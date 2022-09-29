@@ -17319,12 +17319,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1008
-        ActivePage = tsSat
+        ActivePage = tsMonitor
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 17
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -24711,12 +24711,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1000
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
             Font.Height = -13
             Images = ImageList1
             ParentFont = False
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
             OnChange = pgDFeChange
             object tsConfiguracaoDFe: TTabSheet
@@ -29734,14 +29734,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
               ClientWidth = 992
               Font.Height = -13
               ParentFont = False
-              object Panel1: TPanel
+              object pnTestesDFe: TPanel
                 Left = 0
                 Height = 348
                 Top = 0
-                Width = 177
+                Width = 221
                 Align = alLeft
                 ClientHeight = 348
-                ClientWidth = 177
+                ClientWidth = 221
                 Font.Height = -13
                 ParentFont = False
                 TabOrder = 0
@@ -29749,7 +29749,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 1
                   Height = 346
                   Top = 1
-                  Width = 175
+                  Width = 219
                   ActivePage = tsTesteNFe
                   Align = alClient
                   Font.Height = -13
@@ -29759,14 +29759,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
                     ClientHeight = 316
-                    ClientWidth = 167
+                    ClientWidth = 211
                     Font.Height = -13
                     ParentFont = False
                     object btnStatusServ: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 25
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 20
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 20
+                      BorderSpacing.Right = 20
                       Caption = 'Status Serviço'
                       Font.Height = -13
                       OnClick = btnStatusServClick
@@ -29774,10 +29778,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 0
                     end
                     object btnValidarXML: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 146
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 136
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Validar XML'
                       Font.Height = -13
                       OnClick = btnValidarXMLClick
@@ -29785,10 +29793,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 4
                     end
                     object btnImprimir: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 170
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 165
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Imprimir NFe'
                       Font.Height = -13
                       OnClick = btnImprimirClick
@@ -29796,10 +29808,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 5
                     end
                     object btnInutilizar: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 194
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 223
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Inutilizar NFe'
                       Font.Height = -13
                       OnClick = btnInutilizarClick
@@ -29807,10 +29823,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 6
                     end
                     object btnConsultar: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 73
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 78
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Consultar NFe'
                       Font.Height = -13
                       OnClick = btnConsultarClick
@@ -29818,10 +29838,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 2
                     end
                     object btnCancNF: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 97
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 107
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Cancelamento NFe'
                       Font.Height = -13
                       OnClick = btnCancNFClick
@@ -29829,10 +29853,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 3
                     end
                     object btnEnviar: TButton
-                      Left = 12
-                      Height = 22
+                      Left = 20
+                      Height = 24
                       Top = 49
-                      Width = 140
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Enviar XML NFe'
                       Font.Height = -13
                       OnClick = btnEnviarClick
@@ -29840,10 +29868,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 1
                     end
                     object btnEnviarEmail: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 218
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 252
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Enviar Email'
                       Font.Height = -13
                       OnClick = btnEnviarEmailClick
@@ -29851,10 +29883,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 7
                     end
                     object btnCancNFeSubs: TButton
-                      Left = 12
-                      Height = 23
-                      Top = 121
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 194
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Cancelamento Subst.'
                       Font.Height = -13
                       OnClick = btnCancNFeSubsClick
@@ -29865,14 +29901,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object tsTesteCTe: TTabSheet
                     Caption = 'CT-e'
                     ClientHeight = 316
-                    ClientWidth = 167
+                    ClientWidth = 211
                     Font.Height = -13
                     ParentFont = False
                     object btnEnviarEmailCTe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 193
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 20
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 20
+                      BorderSpacing.Right = 20
                       Caption = 'Enviar Email'
                       Font.Height = -13
                       OnClick = btnEnviarEmailCTeClick
@@ -29880,10 +29920,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 0
                     end
                     object btnInutilizarCTe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 169
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 107
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Inutilizar CTe'
                       Font.Height = -13
                       OnClick = btnInutilizarCTeClick
@@ -29891,10 +29935,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 1
                     end
                     object btnImprimirCTe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 145
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 136
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Imprimir CTe'
                       Font.Height = -13
                       OnClick = btnImprimirCTeClick
@@ -29902,10 +29950,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 2
                     end
                     object btnValidarXMLCTe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 121
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 194
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Validar XML'
                       Font.Height = -13
                       OnClick = btnValidarXMLCTeClick
@@ -29913,10 +29965,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 3
                     end
                     object btnCancelarCTe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 97
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 223
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Cancelamento CTe'
                       Font.Height = -13
                       OnClick = btnCancelarCTeClick
@@ -29924,10 +29980,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 4
                     end
                     object btnConsultarCTe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 73
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 165
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Consultar CTe'
                       Font.Height = -13
                       OnClick = btnConsultarCTeClick
@@ -29935,10 +29995,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 5
                     end
                     object btnStatusServCTe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 25
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 49
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Status Serviço'
                       Font.Height = -13
                       OnClick = btnStatusServCTeClick
@@ -29946,10 +30010,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 6
                     end
                     object btnEnviarCTe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 49
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 78
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Enviar XML CTe'
                       Font.Height = -13
                       OnClick = btnEnviarCTeClick
@@ -29960,14 +30028,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object tsTesteMDFe: TTabSheet
                     Caption = 'MDF-e'
                     ClientHeight = 316
-                    ClientWidth = 167
+                    ClientWidth = 211
                     Font.Height = -13
                     ParentFont = False
                     object btnStatusServMDFe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 25
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 20
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 20
+                      BorderSpacing.Right = 20
                       Caption = 'Status Serviço'
                       Font.Height = -13
                       OnClick = btnStatusServMDFeClick
@@ -29975,10 +30047,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 0
                     end
                     object btnEnviarMDFe: TButton
-                      Left = 12
-                      Height = 22
+                      Left = 20
+                      Height = 24
                       Top = 49
-                      Width = 140
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Enviar XML MDFe'
                       Font.Height = -13
                       OnClick = btnEnviarMDFeClick
@@ -29986,10 +30062,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 1
                     end
                     object btnConsultarMDFe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 73
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 78
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Consultar MDFe'
                       Font.Height = -13
                       OnClick = btnConsultarMDFeClick
@@ -29997,10 +30077,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 2
                     end
                     object btnCancMDFe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 97
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 107
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Cancelamento MDFe'
                       Font.Height = -13
                       OnClick = btnCancMDFeClick
@@ -30008,10 +30092,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 3
                     end
                     object btnValidarXMLMDFe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 121
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 136
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Validar XML'
                       Font.Height = -13
                       OnClick = btnValidarXMLMDFeClick
@@ -30019,10 +30107,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 4
                     end
                     object btnImprimirMDFe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 145
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 165
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Imprimir MDFe'
                       Font.Height = -13
                       OnClick = btnImprimirMDFeClick
@@ -30030,10 +30122,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 5
                     end
                     object btnEnviarEmailMDFe: TButton
-                      Left = 12
-                      Height = 22
-                      Top = 169
-                      Width = 140
+                      Left = 20
+                      Height = 24
+                      Top = 194
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
                       Caption = 'Enviar Email'
                       Font.Height = -13
                       OnClick = btnEnviarEmailMDFeClick
@@ -30041,16 +30137,60 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 6
                     end
                   end
+                  object tsTesteGTIN: TTabSheet
+                    Caption = 'GTIN'
+                    ClientHeight = 316
+                    ClientWidth = 211
+                    object lbConsultarGTIN: TLabel
+                      Left = 20
+                      Height = 17
+                      Top = 20
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 20
+                      BorderSpacing.Right = 20
+                      Caption = 'GTIN'
+                      ParentColor = False
+                    end
+                    object edConsultarGTIN: TEdit
+                      Left = 20
+                      Height = 25
+                      Top = 37
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Right = 20
+                      MaxLength = 14
+                      NumbersOnly = True
+                      TabOrder = 0
+                    end
+                    object btnConsultarGTIN: TButton
+                      Left = 20
+                      Height = 26
+                      Top = 67
+                      Width = 171
+                      Align = alTop
+                      BorderSpacing.Left = 20
+                      BorderSpacing.Top = 5
+                      BorderSpacing.Right = 20
+                      Caption = 'Consultar'
+                      Font.Height = -13
+                      OnClick = btnConsultarGTINClick
+                      ParentFont = False
+                      TabOrder = 1
+                    end
+                  end
                 end
               end
-              object Panel2: TPanel
-                Left = 177
+              object pnTestesResposta: TPanel
+                Left = 221
                 Height = 348
                 Top = 0
-                Width = 815
+                Width = 771
                 Align = alClient
                 ClientHeight = 348
-                ClientWidth = 815
+                ClientWidth = 771
                 Font.Height = -13
                 ParentFont = False
                 TabOrder = 1
@@ -30058,7 +30198,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 1
                   Height = 17
                   Top = 68
-                  Width = 813
+                  Width = 769
                   Align = alBottom
                   Alignment = taLeftJustify
                   Caption = 'Resposta WebService'
@@ -30074,7 +30214,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 1
                   Height = 262
                   Top = 85
-                  Width = 813
+                  Width = 769
                   Align = alBottom
                   Font.Height = -13
                   Font.Name = 'Courier New'
@@ -33460,7 +33600,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     OnMinimize = ApplicationProperties1Minimize
     OnRestore = ApplicationProperties1Restore
     Left = 400
-    Top = 656
+    Top = 648
   end
   object ACBrBoleto1: TACBrBoleto
     Banco.Numero = 104

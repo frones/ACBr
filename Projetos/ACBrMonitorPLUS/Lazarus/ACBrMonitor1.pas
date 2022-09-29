@@ -257,6 +257,7 @@ type
     btnStatusServ: TButton;
     btnStatusServCTe: TButton;
     btnStatusServMDFe: TButton;
+    btnConsultarGTIN: TButton;
     btnTC: TPanel;
     btnUser: TPanel;
     btnValidarXML: TButton;
@@ -495,6 +496,7 @@ type
     edEmailUsuario: TEdit;
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
+    edConsultarGTIN: TEdit;
     edNCMCodigo: TEdit;
     edNCMDiasValidade: TSpinEdit;
     edNCMDiretorio: TDirectoryEdit;
@@ -781,6 +783,7 @@ type
     Label109: TLabel;
     Label114: TLabel;
     Label118: TLabel;
+    lbConsultarGTIN: TLabel;
     Label254: TLabel;
     lblPrefixRemessa: TLabel;
     Label255: TLabel;
@@ -1132,8 +1135,8 @@ type
     mRFDINI: TMemo;
     mRSAKey: TMemo;
     mTCConexoes: TMemo;
-    Panel1: TPanel;
-    Panel2: TPanel;
+    pnTestesDFe: TPanel;
+    pnTestesResposta: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
     pnlPesquisa: TPanel;
@@ -1321,6 +1324,7 @@ type
     SynXMLSyn1: TSynXMLSyn;
     TabControl1: TTabControl;
     TabSheet1: TTabSheet;
+    tsTesteGTIN: TTabSheet;
     tsImpMDFe: TTabSheet;
     tsNCM: TTabSheet;
     tsWebBoleto: TTabSheet;
@@ -1442,6 +1446,7 @@ type
     procedure btNCMValidadeHelpClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure btnConsultarCTeClick(Sender: TObject);
+    procedure btnConsultarGTINClick(Sender: TObject);
     procedure btnConsultarMDFeClick(Sender: TObject);
     procedure btnConsultasClick(Sender: TObject);
     procedure btnDFeCertificadosClick(Sender: TObject);
@@ -3469,6 +3474,25 @@ begin
     ACBrCTe1.Consultar;
     ExibeResp(ACBrCTe1.WebServices.Consulta.RetWS);
   end;
+end;
+
+procedure TFrmACBrMonitor.btnConsultarGTINClick(Sender: TObject);
+var
+  wGTIN: String;
+begin
+  wGTIN := Trim(edConsultarGTIN.Text);
+  ACBrGTIN1.Consultar(wGTIN);
+
+  mResposta.Lines.Clear;
+  mResposta.Lines.Add('GTIN Consultado: ' + wGTIN);
+  mResposta.Lines.Add('--- Retorno ---');
+  mResposta.Lines.Add('Retorno..: ' + DateTimeToStr(ACBrGTIN1.WebServices.Consulta.dhResp));
+  mResposta.Lines.Add('Status...: ' + IntToStr(ACBrGTIN1.WebServices.Consulta.cStat));
+  mResposta.Lines.Add('Motivo...: ' + ACBrGTIN1.WebServices.Consulta.xMotivo);
+  mResposta.Lines.Add('Tipo GTIN: ' + IntToStr(ACBrGTIN1.WebServices.Consulta.tpGTIN));
+  mResposta.Lines.Add('Produto..: ' + ACBrGTIN1.WebServices.Consulta.xProd);
+  mResposta.Lines.Add('NCM......: ' + ACBrGTIN1.WebServices.Consulta.NCM);
+  mResposta.Lines.Add('CEST.....: ' + ACBrGTIN1.WebServices.Consulta.CEST);
 end;
 
 procedure TFrmACBrMonitor.btnConsultarMDFeClick(Sender: TObject);

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2022
+-- ACBrMonitor1 --
+[+] Inclusão da consulta de códigos GTIN na aba "DFe > Testes > GTIN"
+    Por: Elias César
+
 28/09/2022
 -- ACBrMonitor1 --
 [*] Alterações para funcionamento da consulta de GTIN por INI e TCP/IP

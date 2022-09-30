@@ -35,12 +35,10 @@
 library ACBrLibGTIN;
 
 uses
-  Interfaces, Forms,
-  sysutils, Classes, ACBrLibGTINDataModule,
-  {$IFDEF MT} ACBrLibGTINMT {$ELSE} ACBrLibGTINST{$ENDIF},
-  ACBrLibConfig,  ACBrLibResposta,
-  ACBrLibComum, ACBrLibConsts, ACBrLibDataModule,
-  ACBrLibGTINConfig, ACBrLibGTINBase, ACBrLibGTINStaticImportST;
+  Interfaces, Forms, sysutils, Classes,
+  {$IFDEF MT} ACBrLibGTINMT{$ELSE}ACBrLibGTINST{$ENDIF},
+  ACBrLibGTINDataModule, ACBrLibConfig,  ACBrLibResposta, ACBrLibComum,
+  ACBrLibConsts, ACBrLibDataModule, ACBrLibGTINConfig, ACBrLibGTINBase;
 
 {$R *.res}
 
@@ -64,7 +62,7 @@ exports
   GTIN_ConfigGravarValor,
 
   // GTIN
-  GTIN_Consultar,
+  GTIN_Consultar;
 
 begin
   {$IFDEF DEBUG}
@@ -76,4 +74,3 @@ begin
   MainThreadID := GetCurrentThreadId();
   Application.Initialize;
 end.
-

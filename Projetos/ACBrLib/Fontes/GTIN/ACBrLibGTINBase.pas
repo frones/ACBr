@@ -87,7 +87,7 @@ end;
 
 procedure TACBrLibGTIN.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
 begin
-  fpConfig := TLibGTINDM.Create(Self, ArqConfig, ChaveCrypt);
+  fpConfig := TLibGTINConfig.Create(Self, ArqConfig, ChaveCrypt);
 end;
 
 procedure TACBrLibGTIN.Executar;
@@ -96,7 +96,7 @@ begin
   FGTINDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibGTIN.Consultar(aGTIN: PChar; const sResposta: PChar; var esTamanho: longint);
+function TACBrLibGTIN.Consultar(aGTIN: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   GTIN, AResposta: String;
   Resp: TGTINResposta;
@@ -114,13 +114,17 @@ begin
       GTINDM.ACBrGTIN1.Consultar(GTIN);
       AResposta:= '';
 
-      Resp:= TGTINConsultaResposta.Create(Config.TipoResposta, Config.CodResposta);
+      Resp:= TGTINResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(GTINDM.ACBrGTIN1);
         AResposta:= Resp.Gerar;
       finally
         Resp.Free;
       end;
+
+      MoverStringParaPChar(AResposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, StrPas(sResposta));
+
     finally
       GTINDM.Destravar;
     end;

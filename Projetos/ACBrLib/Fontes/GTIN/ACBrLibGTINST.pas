@@ -85,7 +85,7 @@ Uses
 function GTIN_Inicializar(const eArqConfig, eChaveCrypt: Pchar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Inicializar(pLib, TACBrLibeSocial, eArqConfig, eChaveCrypt);
+  Result := LIB_Inicializar(pLib, TACBrLibGTIN, eArqConfig, eChaveCrypt);
 end;
 
 function GTIN_Finalizar: longint;
@@ -156,7 +156,7 @@ function GTIN_Consultar(aGTIN: PChar; const sResposta: PChar; var esTamanho: lon
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibGTIN(pLib^.Lib).Consultar(aGTIN);
+    Result := TACBrLibGTIN(pLib^.Lib).Consultar(aGTIN, sResposta, esTamanho);
   except
      on E: EACBrLibException do
      Result := E.Erro;

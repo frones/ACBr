@@ -124,7 +124,7 @@ procedure TLibGTINConfig.Destravar;
 begin
   if Assigned(Owner) then
   begin
-    with TACBrLibGTIN do
+    with TACBrLibGTIN(Owner) do
      GTINDM.Destravar;
   end;
 end;

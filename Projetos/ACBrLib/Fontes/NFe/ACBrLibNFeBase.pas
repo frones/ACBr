@@ -1370,16 +1370,16 @@ begin
 
       with NFeDM do
       begin
+        GravarLog('NFe_DistribuicaoDFePorUltNSU, Executar', logCompleto);
         ACBrNFe1.WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
         ACBrNFe1.WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
         ACBrNFe1.WebServices.DistribuicaoDFe.ultNSU := AultNSU;
         ACBrNFe1.WebServices.DistribuicaoDFe.NSU := '';
         ACBrNFe1.WebServices.DistribuicaoDFe.chNFe := '';
-
         ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
 
+        GravarLog('NFe_DistribuicaoDFePorUltNSU, Proces.Resp DistribuicaoDFe', logParanoico);
         Resp := TDistribuicaoDFeResposta.Create(Config.TipoResposta, Config.CodResposta);
-
         try
           Resp.Processar(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
                          ACBrNFe1.WebServices.DistribuicaoDFe.Msg,

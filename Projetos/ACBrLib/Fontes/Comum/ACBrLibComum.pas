@@ -340,6 +340,8 @@ begin
 {$ENDIF}
 
   AStringLen := Length(AString);
+  if Config.Log.Nivel >= logParanoico then
+    GravarLog('   MoverStringParaPChar. StrLen:'+IntToStr(AStringLen)+', BufLen:'+IntToStr(esTamanho), logParanoico);
 
   if (esTamanho <= 0) then
     esTamanho := AStringLen

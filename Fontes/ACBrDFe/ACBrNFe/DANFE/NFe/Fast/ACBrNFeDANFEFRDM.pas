@@ -276,6 +276,7 @@ begin
         FieldDefs.Add('HoraSaida', ftString, 10);
         FieldDefs.Add('MensagemFiscal', ftString, 200);
         FieldDefs.Add('URL', ftString, 1000);
+        FieldDefs.Add('xPed', ftString, 20);
         CreateDataSet;
      end;
    end;
@@ -1377,6 +1378,7 @@ begin
     FieldByName('FinNFe').AsString  := FinNFeToStr( FNFe.Ide.FinNFe );
     FieldByName('ProcEmi').AsString := procEmiToStr( FNFe.Ide.ProcEmi );
     FieldByName('VerProc').AsString := FNFe.Ide.VerProc;
+
     if FNFe.infNFe.versao = 2.00 then
       FieldByName('HoraSaida').AsString := ifthen(FNFe.ide.hSaiEnt = 0, '', TimeToStr(FNFe.ide.hSaiEnt))
     else
@@ -1406,7 +1408,9 @@ begin
     begin
       FieldByName('MensagemFiscal').AsString := '';
       FieldByName('URL').AsString            := '';
+      FieldByName('xPed').AsString           := FNFe.Compra.xPed;
     end;
+
     Post;
   end;
 end;

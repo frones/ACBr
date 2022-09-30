@@ -813,6 +813,7 @@ begin
   InicializarActivePages;
   InicializarComponentesDefault;
   Application.OnException := TratarException;
+  ACBrPSPBancoDoBrasil1.QuandoReceberRespostaHttp := ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp;
 
   LerConfiguracao;
   VerificarConfiguracao;

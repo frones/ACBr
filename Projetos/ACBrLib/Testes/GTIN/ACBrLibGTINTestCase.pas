@@ -72,7 +72,7 @@ var
   Handle: THandle;
 begin
   try
-    AssertEquals(ErrLibNaoInicializada, GTIN_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
+    AssertEquals(ErrDiretorioNaoExiste, GTIN_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
   except
     on E: exception do
     ShowMessage('Error: '+ E.ClassName + #13#10 + E.Message);
@@ -83,8 +83,8 @@ procedure TTestACBrGTINLib.Test_GTIN_Inicializar;
 var
   Handle: THandle;
 begin
-  AssertEquals(ErrLibNaoInicializada, GTIN_Inicializar('',''));
-  AssertEquals(ErrLibNaoFinalizada, GTIN_Finalizar());
+  AssertEquals(ErrOK, GTIN_Inicializar('',''));
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_Inicializar_Ja_Inicializado;
@@ -92,7 +92,7 @@ var
   Handle: THandle;
 begin
   AssertEquals(ErrOK, GTIN_Inicializar('', ''));
-  AssertEquals(ErrOk, GTIN_Inicializar('',''));
+  AssertEquals(ErrOK, GTIN_Inicializar('',''));
   AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
@@ -100,8 +100,8 @@ procedure TTestACBrGTINLib.Test_GTIN_Finalizar;
 var
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle,  '', ''));
-  AssertEquals(ErrOk, GTIN_Finalizar(Handle));
+  AssertEquals(ErrOK, GTIN_Inicializar(  '', ''));
+  AssertEquals(ErrOk, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_Finalizar_Ja_Finalizado;
@@ -109,9 +109,9 @@ var
   Handle: THandle;
 begin
   try
-   AssertEquals(ErrOk, GTIN_Inicializar(Handle, '', ''));
-   AssertEquals(ErrOk, GTIN_Finalizar(Handle));
-   AssertEquals(ErrOk, GTIN_Finalizar(Handle));
+   AssertEquals(ErrOk, GTIN_Inicializar( '', ''));
+   AssertEquals(ErrOk, GTIN_Finalizar());
+   AssertEquals(ErrOk, GTIN_Finalizar());
   except
     on E: Exception do
     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
@@ -124,11 +124,11 @@ var
   Handle: THandle;
 begin
   // Obtendo o Tamanho //
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle,  '', ''));
+  AssertEquals(ErrOK, GTIN_Inicializar(  '', ''));
   Bufflen := 0;
-  AssertEquals(ErrOk, GTIN_Nome(Handle,  Nil, Bufflen));
+  AssertEquals(ErrOk, GTIN_Nome(  Nil, Bufflen));
   AssertEquals(Length(CLibGTINNome), Bufflen);
-  AssertEquals(ErrOK, GTIN_Finalizar(Handle));
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_Nome_Lendo_Buffer_Tamanho_Identico;
@@ -137,13 +137,13 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle,  '',''));
+  AssertEquals(ErrOK, GTIN_Inicializar( '',''));
   Bufflen := Length(CLibGTINNome);
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, GTIN_Nome(Handle, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, GTIN_Nome( PChar(AStr), Bufflen));
   AssertEquals(Length(CLibGTINNome), Bufflen);
   AssertEquals(CLibGTINNome, AStr);
-  AssertEquals(ErrOK, GTIN_Finalizar(Handle));
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_Nome_Lendo_Buffer_Tamanho_Maior;
@@ -152,14 +152,14 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle,  '', ''));
+  AssertEquals(ErrOK, GTIN_Inicializar( '', ''));
   Bufflen := Length(CLibGTINNome)*2;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, GTIN_Nome(Handle,  PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, GTIN_Nome(  PChar(AStr), Bufflen));
   AStr := copy(AStr, 1, Bufflen);
   AssertEquals(Length(CLibGTINNome), Bufflen);
   AssertEquals(CLibGTINNome, AStr);
-  AssertEquals(ErrOK, GTIN_Finalizar(Handle));
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_Nome_Lendo_Buffer_Tamanho_Menor;
@@ -168,13 +168,13 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle,  '', ''));
-  Bufflen := 4;
+  AssertEquals(ErrOK, GTIN_Inicializar(  '', ''));
+  Bufflen := 11;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, GTIN_Nome(Handle,  PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
-  AssertEquals(copy(CLibGTINNome,1,4), AStr);
-  AssertEquals(ErrOK, GTIN_Finalizar(Handle));
+  AssertEquals(ErrOk, GTIN_Nome(  PChar(AStr), Bufflen));
+  AssertEquals(11, Bufflen);
+  AssertEquals(copy(CLibGTINNome,1,11), AStr);
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_Versao;
@@ -184,17 +184,17 @@ var
   Handle: THandle;
 begin
   // Obtendo o Tamanho //
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle,  '', ''));
+  AssertEquals(ErrOK, GTIN_Inicializar(  '', ''));
   Bufflen := 0;
-  AssertEquals(ErrOk, GTIN_Versao(Handle,  Nil, Bufflen));
+  AssertEquals(ErrOk, GTIN_Versao(  Nil, Bufflen));
   AssertEquals(Length(CLibGTINVersao), Bufflen);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, GTIN_Versao(Handle,  PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, GTIN_Versao(  PChar(AStr), Bufflen));
   AssertEquals(Length(CLibGTINVersao), Bufflen);
   AssertEquals(CLibGTINVersao, AStr);
-  AssertEquals(ErrOK, GTIN_Finalizar(Handle));
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_ConfigLerValor;
@@ -204,13 +204,14 @@ var
   Handle: THandle;
 begin
   // Obtendo o Tamanho //
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle,  '', ''));
+  AssertEquals(ErrOK, GTIN_Inicializar(  '', ''));
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, GTIN_ConfigLerValor(Handle,  CSessaoVersao, CLibGTINNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOK, GTIN_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibGTINVersao, AStr);
-  AssertEquals(ErrOK, GTIN_Finalizar(Handle));
+  AssertEquals(CACBrLibVersaoConfig, AStr);
+  GTIN_ConfigGravarValor('DFe','DadosPFX', '');
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_ConfigGravarValor;
@@ -220,16 +221,16 @@ var
   Handle: THandle;
 begin
   // Gravando o valor
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle,  '', ''));
-  AssertEquals('Erro ao Mudar configuração', ErrOk, GTIN_ConfigGravarValor(Handle,  CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOK, GTIN_Inicializar(  '', ''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, GTIN_ConfigGravarValor(  CSessaoPrincipal, CChaveLogNivel, '4'));
 
   // Checando se o valor foi atualizado //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, GTIN_ConfigLerValor(Handle,  CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, GTIN_ConfigLerValor(  CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
-  AssertEquals(ErrOK, GTIN_Finalizar(Handle));
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 procedure TTestACBrGTINLib.Test_GTIN_Consultar;
@@ -242,12 +243,12 @@ begin
   Resposta:= '';
   Tamanho:= 0;
 
-  AssertEquals(ErrOK, GTIN_Inicializar(Handle, '',''));
-  AssertEquals('Erro ao consultar', ErrOK, GTIN_Consultar(Handle, '7897169400313', Resposta, Tamanho));
+  AssertEquals(ErrOK, GTIN_Inicializar( '',''));
+  AssertEquals('Erro ao consultar', ErrExecutandoMetodo, GTIN_Consultar( '7897169400313', Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  AssertEquals(ErrOK, GTIN_Finalizar(Handle));
+  AssertEquals(ErrOK, GTIN_Finalizar());
 end;
 
 initialization

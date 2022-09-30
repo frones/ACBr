@@ -41,7 +41,7 @@ uses
 
 const
   CLibGTINNome = 'ACBrLibGTIN';
-  CLibGTINVersao = '0.0.1';
+  CLibGTINVersao = '0.0.0.0';
 
   CSessaoRespConsulta = 'Consulta';
 

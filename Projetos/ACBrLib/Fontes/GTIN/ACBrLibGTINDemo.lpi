@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <Language Value="0416"/>
-      <StringTable Comments="Projeto ACBr" CompanyName="ACBrGTIN - Biblioteca para consulta GTIN" FileDescription="ACBrLibGTIN"/>
+      <StringTable Comments="Projeto ACBr" CompanyName="ACBrGTIN - Biblioteca para consulta GTIN" FileDescription="ACBrLibGTIN" InternalName="ACBrLibGTIN" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="GTIN" ProductVersion="0.0.0.4"/>
     </VersionInfo>
     <BuildModes Count="12">
       <Item1 Name="Win32-i386-CDECL" Default="True"/>

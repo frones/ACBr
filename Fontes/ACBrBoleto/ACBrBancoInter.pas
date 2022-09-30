@@ -372,6 +372,10 @@ begin
     Titulo.NumeroDocumento         := copy(Linha, 98, 10);
     Titulo.Carteira                := copy(Linha, 87, 3);
     Titulo.OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 90, 2), 0));
+
+    if Titulo.OcorrenciaOriginal.Tipo = toRetornoRegistroRecusado then
+      Titulo.DescricaoMotivoRejeicaoComando.Add(copy(Linha, 241, 140));
+
     Titulo.Sacado.NomeSacado       := copy(Linha, 325, 30);
     Titulo.DataOcorrencia          := StringToDateTimeDef(Copy(Linha, 92, 2) + '/' + Copy(Linha, 94, 2) + '/' + Copy(Linha, 96, 2), 0, 'DD/MM/YY');
     Titulo.EspecieDoc              := 'DM';

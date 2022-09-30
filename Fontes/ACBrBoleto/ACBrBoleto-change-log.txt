@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2022
+--ACBrBancoInter--
+[*] TK-3115 ACbrBoleto - Ajuste leitura retorno CNAB400 do Banco Inter Motivo de Rejeição
+  por : Daniel Infocotidiano / Michel Ouriques
+
 23/09/2022
 -- ACBrBancoUnicredES --
 [*] TK-2030 ACBrBoleto - Ajuste leitura retorno CNAB400 quanto ao método CodMotivoRejeicaoToDescricao

@@ -261,8 +261,7 @@ function TNFSeW_PadraoNacional.GerarEnderecoPrestador: TACBrXmlNode;
 begin
   Result := nil;
 
-  if (NFSe.Prestador.Endereco.CodigoMunicipio <> '') or
-     (NFSe.Prestador.Endereco.CodigoPais <> 0) then
+  if NFSe.Prestador.Endereco.Endereco <> '' then
   begin
     Result := CreateElement('end');
 
@@ -542,7 +541,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cLocPrestacao', 7, 7, 0,
                                              NFSe.Servico.CodigoMunicipio, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cPaisPrestacao', 2, 2, 0,
+  if (NFSe.Servico.CodigoPais <> 0) and (NFSe.Servico.CodigoPais <> 1058) then
+    Result.AppendChild(AddNode(tcStr, '#1', 'cPaisPrestacao', 2, 2, 0,
                           CodIBGEPaisToSiglaISO2(NFSe.Servico.CodigoPais), ''));
 
   if NFSe.Servico.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then

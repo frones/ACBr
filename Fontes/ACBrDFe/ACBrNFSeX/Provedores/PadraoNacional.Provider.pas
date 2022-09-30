@@ -49,10 +49,10 @@ uses
 type
   TACBrNFSeXWebservicePadraoNacional = class(TACBrNFSeXWebserviceRest)
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function EnviarEvento(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(ACabecalho, AMSG: string): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: string): string; override;
+    function ConsultarNFSe(ACabecalho, AMSG: string): string; override;
+    function EnviarEvento(ACabecalho, AMSG: string): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -324,10 +324,10 @@ procedure TACBrNFSeProviderPadraoNacional.TratarRetornoEmitir(
 var
   Document: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
-  NFSeXml: String;
+  NFSeXml: string;
   DocumentXml: TACBrXmlDocument;
   ANode: TACBrXmlNode;
-  NumNFSe, NumRps: String;
+  NumNFSe, NumRps: string;
   ANota: TNotaFiscal;
 begin
   if Response.ArquivoRetorno = '' then
@@ -486,10 +486,10 @@ procedure TACBrNFSeProviderPadraoNacional.TratarRetornoConsultaNFSe(
 var
   Document: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
-  NFSeXml: String;
+  NFSeXml: string;
   DocumentXml: TACBrXmlDocument;
   ANode: TACBrXmlNode;
-  NumNFSe, NumRps: String;
+  NumNFSe, NumRps: string;
   ANota: TNotaFiscal;
 begin
   if Response.ArquivoRetorno = '' then
@@ -612,24 +612,36 @@ begin
       teCancelamento:
         xCamposEvento := '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
                          '<xMotivo>' + xMotivo + '</xMotivo>';
-      {
-      teCancelamentoSubstituicao,
-      teAnaliseParaCancelamento,
-      teCancelamentoDeferido,
-      teCancelamentoIndeferido,
-      teConfirmacaoPrestador,
-      teConfirmacaoTomador,
-      ConfirmacaoIntermediario,
-      teConfirmacaoTacita,
-      teRejeicaoPrestador,
-      teRejeicaoTomador,
-      teRejeicaoIntermediario,
-      AnulacaoRejeicao,
-      teCancelamentoPorOficio,
-      teBloqueioPorOficio,
-      teDesbloqueioPorOficio
-      }
+
+      teCancelamentoSubstituicao:
+        xCamposEvento := '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                         '<xMotivo>' + xMotivo + '</xMotivo>' +
+                         '<chSubstituta>' + chSubstituta + '</chSubstituta>';
+
+      teAnaliseParaCancelamento:
+        xCamposEvento := '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                         '<xMotivo>' + xMotivo + '</xMotivo>';
+
+      teRejeicaoPrestador:
+        xCamposEvento := '<infRej>' +
+                           '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                           '<xMotivo>' + xMotivo + '</xMotivo>' +
+                         '</infRej>';
+
+      teRejeicaoTomador:
+        xCamposEvento := '<infRej>' +
+                           '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                           '<xMotivo>' + xMotivo + '</xMotivo>' +
+                         '</infRej>';
+
+      teRejeicaoIntermediario:
+        xCamposEvento := '<infRej>' +
+                           '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                           '<xMotivo>' + xMotivo + '</xMotivo>' +
+                         '</infRej>';
     else
+      // teConfirmacaoPrestador, teConfirmacaoTomador,
+      // ConfirmacaoIntermediario e teConfirmacaoTacita
       xCamposEvento := '';
     end;
 
@@ -644,7 +656,9 @@ begin
                    '</dhEvento>' +
                    xAutorEvento +
                    '<chNFSe>' + chNFSe + '</chNFSe>' +
-                   '<nPedRegEvento>' + FormatFloat('000', nPedRegEvento) + '</nPedRegEvento>' +
+                   '<nPedRegEvento>' +
+                     FormatFloat('000', nPedRegEvento) +
+                   '</nPedRegEvento>' +
                    '<' + tpEventoToStr(tpEvento) + '>' +
                      '<xDesc>' + tpEventoToDesc(tpEvento) + '</xDesc>' +
                      xCamposEvento +
@@ -658,7 +672,7 @@ begin
     Response.ArquivoEnvio := xEvento;
     FpChave := chNFSe;
 
-  //  SalvarXmlRps(Nota);
+    SalvarXmlEvento(ID + '-pedRegEvento', Response.ArquivoEnvio);
   end;
 end;
 
@@ -667,13 +681,10 @@ procedure TACBrNFSeProviderPadraoNacional.TratarRetornoEnviarEvento(
 var
   Document: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
-  EventoXml: string;
+  EventoXml, IDEvento: string;
   DocumentXml: TACBrXmlDocument;
-  {
   ANode: TACBrXmlNode;
-  NumNFSe, NumRps: string;
-  ANota: TNotaFiscal;
-  }
+  Ok: Boolean;
 begin
   if Response.ArquivoRetorno = '' then
   begin
@@ -695,44 +706,49 @@ begin
       EventoXml := Document.AsString['eventoXmlGZipB64'];
 
       if EventoXml <> '' then
+      begin
         EventoXml := DeCompress(DecodeBase64(EventoXml));
 
-      DocumentXml := TACBrXmlDocument.Create;
+        DocumentXml := TACBrXmlDocument.Create;
 
-      try
         try
-          if EventoXml = '' then
-          begin
-            AErro := Response.Erros.New;
-            AErro.Codigo := Cod211;
-            AErro.Descricao := Desc211;
-            Exit
+          try
+            if EventoXml = '' then
+            begin
+              AErro := Response.Erros.New;
+              AErro.Codigo := Cod211;
+              AErro.Descricao := Desc211;
+              Exit
+            end;
+
+            DocumentXml.LoadFromXml(EventoXml);
+
+            ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
+
+            IDEvento := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+
+            Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+            Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
+            Response.idEvento := IDEvento;
+            Response.tpEvento := StrTotpEvento(Ok, Copy(IDEvento, 51, 6));
+
+            ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
+            ANode := ANode.Childrens.FindAnyNs('infPedReg');
+
+            Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
+
+            SalvarXmlEvento(IDEvento + '-procEveNFSe', EventoXml);
+          except
+            on E:Exception do
+            begin
+              AErro := Response.Erros.New;
+              AErro.Codigo := Cod999;
+              AErro.Descricao := Desc999 + E.Message;
+            end;
           end;
-          {
-          DocumentXml.LoadFromXml(EventoXml);
-
-          ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
-
-          NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
-          ANode := ANode.Childrens.FindAnyNs('DPS');
-          ANode := ANode.Childrens.FindAnyNs('infDPS');
-          NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
-
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
-
-          ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
-          SalvarXmlNfse(ANota);
-          }
-        except
-          on E:Exception do
-          begin
-            AErro := Response.Erros.New;
-            AErro.Codigo := Cod999;
-            AErro.Descricao := Desc999 + E.Message;
-          end;
+        finally
+          FreeAndNil(DocumentXml);
         end;
-      finally
-        FreeAndNil(DocumentXml);
       end;
     except
       on E:Exception do
@@ -814,7 +830,7 @@ end;
 { TACBrNFSeXWebservicePadraoNacional }
 
 function TACBrNFSeXWebservicePadraoNacional.GerarNFSe(ACabecalho,
-  AMSG: String): string;
+  AMSG: string): string;
 var
   Request: string;
 begin
@@ -826,7 +842,7 @@ begin
 end;
 
 function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSe(ACabecalho,
-  AMSG: String): string;
+  AMSG: string): string;
 var
   Request: string;
 begin
@@ -838,7 +854,7 @@ begin
 end;
 
 function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSePorRps(ACabecalho,
-  AMSG: String): string;
+  AMSG: string): string;
 var
   Request: string;
 begin
@@ -850,7 +866,7 @@ begin
 end;
 
 function TACBrNFSeXWebservicePadraoNacional.EnviarEvento(ACabecalho,
-  AMSG: String): string;
+  AMSG: string): string;
 var
   Request: string;
 begin

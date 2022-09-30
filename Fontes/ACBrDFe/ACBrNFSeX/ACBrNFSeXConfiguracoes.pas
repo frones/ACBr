@@ -180,6 +180,9 @@ type
     function GetPathRPS(Data: TDateTime = 0; const CNPJ: String = '';
       const IE: String = ''): String;
 
+    function GetPathEvento(Data: TDateTime = 0; const CNPJ: String = '';
+      const IE: String = ''): String;
+
     function GetPathNFSe(Data: TDateTime = 0; const CNPJ: String = '';
       const IE: String = ''): String;
 
@@ -580,6 +583,26 @@ begin
     Dir := GetPath(FPathGer, 'NFSe', CNPJ, IE, Data);
 
     Dir := PathWithDelim(Dir) + 'Can';
+
+    if not DirectoryExists(Dir) then
+      ForceDirectories(Dir);
+
+    Result := Dir;
+  end;
+end;
+
+function TArquivosConfNFSe.GetPathEvento(Data: TDateTime; const CNPJ,
+  IE: String): String;
+var
+  Dir: String;
+begin
+  if FPathCan <> '' then
+    Result := GetPath(FPathCan, 'Eventos', CNPJ, IE, Data)
+  else
+  begin
+    Dir := GetPath(FPathGer, 'NFSe', CNPJ, IE, Data);
+
+    Dir := PathWithDelim(Dir) + 'Eventos';
 
     if not DirectoryExists(Dir) then
       ForceDirectories(Dir);

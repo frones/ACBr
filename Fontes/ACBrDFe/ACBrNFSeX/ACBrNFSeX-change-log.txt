@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/09/2022
+-- Diversos --
+[+] Implementado dos os eventos que o Prestador/Tomador/Intermediario
+    podem enviar, esses eventos são exclusivos do provedor PadraoNacional.
+   Por: Italo Giurizzato Junior
+
 29/09/2022
 -- RLZ.Provider --
 [*] Incluído a função TratarXmlRetornado para tratar o XML retornado do
@@ -56,7 +62,6 @@ Símbolo : Significado
 [*] Possível solução para quando ao consultar a situação do lote o
     WebService não retorna a situação.
    Por: Italo Giurizzato Junior
-
 -- ACBrNFSeXServicos --
 [*] Incluído o parâmetro GerarTag para a cidade de São José/SC
    Por: Willian Carminatt

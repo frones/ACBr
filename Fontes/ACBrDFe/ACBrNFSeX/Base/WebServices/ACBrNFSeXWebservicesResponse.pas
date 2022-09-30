@@ -200,6 +200,9 @@ type
     FNumeroRps: string;
     FSerieRps: string;
     FCodVerif: string;
+    FidEvento: string;
+    FtpEvento: TtpEvento;
+    FnSeqEvento: Integer;
 
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
@@ -234,6 +237,9 @@ type
     property NumeroRps: string read FNumeroRps write FNumeroRps;
     property SerieRps: string read FSerieRps write FSerieRps;
     property CodVerif: string read FCodVerif write FCodVerif;
+    property idEvento: string read FidEvento write FidEvento;
+    property tpEvento: TtpEvento read FtpEvento write FtpEvento;
+    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
@@ -518,6 +524,9 @@ begin
   Protocolo := '';
   NumeroRps := '';
   SerieRps := '';
+  idEvento := '';
+  tpEvento := teCancelamento;
+  nSeqEvento := 0;
 
   if Assigned(FErros) then
   begin

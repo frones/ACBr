@@ -338,13 +338,6 @@ type
     FcMotivo: Integer;
     FxMotivo: string;
     FchSubstituta: string;
-    FCPFAgTrib: string;
-    FnProcAdm: string;
-    FidEvManifRej: string;
-    FxProcAdm: string;
-    FcodEvento: TtpEvento;
-    FidBloqOfic: string;
-
   public
     constructor Create;
 
@@ -358,12 +351,6 @@ type
     property cMotivo: Integer       read FcMotivo       write FcMotivo;
     property xMotivo: string        read FxMotivo       write FxMotivo;
     property chSubstituta: string   read FchSubstituta  write FchSubstituta;
-    property CPFAgTrib: string      read FCPFAgTrib     write FCPFAgTrib;
-    property nProcAdm: string       read FnProcAdm      write FnProcAdm;
-    property idEvManifRej: string   read FidEvManifRej  write FidEvManifRej;
-    property xProcAdm: string       read FxProcAdm      write FxProcAdm;
-    property codEvento: TtpEvento   read FcodEvento     write FcodEvento;
-    property idBloqOfic: string     read FidBloqOfic    write FidBloqOfic;
   end;
 
  TInfEvento = class
@@ -1435,12 +1422,6 @@ begin
       cMotivo := INIRec.ReadInteger(sSecao, 'cMotivo', 0);
       xMotivo := INIRec.ReadString(sSecao, 'xMotivo', '');
       chSubstituta := INIRec.ReadString(sSecao, 'chSubstituta', '');
-      CPFAgTrib := INIRec.ReadString(sSecao, 'CPFAgTrib', '');
-      nProcAdm := INIRec.ReadString(sSecao, 'nProcAdm', '');
-      idEvManifRej := INIRec.ReadString(sSecao, 'idEvManifRej', '');
-      xProcAdm := INIRec.ReadString(sSecao, 'xProcAdm', '');
-      codEvento := StrTotpEvento(Ok, INIRec.ReadString(sSecao, 'codEvento', 'e101101'));
-      idBloqOfic := INIRec.ReadString(sSecao, 'idBloqOfic', '');
     end;
 
     Result := True;
@@ -1462,12 +1443,6 @@ begin
   FcMotivo := 0;
   FxMotivo := '';
   FchSubstituta := '';
-  FCPFAgTrib := '';
-  FnProcAdm := '';
-  FidEvManifRej := '';
-  FxProcAdm := '';
-  FcodEvento := teCancelamento;
-  FidBloqOfic := '';
 end;
 
 end.

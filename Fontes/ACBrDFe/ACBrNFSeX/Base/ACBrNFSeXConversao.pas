@@ -278,9 +278,9 @@ type
   TtpEvento = (teCancelamento, teCancelamentoSubstituicao,
                teAnaliseParaCancelamento, teCancelamentoDeferido,
                teCancelamentoIndeferido, teConfirmacaoPrestador,
-               teConfirmacaoTomador, ConfirmacaoIntermediario,
+               teConfirmacaoTomador, teConfirmacaoIntermediario,
                teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
-               teRejeicaoIntermediario, AnulacaoRejeicao,
+               teRejeicaoIntermediario, teAnulacaoRejeicao,
                teCancelamentoPorOficio, teBloqueioPorOficio,
                teDesbloqueioPorOficio);
 
@@ -13107,9 +13107,9 @@ begin
                    [teCancelamento, teCancelamentoSubstituicao,
                     teAnaliseParaCancelamento, teCancelamentoDeferido,
                     teCancelamentoIndeferido, teConfirmacaoPrestador,
-                    teConfirmacaoTomador, ConfirmacaoIntermediario,
+                    teConfirmacaoTomador, teConfirmacaoIntermediario,
                     teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
-                    teRejeicaoIntermediario, AnulacaoRejeicao,
+                    teRejeicaoIntermediario, teAnulacaoRejeicao,
                     teCancelamentoPorOficio, teBloqueioPorOficio,
                     teDesbloqueioPorOficio]);
 end;
@@ -13124,9 +13124,9 @@ begin
                    [teCancelamento, teCancelamentoSubstituicao,
                     teAnaliseParaCancelamento, teCancelamentoDeferido,
                     teCancelamentoIndeferido, teConfirmacaoPrestador,
-                    teConfirmacaoTomador, ConfirmacaoIntermediario,
+                    teConfirmacaoTomador, teConfirmacaoIntermediario,
                     teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
-                    teRejeicaoIntermediario, AnulacaoRejeicao,
+                    teRejeicaoIntermediario, teAnulacaoRejeicao,
                     teCancelamentoPorOficio, teBloqueioPorOficio,
                     teDesbloqueioPorOficio]);
 end;
@@ -13153,9 +13153,9 @@ begin
                    [teCancelamento, teCancelamentoSubstituicao,
                     teAnaliseParaCancelamento, teCancelamentoDeferido,
                     teCancelamentoIndeferido, teConfirmacaoPrestador,
-                    teConfirmacaoTomador, ConfirmacaoIntermediario,
+                    teConfirmacaoTomador, teConfirmacaoIntermediario,
                     teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
-                    teRejeicaoIntermediario, AnulacaoRejeicao,
+                    teRejeicaoIntermediario, teAnulacaoRejeicao,
                     teCancelamentoPorOficio, teBloqueioPorOficio,
                     teDesbloqueioPorOficio]);
 end;

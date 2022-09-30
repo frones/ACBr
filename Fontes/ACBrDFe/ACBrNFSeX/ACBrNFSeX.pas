@@ -942,12 +942,6 @@ begin
     cMotivo := aInfEvento.pedRegEvento.cMotivo;
     xMotivo := TiraAcentos(ChangeLineBreak(aInfEvento.pedRegEvento.xMotivo));
     chSubstituta := aInfEvento.pedRegEvento.chSubstituta;
-    CPFAgTrib := aInfEvento.pedRegEvento.CPFAgTrib;
-    nProcAdm := aInfEvento.pedRegEvento.nProcAdm;
-    idEvManifRej := aInfEvento.pedRegEvento.idEvManifRej;
-    xProcAdm := aInfEvento.pedRegEvento.xProcAdm;
-    codEvento := aInfEvento.pedRegEvento.codEvento;
-    idBloqOfic := aInfEvento.pedRegEvento.idBloqOfic;
   end;
 
   FProvider.EnviarEvento;

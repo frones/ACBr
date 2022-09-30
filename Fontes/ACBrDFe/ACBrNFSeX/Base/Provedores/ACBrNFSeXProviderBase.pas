@@ -79,7 +79,8 @@ type
     procedure SetXmlNameSpace(const aNameSpace: string);
     procedure SalvarXmlRps(aNota: TNotaFiscal);
     procedure SalvarXmlNfse(aNota: TNotaFiscal);
-    procedure SalvarPDFNfse(const aNome, aPDF: string);
+    procedure SalvarPDFNfse(const aNome: string; const aPDF: AnsiString);
+    procedure SalvarXmlEvento(const aNome: string; const  aEvento: AnsiString);
 
     function CarregarXmlNfse(aNota: TNotaFiscal; aXml: string): TNotaFiscal;
 
@@ -840,7 +841,8 @@ begin
     TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aNota.XmlNfse);
 end;
 
-procedure TACBrNFSeXProvider.SalvarPDFNfse(const aNome, aPDF: string);
+procedure TACBrNFSeXProvider.SalvarPDFNfse(const aNome: string;
+  const aPDF: AnsiString);
 var
   aPath, aNomeArq: string;
   aConfig: TConfiguracoesNFSe;
@@ -854,8 +856,23 @@ begin
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
     WriteToTXT(aNomeArq, aPDF, False, False);
+end;
 
-//    TACBrNFSeX(FAOwner).Gravar(aNomeArq, aPDF);
+procedure TACBrNFSeXProvider.SalvarXmlEvento(const aNome: string;
+  const  aEvento: AnsiString);
+var
+  aPath, aNomeArq: string;
+  aConfig: TConfiguracoesNFSe;
+begin
+  aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
+
+  aPath := aConfig.Arquivos.GetPathEvento(0, aConfig.Geral.Emitente.CNPJ,
+                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
+
+  aNomeArq := PathWithDelim(aPath) + aNome + '.xml';
+
+  if FAOwner.Configuracoes.Arquivos.Salvar then
+    WriteToTXT(aNomeArq, aEvento, False, False);
 end;
 
 procedure TACBrNFSeXProvider.SetNomeXSD(const aNome: string);

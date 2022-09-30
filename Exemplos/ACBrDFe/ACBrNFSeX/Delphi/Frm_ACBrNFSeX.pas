@@ -237,6 +237,17 @@ type
     btnObterPDFdoDANFSE: TButton;
     tsEventos: TTabSheet;
     btnEventoCancNFSe: TButton;
+    btnEventoCancPorSub: TButton;
+    btnEventoAnaliseCanc: TButton;
+    btnEventoConfPrest: TButton;
+    btnEventoConfTom: TButton;
+    btnEventoConfInter: TButton;
+    btnEventoRejPrest: TButton;
+    btnEventoRejTom: TButton;
+    btnEventoRejInter: TButton;
+    btnEventoConfTacita: TButton;
+    Label48: TLabel;
+    Label49: TLabel;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -304,6 +315,15 @@ type
     procedure btnGerarTokenClick(Sender: TObject);
     procedure btnObterPDFdoDANFSEClick(Sender: TObject);
     procedure btnEventoCancNFSeClick(Sender: TObject);
+    procedure btnEventoCancPorSubClick(Sender: TObject);
+    procedure btnEventoAnaliseCancClick(Sender: TObject);
+    procedure btnEventoConfPrestClick(Sender: TObject);
+    procedure btnEventoRejPrestClick(Sender: TObject);
+    procedure btnEventoRejTomClick(Sender: TObject);
+    procedure btnEventoRejInterClick(Sender: TObject);
+    procedure btnEventoConfTomClick(Sender: TObject);
+    procedure btnEventoConfInterClick(Sender: TObject);
+    procedure btnEventoConfTacitaClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -553,7 +573,10 @@ begin
       end;
 
       // TnfseSimNao = ( snSim, snNao );
-      OptanteSimplesNacional := snNao;
+      OptanteSimplesNacional := snSim;
+
+      // Provedor PadraoNacional
+      OptanteSN := osnNaoOptante;
 
       // TnfseSimNao = ( snSim, snNao );
       IncentivadorCultural := snNao;
@@ -873,7 +896,7 @@ begin
         Prestador.Contato.Telefone := '1633224455';
       end;
 
-      Prestador.Contato.Email    := 'nome@provedor.com.br';
+      Prestador.Contato.Email := 'nome@provedor.com.br';
 
       {=========================================================================
         Dados do Tomador de Serviço
@@ -888,7 +911,7 @@ begin
 
       // Para o provedor SigISS usar os valores acima de forma adquada
       Tomador.IdentificacaoTomador.Tipo := tpPF;
-      Tomador.IdentificacaoTomador.CpfCnpj := '06760213874';
+      Tomador.IdentificacaoTomador.CpfCnpj := '12345678901';
       Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '';
 
@@ -1922,6 +1945,48 @@ begin
   end;
 end;
 
+procedure TfrmACBrNFSe.btnEventoAnaliseCancClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe, xCodigo, xMotivoCanc: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Analise de Cancelamento';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  xCodigo := '1';
+  if not(InputQuery(xTitulo, 'Código de Cancelamento:', xCodigo)) then
+    exit;
+
+  xMotivoCanc := 'Movido do Cancelamento da nota';
+  if not(InputQuery(xTitulo, 'Motivo do Cancelamento:', xMotivoCanc)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teAnaliseParaCancelamento;
+      cMotivo := StrToIntDef(xCodigo, 1);
+      xMotivo := xMotivoCanc;
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
 procedure TfrmACBrNFSe.btnEventoCancNFSeClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe, xCodigo, xMotivoCanc: String;
@@ -1954,15 +2019,307 @@ begin
       tpEvento := ACBrNFSeXConversao.teCancelamento;
       cMotivo := StrToIntDef(xCodigo, 1);
       xMotivo := xMotivoCanc;
-      {
-      property chSubstituta: string   read FchSubstituta  write FchSubstituta;
-      property CPFAgTrib: string      read FCPFAgTrib     write FCPFAgTrib;
-      property nProcAdm: string       read FnProcAdm      write FnProcAdm;
-      property idEvManifRej: string   read FidEvManifRej  write FidEvManifRej;
-      property xProcAdm: string       read FxProcAdm      write FxProcAdm;
-      property codEvento: TtpEvento   read FcodEvento     write FcodEvento;
-      property idBloqOfic: string     read FidBloqOfic    write FidBloqOfic;
-      }
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnEventoCancPorSubClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe, xCodigo, xMotivoCanc, xChaveSub: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Cancelamento Por Substituição';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  xCodigo := '1';
+  if not(InputQuery(xTitulo, 'Código de Cancelamento:', xCodigo)) then
+    exit;
+
+  xMotivoCanc := 'Movido do Cancelamento da nota';
+  if not(InputQuery(xTitulo, 'Motivo do Cancelamento:', xMotivoCanc)) then
+    exit;
+
+  xChaveSub := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e Substitutiva:', xChaveSub)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teCancelamentoSubstituicao;
+      cMotivo := StrToIntDef(xCodigo, 1);
+      xMotivo := xMotivoCanc;
+      chSubstituta := xChaveSub;
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnEventoConfInterClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Confirmação do Intermediário';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teConfirmacaoIntermediario;
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnEventoConfPrestClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Confirmação do Prestador';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teConfirmacaoPrestador;
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnEventoConfTacitaClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Confirmação do Tacita';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teConfirmacaoTacita;
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnEventoConfTomClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Confirmação do Tomador';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teConfirmacaoTomador;
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnEventoRejInterClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe, xCodigo, xMotivoRej: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Rejeição do Intermediário';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  xCodigo := '1';
+  if not(InputQuery(xTitulo, 'Código de Rejeição:', xCodigo)) then
+    exit;
+
+  xMotivoRej := 'Movido da Rejeição da nota';
+  if not(InputQuery(xTitulo, 'Motivo da Rejeição:', xMotivoRej)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teRejeicaoIntermediario;
+      cMotivo := StrToIntDef(xCodigo, 1);
+      xMotivo := xMotivoRej;
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnEventoRejPrestClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe, xCodigo, xMotivoRej: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Rejeição do Prestador';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  xCodigo := '1';
+  if not(InputQuery(xTitulo, 'Código de Rejeição:', xCodigo)) then
+    exit;
+
+  xMotivoRej := 'Movido da Rejeição da nota';
+  if not(InputQuery(xTitulo, 'Motivo da Rejeição:', xMotivoRej)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teRejeicaoPrestador;
+      cMotivo := StrToIntDef(xCodigo, 1);
+      xMotivo := xMotivoRej;
+    end;
+
+    ACBrNFSeX1.EnviarEvento(InfEvento);
+  finally
+    InfEvento.Free;
+  end;
+
+  ChecarResposta(tmEnviarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnEventoRejTomClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe, xCodigo, xMotivoRej: String;
+  InfEvento: TInfEvento;
+begin
+  xTitulo := 'Evento de Rejeição do Tomador';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  xCodigo := '1';
+  if not(InputQuery(xTitulo, 'Código de Rejeição:', xCodigo)) then
+    exit;
+
+  xMotivoRej := 'Movido da Rejeição da nota';
+  if not(InputQuery(xTitulo, 'Motivo da Rejeição:', xMotivoRej)) then
+    exit;
+
+  InfEvento := TInfEvento.Create;
+
+  try
+    with InfEvento.pedRegEvento do
+    begin
+      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
+      verAplic := 'ACBrNFSeX-1.0';
+      dhEvento := Now;
+      chNFSe := xChaveNFSe;
+      nPedRegEvento := 1;
+      tpEvento := ACBrNFSeXConversao.teRejeicaoTomador;
+      cMotivo := StrToIntDef(xCodigo, 1);
+      xMotivo := xMotivoRej;
     end;
 
     ACBrNFSeX1.EnviarEvento(InfEvento);
@@ -3512,16 +3869,12 @@ begin
             end;
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
-            {
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
-            memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Situação      : ' + Situacao);
-            memoLog.Lines.Add('Data          : ' + DateToStr(Data));
-            memoLog.Lines.Add('Desc. Situação: ' + DescSituacao);
-            memoLog.Lines.Add('ID Nota       : ' + idNota);
-            memoLog.Lines.Add('Link          : ' + Link);
-            }
-            memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+            memoLog.Lines.Add('Chave NFSe      : ' + idNota);
+            memoLog.Lines.Add('Data            : ' + DateToStr(Data));
+            memoLog.Lines.Add('Tipo Evento     : ' + tpEventoToDesc(tpEvento));
+            memoLog.Lines.Add('Num. Seq. Evento: ' + IntToStr(nSeqEvento));
+            memoLog.Lines.Add('ID do Evento    : ' + idEvento);
+            memoLog.Lines.Add('Sucesso         : ' + BoolToStr(Sucesso, True));
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -3699,7 +4052,6 @@ begin
     PathGer          := edtPathLogs.Text;
     PathMensal       := GetPathGer(0);
     PathSalvar       := PathMensal;
-    PathCan          := PathMensal;
   end;
 
   if ACBrNFSeX1.DANFSe <> nil then

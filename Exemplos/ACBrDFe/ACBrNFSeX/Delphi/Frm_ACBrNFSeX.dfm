@@ -2001,14 +2001,121 @@ object frmACBrNFSe: TfrmACBrNFSe
       object tsEventos: TTabSheet
         Caption = 'Eventos'
         ImageIndex = 7
+        object Label48: TLabel
+          Left = 448
+          Top = 92
+          Width = 100
+          Height = 13
+          Caption = 'o Padr'#227'o Nacional'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label49: TLabel
+          Left = 448
+          Top = 73
+          Width = 90
+          Height = 13
+          Caption = 'Eventos s'#243' para'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
         object btnEventoCancNFSe: TButton
-          Left = 11
-          Top = 18
+          Left = 10
+          Top = 10
           Width = 177
           Height = 25
           Caption = 'Cancelar NFSe'
           TabOrder = 0
           OnClick = btnEventoCancNFSeClick
+        end
+        object btnEventoCancPorSub: TButton
+          Left = 193
+          Top = 10
+          Width = 177
+          Height = 25
+          Caption = 'Cancelar por Substitui'#231#227'o'
+          TabOrder = 1
+          OnClick = btnEventoCancPorSubClick
+        end
+        object btnEventoAnaliseCanc: TButton
+          Left = 374
+          Top = 10
+          Width = 177
+          Height = 25
+          Caption = 'Analise para Cancelamento'
+          TabOrder = 2
+          OnClick = btnEventoAnaliseCancClick
+        end
+        object btnEventoConfPrest: TButton
+          Left = 10
+          Top = 41
+          Width = 140
+          Height = 25
+          Caption = 'Confirma'#231#227'o Prestador'
+          TabOrder = 3
+          OnClick = btnEventoConfPrestClick
+        end
+        object btnEventoConfTom: TButton
+          Left = 156
+          Top = 41
+          Width = 140
+          Height = 25
+          Caption = 'Confirma'#231#227'o Tomador'
+          TabOrder = 4
+          OnClick = btnEventoConfTomClick
+        end
+        object btnEventoConfInter: TButton
+          Left = 302
+          Top = 41
+          Width = 140
+          Height = 25
+          Caption = 'Confirma'#231#227'o Intermedi'#225'rio'
+          TabOrder = 5
+          OnClick = btnEventoConfInterClick
+        end
+        object btnEventoRejPrest: TButton
+          Left = 10
+          Top = 72
+          Width = 140
+          Height = 25
+          Caption = 'Rejei'#231#227'o Prestador'
+          TabOrder = 6
+          OnClick = btnEventoRejPrestClick
+        end
+        object btnEventoRejTom: TButton
+          Left = 156
+          Top = 72
+          Width = 140
+          Height = 25
+          Caption = 'Rejei'#231#227'o Tomador'
+          TabOrder = 7
+          OnClick = btnEventoRejTomClick
+        end
+        object btnEventoRejInter: TButton
+          Left = 302
+          Top = 72
+          Width = 140
+          Height = 25
+          Caption = 'Rejei'#231#227'o Intermedi'#225'rio'
+          TabOrder = 8
+          OnClick = btnEventoRejInterClick
+        end
+        object btnEventoConfTacita: TButton
+          Left = 448
+          Top = 41
+          Width = 100
+          Height = 25
+          Caption = 'Confirma'#231#227'o T'#225'cita'
+          TabOrder = 9
+          OnClick = btnEventoConfTacitaClick
         end
       end
     end

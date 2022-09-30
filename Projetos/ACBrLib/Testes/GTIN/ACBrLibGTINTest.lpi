@@ -57,20 +57,31 @@
         <Filename Value="..\..\Fontes\Comum\ACBrLibConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\..\Fontes\GTIN\ACBrLibGTINStaticImportST.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\Fontes\Comum\ACBrLibErros.inc"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="ACBrLibGTINTest"/>
+      <Filename Value="C:\ACBr\Projetos\ACBrLib\Testes\GTIN\bin\ACBrLibGTINTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
+      <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
       <OtherUnitFiles Value="..\..\Fontes\GTIN;..\..\Fontes\Comum"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
@@ -88,6 +99,9 @@
       </Item>
       <Item>
         <Name Value="EFOpenError"/>
+      </Item>
+      <Item>
+        <Name Value="EAssertionFailedError"/>
       </Item>
     </Exceptions>
   </Debugging>

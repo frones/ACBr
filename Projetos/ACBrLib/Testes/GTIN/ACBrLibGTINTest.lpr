@@ -4,8 +4,8 @@ program ACBrLibGTINTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, ACBrLibGTINStaticImportMT, ACBrLibConsts, GuiTestRunner,
-  fpcunittestrunner, ACBrLibGTINTestCase;
+  Interfaces, Forms, ACBrLibGTINStaticImportMT, ACBrLibGTINStaticImportST,
+  ACBrLibConsts, GuiTestRunner, fpcunittestrunner, ACBrLibGTINTestCase;
 
 {$R *.res}
 

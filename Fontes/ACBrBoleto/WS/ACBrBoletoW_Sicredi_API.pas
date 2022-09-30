@@ -141,7 +141,7 @@ begin
     tpConsultaDetalhe : FPURL := FPURL + '/consulta?agencia='+Boleto.Cedente.Agencia
                                 + '&posto='+Boleto.Cedente.AgenciaDigito
                                 + '&cedente='+Boleto.Cedente.CodigoCedente
-                                          + '&nossonumero='+aNossoNumero;
+                                          + '&nossoNumero='+aNossoNumero;
     tpBaixa    : FPURL := FPURL + '/comandoInstrucao';
   end;
 

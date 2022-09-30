@@ -54,8 +54,13 @@ Símbolo : Significado
 [*] TK-3115 ACbrBoleto - Ajuste leitura retorno CNAB400 do Banco Inter Motivo de Rejeição
   por : Daniel Infocotidiano / Michel Ouriques
 
+--ACBrBancoBTGPactual--
 [+] TK-3050 ACBrBoleto - Inclusão do Banco 208 BTG Pactual
   por : Daniel Infocotidiano / Victor H Gonzales - Pandaaa / Luizhbr
+
+--ACBrBoletoW_Sicredi_API-- 
+[-] TK-3116 ACBrBoleto - Ajuste na integração via API com Sicredi parametro url nossoNumero camelCase
+  por : Sergio Mattos
 
 23/09/2022
 -- ACBrBancoUnicredES --

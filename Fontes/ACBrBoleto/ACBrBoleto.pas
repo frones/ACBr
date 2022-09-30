@@ -56,7 +56,7 @@ const
   CConta      = 'CONTA';
   CTitulo     = 'TITULO';
   CWebService = 'WEBSERVICE';
-  cACBrTipoOcorrenciaDecricao: array[0..310] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..315] of String = (
     {Ocorrências para arquivo remessa}
     'Remessa Registrar',
     'Remessa Baixar',
@@ -370,7 +370,12 @@ const
     'Retorno Título Utilizado Como Garantia em Operação de Desconto',
     'Retorno Título Descontável Com Desistência de Garantia em Operação de Desconto',
     'Retorno Intenção de Pagamento',
-    'Retorno Entrada Confirmada na CIP'
+    'Retorno Entrada Confirmada na CIP',
+    'Retorno Confirmação de alteração do valor mínimo/percentual',
+    'Retorno Confirmação de alteração do valor máximo/percentual',
+    'Retorno Confirmação de Pedido de Dispensa de Multa',
+    'Retorno Confirmação do Pedido de Cobrança de Multa',
+    'Retorno Confirmação do Pedido de Alteração do Beneficiário do Título'
 );
 
 type
@@ -417,10 +422,11 @@ type
     cobMoneyPlus,
     cobBancoC6,
     cobBancoRendimento,
-	  cobBancoInter,
+	cobBancoInter,
     cobBancoSofisaSantander,
     cobBS2,
-    cobPenseBankAPI
+    cobPenseBankAPI,
+    cobBTGPactual
     );
 
   TACBrTitulo = class;
@@ -762,7 +768,12 @@ type
     toRetornoTituloDescontado,
     toRetornoTituloDescontavel,
     toRetornoIntensaoPagamento ,
-    toRetornoEntradaConfirmadaNaCip
+    toRetornoEntradaConfirmadaNaCip,
+    toRetornoConfirmacaoAlteracaoValorMinimoOuPercentual,
+    toRetornoConfirmacaoAlteracaoValorMaximoOuPercentual,
+    toRetornoConfirmacaoPedidoDispensaMulta,
+    toRetornoConfirmacaoPedidoCobrancaMulta,
+    toRetornoConfirmacaoPedidoAlteracaoBeneficiarioTitulo
   );
 
   //Complemento de instrução para alterar outros dados
@@ -1869,7 +1880,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
      ACBrBancoBradescoMoneyPlus, ACBrBancoC6, ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
-     ACBrBancoBS2, ACBrBancoPenseBank;
+     ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3499,6 +3510,7 @@ begin
     104: Result := cobCaixaEconomica;
     133: Result := cobBancoCresol;
     136: Result := cobUnicredES;
+    208: Result := cobBTGPactual;
     218: Result := cobBS2;
     237: Result := cobBradesco;
     246: Result := cobBancoABCBrasil;
@@ -4292,6 +4304,7 @@ begin
      cobBancoSofisaSantander : fBancoClass := TACBrBancoSofisaSantander.Create(Self); {637}
      cobBS2                  : fBancoClass := TACBrBancoBS2.Create(Self);             {218}
      cobPenseBankAPI         : fBancoClass := TACBrBancoPenseBank.Create(Self);
+     cobBTGPactual           : fBancoClass := TACBrBancoBTGPactual.create(Self);     {208}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

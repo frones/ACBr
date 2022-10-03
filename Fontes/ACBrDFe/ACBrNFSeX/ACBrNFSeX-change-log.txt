@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 30/09/2022
+-- ACBrNFSeXServicos --
+[*] Incluído a cidade de Jaguaruna/SC - Provedor IPM
+   Por: Davi Souza
 -- Diversos --
 [+] Implementado dos os eventos que o Prestador/Tomador/Intermediario
     podem enviar, esses eventos são exclusivos do provedor PadraoNacional.

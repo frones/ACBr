@@ -1182,7 +1182,7 @@ begin
 
     // Exibe o Valor total dos tributos se vTotTrib for informado
     // e ajusta a posição dos outros campos para "abrir espaço" para ele.
-    if (vTotTrib > 0) then
+    if (vTotTrib > 0) and (fpDANFe.ImprimeTributos = trbNormal) then
     begin
       rllTotalTributos.Caption := FormatFloatBr(vTotTrib);
       rliDivImposto4.Visible := True;

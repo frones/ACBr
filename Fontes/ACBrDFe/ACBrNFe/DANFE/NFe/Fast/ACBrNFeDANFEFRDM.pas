@@ -936,12 +936,16 @@ begin
       FieldByName('VCOFINS').AsFloat      := VCOFINS;
       FieldByName('VOutro').AsFloat       := VOutro;
       FieldByName('VNF').AsFloat          := VNF;
-      FieldByName('VTotTrib').AsFloat     := VTotTrib;
+
+      if (FDANFEClassOwner.ImprimeTributos = trbNormal) or (FNFe.Ide.Modelo = 65)  then
+        FieldByName('VTotTrib').AsFloat     := VTotTrib;
+
       FieldByName('ValorApagar').AsFloat  := VNF;
       FieldByName('VFCP').AsFloat         := VFCP;
       FieldByName('VFCPST').AsFloat       := VFCPST;
       FieldByName('VFCPSTRet').AsFloat    := vFCPSTRet;
       FieldByName('VIPIDevol').AsFloat    := vIPIDevol;
+
       if (FDANFEClassOwner is TACBrNFeDANFEClass) then
         FieldByName('VTribPerc').AsFloat := TACBrNFeDANFEClass(FDANFEClassOwner).ManterVTribPerc(VTotTrib, VProd, VNF);
 

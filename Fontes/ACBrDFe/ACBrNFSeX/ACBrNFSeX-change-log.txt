@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/10/2022
+-- Publica.Provider --
+[*] Possível solução para o problema de assinatura invalida ao assinar o 
+    pedido de cancelamento
+   Por: Italo Giurizzato Junior
+
 30/09/2022
 -- ACBrNFSeXServicos --
 [*] Incluído a cidade de Jaguaruna/SC - Provedor IPM

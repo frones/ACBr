@@ -605,7 +605,9 @@ begin
   NumNFSe := StrToInt64Def(Response.InfCancelamento.NumeroNFSe, 0);
   Response.InfCancelamento.NumeroNFSe := FormatFloat('000000000000000', NumNFSe);
 
+  ConfigAssinar.IncluirURI := False;
   inherited PrepararCancelaNFSe(Response);
+  ConfigAssinar.IncluirURI := True;
 end;
 
 end.

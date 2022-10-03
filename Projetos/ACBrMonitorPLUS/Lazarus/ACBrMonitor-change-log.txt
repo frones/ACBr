@@ -46,6 +46,11 @@ Símbolo : Significado
 
 03/10/2022
 -- ACBrMonitor1 --
+[*] Inclusão campos Versão Arquivo e Versão Lote na tela de configuração do Boleto
+    Por: Antonio Carlos
+
+03/10/2022
+-- ACBrMonitor1 --
 [-] Correção de caminhos dos fontes libGTIN para compilação em release
     Por: Elias César
 

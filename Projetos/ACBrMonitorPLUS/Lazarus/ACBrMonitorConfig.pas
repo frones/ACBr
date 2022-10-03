@@ -646,6 +646,8 @@ type
     CodTransmissao             : String ;
     RemoveAcentos              : Boolean;
     PrefixArqRemessa           : String;
+    VersaoArquivo              : String;
+    VersaoLote                 : String;
   end;
 
   TBoletoRelatorio = record
@@ -1454,6 +1456,8 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETOCodTransmissao,CodTransmissao);
       Ini.WriteBool(   CSecBOLETO, CKeyBOLETORemoveAcentos, RemoveAcentos      );
       ini.WriteString( CSecBOLETO, CKeyBoletoPrefixArqRemessa, PrefixArqRemessa );
+      ini.WriteString( CSecBOLETO, CKeyBOLETOVersaoArquivo, VersaoArquivo);
+      ini.WriteString( CSecBOLETO, CKeyBOLETOVersaoLote, VersaoLote);
     end;
 
     with BOLETO.Relatorio do
@@ -2199,6 +2203,8 @@ begin
       CodTransmissao         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodTransmissao,     ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCodTransmissao,'') );
       RemoveAcentos          :=  Ini.ReadBool(   CSecBOLETO, CKeyBOLETORemoveAcentos,      RemoveAcentos      );
       PrefixArqRemessa       :=  Ini.ReadString( CSecBOLETO, CKeyBoletoPrefixArqRemessa,   PrefixArqRemessa );
+      VersaoArquivo          :=  ini.ReadString( CSecBOLETO, CKeyBOLETOVersaoArquivo,       VersaoArquivo);
+      VersaoLote             :=  Ini.ReadString( CSecBOLETO, CKeyBOLETOVersaoLote,          VersaoLote);
     end;
 
     with BOLETO.Relatorio do

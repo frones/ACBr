@@ -17319,12 +17319,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1008
-        ActivePage = tsMonitor
+        ActivePage = tsSat
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 0
+        TabIndex = 17
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -21411,11 +21411,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1000
-            ActivePage = tsBeneficiario
+            ActivePage = tsRemessaRetorno
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 3
             TabOrder = 0
             OnChange = pgBoletoChange
             object tsBeneficiario: TTabSheet
@@ -22555,6 +22555,36 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 160
                 Caption = 'Prefixo Remessa (Daycoval)'
                 ParentColor = False
+              end
+              object Label152: TLabel
+                Left = 480
+                Height = 17
+                Top = 105
+                Width = 89
+                Caption = 'Versão Arquivo'
+                ParentColor = False
+              end
+              object edtVersaoArquivo: TEdit
+                Left = 480
+                Height = 25
+                Top = 122
+                Width = 89
+                TabOrder = 7
+              end
+              object Label260: TLabel
+                Left = 584
+                Height = 17
+                Top = 105
+                Width = 69
+                Caption = 'Versão Lote'
+                ParentColor = False
+              end
+              object edtVersaoLote: TEdit
+                Left = 584
+                Height = 25
+                Top = 122
+                Width = 80
+                TabOrder = 8
               end
             end
             object tsRelatorio: TTabSheet
@@ -24687,6 +24717,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 004FDD55000F0000000000000000000000000000000000000000
               }
               OnClick = btNCMValidadeHelpClick
+              TabOrder = 4
             end
             object cbNCMForcarDownload: TCheckBox
               Left = 184

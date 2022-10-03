@@ -497,6 +497,8 @@ type
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
     edConsultarGTIN: TEdit;
+    edtVersaoArquivo: TEdit;
+    edtVersaoLote: TEdit;
     edNCMCodigo: TEdit;
     edNCMDiasValidade: TSpinEdit;
     edNCMDiretorio: TDirectoryEdit;
@@ -783,6 +785,8 @@ type
     Label109: TLabel;
     Label114: TLabel;
     Label118: TLabel;
+    Label152: TLabel;
+    Label260: TLabel;
     lbConsultarGTIN: TLabel;
     Label254: TLabel;
     lblPrefixRemessa: TLabel;
@@ -5553,6 +5557,8 @@ begin
       chkLerBeneficiarioRetorno.Checked     := LerCedenteRetorno;
       chkRemoveAcentos.Checked         := RemoveAcentos;
       edtPrefixRemessa.Text            := PrefixArqRemessa;
+      edtVersaoArquivo.Text            := VersaoArquivo;
+      edtVersaoLote.Text               := VersaoLote;
     end;
 
     with Layout do
@@ -7384,6 +7390,8 @@ begin
        CodTransmissao           := edtCodTransmissao.Text;
        RemoveAcentos            := chkRemoveAcentos.Checked;
        PrefixArqRemessa         := edtPrefixRemessa.Text;
+       VersaoArquivo            := edtVersaoArquivo.Text;
+       VersaoLote               := edtVersaoLote.Text;
      end;
 
      with Email do

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2022
+-- ACBrMonitor1 --
+[-] Correção de caminhos dos fontes libGTIN para compilação em release
+    Por: Elias César
+
 29/09/2022
 -- ACBrMonitor1 --
 [+] Inclusão da consulta de códigos GTIN na aba "DFe > Testes > GTIN"

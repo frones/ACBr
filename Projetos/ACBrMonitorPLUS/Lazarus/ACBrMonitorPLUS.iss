@@ -114,6 +114,7 @@ Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\eSocial\*.*; DestDir: {app}\Schemas\
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\Reinf\*.*; DestDir: {app}\Schemas\Reinf; Components: programa;
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\BPe\*.*; DestDir: {app}\Schemas\BPe; Components: programa;
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\GNRe\*.*; DestDir: {app}\Schemas\GNRe; Components: programa;
+Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\GTIN\*.*; DestDir: {app}\Schemas\GTIN; Components: programa;
 
 ;Arquivos de Change-log.TXT
 ;Source: {#ACBrMonitorPLUSDir}\Notas_Lancamento.pdf; DestDir: {app}; Flags: ignoreversion; Components: help

@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2022
+-- ACBrPIXPSPBancoDoBrasil --
+[*] Alteração para disparar erro caso o PSP não possua o endpoint utilizados
+
+-- ACBrPIXCD --
+[*] Incluído resource de erro para disparar a exceção
+    por: Elias César
+
 20/09/2022
 -- ACBrPIXPSPSicoob --
 [-] Correção para tratar corretamente o retorno do Sicoob ao Solicitar uma devolução

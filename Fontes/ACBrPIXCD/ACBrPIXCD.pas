@@ -143,6 +143,7 @@ resourcestring
   sErroAutenticacao = 'Erro de Autenticação';
   sErroPropriedadeNaoDefinida = 'Propriedade %s não atribuida';
   sErroCertificadoAmbiente = 'Rotina disponível apenas em ambiente de produção';
+  sErroEndpointNaoImplementado = 'Endpoint não implementado pelo PSP';
 
 type
 

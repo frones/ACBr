@@ -4037,7 +4037,8 @@ begin
   end;
 
   l := Self.Count; // Indice da última nota já existente
-  Result := LoadFromString(String(XMLUTF8), AGerarNFe);
+  //Result := LoadFromString(String(XMLUTF8), AGerarNFe);
+  Result := LoadFromString(String(InserirDeclaracaoXMLSeNecessario(XMLUTF8)), AGerarNFe);
 
   if Result then
   begin

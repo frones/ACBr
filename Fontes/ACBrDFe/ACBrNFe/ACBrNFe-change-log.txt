@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2022
+[-] TK-3125 ACBrNFE verificação para correção no LOAD falta de Declação UTF-8 no XML
+  por : Victor H Gonzales - Pandaaa
+
 28/09/2022
 -- ACBrNFeServicos --
 [*] Revertido as URLs de Consulta via QR-Code de MG Produção e Homologação.

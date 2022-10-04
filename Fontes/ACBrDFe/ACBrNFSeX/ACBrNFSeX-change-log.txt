@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/10/2022
+-- SigISS.Provider --
+[*] Alteração na função AjustarRetorno para remover namespace não necessários.
+   Por: Marcio Alpha
 -- Diversos --
 [+] Implementado a consulta aos eventos, essas consultas são exclusivas do 
     provedor PadraoNacional.

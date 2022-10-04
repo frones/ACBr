@@ -206,6 +206,7 @@ end;
 function TACBrNFSeProviderSigISS.AjustarRetorno(const Retorno: string): string;
 begin
   Result := StringReplace(Retorno, ' xmlns:ns1="urn:sigiss_ws"', '', [rfReplaceAll]);
+  Result := StringReplace(Result, ' xsi:type="tns:tcDadosNota"', '', [rfReplaceAll]);
   Result := StringReplace(Result, ' xsi:type="tns:tcRetornoNota"', '', [rfReplaceAll]);
   Result := StringReplace(Result, ' xsi:type="xsd:int"', '', [rfReplaceAll]);
   Result := StringReplace(Result, ' xsi:type="xsd:string"', '', [rfReplaceAll]);

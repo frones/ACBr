@@ -427,6 +427,18 @@ type
     property InfEvento: TInfEvento read FInfEvento write FInfEvento;
   end;
 
+  TNFSeConsultarEventoResponse = class(TNFSeWebserviceResponse)
+  private
+    FChaveNFSe: string;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear; override;
+
+    property ChaveNFSe: string read FChaveNFSe write FChaveNFSe;
+  end;
+
 implementation
 
 uses
@@ -879,6 +891,29 @@ end;
 destructor TNFSeEnviarEventoResponse.Destroy;
 begin
   FInfEvento.Free;
+
+  inherited Destroy;
+end;
+
+{ TNFSeConsultarEventoResponse }
+
+procedure TNFSeConsultarEventoResponse.Clear;
+begin
+  inherited Clear;
+
+  ChaveNFSe := '';
+  tpEvento := teNenhum;
+  nSeqEvento := 0;
+end;
+
+constructor TNFSeConsultarEventoResponse.Create;
+begin
+  inherited Create;
+
+end;
+
+destructor TNFSeConsultarEventoResponse.Destroy;
+begin
 
   inherited Destroy;
 end;

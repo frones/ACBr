@@ -49,7 +49,8 @@ type
                      stNFSeConsulta, stNFSeCancelamento, stNFSeSubstituicao,
                      stNFSeImprimir, stNFSeEmail, stNFSeAbrirSessao,
                      stNFSeFecharSessao, stNFSeAguardaProcesso,
-                     stNFSeEnvioWebService, stNFSeGerarToken);
+                     stNFSeEnvioWebService, stNFSeGerarToken,
+                     stNFSeConsultarEvento);
 
   TVersaoNFSe = (ve100, ve101, ve103,
                  ve200, ve201, ve202, ve203, ve204);
@@ -177,7 +178,7 @@ type
              tmConsultarNFSeServicoTomado, tmCancelarNFSe,
              tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
              tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
-             tmGerarToken, tmEnviarEvento);
+             tmGerarToken, tmEnviarEvento, tmConsultarEvento);
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
                               filsComFormatacaoSemZeroEsquerda,
@@ -282,7 +283,7 @@ type
                teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
                teRejeicaoIntermediario, teAnulacaoRejeicao,
                teCancelamentoPorOficio, teBloqueioPorOficio,
-               teDesbloqueioPorOficio);
+               teDesbloqueioPorOficio, teNenhum);
 
 function StatusRPSToStr(const t: TStatusRPS): string;
 function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;

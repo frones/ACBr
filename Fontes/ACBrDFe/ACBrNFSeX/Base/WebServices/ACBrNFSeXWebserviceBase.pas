@@ -139,6 +139,7 @@ type
     function FecharSessao(ACabecalho, AMSG: string): string; virtual;
     function TesteEnvio(ACabecalho, AMSG: string): string; virtual;
     function EnviarEvento(ACabecalho, AMSG: string): string; virtual;
+    function ConsultarEvento(ACabecalho, AMSG: string): string; virtual;
 
     property URL: string read FPURL;
     property BaseURL: string read GetBaseUrl;
@@ -500,6 +501,12 @@ begin
     tmEnviarEvento:
       begin
         FPArqEnv := 'env-eve';
+        FPArqResp := 'eve';
+      end;
+
+    tmConsultarEvento:
+      begin
+        FPArqEnv := 'con-eve';
         FPArqResp := 'eve';
       end;
   end;
@@ -900,6 +907,12 @@ begin
 end;
 
 function TACBrNFSeXWebservice.Recepcionar(ACabecalho, AMSG: string): string;
+begin
+  Result := '';
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+function TACBrNFSeXWebservice.ConsultarEvento(ACabecalho, AMSG: string): string;
 begin
   Result := '';
   raise EACBrDFeException.Create(ERR_NAO_IMP);

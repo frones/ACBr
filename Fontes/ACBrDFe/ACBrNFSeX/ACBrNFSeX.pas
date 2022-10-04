@@ -170,10 +170,13 @@ type
     // Usado pelos provedores que geram token por WebService
     procedure GerarToken;
 
-    procedure ObterDANFSE(const ANumNFSe: String; const ASerieNFSe: String = '');
-
     // Usado pelo provedor PadraoNacional
+    procedure ObterDANFSE(const ANumNFSe: String; const ASerieNFSe: String = '');
     procedure EnviarEvento(aInfEvento: TInfEvento);
+    procedure ConsultarEvento(const aChave: string); overload;
+    procedure ConsultarEvento(const aChave: string; atpEvento: TtpEvento); overload;
+    procedure ConsultarEvento(const aChave: string; atpEvento: TtpEvento;
+      aNumSeq: Integer); overload;
 
     function LinkNFSe(ANumNFSe: String; const ACodVerificacao: String;
       const AChaveAcesso: String = ''; const AValorServico: String = ''): String;
@@ -322,15 +325,21 @@ end;
 
 function TACBrNFSeX.GetNumID(ANFSe: TNFSe): String;
 var
-  NumDoc, xCNPJ: String;
+  xNumDoc, xSerie, xCNPJ: String;
 begin
   if ANFSe = nil then
     raise EACBrNFSeException.Create('Não foi informado o objeto TNFSe para gerar a chave!');
 
   if ANFSe.Numero = '' then
-    NumDoc := ANFSe.IdentificacaoRps.Numero
+  begin
+    xNumDoc := ANFSe.IdentificacaoRps.Numero;
+    xSerie := ANFSe.IdentificacaoRps.Serie;
+  end
   else
-    NumDoc := ANFSe.Numero;
+  begin
+    xNumDoc := ANFSe.Numero;
+    xSerie := ANFSe.SeriePrestacao;
+  end;
 
   xCNPJ := ANFSe.Prestador.IdentificacaoPrestador.CpfCnpj;
 
@@ -338,9 +347,9 @@ begin
     Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
                             ANFSe.DataEmissao,
                             OnlyNumber(xCNPJ),
-                            StrToInt64Def(NumDoc, 0))
+                            StrToInt64Def(xNumDoc, 0))
   else
-    Result := NumDoc + ANFSe.IdentificacaoRps.Serie;
+    Result := xNumDoc + xSerie;
 end;
 
 function TACBrNFSeX.GetConfiguracoes: TConfiguracoesNFSe;
@@ -481,6 +490,50 @@ begin
   Result := SSL.CalcHash(XML + Configuracoes.Geral.Emitente.WSChaveAcesso,
                          dgstSHA512, outHexa, False);
   Result := lowerCase(Result);
+end;
+
+procedure TACBrNFSeX.ConsultarEvento(const aChave: string);
+begin
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.ConsultarEvento.Clear;
+  FWebService.ConsultarEvento.ChaveNFSe := aChave;
+  FWebService.ConsultarEvento.tpEvento := teNenhum;
+  FWebService.ConsultarEvento.nSeqEvento := 0;
+
+  FProvider.ConsultarEvento;
+end;
+
+procedure TACBrNFSeX.ConsultarEvento(const aChave: string;
+  atpEvento: TtpEvento);
+begin
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.ConsultarEvento.Clear;
+  FWebService.ConsultarEvento.ChaveNFSe := aChave;
+  FWebService.ConsultarEvento.tpEvento := atpEvento;
+  FWebService.ConsultarEvento.nSeqEvento := 0;
+
+  FProvider.ConsultarEvento;
+end;
+
+procedure TACBrNFSeX.ConsultarEvento(const aChave: string; atpEvento: TtpEvento;
+  aNumSeq: Integer);
+begin
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  if aNumSeq < 1 then
+    aNumSeq := 1;
+
+  FWebService.ConsultarEvento.Clear;
+  FWebService.ConsultarEvento.ChaveNFSe := aChave;
+  FWebService.ConsultarEvento.tpEvento := atpEvento;
+  FWebService.ConsultarEvento.nSeqEvento := aNumSeq;
+
+  FProvider.ConsultarEvento;
 end;
 
 procedure TACBrNFSeX.ConsultarLoteRps(const AProtocolo, ANumLote: String);

@@ -55,6 +55,7 @@ type
     procedure SubstituiNFSe;
     procedure GerarToken;
     procedure EnviarEvento;
+    procedure ConsultarEvento;
 
     function GetConfigGeral: TConfigGeral;
     function GetConfigWebServices: TConfigWebServices;

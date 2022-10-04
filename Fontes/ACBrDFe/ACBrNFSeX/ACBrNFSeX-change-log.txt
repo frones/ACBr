@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/10/2022
+-- Diversos --
+[+] Implementado a consulta aos eventos, essas consultas são exclusivas do 
+    provedor PadraoNacional.
+   Por: Italo Giurizzato Junior
 --ACBrNFSeXServicos.ini
 [*] Incluido a cidade de Maria da Fé/MG - Provedor Futurize
    Por: daycon
@@ -58,7 +62,7 @@ Símbolo : Significado
 [*] Incluído a cidade de Jaguaruna/SC - Provedor IPM
    Por: Davi Souza
 -- Diversos --
-[+] Implementado dos os eventos que o Prestador/Tomador/Intermediario
+[+] Implementado os eventos que o Prestador/Tomador/Intermediario
     podem enviar, esses eventos são exclusivos do provedor PadraoNacional.
    Por: Italo Giurizzato Junior
 

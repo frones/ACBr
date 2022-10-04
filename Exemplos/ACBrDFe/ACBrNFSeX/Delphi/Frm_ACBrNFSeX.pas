@@ -144,10 +144,6 @@ type
     lblPatrocinador: TLabel;
     lblDoar1: TLabel;
     lblDoar2: TLabel;
-    pgcBotoes: TPageControl;
-    tsEnvios: TTabSheet;
-    tsConsultas: TTabSheet;
-    tsCancelamento: TTabSheet;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
     TabSheet6: TTabSheet;
@@ -174,44 +170,13 @@ type
     Label42: TLabel;
     edtEmailRemetente: TEdit;
     cbEmailTLS: TCheckBox;
-    btnGerarEnviarLote: TButton;
-    btnGerarEnviarNFSe: TButton;
-    btnGerarEnviarSincrono: TButton;
-    btnImprimir: TButton;
-    btnEnviaremail: TButton;
-    btnLinkNFSe: TButton;
-    btnGerarLoteRPS: TButton;
-    btnSubsNFSe: TButton;
-    btnConsultarSitLote: TButton;
-    btnConsultarLote: TButton;
-    btnConsultarNFSeRPS: TButton;
-    btnConsultarNFSePeriodo: TButton;
-    btnCancNFSe: TButton;
     ACBrMail1: TACBrMail;
-    btnConsultarNFSePeloNumero: TButton;
-    btnConsultarNFSeFaixa: TButton;
     ACBrNFSeX1: TACBrNFSeX;
-    btnEmitir: TButton;
     Label43: TLabel;
     edtCNPJPrefeitura: TEdit;
-    tsTeste: TTabSheet;
-    btnGerarEnviarTeste_SP: TButton;
-    mmoObs: TMemo;
     chkConsultaLoteAposEnvio: TCheckBox;
     chkConsultaAposCancelar: TCheckBox;
     ACBrNFSeXDANFSeRL1: TACBrNFSeXDANFSeRL;
-    tsConsServPrest: TTabSheet;
-    btnConsultarNFSeServicoPrestadoPorNumero: TButton;
-    tsConsServTom: TTabSheet;
-    btnConsultarNFSeServicoTomadoPorNumero: TButton;
-    btnConsultarNFSeServicoPrestadoPorPeriodo: TButton;
-    btnConsultarNFSeServicoPrestadoPorTomador: TButton;
-    btnConsultarNFSeServicoPrestadoPorIntermediario: TButton;
-    btnConsultarNFSeServicoTomadoPorPeriodo: TButton;
-    btnConsultarNFSeServicoTomadoPorPrestador: TButton;
-    btnConsultarNFSeServicoTomadoPorIntermediario: TButton;
-    btnConsultarNFSeServicoTomadoPorTomador: TButton;
-    btnConsultarNFSeGenerico: TButton;
     Label30: TLabel;
     edtSenhaWeb: TEdit;
     Label33: TLabel;
@@ -232,22 +197,66 @@ type
     lblSchemas: TLabel;
     Label45: TLabel;
     lblVersaoSchemas: TLabel;
+    pgcProvedores: TPageControl;
+    tsDemais: TTabSheet;
+    tsPadraoNacional: TTabSheet;
+    pgcBotoes: TPageControl;
+    tsEnvios: TTabSheet;
+    btnGerarEnviarLote: TButton;
+    btnGerarEnviarNFSe: TButton;
+    btnGerarEnviarSincrono: TButton;
+    btnImprimir: TButton;
+    btnEnviaremail: TButton;
+    btnLinkNFSe: TButton;
+    btnGerarLoteRPS: TButton;
+    btnSubsNFSe: TButton;
+    btnEmitir: TButton;
+    tsConsultas: TTabSheet;
+    btnConsultarSitLote: TButton;
+    btnConsultarLote: TButton;
+    btnConsultarNFSeRPS: TButton;
+    btnConsultarNFSePeriodo: TButton;
+    btnConsultarNFSePeloNumero: TButton;
+    btnConsultarNFSeFaixa: TButton;
+    btnConsultarNFSeGenerico: TButton;
+    tsConsServPrest: TTabSheet;
+    btnConsultarNFSeServicoPrestadoPorNumero: TButton;
+    btnConsultarNFSeServicoPrestadoPorPeriodo: TButton;
+    btnConsultarNFSeServicoPrestadoPorTomador: TButton;
+    btnConsultarNFSeServicoPrestadoPorIntermediario: TButton;
+    tsConsServTom: TTabSheet;
+    btnConsultarNFSeServicoTomadoPorNumero: TButton;
+    btnConsultarNFSeServicoTomadoPorPeriodo: TButton;
+    btnConsultarNFSeServicoTomadoPorPrestador: TButton;
+    btnConsultarNFSeServicoTomadoPorIntermediario: TButton;
+    btnConsultarNFSeServicoTomadoPorTomador: TButton;
+    tsCancelamento: TTabSheet;
+    btnCancNFSe: TButton;
+    tsTeste: TTabSheet;
+    btnGerarEnviarTeste_SP: TButton;
+    mmoObs: TMemo;
     tsOutros: TTabSheet;
     btnGerarToken: TButton;
-    btnObterPDFdoDANFSE: TButton;
-    tsEventos: TTabSheet;
-    btnEventoCancNFSe: TButton;
-    btnEventoCancPorSub: TButton;
-    btnEventoAnaliseCanc: TButton;
-    btnEventoConfPrest: TButton;
-    btnEventoConfTom: TButton;
-    btnEventoConfInter: TButton;
-    btnEventoRejPrest: TButton;
-    btnEventoRejTom: TButton;
-    btnEventoRejInter: TButton;
-    btnEventoConfTacita: TButton;
-    Label48: TLabel;
-    Label49: TLabel;
+    pgcBotoes1: TPageControl;
+    tsEnvios1: TTabSheet;
+    btnImprimirPN: TButton;
+    btnEnviaremailPN: TButton;
+    btnEmitirPN: TButton;
+    tsEventos1: TTabSheet;
+    btnEventoCancNFSePN: TButton;
+    btnEventoCancPorSubPN: TButton;
+    btnEventoAnaliseCancPN: TButton;
+    btnEventoConfPrestPN: TButton;
+    btnEventoConfTomPN: TButton;
+    btnEventoConfInterPN: TButton;
+    btnEventoRejPrestPN: TButton;
+    btnEventoRejTomPN: TButton;
+    btnEventoRejInterPN: TButton;
+    tsConsultas1: TTabSheet;
+    btnConsultarNFSeRPSPN: TButton;
+    btnConsultarNFSePeloNumeroPN: TButton;
+    btnObterPDFdoDANFSEPN: TButton;
+    btnConsEventoChavPN: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -313,17 +322,18 @@ type
     procedure btnConsultarNFSeGenericoClick(Sender: TObject);
     procedure sbtnPathPDFClick(Sender: TObject);
     procedure btnGerarTokenClick(Sender: TObject);
-    procedure btnObterPDFdoDANFSEClick(Sender: TObject);
-    procedure btnEventoCancNFSeClick(Sender: TObject);
-    procedure btnEventoCancPorSubClick(Sender: TObject);
-    procedure btnEventoAnaliseCancClick(Sender: TObject);
-    procedure btnEventoConfPrestClick(Sender: TObject);
-    procedure btnEventoRejPrestClick(Sender: TObject);
-    procedure btnEventoRejTomClick(Sender: TObject);
-    procedure btnEventoRejInterClick(Sender: TObject);
-    procedure btnEventoConfTomClick(Sender: TObject);
-    procedure btnEventoConfInterClick(Sender: TObject);
-    procedure btnEventoConfTacitaClick(Sender: TObject);
+    procedure btnObterPDFdoDANFSEPNClick(Sender: TObject);
+    procedure btnEventoCancNFSePNClick(Sender: TObject);
+    procedure btnEventoCancPorSubPNClick(Sender: TObject);
+    procedure btnEventoAnaliseCancPNClick(Sender: TObject);
+    procedure btnEventoConfPrestPNClick(Sender: TObject);
+    procedure btnEventoConfTomPNClick(Sender: TObject);
+    procedure btnEventoConfInterPNClick(Sender: TObject);
+    procedure btnEventoRejPrestPNClick(Sender: TObject);
+    procedure btnEventoRejTomPNClick(Sender: TObject);
+    procedure btnEventoRejInterPNClick(Sender: TObject);
+    procedure btnConsultarNFSeRPSPNClick(Sender: TObject);
+    procedure btnConsEventoChavPNClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1260,6 +1270,21 @@ begin
   ShowMessage(ACBrNFSeX1.SSL.CertCNPJ);
 end;
 
+procedure TfrmACBrNFSe.btnConsEventoChavPNClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe: String;
+begin
+  xTitulo := 'Consultar Evento pela chave da NFSe';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarEvento(xChaveNFSe);
+
+  ChecarResposta(tmConsultarEvento);
+end;
+
 procedure TfrmACBrNFSe.btnConsultarLoteClick(Sender: TObject);
 var
   Protocolo, Lote: String;
@@ -1703,6 +1728,21 @@ begin
   ChecarResposta(tmConsultarNFSePorRps);
 end;
 
+procedure TfrmACBrNFSe.btnConsultarNFSeRPSPNClick(Sender: TObject);
+var
+  xTitulo, xChaveDPS: String;
+begin
+  xTitulo := 'Consultar NFSe pela Chave do DPS';
+
+  xChaveDPS := '';
+  if not (InputQuery(xTitulo, 'Chave do DPS:', xChaveDPS)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarNFSeporRps(xChaveDPS, '', '');
+
+  ChecarResposta(tmConsultarNFSePorRps);
+end;
+
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoPrestadoPorIntermediarioClick(
   Sender: TObject);
 var
@@ -1945,7 +1985,7 @@ begin
   end;
 end;
 
-procedure TfrmACBrNFSe.btnEventoAnaliseCancClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoAnaliseCancPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe, xCodigo, xMotivoCanc: String;
   InfEvento: TInfEvento;
@@ -1987,7 +2027,7 @@ begin
   ChecarResposta(tmEnviarEvento);
 end;
 
-procedure TfrmACBrNFSe.btnEventoCancNFSeClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoCancNFSePNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe, xCodigo, xMotivoCanc: String;
   InfEvento: TInfEvento;
@@ -2029,7 +2069,7 @@ begin
   ChecarResposta(tmEnviarEvento);
 end;
 
-procedure TfrmACBrNFSe.btnEventoCancPorSubClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoCancPorSubPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe, xCodigo, xMotivoCanc, xChaveSub: String;
   InfEvento: TInfEvento;
@@ -2076,7 +2116,7 @@ begin
   ChecarResposta(tmEnviarEvento);
 end;
 
-procedure TfrmACBrNFSe.btnEventoConfInterClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoConfInterPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe: String;
   InfEvento: TInfEvento;
@@ -2108,7 +2148,7 @@ begin
   ChecarResposta(tmEnviarEvento);
 end;
 
-procedure TfrmACBrNFSe.btnEventoConfPrestClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoConfPrestPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe: String;
   InfEvento: TInfEvento;
@@ -2140,39 +2180,7 @@ begin
   ChecarResposta(tmEnviarEvento);
 end;
 
-procedure TfrmACBrNFSe.btnEventoConfTacitaClick(Sender: TObject);
-var
-  xTitulo, xChaveNFSe: String;
-  InfEvento: TInfEvento;
-begin
-  xTitulo := 'Evento de Confirmação do Tacita';
-
-  xChaveNFSe := '';
-  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
-    exit;
-
-  InfEvento := TInfEvento.Create;
-
-  try
-    with InfEvento.pedRegEvento do
-    begin
-      tpAmb := ACBrNFSeX1.Configuracoes.WebServices.AmbienteCodigo;
-      verAplic := 'ACBrNFSeX-1.0';
-      dhEvento := Now;
-      chNFSe := xChaveNFSe;
-      nPedRegEvento := 1;
-      tpEvento := ACBrNFSeXConversao.teConfirmacaoTacita;
-    end;
-
-    ACBrNFSeX1.EnviarEvento(InfEvento);
-  finally
-    InfEvento.Free;
-  end;
-
-  ChecarResposta(tmEnviarEvento);
-end;
-
-procedure TfrmACBrNFSe.btnEventoConfTomClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoConfTomPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe: String;
   InfEvento: TInfEvento;
@@ -2204,7 +2212,7 @@ begin
   ChecarResposta(tmEnviarEvento);
 end;
 
-procedure TfrmACBrNFSe.btnEventoRejInterClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoRejInterPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe, xCodigo, xMotivoRej: String;
   InfEvento: TInfEvento;
@@ -2246,7 +2254,7 @@ begin
   ChecarResposta(tmEnviarEvento);
 end;
 
-procedure TfrmACBrNFSe.btnEventoRejPrestClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoRejPrestPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe, xCodigo, xMotivoRej: String;
   InfEvento: TInfEvento;
@@ -2288,7 +2296,7 @@ begin
   ChecarResposta(tmEnviarEvento);
 end;
 
-procedure TfrmACBrNFSe.btnEventoRejTomClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnEventoRejTomPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe, xCodigo, xMotivoRej: String;
   InfEvento: TInfEvento;
@@ -2596,33 +2604,18 @@ begin
   ShowMessage(ACBrNFSeX1.SSL.CertNumeroSerie);
 end;
 
-procedure TfrmACBrNFSe.btnObterPDFdoDANFSEClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnObterPDFdoDANFSEPNClick(Sender: TObject);
 var
-  xTitulo, NumeroNFSe, SerNFSe: String;
+  xTitulo, xChaveNFSe: String;
 begin
   xTitulo := 'Obter PDF do DANFSE';
 
-  NumeroNFSe := '';
-  SerNFSe := '';
+  xChaveNFSe := '';
 
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proPadraoNacional] then
-  begin
-    if not(InputQuery(xTitulo, 'Chave da NFS-e:', NumeroNFSe)) then
-      exit;
-  end
-  else
-  begin
-    if not(InputQuery(xTitulo, 'Numero da NFSe:', NumeroNFSe)) then
-      exit;
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
 
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proIPM] then
-    begin
-      if not(InputQuery(xTitulo, 'Série da NFSe:', SerNFSe)) then
-        exit;
-    end;
-  end;
-
-  ACBrNFSeX1.ObterDANFSE(NumeroNFSe, SerNFSe);
+  ACBrNFSeX1.ObterDANFSE(xChaveNFSe);
 
   ChecarResposta(tmConsultarNFSe);
 end;
@@ -4094,6 +4087,17 @@ begin
 
   lblSchemas.Caption := ACBrNFSeX1.Configuracoes.Geral.xProvedor;
   lblVersaoSchemas.Caption := VersaoNFSeToStr(ACBrNFSeX1.Configuracoes.Geral.Versao);
+
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proPadraoNacional then
+  begin
+    pgcProvedores.Pages[0].TabVisible := False;
+    pgcProvedores.Pages[1].TabVisible := True;
+  end
+  else
+  begin
+    pgcProvedores.Pages[0].TabVisible := True;
+    pgcProvedores.Pages[1].TabVisible := False;
+  end
 end;
 
 procedure TfrmACBrNFSe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser;

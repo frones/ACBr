@@ -642,10 +642,15 @@ begin
     xDataHora := Copy(xDataHora, p+1, Length(xDataHora) - p);
 
     p := Pos('-', xDataHora);
+
     if (p = 0) then
-      p := Pos('+', xDataHora)
-    else if (p = 0) then
-      p := Pos(' ', xDataHora);
+      p := Pos('+', xDataHora);
+
+    if (p = 0) then
+       p := Pos(' ', xDataHora);
+
+    if (p = 0) then
+       p := Pos('.', xDataHora);
 
     if (p > 0) then
     begin

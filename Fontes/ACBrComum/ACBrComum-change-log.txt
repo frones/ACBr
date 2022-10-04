@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2022
+-- ACBrUtil.DateTime --
+[*] Correção na verificação de presença de TimeZone na data/hora
+   Por: Italo Giurizzato Junior
+
 18/08/2022
 -- ACBrUtil.DateTime --
 [*] Criadas funções para testar se uma String é ou possui TimeZone.

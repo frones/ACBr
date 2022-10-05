@@ -238,11 +238,20 @@ move ACBrCTe.lrs ..\ACBrDFe\ACBrCTe
 %1\tools\lazres.exe ACBrCTeDACTeRL.lrs TACBrCTeDACTeRL.png 
 move ACBrCTeDACTeRL.lrs ..\ACBrDFe\ACBrCTe\DACTE\Fortes
 
-
 echo.
 echo "***********************************************"
 echo "* Arquivo    ACBrCTe.lrs     gerado           *"
 echo "* Arquivo    ACBrCTeDACTeRL.lrs     gerado    *"
+echo "***********************************************"
+echo.
+
+:GTIN
+%1\tools\lazres.exe ACBrGTIN.lrs TACBrGTIN.png 
+move ACBrGTIN.lrs ..\ACBrDFe\ACBrGTIN
+
+echo.
+echo "***********************************************"
+echo "* Arquivo    ACBrGTIN.lrs     gerado          *"
 echo "***********************************************"
 echo.
 

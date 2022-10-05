@@ -237,7 +237,6 @@ echo "* Arquivo    ACBrPagFor.lrs     gerado    *"
 echo "****************************************"
 echo
 
-
 :CTe
 $LAZRES ACBrCTe.lrs TACBrCTe.png 
 mv ACBrCTe.lrs ../ACBrDFe/ACBrCTe
@@ -245,11 +244,20 @@ mv ACBrCTe.lrs ../ACBrDFe/ACBrCTe
 $LAZRES ACBrCTeDACTeRL.lrs TACBrCTeDACTeRL.png 
 mv ACBrCTeDACTeRL.lrs ../ACBrDFe/ACBrCTe/DACTE/Fortes
 
-
 echo
 echo "***********************************************"
 echo "* Arquivo    ACBrCTe.lrs     gerado           *"
 echo "* Arquivo    ACBrCTeDACTeRL.lrs     gerado    *"
+echo "***********************************************"
+echo
+
+:GTIN
+$LAZRES ACBrGTIN.lrs TACBrGTIN.png 
+mv ACBrGTIN.lrs ../ACBrDFe/ACBrGTIN
+
+echo
+echo "***********************************************"
+echo "* Arquivo    ACBrGTIN.lrs     gerado          *"
 echo "***********************************************"
 echo
 

@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="ACBrLibCTe"/>
       <ResourceType Value="res"/>
       <XPManifest>
@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="3"/>
       <RevisionNr Value="5"/>
-      <BuildNr Value="171"/>
+      <BuildNr Value="170"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCTe - Biblioteca para emissão e impressão de Conhecimento de Transporte Eletrônico" InternalName="ACBrLibCTe" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrCTe " ProductVersion="0.3.3.20"/>
@@ -253,18 +253,13 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
-            <Optimizations>
-              <OptimizationLevel Value="3"/>
-            </Optimizations>
-            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
             </Debugging>
-            <LinkSmart Value="True"/>
             <Options>
               <ExecutableType Value="Library"/>
             </Options>

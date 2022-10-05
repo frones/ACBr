@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="ACBrLibGTIN"/>
       <ResourceType Value="res"/>
     </General>
@@ -136,6 +136,7 @@
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -177,6 +178,7 @@
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -218,6 +220,7 @@
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -482,7 +485,6 @@
     </PublishOptions>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0"/>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -573,10 +575,13 @@
       <SmallerCode Value="True"/>
     </CodeGeneration>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <UseLineInfoUnit Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
       <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
         <ExecutableType Value="Library"/>
       </Options>
     </Linking>

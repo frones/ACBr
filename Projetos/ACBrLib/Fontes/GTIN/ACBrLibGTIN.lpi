@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="12"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
-        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
       <Title Value="ACBrLibGTIN"/>
       <ResourceType Value="res"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
+      <BuildNr Value="2"/>
       <Language Value="0416"/>
       <StringTable Comments="Projeto ACBr" CompanyName="ACBrGTIN - Biblioteca para consulta GTIN" FileDescription="ACBrLibGTIN" InternalName="ACBrLibGTIN" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="GTIN" ProductVersion="0.0.0.4"/>
     </VersionInfo>
@@ -481,6 +482,7 @@
     </PublishOptions>
     <RunParams>
       <FormatVersion Value="2"/>
+      <Modes Count="0"/>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -582,17 +584,4 @@
       <CustomOptions Value="-dNOGUI"/>
     </Other>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

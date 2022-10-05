@@ -41,9 +41,9 @@ uses
   ACBrBase, ACBrSocket, ACBrIBGE;
 
 const
-  CURL_CAPTCH = 'https://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/captcha/gerarCaptcha.asp';
-  CURL_REFER = 'http://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_Solicitacao_CS.asp';
-  CURL_POST = 'https://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/valida.asp';
+  CURL_CAPTCH = 'https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/captcha/gerarCaptcha.asp';
+  CURL_REFER = 'http://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_Solicitacao_CS.asp';
+  CURL_POST = 'https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/valida.asp';
 
 
 type

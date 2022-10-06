@@ -51,6 +51,7 @@ type
     procedure EhObrigatorioAgenciaDV; override;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
     function MontaInstrucoesCNAB240(ATitulo : TACBrTitulo; AIndex : Integer) : string;
+    function ConverterDigitoModuloFinal(): String; override;
   public
     constructor Create(AOwner: TACBrBanco);
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; override;
@@ -314,6 +315,14 @@ begin
   end;
 end;
 
+function TACBrBancoBTGPactual.ConverterDigitoModuloFinal: String;
+begin
+  if Modulo.ModuloFinal = 1 then
+      Result:= 'P'
+   else
+      Result:= IntToStr(Modulo.DigitoFinal);
+end;
+
 constructor TACBrBancoBTGPactual.Create(AOwner: TACBrBanco);
 begin
   inherited Create(AOwner);
@@ -323,8 +332,8 @@ begin
   fpTamanhoMaximoNossoNum    := 11;
   fpTamanhoNumeroDocumento   := 20;
   fpTamanhoAgencia           := 4;
-  fpTamanhoConta             := 9;
-  fpTamanhoCarteira          := 3;
+  fpTamanhoConta             := 7;
+  fpTamanhoCarteira          := 2;
   fValorTotalDocs            := 0;
   fpDensidadeGravacao        := '01600';
   fpModuloMultiplicadorFinal := 7;
@@ -335,10 +344,11 @@ end;
 function TACBrBancoBTGPactual.DefineCampoLivreCodigoBarras(
   const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia
-            + PadLeft(IntToStr(StrToInt(ACBrTitulo.Carteira)), 2,'0')
-            + ACBrTitulo.NossoNumero
-            + RightStr(ACBrTitulo.ACBrBoleto.Cedente.Conta,8);
+  Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia                        // agencia sem digito
+            + PadLeft(IntToStr(StrToInt(ACBrTitulo.Carteira)), 2,'0')    // codigo da carteira
+            + ACBrTitulo.NossoNumero                                     // nosso número sem o digito
+            + RightStr(ACBrTitulo.ACBrBoleto.Cedente.Conta,7)            // conta beneficiário sem digito
+            + '0';                                                       // zero fixo
 end;
 
 procedure TACBrBancoBTGPactual.EhObrigatorioAgenciaDV;
@@ -574,44 +584,42 @@ begin
                                              'ND' ,'AP' ,'ME' ,'PC' ,'NF' ,'DD',
                                              'CPR','WAA','DAE','DAM','DAU','EC','CCC','DPD', {add casa}
                                              'BDA']) of
-      0  : result := '01';
-      1  : result := '02';
-      2  : result := '03';
-      3  : result := '04';
-      4  : result := '05';
-      5  : result := '06';
-      6  : result := '07';
-      7  : result := '08';
-      8  : result := '09';
-      9  : result := '10';
-      10 : result := '11';
-      11 : result := '12';
-      12 : result := '13';
-      13 : result := '14';
-      14 : result := '15';
-      15 : result := '16';
-      16 : result := '17';
-      17 : result := '18';
-      18 : result := '19';
-      19 : result := '20';
-      20 : result := '21';
-      21 : result := '22';
-      22 : result := '23';
-      23 : result := '24';
-      24 : result := '25'; { Cédula de Produto Rural}
-      25 : result := '26'; { Warrant}
-      26 : result := '27'; { Dívida Ativa de Estado}
-      27 : result := '28'; { Dívida Ativa de Município}
-      28 : result := '29'; { Dívida Ativa da União}
-      29 : result := '30'; { Encargos condominiais}
-      30 : result := '31'; { CC Cartão de Crédito}
-      31 : result := '32'; { BDP – Boleto de Proposta}
-      32 : result := '33'; { Boleto de Depósito e Aporte}
+      0  : AEspecieDoc := '01';
+      1  : AEspecieDoc := '02';
+      2  : AEspecieDoc := '03';
+      3  : AEspecieDoc := '04';
+      4  : AEspecieDoc := '05';
+      5  : AEspecieDoc := '06';
+      6  : AEspecieDoc := '07';
+      7  : AEspecieDoc := '08';
+      8  : AEspecieDoc := '09';
+      9  : AEspecieDoc := '10';
+      10 : AEspecieDoc := '11';
+      11 : AEspecieDoc := '12';
+      12 : AEspecieDoc := '13';
+      13 : AEspecieDoc := '14';
+      14 : AEspecieDoc := '15';
+      15 : AEspecieDoc := '16';
+      16 : AEspecieDoc := '17';
+      17 : AEspecieDoc := '18';
+      18 : AEspecieDoc := '19';
+      19 : AEspecieDoc := '20';
+      20 : AEspecieDoc := '21';
+      21 : AEspecieDoc := '22';
+      22 : AEspecieDoc := '23';
+      23 : AEspecieDoc := '24';
+      24 : AEspecieDoc := '25'; { Cédula de Produto Rural}
+      25 : AEspecieDoc := '26'; { Warrant}
+      26 : AEspecieDoc := '27'; { Dívida Ativa de Estado}
+      27 : AEspecieDoc := '28'; { Dívida Ativa de Município}
+      28 : AEspecieDoc := '29'; { Dívida Ativa da União}
+      29 : AEspecieDoc := '30'; { Encargos condominiais}
+      30 : AEspecieDoc := '31'; { CC Cartão de Crédito}
+      31 : AEspecieDoc := '32'; { BDP – Boleto de Proposta}
+      32 : AEspecieDoc := '33'; { Boleto de Depósito e Aporte}
     else
-      result := '99';      { Outros}
+      AEspecieDoc := '99';      { Outros}
     end;
-
-
 
     {Pegando o Tipo de Ocorrencia}
     case OcorrenciaOriginal.Tipo of
@@ -738,7 +746,7 @@ begin
     Result:= IntToStrZero(ACBrBanco.Numero, 3)                                      + // 001 a 003 Código do banco  {Ok}
              '0001'                                                                 + // 004 a 007 Lote de serviço {ok}
              '3'                                                                    + // 008 a 008 Tipo do registro: Registro detalhe
-             IntToStrZero((2 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+1,5)  + // 009 a 013 Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)' {ok}
+             IntToStrZero(fpQtdRegsLote, 5)                                          + // 009 a 013 Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)' {ok}
              'P'                                                                    + // 014 a 014 Código do segmento do registro detalhe {ok}
              Space(1)                                                               + // 015 a 015 Uso exclusivo FEBRABAN/CNAB: Branco ok
              ATipoOcorrencia                                                        + // 016 a 017 Código de movimento {2 digitos 01- entrada de titulos}
@@ -748,11 +756,11 @@ begin
              PadRight(ACBrBoleto.Cedente.ContaDigito, 1, ' ')                       + // 036 a 036 Dígito verificador da conta {ok}
              Space(1)                                                               + // 037 a 037 Dígito verificador da ag/conta {?? pq branco}
              PadRight(NossoNumero, 20, ' ')                                         + // 038 a 057 Identificação do título no banco{OK}
-             Copy(ACBrBoleto.Cedente.Modalidade+' ',1,1)                            + // 058 a 058 Código da Carteira (característica dos títulos dentro das modalidades de cobrança: '1' = Cobrança Simples '3' = Cobrança Caucionada) {ok}
-             '1'                                                                    + // 059 a 059 Forma de cadastramento do título no banco (1=Cobrança Registrada, 2=Cobrança sem Registro) {ok}
-             Space(1)                                                               + // 060 a 060 Tipo de documento: Brancos   {pq fica em branco ? tradicional/escritual}
-             ATipoBoleto                                                            + // 061 a 061 Quem emite / ident da emissao boleto  pgto
-             ATipoDistribuicao                                                      + // 062 a 062 Quem distribui  {ok}
+             PadLeft(ACodigoCarteira, 1, ' ')                                        + // 058 a 058 Código da Carteira (característica dos títulos dentro das modalidades de cobrança: '1' = Cobrança Simples '3' = Cobrança Caucionada) {ok}
+             PadLeft(ATipoCarteira, 1, ' ')                                          + // 059 a 059 Forma de cadastramento do título no banco (1=Cobrança Registrada, 2=Cobrança sem Registro) {ok}            Space(1)                                                               + // 060 a 060 Tipo de documento: Brancos   {pq fica em branco ? tradicional/escritual}
+             PadLeft(ATipoDocumento, 1, ' ')                                         + // 060 a 060 Tipo de documento: Brancos   {tradicional/escritual}
+             PadLeft(ATipoBoleto, 1, ' ')                                            + // 061 a 061 Quem emite / ident da emissao boleto  pgto
+             PadLeft(ATipoDistribuicao, 1, ' ')                                      + // 062 a 062 Quem distribui  {ok}
              PadRight(NumeroDocumento, 15)                                          + // 063 a 077 Nº do documento de cobrança {ok}
              FormatDateTime('ddmmyyyy', Vencimento)                                 + // 078 a 085 Data de vencimento do título  {ok}
              IntToStrZero( Round( ValorDocumento * 100), 15)                        + // 086 a 100 Valor nominal do título {ok}
@@ -779,12 +787,12 @@ begin
              Space(1);                                                                // 240 a 240 Uso exclusivo FEBRABAN/CNAB { ok}
 
     {SEGMENTO Q}
-Inc(fpQtdRegsLote);					   
+	Inc(fpQtdRegsLote);					   
     Result:= Result +  #13#10 +
              IntToStrZero(ACBrBanco.Numero, 3)                                          + // 001 a 003 Código do banco     {ok}
              '0001'                                                                     + // 004 a 007 Número do lote     {ok}
              '3'                                                                        + // 008 a 008 Tipo do registro: Registro detalhe  {ok}
-             IntToStrZero((2 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 2 ,5)    + // 009 a 013 Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)  {ok}
+             IntToStrZero(fpQtdRegsLote ,5)                                             + // 009 a 013 Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)  {ok}
              'Q'                                                                        + // 014 a 013 Código do segmento do registro detalhe  {ok}
              ' '                                                                        + // 015 a 015 Uso exclusivo FEBRABAN/CNAB: Branco  {ok}
              ATipoOcorrencia                                                            + // 016 a 017 Código de movimento  {ok}
@@ -865,17 +873,15 @@ begin
 end;
 
 function TACBrBancoBTGPactual.GerarRegistroTrailler240( ARemessa : TStringList ): String;
-var
-  wQTDTitulos: Integer;
 begin
-  wQTDTitulos := ARemessa.Count - 1;
+
   { REGISTRO TRAILER DO LOTE Pagina 68 - Unico Trailler com layout compativel }
   Result := IntToStrZero(ACBrBanco.Numero, 3)                         + // 001 - 003 Código do banco
            '0001'                                                     + // 004 - 007 Lote de Serviço
            '5'                                                        + // 008 - 008 Tipo do registro: Registro trailer do lote
            Space(9)                                                   + // 009 - 017 Uso exclusivo FEBRABAN/CNAB
-           IntToStrZero((2 * wQTDTitulos + 2 ), 6)                    + // 018 - 023 Quantidade de Registro no Lote (Registros P,Q header e trailer do lote)
-           IntToStrZero((wQTDTitulos), 6)                             + // 024 - 029 Quantidade títulos em cobrança (CHEQUES)
+           IntToStrZero((fpQtdRegsLote + 2 ), 6)                      + // 018 - 023 Quantidade de Registro no Lote (Registros P,Q header e trailer do lote)
+           IntToStrZero((0), 6)                                       + // 024 - 029 Quantidade títulos em cobrança (CHEQUES)
            IntToStrZero(Round(fValorTotalDocs * 100), 17)             + // 030 - 046 Valor dos títulos em carteiras}
            PadRight('',06, '0')                                       + // 047 - 052 Quantidade títulos em cobrança
            PadRight('',17, '0')                                       + // 053 - 069 Valor dos títulos em carteiras}
@@ -893,7 +899,7 @@ begin
            '9'                                                        + // 008 - 008 Tipo do registro: Registro trailer do arquivo
            PadRight('',9,' ')                                         + // 009 - 017 Uso exclusivo FEBRABAN/CNAB}
            '000001'                                                   + // 018 - 023 Quantidade de lotes do arquivo (Registros P,Q header e trailer do lote e do arquivo)
-           IntToStrZero((2 * wQTDTitulos)+4, 6)                       + // 024 - 029 Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
+           IntToStrZero((fpQtdRegsLote + 4), 6)                       + // 024 - 029 Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
            PadRight('',006,'0')                                       + // 030 - 035 Uso exclusivo FEBRABAN/CNAB}
            PadRight('',205,' ');                                        // 240 - 205 Uso exclusivo FEBRABAN/CNAB}
 
@@ -901,6 +907,4 @@ begin
   fValorTotalDocs := 0;
   fpQtdRegsLote   := 0;
 end;
-
-
 end.

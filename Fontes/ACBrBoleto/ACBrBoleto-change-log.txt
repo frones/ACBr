@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/10/2022
+-- ACBrBancoBTGPactual --
+[-] TK-3050-1-1 Ajustes Campo Livre e Nosso Número
+  por Pandaaa / Daniel Moraes / Luizhbr
+
 30/09/2022
 --ACBrBancoInter--
 [*] TK-3115 ACbrBoleto - Ajuste leitura retorno CNAB400 do Banco Inter Motivo de Rejeição

@@ -43,7 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/10/2022
---ACBrNFSeXServicos.ini
+-- Diversos --
+[*] Realizado varias melhorias em diversas units para atender o provedor:
+    SigISSWeb.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
 [*] Removido as URLs antigas e descomentado as novas URLs da cidade:
     Americana/SP
    Por: Italo Giurizzato Junior
@@ -65,7 +69,7 @@ Símbolo : Significado
 [+] Implementado a consulta aos eventos, essas consultas são exclusivas do 
     provedor PadraoNacional.
    Por: Italo Giurizzato Junior
---ACBrNFSeXServicos.ini
+-- ACBrNFSeXServicos.ini --
 [*] Incluido a cidade de Maria da Fé/MG - Provedor Futurize
    Por: daycon
 

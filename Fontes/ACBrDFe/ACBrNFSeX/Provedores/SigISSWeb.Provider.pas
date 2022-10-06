@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, Variants,
+  ACBrBase,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
@@ -45,8 +46,12 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceSigISSWeb = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceSigISSWeb = class(TACBrNFSeXWebserviceRest)
+  protected
+    procedure SetHeaders(aHeaderReq: THTTPHeader); override;
+
   public
+    function GerarToken(ACabecalho, AMSG: String): string; override;
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
@@ -54,6 +59,10 @@ type
   end;
 
   TACBrNFSeProviderSigISSWeb = class (TACBrNFSeProviderProprio)
+  private
+    FpPath: string;
+    FpMethod: string;
+    FpMimeType: string;
   protected
     procedure Configuracao; override;
 
@@ -63,8 +72,10 @@ type
 
     function PrepararRpsParaLote(const aXml: string): string; override;
 
-    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
-      Params: TNFSeParamsResponse); override;
+    procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
+    procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
+
+    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -84,16 +95,14 @@ type
 implementation
 
 uses
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings,
   ACBrDFeException,
-  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
+  ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   SigISSWeb.GravarXml, SigISSWeb.LerXml;
 
 { TACBrNFSeProviderSigISSWeb }
 
 procedure TACBrNFSeProviderSigISSWeb.Configuracao;
-var
-  aAmbiente: string;
 begin
   inherited Configuracao;
 
@@ -101,29 +110,19 @@ begin
   begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
-    DetalharServico := True;
     ConsultaLote := False;
     ConsultaNFSe := False;
   end;
 
-  ConfigMsgDados.UsarNumLoteConsLote := True;
+//  ConfigMsgDados.UsarNumLoteConsLote := True;
 
-  SetXmlNameSpace('http://www.SigISSWeb.com/nfse');
-
-  if ConfigGeral.Ambiente = taProducao then
-    aAmbiente := '1'
-  else
-    aAmbiente := '2';
-
-  ConfigMsgDados.DadosCabecalho := '<cabecalhoNfseLote xmlns="http://www.SigISSWeb.com/nfse">' +
-                                     '<versao>1.00</versao>' +
-                                     '<ambiente>' + aAmbiente + '</ambiente>' +
-                                   '</cabecalhoNfseLote>';
+  SetXmlNameSpace('');
 
   with ConfigSchemas do
   begin
-    GerarNFSe := 'RecepcaoNFSe_v1.00.xsd';
-    CancelarNFSe := 'CancelamentoNFSe_v1.00.xsd';
+//    GerarNFSe := 'RecepcaoNFSe_v1.00.xsd';
+//    CancelarNFSe := 'CancelamentoNFSe_v1.00.xsd';
+    Validar := False;
   end;
 end;
 
@@ -149,7 +148,11 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceSigISSWeb.Create(FAOwner, AMetodo, URL)
+  begin
+    URL := URL + FpPath;
+    Result := TACBrNFSeXWebserviceSigISSWeb.Create(FAOwner, AMetodo, URL,
+               FpMethod, FpMimeType);
+  end
   else
   begin
     if ConfigGeral.Ambiente = taProducao then
@@ -189,84 +192,50 @@ end;
 function TACBrNFSeProviderSigISSWeb.PrepararRpsParaLote(
   const aXml: string): string;
 begin
-  Result := SeparaDados(aXml, 'nfse');
+  Result := SeparaDados(aXml, 'notafiscal');
 end;
 
-procedure TACBrNFSeProviderSigISSWeb.GerarMsgDadosEmitir(
-  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
+procedure TACBrNFSeProviderSigISSWeb.PrepararGerarToken(
+  Response: TNFSeGerarTokenResponse);
 var
-  Emitente: TEmitenteConfNFSe;
-  CodMun: Integer;
-begin
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-  CodMun := TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio;
-
-  with Params do
-  begin
-    Response.ArquivoEnvio := '<nfseLote xmlns="http://www.SigISSWeb.com/nfse">' +
-                               '<codigoMunicipio>' +
-                                  CodIBGEToCodTOM(CodMun) +
-                               '</codigoMunicipio>' +
-                               '<dtEmissao>' +
-                                  FormatDateTime('YYYY-MM-DD', Now) +
-                                  'T' +
-                                  FormatDateTime('HH:NN:SS', Now) +
-                               '</dtEmissao>' +
-                               '<notaIntermediada>' +
-                                  '2' +
-                               '</notaIntermediada>' +
-                               '<autenticacao>' +
-                                 '<token>' +
-                                    Emitente.WSChaveAutoriz +
-                                 '</token>' +
-                               '</autenticacao>' +
-                                 Xml +
-                             '</nfseLote>';
-  end;
-end;
-
-procedure TACBrNFSeProviderSigISSWeb.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
-var
-  Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode: TACBrXmlNode;
+  Emitente: TEmitenteConfNFSe;
 begin
-  Document := TACBrXmlDocument.Create;
+  Response.Clear;
 
-  try
-    try
-      if Response.ArquivoRetorno = '' then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
-        Exit
-      end;
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-      Document.LoadFromXml(Response.ArquivoRetorno);
-
-      ANode := Document.Root;
-
-      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
-      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoStatus'), tcStr);
-
-      ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
-
-      // Precisamos de um retorno sem erros para terminar a implementação da
-      // leitura do retorno
-    except
-      on E:Exception do
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
-      end;
-    end;
-  finally
-    FreeAndNil(Document);
+  if EstaVazio(Emitente.WSUser) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod119;
+    AErro.Descricao := Desc119;
+    Exit;
   end;
+
+  if EstaVazio(Emitente.WSSenha) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod120;
+    AErro.Descricao := Desc120;
+    Exit;
+  end;
+
+  // Atenção: Neste xml todos os "Ws_" do início das tags devem ter o primeiro "W" em maiúsculo
+  Response.ArquivoEnvio := '{"login":"' +
+                           OnlyNumber(Emitente.CNPJ) + '","senha":"' +
+                           Emitente.WSSenha + '"}';
+
+  FpPath := 'rest/login';
+  FpMethod := 'POST';
+  FpMimeType := 'application/json';
+end;
+
+procedure TACBrNFSeProviderSigISSWeb.TratarRetornoGerarToken(
+  Response: TNFSeGerarTokenResponse);
+begin
+  inherited;
+
 end;
 
 procedure TACBrNFSeProviderSigISSWeb.PrepararCancelaNFSe(
@@ -324,6 +293,107 @@ begin
                                 Response.InfCancelamento.ChaveNFSe +
                              '</chaveSeguranca>' +
                            '</cancelamentoNfseLote>';
+end;
+
+procedure TACBrNFSeProviderSigISSWeb.PrepararEmitir(
+  Response: TNFSeEmiteResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Nota: TNotaFiscal;
+  IdAttr, ListaRps: string;
+  I: Integer;
+begin
+  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod002;
+    AErro.Descricao := Desc002;
+  end;
+
+  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod003;
+    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
+                       IntToStr(Response.MaxRps) + ' RPS)' +
+                       ' excedido. Quantidade atual: ' +
+                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
+  end;
+
+  if Response.Erros.Count > 0 then Exit;
+
+  ListaRps := '';
+
+  if ConfigAssinar.IncluirURI then
+    IdAttr := ConfigGeral.Identificador
+  else
+    IdAttr := 'ID';
+
+  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
+  begin
+    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
+
+    Nota.GerarXML;
+
+    Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
+
+    SalvarXmlRps(Nota);
+
+    ListaRps := ListaRps + Nota.XmlRps;
+  end;
+
+  Response.ArquivoEnvio := RemoverDeclaracaoXML(ListaRps);
+  Response.ArquivoEnvio := '<?xml version="1.0" encoding="ISO-8859-1"?>' +
+                           Response.ArquivoEnvio;
+
+  FpPath := 'rest/nfes';
+  FpMethod := 'POST';
+  FpMimeType := 'text/xml';
+end;
+
+procedure TACBrNFSeProviderSigISSWeb.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
+      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoStatus'), tcStr);
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      // Precisamos de um retorno sem erros para terminar a implementação da
+      // leitura do retorno
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
 end;
 
 procedure TACBrNFSeProviderSigISSWeb.TratarRetornoCancelaNFSe(
@@ -413,6 +483,28 @@ end;
 
 { TACBrNFSeXWebserviceSigISSWeb }
 
+procedure TACBrNFSeXWebserviceSigISSWeb.SetHeaders(aHeaderReq: THTTPHeader);
+var
+  Auth: string;
+begin
+  with TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente do
+    Auth := WSChaveAutoriz;
+
+  aHeaderReq.AddHeader('Authorization', Auth);
+end;
+
+function TACBrNFSeXWebserviceSigISSWeb.GerarToken(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+end;
+
 function TACBrNFSeXWebserviceSigISSWeb.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
@@ -420,13 +512,9 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<wsn:executar>';
-  Request := Request + '<arg0>' + XmlToStr(ACabecalho) + '</arg0>';
-  Request := Request + '<arg1>' + XmlToStr(AMSG) + '</arg1>';
-  Request := Request + '</wsn:executar>';
+  Request := AMSG;
 
-  Result := Executar('', Request, ['return', 'retornoNfseLote'],
-                     ['xmlns:wsn="http://wsnfselote.SigISSWeb.com.br/"']);
+  Result := Executar('', Request, [], []);
 end;
 
 function TACBrNFSeXWebserviceSigISSWeb.Cancelar(ACabecalho, AMSG: String): string;
@@ -437,6 +525,7 @@ begin
 
   xCabecalho := StringReplace(ACabecalho, 'cabecalhoNfseLote',
                      'cabecalhoCancelamentoNfseLote', [rfReplaceAll]);
+
   Request := '<wsn:executar>';
   Request := Request + '<arg0>' + XmlToStr(xCabecalho) + '</arg0>';
   Request := Request + '<arg1>' + XmlToStr(AMSG) + '</arg1>';

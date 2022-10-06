@@ -157,7 +157,7 @@ type
                                   namespace: array of string): string; override;
   public
     constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string;
-      AMethod: string = 'POST');
+      AMethod: string = 'POST'; AMimeType: string = 'text/xml');
 
   end;
 
@@ -167,7 +167,7 @@ type
                                   namespace: array of string): string; override;
   public
     constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string;
-      AMethod: string = 'POST');
+      AMethod: string = 'POST'; AMimeType: string = 'application/soap+xml');
 
   end;
 
@@ -179,7 +179,7 @@ type
                                   namespace: array of string): string; override;
   public
     constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string;
-      AMethod: string = 'POST');
+      AMethod: string = 'POST'; AMimeType: string = 'application/xml');
 
   end;
 
@@ -190,7 +190,7 @@ type
 
   public
     constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string;
-      AMethod: string = 'POST');
+      AMethod: string = 'POST'; AMimeType: string = 'application/json');
 
   end;
 
@@ -201,7 +201,7 @@ type
 
   public
     constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string;
-      AMethod: string = 'POST');
+      AMethod: string = 'POST'; AMimeType: string = 'application/json');
 
   end;
 
@@ -213,7 +213,7 @@ type
                                   namespace: array of string): string; override;
   public
     constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string;
-      AMethod: string = 'POST');
+      AMethod: string = 'POST'; AMimeType: string = 'text/xml');
 
   end;
 
@@ -226,7 +226,7 @@ type
 
   public
     constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string;
-      AMethod: string = 'POST');
+      AMethod: string = 'POST'; AMimeType: string = 'text/xml');
 
   end;
 
@@ -1017,11 +1017,11 @@ end;
 { TACBrNFSeXWebserviceSoap11 }
 
 constructor TACBrNFSeXWebserviceSoap11.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
-  AURL: string; AMethod: string);
+  AURL: string; AMethod: string; AMimeType: string);
 begin
   inherited Create(AOwner, AMetodo, AURL, AMethod);
 
-  FPMimeType := 'text/xml';
+  FPMimeType := AMimeType;
 end;
 
 function TACBrNFSeXWebserviceSoap11.DefinirMsgEnvio(const Message, SoapAction,
@@ -1057,11 +1057,11 @@ end;
 { TACBrNFSeXWebserviceSoap12 }
 
 constructor TACBrNFSeXWebserviceSoap12.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
-  AURL: string; AMethod: string);
+  AURL: string; AMethod: string; AMimeType: string);
 begin
   inherited Create(AOwner, AMetodo, AURL, AMethod);
 
-  FPMimeType := 'application/soap+xml';
+  FPMimeType := AMimeType;
 end;
 
 function TACBrNFSeXWebserviceSoap12.DefinirMsgEnvio(const Message, SoapAction,
@@ -1098,11 +1098,11 @@ end;
 { TACBrNFSeXWebserviceNoSoap }
 
 constructor TACBrNFSeXWebserviceNoSoap.Create(AOwner: TACBrDFe;
-  AMetodo: TMetodo; AURL: string; AMethod: string);
+  AMetodo: TMetodo; AURL: string; AMethod: string; AMimeType: string);
 begin
   inherited Create(AOwner, AMetodo, AURL, AMethod);
 
-  FPMimeType := 'application/xml';
+  FPMimeType := AMimeType;
 end;
 
 function TACBrNFSeXWebserviceNoSoap.DefinirMsgEnvio(const Message, SoapAction,
@@ -1126,11 +1126,11 @@ end;
 { TACBrNFSeXWebserviceRest }
 
 constructor TACBrNFSeXWebserviceRest.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
-  AURL, AMethod: string);
+  AURL, AMethod: string; AMimeType: string);
 begin
   inherited Create(AOwner, AMetodo, AURL, AMethod);
 
-  FPMimeType := 'application/json';
+  FPMimeType := AMimeType;
 end;
 
 function TACBrNFSeXWebserviceRest.DefinirMsgEnvio(const Message, SoapAction,
@@ -1146,11 +1146,11 @@ end;
 { TACBrNFSeXWebserviceRest2 }
 
 constructor TACBrNFSeXWebserviceRest2.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
-  AURL: string; AMethod: string);
+  AURL: string; AMethod: string; AMimeType: string);
 begin
   inherited Create(AOwner, AMetodo, AURL, AMethod);
 
-  FPMimeType := 'application/json';
+  FPMimeType := AMimeType;
 end;
 
 function TACBrNFSeXWebserviceRest2.DefinirMsgEnvio(const Message, SoapAction,
@@ -1170,7 +1170,6 @@ begin
     GerarException(ACBrStr('O provedor ' + TConfiguracoesNFSe(FPConfiguracoes).Geral.xProvedor +
       ' necessita que a propriedade: Configuracoes.Geral.Emitente.WSSenha seja informada.'));
 
-//  Texto := StringReplace(Message, '"', '''', [rfReplaceAll]);
   Texto := StringReplace(Message, '"', '\"', [rfReplaceAll]);
   Texto := StringReplace(Texto, #10, '', [rfReplaceAll]);
   Texto := StringReplace(Texto, #13, '', [rfReplaceAll]);
@@ -1185,7 +1184,7 @@ end;
 { TACBrNFSeXWebserviceMulti1 }
 
 constructor TACBrNFSeXWebserviceMulti1.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
-  AURL: string; AMethod: string);
+  AURL: string; AMethod: string; AMimeType: string);
 begin
   inherited Create(AOwner, AMetodo, AURL, AMethod);
 
@@ -1231,7 +1230,7 @@ end;
 { TACBrNFSeXWebserviceMulti2 }
 
 constructor TACBrNFSeXWebserviceMulti2.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
-  AURL: string; AMethod: string);
+  AURL: string; AMethod: string; AMimeType: string);
 begin
   inherited Create(AOwner, AMetodo, AURL, AMethod);
 
@@ -1250,6 +1249,8 @@ begin
             'Content-Type: text/xml; charset=Cp1252; name=' +
             NomeArq + sLineBreak +
             'Content-Transfer-Encoding: binary' + sLineBreak +
+            'Content-Length: ' + IntToStr(Length(Message)) + sLineBreak +
+//            'Content-Length: ' + IntToStr(TEncoding.UTF8.GetByteCount(Message)) + sLineBreak +
             'Content-Disposition: form-data; name=' + AnsiQuotedStr(NomeArq, '"') +
             '; filename=' + AnsiQuotedStr(NomeArq, '"') + sLineBreak +
             sLineBreak +

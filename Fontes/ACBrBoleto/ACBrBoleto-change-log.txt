@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/10/2022
+-- ACBrBoletoW_Sicredi_API ACBrBoletoRet_Sicredi_API --
+[*] TK3084 Boleto WS Sicredi - Metodo de alteração
+  https://www.projetoacbr.com.br/forum/topic/69046-boleto-ws-sicredi-altera%C3%A7%C3%A3o-de-vencimento/
+  por : Thiago S
+
+06/10/2022
 -- ACBrBancoBTGPactual --
 [-] TK-3050-1-1 Ajustes Campo Livre e Nosso Número
   por Pandaaa / Daniel Moraes / Luizhbr

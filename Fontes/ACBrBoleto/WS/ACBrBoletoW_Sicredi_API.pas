@@ -135,13 +135,12 @@ begin
                                 + '&cedente='+Boleto.Cedente.CodigoCedente
                                 + '&'
                                 + DefinirParametros;
-    tpAltera   : FPURL := FPURL + '/boletos/'+aNossoNumero+
-                                  '?gw-dev-app-key='+Boleto.Cedente.CedenteWS.KeyUser;
+    tpAltera : FPURL := FPURL + '/comandoInstrucao';
 
     tpConsultaDetalhe : FPURL := FPURL + '/consulta?agencia='+Boleto.Cedente.Agencia
                                 + '&posto='+Boleto.Cedente.AgenciaDigito
                                 + '&cedente='+Boleto.Cedente.CodigoCedente
-                                          + '&nossoNumero='+aNossoNumero;
+                                + '&nossoNumero='+aNossoNumero;
     tpBaixa    : FPURL := FPURL + '/comandoInstrucao';
   end;
 
@@ -384,7 +383,7 @@ begin
     Json.Add( 'agencia' ).Value.asString                              := Boleto.Cedente.Agencia;
     Json.Add( 'posto' ).Value.asString                                := Boleto.Cedente.AgenciaDigito;
     Json.Add( 'cedente' ).Value.asString                              := Boleto.Cedente.CodigoCedente;
-    Json.Add( 'nossonumero' ).Value.asString                          := ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo);
+    Json.Add( 'nossoNumero' ).Value.asString                          := ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo);
 
     try
 
@@ -650,7 +649,7 @@ begin
   begin
     if Assigned(AJson) then
     begin
-      AJson.Add('data1' ).Value.asString                  := FormatDateBr(ATitulo.Vencimento, 'DD.MM.YYYY');
+      AJson.Add('data1' ).Value.asString                  := FormatDateBr(ATitulo.Vencimento);
     end;
   end;
 

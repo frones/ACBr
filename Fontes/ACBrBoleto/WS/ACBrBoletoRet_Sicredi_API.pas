@@ -102,6 +102,8 @@ var
 begin
   Result := True;
   TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
+  ARetornoWS.HTTPResultCode := HTTPResultCode;
+
   if RetWS <> '' then
   begin
     //Retorno := ACBrBoleto.CriarRetornoWebNaLista;
@@ -109,14 +111,23 @@ begin
       AJSon := TJson.Create;
       try
         AJSon.Parse(RetWS);
-        if ( AJson.StructType = jsObject ) then
-          if( AJson.Values['codigo'].asString <> '' ) then
-          begin
-            ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-            ARejeicao.Codigo     := AJson.Values['codigo'].AsString;
-            ARejeicao.Versao     := AJson.Values['parametro'].AsString;
-            ARejeicao.Mensagem   := AJson.Values['mensagem'].AsString;
+        ARetornoWS.JSON := AJson.Stringify;
+
+        case HttpResultCode of
+          400, 404 : begin
+
+            if ( AJson.StructType = jsObject ) then
+              if( AJson.Values['codigo'].asString <> '' ) then
+              begin
+                ARejeicao            := ARetornoWS.CriarRejeicaoLista;
+                ARejeicao.Codigo     := AJson.Values['codigo'].AsString;
+                ARejeicao.Versao     := AJson.Values['parametro'].AsString;
+                ARejeicao.Mensagem   := AJson.Values['mensagem'].AsString;
+              end;
+
           end;
+
+        end;
 
         //retorna quando tiver sucesso
         if (ARetornoWS.ListaRejeicao.Count = 0) then
@@ -191,6 +202,9 @@ var
   I: Integer;
 begin
   Result := True;
+
+  ListaRetorno.HTTPResultCode := HTTPResultCode;
+
   if RetWS <> '' then
   begin
     ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
@@ -198,14 +212,19 @@ begin
       AJSon := TJson.Create;
       try
         AJSon.Parse(RetWS);
-        if ( AJson.StructType = jsObject ) then
-          if( AJson.Values['codigo'].asString <> '' ) then
-          begin
-            ARejeicao            := ListaRetorno.CriarRejeicaoLista;
-            ARejeicao.Codigo     := AJson.Values['codigo'].AsString;
-            ARejeicao.Versao     := AJson.Values['parametro'].AsString;
-            ARejeicao.Mensagem   := AJson.Values['mensagem'].AsString;
+
+        case HTTPResultCode of
+          400, 404 : begin
+            if ( AJson.StructType = jsObject ) then
+              if( AJson.Values['codigo'].asString <> '' ) then
+              begin
+                ARejeicao            := ListaRetorno.CriarRejeicaoLista;
+                ARejeicao.Codigo     := AJson.Values['codigo'].AsString;
+                ARejeicao.Versao     := AJson.Values['parametro'].AsString;
+                ARejeicao.Mensagem   := AJson.Values['mensagem'].AsString;
+              end;
           end;
+        end;
 
         //retorna quando tiver sucesso
         if (ListaRetorno.ListaRejeicao.Count = 0) then

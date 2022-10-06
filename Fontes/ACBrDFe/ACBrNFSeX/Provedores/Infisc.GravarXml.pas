@@ -188,9 +188,6 @@ begin
 end;
 
 function TNFSeW_Infisc.GerarDadosdaObra: TACBrXmlNode;
-var
-  xCidade, xUF: string;
-  CodigoIBGE: Integer;
 begin
   Result := CreateElement('dadosDaObra');
 
@@ -212,15 +209,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cCidadeObra', 1, 7, 1,
                             NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio, ''));
 
-  CodigoIBGE := StrToIntDef(NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio, 0);
-
-  xCidade := '';
-
-  if CodigoIBGE > 0 then
-    xCidade := ObterNomeMunicipio(CodigoIBGE, xUF);
-
   Result.AppendChild(AddNode(tcStr, '#1', 'xCidadeObra', 1, 60, 1,
-                                                                  xCidade, ''));
+                                 NFSe.ConstrucaoCivil.Endereco.xMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xUfObra', 1, 2, 1,
                                          NFSe.ConstrucaoCivil.Endereco.UF, ''));
@@ -428,9 +418,6 @@ begin
 end;
 
 function TNFSeW_Infisc.GerarEnderecoEmitente: TACBrXmlNode;
-var
-  xCidade, xUF: string;
-  CodigoIBGE: Integer;
 begin
   Result := CreateElement('end');
 
@@ -449,14 +436,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 1, 7, 1,
                                   NFSe.Prestador.Endereco.CodigoMunicipio, ''));
 
-  CodigoIBGE := StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0);
-
-  xCidade := '';
-
-  if CodigoIBGE > 0 then
-    xCidade := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-  Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 1, xCidade, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 1,
+                                       NFSe.Prestador.Endereco.xMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'UF', 1, 2, 1,
                                                NFSe.Prestador.Endereco.UF, ''));
@@ -472,9 +453,6 @@ begin
 end;
 
 function TNFSeW_Infisc.GerarEnderecoTomador: TACBrXmlNode;
-var
-  xCidade, xUF: string;
-  CodigoIBGE: Integer;
 begin
   Result := CreateElement('ender');
 
@@ -493,14 +471,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 1, 7, 0,
                                     NFSe.Tomador.Endereco.CodigoMunicipio, ''));
 
-  CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
-
-  xCidade := '';
-
-  if CodigoIBGE > 0 then
-    xCidade := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-  Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 0, xCidade, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 0,
+                                         NFSe.Tomador.Endereco.xMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'UF', 1, 2, 0,
                                                  NFSe.Tomador.Endereco.UF, ''));
@@ -1066,7 +1038,15 @@ begin
 
   if (FPVersao = ve100) and (NFSe.Servico.MunicipioIncidencia <> 0) then
   begin
-    xCidade := ObterNomeMunicipio(NFSe.Servico.MunicipioIncidencia, xUF);
+    try
+      xCidade := ObterNomeMunicipio(NFSe.Servico.MunicipioIncidencia, xUF);
+    except
+      on E:Exception do
+      begin
+        xCidade := '';
+        xUF := '';
+      end;
+    end;
 
     Result.AppendChild(AddNode(tcStr, '#1', 'Praca', 1, 60, 1,
                                                       xCidade + '-' + xUF, ''));

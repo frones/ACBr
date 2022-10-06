@@ -300,8 +300,15 @@ begin
 
           CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
-          if CodigoIBGE > 0 then
+          try
             xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+          except
+            on E:Exception do
+            begin
+              xMunicipio := '';
+              xUF := '';
+            end;
+          end;
 
           UF := xUF;
         end;
@@ -502,8 +509,15 @@ begin
 
           CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
-          if CodigoIBGE > 0 then
+          try
             xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+          except
+            on E:Exception do
+            begin
+              xMunicipio := '';
+              xUF := '';
+            end;
+          end;
 
           UF := xUF;
         end;

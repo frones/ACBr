@@ -82,7 +82,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings, ACBrDFeUtil;
+  ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -256,9 +256,6 @@ begin
 end;
 
 function TNFSeW_EL.GerarEnderecoPrestador: TACBrXmlNode;
-var
-  xMun, xUF: String;
-  CodigoIBGE: Integer;
 begin
   Result := CreateElement('Endereco');
 
@@ -280,20 +277,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'CodigoMunicipio', 7, 7, 0,
                       OnlyNumber(NFSe.Prestador.Endereco.CodigoMunicipio), ''));
 
-  if (Trim(NFSe.Prestador.Endereco.xMunicipio) = '') then
-  begin
-    CodigoIBGE := StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0);
-
-    xMun := '';
-
-    if CodigoIBGE > 0 then
-      xMun := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-    Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
-                                                          UpperCase(xMun), ''));
-  end
-  else
-    Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
                                        NFSe.Prestador.Endereco.xMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 1,
@@ -304,9 +288,6 @@ begin
 end;
 
 function TNFSeW_EL.GerarEnderecoTomador: TACBrXmlNode;
-var
-  xMun, xUF: String;
-  CodigoIBGE: Integer;
 begin
   Result := CreateElement('Endereco');
 
@@ -328,20 +309,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'CodigoMunicipio', 7, 7, 0,
                         OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), ''));
 
-  if (Trim(NFSe.Tomador.Endereco.xMunicipio) = '') then
-  begin
-    CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
-
-    xMun := '';
-
-    if CodigoIBGE > 0 then
-      xMun := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-    Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
-                                                          UpperCase(xMun), ''));
-  end
-  else
-    Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
                                          NFSe.Tomador.Endereco.xMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 1,

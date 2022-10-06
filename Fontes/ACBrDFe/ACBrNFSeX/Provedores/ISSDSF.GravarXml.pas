@@ -203,8 +203,7 @@ var
   sIEEmit, SerieRPS, NumeroRPS, sDataEmis,
   sTributacao, sSituacaoRPS, sTipoRecolhimento,
   sValorServico, sValorDeducao, sCodAtividade,
-  sCPFCNPJTomador, sAssinatura, xMunicipio, xUF: String;
-  CodigoIBGE: Integer;
+  sCPFCNPJTomador, sAssinatura: String;
 begin
   Configuracao;
 
@@ -331,21 +330,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomador', 1, 10, 1,
    CodIBGEToCodTOM(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), ''));
 
-  if (Trim(NFSe.Tomador.Endereco.xMunicipio) <> '') then
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomadorDescricao', 1, 50, 1,
-                                          NFSe.Tomador.Endereco.xMunicipio, ''))
-  else
-  begin
-    CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
-
-    xMunicipio := '';
-
-    if CodigoIBGE > 0 then
-      xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomadorDescricao', 1, 50, 1,
-                                                               xMunicipio, ''));
-  end;
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomadorDescricao', 1, 50, 1,
+                                         NFSe.Tomador.Endereco.xMunicipio, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CEPTomador', 1, 8, 1,
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
@@ -379,15 +365,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacao', 1, 10, 1,
             CodIBGEToCodTOM(strtoint64(NFSe.Servico.CodigoMunicipio)), ''));
 
-  CodigoIBGE := StrToIntDef(NFSe.Servico.CodigoMunicipio, 0);
-
-  xMunicipio := '';
-
-  if CodigoIBGE > 0 then
-    xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
-
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacaoDescricao', 1, 30, 1,
-                                                               xMunicipio, ''));
+                                       NFSe.Prestador.Endereco.xMunicipio, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Operacao', 1, 1, 1,
                                      OperacaoToStr(NFSe.Servico.Operacao), ''));

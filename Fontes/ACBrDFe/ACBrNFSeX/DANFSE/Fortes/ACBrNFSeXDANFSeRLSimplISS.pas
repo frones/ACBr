@@ -407,9 +407,18 @@ begin
 	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
 	// do tomador em vez do que foi informado em Serviço.
     CodigoIBGE := StrToIntDef(Servico.CodigoMunicipio, 0);
+    xMunicipio := '';
+    xUF := '';
 
-    if CodigoIBGE >= 1100015 then
+    try
       xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+    except
+      on E:Exception do
+      begin
+        xMunicipio := '';
+        xUF := '';
+      end;
+    end;
 
     rllMunicipioPrestacaoServico.Caption := xMunicipio;
 
@@ -641,13 +650,18 @@ begin
           xUF := '';
           CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
-          if CodigoIBGE >= 1100015 then
-          begin
+          try
             xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-            if UF = '' then
-              UF := xUF;
+          except
+            on E:Exception do
+            begin
+              xMunicipio := '';
+              xUF := '';
+            end;
           end;
+
+          if UF = '' then
+            UF := xUF;
 
           rllPrestMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio;
         end;
@@ -726,13 +740,18 @@ begin
           xUF := '';
           CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
-          if CodigoIBGE >= 1100015 then
-          begin
+          try
             xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-            if UF = '' then
-              UF := xUF;
+          except
+            on E:Exception do
+            begin
+              xMunicipio := '';
+              xUF := '';
+            end;
           end;
+
+          if UF = '' then
+            UF := xUF;
 
           rllTomaMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio;
         end;

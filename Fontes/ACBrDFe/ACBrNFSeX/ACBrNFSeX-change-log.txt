@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/10/2022
+-- Diversos --
+[*] Possível solução para as exceções no ObterNomeMunicipio.
+   Por: Italo Giurizzato Junior
 -- ISSNet.Provider --
 [*] Possível solução para o erro E160, Cabeçalho deve obedecer a um
     schema válido.

@@ -913,8 +913,15 @@ begin
         begin
           CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
-          if CodigoIBGE >= 1100015 then
+          try
             xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+          except
+            on E:Exception do
+            begin
+              xMunicipio := '';
+              xUF := '';
+            end;
+          end;
 
           FieldByName('CodigoMunicipio').AsString := xMunicipio;
           FieldByName('ExigibilidadeISS').AsString := FProvider.ExigibilidadeISSDescricao(ExigibilidadeISS);
@@ -954,12 +961,34 @@ begin
           if Provedor = proAdm then
           begin
             FieldByName('CodigoMunicipio').AsString := CodigoMunicipio;
-            FieldByName('MunicipioIncidencia').AsString := ObterNomeMunicipio(MunicipioIncidencia, xUF);
+
+            try
+              xMunicipio := ObterNomeMunicipio(MunicipioIncidencia, xUF);
+            except
+              on E:Exception do
+              begin
+                xMunicipio := '';
+                xUF := '';
+              end;
+            end;
+
+            FieldByName('MunicipioIncidencia').AsString := xMunicipio;
           end
           else
           begin
             FieldByName('CodigoMunicipio').AsString := CodigoMunicipio;
-            FieldByName('MunicipioIncidencia').AsString := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF);
+
+            try
+              xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF);
+            except
+              on E:Exception do
+              begin
+                xMunicipio := '';
+                xUF := '';
+              end;
+            end;
+
+            FieldByName('MunicipioIncidencia').AsString := xMunicipio;
           end;
         end;
       end;

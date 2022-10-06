@@ -56,8 +56,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings,
-  ACBrDFeUtil;
+  ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -69,8 +68,7 @@ uses
 function TNFSeW_SigISSWeb.GerarXml: Boolean;
 var
   NFSeNode: TACBrXmlNode;
-  tomadorIdentificado, tipoPessoa, xMunicipio, xUF: string;
-  CodigoIBGE: Integer;
+  tomadorIdentificado, tipoPessoa: string;
 begin
   Configuracao;
 
@@ -133,23 +131,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cep_destinatario', 1, 8, 1,
                                                 NFSe.Tomador.Endereco.CEP, ''));
 
-  if NFSe.Tomador.Endereco.xMunicipio = '' then
-  begin
-    CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
-
-    xMunicipio := '';
-
-    if CodigoIBGE > 0 then
-      xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-    if NFSe.Tomador.Endereco.UF = '' then
-      NFSe.Tomador.Endereco.UF := xUF;
-  end
-  else
-    xMunicipio := NFSe.Tomador.Endereco.xMunicipio;
-
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cidade_destinatario', 1, 60, 1,
-                                                             xMunicipio, ''));
+                                         NFSe.Tomador.Endereco.xMunicipio, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'uf_destinatario', 2, 2, 1,
                                                NFSe.Tomador.Endereco.UF, ''));

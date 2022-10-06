@@ -231,9 +231,17 @@ begin
   CodigoIBGE := StrToIntDef(NFSe.Servico.CodigoMunicipio, 0);
 
   xMunicipio := '';
+  xUF := '';
 
-  if CodigoIBGE > 0 then
+  try
     xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+  except
+    on E:Exception do
+    begin
+      xMunicipio := '';
+      xUF := '';
+    end;
+  end;
 
   Result.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacaoServico', 1, 100, 1,
                                                                xMunicipio, ''));

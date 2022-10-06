@@ -155,9 +155,6 @@ begin
 end;
 
 function TNFSeW_Giap.GerarDadosTomador: TACBrXmlNode;
-var
-  CodigoIBGE: Integer;
-  xMunicipio, xUF: string;
 begin
   Result := CreateElement('dadosTomador');
 
@@ -167,21 +164,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cep', 1, 9, 1,
                                                 NFSe.Tomador.Endereco.CEP, ''));
 
-  if NFSe.Tomador.Endereco.CodigoMunicipio = '9999999' then
-    Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 50, 1,
-                                          NFSe.Tomador.Endereco.xMunicipio, ''))
-  else
-  begin
-    CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
-
-    xMunicipio := '';
-
-    if CodigoIBGE > 0 then
-      xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-    Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 50, 1,
-                                                               xMunicipio, ''));
-  end;
+  Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 50, 1,
+                                         NFSe.Tomador.Endereco.xMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 30, 0,
                                         NFSe.Tomador.Endereco.Complemento, ''));

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/10/2022
+--ACBrNFSeXServicos.ini
+[*] Removido as URLs antigas e descomentado as novas URLs da cidade:
+    Americana/SP
+   Por: Italo Giurizzato Junior
+
 05/10/2022
 -- Diversos --
 [*] Possível solução para as exceções no ObterNomeMunicipio.

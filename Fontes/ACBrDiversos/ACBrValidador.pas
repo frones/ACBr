@@ -1832,7 +1832,7 @@ begin
   if NaoEstaVazio(fsMsgErro) then
     Exit;
 
-  CodigoNormalizado := PadLeft(Trim(Documento), 14, '0');
+  CodigoNormalizado := PadLeft(Trim(fsDocto), 14, '0');
 
   if (StrToInt(Copy(CodigoNormalizado, 1, 6)) = 0) then //gtin8
     sPrefixo := copy(CodigoNormalizado, 7, 3)

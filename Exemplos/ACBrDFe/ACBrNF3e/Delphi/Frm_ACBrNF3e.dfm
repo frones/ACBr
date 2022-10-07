@@ -1719,7 +1719,6 @@ object frmACBrNF3e: TfrmACBrNF3e
           Height = 419
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 385
           ControlData = {
             4C000000C63900004E2B00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800

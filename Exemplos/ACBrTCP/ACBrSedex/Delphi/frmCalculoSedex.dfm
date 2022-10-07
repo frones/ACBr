@@ -1044,7 +1044,6 @@ object Form1: TForm1
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 53
         end
         object Label23: TLabel
           Left = 1
@@ -1059,7 +1058,6 @@ object Form1: TForm1
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 70
         end
         object DBMemo2: TDBMemo
           Left = 1

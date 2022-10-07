@@ -128,7 +128,6 @@ object Form1: TForm1
           Color = clBtnFace
           ParentColor = False
           Layout = tlCenter
-          ExplicitHeight = 13
         end
         object edChaveCancelamento: TEdit
           Left = 127

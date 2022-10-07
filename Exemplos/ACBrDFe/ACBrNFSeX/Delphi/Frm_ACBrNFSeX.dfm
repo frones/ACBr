@@ -1687,8 +1687,6 @@ object frmACBrNFSe: TfrmACBrNFSe
       ActivePage = TabSheet8
       Align = alClient
       TabOrder = 0
-      ExplicitTop = 247
-      ExplicitHeight = 364
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
@@ -1706,7 +1704,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           ParentFont = False
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitHeight = 446
         end
       end
       object TabSheet9: TTabSheet
@@ -1719,7 +1716,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           Height = 419
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 446
           ControlData = {
             4C000000C63900004E2B00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -1738,7 +1734,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           Height = 419
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 446
           ControlData = {
             4C000000C63900004E2B00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -1756,7 +1751,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           Height = 419
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 446
           ControlData = {
             4C000000C63900004E2B00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -2099,7 +2093,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           ActivePage = tsEnvios1
           Align = alTop
           TabOrder = 0
-          ExplicitTop = -1
           object tsEnvios1: TTabSheet
             Caption = 'Envios'
             ImageIndex = 2

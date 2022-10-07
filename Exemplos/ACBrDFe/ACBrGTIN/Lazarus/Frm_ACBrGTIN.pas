@@ -40,7 +40,11 @@ uses
   ACBrBase, ACBrDFe, ACBrGTIN;
 
 type
+
+  { TfrmACBrGTIN }
+
   TfrmACBrGTIN = class(TForm)
+    ACBrGTIN1: TACBrGTIN;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
@@ -70,20 +74,18 @@ type
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
     cbXmlSignLib: TComboBox;
-    TabSheet4: TTabSheet;
-    GroupBox3: TGroupBox;
+    tbGERAL: TTabSheet;
+    gbxGeral: TGroupBox;
     sbtnPathSalvar: TSpeedButton;
     Label31: TLabel;
     Label42: TLabel;
     spPathSchemas: TSpeedButton;
     edtPathLogs: TEdit;
     ckSalvar: TCheckBox;
-    cbxAtualizarXML: TCheckBox;
     cbxExibirErroSchema: TCheckBox;
     edtFormatoAlerta: TEdit;
-    cbxRetirarAcentos: TCheckBox;
     edtPathSchemas: TEdit;
-    TabSheet7: TTabSheet;
+    tbWEBSERVICE: TTabSheet;
     GroupBox4: TGroupBox;
     Label6: TLabel;
     lTimeOut: TLabel;
@@ -103,22 +105,12 @@ type
     edtProxyPorta: TEdit;
     edtProxyUser: TEdit;
     edtProxySenha: TEdit;
-    gbxRetornoEnvio: TGroupBox;
-    Label36: TLabel;
-    Label37: TLabel;
-    Label38: TLabel;
-    cbxAjustarAut: TCheckBox;
-    edtTentativas: TEdit;
-    edtIntervalo: TEdit;
-    edtAguardar: TEdit;
-    TabSheet13: TTabSheet;
+    tbAQUIVOS: TTabSheet;
     sbPathGTIN: TSpeedButton;
     Label35: TLabel;
     cbxSalvarArqs: TCheckBox;
     cbxPastaMensal: TCheckBox;
     cbxAdicionaLiteral: TCheckBox;
-    cbxEmissaoPathGTIN: TCheckBox;
-    cbxSalvaPathEvento: TCheckBox;
     cbxSepararPorCNPJ: TCheckBox;
     edtPathGTIN: TEdit;
     cbxSepararPorModelo: TCheckBox;
@@ -134,7 +126,6 @@ type
     TabSheet8: TTabSheet;
     memoLog: TMemo;
     OpenDialog1: TOpenDialog;
-    ACBrGTIN1: TACBrGTIN;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -386,10 +377,8 @@ begin
     Ini.WriteString( 'Certificado', 'Senha',      edtSenha.Text);
     Ini.WriteString( 'Certificado', 'NumSerie',   edtNumSerie.Text);
 
-    Ini.WriteBool(   'Geral', 'AtualizarXML',     cbxAtualizarXML.Checked);
     Ini.WriteBool(   'Geral', 'ExibirErroSchema', cbxExibirErroSchema.Checked);
     Ini.WriteString( 'Geral', 'FormatoAlerta',    edtFormatoAlerta.Text);
-    Ini.WriteBool(   'Geral', 'RetirarAcentos',   cbxRetirarAcentos.Checked);
     Ini.WriteBool(   'Geral', 'Salvar',           ckSalvar.Checked);
     Ini.WriteString( 'Geral', 'PathSalvar',       edtPathLogs.Text);
     Ini.WriteString( 'Geral', 'PathSchemas',      edtPathSchemas.Text);
@@ -398,10 +387,6 @@ begin
     Ini.WriteInteger('WebService', 'Ambiente',   rgTipoAmb.ItemIndex);
     Ini.WriteBool(   'WebService', 'Visualizar', cbxVisualizar.Checked);
     Ini.WriteBool(   'WebService', 'SalvarSOAP', cbxSalvarSOAP.Checked);
-    Ini.WriteBool(   'WebService', 'AjustarAut', cbxAjustarAut.Checked);
-    Ini.WriteString( 'WebService', 'Aguardar',   edtAguardar.Text);
-    Ini.WriteString( 'WebService', 'Tentativas', edtTentativas.Text);
-    Ini.WriteString( 'WebService', 'Intervalo',  edtIntervalo.Text);
     Ini.WriteInteger('WebService', 'TimeOut',    seTimeOut.Value);
     Ini.WriteInteger('WebService', 'SSLType',    cbSSLType.ItemIndex);
 
@@ -413,8 +398,6 @@ begin
     Ini.WriteBool(  'Arquivos', 'Salvar',           cbxSalvarArqs.Checked);
     Ini.WriteBool(  'Arquivos', 'PastaMensal',      cbxPastaMensal.Checked);
     Ini.WriteBool(  'Arquivos', 'AddLiteral',       cbxAdicionaLiteral.Checked);
-    Ini.WriteBool(  'Arquivos', 'EmissaoPathGTIN',   cbxEmissaoPathGTIN.Checked);
-    Ini.WriteBool(  'Arquivos', 'SalvarPathEvento', cbxSalvaPathEvento.Checked);
     Ini.WriteBool(  'Arquivos', 'SepararPorCNPJ',   cbxSepararPorCNPJ.Checked);
     Ini.WriteBool(  'Arquivos', 'SepararPorModelo', cbxSepararPorModelo.Checked);
     Ini.WriteString('Arquivos', 'PathGTIN',          edtPathGTIN.Text);
@@ -472,12 +455,10 @@ begin
     edtSenha.Text          := Ini.ReadString( 'Certificado', 'Senha',      '');
     edtNumSerie.Text       := Ini.ReadString( 'Certificado', 'NumSerie',   '');
 
-    cbxAtualizarXML.Checked     := Ini.ReadBool(   'Geral', 'AtualizarXML',     True);
     cbxExibirErroSchema.Checked := Ini.ReadBool(   'Geral', 'ExibirErroSchema', True);
     edtFormatoAlerta.Text       := Ini.ReadString( 'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
 
     ckSalvar.Checked          := Ini.ReadBool(   'Geral', 'Salvar',         True);
-    cbxRetirarAcentos.Checked := Ini.ReadBool(   'Geral', 'RetirarAcentos', True);
     edtPathLogs.Text          := Ini.ReadString( 'Geral', 'PathSalvar',     PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
     edtPathSchemas.Text       := Ini.ReadString( 'Geral', 'PathSchemas',    PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\');
 
@@ -486,10 +467,6 @@ begin
     rgTipoAmb.ItemIndex   := Ini.ReadInteger('WebService', 'Ambiente',   0);
     cbxVisualizar.Checked := Ini.ReadBool(   'WebService', 'Visualizar', False);
     cbxSalvarSOAP.Checked := Ini.ReadBool(   'WebService', 'SalvarSOAP', False);
-    cbxAjustarAut.Checked := Ini.ReadBool(   'WebService', 'AjustarAut', False);
-    edtAguardar.Text      := Ini.ReadString( 'WebService', 'Aguardar',   '0');
-    edtTentativas.Text    := Ini.ReadString( 'WebService', 'Tentativas', '5');
-    edtIntervalo.Text     := Ini.ReadString( 'WebService', 'Intervalo',  '0');
     seTimeOut.Value       := Ini.ReadInteger('WebService', 'TimeOut',    5000);
     cbSSLType.ItemIndex   := Ini.ReadInteger('WebService', 'SSLType',    0);
 
@@ -501,8 +478,6 @@ begin
     cbxSalvarArqs.Checked       := Ini.ReadBool(  'Arquivos', 'Salvar',           false);
     cbxPastaMensal.Checked      := Ini.ReadBool(  'Arquivos', 'PastaMensal',      false);
     cbxAdicionaLiteral.Checked  := Ini.ReadBool(  'Arquivos', 'AddLiteral',       false);
-    cbxEmissaoPathGTIN.Checked   := Ini.ReadBool(  'Arquivos', 'EmissaoPathGTIN',   false);
-    cbxSalvaPathEvento.Checked  := Ini.ReadBool(  'Arquivos', 'SalvarPathEvento', false);
     cbxSepararPorCNPJ.Checked   := Ini.ReadBool(  'Arquivos', 'SepararPorCNPJ',   false);
     cbxSepararPorModelo.Checked := Ini.ReadBool(  'Arquivos', 'SepararPorModelo', false);
     edtPathGTIN.Text            := Ini.ReadString('Arquivos', 'PathGTIN',          '');
@@ -535,7 +510,6 @@ begin
 
     Salvar           := ckSalvar.Checked;
     ExibirErroSchema := cbxExibirErroSchema.Checked;
-    RetirarAcentos   := cbxRetirarAcentos.Checked;
     FormatoAlerta    := edtFormatoAlerta.Text;
     VersaoDF         := ve100;
   end;
@@ -546,23 +520,6 @@ begin
     Ambiente   := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
     Visualizar := cbxVisualizar.Checked;
     Salvar     := cbxSalvarSOAP.Checked;
-
-    AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
-
-    if NaoEstaVazio(edtAguardar.Text)then
-      AguardarConsultaRet := ifThen(StrToInt(edtAguardar.Text) < 1000, StrToInt(edtAguardar.Text) * 1000, StrToInt(edtAguardar.Text))
-    else
-      edtAguardar.Text := IntToStr(AguardarConsultaRet);
-
-    if NaoEstaVazio(edtTentativas.Text) then
-      Tentativas := StrToInt(edtTentativas.Text)
-    else
-      edtTentativas.Text := IntToStr(Tentativas);
-
-    if NaoEstaVazio(edtIntervalo.Text) then
-      IntervaloTentativas := ifThen(StrToInt(edtIntervalo.Text) < 1000, StrToInt(edtIntervalo.Text) * 1000, StrToInt(edtIntervalo.Text))
-    else
-      edtIntervalo.Text := IntToStr(ACBrGTIN1.Configuracoes.WebServices.IntervaloTentativas);
 
     TimeOut   := seTimeOut.Value;
     ProxyHost := edtProxyHost.Text;

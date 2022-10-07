@@ -64,29 +64,69 @@ procedure Register;
 begin
   RegisterComponents('ACBrGTIN', [TACBrGTIN]);
 
-  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
-    TClassProperty);
+  RegisterPropertyEditor(TypeInfo(TConfiguracoes),   TACBrGTIN,         'Configuracoes', TClassProperty);
 
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrGTIN, 'Configuracoes',
-    TClassProperty);
+  RegisterPropertyEditor(TypeInfo(TArquivosConfGTIN),TConfiguracoes,    'Arquivos',      TClassProperty);
+  RegisterPropertyEditor(TypeInfo(TCertificadosConf),TConfiguracoes,    'Certificados',  TClassProperty);
+  RegisterPropertyEditor(TypeInfo(TGeralConfGTIN),   TConfiguracoes,    'Geral',         TClassProperty);
+  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes,    'WebServices',   TClassProperty);
 
-  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
-    TClassProperty);
+  //RegisterPropertyEditor(TypeInfo(TRespTecConf),     TConfiguracoes,    'RespTec',       TClassProperty);
 
-  RegisterPropertyEditor(TypeInfo(String), TWebServicesConf, 'UF',
-     TACBrUFProperty);
+  RegisterPropertyEditor(TypeInfo(String),           TWebServicesConf,  'UF',            TACBrUFProperty);
+  RegisterPropertyEditor(TypeInfo(String),           TGeralConfGTIN,    'PathSalvar',    TACBrDirProperty);
+  RegisterPropertyEditor(TypeInfo(String),           TArquivosConfGTIN, 'PathGTIN',      TACBrDirProperty);
 
-  RegisterPropertyEditor(TypeInfo(TGeralConfGTIN), TConfiguracoes, 'Geral',
-    TClassProperty);
 
-  RegisterPropertyEditor(TypeInfo(String), TGeralConfGTIN, 'PathSalvar',
-     TACBrDirProperty);
 
-  RegisterPropertyEditor(TypeInfo(TArquivosConfGTIN), TConfiguracoes, 'Arquivos',
-    TClassProperty);
+  {$IFDEF FPC}
 
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfGTIN, 'PathGTIN',
-     TACBrDirProperty);
+
+    RegisterPropertyEditor(TypeInfo(boolean),  TGeralConfGTIN,   'RetirarAcentos',            THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(boolean),  TGeralConfGTIN,   'RetirarEspacos',            THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(string),   TGeralConfGTIN,   'QuebradeLinha',             THiddenPropertyEditor);
+
+    RegisterPropertyEditor(TypeInfo(string),   TDownloadConf,    'PathDownload',              THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(boolean),  TDownloadConf,    'SepararPorNome',            THiddenPropertyEditor);
+
+    RegisterPropertyEditor(TypeInfo(boolean),  TWebServicesConf, 'AjustaAguardaConsultaRet',  THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(Cardinal), TWebServicesConf, 'AguardarConsultaRet',       THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(Cardinal), TWebServicesConf, 'IntervaloTentativas',       THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(integer),  TWebServicesConf, 'Tentativas',                THiddenPropertyEditor);
+
+    //RegisterPropertyEditor(TypeInfo(string),   TRespTecConf,     'CSRT',                      THiddenPropertyEditor);
+    //RegisterPropertyEditor(TypeInfo(integer),  TRespTecConf,     'IdCSRT',                    THiddenPropertyEditor);
+    //RegisterPropertyEditor(TypeInfo(string),   TRespTecConf,     'Name',                      THiddenPropertyEditor);
+    //RegisterPropertyEditor(TypeInfo(integer),  TRespTecConf,     'Tag',                       THiddenPropertyEditor);
+
+  {$ELSE}
+    UnlistPublishedProperty(TGeralConfGTIN,   'RetirarAcentos');
+    UnlistPublishedProperty(TGeralConfGTIN,   'RetirarEspacos');
+    UnlistPublishedProperty(TGeralConfGTIN,   'QuebradeLinha');
+
+  //UnlistPublishedProperty(TGeralConfGTIN,   'RespTec'); nao funcionou
+  //UnlistPublishedProperty(TConfiguracoes,   'RespTec'); nao funcionou
+  //UnlistPublishedProperty(TRespTecConf,     'RespTec'); nao funcionou
+
+
+    UnlistPublishedProperty(TDownloadConf,    'PathDownload');
+    UnlistPublishedProperty(TDownloadConf,    'SepararPorNome');
+
+    UnlistPublishedProperty(TWebServicesConf, 'AjustaAguardaConsultaRet');
+    UnlistPublishedProperty(TWebServicesConf, 'RAguardarConsultaRet');
+    UnlistPublishedProperty(TWebServicesConf, 'IntervaloTentativas');
+    UnlistPublishedProperty(TWebServicesConf, 'Tentativas');
+
+    //UnlistPublishedProperty(TRespTecConf, 'CSRT');
+    //UnlistPublishedProperty(TRespTecConf, 'IdCSRT');
+    //UnlistPublishedProperty(TRespTecConf, 'Name');
+    //UnlistPublishedProperty(TRespTecConf, 'Tag');
+
+
+
+  {$ENDIF}
+
+
 end;
 
 {$IFDEF FPC}

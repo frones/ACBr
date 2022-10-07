@@ -12,7 +12,6 @@ object frmACBrGTIN: TfrmACBrGTIN
   Font.Style = []
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -21,6 +20,7 @@ object frmACBrGTIN: TfrmACBrGTIN
     Height = 612
     Align = alLeft
     TabOrder = 0
+    ExplicitHeight = 611
     object lblColaborador: TLabel
       Left = 18
       Top = 540
@@ -424,43 +424,27 @@ object frmACBrGTIN: TfrmACBrGTIN
                 ParentFont = False
                 TabOrder = 1
               end
-              object cbxAtualizarXML: TCheckBox
-                Left = 8
-                Top = 16
-                Width = 97
-                Height = 17
-                Caption = 'Atualizar XML'
-                TabOrder = 2
-              end
               object cbxExibirErroSchema: TCheckBox
-                Left = 8
-                Top = 32
+                Left = 9
+                Top = 27
                 Width = 129
                 Height = 17
                 Caption = 'Exibir Erro Schema'
-                TabOrder = 3
+                TabOrder = 2
               end
               object edtFormatoAlerta: TEdit
                 Left = 8
                 Top = 66
                 Width = 248
                 Height = 21
-                TabOrder = 4
-              end
-              object cbxRetirarAcentos: TCheckBox
-                Left = 8
-                Top = 90
-                Width = 193
-                Height = 17
-                Caption = 'Retirar Acentos dos XMLs enviados'
-                TabOrder = 5
+                TabOrder = 3
               end
               object edtPathSchemas: TEdit
                 Left = 8
                 Top = 166
                 Width = 228
                 Height = 21
-                TabOrder = 6
+                TabOrder = 4
               end
             end
           end
@@ -608,8 +592,8 @@ object frmACBrGTIN: TfrmACBrGTIN
               end
             end
             object gbProxy: TGroupBox
-              Left = 5
-              Top = 283
+              Left = 3
+              Top = 200
               Width = 265
               Height = 104
               Caption = 'Proxy'
@@ -672,77 +656,13 @@ object frmACBrGTIN: TfrmACBrGTIN
                 TabOrder = 3
               end
             end
-            object gbxRetornoEnvio: TGroupBox
-              Left = 5
-              Top = 200
-              Width = 265
-              Height = 77
-              Caption = 'Retorno de Envio'
-              TabOrder = 2
-              object Label36: TLabel
-                Left = 93
-                Top = 27
-                Width = 51
-                Height = 13
-                Caption = 'Tentativas'
-              end
-              object Label37: TLabel
-                Left = 176
-                Top = 27
-                Width = 44
-                Height = 13
-                Caption = 'Intervalo'
-              end
-              object Label38: TLabel
-                Left = 8
-                Top = 27
-                Width = 45
-                Height = 13
-                Hint = 
-                  'Aguardar quantos segundos para primeira consulta de retorno de e' +
-                  'nvio'
-                Caption = 'Aguardar'
-              end
-              object cbxAjustarAut: TCheckBox
-                Left = 8
-                Top = 12
-                Width = 234
-                Height = 17
-                Caption = 'Ajustar Automaticamente prop. "Aguardar"'
-                TabOrder = 0
-              end
-              object edtTentativas: TEdit
-                Left = 93
-                Top = 43
-                Width = 57
-                Height = 21
-                TabOrder = 2
-              end
-              object edtIntervalo: TEdit
-                Left = 176
-                Top = 43
-                Width = 57
-                Height = 21
-                TabOrder = 3
-              end
-              object edtAguardar: TEdit
-                Left = 8
-                Top = 43
-                Width = 57
-                Height = 21
-                Hint = 
-                  'Aguardar quantos segundos para primeira consulta de retorno de e' +
-                  'nvio'
-                TabOrder = 1
-              end
-            end
           end
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
             object sbPathGTIN: TSpeedButton
               Left = 247
-              Top = 131
+              Top = 116
               Width = 23
               Height = 24
               Glyph.Data = {
@@ -762,8 +682,8 @@ object frmACBrGTIN: TfrmACBrGTIN
               OnClick = sbPathGTINClick
             end
             object Label35: TLabel
-              Left = 6
-              Top = 116
+              Left = 8
+              Top = 102
               Width = 99
               Height = 13
               Caption = 'Pasta Arquivos GTIN'
@@ -792,44 +712,28 @@ object frmACBrGTIN: TfrmACBrGTIN
               Caption = 'Adicionar Literal no nome das pastas'
               TabOrder = 2
             end
-            object cbxEmissaoPathGTIN: TCheckBox
-              Left = 6
-              Top = 48
-              Width = 251
-              Height = 17
-              Caption = 'Salvar Documento pelo campo Data de Emiss'#227'o'
-              TabOrder = 3
-            end
-            object cbxSalvaPathEvento: TCheckBox
-              Left = 6
-              Top = 64
-              Width = 233
-              Height = 17
-              Caption = 'Salvar Arquivos de Eventos'
-              TabOrder = 4
-            end
             object cbxSepararPorCNPJ: TCheckBox
               Left = 6
-              Top = 80
+              Top = 48
               Width = 233
               Height = 17
               Caption = 'Separar Arqs pelo CNPJ do Certificado'
-              TabOrder = 5
+              TabOrder = 3
             end
             object edtPathGTIN: TEdit
               Left = 6
-              Top = 132
+              Top = 117
               Width = 235
               Height = 21
-              TabOrder = 6
+              TabOrder = 4
             end
             object cbxSepararPorModelo: TCheckBox
               Left = 6
-              Top = 96
+              Top = 65
               Width = 251
               Height = 17
               Caption = 'Separar Arqs pelo Modelo do Documento'
-              TabOrder = 7
+              TabOrder = 5
             end
           end
         end
@@ -866,6 +770,8 @@ object frmACBrGTIN: TfrmACBrGTIN
     Height = 612
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 565
+    ExplicitHeight = 611
     object pgcBotoes: TPageControl
       Left = 1
       Top = 1
@@ -874,6 +780,7 @@ object frmACBrGTIN: TfrmACBrGTIN
       ActivePage = tsConsultas
       Align = alTop
       TabOrder = 1
+      ExplicitWidth = 563
       object tsConsultas: TTabSheet
         Caption = 'Consultas'
         ImageIndex = 3
@@ -896,6 +803,8 @@ object frmACBrGTIN: TfrmACBrGTIN
       ActivePage = TabSheet8
       Align = alClient
       TabOrder = 0
+      ExplicitWidth = 563
+      ExplicitHeight = 412
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
@@ -907,6 +816,8 @@ object frmACBrGTIN: TfrmACBrGTIN
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitWidth = 555
+          ExplicitHeight = 384
         end
       end
     end
@@ -932,8 +843,7 @@ object frmACBrGTIN: TfrmACBrGTIN
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.RespTec.IdCSRT = 0
-    Left = 334
-    Top = 286
+    Left = 342
+    Top = 342
   end
 end

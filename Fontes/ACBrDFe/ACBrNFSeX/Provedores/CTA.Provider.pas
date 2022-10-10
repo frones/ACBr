@@ -98,10 +98,9 @@ type
 implementation
 
 uses
-  DateUtils,
-  synacode,
+  DateUtils, synacode,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings,
-  ACBrDFeException,
+  ACBrDFeException, ACBrDFeSSL,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   CTA.GravarXml, CTA.LerXml;
 
@@ -239,7 +238,9 @@ begin
 
   ChaveSeguranca := Emitente.CNPJ + Emitente.WSChaveAcesso + DataEmissao;
 
-  ChaveSeguranca := EncodeBase64(SHA1(ChaveSeguranca));
+  ChaveSeguranca := LowerCase(TACBrNFSeX(FAOwner).SSL.CalcHash(ChaveSeguranca,
+                      dgstSHA256, outHexa, False));
+  ChaveSeguranca := EncodeBase64(ChaveSeguranca);
 
   if ConfigGeral.Ambiente = taProducao then
     Producao := '2'

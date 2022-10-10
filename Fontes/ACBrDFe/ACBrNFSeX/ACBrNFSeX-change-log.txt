@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/10/2022
+-- CTA.Provider --
+[*] Possível solução para gerar a ChaveSeguranca corretamente.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluida a cidade: Piritiba/BA - Provedor: Saatri
 [+] Incluida a cidade: Corumbá de Goiás/GO - Provedor: MegaSoft

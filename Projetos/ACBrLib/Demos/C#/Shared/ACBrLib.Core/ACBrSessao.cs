@@ -46,5 +46,6 @@
         Guia,
         Sedex,
         eSocial,
+        GTIN,
     }
 }

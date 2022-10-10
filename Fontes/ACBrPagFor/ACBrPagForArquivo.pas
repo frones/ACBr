@@ -155,7 +155,10 @@ end;
 function TRegistro.Ler(const aArquivoTXT: String): boolean;
 var
   FProvider: IACBrPagForProvider;
+  Ok: Boolean;
 begin
+  TACBrPagFor(FACBrPagFor).Configuracoes.Geral.Banco := StrToBanco(Ok, Copy(aArquivoTXT, 1, 3));
+
   FProvider := TACBrPagFor(FACBrPagFor).Provider;
 
   if not Assigned(FProvider) then

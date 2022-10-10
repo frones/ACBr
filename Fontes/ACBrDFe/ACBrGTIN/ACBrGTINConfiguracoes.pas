@@ -97,7 +97,7 @@ type
     property Arquivos: TArquivosConfGTIN read GetArquivos;
     property WebServices;
     property Certificados;
-  //property RespTec;
+    property RespTec;
   end;
 
 implementation
@@ -141,7 +141,7 @@ begin
   WebServices.Assign(DeConfiguracoesGTIN.WebServices);
   Certificados.Assign(DeConfiguracoesGTIN.Certificados);
   Arquivos.Assign(DeConfiguracoesGTIN.Arquivos);
-  //RespTec.Assign(DeConfiguracoesGTIN.RespTec);
+  RespTec.Assign(DeConfiguracoesGTIN.RespTec);
 end;
 
 { TGeralConfGTIN }

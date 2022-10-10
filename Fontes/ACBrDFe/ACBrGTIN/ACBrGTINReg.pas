@@ -54,7 +54,8 @@ procedure Register;
 implementation
 
 uses
-  ACBrReg, ACBrDFeConfiguracoes, ACBrGTINConfiguracoes, ACBrDFeRegUtil;
+  ACBrReg, ACBrDFeConfiguracoes, ACBrGTINConfiguracoes, ACBrDFeRegUtil,
+  ACBrMail, ACBrIntegrador;
 
 {$IFNDEF FPC}
    {$R ACBrGTIN.dcr}
@@ -71,16 +72,11 @@ begin
   RegisterPropertyEditor(TypeInfo(TGeralConfGTIN),   TConfiguracoes,    'Geral',         TClassProperty);
   RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes,    'WebServices',   TClassProperty);
 
-  //RegisterPropertyEditor(TypeInfo(TRespTecConf),     TConfiguracoes,    'RespTec',       TClassProperty);
-
   RegisterPropertyEditor(TypeInfo(String),           TWebServicesConf,  'UF',            TACBrUFProperty);
   RegisterPropertyEditor(TypeInfo(String),           TGeralConfGTIN,    'PathSalvar',    TACBrDirProperty);
   RegisterPropertyEditor(TypeInfo(String),           TArquivosConfGTIN, 'PathGTIN',      TACBrDirProperty);
 
-
-
   {$IFDEF FPC}
-
 
     RegisterPropertyEditor(TypeInfo(boolean),  TGeralConfGTIN,   'RetirarAcentos',            THiddenPropertyEditor);
     RegisterPropertyEditor(TypeInfo(boolean),  TGeralConfGTIN,   'RetirarEspacos',            THiddenPropertyEditor);
@@ -94,36 +90,29 @@ begin
     RegisterPropertyEditor(TypeInfo(Cardinal), TWebServicesConf, 'IntervaloTentativas',       THiddenPropertyEditor);
     RegisterPropertyEditor(TypeInfo(integer),  TWebServicesConf, 'Tentativas',                THiddenPropertyEditor);
 
-    //RegisterPropertyEditor(TypeInfo(string),   TRespTecConf,     'CSRT',                      THiddenPropertyEditor);
-    //RegisterPropertyEditor(TypeInfo(integer),  TRespTecConf,     'IdCSRT',                    THiddenPropertyEditor);
-    //RegisterPropertyEditor(TypeInfo(string),   TRespTecConf,     'Name',                      THiddenPropertyEditor);
-    //RegisterPropertyEditor(TypeInfo(integer),  TRespTecConf,     'Tag',                       THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(TRespTecConf),     TConfiguracoesGTIN, 'RespTec',         THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(TACBrIntegrador),  TACBrGTIN,          'Integrador',      THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(TACBrMail),        TACBrGTIN,          'MAIL',            THiddenPropertyEditor);
+
+
 
   {$ELSE}
-    UnlistPublishedProperty(TGeralConfGTIN,   'RetirarAcentos');
-    UnlistPublishedProperty(TGeralConfGTIN,   'RetirarEspacos');
-    UnlistPublishedProperty(TGeralConfGTIN,   'QuebradeLinha');
+    UnlistPublishedProperty(TGeralConfGTIN,    'RetirarAcentos');
+    UnlistPublishedProperty(TGeralConfGTIN,    'RetirarEspacos');
+    UnlistPublishedProperty(TGeralConfGTIN,    'QuebradeLinha');
 
-  //UnlistPublishedProperty(TGeralConfGTIN,   'RespTec'); nao funcionou
-  //UnlistPublishedProperty(TConfiguracoes,   'RespTec'); nao funcionou
-  //UnlistPublishedProperty(TRespTecConf,     'RespTec'); nao funcionou
+    UnlistPublishedProperty(TDownloadConf,     'PathDownload');
+    UnlistPublishedProperty(TDownloadConf,     'SepararPorNome');
 
+    UnlistPublishedProperty(TWebServicesConf,  'AjustaAguardaConsultaRet');
+    UnlistPublishedProperty(TWebServicesConf,  'AguardarConsultaRet');
+    UnlistPublishedProperty(TWebServicesConf,  'IntervaloTentativas');
+    UnlistPublishedProperty(TWebServicesConf,  'Tentativas');
 
-    UnlistPublishedProperty(TDownloadConf,    'PathDownload');
-    UnlistPublishedProperty(TDownloadConf,    'SepararPorNome');
+    UnlistPublishedProperty(TConfiguracoesGTIN,'RespTec');
 
-    UnlistPublishedProperty(TWebServicesConf, 'AjustaAguardaConsultaRet');
-    UnlistPublishedProperty(TWebServicesConf, 'RAguardarConsultaRet');
-    UnlistPublishedProperty(TWebServicesConf, 'IntervaloTentativas');
-    UnlistPublishedProperty(TWebServicesConf, 'Tentativas');
-
-    //UnlistPublishedProperty(TRespTecConf, 'CSRT');
-    //UnlistPublishedProperty(TRespTecConf, 'IdCSRT');
-    //UnlistPublishedProperty(TRespTecConf, 'Name');
-    //UnlistPublishedProperty(TRespTecConf, 'Tag');
-
-
-
+    UnlistPublishedProperty(TACBrGTIN,         'Integrador');
+    UnlistPublishedProperty(TACBrGTIN,         'MAIL');
   {$ENDIF}
 
 

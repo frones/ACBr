@@ -35,12 +35,9 @@ unit ACBrPrinter1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil,
-  Dialogs, Forms, IniFiles,
-  ACBrUtil, pcnConversao,
-  ACBrPosPrinter, ACBrSAT, ACBrNFe,
-  ACBrNFeDANFeRLClass, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
-  ACBrSATExtratoFortesFr, ACBrSATExtratoESCPOS;
+  Classes, SysUtils, FileUtil, Dialogs, Forms, IniFiles, pcnConversao,
+  ACBrPosPrinter, ACBrSAT, ACBrNFe, ACBrNFeDANFeRLClass, ACBrNFeDANFeESCPOS,
+  ACBrDANFCeFortesFr, ACBrSATExtratoFortesFr, ACBrSATExtratoESCPOS;
 
 type
 
@@ -71,7 +68,8 @@ var
 
 implementation
 
-uses configuracoes;
+uses
+  configuracoes, ACBrUtil.Base, ACBrUtil.FilesIO;
 
 {$R *.lfm}
 
@@ -87,7 +85,7 @@ begin
   begin
      if UpperCase(ParamStr(1)) = '/C' then
      begin
-       frConfiguracoes := TfrConfiguracoes.Create(Self);
+       frConfiguracoes := TfrConfiguracoes.Create(Self) ;
        frConfiguracoes.ShowModal;
        frConfiguracoes.Free;
        Application.Terminate;
@@ -114,7 +112,7 @@ begin
 
        ReadConfigPosPrinter(ArquivoConfiguracao);
 
-       if not FileExistsUTF8(ArquivoImpressao) then
+       if not FileExists(ArquivoImpressao) then
        begin
           MessageDlg('Arquivo '+ArquivoImpressao+' não encontrado.', mtError, [mbOK], 0);
           Application.Terminate;
@@ -244,31 +242,25 @@ begin
       ACBrNFe1.DANFE.Sistema := Ini.ReadString('DANFE', 'SoftwareHouse', '');
       ACBrNFe1.DANFE.Site := Ini.ReadString('DANFE', 'Site', '');
       ACBrNFe1.DANFE.Email := Ini.ReadString('DANFE', 'Email', '');
-      ACBrNFe1.DANFE.Fax :=  Ini.ReadString('DANFE', 'Fax', '');
-      ACBrNFe1.DANFE.ImprimirDescPorc := Ini.ReadBool('DANFE', 'ImpDescPorc', False);
-      ACBrNFe1.DANFE.MostrarPreview := Ini.ReadBool('DANFE', 'MostrarPreview', False);
+      ACBrNFe1.DANFE.MostraPreview := Ini.ReadBool('DANFE', 'MostrarPreview', False);
       ACBrNFe1.DANFE.NumCopias := Ini.ReadInteger('DANFE', 'Copias', 1);
-      ACBrNFe1.DANFE.ProdutosPorPagina := Ini.ReadInteger('DANFE', 'ProdutosPorPagina', 0);
       ACBrNFe1.DANFE.MargemInferior := Ini.ReadFloat('DANFE', 'Margem', 0.8);
       ACBrNFe1.DANFE.MargemSuperior := Ini.ReadFloat('DANFE', 'MargemSup', 0.8);
       ACBrNFe1.DANFE.MargemDireita  := Ini.ReadFloat('DANFE', 'MargemDir', 0.51);
       ACBrNFe1.DANFE.MargemEsquerda := Ini.ReadFloat('DANFE', 'MargemEsq', 0.6);
       ACBrNFe1.DANFE.PathPDF := Ini.ReadString('DANFE', 'PathPDF', PathWithDelim(ExtractFilePath(Application.ExeName))+'PDF');
-      ACBrNFe1.DANFE.CasasDecimais._qCom := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
-      ACBrNFe1.DANFE.CasasDecimais._vUnCom := Ini.ReadInteger('DANFE', 'DecimaisValor', 2);
-      ACBrNFe1.DANFE.ExibirResumoCanhoto := Ini.ReadBool('DANFE', 'ExibeResumo', False);
-      ACBrNFe1.DANFE.ImprimirTotalLiquido := Ini.ReadBool('DANFE', 'ImprimirValLiq', False);
-      ACBrNFe1.DANFE.FormularioContinuo := Ini.ReadBool('DANFE', 'PreImpresso', False);
-      ACBrNFe1.DANFE.MostrarStatus := Ini.ReadBool('DANFE', 'MostrarStatus', False);
-      ACBrNFe1.DANFE.ExpandirLogoMarca := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
-      ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := Ini.ReadInteger('DANFE', 'FonteCampos', 10);      
+      ACBrNFe1.DANFE.CasasDecimais.qCom := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
+      ACBrNFe1.DANFE.CasasDecimais.vUnCom := Ini.ReadInteger('DANFE', 'DecimaisValor', 2);
+      ACBrNFe1.DANFE.ImprimeTotalLiquido := Ini.ReadBool('DANFE', 'ImprimirValLiq', False);
+      ACBrNFe1.DANFE.MostraStatus := Ini.ReadBool('DANFE', 'MostrarStatus', False);
+      ACBrNFe1.DANFE.ExpandeLogoMarca := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
 
       if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
       begin
         ACBrNFeDANFeRL1.Fonte.Nome := TNomeFonte(Ini.ReadInteger('DANFE', 'Fonte', 0));
         ACBrNFeDANFeRL1.LarguraCodProd := Ini.ReadInteger('DANFE', 'LarguraCodigoProduto', 54);
-        ACBrNFeDANFeRL1.ExibirEAN := Ini.ReadBool('DANFE', 'ExibirEAN', False);
-        ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentoEspecifico:= Ini.ReadBool('DANFE', 'QuebraLinhaEmDetalhe', False);
+        ACBrNFeDANFeRL1.ExibeEAN := Ini.ReadBool('DANFE', 'ExibirEAN', False);
+        ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentos:= Ini.ReadBool('DANFE', 'QuebraLinhaEmDetalhe', False);
       end
       else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
       begin
@@ -293,17 +285,15 @@ begin
       ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
 
     ACBrSATExtratoFortes1.LarguraBobina := INI.ReadInteger('SATFortes','Largura',ACBrSATExtratoFortes1.LarguraBobina);
-    ACBrSATExtratoFortes1.Margens.Topo  := INI.ReadInteger('SATFortes','MargemTopo',ACBrSATExtratoFortes1.Margens.Topo);
-    ACBrSATExtratoFortes1.Margens.Fundo := INI.ReadInteger('SATFortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
-    ACBrSATExtratoFortes1.Margens.Esquerda := INI.ReadInteger('SATFortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
-    ACBrSATExtratoFortes1.Margens.Direita := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
-    ACBrSATExtratoFortes1.MostrarPreview := INI.ReadBool('SATFortes','Preview',False);
+    ACBrSATExtratoFortes1.MargemSuperior  := INI.ReadFloat('SATFortes','MargemTopo',ACBrSATExtratoFortes1.MargemSuperior);
+    ACBrSATExtratoFortes1.MargemInferior := INI.ReadFloat('SATFortes','MargemFundo',ACBrSATExtratoFortes1.MargemInferior);
+    ACBrSATExtratoFortes1.MargemEsquerda := INI.ReadFloat('SATFortes','MargemEsquerda',ACBrSATExtratoFortes1.MargemEsquerda);
+    ACBrSATExtratoFortes1.MargemDireita := INI.ReadFloat('Fortes','MargemDireita',ACBrSATExtratoFortes1.MargemDireita);
+    ACBrSATExtratoFortes1.MostraPreview := INI.ReadBool('SATFortes','Preview',False);
   finally
     Ini.Free;
   end;
-
 end;
-
 
 end.
 

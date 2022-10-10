@@ -35,10 +35,9 @@ unit configuracoes;
 interface
 
 uses
-  Classes, SysUtils, SdfData, db, FileUtil, Forms, Controls, Graphics, Dialogs,
-  ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls, types, Typinfo,
-  ACBrUtil, IniFiles, Printers, ACBrPosPrinter, fileinfo
-  ;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls,
+  StdCtrls, Spin, Buttons, ExtCtrls, Typinfo, IniFiles, Printers, fileinfo,
+  ACBrPosPrinter;
 
 type
 
@@ -52,12 +51,9 @@ type
     cbIgnorarTags: TCheckBox;
     cbPreview: TCheckBox;
     cbTraduzirTags: TCheckBox;
-    cbxExibeResumo: TCheckBox;
     cbxExibirEAN: TCheckBox;
     cbxQuebraLinhaDetalhe: TCheckBox;
     cbxExpandirLogo: TCheckBox;
-    cbxFormCont: TCheckBox;
-    cbxImpDescPorc: TCheckBox;
     cbxImpressora: TComboBox;
     cbxImpressoraNFCe: TComboBox;
     cbxImpressoraSAT: TComboBox;
@@ -74,8 +70,6 @@ type
     edPosPrinterLog: TEdit;
     edtEmailEmpresa: TEdit;
     edtEspBorda: TSpinEdit;
-    edtFaxEmpresa: TEdit;
-    edtFonteCampos: TSpinEdit;
     edtFonteRazao: TSpinEdit;
     edtLargCodProd: TSpinEdit;
     edtLogoMarca: TEdit;
@@ -85,6 +79,10 @@ type
     edtMargemSup: TFloatSpinEdit;
     edtSiteEmpresa: TEdit;
     edtSoftwareHouse: TEdit;
+    seMargemSuperior: TFloatSpinEdit;
+    seMargemInferior: TFloatSpinEdit;
+    seMargemEsquerda: TFloatSpinEdit;
+    seMargemDireita: TFloatSpinEdit;
     gbCodBarras: TGroupBox;
     gbConfiguracao: TGroupBox;
     gbDANFeESCPOS: TGroupBox;
@@ -101,7 +99,6 @@ type
     Label141: TLabel;
     Label142: TLabel;
     Label143: TLabel;
-    Label144: TLabel;
     Label145: TLabel;
     Label146: TLabel;
     Label147: TLabel;
@@ -109,7 +106,6 @@ type
     Label149: TLabel;
     Label150: TLabel;
     Label151: TLabel;
-    Label152: TLabel;
     Label153: TLabel;
     Label154: TLabel;
     Label166: TLabel;
@@ -159,10 +155,6 @@ type
     seLogoFatorY: TSpinEdit;
     seLogoKC1: TSpinEdit;
     seLogoKC2: TSpinEdit;
-    seMargemDireita: TSpinEdit;
-    seMargemEsquerda: TSpinEdit;
-    seMargemFundo: TSpinEdit;
-    seMargemTopo: TSpinEdit;
     seQRCodeErrorLevel: TSpinEdit;
     seQRCodeLargMod: TSpinEdit;
     seQRCodeTipo: TSpinEdit;
@@ -188,15 +180,12 @@ type
     procedure sbAddClick(Sender: TObject);
     procedure sbDeleteClick(Sender: TObject);
   private
-    { private declarations }
-    FParamsString : String;
-
     procedure FindPrinters;
     procedure LoadConfig(FileConfig : String);
     procedure LoadDefaultValues;
     procedure SaveConfig(FileConfig : String);
   public
-    { public declarations }
+
   end;
 
 var
@@ -205,7 +194,8 @@ var
 
 implementation
 
-uses ConfiguraSerial, ACBrPrinter1;
+uses
+  ConfiguraSerial, ACBrPrinter1, ACBrUtil.Base, ACBrUtil.FilesIO;
 
 {$R *.lfm}
 
@@ -451,24 +441,19 @@ begin
       edtSoftwareHouse.Text := Ini.ReadString('DANFE', 'SoftwareHouse', '');
       edtSiteEmpresa.Text := Ini.ReadString('DANFE', 'Site', '');
       edtEmailEmpresa.Text := Ini.ReadString('DANFE', 'Email', '');
-      edtFaxEmpresa.Text := Ini.ReadString('DANFE', 'Fax', '');
-      cbxImpDescPorc.Checked := Ini.ReadBool('DANFE', 'ImpDescPorc', False);
       cbxMostrarPreview.Checked := Ini.ReadBool('DANFE', 'MostrarPreview', False);
       spedtNumCopias.Value := Ini.ReadInteger('DANFE', 'Copias', 1);
       edtLargCodProd.Value := Ini.ReadInteger('DANFE', 'LarguraCodigoProduto', 54);
       edtEspBorda.Value := Ini.ReadInteger('DANFE', 'EspessuraBorda', 1);
       edtFonteRazao.Value := Ini.ReadInteger('DANFE', 'FonteRazao', 12);
-      edtFonteCampos.Value := Ini.ReadInteger('DANFE', 'FonteCampos', 10);
       edtMargemInf.Value := Ini.ReadFloat('DANFE', 'Margem', 0.8);
       edtMargemSup.Value := Ini.ReadFloat('DANFE', 'MargemSup', 0.8);
       edtMargemDir.Value := Ini.ReadFloat('DANFE', 'MargemDir', 0.51);
       edtMargemEsq.Value := Ini.ReadFloat('DANFE', 'MargemEsq', 0.6);
       spedtDecimaisQtd.Value := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
       spedtDecimaisVUnit.Value := Ini.ReadInteger('DANFE', 'DecimaisValor', 2);
-      cbxExibeResumo.Checked := Ini.ReadBool('DANFE', 'ExibeResumo', False);
       cbxImprimirTributos.Checked := Ini.ReadBool('DANFE', 'ImprimirTributosItem', False);
       cbxImpValLiq.Checked := Ini.ReadBool('DANFE', 'ImprimirValLiq', False);
-      cbxFormCont.Checked := Ini.ReadBool('DANFE', 'PreImpresso', False);
       cbxMostraStatus.Checked := Ini.ReadBool('DANFE', 'MostrarStatus', False);
       cbxExpandirLogo.Checked := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
       rgTipoFonte.ItemIndex := Ini.ReadInteger('DANFE', 'Fonte', 0);
@@ -487,10 +472,10 @@ begin
         rgModeloExtratoSAT.ItemIndex := 1;
 
       seLargura.Value        := INI.ReadInteger('SATFortes','Largura',DataModule1.ACBrSATExtratoFortes1.LarguraBobina);
-      seMargemTopo.Value     := INI.ReadInteger('SATFortes','MargemTopo',DataModule1.ACBrSATExtratoFortes1.Margens.Topo);
-      seMargemFundo.Value    := INI.ReadInteger('SATFortes','MargemFundo',DataModule1.ACBrSATExtratoFortes1.Margens.Fundo);
-      seMargemEsquerda.Value := INI.ReadInteger('SATFortes','MargemEsquerda',DataModule1.ACBrSATExtratoFortes1.Margens.Esquerda);
-      seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',DataModule1.ACBrSATExtratoFortes1.Margens.Direita);
+      seMargemSuperior.Value := INI.ReadFloat('SATFortes','MargemTopo',DataModule1.ACBrSATExtratoFortes1.MargemSuperior);
+      seMargemInferior.Value := INI.ReadFloat('SATFortes','MargemFundo',DataModule1.ACBrSATExtratoFortes1.MargemInferior);
+      seMargemEsquerda.Value := INI.ReadFloat('SATFortes','MargemEsquerda',DataModule1.ACBrSATExtratoFortes1.MargemEsquerda);
+      seMargemDireita.Value  := INI.ReadFloat('Fortes','MargemDireita',DataModule1.ACBrSATExtratoFortes1.MargemDireita);
       cbPreview.Checked      := INI.ReadBool('SATFortes','Preview',False);
 
       cbxImpressoraSAT.ItemIndex := cbxImpressoraNFCe.Items.IndexOf(Ini.ReadString('SATPrinter','Name', '0'));
@@ -533,24 +518,19 @@ begin
   edtSoftwareHouse.Text := '';
   edtSiteEmpresa.Text := '';
   edtEmailEmpresa.Text := '';
-  edtFaxEmpresa.Text := '';
-  cbxImpDescPorc.Checked := False;
   cbxMostrarPreview.Checked := False;
   spedtNumCopias.Value := 1;
   edtLargCodProd.Value := 54;
   edtEspBorda.Value := 1;
   edtFonteRazao.Value := 12;
-  edtFonteCampos.Value := 10;
   edtMargemInf.Value :=  0.8;
   edtMargemSup.Value :=  0.8;
   edtMargemDir.Value := 0.51;
   edtMargemEsq.Value := 0.6;
   spedtDecimaisQtd.Value := 2;
   spedtDecimaisVUnit.Value := 2;
-  cbxExibeResumo.Checked := False;
   cbxImprimirTributos.Checked := False;
   cbxImpValLiq.Checked := False;
-  cbxFormCont.Checked := False;
   cbxMostraStatus.Checked := False;
   cbxExpandirLogo.Checked := False;
   rgTipoFonte.ItemIndex := 0;
@@ -565,10 +545,10 @@ begin
   rgModeloExtratoSAT.ItemIndex := 1;
 
   seLargura.Value        := DataModule1.ACBrSATExtratoFortes1.LarguraBobina;
-  seMargemTopo.Value     := DataModule1.ACBrSATExtratoFortes1.Margens.Topo;
-  seMargemFundo.Value    := DataModule1.ACBrSATExtratoFortes1.Margens.Fundo;
-  seMargemEsquerda.Value := DataModule1.ACBrSATExtratoFortes1.Margens.Esquerda;
-  seMargemDireita.Value  := DataModule1.ACBrSATExtratoFortes1.Margens.Direita;
+  seMargemSuperior.Value := DataModule1.ACBrSATExtratoFortes1.MargemSuperior;
+  seMargemInferior.Value := DataModule1.ACBrSATExtratoFortes1.MargemInferior;
+  seMargemEsquerda.Value := DataModule1.ACBrSATExtratoFortes1.MargemEsquerda;
+  seMargemDireita.Value  := DataModule1.ACBrSATExtratoFortes1.MargemDireita;
   cbPreview.Checked      := False;
 
   cbxImpressoraSAT.Text := '';
@@ -612,24 +592,19 @@ begin
     Ini.WriteString('DANFE', 'SoftwareHouse', edtSoftwareHouse.Text);
     Ini.WriteString('DANFE', 'Site', edtSiteEmpresa.Text);
     Ini.WriteString('DANFE', 'Email', edtEmailEmpresa.Text);
-    Ini.WriteString('DANFE', 'Fax', edtFaxEmpresa.Text);
-    Ini.WriteBool('DANFE', 'ImpDescPorc', cbxImpDescPorc.Checked);
     Ini.WriteBool('DANFE', 'MostrarPreview', cbxMostrarPreview.Checked);
     Ini.WriteInteger('DANFE', 'Copias', spedtNumCopias.Value );
     Ini.WriteInteger('DANFE', 'LarguraCodigoProduto', edtLargCodProd.Value);
     Ini.WriteInteger('DANFE', 'EspessuraBorda', edtEspBorda.Value);
     Ini.WriteInteger('DANFE', 'FonteRazao', edtFonteRazao.Value);
-    Ini.WriteInteger('DANFE', 'FonteCampos', edtFonteCampos.Value);
     Ini.WriteFloat('DANFE', 'Margem', edtMargemInf.Value);
     Ini.WriteFloat('DANFE', 'MargemSup', edtMargemSup.Value);
     Ini.WriteFloat('DANFE', 'MargemDir', edtMargemDir.Value);
     Ini.WriteFloat('DANFE', 'MargemEsq', edtMargemEsq.Value);
     Ini.WriteInteger('DANFE', 'DecimaisQTD', spedtDecimaisQtd.Value);
     Ini.WriteInteger('DANFE', 'DecimaisValor', spedtDecimaisVUnit.Value);
-    Ini.WriteBool('DANFE', 'ExibeResumo', cbxExibeResumo.Checked);
     Ini.WriteBool('DANFE', 'ImprimirTributosItem', cbxImprimirTributos.Checked);
     Ini.WriteBool('DANFE', 'ImprimirValLiq', cbxImpValLiq.Checked);
-    Ini.WriteBool('DANFE', 'PreImpresso', cbxFormCont.Checked);
     Ini.WriteBool('DANFE', 'MostrarStatus', cbxMostraStatus.Checked);
     Ini.WriteBool('DANFE', 'ExpandirLogo', cbxExpandirLogo.Checked );
     Ini.WriteInteger('DANFE', 'Fonte', rgTipoFonte.ItemIndex);
@@ -648,10 +623,10 @@ begin
       Ini.WriteBool('SATFortes','UsarFortes', False);
 
     Ini.WriteInteger('SATFortes','Largura',seLargura.Value);
-    Ini.WriteInteger('SATFortes','MargemTopo',seMargemTopo.Value);
-    Ini.WriteInteger('SATFortes','MargemFundo',seMargemFundo.Value );
-    Ini.WriteInteger('SATFortes','MargemEsquerda',seMargemEsquerda.Value);
-    Ini.WriteInteger('Fortes','MargemDireita',seMargemDireita.Value);
+    Ini.WriteFloat('SATFortes','MargemTopo',seMargemSuperior.Value);
+    Ini.WriteFloat('SATFortes','MargemFundo',seMargemInferior.Value );
+    Ini.WriteFloat('SATFortes','MargemEsquerda',seMargemEsquerda.Value);
+    Ini.WriteFloat('Fortes','MargemDireita',seMargemDireita.Value);
     Ini.WriteBool('SATFortes','Preview',cbPreview.Checked );
 
     Ini.WriteString('SATPrinter','Name', cbxImpressoraSAT.Text);

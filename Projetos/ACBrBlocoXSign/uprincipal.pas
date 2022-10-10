@@ -38,7 +38,7 @@ interface
 uses
   Windows, Classes, SysUtils, strutils, dateutils, IniFiles, FileUtil, Forms,
   Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, MaskEdit, Menus,
-  ComCtrls, Spin, EditBtn, UtilUnit, ACBrGIF, ACBrUtil, ACBrEnterTab, ACBrDFe,
+  ComCtrls, Spin, EditBtn, UtilUnit, ACBrGIF, ACBrEnterTab, ACBrDFe,
   ACBrDFeSSL, ACBrDFeWebService, ACBrBlocoX, ACBrDFeUtil;
 
 const
@@ -51,15 +51,7 @@ type
   TfrmPrincipal = class(TForm)
     ACBrBlocoX1: TACBrBlocoX;
     ACBrEnterTab1: TACBrEnterTab;
-    ACBrGIF1: TACBrGIF;
-    Bevel2: TBevel;
     btnBuscarCertificado: TSpeedButton;
-    btnConsultar: TBitBtn;
-    btnValidar: TBitBtn;
-    btnBuscarArquivo: TSpeedButton;
-    btnCriarAssinatura: TBitBtn;
-    btnSalvarArquivo: TBitBtn;
-    btnTransmitir: TBitBtn;
     btTransmitirArq: TButton;
     btCancelarArq: TButton;
     btConsultarHistArq: TButton;
@@ -73,18 +65,15 @@ type
     edProxyPorta: TSpinEdit;
     edProxySenha: TEdit;
     edProxyUser: TEdit;
-    edtArqBlocoX: TEdit;
     edtCertificado: TEdit;
     edtSenhaCertificado: TEdit;
     gbProxy: TGroupBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label5: TLabel;
+    lbCertificado: TLabel;
+    lbSenhaCertificado: TLabel;
     lblProxyPorta: TLabel;
     lblProxyUser: TLabel;
     lblProxySenha: TLabel;
     lblProxyHost: TLabel;
-    memArqAssinado: TMemo;
     mmRetornoBlocoX: TMemo;
     OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
@@ -92,9 +81,7 @@ type
     pnComandos: TPanel;
     rbtTipoCapicom: TRadioButton;
     rbtTipoOpenSSL: TRadioButton;
-    rgTipo: TRadioGroup;
     SaveDialog1: TSaveDialog;
-    tsWSRecepcao: TTabSheet;
     tsConfiguracao: TTabSheet;
     tsWSBlocoX: TTabSheet;
     procedure ACBrGIF1Click(Sender: TObject);
@@ -105,12 +92,6 @@ type
     procedure btConsultarProcessArqClick(Sender: TObject);
     procedure btDownloadArqClick(Sender: TObject);
     procedure btListarArquivosClick(Sender: TObject);
-    procedure btnBuscarArquivoClick(Sender: TObject);
-    procedure btnConsultarClick(Sender: TObject);
-    procedure btnCriarAssinaturaClick(Sender: TObject);
-    procedure btnSalvarArquivoClick(Sender: TObject);
-    procedure btnTransmitirClick(Sender: TObject);
-    procedure btnValidarClick(Sender: TObject);
     procedure btReprocessarArqClick(Sender: TObject);
     procedure btTransmitirArqClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -123,8 +104,6 @@ type
     function GetPathConfig: String;
     function GetXML: AnsiString;
     procedure GravarConfiguracoes;
-    procedure CarregarGifBannerACBrSAC;
-    function ValidarArquivo : Boolean;
   public
 
   end;
@@ -134,8 +113,8 @@ var
 
 implementation
 
-Uses
-  ACBrBlocoX_WebServices, synautil;
+uses
+  synautil, LazFileUtils, ACBrUtil.FilesIO, ACBrBlocoX_WebServices;
 
 const
   TIPO_CAPICOM = 'CAPICOM';
@@ -144,36 +123,6 @@ const
 {$R *.lfm}
 
 { TfrmPrincipal }
-
-procedure TfrmPrincipal.CarregarGifBannerACBrSAC;
-var
-  S: TResourceStream;
-begin
-  S := TResourceStream.Create(HInstance, 'BANNER_ACBrSAC', RT_RCDATA);
-  try
-    ACBrGIF1.LoadFromStream(S);
-    ACBrGIF1.Active := True;
-  finally
-    S.Free;
-  end;
-end;
-
-function TfrmPrincipal.ValidarArquivo: Boolean;
-begin
-  Result := True;
-
-  if memArqAssinado.Text = '' then
-  begin
-    MessageDlg('Erro','Arquivo Vazio',mtError,[mbOK],0);
-    Result := False;
-  end;
-
-  if not XmlEstaAssinado(memArqAssinado.Text) then
-  begin
-    MessageDlg('Erro','Arquivo sem assinatura',mtError,[mbOK],0);
-    Result := False;
-  end;
-end;
 
 function TfrmPrincipal.GetPathConfig: String;
 begin
@@ -236,7 +185,6 @@ begin
   F := TIniFile.Create(GetPathConfig);
   try
     F.WriteString('CONFIG', 'Certificado', edtCertificado.Text);
-    F.WriteString('CONFIG', 'UltimoArquivo', edtArqBlocoX.Text);
     F.WriteString('CONFIG', 'Tipo', IfThen(rbtTipoCapicom.Checked, TIPO_CAPICOM, TIPO_OPENSSL));
     GravaINICrypt(F, 'Certificado', 'Senha', edtSenhaCertificado.Text, _C);
     F.WriteString('Proxy', 'Host', edProxyHost.Text);
@@ -255,7 +203,6 @@ begin
   F := TIniFile.Create(GetPathConfig);
   try
     edtCertificado.Text      := F.ReadString('CONFIG', 'Certificado', '');
-    edtArqBlocoX.Text        := F.ReadString('CONFIG', 'UltimoArquivo', '');
     rbtTipoCapicom.Checked   := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_CAPICOM;
     rbtTipoOpenSSL.Checked   := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_OPENSSL;
     edtSenhaCertificado.Text := LeINICrypt(F, 'Certificado', 'Senha', _C);
@@ -269,60 +216,22 @@ begin
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
-var
-  fArquivo: TStringList;
 begin
   edtCertificado.Clear;
-  edtArqBlocoX.Clear;
-  memArqAssinado.Clear;
 
   LerConfiguracoes;
 
   ConfigurarDFe;
 
-  if (UpperCase(ParamStr(2)) = '/E') or
-     (UpperCase(ParamStr(2)) = '/V') then
+  if UpperCase(ParamStr(2)) = '/C' then
   begin
-    if FilesExists(ParamStr(1)) then
-    begin
-      try
-        fArquivo := TStringList.Create;
-        fArquivo.LoadFromFile(ParamStr(1));
-        if Pos('</reducaoz>',LowerCase(fArquivo.Text)) > 0 then
-          memArqAssinado.Text := ACBrBlocoX1.SSL.Assinar(fArquivo.Text, 'ReducaoZ', 'Mensagem')
-        else if Pos('</estoque>',LowerCase(fArquivo.Text)) > 0 then
-          memArqAssinado.Text := ACBrBlocoX1.SSL.Assinar(fArquivo.Text, 'Estoque', 'Mensagem')
-        else
-          ShowMessage('Arquivo não reconhecido');
-      finally
-        fArquivo.Free;
-      end;
+    ACBrBlocoX1.ConsultarProcessamentoArquivo.Recibo := ParamStr(1);
+    ACBrBlocoX1.WebServices.ConsultarProcessamentoArquivoBlocoX.Executar;
 
-      if (UpperCase(ParamStr(2)) = '/E') then
-        btnTransmitirClick(Self)
-      else
-        btnValidarClick(Self);
-
-      WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'-resposta.'+ExtractFileExt(ParamStr(1)),memArqAssinado.Text);
-      Application.Terminate;
-    end
-    else
-    begin
-      WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'-resposta.'+ExtractFileExt(ParamStr(1)),'Arquivo Inválido');
-      Application.Terminate;
-    end;
-  end
-  else if UpperCase(ParamStr(2)) = '/C' then
-  begin
-    ACBrBlocoX1.WebServices.ConsultarBlocoX.Recibo := ParamStr(1);
-    ACBrBlocoX1.WebServices.ConsultarBlocoX.Executar;
-
-    memArqAssinado.Text := ACBrBlocoX1.WebServices.ConsultarBlocoX.RetWS;
-    WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'consultar-resposta.'+ExtractFileExt(ParamStr(1)),memArqAssinado.Text);
+    mmRetornoBlocoX.Text := ACBrBlocoX1.WebServices.ConsultarProcessamentoArquivoBlocoX.RetWS;
+    WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'consultar-resposta.'+ExtractFileExt(ParamStr(1)),mmRetornoBlocoX.Text);
     Application.Terminate;
-  end
-  else
-     CarregarGifBannerACBrSAC;;
+  end;
 end;
 
 procedure TfrmPrincipal.Image2Click(Sender: TObject);
@@ -353,6 +262,9 @@ var
   wXML: AnsiString;
   wMotivo, wRecibo: String;
 begin
+  wRecibo := EmptyStr;
+  wMotivo := EmptyStr;
+
   if not InputQuery('Consultar Processamento', 'Informe o número do Recibo', wRecibo) then
     Exit;
 
@@ -391,6 +303,7 @@ var
   wRecibo: String;
   wXML: AnsiString;
 begin
+  wRecibo := EmptyStr;
   if not InputQuery('Consultar Processamento', 'Informe o número do Recibo', wRecibo) then
     Exit;
 
@@ -425,6 +338,7 @@ var
   wIE: String;
   wXML: AnsiString;
 begin
+  wIE := EmptyStr;
   if not InputQuery('Consultar Pendencias Contribuinte', 'Informe a Inscrição Estadual', wIE) then
     Exit;
 
@@ -459,6 +373,7 @@ var
   wCNPJ: String;
   wXML: AnsiString;
 begin
+  wCNPJ := EmptyStr;
   if not InputQuery('Consultar Pend. Desenvolvedor PAF-ECF', 'Informe o CNPJ', wCNPJ) then
     Exit;
 
@@ -493,6 +408,7 @@ var
   wRecibo: String;
   wXML: AnsiString;
 begin
+  wRecibo := EmptyStr;
   if not InputQuery('Consultar Processamento', 'Informe o número do Recibo', wRecibo) then
     Exit;
 
@@ -527,6 +443,7 @@ var
   wRecibo: String;
   wXML: AnsiString;
 begin
+  wRecibo := EmptyStr;
   if not InputQuery('Consultar Processamento', 'Informe o número do Recibo', wRecibo) then
     Exit;
 
@@ -561,6 +478,7 @@ var
   wIE: String;
   wXML: AnsiString;
 begin
+  wIE := EmptyStr;
   if not InputQuery('Listar Arquivos', 'Informe a Inscrição Estadual', wIE) then
     Exit;
 
@@ -590,115 +508,12 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.btnBuscarArquivoClick(Sender: TObject);
-begin
-  OpenDialog1.DefaultExt :=  '*.xml';
-  OpenDialog1.Filter:= 'Arquivos XML|*.xml|Arquivos TXT|*.txt|Todos os arquivos|*.*';
-  if OpenDialog1.Execute then
-    edtArqBlocoX.Text := OpenDialog1.FileName;
-end;
-
-procedure TfrmPrincipal.btnConsultarClick(Sender: TObject);
-var
-  Recibo: String;
-begin
-  if not InputQuery('Consultar', 'Entre com o número do recibo', Recibo) then
-    Exit;
-
-  ConfigurarDFe;
-
-  ACBrBlocoX1.WebServices.ConsultarBlocoX.Recibo := Recibo;
-  ACBrBlocoX1.WebServices.ConsultarBlocoX.Executar;
-
-  memArqAssinado.Text := ACBrBlocoX1.WebServices.ConsultarBlocoX.RetWS;
-end;
-
-procedure TfrmPrincipal.btnCriarAssinaturaClick(Sender: TObject);
-var
-  FXMLOriginal: TStringList;
-begin
-  memArqAssinado.Lines.Clear;
-
-  if (Trim(edtCertificado.Text) = '') then
-  begin
-    edtCertificado.SetFocus;
-    raise Exception.Create('Certificado não foi informado!');
-  end;
-
-  if (Trim(edtArqBlocoX.Text) = '') or (not FileExists(Trim(edtArqBlocoX.Text)))then
-  begin
-    edtArqBlocoX.SetFocus;
-    raise Exception.Create('Arquivo inválido!');
-  end;
-
-  ConfigurarDFe;
-
-  try
-    FXMLOriginal := TStringList.Create;
-    FXMLOriginal.LoadFromFile(edtArqBlocoX.Text);
-    if Pos('</reducaoz>',LowerCase(FXMLOriginal.Text)) > 0 then
-      memArqAssinado.Text := ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'ReducaoZ', 'Mensagem')
-    else if Pos('</estoque>',LowerCase(FXMLOriginal.Text)) > 0 then
-      memArqAssinado.Text := ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'Estoque', 'Mensagem')
-    else
-      ShowMessage('Arquivo não reconhecido');
-  finally
-    FXMLOriginal.Free;
-  end;
-
-  GravarConfiguracoes;
-end;
-
-procedure TfrmPrincipal.btnSalvarArquivoClick(Sender: TObject);
-begin
-  SaveDialog1.FileName := ExtractFileNameWithoutExt(edtArqBlocoX.Text)+'-assinado.'+ExtractFileExt(edtArqBlocoX.Text);
-  SaveDialog1.Execute;
-end;
-
-procedure TfrmPrincipal.btnTransmitirClick(Sender: TObject);
-var
-  wWebServiceBlocoX: TTransmitirArquivoBlocoX;
-begin
-  if not ValidarArquivo then
-    Exit;
-
-  ConfigurarDFe;
-
-  wWebServiceBlocoX := ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX;
-
-  wWebServiceBlocoX.XML := memArqAssinado.Text;
-
-  if wWebServiceBlocoX.Executar then
-    memArqAssinado.Text := wWebServiceBlocoX.RetWS
-  else
-    memArqAssinado.Text := 'Erro ao enviar' + sLineBreak + wWebServiceBlocoX.Msg;
-end;
-
-procedure TfrmPrincipal.btnValidarClick(Sender: TObject);
-var
-  wWebServiceBlocoX: TValidarBlocoX;
-begin
-  if not ValidarArquivo then
-    Exit;
-
-  ConfigurarDFe;
-
-  wWebServiceBlocoX := ACBrBlocoX1.WebServices.ValidarBlocoX;
-
-  wWebServiceBlocoX.XML := memArqAssinado.Text;
-  wWebServiceBlocoX.ValidarPafEcfEEcf := True;
-
-  if wWebServiceBlocoX.Executar then
-    memArqAssinado.Text := wWebServiceBlocoX.RetWS
-  else
-    memArqAssinado.Text := 'Erro ao validar' + sLineBreak + wWebServiceBlocoX.Msg;
-end;
-
 procedure TfrmPrincipal.btReprocessarArqClick(Sender: TObject);
 var
   wRecibo: String;
   wXML: AnsiString;
 begin
+  wRecibo := EmptyStr;
   if not InputQuery('Reprocessar Arquivo', 'Informe o número do Recibo', wRecibo) then
     Exit;
 

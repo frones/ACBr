@@ -661,8 +661,8 @@ object frmACBrGTIN: TfrmACBrGTIN
             Caption = 'Arquivos'
             ImageIndex = 4
             object sbPathGTIN: TSpeedButton
-              Left = 247
-              Top = 116
+              Left = 244
+              Top = 60
               Width = 23
               Height = 24
               Glyph.Data = {
@@ -682,8 +682,8 @@ object frmACBrGTIN: TfrmACBrGTIN
               OnClick = sbPathGTINClick
             end
             object Label35: TLabel
-              Left = 8
-              Top = 102
+              Left = 5
+              Top = 46
               Width = 99
               Height = 13
               Caption = 'Pasta Arquivos GTIN'
@@ -696,44 +696,20 @@ object frmACBrGTIN: TfrmACBrGTIN
               Caption = 'Salvar Arquivos em Pastas Separadas'
               TabOrder = 0
             end
-            object cbxPastaMensal: TCheckBox
-              Left = 6
-              Top = 16
-              Width = 210
-              Height = 17
-              Caption = 'Criar Pastas Mensalmente'
-              TabOrder = 1
-            end
             object cbxAdicionaLiteral: TCheckBox
               Left = 6
-              Top = 32
+              Top = 18
               Width = 210
               Height = 17
               Caption = 'Adicionar Literal no nome das pastas'
-              TabOrder = 2
-            end
-            object cbxSepararPorCNPJ: TCheckBox
-              Left = 6
-              Top = 48
-              Width = 233
-              Height = 17
-              Caption = 'Separar Arqs pelo CNPJ do Certificado'
-              TabOrder = 3
+              TabOrder = 1
             end
             object edtPathGTIN: TEdit
-              Left = 6
-              Top = 117
+              Left = 3
+              Top = 61
               Width = 235
               Height = 21
-              TabOrder = 4
-            end
-            object cbxSepararPorModelo: TCheckBox
-              Left = 6
-              Top = 65
-              Width = 251
-              Height = 17
-              Caption = 'Separar Arqs pelo Modelo do Documento'
-              TabOrder = 5
+              TabOrder = 2
             end
           end
         end
@@ -843,6 +819,7 @@ object frmACBrGTIN: TfrmACBrGTIN
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     Left = 342
     Top = 342
   end

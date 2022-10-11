@@ -104,11 +104,8 @@ type
     sbPathGTIN: TSpeedButton;
     Label35: TLabel;
     cbxSalvarArqs: TCheckBox;
-    cbxPastaMensal: TCheckBox;
     cbxAdicionaLiteral: TCheckBox;
-    cbxSepararPorCNPJ: TCheckBox;
     edtPathGTIN: TEdit;
-    cbxSepararPorModelo: TCheckBox;
     btnSalvarConfig: TBitBtn;
     lblColaborador: TLabel;
     lblPatrocinador: TLabel;
@@ -392,10 +389,7 @@ begin
     Ini.WriteString('Proxy', 'Pass',  edtProxySenha.Text);
 
     Ini.WriteBool(  'Arquivos', 'Salvar',           cbxSalvarArqs.Checked);
-    Ini.WriteBool(  'Arquivos', 'PastaMensal',      cbxPastaMensal.Checked);
     Ini.WriteBool(  'Arquivos', 'AddLiteral',       cbxAdicionaLiteral.Checked);
-    Ini.WriteBool(  'Arquivos', 'SepararPorCNPJ',   cbxSepararPorCNPJ.Checked);
-    Ini.WriteBool(  'Arquivos', 'SepararPorModelo', cbxSepararPorModelo.Checked);
     Ini.WriteString('Arquivos', 'PathGTIN',          edtPathGTIN.Text);
 
     ConfigurarComponente;
@@ -472,10 +466,7 @@ begin
     edtProxySenha.Text := Ini.ReadString('Proxy', 'Pass',  '');
 
     cbxSalvarArqs.Checked       := Ini.ReadBool(  'Arquivos', 'Salvar',           false);
-    cbxPastaMensal.Checked      := Ini.ReadBool(  'Arquivos', 'PastaMensal',      false);
     cbxAdicionaLiteral.Checked  := Ini.ReadBool(  'Arquivos', 'AddLiteral',       false);
-    cbxSepararPorCNPJ.Checked   := Ini.ReadBool(  'Arquivos', 'SepararPorCNPJ',   false);
-    cbxSepararPorModelo.Checked := Ini.ReadBool(  'Arquivos', 'SepararPorModelo', false);
     edtPathGTIN.Text            := Ini.ReadString('Arquivos', 'PathGTIN',          '');
 
     ConfigurarComponente;
@@ -529,10 +520,7 @@ begin
   with ACBrGTIN1.Configuracoes.Arquivos do
   begin
     Salvar           := cbxSalvarArqs.Checked;
-    SepararPorMes    := cbxPastaMensal.Checked;
     AdicionarLiteral := cbxAdicionaLiteral.Checked;
-    SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
-    SepararPorModelo := cbxSepararPorModelo.Checked;
     PathSchemas      := edtPathSchemas.Text;
     PathGTIN         := edtPathGTIN.Text;
     PathMensal       := GetPathGTIN(0);

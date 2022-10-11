@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2022
+-- ACBrGTINReg -- 
+[*] Ajustes de propriedades ACBrGTIN
+    Por: Daniel Infocotidiano
+
 10/10/2022
 -- ACBrGTINReg / ACBrGTINConfiguracoes --
 [*] Correção Units ACBrGTIN

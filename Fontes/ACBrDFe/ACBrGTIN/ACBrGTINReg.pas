@@ -82,6 +82,13 @@ begin
     RegisterPropertyEditor(TypeInfo(boolean),  TGeralConfGTIN,   'RetirarEspacos',            THiddenPropertyEditor);
     RegisterPropertyEditor(TypeInfo(string),   TGeralConfGTIN,   'QuebradeLinha',             THiddenPropertyEditor);
 
+    RegisterPropertyEditor(TypeInfo(boolean),   TArquivosConfGTIN,   'SepararPorAno',            THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(boolean),   TArquivosConfGTIN,   'SepararPorCNPJ',           THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(boolean),   TArquivosConfGTIN,   'SepararPorDia',            THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(boolean),   TArquivosConfGTIN,   'SepararPorIE',             THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(boolean),   TArquivosConfGTIN,   'SepararPorMes',            THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(boolean),   TArquivosConfGTIN,   'SepararPorModelo',         THiddenPropertyEditor);
+
     RegisterPropertyEditor(TypeInfo(string),   TDownloadConf,    'PathDownload',              THiddenPropertyEditor);
     RegisterPropertyEditor(TypeInfo(boolean),  TDownloadConf,    'SepararPorNome',            THiddenPropertyEditor);
 
@@ -93,13 +100,17 @@ begin
     RegisterPropertyEditor(TypeInfo(TRespTecConf),     TConfiguracoesGTIN, 'RespTec',         THiddenPropertyEditor);
     RegisterPropertyEditor(TypeInfo(TACBrIntegrador),  TACBrGTIN,          'Integrador',      THiddenPropertyEditor);
     RegisterPropertyEditor(TypeInfo(TACBrMail),        TACBrGTIN,          'MAIL',            THiddenPropertyEditor);
-
-
-
   {$ELSE}
-    UnlistPublishedProperty(TGeralConfGTIN,    'RetirarAcentos');
-    UnlistPublishedProperty(TGeralConfGTIN,    'RetirarEspacos');
-    UnlistPublishedProperty(TGeralConfGTIN,    'QuebradeLinha');
+    UnlistPublishedProperty(TGeralConfGTIN,   'RetirarAcentos');
+    UnlistPublishedProperty(TGeralConfGTIN,   'RetirarEspacos');
+    UnlistPublishedProperty(TGeralConfGTIN,   'QuebradeLinha');
+
+    UnlistPublishedProperty(TArquivosConfGTIN,   'SepararPorAno');
+    UnlistPublishedProperty(TArquivosConfGTIN,   'SepararPorCNPJ');
+    UnlistPublishedProperty(TArquivosConfGTIN,   'SepararPorDia');
+    UnlistPublishedProperty(TArquivosConfGTIN,   'SepararPorIE');
+    UnlistPublishedProperty(TArquivosConfGTIN,   'SepararPorMes');
+    UnlistPublishedProperty(TArquivosConfGTIN,   'SepararPorModelo');
 
     UnlistPublishedProperty(TDownloadConf,     'PathDownload');
     UnlistPublishedProperty(TDownloadConf,     'SepararPorNome');

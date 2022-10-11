@@ -91,10 +91,7 @@
             this.txtArqGTIN = new System.Windows.Forms.TextBox();
             this.btnArqGTIN = new System.Windows.Forms.Button();
             this.label36 = new System.Windows.Forms.Label();
-            this.ckbSepararPorModelo = new System.Windows.Forms.CheckBox();
-            this.ckbSepararPorCNPJ = new System.Windows.Forms.CheckBox();
             this.ckbAdicionaLiteral = new System.Windows.Forms.CheckBox();
-            this.ckbPastaMensal = new System.Windows.Forms.CheckBox();
             this.ckbSalvarArqs = new System.Windows.Forms.CheckBox();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
             this.btnSalvarConfiguracoes = new System.Windows.Forms.Button();
@@ -782,10 +779,7 @@
             this.tabPage4.Controls.Add(this.txtArqGTIN);
             this.tabPage4.Controls.Add(this.btnArqGTIN);
             this.tabPage4.Controls.Add(this.label36);
-            this.tabPage4.Controls.Add(this.ckbSepararPorModelo);
-            this.tabPage4.Controls.Add(this.ckbSepararPorCNPJ);
             this.tabPage4.Controls.Add(this.ckbAdicionaLiteral);
-            this.tabPage4.Controls.Add(this.ckbPastaMensal);
             this.tabPage4.Controls.Add(this.ckbSalvarArqs);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -796,14 +790,14 @@
             // 
             // txtArqGTIN
             // 
-            this.txtArqGTIN.Location = new System.Drawing.Point(3, 134);
+            this.txtArqGTIN.Location = new System.Drawing.Point(3, 79);
             this.txtArqGTIN.Name = "txtArqGTIN";
             this.txtArqGTIN.Size = new System.Drawing.Size(248, 20);
             this.txtArqGTIN.TabIndex = 25;
             // 
             // btnArqGTIN
             // 
-            this.btnArqGTIN.Location = new System.Drawing.Point(249, 133);
+            this.btnArqGTIN.Location = new System.Drawing.Point(257, 77);
             this.btnArqGTIN.Name = "btnArqGTIN";
             this.btnArqGTIN.Size = new System.Drawing.Size(27, 22);
             this.btnArqGTIN.TabIndex = 27;
@@ -815,51 +809,21 @@
             // 
             this.label36.AutoSize = true;
             this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(3, 118);
+            this.label36.Location = new System.Drawing.Point(3, 62);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(126, 13);
             this.label36.TabIndex = 26;
             this.label36.Text = "Pasta Arquivos GTIN";
             // 
-            // ckbSepararPorModelo
-            // 
-            this.ckbSepararPorModelo.AutoSize = true;
-            this.ckbSepararPorModelo.Location = new System.Drawing.Point(6, 98);
-            this.ckbSepararPorModelo.Name = "ckbSepararPorModelo";
-            this.ckbSepararPorModelo.Size = new System.Drawing.Size(221, 17);
-            this.ckbSepararPorModelo.TabIndex = 13;
-            this.ckbSepararPorModelo.Text = "Separar Arqs pelo Modelo do Documento";
-            this.ckbSepararPorModelo.UseVisualStyleBackColor = true;
-            // 
-            // ckbSepararPorCNPJ
-            // 
-            this.ckbSepararPorCNPJ.AutoSize = true;
-            this.ckbSepararPorCNPJ.Location = new System.Drawing.Point(6, 75);
-            this.ckbSepararPorCNPJ.Name = "ckbSepararPorCNPJ";
-            this.ckbSepararPorCNPJ.Size = new System.Drawing.Size(208, 17);
-            this.ckbSepararPorCNPJ.TabIndex = 12;
-            this.ckbSepararPorCNPJ.Text = "Separar Arqs pelo CNPJ do Certificado";
-            this.ckbSepararPorCNPJ.UseVisualStyleBackColor = true;
-            // 
             // ckbAdicionaLiteral
             // 
             this.ckbAdicionaLiteral.AutoSize = true;
-            this.ckbAdicionaLiteral.Location = new System.Drawing.Point(6, 52);
+            this.ckbAdicionaLiteral.Location = new System.Drawing.Point(6, 29);
             this.ckbAdicionaLiteral.Name = "ckbAdicionaLiteral";
             this.ckbAdicionaLiteral.Size = new System.Drawing.Size(199, 17);
             this.ckbAdicionaLiteral.TabIndex = 9;
             this.ckbAdicionaLiteral.Text = "Adicionar Literal no nome das pastas";
             this.ckbAdicionaLiteral.UseVisualStyleBackColor = true;
-            // 
-            // ckbPastaMensal
-            // 
-            this.ckbPastaMensal.AutoSize = true;
-            this.ckbPastaMensal.Location = new System.Drawing.Point(6, 29);
-            this.ckbPastaMensal.Name = "ckbPastaMensal";
-            this.ckbPastaMensal.Size = new System.Drawing.Size(148, 17);
-            this.ckbPastaMensal.TabIndex = 8;
-            this.ckbPastaMensal.Text = "Criar Pastas Mensalmente";
-            this.ckbPastaMensal.UseVisualStyleBackColor = true;
             // 
             // ckbSalvarArqs
             // 
@@ -998,10 +962,7 @@
         private System.Windows.Forms.TextBox txtArqGTIN;
         private System.Windows.Forms.Button btnArqGTIN;
         private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.CheckBox ckbSepararPorModelo;
-        private System.Windows.Forms.CheckBox ckbSepararPorCNPJ;
         private System.Windows.Forms.CheckBox ckbAdicionaLiteral;
-        private System.Windows.Forms.CheckBox ckbPastaMensal;
         private System.Windows.Forms.CheckBox ckbSalvarArqs;
         private System.Windows.Forms.Button btnCarregarConfiguracoes;
         private System.Windows.Forms.Button btnSalvarConfiguracoes;

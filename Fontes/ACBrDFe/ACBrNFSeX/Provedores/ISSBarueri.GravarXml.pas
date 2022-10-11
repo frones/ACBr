@@ -78,7 +78,7 @@ procedure TNFSeW_ISSBarueri.GerarRegistroTipo1(const AIdentificacaoRemessa: Stri
 begin
   FConteudoTxt.Add(
     '1'+ // Tipo do Registro S Numérico 1 1 1 1
-    PadRight(OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal), 7, ' ')+ // Inscrição do Contribuinte S Texto 7 2 8 Inscrição do Prestador de Serviço
+    PadRight(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, 7, ' ')+ // Inscrição do Contribuinte S Texto 7 2 8 Inscrição do Prestador de Serviço
     'PMB002'+ // Versão do Lay-Out S Texto 6 9 14 Versão do Lay-Out "PMB002"
     PadLeft(AIdentificacaoRemessa, 11, '0') // Identificação da Remessa do Contribuinte
   );

@@ -862,23 +862,36 @@ var
   AModelo: string;
   ASerie: Integer;
   ATpEmis: Integer;
+  AIndEmisNFF: Integer;
 begin
   AModelo := ExtrairModeloChaveAcesso(AChave);
   ASerie := ExtrairSerieChaveAcesso(AChave);
   ATpEmis := ExtrairTipoEmissaoChaveAcesso(AChave);
+  AIndEmisNFF := StrToIntDef(Copy(AChave, 30, 1), 0); // Na NFF o 5o dígito do número identifica se o emissor é CPF ou CNPJ
   case StrToIntDef(AModelo, 0) of
     55, 65: begin  // NFe, NFCe
-      case ASerie of
-        000..889, // Séries (000-889) reservadas para NF-e eCNPJ emitida por aplicativo da Empresa Emitente
-        890..899, // Séries (890-899) reservadas para NFA-e eCNPJ da SEFAZ emitida no Site do Fisco
-        900..909: // Séries (900-909) reservadas para NFA-e eCNPJ emitida no Site do Fisco
-          Result := Copy(AChave, 7, 14);
-        910..919, // Séries (910-919) reservadas para NFA-e eCPF emitida no Site do Fisco
-        920..969: // Séries (920-969) reservadas para NF-e eCPF emitida por aplicativo da Empresa Emitente
-          Result := Copy(AChave, 10, 11);
+      case ATpEmis of
+        3: begin // NFF
+          case AindEmisNFF of
+            2:  // 2-CPF
+              Result := Copy(AChave, 10, 11);
+          else  // 1-CNPJ
+            Result := Copy(AChave, 7, 14);
+          end;
+        end;
       else
-        // Outras possíveis Séries futuras, assume CNPJ
-        Result := Copy(AChave, 7, 14);
+        case ASerie of
+          000..889, // Séries (000-889) reservadas para NF-e eCNPJ emitida por aplicativo da Empresa Emitente
+          890..899, // Séries (890-899) reservadas para NFA-e eCNPJ da SEFAZ emitida no Site do Fisco
+          900..909: // Séries (900-909) reservadas para NFA-e eCNPJ emitida no Site do Fisco
+            Result := Copy(AChave, 7, 14);
+          910..919, // Séries (910-919) reservadas para NFA-e eCPF emitida no Site do Fisco
+          920..969: // Séries (920-969) reservadas para NF-e eCPF emitida por aplicativo da Empresa Emitente
+            Result := Copy(AChave, 10, 11);
+        else
+          // Outras possíveis Séries futuras, assume CNPJ
+          Result := Copy(AChave, 7, 14);
+        end;
       end;
     end;
     57: begin

@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2022
+-- pcnAuxiliar --
+[*] Ajuste no método "ExtrairCNPJCPFChaveAcesso" para tratar NFe emitida pela
+    NFF (emitente CPF ou CNPJ).
+  Por: BigWings
+
 15/07/2022
 -- pcnRetDistDFeInt --
 [*] Inclui a verificação se o documento retornado é um GTVeProc

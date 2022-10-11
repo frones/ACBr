@@ -122,12 +122,11 @@ Begin VB.Form FrmMain
          _Version        =   393216
          Style           =   1
          Tabs            =   4
-         Tab             =   3
          TabsPerRow      =   4
          TabHeight       =   520
          TabCaption(0)   =   "Geral"
          TabPicture(0)   =   "FrmMain.frx":001C
-         Tab(0).ControlEnabled=   0   'False
+         Tab(0).ControlEnabled=   -1  'True
          Tab(0).Control(0)=   "lblFormatoAlerta"
          Tab(0).Control(0).Enabled=   0   'False
          Tab(0).Control(1)=   "lblPastaLogs"
@@ -153,71 +152,42 @@ Begin VB.Form FrmMain
          TabPicture(1)   =   "FrmMain.frx":0038
          Tab(1).ControlEnabled=   0   'False
          Tab(1).Control(0)=   "lblTimeOut(1)"
-         Tab(1).Control(0).Enabled=   0   'False
          Tab(1).Control(1)=   "lblSSLType"
-         Tab(1).Control(1).Enabled=   0   'False
          Tab(1).Control(2)=   "lblUFDestino"
-         Tab(1).Control(2).Enabled=   0   'False
          Tab(1).Control(3)=   "nudTimeOut"
-         Tab(1).Control(3).Enabled=   0   'False
          Tab(1).Control(4)=   "chkSalvarSOAP"
-         Tab(1).Control(4).Enabled=   0   'False
          Tab(1).Control(5)=   "chkVisualizarMensagem"
-         Tab(1).Control(5).Enabled=   0   'False
          Tab(1).Control(6)=   "frmProxy"
-         Tab(1).Control(6).Enabled=   0   'False
          Tab(1).Control(7)=   "cmbSSlType"
-         Tab(1).Control(7).Enabled=   0   'False
          Tab(1).Control(8)=   "cmbUFDestino"
-         Tab(1).Control(8).Enabled=   0   'False
          Tab(1).Control(9)=   "frmAmbiente"
-         Tab(1).Control(9).Enabled=   0   'False
          Tab(1).Control(10)=   "txtTimeOut"
-         Tab(1).Control(10).Enabled=   0   'False
          Tab(1).ControlCount=   11
          TabCaption(2)   =   "Certificados"
          TabPicture(2)   =   "FrmMain.frx":0054
          Tab(2).ControlEnabled=   0   'False
          Tab(2).Control(0)=   "lblCryptLib"
-         Tab(2).Control(0).Enabled=   0   'False
          Tab(2).Control(1)=   "lblHttpLib"
-         Tab(2).Control(1).Enabled=   0   'False
          Tab(2).Control(2)=   "lblXMLSignLib"
-         Tab(2).Control(2).Enabled=   0   'False
          Tab(2).Control(3)=   "cmbCrypt"
-         Tab(2).Control(3).Enabled=   0   'False
          Tab(2).Control(4)=   "cmbHttp"
-         Tab(2).Control(4).Enabled=   0   'False
          Tab(2).Control(5)=   "cmbXmlSign"
-         Tab(2).Control(5).Enabled=   0   'False
          Tab(2).Control(6)=   "frmCertificados"
-         Tab(2).Control(6).Enabled=   0   'False
          Tab(2).ControlCount=   7
          TabCaption(3)   =   "Arquivos"
          TabPicture(3)   =   "FrmMain.frx":0070
-         Tab(3).ControlEnabled=   -1  'True
+         Tab(3).ControlEnabled=   0   'False
          Tab(3).Control(0)=   "lblPastaArqGTIN"
-         Tab(3).Control(0).Enabled=   0   'False
          Tab(3).Control(1)=   "chkSalvarArqs"
-         Tab(3).Control(1).Enabled=   0   'False
-         Tab(3).Control(2)=   "chkPastaMensal"
-         Tab(3).Control(2).Enabled=   0   'False
-         Tab(3).Control(3)=   "chkAdicionaLiteral"
-         Tab(3).Control(3).Enabled=   0   'False
-         Tab(3).Control(4)=   "chkSepararPorCNPJ"
-         Tab(3).Control(4).Enabled=   0   'False
-         Tab(3).Control(5)=   "chkSepararPorModelo"
-         Tab(3).Control(5).Enabled=   0   'False
-         Tab(3).Control(6)=   "txtArqGTIN"
-         Tab(3).Control(6).Enabled=   0   'False
-         Tab(3).Control(7)=   "btnArqGTIN"
-         Tab(3).Control(7).Enabled=   0   'False
-         Tab(3).ControlCount=   8
+         Tab(3).Control(2)=   "chkAdicionaLiteral"
+         Tab(3).Control(3)=   "txtArqGTIN"
+         Tab(3).Control(4)=   "btnArqGTIN"
+         Tab(3).ControlCount=   5
          Begin VB.TextBox txtTimeOut 
             Alignment       =   1  'Right Justify
             Height          =   285
             Left            =   -71280
-            TabIndex        =   51
+            TabIndex        =   48
             Text            =   "0"
             Top             =   720
             Width           =   570
@@ -225,61 +195,37 @@ Begin VB.Form FrmMain
          Begin VB.CommandButton btnArqGTIN 
             Caption         =   "..."
             Height          =   260
-            Left            =   3720
-            TabIndex        =   50
-            Top             =   2400
+            Left            =   -71280
+            TabIndex        =   47
+            Top             =   1320
             Width           =   390
          End
          Begin VB.TextBox txtArqGTIN 
             Height          =   285
-            Left            =   120
-            TabIndex        =   49
-            Top             =   2400
+            Left            =   -74880
+            TabIndex        =   46
+            Top             =   1320
             Width           =   3555
-         End
-         Begin VB.CheckBox chkSepararPorModelo 
-            Caption         =   "Separar Arqs pelo Modelo do Documento"
-            Height          =   195
-            Left            =   120
-            TabIndex        =   48
-            Top             =   1800
-            Width           =   3495
-         End
-         Begin VB.CheckBox chkSepararPorCNPJ 
-            Caption         =   "Separar Arqs pelo CNPJ do Certificado"
-            Height          =   195
-            Left            =   120
-            TabIndex        =   47
-            Top             =   1440
-            Width           =   3615
          End
          Begin VB.CheckBox chkAdicionaLiteral 
             Caption         =   "Adicionar Literal no nome das pastas"
             Height          =   195
-            Left            =   120
-            TabIndex        =   46
-            Top             =   1080
-            Width           =   3870
-         End
-         Begin VB.CheckBox chkPastaMensal 
-            Caption         =   "Criar Pastas Mensalmente"
-            Height          =   255
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   45
             Top             =   720
-            Width           =   3855
+            Width           =   3870
          End
          Begin VB.CheckBox chkSalvarArqs 
             Caption         =   "Salvar Arquivos em Pastas Separadas"
             Height          =   195
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   44
             Top             =   420
             Width           =   4335
          End
          Begin VB.TextBox txtSchemaPath 
             Height          =   285
-            Left            =   -74880
+            Left            =   120
             TabIndex        =   43
             Top             =   2880
             Width           =   4215
@@ -287,14 +233,14 @@ Begin VB.Form FrmMain
          Begin VB.CommandButton btnSelectSchema 
             Caption         =   "..."
             Height          =   260
-            Left            =   -70560
+            Left            =   4440
             TabIndex        =   42
             Top             =   2880
             Width           =   390
          End
          Begin VB.TextBox txtLogs 
             Height          =   285
-            Left            =   -74880
+            Left            =   120
             TabIndex        =   41
             Top             =   2280
             Width           =   4215
@@ -302,7 +248,7 @@ Begin VB.Form FrmMain
          Begin VB.CommandButton btnSelectLog 
             Caption         =   "..."
             Height          =   260
-            Left            =   -70560
+            Left            =   4440
             TabIndex        =   40
             Top             =   2280
             Width           =   390
@@ -310,14 +256,14 @@ Begin VB.Form FrmMain
          Begin VB.CheckBox chkSalvar 
             Caption         =   "Salvar Arquivos de Envio e Resposta"
             Height          =   255
-            Left            =   -74880
+            Left            =   120
             TabIndex        =   39
             Top             =   1680
             Width           =   3375
          End
          Begin VB.TextBox txtFormatoAlerta 
             Height          =   285
-            Left            =   -74880
+            Left            =   120
             TabIndex        =   38
             Top             =   1200
             Width           =   4695
@@ -325,7 +271,7 @@ Begin VB.Form FrmMain
          Begin VB.CheckBox chkExibirErroSchema 
             Caption         =   "Exibir Erro Schema"
             Height          =   255
-            Left            =   -74880
+            Left            =   120
             TabIndex        =   37
             Top             =   600
             Width           =   3375
@@ -459,7 +405,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtProxyPorta"
-               BuddyDispid     =   196637
+               BuddyDispid     =   196634
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -736,7 +682,7 @@ Begin VB.Form FrmMain
          Begin MSComCtl2.UpDown nudTimeOut 
             Height          =   285
             Left            =   -70709
-            TabIndex        =   52
+            TabIndex        =   49
             Top             =   720
             Width           =   255
             _ExtentX        =   450
@@ -766,9 +712,9 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   120
-            TabIndex        =   62
-            Top             =   2160
+            Left            =   -74880
+            TabIndex        =   59
+            Top             =   1080
             Width           =   1725
          End
          Begin VB.Label lblPastaSchemas 
@@ -783,8 +729,8 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   -74880
-            TabIndex        =   61
+            Left            =   120
+            TabIndex        =   58
             Top             =   2640
             Width           =   4575
          End
@@ -800,8 +746,8 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   -74880
-            TabIndex        =   60
+            Left            =   120
+            TabIndex        =   57
             Top             =   2040
             Width           =   4575
          End
@@ -817,8 +763,8 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   255
-            Left            =   -74880
-            TabIndex        =   59
+            Left            =   120
+            TabIndex        =   56
             Top             =   960
             Width           =   4575
          End
@@ -837,7 +783,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74760
-            TabIndex        =   58
+            TabIndex        =   55
             Top             =   480
             Width           =   900
          End
@@ -856,7 +802,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -73080
-            TabIndex        =   57
+            TabIndex        =   54
             Top             =   480
             Width           =   765
          End
@@ -876,7 +822,7 @@ Begin VB.Form FrmMain
             Height          =   195
             Index           =   1
             Left            =   -71280
-            TabIndex        =   56
+            TabIndex        =   53
             Top             =   480
             Width           =   765
          End
@@ -895,7 +841,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74640
-            TabIndex        =   55
+            TabIndex        =   52
             Top             =   1680
             Width           =   915
          End
@@ -914,7 +860,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74640
-            TabIndex        =   54
+            TabIndex        =   51
             Top             =   1080
             Width           =   615
          End
@@ -933,7 +879,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74640
-            TabIndex        =   53
+            TabIndex        =   50
             Top             =   480
             Width           =   705
          End
@@ -942,7 +888,7 @@ Begin VB.Form FrmMain
    Begin TabDlg.SSTab SSTab1 
       Height          =   3855
       Left            =   5640
-      TabIndex        =   63
+      TabIndex        =   60
       Top             =   120
       Width           =   6255
       _ExtentX        =   11033
@@ -962,7 +908,7 @@ Begin VB.Form FrmMain
          Caption         =   "Consultar GTIN"
          Height          =   375
          Left            =   240
-         TabIndex        =   64
+         TabIndex        =   61
          Top             =   480
          Width           =   1575
       End
@@ -1148,10 +1094,7 @@ Private Sub LoadConfig()
     
     'Arquivos
     chkSalvarArqs.Value = CLng(gtin.ConfigLerValor(SESSAO_GTIN, "SalvarArq"))
-    chkPastaMensal.Value = CLng(gtin.ConfigLerValor(SESSAO_GTIN, "SepararPorMes"))
     chkAdicionaLiteral.Value = CLng(gtin.ConfigLerValor(SESSAO_GTIN, "AdicionarLiteral"))
-    chkSepararPorCNPJ.Value = CLng(gtin.ConfigLerValor(SESSAO_GTIN, "SepararPorCNPJ"))
-    chkSepararPorModelo.Value = CLng(gtin.ConfigLerValor(SESSAO_GTIN, "SepararPorModelo"))
     txtArqGTIN.Text = gtin.ConfigLerValor(SESSAO_GTIN, "PathGTIN")
      
 End Sub
@@ -1191,10 +1134,7 @@ Private Sub SalvarConfig()
     
     'Arquivos
     gtin.ConfigGravarValor SESSAO_GTIN, "SalvarArq", CStr(chkSalvarArqs.Value)
-    gtin.ConfigGravarValor SESSAO_GTIN, "SepararPorMes", CStr(chkPastaMensal.Value)
     gtin.ConfigGravarValor SESSAO_GTIN, "AdicionarLiteral", CStr(chkAdicionaLiteral.Value)
-    gtin.ConfigGravarValor SESSAO_GTIN, "SepararPorCNPJ", CStr(chkSepararPorCNPJ.Value)
-    gtin.ConfigGravarValor SESSAO_GTIN, "SepararPorModelo", CStr(chkSepararPorModelo.Value)
     gtin.ConfigGravarValor SESSAO_GTIN, "PathGTIN", txtArqGTIN.Text
         
     gtin.ConfigGravar

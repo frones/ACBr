@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2022
+-- Diversos --
+[+] Implementado a versão 2.04 para o provedor DBSeller.
+   Por: Italo Giurizzato Junior
+
 10/10/2022
 -- CTA.Provider --
 [*] Possível solução para gerar a ChaveSeguranca corretamente.

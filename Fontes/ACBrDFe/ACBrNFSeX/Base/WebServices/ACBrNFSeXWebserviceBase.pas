@@ -365,6 +365,7 @@ type
     FpedRegEvento: TpedRegEvento;
   public
     constructor Create;
+    destructor Destroy; override;
 
     function LerFromIni(const AIniStr: string): Boolean;
 
@@ -1407,6 +1408,13 @@ begin
   FnDFe := '';
 
   FpedRegEvento := TpedRegEvento.Create;
+end;
+
+destructor TInfEvento.Destroy;
+begin
+  FpedRegEvento.Free;
+
+  inherited Destroy;
 end;
 
 function TInfEvento.LerFromIni(const AIniStr: string): Boolean;

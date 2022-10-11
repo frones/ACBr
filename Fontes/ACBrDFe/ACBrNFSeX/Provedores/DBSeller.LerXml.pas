@@ -38,12 +38,21 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv1;
+  ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2;
 
 type
   { TNFSeR_DBSeller }
 
   TNFSeR_DBSeller = class(TNFSeR_ABRASFv1)
+  protected
+
+  public
+
+  end;
+
+  { TNFSeR_DBSeller204 }
+
+  TNFSeR_DBSeller204 = class(TNFSeR_ABRASFv2)
   protected
 
   public

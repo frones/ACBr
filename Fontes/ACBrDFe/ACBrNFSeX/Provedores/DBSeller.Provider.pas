@@ -40,7 +40,8 @@ uses
   SysUtils, Classes,
   ACBrXmlDocument,
   ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXProviderABRASFv1,
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
+  ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
@@ -75,11 +76,46 @@ type
                                      const AMessageTag: string = 'MensagemRetorno'); override;
   end;
 
+  TACBrNFSeXWebserviceDBSeller204 = class(TACBrNFSeXWebserviceSoap11)
+  private
+    function GetNamespace: string;
+
+  public
+    function Recepcionar(ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
+    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+
+    function TratarXmlRetornado(const aXML: string): string; override;
+
+    property Namespace: string read GetNamespace;
+  end;
+
+  TACBrNFSeProviderDBSeller204 = class (TACBrNFSeProviderABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = 'ListaMensagemRetorno';
+                                     const AMessageTag: string = 'MensagemRetorno'); override;
+  end;
+
 implementation
 
 uses
   ACBrUtil.XMLHTML,
-  ACBrXmlBase, ACBrDFeException,
+  ACBrXmlBase, ACBrDFeException, ACBrNFSeX,
   DBSeller.GravarXml, DBSeller.LerXml;
 
 { TACBrNFSeXWebserviceDBSeller }
@@ -249,28 +285,273 @@ begin
   begin
     ANode := RootNode.Childrens.FindAnyNs('ErroWebServiceResposta');
 
-    Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('MensagemErro'), tcStr);
-
-    if Mensagem <> '' then
+    if ANode <> nil then
     begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoErro'), tcStr);
-      AErro.Descricao := Mensagem;
-      AErro.Correcao := '';
+      Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('MensagemErro'), tcStr);
+
+      if Mensagem <> '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoErro'), tcStr);
+        AErro.Descricao := Mensagem;
+        AErro.Correcao := '';
+      end;
     end;
   end
   else
     inherited ProcessarMensagemErros(RootNode, Response, AListTag, AMessageTag);
 end;
 
-(*
-   Retorno ao enviar o Rps:
+{ TACBrNFSeXWebserviceDBSeller204 }
 
-<ii:ErroWebServiceResposta xmlns:ii="urn:DBSeller">
-	<ii:CodigoErro>E157</ii:CodigoErro>
-	<ii:MensagemErro>Usuário contribuinte não existe!</ii:MensagemErro>
-	<ii:ListaMensagemRetorno/>
-</ii:ErroWebServiceResposta>
+function TACBrNFSeXWebserviceDBSeller204.GetNamespace: string;
+begin
+  if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.NameSpace
+  else
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.NameSpace;
 
-*)
+  Result := 'xmlns:e="' + Result + '"';
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.Recepcionar(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:RecepcionarLoteRps>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:RecepcionarLoteRps>';
+
+  Result := Executar('', Request,
+                     ['return'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.RecepcionarSincrono(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:RecepcionarLoteRpsSincrono>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:RecepcionarLoteRpsSincrono>';
+
+  Result := Executar('', Request,
+                     ['return'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.GerarNFSe(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:GerarNfse>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:GerarNfse>';
+
+  Result := Executar('', Request,
+                     ['return'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.ConsultarLote(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:ConsultarLoteRps>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:ConsultarLoteRps>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarLoteRpsResposta'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.ConsultarNFSePorFaixa(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:ConsultarNfsePorFaixa>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:ConsultarNfsePorFaixa>';
+
+  Result := Executar('', Request,
+                     ['return'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.ConsultarNFSePorRps(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:ConsultarNfsePorRps>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:ConsultarNfsePorRps>';
+
+  Result := Executar('', Request,
+                     ['return'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.ConsultarNFSeServicoPrestado(
+  ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:ConsultarNfseServicoPrestado>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:ConsultarNfseServicoPrestado>';
+
+  Result := Executar('', Request,
+                     ['return'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.ConsultarNFSeServicoTomado(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:ConsultarNfseServicoTomado>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:ConsultarNfseServicoTomado>';
+
+  Result := Executar('', Request,
+                     ['return'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.Cancelar(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:CancelarNfse>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:CancelarNfse>';
+
+  Result := Executar('', Request,
+                     ['return', 'CancelarNfseResposta'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.SubstituirNFSe(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<e:SubstituirNfse>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</e:SubstituirNfse>';
+
+  Result := Executar('', Request,
+                     ['return'], [Namespace]);
+end;
+
+function TACBrNFSeXWebserviceDBSeller204.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverPrefixosDesnecessarios(Result);
+end;
+
+{ TACBrNFSeProviderDBSeller204 }
+
+procedure TACBrNFSeProviderDBSeller204.Configuracao;
+begin
+  inherited Configuracao;
+
+  ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.04';
+    VersaoAtrib := '2.04';
+  end;
+
+  ConfigMsgDados.GerarPrestadorLoteRps := True;
+end;
+
+function TACBrNFSeProviderDBSeller204.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_DBSeller204.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderDBSeller204.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_DBSeller204.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderDBSeller204.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceDBSeller204.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderDBSeller204.ProcessarMensagemErros(
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse; const AListTag,
+  AMessageTag: string);
+var
+  ANode: TACBrXmlNode;
+  AErro: TNFSeEventoCollectionItem;
+  Mensagem: string;
+begin
+  ANode := RootNode.Childrens.FindAnyNs(AListTag);
+
+  if (ANode = nil) then
+  begin
+    ANode := RootNode.Childrens.FindAnyNs('ErroWebServiceResposta');
+
+    if ANode <> nil then
+    begin
+      Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('MensagemErro'), tcStr);
+
+      if Mensagem <> '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoErro'), tcStr);
+        AErro.Descricao := Mensagem;
+        AErro.Correcao := '';
+      end;
+    end;
+  end
+  else
+    inherited ProcessarMensagemErros(RootNode, Response, AListTag, AMessageTag);
+end;
+
 end.

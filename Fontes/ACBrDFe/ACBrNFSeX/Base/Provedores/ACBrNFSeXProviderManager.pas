@@ -59,7 +59,6 @@ uses
   // Provedores que seguem a versão 1 do layout da ABRASF
   BHISS.Provider,
   CIGA.Provider,
-  DBSeller.Provider,
   FISSLex.Provider,
   geNFe.Provider,
   Ginfes.Provider,
@@ -143,6 +142,7 @@ uses
   // Provedores que seguem a versão 1 e 2 do layout da ABRASF
   Abaco.Provider,
   Betha.Provider,
+  DBSeller.Provider,
   ISSNet.Provider,
   Pronim.Provider,
   SilTecnologia.Provider,
@@ -246,7 +246,17 @@ begin
         Result := TACBrNFSeProviderCTAConsult.Create(ACBrNFSe);
 
       proDataSmart: Result := TACBrNFSeProviderDataSmart202.Create(ACBrNFSe);
-      proDBSeller:  Result := TACBrNFSeProviderDBSeller.Create(ACBrNFSe);
+
+      proDBSeller:
+        begin
+          case Versao of
+            ve100: Result := TACBrNFSeProviderDBSeller.Create(ACBrNFSe);
+            ve204: Result := TACBrNFSeProviderDBSeller204.Create(ACBrNFSe);
+          else
+            Result := nil;
+          end;
+        end;
+
       proDeISS:     Result := TACBrNFSeProviderDeISS203.Create(ACBrNFSe);
 
       proDesenvolve:

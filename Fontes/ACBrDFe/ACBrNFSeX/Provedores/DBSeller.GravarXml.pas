@@ -38,12 +38,20 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXGravarXml_ABRASFv1;
+  ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_DBSeller }
 
   TNFSeW_DBSeller = class(TNFSeW_ABRASFv1)
+  protected
+    procedure Configuracao; override;
+
+  end;
+
+  { TNFSeW_DBSeller204 }
+
+  TNFSeW_DBSeller204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -63,6 +71,18 @@ begin
   inherited Configuracao;
 
   NrOcorrRegimeEspecialTributacao := -1;
+end;
+
+{ TNFSeW_DBSeller204 }
+
+procedure TNFSeW_DBSeller204.Configuracao;
+begin
+  inherited Configuracao;
+
+  TagTomador := 'TomadorServico';
+
+  NrOcorrCodigoPaisTomador := -1;
+  NrOcorrCodigoPaisServico := -1;
 end;
 
 end.

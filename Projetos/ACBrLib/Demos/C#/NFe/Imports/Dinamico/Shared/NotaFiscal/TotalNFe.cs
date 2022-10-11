@@ -95,6 +95,12 @@
 
         public decimal? vIPIDevol { get; set; }
 
+        public decimal? vFCPUFDest { get; set; }
+
+        public decimal? vICMSUFDest { get; set; }
+
+        public decimal? vICMSUFRemet { get; set; }
+
         #endregion Properties
     }
 }

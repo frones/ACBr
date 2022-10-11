@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/10/2022
+-- ISSNet.Provider --
+[*] Possível solução para o problema da tag com vogal acentuada.
+   Por: Italo Giurizzato Junior
 -- ISSBarueri.GravarXml --
 [*] Alteração para aceitar Inscrição Municipal com letras.
    Por: Patrick Knopf

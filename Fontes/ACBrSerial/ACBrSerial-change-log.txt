@@ -38,6 +38,26 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/10/2022
+-- ACBrPosPrinter --
+[*] Ajuste em "TACBrPosPrinter.TxRx", para permitir leitura de Dados sem o envio
+    de algo
+
+-- ACBrPosPrinterElginE1Lib, ACBrPosPrinterElginE1Service, ACBrPosPrinterGEDI --
+[*] Correção de quebras de linhas nos fontes
+
+-- ACBrPosPrinterElginE1Lib --
+[-] Correção de A.V. em "TE1LibPrinter.FinalizarImpressao", quando não havia uso
+    da classe
+
+-- ACBrWinUSBDevice --
+[*] Ajuste no método "TACBrUSBWinDevice.GetDeviceName", para sempre preferir o
+    Nome definido em "ACBrUSBID.ini", ao invez do "FrendlyName do dispositivo USB
+
+-- ACBrUSBID --
+[*] Ajuste no modelo "Sunmi, NT210", para deixar a escolha do protocolo livre
+(por: DSA)
+
 12/09/2022
 -- ACBrBAL, ACBrBALClass, ACBrBALToledo --
 [+] Inclusão de função para envio do preço/kg para balança.

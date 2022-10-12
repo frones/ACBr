@@ -107,22 +107,16 @@ type
   public
     constructor Create;
     procedure Restaurar;
-
     property Imprimindo: Boolean read fImprimindo;
-
     procedure IniciarImpressao;
     procedure FinalizarImpressao;
-
     procedure PularLinhas(Linhas: Integer);
     procedure ImprimirTexto(Texto: String);
     procedure ImprimirImagem(BitMap: TBitmap);
     procedure ImprimirCodBarras(barCodeType: JGEDI_PRNTR_e_BarCodeType;
                               Conteudo: String; Altura, Largura: Integer);
-
     function Status: Integer;
-
     property iPRNTR:JIPRNTR read fiPRNTR;
-
     property EstiloFonte: TACBrPosFonte read fEstiloFonte write fEstiloFonte
       default [];
     property Alinhamento: TACBrPosTipoAlinhamento read fAlinhamento write fAlinhamento
@@ -327,35 +321,28 @@ var
   TextSize, TextScale: Single;
 begin
   IniciarImpressao;
-
   if Texto.Trim.IsEmpty then
   begin
     PularLinhas(1);
     Exit;
   end;
-
   // Criando Objetos de configuração
   Apaint:= TJPaint.Create;
   AConfig := TJGEDI_PRNTR_st_StringConfig.Create;
   AConfig.offset := 0;
   AConfig.paint := Apaint;
-
   // Ajustando Tamanho de Espaco da Linha
   AConfig.lineSpace := EspacoLinha;
-
   // Ajustando Altura do Texto
   TextSize := TamanhoTexto;  // Fonte Normal
   if (ftAlturaDupla in EstiloFonte) then
     TextSize := TextSize * 2;
-
   Apaint.setTextSize(TextSize);
-
   // Ajustando Largura do Texto
   if (ftCondensado in EstiloFonte) or (ftFonteB in EstiloFonte) then
     TextScale := 0.75
   else
     TextScale := 1;
-
   if (ftExpandido in EstiloFonte) then
   begin
     if not (ftAlturaDupla in EstiloFonte)  then
@@ -363,9 +350,7 @@ begin
   end
   else if (ftAlturaDupla in EstiloFonte) then
     TextScale := TextScale / 2;
-
   Apaint.setTextScaleX(TextScale);
-
   // Ajusta o alinhamento do Texto
   case Alinhamento of
     alCentro: Apaint.setTextAlign(TJPaint_Align.JavaClass.CENTER);
@@ -380,22 +365,16 @@ begin
     Inc(Estilo, 1);
   if (ftItalico in EstiloFonte) then
     Inc(Estilo, 2);
-
   // Definindo Estilo Sublinhado
   if (ftSublinhado in EstiloFonte) then
     Apaint.setFlags(TJPaint.JavaClass.UNDERLINE_TEXT_FLAG);
-
   // Definindo Estilo Invertido - A FAZE
   // https://stackoverflow.com/questions/8242439/how-to-draw-text-with-background-color-using-canvas
   // if (ftInvertido in EstiloFonte) then
   //  Apaint.setColor();
-
   Apaint.setTypeface( TJTypeface.JavaClass.create(fFontTypeFace, Estilo) );
-
   iPRNTR.DrawStringExt(AConfig, StringToJString(Texto));
-
 end;
-
 procedure TGEDIPrinter.ImprimirCodBarras(barCodeType: JGEDI_PRNTR_e_BarCodeType;
   Conteudo: String; Altura, Largura: Integer);
 var
@@ -403,9 +382,7 @@ var
 begin
   if Conteudo.IsEmpty then
     Exit;
-
   IniciarImpressao;
-
   BarCodeConfig := TJGEDI_PRNTR_st_BarCodeConfig.Create;
   BarCodeConfig.barCodeType := barCodeType;
   BarCodeConfig.width := Largura;
@@ -434,11 +411,11 @@ begin
 
   imgConfig.height := BitMap.Height;
   imgConfig.width := BitMap.Width;
-
   iPRNTR.DrawPictureExt(imgConfig, BitmapToJBitmap(BitMap) );
 end;
 
-function TGEDIPrinter.Status: Integer;
+
+function TGEDIPrinter.Status: Integer;
 begin
   Result:= iPRNTR.Status.ordinal;
 end;
@@ -714,7 +691,7 @@ begin
         A := IfThen(Altura = 0, 50, max(min(Altura,255),1));
         L := IfThen( LarguraLinha = 0, 2, max(min(LarguraLinha,4),1) ) * 70;
       end;
-      
+
       fGEDIPrinter.ImprimirCodBarras( barCodeType, ACodBar, A, L );
     end;
   end;

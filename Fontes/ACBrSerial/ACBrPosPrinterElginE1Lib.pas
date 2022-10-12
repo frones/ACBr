@@ -104,12 +104,9 @@ type
   public
     constructor Create;
     procedure Restaurar;
-
     property Imprimindo: Boolean read fImprimindo;
-
     procedure IniciarImpressao;
     procedure FinalizarImpressao;
-
     procedure PularLinhas(Linhas: Integer);
     procedure CortarPapel(Linhas: Integer);
     procedure ImprimirTexto(Texto: String);
@@ -119,7 +116,6 @@ type
     procedure ImprimirQRCode(Conteudo: String; LarguraModulo: Integer;
       nivelCorrecao: Integer= 2);
     function Status(Sensor: Integer): Integer;
-
     property TermicaClass: JTermicaClass read GetTermicaClass;
     property Modelo: TElginE1LibPrinters read fModelo write fModelo;
     property EstiloFonte: TACBrPosFonte read fEstiloFonte write fEstiloFonte
@@ -131,7 +127,6 @@ type
     property TamanhoTexto: Integer read fTamanhoTexto write fTamanhoTexto
       default 0;
   end;
-
   { TACBrPosPrinterElginE1Lib }
 
   TACBrPosPrinterElginE1Lib = class(TACBrPosPrinterClass)
@@ -263,9 +258,11 @@ end;
 
 procedure TE1LibPrinter.FinalizarImpressao;
 begin
+  if not fImprimindo then
+    Exit;
+
   try
-    VerificarErro( TermicaClass.FechaConexaoImpressora,
-                   'FechaConexaoImpressora' );
+    VerificarErro( TermicaClass.FechaConexaoImpressora, 'FechaConexaoImpressora' );
   finally
     fImprimindo := False;
   end;
@@ -329,7 +326,6 @@ begin
     PularLinhas(1);
     Exit;
   end;
-
   // Definindo Estilos
   stilo := 0; // Normal
   if (ftCondensado in EstiloFonte) or (ftFonteB in EstiloFonte) then
@@ -340,14 +336,12 @@ begin
     Inc(stilo, 4);
   if (ftNegrito in EstiloFonte) then
     Inc(stilo, 8);
-
   // Ajustando Largura e Altura do Texto
   tamanho := fTamanhoTexto;
   if (ftAlturaDupla in EstiloFonte) then
     Inc(tamanho, 2);
   if (ftExpandido in EstiloFonte) then
     Inc(tamanho, 16);
-
    VerificarErro( TermicaClass.ImpressaoTexto( StringToJString(Texto),
                                                AlinhamentoToPosicao,
                                                stilo,
@@ -355,17 +349,14 @@ begin
                   'ImpressaoTexto' );
    PularLinhas(1);
 end;
-
 procedure TE1LibPrinter.ImprimirCodBarras(Tipo: Integer; Conteudo: String;
   Altura, Largura: Integer; hri: Boolean);
 begin
   // UPC_A = 0; UPC_E = 1; EAN_13 = 2; EAN_8 = 3; CODE_39 = 4; ITF = 5;
   // CODE_BAR = 6; CODE_93 = 7; CODE_128 = 8;
   // HRI: 1 - Acima do código, 2 - Abaixo do código, 3 - Ambos, 4 - Não impresso.
-
   if Conteudo.IsEmpty then
     Exit;
-
   AjustarAlinhamento;
   VerificarErro( TermicaClass.ImpressaoCodigoBarras( Tipo,
                                                      StringToJString(Conteudo),
@@ -379,7 +370,6 @@ procedure TE1LibPrinter.ImprimirQRCode(Conteudo: String;
 begin
   if Conteudo.IsEmpty then
     Exit;
-
   AjustarAlinhamento;
   VerificarErro( TermicaClass.ImpressaoQRCode( StringToJString(Conteudo),
                                                LarguraModulo, nivelCorrecao),
@@ -393,7 +383,7 @@ begin
                  'ImprimeBitmap' );
 end;
 
-function TE1LibPrinter.Status(Sensor: Integer): Integer;
+function TE1LibPrinter.Status(Sensor: Integer): Integer;
 var
   S: Integer;
 begin

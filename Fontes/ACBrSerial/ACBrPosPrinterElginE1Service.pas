@@ -950,7 +950,8 @@ end;
 //    '{"Funcao":"ImpressaoQRCode","Parametros":[{"dados":"www.clubeautomacaoelgin.com.br","tamanho":5,"nivelCorrecao":2}]},' +
 //    '{"Funcao":"AvancaPapel","Parametros":[{"linhas":3}]},' +
 //    '{"Funcao":"FechaConexaoImpressora"}]}';
-
+
+
    fMessageSubscriptionID := TMessageManager.DefaultManager.SubscribeToMessage(TMessageResultNotification, HandleActivityMessage);
    intentPrint := TJIntent.JavaClass.init(StringToJString('com.elgin.e1.intentservice.IMPRESSAO'));
    intentPrint.putExtra(StringToJString('direta'), StringToJString(LinhasImpressao));
@@ -967,19 +968,16 @@ begin
   begin
     TMessageManager.DefaultManager.Unsubscribe(TMessageResultNotification, fMessageSubscriptionID);
     fMessageSubscriptionID := 0;
-
     if Assigned(fOnErroImpressao) then
     begin
       resultIntent := TMessageResultNotification(M).Value;
       requestCode := TMessageResultNotification(M).RequestCode;
       resultCode := TMessageResultNotification(M).ResultCode;
-
       if( requestCode = CRequestCodeImpressora ) then
       begin
         if  (resultCode = TJActivity.JavaClass.RESULT_OK) then
         begin
           retorno := JStringToString(resultIntent.getStringExtra(StringToJString('retorno')));
-
           if (retorno <> '1') then
           begin
             if resultIntent.hasExtra(StringToJString('erro')) then
@@ -994,7 +992,6 @@ begin
     end;
   end;
 end;
-
 
 {$Else}
  procedure TACBrPosPrinterElginE1Service.EnviarPorTCP(

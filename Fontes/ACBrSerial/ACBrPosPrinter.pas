@@ -2637,11 +2637,13 @@ begin
   OldTimeOut := FDevice.TimeOutMilissegundos;
   OldSendBytesInterval := FDevice.SendBytesInterval;
   try
-    FDevice.TimeOutMilissegundos := ATimeOut;
-    FDevice.SendBytesInterval := 0;
-    FDevice.EnviaString( ACmd );
-
-    Sleep(10);  // Aguarda equipamento ficar pronto para responder
+    if (Length(ACmd) > 0) then
+    begin
+      FDevice.TimeOutMilissegundos := ATimeOut;
+      FDevice.SendBytesInterval := 0;
+      FDevice.EnviaString( ACmd );
+      Sleep(10);  // Aguarda equipamento ficar pronto para responder
+    end;
 
     if WaitForTerminator then
       Result := FDevice.LeString(ATimeOut, 0, chr(BytesToRead))

@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/10/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a cidade: Dom Pedrito/RS - Provedor: Pronim
+   Por: Gabriel Rogelin
+[+] Incluida a cidade: Sarandi/PR - Provedor: SigISS
+[*] Desfeita a alteração na cidade: Sarandi/RS.
+   Por: Marcelo Alpha
+
 11/10/2022
 -- ISSNet.Provider --
 [*] Possível solução para o problema da tag com vogal acentuada.

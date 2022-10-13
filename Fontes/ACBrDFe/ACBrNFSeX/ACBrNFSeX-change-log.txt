@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/10/2022
+-- ISSNet.Provider --
+[*] Alteração visando o problema da tag com vogal acentuada.
+   Por: Catedral Ranieri
 -- ACBrNFSeXServicos.ini --
 [+] Incluida a cidade: Dom Pedrito/RS - Provedor: Pronim
    Por: Gabriel Rogelin

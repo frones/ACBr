@@ -44,5 +44,6 @@ public enum  ACBrSessao {
     BoletoWebSevice,
     IBGE,
     Sedex,
-    eSocial;
+    eSocial,
+    GTIN;
 }

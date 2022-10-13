@@ -41,7 +41,7 @@ uses
 
 const
   CLibeSocialNome = 'ACBrLibeSocial';
-  CLibeSocialVersao = '0.0.1';
+  CLibeSocialVersao = '0.0.1.33';
 
   CSessaoRespEnvio = 'Envio';
   CSessaoRespConsulta = 'Consulta';

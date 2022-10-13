@@ -127,34 +127,28 @@ begin
 end;
 
 function TACBrEscDiebold.LerInfo: String;
-var
+//var
   //Ret: AnsiString;
-  Info: String;
   //B: Byte;
-
-  Procedure AddInfo( Titulo: String; AInfo: AnsiString);
-  begin
-    Info := Info + Titulo+'='+AInfo + sLineBreak;
-  end;
-
 begin
-  Info := '';
+  Result := '';
+  Info.Clear;
 
-  AddInfo('Fabricante', 'Diebold');
+  AddInfo(cKeyFabricante, 'Diebold');
 
   // Aparentemente, Diebold não tem comandos para retornar Informações sobre o equipamento
   //
-  //Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
+  //Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
   //AddInfo('Firmware', Ret);
   //
-  //Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
+  //Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
   //AddInfo('Modelo', Ret);
   //
-  //Ret := fpPosPrinter.TxRx( GS + 'I1', 1, 500 );
+  //Ret := fpPosPrinter.TxRx( GS + 'I1', 1, 0 );
   //B := Ord(Ret[1]);
   //Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
 
-  Result := Info;
+  Result := Info.Text;
 end;
 
 end.

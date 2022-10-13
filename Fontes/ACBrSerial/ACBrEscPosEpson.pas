@@ -42,6 +42,7 @@ uses
 
 const
   MAX_LEN_CMD = 65535;
+  cTimeOutTxRxCheque = 2000;
 
 type
 
@@ -640,30 +641,31 @@ end;
 function TACBrEscPosEpson.LeituraCheque: AnsiString;
 var
   Resp: AnsiString;
-  B: Byte;
-  P: Integer;
+  b: Byte;
+  p, t: Integer;
 begin
   Result := '';
-  Resp := fpPosPrinter.TxRx( FS + 'b', 0, 2000, True );
+  t := max(fpPosPrinter.Device.TimeOutMilissegundos, cTimeOutTxRxCheque);
+  Resp := fpPosPrinter.TxRx( FS + 'b', 0, t, True );
 
   // Verificando o Header
   if copy(Resp,1,1) = '_' then        // Header formarto 1
-    P := 2
+    p := 2
   else if copy(Resp,1,2) = '7*' then  // Header formarto 2
-    P := 3
+    p := 3
   else if copy(Resp,1,1) = '=' then   // Resposta por Hook da DLL
-    P := 1
+    p := 1
   else
-    P := 0;
+    p := 0;
 
   // Verificando o Byte de Status
-  if (P > 0) and (P <= Length(Resp)) then
+  if (p > 0) and (p <= Length(Resp)) then
   begin
-    if P > 1 then
+    if (p > 1) then
     begin
-      B := Ord(Resp[P]);
-      if not TestBit(B, 5) then   // Reading normal ?
-        Result := Trim(copy(Resp, P+1, Length(Resp)));  // Remove Header e Status
+      b := Ord(Resp[p]);
+      if not TestBit(b, 5) then   // Reading normal ?
+        Result := Trim(copy(Resp, p+1, Length(Resp)));  // Remove Header e Status
     end
     else
       Result := Trim(Resp);   // Resposta por Hook da DLL
@@ -675,87 +677,87 @@ begin
     Result := StringReplace(Result,' ','',[rfReplaceAll]);
 
     // Acha Inicio do Bloco CMC7
-    P := pos('=', Result);
-    if (P < 0) then
-      P := 1;
+    p := pos('=', Result);
+    if (p < 0) then
+      p := 1;
 
-    Result := Copy(Result, P, Length(Result));
+    Result := Copy(Result, p, Length(Result));
   end;
 end;
 
 procedure TACBrEscPosEpson.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
-  B: Byte;
-  C: String;
+  b: Byte;
+  c: AnsiString;
 begin
   try
     fpPosPrinter.Ativo := True;
 
-    C := fpPosPrinter.TxRx( DLE + EOT + #1 );
-    if (Length(C) > 0) then
+    c := fpPosPrinter.TxRx( DLE + EOT + #1 );
+    if (Length(c) > 0) then
     begin
-      B := Ord(C[1]);
-      if not TestBit(B, 2) then
+      b := Ord(c[1]);
+      if not TestBit(b, 2) then
         AStatus := AStatus + [stGavetaAberta];
-      if TestBit(B, 3) then
+      if TestBit(b, 3) then
         AStatus := AStatus + [stOffLine];
-      if TestBit(B, 5) then
+      if TestBit(b, 5) then
         AStatus := AStatus + [stErro];  // Waiting for online recovery
-      if TestBit(B, 6) then
+      if TestBit(b, 6) then
         AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
     end;
 
-    C := fpPosPrinter.TxRx( DLE + EOT + #2 );
-    if (Length(C) > 0) then
+    c := fpPosPrinter.TxRx( DLE + EOT + #2 );
+    if (Length(c) > 0) then
     begin
-      B := Ord(C[1]);
-      if TestBit(B, 2) then
+      b := Ord(c[1]);
+      if TestBit(b, 2) then
         AStatus := AStatus + [stTampaAberta];
-      if TestBit(B, 3) then
+      if TestBit(b, 3) then
         AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
-      if TestBit(B, 5) then
+      if TestBit(b, 5) then
         AStatus := AStatus + [stSemPapel];
-      if TestBit(B, 6) then
+      if TestBit(b, 6) then
         AStatus := AStatus + [stErro];
     end;
 
-    C := fpPosPrinter.TxRx( DLE + EOT + #4 );
-    if (Length(C) > 0) then
+    c := fpPosPrinter.TxRx( DLE + EOT + #4 );
+    if (Length(c) > 0) then
     begin
-      B := Ord(C[1]);
-      if TestBit(B, 2) and TestBit(B, 3) then
+      b := Ord(c[1]);
+      if TestBit(b, 2) and TestBit(b, 3) then
         AStatus := AStatus + [stPoucoPapel];
-      if TestBit(B, 5) and TestBit(B, 6) then
+      if TestBit(b, 5) and TestBit(b, 6) then
         AStatus := AStatus + [stSemPapel];
     end;
 
     if (fpPosPrinter.TemCheque = 1) then
     begin
-      C := fpPosPrinter.TxRx( DLE + EOT + #5 );
-      if (Length(C) > 0) then
+      c := fpPosPrinter.TxRx( DLE + EOT + #5 );
+      if (Length(c) > 0) then
       begin
-        B := Ord(C[1]);
-        if not TestBit(B, 2) then
+        b := Ord(c[1]);
+        if not TestBit(b, 2) then
           AStatus := AStatus + [stSlip];
-        if TestBit(B, 3) then
+        if TestBit(b, 3) then
           AStatus := AStatus + [stAguardandoSlip];
-        if not TestBit(B, 5) then
+        if not TestBit(b, 5) then
           AStatus := AStatus + [stTOF];
-        if not TestBit(B, 6) then
+        if not TestBit(b, 6) then
           AStatus := AStatus + [stBOF];
       end;
 
-      C := fpPosPrinter.TxRx( DLE + EOT + BS + #1 );
-      if (Length(C) > 0) then
+      c := fpPosPrinter.TxRx( DLE + EOT + BS + #1 );
+      if (Length(c) > 0) then
       begin
-        B := Ord(C[1]);
-        if not TestBit(B, 2) then
+        b := Ord(c[1]);
+        if not TestBit(b, 2) then
           AStatus := AStatus + [stMICR];
-        if TestBit(B, 3) then
+        if TestBit(b, 3) then
           AStatus := AStatus + [stAguardandoSlip];
-        if not TestBit(B, 5) then
+        if not TestBit(b, 5) then
           AStatus := AStatus + [stTOF];
-        if not TestBit(B, 6) then
+        if not TestBit(b, 6) then
           AStatus := AStatus + [stBOF];
       end;
     end;
@@ -768,70 +770,50 @@ end;
 function TACBrEscPosEpson.LerInfo: String;
 var
   Ret: AnsiString;
-  Info: String;
-  B: Byte;
-
-  Procedure AddInfo( Titulo: String; AInfo: AnsiString);
-  begin
-    AInfo := Trim(AInfo);
-    if (LeftStr(AInfo,1) = '_') then
-      AInfo := copy(AInfo, 2, Length(AInfo));
-
-    Info := Info + Titulo+'='+AInfo + sLineBreak;
-  end;
-
-  function BoolToChar(ABool: Boolean): AnsiChar;
-  begin
-    if ABool then
-      Result := '1'
-    else
-      Result := '0';
-  end;
-
+  b: Byte;
 begin
   Result := '';
+  Info.Clear;
 
   // Lendo o Fabricante
-  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 500, True );
+  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 0, True );
   if (Ret = '') and (not (Self is TACBrEscPosEpson)) then   // Nem todas GPrinter`s suportam leitura de Info
     Exit;
-
-  Info := '';
   AddInfo(cKeyFabricante, Ret);
 
   // Lendo a versão do Firmware
-  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
+  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
   AddInfo(cKeyFirmware, Ret);
 
   // Lendo o Modelo
-  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
+  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
   AddInfo(cKeyModelo, Ret);
 
   // Lendo o Número Serial
   Ret := '';
   try
-    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, True );
+    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
   except
   end;
 
   if (Ret = '') then
-    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, False );
+    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, False );
 
   if (Ret <> '') then
     AddInfo('Serial', Ret);
 
   // Lendo Bit de presença de Guilhotina
-  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 500, False );
+  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 0, False );
   if Length(Ret) > 0 then
   begin
-    B := Ord(Ret[1]);
-    AddInfo(cKeyGuilhotina, BoolToChar(TestBit(B, 1)) );
-    AddInfo(cKeyCheque, BoolToChar(TestBit(B, 3)) );
-    AddInfo(cKeyMICR, BoolToChar(TestBit(B, 3)) );
-    AddInfo(cKeyAutenticacao, BoolToChar(TestBit(B, 6)) );
+    b := Ord(Ret[1]);
+    AddInfo(cKeyGuilhotina, TestBit(b, 1) );
+    AddInfo(cKeyCheque, TestBit(b, 3) );
+    AddInfo(cKeyMICR, TestBit(b, 3) );
+    AddInfo(cKeyAutenticacao, TestBit(b, 6) );
   end;
 
-  Result := Info;
+  Result := Info.Text;
 end;
 
 function TACBrEscPosEpson.ComandoImprimirImagemRasterStr(

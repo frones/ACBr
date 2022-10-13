@@ -85,27 +85,25 @@ end;
 
 procedure TACBrEscElgin.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
-  B: Byte;
+  b: Byte;
   Ret: AnsiString;
 begin
   try
-    Ret := fpPosPrinter.TxRx(ENQ, 1, 500);
-    B := Ord(Ret[1]);
-
-    if not TestBit(B, 0) then
-      AStatus := AStatus + [stOffLine];
-
-    if TestBit(B, 1) then
-      AStatus := AStatus + [stSemPapel];
-
-    if TestBit(B, 2) then
-      AStatus := AStatus + [stGavetaAberta];
-
-    if not TestBit(B, 3) then
-      AStatus := AStatus + [stTampaAberta];
-
-    if TestBit(B, 4) then
-      AStatus := AStatus + [stPoucoPapel];
+    Ret := fpPosPrinter.TxRx(ENQ);
+    if (Length(Ret) > 0) then
+    begin
+      b := Ord(Ret[1]);
+      if not TestBit(b, 0) then
+        AStatus := AStatus + [stOffLine];
+      if TestBit(b, 1) then
+        AStatus := AStatus + [stSemPapel];
+      if TestBit(b, 2) then
+        AStatus := AStatus + [stGavetaAberta];
+      if not TestBit(b, 3) then
+        AStatus := AStatus + [stTampaAberta];
+      if TestBit(b, 4) then
+        AStatus := AStatus + [stPoucoPapel];
+    end;
   except
     AStatus := AStatus + [stErroLeitura];
   end;

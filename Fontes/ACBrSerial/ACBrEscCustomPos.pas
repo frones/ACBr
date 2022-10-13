@@ -234,28 +234,22 @@ end;
 function TACBrEscCustomPos.LerInfo: String;
 var
   Ret: AnsiString;
-  Info, Desc: String;
-  B: Byte;
-
-  Procedure AddInfo( Titulo: String; AInfo: AnsiString);
-  begin
-    Info := Info + Titulo+'='+AInfo + sLineBreak;
-  end;
-
+  Desc: String;
+  b: Byte;
 begin
-  Info := '';
+  Result := '';
+  Info.Clear;
 
-  Ret := 'CUSTOM';
-  AddInfo('Fabricante', Ret);
+  AddInfo(cKeyFabricante, 'CUSTOM');
 
-  Ret := fpPosPrinter.TxRx( GS + 'I'+#3, 4, 500, False );
-  AddInfo('Firmware', Ret);
+  Ret := fpPosPrinter.TxRx( GS + 'I'+#3, 4, 0, False );
+  AddInfo(cKeyFirmware, Ret);
 
-  Ret := fpPosPrinter.TxRx( GS + 'I'+#1, 1, 500, False );
+  Ret := fpPosPrinter.TxRx( GS + 'I'+#1, 1, 0, False );
   Desc := '';
   if (Ret = #142) or (Ret = #255) then
   begin
-    Ret := fpPosPrinter.TxRx( GS + 'I'+#255, 2, 500, False );
+    Ret := fpPosPrinter.TxRx( GS + 'I'+#255, 2, 0, False );
     if (Ret = #02+#10) then
       Desc := 'K3'
     else if (Ret = #02+#41) then
@@ -265,7 +259,7 @@ begin
   end
   else if (Ret = #95) or (Ret = #101) then
   begin
-    Ret := fpPosPrinter.TxRx( GS + 'I'+#5, 1, 500, False );
+    Ret := fpPosPrinter.TxRx( GS + 'I'+#5, 1, 0, False );
     if (Ret = #188) then
       Desc := 'KUBE II'
     else if (Ret = #166) then
@@ -274,21 +268,20 @@ begin
 
   if (Desc = '') then
     Desc := TranslateUnprintable(Ret);
-
-  AddInfo('Modelo', Desc);
+  AddInfo(cKeyModelo, Desc);
 
   // Aparentemente não há comando que retorne o Número Serial
-  //Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, True );
-  //AddInfo('Serial', Ret);
+  //Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
+  //AddInfo(cKeySerial, Ret);
 
-  Ret := fpPosPrinter.TxRx( GS + 'I'+#2, 1, 500, False );
+  Ret := fpPosPrinter.TxRx( GS + 'I' + #02, 1, 0, False );
   if Length(Ret) > 0 then
   begin
-    B := Ord(Ret[1]);
-    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
+    b := Ord(Ret[1]);
+    AddInfo(cKeyGuilhotina, TestBit(b, 1)) ;
   end;
 
-  Result := Info;
+  Result := Info.Text;
 end;
 
 

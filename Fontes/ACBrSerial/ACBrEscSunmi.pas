@@ -43,10 +43,6 @@ uses
   , ACBrBase
   {$ENDIF};
 
-const
-  cSunmiTimeout = 500;
-  cSunmiTimeoutTCP = 1000;
-
 type
 
   { TACBrEscSunmi }
@@ -54,7 +50,6 @@ type
   TACBrEscSunmi = class(TACBrEscPosEpson)
   public
     constructor Create(AOwner: TACBrPosPrinter);
-    procedure Configurar; override;
     function LerInfo: String; override;
     function ComandoFonte(TipoFonte: TACBrPosTipoFonte; Ligar: Boolean): AnsiString;
       override;
@@ -71,7 +66,6 @@ type
 implementation
 
 uses
-  StrUtils,
   ACBrUtil.Math, ACBrUtil.Strings,
   ACBrConsts;
 
@@ -86,30 +80,19 @@ begin
   {(*}
   with Cmd  do
   begin
-    Beep := ESC + GS + BELL + '1' + #2 + #5;
+    FonteA := ESC + 'M' + #0;
+    Zera   := ESC + '@' + FonteA;
+    Beep   := ESC + GS + BELL + '1' + #2 + #5;
     LigaCondensado := '';
     DesligaCondensado := '';
   end;
   {*)}
 
-  TagsNaoSuportadas.Add( cTagLigaCondensado );
-  TagsNaoSuportadas.Add( cTagDesligaCondensado );
   TagsNaoSuportadas.Add( cTagLogotipo );
   TagsNaoSuportadas.Add( cTagLogoKC1 );
   TagsNaoSuportadas.Add( cTagLogoKC2 );
   TagsNaoSuportadas.Add( cTagLogoFatorX );
   TagsNaoSuportadas.Add( cTagLogoFatorY );
-end;
-
-procedure TACBrEscSunmi.Configurar;
-begin
-  inherited Configurar;
-
-  with fpPosPrinter do
-  begin
-    PaginaDeCodigo := pcUTF8;
-
-  end;
 end;
 
 function TACBrEscSunmi.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
@@ -125,9 +108,12 @@ begin
   else
     NovoFonteStatus := NovoFonteStatus - [TipoFonte];
 
-  if TipoFonte in [ftNegrito, ftExpandido, ftItalico, ftSublinhado, ftAlturaDupla] then
+  if TipoFonte in [ftCondensado, ftFonteB, ftNegrito, ftExpandido, ftItalico, ftSublinhado, ftAlturaDupla] then
   begin
     AByte := 0;
+
+    if (ftCondensado in NovoFonteStatus) or (ftFonteB in NovoFonteStatus) then
+      SetBit(AByte, 0);
 
     if ftNegrito in NovoFonteStatus then
       SetBit(AByte, 3);
@@ -157,8 +143,8 @@ end;
 
 function TACBrEscSunmi.ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
 begin
-  // Usa sempre UTF8
-  Result := FS +'.';   // Cancel Chinese character mode
+  Result := FS +'.' + // Cancel Chinese character mode
+            inherited ComandoPaginaCodigo(APagCodigo)
 end;
 
 function TACBrEscSunmi.ComandoImprimirImagemRasterStr(
@@ -199,60 +185,33 @@ end;
 function TACBrEscSunmi.LerInfo: String;
 var
   Ret: AnsiString;
-  Info: String;
-  t: Integer;
-
-  Procedure AddInfo( Titulo: String; AInfo: AnsiString);
-  begin
-    AInfo := Trim(AInfo);
-    if (AInfo = '') then
-      Exit;
-
-    if (LeftStr(AInfo,1) = '_') then
-      AInfo := copy(AInfo, 2, Length(AInfo));
-
-    Info := Info + Titulo+'='+AInfo + sLineBreak;
-  end;
-
-  function BoolToChar(ABool: Boolean): AnsiChar;
-  begin
-    if ABool then
-      Result := '1'
-    else
-      Result := '0';
-  end;
-
+  TemGuilhotina: Boolean;
 begin
-  Info := '';
   Result := '';
+  Info.Clear;
 
-  t := cSunmiTimeout;
-  if fpPosPrinter.Device.IsTCPPort then
-    t := t + cSunmiTimeoutTCP;
-  if (fpPosPrinter.Device.TimeOutMilissegundos > t) then
-    t := fpPosPrinter.Device.TimeOutMilissegundos;
+  // Lendo a versão do Firmware
+  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
+  if (Ret = '') then   // Nem todas impressoras suportam leitura de Info
+    Exit;
+  AddInfo(cKeyFirmware, Ret);
 
-  try
-    // Lendo o Fabricante
-    Ret := fpPosPrinter.TxRx( GS + 'IB', 0, t, True );
-    AddInfo(cKeyFabricante, Ret);
+  // Lendo o Fabricante
+  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 0, True );
+  AddInfo(cKeyFabricante, Ret);
+  TemGuilhotina := (pos('sunmi', LowerCase(Ret)) > 0);
 
-    // Lendo a versão do Firmware
-    Ret := fpPosPrinter.TxRx( GS + 'IA', 0, t, True );
-    AddInfo(cKeyFirmware, Ret);
+  // Lendo o Modelo
+  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
+  AddInfo(cKeyModelo, Ret);
+  TemGuilhotina := TemGuilhotina and (pos('nt', LowerCase(Ret)) > 0);
 
-    // Lendo o Modelo
-    Ret := fpPosPrinter.TxRx( GS + 'IC', 0, t, True );
-    AddInfo(cKeyModelo, Ret);
+  // Lendo o Número Serial
+  Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
+  AddInfo(cKeySerial, Ret);
 
-    // Lendo o Número Serial
-    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, t, True );
-    AddInfo('Serial', Ret);
-  except
-  end;
-
-  AddInfo(cKeyGuilhotina, BoolToChar(True) );
-  Result := Info;
+  AddInfo(cKeyGuilhotina, TemGuilhotina );
+  Result := Info.text;
 end;
 
 end.

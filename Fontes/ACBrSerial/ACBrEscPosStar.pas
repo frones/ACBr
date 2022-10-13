@@ -30,6 +30,10 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+// Equipamentos compatíveis com esse Modelo:
+// - D2 Mini - TecToy/Sunmi,
+// - GPOS800 - Gertec
+
 {$I ACBr.inc}
 
 unit ACBrEscPosStar;
@@ -48,7 +52,6 @@ type
   { TACBrEscPosStar }
 
   TACBrEscPosStar = class(TACBrEscPosEpson)
-
   public
     constructor Create(AOwner: TACBrPosPrinter);
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
@@ -56,6 +59,8 @@ type
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
     function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
       AHeight: Integer): AnsiString; override;
+    procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
+    function LerInfo: String; override;
   end;
 
 implementation
@@ -138,7 +143,76 @@ function TACBrEscPosStar.ComandoImprimirImagemRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 begin
   // Gerando RasterStr, sem LF, a cada fatia
-  Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight, True)
+  Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight, False)
+end;
+
+procedure TACBrEscPosStar.LerStatus(var AStatus: TACBrPosPrinterStatus);
+var
+  b: Byte;
+  c: AnsiString;
+begin
+  try
+    fpPosPrinter.Ativo := True;
+
+    c := fpPosPrinter.TxRx( GS + 'r' + #1 );
+    if (Length(c) > 0) then
+    begin
+      b := Ord(c[1]);
+      if TestBit(b, 0) or TestBit(b, 1) then
+        AStatus := AStatus + [stPoucoPapel];
+      if TestBit(b, 2) or TestBit(b, 3) then
+        AStatus := AStatus + [stSemPapel];
+    end;
+
+    c := fpPosPrinter.TxRx( GS + 'r' + #2 );
+    if (Length(c) > 0) then
+    begin
+      b := Ord(c[1]);
+      if TestBit(b, 0) then
+        AStatus := AStatus + [stGavetaAberta];
+    end;
+  except
+    AStatus := AStatus + [stErroLeitura];
+  end;
+end;
+
+function TACBrEscPosStar.LerInfo: String;
+var
+  Ret: AnsiString;
+  b: Byte;
+begin
+  Result := '';
+  Info.Clear;
+
+  // Lendo a versão do Firmware
+  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 0, True );
+  if (Ret = '') then   // Nem todas impressoras suportam leitura de Info
+    Exit;
+  AddInfo(cKeyFirmware, Ret);
+
+  // Lendo o Fabricante
+  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 0, True );
+  AddInfo(cKeyFabricante, Ret);
+
+  // Lendo o Modelo
+  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 0, True );
+  AddInfo(cKeyModelo, Ret);
+
+  // Lendo o Número Serial
+  Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 0, True );
+  AddInfo(cKeySerial, Ret);
+
+  // Lendo Bit de presença de Guilhotina
+  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 0, False );
+  if Length(Ret) > 0 then
+  begin
+    b := Ord(Ret[1]);
+    AddInfo(cKeyGuilhotina, TestBit(b, 1) );
+    AddInfo(cKeyCheque, TestBit(b, 3) );
+    AddInfo(cKeyMICR, TestBit(b, 3) );
+  end;
+
+  Result := Info.Text;
 end;
 
 end.

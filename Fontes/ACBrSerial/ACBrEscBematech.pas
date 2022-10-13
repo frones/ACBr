@@ -256,7 +256,7 @@ var
   Ret: AnsiString;
 begin
   try
-    Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
+    Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5 );
     if Length(Ret) < 2 then
       raise EPosPrinterException.Create( ACBrStr('Leitura Status, retorno inválido'));
 
@@ -288,37 +288,30 @@ end;
 
 function TACBrEscBematech.LerInfo: String;
 var
-  Ret: AnsiString;
-  InfoCmd, Info: String;
-  B: Byte;
-
-  Procedure AddInfo( Titulo: String; AInfo: AnsiString);
-  begin
-    Info := Info + Titulo+'='+AInfo + sLineBreak;
-  end;
-
+  Ret, InfoCmd: AnsiString;
+  b: Byte;
 begin
-  Info := '';
+  Result := '';
+  Info.Clear;
 
   InfoCmd := GS + #249 + #39;
+  Ret := fpPosPrinter.TxRx( InfoCmd + #0, 10 );
+  AddInfo(cKeyModelo, Ret);
 
-  Ret := fpPosPrinter.TxRx( InfoCmd + #0, 10, 500 );
-  AddInfo('Modelo', Ret);
+  Ret := fpPosPrinter.TxRx( InfoCmd + #1, 0 );
+  AddInfo(cKeySerial, Ret);
 
-  Ret := fpPosPrinter.TxRx( InfoCmd + #1, 0, 500 );
-  AddInfo('Serial', Ret);
+  Ret := fpPosPrinter.TxRx( InfoCmd + #3, 3 );
+  AddInfo(cKeyFirmware, Ret);
 
-  Ret := fpPosPrinter.TxRx( InfoCmd + #3, 3, 500 );
-  AddInfo('Firmware', Ret);
-
-  Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
+  Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5 );
   if Length(Ret) >= 3 then
   begin
-    B := Ord(Ret[3]);
-    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 2),'0','1') + sLineBreak ;
+    b := Ord(Ret[3]);
+    AddInfo(cKeyGuilhotina, not TestBit(b, 2)) ;
   end;
 
-  Result := Info;
+  Result := Info.Text;
 end;
 
 end.

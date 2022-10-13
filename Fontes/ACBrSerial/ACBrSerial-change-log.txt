@@ -38,6 +38,38 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/10/2022
+-- ACBrPosPrinter, ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma,
+   ACBrEscCustomPos, ACBrEscDatecs, ACBrEscDiebold, ACBrEscElgin,
+   ACBrEscPosStar, ACBrEscSunmi --
+[*] Refactoring e Padronização na rotina "LerInfo"
+
+-- ACBrPosPrinter --
+[*] Ajuste na criação para definição de um tempo padrão para:
+    ACBrPosPrinter.Device.TimeOutMilissegundos em 300
+[*] Ajuste no metodo "TACBrPosPrinter.TxRx", para usar o TimeOut definido em:
+    "ACBrPosPrinter.Device.TimeOutMilissegundos"
+[*] Método "TxRx", modificado, para receber como Default o parâmetro "TimeOut=0",
+    situação onde será utilizado o valor de "Device.TimeOutMilissegundos"
+[*] Método "TACBrPosPrinter.Zerar", modificado para desligar Flag de "FontB"
+
+-- ACBrEscPosStar --
+[-] Método "ComandoImprimirImagemRasterStr", modificado para gerar imagens sem a
+    quebra de linha
+[+] Adicionada sobrecarga nos métodos:
+    - procedure LerStatus(var AStatus: TACBrPosPrinterStatus);
+    - function LerInfo: String;
+
+-- ACBrEscSunmi --
+[-] Comando "Zera", modificado, para resetar letra em "Fonte A"
+[-] Remoção de Tags não suportadas "cTagLigaCondensado", "cTagDesligaCondensado"
+[-] Remoção de método "Configurar", que forçava CodePage em UTF8.
+    ( Use sunmi-cloud-printer-setup.exe, para ajustar CodePage )
+[*] Método "TACBrEscSunmi.ComandoFonte", ajustado para processar Tag "FonteB"
+[-] Método "TACBrEscSunmi.ComandoPaginaCodigo", modificado para desligar
+    Caracteres chineses e informar a Pagina de Código
+(por: DSA)
+
 12/10/2022
 -- ACBrPosPrinter --
 [*] Ajuste em "TACBrPosPrinter.TxRx", para permitir leitura de Dados sem o envio

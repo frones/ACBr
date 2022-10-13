@@ -102,36 +102,27 @@ end;
 function TACBrEscDatecs.LerInfo: String;
 var
   Ret: AnsiString;
-  Info: String;
-
-  Procedure AddInfo( Titulo: String; AInfo: AnsiString);
-  begin
-    AInfo := Trim(AInfo);
-    if (LeftStr(AInfo,1) = '_') then
-      AInfo := copy(AInfo, 2, Length(AInfo));
-
-    Info := Info + Titulo+'='+AInfo + sLineBreak;
-  end;
-
 begin
-  Info := '';
-  AddInfo('Fabricante', 'Datecs');
+  Result := '';
+  Info.Clear;
+
+  AddInfo(cKeyFabricante, 'Datecs');
 
   // Lendo Modelo e Firmware
-  Ret := fpPosPrinter.TxRx( ESC + 'Z', 0, 800, False );
-  AddInfo('Firmware', Trim(copy(Ret, 23, 3)));
-  AddInfo('Modelo', Trim(copy(Ret,1 ,22)));
+  Ret := fpPosPrinter.TxRx( ESC + 'Z', 0, 0, False );
+  AddInfo(cKeyFirmware, Trim(copy(Ret, 23, 3)));
+  AddInfo(cKeyModelo, Trim(copy(Ret,1 ,22)));
 
   // Lendo o Número Serial
   try
-    Ret := fpPosPrinter.TxRx( ESC + 'N', 0, 500, False );
+    Ret := Trim(fpPosPrinter.TxRx( ESC + 'N', 0, 0, False ));
   except
     Ret := '';
   end;
-  AddInfo('Serial', Trim(Ret));
-  AddInfo('Guilhotina', '0'); ;
+  AddInfo(cKeySerial, Ret);
+  AddInfo(cKeyGuilhotina, False); ;
 
-  Result := Info;
+  Result := Info.Text;
 end;
 
 end.

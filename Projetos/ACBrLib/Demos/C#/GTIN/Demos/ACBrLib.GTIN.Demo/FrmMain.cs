@@ -126,10 +126,7 @@ namespace ACBrLibGTIN.Demo
 
                 //Arquivos
                 ACBrGTIN.Config.SalvarArq = ckbSalvarArqs.Checked;
-                ACBrGTIN.Config.SepararPorMes = ckbPastaMensal.Checked;
                 ACBrGTIN.Config.AdicionarLiteral = ckbAdicionaLiteral.Checked;
-                ACBrGTIN.Config.SepararPorCNPJ = ckbSepararPorCNPJ.Checked;
-                ACBrGTIN.Config.SepararPorModelo = ckbSepararPorModelo.Checked;
                 ACBrGTIN.Config.PathGTIN = txtArqGTIN.Text;
 
                 ACBrGTIN.ConfigGravar();
@@ -191,10 +188,7 @@ namespace ACBrLibGTIN.Demo
 
             //Config Arquivos
             ckbSalvarArqs.Checked = ACBrGTIN.Config.SalvarArq;
-            ckbPastaMensal.Checked = ACBrGTIN.Config.SepararPorMes;
             ckbAdicionaLiteral.Checked = ACBrGTIN.Config.AdicionarLiteral;
-            ckbSepararPorCNPJ.Checked = ACBrGTIN.Config.SepararPorCNPJ;
-            ckbSepararPorModelo.Checked = ACBrGTIN.Config.SepararPorModelo;
             txtArqGTIN.Text = ACBrGTIN.Config.PathGTIN;
 
         }

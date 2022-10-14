@@ -49,14 +49,13 @@ const
 
   // Essas Tags serão interpretadas no momento da Impressão, pois usam comandos
   // específicos da Biblioteca SunmiPrinter
-  CTAGS_POST_PROCESS: array[0..27] of string = (
+  CTAGS_POST_PROCESS: array[0..25] of string = (
     cTagPulodeLinha, cTagPuloDeLinhas, cTagBR,
     cTagLigaExpandido, cTagDesligaExpandido,
     cTagLigaAlturaDupla, cTagDesligaAlturaDupla,
     cTagLigaNegrito, cTagDesligaNegrito,
     cTagLigaSublinhado, cTagDesligaSublinhado,
     cTagLigaCondensado, cTagDesligaCondensado,
-    cTagLigaItalico, cTagDesligaItalico,
     cTagLigaInvertido, cTagDesligaInvertido,
     cTagFonteNormal,
     cTagFonteA, cTagFonteB,
@@ -98,6 +97,8 @@ type
 
     procedure ProcessarEstiloFonte;
     procedure ProcessarAlinhamento;
+
+    procedure ProcessarSendRAWData(const AData: AnsiString);
   protected
     procedure ImprimirTTSLib(const LinhasImpressao: String; var Tratado: Boolean);
 
@@ -110,6 +111,9 @@ type
       override;
     function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString): Boolean; override;
+
+    function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; override;
+    function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
@@ -139,6 +143,8 @@ begin
   TagsNaoSuportadas.Add( cTagBarraStd );
   TagsNaoSuportadas.Add( cTagBarraCode11 );
   TagsNaoSuportadas.Add( cTagBarraMSI );
+  TagsNaoSuportadas.Add( cTagLigaItalico );
+  TagsNaoSuportadas.Add( cTagDesligaItalico );
 
   fLibTagProcessor := TACBrTagProcessor.Create;
   fLibTagProcessor.AddTags(CTAGS_POST_PROCESS, [],  False);
@@ -147,6 +153,28 @@ begin
   fLibTagProcessor.OnTraduzirTag := TTSLibTraduzirTag;
   fLibTagProcessor.OnAdicionarBlocoResposta := TTSLibAdicionarBlocoResposta;
   fLibTagProcessor.OnTraduzirTagBloco := TTSLibTraduzirTagBloco;
+
+  with Cmd do
+  begin
+    Zera                    := ESC + '@';
+    PuloDeLinha             := LF;
+    PuloDePagina            := FF;
+    EspacoEntreLinhasPadrao := ESC + '2';
+    EspacoEntreLinhas       := ESC + '3';
+    FonteNormal             := ESC + '!' + #0;
+    FonteA                  := ESC + 'M' + #0;
+    FonteB                  := ESC + 'M' + #1;
+    LigaNegrito             := ESC + 'E' + #1;
+    DesligaNegrito          := ESC + 'E' + #0;
+    LigaExpandido           := GS  + '!' + #16;
+    DesligaExpandido        := GS  + '!' + #0;
+    LigaAlturaDupla         := GS  + '!' + #1;
+    DesligaAlturaDupla      := GS  + '!' + #0;
+    LigaSublinhado          := ESC + '-' + #1;
+    DesligaSublinhado       := ESC + '-' + #0;
+    LigaInvertido           := GS  + 'B' + #1;
+    DesligaInvertido        := GS  + 'B' + #0;
+  end;
 
   fLibPrinter := TACBrSunmiPrinter.Create;
 end;
@@ -159,11 +187,37 @@ begin
   inherited;
 end;
 
+function TACBrPosPrinterTecToySunmiLib.ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
+var
+  CmdPag: Integer;
+begin
+  case APagCodigo of
+    pc437: CmdPag := 0;
+    pc850: CmdPag := 2;
+    pc852: CmdPag := 18;
+    pc860: CmdPag := 3;
+    pc1252: CmdPag := 16;
+  else
+    CmdPag := -1;
+  end;
+
+  Result := FS +'.';   // Cancel Chinese character mode - NÃO FUNCIONA
+  if (CmdPag >= 0) then
+    Result := Result + ESC + 't' + AnsiChr( CmdPag );
+
+  ProcessarSendRAWData(Result);
+end;
+
+function TACBrPosPrinterTecToySunmiLib.ComandoEspacoEntreLinhas(Espacos: byte): AnsiString;
+begin
+  Result := inherited ComandoEspacoEntreLinhas(Espacos);
+  ProcessarSendRAWData(Result);
+end;
+
 procedure TACBrPosPrinterTecToySunmiLib.Configurar;
 begin
   fpPosPrinter.Porta := 'NULL';
   fpPosPrinter.OnEnviarStringDevice := ImprimirTTSLib;
-  fpPosPrinter.PaginaDeCodigo := TACBrPosPaginaCodigo.pcUTF8;
 end;
 
 function TACBrPosPrinterTecToySunmiLib.TraduzirTag(const ATag: AnsiString;
@@ -319,10 +373,6 @@ begin
     EstiloFonte := EstiloFonte + [ftCondensado]
   else if (ATag = cTagDesligaCondensado) then
     EstiloFonte := EstiloFonte - [ftCondensado]
-  else if (ATag = cTagLigaItalico) then
-    EstiloFonte := EstiloFonte + [ftItalico]
-  else if (ATag = cTagDesligaItalico) then
-    EstiloFonte := EstiloFonte - [ftItalico]
   else if (ATag = cTagLigaInvertido) then
     EstiloFonte := EstiloFonte + [ftInvertido]
   else if (ATag = cTagDesligaInvertido) then
@@ -338,6 +388,7 @@ begin
   else if (ATag = cTagZera) or (ATag = cTagReset) then
   begin
     fLibPrinter.printerInit;
+    fpPosPrinter.Zerar;
     EstiloFonte := EstiloFonte - [ftCondensado, ftExpandido, ftAlturaDupla,
                                   ftNegrito, ftSublinhado, ftItalico, ftInvertido];
   end
@@ -405,10 +456,8 @@ end;
 
 procedure TACBrPosPrinterTecToySunmiLib.ProcessarEstiloFonte;
 var
-  AByte: Integer;
-  FontSize: Integer;
+  AByte, FontSize: Integer;
   ACmd: AnsiString;
-  ab: array of Byte;
 begin
   AByte := 0;
   FontSize := cTamFontNormal;
@@ -423,10 +472,7 @@ begin
     SetBit(AByte, 4);
 
   if (ftExpandido in EstiloFonte) then
-    FontSize := FontSize * 2; //SetBit(AByte, 5);
-
-  if (ftItalico in EstiloFonte) then
-    SetBit(AByte, 6);
+    SetBit(AByte, 5);  // FontSize := FontSize * RazaoColunaFonte.Expandida;
 
   if (ftSublinhado in EstiloFonte) then
     SetBit(AByte, 7);
@@ -435,13 +481,12 @@ begin
 
   // ESC ! desliga Invertido, enviando o comando novamente
   if (ftInvertido in EstiloFonte) then
-    ACmd := ACmd + Cmd.LigaInvertido;
+    ACmd := ACmd + Cmd.LigaInvertido
+  else
+    ACmd := ACmd + Cmd.DesligaInvertido;
 
   fLibPrinter.setFontSize(FontSize);
-
-  setLength(ab, length(ACmd));
-  Move(ACmd[1], ab[0], Length(ACmd));
-  //fLibPrinter.sendRAWData(ab);
+  ProcessarSendRAWData(ACmd);
 end;
 
 procedure TACBrPosPrinterTecToySunmiLib.ProcessarAlinhamento;
@@ -496,6 +541,18 @@ begin
   fLibPrinter.lineWrap(1);
 end;
 
+procedure TACBrPosPrinterTecToySunmiLib.ProcessarSendRAWData(const AData: AnsiString);
+var
+  ab: TBytes;
+begin
+  if (Length(AData) = 0) then
+    Exit;
+
+  setLength(ab, length(AData));
+  Move(AData[1], ab[0], Length(AData));
+  fLibPrinter.sendRAWData(ab);
+end;
+
 procedure TACBrPosPrinterTecToySunmiLib.ProcessarCodBarras(ConteudoBloco: AnsiString; ATag: String);
 var
   ACodBar: AnsiString;
@@ -535,7 +592,11 @@ begin
   else
     barCodeTextPos := 0;
 
-  A := max(min(fpPosPrinter.ConfigBarras.Altura,255),1);
+  if (fpPosPrinter.ConfigBarras.Altura = 0) then
+    A := 50
+  else
+    A := max(min(fpPosPrinter.ConfigBarras.Altura,255),5);
+
   L := max(min(fpPosPrinter.ConfigBarras.LarguraLinha,6),1);
 
   ProcessarAlinhamento;

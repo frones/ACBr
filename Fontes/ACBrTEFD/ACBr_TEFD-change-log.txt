@@ -46,6 +46,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2022
+-- ACBrTEFPayGoComum --
+[-] Correção para definição do conteúdo de 'TextoEspecialOperador", quando
+    ocorrer falha na Transação, e não houver valor em "PWINFO_CNCDSPMSG", usar
+    "PWINFO_RESULTMSG"
+[*] Método "PWINFOToString", mapeando "PWINFO_RET (0)"
+
+-- ACBrTEFAPIComum --
+[-] Correção em "TACBrTEFAPIComumClass.ProcessarRespostaOperacaoTEF", para
+    chamar evento "QuandoFinalizarOperacao", mesmo quando transação não obtiver
+    Sucesso
+[*] Melhorias nos Logs
+
+-- ACBrTEFPayGoAndroidAPI --
+[*] Ajustes para compatibilizar com o novo APK da PayGo
+[*] Desligando Flag "EmTransacao", quando Inicializar ou DesInicializar
+[*] Melhorias nos Logs
+
 18/08/2022
 -- ACBrPOSPGWebPrinter --
 [-] Correção de erro na compilação. Inclusão das units ACBrUtil.Strings e ACBrUtil.XMLHTML

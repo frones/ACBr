@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -666,7 +666,8 @@ begin
     if Sucesso then
       TextoEspecialOperador := LeInformacao(PWINFO_RESULTMSG, 0).AsBinary
     else
-      TextoEspecialOperador := LeInformacao(PWINFO_CNCDSPMSG, 0).AsBinary;
+      TextoEspecialOperador := IfEmptyThen( LeInformacao(PWINFO_CNCDSPMSG, 0).AsBinary,
+                                            LeInformacao(PWINFO_RESULTMSG, 0).AsBinary );
 
     if (Trim(TextoEspecialOperador) = '') then
       TextoEspecialOperador := 'TRANSACAO FINALIZADA'
@@ -759,6 +760,7 @@ end;
 function PWINFOToString(iINFO: Word): String;
 begin
   case iINFO of
+    PWINFO_RET:             Result := 'PWINFO_RET';
     PWINFO_OPERATION:       Result := 'PWINFO_OPERATION';
     PWINFO_PPPPWD:          Result := 'PWINFO_PPPPWD';
     PWINFO_LOCALIP:         Result := 'PWINFO_LOCALIP';

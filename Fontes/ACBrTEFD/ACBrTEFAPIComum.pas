@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -911,13 +911,13 @@ begin
         begin
           FinalizarTransacao(tefstsSucessoAutomatico);
         end;
-
-        if Assigned(QuandoFinalizarOperacao) then
-        begin
-          GravarLog('  QuandoFinalizarOperacao');
-          QuandoFinalizarOperacao(UltimaRespostaTEF);
-        end;
       end;
+    end;
+
+    if Assigned(QuandoFinalizarOperacao) then
+    begin
+      GravarLog('  QuandoFinalizarOperacao');
+      QuandoFinalizarOperacao(UltimaRespostaTEF);
     end;
   end;
 end;
@@ -1277,7 +1277,7 @@ var
   i: Integer;
   ATEFResp: TACBrTEFResp;
 begin
-  GravarLog( 'FinalizarTransacao( '+
+  GravarLog( '    FinalizarTransacao( '+
              Rede+', '+
              NSU+', '+
              CodigoFinalizacao+', '+
@@ -1293,7 +1293,7 @@ begin
 
     if Assigned(fQuandoFinalizarTransacao) then
     begin
-      GravarLog('  QuandoFinalizarTransacao');
+      GravarLog('      QuandoFinalizarTransacao');
       fQuandoFinalizarTransacao(ATEFResp, AStatus);
     end;
   end;
@@ -1301,7 +1301,7 @@ end;
 
 procedure TACBrTEFAPIComum.FinalizarTransacao(AStatus: TACBrTEFStatusTransacao);
 begin
-  GravarLog( 'FinalizarTransacao( '+
+  GravarLog( '  FinalizarTransacao( '+
              GetEnumName(TypeInfo(TACBrTEFStatusTransacao), integer(AStatus))+' )');
 
   FinalizarTransacao( UltimaRespostaTEF.Rede,

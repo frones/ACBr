@@ -41,7 +41,7 @@ uses
   ACBrBase, ACBrPosPrinter,
   ACBrPosPrinterElginE1Service,
   {$IfDef ANDROID}
-   ACBrPosPrinterGEDI, ACBrPosPrinterElginE1Lib,
+   ACBrPosPrinterGEDI, ACBrPosPrinterElginE1Lib, ACBrPosPrinterTecToySunmiLib,
   {$EndIf}
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
@@ -89,8 +89,6 @@ type
     btAlinhamento: TButton;
     btnBarras: TButton;
     btQRCode: TButton;
-    btnLerStatus: TButton;
-    btnLerInfo: TButton;
     mImp: TMemo;
     GridPanelLayout4: TGridPanelLayout;
     btnImprimir: TCornerButton;
@@ -107,7 +105,6 @@ type
     chbTodasBth: TCheckBox;
     cbxModelo: TComboBox;
     btAcentos: TButton;
-    btBeep: TButton;
     cbxPagCodigo: TComboBox;
     cbSuportaBMP: TCheckBox;
     lbiClasse: TListBoxItem;
@@ -118,6 +115,11 @@ type
     Layout2: TLayout;
     cbControlePorta: TCheckBox;
     cbSmartPOS: TCheckBox;
+    btnLerStatus: TButton;
+    btnLerInfo: TButton;
+    btBeep: TButton;
+    btnAbrirGaveta: TButton;
+    btnCortarPapel: TButton;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -139,12 +141,15 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure cbxModeloChange(Sender: TObject);
     procedure rbMudaClasseImpressora(Sender: TObject);
+    procedure btnAbrirGavetaClick(Sender: TObject);
+    procedure btnCortarPapelClick(Sender: TObject);
   private
     { Private declarations }
     fE1Printer: TACBrPosPrinterElginE1Service;
     {$IfDef ANDROID}
     fGEDIPrinter: TACBrPosPrinterGEDI;
     fE1Lib: TACBrPosPrinterElginE1Lib;
+    fSunmiPrinter: TACBrPosPrinterTecToySunmiLib;
     {$EndIf}
     FVKService: IFMXVirtualKeyboardService;
 
@@ -211,6 +216,7 @@ begin
   fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
   fE1Lib := TACBrPosPrinterElginE1Lib.Create(ACBrPosPrinter1);
   fE1Lib.Modelo := TElginE1LibPrinters.prnM8;
+  fSunmiPrinter := TACBrPosPrinterTecToySunmiLib.Create(ACBrPosPrinter1);
   {$EndIf}
 
   LerConfiguracao;
@@ -222,6 +228,7 @@ begin
   {$IfDef ANDROID}
   fGEDIPrinter.Free;
   fE1Lib.Free;
+  fSunmiPrinter.Free;
   {$EndIf}
 end;
 
@@ -350,6 +357,11 @@ begin
   LerConfiguracao;
 end;
 
+procedure TPosPrinterAndroidTesteForm.btnAbrirGavetaClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.Imprimir('</abre_gaveta>');
+end;
+
 procedure TPosPrinterAndroidTesteForm.btnAtivarClick(Sender: TObject);
 begin
   ConfigurarACBrPosPrinter;
@@ -422,6 +434,11 @@ begin
   mImp.Lines.Add('MSI: 1234567890');
   mImp.Lines.Add('<msi>1234567890</msi>');
   mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TPosPrinterAndroidTesteForm.btnCortarPapelClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.Imprimir('</corte>');
 end;
 
 procedure TPosPrinterAndroidTesteForm.btnImprimirClick(Sender: TObject);
@@ -561,6 +578,7 @@ begin
   cbxModelo.Items.Add('Elgin E1 Service');
   cbxModelo.Items.Add('Elgin E1 Lib');
   cbxModelo.Items.Add('Gertec GEDI');
+  cbxModelo.Items.Add('TecToy Sunmi Service');
   lbImpressoras.Enabled := False;
 end;
 
@@ -604,8 +622,9 @@ begin
     case cbxModelo.ItemIndex of
       0: ACBrPosPrinter1.ModeloExterno := fE1Printer;
       1: ACBrPosPrinter1.ModeloExterno := fE1Lib;
+      2: ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
     else
-      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
+      ACBrPosPrinter1.ModeloExterno := fSunmiPrinter;
     end;
 
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');

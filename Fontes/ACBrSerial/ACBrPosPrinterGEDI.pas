@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -143,6 +143,8 @@ type
       var BlocoTraduzido: AnsiString);
 
     procedure ProcessarComandoBMP(ConteudoBloco: AnsiString);
+    procedure ProcessarQRCode(ConteudoBloco: AnsiString);
+    procedure ProcessarCodBarras(ConteudoBloco: AnsiString; ATag: String);
   protected
     procedure ImprimirGEDI(const LinhasImpressao: String; var Tratado: Boolean);
 
@@ -158,50 +160,13 @@ type
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
   end;
 
-Function BitmapToJBitmap(const ABitmap: TBitmap): JBitmap;
-
 implementation
 
 uses
   System.Threading,
   Androidapi.Helpers,
-  Androidapi.JNIBridge,
-  AndroidApi.JNI.Media,
-  FMX.Helpers.Android,
-  FMX.Surfaces,
   StrUtils, Math,
-  synacode,
-  ACBrUtil.Strings,
-  ACBrImage;
-
-//https://forums.embarcadero.com/thread.jspa?threadID=245452&tstart=0
-Function BitmapToJBitmap(const ABitmap: TBitmap): JBitmap;
-var
-  LSurface: TBitmapSurface;
-  LBitmap : JBitmap;
-begin
-  Result := nil;
-  LSurface := TBitmapSurface.Create;
-  try
-    LSurface.Assign(ABitmap);
-    LBitmap := TJBitmap.JavaClass.createBitmap( LSurface.Width,
-                                                LSurface.Height,
-                                                TJBitmap_Config.JavaClass.ARGB_8888);
-    if SurfaceToJBitmap(LSurface, LBitmap) then
-      Result := LBitmap;
-  finally
-    LSurface.Free;
-  end;
-end;
-
-procedure AndroidBeep(ADuration: Integer);
-begin
-  // https://stackoverflow.com/questions/30938946/how-do-i-make-a-beep-sound-in-android-using-delphi-and-the-api
-  TJToneGenerator.JavaClass.init( TJAudioManager.JavaClass.ERROR,
-                                  TJToneGenerator.JavaClass.MAX_VOLUME)
-    .startTone( TJToneGenerator.JavaClass.TONE_DTMF_0,
-                ADuration );
-end;
+  ACBrPosPrinterAndroidHelper;
 
 { TGEDIPrinter }
 
@@ -634,16 +599,11 @@ begin
     ProcessarComandoBMP(ConteudoBloco)
 
   else if (ATag = cTagQRCode) then
-  begin
-    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.QR_CODE;
-    D := 5 - max(min(fpPosPrinter.ConfigQRCode.LarguraModulo,4),1);
-    A := min(380, Trunc(fpPosPrinter.CalcularAlturaQRCodeAlfaNumM(ConteudoBloco)/D) );
-    fGEDIPrinter.ImprimirCodBarras( barCodeType, ConteudoBloco, A, A );
-  end
+    ProcessarQRCode(ConteudoBloco)
 
   else if (ATag = cTagQRCodeLargura) then
-    fpPosPrinter.ConfigQRCode.LarguraModulo := StrToIntDef(
-       ConteudoBloco, fpPosPrinter.ConfigQRCode.LarguraModulo)
+    fpPosPrinter.ConfigQRCode.LarguraModulo :=
+      StrToIntDef(ConteudoBloco, fpPosPrinter.ConfigQRCode.LarguraModulo)
 
   else if (ATag = cTagQRCodeTipo) or (ATag = cTagQRCodeError) then
     BlocoTraduzido := ''
@@ -652,60 +612,21 @@ begin
     BlocoTraduzido := ''
 
   else if (ATag = cTagBarraLargura) then
-    fpPosPrinter.ConfigBarras.LarguraLinha := StrToIntDef(
-       ConteudoBloco, fpPosPrinter.ConfigBarras.LarguraLinha)
+    fpPosPrinter.ConfigBarras.LarguraLinha :=
+      StrToIntDef(ConteudoBloco, fpPosPrinter.ConfigBarras.LarguraLinha)
 
   else if (ATag = cTagBarraAltura) then
-    fpPosPrinter.ConfigBarras.Altura := StrToIntDef(
-       ConteudoBloco, fpPosPrinter.ConfigBarras.Altura)
+    fpPosPrinter.ConfigBarras.Altura :=
+      StrToIntDef(ConteudoBloco, fpPosPrinter.ConfigBarras.Altura)
 
   else if (AnsiIndexText(ATag, CBLOCK_POST_PROCESS) >= 0) then
-  begin
-    ACodBar := fpPosPrinter.AjustarCodBarras(ConteudoBloco, ATag);
-
-    if (ATag = cTagBarraEAN8) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.EAN_8
-    else if (ATag = cTagBarraEAN13) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.EAN_13
-    else if (ATag = cTagBarraInter) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.ITF
-    else if (ATag = cTagBarraCode39) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.CODE_39
-    else if (ATag = cTagBarraCode93) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.CODE_93
-    else if (ATag = cTagBarraCode128) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.CODE_128
-    else if (ATag = cTagBarraUPCA) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.UPC_A
-    else if (ATag = cTagBarraUPCE) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.UPC_E
-    else if (ATag = cTagBarraCodaBar) then
-      barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.CODABAR
-    else
-      barCodeType := Nil;
-
-    if (barCodeType <> Nil) then
-    begin
-      with  fpPosPrinter.ConfigBarras do
-      begin
-        A := IfThen(Altura = 0, 50, max(min(Altura,255),1));
-        L := IfThen( LarguraLinha = 0, 2, max(min(LarguraLinha,4),1) ) * 70;
-      end;
-
-      fGEDIPrinter.ImprimirCodBarras( barCodeType, ACodBar, A, L );
-    end;
-  end;
+    ProcessarCodBarras(ConteudoBloco, ATag);
 end;
 
 procedure TACBrPosPrinterGEDI.ProcessarComandoBMP(ConteudoBloco: AnsiString);
 var
   ABitMap: TBitmap;
-  ARasterStr: AnsiString;
-  AHeight, AWidth: Integer;
-  SL: TStringList;
   AData: String;
-  MS: TMemoryStream;
-  SS: TStringStream;
 begin
   AData := Trim(ConteudoBloco);
   if (AData = '') then
@@ -713,40 +634,64 @@ begin
 
   ABitMap := TBitmap.Create;
   try
-    if StrIsBinary(LeftStr(AData,10)) then           // AscII Art
-    begin
-      SL := TStringList.Create;
-      MS := TMemoryStream.Create;
-      try
-        SL.Text := AData;
-        AWidth := 0; AHeight := 0; ARasterStr := '';
-        AscIIToRasterStr(SL, AWidth, AHeight, ARasterStr);
-        RasterStrToBMPMono(ARasterStr, AWidth, False, MS);
-        MS.Position := 0;
-        ABitMap.LoadFromStream(MS);
-      finally
-        SL.Free;
-        MS.Free;
-      end;
-    end
-
-    else if StrIsBase64(AData) then
-    begin
-      SS := TStringStream.Create(DecodeBase64(AData));
-      try
-        SS.Position := 0;
-        ABitMap.LoadFromStream(SS);
-      finally
-        SS.Free;
-      end;
-    end
-
-    else
-      ABitMap.LoadFromFile(AData);
-
+    ConteudoBlocoToBitmap(AData, ABitMap);
     fGEDIPrinter.ImprimirImagem(ABitMap);
   finally
     ABitMap.Free;
+  end;
+end;
+
+procedure TACBrPosPrinterGEDI.ProcessarQRCode(ConteudoBloco: AnsiString);
+var
+  barCodeType: JGEDI_PRNTR_e_BarCodeType;
+  D, A: Integer;
+begin
+  barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.QR_CODE;
+  D := 5 - max(min(fpPosPrinter.ConfigQRCode.LarguraModulo,4),1);
+  A := min(380, Trunc(fpPosPrinter.CalcularAlturaQRCodeAlfaNumM(ConteudoBloco)/D) );
+  fGEDIPrinter.ImprimirCodBarras( barCodeType, ConteudoBloco, A, A );
+end;
+
+procedure TACBrPosPrinterGEDI.ProcessarCodBarras(ConteudoBloco: AnsiString; ATag: String);
+var
+  A, L: Integer;
+  ACodBar: AnsiString;
+  barCodeType: JGEDI_PRNTR_e_BarCodeType;
+begin
+  ACodBar := fpPosPrinter.AjustarCodBarras(ConteudoBloco, ATag);
+  if (ACodBar = '') then
+    Exit;
+
+  if (ATag = cTagBarraEAN8) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.EAN_8
+  else if (ATag = cTagBarraEAN13) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.EAN_13
+  else if (ATag = cTagBarraInter) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.ITF
+  else if (ATag = cTagBarraCode39) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.CODE_39
+  else if (ATag = cTagBarraCode93) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.CODE_93
+  else if (ATag = cTagBarraCode128) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.CODE_128
+  else if (ATag = cTagBarraUPCA) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.UPC_A
+  else if (ATag = cTagBarraUPCE) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.UPC_E
+  else if (ATag = cTagBarraCodaBar) then
+    barCodeType := TJGEDI_PRNTR_e_BarCodeType.JavaClass.CODABAR
+  else
+    Exit;
+
+  if (barCodeType <> Nil) then
+  begin
+    with  fpPosPrinter.ConfigBarras do
+    begin
+      A := IfThen(Altura = 0, 50, max(min(Altura,255),1));
+      L := IfThen( LarguraLinha = 0, 2, max(min(LarguraLinha,4),1) ) * 70;
+    end;
+
+    fGEDIPrinter.ImprimirCodBarras( barCodeType, ACodBar, A, L );
   end;
 end;
 

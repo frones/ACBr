@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -41,7 +41,6 @@ interface
 uses
   Classes, SysUtils,
   FMX.Graphics,
-  Androidapi.JNI.GraphicsContentViewText,
   ACBrConsts, ACBrDevice, ACBrBase, ACBrPosPrinter,
   Elgin.JNI.E1;
 
@@ -140,6 +139,9 @@ type
       var BlocoTraduzido: AnsiString);
 
     procedure ProcessarComandoBMP(ConteudoBloco: AnsiString);
+    procedure ProcessarQRCode(ConteudoBloco: AnsiString);
+    procedure ProcessarCodBarras(ConteudoBloco: AnsiString; ATag: String);
+
     function GetModelo: TElginE1LibPrinters;
     procedure SetModelo(const Value: TElginE1LibPrinters);
   protected
@@ -159,51 +161,15 @@ type
     property Modelo: TElginE1LibPrinters read GetModelo write SetModelo;
   end;
 
-Function BitmapToJBitmap(const ABitmap: TBitmap): JBitmap;
-
 implementation
 
 uses
-  System.Threading,
-  Androidapi.Helpers,
-  Androidapi.JNIBridge,
-  AndroidApi.JNI.Media,
-  FMX.Helpers.Android,
-  FMX.Surfaces,
   StrUtils, Math,
-  synacode,
+  Androidapi.Helpers,
+  ACBrPosPrinterAndroidHelper,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,
   ACBrImage;
-
-//https://forums.embarcadero.com/thread.jspa?threadID=245452&tstart=0
-Function BitmapToJBitmap(const ABitmap: TBitmap): JBitmap;
-var
-  LSurface: TBitmapSurface;
-  LBitmap : JBitmap;
-begin
-  Result := nil;
-  LSurface := TBitmapSurface.Create;
-  try
-    LSurface.Assign(ABitmap);
-    LBitmap := TJBitmap.JavaClass.createBitmap( LSurface.Width,
-                                                LSurface.Height,
-                                                TJBitmap_Config.JavaClass.ARGB_8888);
-    if SurfaceToJBitmap(LSurface, LBitmap) then
-      Result := LBitmap;
-  finally
-    LSurface.Free;
-  end;
-end;
-
-procedure AndroidBeep(ADuration: Integer);
-begin
-  // https://stackoverflow.com/questions/30938946/how-do-i-make-a-beep-sound-in-android-using-delphi-and-the-api
-  TJToneGenerator.JavaClass.init( TJAudioManager.JavaClass.ERROR,
-                                  TJToneGenerator.JavaClass.MAX_VOLUME)
-    .startTone( TJToneGenerator.JavaClass.TONE_DTMF_0,
-                ADuration );
-end;
 
 { TE1LibPrinter }
 
@@ -606,29 +572,17 @@ end;
 
 procedure TACBrPosPrinterElginE1Lib.E1LibTraduzirTagBloco(const ATag,
   ConteudoBloco: AnsiString; var BlocoTraduzido: AnsiString);
-var
-  ACodBar: String;
-  barCodeType: Integer;
-  A, L, E: Integer;
 begin
   BlocoTraduzido := '';
   if (ATag = cTagBMP) then
     ProcessarComandoBMP(ConteudoBloco)
 
   else if (ATag = cTagQRCode) then
-  begin
-    L := max(min(fpPosPrinter.ConfigQRCode.LarguraModulo,6),1);
-    if (fpPosPrinter.ConfigQRCode.ErrorLevel = 0) then
-      E := 2
-    else
-      E := max(min(fpPosPrinter.ConfigQRCode.ErrorLevel, 4), 1);
-
-    fE1LibPrinter.ImprimirQRCode(ConteudoBloco, L, E);
-  end
+    ProcessarQRCode(ConteudoBloco)
 
   else if (ATag = cTagQRCodeLargura) then
-    fpPosPrinter.ConfigQRCode.LarguraModulo := StrToIntDef(
-       ConteudoBloco, fpPosPrinter.ConfigQRCode.LarguraModulo)
+    fpPosPrinter.ConfigQRCode.LarguraModulo :=
+      StrToIntDef(ConteudoBloco, fpPosPrinter.ConfigQRCode.LarguraModulo)
 
   else if (ATag = cTagQRCodeTipo) or (ATag = cTagQRCodeError) then
     BlocoTraduzido := ''
@@ -637,58 +591,21 @@ begin
     BlocoTraduzido := ''
 
   else if (ATag = cTagBarraLargura) then
-    fpPosPrinter.ConfigBarras.LarguraLinha := StrToIntDef(
-       ConteudoBloco, fpPosPrinter.ConfigBarras.LarguraLinha)
+    fpPosPrinter.ConfigBarras.LarguraLinha :=
+      StrToIntDef(ConteudoBloco, fpPosPrinter.ConfigBarras.LarguraLinha)
 
   else if (ATag = cTagBarraAltura) then
-    fpPosPrinter.ConfigBarras.Altura := StrToIntDef(
-       ConteudoBloco, fpPosPrinter.ConfigBarras.Altura)
+    fpPosPrinter.ConfigBarras.Altura :=
+      StrToIntDef(ConteudoBloco, fpPosPrinter.ConfigBarras.Altura)
 
   else if (AnsiIndexText(ATag, CBLOCK_POST_PROCESS) >= 0) then
-  begin
-    ACodBar := fpPosPrinter.AjustarCodBarras(ConteudoBloco, ATag);
-
-    // UPC_A = 0; UPC_E = 1; EAN_13 = 2; EAN_8 = 3; CODE_39 = 4; ITF = 5;
-    // CODE_BAR = 6; CODE_93 = 7; CODE_128 = 8;
-    // HRI: 1 - Acima do código, 2 - Abaixo do código, 3 - Ambos, 4 - Não impresso.
-
-    if (ATag = cTagBarraEAN8) then
-      barCodeType := 3
-    else if (ATag = cTagBarraEAN13) then
-      barCodeType := 2
-    else if (ATag = cTagBarraInter) then
-      barCodeType := 5
-    else if (ATag = cTagBarraCode39) then
-      barCodeType := 4
-    else if (ATag = cTagBarraCode93) then
-      barCodeType := 7
-    else if (ATag = cTagBarraCode128) then
-      barCodeType := 8
-    else if (ATag = cTagBarraUPCA) then
-      barCodeType := 0
-    else if (ATag = cTagBarraUPCE) then
-      barCodeType := 1
-    else if (ATag = cTagBarraCodaBar) then
-      barCodeType := 6
-    else
-      barCodeType := 7;
-
-    A := max(min(fpPosPrinter.ConfigBarras.Altura,255),1);
-    L := max(min(fpPosPrinter.ConfigBarras.LarguraLinha,6),1);
-    fE1LibPrinter.ImprimirCodBarras( barCodeType, ACodBar, A, L,
-                                     fpPosPrinter.ConfigBarras.MostrarCodigo );
-  end;
+    ProcessarCodBarras(ConteudoBloco, ATag);
 end;
 
 procedure TACBrPosPrinterElginE1Lib.ProcessarComandoBMP(ConteudoBloco: AnsiString);
 var
   ABitMap: TBitmap;
-  ARasterStr: AnsiString;
-  AHeight, AWidth: Integer;
-  SL: TStringList;
-  AData: String;
-  MS: TMemoryStream;
-  SS: TStringStream;
+  AData: string;
 begin
   AData := Trim(ConteudoBloco);
   if (AData = '') then
@@ -696,41 +613,68 @@ begin
 
   ABitMap := TBitmap.Create;
   try
-    if StrIsBinary(LeftStr(AData,10)) then           // AscII Art
-    begin
-      SL := TStringList.Create;
-      MS := TMemoryStream.Create;
-      try
-        SL.Text := AData;
-        AWidth := 0; AHeight := 0; ARasterStr := '';
-        AscIIToRasterStr(SL, AWidth, AHeight, ARasterStr);
-        RasterStrToBMPMono(ARasterStr, AWidth, False, MS);
-        MS.Position := 0;
-        ABitMap.LoadFromStream(MS);
-      finally
-        SL.Free;
-        MS.Free;
-      end;
-    end
-
-    else if StrIsBase64(AData) then
-    begin
-      SS := TStringStream.Create(DecodeBase64(AData));
-      try
-        SS.Position := 0;
-        ABitMap.LoadFromStream(SS);
-      finally
-        SS.Free;
-      end;
-    end
-
-    else
-      ABitMap.LoadFromFile(AData);
-
+    ConteudoBlocoToBitmap(AData, ABitMap);
     fE1LibPrinter.ImprimirImagem(ABitMap);
   finally
     ABitMap.Free;
   end;
+end;
+
+procedure TACBrPosPrinterElginE1Lib.ProcessarQRCode(ConteudoBloco: AnsiString);
+var
+  L, E: Integer;
+begin
+  if (Trim(ConteudoBloco) = '') then
+    Exit;
+
+  L := max(min(fpPosPrinter.ConfigQRCode.LarguraModulo,6),1);
+  if (fpPosPrinter.ConfigQRCode.ErrorLevel = 0) then
+    E := 2
+  else
+    E := max(min(fpPosPrinter.ConfigQRCode.ErrorLevel, 4), 1);
+
+  fE1LibPrinter.ImprimirQRCode(ConteudoBloco, L, E);
+end;
+
+procedure TACBrPosPrinterElginE1Lib.ProcessarCodBarras(
+  ConteudoBloco: AnsiString; ATag: String);
+var
+  ACodBar: AnsiString;
+  A, L, barCodeType: Integer;
+begin
+  ACodBar := fpPosPrinter.AjustarCodBarras(ConteudoBloco, ATag);
+  if (ACodBar = '') then
+     Exit;
+
+  // UPC_A = 0; UPC_E = 1; EAN_13 = 2; EAN_8 = 3; CODE_39 = 4; ITF = 5;
+  // CODE_BAR = 6; CODE_93 = 7; CODE_128 = 8;
+  // HRI: 1 - Acima do código, 2 - Abaixo do código, 3 - Ambos, 4 - Não impresso.
+
+  if (ATag = cTagBarraEAN8) then
+    barCodeType := 3
+  else if (ATag = cTagBarraEAN13) then
+    barCodeType := 2
+  else if (ATag = cTagBarraInter) then
+    barCodeType := 5
+  else if (ATag = cTagBarraCode39) then
+    barCodeType := 4
+  else if (ATag = cTagBarraCode93) then
+    barCodeType := 7
+  else if (ATag = cTagBarraCode128) then
+    barCodeType := 8
+  else if (ATag = cTagBarraUPCA) then
+    barCodeType := 0
+  else if (ATag = cTagBarraUPCE) then
+    barCodeType := 1
+  else if (ATag = cTagBarraCodaBar) then
+    barCodeType := 6
+  else
+    Exit;
+
+  A := max(min(fpPosPrinter.ConfigBarras.Altura,255),1);
+  L := max(min(fpPosPrinter.ConfigBarras.LarguraLinha,6),1);
+  fE1LibPrinter.ImprimirCodBarras( barCodeType, ACodBar, A, L,
+                                   fpPosPrinter.ConfigBarras.MostrarCodigo );
 end;
 
 end.

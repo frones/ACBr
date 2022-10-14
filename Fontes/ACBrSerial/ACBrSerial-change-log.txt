@@ -38,6 +38,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2022
+-- ACBrPosPrinterAndroidHelper, ACBrPosPrinterGEDI, ACBrPosPrinterElginE1Lib --
+[*] Refactoring para reaproveitamento de códigos em comum
+
+-- ACBrPosPrinterTecToySunmiLib --
+[+] Adição de nova Classe Externa para ACBrPosPrinter. Compatibilizando o
+    Serviço de impressão da Sunmi com as Tags do ACBrPosPrinter
+(por: DSA)
+
 13/10/2022
 -- ACBrPosPrinter, ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma,
    ACBrEscCustomPos, ACBrEscDatecs, ACBrEscDiebold, ACBrEscElgin,
@@ -51,7 +60,7 @@ Símbolo : Significado
     "ACBrPosPrinter.Device.TimeOutMilissegundos"
 [*] Método "TxRx", modificado, para receber como Default o parâmetro "TimeOut=0",
     situação onde será utilizado o valor de "Device.TimeOutMilissegundos"
-[*] Método "TACBrPosPrinter.Zerar", modificado para desligar Flag de "FontB"
+[*] Método "TACBrPosPrinter.Zerar", modificado para desligar Flag de "FonteB"
 
 -- ACBrEscPosStar --
 [-] Método "ComandoImprimirImagemRasterStr", modificado para gerar imagens sem a

@@ -217,7 +217,7 @@ begin
 
       with Prestador.Endereco do
       begin
-        CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
+        CodigoMunicipio := CodTOMToCodIBGE(ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr));
       end;
     end;
   end;
@@ -267,7 +267,7 @@ begin
         Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero_residencia'), tcStr);
         Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
         Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
-        CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
+        CodigoMunicipio := CodTOMToCodIBGE(ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr));
         CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
       end;
 

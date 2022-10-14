@@ -175,6 +175,7 @@ type
   private
     FACBrBoleto: TACBrBoleto;
     FRetWS: String;
+  	FEnvWS: String;
     FCodRetorno: Integer;
     FMsg: String;
     FLeitor: TLeitor;
@@ -188,6 +189,7 @@ type
     property ACBrBoleto: TACBrBoleto read FACBrBoleto;
     property Leitor: TLeitor read FLeitor;
     property RetWS: String read FRetWS write FRetWS;
+	  property EnvWs: String read FEnvWs;
 
   public
     constructor Create(ABoletoWS: TACBrBoleto); virtual;
@@ -1177,6 +1179,7 @@ end;}
 function TBoletoWS.Enviar: Boolean;
 var
   indice: Integer;
+  LJsonEnvio : String;
 begin
   Banco := FBoleto.Banco.TipoCobranca;
   Result := False;
@@ -1187,11 +1190,12 @@ begin
       for indice:= 0 to Pred(FBoleto.ListadeBoletos.Count) do
       begin
         FBoletoWSClass.FTitulo := FBoleto.ListadeBoletos[indice];
-        FBoletoWSClass.GerarRemessa;
-        Result :=  FBoletoWSClass.Enviar;
+        LJsonEnvio := FBoletoWSClass.GerarRemessa;
+        Result     :=  FBoletoWSClass.Enviar;
         FRetornoWS := FBoletoWSClass.FRetornoWS;
 
-        RetornoBanco.RetWS:= FRetornoWS;
+        RetornoBanco.RetWS := FRetornoWS;
+		    RetornoBanco.FEnvWs := LJsonEnvio;
         RetornoBanco.RetornoEnvio(indice);
 
       end;

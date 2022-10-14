@@ -402,6 +402,7 @@ type
     FListaRejeicao  : TACBrBoletoListaRejeicao;
     FHTTPResultCode : Integer;
     FJSON           : String;
+	  FJSONEnvio      : String;
     FIndicadorContinuidade: boolean;
     FProximoIndice: integer;
   public
@@ -417,6 +418,7 @@ type
     property MsgRetorno            : String                   read FMsgRetorno            write FMsgRetorno;
     property HTTPResultCode        : Integer                  read FHTTPResultCode        write FHTTPResultCode;
     property JSON                  : String                   read FJSON                  write FJSON;
+	  property JSONEnvio             : String                   read FJSONEnvio             write FJSONEnvio;
     property DadosRet              : TACBrBoletoDadosRet      read FDadosRet              write FDadosRet;
     property ListaRejeicao         : TACBrBoletoListaRejeicao read FListaRejeicao;
     property indicadorContinuidade : boolean                  read FIndicadorContinuidade write FIndicadorContinuidade;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2022
+-- RLZ.GravarXml --
+[*] As tags: fatura e orcamento são opcionais e não obrigatórias.
+   Por: Willian Delan
+
 13/10/2022
 -- ISSNet.Provider --
 [*] Alteração visando o problema da tag com vogal acentuada.

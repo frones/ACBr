@@ -379,6 +379,7 @@ begin
   BeneficiarioWS.ClientSecret := edtClientSecret.Text;
   BeneficiarioWS.KeyUser      := edtKeyUser.Text;
   BeneficiarioWS.Scope        := edtScope.Text;
+  BeneficiarioWS.IndicadorPix := chkIndicadorPix.Checked;
   WebService.Ambiente         := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
   WebService.SSLHttpLib       := TSSLHttpLib(cbxSSLLib.ItemIndex);
 end;

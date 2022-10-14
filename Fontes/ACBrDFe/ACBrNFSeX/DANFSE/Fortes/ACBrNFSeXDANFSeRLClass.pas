@@ -37,7 +37,7 @@ unit ACBrNFSeXDANFSeRLClass;
 interface
 
 uses
-  Dialogs, Forms, SysUtils, Classes,
+  SysUtils, Classes,
   ACBrBase,
   ACBrNFSeXClass, ACBrNFSeXDANFSeClass;
 

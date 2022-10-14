@@ -39,7 +39,8 @@ uses
   Classes, SysUtils,
   FMX.Graphics,
   FMX.Surfaces,
-  Androidapi.JNI.GraphicsContentViewText;
+  Androidapi.JNI.GraphicsContentViewText,
+  ACBrBase;
 
 procedure AndroidBeep(ADuration: Integer);
 Function BitmapToJBitmap(const ABitmap: TBitmap): JBitmap;

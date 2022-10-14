@@ -27,7 +27,7 @@ type
     Procedure printerInit; cdecl;
     Procedure printerSelfChecking; cdecl;
     Procedure lineWrap(n: Integer); cdecl;
-    Procedure sendRAWData(data: Array Of Byte); cdecl;
+    Procedure sendRAWData(data: TJavaArray<Byte>); cdecl;
     Procedure setAlignment(alignment: Integer); cdecl;
     Procedure setFontName(typeface: JString); cdecl;
     Procedure setFontSize(fontsize: Single); cdecl;

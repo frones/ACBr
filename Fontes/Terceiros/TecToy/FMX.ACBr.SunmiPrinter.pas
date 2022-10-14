@@ -124,7 +124,7 @@ Type
     /// <summary>
     /// Envia array de bytes diretamente ao dispositivo
     /// </summary>
-    Function sendRAWData(data: Array Of Byte): TACBrSunmiPrinter;
+    Function sendRAWData(data: TBytes): TACBrSunmiPrinter;
     /// <summary>
     /// Seta tipo de alinhamento
     /// alignment = 0-Esquerda, 1-Centro, 2-Direita
@@ -492,11 +492,11 @@ begin
 {$ENDIF}
 end;
 
-function TACBrSunmiPrinter.sendRAWData(data: array of Byte): TACBrSunmiPrinter;
+function TACBrSunmiPrinter.sendRAWData(data: TBytes): TACBrSunmiPrinter;
 begin
   Result := Self;
 {$IFDEF ANDROID}
-  FPrinter.sendRAWData(data);
+  FPrinter.sendRAWData(TBytesToTJavaArray(data));
 {$ENDIF}
 end;
 

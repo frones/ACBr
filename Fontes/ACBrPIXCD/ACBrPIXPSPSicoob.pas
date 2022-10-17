@@ -140,7 +140,7 @@ begin
   try
     qp.Values['grant_type'] := 'client_credentials';
     qp.Values['client_id'] := ClientID;
-    qp.Values['scope'] := 'cob.read cob.write pix.read pix.write';
+    qp.Values['scope'] := 'cob.read cob.write pix.read pix.write cobv.read cobv.write';
     Body := qp.AsURL;
     WriteStrToStream(Http.Document, Body);
     Http.MimeType := CContentTypeApplicationWwwFormUrlEncoded;
@@ -193,6 +193,10 @@ begin
   // Sicoob responde OK a esse EndPoint, de forma diferente da especificada
   if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointPix) and (AResultCode = HTTP_OK) then
     AResultCode := HTTP_CREATED;
+
+  // Ajuste no Json de Resposta alterando 'brcode' para 'pixCopiaECola'
+  if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointCobV) and (AResultCode = HTTP_CREATED) then
+    RespostaHttp := StringReplace(RespostaHttp, 'brcode', 'pixCopiaECola', [rfReplaceAll]);
 end;
 
 function TACBrPSPSicoob.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;

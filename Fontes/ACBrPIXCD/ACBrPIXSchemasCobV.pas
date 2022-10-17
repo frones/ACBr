@@ -245,7 +245,7 @@ type
 
   { TACBrPIXCobVSolicitada }
 
-  TACBrPIXCobVSolicitada = class(TACBrPIXCobBase)
+  TACBrPIXCobVSolicitada = class(TACBrPIXCobBaseCopiaCola)
   private
     fcalendario: TACBrPIXCalendarioCobVSolicitada;
     fdevedor: TACBrPIXDadosDevedor;

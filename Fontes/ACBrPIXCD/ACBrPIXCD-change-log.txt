@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2022
+-- ACBrPIXPSPSicoob --
+[-] Ajuste para incluir scopes cobv
+[*] Alteração de 'brcode' para 'pixCopiaECola' no retorno do endpoint cobv
+
+-- ACBrPIXPSPSicredi --
+[-] Ajuste para incluir scopes cobv
+
+-- ACBrPixSchemasCobV --
+[*] Alteração no tipo da classe para incluir também a propiedade pixCopiaECola
+Por: Elias César
+
 04/10/2022
 -- ACBrPIXPSPBancoDoBrasil --
 [*] Alteração para disparar erro caso o PSP não possua o endpoint utilizados

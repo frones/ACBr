@@ -46,6 +46,8 @@ type
   { TfrmACBrCTe }
 
   TfrmACBrCTe = class(TForm)
+    btnDistrDFePorChave: TButton;
+    btnDistrDFePorNSU: TButton;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
@@ -223,7 +225,7 @@ type
     btnImprimirEvento: TButton;
     btnEnviarEventoEmail: TButton;
     tsDistribuicao: TTabSheet;
-    btnDistribuicaoDFe: TButton;
+    btnDistrDFePorUltNSU: TButton;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
@@ -250,6 +252,8 @@ type
     btnPrestacaoDesacordo: TButton;
     btnGerarPDFEvento: TButton;
     btnGerarPDFInut: TButton;
+    procedure btnDistrDFePorChaveClick(Sender: TObject);
+    procedure btnDistrDFePorNSUClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathCTeClick(Sender: TObject);
@@ -302,7 +306,7 @@ type
     procedure btnEnviarEventoEmailClick(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnInutilizarImprimirClick(Sender: TObject);
-    procedure btnDistribuicaoDFeClick(Sender: TObject);
+    procedure btnDistrDFePorUltNSUClick(Sender: TObject);
     procedure ACBrCTe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure ACBrCTe1StatusChange(Sender: TObject);
     procedure btnCriarEnviarClick(Sender: TObject);
@@ -1715,35 +1719,117 @@ begin
   ShowMessage(FormatDateBr(ACBrCTe1.SSL.CertDataVenc));
 end;
 
-procedure TfrmACBrCTe.btnDistribuicaoDFeClick(Sender: TObject);
+procedure TfrmACBrCTe.btnDistrDFePorUltNSUClick(Sender: TObject);
 var
-  cUFAutor, CNPJ, ultNSU, ANSU: string;
+  xTitulo, cUFAutor, CNPJ, AultNSU: string;
+  i: Integer;
 begin
-  cUFAutor := '';
-  if not (InputQuery('WebServices Distribuição Documentos Fiscais', 'Código da UF do Autor', cUFAutor)) then
-     exit;
+  // Opção para simular uma consulta ao WebService lendo o arquivo de retorno e populando o componente
+  OpenDialog1.Title := 'Selecione um Arquivo de Distribuição para simular uma consulta ou feche para consultar o WebService';
+  OpenDialog1.DefaultExt := '*-dist-dfe.XML';
+  OpenDialog1.Filter := 'Arquivos Distribuição DFe (*-dist-dfe.XML)|*-dist-dfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
-  CNPJ := '';
-  if not (InputQuery('WebServices Distribuição Documentos Fiscais', 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
-     exit;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
-  ultNSU := '';
-  if not (InputQuery('WebServices Distribuição Documentos Fiscais', 'Último NSU recebido pelo ator', ultNSU)) then
-     exit;
+  // Lê o arquivo selecionado
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.Leitor.CarregarArquivo(OpenDialog1.FileName);
+    ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.LerXml;
 
-  ANSU := '';
-  if not (InputQuery('WebServices Distribuição Documentos Fiscais', 'NSU específico', ANSU)) then
-     exit;
-
-  if ANSU = '' then
-    ACBrCTe1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, ultNSU)
+    AultNSU := ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU;
+  end
+  // Consulta o WebService
   else
-    ACBrCTe1.DistribuicaoDFePorNSU(StrToInt(cUFAutor), CNPJ, ANSU);
+  begin
+    xTitulo := 'Distribuição DF-e por último NSU';
 
-  MemoResp.Lines.Text   := ACBrCTe1.WebServices.DistribuicaoDFe.RetWS;
+    cUFAutor := IntToStr(ACBrCTe1.Configuracoes.WebServices.UFCodigo);
+    if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
+       exit;
+
+    CNPJ := edtEmitCNPJ.Text;
+    if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
+       exit;
+
+    AultNSU := '';
+    if not(InputQuery(xTitulo, 'Último NSU recebido pelo ator', AultNSU)) then
+       exit;
+
+    ACBrCTe1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, AultNSU);
+  end;
+
+  with ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt do
+  begin
+    // Caso não retorne registros, ocorra consumo indevido ou seja o último lote, gera alerta
+    if ( ( cStat = 137 ) or
+         ( cStat = 656 ) or
+         ( ultNSU = maxNSU ) ) then
+    begin
+      // 656-Consumo indevido
+      if cStat = 656 then
+      begin
+        MemoDados.Lines.Add('Atenção...: Consumo indevido.');
+
+        if AultNSU <> ultNSU then
+          MemoDados.Lines.Add('            ultNSU utilizado nesta consulta [' + AultNSU + '] é diferente ' +
+                              'do ultNSU consultado na Sefaz [' + ultNSU + '].');
+      end
+      // 137-Nenhum documento localizado
+      else if cStat = 137 then
+        MemoDados.Lines.Add('Atenção...: Não existem mais registros disponíveis.')
+      // ultNSU = maxNSU - Documentos Localizados, mas é o último lote
+      else
+        MemoDados.Lines.Add('Atenção...: Este é o último lote de registros disponíveis para distribuição.');
+
+      MemoDados.Lines.Add('Atenção...: Aguarde 1 hora para a próxima consulta.');
+      MemoDados.Lines.Add(' ');
+    end;
+
+    MemoDados.Lines.Add('Qtde Documentos Retornados: ' + IntToStr(docZip.Count));
+    MemoDados.Lines.Add('Status....: ' + IntToStr(cStat));
+    MemoDados.Lines.Add('Motivo....: ' + xMotivo);
+    MemoDados.Lines.Add('Último NSU: ' + ultNSU);
+    MemoDados.Lines.Add('Máximo NSU: ' + maxNSU);
+    MemoDados.Lines.Add(' ');
+    MemoDados.Lines.Add('Documentos Retornados:');
+
+    for i := 0 to docZip.Count -1 do
+    begin
+      case docZip[i].schema of
+        schresCTe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Resumo DFe) Chave: ' + docZip[i].resDFe.chDFe);
+
+        schprocCTe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (CTe Completa) Chave: ' + docZip[i].resDFe.chDFe);
+
+        schprocCTeOS:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (CTeOS Completa) Chave: ' + docZip[i].resDFe.chDFe);
+
+        schprocGTVe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (GTVe Completa) Chave: ' + docZip[i].resDFe.chDFe);
+
+        schresEvento:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Resumo Evento) Chave: ' + docZip[i].resEvento.chDFe);
+
+        schprocEventoCTe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Evento Completo) ID: ' + docZip[i].procEvento.Id);
+      end;
+    end;
+  end;
+
+  MemoResp.Lines.Text := ACBrCTe1.WebServices.DistribuicaoDFe.RetWS;
   memoRespWS.Lines.Text := ACBrCTe1.WebServices.DistribuicaoDFe.RetornoWS;
 
   LoadXML(MemoResp, WBResposta);
+
+  pgRespostas.ActivePage := Dados;
 end;
 
 procedure TfrmACBrCTe.btnEnvEPECClick(Sender: TObject);
@@ -2470,6 +2556,59 @@ begin
 
   LerConfiguracao;
   pgRespostas.ActivePageIndex := 2;
+end;
+
+procedure TfrmACBrCTe.btnDistrDFePorNSUClick(Sender: TObject);
+var
+  xTitulo, cUFAutor, CNPJ, ANSU: string;
+begin
+  xTitulo := 'Distribuição DF-e por NSU';
+
+  cUFAutor := '';
+  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
+     exit;
+
+  CNPJ := '';
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
+     exit;
+
+  ANSU := '';
+  if not(InputQuery(xTitulo, 'NSU específico', ANSU)) then
+     exit;
+
+  ACBrCTe1.DistribuicaoDFePorNSU(StrToInt(cUFAutor), CNPJ, ANSU);
+
+  MemoResp.Lines.Text := ACBrCTe1.WebServices.DistribuicaoDFe.RetWS;
+  memoRespWS.Lines.Text := ACBrCTe1.WebServices.DistribuicaoDFe.RetornoWS;
+
+  LoadXML(MemoResp, WBResposta);
+end;
+
+procedure TfrmACBrCTe.btnDistrDFePorChaveClick(Sender: TObject);
+var
+  xTitulo, cUFAutor, CNPJ, Chave: string;
+begin
+  raise Exception.Create('Aguardando a SEFAZ implementar esse recurso já existente para a NF-e.');
+
+  xTitulo := 'Distribuição DFe Por Chave';
+  cUFAutor := '';
+  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
+     exit;
+
+  CNPJ := '';
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
+     exit;
+
+  Chave := '';
+  if not(InputQuery(xTitulo, 'Chave do DF-e', Chave)) then
+     exit;
+
+  ACBrCTe1.DistribuicaoDFePorChaveCTe(StrToInt(cUFAutor), CNPJ, Chave);
+
+  MemoResp.Lines.Text := ACBrCTe1.WebServices.DistribuicaoDFe.RetWS;
+  memoRespWS.Lines.Text := ACBrCTe1.WebServices.DistribuicaoDFe.RetornoWS;
+
+  LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmACBrCTe.GravarConfiguracao;

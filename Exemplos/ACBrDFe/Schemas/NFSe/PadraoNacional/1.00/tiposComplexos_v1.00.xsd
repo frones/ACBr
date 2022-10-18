@@ -874,15 +874,6 @@
           <xs:documentation>Código do país onde o serviço foi prestado (Tabela de Países ISO)</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="opConsumServ" type="TSOpConsumServ" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>
-            Opção para que o emitente informe onde ocorreu o consumo do serviço prestado.
-            0 - Consumo do serviço prestado ocorrido no município do local da prestação;
-            1 - Consumo do serviço prestado ocorrido ocorrido no exterior ;
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
@@ -1051,18 +1042,17 @@
         <xs:annotation>
           <xs:documentation>
             Categorias de veículos para cobrança:
-            00 - Categoria de Veículos (tipo não informado na nota de origem);
+            00 - Categoria de veículos (tipo não informado na nota de origem)
             01 - Automóvel, caminhonete e furgão;
             02 - Caminhão leve, ônibus, caminhão trator e furgão;
             03 - Automóvel e caminhonete com semireboque;
             04 - Caminhão, caminhão-trator, caminhão-trator com semi-reboque e ônibus;
             05 - Automóvel e caminhonete com reboque;
-            06 - Caminhão com reboque e caminhãotrator com semi-reboque;
-            07 - Caminhão com reboque e caminhãotrator com semi-reboque;
-            08 - Caminhão com reboque e caminhãotrator com semi-reboque;
-            09 - Motocicletas, motonetas e bicicletas motorizadas;
-            10 - Veículo especial;
-            11 - Veículo Isento;
+            06 - Caminhão com reboque;
+            07 - Caminhão trator com semi-reboque;
+            08 - Motocicletas, motonetas e bicicletas motorizadas;
+            09 - Veículo especial;
+            10 - Veículo Isento;
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1255,7 +1245,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="tribNac" type="TCTribNacional" minOccurs="0">
+      <xs:element name="tribFed" type="TCTribFederal" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
             Grupo de informações de outros tributos relacionados ao serviço prestado
@@ -1608,7 +1598,7 @@
   </xs:complexType>
 
   <!--TIPO COMPLEXO PARA INFORMAÇÕES DE TRIBUTAÇÃO ESPECÍFICA PARA OUTROS TRIBUTOS-->
-  <xs:complexType name="TCTribNacional">
+  <xs:complexType name="TCTribFederal">
     <xs:sequence>
       <xs:element name="piscofins" type="TCTribOutrosPisCofins" minOccurs="0">
         <xs:annotation>

@@ -488,7 +488,11 @@ begin
     VersaoAtrib := '2.04';
   end;
 
+  SetXmlNameSpace('http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd');
+
   ConfigMsgDados.GerarPrestadorLoteRps := True;
+
+  ConfigAssinar.LoteRps := True;
 end;
 
 function TACBrNFSeProviderDBSeller204.CriarGeradorXml(

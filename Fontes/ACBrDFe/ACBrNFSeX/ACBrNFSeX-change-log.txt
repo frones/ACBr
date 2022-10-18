@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a cidade: Praia Grande/SC - Provedor: IPM
+   Por: Mario Inacio
+
 14/10/2022
 -- IPM.LerXml --
 [*] Corrigido a leitura dos campos cidade, pois não estava convertendo o código

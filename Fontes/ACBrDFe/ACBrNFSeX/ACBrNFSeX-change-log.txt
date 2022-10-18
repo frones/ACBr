@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/10/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade: Presidente Medici/RO - Provedor: Fiorilli
+   Por: Gabriel Bobello
 -- PadraoNacional.Provider/PadraoNacional.GravarXml/PadraoNacional.LerXml --
 [*] Alteração visando atender a ateração realizada nos schemas.
    Por: Italo Giurizzato Junior

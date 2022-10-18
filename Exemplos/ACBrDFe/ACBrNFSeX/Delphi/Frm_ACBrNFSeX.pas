@@ -1272,7 +1272,8 @@ end;
 
 procedure TfrmACBrNFSe.btnConsEventoChavPNClick(Sender: TObject);
 var
-  xTitulo, xChaveNFSe: String;
+  xTitulo, xChaveNFSe, xTipoEvento, xNumSeqEvento: string;
+  Ok: Boolean;
 begin
   xTitulo := 'Consultar Evento pela chave da NFSe';
 
@@ -1280,7 +1281,28 @@ begin
   if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
     exit;
 
-  ACBrNFSeX1.ConsultarEvento(xChaveNFSe);
+  {
+   'e101101', 'e105102', 'e101103', 'e105104', 'e105105', 'e202201', 'e203202',
+   'e204203', 'e205204', 'e202205', 'e203206', 'e204207', 'e205208', 'e305101',
+   'e305102', 'e305103'
+  }
+  xTipoEvento := 'e101101';
+  if not(InputQuery(xTitulo, 'Tipo de Evento:', xTipoEvento)) then
+    exit;
+
+  xNumSeqEvento := '';
+  if not(InputQuery(xTitulo, 'Numero Sequencial do Evento:', xNumSeqEvento)) then
+    exit;
+
+  if (xChaveNFSe <> '') and (xTipoEvento = '') and (xNumSeqEvento = '') then
+    ACBrNFSeX1.ConsultarEvento(xChaveNFSe);
+
+  if (xChaveNFSe <> '') and (xTipoEvento <> '') and (xNumSeqEvento = '') then
+    ACBrNFSeX1.ConsultarEvento(xChaveNFSe, StrTotpEvento(Ok, xTipoEvento));
+
+  if (xChaveNFSe <> '') and (xTipoEvento <> '') and (xNumSeqEvento <> '') then
+    ACBrNFSeX1.ConsultarEvento(xChaveNFSe, StrTotpEvento(Ok, xTipoEvento),
+      StrToIntDef(xNumSeqEvento, 1));
 
   ChecarResposta(tmConsultarEvento);
 end;
@@ -2000,7 +2022,7 @@ begin
   if not(InputQuery(xTitulo, 'Código de Cancelamento:', xCodigo)) then
     exit;
 
-  xMotivoCanc := 'Movido do Cancelamento da nota';
+  xMotivoCanc := 'Motido do Cancelamento da nota';
   if not(InputQuery(xTitulo, 'Motivo do Cancelamento:', xMotivoCanc)) then
     exit;
 
@@ -2042,7 +2064,7 @@ begin
   if not(InputQuery(xTitulo, 'Código de Cancelamento:', xCodigo)) then
     exit;
 
-  xMotivoCanc := 'Movido do Cancelamento da nota';
+  xMotivoCanc := 'Motido do Cancelamento da nota';
   if not(InputQuery(xTitulo, 'Motivo do Cancelamento:', xMotivoCanc)) then
     exit;
 
@@ -2084,7 +2106,7 @@ begin
   if not(InputQuery(xTitulo, 'Código de Cancelamento:', xCodigo)) then
     exit;
 
-  xMotivoCanc := 'Movido do Cancelamento da nota';
+  xMotivoCanc := 'Motido do Cancelamento da nota';
   if not(InputQuery(xTitulo, 'Motivo do Cancelamento:', xMotivoCanc)) then
     exit;
 
@@ -2227,7 +2249,7 @@ begin
   if not(InputQuery(xTitulo, 'Código de Rejeição:', xCodigo)) then
     exit;
 
-  xMotivoRej := 'Movido da Rejeição da nota';
+  xMotivoRej := 'Motido da Rejeição da nota';
   if not(InputQuery(xTitulo, 'Motivo da Rejeição:', xMotivoRej)) then
     exit;
 
@@ -2269,7 +2291,7 @@ begin
   if not(InputQuery(xTitulo, 'Código de Rejeição:', xCodigo)) then
     exit;
 
-  xMotivoRej := 'Movido da Rejeição da nota';
+  xMotivoRej := 'Motido da Rejeição da nota';
   if not(InputQuery(xTitulo, 'Motivo da Rejeição:', xMotivoRej)) then
     exit;
 
@@ -2311,7 +2333,7 @@ begin
   if not(InputQuery(xTitulo, 'Código de Rejeição:', xCodigo)) then
     exit;
 
-  xMotivoRej := 'Movido da Rejeição da nota';
+  xMotivoRej := 'Motido da Rejeição da nota';
   if not(InputQuery(xTitulo, 'Motivo da Rejeição:', xMotivoRej)) then
     exit;
 
@@ -3860,6 +3882,56 @@ begin
               memoLog.Lines.Add('Chave NFSe : ' + chNFSe);
               memoLog.Lines.Add('Evento     : ' + tpEventoToDesc(tpEvento));
             end;
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Chave NFSe      : ' + idNota);
+            memoLog.Lines.Add('Data            : ' + DateToStr(Data));
+            memoLog.Lines.Add('Tipo Evento     : ' + tpEventoToDesc(tpEvento));
+            memoLog.Lines.Add('Num. Seq. Evento: ' + IntToStr(nSeqEvento));
+            memoLog.Lines.Add('ID do Evento    : ' + idEvento);
+            memoLog.Lines.Add('Sucesso         : ' + BoolToStr(Sucesso, True));
+
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
+
+            if Erros.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Erro(s):');
+              for i := 0 to Erros.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+
+            if Alertas.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Alerta(s):');
+              for i := 0 to Alertas.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+          end;
+        end;
+
+      tmConsultarEvento:
+        begin
+          with ConsultarEvento do
+          begin
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarEvento));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+            memoLog.Lines.Add('Chave NFSe      : ' + ChaveNFSe);
+            memoLog.Lines.Add('Evento          : ' + tpEventoToDesc(tpEvento));
+            memoLog.Lines.Add('Num. Seq. Evento: ' + IntToStr(nSeqEvento));
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Chave NFSe      : ' + idNota);

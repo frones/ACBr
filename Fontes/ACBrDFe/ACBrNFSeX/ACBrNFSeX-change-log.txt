@@ -44,7 +44,9 @@ Símbolo : Significado
 
 18/10/2022
 -- ACBrNFSeXServicos.ini --
-[+] Incluida a cidade: Praia Grande/SC - Provedor: IPM
+[+] Incluída a cidade: Rio Branco do Sul/PR - Provedor: Equiplano
+   Por: Alexandre Felippeto Henzen
+[+] Incluída a cidade: Praia Grande/SC - Provedor: IPM
    Por: Mario Inacio
 
 14/10/2022

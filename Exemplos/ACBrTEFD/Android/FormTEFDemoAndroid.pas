@@ -73,7 +73,7 @@ uses
   Androidapi.JNI.GraphicsContentViewText,
   ACBrTEFAndroid, ACBrTEFComum,
   ACBrPosPrinterElginE1Service, ACBrPosPrinterElginE1Lib,
-  ACBrPosPrinterGEDI,
+  ACBrPosPrinterGEDI, ACBrPosPrinterTecToySunmiLib,
   ACBrBase, ACBrPosPrinter, ACBrTEFAPIComum;
 
 const
@@ -314,6 +314,7 @@ type
     rbClasseInterna: TRadioButton;
     rbClasseExterna: TRadioButton;
     cbxTransacaoPendente: TComboBox;
+    lbiGapKeyboard: TListBoxItem;
     procedure FormCreate(Sender: TObject);
     procedure btVendaPagarClick(Sender: TObject);
     procedure ClickBotaoNumero(Sender: TObject);
@@ -332,9 +333,9 @@ type
     procedure lblTituloTestesClick(Sender: TObject);
     procedure edtApenasNumeros(Sender: TObject; var Key: Word;
       var KeyChar: Char; Shift: TShiftState);
-    procedure FormVirtualKeyboardHidden(Sender: TObject;
-      KeyboardVisible: Boolean; const Bounds: TRect);
     procedure FormVirtualKeyboardShown(Sender: TObject;
+      KeyboardVisible: Boolean; const Bounds: TRect);
+    procedure FormVirtualKeyboardHidden(Sender: TObject;
       KeyboardVisible: Boolean; const Bounds: TRect);
     procedure edtEnterScrollableControl(Sender: TObject);
     procedure edtCNPJSwHouseTyping(Sender: TObject);
@@ -370,6 +371,7 @@ type
     fE1Printer: TACBrPosPrinterElginE1Service;
     fE1Lib: TACBrPosPrinterElginE1Lib;
     fGEDIPrinter: TACBrPosPrinterGEDI;
+    fSunmiPrinter: TACBrPosPrinterTecToySunmiLib;
 
     fValorOperacao: Double;
     fOperacao: String;
@@ -510,6 +512,7 @@ begin
   fE1Printer.Modelo := TElginE1Printers.prnSmartPOS;
   fE1Printer.OnErroImpressao := ExibirErroImpressaoE1;
   fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
+  fSunmiPrinter := TACBrPosPrinterTecToySunmiLib.Create(ACBrPosPrinter1);
   fE1Lib := TACBrPosPrinterElginE1Lib.Create(ACBrPosPrinter1);
   fE1Lib.Modelo := TElginE1LibPrinters.prnM8;
 
@@ -555,6 +558,7 @@ procedure TFrTEFDemoAndroid.FormDestroy(Sender: TObject);
 begin
   fE1Printer.Free;
   fGEDIPrinter.Free;
+  fSunmiPrinter.Free;
   fE1Lib.Free;
 end;
 
@@ -564,6 +568,7 @@ begin
   cbxModelo.Items.Add('Elgin E1 Service');
   cbxModelo.Items.Add('Elgin E1 Lib');
   cbxModelo.Items.Add('Gertec GEDI');
+  cbxModelo.Items.Add('TecToy Sunmi Service');
   lbImpressoras.Enabled := False;
 end;
 
@@ -659,15 +664,15 @@ var
   AVirtualKeyboard: IVirtualKeyboardControl;
 begin
   // Não chamou com parâmetros corretos
-  if not Assigned(AControl) then
+  if (not Assigned(AControl)) or (not Assigned(AScrollBox)) then
     Exit;
 
   // Verificando se esse controle, exibirá o Teclado
   if not Supports(AControl, IVirtualKeyboardControl, AVirtualKeyboard) then
     Exit;
 
-  fScrollBox := AScrollBox;
-  fControlToCenter := AControl;
+  FScrollBox := AScrollBox;
+  FControlToCenter := AControl;
 
   { Ok, agora que salvamos o Scroll e o Controle a ser centralizado, vamos
     deixar a mágica ocorrer em OnVirtualKeyboardShow }
@@ -686,8 +691,9 @@ begin
     case cbxModelo.ItemIndex of
       0: ACBrPosPrinter1.ModeloExterno := fE1Printer;
       1: ACBrPosPrinter1.ModeloExterno := fE1Lib;
+      2: ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
     else
-      ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
+      ACBrPosPrinter1.ModeloExterno := fSunmiPrinter;
     end;
 
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
@@ -722,6 +728,8 @@ begin
   ACBrTEFAndroid1.Modelo := tefPayGo;
   ACBrTEFAndroid1.DiretorioTrabalho := TPath.Combine(TPath.GetPublicPath, 'tef');
   ACBrTEFAndroid1.ArqLOG := TPath.Combine(ACBrTEFAndroid1.DiretorioTrabalho, 'acbrtefandroid.log');
+  if not DirectoryExists(ACBrTEFAndroid1.DiretorioTrabalho) then
+    ForceDirectories(ACBrTEFAndroid1.DiretorioTrabalho);
 
   ACBrTEFAndroid1.DadosAutomacao.NomeSoftwareHouse := edtNomeSwHouse.Text;
   ACBrTEFAndroid1.DadosAutomacao.CNPJSoftwareHouse := edtCNPJSwHouse.Text;
@@ -841,7 +849,6 @@ begin
     // Reposiciona o Scroll, de acordo com o Offset calculado
     NovoY := Ajuste + FScrollBox.ViewportPosition.Y;
     FScrollBox.ViewportPosition := PointF(FScrollBox.ViewportPosition.X, NovoY);
-
     if (FScrollBox.ViewportPosition.Y < NovoY) then   // Se não conseguiu rolar o suficiente, vamos ativar as Margens
     begin
       fScrollBox.Margins.Bottom := NovoY - FScrollBox.ViewportPosition.Y;
@@ -1071,7 +1078,7 @@ end;
 procedure TFrTEFDemoAndroid.edtEnterScrollableControl(Sender: TObject);
 begin
   if (Sender is TControl) then
-    AjustarScroll(TControl(Sender));
+    AjustarScroll(TControl(Sender), lbConfTEF);
 end;
 
 procedure TFrTEFDemoAndroid.edtEstornoHoraTransacaoTyping(Sender: TObject);

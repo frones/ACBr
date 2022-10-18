@@ -2,7 +2,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
   Left = 0
   Top = 0
   Caption = 'ACBrTEFAndroid - Demo'
-  ClientHeight = 612
+  ClientHeight = 544
   ClientWidth = 387
   StyleBook = StyleBook1
   FormFactor.Width = 320
@@ -3343,30 +3343,30 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
     Align = Client
     FullSize = True
     Size.Width = 387.000000000000000000
-    Size.Height = 612.000000000000000000
+    Size.Height = 544.000000000000000000
     Size.PlatformDefault = False
     StyleLookup = 'tabcontrolstyle'
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     TabPosition = Bottom
     Sizes = (
       383s
-      586s
+      518s
       383s
-      586s
+      518s
       383s
-      586s
+      518s
       383s
-      586s
+      518s
       383s
-      586s
+      518s
       383s
-      586s)
+      518s)
     object tabTeste: TTabItem
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       ImageIndex = 18
       Size.Width = 63.000000000000000000
       Size.Height = 22.000000000000000000
@@ -3407,7 +3407,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 47000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
                 078049444154785EED9C5B8815751CC73DC73DBBB5AB491775A3075FBAD84345
                 2A5D5014A2B0882051A18782A0C722510982A0887C557B4828447CB02B158145
-                1185665129891191A505BB418B6EAEACA0ECE5ECADCF6FE77B4E3B3BE73FE77F
+                1185665129891119A505BB418B6EAEACA0ECE5ECADCF6FE77B4E3B3BE73FE77F
                 66E61C2FCC07FECCECCCF777FBCFED3F97B3737272727272722E5B0A9AB68CA9
                 A9A94EDA4A6697315D4ABB9DB6787272B2A3BDBDFD46D394CBE553C56271B450
                 28F4D37EA7FDC1E2634CBFA70D99E68A82E217D1368D8F8F1F1A181818A14312
@@ -3465,7 +3465,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 9DCF800DB656D61F9227EA20F36D315C97F219B4EE43F20A04CC7F8A500F025F
                 F13F6649F4E06B26E491FF1CCA0712BA227F509729E497FF24D307B660FEA35E
                 1F483AFF59B80F1471D9FE6381D457B146A1CEFC5F53E4E4E4E4E4E4B4803973
-                FE0345EF5834922B9D020000000049454E44AE426082}
+                FE039AF457FEEE194D250000000049454E44AE426082}
               FileName = 'C:\temp\outline_paid_white_48.png'
             end>
           Align = Left
@@ -3550,7 +3550,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
         Align = Bottom
         Padding.Top = 5.000000000000000000
         Padding.Bottom = 5.000000000000000000
-        Position.Y = 515.000000000000000000
+        Position.Y = 447.000000000000000000
         Size.Width = 383.000000000000000000
         Size.Height = 71.000000000000000000
         Size.PlatformDefault = False
@@ -3660,7 +3660,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
       object gplMain: TGridPanelLayout
         Align = Client
         Size.Width = 383.000000000000000000
-        Size.Height = 467.000000000000000000
+        Size.Height = 399.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         ColumnCollection = <
@@ -3694,20 +3694,20 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Right = 5.000000000000000000
           Margins.Bottom = 10.000000000000000000
           Size.Width = 278.703704833984400000
-          Size.Height = 447.000000000000000000
+          Size.Height = 379.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
         end
         object lConfOper: TLayout
           Align = Client
           Size.Width = 99.296295166015630000
-          Size.Height = 467.000000000000000000
+          Size.Height = 399.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
           object gplConfOperacao: TGridPanelLayout
             Align = Client
             Size.Width = 99.296295166015630000
-            Size.Height = 313.000000000000000000
+            Size.Height = 245.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
             ColumnCollection = <
@@ -3762,7 +3762,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             object gplbtnModalidade: TGridPanelLayout
               Align = Client
               Size.Width = 99.296295166015630000
-              Size.Height = 62.599998474121090000
+              Size.Height = 49.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 4
               ColumnCollection = <
@@ -3793,7 +3793,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
               object lModelidade: TLabel
                 Align = Client
                 Size.Width = 99.296295166015630000
-                Size.Height = 25.039382934570310000
+                Size.Height = 19.599517822265630000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Trailing
@@ -3809,7 +3809,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Right = 3.000000000000000000
                 Margins.Bottom = 2.000000000000000000
                 Size.Width = 93.296295166015630000
-                Size.Height = 33.560615539550780000
+                Size.Height = 25.400482177734380000
                 Size.PlatformDefault = False
                 StyleLookup = 'comboboxflat'
                 TabOrder = 0
@@ -3819,7 +3819,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             object gplTipoFinanciamento: TGridPanelLayout
               Align = Client
               Size.Width = 99.296295166015630000
-              Size.Height = 62.599998474121090000
+              Size.Height = 49.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
               ColumnCollection = <
@@ -3850,7 +3850,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
               object lFinanciamento: TLabel
                 Align = Client
                 Size.Width = 99.296295166015630000
-                Size.Height = 25.040313720703130000
+                Size.Height = 19.600246429443360000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Trailing
@@ -3866,7 +3866,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Right = 3.000000000000000000
                 Margins.Bottom = 2.000000000000000000
                 Size.Width = 93.296295166015630000
-                Size.Height = 33.559684753417970000
+                Size.Height = 25.399753570556640000
                 Size.PlatformDefault = False
                 StyleLookup = 'comboboxflat'
                 TabOrder = 0
@@ -3877,7 +3877,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             object gplTipoCartao: TGridPanelLayout
               Align = Client
               Size.Width = 99.296295166015630000
-              Size.Height = 62.599990844726560000
+              Size.Height = 49.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
               ColumnCollection = <
@@ -3908,7 +3908,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
               object lTipoCartao: TLabel
                 Align = Client
                 Size.Width = 99.296295166015630000
-                Size.Height = 25.040180206298830000
+                Size.Height = 19.600143432617190000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Trailing
@@ -3924,7 +3924,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Right = 3.000000000000000000
                 Margins.Bottom = 2.000000000000000000
                 Size.Width = 93.296295166015630000
-                Size.Height = 33.559810638427730000
+                Size.Height = 25.399856567382810000
                 Size.PlatformDefault = False
                 StyleLookup = 'comboboxflat'
                 TabOrder = 0
@@ -3934,7 +3934,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             object gplProvedor: TGridPanelLayout
               Align = Client
               Size.Width = 99.296295166015630000
-              Size.Height = 62.600006103515630000
+              Size.Height = 49.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
               ColumnCollection = <
@@ -3965,7 +3965,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
               object lProvedor: TLabel
                 Align = Client
                 Size.Width = 99.296295166015630000
-                Size.Height = 25.040130615234380000
+                Size.Height = 19.600099563598630000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Trailing
@@ -3981,7 +3981,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Right = 3.000000000000000000
                 Margins.Bottom = 2.000000000000000000
                 Size.Width = 93.296295166015630000
-                Size.Height = 33.559875488281250000
+                Size.Height = 25.399900436401370000
                 Size.PlatformDefault = False
                 StyleLookup = 'comboboxflat'
                 TabOrder = 0
@@ -3991,7 +3991,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             object gplMoeda: TGridPanelLayout
               Align = Client
               Size.Width = 99.296295166015630000
-              Size.Height = 62.600006103515630000
+              Size.Height = 49.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
               ColumnCollection = <
@@ -4022,7 +4022,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
               object lMoeda: TLabel
                 Align = Client
                 Size.Width = 99.296295166015630000
-                Size.Height = 25.042091369628910000
+                Size.Height = 19.601634979248050000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Trailing
@@ -4039,7 +4039,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Right = 3.000000000000000000
                 Margins.Bottom = 2.000000000000000000
                 Size.Width = 93.296295166015630000
-                Size.Height = 33.557914733886720000
+                Size.Height = 25.398365020751950000
                 Size.PlatformDefault = False
                 StyleLookup = 'comboboxflat'
                 TabOrder = 0
@@ -4049,7 +4049,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           end
           object gplPreDatado: TGridPanelLayout
             Align = Bottom
-            Position.Y = 313.000000000000000000
+            Position.Y = 245.000000000000000000
             Size.Width = 99.296295166015630000
             Size.Height = 77.000000000000000000
             Size.PlatformDefault = False
@@ -4109,7 +4109,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           end
           object gplParcelas: TGridPanelLayout
             Align = Bottom
-            Position.Y = 390.000000000000000000
+            Position.Y = 322.000000000000000000
             Size.Width = 99.296295166015630000
             Size.Height = 77.000000000000000000
             Size.PlatformDefault = False
@@ -4175,7 +4175,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       ImageIndex = 5
       Size.Width = 63.000000000000000000
       Size.Height = 22.000000000000000000
@@ -4190,7 +4190,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
         FullSize = True
         Images = ImageList1
         Size.Width = 383.000000000000000000
-        Size.Height = 488.000000000000000000
+        Size.Height = 420.000000000000000000
         Size.PlatformDefault = False
         StyleLookup = 'tabcontrolstyle'
         TabHeight = 49.000000000000000000
@@ -4198,17 +4198,17 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
         TabOrder = 2
         TabPosition = PlatformDefault
         Sizes = (
-          383s
-          439s
-          383s
-          439s)
+          379s
+          367s
+          379s
+          367s)
         object tsConfTEF: TTabItem
           CustomIcon = <
             item
             end>
           IsSelected = True
           ImageIndex = 11
-          Size.Width = 191.000000000000000000
+          Size.Width = 189.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -4218,8 +4218,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           ExplicitSize.cy = 49.000000000000000000
           object lbConfTEF: TListBox
             Align = Client
-            Size.Width = 383.000000000000000000
-            Size.Height = 439.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 367.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             ShowScrollBars = False
@@ -4227,8 +4227,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 383.000000000000000000
-            Viewport.Height = 439.000000000000000000
+            Viewport.Width = 375.000000000000000000
+            Viewport.Height = 363.000000000000000000
             object lbiGeral: TListBoxItem
               Selectable = False
               HitTest = True
@@ -4251,8 +4251,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
-                Viewport.Height = 225.000000000000000000
+                Viewport.Width = 351.000000000000000000
+                Viewport.Height = 221.000000000000000000
                 object lbghGeral: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -4433,8 +4433,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
-                Viewport.Height = 224.000000000000000000
+                Viewport.Width = 351.000000000000000000
+                Viewport.Height = 220.000000000000000000
                 object ListBoxGroupHeader17: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -4584,8 +4584,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
-                Viewport.Height = 214.000000000000000000
+                Viewport.Width = 351.000000000000000000
+                Viewport.Height = 210.000000000000000000
                 object ListBoxGroupHeader1: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -4800,7 +4800,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
               HitTest = True
               Position.Y = 663.000000000000000000
               Size.Width = 375.000000000000000000
-              Size.Height = 110.000000000000000000
+              Size.Height = 114.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 4
               object lbDadosEstabelecimento: TListBox
@@ -4809,7 +4809,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Left = 10.000000000000000000
                 Margins.Right = 10.000000000000000000
                 Size.Width = 355.000000000000000000
-                Size.Height = 110.000000000000000000
+                Size.Height = 114.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
                 ShowScrollBars = False
@@ -4817,7 +4817,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
+                Viewport.Width = 351.000000000000000000
                 Viewport.Height = 110.000000000000000000
                 object ListBoxGroupHeader6: TListBoxGroupHeader
                   Selectable = False
@@ -4927,6 +4927,13 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 end
               end
             end
+            object lbiGapKeyboard: TListBoxItem
+              Position.Y = 777.000000000000000000
+              Size.Width = 375.000000000000000000
+              Size.Height = 248.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 5
+            end
           end
         end
         object tbConfImpressora: TTabItem
@@ -4935,7 +4942,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             end>
           IsSelected = False
           ImageIndex = 5
-          Size.Width = 192.000000000000000000
+          Size.Width = 190.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -4945,8 +4952,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           ExplicitSize.cy = 49.000000000000000000
           object lbConfImpressora: TListBox
             Align = Client
-            Size.Width = 383.000000000000000000
-            Size.Height = 439.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 367.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             ShowScrollBars = False
@@ -4954,8 +4961,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 383.000000000000000000
-            Viewport.Height = 439.000000000000000000
+            Viewport.Width = 375.000000000000000000
+            Viewport.Height = 363.000000000000000000
             object ListBoxGroupHeader5: TListBoxGroupHeader
               Selectable = False
               TextSettings.HorzAlign = Center
@@ -5028,7 +5035,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 0
-                  Text = 'Externa'
+                  Text = 'Lib Externa'
                   OnChange = rbMudaClasseImpressora
                 end
               end
@@ -5409,8 +5416,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 355.000000000000000000
-                Viewport.Height = 106.000000000000000000
+                Viewport.Width = 351.000000000000000000
+                Viewport.Height = 102.000000000000000000
                 object ListBoxGroupHeader8: TListBoxGroupHeader
                   Selectable = False
                   Margins.Left = 10.000000000000000000
@@ -5505,7 +5512,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
       end
       object gpBotoesConfig: TGridPanelLayout
         Align = Bottom
-        Position.Y = 536.000000000000000000
+        Position.Y = 468.000000000000000000
         Size.Width = 383.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
@@ -5615,7 +5622,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
       object layoutVenda: TGridPanelLayout
         Align = Client
         Size.Width = 383.000000000000000000
-        Size.Height = 586.000000000000000000
+        Size.Height = 518.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         ColumnCollection = <
@@ -5774,7 +5781,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
           Size.Width = 375.000000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           XRadius = 15.000000000000000000
           YRadius = 15.000000000000000000
@@ -5795,7 +5802,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
             Size.Width = 359.000000000000000000
-            Size.Height = 57.250000000000000000
+            Size.Height = 48.750000000000000000
             Size.PlatformDefault = False
             StyledSettings = [Family]
           end
@@ -5809,7 +5816,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 2
@@ -5829,7 +5836,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 3
@@ -5849,7 +5856,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumerosRed'
           TabOrder = 12
@@ -5867,7 +5874,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumerosBack'
           TabOrder = 13
@@ -5886,7 +5893,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 4
@@ -5906,7 +5913,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 5
@@ -5926,7 +5933,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 6
@@ -5946,7 +5953,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 14
@@ -5966,7 +5973,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 15
@@ -5986,7 +5993,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 7
@@ -6006,7 +6013,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 8
@@ -6026,7 +6033,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 9
@@ -6046,7 +6053,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 10
@@ -6066,7 +6073,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 138.500000000000000000
+          Size.Height = 121.500000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 1
@@ -6086,7 +6093,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 16
@@ -6106,7 +6113,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 17
@@ -6126,7 +6133,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 87.750000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumeros'
           TabOrder = 11
@@ -6146,7 +6153,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
           Size.Width = 183.500000000000000000
-          Size.Height = 65.250000000000000000
+          Size.Height = 56.750000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'StyleNumerosGreen'
           TabOrder = 18
@@ -6175,7 +6182,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
       object layoutAdmin: TLayout
         Align = Client
         Size.Width = 383.000000000000000000
-        Size.Height = 586.000000000000000000
+        Size.Height = 518.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object lbAdmin: TListBox
@@ -6185,7 +6192,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
           Size.Width = 375.000000000000000000
-          Size.Height = 578.000000000000000000
+          Size.Height = 510.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'lbAdminStyle1'
           TabOrder = 0
@@ -6203,8 +6210,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           DefaultItemStyles.GroupHeaderStyle = ''
           DefaultItemStyles.GroupFooterStyle = ''
           OnItemClick = lbAdminItemClick
-          Viewport.Width = 375.000000000000000000
-          Viewport.Height = 578.000000000000000000
+          Viewport.Width = 371.000000000000000000
+          Viewport.Height = 498.000000000000000000
         end
       end
     end
@@ -6224,14 +6231,14 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
       object layoutEstorno: TLayout
         Align = Client
         Size.Width = 383.000000000000000000
-        Size.Height = 586.000000000000000000
+        Size.Height = 518.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object lbEstorno: TListBox
           Align = Client
           HitTest = False
           Size.Width = 383.000000000000000000
-          Size.Height = 586.000000000000000000
+          Size.Height = 518.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
           ShowScrollBars = False
@@ -6240,8 +6247,8 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
           DefaultItemStyles.ItemStyle = ''
           DefaultItemStyles.GroupHeaderStyle = ''
           DefaultItemStyles.GroupFooterStyle = ''
-          Viewport.Width = 383.000000000000000000
-          Viewport.Height = 586.000000000000000000
+          Viewport.Width = 379.000000000000000000
+          Viewport.Height = 514.000000000000000000
           object ListBoxGroupHeader7: TListBoxGroupHeader
             Selectable = False
             TextSettings.WordWrap = True
@@ -6388,7 +6395,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
                 Size.Width = 173.500000000000000000
-                Size.Height = 32.000000000000000000
+                Size.Height = 33.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
                 TextSettings.HorzAlign = Center
@@ -6470,26 +6477,26 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
         FullSize = True
         Images = ImageList1
         Size.Width = 383.000000000000000000
-        Size.Height = 488.000000000000000000
+        Size.Height = 420.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 50.000000000000000000
         TabIndex = 0
         TabOrder = 2
         TabPosition = PlatformDefault
         Sizes = (
-          383s
-          438s
-          383s
-          438s
-          383s
-          438s)
+          379s
+          366s
+          379s
+          366s
+          379s
+          366s)
         object tabDadosUltimaTransacao: TTabItem
           CustomIcon = <
             item
             end>
           IsSelected = True
           ImageIndex = 10
-          Size.Width = 127.000000000000000000
+          Size.Width = 126.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -6509,12 +6516,12 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             TextSettings.Font.Family = 'Lucida Console'
             TextSettings.Font.StyleExt = {00040000000000000003000000}
             Align = Client
-            Size.Width = 383.000000000000000000
-            Size.Height = 438.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 366.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            Viewport.Width = 383.000000000000000000
-            Viewport.Height = 438.000000000000000000
+            Viewport.Width = 358.000000000000000000
+            Viewport.Height = 345.000000000000000000
           end
         end
         object tabComprovantes: TTabItem
@@ -6523,7 +6530,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             end>
           IsSelected = False
           ImageIndex = 12
-          Size.Width = 127.000000000000000000
+          Size.Width = 126.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -6535,25 +6542,25 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             Align = Client
             FullSize = True
             Images = ImageList1
-            Size.Width = 383.000000000000000000
-            Size.Height = 438.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 366.000000000000000000
             Size.PlatformDefault = False
             TabHeight = 50.000000000000000000
             TabIndex = 1
             TabOrder = 0
             TabPosition = Bottom
             Sizes = (
-              383s
-              388s
-              383s
-              388s)
+              375s
+              312s
+              375s
+              312s)
             object tabViaCliente: TTabItem
               CustomIcon = <
                 item
                 end>
               IsSelected = False
               ImageIndex = 13
-              Size.Width = 190.000000000000000000
+              Size.Width = 186.000000000000000000
               Size.Height = 50.000000000000000000
               Size.PlatformDefault = False
               StyleLookup = ''
@@ -6587,12 +6594,12 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Top = 8.000000000000000000
                 Margins.Right = 4.000000000000000000
                 Margins.Bottom = 8.000000000000000000
-                Size.Width = 375.000000000000000000
-                Size.Height = 372.000000000000000000
+                Size.Width = 367.000000000000000000
+                Size.Height = 296.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 375.000000000000000000
-                Viewport.Height = 372.000000000000000000
+                Viewport.Width = 346.000000000000000000
+                Viewport.Height = 275.000000000000000000
               end
             end
             object tabViaEstabelecimento: TTabItem
@@ -6601,7 +6608,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 end>
               IsSelected = True
               ImageIndex = 14
-              Size.Width = 191.000000000000000000
+              Size.Width = 187.000000000000000000
               Size.Height = 50.000000000000000000
               Size.PlatformDefault = False
               StyleLookup = ''
@@ -6635,12 +6642,12 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
                 Margins.Top = 8.000000000000000000
                 Margins.Right = 4.000000000000000000
                 Margins.Bottom = 8.000000000000000000
-                Size.Width = 375.000000000000000000
-                Size.Height = 372.000000000000000000
+                Size.Width = 367.000000000000000000
+                Size.Height = 296.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 375.000000000000000000
-                Viewport.Height = 372.000000000000000000
+                Viewport.Width = 346.000000000000000000
+                Viewport.Height = 275.000000000000000000
               end
             end
           end
@@ -6651,7 +6658,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             end>
           IsSelected = False
           ImageIndex = 12
-          Size.Width = 129.000000000000000000
+          Size.Width = 127.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -6671,12 +6678,12 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             TextSettings.Font.StyleExt = {00040000000000000003000000}
             TextSettings.WordWrap = True
             Align = Client
-            Size.Width = 383.000000000000000000
-            Size.Height = 438.000000000000000000
+            Size.Width = 379.000000000000000000
+            Size.Height = 366.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            Viewport.Width = 383.000000000000000000
-            Viewport.Height = 438.000000000000000000
+            Viewport.Width = 358.000000000000000000
+            Viewport.Height = 345.000000000000000000
           end
         end
       end
@@ -6717,7 +6724,7 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 6.000000000000000000
         Position.X = 10.000000000000000000
-        Position.Y = 542.000000000000000000
+        Position.Y = 474.000000000000000000
         Sides = [Top, Left, Bottom, Right]
         Size.Width = 363.000000000000000000
         Size.Height = 38.000000000000000000
@@ -7458,14 +7465,14 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             PNG = {
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              00D649444154484BED954D0E82301085DBD2780E6EE1163C80E089BC9189AEFD
-              21DD790BCE61DAE21B98445CB8015A83F225CDA48F64669A79B4626176488E2D
-              DEFB35C2066BD50AE378605D9552F76EDB03850A638C6B2684F3955CE27532E7
-              DC015DECACB53562CDF260D07CAAB54E114F4992142C77A0D899BAC1C73D4BA3
-              A03C940F796F2C09C591789B5F50D0C1853A999A4F270BCEEF16EB5B9F7EC01C
-              2EAAA49415CB83C1B832E4CB281FAC9FB3DC41C568A0B1AC1F9CFF2816FC06F9
-              9AF58FB0EA36CAAD0F9796D1DE33025DC479A9176682104FB2F2758BE79FF3E1
-              0000000049454E44AE426082}
+              00D549444154484BED954D0E82301085FB17CFC12DDC8207103C913732D1B53F
+              DD7A0BCE615AE40D9D445CB8015A83F225CDA48F64669A79B4626176488E1D4D
+              D3AC113658AB4E18C703EBAA94BA876D0F142AADB5FE39219CAFE212AF9379EF
+              0FE862E79CAB116B960783E633634C8678D25A972C0750EC4CDDE0E39EA55150
+              1ECA87BC379684E248BCCD2F2AE8E0429D4CCDA79345E7778BF5AD4F3F600117
+              5929A565793018578E7C39E583F50B9603548C069ACAFAD1F98F62D16F90AF59
+              FF08AB6E93DCFA706995EC3D23D0459A977A612608D10228F275730C2CDAA800
+              00000049454E44AE426082}
             FileName = 'C:\temp\outline_credit_card_white_18.png'
           end>
         Name = 'outline_credit_card_white_18'
@@ -7481,17 +7488,17 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             PNG = {
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              014049444154484BED563B6EC2401434EB8663383740A92869E893F448A48486
-              92124197431038021D1C81C6566E001708AD2DF99719EBB9C0ACF9AC0C8A8091
-              9E66FCE6ED5BAFFC2CDB7A0C2449D24ED354891E403BA25F111D6AE4EAD023B2
-              781DFAE239D003D10ABA4DAD451CC733C4143146711A86E1060BDE7DDFFF755D
-              3786EEC15BD223F39A79FAAC63BD7863E93393D687A0C9E2AA50DCAC269C81A6
-              52AA0BFE012F247D3170CA37DBB61BE039F853D2FBC84F56BCA34B51D6271B06
-              1D505B473806910D8E0EA59B014DC4C620B84E8B639B558E639BAD112F06C175
-              A771ED01D18E3E4716FC051E8A7536F275799FB3461FD4A23640EB7F9F4C5246
-              28EBF37CA92BC183BDD4E0DB7DCFAA42F16407CF0C77F38D98504751B4C59A8F
-              2008769EE725D07D782BA95BF19A79FAAC63BD7813F6A12E050A6EF7777547B0
-              AC3FBB0AF80B93394BF60000000049454E44AE426082}
+              014149444154484BED563B6EC2401434EB8663383740A92869E893F448A48486
+              92124197431038021D1C01C92E7203B840686DC9BFCC58CF0566CD676550048C
+              F434E3376FDF7AE567D9D663204992769AA64AF400DA11FD8AE8502357871E91
+              C5EBD017CF811E8856D06D6A2DE2389E21A688318AD3300C3758F0EEFBFEAFEB
+              BA31740FDE921E99D7CCD3671DEBC51B4B9F99B43E044D165785E26635E10C34
+              95525DF00F7821E98B8153BED9B6DD00CFC19F92DE477EB2E21D5D8AB23ED930
+              E880DA3AC231886C707428DD0C68223606C1755A1CDBAC721CDB6C8D783108AE
+              3B8D6B0F8876F439B2E02FF050ACB391AFCBFB9C35FAA016B5015AFFFB649232
+              42599FE74B5D091EECA506DFEE7B56158A273B7866B89B6FC4843A8AA22DD67C
+              0441B0F33C2F81EEC35B49DD8AD7CCD3671DEBC59BB00F75295070BBBFAB3B82
+              65FD01310AF7F33559C74D0000000049454E44AE426082}
             FileName = 'C:\temp\outline_receipt_white_18.png'
           end>
         Name = 'outline_receipt_white_18'
@@ -7508,17 +7515,17 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
               017249444154484BED933B4BC3601486F365AA18B30A5E5617675DEDAEAE0EFE
-              06FB1354B07F417070169CDCDCEB2638647073D0418206020625A1B9EAFB7E3D
-              16A562A309A5853E703839F77C3763CAC4A14497A2288A39A82664057207E998
-              A6F9065D2F18B419C7F1D3FB1768D32F29F58086ABBEEF7739200CC3D72CCB6E
-              A869D3CFB8A45627CFF30B36C6905B349EA78F9A36FD8CEBC43A4892C465530C
-              D815978636FD8C8BEB574CD1E3C348B7118D477741081A56BEFAE3F9A8EBE0AF
-              2B9B815A504A2D437345F7F87E61AC3238960606ECE0B69DE12D3DF64EEA3B69
-              9A3E207E82BC2D980D292D0F8A148AF770019E75C792309F75F82CB7634CC49F
-              9EEB6AE0BA6E02FB124D5A9075C812F3A8C56E31EE795E2C257C77AC1F3E10C5
-              DBBD125D74FAD97C18C85B44FEB1E338056BD947427D06A623691F877E140441
-              D7B6ED6B7197268AA235CBB26631EF00CFA22DEE9FC1B043FE5955D8475AF619
-              5819F29A900D31FF0D76E70AD21173CA4462181FA00A0D7FF2E24B9A00000000
+              06FB1354B07F417070169CDCDCEB26482637071D2468206050129AABBEEFD763
+              512A369A505AE803879373CF7733A64C1C4A74298AA298836A42562077908E69
+              9A6FD0F582419B711C3FBD7F8136FD92520F68B8EAFB7E9703C2307CCDB2EC86
+              9A36FD8C4B6A75F23CBF60630CB945E379FAA869D3CFB84EAC8324495C36C580
+              5D716968D3CFB8B87EC5143D3E8C741BD178741784A061E5AB3F9E8FBA0EFEBA
+              B219A805A5D4323457748FEF17C62A83636960C00E6EDB19DED263EFA4BE93A6
+              E903E227C8DB82D990D2F2A048A1780F17E059772C09F35987CF723BC644FCE9
+              B9AE06AEEB26B02FD1A40559872C318F5AEC16E39EE7C552C277C7FAE10351BC
+              DD2BD145A79FCD8781BC45E41F3B8E53B0967D24D467603A92F671E847411074
+              6DDBBE167769A2285AB32C6B16F30EF02CDAE2FE190C3BE49F55857DA4659F81
+              9521AF09D910F3DF6077AE201D31A74C2486F1018D860D799B0B195900000000
               49454E44AE426082}
             FileName = 'C:\temp\outline_person_white_18.png'
           end>
@@ -7535,19 +7542,19 @@ object FrTEFDemoAndroid: TFrTEFDemoAndroid
             PNG = {
               89504E470D0A1A0A0000000D494844520000001B0000001B08060000008DD4F4
               55000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              017749444154484BED95BD4AC4401485F34708362E3E410A1F40B0DA4A9F4384
-              B5528BED2DAD7D03B551417C0DB5B235BD481E213612F2EBB9E1ECC06C667593
-              2828EE07C3CCDC7BE7DCCCCD2463ADF873D8EC15755DEFA2ED70DA1BDBB61FD1
-              1E38355355D529920D467428A968ED0C4113C41E70DA1BECEADA719C1B4E1B4C
-              651CA19336940409138ECD946579D5D46120A2434985C35E81B86D0E0761D2D1
-              CA8880B5388EDFC230F430DE43199EE85A1AAC1B63DD1D740AE8AC63FC4E970E
-              0EC718C175144518561B347742D6C97AD1113D9ADBC03995A03CCF5F69EA85AC
-              67B2294D0D5A19F1522F705C0F8BA278715DF796E6CE4067DFF3BC4D24BB84CE
-              11CD3ADF751267CC9F486D67789213041CE3A9C2344D13DFF79FE9D2405CB828
-              26CBB2AD200846A84E8C5D9DA3526774B58150F3BB42D27B9A5A7C162336F149
-              0C4D8AD677F693FCC364F2A2A5FE0BDAE05BA161F6F29741127399426CE2331D
-              10D315D3E5A68EE7EF2C2499A00BF14FFCFAA65EF1CBB1AC0FFBEBFB1DBEDD55
-              170000000049454E44AE426082}
+              017849444154484BED953F4AC44014C6F38F106C5C3C410A0F20586DA5E71061
+              ADD4627B4B6B6FA0362A88D7502BCB7800911C213612F2D7EF856F076633AB9B
+              4441717F30CCCC7B6FBE97799964AC157F0E9BBDA2AEEB5DB41D4E7B63DBF623
+              DA03A766AAAA3A45B2C1880E2515AD9D216882D8034E7B835D5D3B8E73C36983
+              A98C2374D286922061C2B199B22CAF9A3A0C447428A970D82B10B7CDE1204C3A
+              5A1911B016C7F15B18861EC67B28C3135D4B837563ACBB834E019D758CDFE9D2
+              C1E11823B88EA208C36A83E64EC83A592F3AA247731B38A71294E7F92B4DBD90
+              F54C36A5A9412B235EEA058EEB6151142FAEEBDED2DC19E8EC7B9EB7896497D0
+              39A259E7BB4EE28CF913A9ED0C4F728280633C5598A669E2FBFE335D1A880B17
+              C56459B61504C108D589B1AB7354EA8CAE36106A7E57487A4F538BCF62C4263E
+              89A149D1FACE7E927F984C5EB4D47F411B7C2B34CC5EFE3248622E53884D7CA6
+              0362BA62BADCD4F1FC9D8524137421FE895FDFD42B7E3996F501ACB3FB11840D
+              93F60000000049454E44AE426082}
             FileName = 'C:\temp\outline_store_white_18.png'
           end>
         Name = 'outline_store_white_18'

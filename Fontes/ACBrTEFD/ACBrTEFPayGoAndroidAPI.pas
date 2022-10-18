@@ -1157,7 +1157,8 @@ begin
     if (ParametrosAdicionais.ValueInfo[PWINFO_TOTAMNT] <> '') then
     begin
       AURI.Params.AddField('amount').AsString := ParametrosAdicionais.ValueInfo[PWINFO_TOTAMNT];
-      AURI.Params.AddField('currencyCode').AsString := '986';
+      AURI.Params.AddField('currencyCode').AsString :=
+        IfEmptyThen( ParametrosAdicionais.ValueInfo[PWINFO_CURRENCY], '986');
     end;
 
     AddURIParam(AURI, 'boardingTax', PWINFO_BOARDINGTAX);

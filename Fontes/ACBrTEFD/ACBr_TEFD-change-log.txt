@@ -46,6 +46,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2022
+-- ACBrTEFAndroidPayGo --
+[*] Correção de erro de grafia em "QuandoFinalizarTransacaoAPI"
+
+-- ACBrTEFAPIComum --
+[*] Método "TACBrTEFAPIComumClass.AtualizarHeader", modificado de Private para
+    Protected
+[*] Inserido no texto, observações sobre Pontos de Parada, para testes de homologação
+
+-- ACBrTEFPayGoAndroidAPI --
+[-] Correção em "TACBrTEFPGWebAndroid.GetURI_Input", para usar o valor do
+    parâmetro "PWINFO_CURRENCY", quando o mesmo for informado
+(por: DSA)
+
 14/10/2022
 -- ACBrTEFPayGoComum --
 [-] Correção para definição do conteúdo de 'TextoEspecialOperador", quando

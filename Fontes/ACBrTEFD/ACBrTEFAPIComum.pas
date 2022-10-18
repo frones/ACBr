@@ -119,7 +119,7 @@ type
     property UtilizaSaldoTotalVoucher: Boolean read fUtilizaSaldoTotalVoucher
       write fUtilizaSaldoTotalVoucher default False;
     property MoedaISO4217: Integer read fMoedaISO4217 write fMoedaISO4217 default 986;
-    property AutoAtendimento: Boolean read fAutoAtendimento write fAutoAtendimento;
+    property AutoAtendimento: Boolean read fAutoAtendimento write fAutoAtendimento;  // Ainda NÃO utilizado
   end;
 
   { TACBrTEFAPIDadosEstabelecimento }
@@ -172,9 +172,6 @@ type
   { TACBrTEFAPIComumClass }
 
   TACBrTEFAPIComumClass = class
-  private
-    procedure AtualizarHeader;
-
   protected
     fpACBrTEFAPI: TACBrTEFAPIComum;
     fpInicializado: Boolean;
@@ -183,6 +180,7 @@ type
 
     procedure ErroAbstract(const NomeProcedure: String);
     procedure VerificarIdentificadorVendaInformado;
+    procedure AtualizarHeader;
 
     procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); virtual;
     procedure FinalizarChamadaAPI; virtual;
@@ -900,6 +898,9 @@ begin
     if UltimaRespostaTEF.Sucesso then
     begin
       NumRespostas := RespostasTEF.Count;
+      //HOMOLOGAÇÃO: Insira um Break Point na linha abaixo, se deseja interromper a
+      //             aplicação, antes de Componente Criar um Arquivo de Backup da Ultima Transação
+      //             (simulação de transação pendente, sem recuperação por arquivo de Backup)
       i := RespostasTEF.AdicionarRespostaTEF(UltimaRespostaTEF);
 
       if (i < 0) or (NumRespostas < RespostasTEF.Count) then  // Adicionou uma nova resposta ?
@@ -1304,6 +1305,9 @@ begin
   GravarLog( '  FinalizarTransacao( '+
              GetEnumName(TypeInfo(TACBrTEFStatusTransacao), integer(AStatus))+' )');
 
+  //HOMOLOGAÇÃO: Insira um Break Point na linha abaixo, se deseja interromper a
+  //             aplicação, antes de Confirmar a Ultima Transação
+  //             (simulação de transação pendente)
   FinalizarTransacao( UltimaRespostaTEF.Rede,
                       UltimaRespostaTEF.NSU,
                       UltimaRespostaTEF.Finalizacao,

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/10/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ao ler o XML de um Rps não estava setando o valor stNenhum ao campo IssRetido.
+   Por: Márcio Baroni
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade: Rio Branco do Sul/PR - Provedor: Equiplano
    Por: Alexandre Felippeto Henzen

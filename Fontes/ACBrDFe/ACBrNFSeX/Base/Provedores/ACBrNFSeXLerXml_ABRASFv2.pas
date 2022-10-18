@@ -1124,6 +1124,7 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
+  NFSe.Servico.Valores.IssRetido := stNenhum;
   LerInfDeclaracaoPrestacaoServico(ANode);
 end;
 

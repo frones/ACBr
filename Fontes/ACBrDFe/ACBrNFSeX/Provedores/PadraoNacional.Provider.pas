@@ -791,7 +791,7 @@ begin
   else
     FpPath := '/nfse/' + Response.ChaveNFSe + '/eventos/' +
               OnlyNumber(tpEventoToStr(Response.tpEvento)) + '/' +
-              IntToStr(Response.nSeqEvento);
+              FormatFloat('000', Response.nSeqEvento);
 
   Response.ArquivoEnvio := FpPath;
   FpMethod := 'GET';

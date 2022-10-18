@@ -244,8 +244,9 @@ type
   Tobjeto = (oFerrovia, oRodovia, oPostes, oCabos, oDutos, oCondutos);
 
   TcategVeic = (cvDesconhecido, cvAutomovel, cvCaminhao, cvAutomovelComSemiReboque,
-                cvCaminhaoComSemiReboque, cvCaminhaoComReboque, cvMotocicleta,
-                cvVeiculoEspecial, cvVeiculoIsento);
+                cvCaminhaoComSemiReboque, cvAutomovelComReboque,
+                cvCaminhaoComReboque, cvCaminhaoTratorComSemiReboque,
+                cvMotocicleta, cvVeiculoEspecial, cvVeiculoIsento);
 
   Trodagem = (trSimples, trDupla);
 
@@ -12896,20 +12897,22 @@ function categVeicToStr(const t: TcategVeic): string;
 begin
   result := EnumeradoToStr(t,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08',
-                            '09', '10', '11'],
+                            '09', '10'],
     [cvDesconhecido, cvAutomovel, cvCaminhao, cvAutomovelComSemiReboque,
-     cvCaminhaoComSemiReboque, cvCaminhaoComReboque, cvCaminhaoComReboque,
-     cvCaminhaoComReboque, cvMotocicleta, cvVeiculoEspecial, cvVeiculoIsento]);
+     cvCaminhaoComSemiReboque, cvAutomovelComReboque, cvCaminhaoComReboque,
+     cvCaminhaoTratorComSemiReboque, cvMotocicleta, cvVeiculoEspecial,
+     cvVeiculoIsento]);
 end;
 
 function StrTocategVeic(out ok: Boolean; const s: string): TcategVeic;
 begin
   result := StrToEnumerado(ok, s,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08',
-                            '09', '10', '11'],
+                            '09', '10'],
     [cvDesconhecido, cvAutomovel, cvCaminhao, cvAutomovelComSemiReboque,
-     cvCaminhaoComSemiReboque, cvCaminhaoComReboque, cvCaminhaoComReboque,
-     cvCaminhaoComReboque, cvMotocicleta, cvVeiculoEspecial, cvVeiculoIsento]);
+     cvCaminhaoComSemiReboque, cvAutomovelComReboque, cvCaminhaoComReboque,
+     cvCaminhaoTratorComSemiReboque, cvMotocicleta, cvVeiculoEspecial,
+     cvVeiculoIsento]);
 end;
 
 function rodagemToStr(const t: Trodagem): string;

@@ -105,7 +105,7 @@ type
     function GerarTributacaoMunicipal: TACBrXmlNode;
     function GerarBeneficioMunicipal: TACBrXmlNode;
     function GerarExigibilidadeSuspensa: TACBrXmlNode;
-    function GerarTributacaoNacional: TACBrXmlNode;
+    function GerarTributacaoFederal: TACBrXmlNode;
     function GerarTributacaoOutrosPisCofins: TACBrXmlNode;
     function GerarTotalTributos: TACBrXmlNode;
     function GerarValorTotalTributos: TACBrXmlNode;
@@ -544,11 +544,6 @@ begin
   if (NFSe.Servico.CodigoPais <> 0) and (NFSe.Servico.CodigoPais <> 1058) then
     Result.AppendChild(AddNode(tcStr, '#1', 'cPaisPrestacao', 2, 2, 0,
                           CodIBGEPaisToSiglaISO2(NFSe.Servico.CodigoPais), ''));
-
-  if NFSe.Servico.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
-    Result.AppendChild(AddNode(tcStr, '#1', 'opConsumServ', 1, 1, 0, '0', ''))
-  else
-    Result.AppendChild(AddNode(tcStr, '#1', 'opConsumServ', 1, 1, 0, '1', ''));
 end;
 
 function TNFSeW_PadraoNacional.GerarCodigoServico: TACBrXmlNode;
@@ -1061,7 +1056,7 @@ begin
   Result := CreateElement('trib');
 
   Result.AppendChild(GerarTributacaoMunicipal);
-  Result.AppendChild(GerarTributacaoNacional);
+  Result.AppendChild(GerarTributacaoFederal);
   Result.AppendChild(GerarTotalTributos);
 end;
 
@@ -1129,31 +1124,31 @@ begin
   end;
 end;
 
-function TNFSeW_PadraoNacional.GerarTributacaoNacional: TACBrXmlNode;
+function TNFSeW_PadraoNacional.GerarTributacaoFederal: TACBrXmlNode;
 begin
   Result := nil;
 
-  if (NFSe.Servico.Valores.tribNac.vRetCP > 0) or
-     (NFSe.Servico.Valores.tribNac.vRetIRRF > 0) or
-     (NFSe.Servico.Valores.tribNac.vRetCSLL > 0) or
-     (NFSe.Servico.Valores.tribNac.vBCPisCofins >0) or
-     (NFSe.Servico.Valores.tribNac.pAliqPis >0) or
-     (NFSe.Servico.Valores.tribNac.pAliqCofins >0) or
-     (NFSe.Servico.Valores.tribNac.vPis >0) or
-     (NFSe.Servico.Valores.tribNac.vCofins >0) then
+  if (NFSe.Servico.Valores.tribFed.vRetCP > 0) or
+     (NFSe.Servico.Valores.tribFed.vRetIRRF > 0) or
+     (NFSe.Servico.Valores.tribFed.vRetCSLL > 0) or
+     (NFSe.Servico.Valores.tribFed.vBCPisCofins >0) or
+     (NFSe.Servico.Valores.tribFed.pAliqPis >0) or
+     (NFSe.Servico.Valores.tribFed.pAliqCofins >0) or
+     (NFSe.Servico.Valores.tribFed.vPis >0) or
+     (NFSe.Servico.Valores.tribFed.vCofins >0) then
   begin
     Result := CreateElement('tribNac');
 
     Result.AppendChild(GerarTributacaoOutrosPisCofins);
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'vRetCP', 1, 15, 0,
-                                      NFSe.Servico.Valores.tribNac.vRetCP, ''));
+                                      NFSe.Servico.Valores.tribFed.vRetCP, ''));
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'vRetIRRF', 1, 15, 0,
-                                    NFSe.Servico.Valores.tribNac.vRetIRRF, ''));
+                                    NFSe.Servico.Valores.tribFed.vRetIRRF, ''));
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'vRetCSLL', 1, 15, 0,
-                                    NFSe.Servico.Valores.tribNac.vRetCSLL, ''));
+                                    NFSe.Servico.Valores.tribFed.vRetCSLL, ''));
   end;
 end;
 
@@ -1161,34 +1156,34 @@ function TNFSeW_PadraoNacional.GerarTributacaoOutrosPisCofins: TACBrXmlNode;
 begin
   Result := nil;
 
-  if (NFSe.Servico.Valores.tribNac.vBCPisCofins >0) or
-     (NFSe.Servico.Valores.tribNac.pAliqPis >0) or
-     (NFSe.Servico.Valores.tribNac.pAliqCofins >0) or
-     (NFSe.Servico.Valores.tribNac.vPis >0) or
-     (NFSe.Servico.Valores.tribNac.vCofins >0) then
+  if (NFSe.Servico.Valores.tribFed.vBCPisCofins >0) or
+     (NFSe.Servico.Valores.tribFed.pAliqPis >0) or
+     (NFSe.Servico.Valores.tribFed.pAliqCofins >0) or
+     (NFSe.Servico.Valores.tribFed.vPis >0) or
+     (NFSe.Servico.Valores.tribFed.vCofins >0) then
   begin
     Result := CreateElement('piscofins');
 
     Result.AppendChild(AddNode(tcStr, '#1', 'CST', 2, 2, 1,
-                               CSTToStr(NFSe.Servico.Valores.tribNac.CST), ''));
+                               CSTToStr(NFSe.Servico.Valores.tribFed.CST), ''));
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'vBCPisCofins', 1, 15, 0,
-                                NFSe.Servico.Valores.tribNac.vBCPisCofins, ''));
+                                NFSe.Servico.Valores.tribFed.vBCPisCofins, ''));
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqPis', 1, 5, 0,
-                                    NFSe.Servico.Valores.tribNac.pAliqPis, ''));
+                                    NFSe.Servico.Valores.tribFed.pAliqPis, ''));
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqCofins', 1, 5, 0,
-                                 NFSe.Servico.Valores.tribNac.pAliqCofins, ''));
+                                 NFSe.Servico.Valores.tribFed.pAliqCofins, ''));
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'vPis', 1, 15, 0,
-                                        NFSe.Servico.Valores.tribNac.vPis, ''));
+                                        NFSe.Servico.Valores.tribFed.vPis, ''));
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'vCofins', 1, 15, 0,
-                                     NFSe.Servico.Valores.tribNac.vCofins, ''));
+                                     NFSe.Servico.Valores.tribFed.vCofins, ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'tpRetPisCofins', 1, 1, 1,
-         tpRetPisCofinsToStr(NFSe.Servico.Valores.tribNac.tpRetPisCofins), ''));
+         tpRetPisCofinsToStr(NFSe.Servico.Valores.tribFed.tpRetPisCofins), ''));
   end;
 end;
 

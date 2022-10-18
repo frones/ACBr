@@ -278,7 +278,7 @@ type
     property tpRetISSQN: TtpRetISSQN read FtpRetISSQN write FtpRetISSQN;
   end;
 
-  TtribNac = class(TObject)
+  TtribFed = class(TObject)
   private
     FCST: TCST;
     FvBCPisCofins: Double;
@@ -368,7 +368,7 @@ type
     FAliquotaDeducoes: Double;
     FDocDeducao: TDocDeducaoCollection;
     FtribMun: TtribMun;
-    FtribNac: TtribNac;
+    FtribFed: TtribFed;
     FtotTrib: TtotTrib;
     FTipoDeducao: TTipoDeducao;
 
@@ -432,7 +432,7 @@ type
     property AliquotaDeducoes: Double read FAliquotaDeducoes write FAliquotaDeducoes;
     property DocDeducao: TDocDeducaoCollection read FDocDeducao write SetDocDeducao;
     property tribMun: TtribMun read FtribMun write FtribMun;
-    property tribNac: TtribNac read FtribNac write FtribNac;
+    property tribFed: TtribFed read FtribFed write FtribFed;
     property totTrib: TtotTrib read FtotTrib write FtotTrib;
     //provedor CTAConsult
     property TipoDeducao: TTipoDeducao read FTipoDeducao write FTipoDeducao;
@@ -1975,7 +1975,7 @@ begin
 
   FDocDeducao := TDocDeducaoCollection.Create;
   FtribMun := TtribMun.Create;
-  FtribNac := TtribNac.Create;
+  FtribFed := TtribFed.Create;
   FtotTrib := TtotTrib.Create;
 end;
 
@@ -1983,7 +1983,7 @@ destructor TValores.Destroy;
 begin
   FDocDeducao.Free;
   FtribMun.Free;
-  FtribNac.Free;
+  FtribFed.Free;
   FtotTrib.Free;
 
   inherited Destroy;

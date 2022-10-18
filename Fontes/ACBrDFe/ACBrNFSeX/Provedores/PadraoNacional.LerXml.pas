@@ -1159,7 +1159,7 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Servico.Valores.tribNac do
+    with NFSe.Servico.Valores.tribFed do
     begin
       LerTributacaoOutrosPisCofins(AuxNode);
 
@@ -1180,7 +1180,7 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Servico.Valores.tribNac do
+    with NFSe.Servico.Valores.tribFed do
     begin
       CST := StrToCST(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('CST'), tcStr));
       vBCPisCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCPisCofins'), tcDe2);

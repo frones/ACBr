@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/10/2022
+-- PadraoNacional.Provider/PadraoNacional.GravarXml/PadraoNacional.LerXml --
+[*] Alteração visando atender a ateração realizada nos schemas.
+   Por: Italo Giurizzato Junior
 -- DBSeller.Provider --
 [*] Alterado o namespace e setado para assinar o lote de Rps.
    Por: Italo Giurizzato Junior

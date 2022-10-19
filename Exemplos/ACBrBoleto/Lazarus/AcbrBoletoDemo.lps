@@ -8,6 +8,7 @@
       <Unit>
         <Filename Value="AcbrBoletoDemo.dpr"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <CursorPos Y="7"/>
         <UsageCount Value="31"/>
         <Loaded Value="True"/>
@@ -19,14 +20,12 @@
         <ComponentName Value="frmDemo"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="640"/>
         <CursorPos Y="646"/>
         <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="uDMForte.pas"/>
@@ -40,7 +39,6 @@
         <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\ACBr\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas"/>
@@ -107,11 +105,7 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="6">
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="429" Column="113" TopLine="447"/>
-      </Position>
+    <JumpHistory HistoryIndex="7">
       <Position>
         <Filename Value="uDemo.pas"/>
       </Position>
@@ -134,6 +128,14 @@
       <Position>
         <Filename Value="uDemo.pas"/>
         <Caret Line="261" TopLine="253"/>
+      </Position>
+      <Position>
+        <Filename Value="AcbrBoletoDemo.dpr"/>
+        <Caret Column="28"/>
+      </Position>
+      <Position>
+        <Filename Value="AcbrBoletoDemo.dpr"/>
+        <Caret Line="4" Column="17"/>
       </Position>
     </JumpHistory>
     <RunParams>

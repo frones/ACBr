@@ -633,7 +633,7 @@ begin
       if (ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
            proCTA, proCTAConsult, proEloTech, proEquiplano, proFacundo, proFGMaiss,
            profintelISS, proGoverna, proInfisc, proIPM, proISSDSF, proRLZ,
-           proSimple, proSimplISS, proSmarAPD, proWebFisco]) or
+           proSimple, proSimplISS, proSmarAPD, proWebFisco, proBauhaus]) or
          ((ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEL]) and
           (ACBrNFSeX1.Configuracoes.Geral.Versao = ve100)) then
       begin
@@ -766,19 +766,19 @@ begin
         Servico.Valores.tribMun.tribISSQN := tiOperacaoTributavel;
         Servico.Valores.tribMun.cPaisResult := 0;
 
-        Servico.Valores.tribNac.CST := cst01;
-        Servico.Valores.tribNac.vBCPisCofins := Servico.Valores.BaseCalculo;
-        Servico.Valores.tribNac.pAliqPis := 1.65;
-        Servico.Valores.tribNac.pAliqCofins := 7.60;
-        Servico.Valores.tribNac.vPis := Servico.Valores.tribNac.vBCPisCofins *
-                                         Servico.Valores.tribNac.pAliqPis / 100;
-        Servico.Valores.tribNac.vCofins := Servico.Valores.tribNac.vBCPisCofins *
-                                      Servico.Valores.tribNac.pAliqCofins / 100;
-        Servico.Valores.tribNac.tpRetPisCofins := trpcNaoRetido;
+        Servico.Valores.tribFed.CST := cst01;
+        Servico.Valores.tribFed.vBCPisCofins := Servico.Valores.BaseCalculo;
+        Servico.Valores.tribFed.pAliqPis := 1.65;
+        Servico.Valores.tribFed.pAliqCofins := 7.60;
+        Servico.Valores.tribFed.vPis := Servico.Valores.tribFed.vBCPisCofins *
+                                         Servico.Valores.tribFed.pAliqPis / 100;
+        Servico.Valores.tribFed.vCofins := Servico.Valores.tribFed.vBCPisCofins *
+                                      Servico.Valores.tribFed.pAliqCofins / 100;
+        Servico.Valores.tribFed.tpRetPisCofins := trpcNaoRetido;
 
-        Servico.Valores.totTrib.vTotTribFed := Servico.Valores.tribNac.vPis;
+        Servico.Valores.totTrib.vTotTribFed := Servico.Valores.tribFed.vPis;
         Servico.Valores.totTrib.vTotTribEst := 0;
-        Servico.Valores.totTrib.vTotTribMun := Servico.Valores.tribNac.vCofins;
+        Servico.Valores.totTrib.vTotTribMun := Servico.Valores.tribFed.vCofins;
 
 
         vValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
@@ -1160,7 +1160,7 @@ begin
       proConam, proEquiplano, proFGMaiss, proGoverna, proIPM, proISSBarueri,
       proISSDSF, proISSLencois, proModernizacaoPublica, proPublica, proSiat,
       proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
-      proWebFisco, proCenti, proCTA] then
+      proWebFisco, proCenti, proCTA, proBauhaus] then
     begin
       Motivo := 'Motivo do Cancelamento';
       if not (InputQuery(Titulo, 'Motivo do Cancelamento', Motivo)) then
@@ -2706,7 +2706,8 @@ begin
 
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proConam, proEquiplano,
     proGoverna, proIPM, proISSDSF, proISSLencois, proModernizacaoPublica,
-    proPublica, proSiat, proSigISS, proSmarAPD, proWebFisco, proSudoeste] then
+    proPublica, proSiat, proSigISS, proSmarAPD, proWebFisco, proSudoeste,
+    proBauhaus] then
   begin
     Motivo := 'Teste de Cancelamento';
     if not (InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then

@@ -1192,7 +1192,6 @@
 			<xsd:element ref="dsig:Signature" 
 				minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
-		<xsd:attribute name="versao" type="tsVersao" use="required" />
 	</xsd:complexType>
 
 	<xsd:complexType name="tcInfPedidoCancelamento">
@@ -1231,7 +1230,6 @@
 			<xsd:element ref="dsig:Signature" 
 				minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
-		<xsd:attribute name="versao" type="tsVersao" use="required" />
 	</xsd:complexType>
 
 	<xsd:complexType name="tcRetCancelamento">
@@ -1256,7 +1254,6 @@
 			<xsd:element ref="dsig:Signature" 
 				minOccurs="0" maxOccurs="2" />
 		</xsd:sequence>
-		<xsd:attribute name="versao" type="tsVersao" use="required" />
 	</xsd:complexType>
 
 	<xsd:complexType name="tcCompNfse">
@@ -1312,7 +1309,6 @@
 			</xsd:element>
 		</xsd:sequence>
 		<xsd:attribute name="Id" type="tsIdTag" />
-		<xsd:attribute name="versao" type="tsVersao" use="required" />
 	</xsd:complexType>
 
 	<xsd:element name="ListaMensagemRetornoLote">
@@ -1348,7 +1344,6 @@
 				<xsd:element name="versaoDados" type="tsVersao"
 					minOccurs="1" maxOccurs="1" />
 			</xsd:sequence>
-			<xsd:attribute name="versao" type="tsVersao" use="required" />
 		</xsd:complexType>
 	</xsd:element>
 

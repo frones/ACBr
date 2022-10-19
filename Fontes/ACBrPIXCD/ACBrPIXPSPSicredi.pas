@@ -135,7 +135,7 @@ begin
   qp := TACBrQueryParams.Create;
   try
     qp.Values['grant_type'] := 'client_credentials';
-    qp.Values['scope'] := 'cob.read cob.write pix.read pix.write cobv.read cobv.write';
+    qp.Values['scope'] := 'cob.read cob.write pix.read pix.write';
     Body := qp.AsURL;
     WriteStrToStream(Http.Document, Body);
     Http.MimeType := CContentTypeApplicationWwwFormUrlEncoded;

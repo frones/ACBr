@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/10/2022
+-- Ginfes.Provider --
+[*] Incluído na function TratarXmlRetornado a chamada a função:
+    RemoverCaracteresDesnecessarios. O provedor estava gerando no meio da 
+    mensagem de erro os caracteres < e >.
+   Por: Italo Giurizzato Junior
 -- DBSeller.Provider --
 [*] Alterado para não gerar o atributo "Id".
    Por: Italo Giurizzato Junior

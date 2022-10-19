@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2022
+-- ACBrUtil.DateTime --
+[*] Ajustes para retornar o valor zero quando a data lida for: 0000/00/00 ou
+    00/00/0000.
+   Por: Italo Giurizzato Junior
+
 04/10/2022
 -- ACBrUtil.DateTime --
 [*] Correção na verificação de presença de TimeZone na data/hora

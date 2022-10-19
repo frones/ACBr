@@ -661,6 +661,11 @@ begin
       xHora := xDataHora;
   end;
 
+  p := Pos('.', xTZD);
+
+  if (p > 0) then
+    xTZD := '';
+
   Result := Trim(xData + ' ' + xHora + xTZD);
 end;
 
@@ -689,7 +694,10 @@ begin
       8: xData := FormatMaskText('!0000\/00\/00;0;_', xData);
     end;
 
-    Result := StringToDateTime(xData, xFormatoData);
+    if (Pos('0000/', xData) > 0) or (Pos('/0000', xData) > 0) then
+      Result := 0
+    else
+      Result := StringToDateTime(xData, xFormatoData);
   end;
 end;
 

@@ -83,6 +83,19 @@ begin
 
   NrOcorrCodigoPaisTomador := -1;
   NrOcorrCodigoPaisServico := -1;
+
+  NrOcorrValorDeducoes := 1;
+  NrOcorrValorISS := 1;
+  NrOcorrAliquota := 1;
+  NrOcorrDescIncond := 1;
+  NrOcorrDescCond := 1;
+  NrOcorrOutrasRet := 1;
+  NrOcorrValTotTrib := 1;
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorInss := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
 end;
 
 end.

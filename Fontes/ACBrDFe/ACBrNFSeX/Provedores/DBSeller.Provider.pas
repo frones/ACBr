@@ -231,7 +231,7 @@ begin
 
   with ConfigGeral do
   begin
-    Identificador := '';
+    Identificador := 'Id';
   end;
 
   with ConfigAssinar do
@@ -480,11 +480,13 @@ begin
   inherited Configuracao;
 
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
+  ConfigGeral.Identificador := '';
 
   with ConfigWebServices do
   begin
     VersaoDados := '2.04';
     VersaoAtrib := '2.04';
+    AtribVerLote := '';
   end;
 
   SetXmlNameSpace('http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd');

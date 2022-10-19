@@ -231,8 +231,7 @@ begin
 
   with ConfigGeral do
   begin
-    Identificador := 'Id';
-    UseCertificateHTTP := False;
+    Identificador := '';
   end;
 
   with ConfigAssinar do

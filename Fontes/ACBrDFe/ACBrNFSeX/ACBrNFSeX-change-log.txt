@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/10/2022
+-- DBSeller.Provider --
+[*] Alterado para não gerar o atributo "Id".
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementação do provedor Bauhaus. 
    Por: Celo G

@@ -437,6 +437,7 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := ParseText(AnsiString(Result), True, False);
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
 end;
 
 { TACBrNFSeProviderDSF200 }

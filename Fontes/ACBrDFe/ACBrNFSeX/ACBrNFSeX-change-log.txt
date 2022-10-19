@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/10/2022
+-- DSF.Provider --
+[*] Alterado a função TratarXmlRetornado visando sanar o problema do "&" no 
+    nome do prestador/tomador.
+   Por: Italo Giurizzato Junior
 -- Ginfes.Provider --
 [*] Incluído na function TratarXmlRetornado a chamada a função:
     RemoverCaracteresDesnecessarios. O provedor estava gerando no meio da 

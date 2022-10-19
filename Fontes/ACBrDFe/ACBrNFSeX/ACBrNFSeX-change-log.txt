@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2022
+-- Diversos --
+[+] Implementação do provedor Bauhaus. 
+   Por: Celo G
+
 18/10/2022
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade: Presidente Medici/RO - Provedor: Fiorilli

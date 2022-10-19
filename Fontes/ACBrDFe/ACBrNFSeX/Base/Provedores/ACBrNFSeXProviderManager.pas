@@ -159,6 +159,7 @@ uses
   // Provedores que tem layout próprio
   Agili.Provider,
   AssessorPublico.Provider,
+  Bauhaus.Provider,
   Conam.Provider,
   CTA.Provider,
   CTAConsult.Provider,
@@ -222,7 +223,8 @@ begin
       proAssessorPublico:
         Result := TACBrNFSeProviderAssessorPublico.Create(ACBrNFSe);
 
-      proAsten: Result := TACBrNFSeProviderAsten202.Create(ACBrNFSe);
+      proAsten:   Result := TACBrNFSeProviderAsten202.Create(ACBrNFSe);
+      proBauhaus: Result := TACBrNFSeProviderBauhaus.Create(ACBrNFSe);
 
       proBetha:
         begin

@@ -3,13 +3,13 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="Debug"/>
     <Units>
       <Unit>
-        <Filename Value="AcbrBoletoDemo.lpr"/>
+        <Filename Value="AcbrBoletoDemo.dpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="21" Y="6"/>
-        <UsageCount Value="20"/>
+        <CursorPos Y="7"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
@@ -20,10 +20,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="258"/>
-        <CursorPos X="8" Y="273"/>
-        <UsageCount Value="20"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="640"/>
+        <CursorPos Y="646"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -34,112 +34,106 @@
         <ComponentName Value="dmForte"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="35"/>
-        <UsageCount Value="20"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="42"/>
+        <CursorPos X="45" Y="52"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
-        <Filename Value="Report.inc"/>
-        <EditorIndex Value="3"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas"/>
+        <Filename Value="C:\ACBr\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas"/>
         <ComponentName Value="ACBRBoletoFCFortesFr"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="36"/>
-        <CursorPos X="58" Y="46"/>
+        <TopLine Value="33"/>
+        <CursorPos X="66" Y="46"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Particular\AppData\Local\lazarus\onlinepackagemanager\packages\fortesreport-ce4\Source\RLReport.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="12"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\ACBr\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1635"/>
+        <CursorPos X="80" Y="1652"/>
+        <UsageCount Value="14"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\ACBr\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="366"/>
+        <CursorPos X="10" Y="383"/>
+        <UsageCount Value="12"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\ACBr\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFrReg.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="19"/>
+        <CursorPos X="97" Y="10"/>
+        <UsageCount Value="12"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\ACBr\Fontes\ACBrBoleto\ACBrBoletoConversao.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="64"/>
+        <CursorPos X="3" Y="81"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\ACBr\Fontes\ACBrBoleto\WS\ACBrBoletoRetorno.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="474"/>
+        <CursorPos X="103" Y="477"/>
+        <UsageCount Value="12"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\contnrs.pp"/>
+        <UnitName Value="Contnrs"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3" Y="74"/>
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="20">
+    <JumpHistory HistoryIndex="6">
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="429" Column="113" TopLine="447"/>
+      </Position>
       <Position>
         <Filename Value="uDemo.pas"/>
       </Position>
       <Position>
         <Filename Value="uDemo.pas"/>
-        <Caret Line="41" Column="55" TopLine="41"/>
+        <Caret Line="747" Column="23" TopLine="736"/>
       </Position>
       <Position>
-        <Filename Value="uDMForte.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="44" Column="26" TopLine="30"/>
+        <Filename Value="AcbrBoletoDemo.dpr"/>
+        <Caret Line="7"/>
       </Position>
       <Position>
         <Filename Value="uDemo.pas"/>
-        <Caret Line="41" Column="55" TopLine="41"/>
+        <Caret Line="31" TopLine="20"/>
       </Position>
       <Position>
         <Filename Value="uDemo.pas"/>
-        <Caret Line="40" Column="43" TopLine="26"/>
+        <Caret Line="48" Column="3" TopLine="37"/>
       </Position>
       <Position>
         <Filename Value="uDemo.pas"/>
-        <Caret Line="38" Column="36" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="45" Column="38" TopLine="110"/>
-      </Position>
-      <Position>
-        <Filename Value="Report.inc"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="38" Column="41" TopLine="28"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="39" Column="53" TopLine="29"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="72" Column="18" TopLine="62"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="73" Column="18" TopLine="63"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="72" Column="18" TopLine="62"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="21" TopLine="21"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="217" Column="21" TopLine="207"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="218" Column="14" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="933" Column="20" TopLine="916"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="218" TopLine="209"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="933" TopLine="916"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemo.pas"/>
-        <Caret Line="934" TopLine="916"/>
+        <Caret Line="261" TopLine="253"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -147,5 +141,17 @@
       <Modes ActiveMode=""/>
     </RunParams>
   </ProjectSession>
-  <SkipCheckLCLInterfaces Value="True"/>
+  <Debugging>
+    <Watches>
+      <Item>
+        <Expression Value="Boleto"/>
+      </Item>
+      <Item>
+        <Expression Value="I"/>
+      </Item>
+      <Item>
+        <Expression Value="SLRetorno"/>
+      </Item>
+    </Watches>
+  </Debugging>
 </CONFIG>

@@ -1,49 +1,57 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{																		                                      	   }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
-{$I Report.inc}
+
 unit uDemo;
+
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, RLReport, uDMForte, ACBrBase, ACBrBoleto,
-  ACBrUtil, ACBrBoletoConversao, ACBrBoletoRetorno, ComCtrls, MaskEdit;
+{$IFnDEF FPC}
+  Mask, Windows,
+{$ELSE}
+  Masks, LCLIntf, LCLType, LMessages,
+{$ENDIF}
+  Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, ComCtrls, MaskEdit,
+  uDMForte,
+  ACBrBase, ACBrBoleto, ACBrUtil,
+//  {$IFDEF VER150} ComCtrls,{$ENDIF}
+  ACBrBoletoConversao, ACBrBoletoRetorno;
 
 type
-
-  { TfrmDemo }
-
   TfrmDemo = class(TForm)
-    OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
@@ -215,6 +223,7 @@ type
     Label65: TLabel;
     edtPathRetorno: TEdit;
     Label66: TLabel;
+    flpndlgRetorno: TOpenDialog;
     btnRetorno: TButton;
     edtClientID: TEdit;
     Label67: TLabel;
@@ -228,6 +237,8 @@ type
     cbxSSLLib: TComboBox;
     Label70: TLabel;
     btnImpressaoPDFIndividual: TButton;
+    Label71: TLabel;
+    edtScope: TEdit;
     procedure btnImpressaoHTMLClick(Sender: TObject);
     procedure btnImpressaoPDFClick(Sender: TObject);
     procedure btnBoletoIndividualClick(Sender: TObject);
@@ -242,6 +253,7 @@ type
     procedure btnWSRegistrarClick(Sender: TObject);
     procedure btnConfigLerClick(Sender: TObject);
     procedure btnConfigGravarClick(Sender: TObject);
+    procedure btnImpressaoPDFIndividualClick(Sender: TObject);
     procedure btnImpressaoStreamClick(Sender: TObject);
     procedure btnRetornoClick(Sender: TObject);
     procedure btnWSConsultaClick(Sender: TObject);
@@ -270,7 +282,11 @@ implementation
 
 Uses TypInfo, DateUtils, pcnConversao, ACBrDFeSSL;
 
-{$R *.lfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 procedure TfrmDemo.GravarIniComponente;
 var
@@ -304,7 +320,7 @@ begin
   if CobAnterior <> TACBrTipoCobranca(cbxBanco.ItemIndex) then
     edtLocalPag.Text := '';
 
-  Boleto.ListadeBoletos.Clear;
+  //Boleto.ListadeBoletos.Clear;
 
   Boleto.PrefixArqRemessa                  := edtPrefixRemessa.Text;
   Boleto.LayoutRemessa                     := TACBrLayoutRemessa(cbxCNAB.itemindex);
@@ -371,11 +387,15 @@ begin
   BeneficiarioWS.ClientID     := edtClientID.Text;
   BeneficiarioWS.ClientSecret := edtClientSecret.Text;
   BeneficiarioWS.KeyUser      := edtKeyUser.Text;
+  BeneficiarioWS.Scope        := edtScope.Text;
+  BeneficiarioWS.IndicadorPix := chkIndicadorPix.Checked;
   WebService.Ambiente         := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
+  WebService.SSLHttpLib       := TSSLHttpLib(cbxSSLLib.ItemIndex);
 end;
 
 procedure TfrmDemo.AplicarConfiguracoesComponenteATela;
 var Beneficiario : TACBrCedente;
+    BeneficiarioWS : TACBrCedenteWS;
     Banco : TACBrBanco;
     Boleto : TACBrBoleto;
 begin
@@ -392,16 +412,17 @@ begin
   ckbRemoverAcentuacaoRemessa.Checked := Boleto.RemoveAcentosArqRemessa;
 
   Beneficiario := Boleto.Cedente;
-  edtAgencia.Text           := Beneficiario.Agencia;
-  edtAgenciaDV.Text         := Beneficiario.AgenciaDigito;
-  edtConta.Text             := Beneficiario.Conta;
-  edtContaDV.Text           := Beneficiario.ContaDigito;
-  edtAgenciaContaDV.Text    := Beneficiario.DigitoVerificadorAgenciaConta;
-  edtConvenio.Text          := Beneficiario.Convenio;
-  edtModalidade.Text        := Beneficiario.Modalidade;
-  edtOperacao.Text          := Beneficiario.Operacao;
-  edtCodigoTransmissao.Text := Beneficiario.CodigoTransmissao;
-  edtCodigoCedente.Text     := Beneficiario.CodigoCedente;
+
+  edtAgencia.Text                   := Beneficiario.Agencia;
+  edtAgenciaDV.Text                 := Beneficiario.AgenciaDigito;
+  edtConta.Text                     := Beneficiario.Conta;
+  edtContaDV.Text                   := Beneficiario.ContaDigito;
+  edtAgenciaContaDV.Text            := Beneficiario.DigitoVerificadorAgenciaConta;
+  edtConvenio.Text                  := Beneficiario.Convenio;
+  edtModalidade.Text                := Beneficiario.Modalidade;
+  edtOperacao.Text                  := Beneficiario.Operacao;
+  edtCodigoTransmissao.Text         := Beneficiario.CodigoTransmissao;
+  edtCodigoCedente.Text             := Beneficiario.CodigoCedente;
 
   cbxTipoDistribuicao.ItemIndex     := Ord(Beneficiario.IdentDistribuicao);
   cbxCaracteristicaTitulo.ItemIndex := Ord(Beneficiario.CaracTitulo);
@@ -419,7 +440,12 @@ begin
   edtDensidadeGravacao.Text := Banco.DensidadeGravacao;
   edtLocalPag.Text          := Banco.LocalPagamento;
 
-
+  BeneficiarioWS            := Beneficiario.CedenteWS;
+  edtClientID.Text          := BeneficiarioWS.ClientID;
+  edtClientSecret.Text      := BeneficiarioWS.ClientSecret;
+  edtKeyUser.Text           := BeneficiarioWS.KeyUser;
+  chkIndicadorPix.Checked   := BeneficiarioWS.IndicadorPix;
+  edtScope.Text             := BeneficiarioWS.Scope;
 end;
 
 procedure TfrmDemo.btnLerRetornoClick(Sender: TObject);
@@ -441,10 +467,11 @@ begin
   try
     for I := 0 to Pred(Retorno.Count) do
     begin
-      RetText.Add( 'Nosso N˙mero :: '    + Retorno[i].NossoNumero);
+      RetText.Add( 'Nosso N√∫mero :: '    + Retorno[i].NossoNumero);
       RetText.Add( 'Valor Documento :: ' + CurrToStr(Retorno[i].ValorDocumento));
       RetText.Add( 'Valor Pago :: '      + CurrToStr(Retorno[i].ValorPago));
       RetText.Add( 'Data Ocorrencia :: ' + DateToStr(Retorno[i].DataOcorrencia));
+      RetText.Add( 'Banco           :: ' + Boleto.Banco.Nome);
       //[...] demais propriedades do titulo a gosto
     end;
     RetText.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoProcessado.txt' );
@@ -503,14 +530,15 @@ begin
   Titulo.ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
   Titulo.DataMoraJuros     := StrToDateDef(edtDataMora.Text, 0);
   Titulo.DataDesconto      := StrToDateDef(edtDataDesconto.Text, 0);
+  Titulo.TipoDesconto      := tdNaoConcederDesconto;
   Titulo.DataAbatimento    := StrToDateDef(edtDataAbatimento.Text, 0);
   Titulo.DataProtesto      := StrToDateDef(edtDataProtesto.Text, 0);
   Titulo.PercentualMulta   := StrToCurrDef(edtMulta.Text,0);
-  Titulo.CodigoMoraJuros   := cjIsento;
+  Titulo.CodigoMoraJuros   := cjValorMensal;
   //Mensagem.Text     := memMensagem.Text;
-  Titulo.OcorrenciaOriginal.Tipo := toRemessaBaixar;
-  Titulo.Instrucao1        := PadRight(trim(edtInstrucoes1.Text),2,'0');
-  Titulo.Instrucao2        := PadRight(trim(edtInstrucoes2.Text),2,'0');
+  Titulo.OcorrenciaOriginal.Tipo := toRemessaRegistrar;
+  Titulo.Instrucao1        := trim(edtInstrucoes1.Text);
+  Titulo.Instrucao2        := trim(edtInstrucoes2.Text);
 
   Titulo.QtdePagamentoParcial   := 1;
   Titulo.TipoPagamento          := tpNao_Aceita_Valor_Divergente;
@@ -528,13 +556,13 @@ begin
     begin
       VLinha := '.';
 
-      VQtdeCarcA := length('DescriÁ„o Produto/ServiÁo ' + IntToStr(I));
+      VQtdeCarcA := length('Descri√ß√£o Produto/Servi√ßo ' + IntToStr(I));
       VQtdeCarcB := Length('Valor:');
       VQtdeCarcC := 85 - (VQtdeCarcA + VQtdeCarcB);
 
       VLinha := PadLeft(VLinha,VQtdeCarcC,'.');
 
-      Titulo.Detalhamento.Add('DescriÁ„o Produto/ServiÁo ' + IntToStr(I) + ' '+ VLinha + ' Valor:   '+  PadRight(FormatCurr('R$ ###,##0.00', StrToCurr(edtValorDoc.Text) * 0.25),18,' ') );
+      Titulo.Detalhamento.Add('Descri√ß√£o Produto/Servi√ßo ' + IntToStr(I) + ' '+ VLinha + ' Valor:   '+  PadRight(FormatCurr('R$ ###,##0.00', StrToCurr(edtValorDoc.Text) * 0.25),18,' ') );
     end;
     Titulo.Detalhamento.Add('');
     Titulo.Detalhamento.Add('');
@@ -543,9 +571,10 @@ begin
     Titulo.Detalhamento.Add('Desconto ........................................................................... Valor: R$ 0,00' );
   end;
 
-  logo:= ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg';
+  //if FileExists(ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg') then
+    // logo := ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg';
 
-  Titulo.ArquivoLogoEmp := logo;  // logo da empresa
+  //Titulo.ArquivoLogoEmp := logo;  // logo da empresa
   Titulo.Verso := ((cbxImprimirVersoFatura.Checked) and ( cbxImprimirVersoFatura.Enabled = true ));
 
 end;
@@ -559,7 +588,7 @@ var
 begin
 
   NrTitulos := '10';
-  InputQuery('GeraÁ„o Lote','Quantidade a Gerar :',NrTitulos);
+  InputQuery('Gera√ß√£o Lote','Quantidade a Gerar :',NrTitulos);
 
   for I := 0 to StrToIntDef(NrTitulos,0) do
   begin
@@ -588,7 +617,7 @@ procedure TfrmDemo.btnImpressaoSpoolerClick(Sender: TObject);
 begin
   dm.ACBrBoleto.Imprimir;
 
-  //MÈtodo para impressao de cada titulo de forma individual
+  //M√©todo para impressao de cada titulo de forma individual
    {for i:= 0 to ACBrBoleto1.ListadeBoletos.Count -1 do
    begin
      ACBrBoleto1.ListadeBoletos[i].Imprimir();
@@ -599,7 +628,7 @@ end;
 procedure TfrmDemo.FormCreate(Sender: TObject);
 var
   I: TACBrBolLayOut;
-  CurrentStyle : LONG;
+  CurrentStyle : longint;
 begin
   CurrentStyle := GetWindowLong(edtCNABLVLote.Handle, GWL_STYLE);
   CurrentStyle := CurrentStyle or ES_NUMBER;
@@ -614,7 +643,7 @@ begin
   For I := Low(TACBrBolLayOut) to High(TACBrBolLayOut) do
     cbxLayOut.Items.Add(GetEnumName(TypeInfo(TACBrBolLayOut), Integer(I)));
   cbxLayOut.ItemIndex := 0;
-    dm := dmForte;
+  dm := dmForte;
   CarregarBancos;
   CarregarTipoDistribuicao;
   CarregarCaracteristicaTitulo;
@@ -712,11 +741,11 @@ var
 begin
   SL := TStringList.Create;
   try
-    SL.Add('Ol·,');
-    SL.Add('AtenÁ„o, Boleto est· em Anexo');
+    SL.Add('Ol√°,');
+    SL.Add('Aten√ß√£o, Boleto est√° em Anexo');
     dm.ACBrBoleto.EnviarEmail(edtEmail.Text ,'Teste de Envio de Email', SL, True);
 
-    //MÈtodo para envio e-mail de forma individual para cada tÌtulo
+    //M√©todo para envio e-mail de forma individual para cada t√≠tulo
     {for i := 0 to dm.ACBrBoleto.ListadeBoletos.Count -1 do
     begin
       if (dm.ACBrBoleto.ListadeBoletos[i].Sacado.Email <> '') then
@@ -782,7 +811,9 @@ begin
         SLRetorno.Add('valorAtual = '                 + CurrToStr(Retorno[I].DadosRet.TituloRet.valorAtual));
         SLRetorno.Add('valorPago = '                  + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorPago));
         SLRetorno.Add('  ---  ');
+
       end;
+      ShowMessage(PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt');
       SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt' );
     finally
       SLRetorno.Free;
@@ -793,10 +824,10 @@ end;
 
 {
 --Utiliza WebService dos Bancos para realizar o Registro dos Boletos--
-AtÈ o momento disponÌvel para Caixa Economica, Banco do Brasil e Itau
-… necessario realizar a configuraÁ„o previa para acesso ao WebService
+At√© o momento dispon√≠vel para Caixa Economica, Banco do Brasil e Itau
+√â necessario realizar a configura√ß√£o previa para acesso ao WebService
 No Object Inspector verifique as propriedades: CedenteWS e Configuracoes/WebService
-Verifique no arquivo "configWebService.txt" quais as configuraÁıes necess·rias para cada Banco
+Verifique no arquivo "configWebService.txt" quais as configura√ß√µes necess√°rias para cada Banco
 }
 procedure TfrmDemo.btnWSRegistrarClick(Sender: TObject);
 var
@@ -806,7 +837,7 @@ var
 begin
   Boleto := dm.ACBrBoleto;
 
-  //FunÁ„o de Envio
+  //Fun√ß√£o de Envio
   Boleto.Configuracoes.WebService.Operacao := tpInclui;
   Boleto.Enviar; // <<< retorna como false se o httpresult code for diferente de 200,201,202
   //Verifica Lista com os retornos
@@ -907,9 +938,25 @@ begin
 end;
 
 procedure TfrmDemo.btnConfigGravarClick(Sender: TObject);
+var teste : TStringList;
 begin
   AplicarConfiguracoesAoComponente;
   GravarIniComponente;
+end;
+
+procedure TfrmDemo.btnImpressaoPDFIndividualClick(Sender: TObject);
+var Index : Cardinal;
+begin
+  for Index := 0 to Pred(dm.ACBrBoleto.ListadeBoletos.Count) do
+  begin
+    dm.ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := True;
+    if Index + 1 = 5 then
+      dm.ACBrBoleto.ACBrBoletoFC.PdfSenha := ''
+    else
+      dm.ACBrBoleto.ACBrBoletoFC.PdfSenha := IntToStr(Index+1);
+
+    dm.ACBrBoleto.GerarPDF(Index);
+  end;
 end;
 
 procedure TfrmDemo.btnImpressaoStreamClick(Sender: TObject);
@@ -917,7 +964,7 @@ var MeuStream : TStream;
     xPath : string;
 begin
   xPath := ExtractFilePath(Application.ExeName) + 'testeStream.pdf';
-  InputQuery('Salvando Boleto em Stream','Caminho + Arquivo + ExtenÁ„o a salvar o Stream',xPath);
+  InputQuery('Salvando Boleto em Stream','Caminho + Arquivo + Exten√ß√£o a salvar o Stream',xPath);
   MeuStream := TFileStream.Create(xPath,fmCreate or fmOpenWrite);
   try
     dm.ACBrBoletoReport.Imprimir(MeuStream);
@@ -929,8 +976,8 @@ end;
 
 procedure TfrmDemo.btnRetornoClick(Sender: TObject);
 begin
-  if OpenDialog1.Execute then
-    edtPathRetorno.Text := OpenDialog1.FileName;
+  if flpndlgRetorno.Execute then
+    edtPathRetorno.Text := flpndlgRetorno.FileName;
 end;
 
 end.

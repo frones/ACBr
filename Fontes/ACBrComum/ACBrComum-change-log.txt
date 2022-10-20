@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/2022
+-- ACBrJSON --
+[-] Correção ao adicionar par utilizando um TACBrJsonObject
+[+] Adicionando possibilidade de incluir elementos do tipo TACBrJsonObject em um TACBrJsonArray
+    Por: Elias César
+
 19/10/2022
 -- ACBrUtil.DateTime --
 [*] Ajustes para retornar o valor zero quando a data lida for: 0000/00/00 ou

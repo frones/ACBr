@@ -120,6 +120,7 @@ type
     property ItemAsJSONObject[const AIndex: Integer]: TACBrJSONObject read GetItemAsJSONObject;
 
     function AddElement(const AValue: string): TACBrJSONArray; overload;
+    function AddElementJSON(AValue: TACBrJSONObject): TACBrJSONArray; overload;
     function AddElementJSONString(const AValue: string): TACBrJSONArray; overload;
 
     procedure Clear;
@@ -734,7 +735,7 @@ begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
   FJSON.O[AName] := TACBrJSONObject.CreateJsonObject(AValue.ToJSON);
   {$Else}{$IfDef FPC}
-  FJSON.Add(AName, AValue.FJSON);
+  FJSON.Objects[AName] := TACBrJSONObject.CreateJsonObject(AValue.ToJSON);
   {$ELSE}
   FJSON.Put(AName, AValue.FJSON);
   {$ENDIF}{$EndIf}
@@ -761,6 +762,13 @@ begin
   {$Else}
   FJSON.Put(AValue);
   {$EndIf}{$EndIf}
+end;
+
+function TACBrJSONArray.AddElementJSON(AValue: TACBrJSONObject): TACBrJSONArray;
+begin
+  Result := Self;
+  AddElementJSONString(AValue.ToJSON);
+  FContexts.Add(AValue);
 end;
 
 function TACBrJSONArray.AddElementJSONString(const AValue: string): TACBrJSONArray;

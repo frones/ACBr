@@ -121,6 +121,7 @@
             this.btnImprimirCFeCanc = new System.Windows.Forms.Button();
             this.btnImpMFe = new System.Windows.Forms.Button();
             this.btnAtivarSAT = new System.Windows.Forms.Button();
+            this.btnClasseAltoNivel = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -153,7 +154,7 @@
             this.rtbRespostas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
             this.rtbRespostas.Name = "rtbRespostas";
-            this.rtbRespostas.Size = new System.Drawing.Size(476, 192);
+            this.rtbRespostas.Size = new System.Drawing.Size(476, 219);
             this.rtbRespostas.TabIndex = 28;
             this.rtbRespostas.Text = "";
             this.rtbRespostas.WordWrap = false;
@@ -183,7 +184,7 @@
             this.groupBox4.Controls.Add(this.rtbRespostas);
             this.groupBox4.Location = new System.Drawing.Point(248, 237);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(482, 211);
+            this.groupBox4.Size = new System.Drawing.Size(482, 238);
             this.groupBox4.TabIndex = 31;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Respostas";
@@ -1144,11 +1145,22 @@
             this.btnAtivarSAT.UseVisualStyleBackColor = true;
             this.btnAtivarSAT.Click += new System.EventHandler(this.BtnAtivarSAT_Click);
             // 
+            // btnClasseAltoNivel
+            // 
+            this.btnClasseAltoNivel.Location = new System.Drawing.Point(130, 440);
+            this.btnClasseAltoNivel.Name = "btnClasseAltoNivel";
+            this.btnClasseAltoNivel.Size = new System.Drawing.Size(112, 23);
+            this.btnClasseAltoNivel.TabIndex = 44;
+            this.btnClasseAltoNivel.Text = "Classe Alto Nivel";
+            this.btnClasseAltoNivel.UseVisualStyleBackColor = true;
+            this.btnClasseAltoNivel.Click += new System.EventHandler(this.btnClasseAltoNivel_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 458);
+            this.ClientSize = new System.Drawing.Size(742, 487);
+            this.Controls.Add(this.btnClasseAltoNivel);
             this.Controls.Add(this.btnAtivarSAT);
             this.Controls.Add(this.btnImpMFe);
             this.Controls.Add(this.btnImprimirCFeCanc);
@@ -1289,6 +1301,7 @@
         private System.Windows.Forms.TextBox txtCodEstFederacao;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Button btnAtivarSAT;
+        private System.Windows.Forms.Button btnClasseAltoNivel;
     }
 }
 

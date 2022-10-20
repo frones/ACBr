@@ -229,10 +229,7 @@ procedure TACBrNFSeProviderDBSeller.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigGeral do
-  begin
-    Identificador := 'Id';
-  end;
+  ConfigGeral.Identificador := '';
 
   with ConfigAssinar do
   begin
@@ -479,8 +476,11 @@ procedure TACBrNFSeProviderDBSeller204.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
-  ConfigGeral.Identificador := '';
+  with ConfigGeral do
+  begin
+    Identificador := '';
+    ConsultaPorFaixaPreencherNumNfseFinal := True;
+  end;
 
   with ConfigWebServices do
   begin

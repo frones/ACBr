@@ -13,7 +13,7 @@ AEG                  2.02
 Agili                1.00  08/09/2022
 AssessorPublico      1.00  23/08/2022
 Asten                2.02
-Bauhaus (em desenvolvimento)
+Bauhaus              1.00  20/10/2022
 Betha                1.00  23/09/2022
 Betha                2.02  17/08/2022
 BHISS                1.00  11/08/2022
@@ -25,7 +25,8 @@ Coplan               2.01
 CTA                  2.00 
 CTAConsult           1.00
 DataSmart            2.02
-DBSeller             1.00
+DBSeller             1.00  20/10/2022
+DBSeller             2.04
 DeISS                2.03
 Desenvolve           2.03
 Digifred             2.00

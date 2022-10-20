@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/10/2022
+-- ACBrNFSeXServicos.ini --
+[*] Acrescentado a URL de homologação para as cidades atendidas pelo provedor
+    ISSDigital.
+   Por: SupraMAIS/Italo Giurizzato Junior
 -- Bauhaus.GravarJson Bauhaus.Provider --
 [*] Adaptando funções para utilizar de maneira mais otimizada a ACBrJSON.
     Por: Elias César

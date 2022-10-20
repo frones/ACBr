@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/10/2022
+-- ISSNet.Provider --
+[*] Alterado a função TratarXmlRetornado visando sanar o problema do "&" no 
+    nome do prestador/tomador.
+   Por: Fabio Pasquali
 -- ACBrNFSeXServicos.ini --
 [*] Acrescentado a URL de homologação para as cidades atendidas pelo provedor
     ISSDigital.

@@ -559,6 +559,7 @@ begin
   Result := inherited TratarXmlRetornado(UTF8Decode(aXML));
 
   Result := ParseText(AnsiString(Result), True, False);
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);  
   Result := RemoverIdentacao(Result);
   Result := TiraAcentos(Result);
 end;

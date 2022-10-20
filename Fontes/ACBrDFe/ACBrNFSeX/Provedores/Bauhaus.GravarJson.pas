@@ -46,19 +46,19 @@ type
   { TNFSeW_Bauhaus }
 
   TNFSeW_Bauhaus = class(TNFSeWClass)
-
   protected
     procedure Configuracao; override;
 
     function GerarDadosNota: String;
-    function GerarAtividade: String;
-    function GerarPrestador: String;
-    function GerarTomador: String;
-    function GerarEndereco: String;
-    function GerarContato: String;
-    function GerarRps: String;
-    function GerarServicos: String;
-    function GerarValores: String;
+
+    function GerarAtividade: TACBrJSONObject;
+    function GerarPrestador: TACBrJSONObject;
+    function GerarTomador: TACBrJSONObject;
+    function GerarTomadorEndereco: TACBrJSONObject;
+    function GerarTomadorContato: TACBrJSONObject;
+    function GerarRps: TACBrJSONObject;
+    function GerarServicos: TACBrJSONArray;
+    function GerarValores: TACBrJSONObject;
   public
     function GerarXml: Boolean; override;
   end;
@@ -103,8 +103,7 @@ begin
     {$ENDIF}
   {$ENDIF}
 
-  FConteudoTxt.Text := '{"DadosNota" : ' + GerarDadosNota + '}';
-
+  FConteudoTxt.Text := GerarDadosNota;
   Result := True;
 end;
 
@@ -113,40 +112,20 @@ var
   AJSon: TACBrJSONObject;
 begin
   AJSon := TACBrJsonObject.Create;
-
   try
-    with NFSe do
-      AJSon
-        .AddPair('MunicipioPrestacao', StrToInt(Prestador.Endereco.CodigoMunicipio))
-        .AddPair('NaturezaOperacao', StrToInt(NaturezaOperacaoToStr(NaturezaOperacao)))
-        .AddPair('IssRetido', IfThen((Servico.Valores.IssRetido = stRetencao), 'S' , 'N'))
-        .AddPair('Observacoes', OutrasInformacoes);
-
-    Result := StringReplace(AJSon.ToJSON, '}', '', [rfReplaceAll]) + ','
-                          + ' "Atividade": ' + GerarAtividade + ','
-                          + ' "Prestador": ' + GerarPrestador + ','
-                          + ' "Tomador": ' + GerarTomador + ','
-                          + ' "Rps": ' + GerarRps + ','
-                          + ' "Servicos": ' + '[' + GerarServicos + ']' + ','
-                          + ' "Valores": ' + GerarValores + '}';
-
-  finally
-    AJSon.Free;
-  end;
-end;
-
-function TNFSeW_Bauhaus.GerarAtividade: String;
-var
-  AJSon: TACBrJSONObject;
-begin
-  AJSon := TACBrJsonObject.Create;
-
-  try
-    with NFSe.Servico do
-      AJSon
-        .AddPair('Codigo', StrToInt(IfThen((CodigoTributacaoMunicipio=''), '0' , CodigoTributacaoMunicipio)))
-        .AddPair('CodigoCnae', CodigoCnae);
-//        .AddPair('CodigoLc116', StrToInt(ItemServico[0].ItemListaServico));
+    AJSon
+      .AddPairJSONObject('DadosNota', EmptyStr)
+      .AsJSONObject['DadosNota']
+        .AddPair('MunicipioPrestacao', StrToInt(NFSe.Prestador.Endereco.CodigoMunicipio))
+        .AddPair('NaturezaOperacao', StrToInt(NaturezaOperacaoToStr(NFSe.NaturezaOperacao)))
+        .AddPair('IssRetido', IfThen((NFSe.Servico.Valores.IssRetido = stRetencao), 'S' , 'N'))
+        .AddPair('Observacoes', NFSe.OutrasInformacoes)
+        .AddPair('Atividade', GerarAtividade)
+        .AddPair('Prestador', GerarPrestador)
+        .AddPair('Tomador', GerarTomador)
+        .AddPair('Rps', GerarRps)
+        .AddPair('Servicos', GerarServicos)
+        .AddPair('Valores', GerarValores);
 
     Result := AJSon.ToJSON;
   finally
@@ -154,175 +133,109 @@ begin
   end;
 end;
 
-function TNFSeW_Bauhaus.GerarPrestador: String;
+function TNFSeW_Bauhaus.GerarAtividade: TACBrJSONObject;
 var
-  AJSon: TACBrJSONObject;
+  wCodTribMun: String;
 begin
-  AJSon := TACBrJsonObject.Create;
+  wCodTribMun := NFSe.Servico.CodigoTributacaoMunicipio;
 
-  try
-    with NFSe.Prestador.IdentificacaoPrestador do
-      AJSon
-        .AddPair('InscricaoMunicipal', OnlyNumber(InscricaoMunicipal));
-
-    Result := AJSon.ToJSON;
-  finally
-    AJSon.Free;
-  end;
+  Result := TACBrJSONObject.Create
+              .AddPair('Codigo', StrToInt(IfThen((EstaVazio(wCodTribMun)), '0' , wCodTribMun)))
+              .AddPair('CodigoCnae', NFSe.Servico.CodigoCnae);
 end;
 
-function TNFSeW_Bauhaus.GerarTomador: String;
-var
-  AJSon: TACBrJSONObject;
-  TipoPessoa: String;
+function TNFSeW_Bauhaus.GerarPrestador: TACBrJSONObject;
 begin
-  AJSon := TACBrJsonObject.Create;
-
-  try
-    with NFSe.Tomador do
-    begin
-      case IdentificacaoTomador.Tipo of
-        tpPF: TipoPessoa := 'F';
-        tpPJforaPais: TipoPessoa := 'E';
-      else
-        TipoPessoa := 'J';
-      end;
-
-      AJSon
-        .AddPair('TipoPessoa', TipoPessoa)
-        .AddPair('NrDocumento', IdentificacaoTomador.CpfCnpj)
-        .AddPair('RazaoSocial', RazaoSocial)
-    end;
-
-    Result := StringReplace(AJSon.ToJSON, '}', '', [rfReplaceAll]) + ','
-                          + ' "Endereco": ' + GerarEndereco + ','
-                          + ' "Contato": ' + GerarContato + '}';
-  finally
-    AJSon.Free;
-  end;
+  Result := TACBrJSONObject.Create
+              .AddPair('InscricaoMunicipal', OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal));
 end;
 
-function TNFSeW_Bauhaus.GerarEndereco: String;
+function TNFSeW_Bauhaus.GerarTomador: TACBrJSONObject;
 var
-  AJSon: TACBrJSONObject;
+  wTipoPessoa: String;
 begin
-  AJSon := TACBrJsonObject.Create;
-
-  try
-    with NFSe.Tomador.Endereco do
-      AJSon
-        .AddPair('Logradouro', Endereco)
-        .AddPair('Numero', Numero)
-        .AddPair('Complemento', Complemento)
-        .AddPair('Bairro', Bairro)
-        .AddPair('Municipio', StrToInt(CodigoMunicipio))
-        .AddPair('Cep', StrToInt(CEP));
-
-    Result := AJSon.ToJSON;
-  finally
-    AJSon.Free;
+  case NFSe.Tomador.IdentificacaoTomador.Tipo of
+    tpPF: wTipoPessoa := 'F';
+    tpPJforaPais: wTipoPessoa := 'E';
+  else
+    wTipoPessoa := 'J';
   end;
+
+  Result := TACBrJSONObject.Create
+              .AddPair('TipoPessoa', wTipoPessoa)
+              .AddPair('NrDocumento', NFSe.Tomador.IdentificacaoTomador.CpfCnpj)
+              .AddPair('RazaoSocial', NFSe.Tomador.RazaoSocial)
+              .AddPair('Endereco', GerarTomadorEndereco)
+              .AddPair('Contato', GerarTomadorContato);
 end;
 
-function TNFSeW_Bauhaus.GerarContato: String;
-var
-  AJSon: TACBrJSONObject;
+function TNFSeW_Bauhaus.GerarTomadorEndereco: TACBrJSONObject;
 begin
-  AJSon := TACBrJsonObject.Create;
-
-  try
-    with NFSe.Tomador.Contato do
-      AJSon
-        .AddPair('Telefone', Telefone)
-        .AddPair('Email', Email);
-
-    Result := AJSon.ToJSON;
-  finally
-    AJSon.Free;
-  end;
+  Result := TACBrJSONObject.Create
+              .AddPair('Logradouro', NFSe.Tomador.Endereco.Endereco)
+              .AddPair('Numero', NFSe.Tomador.Endereco.Numero)
+              .AddPair('Complemento', NFSe.Tomador.Endereco.Complemento)
+              .AddPair('Bairro', NFSe.Tomador.Endereco.Bairro)
+              .AddPair('Municipio', StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio))
+              .AddPair('Cep', StrToInt(NFSe.Tomador.Endereco.CEP));
 end;
 
-function TNFSeW_Bauhaus.GerarRps: String;
-var
-  AJSon: TACBrJSONObject;
+function TNFSeW_Bauhaus.GerarTomadorContato: TACBrJSONObject;
 begin
-  AJSon := TACBrJsonObject.Create;
-
-  try
-    with NFSe.IdentificacaoRps do
-      AJSon
-        .AddPair('Numero', StrToInt(Numero))
-        .AddPair('Serie', StrToInt(Serie))
-        .AddPair('Tipo', 1)
-        .AddPairISODate('DataEmissao', NFSe.DataEmissaoRps);
-
-    Result := AJSon.ToJSON;
-  finally
-    AJSon.Free;
-  end;
+  Result := TACBrJSONObject.Create
+              .AddPair('Telefone', NFSe.Tomador.Contato.Telefone)
+              .AddPair('Email', NFSe.Tomador.Contato.Email);
 end;
 
+function TNFSeW_Bauhaus.GerarRps: TACBrJSONObject;
+begin
+  Result := TACBrJSONObject.Create
+              .AddPair('Numero', StrToInt(NFSe.IdentificacaoRps.Numero))
+              .AddPair('Serie', StrToInt(NFSe.IdentificacaoRps.Serie))
+              .AddPair('Tipo', 1)
+              .AddPairISODate('DataEmissao', NFSe.DataEmissaoRps);
+end;
 
-function TNFSeW_Bauhaus.GerarServicos: String;
+function TNFSeW_Bauhaus.GerarServicos: TACBrJSONArray;
 var
-  AJSon: TACBrJSONObject;
+  jo: TACBrJSONObject;
   i: Integer;
-  xListaServico: String;
 begin
-  AJSon := TACBrJsonObject.Create;
-  xListaServico := '';
-
-  try
-    with NFSe.Servico do
-      for i := 0 to ItemServico.Count - 1 do
-      begin
-        AJSon
-          .AddPair('Unidade', ItemServico[i].Unidade)
-          .AddPair('Quantidade', ItemServico[i].Quantidade)
-          .AddPair('Descricao', ItemServico[i].Descricao)
-          .AddPair('ValorUnitario', ItemServico[i].ValorUnitario);
-
-        xListaServico := xListaServico + AJSon.ToJSON;
-      end;
-
-    Result := StringReplace(xListaServico, '}{', '},{', [rfReplaceAll]);
-  finally
-    AJSon.Free;
+  Result := TACBrJSONArray.Create;
+  for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
+  begin
+    jo := TACBrJSONObject.Create
+      .AddPair('Unidade', NFSe.Servico.ItemServico[i].Unidade)
+      .AddPair('Quantidade', NFSe.Servico.ItemServico[i].Quantidade)
+      .AddPair('Descricao', NFSe.Servico.ItemServico[i].Descricao)
+      .AddPair('ValorUnitario', NFSe.Servico.ItemServico[i].ValorUnitario);
+                                           
+    Result.AddElementJSON(jo);
   end;
 end;
 
-function TNFSeW_Bauhaus.GerarValores: String;
-var
-  AJSon: TACBrJSONObject;
+function TNFSeW_Bauhaus.GerarValores: TACBrJSONObject;
 begin
-  AJSon := TACBrJsonObject.Create;
-
-  try
-    with NFSe.Servico.Valores do
-      AJSon
-        .AddPair('ValorServicos',  ValorServicos)
-        .AddPair('ValorDeducoes', ValorDeducoes)
-        .AddPair('ValorOutrasDeducoes', 0)
-        .AddPair('ValorPis', ValorPis)
-        .AddPair('ValorCofins', ValorCofins)
-        .AddPair('ValorInss', ValorInss)
-        .AddPair('ValorIr', ValorIr)
-        .AddPair('ValorCsll', ValorCsll)
-        .AddPair('OutrasRetencoes', OutrasRetencoes)
-        .AddPair('DescontoIncondicionado', DescontoIncondicionado)
-        .AddPair('DescontoCondicionado', DescontoCondicionado)
-        .AddPair('BaseCalculo', BaseCalculo)
-        .AddPair('Aliquota', Aliquota)
-        .AddPair('ValorIss', ValorIss)
-        .AddPair('ValorLiquidoNota', ValorLiquidoNfse)
-        .AddPair('ValorTotalTributos', ValorTotalTributos)
-        .AddPair('ValorCredito', NFSe.ValorCredito)
-        .AddPair('ValorTotalNota', ValorLiquidoNfse);
-
-    Result := AJSon.ToJSON;
-  finally
-    AJSon.Free;
-  end;
+  with NFSe.Servico.Valores do
+    Result := TACBrJSONObject.Create
+      .AddPair('ValorServicos',  ValorServicos)
+      .AddPair('ValorDeducoes', ValorDeducoes)
+      .AddPair('ValorOutrasDeducoes', 0)
+      .AddPair('ValorPis', ValorPis)
+      .AddPair('ValorCofins', ValorCofins)
+      .AddPair('ValorInss', ValorInss)
+      .AddPair('ValorIr', ValorIr)
+      .AddPair('ValorCsll', ValorCsll)
+      .AddPair('OutrasRetencoes', OutrasRetencoes)
+      .AddPair('DescontoIncondicionado', DescontoIncondicionado)
+      .AddPair('DescontoCondicionado', DescontoCondicionado)
+      .AddPair('BaseCalculo', BaseCalculo)
+      .AddPair('Aliquota', Aliquota)
+      .AddPair('ValorIss', ValorIss)
+      .AddPair('ValorLiquidoNota', ValorLiquidoNfse)
+      .AddPair('ValorTotalTributos', ValorTotalTributos)
+      .AddPair('ValorCredito', NFSe.ValorCredito)
+      .AddPair('ValorTotalNota', ValorLiquidoNfse);
 end;
 
 end.

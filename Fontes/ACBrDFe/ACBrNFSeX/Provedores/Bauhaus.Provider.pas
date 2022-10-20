@@ -340,6 +340,7 @@ procedure TACBrNFSeProviderBauhaus.PrepararCancelaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
+  jo: TACBrJSONObject;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -359,12 +360,22 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  with Response.InfCancelamento do
-    Response.ArquivoEnvio := '{"DadosNota":' +
-                                '{"Numero":' + NumeroNFSe + ',' +
-                                '"Cancelamento":{"Motivo":"' + MotCancelamento + '"},' +
-                                '"Prestador":{"InscricaoMunicipal":' + OnlyNumber(Emitente.InscMun) + '}' +
-                             '}}';
+  jo := TACBrJSONObject.Create;
+  try
+    with Response.InfCancelamento do
+      jo
+        .AddPairJSONObject('DadosNota', EmptyStr)
+        .AsJSONObject['DadosNota']
+          .AddPair('Numero', StrToInt(NumeroNFSe))
+          .AddPair('Cancelamento', TACBrJSONObject.Create
+                                     .AddPair('Motivo', MotCancelamento))
+          .AddPair('Prestador', TACBrJSONObject.Create
+                                  .AddPair('InscricaoMunicipal', StrToInt(OnlyNumber(Emitente.InscMun))));
+    Response.ArquivoEnvio := jo.ToJSON;
+  finally
+    jo.Free;
+  end;
+
   FpMethod := 'POST';
   FpPath := '';
 end;

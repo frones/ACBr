@@ -22,55 +22,55 @@ Private Declare Function GTIN_Inicializar _
                                       ByVal eArqConfig As String, _
                                       ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function GTIN_Finalizar Lib "ACBrGTIN32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function GTIN_Finalizar Lib "ACBrGTIN32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function GTIN_Nome _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
 Private Declare Function GTIN_Versao _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function GTIN_UltimoRetorno _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
 Private Declare Function GTIN_ConfigImportar _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal eArqConfig As String) As Long
                    
 Private Declare Function GTIN_ConfigExportar _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal buffer As String, _
-                                     ByRef bufferLen As Long) As Long
+                                      ByRef bufferLen As Long) As Long
                    
 Private Declare Function GTIN_ConfigLer _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal eArqConfig As String) As Long
 
 Private Declare Function GTIN_ConfigGravar _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal eArqConfig As String) As Long
                    
 Private Declare Function GTIN_ConfigLerValor _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal eSessao As String, _
                                       ByVal eChave As String, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function GTIN_ConfigGravarValor _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal eSessao As String, _
                                       ByVal eChave As String, _
                                       ByVal valor As String) As Long
                                       
 Private Declare Function GTIN_Consultar _
-                Lib "ACBrGTIN32.dll" (ByRef libHandler As Long, _
+                Lib "ACBrGTIN32.dll" (ByVal libHandler As Long, _
                                       ByVal aGTIN As String, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
@@ -218,7 +218,7 @@ Private Sub CheckResult(ByVal Resultado As Long)
     buffer = String$(bufferLen, " ")
     GTIN_UltimoRetorno libHandler, buffer, bufferLen
     
-    Err.Raise Resultado, "ACBrNFe", processResult(buffer, bufferLen)
+    Err.Raise Resultado, "ACBrGTIN", processResult(buffer, bufferLen)
 End Sub
 
 Private Function processResult(ByRef buffer As String, ByRef bufferLen As Long) As String

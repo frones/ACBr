@@ -205,7 +205,7 @@ Private Sub CheckResult(ByVal Resultado As Long)
     buffer = String$(bufferLen, " ")
     GTIN_UltimoRetorno buffer, bufferLen
     
-    Err.Raise Resultado, "ACBrNFe", processResult(buffer, bufferLen)
+    Err.Raise Resultado, "ACBrGTIN", processResult(buffer, bufferLen)
 End Sub
 
 Private Function processResult(ByRef buffer As String, ByRef bufferLen As Long) As String

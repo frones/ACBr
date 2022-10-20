@@ -2674,7 +2674,7 @@ begin
   N := PosNF3e;
   while N > 0 do
   begin
-    P := pos('</NF3eProc>', XMLStr);
+    P := pos('</nf3eProc>', XMLStr);
 
     if P <= 0 then
       P := pos('</procNF3e>', XMLStr);  // NF3e obtida pelo Portal da Receita

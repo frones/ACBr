@@ -47,6 +47,8 @@ type
   private
     FNF3e: TNF3e;
 
+    function NodeNaoEncontrado(const ANode: TACBrXmlNode): Boolean;
+
     procedure LerProtNF3e(const ANode: TACBrXmlNode);
     procedure LerInfNF3e(const ANode: TACBrXmlNode);
     procedure LerIde(const ANode: TACBrXmlNode);
@@ -363,6 +365,7 @@ begin
 
   LergSCEE(ANode.Childrens.Find('gSCEE'));
 
+  NF3e.NFDet.Clear;
   ANodes := ANode.Childrens.FindAll('NFdet');
   for i := 0 to Length(ANodes) - 1 do
   begin
@@ -387,236 +390,297 @@ begin
 end;
 
 procedure TNF3eXmlReader.LerNFDet(const ANode: TACBrXmlNode);
-begin
-{
-  i := 0;
-  NF3e.NFDet.Clear;
-  while Leitor.rExtrai(1, 'NFdet', '', i + 1) <> '' do
+var
+  Item: TNFDetCollectionItem;
+  ADetNodes: TACBrXmlNodeArray;
+  ADetChildrensNodes: TACBrXmlNodeArray;
+  i: Integer;
+  j: Integer;
+  ok: Boolean;
+  ANodeNivel3: TACBrXmlNode;
+  ANodeNivel4: TACBrXmlNode;
+  ANodeNivel5: TACBrXmlNode;
+  ANodeNivel6: TACBrXmlNode;
+  snItemAnt: String;
+
+  procedure LerICMS(sIcms: String; ANodeImposto: TImposto);
   begin
-    NF3e.NFDet.New;
-    NF3e.NFDet[i].chNF3eAnt   := Leitor.rAtributo('chNF3eAnt=', 'NFdet');
-    NF3e.NFDet[i].mod6HashAnt := Leitor.rAtributo('mod6HashAnt=', 'NFdet');
+    ANodeNivel5 := ANodeNivel4.Childrens.Find(sIcms);
 
-    j := 0;
-    NF3e.NFDet[i].Det.Clear;
-    while Leitor.rExtrai(2, 'det', '', j + 1) <> '' do
+    if NodeNaoEncontrado(ANodeNivel5) then
+      Exit;
+
+    ANodeImposto.ICMS.CST        := StrToCSTICMS(ok, ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
+    ANodeImposto.ICMS.vBC        := ObterConteudo(ANodeNivel5.Childrens.Find('vBC'), tcDe2);
+    ANodeImposto.ICMS.pICMS      := ObterConteudo(ANodeNivel5.Childrens.Find('pICMS'), tcDe2);
+    ANodeImposto.ICMS.vICMS      := ObterConteudo(ANodeNivel5.Childrens.Find('vICMS'), tcDe2);
+    ANodeImposto.ICMS.pFCP       := ObterConteudo(ANodeNivel5.Childrens.Find('pFCP'), tcDe2);
+    ANodeImposto.ICMS.vFCP       := ObterConteudo(ANodeNivel5.Childrens.Find('vFCP'), tcDe2);
+    ANodeImposto.ICMS.vBCST      := ObterConteudo(ANodeNivel5.Childrens.Find('vBCST'), tcDe2);
+    ANodeImposto.ICMS.pICMSST    := ObterConteudo(ANodeNivel5.Childrens.Find('pICMSST'), tcDe2);
+    ANodeImposto.ICMS.vICMSST    := ObterConteudo(ANodeNivel5.Childrens.Find('vICMSST'), tcDe2);
+    ANodeImposto.ICMS.pFCPST     := ObterConteudo(ANodeNivel5.Childrens.Find('pFCPST'), tcDe2);
+    ANodeImposto.ICMS.vFCPST     := ObterConteudo(ANodeNivel5.Childrens.Find('vFCPST'), tcDe2);
+    ANodeImposto.ICMS.pRedBC     := ObterConteudo(ANodeNivel5.Childrens.Find('pRedBC'), tcDe2);
+    ANodeImposto.ICMS.vICMSDeson := ObterConteudo(ANodeNivel5.Childrens.Find('vICMSDeson'), tcDe2);
+    ANodeImposto.ICMS.cBenef     := ObterConteudo(ANodeNivel5.Childrens.Find('cBenef'), tcStr);
+  end;
+begin
+  Item := NF3e.NFDet.New;
+  Item.chNF3eAnt   := ObterConteudoTag(ANode.Attributes.Items['chNF3eAnt']);
+  Item.mod6HashAnt := ObterConteudoTag(ANode.Attributes.Items['mod6HashAnt']);
+
+  Item.Det.Clear;
+  ADetNodes := ANode.Childrens.FindAll('det');
+  for i := 0 to Length(ADetNodes) - 1 do
+  begin
+    with Item.Det.New do
     begin
-      NF3e.NFDet[i].Det.New;
-      NF3e.NFDet[i].Det[j].nItem := Leitor.rAtributo('nItem=', 'Det');
+      nItem := StrToInt(ObterConteudoTag(ADetNodes[i].Attributes.Items['nItem']));
 
-      if Leitor.rExtrai(3, 'gAjusteNF3eAnt') <> '' then
-      begin
-        NF3e.NFDet[i].Det[j].gAjusteNF3eAnt.tpAjuste  := StrTotpAjuste(ok, Leitor.rCampo(tcStr, 'tpAjuste'));
-        NF3e.NFDet[i].Det[j].gAjusteNF3eAnt.motAjuste := StrTomotAjuste(ok, Leitor.rCampo(tcStr, 'motAjuste'));
-      end
+      ANodeNivel3 := ADetNodes[i].Childrens.Find('gAjusteNF3eAnt');
+
+      if NodeNaoEncontrado(ANodeNivel3) then
+        gAjusteNF3eAnt.tpAjuste := taNenhum
       else
-        NF3e.NFDet[i].Det[j].gAjusteNF3eAnt.tpAjuste := taNenhum;
-
-      if Leitor.rExtrai(3, 'detItemAnt') <> '' then
       begin
-        NF3e.NFDet[i].Det[j].detItemAnt.nItemAnt  := Leitor.rAtributo('nItemAnt=', 'detItemAnt');
-        NF3e.NFDet[i].Det[j].detItemAnt.vItem     := Leitor.rCampo(tcDe2, 'vItem');
-        NF3e.NFDet[i].Det[j].detItemAnt.qFaturada := Leitor.rCampo(tcDe4, 'qFaturada');
-        NF3e.NFDet[i].Det[j].detItemAnt.vProd     := Leitor.rCampo(tcDe2, 'vProd');
-        NF3e.NFDet[i].Det[j].detItemAnt.cClass    := Leitor.rCampo(tcInt, 'cClass');
-        NF3e.NFDet[i].Det[j].detItemAnt.vBC       := Leitor.rCampo(tcDe2, 'vBC');
-        NF3e.NFDet[i].Det[j].detItemAnt.pICMS     := Leitor.rCampo(tcDe2, 'pICMS');
-        NF3e.NFDet[i].Det[j].detItemAnt.vICMS     := Leitor.rCampo(tcDe2, 'vICMS');
-        NF3e.NFDet[i].Det[j].detItemAnt.vPIS      := Leitor.rCampo(tcDe2, 'vPIS');
-        NF3e.NFDet[i].Det[j].detItemAnt.vCOFINS   := Leitor.rCampo(tcDe2, 'vCOFINS');
+        gAjusteNF3eAnt.tpAjuste := StrTotpAjuste(Ok,ObterConteudo(ANodeNivel3.Childrens.Find('tpAjuste'), tcStr));
+        gAjusteNF3eAnt.motAjuste := StrToMotAjuste(Ok,ObterConteudo(ANodeNivel3.Childrens.Find('motAjuste'), tcStr));
+      end;
 
-        if Leitor.rExtrai(4, 'retTrib') <> '' then
+      ANodeNivel3 := ADetNodes[i].Childrens.Find('detItemAnt');
+
+      if not(NodeNaoEncontrado(ANodeNivel3)) then
+      begin
+        detItemAnt.nItemAnt    := StrToInt(ObterConteudoTag(ANodeNivel3.Attributes.Items['nItemAnt']));
+        detItemAnt.vItem       := ObterConteudo(ANodeNivel3.Childrens.Find('vItem'), tcDe10);
+        detItemAnt.qFaturada   := ObterConteudo(ANodeNivel3.Childrens.Find('qFaturada'), tcDe4);
+        detItemAnt.vProd       := ObterConteudo(ANodeNivel3.Childrens.Find('vProd'), tcDe10);
+        detItemAnt.cClass      := ObterConteudo(ANodeNivel3.Childrens.Find('cClass'), tcInt);
+        detItemAnt.vBC         := ObterConteudo(ANodeNivel3.Childrens.Find('vBC'), tcDe2);
+        detItemAnt.pICMS       := ObterConteudo(ANodeNivel3.Childrens.Find('pICMS'), tcDe2);
+        detItemAnt.vICMS       := ObterConteudo(ANodeNivel3.Childrens.Find('vICMS'), tcDe2);
+        detItemAnt.vFCP        := ObterConteudo(ANodeNivel3.Childrens.Find('vFCP'), tcDe2);
+        detItemAnt.vBCST       := ObterConteudo(ANodeNivel3.Childrens.Find('vBCST'), tcDe2);
+        detItemAnt.vICMSST     := ObterConteudo(ANodeNivel3.Childrens.Find('vICMSST'), tcDe2);
+        detItemAnt.vFCPST      := ObterConteudo(ANodeNivel3.Childrens.Find('vFCPST'), tcDe2);
+        detItemAnt.vPIS        := ObterConteudo(ANodeNivel3.Childrens.Find('vPIS'), tcDe2);
+        detItemAnt.vPISEfet    := ObterConteudo(ANodeNivel3.Childrens.Find('vPISEfet'), tcDe2);
+        detItemAnt.vCOFINS     := ObterConteudo(ANodeNivel3.Childrens.Find('vCOFINS'), tcDe2);
+        detItemAnt.vCOFINSEfet := ObterConteudo(ANodeNivel3.Childrens.Find('vCOFINSEfet'), tcDe2);
+
+        ANodeNivel4 := ANodeNivel3.Childrens.Find('retTrib');
+
+        if not(NodeNaoEncontrado(ANodeNivel4)) then
         begin
-          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetPIS    := Leitor.rCampo(tcDe2, 'vRetPIS');
-          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetCOFINS := Leitor.rCampo(tcDe2, 'vRetCOFINS');
-          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vRetCSLL   := Leitor.rCampo(tcDe2, 'vRetCSLL');
-          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vBCIRRF    := Leitor.rCampo(tcDe2, 'vBCIRRF');
-          NF3e.NFDet[i].Det[j].detItemAnt.retTrib.vIRRF      := Leitor.rCampo(tcDe2, 'vIRRF');
+          detItemAnt.retTrib.vRetPIS    := ObterConteudo(ANodeNivel4.Childrens.Find('vRetPIS'), tcDe2);
+          detItemAnt.retTrib.vRetCOFINS := ObterConteudo(ANodeNivel4.Childrens.Find('vRetCOFINS'), tcDe2);
+          detItemAnt.retTrib.vRetCSLL   := ObterConteudo(ANodeNivel4.Childrens.Find('vRetCSLL'), tcDe2);
+          detItemAnt.retTrib.vBCIRRF    := ObterConteudo(ANodeNivel4.Childrens.Find('vBCIRRF'), tcDe2);
+          detItemAnt.retTrib.vIRRF      := ObterConteudo(ANodeNivel4.Childrens.Find('vIRRF'), tcDe2);
         end;
       end;
 
-      if Leitor.rExtrai(3, 'detItem') <> '' then
+      ANodeNivel3 := ADetNodes[i].Childrens.Find('detItem');
+
+      if not(NodeNaoEncontrado(ANodeNivel3)) then
       begin
-        NF3e.NFDet[i].Det[j].detItem.nItemAnt  := StrToIntDef(Leitor.rAtributo('nItemAnt=', 'detItem'), 0);
-        NF3e.NFDet[i].Det[j].detItem.infAdProd := Leitor.rCampo(tcStr, 'infAdProd');
+        snItemAnt := ObterConteudoTag(ANodeNivel3.Attributes.Items['nItemAnt']);
 
-        k := 0;
-        NF3e.NFDet[i].Det[j].detItem.gTarif.Clear;
-        while Leitor.rExtrai(4, 'gTarif', '', k + 1) <> '' do
+        if snItemAnt <> '' then
+          detItem.nItemAnt  := StrToInt(snItemAnt);
+
+        detItem.infAdProd := ObterConteudo(ANodeNivel3.Childrens.Find('infAdProd'), tcStr);
+
+        detItem.gTarif.Clear;
+        ADetChildrensNodes := ANodeNivel3.Childrens.FindAll('gTarif');
+        for j := 0 to Length(ADetChildrensNodes) - 1 do
         begin
-          NF3e.NFDet[i].Det[j].detItem.gTarif.New;
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].dIniTarif   := Leitor.rCampo(tcDat, 'dIniTarif');
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].dFimTarif   := Leitor.rCampo(tcDat, 'dFimTarif');
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].tpAto       := StrTotpAto(ok, Leitor.rCampo(tcStr, 'tpAto'));
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].nAto        := Leitor.rCampo(tcStr, 'nAto');
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].anoAto      := Leitor.rCampo(tcInt, 'anoAto');
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].tpTarif     := StrTotpTarif(ok, Leitor.rCampo(tcStr, 'tpTarif'));
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].cPosTarif   := StrTocPosTarif(ok, Leitor.rCampo(tcStr, 'cPosTarif'));
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].uMed        := StrTouMed(ok, Leitor.rCampo(tcStr, 'uMed'));
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].vTarifHom   := Leitor.rCampo(tcDe6, 'vTarifHom');
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].vTarifAplic := Leitor.rCampo(tcDe6, 'vTarifAplic');
-          NF3e.NFDet[i].Det[j].detItem.gTarif[k].motDifTarif := StrTomotDifTarif(ok, Leitor.rCampo(tcStr, 'motDifTarif'));
-
-          inc(k);
-        end;
-
-        k := 0;
-        NF3e.NFDet[i].Det[j].detItem.gAdBand.Clear;
-        while Leitor.rExtrai(4, 'gAdBand', '', k + 1) <> '' do
-        begin
-          NF3e.NFDet[i].Det[j].detItem.gAdBand.New;
-          NF3e.NFDet[i].Det[j].detItem.gAdBand[k].dIniAdBand   := Leitor.rCampo(tcDat, 'dIniAdBand');
-          NF3e.NFDet[i].Det[j].detItem.gAdBand[k].dFimAdBand   := Leitor.rCampo(tcDat, 'dFimAdBand');
-          NF3e.NFDet[i].Det[j].detItem.gAdBand[k].tpBand       := StrTotpBand(ok, Leitor.rCampo(tcStr, 'tpBand'));
-          NF3e.NFDet[i].Det[j].detItem.gAdBand[k].vAdBand      := Leitor.rCampo(tcDe2, 'vAdBand');
-          NF3e.NFDet[i].Det[j].detItem.gAdBand[k].vAdBandAplic := Leitor.rCampo(tcDe2, 'vAdBandAplic');
-          NF3e.NFDet[i].Det[j].detItem.gAdBand[k].motDifBand   := StrTomotDifBand(ok, Leitor.rCampo(tcStr, 'motDifBand'));
-
-          inc(k);
-        end;
-
-        if Leitor.rExtrai(4, 'prod') <> '' then
-        begin
-          NF3e.NFDet[i].Det[j].detItem.Prod.indOrigemQtd := StrToindOrigemQtd(ok, Leitor.rCampo(tcStr, 'indOrigemQtd'));
-          NF3e.NFDet[i].Det[j].detItem.Prod.cProd        := Leitor.rCampo(tcStr, 'cProd');
-          NF3e.NFDet[i].Det[j].detItem.Prod.xProd        := Leitor.rCampo(tcStr, 'xProd');
-          NF3e.NFDet[i].Det[j].detItem.Prod.cClass       := Leitor.rCampo(tcInt, 'cClass');
-          NF3e.NFDet[i].Det[j].detItem.Prod.CFOP         := Leitor.rCampo(tcInt, 'CFOP');
-          NF3e.NFDet[i].Det[j].detItem.Prod.uMed         := StrTouMedFat(ok, Leitor.rCampo(tcStr, 'uMed'));
-          NF3e.NFDet[i].Det[j].detItem.Prod.qFaturada    := Leitor.rCampo(tcDe4, 'qFaturada');
-          NF3e.NFDet[i].Det[j].detItem.Prod.vItem        := Leitor.rCampo(tcDe2, 'vItem');
-          NF3e.NFDet[i].Det[j].detItem.Prod.vProd        := Leitor.rCampo(tcDe2, 'vProd');
-          NF3e.NFDet[i].Det[j].detItem.Prod.indDevolucao := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indDevolucao'));
-          NF3e.NFDet[i].Det[j].detItem.Prod.indPrecoACL  := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indPrecoACL'));
-
-          if Leitor.rExtrai(5, 'gMedicao') <> '' then
+          with detItem.gTarif.New do
           begin
-            NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.nMed            := Leitor.rCampo(tcInt, 'nMed');
-            NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.nContrat        := Leitor.rCampo(tcInt, 'nContrat');
-            NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.tpMotNaoLeitura := StrTotpMotNaoLeitura(ok, Leitor.rCampo(tcStr, 'tpMotNaoLeitura'));
+            dIniTarif   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('dIniTarif'), tcDat);
+            dFimTarif   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('dFimTarif'), tcDat);
+            tpAto       := StrTotpAto(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpAto'), tcStr));
+            nAto        := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('nAto'), tcStr);
+            anoAto      := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('anoAto'), tcInt);
+            tpTarif     := StrTotpTarif(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpTarif'), tcStr));
+            cPosTarif   := StrTocPosTarif(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('cPosTarif'), tcStr));
+            uMed        := StrTouMed(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('uMed'), tcStr));
+            vTarifHom   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vTarifHom'), tcDe8);
+            vTarifAplic := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vTarifAplic'), tcDe8);
+            motDifTarif := StrTomotDifTarif(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('motDifTarif'), tcStr));
+          end;
+        end;
 
-            if Leitor.rExtrai(6, 'gMedida') <> '' then
+        detItem.gAdBand.Clear;
+        ADetChildrensNodes := ANodeNivel3.Childrens.FindAll('gAdBand');
+        for j := 0 to Length(ADetChildrensNodes) - 1 do
+        begin
+          with detItem.gAdBand.New do
+          begin
+            dIniAdBand   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('dIniAdBand'), tcDat);
+            dFimAdBand   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('dFimAdBand'), tcDat);
+            tpBand       := StrTotpBand(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpBand'), tcStr));
+            vAdBand      := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vAdBand'), tcDe10);
+            vAdBandAplic := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vAdBandAplic'), tcDe10);
+            motDifBand   := StrTomotDifBand(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('motDifBand'), tcStr));
+          end;
+        end;
+
+        ANodeNivel4 := ANodeNivel3.Childrens.Find('prod');
+
+        if not(NodeNaoEncontrado(ANodeNivel4)) then
+        begin
+          detItem.Prod.indOrigemQtd := ObterConteudo(ANodeNivel4.Childrens.Find('indOrigemQtd'), tcStr);
+          detItem.Prod.cProd        := ObterConteudo(ANodeNivel4.Childrens.Find('cProd'), tcStr);
+          detItem.Prod.xProd        := ObterConteudo(ANodeNivel4.Childrens.Find('xProd'), tcStr);
+          detItem.Prod.cClass       := ObterConteudo(ANodeNivel4.Childrens.Find('cClass'), tcInt);
+          detItem.Prod.CFOP         := ObterConteudo(ANodeNivel4.Childrens.Find('CFOP'), tcInt);
+          detItem.Prod.uMed         := StrTouMedFat(ok, ObterConteudo(ANodeNivel4.Childrens.Find('uMed'), tcStr));
+          detItem.Prod.qFaturada    := ObterConteudo(ANodeNivel4.Childrens.Find('qFaturada'), tcDe4);
+          detItem.Prod.vItem        := ObterConteudo(ANodeNivel4.Childrens.Find('vItem'), tcDe10);
+          detItem.Prod.vProd        := ObterConteudo(ANodeNivel4.Childrens.Find('vProd'), tcDe10);
+          detItem.Prod.indDevolucao := StrToTIndicador(ok, ObterConteudo(ANodeNivel4.Childrens.Find('indDevolucao'), tcStr));
+          detItem.Prod.indPrecoACL  := StrToTIndicador(ok, ObterConteudo(ANodeNivel4.Childrens.Find('indPrecoACL'), tcStr));
+
+          ANodeNivel5 := ANodeNivel4.Childrens.Find('gMedicao');
+
+          if not(NodeNaoEncontrado(ANodeNivel5)) then
+          begin
+            detItem.Prod.gMedicao.nMed            := ObterConteudo(ANodeNivel5.Childrens.Find('nMed'), tcInt);
+            detItem.Prod.gMedicao.nContrat        := ObterConteudo(ANodeNivel5.Childrens.Find('nContrat'), tcInt);
+            detItem.Prod.gMedicao.tpMotNaoLeitura := StrTotpMotNaoLeitura(ok, ObterConteudo(ANodeNivel5.Childrens.Find('tpMotNaoLeitura'), tcStr));
+
+            ANodeNivel6 := ANodeNivel5.Childrens.Find('gMedida');
+
+            if not(NodeNaoEncontrado(ANodeNivel6)) then
             begin
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.tpGrMed         := StrTotpGrMed(ok, Leitor.rCampo(tcStr, 'tpGrMed'));
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.cPosTarif       := StrTocPosTarif(ok, Leitor.rCampo(tcStr, 'cPosTarif'));
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.uMed            := StrTouMedFat(ok, Leitor.rCampo(tcStr, 'uMed'));
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vMedAnt         := Leitor.rCampo(tcDe2, 'vMedAnt');
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vMedAtu         := Leitor.rCampo(tcDe2, 'vMedAtu');
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vConst          := Leitor.rCampo(tcDe2, 'vConst');
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vMed            := Leitor.rCampo(tcDe2, 'vMed');
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.pPerdaTran      := Leitor.rCampo(tcDe2, 'pPerdaTran');
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vMedPerdaTran   := Leitor.rCampo(tcDe2, 'vMedPerdaTran');
-              NF3e.NFDet[i].Det[j].detItem.Prod.gMedicao.vMedPerdaTec    := Leitor.rCampo(tcDe2, 'vMedPerdaTec');
+              detItem.Prod.gMedicao.tpGrMed         := StrTotpGrMed(ok, ObterConteudo(ANodeNivel6.Childrens.Find('tpGrMed'), tcStr));
+              detItem.Prod.gMedicao.cPosTarif       := StrTocPosTarif(ok, ObterConteudo(ANodeNivel6.Childrens.Find('cPosTarif'), tcStr));
+              detItem.Prod.gMedicao.uMed            := StrTouMedFat(ok, ObterConteudo(ANodeNivel6.Childrens.Find('uMed'), tcStr));
+              detItem.Prod.gMedicao.vMedAnt         := ObterConteudo(ANodeNivel6.Childrens.Find('vMedAnt'), tcDe2);
+              detItem.Prod.gMedicao.vMedAtu         := ObterConteudo(ANodeNivel6.Childrens.Find('vMedAtu'), tcDe2);
+              detItem.Prod.gMedicao.vConst          := ObterConteudo(ANodeNivel6.Childrens.Find('vConst'), tcDe6);
+              detItem.Prod.gMedicao.vMed            := ObterConteudo(ANodeNivel6.Childrens.Find('vMed'), tcDe2);
+              detItem.Prod.gMedicao.pPerdaTran      := ObterConteudo(ANodeNivel6.Childrens.Find('pPerdaTran'), tcDe2);
+              detItem.Prod.gMedicao.vMedPerdaTran   := ObterConteudo(ANodeNivel6.Childrens.Find('vMedPerdaTran'), tcDe2);
+              detItem.Prod.gMedicao.vMedPerdaTec    := ObterConteudo(ANodeNivel6.Childrens.Find('vMedPerdaTec'), tcDe2);
             end;
           end;
         end;
 
-        if Leitor.rExtrai(4, 'imposto') <> '' then
+        ANodeNivel4 := ANodeNivel3.Childrens.Find('imposto');
+
+        if not(NodeNaoEncontrado(ANodeNivel4)) then
         begin
-          if (Leitor.rExtrai(5, 'ICMS00') <> '') or (Leitor.rExtrai(5, 'ICMS10') <> '') or
-             (Leitor.rExtrai(5, 'ICMS20') <> '') or (Leitor.rExtrai(5, 'ICMS40') <> '') or
-             (Leitor.rExtrai(5, 'ICMS51') <> '') or (Leitor.rExtrai(5, 'ICMS90') <> '') then
+          LerICMS('ICMS00', detItem.Imposto);
+          LerICMS('ICMS10', detItem.Imposto);
+          LerICMS('ICMS20', detItem.Imposto);
+          LerICMS('ICMS40', detItem.Imposto);
+          LerICMS('ICMS51', detItem.Imposto);
+          LerICMS('ICMS90', detItem.Imposto);
+
+          ANodeNivel5 := ANodeNivel4.Childrens.Find('PIS');
+
+          if not(NodeNaoEncontrado(ANodeNivel5)) then
           begin
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.CST        := StrToCSTICMS(ok, Leitor.rCampo(tcStr, 'CST'));
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vBC        := Leitor.rCampo(tcDe2, 'vBC');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.pICMS      := Leitor.rCampo(tcDe2, 'pICMS');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vICMS      := Leitor.rCampo(tcDe2, 'vICMS');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.pFCP       := Leitor.rCampo(tcDe4, 'pFCP');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vFCP       := Leitor.rCampo(tcDe2, 'vFCP');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vBCST      := Leitor.rCampo(tcDe2, 'vBCST');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.pICMSST    := Leitor.rCampo(tcDe2, 'pICMSST');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vICMSST    := Leitor.rCampo(tcDe2, 'vICMSST');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.pFCPST     := Leitor.rCampo(tcDe4, 'pFCPST');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vFCPST     := Leitor.rCampo(tcDe2, 'vFCPST');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.pRedBC     := Leitor.rCampo(tcDe2, 'pRedBC');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vICMSDeson := Leitor.rCampo(tcDe2, 'vICMSDeson');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.cBenef     := Leitor.rCampo(tcStr, 'cBenef');
+            detItem.Imposto.PIS.CST  := StrToCSTPIS(ok, ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
+            detItem.Imposto.PIS.vBC  := ObterConteudo(ANodeNivel5.Childrens.Find('vBC'), tcDe2);
+            detItem.Imposto.PIS.pPIS := ObterConteudo(ANodeNivel5.Childrens.Find('pPIS'), tcDe4);
+            detItem.Imposto.PIS.vPIS := ObterConteudo(ANodeNivel5.Childrens.Find('vPIS'), tcDe2);
           end;
 
-          if Leitor.rExtrai(5, 'PIS') <> '' then
+          ANodeNivel5 := ANodeNivel4.Childrens.Find('PISEfet');
+
+          if not(NodeNaoEncontrado(ANodeNivel5)) then
           begin
-            NF3e.NFDet[i].Det[j].detItem.Imposto.PIS.CST  := StrToCSTPIS(ok, Leitor.rCampo(tcStr, 'CST'));
-            NF3e.NFDet[i].Det[j].detItem.Imposto.PIS.vBC  := Leitor.rCampo(tcDe2, 'vBC');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.PIS.pPIS := Leitor.rCampo(tcDe2, 'pPIS');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.PIS.vPIS := Leitor.rCampo(tcDe2, 'vPIS');
+            detItem.Imposto.PISEfet.vBCPISEfet := ObterConteudo(ANodeNivel5.Childrens.Find('vBCPISEfet'), tcDe2);
+            detItem.Imposto.PISEfet.pPISEfet   := ObterConteudo(ANodeNivel5.Childrens.Find('pPISEfet'), tcDe4);
+            detItem.Imposto.PISEfet.vPISEfet   := ObterConteudo(ANodeNivel5.Childrens.Find('vPISEfet'), tcDe2);
           end;
 
-          if Leitor.rExtrai(5, 'PISEfet') <> '' then
+          ANodeNivel5 := ANodeNivel4.Childrens.Find('COFINS');
+
+          if not(NodeNaoEncontrado(ANodeNivel5)) then
           begin
-            NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vBCPISEfet := Leitor.rCampo(tcDe2, 'vBCPISEfet');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.pPISEfet   := Leitor.rCampo(tcDe2, 'pPISEfet');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vPISEfet   := Leitor.rCampo(tcDe2, 'vPISEfet');
+            detItem.Imposto.COFINS.CST     := StrToCSTCOFINS(ok, ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
+            detItem.Imposto.COFINS.vBC     := ObterConteudo(ANodeNivel5.Childrens.Find('vBC'), tcDe2);
+            detItem.Imposto.COFINS.pCOFINS := ObterConteudo(ANodeNivel5.Childrens.Find('pCOFINS'), tcDe4);
+            detItem.Imposto.COFINS.vCOFINS := ObterConteudo(ANodeNivel5.Childrens.Find('vCOFINS'), tcDe2);
           end;
 
-          if Leitor.rExtrai(5, 'COFINS') <> '' then
+          ANodeNivel5 := ANodeNivel4.Childrens.Find('COFINSEfet');
+
+          if not(NodeNaoEncontrado(ANodeNivel5)) then
           begin
-            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.CST     := StrToCSTCOFINS(ok, Leitor.rCampo(tcStr, 'CST'));
-            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vBC     := Leitor.rCampo(tcDe2, 'vBC');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.pCOFINS := Leitor.rCampo(tcDe2, 'pCOFINS');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vCOFINS := Leitor.rCampo(tcDe2, 'vCOFINS');
+            detItem.Imposto.COFINSEfet.vBCCOFINSEfet := ObterConteudo(ANodeNivel5.Childrens.Find('vBCCOFINSEfet'), tcDe2);
+            detItem.Imposto.COFINSEfet.pCOFINSEfet   := ObterConteudo(ANodeNivel5.Childrens.Find('pCOFINSEfet'), tcDe4);
+            detItem.Imposto.COFINSEfet.vCOFINSEfet   := ObterConteudo(ANodeNivel5.Childrens.Find('vCOFINSEfet'), tcDe2);
           end;
 
-          if Leitor.rExtrai(5, 'COFINSEfet') <> '' then
-          begin
-            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vBCCOFINSEfet := Leitor.rCampo(tcDe2, 'vBCCOFINSEfet');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.pCOFINSEfet   := Leitor.rCampo(tcDe2, 'pCOFINSEfet');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vCOFINSEfet   := Leitor.rCampo(tcDe2, 'vCOFINSEfet');
-          end;
+          ANodeNivel5 := ANodeNivel4.Childrens.Find('COFINSEfet');
 
-          if Leitor.rExtrai(5, 'retTrib') <> '' then
+          if not(NodeNaoEncontrado(ANodeNivel5)) then
           begin
-            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetPIS    := Leitor.rCampo(tcDe2, 'vRetPIS');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetCOFINS := Leitor.rCampo(tcDe2, 'vRetCOFINS');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vRetCSLL   := Leitor.rCampo(tcDe2, 'vRetCSLL');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vBCIRRF    := Leitor.rCampo(tcDe2, 'vBCIRRF');
-            NF3e.NFDet[i].Det[j].detItem.Imposto.retTrib.vIRRF      := Leitor.rCampo(tcDe2, 'vIRRF');
+            detItem.Imposto.retTrib.vRetPIS    := ObterConteudo(ANodeNivel5.Childrens.Find('vRetPIS'), tcDe2);
+            detItem.Imposto.retTrib.vRetCOFINS := ObterConteudo(ANodeNivel5.Childrens.Find('vRetCOFINS'), tcDe2);
+            detItem.Imposto.retTrib.vRetCSLL   := ObterConteudo(ANodeNivel5.Childrens.Find('vRetCSLL'), tcDe2);
+            detItem.Imposto.retTrib.vBCIRRF    := ObterConteudo(ANodeNivel5.Childrens.Find('vBCIRRF'), tcDe2);
+            detItem.Imposto.retTrib.vIRRF      := ObterConteudo(ANodeNivel5.Childrens.Find('vIRRF'), tcDe2);
           end;
         end;
 
-        if Leitor.rExtrai(4, 'gProcRef') <> '' then
+        ANodeNivel4 := ANodeNivel3.Childrens.Find('gProcRef');
+
+        if not(NodeNaoEncontrado(ANodeNivel4)) then
         begin
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.vItem        := Leitor.rCampo(tcDe2, 'vItem');
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.qFaturada    := Leitor.rCampo(tcDe4, 'qFaturada');
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.vProd        := Leitor.rCampo(tcDe2, 'vProd');
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.indDevolucao := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indDevolucao'));
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.vBC          := Leitor.rCampo(tcDe2, 'vBC');
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.pICMS        := Leitor.rCampo(tcDe2, 'pICMS');
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.vICMS        := Leitor.rCampo(tcDe2, 'vICMS');
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.vPIS         := Leitor.rCampo(tcDe2, 'vPIS');
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.vCOFINS      := Leitor.rCampo(tcDe2, 'vCOFINS');
+          detItem.gProcRef.vItem        := ObterConteudo(ANodeNivel4.Childrens.Find('vItem'), tcDe10);
+          detItem.gProcRef.qFaturada    := ObterConteudo(ANodeNivel4.Childrens.Find('qFaturada'), tcDe4);
+          detItem.gProcRef.vProd        := ObterConteudo(ANodeNivel4.Childrens.Find('vProd'), tcDe10);
+          detItem.gProcRef.indDevolucao := StrToTIndicador(ok, ObterConteudo(ANodeNivel4.Childrens.Find('indDevolucao'), tcStr));
+          detItem.gProcRef.vBC          := ObterConteudo(ANodeNivel4.Childrens.Find('vBC'), tcDe2);
+          detItem.gProcRef.pICMS        := ObterConteudo(ANodeNivel4.Childrens.Find('pICMS'), tcDe2);
+          detItem.gProcRef.vICMS        := ObterConteudo(ANodeNivel4.Childrens.Find('vICMS'), tcDe2);
+          detItem.gProcRef.pFCP         := ObterConteudo(ANodeNivel4.Childrens.Find('pFCP'), tcDe2);
+          detItem.gProcRef.vFCP         := ObterConteudo(ANodeNivel4.Childrens.Find('vFCP'), tcDe2);
+          detItem.gProcRef.vBCST        := ObterConteudo(ANodeNivel4.Childrens.Find('vBCST'), tcDe2);
+          detItem.gProcRef.pICMSST      := ObterConteudo(ANodeNivel4.Childrens.Find('pICMSST'), tcDe2);
+          detItem.gProcRef.vICMSST      := ObterConteudo(ANodeNivel4.Childrens.Find('vICMSST'), tcDe2);
+          detItem.gProcRef.pFCPST       := ObterConteudo(ANodeNivel4.Childrens.Find('pFCPST'), tcDe2);
+          detItem.gProcRef.vFCPST       := ObterConteudo(ANodeNivel4.Childrens.Find('vFCPST'), tcDe2);
+          detItem.gProcRef.vPIS         := ObterConteudo(ANodeNivel4.Childrens.Find('vPIS'), tcDe2);
+          detItem.gProcRef.vPISEfet     := ObterConteudo(ANodeNivel4.Childrens.Find('vPISEfet'), tcDe2);
+          detItem.gProcRef.vCOFINS      := ObterConteudo(ANodeNivel4.Childrens.Find('vCOFINS'), tcDe2);
+          detItem.gProcRef.vCOFINSEfet  := ObterConteudo(ANodeNivel4.Childrens.Find('vCOFINSEfet'), tcDe2);
 
-          k := 0;
-          NF3e.NFDet[i].Det[j].detItem.gProcRef.gProc.Clear;
-          while Leitor.rExtrai(5, 'gProc', '', k + 1) <> '' do
+
+          detItem.gProcRef.gProc.Clear;
+          ADetChildrensNodes := ANodeNivel4.Childrens.FindAll('gProc');
+          for j := 0 to Length(ADetChildrensNodes) - 1 do
           begin
-            NF3e.NFDet[i].Det[j].detItem.gProcRef.gProc.New;
-            NF3e.NFDet[i].Det[j].detItem.gProcRef.gProc[k].tpProc    := StrTotpProc(ok, Leitor.rCampo(tcStr, 'tpProc'));
-            NF3e.NFDet[i].Det[j].detItem.gProcRef.gProc[k].nProcesso := Leitor.rCampo(tcStr, 'nProcesso');
-
-            inc(k);
+            with detItem.gProcRef.gProc.New do
+            begin
+              tpProc    := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpProc'), tcStr);
+              nProcesso := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('nProcesso'), tcStr);
+            end;
           end;
         end;
 
-        k := 0;
-        NF3e.NFDet[i].Det[j].detItem.gContab.Clear;
-        while Leitor.rExtrai(4, 'gContab', '', k + 1) <> '' do
+        detItem.gContab.Clear;
+        ADetChildrensNodes := ANodeNivel3.Childrens.FindAll('gContab');
+        for j := 0 to Length(ADetChildrensNodes) - 1 do
         begin
-          NF3e.NFDet[i].Det[j].detItem.gContab.New;
-          NF3e.NFDet[i].Det[j].detItem.gContab[k].cContab := Leitor.rCampo(tcStr, 'cContab');
-          NF3e.NFDet[i].Det[j].detItem.gContab[k].xContab := Leitor.rCampo(tcStr, 'xContab');
-          NF3e.NFDet[i].Det[j].detItem.gContab[k].vContab := Leitor.rCampo(tcDe2, 'vContab');
-          NF3e.NFDet[i].Det[j].detItem.gContab[k].tpLanc  := StrTotpLanc(ok, Leitor.rCampo(tcStr, 'tpLanc'));
-
-          inc(k);
+          with detItem.gContab.New do
+          begin
+            cContab := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('cContab'), tcStr);
+            xContab := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('xContab'), tcStr);
+            vContab := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vContab'), tcDe2);
+            tpLanc  := StrTotpLanc(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpLanc'), tcStr));
+          end;
         end;
       end;
-
-      inc(j);
     end;
-
-    inc(i);
   end;
-}
 end;
 
 procedure TNF3eXmlReader.LerTotal(const ANode: TACBrXmlNode);
@@ -859,9 +923,9 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if Document.Root.Name = 'NF3eProc' then
+  if Document.Root.Name = 'nf3eProc' then
   begin
-    LerProtNF3e(Document.Root.Childrens.Find('protNF3e'));
+    LerProtNF3e(Document.Root.Childrens.Find('protNF3e').Childrens.Find('infProt'));
     NF3eNode := Document.Root.Childrens.Find('NF3e');
   end
   else
@@ -892,6 +956,11 @@ begin
   LerSignature(NF3eNode.Childrens.Find('Signature'));
 
   Result := True;
+end;
+
+function TNF3eXmlReader.NodeNaoEncontrado(const ANode: TACBrXmlNode): Boolean;
+begin
+  Result := not Assigned(ANode) or (ANode = nil);
 end;
 
 (*

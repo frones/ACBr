@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/2022
+-- ACBrNF3eNotasFiscais/ACBrNF3eXmlReader --
+[*] Ajustes para a leitura correta do XML.
+   Por: Fernando Lobato
+
 19/07/2022
 -- Diversos --
 [*] Correções necessárias para o envio correto em modo síncrono e assíncrono.

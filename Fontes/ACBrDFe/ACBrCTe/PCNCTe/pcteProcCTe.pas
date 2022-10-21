@@ -280,19 +280,30 @@ begin
 
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
-      if Modelo = 57 then
-      begin
-        Gerador.wGrupo('cteProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
-        Gerador.wTexto('<CTe xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTe xmlns', '</CTe>') + '</CTe>');
-        Gerador.wTexto(FXML_prot);
-        Gerador.wGrupo('/cteProc');
-      end
-      else
-      begin
-        Gerador.wGrupo('cteOSProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
-        Gerador.wTexto('<CTeOS xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTeOS xmlns', '</CTeOS>') + '</CTeOS>');
-        Gerador.wTexto(FXML_prot);
-        Gerador.wGrupo('/cteOSProc');
+
+      case Modelo of
+        64: // GTVe (Guia de Transporte de Valores)
+          begin
+            Gerador.wGrupo('GTVeProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
+            Gerador.wTexto('<GTVe xmlns' + RetornarConteudoEntre(FXML_CTe, '<GTVe xmlns', '</GTVe>') + '</GTVe>');
+            Gerador.wTexto(FXML_prot);
+            Gerador.wGrupo('/GTVeProc');
+          end;
+
+        67: // CTe OS (Outros Serviços)
+          begin
+            Gerador.wGrupo('cteOSProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
+            Gerador.wTexto('<CTeOS xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTeOS xmlns', '</CTeOS>') + '</CTeOS>');
+            Gerador.wTexto(FXML_prot);
+            Gerador.wGrupo('/cteOSProc');
+          end;
+      else  // CTe
+        begin
+          Gerador.wGrupo('cteProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
+          Gerador.wTexto('<CTe xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTe xmlns', '</CTe>') + '</CTe>');
+          Gerador.wTexto(FXML_prot);
+          Gerador.wGrupo('/cteProc');
+        end;
       end;
     end;
 

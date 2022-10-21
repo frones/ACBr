@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/10/2022
+-- pcteProcCTe--
+[*] Alteração visando a montagem correta do XML do GTVe Assinado e Protocolado.
+   por: Italo Giurizzato Junior
 -- pcteCTeW --
 [*] Alterado o numero de ocorrências de 1 para 0 da tag <xMoedaEstr>
    por: Italo Giurizzato Junior

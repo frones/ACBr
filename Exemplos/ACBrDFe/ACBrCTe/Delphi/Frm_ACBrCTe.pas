@@ -1577,7 +1577,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrCTe1.Conhecimentos.Clear;
-    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
     with ACBrCTe1.Conhecimentos.Items[0].CTe do
     begin
@@ -2439,7 +2439,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrCTe1.Conhecimentos.Clear;
-    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName,False);
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
     ACBrCTe1.Conhecimentos.Imprimir;
   end;
 end;
@@ -2754,7 +2754,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrCTe1.Conhecimentos.Clear;
-    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName, True);
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
     try
       ACBrCTe1.Conhecimentos.Validar;

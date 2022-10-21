@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2022
+-- pcteCTeW --
+[*] Alterado o numero de ocorrências de 1 para 0 da tag <xMoedaEstr>
+   por: Italo Giurizzato Junior
+
 08/09/2022
 -- ACBrCTeConhecimentos --
 [*] Atualização da função: GerarCTeIni e LerArqIni visando o modelo GTV-e

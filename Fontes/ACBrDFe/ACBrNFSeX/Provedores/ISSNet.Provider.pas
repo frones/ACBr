@@ -579,7 +579,15 @@ begin
   begin
     Rps := True;
     LoteRps := True;
+    ConsultarNFSeRps := True;
+    ConsultarNFSePorFaixa := True;
+    ConsultarNFSeServicoPrestado := True;
+    ConsultarNFSeServicoTomado := True;
     CancelarNFSe := True;
+    RpsGerarNFSe := True;
+    SubstituirNFSe := True;
+
+    IncluirURI := False;
   end;
 
   with ConfigWebServices do

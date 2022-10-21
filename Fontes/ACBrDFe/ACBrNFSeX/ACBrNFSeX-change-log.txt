@@ -43,11 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/10/2022
+-- ISSNet.Provider --
+[*] Incluído na Configuração para realizar a assinatura do RPS em todos os serviços
+    e nas consultas que requer que a mesma seja assinada.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX --
 [*] Incluído do Create do componente a execução do LerCidades.
    Por: Italo Giurizzato Junior
 -- MegaSoft.Provider --
-[*] Incluido na Function TratarXmlRetornado a chamada para remover identação do XML.
+[*] Incluído na Function TratarXmlRetornado a chamada para remover identação do XML.
    Por: Italo Giurizzato Junior
 -- Bauhaus.LerJson --
 [*] Eliminação de Hits

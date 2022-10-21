@@ -88,6 +88,8 @@ function TNFSeR_Bauhaus.LerJsonNfse(const ArquivoRetorno: String): Boolean;
 var
   jsRet: TACBrJSONObject;
 begin
+  Result := False;
+
   try
     jsRet := TACBrJSONObject.Parse(String(ArquivoRetorno));
 
@@ -110,6 +112,8 @@ function TNFSeR_Bauhaus.LerJsonRps(const ArquivoRetorno: String): Boolean;
 var
   jsRet: TACBrJSONObject;
 begin
+  Result := False;
+
   try
     jsRet := TACBrJSONObject.Parse(String(ArquivoRetorno));
 

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/10/2022
+-- Bauhaus.LerJson --
+[*] Eliminação de Hits
+   Por: Italo Giurizzato Junior
 -- ISSFortaleza.Provider --
 [*] Possível solução para vogais acentuadas e o cedilha.
    Por: Italo Giurizzato Junior

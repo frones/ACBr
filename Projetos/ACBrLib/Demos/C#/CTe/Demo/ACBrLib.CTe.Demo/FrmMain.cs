@@ -966,5 +966,19 @@ namespace ACBrLib.CTe.Demo
                 MessageBox.Show(exception.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnValidarXmlClick(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckCTeLista(true);
+                ACBrCTe.Validar();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
     }
 }

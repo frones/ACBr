@@ -140,6 +140,7 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnValidarXml = new System.Windows.Forms.Button();
             this.btnLimparLista = new System.Windows.Forms.Button();
             this.btnImprimirPDF = new System.Windows.Forms.Button();
             this.btnEnviarAssincrono = new System.Windows.Forms.Button();
@@ -1388,6 +1389,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.btnValidarXml);
             this.tabPage5.Controls.Add(this.btnGerarChaveCTe);
             this.tabPage5.Controls.Add(this.btnLimparLista);
             this.tabPage5.Controls.Add(this.btnImprimirPDF);
@@ -1408,6 +1410,15 @@
             this.tabPage5.Text = "Envio";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // btnValidarXml
+            // 
+            this.btnValidarXml.Location = new System.Drawing.Point(130, 122);
+            this.btnValidarXml.Name = "btnValidarXml";
+            this.btnValidarXml.Size = new System.Drawing.Size(118, 23);
+            this.btnValidarXml.TabIndex = 20;
+            this.btnValidarXml.Text = "Validar Xml";
+            this.btnValidarXml.UseVisualStyleBackColor = true;
+            this.btnValidarXml.Click += new System.EventHandler(this.btnValidarXmlClick);
             // btnLimparLista
             // 
             this.btnLimparLista.Location = new System.Drawing.Point(254, 35);
@@ -1851,6 +1862,7 @@
         private System.Windows.Forms.Button btnCarregarConfiguracoes;
         private System.Windows.Forms.Button btnGerarChaveCTe;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.Button btnValidarXml;
     }
 }
 

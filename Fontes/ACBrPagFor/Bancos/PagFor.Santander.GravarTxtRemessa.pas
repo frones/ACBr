@@ -85,7 +85,7 @@ begin
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Agencia.Codigo, 4, tcInt);
   GravarCampo(PagFor.Registro0.Empresa.Convenio, 12, tcStrZero);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
-  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.TipoConta, 1, tcInt);
+  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Agencia.DV, 1, tcStr);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.DV, 1, tcStr);
   GravarCampo(' ', 1, tcStr);

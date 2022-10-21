@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/10/2022
+-- PagFor.Santander.GravarTxtRemessa --
+[*] Correção no Registro 0, não estava incluindo o DV da Agencia.
+   Por: Italo Giurizzato Junior
+
 10/10/2022
 -- ACBrPagForArquivo --
 [*] Alterado o método LoadFromString para que o mesmo identifique qual é

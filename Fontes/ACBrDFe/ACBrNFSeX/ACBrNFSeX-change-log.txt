@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/10/2022
+-- ACBrNFSeX --
+[*] Incluído do Create do componente a execução do LerCidades.
+   Por: Italo Giurizzato Junior
 -- MegaSoft.Provider --
 [*] Incluido na Function TratarXmlRetornado a chamada para remover identação do XML.
    Por: Italo Giurizzato Junior

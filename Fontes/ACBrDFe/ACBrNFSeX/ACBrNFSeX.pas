@@ -224,8 +224,10 @@ begin
   FNotasFiscais := TNotasFiscais.Create(Self);
   FWebService := TWebservices.Create;
 
-
   fpCidadesJaCarregadas := False;
+
+  if not (csDesigning in AOwner.ComponentState) then
+    LerCidades;
 end;
 
 destructor TACBrNFSeX.Destroy;

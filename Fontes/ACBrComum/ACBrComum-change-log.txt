@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2022
+-- ACBrUtil.XMLHTML --
+[*] Incluído no ParseText o caracter HTML (&#45;) na lista de conversão.
+   Por: Italo Giurizzato Junior
+
 20/10/2022
 -- ACBrJSON --
 [-] Correção ao adicionar par utilizando um TACBrJsonObject

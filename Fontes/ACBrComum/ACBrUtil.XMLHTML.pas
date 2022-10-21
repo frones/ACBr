@@ -135,6 +135,7 @@ begin
     AStr := InternalStringReplace(AStr, '&gt;'    , '>');
     AStr := InternalStringReplace(AStr, '&quot;'  , '"');
     AStr := InternalStringReplace(AStr, '&#39;'   , #39);
+    AStr := InternalStringReplace(AStr, '&#45;'   , '-');
     AStr := InternalStringReplace(AStr, '&aacute;', 'á');
     AStr := InternalStringReplace(AStr, '&Aacute;', 'Á');
     AStr := InternalStringReplace(AStr, '&acirc;' , 'â');

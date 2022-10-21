@@ -400,7 +400,7 @@ end;
 function TACBrNFSeXWebserviceISSFortaleza.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  Result := inherited TratarXmlRetornado(UTF8Decode(aXML));
 
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverDeclaracaoXML(Result);

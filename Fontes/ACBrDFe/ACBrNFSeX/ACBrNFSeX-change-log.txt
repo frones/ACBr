@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2022
+-- ISSFortaleza.Provider --
+[*] Possível solução para vogais acentuadas e o cedilha.
+   Por: Italo Giurizzato Junior
+
 20/10/2022
 -- ISSNet.Provider --
 [*] Alterado a função TratarXmlRetornado visando sanar o problema do "&" no 

@@ -10,8 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  uDemo    in 'uDemo.pas'    {frmDemo},
-  uDMForte in 'uDMForte.pas' {dmForte: TDataModule};
+  uDemo, uDMForte;
 
 {$R *.res}
 begin

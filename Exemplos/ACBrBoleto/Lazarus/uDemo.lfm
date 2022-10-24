@@ -1,150 +1,176 @@
 object frmDemo: TfrmDemo
   Left = 288
-  Height = 696
+  Height = 571
   Top = 133
-  Width = 1229
+  Width = 1002
   Caption = 'Demo ACBrBoleto '
-  ClientHeight = 696
-  ClientWidth = 1229
+  ClientHeight = 571
+  ClientWidth = 1002
   Color = clBtnFace
-  DesignTimePPI = 120
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
+  LCLVersion = '2.2.2.0'
   object PageControl1: TPageControl
     Left = 0
-    Height = 696
+    Height = 571
     Top = 0
-    Width = 1229
-    ActivePage = TabSheet1
-    Align = alClient
-    TabIndex = 0
+    Width = 808
+    ActivePage = TabSheet2
+    Align = alLeft
+    TabIndex = 1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Ficha de Pagamento'
-      ClientHeight = 667
-      ClientWidth = 1221
-      object Label31: TLabel
-        Left = 4
-        Height = 16
-        Top = 540
-        Width = 127
-        Caption = 'LayOut Fortes Report'
-        Color = clBtnFace
-        ParentColor = False
-        Transparent = False
-      end
+      ClientHeight = 545
+      ClientWidth = 800
       object GroupBox2: TGroupBox
+        AnchorSideTop.Control = TabSheet1
         Left = -2
-        Height = 131
+        Height = 125
         Top = 0
-        Width = 761
+        Width = 609
         Caption = 'Acréscimos\Descontos'
-        ClientHeight = 110
-        ClientWidth = 757
+        ClientHeight = 107
+        ClientWidth = 605
         TabOrder = 0
         object Label7: TLabel
-          Left = 8
-          Height = 16
-          Top = 1
-          Width = 100
+          AnchorSideTop.Control = GroupBox2
+          Left = 6
+          Height = 13
+          Top = 3
+          Width = 78
+          BorderSpacing.Top = 3
           Caption = 'ValorMora\Juros'
           ParentColor = False
         end
         object Label8: TLabel
-          Left = 200
-          Height = 16
-          Top = 1
-          Width = 93
+          AnchorSideTop.Control = GroupBox2
+          Left = 160
+          Height = 13
+          Top = 3
+          Width = 73
+          BorderSpacing.Top = 3
           Caption = 'Valor Desconto'
           ParentColor = False
         end
         object Label9: TLabel
-          Left = 392
-          Height = 16
-          Top = 1
-          Width = 103
+          AnchorSideTop.Control = GroupBox2
+          Left = 314
+          Height = 13
+          Top = 3
+          Width = 80
+          BorderSpacing.Top = 3
           Caption = 'Valor Abatimento'
           ParentColor = False
         end
         object Label10: TLabel
-          Left = 580
-          Height = 16
-          Top = 1
-          Width = 47
+          AnchorSideTop.Control = GroupBox2
+          Left = 464
+          Height = 13
+          Top = 3
+          Width = 37
+          BorderSpacing.Top = 3
           Caption = '% Multa'
           ParentColor = False
         end
         object Label11: TLabel
-          Left = 8
-          Height = 16
-          Top = 51
-          Width = 104
+          AnchorSideTop.Control = edtMoraJuros
+          AnchorSideTop.Side = asrBottom
+          Left = 6
+          Height = 13
+          Top = 47
+          Width = 83
+          BorderSpacing.Top = 5
           Caption = 'Data Multa_Juros'
           ParentColor = False
         end
         object Label12: TLabel
-          Left = 202
-          Height = 16
-          Top = 54
-          Width = 90
+          AnchorSideTop.Control = edtValorDesconto
+          AnchorSideTop.Side = asrBottom
+          Left = 162
+          Height = 13
+          Top = 47
+          Width = 72
+          BorderSpacing.Top = 5
           Caption = 'Data Desconto'
           ParentColor = False
         end
         object Label13: TLabel
-          Left = 395
-          Height = 16
-          Top = 54
-          Width = 100
+          AnchorSideTop.Control = edtValorAbatimento
+          AnchorSideTop.Side = asrBottom
+          Left = 316
+          Height = 13
+          Top = 47
+          Width = 79
+          BorderSpacing.Top = 5
           Caption = 'Data Abatimento'
           ParentColor = False
         end
         object Label14: TLabel
-          Left = 582
-          Height = 16
-          Top = 54
-          Width = 82
+          AnchorSideTop.Control = edtMulta
+          AnchorSideTop.Side = asrBottom
+          Left = 466
+          Height = 13
+          Top = 47
+          Width = 65
+          BorderSpacing.Top = 5
           Caption = 'Data Protesto'
           ParentColor = False
         end
         object edtMoraJuros: TEdit
-          Left = 8
-          Height = 24
+          AnchorSideTop.Control = Label7
+          AnchorSideTop.Side = asrBottom
+          Left = 6
+          Height = 21
           Top = 21
-          Width = 169
+          Width = 135
+          BorderSpacing.Top = 5
           TabOrder = 0
           Text = '5'
         end
         object edtValorDesconto: TEdit
-          Left = 200
-          Height = 24
+          AnchorSideTop.Control = Label8
+          AnchorSideTop.Side = asrBottom
+          Left = 160
+          Height = 21
           Top = 21
-          Width = 169
+          Width = 135
+          BorderSpacing.Top = 5
           TabOrder = 1
           Text = '0'
         end
         object edtValorAbatimento: TEdit
-          Left = 392
-          Height = 24
+          AnchorSideTop.Control = Label9
+          AnchorSideTop.Side = asrBottom
+          Left = 314
+          Height = 21
           Top = 21
-          Width = 169
+          Width = 135
+          BorderSpacing.Top = 5
           TabOrder = 2
           Text = '0'
         end
         object edtMulta: TEdit
-          Left = 580
-          Height = 24
+          AnchorSideTop.Control = Label10
+          AnchorSideTop.Side = asrBottom
+          Left = 464
+          Height = 21
           Top = 21
-          Width = 169
+          Width = 135
+          BorderSpacing.Top = 5
           TabOrder = 3
           Text = '5'
         end
         object edtDataMora: TMaskEdit
-          Left = 8
-          Height = 24
-          Top = 71
-          Width = 169
+          AnchorSideTop.Control = Label11
+          AnchorSideTop.Side = asrBottom
+          Left = 6
+          Height = 21
+          Top = 63
+          Width = 135
+          BorderSpacing.Top = 3
           MaxLength = 8
           TabOrder = 4
           EditMask = '!99/99/00;1;_'
@@ -152,10 +178,13 @@ object frmDemo: TfrmDemo
           SpaceChar = '_'
         end
         object edtDataDesconto: TMaskEdit
-          Left = 200
-          Height = 24
-          Top = 71
-          Width = 169
+          AnchorSideTop.Control = Label12
+          AnchorSideTop.Side = asrBottom
+          Left = 160
+          Height = 21
+          Top = 63
+          Width = 135
+          BorderSpacing.Top = 3
           MaxLength = 8
           TabOrder = 5
           EditMask = '!99/99/00;1;_'
@@ -163,10 +192,13 @@ object frmDemo: TfrmDemo
           SpaceChar = '_'
         end
         object edtDataAbatimento: TMaskEdit
-          Left = 392
-          Height = 24
-          Top = 71
-          Width = 169
+          AnchorSideTop.Control = Label13
+          AnchorSideTop.Side = asrBottom
+          Left = 314
+          Height = 21
+          Top = 63
+          Width = 135
+          BorderSpacing.Top = 3
           MaxLength = 8
           TabOrder = 6
           EditMask = '!99/99/00;1;_'
@@ -174,10 +206,13 @@ object frmDemo: TfrmDemo
           SpaceChar = '_'
         end
         object edtDataProtesto: TMaskEdit
-          Left = 580
-          Height = 24
-          Top = 71
-          Width = 169
+          AnchorSideTop.Control = Label14
+          AnchorSideTop.Side = asrBottom
+          Left = 464
+          Height = 21
+          Top = 63
+          Width = 135
+          BorderSpacing.Top = 3
           MaxLength = 8
           TabOrder = 7
           EditMask = '!99/99/00;1;_'
@@ -186,75 +221,101 @@ object frmDemo: TfrmDemo
         end
       end
       object GroupBox4: TGroupBox
-        Left = 766
-        Height = 281
-        Top = 4
-        Width = 211
+        AnchorSideLeft.Control = GroupBox2
+        AnchorSideLeft.Side = asrBottom
+        Left = 613
+        Height = 256
+        Top = 0
+        Width = 169
+        BorderSpacing.Left = 6
         Caption = 'Informações Sobre a Duplicata '
-        ClientHeight = 260
-        ClientWidth = 207
+        ClientHeight = 238
+        ClientWidth = 165
         TabOrder = 1
         object Label17: TLabel
-          Left = 10
-          Height = 16
-          Top = 54
-          Width = 120
+          AnchorSideTop.Control = edtNossoNro
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 13
+          Top = 47
+          Width = 95
+          BorderSpacing.Top = 5
           Caption = 'Número Documento'
           ParentColor = False
         end
         object Label18: TLabel
-          Left = 10
-          Height = 16
-          Top = 102
-          Width = 32
+          AnchorSideTop.Control = edtNumeroDoc
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 13
+          Top = 89
+          Width = 24
+          BorderSpacing.Top = 5
           Caption = 'Valor'
           ParentColor = False
         end
         object Label19: TLabel
-          Left = 10
-          Height = 16
-          Top = 156
-          Width = 85
+          AnchorSideTop.Control = edtValorDoc
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 13
+          Top = 131
+          Width = 65
+          BorderSpacing.Top = 5
           Caption = 'Data Emissão'
           ParentColor = False
         end
         object Label20: TLabel
-          Left = 10
-          Height = 16
-          Top = 204
-          Width = 71
+          AnchorSideTop.Control = edtDataDoc
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 13
+          Top = 173
+          Width = 56
+          BorderSpacing.Top = 5
           Caption = 'Vencimento'
           ParentColor = False
         end
         object Label6: TLabel
-          Left = 10
-          Height = 16
-          Top = 2
-          Width = 91
+          AnchorSideTop.Control = GroupBox4
+          Left = 8
+          Height = 13
+          Top = 3
+          Width = 70
+          BorderSpacing.Top = 3
           Caption = 'Nosso Número'
           ParentColor = False
         end
         object edtNumeroDoc: TEdit
-          Left = 10
-          Height = 24
-          Top = 74
-          Width = 191
+          AnchorSideTop.Control = Label17
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 63
+          Width = 153
+          BorderSpacing.Top = 3
           TabOrder = 0
           Text = '0000000001'
         end
         object edtValorDoc: TEdit
-          Left = 10
-          Height = 24
-          Top = 122
-          Width = 191
+          AnchorSideTop.Control = Label18
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 105
+          Width = 153
+          BorderSpacing.Top = 3
           TabOrder = 1
           Text = '100'
         end
         object edtDataDoc: TMaskEdit
-          Left = 10
-          Height = 24
-          Top = 176
-          Width = 191
+          AnchorSideTop.Control = Label19
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 147
+          Width = 153
+          BorderSpacing.Top = 3
           MaxLength = 8
           TabOrder = 2
           EditMask = '!99/99/00;1;_'
@@ -262,10 +323,13 @@ object frmDemo: TfrmDemo
           SpaceChar = '_'
         end
         object edtVencimento: TMaskEdit
-          Left = 10
-          Height = 24
-          Top = 224
-          Width = 191
+          AnchorSideTop.Control = Label20
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 189
+          Width = 153
+          BorderSpacing.Top = 3
           MaxLength = 8
           TabOrder = 3
           EditMask = '!99/99/00;1;_'
@@ -273,71 +337,92 @@ object frmDemo: TfrmDemo
           SpaceChar = '_'
         end
         object edtNossoNro: TEdit
-          Left = 10
-          Height = 24
-          Top = 22
-          Width = 191
+          AnchorSideTop.Control = Label6
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 21
+          Width = 153
+          BorderSpacing.Top = 5
           TabOrder = 4
           Text = '12345'
         end
       end
       object GroupBox3: TGroupBox
+        AnchorSideTop.Control = GroupBox2
+        AnchorSideTop.Side = asrBottom
         Left = -2
-        Height = 142
-        Top = 139
-        Width = 761
+        Height = 129
+        Top = 128
+        Width = 609
+        BorderSpacing.Top = 3
         Caption = 'Mensagens \ Instruções'
-        ClientHeight = 121
-        ClientWidth = 757
+        ClientHeight = 111
+        ClientWidth = 605
         TabOrder = 2
         object Label15: TLabel
-          Left = 400
-          Height = 16
-          Top = -4
-          Width = 64
+          AnchorSideTop.Control = GroupBox3
+          Left = 320
+          Height = 13
+          Top = 5
+          Width = 53
+          BorderSpacing.Top = 5
           Caption = 'Instrução 1'
           ParentColor = False
         end
         object Label16: TLabel
-          Left = 580
-          Height = 16
-          Top = -4
-          Width = 64
+          AnchorSideTop.Control = GroupBox3
+          Left = 464
+          Height = 13
+          Top = 5
+          Width = 53
+          BorderSpacing.Top = 5
           Caption = 'Instrução 2'
           ParentColor = False
         end
         object memMensagem: TMemo
-          Left = 10
-          Height = 111
-          Top = 2
-          Width = 381
+          AnchorSideTop.Control = GroupBox3
+          Left = 8
+          Height = 89
+          Top = 5
+          Width = 305
+          BorderSpacing.Top = 5
           Lines.Strings = (
             ''
           )
           TabOrder = 0
         end
         object edtInstrucoes1: TEdit
-          Left = 400
-          Height = 24
-          Top = 16
-          Width = 171
+          AnchorSideTop.Control = Label15
+          AnchorSideTop.Side = asrBottom
+          Left = 320
+          Height = 21
+          Top = 21
+          Width = 137
+          BorderSpacing.Top = 3
           TabOrder = 1
         end
         object edtInstrucoes2: TEdit
-          Left = 580
-          Height = 24
-          Top = 16
-          Width = 171
+          AnchorSideTop.Control = Label15
+          AnchorSideTop.Side = asrBottom
+          Left = 464
+          Height = 21
+          Top = 21
+          Width = 137
+          BorderSpacing.Top = 3
           TabOrder = 2
         end
         object Panel2: TPanel
-          Left = 400
-          Height = 51
-          Top = 56
-          Width = 351
+          AnchorSideTop.Control = edtInstrucoes1
+          AnchorSideTop.Side = asrBottom
+          Left = 320
+          Height = 41
+          Top = 47
+          Width = 281
+          BorderSpacing.Top = 5
           Caption = '* Informar o Código do Instrução'
           Font.Color = clBlue
-          Font.Height = -14
+          Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
@@ -345,592 +430,788 @@ object frmDemo: TfrmDemo
         end
       end
       object cbxLayOut: TComboBox
-        Left = 4
-        Height = 24
-        Top = 560
-        Width = 201
-        ItemHeight = 16
+        AnchorSideTop.Control = Label31
+        AnchorSideTop.Side = asrBottom
+        Left = 3
+        Height = 21
+        Top = 473
+        Width = 161
+        BorderSpacing.Top = 10
+        ItemHeight = 13
         OnChange = cbxLayOutChange
         Style = csDropDownList
         TabOrder = 3
       end
       object cbxImprimirVersoFatura: TCheckBox
-        Left = 4
-        Height = 23
-        Top = 594
-        Width = 170
+        AnchorSideTop.Control = cbxLayOut
+        AnchorSideTop.Side = asrBottom
+        Left = 3
+        Height = 19
+        Top = 499
+        Width = 133
+        BorderSpacing.Top = 5
         Caption = 'Imprimir Verso da Fatura'
         Enabled = False
         TabOrder = 4
       end
       object PageControl2: TPageControl
-        Left = 4
-        Height = 196
-        Top = 330
-        Width = 974
+        AnchorSideTop.Control = GroupBox3
+        AnchorSideTop.Side = asrBottom
+        Left = 3
+        Height = 173
+        Top = 267
+        Width = 779
         ActivePage = TabSheet5
+        BorderSpacing.Top = 10
         TabIndex = 0
         TabOrder = 5
         object TabSheet5: TTabSheet
           Caption = 'Pagador'
-          ClientHeight = 167
-          ClientWidth = 966
+          ClientHeight = 147
+          ClientWidth = 771
           ImageIndex = 1
           object Label28: TLabel
-            Left = 4
-            Height = 16
-            Top = 109
-            Width = 44
+            AnchorSideTop.Control = edtEndereco
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 13
+            Top = 93
+            Width = 33
+            BorderSpacing.Top = 5
             Caption = 'Cidade'
             ParentColor = False
           end
           object Label24: TLabel
-            Left = 4
-            Height = 16
-            Top = 56
-            Width = 59
+            AnchorSideTop.Control = edtNome
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 13
+            Top = 49
+            Width = 46
+            BorderSpacing.Top = 5
             Caption = 'Endereço'
             ParentColor = False
           end
           object Label21: TLabel
-            Left = 4
-            Height = 16
-            Top = 4
-            Width = 37
+            AnchorSideTop.Control = TabSheet5
+            Left = 3
+            Height = 13
+            Top = 5
+            Width = 28
+            BorderSpacing.Top = 5
             Caption = 'Nome'
             ParentColor = False
           end
           object Label22: TLabel
-            Left = 432
-            Height = 16
-            Top = 4
-            Width = 71
+            AnchorSideTop.Control = TabSheet5
+            Left = 346
+            Height = 13
+            Top = 5
+            Width = 58
+            BorderSpacing.Top = 5
             Caption = 'CPF / CNPJ'
             ParentColor = False
           end
           object Label25: TLabel
-            Left = 410
-            Height = 16
-            Top = 56
-            Width = 48
+            AnchorSideTop.Control = edtNome
+            AnchorSideTop.Side = asrBottom
+            Left = 328
+            Height = 13
+            Top = 49
+            Width = 37
+            BorderSpacing.Top = 5
             Caption = 'Número'
             ParentColor = False
           end
           object Label29: TLabel
-            Left = 380
-            Height = 16
-            Top = 109
-            Width = 27
+            AnchorSideTop.Control = edtEndereco
+            AnchorSideTop.Side = asrBottom
+            Left = 304
+            Height = 13
+            Top = 93
+            Width = 21
+            BorderSpacing.Top = 5
             Caption = 'CEP'
             ParentColor = False
           end
           object Label30: TLabel
-            Left = 480
-            Height = 16
-            Top = 109
-            Width = 18
+            AnchorSideTop.Control = edtEndereco
+            AnchorSideTop.Side = asrBottom
+            Left = 384
+            Height = 13
+            Top = 93
+            Width = 14
+            BorderSpacing.Top = 5
             Caption = 'UF'
             ParentColor = False
           end
           object Label26: TLabel
-            Left = 500
-            Height = 16
-            Top = 56
-            Width = 84
+            AnchorSideTop.Control = edtNome
+            AnchorSideTop.Side = asrBottom
+            Left = 400
+            Height = 13
+            Top = 49
+            Width = 64
+            BorderSpacing.Top = 5
             Caption = 'Complemento'
             ParentColor = False
           end
           object Label23: TLabel
-            Left = 631
-            Height = 16
-            Top = 4
-            Width = 38
+            AnchorSideTop.Control = TabSheet5
+            Left = 505
+            Height = 13
+            Top = 5
+            Width = 29
+            BorderSpacing.Top = 5
             Caption = 'E-Mail'
             ParentColor = False
           end
           object Label27: TLabel
-            Left = 731
-            Height = 16
-            Top = 56
-            Width = 36
+            AnchorSideTop.Control = edtNome
+            AnchorSideTop.Side = asrBottom
+            Left = 585
+            Height = 13
+            Top = 49
+            Width = 27
+            BorderSpacing.Top = 5
             Caption = 'Bairro'
             ParentColor = False
           end
           object edtCidade: TEdit
-            Left = 4
-            Height = 24
-            Top = 130
-            Width = 361
+            AnchorSideTop.Control = Label28
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 21
+            Top = 111
+            Width = 289
+            BorderSpacing.Top = 5
             TabOrder = 7
             Text = 'Tatui'
           end
           object edtEndereco: TEdit
-            Left = 4
-            Height = 24
-            Top = 78
-            Width = 391
+            AnchorSideTop.Control = Label24
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 21
+            Top = 67
+            Width = 313
+            BorderSpacing.Top = 5
             TabOrder = 3
             Text = 'Rua dos clientes'
           end
           object edtNome: TEdit
-            Left = 4
-            Height = 24
-            Top = 25
-            Width = 421
+            AnchorSideTop.Control = Label21
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 21
+            Top = 23
+            Width = 337
+            BorderSpacing.Top = 5
             TabOrder = 0
             Text = 'CLIENTE DE TESTES'
           end
           object edtCPFCNPJ: TEdit
-            Left = 432
-            Height = 24
-            Top = 25
-            Width = 191
+            AnchorSideTop.Control = Label22
+            AnchorSideTop.Side = asrBottom
+            Left = 346
+            Height = 21
+            Top = 23
+            Width = 153
+            BorderSpacing.Top = 5
             TabOrder = 1
             Text = '676.387.808-76'
           end
           object edtNumero: TEdit
-            Left = 410
-            Height = 24
-            Top = 78
-            Width = 81
+            AnchorSideTop.Control = Label25
+            AnchorSideTop.Side = asrBottom
+            Left = 328
+            Height = 21
+            Top = 67
+            Width = 65
+            BorderSpacing.Top = 5
             TabOrder = 4
             Text = '100'
           end
           object edtCEP: TEdit
-            Left = 380
-            Height = 24
-            Top = 130
-            Width = 91
+            AnchorSideTop.Control = Label28
+            AnchorSideTop.Side = asrBottom
+            Left = 304
+            Height = 21
+            Top = 111
+            Width = 73
+            BorderSpacing.Top = 5
             TabOrder = 8
             Text = '18270-000'
           end
           object edtUF: TEdit
-            Left = 480
-            Height = 24
-            Top = 130
-            Width = 41
+            AnchorSideTop.Control = Label28
+            AnchorSideTop.Side = asrBottom
+            Left = 384
+            Height = 21
+            Top = 111
+            Width = 33
+            BorderSpacing.Top = 5
             TabOrder = 9
             Text = 'SP'
           end
           object edtComplemento: TEdit
-            Left = 500
-            Height = 24
-            Top = 78
-            Width = 224
+            AnchorSideTop.Control = Label26
+            AnchorSideTop.Side = asrBottom
+            Left = 400
+            Height = 21
+            Top = 67
+            Width = 179
+            BorderSpacing.Top = 5
             TabOrder = 5
           end
           object edtEmail: TEdit
-            Left = 631
-            Height = 24
-            Top = 25
-            Width = 329
+            AnchorSideTop.Control = Label23
+            AnchorSideTop.Side = asrBottom
+            Left = 505
+            Height = 21
+            Top = 23
+            Width = 263
+            BorderSpacing.Top = 5
             TabOrder = 2
             Text = 'testes@testes.com'
           end
           object edtBairro: TEdit
-            Left = 731
-            Height = 24
-            Top = 78
-            Width = 229
+            AnchorSideTop.Control = Label27
+            AnchorSideTop.Side = asrBottom
+            Left = 585
+            Height = 21
+            Top = 67
+            Width = 183
+            BorderSpacing.Top = 5
             TabOrder = 6
             Text = 'Centro'
           end
         end
         object TabSheet4: TTabSheet
           Caption = 'Beneficiário'
-          ClientHeight = 167
-          ClientWidth = 966
+          ClientHeight = 147
+          ClientWidth = 771
           object Label53: TLabel
-            Left = 4
-            Height = 16
-            Top = 4
-            Width = 37
+            AnchorSideTop.Control = TabSheet4
+            Left = 3
+            Height = 13
+            Top = 5
+            Width = 28
+            BorderSpacing.Top = 5
             Caption = 'Nome'
             ParentColor = False
           end
           object Label54: TLabel
-            Left = 432
-            Height = 16
-            Top = 4
-            Width = 71
+            AnchorSideTop.Control = TabSheet4
+            Left = 346
+            Height = 13
+            Top = 5
+            Width = 58
+            BorderSpacing.Top = 5
             Caption = 'CPF / CNPJ'
             ParentColor = False
           end
           object Label55: TLabel
-            Left = 4
-            Height = 16
-            Top = 56
-            Width = 59
+            AnchorSideTop.Control = edtBenifRazao
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 13
+            Top = 49
+            Width = 46
+            BorderSpacing.Top = 5
             Caption = 'Endereço'
             ParentColor = False
           end
           object Label56: TLabel
-            Left = 410
-            Height = 16
-            Top = 56
-            Width = 48
+            AnchorSideTop.Control = edtBenifRazao
+            AnchorSideTop.Side = asrBottom
+            Left = 328
+            Height = 13
+            Top = 49
+            Width = 37
+            BorderSpacing.Top = 5
             Caption = 'Número'
             ParentColor = False
           end
           object Label57: TLabel
-            Left = 500
-            Height = 16
-            Top = 56
-            Width = 84
+            AnchorSideTop.Control = edtBenifRazao
+            AnchorSideTop.Side = asrBottom
+            Left = 400
+            Height = 13
+            Top = 49
+            Width = 64
+            BorderSpacing.Top = 5
             Caption = 'Complemento'
             ParentColor = False
           end
           object Label58: TLabel
-            Left = 731
-            Height = 16
-            Top = 56
-            Width = 36
+            AnchorSideTop.Control = edtBenifRazao
+            AnchorSideTop.Side = asrBottom
+            Left = 585
+            Height = 13
+            Top = 49
+            Width = 27
+            BorderSpacing.Top = 5
             Caption = 'Bairro'
             ParentColor = False
           end
           object Label59: TLabel
-            Left = 4
-            Height = 16
-            Top = 109
-            Width = 44
+            AnchorSideTop.Control = edtBenifEndereco
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 13
+            Top = 93
+            Width = 33
+            BorderSpacing.Top = 5
             Caption = 'Cidade'
             ParentColor = False
           end
           object Label60: TLabel
-            Left = 380
-            Height = 16
-            Top = 109
-            Width = 27
+            AnchorSideTop.Control = edtBenifEndereco
+            AnchorSideTop.Side = asrBottom
+            Left = 304
+            Height = 13
+            Top = 93
+            Width = 21
+            BorderSpacing.Top = 5
             Caption = 'CEP'
             ParentColor = False
           end
           object Label61: TLabel
-            Left = 480
-            Height = 16
-            Top = 109
-            Width = 18
+            AnchorSideTop.Control = edtBenifEndereco
+            AnchorSideTop.Side = asrBottom
+            Left = 384
+            Height = 13
+            Top = 93
+            Width = 14
+            BorderSpacing.Top = 5
             Caption = 'UF'
             ParentColor = False
           end
           object Label62: TLabel
-            Left = 625
-            Height = 16
-            Top = 4
-            Width = 52
+            AnchorSideTop.Control = TabSheet4
+            Left = 500
+            Height = 13
+            Top = 5
+            Width = 40
+            BorderSpacing.Top = 5
             Caption = 'Fantasia'
             ParentColor = False
           end
           object Label63: TLabel
-            Left = 529
-            Height = 16
-            Top = 109
-            Width = 54
+            AnchorSideTop.Control = edtBenifEndereco
+            AnchorSideTop.Side = asrBottom
+            Left = 423
+            Height = 13
+            Top = 93
+            Width = 42
+            BorderSpacing.Top = 5
             Caption = 'Telefone'
             ParentColor = False
           end
           object edtBenifRazao: TEdit
-            Left = 4
-            Height = 24
-            Top = 25
-            Width = 421
+            AnchorSideTop.Control = Label53
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 21
+            Top = 23
+            Width = 337
+            BorderSpacing.Top = 5
             TabOrder = 0
             Text = 'EMPRESA DE TESTES'
           end
           object edtBenifCNPJ: TEdit
-            Left = 432
-            Height = 24
-            Top = 25
-            Width = 191
+            AnchorSideTop.Control = Label53
+            AnchorSideTop.Side = asrBottom
+            Left = 346
+            Height = 21
+            Top = 23
+            Width = 153
+            BorderSpacing.Top = 5
             TabOrder = 1
             Text = '99.999.999/9999-62'
           end
           object edtBenifEndereco: TEdit
-            Left = 4
-            Height = 24
-            Top = 78
-            Width = 391
+            AnchorSideTop.Control = Label55
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 21
+            Top = 67
+            Width = 313
+            BorderSpacing.Top = 5
             TabOrder = 3
             Text = 'Rua das Empresas'
           end
           object edtBenifNum: TEdit
-            Left = 410
-            Height = 24
-            Top = 78
-            Width = 81
+            AnchorSideTop.Control = Label55
+            AnchorSideTop.Side = asrBottom
+            Left = 328
+            Height = 21
+            Top = 67
+            Width = 65
+            BorderSpacing.Top = 5
             TabOrder = 4
             Text = '100'
           end
           object edtBenifComplemento: TEdit
-            Left = 500
-            Height = 24
-            Top = 78
-            Width = 224
+            AnchorSideTop.Control = Label55
+            AnchorSideTop.Side = asrBottom
+            Left = 400
+            Height = 21
+            Top = 67
+            Width = 179
+            BorderSpacing.Top = 5
             TabOrder = 5
             Text = 'Compl'
           end
           object edtBenifBairro: TEdit
-            Left = 725
-            Height = 24
-            Top = 78
-            Width = 229
+            AnchorSideTop.Control = Label55
+            AnchorSideTop.Side = asrBottom
+            Left = 580
+            Height = 21
+            Top = 67
+            Width = 183
+            BorderSpacing.Top = 5
             TabOrder = 6
             Text = 'Centro'
           end
           object edtBenifCidade: TEdit
-            Left = 4
-            Height = 24
-            Top = 125
-            Width = 361
+            AnchorSideTop.Control = Label59
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 21
+            Top = 111
+            Width = 289
+            BorderSpacing.Top = 5
             TabOrder = 7
             Text = 'Tatui'
           end
           object edtBenifCEP: TEdit
-            Left = 380
-            Height = 24
-            Top = 125
-            Width = 91
+            AnchorSideTop.Control = Label59
+            AnchorSideTop.Side = asrBottom
+            Left = 304
+            Height = 21
+            Top = 111
+            Width = 73
+            BorderSpacing.Top = 5
             TabOrder = 8
             Text = '18270-000'
           end
           object edtBenifUF: TEdit
-            Left = 480
-            Height = 24
-            Top = 125
-            Width = 41
+            AnchorSideTop.Control = Label59
+            AnchorSideTop.Side = asrBottom
+            Left = 384
+            Height = 21
+            Top = 111
+            Width = 33
+            BorderSpacing.Top = 5
             TabOrder = 9
             Text = 'SP'
           end
           object edtBenifFantasia: TEdit
-            Left = 625
-            Height = 24
-            Top = 25
-            Width = 329
+            AnchorSideTop.Control = Label53
+            AnchorSideTop.Side = asrBottom
+            Left = 500
+            Height = 21
+            Top = 23
+            Width = 263
+            BorderSpacing.Top = 5
             TabOrder = 2
             Text = 'A Empresa'
           end
           object edtBenifTelefone: TEdit
-            Left = 529
-            Height = 24
-            Top = 125
-            Width = 224
+            AnchorSideTop.Control = Label59
+            AnchorSideTop.Side = asrBottom
+            Left = 423
+            Height = 21
+            Top = 111
+            Width = 179
+            BorderSpacing.Top = 5
             TabOrder = 10
             Text = '(11) 99999-9999'
           end
         end
       end
       object GroupBox6: TGroupBox
-        Left = 230
-        Height = 76
-        Top = 570
-        Width = 745
+        AnchorSideTop.Control = PageControl2
+        AnchorSideTop.Side = asrBottom
+        Left = 184
+        Height = 61
+        Top = 450
+        Width = 596
+        BorderSpacing.Top = 10
         Caption = 'Impressão / Email '
-        ClientHeight = 55
-        ClientWidth = 741
+        ClientHeight = 43
+        ClientWidth = 592
         TabOrder = 6
         object btnImpressaoHTML: TButton
-          Left = 18
-          Height = 31
-          Top = 9
-          Width = 94
+          AnchorSideTop.Control = GroupBox6
+          Left = 14
+          Height = 25
+          Top = 6
+          Width = 75
+          BorderSpacing.Top = 6
           Caption = 'Gerar HTML'
           OnClick = btnImpressaoHTMLClick
           TabOrder = 0
         end
         object btnImpressaoPDF: TButton
-          Left = 116
-          Height = 31
-          Top = 9
-          Width = 94
+          AnchorSideTop.Control = GroupBox6
+          Left = 93
+          Height = 25
+          Top = 6
+          Width = 75
+          BorderSpacing.Top = 6
           Caption = 'Gerar PDF'
           OnClick = btnImpressaoPDFClick
           TabOrder = 1
         end
         object btnImpressaoSpooler: TButton
-          Left = 594
-          Height = 31
-          Top = 9
-          Width = 122
+          AnchorSideTop.Control = GroupBox6
+          Left = 475
+          Height = 25
+          Top = 6
+          Width = 98
+          BorderSpacing.Top = 6
           Caption = 'Imprimir'
           OnClick = btnImpressaoSpoolerClick
           TabOrder = 3
         end
         object btnEnviarEmail: TButton
-          Left = 368
-          Height = 31
-          Top = 9
-          Width = 94
+          AnchorSideTop.Control = GroupBox6
+          Left = 294
+          Height = 25
+          Top = 6
+          Width = 75
+          BorderSpacing.Top = 6
           Caption = 'Enviar Email'
           OnClick = btnEnviarEmailClick
           TabOrder = 2
         end
         object btnImpressaoStream: TButton
-          Left = 466
-          Height = 31
-          Top = 9
-          Width = 122
+          AnchorSideTop.Control = GroupBox6
+          Left = 373
+          Height = 25
+          Top = 6
+          Width = 98
+          BorderSpacing.Top = 6
           Caption = 'Imprimir Stream'
           OnClick = btnImpressaoStreamClick
           TabOrder = 4
         end
         object btnImpressaoPDFIndividual: TButton
-          Left = 214
-          Height = 31
-          Top = 9
-          Width = 152
+          AnchorSideTop.Control = GroupBox6
+          Left = 171
+          Height = 25
+          Top = 6
+          Width = 122
+          BorderSpacing.Top = 6
           Caption = 'Gerar PDF Individual'
           OnClick = btnImpressaoPDFIndividualClick
           TabOrder = 5
         end
       end
+      object Label31: TLabel
+        AnchorSideTop.Control = PageControl2
+        AnchorSideTop.Side = asrBottom
+        Left = 3
+        Height = 13
+        Top = 450
+        Width = 101
+        BorderSpacing.Top = 10
+        Caption = 'LayOut Fortes Report'
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
+      end
     end
     object TabSheet2: TTabSheet
       Caption = 'Conf. Carteira'
-      ClientHeight = 667
-      ClientWidth = 1221
+      ClientHeight = 545
+      ClientWidth = 800
       ImageIndex = 1
       object Label65: TLabel
-        Left = 319
-        Height = 16
-        Top = 519
-        Width = 157
+        AnchorSideTop.Control = GroupBox14
+        AnchorSideTop.Side = asrBottom
+        Left = 304
+        Height = 13
+        Top = 430
+        Width = 123
+        BorderSpacing.Top = 5
         Caption = 'Path Arquivo de Remessa'
         ParentColor = False
       end
       object Label66: TLabel
-        Left = 319
-        Height = 16
-        Top = 566
-        Width = 156
+        AnchorSideTop.Control = edtPathRemessa
+        AnchorSideTop.Side = asrBottom
+        Left = 304
+        Height = 13
+        Top = 479
+        Width = 126
+        BorderSpacing.Top = 10
         Caption = 'Path de Retorno + Arquivo'
         ParentColor = False
       end
       object GroupBox1: TGroupBox
         Left = 0
-        Height = 146
-        Top = 4
-        Width = 981
+        Height = 117
+        Top = 3
+        Width = 785
         Caption = 'Informações Sobre a Cobrança'
-        ClientHeight = 125
-        ClientWidth = 977
+        ClientHeight = 99
+        ClientWidth = 781
         TabOrder = 0
         object Label1: TLabel
-          Left = 10
-          Height = 16
-          Top = 11
-          Width = 227
+          AnchorSideTop.Control = GroupBox1
+          Left = 8
+          Height = 13
+          Top = 0
+          Width = 177
           Caption = 'Mensagem para Local de Pagamento'
           ParentColor = False
         end
         object Label2: TLabel
-          Left = 479
-          Height = 16
-          Top = 11
-          Width = 89
+          AnchorSideTop.Control = GroupBox1
+          Left = 383
+          Height = 13
+          Top = 0
+          Width = 70
           Caption = 'Espécie Docto'
           ParentColor = False
         end
         object Label3: TLabel
-          Left = 579
-          Height = 16
-          Top = 11
-          Width = 96
+          AnchorSideTop.Control = GroupBox1
+          Left = 463
+          Height = 13
+          Top = 0
+          Width = 74
           Caption = 'Espécie Moeda'
           ParentColor = False
         end
         object Label4: TLabel
-          Left = 680
-          Height = 16
-          Top = 11
-          Width = 38
+          AnchorSideTop.Control = GroupBox1
+          Left = 544
+          Height = 13
+          Top = 0
+          Width = 30
           Caption = 'Aceite'
           ParentColor = False
         end
         object Label5: TLabel
-          Left = 766
-          Height = 16
-          Top = 10
-          Width = 47
+          AnchorSideTop.Control = GroupBox1
+          Left = 613
+          Height = 13
+          Top = 0
+          Width = 36
           Caption = 'Carteira'
           ParentColor = False
         end
         object Label32: TLabel
-          Left = 10
-          Height = 16
-          Top = 64
-          Width = 39
+          AnchorSideTop.Control = edtLocalPag
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 13
+          Top = 42
+          Width = 31
+          BorderSpacing.Top = 5
           Caption = 'Banco'
           ParentColor = False
         end
         object Label49: TLabel
-          Left = 319
-          Height = 16
-          Top = 64
-          Width = 102
+          AnchorSideTop.Control = edtLocalPag
+          AnchorSideTop.Side = asrBottom
+          Left = 255
+          Height = 13
+          Top = 42
+          Width = 79
+          BorderSpacing.Top = 5
           Caption = 'Tipo Distribuição'
           ParentColor = False
         end
         object Label51: TLabel
-          Left = 639
-          Height = 16
-          Top = 64
-          Width = 137
+          AnchorSideTop.Control = edtLocalPag
+          AnchorSideTop.Side = asrBottom
+          Left = 511
+          Height = 13
+          Top = 42
+          Width = 104
+          BorderSpacing.Top = 5
           Caption = 'Responsável Emissão'
           ParentColor = False
         end
         object Label52: TLabel
-          Left = 799
-          Height = 16
-          Top = 64
-          Width = 97
+          AnchorSideTop.Control = edtLocalPag
+          AnchorSideTop.Side = asrBottom
+          Left = 639
+          Height = 13
+          Top = 42
+          Width = 75
+          BorderSpacing.Top = 5
           Caption = 'Tipo da Carteira'
           ParentColor = False
         end
         object Label64: TLabel
-          Left = 825
-          Height = 16
-          Top = 10
-          Width = 119
+          AnchorSideTop.Control = GroupBox1
+          Left = 660
+          Height = 13
+          Top = 0
+          Width = 94
           Caption = 'Tipo da Documento'
           ParentColor = False
         end
         object Label50: TLabel
-          Left = 479
-          Height = 16
-          Top = 64
-          Width = 75
+          AnchorSideTop.Control = edtLocalPag
+          AnchorSideTop.Side = asrBottom
+          Left = 383
+          Height = 13
+          Top = 42
+          Width = 60
+          BorderSpacing.Top = 5
           Caption = 'Carac. Titulo'
           ParentColor = False
         end
         object edtLocalPag: TEdit
-          Left = 10
-          Height = 24
-          Top = 31
-          Width = 461
+          AnchorSideTop.Control = Label1
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 16
+          Width = 369
+          BorderSpacing.Top = 3
           TabOrder = 2
           Text = 'Pagar preferêncialmente nas agências do Bradesco'
         end
         object edtEspecieDoc: TEdit
-          Left = 479
-          Height = 24
-          Top = 31
-          Width = 91
+          AnchorSideTop.Control = Label1
+          AnchorSideTop.Side = asrBottom
+          Left = 383
+          Height = 21
+          Top = 16
+          Width = 73
+          BorderSpacing.Top = 3
           TabOrder = 3
           Text = 'DM'
         end
         object edtEspecieMod: TEdit
-          Left = 579
-          Height = 24
-          Top = 31
-          Width = 95
+          AnchorSideTop.Control = Label1
+          AnchorSideTop.Side = asrBottom
+          Left = 463
+          Height = 21
+          Top = 16
+          Width = 76
+          BorderSpacing.Top = 3
           TabOrder = 4
           Text = '$'
         end
         object cbxAceite: TComboBox
-          Left = 680
-          Height = 24
-          Top = 31
-          Width = 79
-          ItemHeight = 16
+          AnchorSideTop.Control = Label1
+          AnchorSideTop.Side = asrBottom
+          Left = 544
+          Height = 21
+          Top = 16
+          Width = 63
+          BorderSpacing.Top = 3
+          ItemHeight = 13
           ItemIndex = 0
           Items.Strings = (
             'Sim'
@@ -940,131 +1221,173 @@ object frmDemo: TfrmDemo
           Text = 'Sim'
         end
         object edtCarteira: TEdit
-          Left = 766
-          Height = 24
-          Top = 30
-          Width = 51
+          AnchorSideTop.Control = Label1
+          AnchorSideTop.Side = asrBottom
+          Left = 613
+          Height = 21
+          Top = 16
+          Width = 41
+          BorderSpacing.Top = 3
           TabOrder = 0
           Text = '09'
         end
         object cbxBanco: TComboBox
-          Left = 10
-          Height = 24
-          Top = 88
-          Width = 301
-          ItemHeight = 16
+          AnchorSideTop.Control = Label32
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 60
+          Width = 241
+          BorderSpacing.Top = 5
+          ItemHeight = 13
           Style = csDropDownList
           TabOrder = 6
         end
         object cbxTipoDistribuicao: TComboBox
-          Left = 319
-          Height = 24
-          Top = 88
-          Width = 152
-          ItemHeight = 16
+          AnchorSideTop.Control = Label32
+          AnchorSideTop.Side = asrBottom
+          Left = 255
+          Height = 21
+          Top = 60
+          Width = 122
+          BorderSpacing.Top = 5
+          ItemHeight = 13
           Style = csDropDownList
           TabOrder = 7
         end
         object cbxResponsavelEmissao: TComboBox
-          Left = 639
-          Height = 24
-          Top = 88
-          Width = 152
-          ItemHeight = 16
+          AnchorSideTop.Control = Label32
+          AnchorSideTop.Side = asrBottom
+          Left = 511
+          Height = 21
+          Top = 60
+          Width = 122
+          BorderSpacing.Top = 5
+          ItemHeight = 13
           Style = csDropDownList
           TabOrder = 9
         end
         object cbxTipoCarteira: TComboBox
-          Left = 799
-          Height = 24
-          Top = 88
-          Width = 152
-          ItemHeight = 16
+          AnchorSideTop.Control = Label32
+          AnchorSideTop.Side = asrBottom
+          Left = 639
+          Height = 21
+          Top = 60
+          Width = 122
+          BorderSpacing.Top = 5
+          ItemHeight = 13
           Style = csDropDownList
           TabOrder = 10
         end
         object cbxTipoDocumento: TComboBox
-          Left = 825
-          Height = 24
-          Top = 30
-          Width = 126
-          ItemHeight = 16
+          AnchorSideTop.Control = Label1
+          AnchorSideTop.Side = asrBottom
+          Left = 660
+          Height = 21
+          Top = 16
+          Width = 101
+          BorderSpacing.Top = 3
+          ItemHeight = 13
           Style = csDropDownList
           TabOrder = 1
         end
         object cbxCaracteristicaTitulo: TComboBox
-          Left = 479
-          Height = 24
-          Top = 88
-          Width = 152
-          ItemHeight = 16
+          AnchorSideTop.Control = Label32
+          AnchorSideTop.Side = asrBottom
+          Left = 383
+          Height = 21
+          Top = 60
+          Width = 122
+          BorderSpacing.Top = 5
+          ItemHeight = 13
           Style = csDropDownList
           TabOrder = 8
         end
       end
       object GroupBox10: TGroupBox
+        AnchorSideTop.Control = GroupBox1
+        AnchorSideTop.Side = asrBottom
         Left = 0
-        Height = 202
-        Top = 162
-        Width = 311
+        Height = 177
+        Top = 125
+        Width = 249
+        BorderSpacing.Top = 5
         Caption = 'CNAB'
-        ClientHeight = 181
-        ClientWidth = 307
+        ClientHeight = 159
+        ClientWidth = 245
         TabOrder = 1
         object Label33: TLabel
-          Left = 10
-          Height = 16
-          Top = 0
-          Width = 84
+          AnchorSideTop.Control = GroupBox10
+          Left = 8
+          Height = 13
+          Top = 3
+          Width = 65
+          BorderSpacing.Top = 3
           Caption = 'Versão CNAB'
           ParentColor = False
         end
         object Label34: TLabel
-          Left = 122
-          Height = 16
-          Top = 0
-          Width = 51
+          AnchorSideTop.Control = GroupBox10
+          Left = 98
+          Height = 13
+          Top = 3
+          Width = 43
+          BorderSpacing.Top = 3
           Caption = 'L.V. Lote'
           ParentColor = False
         end
         object Label35: TLabel
-          Left = 212
-          Height = 16
-          Top = 0
-          Width = 71
+          AnchorSideTop.Control = GroupBox10
+          Left = 170
+          Height = 13
+          Top = 3
+          Width = 58
+          BorderSpacing.Top = 3
           Caption = 'L.V. Arquivo'
           ParentColor = False
         end
         object Label45: TLabel
-          Left = 10
-          Height = 16
-          Top = 58
-          Width = 145
+          AnchorSideTop.Control = cbxCNAB
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 13
+          Top = 47
+          Width = 110
+          BorderSpacing.Top = 5
           Caption = 'Codigo de Transmissão'
           ParentColor = False
         end
         object Label46: TLabel
-          Left = 155
-          Height = 16
-          Top = 58
-          Width = 130
+          AnchorSideTop.Control = cbxCNAB
+          AnchorSideTop.Side = asrBottom
+          Left = 124
+          Height = 13
+          Top = 47
+          Width = 101
+          BorderSpacing.Top = 5
           Caption = 'Densidade Gravação'
           ParentColor = False
         end
         object Label37: TLabel
-          Left = 10
-          Height = 16
-          Top = 118
-          Width = 95
+          AnchorSideTop.Control = edtCodigoTransmissao
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 13
+          Top = 96
+          Width = 73
+          BorderSpacing.Top = 10
           Caption = 'Prefix Remessa'
           ParentColor = False
         end
         object cbxCNAB: TComboBox
-          Left = 10
-          Height = 24
-          Top = 24
-          Width = 105
-          ItemHeight = 16
+          AnchorSideTop.Control = Label33
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 21
+          Width = 84
+          BorderSpacing.Top = 5
+          ItemHeight = 13
           Items.Strings = (
             'CNAB400'
             'CNAB240'
@@ -1073,365 +1396,515 @@ object frmDemo: TfrmDemo
           TabOrder = 0
         end
         object edtCNABLVLote: TEdit
-          Left = 122
-          Height = 24
-          Top = 24
-          Width = 82
+          AnchorSideTop.Control = Label33
+          AnchorSideTop.Side = asrBottom
+          Left = 98
+          Height = 21
+          Top = 21
+          Width = 66
+          BorderSpacing.Top = 5
           TabOrder = 1
         end
         object edtCNABLVArquivo: TEdit
-          Left = 212
-          Height = 24
-          Top = 24
-          Width = 74
+          AnchorSideTop.Control = Label33
+          AnchorSideTop.Side = asrBottom
+          Left = 170
+          Height = 21
+          Top = 21
+          Width = 59
+          BorderSpacing.Top = 5
           TabOrder = 2
         end
         object edtCodigoTransmissao: TEdit
-          Left = 10
-          Height = 24
-          Top = 81
-          Width = 138
+          AnchorSideTop.Control = Label45
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 65
+          Width = 110
+          BorderSpacing.Top = 5
           TabOrder = 3
         end
         object edtDensidadeGravacao: TEdit
-          Left = 155
-          Height = 24
-          Top = 81
-          Width = 126
+          AnchorSideTop.Control = Label45
+          AnchorSideTop.Side = asrBottom
+          Left = 124
+          Height = 21
+          Top = 65
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 4
         end
         object edtPrefixRemessa: TEdit
-          Left = 10
-          Height = 24
-          Top = 141
-          Width = 126
+          AnchorSideTop.Control = Label37
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 114
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 5
         end
       end
       object GroupBox11: TGroupBox
+        AnchorSideTop.Control = GroupBox10
+        AnchorSideTop.Side = asrBottom
         Left = 0
-        Height = 88
-        Top = 372
-        Width = 311
+        Height = 70
+        Top = 307
+        Width = 249
+        BorderSpacing.Top = 5
         Caption = 'Outras Configurações'
-        ClientHeight = 67
-        ClientWidth = 307
+        ClientHeight = 52
+        ClientWidth = 245
         TabOrder = 2
         object Label36: TLabel
-          Left = 10
-          Height = 16
-          Top = 0
-          Width = 21
+          AnchorSideTop.Control = GroupBox11
+          Left = 8
+          Height = 13
+          Top = 5
+          Width = 17
+          BorderSpacing.Top = 5
           Caption = 'CIP'
           ParentColor = False
         end
         object edtCIP: TEdit
-          Left = 10
-          Height = 24
-          Top = 24
-          Width = 82
+          AnchorSideTop.Control = Label36
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 21
+          Top = 23
+          Width = 66
+          BorderSpacing.Top = 5
           TabOrder = 0
         end
       end
       object GroupBox12: TGroupBox
-        Left = 319
-        Height = 219
-        Top = 162
-        Width = 662
+        AnchorSideLeft.Control = GroupBox10
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = GroupBox1
+        AnchorSideTop.Side = asrBottom
+        Left = 254
+        Height = 177
+        Top = 125
+        Width = 530
+        BorderSpacing.Left = 5
+        BorderSpacing.Top = 5
         Caption = 'Beneficiario'
-        ClientHeight = 198
-        ClientWidth = 658
+        ClientHeight = 159
+        ClientWidth = 526
         TabOrder = 3
         object Label38: TLabel
-          Left = 20
-          Height = 16
-          Top = 0
-          Width = 50
+          AnchorSideTop.Control = GroupBox12
+          Left = 16
+          Height = 13
+          Top = 3
+          Width = 39
+          BorderSpacing.Top = 3
           Caption = 'Agencia'
           ParentColor = False
         end
         object Label39: TLabel
-          Left = 154
-          Height = 16
-          Top = 0
-          Width = 72
+          AnchorSideTop.Control = GroupBox12
+          Left = 123
+          Height = 13
+          Top = 3
+          Width = 57
+          BorderSpacing.Top = 3
           Caption = 'Agencia DV'
           ParentColor = False
         end
         object Label40: TLabel
-          Left = 288
-          Height = 16
-          Top = 0
-          Width = 35
+          AnchorSideTop.Control = GroupBox12
+          Left = 230
+          Height = 13
+          Top = 3
+          Width = 28
+          BorderSpacing.Top = 3
           Caption = 'Conta'
           ParentColor = False
         end
         object Label41: TLabel
-          Left = 421
-          Height = 16
-          Top = 0
-          Width = 57
+          AnchorSideTop.Control = GroupBox12
+          Left = 337
+          Height = 13
+          Top = 3
+          Width = 46
+          BorderSpacing.Top = 3
           Caption = 'Conta DV'
           ParentColor = False
         end
         object Label42: TLabel
-          Left = 20
-          Height = 16
-          Top = 64
-          Width = 104
+          AnchorSideTop.Control = edtAgencia
+          AnchorSideTop.Side = asrBottom
+          Left = 16
+          Height = 13
+          Top = 47
+          Width = 82
+          BorderSpacing.Top = 5
           Caption = 'AgenciaContaDV'
           ParentColor = False
         end
         object Label43: TLabel
-          Left = 154
-          Height = 16
-          Top = 64
-          Width = 57
+          AnchorSideTop.Control = edtAgencia
+          AnchorSideTop.Side = asrBottom
+          Left = 123
+          Height = 13
+          Top = 47
+          Width = 45
+          BorderSpacing.Top = 5
           Caption = 'Convenio'
           ParentColor = False
         end
         object Label44: TLabel
-          Left = 288
-          Height = 16
-          Top = 64
-          Width = 73
+          AnchorSideTop.Control = edtAgencia
+          AnchorSideTop.Side = asrBottom
+          Left = 230
+          Height = 13
+          Top = 47
+          Width = 55
+          BorderSpacing.Top = 5
           Caption = 'Modalidade'
           ParentColor = False
         end
         object Label47: TLabel
-          Left = 421
-          Height = 16
-          Top = 64
-          Width = 61
+          AnchorSideTop.Control = edtAgencia
+          AnchorSideTop.Side = asrBottom
+          Left = 337
+          Height = 13
+          Top = 47
+          Width = 47
+          BorderSpacing.Top = 5
           Caption = 'Operação'
           ParentColor = False
         end
         object Label48: TLabel
-          Left = 20
-          Height = 16
-          Top = 132
-          Width = 82
+          AnchorSideTop.Control = edtAgenciaContaDV
+          AnchorSideTop.Side = asrBottom
+          Left = 16
+          Height = 13
+          Top = 96
+          Width = 65
+          BorderSpacing.Top = 10
           Caption = 'Cód. Cedente'
           ParentColor = False
         end
         object edtAgencia: TEdit
-          Left = 20
-          Height = 24
-          Top = 24
-          Width = 126
+          AnchorSideTop.Control = Label38
+          AnchorSideTop.Side = asrBottom
+          Left = 16
+          Height = 21
+          Top = 21
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 0
         end
         object edtAgenciaDV: TEdit
-          Left = 154
-          Height = 24
-          Top = 24
-          Width = 126
+          AnchorSideTop.Control = Label38
+          AnchorSideTop.Side = asrBottom
+          Left = 123
+          Height = 21
+          Top = 21
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 1
         end
         object edtConta: TEdit
-          Left = 288
-          Height = 24
-          Top = 24
-          Width = 126
+          AnchorSideTop.Control = Label38
+          AnchorSideTop.Side = asrBottom
+          Left = 230
+          Height = 21
+          Top = 21
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 2
         end
         object edtContaDV: TEdit
-          Left = 421
-          Height = 24
-          Top = 24
-          Width = 126
+          AnchorSideTop.Control = Label38
+          AnchorSideTop.Side = asrBottom
+          Left = 337
+          Height = 21
+          Top = 21
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 3
         end
         object edtAgenciaContaDV: TEdit
-          Left = 20
-          Height = 24
-          Top = 88
-          Width = 126
+          AnchorSideTop.Control = Label42
+          AnchorSideTop.Side = asrBottom
+          Left = 16
+          Height = 21
+          Top = 65
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 4
         end
         object edtConvenio: TEdit
-          Left = 154
-          Height = 24
-          Top = 88
-          Width = 126
+          AnchorSideTop.Control = Label42
+          AnchorSideTop.Side = asrBottom
+          Left = 123
+          Height = 21
+          Top = 65
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 5
         end
         object edtModalidade: TEdit
-          Left = 288
-          Height = 24
-          Top = 88
-          Width = 126
+          AnchorSideTop.Control = Label42
+          AnchorSideTop.Side = asrBottom
+          Left = 230
+          Height = 21
+          Top = 65
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 6
         end
         object edtOperacao: TEdit
-          Left = 421
-          Height = 24
-          Top = 88
-          Width = 126
+          AnchorSideTop.Control = Label42
+          AnchorSideTop.Side = asrBottom
+          Left = 337
+          Height = 21
+          Top = 65
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 7
         end
         object edtCodigoCedente: TEdit
-          Left = 20
-          Height = 24
-          Top = 156
-          Width = 126
+          AnchorSideTop.Control = Label48
+          AnchorSideTop.Side = asrBottom
+          Left = 16
+          Height = 21
+          Top = 114
+          Width = 101
+          BorderSpacing.Top = 5
           TabOrder = 8
         end
       end
       object ckbEmHomologacao: TCheckBox
-        Left = 14
-        Height = 23
-        Top = 479
-        Width = 175
+        AnchorSideLeft.Control = TabSheet2
+        AnchorSideTop.Control = GroupBox11
+        AnchorSideTop.Side = asrBottom
+        Left = 10
+        Height = 19
+        Top = 397
+        Width = 136
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 20
         Caption = 'Boleto em Homologação'
         TabOrder = 4
       end
       object ckbImprimirMensagemPadrao: TCheckBox
-        Left = 14
-        Height = 23
-        Top = 508
-        Width = 274
+        AnchorSideLeft.Control = TabSheet2
+        AnchorSideTop.Control = ckbEmHomologacao
+        AnchorSideTop.Side = asrBottom
+        Left = 10
+        Height = 19
+        Top = 419
+        Width = 217
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 3
         Caption = 'Imprimir Msg. Padrão Componente/Banco'
         TabOrder = 5
       end
       object ckbLerCedenteArquivoRetorno: TCheckBox
-        Left = 14
-        Height = 23
-        Top = 536
-        Width = 194
+        AnchorSideLeft.Control = TabSheet2
+        AnchorSideTop.Control = ckbImprimirMensagemPadrao
+        AnchorSideTop.Side = asrBottom
+        Left = 10
+        Height = 19
+        Top = 441
+        Width = 156
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 3
         Caption = 'Ler Cedente do Arq. Retorno'
         TabOrder = 6
       end
       object ckbLerNossoNumeroCompleto: TCheckBox
-        Left = 14
-        Height = 23
-        Top = 562
-        Width = 198
+        AnchorSideLeft.Control = TabSheet2
+        AnchorSideTop.Control = ckbLerCedenteArquivoRetorno
+        AnchorSideTop.Side = asrBottom
+        Left = 10
+        Height = 19
+        Top = 463
+        Width = 155
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 3
         Caption = 'Ler Nosso Número Completo'
         TabOrder = 7
       end
       object ckbRemoverAcentuacaoRemessa: TCheckBox
-        Left = 14
-        Height = 23
-        Top = 591
-        Width = 217
+        AnchorSideLeft.Control = TabSheet2
+        AnchorSideTop.Control = ckbLerNossoNumeroCompleto
+        AnchorSideTop.Side = asrBottom
+        Left = 10
+        Height = 19
+        Top = 485
+        Width = 171
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 3
         Caption = 'Remover Acentuação Remessa'
         TabOrder = 8
       end
       object GroupBox14: TGroupBox
-        Left = 319
-        Height = 131
-        Top = 386
-        Width = 662
+        AnchorSideLeft.Control = GroupBox10
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = GroupBox12
+        AnchorSideTop.Side = asrBottom
+        Left = 254
+        Height = 118
+        Top = 307
+        Width = 530
+        BorderSpacing.Left = 5
+        BorderSpacing.Top = 5
         Caption = 'WebServices '
-        ClientHeight = 110
-        ClientWidth = 658
+        ClientHeight = 100
+        ClientWidth = 526
         TabOrder = 9
         object Label67: TLabel
-          Left = 14
-          Height = 16
-          Top = 0
-          Width = 46
+          AnchorSideTop.Control = GroupBox14
+          Left = 11
+          Height = 13
+          Top = 3
+          Width = 37
+          BorderSpacing.Top = 3
           Caption = 'ClientID'
           ParentColor = False
         end
         object Label68: TLabel
-          Left = 226
-          Height = 16
-          Top = 0
-          Width = 72
+          AnchorSideTop.Control = GroupBox14
+          Left = 181
+          Height = 13
+          Top = 3
+          Width = 57
+          BorderSpacing.Top = 3
           Caption = 'ClientSecret'
           ParentColor = False
         end
         object Label69: TLabel
-          Left = 439
-          Height = 16
-          Top = 0
-          Width = 52
+          AnchorSideTop.Control = GroupBox14
+          Left = 351
+          Height = 13
+          Top = 3
+          Width = 40
+          BorderSpacing.Top = 3
           Caption = 'KeyUser'
           ParentColor = False
         end
         object Label70: TLabel
-          Left = 439
-          Height = 16
-          Top = 51
-          Width = 46
+          AnchorSideTop.Control = edtClientID
+          AnchorSideTop.Side = asrBottom
+          Left = 351
+          Height = 13
+          Top = 43
+          Width = 37
+          BorderSpacing.Top = 3
           Caption = 'SSL Lib'
           ParentColor = False
         end
         object Label71: TLabel
-          Left = 14
-          Height = 16
-          Top = 51
-          Width = 40
+          AnchorSideTop.Control = edtClientID
+          AnchorSideTop.Side = asrBottom
+          Left = 11
+          Height = 13
+          Top = 43
+          Width = 31
+          BorderSpacing.Top = 3
           Caption = 'Scope'
           ParentColor = False
         end
         object edtClientID: TEdit
-          Left = 14
-          Height = 24
-          Top = 21
-          Width = 205
+          AnchorSideTop.Control = Label67
+          AnchorSideTop.Side = asrBottom
+          Left = 11
+          Height = 21
+          Top = 19
+          Width = 164
+          BorderSpacing.Top = 3
           TabOrder = 0
         end
         object edtClientSecret: TEdit
-          Left = 226
-          Height = 24
-          Top = 21
-          Width = 205
+          AnchorSideTop.Control = Label67
+          AnchorSideTop.Side = asrBottom
+          Left = 181
+          Height = 21
+          Top = 19
+          Width = 164
+          BorderSpacing.Top = 3
           TabOrder = 1
         end
         object edtKeyUser: TEdit
-          Left = 439
-          Height = 24
-          Top = 21
-          Width = 205
+          AnchorSideTop.Control = Label67
+          AnchorSideTop.Side = asrBottom
+          Left = 351
+          Height = 21
+          Top = 19
+          Width = 164
+          BorderSpacing.Top = 3
           TabOrder = 2
         end
         object chkIndicadorPix: TCheckBox
-          Left = 226
-          Height = 23
-          Top = 75
-          Width = 120
+          AnchorSideTop.Control = edtClientID
+          AnchorSideTop.Side = asrBottom
+          Left = 181
+          Height = 19
+          Top = 60
+          Width = 96
+          BorderSpacing.Top = 20
           Caption = 'Indicador de Pix'
           TabOrder = 5
         end
         object cbxSSLLib: TComboBox
-          Left = 439
-          Height = 24
-          Top = 71
-          Width = 205
-          ItemHeight = 16
+          AnchorSideTop.Control = Label71
+          AnchorSideTop.Side = asrBottom
+          Left = 351
+          Height = 21
+          Top = 61
+          Width = 164
+          BorderSpacing.Top = 5
+          ItemHeight = 13
           Style = csDropDownList
           TabOrder = 4
         end
         object edtScope: TEdit
-          Left = 14
-          Height = 24
-          Top = 71
-          Width = 205
+          AnchorSideTop.Control = Label71
+          AnchorSideTop.Side = asrBottom
+          Left = 11
+          Height = 21
+          Top = 61
+          Width = 164
+          BorderSpacing.Top = 5
           TabOrder = 3
         end
       end
       object edtPathRemessa: TEdit
-        Left = 319
-        Height = 24
-        Top = 539
-        Width = 461
+        AnchorSideTop.Control = Label65
+        AnchorSideTop.Side = asrBottom
+        Left = 304
+        Height = 21
+        Top = 448
+        Width = 369
+        BorderSpacing.Top = 5
         TabOrder = 10
       end
       object edtPathRetorno: TEdit
-        Left = 319
-        Height = 24
-        Top = 582
-        Width = 461
+        AnchorSideTop.Control = Label66
+        AnchorSideTop.Side = asrBottom
+        Left = 304
+        Height = 21
+        Top = 497
+        Width = 369
+        BorderSpacing.Top = 5
         TabOrder = 11
       end
       object btnRetorno: TButton
-        Left = 788
-        Height = 31
-        Top = 580
-        Width = 40
+        AnchorSideLeft.Control = edtPathRetorno
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = edtPathRemessa
+        AnchorSideTop.Side = asrCenter
+        Left = 673
+        Height = 25
+        Top = 446
+        Width = 32
         Caption = '...'
         OnClick = btnRetornoClick
         TabOrder = 12
@@ -1439,121 +1912,166 @@ object frmDemo: TfrmDemo
     end
   end
   object grpFichaBancaria: TGroupBox
-    Left = 994
-    Height = 141
-    Top = 44
-    Width = 208
+    AnchorSideLeft.Control = PageControl1
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    Left = 818
+    Height = 113
+    Top = 20
+    Width = 166
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 20
     Caption = 'Ficha Bancária'
-    ClientHeight = 120
-    ClientWidth = 204
+    ClientHeight = 95
+    ClientWidth = 162
     TabOrder = 1
     object Button3: TButton
-      Left = 14
-      Height = 31
-      Top = 5
-      Width = 181
+      AnchorSideTop.Control = grpFichaBancaria
+      Left = 11
+      Height = 25
+      Top = 3
+      Width = 145
+      BorderSpacing.Top = 3
       Caption = 'Zerar Lista de Boletos'
       OnClick = Button3Click
       TabOrder = 0
     end
     object btnBoletoIndividual: TButton
-      Left = 14
-      Height = 31
-      Top = 42
-      Width = 181
+      AnchorSideTop.Control = Button3
+      AnchorSideTop.Side = asrBottom
+      Left = 11
+      Height = 25
+      Top = 33
+      Width = 145
+      BorderSpacing.Top = 5
       Caption = 'Incluir Boleto'
       OnClick = btnBoletoIndividualClick
       TabOrder = 1
     end
     object Button5: TButton
-      Left = 14
-      Height = 31
-      Top = 80
-      Width = 181
+      AnchorSideTop.Control = btnBoletoIndividual
+      AnchorSideTop.Side = asrBottom
+      Left = 11
+      Height = 25
+      Top = 63
+      Width = 145
+      BorderSpacing.Top = 5
       Caption = 'Incluir Vários Boletos'
       OnClick = Button5Click
       TabOrder = 2
     end
   end
   object grpCNAB: TGroupBox
-    Left = 994
-    Height = 108
-    Top = 191
-    Width = 208
+    AnchorSideLeft.Control = PageControl1
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = grpFichaBancaria
+    AnchorSideTop.Side = asrBottom
+    Left = 818
+    Height = 86
+    Top = 143
+    Width = 166
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
     Caption = 'CNAB '
-    ClientHeight = 87
-    ClientWidth = 204
+    ClientHeight = 68
+    ClientWidth = 162
     TabOrder = 2
     object btnGerarRemessa: TButton
-      Left = 14
-      Height = 31
-      Top = 6
-      Width = 181
+      AnchorSideTop.Control = grpCNAB
+      Left = 11
+      Height = 25
+      Top = 3
+      Width = 145
+      BorderSpacing.Top = 3
       Caption = 'Gerar Remessa'
       OnClick = btnGerarRemessaClick
       TabOrder = 0
     end
     object btnLerRetorno: TButton
-      Left = 14
-      Height = 31
-      Top = 44
-      Width = 181
+      AnchorSideTop.Control = btnGerarRemessa
+      AnchorSideTop.Side = asrBottom
+      Left = 11
+      Height = 25
+      Top = 33
+      Width = 145
+      BorderSpacing.Top = 5
       Caption = 'Ler Retorno'
       OnClick = btnLerRetornoClick
       TabOrder = 1
     end
   end
   object grpWebServicesApi: TGroupBox
-    Left = 994
-    Height = 108
-    Top = 310
-    Width = 208
+    AnchorSideLeft.Control = PageControl1
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = grpCNAB
+    AnchorSideTop.Side = asrBottom
+    Left = 818
+    Height = 86
+    Top = 239
+    Width = 166
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
     Caption = 'WebServices / API '
-    ClientHeight = 87
-    ClientWidth = 204
+    ClientHeight = 68
+    ClientWidth = 162
     TabOrder = 3
     object btnWSConsulta: TButton
-      Left = 14
-      Height = 31
-      Top = 6
-      Width = 181
+      AnchorSideTop.Control = grpWebServicesApi
+      Left = 11
+      Height = 25
+      Top = 0
+      Width = 145
       Caption = 'Consultar Boleto'
       OnClick = btnWSConsultaClick
       TabOrder = 0
     end
     object btnWSRegistrar: TButton
-      Left = 14
-      Height = 31
-      Top = 44
-      Width = 181
+      AnchorSideTop.Control = btnWSConsulta
+      AnchorSideTop.Side = asrBottom
+      Left = 11
+      Height = 25
+      Top = 30
+      Width = 145
+      BorderSpacing.Top = 5
       Caption = 'Registrar Boleto On Line'
       OnClick = btnWSRegistrarClick
       TabOrder = 1
     end
   end
   object GroupBox13: TGroupBox
-    Left = 994
-    Height = 120
-    Top = 430
-    Width = 208
+    AnchorSideLeft.Control = PageControl1
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = grpWebServicesApi
+    AnchorSideTop.Side = asrBottom
+    Left = 818
+    Height = 96
+    Top = 335
+    Width = 166
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
     Caption = 'Ini '
-    ClientHeight = 99
-    ClientWidth = 204
+    ClientHeight = 78
+    ClientWidth = 162
     TabOrder = 4
     object btnConfigLer: TButton
-      Left = 14
-      Height = 31
-      Top = 14
-      Width = 181
+      AnchorSideTop.Control = GroupBox13
+      Left = 11
+      Height = 25
+      Top = 5
+      Width = 145
+      BorderSpacing.Top = 5
       Caption = 'Ler Ini Config'
       OnClick = btnConfigLerClick
       TabOrder = 0
     end
     object btnConfigGravar: TButton
-      Left = 14
-      Height = 31
-      Top = 51
-      Width = 181
+      AnchorSideTop.Control = btnConfigLer
+      AnchorSideTop.Side = asrBottom
+      Left = 11
+      Height = 25
+      Top = 35
+      Width = 145
+      BorderSpacing.Top = 5
       Caption = 'Salvar Ini Config'
       OnClick = btnConfigGravarClick
       TabOrder = 1
@@ -1562,7 +2080,7 @@ object frmDemo: TfrmDemo
   object flpndlgRetorno: TOpenDialog
     Filter = '*.txt|*.txt|*.ret|*.ret|*.*|*.*'
     Options = []
-    Left = 1040
-    Top = 560
+    Left = 832
+    Top = 448
   end
 end

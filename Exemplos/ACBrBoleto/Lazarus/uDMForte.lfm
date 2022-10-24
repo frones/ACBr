@@ -10,8 +10,8 @@ object dmForte: TdmForte
     DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
     NomeArquivo = 'boleto.pdf'
     AlterarEscalaPadrao = True
-    Left = 128
-    Top = 30
+    Left = 144
+    Top = 32
   end
   object ACBrBoleto: TACBrBoleto
     Banco.Numero = 1
@@ -29,13 +29,11 @@ object dmForte: TdmForte
     Cedente.CNPJCPF = '05.481.336/0001-37'
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
-    DirArqRemessa = 'c:\temp'
-    DirArqRetorno = 'c:\temp'
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoReport
     Configuracoes.Arquivos.LogRegistro = True
     Configuracoes.Arquivos.PathGravarRegistro = '%temp%'
-    Configuracoes.WebService.SSLHttpLib = httpWinHttp
+    Configuracoes.WebService.SSLHttpLib = httpOpenSSL
     Configuracoes.WebService.SSLType = LT_TLSv1_2
     Configuracoes.WebService.StoreName = 'My'
     Configuracoes.WebService.TimeOut = 30000
@@ -43,7 +41,7 @@ object dmForte: TdmForte
     Configuracoes.WebService.Ambiente = taHomologacao
     Configuracoes.WebService.Operacao = tpInclui
     Configuracoes.WebService.VersaoDF = '1.2'
-    Left = 32
-    Top = 30
+    Left = 48
+    Top = 24
   end
 end

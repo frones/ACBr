@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.IO;
 using System.IO.Ports;
@@ -1001,12 +1002,17 @@ namespace ACBrLib.NFe.Demo
             var codUf = 35;
             var cnpj = "";
             var eNsu = "";
+            var ArquivoOuXml = Helpers.OpenFile("Arquivos Distribuição DFe (*-dist-dfe.xml)|*-dist-dfe.xml|Todos os Arquivos (*.*)|*.*",
+                                                "Selecione um Arquivo de Distribuição para simular uma consulta ou feche para consultar o WebService");
 
-            if (InputBox.Show("WebServices: Distribuição DFe", "Código da UF", ref codUf) != DialogResult.OK) return;
-            if (InputBox.Show("WebServices: Distribuição DFe", "CNPJ do autor", ref cnpj) != DialogResult.OK) return;
-            if (InputBox.Show("WebServices: Distribuição DFe", "Número do último NSU", ref eNsu) != DialogResult.OK) return;
+            if (string.IsNullOrEmpty(ArquivoOuXml))
+            {
+                if (InputBox.Show("WebServices: Distribuição DFe", "Código da UF", ref codUf) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Distribuição DFe", "CNPJ do autor", ref cnpj) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Distribuição DFe", "Número do último NSU", ref eNsu) != DialogResult.OK) return;
+            }
 
-            var ret = ACBrNFe.DistribuicaoDFePorNSU(codUf, cnpj, eNsu);
+            var ret = ACBrNFe.DistribuicaoDFe(codUf, cnpj, eNsu, ArquivoOuXml);
             rtbRespostas.AppendText(ret.Resposta);
         }
 

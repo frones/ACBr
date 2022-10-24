@@ -124,6 +124,9 @@ namespace ACBrLib.NFe
         public delegate int NFE_DistribuicaoDFePorUltNSU(IntPtr handle, int acUFAutor, string eCnpjcpf, string eultNsu, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFE_DistribuicaoDFe(IntPtr handle, int acUFAutor, string eCnpjcpf, string eultNsu, string ArquivoOuXml, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_DistribuicaoDFePorNSU(IntPtr handle, int acUFAutor, string eCnpjcpf, string eNsu, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -202,6 +205,7 @@ namespace ACBrLib.NFe
             AddMethod<NFE_Cancelar>("NFE_Cancelar");
             AddMethod<NFE_EnviarEvento>("NFE_EnviarEvento");
             AddMethod<NFE_DistribuicaoDFePorUltNSU>("NFE_DistribuicaoDFePorUltNSU");
+            AddMethod<NFE_DistribuicaoDFe>("NFE_DistribuicaoDFe");
             AddMethod<NFE_DistribuicaoDFePorNSU>("NFE_DistribuicaoDFePorNSU");
             AddMethod<NFE_DistribuicaoDFePorChave>("NFE_DistribuicaoDFePorChave");
             AddMethod<NFE_EnviarEmail>("NFE_EnviarEmail");

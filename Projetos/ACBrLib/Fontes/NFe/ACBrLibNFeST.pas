@@ -136,6 +136,9 @@ function NFE_ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
 function NFE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_DistribuicaoDFe(const AcUFAutor: integer; eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -658,6 +661,22 @@ begin
   try
     VerificarLibInicializada(pLib);
     Result := TACBrLibNFe(pLib^.Lib).DistribuicaoDFePorUltNSU(AcUFAutor, eCNPJCPF, eultNSU, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFE_DistribuicaoDFe(const AcUFAutor: integer; eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFe(pLib^.Lib).DistribuicaoDFe(AcUFAutor, eCNPJCPF, eultNSU, eArquivoOuXML, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;

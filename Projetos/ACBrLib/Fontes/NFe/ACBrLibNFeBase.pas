@@ -111,6 +111,10 @@ type
       eCNPJCPF, eultNSU: PChar;
       const sResposta: PChar;
       var esTamanho: longint): longint;
+    function DistribuicaoDFe(const AcUFAutor: integer;
+      eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
+      const sResposta: PChar;
+      var esTamanho: longint): longint;
     function DistribuicaoDFePorNSU(const AcUFAutor: integer;
       eCNPJCPF, eNSU: PChar; const sResposta: PChar;
       var esTamanho: longint): longint;
@@ -1348,7 +1352,17 @@ end;
 
 function TACBrLibNFe.DistribuicaoDFePorUltNSU(const AcUFAutor: integer;  eCNPJCPF, eultNSU: PChar;
                                                      const sResposta: PChar; var esTamanho: longint): longint;
+begin
+  result := DistribuicaoDFe(AcUFAutor, eCNPJCPF, eultNSU, '',
+                             sResposta, esTamanho);
+
+end;
+
+function TACBrLibNFe.DistribuicaoDFe(const AcUFAutor: integer;  eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
+                                            const sResposta: PChar; var esTamanho: longint): longint;
 var
+  EhArquivo: boolean;
+  ArquivoOuXml: string;
   AultNSU, ACNPJCPF: string;
   Resposta: Ansistring;
   Resp: TDistribuicaoDFeResposta;
@@ -1356,27 +1370,65 @@ begin
   try
     ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
     AultNSU := ConverterAnsiParaUTF8(eultNSU);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFe_DistribuicaoDFePorUltNSU(' + IntToStr(AcUFAutor) + ',' + ACNPJCPF + ',' + AultNSU + ')', logCompleto, True)
     else
       GravarLog('NFe_DistribuicaoDFePorUltNSU', logNormal);
 
+    if ArquivoOuXml <> '' then
+    begin
+      EhArquivo := StringEhArquivo(ArquivoOuXml);
+      if EhArquivo then
+        VerificarArquivoExiste(ArquivoOuXml);
+    end;
+
     NFeDM.Travar;
 
     try
-      if not ValidarCNPJouCPF(ACNPJCPF) then
-        raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
+      if ArquivoOuXml = '' then
+        if not ValidarCNPJouCPF(ACNPJCPF) then
+          raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       with NFeDM do
       begin
         GravarLog('NFe_DistribuicaoDFePorUltNSU, Executar', logCompleto);
-        ACBrNFe1.WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
-        ACBrNFe1.WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
-        ACBrNFe1.WebServices.DistribuicaoDFe.ultNSU := AultNSU;
-        ACBrNFe1.WebServices.DistribuicaoDFe.NSU := '';
-        ACBrNFe1.WebServices.DistribuicaoDFe.chNFe := '';
-        ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
+
+        // Lê o arquivo selecionado
+        if ArquivoOuXml <> '' then
+        begin
+          try
+            ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Clear;
+
+            if EhArquivo then
+              ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.Leitor.CarregarArquivo(ArquivoOuXml)
+            else
+              ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.Leitor.Arquivo := ArquivoOuXml;
+
+            ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.LerXml;
+
+            // Preenche a lista de arquivos extraídos da distribuição, pois a leitura não gera os arquivos individuais
+            while ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs.Count <
+                  ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count do
+              ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs.Add('');
+
+            AultNSU := ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU;
+          except
+            on E:Exception do
+              raise EACBrLibException.Create(ErrCNPJ, E.Message);
+          end;
+        end
+        // Consulta o WebService
+        else
+        begin
+          ACBrNFe1.WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+          ACBrNFe1.WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
+          ACBrNFe1.WebServices.DistribuicaoDFe.ultNSU := AultNSU;
+          ACBrNFe1.WebServices.DistribuicaoDFe.NSU := '';
+          ACBrNFe1.WebServices.DistribuicaoDFe.chNFe := '';
+          ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
+        end;
 
         GravarLog('NFe_DistribuicaoDFePorUltNSU, Proces.Resp DistribuicaoDFe', logParanoico);
         Resp := TDistribuicaoDFeResposta.Create(Config.TipoResposta, Config.CodResposta);

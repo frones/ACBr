@@ -72,6 +72,7 @@ exports
   NFE_EnviarEvento,
   NFE_ConsultaCadastro,
   NFE_DistribuicaoDFePorUltNSU,
+  NFE_DistribuicaoDFe,
   NFE_DistribuicaoDFePorNSU,
   NFE_DistribuicaoDFePorChave,
   NFE_EnviarEmail,

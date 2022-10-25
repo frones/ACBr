@@ -38,13 +38,23 @@ interface
 
 uses
 {$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
+  LResources, 
+  Controls, 
 {$ELSE}
 
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
-  ACBrConsts, pcnAuxiliar, pcnConsts, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsNFSeW, pnfsConversao, pnfsConsts;
+  SysUtils, 
+  Classes, 
+  StrUtils,
+  ACBrConsts, 
+  pcnAuxiliar, 
+  pcnConsts, 
+  pcnConversao, 
+  pcnGerador,
+  pnfsNFSe, 
+  pnfsNFSeW, 
+  pnfsConversao, 
+  pnfsConsts;
 
 type
   { TNFSeW_ABRASFv2 }

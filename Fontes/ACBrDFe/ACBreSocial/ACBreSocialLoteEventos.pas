@@ -46,18 +46,27 @@ unit ACBreSocialLoteEventos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils, synautil,
+  Classes, 
+	SysUtils, 
+	StrUtils, 
+	synautil,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
-   System.Generics.Collections, System.Generics.Defaults,
+		System.Generics.Collections, 
+		System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
-   System.Contnrs,
+		System.Contnrs,
   {$ELSE}
-   Contnrs,
+		Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
-  ACBreSocialConfiguracoes, ACBreSocialEventos,
-  pcesCommon, pcesConversaoeSocial;
+  pcnConversao, 
+	pcnAuxiliar, 
+	pcnLeitor, 
+	pcnGerador,
+  ACBreSocialConfiguracoes, 
+	ACBreSocialEventos,
+  pcesCommon, 
+	pcesConversaoeSocial;
 
 type
 
@@ -117,7 +126,8 @@ uses
   DateUtils,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
-  ACBreSocial, pcnConsts;
+  ACBreSocial, 
+	pcnConsts;
 
 { TLoteEventos }
 

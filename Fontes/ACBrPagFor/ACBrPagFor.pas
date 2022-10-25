@@ -37,11 +37,22 @@ unit ACBrPagFor;
 interface
 
 uses
-  Classes, SysUtils, Contnrs,
-  {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
+  Classes, 
+  SysUtils, 
+  Contnrs,
+  {$IFNDEF NOGUI}
+	  {$IFDEF CLX} 
+		QDialogs,
+	  {$ELSE} 
+		Dialogs,
+	  {$ENDIF}
+  {$ENDIF}
   ACBrBase,
-  ACBrPagForClass, ACBrPagForConversao,
-  ACBrPagForArquivo, ACBrPagForArquivoClass, ACBrPagForConfiguracoes,
+  ACBrPagForClass, 
+  ACBrPagForConversao,
+  ACBrPagForArquivo, 
+  ACBrPagForArquivoClass, 
+  ACBrPagForConfiguracoes,
   ACBrPagForInterface;
 
 resourcestring

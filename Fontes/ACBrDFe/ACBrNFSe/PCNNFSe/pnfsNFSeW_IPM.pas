@@ -38,13 +38,19 @@ interface
 
 uses
 {$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
+  LResources, 
+  Controls, 
 {$ELSE}
 
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
+  SysUtils, 
+  Classes, 
+  StrUtils,
   ACBrConsts,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts,
+  pcnAuxiliar, 
+  pcnConversao, 
+  pcnGerador, 
+  pcnConsts,
   pnfsNFSeW, pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type

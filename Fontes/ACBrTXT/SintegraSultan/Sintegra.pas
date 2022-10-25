@@ -34,7 +34,10 @@ unit Sintegra;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, Dialogs, Sintegra_TLB;
+  SysUtils, 
+  Classes, 
+  DateUtils, 
+  Sintegra_TLB;
 
   { Funcoes Utilitárias }
   function VerificaCEP(cCep, cEstado: string): Boolean;
@@ -2425,8 +2428,6 @@ begin
             LFill(Registro60D[intFor60X].ValorICMS, 13) +
             RFill('', 19) +
             #13#10;
-
-//            ShowMessage( LFill(Registro60D[intFor60X].ValorICMS, 13) );
 
         end;
       end;

@@ -37,9 +37,16 @@ unit ACBrMDFeManifestos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, Forms, StrUtils,
+  Classes, 
+  SysUtils, 
+  StrUtils,
   ACBrMDFeConfiguracoes,
-  pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW, pcnConversao, pcnAuxiliar, pcnLeitor;
+  pmdfeMDFe, 
+  pmdfeMDFeR, 
+  pmdfeMDFeW, 
+  pcnConversao, 
+  pcnAuxiliar, 
+  pcnLeitor;
 
 type
 
@@ -167,7 +174,8 @@ type
 implementation
 
 uses
-  dateutils, IniFiles,
+  Dateutils, 
+  IniFiles,
   synautil,
   ACBrMDFe,
   ACBrUtil.Base,
@@ -175,7 +183,8 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
-  ACBrDFeUtil, pmdfeConversaoMDFe;
+  ACBrDFeUtil, 
+  pmdfeConversaoMDFe;
 
 { Manifesto }
 

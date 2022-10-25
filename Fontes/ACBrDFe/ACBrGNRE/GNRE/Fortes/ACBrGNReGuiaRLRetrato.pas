@@ -37,9 +37,20 @@ unit ACBrGNReGuiaRLRetrato;
 interface
 
 uses
-  SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, RLReport, RLBarcode, RLPDFFilter,
-  ACBrGNReGuiaRL, RLFilters, pgnreGNRERetorno, maskutils;
+  SysUtils, 
+  Variants, 
+  Classes, 
+  Graphics, 
+  Controls, 
+  Forms,
+  ExtCtrls, 
+  RLReport, 
+  RLBarcode, 
+  RLPDFFilter,
+  ACBrGNReGuiaRL, 
+  RLFilters, 
+  pgnreGNRERetorno, 
+  maskutils;
 
 type
 

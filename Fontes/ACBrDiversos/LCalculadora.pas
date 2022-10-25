@@ -38,8 +38,18 @@ interface
 
 uses
   ACBrCalculadora,          
-  Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  Menus, StdCtrls, ExtCtrls, Buttons ;
+  Classes, 
+  SysUtils, 
+  FileUtil, 
+  LResources, 
+  Forms,
+  Dialogs,
+  Controls, 
+  Graphics, 
+  Menus, 
+  StdCtrls, 
+  ExtCtrls, 
+  Buttons ;
 
 type
 

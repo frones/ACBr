@@ -41,8 +41,13 @@ interface
 {$H+}
 
 uses
-  Forms, SysUtils, Classes, ACBrBase,
-  pcnConversao, pcteCTe, ACBrCTeDACTEClass, RLTypes;
+  SysUtils, 
+  Classes, 
+  ACBrBase,
+  pcnConversao, 
+  pcteCTe, 
+  ACBrCTeDACTEClass, 
+  RLTypes;
 
 type
 
@@ -68,12 +73,19 @@ type
 implementation
 
 uses
-  StrUtils, Dialogs,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
-  ACBrCTe, pcteEnvEventoCTe,
-  ACBrCTeDAInutRL, ACBrCTeDAInutRLRetrato,
-  ACBrCTeDACTeRL, ACBrCTeDACTeRLRetrato, ACBrCTeDACTeRLRetratoA5,
-  ACBrCTeDAEventoRL, ACBrCTeDAEventoRLRetrato;
+  StrUtils,   
+  ACBrUtil.Base, 
+  ACBrUtil.Strings, 
+  ACBrUtil.FilesIO,
+  ACBrCTe, 
+  pcteEnvEventoCTe,
+  ACBrCTeDAInutRL, 
+  ACBrCTeDAInutRLRetrato,
+  ACBrCTeDACTeRL, 
+  ACBrCTeDACTeRLRetrato, 
+  ACBrCTeDACTeRLRetratoA5,
+  ACBrCTeDAEventoRL, 
+  ACBrCTeDAEventoRLRetrato;
 
 constructor TACBrCTeDACTeRL.Create(AOwner: TComponent);
 begin

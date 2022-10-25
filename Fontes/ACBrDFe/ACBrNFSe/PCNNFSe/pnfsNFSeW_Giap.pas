@@ -36,12 +36,21 @@ unit pnfsNFSeW_Giap;
 interface
 uses
 {$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
+  LResources, 
+  Controls, 
 {$ELSE}
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
+  SysUtils, 
+  Classes, 
+  StrUtils,
   ACBrConsts,
-  pnfsNFSeW, pcnAuxiliar, pcnConversao, pcnGerador, pnfsNFSe, pnfsConversao;
+  pnfsNFSeW, 
+  pcnAuxiliar, 
+  pcnConversao, 
+  pcnGerador, 
+  pnfsNFSe, 
+  pnfsConversao;
+  
 type
   { TNFSeW_Giap }
   TNFSeW_Giap = class(TNFSeWClass)

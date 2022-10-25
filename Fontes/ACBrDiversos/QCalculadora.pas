@@ -36,8 +36,17 @@ interface
 
 uses
   ACBrCalculadora,          
-  SysUtils, Variants, Classes,
-  QGraphics, QForms, QDialogs, QMenus, QTypes, QControls, QStdCtrls, QExtCtrls;
+  SysUtils, 
+  Variants, 
+  Classes,
+  QGraphics, 
+  QForms, 
+  QDialogs, 
+  QMenus, 
+  QTypes, 
+  QControls, 
+  QStdCtrls, 
+  QExtCtrls;
 
 type
   TFrCalculadora = class(TForm)
@@ -108,7 +117,8 @@ type
 
 implementation
 
-uses Math, ACBrConsts ;
+uses Math, 
+		ACBrConsts ;
 
 {$R *.xfm}
 

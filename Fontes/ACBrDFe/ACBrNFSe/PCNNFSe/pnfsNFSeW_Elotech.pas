@@ -38,14 +38,24 @@ interface
 
 uses
 {$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
+  LResources, 
+  Controls, 
 {$ELSE}
 
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
-  synacode, ACBrConsts,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts,
-  pnfsNFSeW, pnfsNFSe, pnfsConversao, pnfsConsts;
+  SysUtils, 
+  Classes, 
+  StrUtils,
+  synacode, 
+  ACBrConsts,
+  pcnAuxiliar, 
+  pcnConversao, 
+  pcnGerador, 
+  pcnConsts,
+  pnfsNFSeW, 
+  pnfsNFSe, 
+  pnfsConversao, 
+  pnfsConsts;
 
 type
   { TNFSeW_Elotech }

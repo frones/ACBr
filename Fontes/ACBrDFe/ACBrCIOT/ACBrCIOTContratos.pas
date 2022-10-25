@@ -37,9 +37,16 @@ unit ACBrCIOTContratos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, Forms,
-  ACBrCIOTConfiguracoes, ACBrDFeUtil,
-  pcnCIOT, pcnCIOTR, pcnCIOTW, pcnConversao, pcnAuxiliar, pcnLeitor;
+  Classes, 
+  SysUtils,
+  ACBrCIOTConfiguracoes, 
+  ACBrDFeUtil,
+  pcnCIOT, 
+  pcnCIOTR, 
+  pcnCIOTW, 
+  pcnConversao, 
+  pcnAuxiliar, 
+  pcnLeitor;
 
 type
 

@@ -37,16 +37,28 @@ unit ACBrReinfLoteEventos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils, synautil,
+  Classes, 
+  SysUtils, 
+  StrUtils, 
+  synautil,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
-   System.Generics.Collections, System.Generics.Defaults,
+   System.Generics.Collections, 
+   System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  ACBrBase, ACBrUtil.Strings, ACBrUtil.XMLHTML,
-  pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
-  ACBrReinfConfiguracoes, ACBrReinfEventos, pcnConsts,
-  pcnCommonReinf, pcnConversaoReinf;
+  ACBrBase, 
+  ACBrUtil.Strings, 
+  ACBrUtil.XMLHTML,
+  pcnConversao, 
+  pcnAuxiliar, 
+  pcnLeitor, 
+  pcnGerador,
+  ACBrReinfConfiguracoes, 
+  ACBrReinfEventos, 
+  pcnConsts,
+  pcnCommonReinf, 
+  pcnConversaoReinf;
 
 type
   TItemLoteEventosClass = class of TItemLoteEventos;

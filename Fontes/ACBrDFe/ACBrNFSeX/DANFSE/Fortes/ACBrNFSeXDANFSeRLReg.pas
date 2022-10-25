@@ -37,8 +37,10 @@ unit ACBrNFSeXDANFSeRLReg;
 interface
 
 uses
-  SysUtils, {$IFDEF FPC}LResources ,{$ENDIF}
-  Classes, Dialogs, ACBrNFSeXDANFSeRLClass;
+  SysUtils, 
+  {$IFDEF FPC}LResources ,{$ENDIF}
+  Classes, 
+  ACBrNFSeXDANFSeRLClass;
 
 procedure Register;
 

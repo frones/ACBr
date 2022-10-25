@@ -38,10 +38,12 @@ interface
 
 uses
   SysUtils, Variants, Classes,
-  {$IFDEF CLX}
-   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
-  {$ELSE}
-   Graphics, Controls, Forms, Dialogs, ExtCtrls, Printers,
+  {$IFNDEF NOGUI}
+	{$IFDEF CLX}
+	  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
+	{$ELSE}
+	  Graphics, Controls, Forms, Dialogs, ExtCtrls, Printers,
+    {$ENDIF}
   {$ENDIF}
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF}

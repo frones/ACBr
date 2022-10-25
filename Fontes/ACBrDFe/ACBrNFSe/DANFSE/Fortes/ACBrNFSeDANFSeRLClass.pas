@@ -37,8 +37,12 @@ unit ACBrNFSeDANFSeRLClass;
 interface
 
 uses
-  Forms, SysUtils, Classes, pnfsNFSe,
-  ACBrBase, ACBrNFSeDANFSeClass;
+  Forms, 
+  SysUtils, 
+  Classes, 
+  pnfsNFSe,
+  ACBrBase, 
+  ACBrNFSeDANFSeClass;
 
 type
   {$IFDEF RTL230_UP}
@@ -65,9 +69,9 @@ type
 implementation
 
 uses
-  Dialogs,
   ACBrUtil.FilesIO,
-  ACBrNFSe, ACBrNFSeDANFSeRLRetrato;
+  ACBrNFSe, 
+  ACBrNFSeDANFSeRLRetrato;
 
 constructor TACBrNFSeDANFSeRL.Create(AOwner: TComponent);
 begin

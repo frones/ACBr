@@ -38,11 +38,19 @@ unit ACBrGNRE2;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes, ACBrBase,
-  ACBrGNREConfiguracoes, ACBrGNREWebServices, ACBrGNREGuias,
-  ACBrGNREGuiasRetorno, ACBrGNREGuiaClass,
-  pcnConversao, pgnreConversao,
+  Classes,
+  SysUtils,
+  ACBrDFe,
+  ACBrDFeException,
+  ACBrDFeConfiguracoes,
+  ACBrBase,
+  ACBrGNREConfiguracoes,
+  ACBrGNREWebServices,
+  ACBrGNREGuias,
+  ACBrGNREGuiasRetorno,
+  ACBrGNREGuiaClass,
+  pcnConversao,
+  pgnreConversao,
   ACBrDFeUtil;
 
 const
@@ -112,9 +120,10 @@ type
 implementation
 
 uses
-  dateutils,
-  pcnAuxiliar,
-  ACBrUtil.Base, ACBrUtil.Strings;
+  Dateutils,
+  PcnAuxiliar,
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 {$IFDEF FPC}
  {$R ACBrGNREServicos.rc}

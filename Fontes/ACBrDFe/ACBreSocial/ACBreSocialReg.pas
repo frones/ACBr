@@ -45,11 +45,14 @@ unit ACBreSocialReg;
 
 interface
 
-uses
- SysUtils, Classes,
-  {$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs {$ENDIF},
+uses	
+	SysUtils, 
+	Classes,
   {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors,
+     LResources, 
+		 LazarusPackageIntf, 
+		 PropEdits, 
+		 componenteditors,
   {$ELSE}
     {$IFNDEF COMPILER6_UP}
        DsgnIntf,
@@ -58,7 +61,7 @@ uses
        DesignEditors,
     {$ENDIF}
   {$ENDIF}
- ACBreSocial;
+	ACBreSocial;
 
 procedure Register;
 

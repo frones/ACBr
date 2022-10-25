@@ -37,8 +37,13 @@ unit ACBrGNReGuiaRLClass;
 interface
 
 uses
-  Forms, SysUtils, Classes, RLTypes,
-  ACBrBase, ACBrGNREGuiaClass, pgnreGNRERetorno;
+  Forms, 
+  SysUtils, 
+  Classes, 
+  RLTypes,
+  ACBrBase, 
+  ACBrGNREGuiaClass, 
+  pgnreGNRERetorno;
 
 type
   {$IFDEF RTL230_UP}
@@ -60,9 +65,10 @@ end;
 implementation
 
 uses
-  Dialogs,
-  ACBrUtil.Strings, ACBrUtil.FilesIO,
-  ACBrGNRE2, ACBrGNREGuiaRLRetrato;
+  ACBrUtil.Strings, 
+  ACBrUtil.FilesIO,
+  ACBrGNRE2, 
+  ACBrGNREGuiaRLRetrato;
 
 constructor TACBrGNREGuiaRL.Create(AOwner: TComponent);
 begin

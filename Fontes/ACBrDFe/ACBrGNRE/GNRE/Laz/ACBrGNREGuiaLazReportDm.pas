@@ -39,10 +39,31 @@ unit ACBrGNREGuiaLazReportDm;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  ACBrGNREGuiaClass, LR_Class, LR_DSet, LR_BarC, LR_Shape, LR_RRect, LR_E_HTM,
-  lr_e_pdf, PrintersDlgs, Printers, strutils, BufDataset, LResources, PReport,
-  DB, pgnreGNRERetorno, maskutils;
+  Classes, 
+  SysUtils, 
+  FileUtil, 
+  Forms, 
+  Controls, 
+  Graphics,  
+  ExtCtrls,
+  ACBrGNREGuiaClass, 
+  LR_Class, 
+  LR_DSet, 
+  LR_BarC, 
+  LR_Shape, 
+  LR_RRect, 
+  LR_E_HTM,
+  lr_e_pdf,
+  Dialogs,
+  PrintersDlgs, 
+  Printers, 
+  strutils, 
+  BufDataset, 
+  LResources, 
+  PReport,
+  DB, 
+  pgnreGNRERetorno, 
+  maskutils;
 
 const
   CACBrGNREGuiaLazReport_Versao = '0.1.0';

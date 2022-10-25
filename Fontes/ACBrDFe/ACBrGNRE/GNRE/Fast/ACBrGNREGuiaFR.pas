@@ -38,9 +38,16 @@ unit ACBrGNREGuiaFR;
 interface
 
 uses
-  Forms, SysUtils, Classes, Graphics,
-  ACBrBase, ACBrGNREGuiaClass, ACBrGNREGuiaFRDM,
-  pcnConversao, frxClass, pgnreGNRERetorno;
+  Forms, 
+  SysUtils, 
+  Classes, 
+  Graphics,
+  ACBrBase, 
+  ACBrGNREGuiaClass, 
+  ACBrGNREGuiaFRDM,
+  pcnConversao, 
+  frxClass, 
+  pgnreGNRERetorno;
 
 type
   EACBrGNREGuiaFR = class(Exception);
@@ -71,9 +78,16 @@ type
 
 implementation
 
-uses ACBrGNRE2, ACBrUtil.Strings,
-  ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.XMLHTML, 
-  StrUtils, Dialogs, ACBrGNREGuiasRetorno;
+uses 
+  ACBrGNRE2, 
+  ACBrUtil.Strings,
+  ACBrUtil.Math, 
+  ACBrUtil.FilesIO, 
+  ACBrUtil.Base, 
+  ACBrUtil.DateTime, 
+  ACBrUtil.XMLHTML, 
+  StrUtils, 
+  ACBrGNREGuiasRetorno;
 
 constructor TACBrGNREGuiaFR.Create(AOwner: TComponent);
 begin

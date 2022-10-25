@@ -38,15 +38,25 @@ interface
 
 uses
 {$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
+  LResources, 
+  Controls, 
 {$ELSE}
 
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
-  synacode, ACBrConsts,
-  pcnCIOTW, pcnCIOTR,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor,
-  pcnCIOT, pcnConversaoCIOT, pcnConsts;
+  SysUtils, 
+  Classes, 
+  StrUtils,
+  synacode, 
+  ACBrConsts,
+  pcnCIOTW, 
+  pcnCIOTR,
+  pcnAuxiliar, 
+  pcnConversao, 
+  pcnGerador, 
+  pcnLeitor,
+  pcnCIOT, 
+  pcnConversaoCIOT, 
+  pcnConsts;
 
 type
   { TCIOTW_Pamcard }

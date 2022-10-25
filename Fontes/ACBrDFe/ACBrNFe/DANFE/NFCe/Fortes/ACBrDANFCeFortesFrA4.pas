@@ -37,14 +37,25 @@ unit ACBrDANFCeFortesFrA4;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, 
+  SysUtils,
   {$IFDEF FPC}
    LResources,
   {$ENDIF}
-  Variants, Graphics, Controls, Forms, Dialogs,
-  ACBrBase, ACBrNFeDANFEClass, pcnNFe, ACBrNFe,
-  RLReport, RLHTMLFilter, RLFilters, RLPDFFilter,
-  pcnConversao, ACBrDFeUtil;
+  Variants, 
+  Graphics, 
+  Controls, 
+  Forms, 
+  ACBrBase, 
+  ACBrNFeDANFEClass, 
+  pcnNFe, 
+  ACBrNFe,
+  RLReport, 
+  RLHTMLFilter, 
+  RLFilters, 
+  RLPDFFilter,
+  pcnConversao, 
+  ACBrDFeUtil;
 
 type
   TACBrNFeDANFCeFortesA4Filtro = (fiNenhum, fiPDF, fiHTML ) ;
@@ -308,9 +319,15 @@ implementation
 uses
   StrUtils,
   RLPrinters,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.DateTime,
-  ACBrDFeDANFeReport, ACBrDFeReportFortes,
-  ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode;
+  ACBrUtil.Base, 
+  ACBrUtil.Strings, 
+  ACBrUtil.FilesIO, 
+  ACBrUtil.DateTime,
+  ACBrDFeDANFeReport, 
+  ACBrDFeReportFortes,
+  ACBrValidador, 
+  ACBrImage, 
+  ACBrDelphiZXingQRCode;
 
 function TfrmACBrDANFCeFortesFrA4.CompoemEnderecoCFe: String;
 var

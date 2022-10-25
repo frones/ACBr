@@ -34,7 +34,9 @@ unit Sintegra_TLB;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, Dialogs;
+  SysUtils, 
+  Classes, 
+  DateUtils;
 
 type
   TCodIdentificaOper = (opeInterestaduais, opeInterestSubTributaria, opeTotal);

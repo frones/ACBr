@@ -37,9 +37,20 @@ unit ACBrGNReGuiaRL;
 interface
 
 uses
-  SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  pgnreGNRERetorno, ACBrGNRE2;
+  SysUtils, 
+  Variants, 
+  Classes, 
+  Graphics, 
+  Controls, 
+  Forms, 
+  ExtCtrls,
+  RLReport, 
+  RLFilters, 
+  RLPrinters, 
+  RLPDFFilter, 
+  RLConsts,
+  pgnreGNRERetorno, 
+  ACBrGNRE2;
 
 type
 

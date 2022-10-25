@@ -38,9 +38,22 @@ interface
 
 uses
   ACBrCalculadora,
-  Messages, SysUtils, Classes, Graphics, Controls, Forms,
-   Dialogs, Menus, StdCtrls, ExtCtrls, Windows,
-  {$IFDEF COMPILER6_UP} Variants {$ELSE} ACBrD5 {$ENDIF}  ;
+  Messages, 
+  SysUtils, 
+  Classes, 
+  Graphics, 
+  Controls, 
+  Forms,
+  Dialogs, 
+  Menus, 
+  StdCtrls, 
+  ExtCtrls, 
+  Windows,
+  {$IFDEF COMPILER6_UP} 
+	Variants 
+  {$ELSE} 
+	ACBrD5 
+  {$ENDIF}  ;
 
 type
 

@@ -37,9 +37,22 @@ unit ACBrMDFeDAMDFeRL;
 interface
 
 uses
-  SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  pmdfeMDFe, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrDFeReportFortes;
+  SysUtils, 
+  Variants, 
+  Classes, 
+  Graphics, 
+  Controls, 
+  Forms, 
+  ExtCtrls,
+  RLReport, 
+  RLFilters, 
+  RLPrinters, 
+  RLPDFFilter, 
+  RLConsts,
+  pmdfeMDFe, 
+  ACBrMDFe, 
+  ACBrMDFeDAMDFeRLClass, 
+  ACBrDFeReportFortes;
 
 type
 

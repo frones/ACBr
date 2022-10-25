@@ -38,10 +38,17 @@ unit ACBrGNREGuias;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils,
-  ACBrDFeUtil, pcnConversao, pcnAuxiliar, pcnLeitor,
+  Classes, 
+  SysUtils, 
+  StrUtils,
+  ACBrDFeUtil, 
+  pcnConversao, 
+  pcnAuxiliar, 
+  pcnLeitor,
   ACBrGNREConfiguracoes,
-  pgnreGNRE, pgnreGNRER, pgnreGNREW;
+  pgnreGNRE, 
+  pgnreGNRER, 
+  pgnreGNREW;
 
 type
 

@@ -49,19 +49,25 @@ unit pcesS1202;
 interface
 
 uses
-  SysUtils, Classes, Dialogs, Controls,
+  SysUtils, 
+	Classes, 
+	Controls,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
-   System.Generics.Collections, System.Generics.Defaults,
+		System.Generics.Collections, 
+		System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
-   System.Contnrs,
+		System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, pcnGerador,
+  pcnConversao, 
+	pcnGerador,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
   pcnConsts,
-  pcesCommon, pcesConversaoeSocial, pcesGerador;
+  pcesCommon, 
+	pcesConversaoeSocial, 
+	pcesGerador;
 
 type
 

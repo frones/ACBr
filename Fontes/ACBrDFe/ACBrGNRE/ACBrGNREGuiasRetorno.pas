@@ -38,9 +38,13 @@ unit ACBrGNREGuiasRetorno;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms,
+  Classes, 
+  Sysutils, 
   ACBrGNREGuiaClass,
-  pgnreGNRERetorno, pcnConversao, pcnAuxiliar, pcnLeitor;
+  pgnreGNRERetorno, 
+  pcnConversao, 
+  pcnAuxiliar, 
+  pcnLeitor;
 
 type
 

@@ -37,9 +37,13 @@ unit ACBrPagForArquivo;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms, Contnrs,
+  Classes, 
+  Sysutils, 
+  Contnrs,
   ACBrBase,
-  ACBrPagForClass, ACBrPagForConversao, ACBrPagForConfiguracoes;
+  ACBrPagForClass, 
+  ACBrPagForConversao, 
+  ACBrPagForConfiguracoes;
 
 type
   TRegistro = class(TObject)

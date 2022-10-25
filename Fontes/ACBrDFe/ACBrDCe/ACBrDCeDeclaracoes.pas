@@ -37,9 +37,15 @@ unit ACBrDCeDeclaracoes;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, Forms, StrUtils,
+  Classes, 
+	SysUtils, 
+	StrUtils,
   ACBrDCeConfiguracoes,
-  ACBrDCeClass, ACBrDCeLerXml, ACBrDCeGravarXml, pcnConversao, pcnAuxiliar;
+  ACBrDCeClass, 
+	ACBrDCeLerXml, 
+	ACBrDCeGravarXml, 
+	pcnConversao, 
+	pcnAuxiliar;
 
 type
 
@@ -167,9 +173,14 @@ type
 implementation
 
 uses
-  dateutils, IniFiles,
-  synautil, ACBrXmlBase,
-  ACBrDCe, ACBrUtil.Strings, ACBrDFeUtil, ACBrDCeConversao;
+  Dateutils, 
+	IniFiles,
+  synautil, 
+	ACBrXmlBase,
+  ACBrDCe, 
+	ACBrUtil.Strings, 
+	ACBrDFeUtil, 
+	ACBrDCeConversao;
 
 { Declaracao }
 

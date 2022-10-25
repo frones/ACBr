@@ -126,6 +126,9 @@ function SAT_ConsultarNumeroSessao(cNumeroDeSessao: integer;
   const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
 
+function SAT_SetNumeroSessao(cNumeroDeSessao: PChar): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
 function SAT_AtualizarSoftwareSAT(const sResposta: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;

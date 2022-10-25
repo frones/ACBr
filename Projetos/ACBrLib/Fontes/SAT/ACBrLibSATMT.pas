@@ -88,6 +88,8 @@ function SAT_ConsultarStatusOperacional(const libHandle: PLibHandle; const sResp
   var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ConsultarNumeroSessao(const libHandle: PLibHandle; cNumeroDeSessao: integer;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_SetNumeroSessao(const libHandle:PLibHandle; cNumeroDeSessao: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_AtualizarSoftwareSAT(const libHandle: PLibHandle; const sResposta: PChar;
   var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ComunicarCertificadoICPBRASIL(const libHandle: PLibHandle; certificado: PChar;
@@ -351,6 +353,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibSAT(libHandle^.Lib).ConsultarNumeroSessao(cNumeroDeSessao, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function SAT_SetNumeroSessao(const libHandle: PLibHandle; cNumeroDeSessao: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibSAT(libHandle^.Lib).SetNumeroSessao(cNumeroDeSessao);
   except
     on E: EACBrLibException do
       Result := E.Erro;

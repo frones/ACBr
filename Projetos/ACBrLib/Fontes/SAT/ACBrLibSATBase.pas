@@ -72,6 +72,7 @@ type
     function ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarStatusOperacional(const sResposta: PChar;  var esTamanho: longint): longint;
     function ConsultarNumeroSessao(cNumeroDeSessao: integer; const sResposta: PChar; var esTamanho: longint): longint;
+    function SetNumeroSessao(cNumeroDeSessao: PChar):longint;
     function AtualizarSoftwareSAT(const sResposta: PChar; var esTamanho: longint): longint;
     function ComunicarCertificadoICPBRASIL(certificado: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function ExtrairLogs(eArquivo: PChar): longint;
@@ -494,6 +495,35 @@ begin
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibSAT.SetNumeroSessao(cNumeroDeSessao: PChar):longint;
+var
+  Sessao: String;
+begin
+  try
+    Sessao:= ConverterAnsiParaUTF8(cNumeroDeSessao);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('SAT_SetNumeroSessao(' + cNumeroDeSessao + ' )', logCompleto, True)
+    else
+      GravarLog('SAT_SetNumeroSessao', logNormal);
+
+    SatDM.Travar;
+    try
+      SatDM.ACBrSAT1.Tag:= StrToIntDef(Trim(cNumeroDeSessao),0);
+      Result := SetRetorno(ErrOK);
+    finally
+      SatDM.Destravar;
+    end;
+
+  except
+    on E: EACBrLibException do
+    Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+    Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 

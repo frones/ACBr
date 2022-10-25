@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
   ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
-  ACBrMail, ACBrPosPrinter, ACBrLibComum, ACBrLibDataModule;
+  ACBrMail, ACBrPosPrinter, ACBrLibComum, ACBrLibDataModule, ACBrSATClass;
 
 type
 
@@ -52,6 +52,7 @@ type
     ACBrSAT1: TACBrSAT;
 
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetNumeroSessao(var NumeroSessao: Integer);
     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
   private
     ExtratoEscPos: TACBrSATExtratoESCPOS;
@@ -90,6 +91,14 @@ end;
 procedure TLibSatDM.ACBrSAT1GetsignAC(var Chave: AnsiString);
 begin
   Chave := TLibSATConfig(Lib.Config).SignAC;
+end;
+
+procedure TLibSatDM.ACBrSAT1GetNumeroSessao(var NumeroSessao: Integer);
+begin
+  if ACBrSAT1.Tag <> 0 then
+  NumeroSessao:= ACBrSAT1.Tag;
+
+  ACBrSAT1.Tag:= 0;
 end;
 
 procedure TLibSatDM.AplicarConfiguracoes;

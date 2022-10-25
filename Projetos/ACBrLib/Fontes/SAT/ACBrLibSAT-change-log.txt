@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2022
+--- ACBrLibSAT ---
+[+] Adicionado método SAT_SetNumeroSessao
+    Por: Antonio Carlos
+
+
 20/07/2022
 --- ACBrLibSAT ---
 [*] Remoção de Warning @deprecated ref. ACBrUtils

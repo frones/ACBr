@@ -80,6 +80,8 @@ function SAT_ConsultarStatusOperacional(const sResposta: PChar; var esTamanho: l
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ConsultarNumeroSessao(cNumeroDeSessao: integer; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_SetNumeroSessao(cNumeroDeSessao: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_AtualizarSoftwareSAT(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar; const sResposta: PChar; var esTamanho: longint): longint;
@@ -344,6 +346,21 @@ begin
   try
     VerificarLibInicializada(pLib);
     Result := TACBrLibSAT(pLib^.Lib).ConsultarNumeroSessao(cNumeroDeSessao, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function SAT_SetNumeroSessao(cNumeroDeSessao: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibSAT(pLib^.Lib).SetNumeroSessao(cNumeroDeSessao);
   except
     on E: EACBrLibException do
       Result := E.Erro;

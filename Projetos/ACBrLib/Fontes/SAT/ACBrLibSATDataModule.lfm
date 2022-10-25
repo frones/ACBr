@@ -2,8 +2,8 @@ inherited LibSatDM: TLibSatDM
   Left = 18
   Top = 11
   Height = 153
-  HorizontalOffset = 508
-  VerticalOffset = 253
+  HorizontalOffset = 830
+  VerticalOffset = 401
   Width = 210
   object ACBrSAT1: TACBrSAT[0]
     MAIL = ACBrMail1
@@ -26,6 +26,7 @@ inherited LibSatDM: TLibSatDM
     Rede.proxy_porta = 0
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
+    OnGetNumeroSessao = ACBrSAT1GetNumeroSessao
     Left = 32
     Top = 24
   end

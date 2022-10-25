@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade Bezerros/PE - provedor Tributus
+   Por: Marcelo Santos
+
 21/10/2022
 -- ISSNet.Provider --
 [*] Incluído na Configuração para realizar a assinatura do RPS em todos os serviços

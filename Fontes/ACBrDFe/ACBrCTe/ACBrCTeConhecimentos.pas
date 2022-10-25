@@ -38,7 +38,7 @@ unit ACBrCTeConhecimentos;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms, StrUtils,
+  Classes, Sysutils, StrUtils,
   ACBrCTeConfiguracoes,
   pcteCTe, pcteCTeR, pcteCTeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 

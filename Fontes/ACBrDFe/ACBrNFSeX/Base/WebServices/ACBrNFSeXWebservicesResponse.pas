@@ -81,6 +81,9 @@ type
     FProtocolo: string;
     FSerieNota: string;
     FData: TDateTime;
+    FNSU: Integer;
+    FChaveDFe: string;
+    FTipoDoc: string;
   public
     property NumeroNota: string read FNumeroNota write FNumeroNota;
     property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
@@ -92,6 +95,9 @@ type
     property Protocolo: string read FProtocolo write FProtocolo;
     property SerieNota: string read FSerieNota write FSerieNota;
     property Data: TDateTime read FData write FData;
+    property NSU: Integer read FNSU write FNSU;
+    property ChaveDFe: string read FChaveDFe write FChaveDFe;
+    property TipoDoc: string read FTipoDoc write FTipoDoc;
   end;
 
   TNFSeResumoCollection = class(TACBrObjectList)
@@ -436,6 +442,20 @@ type
 
     procedure Clear; override;
 
+    property ChaveNFSe: string read FChaveNFSe write FChaveNFSe;
+  end;
+
+  TNFSeConsultarDFeResponse = class(TNFSeWebserviceResponse)
+  private
+    FNSU: Integer;
+    FChaveNFSe: string;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear; override;
+
+    property NSU: Integer read FNSU write FNSU;
     property ChaveNFSe: string read FChaveNFSe write FChaveNFSe;
   end;
 
@@ -913,6 +933,28 @@ begin
 end;
 
 destructor TNFSeConsultarEventoResponse.Destroy;
+begin
+
+  inherited Destroy;
+end;
+
+{ TNFSeConsultarDFeResponse }
+
+procedure TNFSeConsultarDFeResponse.Clear;
+begin
+  inherited Clear;
+
+  NSU := 0;
+  ChaveNFSe := '';
+end;
+
+constructor TNFSeConsultarDFeResponse.Create;
+begin
+  inherited Create;
+
+end;
+
+destructor TNFSeConsultarDFeResponse.Destroy;
 begin
 
   inherited Destroy;

@@ -140,6 +140,7 @@ type
     function TesteEnvio(ACabecalho, AMSG: string): string; virtual;
     function EnviarEvento(ACabecalho, AMSG: string): string; virtual;
     function ConsultarEvento(ACabecalho, AMSG: string): string; virtual;
+    function ConsultarDFe(ACabecalho, AMSG: string): string; virtual;
 
     property URL: string read FPURL;
     property BaseURL: string read GetBaseUrl;
@@ -509,6 +510,12 @@ begin
       begin
         FPArqEnv := 'con-eve';
         FPArqResp := 'eve';
+      end;
+
+    tmConsultarDFe:
+      begin
+        FPArqEnv := 'con-dfe';
+        FPArqResp := 'dfe';
       end;
   end;
 
@@ -913,6 +920,12 @@ begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
+function TACBrNFSeXWebservice.ConsultarDFe(ACabecalho, AMSG: string): string;
+begin
+  Result := '';
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
 function TACBrNFSeXWebservice.ConsultarEvento(ACabecalho, AMSG: string): string;
 begin
   Result := '';
@@ -1243,6 +1256,8 @@ function TACBrNFSeXWebserviceMulti2.DefinirMsgEnvio(const Message, SoapAction,
   SoapHeader: string; namespace: array of string): string;
 var
   NomeArq: string;
+  Tamanho: Integer;
+  xTamanho: string;
 begin
   NomeArq := GerarPrefixoArquivo + '-' + FPArqEnv + '.xml';
 
@@ -1250,17 +1265,22 @@ begin
             'Content-Type: text/xml; charset=Cp1252; name=' +
             NomeArq + sLineBreak +
             'Content-Transfer-Encoding: binary' + sLineBreak +
-            'Content-Length: ' + IntToStr(Length(Message)) + sLineBreak +
-//            'Content-Length: ' + IntToStr(TEncoding.UTF8.GetByteCount(Message)) + sLineBreak +
+//            'Content-Length: ****' + sLineBreak +
             'Content-Disposition: form-data; name=' + AnsiQuotedStr(NomeArq, '"') +
             '; filename=' + AnsiQuotedStr(NomeArq, '"') + sLineBreak +
             sLineBreak +
             Message + sLineBreak +
             '--' + FPBound + '--' + sLineBreak;
 
+  Tamanho := Length(Result);
+  xTamanho := IntToStr(Tamanho);
+
+//  Result := StringReplace(Result, '****', xTamanho, [rfReplaceAll]);
+
   HttpClient := FPDFeOwner.SSL.SSLHttpClass;
 
   HttpClient.Clear;
+  HttpClient.HeaderReq.AddHeader('Content-Length', xTamanho);
 end;
 
 { TInfConsulta }

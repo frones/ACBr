@@ -809,6 +809,9 @@ begin
       LerValoresNFSe(AuxNode);
       LerDPS(AuxNode);
     end;
+
+    NFSe.Numero := NFSe.infNFSe.nNFSe;
+    NFSe.CodigoVerificacao := NFSe.infNFSe.ID;
   end;
 end;
 

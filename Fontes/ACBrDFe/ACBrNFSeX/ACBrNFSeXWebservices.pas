@@ -56,6 +56,7 @@ type
     FGerarToken: TNFSeGerarTokenResponse;
     FEnviarEvento: TNFSeEnviarEventoResponse;
     FConsultarEvento: TNFSeConsultarEventoResponse;
+    FConsultarDFe: TNFSeConsultarDFeResponse;
 
   public
     constructor Create;
@@ -72,6 +73,7 @@ type
     property GerarToken: TNFSeGerarTokenResponse read FGerarToken;
     property EnviarEvento: TNFSeEnviarEventoResponse read FEnviarEvento;
     property ConsultarEvento: TNFSeConsultarEventoResponse read FConsultarEvento;
+    property ConsultarDFe: TNFSeConsultarDFeResponse read FConsultarDFe;
 
   end;
 
@@ -91,6 +93,7 @@ begin
   FGerarToken := TNFSeGerarTokenResponse.Create;
   FEnviarEvento := TNFSeEnviarEventoResponse.Create;
   FConsultarEvento := TNFSeConsultarEventoResponse.Create;
+  FConsultarDFe := TNFSeConsultarDFeResponse.Create;
 end;
 
 destructor TWebServices.Destroy;
@@ -106,6 +109,7 @@ begin
   FGerarToken.Free;
   FEnviarEvento.Free;
   FConsultarEvento.Free;
+  FConsultarDFe.Free;
 
   inherited Destroy;
 end;

@@ -50,7 +50,7 @@ type
                      stNFSeImprimir, stNFSeEmail, stNFSeAbrirSessao,
                      stNFSeFecharSessao, stNFSeAguardaProcesso,
                      stNFSeEnvioWebService, stNFSeGerarToken,
-                     stNFSeConsultarEvento);
+                     stNFSeConsultarEvento, stNFSeConsultarDFe);
 
   TVersaoNFSe = (ve100, ve101, ve103,
                  ve200, ve201, ve202, ve203, ve204);
@@ -178,7 +178,7 @@ type
              tmConsultarNFSeServicoTomado, tmCancelarNFSe,
              tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
              tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
-             tmGerarToken, tmEnviarEvento, tmConsultarEvento);
+             tmGerarToken, tmEnviarEvento, tmConsultarEvento, tmConsultarDFe);
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
                               filsComFormatacaoSemZeroEsquerda,
@@ -12670,14 +12670,16 @@ begin
                         'ConsultarNFSeServicoTomado', 'CancelarNFSe',
                         'Gerar', 'GerarLote', 'RecepcionarSincrono', 'SubstituirNFSe',
                         'AbrirSessao', 'FecharSessao', 'Teste', 'Todos',
-                        'GerarToken', 'EnviarEvento'],
+                        'GerarToken', 'EnviarEvento', 'ConsultarEvento',
+                        'ConsultarDFe'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
                         tmConsultarNFSePorRps, tmConsultarNFSe,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
                         tmConsultarNFSeServicoTomado, tmCancelarNFSe,
                         tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
                         tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
-                        tmGerarToken, tmEnviarEvento]);
+                        tmGerarToken, tmEnviarEvento, tmConsultarEvento,
+                        tmConsultarDFe]);
 end;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;

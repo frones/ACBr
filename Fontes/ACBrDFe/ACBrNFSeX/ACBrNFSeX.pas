@@ -171,12 +171,14 @@ type
     procedure GerarToken;
 
     // Usado pelo provedor PadraoNacional
-    procedure ObterDANFSE(const ANumNFSe: String; const ASerieNFSe: String = '');
+    procedure ObterDANFSE(const aChave: String);
     procedure EnviarEvento(aInfEvento: TInfEvento);
     procedure ConsultarEvento(const aChave: string); overload;
     procedure ConsultarEvento(const aChave: string; atpEvento: TtpEvento); overload;
     procedure ConsultarEvento(const aChave: string; atpEvento: TtpEvento;
       aNumSeq: Integer); overload;
+    procedure ConsultarDFe(aNSU: Integer); overload;
+    procedure ConsultarDFe(const aChave: string); overload;
 
     function LinkNFSe(ANumNFSe: String; const ACodVerificacao: String;
       const AChaveAcesso: String = ''; const AValorServico: String = ''): String;
@@ -385,7 +387,8 @@ end;
 
 procedure TACBrNFSeX.GerarLote(const aLote: String; aqMaxRps: Integer; aModoEnvio: TmodoEnvio);
 begin
-  if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FWebService.Gerar.Clear;
   FWebService.Gerar.Lote := aLote;
@@ -538,9 +541,34 @@ begin
   FProvider.ConsultarEvento;
 end;
 
+procedure TACBrNFSeX.ConsultarDFe(aNSU: Integer);
+begin
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.ConsultarDFe.Clear;
+  FWebService.ConsultarDFe.NSU := aNSU;
+  FWebService.ConsultarDFe.ChaveNFSe := '';
+
+  FProvider.ConsultarDFe;
+end;
+
+procedure TACBrNFSeX.ConsultarDFe(const aChave: string);
+begin
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.ConsultarDFe.Clear;
+  FWebService.ConsultarDFe.NSU := -1;
+  FWebService.ConsultarDFe.ChaveNFSe := aChave;
+
+  FProvider.ConsultarDFe;
+end;
+
 procedure TACBrNFSeX.ConsultarLoteRps(const AProtocolo, ANumLote: String);
 begin
-  if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FWebService.ConsultaLoteRps.Clear;
   FWebService.ConsultaLoteRps.Protocolo := AProtocolo;
@@ -551,7 +579,8 @@ end;
 
 procedure TACBrNFSeX.ConsultarNFSe;
 begin
-  if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FProvider.ConsultaNFSe;
 end;
@@ -960,7 +989,7 @@ begin
   FProvider.GerarToken;
 end;
 
-procedure TACBrNFSeX.ObterDANFSE(const ANumNFSe, ASerieNFSe: String);
+procedure TACBrNFSeX.ObterDANFSE(const aChave: String);
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
@@ -972,8 +1001,7 @@ begin
     tpConsulta := tcPorNumero;
     tpRetorno := trPDF;
 
-    NumeroIniNFSe := ANumNFSe;
-    SerieNFSe := ASerieNFSe;
+    NumeroIniNFSe := aChave;
   end;
 
   ConsultarNFSe;

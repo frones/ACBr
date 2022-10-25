@@ -105,6 +105,11 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultarEvento(Response: TNFSeConsultarEventoResponse); override;
 
+    procedure PrepararConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
+    procedure GerarMsgDadosConsultarDFe(Response: TNFSeConsultarDFeResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
+
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -1514,6 +1519,28 @@ end;
 
 procedure TACBrNFSeProviderABRASFv1.TratarRetornoConsultarEvento(
   Response: TNFSeConsultarEventoResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
+procedure TACBrNFSeProviderABRASFv1.PrepararConsultarDFe(
+  Response: TNFSeConsultarDFeResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderABRASFv1.GerarMsgDadosConsultarDFe(
+  Response: TNFSeConsultarDFeResponse; Params: TNFSeParamsResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderABRASFv1.TratarRetornoConsultarDFe(
+  Response: TNFSeConsultarDFeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;

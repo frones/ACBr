@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/10/2022
+-- Diversos --
+[+] Implementado o método ConsultarDFe que vai ser utilizado pelo provedor
+    PadraoNacional para poder baixar os XML das notas e eventos, algo semelhante
+    ao DistribuicaoDFe.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Possível solução para os provedores que ao gerar o XML da nota não gera o
     CNPJ com 14 digitos.

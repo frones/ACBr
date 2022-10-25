@@ -56,6 +56,7 @@ type
     procedure GerarToken;
     procedure EnviarEvento;
     procedure ConsultarEvento;
+    procedure ConsultarDFe;
 
     function GetConfigGeral: TConfigGeral;
     function GetConfigWebServices: TConfigWebServices;

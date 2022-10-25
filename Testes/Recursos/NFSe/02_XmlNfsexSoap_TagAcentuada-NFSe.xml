@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <s:Body>
+    <RecepcionarLoteRpsSincronoResponse xmlns="http://nfse.abrasf.org.br">
+      <EnviarLoteRpsSincronoResposta xmlns="http://www.abrasf.org.br/nfse.xsd">
+        <NumeroLote>4</NumeroLote>
+        <DataRecebimento>2022-10-19T17:21:01</DataRecebimento>
+        <Protocolo>93611489-1CDF-49C2-88B6-4C5B4F0D2FFD</Protocolo>
+        <ListaNfse>
+          <CompNfse>
+            <Nfse versao="2.04">
+              <InfNfse>
+                <Numero>5</Numero>
+                <CodigoVerificacao>B08576A2F</CodigoVerificacao>
+                <DataEmissao>2022-10-19T17:21:01.017</DataEmissao>
+                <OutrasInformacoes> .</OutrasInformacoes>
+                <ValoresNfse>
+                  <BaseCalculo>15.50</BaseCalculo>
+                  <ValorLiquidoNfse>15.50</ValorLiquidoNfse>
+                </ValoresNfse>
+                <DescricaoCodigoTributacaoMunicípio>Prestação de Serviços</DescricaoCodigoTributacaoMunicípio>
+                <ValorCredito>0</ValorCredito>
+                <PrestadorServico>
+                  <RazaoSocial>EMITENTE TESTE</RazaoSocial>
+                  <NomeFantasia>EMITENTE TESTE</NomeFantasia>
+                  <Endereco>
+                    <Endereco>ENDEREÇO TESTE</Endereco>
+                    <Numero>11</Numero>
+                    <Complemento>SALA</Complemento>
+                    <Bairro>Recanto das Emas</Bairro>
+                    <CodigoMunicipio>5300108</CodigoMunicipio>
+                    <Uf>DF</Uf>
+                    <Cep>72610321</Cep>
+                  </Endereco>
+                  <Contato>
+                    <Telefone>61999999999</Telefone>
+                    <Email>email@gmail.com</Email>
+                  </Contato>
+                </PrestadorServico>
+                <OrgaoGerador>
+                  <CodigoMunicipio>5002704</CodigoMunicipio>
+                  <Uf>MS</Uf>
+                </OrgaoGerador>
+                <DeclaracaoPrestacaoServico>
+                  <InfDeclaracaoPrestacaoServico Id="Dec_48">
+                    <Rps>
+                      <IdentificacaoRps>
+                        <Numero>4</Numero>
+                        <Serie>8</Serie>
+                        <Tipo>1</Tipo>
+                      </IdentificacaoRps>
+                      <DataEmissao>2022-10-19</DataEmissao>
+                      <Status>1</Status>
+                    </Rps>
+                    <Competencia>2022-10-19</Competencia>
+                    <Servico>
+                      <Valores>
+                        <ValorServicos>15.50</ValorServicos>
+                        <ValorIss>0.39</ValorIss>
+                        <Aliquota>2.5000</Aliquota>
+                      </Valores>
+                      <IssRetido>2</IssRetido>
+                      <ItemListaServico>17.01</ItemListaServico>
+                      <CodigoCnae>6399200</CodigoCnae>
+                      <CodigoTributacaoMunicipio>170</CodigoTributacaoMunicipio>
+                      <Discriminacao>PLANEJAMENTO E PRODUCAO DE PAGINAS ELETRONICAS Obs: - ; Informacoes dos tributos totais incidentes (Lei Federal 12.741/2012). Total R$ = 2,08;</Discriminacao>
+                      <CodigoMunicipio>5300108</CodigoMunicipio>
+                      <ExigibilidadeISS>1</ExigibilidadeISS>
+                      <MunicipioIncidencia>5300108</MunicipioIncidencia>
+                    </Servico>
+                    <Prestador>
+                      <CpfCnpj>
+                        <Cnpj>0000000000</Cnpj>
+                      </CpfCnpj>
+                      <InscricaoMunicipal>0000000</InscricaoMunicipal>
+                    </Prestador>
+                    <TomadorServico>
+                      <IdentificacaoTomador>
+                        <CpfCnpj>
+                          <Cpf>000000000</Cpf>
+                        </CpfCnpj>
+                      </IdentificacaoTomador>
+                      <RazaoSocial>TOMADOR TESTE</RazaoSocial>
+                      <Endereco>
+                        <Endereco>ENDEREÇO TESTE</Endereco>
+                        <Numero>11</Numero>
+                        <Complemento>LOTE</Complemento>
+                        <Bairro>RECANTO DAS EMAS</Bairro>
+                        <CodigoMunicipio>5300108</CodigoMunicipio>
+                        <Uf>DF</Uf>
+                        <Cep>72600407</Cep>
+                      </Endereco>
+                      <Contato>
+                        <Telefone>61999999999</Telefone>
+                        <Email>email@gmai.com</Email>
+                      </Contato>
+                    </TomadorServico>
+                    <RegimeEspecialTributacao>1</RegimeEspecialTributacao>
+                    <OptanteSimplesNacional>2</OptanteSimplesNacional>
+                    <IncentivoFiscal>2</IncentivoFiscal>
+                  </InfDeclaracaoPrestacaoServico>
+                  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                    <SignedInfo>
+                      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+                      <Reference URI="#Dec_48">
+                        <Transforms>
+                          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                          <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                        </Transforms>
+                        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+                        <DigestValue>Ys84pLubT4W80qs2d38yPgydhTg=</DigestValue>
+                      </Reference>
+                    </SignedInfo>
+                    <SignatureValue>nrFTQSQV+hRhRgOMRHLKuRLofpXEfVC7nPje1isdKskPFoyNSRmStY9hX4Vz2GHmRhj2+EnYhhvF0lt376RC/uKiJcReANADVX65civSS12k6iC3jb7KjFuSuYPUUmeMRgTkHFITXlhawAfJOzMct+YxpzK6D1CQ6tNvdkwpeo2Br+GLfkReysy016uHTxmvxiZBDosuJRcDv0xzll8lBaCBOMLi8FQEtdQFkVHUBmAcwLSxSebuMH54e/dnalK7Ky4mFXZWgGy0p/4V4UlmDckPoXr90/MYZxxcW/XrjWyF9lkI9Y+S3NwT/Svsp9BZl6VDAlWFD1/62YUbmlId+w==</SignatureValue>
+                    <KeyInfo>
+                      <X509Data>
+                        <X509Certificate>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</X509Certificate>
+                      </X509Data>
+                    </KeyInfo>
+                  </Signature>
+                </DeclaracaoPrestacaoServico>
+              </InfNfse>
+            </Nfse>
+          </CompNfse>
+        </ListaNfse>
+      </EnviarLoteRpsSincronoResposta>
+    </RecepcionarLoteRpsSincronoResponse>
+  </s:Body>
+</s:Envelope>

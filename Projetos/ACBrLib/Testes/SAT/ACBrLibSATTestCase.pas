@@ -68,6 +68,7 @@ type
     procedure Test_SAT_ImpressaoExtratoPDF_Sem_NomeArquivo;
     procedure Test_SAT_ImpressaoExtratoPDF_Com_NomeArquivo;
     procedure Test_SAT_ImpressaoExtratoPDF_Com_PathPDF;
+    procedure Test_SAT_SetNumeroSessao;
   end;
 
 implementation
@@ -509,6 +510,15 @@ begin
   AssertEquals(ErrOK, SAT_ConfigGravarValor(Handle, CSessaoExtrato, CChavePathPDF, ''));
   AssertEquals(ErrOK, SAT_Finalizar(Handle));
   AssertTrue(FileExists(PDFFile));
+end;
+
+procedure TTestACBrSATLib.Test_SAT_SetNumeroSessao;
+var
+  Handle: THandle;
+begin
+  AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
+  AssertEquals(ErrOK, SAT_SetNumeroSessao(Handle,'92238'));
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 
 initialization

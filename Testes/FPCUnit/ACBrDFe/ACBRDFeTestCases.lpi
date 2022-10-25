@@ -74,7 +74,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="5">
       <Unit0>
         <Filename Value="ACBRDFeTestCases.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -92,6 +92,11 @@
         <Filename Value="..\..\ACBrTests.Util.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="acbrlibxml2testclass.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ACBrLibXml2TestClass"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

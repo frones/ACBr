@@ -36,7 +36,8 @@ uses
   ACBrTests.Util in '..\..\ACBrTests.Util.pas',
   ACBrTests.Runner in '..\..\ACBrTests.Runner.pas',
   ACBrDFeUtilTest in '..\..\FPCUnit\ACBrDFe\ACBrDFeUtilTest.pas',
-  LibXml2TestCases in '..\..\FPCUnit\ACBrDFe\LibXml2TestCases.pas';
+  LibXml2TestCases in '..\..\FPCUnit\ACBrDFe\LibXml2TestCases.pas',
+  ACBrLibXml2TestClass in '..\..\FPCUnit\ACBrDFe\ACBrLibXml2TestClass.pas';
 
 {$R *.RES}
 

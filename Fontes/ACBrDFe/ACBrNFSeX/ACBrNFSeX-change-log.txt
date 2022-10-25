@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/10/2022
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Possível solução para os provedores que ao gerar o XML da nota não gera o
+    CNPJ com 14 digitos.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade Bezerros/PE - provedor Tributus
    Por: Marcelo Santos

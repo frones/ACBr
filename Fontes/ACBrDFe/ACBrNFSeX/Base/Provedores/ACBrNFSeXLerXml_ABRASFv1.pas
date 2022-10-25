@@ -96,7 +96,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrConsts, ACBrDFeUtil,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrConsts, ACBrDFeUtil,
   ACBrNFSeXConversao;
 
 //==============================================================================
@@ -327,6 +327,9 @@ begin
         end;
       end;
 
+      if Length(CpfCnpj) > 11 then
+        CpfCnpj := Poem_Zeros(CpfCnpj, 14);
+
       InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
     end;
   end
@@ -348,6 +351,9 @@ begin
             CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cnpj'), tcStr);
         end;
       end;
+
+      if Length(CpfCnpj) > 11 then
+        CpfCnpj := Poem_Zeros(CpfCnpj, 14);
 
       InscricaoMunicipal := ObterConteudo(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
     end;
@@ -395,6 +401,9 @@ begin
         if CpfCnpj = '' then
           CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cnpj'), tcStr);
       end;
+
+      if Length(CpfCnpj) > 11 then
+        CpfCnpj := Poem_Zeros(CpfCnpj, 14);
 
       InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
       InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('InscricaoEstadual'), tcStr);
@@ -531,6 +540,9 @@ begin
         if CpfCnpj = '' then
           CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cnpj'), tcStr);
       end;
+
+      if Length(CpfCnpj) > 11 then
+        CpfCnpj := Poem_Zeros(CpfCnpj, 14);
 
       InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
     end;

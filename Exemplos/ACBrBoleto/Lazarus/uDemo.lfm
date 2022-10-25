@@ -1899,11 +1899,11 @@ object frmDemo: TfrmDemo
       object btnRetorno: TButton
         AnchorSideLeft.Control = edtPathRetorno
         AnchorSideLeft.Side = asrBottom
-        AnchorSideTop.Control = edtPathRemessa
+        AnchorSideTop.Control = edtPathRetorno
         AnchorSideTop.Side = asrCenter
         Left = 673
         Height = 25
-        Top = 446
+        Top = 495
         Width = 32
         Caption = '...'
         OnClick = btnRetornoClick

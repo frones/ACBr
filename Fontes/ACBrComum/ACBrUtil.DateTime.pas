@@ -649,9 +649,6 @@ begin
     if (p = 0) then
        p := Pos(' ', xDataHora);
 
-    if (p = 0) then
-       p := Pos('.', xDataHora);
-
     if (p > 0) then
     begin
       xHora := Copy(xDataHora, 1, p-1);
@@ -661,10 +658,10 @@ begin
       xHora := xDataHora;
   end;
 
-  p := Pos('.', xTZD);
+  p := Pos('.', xHora);
 
   if (p > 0) then
-    xTZD := '';
+    xHora := Copy(xHora, 1, p-1);
 
   Result := Trim(xData + ' ' + xHora + xTZD);
 end;

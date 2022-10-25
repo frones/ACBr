@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2022
+-- ACBrUtil.DateTime --
+[*] Possível solução para a leitura correta de data/hora cujo segundo tem fração.
+   Por: Italo Giurizzato Junior
+
 21/10/2022
 -- ACBrUtil.XMLHTML --
 [*] Incluído no ParseText o caracter HTML (&#45;) na lista de conversão.

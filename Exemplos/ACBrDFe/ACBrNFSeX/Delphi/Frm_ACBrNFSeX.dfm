@@ -2250,6 +2250,15 @@ object frmACBrNFSe: TfrmACBrNFSe
               TabOrder = 3
               OnClick = btnConsEventoChavPNClick
             end
+            object btnConsultarDFe: TButton
+              Left = 186
+              Top = 41
+              Width = 177
+              Height = 25
+              Caption = 'Consultar DFe'
+              TabOrder = 4
+              OnClick = btnConsultarDFeClick
+            end
           end
         end
       end

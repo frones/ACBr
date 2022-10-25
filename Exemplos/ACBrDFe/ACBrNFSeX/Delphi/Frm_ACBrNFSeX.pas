@@ -257,6 +257,7 @@ type
     btnConsultarNFSePeloNumeroPN: TButton;
     btnObterPDFdoDANFSEPN: TButton;
     btnConsEventoChavPN: TButton;
+    btnConsultarDFe: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -334,6 +335,7 @@ type
     procedure btnEventoRejInterPNClick(Sender: TObject);
     procedure btnConsultarNFSeRPSPNClick(Sender: TObject);
     procedure btnConsEventoChavPNClick(Sender: TObject);
+    procedure btnConsultarDFeClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1304,6 +1306,29 @@ begin
       StrToIntDef(xNumSeqEvento, 1));
 
   ChecarResposta(tmConsultarEvento);
+end;
+
+procedure TfrmACBrNFSe.btnConsultarDFeClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe, xNSU: string;
+begin
+  xTitulo := 'Consultar DFe pela chave da NFSe ou NSU';
+
+  xChaveNFSe := '';
+  if not(InputQuery(xTitulo, 'Chave da NFS-e:', xChaveNFSe)) then
+    exit;
+
+  xNSU := '';
+  if not(InputQuery(xTitulo, 'NSU - Numero Sequencial Unico:', xNSU)) then
+    exit;
+
+  if (xChaveNFSe <> '') and (xNSU = '') then
+    ACBrNFSeX1.ConsultarDFe(xChaveNFSe);
+
+  if (xChaveNFSe = '') and (xNSU <> '') then
+    ACBrNFSeX1.ConsultarDFe(StrToIntDef(xNSU, 0));
+
+  ChecarResposta(tmConsultarDFe);
 end;
 
 procedure TfrmACBrNFSe.btnConsultarLoteClick(Sender: TObject);
@@ -3940,6 +3965,64 @@ begin
             memoLog.Lines.Add('Num. Seq. Evento: ' + IntToStr(nSeqEvento));
             memoLog.Lines.Add('ID do Evento    : ' + idEvento);
             memoLog.Lines.Add('Sucesso         : ' + BoolToStr(Sucesso, True));
+
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
+
+            if Erros.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Erro(s):');
+              for i := 0 to Erros.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+
+            if Alertas.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Alerta(s):');
+              for i := 0 to Alertas.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+          end;
+        end;
+
+      tmConsultarDFe:
+        begin
+          with ConsultarDFe do
+          begin
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarDFe));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+            memoLog.Lines.Add('Chave NFSe     : ' + ChaveNFSe);
+            memoLog.Lines.Add('Num. Seq. Unico: ' + IntToStr(NSU));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Data   : ' + DateToStr(Data));
+            memoLog.Lines.Add('Sucesso: ' + BoolToStr(Sucesso, True));
+
+            if Resumos.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Resumo(s):');
+              for i := 0 to Resumos.Count -1 do
+              begin
+                memoLog.Lines.Add('NSU      : ' + IntToStr(Resumos[i].NSU));
+                memoLog.Lines.Add('Chave DFe: ' + Resumos[i].ChaveDFe);
+                memoLog.Lines.Add('Tipo Doc.: ' + Resumos[i].TipoDoc);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+26/10/2022
+-- ACBrNFSeXServicos.ini --
+[*] As URLs de Homologação para a cidade de Bauru foram alteradas.
+   Por: Innovae Brasil Engenharia
+
 25/10/2022
 -- Diversos --
 [+] Implementado o método ConsultarDFe que vai ser utilizado pelo provedor

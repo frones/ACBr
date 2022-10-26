@@ -73,10 +73,22 @@ unit uFrameLista;
 interface
 
 uses
-  Generics.Collections, Generics.Defaults,
-
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Buttons, ExtCtrls, StdCtrls, ComCtrls, ACBrPacotes;
+  Generics.Collections,
+  Generics.Defaults,
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  Buttons,
+  ExtCtrls,
+  StdCtrls,
+  ComCtrls,
+  ACBrPacotes;
 
 type
   TframePacotes = class(TFrame)
@@ -185,6 +197,7 @@ type
     ACBr_OFX_dpk: TCheckBox;
     ACBr_GTIN_dpk: TCheckBox;
     ACBr_OpenDelivery_dpk: TCheckBox;
+    ACBr_PAFNFCe_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -203,7 +216,8 @@ type
 implementation
 
 uses
-  StrUtils, IniFiles;
+  StrUtils,
+  IniFiles;
 
 {$R *.dfm}
 
@@ -436,7 +450,8 @@ begin
          (ACBr_BlocoX_dpk.Checked) or (ACBr_SATWS_dpk.Checked) or
          (ACBr_BPe_dpk.Checked)    or (ACBr_ANe_dpk.Checked)   or
          (ACBr_CIOT_dpk.Checked)   or (ACBr_NF3e_dpk.Checked)  or
-         (ACBr_SAT_dpk.Checked)    or (ACBr_Boleto_dpk.Checked) then
+         (ACBr_SAT_dpk.Checked)    or (ACBr_Boleto_dpk.Checked) or
+         (ACBr_PAFNFCe_dpk.Checked) then
       begin
         ACBr_DFeComum_dpk.Checked := True;
       end;

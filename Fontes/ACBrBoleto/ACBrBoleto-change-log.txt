@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2022
+--ACBrBoletoRet_Sicredi_API--
+[*]ACBrBoleto API Sicredi Consulta em lista
+  por: Victor H Gonzales - Pandaaa
+
 10/10/2022
 --ACBrBoletoRetorno ACBrBoletoRet_Sicredi_API ACBrBoletoRet_PenseBank_API ACBrBoletoRet_BancoBrasil_API ACBrBoletoWS--
 [+]TK-3090 ACBrBoleto - Ajuste  integração via API, adicionado propriedade de JSON Envio

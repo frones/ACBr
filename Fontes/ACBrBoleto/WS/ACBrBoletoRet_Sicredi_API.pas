@@ -144,7 +144,7 @@ begin
             ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
 
           end else
-          if (TipoOperacao = tpConsultaDetalhe) then
+          if (TipoOperacao in [tpConsultaDetalhe,tpConsulta]) then
           begin
             AJsonBoletos := TJsonArray.Create;
             AJsonBoletos.Parse( AJson.Stringify );

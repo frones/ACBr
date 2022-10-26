@@ -1580,10 +1580,17 @@
 	<xsd:element name="ConsultarNfseRpsEnvio">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="IdentificacaoRps" type="tcIdentificacaoRps"
-					minOccurs="1" maxOccurs="1" />
-				<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="Pedido" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="IdentificacaoRps" type="tcIdentificacaoRps"
+								minOccurs="1" maxOccurs="1" />
+							<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
+								minOccurs="1" maxOccurs="1" />
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -1603,40 +1610,47 @@
 	<xsd:element name="ConsultarNfseServicoPrestadoEnvio">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="1" maxOccurs="1" />
-				<xsd:choice>
-				    <xsd:element name="NumeroNfse" type="tsNumeroNfse"
-                        minOccurs="1" maxOccurs="1" />
-					<xsd:element name="PeriodoEmissao" 
-						minOccurs="1" maxOccurs="1">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="DataInicial" type="xsd:date"
+				<xsd:element name="Pedido" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
+								minOccurs="1" maxOccurs="1" />
+							<xsd:choice>
+								<xsd:element name="NumeroNfse" type="tsNumeroNfse"
 									minOccurs="1" maxOccurs="1" />
-								<xsd:element name="DataFinal" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-							</xsd:sequence>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="PeriodoCompetencia" 
-						minOccurs="1" maxOccurs="1">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="DataInicial" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-								<xsd:element name="DataFinal" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-							</xsd:sequence>
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-				<xsd:element name="Tomador" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="0" maxOccurs="1" />
-				<xsd:element name="Intermediario" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="0" maxOccurs="1" />
-				<xsd:element name="Pagina" type="tsPagina" 
-					minOccurs="1" maxOccurs="1"/>
+								<xsd:element name="PeriodoEmissao" 
+									minOccurs="1" maxOccurs="1">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="DataInicial" type="xsd:date"
+												minOccurs="1" maxOccurs="1" />
+											<xsd:element name="DataFinal" type="xsd:date"
+												minOccurs="1" maxOccurs="1" />
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+								<xsd:element name="PeriodoCompetencia" 
+									minOccurs="1" maxOccurs="1">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="DataInicial" type="xsd:date"
+												minOccurs="1" maxOccurs="1" />
+											<xsd:element name="DataFinal" type="xsd:date"
+												minOccurs="1" maxOccurs="1" />
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:choice>
+							<xsd:element name="Tomador" type="tcIdentificacaoPessoaEmpresa"
+								minOccurs="0" maxOccurs="1" />
+							<xsd:element name="Intermediario" type="tcIdentificacaoPessoaEmpresa"
+								minOccurs="0" maxOccurs="1" />
+							<xsd:element name="Pagina" type="tsPagina" 
+								minOccurs="1" maxOccurs="1"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -1665,42 +1679,49 @@
 	<xsd:element name="ConsultarNfseServicoTomadoEnvio">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="Consulente" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="1" maxOccurs="1" />
-				<xsd:choice>
-				    <xsd:element name="NumeroNfse" type="tsNumeroNfse"
-                        minOccurs="1" maxOccurs="1" />
-					<xsd:element name="PeriodoEmissao" 
-						minOccurs="1" maxOccurs="1">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="DataInicial" type="xsd:date"
+				<xsd:element name="Pedido" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Consulente" type="tcIdentificacaoPessoaEmpresa"
+								minOccurs="1" maxOccurs="1" />
+							<xsd:choice>
+								<xsd:element name="NumeroNfse" type="tsNumeroNfse"
 									minOccurs="1" maxOccurs="1" />
-								<xsd:element name="DataFinal" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-							</xsd:sequence>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="PeriodoCompetencia" 
-						minOccurs="1" maxOccurs="1">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="DataInicial" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-								<xsd:element name="DataFinal" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-							</xsd:sequence>
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-				<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="0" maxOccurs="1" />
-				<xsd:element name="Tomador" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="0" maxOccurs="1" />
-				<xsd:element name="Intermediario" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="0" maxOccurs="1" />
-				<xsd:element name="Pagina" type="tsPagina" 
-					minOccurs="1" maxOccurs="1"/>
+								<xsd:element name="PeriodoEmissao" 
+									minOccurs="1" maxOccurs="1">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="DataInicial" type="xsd:date"
+												minOccurs="1" maxOccurs="1" />
+											<xsd:element name="DataFinal" type="xsd:date"
+												minOccurs="1" maxOccurs="1" />
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+								<xsd:element name="PeriodoCompetencia" 
+									minOccurs="1" maxOccurs="1">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="DataInicial" type="xsd:date"
+												minOccurs="1" maxOccurs="1" />
+											<xsd:element name="DataFinal" type="xsd:date"
+												minOccurs="1" maxOccurs="1" />
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:choice>
+							<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
+								minOccurs="0" maxOccurs="1" />
+							<xsd:element name="Tomador" type="tcIdentificacaoPessoaEmpresa"
+								minOccurs="0" maxOccurs="1" />
+							<xsd:element name="Intermediario" type="tcIdentificacaoPessoaEmpresa"
+								minOccurs="0" maxOccurs="1" />
+							<xsd:element name="Pagina" type="tsPagina" 
+								minOccurs="1" maxOccurs="1"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -1729,21 +1750,28 @@
 	<xsd:element name="ConsultarNfseFaixaEnvio">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="1" maxOccurs="1" />
-				<xsd:element name="Faixa" 
-					minOccurs="1" maxOccurs="1">
+				<xsd:element name="Pedido" minOccurs="1" maxOccurs="1">
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element name="NumeroNfseInicial" type="tsNumeroNfse"
+							<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
 								minOccurs="1" maxOccurs="1" />
-							<xsd:element name="NumeroNfseFinal" type="tsNumeroNfse"
-								minOccurs="1" maxOccurs="1" />
+							<xsd:element name="Faixa" 
+								minOccurs="1" maxOccurs="1">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="NumeroNfseInicial" type="tsNumeroNfse"
+											minOccurs="1" maxOccurs="1" />
+										<xsd:element name="NumeroNfseFinal" type="tsNumeroNfse"
+											minOccurs="1" maxOccurs="1" />
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="Pagina" type="tsPagina" 
+								minOccurs="1" maxOccurs="1"/>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="Pagina" type="tsPagina" 
-					minOccurs="1" maxOccurs="1"/>
+				<xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>

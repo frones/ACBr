@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 26/10/2022
+-- ISSNet.Provider --
+[*] Incluído as chamadas para gerar os XML de consultas segundo o que o provedor
+    fez.
+    Incluído também a chamada para gerar o XML de cancelamento.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] As URLs de Homologação para a cidade de Bauru foram alteradas.
    Por: Innovae Brasil Engenharia

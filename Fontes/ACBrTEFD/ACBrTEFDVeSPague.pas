@@ -124,6 +124,10 @@ type
    private
       fAplicacao       : String;
       fAplicacaoVersao : String;
+      fComputadorEndereco: string;
+      fComputadorNome: string;
+      fEstabelecimento: string;
+      fLoja: string;
       fTemPendencias   : Boolean;
       fCancelandoTransacao: Boolean;
       fGPExeParams : String ;
@@ -131,6 +135,7 @@ type
       fTerminador : AnsiString ;
       fEnderecoIP : AnsiString;
       fPorta      : AnsiString;
+      fTerminal: string;
       fTimeOut    : Integer ;
 
       fSocket : TTCPBlockSocket ;
@@ -146,6 +151,7 @@ type
       fTransacaoOpcao : String ;
       fTransacaoPendente : String ;
       fTransacaoReImpressao: String;
+      fTransacaoPix: String;
 
      procedure ExecutarTranscaoPendente(NSU : String ; Valor : Double) ;
      procedure FinalizarTranscaoPendente;
@@ -161,7 +167,7 @@ type
    protected
      procedure SetNumVias(const AValue : Integer); override;
 
-     function FazerRequisicao(Transacao : String; AHeader : AnsiString = '' ;
+     function FazerRequisicao(Transacao: String; AHeader : AnsiString = '' ;
        Valor : Double = 0 ; Documento : AnsiString = '';
         ListaParams : AnsiString = '') : Integer ;
      Function ContinuarRequisicao( ImprimirComprovantes : Boolean = True) : Integer ;
@@ -222,6 +228,12 @@ type
      property TimeOut    : Integer    read fTimeOut     write SeTimeOut default 1000 ;
      Property TemPendencias: Boolean read fTemPendencias write fTemPendencias;
 
+     property Estabelecimento: string read fEstabelecimento write fEstabelecimento;
+     property Loja: string read fLoja write fLoja;
+     property Terminal: string read fTerminal write fTerminal;
+     property ComputadorNome: string read fComputadorNome write fComputadorNome;
+     property ComputadorEndereco: string read fComputadorEndereco write fComputadorEndereco;
+
      property TransacaoADM   : String read fTransacaoADM   write fTransacaoADM ;
      property TransacaoCRT   : String read fTransacaoCRT   write fTransacaoCRT ;
      property TransacaoCHQ   : String read fTransacaoCHQ   write fTransacaoCHQ ;
@@ -231,6 +243,7 @@ type
         write fTransacaoReImpressao ;
      property TransacaoPendente : String read fTransacaoPendente
         write fTransacaoPendente ;
+     property TransacaoPix: String read fTransacaoPix write fTransacaoPix;
 
      property OnExibeMenu : TACBrTEFDVeSPagueExibeMenu read fOnExibeMenu
         write fOnExibeMenu ;
@@ -472,8 +485,8 @@ begin
   AddParamString('servico',AValue);
 end;
 
-procedure TACBrTEFDVeSPagueCmd.AddParamString(const ParamName : String ;
-  const AString : AnsiString) ;
+procedure TACBrTEFDVeSPagueCmd.AddParamString(const ParamName: String;
+  const AString: AnsiString);
 begin
    fsParams.Values[ParamName] := '"'+AString+'"';
 end ;
@@ -548,6 +561,7 @@ begin
      begin
         fpNFCeSAT.Bandeira := Linha.Informacao.AsString;
         fpNomeAdministradora := Linha.Informacao.AsString;
+        fpRede := Linha.Informacao.AsString ;
      end
      else if Chave = 'transacao_autorizacao' then
      begin
@@ -578,10 +592,13 @@ begin
         ParcVenctoStr := Valor
      else if Chave = 'transacao_produto' then
         fpModalidadePagtoDescrita := Linha.Informacao.AsString
-     else if Chave = 'transacao_rede' then
-        fpRede := Linha.Informacao.AsString
      else if Chave = 'transacao_tipo_cartao' then
-        fpTipoTransacao := ifthen(LowerCase(Valor)='debito', 20, 10 )
+     begin
+        fpTipoTransacao := ifthen(LowerCase(Valor)='debito', 20, 10 );
+
+        fpDebito  := (LowerCase(Valor) = 'debito');
+        fpCredito := (LowerCase(Valor) = 'credito');
+     end
      else if Chave = 'transacao_valor' then
         fpValorTotal := StringToFloatDef( Valor, 0 )
      else if Chave = 'transacao_valor_ajuste' then //---Valor retornado contendo o valor CIELO PREMIA
@@ -934,7 +951,10 @@ var
 begin
   VerificarTransacaoPagamento( Valor );
 
-  Retorno := FazerRequisicao( fTransacaoCRT, 'CRT', Valor, DocumentoVinculado) ;
+  if LowerCase(fTransacaoPix) = 'digital pagar' then
+    Retorno := FazerRequisicao('Digital Pagar', 'CRT', Valor, DocumentoVinculado)
+  else
+    Retorno := FazerRequisicao(fTransacaoCRT, 'CRT', Valor, DocumentoVinculado);
 
   if Retorno = 0 then
      Retorno := ContinuarRequisicao( False ) ;  { False = NAO Imprimir Comprovantes agora }
@@ -1076,9 +1096,15 @@ end;
 procedure TACBrTEFDVeSPague.ServicoIniciar ;
 begin
   repeat
-     ReqVS.Servico := 'iniciar' ;
+     ReqVS.Servico := 'iniciar';
      ReqVS.AddParamString('aplicacao',fAplicacao);
      ReqVS.AddParamString('versao',fAplicacaoVersao);
+     ReqVS.AddParamString('computador_nome', fComputadorNome);
+     ReqVS.AddParamString('computador_endereco', fComputadorEndereco);
+     ReqVS.AddParamString('estabelecimento', fEstabelecimento);
+     ReqVS.AddParamString('loja', fLoja);
+     ReqVS.AddParamString('terminal', fTerminal);
+     //ReqVS.AddParamString('estado', '7');
 
      TransmiteCmd;
 
@@ -1121,7 +1147,8 @@ begin
       ReqVS.AddParamString( 'transacao_opcao', TransacaoOpcao ) ;
 
    //---Adicionando o parametro CIELO PREMIA--------------
-   ReqVS.AddParamDouble( 'transacao_valor_ajuste',  0) ;
+   if Transacao = fTransacaoCRT then
+     ReqVS.AddParamDouble( 'transacao_valor_ajuste',  0) ;
 
    //-----------------------------------------------------
 
@@ -1401,7 +1428,7 @@ begin
                fpSalvarArquivoBackup := False;
            end;
 
-           ReqVS.Retorno := ifthen( Cancelar, 9, 0);
+           ReqVS.Retorno := 0; //ReqVS.Retorno := ifthen(Cancelar, 9, 0);
 
            TransmiteCmd;
         end ;
@@ -1428,7 +1455,11 @@ Var
     TX : AnsiString ;
   begin
     // Enviado comando //
-    TX := ReqVS.FrameEnvio;
+    TX := ReqVS.FrameEnvio + sLineBreak +
+          '		' + sLineBreak +
+          '			' + sLineBreak +
+          '		' + sLineBreak +
+          '	';
     GravaLog( 'TRANSMITINDO ->'+sLineBreak+TX );
     fSocket.SendString(TX);
     Erro := fSocket.LastError ;
@@ -1526,7 +1557,7 @@ begin
                         'Endereço: '+fEnderecoIP+sLineBreak+
                         'Porta: '+fPorta+sLineBreak+
                         'Erro: '+IntToStr(Erro)+'-'+fSocket.GetErrorDesc(Erro) ) ) ;
-      end ;
+     end ;
   end ;
 
 end ;

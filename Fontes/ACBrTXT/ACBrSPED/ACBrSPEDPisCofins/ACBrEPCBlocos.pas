@@ -212,7 +212,36 @@ type
                      );
   TACBrOrigemCredito = TACBrIndOrigCred;
 
+  // Identificação dos bens ou grupo de bens incorporados ao Ativo Imobilizado - {IDENT_BEM_IMOB}
+  TACBrIdentBemImob = (
+                        iocEdificacoesBenfeitorias,       // '01' // Edificações e Benfeitorias
+                        iocInstalacoes,                   // '03' // Instalações
+                        iocMaquinas,                      // '04' // Máquinas
+                        iocEquipamentos,                  // '05' // Equipamentos
+                        iocVeiculos,                      // '06' // Veículos
+                        iocOutros                         // '99' // Outros bens incorporados ao Ativo Imobilizado
+                      );
+  TACBrIdentificacaoBem = TACBrIdentBemImob;
 
+  // Indicador da Utilização dos Bens Incorporados ao Ativo Imobilizado - {IND_UTIL_BEM_IMOB}
+  TACBrIndUtilBemImob = (
+                          ubiProducaoBensDestinadosVenda,   // '1' // Produção de Bens Destinados a Venda
+                          ubiPrestacaoServicos,             // '2' // Prestação de Serviços
+                          ubiLocacaoTerceiros,              // '3' // Locação a Terceiros
+                          ubiOutros                         // '9' // Outros
+                        );
+  TACBrUtilBensIncorporados = TACBrIndUtilBemImob;
+
+  // Indicador do Número de Parcelas a serem apropriadas (Crédito sobre Valor de Aquisição) - {IND_NR_PARC}
+  TACBrIndNrParc = (
+                     inrIntegral,           // '1' // Integral (Mês de Aquisição)
+                     inr12Meses,            // '2' // 12 Meses
+                     inr24Meses,            // '3' // 24 Meses
+                     inr48Meses,            // '4' // 48 Meses
+                     inr6Meses,             // '5' // 6 Meses (Embalagens de bebidas frias)
+                     inrOutra               // '9' // Outra periodicidade definida em Lei
+                   );
+  TACBrNumeroParcelas = TACBrIndNrParc;
 
   /// Indicador de tipo de atividade - TRegistro0000
 //  TACBrAtividade   = (
@@ -1235,6 +1264,12 @@ function NatBcCredToStr(AValue: TACBrNatBcCred): string;
 function StrToNatBcCred(const AValue: string): TACBrNatBcCred;
 function IndOrigCredToStr(AValue: TACBrIndOrigCred): string;
 function StrToIndOrigCred(const AValue: String): TACBrIndOrigCred;
+function IdentBemImobToStr(AValue: TACBrIdentBemImob): string;
+function StrToIdentBemImob(const AValue: String): TACBrIdentBemImob;
+function IndUtilBemImobToStr(AValue: TACBrIndUtilBemImob): string;
+function StrToIndUtilBemImob(const AValue: String): TACBrIndUtilBemImob;
+function IndNrParcToStr(AValue: TACBrIndNrParc): string;
+function StrToIndNrParc(const AValue: String): TACBrIndNrParc;
 function CstPisToStr(AValue: TACBrCstPis): string;
 function StrToCstPis(const AValue: String): TACBrCstPis;
 function CstPisCofinsToStr(AValue: TACBrCstPisCofins): string;
@@ -2207,6 +2242,83 @@ begin
       Result := opcVazio
    else
       Result := TACBrIndOrigCred( StrToIntDef( AValue, 0) );
+end;
+
+function IdentBemImobToStr(AValue: TACBrIdentBemImob): string;
+begin
+  case Integer( AValue ) of
+    Integer(iocEdificacoesBenfeitorias) : Result := '01';   // '01' // Edificações e Benfeitorias
+    Integer(iocInstalacoes)             : Result := '03';   // '03' // Instalações
+    Integer(iocMaquinas)                : Result := '04';   // '04' // Máquinas
+    Integer(iocEquipamentos)            : Result := '05';   // '05' // Equipamentos
+    Integer(iocVeiculos)                : Result := '06';   // '06' // Veículos
+    Integer(iocOutros)                  : Result := '99';   // '99' // Outros bens incorporados ao Ativo Imobilizado
+  else
+    Result := '';
+  end;
+end;
+
+function StrToIdentBemImob(const AValue: String): TACBrIdentBemImob;
+begin
+  case StrToIntDef( AValue, 0 ) of
+    1: Result := iocEdificacoesBenfeitorias;   // '01' // Edificações e Benfeitorias
+    3: Result := iocInstalacoes;               // '03' // Instalações
+    4: Result := iocMaquinas;                  // '04' // Máquinas
+    5: Result := iocEquipamentos;              // '05' // Equipamentos
+    6: Result := iocVeiculos;                  // '06' // Veículos
+  else
+    Result := iocOutros;                       // '99' // Outros bens incorporados ao Ativo Imobilizado
+  end;
+end;
+
+function IndUtilBemImobToStr(AValue: TACBrIndUtilBemImob): string;
+begin
+  case Integer( AValue ) of
+    Integer(ubiProducaoBensDestinadosVenda) : Result := '1';   // '1' // Produção de Bens Destinados a Venda
+    Integer(ubiPrestacaoServicos)           : Result := '2';   // '2' // Prestação de Serviços
+    Integer(ubiLocacaoTerceiros)            : Result := '3';   // '3' // Locação a Terceiros
+    Integer(ubiOutros)                      : Result := '9';   // '9' // Outros
+  else
+    Result := '';
+  end;
+end;
+
+function StrToIndUtilBemImob(const AValue: String): TACBrIndUtilBemImob;
+begin
+  case StrToIntDef( AValue, 0) of
+    1: Result := ubiProducaoBensDestinadosVenda;   // '1' // Produção de Bens Destinados a Venda
+    2: Result := ubiPrestacaoServicos;             // '2' // Prestação de Serviços
+    3: Result := ubiLocacaoTerceiros;              // '3' // Locação a Terceiros
+  else
+    Result := ubiOutros;                           // '9' // Outros
+  end;
+end;
+
+function IndNrParcToStr(AValue: TACBrIndNrParc): string;
+begin
+  case Integer( AValue ) of
+    Integer(inrIntegral): Result := '1';           // '1' // Integral (Mês de Aquisição)
+    Integer(inr12Meses) : Result := '2';           // '2' // 12 Meses
+    Integer(inr24Meses) : Result := '3';           // '3' // 24 Meses
+    Integer(inr48Meses) : Result := '4';           // '4' // 48 Meses
+    Integer(inr6Meses)  : Result := '5';           // '5' // 6 Meses (Embalagens de bebidas frias)
+    Integer(inrOutra)   : Result := '9';           // '9' // Outra periodicidade definida em Lei
+  else
+    Result := '';
+  end;
+end;
+
+function StrToIndNrParc(const AValue: String): TACBrIndNrParc;
+begin
+  case StrToIntDef( AValue, 0) of
+    1: Result := inrIntegral;      // '1' // Integral (Mês de Aquisição)
+    2: Result := inr12Meses;       // '2' // 12 Meses
+    3: Result := inr24Meses;       // '3' // 24 Meses
+    4: Result := inr48Meses;       // '4' // 48 Meses
+    5: Result := inr6Meses;        // '5' // 6 Meses (Embalagens de bebidas frias)
+  else
+    Result := inrOutra;            // '9' // Outra periodicidade definida em Lei
+  end;
 end;
 
 function CstPisToStr(AValue: TACBrCstPis): string;

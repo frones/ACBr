@@ -44,6 +44,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2022
+-- ACBrEPCBlocos --
+[+] Incluídos novos tipos enumerados: TACBrIdentBemImob, TACBrIndUtilBemImob e TACBrIndNrParc;
+[+] Inclusão de funções para conversão dos novos enumerados para String.
+    https://www.projetoacbr.com.br/forum/topic/69420-efdcontribuições-f100-f120-f130-e-f150/
+	Por: Renato Rubinho
+
+-- ACBrEPCBloco_F_Class --
+[*] Alteração para utilizar funções de conversão de enumerados para String;
+
+-- ACBrEPCBloco_F --
+[*] Alteração dos tipos das propriedades de String para os novos tipos enumerados.
+
+-- ACBrEPCBloco_F_Importar --
+[*] Ajuste para utilizar as funções de conversão de String para enumerados.
+    Por: Elias César
+
 02/09/2022
 -- ACBrECFBloco_X_Class --
 [-] Correção no Registro X450 para envio da propriedade correta ao campo VL_DIVID_PJ.

@@ -473,9 +473,6 @@ end;
 procedure TBloco_F.WriteRegistroF100(RegF010: TRegistroF010) ;
   var
     intFor           : integer;
-    strIND_OPER      : String;
-    strIND_ORIG_CRED : String;
-    strNAT_BC_CRED   : String;
 begin
   if Assigned(RegF010.RegistroF100) then
   begin
@@ -483,42 +480,8 @@ begin
      begin
         with RegF010.RegistroF100.Items[intFor] do
         begin
-
-          case IND_OPER of
-            indRepCustosDespesasEncargos : strIND_OPER := '0'; //0 – Operação Representativa de Aquisição, Custos, Despesa ou Encargos, Sujeita à Incidência de Crédito de PIS/Pasep ou Cofins (CST 50 a 66).
-            indRepReceitaAuferida        : strIND_OPER := '1'; //1 – Operação Representativa de Receita Auferida Sujeita ao Pagamento da Contribuição para o PIS/Pasep e da Cofins (CST 01, 02, 03 ou 05).
-            indRepReceitaNaoAuferida     : strIND_OPER := '2'; //2 - Operação Representativa de Receita Auferida Não Sujeita ao Pagamento da Contribuição para o PIS/Pasep e da Cofins (CST 04, 06, 07, 08, 09, 49 ou 99).
-
-          end;
-
-          case IND_ORIG_CRED of
-            opcMercadoInterno : strIND_ORIG_CRED := '0';
-            opcImportacao     : strIND_ORIG_CRED := '1';
-          end;
-
-          case NAT_BC_CRED of
-            bccAqBensRevenda                 : strNAT_BC_CRED := '01';
-            bccAqBensUtiComoInsumo           : strNAT_BC_CRED := '02';
-            bccAqServUtiComoInsumo           : strNAT_BC_CRED := '03';
-            bccEnergiaEletricaTermica        : strNAT_BC_CRED := '04';
-            bccAluguelPredios                : strNAT_BC_CRED := '05';
-            bccAluguelMaqEquipamentos        : strNAT_BC_CRED := '06';
-            bccArmazenagemMercadoria         : strNAT_BC_CRED := '07';
-            bccConArrendamentoMercantil      : strNAT_BC_CRED := '08';
-            bccMaqCredDepreciacao            : strNAT_BC_CRED := '09';
-            bccMaqCredAquisicao              : strNAT_BC_CRED := '10';
-            bccAmortizacaoDepreciacaoImoveis : strNAT_BC_CRED := '11';
-            bccDevolucaoSujeita              : strNAT_BC_CRED := '12';
-            bccOutrasOpeComDirCredito        : strNAT_BC_CRED := '13';
-            bccAtTransporteSubcontratacao    : strNAT_BC_CRED := '14';
-            bccAtImobCustoIncorrido          : strNAT_BC_CRED := '15';
-            bccAtImobCustoOrcado             : strNAT_BC_CRED := '16';
-            bccAtPresServ                    : strNAT_BC_CRED := '17';
-            bccEstoqueAberturaBens           : strNAT_BC_CRED := '18';
-          end;
-
           Add( LFill('F100')             +
-               LFill( strIND_OPER )      +
+               LFill( IndTpOperacaoReceitaToStr(IND_OPER) ) +
                LFill( COD_PART )         +
                LFill( COD_ITEM )         +
                LFill( DT_OPER )          +
@@ -531,8 +494,8 @@ begin
                LFill( VL_BC_COFINS,0,4, False, '0','0.0000' ) +
                LFill( ALIQ_COFINS,0,4, False, '0','0.0000' )  +
                LFill( VL_COFINS,0,2 )    +
-               LFill( strNAT_BC_CRED )   +
-               LFill( strIND_ORIG_CRED ) +
+               LFill( NatBcCredToStr(NAT_BC_CRED) )   +
+               LFill( IndOrigCredToStr(IND_ORIG_CRED) ) +
                LFill( COD_CTA )          +
                LFill( COD_CCUS )         +
                LFill( DESC_DOC_OPER ) ) ;
@@ -581,7 +544,6 @@ end;
 procedure TBloco_F.WriteRegistroF120(RegF010: TRegistroF010) ;
   var
     intFor         : integer;
-    strNAT_BC_CRED : String;
 begin
   if Assigned(RegF010.RegistroF120) then
   begin
@@ -589,32 +551,11 @@ begin
      begin
         with RegF010.RegistroF120.Items[intFor] do
         begin
-          case NAT_BC_CRED of
-            bccAqBensRevenda                 : strNAT_BC_CRED := '01';
-            bccAqBensUtiComoInsumo           : strNAT_BC_CRED := '02';
-            bccAqServUtiComoInsumo           : strNAT_BC_CRED := '03';
-            bccEnergiaEletricaTermica        : strNAT_BC_CRED := '04';
-            bccAluguelPredios                : strNAT_BC_CRED := '05';
-            bccAluguelMaqEquipamentos        : strNAT_BC_CRED := '06';
-            bccArmazenagemMercadoria         : strNAT_BC_CRED := '07';
-            bccConArrendamentoMercantil      : strNAT_BC_CRED := '08';
-            bccMaqCredDepreciacao            : strNAT_BC_CRED := '09';
-            bccMaqCredAquisicao              : strNAT_BC_CRED := '10';
-            bccAmortizacaoDepreciacaoImoveis : strNAT_BC_CRED := '11';
-            bccDevolucaoSujeita              : strNAT_BC_CRED := '12';
-            bccOutrasOpeComDirCredito        : strNAT_BC_CRED := '13';
-            bccAtTransporteSubcontratacao    : strNAT_BC_CRED := '14';
-            bccAtImobCustoIncorrido          : strNAT_BC_CRED := '15';
-            bccAtImobCustoOrcado             : strNAT_BC_CRED := '16';
-            bccAtPresServ                    : strNAT_BC_CRED := '17';
-            bccEstoqueAberturaBens           : strNAT_BC_CRED := '18';
-          end;
-
           Add( LFill('F120')                      +
-               LFill( strNAT_BC_CRED )            +
-               LFill( IDENT_BEM_IMOB )            +    //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( IND_ORIG_CRED )             +     //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( IND_UTIL_BEM_IMOB )         + //Verificar criação da tabela no ACBrEPCBlocos
+               LFill( NatBcCredToStr(NAT_BC_CRED) ) +
+               LFill( IdentBemImobToStr(IDENT_BEM_IMOB) ) +
+               LFill( IndOrigCredToStr(IND_ORIG_CRED) ) +
+               LFill( IndUtilBemImobToStr(IND_UTIL_BEM_IMOB) ) +
                LFill( VL_OPER_DEP,0,2 )           +
                LFill( PARC_OPER_NAO_BC_CRED,0,2 ) +
                LFill( CstPisToStr(CST_PIS) )                +
@@ -673,7 +614,6 @@ end;
 procedure TBloco_F.WriteRegistroF130(RegF010: TRegistroF010) ;
   var
     intFor         : integer;
-    strNAT_BC_CRED : String;
 begin
   if Assigned(RegF010.RegistroF130) then
   begin
@@ -681,37 +621,16 @@ begin
      begin
         with RegF010.RegistroF130.Items[intFor] do
         begin
-          case NAT_BC_CRED of
-            bccAqBensRevenda                 : strNAT_BC_CRED := '01';
-            bccAqBensUtiComoInsumo           : strNAT_BC_CRED := '02';
-            bccAqServUtiComoInsumo           : strNAT_BC_CRED := '03';
-            bccEnergiaEletricaTermica        : strNAT_BC_CRED := '04';
-            bccAluguelPredios                : strNAT_BC_CRED := '05';
-            bccAluguelMaqEquipamentos        : strNAT_BC_CRED := '06';
-            bccArmazenagemMercadoria         : strNAT_BC_CRED := '07';
-            bccConArrendamentoMercantil      : strNAT_BC_CRED := '08';
-            bccMaqCredDepreciacao            : strNAT_BC_CRED := '09';
-            bccMaqCredAquisicao              : strNAT_BC_CRED := '10';
-            bccAmortizacaoDepreciacaoImoveis : strNAT_BC_CRED := '11';
-            bccDevolucaoSujeita              : strNAT_BC_CRED := '12';
-            bccOutrasOpeComDirCredito        : strNAT_BC_CRED := '13';
-            bccAtTransporteSubcontratacao    : strNAT_BC_CRED := '14';
-            bccAtImobCustoIncorrido          : strNAT_BC_CRED := '15';
-            bccAtImobCustoOrcado             : strNAT_BC_CRED := '16';
-            bccAtPresServ                    : strNAT_BC_CRED := '17';
-            bccEstoqueAberturaBens           : strNAT_BC_CRED := '18';
-          end;
-
           Add( LFill('F130')                      +
-               LFill( strNAT_BC_CRED )            +
-               LFill( IDENT_BEM_IMOB )            +    //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( IND_ORIG_CRED )             +     //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( IND_UTIL_BEM_IMOB )         + //Verificar criação da tabela no ACBrEPCBlocos
+               LFill( NatBcCredToStr(NAT_BC_CRED) ) +
+               LFill( IdentBemImobToStr(IDENT_BEM_IMOB) ) +
+               LFill( IndOrigCredToStr(IND_ORIG_CRED) ) +
+               LFill( IndUtilBemImobToStr(IND_UTIL_BEM_IMOB) ) +
                LFill( MES_OPER_AQUIS )            +
                LFill( VL_OPER_AQUIS,0,2 )         +
-               LFill( PARC_OPER_NAO_BC_CRED,0,2 ) +
+               LFill( PARC_OPER_NAO_BC_CRED,0,2,True ) +
                LFill( VL_BC_CRED,0,2 )            +
-               LFill( IND_NR_PARC,1 )             +
+               LFill( IndNrParcToStr(IND_NR_PARC) ) +
                LFill( CstPisToStr(CST_PIS) )      +
                LFill( VL_BC_PIS,0,2 )             +
                DFill( ALIQ_PIS, 4 )               +
@@ -768,7 +687,6 @@ end;
 procedure TBloco_F.WriteRegistroF150(RegF010: TRegistroF010) ;
   var
     intFor         : integer;
-    strNAT_BC_CRED : String;
 begin
   if Assigned(RegF010.RegistroF150) then
   begin
@@ -776,29 +694,8 @@ begin
      begin
         with RegF010.RegistroF150.Items[intFor] do
         begin
-          case NAT_BC_CRED of
-            bccAqBensRevenda                 : strNAT_BC_CRED := '01';
-            bccAqBensUtiComoInsumo           : strNAT_BC_CRED := '02';
-            bccAqServUtiComoInsumo           : strNAT_BC_CRED := '03';
-            bccEnergiaEletricaTermica        : strNAT_BC_CRED := '04';
-            bccAluguelPredios                : strNAT_BC_CRED := '05';
-            bccAluguelMaqEquipamentos        : strNAT_BC_CRED := '06';
-            bccArmazenagemMercadoria         : strNAT_BC_CRED := '07';
-            bccConArrendamentoMercantil      : strNAT_BC_CRED := '08';
-            bccMaqCredDepreciacao            : strNAT_BC_CRED := '09';
-            bccMaqCredAquisicao              : strNAT_BC_CRED := '10';
-            bccAmortizacaoDepreciacaoImoveis : strNAT_BC_CRED := '11';
-            bccDevolucaoSujeita              : strNAT_BC_CRED := '12';
-            bccOutrasOpeComDirCredito        : strNAT_BC_CRED := '13';
-            bccAtTransporteSubcontratacao    : strNAT_BC_CRED := '14';
-            bccAtImobCustoIncorrido          : strNAT_BC_CRED := '15';
-            bccAtImobCustoOrcado             : strNAT_BC_CRED := '16';
-            bccAtPresServ                    : strNAT_BC_CRED := '17';
-            bccEstoqueAberturaBens           : strNAT_BC_CRED := '18';
-          end;
-
           Add( LFill('F150')               +
-               LFill( strNAT_BC_CRED )     +
+               LFill( NatBcCredToStr(NAT_BC_CRED) ) +
                LFill( VL_TOT_EST,0,2 )     +
                LFill( EST_IMP,0,2 )        +
                LFill( VL_BC_EST,0,2 )      +

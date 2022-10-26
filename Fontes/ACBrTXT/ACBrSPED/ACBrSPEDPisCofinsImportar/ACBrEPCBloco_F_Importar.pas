@@ -191,9 +191,9 @@ begin
   with ACBrSpedPisCofins.Bloco_F.RegistroF120New do
   begin
     NAT_BC_CRED := StrToNatBcCred(Valor);
-    IDENT_BEM_IMOB := Valor;
-    IND_ORIG_CRED := Valor;
-    IND_UTIL_BEM_IMOB := Valor;
+    IDENT_BEM_IMOB := StrToIdentBemImob(Valor);
+    IND_ORIG_CRED := StrToIndOrigCred(Valor);
+    IND_UTIL_BEM_IMOB := StrToIndUtilBemImob(Valor);
     VL_OPER_DEP := ValorF;
     PARC_OPER_NAO_BC_CRED := ValorF;
     CST_PIS := StrToCstPis(Valor);
@@ -224,14 +224,14 @@ begin
   with ACBrSpedPisCofins.Bloco_F.RegistroF130New do
   begin
     NAT_BC_CRED := StrToNatBcCred(Valor);
-    IDENT_BEM_IMOB := Valor;
-    IND_ORIG_CRED := Valor;
-    IND_UTIL_BEM_IMOB := Valor;
+    IDENT_BEM_IMOB := StrToIdentBemImob(Valor);
+    IND_ORIG_CRED := StrToIndOrigCred(Valor);
+    IND_UTIL_BEM_IMOB := StrToIndUtilBemImob(Valor);
     MES_OPER_AQUIS := Valor;
     VL_OPER_AQUIS := ValorF;
     PARC_OPER_NAO_BC_CRED := ValorF;
     VL_BC_CRED := ValorF;
-    IND_NR_PARC := ValorI;
+    IND_NR_PARC := StrToIndNrParc(Valor);
     CST_PIS := StrToCstPis(Valor);
     VL_BC_PIS := ValorF;
     ALIQ_PIS := ValorF;

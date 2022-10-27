@@ -230,7 +230,8 @@ begin
       begin
         with FRegistrosV3.Items[intFor] do
         begin
-          Add( LFill('V2') +
+          Add( LFill('V3') +
+               LFill(DATA) +
                LFill(DAV,13));
         end;
       end;

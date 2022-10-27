@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/10/2022
+-- EloTech.GravarXml --
+[*] Alteração para gerar a tag InscricaoEstadual no local correto.
+   Por: Sandro Felipe Adad
+
 26/10/2022
 -- ISSNet.Provider --
 [*] Incluído as chamadas para gerar os XML de consultas segundo o que o provedor

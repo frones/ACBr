@@ -67,7 +67,7 @@ begin
   FormatoAliq := tcDe2;
   FormatoItemListaServico := filsSemFormatacao;
 
-  NrOcorrInscEstTomador := 0;
+  NrOcorrInscEstTomador_1 := 0;
 
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

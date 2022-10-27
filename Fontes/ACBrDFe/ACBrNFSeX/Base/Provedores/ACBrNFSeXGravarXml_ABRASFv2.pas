@@ -57,7 +57,8 @@ type
     FNrOcorrDescCond: Integer;
     FNrOcorrValorDeducoes: Integer;
     FNrOcorrValorTotalRecebido: Integer;
-    FNrOcorrInscEstTomador: Integer;
+    FNrOcorrInscEstTomador_1: Integer;
+    FNrOcorrInscEstTomador_2: Integer;
     FNrOcorrOutrasInformacoes: Integer;
     FNrOcorrNaturezaOperacao: Integer;
     FNrOcorrIdCidade: Integer;
@@ -197,7 +198,8 @@ type
     property NrOcorrRazaoSocialInterm: Integer  read FNrOcorrRazaoSocialInterm  write FNrOcorrRazaoSocialInterm;
     property NrOcorrValorDeducoes: Integer      read FNrOcorrValorDeducoes      write FNrOcorrValorDeducoes;
     property NrOcorrValorTotalRecebido: Integer read FNrOcorrValorTotalRecebido write FNrOcorrValorTotalRecebido;
-    property NrOcorrInscEstTomador: Integer     read FNrOcorrInscEstTomador     write FNrOcorrInscEstTomador;
+    property NrOcorrInscEstTomador_1: Integer   read FNrOcorrInscEstTomador_1   write FNrOcorrInscEstTomador_1;
+    property NrOcorrInscEstTomador_2: Integer   read FNrOcorrInscEstTomador_2   write FNrOcorrInscEstTomador_2;
     property NrOcorrOutrasInformacoes: Integer  read FNrOcorrOutrasInformacoes  write FNrOcorrOutrasInformacoes;
     property NrOcorrNaturezaOperacao: Integer   read FNrOcorrNaturezaOperacao   write FNrOcorrNaturezaOperacao;
     property NrOcorrPercCargaTrib: Integer      read FNrOcorrPercCargaTrib      write FNrOcorrPercCargaTrib;
@@ -337,7 +339,8 @@ begin
   FNrOcorrNaturezaOperacao := -1;
   FNrOcorrIdCidade := -1;
   FNrOcorrValorTotalRecebido := -1;
-  FNrOcorrInscEstTomador := -1;
+  FNrOcorrInscEstTomador_1 := -1;
+  FNrOcorrInscEstTomador_2 := -1;
   FNrOcorrOutrasInformacoes := -1;
   FNrOcorrTipoNota := -1;
   FNrOcorrSiglaUF := -1;
@@ -825,6 +828,9 @@ begin
 
     Result.AppendChild(GerarContatoTomador);
 
+    Result.AppendChild(AddNode(tcStr, '#38', 'InscricaoEstadual', 1, 20, NrOcorrInscEstTomador_2,
+                  NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, DSC_IE));
+
     Result.AppendChild(AddNode(tcStr, '#', 'AtualizaTomador', 1, 1, NrOcorrAtualizaTomador,
       FpAOwner.SimNaoToStr(NFSe.Tomador.AtualizaTomador), '****'));
 
@@ -844,7 +850,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#37', 'InscricaoMunicipal', 1, 15, NrOcorrInscMunTomador,
                  NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, DSC_IM));
 
-  Result.AppendChild(AddNode(tcStr, '#38', 'InscricaoEstadual', 1, 20, NrocorrInscEstTomador,
+  Result.AppendChild(AddNode(tcStr, '#38', 'InscricaoEstadual', 1, 20, NrocorrInscEstTomador_1,
                   NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, DSC_IE));
 end;
 

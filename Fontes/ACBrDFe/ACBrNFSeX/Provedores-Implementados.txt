@@ -84,7 +84,7 @@ ISSSJP               1.00
 ISSVitoria           2.00
 Lexsom               1.00
 Link3                2.00
-MegaSoft             2.00
+MegaSoft             2.00  26/10/2022
 MetropolisWeb        1.00
 Mitra                2.00
 ModernizacaoPublica  2.02

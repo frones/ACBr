@@ -84,6 +84,7 @@ begin
   NrOcorrRetidoIr := 0;
   NrOcorrAliquotaCsll := 0;
   NrOcorrRetidoCsll := 0;
+  NrOcorrInscEstTomador_2 := 0;
 
   GerarIDDeclaracao := False;
 end;

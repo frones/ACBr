@@ -167,18 +167,18 @@ begin
         Nutricional.Galactose429:=17;
 
         Fornecedor.Codigo:=i;
-        Fornecedor.Observacao:='observacao do fornecedor'+i.ToString;
-        Fornecedor.Descricao1:='descricao 1 do fornecedor'+i.ToString;
-        Fornecedor.Descricao2:='descricao 2 do fornecedor'+i.ToString;
-        Fornecedor.Descricao3:='descricao 3 do fornecedor'+i.ToString;
-        Fornecedor.Descricao4:='descricao 4 do fornecedor'+i.ToString;
-        Fornecedor.Descricao5:='descricao 5 do fornecedor'+i.ToString;
+        Fornecedor.Observacao:='observacao do fornecedor'+IntToStr(i);
+        Fornecedor.Descricao1:='descricao 1 do fornecedor'+IntToStr(i);
+        Fornecedor.Descricao2:='descricao 2 do fornecedor'+IntToStr(i);
+        Fornecedor.Descricao3:='descricao 3 do fornecedor'+IntToStr(i);
+        Fornecedor.Descricao4:='descricao 4 do fornecedor'+IntToStr(i);
+        Fornecedor.Descricao5:='descricao 5 do fornecedor'+IntToStr(i);
 
         Fracionador.Codigo:=i;
-        Fracionador.Observacao:='obs fracionador'+i.ToString;
-        Fracionador.Descricao1:='desc1 fracionador'+i.ToString;
-        Fracionador.Descricao2:='desc2 fracionador'+i.ToString;
-        Fracionador.Descricao3:='desc3 fracionador'+i.ToString;
+        Fracionador.Observacao:='obs fracionador'+IntToStr(i);
+        Fracionador.Descricao1:='desc1 fracionador'+IntToStr(i);
+        Fracionador.Descricao2:='desc2 fracionador'+IntToStr(i);
+        Fracionador.Descricao3:='desc3 fracionador'+IntToStr(i);
 
         Setor.Codigo    := 1;
         Setor.Descricao := 'GERAL';

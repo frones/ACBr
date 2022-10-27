@@ -93,13 +93,12 @@ uses
 constructor TACBrPAFNFCe_MenuFiscal.Create(AOwner: TComponent);
 begin
   inherited;
-  //
   Inicializar;
 end;
 
 destructor TACBrPAFNFCe_MenuFiscal.Destroy;
 begin
-  //
+  FSignature.Free;
   inherited;
 end;
 

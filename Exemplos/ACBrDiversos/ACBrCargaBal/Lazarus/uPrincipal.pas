@@ -112,7 +112,8 @@ begin
 
     // adição dos itens que serão gerados no arquivo
     ACBrCargaBal1.Produtos.Clear;
-    for I := 0 to 1000 do
+
+    for I := 0 to 1 do
     begin
       with ACBrCargaBal1.Produtos.New do
       begin
@@ -122,11 +123,13 @@ begin
         Descricao       := Format('Descricao item %d', [I]);
         ValorVenda      := 1.23;
         Validade        := 15;
+        CodigoFornecedor:=i;
+        CodigoFracionador:=i;
 
         // Teclado
-        Teclado.Codigo_Teclado := 4; // Preencher no caso de Toledo (Código do Teclado)
-        Teclado.Pagina_Teclado := 2; // Preencher no caso de Toledo (Pagina do Teclado)
-        Teclado.Tecla          := 1; // Código da Tecla
+        Teclado.Codigo_Teclado := 0; // Preencher no caso de Toledo (Código do Teclado)
+        Teclado.Pagina_Teclado := 0; // Preencher no caso de Toledo (Pagina do Teclado)
+        Teclado.Tecla          := 0; // Código da Tecla
         InformacaoExtra.Receita := Format('Receita do item %d', [I]);
 //        Nutricional     := Format('Informação Nutricional do item %d', [I]);;
 
@@ -144,6 +147,43 @@ begin
         Nutricional.GorduraTrans := 6;
         Nutricional.Fibra := 7;
         Nutricional.Sodio :=8;
+        //RDC 429
+        Nutricional.QtdeAutomaticaPorcao429:=True;
+        Nutricional.QtdePorcEmb429:=1;
+        Nutricional.QtdePorcao429:=2;
+        Nutricional.UndPorcao429:=tpMililitros429;
+        Nutricional.PartIntMedidaCaseira429:=3;
+        Nutricional.PartDecMedidaCaseira429:=tpPara23_429;
+        Nutricional.MedCaseira429:=tpUnidade429;
+        Nutricional.ValorEnergetico429:=6;
+        Nutricional.Carboidrato429:=7;
+        Nutricional.AcucaresTotais429:=8;
+        Nutricional.AcucaresAdicionados429:=9;
+        Nutricional.Proteinas429:=10;
+        Nutricional.GordurasTotais429:=11;
+        Nutricional.GordurasSaturadas429:=12;
+        Nutricional.GordurasTrans429:=13;
+        Nutricional.FibraAlimentar429:=14;
+        Nutricional.Sodio429:=15;
+        Nutricional.AltoAcucar429:=1;
+        Nutricional.AltoGordura429:=1;
+        Nutricional.AltoSodio429:=1;
+        Nutricional.Lactose429:=16;
+        Nutricional.Galactose429:=17;
+
+        Fornecedor.Codigo:=i;
+        Fornecedor.Observacao:='observacao do fornecedor'+i.ToString;
+        Fornecedor.Descricao1:='descricao 1 do fornecedor'+i.ToString;
+        Fornecedor.Descricao2:='descricao 2 do fornecedor'+i.ToString;
+        Fornecedor.Descricao3:='descricao 3 do fornecedor'+i.ToString;
+        Fornecedor.Descricao4:='descricao 4 do fornecedor'+i.ToString;
+        Fornecedor.Descricao5:='descricao 5 do fornecedor'+i.ToString;
+
+        Fracionador.Codigo:=i;
+        Fracionador.Observacao:='obs fracionador'+i.ToString;
+        Fracionador.Descricao1:='desc1 fracionador'+i.ToString;
+        Fracionador.Descricao2:='desc2 fracionador'+i.ToString;
+        Fracionador.Descricao3:='desc3 fracionador'+i.ToString;
 
         Setor.Codigo    := 1;
         Setor.Descricao := 'GERAL';

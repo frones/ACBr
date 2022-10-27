@@ -3608,6 +3608,17 @@ begin
         Result   := True;
       end;
 
+      if IniBoletos.SectionExists('BoletoConfig') then
+      begin
+        PrefixArqRemessa                  := IniBoletos.ReadString(CBanco,'PrefixArqRemessa',PrefixArqRemessa);
+        Homologacao                       := IniBoletos.ReadBool(CBanco,'Homologacao', Homologacao );
+        ImprimirMensagemPadrao            := IniBoletos.ReadBool(CBanco,'ImprimirMensagemPadrao', ImprimirMensagemPadrao );
+        LeCedenteRetorno                  := IniBoletos.ReadBool(CBanco,'LeCedenteRetorno', LeCedenteRetorno );
+        LerNossoNumeroCompleto            := IniBoletos.ReadBool(CBanco,'LerNossoNumeroCompleto', LerNossoNumeroCompleto );
+        RemoveAcentosArqRemessa           := IniBoletos.ReadBool(CBanco,'RemoveAcentosArqRemessa', RemoveAcentosArqRemessa );
+      end;
+
+
       //Banco
       if IniBoletos.SectionExists('Banco') then
       begin
@@ -3626,16 +3637,25 @@ begin
         if NaoEstaVazio(OrientacoesBanco) then
           Banco.OrientacoesBanco.Text       := OrientacoesBanco;
 
-        Banco.CasasDecimaisMoraJuros      := IniBoletos.ReadInteger(CBanco,'CasasDecimaisMoraJuros',2);
-        Banco.DensidadeGravacao           := IniBoletos.ReadString(CBanco,'DensidadeGravacao','');
-        Banco.CIP                         := IniBoletos.ReadString(CBanco,'CIP','');
+        Banco.CasasDecimaisMoraJuros      := IniBoletos.ReadInteger(CBanco,'CasasDecimaisMoraJuros',Banco.CasasDecimaisMoraJuros);
+        Banco.DensidadeGravacao           := IniBoletos.ReadString(CBanco,'DensidadeGravacao',Banco.DensidadeGravacao);
+        Banco.CIP                         := IniBoletos.ReadString(CBanco,'CIP',Banco.CIP);
 
-        PrefixArqRemessa                  := IniBoletos.ReadString(CBanco,'PrefixArqRemessa','');
-        Homologacao                       := IniBoletos.ReadBool(CBanco,'Homologacao', false );
-        ImprimirMensagemPadrao            := IniBoletos.ReadBool(CBanco,'ImprimirMensagemPadrao', true );
-        LeCedenteRetorno                  := IniBoletos.ReadBool(CBanco,'LeCedenteRetorno', false );
-        LerNossoNumeroCompleto            := IniBoletos.ReadBool(CBanco,'LerNossoNumeroCompleto', false );
-        RemoveAcentosArqRemessa           := IniBoletos.ReadBool(CBanco,'RemoveAcentosArqRemessa', false );
+        {$REGION 'deprecated enviados para sessão de [BoletoConfig] - previsão para remoção de retirada XX/XX/XXXX'}
+          if IniBoletos.ValueExists('Banco','PrefixArqRemessa') then
+            PrefixArqRemessa                := IniBoletos.ReadString(CBanco,'PrefixArqRemessa',PrefixArqRemessa);
+          if IniBoletos.ValueExists('Banco','Homologacao') then
+            Homologacao                     := IniBoletos.ReadBool(CBanco,'Homologacao', Homologacao );
+          if IniBoletos.ValueExists('Banco','ImprimirMensagemPadrao') then
+            ImprimirMensagemPadrao          := IniBoletos.ReadBool(CBanco,'ImprimirMensagemPadrao', ImprimirMensagemPadrao );
+          if IniBoletos.ValueExists('Banco','LeCedenteRetorno') then
+            LeCedenteRetorno                := IniBoletos.ReadBool(CBanco,'LeCedenteRetorno', LeCedenteRetorno );
+          if IniBoletos.ValueExists('Banco','LerNossoNumeroCompleto') then
+            LerNossoNumeroCompleto          := IniBoletos.ReadBool(CBanco,'LerNossoNumeroCompleto', LerNossoNumeroCompleto );
+          if IniBoletos.ValueExists('Banco','RemoveAcentosArqRemessa') then
+            RemoveAcentosArqRemessa         := IniBoletos.ReadBool(CBanco,'RemoveAcentosArqRemessa', RemoveAcentosArqRemessa );
+        {$ENDREGION}
+
 
         if ( wCNAB = 0 ) then
            LayoutRemessa := c240
@@ -3678,11 +3698,11 @@ begin
 
       if IniBoletos.SectionExists('WEBSERVICE') then
       begin
-        CedenteWS.ClientID                  := IniBoletos.ReadString(CWebService,'ClientID', '');
-        CedenteWS.ClientSecret              := IniBoletos.ReadString(CWebService,'ClientSecret', '');
-        CedenteWS.KeyUser                   := IniBoletos.ReadString(CWebService,'KeyUser', '');
-        CedenteWS.IndicadorPix              := IniBoletos.ReadBool(CWebService,'IndicadorPix', false);
-        CedenteWS.Scope                     := IniBoletos.ReadString(CWebService,'Scope', '');
+        CedenteWS.ClientID                  := IniBoletos.ReadString(CWebService,'ClientID', CedenteWS.ClientID);
+        CedenteWS.ClientSecret              := IniBoletos.ReadString(CWebService,'ClientSecret', CedenteWS.ClientSecret);
+        CedenteWS.KeyUser                   := IniBoletos.ReadString(CWebService,'KeyUser', CedenteWS.KeyUser);
+        CedenteWS.IndicadorPix              := IniBoletos.ReadBool(CWebService,'IndicadorPix', CedenteWS.IndicadorPix);
+        CedenteWS.Scope                     := IniBoletos.ReadString(CWebService,'Scope', CedenteWS.Scope);
         Configuracoes.WebService.Ambiente   := TpcnTipoAmbiente(IniBoletos.ReadInteger(CWebService,'Ambiente', Integer(Configuracoes.WebService.Ambiente)));
         Configuracoes.WebService.SSLHttpLib := TSSLHttpLib(IniBoletos.ReadInteger(CWebService,'SSLHttpLib', Integer(Configuracoes.WebService.SSLHttpLib)));
         Result := True;

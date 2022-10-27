@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2022
+-- ACBrJSON --
+[-] Correção de problema no Lazarus com objetos com valor Null
+    https://www.projetoacbr.com.br/forum/topic/69458-acbrpixcd-sicredi-mensagem-erro-no-demo-duplicate-object-member-retirada/
+    Por: Elias César
+
 25/10/2022
 -- ACBrUtil.DateTime --
 [*] Possível solução para a leitura correta de data/hora cujo segundo tem fração.

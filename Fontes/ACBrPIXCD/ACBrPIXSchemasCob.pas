@@ -444,6 +444,9 @@ end;
 
 procedure TACBrPIXRetirada.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
+  if (not Assigned(AJSon)) then
+    Exit;
+
   fsaque.ReadFromJSon(AJSon);
   ftroco.ReadFromJSon(AJSon);
 end;

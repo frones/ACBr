@@ -225,7 +225,7 @@ procedure TACBrPSPBancoDoBrasil.QuandoReceberRespostaEndPoint(const AEndPoint,
   AURL, AMethod: String; var AResultCode: Integer; var RespostaHttp: AnsiString);
 begin
   // Banco do Brasil não possui consulta de cobranças por período
-  if (UpperCase(AMethod) = ChttpMethodGET) and (AResultCode <> HTTP_OK) and
+  if (UpperCase(AMethod) = ChttpMethodGET) and (AEndPoint = cEndPointCob) and (AResultCode <> HTTP_OK) and
      (Pos('txid', LowerCase(AURL)) <= 0) then
     raise EACBrPixException.Create(ACBrStr(sErroEndpointNaoImplementado));
 

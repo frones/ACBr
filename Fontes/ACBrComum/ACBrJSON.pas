@@ -301,7 +301,7 @@ begin
     {$Else}{$IfDef FPC}
     if NaoEstaVazio(AValue) then
       FJSON.Objects[AName] := LJSON.Objects[AName].Clone as TJSONObject
-    else
+    else if (FJSON.IndexOfName(AName) < 0) then
       FJSON.Add(AName, TJSONObject(LJSON.Clone));
     {$Else}
     FJson[AName].AsObject := LJSON[AName].AsObject;

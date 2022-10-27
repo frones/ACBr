@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2022
+-- ACBrPIXSchemasCob --
+[*] Correção de problema ocorrido com PSP Siccob quando há retorno de tag com valor Null
+    https://www.projetoacbr.com.br/forum/topic/69458-acbrpixcd-sicredi-mensagem-erro-no-demo-duplicate-object-member-retirada/
+	
+-- ACBrPIXPSPBancoDoBrasil --
+[-] Correção de problema ao consultar lista de pagamentos com o PSP BB
+    Por: Elias César
+
 17/10/2022
 -- ACBrPIXPSPSicoob --
 [-] Ajuste para incluir scopes cobv

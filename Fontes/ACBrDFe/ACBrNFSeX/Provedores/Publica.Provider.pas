@@ -66,11 +66,12 @@ type
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
+
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
+    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   public
     function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao): string; override;
   end;
@@ -78,9 +79,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, Publica.GravarXml, Publica.LerXml;
@@ -290,6 +289,8 @@ var
   IdAttr, NameSpace, xRps, ListaRps, Prefixo: string;
   I: Integer;
 begin
+  ConfigAssinar.IncluirURI := True;
+
   if Response.ModoEnvio <> meUnitario then
   begin
     inherited PrepararEmitir(Response);
@@ -354,8 +355,8 @@ begin
     NameSpace := ' xmlns="' + ConfigMsgDados.GerarNFSe.xmlns + '"';
 
   Response.ArquivoEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
-                          ListaRps +
-                       '</' + Prefixo + 'GerarNfseEnvio' + '>';
+                             ListaRps +
+                           '</' + Prefixo + 'GerarNfseEnvio' + '>';
 end;
 
 procedure TACBrNFSeProviderPublica.TratarRetornoEmitir(
@@ -549,7 +550,7 @@ procedure TACBrNFSeProviderPublica.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
   Emitente: TEmitenteConfNFSe;
-  XmlConsulta, NameSpace, NumFinal, IdAttr: string;
+  xConsulta, NameSpace, NumFinal, IdAttr: string;
   NumNFSeI, NumNFSeF: Integer;
 begin
   NumNFSeI := StrToIntDef(Response.InfConsultaNFSe.NumeroIniNFSe, 0);
@@ -569,12 +570,12 @@ begin
   else
     NumFinal := '';
 
-  XmlConsulta := '<Faixa>' +
-                   '<NumeroNfseInicial>' +
-                      OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
-                   '</NumeroNfseInicial>' +
-                   NumFinal +
-                 '</Faixa>';
+  xConsulta := '<Faixa>' +
+                 '<NumeroNfseInicial>' +
+                    OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
+                 '</NumeroNfseInicial>' +
+                 NumFinal +
+               '</Faixa>';
 
   if ConfigGeral.Identificador <> '' then
     IdAttr := ' ' + ConfigGeral.Identificador + '="Cons_' +
@@ -588,12 +589,12 @@ begin
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSe.xmlns + '"';
 
   Response.ArquivoEnvio := '<ConsultarNfseFaixaEnvio' + NameSpace + '>' +
-                         '<Prestador' + IdAttr + '>' +
-//                           '<CpfCnpj>' + GetCpfCnpj(Emitente.CNPJ) + '</CpfCnpj>' +
+//                         '<Prestador' + IdAttr + '>' +
+                         '<Prestador>' +
                            '<Cnpj>' + Emitente.CNPJ + '</Cnpj>' +
                            GetInscMunic(Emitente.InscMun) +
                          '</Prestador>' +
-                         XmlConsulta +
+                         xConsulta +
                        '</ConsultarNfseFaixaEnvio>';
 end;
 

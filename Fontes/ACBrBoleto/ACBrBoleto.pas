@@ -3641,7 +3641,7 @@ begin
         Banco.DensidadeGravacao           := IniBoletos.ReadString(CBanco,'DensidadeGravacao',Banco.DensidadeGravacao);
         Banco.CIP                         := IniBoletos.ReadString(CBanco,'CIP',Banco.CIP);
 
-        {$REGION 'deprecated enviados para sessão de [BoletoConfig] - previsão para remoção de retirada XX/XX/XXXX'}
+        {$IFDEF SUPPORTS_REGION}{$REGION 'deprecated enviados para sessão de [BoletoConfig] - previsão para remoção de retirada XX/XX/XXXX'}{$ENDIF}
           if IniBoletos.ValueExists('Banco','PrefixArqRemessa') then
             PrefixArqRemessa                := IniBoletos.ReadString(CBanco,'PrefixArqRemessa',PrefixArqRemessa);
           if IniBoletos.ValueExists('Banco','Homologacao') then
@@ -3654,7 +3654,7 @@ begin
             LerNossoNumeroCompleto          := IniBoletos.ReadBool(CBanco,'LerNossoNumeroCompleto', LerNossoNumeroCompleto );
           if IniBoletos.ValueExists('Banco','RemoveAcentosArqRemessa') then
             RemoveAcentosArqRemessa         := IniBoletos.ReadBool(CBanco,'RemoveAcentosArqRemessa', RemoveAcentosArqRemessa );
-        {$ENDREGION}
+        {$IFDEF SUPPORTS_REGION}{$ENDREGION}{$ENDIF}
 
 
         if ( wCNAB = 0 ) then

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/10/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluído a cidade Ilheus/BA - provedor MetropolisWeb
+   Por: Flávio Exata
 -- Governa.Provider/Governa.GravarXml/Governa.LerXml --
 [*] Ajustes necessário para que a emissão da nota ocorra sem nenhum 
     problema.

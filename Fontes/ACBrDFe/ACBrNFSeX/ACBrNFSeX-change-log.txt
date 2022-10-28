@@ -45,6 +45,8 @@ Símbolo : Significado
 
 28/10/2022
 -- ACBrNFSeXServicos.ini --
+[+] Incluída a URL de homologação da cidade Sao Joao Del Rei/MG.
+   Por: Italo Giurizzato Junior
 [*] A cidade Silvania/GO - mudou de provedor agora é MegaSoft.
    Por: Lucio Bittes
 [*] A cidade Vargem Alta/ES - provedor EL mudou para o layout versão 2.04 da ABRASF.

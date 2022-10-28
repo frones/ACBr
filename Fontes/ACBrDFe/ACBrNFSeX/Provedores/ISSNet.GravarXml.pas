@@ -134,6 +134,8 @@ begin
   inherited Configuracao;
 
   NrOcorrNIFTomador := 0;
+  NrOcorrCodigoNBS := 0;
+
   NrOcorrCodigoPaisServico := -1;
   NrOcorrCodigoPaisTomador := -1;
 

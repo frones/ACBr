@@ -96,7 +96,7 @@ type
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
     procedure PrepararConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -904,7 +904,7 @@ begin
   Response.ArquivoEnvio := XmlConsulta;
 end;
 
-procedure TACBrNFSeProviderISSBarueri.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderISSBarueri.TratarRetornoConsultaNFSeServicoTomado(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrXmlDocument;

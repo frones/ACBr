@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 28/10/2022
+-- ACBrNFSeXProvider_ABRASFv1 --
+[*] Possível solução para a leitura de listas de notas quando no 
+    retorno tem o grupo <tcCompNfse>
+   Por: Italo Giurizzato Junior
 -- SoftPlan.Provider/SoftPlan.GravarXml/SoftPlan.LerXml --
 [+] Inicio da implementação do provedor SoftPlan.
     Já esta pronto a geração do XML da nota e o seu envio,

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -38,26 +38,26 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase, ACBrXmlDocument,
+  ACBrXmlBase, ACBrXmlDocument, ACBrJSON,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderProprio,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceSoftPlan = class(TACBrNFSeXWebserviceRest2)
-  private
-    function GetOperacao: string;
-
+  TACBrNFSeXWebserviceSoftPlan = class(TACBrNFSeXWebserviceRest)
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
-    property Operacao: string read GetOperacao;
   end;
 
   TACBrNFSeProviderSoftPlan = class (TACBrNFSeProviderProprio)
+  private
+    FpPath: string;
+    FpMethod: string;
+    FpMimeType: string;
   protected
     procedure Configuracao; override;
 
@@ -65,16 +65,25 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-  public
-    function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string; override;
-    function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria; override;
-    function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string; override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = 'message';
+                                     const AMessageTag: string = ''); override;
+
+    procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = 'erros');
+
+    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
+
   end;
 
 implementation
 
 uses
-  ACBrDFeException,
+  ACBrDFeException,  ACBrUtil.FilesIO,
+  ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   SoftPlan.GravarXml, SoftPlan.LerXml;
 
 { TACBrNFSeProviderSoftPlan }
@@ -87,24 +96,31 @@ begin
   begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+    Identificador := '';
   end;
 
   with ConfigAssinar do
   begin
-    Rps := True;
-    LoteRps := True;
     RpsGerarNFSe := True;
     CancelarNFSe := True;
-    RpsSubstituirNFSe := True;
   end;
 
-  with ConfigWebServices do
+  with ConfigMsgDados do
   begin
-    VersaoDados := '2.02';
-    VersaoAtrib := '2.02';
+    with XmlRps do
+    begin
+      InfElemento := 'xmlProcessamentoNfpse';
+      DocElemento := 'xmlProcessamentoNfpse';
+    end;
+
+    with CancelarNFSe do
+    begin
+      InfElemento := 'xmlCancelamentoNfpse';
+      DocElemento := 'xmlCancelamentoNfpse';
+    end;
   end;
 
-  SetXmlNameSpace('http://www.centi.com.br/files/nfse.xsd');
+  ConfigSchemas.Validar := False;
 end;
 
 function TACBrNFSeProviderSoftPlan.CriarGeradorXml(
@@ -129,7 +145,11 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceSoftPlan.Create(FAOwner, AMetodo, URL)
+  begin
+    URL := URL + FpPath;
+    Result := TACBrNFSeXWebserviceSoftPlan.Create(FAOwner, AMetodo, URL,
+      FpMethod, FpMimeType);
+  end
   else
   begin
     if ConfigGeral.Ambiente = taProducao then
@@ -139,43 +159,214 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderSoftPlan.SituacaoTributariaToStr(
-  const t: TnfseSituacaoTributaria): string;
+procedure TACBrNFSeProviderSoftPlan.ProcessarMensagemErros(
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse; const AListTag,
+  AMessageTag: string);
+var
+//  I: Integer;
+  ANode: TACBrXmlNode;
+//  ANodeArray: TACBrXmlNodeArray;
+  AErro: TNFSeEventoCollectionItem;
 begin
-  Result := EnumeradoToStr(t,
-                             ['0', '1', '2'],
-                             [stRetencao, stNormal, stSubstituicao]);
+  ANode := RootNode.Childrens.FindAnyNs(AListTag);
+
+  if ANode <> nil then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := '';
+    AErro.Descricao := ANode.AsString;
+    AErro.Correcao := '';
+  end;
+  {
+  if (ANode = nil) then
+    ANode := RootNode;
+
+  ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
+
+  if not Assigned(ANodeArray) then Exit;
+
+  for I := Low(ANodeArray) to High(ANodeArray) do
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := '';
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ERRO'), tcStr);
+    AErro.Correcao := '';
+  end;
+  }
 end;
 
-function TACBrNFSeProviderSoftPlan.StrToSituacaoTributaria(out ok: boolean;
-  const s: string): TnfseSituacaoTributaria;
+procedure TACBrNFSeProviderSoftPlan.ProcessarMensagemDeErros(
+  LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse;
+  const AListTag: string);
+var
+  Codigo, Descricao: string;
+  AErro: TNFSeEventoCollectionItem;
 begin
-  Result := StrToEnumerado(ok, s,
-                             ['0', '1', '2'],
-                             [stNormal, stRetencao, stSubstituicao]);
+  Codigo := '';
+  Descricao := '';
+  LJson.Value('error', Codigo);
+  LJson.Value('error_description', Descricao);
+
+  AErro := Response.Erros.New;
+  AErro.Codigo := Codigo;
+  AErro.Descricao := Descricao;
+  AErro.Correcao := '';
 end;
 
-function TACBrNFSeProviderSoftPlan.SituacaoTributariaDescricao(
-  const t: TnfseSituacaoTributaria): string;
+procedure TACBrNFSeProviderSoftPlan.PrepararEmitir(
+  Response: TNFSeEmiteResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Nota: TNotaFiscal;
+  IdAttr, ListaRps: string;
+  I: Integer;
 begin
-  case t of
-    stNormal       : Result := '0 - Não' ;
-    stRetencao     : Result := '1 - Sim' ;
-    stSubstituicao : Result := '2 - Substituição' ;
+  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod002;
+    AErro.Descricao := Desc002;
+  end;
+
+  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod003;
+    AErro.Descricao := 'Conjunto de DPS transmitidos (máximo de ' +
+                       IntToStr(Response.MaxRps) + ' DPS)' +
+                       ' excedido. Quantidade atual: ' +
+                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
+  end;
+
+  if Response.Erros.Count > 0 then Exit;
+
+  ListaRps := '';
+
+  if ConfigAssinar.IncluirURI then
+    IdAttr := ConfigGeral.Identificador
   else
-    Result := '';
+    IdAttr := 'ID';
+
+  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
+  begin
+    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
+
+    Nota.GerarXML;
+
+    Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
+
+    if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
+       (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
+    begin
+      Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
+                                         PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
+                                         ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
+
+      Response.ArquivoEnvio := Nota.XmlRps;
+    end;
+
+    SalvarXmlRps(Nota);
+
+    ListaRps := ListaRps + Nota.XmlRps;
+  end;
+
+  Response.ArquivoEnvio := ListaRps;
+
+  FpMimeType := 'application/xml';
+  FpPath := '/processamento/notas/processa';
+  FpMethod := 'POST';
+end;
+
+procedure TACBrNFSeProviderSoftPlan.TratarRetornoEmitir(
+  Response: TNFSeEmiteResponse);
+var
+  Document: TACBrJSONObject;
+  AErro: TNFSeEventoCollectionItem;
+  DocumentXml: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  ANota: TNotaFiscal;
+begin
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := Desc201;
+    Exit
+  end;
+
+  if StringIsXml(Response.ArquivoRetorno) then
+  begin
+    DocumentXml := TACBrXmlDocument.Create;
+
+    try
+      try
+        if Response.ArquivoRetorno = '' then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
+          Exit
+        end;
+
+        DocumentXml.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := DocumentXml.Root;
+
+        ProcessarMensagemErros(ANode, Response);
+        Response.Sucesso := (Response.Erros.Count = 0);
+
+        if Response.Sucesso then
+        begin
+          with Response do
+          begin
+            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+            Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataEmissao'), tcDat);
+            DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDat);
+            DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('motivoCancelamento'), tcStr);
+            NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('identificacao'), tcStr);
+          end;
+
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroNota);
+
+          ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
+          SalvarXmlNfse(ANota);
+        end;
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := Desc999 + E.Message;
+        end;
+      end;
+    finally
+      FreeAndNil(DocumentXml);
+    end;
+  end
+  else
+  begin
+    Document := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+
+    try
+      try
+        ProcessarMensagemDeErros(Document, Response);
+        Response.Sucesso := (Response.Erros.Count = 0);
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := Desc999 + E.Message;
+        end;
+      end;
+    finally
+      FreeAndNil(Document);
+    end;
   end;
 end;
 
 { TACBrNFSeXWebserviceSoftPlan }
-
-function TACBrNFSeXWebserviceSoftPlan.GetOperacao: string;
-begin
-  if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
-    Result := 'Homologacao'
-  else
-    Result := '';
-end;
 
 function TACBrNFSeXWebserviceSoftPlan.GerarNFSe(ACabecalho,
   AMSG: String): string;
@@ -186,11 +377,10 @@ begin
 
   Request := AMSG;
 
-  Result := Executar('http://tempuri.org/IServiceNfse/GerarNfse' + Operacao,
-                     Request, ['GerarNfseResposta'], []);
+  Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebserviceSoftPlan.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceSoftPlan.ConsultarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -199,8 +389,7 @@ begin
 
   Request := AMSG;
 
-  Result := Executar('http://tempuri.org/IServiceNfse/ConsultarNfseRps' + Operacao,
-                     Request, ['ConsultarNfseRpsResposta'], []);
+  Result := Executar('', Request, [], []);
 end;
 
 function TACBrNFSeXWebserviceSoftPlan.Cancelar(ACabecalho, AMSG: String): string;
@@ -211,8 +400,7 @@ begin
 
   Request := AMSG;
 
-  Result := Executar('http://tempuri.org/IServiceNfse/CancelarNfse' + Operacao,
-                     Request, ['CancelarNfseResposta'], []);
+  Result := Executar('', Request, [], []);
 end;
 
 end.

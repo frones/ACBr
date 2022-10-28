@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -46,10 +46,8 @@ type
 
   TNFSeW_SoftPlan = class(TNFSeWClass)
   protected
-//    function GerarChaveRPS: TACBrXmlNode;
-//    function GerarCPFCNPJTomador: TACBrXmlNode;
-//    function GerarEnderecoTomador: TACBrXmlNode;
-//    function GerarCPFCNPJIntermediario: TACBrXmlNode;
+    function GerarItensServico: TACBrXmlNode;
+    function GerarItemServico: TACBrXmlNodeArray;
   public
     function GerarXml: Boolean; override;
 
@@ -67,16 +65,69 @@ uses
 
 { TNFSeW_SoftPlan }
 
+function TNFSeW_SoftPlan.GerarItemServico: TACBrXmlNodeArray;
+var
+  i: Integer;
+begin
+  Result := nil;
+  SetLength(Result, NFSe.Servico.ItemServico.Count);
+
+  for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
+  begin
+    Result[i] := CreateElement('itemServico');
+
+    Result[i].AppendChild(AddNode(tcDe2, '#1', 'aliquota', 4, 4, 1,
+                                 NFSe.Servico.ItemServico[i].Aliquota/100, ''));
+
+    Result[i].AppendChild(AddNode(tcDe4, '#1', 'baseCalculo', 1, 15, 1,
+                                  NFSe.Servico.ItemServico[i].BaseCalculo, ''));
+
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'cst', 1, 5, 1,
+                                      NFSe.Servico.ItemServico[i].CodServ, ''));
+
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'descricaoServico', 0, 1500, 1,
+                                    NFSe.Servico.ItemServico[i].Descricao, ''));
+
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'idCNAE', 0, 5, 1,
+                                   NFSe.Servico.ItemServico[i].CodigoCnae, ''));
+
+    Result[i].AppendChild(AddNode(tcDe2, '#1', 'quantidade', 1, 8, 1,
+                                   NFSe.Servico.ItemServico[i].Quantidade, ''));
+
+    Result[i].AppendChild(AddNode(tcDe4, '#1', 'valorTotal', 1, 15, 1,
+                                   NFSe.Servico.ItemServico[i].ValorTotal, ''));
+
+    Result[i].AppendChild(AddNode(tcDe4, '#1', 'valorUnitario', 1, 15, 1,
+                                NFSe.Servico.ItemServico[i].ValorUnitario, ''));
+  end;
+end;
+
+function TNFSeW_SoftPlan.GerarItensServico: TACBrXmlNode;
+var
+  nodeArray: TACBrXmlNodeArray;
+  i: Integer;
+begin
+  Result := CreateElement('itensServico');
+
+  nodeArray := GerarItemServico;
+  if nodeArray <> nil then
+  begin
+    for i := 0 to Length(nodeArray) - 1 do
+    begin
+      Result.AppendChild(nodeArray[i]);
+    end;
+  end;
+end;
+
 function TNFSeW_SoftPlan.GerarXml: Boolean;
 var
-  NFSeNode{, xmlNode}: TACBrXmlNode;
-  TipoRPS, Situacao, aliquota, ISSRetido, sISSRetidoInter: String;
+  NFSeNode, xmlNode: TACBrXmlNode;
 begin
   Configuracao;
 
-  Opcoes.SuprimirDecimais := True;
-  Opcoes.DecimalChar := '.';
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+//  Opcoes.SuprimirDecimais := True;
+//  Opcoes.DecimalChar := '.';
+//  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 
@@ -84,177 +135,86 @@ begin
 
   NFSe.InfID.ID := NFSe.IdentificacaoRps.Numero;
 
-  NFSeNode := CreateElement('RPS');
-  NFSeNode.SetNamespace(FpAOwner.ConfigMsgDados.LoteRps.xmlns, Self.PrefixoPadrao);
+  NFSeNode := CreateElement('xmlProcessamentoNfpse');
 
   FDocument.Root := NFSeNode;
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Assinatura', 1, 2000, 1,
-                                                          NFSe.Assinatura, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'bairroTomador', 0, 60, 1,
+                                             NFSe.Tomador.Endereco.Bairro, ''));
 
-//  xmlNode := GerarChaveRPS;
-//  NFSeNode.AppendChild(xmlNode);
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'baseCalculo', 1, 15, 1,
+                                         NFSe.Servico.Valores.BaseCalculo, ''));
 
-  TipoRPS := EnumeradoToStr(NFSe.IdentificacaoRps.Tipo,
-                      ['RPS','RPS-M','RPS-C'], [trRPS, trNFConjugada, trCupom]);
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'baseCalculoSubstituicao', 1, 15, 0,
+                                                                        0, ''));
 
-  Situacao := EnumeradoToStr(NFSe.StatusRps, ['N', 'C'], [srNormal, srCancelado]);
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cfps', 4, 4, 1,
+                                                  NFSe.Servico.CodigoCnae, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'TipoRPS', 1, 5, 1, TipoRPS, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigoMunicipioTomador', 7, 7, 1,
+                                    NFSe.Tomador.Endereco.CodigoMunicipio, ''));
 
-  NFSeNode.AppendChild(AddNode(tcDat, '#1', 'DataEmissao', 1, 10, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigoPostalTomador', 8, 8, 1,
+                                                NFSe.Tomador.Endereco.CEP, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'complementoEnderecoTomador', 1, 30, 0,
+                                        NFSe.Tomador.Endereco.Complemento, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'dadosAdicionais', 0, 600, 0,
+                                                                       '', ''));
+
+  NFSeNode.AppendChild(AddNode(tcDat, '#1', 'dataEmissao', 1, 10, 1,
                                                          NFse.DataEmissao, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'StatusRPS', 1, 1, 1, Situacao, ''));
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'TributacaoRPS', 1, 1, 1,
-                           TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS), ''));
-
-  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorServicos', 1, 15, 1,
-                                       NFSe.Servico.Valores.ValorServicos, ''));
-
-  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorDeducoes', 1, 15, 1,
-                                       NFSe.Servico.Valores.ValorDeducoes, ''));
-
-  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorPIS', 1, 15, 0,
-                                            NFSe.Servico.Valores.ValorPis, ''));
-
-  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorCOFINS', 1, 15, 0,
-                                         NFSe.Servico.Valores.ValorCofins, ''));
-
-  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorINSS', 1, 15, 0,
-                                           NFSe.Servico.Valores.ValorInss, ''));
-
-  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorIR', 1, 15, 0,
-                                             NFSe.Servico.Valores.ValorIr, ''));
-
-  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorCSLL', 1, 15, 0,
-                                           NFSe.Servico.Valores.ValorCsll, ''));
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoServico', 1, 5, 1,
-                                OnlyNumber(NFSe.Servico.ItemListaServico), ''));
-
-  if NFSe.Servico.Valores.Aliquota > 0 then
-  begin
-    aliquota := FormatFloat('0.00##', NFSe.Servico.Valores.Aliquota / 100);
-
-    aliquota := StringReplace(aliquota, ',', '.', [rfReplaceAll]);
-  end
-  else
-    aliquota := '0';
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'AliquotaServicos', 1, 6, 1,
-                                                                 aliquota, ''));
-
-  ISSRetido := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
-                                     ['false', 'true'], [stNormal, stRetencao]);
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ISSRetido', 1, 5, 1, ISSRetido, ''));
-
-//  xmlNode := GerarCPFCNPJTomador;
-//  NFSeNode.AppendChild(xmlNode);
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipalTomador', 1, 8, 0,
-         OnlyNumber(NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal), ''));
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoEstadualTomador', 1, 19, 0,
-          OnlyNumber(NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), ''));
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'RazaoSocialTomador', 1, 75, 0,
-                                                 NFSe.Tomador.RazaoSocial, ''));
-
-//  xmlNode := GerarEnderecoTomador;
-//  NFSeNode.AppendChild(xmlNode);
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'EmailTomador', 1, 75, 0,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'emailTomador', 6, 500, 1,
                                                NFSe.Tomador.Contato.Email, ''));
 
-  if OnlyNumber(NFSe.Intermediario.Identificacao.CpfCnpj) <> '' then
-  begin
-//    xmlNode := GerarCPFCNPJIntermediario;
-//    NFSeNode.AppendChild(xmlNode);
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'identificacao', 1, 10, 1,
+                                                            NFSe.InfID.ID, ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipalIntermediario', 1, 8, 0,
-          OnlyNumber(NFSe.Intermediario.Identificacao.InscricaoMunicipal), ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'identificacaoTomador', 0, 20, 1,
+                                   NFSe.Tomador.IdentificacaoTomador.Cnpj, ''));
 
-    sISSRetidoInter := EnumeradoToStr( NFSe.Intermediario.IssRetido,
-                                     ['false', 'true'], [stNormal, stRetencao]);
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'inscricaoMunicipalTomador', 0, 30, 1,
+                     NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ISSRetidoIntermediario', 1, 5, 0,
-                                                          sISSRetidoInter, ''));
+  xmlNode := GerarItensServico;
+  NFSeNode.AppendChild(xmlNode);
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'EmailIntermediario', 1, 75, 0,
-                                         NFSe.Intermediario.Contato.EMail, ''));
-  end;
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'logradouroTomador', 0, 60, 1,
+                                           NFSe.Tomador.Endereco.Endereco, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Discriminacao', 1, 2000, 1,
-                                               NFSe.Servico.Discriminacao, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'nomeMunicipioTomador', 0, 60, 0,
+                                         NFSe.Tomador.Endereco.xMunicipio, ''));
 
-  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorCargaTributaria', 1, 15, 0,
-                                               NFSe.Servico.ValorCargaTributaria, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'numeroAEDF', 6, 7, 1,
+                                                                 '123456', ''));
 
-  NFSeNode.AppendChild(AddNode(tcDe4, '#1', 'PercentualCargaTributaria', 1, 5, 0,
-                                   NFSe.Servico.PercentualCargaTributaria, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'numeroEnderecoTomador', 0, 9, 0,
+                                             NFSe.Tomador.Endereco.Numero, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'FonteCargaTributaria', 1, 10, 0,
-                                        NFSe.Servico.FonteCargaTributaria, ''));
+  NFSeNode.AppendChild(AddNode(tcInt, '#1', 'paisTomador', 0, 9, 0,
+                                         NFSe.Tomador.Endereco.CodigoPais, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoCEI', 1, 12, 0,
-                                                NFSe.ConstrucaoCivil.nCei, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'razaoSocialTomador', 0, 80, 1,
+                                                 NFSe.Tomador.RazaoSocial, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MatriculaObra', 1, 12, 0,
-                                              NFSe.ConstrucaoCivil.nMatri, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'telefoneTomador', 0, 10, 0,
+                                OnlyNumber(NFSe.Tomador.Contato.Telefone), ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NumeroEncapsulamento', 1, 12, 0,
-                               NFSe.ConstrucaoCivil.nNumeroEncapsulamento, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ufTomador', 2, 2, 0,
+                                                 NFSe.Tomador.Endereco.UF, ''));
 
-  if (NFSe.TipoTributacaoRPS  <> ttTribnoMun) and
-     (NFSe.TipoTributacaoRPS  <> ttTribnoMunIsento) then
-    NFSeNode.AppendChild(AddNode(tcInt, '#1', 'MunicipioPrestacao', 1, 7, 0,
-                                         NFSe.Servico.MunicipioIncidencia, ''));
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'valorISSQN', 1, 15, 1,
+                                            NFSe.Servico.Valores.ValorIss, ''));
+
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'valorISSQNSubstituicao', 1, 15, 0,
+                                                                        0, ''));
+
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'valorTotalServicos', 1, 15, 1,
+                                       NFSe.Servico.Valores.ValorServicos, ''));
 
   Result := True;
-  (*
- <xmlProcessamentoNfpse>
- 	<bairroTomador>CENTRO</bairroTomador>
- 	<baseCalculo>9990</baseCalculo>
- 	<baseCalculoSubstituicao>0</baseCalculoSubstituicao>
- 	<cfps>9202</cfps>
- 	<codigoMunicipioTomador>4211900</codigoMunicipioTomador>
- 	<codigoPostalTomador>88020001</codigoPostalTomador>
- 	<complementoEnderecoTomador>Complemento</complementoEnderecoTomador>
- 	<dadosAdicionais>Casa</dadosAdicionais>
- 	<dataEmissao>2017-01-15</dataEmissao>
- 	<emailTomador>exemplo@exemplo.com.br;exemplo2@exemplo2.com</emailTomador>
- 	<identificacao>001</identificacao>
- 	<identificacaoTomador>83930545000124</identificacaoTomador>
- 	<inscricaoMunicipalTomador>0000001</inscricaoMunicipalTomador>
- 	<itensServico>
- 		<itemServico>
- 			<aliquota>0.05</aliquota>
- 			<baseCalculo>9990</baseCalculo>
- 			<cst>0</cst>
- 			<descricaoServico>Extração de Pau Brasil</descricaoServico>
- 			<idCNAE>8900</idCNAE>
- 			<quantidade>999</quantidade>
- 			<valorTotal>9990</valorTotal>
- 			<valorUnitario>10</valorUnitario>
- 		</itemServico>
- 	</itensServico>
- 	<logradouroTomador>MORRO DOS CAVALOS</logradouroTomador>
- 	<nomeMunicipioTomador>Florianópolis</nomeMunicipioTomador>
- 	<numeroAEDF>000000</numeroAEDF>
- 	<numeroEnderecoTomador>123</numeroEnderecoTomador>
- 	<paisTomador>1058</paisTomador>
- 	<razaoSocialTomador>TRIBO CARIJOS</razaoSocialTomador>
- 	<telefoneTomador>4812345678</telefoneTomador>
- 	<ufTomador>SC</ufTomador>
- 	<valorISSQN>499.5</valorISSQN>
- 	<valorISSQNSubstituicao>0</valorISSQNSubstituicao>
- 	<valorTotalServicos>9990</valorTotalServicos>
- 	<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig">***Obrigatório***</ds:Signature>
- </xmlProcessamentoNfpse>
-   *)
 end;
 
 end.

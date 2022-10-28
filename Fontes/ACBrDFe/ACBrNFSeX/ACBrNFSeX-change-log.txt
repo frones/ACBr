@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 28/10/2022
+-- SoftPlan.Provider/SoftPlan.GravarXml/SoftPlan.LerXml --
+[+] Inicio da implementação do provedor SoftPlan.
+    Já esta pronto a geração do XML da nota e o seu envio,
+    esta faltando a leitura do XML e depois a consulta e
+    cancelamento.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [+] Incluído a geração da tag CodigoNbs, mas por padrão o numero de 
     ocorrências é -1, pois somente as versões 2.03 e 2.04 tem essa

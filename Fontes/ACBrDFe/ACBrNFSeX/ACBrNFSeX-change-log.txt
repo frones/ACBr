@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/10/2022
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[+] Incluído a geração da tag CodigoNbs, mas por padrão o numero de 
+    ocorrências é -1, pois somente as versões 2.03 e 2.04 tem essa
+    tag, logo se faz necessário na unit .GravarXml incluir a linha
+    para mudar o numero de ocorrências para zero.
+   Por: Italo Giurizzato Junior
+
 27/10/2022
 -- Publica.Provider --
 [*] Possível solução para o problema da consulta a NFSe.

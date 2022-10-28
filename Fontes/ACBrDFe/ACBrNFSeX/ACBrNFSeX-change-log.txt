@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/10/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluído o link para baixar o PDF - Vila Velha/ES
+   Por: Calos Tedex
 -- ACBrNFSeXProvider_ABRASFv1 --
 [*] Possível solução para a leitura de listas de notas quando no 
     retorno tem o grupo <tcCompNfse>

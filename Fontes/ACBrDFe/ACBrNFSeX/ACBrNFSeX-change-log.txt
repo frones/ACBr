@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 28/10/2022
+-- Governa.Provider/Governa.GravarXml/Governa.LerXml --
+[*] Ajustes necessário para que a emissão da nota ocorra sem nenhum 
+    problema.
+-- ACBrNFSeXServicos.ini --
+[*] Atualizado os parâmetros da cidade de Patos de Minas
+   Por: Fabio Luiz Binhara
 -- ACBrNFSeXServicos.ini --
 [+] Incluído o link para baixar o PDF - Vila Velha/ES
    Por: Calos Tedex

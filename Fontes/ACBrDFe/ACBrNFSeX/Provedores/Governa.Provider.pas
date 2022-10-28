@@ -221,6 +221,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   AResumo: TNFSeResumoCollectionItem;
+  Codigo: String;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -259,6 +260,19 @@ begin
         for i := Low(ANodeArray) to High(ANodeArray) do
         begin
           ANode := ANodeArray[i];
+
+          Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
+
+          if Codigo <> 'V' then
+          begin
+            AErro := Response.Erros.New;
+            AErro.Codigo := Codigo;
+            AErro.Descricao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsDesOco'), tcStr);
+            AErro.Correcao := '';
+
+            if AErro.Descricao = '' then
+              AErro.Descricao := ANode.AsString;
+          end;
 
           AResumo := Response.Resumos.New;
           AResumo.NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumRps'), tcStr);

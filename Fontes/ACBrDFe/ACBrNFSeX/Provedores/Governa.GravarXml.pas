@@ -109,8 +109,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'tsInsEstTmd', 1, 20, 1,
                       NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, ''));
 
-//  Result.AppendChild(AddNode(tcStr, '#1', 'tsTlfTmd', 1, 11, 1,
-//                                            NFSe.Tomador.Contato.Telefone, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'tsTlfTmd', 1, 11, 1,
+                                            NFSe.Tomador.Contato.Telefone, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tsInsMunTmd', 1, 20, 1,
                      NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
@@ -153,11 +153,14 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsRps', 8, 8, 1,
       StringReplace(FormatDateTime('yyyymmdd',NFSe.DataEmissao),'/', '',[rfReplaceAll]), ''));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'tsAnoCpt', 1, 4, 1,
-                                 FormatDateTime('YYYY', NFSe.Competencia), ''));
+    Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsNFSe', 8, 8, 1,
+      StringReplace(FormatDateTime('yyyymmdd',NFSe.DataEmissao),'/', '',[rfReplaceAll]), ''));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'tsMesCpt', 1, 4, 1,
+    Result.AppendChild(AddNode(tcStr, '#1', 'tsMesCmp', 1, 4, 1,
                                    FormatDateTime('MM', NFSe.Competencia), ''));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'tsAnoCmp', 1, 4, 1,
+                                 FormatDateTime('YYYY', NFSe.Competencia), ''));
   end
   else
   begin
@@ -166,8 +169,6 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'tsTipRec', 1, 1, 1,
                                                     NFSe.TipoRecolhimento, ''));
   end;
-
-//  Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsNFSe', 8, 8, 1, '', ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'tsVlrRep', 1, 16, 1,
                                         NFSe.Servico.Valores.ValorRepasse, ''));

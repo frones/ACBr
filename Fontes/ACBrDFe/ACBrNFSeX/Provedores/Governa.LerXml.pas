@@ -72,7 +72,9 @@ var
   AuxNode: TACBrXmlNode;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
+  xValorServico: Extended;
 begin
+  xValorServico := 0;
   AuxNode := ANode.Childrens.FindAnyNs('tcItensRps');
 
   if AuxNode <> nil then
@@ -85,9 +87,20 @@ begin
 
       with NFSe.Servico.ItemServico[i] do
       begin
-        Descricao  := ObterConteudo(ANodes[i].Childrens.FindAnyNs('tsDesSvc'), tcStr);
+        Descricao     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('tsDesSvc'), tcStr);
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('tsVlrUnt'), tcDe2);
+        Quantidade    := 1;
+        ValorTotal    := Quantidade * ValorUnitario;
+        xValorServico := xValorServico + ValorTotal;
       end;
+    end;
+
+    with NFSe.Servico.Valores do
+    begin
+      ValorServicos := xValorServico;
+      ValorLiquidoNfse := xValorServico;
+      BaseCalculo := xValorServico;
+      ValorIss := (BaseCalculo * (Aliquota/100));
     end;
   end;
 end;
@@ -221,7 +234,7 @@ begin
             Descricao     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DesSvc'), tcStr);
             Quantidade    := ObterConteudo(ANodes[i].Childrens.FindAnyNs('QdeSvc'), tcDe2);
             ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('VlrUnt'), tcDe2);
-            ValorTotal    := Quantidade + ValorUnitario;
+            ValorTotal    := Quantidade * ValorUnitario;
           end;
 
           ValorLiquidoNfse := ValorLiquidoNfse + ItemServico[i].ValorTotal;

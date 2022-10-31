@@ -1399,6 +1399,8 @@ begin
         if ArquivoOuXml <> '' then
         begin
           try
+            ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs.Clear;
+            ACBrNFe1.WebServices.DistribuicaoDFe.Clear;
             ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Clear;
 
             if EhArquivo then

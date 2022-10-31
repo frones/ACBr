@@ -42,10 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2022
+--- ACBrLibNFeBase ---
+[*] Limpar as propriedades do componente referente a consultas anteriores
+    Por: Renato Rubinho
+
 24/10/2022
 --- ACBrLibNFe ---
 [*] Leitura de arquivo de Distribuição DFe #TK-3182
-    Por Renato Rubinho
+    Por: Renato Rubinho
 
 20/07/2022
 --- ACBrLibNFe ---

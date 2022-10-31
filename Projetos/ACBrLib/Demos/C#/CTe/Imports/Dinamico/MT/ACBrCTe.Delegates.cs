@@ -124,6 +124,9 @@ namespace ACBrLib.CTe
         public delegate int CTE_DistribuicaoDFePorUltNSU(IntPtr handle, int acUFAutor, string eCnpjcpf, string eultNsu, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int CTE_DistribuicaoDFe(IntPtr handle, int acUFAutor, string eCnpjcpf, string eultNsu, string ArquivoOuXml, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int CTE_DistribuicaoDFePorNSU(IntPtr handle, int acUFAutor, string eCnpjcpf, string eNsu, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -193,6 +196,7 @@ namespace ACBrLib.CTe
             AddMethod<CTE_Cancelar>("CTE_Cancelar");
             AddMethod<CTE_EnviarEvento>("CTE_EnviarEvento");
             AddMethod<CTE_DistribuicaoDFePorUltNSU>("CTE_DistribuicaoDFePorUltNSU");
+            AddMethod<CTE_DistribuicaoDFe>("CTE_DistribuicaoDFe");
             AddMethod<CTE_DistribuicaoDFePorNSU>("CTE_DistribuicaoDFePorNSU");
             AddMethod<CTE_DistribuicaoDFePorChave>("CTE_DistribuicaoDFePorChave");
             AddMethod<CTE_EnviarEmail>("CTE_EnviarEmail");

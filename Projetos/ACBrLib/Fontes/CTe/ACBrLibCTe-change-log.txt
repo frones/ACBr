@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2022
+--- ACBrLibCTe ---
+[*] Leitura de arquivo de Distribuição DFe #TK-263
+    Por: Renato Rubinho
+
 20/07/2022
 --- ACBrLibCTe ---
 [*] Remoção de Warning @deprecated ref. ACBrUtils

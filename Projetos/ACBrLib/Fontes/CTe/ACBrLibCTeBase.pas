@@ -95,6 +95,10 @@ type
                               const sResposta: PChar; var esTamanho: longint): longint;
     function DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
                                       const sResposta: PChar; var esTamanho: longint): longint;
+    function DistribuicaoDFe(const AcUFAutor: integer;
+                             eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
+                             const sResposta: PChar;
+                             var esTamanho: longint): longint;
     function DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
                                    const sResposta: PChar; var esTamanho: longint): longint;
     function DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echCTe: PChar;
@@ -1272,6 +1276,16 @@ end;
 
 function TACBrLibCTe.DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;  
+begin
+  result := DistribuicaoDFe(AcUFAutor, eCNPJCPF, eultNSU, '',
+                            sResposta, esTamanho);
+end;
+
+function TACBrLibCTe.DistribuicaoDFe(const AcUFAutor: integer;  eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
+                                     const sResposta: PChar; var esTamanho: longint): longint;
+var
+  EhArquivo: boolean;
+  ArquivoOuXml: string;
 var
   AultNSU, ACNPJCPF: Ansistring;
   Resposta: string;
@@ -1280,6 +1294,7 @@ begin
   try
     ACNPJCPF := ConverterAnsiParaUTF8(eCNPJCPF);
     AultNSU := ConverterAnsiParaUTF8(eultNSU);
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CTE_DistribuicaoDFePorUltNSU(' + IntToStr(AcUFAutor) + ',' +
@@ -1287,22 +1302,59 @@ begin
     else
       GravarLog('CTE_DistribuicaoDFePorUltNSU', logNormal);
 
+    if ArquivoOuXml <> '' then
+    begin
+      EhArquivo := StringEhArquivo(ArquivoOuXml);
+      if EhArquivo then
+        VerificarArquivoExiste(ArquivoOuXml);
+    end;
+
     CTeDM.Travar;
 
     try
-      if not ValidarCNPJouCPF(ACNPJCPF) then
-        raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
+      if ArquivoOuXml = '' then
+        if not ValidarCNPJouCPF(ACNPJCPF) then
+          raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       with CTeDM do
       begin
         try
-          ACBrCTe1.WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
-          ACBrCTe1.WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
-          ACBrCTe1.WebServices.DistribuicaoDFe.ultNSU   := AultNSU;
-          ACBrCTe1.WebServices.DistribuicaoDFe.NSU      := '';
-          ACBrCTe1.WebServices.DistribuicaoDFe.chCTe    := '';
+          // Lê o arquivo selecionado
+          if ArquivoOuXml <> '' then
+          begin
+            try
+              ACBrCTe1.WebServices.DistribuicaoDFe.ListaArqs.Clear;
+              ACBrCTe1.WebServices.DistribuicaoDFe.Clear;
+              ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Clear;
 
-          ACBrCTe1.WebServices.DistribuicaoDFe.Executar;
+              if EhArquivo then
+                ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.Leitor.CarregarArquivo(ArquivoOuXml)
+              else
+                ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.Leitor.Arquivo := ArquivoOuXml;
+
+              ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.LerXml;
+
+              // Preenche a lista de arquivos extraídos da distribuição, pois a leitura não gera os arquivos individuais
+              while ACBrCTe1.WebServices.DistribuicaoDFe.ListaArqs.Count <
+                    ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count do
+                ACBrCTe1.WebServices.DistribuicaoDFe.ListaArqs.Add('');
+
+              AultNSU := ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU;
+            except
+              on E:Exception do
+                raise EACBrLibException.Create(ErrCNPJ, E.Message);
+            end;
+          end
+          // Consulta o WebService
+          else
+          begin
+            ACBrCTe1.WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+            ACBrCTe1.WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
+            ACBrCTe1.WebServices.DistribuicaoDFe.ultNSU   := AultNSU;
+            ACBrCTe1.WebServices.DistribuicaoDFe.NSU      := '';
+            ACBrCTe1.WebServices.DistribuicaoDFe.chCTe    := '';
+            ACBrCTe1.WebServices.DistribuicaoDFe.Executar;
+          end;
 
           Resp := TDistribuicaoDFeResposta.Create(Config.TipoResposta, Config.CodResposta);
           try

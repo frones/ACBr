@@ -39,6 +39,7 @@ exports
   CTE_EnviarEvento,
   CTE_ConsultaCadastro,
   CTE_DistribuicaoDFePorUltNSU,
+  CTE_DistribuicaoDFe,
   CTE_DistribuicaoDFePorNSU,
   CTE_DistribuicaoDFePorChave,
   CTE_EnviarEmail,

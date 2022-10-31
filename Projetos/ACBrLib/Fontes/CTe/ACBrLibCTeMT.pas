@@ -135,6 +135,9 @@ function CTE_ConsultaCadastro(const libHandle: PLibHandle; cUF, nDocumento: PCha
 function CTE_DistribuicaoDFePorUltNSU(const libHandle: PLibHandle; const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_DistribuicaoDFe(const libHandle: PLibHandle; const AcUFAutor: integer; eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_DistribuicaoDFePorNSU(const libHandle: PLibHandle; const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -652,6 +655,21 @@ begin
   except
     on E: EACBrLibException do
       Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function CTE_DistribuicaoDFe(const libHandle: PLibHandle; const AcUFAutor: integer; eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibCTe(libHandle^.Lib).DistribuicaoDFe(AcUFAutor, eCNPJCPF, eultNSU, eArquivoOuXML, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
 
     on E: Exception do
       Result := ErrExecutandoMetodo;

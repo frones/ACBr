@@ -1,0 +1,116 @@
+object frmACBrDI: TfrmACBrDI
+  Left = 0
+  Height = 460
+  Top = 0
+  Width = 551
+  Caption = 'frmACBrDI'
+  ClientHeight = 460
+  ClientWidth = 551
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Position = poScreenCenter
+  LCLVersion = '2.2.2.0'
+  object PanelTop: TPanel
+    Left = 0
+    Height = 49
+    Top = 0
+    Width = 551
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 49
+    ClientWidth = 551
+    Color = 15527148
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object Shape1: TShape
+      Left = 0
+      Height = 1
+      Top = 48
+      Width = 551
+      Align = alBottom
+      Pen.Color = clSilver
+    end
+    object BtnLerMultiplosXML: TBitBtn
+      Left = 179
+      Height = 25
+      Top = 13
+      Width = 145
+      Caption = 'Ler Múltiplos XML'
+      OnClick = BtnLerMultiplosXMLClick
+      TabOrder = 0
+    end
+    object BtnLerXMLIndividualDI: TBitBtn
+      Left = 21
+      Height = 25
+      Top = 13
+      Width = 132
+      Caption = 'Ler XML Individual'
+      OnClick = BtnLerXMLIndividualDIClick
+      TabOrder = 1
+    end
+    object BtnLimpar: TBitBtn
+      Left = 352
+      Height = 25
+      Top = 13
+      Width = 75
+      Caption = 'Limpar'
+      OnClick = BtnLimparClick
+      TabOrder = 2
+    end
+  end
+  object PageControlPrincipal: TPageControl
+    Left = 0
+    Height = 411
+    Top = 49
+    Width = 551
+    ActivePage = TabXMLDI
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 1
+    object TabXMLDI: TTabSheet
+      Caption = 'XML da DI'
+      ClientHeight = 0
+      ClientWidth = 0
+      object MemoXML: TMemo
+        Left = 0
+        Height = 381
+        Top = 0
+        Width = 543
+        Align = alClient
+        Lines.Strings = (
+          'MemoXML'
+        )
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+    end
+    object TabLogs: TTabSheet
+      Caption = 'Logs/Resultados'
+      ClientHeight = 0
+      ClientWidth = 0
+      ImageIndex = 1
+      object MemoLogs: TMemo
+        Left = 0
+        Height = 381
+        Top = 0
+        Width = 543
+        Align = alClient
+        Lines.Strings = (
+          'MemoLogs'
+        )
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    Title = 'Selecione o XML da DI'
+    DefaultExt = '.*.xml'
+    Filter = 'Arquivos xml| *.xml'
+    Left = 480
+    Top = 88
+  end
+end

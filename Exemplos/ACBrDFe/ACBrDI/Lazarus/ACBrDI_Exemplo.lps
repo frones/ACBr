@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="ACBrDI_Exemplo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="4"/>
+        <CursorPos X="40" Y="19"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="frm_acbrdi.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmACBrDI"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ACBrDI"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="156"/>
+        <CursorPos X="14" Y="162"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\ACBr\Pacotes\Lazarus\ACBrDFe\ACBrNFe\ACBr_NFe.lpk"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="XML"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\ACBr\Fontes\ACBrDFe\ACBrDI\ACBrDIDeclaracaoImportacao.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="65"/>
+        <CursorPos Y="82"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="15">
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="8" Column="81"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="13" Column="27"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="164" Column="7" TopLine="154"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="166" Column="63" TopLine="157"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="164" Column="49" TopLine="154"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="166" Column="66" TopLine="156"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="283" TopLine="266"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="42" Column="8"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="25" Column="22" TopLine="17"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="67" Column="32" TopLine="70"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="28" Column="15" TopLine="16"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="172" Column="25" TopLine="159"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="163" Column="47" TopLine="159"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="170" Column="27" TopLine="160"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="165" Column="51" TopLine="160"/>
+      </Position>
+      <Position>
+        <Filename Value="frm_acbrdi.pas"/>
+        <Caret Line="169" Column="9" TopLine="162"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

@@ -69,6 +69,7 @@ function ObterNomeMunicipio(const AcMun: Integer; var AxUF: String;
                             const APathArqMun: String = ''): String;
 function ObterCodigoMunicipio(const AxMun, AxUF: String;
                               const APathArqMun: String = ''): Integer;
+function ObterCodigoUF(const AUF: String; APathArqMun: String = ''): Integer;
 
 function CalcularHashCSRT(const ACSRT, AChave: String): string;
 function CalcularHashDados(const ADados: TStream; AChave: String): string;
@@ -493,6 +494,21 @@ begin
 
   if (ACBrIBGE1.BuscarPorNome(AxMun, AxUF) > 0) then
     Result := ACBrIBGE1.Cidades[0].CodMunicipio;
+end;
+
+function ObterCodigoUF(const AUF: String; APathArqMun: String = ''): Integer;
+var
+  LPath: String;
+begin
+  Result := 0;
+  LPath := IfEmptyThen(APathArqMun, ApplicationPath);
+  if(GetACBrIBGE(LPath)= Nil)then
+    Exit;
+
+  Result := ACBrIBGE1.UFToCodUF(AUF);
+
+  if(Result < 0)then
+    Result := 0;
 end;
 
 function CalcularHashCSRT(const ACSRT, AChave: String): string;

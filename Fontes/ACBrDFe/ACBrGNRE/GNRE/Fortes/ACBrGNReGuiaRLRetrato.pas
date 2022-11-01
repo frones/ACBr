@@ -373,7 +373,9 @@ procedure TfrlGuiaRLRetrato.RLBand1BeforePrint(Sender: TObject; var PrintIt: Boo
       3: result := RemoverZeros(sDocEmitente);
     end;
   end;
-
+var
+  FUF, FCodUF: String;
+  FCodIBGE   : Integer;
 begin
   // 1ª Via
   RLLabel18.Caption             := FGNRe.DocDestinatario;
@@ -436,7 +438,23 @@ begin
   CEPEmitente2.Caption          := CEPEmitente.Caption;
   CEPEmitente3.Caption          := CEPEmitente.Caption;
 
-  MunicipioEmitente.Caption     := FGNRe.MunicipioEmitente;
+  try
+    FUF      := FGNRe.UFEmitente;
+    FCodUF   := IntToStr(ObterCodigoUF(FUF));
+    FCodIBGE := StrToIntDef(FCodUF + FGNRe.MunicipioEmitente, 0);
+
+    if(FCodIBGE > 0)then
+      MunicipioEmitente.Caption := ObterNomeMunicipio(FCodIBGE, FUF)
+    else
+      MunicipioEmitente.Caption := FGNRe.MunicipioEmitente;
+
+  except
+    on E:Exception do
+    begin
+      MunicipioEmitente.Caption     := FGNRe.MunicipioEmitente;
+    end;
+  end;
+
   MunicipioEmitente2.Caption    := MunicipioEmitente.Caption;
   MunicipioEmitente3.Caption    := MunicipioEmitente.Caption;
 
@@ -456,7 +474,21 @@ begin
   NumDocOrigem2.Caption         := NumDocOrigem.Caption;
   NumDocOrigem3.Caption         := NumDocOrigem.Caption;
 
-  MunicipioDestinatario.Caption := FGNRe.MunicipioDestinatario;
+  try
+    FUF      := FGNRe.UFFavorecida;
+    FCodUF   := IntToStr(ObterCodigoUF(FUF));
+    FCodIBGE := StrToIntDef(FCodUF + FGNRe.MunicipioDestinatario, 0);
+
+    if(FCodIBGE > 0)then
+      MunicipioDestinatario.Caption := ObterNomeMunicipio(FCodIBGE, FUF)
+    else
+      MunicipioDestinatario.Caption := FGNRe.MunicipioDestinatario;
+
+  except
+    on E:Exception do
+      MunicipioDestinatario.Caption := FGNRe.MunicipioDestinatario;
+  end;
+
   MunicipioDestinatario2.Caption:= MunicipioDestinatario.Caption;
   MunicipioDestinatario3.Caption:= MunicipioDestinatario.Caption;
 

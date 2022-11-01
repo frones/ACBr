@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 31/10/2022
+-- SH3.Provider --
+[*] Possível solução para a leitura correta do retorno da consulta ao lote.
+   Por: Italo Giurizzato Junior
 -- ISSNet.GravarXml --
 [*] Alterado a configuração para gerar a aliquota com 2 casas decimais.
    Por: Alan Lucas/Italo Giurizzato Junior

@@ -37,14 +37,8 @@ unit ACBrConsultaCNPJ;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, types, IniFiles,
   ACBrBase, ACBrSocket, ACBrIBGE;
-
-const
-  CURL_CAPTCH = 'https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/captcha/gerarCaptcha.asp';
-  CURL_REFER = 'http://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_Solicitacao_CS.asp';
-  CURL_POST = 'https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/valida.asp';
-
 
 type
   EACBrConsultaCNPJException = class ( Exception );
@@ -83,11 +77,18 @@ type
     FMotivoSituacaoCad: string;
     FPesquisarIBGE: Boolean;
     FCodigoIBGE: String;
+    FIniServicos: string;
+    FResourceName: String;
+    FParams: TStrings;
     //Function GetCaptchaURL: String;
     function GetIBGE_UF : String ;
-
     function VerificarErros(const Str: String): String;
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
+    function GetIniServicos: String;
+    procedure LerParams;
+    function LerSessaoChaveIni(const Sessao, Chave : String):String;
+    function LerParamsIniServicos: AnsiString;
+    function LerParamsInterno: AnsiString;
   public
     procedure Captcha(Stream: TStream);
     function Consulta(const ACNPJ, ACaptcha: String;
@@ -123,6 +124,7 @@ type
     property IBGE_Municipio  : String read FCodigoIBGE;
     property IBGE_UF         : String read GetIBGE_UF ;
     property PesquisarIBGE: Boolean read FPesquisarIBGE write FPesquisarIBGE;
+    property IniServicos : string read GetIniServicos write FIniServicos;
   end;
 
 implementation
@@ -133,8 +135,14 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrUtil.XMLHTML,
-  ACBrValidador;
+  ACBrValidador,
+  ACBrUtil.FilesIO;
 
+{$IFDEF FPC}
+ {$R ACBrConsultaCNPJServicos.rc}
+{$ELSE}
+ {$R ACBrConsultaCNPJServicos.res}
+{$ENDIF}
 (*function TACBrConsultaCNPJ.GetCaptchaURL : String ;
 var
   AURL, Html: String;
@@ -159,7 +167,7 @@ end;*)
 procedure TACBrConsultaCNPJ.Captcha(Stream: TStream);
 begin
   try
-    HTTPGet(CURL_CAPTCH);  // GetCaptchaURL
+    HTTPGet(LerSessaoChaveIni('ENDERECOS','CAPTCH'));  // GetCaptchaURL
     if HttpSend.ResultCode = 200 then
     begin
       HTTPSend.Document.Position := 0;
@@ -217,6 +225,59 @@ begin
   end
 end;
 
+procedure TACBrConsultaCNPJ.LerParams;
+var
+  ConteudoParams: AnsiString;
+begin
+  ConteudoParams := LerParamsIniServicos;
+
+  if ConteudoParams = '' then
+    ConteudoParams := LerParamsInterno;
+
+  FParams.Text := ConteudoParams;
+end;
+
+function TACBrConsultaCNPJ.LerParamsIniServicos: AnsiString;
+var
+  ArqIni: String;
+  FS: TFileStream;
+begin
+  Result := '';
+  ArqIni := Trim(IniServicos);
+  if (ArqIni <> '') and FileExists(ArqIni) then
+  begin
+    FS := TFileStream.Create(ArqIni, fmOpenRead or fmShareDenyNone);
+    try
+      FS.Position := 0;
+      Result := ReadStrFromStream(FS, FS.Size);
+    finally
+      FS.Free;
+    end;
+  end;
+end;
+
+function TACBrConsultaCNPJ.LerParamsInterno: AnsiString;
+var
+  RS: TResourceStream;
+begin
+  Result := '';
+
+  RS := TResourceStream.Create(HInstance, FResourceName, RT_RCDATA);
+  try
+    RS.Position := 0;
+    Result := ReadStrFromStream(RS, RS.Size);
+  finally
+    RS.Free;
+  end;
+
+end;
+
+function TACBrConsultaCNPJ.LerSessaoChaveIni(const Sessao,
+  Chave: String): String;
+begin
+  Result := FParams.Values[Chave];
+end;
+
 function TACBrConsultaCNPJ.Consulta(const ACNPJ, ACaptcha: String;
   ARemoverEspacosDuplos: Boolean): Boolean;
 var
@@ -232,6 +293,7 @@ begin
   Clear;
   Retentar := True;
   Tentativas := 0;
+
   while Retentar do
   begin
     HTTPSend.Clear;
@@ -243,8 +305,8 @@ begin
     WriteStrToStream( HTTPSend.Document, PostStr );
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
     HTTPSend.Cookies.Add('flag=1');
-    HTTPSend.Headers.Add('Referer: '+CURL_REFER);
-    HTTPPost(CURL_POST);
+    HTTPSend.Headers.Add('Referer: '+LerSessaoChaveIni('ENDERECOS','REFER'));
+    HTTPPost(LerSessaoChaveIni('ENDERECOS','POST'));
 
     //DEBUG:
     //RespHTTP.SaveToFile('c:\temp\cnpj1.txt');
@@ -370,14 +432,17 @@ begin
   FPesquisarIBGE := False;
   fACBrIBGE := TACBrIBGE.Create(nil);
   FACBrIBGE.IgnorarCaixaEAcentos := True;
-
   HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
+  FResourceName := 'ACBrConsultaCNPJServicos';
+  FParams := TStringList.Create;
+  LerParams;
 end;
 
 destructor TACBrConsultaCNPJ.Destroy;
 begin
   fACBrIBGE.Free;
   FCNAE2.Free;
+  FParams.Free;
   inherited;
 end;
 
@@ -414,6 +479,13 @@ end;
 function TACBrConsultaCNPJ.GetIBGE_UF: String;
 begin
   Result := copy(fCodigoIBGE,1,2) ;
+end;
+
+function TACBrConsultaCNPJ.GetIniServicos: String;
+begin
+  if FIniServicos = '' then
+    FIniServicos := ApplicationPath + FResourceName +'.ini';
+  Result := FIniServicos;
 end;
 
 end.

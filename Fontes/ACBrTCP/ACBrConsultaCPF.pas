@@ -37,7 +37,7 @@ unit ACBrConsultaCPF;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, types, IniFiles,
   ACBrBase, ACBrSocket;
 
 type
@@ -58,12 +58,21 @@ type
     FEmissao: String;
     FCodCtrlControle: String;
     FTokenCaptcha: String;
+    FIniServicos: string;
+    FResourceName: String;
+    FParams: TStrings;
 
     function VerificarErros(const Str: String): String;
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
     function GetCaptchaURL : String ;
+    function GetIniServicos: String;
+    procedure LerParams;
+    function LerSessaoChaveIni(const Sessao, Chave : String):String;
+    function LerParamsIniServicos: AnsiString;
+    function LerParamsInterno: AnsiString;
   public
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
 
     procedure Captcha(Stream: TStream);
     function Consulta(const ACPF, DataNasc, ACaptcha: String;
@@ -77,15 +86,24 @@ type
     property DigitoVerificador: String Read FDigitoVerificador;
     property Emissao: String Read FEmissao;
     property CodCtrlControle: String Read FCodCtrlControle;
+    property IniServicos : string read GetIniServicos write FIniServicos;
+
   end;
 
 implementation
+
+{$IFDEF FPC}
+ {$R ACBrConsultaCPFServicos.rc}
+{$ELSE}
+ {$R ACBrConsultaCPFServicos.res}
+{$ENDIF}
 
 uses
   strutils,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrValidador,
+  ACBrUtil.FilesIO,
   synacode, synautil, blcksock;
 
 constructor TACBrConsultaCPF.Create(AOwner: TComponent);
@@ -93,6 +111,15 @@ begin
   inherited Create(AOwner);
   HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
   Self.IsUTF8 := False;
+  FResourceName := 'ACBrConsultaCPFServicos';
+  FParams := TStringList.Create;
+  LerParams;
+end;
+
+destructor TACBrConsultaCPF.Destroy;
+begin
+  FParams.Free;
+  inherited;
 end;
 
 function TACBrConsultaCPF.GetCaptchaURL : String ;
@@ -100,7 +127,7 @@ var
   AURL, Html: String;
 begin
   try
-    Self.HTTPGet('https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublicaSonoro.asp');
+    Self.HTTPGet(LerSessaoChaveIni('ENDERECOS','CAPTCH'));
     Html := Self.RespHTTP.Text;
     //Debug
     //WriteToTXT('C:\TEMP\ACBrConsultaCPF-Captcha.TXT',Html);
@@ -113,6 +140,13 @@ begin
       raise EACBrConsultaCPFException.Create('Erro na hora de obter a URL do captcha.'+#13#10+E.Message);
     end;
   end;
+end;
+
+function TACBrConsultaCPF.GetIniServicos: String;
+begin
+  if FIniServicos = '' then
+    FIniServicos := ApplicationPath + FResourceName +'.ini';
+  Result := FIniServicos;
 end;
 
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
@@ -173,6 +207,58 @@ begin
   end
 end;
 
+procedure TACBrConsultaCPF.LerParams;
+var
+  ConteudoParams: AnsiString;
+begin
+  ConteudoParams := LerParamsIniServicos;
+
+  if ConteudoParams = '' then
+    ConteudoParams := LerParamsInterno;
+
+  FParams.Text := ConteudoParams;
+end;
+
+function TACBrConsultaCPF.LerParamsIniServicos: AnsiString;
+var
+  ArqIni: String;
+  FS: TFileStream;
+begin
+  Result := '';
+  ArqIni := Trim(IniServicos);
+  if (ArqIni <> '') and FileExists(ArqIni) then
+  begin
+    FS := TFileStream.Create(ArqIni, fmOpenRead or fmShareDenyNone);
+    try
+      FS.Position := 0;
+      Result := ReadStrFromStream(FS, FS.Size);
+    finally
+      FS.Free;
+    end;
+  end;
+end;
+
+function TACBrConsultaCPF.LerParamsInterno: AnsiString;
+var
+  RS: TResourceStream;
+begin
+  Result := '';
+
+  RS := TResourceStream.Create(HInstance, FResourceName, RT_RCDATA);
+  try
+    RS.Position := 0;
+    Result := ReadStrFromStream(RS, RS.Size);
+  finally
+    RS.Free;
+  end;
+end;
+
+function TACBrConsultaCPF.LerSessaoChaveIni(const Sessao,
+  Chave: String): String;
+begin
+  Result := FParams.Values[Chave];
+end;
+
 function TACBrConsultaCPF.Consulta(const ACPF, DataNasc,  ACaptcha: String;
   ARemoverEspacosDuplos: Boolean): Boolean;
 var
@@ -206,7 +292,7 @@ begin
     HttpSend.Document.Position:= 0;
     HttpSend.Document.CopyFrom(Post, Post.Size);
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPPost('https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublicaExibir.asp');
+    HTTPPost(LerSessaoChaveIni('ENDERECOS','POST'));
 
     //Debug
     //RespHTTP.SaveToFile('C:\TEMP\ACBrConsultaCPF-1.TXT');

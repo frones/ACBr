@@ -1,0 +1,1 @@
+c:\lazarus\tools\lazres.exe ACBrConsultaCPFServicos.res ACBrConsultaCPFServicos.ini

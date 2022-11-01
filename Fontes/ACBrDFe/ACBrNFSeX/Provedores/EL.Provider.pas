@@ -55,6 +55,8 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function AbrirSessao(ACabecalho, AMSG: String): string; override;
     function FecharSessao(ACabecalho, AMSG: String): string; override;
+
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderEL = class (TACBrNFSeProviderProprio)
@@ -1306,6 +1308,14 @@ begin
 end;
 
 { TACBrNFSeXWebserviceEL }
+
+function TACBrNFSeXWebserviceEL.TratarXmlRetornado(const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+end;
 
 function TACBrNFSeXWebserviceEL.Recepcionar(ACabecalho, AMSG: String): string;
 begin

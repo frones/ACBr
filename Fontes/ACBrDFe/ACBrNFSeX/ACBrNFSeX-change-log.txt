@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/11/2022
+-- EL.Provider --
+[*] Possível solução para a leitura correta do retorno dos métodos.
+   Por: Italo Giurizzato Junior
+
 31/10/2022
 -- SH3.Provider --
 [*] Possível solução para a leitura correta do retorno da consulta ao lote.

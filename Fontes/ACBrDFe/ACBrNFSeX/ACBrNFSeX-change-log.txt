@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/10/2022
+-- ISSNet.GravarXml --
+[*] Alterado a configuração para gerar a aliquota com 2 casas decimais.
+   Por: Alan Lucas/Italo Giurizzato Junior
+
 28/10/2022
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a URL de homologação da cidade Sao Joao Del Rei/MG.

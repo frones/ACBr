@@ -4,7 +4,7 @@
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>
     <PropertyGroup>
-        <DeviceId Condition="'$(Platform)'=='Android'">DM04218E41876</DeviceId>
+        <DeviceId Condition="'$(Platform)'=='Android'">0123abcd</DeviceId>
         <DeviceId Condition="'$(Platform)'=='Android64'">0123abcd</DeviceId>
     </PropertyGroup>
     <ItemGroup Condition="'$(Platform)'=='Win32'"/>
@@ -47,15 +47,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="ACBrFavIcon.png" Condition="'$(Config)'=='Release'">
-            <RemoteDir>TEFDemoAndroid\assets\internal\</RemoteDir>
-            <RemoteName>ACBrFavIcon.png</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>TEFDemoAndroid\res\drawable-xxhdpi\</RemoteDir>
             <RemoteName>ic_launcher.png</RemoteName>
@@ -83,11 +74,11 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="ACBrFavIcon.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>TEFDemoAndroid\assets\internal\</RemoteDir>
-            <RemoteName>ACBrFavIcon.png</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
+        <DeployFile Include="$(BDS)\lib\android\debug\mips\libnative-activity.so" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TEFDemoAndroid\library\lib\mips\</RemoteDir>
+            <RemoteName>libTEFDemoAndroid.so</RemoteName>
+            <DeployClass>AndroidLibnativeMipsFile</DeployClass>
+            <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -119,11 +110,11 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(BDS)\lib\android\debug\mips\libnative-activity.so" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>TEFDemoAndroid\library\lib\mips\</RemoteDir>
-            <RemoteName>libTEFDemoAndroid.so</RemoteName>
-            <DeployClass>AndroidLibnativeMipsFile</DeployClass>
-            <Operation>1</Operation>
+        <DeployFile Include="ACBr_96_96.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>TEFDemoAndroid\assets\internal\</RemoteDir>
+            <RemoteName>ACBr_96_96.png</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -182,6 +173,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
             <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="ACBr_96_96.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TEFDemoAndroid\assets\internal\</RemoteDir>
+            <RemoteName>ACBr_96_96.png</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
         </DeployFile>
         <DeployFile Include="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Condition="'$(Config)'=='Debug'">
             <RemoteDir>TEFDemoAndroid\library\lib\armeabi\</RemoteDir>

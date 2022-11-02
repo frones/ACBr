@@ -315,6 +315,8 @@ type
     rbClasseExterna: TRadioButton;
     cbxTransacaoPendente: TComboBox;
     lbiGapKeyboard: TListBoxItem;
+    ListBoxItem3: TListBoxItem;
+    swExibirLogAposTransacao: TSwitch;
     procedure FormCreate(Sender: TObject);
     procedure btVendaPagarClick(Sender: TObject);
     procedure ClickBotaoNumero(Sender: TObject);
@@ -446,7 +448,7 @@ var
 implementation
 
 uses
-  Math, StrUtils, IniFiles,
+  Math, StrUtils, IniFiles, DateUtils,
   System.TypInfo,
   System.IOUtils,
   Androidapi.JNI.Widget,
@@ -788,7 +790,7 @@ begin
     With ACBrTEFAndroid1.Personalizacao do
     begin
       corFundoTela := TAlphaColorRec.Darkblue;
-      corFundoToolbar := TAlphaColorRec.Gold;
+      corFundoToolbar := TAlphaColorRec.Seagreen;
       corFonte := TAlphaColorRec.White;
       corSeparadorMenu := TAlphaColorRec.White;
       corFundoCaixaEdicao := TAlphaColorRec.Azure;
@@ -797,7 +799,7 @@ begin
       corTeclaLiberadaTeclado := TAlphaColorRec.Green;
       corTeclaPressionadaTeclado := TAlphaColorRec.Greenyellow;
       corFonteTeclado := TAlphaColorRec.Black;
-      ArquivoIcone := TPath.Combine(TPath.GetHomePath, 'ACBrFavIcon.png');
+      ArquivoIcone := TPath.Combine(TPath.GetHomePath, 'ACBr_96_96.png');
       ArquivoFonte := TPath.Combine(TPath.GetHomePath, 'RobotoSlab-Regular.ttf');
     end;
   end
@@ -1012,6 +1014,9 @@ begin
   gplParcelas.Visible := (cbxTipoFinanciamento.ItemIndex = 2) or
                          (cbxTipoFinanciamento.ItemIndex = 3);
   gplPreDatado.Visible := (cbxTipoFinanciamento.ItemIndex = 4);
+
+  if gplPreDatado.Visible then
+    deFinancPreDatado.Date := DateOf(EndOfTheMonth(Now));
 end;
 
 procedure TFrTEFDemoAndroid.ClickBotaoNumero(Sender: TObject);
@@ -1376,7 +1381,8 @@ var
   TheKey, TheValue: string;
   MsgFinal: String;
 begin
-  MostrarTelaUltimaTransacao;
+  if swExibirLogAposTransacao.IsChecked then
+    MostrarTelaUltimaTransacao;
 
   with memoDadosUltimaTransacao.Lines do
   begin
@@ -1457,11 +1463,13 @@ begin
 
   if (MsgFinal <> '') then
   begin
-    TDialogService.MessageDialog( MsgFinal,
-                                  TMsgDlgType.mtError,
-                                  [TMsgDlgBtn.mbOK],
-                                  TMsgDlgBtn.mbOK, 0, nil);
-
+    if not RespostaTEF.Sucesso then
+      TDialogService.MessageDialog( MsgFinal,
+                                    TMsgDlgType.mtError,
+                                    [TMsgDlgBtn.mbOK],
+                                    TMsgDlgBtn.mbOK, 0, nil)
+    else
+      Toast(MsgFinal, False);
   end;
 
   // Exemplo de como usar as Propriedades da API, fazendo TypeCast
@@ -1512,8 +1520,11 @@ begin
 
   if (ATEFResp.ImagemComprovante1aVia.Count > 0) then
   begin
-    if (cbxImpressaoViaCliente.ItemIndex = 0) then   // Imprimir
+    if (cbxImpressaoViaCliente.ItemIndex = 0) or         // Configurado para sempre Imprimir
+       (ATEFResp.ImagemComprovante2aVia.Count = 0) then  // Só recebeu a via do Cliente
+    begin
       ImprimirRelatorio( ATEFResp.ImagemComprovante1aVia.Text )
+    end
 
     else if (cbxImpressaoViaCliente.ItemIndex = 1) then   // Perguntar
     begin
@@ -1587,6 +1598,7 @@ begin
     swConfirmacaoManual.IsChecked := Ini.ReadBool('Geral', 'ConfirmacaoManual', False);
     swInterfaceAlternativa.IsChecked := Ini.ReadBool('Geral', 'InterfaceAlternativa', True);
     swMenuAdministrativo.IsChecked := Ini.ReadBool('Geral', 'MenuAdministrativo', False);
+    swExibirLogAposTransacao.IsChecked := Ini.ReadBool('Geral', 'ExibirLogAposTransacao', False);
     cbxTransacaoPendente.ItemIndex := INI.ReadInteger('Geral', 'TransacaoPendente', 0);
     cbxImpressaoViaCliente.ItemIndex := Ini.ReadInteger('Geral', 'ImpressaoViaCliente', 1);
 
@@ -1649,6 +1661,7 @@ begin
     Ini.WriteBool('Geral', 'ConfirmacaoManual', swConfirmacaoManual.IsChecked);
     Ini.WriteBool('Geral', 'InterfaceAlternativa', swInterfaceAlternativa.IsChecked);
     Ini.WriteBool('Geral', 'MenuAdministrativo', swMenuAdministrativo.IsChecked);
+    Ini.WriteBool('Geral', 'ExibirLogAposTransacao', swExibirLogAposTransacao.IsChecked);
     INI.WriteInteger('Geral', 'TransacaoPendente', cbxTransacaoPendente.ItemIndex);
     Ini.WriteInteger('Geral', 'ImpressaoViaCliente', cbxImpressaoViaCliente.ItemIndex);
 

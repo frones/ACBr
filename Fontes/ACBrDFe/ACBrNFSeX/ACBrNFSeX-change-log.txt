@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/11/2022
+-- SoftPlan.LerXml --
+[+] Implementado a leitura do XML do Rps e da NFS-e.
+   Por: Italo Giurizzato Junior
 -- EL.Provider --
 [*] Possível solução para a leitura correta do retorno dos métodos.
    Por: Italo Giurizzato Junior

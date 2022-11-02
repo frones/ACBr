@@ -161,7 +161,7 @@ begin
                                         NFSe.Tomador.Endereco.Complemento, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'dadosAdicionais', 0, 600, 0,
-                                                                       '', ''));
+                                                   NFSe.OutrasInformacoes, ''));
 
   NFSeNode.AppendChild(AddNode(tcDat, '#1', 'dataEmissao', 1, 10, 1,
                                                          NFse.DataEmissao, ''));

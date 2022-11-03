@@ -46,13 +46,24 @@
     <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.GNRe.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\Shared\GNReConfig.cs" Link="GNReConfig.cs" />
-    <Compile Include="..\Shared\GuiaConfig.cs" Link="GuiaConfig.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\Shared\GNReConfig.cs" Link="GNReConfig.cs" />
+		<Compile Include="..\Shared\GuiaConfig.cs" Link="GuiaConfig.cs" />
+		<Compile Include="..\Shared\GerarGuia\GerarGuia.cs" Link="GerarGuia\GerarGuia.cs" />
+		<Compile Include="..\Shared\GerarGuia\EmitenteGNRe.cs" Link="GerarGuia\EmitenteGNRe.cs" />
+		<Compile Include="..\Shared\GerarGuia\ComplementoGNRe.cs" Link="GerarGuia\ComplementoGNRe.cs" />
+		<Compile Include="..\Shared\GerarGuia\ReferenciaGNRe.cs" Link="GerarGuia\ReferenciaGNRe.cs" />
+		<Compile Include="..\Shared\GerarGuia\DestinatarioGNRe.cs" Link="GerarGuia\DestinatarioGNRe.cs" />
+		<Compile Include="..\Shared\GerarGuia\CampoExtraGNRe.cs" Link="GerarGuia\CampoExtraGNRe.cs" />
+		<Compile Include="..\Shared\Respostas\ConsultaGNReResposta.cs" Link="Respostas\ConsultaGNReResposta.cs" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Respostas\" />
   </ItemGroup>
 
 </Project>

@@ -142,6 +142,7 @@
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.btnConfiguracaoUF = new System.Windows.Forms.Button();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
+            this.btnClasseAltoNivel = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1284,6 +1285,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.btnClasseAltoNivel);
             this.tabPage5.Controls.Add(this.btnEnviarEmail);
             this.tabPage5.Controls.Add(this.btnLimparLista);
             this.tabPage5.Controls.Add(this.btnImprimirPDF);
@@ -1411,6 +1413,16 @@
             this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
             this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.btnCarregarConfiguracoes_Click);
             // 
+            // btnClasseAltoNivel
+            // 
+            this.btnClasseAltoNivel.Location = new System.Drawing.Point(254, 150);
+            this.btnClasseAltoNivel.Name = "btnClasseAltoNivel";
+            this.btnClasseAltoNivel.Size = new System.Drawing.Size(118, 23);
+            this.btnClasseAltoNivel.TabIndex = 27;
+            this.btnClasseAltoNivel.Text = "Classe Alto Nível";
+            this.btnClasseAltoNivel.UseVisualStyleBackColor = true;
+            this.btnClasseAltoNivel.Click += new System.EventHandler(this.btnClasseAltoNivel_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1426,7 +1438,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ACBrLibNFe Demo";
+            this.Text = "ACBrLibGNRe Demo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Shown += new System.EventHandler(this.FrmMain_Shown);
             this.tabControl1.ResumeLayout(false);
@@ -1580,6 +1592,7 @@
         private System.Windows.Forms.Button btnObterCertificados;
         private System.Windows.Forms.Button btnCarregarConfiguracoes;
         private System.Windows.Forms.Button btnEnviarEmail;
+        private System.Windows.Forms.Button btnClasseAltoNivel;
     }
 }
 

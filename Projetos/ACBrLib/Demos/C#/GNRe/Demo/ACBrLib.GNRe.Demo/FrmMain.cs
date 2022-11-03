@@ -434,6 +434,76 @@ namespace ACBrLib.GNRe.Demo
             }
         }
 
+        private void btnClasseAltoNivel_Click(object sender, EventArgs e)
+        {
+            var GuiaGNRe = AlimentarDados();
+
+            gnre.LimparLista();
+            gnre.CarregarINI(GuiaGNRe);
+
+            try
+            {
+                var ret = gnre.Enviar();
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private string AlimentarDados()
+        {
+            var gerarGuia = new GerarGuia();
+
+            //Emitente
+            gerarGuia.Emitente.Tipo = Tipo.CNPJ;
+            gerarGuia.Emitente.IE = "99999999999";
+            gerarGuia.Emitente.ID = "99999999999999";
+            gerarGuia.Emitente.RazaoSocial = "PROJETO ACBR CONSULTORIA LTDA";
+            gerarGuia.Emitente.Endereco = "Rua Cel Aureliano Camargo";
+            gerarGuia.Emitente.Cidade = "54003";
+            gerarGuia.Emitente.UF = DFeUF.SP;
+            gerarGuia.Emitente.CEP = "18270000";
+            gerarGuia.Emitente.Telefone = "(11)9999-9999";
+
+            //Complemento
+            gerarGuia.Complemento.IdentificadorGuia = "1";
+            gerarGuia.Complemento.TipoDocOrigem = 1;
+            gerarGuia.Complemento.DocOrigem = 5567;
+            gerarGuia.Complemento.DetalhamentoReceita = "";
+            gerarGuia.Complemento.Produto = "";
+
+            //Referencia
+            gerarGuia.Referencia.Convenio = "";
+            gerarGuia.Referencia.Receita = "";
+            gerarGuia.Referencia.UfFavorecida = DFeUF.SP;
+            gerarGuia.Referencia.DataVencimento = DateTime.Now;
+            gerarGuia.Referencia.DataPagamento = DateTime.Now;
+            gerarGuia.Referencia.ReferenciaAno = "";
+            gerarGuia.Referencia.ReferenciaMes = "";
+            gerarGuia.Referencia.ReferenciaParcela = "";
+            gerarGuia.Referencia.ReferenciaPeriodo = "";
+            gerarGuia.Referencia.ValorTotal = 200;
+            gerarGuia.Referencia.ValorPrincipal = 0;
+
+            //Destinatario
+            gerarGuia.Destinatario.Tipo = Tipo.CNPJ;
+            gerarGuia.Destinatario.IE = "99999999999";
+            gerarGuia.Destinatario.ID = "99999999999999";
+            gerarGuia.Destinatario.RazaoSocial = "PROJETO ACBR CONSULTORIA LTDA";
+            gerarGuia.Destinatario.Cidade = "Tatuí";
+
+            //CampoExtra
+            gerarGuia.CampoExtra.Codigo = 1;
+            gerarGuia.CampoExtra.Tipo = "";
+            gerarGuia.CampoExtra.Valor = 200;
+
+            return gerarGuia.ToString();
+        }
+
         #endregion EventHandlers
+
     }
 }

@@ -48,6 +48,7 @@ type
     ID: string;
     Document: string;
     Description: string;
+    Name: string;
   end;
 
 type
@@ -254,6 +255,8 @@ begin
               Amount := StringReplace(Amount,'.',',',[rfReplaceAll]);
               oItem.Value := StrToFloat(Amount);
             end;
+            if FindString('<NAME>', sLine) then
+              oItem.Name := InfLine(sLine);
             if oItem.Document = '' then
               oItem.Document := FirstWord(oItem.ID);
           end;

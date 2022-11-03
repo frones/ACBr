@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2022
+[+] TK-3190 Adicionado leitura da tag <Name> do grupo <STMTTRN>
+   Por: evandromira
+
 22/03/2022
 [+] TK-2397 Adicionado Componente a Suite
    Por : Pandaaa - Contribuição Tiago Passarela, Leonardo Gregianin

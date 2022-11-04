@@ -171,11 +171,20 @@ begin
   if Node <> nil then
   begin
     Node := Node.Childrens.FindAnyNs('InfNfse');
+
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
     CodVerif := ObterConteudoTag(Node.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+
     Node := Node.Childrens.FindAnyNs('IdentificacaoRps');
-    NumRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
-    SerieRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Serie'), tcStr);
+
+    NumRps := '';
+    SerieRps := '';
+
+    if Node <> nil then
+    begin
+      NumRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
+      SerieRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Serie'), tcStr);
+    end;
 
     AResumo := Response.Resumos.New;
     AResumo.NumeroNota := NumNFSe;
@@ -183,7 +192,10 @@ begin
     AResumo.NumeroRps := NumRps;
     AResumo.SerieRps := SerieRps;
 
-    ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+    if NumRps <> '' then
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
+    else
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
     ANota := CarregarXmlNfse(ANota, parentNode.OuterXml);
     SalvarXmlNfse(ANota);
@@ -203,11 +215,20 @@ begin
   if Node <> nil then
   begin
     Node := Node.Childrens.FindAnyNs('InfNfse');
+
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
     CodVerif := ObterConteudoTag(Node.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+
     Node := Node.Childrens.FindAnyNs('IdentificacaoRps');
-    NumRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
-    SerieRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Serie'), tcStr);
+
+    NumRps := '';
+    SerieRps := '';
+
+    if Node <> nil then
+    begin
+      NumRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
+      SerieRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Serie'), tcStr);
+    end;
 
     AResumo := Response.Resumos.New;
     AResumo.NumeroNota := NumNFSe;
@@ -215,7 +236,10 @@ begin
     AResumo.NumeroRps := NumRps;
     AResumo.SerieRps := SerieRps;
 
-    ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+    if NumRps <> '' then
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
+    else
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
     ANota := CarregarXmlNfse(ANota, parentNode.OuterXml);
     SalvarXmlNfse(ANota);

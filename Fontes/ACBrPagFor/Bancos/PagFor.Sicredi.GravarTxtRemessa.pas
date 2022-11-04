@@ -297,8 +297,9 @@ begin
         GravarCampo(' ', 1, tcStr);
         GravarCampo(TpInscricaoToStr(Inscricao.Tipo), 1, tcStr);
         GravarCampo(Inscricao.Numero, 14, tcStrZero);
-        GravarCampo(' ', 95, tcStr);
-        GravarCampo(PixMensagem, 99, tcStr);
+        GravarCampo(PixTXID, 30, tcStr);
+        GravarCampo(PixMensagem, 65, tcStr);
+        GravarCampo(PixChave, 99, tcStr);
       end
       else
       begin

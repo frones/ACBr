@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/11/2022
+-- PagFor.Sicredi.GravarTxtRemessa --
+[*] Correção no Segmento B para PIX, não estava usando os campos corretos.
+   Por: Centrodata Sistemas
+
 21/10/2022
 -- PagFor.Santander.GravarTxtRemessa --
 [*] Correção no Registro 0, não estava incluindo o DV da Agencia.

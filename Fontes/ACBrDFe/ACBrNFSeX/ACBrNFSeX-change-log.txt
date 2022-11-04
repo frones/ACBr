@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/11/2022
+-- ACBrNFSeXServicos.ini --
+[*] A cidade Rolandia/PR mudou a URL do produção.
+   Por: Douglas GV
+[*] A cidade Rio Branco do Sul/PR mudou de provedor agora é IPM.
+   Por: Alexandre Felippeto Henzen
+[+] Incluída a cidade de Alto Parnaiba/MA - Provedor Fiorilli.
+   Por: Gabriel Rogelin
+
 01/11/2022
 -- SoftPlan.LerXml --
 [+] Implementado a leitura do XML do Rps e da NFS-e.

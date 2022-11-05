@@ -1062,7 +1062,7 @@ begin
 
        AInstrucao := PadLeft(Trim(Instrucao1),2,'0') + PadLeft(Trim(Instrucao2),2,'0');
        if (DataProtesto > 0) and (DataProtesto > Vencimento) then
-        begin
+       begin
          DiasProtesto := '  ';
          case (DaysBetween(DataProtesto,Vencimento)) of
             3: // Protestar no 3º dia util após vencimento
@@ -1086,13 +1086,12 @@ begin
             DiasProtesto:=IntToStr(DaysBetween(DataProtesto,Vencimento));
          end;
         end
-       else
-        begin
+       else if ATipoOcorrencia <> '02' then //para comando de baixa 02 é necessario informar a instrução [42,44 ou 46]
+       begin
          Instrucao1  := '07'; //Não Protestar
          AInstrucao  := PadLeft(Trim(Instrucao1),2,'0') + PadLeft(Trim(Instrucao2),2,'0');
          DiasProtesto:= '  ';
-        end;
-
+       end;
      end;
 
      aDataDesconto:= '000000';

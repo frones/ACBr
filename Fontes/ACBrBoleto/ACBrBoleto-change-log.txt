@@ -51,7 +51,10 @@ Símbolo : Significado
 
 04/11/2022
 [*]TK-3217 ACBrBoleto - Mapeamento de alguns códigos de ocorrência para o Ailos/Cecred
-  por : IBS Sistemas
+  por : IBS Sistemas 
+
+[*]TK-3173 ACBrBoleto - Alteração na instrução codificada para CNAB400 BB
+  por : Midas
 
 27/10/2022
 --ACBrBoleto--

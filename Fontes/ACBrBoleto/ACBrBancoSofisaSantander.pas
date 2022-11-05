@@ -158,7 +158,7 @@ end;
 
 procedure TACBrBancoSofisaSantander.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  DigitoNossoNumero, Ocorrencia,aEspecie :String;
+  DigitoNossoNumero, Ocorrencia,aEspecie, sChaveNFe :String;
   Protesto, Multa, valorMulta, aAgencia, TipoSacado, wLinha :String;
   aCarteira, I, mensagemBranco, multiplicadorMulta: Integer;
 begin
@@ -254,6 +254,11 @@ begin
 
     with ACBrBoleto do
     begin
+      sChaveNFe := '';
+      if (ACBrTitulo.ListaDadosNFe.Count > 0) then
+        sChaveNFe := ACBrTitulo.ListaDadosNFe[0].ChaveNFe;
+      sChaveNFe := PadLeft(sChaveNFe,44,'0');
+
       wLinha:= '1'                                                  +  // 1- ID Registro
         IfThen(Cedente.TipoInscricao = pJuridica,'02','01')         +  // 2 a 3
         PadLeft(trim(OnlyNumber(Cedente.CNPJCPF)),14,'0')           +  // 4 a 17

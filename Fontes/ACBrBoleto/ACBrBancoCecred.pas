@@ -743,7 +743,7 @@ begin
                   ATipoAceite +                                                 // 150 a 150 - Aceite
                   FormatDateTime( 'ddmmyy', DataDocumento ) +                   // 151 a 156 - Data de Emissão
                   PadLeft(AInstrucao, 2, '0') +                                 // 157 a 158 - Instrução codificada (cód. Protesto)
-                  '  ' +                                                        // 159 a 160 - Brancos
+                  '00' +                                                        // 159 a 160 - Zeros
                   IntToStrZero( round(ValorMoraJuros * 100 ), 13) +             // 161 a 173 - Juros de mora por dia
                   IntToStrZero(0,6) +                                           // 174 a 179 - Zeros
                   IntToStrZero( round( ValorDesconto * 100), 13) +              // 180 a 192 - Valor do desconto

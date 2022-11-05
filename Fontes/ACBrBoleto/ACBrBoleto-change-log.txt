@@ -70,6 +70,10 @@ Símbolo : Significado
 [+]TK-3228 ACBrBoleto - Inclusão do Banco BTG Pactual Regra C058 Segmento U
   por Victor H Gonzales - Pandaaa  
 
+--ACBrCecredi--
+[*]TK-3224 CNAB400 Alteração Registro 7 campo 32 colunas 159 a 160, alteração de dominio vazio para zeros conforme manual versão 03 abril/2021 
+  por Doglas Stumpf
+
 27/10/2022
 --ACBrBoleto--
 [-]TK-3132 - Parâmetro ImprimirMensagemPadrao não está surtindo efeito / Outros

@@ -773,7 +773,8 @@ type
     toRetornoConfirmacaoAlteracaoValorMaximoOuPercentual,
     toRetornoConfirmacaoPedidoDispensaMulta,
     toRetornoConfirmacaoPedidoCobrancaMulta,
-    toRetornoConfirmacaoPedidoAlteracaoBeneficiarioTitulo
+    toRetornoConfirmacaoPedidoAlteracaoBeneficiarioTitulo,
+    toRetornoExcluirProtestoCartaAnuencia
   );
 
   //Complemento de instrução para alterar outros dados
@@ -867,6 +868,9 @@ type
     function DefinePosicaoNossoNumeroRetorno: Integer; virtual;                     //Define posição para leitura de Retorno campo: NossoNumero
     function DefineTamanhoNossoNumeroRetorno: Integer; virtual;                     //Define posição para leitura de Retorno campo: NossoNumero
     function DefinePosicaoCarteiraRetorno:Integer; virtual;                         //Define posição para leitura de Retorno campo: NumeroDocumento
+    function DefineDataOcorrencia(const ALinha: String): String; virtual;           //Define a data da ocorrencia
+    function DefineSeuNumeroRetorno(const ALinha: String): String; virtual;         //Define o Seu Numero
+    function DefineNumeroDocumentoRetorno(const ALinha: String): String; virtual;   //Define o Numero Documento do Retorno
 
     function DefineTipoInscricao: String; virtual;                            //Utilizado para definir Tipo de Inscrição na Remessa
     function DefineResponsEmissao: String; virtual;                           //Utilizado para definir Responsável Emissão na Remessa
@@ -4449,16 +4453,7 @@ end;
 procedure TACBrBanco.Loaded;
 begin
   inherited;
-  case TipoCobranca of
-    cobBanrisul :
-      begin
-        if (LayoutVersaoArquivo = 0) then
-        LayoutVersaoArquivo := 40;
 
-        if (LayoutVersaoLote = 0) then
-          LayoutVersaoLote    := 20;
-      end;
-  end;
 end;
 
 procedure TACBrBanco.LerRetorno240(ARetorno: TStringList);
@@ -5000,8 +4995,8 @@ begin
      begin
         if copy(Linha, 14, 1) = 'T' then
         begin
-          SeuNumero := copy(Linha, 106, 25);
-          NumeroDocumento := copy(Linha, 59, fpTamanhoNumeroDocumento);
+          SeuNumero := DefineSeuNumeroRetorno(Linha);
+          NumeroDocumento := DefineNumeroDocumentoRetorno(Linha);
           Carteira := copy(Linha, DefinePosicaoCarteiraRetorno, TamanhoCarteira);
 
           case strtoint(copy(Linha, 58, 1)) of
@@ -5045,7 +5040,7 @@ begin
            ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
            ValorRecebido       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
 
-           TempData            := copy(Linha, 138, 2)+'/'+copy(Linha, 140, 2)+'/'+copy(Linha, 142, 4);
+           TempData            := DefineDataOcorrencia(Linha);
            if TempData <> '00/00/0000' then
                DataOcorrencia  := StringToDateTimeDef(TempData, 0, 'DD/MM/YYYY');
 
@@ -5255,6 +5250,12 @@ end;
 function TACBrBancoClass.DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String;
 begin
   Result := ACBrTitulo.Carteira + ACBrTitulo.NossoNumero;
+end;
+
+function TACBrBancoClass.DefineNumeroDocumentoRetorno(
+  const ALinha: String): String;
+begin
+  Result := copy(ALinha, 59, fpTamanhoNumeroDocumento);
 end;
 
 function TACBrBancoClass.ConverterDigitoModuloFinal: String;
@@ -5519,6 +5520,11 @@ begin
   end;
 end;
 
+function TACBrBancoClass.DefineSeuNumeroRetorno(const ALinha: String): String;
+begin
+  Result := copy(ALinha, 106, 25);
+end;
+
 function TACBrBancoClass.DefineCaracTitulo(const ACBrTitulo: TACBrTitulo): String;
 begin
   with ACBrTitulo do
@@ -5679,6 +5685,11 @@ begin
     else
       Result := PadRight('', Length(AFormat), '0');
   end;
+end;
+
+function TACBrBancoClass.DefineDataOcorrencia(const ALinha: String): String;
+begin
+  Result := copy(ALinha, 138, 2)+'/'+copy(ALinha, 140, 2)+'/'+copy(ALinha, 142, 4);
 end;
 
 function TACBrBancoClass.DefineTipoDocumento: String;

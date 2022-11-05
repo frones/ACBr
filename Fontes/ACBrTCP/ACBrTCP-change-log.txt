@@ -36,6 +36,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/11/2022
+--ACBrCEP--
+[*]TK-3227 Remoção do JSON antigo ACBrCEP
+  por : Victor H Gonzales - Panda
+
+[+]TK-3226 Inclusão do WS OpenCEP no ACBrCEP
+  por : Victor H Gonzales - Panda
+
 05/10/2022
 - ACBrConsultaCNPJ -
 [-] TK-3129 ACBrConsultaCNPJ - HTTP Code 301

@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/11/2022
+[*]TK-3217 ACBrBoleto - Mapeamento de alguns códigos de ocorrência para o Ailos/Cecred
+  por : IBS Sistemas
+
 27/10/2022
 --ACBrBoleto--
 [-]TK-3132 - Parâmetro ImprimirMensagemPadrao não está surtindo efeito / Outros

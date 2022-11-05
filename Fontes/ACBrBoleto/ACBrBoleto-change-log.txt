@@ -50,14 +50,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/11/2022
+--ACBrBancoCecred--
 [*]TK-3217 ACBrBoleto - Mapeamento de alguns códigos de ocorrência para o Ailos/Cecred
   por : IBS Sistemas 
 
+--ACBrBancoBrasil--
 [*]TK-3173 ACBrBoleto - Alteração na instrução codificada para CNAB400 BB
   por : Midas
 
+--ACBrBoleto--
 [+]TK-3225 Alteração no CNAB240 novas procedures para leitura dinamica
   por : Victor H Gonzales - Pandaaa
+
+--ACBrBancoUnicredES--
+[*]TK-3028-1 Alteração retorno para ajuste leitura CNAB240 Retorno SeuNumero / Nosso Numero, banco retorna fixo 0, foi alterado para retornar o mesmo valor em ambos
+  por Daniel de Morais / Victor H Gonzales - Pandaaa
 
 27/10/2022
 --ACBrBoleto--

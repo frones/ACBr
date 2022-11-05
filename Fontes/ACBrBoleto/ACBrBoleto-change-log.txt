@@ -66,6 +66,10 @@ Símbolo : Significado
 [*]TK-3028-1 Alteração retorno para ajuste leitura CNAB240 Retorno SeuNumero / Nosso Numero, banco retorna fixo 0, foi alterado para retornar o mesmo valor em ambos
   por Daniel de Morais / Victor H Gonzales - Pandaaa
 
+--ACBrBTGPactual--
+[+]TK-3228 ACBrBoleto - Inclusão do Banco BTG Pactual Regra C058 Segmento U
+  por Victor H Gonzales - Pandaaa  
+
 27/10/2022
 --ACBrBoleto--
 [-]TK-3132 - Parâmetro ImprimirMensagemPadrao não está surtindo efeito / Outros

@@ -52,6 +52,7 @@ type
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
     function MontaInstrucoesCNAB240(ATitulo : TACBrTitulo; AIndex : Integer) : string;
     function ConverterDigitoModuloFinal(): String; override;
+    function DefineDataOcorrencia(const ALinha: String): String; override;
   public
     constructor Create(AOwner: TACBrBanco);
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; override;
@@ -349,6 +350,12 @@ begin
             + ACBrTitulo.NossoNumero                                     // nosso número sem o digito
             + RightStr(ACBrTitulo.ACBrBoleto.Cedente.Conta,7)            // conta beneficiário sem digito
             + '0';                                                       // zero fixo
+end;
+
+function TACBrBancoBTGPactual.DefineDataOcorrencia(
+  const ALinha: String): String;
+begin
+  Result := copy(ALinha, 158, 2)+'/'+copy(ALinha, 160, 2)+'/'+copy(ALinha, 162, 4);
 end;
 
 procedure TACBrBancoBTGPactual.EhObrigatorioAgenciaDV;

@@ -46,7 +46,7 @@ type
                       tcSimplesRapComReg, tcCaucionadaRapComReg, tcDiretaEspecial);
   TACBrPessoa = (pFisica,pJuridica,pOutras, pNenhum);
   TACBrPessoaCedente = pFisica..pJuridica;
-  TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo, lPadraoEntrega2, lFaturaDetal, lTermica80mm, lPadraoPIX, lPrestaServicos);
+  TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo, lPadraoEntrega2, lFaturaDetal, lTermica80mm, lPadraoPIX, lPrestaServicos, lCarneA5);
 
   {Aceite do titulo}
   TACBrAceiteTitulo = (atSim, atNao);

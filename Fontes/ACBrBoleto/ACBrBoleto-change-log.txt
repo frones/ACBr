@@ -84,6 +84,14 @@ da NF-e para o título/documento ( 44 posições ).
 chave possuirá normalmente 9 posições. Neste caso, completar com zeros à esquerda 
 até que o campo tenha as 44 posições preenchidas. pag 10
 
+--ACBrBoletoConversao ACBrBoletoFCFortesFr ACBrBoletoFCFortesFr--
+[+]TK-2146 Boleto CarneA5 RL
+  por : Marcio Rossato / Daniel de Morais
+
+--ACBrBoletoFCFortesFr ACBrBoletoFCFortesFr--
+[*]Correção no relatório de Serviços
+  por : Daniel de Morais
+
 27/10/2022
 --ACBrBoleto--
 [-]TK-3132 - Parâmetro ImprimirMensagemPadrao não está surtindo efeito / Outros

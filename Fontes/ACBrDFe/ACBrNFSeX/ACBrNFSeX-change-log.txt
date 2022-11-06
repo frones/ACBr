@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/11/2022
+-- Diversos --
+[+] Implementado o método ConsultarParametros para o provedor PadraoNacional.
+    Tem por finalidade retornar o Parâmetros Municipais de um município que 
+    aderiu a NFSe Padrão Nacional.
+   Por: Italo Giurizzato Junior
+
 04/11/2022
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Alteração visando um possível AV ao ler as informações da nota retornada.

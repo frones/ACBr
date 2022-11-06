@@ -459,6 +459,27 @@ type
     property ChaveNFSe: string read FChaveNFSe write FChaveNFSe;
   end;
 
+  TNFSeConsultarParamResponse = class(TNFSeWebserviceResponse)
+  private
+    FtpParamMunic: TParamMunic;
+    FCodigoMunic: Integer;
+    FCodigoServico: string;
+    FCompetencia: TDateTime;
+    FNumeroBeneficio: string;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear; override;
+
+    property tpParamMunic: TParamMunic read FtpParamMunic write FtpParamMunic;
+    property CodigoMunic: Integer read FCodigoMunic write FCodigoMunic;
+    property CodigoServico: string read FCodigoServico write FCodigoServico;
+    property Competencia: TDateTime read FCompetencia write FCompetencia;
+    property NumeroBeneficio: string read FNumeroBeneficio write FNumeroBeneficio;
+
+  end;
+
 implementation
 
 uses
@@ -955,6 +976,31 @@ begin
 end;
 
 destructor TNFSeConsultarDFeResponse.Destroy;
+begin
+
+  inherited Destroy;
+end;
+
+{ TNFSeConsultarParamResponse }
+
+procedure TNFSeConsultarParamResponse.Clear;
+begin
+  inherited Clear;
+
+  tpParamMunic := pmConvenio;
+  CodigoMunic := 0;
+  CodigoServico := '';
+  Competencia := 0;
+  NumeroBeneficio := '';
+end;
+
+constructor TNFSeConsultarParamResponse.Create;
+begin
+  inherited Create;
+
+end;
+
+destructor TNFSeConsultarParamResponse.Destroy;
 begin
 
   inherited Destroy;

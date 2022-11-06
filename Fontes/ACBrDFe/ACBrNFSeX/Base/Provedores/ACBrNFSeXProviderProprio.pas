@@ -119,6 +119,11 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
 
+    procedure PrepararConsultarParam(Response: TNFSeConsultarParamResponse); override;
+    procedure GerarMsgDadosConsultarParam(Response: TNFSeConsultarParamResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultarParam(Response: TNFSeConsultarParamResponse); override;
+
     function AplicarXMLtoUTF8(AXMLRps: String): String; virtual;
     function AplicarLineBreak(AXMLRps: String; const ABreak: String): String; virtual;
 
@@ -738,6 +743,28 @@ end;
 
 procedure TACBrNFSeProviderProprio.TratarRetornoConsultarDFe(
   Response: TNFSeConsultarDFeResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
+procedure TACBrNFSeProviderProprio.PrepararConsultarParam(
+  Response: TNFSeConsultarParamResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultarParam(
+  Response: TNFSeConsultarParamResponse; Params: TNFSeParamsResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderProprio.TratarRetornoConsultarParam(
+  Response: TNFSeConsultarParamResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;

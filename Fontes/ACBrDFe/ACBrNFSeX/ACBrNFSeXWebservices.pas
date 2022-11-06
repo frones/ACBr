@@ -57,6 +57,7 @@ type
     FEnviarEvento: TNFSeEnviarEventoResponse;
     FConsultarEvento: TNFSeConsultarEventoResponse;
     FConsultarDFe: TNFSeConsultarDFeResponse;
+    FConsultarParam: TNFSeConsultarParamResponse;
 
   public
     constructor Create;
@@ -74,6 +75,7 @@ type
     property EnviarEvento: TNFSeEnviarEventoResponse read FEnviarEvento;
     property ConsultarEvento: TNFSeConsultarEventoResponse read FConsultarEvento;
     property ConsultarDFe: TNFSeConsultarDFeResponse read FConsultarDFe;
+    property ConsultarParam: TNFSeConsultarParamResponse read FConsultarParam;
 
   end;
 
@@ -94,6 +96,7 @@ begin
   FEnviarEvento := TNFSeEnviarEventoResponse.Create;
   FConsultarEvento := TNFSeConsultarEventoResponse.Create;
   FConsultarDFe := TNFSeConsultarDFeResponse.Create;
+  FConsultarParam := TNFSeConsultarParamResponse.Create;
 end;
 
 destructor TWebServices.Destroy;
@@ -110,6 +113,7 @@ begin
   FEnviarEvento.Free;
   FConsultarEvento.Free;
   FConsultarDFe.Free;
+  FConsultarParam.Free;
 
   inherited Destroy;
 end;

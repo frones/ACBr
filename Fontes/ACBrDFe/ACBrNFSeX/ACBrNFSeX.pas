@@ -180,6 +180,10 @@ type
     procedure ConsultarDFe(aNSU: Integer); overload;
     procedure ConsultarDFe(const aChave: string); overload;
 
+    procedure ConsultarParametros(ATipoParamMunic: TParamMunic;
+      const ACodigoServico: string = ''; ACompetencia: TDateTime = 0;
+      const ANumeroBeneficio: string = '');
+
     function LinkNFSe(ANumNFSe: String; const ACodVerificacao: String;
       const AChaveAcesso: String = ''; const AValorServico: String = ''): String;
 
@@ -881,6 +885,23 @@ begin
   end;
 
   ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarParametros(ATipoParamMunic: TParamMunic;
+  const ACodigoServico: string = ''; ACompetencia: TDateTime = 0;
+  const ANumeroBeneficio: string = '');
+begin
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.ConsultarParam.Clear;
+  FWebService.ConsultarParam.tpParamMunic := ATipoParamMunic;
+  FWebService.ConsultarParam.CodigoMunic := Configuracoes.Geral.CodigoMunicipio;
+  FWebService.ConsultarParam.CodigoServico := ACodigoServico;
+  FWebService.ConsultarParam.Competencia := ACompetencia;
+  FWebService.ConsultarParam.NumeroBeneficio := ANumeroBeneficio;
+
+  FProvider.ConsultarParam;
 end;
 
 procedure TACBrNFSeX.ConsultarSituacao(const AProtocolo, ANumLote: String);

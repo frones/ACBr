@@ -55,6 +55,7 @@ type
     function EnviarEvento(ACabecalho, AMSG: string): string; override;
     function ConsultarEvento(ACabecalho, AMSG: string): string; override;
     function ConsultarDFe(ACabecalho, AMSG: string): string; override;
+    function ConsultarParam(ACabecalho, AMSG: string): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -88,6 +89,9 @@ type
 
     procedure PrepararConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
     procedure TratarRetornoConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
+
+    procedure PrepararConsultarParam(Response: TNFSeConsultarParamResponse); override;
+    procedure TratarRetornoConsultarParam(Response: TNFSeConsultarParamResponse); override;
 
     procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
                                      Response: TNFSeWebserviceResponse;
@@ -1040,6 +1044,110 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderPadraoNacional.PrepararConsultarParam(
+  Response: TNFSeConsultarParamResponse);
+var
+  CodSer, Compet, NumBenef: string;
+begin
+  FpPath := '/parametros_municipais/' + IntToStr(Response.CodigoMunic);
+
+  CodSer := OnlyNumber(Response.CodigoServico);
+  CodSer := Copy(CodSer, 1, 2) + '.' + Copy(CodSer, 3, 2) + '.' +
+            Copy(CodSer, 5, 2) + '.' + Copy(CodSer, 7, 3);
+  Compet := FormatDateTime('MM-DD-YYYY', Response.Competencia);
+  NumBenef := Response.NumeroBeneficio;
+
+  case Response.tpParamMunic of
+    pmAliquota:
+      FpPath := FpPath + '/' + CodSer + '/' + Compet + '/aliquota';
+    pmHistoricoAliquota:
+      FpPath := FpPath + '/' + CodSer + '/historicoaliquotas';
+    pmConvenio:
+      FpPath := FpPath + '/convenio';
+    pmRegimesEspeciais:
+      FpPath := FpPath + '/' + CodSer + '/' + Compet + '/regimes_especiais';
+    pmRetencoes:
+      FpPath := FpPath + '/' + Compet + '/retencoes';
+    pmBeneficios:
+      FpPath := FpPath + '/' + NumBenef + '/' + Compet + '/beneficio';
+  else
+    FpPath := '';
+  end;
+
+  Response.ArquivoEnvio := FpPath;
+  FpMethod := 'GET';
+end;
+
+procedure TACBrNFSeProviderPadraoNacional.TratarRetornoConsultarParam(
+  Response: TNFSeConsultarParamResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+//  AResumo: TNFSeResumoCollectionItem;
+  Document, JSon: TACBrJSONObject;
+//  JSonLoteDFe: TACBrJSONArray;
+//  i: Integer;
+//  TipoDoc, ArquivoXml, NumNFSe, NumRps: string;
+begin
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := Desc201;
+    Exit
+  end;
+
+  Document := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+
+  try
+    try
+      ProcessarMensagemDeErros(Document, Response, 'Erros');
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      Response.Data := Document.AsISODateTime['dataHoraProcessamento'];
+      {
+      Response.Situacao := Document.AsString['StatusProcessamento'];
+
+      if Response.Situacao = 'DOCUMENTOS_LOCALIZADOS' then
+      begin
+
+        JSonLoteDFe := Document.AsJSONArray['LoteDFe'];
+
+        for i := 0 to JSonLoteDFe.Count-1 do
+        begin
+          JSon := JSonLoteDFe.ItemAsJSONObject[i];
+
+          AResumo := Response.Resumos.New;
+          AResumo.NSU := JSon.AsInteger['NSU'];
+          AResumo.ChaveDFe := JSon.AsString['ChaveAcesso'];
+          TipoDoc := JSon.AsString['TipoDocumento'];
+          AResumo.TipoDoc := TipoDoc;
+
+          ArquivoXml := JSon.AsString['ArquivoXml'];
+          ArquivoXml := DeCompress(DecodeBase64(ArquivoXml));
+
+          if ArquivoXml = '' then
+          begin
+            AErro := Response.Erros.New;
+            AErro.Codigo := Cod203;
+            AErro.Descricao := Desc203;
+            Exit
+          end;
+        end;
+      end;
+      }
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
 procedure TACBrNFSeProviderPadraoNacional.ValidarSchema(
   Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
 begin
@@ -1167,6 +1275,18 @@ begin
 end;
 
 function TACBrNFSeXWebservicePadraoNacional.ConsultarDFe(ACabecalho,
+  AMSG: string): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+end;
+
+function TACBrNFSeXWebservicePadraoNacional.ConsultarParam(ACabecalho,
   AMSG: string): string;
 var
   Request: string;

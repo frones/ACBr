@@ -70,6 +70,7 @@ type
     function GetEnviarEventoResponse: TNFSeEnviarEventoResponse;
     function GetConsultarEventoResponse: TNFSeConsultarEventoResponse;
     function GetConsultarDFeResponse: TNFSeConsultarDFeResponse;
+    function GetConsultarParamResponse: TNFSeConsultarParamResponse;
 
   protected
     FAOwner: TACBrDFe;
@@ -178,6 +179,13 @@ type
     procedure AssinarConsultarDFe(Response: TNFSeConsultarDFeResponse); virtual;
     procedure TratarRetornoConsultarDFe(Response: TNFSeConsultarDFeResponse); virtual; abstract;
 
+    //metodos para geração e tratamento dos dados do metodo ConsultarParam
+    procedure PrepararConsultarParam(Response: TNFSeConsultarParamResponse); virtual; abstract;
+    procedure GerarMsgDadosConsultarParam(Response: TNFSeConsultarParamResponse;
+      Params: TNFSeParamsResponse); virtual; abstract;
+    procedure AssinarConsultarParam(Response: TNFSeConsultarParamResponse); virtual;
+    procedure TratarRetornoConsultarParam(Response: TNFSeConsultarParamResponse); virtual; abstract;
+
   public
     constructor Create(AOwner: TACBrDFe);
     destructor Destroy; override;
@@ -200,6 +208,7 @@ type
     procedure EnviarEvento; virtual;
     procedure ConsultarEvento; virtual;
     procedure ConsultarDFe; virtual;
+    procedure ConsultarParam; virtual;
 
     property ConfigGeral: TConfigGeral read GetConfigGeral;
     property ConfigWebServices: TConfigWebServices read GetConfigWebServices;
@@ -219,6 +228,7 @@ type
     property EnviarEventoResponse: TNFSeEnviarEventoResponse read GetEnviarEventoResponse;
     property ConsultarEventoResponse: TNFSeConsultarEventoResponse read GetConsultarEventoResponse;
     property ConsultarDFeResponse: TNFSeConsultarDFeResponse read GetConsultarDFeResponse;
+    property ConsultarParamResponse: TNFSeConsultarParamResponse read GetConsultarParamResponse;
 
     function SimNaoToStr(const t: TnfseSimNao): string; virtual;
     function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; virtual;
@@ -358,6 +368,11 @@ begin
   Result := TACBrNFSeX(FAOwner).Webservice.ConsultarEvento;
 end;
 
+function TACBrNFSeXProvider.GetConsultarParamResponse: TNFSeConsultarParamResponse;
+begin
+  Result := TACBrNFSeX(FAOwner).Webservice.ConsultarParam;
+end;
+
 function TACBrNFSeXProvider.GetConsultarDFeResponse: TNFSeConsultarDFeResponse;
 begin
   Result := TACBrNFSeX(FAOwner).Webservice.ConsultarDFe;
@@ -449,6 +464,7 @@ begin
         tmEnviarEvento: Result := EnviarEvento;
         tmConsultarEvento: Result := ConsultarEvento;
         tmConsultarDFe: Result := ConsultarDFe;
+        tmConsultarParam: Result := ConsultarParam;
       else
         Result := '';
       end;
@@ -483,6 +499,7 @@ begin
         tmEnviarEvento: Result := EnviarEvento;
         tmConsultarEvento: Result := ConsultarEvento;
         tmConsultarDFe: Result := ConsultarDFe;
+        tmConsultarParam: Result := ConsultarParam;
       else
         Result := '';
       end;
@@ -718,6 +735,14 @@ begin
       InfElemento := '';
       DocElemento := '';
     end;
+
+    // Usado para geração do Consultar Parâmetros
+    with ConsultarParam do
+    begin
+      xmlns := '';
+      InfElemento := '';
+      DocElemento := '';
+    end;
   end;
 
   // Inicializa os parâmetros de configuração: Assinar
@@ -743,6 +768,7 @@ begin
     EnviarEvento := False;
     ConsultarEvento := False;
     ConsultarDFe := False;
+    ConsultarParam := False;
 
     IncluirURI := True;
 
@@ -968,6 +994,7 @@ begin
     EnviarEvento := aNome;
     ConsultarEvento := aNome;
     ConsultarDFe := aNome;
+    ConsultarParam := aNome;
 
     Validar := True;
   end;
@@ -996,6 +1023,7 @@ begin
     EnviarEvento.xmlns := aNameSpace;
     ConsultarEvento.xmlns := aNameSpace;
     ConsultarDFe.xmlns := aNameSpace;
+    ConsultarParam.xmlns := aNameSpace;
   end;
 
   TACBrNFSeX(FAOwner).SSL.NameSpaceURI := aNameSpace;
@@ -1447,6 +1475,7 @@ begin
     tmEnviarEvento: Schema := ConfigSchemas.EnviarEvento;
     tmConsultarEvento: Schema := ConfigSchemas.ConsultarEvento;
     tmConsultarDFe: Schema := ConfigSchemas.ConsultarDFe;
+    tmConsultarParam: Schema := ConfigSchemas.ConsultarParam;
   else
     // tmTeste
     Schema := ConfigSchemas.Teste;
@@ -1880,6 +1909,72 @@ begin
 
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultarEvento(ConsultarEventoResponse);
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+end;
+
+procedure TACBrNFSeXProvider.ConsultarParam;
+var
+  AService: TACBrNFSeXWebservice;
+  AErro: TNFSeEventoCollectionItem;
+begin
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeConsultarParam);
+
+  PrepararConsultarParam(ConsultarParamResponse);
+  if (ConsultarParamResponse.Erros.Count > 0) then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Exit;
+  end;
+
+  AssinarConsultarParam(ConsultarParamResponse);
+  if (ConsultarParamResponse.Erros.Count > 0) then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Exit;
+  end;
+
+  ValidarSchema(ConsultarParamResponse, tmConsultarParam);
+  if (ConsultarParamResponse.Erros.Count > 0) then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Exit;
+  end;
+
+  AService := nil;
+
+  try
+    try
+      TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
+      AService := CriarServiceClient(tmConsultarParam);
+      AService.Prefixo := IntToStr(ConsultarParamResponse.CodigoMunic) +
+        '-' + ParamMunicToStr(ConsultarParamResponse.tpParamMunic);
+
+      ConsultarParamResponse.ArquivoRetorno := AService.ConsultarParam(ConfigMsgDados.DadosCabecalho,
+                                                           ConsultarParamResponse.ArquivoEnvio);
+
+      ConsultarParamResponse.Sucesso := True;
+      ConsultarParamResponse.EnvelopeEnvio := AService.Envio;
+      ConsultarParamResponse.EnvelopeRetorno := AService.Retorno;
+    except
+      on E:Exception do
+      begin
+        AErro := ConsultarParamResponse.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(AService);
+  end;
+
+  if not ConsultarParamResponse.Sucesso then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Exit;
+  end;
+
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
+  TratarRetornoConsultarParam(ConsultarParamResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
 end;
 
@@ -2484,6 +2579,38 @@ begin
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarEvento.DocElemento,
       ConfigMsgDados.ConsultarEvento.InfElemento, '', '', '', IdAttr);
+  except
+    on E:Exception do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
+    end;
+  end;
+end;
+
+procedure TACBrNFSeXProvider.AssinarConsultarParam(
+  Response: TNFSeConsultarParamResponse);
+var
+  IdAttr, Prefixo: string;
+  AErro: TNFSeEventoCollectionItem;
+begin
+  if not ConfigAssinar.ConsultarParam then Exit;
+
+  if ConfigAssinar.IncluirURI then
+    IdAttr := ConfigGeral.Identificador
+  else
+    IdAttr := 'ID';
+
+  if ConfigMsgDados.Prefixo = '' then
+    Prefixo := ''
+  else
+    Prefixo := ConfigMsgDados.Prefixo + ':';
+
+  try
+    Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
+      Prefixo + ConfigMsgDados.ConsultarParam.DocElemento,
+      ConfigMsgDados.ConsultarParam.InfElemento, '', '', '', IdAttr);
   except
     on E:Exception do
     begin

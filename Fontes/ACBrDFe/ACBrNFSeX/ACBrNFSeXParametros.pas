@@ -194,6 +194,8 @@ type
     FConsultarEvento: string;
     // URL de homologação ou produção para o serviço ConsultarDFe
     FConsultarDFe: string;
+    // URL de homologação ou produção para o serviço ConsultarParam
+    FConsultarParam: string;
 
   public
     property LinkURL: string read FLinkURL;
@@ -219,6 +221,7 @@ type
     property EnviarEvento: string read FEnviarEvento;
     property ConsultarEvento: string read FConsultarEvento;
     property ConsultarDFe: string read FConsultarDFe;
+    property ConsultarParam: string read FConsultarParam;
 
   end;
 
@@ -323,6 +326,8 @@ type
     FConsultarEvento: TDocElement;
     // Contem a definição dos campos TDocElement para o XML de Consultar DFe
     FConsultarDFe: TDocElement;
+    // Contem a definição dos campos TDocElement para o XML de Consultar Param
+    FConsultarParam: TDocElement;
 
     // Se True gera o namespace no Lote de Rps
     FGerarNSLoteRps: Boolean;
@@ -358,6 +363,7 @@ type
     property EnviarEvento: TDocElement read FEnviarEvento;
     property ConsultarEvento: TDocElement read FConsultarEvento;
     property ConsultarDFe: TDocElement read FConsultarDFe;
+    property ConsultarParam: TDocElement read FConsultarParam;
 
     property GerarNSLoteRps: Boolean read FGerarNSLoteRps write FGerarNSLoteRps;
     property GerarPrestadorLoteRps: Boolean read FGerarPrestadorLoteRps write FGerarPrestadorLoteRps;
@@ -407,6 +413,8 @@ type
     FConsultarEvento: boolean;
     // Se True assina o Consultar DFe
     FConsultarDFe: boolean;
+    // Se True assina o Consultar Param
+    FConsultarParam: boolean;
 
     // Se True Incluir o valor de ID na URI da assinatura
     FIncluirURI: boolean;
@@ -434,6 +442,7 @@ type
     property EnviarEvento: boolean read FEnviarEvento write FEnviarEvento;
     property ConsultarEvento: boolean read FConsultarEvento write FConsultarEvento;
     property ConsultarDFe: boolean read FConsultarDFe write FConsultarDFe;
+    property ConsultarParam: boolean read FConsultarParam write FConsultarParam;
 
     property IncluirURI: boolean read FIncluirURI write FIncluirURI;
     property AssinaturaAdicional: boolean read FAssinaturaAdicional write FAssinaturaAdicional;
@@ -480,6 +489,8 @@ type
     FConsultarEvento: string;
     // Nome do arquivo XSD para validar o Consultar DFe
     FConsultarDFe: string;
+    // Nome do arquivo XSD para validar o Consultar Param
+    FConsultarParam: string;
 
     // Se True realiza a validação do XML com os Schemas
     FValidar: boolean;
@@ -503,6 +514,7 @@ type
     property EnviarEvento: string read FEnviarEvento write FEnviarEvento;
     property ConsultarEvento: string read FConsultarEvento write FConsultarEvento;
     property ConsultarDFe: string read FConsultarDFe write FConsultarDFe;
+    property ConsultarParam: string read FConsultarParam write FConsultarParam;
 
     property Validar: boolean read FValidar write FValidar;
   end;
@@ -641,6 +653,7 @@ begin
     FEnviarEvento        := AINI.ReadString(ASession, 'HomEnviarEvento'       , FRecepcionar);
     FConsultarEvento     := AINI.ReadString(ASession, 'HomConsultarEvento'    , FRecepcionar);
     FConsultarDFe        := AINI.ReadString(ASession, 'HomConsultarDFe'       , FRecepcionar);
+    FConsultarParam      := AINI.ReadString(ASession, 'HomConsultarParam'     , FRecepcionar);
 
     FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'HomConsultarNFSePorFaixa'       , FRecepcionar);
     FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'HomConsultarNFSeServicoPrestado', FRecepcionar);
@@ -667,6 +680,7 @@ begin
     FEnviarEvento        := AINI.ReadString(ASession, 'ProEnviarEvento'       , FRecepcionar);
     FConsultarEvento     := AINI.ReadString(ASession, 'ProConsultarEvento'    , FRecepcionar);
     FConsultarDFe        := AINI.ReadString(ASession, 'ProConsultarDFe'       , FRecepcionar);
+    FConsultarParam      := AINI.ReadString(ASession, 'ProConsultarParam'     , FRecepcionar);
 
     FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'ProConsultarNFSePorFaixa'       , FRecepcionar);
     FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'ProConsultarNFSeServicoPrestado', FRecepcionar);
@@ -697,6 +711,7 @@ begin
   FEnviarEvento := TDocElement.Create;
   FConsultarEvento := TDocElement.Create;
   FConsultarDFe := TDocElement.Create;
+  FConsultarParam := TDocElement.Create;
 end;
 
 destructor TConfigMsgDados.Destroy;
@@ -720,6 +735,7 @@ begin
   FEnviarEvento.Free;
   FConsultarEvento.Free;
   FConsultarDFe.Free;
+  FConsultarParam.Free;
 
   inherited Destroy;
 end;

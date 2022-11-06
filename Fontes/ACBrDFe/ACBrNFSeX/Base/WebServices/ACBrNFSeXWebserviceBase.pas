@@ -141,6 +141,7 @@ type
     function EnviarEvento(ACabecalho, AMSG: string): string; virtual;
     function ConsultarEvento(ACabecalho, AMSG: string): string; virtual;
     function ConsultarDFe(ACabecalho, AMSG: string): string; virtual;
+    function ConsultarParam(ACabecalho, AMSG: string): string; virtual;
 
     property URL: string read FPURL;
     property BaseURL: string read GetBaseUrl;
@@ -516,6 +517,12 @@ begin
       begin
         FPArqEnv := 'con-dfe';
         FPArqResp := 'dfe';
+      end;
+
+    tmConsultarParam:
+      begin
+        FPArqEnv := 'con-param';
+        FPArqResp := 'param';
       end;
   end;
 
@@ -969,6 +976,12 @@ begin
 end;
 
 function TACBrNFSeXWebservice.ConsultarNFSeServicoTomado(ACabecalho, AMSG: string): string;
+begin
+  Result := '';
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+function TACBrNFSeXWebservice.ConsultarParam(ACabecalho, AMSG: string): string;
 begin
   Result := '';
   raise EACBrDFeException.Create(ERR_NAO_IMP);

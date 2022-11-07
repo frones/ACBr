@@ -124,6 +124,8 @@ type
     function EnviarEvento(idLote: Int64): Boolean;
     function Inutilizar(const ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
+    function DistribuicaoDFe(AcUFAutor: integer; const ACNPJCPF, AultNSU,
+      ANSU: String; const AchNFe: String = ''): Boolean;
     function DistribuicaoDFePorUltNSU(AcUFAutor: integer;
       const ACNPJCPF, AultNSU: String): Boolean;
     function DistribuicaoDFePorNSU(AcUFAutor: integer;
@@ -922,6 +924,19 @@ begin
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
+end;
+
+function TACBrCTe.DistribuicaoDFe(AcUFAutor: integer; const ACNPJCPF, AultNSU,
+  ANSU: String; const AchNFe: String): Boolean;
+begin
+  // Aguardando a SEFAZ implementar esse recurso já existente para a NF-e.
+  if AchNFe <> '' then
+  begin
+    Result := False;
+    GerarException('Aguardando a SEFAZ implementar consulta pela chave, já existente para a NF-e.');
+  end
+  else
+    Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, ANSU, AchNFe);
 end;
 
 function TACBrCTe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; const ACNPJCPF,

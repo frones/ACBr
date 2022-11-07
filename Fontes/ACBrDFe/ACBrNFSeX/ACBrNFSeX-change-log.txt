@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 07/11/2022
+-- Thema.Provider --
+[*] Ajustes para gerar o Envelope corretamente para quando tem menos do
+    4 Rps no Lote e para quando tem mais do que 4.
+  Por: Italo Giurizzato Junior
 -- Equiplano.GravarXml/Equiplano.LerXml --
 [*] Incluído a tag nrCidadeIbgeServico.
   Por: Italo Giurizzato Junior

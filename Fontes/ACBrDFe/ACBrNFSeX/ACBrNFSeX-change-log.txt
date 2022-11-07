@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 07/11/2022
+-- ISSDSF.lerXml --
+[*] Ajustes em diversas units para utilizar a função ObterNomeMunicipio
+    após a sua alteração.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Ajustes em diversas units para utilizar a função ObterNomeMunicipio
     após a sua alteração.

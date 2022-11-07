@@ -246,6 +246,7 @@ begin
     with NFSe.Servico do
     begin
       Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
+      CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCidadeIbgeServico'), tcStr);
     end;
 
     with NFSe.Servico.Valores do

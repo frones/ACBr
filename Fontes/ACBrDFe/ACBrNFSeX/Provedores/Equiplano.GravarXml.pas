@@ -106,6 +106,9 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tpTributacao', 1, 1, 1,
                              NaturezaOperacaoToStr(NFSe.NaturezaOperacao), ''));
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'nrCidadeIbgeServico', 0, 7, 0,
+                                             NFSe.Servico.CodigoMunicipio, ''));
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'isIssRetido', 1, 1, 1,
     FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), ''));
 

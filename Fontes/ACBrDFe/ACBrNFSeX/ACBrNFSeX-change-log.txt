@@ -44,7 +44,10 @@ Símbolo : Significado
 
 
 07/11/2022
--- ISSDSF.lerXml --
+-- Equiplano.GravarXml/Equiplano.LerXml --
+[*] Incluído a tag nrCidadeIbgeServico.
+  Por: Italo Giurizzato Junior
+-- ISSDSF.LerXml --
 [*] Ajustes em diversas units para utilizar a função ObterNomeMunicipio
     após a sua alteração.
   Por: Italo Giurizzato Junior

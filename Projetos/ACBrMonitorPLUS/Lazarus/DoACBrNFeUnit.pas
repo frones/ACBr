@@ -3433,6 +3433,7 @@ end;
           2 - Numero do último NSU retornado na consulta anterior
           3 - Numero do NSU a ser consultado
           4 - Chave da NF-e que se deseja baixar o XML
+          5 - Arquivo XML de Distribuição para leitura
 }
 procedure TMetodoDistribuicaoDFe.Executar;
 var
@@ -3441,6 +3442,7 @@ var
   AUltNSU: String;
   ANSU: String;
   AChave: String;
+  AArquivoOuXML: String;
   Resp: TDistribuicaoDFeResposta;
 begin
   AUF := StrToIntDef(fpCmd.Params(0), 0);
@@ -3448,14 +3450,44 @@ begin
   AUltNSU := fpCmd.Params(2);
   ANSU := fpCmd.Params(3);
   AChave := fpCmd.Params(4);
+  AArquivoOuXML := fpCmd.Params(5);
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
-    if not( ValidarCNPJouCPF(ACNPJ) ) then
-      raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
+    if AArquivoOuXML <> '' then
+    begin
+      if not FileExists(AArquivoOuXML) then
+        Raise Exception.Create('Arquivo não encontrado ou inacessível [' + AArquivoOuXML + '] ');
+    end
+    else
+    begin
+      if not( ValidarCNPJouCPF(ACNPJ) ) then
+        raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
+    end;
 
     DoValidarIntegradorNFCe();
-    ACBrNFe.DistribuicaoDFe(AUF, ACNPJ, AUltNSU, ANSU, AChave);
+
+    // Lê o arquivo selecionado
+    if AArquivoOuXml <> '' then
+    begin
+      ACBrNFe.WebServices.DistribuicaoDFe.ListaArqs.Clear;
+      ACBrNFe.WebServices.DistribuicaoDFe.Clear;
+      ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Clear;
+
+      ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.Leitor.CarregarArquivo(AArquivoOuXml);
+      ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.LerXml;
+
+      // Preenche a lista de arquivos extraídos da distribuição, pois a leitura não gera os arquivos individuais
+      while ACBrNFe.WebServices.DistribuicaoDFe.ListaArqs.Count <
+            ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count do
+        ACBrNFe.WebServices.DistribuicaoDFe.ListaArqs.Add('');
+
+      AultNSU := ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU;
+    end
+    // Consulta o WebService
+    else
+      ACBrNFe.DistribuicaoDFe(AUF, ACNPJ, AUltNSU, ANSU, AChave);
+
     Resp:= TDistribuicaoDFeResposta.Create(TpResp, codUTF8);
     try
       Resp.Processar(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt,

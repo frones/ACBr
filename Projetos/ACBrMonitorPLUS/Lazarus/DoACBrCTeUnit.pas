@@ -386,6 +386,12 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoDistribuicaoDFe}
+TMetodoDistribuicaoDFe = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses
@@ -450,6 +456,7 @@ begin
   ListaDeMetodos.Add(CMetodoValidarRegrasNegocios);
   ListaDeMetodos.Add(CMetodoDataVencimentoCertificado);
   ListaDeMetodos.Add(CMetodoSetTipoImpressao);
+  ListaDeMetodos.Add(CMetodoDistribuicaoDFe);
 
   // DoACBr
   ListaDeMetodos.Add(CMetodoSavetofile);
@@ -531,6 +538,7 @@ begin
     45 : AMetodoClass := TMetodoValidarRegrasNegocios;
     46 : AMetodoClass := TMetodoCertificadoDataVencimento; // DataVencimentoCertificado
     47 : AMetodoClass := TMetodoSetTipoImpressao;
+    48 : AMetodoClass := TMetodoDistribuicaoDFe;
 
     else
       begin
@@ -2682,6 +2690,81 @@ begin
       raise Exception.Create('Tipo Impressão Inválido: ' + tpImp);
 
     ACBrCTe.DACTE.TipoDACTE := TipodeDACTE;
+  end;
+end;
+
+{ TMetodoDistribuicaoDFe }
+
+{ Params: 0 - Código da UF do autor da consulta
+          1 - CNPJ do autor da consulta
+          2 - Numero do último NSU retornado na consulta anterior
+          3 - Numero do NSU a ser consultado
+          4 - Chave da DF-e que se deseja baixar o XML
+          5 - Arquivo XML de Distribuição para leitura
+}
+procedure TMetodoDistribuicaoDFe.Executar;
+var
+  AUF: Integer;
+  ACNPJ: String;
+  AUltNSU: String;
+  ANSU: String;
+  AChave: String;
+  AArquivoOuXML: String;
+  Resp: TDistribuicaoDFeResposta;
+begin
+  AUF := StrToIntDef(fpCmd.Params(0), 0);
+  ACNPJ := fpCmd.Params(1);
+  AUltNSU := fpCmd.Params(2);
+  ANSU := fpCmd.Params(3);
+  AChave := fpCmd.Params(4);
+  AArquivoOuXML := fpCmd.Params(5);
+
+  with TACBrObjetoCTe(fpObjetoDono) do
+  begin
+    if AArquivoOuXML <> '' then
+    begin
+      if not FileExists(AArquivoOuXML) then
+        Raise Exception.Create('Arquivo não encontrado ou inacessível [' + AArquivoOuXML + '] ');
+    end
+    else
+    begin
+      if not( ValidarCNPJouCPF(ACNPJ) ) then
+        raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
+    end;
+
+    // Lê o arquivo selecionado
+    if AArquivoOuXml <> '' then
+    begin
+      ACBrCTe.WebServices.DistribuicaoDFe.ListaArqs.Clear;
+      ACBrCTe.WebServices.DistribuicaoDFe.Clear;
+      ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Clear;
+
+      ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.Leitor.CarregarArquivo(AArquivoOuXml);
+      ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.LerXml;
+
+      // Preenche a lista de arquivos extraídos da distribuição, pois a leitura não gera os arquivos individuais
+      while ACBrCTe.WebServices.DistribuicaoDFe.ListaArqs.Count <
+            ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count do
+        ACBrCTe.WebServices.DistribuicaoDFe.ListaArqs.Add('');
+
+      AultNSU := ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU;
+    end
+    // Consulta o WebService
+    else
+      ACBrCTe.DistribuicaoDFe(AUF, ACNPJ, AUltNSU, ANSU, AChave);
+
+    Resp:= TDistribuicaoDFeResposta.Create(TpResp, codUTF8);
+    try
+      Resp.Processar(ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt,
+                     ACBrCTe.WebServices.DistribuicaoDFe.Msg,
+                     ACBrCTe.WebServices.DistribuicaoDFe.NomeArq,
+                     ACBrCTe.WebServices.DistribuicaoDFe.ListaArqs);
+      fpCmd.Resposta:= fpCmd.Resposta + sLineBreak + Resp.Gerar ;
+
+    finally
+      Resp.Free;
+    end;
+
   end;
 end;
 

@@ -66,7 +66,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base;
+  ACBrUtil.Base, ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -110,6 +110,7 @@ end;
 procedure TNFSeR_RLZ.LerPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  xUF: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -128,6 +129,10 @@ begin
         CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
         UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('uf'), tcStr);
+        xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+
+        if UF = '' then
+          UF := xUF;
       end;
 
       RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nome'), tcStr);
@@ -144,6 +149,7 @@ end;
 procedure TNFSeR_RLZ.LerTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  xUF: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -162,6 +168,10 @@ begin
         CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
         UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('uf'), tcStr);
+        xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+
+        if UF = '' then
+          UF := xUF;
       end;
 
       RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nome'), tcStr);

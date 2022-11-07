@@ -67,7 +67,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base;
+  ACBrUtil.Base, ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -108,7 +108,7 @@ end;
 procedure TNFSeR_SigISS.LerIdentificacaoRps(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  Dia, Mes, Ano: string;
+  Dia, Mes, Ano, xUF: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('DescricaoRps');
 
@@ -180,6 +180,10 @@ begin
           Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomador_bairro'), tcStr);
           CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomador_CEP'), tcStr);
           CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomador_cod_cidade'), tcStr);
+          xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+
+          if UF = '' then
+            UF := xUF;
         end;
 
         with IdentificacaoRps do
@@ -365,7 +369,7 @@ end;
 function TNFSeR_SigISS.LerXmlEspelho(const ANode: TACBrXmlNode): Boolean;
 var
   AuxNode, IdentificacaoNfseNode, DadosNfseNode: TACBrXmlNode;
-  aValor: string;
+  aValor, xUF: string;
 begin
   Result := True;
 
@@ -414,6 +418,10 @@ begin
         CodigoMunicipio := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('PrestadorCodigoMunicipio'), tcStr);
         UF              := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('PrestadorUf'), tcStr);
         CEP             := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('PrestadorCep'), tcStr);
+        xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+
+        if UF = '' then
+          UF := xUF;
       end;
     end;
 
@@ -474,6 +482,10 @@ begin
         CEP             := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('TomadorCep'), tcStr);
         CodigoMunicipio := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('TomadorCodigoMunicipio'), tcStr);
         UF              := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('TomadorUf'), tcStr);
+        xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+
+        if UF = '' then
+          UF := xUF;
       end;
     end;
 

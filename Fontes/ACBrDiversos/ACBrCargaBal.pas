@@ -331,6 +331,7 @@ type
     FCodigo: Integer;
     FTipo: TACBrCargaBalTipoVenda;
     FValidade: Smallint;
+    FLote: String;
     FTipoValidade: TACBrCargaBalTipoValidade;
     FSetor: TACBrCargaBalSetor;
     FNutricional: TACBrCargaBalNutricional;
@@ -369,6 +370,7 @@ type
     property Codigo: Integer read FCodigo write FCodigo;
     property ValorVenda: Currency read FValorVenda write FValorVenda;
     property Validade: Smallint read FValidade write FValidade;
+    property Lote: String read FLote write FLote;
     property Descricao: String read FDescricao write FDescricao;
     property InformacaoExtra: TACBrCargaBalInformacaoExtra read FInformacaoExtra write FInformacaoExtra;
     property Teclado: TAcbrCargaBalTeclado read FTeclado write FTeclado;
@@ -658,6 +660,7 @@ begin
   FValorVenda      := 0.00;
   FModeloEtiqueta  := 0;
   FValidade        := 0;
+  FLote            := '0';
 
   FNutricional     := TACBrCargaBalNutricional.Create;
   FTara            := TACBrCargaBalTaras.Create;
@@ -1289,7 +1292,7 @@ begin
           RFill(IntToStr(Produtos[i].ImpEmbalagem), 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
-          lFill('0', 12)+ // lote
+          lFill(Produtos[i].Lote, 12)+ // lote
           lFill('0', 11)+ // codigo especial
           LFIll('0', 1)+ // versao do preco
           LFIll('0', 2)
@@ -1378,7 +1381,7 @@ begin
           RFill(IntToStr(Produtos[i].ImpEmbalagem), 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
-          lFill('0', 12)+ // lote
+          lFill(Produtos[i].Lote, 12)+ // lote
           lFill('0', 11)+ // codigo especial
           LFIll('0', 1)+ // versao do preco
           LFIll('0', 4)+ // codigo do som
@@ -1509,7 +1512,7 @@ begin
           RFill(IntToStr(Produtos[i].ImpEmbalagem), 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
-          lFill('0', 12)+ // lote
+          lFill(Produtos[i].Lote, 12)+ // lote
           lFill('0', 11)+ // codigo especial
           LFIll('0', 1)+ // versao do preco
           LFIll('0', 4)+ // codigo do som
@@ -1690,7 +1693,7 @@ begin
                        RFill(IntToStr(Produtos[i].ImpEmbalagem), 1)+ // imprime data embalagem
                        LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
                        //LFIll('0', 4)+ // codigo fornecedor
-                       lFill('0', 12)+ // lote
+                       lFill(Produtos[i].Lote, 12)+ // lote
                        lFill('0', 11)+ // codigo especial
                        LFIll('0', 1)+ // versao do preco
                        LFIll('0', 4)+ // codigo do som

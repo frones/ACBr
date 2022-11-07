@@ -1331,7 +1331,7 @@ object Form1: TForm1
                       Width = 145
                       Alignment = taRightJustify
                       TabOrder = 6
-                      Text = '0,00'
+                      Text = '1,00'
                     end
                   end
                   object mCriarCobrancaImediata: TMemo
@@ -1768,9 +1768,9 @@ object Form1: TForm1
                 Height = 522
                 Top = 0
                 Width = 616
-                ActivePage = tsCobVCancelarCobranca
+                ActivePage = tsCobVCriarCobranca
                 Align = alClient
-                TabIndex = 3
+                TabIndex = 0
                 TabOrder = 0
                 object tsCobVCriarCobranca: TTabSheet
                   Caption = 'Criar Cobrança Vencimento'
@@ -4695,12 +4695,13 @@ object Form1: TForm1
                     end
                   end
                 end
-                object tsSicrediGerarChaveCertificado: TTabSheet
-                  Caption = 'Gerar Chave/Certificado'
+                object tsSicrediGerarChaveCSR: TTabSheet
+                  Caption = 'Gerar Chave/CSR'
                   ClientHeight = 340
                   ClientWidth = 880
                   ImageIndex = 1
-                  object pnSicrediGerarChaveCertificado: TPanel
+                  OnShow = tsSicrediGerarChaveCSRShow
+                  object pnSicrediGerarChaveCSR: TPanel
                     Left = 0
                     Height = 340
                     Top = 0
@@ -4718,12 +4719,12 @@ object Form1: TForm1
                       Caption = 'Chave Privada'
                       ParentColor = False
                     end
-                    object lbSicrediGerarCertificado: TLabel
+                    object lbSicrediGerarCSR: TLabel
                       Left = 24
                       Height = 15
                       Top = 181
-                      Width = 85
-                      Caption = 'Certificado PEM'
+                      Width = 21
+                      Caption = 'CSR'
                       ParentColor = False
                     end
                     object btSicrediGerarChaveInfo: TSpeedButton
@@ -4741,8 +4742,8 @@ object Form1: TForm1
                       ParentFont = False
                       ParentShowHint = False
                     end
-                    object btSicrediGerarCertificadoInfo: TSpeedButton
-                      Left = 112
+                    object btSicrediGerarCSRInfo: TSpeedButton
+                      Left = 56
                       Height = 30
                       Top = 168
                       Width = 30
@@ -4790,17 +4791,17 @@ object Form1: TForm1
                       OnClick = btSicrediGerarChavePrivadaClick
                       TabOrder = 2
                     end
-                    object edSicrediGerarCertificado: TEdit
+                    object edSicrediGerarCSR: TEdit
                       Left = 24
                       Height = 23
                       Top = 197
-                      Width = 665
+                      Width = 408
                       Anchors = [akTop, akLeft, akRight]
                       AutoSize = False
                       TabOrder = 3
-                      Text = 'SicrediCertificado.pem'
+                      Text = 'SicrediCertificado.csr'
                     end
-                    object mmSicrediGerarCertificado: TMemo
+                    object mmSicrediGerarCSR: TMemo
                       Left = 24
                       Height = 89
                       Top = 232
@@ -4815,14 +4816,31 @@ object Form1: TForm1
                       WantReturns = False
                       WordWrap = False
                     end
-                    object btSicrediGerarCertificado: TBitBtn
+                    object btSicrediGerarCSR: TBitBtn
                       Left = 712
                       Height = 33
                       Top = 192
                       Width = 137
-                      Caption = 'Gerar Certificado'
-                      OnClick = btSicrediGerarCertificadoClick
+                      Caption = 'Gerar CSR'
+                      OnClick = btSicrediGerarCSRClick
                       TabOrder = 5
+                    end
+                    object edSicrediGerarCSREmail: TEdit
+                      Left = 448
+                      Height = 23
+                      Top = 197
+                      Width = 249
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = False
+                      TabOrder = 6
+                    end
+                    object lbSicrediGerarCSREmail: TLabel
+                      Left = 448
+                      Height = 15
+                      Top = 181
+                      Width = 34
+                      Caption = 'E-mail'
+                      ParentColor = False
                     end
                   end
                 end

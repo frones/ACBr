@@ -1234,7 +1234,7 @@ object Form1: TForm1
                       Width = 145
                       Height = 21
                       TabOrder = 6
-                      Text = '0,00'
+                      Text = '1,00'
                     end
                   end
                   object mCriarCobrancaImediata: TMemo
@@ -1603,7 +1603,7 @@ object Form1: TForm1
                 Top = 0
                 Width = 616
                 Height = 529
-                ActivePage = tsCobVConsultarCobrancas
+                ActivePage = tsCobVCriarCobranca
                 Align = alClient
                 TabOrder = 0
                 object tsCobVCriarCobranca: TTabSheet
@@ -3874,27 +3874,6 @@ object Form1: TForm1
                       Anchors = [akTop, akRight]
                       Visible = False
                     end
-                    object imSantanderErroCertificadoPFX: TImage
-                      Left = 3
-                      Top = 200
-                      Width = 16
-                      Height = 16
-                      Visible = False
-                    end
-                    object lbSantanderErroCertificadoPFX: TLabel
-                      Left = 24
-                      Top = 222
-                      Width = 146
-                      Height = 13
-                      Caption = 'lbSantanderErroCertificadoPFX'
-                    end
-                    object lbSantanderArqCertificadoPFX: TLabel
-                      Left = 24
-                      Top = 181
-                      Width = 112
-                      Height = 13
-                      Caption = 'Arquivo Certificado PFX'
-                    end
                     object sbSantanderAcharCertificadoPFX: TSpeedButton
                       Left = 640
                       Top = 197
@@ -3911,6 +3890,31 @@ object Form1: TForm1
                       ParentShowHint = False
                       ShowHint = True
                       OnClick = sbSantanderAcharCertificadoPFXClick
+                    end
+                    object lbSantanderArqCertificadoPFX: TLabel
+                      Left = 24
+                      Top = 181
+                      Width = 112
+                      Height = 13
+                      Caption = 'Arquivo Certificado PFX'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbSantanderErroCertificadoPFX: TLabel
+                      Left = 24
+                      Top = 222
+                      Width = 146
+                      Height = 13
+                      Caption = 'lbSantanderErroCertificadoPFX'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object imSantanderErroCertificadoPFX: TImage
+                      Left = 3
+                      Top = 200
+                      Width = 16
+                      Height = 16
+                      Visible = False
                     end
                     object lbSantanderSenhaCertificado: TLabel
                       Left = 688
@@ -3989,7 +3993,6 @@ object Form1: TForm1
                 end
                 object tsSantanderExtrairCertificado: TTabSheet
                   Caption = 'Extrair Certificado'
-                  ImageIndex = 1
                   object pnSantanderExtrairCertificado: TPanel
                     Left = 0
                     Top = 0
@@ -4001,13 +4004,6 @@ object Form1: TForm1
                     DesignSize = (
                       880
                       340)
-                    object lbSantanderExtrairCertificadoPFX: TLabel
-                      Left = 40
-                      Top = 40
-                      Width = 112
-                      Height = 13
-                      Caption = 'Arquivo Certificado PFX'
-                    end
                     object sbSantanderExtrairCertificadoPFX: TSpeedButton
                       Left = 600
                       Top = 56
@@ -4024,6 +4020,24 @@ object Form1: TForm1
                       ParentShowHint = False
                       ShowHint = True
                       OnClick = sbSantanderExtrairCertificadoPFXClick
+                    end
+                    object lbSantanderExtrairCertificadoPFX: TLabel
+                      Left = 40
+                      Top = 40
+                      Width = 112
+                      Height = 13
+                      Caption = 'Arquivo Certificado PFX'
+                      Color = clBtnFace
+                      ParentColor = False
+                    end
+                    object lbSantanderExtrairCertificadoPEM: TLabel
+                      Left = 40
+                      Top = 160
+                      Width = 115
+                      Height = 13
+                      Caption = 'Arquivo Certificado PEM'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object lbSantanderExtrairCertificadoSenhaPFX: TLabel
                       Left = 640
@@ -4043,13 +4057,6 @@ object Form1: TForm1
                       Flat = True
                       OnClick = sbSantanderExtrairCertificadoVerSenhaPFXClick
                     end
-                    object lbSantanderExtrairCertificadoPEM: TLabel
-                      Left = 40
-                      Top = 160
-                      Width = 115
-                      Height = 13
-                      Caption = 'Arquivo Certificado PEM'
-                    end
                     object sbSantanderExtrairCertificadoInfo: TSpeedButton
                       Left = 224
                       Top = 104
@@ -4057,14 +4064,6 @@ object Form1: TForm1
                       Height = 30
                       Anchors = [akTop, akRight]
                       Flat = True
-                      Font.Charset = DEFAULT_CHARSET
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Font.Style = []
-                      ParentFont = False
-                      ParentShowHint = False
-                      ShowHint = True
                       OnClick = sbSantanderExtrairCertificadoInfoClick
                     end
                     object edSantanderExtrairCertificadoPFX: TEdit
@@ -4076,22 +4075,13 @@ object Form1: TForm1
                       AutoSize = False
                       TabOrder = 0
                     end
-                    object edSantanderExtrairCertificadoSenhaPFX: TEdit
-                      Left = 640
-                      Top = 56
-                      Width = 164
-                      Height = 21
-                      Anchors = [akLeft, akTop, akRight]
-                      PasswordChar = '*'
-                      TabOrder = 1
-                    end
                     object btSantanderExtrairPEM: TBitBtn
                       Left = 40
                       Top = 104
                       Width = 179
                       Height = 30
                       Caption = 'Extrair Certificado PEM'
-                      TabOrder = 2
+                      TabOrder = 1
                       OnClick = btSantanderExtrairPEMClick
                     end
                     object edSantanderExtrairCertificadoPEM: TEdit
@@ -4101,8 +4091,17 @@ object Form1: TForm1
                       Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       AutoSize = False
-                      TabOrder = 3
+                      TabOrder = 2
                       Text = 'SantanderCertificado.pem'
+                    end
+                    object edSantanderExtrairCertificadoSenhaPFX: TEdit
+                      Left = 640
+                      Top = 56
+                      Width = 164
+                      Height = 23
+                      Anchors = [akLeft, akTop, akRight]
+                      PasswordChar = '*'
+                      TabOrder = 3
                     end
                   end
                 end
@@ -4305,11 +4304,11 @@ object Form1: TForm1
                     end
                   end
                 end
-                object tsSicrediGerarChaveCertificado: TTabSheet
-                  Caption = 'Gerar Chave/Certificado'
+                object tsSicrediGerarChaveCSR: TTabSheet
+                  Caption = 'Gerar Chave/CSR'
                   ImageIndex = 1
-                  OnShow = tsSicrediGerarChaveCertificadoShow
-                  object pnSicrediGerarChaveCertificado: TPanel
+                  OnShow = tsSicrediGerarChaveCSRShow
+                  object pnSicrediGerarChaveCSR: TPanel
                     Left = 0
                     Top = 0
                     Width = 880
@@ -4327,15 +4326,15 @@ object Form1: TForm1
                       Height = 13
                       Caption = 'Chave Privada'
                     end
-                    object lbSicrediGerarCertificado: TLabel
+                    object lbSicrediGerarCSR: TLabel
                       Left = 24
                       Top = 181
-                      Width = 76
+                      Width = 22
                       Height = 13
-                      Caption = 'Certificado PEM'
+                      Caption = 'CSR'
                     end
                     object btSicrediGerarChaveInfo: TSpeedButton
-                      Left = 104
+                      Left = 112
                       Top = 8
                       Width = 30
                       Height = 30
@@ -4351,8 +4350,8 @@ object Form1: TForm1
                       ShowHint = True
                       OnClick = btSicrediGerarChaveCertificadoInfoClick
                     end
-                    object btSicrediGerarCertificadoInfo: TSpeedButton
-                      Left = 104
+                    object btSicrediGerarCSRInfo: TSpeedButton
+                      Left = 56
                       Top = 168
                       Width = 30
                       Height = 30
@@ -4367,6 +4366,15 @@ object Form1: TForm1
                       ParentShowHint = False
                       ShowHint = True
                       OnClick = btSicrediGerarChaveCertificadoInfoClick
+                    end
+                    object lbSicrediGerarCSREmail: TLabel
+                      Left = 448
+                      Top = 181
+                      Width = 28
+                      Height = 13
+                      Caption = 'E-mail'
+                      Color = clBtnFace
+                      ParentColor = False
                     end
                     object edSicrediGerarChavePrivada: TEdit
                       Left = 24
@@ -4404,17 +4412,17 @@ object Form1: TForm1
                       TabOrder = 2
                       OnClick = btSicrediGerarChavePrivadaClick
                     end
-                    object edSicrediGerarCertificado: TEdit
+                    object edSicrediGerarCSR: TEdit
                       Left = 24
                       Top = 197
-                      Width = 665
+                      Width = 408
                       Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       AutoSize = False
                       TabOrder = 3
-                      Text = 'SicrediCertificado.pem'
+                      Text = 'SicrediCertificado.csr'
                     end
-                    object mmSicrediGerarCertificado: TMemo
+                    object mmSicrediGerarCSR: TMemo
                       Left = 24
                       Top = 232
                       Width = 825
@@ -4431,14 +4439,23 @@ object Form1: TForm1
                       WantReturns = False
                       WordWrap = False
                     end
-                    object btSicrediGerarCertificado: TBitBtn
+                    object btSicrediGerarCSR: TBitBtn
                       Left = 712
                       Top = 192
                       Width = 137
                       Height = 33
-                      Caption = 'Gerar Certificado'
+                      Caption = 'Gerar CSR'
                       TabOrder = 5
-                      OnClick = btSicrediGerarCertificadoClick
+                      OnClick = btSicrediGerarCSRClick
+                    end
+                    object edSicrediGerarCSREmail: TEdit
+                      Left = 448
+                      Top = 197
+                      Width = 249
+                      Height = 23
+                      Anchors = [akLeft, akTop, akRight]
+                      AutoSize = False
+                      TabOrder = 6
                     end
                   end
                 end
@@ -4446,7 +4463,6 @@ object Form1: TForm1
             end
             object tsSicoob: TTabSheet
               Caption = 'Sicoob'
-              ImageIndex = 5
               object pgSicoob: TPageControl
                 Left = 48
                 Top = 56
@@ -4619,7 +4635,7 @@ object Form1: TForm1
                         Anchors = [akLeft, akTop, akRight]
                         AutoSize = False
                         TabOrder = 3
-                        Text = 'SicoobChavePrivada.pem'
+                        Text = 'SicoobChavePrivada.key'
                         OnChange = edSicoobArqsChange
                         OnExit = edSicoobArqChavePrivadaExit
                       end

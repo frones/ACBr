@@ -121,8 +121,8 @@ type
     btSicoobExtrairChaveCertificado: TBitBtn;
     btSicoobExtrairChaveCertificadoArqPFX: TSpeedButton;
     btSicoobExtrairChaveCertificadoVerSenhaPFX: TSpeedButton;
-    btSicrediGerarCertificado: TBitBtn;
-    btSicrediGerarCertificadoInfo: TSpeedButton;
+    btSicrediGerarCSR: TBitBtn;
+    btSicrediGerarCSRInfo: TSpeedButton;
     btSicrediGerarChaveInfo: TSpeedButton;
     btSicrediGerarChavePrivada: TBitBtn;
     btSolicitarDevolucaoPix: TBitBtn;
@@ -198,8 +198,9 @@ type
     edSicrediChavePIX: TEdit;
     edSicrediClientID: TEdit;
     edSicrediClientSecret: TEdit;
-    edSicrediGerarCertificado: TEdit;
+    edSicrediGerarCSR: TEdit;
     edSicrediGerarChavePrivada: TEdit;
+    edSicrediGerarCSREmail: TEdit;
     edtArqLog: TEdit;
     edtProxyHost: TEdit;
     edtProxySenha: TEdit;
@@ -360,8 +361,9 @@ type
     lbSicrediClientSecret: TLabel;
     lbSicrediErroCertificado: TLabel;
     lbSicrediErroChavePrivada: TLabel;
-    lbSicrediGerarCertificado: TLabel;
+    lbSicrediGerarCSR: TLabel;
     lbSicrediGerarChavePrivada: TLabel;
+    lbSicrediGerarCSREmail: TLabel;
     lbSicrediTipoChave: TLabel;
     lConsultarPixE2eid1: TLabel;
     lConsultarPixE2eid2: TLabel;
@@ -414,7 +416,7 @@ type
     mmCobVConsultar: TMemo;
     mmCobVConsultarLista: TMemo;
     mmItauRenovarCertificadoPEM: TMemo;
-    mmSicrediGerarCertificado: TMemo;
+    mmSicrediGerarCSR: TMemo;
     mmSicrediGerarChavePrivada: TMemo;
     mQRE: TMemo;
     mQRD: TMemo;
@@ -496,7 +498,7 @@ type
     pnFluxoTotalStr: TPanel;
     pnSicoobExtrairChaveCertificado: TPanel;
     pnSicrediCredenciais: TPanel;
-    pnSicrediGerarChaveCertificado: TPanel;
+    pnSicrediGerarChaveCSR: TPanel;
     pQREDados: TPanel;
     pQRDDados: TPanel;
     pQREGerado: TPanel;
@@ -588,7 +590,7 @@ type
     tsCriarCobrancaImediata: TTabSheet;
     tsConsultarCobrancaImediata: TTabSheet;
     tsSicrediCredenciais: TTabSheet;
-    tsSicrediGerarChaveCertificado: TTabSheet;
+    tsSicrediGerarChaveCSR: TTabSheet;
     tsSolicitarDevolucaoPix: TTabSheet;
     tsConsultarDevolucaoPix: TTabSheet;
     tsConsultarPix: TTabSheet;
@@ -663,7 +665,7 @@ type
     procedure btSicoobExtrairChaveCertificadoVerSenhaPFXClick(Sender: TObject);
     procedure btSicrediGerarChaveCertificadoInfoClick(Sender: TObject);
     procedure btSicrediGerarChavePrivadaClick(Sender: TObject);
-    procedure btSicrediGerarCertificadoClick(Sender: TObject);
+    procedure btSicrediGerarCSRClick(Sender: TObject);
     procedure btSolicitarDevolucaoPixClick(Sender: TObject);
     procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
@@ -712,7 +714,7 @@ type
     procedure sbVerSenhaProxyClick(Sender: TObject);
     procedure tmConsultarDevolucaoTimer(Sender: TObject);
     procedure tmConsultarPagtoTimer(Sender: TObject);
-    procedure tsSicrediGerarChaveCertificadoShow(Sender: TObject);
+    procedure tsSicrediGerarChaveCSRShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     fFluxoDados: TFluxoPagtoDados;
@@ -1024,7 +1026,7 @@ begin
   end;
 end;
 
-procedure TForm1.tsSicrediGerarChaveCertificadoShow(Sender: TObject);
+procedure TForm1.tsSicrediGerarChaveCSRShow(Sender: TObject);
 var
   wSL: TStringList;
 begin
@@ -1036,10 +1038,10 @@ begin
       mmSicrediGerarChavePrivada.Text := wSL.Text;
     end;
 
-    if FileExists(edSicrediGerarCertificado.Text) then
+    if FileExists(edSicrediGerarCSR.Text) then
     begin
-      wSL.LoadFromFile(edSicrediGerarCertificado.Text);
-      mmSicrediGerarCertificado.Text := wSL.Text;
+      wSL.LoadFromFile(edSicrediGerarCSR.Text);
+      mmSicrediGerarCSR.Text := wSL.Text;
     end;
   finally
     wSL.Free;
@@ -1562,6 +1564,7 @@ begin
     ACBrPixCD1.PSP.epCob.CobRevisada.status := stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
     if ACBrPixCD1.PSP.epCob.RevisarCobrancaImediata(FluxoDados.TxID) then
     begin
+      Sleep(1000);
       ConsultarCobranca;
       ShowMessage('Cobrança cancelada com sucesso');
     end
@@ -1977,7 +1980,7 @@ end;
 procedure TForm1.btSicrediGerarChaveCertificadoInfoClick(Sender: TObject);
 begin
   MessageDlg(ACBrStr('Para utilizar o PSP Sicredi em ambiente de Produção é ' +
-    'necessário gerar uma Chave Privada e um Certificado PEM. ' + sLineBreak +
+    'necessário gerar uma Chave Privada e um CSR. ' + sLineBreak +
     'Após esse procedimento envie esses arquivos para o Sicredi pelo Internet ' +
     'Banking e receba um novo arquivo certificado .CER para utilizar nas requisições'),
     mtInformation, [mbOk], 0);
@@ -1988,59 +1991,60 @@ var
   wPrivateKey, wPublicKey: String;
 begin
   if FileExists(edSicrediGerarChavePrivada.Text) and
-     (MessageDlg('Chave Privada já existe, deseja realmente sobreescrecer ?',
+     (MessageDlg(ACBrStr('Chave Privada já existe, deseja realmente sobreescrecer ?'),
        mtConfirmation, [mbYes, mbNo], 0) <> mrYes) then
     Exit;
 
-  ACBrOpenSSLUtils.GenerateKeyPair(wPrivateKey, wPublicKey);
+  ACBrOpenSSLUtils.GenerateKeyPair(wPrivateKey, wPublicKey, EmptyStr, bit2048);
   mmSicrediGerarChavePrivada.Lines.Text := ChangeLineBreak(wPrivateKey, sLineBreak);
   mmSicrediGerarChavePrivada.Lines.SaveToFile(edSicrediGerarChavePrivada.Text);
   edSicrediArqChavePrivada.Text := edSicrediGerarChavePrivada.Text;
 end;
 
-procedure TForm1.btSicrediGerarCertificadoClick(Sender: TObject);
+procedure TForm1.btSicrediGerarCSRClick(Sender: TObject);
 var
   wErros, wCertificado: String;
 begin
-  if FileExists(edSicrediGerarCertificado.Text) and
-     (MessageDlg('Certificado PEM já existe, deseja realmente sobreescrecer ?',
+  if FileExists(edSicrediGerarCSR.Text) and
+     (MessageDlg(ACBrStr('Certificado CSR já existe, deseja realmente sobreescrecer ?'),
        mtConfirmation, [mbYes, mbNo], 0) <> mrYes) then
     Exit;
 
   if EstaVazio(mmSicrediGerarChavePrivada.Text) then
   begin
-    MessageDlg('Antes de gerar o Certificado é necessário gerar a Chave Privada', mtInformation, [mbOK], 0);
+    MessageDlg(ACBrStr('Antes de gerar o CSR é necessário gerar a Chave Privada'), mtInformation, [mbOK], 0);
     Exit;
   end;
 
   wErros := EmptyStr;
-  if (Trim(edSicrediClientID.Text) = EmptyStr) then
-    wErros := sLineBreak + ACBrStr('- Campo ClientID não informado');
-
   if (Trim(edtRecebedorNome.Text) = EmptyStr) then
     wErros := sLineBreak + ACBrStr('- Campo Nome do Recebedor não informado');
 
   if (Trim(edtRecebedorCidade.Text) = EmptyStr) then
-    wErros := sLineBreak + ACBrStr('- Campo Cidade do Recebedor não informado');
+    wErros := wErros + sLineBreak + ACBrStr('- Campo Cidade do Recebedor não informado');
 
   if (Trim(cbxRecebedorUF.Text) = EmptyStr) then
-    wErros := sLineBreak + ACBrStr('- Campo UF do Recebedor não informado');
+    wErros := wErros + sLineBreak + ACBrStr('- Campo UF do Recebedor não informado');
+
+  if EstaVazio(Trim(edSicrediGerarCSREmail.Text)) then
+    wErros := wErros + sLineBreak + ACBrStr('- Campo E-mail não informado');
 
   if NaoEstaVazio(wErros) then
   begin
-    MessageDlg('Erro ao gerar Certificado:' + wErros, mtError, [mbOK], 0);
+    MessageDlg('Erro ao gerar CSR:' + wErros, mtError, [mbOK], 0);
     Exit;
   end;
 
   ACBrOpenSSLUtils1.LoadPrivateKeyFromString(mmSicrediGerarChavePrivada.Text);
-  wCertificado := ACBrOpenSSLUtils1.CreateSelfSignedCert(
-                    edSicrediClientID.Text,
+  wCertificado := ACBrOpenSSLUtils1.CreateCertificateSignRequest(
+                    'api-pix-' + OnlyAlphaNum(TiraAcentos(edtRecebedorNome.Text)),
                     edtRecebedorNome.Text,
-                    ACBrPixCD1.DadosAutomacao.NomeAplicacao,
+                    'API PIX Sicredi',
                     edtRecebedorCidade.Text,
-                    cbxRecebedorUF.Text, 'BR');
-  mmSicrediGerarCertificado.Text := ChangeLineBreak(wCertificado, sLineBreak);
-  mmSicrediGerarCertificado.Lines.SaveToFile(edSicrediGerarCertificado.Text);
+                    cbxRecebedorUF.Text, 'BR',
+                    edSicrediGerarCSREmail.Text);
+  mmSicrediGerarCSR.Text := ChangeLineBreak(wCertificado, sLineBreak);
+  mmSicrediGerarCSR.Lines.SaveToFile(edSicrediGerarCSR.Text);
 end;
 
 procedure TForm1.btSolicitarDevolucaoPixClick(Sender: TObject);
@@ -2618,7 +2622,7 @@ begin
     edSicrediClientSecret.Text := Ini.ReadString('Sicredi', 'ClientSecret', '');
     edSicrediArqChavePrivada.Text := Ini.ReadString('Sicredi', 'ArqChavePrivada', edSicrediArqChavePrivada.Text);
     edSicrediArqCertificado.Text := Ini.ReadString('Sicredi', 'ArqCertificado', edSicrediArqCertificado.Text);
-    edSicrediGerarCertificado.Text := Ini.ReadString('Sicredi', 'CertificadoPEM', edSicrediGerarCertificado.Text);
+    edSicrediGerarCSR.Text := Ini.ReadString('Sicredi', 'CertificadoCSR', edSicrediGerarCSR.Text);
     edSicrediGerarChavePrivada.Text := edSicrediArqChavePrivada.Text;
 
     edSicoobChavePIX.Text := Ini.ReadString('Sicoob', 'ChavePIX', '');
@@ -2686,8 +2690,8 @@ begin
     Ini.WriteString('Sicredi', 'ClientSecret', edSicrediClientSecret.Text);
     Ini.WriteString('Sicredi', 'ArqChavePrivada', edSicrediArqChavePrivada.Text);
     Ini.WriteString('Sicredi', 'ArqCertificado', edSicrediArqCertificado.Text);
-    if FileExists(edSicrediGerarCertificado.Text) then
-      Ini.WriteString('Sicredi', 'CertificadoPEM', edSicrediGerarCertificado.Text);
+    if FileExists(edSicrediGerarCSR.Text) then
+      Ini.WriteString('Sicredi', 'CertificadoCSR', edSicrediGerarCSR.Text);
 
     Ini.WriteString('Sicoob', 'ChavePIX', edSicoobChavePIX.Text);
     Ini.WriteString('Sicoob', 'ClientID', edSicoobClientID.Text);
@@ -2776,7 +2780,7 @@ begin
   ImageList1.GetBitmap(5, btQREAnalisar.Glyph);
   ImageList1.GetBitmap(5, btQRDAnalisar.Glyph);
   ImageList1.GetBitmap(5, btSicrediGerarChaveInfo.Glyph);
-  ImageList1.GetBitmap(5, btSicrediGerarCertificadoInfo.Glyph);
+  ImageList1.GetBitmap(5, btSicrediGerarCSRInfo.Glyph);
   ImageList1.GetBitmap(5, btSicoobExtrairChaveCertificadoInfo.Glyph);
   ImageList1.GetBitmap(13, btQREColar.Glyph);
   ImageList1.GetBitmap(13, btQRDColar.Glyph);
@@ -3252,6 +3256,7 @@ begin
 
       if SolicitarDevolucaoPix(fFluxoDados.E2E, StringReplace(fFluxoDados.E2E, 'E', 'D', [rfReplaceAll])) then
       begin
+        Sleep(1000);
         ConsultarDevolucao;
 
         if (fFluxoDados.StatusDevolucao = stdDEVOLVIDO) then

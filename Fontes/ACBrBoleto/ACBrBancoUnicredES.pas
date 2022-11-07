@@ -566,7 +566,7 @@ begin
   if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
     Result:= copy(ALinha, 59, 15)
   else
-    Result:= inherited;
+    Result:= inherited DefineNumeroDocumentoRetorno(ALinha);
 end;
 
 function TACBrBancoUnicredES.DefinePosicaoNossoNumeroRetorno: Integer;
@@ -583,7 +583,7 @@ begin
   if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
     Result:= copy(ALinha, 59, 15)
   else
-    Result:= inherited;
+    Result:= inherited DefineSeuNumeroRetorno(ALinha);
 end;
 
 function TACBrBancoUnicredES.CodMotivoRejeicaoToDescricao(

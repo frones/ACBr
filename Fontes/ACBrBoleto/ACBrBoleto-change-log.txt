@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2022
+--ACBrBancoUnicredES--
+[-] Correção para compilar no Delphi 7.
+  por : Italo Giurizzato Junior
+
 04/11/2022
 --ACBrBancoCecred--
 [*]TK-3217 ACBrBoleto - Mapeamento de alguns códigos de ocorrência para o Ailos/Cecred

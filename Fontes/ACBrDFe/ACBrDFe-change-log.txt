@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2022
+-- ACBrDFeUtil --
+[*] Incluído um novo parâmetro que determina se deve ou não gerar uma exception,
+    e também antes de buscar a cidade por código é validado a UF presente no código.
+  Por: Italo Giurizzato Junior/Victor H Gonzales
+
 05/09/2022
 -- ACBrXmlBase --
 [*] Alterado a leitura de Horário, para ler corretamente HH:MM (sem os segundos)

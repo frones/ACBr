@@ -66,7 +66,7 @@ function SignatureElement(const URI: String; AddX509Data: Boolean;
     const IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
 function EncontrarURI(const AXML: String; docElement: String = ''; IdAttr: String = ''): String;
 function ObterNomeMunicipio(const AcMun: Integer; var AxUF: String;
-                            const APathArqMun: String = ''): String;
+  const APathArqMun: String = ''; const AGerarException : Boolean = True): String;
 function ObterCodigoMunicipio(const AxMun, AxUF: String;
                               const APathArqMun: String = ''): Integer;
 function ObterCodigoUF(const AUF: String; APathArqMun: String = ''): Integer;
@@ -465,20 +465,32 @@ begin
 end;
 
 function ObterNomeMunicipio(const AcMun: Integer; var AxUF: String;
-  const APathArqMun: String): String;
+  const APathArqMun: String = ''; const AGerarException : Boolean = True): String;
 var
   p: String;
 begin
   result := '';
   AxUF := '';
+
+  if not ValidarCodigoUF( StrToInt(Copy(IntToStr(AcMun), 1, 2)) ) then
+    Exit;
+
   p := IfEmptyThen(APathArqMun, ApplicationPath);
   if (GetACBrIBGE(p) = Nil) then
     Exit;
 
-  if (ACBrIBGE1.BuscarPorCodigo(AcMun) > 0) then
-  begin
-    AxUF := ACBrIBGE1.Cidades[0].UF;
-    Result := ACBrIBGE1.Cidades[0].Municipio;
+  try
+    if (ACBrIBGE1.BuscarPorCodigo(AcMun) > 0) then
+    begin
+      AxUF := ACBrIBGE1.Cidades[0].UF;
+      Result := ACBrIBGE1.Cidades[0].Municipio;
+    end;
+  except on E: Exception do
+    begin
+      // Exception controlada, exibição somente em tempo de Debug.
+      if (AGerarException) then
+        raise EACBrDFeException.Create(ACBrStr(E.Message));
+    end;
   end;
 end;
 

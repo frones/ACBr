@@ -378,7 +378,7 @@ function TACBrXmlNode.GetLocalName: string;
 Var
   AName: string;
 begin
-  AName := string(FXmlNode^.Name);;
+  AName := string(FXmlNode^.Name);
   Result := copy(AName, Pos(':', AName) + 1, Length(AName));
 end;
 

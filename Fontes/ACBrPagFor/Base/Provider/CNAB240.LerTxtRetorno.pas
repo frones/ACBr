@@ -1435,6 +1435,8 @@ begin
     NossoNumero := LerCampo(Linha, 143, 15, tcStr);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
     DescOcorrencia := DescricaoRetorno(CodOcorrencia);
+
+    GerarAvisos(CodOcorrencia, DescOcorrencia, 'O', '', SeuNumero);
   end;
 
   Linha := ArquivoTXT.Strings[I+1];

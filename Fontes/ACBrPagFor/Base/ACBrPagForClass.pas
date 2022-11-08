@@ -1662,7 +1662,7 @@ const
   // Os códigos de aprovação de pagamento (pagamento efetuado)
   PAGAMENTO_LIBERADO_BANCO = '00 BD BDCI BDCD BDCN';
   // Os códigos que não vai gerar aviso
-  PAGAMENTO_LIBERADO_AVISO = '00 BD';
+  PAGAMENTO_LIBERADO_AVISO = '00';
 // OBS: estes dados foram pegos do manual do ITAU.
 // BD   - Pagamento Agendado.
 // BDCI - Pagamento acatado, porém o CPF/CNPJ é inválido.

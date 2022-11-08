@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/11/2022
+-- ACBrPagForClass/CNAB240.LerTxtRetorno --
+[*] Não estava Gerando os avisos ao ler o Segmento O.
+   Por: Italo Giurizzato Junior
+
 04/11/2022
 -- PagFor.Sicredi.GravarTxtRemessa --
 [*] Correção no Segmento B para PIX, não estava usando os campos corretos.

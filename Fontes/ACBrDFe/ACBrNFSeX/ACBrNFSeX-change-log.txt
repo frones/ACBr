@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/11/2022
+-- Infisc.GravarXml/Infisc.LerXml --
+[*] Ajustes para tratar corretamente a questão da retenção de ISS tanto na
+    geração quanto na leitura do XML.
+  Por: Tiago Tecchio
+
 07/11/2022
 -- Thema.Provider --
 [*] Ajustes para gerar o Envelope corretamente para quando tem menos do

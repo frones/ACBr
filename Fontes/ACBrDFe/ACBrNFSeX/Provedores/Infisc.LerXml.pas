@@ -480,21 +480,37 @@ begin
         ValorISS    := ObterConteudo(AuxNode.Childrens.FindAnyNs('vISS'), tcDe2);
         BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCISS'), tcDe2);
 
-        ValorIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetIRF'), tcDe2);
+        ValorIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRed'), tcDe2);
+
+        if ValorIRRF = 0 then
+          ValorIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetIR'), tcDe2);
+
+        AliqRetIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRetIR'), tcDe2);
+        ValorBCRetIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCRetIR'), tcDe2);
+
         ValorPIS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-PIS-PASEP'), tcDe2);
 
         if ValorPIS = 0 then
           ValorPIS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetPISPASEP'), tcDe2);
+
+        AliqRetPIS := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRetPISPASEP'), tcDe2);
+        ValorBCPIS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCPISPASEP'), tcDe2);
 
         ValorCOFINS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-COFINS'), tcDe2);
 
         if ValorCOFINS = 0 then
           ValorCOFINS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetCOFINS'), tcDe2);
 
+        AliqRetCOFINS := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRetCOFINS'), tcDe2);
+        ValorBCCOFINS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCCOFINS'), tcDe2);
+
         ValorCSLL := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-CSLL'), tcDe2);
 
         if ValorCSLL = 0 then
           ValorCSLL := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetCSLL'), tcDe2);
+
+        AliqRetCSLL := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRetCSLL'), tcDe2);
+        ValorBCCSLL := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCCSLL'), tcDe2);
 
         ValorINSS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetINSS'), tcDe2);
 
@@ -502,12 +518,13 @@ begin
         CodLCServ := ObterConteudo(AuxNode.Childrens.FindAnyNs('cLCServ'), tcStr);
         ValorTotal := ObterConteudo(AuxNode.Childrens.FindAnyNs('vServ'), tcDe3);
 
-        AuxNodeItem := AuxNode.Childrens.FindAnyNs('ISSST');
+        AuxNodeItem := ANodes[i].Childrens.FindAnyNs('ISSST');
 
         if AuxNodeItem <> nil then
         begin
-          AliqISSST := ObterConteudo(AuxNode.Childrens.FindAnyNs('pISSST'), tcDe2);
-          ValorISSST := ObterConteudo(AuxNode.Childrens.FindAnyNs('vISSST'), tcDe2);
+          AliqISSST := ObterConteudo(AuxNodeItem.Childrens.FindAnyNs('pISSST'), tcDe2);
+          ValorISSST := ObterConteudo(AuxNodeItem.Childrens.FindAnyNs('vISSST'), tcDe2);
+          BaseCalculo := ObterConteudo(AuxNodeItem.Childrens.FindAnyNs('vBCST'), tcDe2);
         end;
       end;
 

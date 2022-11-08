@@ -732,6 +732,8 @@ begin
 
   if FPVersao = ve101 then
   begin
+    Result.AppendChild(AddNode(tcDe2, '#1', 'vRedBCST', 1, 15, 1, 0, ''));
+
     Result.AppendChild(AddNode(tcDe2, '#1', 'vBCST', 1, 15, 0,
                          NFSe.Servico.ItemServico[Item].BaseCalculo, ''));
 
@@ -866,7 +868,8 @@ begin
   else
     GeraTag := 0;
 
-  Result.AppendChild(AddNode(tcDe2, '#1', 'vBCISS', 1, 15, GeraTag,
+  if NFSe.Servico.ItemServico[Item].ValorISSST = 0 then
+    Result.AppendChild(AddNode(tcDe2, '#1', 'vBCISS', 1, 15, GeraTag,
                          NFSe.Servico.ItemServico[Item].BaseCalculo, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pISS', 1, 15, GeraTag,
@@ -1038,15 +1041,8 @@ begin
 
   if (FPVersao = ve100) and (NFSe.Servico.MunicipioIncidencia <> 0) then
   begin
-    try
-      xCidade := ObterNomeMunicipio(NFSe.Servico.MunicipioIncidencia, xUF);
-    except
-      on E:Exception do
-      begin
-        xCidade := '';
-        xUF := '';
-      end;
-    end;
+    xUF := '';
+    xCidade := ObterNomeMunicipio(NFSe.Servico.MunicipioIncidencia, xUF, '', False);
 
     Result.AppendChild(AddNode(tcStr, '#1', 'Praca', 1, 60, 1,
                                                       xCidade + '-' + xUF, ''));
@@ -1059,11 +1055,11 @@ var
 begin
   Result := CreateElement('total');
 
-  Result.AppendChild(AddNode(tcDe2, '#1', 'vServ', 1, 15, 0,
-                                       NFSe.Servico.Valores.ValorServicos, ''));
-
   if FPVersao = ve100 then
     Result.AppendChild(AddNode(tcDe2, '#1', 'vReemb', 1, 15, 1, 0, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'vServ', 1, 15, 0,
+                                       NFSe.Servico.Valores.ValorServicos, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vDesc', 1, 15, 0,
                               NFSe.Servico.Valores.DescontoIncondicionado, ''));
@@ -1073,13 +1069,13 @@ begin
                                      NFSe.Servico.Valores.OutrosDescontos, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vtNF', 1, 15, 1,
-                                    NFSe.Servico.Valores.ValorLiquidoNfse, ''));
+                                       NFSe.Servico.Valores.ValorServicos, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vtLiq', 1, 15, 1,
                                     NFSe.Servico.Valores.ValorLiquidoNfse, ''));
 
   if FPVersao = ve100 then
-    Result.AppendChild(AddNode(tcDe2, '#1', 'totalAproxTribServ', 1, 15, 0,
+    Result.AppendChild(AddNode(tcDe2, '#1', 'totalAproxTrib', 1, 15, 0,
                                                                         0, ''));
 
   if (NFSe.Servico.Valores.ValorIr + NFSe.Servico.Valores.ValorPis +
@@ -1093,13 +1089,8 @@ begin
   // incluir tag 'fat' aqui!
 
   if FPVersao = ve101 then
-  begin
     Result.AppendChild(AddNode(tcDe2, '#1', 'vtLiqFaturas', 1, 15, 0,
                                     NFSe.Servico.Valores.ValorLiquidoNfse, ''));
-
-    Result.AppendChild(AddNode(tcDe2, '#1', 'vtLiqFaturas', 1, 15, 0,
-                         NFSe.Servico.Valores.ValorDespesasNaoTributaveis, ''));
-  end;
 
   // Total Retenção ISSQN
   xmlNode := GerarISS;

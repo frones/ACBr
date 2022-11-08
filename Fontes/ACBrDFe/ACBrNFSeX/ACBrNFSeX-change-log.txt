@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/11/2022
+-- ACBrNFSeXServicos.ini--
+[+] Incluida a cidade de Nova Granada-SP o provedor é Fiorilli
+   Por: PrimeSoftware
 -- Infisc.GravarXml/Infisc.LerXml --
 [*] Ajustes para tratar corretamente a questão da retenção de ISS tanto na
     geração quanto na leitura do XML.

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/11/2022
+-- SystemPro.Provider --
+[*] Trocado o XmlToStr por IncluirCDATA nos envios do Rps.
+  Por: Italo Giurizzato Junior
 -- ISSNet.GravarXml --
 [*] Ajustes na procedure Configuração, visando gerar o XML do Rps corretamente.
   Por: Italo Giurizzato Junior

@@ -62,6 +62,7 @@ type
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
     procedure GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList);override;
     Procedure LerRetorno400(ARetorno:TStringList); override;
+    Procedure LerRetorno240(ARetorno:TStringList); override;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; Override;
@@ -194,6 +195,17 @@ begin
        aRemessa.Add(UpperCase(sLinha));
     end;
   end;
+end;
+
+procedure TACBrBancoUnicredES.LerRetorno240(ARetorno: TStringList);
+begin
+  fpTamanhoMaximoNossoNum := 19;
+  try
+    inherited;
+  finally
+    fpTamanhoMaximoNossoNum := 10;
+  end;
+
 end;
 
 procedure TACBrBancoUnicredES.LerRetorno400(ARetorno: TStringList);

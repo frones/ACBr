@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/11/2022
+--ACBrBancoUnicredES--
+[*]TK-3247 UnicredES CNAB240 Retorno com 19 caracteres
+  por : Victor H Gonzales - Pandaaa
+
 07/11/2022
 --ACBrBancoUnicredES--
 [-] Correção para compilar no Delphi 7.

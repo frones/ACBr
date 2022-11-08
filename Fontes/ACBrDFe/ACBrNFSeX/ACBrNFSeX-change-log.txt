@@ -45,6 +45,9 @@ Símbolo : Significado
 
 08/11/2022
 -- ACBrNFSeXServicos.ini--
+[*] A cidade de Osorio-RS mudou de provedor, agora é IPM
+   Por: Igor Nunes
+-- ACBrNFSeXServicos.ini--
 [+] Incluida a cidade de Nova Granada-SP o provedor é Fiorilli
    Por: PrimeSoftware
 -- Infisc.GravarXml/Infisc.LerXml --

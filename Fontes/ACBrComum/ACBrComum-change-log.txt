@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/11/2022
+-- ACBrUtil.DateTime --
+[*] Alteração visando a leitura de datas com somente ano e mês.
+   Por: Italo Giurizzato Junior
+
 27/10/2022
 -- ACBrJSON --
 [-] Correção de problema no Lazarus com objetos com valor Null

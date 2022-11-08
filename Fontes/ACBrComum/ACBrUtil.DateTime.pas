@@ -566,6 +566,14 @@ begin
   end
   else
   begin
+    if Length(xData) = 7 then
+    begin
+      if i = 5 then
+        xData := xData + '/01'
+      else
+        xData := '01/' + xData;
+    end;
+
     if i = 5 then
     begin
       Ano := StrToInt(Copy(xData, 1, 4));

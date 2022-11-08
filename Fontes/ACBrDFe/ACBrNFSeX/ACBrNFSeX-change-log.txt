@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/11/2022
+-- SimplISS.GravarXml --
+[*] Alterado a quantidade de casas decimais para 2 ao gerar a tag ValorUnitario.
+  Por: Diego F.
 -- ACBrNFSeXServicos.ini--
 [*] A cidade de Osorio-RS mudou de provedor, agora é IPM
    Por: Igor Nunes

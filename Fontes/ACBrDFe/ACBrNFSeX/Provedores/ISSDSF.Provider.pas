@@ -1073,14 +1073,6 @@ begin
     Exit;
   end;
 
-  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := Desc108;
-    Exit;
-  end;
-
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
   Prefixo := '';
   PrefixoTS := '';
@@ -1147,14 +1139,6 @@ begin
                                '</InscricaoMunicipalPrestador>' +
                                '<dtInicio>' + xDataI + '</dtInicio>' +
                                '<dtFim>' + xDataF + '</dtFim>' +
-                               '<NotaInicial>' +
-                                 Response.InfConsultaNFSe.NumeroIniNFSe +
-                               '</NotaInicial>' +
-                               {
-                               '<NumeroLote>' +
-                                 Response.InfConsultaNFSe.NumeroLote +
-                               '</NumeroLote>' +
-                               }
                                '<Versao>1</Versao>' +
                              '</Cabecalho>' +
                            '</' + Prefixo + 'ReqConsultaNotas>';

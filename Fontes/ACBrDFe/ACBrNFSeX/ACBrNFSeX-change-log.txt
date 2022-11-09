@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/11/2022
+-- ISSDSF.Provider --
+[*] Corrigido a montagem do pedido de consulta a NFSe.
+  Por: Rodrigo - Digibyte
 -- ISSSaoPaulo.Provider --
 [*] Corrigido o caractere de quebra de linha.
   Por: João Antônio

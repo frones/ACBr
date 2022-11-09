@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/11/2022
+-- ACBrXmlBase --
+[*] Incluído o prefixo "nfse:" na lista de prefixos a serem removidos do XML.
+  Por: Italo Giurizzato Junior
+
 07/11/2022
 -- ACBrDFeUtil --
 [*] Incluído um novo parâmetro que determina se deve ou não gerar uma exception,

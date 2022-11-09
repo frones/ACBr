@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/11/2022
+-- ACBrNFSeXServicos.ini--
+[*] A cidade de Paranavai/PR mudou de provedor, agora é IPM
+   Por: Igor Rafael Martins
 -- ISSDSF.Provider --
 [*] Corrigido a montagem do pedido de consulta a NFSe.
   Por: Rodrigo - Digibyte

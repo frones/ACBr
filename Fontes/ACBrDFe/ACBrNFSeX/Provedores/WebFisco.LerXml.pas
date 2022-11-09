@@ -223,6 +223,8 @@ begin
               if i = 1 then
                 Descricao := ObterConteudo(ANode.Childrens.FindAnyNs('nfedescricaoservicos'), tcStr);
 
+              Quantidade := 1;
+              ValorTotal := ValorUnitario;
             end;
           end;
         until aValor = '';

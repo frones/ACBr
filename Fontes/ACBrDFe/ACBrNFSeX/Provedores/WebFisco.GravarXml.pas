@@ -283,7 +283,7 @@ begin
 
   for i := 1 to 8 do
   begin
-    if i = 1 then
+    if (i = 1) and cSimples then
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'iteser' + IntToStr(i), 1, 5, 1,
                                NFSe.Servico.ItemListaServico, '', True, xAtrib))
     else
@@ -293,7 +293,7 @@ begin
 
   for i := 1 to 8 do
   begin
-    if i = 1 then
+    if (i = 1) and cSimples then
       NFSeNode.AppendChild(AddNode(tcDe2, '#', 'alqser' + IntToStr(i), 1, 5, 1,
                                NFSe.Servico.Valores.Aliquota, '', True, xAtrib))
     else
@@ -303,14 +303,13 @@ begin
 
   for i := 1 to 8 do
   begin
-    if i = 1 then
+    if (i = 1) and cSimples then
       NFSeNode.AppendChild(AddNode(tcDe2, '#', 'valser' + IntToStr(i), 1, 12, 1,
                           NFSe.Servico.Valores.ValorServicos, '', True, xAtrib))
     else
       NFSeNode.AppendChild(AddNode(tcDe2, '#', 'valser' + IntToStr(i), 1, 12, 1,
                                                           0, '', True, xAtrib));
   end;
-
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'paisest', 1, 60, 1,
                                                          '', '', True, xAtrib));

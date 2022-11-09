@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/11/2022
+-- WebFisco.GravarXml/WebFisco.LerXml --
+[*] Correção necessária para contribuintes do Simples Nacional.
+  Por: Widson
 -- ACBrNFSeXServicos.ini--
 [*] A cidade de Paranavai/PR mudou de provedor, agora é IPM
    Por: Igor Rafael Martins

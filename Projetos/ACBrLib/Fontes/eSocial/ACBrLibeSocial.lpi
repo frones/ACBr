@@ -230,7 +230,7 @@
           </Other>
         </CompilerOptions>
       </Item6>
-      <Item7 Name="i386 - CDECL - DEBUG">
+      <Item7 Name="i386-CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -253,6 +253,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
+              <DebugInfoType Value="dsDwarf3"/>
               <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
             </Debugging>

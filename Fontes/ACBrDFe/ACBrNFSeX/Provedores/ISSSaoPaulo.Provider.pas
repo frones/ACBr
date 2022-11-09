@@ -180,7 +180,7 @@ begin
   with ConfigGeral do
   begin
     Identificador := '';
-    QuebradeLinha := ';';
+    QuebradeLinha := '|';
     ModoEnvio := meLoteAssincrono;
   end;
 

@@ -44,7 +44,10 @@ Símbolo : Significado
 
 
 10/11/2022
--- ACBrNFSeXServicos.ini--
+-- SoftPlan.Provider --
+[*] Implementado o método GerarToken e ajustes para o correto envio.
+   Por: Ronaldo Bispo
+-- ACBrNFSeXServicos.ini --
 [*] A cidade de Pirajui/SP mudou a URL de produção, o provedor é o mesmo.
    Por: ftellini
 
@@ -52,7 +55,7 @@ Símbolo : Significado
 -- WebFisco.GravarXml/WebFisco.LerXml --
 [*] Correção necessária para contribuintes do Simples Nacional.
   Por: Widson
--- ACBrNFSeXServicos.ini--
+-- ACBrNFSeXServicos.ini --
 [*] A cidade de Paranavai/PR mudou de provedor, agora é IPM
    Por: Igor Rafael Martins
 -- ISSDSF.Provider --
@@ -72,10 +75,10 @@ Símbolo : Significado
 -- SimplISS.GravarXml --
 [*] Alterado a quantidade de casas decimais para 2 ao gerar a tag ValorUnitario.
   Por: Diego F.
--- ACBrNFSeXServicos.ini--
+-- ACBrNFSeXServicos.ini --
 [*] A cidade de Osorio-RS mudou de provedor, agora é IPM
    Por: Igor Nunes
--- ACBrNFSeXServicos.ini--
+-- ACBrNFSeXServicos.ini --
 [+] Incluida a cidade de Nova Granada-SP o provedor é Fiorilli
    Por: PrimeSoftware
 -- Infisc.GravarXml/Infisc.LerXml --

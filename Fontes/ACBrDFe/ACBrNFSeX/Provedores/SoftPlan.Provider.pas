@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase, ACBrXmlDocument, ACBrJSON,
+  ACBrBase, ACBrXmlBase, ACBrXmlDocument, ACBrJSON,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderProprio,
@@ -46,10 +46,16 @@ uses
 
 type
   TACBrNFSeXWebserviceSoftPlan = class(TACBrNFSeXWebserviceRest)
+  private
+    FpMetodo: TMetodo;
+  protected
+    procedure SetHeaders(aHeaderReq: THTTPHeader); override;
+
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarToken(ACabecalho, AMSG: String): string; override;
 
   end;
 
@@ -77,13 +83,16 @@ type
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
+    procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
+    procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
   end;
 
 implementation
 
 uses
+  synacode,
   ACBrDFeException,  ACBrUtil.FilesIO,
-  ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
+  ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   SoftPlan.GravarXml, SoftPlan.LerXml;
 
 { TACBrNFSeProviderSoftPlan }
@@ -366,13 +375,103 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderSoftPlan.PrepararGerarToken(
+  Response: TNFSeGerarTokenResponse);
+begin
+  FpPath := '/autenticacao/oauth/token';
+
+  with TACBrNFSeX(FAOwner).Configuracoes.Geral do
+  begin
+    FpPath := FpPath + '?grant_type=password';
+    FpPath := FpPath + '&username=' + Emitente.WSUser;
+    FpPath := FpPath + '&password=' + Emitente.WSSenha;
+    FpPath := FpPath + '&client_id=' + Emitente.WSChaveAcesso;
+    FpPath := FpPath + '&client_secret=' + Emitente.WSChaveAutoriz;
+  end;
+
+  FpMimeType := 'application/x-www-form-urlencoded';
+  FpMethod := 'POST';
+
+  Response.Clear;
+end;
+
+procedure TACBrNFSeProviderSoftPlan.TratarRetornoGerarToken(
+  Response: TNFSeGerarTokenResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  json: TACBrJsonObject;
+begin
+  try
+    if (Copy(Response.ArquivoRetorno, 1, 1) = '{') then
+    begin
+      json := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+      try
+        if (json.AsString['access_token'] <> '') then
+        begin
+          Response.Token := json.AsString['access_token'];
+        end;
+
+        if (json.AsString['error'] <> '') then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := json.AsString['error'];
+          AErro.Correcao := json.AsString['error_description'];
+        end;
+
+      finally
+        json.Free;
+      end;
+    end
+    else
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod211;
+      AErro.Descricao := Desc211;
+      AErro.Correcao := Response.ArquivoRetorno;
+    end;
+  except
+    on E:Exception do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod999;
+      AErro.Descricao := Desc999 + E.Message;
+    end;
+  end;
+
+  Response.Sucesso := (Response.Erros.Count = 0);
+end;
+
 { TACBrNFSeXWebserviceSoftPlan }
+
+procedure TACBrNFSeXWebserviceSoftPlan.SetHeaders(aHeaderReq: THTTPHeader);
+var
+  Auth: string;
+begin
+  if (FpMetodo = tmGerarToken) then
+  begin
+    with TConfiguracoesNFSe(FPConfiguracoes).Geral do
+      Auth := Emitente.WSChaveAcesso + ':' + Emitente.WSChaveAutoriz;
+    Auth := 'Basic ' + String(EncodeBase64(AnsiString(Auth)));
+
+    aHeaderReq.AddHeader('Authorization', Auth);
+  end
+  else
+  begin
+    Auth := 'Bearer ' + TACBrNFSeX(FPDFeOwner).WebService.GerarToken.Token;
+
+    aHeaderReq.AddHeader('Authorization', Auth);
+    aHeaderReq.AddHeader('Connection', 'keep-alive');
+    aHeaderReq.AddHeader('Accept', '*/*');
+  end;
+end;
 
 function TACBrNFSeXWebserviceSoftPlan.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
 begin
+  FpMetodo := tmGerar;
   FPMsgOrig := AMSG;
 
   Request := AMSG;
@@ -385,6 +484,7 @@ function TACBrNFSeXWebserviceSoftPlan.ConsultarNFSe(ACabecalho,
 var
   Request: string;
 begin
+  FpMetodo := tmConsultarNFSe;
   FPMsgOrig := AMSG;
 
   Request := AMSG;
@@ -396,6 +496,20 @@ function TACBrNFSeXWebserviceSoftPlan.Cancelar(ACabecalho, AMSG: String): string
 var
   Request: string;
 begin
+  FpMetodo := tmCancelarNFSe;
+  FPMsgOrig := AMSG;
+
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+end;
+
+function TACBrNFSeXWebserviceSoftPlan.GerarToken(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FpMetodo := tmGerarToken;
   FPMsgOrig := AMSG;
 
   Request := AMSG;

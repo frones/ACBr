@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/11/2022
+-- SoftPlan.Provider --
+[+] Implementado o método Cancelar.
+   Por: Italo Giurizzato Junior
 -- SH3.Provider --
 [*] Alteração visando remover todas as declarações de XML que consta no
     arquivo de retorno do WebService.

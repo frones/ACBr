@@ -85,13 +85,16 @@ type
 
     procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
     procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
+
+    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   end;
 
 implementation
 
 uses
   synacode,
-  ACBrDFeException,  ACBrUtil.FilesIO,
+  ACBrDFeException, ACBrUtil.Base, ACBrUtil.FilesIO,
   ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   SoftPlan.GravarXml, SoftPlan.LerXml;
 
@@ -440,6 +443,155 @@ begin
   end;
 
   Response.Sucesso := (Response.Erros.Count = 0);
+end;
+
+procedure TACBrNFSeProviderSoftPlan.PrepararCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  if EstaVazio(Response.InfCancelamento.MotCancelamento) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod110;
+    AErro.Descricao := Desc110;
+    Exit;
+  end;
+
+  if EstaVazio(Emitente.WSChaveAutoriz) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod125;
+    AErro.Descricao := Desc125;
+    Exit;
+  end;
+
+  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod108;
+    AErro.Descricao := Desc108;
+    Exit;
+  end;
+
+  if EstaVazio(Response.InfCancelamento.CodVerificacao) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod117;
+    AErro.Descricao := Desc117;
+    Exit;
+  end;
+
+  // AEDF = Autorização para emissão de documentos fiscais eletrônicos.
+  Response.ArquivoEnvio := '<xmlCancelamentoNfpse>' +
+                             '<motivoCancelamento>' +
+                                Response.InfCancelamento.MotCancelamento +
+                             '</motivoCancelamento>' +
+                             '<nuAedf>' +
+                                Emitente.WSChaveAutoriz +
+                             '</nuAedf>' +
+                             '<nuNotaFiscal>' +
+                                Response.InfCancelamento.NumeroNFSe +
+                             '</nuNotaFiscal>' +
+                             '<codigoVerificacao>' +
+                                Response.InfCancelamento.CodVerificacao +
+                             '</codigoVerificacao>' +
+                           '</xmlCancelamentoNfpse>';
+
+  FpMimeType := 'application/xml';
+  FpPath := '/cancelamento/notas/cancela';
+  FpMethod := 'POST';
+end;
+
+procedure TACBrNFSeProviderSoftPlan.TratarRetornoCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+var
+  Document: TACBrJSONObject;
+  AErro: TNFSeEventoCollectionItem;
+  DocumentXml: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  ANota: TNotaFiscal;
+begin
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := Desc201;
+    Exit
+  end;
+
+  if StringIsXml(Response.ArquivoRetorno) then
+  begin
+    DocumentXml := TACBrXmlDocument.Create;
+
+    try
+      try
+        if Response.ArquivoRetorno = '' then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
+          Exit
+        end;
+
+        DocumentXml.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := DocumentXml.Root;
+
+        ProcessarMensagemErros(ANode, Response);
+        Response.Sucesso := (Response.Erros.Count = 0);
+
+        if Response.Sucesso then
+        begin
+          with Response do
+          begin
+            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+            Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataEmissao'), tcDat);
+            DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDat);
+            DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('motivoCancelamento'), tcStr);
+            NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('identificacao'), tcStr);
+          end;
+
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroNota);
+
+          ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
+          SalvarXmlNfse(ANota);
+        end;
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := Desc999 + E.Message;
+        end;
+      end;
+    finally
+      FreeAndNil(DocumentXml);
+    end;
+  end
+  else
+  begin
+    Document := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+
+    try
+      try
+        ProcessarMensagemDeErros(Document, Response);
+        Response.Sucesso := (Response.Erros.Count = 0);
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := Desc999 + E.Message;
+        end;
+      end;
+    finally
+      FreeAndNil(Document);
+    end;
+  end;
 end;
 
 { TACBrNFSeXWebserviceSoftPlan }

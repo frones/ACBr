@@ -187,8 +187,9 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'nomeMunicipioTomador', 0, 60, 0,
                                          NFSe.Tomador.Endereco.xMunicipio, ''));
 
+  // AEDF = Autorização para emissão de documentos fiscais eletrônicos.
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'numeroAEDF', 6, 7, 1,
-                                                                 '123456', ''));
+                                                             ChaveAutoriz, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'numeroEnderecoTomador', 0, 9, 0,
                                              NFSe.Tomador.Endereco.Numero, ''));

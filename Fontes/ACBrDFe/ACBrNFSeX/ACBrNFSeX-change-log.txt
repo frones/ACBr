@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/11/2022
+-- ACBrNFSeXNotasFiscais/ACBrNFSeXLerXml --
+[*] Alteração visando a leitura de um XML que contenha tag ou conteudo com 
+   vogais acentuadas, cedilha e o E comercial "&".
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais --
 [*] Alterado o GravarStream para usar o XML do Rps em vez do NFS-e ao gerar
     o Stream para o envio do e-mail.

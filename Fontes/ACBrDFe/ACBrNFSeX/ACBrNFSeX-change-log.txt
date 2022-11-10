@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/11/2022
+-- ACBrNFSeXNotasFiscais --
+[*] Alterado o GravarStream para usar o XML do Rps em vez do NFS-e ao gerar
+    o Stream para o envio do e-mail.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Alterado o tipo de Integer para String do campo Parcela, pois tem provedor
     que o campo é alfa-numérico.

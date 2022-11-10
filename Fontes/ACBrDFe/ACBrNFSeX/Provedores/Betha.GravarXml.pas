@@ -130,7 +130,7 @@ begin
   begin
     Result[i] := CreateElement('Parcelas');
 
-    Result[i].AppendChild(AddNode(tcInt, '#55', 'Parcela', 1, 03, 1,
+    Result[i].AppendChild(AddNode(tcStr, '#55', 'Parcela', 1, 03, 1,
                   NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, DSC_NPARC));
 
     Result[i].AppendChild(AddNode(tcDatVcto, '#56', 'DataVencimento', 10, 10, 1,

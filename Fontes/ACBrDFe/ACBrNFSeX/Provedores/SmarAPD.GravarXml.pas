@@ -279,7 +279,7 @@ begin
   begin
     Result[i] := CreateElement('fatura');
 
-    Result[i].AppendChild(AddNode(tcInt, '#55', 'numfatura', 1, 12, 1,
+    Result[i].AppendChild(AddNode(tcStr, '#55', 'numfatura', 1, 12, 1,
                          NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, ''));
 
     Result[i].AppendChild(AddNode(tcDatVcto, '#56', 'vencimentofatura', 1, 12, 1,

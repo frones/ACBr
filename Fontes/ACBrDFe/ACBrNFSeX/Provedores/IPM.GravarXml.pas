@@ -351,7 +351,7 @@ begin
   begin
     Result[i] := CreateElement('parcela');
 
-    Result[i].AppendChild(AddNode(tcInt, '#', 'numero', 1, 2, 1,
+    Result[i].AppendChild(AddNode(tcStr, '#', 'numero', 1, 2, 1,
                          NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor', 1, 15, 1,

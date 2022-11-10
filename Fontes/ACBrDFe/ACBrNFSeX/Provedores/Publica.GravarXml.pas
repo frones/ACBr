@@ -109,7 +109,7 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#53', 'Condicao  ', 1, 15, 1,
       CondicaoToStrPublica(NFSe.CondicaoPagamento.Parcelas.Items[i].Condicao), DSC_TPAG));
 
-    Result[i].AppendChild(AddNode(tcInt, '#54', 'Parcela', 1, 03, 1,
+    Result[i].AppendChild(AddNode(tcStr, '#54', 'Parcela', 1, 03, 1,
                   NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, DSC_NPARC));
 
     Result[i].AppendChild(AddNode(tcDe2, '#55', 'Valor', 1, 18, 1,

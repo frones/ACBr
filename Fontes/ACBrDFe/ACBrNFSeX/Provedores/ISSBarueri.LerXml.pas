@@ -283,7 +283,7 @@ begin
   NFSe.FormaPagamento := StrToIntDef(ObterConteudo(AuxNode.Childrens.FindAnyNs('FormaPagamentoFatura'), tcInt), 0);
 
   Pag := NFSe.CondicaoPagamento.Parcelas.New;
-  Pag.Parcela := StrToIntDef(ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroFatura'), tcDe2), 0);
+  Pag.Parcela := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroFatura'), tcStr);
   Pag.Valor := StrToFloatDef(ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorFatura'), tcDe2), 0);
   //ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorExtensoFatura'), tcStr);
 end;

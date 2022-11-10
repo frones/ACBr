@@ -939,12 +939,12 @@ type
   TParcelasCollectionItem = class(TObject)
   private
     FCondicao: TnfseCondicaoPagamento;
-    FParcela: Integer;
+    FParcela: string;
     FDataVencimento: TDateTime;
     FValor: Double;
   public
     property Condicao: TnfseCondicaoPagamento read FCondicao write FCondicao;
-    property Parcela: Integer read FParcela write FParcela;
+    property Parcela: string read FParcela write FParcela;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
     property Valor: Double read FValor write FValor;
   end;

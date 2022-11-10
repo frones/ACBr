@@ -114,7 +114,7 @@ begin
 
     with NFSe.CondicaoPagamento.Parcelas[i] do
     begin
-      Parcela := ObterConteudo(ANodes[i].Childrens.FindAnyNs('numfatura'), tcInt);
+      Parcela := ObterConteudo(ANodes[i].Childrens.FindAnyNs('numfatura'), tcStr);
       DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vencimentofatura'), tcDatVcto);
       Valor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valorfatura'), tcDe2);
     end;

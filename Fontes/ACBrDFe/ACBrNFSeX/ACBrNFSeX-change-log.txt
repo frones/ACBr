@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/11/2022
+-- Diversos --
+[*] Alterado o tipo de Integer para String do campo Parcela, pois tem provedor
+    que o campo é alfa-numérico.
+   Por: Italo Giurizzato Junior
 -- SoftPlan.Provider --
 [*] Implementado o método GerarToken e ajustes para o correto envio.
    Por: Ronaldo Bispo

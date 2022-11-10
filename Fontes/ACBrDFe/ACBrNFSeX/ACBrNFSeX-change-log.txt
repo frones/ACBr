@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/11/2022
+-- ACBrNFSeXServicos.ini--
+[*] A cidade de Pirajui/SP mudou a URL de produção, o provedor é o mesmo.
+   Por: ftellini
+
 09/11/2022
 -- WebFisco.GravarXml/WebFisco.LerXml --
 [*] Correção necessária para contribuintes do Simples Nacional.

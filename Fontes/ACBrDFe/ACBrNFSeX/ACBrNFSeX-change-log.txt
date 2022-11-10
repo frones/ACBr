@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/11/2022
+-- SH3.Provider --
+[*] Alteração visando remover todas as declarações de XML que consta no
+    arquivo de retorno do WebService.
+   Por: alfadesign
 -- Infisc.LerXml --
 [*] Alteração visando a leitura da Alíquota e Base de INSS, o Valor da 
     Redução de ISS e correção da leitura do campo ValorIRRF.

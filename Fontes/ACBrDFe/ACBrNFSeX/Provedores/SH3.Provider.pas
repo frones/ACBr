@@ -297,7 +297,7 @@ begin
 
   Result := RemoverIdentacao(Result);
   Result := RemoverCDATA(Result);
-  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverDeclaracaoXML(Result, True);
   Result := RemoverCaracteresDesnecessarios(Result);
 end;
 

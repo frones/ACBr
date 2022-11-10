@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/11/2022
+-- Infisc.LerXml --
+[*] Alteração visando a leitura da Alíquota e Base de INSS, o Valor da 
+    Redução de ISS e correção da leitura do campo ValorIRRF.
+   Por: Tiago Tecchio
 -- ACBrNFSeXNotasFiscais/ACBrNFSeXLerXml --
 [*] Alteração visando a leitura de um XML que contenha tag ou conteudo com 
    vogais acentuadas, cedilha e o E comercial "&".

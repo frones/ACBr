@@ -479,11 +479,9 @@ begin
         Aliquota    := ObterConteudo(AuxNode.Childrens.FindAnyNs('pISS'), tcDe2);
         ValorISS    := ObterConteudo(AuxNode.Childrens.FindAnyNs('vISS'), tcDe2);
         BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCISS'), tcDe2);
+        ValorReducao := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRed'), tcDe2);
 
-        ValorIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRed'), tcDe2);
-
-        if ValorIRRF = 0 then
-          ValorIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetIR'), tcDe2);
+        ValorIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetIR'), tcDe2);
 
         AliqRetIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRetIR'), tcDe2);
         ValorBCRetIRRF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCRetIR'), tcDe2);
@@ -513,6 +511,8 @@ begin
         ValorBCCSLL := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCCSLL'), tcDe2);
 
         ValorINSS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetINSS'), tcDe2);
+        AliqRetINSS := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRetINSS'), tcDe2);
+        ValorBCINSS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCINSS'), tcDe2);
 
         // versão 1.1
         CodLCServ := ObterConteudo(AuxNode.Childrens.FindAnyNs('cLCServ'), tcStr);

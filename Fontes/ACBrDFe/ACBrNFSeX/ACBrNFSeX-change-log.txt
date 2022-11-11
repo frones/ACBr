@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 11/11/2022
+-- ACBrNFSeXServicos.ini --
+[*] Mudança de URL e versão da cidade de Triunfo-RS
+   Por: C4Dev
 -- PadraoNacional.Provider/ACBrNFSeXWebservicesResponse --
 [+] Implementado o Tratamento do retorno da consulta aos parâmetros municipais.
    Por: Italo Giurizzato Junior

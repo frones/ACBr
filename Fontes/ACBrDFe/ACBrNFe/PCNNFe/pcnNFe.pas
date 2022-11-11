@@ -2552,6 +2552,10 @@ procedure TComb.Assign(Source: TComb);
 begin
   cProdANP := Source.cProdANP;
   descANP  := Source.descANP;
+  pGLP     := Source.pGLP;
+  pGNn     := Source.pGNn;
+  pGNi     := Source.pGNi;
+  vPart    := Source.vPart;
   pMixGN   := Source.pMixGN;
   CODIF    := Source.CODIF;
   qTemp    := Source.qTemp;

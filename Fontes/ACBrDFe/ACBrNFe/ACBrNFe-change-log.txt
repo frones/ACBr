@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/11/2022
+[*] Adição de informações relacionadas ao grupo comb no método Assign da classe respectiva.
+  por: Eduardo Eng. Costa
+
 04/10/2022
 [-] TK-3125 ACBrNFE verificação para correção no LOAD falta de Declação UTF-8 no XML
   por : Victor H Gonzales - Pandaaa

@@ -1083,10 +1083,29 @@ procedure TACBrNFSeProviderPadraoNacional.TratarRetornoConsultarParam(
 var
   AErro: TNFSeEventoCollectionItem;
 //  AResumo: TNFSeResumoCollectionItem;
-  Document, JSon: TACBrJSONObject;
-//  JSonLoteDFe: TACBrJSONArray;
-//  i: Integer;
-//  TipoDoc, ArquivoXml, NumNFSe, NumRps: string;
+  Document, JSon, JsonI: TACBrJSONObject;
+  JSonItem: TACBrJSONArray;
+  i: Integer;
+  xCodServ: string;
+
+  procedure LerHistorico(Json: TACBrJSONObject);
+  var
+    JSonItem: TACBrJSONArray;
+    i: Integer;
+  begin
+    JSonItem := Json.AsJSONArray['hist'];
+
+    for i := 0 to JSonItem.Count-1 do
+    begin
+      JsonI := JSonItem.ItemAsJSONObject[i];
+
+      Response.Parametros.Add('Data Inicial: ' +
+        DateTimeToStr(JsonI.AsISODate['dtIni']));
+
+      Response.Parametros.Add('Data Final: ' +
+        DateTimeToStr(JsonI.AsISODate['dtFim']));
+    end;
+  end;
 begin
   if Response.ArquivoRetorno = '' then
   begin
@@ -1103,38 +1122,109 @@ begin
       ProcessarMensagemDeErros(Document, Response, 'Erros');
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      Response.Data := Document.AsISODateTime['dataHoraProcessamento'];
-      {
-      Response.Situacao := Document.AsString['StatusProcessamento'];
+      Response.Data := Document.AsDateTimeBr['dataHoraProcessamento'];
 
-      if Response.Situacao = 'DOCUMENTOS_LOCALIZADOS' then
+      Response.Parametros.Clear;
+      Response.Parametros.Add('Mensagem: ' + Document.AsString['mensagem']);
+
+      // Retorno da Consulta Parâmetros Municipais - Aliquotas
+      // Retorno da Consulta Parâmetros Municipais - Histórico de Aliquotas
+      JSon := Document.AsJSONObject['aliquotas'];
+
+      if Json <> nil then
       begin
+        xCodServ := OnlyNumber(Response.CodigoServico);
+        xCodServ := Copy(xCodServ, 1, 2) + '.' + Copy(xCodServ, 3, 2) + '.' +
+                    Copy(xCodServ, 5, 2) + '.' + Copy(xCodServ, 7, 3);
 
-        JSonLoteDFe := Document.AsJSONArray['LoteDFe'];
+        JSonItem := Json.AsJSONArray[xCodServ];
 
-        for i := 0 to JSonLoteDFe.Count-1 do
+        for i := 0 to JSonItem.Count-1 do
         begin
-          JSon := JSonLoteDFe.ItemAsJSONObject[i];
+          JsonI := JSonItem.ItemAsJSONObject[i];
 
-          AResumo := Response.Resumos.New;
-          AResumo.NSU := JSon.AsInteger['NSU'];
-          AResumo.ChaveDFe := JSon.AsString['ChaveAcesso'];
-          TipoDoc := JSon.AsString['TipoDocumento'];
-          AResumo.TipoDoc := TipoDoc;
+          Response.Parametros.Add('Aliquota: ' +
+            JsonI.AsString['aliq']);
 
-          ArquivoXml := JSon.AsString['ArquivoXml'];
-          ArquivoXml := DeCompress(DecodeBase64(ArquivoXml));
-
-          if ArquivoXml = '' then
-          begin
-            AErro := Response.Erros.New;
-            AErro.Codigo := Cod203;
-            AErro.Descricao := Desc203;
-            Exit
-          end;
+          Response.Parametros.Add('Data Inicial: ' +
+            DateTimeToStr(JsonI.AsISODate['dtIni']));
         end;
       end;
-      }
+
+      // Retorno da Consulta Parâmetros Municipais - Convenio
+      JSon := Document.AsJSONObject['parametrosConvenio'];
+
+      if Json <> nil then
+      begin
+        Response.Parametros.Add('Aderente ao Ambiente Nacional: ' +
+          JSon.AsString['aderenteAmbienteNacional']);
+
+        Response.Parametros.Add('Aderente ao Emissor Nacional: ' +
+          JSon.AsString['aderenteEmissorNacional']);
+
+        Response.Parametros.Add('Aderente ao MAN: ' +
+          JSon.AsString['aderenteMAN']);
+
+        Response.Parametros.Add('orig Cad: ' +
+          JSon.AsString['origCad']);
+
+        Response.Parametros.Add('Permite Aproveitameto de Créditos: ' +
+          JSon.AsString['permiteAproveitametoDeCreditos']);
+      end;
+
+      // Retorno da Consulta Parâmetros Municipais - Retenções
+      JSon := Document.AsJSONObject['retencoes'];
+
+      if Json <> nil then
+      begin
+        JSon := JSon.AsJSONObject['art6'];
+
+        Response.Parametros.Add('Habilitado: ' +
+          JSon.AsString['habilitado']);
+
+        LerHistorico(Json);
+
+        JSon := JSon.AsJSONObject['retMun'];
+
+        Response.Parametros.Add('Descrição: ' +
+          JSon.AsString['desc']);
+
+        Response.Parametros.Add('Data Inicial: ' +
+          DateTimeToStr(JSon.AsISODate['dtIni']));
+
+        Response.Parametros.Add('Data Final: ' +
+          DateTimeToStr(JSon.AsISODate['dtFim']));
+
+        // Falta ler o tpRet
+
+        JSonItem := Json.AsJSONArray['serv'];
+
+        for i := 0 to JSonItem.Count-1 do
+        begin
+          JsonI := JSonItem.ItemAsJSONObject[i];
+
+          Response.Parametros.Add('Codigo: ' +
+            JsonI.AsString['codigo']);
+
+          LerHistorico(JsonI);
+        end;
+
+        JSonItem := Json.AsJSONArray['respTrib'];
+
+        for i := 0 to JSonItem.Count-1 do
+        begin
+          JsonI := JSonItem.ItemAsJSONObject[i];
+
+          Response.Parametros.Add('Tipo Inscrição: ' +
+            JsonI.AsString['tpInsc']);
+
+          Response.Parametros.Add('Inscrição: ' +
+            JsonI.AsString['insc']);
+
+          LerHistorico(JsonI);
+        end;
+      end;
+
     except
       on E:Exception do
       begin

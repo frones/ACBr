@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 11/11/2022
+-- PadraoNacional.Provider/ACBrNFSeXWebservicesResponse --
+[+] Implementado o Tratamento do retorno da consulta aos parâmetros municipais.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluído as cidades: Colinas do Tocantins/TO - Provedor ISSIntel e
     Teodoro Sampaio/SP - Provedor Pronim.

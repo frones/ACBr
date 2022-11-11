@@ -37,6 +37,7 @@ unit ACBrNFSeXWebservicesResponse;
 interface
 
 uses
+  classes,
   {$IF DEFINED(NEXTGEN)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
@@ -466,6 +467,7 @@ type
     FCodigoServico: string;
     FCompetencia: TDateTime;
     FNumeroBeneficio: string;
+    FParametros: TStrings;
   public
     constructor Create;
     destructor Destroy; override;
@@ -477,6 +479,7 @@ type
     property CodigoServico: string read FCodigoServico write FCodigoServico;
     property Competencia: TDateTime read FCompetencia write FCompetencia;
     property NumeroBeneficio: string read FNumeroBeneficio write FNumeroBeneficio;
+    property Parametros: TStrings read FParametros write FParametros;
 
   end;
 
@@ -992,16 +995,20 @@ begin
   CodigoServico := '';
   Competencia := 0;
   NumeroBeneficio := '';
+
+//  Parametros.Clear;
 end;
 
 constructor TNFSeConsultarParamResponse.Create;
 begin
   inherited Create;
 
+  FParametros := TStringList.Create;
 end;
 
 destructor TNFSeConsultarParamResponse.Destroy;
 begin
+  FParametros.Free;
 
   inherited Destroy;
 end;

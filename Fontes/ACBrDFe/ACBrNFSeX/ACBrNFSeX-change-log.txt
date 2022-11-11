@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/11/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluído as cidades: Colinas do Tocantins/TO - Provedor ISSIntel e
+    Teodoro Sampaio/SP - Provedor Pronim.
+   Por: Rodrigo - Digibyte
+
 10/11/2022
 -- SoftPlan.Provider --
 [+] Implementado o método Cancelar.

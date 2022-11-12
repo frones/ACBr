@@ -256,8 +256,15 @@ type
     btnConsultarNFSeRPSPN: TButton;
     btnConsultarNFSePeloNumeroPN: TButton;
     btnObterPDFdoDANFSEPN: TButton;
-    btnConsEventoChavPN: TButton;
+    btnConsultarEventoChavPN: TButton;
     btnConsultarDFe: TButton;
+    tsConsultarParametros: TTabSheet;
+    btnConsultarParamMunicConvenio: TButton;
+    btnConsultarParamMunicAliquota: TButton;
+    btnConsultarParamMunicHistAliquota: TButton;
+    btnConsultarParamMunicRegimesEspeciais: TButton;
+    btnConsultarParamMunicRetencoes: TButton;
+    btnConsultarParamMunicBeneficio: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -334,8 +341,14 @@ type
     procedure btnEventoRejTomPNClick(Sender: TObject);
     procedure btnEventoRejInterPNClick(Sender: TObject);
     procedure btnConsultarNFSeRPSPNClick(Sender: TObject);
-    procedure btnConsEventoChavPNClick(Sender: TObject);
+    procedure btnConsultarEventoChavPNClick(Sender: TObject);
     procedure btnConsultarDFeClick(Sender: TObject);
+    procedure btnConsultarParamMunicConvenioClick(Sender: TObject);
+    procedure btnConsultarParamMunicAliquotaClick(Sender: TObject);
+    procedure btnConsultarParamMunicHistAliquotaClick(Sender: TObject);
+    procedure btnConsultarParamMunicRegimesEspeciaisClick(Sender: TObject);
+    procedure btnConsultarParamMunicRetencoesClick(Sender: TObject);
+    procedure btnConsultarParamMunicBeneficioClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -635,7 +648,8 @@ begin
       if (ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
            proCTA, proCTAConsult, proEloTech, proEquiplano, proFacundo, proFGMaiss,
            profintelISS, proGoverna, proInfisc, proIPM, proISSDSF, proRLZ,
-           proSimple, proSimplISS, proSmarAPD, proWebFisco, proBauhaus]) or
+           proSimple, proSimplISS, proSmarAPD, proWebFisco, proBauhaus,
+           proSoftPlan]) or
          ((ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEL]) and
           (ACBrNFSeX1.Configuracoes.Geral.Versao = ve100)) then
       begin
@@ -805,6 +819,20 @@ begin
         Dados do Serviço
       =========================================================================}
 
+      if ACBrNFSeX1.Configuracoes.Geral.Provedor = proInfisc then
+      begin
+        Servico.Valores.ValorServicos := 100.35;
+        Servico.Valores.DescontoIncondicionado := 0.00;
+        Servico.Valores.OutrosDescontos := 0.00;
+
+        Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
+          Servico.Valores.ValorPis - Servico.Valores.ValorCofins -
+          Servico.Valores.ValorInss - Servico.Valores.ValorIr -
+          Servico.Valores.ValorCsll - Servico.Valores.OutrasRetencoes -
+          Servico.Valores.ValorIssRetido - Servico.Valores.DescontoIncondicionado
+          - Servico.Valores.DescontoCondicionado;
+      end;
+
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
         proSiapSistemas:
           // código padrão ABRASF acrescido de um sub-item
@@ -820,6 +848,7 @@ begin
         Servico.ItemListaServico := '09.01';
       end;
 
+      servico.CodigoNBS := '123456789';
       Servico.Discriminacao := 'discriminacao I; discriminacao II';
 
       // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum )
@@ -993,7 +1022,7 @@ begin
         begin
           with CondicaoPagamento.Parcelas.New do
           begin
-            Parcela := i;
+            Parcela := IntToStr(i);
             DataVencimento := Date + (30 * i);
             Valor := (Servico.Valores.ValorLiquidoNfse / CondicaoPagamento.QtdParcela);
           end;
@@ -1271,7 +1300,7 @@ begin
   ShowMessage(ACBrNFSeX1.SSL.CertCNPJ);
 end;
 
-procedure TfrmACBrNFSe.btnConsEventoChavPNClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnConsultarEventoChavPNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe, xTipoEvento, xNumSeqEvento: string;
   Ok: Boolean;
@@ -1769,7 +1798,7 @@ begin
       exit;
   end;
 
-  ACBrNFSeX1.ConsultarNFSeporRps(NumeroRps, SerieRps, TipoRps, CodVerificacao);
+  ACBrNFSeX1.ConsultarNFSePorRps(NumeroRps, SerieRps, TipoRps, CodVerificacao);
 
   ChecarResposta(tmConsultarNFSePorRps);
 end;
@@ -2841,6 +2870,104 @@ begin
     IMTomador, StrToIntDef(NumPagina, 1));
 
   ChecarResposta(tmConsultarNFSeServicoTomado);
+end;
+
+procedure TfrmACBrNFSe.btnConsultarParamMunicAliquotaClick(Sender: TObject);
+var
+  xTitulo, CodServ, Compet: String;
+begin
+  xTitulo := 'Consultar Parâmetros Municipais';
+
+  CodServ := '';
+  if not(InputQuery(xTitulo, 'Código do Serviço:', CodServ)) then
+    exit;
+
+  Compet := DateToStr(Date);
+  if not(InputQuery(xTitulo, 'Data de Competencia:', Compet)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarParametros(pmAliquota, CodServ,
+    StrToDateDef(Compet, 0));
+
+  ChecarResposta(tmConsultarParam);
+end;
+
+procedure TfrmACBrNFSe.btnConsultarParamMunicBeneficioClick(Sender: TObject);
+var
+  xTitulo, NumBenef, Compet: String;
+begin
+  xTitulo := 'Consultar Parâmetros Municipais';
+
+  NumBenef := '';
+  if not(InputQuery(xTitulo, 'Numero do Beneficio:', NumBenef)) then
+    exit;
+
+  Compet := DateToStr(Date);
+  if not(InputQuery(xTitulo, 'Data de Competencia:', Compet)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarParametros(pmBeneficios, '',
+    StrToDateDef(Compet, 0), NumBenef);
+
+  ChecarResposta(tmConsultarParam);
+end;
+
+procedure TfrmACBrNFSe.btnConsultarParamMunicConvenioClick(Sender: TObject);
+begin
+  ACBrNFSeX1.ConsultarParametros(pmConvenio);
+
+  ChecarResposta(tmConsultarParam);
+end;
+
+procedure TfrmACBrNFSe.btnConsultarParamMunicHistAliquotaClick(Sender: TObject);
+var
+  xTitulo, CodServ: String;
+begin
+  xTitulo := 'Consultar Parâmetros Municipais';
+
+  CodServ := '';
+  if not(InputQuery(xTitulo, 'Código do Serviço:', CodServ)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarParametros(pmHistoricoAliquota, CodServ);
+
+  ChecarResposta(tmConsultarParam);
+end;
+
+procedure TfrmACBrNFSe.btnConsultarParamMunicRegimesEspeciaisClick(
+  Sender: TObject);
+var
+  xTitulo, CodServ, Compet: String;
+begin
+  xTitulo := 'Consultar Parâmetros Municipais';
+
+  CodServ := '';
+  if not(InputQuery(xTitulo, 'Código do Serviço:', CodServ)) then
+    exit;
+
+  Compet := DateToStr(Date);
+  if not(InputQuery(xTitulo, 'Data de Competencia:', Compet)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarParametros(pmRegimesEspeciais, CodServ,
+    StrToDateDef(Compet, 0));
+
+  ChecarResposta(tmConsultarParam);
+end;
+
+procedure TfrmACBrNFSe.btnConsultarParamMunicRetencoesClick(Sender: TObject);
+var
+  xTitulo, Compet: String;
+begin
+  xTitulo := 'Consultar Parâmetros Municipais';
+
+  Compet := DateToStr(Date);
+  if not(InputQuery(xTitulo, 'Data de Competencia:', Compet)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarParametros(pmRetencoes, '', StrToDateDef(Compet, 0));
+
+  ChecarResposta(tmConsultarParam);
 end;
 
 procedure TfrmACBrNFSe.btnGerarEnviarTeste_SPClick(Sender: TObject);
@@ -4010,6 +4137,77 @@ begin
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data   : ' + DateToStr(Data));
             memoLog.Lines.Add('Sucesso: ' + BoolToStr(Sucesso, True));
+
+            if Resumos.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Resumo(s):');
+              for i := 0 to Resumos.Count -1 do
+              begin
+                memoLog.Lines.Add('NSU      : ' + IntToStr(Resumos[i].NSU));
+                memoLog.Lines.Add('Chave DFe: ' + Resumos[i].ChaveDFe);
+                memoLog.Lines.Add('Tipo Doc.: ' + Resumos[i].TipoDoc);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
+
+            if Erros.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Erro(s):');
+              for i := 0 to Erros.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+
+            if Alertas.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Alerta(s):');
+              for i := 0 to Alertas.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+          end;
+        end;
+
+      tmConsultarParam:
+        begin
+          with ConsultarParam do
+          begin
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarParam));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+            memoLog.Lines.Add('Tipo Parâmetro  : ' + ParamMunicToStr(tpParamMunic));
+            memoLog.Lines.Add('Código Municipío: ' + IntToStr(CodigoMunic));
+            memoLog.Lines.Add('Código Serviço  : ' + CodigoServico);
+            memoLog.Lines.Add('Competencia     : ' + DateToStr(Competencia));
+            memoLog.Lines.Add('Numero Beneficio: ' + NumeroBeneficio);
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Data      : ' + DateTimeToStr(Data));
+            memoLog.Lines.Add('Sucesso   : ' + BoolToStr(Sucesso, True));
+
+            if Parametros.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Parâmetros(s):');
+              for i := 0 to Parametros.Count -1 do
+              begin
+                memoLog.Lines.Add(Parametros[i]);
+              end;
+            end;
 
             if Resumos.Count > 0 then
             begin

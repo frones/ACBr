@@ -2241,14 +2241,14 @@ object frmACBrNFSe: TfrmACBrNFSe
               TabOrder = 2
               OnClick = btnObterPDFdoDANFSEPNClick
             end
-            object btnConsEventoChavPN: TButton
+            object btnConsultarEventoChavPN: TButton
               Left = 3
               Top = 41
               Width = 177
               Height = 25
               Caption = 'Consultar Evento por Chave'
               TabOrder = 3
-              OnClick = btnConsEventoChavPNClick
+              OnClick = btnConsultarEventoChavPNClick
             end
             object btnConsultarDFe: TButton
               Left = 186
@@ -2258,6 +2258,64 @@ object frmACBrNFSe: TfrmACBrNFSe
               Caption = 'Consultar DFe'
               TabOrder = 4
               OnClick = btnConsultarDFeClick
+            end
+          end
+          object tsConsultarParametros: TTabSheet
+            Caption = 'Consultar Par'#226'metros Municipais'
+            ImageIndex = 3
+            object btnConsultarParamMunicConvenio: TButton
+              Left = 368
+              Top = 10
+              Width = 177
+              Height = 25
+              Caption = 'Conv'#234'nio'
+              TabOrder = 0
+              OnClick = btnConsultarParamMunicConvenioClick
+            end
+            object btnConsultarParamMunicAliquota: TButton
+              Left = 3
+              Top = 10
+              Width = 177
+              Height = 25
+              Caption = 'Aliquota'
+              TabOrder = 1
+              OnClick = btnConsultarParamMunicAliquotaClick
+            end
+            object btnConsultarParamMunicHistAliquota: TButton
+              Left = 186
+              Top = 10
+              Width = 177
+              Height = 25
+              Caption = 'Historico Aliquotas'
+              TabOrder = 2
+              OnClick = btnConsultarParamMunicHistAliquotaClick
+            end
+            object btnConsultarParamMunicRegimesEspeciais: TButton
+              Left = 3
+              Top = 44
+              Width = 177
+              Height = 25
+              Caption = 'Regimes Especiais'
+              TabOrder = 3
+              OnClick = btnConsultarParamMunicRegimesEspeciaisClick
+            end
+            object btnConsultarParamMunicRetencoes: TButton
+              Left = 186
+              Top = 44
+              Width = 177
+              Height = 25
+              Caption = 'Reten'#231#245'es'
+              TabOrder = 4
+              OnClick = btnConsultarParamMunicRetencoesClick
+            end
+            object btnConsultarParamMunicBeneficio: TButton
+              Left = 369
+              Top = 44
+              Width = 177
+              Height = 25
+              Caption = 'Beneficio'
+              TabOrder = 5
+              OnClick = btnConsultarParamMunicBeneficioClick
             end
           end
         end

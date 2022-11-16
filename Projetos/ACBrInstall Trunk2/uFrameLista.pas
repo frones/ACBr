@@ -193,11 +193,11 @@ type
     ACBr_NFSeXDanfseRL_dpk: TCheckBox;
     Label29: TLabel;
     ACBr_NFSeXDanfseFR_dpk: TCheckBox;
-    ACBr_PIXCD_dpk: TCheckBox;
     ACBr_OFX_dpk: TCheckBox;
     ACBr_GTIN_dpk: TCheckBox;
     ACBr_OpenDelivery_dpk: TCheckBox;
     ACBr_PAFNFCe_dpk: TCheckBox;
+    ACBr_PIXCD_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -500,6 +500,11 @@ begin
 
       // Dependencias do OpenDelivery
       if ACBr_OpenDelivery_dpk.Checked then
+      begin
+        ACBr_OpenSSL_dpk.Checked  := True;
+      end;
+
+      if ACBr_PIXCD_dpk.Checked then
       begin
         ACBr_OpenSSL_dpk.Checked  := True;
       end;

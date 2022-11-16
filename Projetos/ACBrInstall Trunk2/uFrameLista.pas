@@ -504,6 +504,11 @@ begin
         ACBr_OpenSSL_dpk.Checked  := True;
       end;
 
+      if ACBr_Boleto_dpk.Checked then
+      begin
+        ACBr_PIXCD_dpk.Checked := True;
+      end;
+
     finally
       FUtilizarBotoesMarcar := False;
     end;

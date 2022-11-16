@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 16/11/2022
+-- ACBrNFSeXServicos.ini --
+[*] A cidade Guaratuba/PR trocou de provedor agora é: Elotech
+   Por: Marcelo Dev
+[+] Incluída a cidade Junqueiropolis/SP - provedor Fiorilli
+   Por: Adriano Teodorico
 -- SmarAPD.Provider/SmarAPD.GravarXml --
 [*] Possível solução para o método ConsultarNfsePorFaixa
    Por: Italo Giurizzato Junior

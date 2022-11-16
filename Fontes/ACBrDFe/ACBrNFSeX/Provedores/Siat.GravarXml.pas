@@ -56,7 +56,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     Siat
+//     Siat que é igual ao do provedor ISSDSF
 //==============================================================================
 
 end.

@@ -96,7 +96,7 @@ type
 implementation
 
 uses
-  ACBrUtil.XMLHTML,
+  ACBrUtil.XMLHTML, ACBrUtil.Strings,
   ACBrDFeException, ACBrXmlBase,
   SilTecnologia.GravarXml, SilTecnologia.LerXml;
 
@@ -320,7 +320,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := '';
-      AErro.Descricao := SeparaDados(Response.ArquivoRetorno, 'return');
+      AErro.Descricao := ACBrStr(SeparaDados(Response.ArquivoRetorno, 'return'));
     end;
   end;
 end;

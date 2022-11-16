@@ -1492,7 +1492,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod800;
-    AErro.Descricao := 'Erro de Validação: ' + Erros;
+    AErro.Descricao := ACBrStr(Desc800 + Erros);
   end;
 end;
 
@@ -1635,7 +1635,7 @@ begin
       begin
         AErro := EmiteResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -1700,7 +1700,7 @@ begin
       begin
         AErro := ConsultaSituacaoResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -1764,7 +1764,7 @@ begin
       begin
         AErro := ConsultaLoteRpsResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -1829,7 +1829,7 @@ begin
       begin
         AErro := ConsultaNFSeporRpsResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -1894,7 +1894,7 @@ begin
       begin
         AErro := ConsultarEventoResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -1960,7 +1960,7 @@ begin
       begin
         AErro := ConsultarParamResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -2025,7 +2025,7 @@ begin
       begin
         AErro := ConsultarDFeResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -2115,7 +2115,7 @@ begin
       begin
         AErro := ConsultaNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -2184,7 +2184,7 @@ begin
       begin
         AErro := CancelaNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -2282,7 +2282,7 @@ begin
       begin
         AErro := SubstituiNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -2346,7 +2346,7 @@ begin
       begin
         AErro := GerarTokenResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -2411,7 +2411,7 @@ begin
       begin
         AErro := EnviarEventoResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -2456,7 +2456,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2488,7 +2488,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2520,7 +2520,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2552,7 +2552,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2584,7 +2584,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2616,7 +2616,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2647,7 +2647,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2703,7 +2703,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2734,7 +2734,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2766,7 +2766,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2798,7 +2798,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;
@@ -2830,7 +2830,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod801;
-      AErro.Descricao := Desc801 + E.Message;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
     end;
   end;
 end;

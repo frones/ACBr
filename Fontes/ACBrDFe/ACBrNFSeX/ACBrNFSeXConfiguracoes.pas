@@ -225,7 +225,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO,
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrNFSeX;
 
 { TEmitenteConfNFSe }
@@ -436,7 +436,8 @@ begin
     TACBrNFSeX(fpConfiguracoes.Owner).SetProvider;
 
   if FProvedor = proNenhum then
-    raise Exception.Create('Código do Municipio [' + CodIBGE + '] não Encontrado.');
+    raise Exception.Create(ACBrStr('Código do Municipio [' + CodIBGE +
+            '] não Encontrado.'));
 
   FxMunicipio := FPIniParams.ReadString(CodIBGE, 'Nome', '');
   FxUF := FPIniParams.ReadString(CodIBGE, 'UF'  , '');

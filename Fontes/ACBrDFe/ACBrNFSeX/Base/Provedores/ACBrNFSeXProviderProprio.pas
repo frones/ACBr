@@ -163,17 +163,17 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod002;
-    AErro.Descricao := Desc002;
+    AErro.Descricao := ACBrStr(Desc002);
   end;
 
   if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
+    AErro.Descricao := ACBrStr('Conjunto de RPS transmitidos (máximo de ' +
                        IntToStr(Response.MaxRps) + ' RPS)' +
                        ' excedido. Quantidade atual: ' +
-                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
+                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
   end;
 
   if Response.Erros.Count > 0 then Exit;
@@ -409,7 +409,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod001;
-        AErro.Descricao := Desc001;
+        AErro.Descricao := ACBrStr(Desc001);
       end;
     end;
   end;
@@ -513,7 +513,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod107;
-    AErro.Descricao := Desc107;
+    AErro.Descricao := ACBrStr(Desc107);
     Exit;
   end;
 
@@ -521,16 +521,16 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod002;
-    AErro.Descricao := Desc002;
+    AErro.Descricao := ACBrStr(Desc002);
   end;
 
   if TACBrNFSeX(FAOwner).NotasFiscais.Count > 1 then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de 1 RPS)' +
+    AErro.Descricao := ACBrStr('Conjunto de RPS transmitidos (máximo de 1 RPS)' +
                        ' excedido. Quantidade atual: ' +
-                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
+                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
   end;
 
   if Response.Erros.Count > 0 then Exit;

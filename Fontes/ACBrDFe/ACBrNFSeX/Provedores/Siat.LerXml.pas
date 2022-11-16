@@ -55,7 +55,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     Siat
+//     Siat que é igual ao do provedor ISSDSF
 //==============================================================================
 
 end.

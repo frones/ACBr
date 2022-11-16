@@ -198,7 +198,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Erro'), tcStr);
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Status'), tcStr);
+    AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Status'), tcStr));
     AErro.Correcao := '';
   end;
 end;
@@ -280,7 +280,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -299,7 +299,7 @@ begin
         Response.Sucesso := False;
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;
-        AErro.Descricao := Desc203;
+        AErro.Descricao := ACBrStr(Desc203);
         Exit;
       end;
 
@@ -312,7 +312,7 @@ begin
           Response.Sucesso := False;
           AErro := Response.Erros.New;
           AErro.Codigo := Cod203;
-          AErro.Descricao := Desc203;
+          AErro.Descricao := ACBrStr(Desc203);
           Exit;
         end;
 
@@ -351,7 +351,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -369,7 +369,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
-    AErro.Descricao := Desc111;
+    AErro.Descricao := ACBrStr(Desc111);
     Exit;
   end;
 
@@ -409,7 +409,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -427,7 +427,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod208;
-        AErro.Descricao := Desc208;
+        AErro.Descricao := ACBrStr(Desc208);
         Exit;
       end;
 
@@ -449,7 +449,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -468,7 +468,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod108;
-    AErro.Descricao := Desc108;
+    AErro.Descricao := ACBrStr(Desc108);
     Exit;
   end;
 
@@ -523,19 +523,19 @@ begin
                    '<NumeroFinal/>';
 
   Response.ArquivoEnvio := '<ConsultaNfse>' +
-                         '<CnpjCpf>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</CnpjCpf>' +
-                         '<Consulta>' +
-                           '<CnpjCpfPrestador>' +
-                              OnlyNumber(Emitente.CNPJ) +
-                           '</CnpjCpfPrestador>' +
-                           XmlConsulta +
-                           '<Pagina>' +
-                              IntToStr(Response.InfConsultaNFSe.Pagina) +
-                           '</Pagina>' +
-                         '</Consulta>' +
-                       '</ConsultaNfse>';
+                             '<CnpjCpf>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</CnpjCpf>' +
+                             '<Consulta>' +
+                               '<CnpjCpfPrestador>' +
+                                  OnlyNumber(Emitente.CNPJ) +
+                               '</CnpjCpfPrestador>' +
+                               XmlConsulta +
+                               '<Pagina>' +
+                                  IntToStr(Response.InfConsultaNFSe.Pagina) +
+                               '</Pagina>' +
+                             '</Consulta>' +
+                           '</ConsultaNfse>';
 end;
 
 procedure TACBrNFSeProviderGeisWeb.TratarRetornoConsultaNFSe(
@@ -557,7 +557,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -575,7 +575,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;
-        AErro.Descricao := Desc203;
+        AErro.Descricao := ACBrStr(Desc203);
         Exit;
       end;
 
@@ -597,7 +597,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -615,25 +615,25 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod108;
-    AErro.Descricao := Desc108;
+    AErro.Descricao := ACBrStr(Desc108);
     Exit;
   end;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<CancelaNfse>' +
-                         '<CnpjCpf>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</CnpjCpf>' +
-                         '<Cancela>' +
-                           '<CnpjCpfPrestador>' +
-                              OnlyNumber(Emitente.CNPJ) +
-                           '</CnpjCpfPrestador>' +
-                           '<NumeroNfse>' +
-                              Response.InfCancelamento.NumeroNFSe +
-                           '</NumeroNfse>' +
-                         '</Cancela>' +
-                       '</CancelaNfse>';
+                             '<CnpjCpf>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</CnpjCpf>' +
+                             '<Cancela>' +
+                               '<CnpjCpfPrestador>' +
+                                  OnlyNumber(Emitente.CNPJ) +
+                               '</CnpjCpfPrestador>' +
+                               '<NumeroNfse>' +
+                                  Response.InfCancelamento.NumeroNFSe +
+                               '</NumeroNfse>' +
+                             '</Cancela>' +
+                           '</CancelaNfse>';
 end;
 
 procedure TACBrNFSeProviderGeisWeb.TratarRetornoCancelaNFSe(
@@ -655,7 +655,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -675,7 +675,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;
-        AErro.Descricao := Desc203;
+        AErro.Descricao := ACBrStr(Desc203);
         Exit;
       end;
 
@@ -697,7 +697,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -823,6 +823,7 @@ begin
 
   Result := StrToXml(Result);
   Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
   Result := string(NativeStringToUTF8(Result));
 end;
 

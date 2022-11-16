@@ -114,7 +114,7 @@ type
 implementation
 
 uses
-  ACBrUtil.XMLHTML,
+  ACBrUtil.XMLHTML, ACBrUtil.Strings,
   ACBrXmlBase, ACBrDFeException, ACBrNFSeX,
   DBSeller.GravarXml, DBSeller.LerXml;
 
@@ -289,7 +289,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoErro'), tcStr);
-        AErro.Descricao := Mensagem;
+        AErro.Descricao := ACBrStr(Mensagem);
         AErro.Correcao := '';
       end;
     end;
@@ -550,7 +550,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoErro'), tcStr);
-        AErro.Descricao := Mensagem;
+        AErro.Descricao := ACBrStr(Mensagem);
         AErro.Correcao := '';
       end;
     end;

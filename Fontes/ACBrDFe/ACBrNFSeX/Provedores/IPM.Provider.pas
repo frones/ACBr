@@ -236,7 +236,7 @@ begin
       AErro := Response.Erros.New;
 
       AErro.Codigo := Codigo;
-      AErro.Descricao := Copy(aMsg, 9, Length(aMsg));
+      AErro.Descricao := ACBrStr(Copy(aMsg, 9, Length(aMsg)));
       AErro.Correcao := '';
     end;
 
@@ -329,7 +329,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -350,7 +350,7 @@ begin
         begin
           AErro := Response.Erros.New;
           AErro.Codigo := Cod203;
-          AErro.Descricao := Desc203;
+          AErro.Descricao := ACBrStr(Desc203);
           Exit;
         end;
 
@@ -423,7 +423,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -440,7 +440,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod101;
-    AErro.Descricao := Desc101;
+    AErro.Descricao := ACBrStr(Desc101);
     Exit;
   end;
 
@@ -472,7 +472,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -555,7 +555,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -572,7 +572,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod102;
-    AErro.Descricao := Desc102;
+    AErro.Descricao := ACBrStr(Desc102);
     Exit;
   end;
 
@@ -580,7 +580,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod103;
-    AErro.Descricao := Desc103;
+    AErro.Descricao := ACBrStr(Desc103);
     Exit;
   end;
 
@@ -616,7 +616,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -713,7 +713,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -731,7 +731,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod108;
-    AErro.Descricao := Desc108;
+    AErro.Descricao := ACBrStr(Desc108);
     Exit;
   end;
 
@@ -739,7 +739,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod112;
-    AErro.Descricao := Desc112;
+    AErro.Descricao := ACBrStr(Desc112);
     Exit;
   end;
 
@@ -747,7 +747,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod112;
-    AErro.Descricao := Desc112;
+    AErro.Descricao := ACBrStr(Desc112);
     Exit;
   end;
 
@@ -792,7 +792,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -905,7 +905,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally
@@ -924,7 +924,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod108;
-    AErro.Descricao := Desc108;
+    AErro.Descricao := ACBrStr(Desc108);
     Exit;
   end;
 
@@ -932,7 +932,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod112;
-    AErro.Descricao := Desc112;
+    AErro.Descricao := ACBrStr(Desc112);
     Exit;
   end;
 
@@ -940,7 +940,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod110;
-    AErro.Descricao := Desc110;
+    AErro.Descricao := ACBrStr(Desc110);
     Exit;
   end;
 
@@ -1044,7 +1044,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
-        AErro.Descricao := Desc201;
+        AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
 
@@ -1065,7 +1065,7 @@ begin
         begin
           AErro := Response.Erros.New;
           AErro.Codigo := Cod203;
-          AErro.Descricao := Desc203;
+          AErro.Descricao := ACBrStr(Desc203);
           Exit;
         end;
 
@@ -1139,7 +1139,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
   finally

@@ -79,7 +79,7 @@ type
 implementation
 
 uses
-  ACBrUtil.XMLHTML,
+  ACBrUtil.XMLHTML, ACBrUtil.Strings,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
   AEG.GravarXml, AEG.LerXml;
@@ -294,7 +294,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ResultadoCodigo'), tcStr);
-      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ResultadoErro'), tcStr);
+      AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ResultadoErro'), tcStr));
       AErro.Correcao := '';
     end;
   end;

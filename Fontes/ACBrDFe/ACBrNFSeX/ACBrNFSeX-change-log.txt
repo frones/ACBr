@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 16/11/2022
+-- Diversos --
+[*] Uso da função ACBrStr para exibir a mensagem com vogais acentuadas no
+    Lazarus.
+   Por: Italo Giurizzato Junior
 -- PadraoNacional.Provider --
 [*] Ajustes finais no tratar retorno do consultar parâmetros municipais.
    Por: Italo Giurizzato Junior

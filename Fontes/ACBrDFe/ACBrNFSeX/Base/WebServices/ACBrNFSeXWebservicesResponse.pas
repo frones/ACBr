@@ -996,7 +996,7 @@ begin
   Competencia := 0;
   NumeroBeneficio := '';
 
-//  Parametros.Clear;
+  Parametros.Clear;
 end;
 
 constructor TNFSeConsultarParamResponse.Create;

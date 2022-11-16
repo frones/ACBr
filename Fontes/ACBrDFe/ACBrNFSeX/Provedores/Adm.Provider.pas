@@ -77,7 +77,7 @@ type
 implementation
 
 uses
-  ACBrDFeException, ACBrUtil.Base,
+  ACBrDFeException, ACBrUtil.Base, ACBrUtil.Strings,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   Adm.GravarXml, Adm.LerXml;
 
@@ -333,7 +333,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod119;
-      AErro.Descricao := Desc119;
+      AErro.Descricao := ACBrStr(Desc119);
       Exit;
     end;
 
@@ -341,7 +341,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod124;
-      AErro.Descricao := Desc124;
+      AErro.Descricao := ACBrStr(Desc124);
       Exit;
     end;
 
@@ -349,7 +349,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod125;
-      AErro.Descricao := Desc125;
+      AErro.Descricao := ACBrStr(Desc125);
       Exit;
     end;
 

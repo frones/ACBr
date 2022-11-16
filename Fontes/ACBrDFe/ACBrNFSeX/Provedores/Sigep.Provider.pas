@@ -145,7 +145,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod119;
-      AErro.Descricao := Desc119;
+      AErro.Descricao := ACBrStr(Desc119);
       Exit;
     end;
 
@@ -153,7 +153,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod120;
-      AErro.Descricao := Desc120;
+      AErro.Descricao := ACBrStr(Desc120);
       Exit;
     end;
 

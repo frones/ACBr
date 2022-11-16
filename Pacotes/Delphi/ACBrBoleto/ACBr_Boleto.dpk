@@ -33,7 +33,8 @@ requires
   ACBr_DFeComum,
   rtl,
   vcl,
-  ACBr_Diversos;
+  ACBr_Diversos,
+  ACBr_PIXCD;
 
 contains
   ACBrBancoBrasil in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas',
@@ -97,6 +98,8 @@ contains
   ACBrBancoBS2 in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBS2.pas',
   ACBrBancoPenseBank in '..\..\..\Fontes\ACBrBoleto\ACBrBancoPenseBank.pas',
   ACBrBoletoW_PenseBank_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_PenseBank_API.pas',
-  ACBrBoletoRet_PenseBank_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_PenseBank_API.pas';
+  ACBrBoletoRet_PenseBank_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_PenseBank_API.pas',
+  ACBrBoletoRet_Santander in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Santander.pas',
+  ACBrBoletoW_Santander in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Santander.pas';
 
 end.

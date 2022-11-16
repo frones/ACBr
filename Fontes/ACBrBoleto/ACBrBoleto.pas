@@ -45,7 +45,8 @@ uses Classes, Graphics, Contnrs, IniFiles,
      {$ENDIF}
      SysUtils, typinfo,
      ACBrBase, ACBrMail, ACBrValidador,
-     ACBrDFeSSL, pcnConversao, ACBrBoletoConversao, ACBrBoletoRetorno;
+     ACBrDFeSSL, pcnConversao, ACBrBoletoConversao, ACBrBoletoRetorno,
+     ACBrPixBase;
 
 const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
@@ -806,6 +807,16 @@ type
      property CodigoBanco: String  read GetCodigoBanco;
   end;
 
+  { TACBrBoletoChavePIX }
+  TACBrBoletoChavePIX = class(TPersistent)
+  private
+    fTipoChave: TACBrPIXTipoChave;
+    fChave: String;
+    published
+    property TipoChavePIX: TACBrPIXTipoChave read fTipoChave write fTipoChave;
+    property Chave: String   read fChave write fChave;
+  end;
+
   { TACBrBancoClass }
   TACBrBancoClass = class
   protected
@@ -968,6 +979,7 @@ type
     fBancoClass        : TACBrBancoClass;
     fLocalPagamento    : String;
     FCIP               : string;
+    FPIX               : TACBrBoletoChavePIX;
     function GetNome   : String;
     function GetDigito : Integer;
     function GetNumero : Integer;
@@ -1059,6 +1071,7 @@ type
     property CasasDecimaisMoraJuros: Integer read GetCasasDecimaisMoraJuros write SetCasasDecimaisMoraJuros;
     property DensidadeGravacao : string read GetDensidadeGravacao write SetDensidadeGravacao;
     property CIP: string read FCIP write SetCIP;
+    property PIX: TACBrBoletoChavePIX read FPIX write FPIX;
   end;
 
   { TACBrCedenteWS }
@@ -3969,7 +3982,7 @@ begin
        IniRetorno.WriteString(CConta,'DigitoAgencia',Cedente.AgenciaDigito);
        IniRetorno.WriteString(CConta,'DigitoVerificadorAgenciaConta',Cedente.DigitoVerificadorAgenciaConta);
 
-       IniRetorno.WriteInteger(CConta,'CaracTitulo',Integer(Cedente.CaracTitulo));
+       IniRetorno.WriteInteger(CCedente,'CaracTitulo',Integer(Cedente.CaracTitulo));
        IniRetorno.WriteInteger(CCedente,'TipoDocumento',Integer(Cedente.TipoDocumento));
        IniRetorno.WriteInteger(CConta,'TipoCarteira',Integer(Cedente.TipoCarteira));
        IniRetorno.WriteInteger(CConta,'TipoInscricao',Integer(Cedente.TipoInscricao));
@@ -4113,7 +4126,8 @@ begin
    fACBrBoleto  := TACBrBoleto(AOwner);
    fNumeroBanco := 0;
 
-   fBancoClass := TACBrBancoClass.create(Self);
+   fBancoClass  := TACBrBancoClass.create(Self);
+   fPIX         := TACBrBoletoChavePIX.Create;
 end;
 
 destructor TACBrBanco.Destroy ;

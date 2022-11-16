@@ -87,7 +87,7 @@ implementation
 uses
   {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
   StrUtils, math, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime,
-  ACBrUtil.Math;
+  ACBrUtil.Math, ACBrPIXBase;
 
 { TACBrBancoSantander }
 
@@ -527,6 +527,7 @@ var
   ATipoInscricao: String;
   ListTransacao: TStringList;
 
+  LTipoChaveDICT : string;
 
 
 begin
@@ -719,6 +720,33 @@ begin
         {SEGMENTO R - FIM}
       end;
 
+      if (ACBrBanco.PIX.TipoChavePIX <> tchNenhuma) then
+      begin
+        Inc(ISequencia);
+        {SEGMENTO Y03}
+        case ACBrBanco.PIX.TipoChavePIX of
+          tchCPF       : LTipoChaveDICT := '1';
+          tchCNPJ      : LTipoChaveDICT := '2';
+          tchCelular   : LTipoChaveDICT := '3';
+          tchEmail     : LTipoChaveDICT := '4';
+          tchAleatoria : LTipoChaveDICT := '5';
+        end;
+
+          ListTransacao.Add( IntToStrZero(ACBrBanco.Numero, 3)               +  // 001 - 003 Código do Banco na compensação
+                  '0001'                                                     +  // 004 - 007 Numero do lote remessa
+                  '3'                                                        +  // 008 - 008 Tipo de Registro
+                  IntToStrZero(ISequencia ,5)                                +  // 009 - 013 N Sequencial do Registro no lote
+                  'Y'                                                        +  // 014 - 014 Cód. Segmento do registro detalhe
+                  Space(1)                                                   +  // 015 - 015 Reservado (uso Banco)
+                  sCodMovimento                                              +  // 016 - 017 Código de movimento Remessa
+                  '03'                                                       +  // 018 - 019 Identificação Registro
+                  Space(61)                                                  +  // 020 - 080 Reservado (uso Banco)
+                  LTipoChaveDICT                                             +  // 081 - 081 Tipo de Chave Pix
+                  PadRight(ACBrBanco.PIX.Chave,77,' ')                       +  // 082 - 158 Chave Pix
+                  PadRight(QrCode.txId,35,' ')                               +  // 159 - 193 Código identificação do QR Code
+                  Space(47)                                                 );  // 194 - 240 Reservado (uso Banco)
+        {SEGMENTO Y03 - FIM}
+      end;
       Inc(ISequencia);
       {SEGMENTO S}
       // Existe um Formmulário 1 - Especial, que não será implementado, erá implementado do Formulário 2

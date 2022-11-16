@@ -138,8 +138,12 @@ begin
 end;
 
 function TNFSeRClass.TipodeXMLLeitura(const aArquivo: string): TtpXML;
+var
+  aXML: string;
 begin
-  if (Pos('/infnfse>', LowerCase(Arquivo)) > 0) then
+  aXML := RemoverPrefixosDesnecessarios(aArquivo);
+
+  if (Pos('/infnfse>', LowerCase(aXML)) > 0) then
     Result := txmlNFSe
   else
     Result := txmlRPS;

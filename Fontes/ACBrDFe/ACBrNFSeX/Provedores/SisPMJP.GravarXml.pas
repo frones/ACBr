@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlBase,
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
@@ -63,7 +64,8 @@ begin
   inherited Configuracao;
 
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
-  DivAliq100 := True;
+  FormatoAliq := tcDe2;
+  NrOcorrValorISS := -1;
 end;
 
 end.

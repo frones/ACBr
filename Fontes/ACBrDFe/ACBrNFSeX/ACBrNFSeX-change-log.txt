@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 16/11/2022
+-- SisPMJP.GravarXml --
+[*] Ajustes para gerar o XML do Rps corretamente.
+   Por: Guilherme Costa - Dataweb
+-- ACBrNFSeXLerXml --
+[*] Remoção temporaria dos prefixos do XML para verificar se o XML é
+    de uma NFS-e ou Rps.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade Guaratuba/PR trocou de provedor agora é: Elotech
    Por: Marcelo Dev

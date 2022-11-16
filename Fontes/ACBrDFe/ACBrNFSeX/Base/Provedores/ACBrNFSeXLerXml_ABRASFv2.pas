@@ -1091,10 +1091,10 @@ begin
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();
 
-  Document.Clear();
-  Document.LoadFromXml(Arquivo);
+  FDocument.Clear();
+  FDocument.LoadFromXml(Arquivo);
 
-  XmlNode := Document.Root;
+  XmlNode := FDocument.Root;
 
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');

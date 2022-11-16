@@ -161,8 +161,8 @@ object framePacotes: TframePacotes
       ParentFont = False
     end
     object Label8: TLabel
-      Left = 276
-      Top = 398
+      Left = 282
+      Top = 394
       Width = 146
       Height = 13
       Margins.Left = 5
@@ -412,7 +412,7 @@ object framePacotes: TframePacotes
     end
     object Label23: TLabel
       Left = 292
-      Top = 397
+      Top = 410
       Width = 155
       Height = 13
       Margins.Left = 5

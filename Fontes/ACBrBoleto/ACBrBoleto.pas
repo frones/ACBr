@@ -979,7 +979,7 @@ type
     fBancoClass        : TACBrBancoClass;
     fLocalPagamento    : String;
     FCIP               : string;
-    FPIX               : TACBrBoletoChavePIX;
+
     function GetNome   : String;
     function GetDigito : Integer;
     function GetNumero : Integer;
@@ -1071,7 +1071,7 @@ type
     property CasasDecimaisMoraJuros: Integer read GetCasasDecimaisMoraJuros write SetCasasDecimaisMoraJuros;
     property DensidadeGravacao : string read GetDensidadeGravacao write SetDensidadeGravacao;
     property CIP: string read FCIP write SetCIP;
-    property PIX: TACBrBoletoChavePIX read FPIX write FPIX;
+
   end;
 
   { TACBrCedenteWS }
@@ -1142,6 +1142,7 @@ type
     fCedenteWS: TACBrCedenteWS;
     fIdentDistribuicao: TACBrIdentDistribuicao;
     fOperacao: string;
+    FPIX               : TACBrBoletoChavePIX;
     procedure SetAgencia(const AValue: String);
     procedure SetCNPJCPF ( const AValue: String ) ;
     procedure SetConta(const AValue: String);
@@ -1179,6 +1180,7 @@ type
     property CedenteWS: TACBrCedenteWS read fCedenteWS;
     property IdentDistribuicao: TACBrIdentDistribuicao read fIdentDistribuicao  write fIdentDistribuicao default tbClienteDistribui;
     property Operacao: string read fOperacao write fOperacao;
+    property PIX: TACBrBoletoChavePIX read FPIX write FPIX;
   end;
 
   { TACBrDataPeriodo }
@@ -2224,6 +2226,7 @@ begin
 
   fCedenteWS := TACBrCedenteWS.Create(self);
   fCedenteWS.Name := 'CedenteWS';
+  fPIX         := TACBrBoletoChavePIX.Create;
   {$IFDEF COMPILER6_UP}
   fCedenteWS.SetSubComponent(True);
   {$ENDIF}
@@ -4127,7 +4130,7 @@ begin
    fNumeroBanco := 0;
 
    fBancoClass  := TACBrBancoClass.create(Self);
-   fPIX         := TACBrBoletoChavePIX.Create;
+
 end;
 
 destructor TACBrBanco.Destroy ;

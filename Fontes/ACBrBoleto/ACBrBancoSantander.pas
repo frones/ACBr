@@ -720,11 +720,11 @@ begin
         {SEGMENTO R - FIM}
       end;
 
-      if (ACBrBanco.PIX.TipoChavePIX <> tchNenhuma) then
+      if (ACBrTitulo.ACBrBoleto.Cedente.PIX.TipoChavePIX <> tchNenhuma) then
       begin
         Inc(ISequencia);
         {SEGMENTO Y03}
-        case ACBrBanco.PIX.TipoChavePIX of
+        case ACBrTitulo.ACBrBoleto.Cedente.PIX.TipoChavePIX of
           tchCPF       : LTipoChaveDICT := '1';
           tchCNPJ      : LTipoChaveDICT := '2';
           tchCelular   : LTipoChaveDICT := '3';
@@ -742,7 +742,7 @@ begin
                   '03'                                                       +  // 018 - 019 Identificação Registro
                   Space(61)                                                  +  // 020 - 080 Reservado (uso Banco)
                   LTipoChaveDICT                                             +  // 081 - 081 Tipo de Chave Pix
-                  PadRight(ACBrBanco.PIX.Chave,77,' ')                       +  // 082 - 158 Chave Pix
+                  PadRight(ACBrTitulo.ACBrBoleto.Cedente.PIX.Chave,77,' ')   +  // 082 - 158 Chave Pix
                   PadRight(QrCode.txId,35,' ')                               +  // 159 - 193 Código identificação do QR Code
                   Space(47)                                                 );  // 194 - 240 Reservado (uso Banco)
         {SEGMENTO Y03 - FIM}

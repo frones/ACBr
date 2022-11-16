@@ -60,7 +60,7 @@ package ACBr_LCDPR;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Livro Caixa Digital do Produtor Rural (LCDPR) - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

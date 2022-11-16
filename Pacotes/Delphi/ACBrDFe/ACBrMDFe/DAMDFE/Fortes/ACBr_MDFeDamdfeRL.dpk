@@ -59,7 +59,7 @@ package ACBr_MDFeDamdfeRL;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

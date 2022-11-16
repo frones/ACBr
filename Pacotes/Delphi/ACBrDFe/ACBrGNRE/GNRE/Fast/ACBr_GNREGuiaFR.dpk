@@ -68,7 +68,7 @@ package ACBr_GNREGuiaFR;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - GNRE Impressão da Guia em FastReport - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

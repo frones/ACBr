@@ -62,7 +62,7 @@ package ACBr_BPeDabpeFR;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DABPe em FastReport - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

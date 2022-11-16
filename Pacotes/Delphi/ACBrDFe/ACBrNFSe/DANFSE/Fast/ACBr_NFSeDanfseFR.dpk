@@ -27,7 +27,7 @@ package ACBr_NFSeDanfseFR;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DANFSe em FastReport - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

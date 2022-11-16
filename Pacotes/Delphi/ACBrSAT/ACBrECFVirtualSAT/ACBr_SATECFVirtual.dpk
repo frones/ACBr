@@ -27,7 +27,7 @@ package ACBr_SATECFVirtual;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Implementação de ECF Virtual para o SAT. Permite usar ACBrECF para comandar o SAT como se fosse um ECF'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

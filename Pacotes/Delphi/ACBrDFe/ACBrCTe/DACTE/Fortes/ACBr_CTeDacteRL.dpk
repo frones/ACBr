@@ -62,7 +62,7 @@ package ACBr_CTeDacteRL;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DACTe em FortesReport - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

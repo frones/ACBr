@@ -68,7 +68,7 @@ package ACBr_NF3eDANF3eESCPOS;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DANF3e para NF3e Impressora Serial - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

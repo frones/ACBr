@@ -27,7 +27,7 @@ package ACBr_GNREGuiaRL;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - GNRE Impressão em FortesReport - (http://www.projectoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

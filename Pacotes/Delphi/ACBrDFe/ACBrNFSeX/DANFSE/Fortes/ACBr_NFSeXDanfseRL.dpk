@@ -59,7 +59,7 @@ package ACBr_NFSeXDanfseRL;
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DANFSe X em Fortes Report - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

@@ -2850,7 +2850,7 @@ end;
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorTomadorClick(
   Sender: TObject);
 var
-  xTitulo, NumPagina, CPFCNPJTomador, IMTomador: String;
+  xTitulo, NumPagina, CPFCNPJTomador, IMTomador, DataIni, DataFin: String;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Tomador';
 
@@ -2866,8 +2866,20 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proISSSaoPaulo then
+  begin
+    DataIni := DateToStr(Date);
+    if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
+      exit;
+
+    DataFin := DataIni;
+    if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
+      exit;
+  end;
+
   ACBrNFSeX1.ConsultarNFSeServicoTomadoPorTomador(CPFCNPJTomador,
-    IMTomador, StrToIntDef(NumPagina, 1));
+    IMTomador, StrToIntDef(NumPagina, 1), StrToDateDef(DataIni, 0),
+    StrToDateDef(DataFin, 0));
 
   ChecarResposta(tmConsultarNFSeServicoTomado);
 end;

@@ -4,7 +4,6 @@ Abaco                1.00
 Abaco                1.01
 Abaco                2.04  05/09/2022
 ABase                2.01
-Actcon               2.00
 Actcon               2.01
 Actcon               2.02
 Adm                  2.01
@@ -32,6 +31,7 @@ Desenvolve           2.03
 Digifred             2.00
 DSF                  1.00
 DSF                  2.00
+DSF                  2.03
 eGoverneISS          1.00  06/09/2022
 EL                   1.00
 EL                   2.04
@@ -60,6 +60,7 @@ iiBrasil             2.04
 infisc               1.00
 infisc               1.01
 infisc               2.01
+infisc               2.03
 IPM                  1.00
 IPM                  1.01  24/08/2022
 ISSBarueri           1.00  19/09/2022
@@ -75,6 +76,7 @@ ISSJoinville         2.04  10/08/2022
 ISSLencois           1.00
 ISSNatal             1.00
 ISSNet               1.00  04/08/2022
+ISSNet               2.04
 ISSPortoVelho        2.00
 ISSRecife            1.00
 ISSRio               1.00
@@ -95,6 +97,7 @@ PadraoNacional       1.00
 Prodata              2.01
 Pronim               1.00
 Pronim               2.02  17/08/2022
+Pronim               2.03
 Publica              1.00  08/08/2022
 RLZ                  1.00
 RLZ                  2.03
@@ -108,7 +111,9 @@ SiapSistemas         2.03
 Siat                 1.00
 SigCorp              2.03
 Sigep                2.00
+SigISS               1.00
 SigISS               1.03  01/08/2022
+SigISSWeb            1.00
 SilTecnologia        1.00
 SilTecnologia        2.03
 Simple               1.00
@@ -129,6 +134,7 @@ TcheInfo             2.04
 Tecnos               2.01
 Thema                1.00
 Tinus                1.00
+Tinus                1.01
 Tiplan               1.00
 Tiplan               2.03  30/08/2022
 Tributus             2.04

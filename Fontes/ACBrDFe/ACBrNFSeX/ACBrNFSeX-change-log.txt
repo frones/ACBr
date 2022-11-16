@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/11/2022
+-- PadraoNacional.Provider --
+[*] Ajustes finais no tratar retorno do consultar parâmetros municipais.
+   Por: Italo Giurizzato Junior
+
 11/11/2022
 -- ACBrNFSeXServicos.ini --
 [*] Mudança de URL e versão da cidade de Triunfo-RS

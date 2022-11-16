@@ -18,7 +18,8 @@ uses
   ACBrBoletoRet_Caixa, ACBrBoletoRetorno, ACBrBoletoW_BancoBrasil, 
   ACBrBoletoRet_BancoBrasil, ACBrBoletoW_BancoBrasil_API, 
   ACBrBoletoRet_BancoBrasil_API, ACBrBancoPenseBank, 
-  ACBrBoletoW_PenseBank_API, ACBrBoletoRet_PenseBank_API, LazarusPackageIntf;
+  ACBrBoletoW_PenseBank_API, ACBrBoletoRet_PenseBank_API, 
+  ACBrBoletoW_Santander, ACBrBoletoRet_Santander, LazarusPackageIntf;
 
 implementation
 

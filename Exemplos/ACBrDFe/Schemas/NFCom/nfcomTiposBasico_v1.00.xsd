@@ -112,8 +112,8 @@ Observação: o ambiente autorizador que trabalhar com mais de um Site deverá d
 										<xs:annotation>
 											<xs:documentation>Finalidade de emissão da NFCom</xs:documentation>
 											<xs:documentation>0- NFCom Normal; 
-
-3 - NFCom de Substituição; 4 - NFCom de Ajuste;</xs:documentation>
+3 - NFCom de Substituição; 
+4 - NFCom ajuste de debito;</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpFat" type="TFatNFCom">
@@ -138,6 +138,21 @@ Observação: o ambiente autorizador que trabalhar com mais de um Site deverá d
 										<xs:annotation>
 											<xs:documentation>Indicador de serviço pré-pago</xs:documentation>
 											<xs:documentation>1 – Serviço pré-pago (informar a tag somente se a nota for referente a um serviço exclusivamente pré-pago)</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="1"/>
+												<xs:whiteSpace value="preserve"/>
+												<xs:enumeration value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="indCessaoMeiosRede" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Indicador de Sessão de Meios de Rede.</xs:documentation>
+											<xs:documentation>Uma vez sinalizada, essa tag dispensa geração do grupo Fatura.
+Apenas para notas dos tipos Normal e Substituição com tipo de faturamento normal</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -358,7 +373,7 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 									<xs:element name="tpServUtil" type="TUtilizacao">
 										<xs:annotation>
 											<xs:documentation>Tipo de serviço utilizado</xs:documentation>
-											<xs:documentation>1-Telefonia; 2-Comunicação de dados; 3-TV por Assinatura;4 - Provimento de acesso à Internet; 5-Multimídia; 6-Outros; 7-Varios (Combo);</xs:documentation>
+											<xs:documentation>1-Telefonia; 2-Comunicação de dados; 3-TV por Assinatura;4 - Provimento de acesso à Internet; 5-Multimídia; 6-Outros; 7-Varios;</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="nContrato">
@@ -986,11 +1001,6 @@ item.
 																			<xs:annotation>
 																				<xs:documentation>Alíquota interna da UF de destino</xs:documentation>
 																				<xs:documentation>Alíquota adotada nas operações internas na UF do destinatário</xs:documentation>
-																			</xs:annotation>
-																		</xs:element>
-																		<xs:element name="pICMSInter" type="TDec_0302">
-																			<xs:annotation>
-																				<xs:documentation>Alíquota interestadual das UF envolvidas</xs:documentation>
 																			</xs:annotation>
 																		</xs:element>
 																		<xs:element name="vFCPUFDest" type="TDec_1302">

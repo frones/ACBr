@@ -52,11 +52,13 @@ type
   private
     FStatus: Integer;
     FTitle: string;
+    FContent: string;
   public
-    constructor Create(const AStatus: Integer; const ATitle: string); reintroduce;
+    constructor Create(const AStatus: Integer; const ATitle, AContent: string); reintroduce;
 
     property Status: Integer read FStatus;
     property Title: string read FTitle;
+    property Content: string read FContent;
   end;
 
 implementation
@@ -78,14 +80,15 @@ end;
 
 { EACBrOpenDeliveryHTTPException }
 
-constructor EACBrOpenDeliveryHTTPException.Create(const AStatus: Integer; const ATitle: string);
+constructor EACBrOpenDeliveryHTTPException.Create(const AStatus: Integer; const ATitle, AContent: string);
 var
   LMsg: string;
 begin
-  LMsg := Format('%d: %s', [AStatus, ATitle]);
+  LMsg := Format('%d: %s - %s', [AStatus, ATitle, AContent]);
   inherited Create(LMsg);
   FStatus := AStatus;
   FTitle := ATitle;
+  FContent := AContent;
 end;
 
 end.

@@ -39,6 +39,7 @@ interface
 uses
   ACBrJSON,
   ACBrOpenDeliverySchemaClasses,
+  ACBrOpenDeliveryException,
   Classes,
   SysUtils;
 
@@ -50,6 +51,8 @@ type
 
   TACBrOpenDeliveryOnHTTPEnviar = procedure(ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio) of object;
   TACBrOpenDeliveryOnHTTPRetornar = procedure(ALogResposta: TACBrOpenDeliveryHTTPLogResposta) of object;
+  TACBrOpenDeliveryOnHTTPError = procedure(ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio;
+    ALogResposta: TACBrOpenDeliveryHTTPLogResposta; AErro: EACBrOpenDeliveryHTTPException; var ATratado: Boolean) of object;
 
   TACBrOpenDeliveryHTTPLogEnvio = class
   private
@@ -415,14 +418,16 @@ end;
 function TACBrOpenDeliveryHTTPResponse.GetJSONArray: TACBrJSONArray;
 begin
   if (not Assigned(FJSONArray)) and (GetContent <> '') then
-    FJSONArray := TACBrJSONArray.Parse(GetContent);
+    if GetContent[1] = '[' then // alguns marketplaces não estão retornando
+      FJSONArray := TACBrJSONArray.Parse(GetContent);
   Result := FJSONArray;
 end;
 
 function TACBrOpenDeliveryHTTPResponse.GetJSONObject: TACBrJSONObject;
 begin
   if (not Assigned(FJSONObject)) and (GetContent <> '') then
-    FJSONObject := TACBrJSONObject.Parse(GetContent);
+    if GetContent[1] = '{' then // alguns marketplaces não estão retornando
+      FJSONObject := TACBrJSONObject.Parse(GetContent);
   Result := FJSONObject;
 end;
 

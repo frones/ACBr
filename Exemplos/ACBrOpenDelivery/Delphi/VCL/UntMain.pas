@@ -172,6 +172,10 @@ type
       ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio);
     procedure ACBrOpenDelivery1HTTPRetornar(
       ALogResposta: TACBrOpenDeliveryHTTPLogResposta);
+    procedure ACBrOpenDelivery1HTTPError(
+      ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio;
+      ALogResposta: TACBrOpenDeliveryHTTPLogResposta;
+      AErro: EACBrOpenDeliveryHTTPException; var ATratado: Boolean);
     private
       { Private declarations }
     public
@@ -488,6 +492,17 @@ begin
   mmoLogRequest.Lines.Add('Headers: ' + ALogEnvio.Headers.Text);
   mmoLogRequest.Lines.Add('Body: ' + ALogEnvio.Body);
   mmoLogRequest.Lines.Add('------ FIM REQUEST -------');
+end;
+
+procedure TFMain.ACBrOpenDelivery1HTTPError(
+  ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio;
+  ALogResposta: TACBrOpenDeliveryHTTPLogResposta;
+  AErro: EACBrOpenDeliveryHTTPException; var ATratado: Boolean);
+begin
+  ShowMessage(AErro.Content);
+  // Setar essa variável para True caso queira que o componente não lance
+  // a exceção e siga o fluxo normal
+  ATratado := True;
 end;
 
 procedure TFMain.ACBrOpenDelivery1HTTPRetornar(ALogResposta: TACBrOpenDeliveryHTTPLogResposta);

@@ -108,9 +108,14 @@ type
     FOwner: TACBrComponent;
     FRequest: TACBrOpenDeliveryHTTPRequest;
     FResponse: TACBrOpenDeliveryHTTPResponse;
+    FLogEnvio: TACBrOpenDeliveryHTTPLogEnvio;
+    FLogResposta: TACBrOpenDeliveryHTTPLogResposta;
     FUseAuth: Boolean;
     FStatusCode: Integer;
     FStatusText: string;
+
+    procedure SetLogEnvio(ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio);
+    procedure SetLogResposta(ALogResposta: TACBrOpenDeliveryHTTPLogResposta);
 
     procedure InicializarServico;
     procedure FinalizarServico;
@@ -473,14 +478,18 @@ var
   LJSONObject: TACBrJSONObject;
   LStatus: Integer;
   LTitle: string;
+  LContent: string;
 begin
   FreeAndNil(FResponse);
+  FLogEnvio := nil;
+  FLogResposta := nil;
   FResponse := FRequest.Send;
   FStatusText := FResponse.StatusText;
   FStatusCode := FResponse.StatusCode;
 
   LStatus := FStatusCode;
   LTitle := FStatusText;
+  LContent := FResponse.GetContent;
   if FStatusCode >= 400 then
   begin
     LJSONObject := FResponse.GetJSONObject;
@@ -496,7 +505,7 @@ begin
       end;
     end;
 
-    raise EACBrOpenDeliveryHTTPException.Create(LStatus, LTitle);
+    raise EACBrOpenDeliveryHTTPException.Create(LStatus, LTitle, LContent);
   end;
 end;
 
@@ -513,8 +522,18 @@ begin
 end;
 
 procedure TACBrOpenDeliveryWebService.GerarException(const AMsg: string; AErro: Exception);
+var
+  LTratado: Boolean;
 begin
-  GetACBrOpenDelivery(FOwner).GerarException(AMsg, AErro);
+  LTratado := False;
+  if Assigned(GetACBrOpenDelivery(FOwner).OnHTTPError) then
+  begin
+    if AErro is EACBrOpenDeliveryHTTPException then
+      GetACBrOpenDelivery(FOwner).OnHTTPError(FLogEnvio, FLogResposta,
+        EACBrOpenDeliveryHTTPException(AErro), LTratado);
+  end;
+  if not LTratado then
+    GetACBrOpenDelivery(FOwner).GerarException(AMsg, AErro);
 end;
 
 function TACBrOpenDeliveryWebService.GerarMsgErro(AErro: Exception): string;
@@ -535,8 +554,8 @@ begin
   if not Assigned(FRequest) then
     FRequest := TACBrOpenDeliveryHTTPRequest.New;
   FRequest
-    .OnHTTPEnvio(LComponent.OnHTTPEnviar)
-    .OnHTTPResposta(LComponent.OnHTTPRetornar)
+    .OnHTTPEnvio(SetLogEnvio)
+    .OnHTTPResposta(SetLogResposta)
     .BaseURL(LComponent.MarketPlace.BaseUrl)
     .TimeOut(LComponent.TimeOut)
     .ProxyHost(LComponent.Proxy.Host)
@@ -556,6 +575,20 @@ end;
 procedure TACBrOpenDeliveryWebService.SalvarResposta;
 begin
 
+end;
+
+procedure TACBrOpenDeliveryWebService.SetLogEnvio(ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio);
+begin
+  FLogEnvio := ALogEnvio;
+  if Assigned(GetACBrOpenDelivery(FOwner).OnHTTPEnviar) then
+    GetACBrOpenDelivery(FOwner).OnHTTPEnviar(ALogEnvio);
+end;
+
+procedure TACBrOpenDeliveryWebService.SetLogResposta(ALogResposta: TACBrOpenDeliveryHTTPLogResposta);
+begin
+  FLogResposta := ALogResposta;
+  if Assigned(GetACBrOpenDelivery(FOwner).OnHTTPRetornar) then
+    GetACBrOpenDelivery(FOwner).OnHTTPRetornar(ALogResposta);
 end;
 
 function TACBrOpenDeliveryWebService.TratarResposta: Boolean;

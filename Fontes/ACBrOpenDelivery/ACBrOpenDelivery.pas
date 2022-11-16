@@ -51,6 +51,7 @@ type
   TACBrOpenDeliveryProxy = class;
   TACBrOpenDeliveryHTTPLogEnvio = ACBrOpenDeliveryHTTP.TACBrOpenDeliveryHTTPLogEnvio;
   TACBrOpenDeliveryHTTPLogResposta = ACBrOpenDeliveryHTTP.TACBrOpenDeliveryHTTPLogResposta;
+  EACBrOpenDeliveryHTTPException = ACBrOpenDeliveryException.EACBrOpenDeliveryHTTPException;
 
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
@@ -77,6 +78,7 @@ type
     FOnEventOrderCancellationRequest: TOnEventStatus;
     FOnEventOrderPlaced: TOnEventOrder;
     FOnPollingEnd: TOnPollingEnd;
+    FOnHTTPError: TACBrOpenDeliveryOnHTTPError;
     function GetWebServices: TACBrOpenDeliveryWebServices;
     function GetOrder: TACBrOpenDeliverySchemaOrder;
     function GetEvents: TACBrOpenDeliverySchemaEventCollection;
@@ -112,6 +114,7 @@ type
     property OnGerarLog: TACBrGravarLog read FOnGerarLog write FOnGerarLog;
     property OnHTTPEnviar: TACBrOpenDeliveryOnHTTPEnviar read FOnHTTPEnviar write FOnHTTPEnviar;
     property OnHTTPRetornar: TACBrOpenDeliveryOnHTTPRetornar read FOnHTTPRetornar write FOnHTTPRetornar;
+    property OnHTTPError: TACBrOpenDeliveryOnHTTPError read FOnHTTPError write FOnHTTPError;
     property OnTokenGet: TOnTokenGet read FOnTokenGet write FOnTokenGet;
     property OnTokenSave: TOnTokenSave read FOnTokenSave write FOnTokenSave;
   end;

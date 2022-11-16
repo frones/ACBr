@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/11/2022
+-- SmarAPD.Provider/SmarAPD.GravarXml --
+[*] Possível solução para o método ConsultarNfsePorFaixa
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Uso da função ACBrStr para exibir a mensagem com vogais acentuadas no
     Lazarus.

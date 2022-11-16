@@ -381,7 +381,6 @@ begin
 
   FormatoAliq := tcDe2;
 
-  NrOcorrInformacoesComplemetares := 0;
   NrOcorrNIFTomador := 0;
   NrOcorrValTotTrib := 0;
   NrOcorrAliquota := 1;

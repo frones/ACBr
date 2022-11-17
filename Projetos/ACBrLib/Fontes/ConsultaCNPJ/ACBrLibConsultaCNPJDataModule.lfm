@@ -1,0 +1,14 @@
+object LibConsultaCNPJDM: TLibConsultaCNPJDM
+  OldCreateOrder = False
+  Height = 150
+  HorizontalOffset = 1004
+  VerticalOffset = 423
+  Width = 150
+  object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
+    ProxyPort = '8080'
+    PesquisarIBGE = False
+    IniServicos = 'C:\lazarus\ACBrConsultaCNPJServicos.ini'
+    Left = 60
+    Top = 48
+  end
+end

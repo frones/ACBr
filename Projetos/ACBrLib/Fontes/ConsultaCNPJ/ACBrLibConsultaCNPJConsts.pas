@@ -38,13 +38,25 @@ uses
   Classes, SysUtils;
 
 const
-  CLibSedexNome = 'ACBrLibConsultaCNPJ';
-  CLibSedexVersao = '0.0.1';
+  CLibConsultaCNPJNome = 'ACBrLibConsultaCNPJ';
+  CLibConsultaCNPJVersao = '0.0.0.0';
 
   CSessaoRespConsulta = 'Consulta';
 
   CSessaoConsultaCNPJ = 'ConsultaCNPJ';
 
+  CChaveAbertura = 'Abertura';
+  CChaveEndereco = 'Endereco';
+  CChaveNumero   = 'Numero';
+  CChaveComplemento = 'Complemento';
+  CChaveBairo = 'Bairro';
+  CChaveCidade = 'Cidade';
+  CChaveUF = 'UF';
+  CChaveCEP = 'CEP';
+  CChaveSituacao = 'Situacao';
+  CChaveCNAE1 = 'CNAE1';
+  CChaveCNAE2 = 'CNAE2';
+  CChaveNaturezaJuridica = 'NaturezaJuridica';
 
 implementation
 

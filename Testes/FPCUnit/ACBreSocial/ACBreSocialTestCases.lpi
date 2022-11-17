@@ -80,7 +80,7 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="acbresocialtests.pas"/>
+        <Filename Value="ACBreSocialTests.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBreSocialTests"/>
       </Unit1>

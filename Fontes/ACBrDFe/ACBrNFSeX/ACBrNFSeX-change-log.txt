@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/11/2022
+-- Equiplano.Provider --
+[*] Alteração visando a leitura do retorno do Consultar Lote
+   Por: Italo Giurizzato Junior
+
 16/11/2022
 -- SisPMJP.GravarXml --
 [*] Ajustes para gerar o XML do Rps corretamente.

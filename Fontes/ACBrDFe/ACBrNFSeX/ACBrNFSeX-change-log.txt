@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/11/2022
+-- Equiplano.LerXml --
+[*] Alteração visando a leitura correta do XML da NFS-e
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv2/ACBrNFSeXWebserviceBase --
 [*] Remoção de linhas comentadas, correções em alguns comentários e 
     ajustes no alinhamento de algumas linhas.

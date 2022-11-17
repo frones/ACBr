@@ -2801,8 +2801,33 @@ begin
 end;
 
 function StringINIToTipoEvento(out ok: boolean; const s: string; AVersaoeSocial: TVersaoeSocial): TTipoEvento;
+var
+  intSecondPos     : Integer;
+  strSearchValue   : string;
+  intFirstPos      : integer;
 begin
-  Result := StringXMLToTipoEvento(ok, s, AVersaoeSocial);
+  ok               := False;
+  Result           := teNaoIdentificado;
+  strSearchValue   := EmptyStr;
+  try
+    intSecondPos   := PosAt(']', s, 1);
+    if(intSecondPos > 0)then
+    begin
+      intFirstPos  := PosAt('[', s, 1);
+
+      if(intFirstPos > 0)then
+        strSearchValue := Trim(Copy(s, intFirstPos + 1, intSecondPos - intFirstPos - 1));
+    end;
+
+    if(strSearchValue <> '')then
+    begin
+      ok := True;
+      Result := GetMatrixEventoInfo(meiEventoString, strSearchValue, AVersaoESocial).TipoEvento;
+    end;
+  except
+    on E:Exception do
+      ok := False;
+  end;
 end;
 
 function StringXMLToTipoEvento(out ok: boolean; const s: string; AVersaoeSocial: TVersaoeSocial): TTipoEvento;

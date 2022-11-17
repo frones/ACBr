@@ -1278,7 +1278,6 @@ begin
             'Content-Type: text/xml; charset=Cp1252; name=' +
             NomeArq + sLineBreak +
             'Content-Transfer-Encoding: binary' + sLineBreak +
-//            'Content-Length: ****' + sLineBreak +
             'Content-Disposition: form-data; name=' + AnsiQuotedStr(NomeArq, '"') +
             '; filename=' + AnsiQuotedStr(NomeArq, '"') + sLineBreak +
             sLineBreak +
@@ -1287,8 +1286,6 @@ begin
 
   Tamanho := Length(Result);
   xTamanho := IntToStr(Tamanho);
-
-//  Result := StringReplace(Result, '****', xTamanho, [rfReplaceAll]);
 
   HttpClient := FPDFeOwner.SSL.SSLHttpClass;
 

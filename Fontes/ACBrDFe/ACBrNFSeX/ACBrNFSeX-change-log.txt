@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/11/2022
+-- ACBrNFSeXGravarXml_ABRASFv2/ACBrNFSeXWebserviceBase --
+[*] Remoção de linhas comentadas, correções em alguns comentários e 
+    ajustes no alinhamento de algumas linhas.
+   Por: Italo Giurizzato Junior
 -- Equiplano.Provider --
 [*] Alteração visando a leitura do retorno do Consultar Lote
    Por: Italo Giurizzato Junior

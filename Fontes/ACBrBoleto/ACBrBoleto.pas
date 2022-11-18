@@ -46,7 +46,7 @@ uses Classes, Graphics, Contnrs, IniFiles,
      SysUtils, typinfo,
      ACBrBase, ACBrMail, ACBrValidador,
      ACBrDFeSSL, pcnConversao, ACBrBoletoConversao, ACBrBoletoRetorno,
-     ACBrPixBase;
+     ACBrPIXBase;
 
 const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';

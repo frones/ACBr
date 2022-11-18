@@ -116,6 +116,9 @@ function eSocial_ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador:
 function eSocial_DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function eSocial_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 
 implementation
 
@@ -400,6 +403,21 @@ begin
 
    on E: Exception do
    Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function eSocial_ObterCertificados (const sResposta: PChar; var esTamanho: longint):longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibeSocial(pLib^.Lib).ObterCertificados(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
   end;
 end;
 

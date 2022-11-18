@@ -137,6 +137,10 @@ function eSocial_ConsultaIdentificadoresEventosTrabalhador (var libHandle: TLibH
 
 function eSocial_DownloadEventos (var libHandle: TLibHandle; const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
+
+function eSocial_ObterCertificados (var libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint):longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
+
 {%endregion}
 
 implementation

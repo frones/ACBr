@@ -71,6 +71,7 @@ type
     function ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
     function DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
     function SetRetornoEventoCarregados(const NumEventos: integer): integer;
+    function ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
 
     property eSocialDM: TLibeSocialDM read FeSocialDM;
 
@@ -80,7 +81,7 @@ implementation
 
 Uses
   ACBrLibConsts, ACBrLibeSocialConsts, ACBrLibConfig, ACBrLibeSocialConfig,
-  ACBrLibResposta;
+  ACBrLibResposta, ACBrLibCertUtils, StrUtils;
 
 { TACBrLibeSocial }
 
@@ -705,6 +706,33 @@ begin
     Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 
+end;
+
+function TACBrLibeSocial.ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+var
+  Resposta: Ansistring;
+begin
+  try
+    GravarLog('eSocial_ObterCertificados', logNormal);
+
+    eSocialDM.Travar;
+
+    try
+      Resposta := '';
+      Resposta := ObterCerticados(eSocialDM.ACBreSocial1.SSL);
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      eSocialDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 end.

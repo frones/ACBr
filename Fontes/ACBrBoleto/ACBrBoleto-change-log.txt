@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2022
+--ACBrBancoDaycoval--
+[-]TK-3295 Ajuste remessa CNAB400 Daycoval sobre a informação do campo Seu Numero
+  por Daniel de Morais / Keiller Rodrigues / Victor H Gonzales - Pandaaa
+
 16/11/2022
 [+]TK2854 - Inclusão do boleto com integração via WS para o Santander
   por : Renato Rubinho

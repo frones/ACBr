@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/11/2022
+-- SoftPlan.Provider/SoftPlan.GravarXml --
+[*] Ajustes necessário para não ocorrer o conflito com o parâmetro "client_secret"
+   Por: Ronaldo Bispo
 -- DBSeller.Provider --
 [*] Correção na lista de tags dos retornos para a correta leitura do retorno.
    Por: Italo Giurizzato Junior

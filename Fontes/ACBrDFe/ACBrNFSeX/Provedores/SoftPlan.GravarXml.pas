@@ -125,10 +125,6 @@ var
 begin
   Configuracao;
 
-//  Opcoes.SuprimirDecimais := True;
-//  Opcoes.DecimalChar := '.';
-//  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
-
   ListaDeAlertas.Clear;
 
   FDocument.Clear();
@@ -173,7 +169,7 @@ begin
                                                             NFSe.InfID.ID, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'identificacaoTomador', 0, 20, 1,
-                                   NFSe.Tomador.IdentificacaoTomador.Cnpj, ''));
+                       OnlyNumber(NFSe.Tomador.IdentificacaoTomador.Cnpj), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'inscricaoMunicipalTomador', 0, 30, 1,
                      NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));

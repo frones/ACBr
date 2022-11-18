@@ -336,7 +336,7 @@ begin
             Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataEmissao'), tcDat);
             DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDat);
             DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('motivoCancelamento'), tcStr);
-            NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('identificacao'), tcStr);
+            NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroSerie'), tcStr);
           end;
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroNota);
@@ -389,7 +389,7 @@ begin
     FpPath := FpPath + '&username=' + Emitente.WSUser;
     FpPath := FpPath + '&password=' + Emitente.WSSenha;
     FpPath := FpPath + '&client_id=' + Emitente.WSChaveAcesso;
-    FpPath := FpPath + '&client_secret=' + Emitente.WSChaveAutoriz;
+    FpPath := FpPath + '&client_secret=' + Emitente.WSFraseSecr;
   end;
 
   FpMimeType := 'application/x-www-form-urlencoded';
@@ -603,7 +603,7 @@ begin
   if (FpMetodo = tmGerarToken) then
   begin
     with TConfiguracoesNFSe(FPConfiguracoes).Geral do
-      Auth := Emitente.WSChaveAcesso + ':' + Emitente.WSChaveAutoriz;
+      Auth := Emitente.WSChaveAcesso + ':' + Emitente.WSFraseSecr;
     Auth := 'Basic ' + String(EncodeBase64(AnsiString(Auth)));
 
     aHeaderReq.AddHeader('Authorization', Auth);

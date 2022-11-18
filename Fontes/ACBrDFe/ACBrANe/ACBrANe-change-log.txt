@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2022
+-- ACBrANeDocumentos/ACBrANeWebServices --
+[*] Ajustes na função RemoverGrupoInfSuplementares.
+   Por: Cleonir
+
 29/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

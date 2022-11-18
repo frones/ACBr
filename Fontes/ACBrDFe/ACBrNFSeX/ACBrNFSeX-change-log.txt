@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 18/11/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade Rio das Antas/SC - Provedor IPM
+   Por: Willian Delan
+[*] A cidade Jaru/RO trocou a URL de produção
+   Por: Diego Reckziegel
+[*] A cidade Varzea da Palma/MG trocou de provedor agora é: Sintese
+   Por: Antonio Alexandre
 -- IPM.GravarXml --
 [*] Possível solução para o erro 400 retornado pelo provedor.
    Por: Italo Giurizzato Junior

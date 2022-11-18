@@ -83,6 +83,9 @@ namespace ACBrLib.eSocial
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int eSocial_DownloadEventos(IntPtr handle, string aIdEmpregador, string aCPFTrabalhador, DateTime aDataInicial, DateTime aDataFinal, StringBuilder buffer, ref int bufferSize);
+        
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int eSocial_ObterCertificados(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         protected override void InitializeMethods()
         {
@@ -111,6 +114,7 @@ namespace ACBrLib.eSocial
             AddMethod<eSocial_ConsultaIdentificadoresEventosTabela>("eSocial_ConsultaIdentificadoresEventosTabela");
             AddMethod<eSocial_ConsultaIdentificadoresEventosTrabalhador>("eSocial_ConsultaIdentificadoresEventosTrabalhador");
             AddMethod<eSocial_DownloadEventos>("eSocial_DownloadEventos");
+            AddMethod<eSocial_ObterCertificados>("eSocial_ObterCertificados");
 
         }
     }

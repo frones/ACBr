@@ -134,6 +134,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
             this.btnSalvarConfiguracoes = new System.Windows.Forms.Button();
+            this.btnObterCertificados = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -451,6 +452,7 @@
             this.btnSelectSchema.TabIndex = 34;
             this.btnSelectSchema.Text = "...";
             this.btnSelectSchema.UseVisualStyleBackColor = true;
+            this.btnSelectSchema.Click += new System.EventHandler(this.btnSelectSchema_Click);
             // 
             // label31
             // 
@@ -534,6 +536,7 @@
             this.btnSelectLog.TabIndex = 15;
             this.btnSelectLog.Text = "...";
             this.btnSelectLog.UseVisualStyleBackColor = true;
+            this.btnSelectLog.Click += new System.EventHandler(this.btnSelectLog_Click);
             // 
             // tabPage2
             // 
@@ -906,6 +909,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnObterCertificados);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.cmbXmlSign);
             this.tabPage3.Controls.Add(this.label6);
@@ -967,6 +971,7 @@
             this.btnDadosPFX.TabIndex = 16;
             this.btnDadosPFX.Text = "...";
             this.btnDadosPFX.UseVisualStyleBackColor = true;
+            this.btnDadosPFX.Click += new System.EventHandler(this.btnDadosPFX_Click);
             // 
             // txtCertNumero
             // 
@@ -1031,6 +1036,7 @@
             this.btnSelecionarCertificado.TabIndex = 9;
             this.btnSelecionarCertificado.Text = "...";
             this.btnSelecionarCertificado.UseVisualStyleBackColor = true;
+            this.btnSelecionarCertificado.Click += new System.EventHandler(this.btnSelecionarCertificado_Click);
             // 
             // cmbXmlSign
             // 
@@ -1123,6 +1129,7 @@
             this.btnArqeSocial.TabIndex = 27;
             this.btnArqeSocial.Text = "...";
             this.btnArqeSocial.UseVisualStyleBackColor = true;
+            this.btnArqeSocial.Click += new System.EventHandler(this.btnArqeSocial_Click);
             // 
             // label36
             // 
@@ -1328,6 +1335,16 @@
             this.btnSalvarConfiguracoes.UseVisualStyleBackColor = true;
             this.btnSalvarConfiguracoes.Click += new System.EventHandler(this.btnSalvarConfiguracoes_Click);
             // 
+            // btnObterCertificados
+            // 
+            this.btnObterCertificados.Location = new System.Drawing.Point(9, 315);
+            this.btnObterCertificados.Name = "btnObterCertificados";
+            this.btnObterCertificados.Size = new System.Drawing.Size(118, 23);
+            this.btnObterCertificados.TabIndex = 21;
+            this.btnObterCertificados.Text = "Obter Certificados";
+            this.btnObterCertificados.UseVisualStyleBackColor = true;
+            this.btnObterCertificados.Click += new System.EventHandler(this.btnObterCertificados_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1486,6 +1503,7 @@
         private System.Windows.Forms.Button btnConsultaIdentificadoresEventosEmpregador;
         private System.Windows.Forms.Button btnConsultaIdentificadoresEventosTrabalhador;
         private System.Windows.Forms.Button btnConsultaIdentificadoresEventosTabela;
+        private System.Windows.Forms.Button btnObterCertificados;
     }
 }
 

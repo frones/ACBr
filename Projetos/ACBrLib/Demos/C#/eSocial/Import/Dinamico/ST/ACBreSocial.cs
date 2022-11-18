@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
+using ACBrLib.Core.DFe;
 using ACBrLib.eSocial;
 
 namespace ACBrLib.eSocial
@@ -274,6 +275,20 @@ namespace ACBrLib.eSocial
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
+        }
+
+        public InfoCertificado[] ObterCertificados()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<eSocial_ObterCertificados>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var certificados = ProcessResult(buffer, bufferLen).Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            return certificados.Length == 0 ? new InfoCertificado[0] : certificados.Select(x => new InfoCertificado(x)).ToArray();
         }
 
         #endregion Diversos

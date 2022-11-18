@@ -456,5 +456,40 @@ namespace ACBrLibeSocial.Demo
                 MessageBox.Show(ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnObterCertificados_Click(object sender, EventArgs e)
+        {
+            var ret = ACBreSocial.ObterCertificados();
+            rtbRespostas.AppendLine(ret.Select(x => x.ToString()).ToArray());
+        }
+
+        private void btnSelectLog_Click(object sender, EventArgs e)
+        {
+            txtLogs.Text = Helpers.SaveFile("Arquivos Logs (*.log)|*.log|Todos os Arquivos (*.*)|*.*");
+        }
+
+        private void btnSelectSchema_Click(object sender, EventArgs e)
+        {
+            txtSchemaPath.Text = Helpers.SelectFolder();
+        }
+
+        private void btnSelecionarCertificado_Click(object sender, EventArgs e)
+        {
+            txtCertPath.Text = Helpers.OpenFile("Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*");
+        }
+
+        private void btnDadosPFX_Click(object sender, EventArgs e)
+        {
+            var file = Helpers.OpenFile("Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*");
+            if (!File.Exists(file)) return;
+
+            var dados = File.ReadAllBytes(file);
+            txtDadosPFX.Text = Convert.ToBase64String(dados);
+        }
+
+        private void btnArqeSocial_Click(object sender, EventArgs e)
+        {
+            txtArqeSocial.Text = Helpers.SelectFolder();
+        }
     }
 }

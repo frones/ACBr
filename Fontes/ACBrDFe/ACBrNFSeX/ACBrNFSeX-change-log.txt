@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/11/2022
+-- DBSeller.Provider --
+[*] Correção na lista de tags dos retornos para a correta leitura do retorno.
+   Por: Italo Giurizzato Junior
 -- WebISS.GravarXml --
 [*] Incluído a condição de OptanteSimplesNacional para definir se a aliquota
     será obrigatória ou não.

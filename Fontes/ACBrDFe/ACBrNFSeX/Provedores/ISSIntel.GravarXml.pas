@@ -47,9 +47,14 @@ type
   protected
     procedure Configuracao; override;
 
+  public
+    function GerarXml: Boolean; Override;
   end;
 
 implementation
+
+uses
+  ACBrNFSeXConversao;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -63,6 +68,14 @@ begin
   inherited Configuracao;
 
   DivAliq100  := True;
+end;
+
+function TNFSeW_ISSIntel.GerarXml: Boolean;
+begin
+  if NFSe.OptanteSimplesNacional = snSim then
+    NrOcorrAliquota := 1;
+
+  Result := inherited GerarXml;
 end;
 
 end.

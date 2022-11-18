@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 18/11/2022
+-- ISSIntel.GravarXml --
+[*] Incluído a condição de OptanteSimplesNacional para definir se a aliquota
+    será obrigatória ou não.
+   Por: Italo Giurizzato Junior
 -- SoftPlan.Provider/SoftPlan.GravarXml --
 [*] Ajustes necessário para não ocorrer o conflito com o parâmetro "client_secret"
    Por: Ronaldo Bispo

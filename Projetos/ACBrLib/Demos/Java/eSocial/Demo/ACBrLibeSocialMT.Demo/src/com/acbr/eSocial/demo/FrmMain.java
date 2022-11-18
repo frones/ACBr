@@ -133,6 +133,7 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel31 = new javax.swing.JLabel();
         txtCertNumero = new javax.swing.JTextField();
         txtCertPassword = new javax.swing.JPasswordField();
+        btnObterCertificados1 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         ckbSalvarArqs = new javax.swing.JCheckBox();
         ckbPastaMensal = new javax.swing.JCheckBox();
@@ -788,6 +789,14 @@ public class FrmMain extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
+        btnObterCertificados1.setActionCommand("Obter Certificados");
+        btnObterCertificados1.setLabel("Obter Certificados");
+        btnObterCertificados1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObterCertificados1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -797,13 +806,15 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel26)
-                            .addComponent(cmbHttp, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbCrypt, 0, 163, Short.MAX_VALUE)
-                            .addComponent(jLabel27)
-                            .addComponent(cmbXmlSign, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel17)
+                                .addComponent(jLabel26)
+                                .addComponent(cmbHttp, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbCrypt, 0, 163, Short.MAX_VALUE)
+                                .addComponent(jLabel27)
+                                .addComponent(cmbXmlSign, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnObterCertificados1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -823,7 +834,9 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(cmbXmlSign, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnObterCertificados1)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Certificados", jPanel7);
@@ -1372,6 +1385,16 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDownloadEventosActionPerformed
 
+    private void btnObterCertificados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObterCertificados1ActionPerformed
+
+        try {
+            String ret = acbreSocial.obterCertificados();
+            rtbRespostas.append(ret);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnObterCertificados1ActionPerformed
+
     private void loadConfig() {
         try {
             
@@ -1514,6 +1537,8 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnDownloadEventos;
     private javax.swing.JButton btnEnviareSocial;
     private javax.swing.JButton btnLimpareSocial;
+    private javax.swing.JButton btnObterCertificados;
+    private javax.swing.JButton btnObterCertificados1;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSelecionarCertificado;
     private javax.swing.JButton btnSelectLog;

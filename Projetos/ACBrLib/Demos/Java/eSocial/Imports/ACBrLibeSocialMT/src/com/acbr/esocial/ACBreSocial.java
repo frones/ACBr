@@ -101,6 +101,8 @@ public final class ACBreSocial extends ACBrLibBase {
         int eSocial_ConsultaIdentificadoresEventosTrabalhador(Pointer libHandler, String aIdEmpregador, String aCPFTrabalhador, Date aDataInicial, Date aDataFinal, ByteBuffer buffer, IntByReference bufferSize);
     
         int eSocial_DownloadEventos(Pointer libHandler, String aIdEmpregador, String aCPFTrabalhador, Date aDataInicial, Date aDataFinal, ByteBuffer buffer, IntByReference bufferSize);
+    
+        int eSocial_ObterCertificados( Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
     }
 
     public ACBreSocial() throws Exception {
@@ -308,6 +310,15 @@ public final class ACBreSocial extends ACBrLibBase {
         
         return processResult(buffer, bufferLen);
     }
+    
+    public String obterCertificados() throws Exception {
+      ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+      IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+      
+      int ret = ACBreSocialLib.INSTANCE.eSocial_ObterCertificados(getHandle(), buffer, bufferLen );
+      checkResult( ret );
+      return processResult( buffer, bufferLen );
+  }
     
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {

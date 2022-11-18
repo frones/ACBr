@@ -374,7 +374,8 @@ Begin VB.Form FrmMain
          Tab(2).Control(4)=   "cmbXmlSign"
          Tab(2).Control(5)=   "cmbHttp"
          Tab(2).Control(6)=   "cmbCrypt"
-         Tab(2).ControlCount=   7
+         Tab(2).Control(7)=   "btnObterCertificados"
+         Tab(2).ControlCount=   8
          TabCaption(3)   =   "Arquivos"
          TabPicture(3)   =   "FrmMain.frx":008C
          Tab(3).ControlEnabled=   0   'False
@@ -401,6 +402,14 @@ Begin VB.Form FrmMain
          Tab(4).Control(6)=   "cmbTipoEmpregador"
          Tab(4).Control(7)=   "cmbVersaoDF"
          Tab(4).ControlCount=   8
+         Begin VB.CommandButton btnObterCertificados 
+            Caption         =   "Obter Certificados"
+            Height          =   375
+            Left            =   -74640
+            TabIndex        =   107
+            Top             =   5160
+            Width           =   1575
+         End
          Begin VB.ComboBox cmbVersaoDF 
             Height          =   315
             ItemData        =   "FrmMain.frx":00C4
@@ -683,7 +692,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtAguardar"
-               BuddyDispid     =   196654
+               BuddyDispid     =   196655
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -704,7 +713,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtTentativas"
-               BuddyDispid     =   196653
+               BuddyDispid     =   196654
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -725,7 +734,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtIntervalo"
-               BuddyDispid     =   196652
+               BuddyDispid     =   196653
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -850,7 +859,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtProxyPorta"
-               BuddyDispid     =   196663
+               BuddyDispid     =   196664
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1180,7 +1189,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Value           =   5000
             BuddyControl    =   "txtTimeOut"
-            BuddyDispid     =   196691
+            BuddyDispid     =   196692
             OrigLeft        =   4560
             OrigTop         =   780
             OrigRight       =   4815
@@ -1718,6 +1727,13 @@ Private Sub btnDownloadEventos_Click()
     ret = eSocial.ConsultaIdentificadoresEventosTrabalhador(txtEmpregador.Text, cpfTrabalhador, dataInicial, dataFinal)
     rtbRespostas.Text = ret
     
+Erro:
+    MsgBox Err.Description
+End Sub
+
+Private Sub btnObterCertificados_Click()
+    On Error GoTo Erro:
+    eSocial.ObterCertificados
 Erro:
     MsgBox Err.Description
 End Sub

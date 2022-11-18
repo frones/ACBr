@@ -122,6 +122,10 @@ Private Declare Function eSocial_DownloadEventos _
                                          ByVal aDataFinal As Date, _
                                          ByVal buffer As String, _
                                          ByRef bufferLen As Long) As Long
+                                         
+Private Declare Function eSocial_ObterCertificados _
+                Lib "ACBreSocial32.dll" (ByVal buffer As String, _
+                                         ByRef bufferSize As Long) As Long
 
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
@@ -385,6 +389,20 @@ Public Function DownloadEventos(ByVal aIdEmpregador As String, _
     CheckResult retorno
     
     DownloadEventos = processResult(buffer, bufferLen)
+End Function
+
+Public Function ObterCertificados() As String()
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = eSocial_ObterCertificados(buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
 End Function
 
 Private Sub CheckResult(ByVal Resultado As Long)

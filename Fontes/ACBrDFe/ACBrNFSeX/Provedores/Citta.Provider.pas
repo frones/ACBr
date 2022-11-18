@@ -216,8 +216,8 @@ function TACBrNFSeProviderCitta203.StrToSituacaoTributaria(out ok: boolean;
   const s: string): TnfseSituacaoTributaria;
 begin
   Result := StrToEnumerado(ok, s,
-                             ['1', '0', '2'],
-                             [stRetencao, stNormal, stSubstituicao]);
+                             ['1', '0', '2', ''],
+                             [stRetencao, stNormal, stSubstituicao, stNenhum]);
 end;
 
 { TACBrNFSeXWebserviceCitta203 }

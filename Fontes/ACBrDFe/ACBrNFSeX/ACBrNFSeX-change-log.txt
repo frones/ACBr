@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/11/2022
+-- Citta.Provider/Centi.Provider --
+[*] Incluído o valor stNenhum na função StrToSituacaoTributaria.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade Rio das Antas/SC - Provedor IPM
    Por: Willian Delan

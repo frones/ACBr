@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 18/11/2022
+-- WebISS.GravarXml --
+[*] Incluído a condição de OptanteSimplesNacional para definir se a aliquota
+    será obrigatória ou não.
+   Por: Italo Giurizzato Junior
 -- Citta.Provider/Centi.Provider --
 [*] Incluído o valor stNenhum na função StrToSituacaoTributaria.
    Por: Italo Giurizzato Junior

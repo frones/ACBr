@@ -56,6 +56,8 @@ type
   protected
     procedure Configuracao; override;
 
+  public
+    function GerarXml: Boolean; Override;
   end;
 
 implementation
@@ -83,6 +85,14 @@ begin
   inherited Configuracao;
 
   FormatoItemListaServico := filsSemFormatacao;
+end;
+
+function TNFSeW_WebISS202.GerarXml: Boolean;
+begin
+  if NFSe.OptanteSimplesNacional = snSim then
+    NrOcorrAliquota := 1;
+
+  Result := inherited GerarXml;
 end;
 
 end.

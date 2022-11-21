@@ -47,6 +47,7 @@ type
   private
     FNumeroSequencialRegistroNoLote: Int64;
   protected
+    function DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String; override;
   public
     Constructor Create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String; Override;
@@ -211,6 +212,17 @@ begin
   end;
 end;
 
+function TACBrBancoCresol.DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String;
+begin
+  with ACBrTitulo do
+  begin
+    if(PercentualMulta > 0)then
+      Result := '0'
+    else
+      Result := '1';
+  end;
+end;
+
 function TACBrBancoCresol.DefinePosicaoNossoNumeroRetorno: Integer;
 begin
   if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
@@ -228,6 +240,8 @@ var
   ATipoBoleto,
   ADataMoraJuros,
   ADataDesconto,
+  ACodigoMulta,
+  ADataMulta,
   ATipoAceite,
   NossoNum                : string;
   strCarteiraEnvio        : Char;
@@ -369,6 +383,12 @@ begin
     else
       strCarteiraEnvio := '1';
 
+    {Código Multa}
+    ACodigoMulta := DefineCodigoMulta(ACBrTitulo);
+
+    {Data Multa}
+    ADataMulta := DefineDataMulta(ACBrTitulo);
+
     Result := IntToStrZero(ACBrBanco.Numero, 3)                         + //1 a 3 - Código do banco
               '0001'                                                    + //4 a 7 - Lote de serviço
               '3'                                                       + //8 - Tipo do registro: Registro detalhe
@@ -454,6 +474,47 @@ begin
               '000'                                                      + //210 a 212 - Uso exclusivo FEBRABAN/CNAB
               space(28);                                                   //213 a 240 - Uso exclusivo FEBRABAN/CNAB
     Inc(FNumeroSequencialRegistroNoLote);
+
+    {SEGMENTO R OPCIONAL }
+    if (TipoDesconto2<>tdNaoConcederDesconto) or
+       (TipoDesconto3<>tdNaoConcederDesconto) or
+       (PercentualMulta > 0) then
+    begin
+      Result := Result + sLineBreak +
+                IntToStrZero(ACBrBanco.Numero, 3)                      + //1 a 3 - Código do banco
+                '0001'                                                 + //4 a 7 - Número do lote
+                '3'                                                    + //8 - Tipo do registro: Registro detalhe
+                IntToStrZero((FNumeroSequencialRegistroNoLote)+ 1, 5)  + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+                'R'                                                    + //14 - Código do segmento do registro detalhe
+                ' '                                                    + //CNAB Uso Exclusivo FEBRABAN/CNAB 15 15 1 - Alfa Brancos G004
+                ATipoOcorrencia                                        + //Código de Movimento Remessa 16 17 2 - Num *C004
+                TipoDescontoToString(TipoDesconto2)                    + //Código do Desconto 2 18 18 1 - Num *C021
+                PadLeft(IfThen(TipoDesconto2<>tdNaoConcederDesconto,IfThen(DataDesconto2  > 0, FormatDateTime( 'ddmmyyyy', DataDesconto2),''),''),8,'0') + //Data do Desconto 2 19 26 8 - Num C022
+                PadLeft(IfThen(TipoDesconto2<>tdNaoConcederDesconto,IfThen(ValorDesconto2 > 0,IntToStrZero(round(ValorDesconto2 * 100), 15),''),''), 15, '0') + //Valor/Percentual a ser Concedido 27 41 13 2 Num C023
+                TipoDescontoToString(TipoDesconto3)                    + //Código do Desconto 3 42 42 1 - Num *C021
+                PadLeft(IfThen(TipoDesconto3<>tdNaoConcederDesconto,IfThen(DataDesconto3  > 0, FormatDateTime( 'ddmmyyyy', DataDesconto3),'0'),'0'),8,'0') + //Data do Desconto 3 43 50 8 - Num C022
+                PadLeft(IfThen(TipoDesconto3<>tdNaoConcederDesconto,IfThen(ValorDesconto3 > 0,IntToStrZero(round(ValorDesconto3 * 100), 15),''),''), 15, '0') + //Valor/Percentual a Ser Concedido 51 65 13 2 Num C023
+                ACodigoMulta                                           + //Código da Multa 66 66 1 - Alfa G073
+                ADataMulta                                             + //Data da Multa 67 74 8 - Num G074
+                IfThen(PercentualMulta > 0,
+                  IntToStrZero(round(PercentualMulta * 100), 15),
+                PadRight('', 15, '0'))                                 + //Multa Valor/Percentual a Ser Aplicado 75 89 13 2 Num G075
+                PadRight('', 10, ' ')                                  + //Informação ao Pagador Informação ao Pagador 90 99 10 - Alfa *C036
+                PadRight('', 40, ' ')                                  + //Informação 3 Mensagem 3 100 139 40 - Alfa *C037
+                PadRight('', 40, ' ')                                  + //Mensagem 4 140 179 40 - Alfa *C037
+                PadRight('', 20, ' ')                                  + //CNAB Uso Exclusivo FEBRABAN/CNAB 180 199 20 - Alfa Brancos G004
+                PadLeft('', 8, '0')                                    + //Cód. Ocor. do Pagador 200 207 8 - Num *C038
+                PadLeft('', 3, '0')                                    + //Cód. do Banco na Conta do Débito 208 210 3 - Num G001
+                PadLeft('', 5, '0')                                    + //Código da Agência do Débito 211 215 5 - Num *G008
+                PadLeft('', 1, ' ')                                    + //Dígito Verificador da Agência 216 216 1 - Alfa *G009
+                PadLeft('', 12, '0')                                   + //Corrente para Débito 217 228 12 - Num *G010
+                PadLeft('', 1, ' ')                                    + //Dígito Verificador da Conta 229 229 1 - Alfa *G011
+                PadLeft('', 1, ' ')                                    + //DV Dígito Verificador Ag/Conta 230 230 1 - Alfa *G012
+                PadLeft('', 1, '0')                                    + //Ident. da Emissão do Aviso Déb. Aviso para Débito Automático 231 231 1 - Num *C039
+                PadLeft('',9, ' ');                                      //CNAB Uso Exclusivo FEBRABAN/CNAB 232 240 9 - Alfa Brancos G004
+      Inc(FNumeroSequencialRegistroNoLote);
+    end;
+
   end;
   fpQtdRegsLote := FNumeroSequencialRegistroNoLote;
 end;

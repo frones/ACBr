@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2022
+--ACBBancoCresol--
+[*] TK-3198 Incluido a geração do Segmento Opcional R
+  por: Atual Sistemas Dev
+
 18/11/2022
 --ACBrBancoDaycoval--
 [-]TK-3295 Ajuste remessa CNAB400 Daycoval sobre a informação do campo Seu Numero

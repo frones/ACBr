@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2022
+-- ACBrPIXCDReg, ACBrPIXCD.dpk, ACBrPIXCD.lpk --
+[+] Inclusão de novo PSP PagSeguro
+
+-- ACBrPIXCD.dcr, ACBrPIXCD.lrs --
+[+] Inclusão de resources do ícone para o novo PSP PagSeguro
+    Por: Elias César
+
 27/10/2022
 -- ACBrPIXSchemasCob --
 [*] Correção de problema ocorrido com PSP Siccob quando há retorno de tag com valor Null

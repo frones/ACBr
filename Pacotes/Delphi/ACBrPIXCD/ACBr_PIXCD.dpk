@@ -62,6 +62,7 @@ contains
   ACBrPIXSchemasParametrosConsultaLote in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaLote.pas',
   ACBrPIXSchemasLotesCobVConsultadas in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLotesCobVConsultadas.pas',
   ACBrShipaySchemas in '..\..\..\Fontes\ACBrPIXCD\ACBrShipaySchemas.pas',
-  ACBrPIXPSPSicredi in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPSicredi.pas';
+  ACBrPIXPSPSicredi in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPSicredi.pas',
+  ACBrPIXPSPPagSeguro in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPagSeguro.pas';
 
 end.

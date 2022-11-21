@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 21/11/2022
+-- SimplISS.Provider --
+[*] Possível solução para a leitura correta dos retornos no Lazarus.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.GravarXml --
 [*] Ajuste para gerar a tag CodigoAtividade com 9 digitos.
    Por: Italo Giurizzato Junior

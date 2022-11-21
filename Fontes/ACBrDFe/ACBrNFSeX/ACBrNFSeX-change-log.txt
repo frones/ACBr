@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/11/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade Tubarao/SC - Provedor Bauhaus
+[+] Incluída a cidade Icara/SC - Provedor Bauhaus
+   Por: Adriano Luiz de Souza
+
 18/11/2022
 -- ISSIntel.GravarXml --
 [*] Incluído a condição de OptanteSimplesNacional para definir se a aliquota

@@ -1598,40 +1598,34 @@
 	<xsd:element name="ConsultarNfseServicoPrestadoEnvio">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="1" maxOccurs="1" />
-				<xsd:choice>
-				    <xsd:element name="NumeroNfse" type="tsNumeroNfse"
-                        minOccurs="1" maxOccurs="1" />
-					<xsd:element name="PeriodoEmissao" 
-						minOccurs="1" maxOccurs="1">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="DataInicial" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-								<xsd:element name="DataFinal" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-							</xsd:sequence>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="PeriodoCompetencia" 
-						minOccurs="1" maxOccurs="1">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="DataInicial" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-								<xsd:element name="DataFinal" type="xsd:date"
-									minOccurs="1" maxOccurs="1" />
-							</xsd:sequence>
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-				<xsd:element name="Tomador" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="0" maxOccurs="1" />
-				<xsd:element name="Intermediario" type="tcIdentificacaoPessoaEmpresa"
-					minOccurs="0" maxOccurs="1" />
-				<xsd:element name="Pagina" type="tsPagina" 
-					minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="ConsultarNfseEnvio">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa" minOccurs="1" maxOccurs="1" />
+							<xsd:choice>
+								<xsd:element name="NumeroNfse" type="tsNumeroNfse" minOccurs="1" maxOccurs="1" />
+								<xsd:element name="PeriodoEmissao" minOccurs="1" maxOccurs="1">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="DataInicial" type="xsd:date" minOccurs="1" maxOccurs="1" />
+											<xsd:element name="DataFinal" type="xsd:date" minOccurs="1" maxOccurs="1" />
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+								<xsd:element name="PeriodoCompetencia" minOccurs="1" maxOccurs="1">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="DataInicial" type="xsd:date" minOccurs="1" maxOccurs="1" />
+											<xsd:element name="DataFinal" type="xsd:date" minOccurs="1" maxOccurs="1" />
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:choice>
+							<xsd:element name="Tomador" type="tcIdentificacaoPessoaEmpresa" minOccurs="0" maxOccurs="1" />
+							<xsd:element name="Intermediario" type="tcIdentificacaoPessoaEmpresa" minOccurs="0" maxOccurs="1" />
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 21/11/2022
+-- ISSDSF.GravarXml --
+[*] Ajuste para gerar a tag CodigoAtividade com 9 digitos.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade Tubarao/SC - Provedor Bauhaus
 [+] Incluída a cidade Icara/SC - Provedor Bauhaus

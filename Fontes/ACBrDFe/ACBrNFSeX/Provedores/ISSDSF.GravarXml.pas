@@ -346,7 +346,7 @@ begin
                                           NFSe.ConstrucaoCivil.CodigoObra, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoAtividade', 1, 9, 1,
-                                                  NFSe.Servico.CodigoCnae, ''));
+                                PadRight(NFSe.Servico.CodigoCnae, 9, '0'), ''));
 
   if VersaoNFSe = ve101 then
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoServico', 4, 5, 0,

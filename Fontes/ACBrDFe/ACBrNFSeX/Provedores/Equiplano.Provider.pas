@@ -307,9 +307,18 @@ function TACBrNFSeProviderEquiplano.GerarXmlNota(const aXmlRps,
   aXmlRetorno: string): string;
 var
   aRPS, aNFSE: string;
+  i: Integer;
 begin
   aRPS  := SeparaDados(aXmlRps, 'rps', False);
-  aNFSE := aXmlRetorno;
+  aNFSE := SeparaDados(aXmlRetorno, 'nfse', False);
+
+  i := Pos('<nrEmissorRps', aNFSE);
+  if i > 0 then
+    aNFSE := Copy(aNFSE, 1, i-1);
+
+  i := Pos('<nrRps', aNFSE);
+  if i > 0 then
+    aNFSE := Copy(aNFSE, 1, i-1);
 
   Result := '<compNfse xmlns="http://www.equiplano.com.br/esnfs">' +
               '<nfse>' +

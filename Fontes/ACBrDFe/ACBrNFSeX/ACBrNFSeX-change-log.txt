@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/11/2022
+-- Equiplano.Provider --
+[*] Ajustes na montagem do XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Ajustes na leitura da Data/Hora do cancelamento.
    Por: Italo Giurizzato Junior

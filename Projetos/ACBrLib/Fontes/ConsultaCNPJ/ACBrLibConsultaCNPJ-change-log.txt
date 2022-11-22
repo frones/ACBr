@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2022
+--- ACBrLibConsultaCNPJDataModule ---
+[*] Correção Procedure AplicarConfigurações
+
 17/11/2022
 --- ACBrLibConsultaCNPJ ---
 [*] Ajustes da unit ACBrLibConsultaCNPJConsts

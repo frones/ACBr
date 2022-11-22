@@ -85,7 +85,7 @@ procedure TLibConsultaCNPJDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibConsultaCNPJConfig;
 begin
-  pLibConfig := TLibConsultaCNPJConfig(TACBrLibConsultaCNPJ(pLib).Config);
+  pLibConfig := TLibConsultaCNPJConfig(TACBrLibConsultaCNPJ(Lib).Config);
 end;
 
 procedure TLibConsultaCNPJDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/11/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a cidade Januaria/MG - Provedor Sintese
+   Por: M3Software Sistemas
 -- Equiplano.Provider --
 [*] Ajustes na montagem do XML da NFS-e.
    Por: Italo Giurizzato Junior

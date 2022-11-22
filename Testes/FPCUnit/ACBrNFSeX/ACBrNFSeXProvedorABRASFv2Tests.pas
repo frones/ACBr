@@ -1,4 +1,4 @@
-﻿unit ACBrNFSeXProvedorAbrasfTests;
+﻿unit ACBrNFSeXProvedorABRASFv2Tests;
 
 {$I ACBr.inc}
 
@@ -10,9 +10,9 @@ uses
 
 type
 
-  { ACBrNFSeXProvedorAbrasfTest }
+  { ACBrNFSeXProvedorABRASFv2Test }
 
-  ACBrNFSeXProvedorAbrasfTest = class(TTestCase)
+  ACBrNFSeXProvedorABRASFv2Test = class(TTestCase)
   private
     FACBrNFSeX1: TACBrNFSeX;
   public
@@ -20,52 +20,47 @@ type
     procedure TearDown; override;
   published
     procedure AoCriarComponente_ContadorDeNotas_DeveSerZero;
-    procedure Proverdor_Eh_Abrasf;
+    procedure Proverdor_Eh_ABRASFv2;
     procedure LoadFromFile_PassandoXMLValidoNaoAssinado_CampoXml_EhIdenticoAoArquivo;
     procedure LoadFromFile_PassandoXMLValidoNaoAssinado_CamposCarregadosCorretamente;
 
   end;
-
-
-
 
 implementation
 
 uses
   ACBrConsts, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrNFSeXConversao;
 
-
 const
-  SArquivoAbrasf01  = '..\..\..\..\Recursos\NFSe\Provedores\Abrasf\Abrasf_01-nfse.xml';
-  UmMunicipioAbrasf = 3162500;
+  SArquivoABRASFv201  = '..\..\..\..\Recursos\NFSe\Provedores\ABRASFv2\ABRASFv2_01-nfse.xml';
+  UmMunicipioABRASFv2 = 5300108; // Usado o XML da NFS-e de Brasília - DF para o teste
 
-{ ACBrNFSeXProvedorAbrasfTest }
+{ ACBrNFSeXProvedorABRASFv2Test }
 
-procedure ACBrNFSeXProvedorAbrasfTest.SetUp;
+procedure ACBrNFSeXProvedorABRASFv2Test.SetUp;
 begin
   inherited SetUp;
   FACBrNFSeX1 := TACBrNFSeX.Create(nil);
-  FACBrNFSeX1.Configuracoes.Geral.CodigoMunicipio := UmMunicipioAbrasf;
+  FACBrNFSeX1.Configuracoes.Geral.CodigoMunicipio := UmMunicipioABRASFv2;
 end;
 
-procedure ACBrNFSeXProvedorAbrasfTest.TearDown;
+procedure ACBrNFSeXProvedorABRASFv2Test.TearDown;
 begin
   FACBrNFSeX1.Free;
   inherited TearDown;
 end;
 
-procedure ACBrNFSeXProvedorAbrasfTest.AoCriarComponente_ContadorDeNotas_DeveSerZero;
+procedure ACBrNFSeXProvedorABRASFv2Test.AoCriarComponente_ContadorDeNotas_DeveSerZero;
 begin
-  CheckEquals(0, FACBrNFSeX1.NotasFiscais.Count, 'Contador de NFeS Não é zero');
+  CheckEquals(0, FACBrNFSeX1.NotasFiscais.Count, 'Contador de NFSe Não é zero');
 end;
 
-procedure ACBrNFSeXProvedorAbrasfTest.Proverdor_Eh_Abrasf;
+procedure ACBrNFSeXProvedorABRASFv2Test.Proverdor_Eh_ABRASFv2;
 begin
-  Fail('Provedor Abrasf não encontrado')
-  //CheckTrue((FACBrNFSeX1.Configuracoes.Geral.Provedor = proISSNet), 'Provedor não é Abrasf');
+  CheckTrue((FACBrNFSeX1.Configuracoes.Geral.Provedor = proISSNet), 'Provedor não é ISSNet');
 end;
 
-procedure ACBrNFSeXProvedorAbrasfTest.LoadFromFile_PassandoXMLValidoNaoAssinado_CampoXml_EhIdenticoAoArquivo;
+procedure ACBrNFSeXProvedorABRASFv2Test.LoadFromFile_PassandoXMLValidoNaoAssinado_CampoXml_EhIdenticoAoArquivo;
 var
   lStrList: TStringList;
   sxml: string;
@@ -74,7 +69,7 @@ begin
   lStrList := TStringList.Create;;
   try
     //lStrList.TrailingLineBreak := False; //Não funciona no Delphi 7
-    lStrList.LoadFromFile(SArquivoAbrasf01);
+    lStrList.LoadFromFile(SArquivoABRASFv201);
     sxml := lStrList.Text;
   finally
     lStrList.Free;
@@ -86,15 +81,16 @@ begin
     sxml := Copy(sxml, 0, Length(sxml) - Length(sLineBreak));
   end;
 
-  FACBrNFSeX1.NotasFiscais.LoadFromFile(SArquivoAbrasf01);
+  FACBrNFSeX1.NotasFiscais.LoadFromFile(SArquivoABRASFv201);
   CheckEquals(sxml, FACBrNFSeX1.NotasFiscais[0].XmlNfse, 'Campo XmlNfse não corresponde ao conteúdo do arquivo');
-
 end;
 
-procedure ACBrNFSeXProvedorAbrasfTest.LoadFromFile_PassandoXMLValidoNaoAssinado_CamposCarregadosCorretamente;
+procedure ACBrNFSeXProvedorABRASFv2Test.LoadFromFile_PassandoXMLValidoNaoAssinado_CamposCarregadosCorretamente;
 begin
-  FACBrNFSeX1.NotasFiscais.LoadFromFile(SArquivoAbrasf01);
+  FACBrNFSeX1.NotasFiscais.LoadFromFile(SArquivoABRASFv201);
+
   CheckTrue(FACBrNFSeX1.NotasFiscais.Count > 0, '');
+
   CheckEquals('5', FACBrNFSeX1.NotasFiscais[0].NFSe.Numero, 'NFSe.Numero valor incorreto') ;
   CheckEquals('B01234A5F', FACBrNFSeX1.NotasFiscais[0].NFSe.CodigoVerificacao, 'CodigoVerificacao não é B01234A5F');
   //CheckEquals(Iso8601ToDateTime('2022-10-19T17:21:01.017'), FACBrNFSeX1.NotasFiscais[0].NFSe.DataEmissao, 'NFSe.DataEmissao valor incorreto');
@@ -140,10 +136,8 @@ begin
 
 end;
 
-
 initialization
 
-  _RegisterTest('ACBrNFSeXProvedorISSNETTests', ACBrNFSeXProvedorAbrasfTest);
-
+  _RegisterTest('ACBrNFSeXProvedorABRASFv2Tests', ACBrNFSeXProvedorABRASFv2Test);
 
 end.

@@ -35,8 +35,9 @@ program ACBrNFSeXTestCases;
 uses
   ACBrTests.Util in '..\..\ACBrTests.Util.pas',
   ACBrTests.Runner in '..\..\ACBrTests.Runner.pas',
-  ACBrNFSeXProvedorISSNETTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorISSNETTests.pas',
-  ACBrNFSeXTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXTests.pas';
+  ACBrNFSeXTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXTests.pas',
+  ACBrNFSeXProvedorABRASFv1Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv1Tests.pas',
+  ACBrNFSeXProvedorABRASFv2Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv2Tests.pas';
 
 begin
   ACBrRunTests;

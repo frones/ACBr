@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="12"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
-      <Flags>
-        <CompatibilityMode Value="True"/>
-      </Flags>
       <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
       <Title Value="ACBrNFSeXTestCases"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
@@ -66,7 +64,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="5">
       <Unit0>
         <Filename Value="ACBrNFSeXTestCases.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -80,17 +78,13 @@
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="ACBrNFSeXProvedorISSNETTests.pas"/>
+        <Filename Value="ACBrNFSeXProvedorABRASFv1Tests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="ACBrNFSeXProvedorAbrasfTests.pas"/>
+        <Filename Value="ACBrNFSeXProvedorABRASFv2Tests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
-      <Unit5>
-        <Filename Value="ACBrNFSeXProvedorGinfesTests.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

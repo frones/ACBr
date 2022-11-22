@@ -135,6 +135,8 @@ begin
 
   FormatoAliq := tcDe2;
 
+  GerarEnderecoExterior := True;
+
   NrOcorrNIFTomador := 0;
   NrOcorrCodTribMun_1 := 0;
   NrOcorrCodigoNBS := 0;

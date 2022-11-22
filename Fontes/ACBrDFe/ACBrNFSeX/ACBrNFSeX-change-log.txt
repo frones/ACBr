@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/11/2022
+-- ISSNet.GravarXml --
+[*] Alteração na procedure de Configuração visando a geração da tag EnderecoExterior.
+   Por: Douglas A R Lima
+
 21/11/2022
 -- SimplISS.Provider --
 [*] Possível solução para a leitura correta dos retornos no Lazarus.

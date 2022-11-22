@@ -35,6 +35,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+22/11/2022
+--ACBrCEP--
+[+]TK-3318 Inclusão do WS BrasilAPI no ACBrCEP
+  por : Victor H Gonzales - Panda
 
 05/11/2022
 --ACBrCEP--

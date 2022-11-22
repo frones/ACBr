@@ -66,7 +66,8 @@ type
                          wsCorreiosSIGEP,
                          wsCepAberto,
                          wsWSCep,
-                         wsOpenCep );
+                         wsOpenCep,
+                         wsBrasilAPI );
 
   EACBrCEPException = class ( Exception );
 
@@ -333,6 +334,18 @@ type
     Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
   end;
 
+  { TACBrWSBrasilAPI } // https://brasilapi.com.br/docs
+  TACBrWSBrasilAPI = class(TACBrCEPWSClass)
+  private
+    FCepBusca: String;
+    procedure ProcessaResposta;
+  public
+    constructor Create( AOwner : TACBrCEP ); override;
+
+    Procedure BuscarPorCEP(const ACEP : String ); override;
+    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
+  end;
+
 implementation
 uses
   strutils,
@@ -448,6 +461,7 @@ begin
     wsCepAberto        : fACBrCEPWS := TACBrWSCEPAberto.Create(Self);
     wsWSCep            : fACBrCEPWS := TACBrWSWSCEP.Create(Self);
     wsOpenCep          : fACBrCEPWS := TACBrWSOpenCEP.Create(Self);
+    wsBrasilAPI        : fACBrCEPWS := TACBrWSBrasilAPI.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -1585,9 +1599,9 @@ begin
 end;
 
 procedure TACBrWSOpenCEP.ProcessaResposta;
-  var
-    LJson      : TACBrJSONObject;
-    LACBrCEPEnderecos : TACBrCEPEndereco;
+var
+  LJson : TACBrJSONObject;
+  LACBrCEPEnderecos : TACBrCEPEndereco;
 begin
   LJson := TACBrJSONObject.Parse(fOwner.RespHTTP.Text);
 
@@ -1604,9 +1618,60 @@ begin
 
   finally
     LJson.Free;
-
     BuscaEfetuada;
+  end;
+end;
 
+{ TACBrWSBrasilAPI }
+
+procedure TACBrWSBrasilAPI.BuscarPorCEP(const ACEP: String);
+var
+  LCEP: string;
+begin
+  FCepBusca := ACep;
+  LCEP := OnlyNumber( ACEP );
+
+  if ACEP = '' then
+     raise EACBrCEPException.Create( ERROR_CEP_OBRIGATORIO );
+
+  fOwner.HTTPGet( fpURL + LCEP ) ;
+  ProcessaResposta();
+end;
+
+procedure TACBrWSBrasilAPI.BuscarPorLogradouro(const AMunicipio,
+  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
+begin
+  inherited;
+end;
+
+constructor TACBrWSBrasilAPI.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+  fOwner.ParseText := True;
+  fpURL := 'https://brasilapi.com.br/api/cep/v2/';
+end;
+
+procedure TACBrWSBrasilAPI.ProcessaResposta;
+var
+  LJson : TACBrJSONObject;
+  LACBrCEPEnderecos : TACBrCEPEndereco;
+begin
+  LJson := TACBrJSONObject.Parse(fOwner.RespHTTP.Text);
+
+  try
+    LACBrCEPEnderecos := fOwner.Enderecos.New;
+
+    LACBrCEPEnderecos.CEP             := LJson.AsString['cep'];
+    LACBrCEPEnderecos.Logradouro      := LJson.AsString['street'];
+    LACBrCEPEnderecos.Complemento     := LJson.AsString['complemento'];
+    LACBrCEPEnderecos.Bairro          := LJson.AsString['neighborhood'];
+    LACBrCEPEnderecos.Municipio       := LJson.AsString['city'];
+    LACBrCEPEnderecos.UF              := LJson.AsString['state'];
+    LACBrCEPEnderecos.Longitude       := LJson.AsJSONObject['location'].AsJSONObject['coordinates'].AsString['longitude'];
+    LACBrCEPEnderecos.Latitude        := LJson.AsJSONObject['location'].AsJSONObject['coordinates'].AsString['longitude'];
+  finally
+    LJson.Free;
+    BuscaEfetuada;
   end;
 end;
 

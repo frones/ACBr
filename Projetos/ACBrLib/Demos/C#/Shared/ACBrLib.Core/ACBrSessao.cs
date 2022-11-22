@@ -47,5 +47,6 @@
         Sedex,
         eSocial,
         GTIN,
+        ConsultaCNPJ,
     }
 }

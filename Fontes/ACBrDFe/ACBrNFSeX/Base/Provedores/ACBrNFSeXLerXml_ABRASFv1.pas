@@ -154,10 +154,13 @@ begin
 
     with NFSe.NfseCancelamento do
     begin
-      DataHora := LerDataHoraCancelamento(AuxNode);
+      if DataHora = 0 then
+      begin
+        DataHora := LerDataHoraCancelamento(AuxNode);
 
-      if DataHora > 0 then
-        NFSe.SituacaoNfse := snCancelado;
+        if DataHora > 0 then
+          NFSe.SituacaoNfse := snCancelado;
+      end;
     end;
   end;
 end;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/11/2022
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Ajustes na leitura da Data/Hora do cancelamento.
+   Por: Italo Giurizzato Junior
 -- ISSNet.GravarXml --
 [*] Alteração na procedure de Configuração visando a geração da tag EnderecoExterior.
    Por: Douglas A R Lima

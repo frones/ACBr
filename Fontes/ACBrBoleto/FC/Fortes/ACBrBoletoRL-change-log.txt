@@ -46,9 +46,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2022
+--ACBrBoletoFCFortesFr--
+[-] Proteção na propriedade de logo da empresa se o arquivo existe no path, e não se o path foi informado.
+  por : Victor H Gonzales - Pandaaa
+
 30/05/2022
 --ACBrBoletoFCFortesFr.pas--
-  [-] #TK-2437 correção na saida do filtro fiJPG para não sair bitmap (bmp) e sim sair o arquivo como jpeg;
+[-] #TK-2437 correção na saida do filtro fiJPG para não sair bitmap (bmp) e sim sair o arquivo como jpeg;
       por: Pandaaa / Nelson Santos
 
 05/04/2022

@@ -1328,7 +1328,9 @@ var
 implementation
 
 Uses
-  strutils, ACBrImage, ACBrDelphiZXingQRCode, ACBrUtil.Strings, ACBrUtil.Base
+  strutils, ACBrImage, ACBrDelphiZXingQRCode, ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO
   {$ifndef FPC}
     ,jpeg
   {$ENDIF};
@@ -1979,7 +1981,7 @@ begin
       txtValorDocumento4.Caption      := FormatFloatBr(Titulo.ValorDocumento,',0.00');
       txtNomeSacado4.Caption          := Titulo.Sacado.NomeSacado;
 
-      if Titulo.ArquivoLogoEmp <> EmptyStr then
+      if ACBrUtil.FilesIO.FilesExists(Titulo.ArquivoLogoEmp) then
          imgLogoEmpresaBoleto.Picture.LoadFromFile(Titulo.ArquivoLogoEmp);
 
 
@@ -2572,7 +2574,7 @@ begin
 
     //imgLogoEmpresaServicos.Picture.LoadFromFile(ExtractFilePath(Application.ExeName) + 'logo.jpg');
 
-      if Titulo.ArquivoLogoEmp <> EmptyStr then
+      if ACBrUtil.FilesIO.FilesExists(Titulo.ArquivoLogoEmp) then
          imgLogoEmpresaServicos.Picture.LoadFromFile(Titulo.ArquivoLogoEmp);
 
 

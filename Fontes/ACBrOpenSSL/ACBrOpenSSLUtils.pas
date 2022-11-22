@@ -63,6 +63,7 @@ const
   CPublic = 'Public';
   CPFX = 'PFX';
   CPEM = 'PEM';
+  CX509 = 'X509';
 
 type
   TACBrOpenSSLAlgorithm = ( algMD2, algMD4, algMD5, algRMD160, algSHA, algSHA1,
@@ -151,8 +152,12 @@ type
   public
     property Version: String read GetVersion;
 
+    procedure LoadX509FromFile(const aX509File: String);
+    procedure LoadX509FromString(const aX509Data: String);
     procedure LoadPFXFromFile(const APFXFile: String; const Password: AnsiString = '');
     procedure LoadPFXFromStr(const APFXData: AnsiString; const Password: AnsiString = '');
+    procedure LoadPEMFromFile(const aPEMFile: String; const Password: AnsiString = '');
+    procedure LoadPEMFromStr(const aPEMData: AnsiString; const Password: AnsiString = '');
     procedure LoadCertificateFromFile(const ACertificateFile: String; const Password: AnsiString = '');
     procedure LoadCertificateFromString(const ACertificate: AnsiString; const Password: AnsiString = '');
 
@@ -903,6 +908,43 @@ begin
 
 end;
 
+procedure TACBrOpenSSLUtils.LoadX509FromFile(const aX509File: String);
+var
+  fs: TFileStream;
+  s: AnsiString;
+begin
+  CheckFileExists(aX509File);
+  fs := TFileStream.Create(aX509File, fmOpenRead or fmShareDenyWrite);
+  try
+    fs.Position := 0;
+    s := ReadStrFromStream(fs, fs.Size);
+    LoadX509FromString(s);
+  finally
+    fs.Free;
+  end;
+end;
+
+procedure TACBrOpenSSLUtils.LoadX509FromString(const aX509Data: String);
+var
+  bio: PBIO;
+begin
+  FreeKeys;
+  FreeCert;
+  bio := BioNew(BioSMem);
+  try
+    BioWrite(bio, aX509Data, Length(aX509Data));
+    fCertX509 := d2iX509bio(bio, fCertX509);
+  finally
+    BioFreeAll(bio);
+  end;
+
+  if not Assigned(fCertX509) then
+    raise EACBrOpenSSLException.Create(Format(sErrLoadingCertificate, [CX509]) +
+      sLineBreak + GetLastOpenSSLError);
+
+  LoadPublicKeyFromCertificate(fCertX509);
+end;
+
 procedure TACBrOpenSSLUtils.LoadPFXFromFile(const APFXFile: String;
   const Password: AnsiString);
 Var
@@ -949,10 +991,49 @@ begin
   LoadPublicKeyFromCertificate(fCertX509);
 end;
 
+procedure TACBrOpenSSLUtils.LoadPEMFromFile(const aPEMFile: String;
+  const Password: AnsiString);
+var
+  fs: TFileStream;
+  s: AnsiString;
+begin
+  CheckFileExists(aPEMFile);
+  fs := TFileStream.Create(aPEMFile, fmOpenRead or fmShareDenyWrite);
+  try
+    fs.Position := 0;
+    s := ReadStrFromStream(fs, fs.Size);
+    LoadPEMFromStr(s, Password);
+  finally
+    fs.Free;
+  end;
+end;
+
+procedure TACBrOpenSSLUtils.LoadPEMFromStr(const aPEMData: AnsiString;
+  const Password: AnsiString);
+var
+  bio: pBIO;
+  buf: AnsiString;
+begin
+  InitOpenSSL;
+  FreeCert;
+
+  buf := AnsiString(ChangeLineBreak(Trim(aPEMData), LF));  // Use Linux LineBreak
+  bio := BIO_new_mem_buf(PAnsiChar(buf), Length(buf)+1);
+  try
+    fCertX509 := PEM_read_bio_X509(bio, nil, @PasswordCallback, PAnsiChar(Password));
+  finally
+    BioFreeAll(bio);
+  end ;
+
+  if (fCertX509 = nil) then
+    raise EACBrOpenSSLException.Create(Format(sErrLoadingCertificate, [CPEM]) + sLineBreak + GetLastOpenSSLError);
+  LoadPublicKeyFromCertificate(fCertX509);
+end;
+
 procedure TACBrOpenSSLUtils.LoadCertificateFromFile(
   const ACertificateFile: String; const Password: AnsiString);
-Var
-  fs: TFileStream ;
+var
+  fs: TFileStream;
   s: AnsiString;
 begin
   CheckFileExists(ACertificateFile);
@@ -962,31 +1043,29 @@ begin
     s := ReadStrFromStream(fs, fs.Size);
     LoadCertificateFromString(s, Password);
   finally
-    fs.Free ;
-  end ;
+    fs.Free;
+  end;
 end;
 
 procedure TACBrOpenSSLUtils.LoadCertificateFromString(
   const ACertificate: AnsiString; const Password: AnsiString);
-var
-  bio: pBIO;
-  buf: AnsiString;
 begin
-  InitOpenSSL ;
-  FreeCert;
+  if StringIsPEM(ACertificate) then
+  begin
+    LoadPEMFromStr(ACertificate, Password);
+    Exit;
+  end;
 
-  buf := AnsiString(ChangeLineBreak(Trim(ACertificate), LF));  // Use Linux LineBreak
-  bio := BIO_new_mem_buf(PAnsiChar(buf), Length(buf)+1) ;
   try
-    fCertX509 := PEM_read_bio_X509(bio, nil, @PasswordCallback, PAnsiChar(Password));
-  finally
-    BioFreeAll(bio);
-  end ;
+    LoadX509FromString(ACertificate);
+    if Assigned(fCertX509) then
+      Exit;
+  except
+    LoadPFXFromStr(ACertificate, Password);
+    Exit;
+  end;
 
-  if (fCertX509 = nil) then
-    raise EACBrOpenSSLException.Create( Format(sErrLoadingCertificate, [CPEM]) +
-                                        sLineBreak + GetLastOpenSSLError);
-  LoadPublicKeyFromCertificate(fCertX509);
+  LoadPFXFromStr(ACertificate, Password);
 end;
 
 procedure TACBrOpenSSLUtils.LoadPrivateKeyFromFile(const APrivateKeyFile: String;

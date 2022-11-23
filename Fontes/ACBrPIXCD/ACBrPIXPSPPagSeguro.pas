@@ -140,6 +140,7 @@ end;
 constructor TACBrPSPPagSeguro.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  fTokenPay := EmptyStr;
   fpQuandoAcessarEndPoint := QuandoAcessarEndPoint;
 end;
 

@@ -80,6 +80,9 @@ type
     procedure SetConsumerSecret(AValue: String);
     procedure SetArquivoPFX(const AValue: String);
     procedure SetSenhaPFX(const AValue: String);
+    procedure QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String;
+      var aResultCode: Integer; var aRespostaHttp: AnsiString);
+    procedure QuandoAcessarEndPoint(const aEndPoint: String; var aURL: String; var aMethod: String);
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
     procedure ConfigurarHeaders(const Method, AURL: String); override;
@@ -99,7 +102,7 @@ implementation
 
 uses
   synautil, DateUtils,
-  ACBrJSON,
+  ACBrJSON, ACBrPIXUtil,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings;
 
@@ -119,6 +122,8 @@ end;
 constructor TACBrPSPSantander.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
+  fpQuandoAcessarEndPoint := QuandoAcessarEndPoint;
   fRefreshURL := EmptyStr;
   fK := EmptyStr;
 end;
@@ -226,6 +231,25 @@ begin
 
   fK := FormatDateTime('hhnnsszzz', Now);
   fSenhaPFX := StrCrypt(AValue, fK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
+end;
+
+procedure TACBrPSPSantander.QuandoReceberRespostaEndPoint(const aEndPoint,
+  aURL, aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
+begin
+  // Santander responde OK a esse EndPoint, de forma diferente da especificada
+  if (UpperCase(AMethod) = ChttpMethodPOST) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_OK) then
+    AResultCode := HTTP_CREATED;
+end;
+
+procedure TACBrPSPSantander.QuandoAcessarEndPoint(const aEndPoint: String;
+  var aURL: String; var aMethod: String);
+begin
+  // Santander não possui POST para endpoint /cob
+   if (LowerCase(aEndPoint) = cEndPointCob) and (UpperCase(aMethod) = ChttpMethodPOST) then
+  begin
+    aMethod := ChttpMethodPUT;
+    aURL := URLComDelimitador(aURL) + CriarTxId;
+  end;
 end;
 
 function TACBrPSPSantander.ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String;

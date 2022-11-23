@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2022
+-- ACBrPIXPSPSantander --
+[-] Correção do endpoint /cob que não possui método POST no Santander
+    Por: Elias César
+
 21/11/2022
 -- ACBrPIXCDReg, ACBrPIXCD.dpk, ACBrPIXCD.lpk --
 [+] Inclusão de novo PSP PagSeguro

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2022
+-- pmdfeMDFeW  --
+[*] Alterado para zero o numero de ocorrências, com isso a tag <dhTrem> passa a ser opcional
+    ao gerar o grupo <ferrov>
+   Por: Italo Giurizzato Junior
+
 10/08/2022
 -- ACBrMDFeManifestos --
 [*] Atualizado função ValidarRegrasdeNegocios, utilizando a função DataHoraTimeZoneModoDeteccao para validar a DataHora com TimeZone informado no XML
@@ -60,7 +66,7 @@ Símbolo : Significado
 
 12/08/2021
 -- pmdfeMDFeW  --
-[*] Corrigido a condição para definir se gera dou não o grupo <valePed>.
+[*] Corrigido a condição para definir se gera ou não o grupo <valePed>.
    Por: Italo Giurizzato Junior
 
 25/06/2021

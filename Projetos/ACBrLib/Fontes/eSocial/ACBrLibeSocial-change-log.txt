@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2022
+--- ACBrLibeSocial ---
+[+] Novo método eSocial_Validar
+    Por: Antonio Carlos Junior
+
 18/11/2022
 --- ACBrLibeSocial ---
 [+] Novo método eSocial_ObterCertificados

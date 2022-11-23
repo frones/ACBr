@@ -48,6 +48,9 @@ type
   private
     FeSocialDM: TLibeSocialDM;
 
+    function SetRetornoEventoCarregados(const NumEventos: integer): integer;
+    function SetRetornoeSocialCarregadas(const NumeSocial: integer): integer;
+
   protected
     procedure CriarConfiguracao (ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
@@ -70,8 +73,8 @@ type
     function ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
     function ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
     function DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
-    function SetRetornoEventoCarregados(const NumEventos: integer): integer;
     function ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+    function Validar: longint;
 
     property eSocialDM: TLibeSocialDM read FeSocialDM;
 
@@ -114,6 +117,11 @@ end;
 function TACBrLibeSocial.SetRetornoEventoCarregados(const NumEventos: integer): integer;
 begin
   Result := SetRetorno(0, Format(SInfEventosCarregados, [NumEventos]));
+end;
+
+function TACBrLibeSocial.SetRetornoeSocialCarregadas(const NumeSocial: integer):integer;
+begin
+  Result := SetRetorno(0, Format(SInfeSocialCarregadas, [NumeSocial]));
 end;
 
 function TACBrLibeSocial.CriarEventoeSocial(eArqIni: PChar): longint;
@@ -723,6 +731,32 @@ begin
       Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
+    finally
+      eSocialDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibeSocial.Validar():longint;
+begin
+  try
+    GravarLog('eSocial_Validar', logNormal);
+
+    eSocialDM.Travar;
+    try
+      try
+        eSocialDM.ACBreSocial1.Eventos.Validar;
+        Result := SetRetornoeSocialCarregadas(eSocialDM.ACBreSocial1.Eventos.Count);
+      except
+        on E: EACBreSocialException do
+          Result := SetRetorno(ErrValidacaoeSocial, E.Message);
+      end;
     finally
       eSocialDM.Destravar;
     end;

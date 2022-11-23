@@ -79,7 +79,8 @@ exports
   eSocial_ConsultaIdentificadoresEventosTabela,
   eSocial_ConsultaIdentificadoresEventosTrabalhador,
   eSocial_DownloadEventos,
-  eSocial_ObterCertificados;
+  eSocial_ObterCertificados,
+  eSocial_Validar;
 
 begin
   {$IFDEF DEBUG}

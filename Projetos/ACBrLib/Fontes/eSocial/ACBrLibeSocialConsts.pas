@@ -51,12 +51,14 @@ const
   CSessaoRespConsultaIdentEventosRecibo = 'ConsultaIdentEventoRecibo';
   CErroeSocialAbrir = 'Erro ao abrir o arquivo do eSocial';
 
+  ErrValidacaoeSocial = -11;
 
 Resourcestring
   SErroeSocialAbrir = 'Erro ao abrir o arquivo do eSocial: %s';
   SMsgeSocialEventoAdicionado = 'Evento Adicionado: %s';
   SErroeSocialConsulta = 'Erro ao Consultar Evento - Parâmetro não Preenchido';
   SInfEventosCarregados = '%d Evento(s) Carregado(s)';
+  SInfeSocialCarregadas = '%d eSocial(s) Carregada(s)';
 
 implementation
 

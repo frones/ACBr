@@ -141,6 +141,9 @@ function eSocial_DownloadEventos (var libHandle: TLibHandle; const aIdEmpregador
 function eSocial_ObterCertificados (var libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
+function eSocial_Validar(const libHandle:longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
+
 {%endregion}
 
 implementation

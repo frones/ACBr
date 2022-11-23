@@ -119,6 +119,9 @@ function eSocial_ConfigGravarValor (const libHandle: PLibHandle; const eSessao, 
  function eSocial_ObterCertificados(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+ function eSocial_Validar(const libHandle: PLibHandle): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 implementation
 
 Uses
@@ -410,6 +413,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibeSocial(libHandle^.Lib).ObterCertificados(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function eSocial_Validar(const libHandle: PLibHandle): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibeSocial(libHandle^.Lib).Validar;
   except
     on E: EACBrLibException do
      Result := E.Erro;

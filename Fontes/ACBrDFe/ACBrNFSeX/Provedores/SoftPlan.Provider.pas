@@ -56,6 +56,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function GerarToken(ACabecalho, AMSG: String): string; override;
+    function ConsultarDFe(ACabecalho, AMSG: string): string; override;
 
   end;
 
@@ -88,6 +89,12 @@ type
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+
+    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+
+    procedure PrepararConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
+    procedure TratarRetornoConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
   end;
 
 implementation
@@ -421,7 +428,6 @@ begin
           AErro.Descricao := ACBrStr(json.AsString['error']);
           AErro.Correcao := ACBrStr(json.AsString['error_description']);
         end;
-
       finally
         json.Free;
       end;
@@ -429,8 +435,8 @@ begin
     else
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod211;
-      AErro.Descricao := ACBrStr(Desc211);
+      AErro.Codigo := Cod212;
+      AErro.Descricao := ACBrStr(Desc212);
       AErro.Correcao := ACBrStr(Response.ArquivoRetorno);
     end;
   except
@@ -594,6 +600,196 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderSoftPlan.PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+begin
+  case Response.InfConsultaNFSe.tpConsulta of
+    tcPorCodigoVerificacao:
+    begin
+      if EstaVazio(Response.InfConsultaNFSe.CodVerificacao) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod117;
+        AErro.Descricao := ACBrStr(Desc117);
+        Exit;
+      end;
+
+      FpPath :=
+        '/consultas/notas/codigo' +
+        '/' + Response.InfConsultaNFSe.CodVerificacao +
+        '/' + OnlyNumber(TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.InscMun);
+    end;
+
+    tcPorNumero:
+    begin
+      if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod108;
+        AErro.Descricao := ACBrStr(Desc108);
+        Exit;
+      end;
+
+      FpPath := '/consultas/notas/numero/' + Response.InfConsultaNFSe.NumeroIniNFSe;
+    end
+  else
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod001;
+      AErro.Descricao := ACBrStr(Desc001 + #13 + 'Consulta por ' +
+                          tpConsultaToStr(Response.InfConsultaNFSe.tpConsulta));
+    end;
+  end;
+
+  FpMethod := 'GET';
+end;
+
+procedure TACBrNFSeProviderSoftPlan.TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  json: TACBrJsonObject;
+  idNFSe: Integer;
+
+  procedure LerJson(AJson: TACBrJsonObject);
+  begin
+    idNFSe := AJson.AsInteger['id'];
+    Response.CodVerif := AJson.AsString['cdVerificacao'];
+    Response.Data := AJson.AsISODateTime['dataEmissao'];
+    Response.DataCanc := AJson.AsISODateTime['dataCancelamento'];
+    Response.DescSituacao := AJson.AsString['motivoCancelamento'];
+    Response.NumeroNota := AJson.AsString['numero'];
+  end;
+
+  procedure DownloadXML;
+  begin
+    with TACBrNFSeX(FAOwner) do
+    begin
+      ConsultarDFe(idNFSe);
+
+      if (WebService.ConsultarDFe.Sucesso and (WebService.ConsultarDFe.Erros.Count = 0)) then
+      begin
+        Response.XmlRetorno := WebService.ConsultarDFe.XmlRetorno;
+      end;
+    end;
+  end;
+
+begin
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := ACBrStr(Desc201);
+    Exit
+  end;
+
+  try
+    if (Copy(Response.ArquivoRetorno, 1, 1) <> '{') then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod212;
+      AErro.Descricao := ACBrStr(Desc212);
+      Exit
+
+//      raise Exception.Create(Response.ArquivoRetorno);
+    end;
+
+    json := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+    try
+      if (json.AsJSONArray['notas'].Count > 0) then
+        LerJson(json.AsJSONArray['notas'].ItemAsJSONObject[0])
+      else
+        LerJson(json);
+    finally
+      json.Free;
+    end;
+
+    DownloadXML;
+  except
+    on E:Exception do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod999;
+      AErro.Descricao := ACBrStr(Desc999 + E.Message);
+    end;
+  end;
+
+  Response.Sucesso := Response.Erros.Count = 0;
+end;
+
+procedure TACBrNFSeProviderSoftPlan.PrepararConsultarDFe(Response: TNFSeConsultarDFeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+begin
+  if Response.NSU = -1 then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod128;
+    AErro.Descricao := ACBrStr(Desc128);
+    Exit;
+  end;
+
+  FpPath :=
+    '/consultas/notas/xml' +
+    '/' + IntToStr(Response.NSU) +
+    '/' + OnlyNumber(TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.InscMun);
+
+  FpMethod := 'GET';
+  FpMimeType := 'application/xml';
+end;
+
+procedure TACBrNFSeProviderSoftPlan.TratarRetornoConsultarDFe(Response: TNFSeConsultarDFeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  ANota: TNotaFiscal;
+  DocumentXml: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+begin
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := ACBrStr(Desc201);
+    Exit
+  end;
+
+  try
+    if (StringIsXml(Response.ArquivoRetorno)) then
+    begin
+      DocumentXml := TACBrXmlDocument.Create;
+      try
+        DocumentXml.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := DocumentXml.Root;
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroNota);
+        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+
+        SalvarXmlNfse(ANota);
+      finally
+        DocumentXml.Free;
+      end;
+    end
+    else
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod203;
+      AErro.Descricao := ACBrStr(Desc203);
+//      raise Exception.Create(Response.ArquivoRetorno);
+    end;
+
+  except
+    on E:Exception do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod999;
+      AErro.Descricao := ACBrStr(Desc999 + E.Message);
+    end;
+  end;
+
+  Response.Sucesso := Response.Erros.Count = 0;
+end;
+
 { TACBrNFSeXWebserviceSoftPlan }
 
 procedure TACBrNFSeXWebserviceSoftPlan.SetHeaders(aHeaderReq: THTTPHeader);
@@ -662,6 +858,18 @@ var
   Request: string;
 begin
   FpMetodo := tmGerarToken;
+  FPMsgOrig := AMSG;
+
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+end;
+
+function TACBrNFSeXWebserviceSoftPlan.ConsultarDFe(ACabecalho, AMSG: string): string;
+var
+  Request: string;
+begin
+  FpMetodo := tmConsultarDFe;
   FPMsgOrig := AMSG;
 
   Request := AMSG;

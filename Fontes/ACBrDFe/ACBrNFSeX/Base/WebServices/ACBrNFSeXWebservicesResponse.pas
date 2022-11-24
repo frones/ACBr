@@ -968,7 +968,7 @@ procedure TNFSeConsultarDFeResponse.Clear;
 begin
   inherited Clear;
 
-  NSU := 0;
+  NSU := -1;
   ChaveNFSe := '';
 end;
 

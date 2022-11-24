@@ -190,6 +190,7 @@ begin
     Servico.Valores.ValorIss := ObterConteudo(ANode.Childrens.FindAnyNs('valorISSQN'), tcDe2);
   	// <valorISSQNSubstituicao>0</valorISSQNSubstituicao>
     Servico.Valores.ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('valorTotalServicos'), tcDe2);
+    Situacao := ObterConteudo(ANode.Childrens.FindAnyNs('statusNFPSe'), tcInt);
   end;
 end;
 

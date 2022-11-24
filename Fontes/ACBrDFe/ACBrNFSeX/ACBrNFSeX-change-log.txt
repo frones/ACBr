@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/11/2022
+-- SSInformatica.GravarXml --
+[*] Alteração na procedure de Configuração visando a geração da tag Aliquota com
+    2 casas decimais.
+   Por: Italo Giurizzato Junior
+
 22/11/2022
 -- ACBrNFSeXServicos.ini --
 [+] Incluida a cidade Januaria/MG - Provedor Sintese

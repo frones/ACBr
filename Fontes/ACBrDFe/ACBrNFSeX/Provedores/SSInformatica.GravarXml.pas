@@ -51,6 +51,9 @@ type
 
 implementation
 
+uses
+  ACBrXmlBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     SSInformatica
@@ -62,13 +65,14 @@ procedure TNFSeW_SSInformatica203.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoAliq := tcDe2;
+
   // Propriedades de Formatação de informações
   // elas requerem que seja declarado em uses a unit: ACBrXmlBase
   {
   FormatoEmissao     := tcDat;
   FormatoCompetencia := tcDat;
 
-  FormatoAliq := tcDe4;
   }
 
   // elas requerem que seja declarado em uses a unit: ACBrNFSeXConversao

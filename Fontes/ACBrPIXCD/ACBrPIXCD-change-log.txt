@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/11/2022
+-- ACBrPIXUtil --
+[-] Correção de problema ao criar cobranças quando o caractere para decimal do 
+    Sistema Operacional é '.'(ponto)
+    Por: Elias César
+
 23/11/2022
 -- ACBrPIXPSPSantander --
 [-] Correção do endpoint /cob que não possui método POST no Santander

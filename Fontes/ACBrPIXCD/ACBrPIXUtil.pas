@@ -216,7 +216,7 @@ var
   s: String;
 begin
   s := FormatFloatBr(AValor, FloatMask(2,False));
-  Result := StringReplace(s, {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator, '.', []);
+  Result := StringReplace(s, ',', '.', []);
 end;
 
 function Crc16BRCode(const AString: String): String;

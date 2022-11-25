@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 25/11/2022
+-- Equiplano.Provider --
+[*] Alteração visando ler o grupo listaNfse quando este estiver presente no
+    retorno da consulta ao lote.
+   Por: Marcos
 -- ISSDSF.Provider --
 [*] Alterações visando ler as tags: DataEnvioLote e URLNotaFiscal
    Por: Luiz Sodré

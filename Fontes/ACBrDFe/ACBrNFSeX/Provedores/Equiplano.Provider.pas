@@ -531,6 +531,9 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  AResumo: TNFSeResumoCollectionItem;
+  ANumRps: String;
   i: Integer;
   aXmlNota: string;
   ANota: TNotaFiscal;
@@ -585,39 +588,46 @@ begin
             SalvarXmlNfse(ANota);
           end;
         end;
-      end;
-      {
-      AuxNode := ANode.Childrens.FindAnyNs('listaNfse');
-
-      if AuxNode <> nil then
+      end
+      else
       begin
-        ANodeArray := ANode.Childrens.FindAllAnyNs('nfse');
-        if not Assigned(ANodeArray) then
-        begin
-          AErro := Response.Erros.New;
-          AErro.Codigo := Cod203;
-          AErro.Descricao := ACBrStr(Desc203);
-          Exit;
-        end;
+        AuxNode := ANode.Childrens.FindAnyNs('listaNfse');
 
-        for i := Low(ANodeArray) to High(ANodeArray) do
+        if AuxNode <> nil then
         begin
-          ANode := ANodeArray[i];
-          AuxNode := ANode.Childrens.FindAnyNs('nfse');
-          AuxNode := AuxNode.Childrens.FindAnyNs('nrRps');
-
-          if AuxNode <> nil then
+          ANodeArray := AuxNode.Childrens.FindAllAnyNs('nfse');
+          if not Assigned(ANodeArray) then
           begin
-            NumRps := AuxNode.AsString;
+            AErro := Response.Erros.New;
+            AErro.Codigo := Cod203;
+            AErro.Descricao := ACBrStr(Desc203);
+            Exit;
+          end;
 
-            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+          for i := Low(ANodeArray) to High(ANodeArray) do
+          begin
+            AuxNode := ANodeArray[i];
 
-            ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
-            SalvarXmlNfse(ANota);
+            if AuxNode <> nil then
+            begin
+              ANumRps:= ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
+
+              ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(ANumRps);
+              ANota.NFSe.Numero := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
+              ANota.NFSe.CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
+              ANota.NFSe.DataEmissao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDat);
+
+              SalvarXmlNfse(ANota);
+
+              AResumo := Response.Resumos.New;
+              AResumo.NumeroNota := ANota.NFSe.Numero;
+              AResumo.CodigoVerificacao := ANota.NFSe.CodigoVerificacao;
+              AResumo.NumeroRps := ANumRps;
+              AResumo.Data := ANota.NFSe.DataEmissao;
+            end;
           end;
         end;
       end;
-      }
     except
       on E:Exception do
       begin

@@ -13,6 +13,9 @@ uses
 
 {$R *.res}
 
+{$SETPEOSVERSION 5.0}
+{$SETPESUBSYSVERSION 5.0}
+
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;

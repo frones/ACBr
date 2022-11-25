@@ -208,7 +208,7 @@ end;
 
 function TACBrBanrisul.MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string;
 var
-  CodigoBarras, FatorVencimento, DigitoCodBarras, CampoLivre, Modalidade,digitoVerificador: string;
+  CodigoBarras, FatorVencimento, DigitoCodBarras, CampoLivre, Modalidade,digitoVerificador, LCedente: string;
   DigitoNum: Integer;
 begin
   with ACBrTitulo do
@@ -220,9 +220,14 @@ begin
 
      FatorVencimento:=CalcularFatorVencimento(ACBrTitulo.Vencimento);
 
+    if ((fpLayoutVersaoArquivo >= 103) and (Length(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente) = 13)) then
+      LCedente := copy(ACBrBoleto.Cedente.CodigoCedente,5,13)
+    else
+      LCedente := ACBrBoleto.Cedente.CodigoCedente;
+
      CampoLivre:= Modalidade +'1'+
                   PadLeft(copy(trim(ACBrBoleto.Cedente.Agencia),1,4), 4, '0')+{ Código agência (cooperativa) }
-                  PadLeft(OnlyNumber(ACBrBoleto.Cedente.CodigoCedente), 7, '0')+{ Código cedente = codigoCedente }
+                  PadLeft(OnlyNumber(LCedente), 7, '0')+{ Código cedente = codigoCedente }
                   PadLeft(NossoNumero, 8, '0')+{ Nosso número }
                   '40';
 
@@ -272,6 +277,13 @@ begin
   Result := Result + Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,1,6) + '.';
   Result := Result + Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,7,1) + '.';
   Result := Result + Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,8,2);
+
+  if(fpLayoutVersaoArquivo >= 103) then
+    Result := IfThen(Length(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente) <> 13,
+                     ACBrTitulo.ACBrBoleto.Cedente.Agencia
+                     + ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,
+                     ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente);
+
 end;
 
 procedure TACBrBanrisul.GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa: TStringList);

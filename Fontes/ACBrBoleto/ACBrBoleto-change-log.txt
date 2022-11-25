@@ -53,7 +53,11 @@ Símbolo : Significado
 --ACBrBancoUnicredES--
 [*]TK-3028-2 UnicredES CNAB240 Complemento Retorno posicao 214 até 223
 Criado procedure DefineRejeicaoComplementoRetorno
-por : Victor H Gonzales - Pandaaa / Daniel de Morais
+  por : Victor H Gonzales - Pandaaa / Daniel de Morais
+
+--ACBrBancoBanrisul--
+[-]TK-3271 ACBrBoleto - Adequação Banrisul para versão 10.3 do CNAB240
+  por : Victor H Gonzales - Pandaaa / Daniel de Morais
 
 21/11/2022
 --ACBBancoCresol--

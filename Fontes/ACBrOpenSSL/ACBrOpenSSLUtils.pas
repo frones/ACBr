@@ -1051,21 +1051,17 @@ procedure TACBrOpenSSLUtils.LoadCertificateFromString(
   const ACertificate: AnsiString; const Password: AnsiString);
 begin
   if StringIsPEM(ACertificate) then
+    LoadPEMFromStr(ACertificate, Password)
+  else
   begin
-    LoadPEMFromStr(ACertificate, Password);
-    Exit;
-  end;
+    try
+      LoadX509FromString(ACertificate);
+    except
+    end;
 
-  try
-    LoadX509FromString(ACertificate);
-    if Assigned(fCertX509) then
-      Exit;
-  except
-    LoadPFXFromStr(ACertificate, Password);
-    Exit;
+    if not Assigned(fCertX509) then
+      LoadPFXFromStr(ACertificate, Password);
   end;
-
-  LoadPFXFromStr(ACertificate, Password);
 end;
 
 procedure TACBrOpenSSLUtils.LoadPrivateKeyFromFile(const APrivateKeyFile: String;

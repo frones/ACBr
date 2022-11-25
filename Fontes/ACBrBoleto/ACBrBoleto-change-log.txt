@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2022
+--ACBrBancoUnicredES--
+[*]TK-3028-2 UnicredES CNAB240 Complemento Retorno posicao 214 até 223
+Criado procedure DefineRejeicaoComplementoRetorno
+por : Victor H Gonzales - Pandaaa / Daniel de Morais
+
 21/11/2022
 --ACBBancoCresol--
 [*] TK-3198 Incluido a geração do Segmento Opcional R

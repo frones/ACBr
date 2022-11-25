@@ -882,6 +882,7 @@ type
     function DefineDataOcorrencia(const ALinha: String): String; virtual;           //Define a data da ocorrencia
     function DefineSeuNumeroRetorno(const ALinha: String): String; virtual;         //Define o Seu Numero
     function DefineNumeroDocumentoRetorno(const ALinha: String): String; virtual;   //Define o Numero Documento do Retorno
+    procedure DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo); virtual;   //Define o Motivo da Rejeição ou Complemento no Retorno
 
     function DefineTipoInscricao: String; virtual;                            //Utilizado para definir Tipo de Inscrição na Remessa
     function DefineResponsEmissao: String; virtual;                           //Utilizado para definir Responsável Emissão na Remessa
@@ -5041,17 +5042,7 @@ begin
 
            OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 16, 2), 0));
 
-           IdxMotivo := 214;
-
-           while (IdxMotivo < 223) do
-           begin
-              if (trim(Copy(Linha, IdxMotivo, 2)) <> '')  and (trim(Copy(Linha, IdxMotivo, 2)) <> '00') then
-              begin
-                 MotivoRejeicaoComando.Add(Copy(Linha, IdxMotivo, 2));
-                 DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, StrToIntDef(Copy(Linha, IdxMotivo, 2), 0)));
-              end;
-              Inc(IdxMotivo, 2);
-           end;
+           DefineRejeicaoComplementoRetorno(Linha, Titulo);
 
         end
         else // segmento U
@@ -5528,6 +5519,22 @@ begin
     end;
   end;
 
+end;
+
+procedure TACBrBancoClass.DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo);
+var LIdxMotivo : Integer;
+begin
+  LIdxMotivo := 214;
+
+  while (LIdxMotivo < 223) do
+  begin
+    if (trim(Copy(ALinha, LIdxMotivo, 2)) <> '')  and (trim(Copy(ALinha, LIdxMotivo, 2)) <> '00') then
+    begin
+       ATitulo.MotivoRejeicaoComando.Add(Copy(ALinha, LIdxMotivo, 2));
+       ATitulo.DescricaoMotivoRejeicaoComando.Add(ATitulo.ACBrBoleto.Banco.CodMotivoRejeicaoToDescricao(ATitulo.OcorrenciaOriginal.Tipo, StrToIntDef(Copy(ALinha, LIdxMotivo, 2), 0)));
+    end;
+    Inc(LIdxMotivo, 2);
+  end;
 end;
 
 function TACBrBancoClass.DefineResponsEmissao: String;

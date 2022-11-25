@@ -70,6 +70,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia : TACBrTipoOcorrencia ; CodMotivo : Integer) : String ; override;
     function CodComplementoMovimento(const ACodMotivo: String): String;
     function TipoOcorrenciaToCodRemessa(const ATipoOcorrencia: TACBrTipoOcorrencia): String; override;
+    procedure DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo); override;
 
   end;
 
@@ -587,6 +588,14 @@ begin
     Result := 39
   else
     Result := 71;
+end;
+
+procedure TACBrBancoUnicredES.DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo: TACBrTitulo);
+var LCodInstrucao : String;
+begin
+  LCodInstrucao := trim(copy(ALinha,214,8));
+  ATitulo.MotivoRejeicaoComando.Add(LCodInstrucao);
+  ATitulo.DescricaoMotivoRejeicaoComando.Add(CodComplementoMovimento(LCodInstrucao));
 end;
 
 function TACBrBancoUnicredES.DefineSeuNumeroRetorno(

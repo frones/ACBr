@@ -3852,7 +3852,9 @@ begin
             Sacado.SacadoAvalista.Email         := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.Email','');
             Sacado.SacadoAvalista.Fone          := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.Fone','');
             Sacado.SacadoAvalista.InscricaoNr   := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.InscricaoNr','');
-
+            QrCode.emv                          := IniBoletos.ReadString(Sessao,'QrCode.emv','');
+            QrCode.url                          := IniBoletos.ReadString(Sessao,'QrCode.url','');
+            QrCode.txId                         := IniBoletos.ReadString(Sessao,'QrCode.txId','');
             TipoPagamento                       := TTipo_Pagamento( IniBoletos.ReadInteger(Sessao,'TipoPagamento',2));
             QtdePagamentoParcial                := IniBoletos.ReadInteger(Sessao,'QtdePagamentoParcial',0);
             QtdeParcelas                        := IniBoletos.ReadInteger(Sessao,'QtdeParcelas',0);

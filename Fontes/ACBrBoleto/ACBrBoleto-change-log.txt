@@ -59,6 +59,10 @@ Criado procedure DefineRejeicaoComplementoRetorno
 [-]TK-3271 ACBrBoleto - Adequação Banrisul para versão 10.3 do CNAB240
   por : Victor H Gonzales - Pandaaa / Daniel de Morais
 
+--ACBrBoleto--
+[+]TK-3201-1-3 ACBrBoleto Adicionar métodos de leitura para o Monitor (EMV)
+  por : Victor H Gonzales - Pandaaa
+
 21/11/2022
 --ACBBancoCresol--
 [*] TK-3198 Incluido a geração do Segmento Opcional R

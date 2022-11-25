@@ -45,6 +45,8 @@ Símbolo : Significado
 
 25/11/2022
 -- ACBrNFSeXServicos.ini--
+[*] Alteração das URLs para Link PDF da cidade de Vitoria-ES.
+   Por: carlos_tedex
 [*] A cidade de Juazeiro do Norte-CE mudou de provedor, agora é SpeedGov
    Por: Luiz Sodré
 -- Equiplano.Provider --

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/11/2022
+-- ACBrNFSeXDANFSeRLSimplISS --
+[*] Uso da nova função ObterNomeMunicipio.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [+] Incluído a leitura dos novos campos.
    Por: Italo Giurizzato Junior

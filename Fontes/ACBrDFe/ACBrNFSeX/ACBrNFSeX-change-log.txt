@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/11/2022
+-- Centi.GravarXml --
+[*] Comentado a linha que não permitia que o atributo "Id" fosse gerado.
+   Por: Italo Giurizzato Junior
 -- ISSBarueri.LerXml --
 [*] Corrigido o nome da tag.
    Por: Patrick Knopf

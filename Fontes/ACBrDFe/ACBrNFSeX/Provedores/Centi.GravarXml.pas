@@ -82,7 +82,7 @@ begin
   NrOcorrOptanteSimplesNacional := -1;
   NrOcorrIncentCultural := -1;
 
-  GerarIDDeclaracao := False;
+//  GerarIDDeclaracao := False;
 end;
 
 end.

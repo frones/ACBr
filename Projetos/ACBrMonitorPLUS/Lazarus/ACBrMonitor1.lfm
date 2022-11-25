@@ -20,7 +20,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '2.2.2.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -17319,12 +17318,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1008
-        ActivePage = tsSat
+        ActivePage = tsACBrBoleto
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 17
+        TabIndex = 11
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -17939,11 +17938,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 348
                 Top = 0
                 Width = 992
-                ActivePage = tsCadSwDados
+                ActivePage = tsCadSwChaveRSA
                 Align = alClient
                 Font.Height = -13
                 ParentFont = False
-                TabIndex = 0
+                TabIndex = 1
                 TabOrder = 0
                 object tsCadSwDados: TTabSheet
                   Caption = 'Dados Cadastrais'
@@ -21411,11 +21410,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1000
-            ActivePage = tsRemessaRetorno
+            ActivePage = tsBeneficiario
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 3
+            TabIndex = 0
             TabOrder = 0
             OnChange = pgBoletoChange
             object tsBeneficiario: TTabSheet
@@ -21799,6 +21798,52 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 22
                 Caption = 'CEP'
                 ParentColor = False
+              end
+              object edtBOLChavePix: TEdit
+                Left = 8
+                Height = 25
+                Top = 228
+                Width = 520
+                Font.Height = -13
+                ParentFont = False
+                TabOrder = 11
+              end
+              object lblBOLChavePix: TLabel
+                Left = 8
+                Height = 17
+                Top = 208
+                Width = 55
+                Caption = 'Chave Pix'
+                Font.Height = -13
+                ParentColor = False
+                ParentFont = False
+              end
+              object cbxBOLTipoChavePix: TComboBox
+                Left = 9
+                Height = 25
+                Top = 181
+                Width = 184
+                Font.Height = -13
+                ItemHeight = 17
+                Items.Strings = (
+                  'Cliente emite'
+                  'Banco emite'
+                  'Banco reemite'
+                  'Banco não emite'
+                )
+                ParentFont = False
+                Style = csDropDownList
+                TabOrder = 12
+              end
+              object lblBOLTipoChavePix: TLabel
+                Left = 9
+                Height = 17
+                Top = 160
+                Width = 85
+                Caption = 'Tipo Chave Pix'
+                Font.Height = -13
+                ParentColor = False
+                ParentFont = False
               end
             end
             object tsContaBancaria: TTabSheet
@@ -33648,6 +33693,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.CasasDecimaisMoraJuros = 2
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
+    Cedente.PIX.TipoChavePIX = tchNenhuma
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoFCFortes1
     Configuracoes.Arquivos.LogRegistro = False
@@ -34569,11 +34615,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
     ProxyPort = '8080'
     PesquisarIBGE = True
+    IniServicos = 'C:\lazarus\ACBrConsultaCNPJServicos.ini'
     Left = 968
     Top = 448
   end
   object ACBrConsultaCPF1: TACBrConsultaCPF
     ProxyPort = '8080'
+    IniServicos = 'C:\lazarus\ACBrConsultaCPFServicos.ini'
     Left = 1000
     Top = 448
   end

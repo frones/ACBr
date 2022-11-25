@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2022
+---ACBrMonitorConfig, ACBrMonitorConsts, DoBoletoUnit---
+[*] Criação campos para leitura de novas propriedades do PIX (Y03) Santander CNAB240 - TK3201
+    Por: Daniel Infocotidiano
+
 04/10/2022
 -- ACBrMonitorPLUS.iss --
 [-] Correção para incluir os arquivos de Schemas do GTIN no instalador

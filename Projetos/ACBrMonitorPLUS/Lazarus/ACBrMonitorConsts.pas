@@ -1336,6 +1336,8 @@ const
   CKeyBOLETOCedenteModalidade =             'Cedente.Modalidade';
   CKeyBOLETOCedenteConvenio =               'Cedente.Convenio';
 
+  CKeyBOLETOChavePix =                      'ChavePix';
+  CKeyBOLETOTipoChavePix =                  'TipoChavePix';
   CKeyBOLETOClientID =                      'ClientID';
   CKeyBOLETOClientSecret =                  'ClientSecret';
   CKeyBOLETOKeyUser =                       'KeyUser';

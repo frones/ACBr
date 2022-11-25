@@ -40,7 +40,7 @@ interface
 
 uses
   Classes, TypInfo, SysUtils, strutils, CmdUnit, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math,
-  ACBrBoleto, ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao;
+  ACBrBoleto, ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao, ACBrPIXBase;
 
 type
 
@@ -1113,12 +1113,16 @@ begin
       Modalidade       := fACBrBoleto.Cedente.Modalidade;
       Convenio         := fACBrBoleto.Cedente.Convenio;
     end;
+    with PIX do
+      begin
+        ChavePix       := fACBrBoleto.Cedente.PIX.Chave;
+        TipoChavePix   := integer(fACBrBoleto.Cedente.PIX.TipoChavePIX);
+      end;
     with RemessaRetorno do
       CodTransmissao    := fACBrBoleto.Cedente.CodigoTransmissao;
     if ( Integer(fACBrBoleto.ACBrBoletoFC.LayOut) > 0 ) then
     with Layout do
       Layout            := Integer(fACBrBoleto.ACBrBoletoFC.LayOut);
-
   end;
 
   {Parametros do Banco}

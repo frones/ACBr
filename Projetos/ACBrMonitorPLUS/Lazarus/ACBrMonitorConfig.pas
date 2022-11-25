@@ -620,7 +620,7 @@ type
     DigitoAgenciaConta         : String ;
     CodCedente                 : String ;
     LocalPagamento             : String ;
-    CodigoOperacao             : String;
+    CodigoOperacao             : String ;
   end;
 
   TBoletoLayout = record
@@ -661,13 +661,18 @@ type
     EmailFormatoHTML           : Boolean;
   end;
 
+  TBoletoPIX = record
+    TipoChavePix               : integer;
+    ChavePix                   : String ;
+  end;
+
+
   TBoletoCedenteWS = record
     ClientID                   : String;
     ClientSecret               : String;
     KeyUser                    : String;
     Scope                      : String;
     IndicadorPix               : Boolean;
-
   end;
 
   TBoletoSSL = record
@@ -684,7 +689,6 @@ type
     SSLType                    : Integer;
     TimeOut                    : Integer;
     CertificadoHTTP            : Boolean;
-
   end;
 
   TBoletoConfig = record
@@ -715,6 +719,7 @@ type
     Relatorio                  : TBoletoRelatorio;
     Email                      : TBoletoEmail;
     WS                         : TBoletoWS;
+    PIX                        : TBoletoPIX;
   end;
 
 
@@ -1431,6 +1436,13 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETOCodigoOperacao,CodigoOperacao );
     end;
 
+    with BOLETO.PIX do
+    begin
+      ini.WriteString(CSecBOLETO,CKeyBOLETOChavePIX,ChavePix);
+      ini.WriteInteger(CSecBOLETO,CKeyBOLETOTipoChavePix,TipoChavePix);
+    end;
+
+
     with BOLETO.Layout do
     begin
       ini.WriteString( CSecBOLETO, CKeyBOLETODirLogos,      DirLogos      );
@@ -1459,6 +1471,7 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETOVersaoArquivo, VersaoArquivo);
       ini.WriteString( CSecBOLETO, CKeyBOLETOVersaoLote, VersaoLote);
     end;
+
 
     with BOLETO.Relatorio do
     begin
@@ -2177,6 +2190,12 @@ begin
       CodigoOperacao         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodigoOperacao,   CodigoOperacao         );
     end;
 
+    with BOLETO.PIX do
+      begin
+        ChavePix                := ini.ReadString(CSecBOLETO,CKeyBOLETOChavePix, '');
+        TipoChavePix         := ini.ReadInteger(CSecBOLETO,CKeyBOLETOTipoChavePix, 0);
+      end;
+
     with BOLETO.Layout do
     begin
       DirLogos               :=  ini.ReadString( CSecBOLETO, CKeyBOLETODirLogos,         DirLogos               );
@@ -2191,7 +2210,6 @@ begin
       DirArquivoBoleto       :=  ini.ReadString( CSecBOLETO, CKeyBOLETODirArquivoBoleto, DirArquivoBoleto       );
       Impressora             :=  Ini.ReadString( CSecBOLETO, CKeyBOLETOImpressora,       Impressora             );
       NomeArquivoBoleto      :=  Ini.ReadString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto);
-      
     end;
 
     with BOLETO.RemessaRetorno do
@@ -2888,6 +2906,13 @@ begin
     LocalPagamento         :=  '';
     CodigoOperacao         :=  '';
   end;
+
+  with BOLETO.PIX do
+  begin
+    ChavePix               :=  '';
+    TipoChavePix           :=  0;
+  end;
+
 
   with BOLETO.Layout do
   begin

@@ -482,6 +482,7 @@
 			<xsd:element name="OptanteSimplesNacional"   type="tsSimNao"	                minOccurs="0" maxOccurs="1" />
 			<xsd:element name="IncentivoFiscal"          type="tsSimNao"                    minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
+		<xsd:attribute name="Id" type="tsIdTag" />
 	</xsd:complexType>
 
 	<xsd:complexType name="tcDeclaracaoPrestacaoServico">

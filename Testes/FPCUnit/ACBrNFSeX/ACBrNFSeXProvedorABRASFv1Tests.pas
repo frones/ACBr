@@ -94,7 +94,7 @@ begin
 
   // InfNfse
   CheckEquals('3104', FACBrNFSeX1.NotasFiscais[0].NFSe.Numero, 'NFSe.Numero valor incorreto') ;
-  CheckEquals('D12345EFG', FACBrNFSeX1.NotasFiscais[0].NFSe.CodigoVerificacao, 'CodigoVerificacao não é B01234A5F');
+  CheckEquals('D12345EFG', FACBrNFSeX1.NotasFiscais[0].NFSe.CodigoVerificacao, 'NFSe.CodigoVerificacao valor incorreto');
   CheckEquals(EncodeDataHora('2022-08-22T16:07:23'), FACBrNFSeX1.NotasFiscais[0].NFSe.DataEmissao, 'NFSe.DataEmissao valor incorreto');
 
   // IdentificacaoRps

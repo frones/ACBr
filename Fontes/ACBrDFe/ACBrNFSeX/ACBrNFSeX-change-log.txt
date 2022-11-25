@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 25/11/2022
+-- SoftPlan.GravarXml --
+[*] Alterado o numero de ocorrências para zero, desta forma a tag inscricaoMunicipalTomador
+    passa a ser opcional.
+   Por: Ronaldo Bispo
 -- ACBrNFSeXDANFSeRLSimplISS --
 [*] Uso da nova função ObterNomeMunicipio.
    Por: Italo Giurizzato Junior

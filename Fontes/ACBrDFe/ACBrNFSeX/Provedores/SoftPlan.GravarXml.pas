@@ -171,7 +171,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'identificacaoTomador', 0, 20, 1,
                        OnlyNumber(NFSe.Tomador.IdentificacaoTomador.Cnpj), ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'inscricaoMunicipalTomador', 0, 30, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'inscricaoMunicipalTomador', 0, 30, 0,
                      NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
 
   xmlNode := GerarItensServico;

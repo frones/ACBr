@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/11/2022
+-- ISSDSF.Provider --
+[*] Alterações visando ler as tags: DataEnvioLote e URLNotaFiscal
+   Por: Luiz Sodré
+
 24/11/2022
 -- Diversos --
 [*] Alterações em diversas Units para atender o provedor SoftPlan

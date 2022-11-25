@@ -25,7 +25,7 @@ CTA                  2.00
 CTAConsult           1.00
 DataSmart            2.02
 DBSeller             1.00  20/10/2022
-DBSeller             2.04
+DBSeller             2.04  23/11/2022
 DeISS                2.03
 Desenvolve           2.03
 Digifred             2.00

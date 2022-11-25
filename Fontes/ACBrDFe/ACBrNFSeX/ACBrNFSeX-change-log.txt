@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/11/2022
+-- ISSBarueri.LerXml --
+[*] Corrigido o nome da tag.
+   Por: Patrick Knopf
 -- ACBrNFSeXServicos.ini--
 [*] Alteração das URLs para Link PDF da cidade de Vitoria-ES.
    Por: carlos_tedex

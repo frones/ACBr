@@ -545,7 +545,7 @@ begin
       if (XmlNode = Nil) then
         raise Exception.Create('Arquivo XML vazio.');
 
-      AuxNode := XmlNode.Childrens.FindAnyNs('ListaMensagemRetorno');
+      AuxNode := XmlNode.Childrens.FindAnyNs('ListaNfeServPrestado');
 
       if AuxNode <> nil then
       begin

@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 25/11/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[+] Incluído a leitura dos novos campos.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXClass --
+[+] Incluído novos campos para a leitura da versão 2 do layout da ABRASF.
+   Por: Italo Giurizzato Junior
 -- Centi.GravarXml --
 [*] Comentado a linha que não permitia que o atributo "Id" fosse gerado.
    Por: Italo Giurizzato Junior

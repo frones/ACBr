@@ -750,6 +750,7 @@ type
     FExplRod: TExplRod;
     FinfoCompl: TinfoCompl;
     FImposto: TImpostoCollection;
+    FIdentifNaoExigibilidade: string;
 
     procedure SetItemServico(Value: TItemServicoCollection);
     procedure SetDeducao(const Value: TDeducaoCollection);
@@ -767,6 +768,7 @@ type
     property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
     property CodigoPais: Integer read FCodigoPais write FCodigoPais;
     property ExigibilidadeISS: TnfseExigibilidadeISS read FExigibilidadeISS write FExigibilidadeISS;
+    property IdentifNaoExigibilidade: string read FIdentifNaoExigibilidade write FIdentifNaoExigibilidade;
     property MunicipioIncidencia: Integer read FMunicipioIncidencia write FMunicipioIncidencia;
     property NumeroProcesso: string read FNumeroProcesso write FNumeroProcesso;
     property xItemListaServico: string read FxItemListaServico write FxItemListaServico;
@@ -889,6 +891,7 @@ type
 
     FEndereco: TEndereco;
     FContato: TContato;
+    FCodigoMunicipio: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -898,6 +901,7 @@ type
     property IssRetido: TnfseSituacaoTributaria read FIssRetido write FIssRetido;
     property Endereco: TEndereco read FEndereco write FEndereco;
     property Contato: TContato read FContato write FContato;
+    property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
   end;
 
   TIdentificacaoOrgaoGerador = class(TObject)
@@ -1272,6 +1276,7 @@ type
     Fsubst: TSubstituicao;
 
     FinfNFSe: TinfNFSe;
+    FDescricaoCodigoTributacaoMunicipio: string;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: string);
@@ -1326,6 +1331,7 @@ type
     property ChaveAcesso: string read FChaveAcesso write FChaveAcesso;
     property Link: string read FLink write FLink;
     property NumeroLote: string read FNumeroLote write FNumeroLote;
+    property DescricaoCodigoTributacaoMunicipio: string read FDescricaoCodigoTributacaoMunicipio write FDescricaoCodigoTributacaoMunicipio;
 //    property Protocolo: string read FProtocolo write FProtocolo;
     property dhRecebimento: TDateTime read FdhRecebimento write FdhRecebimento;
     property NfseCancelamento: TConfirmacaoCancelamento read FNfseCancelamento write FNfseCancelamento;

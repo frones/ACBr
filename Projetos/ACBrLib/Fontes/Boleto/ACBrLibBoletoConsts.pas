@@ -95,6 +95,8 @@ const
   CChaveDigitoVerificadorAgenciaConta= 'DigitoVerificadorAgenciaConta';
   CChaveIdentDistribuicao= 'IdentDistribuicao';
   CChaveOperacao= 'Operacao';
+  CChavePIX = 'ChavePIX';
+  CTipoChavePix = 'TipoChavePIX';
 
   CSessaoBoletoFCFortesConfig = 'BoletoBancoFCFortesConfig';
   CChaveDirLogo= 'DirLogo';

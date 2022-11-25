@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2022
+---ACBrLibBoletoConfig, ACBrLibBoletoConsts, ACBrLibBoletoDataModule---
+[*] Criação campos para leitura de novas propriedades do PIX (Y03) Santander CNAB240 - TK3201
+	Por: Antonio Carlos Junior
+
 17/08/2022
 --- ACBrLibBoleto, ACBrLibBoletoBase ---
 [*] Atualização das chamadas de envio por API e atualização das classes resposta baseado no refactory do componente boleto

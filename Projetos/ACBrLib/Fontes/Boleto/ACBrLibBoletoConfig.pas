@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrBoleto, ACBrBoletoConversao, ACBrLibConfig, ACBrLibComum, pcnConversao, ACBrDFeConfiguracoes;
+  ACBrBoleto, ACBrBoletoConversao, ACBrLibConfig, ACBrLibComum, pcnConversao, ACBrDFeConfiguracoes, ACBrPIXBase;
 
 type
 
@@ -169,6 +169,8 @@ type
     FDigitoVerificadorAgenciaConta: String;
     FIdentDistribuicao: TACBrIdentDistribuicao;
     FOperacao: String;
+    FPIXChave: String;
+    FPIXTipoChave : TACBrPIXTipoChave;
 
   public
     constructor Create;
@@ -202,6 +204,8 @@ type
     property DigitoVerificadorAgenciaConta : String read FDigitoVerificadorAgenciaConta   write FDigitoVerificadorAgenciaConta;
     property IdentDistribuicao: TACBrIdentDistribuicao read FIdentDistribuicao  write FIdentDistribuicao;
     property Operacao: string read FOperacao write FOperacao;
+    property PIXChave         :String read FPIXChave write FPIXChave;
+    property PIXTipoChave     : TACBrPIXTipoChave read FPIXTipoChave write FPIXTipoChave;
 
   end;
 
@@ -580,6 +584,8 @@ begin
   FDigitoVerificadorAgenciaConta:= '';
   FIdentDistribuicao := tbClienteDistribui;
   FOperacao := '';
+  FPIXChave:= '';
+  FPIXTipoChave := tchNenhuma;
 end;
 
 procedure TBoletoCedenteConfig.LerIni(const AIni: TCustomIniFile);
@@ -610,7 +616,8 @@ begin
   DigitoVerificadorAgenciaConta:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveDigitoVerificadorAgenciaConta, DigitoVerificadorAgenciaConta);
   IdentDistribuicao:= TACBrIdentDistribuicao(AIni.ReadInteger(CSessaoBoletoCedenteConfig, CChaveIdentDistribuicao, integer(FIdentDistribuicao)));
   Operacao:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveOperacao, Operacao);
-
+  PIXChave:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChavePIX, PIXChave);
+  PIXTipoChave := TACBrPIXTipoChave(AIni.ReadInteger(CSessaoBoletoCedenteConfig, CTipoChavePix, Integer(PIXTipoChave)));
 end;
 
 procedure TBoletoCedenteConfig.GravarIni(const AIni: TCustomIniFile);
@@ -641,7 +648,8 @@ begin
   AIni.WriteString(CSessaoBoletoCedenteConfig, CChaveDigitoVerificadorAgenciaConta, DigitoVerificadorAgenciaConta );
   AIni.WriteInteger(CSessaoBoletoCedenteConfig, CChaveIdentDistribuicao, integer(FIdentDistribuicao));
   AIni.WriteString(CSessaoBoletoCedenteConfig, CChaveOperacao, Operacao);
-
+  AIni.WriteString(CSessaoBoletoCedenteConfig, CChavePIX, PIXChave);
+  AIni.WriteInteger(CSessaoBoletoCedenteConfig, CTipoChavePix, integer(PIXTipoChave));
 end;
 
 { TBoletoBancoConfig }

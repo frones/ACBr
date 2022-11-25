@@ -161,6 +161,8 @@ begin
     DigitoVerificadorAgenciaConta := LibConfig.BoletoCedenteConfig.DigitoVerificadorAgenciaConta;
     IdentDistribuicao := LibConfig.BoletoCedenteConfig.IdentDistribuicao;
     Operacao := LibConfig.BoletoCedenteConfig.Operacao;
+    PIX.Chave := LibConfig.BoletoCedenteConfig.PIXChave;
+    PIX.TipoChavePIX := LibConfig.BoletoCedenteConfig.PIXTipoChave;
   end;
 
   with ACBrBoleto1.Cedente.CedenteWS do

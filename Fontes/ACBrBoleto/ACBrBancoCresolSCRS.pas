@@ -516,7 +516,7 @@ begin
                else
                 begin
                   //Apos o 1º motivo os 00 significam que não existe mais motivo
-                  if CodMotivo <> '00' then
+                  if (CodMotivo <> '00') and (Trim(CodMotivo) <> '') then
                   begin
                      MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '00','00',copy(Linha,MotivoLinha,2)));
                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));

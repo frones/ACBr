@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+28/11/2022
+--ACBrBancoCresolSCRS--
+[*]TK-3320 ACBrBoleto - Ajuste na função de leitura do retorno CNAB400
+  por : Desenvolvimento Farol Soft
 
 25/11/2022
 --ACBrBancoUnicredES--

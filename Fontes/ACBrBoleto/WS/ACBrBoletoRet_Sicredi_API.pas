@@ -166,7 +166,10 @@ begin
 
               if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
                  ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then
-              ARetornoWS.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
+              begin
+                ARetornoWS.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
+                ARetornoWS.DadosRet.TituloRet.DataCredito                := DateSicrediToDateTime(AJSonObject.Values['dataliquidacao'].AsString);
+              end;
 
             end;
           end else
@@ -202,12 +205,12 @@ var
   I: Integer;
 begin
   Result := True;
-
+  ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
   ListaRetorno.HTTPResultCode := HTTPResultCode;
   ListaRetorno.JSONEnvio      := EnvWs;
   if RetWS <> '' then
   begin
-    ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+    
     try
       AJSon := TJson.Create;
       try
@@ -251,9 +254,16 @@ begin
             ListaRetorno.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
             ListaRetorno.DadosRet.TituloRet.ValorAtual                 := AJSonObject.Values['valor'].AsNumber;
 
+            ListaRetorno.DadosRet.TituloRet.DataRegistro               := DateSicrediToDateTime(AJSonObject.Values['dataemissao'].AsString);
+            ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca       := AJSonObject.Values['situacao'].AsString;
+
+
             if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
                ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then
-            ListaRetorno.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
+            begin
+               ListaRetorno.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
+               ListaRetorno.DadosRet.TituloRet.DataCredito                := DateSicrediToDateTime(AJSonObject.Values['dataliquidacao'].AsString);
+            end;
 
           end;
         end;

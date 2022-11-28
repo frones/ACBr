@@ -52,6 +52,11 @@ Símbolo : Significado
 --ACBrBancoCresolSCRS--
 [*]TK-3320 ACBrBoleto - Ajuste na função de leitura do retorno CNAB400
   por : Desenvolvimento Farol Soft
+--ACBrBancoSicred--
+
+[*]TK-3326 Retorno API capturar a data da liquidação JSON para o campo :TituloRet.DataCredito
+Nas procedures LerListaRetorno e LerRetorno
+  por : Daniel de Morais / Rafael Mozer
 
 25/11/2022
 --ACBrBancoUnicredES--

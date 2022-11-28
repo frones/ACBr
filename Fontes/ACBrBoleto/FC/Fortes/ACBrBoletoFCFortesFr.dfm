@@ -108,6 +108,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 213
         Height = 114
         Center = True
+        Scaled = True
       end
       object txtEnderecoSacadoTopServicos: TRLLabel
         Left = 50

@@ -45,8 +45,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+28/11/2022
+--ACBrBoletoFCFortesFr--
+[*]TK-3334 ACBrBoleto - Alteração no dfm para Logos com tamanho maior do que o componente
+https://www.projetoacbr.com.br/forum/topic/69902-layout-fortes-acbrboletofcfortesfr/
 22/11/2022
+  por : Francisco IBS
+
 --ACBrBoletoFCFortesFr--
 [-] Proteção na propriedade de logo da empresa se o arquivo existe no path, e não se o path foi informado.
   por : Victor H Gonzales - Pandaaa

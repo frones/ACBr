@@ -808,7 +808,7 @@ type
   end;
 
   { TACBrBoletoChavePIX }
-  TACBrBoletoChavePIX = class(TPersistent)
+  TACBrBoletoChavePIX = class(TComponent)
   private
     fTipoChave: TACBrPIXTipoChave;
     fChave: String;
@@ -2227,7 +2227,7 @@ begin
 
   fCedenteWS := TACBrCedenteWS.Create(self);
   fCedenteWS.Name := 'CedenteWS';
-  fPIX         := TACBrBoletoChavePIX.Create;
+  fPIX         := TACBrBoletoChavePIX.Create(Self);
   {$IFDEF COMPILER6_UP}
   fCedenteWS.SetSubComponent(True);
   {$ENDIF}

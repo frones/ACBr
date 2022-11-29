@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/11/2022
+-- ACBrNFSeXProviderBase/ACBrNFSeXWebserviceBase --
+[+] Incluído a propriedade Path para definir o Path onde vai ser salvo o pedido de
+    cancelamento e o respectivo retorno.
+   Por: Italo Giurizzato Junior
+
 25/11/2022
 -- SoftPlan.GravarXml --
 [*] Alterado o numero de ocorrências para zero, desta forma a tag inscricaoMunicipalTomador

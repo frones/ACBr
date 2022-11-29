@@ -2137,6 +2137,7 @@ procedure TACBrNFSeXProvider.CancelaNFSe;
 var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
+  aConfig: TConfiguracoesNFSe;
 begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeCancelamento);
 
@@ -2173,6 +2174,11 @@ begin
         AService.Prefixo := CancelaNFSeResponse.InfCancelamento.NumeroNFSe
       else
         AService.Prefixo := CancelaNFSeResponse.InfCancelamento.ChaveNFSe;
+
+      aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
+
+      AService.Path := aConfig.Arquivos.GetPathCan(0, aConfig.Geral.Emitente.CNPJ,
+                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
 
       CancelaNFSeResponse.ArquivoRetorno := AService.Cancelar(ConfigMsgDados.DadosCabecalho, CancelaNFSeResponse.ArquivoEnvio);
 
@@ -2368,6 +2374,7 @@ procedure TACBrNFSeXProvider.EnviarEvento;
 var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
+  aConfig: TConfiguracoesNFSe;
 begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeGerarToken);
 
@@ -2399,6 +2406,11 @@ begin
       TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
       AService := CriarServiceClient(tmEnviarEvento);
       AService.Prefixo := EnviarEventoResponse.InfEvento.pedRegEvento.ID;
+
+      aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
+
+      AService.Path := aConfig.Arquivos.GetPathEvento(0, aConfig.Geral.Emitente.CNPJ,
+                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
 
       EnviarEventoResponse.ArquivoRetorno := AService.EnviarEvento(ConfigMsgDados.DadosCabecalho,
                                                            EnviarEventoResponse.ArquivoEnvio);

@@ -62,6 +62,7 @@ type
   TACBrNFSeXWebservice = class
   private
     FPrefixo: string;
+    FPath: string;
 
     function GetBaseUrl: string;
 
@@ -150,6 +151,7 @@ type
     property Retorno: string read FPRetorno;
     property Prefixo: string read FPrefixo write FPrefixo;
     property Method: string read FPMethod;
+    property Path: string read FPath write FPath;
 
   end;
 
@@ -403,6 +405,7 @@ begin
   FPFaultNode := 'Fault';
   FPFaultCodeNode := 'faultcode';
   FPFaultMsgNode := 'faultstring';
+  Path := '';
 
   case AMetodo of
     tmRecepcionar:
@@ -595,14 +598,14 @@ begin
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
 
-    FPDFeOwner.Gravar(ArqEnv, ADadosMsg);
+    FPDFeOwner.Gravar(ArqEnv, ADadosMsg, Path);
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
 
-    FPDFeOwner.Gravar(ArqEnv, ADadosSoap);
+    FPDFeOwner.Gravar(ArqEnv, ADadosSoap, Path);
   end;
 end;
 
@@ -620,7 +623,7 @@ begin
   begin
     ArqEnv := Prefixo + '-' + FPArqResp + '.xml';
 
-    FPDFeOwner.Gravar(ArqEnv, ADadosMsg);
+    FPDFeOwner.Gravar(ArqEnv, ADadosMsg, Path);
   end;
 end;
 
@@ -641,7 +644,7 @@ begin
     if not XmlEhUTF8(ADadosSoap) then
       ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
 
-    FPDFeOwner.Gravar(ArqEnv, ADadosSoap);
+    FPDFeOwner.Gravar(ArqEnv, ADadosSoap, Path);
   end;
 end;
 

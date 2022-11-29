@@ -419,6 +419,11 @@ var
   Ok: Boolean;
   CodIBGE: string;
 begin
+  // Carrega automaticamente o arquivo ACBrNFSeXServicos se necessário.
+  if Assigned(fpConfiguracoes.Owner) then
+    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
+      TACBrNFSeX(fpConfiguracoes.Owner).LerCidades;
+
   // ===========================================================================
   // Verifica se o código IBGE consta no arquivo: ACBrNFSeXServicos
   // se encontrar carrega os parâmetros definidos.

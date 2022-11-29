@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 29/11/2022
+-- ACBrNFSeX/ACBrNFSeXConfiguracoes --
+[*] Alteração para executar o LerCidades automaticamente.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase/ACBrNFSeXWebserviceBase --
 [+] Incluído a propriedade Path para definir o Path onde vai ser salvo o pedido de
     cancelamento e o respectivo retorno.

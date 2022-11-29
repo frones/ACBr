@@ -231,9 +231,6 @@ begin
   FWebService := TWebservices.Create;
 
   fpCidadesJaCarregadas := False;
-
-  if not (csDesigning in Self.ComponentState) then
-    LerCidades;
 end;
 
 destructor TACBrNFSeX.Destroy;

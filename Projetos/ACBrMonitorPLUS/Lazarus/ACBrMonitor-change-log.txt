@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2022
+--- ACBrMonitorConsts, DoACBreSocialUnit ---
+[+] Novos métodos ObterCertificados e ValidarXML para o eSocial
+    Por: Antonio Carlos Junior
+
 25/11/2022
 ---ACBrMonitorConfig, ACBrMonitorConsts, DoBoletoUnit---
 [*] Criação campos para leitura de novas propriedades do PIX (Y03) Santander CNAB240 - TK3201

@@ -542,6 +542,7 @@ const
   CMetodoConsultaIdentEventosTabela =  'ConsultaIdentificadoresEventosTabela';
   CMetodoConsultaIdentEventosTrab =    'ConsultaIdentificadoresEventosTrabalhador';
   CMetodoDownloadEventos =             'DownloadEventos';
+  CMetodoValidareSocial =              'validaresocial';
 
   CMetodoCriarEventoReinf =          'criareventoreinf';
   CMetodoCriarEnviarReinf =          'criarenviarreinf';

@@ -477,8 +477,9 @@ begin
 
         end
         else
-          FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
-                             + ' Erro='+ AJson.S['error_description'];
+          FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode);
+          if (AJson <> nil) then
+            FErroComunicacao := FErroComunicacao + ' Erro='+ AJson.S['error_description'];
 
       finally
         AJSon.Free;

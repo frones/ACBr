@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+29/11/2022
+--ACBrBoletoWS--
+[*]Correção de AV quando WS com erro e não houver JSON
+ por : Victor H Gonzales - Pandaaa
+
 28/11/2022
 --ACBrBancoCresolSCRS--
 [*]TK-3320 ACBrBoleto - Ajuste na função de leitura do retorno CNAB400

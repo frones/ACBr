@@ -37,6 +37,8 @@ unit ACBrTests.Util;
   -------------------------
   Esses métodos tem objetivo de permitir o máximo de compatibilidade entre os frameworks
     DUnitX/DUnit/FPCunit, FMX/VCL, CONSOLE/GUI/TestInsight
+  No momento os testes precisam ser desenvolvidos como se estivessem no Dunit ou na FPCUnit.
+  Assim, com ajuda dessa unit, consguimos manter a compatibilidade mencionada.
 
 }
 

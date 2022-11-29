@@ -62,6 +62,7 @@ interface
 
 uses
 {$IFDEF TESTINSIGHT}
+  TestInsight.Client,
   {$IFDEF DUNITX}
   TestInsight.DUnitX,
   {$ELSE}
@@ -121,7 +122,7 @@ implementation
   begin
     {$IFNDEF CI}
     //We don't want this happening when running under CI.
-    System.Write('Done.. press <Enter> key to quit.');
+    System.Write('Pronto.. pressione <Enter> para sair.');
     System.Readln;
     {$ENDIF}
   end;

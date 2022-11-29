@@ -20,9 +20,7 @@ program NomeProjetoExemplo;
 Para mais informações veja o arquivo: ACBrTests.Runner.pas
 
 }
-
-{$I ACBr.inc}
-
+//mantenha a verificação abaixo como primeira linha.
 {$IFDEF NOGUI}
 {$APPTYPE CONSOLE}
 {$ENDIF}
@@ -30,6 +28,8 @@ Para mais informações veja o arquivo: ACBrTests.Runner.pas
 {$IFDEF DUNITX}
   {$STRONGLINKTYPES ON}
 {$ENDIF}
+
+{$I ACBr.inc}
 
 {$R *.RES}
 

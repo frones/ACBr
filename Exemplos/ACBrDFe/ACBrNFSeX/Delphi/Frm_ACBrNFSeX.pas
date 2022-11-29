@@ -3264,8 +3264,6 @@ begin
     edtSenha.Text          := Ini.ReadString( 'Certificado', 'Senha',      '');
     edtNumSerie.Text       := Ini.ReadString( 'Certificado', 'NumSerie',   '');
 
-    AtualizarCidades;
-
     cbxAtualizarXML.Checked     := Ini.ReadBool(   'Geral', 'AtualizarXML',     True);
     cbxExibirErroSchema.Checked := Ini.ReadBool(   'Geral', 'ExibirErroSchema', True);
     edtFormatoAlerta.Text       := Ini.ReadString( 'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
@@ -3323,8 +3321,6 @@ begin
     edtCodCidade.Text      := Ini.ReadString('Emitente', 'CodCidade',   '');
     edtEmitCidade.Text     := Ini.ReadString('Emitente', 'Cidade',      '');
     edtEmitUF.Text         := Ini.ReadString('Emitente', 'UF',          '');
-    cbCidades.ItemIndex    := cbCidades.Items.IndexOf(edtEmitCidade.Text + '/' +
-      edtCodCidade.Text + '/' + edtEmitUF.Text);
     edtCNPJPrefeitura.Text := Ini.ReadString('Emitente', 'CNPJPref',    '');
 
     edtSmtpHost.Text     := Ini.ReadString('Email', 'Host',    '');
@@ -3344,6 +3340,11 @@ begin
     edtPathPDF.Text        := Ini.ReadString( 'DANFSE', 'PathPDF',   '');
 
     ConfigurarComponente;
+
+    AtualizarCidades;
+
+    cbCidades.ItemIndex := cbCidades.Items.IndexOf(edtEmitCidade.Text + '/' +
+      edtCodCidade.Text + '/' + edtEmitUF.Text);
   finally
     Ini.Free;
   end;

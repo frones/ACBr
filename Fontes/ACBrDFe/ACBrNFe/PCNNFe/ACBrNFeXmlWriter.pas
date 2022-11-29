@@ -36,8 +36,8 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrXmlDocument, ACBrXmlWriter,
-  pcnNFe, pcnGerador, pcnConversao, pcnNFeConsts;
+  pcnNFe, pcnGerador, pcnConversao, pcnNFeConsts,
+  ACBrXmlDocument, ACBrXmlWriter;
 
 type
   TNFeXmlWriterOptions = class(TACBrXmlWriterOptions)
@@ -176,8 +176,8 @@ implementation
 uses
   variants, dateutils,
   pcnConversaoNFe, ACBrValidador, pcnAuxiliar,
-  ACBrDFeUtil, pcnConsts, ACBrUtil.Strings,
-  ACBrNFe;
+  ACBrDFeUtil, pcnConsts, ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.DateTime,
+  ACBrXmlBase, ACBrNFe;
 
 constructor TNFeXmlWriter.Create(AOwner: TNFe);
 begin
@@ -186,7 +186,7 @@ begin
   Opcoes.GerarTagIPIparaNaoTributado := True;
   Opcoes.NormatizarMunicipios := False;
   Opcoes.PathArquivoMunicipios := '';
-  Opcoes.GerarTagAssinatura := taSomenteSeAssinada;
+  Opcoes.GerarTagAssinatura := pcnConversao.taSomenteSeAssinada;
   Opcoes.ValidarInscricoes := False;
   Opcoes.ValidarListaServicos := False;
   Opcoes.CamposFatObrigatorios := True;
@@ -257,7 +257,7 @@ begin
 
   ChaveNFe := GerarChaveAcesso(NFe.ide.cUF, NFe.ide.dEmi, xCNPJCPF,
       NFe.ide.serie, NFe.ide.nNF, StrToInt(TpEmisToStr(NFe.ide.tpEmis)),
-     { NFe.ide.cNF} 0, NFe.ide.modelo);
+      NFe.ide.cNF, NFe.ide.modelo);
 
   NFe.infNFe.ID := 'NFe' + ChaveNFe;
   NFe.ide.cDV := ExtrairDigitoChaveAcesso(NFe.infNFe.ID);
@@ -292,15 +292,15 @@ begin
                                   85, 1, NFe.infNFeSupl.urlChave, DSC_URLCHAVE, False));
   end;
 
-  Gerar := (Opcoes.GerarTagAssinatura = taSempre) or
+  Gerar := (Opcoes.GerarTagAssinatura = pcnConversao.taSempre) or
     (
-      (Opcoes.GerarTagAssinatura = taSomenteSeAssinada) and
+      (Opcoes.GerarTagAssinatura = pcnConversao.taSomenteSeAssinada) and
         (NFe.signature.DigestValue <> '') and
         (NFe.signature.SignatureValue <> '') and
         (NFe.signature.X509Certificate <> '')
     ) or
     (
-      (Opcoes.GerarTagAssinatura = taSomenteParaNaoAssinada) and
+      (Opcoes.GerarTagAssinatura = pcnConversao.taSomenteParaNaoAssinada) and
         (NFe.signature.DigestValue = '') and
         (NFe.signature.SignatureValue = '') and
         (NFe.signature.X509Certificate = '')
@@ -743,7 +743,7 @@ begin
   else
     Result.AppendChild(AddNodeCNPJCPF('E02', 'E03', NFe.Dest.CNPJCPF, IsNFe));
 
-  if NFe.Ide.tpAmb = taProducao then
+  if NFe.Ide.tpAmb = pcnConversao.taProducao then
     Result.AppendChild(AddNode(tcStr, 'E04', 'xNome  ', 02, 60,
       IIf(IsNFe, 1, 0), NFe.Dest.xNome, DSC_XNOME))
   else
@@ -999,8 +999,8 @@ begin
   Result.AppendChild(AddNode(tcStr, 'I03a ', 'cBarra', 3, 30, 0,
     NFe.Det[i].Prod.cBarra, DSC_CBARRA));
 
-  if (NFe.Det[i].Prod.nItem = 1) and (NFe.Ide.tpAmb = taHomologacao) and
-    (NFe.ide.modelo = 65) then
+  if (NFe.Det[i].Prod.nItem = 1) and (NFe.Ide.tpAmb = pcnConversao.taHomologacao) and
+     (NFe.ide.modelo = 65) then
     Result.AppendChild(AddNode(tcStr, 'I04 ', 'xProd   ', 1, 120, 1,
       HOM_XPROD, DSC_XPROD))
   else
@@ -1049,7 +1049,7 @@ begin
 
   // Implementação futura - regra de validação somente em 01/12/2018
   if (NFe.infNFe.Versao >= 4) and (trim(NFe.Det[i].Prod.cEANTrib) = '') and
-    (CompareDate(NFe.Ide.dEmi, StringToDateTime('01/12/2018')) > 0) then
+     (CompareDate(NFe.Ide.dEmi, StringToDateTime('01/12/2018')) > 0) then
     NFe.Det[i].Prod.cEANTrib := SEMGTIN;
 
   Result.AppendChild(AddNode(tcStr, 'I12 ', 'cEANTrib', 00, 14, 1,
@@ -1675,8 +1675,8 @@ var
   function OcorrenciasVICMSSubstituto : Integer;
   begin
 	if (TNFeXmlWriterOptions(Opcoes).ForcarGerarTagRejeicao938 = fgtSempre) or
-	   ((TNFeXmlWriterOptions(Opcoes).ForcarGerarTagRejeicao938 = fgtSomenteProducao) and (NFe.Ide.tpAmb = taProducao)) or
-	   ((TNFeXmlWriterOptions(Opcoes).ForcarGerarTagRejeicao938 = fgtSomenteHomologacao) and (NFe.Ide.tpAmb = taHomologacao))  then
+	   ((TNFeXmlWriterOptions(Opcoes).ForcarGerarTagRejeicao938 = fgtSomenteProducao) and (NFe.Ide.tpAmb = pcnConversao.taProducao)) or
+	   ((TNFeXmlWriterOptions(Opcoes).ForcarGerarTagRejeicao938 = fgtSomenteHomologacao) and (NFe.Ide.tpAmb = pcnConversao.taHomologacao))  then
 	begin
 	  Result := 1;
 	end

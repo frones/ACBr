@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2022
+-- ACBrNFeXmlWriter --
+[*] Ao gerar a chave estava passando o valor zero em vez de pegar o valor do
+    campo cNF.
+   Por: Italo Giurizzato Junior
+
 10/11/2022
 [*] Adição de informações relacionadas ao grupo comb no método Assign da classe respectiva.
   por: Eduardo Eng. Costa

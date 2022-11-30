@@ -116,7 +116,7 @@ end;
 
 procedure TNCMsConfig.LerIni(const AIni: TCustomIniFile);
 begin
-  FPortaProxy        := AIni.ReadString(CSessaoNCMs, CChavePorta, FPortaProxy);
+  FPortaProxy        := AIni.ReadString(CSessaoNCMs, CChavePortaProxy, FPortaProxy);
   FSenhaProxy        := AIni.ReadString(CSessaoNCMs, CChaveSenhaProxy, FSenhaProxy);
   FUsuarioProxy      := AIni.ReadString(CSessaoNCMs, CChaveUsuarioProxy, FUsuarioProxy);
   FServidorProxy     := AIni.ReadString(CSessaoNCMs, CChaveServidorProxy, FServidorProxy);
@@ -126,11 +126,11 @@ end;
 
 procedure TNCMsConfig.GravarIni(const AIni: TCustomIniFile);
 begin
-  AIni.WriteString(CSessaoNCMs, CChavePorta, FPortaProxy);
-  AIni.WriteString(CSessaoNCMs, CChaveSenhaProxy, FSenhaProxy);
-  AIni.WriteString(CSessaoNCMs, CChaveUsuarioProxy, FUsuarioProxy);
-  AIni.WriteString(CSessaoNCMs, CChaveServidorProxy, FServidorProxy);
-  AIni.WriteString(CSessaoNCMs, CChaveArquivoCache, FArquivoCache);
+  AIni.WriteString(CSessaoNCMs,  CChavePortaProxy,    FPortaProxy);
+  AIni.WriteString(CSessaoNCMs,  CChaveSenhaProxy,    FSenhaProxy);
+  AIni.WriteString(CSessaoNCMs,  CChaveUsuarioProxy,  FUsuarioProxy);
+  AIni.WriteString(CSessaoNCMs,  CChaveServidorProxy, FServidorProxy);
+  AIni.WriteString(CSessaoNCMs,  CChaveArquivoCache,  FArquivoCache);
   AIni.WriteInteger(CSessaoNCMs, CChaveDiasValidadeCache, FDiasValidadeCache);
 end;
 

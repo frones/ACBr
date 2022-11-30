@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 30/11/2022
+-- IPM.GravarXml --
+[*] Corrigido a posição da tag nfse_teste.
+   Por: Italo Giurizzato Junior
 -- Publica.Provider --
 [*] Alteração no TratarXmlRetornado, o provedor esta inserindo na mensagem de retorno
     uma sequencia de caracteres que estava provocando erro.

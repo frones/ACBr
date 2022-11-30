@@ -115,11 +115,11 @@ begin
 
   FDocument.Root := NFSeNode;
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
-    'nfse_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
-
   if (VersaoNFSe = ve100) and (Ambiente = taHomologacao) then
     NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
+    'nfse_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
 
   xmlNode := GerarIdentificacaoRPS;
   NFSeNode.AppendChild(xmlNode);

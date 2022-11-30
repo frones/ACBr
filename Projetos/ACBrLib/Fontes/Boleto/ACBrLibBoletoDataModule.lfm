@@ -8,9 +8,9 @@ inherited LibBoletoDM: TLibBoletoDM
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
+    Banco.PIX.TipoChavePIX = tchNenhuma
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
-    Cedente.PIX.TipoChavePIX = tchNenhuma
     DirArqRemessa = 'C:\Temp\'
     DirArqRetorno = 'C:\Temp\'
     NumeroArquivo = 0

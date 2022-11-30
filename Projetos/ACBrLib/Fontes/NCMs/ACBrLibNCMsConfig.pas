@@ -51,6 +51,7 @@ type
     FUsuarioProxy: String;
     FArquivoCache      : String;
     FDiasValidadeCache : Integer;
+    FUsarRespostaExtendida: Boolean;
 
   public
     constructor Create;
@@ -65,6 +66,7 @@ type
     property UsuarioProxy: String read FUsuarioProxy write FUsuarioProxy;
     property ArquivoCache: String read FArquivoCache write FArquivoCache;
     property DiasValidadeCache: Integer read FDiasValidadeCache write FDiasValidadeCache;
+    property UsarRespostaExtendida: Boolean read FUsarRespostaExtendida write FUsarRespostaExtendida;
   end;
 
   { TLibNCMsConfig }

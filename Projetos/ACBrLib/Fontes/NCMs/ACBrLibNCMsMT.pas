@@ -40,6 +40,8 @@ uses
   Classes, SysUtils, Forms,
   ACBrLibComum;
 
+{%region Redeclarando Métodos de ACBrLibComum, com nome específico}
+
 function NCM_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NCM_Finalizar(libHandle: PLibHandle): longint;
@@ -63,6 +65,10 @@ function NCM_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: 
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NCM_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  {%endregion}
+
+
+  {%region NCMs}
 
 function NCM_DescricaoNCM(const libHandle: PLibHandle; const cNCM: PChar;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -77,10 +83,14 @@ function NCM_BuscarPorCodigo(const libHandle: PLibHandle; const cNCM: PChar;
 function NCM_BuscarPorDescricao(const libHandle: PLibHandle; const cDesc: PChar; const nTipo: longint;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+{%endregion}
+
 implementation
 
 Uses
   ACBrLibConsts, ACBrLibNCMsBase;
+
+{%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 
 function NCM_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -150,28 +160,70 @@ begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
 end;
 
+{%endregion}
+
+
+{%region NCMs}
+
 function NCM_DescricaoNCM(const libHandle: PLibHandle; const cNCM: PChar;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNCMs(libHandle^.Lib).DescricaoNCM( cNCM, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
 
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 end;
 
 function NCM_Validar(const libHandle: PLibHandle; const cNCM: PChar;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNCMs(libHandle^.Lib).Validar( cNCM, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
 
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 end;
 
 function NCM_BaixarLista(const libHandle: PLibHandle; const cNomeArquivo: PChar;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNCMs(libHandle^.Lib).BaixarLista( cNomeArquivo, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 
 end;
 
 function NCM_ObterNCMs(const libHandle: PLibHandle;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNCMs(libHandle^.Lib).ObterNCMs( sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
 
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 end;
 
 function NCM_BuscarPorCodigo(const libHandle: PLibHandle; const cNCM: PChar;
@@ -203,6 +255,9 @@ begin
       Result := ErrExecutandoMetodo;
   end;
 end;
+
+{%endregion}
+
 
 end.
 

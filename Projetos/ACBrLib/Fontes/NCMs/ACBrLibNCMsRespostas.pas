@@ -42,54 +42,42 @@ uses
 
 type
 
-  { TEnderecoResposta }
-  TEnderecoResposta = class(TACBrLibRespostaBase)
+  { TNCMsRespostaSimples }
+  TNCMsRespostaSimples = class(TObject)
   private
-    FBairro: string;
-    FCEP: string;
-    FComplemento: string;
-    FIBGE_Municipio: string;
-    FIBGE_UF: string;
-    FLogradouro: string;
-    FMunicipio: string;
-    FTipo_Logradouro: string;
-    FUF: string;
-
+    FStringListNCMs: TStringList;
   public
-    constructor Create(const Id: Integer; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
-
-    procedure Processar(const UmNCM: TACBrNCM);
-
-  published
-    property CEP: string read FCEP write FCEP;
-    property Tipo_Logradouro: string read FTipo_Logradouro write FTipo_Logradouro;
-    property Logradouro: string read FLogradouro write FLogradouro;
-    property Complemento: string read FComplemento write FComplemento;
-    property Bairro: string read FBairro write FBairro;
-    property Municipio: string read FMunicipio write FMunicipio;
-    property UF: string read FUF write FUF;
-    property IBGE_Municipio: string read FIBGE_Municipio write FIBGE_Municipio;
-    property IBGE_UF: string read FIBGE_UF write FIBGE_UF;
-
-  end;
-
-  { TNCMsResposta }
-  TNCMsResposta = class(TACBrLibRespostaBase)
-  private
-    FQtd: Integer;
-    FItems: TObjectList;
-
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
-    procedure Processar(const umACBrNCMs: TACBrNCMs);
+    procedure Processar(const UmNCM: TACBrNCMs);
+    function Gerar: Ansistring;
+  end;
 
+  { TNCMsRespostaExtendido }
+  TNCMsRespostaExtendido = class(TACBrLibRespostaBase)
+  private
+    FQtd: Integer;
+    FItems: TACBrNCMsList;
+  public
+    procedure Processar(const umACBrNCMs: TACBrNCMs);
   published
     property Quantidade: Integer read FQtd write FQtd;
-    property Items: TObjectList read FItems;
+    property Items: TACBrNCMsList read FItems;
+  end;
 
+  { TNCMsRespostaFactory }
+
+  TNCMsRespostaFactory = class(TObject)
+  private
+    FUsarRespostaExtendida: Boolean;
+    FRespostaSimples: TNCMsRespostaSimples;
+    FRespostaExtendido: TNCMsRespostaExtendido;
+  public
+    constructor Create(const UsarRespostaExtendida: Boolean; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+
+    procedure Processar(const UmNCM: TACBrNCMs);
+    function Gerar: Ansistring;
   end;
 
 implementation
@@ -97,58 +85,63 @@ implementation
 Uses
   ACBrLibNCMsConsts;
 
-{ TEnderecoResposta }
-constructor TEnderecoResposta.Create(const Id: Integer; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodificacao);
+{ TNCMsRespostaFactory }
+
+constructor TNCMsRespostaFactory.Create(const UsarRespostaExtendida: Boolean; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(CSessaoRespConsulta + IntToStr(Id), ATipo, AFormato);
+  inherited Create;
+  FUsarRespostaExtendida := UsarRespostaExtendida;
+  if FUsarRespostaExtendida then
+    FRespostaExtendido := TNCMsRespostaExtendido.Create(CSessaoNCMs, ATipo, AFormato)
+  else
+    FRespostaSimples := TNCMsRespostaSimples.Create;
 end;
 
-procedure TEnderecoResposta.Processar(const UmNCM: TACBrNCM);
+procedure TNCMsRespostaFactory.Processar(const UmNCM: TACBrNCMs);
 begin
-  with UmNCM do
-  begin
-    self.CEP:= UmNCM.CodigoNcm;
-    //Self.CEP := CEP;
-    //Self.Tipo_Logradouro := Tipo_Logradouro;
-    //Self.Logradouro := Logradouro;
-    //Self.Logradouro := Logradouro;
-    //Self.Complemento := Complemento;
-    //Self.Bairro := Bairro;
-    //Self.Municipio := Municipio;
-    //Self.UF := UF;
-    //Self.IBGE_Municipio := IBGE_Municipio;
-    //Self.IBGE_UF := IBGE_UF;
-  end;
+  if FUsarRespostaExtendida then
+    FRespostaExtendido.Processar(UmNCM)
+  else
+    FRespostaSimples.Processar(UmNCM);
 end;
 
-{ TNCMsResposta }
-constructor TNCMsResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+function TNCMsRespostaFactory.Gerar: Ansistring;
 begin
-  inherited Create(CSessaoNCMs, ATipo, AFormato);
-
-  FItems := TObjectList.Create(True);
+  if FUsarRespostaExtendida then
+    Result := FRespostaExtendido.Gerar
+  else
+    Result := FRespostaSimples.Gerar;
 end;
 
-destructor TNCMsResposta.Destroy;
+constructor TNCMsRespostaSimples.Create;
 begin
-  FItems.Free;
+  inherited;
+  FStringListNCMs := TStringList.Create;
+end;
 
+destructor TNCMsRespostaSimples.Destroy;
+begin
+  FStringListNCMs.Free;
   inherited Destroy;
 end;
 
-procedure TNCMsResposta.Processar(const umACBrNCMs: TACBrNCMs);
-Var
-  I: Integer;
-  Item: TEnderecoResposta;
+{ TNCMsRespostaSimples }
+procedure TNCMsRespostaSimples.Processar(const UmNCM: TACBrNCMs);
 begin
-  //FQtd := ACBrNCMs.Enderecos.Count;
-  //for I := 0 to ACBrCEP.Enderecos.Count - 1 do
-  //begin
-  //  Item := TEnderecoResposta.Create(I + 1, Tipo, Formato);
-  //  Item.Processar(ACBrCEP.Enderecos[I]);
-  //  FItems.Add(Item);
-  //end;
+  FStringListNCMs.Clear;
+  UmNCM.NCMsFiltrados.SaveToStringList(FStringListNCMs, '|');
+end;
+
+function TNCMsRespostaSimples.Gerar: Ansistring;
+begin
+  Result := FStringListNCMs.Text;
+end;
+
+{ TNCMsRespostaExtendido }
+procedure TNCMsRespostaExtendido.Processar(const umACBrNCMs: TACBrNCMs);
+begin
+  FQtd := umACBrNCMs.NCMsFiltrados.Count;
+  FItems := umACBrNCMs.NCMsFiltrados;
 end;
 
 end.

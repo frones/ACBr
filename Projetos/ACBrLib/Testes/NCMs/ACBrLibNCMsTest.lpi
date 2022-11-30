@@ -126,9 +126,8 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="acbrlibncmstestcase.pas"/>
+        <Filename Value="ACBrLibNCMsTestCase.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrLibNCMsTestCase"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\..\Fontes\Comum\ACBrLibConsts.pas"/>

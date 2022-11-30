@@ -41,7 +41,7 @@ unit ACBrLibNCMsStaticImportMT;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, ACBrLibComum;
 
 const
  {$IfDef MSWINDOWS}
@@ -58,45 +58,61 @@ const
   {$EndIf}
  {$EndIf}
 
+{$I ACBrLibErros.inc}
+
 {%region Constructor/Destructor}
-function NCM_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function NCM_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_Finalizar(const libHandle: TLibHandle): longint;
+function NCM_Finalizar(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function NCM_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function NCM_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function NCM_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function NCM_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function NCM_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function NCM_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function NCM_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function NCM_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function NCM_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 {%endregion}
 
 {%region NCM}
-//function CEP_BuscarPorCEP(const libHandle: TLibHandle; eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-//  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
-//function CEP_BuscarPorLogradouro(const libHandle: TLibHandle; eCidade, eTipo_Logradouro, eLogradouro, eUF,
-//  eBairro: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-//  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
+
+function NCM_DescricaoNCM(const libHandle: PLibHandle; const cNCM: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
+function NCM_Validar(const libHandle: PLibHandle; const cNCM: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
+function NCM_BaixarLista(const libHandle: PLibHandle; const cNomeArquivo: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
+function NCM_ObterNCMs(const libHandle: PLibHandle;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
+function NCM_BuscarPorCodigo(const libHandle: PLibHandle; const cNCM: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
+function NCM_BuscarPorDescricao(const libHandle: PLibHandle; const cDesc: PChar; const nTipo: longint;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 {%endregion}
 
 implementation

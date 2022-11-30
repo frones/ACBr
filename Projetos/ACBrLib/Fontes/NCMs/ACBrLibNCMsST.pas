@@ -155,25 +155,61 @@ end;
 function NCM_DescricaoNCM(const cNCM: PChar;
   const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNCMs(pLib^.Lib).DescricaoNCM( cNCM, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
 
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 end;
 
 function NCM_Validar(const cNCM: PChar;
   const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNCMs(pLib^.Lib).Validar( cNCM, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
 
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 end;
 
 function NCM_BaixarLista(const cNomeArquivo: PChar;
   const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNCMs(pLib^.Lib).BaixarLista( cNomeArquivo, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
 
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 end;
 
 function NCM_ObterNCMs(
   const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNCMs(pLib^.Lib).ObterNCMs( sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
 
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 end;
 
 function NCM_BuscarPorCodigo(const cNCM: PChar;

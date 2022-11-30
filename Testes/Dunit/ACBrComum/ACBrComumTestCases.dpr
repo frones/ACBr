@@ -20,8 +20,6 @@ program ACBrComumTestCases;
   Para mais informações veja o arquivo: ACBrTests.Runner.pas
 }
 
-{$I ACBr.inc}
-
 {$IFDEF NOGUI}
 {$APPTYPE CONSOLE}
 {$ENDIF}
@@ -30,11 +28,13 @@ program ACBrComumTestCases;
   {$STRONGLINKTYPES ON}
 {$ENDIF}
 
+{$I ACBr.inc}
+
 {$R *.RES}
 
 uses
-  ACBrTests.Util in '..\..\ACBrTests.Util.pas',
   ACBrTests.Runner in '..\..\ACBrTests.Runner.pas',
+  ACBrTests.Util in '..\..\ACBrTests.Util.pas',
   acbrutiltest in '..\..\FPCUnit\ACBrComum\acbrutiltest.pas',
   ACBrUtil.StringsTests in '..\..\FPCUnit\ACBrComum\ACBrUtil.StringsTests.pas';
 

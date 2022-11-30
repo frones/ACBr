@@ -148,6 +148,8 @@ begin
 end;
 
 function TNFSeW_Tecnos201.GerarValores: TACBrXmlNode;
+var
+  item: string;
 begin
   Result := CreateElement('tcDadosServico');
 
@@ -159,8 +161,10 @@ begin
   Result.AppendChild(AddNode(tcStr, '#21', 'ResponsavelRetencao', 1, 1, NrOcorrRespRetencao,
    FpAOwner.ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET));
 
+  item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
+
   Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, 1,
-                                 NFSe.Servico.ItemListaServico, DSC_CLISTSERV));
+                                                          item, DSC_CLISTSERV));
 
   Result.AppendChild(AddNode(tcStr, '#30', 'CodigoCnae', 1, 7, 1,
                                 OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE));
@@ -171,7 +175,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,
     StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
                                        [rfReplaceAll, rfIgnoreCase]), DSC_DISCR,
-                (NFSe.Prestador.Endereco.CodigoMunicipio <> '3304557')));
+                       (NFSe.Prestador.Endereco.CodigoMunicipio <> '3304557')));
 
   Result.AppendChild(AddNode(tcStr, '#33', 'CodigoMunicipio', 1, 7, 1,
                            OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));

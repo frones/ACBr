@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 30/11/2022
+-- Tecnos.GravarXml --
+[*] Estava faltando a chamada a função para formatar o ItemListaServicos.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini--
 [*] A cidade Brasnorte/MT trocou de provedor, agora é: Coplan
    Por: Carlito Morais

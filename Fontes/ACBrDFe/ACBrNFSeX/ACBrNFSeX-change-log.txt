@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 30/11/2022
+-- ACBrNFSeXServicos.ini--
+[*] A cidade Brasnorte/MT trocou de provedor, agora é: Coplan
+   Por: Carlito Morais
 -- IPM.GravarXml --
 [*] Corrigido a posição da tag nfse_teste.
    Por: Italo Giurizzato Junior

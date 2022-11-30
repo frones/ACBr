@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/11/2022
+-- ACBrPagForClass/CNAB240.LerTxtRetorno --
+[*] Ajustes na leitura do Registro 1.
+   Por: Italo Giurizzato Junior
+
 08/11/2022
 -- ACBrPagForClass/CNAB240.LerTxtRetorno --
 [*] Não estava Gerando os avisos ao ler o Segmento O.

@@ -678,31 +678,37 @@ type
 
   TSegmentoE = class(TObject)
   private
-    FTipoMovimento: TTipoMovimento;
-    FCodMovimento: TInstrucaoMovimento;
     FConvenio: string;
     FContaCorrente: TContaCorrente;
     FNome: string;
     FNaturezaLanc: TNaturezaLanc;
-    {
-    FInformacaoComplementar: string;
-    FMovimento: TTipoMovimentoPagto;
-    FCodOcorrencia: string;
-    FDescOcorrencia: string;
-    }
+    FTipoComplemento: Integer;
+    FComplemento: string;
+    FCPMF: string;
+    FDataContabil: TDateTime;
+    FDataLancamento: TDateTime;
+    FValor: Double;
+    FTipoLancamento: string;
+    FCategoria: Integer;
+    FCodigoHistorico: string;
+    FHistorico: string;
+    FNumeroDocumento: string;
   public
-    property TipoMovimento: TTipoMovimento read FTipoMovimento write FTipoMovimento;
-    property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property Convenio: string read FConvenio write FConvenio;
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
     property Nome: string read FNome write FNome;
     property NaturezaLanc: TNaturezaLanc read FNaturezaLanc write FNaturezaLanc;
-    {
-    property Movimento: TTipoMovimentoPagto read FMovimento write FMovimento;
-    property InformacaoComplementar: string read FInformacaoComplementar write FInformacaoComplementar;
-    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
-    }
+    property TipoComplemento: Integer read FTipoComplemento write FTipoComplemento;
+    property Complemento: string read FComplemento write FComplemento;
+    property CPMF: string read FCPMF write FCPMF;
+    property DataContabil: TDateTime read FDataContabil write FDataContabil;
+    property DataLancamento: TDateTime read FDataLancamento write FDataLancamento;
+    property Valor: Double read FValor write FValor;
+    property TipoLancamento: string read FTipoLancamento write FTipoLancamento;
+    property Categoria: Integer read FCategoria write FCategoria;
+    property CodigoHistorico: string read FCodigoHistorico write FCodigoHistorico;
+    property Historico: string read FHistorico write FHistorico;
+    property NumeroDocumento: string read FNumeroDocumento write FNumeroDocumento;
   end;
 
   TSegmentoEList = class(TObjectList)

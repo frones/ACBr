@@ -1393,6 +1393,7 @@ begin
 
       with NFeDM do
       begin
+        try
         GravarLog('NFe_DistribuicaoDFePorUltNSU, Executar', logCompleto);
 
         // Lê o arquivo selecionado
@@ -1446,6 +1447,12 @@ begin
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
+        except
+          on E: Exception do
+          begin
+            raise EACBrLibException.Create(ErrRetorno, E.Message + SLineBreak  + '  MotivoRetornadoDoWebService: "' + Trim(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo) + '"' );
+          end;
+        end;
       end;
     finally
       NFeDM.Destravar;

@@ -1370,7 +1370,10 @@ begin
           MoverStringParaPChar(Resposta, sResposta, esTamanho);
           Result := SetRetorno(ErrOK, Resposta);
         except
-          raise EACBrLibException.Create(ErrRetorno, ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
+          on E: Exception do
+          begin
+            raise EACBrLibException.Create(ErrRetorno, E.Message + SLineBreak  + '  MotivoRetornadoDoWebService: "' + Trim(ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo) + '"' );
+          end;
         end;
       end;
     finally

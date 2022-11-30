@@ -1344,6 +1344,7 @@ begin
 
       with MDFeDM do
       begin
+        try
         ACBrMDFe1.WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
         ACBrMDFe1.WebServices.DistribuicaoDFe.ultNSU   := AultNSU;
         ACBrMDFe1.WebServices.DistribuicaoDFe.NSU      := '';
@@ -1364,6 +1365,12 @@ begin
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
+        except
+          on E: Exception do
+          begin
+            raise EACBrLibException.Create(ErrRetorno, E.Message + SLineBreak  + '  MotivoRetornadoDoWebService: "' + Trim(ACBrMDFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo) + '"' );
+          end;
+        end;
       end;
     finally
       MDFeDM.Destravar;

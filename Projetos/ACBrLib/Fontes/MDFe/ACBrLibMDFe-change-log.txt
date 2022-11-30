@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2022
+--- ACBrLibMDFeBase ---
+[*] Concatenação E.Message junto ao xMotivo para saber real motivo do Exception - #TK-3293
+	Por: Antonio Carlos Junior
 
 20/07/2022
 --- ACBrLibMDFe ---

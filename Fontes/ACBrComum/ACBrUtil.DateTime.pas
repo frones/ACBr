@@ -451,7 +451,6 @@ var
   DT: TDateTime;
   Bias, H, M: Integer;
 begin
-  Result := 0;
   DT := ADateTime;
   TZ := AUTC;
 
@@ -486,7 +485,6 @@ begin
 
   Bias := TimeZoneToBias(DateTimeToStr(DT) + TZ);
   Result := IncMinute(DT, Bias);
-
 end;
 
 {-----------------------------------------------------------------------------

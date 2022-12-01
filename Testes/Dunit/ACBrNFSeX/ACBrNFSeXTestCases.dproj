@@ -122,6 +122,7 @@
         <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXTests.pas"/>
         <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv1Tests.pas"/>
         <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv2Tests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorWebFiscoTests.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

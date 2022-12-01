@@ -29,7 +29,9 @@ type
 implementation
 
 uses
-  ACBrConsts, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrNFSeXConversao;
+  synautil, ACBrConsts,
+  ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math,
+  ACBrNFSeXConversao;
 
 const
   SArquivoABRASFv201  = '..\..\..\..\Recursos\NFSe\Provedores\ABRASFv2\ABRASFv2_01-nfse.xml';
@@ -64,7 +66,6 @@ procedure ACBrNFSeXProvedorABRASFv2Test.LoadFromFile_PassandoXMLValidoNaoAssinad
 var
   lStrList: TStringList;
   sxml: string;
-
 begin
   lStrList := TStringList.Create;;
   try
@@ -101,11 +102,11 @@ begin
   // ValoresNfse
   CheckEquals(15.50, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.BaseCalculo, 'NFSe.Servico.Valores.BaseCalculo valor incorreto');
   CheckEquals(5.00, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.Aliquota, 'NFSe.Servico.Valores.Aliquota valor incorreto');
-  //CheckEquals(0.39, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.ValorIss, 'NFSe.Servico.Valores.ValorIss valor incorreto');
+  CheckEquals(0.39, SimpleRoundToEX(FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.ValorIss), 'NFSe.Servico.Valores.ValorIss valor incorreto');
   CheckEquals(7.50, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.ValorLiquidoNfse, 'NFSe.Servico.Valores.ValorLiquidoNfse valor incorreto');
 
   // InfNfse
-  //CheckEquals('Prestação de Serviços', FACBrNFSeX1.NotasFiscais[0].NFSe.DescricaoCodigoTributacaoMunicipio, 'NFSe.DescricaoCodigoTributacaoMunicipio valor incorreto') ;
+  CheckEquals('Prestação de Serviços', FACBrNFSeX1.NotasFiscais[0].NFSe.DescricaoCodigoTributacaoMunicipio, 'NFSe.DescricaoCodigoTributacaoMunicipio valor incorreto') ;
   CheckEquals(10, FACBrNFSeX1.NotasFiscais[0].NFSe.ValorCredito, 'NFSe.ValorCredito valor incorreto');
 
   // PrestadorServico
@@ -156,7 +157,7 @@ begin
   CheckEquals(1, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.ValorCsll, 'NFSe.Servico.Valores.ValorCsll valor incorreto');
   CheckEquals(1, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.OutrasRetencoes, 'NFSe.Servico.Valores.OutrasRetencoes valor incorreto');
   CheckEquals(1, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.ValorTotalTributos, 'NFSe.Servico.Valores.ValorTotalTributos valor incorreto');
-  //CheckEquals(0.39, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.ValorIss, 'NFSe.Servico.Valores.ValorIss valor incorreto');
+  CheckEquals(0.39, SimpleRoundToEX(FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.ValorIss), 'NFSe.Servico.Valores.ValorIss valor incorreto');
   CheckEquals(5.00, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.Aliquota, 'NFSe.Servico.Valores.Aliquota valor incorreto');
   CheckEquals(1, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.DescontoIncondicionado, 'NFSe.Servico.Valores.DescontoIncondicionado valor incorreto');
   CheckEquals(1, FACBrNFSeX1.NotasFiscais[0].NFSe.Servico.Valores.DescontoCondicionado, 'NFSe.Servico.Valores.DescontoCondicionado valor incorreto');

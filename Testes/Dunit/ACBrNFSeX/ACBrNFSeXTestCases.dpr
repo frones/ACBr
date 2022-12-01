@@ -37,7 +37,8 @@ uses
   ACBrTests.Runner in '..\..\ACBrTests.Runner.pas',
   ACBrNFSeXTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXTests.pas',
   ACBrNFSeXProvedorABRASFv1Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv1Tests.pas',
-  ACBrNFSeXProvedorABRASFv2Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv2Tests.pas';
+  ACBrNFSeXProvedorABRASFv2Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv2Tests.pas',
+  ACBrNFSeXProvedorWebFiscoTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorWebFiscoTests.pas';
 
 begin
   ACBrRunTests;

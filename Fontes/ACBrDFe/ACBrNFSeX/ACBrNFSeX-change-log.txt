@@ -44,7 +44,11 @@ Símbolo : Significado
 
 
 01/12/2022
--- ACBrNFSeXServicos.ini--
+-- CTA.Provider/ CTA.GravarXml --
+[*] Ao gerar o XML não estava totalizando os serviços e diversas alterações
+    para que o envio fosse feito com sucesso.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
 [*] Correção na URL da cidade de Vassouras/RJ
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebserviceBase --

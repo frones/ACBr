@@ -46,6 +46,8 @@ type
   { TNFSeW_CTA200 }
 
   TNFSeW_CTA200 = class(TNFSeWClass)
+  private
+    FpValorTotalDosServicos: Double;
   protected
     function GerarIdentificacaoRps: TACBrXmlNode;
     function GerarServico: TACBrXmlNodeArray;
@@ -102,6 +104,7 @@ var
   Descricao: string;
   Quantidade, ValorUnitario, ValorTotal: Double;
 begin
+  FpValorTotalDosServicos := 0;
   Result := nil;
   SetLength(Result, 5 {NFSe.Servico.ItemServico.Count});
 
@@ -135,6 +138,8 @@ begin
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'ValorTotalDoItem', 1, 15, 1,
                                                                ValorTotal, ''));
+
+    FpValorTotalDosServicos := FpValorTotalDosServicos + ValorTotal;
   end;
 
   if NFSe.Servico.ItemServico.Count > 5 then
@@ -146,7 +151,7 @@ begin
   Result := CreateElement('Valores');
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'ValorTotalDosServicos', 1, 15, 1,
-                                       NFSe.Servico.Valores.ValorServicos, ''));
+                                                  FpValorTotalDosServicos, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'ValorDeducoes', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorDeducoes, ''));

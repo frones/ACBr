@@ -1264,7 +1264,7 @@ constructor TACBrNFSeXWebserviceMulti2.Create(AOwner: TACBrDFe; AMetodo: TMetodo
 begin
   inherited Create(AOwner, AMetodo, AURL, AMethod);
 
-  FPBound := '----=_Part_1_' + IntToHex(Random(MaxInt), 8);
+  FPBound := '----=_Part_3_' + IntToHex(Random(MaxInt), 8);
   FPMimeType := 'multipart/form-data; boundary=' + AnsiQuotedStr(FPBound, '"');
 end;
 

@@ -128,13 +128,12 @@ end;
 
 function TNFSeRClass.NormatizarXml(const aXml: string): string;
 begin
-{$IfDef DFE_ACBR_LIBXML2}
-  Result := aXML;
+{$IfDef FPC}
+  Result := aXml;
 {$Else}
   Result := ParseText(aXml, True, False);
-{$EndIf}
-
   Result := FastStringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+{$EndIf}
 end;
 
 function TNFSeRClass.TipodeXMLLeitura(const aArquivo: string): TtpXML;

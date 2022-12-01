@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 30/11/2022
+-- ACBrNFSeXLerXml --
+[*] Alteração na função NormatizarXml para atender tanto o Delphi quanto o
+    Lazarus.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Incluido o tratamento na string atribuida ao campo Link retornado por
     alguns provedores. Esse campo contem uma URL que permite acessar o

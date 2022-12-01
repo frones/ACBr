@@ -239,6 +239,7 @@ begin
     // <retido>?</ retido >
     // <incidencia>?</incidencia>
     Link := ObterConteudo(ANode.Childrens.FindAnyNs('url'), tcStr);
+    Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
 
     LerServicos(ANode);
     LerPrestador(ANode);

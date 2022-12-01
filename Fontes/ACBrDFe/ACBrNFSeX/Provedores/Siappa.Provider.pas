@@ -422,6 +422,7 @@ begin
           Data := EncodeDataHora( ObterConteudoTag(ANode.Childrens.FindAnyNs('ws_003_out_nfse_data_hora'), tcStr),
                                   'DD/MM/YYYY HH:NN:SS' );
           Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('ws_003_out_nfse_url_emissao'), tcStr);
+          Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
         end;
 
         if Assigned(ANota) then

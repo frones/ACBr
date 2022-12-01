@@ -115,6 +115,7 @@ begin
     AuxNode := ANode;
 
   NFSe.Link       := ObterConteudo(AuxNode.Childrens.FindAnyNs('LINK'), tcStr);
+  NFSe.Link       := StringReplace(NFSe.Link, '&amp;', '&', [rfReplaceAll]);
   NFSe.NumeroLote := ObterConteudo(AuxNode.Childrens.FindAnyNs('LOTE'), tcStr);
   NFSe.Numero     := ObterConteudo(AuxNode.Childrens.FindAnyNs('COD'), tcStr);
 

@@ -512,6 +512,7 @@ begin
         Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('guia'), tcStr);
         CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('codigoverificacao'), tcStr);
         Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('url'), tcStr);
+        Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
         Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
       end;
 

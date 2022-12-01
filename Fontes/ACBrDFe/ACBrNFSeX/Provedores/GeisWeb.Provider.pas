@@ -322,6 +322,7 @@ begin
         begin
           Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataLancamento'), tcDatVcto);
           Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('LinkConsulta'), tcStr);
+          Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
         end;
 
         AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');

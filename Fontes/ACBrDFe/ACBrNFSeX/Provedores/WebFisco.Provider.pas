@@ -351,6 +351,7 @@ begin
         Data := Data + ObterConteudoTag(ANode.Childrens.FindAnyNs('nfehora'), tcHor);
         CodVerif := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfeautenticacao'), tcStr);
         Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfelink'), tcStr);
+        Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
         xStatus := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfestatus'), tcStr);
 
         if UpperCase(xStatus) = 'SIM' then
@@ -460,6 +461,7 @@ begin
 
       Response.RetCancelamento.MsgCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);
       Response.RetCancelamento.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);
+      Response.RetCancelamento.Link := StringReplace(Response.RetCancelamento.Link, '&amp;', '&', [rfReplaceAll]);
 
       if (Copy(Response.RetCancelamento.Link, 1, 5) = 'https') or
          (Copy(Response.RetCancelamento.Link, 1, 5) = 'http:') or

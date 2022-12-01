@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 30/11/2022
+-- Diversos --
+[*] Incluido o tratamento na string atribuida ao campo Link retornado por
+    alguns provedores. Esse campo contem uma URL que permite acessar o
+    DANFSE e até baixar o XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- Tecnos.GravarXml --
 [*] Estava faltando a chamada a função para formatar o ItemListaServicos.
    Por: Italo Giurizzato Junior

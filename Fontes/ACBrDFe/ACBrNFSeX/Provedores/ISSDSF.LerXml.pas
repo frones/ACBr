@@ -368,9 +368,8 @@ begin
   if aValor <> '' then
     NFSe.Intermediario.Identificacao.CpfCnpj := aValor;
 
-  aValor := ObterConteudo(ANode.Childrens.FindAnyNs('URLNotaFiscal'), tcStr);
-  if aValor <> '' then
-    NFSe.Link := aValor;
+  NFSe.Link := ObterConteudo(ANode.Childrens.FindAnyNs('URLNotaFiscal'), tcStr);
+  NFSe.Link := StringReplace(NFSe.Link, '&amp;', '&', [rfReplaceAll]);
 
   LerDeducoes(ANode);
   LerItens(ANode);

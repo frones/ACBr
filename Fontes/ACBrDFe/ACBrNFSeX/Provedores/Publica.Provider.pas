@@ -520,6 +520,7 @@ begin
         InfNfseID := ObterConteudoTag(AuxNode.Attributes.Items['id']);
         NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
         sLink := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkVisualizacaoNfse'), tcStr);
+        sLink := StringReplace(sLink, '&amp;', '&', [rfReplaceAll]);
 
         with Response do
         begin

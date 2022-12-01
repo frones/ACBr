@@ -840,6 +840,7 @@ begin
           AResumo.NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroRPS'), tcStr);
           AResumo.SerieRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr);
           AResumo.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('URLNotaFiscal'), tcStr);
+          AResumo.Link := StringReplace(AResumo.Link, '&amp;', '&', [rfReplaceAll]);
 
           with Response do
           begin

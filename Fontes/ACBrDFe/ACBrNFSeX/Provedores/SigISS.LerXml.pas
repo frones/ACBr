@@ -264,6 +264,7 @@ begin
     DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dt_conversao'), tcDat);
     DataEmissaoRps := ObterConteudo(AuxNode.Childrens.FindAnyNs('emissao_rps'), tcDat);
     Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
+    Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
 
     aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
 
@@ -388,6 +389,7 @@ begin
     Numero := ObterConteudo(IdentificacaoNfseNode.Childrens.FindAnyNs('Numero'), tcStr);
     CodigoVerificacao := ObterConteudo(IdentificacaoNfseNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
     Link := ObterConteudo(IdentificacaoNfseNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
+    Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
     DataEmissao := ObterConteudo(IdentificacaoNfseNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
 
     aValor := ObterConteudo(IdentificacaoNfseNode.Childrens.FindAnyNs('StatusNfse'), tcStr);

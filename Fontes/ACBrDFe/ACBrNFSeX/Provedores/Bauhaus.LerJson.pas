@@ -184,6 +184,7 @@ begin
         Numero := aJson.AsString['NumeroNfse'];
         CodigoVerificacao := aJson.AsString['CodigoValidacao'];
         Link := aJson.AsString['LinkNfse'];
+        Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
 
         jsAux := aJson.AsJSONObject['Rps'];
 

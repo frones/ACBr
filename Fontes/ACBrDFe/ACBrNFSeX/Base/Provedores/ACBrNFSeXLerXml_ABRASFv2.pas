@@ -563,7 +563,7 @@ begin
     LerValoresNfse(AuxNode);
 
     NFSe.DescricaoCodigoTributacaoMunicipio :=
-      ObterConteudo(AuxNode.Childrens.FindAnyNs('DescricaoCodigoTributacaoMunicípio'), tcStr);
+      ObterConteudo(AuxNode.Childrens.FindAnyNs(ACBrStr('DescricaoCodigoTributacaoMunicípio')), tcStr);
     NFSe.ValorCredito := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCredito'), tcDe2);
 
     LerIdentificacaoRps(AuxNode);

@@ -361,6 +361,7 @@ begin
       Response.Data := Document.AsISODateTime['dataHoraProcessamento'];
       Response.idNota := Document.AsString['idDPS'];
       Response.Link := Document.AsString['chaveAcesso'];
+      Response.Link := StringReplace(Response.Link, '&amp;', '&', [rfReplaceAll]);
       NFSeXml := Document.AsString['nfseXmlGZipB64'];
 
       if NFSeXml <> '' then

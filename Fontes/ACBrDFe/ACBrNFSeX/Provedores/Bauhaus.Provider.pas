@@ -297,6 +297,7 @@ begin
               SerieNota := jRps.AsString['Serie'];
               Data := jNfse.AsISODateTime['DataEmissao'];
               Link := jNfse.AsString['LinkNfse'];
+              Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
               Protocolo := jNfse.AsString['CodigoValidacao'];
               Situacao := jNfse.AsString['SituacaoNfse'];
               Lote := NumRps;

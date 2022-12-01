@@ -378,6 +378,7 @@ begin
     LerOutrosImpostos(ANode);
 
     Link := ObterConteudo(ANode.Childrens.FindAnyNs('LinkConsulta'), tcStr);
+    Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
   end;
 end;
 

@@ -250,7 +250,8 @@ begin
       NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
 
       Response.NumeroNota := NumNFSe;
-      Response.Link       := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('linkImpressao'), tcStr);
+      Response.Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('linkImpressao'), tcStr);
+      Response.Link := StringReplace(Response.Link, '&amp;', '&', [rfReplaceAll]);
 
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
@@ -403,7 +404,8 @@ begin
       NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
 
       Response.NumeroNota := NumNFSe;
-      Response.Link       := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('linkImpressao'), tcStr);
+      Response.Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('linkImpressao'), tcStr);
+      Response.Link := StringReplace(Response.Link, '&amp;', '&', [rfReplaceAll]);
 
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 

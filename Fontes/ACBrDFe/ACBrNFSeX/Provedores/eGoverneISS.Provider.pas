@@ -278,6 +278,7 @@ begin
               CodVerificacao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Autenticador'), tcStr);
 
               Link := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Link'), tcStr);
+              Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
             end;
 
             AResumo := Response.Resumos.New;

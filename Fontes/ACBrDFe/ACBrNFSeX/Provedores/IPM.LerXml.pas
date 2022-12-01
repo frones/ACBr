@@ -160,6 +160,7 @@ begin
         CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
 
       Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
+      Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
 
       // campos presentes ao baixar do site da prefeitura
       if Numero = '' then

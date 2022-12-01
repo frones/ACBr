@@ -122,7 +122,7 @@ end;
 
 procedure TACBrPSPSicoob.Autenticar;
 var
-  AURL, Body, BasicAutentication: String;
+  AURL, Body: String;
   RespostaHttp: AnsiString;
   ResultCode, sec: Integer;
   js: TACBrJSONObject;

@@ -156,6 +156,7 @@ type
     cbxConsultarCobrancas_Status: TComboBox;
     chCriarCobrancaImediata_PermiterAlterarValor: TCheckBox;
     chConsultarCobrancas_ComLocation: TCheckBox;
+    cbAutenticacaoManual: TCheckBox;
     CobVConsultarRodapeLista: TPanel;
     dtConsultarCobrancas_Fim: TDateTimePicker;
     dtConsultarPixRecebidosInicio: TDateTimePicker;
@@ -265,12 +266,12 @@ type
     gbFluxoStatus: TGroupBox;
     gbFluxoTotal: TGroupBox;
     gdFluxoItens: TStringGrid;
+    gbAutenticacaoManual: TGroupBox;
     imCobVQRCode: TImage;
     imFluxoQRCode: TImage;
     imgErrCEP: TImage;
     imgErrNome: TImage;
     imgErrPSP: TImage;
-    imgInfoMCC: TImage;
     imgItauErroCertificado: TImage;
     imgItauErroChavePIX: TImage;
     imgItauErroChavePrivada: TImage;
@@ -300,7 +301,6 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
-    Label19: TLabel;
     Label25: TLabel;
     Label26: TLabel;
     Label27: TLabel;
@@ -452,6 +452,7 @@ type
     mConsultarDevolucaoPix: TMemo;
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
+    pnAutenticacaoManual: TPanel;
     pnPagSeguroLimpar: TPanel;
     pnPagSeguroCabecalho: TPanel;
     pcSimularPagamento: TPageControl;
@@ -584,7 +585,6 @@ type
     pgPrincipal: TPageControl;
     pLogs: TPanel;
     seProxyPorta: TSpinEdit;
-    seRecebedorMCC: TSpinEdit;
     seConsultarPixRecebidosPagina: TSpinEdit;
     seConsultarPixRecebidosItensPagina: TSpinEdit;
     seTimeout: TSpinEdit;
@@ -828,6 +828,9 @@ type
     procedure InicializarGridFluxo;
     procedure ExcluirItemGrid(aGrid: TStringGrid; aIndex: Integer);
     procedure AdicionarItemGridFluxo(aEan, aDescricao: String; aValor: Double);
+
+    procedure DoAntesAutenticar(var aToken: String; var aValidadeToken: TDateTime);
+    procedure DoDepoisAutenticar(const aToken: String; const aValidadeToken: TDateTime);
 
   public
     property FluxoDados: TFluxoPagtoDados read fFluxoDados;
@@ -2751,7 +2754,7 @@ begin
     edtRecebedorCidade.Text := Ini.ReadString('Recebedor', 'Cidade', '');
     cbxRecebedorUF.ItemIndex := cbxRecebedorUF.Items.IndexOf(Ini.ReadString('Recebedor', 'UF', ''));
 
-    //seRecebedorMCC.Value := Ini.ReadInteger('Recebedor', 'MCC', 0);
+    cbAutenticacaoManual.Checked := Ini.ReadBool('Autenticar', 'Manual', False);
 
     cbxPSPAtual.ItemIndex := Ini.ReadInteger('PIX','PSP', 0);
     cbxAmbiente.ItemIndex := Ini.ReadInteger('PIX','Ambiente', 0);
@@ -2825,7 +2828,13 @@ begin
     Ini.WriteString('Recebedor', 'CEP', edtRecebedorCEP.Text);
     Ini.WriteString('Recebedor', 'Cidade', edtRecebedorCidade.Text);
     Ini.WriteString('Recebedor', 'UF', cbxRecebedorUF.Text);
-    //Ini.WriteInteger('Recebedor', 'MCC', seRecebedorMCC.Value);
+
+    Ini.WriteBool('Autenticar', 'Manual', cbAutenticacaoManual.Checked);
+    if (not cbAutenticacaoManual.Checked) then
+    begin
+      Ini.DeleteKey('Autenticar', 'Token');
+      Ini.DeleteKey('Autenticar', 'Validade');
+    end;
 
     Ini.WriteInteger('PIX','PSP', cbxPSPAtual.ItemIndex);
     Ini.WriteInteger('PIX','Ambiente', cbxAmbiente.ItemIndex);
@@ -3112,6 +3121,12 @@ begin
     6: ACBrPixCD1.PSP := ACBrPSPPagSeguro1;
   else
     raise Exception.Create('PSP configurado é inválido');
+  end;
+
+  if cbAutenticacaoManual.Checked then
+  begin
+    ACBrPixCD1.PSP.OnAntesAutenticar := DoAntesAutenticar;
+    ACBrPixCD1.PSP.OnDepoisAutenticar := DoDepoisAutenticar;
   end;
 end;
 
@@ -3605,6 +3620,34 @@ begin
     Cells[0, RowCount-1] := aEAN;
     Cells[1, RowCount-1] := aDescricao;
     Cells[2, RowCount-1] := FormatFloatBr(aValor);
+  end;
+end;
+
+procedure TForm1.DoAntesAutenticar(var aToken: String;
+  var aValidadeToken: TDateTime);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(NomeArquivoConfiguracao);
+  try
+    aToken := Ini.ReadString('Autenticar', 'Token', EmptyStr);
+    aValidadeToken := Ini.ReadDateTime('Autenticar', 'Validade', 0);
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TForm1.DoDepoisAutenticar(const aToken: String;
+  const aValidadeToken: TDateTime);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(NomeArquivoConfiguracao);
+  try
+    Ini.WriteString('Autenticar', 'Token', aToken);
+    Ini.WriteDateTime('Autenticar', 'Validade', aValidadeToken);
+  finally
+    Ini.Free;
   end;
 end;
 

@@ -275,6 +275,9 @@ type
   TACBrQuandoNecessitarCredencial = procedure(const TipoCredencial: TACBrOpenSSLCredential;
     var Resposta: AnsiString) of object;
 
+  TACBrOnAntesAutenticar = procedure(var aToken: String; var aValidadeToken: TDateTime) of object;
+
+  TACBrOnDepoisAutenticar = procedure(const aToken: String; const aValidadeToken: TDateTime) of object;
 
   { TACBrQueryParams }
 
@@ -322,11 +325,14 @@ type
     procedure SetACBrPixCD(AValue: TACBrPixCD);
   protected
     fpAutenticado: Boolean;
+    fpAutenticouManual:Boolean;
     fpToken: String;
     fpRefreshToken: String;
     fpValidadeToken: TDateTime;
     fpQuandoAcessarEndPoint: TACBrQuandoAcessarEndPoint;
     fpQuandoReceberRespostaEndPoint: TACBrQuandoReceberRespostaEndPoint;
+    fpOnAntesAutenticar: TACBrOnAntesAutenticar;
+    fpOnDepoisAutenticar: TACBrOnDepoisAutenticar;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure VerificarPIXCDAtribuido;
@@ -351,6 +357,7 @@ type
       out ResultCode: Integer; out RespostaHttp: AnsiString): Boolean; virtual;
     function CalcularURLEndPoint(const Method, EndPoint: String): String; virtual;
     function CalcularEndPointPath(const Method, EndPoint: String): String; virtual;
+    function EfetuarAutenticacaoManual: Boolean;
 
     procedure ChamarEventoQuandoAcessarEndPoint(const AEndPoint: String;
       var AURL: String; var AMethod: String);
@@ -396,10 +403,10 @@ type
     property ChavePIX: String read fChavePIX write SetChavePIX;
     property TipoChave: TACBrPIXTipoChave read fTipoChave write SetTipoChave stored false;
 
-    property QuandoTransmitirHttp : TACBrQuandoTransmitirHttp
-      read fQuandoTransmitirHttp write fQuandoTransmitirHttp;
-    property QuandoReceberRespostaHttp: TACBrQuandoReceberRespostaHttp
-      read fQuandoReceberRespostaHttp write fQuandoReceberRespostaHttp;
+    property QuandoTransmitirHttp: TACBrQuandoTransmitirHttp read fQuandoTransmitirHttp write fQuandoTransmitirHttp;
+    property QuandoReceberRespostaHttp: TACBrQuandoReceberRespostaHttp read fQuandoReceberRespostaHttp write fQuandoReceberRespostaHttp;
+    property OnAntesAutenticar: TACBrOnAntesAutenticar read fpOnAntesAutenticar write fpOnAntesAutenticar;
+    property OnDepoisAutenticar: TACBrOnDepoisAutenticar read fpOnDepoisAutenticar write fpOnDepoisAutenticar;
   end;
 
   { TACBrPSPCertificate }
@@ -1354,8 +1361,6 @@ begin
   fpValidadeToken := 0;
   fpToken := '';
   fpRefreshToken := '';
-  fpQuandoAcessarEndPoint := Nil;
-  fpQuandoReceberRespostaEndPoint := Nil;
 
   fHttpRespStream := TMemoryStream.Create;
   fHttpSend := THTTPSend.Create;
@@ -1366,9 +1371,13 @@ begin
   fepCobV := TACBrPixEndPointCobV.Create(Self);
   fURLQueryParams := TACBrQueryParams.Create;
   fURLPathParams := TStringList.Create;
-
+  
+  fpQuandoAcessarEndPoint := Nil;
+  fpQuandoReceberRespostaEndPoint := Nil;
   fQuandoTransmitirHttp := Nil;
   fQuandoReceberRespostaHttp := Nil;
+  fpOnAntesAutenticar := Nil;
+  fpOnDepoisAutenticar := Nil;
 end;
 
 destructor TACBrPSP.Destroy;
@@ -1640,6 +1649,35 @@ function TACBrPSP.CalcularEndPointPath(const Method, EndPoint: String): String;
 begin
   { Sobreescreva em PSPs que usem Nomes de EndPoint, fora do padrão da API do BC }
   Result := Trim(EndPoint);
+end;
+
+function TACBrPSP.EfetuarAutenticacaoManual: Boolean;
+var
+  wToken: String;
+  wValidade: TDateTime;
+begin
+  Result := False;
+  wToken := EmptyStr;
+  wValidade := 0;
+
+  if (not Assigned(fpOnAntesAutenticar)) then
+    Exit;
+
+  fpOnAntesAutenticar(wToken, wValidade);
+
+  Result := (wToken <> EmptyStr) and (wValidade <> 0);
+  fpAutenticado := Result;
+
+  if Result then
+  begin
+    fpToken := wToken;
+    fpValidadeToken := wValidade;
+
+    if (NivelLog > 1) then
+      RegistrarLog(ACBrStr('Efetuada autenticação manual' + sLineBreak +
+        ' - Token: ' + fpToken + sLineBreak +
+        ' - Validade: ' + DateTimeToStr(fpValidadeToken)));
+  end;
 end;
 
 procedure TACBrPSP.ChamarEventoQuandoAcessarEndPoint(const AEndPoint: String;
@@ -1920,16 +1958,24 @@ end;
 procedure TACBrPSP.RenovarToken;
 begin
   Autenticar;
+
+  if Assigned(fpOnDepoisAutenticar) then
+    fpOnDepoisAutenticar(fpToken, fpValidadeToken);
 end;
 
 procedure TACBrPSP.VerificarAutenticacao;
 begin
-  if not Autenticado then
+  if (not (Autenticado or EfetuarAutenticacaoManual)) then
   begin
     if (NivelLog > 2) then
       RegistrarLog('Autenticar');
+
     Autenticar;
+
+    if Assigned(fpOnDepoisAutenticar) then
+      fpOnDepoisAutenticar(fpToken, fpValidadeToken);
   end;
+
   VerificarValidadeToken;
 end;
 

@@ -2818,25 +2818,6 @@ object Form1: TForm1
                   Anchors = [akTop, akRight]
                   Caption = 'CEP'
                 end
-                object Label19: TLabel
-                  Left = 416
-                  Top = 48
-                  Width = 23
-                  Height = 13
-                  Anchors = [akTop, akRight]
-                  Caption = 'MCC'
-                  Visible = False
-                end
-                object imgInfoMCC: TImage
-                  Left = 532
-                  Top = 68
-                  Width = 16
-                  Height = 16
-                  Cursor = crHandPoint
-                  Anchors = [akTop, akRight]
-                  Visible = False
-                  OnClick = imgInfoMCCClick
-                end
                 object sbConsultaCEP: TSpeedButton
                   Left = 529
                   Top = 16
@@ -2890,22 +2871,10 @@ object Form1: TForm1
                   OnExit = edtRecebedorCEPExit
                   OnKeyPress = edOnlyNumbersKeyPress
                 end
-                object seRecebedorMCC: TSpinEdit
+                object cbxRecebedorUF: TComboBox
                   Left = 416
                   Top = 64
                   Width = 113
-                  Height = 22
-                  Anchors = [akTop, akRight]
-                  MaxValue = 99999999
-                  MinValue = 0
-                  TabOrder = 4
-                  Value = 0
-                  Visible = False
-                end
-                object cbxRecebedorUF: TComboBox
-                  Left = 343
-                  Top = 64
-                  Width = 49
                   Height = 21
                   Style = csDropDownList
                   ItemHeight = 0
@@ -3156,7 +3125,7 @@ object Form1: TForm1
                 object seTimeout: TSpinEdit
                   Left = 416
                   Top = 19
-                  Width = 106
+                  Width = 113
                   Height = 22
                   Increment = 10
                   MaxValue = 999999
@@ -3169,14 +3138,14 @@ object Form1: TForm1
             object gbCobranca: TGroupBox
               Left = 16
               Top = 224
-              Width = 560
+              Width = 280
               Height = 72
               Caption = 'Cobran'#231'a'
               TabOrder = 4
               object pnCobranca: TPanel
                 Left = 2
                 Top = 15
-                Width = 556
+                Width = 276
                 Height = 55
                 Align = alClient
                 BevelOuter = bvNone
@@ -3198,6 +3167,30 @@ object Form1: TForm1
                   MinValue = 0
                   TabOrder = 0
                   Value = 3600
+                end
+              end
+            end
+            object gbAutenticacaoManual: TGroupBox
+              Left = 320
+              Top = 224
+              Width = 256
+              Height = 72
+              TabOrder = 5
+              object pnAutenticacaoManual: TPanel
+                Left = 2
+                Top = 15
+                Width = 252
+                Height = 55
+                Align = alClient
+                BevelOuter = bvNone
+                TabOrder = 0
+                object cbAutenticacaoManual: TCheckBox
+                  Left = 16
+                  Top = 16
+                  Width = 193
+                  Height = 17
+                  Caption = 'Controlar Autentica'#231#227'o Manual'
+                  TabOrder = 0
                 end
               end
             end
@@ -3513,7 +3506,7 @@ object Form1: TForm1
                     Left = 19
                     Top = 24
                     Width = 900
-                    Height = 373
+                    Height = 371
                     ActivePage = tsItauChaveCertificadoArquivos
                     Anchors = [akLeft, akTop, akRight, akBottom]
                     TabOrder = 0
@@ -3522,7 +3515,7 @@ object Form1: TForm1
                       Caption = 'Arquivos'
                       DesignSize = (
                         892
-                        345)
+                        343)
                       object lItauAvisoChaveCertificadoDesabilitado: TLabel
                         Left = 35
                         Top = 16
@@ -3663,12 +3656,12 @@ object Form1: TForm1
                       Caption = 'Gerar Chave e Certificado'
                       DesignSize = (
                         892
-                        345)
+                        343)
                       object pgPSPItauGerarChaveCertificado: TPageControl
                         Left = 16
                         Top = 16
                         Width = 842
-                        Height = 325
+                        Height = 323
                         ActivePage = tsItauCertPasso1
                         Anchors = [akLeft, akTop, akRight, akBottom]
                         TabOrder = 0
@@ -3676,7 +3669,7 @@ object Form1: TForm1
                           Caption = 'Passo 1 - Definir Chave Privada'
                           DesignSize = (
                             834
-                            297)
+                            295)
                           object Label39: TLabel
                             Left = 16
                             Top = 24
@@ -3709,7 +3702,7 @@ object Form1: TForm1
                             Left = 16
                             Top = 72
                             Width = 794
-                            Height = 208
+                            Height = 206
                             Anchors = [akLeft, akTop, akRight, akBottom]
                             Font.Charset = DEFAULT_CHARSET
                             Font.Color = clWindowText
@@ -3804,7 +3797,7 @@ object Form1: TForm1
                             Left = 0
                             Top = 136
                             Width = 834
-                            Height = 161
+                            Height = 159
                             Align = alClient
                             BevelOuter = bvNone
                             TabOrder = 2

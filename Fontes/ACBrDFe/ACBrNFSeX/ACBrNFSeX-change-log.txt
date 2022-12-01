@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/12/2022
+-- ACBrNFSeXServicos.ini--
+[*] Correção na URL da cidade de Vassouras/RJ
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebserviceBase --
 [*] Possível solução para o erro HTTP 400 que esta ocorrendo no provedor IPM.
    Por: Italo Giurizzato Junior

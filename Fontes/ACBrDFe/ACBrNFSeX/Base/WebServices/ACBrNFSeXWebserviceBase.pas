@@ -1272,8 +1272,6 @@ function TACBrNFSeXWebserviceMulti2.DefinirMsgEnvio(const Message, SoapAction,
   SoapHeader: string; namespace: array of string): string;
 var
   NomeArq: string;
-  Tamanho: Integer;
-  xTamanho: string;
 begin
   NomeArq := GerarPrefixoArquivo + '-' + FPArqEnv + '.xml';
 
@@ -1287,13 +1285,9 @@ begin
             Message + sLineBreak +
             '--' + FPBound + '--' + sLineBreak;
 
-  Tamanho := Length(Result);
-  xTamanho := IntToStr(Tamanho);
-
   HttpClient := FPDFeOwner.SSL.SSLHttpClass;
 
   HttpClient.Clear;
-  HttpClient.HeaderReq.AddHeader('Content-Length', xTamanho);
 end;
 
 { TInfConsulta }

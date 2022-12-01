@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/12/2022
+-- ACBrNFSeXWebserviceBase --
+[*] Possível solução para o erro HTTP 400 que esta ocorrendo no provedor IPM.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini--
 [*] A cidade Paty do Alferes/RJ trocou de provedor, agora é: DBSeller
    Por: Destak

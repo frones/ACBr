@@ -590,7 +590,6 @@ var
   DT: TDateTime;
 begin
   DT := now;
-  Bias := 0;
   UTC := '';
 
   if (AComponente.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao <> tzSistema) then

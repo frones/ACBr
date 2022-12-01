@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2022
+-- ACBrXmlDocument --
+[*] Incluído uma diretiva de compilação para tratar o LocalName para quando
+    for Delphi ou Lazarus.
+  Por: Italo Giurizzato Junior
+
 09/11/2022
 -- ACBrXmlBase --
 [*] Incluído o prefixo "nfse:" na lista de prefixos a serem removidos do XML.

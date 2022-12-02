@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 02/12/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a cidade de São Domingos das Dores/MG - Provedor: Futurize
+   Por: Glauber Bernardo
+[+] Incluida a cidade de Altamira-PA, provedor é Desenvolve
+   Por: CMM AUTOMACAO COMERCIAL LT
+[*] A cidade de Angra dos Reis mudou para versão 2.03, provedor ainda é Tiplan.
+   Por: dkinformatica
 -- ACBrNFSeXNotasFiscais --
 [*] No método GravarXML agora esta checando o conteudo do parâmetro NomeArquivo.
    Por: Italo Giurizzato Junior

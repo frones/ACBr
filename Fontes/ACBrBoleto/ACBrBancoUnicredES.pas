@@ -576,6 +576,7 @@ begin
     else
       result := '5';
     end;
+  end;
 end;
 
 function TACBrBancoUnicredES.DefineNumeroDocumentoModulo(

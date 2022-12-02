@@ -873,21 +873,10 @@ var
   XmlUTF8: AnsiString;
   i, l: integer;
   MS: TMemoryStream;
-  SL: TStringStream;
-  IsFile: Boolean;
 begin
   MS := TMemoryStream.Create;
   try
-    IsFile := FilesExists(CaminhoArquivo);
-
-    if (IsFile) then
-      MS.LoadFromFile(CaminhoArquivo)
-    else
-    begin
-      SL := TStringStream.Create(CaminhoArquivo);
-      MS.LoadFromStream(SL);
-      SL.Free;
-    end;
+    MS.LoadFromFile(CaminhoArquivo);
 
     XmlUTF8 := ReadStrFromStream(MS, MS.Size);
   finally
@@ -906,12 +895,7 @@ begin
       if Pos('-rps.xml', CaminhoArquivo) > 0 then
         Self.Items[i].NomeArqRps := CaminhoArquivo
       else
-      begin
-        if IsFile then
-          Self.Items[i].NomeArq := CaminhoArquivo
-        else
-          Self.Items[i].NomeArq := Items[i].NFSe.ChaveAcesso + '-nfse.xml';
-      end;
+        Self.Items[i].NomeArq := CaminhoArquivo;
     end;
   end;
 end;
@@ -933,6 +917,8 @@ var
   P, N, TamTag, j: Integer;
   aXml, aXmlLote: string;
   TagF: Array[1..14] of String;
+  SL: TStringStream;
+  IsFile: Boolean;
 
   function PrimeiraNFSe: Integer;
   begin
@@ -994,7 +980,17 @@ var
 begin
   MS := TMemoryStream.Create;
   try
-    MS.LoadFromFile(CaminhoArquivo);
+    IsFile := FilesExists(CaminhoArquivo);
+
+    if (IsFile) then
+      MS.LoadFromFile(CaminhoArquivo)
+    else
+    begin
+      SL := TStringStream.Create(CaminhoArquivo);
+      MS.LoadFromStream(SL);
+      SL.Free;
+    end;
+
     XMLUTF8 := ReadStrFromStream(MS, MS.Size);
   finally
     MS.Free;
@@ -1030,7 +1026,12 @@ begin
       if Pos('-rps.xml', CaminhoArquivo) > 0 then
         Self.Items[i].NomeArqRps := CaminhoArquivo
       else
-        Self.Items[i].NomeArq := CaminhoArquivo;
+      begin
+        if IsFile then
+          Self.Items[i].NomeArq := CaminhoArquivo
+        else
+          Self.Items[i].NomeArq := TACBrNFSeX(FACBrNFSe).GetNumID(Items[i].NFSe) + '-nfse.xml';
+      end;
     end;
   end;
 end;

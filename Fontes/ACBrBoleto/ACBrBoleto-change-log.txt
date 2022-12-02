@@ -49,6 +49,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2022
+--ACBrBoletoWS--
+Revert 25580 [*]Correção de AV quando WS com erro e não houver JSON
+ por : Victor H Gonzales - Pandaaa
+
+--ACBrBancoUnicredES--
+[*]Correção da função TACBrBancoUnicredES.CodJurosToStr() 
+ por : Daniel morais
+
 29/11/2022
 --ACBrBoletoWS--
 [*]Correção de AV quando WS com erro e não houver JSON

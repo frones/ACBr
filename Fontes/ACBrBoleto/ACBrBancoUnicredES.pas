@@ -564,7 +564,18 @@ end;
 function TACBrBancoUnicredES.CodJurosToStr(const pCodigoJuros: TACBrCodigoJuros;
   ValorMoraJuros: Currency): String;
 begin
-
+  if ValorMoraJuros = 0 then
+    result := '5'
+  else
+  begin
+    case pCodigoJuros of
+      cjValorDia: result := '1';
+      cjTaxaMensal: result := '2';
+      cjValorMensal: result := '3';
+      cjTaxaDiaria: result := '4';
+    else
+      result := '5';
+    end;
 end;
 
 function TACBrBancoUnicredES.DefineNumeroDocumentoModulo(

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/12/2022
+-- SigISS.LerXml --
+[*] Ajustes para poder ler as datas retornadas pelo provedor.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluida a cidade de São Domingos das Dores/MG - Provedor: Futurize
    Por: Glauber Bernardo

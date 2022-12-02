@@ -67,6 +67,7 @@ type
 implementation
 
 uses
+  synautil,
   ACBrUtil.Base, ACBrDFeUtil;
 
 //==============================================================================
@@ -252,7 +253,8 @@ begin
 
   AuxNode := ANode.Childrens.FindAnyNs('DadosNota');
 
-  if AuxNode = nil then Exit;
+  if AuxNode = nil then
+    AuxNode := ANode;
 
   with NFSe do
   begin
@@ -261,8 +263,15 @@ begin
     id_sis_legado := ObterConteudo(AuxNode.Childrens.FindAnyNs('id_sis_legado'), tcInt);
     CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
     Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nota'), tcStr);
-    DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dt_conversao'), tcDat);
-    DataEmissaoRps := ObterConteudo(AuxNode.Childrens.FindAnyNs('emissao_rps'), tcDat);
+
+    aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('dt_conversao'), tcStr);
+    aValor := Copy(aValor, 1, 11);
+    DataEmissao := DecodeRfcDateTime(aValor);
+
+    aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('emissao_rps'), tcStr);
+    aValor := Copy(aValor, 1, 11);
+    DataEmissaoRps := DecodeRfcDateTime(aValor);
+
     Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
     Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
 
@@ -281,7 +290,7 @@ begin
     with ValoresNfse do
     begin
       ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor'), tcDe2);
-      BaseCalculo      := ValorLiquidoNfse;
+      BaseCalculo      := ObterConteudo(AuxNode.Childrens.FindAnyNs('base'), tcDe2);
       Aliquota         := ObterConteudo(AuxNode.Childrens.FindAnyNs('aliquota_atividade'), tcDe2);
       ValorIss         := ObterConteudo(AuxNode.Childrens.FindAnyNs('iss'), tcDe2);
     end;

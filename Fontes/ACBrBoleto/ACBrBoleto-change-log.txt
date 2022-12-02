@@ -58,6 +58,10 @@ Revert 25580 [*]Correção de AV quando WS com erro e não houver JSON
 [*]Correção da função TACBrBancoUnicredES.CodJurosToStr() 
  por : Daniel morais
 
+--ACBrBoletoW_BancoBrasil_API--
+[*]TK-3327 ACBrBoleto - Ajuste integração via API para o BB quanto a multa
+  por : Aggille Sistemas de Gestão
+
 29/11/2022
 --ACBrBoletoWS--
 [*]Correção de AV quando WS com erro e não houver JSON

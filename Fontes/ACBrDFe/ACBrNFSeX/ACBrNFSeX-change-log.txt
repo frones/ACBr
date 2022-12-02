@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/12/2022
+-- ACBrNFSeXNotasFiscais --
+[*] No método GravarXML agora esta checando o conteudo do parâmetro NomeArquivo.
+   Por: Italo Giurizzato Junior
+[*] O método LoadFromLoteNfse agora Identifica se o lote de NFSe esta salvo em 
+    disco ou no banco de dados.
+   Por: Giquieu
+
 01/12/2022
 -- CTA.Provider/ CTA.GravarXml --
 [*] Ao gerar o XML não estava totalizando os serviços e diversas alterações

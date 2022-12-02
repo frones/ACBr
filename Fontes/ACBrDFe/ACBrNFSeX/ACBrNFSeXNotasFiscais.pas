@@ -599,7 +599,11 @@ begin
 
   if aTipo = txmlNFSe then
   begin
-    FNomeArq := TACBrNFSeX(FACBrNFSe).GetNumID(NFSe) + '-nfse.xml';
+    if EstaVazio(NomeArquivo) then
+      FNomeArq := TACBrNFSeX(FACBrNFSe).GetNumID(NFSe) + '-nfse.xml'
+    else
+      FNomeArq := NomeArquivo + '-nfse.xml';
+
     Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArq, FXmlNfse, PathArquivo);
   end
   else
@@ -869,10 +873,22 @@ var
   XmlUTF8: AnsiString;
   i, l: integer;
   MS: TMemoryStream;
+  SL: TStringStream;
+  IsFile: Boolean;
 begin
   MS := TMemoryStream.Create;
   try
-    MS.LoadFromFile(CaminhoArquivo);
+    IsFile := FilesExists(CaminhoArquivo);
+
+    if (IsFile) then
+      MS.LoadFromFile(CaminhoArquivo)
+    else
+    begin
+      SL := TStringStream.Create(CaminhoArquivo);
+      MS.LoadFromStream(SL);
+      SL.Free;
+    end;
+
     XmlUTF8 := ReadStrFromStream(MS, MS.Size);
   finally
     MS.Free;
@@ -890,7 +906,12 @@ begin
       if Pos('-rps.xml', CaminhoArquivo) > 0 then
         Self.Items[i].NomeArqRps := CaminhoArquivo
       else
-        Self.Items[i].NomeArq := CaminhoArquivo;
+      begin
+        if IsFile then
+          Self.Items[i].NomeArq := CaminhoArquivo
+        else
+          Self.Items[i].NomeArq := Items[i].NFSe.ChaveAcesso + '-nfse.xml';
+      end;
     end;
   end;
 end;

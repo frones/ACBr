@@ -462,7 +462,6 @@ var
   PropList: TPropInfoList;
   i: Integer;
   JSONRoot: TJSONObject;
-  JSONRootNew: TJSONObject;
   ClassObject: TObject;
   CollectionObject: TCollection;
   CollectionItem: TCollectionItem;
@@ -471,7 +470,6 @@ var
   FValue: Extended;
   Propertie: TRttiProperty;
   AValue, ARValue: TValue;
-//  tjsonstreamer
 begin
   if Target = nil then Exit;
   if Target.ClassType = nil then Exit;
@@ -495,32 +493,23 @@ begin
 
             if (ClassObject.InheritsFrom(TCollection)) then
             begin
-              //Cria itens aqui
-              JSONRootNew := TJSONObject.Create;
-              JSONRoot.Add('Itens', JSONRootNew);
-
               CollectionObject := TCollection(ClassObject);
               for i := 0 to CollectionObject.Count - 1 do
               begin
                 CollectionItem := CollectionObject.Items[i];
-                GravarJson(JSONRootNew, Format(CSessionFormat, [Propertie.Name, i+1]), CollectionItem);
+                GravarJson(JSONRoot, Format(CSessionFormat, [Propertie.Name, i+1]), CollectionItem);
               end;
             end
             else if (ClassObject.InheritsFrom(TList)) then
             begin
-              //Cria itens aqui
-              JSONRootNew := TJSONObject.Create;
-              JSONRoot.Add('Itens', JSONRootNew);
-
-
               ListObject := TList(ClassObject);
               for i := 0 to ListObject.Count - 1 do
               begin
                 ListItem := ListObject.Items[i];
                 if (ListItem.ClassType.InheritsFrom(TACBrLibRespostaBase)) then
-                  GravarJson(JSONRootNew, TACBrLibRespostaBase(ListItem).Sessao, ListItem)
+                  GravarJson(JSONRoot, TACBrLibRespostaBase(ListItem).Sessao, ListItem)
                 else
-                  GravarJson(JSONRootNew, Format(CSessionFormat, [Propertie.Name, i+1]), ListItem);
+                  GravarJson(JSONRoot, Format(CSessionFormat, [Propertie.Name, i+1]), ListItem);
               end;
             end
             else

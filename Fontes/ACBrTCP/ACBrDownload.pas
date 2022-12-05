@@ -104,7 +104,7 @@ type
     property OnHookStatus: TACBrHookStatus read fOnHookStatus write SetOnHookStatus;
     property OnHookMonitor: TACBrHookMonitor read fOnHookMonitor write SetOnHookMonitor;
     property OnDownloadStatus: TACBrDownloadStatus read fOnDownloadStatus write SetOnDownloadStatus;
-  end;
+  end deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse componente foi descontinuado e pode apresentar erros. Sugerimos migrar para outros.' {$ENDIF};
 
 implementation
 

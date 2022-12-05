@@ -839,7 +839,7 @@ end;
 procedure TACBrPIXQRCodeDinamico.AddDefaultValues;
 begin
   inherited AddDefaultValues;
-  PointOfInformationMethod := cEMVQrCodeStatic;
+  PointOfInformationMethod := cEMVQRCodeDynamic;
 end;
 
 end.

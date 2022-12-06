@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] Correções nas URLs da cidade de Jacareí/SP
+   Por: SISBLU Software
 -- ISSe.Provider --
 [*] A função que trata o XML retornado não estava removendo a identação.
    Por: Italo Giurizzato Junior

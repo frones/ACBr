@@ -35,7 +35,7 @@ unit DoNcmUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.Base, ACBrUtil.Strings,
+  Classes, TypInfo, SysUtils, CmdUnit,
   ACBrNCMs, ACBrMonitorConsts, ACBrMonitorConfig;
 
 type
@@ -89,6 +89,8 @@ public
 end;
 
 implementation
+
+uses ACBrUtil.Base, ACBrUtil.Strings, ACBrLibResposta, ACBrLibNCMsRespostas;
 
 { TACBrObjetoNcm }
 
@@ -189,26 +191,26 @@ end;
 procedure TMetodoBuscarPorCodigo.Executar;
 var
   wFiltro: String;
-  wSL: TStringList;
+  NCMsResposta: TNCMsRespostaFactory;
 begin
   wFiltro := Trim(fpCmd.Params(0));
   if EstaVazio(wFiltro) then
     raise Exception.Create('Filtro nao informado');
 
-  wSL := TStringList.Create;
-  try 
-    with TACBrObjetoNcm(fpObjetoDono) do
-    begin
-      ACBrNcm.BuscarPorCodigo(wFiltro);
+  with TACBrObjetoNcm(fpObjetoDono) do
+  begin
+    ACBrNcm.BuscarPorCodigo(wFiltro);
 
-      if (ACBrNcm.NCMsFiltrados.Count <= 0) then
-        raise Exception.Create('Nenhum NCM encontrado com codigo: ' + wFiltro);
+    if (ACBrNcm.NCMsFiltrados.Count <= 0) then
+      raise Exception.Create('Nenhum NCM encontrado com codigo: ' + wFiltro);
 
-      ACBrNcm.NCMsFiltrados.SaveToStringList(wSL, '|');
-      fpCmd.Resposta := wSL.Text;
+    NCMsResposta := TNCMsRespostaFactory.Create(False, TpResp, codUTF8);
+    try
+      NCMsResposta.Processar(ACBrNcm);
+      fpCmd.Resposta := NCMsResposta.Gerar;
+    finally
+      NCMsResposta.Free;
     end;
-  finally
-    wSL.Free;
   end;
 end;
 
@@ -219,9 +221,9 @@ end;
 // 1 - Tipo Filtro (0: IniciaCom | 1: Contém | 2: FinalizaCom)
 procedure TMetodoBuscarPorDescricao.Executar;
 var
-  wSL: TStringList;
   wTipoFiltro: Integer;
   wFiltro, wMsgErro: String;
+  NCMsResposta: TNCMsRespostaFactory;
 begin
   wMsgErro := EmptyStr;
   wFiltro := Trim(fpCmd.Params(0));
@@ -230,30 +232,30 @@ begin
   if EstaVazio(wFiltro) then
     raise Exception.Create('Filtro nao informado');
 
-  wSL := TStringList.Create;
-  try
-    with TACBrObjetoNcm(fpObjetoDono) do
+  with TACBrObjetoNcm(fpObjetoDono) do
+  begin
+    ACBrNcm.BuscarPorDescricao(wFiltro, TACBrNCMTipoFiltro(wTipoFiltro));
+
+    if (ACBrNcm.NCMsFiltrados.Count <= 0) then
     begin
-      ACBrNcm.BuscarPorDescricao(wFiltro, TACBrNCMTipoFiltro(wTipoFiltro));
-
-      if (ACBrNcm.NCMsFiltrados.Count <= 0) then
-      begin
-        case wTipoFiltro of
-          1: wMsgErro := 'contendo';
-          2: wMsgErro := 'finalizada com';
-        else
-          wMsgErro := 'iniciando com';
-        end;
-
-        raise Exception.Create(Format('Nenhum NCM encontrado com descricao %s a string %s',
-          [wMsgErro, QuotedStr(wFiltro)]));
+      case wTipoFiltro of
+        1: wMsgErro := 'contendo';
+        2: wMsgErro := 'finalizada com';
+      else
+        wMsgErro := 'iniciando com';
       end;
 
-      ACBrNcm.NCMsFiltrados.SaveToStringList(wSL, '|');
-      fpCmd.Resposta := wSL.Text;
+      raise Exception.Create(Format('Nenhum NCM encontrado com descricao %s a string %s',
+        [wMsgErro, QuotedStr(wFiltro)]));
     end;
-  finally
-    wSL.Free;
+
+    NCMsResposta := TNCMsRespostaFactory.Create(False, TpResp, codUTF8);
+    try
+      NCMsResposta.Processar(ACBrNcm);
+      fpCmd.Resposta := NCMsResposta.Gerar;
+    finally
+      NCMsResposta.Free;
+    end;
   end;
 end;
 

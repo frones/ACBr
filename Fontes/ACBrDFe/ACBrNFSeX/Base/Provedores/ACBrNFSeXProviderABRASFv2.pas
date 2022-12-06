@@ -163,6 +163,7 @@ begin
   // configurar o serviço disponibilizado.
   with ConfigGeral do
   begin
+    Layout := loABRASF;
     ModoEnvio := meLoteSincrono;
     ConsultaPorFaixa := True;
     ConsultaPorFaixaPreencherNumNfseFinal := False;

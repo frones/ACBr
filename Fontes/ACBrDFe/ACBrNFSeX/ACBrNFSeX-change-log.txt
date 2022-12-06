@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 06/12/2022
+-- Diversos --
+[+] Implementado a propriedade Layout que contem o layout (ABRASF ou Próprio)
+    do provedor setado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Correções nas URLs das cidades de Poa/SP e Maringa/PR
    Por: Italo Giurizzato Junior

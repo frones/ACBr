@@ -148,6 +148,7 @@ begin
   // um serviço para recepcionar o RPS e é assíncrono.
   with ConfigGeral do
   begin
+    Layout := loABRASF;
     ModoEnvio := meLoteAssincrono;
     ConsultaSitLote := True;
     ConsultaPorFaixa := False;

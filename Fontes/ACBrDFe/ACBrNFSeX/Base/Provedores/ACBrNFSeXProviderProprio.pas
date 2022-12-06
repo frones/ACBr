@@ -148,6 +148,7 @@ procedure TACBrNFSeProviderProprio.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.Layout := loProprio;
 end;
 
 procedure TACBrNFSeProviderProprio.PrepararEmitir(Response: TNFSeEmiteResponse);

@@ -111,6 +111,8 @@ type
     // define se deve imprimir o conteudo do campo Discriminação ou a lista de
     // serviços
     FDetalharServico: Boolean;
+    // Layout setando ao ler o provedor
+    FLayout: TLayout;
 
   public
     constructor Create;
@@ -143,6 +145,7 @@ type
     property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente;
     property CodIBGE: string read FCodIBGE write FCodIBGE;
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico;
+    property Layout: TLayout read FLayout write FLayout;
   end;
 
   { TWebserviceInfo }

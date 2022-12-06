@@ -56,6 +56,8 @@ type
   TVersaoNFSe = (ve100, ve101, ve103,
                  ve200, ve201, ve202, ve203, ve204);
 
+  TLayout =(loABRASF, loProprio);
+
   TStatusRPS = (srNormal, srCancelado);
 
   TStatusNFSe = (snNormal, snCancelado, snSubstituido);

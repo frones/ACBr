@@ -127,6 +127,7 @@ type
     FConsultaAposCancelar: Boolean;
     FEmitente: TEmitenteConfNFSe;
     FMontarPathSchema: Boolean;
+    FLayout: TLayout;
 
     procedure SetCodigoMunicipio(const Value: Integer);
   public
@@ -152,6 +153,7 @@ type
     property Emitente: TEmitenteConfNFSe read FEmitente write FEmitente;
     property MontarPathSchema: Boolean read FMontarPathSchema
       write FMontarPathSchema default True;
+    property Layout: TLayout read FLayout;
   end;
 
   { TArquivosConfNFSe }
@@ -446,6 +448,8 @@ begin
 
   FxMunicipio := FPIniParams.ReadString(CodIBGE, 'Nome', '');
   FxUF := FPIniParams.ReadString(CodIBGE, 'UF'  , '');
+
+  FLayout := TACBrNFSeX(TConfiguracoesNFSe(Owner).Owner).Provider.ConfigGeral.Layout;
 end;
 
 procedure TGeralConfNFSe.Assign(DeGeralConfNFSe: TGeralConfNFSe);

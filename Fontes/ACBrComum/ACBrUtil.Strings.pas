@@ -399,7 +399,11 @@ end;
 function NativeStringToAnsi(const AString: String): AnsiString;
 begin
   {$IfDef USE_UTF8}
+   {$IfDef ANDROID}
+    Result := TranslateString(AString, 1252)
+   {$Else}
     Result := ACBrUTF8ToAnsi(AString);
+   {$EndIf}
   {$Else}
     Result := AnsiString(AString);
   {$EndIf}
@@ -1236,7 +1240,7 @@ Var A : Integer ;
 begin
   Result  := '' ;
   Ret     := '' ;
-  AnsiStr := AnsiString( ACBrStrToAnsi( AString ));
+  AnsiStr := NativeStringToAnsi( AString );
   For A := 1 to Length( AnsiStr ) do
   begin
      Letra := TiraAcento( AnsiStr[A] ) ;

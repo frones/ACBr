@@ -37,6 +37,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/12/22
+-- ACBrUtil.DateTime --
+[-] Ajuste em "Iso8601ToDateTime", para processar Strings onde hora, minutos ou
+    segundos não são informados.. Exemplo: '2022-12-05T00:00Z'
+
+-- ACBrUtil.Strings --
+[-] Ajuste em 'TiraAcentos' e 'NativeStringToAnsi', para funcionamento correto
+    em Android FMX
+    (por: DSA)
+
 30/11/2022
 -- ACBrUtil.DateTime --
 [*] Remoção de Warnings e Hints.

@@ -44,8 +44,11 @@ Símbolo : Significado
 
 
 06/12/2022
+-- ISSe.Provider --
+[*] A função que trata o XML retornado não estava removendo a identação.
+   Por: Italo Giurizzato Junior
 -- SigISSWeb.GravarXml --
-[*] Possível solução para o erro HTML 500.
+[*] Possível solução para o erro HTTP 500.
    Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado a propriedade Layout que contem o layout (ABRASF ou Próprio)

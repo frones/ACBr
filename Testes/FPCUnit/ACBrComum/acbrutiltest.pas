@@ -2207,7 +2207,12 @@ begin
   currTotal := currValorUnit * currQtde;
 
   // 0.99 x 0.995 = 0,98505, porém "currTotal" é um currency, que somente usa 4 casas decimais, portanto será: 0,9850
-  currVal := 0.98;
+  // Porém, se GetRoundMode for "rmUp", ocorrerá arredondamento, quando o valor é atribuido ao Currency, ficando 0,9851
+
+  if (GetRoundMode = rmUp) then
+    currVal := 0.99
+  else
+    currVal := 0.98;
   CheckEquals(currVal , RoundABNT(currTotal, 2), 0.00001);
 
   //----------- casts implícitos...
@@ -3193,10 +3198,10 @@ initialization
   {Temos 4 classes de testes da RoundABNT. No entanto, apenas uma delas pode ser executada por vez.
    Quando mais de uma é adicionada, podem causar efeitos colaterais ao modificar o RoundingMode.
    Mesmo assim, as outras podem ser adicionadas bastando descomentar as linhas abaixo}
-//  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest);
   _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmUpTest);
-//  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmDownTest);
-//  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmTruncateTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmDownTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmTruncateTest);
   _RegisterTest('ACBrComum.ACBrUtil', CompareVersionsTest);
   _RegisterTest('ACBrComum.ACBrUtil', TestBitTest);
   _RegisterTest('ACBrComum.ACBrUtil', TesteSetBit);

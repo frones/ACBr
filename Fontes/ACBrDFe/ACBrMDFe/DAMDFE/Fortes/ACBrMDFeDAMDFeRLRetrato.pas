@@ -75,6 +75,7 @@ type
     rlLabel109: TRLLabel;
     rlLabel106: TRLLabel;
     rlLabel100: TRLLabel;
+    rlmChave1: TRLMemo;
     rlmObservacao: TRLMemo;
     rlb_2: TRLBand;
     rlLabel12: TRLLabel;
@@ -85,7 +86,6 @@ type
     rlLabel5: TRLLabel;
     subItens: TRLSubDetail;
     rlbItens: TRLBand;
-    rlmChave1: TRLMemo;
     rlmChave2: TRLMemo;
     rlb_1_DadosManifesto: TRLBand;
     rliLogo: TRLImage;
@@ -195,19 +195,23 @@ type
       var PrintIt: Boolean);
     procedure subItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
-    { Private declarations }
     FNumItem: Integer;
   end;
 
 implementation
 
 uses
-  StrUtils, DateUtils,
+  StrUtils,
+  Dialogs,
+  DateUtils,
   pmdfeMDFe,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrUtil.Base,
-  ACBrDFeUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
+  ACBrDFeUtil,
+  ACBrValidador,
+  ACBrImage,
+  ACBrDelphiZXingQRCode,
   ACBrDFeReportFortes;
 
 {$ifdef FPC}
@@ -215,13 +219,6 @@ uses
 {$else}
  {$R *.dfm}
 {$endif}
-
-const
-  _NUM_ITEMS_PAGE1 = 18;
-  _NUM_ITEMS_OTHERPAGES = 50;
-
-var
-  nItemControle: integer;
 
 procedure TfrlDAMDFeRLRetrato.rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
@@ -361,26 +358,11 @@ begin
     rlLabel12.Caption := 'PESO TOTAL (Kg)';
 
   rllPesoTotal.Caption := FormatFloatBr(fpMDFe.tot.qCarga, ',#0.0000');
- // rllValorMercadoria.Caption := FormatFloatBr(fpMDFe.tot.vCarga, ',#0.00');
-
- { if deValorTotal in fpDAMDFe.ImprimeDadosExtras then
-  begin
-    rllTituloValorMerc.Visible := True;
-    rllValorMercadoria.Visible := True;
-    RLPanelVlrMercadoria.Visible := true;
-  end
-  else
-  begin
-    rllTituloValorMerc.Visible := False;
-    rllValorMercadoria.Visible := False;
-    RLPanelVlrMercadoria.Visible := false;
-  end;}
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
-  i{, j}: integer;
-//  averbacao: string;
+  i: integer;
 begin
   inherited;
 
@@ -454,7 +436,7 @@ begin
 
   rlmRespSeguradora.Lines.Clear;
   rlmRespApolice.Lines.Clear;
-//  rlmRespAverbacao.Lines.Clear;
+
 
   rlmRespSeguro.Caption:= '';
 
@@ -466,17 +448,6 @@ begin
     rlmRespSeguradora.Lines.Add(fpMDFe.seg.Items[i].xSeg);
     rlmRespApolice.Lines.Add(fpMDFe.seg.Items[i].nApol);
 
-    { Remoção de averbação até ajuste de layout.
-      Veja: https://www.projetoacbr.com.br/forum/topic/53091-impress%C3%A3o-da-mdfe-300a/
-    averbacao := '';
-    for j := 0 to fpMDFe.seg.Items[i].aver.Count - 1 do
-    begin
-      if (averbacao = '') then
-        averbacao := fpMDFe.seg.Items[i].aver.Items[j].nAver
-      else
-        averbacao := averbacao +'; '+ fpMDFe.seg.Items[i].aver.Items[j].nAver;
-    end;
-    rlmRespAverbacao.Lines.Add(averbacao);}
   end;
 end;
 
@@ -625,7 +596,6 @@ procedure TfrlDAMDFeRLRetrato.RLMDFeBeforePrint(Sender: TObject; var PrintIt: bo
 begin
   inherited;
 
-  nItemControle := 0;
 
   RLMDFe.FirstPageNumber := 1;
   RLMDFe.Title  := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
@@ -697,10 +667,12 @@ begin
   end;
 
   rlmChave1.Lines.Clear;
-  rlmChave2.Lines := rlmChave1.Lines;
+  rlmChave1.Align := faWidth;
+//  rlmChave2.Lines := rlmChave1.Lines;
+  rlmChave2.Visible:= false;
 
   rlmChave1.AutoSize := True;
-  rlmChave2.AutoSize := rlmChave1.AutoSize;
+//  rlmChave2.AutoSize := rlmChave1.AutoSize;
 
   if not EstaVazio(Trim(fpMDFe.infMDFeSupl.qrCodMDFe)) then
     PintarQRCode( fpMDFe.infMDFeSupl.qrCodMDFe, imgQRCode.Picture.Bitmap, qrUTF8NoBOM )
@@ -732,70 +704,95 @@ begin
   inherited;
   rlb_6_Observacao.Visible := RLMDFe.PageNumber = 1 ;
   rlmChave1.Lines.Clear;
-  rlmChave2.Lines.Clear;
+//  rlmChave2.Lines.Clear;
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlbItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
   J, nItem: integer;
+  LDocumentos1, LDocumentos2 :TStrings;
+  LDocumento1, LDocumento2 : String;
+
 
   procedure Printar( sTemp : String; nItem : Integer );
   begin
     if (nItem mod 2) = 0 then
-      rlmChave1.Lines.Add(sTemp)
+      LDocumentos1.Add(sTemp)
     else
-      rlmChave2.Lines.Add( sTemp);
+      LDocumentos2.Add( sTemp);
   end;
 begin
   nItem := 0;
+  rlmChave1.Lines.Clear;
+//  rlmChave2.Lines.Clear;
 
-  with fpMDFe.infDoc.infMunDescarga.Items[FNumItem] do
-  begin
-    rlbMunicipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
+  LDocumentos1 := TStringList.Create;
+  try
+    LDocumentos2 := TStringList.Create;
+    try
 
-   // LinhaDivisoria.Left := (rlbMunicipio.Width div 2) ;
+      with fpMDFe.infDoc.infMunDescarga.Items[FNumItem] do
+      begin
+        rlbMunicipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
 
-   // Lista de CT-e
-    for J := 0 to ( infCTe.Count - 1) do
-    begin
-      Printar( 'CT-e          ' + FormatarChaveAcesso(infCTe.Items[J].chCTe), nItem);
-      Inc(nItem);
+
+       // Lista de CT-e
+        for J := 0 to ( infCTe.Count - 1) do
+        begin
+          Printar( 'CT-e          ' + FormatarChaveAcesso(infCTe.Items[J].chCTe), nItem);
+          Inc(nItem);
+        end;
+
+       // Lista de CT
+        for J := 0 to (infCT.Count - 1) do
+        begin
+          Printar( 'CT            ' + FormatarCNPJouCPF(fpMDFe.emit.CNPJCPF) + ' - '
+                                    + IntToStr(infCT.Items[J].serie)     + '-'
+                                    + infCT.Items[J].nCT , nItem );
+          Inc(nItem);
+        end;
+
+        // Lista de NF-e
+        for J := 0 to (infNFe.Count - 1) do
+        begin
+          Printar( 'NF-e          ' + FormatarChaveAcesso(infNFe.Items[J].chNFe),nItem );
+          Inc(nItem);
+        end;
+
+        // Lista de NF
+        for J := 0 to ( infNF.Count - 1) do
+        begin
+          Printar( 'NF            ' + FormatarCNPJouCPF(infNF.Items[J].CNPJ) + ' - '
+                                    + IntToStr(infNF.Items[J].serie) + '-'
+                                    + IntToStr(infNF.Items[J].nNF),nItem);
+          Inc(nItem);
+        end;
+
+        // Lista de MDF-e
+        for J := 0 to ( infMDFeTransp.Count - 1) do
+        begin
+          Printar( 'MDF-e         ' + FormatarChaveAcesso( infMDFeTransp.Items[J].chMDFe),nItem);
+          Inc(nItem);
+        end;
+      end;
+      for j := 0 to LDocumentos1.Count -1 do
+      begin
+        LDocumento1:= EmptyStr;
+        LDocumento2:= EmptyStr;
+        if LDocumentos1.Count -1 >= j  then
+          LDocumento1:= LDocumentos1[j];
+        if LDocumentos2.Count -1 >= j  then
+          LDocumento2:= LDocumentos2[j];
+        rlmChave1.Lines.Add(Format('%s         %s', [LDocumento1,LDocumento2])   );
+      end;
+      rlmChave1.Lines.Add('');
+    finally
+      LDocumentos2.free;
     end;
-
-   // Lista de CT
-    for J := 0 to (infCT.Count - 1) do
-    begin
-      Printar( 'CT            ' + FormatarCNPJouCPF(fpMDFe.emit.CNPJCPF) + ' - '
-                                + IntToStr(infCT.Items[J].serie)     + '-'
-                                + infCT.Items[J].nCT , nItem );
-      Inc(nItem);
-    end;
-
-    // Lista de NF-e
-    for J := 0 to (infNFe.Count - 1) do
-    begin
-      Printar( 'NF-e          ' + FormatarChaveAcesso(infNFe.Items[J].chNFe),nItem );
-      Inc(nItem);
-    end;
-
-    // Lista de NF
-    for J := 0 to ( infNF.Count - 1) do
-    begin
-      Printar( 'NF            ' + FormatarCNPJouCPF(infNF.Items[J].CNPJ) + ' - '
-                                + IntToStr(infNF.Items[J].serie) + '-'
-                                + IntToStr(infNF.Items[J].nNF),nItem);
-      Inc(nItem);
-    end;
-
-    // Lista de MDF-e
-    for J := 0 to ( infMDFeTransp.Count - 1) do
-    begin
-      Printar( 'MDF-e         ' + FormatarChaveAcesso( infMDFeTransp.Items[J].chMDFe),nItem);
-      Inc(nItem);
-    end;
+  finally
+    LDocumentos1.free;
   end;
-
   inherited;
 end;
 
@@ -803,7 +800,6 @@ procedure TfrlDAMDFeRLRetrato.rlb_7_Documentos_TitulosBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
 begin
   PrintIt := (deRelacaoDFe in fPDAMDFE.ImprimeDadosExtras);
-
   inherited;
 end;
 
@@ -811,7 +807,6 @@ procedure TfrlDAMDFeRLRetrato.subItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   PrintIt := (deRelacaoDFe in fPDAMDFE.ImprimeDadosExtras);
-
   inherited;
 end;
 

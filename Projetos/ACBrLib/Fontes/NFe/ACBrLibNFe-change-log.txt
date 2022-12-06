@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2022
+--- ACBrLibNFeBase ---
+[-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver
+    configurado
+    (por: DSA)
+
 30/11/2022
 --- ACBrLibNFeBase ---
 [*] Concatenação E.Message junto ao xMotivo para saber real motivo do Exception - #TK-3293

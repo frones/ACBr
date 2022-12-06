@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/12/2022
+-- SigISSWeb.GravarXml --
+[*] Possível solução para o erro HTML 500.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado a propriedade Layout que contem o layout (ABRASF ou Próprio)
     do provedor setado.

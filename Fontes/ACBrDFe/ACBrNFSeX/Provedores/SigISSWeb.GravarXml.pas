@@ -72,6 +72,7 @@ var
 begin
   Configuracao;
 
+  Opcoes.DecimalChar := ',';
   Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
@@ -155,7 +156,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'valor_servico', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));
 
-  NFSeNode.AppendChild(AddNode(tcDat, '#1', 'data_emissao', 10, 10, 1,
+  NFSeNode.AppendChild(AddNode(tcDatVcto, '#1', 'data_emissao', 10, 10, 1,
                                                          NFSe.DataEmissao, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'forma_de_pagamento', 1, 2, 1,

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/12/2022
+-- SoftPlan.Provider/SoftPlan.GravarXml --
+[+] Implementado o método SubstituicaoNFSe.
+   Por: Ronaldo Bispo
 -- ACBrNFSeXServicos.ini --
 [*] Correções nas URLs da cidade de Jacareí/SP
    Por: SISBLU Software

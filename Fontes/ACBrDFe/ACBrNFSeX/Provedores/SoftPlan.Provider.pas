@@ -57,6 +57,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function GerarToken(ACabecalho, AMSG: String): string; override;
     function ConsultarDFe(ACabecalho, AMSG: string): string; override;
+    function SubstituirNFSe(ACabecalho, AMSG: string): string; override;
 
   end;
 
@@ -95,6 +96,9 @@ type
 
     procedure PrepararConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
     procedure TratarRetornoConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
+
+    procedure PrepararSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
+    procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
   end;
 
 implementation
@@ -136,6 +140,12 @@ begin
     begin
       InfElemento := 'xmlCancelamentoNfpse';
       DocElemento := 'xmlCancelamentoNfpse';
+    end;
+
+    with SubstituirNFSe do
+    begin
+      InfElemento := 'xmlProcessamentoNfpseSubstituta';
+      DocElemento := 'xmlProcessamentoNfpseSubstituta';
     end;
   end;
 
@@ -457,6 +467,13 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
+  // Substituição não precisa cancelar antes de enviar a nova
+  if (TACBrNFSeX(FAOwner).Status = stNFSeSubstituicao) then
+  begin
+    TACBrNFSeX(FAOwner).Provider.ConfigAssinar.CancelarNFSe := False;
+    Exit;
+  end;
+
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   if EstaVazio(Response.InfCancelamento.MotCancelamento) then
@@ -521,6 +538,13 @@ var
   ANode: TACBrXmlNode;
   ANota: TNotaFiscal;
 begin
+  // Substituição não precisa cancelar antes de enviar a nova
+  if (TACBrNFSeX(FAOwner).Status = stNFSeSubstituicao) then
+  begin
+    Response.Sucesso := True;
+    Exit;
+  end;
+
   if Response.ArquivoRetorno = '' then
   begin
     AErro := Response.Erros.New;
@@ -790,6 +814,164 @@ begin
   Response.Sucesso := Response.Erros.Count = 0;
 end;
 
+procedure TACBrNFSeProviderSoftPlan.PrepararSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Nota: TNotaFiscal;
+  IdAttr, ListaRps: string;
+  I: Integer;
+
+begin
+  try
+    if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod002;
+      AErro.Descricao := ACBrStr(Desc002);
+    end;
+
+    if TACBrNFSeX(FAOwner).NotasFiscais.Count > 1 then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod003;
+      AErro.Descricao := ACBrStr('Conjunto de DPS transmitidos (máximo de 1 DPS)' +
+                         ' excedido. Quantidade atual: ' +
+                         IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
+    end;
+
+    if Response.Erros.Count > 0 then Exit;
+
+    ListaRps := '';
+
+    if ConfigAssinar.IncluirURI then
+      IdAttr := ConfigGeral.Identificador
+    else
+      IdAttr := 'ID';
+
+    for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
+    begin
+      Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
+
+      Nota.GerarXML;
+
+      Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
+      Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
+
+      Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
+                                         PrefixoTS + ConfigMsgDados.SubstituirNFSe.DocElemento,
+                                         ConfigMsgDados.SubstituirNFSe.InfElemento, '', '', '', IdAttr);
+
+      Response.ArquivoEnvio := Nota.XmlRps;
+
+      SalvarXmlRps(Nota);
+
+      ListaRps := ListaRps + Nota.XmlRps;
+    end;
+
+    Response.ArquivoEnvio := ListaRps;
+
+  except
+    on E:Exception do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod999;
+      AErro.Descricao := ACBrStr(Desc999 + E.Message);
+    end;
+  end;
+
+  FpMimeType := 'application/xml';
+  FpPath := '/processamento/notas/processa-substituta';
+  FpMethod := 'POST';
+end;
+
+procedure TACBrNFSeProviderSoftPlan.TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse);
+var
+  Document: TACBrJSONObject;
+  AErro: TNFSeEventoCollectionItem;
+  DocumentXml: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  ANota: TNotaFiscal;
+
+begin
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := ACBrStr(Desc201);
+    Exit
+  end;
+
+  if StringIsXml(Response.ArquivoRetorno) then
+  begin
+    DocumentXml := TACBrXmlDocument.Create;
+
+    try
+      try
+        if Response.ArquivoRetorno = '' then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit
+        end;
+
+        DocumentXml.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := DocumentXml.Root;
+
+        ProcessarMensagemErros(ANode, Response);
+        Response.Sucesso := (Response.Erros.Count = 0);
+
+        if Response.Sucesso then
+        begin
+          with Response do
+          begin
+            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+            Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataEmissao'), tcDat);
+            DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDat);
+            DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('motivoCancelamento'), tcStr);
+            NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroSerie'), tcStr);
+          end;
+
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroNota);
+
+          ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
+          SalvarXmlNfse(ANota);
+        end;
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := ACBrStr(Desc999 + E.Message);
+        end;
+      end;
+    finally
+      FreeAndNil(DocumentXml);
+    end;
+  end
+  else
+  begin
+    Document := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+
+    try
+      try
+        ProcessarMensagemDeErros(Document, Response);
+        Response.Sucesso := (Response.Erros.Count = 0);
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := ACBrStr(Desc999 + E.Message);
+        end;
+      end;
+    finally
+      FreeAndNil(Document);
+    end;
+  end;
+end;
+
 { TACBrNFSeXWebserviceSoftPlan }
 
 procedure TACBrNFSeXWebserviceSoftPlan.SetHeaders(aHeaderReq: THTTPHeader);
@@ -870,6 +1052,18 @@ var
   Request: string;
 begin
   FpMetodo := tmConsultarDFe;
+  FPMsgOrig := AMSG;
+
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+end;
+
+function TACBrNFSeXWebserviceSoftPlan.SubstituirNFSe(ACabecalho, AMSG: string): string;
+var
+  Request: string;
+begin
+  FpMetodo := tmSubstituirNFSe;
   FPMsgOrig := AMSG;
 
   Request := AMSG;

@@ -48,6 +48,9 @@ type
   protected
     function GerarItensServico: TACBrXmlNode;
     function GerarItemServico: TACBrXmlNodeArray;
+
+    function GerarXmlEnvio: Boolean;
+    function GerarXmlSubstituicao: Boolean;
   public
     function GerarXml: Boolean; override;
 
@@ -75,6 +78,15 @@ begin
   for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
   begin
     Result[i] := CreateElement('itemServico');
+
+    // NFS-e Substituta envia apenas a descrição do serviço.
+    if (NFSe.NfseSubstituida <> '') then
+    begin
+      Result[i].AppendChild(AddNode(tcStr, '#1', 'descricaoServico', 0, 1500, 1,
+                                      NFSe.Servico.ItemServico[i].Descricao, ''));
+
+      Continue;
+    end;
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'aliquota', 4, 4, 1,
                                  NFSe.Servico.ItemServico[i].Aliquota/100, ''));
@@ -120,8 +132,6 @@ begin
 end;
 
 function TNFSeW_SoftPlan.GerarXml: Boolean;
-var
-  NFSeNode, xmlNode: TACBrXmlNode;
 begin
   Configuracao;
 
@@ -131,6 +141,17 @@ begin
 
   NFSe.InfID.ID := NFSe.IdentificacaoRps.Numero;
 
+  if (NFSe.NfseSubstituida = '') then
+    Result := GerarXmlEnvio
+  else
+    Result := GerarXmlSubstituicao;
+
+end;
+
+function TNFSeW_SoftPlan.GerarXmlEnvio: Boolean;
+var
+  NFSeNode, xmlNode: TACBrXmlNode;
+begin
   NFSeNode := CreateElement('xmlProcessamentoNfpse');
 
   FDocument.Root := NFSeNode;
@@ -210,6 +231,60 @@ begin
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'valorTotalServicos', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));
+
+  Result := True;
+end;
+
+function TNFSeW_SoftPlan.GerarXmlSubstituicao: Boolean;
+var
+  NFSeNode, xmlNode: TACBrXmlNode;
+begin
+  NFSeNode := CreateElement('xmlProcessamentoNfpseSubstituta');
+
+  FDocument.Root := NFSeNode;
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'bairroTomador', 0, 60, 1,
+                                             NFSe.Tomador.Endereco.Bairro, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigoPostalTomador', 8, 8, 1,
+                                                NFSe.Tomador.Endereco.CEP, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'complementoEnderecoTomador', 1, 30, 0,
+                                        NFSe.Tomador.Endereco.Complemento, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'dadosAdicionais', 0, 600, 0,
+                                                   NFSe.OutrasInformacoes, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'emailTomador', 6, 500, 1,
+                                               NFSe.Tomador.Contato.Email, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'identificacao', 1, 10, 1,
+                                                            NFSe.InfID.ID, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'inscricaoMunicipalTomador', 0, 30, 0,
+                     NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
+
+  xmlNode := GerarItensServico;
+  NFSeNode.AppendChild(xmlNode);
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'logradouroTomador', 0, 60, 1,
+                                           NFSe.Tomador.Endereco.Endereco, ''));
+
+  // AEDF = Autorização para emissão de documentos fiscais eletrônicos.
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'numeroAEDF', 6, 7, 1,
+                                                             ChaveAutoriz, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'numeroEnderecoTomador', 0, 9, 0,
+                                             NFSe.Tomador.Endereco.Numero, ''));
+
+  NFSeNode.AppendChild(AddNode(tcInt, '#1', 'nuNotaFiscal', 0, 9, 1,
+                                         NFSe.NfseSubstituida, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'razaoSocialTomador', 0, 80, 1,
+                                                 NFSe.Tomador.RazaoSocial, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'telefoneTomador', 0, 10, 0,
+                                OnlyNumber(NFSe.Tomador.Contato.Telefone), ''));
 
   Result := True;
 end;

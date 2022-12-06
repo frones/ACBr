@@ -535,18 +535,20 @@ begin
     try
       wSL.LoadFromFile(wArq); 
       wJson := CriarEValidarJson(wSL.Text);
+			try
+				wDataCache := StringToDateTimeDef(wJson.AsString['DataCache'], 0, 'dd/mm/yyyy');
 
-      wDataCache := StringToDateTimeDef(wJson.AsString['DataCache'], 0, 'dd/mm/yyyy');
+				if (CacheDiasValidade > 0) and (DaysBetween(Now, wDataCache) > CacheDiasValidade) then
+				begin
+					DeleteFile(wArq);
+					Exit;
+				end;
 
-      if (CacheDiasValidade > 0) and (DaysBetween(Now, wDataCache) > CacheDiasValidade) then
-      begin
-        DeleteFile(wArq);
-        Exit;
-      end;
-
-      Result := wSL.Text;
+				Result := wSL.Text;
+			finally
+				wJson.Free;
+			end;
     finally
-      wJson.Free;
       wSL.Free;
     end;
   except

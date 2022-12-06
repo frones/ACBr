@@ -133,9 +133,12 @@ begin
     while not FileExists(NomeArquivoRetorno) do begin end;
     sleep(500);
     ArquivoRetorno := TStringList.Create;
-    ArquivoRetorno.LoadFromFile(NomeArquivoRetorno);
-    Mensagens := ArquivoRetorno.Text;
-    ArquivoRetorno.Free;
+	try
+		ArquivoRetorno.LoadFromFile(NomeArquivoRetorno);
+		Mensagens := ArquivoRetorno.Text;
+    finally
+		ArquivoRetorno.Free;
+	end;
     DeleteFile(NomeArquivoRetorno);
     if ApagarAposValidar then
       DeleteFile(PathArquivoXML);

@@ -394,19 +394,23 @@ end;
 
 procedure TACBrTEFDBanese.CNF(Rede, NSU, Finalizacao: String;
   DocumentoVinculado: String);
-var ArquivoReq : TStringList;   
+var 
+	ArquivoReq : TStringList;   
 begin
   {O CNF é sempre padrão, não necessitando ser montado dinamicamente}
   ArquivoReq := TStringList.Create;
-  ArquivoReq.Add('CF0000TTTT00');
-  ArquivoReq.SaveToFile(ArqTemp);
-  Sleep(1000);
-  RenameFile(ArqTemp, ArqReq);
-  Sleep(2000);
-  DeleteFile(ArqResp);
-  Sleep(2000);
-  DeleteFile(ArqSTS);
-  ArquivoReq.Free;
+	try
+		ArquivoReq.Add('CF0000TTTT00');
+		ArquivoReq.SaveToFile(ArqTemp);
+		Sleep(1000);
+		RenameFile(ArqTemp, ArqReq);
+		Sleep(2000);
+		DeleteFile(ArqResp);
+		Sleep(2000);
+		DeleteFile(ArqSTS);
+	finally
+		ArquivoReq.Free;
+	end;
 end;
 
 function TACBrTEFDBanese.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
@@ -491,47 +495,50 @@ begin
       with TACBrTEFDRespBanese( Resp ) do
       begin
         ArquivoResposta := TStringList.Create;
+				try
+					if ((AHeader = 'ADM') and (ItemSelecionado = 1)) then
+						begin
+							ArquivoResposta.LoadFromFile(ArqRespBkp);
+							MontaArquivoResposta('0', ArquivoResposta, operReimpressao);
+							ImprimirComprovantes(ArquivoResposta);
+						end
+					else
+					begin
+						if ((AHeader = 'ADM') and (ItemSelecionado = 3)) then
+							ArquivoResposta.LoadFromFile(ArqRespMovBkp)
+						else
+							ArquivoResposta.LoadFromFile(ArqRespBkp);
 
-        if ((AHeader = 'ADM') and (ItemSelecionado = 1)) then
-          begin
-            ArquivoResposta.LoadFromFile(ArqRespBkp);
-            MontaArquivoResposta('0', ArquivoResposta, operReimpressao);
-            ImprimirComprovantes(ArquivoResposta);
-          end
-        else
-          begin
-            if ((AHeader = 'ADM') and (ItemSelecionado = 3)) then
-              ArquivoResposta.LoadFromFile(ArqRespMovBkp)
-            else
-              ArquivoResposta.LoadFromFile(ArqRespBkp);
+						if ((AHeader = 'ADM') and ((ItemSelecionado = 2) or (ItemSelecionado = 3))) then
+							begin
+								{Lê o Arquivo de Backup da Resposta anterior existe e monta uma
+								estrutura que possa ser utilizada com as funções de impressão
+								do ACBr}
+								MontaArquivoResposta('0', ArquivoResposta, OperCancelamento);
+								ImprimirComprovantes(ArquivoResposta);
+							end
+						else
+							begin
+								{Lê o Arquivo de Backup da Resposta anterior existe e monta uma
+								estrutura que possa ser utilizada com as rotinas de impressão
+								do ACBr}              
+								MontaArquivoResposta(aNSU, ArquivoResposta, operCRT);
 
-            if ((AHeader = 'ADM') and ((ItemSelecionado = 2) or (ItemSelecionado = 3))) then
-              begin
-                {Lê o Arquivo de Backup da Resposta anterior existe e monta uma
-                estrutura que possa ser utilizada com as funções de impressão
-                do ACBr}
-                MontaArquivoResposta('0', ArquivoResposta, OperCancelamento);
-                ImprimirComprovantes(ArquivoResposta);
-              end
-            else
-              begin
-                {Lê o Arquivo de Backup da Resposta anterior existe e monta uma
-                estrutura que possa ser utilizada com as rotinas de impressão
-                do ACBr}              
-                MontaArquivoResposta(aNSU, ArquivoResposta, operCRT);
+								{Grava informações utilizadas pelas rotinas de impressão do ACBr}
+								Conteudo.Conteudo.Text := ArquivoResposta.Text;
+								Conteudo.GravaInformacao(899,100, AHeader ) ;
+								Conteudo.GravaInformacao(899,101, IntToStr(fpIDSeq) ) ;
+								Conteudo.GravaInformacao(899,102, IndiceFPG_ECF ) ;
+								Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( Valor * 100 ,0))) );
+								Conteudo.GravaInformacao(899,104, AHeader );
+								Conteudo.GravaInformacao(899,130, 'IMPRIMINDO...' ) ;
 
-                {Grava informações utilizadas pelas rotinas de impressão do ACBr}
-                Conteudo.Conteudo.Text := ArquivoResposta.Text;
-                Conteudo.GravaInformacao(899,100, AHeader ) ;
-                Conteudo.GravaInformacao(899,101, IntToStr(fpIDSeq) ) ;
-                Conteudo.GravaInformacao(899,102, IndiceFPG_ECF ) ;
-                Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( Valor * 100 ,0))) );
-                Conteudo.GravaInformacao(899,104, AHeader );
-                Conteudo.GravaInformacao(899,130, 'IMPRIMINDO...' ) ;
-
-                Resp.TipoGP := fpTipo;
-              end;
-          end;
+								Resp.TipoGP := fpTipo;
+							end;
+					end;
+				finally
+					ArquivoResposta.free;
+				end;
       end;
     end;
 end;
@@ -596,33 +603,37 @@ begin
         end;
 
         RespostaRequisicao := TStringList.Create;
-        RespostaRequisicao.LoadFromFile(ArqResp);
+				try
+					RespostaRequisicao.LoadFromFile(ArqResp);
 
-        if copy(RespostaRequisicao[0],19,2) <> '00' then
-          begin
-             DeleteFile(ArqResp);
-             TACBrTEFD(Owner).DoExibeMsg( opmOK, copy(RespostaRequisicao[0],25,length(RespostaRequisicao[0])));
-             RespostaRequisicao.Free;
-             Interromper := True;
-          end
-        else
-          begin
-            if (operacao = operFechamento) then
-              RespostaRequisicao.SaveToFile(ArqRespMovBkp)
-            else
-              RespostaRequisicao.SaveToFile(ArqRespBkp);
+					if copy(RespostaRequisicao[0],19,2) <> '00' then
+					begin
+						 DeleteFile(ArqResp);
+						 TACBrTEFD(Owner).DoExibeMsg( opmOK, copy(RespostaRequisicao[0],25,length(RespostaRequisicao[0])));
+						 RespostaRequisicao.Free;
+						 Interromper := True;
+					end
+					else
+					begin
+						if (operacao = operFechamento) then
+							RespostaRequisicao.SaveToFile(ArqRespMovBkp)
+						else
+							RespostaRequisicao.SaveToFile(ArqRespBkp);
 
-            RespostaRequisicao.Free;
-            DeleteFile(ArqSTS);
-            DeleteFile(ArqResp);
+						RespostaRequisicao.Free;
+						DeleteFile(ArqSTS);
+						DeleteFile(ArqResp);
 
-            {Se for CRT ou cancelamento, envia a confirmação}
-            if ((operacao = operCRT) or (operacao = operCancelamento))  then
-              CNF('', '', '');
+						{Se for CRT ou cancelamento, envia a confirmação}
+						if ((operacao = operCRT) or (operacao = operCancelamento))  then
+							CNF('', '', '');
 
-            OK := True;
-            Result := True;
-          end;
+						OK := True;
+						Result := True;
+					end;
+				finally
+					RespostaRequisicao.free;
+				end;
      end ;
   finally
     DeleteFile( ArqReq );
@@ -700,26 +711,34 @@ var aResposta, imgCupom : TStringList;
     posicao : Integer;
 begin
   aResposta := TStringList.Create;
-  imgCupom := TStringList.Create;
+	try
+		imgCupom := TStringList.Create;
+		try
 
-  posicao := 25;
-  while posicao < Length(aRetorno[0]) do
-    begin
-      imgCupom.Add(copy(aRetorno[0], posicao, 40));
-      posicao := posicao + 40;
-    end;
+			posicao := 25;
+			while posicao < Length(aRetorno[0]) do
+				begin
+					imgCupom.Add(copy(aRetorno[0], posicao, 40));
+					posicao := posicao + 40;
+				end;
 
-  if operacao = operCRT then
-    begin
-      aResposta.Add('134-000 = ' + aNSU);
-      aResposta.Add('102-000 = T.E.F.');
-      aResposta.Add('121-000 = ' +  BinaryStringToString(imgCupom.Text));
-    end
-  else
-    aResposta.Text := imgCupom.Text;
+			if operacao = operCRT then
+				begin
+					aResposta.Add('134-000 = ' + aNSU);
+					aResposta.Add('102-000 = T.E.F.');
+					aResposta.Add('121-000 = ' +  BinaryStringToString(imgCupom.Text));
+				end
+			else
+				aResposta.Text := imgCupom.Text;
 
-  aRetorno.Text := aResposta.Text;
-  aResposta.Clear;
+			aRetorno.Text := aResposta.Text;
+			aResposta.Clear;
+		finally
+			imgCupom.free;
+		end;
+	finally
+		aResposta.free;
+	end;
 end;
 
 procedure TACBrTEFDBanese.ImprimirComprovantes(SL : TStringList);

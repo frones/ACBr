@@ -315,8 +315,10 @@ begin
   DecodeDate(emissao, nAno, nMes, nDia);
   DecodeTime(emissao, nHora, nMin, nSeg, nMSeg);
   Result := 'ID';
-
-  if (Length(CNPJF) = 14) then
+                              //Para Órgão publico o CNPJ possui 8 Digitos exceto se a natureza jurídica do contribuinte
+                              //declarante for de administração pública direta federal ([101-5], [104-0], [107-4], [116-3]
+                              //de acordo com Leiautes da EFD-Reinf versão 1.5.1 Pag: 3
+  if (Length(CNPJF) = 14) or (TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte = tcOrgaoPublico) then
     Result := Result + IntToStr(1)
   else
     Result := Result + IntToStr(2);

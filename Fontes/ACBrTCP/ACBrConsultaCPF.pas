@@ -305,6 +305,7 @@ begin
       Resposta := TStringList.Create;
       try
         Resposta.Text := StripHTML(RespHTTP.Text);
+        Resposta.Text := ACBrUtil.XMLHTML.ParseText( Resposta.Text );
         RemoveEmptyLines( Resposta );
 
         //Debug

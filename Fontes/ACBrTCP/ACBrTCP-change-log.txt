@@ -35,6 +35,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+06/12/2022
+--ACBrConsultaCPF--
+[*] Alteração para que leia e encontre informações na resposta que vinham codificadas por virem terem caracteres especiais.
+  por: fabiotj 
+
 22/11/2022
 --ACBrCEP--
 [+]TK-3318 Inclusão do WS BrasilAPI no ACBrCEP

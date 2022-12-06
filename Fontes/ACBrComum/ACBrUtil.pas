@@ -42,7 +42,7 @@
  {$ENDIF}
 {$ENDIF}
 
-unit ACBrUtil;
+unit ACBrUtil deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Utilize uma das units ACBrUtil no lugar dessa' {$ENDIF};
 
 interface
 

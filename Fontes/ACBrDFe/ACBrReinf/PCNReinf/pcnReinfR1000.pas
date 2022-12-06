@@ -97,9 +97,11 @@ type
   private
      FideEFR: TtpSimNao;
      FcnpjEFR: String;
+     FPossuiNaturezaJuridicaNaRegra: Boolean;
   public
     property ideEFR: TtpSimNao read FideEFR write FideEFR;
     property cnpjEFR: String read FcnpjEFR write FcnpjEFR;
+    property PossuiNaturezaJuridicaNaRegra: Boolean read FPossuiNaturezaJuridicaNaRegra write FPossuiNaturezaJuridicaNaRegra;
   end;
 
   TInfoCadastro = class(TObject)
@@ -402,7 +404,11 @@ end;
 
 procedure TevtInfoContri.GerarInfoEFR;
 begin
-  if TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte in [tcOrgaoPublico] then
+     //a Tag é gerada de acordo como CÓDIGO E DESCRIÇÃO DA NATUREZA JURÍDICA
+     //informado no manual este campo PossuiNaturezaJuridicaNaRegra e possível
+     //ter o controle pelo sistema se vai gerar a tag ou não
+  if (infoContribuinte.infoCadastro.infoEFR.PossuiNaturezaJuridicaNaRegra) and 
+     (TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte in [tcOrgaoPublico]) then
   begin
     Gerador.wGrupo('infoEFR');
 

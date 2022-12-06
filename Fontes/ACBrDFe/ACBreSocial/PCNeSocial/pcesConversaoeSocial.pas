@@ -2948,7 +2948,7 @@ end;
 
 function StrTotpCondIng(var ok: boolean; const s: string): tpCondIng;
 begin
-  result := tpCondIng( StrToEnumerado2(ok, s, TGenericosString1_7) );
+  result := tpCondIng( StrToEnumerado2(ok, s, TGenericosString0_7) );
 end;
 
 function eSTpIndSitBenefToStr(const t: tpIndSitBenef): string;

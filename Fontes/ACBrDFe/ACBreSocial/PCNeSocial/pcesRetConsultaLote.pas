@@ -484,7 +484,7 @@ begin
           begin
             RetEventos.Items[i].tot.New;
             RetEventos.Items[i].tot.Items[j].tipo := FLeitor.rAtributo('tipo=', 'tot');
-            RetEventos.Items[i].tot.Items[j].XML := RetornarConteudoEntre(Leitor.Grupo, '>', '</tot');
+            RetEventos.Items[i].tot.Items[j].XML := RetornarConteudoEntre(Leitor.Grupo, '>', '</tot>');
 
             if RetEventos.Items[i].tot.Items[j].tipo = 'S5001' then
             begin

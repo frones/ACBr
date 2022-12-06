@@ -596,7 +596,7 @@ begin
     begin
       FId := Leitor.rAtributo('Id=');
 
-      if leitor.rExtrai(2, 'ideEvento') <> '' then
+      if leitor.rExtrai(1, 'ideEvento') <> '' then
       begin
         IdeEvento.nrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
 
@@ -606,13 +606,13 @@ begin
         IdeEvento.perApur      := leitor.rCampo(tcStr, 'perApur');
       end;
 
-      if leitor.rExtrai(2, 'ideEmpregador') <> '' then
+      if leitor.rExtrai(1, 'ideEmpregador') <> '' then
       begin
         IdeEmpregador.TpInsc := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
         IdeEmpregador.NrInsc := leitor.rCampo(tcStr, 'nrInsc');
       end;
 
-      if leitor.rExtrai(2, 'ideTrabalhador') <> '' then
+      if leitor.rExtrai(1, 'ideTrabalhador') <> '' then
       begin
         if VersaoDF <= ve02_05_00 then
           IdeTrabalhador.cpfTrab := leitor.rCampo(tcStr, 'cpfTrab')
@@ -676,7 +676,7 @@ begin
       else
       begin
         i := 0;
-        while Leitor.rExtrai(2, 'dmDev', '', i + 1) <> '' do
+        while Leitor.rExtrai(1, 'dmDev', '', i + 1) <> '' do
         begin
           IdeTrabalhador.DmDev.New;
           IdeTrabalhador.DmDev.Items[i].FperRef   := leitor.rCampo(tcStr, 'perRef');
@@ -686,7 +686,7 @@ begin
           IdeTrabalhador.DmDev.Items[i].FcodCateg := leitor.rCampo(tcInt, 'codCateg');
 
           j := 0;
-          while Leitor.rExtrai(3, 'infoIR', '', j + 1) <> '' do
+          while Leitor.rExtrai(2, 'infoIR', '', j + 1) <> '' do
           begin
             IdeTrabalhador.DmDev.Items[i].infoIR.New;
             IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].FtpInfoIR := leitor.rCampo(tcInt, 'tpInfoIR');

@@ -165,18 +165,20 @@ type
   TinfoExpRisco = class(TObject)
   private
     FdtIniCondicao: TDateTime;
+    FdtFimCondicao: TDateTime;
     FInfoAmb: TInfoAmbCollection;
     FInfoAtiv: TInfoAtiv;
     FFatRisco: TAgNocCollection;
     FRespReg: TRespRegCollection;
     FObs: TObs;
-    
+
     function getRespReg: TRespRegCollection;
   public
     constructor Create;
     destructor Destroy; override;
 
     property dtIniCondicao: TDateTime read FdtIniCondicao write FdtIniCondicao;
+    property dtFimCondicao: TDateTime read FdtFimCondicao write FdtFimCondicao;
     property InfoAmb: TInfoAmbCollection read FInfoAmb write FInfoAmb;
     property infoAtiv: TInfoAtiv read FInfoAtiv write FInfoAtiv;
     property agNoc: TagNocCollection read FFatRisco write FFatRisco;
@@ -558,14 +560,18 @@ begin
       Gerador.wCampo(tcStr, '', 'nisResp', 1, 11, 1, pRespReg[i].nisResp);
       Gerador.wCampo(tcStr, '', 'nmResp',  1, 70, 1, pRespReg[i].nmResp);
     end;
-    
-    Gerador.wCampo(tcStr, '', 'ideOC',   1,  1, 1, eSIdeOCToStr(pRespReg[i].ideOC));
-    
+
+    if pRespReg[i].ideOC <> idNenhum then
+      Gerador.wCampo(tcStr, '', 'ideOC',   1,  1, 1, eSIdeOCToStr(pRespReg[i].ideOC));
+
     if pRespReg[i].ideOC = idOutros then
       Gerador.wCampo(tcStr, '', 'dscOC',   1, 20, 1, pRespReg[i].dscOC);
-      
-    Gerador.wCampo(tcStr, '', 'nrOC',    1, 14, 1, pRespReg[i].nrOc);
-    Gerador.wCampo(tcStr, '', 'ufOC',    2,  2, 0, pRespReg[i].ufOC);
+
+    if pRespReg[i].ideOC <> idNenhum then
+    begin
+      Gerador.wCampo(tcStr, '', 'nrOC',    1, 14, 1, pRespReg[i].nrOc);
+      Gerador.wCampo(tcStr, '', 'ufOC',    2,  2, 0, pRespReg[i].ufOC);
+    end;
 
     Gerador.wGrupo('/respReg');
   end;
@@ -579,6 +585,10 @@ begin
   Gerador.wGrupo('infoExpRisco');
 
   Gerador.wCampo(tcDat, '', 'dtIniCondicao',   10, 10, 1, objInfoExpRisco.dtIniCondicao);
+
+  if ((objInfoExpRisco.dtIniCondicao >= StringToDateTime('16/01/2022')) and (objInfoExpRisco.dtFimCondicao > 0)) then
+    Gerador.wCampo(tcDat, '', 'dtFimCondicao',   10, 10, 1, objInfoExpRisco.dtFimCondicao);
+
   GerarInfoAmb(objInfoExpRisco.InfoAmb);
   GerarInfoAtiv(objInfoExpRisco.infoAtiv);
   GerarAgNoc(objInfoExpRisco.agNoc);
@@ -873,6 +883,9 @@ begin
       begin
         infoExpRisco.dtIniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
 
+        if ((infoExpRisco.dtIniCondicao >= StringToDateTime('16/01/2022')) and (infoExpRisco.dtFimCondicao > 0)) then
+          infoExpRisco.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
+
         I := 1;
         while true do
         begin
@@ -1063,6 +1076,9 @@ begin
         with Self.infoExpRisco do
         begin
           dtIniCondicao := Leitor.rCampo(tcDat, 'dtIniCondicao');
+
+          if ((dtIniCondicao >= StringToDateTime('16/01/2022')) and (dtFimCondicao > 0)) then
+            dtFimCondicao := Leitor.rCampo(tcDat, 'dtFimCondicao');
 
           if Leitor.rExtrai(3, 'infoAmb') <> '' then
             with infoAmb.New do

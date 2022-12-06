@@ -477,7 +477,7 @@ type
 
   tpLateralidade          = (laNaoAplicavel, laEsquerda, laDireita, laAmbas);
 
-  tpIdeOC                 = (idCRM, idCRO, idRMS, idCREA, idOutros);
+  tpIdeOC                 = (idNenhum, idCRM, idCRO, idRMS, idCREA, idOutros);
 
   tpTpAvPrevio            = (tpAvPrevTrabDadoPeloEmpregadorAoEmpregadoRed2horasDiarias, tpAvPrevTrabDadoPeloEmpregadorAoEmpregadoRedDiasCorridos,
                              tpAvPrevPeloEmpregadoNaoDispensadoDeSeuCumprimento, tpAvPrevTrabDadoPeloEmpregadorRuralComRed1DiaporSemana,
@@ -1771,7 +1771,7 @@ end;
 
 function eSIdeOCToStr(const t: tpIdeOC ): string;
 begin
-  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '9']);
+  result := EnumeradoToStr2(t, ['0','1', '2', '3', '4', '9']);
 end;
 
 function eSStrToIdeOC(var ok: boolean; const s: string): tpIdeOC;

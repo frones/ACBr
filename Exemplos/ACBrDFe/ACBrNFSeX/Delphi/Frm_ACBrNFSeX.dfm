@@ -970,18 +970,38 @@ object frmACBrNFSe: TfrmACBrNFSe
               ParentFont = False
             end
             object Label45: TLabel
-              Left = 8
+              Left = 150
               Top = 389
               Width = 37
               Height = 13
               Caption = 'Vers'#227'o:'
             end
             object lblVersaoSchemas: TLabel
-              Left = 61
+              Left = 203
               Top = 390
               Width = 53
               Height = 13
               Caption = 'lblVersao'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clRed
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label48: TLabel
+              Left = 8
+              Top = 390
+              Width = 37
+              Height = 13
+              Caption = 'Layout:'
+            end
+            object lblLayout: TLabel
+              Left = 61
+              Top = 390
+              Width = 52
+              Height = 13
+              Caption = 'lblLayout'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clRed
               Font.Height = -11

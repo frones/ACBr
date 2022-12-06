@@ -265,6 +265,8 @@ type
     btnConsultarParamMunicRegimesEspeciais: TButton;
     btnConsultarParamMunicRetencoes: TButton;
     btnConsultarParamMunicBeneficio: TButton;
+    Label48: TLabel;
+    lblLayout: TLabel;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -4452,6 +4454,12 @@ begin
   end;
 
   lblSchemas.Caption := ACBrNFSeX1.Configuracoes.Geral.xProvedor;
+
+  if ACBrNFSeX1.Configuracoes.Geral.Layout = loABRASF then
+    lblLayout.Caption := 'ABRASF'
+  else
+    lblLayout.Caption := 'Próprio';
+
   lblVersaoSchemas.Caption := VersaoNFSeToStr(ACBrNFSeX1.Configuracoes.Geral.Versao);
 
   if ACBrNFSeX1.Configuracoes.Geral.Provedor = proPadraoNacional then

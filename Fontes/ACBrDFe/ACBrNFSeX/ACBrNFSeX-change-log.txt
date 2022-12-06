@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] Correções nas URLs das cidades de Poa/SP e Maringa/PR
+   Por: Italo Giurizzato Junior
+
 02/12/2022
 -- SigISS.LerXml --
 [*] Ajustes para poder ler as datas retornadas pelo provedor.

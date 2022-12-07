@@ -146,7 +146,7 @@ type
     {:See @inherited}
     function GetPeerName: string; override;
     {:See @inherited}
-    function GetPeerFingerprint: string; override;
+    function GetPeerFingerprint: ansistring; override;
     {:See @inherited}
     function GetVerifyCert: integer; override;
   published
@@ -576,7 +576,7 @@ begin
   cryptDestroyCert(cert);
 end;
 
-function TSSLCryptLib.GetPeerFingerprint: string;
+function TSSLCryptLib.GetPeerFingerprint: ansistring;
 var
   cert: CRYPT_CERTIFICATE;
 begin

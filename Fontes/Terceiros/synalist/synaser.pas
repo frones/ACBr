@@ -1,9 +1,9 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 007.006.002 |
+| Project : Ararat Synapse                                       | 007.007.000 |
 |==============================================================================|
 | Content: Serial port support                                                 |
 |==============================================================================|
-| Copyright (c)2001-2021, Lukas Gebauer                                        |
+| Copyright (c)2001-2022, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -38,7 +38,6 @@
 |==============================================================================|
 | Contributor(s):                                                              |
 |  (c)2002, Hans-Georg Joepgen (cpom Comport Ownership Manager and bugfixes)   |
-|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -128,8 +127,7 @@ interface
 uses
 {$IFNDEF MSWINDOWS}
   {$IFDEF POSIX}
-    Posix.Termios, Posix.Fcntl, Posix.Unistd, Posix.Stropts, Posix.SysSelect,
-    Posix.SysTime,
+    Posix.Termios, Posix.Fcntl, Posix.Unistd, Posix.Stropts, Posix.SysSelect, Posix.SysTime,
     {$IFDEF LINUX}
       Linuxapi.KernelIoctl,
     {$ENDIF}

@@ -41,7 +41,6 @@
 | Contributor(s):                                                              |
 |   Tomas Hajny (OS2 support)                                                  |
 |   Pepak (multiversion support)                                               |
-|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -1795,7 +1794,7 @@ end;
 function d2iX509bio(b: PBIO; x: PX509): PX509; {pf}
 begin
   if InitSSLInterface and Assigned(_d2iX509bio) then
-    Result := _d2iX509bio(x,b)
+    Result := _d2iX509bio(b, x)
   else
     Result := nil;
 end;

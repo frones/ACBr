@@ -82,7 +82,7 @@ accepting of new connections!
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
 
-unit ssl_openssl11;
+unit ssl_openssl11{$IFDEF SUPPORTS_DEPRECATED} deprecated{$IFDEF SUPPORTS_DEPRECATED_DETAILS} 'Use ssl_openssl3 with OpenSSL 3.0 instead'{$ENDIF}{$ENDIF};
 
 interface
 
@@ -142,7 +142,7 @@ type
     {:See @inherited}
     function GetPeerNameHash: cardinal; override; {pf}
     {:See @inherited}
-    function GetPeerFingerprint: string; override;
+    function GetPeerFingerprint: ansistring; override;
     {:See @inherited}
     function GetCertInfo: string; override;
     {:See @inherited}
@@ -283,8 +283,12 @@ end;
 function TSSLOpenSSL.LoadPFX(pfxdata: Ansistring): Boolean;
 var
   cert, pkey, ca: SslPtr;
+  certx: PAnsiChar;
   b: PBIO;
   p12: SslPtr;
+  i: Integer;
+  Store: PX509_STORE;
+  iTotal: Integer;
 begin
   Result := False;
   b := BioNew(BioSMem);
@@ -303,6 +307,27 @@ begin
             if SSLCTXusePrivateKey(Fctx, pkey) > 0 then
               Result := True;
       {pf}
+
+         if Result and (ca <> nil) then
+         begin
+            iTotal := OPENSSL_sk_num(ca);
+            if iTotal > 0 then
+            begin
+              Store := SSL_CTX_get_cert_store(Fctx);
+              for I := 0 to iTotal - 1 do
+              begin
+                certx := OPENSSL_sk_value(ca, I);
+                if certx <> nil then
+                begin
+                  if X509_STORE_add_cert(Store, certx) = 0  then
+                  begin
+                    // already exists
+                  end;
+                 //X509_free(Cert);
+                end;
+              end;
+            end;
+         end;
       finally
         EvpPkeyFree(pkey);
         X509free(cert);
@@ -320,12 +345,13 @@ end;
 function TSSLOpenSSL.SetSslKeys: boolean;
 var
   st: TFileStream;
-  s: string;
+  s: ansistring;
 begin
   Result := False;
   if not assigned(FCtx) then
     Exit;
   try
+
     if FCertificateFile <> '' then
       if SslCtxUseCertificateChainFile(FCtx, FCertificateFile) <> 1 then
         if SslCtxUseCertificateFile(FCtx, FCertificateFile, SSL_FILETYPE_PEM) <> 1 then
@@ -717,7 +743,7 @@ begin
   X509Free(cert);
 end;
 
-function TSSLOpenSSL.GetPeerFingerprint: string;
+function TSSLOpenSSL.GetPeerFingerprint: ansistring;
 var
   cert: PX509;
   x: integer;

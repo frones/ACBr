@@ -66,7 +66,7 @@ unit synaip;
 interface
 
 uses
-  SysUtils, SynaUtil;
+  SysUtils, synautil, synafpc;
 
 type
 {:binary form of IPv6 adress (for string conversion routines)}
@@ -81,7 +81,7 @@ function IsIP(const Value: string): Boolean;
 function IsIP6(const Value: string): Boolean;
 
 {:Returns a string with the "Host" ip address converted to binary form.}
-function IPToID(Host: string): string;
+function IPToID(Host: string): Ansistring;
 
 {:Convert IPv6 address from their string form to binary byte array.}
 function StrToIp6(value: string): TIp6Bytes;
@@ -96,13 +96,13 @@ function StrToIp(value: string): integer;
 function IpToStr(value: integer): string;
 
 {:Convert IPv4 address to reverse form.}
-function ReverseIP(Value: String): String;
+function ReverseIP(Value: AnsiString): AnsiString;
 
 {:Convert IPv6 address to reverse form.}
-function ReverseIP6(Value: String): String;
+function ReverseIP6(Value: AnsiString): AnsiString;
 
 {:Expand short form of IPv6 address to long form.}
-function ExpandIP6(Value: String): String;
+function ExpandIP6(Value: AnsiString): AnsiString;
 
 
 implementation
@@ -193,7 +193,7 @@ begin
 end;
 
 {==============================================================================}
-function IPToID(Host: string): String;
+function IPToID(Host: string): Ansistring;
 var
   s: string;
   i, x: Integer;
@@ -203,7 +203,7 @@ begin
   begin
     s := Fetch(Host, '.');
     i := StrToIntDef(s, 0);
-    Result := Result + Char(i);
+    Result := Result + AnsiChar(i);
   end;
 end;
 
@@ -243,10 +243,10 @@ end;
 
 {==============================================================================}
 
-function ExpandIP6(Value: String): String;
+function ExpandIP6(Value: AnsiString): AnsiString;
 var
  n: integer;
- s: String;
+ s: ansistring;
  x: integer;
 begin
   Result := '';
@@ -388,7 +388,7 @@ begin
 end;
 
 {==============================================================================}
-function ReverseIP(Value: String): String;
+function ReverseIP(Value: AnsiString): AnsiString;
 var
   x: Integer;
 begin
@@ -404,7 +404,7 @@ begin
 end;
 
 {==============================================================================}
-function ReverseIP6(Value: String): String;
+function ReverseIP6(Value: AnsiString): AnsiString;
 var
   ip6: TIp6bytes;
   n: integer;

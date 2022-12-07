@@ -37,7 +37,6 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
-|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -65,7 +64,7 @@ interface
 uses
   SyncObjs, SysUtils, Classes,
   synafpc,
-  {$IFDEF POSIX}
+  {$IFDEF POSIX} //even POSIX should use new ssPosix module instead...
     Posix.Errno,
     Posix.Signal,
     Posix.NetDB

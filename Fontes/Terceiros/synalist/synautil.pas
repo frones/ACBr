@@ -66,13 +66,6 @@
   {$ZEROBASEDSTRINGS OFF}
 {$ENDIF}
 
-{$IfDef DELPHI2009_UP}
-  {$DEFINE HAS_CHARINSET}
-{$EndIf}
-{$IfDef FPC}
-  {$DEFINE HAS_CHARINSET}
-{$EndIf}
-
 unit synautil;
 
 interface
@@ -89,8 +82,7 @@ uses
     {$ENDIF OS2}
   {$ELSE FPC}
     {$IFDEF POSIX}
-      Posix.Base, Posix.Time, Posix.SysTypes, Posix.SysTime, Posix.Stdio,
-      Posix.Unistd,
+      Posix.Base, Posix.Time, Posix.SysTypes, Posix.SysTime, Posix.Stdio, Posix.Unistd,
     {$ELSE}
       Libc,
     {$ENDIF}
@@ -99,7 +91,12 @@ uses
 {$IFDEF CIL}
   System.IO,
 {$ENDIF}
-  SysUtils, Classes, SynaFpc;
+{$IFDEF DELPHIX_SEATTLE_UP}
+  {$IFNDEF NEXTGEN}
+    System.AnsiStrings,
+  {$ENDIF}
+{$ENDIF}
+  SysUtils, Classes, synafpc;
 
 {$IFDEF VER100}
 type
@@ -389,10 +386,6 @@ function  MatchLastBoundary               (ABOL,AETX:PANSIChar; const ABoundary:
  position into ANSIString.}
 function  BuildStringFromBuffer           (AStx,AEtx:PANSIChar): ANSIString;
 {/pf}
-
-{$IfNDef HAS_CHARINSET}
-function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
-{$EndIf}
 
 var
   {:can be used for your own months strings for @link(getmonthnumber)}
@@ -1834,53 +1827,47 @@ end;
 
 {==============================================================================}
 
-{$IFNDEF FPC}
- {$IFNDEF CIL}
-  {$IFNDEF MSWINDOWS}
-   function tempnam(const Path: PAnsiChar; const Prefix: PAnsiChar): PAnsiChar; cdecl;
-     external libc name _PU + 'tempnam';
-  {$ENDIF}
- {$ENDIF}
+{$IFDEF POSIX}
+function tempnam(const Path: PAnsiChar; const Prefix: PAnsiChar): PAnsiChar; cdecl;
+  external libc name _PU + 'tempnam';
 {$ENDIF}
 
 function GetTempFile(const Dir, prefix: String): String;
 {$IFNDEF FPC}
- {$IFNDEF CIL}
-  {$IFDEF MSWINDOWS}
-   var
-    Path: String;
-    x: integer;
-  {$ENDIF}
- {$ENDIF}
+{$IFDEF MSWINDOWS}
+var
+  Path: String;
+  x: integer;
+{$ENDIF}
 {$ENDIF}
 begin
-  {$IFDEF FPC}
-   Result := GetTempFileName(Dir, Prefix);
+{$IFDEF FPC}
+  Result := GetTempFileName(Dir, Prefix);
+{$ELSE}
+  {$IFNDEF MSWINDOWS}
+    Result := tempnam(Pointer(Dir), Pointer(prefix));
   {$ELSE}
-   {$IFDEF CIL}
-    Result := System.IO.Path.GetTempFileName;
-   {$ELSE}
-    {$IFDEF MSWINDOWS}
-     if Dir = '' then
-     begin
-       Path := StringOfChar(#0, MAX_PATH);
-       GetTempPath(Length(Path), PChar(Path));
-       Path := PChar(Path);
-     end
-     else
-       Path := Dir;
-     x := Length(Path);
-     if Path[x] <> '\' then
-       Path := Path + '\';
-     Result := StringOfChar(#0, MAX_PATH);
-     GetTempFileName(PChar(Path), PChar(Prefix), 0, PChar(Result));
-     Result := PChar(Result);
-     SetFileattributes(PChar(Result), GetFileAttributes(PChar(Result)) or FILE_ATTRIBUTE_TEMPORARY);
+    {$IFDEF CIL}
+  Result := System.IO.Path.GetTempFileName;
     {$ELSE}
-     Result := String( tempnam(PAnsiChar(Dir), PAnsiChar(prefix) )) ;
+  if Dir = '' then
+  begin
+    Path := StringOfChar(#0, MAX_PATH);
+	  {x :=} GetTempPath(Length(Path), PChar(Path));
+    Path := PChar(Path);
+  end
+  else
+    Path := Dir;
+  x := Length(Path);
+  if Path[x] <> '\' then
+    Path := Path + '\';
+  Result := StringOfChar(#0, MAX_PATH);
+  GetTempFileName(PChar(Path), PChar(Prefix), 0, PChar(Result));
+  Result := PChar(Result);
+  SetFileattributes(PChar(Result), GetFileAttributes(PChar(Result)) or FILE_ATTRIBUTE_TEMPORARY);
     {$ENDIF}
-   {$ENDIF}
   {$ENDIF}
+{$ENDIF}
 end;
 
 {==============================================================================}
@@ -1940,7 +1927,7 @@ end;
 procedure SearchForLineBreak(var APtr:PANSIChar; AEtx:PANSIChar; out ABol:PANSIChar; out ALength:integer);
 begin
   ABol := APtr;
-  while (APtr<AEtx) and not (Byte(APtr^) in [0,10,13]) do
+  while (APtr<AEtx) and not (Byte(APtr^) in [0, 10, 13]) do
     inc(APtr);
   ALength := APtr-ABol;
 end;
@@ -2044,12 +2031,12 @@ begin
   // Moving Aptr position forward until boundary will be reached
   while (APtr<AEtx) do
     begin
-      if SynaFpc.StrLComp(APtr,#13#10'--',4)=0 then
+      if SynaFpc.strlcomp(APtr,#13#10'--',4)=0 then
         begin
           eob  := MatchBoundary(APtr,AEtx,ABoundary);
           Step := 4;
         end
-      else if SynaFpc.StrLComp(APtr,'--',2)=0 then
+      else if SynaFpc.strlcomp(APtr,'--',2)=0 then
         begin
           eob  := MatchBoundary(APtr,AEtx,ABoundary);
           Step := 2;
@@ -2082,17 +2069,17 @@ begin
   Lng := length(ABoundary);
   if (MatchPos+2+Lng)>AETX then
     exit;
-  if strlcomp(MatchPos,#13#10,2)=0 then
+  if SynaFpc.strlcomp(MatchPos,#13#10,2)=0 then
     inc(MatchPos,2);
   if (MatchPos+2+Lng)>AETX then
     exit;
-  if strlcomp(MatchPos,'--',2)<>0 then
+  if SynaFpc.strlcomp(MatchPos,'--',2)<>0 then
     exit;
   inc(MatchPos,2);
-  if strlcomp(MatchPos,PANSIChar(ABoundary),Lng)<>0 then
+  if SynaFpc.strlcomp(MatchPos,PANSIChar(ABoundary),Lng)<>0 then
     exit;
   inc(MatchPos,Lng);
-  if ((MatchPos+2)<=AEtx) and (strlcomp(MatchPos,#13#10,2)=0) then
+  if ((MatchPos+2)<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10,2)=0) then
     inc(MatchPos,2);
   Result := MatchPos;
 end;
@@ -2107,10 +2094,10 @@ begin
   MatchPos := MatchBoundary(ABOL,AETX,ABoundary);
   if not Assigned(MatchPos) then
     exit;
-  if strlcomp(MatchPos,'--',2)<>0 then
+  if SynaFpc.strlcomp(MatchPos,'--',2)<>0 then
     exit;
   inc(MatchPos,2);
-  if (MatchPos+2<=AEtx) and (strlcomp(MatchPos,#13#10,2)=0) then
+  if (MatchPos+2<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10,2)=0) then
     inc(MatchPos,2);
   Result := MatchPos;
 end;
@@ -2132,12 +2119,6 @@ begin
 end;
 {/pf}
 
-{$IfNDef HAS_CHARINSET}
-function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
-begin
-  result := C in CharSet;     
-end;
-{$EndIf}
 
 
 

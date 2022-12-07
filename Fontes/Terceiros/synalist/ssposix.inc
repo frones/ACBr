@@ -38,16 +38,15 @@
 |==============================================================================|
 | Contributor(s):                                                              |
 |  Radek Cervinka                                                              |
-|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
 |==============================================================================}
 
+{:@exclude}
+
 {$WARN UNIT_PLATFORM OFF}
 {$WARN SYMBOL_PLATFORM OFF}
-
-{:@exclude}
 
 {$IFDEF POSIX}
 {for delphi XE2+}
@@ -72,7 +71,7 @@ interface
 
 uses
   SyncObjs, SysUtils, Classes, synafpc,
-  Posix.SysSocket, Posix.SysSelect, Posix.SysTime,  Posix.NetinetIn,
+  Posix.SysSocket, Posix.SysSelect, Posix.SysTime, Posix.NetinetIn,
   Posix.StrOpts, Posix.Errno;
 
 function InitSocketInterface(stack: string): Boolean;
@@ -88,6 +87,7 @@ const
   c6AnyHost = '::0';
   c6Localhost = '::1';
   cLocalHostStr = 'localhost';
+  cMaxHostLength = 255;
 
 type
   TSocket = longint;
@@ -101,32 +101,31 @@ type
   Ttimeval = Posix.SysTime.timeval;
 
 const
-  //
+  //not declared in all Delphi versions...
   {$IF DECLARED(Posix.StrOpts.FIONREAD)}
   FIONREAD = Posix.StrOpts.FIONREAD;
   {$Else}
   FIONREAD = {$IFNDEF MSWINDOWS}$541B{$ELSE}$4004667F{$ENDIF};
   {$IfEnd}
-  
+
   {$IF DECLARED(Posix.StrOpts.FIONBIO)}
   FIONBIO = Posix.StrOpts.FIONBIO;
   {$Else}
   FIONBIO  = {$IFNDEF MSWINDOWS}$5421{$ELSE}$8004667E{$ENDIF};
   {$IfEnd}
-  
+
   {$IF DECLARED(Posix.StrOpts.FIOASYNC)}
   FIOASYNC = Posix.StrOpts.FIOASYNC;
   {$Else}
   FIOASYNC = {$IFNDEF MSWINDOWS}$5452{$ELSE}$8004667D{$ENDIF};
   {$IfEnd}
-  
-  
+
 const
-  IPPROTO_IP     =   Posix.NetinetIn.IPPROTO_IP;		{ Dummy	}
+  IPPROTO_IP     =   Posix.NetinetIn.IPPROTO_IP;		{ Dummy					}
   IPPROTO_ICMP   =   Posix.NetinetIn.IPPROTO_ICMP;		{ Internet Control Message Protocol }
   IPPROTO_IGMP   =   Posix.NetinetIn.IPPROTO_IGMP;		{ Internet Group Management Protocol}
-  IPPROTO_TCP    =   Posix.NetinetIn.IPPROTO_TCP;		{ TCP }
-  IPPROTO_UDP    =   Posix.NetinetIn.IPPROTO_UDP;	    { User Datagram Protocol }
+  IPPROTO_TCP    =   Posix.NetinetIn.IPPROTO_TCP;		{ TCP           			}
+  IPPROTO_UDP    =   Posix.NetinetIn.IPPROTO_UDP;	{ User Datagram Protocol		}
   IPPROTO_IPV6   =   Posix.NetinetIn.IPPROTO_IPV6;
   IPPROTO_ICMPV6 =   58;
   IPPROTO_RM     =  113;
@@ -249,7 +248,7 @@ const
   {$IF DECLARED(Posix.SysSocket.AF_MAX)}
   AF_MAX          = Posix.SysSocket.AF_MAX;   // !! - variable by OS
   {$Else}
-  AF_MAX = 39;
+  AF_MAX = 43; //not declared for Android
   {$IfEnd}
 
 { Protocol families, same as address families for now. }
@@ -434,7 +433,7 @@ function ResolvePort(Port: string; Family, SockProtocol, SockType: integer): Wor
 {==============================================================================}
 implementation
 uses
-  Posix.Base, Posix.Unistd, Posix.ArpaInet, Posix.NetDB, SynaUtil;
+  Posix.Base, Posix.Unistd, Posix.ArpaInet, Posix.NetDB;
 
 function IN6_IS_ADDR_UNSPECIFIED(const a: PInAddr6): boolean;
 begin
@@ -590,18 +589,25 @@ begin
 end;
 
 function GetHostName: string;
+{$IFDEF NEXTGEN}
 var
-  name: TBytes;
+  name: TArray<Byte>;
 begin
-  SetLength(name, 256);
-  fillchar(name[0],sizeof(name),0);
-  if Posix.Unistd.GetHostName(@name[0], length(name))=0 then
-  begin
-    result := StringOf(name);
-    result := Uppercase( copy(result,1,pos(#0,result+#0)-1) );
-  end
-  else
-    result := 'LOCALHOST';
+  Result := '';
+  SetLength(name, cMaxHostLength);
+  if Posix.Unistd.GetHostName(MarshaledAString(name), cMaxHostLength) = 0 then
+    Result := TEncoding.UTF8.GetString(name).ToUpper;
+{$ELSE}
+var
+  s: AnsiString;
+begin
+  Result := '';
+  setlength(s, cMaxHostLength);
+  Posix.Unistd.GetHostName(PAnsiChar(s), Length(s) - 1);
+  Result := PChar(string(s));
+{$ENDIF}
+  if Result = '' then
+    Result := cLocalHostStr;
 end;
 
 function Send(s: TSocket; Buf: TMemory; len, flags: Integer): Integer;
@@ -717,14 +723,6 @@ begin
     Result := (Family = AF_INET6) and SockWship6Api;
 end;
 
-{
-function gethostbyname(name: pointer): PHostEnt; cdecl;
-  external libc name _PU + 'gethostbyname';
-
-function gethostbyaddr(var addr; len: socklen_t; atype: integer): PHostEnt; cdecl;
-  external libc name _PU + 'gethostbyaddr';
-}
-
 function SetVarSin(var Sin: TVarSin; IP, Port: string; Family, SockProtocol, SockType: integer; PreferIP4: Boolean): integer;
 var
   ProtoEnt: PProtoEnt;
@@ -738,7 +736,10 @@ var
   function GetAddr(const IP, port: string; Hints: AddrInfo; var Sin: TVarSin): integer;
   var
     Addr: PAddrInfo;
+    aIP,aPort : AnsiString;
   begin
+    aIP:=Utf8Encode(IP);
+    aPort:=Utf8Encode(Port);
     Addr := nil;
     try
       FillChar(Sin, Sizeof(Sin), 0);
@@ -746,30 +747,30 @@ var
       begin
         Hints.ai_socktype := 0;
         Hints.ai_protocol := 0;
-        Result := GetAddrInfo(MarshaledAString(TMarshal.AsAnsi(IP)), nil, Hints, Addr);
+        Result := GetAddrInfo(PAnsiChar(aIP), nil, Hints, Addr);
       end
       else
       begin
         if (IP = cAnyHost) or (IP = c6AnyHost) then
         begin
           Hints.ai_flags := AI_PASSIVE;
-          Result := GetAddrInfo(nil, MarshaledAString(TMarshal.AsAnsi(Port)), Hints, Addr);
+          Result := GetAddrInfo(nil, PAnsiChar(aPort), Hints, Addr);
         end
         else
           if (IP = cLocalhost) or (IP = c6Localhost) then
           begin
-            Result := GetAddrInfo(nil, MarshaledAString(TMarshal.AsAnsi(Port)), Hints, Addr);
+            Result := GetAddrInfo(nil, PAnsiChar(aPort), Hints, Addr);
           end
           else
           begin
-            Result := GetAddrInfo(MarshaledAString(TMarshal.AsAnsi(IP)), MarshaledAString(TMarshal.AsAnsi(Port)), Hints, Addr);
+            //for Android see code in System.Net.Socket TIPAddress.LookupName
+           // Result :=  getaddrinfo(M.AsUTF8(TURI.UnicodeToIDNA(aIP)).ToPointer, nil, Hints, Addr);
+            Result := GetAddrInfo(PAnsiChar(aIP), PAnsiChar(aPort), Hints, Addr);
           end;
       end;
       if Result = 0 then
         if (Addr <> nil) then
-        begin
           Move(Addr^.ai_addr^, Sin, Addr^.ai_addrlen);
-        end;
     finally
       if Assigned(Addr) then
         FreeAddrInfo(Addr^);
@@ -865,12 +866,12 @@ end;
 
 function GetSinIP(Sin: TVarSin): string;
 var
-  p: pointer;
+  p: PAnsiChar;
   hostlen, servlen: integer;
   r: integer;
   sa:sockaddr absolute Sin;
   byHost, byServ: TBytes;
-  HostWrapper, ServWrapper: Pointer;
+  HostWrapper, ServWrapper: TPtrWrapper;
 begin
   Result := '';
   if not IsNewApi(Sin.AddressFamily) then
@@ -886,12 +887,12 @@ begin
     servlen := NI_MAXSERV;
     Setlength(byHost, hostLen);
     Setlength(byServ, hostLen);
-    HostWrapper := @byHost[0];
-    ServWrapper := @byServ[0];
-    r := getnameinfo(sa, SizeOfVarSin(sin), HostWrapper, hostlen,
-      ServWrapper, servlen, NI_NUMERICHOST + NI_NUMERICSERV);
+    HostWrapper := TPtrWrapper.Create(@byHost[0]);
+    ServWrapper := TPtrWrapper.Create(@byServ[0]);
+    r := getnameinfo(sa, SizeOfVarSin(sin), HostWrapper.ToPointer, hostlen,
+      ServWrapper.ToPointer, servlen, NI_NUMERICHOST + NI_NUMERICSERV);
     if r = 0 then
-      Result := MarshaledAString(HostWrapper);
+      Result := TMarshal.ReadStringAsAnsi(HostWrapper{, NI_MAXHOST});
   end;
 end;
 
@@ -912,7 +913,7 @@ var
   Addr: PAddrInfo;
   AddrNext: PAddrInfo;
   r: integer;
-  host, serv: TBytes;
+  host, serv: string;
   hostlen, servlen: integer;
   RemoteHost: PHostEnt;
   IP: UINT32;
@@ -920,7 +921,7 @@ var
   i: Integer;
   s: string;
   InAddr: TInAddr;
-  aby: TArray<Byte>;
+  aby:TArray<Byte>;
 begin
   IPList.Clear;
   if not IsNewApi(Family) then
@@ -969,7 +970,7 @@ begin
       Hints.ai_socktype := SockType;
       Hints.ai_protocol := SockProtocol;
       Hints.ai_flags := 0;
-      r := GetAddrInfo(MarshaledAString(TMarshal.AsAnsi(Name)), nil, Hints, Addr);
+      r := GetAddrInfo(PAnsiChar(AnsiString(Name)), nil, Hints, Addr);
       if r = 0 then
       begin
         AddrNext := Addr;
@@ -982,13 +983,20 @@ begin
             servlen := NI_MAXSERV;
             setlength(host, hostlen);
             setlength(serv, servlen);
+{$IFDEF NEXTGEN}
             r := getnameinfo(AddrNext^.ai_addr^, AddrNext^.ai_addrlen,
-              @host[0], hostlen, @serv[0], servlen,
+              MarshaledAString(TMarshal.AsAnsi(host)), hostlen, MarshaledAString(TMarshal.AsAnsi(serv)), servlen,
               NI_NUMERICHOST + NI_NUMERICSERV);
+{$ELSE}
+            r := getnameinfo(AddrNext^.ai_addr^, AddrNext^.ai_addrlen,
+              PAnsiChar(AnsiString(host)), hostlen, PAnsiChar(AnsiString(serv)), servlen,
+              NI_NUMERICHOST + NI_NUMERICSERV);
+{$ENDIF}
             if r = 0 then
-              IPList.Add(StringOf(host));
-            SetLength(host, 0);
-            SetLength(serv, 0);
+            begin
+              host := PChar(host);
+              IPList.Add(host);
+            end;
           end;
           AddrNext := AddrNext^.ai_next;
         end;
@@ -1019,7 +1027,7 @@ begin
       ProtoEnt := GetProtoByNumber(SockProtocol);
       ServEnt := nil;
       if ProtoEnt <> nil then
-        ServEnt := GetServByName(MarshaledAString(TMarshal.AsAnsi(Port)), ProtoEnt^.p_name);
+        ServEnt := GetServByName(PAnsiChar(AnsiString(Port)), ProtoEnt^.p_name);
       if ServEnt = nil then
         Result := StrToIntDef(Port, 0)
       else
@@ -1037,7 +1045,7 @@ begin
       Hints.ai_socktype := SockType;
       Hints.ai_protocol := Sockprotocol;
       Hints.ai_flags := AI_PASSIVE;
-      r := GetAddrInfo(nil, MarshaledAString(TMarshal.AsAnsi(Port)), Hints, Addr);
+      r := GetAddrInfo(nil, PAnsiChar(AnsiString(Port)), Hints, Addr);
       if (r = 0) and Assigned(Addr) then
       begin
         if Addr^.ai_family = AF_INET then
@@ -1061,7 +1069,7 @@ var
   Addr: PAddrInfo;
   _Addr: AddrInfo;
   r: integer;
-  host, serv: TBytes;
+  host, serv: string;
   hostlen, servlen: integer;
   RemoteHost: PHostEnt;
   IPn: UINT32;
@@ -1069,7 +1077,7 @@ begin
   Result := IP;
   if not IsNewApi(Family) then
   begin
-    IPn := inet_addr(MarshaledAString(TMarshal.AsAnsi(IP)));
+    IPn := inet_addr(PAnsiChar(AnsiString(IP)));
     if IPn <> UINT32(INADDR_NONE) then
     begin
       SynSockCS.Enter;
@@ -1091,7 +1099,7 @@ begin
       Hints.ai_socktype := SockType;
       Hints.ai_protocol := SockProtocol;
       Hints.ai_flags := 0;
-      r := GetAddrInfo(MarshaledAString(TMarshal.AsAnsi(IP)), nil, Hints, Addr);
+      r := GetAddrInfo(PAnsiChar(AnsiString(IP)), nil, Hints, Addr);
       if (r = 0) and Assigned(Addr)then
       begin
         hostlen := NI_MAXHOST;
@@ -1099,12 +1107,10 @@ begin
         setlength(host, hostlen);
         setlength(serv, servlen);
         r := getnameinfo(Addr^.ai_addr^, Addr^.ai_addrlen,
-          @host[0], hostlen, @serv[0], servlen,
+          PAnsiChar(AnsiString(host)), hostlen, PAnsiChar(AnsiString(serv)), servlen,
           NI_NUMERICSERV);
         if r = 0 then
-          Result := StringOf(host);
-        SetLength(host, 0);
-        SetLength(serv, 0);
+          Result := PChar(host);
       end;
     finally
       if Assigned(Addr) then

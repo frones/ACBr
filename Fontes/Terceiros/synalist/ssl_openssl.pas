@@ -39,7 +39,6 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
-|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -157,7 +156,7 @@ type
     {:See @inherited}
     function GetPeerNameHash: cardinal; override; {pf}
     {:See @inherited}
-    function GetPeerFingerprint: string; override;
+    function GetPeerFingerprint: ansistring; override;
     {:See @inherited}
     function GetCertInfo: string; override;
     {:See @inherited}
@@ -776,7 +775,7 @@ end;
 
 function TSSLOpenSSL.GetPeerName: string;
 var
-  s: string;
+  s: ansistring;
 begin
   s := GetPeerSubject;
   s := SeparateRight(s, '/CN=');
@@ -834,7 +833,7 @@ begin
   X509Free(cert);
 end;
 
-function TSSLOpenSSL.GetPeerFingerprint: string;
+function TSSLOpenSSL.GetPeerFingerprint: ansistring;
 var
   cert: PX509;
   x: integer;

@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 07/12/2022
+-- ISSe.Provider --
+[*] No envio unitário do Rps requer que o mesmo esteja assinado.
+    No retorno do envio do lote de rps no modo assíncrono o nome da tag contem
+    indevidamente a palavra Sincrono, foi feita a alteração para que a leitura
+    fosse realizada com sucesso.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Para os provedores que tem somente alguns serviços implementados, foi realizado
     uma alteração para setar o nome do XSD com "***" e com isso identificar os

@@ -98,6 +98,7 @@ begin
   begin
     LoteRps := True;
     CancelarNFSe := True;
+    RpsGerarNFSe := True;
   end;
 
   with ConfigWebServices do
@@ -171,7 +172,7 @@ begin
   Request := Request + '</ws:EnviarLoteRps>';
 
   Result := Executar(SoapAction + '#EnviarLoteRps', Request,
-                     ['return', 'EnviarLoteRpsResposta'],
+                     ['return', 'EnviarLoteRpsSincronoResposta'],
                      [NameSpace]);
 end;
 

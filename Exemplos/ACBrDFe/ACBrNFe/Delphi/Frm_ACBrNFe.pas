@@ -1122,8 +1122,8 @@ begin
   Produto.Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
   Produto.Prod.cProd    := '123456';
   Produto.Prod.cEAN     := '7896523206646';
-  Produto.Prod.xProd    := 'TESTE DE PRODUTO';
-  Produto.Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+  Produto.Prod.xProd    := 'Camisa Polo ACBr';
+  Produto.Prod.NCM      := '61051000';
   Produto.Prod.EXTIPI   := '';
   Produto.Prod.CFOP     := '5101';
   Produto.Prod.uCom     := 'UN';
@@ -1141,7 +1141,7 @@ begin
   Produto.Prod.vSeg      := 0;
   Produto.Prod.vDesc     := 0;
 
-  Produto.Prod.CEST := '1111111';
+  //Produto.Prod.CEST := '1111111';
 
   Produto.infAdProd := 'Informacao Adicional do Produto';
 
@@ -1342,7 +1342,6 @@ begin
       pST := 0;
       vICMSSubstituto := 0;
       vICMSSTRet := 0;
-
       vBCFCPSTRet := 0;
       pFCPSTRet := 0;
       vFCPSTRet := 0;
@@ -1640,7 +1639,7 @@ begin
   InfoPgto := NotaF.NFe.pag.New;
   InfoPgto.indPag := ipVista;
   InfoPgto.tPag   := fpDinheiro;
-  InfoPgto.vPag   := 50;
+  InfoPgto.vPag   := 100;
 
 // Exemplo de pagamento integrado.
 
@@ -1655,7 +1654,7 @@ begin
     se tPag for fpOutro devemos incluir o campo xPag
   InfoPgto.xPag := 'Caderneta';
   }
-  InfoPgto.vPag   := 50;
+  InfoPgto.vPag   := 75;
   InfoPgto.tpIntegra := tiPagIntegrado;
   InfoPgto.CNPJ      := '05481336000137';
   InfoPgto.tBand     := bcVisa;
@@ -2229,7 +2228,7 @@ end;
 
 procedure TfrmACBrNFe.btnDataValidadeClick(Sender: TObject);
 begin
-  ShowMessage(FormatDateBr(ACBrNFe1.SSL.CertDataVenc));
+  ShowMessage(FormatDateTimeBr(ACBrNFe1.SSL.CertDataVenc));
 end;
 
 procedure TfrmACBrNFe.btnDistrDFePorChaveClick(Sender: TObject);
@@ -3312,7 +3311,8 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    PrepararImpressao;
+    if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+      PrepararImpressao;
 
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);

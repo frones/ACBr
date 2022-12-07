@@ -79,8 +79,7 @@ uses ACBrGNRE2, ACBrDFeUtil, StrUtils, Math, pgnreRetConsResLoteGNRE;
 
 procedure TdmACBrGNREFR.CarregaDados;
 var
-  Referencia, FUF, FCodUF : String;
-  FCodIBGE   : Integer;
+  Referencia : String;
 
   function FormatarDataPadraoAmericanoParaBrasileiro(Str: string): string;
   begin
@@ -177,19 +176,7 @@ begin
 
       FieldByName('RazaoSocialEmitente').AsString  := RazaoSocialEmitente;
       FieldByName('EnderecoEmitente').AsString     := EnderecoEmitente;
-      try
-        FUF    := UFEmitente;
-        FCodUF := IntToStr(ObterCodigoUF(FUF));
-        FCodIBGE := StrToIntDef(FCodUF+MunicipioEmitente, 0);
-
-        if(FCodIBGE > 0)then
-          FieldByName('MunicipioEmitente').AsString    := ObterNomeMunicipio(FCodIBGE, FUF)
-        else
-          FieldByName('MunicipioEmitente').AsString    := MunicipioEmitente;
-      except
-        on E:Exception do
-          FieldByName('MunicipioEmitente').AsString    := MunicipioEmitente;
-      end;
+      FieldByName('MunicipioEmitente').AsString    := MunicipioEmitenteNome;
       FieldByName('UFEmitente').AsString           := UFEmitente;
       FieldByName('CEPEmitente').AsString          := CEPEmitente;
       FieldByName('TelefoneEmitente').AsString     := RemoverZeros(TelefoneEmitente);
@@ -201,17 +188,7 @@ begin
         3: FieldByName('DocDestinatario').AsString := RemoverZeros(DocDestinatario);
       end;
 
-      try
-        FUF      := UFFavorecida;
-        FCodUF   := IntToStr(ObterCodigoUF(FUF));
-        FCodIBGE := StrToIntDef(FCodUF + MunicipioDestinatario, 0);
-
-        if(FCodIBGE > 0)then
-          FieldByName('MunicipioDestinatario').AsString := ObterNomeMunicipio(FCodIBGE, FUF);
-      except
-        on E:Exception do
-          FieldByName('MunicipioDestinatario').AsString := MunicipioDestinatario;
-      end;
+      FieldByName('MunicipioDestinatario').AsString := MunicipioDestinatarioNome;
 
       FieldByName('Produto').AsString               := Produto;
       FieldByName('NumDocOrigem').AsString          := RemoverZeros(NumDocOrigem);

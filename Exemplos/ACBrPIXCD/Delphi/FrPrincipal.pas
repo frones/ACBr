@@ -2124,12 +2124,6 @@ begin
   if (Trim(edtRecebedorNome.Text) = EmptyStr) then
     wErros := sLineBreak + ACBrStr('- Campo Nome do Recebedor não informado');
 
-  if (Trim(edtRecebedorCidade.Text) = EmptyStr) then
-    wErros := wErros + sLineBreak + ACBrStr('- Campo Cidade do Recebedor não informado');
-
-  if (Trim(cbxRecebedorUF.Text) = EmptyStr) then
-    wErros := wErros + sLineBreak + ACBrStr('- Campo UF do Recebedor não informado');
-
   if EstaVazio(Trim(edSicrediGerarCSREmail.Text)) then
     wErros := wErros + sLineBreak + ACBrStr('- Campo E-mail não informado');
 
@@ -2144,8 +2138,8 @@ begin
                     'api-pix-' + OnlyAlphaNum(TiraAcentos(edtRecebedorNome.Text)),
                     edtRecebedorNome.Text,
                     'API PIX Sicredi',
-                    edtRecebedorCidade.Text,
-                    cbxRecebedorUF.Text, 'BR',
+                    'Porto Alegre',
+                    'Rio Grande do Sul', 'BR',
                     edSicrediGerarCSREmail.Text);
   mmSicrediGerarCSR.Text := ChangeLineBreak(wCertificado, sLineBreak);
   mmSicrediGerarCSR.Lines.SaveToFile(edSicrediGerarCSR.Text);

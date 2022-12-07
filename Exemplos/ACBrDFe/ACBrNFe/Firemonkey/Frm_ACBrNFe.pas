@@ -76,7 +76,7 @@ uses
   ACBrNFeDANFEClass,
   ACBrBase, ACBrDFe, ACBrNFe, FMX.WebBrowser,
   FMX.ScrollBox, FMX.EditBox, FMX.SpinBox, FMX.Controls.Presentation,
-  FMX.ComboEdit, ACBrDFeReport, ACBrDFeDANFeReport;
+  FMX.ComboEdit, ACBrDFeReport, ACBrDFeDANFeReport, FMX.Memo.Types;
 
 //**   Original VCL Uses section :
 
@@ -905,10 +905,25 @@ begin
   if  Assigned( ACBrNFe1.DANFE ) then
     NotaF.NFe.Ide.tpImp     := ACBrNFe1.DANFE.TipoDANFE;
 
+  // Valores aceitos:
+  // iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador
+//  NotaF.NFe.Ide.indIntermed := iiSemOperacao;
+
 //  NotaF.NFe.Ide.dhCont := date;
 //  NotaF.NFe.Ide.xJust  := 'Justificativa Contingencia';
 
-//Para NFe referenciada use os campos abaixo
+  {
+    abaixo o campo incluido no layout a partir da NT 2020/006
+  }
+  {
+    valores aceitos pelo campo:
+    iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador
+  }
+  // Indicador de intermediador/marketplace
+  NotaF.NFe.Ide.indIntermed := iiSemOperacao;
+
+
+  //Para NFe referenciada use os campos abaixo
   (*
   Referenciada := NotaF.NFe.Ide.NFref.Add;
   Referenciada.refNFe       := ''; //NFe Eletronica
@@ -1018,8 +1033,8 @@ begin
   Produto.Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
   Produto.Prod.cProd    := '123456';
   Produto.Prod.cEAN     := '7896523206646';
-  Produto.Prod.xProd    := 'TESTE DE PRODUTO';
-  Produto.Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+  Produto.Prod.xProd    := 'Camisa Polo ACBr';
+  Produto.Prod.NCM      := '61051000';
   Produto.Prod.EXTIPI   := '';
   Produto.Prod.CFOP     := '5101';
   Produto.Prod.uCom     := 'UN';
@@ -1037,11 +1052,22 @@ begin
   Produto.Prod.vSeg      := 0;
   Produto.Prod.vDesc     := 0;
 
-  Produto.Prod.CEST := '1111111';
+  //Produto.Prod.CEST := '1111111';
 
   Produto.infAdProd := 'Informacao Adicional do Produto';
 
-//Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
+  {
+    abaixo os campos incluidos no layout a partir da NT 2020/005
+  }
+  // Opcional - Preencher com o Código de Barras próprio ou de terceiros que seja diferente do padrão GTIN
+  // por exemplo: código de barras de catálogo, partnumber, etc
+  Produto.Prod.cBarra := 'ABC123456';
+  // Opcional - Preencher com o Código de Barras próprio ou de terceiros que seja diferente do padrão GTIN
+  //  correspondente àquele da menor unidade comercializável identificado por Código de Barras
+  // por exemplo: código de barras de catálogo, partnumber, etc
+  Produto.Prod.cBarraTrib := 'ABC123456';
+
+  // Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
   (*
   DI := Produto.Prod.DI.Add;
   DI.nDi         := '';
@@ -1049,6 +1075,21 @@ begin
   DI.xLocDesemb  := '';
   DI.UFDesemb    := '';
   DI.dDesemb     := now;
+  {
+    tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal, tvFerroviaria, tvRodoviaria,
+
+    abaixo os novos valores incluidos a partir da NT 2020/005
+
+    tvConduto, tvMeiosProprios, tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque
+  }
+  DI.tpViaTransp := tvRodoviaria;
+  DI.vAFRMM := 0;
+  {
+    tiContaPropria, tiContaOrdem, tiEncomenda
+  }
+  DI.tpIntermedio := tiContaPropria;
+  DI.CNPJ := '';
+  DI.UFTerceiro := '';
   DI.cExportador := '';
 
   Adicao := DI.adi.Add;
@@ -1056,6 +1097,7 @@ begin
   Adicao.nSeqAdi     := 1;
   Adicao.cFabricante := '';
   Adicao.vDescDI     := 0;
+  Adicao.nDraw       := '';
   *)
 
 //Campos para venda de veículos novos
@@ -1081,7 +1123,6 @@ begin
   Produto.Prod.veicProd.VIN     := '';
   Produto.Prod.veicProd.condVeic := cvAcabado;
   Produto.Prod.veicProd.cMod    := '';
-
 
 // Campos de Rastreabilidade do produto
   {
@@ -1171,26 +1212,40 @@ begin
       // (consulte o contador do seu cliente para saber qual deve ser utilizado)
       // Pode variar de um produto para outro.
 
+      orig := oeNacional;
+
       if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
-        CST := cst00
+      begin
+        CST     := cst00;
+        modBC   := dbiPrecoTabelado;
+        vBC     := 100;
+        pICMS   := 18;
+        vICMS   := 18;
+        modBCST := dbisMargemValorAgregado;
+        pMVAST  := 0;
+        pRedBCST:= 0;
+        vBCST   := 0;
+        pICMSST := 0;
+        vICMSST := 0;
+        pRedBC  := 0;
+      end
       else
-        CSOSN := csosn101;
+      begin
+        CSOSN   := csosn101;
+        modBC   := dbiValorOperacao;
+        pCredSN := 5;
+        vCredICMSSN := 100 * pCredSN / 100;;
+        vBC     := 0;
+        pICMS   := 0;
+        vICMS   := 0;
+        modBCST := dbisListaNeutra;
+        pMVAST  := 0;
+        pRedBCST:= 0;
+        vBCST   := 0;
+        pICMSST := 0;
+        vICMSST := 0;
+      end;
 
-      orig    := oeNacional;
-      modBC   := dbiValorOperacao;
-      vBC     := 100;
-      pICMS   := 18;
-      vICMS   := 18;
-      modBCST := dbisMargemValorAgregado;
-      pMVAST  := 0;
-      pRedBCST:= 0;
-      vBCST   := 0;
-      pICMSST := 0;
-      vICMSST := 0;
-      pRedBC  := 0;
-
-      pCredSN := 5;
-      vCredICMSSN := 50;
       vBCFCPST := 100;
       pFCPST := 2;
       vFCPST := 2;
@@ -1205,6 +1260,26 @@ begin
       vBCEfet := 0;
       pICMSEfet := 0;
       vICMSEfet := 0;
+
+      {
+        abaixo os campos incluidos no layout a partir da NT 2020/005
+      }
+      // Informar apenas nos motivos de desoneração documentados abaixo
+      vICMSSTDeson := 0;
+      {
+        o campo abaixo só aceita os valores:
+        mdiProdutorAgropecuario, mdiOutros, mdiOrgaoFomento
+        Campo será preenchido quando o campo anterior estiver preenchido.
+      }
+      motDesICMSST := mdiOutros;
+
+      // Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP).
+      // No caso de diferimento total, informar o percentual de diferimento "100"
+      pFCPDif := 0;
+      // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido
+      vFCPDif := 0;
+      // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) realmente devido.
+      vFCPEfet := 0;
     end;
 
     with ICMSUFDest do
@@ -1266,6 +1341,15 @@ begin
       qBCProd   := 0;
       vAliqProd := 0;
       vPIS      := 0;
+      {
+        abaixo o campo incluido no layout a partir da NT 2020/005
+      }
+      {
+        valores aceitos pelo campo:
+        ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe
+      }
+      // Indica se o valor do PISST compõe o valor total da NF-e
+      IndSomaPISST :=  ispNenhum;
     end;
 
     with COFINS do
@@ -1285,6 +1369,15 @@ begin
       qBCProd   := 0;
       vAliqProd := 0;
       vCOFINS   := 0;
+      {
+        abaixo o campo incluido no layout a partir da NT 2020/005
+      }
+      {
+        valores aceitos pelo campo:
+        iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe
+      }
+      // Indica se o valor da COFINS ST compõe o valor total da NF-e
+      indSomaCOFINSST :=  iscNenhum;
     end;
   end;
 
@@ -1335,8 +1428,17 @@ begin
 
 *)
 
-  NotaF.NFe.Total.ICMSTot.vBC     := 100;
-  NotaF.NFe.Total.ICMSTot.vICMS   := 18;
+  if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+  begin
+    NotaF.NFe.Total.ICMSTot.vBC := 100;
+    NotaF.NFe.Total.ICMSTot.vICMS := 18;
+  end
+  else
+  begin
+    NotaF.NFe.Total.ICMSTot.vBC := 0;
+    NotaF.NFe.Total.ICMSTot.vICMS := 0;
+  end;
+
   NotaF.NFe.Total.ICMSTot.vBCST   := 0;
   NotaF.NFe.Total.ICMSTot.vST     := 0;
   NotaF.NFe.Total.ICMSTot.vProd   := 100;
@@ -1410,6 +1512,11 @@ begin
   Duplicata.dVenc := now+20;
   Duplicata.vDup  := 50;
 
+    // O grupo infIntermed só deve ser gerado nos casos de operação não presencial
+    // pela internet em site de terceiros (Intermediadores).
+//  NotaF.NFe.infIntermed.CNPJ := '';
+//  NotaF.NFe.infIntermed.idCadIntTran := '';
+
   NotaF.NFe.InfAdic.infCpl     :=  '';
   NotaF.NFe.InfAdic.infAdFisco :=  '';
 
@@ -1447,6 +1554,14 @@ begin
   InfoPgto := NotaF.NFe.pag.New;
   InfoPgto.indPag := ipVista;
   InfoPgto.tPag   := fpCartaoCredito;
+
+  {
+    abaixo o campo incluido no layout a partir da NT 2020/006
+  }
+  {
+    se tPag for fpOutro devemos incluir o campo xPag
+  InfoPgto.xPag := 'Caderneta';
+  }
   InfoPgto.vPag   := 75;
   InfoPgto.tpIntegra := tiPagIntegrado;
   InfoPgto.CNPJ      := '05481336000137';
@@ -1457,6 +1572,17 @@ begin
 // Regra opcional: Informar se valor dos pagamentos maior que valor da nota.
 // Regra obrigatória: Se informado, Não pode diferir de "(+) vPag (id:YA03) (-) vNF (id:W16)"
 //  NotaF.NFe.pag.vTroco := 75;
+
+  {
+    abaixo o campo incluido no layout a partir da NT 2020/006
+  }
+  // CNPJ do Intermediador da Transação (agenciador, plataforma de delivery,
+  // marketplace e similar) de serviços e de negócios.
+  NotaF.NFe.infIntermed.CNPJ := '';
+  // Nome do usuário ou identificação do perfil do vendedor no site do intermediador
+  // (agenciador, plataforma de delivery, marketplace e similar) de serviços e de
+  // negócios.
+  NotaF.NFe.infIntermed.idCadIntTran := '';
 
   ACBrNFe1.NotasFiscais.GerarNFe;
 end;

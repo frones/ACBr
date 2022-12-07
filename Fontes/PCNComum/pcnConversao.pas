@@ -61,7 +61,7 @@ type
                   // tcEsp = String: somente numeros;
   TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
-                   tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64);
+                   tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64, tcDe1);
   TpcnFormatoGravacao = (fgXML, fgTXT);
   TpcnTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada, taSomenteParaNaoAssinada);
 

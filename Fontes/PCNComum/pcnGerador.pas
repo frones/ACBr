@@ -452,7 +452,7 @@ begin
         EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
       end;
 
-    tcDe2, tcDe3, tcDe4, tcDe5, tcDe6, tcDe8, tcDe10:
+    tcDe2, tcDe3, tcDe4, tcDe5, tcDe6, tcDe8, tcDe10, tcDe1:
       begin
         // adicionar um para que o máximo e mínimo não considerem a virgula
         if not FOpcoes.FSuprimirDecimais then
@@ -463,6 +463,7 @@ begin
         
         // Tipo numerico com decimais
         case Tipo of
+          tcDe1 : NumeroDecimais :=  1;
           tcDe2 : NumeroDecimais :=  2;
           tcDe3 : NumeroDecimais :=  3;
           tcDe4 : NumeroDecimais :=  4;

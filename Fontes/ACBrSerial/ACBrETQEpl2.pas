@@ -113,7 +113,7 @@ uses
   math, SysUtils,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
   ACBrImage, ACBrConsts, synautil,
-  ACBrUtil.Strings;
+  ACBrUtil.Compatibilidade, ACBrUtil.Strings;
 
 { TACBrETQEpl2 }
 

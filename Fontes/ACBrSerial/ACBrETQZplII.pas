@@ -126,7 +126,7 @@ uses
   Math, {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF} sysutils, strutils,
   synautil, synacode, ACBrImage, ACBrConsts,
   ACBrETQ,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Math;
+  ACBrUtil.Base, ACBrUtil.Compatibilidade, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Math;
 
 { TACBrETQPpla }
 

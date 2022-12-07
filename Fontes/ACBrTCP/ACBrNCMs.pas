@@ -171,7 +171,7 @@ uses
   DateUtils,
   synautil,
   ACBrCompress,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
+  ACBrUtil.Base, ACBrUtil.Compatibilidade, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.FilesIO, ACBrUtil.XMLHTML;
 
 { TACBrNCM }

@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  synautil;
+  synautil, ACBrUtil.Compatibilidade;
 
 type
   {$IfDef NEXTGEN}

@@ -128,7 +128,7 @@ uses
   Math, sysutils, strutils,
   {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF}
   ACBrImage, ACBrConsts, synautil,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.Math;
+  ACBrUtil.Base, ACBrUtil.Compatibilidade, ACBrUtil.Strings, ACBrUtil.Math;
 
 { TACBrETQPpla }
 

@@ -658,6 +658,7 @@ uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
+  ACBrUtil.Compatibilidade,
   ACBrImage, ACBrConsts, ACBrExtenso, ACBrCMC7,
   synacode, synautil,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,

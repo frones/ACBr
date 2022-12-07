@@ -258,6 +258,8 @@ begin
     DadosCabecalho := '1';
   end;
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     Teste := 'PedidoEnvioLoteRPS_v01.xsd';

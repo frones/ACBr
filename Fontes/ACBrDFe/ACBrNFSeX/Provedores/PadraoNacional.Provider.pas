@@ -160,6 +160,8 @@ begin
     EnviarEvento := True;
   end;
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     GerarNFSe := 'DPS_v1.00.xsd';

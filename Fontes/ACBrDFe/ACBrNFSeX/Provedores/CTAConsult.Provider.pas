@@ -120,6 +120,8 @@ begin
                                      '<ambiente>' + aAmbiente + '</ambiente>' +
                                    '</cabecalhoNfseLote>';
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     GerarNFSe := 'RecepcaoNFSe_v1.00.xsd';

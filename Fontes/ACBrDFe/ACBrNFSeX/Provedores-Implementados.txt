@@ -27,7 +27,7 @@ DataSmart            2.02
 DBSeller             1.00  20/10/2022
 DBSeller             2.04  23/11/2022
 DeISS                2.03
-Desenvolve           2.03
+Desenvolve           2.03  02/12/2022
 Digifred             2.00
 DSF                  1.00
 DSF                  2.00

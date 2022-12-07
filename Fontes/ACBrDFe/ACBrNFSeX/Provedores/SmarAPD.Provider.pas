@@ -187,6 +187,8 @@ begin
 
   // Os schemas que se encontram na pasta SmarAPD/Proprio não é padrão para
   // todas as cidades
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     Recepcionar := 'WSEntradaNfd.xsd';

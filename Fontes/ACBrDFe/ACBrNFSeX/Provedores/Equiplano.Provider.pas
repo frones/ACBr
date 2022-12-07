@@ -176,6 +176,8 @@ begin
     DadosCabecalho := '1';
   end;
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     Recepcionar := 'esRecepcionarLoteRpsEnvio_v01.xsd';

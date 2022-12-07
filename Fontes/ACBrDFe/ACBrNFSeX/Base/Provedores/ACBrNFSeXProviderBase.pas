@@ -1481,6 +1481,14 @@ begin
     Schema := ConfigSchemas.Teste;
   end;
 
+  if Schema = '***' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod001;
+    AErro.Descricao := ACBrStr(Desc001);
+    Exit;
+  end;
+
   if TACBrNFSeX(FAOwner).Configuracoes.Geral.MontarPathSchema then
     Schema := PathWithDelim(GetSchemaPath) + Schema
   else

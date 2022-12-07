@@ -135,7 +135,7 @@ end;
 procedure TACBrNFSeProviderFiorilli200.PrepararEmitir(
   Response: TNFSeEmiteResponse);
 begin
-  // O provedor Fiorilli existe que o numero do lote seja numerico e que não
+  // O provedor Fiorilli exige que o numero do lote seja numerico e que não
   // não tenha zeros a esquerda.
   Response.Lote := IntToStr(StrToIntDef(Trim(Response.Lote), 0));
 

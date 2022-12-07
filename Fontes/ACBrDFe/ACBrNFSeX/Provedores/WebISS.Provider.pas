@@ -116,6 +116,8 @@ begin
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     Recepcionar := 'servico_enviar_lote_rps_envio.xsd';

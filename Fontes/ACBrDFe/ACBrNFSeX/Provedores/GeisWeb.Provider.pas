@@ -135,6 +135,8 @@ begin
     end;
   end;
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     RecepcionarSincrono := 'envio_lote_rps.xsd';

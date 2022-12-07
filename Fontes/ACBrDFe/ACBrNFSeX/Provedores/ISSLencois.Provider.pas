@@ -114,6 +114,8 @@ begin
     CancelarNFSe.xmlns := 'NotaFiscal-Cancelamento.xsd';
   end;
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     CancelarNFSe := 'NotaFiscal-Cancelamento.xsd';

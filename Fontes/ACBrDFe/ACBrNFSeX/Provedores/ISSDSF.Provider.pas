@@ -243,6 +243,8 @@ begin
     end;
   end;
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     Recepcionar := 'ReqEnvioLoteRPS.xsd';

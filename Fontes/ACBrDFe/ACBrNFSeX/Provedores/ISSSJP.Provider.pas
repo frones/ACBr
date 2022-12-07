@@ -219,6 +219,8 @@ begin
                       '</ns2:cabecalho>';
   end;
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     Recepcionar := 'servico_enviar_lote_rps_envio_v03.xsd';

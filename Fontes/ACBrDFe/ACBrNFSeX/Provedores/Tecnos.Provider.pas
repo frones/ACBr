@@ -184,6 +184,8 @@ begin
     DadosCabecalho := GetCabecalho('http://www.nfse-tecnos.com.br');
   end;
 
+  SetNomeXSD('***');
+
   with ConfigSchemas do
   begin
     ConsultarLote := 'ConsultarLoteRpsEnvio.xsd';

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 07/12/2022
+-- ISSNet.GravarXml --
+[*] Imposta uma condição para gerar ou não a tag referente ao código do pais 
+    no grupo de serviços.
+   Por: Italo Giurizzato Junior
 -- ISSe.Provider --
 [*] No envio unitário do Rps requer que o mesmo esteja assinado.
     No retorno do envio do lote de rps no modo assíncrono o nome da tag contem

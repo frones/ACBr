@@ -24,7 +24,7 @@ object frmACBrNFe: TfrmACBrNFe
       Size.Width = 295.000000000000000000
       Size.Height = 576.000000000000000000
       Size.PlatformDefault = False
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 0
       TabPosition = Top
       Sizes = (
@@ -38,7 +38,7 @@ object frmACBrNFe: TfrmACBrNFe
         CustomIcon = <
           item
           end>
-        IsSelected = True
+        IsSelected = False
         Size.Width = 96.000000000000000000
         Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
@@ -1274,7 +1274,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos NFe'
-              TabOrder = 287
+              TabOrder = 300
             end
             object Label39: TLabel
               AutoSize = True
@@ -1285,7 +1285,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Cancelamento'
-              TabOrder = 288
+              TabOrder = 301
             end
             object sbPathCan: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1305,7 +1305,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos CC-e - Carta de Corre'#231#227'o'
-              TabOrder = 290
+              TabOrder = 303
             end
             object sbPathCCe: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1325,7 +1325,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Inutiliza'#231#227'o'
-              TabOrder = 292
+              TabOrder = 305
             end
             object sbPathInu: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1345,7 +1345,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos DPEC'
-              TabOrder = 294
+              TabOrder = 307
             end
             object sbPathDPEC: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1365,7 +1365,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Evento'
-              TabOrder = 296
+              TabOrder = 309
             end
             object sbPathEvento: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1500,7 +1500,7 @@ object frmACBrNFe: TfrmACBrNFe
         CustomIcon = <
           item
           end>
-        IsSelected = False
+        IsSelected = True
         ImageIndex = 1
         Size.Width = 125.000000000000000000
         Size.Height = 26.000000000000000000
@@ -2379,6 +2379,7 @@ object frmACBrNFe: TfrmACBrNFe
           Size.Width = 585.000000000000000000
           Size.Height = 428.000000000000000000
           Size.PlatformDefault = False
+          WindowsEngine = IEOnly
         end
       end
       object tsLog: TTabItem
@@ -2554,7 +2555,7 @@ object frmACBrNFe: TfrmACBrNFe
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
-    Porta = 'COM9'
+    Porta = 'c:\temp\printer.txt'
     EspacoEntreLinhas = 30
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0

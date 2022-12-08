@@ -325,8 +325,8 @@ begin
   aStrings.Clear;
   for I := 0 to Count - 1 do
     aStrings.Add(
-      Objects[I].CodigoNcm + aSeparator +
-      Objects[I].DescricaoNcm + aSeparator +
+      Objects[I].CodigoNcm + aSeparator+
+      QuoteStr(Objects[I].DescricaoNcm, '"') + aSeparator +
       FormatDateBr(Objects[I].DataInicio) + aSeparator +
       FormatDateBr(Objects[I].DataFim) + aSeparator +
       Objects[I].TipoAto + aSeparator +

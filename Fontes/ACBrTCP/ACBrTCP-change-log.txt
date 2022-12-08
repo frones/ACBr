@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2022
+-- ACBrNCMs --
+[*] Ajuste no campo Descrição para ser criado com aspas, para não ocorrer problema de leitura do arquivo CSV
+    Por: Daniel de Morais 
+
 06/12/2022
 --ACBrConsultaCPF--
 [*] Alteração para que leia e encontre informações na resposta que vinham codificadas por virem terem caracteres especiais.

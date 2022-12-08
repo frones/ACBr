@@ -39,6 +39,7 @@ uses
   ACBrNFSeXProvedorABRASFv1Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv1Tests.pas',
   ACBrNFSeXProvedorABRASFv2Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv2Tests.pas',
   ACBrNFSeXProvedorSigISSTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSigISSTests.pas',
+  ACBrNFSeXProvedorSoftPlanTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSoftPlanTests.pas',
   ACBrNFSeXProvedorWebFiscoTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorWebFiscoTests.pas';
 
 begin

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 08/12/2022
+-- Equiplano.Provider --
+[*] Possível solução para o erro de AV que esta ocorrendo ao tratar o retorno
+    da consulta ao lote.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade Confresa/MT trocou de provedor, agora é: Coplan.
    Por: Luiz Eduardo Bodo

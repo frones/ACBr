@@ -118,6 +118,7 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 function TACBrNFSeXWebserviceBetha.Recepcionar(ACabecalho, AMSG: String): string;

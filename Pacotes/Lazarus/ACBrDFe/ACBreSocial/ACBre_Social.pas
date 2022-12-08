@@ -19,7 +19,8 @@ uses
   pcesS2400, pcesS3000, pcesS5001, pcesTabelas, pcesRetConsultaIdentEvt, 
   pcesRetConsultaLote, pcesRetDownloadEvt, pcesRetEnvioLote, pcesRetornoClass, 
   pcesS2260, pcesS5002, pcesS5003, pcesS5011, pcesS5012, pcesS5013, 
-  pcesConsultaIdentEvt, LazarusPackageIntf;
+  pcesConsultaIdentEvt, pcesS2500, pcesS1220, pcesS2501, pcesS3500, pcesS5501, 
+  LazarusPackageIntf;
 
 implementation
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBre_Social"/>
     <Type Value="RunAndDesignTime"/>
@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr e-Social
 (www.projetoacbr.com.br)"/>
-    <Files Count="65">
+    <Files Count="70">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocial.pas"/>
         <AddToUsesPkgSection Value="False"/>
@@ -284,7 +284,28 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesConsultaIdentEvt.pas"/>
         <UnitName Value="pcesConsultaIdentEvt"/>
       </Item65>
+      <Item66>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2500.pas"/>
+        <UnitName Value="pcesS2500"/>
+      </Item66>
+      <Item67>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS1220.pas"/>
+        <UnitName Value="pcesS1220"/>
+      </Item67>
+      <Item68>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2501.pas"/>
+        <UnitName Value="pcesS2501"/>
+      </Item68>
+      <Item69>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS3500.pas"/>
+        <UnitName Value="pcesS3500"/>
+      </Item69>
+      <Item70>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5501.pas"/>
+        <UnitName Value="pcesS5501"/>
+      </Item70>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

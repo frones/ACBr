@@ -184,7 +184,6 @@ type
     property agNoc: TagNocCollection read FFatRisco write FFatRisco;
     property respReg: TRespRegCollection read getRespReg write FRespReg;
     property obs: TObs read FObs write FObs;
-    property dtFimCondicao: TDateTime read FdtFimCondicao write FdtFimCondicao;
   end;
 
   TInfoAmbCollection = class(TACBrObjectList)

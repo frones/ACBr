@@ -141,8 +141,6 @@ type
     FAgenteCausador: TAgenteCausadorCollection;
     FAtestado: TAtestado;
     FCatOrigem: TCatOrigem;
-    FUltDiaTrab: TDateTime;
-    FHouveAfast: tpSimNao;
   public
     constructor Create;
     destructor Destroy; override;
@@ -165,8 +163,6 @@ type
     property agenteCausador: TAgenteCausadorCollection read FAgenteCausador write FAgenteCausador;
     property atestado: TAtestado read FAtestado write FAtestado;
     property catOrigem: TCatOrigem read FCatOrigem write FCatOrigem;
-    property ultDiaTrab: TDateTime read FultDiaTrab write FultDiaTrab;
-    property houveAfast: tpSimNao read FhouveAfast write FhouveAfast;
   end;
 
   TAtestado = class

@@ -73,8 +73,8 @@ type
   TInfoComplementares = class;
   TSituacaoPJ = class;
   TSituacaoPF = class;
-  TInfoOP = class;
   TInfoEFR = class;
+  TInfoOP = class;
   TInfoEnte = class;
 
   TS1000Collection = class(TeSocialCollection)
@@ -153,8 +153,8 @@ type
   TInfoCadastro = class(TObject)
   private
     FNmRazao: String;
-    FClassTrib: TpClassTrib;
     FNatJurid: String;
+    FClassTrib: TpClassTrib;
     FIndCoop: TpIndCoop;
     FIndConstr: TpIndConstr;
     FIndDesFolha: TpIndDesFolha;
@@ -171,7 +171,8 @@ type
     FSoftwareHouse: TSoftwareHouseCollection;
     FInfoComplementares: TInfoComplementares;
     FcnpjEFR: String;
-    FdtTrans11096 : TDatetime;
+    FdtTrans11096: TDatetime;
+    FIndTribFolhaPisCofins: TpSimNao;
 
     function getDadosIsencao(): TDadosIsencao;
     function getInfoOrgInternacional(): TInfoOrgInternacional;
@@ -184,8 +185,8 @@ type
     function infoOpInst(): Boolean;
 
     property NmRazao: String read FNmRazao write FNmRazao;
-    property ClassTrib: TpClassTrib read FClassTrib write FClassTrib;
     property NatJurid: String read FNatJurid write FNatJurid;
+    property ClassTrib: TpClassTrib read FClassTrib write FClassTrib;
     property IndCoop: TpIndCoop read FIndCoop write FIndCoop;
     property IndConstr: TpIndConstr read FIndConstr write FIndConstr;
     property IndDesFolha: TpIndDesFolha read FIndDesFolha write FIndDesFolha;
@@ -203,6 +204,7 @@ type
     property SoftwareHouse: TSoftwareHouseCollection read FSoftwareHouse write FSoftwareHouse;
     property InfoComplementares: TInfoComplementares read FInfoComplementares write FInfoComplementares;
     property dtTrans11096 : TDatetime read FdtTrans11096 write FdtTrans11096;
+    property indTribFolhaPisCofins: tpSimNao read FIndTribFolhaPisCofins write FIndTribFolhaPisCofins default tpNao;
   end;
 
   TInfoComplementares = class(TObject)
@@ -324,9 +326,10 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    
+
     function InfoEFRInst(): Boolean;
     function InfoEnteInst(): Boolean;
+
     property nrSiafi: String read FNrSiafi write FNrSiafi;
     property infoEFR: TInfoEFR read FInfoEFR write FInfoEFR;
     property infoEnte: TInfoEnte read FInfoEnte write FInfoEnte;
@@ -488,57 +491,55 @@ end;
 procedure TevtInfoEmpregador.GerarInfoCadastro;
 begin
   Gerador.wGrupo('infoCadastro');
-  
+
   if VersaoDF <= ve02_05_00 then
     Gerador.wCampo(tcStr, '', 'nmRazao',          1, 100, 1, Self.infoEmpregador.infoCadastro.NmRazao);
-    
-  Gerador.wCampo(tcStr, '', 'classTrib',        2, 002, 1, tpClassTribToStr(Self.infoEmpregador.infoCadastro.ClassTrib));
+  Gerador.wCampo(tcStr, '', 'classTrib',        2, 2, 1, tpClassTribToStr(Self.infoEmpregador.infoCadastro.ClassTrib));
 
   if (Self.ideEmpregador.TpInsc = tiCNPJ) then
   begin
     if VersaoDF <= ve02_05_00 then
-      Gerador.wCampo(tcStr, '', 'natJurid',       4, 004, 0, Self.infoEmpregador.infoCadastro.NatJurid); // criar enumerador
-      
-    Gerador.wCampo(tcStr, '', 'indCoop',        1, 001, 0, eSIndCooperativaToStr(Self.infoEmpregador.infoCadastro.IndCoop));
-    Gerador.wCampo(tcStr, '', 'indConstr',      1, 001, 0, eSIndConstrutoraToStr(Self.infoEmpregador.infoCadastro.IndConstr));
+      Gerador.wCampo(tcStr, '', 'natJurid',       4, 4, 0, Self.infoEmpregador.infoCadastro.NatJurid); // criar enumerador
+
+    Gerador.wCampo(tcStr, '', 'indCoop',        1, 1, 0, eSIndCooperativaToStr(Self.infoEmpregador.infoCadastro.IndCoop));
+    Gerador.wCampo(tcStr, '', 'indConstr',      1, 1, 0, eSIndConstrutoraToStr(Self.infoEmpregador.infoCadastro.IndConstr));
   end;
 
-  Gerador.wCampo(tcStr, '', 'indDesFolha',      1, 001, 1, eSIndDesFolhaToStr(Self.infoEmpregador.infoCadastro.IndDesFolha));
+  Gerador.wCampo(tcStr, '', 'indDesFolha',      1, 1, 1, eSIndDesFolhaToStr(Self.infoEmpregador.infoCadastro.IndDesFolha));
 
-  if (VersaoDF >= ve02_05_00) and (Self.infoEmpregador.infoCadastro.ClassTrib in [ct07, ct08, ct21]) and (Self.infoEmpregador.infoCadastro.IndOpcCP <> icpNenhum) then
-    Gerador.wCampo(tcStr, '', 'indOpcCP', 1, 001, 0, eSIndOpcCPToStr(Self.infoEmpregador.infoCadastro.IndOpcCP));
+  if (VersaoDF >= ve02_05_00) and (Self.infoEmpregador.infoCadastro.ClassTrib in [ct07, ct08, ct21]) and
+      (Self.infoEmpregador.infoCadastro.IndOpcCP <> icpNenhum) then
+    Gerador.wCampo(tcStr, '', 'indOpcCP', 1, 1, 0, eSIndOpcCPToStr(Self.infoEmpregador.infoCadastro.IndOpcCP));
 
   if (VersaoDF >= ve02_05_00) and (Not (Self.infoEmpregador.infoCadastro.ClassTrib in [ct21, ct22])) then
-  begin
     if (Self.infoEmpregador.infoCadastro.IndPorte = tpSim) then //Somente empresas que não são (ME e EPP)
-      Gerador.wCampo(tcStr, '', 'indPorte',       1, 001, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndPorte));
+      Gerador.wCampo(tcStr, '', 'indPorte',       1, 1, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndPorte));
 
-    if (DateToStr(infoEmpregador.infoCadastro.dtTrans11096) <> '') then
-      Gerador.wCampo(tcDat, '', 'dtTrans11096', 10, 10, 0, infoEmpregador.infoCadastro.dtTrans11096);
-  end;
-
-  Gerador.wCampo(tcStr, '', 'indOptRegEletron', 1, 001, 1, eSIndOptRegEletronicoToStr(Self.infoEmpregador.infoCadastro.IndOptRegEletron));
+  Gerador.wCampo(tcStr, '', 'indOptRegEletron', 1, 1, 1, eSIndOptRegEletronicoToStr(Self.infoEmpregador.infoCadastro.IndOptRegEletron));
 
   if VersaoDF <= ve02_05_00 then
   begin
     if (Self.ideEmpregador.TpInsc = tiCNPJ) then
-      Gerador.wCampo(tcStr, '', 'indEntEd',       0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEntEd));
+      Gerador.wCampo(tcStr, '', 'indEntEd',       0, 1, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEntEd));
 
-    Gerador.wCampo(tcStr, '', 'indEtt',           0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEtt));
-    Gerador.wCampo(tcStr, '', 'nrRegEtt',         0, 030, 0, Self.infoEmpregador.infoCadastro.nrRegEtt);
-  end;
-
-  GerarDadosIsencao;
-
-  if VersaoDF <= ve02_05_00 then
-  begin
+    Gerador.wCampo(tcStr, '', 'indEtt',           0, 1, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEtt));
+    Gerador.wCampo(tcStr, '', 'nrRegEtt',         0, 30, 0, Self.infoEmpregador.infoCadastro.nrRegEtt);
     GerarContato;
     GerarInfoOp;
   end
   else
-  if Self.infoEmpregador.infoCadastro.cnpjEFR <> '' then
-    Gerador.wCampo(tcStr, '', 'cnpjEFR', 14, 14, 0, Self.infoEmpregador.infoCadastro.cnpjEFR);
-  
+  begin
+    if Self.infoEmpregador.infoCadastro.cnpjEFR <> '' then
+      Gerador.wCampo(tcStr, '', 'cnpjEFR', 14, 14, 0, Self.infoEmpregador.infoCadastro.cnpjEFR);
+
+    if DateToStr(infoEmpregador.infoCadastro.dtTrans11096) <> dDataBrancoNula then
+      Gerador.wCampo(tcDat, '', 'dtTrans11096', 10, 10, 0, infoEmpregador.infoCadastro.dtTrans11096);
+
+    if (VersaoDF >= veS01_01_00) and (infoEmpregador.infoCadastro.indTribFolhaPisCofins = tpSim) then
+      Gerador.wCampo(tcStr, '', 'indTribFolhaPisCofins',  0, 1, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.indTribFolhaPisCofins));
+  end;
+
+  GerarDadosIsencao;
   GerarInfoOrgInternacional;
 
   if VersaoDF <= ve02_05_00 then
@@ -603,7 +604,7 @@ begin
   for i := 0 to infoEmpregador.infoCadastro.SoftwareHouse.Count - 1 do
   begin
     Gerador.wGrupo('softwareHouse');
-    
+
     Gerador.wCampo(tcStr, '', 'cnpjSoftHouse', 14,  14, 1, infoEmpregador.infoCadastro.SoftwareHouse[i].CnpjSoftHouse);
     Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, infoEmpregador.infoCadastro.SoftwareHouse[i].NmRazao);
     Gerador.wCampo(tcStr, '', 'nmCont',         1,  70, 1, infoEmpregador.infoCadastro.SoftwareHouse[i].NmCont);
@@ -621,7 +622,7 @@ function TevtInfoEmpregador.GerarXML: Boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtInfoEmpregador');
@@ -697,19 +698,20 @@ begin
       if (ModoLancamento <> mlExclusao) then
       begin
         sSecao := 'infoCadastro';
-        infoEmpregador.infoCadastro.NmRazao          := INIRec.ReadString(sSecao, 'nmRazao', EmptyStr);
-        infoEmpregador.infoCadastro.ClassTrib        := StrTotpClassTrib(Ok, INIRec.ReadString(sSecao, 'classTrib', '00'));
-        infoEmpregador.infoCadastro.NatJurid         := INIRec.ReadString(sSecao, 'natJurid', EmptyStr);
-        infoEmpregador.infoCadastro.IndCoop          := eSStrToIndCooperativa(Ok, INIRec.ReadString(sSecao, 'indCoop', '0'));
-        infoEmpregador.infoCadastro.IndConstr        := eSStrToIndConstrutora(Ok, INIRec.ReadString(sSecao, 'indConstr', '0'));
-        infoEmpregador.infoCadastro.IndDesFolha      := eSStrToIndDesFolha(Ok, INIRec.ReadString(sSecao, 'indDesFolha', '0'));
-        infoEmpregador.infoCadastro.IndOpcCP         := eSStrToIndOpcCP(Ok, INIRec.ReadString(sSecao, 'indOpcCP', '0'));
-        infoEmpregador.infoCadastro.IndPorte         := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPorte', 'S'));
-        infoEmpregador.infoCadastro.IndOptRegEletron := eSStrToIndOptRegEletronico(Ok, INIRec.ReadString(sSecao, 'indOptRegEletron', '0'));
-        infoEmpregador.infoCadastro.IndEntEd         := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEntEd', 'S'));
-        infoEmpregador.infoCadastro.IndEtt           := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEtt', 'S'));
-        infoEmpregador.infoCadastro.nrRegEtt         := INIRec.ReadString(sSecao, 'nrRegEtt', EmptyStr);
-        infoEmpregador.infoCadastro.cnpjEFR          := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
+        infoEmpregador.infoCadastro.NmRazao               := INIRec.ReadString(sSecao, 'nmRazao', EmptyStr);
+        infoEmpregador.infoCadastro.ClassTrib             := StrTotpClassTrib(Ok, INIRec.ReadString(sSecao, 'classTrib', '00'));
+        infoEmpregador.infoCadastro.NatJurid              := INIRec.ReadString(sSecao, 'natJurid', EmptyStr);
+        infoEmpregador.infoCadastro.IndCoop               := eSStrToIndCooperativa(Ok, INIRec.ReadString(sSecao, 'indCoop', '0'));
+        infoEmpregador.infoCadastro.IndConstr             := eSStrToIndConstrutora(Ok, INIRec.ReadString(sSecao, 'indConstr', '0'));
+        infoEmpregador.infoCadastro.IndDesFolha           := eSStrToIndDesFolha(Ok, INIRec.ReadString(sSecao, 'indDesFolha', '0'));
+        infoEmpregador.infoCadastro.IndOpcCP              := eSStrToIndOpcCP(Ok, INIRec.ReadString(sSecao, 'indOpcCP', '0'));
+        infoEmpregador.infoCadastro.IndPorte              := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPorte', 'S'));
+        infoEmpregador.infoCadastro.IndOptRegEletron      := eSStrToIndOptRegEletronico(Ok, INIRec.ReadString(sSecao, 'indOptRegEletron', '0'));
+        infoEmpregador.infoCadastro.IndEntEd              := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEntEd', 'S'));
+        infoEmpregador.infoCadastro.IndEtt                := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEtt', 'S'));
+        infoEmpregador.infoCadastro.nrRegEtt              := INIRec.ReadString(sSecao, 'nrRegEtt', EmptyStr);
+        infoEmpregador.infoCadastro.cnpjEFR               := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
+        infoEmpregador.infoCadastro.indTribFolhaPisCofins := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indTribFolhaPisCofins', 'S'));
 
         sSecao := 'dadosIsencao';
         if INIRec.ReadString(sSecao, 'ideMinLei', '') <> '' then

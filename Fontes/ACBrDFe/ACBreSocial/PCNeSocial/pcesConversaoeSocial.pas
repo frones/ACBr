@@ -90,10 +90,10 @@ type
                              schevtTabProcesso, schevtTabRubrica, schevtTotConting, schevtTSVAltContr,
                              schevtTSVInicio, schevtTSVTermino, schRetornoEnvioLoteEventos,
                              schRetornoEvento, schRetornoProcessamentoLote, schConsultaIdentEventos,
-                             schDownloadEventos, schEvtToxic, schEvtTreiCap,schevtCdBenefAlt,
+                             schDownloadEventos, schEvtToxic, schEvtTreiCap, schevtCdBenefAlt,
                              schevtCdBenIn, schevtCessao, schevtCdBenAlt, schevtReativBen,
-                             schevtCdBenTerm,
-                             schNaoIdentificado,
+                             schevtCdBenTerm, schNaoIdentificado, schevtProcTrab, schevtContProc,
+                             schevtInfoIR, schevtExcProcTrab,
                              schevtCdBenPrRP // Especifico para versões do eSocial anterior a vS1.0.0.00
                              );
 
@@ -110,7 +110,7 @@ type
                              teS2240, teS2245, teS2250, teS2260, teS2298, teS2299, teS2300, teS2305,
                              teS2306, teS2399, teS2400, teS3000, teS4000, teS4999, teS2231, teS5002,
                              teS5003, teS5011, teS5012, teS5013, teS2221, teS2405, teS2410, teS5001,
-                             teS2416, teS2418, teS2420,
+                             teS2416, teS2418, teS2420, teS2500, teS2501, teS3500, teS5501,
                              teS8299, teConsultaIdentEventos, teConsultaLoteEventos, teDownloadEventos, teEnvioLoteEventos,
                              teErro, teRetornoEnvioLoteEventos, teRetornoEvento, teRetornoProcessamentoLote,
                              teInsApo, teAdesao, teCadInicial, teASO, teNaoIdentificado
@@ -273,6 +273,7 @@ type
                              cicpContribuicaoDescontadadoSeguradoeBeneficiario,
                              cicpContribuicaoDescontadadoSeguradoeBeneficiarioDecimo,
                              cicpSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicial,
+                             cicpSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicialDecimo,
                              cicpNenhum);
 
   tpCodIncFGTS            = (cdfNaoeBasedeCalculo, cdfBasedeCalculoFGTS, cdfBasedeCalculoFGTS13Sal, cdfBasedeCalculoFGTSRescisorio, cdfIncidenciadecisaoJudicialFGTSMensal, cdfIncidenciadecisaoJudicialFGTS13Sal, cdfIncidenciadecisaoJudicial);
@@ -314,7 +315,7 @@ type
 
   tpIndSimples            = (idsNenhum, idsIntegralmente, idsNaosubstituida, idsConcomitante);
 
-  tpNatAtividade          = (navNaoInformar, navUrbano, navRural );
+  tpNatAtividade          = (navNaoInformar, navUrbano, navRural);
 
   tpTpTributo             = (tptIRRF, tptPrevidenciaria, tptFGTS, tptContribSind);
 
@@ -322,7 +323,7 @@ type
 
   tpTpAcordo              = (tpaAcordo, tpaComissao, tpaConvenca, tpaDissidio );
 
-  tpIndNIF                = (infBeneficiaNIF, infDispensadoNIF, infPaisnaoNIF );
+  tpIndNIF                = (infBeneficiaNIF, infDispensadoNIF, infPaisnaoNIF);
 
   tpIndTpDeducao          = (itpOficial, itpPrivada, itpPensao, itpDependentes );
 
@@ -332,6 +333,8 @@ type
   tpIndPerReferencia      = (iprFolhaMensal, iprFolhaDecimo);
 
   tpTpProcRRA             = (tppAdministrativo, tppJudicial);
+
+  tpTpProcRet             = (tpprAdministrativo, tpprJudicial);
 
   tpTpInscAdvogado        = (tadJuridica, tadFisica );
 
@@ -396,10 +399,26 @@ type
                              ctDependenteAgenteDiplomaticoOuConsular, ctBeneficiadoTratadoAmizade,
                              ctVazio);
 
-  tpTpDep                 = (tdConjuge, tdCompanheiroComFilhoOuVivaMais5Anos, tdFilhoOuEnteado, tdFilhoOuEnteadoUniverOuEscolaTec,
-                             tdIrmaoNetoBisnetoGuardaJudicial, tdIrmaoNetoBisnetoUniverOuEscolaTecGuardaJudicial,
-                             tdPaisAvosBisavos, tdMenorPobreGuardaJudicial, tdPessoaIncapazTutorOuCurador, tdExConjuge,
+  tpTpDep                 = (tdConjuge,
+                             tdCompanheiroComFilhoOuVivaMais5Anos,
+                             tdFilhoOuEnteado,
+                             tdFilhoOuEnteadoUniverOuEscolaTec,
+                             tdIrmaoNetoBisnetoGuardaJudicial,
+                             tdIrmaoNetoBisnetoUniverOuEscolaTecGuardaJudicial,
+                             tdPaisAvosBisavos,
+                             tdMenorPobreGuardaJudicial,
+                             tdPessoaIncapazTutorOuCurador,
+                             tdExConjuge,
                              tdAgregadoOutros);
+
+  tpRelDep                = (relNetoBisneto,
+                             relIrmao,
+                             relConjugeCompanheiro,
+                             relFilho,
+                             relPaisAvosEBisavos,
+                             relEnteado,
+                             relSogro,
+                             relAgregadoOutros);
 
   tpTpRegTrab             = (trCLT, trEstatutario);
 
@@ -412,7 +431,8 @@ type
                              taTransfEmpresaConsorciadaOuDeConsorcio,
                              taTransfPorMotivoSucessaoIncorporacaoCisaoOuFuso,
                              taTransfEmpregadoDomesticoParaOutroRepresentanteMesmaFamiliar,
-                             taMudancaDeCPF);
+                             taMudancaDeCPF,
+                             taTransfEmpresaConsideradaInapta);
 
   tpTpIndAdmissao         = (iaNormal, iaDecorrenteAcaoFiscal, iaDecorrenteDecisaoJudicial);
 
@@ -440,6 +460,13 @@ type
   tpUndSalFixo            = (sfPorHora, sfPorDia, sfPorSemana, sfPorQuinzena, sfPorMes, sfPorTarefa, sfNaoaplicavel);
 
   tpTpContr               = (PrazoIndeterminado, PrazoDeterminado, PrazoDeterminadoVincOcDeUmFato, PrazoNaoAplicavel);
+
+  tpTpContrS2500          = (TrabalhadorComVinculoFormalizadoSemAlteracaoNasDatasDeAdmissaoEDeDesligamento,
+                             TrabalhadorComVinculoFormalizadoComAlteracaoNaDataDeAdmissao,
+                             TrabalhadorComVinculoFormalizadoComInclusaoOuAlteracaoDeDataDeDesligamento,
+                             TrabalhadorComVinculoFormalizadoComAlteracaoNasDatasDeAdmissaoEDeDesligamento,
+                             EmpregadoComReconhecimentoDeVinculo,
+                             TrabalhadorSemVinculoDeEmpregoOuEstatutarioSemReconhecimentoDeVinculoEmpregaticio);
 
   tpTpJornada             = (tjJornadaComHorarioDiarioFolgaFixos,                      { Item válido até a versão 2.5 }
                              tjJornada12x36,
@@ -502,16 +529,16 @@ type
 
   tpTpPgto                = (tpPgtoRemun1200, tpPgtoResc2299, tpPgtoResc2399, tpPgtoRemun1202, tpPgtoBenefPrev1207);
 
-  tpMotivosAfastamento    = ( mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho, mtvAfastLicencaRegimeProprioSemRemuneracao,
-                              mtvAposentadoriaInvalidez, mtvAcompanhamentoFamiliaEnfermo, mtvAfastamentoEmpregadoConCuradorFGTS,
-                              mtvAfastLicencaRegimeProprioComRemuneracao, mtvCarcere, mtvCargoEletivoCeletistasGeral,
-                              mtvCargoEletivoServidorPublico, mtvCessaoRequisicao, mtvGozoFeriasRecesso, mtvLicencaRemunerada,
-                              mtvLicencaMaternidade120Dias, mtvLicencaMaternidadeEmpresaCidada, mtvLicencaMaternidadeAbortoNaoCriminoso,
-                              mtvLicencaMaternidadeAdocaoGuardaJudicial, mtvLicencaNaoRemunerada, mtvMandatoEleitoralSemRemuneracao,
-                              mtvMandatoEleitoralComRemuneracao, mtvMandatoSindical, mtvMulherVitimaViolencia, mtvParticipacaoCNPS,
-                              mtvQualificacao, mtvRepresentanteSindical, mtvServicoMilitar, mtvSuspensaoDisciplinar, mtvServidorPublicoDisponibilidade,
-                              mtvLicencaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias, mtvLicencaMaternidadeAntecipacaoProrrogacao,
-                              mtvSuspensaoTemporariaContratoTrabalhoNosTermosMP936_2020, mtvImpedimentoConcorrenciaEscalaTrabalhoAvulso);
+  tpMotivosAfastamento    = (mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho, mtvAfastLicencaRegimeProprioSemRemuneracao,
+                             mtvAposentadoriaInvalidez, mtvAcompanhamentoFamiliaEnfermo, mtvAfastamentoEmpregadoConCuradorFGTS,
+                             mtvAfastLicencaRegimeProprioComRemuneracao, mtvCarcere, mtvCargoEletivoCeletistasGeral,
+                             mtvCargoEletivoServidorPublico, mtvCessaoRequisicao, mtvGozoFeriasRecesso, mtvLicencaRemunerada,
+                             mtvLicencaMaternidade120Dias, mtvLicencaMaternidadeEmpresaCidada, mtvLicencaMaternidadeAbortoNaoCriminoso,
+                             mtvLicencaMaternidadeAdocaoGuardaJudicial, mtvLicencaNaoRemunerada, mtvMandatoEleitoralSemRemuneracao,
+                             mtvMandatoEleitoralComRemuneracao, mtvMandatoSindical, mtvMulherVitimaViolencia, mtvParticipacaoCNPS,
+                             mtvQualificacao, mtvRepresentanteSindical, mtvServicoMilitar, mtvSuspensaoDisciplinar, mtvServidorPublicoDisponibilidade,
+                             mtvLicencaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias, mtvLicencaMaternidadeAntecipacaoProrrogacao,
+                             mtvSuspensaoTemporariaContratoTrabalhoNosTermosMP936_2020, mtvImpedimentoConcorrenciaEscalaTrabalhoAvulso);
 
   tpTpAcidTransito        = (tpatAtropelamento, tpatColisao, tpatOutros, tpatNao);
 
@@ -568,7 +595,7 @@ type
 
   tpNacProf               = (ttpProfissionalBrasileiro, ttpProfissionalEstrangeiro);
 
-  TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00);
+  TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00);
 
   tpTmpParc               = (tpNaoeTempoParcial,
                              tpLimitado25HorasSemanais,
@@ -617,7 +644,28 @@ type
                              mtvSuspensaoPorNaoRecadastramento,
                              mtvOutrosMotivosDeSuspensao);
 
-  TMatrixEventoInfo = (meiTipoEvento, meiTipoEventoString, meiVersao, meiEventoString, meiSchema, meiStrEventoToTipoEvento, meiObservacao);
+  tpPercTransf            = (PTr20, PTr40, PTr60, PTr80, PTr100);
+
+  tpIndRemun              = (ireNaoInformado, ireQuarentena, ireDesligamentoReconhecidoJudicialmente, ireAposentadoriaServidor);
+
+  tpTpCCP                 = (CCPAmbitoEmpresa, CCPAmbitoSindicato, Ninter);
+
+  tpMtvDesligTSV          = (mdtNaoInformado,
+                             mdtExoneracaoDoDiretorNaoEmpregadoSemJustaCausa,
+                             mdtTerminoDeMandatoDoDiretorNaoEmpregado,
+                             mdtExoneracaoAPedidoDeDiretorNaoEmpregado,
+                             mdtExoneracaoDoDiretorNaoEmpregadoPorCulpaReciprocaOuForcaMaior,
+                             mdtMorteDoDiretorNaoEmpregado,
+                             mdtExoneracaoDoDiretorNaoEmpregadoPorFalenciaEncerramento,
+                             mdtOutros);
+
+  tpRepercProc            = (repDecisaoComPagamentoDeVerbasDeNaturezaRemuneratoria, repDecisaoSemPagamentoDeVerbasDeNaturezaRemuneratoria);
+
+  tpOrigemProc            = (oprProcessoJudicial, oprDemandaSubmetidaACCPOuAoNINTER);
+
+  tpIndTpDedu             = (itdPrevidenciaComplementar, itdPensaoAlimenticia);
+
+  TMatrixEventoInfo       = (meiTipoEvento, meiTipoEventoString, meiVersao, meiEventoString, meiSchema, meiStrEventoToTipoEvento, meiObservacao);
 
   TRecMatrixEventoInfo = record
     TipoEvento           : TTipoEvento;
@@ -633,7 +681,7 @@ type
 const
   PrefixoVersao = '-v';
 
-  TEventoString: array[0..49] of String =('evtInfoEmpregador', 'evtTabEstab',
+  TEventoString: array[0..52] of String =('evtInfoEmpregador', 'evtTabEstab',
                                           'evtTabRubrica', 'evtTabLotacao',
                                           'evtTabCargo', 'evtTabCarreira',
                                           'evtTabFuncao', 'evtTabHorTur',
@@ -641,7 +689,7 @@ const
                                           'evtTabOperPort', 'S-2100',
                                           'evtRemun', 'evtRmnRPPS',
                                           'evtCdBenefIn', 'evtPgtos',
-                                          'S-1220', 'evtAqProd',
+                                          'evtInfoIR', 'evtAqProd',
                                           'evtComProd', 'evtContratAvNP',
                                           'evtInfoComplPer', 'evtTotConting',
                                           'evtReabreEvPer', 'evtFechaEvPer',
@@ -657,7 +705,9 @@ const
                                           'evtCdBenPrRP', 'evtExclusao',
                                           'evtCdBenefAlt', 'evtCdBenIn',
                                           'evtCessao', 'evtCdBenAlt',
-                                          'evtReativBen','evtCdBenTerm');
+                                          'evtReativBen','evtCdBenTerm',
+                                          'evtProcTrab', 'evtContProc',
+                                          'evtExcProcTrab');
 
   EventoStringNova: array[0..58] of String =
       ('evtInfoEmpregador', 'evtTabEstab', 'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
@@ -670,7 +720,6 @@ const
        'evtCdBenPrRP', 'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011',
        'S-5012', 'S-5013', 'evtToxic', 'evtCdBenefAlt', 'evtCdBenIn', 'evtCessao', 'evtCdBenAlt',
        'evtReativBen', 'evtCdBenTerm');
-
 
   TTrabalhadorSemVinculo: Array[0..27] of integer = (
                                           201, 202, 304, 305, 308, 311, 313, 401, 410, 501,
@@ -904,6 +953,9 @@ function eSStrToIndPerReferencia(var ok: boolean; const s: string): TpIndPerRefe
 
 function eSTpProcRRAToStr(const t: TpTpProcRRA ): string;
 function eSStrToTpProcRRA(var ok: boolean; const s: string): TpTpProcRRA;
+
+function eStpTpProcRetToStr(const t: tpTpProcRet ): string;
+function eSStrTotpTpProcRet(var ok: boolean; const s: string): tpTpProcRet;
 
 function eSTpInscAdvogadoToStr(const t: TpTpInscAdvogado ): string;
 function eSStrToTpInscAdvogado(var ok: boolean; const s: string): TpTpInscAdvogado;
@@ -1200,7 +1252,34 @@ function eSStrToTpMotCessBenef(var ok: boolean; const s: string): tpMotCessBenef
 function eStpTpMtvSuspensaoToStr(const t: tpMtvSuspensao): string;
 function eSStrToTpMtvSuspensao(var ok: boolean; const s: string): tpMtvSuspensao;
 
+function eSTpPercTransfToStr(const t: tpPercTransf): string;
+function eSStrToTpPercTransf(var ok: boolean; const s: string): tpPercTransf;
+
+function TpIndRemunToStr(const t: tpIndRemun): string;
+function StrToTpIndRemun(var ok: boolean; const s: string): tpIndRemun;
+
+function eSTpTpCCPToStr(const t: tpTpCCP): string;
+function eSStrToTpTpCCP(var ok: boolean; const s: string): tpTpCCP;
+
 function IntToTpProf(codCateg : Integer): tpTpProf;
+
+function eSTpContrS2500ToStr(const t: tpTpContrS2500): string;
+function eSStrToTpContrS2500(var ok: boolean; const s: string): tpTpContrS2500;
+
+function eSTpMtvDesligTSVToStr(const t: tpMtvDesligTSV ): string;
+function eSStrToTpMtvDesligTSV(var ok: boolean; const s: string): tpMtvDesligTSV;
+
+function eSTpTpRepercProcToStr(const t: tpRepercProc): string;
+function eSStrToTpRepercProc(var ok: boolean; const s: string): tpRepercProc;
+
+function eSTpTpOrigemProcToStr(const t: tpOrigemProc): string;
+function eSStrToTpOrigemProc(var ok: boolean; const s: string): tpOrigemProc;
+
+function eSTpRelDepToStr(const t: tpRelDep): string;
+function eSStrToTpRelDep(var ok: boolean; const s: string): tpRelDep;
+
+function eStpIndTpDeduToStr(const t: tpIndTpDedu): string;
+function eSStrTotpIndTpDedu(var ok: boolean; const s: string): tpIndTpDedu;
 
 implementation
 
@@ -1209,7 +1288,7 @@ uses
   ACBrUtil.Strings;
 
 const
-  TTipoEventoString   : array[0..58] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
+  TTipoEventoString   : array[0..62] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
                                                  'S-1035', 'S-1040', 'S-1050', 'S-1060', 'S-1070',
                                                  'S-1080', 'S-2100', 'S-1200', 'S-1202', 'S-1207',
                                                  'S-1210', 'S-1220', 'S-1250', 'S-1260', 'S-1270',
@@ -1220,7 +1299,8 @@ const
                                                  'S-2306', 'S-2399', 'S-2400', 'S-3000', 'S-4000',
                                                  'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011',
                                                  'S-5012', 'S-5013', 'S-2221', 'S-2405', 'S-2410',
-                                                 'S-2231', 'S-2416', 'S-2418', 'S-2420');
+                                                 'S-2231', 'S-2416', 'S-2418', 'S-2420', 'S-2500',
+                                                 'S-2501', 'S-3500', 'S-5501');
 
   TUFString           : array[0..27] of String = ('AC','AL','AP','AM','BA','CE','DF','ES','GO',
                                                   'MA','MT','MS','MG','PA','PB','PR','PE','PI',
@@ -1345,8 +1425,6 @@ begin
   end;
 
   Result := TeSocialSchema( CodSchema );
-
-
 end;
 
 function TipoEventoToSchemaeSocial(const t: TTipoEvento; AVersaoeSocial: TVersaoeSocial): TeSocialSchema;
@@ -1366,6 +1444,7 @@ begin
      teS1200: Result := schevtRemun;
      teS1202: Result := schevtRmnRPPS;
      teS1210: Result := schevtPgtos;
+     teS1220: Result := schevtInfoIR;
      teS1250: Result := schevtAqProd;
      teS1260: Result := schevtComProd;
      teS1270: Result := schevtContratAvNP;
@@ -1398,7 +1477,10 @@ begin
      teS2416: Result := schevtCdBenAlt;
      teS2418: Result := schevtReativBen;
      teS2420: Result := schevtCdBenTerm;
+     teS2500: Result := schevtProcTrab;
+     teS2501: Result := schevtContProc;
      teS3000: Result := schevtExclusao;
+     teS3500: Result := schevtExcProcTrab;
 
       // Schemas alterados conforme a versão do eSocial
      teS1207:
@@ -2075,12 +2157,12 @@ end;
 
 function eSCodIncCPRPToStr(const t:tpCodIncCPRP ): string;
 begin
-  result := EnumeradoToStr2(t,[ '00', '11', '12', '31', '32', '91', '99' ] );
+  result := EnumeradoToStr2(t,[ '00', '11', '12', '31', '32', '91', '92', '99' ] );
 end;
 
 function eSStrToCodIncCPRP(var ok: boolean; const s: string): tpCodIncCPRP;
 begin
-  result := tpCodIncCPRP( StrToEnumerado2(ok , s,[ '00', '11', '12', '31', '32', '91', '99' ] ));
+  result := tpCodIncCPRP( StrToEnumerado2(ok , s,[ '00', '11', '12', '31', '32', '91', '92', '99' ] ));
 end;
 
 function eSIndSuspToStr(const t: tpIndSusp): string;
@@ -2349,6 +2431,16 @@ end;
 function eSStrToTpProcRRA(var ok: boolean; const s: string): TpTpProcRRA;
 begin
   result := TpTpProcRRA( StrToEnumerado2(ok , s,TGenericosString1_2 ));
+end;
+
+function eStpTpProcRetToStr(const t:tpTpProcRet ): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_2);
+end;
+
+function eSStrTotpTpProcRet(var ok: boolean; const s: string): tpTpProcRet;
+begin
+  result := tpTpProcRet( StrToEnumerado2(ok, s, TGenericosString1_2));
 end;
 
 function eSTpInscAdvogadoToStr(const t:tpTpInscAdvogado ): string;
@@ -2699,14 +2791,14 @@ end;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
 begin
-  result := StrToEnumerado(ok, s, ['02_04_01', '02_04_02', '02_05_00', 'S01_00_00'],
-                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
+  result := StrToEnumerado(ok, s, ['02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00'],
+                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
 end;
 
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
 begin
-  result := EnumeradoToStr(t, ['02_04_01', '02_04_02', '02_05_00', '_S_01_00_00'],
-                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
+  result := EnumeradoToStr(t, ['02_04_01', '02_04_02', '02_05_00', '_S_01_00_00', '_S_01_01_00'],
+                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
 end;
 
 function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
@@ -2721,9 +2813,11 @@ begin
     result := ve02_05_00
   else if (d = 10.0000)  then
     result := veS01_00_00
+  else if (d = 10.1000)  then
+    result := veS01_01_00
   else
   begin
-    result := ve02_04_01;
+    result := veS01_00_00;
     ok := False;
   end;
 end;
@@ -2735,6 +2829,7 @@ begin
     ve02_04_02:  result := 2.0402;
     ve02_05_00:  result := 2.0500;
     veS01_00_00: result := 10.0000;
+    veS01_01_00: result := 10.1000;
   else
     result := 0;
   end;
@@ -2991,6 +3086,96 @@ begin
                            [mtvNada,
                             mtvSuspensaoPorNaoRecadastramento,
                             mtvOutrosMotivosDeSuspensao]);
+end;
+
+function TpIndRemunToStr(const t: tpIndRemun): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString0_3);
+end;
+
+function StrToTpIndRemun(var ok: boolean; const s: string): tpIndRemun;
+begin
+  result := tpIndRemun(StrToEnumerado2(ok, s, TGenericosString0_3));
+end;
+
+function eSTpTpCCPToStr(const t: tpTpCCP): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_3);
+end;
+
+function eSStrToTpTpCCP(var ok: boolean; const s: string): tpTpCCP;
+begin
+  result := tpTpCCP(StrToEnumerado2(ok, s, TGenericosString1_3));
+end;
+
+function eSTpPercTransfToStr(const t: tpPercTransf): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_5);
+end;
+
+function eSStrToTpPercTransf(var ok: boolean; const s: string): tpPercTransf;
+begin
+  result := tpPercTransf(StrToEnumerado2(ok, s, TGenericosString1_5));
+end;
+
+function eSTpContrS2500ToStr(const t: tpTpContrS2500 ): string;
+begin
+  result := EnumeradoToStr2(t,TGenericosString1_6);
+end;
+
+function eSStrToTpContrS2500(var ok: boolean; const s: string): tpTpContrS2500;
+begin
+  result := tpTpContrS2500(StrToEnumerado2(ok , s, TGenericosString1_6));
+end;
+
+function eStpMtvDesligTSVToStr(const t: tpMtvDesligTSV ): string;
+begin
+  result := EnumeradoToStr2(t,['00', '01', '02', '03', '04', '05', '06', '99']);
+end;
+
+function eSStrToTpMtvDesligTSV(var ok: boolean; const s: string): tpMtvDesligTSV;
+begin
+  result := tpMtvDesligTSV(StrToEnumerado2(ok, s, ['00', '01', '02', '03', '04', '05', '06', '99']));
+end;
+
+function eSTpTpRepercProcToStr(const t: tpRepercProc): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_2);
+end;
+
+function eSStrToTpRepercProc(var ok: boolean; const s: string): tpRepercProc;
+begin
+  result := tpRepercProc(StrToEnumerado2(ok , s, TGenericosString1_2));
+end;
+
+function eSTpTpOrigemProcToStr(const t: tpOrigemProc): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_2);
+end;
+
+function eSStrToTpOrigemProc(var ok: boolean; const s: string): tpOrigemProc;
+begin
+  result := tpOrigemProc(StrToEnumerado2(ok , s, TGenericosString1_2));
+end;
+
+function eSTpRelDepToStr(const t: tpRelDep): string;
+begin
+  result := EnumeradoToStr2(t,['01', '02', '03', '04', '05', '06', '07', '99']);
+end;
+
+function eSStrToTpRelDep(var ok: boolean; const s: string): tpRelDep;
+begin
+  result := tpRelDep(StrToEnumerado2(ok , s, ['01', '02', '03', '04', '05', '06', '07', '99']));
+end;
+
+function eStpIndTpDeduToStr(const t: tpIndTpDedu): string;
+begin
+  result := EnumeradoToStr2(t,['2', '5']);
+end;
+
+function eSStrTotpIndTpDedu(var ok: boolean; const s: string): tpIndTpDedu;
+begin
+  result := tpIndTpDedu(StrToEnumerado2(ok , s, ['2', '5']));
 end;
 
 function IntToTpProf(codCateg : Integer): tpTpProf;

@@ -102,7 +102,7 @@ type
     property InfoExclusao: TInfoExclusao read FInfoExclusao write FInfoExclusao;
   end;
 
-  TInfoExclusao = class
+  TInfoExclusao = class(TObject)
   private
     FtpEvento: TTipoEvento;
     FnrRecEvt: string;
@@ -207,7 +207,7 @@ function TEvtExclusao.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtExclusao');

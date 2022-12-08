@@ -120,18 +120,24 @@ type
     FNrBeneficio: string;
     FInfoPerApur: TInfoPerApur;
     FInfoPerAnt: TInfoPerAnt;
+    FindRRA: tpSimNaoFacultativo;
+    FinfoRRA: TinfoRRA;
 
     function getInfoPerApur(): TInfoPerApur;
     function getInfoPerAnt(): TInfoPerAnt;
+    function getInfoRRA(): TInfoRRA;
   public
     constructor Create;
     destructor Destroy; override;
 
     function infoPerApurInst(): boolean;
     function infoPerAntInst(): boolean;
+    function infoRRAInst(): boolean;
 
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
     property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
+    property indRRA: tpSimNaoFacultativo read FindRRA write FindRRA;
+    property infoRRA: TinfoRRA read getInfoRRA write FinfoRRA;
     property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
     property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
   end;
@@ -269,13 +275,18 @@ end;
 constructor TDMDevCollectionItem.Create;
 begin
   inherited Create;
+
+  FinfoRRA        := nil;
 end;
 
 destructor TDMDevCollectionItem.Destroy;
 begin
+  if infoRRAInst() then
+    FreeAndNil(FinfoRRA);
 
   inherited;
 end;
+
 function TDMDevCollectionItem.getInfoPerApur: TInfoPerApur;
 begin
   if not (Assigned(FInfoPerApur)) then
@@ -298,6 +309,18 @@ end;
 function TDMDevCollectionItem.infoPerAntInst: boolean;
 begin
   Result := Assigned(FInfoPerAnt);
+end;
+
+function TDMDevCollectionItem.getInfoRRA: TInfoRRA;
+begin
+  if not(Assigned(FInfoRRA)) then
+    FInfoRRA := TInfoRRA.Create;
+  Result := FInfoRRA;
+end;
+
+function TDMDevCollectionItem.infoRRAInst: boolean;
+begin
+  Result := Assigned(FInfoRRA);
 end;
 
 { TEvtBenPrRP }
@@ -398,6 +421,17 @@ begin
 
     Gerador.wCampo(tcStr, '', 'ideDmDev',    1, 30, 1, dmDev[i].ideDmDev);
     Gerador.wCampo(tcStr, '', 'nrBeneficio', 1, 20, 1, dmDev[i].nrBeneficio);
+
+    if VersaoDF >= veS01_01_00 then
+    begin
+      if (dmDev[i].indRRA = snfSim) and (dmDev[i].infoRRAInst()) then
+      begin
+        Gerador.wCampo(tcStr, '', 'indRRA', 1,  1, 1, eSSimNaoFacultativoToStr(dmDev[i].indRRA));
+
+        if (dmDev[i].infoRRAInst()) then
+          GerarInfoRRA(dmDev[i].infoRRA);
+      end;
+    end;
 
     if (dmDev[i].infoPerApurInst()) then
       GerarInfoPerApur(dmDev[i].infoPerApur);

@@ -62,6 +62,7 @@ uses
 type
 
   TPgtoExt = class;
+  TInfoPgtoExt = class;
   TIdeBenef = class;
   TInfoPgtoCollection = class;
   TInfoPgtoItem = class;
@@ -115,6 +116,7 @@ type
     procedure GerarDetPgtoBenPr(pDetPgtoBenPr: TDetPgtoBenPr);
     procedure GerarDetPgtoFer(pDetPgtoFer: TDetPgtoFerCollection);
     procedure GeraridePgtoExt(objPgtoExt: TPgtoExt);
+    procedure GerarInfoPgtoExt(objInfoPgtoExt: TInfoPgtoExt);
     procedure GerarDeps(pDeps: TDeps);
     procedure GerarCamposRubricas(pRubrica: TRubricaCollectionItem);
     procedure GerarDetPgtoAnt(pDetPgtoAnt: TDetPgtoAntCollection);
@@ -177,12 +179,15 @@ type
     FDetPgtoFer  : TDetPgtoFerCollection;
     FDetPgtoAnt  : TDetPgtoAntCollection;
     FIdePgtoExt  : TPgtoExt;
+    FInfoPgtoExt : TInfoPgtoExt;
     FPerRef      : String;
     FIdeDmDev    : string;
     FVrLiq       : Double;
+    FPaisResidExt: string;
 
     function GetdetPgtoFl : TdetPgtoFlCollection;
     function GetIdePgtoExt : TPgtoExt;
+    function getInfoPgtoExt : TInfoPgtoExt;
     function getDetPgtoBenPr: TdetPgtoBenPr;
     function getDetPgtoFer: TDetPgtoFerCollection;
     function getDetPgtoAnt: TDetPgtoAntCollection;
@@ -192,6 +197,7 @@ type
 
     function detPgtoFlInst(): Boolean;
     function detidePgtoExtInst(): Boolean;
+    function InfoPgtoExtInst(): Boolean;
     function detPgtoBenPrInst(): Boolean;
     function detPgtoFerInst(): Boolean;
     function detPgtoAntInst(): Boolean;
@@ -204,9 +210,11 @@ type
     property detPgtoFer: TDetPgtoFerCollection read getDetPgtoFer write FDetPgtoFer;
     property detPgtoAnt: TDetPgtoAntCollection read getDetPgtoAnt write FDetPgtoAnt;
     property IdePgtoExt : TPgtoExt read GetIdePgtoExt write FIdePgtoExt;
+    property infoPgtoExt : TInfoPgtoExt read GetInfoPgtoExt write FInfoPgtoExt;
     property perRef: string read FPerRef write FPerRef;
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
     property vrLiq: Double read FVrLiq write FVrLiq;
+    property paisResidExt: string read FPaisResidExt write FPaisResidExt;
   end;
 
   TDetPgtoBenPr = class(TObject)
@@ -307,6 +315,22 @@ type
 
     property idePais: TIdePais read FIdePais write FIdePais;
     property endExt: TEndExt read FEndExt write FEndExt;
+  end;
+
+  TInfoPgtoExt = class(TObject)
+  private
+    FindNIF: tpIndNIF;
+    FnifBenef: string;
+    FfrmTribut: Integer;
+    FEndExtV110: TEndExtV110;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    property indNIF: tpIndNIF read FindNIF write FindNIF;
+    property nifBenef: string read FnifBenef write FnifBenef;
+    property frmTribut: Integer read FfrmTribut write FfrmTribut;
+    property endExt: TEndExtV110 read FEndExtV110 write FEndExtV110;
   end;
 
   TDetPgtoFerCollection = class(TACBrObjectList)
@@ -524,6 +548,7 @@ begin
   FdetPgtoBenPr := nil;
   FDetPgtoFer   := nil;
   FDetPgtoAnt   := nil;
+  FInfoPgtoExt  := nil;
 end;
 
 destructor TInfoPgtoItem.Destroy;
@@ -533,7 +558,7 @@ begin
   FreeAndNil(FdetPgtoBenPr);
   FreeAndNil(FDetPgtoFer);
   FreeAndNil(FDetPgtoAnt);
-
+  FreeAndNil(FInfoPgtoExt);
   inherited;
 end;
 
@@ -550,6 +575,11 @@ end;
 function TInfoPgtoItem.detidePgtoExtInst: Boolean;
 begin
   Result := Assigned(FidePgtoExt);
+end;
+
+function TInfoPgtoItem.InfoPgtoExtInst: Boolean;
+begin
+  Result := Assigned(FInfoPgtoExt);
 end;
 
 function TInfoPgtoItem.detPgtoFlInst: Boolean;
@@ -588,6 +618,13 @@ begin
   if not (Assigned(FIdePgtoExt)) then
     FIdePgtoExt := TPgtoExt.Create;
   Result := FIdePgtoExt;
+end;
+
+function TInfoPgtoItem.GetInfoPgtoExt: TInfoPgtoExt;
+begin
+  if not (Assigned(FInfoPgtoExt)) then
+    FInfoPgtoExt := TInfoPgtoExt.Create;
+  Result := FInfoPgtoExt;
 end;
 
 function TInfoPgtoItem.getDetPgtoFer: TDetPgtoFerCollection;
@@ -962,6 +999,33 @@ begin
   Gerador.wGrupo('/idePgtoExt');
 end;
 
+procedure TEvtPgtos.GerarInfoPgtoExt(objInfoPgtoExt: TInfoPgtoExt);
+begin
+  Gerador.wGrupo('infoPgtoExt');
+
+  Gerador.wCampo(tcStr, '', 'indNIF'      ,  1,  1,  1, eSIndNIFToStr(objInfoPgtoExt.indNIF));
+  Gerador.wCampo(tcStr, '', 'nifBenef'    ,  1, 30,  0, objInfoPgtoExt.nifBenef);
+  Gerador.wCampo(tcStr, '', 'frmTribut'   ,  1,  2,  1, objInfoPgtoExt.frmTribut);
+  
+  if objInfoPgtoExt.endExt.endDscLograd <> '' then
+  begin
+    Gerador.wGrupo('endExt');
+
+    Gerador.wCampo(tcStr, '', 'endDscLograd',  1, 80,  0, objInfoPgtoExt.endExt.endDscLograd);
+    Gerador.wCampo(tcStr, '', 'endNrLograd' ,  1, 10,  0, objInfoPgtoExt.endExt.endNrLograd);
+    Gerador.wCampo(tcStr, '', 'endComplem'  ,  1, 30,  0, objInfoPgtoExt.endExt.endComplem);
+    Gerador.wCampo(tcStr, '', 'endBairro'   ,  1, 60,  0, objInfoPgtoExt.endExt.endBairro);
+    Gerador.wCampo(tcStr, '', 'endCidade'   ,  1, 40,  0, objInfoPgtoExt.endExt.endCidade);
+    Gerador.wCampo(tcStr, '', 'endEstado'   ,  1, 40,  0, objInfoPgtoExt.endExt.endEstado);
+    Gerador.wCampo(tcStr, '', 'endCodPostal',  1, 12,  0, objInfoPgtoExt.endExt.endCodPostal);
+    Gerador.wCampo(tcStr, '', 'telef'       ,  1, 15,  0, objInfoPgtoExt.endExt.telef);
+    
+    Gerador.wGrupo('/endExt');
+  end;
+
+  Gerador.wGrupo('/infoPgtoExt');
+end;
+
 procedure TEvtPgtos.GerarDetPgtoBenPr(pDetPgtoBenPr: TDetPgtoBenPr);
 begin
   Gerador.wGrupo('detPgtoBenPr');
@@ -1053,7 +1117,7 @@ begin
 
     Gerador.wCampo(tcDat, '', 'dtPgto',   10, 10, 1, objInfoPgto.Items[i].dtPgto);
     Gerador.wCampo(tcStr, '', 'tpPgto',    1,  2, 1, eSTpTpPgtoToStr(objInfoPgto.Items[i].tpPgto));
-    
+
     if VersaoDF <= ve02_05_00 then
     begin
       Gerador.wCampo(tcStr, '', 'indResBr',  1,  1, 1, eSSimNaoToStr(objInfoPgto.Items[i].indResBr));
@@ -1061,16 +1125,16 @@ begin
       if (objInfoPgto.Items[i].tpPgto in [tpPgtoRemun1200, tpPgtoResc2299, tpPgtoResc2399, tpPgtoRemun1202]) then
         if (objInfoPgto.Items[i].detPgtoFlInst()) then
           GerardetPgtoFl(objInfoPgto.Items[i].detPgtoFl);
-     
+
       if objInfoPgto.Items[i].detPgtoBenPrInst() then
         GerarDetPgtoBenPr(objInfoPgto.Items[i].detPgtoBenPr);
-     
+
       if objInfoPgto.Items[i].detPgtoFerInst() then
         GerarDetPgtoFer(objInfoPgto.Items[i].detPgtoFer);
-     
+
       if objInfoPgto.Items[i].detPgtoAntInst() then
         GerarDetPgtoAnt(objInfoPgto.Items[i].detPgtoAnt);
-     
+
       if (objInfoPgto.Items[i].indResBr = tpNao) then
         if (objInfoPgto.Items[i].detidePgtoExtInst) then
           GeraridePgtoExt(objInfoPgto.Items[i].idePgtoExt);
@@ -1081,7 +1145,19 @@ begin
       Gerador.wCampo(tcStr, '', 'ideDmDev',  1, 30, 1, objInfoPgto.Items[i].ideDmDev);
       Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, objInfoPgto.items[i].vrLiq);
     end;
-    
+   
+    if VersaoDF >= veS01_01_00 then
+    begin   
+      if (StrToInt(objInfoPgto.Items[i].paisResidExt) > 0) and (StrToInt(objInfoPgto.Items[i].paisResidExt) > 105) and 
+         ((StrToInt(Copy(Self.ideEvento.perApur,1,4))*100)+StrToInt(Copy(Self.ideEvento.perApur,6,2)) >= 202303) then
+      begin
+        Gerador.wCampo(tcStr, '', 'paisResidExt',  1,  3, 1, objInfoPgto.Items[i].paisResidExt);
+
+        if (objInfoPgto.Items[i].InfoPgtoExtInst()) then
+          GerarInfoPgtoExt(objInfoPgto.Items[i].InfoPgtoExt);
+      end;
+    end;
+
     Gerador.wGrupo('/infoPgto');
   end;
 
@@ -1093,7 +1169,7 @@ function TEvtPgtos.GerarXML: Boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtPgtos');
@@ -1465,6 +1541,22 @@ begin
   finally
     INIRec.Free;
   end;
+end;
+
+{ TInfoPgtoExt }
+
+constructor TInfoPgtoExt.Create;
+begin
+  inherited Create;
+  
+  FEndExtV110 := TEndExtV110.Create;
+end;
+
+destructor TInfoPgtoExt.Destroy;
+begin
+  FreeAndNil(FEndExtV110);
+
+  inherited;
 end;
 
 end.

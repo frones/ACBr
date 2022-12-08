@@ -481,6 +481,7 @@ end;
   TinfoBasePerAntECollectionItem = class(TObject)
   private
     FperRef     : String;
+    FtpAcConv   : string;
     FbasePerAntE: TbasePerAntECollection;
 
     function getBasePerAntE(): TbasePerAntECollection;
@@ -491,6 +492,7 @@ end;
     function basePerAntEInst(): Boolean;
     
     property perRef     : String read FperRef write FperRef;
+    property tpAcConv   : string read FtpAcConv write FtpAcConv;
     property basePerAntE: TbasePerAntECollection read getbasePerAntE write FbasePerAntE;
   end;
   
@@ -615,7 +617,7 @@ begin
     // Capturar a versão do evento
     s := Copy(FXML, Pos('/evt/evtBasesFGTS/', FXML)+18, 16);
     s := Copy(s, 1, Pos('"', s)-1);
-    Self.VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
+    Self.VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00', 'v_S_01_01_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
 
     if leitor.rExtrai(1, 'evtBasesFGTS') <> '' then
     begin
@@ -726,8 +728,11 @@ begin
               infoFGTS.IdeEstab.Items[i].IdeLotacao.New;
               infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].codLotacao := leitor.rCampo(tcStr, 'codLotacao');
               infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao  := leitor.rCampo(tcStr, 'tpLotacao');
-              infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpInsc     := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
-              infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].nrInsc     := leitor.rCampo(tcStr, 'nrInsc');
+              if (StrToInt(InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao) in [2, 3, 4, 5, 6, 7, 8, 9]) then
+              begin
+                infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpInsc   := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+                infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].nrInsc   := leitor.rCampo(tcStr, 'nrInsc');
+              end;
 
               k := 0;
               while Leitor.rExtrai(5, 'infoTrabFGTS', '', k + 1) <> '' do
@@ -790,7 +795,7 @@ begin
                   begin
                     infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoTrabFGTS.Items[k].infoBaseFGTS.infoBasePerAntE.New;
                     infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoTrabFGTS.Items[k].infoBaseFGTS.infoBasePerAntE.Items[l].perRef := leitor.rCampo(tcStr, 'perRef');
-
+                    infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoTrabFGTS.Items[k].InfoBaseFGTS.InfoBasePerAntE.Items[l].tpAcConv := leitor.rCampo(tcStr, 'tpAcConv');
                     m := 0;
                     while Leitor.rExtrai(8, 'basePerAntE', '', m + 1) <> '' do
                     begin

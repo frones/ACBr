@@ -169,6 +169,17 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="T_ideEvento_exclusao_proc_trab">
+        <xs:annotation>
+            <xs:documentation>Informações de identificação do evento.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="tpAmb" type="TS_tpAmb" />
+            <xs:element name="procEmi" type="TS_procEmi" />
+            <xs:element name="verProc" type="TS_verProc" />
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="T_ideEvento_trab_jud">
         <xs:annotation>
             <xs:documentation>Informações de identificação do evento.</xs:documentation>
@@ -206,7 +217,6 @@
     <xs:complexType name="T_ideEvento_retorno_contrib">
         <xs:annotation>
             <xs:documentation>Identificação do evento de retorno.</xs:documentation>
-            <xs:documentation>DESCRICAO_COMPLETA:Identificação do evento de retorno.</xs:documentation>
             <xs:documentation>Evento de origem: S-1299.</xs:documentation>
             <xs:documentation>CHAVE_GRUPO: {indApuracao*}, {perApur*}</xs:documentation>
         </xs:annotation>
@@ -215,6 +225,21 @@
             <xs:element name="perApur" type="TS_perApur">
                 <xs:annotation>
                     <xs:documentation>Informar o mês/ano (formato AAAA-MM) de referência das informações, se {indApuracao}(./indApuracao) for igual a [1], ou apenas o ano (formato AAAA), se {indApuracao}(./indApuracao) for igual a [2].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="T_ideEvento_retorno_mensal">
+        <xs:annotation>
+            <xs:documentation>Identificação do evento de retorno.</xs:documentation>
+            <xs:documentation>Evento de origem: S-1299.</xs:documentation>
+            <xs:documentation>CHAVE_GRUPO: {perApur*}</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="perApur" type="TS_perApur_mensal">
+                <xs:annotation>
+                    <xs:documentation>Informar o mês/ano (formato AAAA-MM) de referência das informações.</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
@@ -309,6 +334,104 @@
             <xs:element name="dia" type="TS_dia" />
         </xs:sequence>
     </xs:complexType>
+
+    <!-- Grupo {infoRRA} -->
+
+    <xs:complexType name="T_infoRRA">
+        <xs:annotation>
+            <xs:documentation>Informações complementares de RRA.</xs:documentation>
+            <xs:documentation>DESCRICAO_COMPLETA:Informações complementares relativas a Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
+            <xs:documentation>CONDICAO_GRUPO: O (se {indRRA}(../indRRA) = [S]); N (nos demais casos)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="tpProcRRA" type="TS_tpProc_1_2" />
+            <xs:element name="nrProcRRA" minOccurs="0" type="TS_nrProc_17_20_21">
+                <xs:annotation>
+                    <xs:documentation>Informar o número do processo/requerimento administrativo/judicial.</xs:documentation>
+                    <xs:documentation>Validação: Informação obrigatória se {tpProcRRA}(./tpProcRRA) = [2] e opcional se {tpProcRRA}(./tpProcRRA) = [1]. Deve ser número de processo válido e:</xs:documentation>
+                    <xs:documentation>a) Se {tpProcRRA}(./tpProcRRA) = [1], deve possuir 17 (dezessete) ou 21 (vinte e um) algarismos;</xs:documentation>
+                    <xs:documentation>b) Se {tpProcRRA}(./tpProcRRA) = [2], deve possuir 20 (vinte) algarismos.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="descRRA">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Descrição dos Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1" />
+                        <xs:maxLength value="50" />
+                        <xs:pattern value=".*[^\s].*" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="qtdMesesRRA">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Número de meses relativo aos Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="4" />
+                        <xs:fractionDigits value="1" />
+                        <xs:minExclusive value="0" />
+                        <xs:maxInclusive value="999.9" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="despProcJud" minOccurs="0">
+                <xs:complexType>
+                    <xs:annotation>
+                        <xs:documentation>Despesas com processo judicial</xs:documentation>
+                        <xs:documentation>DESCRICAO_COMPLETA:Detalhamento das despesas com processo judicial.</xs:documentation>
+                        <xs:documentation>CONDICAO_GRUPO: OC</xs:documentation>
+                    </xs:annotation>
+                    <xs:sequence>
+                        <xs:element name="vlrDespCustas" type="TS_valorMonetario">
+                            <xs:annotation>
+                                <xs:documentation>Preencher com o valor das despesas com custas judiciais.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="vlrDespAdvogados" type="TS_valorMonetario">
+                            <xs:annotation>
+                                <xs:documentation>Preencher com o valor total das despesas com advogado(s).</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ideAdv" minOccurs="0" maxOccurs="99">
+                <xs:annotation>
+                    <xs:documentation>Identificação dos advogados.</xs:documentation>
+                    <xs:documentation>CHAVE_GRUPO: {tpInsc}, {nrInsc}</xs:documentation>
+                    <xs:documentation>CONDICAO_GRUPO: OC</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="tpInsc" type="TS_tpInsc_1_2">
+                            <xs:annotation>
+                                <xs:documentation>Preencher com o código correspondente ao tipo de inscrição, conforme Tabela 05.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="nrInsc" type="TS_nrInsc_11_14">
+                            <xs:annotation>
+                                <xs:documentation>Informar o número de inscrição do advogado.</xs:documentation>
+                                <xs:documentation>Validação: Deve ser um número de inscrição válido, de acordo com o tipo de inscrição indicado no campo {ideAdv/tpInsc}(./tpInsc), considerando as particularidades aplicadas à informação de CNPJ de órgão público em S-1000.</xs:documentation>
+                                <xs:documentation>Se {ideAdv/tpInsc}(./tpInsc) = [1], deve possuir 14 (catorze) algarismos e, no caso de declarante pessoa jurídica, ser diferente do CNPJ base do empregador (exceto se {ideEmpregador/nrInsc}(/ideEmpregador_nrInsc) tiver 14 (catorze) algarismos).</xs:documentation>
+                                <xs:documentation>Se {ideAdv/tpInsc}(./tpInsc) = [2], deve possuir 11 (onze) algarismos e, no caso de declarante pessoa física, ser diferente do CPF do empregador.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="vlrAdv" minOccurs="0" type="TS_valorMonetario">
+                            <xs:annotation>
+                                <xs:documentation>Valor da despesa com o advogado, se houver.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Grupo {itensRemun} (S-1202 e S-1207) -->
 
     <xs:complexType name="T_itensRemun_rpps">
         <xs:annotation>
@@ -574,36 +697,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="tmpParc">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Preencher com o código relativo ao tipo de contrato em tempo parcial.</xs:documentation>
-                        <xs:documentation>Validação: O código [1] só é válido se {codCateg}(../codCateg) = [104]. Os códigos [2, 3] não são válidos se {codCateg}(../codCateg) = [104].</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:byte">
-                        <xs:enumeration value="0">
-                            <xs:annotation>
-                                <xs:documentation>Não é contrato em tempo parcial</xs:documentation>
-                            </xs:annotation>
-                        </xs:enumeration>
-                        <xs:enumeration value="1">
-                            <xs:annotation>
-                                <xs:documentation>Limitado a 25 horas semanais</xs:documentation>
-                            </xs:annotation>
-                        </xs:enumeration>
-                        <xs:enumeration value="2">
-                            <xs:annotation>
-                                <xs:documentation>Limitado a 30 horas semanais</xs:documentation>
-                            </xs:annotation>
-                        </xs:enumeration>
-                        <xs:enumeration value="3">
-                            <xs:annotation>
-                                <xs:documentation>Limitado a 26 horas semanais</xs:documentation>
-                            </xs:annotation>
-                        </xs:enumeration>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="tmpParc" type="TS_tmpParc" />
             <xs:element name="horNoturno" minOccurs="0" type="TS_sim_nao">
                 <xs:annotation>
                     <xs:documentation>Indicar se a jornada semanal possui horário noturno (no todo ou em parte).</xs:documentation>
@@ -1588,7 +1682,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <!-- Campo {nrProcJud} -->
+    <!-- Campos {nrProcJud} e {nrProcTrab} -->
 
     <xs:simpleType name="TS_nrProcJud_1">
         <xs:annotation>
@@ -1609,6 +1703,15 @@
     <xs:simpleType name="TS_nrProcJud">
         <xs:restriction base="xs:string">
             <xs:length value="20" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TS_nrProcTrab">
+        <xs:annotation>
+            <xs:documentation>Número do processo trabalhista, da ata ou número de identificação da conciliação.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{15}|\d{20}" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -1955,6 +2058,23 @@
         </xs:annotation>
         <xs:restriction base="xs:date">
             <xs:minInclusive value="1890-01-01" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {indRRA} -->
+
+    <xs:simpleType name="TS_indRRA">
+        <xs:annotation>
+            <xs:documentation>Indicativo de Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
+            <xs:documentation>Somente preencher este campo se for um demonstrativo de RRA.</xs:documentation>
+            <xs:documentation>Validação: O campo apenas pode ser informado se {perApur}(/ideEvento_perApur) >= [2023-03] (se {indApuracao}(/ideEvento_indApuracao) = [1]) ou se {perApur}(/ideEvento_perApur) >= [2023] (se {indApuracao}(/ideEvento_indApuracao) = [2]).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="S">
+                <xs:annotation>
+                    <xs:documentation>Sim</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
 
@@ -3075,6 +3195,37 @@
         <xs:restriction base="TS_texto_255" />
     </xs:simpleType>
 
+    <!-- Campo {tmpParc} -->
+
+    <xs:simpleType name="TS_tmpParc">
+        <xs:annotation>
+            <xs:documentation>Preencher com o código relativo ao tipo de contrato em tempo parcial.</xs:documentation>
+            <xs:documentation>Validação: O código [1] só é válido se {codCateg}(../codCateg) = [104]. Os códigos [2, 3] não são válidos se {codCateg}(../codCateg) = [104].</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="0">
+                <xs:annotation>
+                    <xs:documentation>Não é contrato em tempo parcial</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Limitado a 25 horas semanais</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Limitado a 30 horas semanais</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Limitado a 26 horas semanais</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- Campo {codMotAfast} -->
 
     <xs:simpleType name="TS_codMotAfast">
@@ -3238,6 +3389,91 @@
             <xs:enumeration value="1">
                 <xs:annotation>
                     <xs:documentation>13° salário ({codIncCP}(1010_infoRubrica_inclusao_dadosRubrica_codIncCP) em S-1010 = [12, 14, 16, 22, 26, 32, 92, 94, 96, 98])</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {CRMen} -->
+
+    <xs:simpleType name="TS_CRMen">
+        <xs:annotation>
+            <xs:documentation>Código de Receita - CR relativo ao Imposto de Renda Retido na Fonte sobre rendimentos do trabalho.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="056107">
+                <xs:annotation>
+                    <xs:documentation>IRRF mensal, 13° salário e férias sobre trabalho assalariado no país ou ausente no exterior a serviço do país, exceto se contratado por empregador doméstico ou por segurado especial sujeito a recolhimento unificado</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056108">
+                <xs:annotation>
+                    <xs:documentation>IRRF mensal e férias - Empregado doméstico</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056109">
+                <xs:annotation>
+                    <xs:documentation>IRRF 13° salário na rescisão de contrato de trabalho - Empregado doméstico</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056110">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Empregado doméstico 13º salário</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056111">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Empregado/Trabalhador rural - Segurado especial</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056112">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Empregado/Trabalhador rural - Segurado especial 13° salário</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056113">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Empregado/Trabalhador rural - Segurado especial 13° salário rescisório</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="058806">
+                <xs:annotation>
+                    <xs:documentation>IRRF sobre rendimento do trabalho sem vínculo empregatício</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="061001">
+                <xs:annotation>
+                    <xs:documentation>IRRF sobre rendimentos relativos a prestação de serviços de transporte rodoviário internacional de carga, pagos a transportador autônomo PF residente no Paraguai</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="353301">
+                <xs:annotation>
+                    <xs:documentation>Proventos de aposentadoria, reserva, reforma ou pensão pagos por previdência pública</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="356201">
+                <xs:annotation>
+                    <xs:documentation>IRRF sobre participação dos trabalhadores em lucros ou resultados - PLR</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>                                                    
+            <xs:enumeration value="188901">
+                <xs:annotation>
+                    <xs:documentation>Rendimentos Recebidos Acumuladamente - RRA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {CRDia} -->
+
+    <xs:simpleType name="TS_CRDia">
+        <xs:annotation>
+            <xs:documentation>Código de Receita - CR relativo ao Imposto de Renda Retido na Fonte sobre rendimentos do trabalho pagos a residente no exterior para fins fiscais.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="047301">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Residentes no exterior, para fins fiscais</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>

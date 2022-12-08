@@ -72,6 +72,10 @@ type
   TinfoirCollectionItem = class;
   TidePgtoExt = class;
   TEvtIrrfBenef = class;
+  TtotApurMenCollection = class;
+  TtotApurMenCollectionItem = class;
+  TtotApurDiaCollection = class;
+  TtotApurDiaCollectionItem = class;
 
   TS5002 = class(TInterfacedObject, IEventoeSocial)
   private
@@ -160,40 +164,48 @@ type
 
   TdmDevCollectionItem = class(TObject)
   private
-    FperRef   : String;
-    FideDmDev : String;
-    FtpPgto   : Integer;
-    FdtPgto   : TDateTime;
-    FcodCateg : Integer;
-    FinfoIR   : TinfoIRCollection;
-    
+    FperRef    : String;
+    FideDmDev  : String;
+    FtpPgto    : Integer;
+    FdtPgto    : TDateTime;
+    FcodCateg  : Integer;
+    FinfoIR    : TinfoIRCollection;
+    FtotApurMen: TtotApurMenCollection;
+    FtotApurDia: TtotApurDiaCollection;
+
     function getInfoIR(): TInfoIRCollection;
+    function getTotApurMen(): TTotApurMenCollection;
+    function getTotApurDia(): TTotApurDiaCollection;
   public
     constructor Create;
     destructor Destroy; override;
 
     function infoIRInst(): Boolean;
-    
-    property perRef   : String read FperRef write FperRef;
-    property ideDmDev : String read FideDmDev write FideDmDev;
-    property tpPgto   : Integer read FtpPgto write FtpPgto;
-    property dtPgto   : TDateTime read FdtPgto write FdtPgto;
-    property codCateg : Integer read FcodCateg write FcodCateg;
-    property infoIR   : TInfoIRCollection read getInfoIR write FinfoIR;
+    function totApurMenInst(): Boolean;
+    function totApurDiaInst(): Boolean;
+
+    property perRef    : String read FperRef write FperRef;
+    property ideDmDev  : String read FideDmDev write FideDmDev;
+    property tpPgto    : Integer read FtpPgto write FtpPgto;
+    property dtPgto    : TDateTime read FdtPgto write FdtPgto;
+    property codCateg  : Integer read FcodCateg write FcodCateg;
+    property infoIR    : TInfoIRCollection read getInfoIR write FinfoIR;
+    property totApurMen: TtotApurMenCollection read getTotApurMen write FtotApurMen;
+    property totApurDia: TtotApurDiaCollection read getTotApurDia write FtotApurDia;
   end;
 
   TideTrabalhador4 = class(TIdeTrabalhador3)
   private
     FcpfBenef: string;
     FdmDev: TdmDevCollection;
-    
+
     function getDmDev: TDmDevCollection;
   public
     constructor Create;
     destructor Destroy; override;
 
     function dmDevInst(): boolean;
-    
+
     property cpfBenef: string read FcpfBenef write FcpfBenef;
     property dmDev: TdmDevCollection read getDmDev write FdmDev;
   end;
@@ -246,6 +258,48 @@ type
 
     property idePais: TidePais read FidePais write FidePais;
     property endExt: TendExt read FendExt write FendExt;
+  end;
+
+  TTotApurMenCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TTotApurMenCollectionItem;
+    procedure SetItem(Index: Integer; Value: TTotApurMenCollectionItem);
+  public
+    function New: TTotApurMenCollectionItem;
+    property Items[Index: Integer]: TTotApurMenCollectionItem read GetItem write SetItem;
+  end;
+
+  TTotApurMenCollectionItem = class
+  private
+   FCRMen: string;
+   FVlrCRMen: Double;
+   FVlrCRMenSusp: Double;
+  public
+   property CRMen: string read FCRMen;
+   property vlrCRMen: Double read FVlrCRMen;
+   property vlrCRMenSusp: Double read FVlrCRMenSusp;
+  end;
+
+  TTotApurDiaCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TTotApurDiaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TTotApurDiaCollectionItem);
+  public
+    function New: TTotApurDiaCollectionItem;
+    property Items[Index: Integer]: TTotApurDiaCollectionItem read GetItem write SetItem;
+  end;
+
+  TTotApurDiaCollectionItem = class
+  private
+   FPerApurDia: Integer;
+   FCRDia: string;
+   FVlrCRDia: Double;
+   FVlrCRDiaSusp: Double;
+  public
+   property perApurDia: Integer read FPerApurDia;
+   property CRDia: string read FCRDia;
+   property vlrCRDia: Double read FVlrCRDia;
+   property vlrCRDiaSusp: Double read FVlrCRDiaSusp;
   end;
 
   TEvtIrrfBenef = class(TObject)
@@ -429,15 +483,21 @@ end;
 constructor TDmDevCollectionItem.Create;
 begin
   inherited;
-  
-  FinfoIR := nil;
+
+  FinfoIR     := nil;
+  FtotApurMen := nil;
+  FtotApurDia := nil;
 end;
 
 destructor TDmDevCollectionItem.Destroy;
 begin
-  if Assigned(FinfoIR) then
+  if infoIRInst() then
     FreeAndNil(FinfoIR);
-    
+  if totApurMenInst() then
+    FreeAndNil(FtotApurMen);
+  if totApurDiaInst() then
+    FreeAndNil(FtotApurDia);
+
   inherited;
 end;
 
@@ -451,6 +511,30 @@ begin
   if not(Assigned(FinfoIR)) then
     FinfoIR := TinfoIRCollection.Create;
   Result := FinfoIR;
+end;
+
+function TDmDevCollectionItem.totApurMenInst(): Boolean;
+begin
+  Result := Assigned(FtotApurMen);
+end;
+
+function TDmDevCollectionItem.getTotApurMen: TtotApurMenCollection;
+begin
+  if not(Assigned(FtotApurMen)) then
+    FtotApurMen := TtotApurMenCollection.Create;
+  Result := FtotApurMen;
+end;
+
+function TDmDevCollectionItem.totApurDiaInst(): Boolean;
+begin
+  Result := Assigned(FtotApurDia);
+end;
+
+function TDmDevCollectionItem.getTotApurDia: TtotApurDiaCollection;
+begin
+  if not(Assigned(FtotApurDia)) then
+    FtotApurDia := TtotApurDiaCollection.Create;
+  Result := FtotApurDia;
 end;
 
 { TinfoIRCollection }
@@ -523,7 +607,7 @@ end;
 constructor TIdeTrabalhador4.Create;
 begin
  inherited Create;
- 
+
  FdmDev := nil;
 end;
 
@@ -531,7 +615,7 @@ destructor TIdeTrabalhador4.Destroy;
 begin
  if dmDevInst() = True then
    FreeAndNil(FdmDev);
- 
+
  inherited;
 end;
 
@@ -590,7 +674,8 @@ begin
     // Capturar a versão do evento
     s := Copy(FXML, Pos('/evt/evtIrrfBenef/', FXML)+18, 16);
     s := Copy(s, 1, Pos('"', s)-1);
-    Self.VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
+    Self.VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00','v_S_01_01_00'], 
+                                             [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
 
     if leitor.rExtrai(1, 'evtIrrfBenef') <> '' then
     begin
@@ -621,7 +706,7 @@ begin
       end;
 
       if VersaoDF <= ve02_05_00 then
-      begin      
+      begin
         if leitor.rExtrai(2, 'infoDep') <> '' then
           infoDep.FvrDedDep := leitor.rCampo(tcDe2, 'vrDedDep');
 
@@ -671,7 +756,7 @@ begin
           end;
 
           inc(i);
-        end;  
+        end;
       end
       else
       begin
@@ -691,6 +776,29 @@ begin
             IdeTrabalhador.DmDev.Items[i].infoIR.New;
             IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].FtpInfoIR := leitor.rCampo(tcInt, 'tpInfoIR');
             IdeTrabalhador.DmDev.Items[i].infoIR.Items[j].Fvalor    := leitor.rCampo(tcDe2, 'valor');
+
+            inc(j);
+          end;
+
+          j := 0;
+          while Leitor.rExtrai(3, 'totApurMen', '', j + 1) <> '' do
+          begin
+            IdeTrabalhador.DmDev.Items[i].totApurMen.New;
+            IdeTrabalhador.DmDev.Items[i].totApurMen.Items[j].FCRMen        := leitor.rCampo(tcStr, 'CRMen');
+            IdeTrabalhador.DmDev.Items[i].totApurMen.Items[j].FvlrCRMen     := leitor.rCampo(tcDe2, 'vlrCRMen');
+            IdeTrabalhador.DmDev.Items[i].totApurMen.Items[j].FvlrCRMenSusp := leitor.rCampo(tcDe2, 'vlrCRMenSusp');
+
+            inc(j);
+          end;
+
+          j := 0;
+          while Leitor.rExtrai(3, 'totApurDia', '', j + 1) <> '' do
+          begin
+            IdeTrabalhador.DmDev.Items[i].totApurDia.New;
+            IdeTrabalhador.DmDev.Items[i].totApurDia.Items[j].FperApurDia   := leitor.rCampo(tcInt, 'perApurDia');
+            IdeTrabalhador.DmDev.Items[i].totApurDia.Items[j].FCRDia        := leitor.rCampo(tcStr, 'CRDia');
+            IdeTrabalhador.DmDev.Items[i].totApurDia.Items[j].FvlrCRDia     := leitor.rCampo(tcDe2, 'vlrCRDia');
+            IdeTrabalhador.DmDev.Items[i].totApurDia.Items[j].FvlrCRDiaSusp := leitor.rCampo(tcDe2, 'vlrCRDiaSusp');
 
             inc(j);
           end;
@@ -782,6 +890,46 @@ end;
 function TbasesIrrfCollection.New: TbasesIrrfCollectionItem;
 begin
   Result := TbasesIrrfCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TTotApurMenCollection }
+
+function TTotApurMenCollection.GetItem(
+  Index: Integer): TTotApurMenCollectionItem;
+begin
+  Result := TTotApurMenCollectionItem(inherited Items[Index]);
+end;
+
+procedure TTotApurMenCollection.SetItem(Index: Integer;
+  Value: TTotApurMenCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TTotApurMenCollection.New: TTotApurMenCollectionItem;
+begin
+  Result := TTotApurMenCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TTotApurDiaCollection }
+
+function TTotApurDiaCollection.GetItem(
+  Index: Integer): TTotApurDiaCollectionItem;
+begin
+  Result := TTotApurDiaCollectionItem(inherited Items[Index]);
+end;
+
+procedure TTotApurDiaCollection.SetItem(Index: Integer;
+  Value: TTotApurDiaCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TTotApurDiaCollection.New: TTotApurDiaCollectionItem;
+begin
+  Result := TTotApurDiaCollectionItem.Create;
   Self.Add(Result);
 end;
 

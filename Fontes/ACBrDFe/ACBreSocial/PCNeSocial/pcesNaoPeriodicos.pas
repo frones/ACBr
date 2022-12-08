@@ -56,7 +56,8 @@ uses
   pcesS2240, pcesS2221, pcesS2205, pcesS2206, pcesS2210,
   pcesS2250, pcesS2260, pcesS2298, pcesS2299, pcesS2300,
   pcesS2306, pcesS2399, pcesS2400, pcesS3000, pcesS2245,
-  pcesS2405, pcesS2410, pcesS2416, pcesS2418, pcesS2420;
+  pcesS2405, pcesS2410, pcesS2416, pcesS2418, pcesS2420,
+  pcesS2500, pcesS2501, pcesS3500;
 
 type
 
@@ -86,7 +87,10 @@ type
     FS2416: TS2416Collection;
     FS2418: TS2418Collection;
     FS2420: TS2420Collection;
+    FS2500: TS2500Collection;
+    FS2501: TS2501Collection;
     FS3000: TS3000Collection;
+    FS3500: TS3500Collection;
 
     function GetCount: integer;
     procedure setS2190(const Value: TS2190Collection);
@@ -113,7 +117,10 @@ type
     procedure setS2416(const Value: TS2416Collection);
     procedure setS2418(const Value: TS2418Collection);
     procedure setS2420(const Value: TS2420Collection);
+    procedure setS2500(const Value: TS2500Collection);
+    procedure setS2501(const Value: TS2501Collection);
     procedure setS3000(const Value: TS3000Collection);
+    procedure setS3500(const Value: TS3500Collection);
 
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -153,8 +160,10 @@ type
     property S2416: TS2416Collection read FS2416 write setS2416;
     property S2418: TS2418Collection read FS2418 write setS2418;
     property S2420: TS2420Collection read FS2420 write setS2420;
+    property S2500: TS2500Collection read FS2500 write setS2500;
+    property S2501: TS2501Collection read FS2501 write setS2501;
     property S3000: TS3000Collection read FS3000 write setS3000;
-
+    property S3500: TS3500Collection read FS3500 write setS3500;
   end;
 
 implementation
@@ -192,7 +201,10 @@ begin
   FS2416.Clear;
   FS2418.Clear;
   FS2420.Clear;
+  FS2500.Clear;
+  FS2501.Clear;
   FS3000.Clear;
+  FS3500.Clear;
 end;
 
 constructor TNaoPeriodicos.Create(AOwner: TComponent);
@@ -223,7 +235,10 @@ begin
   FS2416 := TS2416Collection.Create(AOwner);
   FS2418 := TS2418Collection.Create(AOwner);
   FS2420 := TS2420Collection.Create(AOwner);
+  FS2500 := TS2500Collection.Create(AOwner);
+  FS2501 := TS2501Collection.Create(AOwner);
   FS3000 := TS3000Collection.Create(AOwner);
+  FS3500 := TS3500Collection.Create(AOwner);
 end;
 
 destructor TNaoPeriodicos.Destroy;
@@ -252,7 +267,10 @@ begin
   FS2416.Free;
   FS2418.Free;
   FS2420.Free;
+  FS2500.Free;
+  FS2501.Free;
   FS3000.Free;
+  FS3500.Free;
 
   inherited;
 end;
@@ -283,7 +301,10 @@ begin
             self.S2416.Count +
             self.S2418.Count +
             self.S2420.Count +
-            self.S3000.Count;
+            self.S2500.Count +
+            self.S2501.Count +
+            self.S3000.Count +
+            self.S3500.Count;
 end;
 
 procedure TNaoPeriodicos.Gerar;
@@ -362,8 +383,17 @@ begin
   for I := 0 to Self.S2420.Count - 1 do
     Self.S2420.Items[i].EvtCdBenTerm.GerarXML;
 
+  for I := 0 to Self.S2500.Count - 1 do
+    Self.S2500.Items[i].EvtProcTrab.GerarXML;
+
+  for I := 0 to Self.S2501.Count - 1 do
+    Self.S2501.Items[i].EvtContProc.GerarXML;
+
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.GerarXML;
+
+  for I := 0 to Self.S3500.Count - 1 do
+    Self.S3500.Items[i].EvtExcProcTrab.GerarXML;
 end;
 
 procedure TNaoPeriodicos.Assinar;
@@ -466,9 +496,21 @@ begin
     Self.S2420.Items[i].EvtCdBenTerm.XML :=
     Self.S2420.Items[i].EvtCdBenTerm.Assinar(Self.S2420.Items[i].EvtCdBenTerm.XML, 'evtCdBenTerm');
 
+  for I := 0 to Self.S2500.Count - 1 do
+    Self.S2500.Items[i].EvtProcTrab.XML :=
+    Self.S2500.Items[i].EvtProcTrab.Assinar(Self.S2500.Items[i].EvtProcTrab.XML, 'evtProcTrab');
+
+  for I := 0 to Self.S2501.Count - 1 do
+    Self.S2501.Items[i].EvtContProc.XML :=
+    Self.S2501.Items[i].EvtContProc.Assinar(Self.S2501.Items[i].EvtContProc.XML, 'evtContProc');
+
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.XML :=
     Self.S3000.Items[i].EvtExclusao.Assinar(Self.S3000.Items[i].EvtExclusao.XML, 'evtExclusao');
+
+  for I := 0 to Self.S3500.Count - 1 do
+    Self.S3500.Items[i].EvtExcProcTrab.XML :=
+    Self.S3500.Items[i].EvtExcProcTrab.Assinar(Self.S3500.Items[i].EvtExcProcTrab.XML, 'evtExcProcTrab');
 end;
 
 procedure TNaoPeriodicos.Validar;
@@ -547,8 +589,17 @@ begin
   for I := 0 to Self.S2420.Count - 1 do
     Self.S2420.Items[i].EvtCdBenTerm.Validar(schevtCdBenTerm);
 
+  for I := 0 to Self.S2500.Count - 1 do
+    Self.S2500.Items[i].EvtProcTrab.Validar(schevtProcTrab);
+
+  for I := 0 to Self.S2501.Count - 1 do
+    Self.S2501.Items[i].EvtContProc.Validar(schevtContProc);
+
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.Validar(schevtExclusao);
+
+  for I := 0 to Self.S3500.Count - 1 do
+    Self.S3500.Items[i].EvtExcProcTrab.Validar(schevtExcProcTrab);
 end;
 
 procedure TNaoPeriodicos.SaveToFiles;
@@ -943,6 +994,38 @@ begin
     end;
   end;
 
+  for I := 0 to Self.S2500.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.S2500.Items[i].EvtProcTrab.Id) + '-' +
+     TipoEventoToStr(Self.S2500.Items[i].TipoEvento) + '-' + IntToStr(i);
+
+    Self.S2500.Items[i].EvtProcTrab.SaveToFile(PathName);
+
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teS2500;
+      PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2500.Items[i].EvtProcTrab.Id);
+      XML := Self.S2500.Items[i].EvtProcTrab.XML;
+    end;
+  end;
+
+  for I := 0 to Self.S2501.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.S2501.Items[i].EvtContProc.Id) + '-' +
+     TipoEventoToStr(Self.S2501.Items[i].TipoEvento) + '-' + IntToStr(i);
+
+    Self.S2501.Items[i].EvtContProc.SaveToFile(PathName);
+
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teS2501;
+      PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2501.Items[i].EvtContProc.Id);
+      XML := Self.S2501.Items[i].EvtContProc.XML;
+    end;
+  end;
+
   for I := 0 to Self.S3000.Count - 1 do
   begin
     PathName := Path + OnlyNumber(Self.S3000.Items[i].EvtExclusao.Id) + '-' +
@@ -956,6 +1039,22 @@ begin
       PathNome := PathName;
       idEvento := OnlyNumber(Self.S3000.Items[i].EvtExclusao.Id);
       XML := Self.S3000.Items[i].EvtExclusao.XML;
+    end;
+  end;
+
+  for I := 0 to Self.S3500.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.S3500.Items[i].EvtExcProcTrab.Id) + '-' +
+     TipoEventoToStr(Self.S3500.Items[i].TipoEvento) + '-' + IntToStr(i);
+
+    Self.S3500.Items[i].EvtExcProcTrab.SaveToFile(PathName);
+
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teS3500;
+      PathNome := PathName;
+      idEvento := OnlyNumber(Self.S3500.Items[i].EvtExcProcTrab.Id);
+      XML := Self.S3500.Items[i].EvtExcProcTrab.XML;
     end;
   end;
 end;
@@ -1080,9 +1179,24 @@ begin
   FS2420.Assign(Value);
 end;
 
+procedure TNaoPeriodicos.setS2500(const Value: TS2500Collection);
+begin
+  FS2500.Assign(Value);
+end;
+
+procedure TNaoPeriodicos.setS2501(const Value: TS2501Collection);
+begin
+  FS2501.Assign(Value);
+end;
+
 procedure TNaoPeriodicos.setS3000(const Value: TS3000Collection);
 begin
   FS3000.Assign(Value);
+end;
+
+procedure TNaoPeriodicos.setS3500(const Value: TS3500Collection);
+begin
+  FS3500.Assign(Value);
 end;
 
 function TNaoPeriodicos.LoadFromString(const AXMLString: String): Boolean;
@@ -1138,7 +1252,10 @@ begin
     teS2416: Self.S2416.New.EvtCdBenAlt.XML := AXMLString;
     teS2418: Self.S2418.New.EvtReativBen.XML := AXMLString;
     teS2420: Self.S2420.New.EvtCdBenTerm.XML := AXMLString;
+    teS2500: Self.S2500.New.EvtProcTrab.XML := AXMLString;
+    teS2501: Self.S2501.New.EvtContProc.XML := AXMLString;
     teS3000: Self.S3000.New.EvtExclusao.XML := AXMLString;
+    teS3500: Self.S3500.New.EvtExcProcTrab.XML := AXMLString;
   end;
 
   Result := (GetCount > 0);
@@ -1176,7 +1293,10 @@ begin
     teS2416: Self.S2416.New.EvtCdBenAlt.LerArqIni(AIniString);
     teS2418: Self.S2418.New.EvtReativBen.LerArqIni(AIniString);
     teS2420: Self.S2420.New.EvtCdBenTerm.LerArqIni(AIniString);
+    teS2500: Self.S2500.New.EvtProcTrab.LerArqIni(AIniString);
+    teS2501: Self.S2501.New.EvtContProc.LerArqIni(AIniString);
     teS3000: Self.S3000.New.EvtExclusao.LerArqIni(AIniString);
+    teS3500: Self.S3500.New.EvtExcProcTrab.LerArqIni(AIniString);
   end;
 
   Result := (GetCount > 0);

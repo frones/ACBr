@@ -120,6 +120,7 @@ type
     FindConstr: Integer;
     FindSubstPatr: Integer;
     FpercRedContrib: Double;
+    FpercTransf: tpPercTransf;
     FinfoAtConc: TinfoAtConc;
   public
     constructor Create;
@@ -130,6 +131,7 @@ type
     property indSubstPatr: Integer read FindSubstPatr;
     property percRedContrib: Double read FpercRedContrib;
     property infoAtConc: TinfoAtConc read FinfoAtConc write FinfoAtConc;
+    property percTransf: tpPercTransf read FPercTransf write FPercTransf;
   end;
 
   TInfoContrib = class(TObject)
@@ -156,6 +158,7 @@ type
     FFap: Double;
     FAliqRatAjust: Double;
     FcnaePrep: String;
+    FcnpjResp: String;
     FAliqRat: tpAliqRat;
     FinfoComplObra: TInfoComplObra;
   public
@@ -163,6 +166,7 @@ type
     destructor Destroy; override;
 
     property cnaePrep: String read FcnaePrep;
+    property cnpjResp: String read FcnpjResp;
     property AliqRat: tpAliqRat read FAliqRat;
     property fap: Double read FFap;
     property aliqRatAjust: Double read FAliqRatAjust;
@@ -631,7 +635,7 @@ begin
     // Capturar a versão do evento
     s := Copy(FXML, Pos('/evt/evtCS/', FXML)+11, 16);
     s := Copy(s, 1, Pos('"', s)-1);
-    Self.VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
+    Self.VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00', 'v_S_01_01_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
 
     if leitor.rExtrai(1, 'evtCS') <> '' then
     begin
@@ -670,6 +674,7 @@ begin
             infoCS.InfoContrib.infoPJ.FindConstr      := leitor.rCampo(tcInt, 'indConstr');
             infoCS.InfoContrib.infoPJ.FindSubstPatr   := leitor.rCampo(tcInt, 'indSubstPatr');
             infoCS.InfoContrib.infoPJ.FpercRedContrib := leitor.rCampo(tcDe2, 'percRedContrib');
+            infoCS.InfoContrib.infoPJ.FPercTransf     := eSStrToTpPercTransf(ok, leitor.rCampo(tcStr, 'percTransf'));
 
             if leitor.rExtrai(5, 'infoAtConc') <> '' then
             begin
@@ -689,6 +694,7 @@ begin
           if leitor.rExtrai(4, 'infoEstab') <> '' then
           begin
             infoCS.ideEstab.Items[i].infoEstab.FcnaePrep     := leitor.rCampo(tcStr, 'cnaePrep');
+            infoCS.ideEstab.Items[i].infoEstab.FcnpjResp     := leitor.rCampo(tcStr, 'cnpjResp');
             infoCS.ideEstab.Items[i].infoEstab.FAliqRat      := eSStrToAliqRat(ok, leitor.rCampo(tcStr, 'AliqRat'));
             infoCS.ideEstab.Items[i].infoEstab.Ffap          := leitor.rCampo(tcDe4, 'fap');
             infoCS.ideEstab.Items[i].infoEstab.FaliqRatAjust := leitor.rCampo(tcDe4, 'aliqRatAjust');

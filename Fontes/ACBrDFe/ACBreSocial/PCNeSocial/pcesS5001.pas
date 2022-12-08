@@ -137,6 +137,7 @@ type
 
   TInfoCp = class(TObject)
   private
+    FClassTrib: tpClassTrib;
     FIdeEstabLot: TIdeEstabLotCollection;
 
     procedure SetIdeEstabLot(const Value: TIdeEstabLotCollection);
@@ -144,6 +145,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    property classTrib: tpClassTrib read FClassTrib write FClassTrib;
     property IdeEstabLot: TIdeEstabLotCollection read FIdeEstabLot write SetIdeEstabLot;
   end;
 
@@ -997,6 +999,8 @@ begin
       if leitor.rExtrai(2, 'infoCp') <> '' then
       begin
         i := 0;
+        infoCp.classTrib := StrTotpClassTrib(ok, leitor.rCampo(tcStr,'classTrib'));
+
         while Leitor.rExtrai(3, 'ideEstabLot', '', i + 1) <> '' do
         begin
           infoCp.IdeEstabLot.New;

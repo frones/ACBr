@@ -421,7 +421,7 @@ begin
       if leitor.rExtrai(2, 'ideEvento') <> '' then
       begin
         if VersaoDF >= veS01_00_00 then
-          IdeEvento.IndApuracao := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'IndApuracao'));
+          IdeEvento.indApuracao := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'indApuracao'));
         IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
       end;
 
@@ -478,7 +478,7 @@ begin
               InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].codLotacao := leitor.rCampo(tcStr, 'codLotacao');
               InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao  := leitor.rCampo(tcStr, 'tpLotacao');
 
-              if leitor.rCampo(tcStr, 'nrInsc') <> '' then
+              if (StrToInt(InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao) in [2, 3, 4, 5, 6, 7, 8, 9]) then
               begin
                 InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].TpInsc     := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
                 InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].NrInsc     := leitor.rCampo(tcStr, 'nrInsc');

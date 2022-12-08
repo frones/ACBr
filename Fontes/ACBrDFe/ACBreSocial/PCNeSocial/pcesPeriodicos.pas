@@ -52,9 +52,10 @@ interface
 uses
   SysUtils, Classes, synautil,
   pcesConversaoeSocial,
-  pcesS1200, pcesS1202, pcesS1207, pcesS1210,
-  pcesS1250, pcesS1260, pcesS1270, pcesS1280, pcesS1295,
-  pcesS1298, pcesS1299, pcesS1300;
+  pcesS1200, pcesS1202, pcesS1207, pcesS1210, 
+  pcesS1220, pcesS1250, pcesS1260, pcesS1270, 
+  pcesS1280, pcesS1295, pcesS1298, pcesS1299, 
+  pcesS1300;
 
 type
 
@@ -64,6 +65,7 @@ type
     FS1202: TS1202Collection;
     FS1207: TS1207Collection;
     FS1210: TS1210Collection;
+    FS1220: TS1220Collection;
     FS1250: TS1250Collection;
     FS1260: TS1260Collection;
     FS1270: TS1270Collection;
@@ -78,6 +80,7 @@ type
     procedure setS1202(const Value: TS1202Collection);
     procedure setS1207(const Value: TS1207Collection);
     procedure setS1210(const Value: TS1210Collection);
+    procedure setS1220(const Value: TS1220Collection);
     procedure setS1250(const Value: TS1250Collection);
     procedure setS1260(const Value: TS1260Collection);
     procedure setS1270(const Value: TS1270Collection);
@@ -105,6 +108,7 @@ type
     property S1202: TS1202Collection read FS1202 write setS1202;
     property S1207: TS1207Collection read FS1207 write setS1207;
     property S1210: TS1210Collection read FS1210 write setS1210;
+    property S1220: TS1220Collection read FS1220 write setS1220;
     property S1250: TS1250Collection read FS1250 write setS1250;
     property S1260: TS1260Collection read FS1260 write setS1260;
     property S1270: TS1270Collection read FS1270 write setS1270;
@@ -131,6 +135,7 @@ begin
   FS1202.Clear;
   FS1207.Clear;
   FS1210.Clear;
+  FS1220.Clear;
   FS1250.Clear;
   FS1260.Clear;
   FS1270.Clear;
@@ -149,6 +154,7 @@ begin
   FS1202 := TS1202Collection.Create(AOwner);
   FS1207 := TS1207Collection.Create(AOwner);
   FS1210 := TS1210Collection.Create(AOwner);
+  FS1220 := TS1220Collection.Create(AOwner);
   FS1250 := TS1250Collection.Create(AOwner);
   FS1260 := TS1260Collection.Create(AOwner);
   FS1270 := TS1270Collection.Create(AOwner);
@@ -165,6 +171,7 @@ begin
   FS1202.Free;
   FS1207.Free;
   FS1210.Free;
+  FS1220.Free;
   FS1250.Free;
   FS1260.Free;
   FS1270.Free;
@@ -183,6 +190,7 @@ begin
             self.S1202.Count +
             self.S1207.Count +
             self.S1210.Count +
+            self.S1220.Count +
             self.S1250.Count +
             self.S1260.Count +
             self.S1270.Count +
@@ -198,16 +206,19 @@ var
   i: Integer;
 begin
   for I := 0 to Self.S1200.Count - 1 do
-    Self.S1200.Items[i].evtRemun.GerarXML;
+    Self.S1200.Items[i].EvtRemun.GerarXML;
 
   for I := 0 to Self.S1202.Count - 1 do
     Self.S1202.Items[i].EvtRmnRPPS.GerarXML;
 
   for I := 0 to Self.S1207.Count - 1 do
-    Self.S1207.Items[i].evtBenPrRP.GerarXML;
+    Self.S1207.Items[i].EvtBenPrRP.GerarXML;
 
   for I := 0 to Self.S1210.Count - 1 do
-    Self.S1210.Items[i].evtPgtos.GerarXML;
+    Self.S1210.Items[i].EvtPgtos.GerarXML;
+
+  for I := 0 to Self.S1220.Count - 1 do
+    Self.S1220.Items[i].EvtInfoIR.GerarXML;
 
   for I := 0 to Self.S1250.Count - 1 do
     Self.S1250.Items[i].EvtAqProd.GerarXML;
@@ -222,7 +233,7 @@ begin
     Self.S1280.Items[i].EvtInfoComplPer.GerarXML;
 
   for I := 0 to Self.S1295.Count - 1 do
-    Self.S1295.Items[i].evtTotConting.GerarXML;
+    Self.S1295.Items[i].EvtTotConting.GerarXML;
 
   for I := 0 to Self.S1298.Count - 1 do
     Self.S1298.Items[i].EvtReabreEvPer.GerarXML;
@@ -253,6 +264,10 @@ begin
   for I := 0 to Self.S1210.Count - 1 do
     Self.S1210.Items[i].evtPgtos.XML :=
     Self.S1210.Items[i].evtPgtos.Assinar(Self.S1210.Items[i].evtPgtos.XML, 'evtPgtos');
+
+  for I := 0 to Self.S1220.Count - 1 do
+    Self.S1220.Items[i].EvtInfoIR.XML :=
+    Self.S1220.Items[i].EvtInfoIR.Assinar(Self.S1220.Items[i].EvtInfoIR.XML, 'evtInfoIR');
 
   for I := 0 to Self.S1250.Count - 1 do
     Self.S1250.Items[i].EvtAqProd.XML :=
@@ -302,6 +317,9 @@ begin
 
   for I := 0 to Self.S1210.Count - 1 do
     Self.S1210.Items[i].evtPgtos.Validar(schevtPgtos);
+
+  for I := 0 to Self.S1220.Count - 1 do
+    Self.S1220.Items[i].EvtInfoIR.Validar(schevtInfoIR);
 
   for I := 0 to Self.S1250.Count - 1 do
     Self.S1250.Items[i].EvtAqProd.Validar(schevtAqProd);
@@ -397,6 +415,22 @@ begin
       PathNome := PathName;
       idEvento := OnlyNumber(Self.S1210.Items[i].evtPgtos.Id);
       XML := Self.S1210.Items[i].evtPgtos.XML;
+    end;
+  end;
+
+  for I := 0 to Self.S1220.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.S1220.Items[i].evtInfoIR.Id) + '-' +
+     TipoEventoToStr(Self.S1220.Items[i].TipoEvento) + '-' + IntToStr(i);
+
+    Self.S1220.Items[i].evtInfoIR.SaveToFile(PathName);
+
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teS1220;
+      PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1220.Items[i].evtInfoIR.Id);
+      XML := Self.S1220.Items[i].evtInfoIR.XML;
     end;
   end;
 
@@ -549,6 +583,11 @@ begin
   FS1210.Assign(Value);
 end;
 
+procedure TPeriodicos.setS1220(const Value: TS1220Collection);
+begin
+  FS1220.Assign(Value);
+end;
+
 procedure TPeriodicos.setS1250(const Value: TS1250Collection);
 begin
   FS1250.Assign(Value);
@@ -597,15 +636,16 @@ begin
   typVersaoDF := TACBreSocial(Self.Owner).Configuracoes.Geral.VersaoDF;
 
   case StringXMLToTipoEvento(Ok, AXMLString, typVersaoDF) of
-    teS1200: Self.S1200.New.evtRemun.XML := AXMLString;
+    teS1200: Self.S1200.New.EvtRemun.XML := AXMLString;
     teS1202: Self.S1202.New.EvtRmnRPPS.XML := AXMLString;
-    teS1207: Self.S1207.New.evtBenPrRP.XML := AXMLString;
-    teS1210: Self.S1210.New.evtPgtos.XML := AXMLString;
+    teS1207: Self.S1207.New.EvtBenPrRP.XML := AXMLString;
+    teS1210: Self.S1210.New.EvtPgtos.XML := AXMLString;
+    teS1220: Self.S1220.New.EvtInfoIR.XML := AXMLString;
     teS1250: Self.S1250.New.EvtAqProd.XML := AXMLString;
     teS1260: Self.S1260.New.EvtComProd.XML := AXMLString;
     teS1270: Self.S1270.New.EvtContratAvNP.XML := AXMLString;
     teS1280: Self.S1280.New.EvtInfoComplPer.XML := AXMLString;
-    teS1295: Self.S1295.New.evtTotConting.XML := AXMLString;
+    teS1295: Self.S1295.New.EvtTotConting.XML := AXMLString;
     teS1298: Self.S1298.New.EvtReabreEvPer.XML := AXMLString;
     teS1299: Self.S1299.New.EvtFechaEvPer.XML := AXMLString;
     teS1300: Self.S1300.New.EvtContrSindPatr.XML := AXMLString;
@@ -626,6 +666,7 @@ begin
     teS1202: Self.S1202.New.EvtRmnRPPS.LerArqIni(AIniString);
     teS1207: Self.S1207.New.evtBenPrRP.LerArqIni(AIniString);
     teS1210: Self.S1210.New.evtPgtos.LerArqIni(AIniString);
+    teS1220: Self.S1220.New.EvtInfoIR.LerArqIni(AIniString);
     teS1250: Self.S1250.New.EvtAqProd.LerArqIni(AIniString);
     teS1260: Self.S1260.New.EvtComProd.LerArqIni(AIniString);
     teS1270: Self.S1270.New.EvtContratAvNP.LerArqIni(AIniString);
@@ -640,4 +681,3 @@ begin
 end;
 
 end.
-

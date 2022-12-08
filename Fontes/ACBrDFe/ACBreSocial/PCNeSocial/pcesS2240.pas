@@ -184,6 +184,7 @@ type
     property agNoc: TagNocCollection read FFatRisco write FFatRisco;
     property respReg: TRespRegCollection read getRespReg write FRespReg;
     property obs: TObs read FObs write FObs;
+    property dtFimCondicao: TDateTime read FdtFimCondicao write FdtFimCondicao;
   end;
 
   TInfoAmbCollection = class(TACBrObjectList)
@@ -424,8 +425,9 @@ begin
       Gerador.wCampo(tcStr, '', 'docAval',       1, 255, 0, objEPI[i].docAval);
       
     Gerador.wCampo(tcStr, '', 'dscEPI',          1, 999, 0, objEPI[i].dscEPI);
-    //Gerador.wCampo(tcStr, '', 'eficEpi',         1,   1, 1, eSSimNaoToStr(objEPI[i].eficEpi));
-    
+{    
+    Gerador.wCampo(tcStr, '', 'eficEpi',         1,   1, 1, eSSimNaoToStr(objEPI[i].eficEpi));
+}    
     if VersaoDF <= ve02_05_00 then
     begin
       Gerador.wCampo(tcStr, '', 'medProtecao',   1,   1, 1, eSSimNaoToStr(objEPI[i].medProtecao));
@@ -490,16 +492,16 @@ begin
   begin
     Gerador.wGrupo('agNoc');
 
-    Gerador.wCampo(tcStr, '', 'codAgNoc',      1, 10, 1, objFatRisco.Items[i].codAgNoc);
-    Gerador.wCampo(tcStr, '', 'dscAgNoc',      1, 10, 0, objFatRisco.Items[i].dscAgNoc);
+    Gerador.wCampo(tcStr, '', 'codAgNoc',     1,  10, 1, objFatRisco.Items[i].codAgNoc);
+    Gerador.wCampo(tcStr, '', 'dscAgNoc',     1, 100, 0, objFatRisco.Items[i].dscAgNoc);
 
     if objFatRisco.Items[i].codAgNoc <> '09.01.001' then
-      Gerador.wCampo(tcStr, '', 'tpAval',         1,  1, 1, tpAvalToStr(objFatRisco.Items[i].tpAval));
+      Gerador.wCampo(tcStr, '', 'tpAval',     1,   1, 1, tpAvalToStr(objFatRisco.Items[i].tpAval));
 
-    Gerador.wCampo(tcDe4, '', 'intConc',        1, 10, 0, objFatRisco.Items[i].intConc);
-    Gerador.wCampo(tcDe4, '', 'limTol',         1, 10, 0, objFatRisco.Items[i].limTol);
-    Gerador.wCampo(tcInt, '', 'unMed',          1,  2, 0, objFatRisco.Items[i].unMed);
-    Gerador.wCampo(tcStr, '', 'tecMedicao',     1, 40, 0, objFatRisco.Items[i].tecMedicao);
+    Gerador.wCampo(tcDe4, '', 'intConc',      1,  10, 0, objFatRisco.Items[i].intConc);
+    Gerador.wCampo(tcDe4, '', 'limTol',       1,  10, 0, objFatRisco.Items[i].limTol);
+    Gerador.wCampo(tcInt, '', 'unMed',        1,   2, 0, objFatRisco.Items[i].unMed);
+    Gerador.wCampo(tcStr, '', 'tecMedicao',   1,  40, 0, objFatRisco.Items[i].tecMedicao);
 
     if (objFatRisco.Items[i].epcEpiInst()) and (objFatRisco.Items[i].codAgNoc <> '09.01.001') then
       GerarEpcEpi(objFatRisco.Items[i].epcEpi);
@@ -586,8 +588,8 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtIniCondicao',   10, 10, 1, objInfoExpRisco.dtIniCondicao);
 
-  if ((objInfoExpRisco.dtIniCondicao >= StringToDateTime('16/01/2022')) and (objInfoExpRisco.dtFimCondicao > 0)) then
-    Gerador.wCampo(tcDat, '', 'dtFimCondicao',   10, 10, 1, objInfoExpRisco.dtFimCondicao);
+  if ((objInfoExpRisco.dtIniCondicao >= StringToDateTime('16/01/2022')) and (DateToStr(objInfoExpRisco.dtFimCondicao) <> dDataBrancoNula)) then
+    Gerador.wCampo(tcDat, '', 'dtFimCondicao', 10, 10, 1, objInfoExpRisco.dtFimCondicao);
 
   GerarInfoAmb(objInfoExpRisco.InfoAmb);
   GerarInfoAtiv(objInfoExpRisco.infoAtiv);
@@ -882,6 +884,7 @@ begin
       if INIRec.ReadString(sSecao, 'dtIniCondicao', '') <> '' then
       begin
         infoExpRisco.dtIniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
+        infoExpRisco.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
 
         if ((infoExpRisco.dtIniCondicao >= StringToDateTime('16/01/2022')) and (infoExpRisco.dtFimCondicao > 0)) then
           infoExpRisco.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
@@ -1076,6 +1079,7 @@ begin
         with Self.infoExpRisco do
         begin
           dtIniCondicao := Leitor.rCampo(tcDat, 'dtIniCondicao');
+          dtFimCondicao := Leitor.rCampo(tcDat, 'dtFimCondicao');
 
           if ((dtIniCondicao >= StringToDateTime('16/01/2022')) and (dtFimCondicao > 0)) then
             dtFimCondicao := Leitor.rCampo(tcDat, 'dtFimCondicao');
@@ -1115,7 +1119,7 @@ begin
                   eficEpi   := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'eficEpi'));
                   
                   j := 0;
-                  while Leitor.rExtrai(4, 'epi', '', j + 1) <> '' do
+                  while Leitor.rExtrai(5, 'epi', '', j + 1) <> '' do
                   begin
                     with epi.New do
                     begin
@@ -1125,8 +1129,8 @@ begin
 
                     Inc(j);
                   end;
-                  
-                  if Leitor.rExtrai(4, 'epiCompl') <> '' then
+
+                  if Leitor.rExtrai(5, 'epiCompl') <> '' then
                     with epiCompl do
                     begin
                       medProtecao   := eSStrToSimNaoFacultativo(ok, Leitor.rCampo(tcStr, 'medProtecao'));

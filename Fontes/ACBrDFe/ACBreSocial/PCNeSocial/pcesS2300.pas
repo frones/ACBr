@@ -446,11 +446,12 @@ begin
     GerarFGTS(obj.FGTS);
     GerarinfoDirSind(obj.infoDirSind);
     GerarinfoTrabCedido(obj.infoTrabCedido);
-    GerarinfoEstagiario(obj.infoEstagiario);
     
     if VersaoDF > ve02_05_00 then
       GerarInfoMandElet(obj.infoMandElet);
       
+    GerarinfoEstagiario(obj.infoEstagiario);
+
     Gerador.wGrupo('/infoComplementares');
   end;
 end;

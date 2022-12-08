@@ -69,7 +69,6 @@ type
   TInfoProcesso = class;
   TIdeProcesso = class;
 
-
   TS1070Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1070CollectionItem;
@@ -408,9 +407,7 @@ procedure TEvtTabProcesso.GerarDadosProc;
 begin
   Gerador.wGrupo('dadosProc');
 
-  if self.InfoProcesso.ideProcesso.tpProc = tpJudicial then
-    Gerador.wCampo(tcInt, '', 'indAutoria', 1, 1, 1, eSindAutoriaToStr(InfoProcesso.dadosProc.indAutoria));
-
+  Gerador.wCampo(tcInt, '', 'indAutoria', 1, 1, 1, eSindAutoriaToStr(InfoProcesso.dadosProc.indAutoria));
   Gerador.wCampo(tcInt, '', 'indMatProc', 1, 2, 1, eSTpIndMatProcToStr(InfoProcesso.dadosProc.indMatProc));
 
   if VersaoDF >= ve02_04_02 then

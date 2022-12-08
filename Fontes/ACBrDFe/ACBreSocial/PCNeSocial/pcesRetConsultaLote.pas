@@ -57,7 +57,8 @@ uses
   {$IfEnd}
   ACBrBase, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
-  pcesS5001, pcesS5002, pcesS5011, pcesS5012, pcesS5003, pcesS5013;
+  pcesS5001, pcesS5002, pcesS5011, pcesS5012, pcesS5003, 
+  pcesS5013, pcesS5501;
 
 type
   TtotCollectionItem = class;
@@ -519,6 +520,12 @@ begin
             if RetEventos.Items[i].tot.Items[j].tipo = 'S5013' then
             begin
               RetEventos.Items[i].tot.Items[j].Evento := TS5013.Create;
+              RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
+            end;
+
+            if RetEventos.Items[i].tot.Items[j].tipo = 'S5501' then
+            begin
+              RetEventos.Items[i].tot.Items[j].Evento := TS5501.Create;
               RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
             end;
 

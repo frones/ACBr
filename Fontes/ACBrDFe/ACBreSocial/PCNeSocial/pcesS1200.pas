@@ -67,7 +67,6 @@ uses
 	pcesGerador;
 
 type
-
   TRemunPer1200Collection = class;
   TRemunPer1200CollectionItem = class;
   TIdeEstabLotCollectionS1200 = class;
@@ -127,6 +126,8 @@ type
   private
     FIdeDmDev: string;
     FCodCateg: integer;
+    FindRRA: tpSimNaoFacultativo;
+    FinfoRRA: TinfoRRA;
     FInfoPerApur: TInfoPerApur;
     FInfoPerAnt: TInfoPerAnt;
     FinfoTrabInterm: TinfoTrabIntermCollection;
@@ -135,6 +136,7 @@ type
     function getInfoPerApur: TInfoPerApur;
     function getInfoPerAnt: TInfoPerAnt;
     function getInfoComplCont: TInfoComplCont;
+    function getInfoRRA: TInfoRRA;
   public
     constructor Create;
     destructor Destroy; override;
@@ -143,8 +145,12 @@ type
     function infoPerAntInst(): boolean;
     function infoComplContInst(): boolean;
     function infoTrabIntermInst(): boolean;
+    function infoRRAInst(): boolean;
+
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
     property codCateg: integer read FCodCateg write FCodCateg;
+    property indRRA: tpSimNaoFacultativo read FindRRA write FindRRA;
+    property infoRRA: TinfoRRA read getInfoRRA write FinfoRRA;
     property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
     property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
     property infoTrabInterm: TinfoTrabIntermCollection read FinfoTrabInterm write FinfoTrabInterm;
@@ -174,6 +180,7 @@ type
     procedure GerarInfoTrabInterm(pInfoTrabInterm: TInfoTrabIntermCollection);
     procedure GerarInfoInterm(obj: TinfoIntermCollection);
     procedure GerarInfoComplCont(pInfoComplCont: TInfoComplCont);
+
   public
     constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
@@ -776,10 +783,12 @@ end;
 constructor TDMDevCollectionItemS1200.Create;
 begin
   inherited Create;
+
   FinfoTrabInterm := TinfoTrabIntermCollection.Create;
   FInfoPerApur    := nil;
   FInfoPerAnt     := nil;
   FinfoComplCont  := nil;
+  FinfoRRA        := nil;
 end;
 
 destructor TDMDevCollectionItemS1200.Destroy;
@@ -788,6 +797,9 @@ begin
   FreeAndNil(FInfoPerAnt);
   FreeAndNil(FinfoComplCont);
   FinfoTrabInterm.Free;
+
+  if infoRRAInst() then
+    FreeAndNil(FinfoRRA);
 
   inherited;
 end;
@@ -831,6 +843,18 @@ end;
 function TDMDevCollectionItemS1200.infoPerAntInst: boolean;
 begin
   Result := Assigned(FInfoPerAnt);
+end;
+
+function TDMDevCollectionItemS1200.getInfoRRA: TInfoRRA;
+begin
+  if not(Assigned(FInfoRRA)) then
+    FInfoRRA := TInfoRRA.Create;
+  Result := FInfoRRA;
+end;
+
+function TDMDevCollectionItemS1200.infoRRAInst: boolean;
+begin
+  Result := Assigned(FInfoRRA);
 end;
 
 { TEvtRemun }
@@ -950,7 +974,7 @@ begin
   Gerador.wGrupo('ideTrabalhador');
 
   Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, ideTrabalhador.cpfTrab);
-  
+
   if VersaoDF <= ve02_05_00 then
     Gerador.wCampo(tcStr, '', 'nisTrab',  1, 11, 0, ideTrabalhador.nisTrab);
 
@@ -1039,6 +1063,17 @@ begin
     Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, dmDev[i].ideDmDev);
     Gerador.wCampo(tcInt, '', 'codCateg', 1,  3, 1, dmDev[i].codCateg);
 
+    if VersaoDF >= veS01_01_00 then
+    begin
+      if (dmDev[i].indRRA = snfSim) and (dmDev[i].infoRRAInst()) then
+      begin
+        Gerador.wCampo(tcStr, '', 'indRRA', 1,  1, 1, eSSimNaoFacultativoToStr(dmDev[i].indRRA));
+
+        if (dmDev[i].infoRRAInst()) then
+          GerarInfoRRA(dmDev[i].infoRRA);
+      end;
+    end;
+
     if (dmDev[i].infoPerApurInst()) then
       GerarInfoPerApur(dmDev[i].infoPerApur);
 
@@ -1124,7 +1159,7 @@ function TEvtRemun.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtRemun');
@@ -1177,7 +1212,7 @@ begin
 
     if obj.Count > 31 then
       Gerador.wAlerta('', 'infoInterm', 'Informações relativas ao trabalho intermitente', ERR_MSG_MAIOR_MAXIMO + '31');
-  end;   
+  end;
 end;
 
 procedure TEvtRemun.GerarInfoComplCont(pInfoComplCont: TInfoComplCont);

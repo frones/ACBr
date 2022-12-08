@@ -125,17 +125,23 @@ type
     FCodCateg: integer;
     FInfoPerApur: TInfoPerApur;
     FInfoPerAnt: TInfoPerAnt;
+    FindRRA: tpSimNaoFacultativo;
+    FinfoRRA: TinfoRRA;
 
     function getInfoPerApur(): TInfoPerApur;
     function getInfoPerAnt(): TInfoPerAnt;
+    function getInfoRRA(): TInfoRRA;
   public
     constructor Create;
     destructor Destroy; override;
 
     function infoPerApurInst(): boolean;
     function infoPerAntInst(): boolean;
+    function infoRRAInst(): boolean;
 
     property codCateg: integer read FCodCateg write FCodCateg;
+    property indRRA: tpSimNaoFacultativo read FindRRA write FindRRA;
+    property infoRRA: TinfoRRA read getInfoRRA write FinfoRRA;
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
     property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
     property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
@@ -526,12 +532,14 @@ begin
   inherited Create;
   FInfoPerApur := nil;
   FInfoPerAnt  := nil;
+  FInfoRRA     := nil;
 end;
 
 destructor TDMDevCollectionItem.Destroy;
 begin
   FreeAndNil(FInfoPerApur);
   FreeAndNil(FInfoPerAnt);
+  FreeAndNil(FInfoRRA);
 
   inherited;
 end;
@@ -558,6 +566,18 @@ end;
 function TDMDevCollectionItem.infoPerAntInst: boolean;
 begin
   Result := Assigned(FInfoPerAnt);
+end;
+
+function TDMDevCollectionItem.getInfoRRA: TInfoRRA;
+begin
+  if not(Assigned(FInfoRRA)) then
+    FInfoRRA := TInfoRRA.Create;
+  Result := FInfoRRA;
+end;
+
+function TDMDevCollectionItem.infoRRAInst: boolean;
+begin
+  Result := Assigned(FInfoRRA);
 end;
 
 { TEvtRmnRPPS }
@@ -683,6 +703,17 @@ begin
     Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, dmDev[i].ideDmDev);
     Gerador.wCampo(tcInt, '', 'codCateg', 1,  3, 1, dmDev[i].codCateg);
 
+    if VersaoDF >= veS01_01_00 then
+    begin
+      if (dmDev[i].indRRA = snfSim) and (dmDev[i].infoRRAInst()) then
+      begin
+        Gerador.wCampo(tcStr, '', 'indRRA', 1,  1, 1, eSSimNaoFacultativoToStr(dmDev[i].indRRA));
+
+        if (dmDev[i].infoRRAInst()) then
+          GerarInfoRRA(dmDev[i].infoRRA);
+      end;
+    end;
+    
     if (dmDev[i].infoPerApurInst()) then
       GerarInfoPerApur(dmDev[i].infoPerApur);
 

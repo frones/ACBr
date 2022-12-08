@@ -259,24 +259,36 @@ begin
   {S2420}
   for i := 0 to FEventos.NaoPeriodicos.S2420.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2420[i].EvtCdBenTerm.XML);
+  {S2500}
+  for i := 0 to FEventos.NaoPeriodicos.S2500.Count - 1 do
+    LoadFromString(FEventos.NaoPeriodicos.S2500[i].EvtProcTrab.XML);
+  {S2501}
+  for i := 0 to FEventos.NaoPeriodicos.S2501.Count - 1 do
+    LoadFromString(FEventos.NaoPeriodicos.S2501[i].EvtContProc.XML);
   {S3000}
   for i := 0 to FEventos.NaoPeriodicos.S3000.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S3000[i].EvtExclusao.XML);
+  {S3500}
+  for i := 0 to FEventos.NaoPeriodicos.S3500.Count - 1 do
+    LoadFromString(FEventos.NaoPeriodicos.S3500[i].EvtExcProcTrab.XML);
 {NaoPeriodicos}
 
 {Periodicos}
   {S1200}
   for i := 0 to FEventos.Periodicos.S1200.Count - 1 do
-    LoadFromString(FEventos.Periodicos.S1200[i].evtRemun.XML);
+    LoadFromString(FEventos.Periodicos.S1200[i].EvtRemun.XML);
   {S1202}
   for i := 0 to FEventos.Periodicos.S1202.Count - 1 do
-    LoadFromString(FEventos.Periodicos.S1202[i].evtRmnRPPS.XML);
+    LoadFromString(FEventos.Periodicos.S1202[i].EvtRmnRPPS.XML);
   {S1207}
   for i := 0 to FEventos.Periodicos.S1207.Count - 1 do
-    LoadFromString(FEventos.Periodicos.S1207[i].evtBenPrRP.XML);
+    LoadFromString(FEventos.Periodicos.S1207[i].EvtBenPrRP.XML);
   {S1210}
   for i := 0 to FEventos.Periodicos.S1210.Count - 1 do
-    LoadFromString(FEventos.Periodicos.S1210[i].evtPgtos.XML);
+    LoadFromString(FEventos.Periodicos.S1210[i].EvtPgtos.XML);
+  {S1220}
+  for i := 0 to FEventos.Periodicos.S1220.Count - 1 do
+    LoadFromString(FEventos.Periodicos.S1220[i].EvtInfoIR.XML);
   {S1250}
   for i := 0 to FEventos.Periodicos.S1250.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1250[i].EvtAqProd.XML);
@@ -291,7 +303,7 @@ begin
     LoadFromString(FEventos.Periodicos.S1280[i].EvtInfoComplPer.XML);
   {S1295}
   for i := 0 to FEventos.Periodicos.S1295.Count - 1 do
-    LoadFromString(FEventos.Periodicos.S1295[i].evtTotConting.XML);
+    LoadFromString(FEventos.Periodicos.S1295[i].EvtTotConting.XML);
   {S1298}
   for i := 0 to FEventos.Periodicos.S1298.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1298[i].EvtReabreEvPer.XML);

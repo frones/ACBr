@@ -141,6 +141,8 @@ type
     FAgenteCausador: TAgenteCausadorCollection;
     FAtestado: TAtestado;
     FCatOrigem: TCatOrigem;
+    FUltDiaTrab: TDateTime;
+    FHouveAfast: tpSimNao;
   public
     constructor Create;
     destructor Destroy; override;
@@ -163,6 +165,8 @@ type
     property agenteCausador: TAgenteCausadorCollection read FAgenteCausador write FAgenteCausador;
     property atestado: TAtestado read FAtestado write FAtestado;
     property catOrigem: TCatOrigem read FCatOrigem write FCatOrigem;
+    property ultDiaTrab: TDateTime read FultDiaTrab write FultDiaTrab;
+    property houveAfast: tpSimNao read FhouveAfast write FhouveAfast;
   end;
 
   TAtestado = class
@@ -517,8 +521,11 @@ begin
      )
   then
   begin
-    Gerador.wCampo(tcDat, '', 'ultDiaTrab',       10,  10, 1, Self.Cat.ultDiaTrab);
-    Gerador.wCampo(tcStr, '', 'houveAfast',        1,   1, 1, eSSimNaoToStr(Self.Cat.houveAfast));
+    if Self.Cat.ultDiaTrab >= Self.Cat.dtAcid then
+      Gerador.wCampo(tcDat, '', 'ultDiaTrab',     10,  10, 1, Self.Cat.ultDiaTrab);
+
+    if Self.Cat.dtAcid >= StrToDate('21/11/2022') then
+      Gerador.wCampo(tcStr, '', 'houveAfast',      1,   1, 1, eSSimNaoToStr(Self.Cat.houveAfast));
   end;
 
   GerarLocalAcidente;
@@ -693,7 +700,9 @@ begin
       cat.codSitGeradora   := INIRec.ReadInteger(sSecao, 'codSitGeradora', 0);
       cat.iniciatCAT       := eSStrToIniciatCAT(Ok, INIRec.ReadString(sSecao, 'iniciatCAT', '1'));
       cat.obsCAT           := INIRec.ReadString(sSecao, 'obsCAT', EmptyStr);
-
+      cat.ultDiaTrab       := StringToDateTime(INIRec.ReadString(sSecao, 'ultDiaTrab', '0'));
+      cat.houveAfast       := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'houveAfast', 'S'));
+      
       if (
            ( (TpAmbToStr(TACBreSocial(FACBreSocial).Configuracoes.WebServices.Ambiente) = '1') and (Self.Cat.dtAcid >= StringToDateTime('16/01/2023')) ) or
            ( (TpAmbToStr(TACBreSocial(FACBreSocial).Configuracoes.WebServices.Ambiente) = '2') and (Self.Cat.dtAcid >= StringToDateTime('16/01/2022')) )

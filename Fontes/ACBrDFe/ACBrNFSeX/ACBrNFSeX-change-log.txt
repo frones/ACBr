@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] A cidade Confresa/MT trocou de provedor, agora é: Coplan.
+   Por: Luiz Eduardo Bodo
+
 07/12/2022
 -- ISSNet.GravarXml --
 [*] Imposta uma condição para gerar ou não a tag referente ao código do pais 

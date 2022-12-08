@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/12/2022
+-- SoftPlan.LerXml --
+[*] Organizado a sequencia de leitura das tag do XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- Equiplano.Provider --
 [*] Possível solução para o erro de AV que esta ocorrendo ao tratar o retorno
     da consulta ao lote.

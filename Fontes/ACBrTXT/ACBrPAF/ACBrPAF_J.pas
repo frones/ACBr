@@ -35,7 +35,11 @@ unit ACBrPAF_J;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, DateUtils, ACBrPAFRegistros;
+  SysUtils,
+  Classes,
+  Contnrs,
+  DateUtils,
+  ACBrPAFRegistros;
 
 type
   TRegistroJ2List = class;

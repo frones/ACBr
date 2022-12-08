@@ -36,8 +36,12 @@ unit ACBrPAF_C_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass,
-     ACBrPAF_C;
+uses SysUtils,
+     Classes,
+     DateUtils,
+     ACBrTXTClass,
+     ACBrPAF_C,
+     ACBrPAFRegistros;
 
 type
 
@@ -57,7 +61,7 @@ type
     procedure LimpaRegistros;
 
     procedure WriteRegistroC1;
-    procedure WriteRegistroC2;
+    procedure WriteRegistroC2(Layout: TLayoutPAF);
     procedure WriteRegistroC9;
 
     property RegistroC1: TRegistroC1 read FRegistroC1 write FRegistroC1;
@@ -140,9 +144,9 @@ begin
   Result := AnsiCompareText(Campo1, Campo2);
 end;
 
-procedure TPAF_C.WriteRegistroC2;
+procedure TPAF_C.WriteRegistroC2(Layout: TLayoutPAF);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(FRegistroC2) then
   begin
@@ -153,25 +157,40 @@ begin
      begin
         with FRegistroC2.Items[intFor] do
         begin
-          ///
-          Add( LFill('C2') +
-               LFill(FRegistroC1.CNPJ, 14) +
-               LFill(ID_ABASTECIMENTO, 15) +
-               RFill(TANQUE, 3) +
-               RFill(BOMBA, 3) +
-               RFill(BICO, 3) +
-               RFill(COMBUSTIVEL, 20, ifThen(RegistroValido, ' ', '?')) +
-               LFill(DATA_ABASTECIMENTO, 'yyyymmdd') +
-               LFill(HORA_ABASTECIMENTO, 'hhmmss') +
-               LFill(ENCERRANTE_INICIAL, 15, 2) +
-               LFill(ENCERRANTE_FINAL, 15, 2) +
-               RFill(STATUS_ABASTECIMENTO, 10) +
-               IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, RFill(NRO_SERIE_ECF, 20), RFill('',20)) +
-               IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, LFill(DATA, 'yyyymmdd'), LFill(0,8)) +
-               IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, LFill(HORA, 'hhmmss'), LFill(0,6)) +
-               LFill(COO, 9) +
-               LFill(NRO_NOTA_FISCAL, 6) +
-               LFill(VOLUME, 10, 3) );
+          if Layout = lpPAFECF then
+          begin
+            ///
+            Add( LFill('C2') +
+                 LFill(FRegistroC1.CNPJ, 14) +
+                 LFill(ID_ABASTECIMENTO, 15) +
+                 RFill(TANQUE, 3) +
+                 RFill(BOMBA, 3) +
+                 RFill(BICO, 3) +
+                 RFill(COMBUSTIVEL, 20, ifThen(RegistroValido, ' ', '?')) +
+                 LFill(DATA_ABASTECIMENTO, 'yyyymmdd') +
+                 LFill(HORA_ABASTECIMENTO, 'hhmmss') +
+                 LFill(ENCERRANTE_INICIAL, 15, 2) +
+                 LFill(ENCERRANTE_FINAL, 15, 2) +
+                 RFill(STATUS_ABASTECIMENTO, 10) +
+                 IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, RFill(NRO_SERIE_ECF, 20), RFill('',20)) +
+                 IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, LFill(DATA, 'yyyymmdd'), LFill(0,8)) +
+                 IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, LFill(HORA, 'hhmmss'), LFill(0,6)) +
+                 LFill(COO, 9) +
+                 LFill(NRO_NOTA_FISCAL, 6) +
+                 LFill(VOLUME, 10, 3) );
+          end
+          else
+          begin
+            Add( LFill('C2') +
+                 LFill(FRegistroC1.CNPJ, 14) +
+                 RFill(BOMBA, 3) +
+                 RFill(BICO, 3) +
+                 RFill(TIPOEVENTO, 2) +
+                 LFill(DATA_ABASTECIMENTO, 'yyyymmdd') +
+                 LFill(HORA_ABASTECIMENTO, 'hhmmss') +
+                 LFill(ENCERRANTE_INICIAL, 15, 2) +
+                 LFill(ENCERRANTE_FINAL, 15, 2) );
+          end;
         end;
         ///
         FRegistroC9.TOT_REG := FRegistroC9.TOT_REG + 1;

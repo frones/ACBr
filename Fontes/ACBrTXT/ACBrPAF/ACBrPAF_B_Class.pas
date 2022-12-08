@@ -37,8 +37,13 @@ unit ACBrPAF_B_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass,
-     ACBrPAF_B;
+uses
+  SysUtils,
+  Classes,
+  DateUtils,
+  ACBrTXTClass,
+  ACBrPAF_B,
+  ACBrPAFRegistros;
 
 type
 
@@ -58,7 +63,7 @@ type
     procedure LimpaRegistros;
 
     procedure WriteRegistroB1;
-    procedure WriteRegistroB2;
+    procedure WriteRegistroB2(Layout: TLayoutPAF);
     procedure WriteRegistroB9;
 
     property RegistroB1: TRegistroB1 read FRegistroB1 write FRegistroB1;
@@ -140,9 +145,9 @@ begin
   Result := AnsiCompareText(Campo1, Campo2);
 end;
 
-procedure TPAF_B.WriteRegistroB2;
+procedure TPAF_B.WriteRegistroB2(Layout: TLayoutPAF);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(FRegistroB2) then
   begin
@@ -153,20 +158,37 @@ begin
      begin
         with FRegistroB2.Items[intFor] do
         begin
-          ///
-          Add( LFill('B2') +
-               LFill(FRegistroB1.CNPJ, 14) +
-               RFill(BOMBA, 3) +
-               RFill(BICO, 3) +
-               LFill(DATA, 'yyyymmdd') +
-               LFill(HORA, 'hhmmss') +
-               RFill(MOTIVO, 50, ifThen(RegistroValido, ' ', '?')) +
-               LFill(CNPJ_EMPRESA, 14) +
-               LFill(CPF_TECNICO, 11) +
-               RFill(NRO_LACRE_ANTES, 15) +
-               RFill(NRO_LACRE_APOS, 15) +
-               LFill(ENCERRANTE_ANTES, 15, 2) +
-               LFill(ENCERRANTE_APOS, 15, 2) );
+          if Layout = lpPAFECF then
+          begin
+            Add( LFill('B2') +
+                 LFill(FRegistroB1.CNPJ, 14) +
+                 RFill(BOMBA, 3) +
+                 RFill(BICO, 3) +
+                 LFill(DATA, 'yyyymmdd') +
+                 LFill(HORA, 'hhmmss') +
+                 RFill(MOTIVO, 50, ifThen(RegistroValido, ' ', '?')) +
+                 LFill(CNPJ_EMPRESA, 14) +
+                 LFill(CPF_TECNICO, 11) +
+                 RFill(NRO_LACRE_ANTES, 15) +
+                 RFill(NRO_LACRE_APOS, 15) +
+                 LFill(ENCERRANTE_ANTES, 15, 2) +
+                 LFill(ENCERRANTE_APOS, 15, 2) );
+          end
+          else
+          begin
+            Add( LFill('B2') +
+                 LFill(FRegistroB1.CNPJ, 14) +
+                 RFill(BOMBA, 3) +
+                 RFill(BICO, 3) +
+                 RFill(TIPO, 2) +
+                 LFill(DATA, 'yyyymmdd') +
+                 LFill(HORA, 'hhmmss') +
+                 RFill(MOTIVO, 50, ifThen(RegistroValido, ' ', '?')) +
+                 LFill(CNPJ_EMPRESA, 14) +
+                 LFill(CPF_TECNICO, 11) +
+                 LFill(ENCERRANTE_ANTES, 15, 2) +
+                 LFill(ENCERRANTE_APOS, 15, 2) );
+          end;
         end;
         ///
         FRegistroB9.TOT_REG := FRegistroB9.TOT_REG + 1;

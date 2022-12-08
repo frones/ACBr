@@ -793,15 +793,15 @@ begin
     FPAF_D.WriteBuffer;
   end;
 
-  if (FPAF_B.RegistroB2.Count > 0) and (Layout = lpPAFECF) then
+  if (FPAF_B.RegistroB2.Count > 0) then
   begin
-    FPAF_B.WriteRegistroB2;
+    FPAF_B.WriteRegistroB2(Layout);
     FPAF_B.WriteBuffer;
   end;
 
-  if (FPAF_C.RegistroC2.Count > 0) and (Layout = lpPAFECF) then
+  if (FPAF_C.RegistroC2.Count > 0)  then
   begin
-    FPAF_C.WriteRegistroC2;
+    FPAF_C.WriteRegistroC2(Layout);
     FPAF_C.WriteBuffer;
   end;
 

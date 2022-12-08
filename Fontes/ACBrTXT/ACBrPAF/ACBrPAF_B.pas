@@ -35,7 +35,11 @@ unit ACBrPAF_B;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, DateUtils, ACBrPAFRegistros;
+  SysUtils,
+  Classes,
+  Contnrs,
+  DateUtils,
+  ACBrPAFRegistros;
 
 type
   /// REGISTRO TIPO B1 - IDENTIFICAÇÃO DO ESTABELECIMENTO USUÁRIO DO PAF-ECF
@@ -45,10 +49,11 @@ type
 
   /// REGISTRO TIPO B2 - REGISTRO DE SUBSTITUIÇÃO DA PLACA ELETRÓNICA DE GERENCIAMENTO DE BOMBA DE COMBUSTIVEL
 
+  { TRegistroB2 }
+
   TRegistroB2 = class
   private
     fRegistroValido: boolean;
-//    fTANQUE: string;
     fBOMBA: string;
     fBICO: string;
     fDATA: TDateTime;
@@ -60,12 +65,14 @@ type
     fNRO_LACRE_APOS: string;
     fENCERRANTE_ANTES: currency;
     fENCERRANTE_APOS: currency;
+    fTIPO: string;
   public
     constructor Create; virtual; /// Create
 
     property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
     property BOMBA: string read fBOMBA write fBOMBA;
     property BICO: string read fBICO write fBICO;
+    property TIPO: string read fTIPO write fTIPO;//01 – Intervenção 02 – Intercorrência
     property DATA: TDateTime read fDATA write fDATA;
     property HORA: TDateTime read fHORA write fHORA;
     property MOTIVO: string read fMOTIVO write fMOTIVO;

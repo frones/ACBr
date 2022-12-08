@@ -35,7 +35,11 @@ unit ACBrPAF_C;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, DateUtils, ACBrPAFRegistros;
+  SysUtils,
+  Classes,
+  Contnrs,
+  DateUtils,
+  ACBrPAFRegistros;
 
 type
   /// REGISTRO TIPO C1 - IDENTIFICAÇÃO DO ESTABELECIMENTO USUÁRIO DO PAF-ECF
@@ -44,6 +48,8 @@ type
   end;
 
   /// REGISTRO TIPO C2 - RELAÇÃO DE MERCADORIAS E SERVIÇOS
+
+  { TRegistroC2 }
 
   TRegistroC2 = class
   private
@@ -63,6 +69,7 @@ type
     fHORA: TDateTime;
     fCOO: Integer;
     fNRO_NOTA_FISCAL: Integer;
+    fTIPOEVENTO: string;
     fVOLUME: Currency;
   public
     constructor Create; virtual; /// Create
@@ -84,6 +91,13 @@ type
     property COO: Integer read fCOO write fCOO;
     property NRO_NOTA_FISCAL: Integer read fNRO_NOTA_FISCAL write fNRO_NOTA_FISCAL;
     property VOLUME: Currency read fVOLUME write fVOLUME;
+
+    property TIPOEVENTO:string read fTIPOEVENTO write fTIPOEVENTO;
+    //PC – Perda de comunicação
+    //RC – Retorno de comunicação
+    //AB – Aferição de bico
+    //CE – Controle de encerrantes
+    //QE – Quebra ou descontinuidade de encerrante
 
   end;
 

@@ -35,11 +35,12 @@ unit ACBrPAFRegistros;
 interface
 
 uses
-  SysUtils, Classes, DateUtils;
+  SysUtils,
+  Classes,
+  DateUtils;
 
 type
   TLayoutPAF = (lpPAFECF, lpPAFNFCe);
-
 
   /// REGISTRO TIPO X1 - IDENTIFICAÇÃO DO ESTABELECIMENTO USUÁRIO DO PAF-ECF:
 

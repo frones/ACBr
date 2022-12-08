@@ -136,8 +136,8 @@ namespace ACBrLibBoleto.Demo
             txtPathLog.Text = boleto.Config.Webservice.PathGravarRegistro;
 
             var ambiente = boleto.Config.Webservice.Ambiente;
-            rdbHomologacao.Checked = ambiente == AmbienteWebservice.Homologaçao;
-            rdbProducao.Checked = ambiente == AmbienteWebservice.Producao;
+            rdbProducao.Checked = ambiente == AmbienteWebservice.Homologaçao;
+            rdbHomologacao.Checked = ambiente == AmbienteWebservice.Producao;
 
             cmbOperacao.SetSelectedValue(boleto.Config.Webservice.Operacao);
             cmbSSlType.SetSelectedValue(boleto.Config.Webservice.SSLType);
@@ -202,7 +202,7 @@ namespace ACBrLibBoleto.Demo
 
             boleto.Config.Webservice.LogRegistro = chkGravarLog.Checked;
             boleto.Config.Webservice.PathGravarRegistro = txtPathLog.Text;
-            boleto.Config.Webservice.Ambiente = rdbHomologacao.Checked ? AmbienteWebservice.Homologaçao : AmbienteWebservice.Producao;
+            boleto.Config.Webservice.Ambiente = rdbProducao.Checked ? AmbienteWebservice.Homologaçao : AmbienteWebservice.Producao;
             boleto.Config.Webservice.Operacao = cmbOperacao.GetSelectedValue<OperacaoBoleto>();
             boleto.Config.Webservice.SSLType = cmbSSlType.GetSelectedValue<SSLType>();
             boleto.Config.DFe.SSLHttpLib = cmbHttp.GetSelectedValue<SSLHttpLib>();

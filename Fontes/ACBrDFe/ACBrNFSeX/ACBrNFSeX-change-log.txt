@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] Incluída a cidade Araçoiaba da Serra/SP - provedor: Fiorilli
+   Por: JJ Sistemas
 -- SoftPlan.LerXml --
 [*] Organizado a sequencia de leitura das tag do XML da NFS-e.
    Por: Italo Giurizzato Junior

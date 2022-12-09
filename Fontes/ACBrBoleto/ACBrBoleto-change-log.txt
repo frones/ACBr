@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2022
+--ACBrBoletoRet_Sicredi_API--
+[-]Correção da função trata a data SICREDI
+ por : Daniel de Morais
+
 02/12/2022
 --ACBrBoletoWS--
 Revert 25580 [*]Correção de AV quando WS com erro e não houver JSON

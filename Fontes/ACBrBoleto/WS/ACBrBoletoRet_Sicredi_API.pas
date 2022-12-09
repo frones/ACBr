@@ -45,7 +45,7 @@ uses
 //  {$Else}
     Jsons,
 //  {$EndIf}
-  DateUtils, pcnConversao;
+  DateUtils, pcnConversao, ACBrUtil.DateTime;
 
 type
 
@@ -83,7 +83,7 @@ end;
 function TRetornoEnvio_Sicredi_API.DateSicrediToDateTime(
   const AValue: String): TDateTime;
 begin
-  Result := StrToDateDef( StringReplace( AValue,'-','/', [rfReplaceAll] ),0);
+  Result :=EncodeDataHora(StringReplace(AValue,'-','/',[rfReplaceAll]));
 end;
 
 destructor TRetornoEnvio_Sicredi_API.Destroy;

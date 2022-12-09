@@ -272,12 +272,95 @@ begin
 end;
 
 function TEvtCdBenefIn.LerArqIni(const AIniString: String): Boolean;
-//var
-//  INIRec: TMemIniFile;
-//  Ok: Boolean;
-//  sSecao: String;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I : Integer;
+  depend: TDependenteCollectionItem;
 begin
   Result := True;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+    with Self do
+    begin
+      sSecao             := 'evtCdBenefln';
+      Id                 := INIRec.ReadString(sSecao , 'Id'        , '');
+      Sequencial         := INIRec.ReadInteger(sSecao, 'Sequencial',  0);
+
+      sSecao             := 'ideEvento';
+      ideEvento.indRetif := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif'  , '1'));
+      ideEvento.NrRecibo := INIRec.ReadString(sSecao , 'nrRecibo'  , EmptyStr);
+      ideEvento.ProcEmi  := eSStrToprocEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc  := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao             := 'ideEmpregador';
+      IdeEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      IdeEmpregador.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      IdeEmpregador.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao             := 'beneficiario';
+      Beneficiario.cpfBenef  := INIRec.ReadString(sSecao, 'cpfBenef'  , EmptyStr);
+      Beneficiario.nmBenefic := INIRec.ReadString(sSecao, 'nmBenefic' , EmptyStr);
+      Beneficiario.dtNascto  := INIRec.ReadDate(sSecao, 'dtNascto', 0);
+      Beneficiario.dtInicio  := INIRec.ReadDate(sSecao, 'dtInicio', 0);
+      Beneficiario.sexo      := INIRec.ReadString(sSecao, 'sexo', EmptyStr);
+      Beneficiario.racaCor   := INIRec.ReadInteger(sSecao, 'racaCor', 0);
+      Beneficiario.estCiv    := INIRec.ReadInteger(sSecao, 'estCiv' , 0);
+      Beneficiario.incFisMen := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incFiscMen', EmptyStr));
+      Beneficiario.dtIncFisMen := INIRec.ReadDate(sSecao, 'dtIncFisMen', 0);
+
+      sSecao := 'enderecoBrasil';
+      Beneficiario.endereco.Brasil.TpLograd    := INIRec.ReadString(sSecao , 'tpLograd'   , EmptyStr);
+      Beneficiario.endereco.Brasil.dscLograd   := INIRec.ReadString(sSecao , 'dscLograd'  , EmptyStr);
+      Beneficiario.endereco.Brasil.nrLograd    := INIRec.ReadString(sSecao , 'nrLograd'   , EmptyStr);
+      Beneficiario.endereco.Brasil.complemento := INIRec.ReadString(sSecao , 'complemento', EmptyStr);
+      Beneficiario.endereco.Brasil.bairro      := INIRec.ReadString(sSecao , 'bairro'     , EmptyStr);
+      Beneficiario.endereco.Brasil.cep         := INIRec.ReadString(sSecao , 'cep'        , EmptyStr);
+      Beneficiario.endereco.Brasil.codMunic    := INIRec.ReadInteger(sSecao, 'codMunic'   , 0       );
+      Beneficiario.endereco.Brasil.uf          := INIRec.ReadString(sSecao , 'uf'         , EmptyStr);
+
+      sSecao := 'enderecoExterior';
+      Beneficiario.endereco.exterior.paisResid   := INIRec.ReadString(sSecao, 'paisResid'  , EmptyStr);
+      Beneficiario.endereco.exterior.dscLograd   := INIRec.ReadString(sSecao, 'dscLograd'  , EmptyStr);
+      Beneficiario.endereco.exterior.nrLograd    := INIRec.ReadString(sSecao, 'nrLograd'   , EmptyStr);
+      Beneficiario.endereco.exterior.complemento := INIRec.ReadString(sSecao, 'complemento', EmptyStr);
+      Beneficiario.endereco.exterior.bairro      := INIRec.ReadString(sSecao, 'bairro'     , EmptyStr);
+      Beneficiario.endereco.exterior.nmCid       := INIRec.ReadString(sSecao, 'nmCid'      , EmptyStr);
+      Beneficiario.endereco.exterior.codPostal   := INIRec.ReadString(sSecao, 'codPostal'  , EmptyStr);
+
+      I := 1;
+      sFim := EmptyStr;
+      while true do
+      begin
+        //De 0 até 99;
+        sSecao := 'dependente' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'tpDep', 'FIM');
+
+        if(sFim = 'FIM') or (Length(sFIM) <= 0)then
+          break;
+
+        depend := Beneficiario.dependente.Add;
+        depend.tpDep     := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', EmptyStr));
+        depend.nmDep     := INIRec.ReadString(sSecao, 'nmDep', EmptyStr);
+        depend.dtNascto  := INIRec.ReadDate(sSecao, 'dtNascto', 0);
+        depend.cpfDep    := INIRec.ReadString(sSecao, 'cpfDep' , EmptyStr);
+        depend.sexoDep   := INIRec.ReadString(sSecao, 'sexoDep', EmptyStr);
+        depend.depIRRF   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depIRRF', EmptyStr));
+        depend.incFisMen := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incFisMen', EmptyStr));
+
+        Inc(I);
+      end;
+
+      GerarXML;
+      XML := FXML;
+
+    end;
+  finally
+    INIRec.Free;
+  end;
 end;
 
 end.

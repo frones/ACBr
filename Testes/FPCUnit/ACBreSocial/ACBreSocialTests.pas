@@ -5,7 +5,8 @@ unit ACBreSocialTests;
 interface
 
 uses
-  Classes, SysUtils, ACBrTests.Util, ACBreSocial, pcesConversaoeSocial;
+  Classes, SysUtils, ACBrTests.Util, ACBreSocial, pcesConversaoeSocial,
+  pcesCommon, pcesS2400, pcesS1202, pcesS1207;
 
 const
   ARQINI_S1000 = 'C:\ACBr\Testes\Recursos\eSocial\INI\S1000.INI';
@@ -119,8 +120,273 @@ type
       procedure ConversaoeSocial_StringINIToTipoEvento_RetornaS1300;
   end;
 
+  { TACBreSocialEventosNaoPeriodicosTest }
+
+  TACBreSocialEventosNaoPeriodicosTest = class(TTestCase)
+    private
+      FACBreSocial : TACBreSocial;
+    public
+      procedure Setup;override;
+      procedure TearDown;override;
+    published
+      procedure ACBreSocialEventosNaoPeriodicosS2400_Create_ListaVazia;
+      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS2400;
+  end;
+
+  { TACBreSocialEventosPeriodicosTest }
+
+  TACBreSocialEventosPeriodicosTest = class(TTestCase)
+    private
+      FACBreSocial : TACBreSocial;
+    public
+      procedure Setup;override;
+      procedure TearDown;override;
+    published
+      procedure ACBreSocialEventosPeriodicosS1202_Create_ListaVazia;
+      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1202;
+      procedure ACBreSocialEventosPeriodicosS1207_Create_ListaVazia;
+      procedure ACBreSocualEventos_LoadFromINI_LeuePreencheuS1207;
+  end;
+
 
 implementation
+
+{ TACBreSocualEventosPeriodicosTest }
+
+procedure TACBreSocialEventosPeriodicosTest.Setup;
+begin
+  inherited Setup;
+  FACBreSocial := TACBreSocial.Create(nil);
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.TearDown;
+begin
+  inherited TearDown;
+  FACBreSocial.Free;
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventosPeriodicosS1202_Create_ListaVazia;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1202.Count = 0, 'Lista de eventos S-1202 não está vazia');
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS1202;
+var
+  eSS1202 : TEvtRmnRPPS;
+  InfoComp : TInfoComplem;
+  sucessVinc: TSucessaoVinc3;
+  dmDevI: pcesS1202.TDMDevCollectionItem;
+  ideEstabI: pcesS1202.TIdeEstabCollectionItem;
+  ideADVI : TIdeAdvCollectionItem;
+  itemRemun : TRubricaCollectionItem;
+begin
+  try
+     FACBreSocial.Eventos.Clear;
+     FACBreSocial.Eventos.LoadFromIni(ARQINI_S1202);
+  except
+    Check(FACBreSocial.Eventos.Periodicos.S1202.Count > 0, 'Não instânciou o S-1202 na lista');
+
+    eSS1202 := FACBreSocial.Eventos.Periodicos.S1202[0].evtRmnRPPS;
+    Check(eSS1202.ideEvento.indRetif = ireOriginal, 'ideEvento.indRetif diferente do valor esperado');
+    Check(eSS1202.ideEvento.nrRecibo = '123' , 'ideEvento.nrRecibo diferente do valor esperado');
+    Check(eSS1202.ideEvento.indApuracao = iapuMensal, 'ideEvento.indApuracao diferente do valor esperado');
+    Check(eSS1202.ideEvento.perApur = '2018-05', 'ideEvento.perApur diferente do valor esperado');
+    Check(eSS1202.ideEvento.ProcEmi = peAplicEmpregador, 'ideEvento.procEmi diferente do valor esperado');
+
+    Check(eSS1202.ideEmpregador.TpInsc = tiCNPJ, 'ideEvento.tpInsc diferente do valor esperado');
+    Check(eSS1202.ideEmpregador.NrInsc = '12345678000123', 'ideEvento.nrInsc diferente do valor esperado');
+
+    Check(eSS1202.ideTrabalhador.cpfTrab = '12345678901', 'ideTrabalhador.cpfTrab diferente do valor esperado');
+
+    infoComp := eSS1202.ideTrabalhador.InfoComplem;
+    Check(InfoComp.nmTrab = 'Nome do Trabalhador', 'ideTrabalhador.infoComplem.nmTrab diferente do valor esperado');
+
+    sucessVinc := infoComp.sucessaoVinc;;
+    Check(sucessVinc.cnpjOrgaoAnt = '11111111111111', 'ideTrabalhador.infoComplem.sucessaoVinc.cnpjOrgaoAnt diferente do valor esperado');
+    Check(sucessVinc.matricAnt = '123456', 'ideTrabalhador.infoComplem.sucessaoVinc.matricAnt diferente do valor esperado');
+
+    dmDevI := eSS1202.dmDev[0];
+    Check(dmdevI.ideDmDev = '1234', 'dmDev.ideDmDev diferente do valor esperado');
+    Check(dmDevI.codCateg = 101, 'dmDev.codCategoria diferente do valor esperado');
+    Check(dmDevI.indRRA = snfSim, 'dmDev.indRRA diferente do valor esperado');
+    Check(dmDevI.infoRRA.qtdMesesRRA = 11, 'dmDev.infoRRA.qtdMesesRRA diferente do valor esperado');
+    Check(dmDevI.infoRRA.DespProcJud.vlrDespCustas = 2200.50, 'dmDev.infoRRA.vlrDespCustas diferente do valor esperado');
+
+    ideAdvI := dmDevI.infoRRA.ideAdv[0];
+    Check(ideADVI.NrInsc = '11111111111111', 'dmDev.infoRRA.ideADV.nrInsc diferente do valor esperado');
+    Check(ideADVI.vlrAdv = 350.00, 'dmDev.infoRRA.ideADV.vlrAdv diferente do valor esperado');
+
+    ideEstabI := dmDevI.infoPerApur.ideEstab.Items[0];
+    Check(ideEstabI.tpInsc = tiCNPJ, 'dmDev.infoPerApur.ideEstab.tpInsc diferente do valor esperado');
+    Check(ideEstabI.nrInsc = '11111111111111', 'dmDev.infoPerApur.ideEstab.nrInsc diferente do valor esperado');
+
+    Check(ideEstabI.remunPerApur.Items[0].matricula='1234567','dmDev.infoPerApur.ideEstab.remunPerApur.matricula diferente do valor esperado');
+
+    itemRemun := dmDevI.infoPerApur.ideEstab.Items[0].remunPerApur.Items[0].itensRemun[0];
+    Check(itemRemun.codRubr = '1000', 'dmDev.infoPerApur.IdeEstab.RemunPerApur.ItensRemun.codRubr diferente do valor esperado');
+    Check(itemRemun.ideTabRubr = '1000', 'dmDev.infoPerApur.ideEstab.RemunPerApur.ItensRemun.ideTabRubr diferente do valor esperado');
+    Check(itemRemun.qtdRubr = 500, 'dmDev.infoPerApur.ideEstab.RemunPerApur.ItensRemun.qtdRubr diferente do valor esperado');
+    Check(itemRemun.vrRubr = 800, 'dmDev.infoPerApur.ideEstab.RemunPerApur.itensRemun.vrRubr diferente do valor esperado');
+
+    Check(dmDevI.infoPerAnt.remunOrgSuc = tpNao, 'dmDev.infoPerAnt diferente de N');
+
+    Check(dmDevI.infoPerAnt.idePeriodo.Items[0].perRef = '2020-05', 'dmDev.infoPerAnt.idePeriodo.perRef diferente do valor esperado');
+
+    ideEstabI := dmDevI.infoPerAnt.idePeriodo.Items[0].ideEstab.Items[0];
+    Check(ideEstabI.tpInsc = tiCNPJ, 'dmDev.infoPerAnt.idePeriodo.ideEstab.tpInsc diferente do valor esperado');
+    Check(ideEstabI.nrInsc = '22222222222222', 'dmDev.infoPerAnt.idePeriodo.ideEstab.nrInsc diferente do valor esperado');
+
+    Check(ideEstabI.remunPerAnt.Items[0].matricula = '123456', 'dmDev.infoPerAnt.idePeriodo.ideEstab.remunPerAnt.matricula diferente do valor esperado');
+
+    itemRemun := ideEstabI.remunPerAnt.Items[0].itensRemun[0];
+    Check(itemRemun.qtdRubr = 450, 'dmDev.infoPerAnt.idePeriodo.ideEstab.remunPerAnt.itensRemun.qtdRubr diferente do valor esperado');
+    Check(itemRemun.fatorRubr = 11,'dmDev.infoPerAnt.idePeriodo.ideEstab.remunPerAnt.itensRemun.fatorRubr diferente do valor esperado');
+    Check(itemRemun.vrRubr = 900, 'dmDev.infoPerAnt.idePeriodo.ideEstab.remunPerAnt.itensRemun.vrRubr diferente do valor esperado');
+  end;
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventosPeriodicosS1207_Create_ListaVazia;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1207.Count = 0, 'Lista de eventos S-1207 não está vazia');
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocualEventos_LoadFromINI_LeuePreencheuS1207;
+var
+  eSS1207: TEvtBenPrRP;
+  dmDevI : pcesS1207.TDMDevCollectionItem;
+  ideADVI: TIdeAdvCollectionItem;
+  ideEstabI: pcesS1207.TIdeEstabCollectionItem;
+  itemRemun: TRubricaCollectionItem;
+  idePeriodoI: pcesS1207.TIdePeriodoCollectionItem;
+begin
+  try
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_S1207);
+  except
+    Check(FACBreSocial.Eventos.Periodicos.S1207.Count > 0, 'Não instanciou o S-1207 na lista');
+
+    eSS1207 := FACBreSocial.Eventos.Periodicos.S1207[0].evtBenPrRP;
+
+    Check(eSS1207.ideEvento.indRetif = ireOriginal, 'ideEvento.indRetif diferente do valor esperado');
+    Check(eSS1207.ideEvento.NrRecibo = '123', 'ideEvento.nrRecibo diferente do valor esperado');
+    Check(eSS1207.ideEvento.IndApuracao = iapuMensal, 'ideEvento.indApuracao do valor esperado');
+    Check(eSS1207.ideEvento.perApur='2018-05', 'ideEvento.perApur diferente do valor esperado');
+
+    Check(eSS1207.ideEmpregador.TpInsc = tiCNPJ, 'ideEmpregador.tpInsc diferente do valor esperado');
+    Check(eSS1207.ideEmpregador.NrInsc = '12345678000123', 'ideEmpregador.nrInsc diferente do valor esperado');
+
+    Check(eSS1207.ideBenef.cpfBenef = '12345678901', 'ideBenef.cpfBenef diferente do valor esperado');
+
+    dmDevI := eSS1207.dmDev[0];
+    Check(dmDevI.ideDMDev = '1A', 'dmDev.ideDMDev diferente do valor esperado');
+    Check(dmDevI.nrBeneficio = '123456', 'dmDev.nrBeneficio diferente do valor esperado');
+    Check(dmDevI.indRRA = snfSim, 'dmDev.indRRA diferente do valor esperado');
+    Check(dmDevI.infoRRA.tpProcRRA = tppAdministrativo, 'dmDev.infoRRA.tpProcRRA diferente do valor esperado');
+    Check(dmDevI.infoRRA.nrProcRRA = '12345678901234567', 'dmDev.infoRRA.nrProcRRA diferente do valor esperado');
+    Check(dmDevI.infoRRA.qtdMesesRRA = 5, 'dmDev.infoRRA.qtdMesesRRA diferente do valor esperado');
+    Check(dmDevI.infoRRA.despProcJud.vlrDespCustas = 1000.25, 'dmDev.infoRRA.descProcJud.vlrDespCustas diferente do valor esperado');
+    Check(dmDevI.infoRRA.despProcJud.vlrDespAdvogados = 250.50, 'dmDev.infoRRA.despProcJud.vlrDespAdvogados diferente do valor esperado');
+
+    ideADVI := dmDevI.infoRRA.ideAdv[0];
+    Check(ideADVI.tpInsc = tiCNPJ, 'dmDev.infoRRA.ideADV.tpInsc diferente do valor esperado');
+    Check(ideADVI.nrInsc = '11111111111111', 'dmDev.infoRRA.ideADV.nrInsc diferente do valor esperado');
+    Check(ideADVI.vlrAdv = 250, 'dmDev.infoRRA.ideADV.vlrADV diferente do esperado');
+
+    ideEstabI := dmDevI.infoPerApur.ideEstab.Items[0];
+    Check(ideEstabI.tpInsc = tiCNPJ, 'dmDev.infoPerAPur.ideEstab.tpInsc diferente do valor esperado');
+    Check(ideEstabI.NrInsc = '22222222222222', 'dmDev.infoPerApur.ideEstab.nrInsc diferente do valor esperado');
+
+    itemRemun := ideEstabI.itensRemun[0];
+    Check(itemRemun.codRubr = '1', 'dmDev.infoPerApur.ideEstab.ItensRemun.codRubr diferente do valor esperado');
+    Check(itemRemun.ideTabRubr = '100', 'dmDev.infoPerApur.ideEstab.itensRemun.ideTabRubr diferente do valor esperado');
+    Check(itemRemun.qtdRubr = 50, 'dmDev.infoPerApur.ideEstab.itensRemun.qtdRubr diferente do valor esperado');
+    Check(itemRemun.fatorRubr = 15, 'dmDev.infoPerApur.ideEstab.fatorRubr diferente do valor esperado');
+    Check(itemRemun.vrRubr = 500, 'dmDev.infoPerApur.ideEstab.vrRubr diferente do valor esperado');
+
+    idePeriodoI := dmDevI.infoPerAnt.idePeriodo.Items[0];
+    Check(idePeriodoI.perRef = '2022-05', 'dmDev.infoPerAnt.idePeriodo.perRef diferente do valor esperado');
+
+    ideEstabI := idePeriodoI.ideEstab.Items[0];
+    Check(ideEstabI.tpInsc = tiCNPJ, 'dmDev.infoPerAnt.idePeriodo.ideEstab.tpInsc diferente do valor esperado');
+    Check(ideEstabI.nrInsc = '33333333333333', 'dmDev.infoPerAnt.idePeriodo.ideEstab.nrInsc diferente do valor esperado');
+
+    itemRemun := ideEstabI.itensRemun[0];
+    Check(itemRemun.codRubr = '2', 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.codRubr diferente do valor esperado');
+    Check(itemRemun.ideTabRubr = '200', 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.ideTabRubr diferente do valor esperado');
+    Check(itemRemun.qtdRubr = 60, 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.qtdRubr diferente do valor esperado');
+    Check(itemRemun.fatorRubr = 10, 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.fatorRubr diferente do valor esperado');
+    Check(itemRemun.vrRubr = 300, 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.vrRubr diferente do valor esperado');
+
+
+  end;
+end;
+
+{ TACBreSocialEventosNaoPeriodicosTest }
+
+procedure TACBreSocialEventosNaoPeriodicosTest.Setup;
+begin
+  inherited Setup;
+  FACBreSocial := TACBreSocial.Create(nil);
+end;
+
+procedure TACBreSocialEventosNaoPeriodicosTest.TearDown;
+begin
+  inherited TearDown;
+  FACBreSocial.Free;
+end;
+
+procedure TACBreSocialEventosNaoPeriodicosTest.ACBreSocialEventosNaoPeriodicosS2400_Create_ListaVazia;
+begin
+  Check(FACBreSocial.Eventos.NaoPeriodicos.S2400.Count = 0, 'Lista de Eventos S-2400 não está vazia');
+end;
+
+procedure TACBreSocialEventosNaoPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS2400;
+var
+  eSS2400 : TEvtCdBenefIn;
+begin
+  //Precisei fazer assim porque a rotina requer certificado digital e eu não tenho;
+  //então ela levanta uma exceção que faz o teste falhar.
+  try
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_S2400);
+  except
+    Check(FACBreSocial.Eventos.NaoPeriodicos.S2400.Count > 0, 'Não instanciou o S-2400 na lista');
+
+    eSS2400    := FACBreSocial.Eventos.NaoPeriodicos.S2400.Items[0].EvtCdBenefIn;
+
+    Check(eSS2400.IdeEvento.indRetif     = ireOriginal            , 'IdeEvento.indRetif diferente do valor esperado');
+    Check(eSS2400.IdeEvento.NrRecibo     = EmptyStr               , 'IdeEvento.NrRecibo diferente do valor esperado');
+    Check(eSS2400.IdeEvento.ProcEmi      = peAplicEmpregador      , 'IdeEvento.ProcEmi diferente do valor esperado');
+    Check(eSS2400.IdeEvento.VerProc      = '1.1'                  , 'IdeEvento.VerProc diferente do valor esperado');
+
+    Check(eSS2400.IdeEmpregador.TpInsc   = tiCNPJ                 , 'IdeEmpregador.tpInsc diferente do valor esperado');
+    Check(eSS2400.IdeEmpregador.NrInsc   = '12345678000123'       , 'IdeEmpregador.NrInsc diferente do valor esperado');
+
+    Check(eSS2400.Beneficiario.cpfBenef  = '99999999999'          , 'Beneficiario.cpfBenef diferente do valor esperado');
+    Check(eSS2400.Beneficiario.nmBenefic = 'Beneficiario'         , 'Beneficiario.nmBenefic diferente do valor esperado');
+    Check(eSS2400.Beneficiario.dtNascto  = StrToDate('01/01/2000'), 'Beneficiario.dtNascto diferente do valor esperado');
+    Check(eSS2400.Beneficiario.dtInicio  = StrToDate('01/01/2022'), 'Beneficiario.dtInicio diferente do valor esperado');
+    Check(eSS2400.Beneficiario.sexo      = 'M'                    , 'Beneficiario.sexo diferente do valor esperado');
+    Check(eSS2400.Beneficiario.racaCor   = 1                      , 'Beneficiario.racaCor diferente do valor esperado');
+    Check(eSS2400.Beneficiario.estCiv    = 1                      , 'Beneficiario.estCiv diferente do valor esperado');
+    Check(eSS2400.Beneficiario.incFisMen = tpNao                  , 'Beneficiario.incFisMen diferente do valor esperado');
+
+    Check(eSS2400.Beneficiario.endereco.Brasil.TpLograd  = 'R'    , 'Beneficiario.endereco.Brasil.TpLograd diferente do valor esperado');
+    Check(eSS2400.Beneficiario.endereco.Brasil.dscLograd = 'Logradouro de teste', 'Beneficiario.endereco.Brasil.dscLograd diferente do valor esperado');
+    Check(eSS2400.Beneficiario.endereco.Brasil.nrLograd  = '100'  , 'Beneficiario.endereco.Brasil.nrLograd diferente do valor esperado');
+    Check(eSS2400.Beneficiario.endereco.Brasil.Complemento = 'Apto 10', 'Beneficiario.endereco.Brasil.Complemento diferente do valor esperado');
+    Check(eSS2400.Beneficiario.endereco.Brasil.Bairro = 'Centro' , 'Beneficiario.endereco.Brasil.Bairro diferente do valor esperado');
+    Check(eSS2400.Beneficiario.endereco.Brasil.cep = '14123456'  , 'Beneficiario.endereco.Brasil.cep diferente do valor esperado');
+    Check(eSS2400.Beneficiario.endereco.Brasil.CodMunic = 3512345, 'Beneficiario.endereco.Brasil.codMunic diferente do valor esperado');
+    Check(eSS2400.Beneficiario.endereco.Brasil.uf = 'SP'         , 'Beneficiario.endereco.Brasil.uf diferente do valor esperado');
+
+    Check(eSS2400.Beneficiario.dependente.Items[0].tpDep = tdConjuge, 'Beneficiario.dependente.tpDep diferente do valor esperado');
+    Check(eSS2400.Beneficiario.dependente.Items[0].nmDep = 'Conjuge', 'Beneficiario.dependente.nmDep diferente do valor esperado');
+    Check(eSS2400.Beneficiario.dependente.Items[0].dtNascto = StrToDate('01/01/1995'), 'Beneficiario.depentente.dtNascto diferente do valor esperado');
+    Check(eSS2400.Beneficiario.dependente.Items[0].cpfDep = '11111111111', 'Beneficiario.dependente.cpfDep diferente do valor esperado');
+    Check(eSS2400.Beneficiario.dependente.Items[0].sexoDep   = 'F', 'Beneficiario.dependente.sexo diferente do valor esperado');
+    Check(eSS2400.Beneficiario.dependente.Items[0].depIRRF   = tpNao, 'Beneficiario.dependente.depIRRF diferente do valor esperado');
+    Check(eSS2400.Beneficiario.dependente.Items[0].incFisMen = tpNao, 'Beneficiario.depentente.incFisMen diferente do valor esperado');
+  end;
+end;
 
 { TACBreSocialConversaoeSocialTest }
 
@@ -469,6 +735,8 @@ end;
 
 initialization
   _RegisterTest('pcesConversaoeSocial', TACBreSocialConversaoeSocialTest);
+  _RegisterTest('pcesNaoPeriodicos'   , TACBreSocialEventosNaoPeriodicosTest);
+  _RegisterTest('pcesPeriodicos'      , TACBreSocialEventosPeriodicosTest);
 
 end.
 

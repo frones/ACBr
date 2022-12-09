@@ -182,6 +182,7 @@ type
     fValor: Currency;
     fExpirar : TDateTime;
     fCancelarAguardoRetorno: Boolean;
+    fQRCodeText : String;
 
     fTipoRetorno: TACBrTipoRetornoPicpay;
     fOnStatusPayment: TStatusPayment;
@@ -209,6 +210,7 @@ type
   public
     property QRCode: TStringStream read GetQRCode;
     property Status: string read fStatus;
+    property QRCodeText: string read fQRCodeText;
     procedure Enviar;
     procedure Consultar;
     procedure CancelarAguardoRetorno;
@@ -648,6 +650,7 @@ begin
     begin
 
       fReferenceId := JsonResponse.Values['referenceId'].AsString;
+      fQRCodeText := JsonResponse.Values['paymentUrl'].AsString;
 
       for J := 0 to TJsonObject(JsonResponse.Values['qrcode'].AsObject).Count - 1 do
       begin

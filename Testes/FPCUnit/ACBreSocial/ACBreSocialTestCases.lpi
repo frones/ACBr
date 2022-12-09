@@ -82,7 +82,6 @@
       <Unit1>
         <Filename Value="ACBreSocialTests.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBreSocialTests"/>
       </Unit1>
     </Units>
   </ProjectOptions>
@@ -94,7 +93,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\.."/>
+      <OtherUnitFiles Value="..\..\..;..\.."/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

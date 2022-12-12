@@ -87,12 +87,12 @@ const
   cTipoAto01 = 'Res Camex';
   cNumeroAto01 = '000272';
   AnoAto01 = '2021';
-  cRespostaCompleta01 = cCodigoNCMValido01 + '|'+ cDescricaoNCMValida01 +'|'+cDataInicioVigecia01 +'|'+ cDataFinalVigencia01 +
+  cRespostaCompleta01 = cCodigoNCMValido01 + '|'+ '"'+cDescricaoNCMValida01+'"' +'|'+cDataInicioVigecia01 +'|'+ cDataFinalVigencia01 +
                       '|'+ cTipoAto01 +'|'+ cNumeroAto01 +'|'+ AnoAto01;
 
   cDescricaoParcial01 = 'Cavalo';
-  cRetornoMultiplo01 =  '0101|Cavalos, asininos e muares, vivos.|01/04/2022|31/12/9999|Res Camex|000272|2021'+ sLineBreak +
-                        '01012|Cavalos:|01/04/2022|31/12/9999|Res Camex|000272|2021';
+  cRetornoMultiplo01 =  '0101|"Cavalos, asininos e muares, vivos."|01/04/2022|31/12/9999|Res Camex|000272|2021'+ sLineBreak +
+                        '01012|"Cavalos:"|01/04/2022|31/12/9999|Res Camex|000272|2021';
 
 procedure TTestACBrNCMsLib.Test_NCMs_Inicializar_Com_DiretorioInvalido;
 var
@@ -325,6 +325,7 @@ var
   Handle: PLibHandle;
   Resposta: String;
   Tamanho: Longint;
+  RetornoFuncao: LongInt;
 begin
   //Tamanho := Length(cDescricaoNCMValida01);
   //Resposta := space(Tamanho);
@@ -332,14 +333,17 @@ begin
 
   AssertEquals(ErrOk, NCM_Inicializar(Handle, '',''));
   //AssertEquals('Erro ao Mudar configuração', ErrOk, NCM_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, '10'));  // Via Cep
-  AssertEquals('Erro pegar tamnho da resposta', ErrOk,
+  AssertEquals('Erro pegar tamanho da resposta', ErrOk,
     NCM_DescricaoNCM(Handle, PChar(cCodigoNCMValido01),
                             nil, Tamanho));
 
   Resposta := space(Tamanho);
-  AssertEquals('Erro ao buscar descrição do NCM', ErrOk,
-    NCM_DescricaoNCM(Handle, PChar(cCodigoNCMValido01),
-                            PChar(Resposta), Tamanho));
+  RetornoFuncao := NCM_DescricaoNCM(Handle, PChar(cCodigoNCMValido01), PChar(Resposta), Tamanho);
+  if RetornoFuncao < 0 then
+  begin
+    NCM_UltimoRetorno(Handle, Pchar(Resposta), Tamanho );
+  end;
+  AssertEquals('Erro ao buscar descrição do NCM: '+ Resposta, ErrOk, RetornoFuncao);
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), cDescricaoNCMValida01, Resposta);
   //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');

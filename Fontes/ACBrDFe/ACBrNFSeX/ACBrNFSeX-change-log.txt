@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 12/12/2022
+-- Fiorilli.Provider --
+[*] Possível solução para o erro de SoapAction em ambiente de produção.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade Jaú/SP trocou de provedor, agora é: Fiorilli
    Por: Keiller Rodrigues

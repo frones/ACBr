@@ -77,7 +77,8 @@ type
 implementation
 
 uses
-  ACBrDFeException, ACBrUtil.Strings, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrUtil.Strings, ACBrUtil.XMLHTML,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Fiorilli.GravarXml, Fiorilli.LerXml;
 
 { TACBrNFSeProviderFiorilli200 }
@@ -165,7 +166,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:recepcionarLoteRps>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/recepcionarLoteRps', Request,
+  Result := Executar('recepcionarLoteRps', Request,
                      ['EnviarLoteRpsResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -182,7 +183,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:recepcionarLoteRpsSincrono>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/recepcionarLoteRpsSincrono', Request,
+  Result := Executar('recepcionarLoteRpsSincrono', Request,
                      ['EnviarLoteRpsSincronoResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -199,7 +200,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:gerarNfse>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/gerarNfse', Request,
+  Result := Executar('gerarNfse', Request,
                      ['GerarNfseResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -216,7 +217,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:consultarLoteRps>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/consultarLoteRps', Request,
+  Result := Executar('consultarLoteRps', Request,
                      ['ConsultarLoteRpsResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -233,7 +234,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:consultarNfsePorFaixa>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/consultarNfsePorFaixa', Request,
+  Result := Executar('consultarNfsePorFaixa', Request,
                      ['ConsultarNfseFaixaResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -250,7 +251,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:consultarNfsePorRps>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/consultarNfsePorRps', Request,
+  Result := Executar('consultarNfsePorRps', Request,
                      ['ConsultarNfseRpsResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -267,7 +268,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:consultarNfseServicoPrestado>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/consultarNfseServicoPrestado', Request,
+  Result := Executar('consultarNfseServicoPrestado', Request,
                      ['ConsultarNfseServicoPrestadoResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -284,7 +285,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:consultarNfseServicoTomado>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/consultarNfseServicoTomado', Request,
+  Result := Executar('consultarNfseServicoTomado', Request,
                      ['ConsultarNfseServicoTomadoResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -300,7 +301,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:cancelarNfse>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/cancelarNfse', Request,
+  Result := Executar('cancelarNfse', Request,
                      ['CancelarNfseResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -317,7 +318,7 @@ begin
   Request := Request + DadosUsuario;
   Request := Request + '</ws:substituirNfse>';
 
-  Result := Executar('http://ws.issweb.fiorilli.com.br/substituirNfse', Request,
+  Result := Executar('substituirNfse', Request,
                      ['SubstituirNfseResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
@@ -327,8 +328,8 @@ function TACBrNFSeXWebserviceFiorilli200.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverPrefixosDesnecessarios(Result);
-  Result := NativeStringToUTF8(Result);
 end;
 
 end.

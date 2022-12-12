@@ -48,5 +48,6 @@
         eSocial,
         GTIN,
         ConsultaCNPJ,
+        NCM,
     }
 }

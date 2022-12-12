@@ -69,7 +69,6 @@ exports
   NCM_BuscarPorCodigo,
   NCM_BuscarPorDescricao;
 
-
 begin
   {$IFDEF DEBUG}
    HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc';

@@ -65,10 +65,6 @@ var
 begin
   pLibConfig := TLibNCMsConfig(Lib.Config);
 
-  ACBrNCMs1.ProxyHost  := pLibConfig.NCMsConfig.ServidorProxy;
-  ACBrNCMs1.ProxyPort  := pLibConfig.NCMsConfig.PortaProxy;
-  ACBrNCMs1.ProxyUser  := pLibConfig.NCMsConfig.UsuarioProxy;
-  ACBrNCMs1.ProxyPass  := pLibConfig.NCMsConfig.SenhaProxy;
   ACBrNCMs1.CacheDiasValidade := pLibConfig.NCMsConfig.DiasValidadeCache;
   ACBrNCMs1.CacheArquivo      := pLibConfig.NCMsConfig.ArquivoCache;
 end;

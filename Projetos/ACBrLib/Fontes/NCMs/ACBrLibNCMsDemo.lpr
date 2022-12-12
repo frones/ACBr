@@ -72,5 +72,6 @@ begin
   {$ENDIF}
 
   MainThreadID := GetCurrentThreadId();
+  Application.Initialize;
 end.
 

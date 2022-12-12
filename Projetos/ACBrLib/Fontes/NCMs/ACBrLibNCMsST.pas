@@ -153,7 +153,7 @@ end;
 
 //--
 function NCM_DescricaoNCM(const cNCM: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -168,7 +168,7 @@ begin
 end;
 
 function NCM_Validar(const cNCM: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -183,7 +183,7 @@ begin
 end;
 
 function NCM_BaixarLista(const cNomeArquivo: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -198,7 +198,7 @@ begin
 end;
 
 function NCM_ObterNCMs(
-  const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -213,10 +213,10 @@ begin
 end;
 
 function NCM_BuscarPorCodigo(const cNCM: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(libHandle);
+    VerificarLibInicializada(pLib);
     Result := TACBrLibNCMs(pLib^.Lib).BuscarPorCodigo(cNCM, sResposta, esTamanho);
   except
     on E: EACBrLibException do
@@ -228,10 +228,10 @@ begin
 end;
 
 function NCM_BuscarPorDescricao(const cDesc: PChar; const nTipo: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; cdecl; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(libHandle);
+    VerificarLibInicializada(pLib);
     Result := TACBrLibNCMs(pLib^.Lib).BuscarPorDescricao(cDesc, nTipo, sResposta, esTamanho);
   except
     on E: EACBrLibException do

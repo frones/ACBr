@@ -8,8 +8,8 @@
       <Unit0>
         <Filename Value="ACBrLibNCMsDemo.lpr"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="25"/>
-        <CursorPos X="15" Y="40"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="26" Y="75"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -43,13 +43,10 @@
         <ComponentName Value="LibNCMsDM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="40"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="8"/>
         <CursorPos X="16" Y="36"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="ACBrLibCEPST.pas"/>

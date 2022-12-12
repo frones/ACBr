@@ -47,10 +47,6 @@ const
 
   CSessaoNCMs = 'NCMs';
 
-  CChaveServidorProxy = 'ServidorProxy';
-  CChavePortaProxy    = 'PortaProxy';
-  CChaveSenhaProxy    = 'SenhaProxy';
-  CChaveUsuarioProxy  = 'UsuarioProxy';
   CChaveArquivoCache  = 'ArquivoCache';
   CChaveDiasValidadeCache = 'DiasValidadeCache';
 

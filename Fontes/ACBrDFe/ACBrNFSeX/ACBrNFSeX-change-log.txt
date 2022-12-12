@@ -45,6 +45,9 @@ Símbolo : Significado
 
 12/12/2022
 -- Fiorilli.Provider --
+[*] Ajuste para tratar o XML retornado que esta no formato ANSI em vez de UTF-8
+   Por: Italo Giurizzato Junior
+-- Fiorilli.Provider --
 [*] Possível solução para o erro de SoapAction em ambiente de produção.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --

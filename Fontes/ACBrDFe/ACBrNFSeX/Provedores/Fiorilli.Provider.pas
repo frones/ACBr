@@ -328,6 +328,7 @@ function TACBrNFSeXWebserviceFiorilli200.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := NativeStringToUTF8(Result);
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverPrefixosDesnecessarios(Result);
 end;

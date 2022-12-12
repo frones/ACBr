@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] A cidade Jaú/SP trocou de provedor, agora é: Fiorilli
+   Por: Keiller Rodrigues
+
 08/12/2022
 -- ACBrNFSeXServicos.ini --
 [*] Incluída a cidade Araçoiaba da Serra/SP - provedor: Fiorilli

@@ -456,7 +456,7 @@ type
       default httpNone;
     property SSLXmlSignLib: TSSLXmlSignLib read FSSLXmlSignLib write SetSSLXmlSignLib
       default xsNone;
-    property SSLType: TSSLType read FSSLType write FSSLType default LT_all;
+    property SSLType: TSSLType read FSSLType write FSSLType default LT_TLSv1_2;
     property SSLDgst: TSSLDgst read FSSLDgst write FSSLDgst default dgstSHA1;
 
     property StoreLocation: TSSLStoreLocation read FStoreLocation
@@ -1296,7 +1296,7 @@ begin
   FTimeOutPorThread := False;
   FNameSpaceURI:= '';
 
-  FSSLType       := LT_all;
+  FSSLType       := LT_TLSv1_2;
   FSSLDgst       := dgstSHA1;
   FStoreLocation := slCurrentUser;
   FStoreName     := CDEFAULT_STORE_NAME;

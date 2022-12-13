@@ -228,7 +228,7 @@ implementation
 
 uses
   ACBrUtil.FilesIO, ACBrUtil.Strings,
-  ACBrNFSeX;
+  ACBrNFSeX, ACBrDFeException;
 
 { TEmitenteConfNFSe }
 
@@ -434,20 +434,19 @@ begin
 
   FPIniParams.SetStrings(fpConfiguracoes.WebServices.Params);
 
+  FxMunicipio := FPIniParams.ReadString(CodIBGE, 'Nome', '');
+  FxUF := FPIniParams.ReadString(CodIBGE, 'UF'  , '');
   FxProvedor := FPIniParams.ReadString(CodIBGE, 'Provedor', '');
-  FVersao := StrToVersaoNFSe(Ok, FPIniParams.ReadString(CodIBGE, 'Versao', ''));
+  FVersao := StrToVersaoNFSe(Ok, FPIniParams.ReadString(CodIBGE, 'Versao', '1.00'));
 
   FProvedor := StrToProvedor(FxProvedor);
 
+  if FProvedor = proNenhum then
+    raise EACBrDFeException.Create('Código do Municipio [' + CodIBGE +
+            '] não Encontrado.');
+
   if Assigned(fpConfiguracoes.Owner) then
     TACBrNFSeX(fpConfiguracoes.Owner).SetProvider;
-
-  if FProvedor = proNenhum then
-    raise Exception.Create(ACBrStr('Código do Municipio [' + CodIBGE +
-            '] não Encontrado.'));
-
-  FxMunicipio := FPIniParams.ReadString(CodIBGE, 'Nome', '');
-  FxUF := FPIniParams.ReadString(CodIBGE, 'UF'  , '');
 
   FLayout := TACBrNFSeX(TConfiguracoesNFSe(Owner).Owner).Provider.ConfigGeral.Layout;
 end;

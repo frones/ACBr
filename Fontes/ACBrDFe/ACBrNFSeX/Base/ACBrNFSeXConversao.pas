@@ -673,10 +673,9 @@ begin
   CodProvedor := GetEnumValue(TypeInfo(TnfseProvedor), ProvedorStr);
 
   if CodProvedor = -1 then
-    raise Exception.Create(Format('"%s" não é um valor TnfseProvedor válido.',
-                                                                [ProvedorStr]));
-
-  Result := TnfseProvedor(CodProvedor);
+    Result := proNenhum
+  else
+    Result := TnfseProvedor(CodProvedor);
 end;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;

@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 13/12/2022
+-- ACBrNFSeXConfiguracoes --
+[*] Trocado o Exception pelo EACBrDFeException na procedure LerParamsMunicipio
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXConversao --
+[*] Removido o Exception da função StrToProvedor
+   Por: Italo Giurizzato Junior
 -- Publica.Provider --
 [*] Correção na condição de Sucesso para validar se tem erros.
    Por: Alex Heinen

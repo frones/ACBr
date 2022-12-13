@@ -62,6 +62,7 @@ Public Const SESSAO_Sedex                     As String = "Sedex"
 Public Const SESSAO_eSocial                   As String = "eSocial"
 Public Const SESSAO_GTIN                      As String = "GTIN"
 Public Const SESSAO_ConsultaCNPJ              As String = "ConsultaCNPJ"
+Public Const SESSAO_NCM                       As String = "NCM"
 
 Public Enum NivelLog
     logNenhum = 0

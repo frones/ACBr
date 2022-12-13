@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] A cidade Tijucas/SC trocou de provedor, agora é: IPM
+   Por: Adriano Luiz de Souza
+
 12/12/2022
 -- Fiorilli.Provider --
 [*] Ajuste para tratar o XML retornado que esta no formato ANSI em vez de UTF-8

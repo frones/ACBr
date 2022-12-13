@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 13/12/2022
+-- Publica.Provider --
+[*] Correção na condição de Sucesso para validar se tem erros.
+   Por: Alex Heinen
+-- ISSRecife.Provider/ISSRio.Provider/Thema.Provider --
+[*] Aplicada a mesma correção na condição de Sucesso.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade Tijucas/SC trocou de provedor, agora é: IPM
    Por: Adriano Luiz de Souza

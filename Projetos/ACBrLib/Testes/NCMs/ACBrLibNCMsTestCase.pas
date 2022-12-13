@@ -87,12 +87,12 @@ const
   cTipoAto01 = 'Res Camex';
   cNumeroAto01 = '000272';
   AnoAto01 = '2021';
-  cRespostaCompleta01 = cCodigoNCMValido01 + '|'+ '"'+cDescricaoNCMValida01+'"' +'|'+cDataInicioVigecia01 +'|'+ cDataFinalVigencia01 +
+  cRespostaCompleta01 = cCodigoNCMValido01 + '|'+ cDescricaoNCMValida01 +'|'+cDataInicioVigecia01 +'|'+ cDataFinalVigencia01 +
                       '|'+ cTipoAto01 +'|'+ cNumeroAto01 +'|'+ AnoAto01;
 
   cDescricaoParcial01 = 'Cavalo';
-  cRetornoMultiplo01 =  '0101|"Cavalos, asininos e muares, vivos."|01/04/2022|31/12/9999|Res Camex|000272|2021'+ sLineBreak +
-                        '01012|"Cavalos:"|01/04/2022|31/12/9999|Res Camex|000272|2021';
+  cRetornoMultiplo01 =  '0101|Cavalos, asininos e muares, vivos.|01/04/2022|31/12/9999|Res Camex|000272|2021'+ sLineBreak +
+                        '01012|Cavalos:|01/04/2022|31/12/9999|Res Camex|000272|2021';
 
 procedure TTestACBrNCMsLib.Test_NCMs_Inicializar_Com_DiretorioInvalido;
 var
@@ -276,6 +276,8 @@ begin
 end;
 
 procedure TTestACBrNCMsLib.Test_NCM_ObterNCMs;
+const
+  SNomeArquivoACBrNCMJson = 'ACBrNCM.json';
 var
   Handle: PLibHandle;
   Resposta: String;
@@ -283,6 +285,11 @@ var
 begin
   Resposta := Space  (24);
   Tamanho := 24;
+
+  if FileExists(SNomeArquivoACBrNCMJson) then
+  begin
+    DeleteFile(SNomeArquivoACBrNCMJson);
+  end;
 
   AssertEquals(ErrOk, NCM_Inicializar(Handle, '',''));
 
@@ -292,7 +299,7 @@ begin
   CheckEquals('Lista de NCMs atualizada', Resposta, Resposta);
   //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  CheckTrue(FileExists('ACBrNCM.json'), 'Arquivo "ACBrNCM.json" não foi criado na pasta do executável');
+  CheckTrue(FileExists(SNomeArquivoACBrNCMJson), 'Arquivo "'+SNomeArquivoACBrNCMJson+'" não foi criado na pasta do executável');
 
   AssertEquals(ErrOk, NCM_Finalizar(Handle));
 end;

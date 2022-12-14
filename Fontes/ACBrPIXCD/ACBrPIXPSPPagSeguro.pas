@@ -105,13 +105,12 @@ begin
   inherited ConfigurarHeaders(aMethod, aURL);
 
   if (Pos('secure', aURL) <= 0) then
-    Exit;
-
-  if NaoEstaVazio(ArquivoCertificado) then
-    Http.Sock.SSL.CertificateFile := ArquivoCertificado;
-                                           
-  if NaoEstaVazio(ArquivoChavePrivada) then
-    Http.Sock.SSL.PrivateKeyFile := ArquivoChavePrivada;
+  begin
+    Http.Sock.SSL.CertificateFile := EmptyStr;
+    Http.Sock.SSL.Certificate := EmptyStr;
+    Http.Sock.SSL.PrivateKeyFile := EmptyStr;
+    Http.Sock.SSL.PrivateKey := EmptyStr;
+  end;
 end;
 
 procedure TACBrPSPPagSeguro.ConfigurarAutenticacao(const aMethod,

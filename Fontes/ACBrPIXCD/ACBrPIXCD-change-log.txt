@@ -48,6 +48,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/12/2022
+-- ACBrPSP --
+[*] Alteração para limpar também as propriedades User e Password do em LimparHTTP
+
+-- ACBrPIXPSPPagSeguro --
+[*] Correção de problema ao Simular pagamento após efetuar a criação de cobrança
+    As propriedades de certificado continuavam preenchidas.
+    Por: Elias César
+
+14/12/2022
 -- ACBrPIXPSPSicoob --
 [*] Alteração para PSP Sicoob herdar da classe TACBrPSPCertificate.
     por: Elias César

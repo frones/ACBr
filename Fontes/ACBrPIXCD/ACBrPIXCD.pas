@@ -1765,9 +1765,12 @@ procedure TACBrPSP.LimparHTTP;
 begin
   if (NivelLog > 2) then
     RegistrarLog('LimparHTTP');
+
   fHttpSend.Clear;
   fURLPathParams.Clear;
   fURLQueryParams.Clear;
+  fHttpSend.UserName := EmptyStr;
+  fHttpSend.Password := EmptyStr;
 end;
 
 procedure TACBrPSP.PrepararHTTP;

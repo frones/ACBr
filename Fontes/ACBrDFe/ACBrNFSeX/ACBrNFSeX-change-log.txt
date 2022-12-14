@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] Incluída a cidade Piraí/RJ - provedor: Tiplan
+   Por: Arimateia
+
 13/12/2022
 -- ACBrNFSeXConfiguracoes --
 [*] Trocado o Exception pelo EACBrDFeException na procedure LerParamsMunicipio

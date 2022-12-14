@@ -59,7 +59,7 @@ type
 
   { TACBrPSPSicoob }
 
-  TACBrPSPSicoob = class(TACBrPSP)
+  TACBrPSPSicoob = class(TACBrPSPCertificate)
   private
     fSandboxStatusCode: String;
     fxCorrelationID: String;
@@ -67,8 +67,6 @@ type
     fArquivoChavePrivada: String;
     fQuandoNecessitarCredenciais: TACBrQuandoNecessitarCredencial;
 
-    procedure SetArquivoCertificado(AValue: String);
-    procedure SetArquivoChavePrivada(AValue: String);
     procedure QuandoReceberRespostaEndPoint(const AEndPoint, AURL, AMethod: String;
       var AResultCode: Integer; var RespostaHttp: AnsiString);
   protected
@@ -85,8 +83,6 @@ type
     property ClientID;
     property ClientSecret;
 
-    property ArquivoChavePrivada: String read fArquivoChavePrivada write SetArquivoChavePrivada;
-    property ArquivoCertificado: String read fArquivoCertificado write SetArquivoCertificado;
     property SandboxStatusCode: String read fSandboxStatusCode write fSandboxStatusCode;
 
     property QuandoNecessitarCredenciais: TACBrQuandoNecessitarCredencial
@@ -171,22 +167,6 @@ begin
       [Http.ResultCode, ChttpMethodGET, AURL]));
 end;
 
-procedure TACBrPSPSicoob.SetArquivoCertificado(AValue: String);
-begin
-  if (fArquivoCertificado = AValue) then
-    Exit;
-
-  fArquivoCertificado := Trim(AValue);
-end;
-
-procedure TACBrPSPSicoob.SetArquivoChavePrivada(AValue: String);
-begin
-  if (fArquivoChavePrivada = AValue) then
-    Exit;
-
-  fArquivoChavePrivada := (AValue);
-end;
-
 procedure TACBrPSPSicoob.QuandoReceberRespostaEndPoint(const AEndPoint, AURL,
   AMethod: String; var AResultCode: Integer; var RespostaHttp: AnsiString);
 begin
@@ -212,11 +192,6 @@ end;
 procedure TACBrPSPSicoob.ConfigurarHeaders(const Method, AURL: String);
 begin
   inherited ConfigurarHeaders(Method, AURL);
-
-  if NaoEstaVazio(fArquivoCertificado) then
-    Http.Sock.SSL.CertificateFile := fArquivoCertificado;
-  if NaoEstaVazio(fArquivoChavePrivada) then
-    Http.Sock.SSL.PrivateKeyFile  := fArquivoChavePrivada;
 
   if NaoEstaVazio(ClientID) then
     Http.Headers.Add('client_id: ' + ClientID);

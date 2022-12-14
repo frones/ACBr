@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/12/2022
+-- ACBrPIXPSPSicoob --
+[*] Alteração para PSP Sicoob herdar da classe TACBrPSPCertificate.
+    por: Elias César
+
+14/12/2022
 -- ACBrPIXPSPSicredi --
 [*] Alteração do path da url API Pix do Sicredi
 [+] Inclusão dos scopes para cobranças com venscimento

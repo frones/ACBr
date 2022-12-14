@@ -278,12 +278,14 @@ type
     FProtocolo: String;
     FItemConsulta: TObjectList;
     FItemOcorrencia: TObjectList;
+    FnrRecibo: String;
+    Fhash: String;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
-    procedure Processar(const ACBreSocial: TACBreSocial); override;
+    procedure Processar(const ACBreSocial: TACBreSocial);
 
   published
     property TpInscEmpreg: String read FTpInscEmpreg write FTpInscEmpreg;
@@ -295,6 +297,8 @@ type
     property Protocolo: String read FProtocolo write FProtocolo;
     property ItemConsulta: TObjectList read FItemConsulta;
     property ItemOcorrencia: TObjectList read FItemOcorrencia;
+    property nrRecibo: String read FnrRecibo write FnrRecibo;
+    property hash: String read Fhash write Fhash;
 
   end;
 
@@ -463,7 +467,7 @@ var
   ItemCons : TConsultaResposta;
   ItemOcor : TOcorrenciaConsultaLote;
 begin
-  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote  do
+  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
   begin
     Codigo       := Status.cdResposta;
     Mensagem     := Status.descResposta;
@@ -474,6 +478,8 @@ begin
     DhRecepcao   := dadosRecLote.dhRecepcao;
     VersaoAplic  := dadosRecLote.versaoAplicRecepcao;
     Protocolo    := dadosRecLote.Protocolo;
+    nrRecibo     := RetEventos.Add.Recibo.nrRecibo;
+    hash         := RetEventos.Add.Recibo.Hash;
 
     if Status.cdResposta in [201, 202] then
     begin

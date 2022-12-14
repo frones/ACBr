@@ -51,7 +51,7 @@ const
   cSicrediURLSandbox = 'https://api-pix-h.sicredi.com.br';
   cSicrediURLProducao = 'https://api-pix.sicredi.com.br';
   cSicrediPathAuthToken = '/oauth/token';
-  cSicrediPathAPIPix = '/api';
+  cSicrediPathAPIPix = '/api/v2';
   cSicrediURLAuthTeste = cSicrediURLSandbox+cSicrediPathAuthToken;
   cSicrediURLAuthProducao = cSicrediURLProducao+cSicrediPathAuthToken;
 
@@ -135,7 +135,7 @@ begin
   qp := TACBrQueryParams.Create;
   try
     qp.Values['grant_type'] := 'client_credentials';
-    qp.Values['scope'] := 'cob.read cob.write pix.read pix.write';
+    qp.Values['scope'] := 'cob.read cob.write cobv.read cobv.write pix.read pix.write';
     Body := qp.AsURL;
     WriteStrToStream(Http.Document, Body);
     Http.MimeType := CContentTypeApplicationWwwFormUrlEncoded;

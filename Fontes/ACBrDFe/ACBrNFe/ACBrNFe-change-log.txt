@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2022
+-- ACBrNFeServicos --
+[*] Revertido as URLs de Consulta via QR-Code de MG Produção e Homologação.
+    Pois no Portal contem uma informação que mudou as URLs, mas o Webservice
+    não aceita essas novas URLs.
+   Por: Victor H Gonzales - Pandaaa
+
 29/11/2022
 -- ACBrNFeXmlWriter --
 [*] Ao gerar a chave estava passando o valor zero em vez de pegar o valor do

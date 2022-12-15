@@ -46,6 +46,8 @@ Símbolo : Significado
 
 15/12/2022
 -- ACBrNFeServicos --
+[*] Revertido a URL de Consulta via QR-Code de MG Produção.
+   Por: Italo Giurizzato Junior
 [*] Revertido as URLs de Consulta via QR-Code de MG Produção e Homologação.
     Pois no Portal contem uma informação que mudou as URLs, mas o Webservice
     não aceita essas novas URLs.

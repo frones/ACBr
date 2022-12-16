@@ -49,23 +49,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-09/12/2022
---ACBrBoletoRet_Sicredi_API--
-[-]Correção da função trata a data SICREDI
- por : Daniel de Morais
-
-02/12/2022
---ACBrBoletoWS--
-Revert 25580 [*]Correção de AV quando WS com erro e não houver JSON
- por : Victor H Gonzales - Pandaaa
-
---ACBrBancoUnicredES--
-[*]Correção da função TACBrBancoUnicredES.CodJurosToStr() 
- por : Daniel morais
-
---ACBrBoletoW_BancoBrasil_API--
-[*]TK-3327 ACBrBoleto - Ajuste integração via API para o BB quanto a multa
-  por : Aggille Sistemas de Gestão
+16/12/2022
+[+] TK-3264 ACBrBoleto - 212-Banco Original
+  por : Renato Pavan
 
 29/11/2022
 --ACBrBoletoWS--

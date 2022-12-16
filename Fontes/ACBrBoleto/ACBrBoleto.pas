@@ -427,7 +427,8 @@ type
     cobBancoSofisaSantander,
     cobBS2,
     cobPenseBankAPI,
-    cobBTGPactual
+    cobBTGPactual,
+    cobBancoOriginal
     );
 
   TACBrTitulo = class;
@@ -812,7 +813,7 @@ type
   private
     fTipoChave: TACBrPIXTipoChave;
     fChave: String;
-    published
+  published
     property TipoChavePIX: TACBrPIXTipoChave read fTipoChave write fTipoChave;
     property Chave: String   read fChave write fChave;
   end;
@@ -1900,7 +1901,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
      ACBrBancoBradescoMoneyPlus, ACBrBancoC6, ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
-     ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual;
+     ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual, ACBrBancoOriginal;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3532,6 +3533,7 @@ begin
     133: Result := cobBancoCresol;
     136: Result := cobUnicredES;
     208: Result := cobBTGPactual;
+    212: Result := cobBancoOriginal;
     218: Result := cobBS2;
     237: Result := cobBradesco;
     246: Result := cobBancoABCBrasil;
@@ -4356,6 +4358,7 @@ begin
      cobBS2                  : fBancoClass := TACBrBancoBS2.Create(Self);             {218}
      cobPenseBankAPI         : fBancoClass := TACBrBancoPenseBank.Create(Self);
      cobBTGPactual           : fBancoClass := TACBrBancoBTGPactual.create(Self);     {208}
+     cobBancoOriginal        : fBancoClass := TACBrBancoOriginal.Create(Self);        {212}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

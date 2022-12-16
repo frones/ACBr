@@ -1047,7 +1047,7 @@ begin
               begin
                 infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].DetInfoPerRef.New;
                 infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].DetInfoPerRef.Items[l].Find13      := leitor.rCampo(tcInt, 'ind13');
-                infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].DetInfoPerRef.Items[l].FtpVrPerRef := leitor.rCampo(tcInt, 'tpValor');
+                infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].DetInfoPerRef.Items[l].FtpVrPerRef := leitor.rCampo(tcInt, 'tpVrPerRef');
                 infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].DetInfoPerRef.Items[l].FvrPerRef   := leitor.rCampo(tcDe2, 'vrPerRef');
                 inc(l);
               end;

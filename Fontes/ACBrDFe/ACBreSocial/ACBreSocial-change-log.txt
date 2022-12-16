@@ -53,9 +53,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/12/2022
---pcesGerador--
+-- pcesGerador--
 [*] Ajuste para que não haja problemas de codificação quando o XML precisar ter caracteres especiais
   Por: DiegoF
+-- pcesS5001--
+[*] Corrige leitura da tag tpVrPerRef.
+  Por: DiegoCaetano 
 
 18/09/2022
 -- pcesS3000 --

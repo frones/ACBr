@@ -171,6 +171,10 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Santander.pas"/>
         <UnitName Value="ACBrBoletoRet_Santander"/>
       </Item37>
+      <Item38>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoOriginal.pas"/>
+        <UnitName Value="ACBrBancoOriginal"/>
+      </Item38>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

@@ -67,11 +67,11 @@ implementation
 uses
   ACBrValidador,
   ACBrUtil.Base,
-  ACBrUtil.Strings,
   ACBrUtil.DateTime,
   StrUtils,
   Variants,
-  DateUtils;
+  DateUtils,
+  ACBrUtil.Strings;
 
 constructor TACBrBancoOriginal.Create(AOwner: TACBrBanco);
 begin

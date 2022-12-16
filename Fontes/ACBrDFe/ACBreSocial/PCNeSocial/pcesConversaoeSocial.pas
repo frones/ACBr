@@ -2142,7 +2142,7 @@ end;
 
 function eSStrToCodIncFGTS(var ok: boolean; const s: string): tpCodIncFGTS;
 begin
-  result := tpCodIncFGTS( StrToEnumerado2(ok , s,[ '00', '11', '12', '21', '91' ] ));
+  result := tpCodIncFGTS( StrToEnumerado2(ok , s,[ '00', '11', '12', '21', '91', '92', '93' ] ));
 end;
 
 function eSCodIncSINDToStr(const t:tpCodIncSIND ): string;

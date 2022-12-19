@@ -1156,7 +1156,7 @@ begin
   begin
     with NFSe.Servico.Valores.tribMun do
     begin
-      tribISSQN := ObterConteudo(AuxNode.Childrens.FindAnyNs('tribISSQN'), tcStr);
+      tribISSQN := StrTotribISSQN(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tribISSQN'), tcStr));
       cPaisResult := SiglaISO2ToCodIBGEPais(ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisResult'), tcStr));
 
       LerBeneficioMunicipal(AuxNode);
@@ -1164,7 +1164,7 @@ begin
 
       tpImunidade := StrTotpImunidade(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpImunidade'), tcStr));
       pAliq := ObterConteudo(AuxNode.Childrens.FindAnyNs('pAliq'), tcDe2);
-      tpRetISSQN := ObterConteudo(AuxNode.Childrens.FindAnyNs('tpRetISSQN'), tcStr);
+      tpRetISSQN := StrTotpRetISSQN(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpRetISSQN'), tcStr));
     end;
   end;
 end;

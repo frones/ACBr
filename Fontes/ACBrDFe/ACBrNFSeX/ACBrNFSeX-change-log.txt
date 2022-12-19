@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/12/2022
+-- PadraoNacional.LerXml --
+[*] Estava faltando as funções de conversão ao ler os campos: tribISSQN e 
+    tpRetISSQN.
+   Por: Italo Giurizzato Junior
+
 14/12/2022
 -- ACBrNFSeXServicos.ini --
 [*] Incluída a cidade Piraí/RJ - provedor: Tiplan

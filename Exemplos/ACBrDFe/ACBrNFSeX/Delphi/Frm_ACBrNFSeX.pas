@@ -267,6 +267,8 @@ type
     btnConsultarParamMunicBeneficio: TButton;
     Label48: TLabel;
     lblLayout: TLabel;
+    cbLayoutNFSe: TComboBox;
+    Label49: TLabel;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -3078,6 +3080,7 @@ var
   V: TSSLHttpLib;
   X: TSSLXmlSignLib;
   Y: TSSLType;
+  L: TLayoutNFSe;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -3108,6 +3111,11 @@ begin
   for I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
     cbFormaEmissao.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I)));
   cbFormaEmissao.ItemIndex := 0;
+
+  cbLayoutNFSe.Items.Clear;
+  for L := Low(TLayoutNFSe) to High(TLayoutNFSe) do
+    cbLayoutNFSe.Items.Add(GetEnumName(TypeInfo(TLayoutNFSe), integer(L)));
+  cbLayoutNFSe.ItemIndex := 0;
 
   LerConfiguracao;
 
@@ -3147,6 +3155,8 @@ begin
     Ini.WriteBool(   'Geral', 'ConsultaAposEnvio',    chkConsultaLoteAposEnvio.Checked);
     Ini.WriteBool(   'Geral', 'ConsultaAposCancelar', chkConsultaAposCancelar.Checked);
     Ini.WriteBool(   'Geral', 'MontarPathSchemas',    chkMontarPathSchemas.Checked);
+
+    Ini.WriteInteger('Geral', 'LayoutNFSe',     cbLayoutNFSe.ItemIndex);
 
     Ini.WriteInteger('WebService', 'Ambiente',     rgTipoAmb.ItemIndex);
     Ini.WriteBool(   'WebService', 'Visualizar',   cbxVisualizar.Checked);
@@ -3282,6 +3292,8 @@ begin
     chkConsultaLoteAposEnvio.Checked := Ini.ReadBool('Geral', 'ConsultaAposEnvio',    False);
     chkConsultaAposCancelar.Checked  := Ini.ReadBool('Geral', 'ConsultaAposCancelar', False);
     chkMontarPathSchemas.Checked     := Ini.ReadBool('Geral', 'MontarPathSchemas',    True);
+
+    cbLayoutNFSe.ItemIndex     := Ini.ReadInteger('Geral', 'LayoutNFSe',     0);
 
     rgTipoAmb.ItemIndex     := Ini.ReadInteger('WebService', 'Ambiente',     0);
     cbxVisualizar.Checked   := Ini.ReadBool(   'WebService', 'Visualizar',   False);
@@ -4450,6 +4462,7 @@ begin
   // Pois ela se utiliza das demais configurações
   with ACBrNFSeX1.Configuracoes.Geral do
   begin
+    LayoutNFSe := TLayoutNFSe(cbLayoutNFSe.ItemIndex);
     CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
   end;
 

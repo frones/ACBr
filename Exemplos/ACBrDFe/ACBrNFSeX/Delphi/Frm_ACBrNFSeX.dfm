@@ -462,6 +462,16 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Height = 13
                 Caption = 'Schemas do Provedor:'
               end
+              object Label49: TLabel
+                Left = 8
+                Top = 307
+                Width = 80
+                Height = 13
+                Alignment = taRightJustify
+                Caption = 'Layout da NFS-e'
+                Color = clBtnFace
+                ParentColor = False
+              end
               object edtPathLogs: TEdit
                 Left = 8
                 Top = 162
@@ -530,7 +540,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               end
               object chkConsultaLoteAposEnvio: TCheckBox
                 Left = 9
-                Top = 304
+                Top = 262
                 Width = 152
                 Height = 17
                 Caption = 'Consultar Lote Ap'#243's Envio'
@@ -538,7 +548,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               end
               object chkConsultaAposCancelar: TCheckBox
                 Left = 9
-                Top = 320
+                Top = 282
                 Width = 152
                 Height = 17
                 Caption = 'Consultar Ap'#243's Cancelar'
@@ -551,6 +561,15 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Height = 17
                 Caption = 'Montar automaticamente o Path dos Schemas'
                 TabOrder = 10
+              end
+              object cbLayoutNFSe: TComboBox
+                Left = 9
+                Top = 323
+                Width = 160
+                Height = 21
+                Style = csDropDownList
+                TabOrder = 11
+                OnChange = cbSSLLibChange
               end
             end
           end

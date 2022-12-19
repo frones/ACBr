@@ -5,8 +5,10 @@ program ACBrNFSeXTestCases;
 uses
   Interfaces, Forms, ACBrNFSeXTests, ACBrTests.Util, GuiTestRunner,
   ACBrNFSeXProvedorABRASFv1Tests, ACBrNFSeXProvedorABRASFv2Tests,
+  ACBrNFSeXProvedorAssessorPublicoTests,
   ACBrNFSeXProvedorPadraoNacionalTests,
-  ACBrNFSeXProvedorSigISSTests, ACBrNFSeXProvedorSoftPlanTests, 
+  ACBrNFSeXProvedorSigISSTests, 
+  ACBrNFSeXProvedorSoftPlanTests, 
   ACBrNFSeXProvedorWebFiscoTests;
 
 {$R *.res}

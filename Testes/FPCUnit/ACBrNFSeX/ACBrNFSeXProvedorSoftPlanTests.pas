@@ -82,13 +82,13 @@ begin
     sxml := Copy(sxml, 0, Length(sxml) - Length(sLineBreak));
   end;
 
-  FACBrNFSeX1.NotasFiscais.LoadFromFile(SArquivoSoftPlan01);
+  FACBrNFSeX1.NotasFiscais.LoadFromFile(SArquivoSoftPlan01, False);
   CheckEquals(sxml, FACBrNFSeX1.NotasFiscais[0].XmlNfse, 'Campo XmlNfse não corresponde ao conteúdo do arquivo');
 end;
 
 procedure ACBrNFSeXProvedorSoftPlanTest.LoadFromFile_PassandoXMLValidoNaoAssinado_CamposCarregadosCorretamente;
 begin
-  FACBrNFSeX1.NotasFiscais.LoadFromFile(SArquivoSoftPlan01);
+  FACBrNFSeX1.NotasFiscais.LoadFromFile(SArquivoSoftPlan01, False);
 
   CheckTrue(FACBrNFSeX1.NotasFiscais.Count > 0, '');
 

@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 19/12/2022
+-- ACBrNFSeXConfiguracoes/ACBrNFSeXConversao --
+[+] Implementado a propriedade de configuração: LayoutNFSe que aceita os seguintes
+    valores: lnfsProvedor (padrão), lnfsPadraoNacionalv1.
+    Se alterado para lnfsPadraoNacionalv1 o componente entende que deve-se enviar
+    o RPS para a API do Padrão Nacional.
+   Por: Italo Giurizzato Junior
 -- PadraoNacional.LerXml --
 [*] Estava faltando as funções de conversão ao ler os campos: tribISSQN e 
     tpRetISSQN.

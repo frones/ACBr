@@ -58,6 +58,8 @@ type
 
   TLayout =(loABRASF, loProprio);
 
+  TLayoutNFSe = (lnfsProvedor, lnfsPadraoNacionalv1);
+
   TStatusRPS = (srNormal, srCancelado);
 
   TStatusNFSe = (snNormal, snCancelado, snSubstituido);

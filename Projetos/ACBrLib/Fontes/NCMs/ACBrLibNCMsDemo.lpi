@@ -11,16 +11,18 @@
         <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="ACBrLibCEP"/>
+      <Title Value="ACBrLibNCMs"/>
       <ResourceType Value="res"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
+      <MinorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="102"/>
+      <BuildNr Value="124"/>
       <Language Value="0416"/>
-      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCEP - Biblioteca para consulta Endereços e CEPs" InternalName="ACBrLibCEP" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CEP" ProductVersion="0.0.1.30"/>
+      <Attributes pvaPreRelease="True"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNCMs - Biblioteca para consulta de NCMs" InternalName="ACBrLibNCMs" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>
     </VersionInfo>
     <BuildModes Count="13">
       <Item1 Name="Win32-i386-CDECL" Default="True"/>
@@ -29,13 +31,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\Cdecl\ACBrNCMs64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
@@ -43,10 +50,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -64,13 +73,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\StdCall\ACBrNCMs32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
@@ -78,10 +92,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -99,13 +115,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\StdCall\ACBrNCMs64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
@@ -113,10 +134,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -134,13 +157,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\Linux\acbrncms64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
@@ -148,10 +176,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -169,13 +199,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\Linux\acbrncms32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
@@ -183,10 +218,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -199,20 +236,26 @@
           </Other>
         </CompilerOptions>
       </Item6>
-      <Item7 Name="i386-CDECL-DEBUG">
+      <Item7 Name="i386 - CDECL - DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="C:\ACBr\Projetos\ACBrLib\Testes\NCMs\bin\ACBrNCMs32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
@@ -224,7 +267,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dDemo -dDEBUG -dMT -dNOGUI"/>
+            <CustomOptions Value="-dDemo -dDEBUG -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item7>
@@ -233,13 +276,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\MT\Cdecl\ACBrNCMs32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
@@ -247,10 +295,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -263,53 +313,23 @@
           </Other>
         </CompilerOptions>
       </Item8>
-      <Item9 Name="Win64-x86_64-CDECL-MT">
+      <Item9 Name="Win32-i386-STDCALL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\MT\StdCall\ACBrNCMs32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
-          <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
-            <TargetCPU Value="x86_64"/>
-            <TargetOS Value="win64"/>
-            <Optimizations>
-              <OptimizationLevel Value="3"/>
-            </Optimizations>
-          </CodeGeneration>
-          <Linking>
-            <Debugging>
-              <GenerateDebugInfo Value="False"/>
-              <StripSymbols Value="True"/>
-            </Debugging>
-            <LinkSmart Value="True"/>
-            <Options>
-              <ExecutableType Value="Library"/>
-            </Options>
-          </Linking>
-          <Other>
-            <CustomOptions Value="-dDemo -dMT -dNOGUI"/>
-          </Other>
-        </CompilerOptions>
-      </Item9>
-      <Item10 Name="Win32-i386-STDCALL-MT">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <PathDelim Value="\"/>
-          <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
-          </Target>
-          <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum"/>
-            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
-          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
@@ -317,10 +337,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -332,19 +354,24 @@
             <CustomOptions Value="-dDemo -dMT -dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item10>
-      <Item11 Name="Win64-x86_64-STDCALL-MT">
+      </Item9>
+      <Item10 Name="Win64-x86_64-CDECL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\MT\Cdecl\ACBrNCMs64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
@@ -352,10 +379,54 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dDemo -dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item10>
+      <Item11 Name="Win64-x86_64-STDCALL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\StdCall\ACBrNCMs64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -373,13 +444,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\MT\Linux\acbrncms64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
@@ -387,10 +463,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -408,13 +486,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+            <Filename Value="bin\MT\Linux\acbrncms32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
@@ -422,10 +505,12 @@
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -444,13 +529,17 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CEP\bin\ACBrLibCEPTest.exe"/>
+        <HostApplicationFilename Value="C:\ACBr\Projetos\ACBrLib\Testes\NCMs\bin\ACBrLibNCMsTest.exe"/>
+        <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe \C ${TargetCmdLine}"/>
+        <WorkingDirectory Value=".\"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CEP\bin\ACBrLibCEPTest.exe"/>
+            <HostApplicationFilename Value="C:\ACBr\Projetos\ACBrLib\Testes\NCMs\bin\ACBrLibNCMsTest.exe"/>
+            <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe \C ${TargetCmdLine}"/>
+            <WorkingDirectory Value=".\"/>
           </local>
         </Mode0>
       </Modes>
@@ -460,72 +549,72 @@
         <PackageName Value="ACBrTCP"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="12">
+    <Units Count="11">
       <Unit0>
-        <Filename Value="ACBrLibNCMsDemo.lpr"/>
+        <Filename Value="ACBrLibNCMs.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="ACBrLibCEPConfig.pas"/>
+        <Filename Value="..\Comum\ACBrLibComum.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrLibNCMsConfig"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Comum\ACBrLibComum.pas"/>
+        <Filename Value="..\Comum\ACBrLibConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\Comum\ACBrLibConfig.pas"/>
+        <Filename Value="..\Comum\ACBrLibConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\Comum\ACBrLibConsts.pas"/>
+        <Filename Value="..\Comum\ACBrLibResposta.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
+        <Filename Value="ACBrLibNCMsConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="ACBrLibNCMsBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="ACBrLibNCMsConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
         <Filename Value="ACBrLibNCMsDataModule.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="LibNCMsDM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="ACBrLibCEPST.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="ACBrLibCEPConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="ACBrLibCEPRespostas.pas"/>
-        <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="..\Comum\ACBrLibResposta.pas"/>
+        <Filename Value="ACBrLibNCMsST.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
       <Unit10>
-        <Filename Value="ACBrLibCEPBase.pas"/>
+        <Filename Value="ACBrLibNCMsMT.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
-      <Unit11>
-        <Filename Value="ACBrLibCEPMT.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="bin\Demo\Cdecl\ACBrLibNCMsDemo"/>
+      <Filename Value="bin\Cdecl\ACBrNCMs32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
       <OtherUnitFiles Value="..\Comum"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
       <TargetCPU Value="i386"/>
@@ -533,10 +622,12 @@
       <Optimizations>
         <OptimizationLevel Value="3"/>
       </Optimizations>
+      <SmallerCode Value="True"/>
     </CodeGeneration>
     <Linking>
       <Debugging>
         <GenerateDebugInfo Value="False"/>
+        <UseLineInfoUnit Value="False"/>
         <StripSymbols Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>

@@ -3,89 +3,174 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
+    <ManyBuildModesSelection Value="Win32-i386-CDECL,Win64-x86_64-CDECL,Win32-i386-STDCALL,Win64-x86_64-STDCALL,Linux-x86_64,Linux-i386,&quot;i386 - CDECL - DEBUG&quot;,Win32-i386-CDECL-MT,Win32-i386-STDCALL-MT,Win64-x86_64-CDECL-MT,Win64-x86_64-STDCALL-MT,Linux-x86_64-MT,Linux-i386-MT"/>
     <BuildModes Active="Win32-i386-CDECL"/>
-    <Units Count="12">
+    <Units Count="17">
       <Unit0>
-        <Filename Value="ACBrLibNCMsDemo.lpr"/>
+        <Filename Value="ACBrLibNCMs.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="26" Y="75"/>
-        <UsageCount Value="20"/>
+        <CursorPos X="16" Y="64"/>
+        <UsageCount Value="222"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="ACBrLibCEPConfig.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrLibNCMsConfig"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="13"/>
-        <CursorPos X="13" Y="35"/>
-        <UsageCount Value="20"/>
-      </Unit1>
-      <Unit2>
         <Filename Value="..\Comum\ACBrLibComum.pas"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
-      </Unit2>
-      <Unit3>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="65"/>
+        <CursorPos X="18" Y="35"/>
+        <UsageCount Value="222"/>
+      </Unit1>
+      <Unit2>
         <Filename Value="..\Comum\ACBrLibConfig.pas"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
-      </Unit3>
-      <Unit4>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="72"/>
+        <CursorPos X="21" Y="48"/>
+        <UsageCount Value="222"/>
+      </Unit2>
+      <Unit3>
         <Filename Value="..\Comum\ACBrLibConsts.pas"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="51"/>
+        <CursorPos X="3" Y="66"/>
+        <UsageCount Value="222"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Comum\ACBrLibResposta.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="57"/>
+        <CursorPos X="3" Y="51"/>
+        <UsageCount Value="222"/>
       </Unit4>
       <Unit5>
+        <Filename Value="ACBrLibNCMsConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="50"/>
+        <CursorPos Y="58"/>
+        <UsageCount Value="220"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="ACBrLibNCMsBase.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="107"/>
+        <CursorPos X="26" Y="234"/>
+        <UsageCount Value="220"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="ACBrLibNCMsConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="18"/>
+        <CursorPos X="30" Y="43"/>
+        <UsageCount Value="220"/>
+      </Unit7>
+      <Unit8>
         <Filename Value="ACBrLibNCMsDataModule.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="LibNCMsDM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="8"/>
-        <CursorPos X="16" Y="36"/>
-        <UsageCount Value="20"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="ACBrLibCEPST.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="ACBrLibCEPConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="ACBrLibCEPRespostas.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="35"/>
+        <CursorPos Y="67"/>
+        <UsageCount Value="220"/>
       </Unit8>
       <Unit9>
-        <Filename Value="..\Comum\ACBrLibResposta.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="ACBrLibCEPBase.pas"/>
+        <Filename Value="ACBrLibNCMsST.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="32"/>
-        <CursorPos X="25" Y="52"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="212"/>
+        <CursorPos X="136" Y="227"/>
+        <UsageCount Value="321"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="ACBrLibNCMsMT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="225"/>
+        <CursorPos X="84" Y="244"/>
+        <UsageCount Value="243"/>
       </Unit10>
       <Unit11>
-        <Filename Value="ACBrLibCEPMT.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
+        <Filename Value="ACBrLibNCMsStaticImportMT.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="48"/>
+        <CursorPos X="8" Y="73"/>
+        <UsageCount Value="120"/>
       </Unit11>
+      <Unit12>
+        <Filename Value="ACBrLibNCMsRespostas.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="96"/>
+        <CursorPos X="12" Y="111"/>
+        <UsageCount Value="90"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="27"/>
+        <CursorPos X="3" Y="46"/>
+        <UsageCount Value="82"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\Comum\backup\ACBrLibConsts.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="226"/>
+        <CursorPos X="18" Y="229"/>
+        <UsageCount Value="81"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\Comum\ACBrLibDemo.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="34"/>
+        <CursorPos X="18" Y="53"/>
+        <UsageCount Value="89"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\Comum\ACBrObjectSerializer.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="136"/>
+        <CursorPos X="61" Y="161"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit16>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory Count="4" HistoryIndex="3">
+      <Position1>
+        <Filename Value="ACBrLibNCMs.lpr"/>
+        <Caret Line="65" Column="12" TopLine="51"/>
+      </Position1>
+      <Position2>
+        <Filename Value="ACBrLibNCMs.lpr"/>
+        <Caret Line="60" Column="40" TopLine="44"/>
+      </Position2>
+      <Position3>
+        <Filename Value="ACBrLibNCMs.lpr"/>
+        <Caret Line="67" Column="39" TopLine="44"/>
+      </Position3>
+      <Position4>
+        <Filename Value="ACBrLibNCMs.lpr"/>
+        <Caret Line="80" Column="27" TopLine="44"/>
+      </Position4>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode="default"/>
     </RunParams>
+    <HistoryLists Count="2">
+      <List0 Name="WorkingDirectory" Type="File" Count="2">
+        <Item1 Value=".\"/>
+        <Item2 Value="..\..\Testes\NCMs\bin"/>
+      </List0>
+      <List1 Name="LaunchingApplication" Type="File" Count="1">
+        <Item1 Value="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
+      </List1>
+    </HistoryLists>
   </ProjectSession>
 </CONFIG>

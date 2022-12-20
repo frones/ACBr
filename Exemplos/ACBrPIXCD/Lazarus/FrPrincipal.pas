@@ -2136,7 +2136,7 @@ begin
   ACBrOpenSSLUtils1.LoadPrivateKeyFromString(mmSicrediGerarChavePrivada.Text);
   wCertificado := ACBrOpenSSLUtils1.CreateCertificateSignRequest(
                     'api-pix-' + OnlyAlphaNum(TiraAcentos(edtRecebedorNome.Text)),
-                    edtRecebedorNome.Text,
+                    'Confederacao Interestadual das Cooperativas Ligadas ao Sicredi',
                     'API PIX Sicredi',
                     'Porto Alegre',
                     'Rio Grande do Sul', 'BR',

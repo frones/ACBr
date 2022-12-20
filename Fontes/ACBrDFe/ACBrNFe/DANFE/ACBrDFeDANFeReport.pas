@@ -69,6 +69,7 @@ type
     FExibeInforAdicProduto: TinfAdcProd;
     FImprimeNomeFantasia: Boolean;
     FTipoDANFE: TpcnTipoImpressao;
+    FImprimeXPedNItemPed : Boolean;
 
     procedure SetACBrNFE(const AValue: TComponent);
     procedure ErroAbstract(const NomeProcedure: String);
@@ -135,6 +136,7 @@ type
     property ImprimeCodigoEan: Boolean read FImprimeCodigoEan write FImprimeCodigoEan default False;
     property ImprimeInfContr: Boolean read FImprimeInfContr write FImprimeInfContr default True;
     property ImprimeNomeFantasia: Boolean read FImprimeNomeFantasia write FImprimeNomeFantasia default False;
+    property ImprimeXPedNItemPed : Boolean read FImprimeXPedNItemPed write FImprimeXPedNItemPed default False;
   end;
 
 implementation
@@ -406,6 +408,7 @@ end;
 function TACBrDFeDANFeReport.ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String;
 var
   sQuebraLinha: String;
+  LxPed, LnItemPed : String;
 begin
   Result := '';
 
@@ -422,7 +425,20 @@ begin
     Result := StringReplace(Result, ';', sQuebraLinha, [rfReplaceAll, rfIgnoreCase]);
     if (Result <> '') then
       Result := sQuebraLinha + Result;
-  end
+  end;
+
+  LxPed := aNFE.Det.Items[inItem].Prod.xPed;
+  LnItemPed := aNFE.Det.Items[inItem].Prod.nItemPed;
+
+  if (ImprimeXPedNItemPed) and (NaoEstaVazio(LxPed) or NaoEstaVazio(LnItemPed)) then
+  begin
+    Result := Result + ';N.Pedido = ' + LxPed + '  '+ 'N.Item = ' + LnItemPed;
+
+    sQuebraLinha := SeparadorDetalhamentos;
+    Result := StringReplace(Result, ';', sQuebraLinha, [rfReplaceAll, rfIgnoreCase]);
+
+  end;
+
 end;
 
 function TACBrDFeDANFeReport.ManterInfCompl(ANFe: TNFe): String;

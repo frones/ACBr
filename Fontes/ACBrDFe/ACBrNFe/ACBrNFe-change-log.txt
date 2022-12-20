@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2022
+--ACBrDFeDANFeReport--
+[+] TK-3373-1 Opção para impressão do xPED e nTemPed no Danfe (RL e FR) quadro de produtos
+  por : Victor H Gonzales - Pandaaa
+
 15/12/2022
 -- ACBrNFeServicos --
 [*] Revertido a URL de Consulta via QR-Code de MG Produção.

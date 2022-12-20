@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="12"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
-        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
       <Title Value="ACBrLibNCMs"/>
       <ResourceType Value="res"/>
     </General>
@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="122"/>
+      <BuildNr Value="123"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNCMs - Biblioteca para consulta de NCMs" InternalName="ACBrLibNCMs" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>
@@ -530,7 +530,7 @@
     <RunParams>
       <local>
         <HostApplicationFilename Value="C:\ACBr\Projetos\ACBrLib\Testes\NCMs\bin\ACBrLibNCMsTest.exe"/>
-        <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
+        <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe \C ${TargetCmdLine}"/>
         <WorkingDirectory Value=".\"/>
       </local>
       <FormatVersion Value="2"/>
@@ -538,7 +538,7 @@
         <Mode0 Name="default">
           <local>
             <HostApplicationFilename Value="C:\ACBr\Projetos\ACBrLib\Testes\NCMs\bin\ACBrLibNCMsTest.exe"/>
-            <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
+            <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe \C ${TargetCmdLine}"/>
             <WorkingDirectory Value=".\"/>
           </local>
         </Mode0>

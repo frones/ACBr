@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Uberaba/MG mudou a versão e as URLs, provedor ainda é WebISS
+   Por: Diego Reckziegel
 
 19/12/2022
 -- ACBrNFSeXConfiguracoes/ACBrNFSeXConversao --

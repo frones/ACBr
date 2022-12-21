@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2022
+-- ACBrNFSeXServicos.ini --
+[*] Adiciona a URL de produção para Brasília/DF.
+   Por: Lino 
+
 20/12/2022
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Uberaba/MG mudou a versão e as URLs, provedor ainda é WebISS

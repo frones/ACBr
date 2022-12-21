@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2022
+--ACBrDFeDANFeReport--
+[*] TK-3373-1 Opção para impressão do xPED e nTemPed no Danfe (RL e FR) quadro de produtos
+    Removido do grupo informação adicional, criado a função separada para o parametro de
+    dados adicionais não inferir nessa opção. (ExibeInforAdicProduto)
+  por : Victor H Gonzales - Pandaaa
+
 20/12/2022
 --ACBrDFeDANFeReport--
 [+] TK-3373-1 Opção para impressão do xPED e nTemPed no Danfe (RL e FR) quadro de produtos

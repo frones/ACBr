@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2022
+--- ACBrLibNFeConsts, ACBrLibNFeConfig --- 
+[+] Adicionado propriedade ImprimeInscSuframa - #TK-2947-3
+    Por: Antonio Carlos Junior
+
 06/02/2022
 --- ACBrLibNFeBase ---
 [-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver

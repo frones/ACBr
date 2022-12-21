@@ -88,6 +88,7 @@ const
   CChaveRecuoEndereco = 'RecuoEndereco';
   CChaveRecuoEmpresa = 'RecuoEmpresa';
   CChaveLogoemCima = 'LogoemCima';
+  CChaveImprimeInscSuframa = 'ImprimeInscSuframa';
   CChaveRecuoLogo = 'RecuoLogo';
   CChaveExpandirDadosAdicionaisAuto = 'ExpandirDadosAdicionaisAuto';
   CChaveImprimeContDadosAdPrimeiraPagina = 'ImprimeContDadosAdPrimeiraPagina';

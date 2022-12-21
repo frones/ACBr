@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2022
+--- ACBrMonitorConsts, ACBrMonitorConfig, ACBrMonitor1 ---
+[+] Nova Propriedade para impressão do xPed e nItemPed na DANFE
+    Por: Daniel Morais / Victor H Gonzales - Pandaaa
+	
 29/11/2022
 --- ACBrMonitorConsts, DoACBreSocialUnit ---
 [+] Novos métodos ObterCertificados e ValidarXML para o eSocial

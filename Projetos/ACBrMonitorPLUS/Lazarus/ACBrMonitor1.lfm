@@ -28846,6 +28846,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ParentFont = False
                     WordWrap = True
                   end
+                  object cbxImprimeXPedNitemPed: TCheckBox
+                    Left = 262
+                    Height = 21
+                    Top = 298
+                    Width = 477
+                    Caption = 'Imprime xPed e nItemPed no quadro de detalhamento de produtos e serviços'
+                    Font.Height = -13
+                    ParentFont = False
+                    TabOrder = 25
+                  end
                 end
                 object tsImpNFCe: TTabSheet
                   Caption = 'NFC-e'

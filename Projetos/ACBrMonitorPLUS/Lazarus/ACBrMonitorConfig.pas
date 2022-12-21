@@ -350,6 +350,7 @@ type
     ExpandirDadosAdicionaisAuto      : Boolean;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean;
     ImprimirCampoFormaPagamento      : Integer;
+    ImprimeXPedNitemPed              : boolean;
   end;
 
   TDACTE = record
@@ -1210,6 +1211,7 @@ begin
       Ini.WriteBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto , ExpandirDadosAdicionaisAuto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
       Ini.WriteInteger (CSecDANFE, CKeyDANFEImprimirCampoFormaPagamento, ImprimirCampoFormaPagamento);
+      Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimeXPedNitemPed  , ImprimeXPedNitemPed );
 
     end;
 
@@ -1942,6 +1944,7 @@ begin
       ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina,
                                                         ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
       ImprimirCampoFormaPagamento   := Ini.ReadInteger( CSecDANFE, CKeyDANFEImprimirCampoFormaPagamento  , ImprimirCampoFormaPagamento );
+      ImprimeXPedNitemPed           := Ini.ReadBool( CSecDANFE, CKeyDANFEImprimeXPedNitemPed  , ImprimeXPedNitemPed );
 
     end;
 
@@ -2662,6 +2665,7 @@ begin
     LogoEmCima                 := False;
     ExpandirDadosAdicionaisAuto := False;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= False;
+    ImprimeXPedNitemPed        := False;
   end;
 
   with DFe.Impressao.DACTE do

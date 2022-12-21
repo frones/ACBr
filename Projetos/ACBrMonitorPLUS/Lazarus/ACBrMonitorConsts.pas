@@ -1068,10 +1068,12 @@ const
   CKeyDANFEImprimirDadosDocReferenciados = 'ImprimirDadosDocReferenciados';
   CKeyDANFEExibirBandInforAdicProduto =    'ExibirBandInforAdicProduto';
   CKeyDANFELogoEmCima =                    'LogoEmCima';
-  CKeyDANFEExpandirDadosAdicionaisAuto = 'ExpandirDadosAdicionaisAuto';
+  CKeyDANFEExpandirDadosAdicionaisAuto =   'ExpandirDadosAdicionaisAuto';
   CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina = 'ImprimeContinuacaoDadosAdicionaisPrimeiraPagina';
-  CKeyDANFEImprimeDescAcrescItemNFe = 'ImprimeDescAcrescItemNFe';
-  CKeyDANFEImprimirCampoFormaPagamento = 'ImprimirCampoFormaPagamento';
+  CKeyDANFEImprimeDescAcrescItemNFe =      'ImprimeDescAcrescItemNFe';
+  CKeyDANFEImprimirCampoFormaPagamento =   'ImprimirCampoFormaPagamento';
+  CKeyDANFEImprimeXPedNitemPed =           'ImprimeXPedNitemPed';
+
 
   CSecDANFCe =                         'DANFCe';
   CKeyDANFCeMargemInf =                'MargemInf';

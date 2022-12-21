@@ -380,6 +380,7 @@ type
     cbxImpDescPorc: TCheckBox;
     cbxImpDetEspNFe: TCheckBox;
     cbxImpDocsReferenciados: TCheckBox;
+    cbxImprimeXPedNitemPed: TCheckBox;
     cbxImpressora: TComboBox;
     cbxImpressoraNFCe: TComboBox;
     cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina: TCheckBox;
@@ -5894,6 +5895,7 @@ begin
       cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked:= ImprimeContinuacaoDadosAdicionaisPrimeiraPagina;
       rgImprimeDescAcrescItemNFe.ItemIndex:= ImprimeDescAcrescItemNFe;
       rgInfFormaPagNFe.ItemIndex          := ImprimirCampoFormaPagamento;
+      cbxImprimeXPedNitemPed.Checked      := ImprimeXPedNitemPed;
     end;
 
     with Impressao.DACTE do
@@ -7108,6 +7110,7 @@ begin
         ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked;
         ImprimeDescAcrescItemNFe   := rgImprimeDescAcrescItemNFe.ItemIndex;
         ImprimirCampoFormaPagamento:= rgInfFormaPagNFe.ItemIndex;
+        ImprimeXPedNitemPed        := cbxImprimeXPedNitemPed.Checked;
       end;
 
       with Impressao.DACTE do
@@ -10781,7 +10784,7 @@ begin
       ACBrNFeDANFeRL1.ImprimeDescAcrescItem:= TpcnImprimeDescAcrescItem(rgImprimeDescAcrescItemNFe.ItemIndex);
       ACBrNFeDANFeRL1.ExibeCampoDePagamento:= TpcnInformacoesDePagamento(rgInfFormaPagNFe.ItemIndex);
       ACBrNFeDANFeRL1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
-
+      ACBrNFeDANFeRL1.ImprimeXPedNItemPed := cbxImprimeXPedNitemPed.Checked;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortesA4_1 then
     begin

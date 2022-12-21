@@ -1068,6 +1068,7 @@ const
   CKeyDANFEImprimirDadosDocReferenciados = 'ImprimirDadosDocReferenciados';
   CKeyDANFEExibirBandInforAdicProduto =    'ExibirBandInforAdicProduto';
   CKeyDANFELogoEmCima =                    'LogoEmCima';
+  CKeyDANFEImprimeInscSuframa =            'ImprimeInscSuframa';
   CKeyDANFEExpandirDadosAdicionaisAuto =   'ExpandirDadosAdicionaisAuto';
   CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina = 'ImprimeContinuacaoDadosAdicionaisPrimeiraPagina';
   CKeyDANFEImprimeDescAcrescItemNFe =      'ImprimeDescAcrescItemNFe';

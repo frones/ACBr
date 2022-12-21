@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/12/2022
+--- ACBrMonitorConsts, ACBrMonitorConfig --- 
+[+] Adicionado propriedade ImprimeInscSuframa - #TK-2947-2
+    Por: Antonio Carlos Junior
+
+21/12/2022
 --- ACBrMonitorConsts, ACBrMonitorConfig, ACBrMonitor1 ---
 [+] Nova Propriedade para impressão do xPed e nItemPed na DANFE
     Por: Daniel Morais / Victor H Gonzales - Pandaaa

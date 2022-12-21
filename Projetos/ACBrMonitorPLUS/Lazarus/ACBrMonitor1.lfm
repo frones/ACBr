@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 340
+  Left = 640
   Height = 691
-  Top = 191
+  Top = 178
   Width = 1228
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.html'
@@ -20,6 +20,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
+  LCLVersion = '2.2.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -17318,12 +17319,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1008
-        ActivePage = tsACBrBoleto
+        ActivePage = tsDFe
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 11
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -28856,6 +28857,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ParentFont = False
                     TabOrder = 25
                   end
+                  object cbxImprimeInscSuframa: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 298
+                    Width = 176
+                    Caption = 'Imprimir Inscrição Suframa'
+                    TabOrder = 26
+                  end
                 end
                 object tsImpNFCe: TTabSheet
                   Caption = 'NFC-e'
@@ -30796,11 +30805,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1000
-            ActivePage = Impressao
+            ActivePage = tsDadosSAT
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
             OnChange = pgSATChange
             object tsDadosSAT: TTabSheet
@@ -33703,7 +33712,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.CasasDecimaisMoraJuros = 2
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
-    Cedente.PIX.TipoChavePIX = tchNenhuma
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoFCFortes1
     Configuracoes.Arquivos.LogRegistro = False

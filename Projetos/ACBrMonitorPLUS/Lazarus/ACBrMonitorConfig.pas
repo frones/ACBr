@@ -347,6 +347,7 @@ type
     ExibirBandInforAdicProduto       : Integer;
     ImprimeDescAcrescItemNFe         : Integer;
     LogoEmCima                       : Boolean;
+    ImprimeInscSuframa               : Boolean;
     ExpandirDadosAdicionaisAuto      : Boolean;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean;
     ImprimirCampoFormaPagamento      : Integer;
@@ -1208,6 +1209,7 @@ begin
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto  , ExibirBandInforAdicProduto );
       Ini.WriteInteger (CSecDANFE, CKeyDANFEImprimeDescAcrescItemNFe     , ImprimeDescAcrescItemNFe);
       Ini.WriteBool( CSecDANFE,  CKeyDANFELogoEmCima                     , LogoEmCima );
+      Ini.WriteBool( CSecDANFE, CKeyDANFEImprimeInscSuframa              , ImprimeInscSuframa);
       Ini.WriteBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto , ExpandirDadosAdicionaisAuto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
       Ini.WriteInteger (CSecDANFE, CKeyDANFEImprimirCampoFormaPagamento, ImprimirCampoFormaPagamento);
@@ -1940,6 +1942,7 @@ begin
       ExibirBandInforAdicProduto := Ini.ReadInteger( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto     , ExibirBandInforAdicProduto );
       ImprimeDescAcrescItemNFe   := Ini.ReadInteger( CSecDANFE, CKeyDANFEImprimeDescAcrescItemNFe        , ImprimeDescAcrescItemNFe );
       LogoEmCima                 := Ini.ReadBool( CSecDANFE,  CKeyDANFELogoEmCima                        , LogoEmCima );
+      ImprimeInscSuframa         := Ini.ReadBool( CSecDANFE, CKeyDANFEImprimeInscSuframa                 , ImprimeInscSuframa);
       ExpandirDadosAdicionaisAuto:= Ini.ReadBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto      , ExpandirDadosAdicionaisAuto );
       ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina,
                                                         ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
@@ -2663,6 +2666,7 @@ begin
     ImprimeDescAcrescItemNFe   := 0;
     ImprimirCampoFormaPagamento:= 0;
     LogoEmCima                 := False;
+    ImprimeInscSuframa         := True;
     ExpandirDadosAdicionaisAuto := False;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= False;
     ImprimeXPedNitemPed        := False;

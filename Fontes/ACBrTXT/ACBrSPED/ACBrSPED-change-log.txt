@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/12/2022
+-- ACBrEFDBloco_C, ACBrEFDBloco_C_Class --
+[*] Alteração nos campos que passaram a poder ser nulos dos 
+    Registros: C181, C330, C380, C430, C480, C815, C880 e C185
+	Por: Elias César
+
+22/12/2022
 -- ACBrEFDBloco_0, ACBrEFDBloco_0_Class --
 [+] Inclusão do Registro 0221
     Por: Diego Folieni

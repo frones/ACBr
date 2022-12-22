@@ -2350,12 +2350,12 @@ begin
                DFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA,6,True ) +
                DFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA,6,True ) +
                DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA,6,True ) +
-               DFill( VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA,6,True ) +
-               DFill( VL_UNIT_ICMS_OP_CONV_SAIDA,6,True ) +
-               DFill( VL_UNIT_ICMS_ST_CONV_REST,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_REST) ) +
-               DFill( VL_UNIT_FCP_ST_CONV_REST,6,VarIsNull(VL_UNIT_FCP_ST_CONV_REST) ) +
-               DFill( VL_UNIT_ICMS_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_COMPL) ) +
-               DFill( VL_UNIT_FCP_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_COMPL) ));
+               VDFill( VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA, 6) +
+               VDFill( VL_UNIT_ICMS_OP_CONV_SAIDA, 6) +
+               VDFill( VL_UNIT_ICMS_ST_CONV_REST), 6) +
+               VDFill( VL_UNIT_FCP_ST_CONV_REST), 6) +
+               VDFill( VL_UNIT_ICMS_ST_CONV_COMPL), 6) +
+               VDFill( VL_UNIT_FCP_ST_CONV_COMPL), 6));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -2385,15 +2385,15 @@ begin
                DFill( QUANT_CONV, 6, False ) +
                LFill( UNID ) +
                DFill( VL_UNIT_CONV,6, False ) +
-               DFill( VL_UNIT_ICMS_NA_OPERACAO_CONV,6,True ) +
-               DFill( VL_UNIT_ICMS_OP_CONV,6,True ) +
+               VDFill(VL_UNIT_ICMS_NA_OPERACAO_CONV, 6) +
+               VDFill(VL_UNIT_ICMS_OP_CONV,6) +
                DFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,6, VarIsNull(VL_UNIT_ICMS_OP_ESTOQUE_CONV) ) +
                DFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,6,VarIsNull(VL_UNIT_ICMS_ST_ESTOQUE_CONV) ) +
                DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,6, VarIsNull(VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV) ) +
-               DFill( VL_UNIT_ICMS_ST_CONV_REST,6, VarIsNull(VL_UNIT_ICMS_ST_CONV_REST) ) +
-               DFill( VL_UNIT_FCP_ST_CONV_REST,6, VarIsNull(VL_UNIT_FCP_ST_CONV_REST) ) +
-               DFill( VL_UNIT_ICMS_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_COMPL) ) +
-               DFill( VL_UNIT_FCP_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_FCP_ST_CONV_COMPL) ));
+               VDFill(VL_UNIT_ICMS_ST_CONV_REST, 6) +
+               VDFill(VL_UNIT_FCP_ST_CONV_REST, 6) +
+               VDFill(VL_UNIT_ICMS_ST_CONV_COMPL, 6) +
+               VDFill(VL_UNIT_FCP_ST_CONV_COMPL, 6));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -2699,10 +2699,10 @@ begin
                LFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,0,6 ) +
                LFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,0,6 ) +
                LFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,0,6 ) +
-               LFill( VL_UNIT_ICMS_ST_CONV_REST,0,6 ) +
-               LFill( VL_UNIT_FCP_ST_CONV_REST,0,6 ) +
-               LFill( VL_UNIT_ICMS_ST_CONV_COMPL,0,6 ) +
-               LFill( VL_UNIT_FCP_ST_CONV_COMPL,0,6 ));
+               VDFill(VL_UNIT_ICMS_ST_CONV_REST, 6) +
+               VDFill(VL_UNIT_FCP_ST_CONV_REST, 6) +
+               VDFill(VL_UNIT_ICMS_ST_CONV_COMPL, 6) +
+               VDFill(VL_UNIT_FCP_ST_CONV_COMPL, 6));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -2794,6 +2794,7 @@ begin
         with RegC370.RegistroC380.Items[intFor] do
         begin
           Add( LFill('C380') +
+               LFill( COD_MOT_REST_COMPL ) +
                LFill( QUANT_CONV,0,6 ) +
                LFill( UNID ) +
                LFill( VL_UNIT_CONV,0,6 ) +
@@ -2802,10 +2803,10 @@ begin
                LFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,0,6 ) +
                LFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,0,6 ) +
                LFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,0,6 ) +
-               LFill( VL_UNIT_ICMS_ST_CONV_REST,0,6 ) +
-               LFill( VL_UNIT_FCP_ST_CONV_REST,0,6 ) +
-               LFill( VL_UNIT_ICMS_ST_CONV_COMPL,0,6 ) +
-               LFill( VL_UNIT_FCP_ST_CONV_COMPL,0,6 ) +
+               VDFill(VL_UNIT_ICMS_ST_CONV_REST, 6) +
+               VDFill(VL_UNIT_FCP_ST_CONV_REST, 6) +
+               VDFill(VL_UNIT_ICMS_ST_CONV_COMPL, 6) +
+               VDFill(VL_UNIT_FCP_ST_CONV_COMPL, 6) +
                LFill( CST_ICMS ) +
                LFill( CFOP ));
         end;
@@ -3008,10 +3009,10 @@ begin
             LFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,0,6 ) +
             LFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,0,6 ) +
             LFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,0,6 ) +
-            LFill( VL_UNIT_ICMS_ST_CONV_REST,0,6 ) +
-            LFill( VL_UNIT_FCP_ST_CONV_REST,0,6 ) +
-            LFill( VL_UNIT_ICMS_ST_CONV_COMPL,0,6 ) +
-            LFill( VL_UNIT_FCP_ST_CONV_COMPL,0,6 ) +
+            VDFill(VL_UNIT_ICMS_ST_CONV_REST, 6) +
+            VDFill(VL_UNIT_FCP_ST_CONV_REST, 6) +
+            VDFill(VL_UNIT_ICMS_ST_CONV_COMPL, 6) +
+            VDFill(VL_UNIT_FCP_ST_CONV_COMPL, 6) +
             LFill( CST_ICMS ) +
             LFill( CFOP ));
         end;
@@ -3204,10 +3205,10 @@ begin
             LFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,0,6 ) +
             LFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,0,6 ) +
             LFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,0,6 ) +
-            LFill( VL_UNIT_ICMS_ST_CONV_REST,0,6 ) +
-            LFill( VL_UNIT_FCP_ST_CONV_REST,0,6 ) +
-            LFill( VL_UNIT_ICMS_ST_CONV_COMPL,0,6 ) +
-            LFill( VL_UNIT_FCP_ST_CONV_COMPL,0,6 ) +
+            VDFill(VL_UNIT_ICMS_ST_CONV_REST, 6) +
+            VDFill(VL_UNIT_FCP_ST_CONV_REST, 6) +
+            VDFill(VL_UNIT_ICMS_ST_CONV_COMPL, 6) +
+            VDFill(VL_UNIT_FCP_ST_CONV_COMPL, 6) +
             LFill( CST_ICMS ) +
             LFill( CFOP ));
         end;
@@ -3970,10 +3971,10 @@ begin
          VLFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV, 6 ) +
          VLFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV, 6 ) +
          VLFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, 6 ) +
-         VLFill( VL_UNIT_ICMS_ST_CONV_REST, 6 ) +
-         VLFill( VL_UNIT_FCP_ST_CONV_REST, 6 ) +
-         VLFill( VL_UNIT_ICMS_ST_CONV_COMPL, 6 ) +
-         VLFill( VL_UNIT_FCP_ST_CONV_COMPL, 6 )
+         VDFill( VL_UNIT_ICMS_ST_CONV_REST, 6 ) +
+         VDFill( VL_UNIT_FCP_ST_CONV_REST, 6 ) +
+         VDFill( VL_UNIT_ICMS_ST_CONV_COMPL, 6 ) +
+         VDFill( VL_UNIT_FCP_ST_CONV_COMPL, 6 )
        ) ;
   end;
 
@@ -4131,10 +4132,10 @@ begin
          VLFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV, 6 ) +
          VLFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV, 6 ) +
          VLFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, 6 ) +
-         VLFill( VL_UNIT_ICMS_ST_CONV_REST, 6 ) +
-         VLFill( VL_UNIT_FCP_ST_CONV_REST, 6 ) +
-         VLFill( VL_UNIT_ICMS_ST_CONV_COMPL, 6 ) +
-         VLFill( VL_UNIT_FCP_ST_CONV_COMPL, 6 )
+         VDFill( VL_UNIT_ICMS_ST_CONV_REST, 6 ) +
+         VDFill( VL_UNIT_FCP_ST_CONV_REST, 6 ) +
+         VDFill( VL_UNIT_ICMS_ST_CONV_COMPL, 6 ) +
+         VDFill( VL_UNIT_FCP_ST_CONV_COMPL, 6 )
        ) ;
   end;
 

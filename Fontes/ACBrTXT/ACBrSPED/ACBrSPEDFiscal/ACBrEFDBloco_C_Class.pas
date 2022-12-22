@@ -2352,10 +2352,10 @@ begin
                DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA,6,True ) +
                VDFill( VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA, 6) +
                VDFill( VL_UNIT_ICMS_OP_CONV_SAIDA, 6) +
-               VDFill( VL_UNIT_ICMS_ST_CONV_REST), 6) +
-               VDFill( VL_UNIT_FCP_ST_CONV_REST), 6) +
-               VDFill( VL_UNIT_ICMS_ST_CONV_COMPL), 6) +
-               VDFill( VL_UNIT_FCP_ST_CONV_COMPL), 6));
+               VDFill( VL_UNIT_ICMS_ST_CONV_REST, 6) +
+               VDFill( VL_UNIT_FCP_ST_CONV_REST, 6) +
+               VDFill( VL_UNIT_ICMS_ST_CONV_COMPL, 6) +
+               VDFill( VL_UNIT_FCP_ST_CONV_COMPL, 6));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;

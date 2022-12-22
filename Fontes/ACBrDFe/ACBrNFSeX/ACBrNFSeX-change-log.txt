@@ -45,10 +45,12 @@ Símbolo : Significado
 
 22/12/2022
 -- ACbrNFseXServicos.ini --
-[*] Altare URL de produção para a cidade de Sao Luis de Montes Belos-GO, o provedor e versão continuam os mesmo, Sigep Versao 2.00
+[*] Altera URL de produção para a cidade de Sao Luis de Montes Belos-GO, o provedor e versão continuam os mesmo, Sigep Versao 2.00
    Por: Lucio Bittes
 [+] Incluida a cidade de São Miguel do Iguaçu/PR, provedor Elotech
    Por: Alex Heinen
+[*] Adiciona o parâmetro NaoDivir100 para Cuiabá/MT
+   Por: Márcio Baroni
 
 -- Fiorilli.Provider --
 [*] Ajuste para que gere quebra de linha e não exiba caracteres estranhos na descrição do serviço

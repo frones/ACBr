@@ -93,6 +93,7 @@ const
   CChaveExpandirDadosAdicionaisAuto = 'ExpandirDadosAdicionaisAuto';
   CChaveImprimeContDadosAdPrimeiraPagina = 'ImprimeContDadosAdPrimeiraPagina';
   CChaveExibeCampoDePagamento = 'ExibeCampoDePagamento';
+  CChaveImprimeXPedNitemPed = 'ImprimeXPedNitemPed';
   CChaveFonteNome = 'Fonte.Nome';
   CChaveFonteNegrito = 'Fonte.Negrito';
   CChaveFonteTamanhoFonteRazaoSocial = 'Fonte.TamanhoFonteRazaoSocial';

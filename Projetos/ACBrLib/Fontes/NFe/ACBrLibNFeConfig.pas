@@ -85,6 +85,7 @@ type
     FImprimeContDadosAdPrimeiraPagina: Boolean;
     FExibeCampoDePagamento: TpcnInformacoesDePagamento;
     FImprimeInscSuframa: Boolean;
+    FImprimeXPedNitemPed: Boolean;
 
   public
     constructor Create;
@@ -131,6 +132,7 @@ type
     property ImprimeContDadosAdPrimeiraPagina: Boolean read FImprimeContDadosAdPrimeiraPagina write FImprimeContDadosAdPrimeiraPagina;
     property ExibeCampoDePagamento: TpcnInformacoesDePagamento read FExibeCampoDePagamento write FExibeCampoDePagamento;
     property ImprimeInscSuframa: Boolean read FImprimeInscSuframa write FImprimeInscSuframa;
+    property ImprimeXPedNitemPed: Boolean read FImprimeXPedNitemPed write FImprimeXPedNitemPed;
 
   end;
 
@@ -325,6 +327,7 @@ begin
   FImprimeContDadosAdPrimeiraPagina := False;
   FExibeCampoDePagamento := eipNunca;
   FImprimeInscSuframa:= True;
+  FImprimeXPedNitemPed:= False;
 
   if Assigned(FFonte) then FFonte.Free;
   FFonte := TFonte.Create(nil);
@@ -370,6 +373,7 @@ begin
   ImprimeContDadosAdPrimeiraPagina := AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeContDadosAdPrimeiraPagina, ImprimeContDadosAdPrimeiraPagina);
   ExibeCampoDePagamento := TpcnInformacoesDePagamento(AIni.ReadInteger(CSessaoDANFENFE, CChaveExibeCampoDePagamento, Integer(ExibeCampoDePagamento)));
   ImprimeInscSuframa:= AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeInscSuframa, ImprimeInscSuframa);
+  ImprimeXPedNitemPed:= AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeXPedNitemPed, ImprimeXPedNitemPed);
 
   with Fonte do
   begin
@@ -421,6 +425,7 @@ begin
   AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeContDadosAdPrimeiraPagina, ImprimeContDadosAdPrimeiraPagina);
   AIni.WriteInteger(CSessaoDANFENFE, CChaveExibeCampoDePagamento, Integer(ExibeCampoDePagamento));
   AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeInscSuframa, ImprimeInscSuframa);
+  AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeXPedNitemPed, ImprimeXPedNitemPed);
 
   with Fonte do
   begin

@@ -53,6 +53,11 @@ Símbolo : Significado
 [*] Ajuste na Instrução do método LerArqIni - #TK-3408
 Por: Antonio Carlos Junior / Victor H Gonzales - Pandaaa
 
+--ACBrBoletoCresol--
+[-] TK-3413 133 ACBrBoletoCresol Atualização CNAB240 Dominio de Multa
+  por :  Victor H Gonzales - Pandaaa
+
+
 16/12/2022
 [+] TK-3264 ACBrBoleto - 212-Banco Original
   por : Renato Pavan

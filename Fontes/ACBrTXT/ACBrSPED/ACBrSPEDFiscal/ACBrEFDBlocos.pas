@@ -78,7 +78,8 @@ type
                                   vlVersao112,  // Código 013 - Versão 112 Ato COTEPE 01/01/2019
                                   vlVersao113,  // Código 014 - Versão 113 Ato COTEPE 01/01/2020
                                   vlVersao114,  // Código 015 - Versão 114 Ato COTEPE 01/01/2021
-                                  vlVersao115   // Código 016 - Versão 115 Ato COTEPE 01/01/2022
+                                  vlVersao115,  // Código 016 - Versão 115 Ato COTEPE 01/01/2022
+                                  vlVersao116   // Código 016 - Versão 116 Ato COTEPE 01/01/2023
                                  );
   TACBrVersaoLeiaute = TACBrVersaoLeiauteSPEDFiscal {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf}{$EndIf};
   TACBrCodVer = TACBrVersaoLeiauteSPEDFiscal {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf}{$EndIf};
@@ -305,10 +306,16 @@ type
   TACBrExportacao = (exDireta,             // 0 - Exportação Direta
                      exIndireta            // 1 - Exportação Indireta
                      );
+
+  /// Indicador Tipo de leiaute K010
+  TACBrIndTipoLeiaute = (itlSimplificado,           // 0 = Leiaute simplificado
+                         itlCompleto,               // 1 = Leiaute completo
+                         itlRestritoSaldoEstoque);  // 2 = Leiaute restrito aos saldos de estoque
+
   /// Indicador Tipo de Estoque K200
-  TACBrIndEstoque = ( estPropInformantePoder, // 0 = Estoque de propriedade do informante e em seu poder
-                      estPropInformanteTerceiros,// 1 = Estoque de propriedade do informante e em posse de terceiros;
-                      estPropTerceirosInformante // 2 = Estoque de propriedade de terceiros e em posse do informante
+  TACBrIndEstoque = ( estPropInformantePoder,      // 0 = Estoque de propriedade do informante e em seu poder
+                      estPropInformanteTerceiros,  // 1 = Estoque de propriedade do informante e em posse de terceiros;
+                      estPropTerceirosInformante   // 2 = Estoque de propriedade de terceiros e em posse do informante
                     );
   /// Informação do tipo de conhecimento de embarque
   TACBrConhecEmbarque = (ceAWB,            //01 – AWB;
@@ -658,7 +665,6 @@ type
                   );
   TACBrSituacaoTribCOFINS = TACBrCstCofins;
 
-
   TACBrMotivoRessarcimento = (tmrVendaOutraUF = 1,             // 1 – Venda para outra UF;
                               tmrSaidaInsetaNaoIncidencia = 2, // 2 – Saída amparada por isenção ou não incidência;
                               tmrPerdaDeterioracao = 3,        // 3 – Perda ou deterioração;
@@ -678,7 +684,6 @@ type
                              tipJusticaEstadual, // 2- Justiça Estadual;
                              tipOutros);         // 9- Outros;
 
-
    TACBrIndicadorObrigacao = (tioISSProprio,           // 0 - ISS Próprio;
                               tioISSSubstituto,        // 1 - ISS Substituto (devido pelas aquisições de serviços do declarante).
                               tioISSUniprofissionais); // 2 - ISS Uniprofissionais
@@ -689,13 +694,25 @@ type
                                                 fedcSubstituicao,     // 2 – Substituição
                                                 fedcNormalComAjuste   // 3 – Normal com ajuste
                                                 );
+
    // Indicador do Destinatário/Acessante: Registro C500
    TACBrIndicadorDestinatarioAcessante = (iedaContribuinteICMS,                         // 1 – Contribuinte do ICMS
                                           iedaContribuinteIsentoInscricaoCadastroICMS,  // 2 – Contribuinte Isento de Inscrição no Cadastro de Contribuintes do ICMS
                                           iedaNaoContribuinte                           // 9 – Não Contribuinte
-                                         );
+                                         ); 
 
+   // Finalidade da emissão do documento eletrônico - Registro D700
+   TACBrFinEmissaoFaturaEletronica = (ffcNaoDefinida,
+                                      ffcNormal,
+                                      ffcSubstituicao,
+                                      ffcAjuste);
 
+   TACBrTipoFaturamentoDocumentoEletronico = (tfdeFaturamentoNormal,        // 0 - Faturamento Normal
+                                              tfdeFaturamentoCentralizado,  // 1 - Faturamento Centralizado
+                                              tfdeCofaturamento);           // 2 - Cofaturamento
+
+   TACBrIndicadorFormaPagto = (fpgPrePago,    // 0 – Pré pago
+                               fpgPosPago);   // 1 - Pós pago
 
   TOpenBlocos = class
   private
@@ -815,6 +832,12 @@ type
   function StrToFinalidadeEmissaoDocElet(const AValue: string): TACBrFinalidadeEmissaoDocumentoEletronico;
   function IndicadorDestinatarioAcessanteToInt( AValue: TACBrIndicadorDestinatarioAcessante): Integer;
   function IntToIndicadorDestinatarioAcessante( AValue: Integer): TACBrIndicadorDestinatarioAcessante;
+  function IndFormaPagtoToStr(aValue: TACBrIndicadorFormaPagto): String;
+  function StrToIndFormaPagto(const aValue: String): TACBrIndicadorFormaPagto;
+  function FinEmissaoFatEletToStr(aValue: TACBrFinEmissaoFaturaEletronica): String;
+  function StrToFinEmissaoFatElet(const aValue: string): TACBrFinEmissaoFaturaEletronica;
+  function TipoFaturamentoDOCeToStr(aValue: TACBrTipoFaturamentoDocumentoEletronico): String;
+  function StrToTipoFaturamentoDOCe(const aValue: String): TACBrTipoFaturamentoDocumentoEletronico;
 
 implementation
 
@@ -870,6 +893,9 @@ begin
    if AValue = '016' then
       Result := vlVersao115
    else
+   if AValue = '017' then
+      Result := vlVersao116
+   else
      raise EACBrSPEDFiscalException.CreateFmt('Versão desconhecida. Versao "%s" não é um valor válido.', [AValue]);
 end;
 
@@ -908,6 +934,8 @@ begin
       Result := '015';
     vlVersao115:
       Result := '016';
+    vlVersao116:
+      Result := '017';
   else
     Result := EmptyStr;
   end;
@@ -1996,29 +2024,16 @@ end;
 
 function StrToFinalidadeEmissaoDocElet(const AValue: string): TACBrFinalidadeEmissaoDocumentoEletronico;
 begin
-  if AValue = '' then
-  begin
-    Result := fedcNaoDefinida;
-  end
+  if (AValue = EmptyStr) then
+    Result := fedcNaoDefinida
+  else if (AValue = '1') then
+    Result := fedcNormal
+  else if (AValue = '2') then
+    Result := fedcSubstituicao
+  else if (AValue = '3') then
+    Result := fedcNormalComAjuste
   else
-  if AValue = '1' then
-  begin
-    Result := fedcNormal;
-  end
-  else
-  if AValue = '2' then
-  begin
-    Result := fedcSubstituicao;
-  end
-  else
-  if AValue = '3' then
-  begin
-    Result := fedcNormalComAjuste;
-  end
-  else
-  begin
     raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrFinalidadeEmissaoDocumentoEletronico.', [AValue]);
-  end;
 end;
 
 function IndicadorDestinatarioAcessanteToInt( AValue: TACBrIndicadorDestinatarioAcessante): Integer;
@@ -2043,7 +2058,60 @@ begin
   end;
 end;
 
+function IndFormaPagtoToStr(aValue: TACBrIndicadorFormaPagto): String;
+begin
+  Result := IntToStr(Integer(AValue));
+end;
 
+function StrToIndFormaPagto(const aValue: String): TACBrIndicadorFormaPagto;
+begin
+  if (aValue = '0') then
+    Result := fpgPrePago
+  else if (aValue = '1') then
+    Result := fpgPosPago
+  else
+    raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrIndicadorFormaPagto', [aValue]);
+end;
 
+function FinEmissaoFatEletToStr(aValue: TACBrFinEmissaoFaturaEletronica): string;
+begin
+  case AValue of
+    ffcNaoDefinida:  Result := EmptyStr;
+    ffcNormal:       Result := '0';
+    ffcSubstituicao: Result := '3';
+    ffcAjuste:       Result := '4';
+  else
+    raise EACBrSPEDFiscalException.Create('TACBrFinEmissaoFaturaEletronica com valor inválido');
+  end;
+end;
+
+function StrToFinEmissaoFatElet(const aValue: string): TACBrFinEmissaoFaturaEletronica;
+begin
+  if (aValue = EmptyStr) then
+    Result := ffcNaoDefinida
+  else if (aValue = '0') then
+    Result := ffcNormal
+  else if (aValue = '3') then
+    Result := ffcSubstituicao
+  else if (aValue = '4') then
+    Result := ffcAjuste
+  else
+    raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrFinalidadeEmissaoDocumentoEletronico.', [aValue]);
+end;
+
+function TipoFaturamentoDOCeToStr(aValue: TACBrTipoFaturamentoDocumentoEletronico): String;
+begin
+  Result := IntToStr(Integer(AValue));
+end;
+
+function StrToTipoFaturamentoDOCe(const aValue: String): TACBrTipoFaturamentoDocumentoEletronico;
+begin
+  if (aValue = '0') then
+    Result := tfdeFaturamentoNormal
+  else if (aValue = '1') then
+    Result := tfdeFaturamentoCentralizado
+  else if (aValue = '2') then
+    Result := tfdeCofaturamento;
+end;
 
 end.

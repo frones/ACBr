@@ -44,6 +44,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2022
+-- ACBrEFDBloco_0, ACBrEFDBloco_0_Class --
+[+] Inclusão do Registro 0221
+    Por: Diego Folieni
+
+-- ACBrEFDBloco_K, ACBrEFDBloco_K_Class --
+[+] Inclusão do Registro K010
+    Por: Diego Folieni
+
+-- ACBrEFDBloco_C, ACBrEFDBloco_C_Class --
+[+] Inclusão dos Registros C855, C857, C895 e C897
+
+-- ACBrEFDBloco_D, ACBrEFDBloco_D_Class --
+[+] Inclusão dos Registros D700, D730, D731, D735, D737, D750, D760 e D761
+    Por: Elias César
+
 26/10/2022
 -- ACBrEPCBlocos --
 [+] Incluídos novos tipos enumerados: TACBrIdentBemImob, TACBrIndUtilBemImob e TACBrIndNrParc;

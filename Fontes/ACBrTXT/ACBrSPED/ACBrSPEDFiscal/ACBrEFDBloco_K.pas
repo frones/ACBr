@@ -38,6 +38,7 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrEFDBlocos;
 
 type
+  TRegistroK010     = class;
   TRegistroK100List = class;
   TRegistroK200List = class;
   TRegistroK210List = class;  
@@ -65,12 +66,22 @@ type
 
   TRegistroK001 = class(TOpenBlocos)
   private
+    FRegistroK010: TRegistroK010;
     FRegistroK100: TRegistroK100List;
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
 
+    property RegistroK010: TRegistroK010     read FRegistroK010 write FRegistroK010;
     property RegistroK100: TRegistroK100List read FRegistroK100 write FRegistroK100;
+  end;
+
+  /// REGISTRO K010 - INFORMAÇÃO SOBRE O TIPO DE LEIAUTE (SIMPLIFICADO / COMPLETO)
+  TRegistroK010 = class
+  private
+    fIND_TIPO_LEIAUTE: TACBrIndTipoLeiaute;
+  public
+    property IND_TIPO_LEIAUTE: TACBrIndTipoLeiaute read fIND_TIPO_LEIAUTE write fIND_TIPO_LEIAUTE;
   end;
 
   /// Registro K100 - PERIODO DE APURACAO DO ICMS/IPI
@@ -704,13 +715,14 @@ implementation
 constructor TRegistroK001.Create;
 begin
    inherited Create;
+   FRegistroK010 := TRegistroK010.Create;
    FRegistroK100 := TRegistroK100List.Create;
-   //
    IND_MOV := imSemDados;
 end;
 
 destructor TRegistroK001.Destroy;
 begin
+  FRegistroK010.Free;
   FRegistroK100.Free;
   inherited Destroy;
 end;

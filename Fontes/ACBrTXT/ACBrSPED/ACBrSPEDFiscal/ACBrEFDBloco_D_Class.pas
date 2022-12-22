@@ -39,6 +39,9 @@ uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_D,
 
 type
   /// TBLOCO_D -
+
+  { TBloco_D }
+
   TBloco_D = class(TACBrSPED)
   private
     FOnBeforeWriteRegistroD100: TWriteRegistroEvent;
@@ -96,45 +99,61 @@ type
     FRegistroD695Count: integer;
     FRegistroD696Count: integer;
     FRegistroD697Count: integer;
+    FRegistroD700Count: Integer;
+    FRegistroD730Count: Integer;
+    FRegistroD731Count: Integer;
+    FRegistroD735Count: Integer;
+    FRegistroD737Count: Integer;
+    FRegistroD750Count: Integer;
+    FRegistroD760Count: Integer;
+    FRegistroD761Count: Integer;
 
-    procedure WriteRegistroD100(RegD001: TRegistroD001) ;
-    procedure WriteRegistroD101(RegD100: TRegistroD100) ; 
-    procedure WriteRegistroD110(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD120(RegD110: TRegistroD110) ;
-    procedure WriteRegistroD130(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD140(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD150(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD160(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD161(RegD160: TRegistroD160) ;
-    procedure WriteRegistroD162(RegD160: TRegistroD160) ;
-    procedure WriteRegistroD170(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD180(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD190(RegD100: TRegistroD100) ; 
-    procedure WriteRegistroD195(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD197(RegD195: TRegistroD195) ;
-    procedure WriteRegistroD300(RegD001: TRegistroD001) ;
-    procedure WriteRegistroD301(RegD300: TRegistroD300) ;
-    procedure WriteRegistroD310(RegD300: TRegistroD300) ;
-    procedure WriteRegistroD350(RegD001: TRegistroD001) ;
-    procedure WriteRegistroD355(RegD350: TRegistroD350) ;
-    procedure WriteRegistroD360(RegD355: TRegistroD355) ;
-    procedure WriteRegistroD365(RegD355: TRegistroD355) ;
-    procedure WriteRegistroD370(RegD365: TRegistroD365) ;
-    procedure WriteRegistroD390(RegD355: TRegistroD355) ;
-    procedure WriteRegistroD400(RegD001: TRegistroD001) ;
-    procedure WriteRegistroD410(RegD400: TRegistroD400) ;
-    procedure WriteRegistroD411(RegD410: TRegistroD410) ;
-    procedure WriteRegistroD420(RegD400: TRegistroD400) ;
-    procedure WriteRegistroD500(RegD001: TRegistroD001) ;
-    procedure WriteRegistroD510(RegD500: TRegistroD500) ;
-    procedure WriteRegistroD530(RegD500: TRegistroD500) ;
-    procedure WriteRegistroD590(RegD500: TRegistroD500) ; 
-    procedure WriteRegistroD600(RegD001: TRegistroD001) ;
-    procedure WriteRegistroD610(RegD600: TRegistroD600) ;
-    procedure WriteRegistroD690(RegD600: TRegistroD600) ;
-    procedure WriteRegistroD695(RegD001: TRegistroD001) ;
-    procedure WriteRegistroD696(RegD695: TRegistroD695) ;
-    procedure WriteRegistroD697(RegD696: TRegistroD696) ;
+    procedure WriteRegistroD100(RegD001: TRegistroD001);
+    procedure WriteRegistroD101(RegD100: TRegistroD100);
+    procedure WriteRegistroD110(RegD100: TRegistroD100);
+    procedure WriteRegistroD120(RegD110: TRegistroD110);
+    procedure WriteRegistroD130(RegD100: TRegistroD100);
+    procedure WriteRegistroD140(RegD100: TRegistroD100);
+    procedure WriteRegistroD150(RegD100: TRegistroD100);
+    procedure WriteRegistroD160(RegD100: TRegistroD100);
+    procedure WriteRegistroD161(RegD160: TRegistroD160);
+    procedure WriteRegistroD162(RegD160: TRegistroD160);
+    procedure WriteRegistroD170(RegD100: TRegistroD100);
+    procedure WriteRegistroD180(RegD100: TRegistroD100);
+    procedure WriteRegistroD190(RegD100: TRegistroD100);
+    procedure WriteRegistroD195(RegD100: TRegistroD100);
+    procedure WriteRegistroD197(RegD195: TRegistroD195);
+    procedure WriteRegistroD300(RegD001: TRegistroD001);
+    procedure WriteRegistroD301(RegD300: TRegistroD300);
+    procedure WriteRegistroD310(RegD300: TRegistroD300);
+    procedure WriteRegistroD350(RegD001: TRegistroD001);
+    procedure WriteRegistroD355(RegD350: TRegistroD350);
+    procedure WriteRegistroD360(RegD355: TRegistroD355);
+    procedure WriteRegistroD365(RegD355: TRegistroD355);
+    procedure WriteRegistroD370(RegD365: TRegistroD365);
+    procedure WriteRegistroD390(RegD355: TRegistroD355);
+    procedure WriteRegistroD400(RegD001: TRegistroD001);
+    procedure WriteRegistroD410(RegD400: TRegistroD400);
+    procedure WriteRegistroD411(RegD410: TRegistroD410);
+    procedure WriteRegistroD420(RegD400: TRegistroD400);
+    procedure WriteRegistroD500(RegD001: TRegistroD001);
+    procedure WriteRegistroD510(RegD500: TRegistroD500);
+    procedure WriteRegistroD530(RegD500: TRegistroD500);
+    procedure WriteRegistroD590(RegD500: TRegistroD500);
+    procedure WriteRegistroD600(RegD001: TRegistroD001);
+    procedure WriteRegistroD610(RegD600: TRegistroD600);
+    procedure WriteRegistroD690(RegD600: TRegistroD600);
+    procedure WriteRegistroD695(RegD001: TRegistroD001);
+    procedure WriteRegistroD696(RegD695: TRegistroD695);
+    procedure WriteRegistroD697(RegD696: TRegistroD696);
+    procedure WriteRegistroD700(RegD001: TRegistroD001);
+    procedure WriteRegistroD730(RegD700: TRegistroD700);
+    procedure WriteRegistroD731(RegD730: TRegistroD730);
+    procedure WriteRegistroD735(RegD700: TRegistroD700);
+    procedure WriteRegistroD737(RegD735: TRegistroD735);
+    procedure WriteRegistroD750(RegD001: TRegistroD001);
+    procedure WriteRegistroD760(RegD750: TRegistroD750);
+    procedure WriteRegistroD761(RegD760: TRegistroD760);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -182,6 +201,14 @@ type
     function RegistroD695New: TRegistroD695;
     function RegistroD696New: TRegistroD696;
     function RegistroD697New: TRegistroD697;
+    function RegistroD700New: TRegistroD700;
+    function RegistroD730New: TRegistroD730;
+    function RegistroD731New: TRegistroD731;
+    function RegistroD735New: TRegistroD735;
+    function RegistroD737New: TRegistroD737;
+    function RegistroD750New: TRegistroD750;
+    function RegistroD760New: TRegistroD760;
+    function RegistroD761New: TRegistroD761;
 
     procedure WriteRegistroD001;
     procedure WriteRegistroD990;
@@ -228,6 +255,14 @@ type
     property RegistroD695Count: integer read FRegistroD695Count write FRegistroD695Count;
     property RegistroD696Count: integer read FRegistroD696Count write FRegistroD696Count;
     property RegistroD697Count: integer read FRegistroD697Count write FRegistroD697Count;
+    property RegistroD700Count: Integer read FRegistroD700Count write FRegistroD700Count;
+    property RegistroD730Count: Integer read FRegistroD730Count write FRegistroD730Count;
+    property RegistroD731Count: Integer read FRegistroD731Count write FRegistroD731Count;
+    property RegistroD735Count: Integer read FRegistroD735Count write FRegistroD735Count;
+    property RegistroD737Count: Integer read FRegistroD737Count write FRegistroD737Count;
+    property RegistroD750Count: Integer read FRegistroD750Count write FRegistroD750Count;
+    property RegistroD760Count: Integer read FRegistroD760Count write FRegistroD760Count;
+    property RegistroD761Count: Integer read FRegistroD761Count write FRegistroD761Count;
 
     property OnBeforeWriteRegistroD100: TWriteRegistroEvent read FOnBeforeWriteRegistroD100 write FOnBeforeWriteRegistroD100;
     property OnBeforeWriteRegistroD110: TWriteRegistroEvent read FOnBeforeWriteRegistroD110 write FOnBeforeWriteRegistroD110;
@@ -303,6 +338,14 @@ begin
   FRegistroD695Count := 0;
   FRegistroD696Count := 0;
   FRegistroD697Count := 0;
+  FRegistroD700Count := 0;
+  FRegistroD730Count := 0;
+  FRegistroD731Count := 0;
+  FRegistroD735Count := 0;
+  FRegistroD737Count := 0;
+  FRegistroD750Count := 0;
+  FRegistroD760Count := 0;
+  FRegistroD761Count := 0;
 
   FRegistroD990.QTD_LIN_D := 0;
 end;
@@ -589,6 +632,58 @@ begin
    Result := FRegistroD001.RegistroD695.Items[D695Count].RegistroD696.Items[D696Count].RegistroD697.New;
 end;
 
+function TBloco_D.RegistroD700New: TRegistroD700;
+begin
+  Result := FRegistroD001.RegistroD700.New;
+end;
+
+function TBloco_D.RegistroD730New: TRegistroD730;
+begin
+  Result := FRegistroD001.RegistroD700.Items[FRegistroD001.RegistroD700.Count - 1].RegistroD730.New;
+end;
+
+function TBloco_D.RegistroD731New: TRegistroD731;
+var
+  wUltimoD700, wUltimoD730: Integer;
+begin
+  wUltimoD700 := (FRegistroD001.RegistroD700.Count - 1);
+  wUltimoD730 := (FRegistroD001.RegistroD700.Items[wUltimoD700].RegistroD730.Count - 1);
+  Result := FRegistroD001.RegistroD700.Items[wUltimoD700].RegistroD730.Items[wUltimoD730].RegistroD731.New;
+end;
+
+function TBloco_D.RegistroD735New: TRegistroD735;
+begin
+  Result := FRegistroD001.RegistroD700.Items[FRegistroD001.RegistroD700.Count - 1].RegistroD735.New;
+end;
+
+function TBloco_D.RegistroD737New: TRegistroD737;
+var
+  wUltimoD700, wUltimoD735: Integer;
+begin
+  wUltimoD700 := (FRegistroD001.RegistroD700.Count - 1);
+  wUltimoD735 := (FRegistroD001.RegistroD700.Items[wUltimoD700].RegistroD735.Count - 1);
+  Result := FRegistroD001.RegistroD700.Items[wUltimoD700].RegistroD735.Items[wUltimoD735].RegistroD737.New;
+end;
+
+function TBloco_D.RegistroD750New: TRegistroD750;
+begin
+  Result := FRegistroD001.RegistroD750.New;
+end;
+
+function TBloco_D.RegistroD760New: TRegistroD760;
+begin
+  Result := FRegistroD001.RegistroD750.Items[FRegistroD001.RegistroD750.Count - 1].RegistroD760.New;
+end;
+
+function TBloco_D.RegistroD761New: TRegistroD761;
+var
+  wUltimoD750, wUltimoD760: Integer;
+begin
+  wUltimoD750 := (FRegistroD001.RegistroD750.Count - 1);
+  wUltimoD760 := (FRegistroD001.RegistroD750.Items[wUltimoD750].RegistroD760.Count - 1);
+  Result := FRegistroD001.RegistroD750.Items[wUltimoD750].RegistroD760.Items[wUltimoD760].RegistroD761.New;
+end;
+
 procedure TBloco_D.WriteRegistroD001 ;
 begin
   if Assigned(FRegistroD001) then
@@ -607,6 +702,8 @@ begin
          WriteRegistroD500 ( FRegistroD001 ) ;
          WriteRegistroD600 ( FRegistroD001 ) ;
          WriteRegistroD695 ( FRegistroD001 ) ;
+         WriteRegistroD700 ( FRegistroD001 ) ;
+         WriteRegistroD750 ( FRegistroD001 ) ;
        end;
      end;
 
@@ -1924,6 +2021,263 @@ begin
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroD697Count := FRegistroD697Count + RegD696.RegistroD697.Count;
+  end;
+end;
+
+procedure TBloco_D.WriteRegistroD700(RegD001: TRegistroD001);
+var
+  intFor: Integer; 
+  wCodSit: String;
+  wRegD700: TRegistroD700;
+begin  
+  if (FBloco_0.Registro0000.COD_VER < vlVersao116) then
+    Exit;
+
+  if Assigned(RegD001.RegistroD700) then
+  begin
+    for intFor := 0 to RegD001.RegistroD700.Count - 1 do
+    begin
+      wRegD700 := RegD001.RegistroD700.Items[intFor];
+
+      // COD_MOD
+      Check(MatchText(wRegD700.COD_MOD, ['62']),
+        'Registro D700: O código do modelo "%s" não está na lista de valores válidos "%s"!', [wRegD700.COD_MOD, '[62]']);
+
+      // COD_SIT
+      wCodSit := CodSitToStr(wRegD700.COD_SIT);
+      Check(MatchText(wCodSit, ['00', '08']),
+        'Registro D700: O código da situação do documento fiscal "%s" não está na lista de valores válidos "%s"!', [wCodSit, '[00, 08]']);
+
+      Add(LFill('D700') +
+        LFill(IndOperToStr(wRegD700.IND_OPER), 0) +
+        LFill(IndEmitToStr(wRegD700.IND_EMIT), 0) +
+        LFill(wRegD700.COD_PART) +
+        LFill(wRegD700.COD_MOD, 2) +
+        LFill(wCodSit) +
+        LFill(wRegD700.SER) +
+        LFill(wRegD700.NUM_DOC, 9) +
+        LFill(wRegD700.DT_DOC) +
+        LFill(wRegD700.DT_E_S) +
+        LFill(wRegD700.VL_DOC, 0, 2) +
+        LFill(wRegD700.VL_DESC, 0, 2) +
+        LFill(wRegD700.VL_SERV, 0, 2) +
+        LFill(wRegD700.VL_SERV_NT, 0, 2) +
+        LFill(wRegD700.VL_TERC, 0, 2) +
+        LFill(wRegD700.VL_DA, 0, 2) +
+        LFill(wRegD700.VL_BC_ICMS, 0, 2) +
+        LFill(wRegD700.VL_ICMS, 0, 2) +
+        LFill(wRegD700.COD_INF ) +
+        LFill(wRegD700.VL_PIS,0,2, True ) +
+        LFill(wRegD700.VL_COFINS,0,2, True) +
+        LFill(wRegD700.CHV_DOCe) +
+        LFill(FinEmissaoFatEletToStr(wRegD700.FIN_DOCe)) +
+        LFill(TipoFaturamentoDOCeToStr(wRegD700.TIP_FAT)) +
+        LFill(wRegD700.COD_MOD_DOC_REF) +
+        LFill(wRegD700.CHV_DOCe_REF) +
+        LFill(wRegD700.HASH_DOC_REF) +
+        LFill(wRegD700.SER_DOC_REF) +
+        LFill(wRegD700.NUM_DOC_REF) +
+        LFill(wRegD700.MES_DOC_REF) +
+        LFill(wRegD700.COD_MUN_DEST));
+
+      WriteRegistroD730(wRegD700);
+      WriteRegistroD735(wRegD700);
+      RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+    end;
+  end;
+
+  /// Variavél para armazenar a quantidade de registro do tipo
+  FRegistroD700Count := FRegistroD700Count + RegD001.RegistroD700.Count;
+
+  RegD001.RegistroD700.Clear;
+end;
+
+procedure TBloco_D.WriteRegistroD730(RegD700: TRegistroD700);
+var
+  intFor: Integer;
+begin
+  if Assigned(RegD700.RegistroD730) then
+  begin
+    for intFor := 0 to RegD700.RegistroD730.Count - 1 do
+    begin
+      with RegD700.RegistroD730.Items[intFor] do
+        Add(LFill('D730') +
+          LFill(CST_ICMS, 3) +
+          LFill(CFOP, 4) +
+          LFill(ALIQ_ICMS, 6, 2) +
+          LFill(VL_OPR, 0, 2) +
+          LFill(VL_BC_ICMS, 0, 2) +
+          LFill(VL_ICMS, 0, 2) +
+          LFill(VL_RED_BC, 0, 2) +
+          LFill(COD_OBS));
+
+      WriteRegistroD731(RegD700.RegistroD730.Items[intFor]);
+      RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+    end;
+
+    /// Variavél para armazenar a quantidade de registro do tipo
+    FRegistroD730Count := FRegistroD730Count + RegD700.RegistroD730.Count;
+  end;
+end;
+
+procedure TBloco_D.WriteRegistroD731(RegD730: TRegistroD730);
+var
+  intFor: Integer;
+begin
+  if Assigned(RegD730.RegistroD731) then
+  begin
+    for intFor := 0 to RegD730.RegistroD731.Count - 1 do
+    begin
+      with RegD730.RegistroD731.Items[intFor] do
+        Add(
+          LFill('D731') +
+          LFill(VL_FCP_OP, 0, 2));
+
+      RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+    end;
+
+    /// Variavél para armazenar a quantidade de registro do tipo
+    FRegistroD731Count := FRegistroD731Count + RegD730.RegistroD731.Count;
+  end;
+end;
+
+procedure TBloco_D.WriteRegistroD735(RegD700: TRegistroD700);
+var
+  intFor: Integer;
+begin
+  if Assigned(RegD700.RegistroD735) then
+  begin
+    for intFor := 0 to RegD700.RegistroD735.Count - 1 do
+    begin
+      with RegD700.RegistroD735.Items[intFor] do
+        Add(LFill('D735') +
+          LFill(COD_OBS) +
+          LFill(TXT_COMPL));
+
+      WriteRegistroD737(RegD700.RegistroD735.Items[intFor]);
+
+      RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+    end;
+
+    /// Variavél para armazenar a quantidade de registro do tipo
+    FRegistroD735Count := FRegistroD735Count + RegD700.RegistroD735.Count;
+  end;
+end;
+
+procedure TBloco_D.WriteRegistroD737(RegD735: TRegistroD735);
+var
+  intFor: Integer;
+begin
+  if Assigned(RegD735.RegistroD737) then
+  begin
+     for intFor := 0 to RegD735.RegistroD737.Count - 1 do
+     begin
+        with RegD735.RegistroD737.Items[intFor] do
+          Add(LFill('D737') +
+            LFill(COD_AJ) +
+            LFill(DESCR_COMPL_AJ) +
+            LFill(COD_ITEM) +
+            LFill(VL_BC_ICMS, 0, 2) +
+            LFill(ALIQ_ICMS, 6, 2) +
+            LFill(VL_ICMS, 0, 2) +
+            LFill(VL_OUTROS, 0, 2));
+
+        RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+     end;
+
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroD737Count := FRegistroD737Count + RegD735.RegistroD737.Count;
+  end;
+end;
+
+procedure TBloco_D.WriteRegistroD750(RegD001: TRegistroD001);
+var
+  intFor: Integer;
+  wRegD750: TRegistroD750;
+begin
+  if (FBloco_0.Registro0000.COD_VER < vlVersao116) then
+    Exit;
+
+  if Assigned(RegD001.RegistroD750) then
+  begin
+    for intFor := 0 to RegD001.RegistroD750.Count - 1 do
+    begin
+      wRegD750 := RegD001.RegistroD750.Items[intFor];
+
+      Add(LFill('D750') +
+        LFill(wRegD750.COD_MOD, 2) +
+        LFill(wRegD750.SER) +
+        LFill(wRegD750.DT_DOC) +
+        LFill(wRegD750.QTD_CONS, 0, 2) +
+        LFill(IndFormaPagtoToStr(wRegD750.IND_PREPAGO)) +
+        LFill(wRegD750.VL_DOC, 0, 2) +
+        LFill(wRegD750.VL_SERV, 0, 2) +
+        LFill(wRegD750.VL_SERV_NT, 0, 2) +
+        LFill(wRegD750.VL_TERC, 0, 2) +
+        LFill(wRegD750.VL_DESC, 0, 2) +
+        LFill(wRegD750.VL_DA, 0, 2) +
+        LFill(wRegD750.VL_BC_ICMS, 0, 2) +
+        LFill(wRegD750.VL_ICMS, 0, 2) +
+        LFill(wRegD750.VL_PIS,0,2, True ) +
+        LFill(wRegD750.VL_COFINS,0,2, True));
+
+      WriteRegistroD760(wRegD750);
+      RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+    end;
+  end;
+
+  /// Variavél para armazenar a quantidade de registro do tipo
+  FRegistroD750Count := FRegistroD750Count + RegD001.RegistroD750.Count;
+
+  RegD001.RegistroD750.Clear;
+end;
+
+procedure TBloco_D.WriteRegistroD760(RegD750: TRegistroD750);
+var
+  intFor: Integer;
+begin
+  if Assigned(RegD750.RegistroD760) then
+  begin
+    for intFor := 0 to RegD750.RegistroD760.Count - 1 do
+    begin
+      with RegD750.RegistroD760.Items[intFor] do
+        Add(LFill('D760') +
+          LFill(CST_ICMS, 3) +
+          LFill(CFOP, 4) +
+          LFill(ALIQ_ICMS, 6, 2) +
+          LFill(VL_OPR, 0, 2) +
+          LFill(VL_BC_ICMS, 0, 2) +
+          LFill(VL_ICMS, 0, 2) +
+          LFill(VL_RED_BC, 0, 2) +
+          LFill(COD_OBS));
+
+      WriteRegistroD761(RegD750.RegistroD760.Items[intFor]);
+      RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+    end;
+
+    /// Variavél para armazenar a quantidade de registro do tipo
+    FRegistroD760Count := FRegistroD760Count + RegD750.RegistroD760.Count;
+  end;
+end;
+
+procedure TBloco_D.WriteRegistroD761(RegD760: TRegistroD760);
+var
+  intFor: Integer;
+begin
+  if Assigned(RegD760.RegistroD761) then
+  begin
+    for intFor := 0 to RegD760.RegistroD761.Count - 1 do
+    begin
+      with RegD760.RegistroD761.Items[intFor] do
+        Add(
+          LFill('D761') +
+          LFill(VL_FCP_OP, 0, 2));
+
+      RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+    end;
+
+    /// Variavél para armazenar a quantidade de registro do tipo
+    FRegistroD761Count := FRegistroD761Count + RegD760.RegistroD761.Count;
   end;
 end;
 

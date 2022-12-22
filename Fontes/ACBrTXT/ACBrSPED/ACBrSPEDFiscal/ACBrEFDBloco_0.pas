@@ -61,6 +61,7 @@ type
   TRegistro0206List = class;
   TRegistro0210List = class;
   TRegistro0220List = class;
+  TRegistro0221List = class;
   TRegistro0300List = class;
   TRegistro0305 = class;
   TRegistro0400List = class;
@@ -344,10 +345,11 @@ type
     fALIQ_ICMS: Variant;      /// Alíquota ICMS aplicável (operações internas):
 		FCEST : string;
 
-    FRegistro0205: TRegistro0205List;  /// BLOCO C - Lista de Registro0205 (FILHO)
-    FRegistro0206: TRegistro0206List;  /// BLOCO C - Lista de Registro0206 (FILHO)
+    FRegistro0205: TRegistro0205List;  /// BLOCO 0 - Lista de Registro0205 (FILHO)
+    FRegistro0206: TRegistro0206List;  /// BLOCO 0 - Lista de Registro0206 (FILHO)
     FRegistro0210: TRegistro0210List;
-    FRegistro0220: TRegistro0220List;  /// BLOCO C - Lista de Registro0220 (FILHO)
+    FRegistro0220: TRegistro0220List;  /// BLOCO 0 - Lista de Registro0220 (FILHO)
+    FRegistro0221: TRegistro0221List;  /// BLOCO 0 - Lista de Registro0221 (FILHO)
   public
     constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -369,6 +371,7 @@ type
     property Registro0206: TRegistro0206List read FRegistro0206 write FRegistro0206;
     property Registro0210: TRegistro0210List read FRegistro0210 write FRegistro0210;
     property Registro0220: TRegistro0220List read FRegistro0220 write FRegistro0220;
+    property Registro0221: TRegistro0221List read FRegistro0221 write FRegistro0221;
   end;
 
   /// Registro 0200 - Lista
@@ -480,6 +483,28 @@ type
   public
     function New: TRegistro0220;
     property Items[Index: Integer]: TRegistro0220 read GetItem write SetItem;
+  end;
+
+  { TRegistro0221 - CORRELAÇÃO ENTRE CÓDIGOS DE ITENS COMERCIALIZADOS }
+
+  TRegistro0221 = class
+  private
+    fCOD_ITEM_ATOMICO: String;  /// Informar o código do item atômico contido no item informado no 0200 Pai.
+    fQTDE_CONTIDA: Double;      /// Informar quantos itens atômicos estão contidos no item informado no 0200 Pai.
+  public
+    property COD_ITEM_ATOMICO: String read fCOD_ITEM_ATOMICO write fCOD_ITEM_ATOMICO;
+    property QTDE_CONTIDA: Double read fQTDE_CONTIDA write fQTDE_CONTIDA;
+  end;
+
+  { TRegistro0221List }
+
+  TRegistro0221List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro0221;
+    procedure SetItem(Index: Integer; const Value: TRegistro0221);
+  public
+    function New: TRegistro0221; overload;
+    property Items[Index: Integer]: TRegistro0221 read GetItem write SetItem;
   end;
 
   /// Registro 0300 - CADASTRO DE BENS OU COMPONENTES DO ATIVO IMOBILIZADO
@@ -946,6 +971,24 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistro0221List }
+
+function TRegistro0221List.GetItem(Index: Integer): TRegistro0221;
+begin
+  Result := TRegistro0221(Inherited GetItem(Index));
+end;
+
+function TRegistro0221List.New: TRegistro0221;
+begin
+  Result := TRegistro0221.Create;
+  Add(Result);
+end;
+
+procedure TRegistro0221List.SetItem(Index: Integer; const Value: TRegistro0221);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistro0400List }
 
 function TRegistro0400List.GetItem(Index: Integer): TRegistro0400;
@@ -1112,16 +1155,18 @@ begin
    inherited Create();
    FRegistro0205 := TRegistro0205List.Create;
    FRegistro0206 := TRegistro0206List.Create;
-   FRegistro0210 := TRegistro0210List.Create;  // jorge 20/08/14
+   FRegistro0210 := TRegistro0210List.Create;
    FRegistro0220 := TRegistro0220List.Create;
+   FRegistro0221 := TRegistro0221List.Create;
 end;
 
 destructor TRegistro0200.Destroy;
 begin
   FRegistro0205.Free;
   FRegistro0206.Free;
-  FRegistro0210.Free; // jorge 20/08/14
+  FRegistro0210.Free;
   FRegistro0220.Free;
+  FRegistro0221.Free;
   inherited;
 end;
 

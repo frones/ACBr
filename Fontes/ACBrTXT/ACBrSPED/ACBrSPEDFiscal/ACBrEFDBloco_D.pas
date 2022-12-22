@@ -78,6 +78,14 @@ type
   TRegistroD695List = class;
   TRegistroD696List = class;
   TRegistroD697List = class;
+  TRegistroD700List = class;
+  TRegistroD730List = class;
+  TRegistroD731List = class;
+  TRegistroD735List = class;
+  TRegistroD737List = class;
+  TRegistroD750List = class;
+  TRegistroD760List = class;
+  TRegistroD761List = class;
 
   /// Registro D001 - ABERTURA DO BLOCO D
 
@@ -90,6 +98,8 @@ type
     FRegistroD500: TRegistroD500List;
     FRegistroD600: TRegistroD600List;
     FRegistroD695: TRegistroD695List;
+    FRegistroD700: TRegistroD700List;
+    FRegistroD750: TRegistroD750List;
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -101,6 +111,8 @@ type
     property RegistroD500: TRegistroD500List read FRegistroD500 write FRegistroD500;
     property RegistroD600: TRegistroD600List read FRegistroD600 write FRegistroD600;
     property RegistroD695: TRegistroD695List read FRegistroD695 write FRegistroD695;
+    property RegistroD700: TRegistroD700List read FRegistroD700 write FRegistroD700;
+    property RegistroD750: TRegistroD750List read FRegistroD750 write FRegistroD750;
   end;
 
   /// Registro D100 - NOTA FISCAL DE SERVIÇO DE TRANSPORTE (CÓDIGO 07) E CONHECIMENTOS DE TRANSPORTE RODOVIÁRIO DE CARGAS (CÓDIGO 08), AQUAVIÁRIO DE CARGAS (CÓDIGO 09), AÉREO (CÓDIGO 10), FERROVIÁRIO DE CARGAS (CÓDIGO 11) E MULTIMODAL DE CARGAS (CÓDIGO 26) E NOTA FISCAL DE TRANSPORTE FERROVIÁRIO DE CARGA (CÓDIGO 27)
@@ -1517,6 +1529,331 @@ type
     property Items[Index: Integer]: TRegistroD697 read GetItem write SetItem;
   end;
 
+  { TRegistroD700 - Nota Fiscal Fatura Eletrônica de Serviços de Comunicação. NFCom (Código 62)  }
+
+  TRegistroD700 = class
+  private
+    FCHV_DOCe: String;         // Chave da Nota Fiscal Fatura de Serviço de Comunicação Eletrônica
+    FCHV_DOCe_REF: string;     // Chave da nota referenciada
+    fCOD_INF: String;          // Código da informação complementar do documento fiscal
+    FCOD_MOD: String;          // Código do modelo do documento fiscal
+    FCOD_MOD_DOC_REF: string;  // Código do modelo do documento fiscal referenciado
+    FCOD_MUN_DEST: String;     // Código do município do destinatário conforme a tabela do IBGE
+    FCOD_PART: String;         // Código do participante
+    FCOD_SIT: TACBrCodSit;     // Código da situação do documento fiscal
+    FDT_DOC: TDateTime;        // Data da emissão do documento fiscal
+    FDT_E_S: TDateTime;        // Data da entrada
+    FFIN_DOCe: TACBrFinEmissaoFaturaEletronica;  // Finalidade da emissão do documento eletrônico
+    FHASH_DOC_REF: string;     // Código de autenticação digital do registro
+    FIND_EMIT: TACBrIndEmit;   // Indicador do emitente do documento fiscal
+    FIND_OPER: TACBrIndOper;   // Indicador do tipo de prestação
+    FMES_DOC_REF: string;      // Mês e ano da emissão do documento fiscal referenciado
+    FNUM_DOC: String;          // Número do documento fiscal
+    FNUM_DOC_REF: string;      // Número do documento fiscal referenciado
+    FSER: String;              //
+    FSER_DOC_REF: string;      // Série do documento fiscal referenciado
+    FTIP_FAT: TACBrTipoFaturamentoDocumentoEletronico;  // Tipo de faturamento do documento eletrônico
+    FVL_BC_ICMS: Currency;     // Valor da Base de Cálculo (BC) do ICMS
+    FVL_COFINS: Currency;      // Valor do Cofins
+    FVL_DA: Currency;          // Valor de despesas acessórias indicadas no documento fiscal
+    FVL_DESC: Currency;        // Valor do Desconto
+    FVL_DOC: Currency;         // Valor do Documento Fiscal
+    FVL_ICMS: Currency;        // Valor do ICMS
+    FVL_PIS: Currency;         // Valor do Pis/Pasep
+    FVL_SERV: Currency;        // Valor dos serviços tributados pelo ICMS
+    FVL_SERV_NT: Currency;     // Valores cobrados em nome do prestador sem destaque de ICMS
+    FVL_TERC: Currency;        // Valores cobrados em nome de terceiros
+
+    FRegistroD730: TRegistroD730List;
+    FRegistroD735: TRegistroD735List;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property IND_OPER: TACBrIndOper read FIND_OPER write FIND_OPER;
+    property IND_EMIT: TACBrIndEmit read FIND_EMIT write FIND_EMIT;
+    property COD_PART: String read FCOD_PART write FCOD_PART;
+    property COD_MOD: String read FCOD_MOD write FCOD_MOD;
+    property COD_SIT: TACBrCodSit read FCOD_SIT write FCOD_SIT;
+    property SER: String read FSER write FSER;
+    property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
+    property DT_E_S: TDateTime read FDT_E_S write FDT_E_S;
+    property VL_DOC: Currency read FVL_DOC write FVL_DOC;
+    property VL_DESC: Currency read FVL_DESC write FVL_DESC;
+    property VL_SERV: Currency read FVL_SERV write FVL_SERV;
+    property VL_SERV_NT: Currency read FVL_SERV_NT write FVL_SERV_NT;
+    property VL_TERC: Currency read FVL_TERC write FVL_TERC;
+    property VL_DA: Currency read FVL_DA write FVL_DA;
+    property VL_BC_ICMS: Currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: Currency read FVL_ICMS write FVL_ICMS;
+    property COD_INF: String read fCOD_INF write fCOD_INF;
+    property VL_PIS: Currency read FVL_PIS write FVL_PIS;
+    property VL_COFINS: Currency read FVL_COFINS write FVL_COFINS;
+    property CHV_DOCe: String read FCHV_DOCe write FCHV_DOCe;
+    property FIN_DOCe: TACBrFinEmissaoFaturaEletronica read FFIN_DOCe write FFIN_DOCe;
+    property TIP_FAT: TACBrTipoFaturamentoDocumentoEletronico read FTIP_FAT write FTIP_FAT;
+    property COD_MOD_DOC_REF: string read FCOD_MOD_DOC_REF write FCOD_MOD_DOC_REF;
+    property CHV_DOCe_REF: string read FCHV_DOCe_REF write FCHV_DOCe_REF;
+    property HASH_DOC_REF: string read FHASH_DOC_REF write FHASH_DOC_REF;
+    property SER_DOC_REF: string read FSER_DOC_REF write FSER_DOC_REF;
+    property NUM_DOC_REF: string read FNUM_DOC_REF write FNUM_DOC_REF;
+    property MES_DOC_REF: string read FMES_DOC_REF write FMES_DOC_REF;
+    property COD_MUN_DEST: String read FCOD_MUN_DEST write FCOD_MUN_DEST;
+
+    property RegistroD730: TRegistroD730List read FRegistroD730 write FRegistroD730;
+    property RegistroD735: TRegistroD735List read FRegistroD735 write FRegistroD735;
+  end;
+
+  { TRegistroD700List }
+
+  TRegistroD700List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD700;
+    procedure SetItem(Index: Integer; const Value: TRegistroD700);
+  public
+    function New: TRegistroD700;
+    property Items[Index: Integer]: TRegistroD700 read GetItem write SetItem;
+  end;
+
+  { TRegistroD730 - Registro analítico Nota Fiscal Fatura Eletrônica de Serviços de Comunicação. NFCom (Código 62) }
+
+  TRegistroD730 = class
+  private
+    FALIQ_ICMS: Currency;   // Alíquota do ICMS
+    FCFOP: String;          // Código Fiscal de Operação e Prestação
+    FCOD_OBS: String;       // Código da observação
+    FCST_ICMS: String;      // Código da Situação Tributária
+    FVL_BC_ICMS: Currency;  // Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS
+    FVL_ICMS: Currency;     // Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS, incluindo o FCP, quando aplicável, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS
+    FVL_OPR: Currency;      // Valor da prestação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS, incluídas as despesas acessórias e acréscimos
+    FVL_RED_BC: Currency;   // Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS
+
+    FRegistroD731: TRegistroD731List;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
+    property CFOP: String read FCFOP write FCFOP;
+    property ALIQ_ICMS: Currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: Currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: Currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: Currency read FVL_ICMS write FVL_ICMS;
+    property VL_RED_BC: Currency read FVL_RED_BC write FVL_RED_BC;
+    property COD_OBS: String read FCOD_OBS write FCOD_OBS;
+
+    property RegistroD731: TRegistroD731List read FRegistroD731 write FRegistroD731;
+  end;
+
+  { TRegistroD730List }
+
+  TRegistroD730List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD730;
+    procedure SetItem(Index: Integer; const Value: TRegistroD730);
+  public
+    function New: TRegistroD730;
+    property Items[Index: Integer]: TRegistroD730 read GetItem write SetItem;
+  end;
+
+  { TRegistroD731 - INFORMAÇÕES DO FUNDO DE COMBATE À POBREZA. NFCom (CÓDIGO 62) }
+
+  TRegistroD731 = class
+  private
+    FVL_FCP_OP: Currency;  // Valor do Fundo de Combate à Pobreza (FCP) vinculado à operação própria, na combinação de CST_ICMS, CFOP e alíquota do ICMS
+  public
+    property VL_FCP_OP: Currency read FVL_FCP_OP write FVL_FCP_OP;
+  end;
+
+  { TRegistroD731List }
+
+  TRegistroD731List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD731;
+    procedure SetItem(Index: Integer; const Value: TRegistroD731);
+  public
+    function New: TRegistroD731;
+    property Items[Index: Integer]: TRegistroD731 read GetItem write SetItem;
+  end;
+
+  { TRegistroD735 - OBSERVAÇÕES DO LANÇAMENTO FISCAL (CÓDIGO 62) }
+
+  TRegistroD735 = class
+  private
+    fCOD_OBS: String;    // Código da observação do lançamento fiscal
+    fTXT_COMPL: String;  // Descrição complementar do código de observação.
+
+    FRegistroD737: TRegistroD737List;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property COD_OBS: String read fCOD_OBS write fCOD_OBS;
+    property TXT_COMPL: String read fTXT_COMPL write fTXT_COMPL;
+
+    property RegistroD737: TRegistroD737List read FRegistroD737 write FRegistroD737;
+  end;
+
+  { TRegistroD735List }
+
+  TRegistroD735List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD735;
+    procedure SetItem(Index: Integer; const Value: TRegistroD735);
+  public
+    function New: TRegistroD735;
+    property Items[Index: Integer]: TRegistroD735 read GetItem write SetItem;
+  end;
+
+  { TRegistroD737 - OUTRAS OBRIGAÇÕES TRIBUTÁRIAS, AJUSTES E INFORMAÇÕES DE VALORES PROVENIENTES DE DOCUMENTO FISCAL }
+
+  TRegistroD737 = class
+  private
+    fALIQ_ICMS: Currency;     // Alíquota do ICMS
+    fCOD_AJ: String;          // Código do ajustes/benefício/incentivo
+    fCOD_ITEM: String;        // Código do item
+    fDESCR_COMPL_AJ: String;  // Descrição complementar do ajuste do documento fiscal
+    fVL_BC_ICMS: Currency;    // Base de cálculo do ICMS
+    fVL_ICMS: Currency;       // Valor do ICMS
+    fVL_OUTROS: Currency;     // Outros valores
+  public
+    property COD_AJ: String read fCOD_AJ write fCOD_AJ;
+    property DESCR_COMPL_AJ: String read fDESCR_COMPL_AJ write fDESCR_COMPL_AJ;
+    property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
+    property VL_BC_ICMS: Currency read fVL_BC_ICMS write fVL_BC_ICMS;
+    property ALIQ_ICMS: Currency read fALIQ_ICMS write fALIQ_ICMS;
+    property VL_ICMS: Currency read fVL_ICMS write fVL_ICMS;
+    property VL_OUTROS: Currency read fVL_OUTROS write fVL_OUTROS;
+  end;
+
+  { TRegistroD737List }
+
+  TRegistroD737List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD737;
+    procedure SetItem(Index: Integer; const Value: TRegistroD737);
+  public
+    function New: TRegistroD737;
+    property Items[Index: Integer]: TRegistroD737 read GetItem write SetItem;
+  end;
+
+  { TRegistroD750 - ESCRITURAÇÃO CONSOLIDADA DA NOTA FISCAL FATURA ELETRÔNICA DE SERVIÇOS DE COMUNICAÇÃO. NFCom (CÓDIGO 62) }
+
+  TRegistroD750 = class
+  private
+    FCOD_MOD: String;                        // Código do modelo do documento fiscal
+    FDT_DOC: TDateTime;                      // Data da emissão dos documentos
+    FIND_PREPAGO: TACBrIndicadorFormaPagto;  // Forma de pagamento
+    fQTD_CONS: Currency;                     // Quantidade de documentos consolidados neste registro
+    FSER: String;                            // Série do documento fiscal
+    FVL_BC_ICMS: Currency;                   // Valor total da base de cálculo do ICMS
+    FVL_COFINS: Currency;                    // Valor total do COFINS
+    FVL_DA: Currency;                        // Valor total das despesas acessórias
+    FVL_DESC: Currency;                      // Valor total dos descontos
+    FVL_DOC: Currency;                       // Valor total dos documentos
+    FVL_ICMS: Currency;                      // Valor total do ICMS
+    FVL_PIS: Currency;                       // Valor total do PIS
+    FVL_SERV: Currency;                      // Valor total dos descontos
+    FVL_SERV_NT: Currency;                   // Valores cobrados em nome do prestador sem destaque de ICMS
+    FVL_TERC: Currency;                      // Valor total cobrado em nome de terceiros
+
+    FRegistroD760: TRegistroD760List;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property COD_MOD: String read FCOD_MOD write FCOD_MOD;
+    property SER: String read FSER write FSER;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
+    property QTD_CONS: Currency read fQTD_CONS write fQTD_CONS;
+    property IND_PREPAGO: TACBrIndicadorFormaPagto read FIND_PREPAGO write FIND_PREPAGO;
+    property VL_DOC: Currency read FVL_DOC write FVL_DOC;
+    property VL_SERV: Currency read FVL_SERV write FVL_SERV;
+    property VL_SERV_NT: Currency read FVL_SERV_NT write FVL_SERV_NT;
+    property VL_TERC: Currency read FVL_TERC write FVL_TERC;
+    property VL_DESC: Currency read FVL_DESC write FVL_DESC;
+    property VL_DA: Currency read FVL_DA write FVL_DA;
+    property VL_BC_ICMS: Currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: Currency read FVL_ICMS write FVL_ICMS;
+    property VL_PIS: Currency read FVL_PIS write FVL_PIS;
+    property VL_COFINS: Currency read FVL_COFINS write FVL_COFINS;
+
+    property RegistroD760: TRegistroD760List read FRegistroD760 write FRegistroD760;
+  end;
+
+  { TRegistroD750List }
+
+  TRegistroD750List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD750;
+    procedure SetItem(Index: Integer; const Value: TRegistroD750);
+  public
+    function New: TRegistroD750;
+    property Items[Index: Integer]: TRegistroD750 read GetItem write SetItem;
+  end;
+
+  { TRegistroD760 - REGISTRO ANALÍTICO DA ESCRITURAÇÃO CONSOLIDADA DA NOTA FISCAL FATURA ELETRÔNICA DE SERVIÇOS DE COMUNICAÇÃO. NFCom (CÓDIGO 62) }
+
+  TRegistroD760 = class
+  private
+    FALIQ_ICMS: Currency;
+    FCFOP: String;
+    FCOD_OBS: String;
+    FCST_ICMS: String;
+    FVL_BC_ICMS: Currency;
+    FVL_ICMS: Currency;
+    FVL_OPR: Currency;
+    FVL_RED_BC: Currency;
+
+    FRegistroD761: TRegistroD761List;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
+    property CFOP: String read FCFOP write FCFOP;
+    property ALIQ_ICMS: Currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: Currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: Currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: Currency read FVL_ICMS write FVL_ICMS;
+    property VL_RED_BC: Currency read FVL_RED_BC write FVL_RED_BC;
+    property COD_OBS: String read FCOD_OBS write FCOD_OBS;
+
+    property RegistroD761: TRegistroD761List read FRegistroD761 write FRegistroD761;
+  end;
+
+  { TRegistroD760List }
+
+  TRegistroD760List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD760;
+    procedure SetItem(Index: Integer; const Value: TRegistroD760);
+  public
+    function New: TRegistroD760;
+    property Items[Index: Integer]: TRegistroD760 read GetItem write SetItem;
+  end;
+
+  { TRegistroD761 }
+
+  TRegistroD761 = class
+  private
+    FVL_FCP_OP: Currency;  // Valor do Fundo de Combate à Pobreza (FCP) vinculado à operação própria, na combinação de CST_ICMS, CFOP e alíquota do ICMS
+  public
+    property VL_FCP_OP: Currency read FVL_FCP_OP write FVL_FCP_OP;
+  end;
+
+  { TRegistroD761List }
+
+  TRegistroD761List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD761;
+    procedure SetItem(Index: Integer; const Value: TRegistroD761);
+  public
+    function New: TRegistroD761;
+    property Items[Index: Integer]: TRegistroD761 read GetItem write SetItem;
+  end;
+
   /// Registro D990 - ENCERRAMENTO DO BLOCO D
 
   TRegistroD990 = class
@@ -2218,6 +2555,217 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistroD700 }
+
+constructor TRegistroD700.Create;
+begin
+  FRegistroD730 := TRegistroD730List.Create;
+  FRegistroD735 := TRegistroD735List.Create;
+end;
+
+destructor TRegistroD700.Destroy;
+begin
+  FRegistroD730.Free;
+  FRegistroD735.Free;
+  inherited Destroy;
+end;
+
+{ TRegistroD700List }
+
+function TRegistroD700List.GetItem(Index: Integer): TRegistroD700;
+begin
+  Result := TRegistroD700(Inherited Items[Index]);
+end;
+
+procedure TRegistroD700List.SetItem(Index: Integer; const Value: TRegistroD700);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroD700List.New: TRegistroD700;
+begin
+  Result := TRegistroD700.Create;
+  Add(Result);
+end;
+
+{ TRegistroD730 }
+
+constructor TRegistroD730.Create;
+begin
+  FRegistroD731 := TRegistroD731List.Create;
+end;
+
+destructor TRegistroD730.Destroy;
+begin
+  FRegistroD731.Free;
+  inherited Destroy;
+end;
+
+{ TRegistroD730List }
+
+function TRegistroD730List.GetItem(Index: Integer): TRegistroD730;
+begin
+  Result := TRegistroD730(Inherited Items[Index]);
+end;
+
+procedure TRegistroD730List.SetItem(Index: Integer; const Value: TRegistroD730);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroD730List.New: TRegistroD730;
+begin
+  Result := TRegistroD730.Create;
+  Add(Result);
+end;
+
+{ TRegistroD731List }
+
+function TRegistroD731List.GetItem(Index: Integer): TRegistroD731;
+begin
+  Result := TRegistroD731(Inherited Items[Index]);
+end;
+
+procedure TRegistroD731List.SetItem(Index: Integer; const Value: TRegistroD731);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroD731List.New: TRegistroD731;
+begin
+  Result := TRegistroD731.Create;
+  Add(Result);
+end;
+
+{ TRegistroD735 }
+
+constructor TRegistroD735.Create;
+begin
+  FRegistroD737 := TRegistroD737List.Create;
+end;
+
+destructor TRegistroD735.Destroy;
+begin
+  FRegistroD737.Free;
+  inherited Destroy;
+end;
+
+{ TRegistroD735List }
+
+function TRegistroD735List.GetItem(Index: Integer): TRegistroD735;
+begin
+  Result := TRegistroD735(Inherited Items[Index]);
+end;
+
+procedure TRegistroD735List.SetItem(Index: Integer; const Value: TRegistroD735);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroD735List.New: TRegistroD735;
+begin
+  Result := TRegistroD735.Create;
+  Add(Result);
+end;
+
+{ TRegistroD737List }
+
+function TRegistroD737List.GetItem(Index: Integer): TRegistroD737;
+begin
+  Result := TRegistroD737(Inherited Items[Index]);
+end;
+
+procedure TRegistroD737List.SetItem(Index: Integer; const Value: TRegistroD737);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroD737List.New: TRegistroD737;
+begin
+  Result := TRegistroD737.Create;
+  Add(Result);
+end;
+
+{ TRegistroD750 }
+
+constructor TRegistroD750.Create;
+begin
+  FRegistroD760 := TRegistroD760List.Create;
+end;
+
+destructor TRegistroD750.Destroy;
+begin
+  FRegistroD760.Free;
+  inherited Destroy;
+end;
+
+{ TRegistroD750List }
+
+function TRegistroD750List.GetItem(Index: Integer): TRegistroD750;
+begin
+  Result := TRegistroD750(Inherited Items[Index]);
+end;
+
+procedure TRegistroD750List.SetItem(Index: Integer; const Value: TRegistroD750);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroD750List.New: TRegistroD750;
+begin
+  Result := TRegistroD750.Create;
+  Add(Result);
+end;
+
+{ TRegistroD760 }
+
+constructor TRegistroD760.Create;
+begin
+  FRegistroD761 := TRegistroD761List.Create;
+end;
+
+destructor TRegistroD760.Destroy;
+begin
+  FRegistroD761.Free;
+  inherited Destroy;
+end;
+
+{ TRegistroD760List }
+
+function TRegistroD760List.GetItem(Index: Integer): TRegistroD760;
+begin
+  Result := TRegistroD760(Inherited Items[Index]);
+end;
+
+procedure TRegistroD760List.SetItem(Index: Integer; const Value: TRegistroD760);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroD760List.New: TRegistroD760;
+begin
+  Result := TRegistroD760.Create;
+  Add(Result);
+end;
+
+{ TRegistroD761List }
+
+function TRegistroD761List.GetItem(Index: Integer): TRegistroD761;
+begin
+  Result := TRegistroD761(Inherited Items[Index]);
+end;
+
+procedure TRegistroD761List.SetItem(Index: Integer; const Value: TRegistroD761);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroD761List.New: TRegistroD761;
+begin
+  Result := TRegistroD761.Create;
+  Add(Result);
+end;
+
 { TRegistroD500 }
 
 constructor TRegistroD500.Create;
@@ -2292,7 +2840,8 @@ begin
   FRegistroD500 := TRegistroD500List.Create;
   FRegistroD600 := TRegistroD600List.Create;
   FRegistroD695 := TRegistroD695List.Create;
-  //
+  FRegistroD700 := TRegistroD700List.Create;
+  FRegistroD750 := TRegistroD750List.Create;
   IND_MOV := imSemDados;
 end;
 
@@ -2305,6 +2854,8 @@ begin
   FRegistroD500.Free;
   FRegistroD600.Free;
   FRegistroD695.Free;
+  FRegistroD700.Free;
+  FRegistroD750.Free;
   inherited;
 end;
 

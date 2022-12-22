@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+22/12/2022
+-- Fiorilli.Provider --
+[*] Ajuste para que gere quebra de linha e não exiba caracteres estranhos na descrição do serviço
+   Por: Italo Giurizzato Junior
+
 21/12/2022
 -- ACBrNFSeXServicos.ini --
 [*] Adiciona a URL de produção para Brasília/DF.

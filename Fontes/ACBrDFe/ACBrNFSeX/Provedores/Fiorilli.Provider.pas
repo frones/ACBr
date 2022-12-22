@@ -329,8 +329,10 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := NativeStringToUTF8(Result);
+  Result := StringReplace(Result, '&#xd;', '\s\n', [rfReplaceAll]);
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2022
+[*] Ajuste na Instrução do método LerArqIni - #TK-3408
+Por: Antonio Carlos Junior / Victor H Gonzales - Pandaaa
+
 16/12/2022
 [+] TK-3264 ACBrBoleto - 212-Banco Original
   por : Renato Pavan

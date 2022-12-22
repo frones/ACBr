@@ -3823,9 +3823,9 @@ begin
             Mensagem.Text       := MemFormatada;
             Informativo.Text    := MemInformativo;
             Detalhamento.Text   := MemDetalhamento;
-            Instrucao1          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao1',Instrucao1),2);
-            Instrucao2          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao2',Instrucao2),2);
-            Instrucao3          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao3',Instrucao3),2);
+            Instrucao1          := IniBoletos.ReadString(Sessao,'Instrucao1',Instrucao1);
+            Instrucao2          := IniBoletos.ReadString(Sessao,'Instrucao2',Instrucao2);
+            Instrucao3          := IniBoletos.ReadString(Sessao,'Instrucao3',Instrucao3);
             TotalParcelas       := IniBoletos.ReadInteger(Sessao,'TotalParcelas',TotalParcelas);
             Parcela             := IniBoletos.ReadInteger(Sessao,'Parcela',Parcela);
             ValorAbatimento     := IniBoletos.ReadFloat(Sessao,'ValorAbatimento',ValorAbatimento);

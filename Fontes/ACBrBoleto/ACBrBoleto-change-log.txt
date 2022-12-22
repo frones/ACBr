@@ -50,13 +50,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/12/2022
-[*] Ajuste na Instrução do método LerArqIni - #TK-3408
+[*]TK-3408 Ajuste na Instrução do método LerArqIni
 Por: Antonio Carlos Junior / Victor H Gonzales - Pandaaa
 
 --ACBrBoletoCresol--
-[-] TK-3413 133 ACBrBoletoCresol Atualização CNAB240 Dominio de Multa
-  por :  Victor H Gonzales - Pandaaa
+[-]TK-3413 Banco 133 ACBrBoletoCresol Atualização CNAB240 Dominio de Multa
+  por : Victor H Gonzales - Pandaaa
 
+[+]TK-3008 Banco Sicredi Boleto Hibrido
+  por : Nazarenoneto / Eric100 / Victor H Gonzales - Pandaaa
 
 16/12/2022
 [+] TK-3264 ACBrBoleto - 212-Banco Original

@@ -219,6 +219,7 @@ var
   TipoBoleto, wModalidade: Char;
   TextoRegInfo: String;
   ANumeroDocumento: String;
+  LHibrido : string;
 begin
 
    with ACBrTitulo do
@@ -326,14 +327,18 @@ begin
        CodigoMora := 'A';
 
      TpDesconto := TipoDescontoToString(TipoDesconto);
-     
+
+     LHibrido := IfThen(NaoEstaVazio(ACBrBoleto.Cedente.PIX.Chave),'H',' ');
+
       with ACBrBoleto do
       begin
          wLinha:= '1'                                                                   +  // 001 a 001 - Identificação do registro detalhe
                   wModalidade                                                           +  // 002 a 002 - Tipo de cobrança ("A" - Registrada  e "C" Sem Regsitro)
                   ifthen(wModalidade = 'A', 'A', ' ')                                   +  // 003 a 003 - Tipo de carteira = "A" Simples
                   IfThen(TipoImpressao = tipCarne, 'B', 'A')                            +  // 004 a 004 - Tipo de impressão = "A" Normal "B" Carnê //--Anderson
-                  Space(12)                                                             +  // 005 a 016 - Filler - Brancos
+                  ' '                                                                   +  // 005 a 005 - Filler - Brancos
+                  LHibrido                                                              +  // 006 a 006 - Tipo de Boleto: H - Híbrido
+                  Space(10)                                                             +  // 007 a 016 - Filler - Brancos
                   'A'                                                                   +  // 017 a 017 - Tipo de moeda = "A" Real
                   TpDesconto                                                            +  // 018 a 018 - Tipo de desconto: "A" Valor "B" percentual
                   trim(CodigoMora)                                                      +  // 019 a 019 - Tipo de juro: "A" Valor "B" percentual
@@ -588,6 +593,21 @@ begin
                     IntToStrZero( ARemessa.Count + 1, 6);                            // 395 a 400 - Número sequencial do registro
           ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
         end;
+
+        {8.7 Registro Híbrido}
+        if (NaoEstaVazio(ACBrBoleto.Cedente.PIX.Chave)) then
+        begin
+          wLinha := '8'                                                            + // 001 a 001 - Identificação do registro detalhe (7)
+                    PadRight(wNossoNumeroCompleto, 15, ' ')                        + // 002 a 016 - Nosso número Sicredi
+                    ' '                                                            + // 017 a 017 - Filler ( Deixar em Branco (sem preenchimento) )
+                    'H'                                                            + // 018 a 018 - Híbrido
+                    Space(12)                                                      + // 019 a 030 - Filler ( Deixar em Branco (sem preenchimento) )
+                    ANumeroDocumento                                               + // 031 a 040 - Seu número
+                    PadLeft(QrCode.txId, 35, ' ')                                  + // 041 a 075 - TXID
+                    Space(319)                                                     + // 076 a 394 - Filler ( Deixar em Branco (sem preenchimento) )
+                    IntToStrZero( ARemessa.Count + 1, 6);                            // 395 a 400 - Número sequencial do registro
+          ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+        end;
       end;
    end;
 end;
@@ -675,118 +695,126 @@ begin
   begin
     Linha := ARetorno[ContLinha] ;
 
-    if (Copy(Linha,1,1) <> '1') then
+    if (Copy(Linha,1,1) <> '1') and (Copy(Linha,1,1) <> '8') then
       Continue;
-
-    Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
-
-    with Titulo do
+    if (Copy(Linha,1,1) = '1') then
     begin
-      Carteira             := Copy(Linha,14,1);
-      if (Carteira = '1') or (Carteira = 'A') then //Cobrança com Registro
+      Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+
+      with Titulo do
       begin
-        NossoNumero          := Copy(Linha,48,15);
-        Vencimento     := StringToDateTimeDef(Copy(Linha,147,2)+'/'+
-                                              Copy(Linha,149,2)+'/'+
-                                              Copy(Linha,151,2),0, 'DD/MM/YY' );
-
-        rEspDoc := trim(Copy(Linha,175,1));
-        if (rEspDoc = '') or (rEspDoc = 'K') then
-          EspecieDoc := 'OS'
-        else if (rEspDoc = 'A') then
-          EspecieDoc := 'DMI'
-        else if (rEspDoc = 'B') then
-          EspecieDoc := 'DR'
-        else if (rEspDoc = 'C') then
-          EspecieDoc := 'NP'
-        else if (rEspDoc = 'D') then
-          EspecieDoc := 'NR'
-        else if (rEspDoc = 'E') then
-          EspecieDoc := 'NS'
-        else if (rEspDoc = 'G') then
-          EspecieDoc := 'RC'
-        else if (rEspDoc = 'H') then
-          EspecieDoc := 'LC'
-        else if (rEspDoc = 'I') then
-          EspecieDoc := 'ND'
-        else if (rEspDoc = 'J') then
-          EspecieDoc := 'DSI';
-
-        ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
-        ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
-        qtdMotivo:=5;
-      end
-      else                 //Cobrança sem Registro
-      begin
-        NossoNumero          := Copy(Linha,48,09);
-        qtdMotivo:=1;
-      end;
-      SeuNumero                   := copy(Linha,117,10);
-      NumeroDocumento             := copy(Linha,117,10);  //Se repete pois esse layout não se utiliza de campo específico para Numero Documento
-
-      ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
-      ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
-      ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-      ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-      ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-      ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
-      if StrToIntDef(Copy(Linha,329,8),0) <> 0 then
-        DataCredito:= StringToDateTimeDef( Copy(Linha,335,2)+'/'+
-                                          Copy(Linha,333,2)+'/'+
-                                          Copy(Linha,329,4),0, 'DD/MM/YYYY' );
-
-
-      CodOcorrencia := StrToIntDef(copy(Linha,109,2),0);
-      OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(CodOcorrencia);
-      DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                             Copy(Linha,113,2)+'/'+
-                                             Copy(Linha,115,2),0, 'DD/MM/YY' );
-
-      //-|Se a ocorrência for igual a  19 - Confirmação de Receb. de Protesto
-      //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
-      if (CodOcorrencia = 19) then
-      begin
-        CodMotivo_19:= Copy(Linha,295,1);
-        if(CodMotivo_19 = 'A')then
+        Carteira             := Copy(Linha,14,1);
+        if (Carteira = '1') or (Carteira = 'A') then //Cobrança com Registro
         begin
-          MotivoRejeicaoComando.Add(Copy(Linha,295,1));
-          DescricaoMotivoRejeicaoComando.Add('A - Aceito');
+          NossoNumero          := Copy(Linha,48,15);
+          Vencimento     := StringToDateTimeDef(Copy(Linha,147,2)+'/'+
+                                                Copy(Linha,149,2)+'/'+
+                                                Copy(Linha,151,2),0, 'DD/MM/YY' );
+
+          rEspDoc := trim(Copy(Linha,175,1));
+          if (rEspDoc = '') or (rEspDoc = 'K') then
+            EspecieDoc := 'OS'
+          else if (rEspDoc = 'A') then
+            EspecieDoc := 'DMI'
+          else if (rEspDoc = 'B') then
+            EspecieDoc := 'DR'
+          else if (rEspDoc = 'C') then
+            EspecieDoc := 'NP'
+          else if (rEspDoc = 'D') then
+            EspecieDoc := 'NR'
+          else if (rEspDoc = 'E') then
+            EspecieDoc := 'NS'
+          else if (rEspDoc = 'G') then
+            EspecieDoc := 'RC'
+          else if (rEspDoc = 'H') then
+            EspecieDoc := 'LC'
+          else if (rEspDoc = 'I') then
+            EspecieDoc := 'ND'
+          else if (rEspDoc = 'J') then
+            EspecieDoc := 'DSI';
+
+          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+          ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
+          qtdMotivo:=5;
         end
-        else
+        else                 //Cobrança sem Registro
         begin
-          MotivoRejeicaoComando.Add(Copy(Linha,295,1));
-          DescricaoMotivoRejeicaoComando.Add('D - Desprezado');
+          NossoNumero          := Copy(Linha,48,09);
+          qtdMotivo:=1;
         end;
-      end
-      else
-      begin
-        MotivoLinha := 319;  //Motivos da ocorrência
-        for i := 0 to qtdMotivo-1 do
+        SeuNumero                   := copy(Linha,117,10);
+        NumeroDocumento             := copy(Linha,117,10);  //Se repete pois esse layout não se utiliza de campo específico para Numero Documento
+
+        ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+        ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+        ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+        ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+        ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+        ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
+        if StrToIntDef(Copy(Linha,329,8),0) <> 0 then
+          DataCredito:= StringToDateTimeDef( Copy(Linha,335,2)+'/'+
+                                            Copy(Linha,333,2)+'/'+
+                                            Copy(Linha,329,4),0, 'DD/MM/YYYY' );
+
+
+        CodOcorrencia := StrToIntDef(copy(Linha,109,2),0);
+        OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(CodOcorrencia);
+        DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                               Copy(Linha,113,2)+'/'+
+                                               Copy(Linha,115,2),0, 'DD/MM/YY' );
+
+        //-|Se a ocorrência for igual a  19 - Confirmação de Receb. de Protesto
+        //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
+        if (CodOcorrencia = 19) then
         begin
-          CodMotivo := IfThen(Copy(Linha,MotivoLinha,2) = '00',
-                              '00',
-                              Copy(Linha,MotivoLinha,2));
-          //Se for o 1º motivo
-          if(i = 0)then
+          CodMotivo_19:= Copy(Linha,295,1);
+          if(CodMotivo_19 = 'A')then
           begin
-            MotivoRejeicaoComando.Add(IfThen(Copy(Linha,MotivoLinha,2) = '00',
-                                             '00',
-                                             Copy(Linha,MotivoLinha,2)));
-            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
+            MotivoRejeicaoComando.Add(Copy(Linha,295,1));
+            DescricaoMotivoRejeicaoComando.Add('A - Aceito');
           end
           else
           begin
-            if (CodMotivo <> '00') And (Trim(CodMotivo) <> '') then     //Após o 1º motivo os 00 significam que não existe mais motivo
+            MotivoRejeicaoComando.Add(Copy(Linha,295,1));
+            DescricaoMotivoRejeicaoComando.Add('D - Desprezado');
+          end;
+        end
+        else
+        begin
+          MotivoLinha := 319;  //Motivos da ocorrência
+          for i := 0 to qtdMotivo-1 do
+          begin
+            CodMotivo := IfThen(Copy(Linha,MotivoLinha,2) = '00',
+                                '00',
+                                Copy(Linha,MotivoLinha,2));
+            //Se for o 1º motivo
+            if(i = 0)then
             begin
               MotivoRejeicaoComando.Add(IfThen(Copy(Linha,MotivoLinha,2) = '00',
                                                '00',
                                                Copy(Linha,MotivoLinha,2)));
               DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
+            end
+            else
+            begin
+              if (CodMotivo <> '00') And (Trim(CodMotivo) <> '') then     //Após o 1º motivo os 00 significam que não existe mais motivo
+              begin
+                MotivoRejeicaoComando.Add(IfThen(Copy(Linha,MotivoLinha,2) = '00',
+                                                 '00',
+                                                 Copy(Linha,MotivoLinha,2)));
+                DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
+              end;
             end;
+            MotivoLinha := MotivoLinha + 2; //Incrementa a coluna dos motivos
           end;
-          MotivoLinha := MotivoLinha + 2; //Incrementa a coluna dos motivos
         end;
       end;
+    end;
+
+    if (Copy(Linha,1,1) = '8') then
+    begin
+      Titulo.QrCode.txId := Copy(Linha,55,35);
+      Titulo.QrCode.emv  := Copy(Linha,57,77);
     end;
   end;
   fpTamanhoMaximoNossoNum := 5;
@@ -1782,7 +1810,7 @@ begin
             '0001'                                      + // 004 a 007 - Lote de serviço = "9999"
             '5'                                         + // 008 a 008 - Tipo do registro = "5" TRAILLER LOTE
             Space(9)                                    + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
-            IntToStrZero(((ARemessa.Count-1) * 3)+2, 6)     + // 018 a 023 - Quantidade de registros no lote
+            IntToStrZero(((ARemessa.Count-1) * fpQtdRegsCobranca)+2, 6) + // 018 a 023 - Quantidade de registros no lote
             StringOfChar('0',6)                         + // 024 a 029 - Quantidade de títulos em cobrança
             StringOfChar('0',17)                        + // 030 a 046 - Valor total dos títulos em carteiras
             StringOfChar('0',6)                         + // 047 a 052 - Quantidade de títulos em cobrança
@@ -1801,7 +1829,7 @@ begin
             '9'                                         + // 008 a 008 - Tipo do registro = "9" TRAILLER ARQUIVO
             Space(9)                                    + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
             '000001'                                    + // 018 a 023 - Quantidade de lotes do arquivo
-            IntToStrZero(((ARemessa.Count-1) * 3)+4, 6)   + // 024 a 029 - Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora
+            IntToStrZero(((ARemessa.Count-1) * fpQtdRegsCobranca)+4, 6) + // 024 a 029 - Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora
             StringOfChar('0', 6)                        + // 030 a 035 - Quantidade de contas para conciliação (lotes)
             Space(205);                                   // 036 a 240 - Uso exclusivo FEBRABAN/CNAB
 end;
@@ -1888,6 +1916,11 @@ begin
       TipoSacado := '9';
     end;
 
+    if NaoEstaVazio(ACBrBoleto.Cedente.PIX.Chave) then
+      fpQtdRegsCobranca := 4
+    else
+      fpQtdRegsCobranca := 3;
+
     EndSacado := Sacado.Logradouro;
     if (Sacado.Numero <> '') then
       EndSacado := EndSacado + ', ' + Sacado.Numero;
@@ -1921,7 +1954,7 @@ begin
              '0001'                                                           + // 004 a 007 - Lote de serviço = "0001"
              '3'                                                              + // 008 a 008 - Tipo de registro = "3" DETALHE
              IntToStrZero(
-               (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5)   + // 009 a 013 - Nº sequencial do registro do lote
+               (fpQtdRegsCobranca * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5)   + // 009 a 013 - Nº sequencial do registro do lote
              'P'                                                              + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                         + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              Ocorrencia                                                       + // 016 a 017 - Código de movimento remessa
@@ -1968,7 +2001,7 @@ begin
              '0001'                                                         + // 004 a 007 - Lote de serviço = "0001"
              '3'                                                            + // 008 a 008 - Tipo de registro = "3" DETALHE
              IntToStrZero(
-               (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 2 , 5) + // 009 a 013 - Nº sequencial do registro do lote
+               (fpQtdRegsCobranca * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 2 , 5) + // 009 a 013 - Nº sequencial do registro do lote
              'Q'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              Ocorrencia                                                     + // 016 a 017 - Código de movimento de remessa
@@ -1994,7 +2027,7 @@ begin
                '0001'                                                      + // Número do lote
                '3'                                                         + // Tipo do registro: Registro detalhe
                IntToStrZero(
-               (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 3 , 5)+ // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               (fpQtdRegsCobranca * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 3 , 5)+ // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'R'                                                         + // Código do segmento do registro detalhe
                ' '                                                         + // Uso exclusivo FEBRABAN/CNAB: Branco
                Ocorrencia                                                  + // 16 a 17 - Código de movimento
@@ -2040,14 +2073,37 @@ begin
                '0'                                                         + // 231 Aviso debito automatico
                space(9);                                                     // 232-240 Uso FEBRABAN
 
+
+      {8.7 Registro Híbrido}
+      if NaoEstaVazio(ACBrBoleto.Cedente.PIX.Chave) then
+      begin
+        Result:= Result + #13#10 +
+                  IntToStrZero(ACBrBanco.Numero, 3)                              + // Código do banco
+                  '0001'                                                         + // Número do lote
+                  '3'                                                            + // Tipo do registro: Registro detalhe
+                  IntToStrZero(
+                  (fpQtdRegsCobranca * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 4 , 5)   + // 009 a 013 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+                  'Y'                                                            + // 014 a 014 - Código para identificar o segmento do registro
+                  ' '                                                            + // 015 a 015 - Sem preenchimento
+                  '01'                                                           + // 016 a 017 - Domínio ( 01- Entrada de títulos )
+                  '04'                                                           + // 018 a 019 - Identificação registro opcional
+                  Space(50)                                                      + // 020 a 069 - Sem preenchimento
+                  Space(2)                                                       + // 070 a 071 - Sem preenchimento
+                  Space(9)                                                       + // 072 a 080 - Sem preenchimento
+                  Space(1)                                                       + // 081 a 081 - Tipo de chave Em branco (Sicredi não valida)
+                  PadRight(ACBrBoleto.Cedente.PIX.Chave, 77, ' ')                + // 082 a 158 - Chave PIX (chave aleatória disponibilizada no PIX)
+                  PadRight(QrCode.txId, 35, ' ')                                 + // 159 a 193 - TXID
+                  Space(47)                                                      ; // 194 a 240 - Filler ( Deixar em Branco (sem preenchimento) )
+      end;
+
   end;
 
-  Result := UpperCase(Result);
+  Result := IfThen(NaoEstaVazio(ACBrBanco.ACBrBoleto.Cedente.PIX.Chave),Result,UpperCase(Result));
 end;
 
 procedure TACBrBancoSicredi.LerRetorno240(ARetorno: TStringList);
 var Titulo: TACBrTitulo;
-    SegT, SegU: String;
+    SegT, SegU, SegY: String;
     ContLinha, IdxMotivo: Integer;
     rCedente, rCNPJCPF, rCodCedente, rAgencia, rDigitoAgencia: String;
     rConta, rDigitoConta: String;
@@ -2111,6 +2167,11 @@ begin
 //      else if (Copy(SegT,16,2) = '28') then // se a ocorrência do campo 016~017 for = 28
 //         Continue;
 
+      SegY := ARetorno[ContLinha + 2] ;
+      if (SegY[14] <> 'Y') then
+        SegY := '';
+
+
       Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
       with Titulo do
@@ -2168,6 +2229,12 @@ begin
           end;
 
         OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(SegT, 16, 2), 0));
+
+        if Trim(Copy(SegY,82,77))<>'' then begin
+          QrCode.url := Copy(SegY,82,77);
+          QrCode.txId:= Copy(SegY,159,35);
+        end;
+
 
         IdxMotivo := 214;
         while (IdxMotivo < 223) do

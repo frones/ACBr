@@ -423,7 +423,7 @@ type
     cobMoneyPlus,
     cobBancoC6,
     cobBancoRendimento,
-	cobBancoInter,
+    cobBancoInter,
     cobBancoSofisaSantander,
     cobBS2,
     cobPenseBankAPI,

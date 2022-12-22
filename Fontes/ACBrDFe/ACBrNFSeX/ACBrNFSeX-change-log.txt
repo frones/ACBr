@@ -47,6 +47,8 @@ Símbolo : Significado
 -- ACbrNFseXServicos.ini --
 [*] Altare URL de produção para a cidade de Sao Luis de Montes Belos-GO, o provedor e versão continuam os mesmo, Sigep Versao 2.00
    Por: Lucio Bittes
+[+] Incluida a cidade de São Miguel do Iguaçu/PR, provedor Elotech
+   Por: Alex Heinen
 
 -- Fiorilli.Provider --
 [*] Ajuste para que gere quebra de linha e não exiba caracteres estranhos na descrição do serviço

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 22/12/2022
+-- ACbrNFseXServicos.ini --
+[*] Altare URL de produção para a cidade de Sao Luis de Montes Belos-GO, o provedor e versão continuam os mesmo, Sigep Versao 2.00
+   Por: Lucio Bittes
+
 -- Fiorilli.Provider --
 [*] Ajuste para que gere quebra de linha e não exiba caracteres estranhos na descrição do serviço
    Por: Italo Giurizzato Junior

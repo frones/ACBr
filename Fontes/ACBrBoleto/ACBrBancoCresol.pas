@@ -217,7 +217,7 @@ begin
   with ACBrTitulo do
   begin
     if(PercentualMulta > 0)then
-      Result := '0'
+      Result := '2'
     else
       Result := '1';
   end;

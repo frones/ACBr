@@ -198,6 +198,7 @@ function TACBrNFSeXWebserviceBHISS.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverDeclaracaoXML(Result);
 end;

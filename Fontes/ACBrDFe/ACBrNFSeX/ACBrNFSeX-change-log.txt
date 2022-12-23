@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/12/2022
+-- BHISS.Provider --
+[*] Correção do tratamento do XML retornado.
+   Por: Renato Rubinho
 -- Betha.LerXml --
 [*] Alteração visando reconhecer valores reais no campo Discriminação.
    Por: Italo Giurizzato Junior

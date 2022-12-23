@@ -2228,9 +2228,13 @@ begin
 
   fCedenteWS := TACBrCedenteWS.Create(self);
   fCedenteWS.Name := 'CedenteWS';
-  fPIX         := TACBrBoletoChavePIX.Create(Self);
+  
+  fPIX            := TACBrBoletoChavePIX.Create(Self);
+  fPIX.Name       := 'PIX';
+
   {$IFDEF COMPILER6_UP}
-  fCedenteWS.SetSubComponent(True);
+    fCedenteWS.SetSubComponent(True);
+    fPIX.SetSubComponent(True);
   {$ENDIF}
 end;
 

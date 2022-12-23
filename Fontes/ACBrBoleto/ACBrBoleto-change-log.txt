@@ -51,7 +51,10 @@ Símbolo : Significado
 
 23/12/2022
 [-]TK-3389 ACBrBoletoW_Sicredi_API - Ajuste na função de alteração
-Por: Daniel Morais
+  Por: Daniel Morais
+
+[-]TK-3418 ACBrBoleto erro de persistência DFM PIX
+  Por : Victor H Gonzales - Pandaaa
 
 22/12/2022
 [*]TK-3408 Ajuste na Instrução do método LerArqIni

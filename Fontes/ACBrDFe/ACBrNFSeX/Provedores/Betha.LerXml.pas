@@ -75,7 +75,7 @@ var
   fQuantidade, fValorUnitario, fValorServico, fValorBC, fAliquota: Double;
   i, j: Integer;
 
-  function ExtraiValorCampo(aCampo: string): string;
+  function ExtraiValorCampo(aCampo: string; aCampoNumerico: Boolean): string;
   begin
     i := PosEx(aCampo, xDiscriminacao, j) + Length(aCampo) + 1;
 
@@ -85,6 +85,9 @@ var
     begin
       j := PosEx(']', xDiscriminacao, i);
       Result := Copy(xDiscriminacao, i, j-i);
+
+      if aCampoNumerico then
+        Result := StringReplace(Result, '.', ',', [rfReplaceAll])
     end;
   end;
 begin
@@ -96,17 +99,17 @@ begin
 
   while true do
   begin
-    xDescricao := ExtraiValorCampo('Descricao');
+    xDescricao := ExtraiValorCampo('Descricao', False);
 
     if xDescricao = '' then
       Break;
 
-    xItemServico := ExtraiValorCampo('ItemServico');
-    fQuantidade := StrToFloatDef(ExtraiValorCampo('Quantidade'), 0);
-    fValorUnitario := StrToFloatDef(ExtraiValorCampo('ValorUnitario'), 0);
-    fValorServico := StrToFloatDef(ExtraiValorCampo('ValorServico'), 0);
-    fValorBC := StrToFloatDef(ExtraiValorCampo('ValorBaseCalculo'), 0);
-    fAliquota := StrToFloatDef(ExtraiValorCampo('Aliquota'), 0);
+    xItemServico := ExtraiValorCampo('ItemServico', False);
+    fQuantidade := StrToFloatDef(ExtraiValorCampo('Quantidade', True), 0);
+    fValorUnitario := StrToFloatDef(ExtraiValorCampo('ValorUnitario', True), 0);
+    fValorServico := StrToFloatDef(ExtraiValorCampo('ValorServico', True), 0);
+    fValorBC := StrToFloatDef(ExtraiValorCampo('ValorBaseCalculo', True), 0);
+    fAliquota := StrToFloatDef(ExtraiValorCampo('Aliquota', True), 0);
 
     with NFSe.Servico.ItemServico.New do
     begin

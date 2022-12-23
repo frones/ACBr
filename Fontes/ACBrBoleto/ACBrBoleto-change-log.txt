@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2022
+[-]TK-3389 ACBrBoletoW_Sicredi_API - Ajuste na função de alteração
+Por: Daniel Morais
+
 22/12/2022
 [*]TK-3408 Ajuste na Instrução do método LerArqIni
 Por: Antonio Carlos Junior / Victor H Gonzales - Pandaaa

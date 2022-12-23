@@ -334,8 +334,8 @@ begin
     Json := TJsonObject.Create;
     try
 
-      aNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));;
-      aSeuNumero    := ATitulo.NossoNumero;// ATitulo.SeuNumero;
+      aNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
+      aSeuNumero    := ATitulo.NossoNumero;
       Json.Add('agencia' ).Value.asString                              := Boleto.Cedente.Agencia;
       Json.Add('posto' ).Value.asString                                := Boleto.Cedente.AgenciaDigito;
       Json.Add('cedente' ).Value.asString                              := Boleto.Cedente.CodigoCedente;
@@ -351,13 +351,14 @@ begin
       GerarMulta(Json);
       GerarPagador(Json);
       GerarBenificiarioFinal(Json);
+      
       if (ATitulo.DiasDeNegativacao > 0) then
       begin
         Json.Add('numDiasNegativacao').Value.AsInteger                  := ATitulo.DiasDeNegativacao;
       end;
 
-      Json.Values['seuNumero' ].asString                            := aSeuNumero;
-      Json.Values['nossoNumero' ].asString                          := aNossoNumero;
+      Json.Values['seuNumero' ].asString                                := aSeuNumero;
+      Json.Values['nossoNumero' ].asString                              := aNossoNumero;
 
       Data := Json.Stringify;
 
@@ -383,7 +384,7 @@ begin
     Json.Add( 'agencia' ).Value.asString                              := Boleto.Cedente.Agencia;
     Json.Add( 'posto' ).Value.asString                                := Boleto.Cedente.AgenciaDigito;
     Json.Add( 'cedente' ).Value.asString                              := Boleto.Cedente.CodigoCedente;
-    Json.Add( 'nossoNumero' ).Value.asString                          := ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo);
+    Json.Add( 'nossoNumero' ).Value.asString                          := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
 
     try
 
@@ -499,7 +500,7 @@ procedure TBoletoW_Sicredi_API.GeraDadosInstrucao(AJson: TJsonObject);
 var
 aNossoNumero:String;
 begin
-    aNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
+    aNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
     AJson.Add('agencia' ).Value.asString           := Boleto.Cedente.Agencia;
     AJson.Add('posto' ).Value.asString             := Boleto.Cedente.AgenciaDigito;
     AJson.Add('cedente' ).Value.asString           := Boleto.Cedente.CodigoCedente;
@@ -690,7 +691,7 @@ begin
   begin
     if Assigned(AJson) then
     begin
-      AJson.Add('data1' ).Value.asString                  := FormatDateBr(ATitulo.DataDesconto, 'DD.MM.YYYY');
+      AJson.Add('data1' ).Value.asString        := FormatDateBr(ATitulo.DataDesconto, 'DD.MM.YYYY');
     end;
   end;
 

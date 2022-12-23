@@ -593,9 +593,19 @@ end;
 
 function TNotaFiscal.GravarXML(const NomeArquivo: String;
   const PathArquivo: String; aTipo: TtpXML): Boolean;
+var
+  ConteudoEhXml: Boolean;
 begin
   if EstaVazio(FXmlRps) then
     GerarXML;
+
+  {
+    Tem provedor que é gerando um JSON em vez de XML e o método Gravar acaba
+    incluindo na primeira linha do arquivo o encoding do XML.
+    Para contornar isso a variável ConteudoEhXml recebe o valor false quando é
+    um JSON e o método Gravar não inclui o encoding.
+  }
+  ConteudoEhXml := StringIsXML(FXmlRps);
 
   if aTipo = txmlNFSe then
   begin
@@ -604,12 +614,12 @@ begin
     else
       FNomeArq := NomeArquivo + '-nfse.xml';
 
-    Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArq, FXmlNfse, PathArquivo);
+    Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArq, FXmlNfse, PathArquivo, ConteudoEhXml);
   end
   else
   begin
     FNomeArqRps := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-    Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArqRps, FXmlRps);
+    Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArqRps, FXmlRps, '', ConteudoEhXml);
   end;
 end;
 

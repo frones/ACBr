@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 23/12/2022
+-- ACBrNFSeXNotasFiscais/ACBrNFSeXWebserviceBase --
+[*] Tem provedor que gera um JSON em vez de XML, o componente estava incluindo
+    o encoding do XML nos arquivos JSON, isso foi corrigido.
+   Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] Uso das classes do ACBrJSON para a leitura do retorno do provedor.
    Por: Italo Giurizzato Junior

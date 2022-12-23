@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/12/2022
+-- ACBrNFSeXDANFSeFR --
+[+] Incluído os CDS para CondicaoPagamento e CondicaoPagamentoParcelas.
+   Por: Luiz Carlos Ruiz Cestaro
 -- ISSLencois.GravarXml --
 [*] Alterado o campo Descricao por Discriminacao para manter o padrão.
    Por: Italo Giurizzato Junior

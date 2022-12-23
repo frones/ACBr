@@ -10,10 +10,8 @@ object frmACBreSocial: TfrmACBreSocial
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -22,6 +20,7 @@ object frmACBreSocial: TfrmACBreSocial
     Height = 752
     Align = alLeft
     TabOrder = 0
+    ExplicitHeight = 751
     object lblColaborador: TLabel
       Left = 18
       Top = 540
@@ -91,10 +90,6 @@ object frmACBreSocial: TfrmACBreSocial
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'Configura'#231#245'es'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object PageControl4: TPageControl
           Left = 0
           Top = 0
@@ -106,10 +101,6 @@ object frmACBreSocial: TfrmACBreSocial
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -402,10 +393,6 @@ object frmACBreSocial: TfrmACBreSocial
           object TabSheet4: TTabSheet
             Caption = 'Geral'
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox3: TGroupBox
               Left = 3
               Top = 12
@@ -561,10 +548,6 @@ object frmACBreSocial: TfrmACBreSocial
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox4: TGroupBox
               Left = 5
               Top = 4
@@ -838,10 +821,6 @@ object frmACBreSocial: TfrmACBreSocial
           object TabSheet12: TTabSheet
             Caption = 'Emitente'
             ImageIndex = 3
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object gbDadosEmpresa: TGroupBox
               Left = 5
               Top = 14
@@ -896,10 +875,6 @@ object frmACBreSocial: TfrmACBreSocial
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object sbPatheSocial: TSpeedButton
               Left = 247
               Top = 131
@@ -1037,10 +1012,6 @@ object frmACBreSocial: TfrmACBreSocial
       object tbsEventosTabela: TTabSheet
         Caption = 'Eventos de Tabela'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cbS1000: TCheckBox
           Left = 12
           Top = 12
@@ -1161,10 +1132,6 @@ object frmACBreSocial: TfrmACBreSocial
       object tbsEventosPeriodicos: TTabSheet
         Caption = 'Eventos Peri'#243'dicos'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cbS1200: TCheckBox
           Left = 12
           Top = 12
@@ -1287,10 +1254,6 @@ object frmACBreSocial: TfrmACBreSocial
       object tbsEventosNaoPeriodicos: TTabSheet
         Caption = 'Eventos N'#227'o Peri'#243'dicos'
         ImageIndex = 6
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cbS2190: TCheckBox
           Left = 12
           Top = 12
@@ -1568,10 +1531,6 @@ object frmACBreSocial: TfrmACBreSocial
       object tsFormaEnvio: TTabSheet
         Caption = 'Forma de Envio'
         ImageIndex = 7
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object rdgGrupo: TRadioGroup
           Left = 0
           Top = 0
@@ -1626,10 +1585,6 @@ object frmACBreSocial: TfrmACBreSocial
       object tsComandos: TTabSheet
         Caption = 'Comandos'
         ImageIndex = 6
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object btnGerar: TButton
           Left = 10
           Top = 12
@@ -1723,10 +1678,6 @@ object frmACBreSocial: TfrmACBreSocial
       end
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoResp: TMemo
           Left = 0
           Top = 0
@@ -1740,10 +1691,6 @@ object frmACBreSocial: TfrmACBreSocial
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1763,10 +1710,6 @@ object frmACBreSocial: TfrmACBreSocial
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1780,15 +1723,11 @@ object frmACBreSocial: TfrmACBreSocial
       object TabSheet9: TTabSheet
         Caption = 'Documento'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object trvwDocumento: TTreeView
           Left = 0
           Top = 0
-          Width = 792
-          Height = 302
+          Width = 788
+          Height = 301
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1797,10 +1736,6 @@ object frmACBreSocial: TfrmACBreSocial
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1814,15 +1749,11 @@ object frmACBreSocial: TfrmACBreSocial
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoDados: TMemo
           Left = 0
           Top = 0
-          Width = 792
-          Height = 302
+          Width = 788
+          Height = 301
           Align = alClient
           Lines.Strings = (
             '')

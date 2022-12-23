@@ -327,8 +327,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'BairroTomador', 1, 50, 1,
                                              NFSe.Tomador.Endereco.Bairro, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomador', 1, 10, 1,
-   CodIBGEToCodTOM(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomador', 1, 10, 0,
+   CodIBGEToCodTOM(StrToInt64Def(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomadorDescricao', 1, 50, 1,
                                          NFSe.Tomador.Endereco.xMunicipio, ''));
@@ -363,7 +363,7 @@ begin
                                                        FPTipoRecolhimento, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacao', 1, 10, 1,
-            CodIBGEToCodTOM(strtoint64(NFSe.Servico.CodigoMunicipio)), ''));
+          CodIBGEToCodTOM(strtoint64Def(NFSe.Servico.CodigoMunicipio, 0)), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacaoDescricao', 1, 30, 1,
                                        NFSe.Prestador.Endereco.xMunicipio, ''));

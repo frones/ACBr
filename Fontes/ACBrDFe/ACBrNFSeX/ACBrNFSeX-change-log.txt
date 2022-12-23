@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 23/12/2022
+-- ISSDSF.GravarXml --
+[*] Alterado a função StrToInt64 por StrToInt64Def, para evitar erro se o 
+    CodigoMunicipio for uma string vazia.
+   Por: Italo Giurizzato Junior
 -- AssessorPublico.LerXml --
 [*] Alteração com base no Teste Unitário realizado.
    Por: Italo Giurizzato Junior

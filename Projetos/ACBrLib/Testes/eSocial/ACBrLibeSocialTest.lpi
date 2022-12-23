@@ -75,7 +75,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="C:\ACBr\Projetos\ACBrLib\Testes\eSocial\bin\ACBrLibeSocialTest"/>
+      <Filename Value="bin\ACBrLibeSocialTest"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\Comum;..\..\Fontes\Comum"/>

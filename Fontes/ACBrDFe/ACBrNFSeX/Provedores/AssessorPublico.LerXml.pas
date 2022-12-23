@@ -103,7 +103,7 @@ var
   AuxNode: TACBrXmlNode;
   aValor: String;
   ANodes: TACBrXmlNodeArray;
-  i: integer;
+  i, mes, ano: integer;
 begin
   Result := True;
 
@@ -123,16 +123,13 @@ begin
 
   NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('SEQUENCIA'), tcStr);
   NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('RPS'), tcStr);
-  {
-  NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('RPS'), tcStr);
-  NFSe.CodigoVerificacao := NFSe.IdentificacaoRps.Numero;
 
-  NFSe.IdentificacaoRps.Serie  := ObterConteudo(AuxNode.Childrens.FindAnyNs('SEQUENCIA'), tcStr);
-  }
-  NFSe.Competencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MESCOMP'), tcStr) +
-                      ObterConteudo(AuxNode.Childrens.FindAnyNs('ANOCOMP'), tcStr);
+  mes := ObterConteudo(AuxNode.Childrens.FindAnyNs('MESCOMP'), tcInt);
+  ano := ObterConteudo(AuxNode.Childrens.FindAnyNs('ANOCOMP'), tcInt);
 
-  aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('DATA'), tcStr) +
+  NFSe.Competencia := EncodeDataHora(IntToStr(Ano)+ '/' + Poem_Zeros(mes, 2));
+
+  aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('DATA'), tcStr) + ' ' +
             ObterConteudo(AuxNode.Childrens.FindAnyNs('HORA'), tcStr);
 
   NFSe.DataEmissao := StringToDateTime(aValor, 'DD/MM/YYYY hh:nn:ss');
@@ -144,7 +141,7 @@ begin
   if aValor = 'S' then
     NFSe.OptanteSimplesNacional := snSim;
 
-  NFSe.OutrasInformacoes:=ObterConteudo(AuxNode.Childrens.FindAnyNs('OBSSERVICO'), tcStr);
+  NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OBSSERVICO'), tcStr);
 
   with NFSe.Servico do
   begin

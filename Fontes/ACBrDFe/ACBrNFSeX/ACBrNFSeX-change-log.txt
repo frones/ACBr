@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/12/2022
+-- AssessorPublico.LerXml --
+[*] Alteração com base no Teste Unitário realizado.
+   Por: Italo Giurizzato Junior
 -- BHISS.Provider --
 [*] Correção do tratamento do XML retornado.
    Por: Renato Rubinho

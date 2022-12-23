@@ -73,6 +73,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Aguas Lindas de Goais/GO mudou de provedor, agora é Ginfes
    Por: Massao Aihara
+[*] Preenchimento da URLs de homologação e alteração da versão para a cidade de Corbélia/PR, o provedor ainda é IPM
+   Por: Alex Heinen
 
 22/12/2022
 -- ACbrNFseXServicos.ini --

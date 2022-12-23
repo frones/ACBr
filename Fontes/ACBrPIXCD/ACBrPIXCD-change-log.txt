@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2022
+-- ACBrPIXPSPGerenciaNet -- 
+[+] Inclusão do novo PSP GerenciaNet
+    Por: djinfope
+
 14/12/2022
 -- ACBrPSP --
 [*] Alteração para limpar também as propriedades User e Password do em LimparHTTP

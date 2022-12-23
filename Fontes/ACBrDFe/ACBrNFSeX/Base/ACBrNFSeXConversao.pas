@@ -6742,7 +6742,7 @@ begin
 
  Result := CodTOM;
 
- if (Trim(Result) = '') and (ACodigo <= 9999) then
+ if (Trim(Result) = '') and (ACodigo > 0) and (ACodigo <= 9999) then
    Result:= IntToStr(ACodigo);
 end;
 

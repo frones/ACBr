@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/12/2022
+-- IPM.Provider --
+[*] Uso das classes do ACBrJSON para a leitura do retorno do provedor.
+   Por: Italo Giurizzato Junior
+
 22/12/2022
 -- ACbrNFseXServicos.ini --
 [*] Altera URL de produção para a cidade de Sao Luis de Montes Belos-GO, o provedor e versão continuam os mesmo, Sigep Versao 2.00
@@ -51,7 +56,6 @@ Símbolo : Significado
    Por: Alex Heinen
 [*] Adiciona o parâmetro NaoDivir100 para Cuiabá/MT
    Por: Márcio Baroni
-
 -- Fiorilli.Provider --
 [*] Ajuste para que gere quebra de linha e não exiba caracteres estranhos na descrição do serviço
    Por: Italo Giurizzato Junior

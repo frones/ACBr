@@ -101,7 +101,7 @@ begin
                                              NFSe.Servico.CodigoMunicipio, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'Descricao', 1, 1000, 1,
-                                                   NFSe.Servico.Descricao, ''));
+                                               NFSe.Servico.Discriminacao, ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#', 'ValorTotal', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));

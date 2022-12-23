@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/12/2022
+-- ISSLencois.GravarXml --
+[*] Alterado o campo Descricao por Discriminacao para manter o padrão.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.GravarXml --
 [*] Alterado a função StrToInt64 por StrToInt64Def, para evitar erro se o 
     CodigoMunicipio for uma string vazia.

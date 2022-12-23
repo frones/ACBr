@@ -47,6 +47,9 @@ Símbolo : Significado
 -- IPM.Provider --
 [*] Uso das classes do ACBrJSON para a leitura do retorno do provedor.
    Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Aguas Lindas de Goais/GO mudou de provedor, agora é Ginfes
+   Por: Massao Aihara
 
 22/12/2022
 -- ACbrNFseXServicos.ini --

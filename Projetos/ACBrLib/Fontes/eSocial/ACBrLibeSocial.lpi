@@ -235,7 +235,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="C:\ACBr\Projetos\ACBrLib\Testes\eSocial\bin\ACBreSocial32"/>
+            <Filename Value="..\..\Testes\eSocial\bin\ACBreSocial32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -244,12 +244,22 @@
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
-              <SyntaxMode Value="Delphi"/>
+              <IncludeAssertionCode Value="True"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
             <TargetCPU Value="i386"/>
             <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="0"/>
+            </Optimizations>
           </CodeGeneration>
           <Linking>
             <Debugging>
@@ -524,13 +534,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe \C ${TargetCmdLine}"/>
+        <HostApplicationFilename Value=".\ACBr\Projetos\ACBrLib\Testes\eSocial\bin\ACBrLibeSocialTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe \C ${TargetCmdLine}"/>
+            <HostApplicationFilename Value=".\ACBr\Projetos\ACBrLib\Testes\eSocial\bin\ACBrLibeSocialTest.exe"/>
           </local>
         </Mode0>
       </Modes>

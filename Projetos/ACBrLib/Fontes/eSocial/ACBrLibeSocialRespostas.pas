@@ -278,8 +278,6 @@ type
     FProtocolo: String;
     FItemConsulta: TObjectList;
     FItemOcorrencia: TObjectList;
-    FnrRecibo: String;
-    Fhash: String;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
@@ -297,8 +295,6 @@ type
     property Protocolo: String read FProtocolo write FProtocolo;
     property ItemConsulta: TObjectList read FItemConsulta;
     property ItemOcorrencia: TObjectList read FItemOcorrencia;
-    property nrRecibo: String read FnrRecibo write FnrRecibo;
-    property hash: String read Fhash write Fhash;
 
   end;
 
@@ -478,8 +474,6 @@ begin
     DhRecepcao   := dadosRecLote.dhRecepcao;
     VersaoAplic  := dadosRecLote.versaoAplicRecepcao;
     Protocolo    := dadosRecLote.Protocolo;
-    nrRecibo     := RetEventos.Add.Recibo.nrRecibo;
-    hash         := RetEventos.Add.Recibo.Hash;
 
     if Status.cdResposta in [201, 202] then
     begin
@@ -642,7 +636,7 @@ var
   Item : TOcorrenciaConsulta;
   ItemTot : TConsultaTotResposta;
 begin
-  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.Items[ACont] do
+  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.RetEventos.Items[ACont] do
   begin
     cdResposta      := Processamento.cdResposta;
     descResposta    := Processamento.descResposta;

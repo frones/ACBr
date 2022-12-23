@@ -78,7 +78,7 @@ type
 implementation
 
 uses
-  ACBrLibeSocialStaticImportST, ACBrLibeSocialConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibeSocialStaticImportST, ACBrLibeSocialConsts, ACBrLibConsts, ACBrUtil.Strings;
 
 procedure TTestACBreSocialLib.Test_eSocial_Inicializar_Com_DiretorioInvalido;
 var

@@ -13,5 +13,11 @@ namespace ACBrLib.NFe
         }
 
         #endregion Constructors
+
+        #region Properties
+
+        public string xJust { get; set; }
+
+        #endregion Properties
     }
 }

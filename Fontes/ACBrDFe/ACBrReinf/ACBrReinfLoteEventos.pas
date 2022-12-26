@@ -156,6 +156,10 @@ begin
   for i := 0 to FEventos.ReinfEventos.R1000.Count - 1 do
     LoadFromString(FEventos.ReinfEventos.R1000[i].evtInfoContri.XML);
 
+  {R1050}
+  for i := 0 to FEventos.ReinfEventos.R1050.Count - 1 do
+    LoadFromString(FEventos.ReinfEventos.R1050[i].evtTabLig.XML);
+
   {R1070}
   for i := 0 to FEventos.ReinfEventos.R1070.Count - 1 do
     LoadFromString(FEventos.ReinfEventos.R1070[i].evtTabProcesso.XML);
@@ -203,6 +207,14 @@ begin
   {R3010}
   for i := 0 to FEventos.ReinfEventos.R3010.Count - 1 do
     LoadFromString(FEventos.ReinfEventos.R3010[i].evtEspDesportivo.XML);
+
+  {R4010}
+  for i := 0 to FEventos.ReinfEventos.R4010.Count - 1 do
+    LoadFromString(FEventos.ReinfEventos.R4010[i].evtRetPF.XML);
+
+  {R4099}
+  for i := 0 to FEventos.ReinfEventos.R4099.Count - 1 do
+    LoadFromString(FEventos.ReinfEventos.R4099[i].evtFech.XML);
 
   {R9000}
   for i := 0 to FEventos.ReinfEventos.R9000.Count - 1 do

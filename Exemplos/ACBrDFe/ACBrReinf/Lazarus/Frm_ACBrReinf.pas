@@ -41,7 +41,16 @@ uses
   ACBrReinf, pcnConversaoReinf;
 
 type
+
+  { TfrmACBrReinf }
+
   TfrmACBrReinf = class(TForm)
+    chk1050: TCheckBox;
+    chk4010: TCheckBox;
+    chk4020: TCheckBox;
+    chk4040: TCheckBox;
+    chk4080: TCheckBox;
+    chk4099: TCheckBox;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
@@ -258,6 +267,7 @@ type
 
     {Eventos}
     procedure GerarReinf1000;
+    procedure GerarReinf1050;
     procedure GerarReinf1070;
     procedure GerarReinf2010;
     procedure GerarReinf2020;
@@ -269,6 +279,11 @@ type
     procedure GerarReinf2098;
     procedure GerarReinf2099;
     procedure GerarReinf3010;
+    procedure GerarReinf4010;
+    procedure GerarReinf4020;
+    procedure GerarReinf4040;
+    procedure GerarReinf4080;
+    procedure GerarReinf4099;
     procedure GerarReinf9000;
 
     procedure PreencherXMLEventos;
@@ -1133,46 +1148,137 @@ begin
 
     with memoLog.Lines do
     begin
-      with ACBrReinf1.WebServices.Consultar.RetConsulta do
+      if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_01 then
       begin
-        Add('');
-        Add(' Evento: R5011');
-
-        with evtTotalContrib do
+        with ACBrReinf1.WebServices.Consultar.RetConsulta_R9011 do
         begin
-          Add('   Id...........: ' + Id);
-          Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
-          Add('   Descrição....: ' + IdeStatus.descRetorno);
+          Add('');
+          Add(' Evento: 9011');
 
-          if IdeStatus.regOcorrs.Count > 0 then
+          with evtTotalContrib do
           begin
-            Add('');
-            Add(' **Ocorrencias');
+            Add('   Id...........: ' + Id);
+            Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+            Add('   Descrição....: ' + IdeStatus.descRetorno);
 
-            for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+            if IdeStatus.regOcorrs.Count > 0 then
             begin
-              with IdeStatus.regOcorrs.Items[i] do
+              Add('');
+              Add(' **Ocorrencias');
+
+              for i := 0 to IdeStatus.regOcorrs.Count - 1 do
               begin
-                Add('   Tipo............: ' + IntToStr(tpOcorr));
-                Add('   Local Erro Aviso: ' + localErroAviso);
-                Add('   Código Resp.... : ' + codResp);
-                Add('   Descricao Resp..: ' + dscResp);
+                with IdeStatus.regOcorrs.Items[i] do
+                begin
+                  Add('   Tipo............: ' + IntToStr(tpOcorr));
+                  Add('   Local Erro Aviso: ' + localErroAviso);
+                  Add('   Código Resp.... : ' + codResp);
+                  Add('   Descricao Resp..: ' + dscResp);
+                end;
               end;
             end;
-          end;
 
+            Add('');
+            Add(' **Informações de processamento dos eventos ');
+
+            with InfoRecEv do
+            begin
+              Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
+              Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+              Add('   Tipo do Evento......................: ' + tpEv);
+              Add('   ID do Evento........................: ' + idEv);
+              Add('   Hash do arquivo processado..........: ' + hash);
+            end;
+
+          end;
+        end;
+
+        with ACBrReinf1.WebServices.Consultar.RetConsulta_R9015 do
+        begin
           Add('');
-          Add(' **Informações de processamento dos eventos ');
+          Add(' Evento: 9015');
 
-          with InfoRecEv do
+          with evtRetCons do
           begin
-            Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
-            Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
-            Add('   Tipo do Evento......................: ' + tpEv);
-            Add('   ID do Evento........................: ' + idEv);
-            Add('   Hash do arquivo processado..........: ' + hash);
-          end;
+            Add('   Id...........: ' + Id);
+            Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+            Add('   Descrição....: ' + IdeStatus.descRetorno);
 
+            if IdeStatus.regOcorrs.Count > 0 then
+            begin
+              Add('');
+              Add(' **Ocorrencias');
+
+              for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+              begin
+                with IdeStatus.regOcorrs.Items[i] do
+                begin
+                  Add('   Tipo............: ' + IntToStr(tpOcorr));
+                  Add('   Local Erro Aviso: ' + localErroAviso);
+                  Add('   Código Resp.... : ' + codResp);
+                  Add('   Descricao Resp..: ' + dscResp);
+                end;
+              end;
+            end;
+
+            Add('');
+            Add(' **Informações de processamento dos eventos ');
+
+            with InfoRecEv do
+            begin
+              Add('   Num. Protocolo de Entrega do Lote...: ' + nrProtLote);
+              Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+              Add('   Tipo do Evento......................: ' + tpEv);
+              Add('   ID do Evento........................: ' + idEv);
+              Add('   Hash do arquivo processado..........: ' + hash);
+            end;
+
+          end;
+        end;
+      end
+      else
+      begin
+        with ACBrReinf1.WebServices.Consultar.RetConsulta_R5011 do
+        begin
+          Add('');
+          Add(' Evento: R5011');
+
+          with evtTotalContrib do
+          begin
+            Add('   Id...........: ' + Id);
+            Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+            Add('   Descrição....: ' + IdeStatus.descRetorno);
+
+            if IdeStatus.regOcorrs.Count > 0 then
+            begin
+              Add('');
+              Add(' **Ocorrencias');
+
+              for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+              begin
+                with IdeStatus.regOcorrs.Items[i] do
+                begin
+                  Add('   Tipo............: ' + IntToStr(tpOcorr));
+                  Add('   Local Erro Aviso: ' + localErroAviso);
+                  Add('   Código Resp.... : ' + codResp);
+                  Add('   Descricao Resp..: ' + dscResp);
+                end;
+              end;
+            end;
+
+            Add('');
+            Add(' **Informações de processamento dos eventos ');
+
+            with InfoRecEv do
+            begin
+              Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
+              Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+              Add('   Tipo do Evento......................: ' + tpEv);
+              Add('   ID do Evento........................: ' + idEv);
+              Add('   Hash do arquivo processado..........: ' + hash);
+            end;
+
+          end;
         end;
       end;
     end;
@@ -1188,7 +1294,6 @@ var
   i: Integer;
   dtApur: TDateTime;
 begin
-  Ok := True;
   PerApur := '';
   if not (InputQuery('WebServices: Consulta Recibo', 'Período de Apuração (AAAA-MM):', PerApur)) then
     Exit;
@@ -1224,53 +1329,154 @@ begin
 
     with memoLog.Lines do
     begin
-      with ACBrReinf1.WebServices.ConsultarReciboEvento.RetConsulta do
+      if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_01 then
       begin
-        with evtTotalContrib do
+        with ACBrReinf1.WebServices.ConsultarReciboEvento.RetConsulta_R9011 do
         begin
-          Add('');
-          Add(' **Status');
-          Add('   Cód Retorno..: ' + ideStatus.cdRetorno);
-          Add('   Descrição....: ' + ideStatus.descRetorno);
-
-          if IdeStatus.regOcorrs.Count > 0 then
+          with evtTotalContrib do
           begin
             Add('');
-            Add(' **Ocorrencias');
+            Add(' **Status');
+            Add('   Cód Retorno..: ' + ideStatus.cdRetorno);
+            Add('   Descrição....: ' + ideStatus.descRetorno);
 
-            for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+            if IdeStatus.regOcorrs.Count > 0 then
             begin
-              with IdeStatus.regOcorrs.Items[i] do
-              begin
-                Add('   Tipo............: ' + IntToStr(tpOcorr));
-                Add('   Local Erro Aviso: ' + localErroAviso);
-                Add('   Código Resp.... : ' + codResp);
-                Add('   Descricao Resp..: ' + dscResp);
-              end;
-            end;
-          end;
+              Add('');
+              Add(' **Ocorrencias');
 
-          if RetornoEventos.Count > 0 then
-          begin
-            Add('');
-            Add(' **Retorno Eventos');
-
-            for i := 0 to RetornoEventos.Count - 1 do
-            begin
-              with RetornoEventos.Items[i] do
+              for i := 0 to IdeStatus.regOcorrs.Count - 1 do
               begin
-                Add('   ID................: ' + Id);
-                Add('   Inicio da Validade: ' + iniValid);
-                Add('   Data/Hora Receb...: ' + dtHoraRecebimento);
-                Add('   Numero do Recibo..: ' + nrRecibo);
-                Add('   Situação do Evento: ' + situacaoEvento);
-                Add('   Aplicacao Recepção: ' + aplicacaoRecepcao);
+                with IdeStatus.regOcorrs.Items[i] do
+                begin
+                  Add('   Tipo............: ' + IntToStr(tpOcorr));
+                  Add('   Local Erro Aviso: ' + localErroAviso);
+                  Add('   Código Resp.... : ' + codResp);
+                  Add('   Descricao Resp..: ' + dscResp);
+                end;
               end;
             end;
 
+            if RetornoEventos.Count > 0 then
+            begin
+              Add('');
+              Add(' **Retorno Eventos');
+
+              for i := 0 to RetornoEventos.Count - 1 do
+              begin
+                with RetornoEventos.Items[i] do
+                begin
+                  Add('   ID................: ' + Id);
+                  Add('   Inicio da Validade: ' + iniValid);
+                  Add('   Data/Hora Receb...: ' + dtHoraRecebimento);
+                  Add('   Numero do Recibo..: ' + nrRecibo);
+                  Add('   Situação do Evento: ' + situacaoEvento);
+                  Add('   Aplicacao Recepção: ' + aplicacaoRecepcao);
+                end;
+              end;
+
+            end;
           end;
         end;
-      end;
+
+        with ACBrReinf1.WebServices.ConsultarReciboEvento.RetConsulta_R9015 do
+        begin
+          with evtRetCons do
+          begin
+            Add('');
+            Add(' **Status');
+            Add('   Cód Retorno..: ' + ideStatus.cdRetorno);
+            Add('   Descrição....: ' + ideStatus.descRetorno);
+
+            if IdeStatus.regOcorrs.Count > 0 then
+            begin
+              Add('');
+              Add(' **Ocorrencias');
+
+              for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+              begin
+                with IdeStatus.regOcorrs.Items[i] do
+                begin
+                  Add('   Tipo............: ' + IntToStr(tpOcorr));
+                  Add('   Local Erro Aviso: ' + localErroAviso);
+                  Add('   Código Resp.... : ' + codResp);
+                  Add('   Descricao Resp..: ' + dscResp);
+                end;
+              end;
+            end;
+
+            if RetornoEventos.Count > 0 then
+            begin
+              Add('');
+              Add(' **Retorno Eventos');
+
+              for i := 0 to RetornoEventos.Count - 1 do
+              begin
+                with RetornoEventos.Items[i] do
+                begin
+                  Add('   ID................: ' + Id);
+                  Add('   Inicio da Validade: ' + iniValid);
+                  Add('   Data/Hora Receb...: ' + dtHoraRecebimento);
+                  Add('   Numero do Recibo..: ' + nrRecibo);
+                  Add('   Situação do Evento: ' + situacaoEvento);
+                  Add('   Aplicacao Recepção: ' + aplicacaoRecepcao);
+                end;
+              end;
+
+            end;
+          end;
+        end;
+      end
+      else
+      begin
+        with ACBrReinf1.WebServices.ConsultarReciboEvento.RetConsulta_R5011 do
+        begin
+          with evtTotalContrib do
+          begin
+            Add('');
+            Add(' **Status');
+            Add('   Cód Retorno..: ' + ideStatus.cdRetorno);
+            Add('   Descrição....: ' + ideStatus.descRetorno);
+
+            if IdeStatus.regOcorrs.Count > 0 then
+            begin
+              Add('');
+              Add(' **Ocorrencias');
+
+              for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+              begin
+                with IdeStatus.regOcorrs.Items[i] do
+                begin
+                  Add('   Tipo............: ' + IntToStr(tpOcorr));
+                  Add('   Local Erro Aviso: ' + localErroAviso);
+                  Add('   Código Resp.... : ' + codResp);
+                  Add('   Descricao Resp..: ' + dscResp);
+                end;
+              end;
+            end;
+
+            if RetornoEventos.Count > 0 then
+            begin
+              Add('');
+              Add(' **Retorno Eventos');
+
+              for i := 0 to RetornoEventos.Count - 1 do
+              begin
+                with RetornoEventos.Items[i] do
+                begin
+                  Add('   ID................: ' + Id);
+                  Add('   Inicio da Validade: ' + iniValid);
+                  Add('   Data/Hora Receb...: ' + dtHoraRecebimento);
+                  Add('   Numero do Recibo..: ' + nrRecibo);
+                  Add('   Situação do Evento: ' + situacaoEvento);
+                  Add('   Aplicacao Recepção: ' + aplicacaoRecepcao);
+                end;
+              end;
+
+            end;
+          end;
+        end;
+      end
     end;
 
     PageControl1.ActivePageIndex := 1;
@@ -1324,6 +1530,9 @@ begin
       GerarReinf1000;
   end;
 
+  if chk1050.Checked then
+    GerarReinf1050;
+
   if chk1070.Checked then
     GerarReinf1070;
 
@@ -1356,6 +1565,21 @@ begin
 
   if chk3010.Checked then
     GerarReinf3010;
+
+  if chk4010.Checked then
+    GerarReinf4010;
+
+  if chk4020.Checked then
+    GerarReinf4020;
+
+  if chk4040.Checked then
+    GerarReinf4040;
+
+  if chk4080.Checked then
+    GerarReinf4080;
+
+  if chk4099.Checked then
+    GerarReinf4099;
 
   if chk9000.Checked then
     GerarReinf9000;
@@ -1405,16 +1629,51 @@ begin
         SoftwareHouse.Clear;
         with SoftwareHouse.New do
         begin
-          CnpjSoftHouse := '12345678000123';
-          NmRazao       := 'SoftwareHouse Teste';
-          NmCont        := 'Soft Contato';
-          Telefone      := '1634335856';
-          email         := 'teste@teste.com';
+          CnpjSoftHouse := edSoftCNPJ.Text;
+          NmRazao       := edSoftRazao.Text;
+          NmCont        := edSoftContato.Text;
+          Telefone      := edSoftFone.Text;
+          email         := edSoftEmail.Text;
         end;
       end;
 
       infoContribuinte.NovaValidade.IniValid := '2017-01';
       infoContribuinte.NovaValidade.FimValid := '2099-12';
+    end;
+  end;
+end;
+
+procedure TfrmACBrReinf.GerarReinf1050;
+begin
+  ACBrReinf1.Eventos.ReinfEventos.R1050.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R1050.New do
+  begin
+    with evtTabLig do
+    begin
+      Sequencial     := 0;
+      ModoLancamento := GetTipoOperacao;
+
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with infoLig do
+      begin
+        if rdgOperacao.ItemIndex <> 3 then
+          ideEntLig.tpEntLig := telFundoInvestimento;
+
+        ideEntLig.cnpjLig  := '12345678000123';
+        ideEntLig.IniValid := FormatDateTime('yyyy-mm', Date-30);
+        ideEntLig.FimValid := FormatDateTime('yyyy-mm', Date+365);
+
+        if rdgOperacao.ItemIndex = 1 then
+        begin
+          novaValidade.IniValid := FormatDateTime('yyyy-mm', Date-30);
+          novaValidade.FimValid := FormatDateTime('yyyy-mm', Date+30);
+        end;
+      end;
     end;
   end;
 end;
@@ -2211,6 +2470,518 @@ begin
   end;
 end;
 
+procedure TfrmACBrReinf.GerarReinf4010;
+begin
+  ACBrReinf1.Eventos.ReinfEventos.R4010.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R4010.New do
+  begin
+    with evtRetPF do
+    begin
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+
+      if ChkRetificadora.Checked then
+        ideEvento.indRetif := trRetificacao;
+
+      if ideEvento.indRetif = trRetificacao then
+        ideEvento.nrRecibo := edRecibo.Text;
+
+      ideEvento.perApur    := FormatDateTime('yyyy-mm', Date-30);
+      IdeEvento.ProcEmi    := peAplicEmpregador;
+      IdeEvento.VerProc    := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+      // Informação de preenchimento restrito, apenas nos casos em que a natureza jurídica do declarante
+      //   está desatualizada nas bases do CNPJ na Receita Federal, especialmente em situações de
+      //   alteração de natureza jurídica e enquanto o CNPJ não é atualizado.
+      //   Validação: Se informado, deve conter apenas números.
+      // ideContri.infoComplContri.NatJur := '1234';
+
+      with ideEstab do
+      begin
+        tpInscEstab := tiCNPJ;
+        nrInscEstab := '12345678000123';
+
+        with ideBenef do
+        begin
+          cpfBenef := '12345678909';
+          nmBenef  := 'Beneficiario';
+
+          ideDep.Clear;
+          with ideDep.New do
+          begin
+            cpfDep := '98765432100';
+            relDep := ttdConjuge;
+            // Preencher apenas quando relDep = ttdAgregadoOutros
+            // descrDep := 'Outros';
+          end;
+
+          idePgto.Clear;
+          with idePgto.New do
+          begin
+            natRend := '10001'; // Tabela 01
+            observ := 'Observações';
+
+            infoPgto.Clear;
+            with infoPgto.New do
+            begin
+              dtFG         := Date;
+              compFP       := Date;
+              indDecTerc   := 'S';
+              vlrRendBruto := 100;
+              vlrRendTrib  := 100;
+              vlrIR        := 10;
+              indRRA       := 'S';
+              indFciScp    := '1';
+              nrInscFciScp := '12345678000123';
+              percSCP      := 12.3;
+              indJud       := 'N';
+              paisResidExt := '063';
+
+              with detDed.New do
+              begin
+                indTpDeducao   := itdOficial;
+                vlrDeducao     := 10;
+                infoEntid      := 'S';
+                nrInscPrevComp := '12345678000123';
+                vlrPatrocFunp  := 11;
+
+                with benefPen.New do
+                begin
+                  cpfDep   := '98765432100';
+                  vlrDepen := 10;
+                end;
+              end;
+
+              with rendIsento.New do
+              begin
+                tpIsencao := tiPensaoAposentadoria;
+                vlrIsento := 10;
+                descRendimento := 'Descrição';
+                dtLaudo := Date - 31;
+              end;
+
+              with infoProcRet.New do
+              begin
+                tpProcRet    := tpAdministrativo;
+                nrProcRet    := '123456789012345678901';
+                codSusp      := '12345678901234';
+                vlrNRetido   := 10;
+                vlrDepJud    := 10;
+                vlrCmpAnoCal := 10;
+                vlrCmpAnoAnt := 10;
+                vlrRendSusp  := 10;
+
+                with dedSusp.New do
+                begin
+                  indTpDeducao := itdOficial;
+                  vlrDedSusp   := 10;
+
+                  with benefPenSusp.New do
+                  begin
+                    cpfDep       := '98765432100';
+                    vlrDepenSusp := 10;
+                  end;
+                end;
+              end;
+
+              with infoRRA do
+              begin
+                tpProcRRA       := tpAdministrativo;
+                nrProcRRA       := '123456789012345678901';
+                indOrigRec      := iorProprios;
+                descRRA         := 'Descrição';
+                qtdMesesRRA     := 1.0;
+                cnpjOrigRecurso := '12345678000123';
+
+                with despProcJud do
+                begin
+                  vlrDespCustas    := 10;
+                  vlrDespAdvogados := 15;
+
+                  with ideAdv.New do
+                  begin
+                    tpInscAdv := tiCPF;
+                    nrInscAdv := '98765432100';
+                    vlrAdv    := 10;
+                  end;
+                end;
+              end;
+
+              with infoProcJud do
+              begin
+                nrProc          := '123456789012345678901';
+                indOrigRec      := iorProprios;
+                cnpjOrigRecurso := '12345678000123';
+                desc            := 'Descrição';
+
+                with despProcJud do
+                begin
+                  vlrDespCustas    := 10;
+                  vlrDespAdvogados := 15;
+
+                  with ideAdv.New do
+                  begin
+                    tpInscAdv := tiCPF;
+                    nrInscAdv := '98765432100';
+                    vlrAdv    := 10;
+                  end;
+                end;
+              end;
+
+              with infoPgtoExt do
+              begin
+                indNIF    := nifCom;
+                nifBenef  := '123456789012345678901234567890';
+                frmTribut := '10'; // Tabela 02
+
+                with endExt do
+                begin
+                  dscLograd := 'Logradouro';
+                  nrLograd  := '1234567890';
+                  complem   := 'Complemento';
+                  bairro    := 'Bairro';
+                  cidade    := 'Cidade';
+                  estado    := 'Estado';
+                  codPostal := '01311200';
+                  telef     := '1234567890';
+                end;
+              end;
+            end;
+          end;
+
+          with ideBenef.ideOpSaude.New do
+          begin
+            nrInsc   := '12345678000123';
+            regANS   := '123456';
+            vlrSaude := 10;
+
+            with infoReemb.New do
+            begin
+              tpInsc      := tiCNPJ;
+              nrInsc      := '12345678000123';
+              vlrReemb    := 10;
+              vlrReembAnt := 15;
+            end;
+
+            with infoDependPl.New do
+            begin
+              cpfDep   := '98765432100';
+              vlrSaude := 10;
+
+              with infoReembDep.New do
+              begin
+                tpInsc      := tiCNPJ;
+                nrInsc      := '12345678000123';
+                vlrReemb    := 10;
+                vlrReembAnt := 15;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmACBrReinf.GerarReinf4020;
+begin
+  ACBrReinf1.Eventos.ReinfEventos.R4020.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R4020.New do
+  begin
+    with evtRetPJ do
+    begin
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+
+      if ChkRetificadora.Checked then
+        ideEvento.indRetif := trRetificacao;
+
+      if ideEvento.indRetif = trRetificacao then
+        ideEvento.nrRecibo := edRecibo.Text;
+
+      ideEvento.perApur    := FormatDateTime('yyyy-mm', Date-30);
+      IdeEvento.ProcEmi    := peAplicEmpregador;
+      IdeEvento.VerProc    := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+      // Informação de preenchimento restrito, apenas nos casos em que a natureza jurídica do declarante
+      //   está desatualizada nas bases do CNPJ na Receita Federal, especialmente em situações de
+      //   alteração de natureza jurídica e enquanto o CNPJ não é atualizado.
+      //   Validação: Se informado, deve conter apenas números.
+      // ideContri.infoComplContri.NatJur := '1234';
+
+      with ideEstab do
+      begin
+        tpInscEstab := tiCNPJ;
+        nrInscEstab := '12345678000123';
+
+        with ideBenef do
+        begin
+          cnpjBenef := '12345678000123';
+          nmBenef   := 'Beneficiario';
+          isenImun  := tiiTributacaoNormal;
+
+          idePgto.Clear;
+          with idePgto.New do
+          begin
+            natRend := '10001'; // Tabela 01
+            observ := 'Observações';
+
+            infoPgto.Clear;
+            with infoPgto.New do
+            begin
+              dtFG         := Date;
+              vlrBruto     := 100;
+              indFciScp    := '1';
+              nrInscFciScp := '12345678000123';
+              percSCP      := 12.3;
+              indJud       := 'N';
+              paisResidExt := '063';
+
+              with retencoes do
+              begin
+                vlrBaseIR     := 100;
+                vlrIR         := 10;
+                vlrBaseAgreg  := 100;
+                vlrAgreg      := 10;
+                vlrBaseCSLL   := 100;
+                vlrCSLL       := 10;
+                vlrBaseCofins := 100;
+                vlrCofins     := 10;
+                vlrBasePP     := 100;
+                vlrPP         := 10;
+              end;
+
+              with infoProcRet.New do
+              begin
+                tpProcRet         := tpAdministrativo;
+                nrProcRet         := '123456789012345678901';
+                codSusp           := '12345678901234';
+                vlrBaseSuspIR     := 100;
+                vlrNIR            := 10;
+                vlrDepIR          := 20;
+                vlrBaseSuspCSLL   := 100;
+                vlrNCSLL          := 10;
+                vlrDepCSLL        := 20;
+                vlrBaseSuspCofins := 100;
+                vlrNCofins        := 10;
+                vlrDepCofins      := 20;
+                vlrBaseSuspPP     := 100;
+                vlrNPP            := 10;
+                vlrDepPP          := 20;
+              end;
+
+              with infoProcJud do
+              begin
+                nrProc          := '123456789012345678901';
+                indOrigRec      := iorProprios;
+                cnpjOrigRecurso := '12345678000123';
+                desc            := 'Descrição';
+
+                with despProcJud do
+                begin
+                  vlrDespCustas    := 10;
+                  vlrDespAdvogados := 15;
+
+                  with ideAdv.New do
+                  begin
+                    tpInscAdv := tiCPF;
+                    nrInscAdv := '98765432100';
+                    vlrAdv    := 10;
+                  end;
+                end;
+              end;
+
+              with infoPgtoExt do
+              begin
+                indNIF    := nifCom;
+                nifBenef  := '123456789012345678901234567890';
+                relFontPg := '500'; // Tabela 03
+                frmTribut := '10';  // Tabela 02
+
+                with endExt do
+                begin
+                  dscLograd := 'Logradouro';
+                  nrLograd  := '1234567890';
+                  complem   := 'Complemento';
+                  bairro    := 'Bairro';
+                  cidade    := 'Cidade';
+                  estado    := 'Estado';
+                  codPostal := '01311200';
+                  telef     := '1234567890';
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmACBrReinf.GerarReinf4040;
+begin
+  ACBrReinf1.Eventos.ReinfEventos.R4040.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R4040.New do
+  begin
+    with evtBenefNId do
+    begin
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+
+      if ChkRetificadora.Checked then
+        ideEvento.indRetif := trRetificacao;
+
+      if ideEvento.indRetif = trRetificacao then
+        ideEvento.nrRecibo := edRecibo.Text;
+
+      ideEvento.perApur    := FormatDateTime('yyyy-mm', Date-30);
+      IdeEvento.ProcEmi    := peAplicEmpregador;
+      IdeEvento.VerProc    := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with ideEstab do
+      begin
+        tpInscEstab := tiCNPJ;
+        nrInscEstab := '12345678000123';
+
+        ideNat.Clear;
+        with ideNat.New do
+        begin
+          natRend := '19001';
+
+          infoPgto.Clear;
+          with infoPgto.New do
+          begin
+            dtFG      := Date;
+            vlrLiq    := 10;
+            vlrBaseIR := 100;
+            vlrIR     := 10;
+            descr     := 'Descrição';
+
+            with infoProcRet.New do
+            begin
+              tpProcRet     := tpAdministrativo;
+              nrProcRet     := '123456789012345678901';
+              codSusp       := '12345678901234';
+              vlrBaseSuspIR := 100;
+              vlrNIR        := 10;
+              vlrDepIR      := 20;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmACBrReinf.GerarReinf4080;
+begin
+  ACBrReinf1.Eventos.ReinfEventos.R4080.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R4080.New do
+  begin
+    with evtRetRec do
+    begin
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+
+      if ChkRetificadora.Checked then
+        ideEvento.indRetif := trRetificacao;
+
+      if ideEvento.indRetif = trRetificacao then
+        ideEvento.nrRecibo := edRecibo.Text;
+
+      ideEvento.perApur    := FormatDateTime('yyyy-mm', Date-30);
+      IdeEvento.ProcEmi    := peAplicEmpregador;
+      IdeEvento.VerProc    := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+      // Informação de preenchimento restrito, apenas nos casos em que a natureza jurídica do declarante
+      //   está desatualizada nas bases do CNPJ na Receita Federal, especialmente em situações de
+      //   alteração de natureza jurídica e enquanto o CNPJ não é atualizado.
+      //   Validação: Se informado, deve conter apenas números.
+      // ideContri.infoComplContri.NatJur := '1234';
+
+      with ideEstab do
+      begin
+        tpInscEstab := tiCNPJ;
+        nrInscEstab := '12345678000123';
+
+        with ideFont do
+        begin
+          cnpjFont := '12345678000123';
+
+          ideRend.Clear;
+          with ideRend.New do
+          begin
+            natRend := '20001'; // Tabela 01
+            observ := 'Observações';
+
+            infoRec.Clear;
+            with infoRec.New do
+            begin
+              dtFG      := Date;
+              vlrBruto  := 100;
+              vlrBaseIR := 100;
+              vlrIR     := 10;
+
+              with infoProcRet.New do
+              begin
+                tpProcRet     := tpAdministrativo;
+                nrProcRet     := '123456789012345678901';
+                codSusp       := '12345678901234';
+                vlrBaseSuspIR := 100;
+                vlrNIR        := 10;
+                vlrDepIR      := 20;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmACBrReinf.GerarReinf4099;
+begin
+  ACBrReinf1.Eventos.ReinfEventos.R4099.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R4099.New do
+  begin
+    with evtFech do
+    begin
+      Sequencial := 0;
+
+      ideEvento.perApur := FormatDateBr(Date-30, 'yyyy-mm');
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with ideRespInf do
+      begin
+        nmResp   := edContNome.Text;
+        cpfResp  := edContCPF.Text;
+        telefone := edContFone.Text;
+        email    := edContEmail.Text;
+      end;
+
+      with infoFech do
+        fechRet := tfrFechamento;
+    end;
+  end;
+end;
+
 procedure TfrmACBrReinf.GerarReinf9000;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R9000.Clear;
@@ -2252,16 +3023,21 @@ end;
 
 procedure TfrmACBrReinf.chk1000Click(Sender: TObject);
 begin
-  rdgOperacao.Visible := ( chk1000.Checked or chk1070.Checked );
+  rdgOperacao.Visible := ( chk1000.Checked or chk1050.Checked or chk1070.Checked );
 
   ChkRetificadora.Visible := ( chk2010.Checked or chk2020.Checked or
                                chk2030.Checked or chk2040.Checked or
                                chk2050.Checked or chk2060.Checked or
-                               chk2070.Checked or chk3010.Checked );
+                               chk2070.Checked or
+                               chk3010.Checked or chk4010.Checked or
+                               chk4020.Checked or chk4080.Checked or
+                               chk4040.Checked );
 
   edRecibo.Visible := ( chk2010.Checked or chk2020.Checked or chk2030.Checked or
                         chk2040.Checked or chk2050.Checked or chk2060.Checked or
-                        chk2070.Checked or chk3010.Checked or chk9000.Checked );
+                        chk2070.Checked or chk3010.Checked or
+                        chk4010.Checked or chk4020.Checked or chk4040.Checked or
+                        chk4080.Checked or chk9000.Checked );
 
   lblRecibo.Visible := edRecibo.Visible;
 

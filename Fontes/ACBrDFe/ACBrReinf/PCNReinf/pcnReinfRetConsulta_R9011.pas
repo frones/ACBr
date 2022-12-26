@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Leivio Ramos de Fontenele                       }
+{ Colaboradores nesse arquivo: Renato Tanchela Rubinho                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnReinfRetConsulta;
+unit pcnReinfRetConsulta_R9011;
 
 interface
 
@@ -48,7 +48,7 @@ uses
   pcnCommonReinf, pcnConversaoReinf;
 
 type
-  TRetConsulta_R5011 = class;
+  TRetConsulta_R9011 = class;
   TEvtTotalContrib = class;
   TInfoRecEv = class;
   TInfoTotalContrib = class;
@@ -86,6 +86,7 @@ type
   private
     FnrRecArqBase: String;
     FindExistInfo: TindExistInfo;
+    FidentEscritDCTF: String;
     FRTom: TRTomCollection;
     FRPrest: TRPrestCollection;
     FRRecRepAD: TRRecRepADCollection;
@@ -99,6 +100,7 @@ type
 
     property nrRecArqBase: String read FnrRecArqBase;
     property indExistInfo: TindExistInfo read FindExistInfo;
+    property identEscritDCTF: String read FidentEscritDCTF;
     property RTom: TRTomCollection read FRTom;
     property RPrest: TRPrestCollection read FRPrest;
     property RRecRepAD: TRRecRepADCollection read FRRecRepAD;
@@ -340,7 +342,7 @@ type
     property RetornoEventos: TRetornoEventosCollection read FRetornoEventos write FRetornoEventos;
   end;
 
-  TRetConsulta_R5011 = class(TObject)
+  TRetConsulta_R9011 = class(TObject)
   private
     FLeitor: TLeitor;
     FevtTotalContrib: TEvtTotalContrib;
@@ -356,8 +358,6 @@ type
     property evtTotalContrib: TEvtTotalContrib read FevtTotalContrib write FevtTotalContrib;
     property XML: String read FXML;
   end;
-
-  TRetConsulta = class(TRetConsulta_R5011); // Remover após entrar em vigor a versão 2_01_01
 
 implementation
 
@@ -579,15 +579,15 @@ begin
   inherited;
 end;
 
-{ TRetConsulta_R5011 }
+{ TRetConsulta_R9011 }
 
-constructor TRetConsulta_R5011.Create;
+constructor TRetConsulta_R9011.Create;
 begin
   FLeitor := TLeitor.Create;
   FevtTotalContrib := TEvtTotalContrib.Create;
 end;
 
-destructor TRetConsulta_R5011.Destroy;
+destructor TRetConsulta_R9011.Destroy;
 begin
   FLeitor.Free;
   FevtTotalContrib.Free;
@@ -618,7 +618,7 @@ begin
   inherited Items[Index] := Value;
 end;
 
-function TRetConsulta_R5011.LerXml: boolean;
+function TRetConsulta_R9011.LerXml: boolean;
 var
   i, j: Integer;
   Ok: Boolean;
@@ -678,8 +678,9 @@ begin
         begin
           with infoTotalContrib do
           begin
-            FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
-            FindExistInfo := StrToindExistInfo(Ok, leitor.rCampo(tcStr, 'indExistInfo'));
+            FnrRecArqBase    := leitor.rCampo(tcStr, 'nrRecArqBase');
+            FindExistInfo    := StrToindExistInfo(Ok, leitor.rCampo(tcStr, 'indExistInfo'));
+            FidentEscritDCTF := leitor.rCampo(tcStr, 'identEscritDCTF');
 
             i := 0;
             while Leitor.rExtrai(3, 'RTom', '', i + 1) <> '' do
@@ -832,7 +833,7 @@ begin
   end;
 end;
 
-function TRetConsulta_R5011.SalvarINI: boolean;
+function TRetConsulta_R9011.SalvarINI: boolean;
 var
   AIni: TMemIniFile;
   sSecao: String;
@@ -880,6 +881,7 @@ begin
         sSecao := 'infoTotalContrib';
         AIni.WriteString(sSecao, 'nrRecArqBase', infoTotalContrib.nrRecArqBase);
         AIni.WriteString(sSecao, 'indExistInfo', indExistInfoToStr(infoTotalContrib.indExistInfo));
+        AIni.WriteString(sSecao, 'identEscritDCTF', infoTotalContrib.identEscritDCTF);
 
         with infoTotalContrib do
         begin

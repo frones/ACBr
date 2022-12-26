@@ -43,7 +43,7 @@ uses
   pcnLeitor, pcnConsts,
   ACBrReinfLoteEventos, ACBrReinfConfiguracoes,
   pcnConversaoReinf, pcnCommonReinf, pcnReinfRetEventos, pcnReinfConsulta,
-  pcnReinfRetConsulta;
+  pcnReinfRetConsulta, pcnReinfRetConsulta_R9011, pcnReinfRetConsulta_R9015;
 
 type
   { TReinfWebService }
@@ -103,8 +103,14 @@ type
   TConsultar = class(TReinfWebService)
   private
     FProtocolo: string;
-    FRetConsulta: TRetConsulta;
+    FRetConsulta_R5011: TRetConsulta_R5011;
+    FRetConsulta_R9011: TRetConsulta_R9011;
+    FRetConsulta_R9015: TRetConsulta_R9015;
     FVersaoDF: TVersaoReinf;
+    function GetRetConsulta: TRetConsulta; // Remover após entrar em vigor a versão 2_01_01 ou colocar exceção alertanto para usar a RetConsulta_R5011
+    function GetRetConsulta_R5011: TRetConsulta_R5011;
+    function GetRetConsulta_R9011: TRetConsulta_R9011;
+    function GetRetConsulta_R9015: TRetConsulta_R9015;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -121,7 +127,10 @@ type
     procedure BeforeDestruction; override;
 
     property Protocolo: string read FProtocolo write FProtocolo;
-    property RetConsulta: TRetConsulta read FRetConsulta;
+    property RetConsulta: TRetConsulta read GetRetConsulta; // Remover após entrar em vigor a versão 2_01_01 ou colocar exceção alertanto para usar a RetConsulta_R5011
+    property RetConsulta_R5011: TRetConsulta_R5011 read GetRetConsulta_R5011;
+    property RetConsulta_R9011: TRetConsulta_R9011 read GetRetConsulta_R9011;
+    property RetConsulta_R9015: TRetConsulta_R9015 read GetRetConsulta_R9015;
   end;
 
   { TConsultarReciboEvento }
@@ -136,8 +145,14 @@ type
     FnrInscTomador: string;
     FdtApur: TDateTime;
 
-    FRetConsulta: TRetConsulta;
+    FRetConsulta_R5011: TRetConsulta_R5011;
+    FRetConsulta_R9011: TRetConsulta_R9011;
+    FRetConsulta_R9015: TRetConsulta_R9015;
     FVersaoDF: TVersaoReinf;
+    function GetRetConsulta: TRetConsulta; // Remover após entrar em vigor a versão 2_01_01 ou colocar exceção alertanto para usar a RetConsulta_R5011
+    function GetRetConsulta_R5011: TRetConsulta_R5011;
+    function GetRetConsulta_R9011: TRetConsulta_R9011;
+    function GetRetConsulta_R9015: TRetConsulta_R9015;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -161,7 +176,10 @@ type
     property nrInscTomador: string   read FnrInscTomador write FnrInscTomador;
     property dtApur: TDateTime       read FdtApur        write FdtApur;
 
-    property RetConsulta: TRetConsulta read FRetConsulta;
+    property RetConsulta: TRetConsulta read GetRetConsulta; // Remover após entrar em vigor a versão 2_01_01 ou colocar exceção alertanto para usar a RetConsulta_R5011
+    property RetConsulta_R5011: TRetConsulta_R5011 read GetRetConsulta_R5011;
+    property RetConsulta_R9011: TRetConsulta_R9011 read GetRetConsulta_R9011;
+    property RetConsulta_R9015: TRetConsulta_R9015 read GetRetConsulta_R9015;
   end;
 
   { TWebServices }
@@ -373,7 +391,15 @@ begin
 
     if AXML <> '' then
     begin
-      NomeArq := FRetEnvioLote.evento.Items[i].Id + '-R5001.xml';
+      if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
+      begin
+        if Pos('</evtRet>', FPRetWS) > 0 then
+          NomeArq := FRetEnvioLote.evento.Items[i].Id + '-R9005.xml'
+        else
+          NomeArq := FRetEnvioLote.evento.Items[i].Id + '-R9001.xml';
+      end
+      else
+        NomeArq := FRetEnvioLote.evento.Items[i].Id + '-R5001.xml';
 
       if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
         FPDFeOwner.Gravar(NomeArq, AXML, '',False);
@@ -447,17 +473,27 @@ begin
   FPArqEnv := 'ped-sit';
   FPArqResp := 'sit';
 
-  if Assigned(FRetConsulta) then
-    FRetConsulta.Free;
+  if Assigned(FRetConsulta_R5011) then
+    FRetConsulta_R5011.Free;
 
-  FRetConsulta := TRetConsulta.Create;
+  if Assigned(FRetConsulta_R9011) then
+    FRetConsulta_R9011.Free;
+
+  if Assigned(FRetConsulta_R9015) then
+    FRetConsulta_R9015.Free;
+
+  FRetConsulta_R5011 := TRetConsulta_R5011.Create;
+  FRetConsulta_R9011 := TRetConsulta_R9011.Create;
+  FRetConsulta_R9015 := TRetConsulta_R9015.Create;
 end;
 
 procedure TConsultar.BeforeDestruction;
 begin
   inherited;
 
-  FRetConsulta.Free;
+  FRetConsulta_R5011.Free;
+  FRetConsulta_R9011.Free;
+  FRetConsulta_R9015.Free;
 end;
 
 procedure TConsultar.DefinirDadosMsg;
@@ -474,7 +510,7 @@ begin
   else
     tpInsc := '2';
 
-  if FPConfiguracoesReinf.Geral.VersaoDF = v1_05_01 then
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v1_05_01 then
     FPDadosMsg :=
             '<consultar' + FPSoapEnvelopeAtributtes + '>' +
             '<v1:tpInsc>' + tpInsc + '</v1:tpInsc>' +
@@ -504,7 +540,7 @@ begin
    Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
   {$ENDIF}
 
-  if FPConfiguracoesReinf.Geral.VersaoDF = v1_05_01 then
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v1_05_01 then
     xTag := 'ConsultaResultadoFechamento2099'
   else
     xTag := 'ConsultaInformacoesConsolidadas';
@@ -522,7 +558,7 @@ end;
 
 procedure TConsultar.DefinirServicoEAction;
 begin
-  if FPConfiguracoesReinf.Geral.VersaoDF = v1_05_01 then
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v1_05_01 then
     FPServico := ACBRREINF_NAMESPACE_CON +
                  '/ConsultaResultadoFechamento2099'
   else
@@ -575,19 +611,58 @@ function TConsultar.TratarResposta: Boolean;
 var
   AXML, NomeArq: String;
 begin
-  FPRetWS := SeparaDadosArray(['ConsultaInformacoesConsolidadasResult',
-                               'ConsultaResultadoFechamento2099Response'],
-                               FPRetornoWS);
+  // Atenção - Verificar o xml retornado quando a produção restrita for ativada na versão 2_01_01
+  if (FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01) and
+     (Pos('</evtRetCons>', FPRetornoWS) > 0) then
+  begin
+    FPRetWS := SeparaDadosArray(['ConsultaInformacoesConsolidadasResult',
+                                 'ConsultaResultadoFechamento4099Response'],
+                                 FPRetornoWS);
 
-  FRetConsulta.Leitor.Arquivo := ParseText(FPRetWS);
-  FRetConsulta.LerXml;
+    if FPRetWS <> '' then
+    begin
+      FRetConsulta_R9015.Leitor.Arquivo := ParseText(FPRetWS);
+      FRetConsulta_R9015.LerXml;
 
-  AXML := FRetConsulta.XML;
+      AXML := FRetConsulta_R9015.XML;
+
+      if AXML <> '' then
+        NomeArq := FRetConsulta_R9015.evtRetCons.Id + '-R9015.xml';
+    end;
+  end
+  else
+  begin
+    FPRetWS := SeparaDadosArray(['ConsultaInformacoesConsolidadasResult',
+                                 'ConsultaResultadoFechamento2099Response'],
+                                 FPRetornoWS);
+
+    if FPRetWS <> '' then
+    begin
+      if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
+      begin
+        FRetConsulta_R9011.Leitor.Arquivo := ParseText(FPRetWS);
+        FRetConsulta_R9011.LerXml;
+
+        AXML := FRetConsulta_R9011.XML;
+
+        if AXML <> '' then
+          NomeArq := FRetConsulta_R9011.evtTotalContrib.Id + '-R9011.xml';
+      end
+      else
+      begin
+        FRetConsulta_R5011.Leitor.Arquivo := ParseText(FPRetWS);
+        FRetConsulta_R5011.LerXml;
+
+        AXML := FRetConsulta_R5011.XML;
+
+        if AXML <> '' then
+          NomeArq := FRetConsulta_R5011.evtTotalContrib.Id + '-R5011.xml';
+      end;
+    end;
+  end;
 
   if AXML <> '' then
   begin
-    NomeArq := FRetConsulta.evtTotalContrib.Id + '-R5011.xml';
-
     if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
       FPDFeOwner.Gravar(NomeArq, AXML, '',False);
   end;
@@ -598,13 +673,48 @@ begin
   Result := True;
 end;
 
+// Remover após entrar em vigor a versão 2_01_01 ou colocar exceção alertanto para usar a RetConsulta_R5011
+function TConsultar.GetRetConsulta: TRetConsulta;
+begin
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
+    GerarException('Propriedade RetConsulta disponível apenas até a versão 1_05_01, utilize a RetConsulta_R9011 para versões posteriores');
+
+  Result := TRetConsulta(FRetConsulta_R5011);
+end;
+
+function TConsultar.GetRetConsulta_R5011: TRetConsulta_R5011;
+begin
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
+    GerarException('Propriedade RetConsulta_R5011 disponível apenas até a versão 1_05_01, utilize a RetConsulta_R9011 para versões posteriores');
+
+  Result := FRetConsulta_R5011;
+end;
+
+function TConsultar.GetRetConsulta_R9011: TRetConsulta_R9011;
+begin
+  if FPConfiguracoesReinf.Geral.VersaoDF < v2_01_01 then
+    GerarException('Propriedade RetConsulta_R9011 disponível a partir da versão 2_01_01, utilize a RetConsulta_R5011 para versões anteriores');
+
+  Result := FRetConsulta_R9011;
+end;
+
+function TConsultar.GetRetConsulta_R9015: TRetConsulta_R9015;
+begin
+  if FPConfiguracoesReinf.Geral.VersaoDF < v2_01_01 then
+    GerarException('Propriedade RetConsulta_R9015 disponível a partir da versão 2_01_01, registro indexistente em versões anteriores');
+
+  Result := FRetConsulta_R9015;
+end;
+
 { TConsultarReciboEvento }
 
 procedure TConsultarReciboEvento.BeforeDestruction;
 begin
   inherited;
 
-  FRetConsulta.Free;
+  FRetConsulta_R5011.Free;
+  FRetConsulta_R9011.Free;
+  FRetConsulta_R9015.Free;
 end;
 
 procedure TConsultarReciboEvento.Clear;
@@ -616,10 +726,18 @@ begin
   FPArqEnv := 'ped-con';
   FPArqResp := 'con';
 
-  if Assigned(FRetConsulta) then
-    FRetConsulta.Free;
+  if Assigned(FRetConsulta_R5011) then
+    FRetConsulta_R5011.Free;
 
-  FRetConsulta := TRetConsulta.Create;
+  if Assigned(FRetConsulta_R9011) then
+    FRetConsulta_R9011.Free;
+
+  if Assigned(FRetConsulta_R9015) then
+    FRetConsulta_R9015.Free;
+
+  FRetConsulta_R5011 := TRetConsulta_R5011.Create;
+  FRetConsulta_R9011 := TRetConsulta_R9011.Create;
+  FRetConsulta_R9015 := TRetConsulta_R9015.Create;
 end;
 
 constructor TConsultarReciboEvento.Create(AOwner: TACBrDFe);
@@ -726,6 +844,39 @@ begin
   Result := tpEventoStr;
 end;
 
+// Remover após entrar em vigor a versão 2_01_01 ou colocar exceção alertanto para usar a RetConsulta_R5011
+function TConsultarReciboEvento.GetRetConsulta: TRetConsulta;
+begin
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
+    GerarException('Propriedade RetConsulta disponível apenas até a versão 1_05_01, utilize a RetConsulta_R9011 para versões posteriores');
+
+  Result := TRetConsulta(FRetConsulta_R5011);
+end;
+
+function TConsultarReciboEvento.GetRetConsulta_R5011: TRetConsulta_R5011;
+begin
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
+    GerarException('Propriedade RetConsulta_R5011 disponível apenas até a versão 1_05_01, utilize a RetConsulta_R9011 para versões posteriores');
+
+  Result := FRetConsulta_R5011;
+end;
+
+function TConsultarReciboEvento.GetRetConsulta_R9011: TRetConsulta_R9011;
+begin
+  if FPConfiguracoesReinf.Geral.VersaoDF < v2_01_01 then
+    GerarException('Propriedade RetConsulta_R9011 disponível a partir da versão 2_01_01, utilize a RetConsulta_R5011 para versões anteriores');
+
+  Result := FRetConsulta_R9011;
+end;
+
+function TConsultarReciboEvento.GetRetConsulta_R9015: TRetConsulta_R9015;
+begin
+  if FPConfiguracoesReinf.Geral.VersaoDF < v2_01_01 then
+    GerarException('Propriedade RetConsulta_R9015 disponível a partir da versão 2_01_01, registro inexistente em versões anteriores');
+
+  Result := FRetConsulta_R9015;
+end;
+
 procedure TConsultarReciboEvento.InicializarServico;
 begin
   FVersaoDF := FPConfiguracoesReinf.Geral.VersaoDF;
@@ -737,15 +888,40 @@ function TConsultarReciboEvento.TratarResposta: Boolean;
 var
   AXML: String;
 begin
-  //aqui nao esta pronto
-  FPRetWS := SeparaDadosArray(['ConsultaReciboEvento' + tpEventoStr + 'Result',
-                               'ConsultaReciboEvento' + tpEventoStr + 'Response'],
-                               FPRetornoWS);
+  // Atenção - Verificar o xml retornado quando a produção restrita for ativada na versão 2_01_01
+  if (FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01) and
+     (Pos('ConsultaReciboEvento4099Result', FPRetornoWS) > 0) then
+  begin
+    FPRetWS := SeparaDadosArray(['ConsultaReciboEvento' + tpEventoStr + 'Result',
+                                 'ConsultaReciboEvento' + tpEventoStr + 'Response'],
+                                 FPRetornoWS);
 
-  FRetConsulta.Leitor.Arquivo := ParseText(FPRetWS);
-  FRetConsulta.LerXml;
+    FRetConsulta_R9015.Leitor.Arquivo := ParseText(FPRetWS);
+    FRetConsulta_R9015.LerXml;
 
-  AXML := FRetConsulta.XML;
+    AXML := FRetConsulta_R9015.XML;
+  end
+  else
+  begin
+    FPRetWS := SeparaDadosArray(['ConsultaReciboEvento' + tpEventoStr + 'Result',
+                                 'ConsultaReciboEvento' + tpEventoStr + 'Response'],
+                                 FPRetornoWS);
+
+    if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
+    begin
+      FRetConsulta_R9011.Leitor.Arquivo := ParseText(FPRetWS);
+      FRetConsulta_R9011.LerXml;
+
+      AXML := FRetConsulta_R9011.XML;
+    end
+    else
+    begin
+      FRetConsulta_R5011.Leitor.Arquivo := ParseText(FPRetWS);
+      FRetConsulta_R5011.LerXml;
+
+      AXML := FRetConsulta_R5011.XML;
+    end;
+  end;
 
   if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
     TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPRetWS, erRetornoConsulta);

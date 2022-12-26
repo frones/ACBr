@@ -62,6 +62,7 @@ type
   TInscricao = class;
   TideContri = class;
   TideContrib = class;
+  TinfoComplContri = class;
   TIdeTransmissor = class;
   TidePeriodo = class;
   TideStatus = class;
@@ -178,9 +179,22 @@ type
   TideContri = class(TInscricao)
   private
     FOrgaoPublico: Boolean;
+    FinfoComplContri: TinfoComplContri;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     procedure AfterConstruction; override;
     property OrgaoPublico: Boolean read FOrgaoPublico write FOrgaoPublico;
+    property infoComplContri: TinfoComplContri read FinfoComplContri write FinfoComplContri;
+  end;
+
+  { TinfoComplContri }
+  TinfoComplContri = class(TObject)
+  private
+    FnatJur: string;
+  public
+    property natJur: string read FnatJur write FnatJur;
   end;
 
   { TideContrib }
@@ -261,6 +275,18 @@ procedure TideContri.AfterConstruction;
 begin
   inherited;
   FOrgaoPublico := False;
+end;
+
+constructor TideContri.Create;
+begin
+  FinfoComplContri := TinfoComplContri.Create;
+end;
+
+destructor TideContri.Destroy;
+begin
+  FinfoComplContri.Free;
+
+  inherited;
 end;
 
 { TideStatus }

@@ -46,7 +46,9 @@ type
   TTipoEvento             = (teR1000, teR2099, teR1070, teR2010, teR2020,
                              teR2030, teR2040, teR2050, teR2055, teR2060,
                              teR2070, teR2098, teR3010, teR5001, teR5011,
-                             teR9000);
+                             teR9000, teR1050, teR4010, teR4020, teR4040,
+                             teR4080, teR4099, teR9001, teR9005, teR9011,
+                             teR9015);
 
   TprocEmi                = (peNenhum, peAplicEmpregador, peAplicGoverno);
 
@@ -114,10 +116,20 @@ type
                             schevtPgtosDivs,                  // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
                             schevtReabreEvPer,                // R-2098 - Reabertura dos Eventos Periódicos
                             schevtEspDesportivo,              // R-3010 - Receita de Espetáculo Desportivo
-                            schevtTotal,                      // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
-                            schevtTotalConsolid,              // R-5011 - Informações de bases e tributos consolidadas por período de apuração
+                            schevtTotalv1,                    // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
+                            schevtTotalConsolidv1,            // R-5011 - Informações de bases e tributos consolidadas por período de apuração
                             schevtExclusao,                   // R-9000 - Exclusão de Eventos
-                            schErro, schConsultaLoteEventos, schEnvioLoteEventos
+                            schErro, schConsultaLoteEventos, schEnvioLoteEventos,
+                            schevt1050TabLig,                 // R-1050 - Evento tabela de entidades ligadas
+                            schevt4010PagtoBeneficiarioPF,    // R-4010 - Pagamentos/créditos a beneficiário pessoa física
+                            schevt4020PagtoBeneficiarioPJ,    // R-4020 - Pagamentos/créditos a beneficiário pessoa jurídica
+                            schevt4040PagtoBenefNaoIdentificado,// R-4040 - Pagamentos/créditos a beneficiários não identificados
+                            schevt4080RetencaoRecebimento,    // R-4080 - Retenção no recebimento
+                            schevt4099FechamentoDirf,         // R-4099 - Fechamento/reabertura dos eventos da série R-4000
+                            schevtTotal,                      // R-9001 - Informações das bases e dos tributos consolidados por contribuinte
+                            schevtRet,                        // R-9005 - Bases e tributos - retenções na fonte
+                            schevtTotalConsolid,              // R-9011 - Informações de bases e tributos consolidadas por período de apuração
+                            schevtRetConsolid                 // R-9015 - Consolidação das retenções na fonte
                             );
 
   TtpAjuste               = (taReducao, taAcrescimo);
@@ -169,21 +181,20 @@ type
                             itdFapi,       // 3 - Fapi
                             itdFunpresp,   // 4 - Funpresp
                             itdPensao,     // 5 - Pensão Alimentícia
-                            itdDependentes // 6 - Dependentes
+                            itdDependentes // 7 - Dependentes
                             );
 
   TtpIsencao              = (
-                            tiIsenta,              // 1 - Parcela Isenta 65 anos
-                            tiAjudaCusto,          // 2 - Diária e Ajuda de Custo
-                            tiIndenizaRescisao,    // 3 - Indenização e rescisão de contrato, inclusive a título de PDV
-                            tiAbono,               // 4 - Abono pecuniário
-                            tiOutros,              // 5 - Outros (especificar)
-                            tiLucros,              // 6 - Lucros e dividendos pagos a partir de 1996
-                            tiSocioMicroempresa,   // 7 - Valores pagos a titular ou sócio de microempresa ou empresa de pequeno porte, exceto pró-labore e alugueis
-                            tiPensaoAposentadoria, // 8 - Pensão, aposentadoria ou reforma por moléstia grave ou acidente em serviço
-                            tiBeneficiosIndiretos, // 9 - Benefícios indiretos e/ou reembolso de despesas recebidas por voluntário da copa do mundo ou da copa das confederações
-                            tiBolsaEstudo,         // 10 - Bolsa de estudo recebida por médico-residente
-                            tiComplAposentadoria   // 11 - Complementação de aposentadoria, correspondente às contribuições efetuadas no período de 01/01/1989 a 31/12/1995
+                            tiIsenta,                 //  1 - Parcela Isenta 65 anos
+                            tiAjudaViagem,            //  2 - Diária de viagem
+                            tiIndenizaRescisao,       //  3 - Indenização e rescisão de contrato, inclusive a título de PDV e acidentes de trabalho
+                            tiAbono,                  //  4 - Abono pecuniário
+                            tiSocioMicroempresa,      //  5 - Valores pagos a titular ou sócio de microempresa ou empresa de pequeno porte, exceto pró-labore, alugueis e serviços prestados
+                            tiPensaoAposentadoria,    //  6 - Pensão, aposentadoria ou reforma por moléstia grave ou acidente em serviço
+                            tiComplAposentadoria,     //  7 - Complementação de aposentadoria, correspondente às contribuições efetuadas no período de 01/01/1989 a 31/12/1995
+                            tiAjudaCusto,             //  8 - Ajuda de custo
+                            tiRendimentosSemRetencao, //  9 - Rendimentos pagos sem retenção do IR na fonte - Lei 10.833/2003
+                            tiOutros                  // 99 - Outros (especificar)
                             );
 
   TindPerReferencia       = (
@@ -249,7 +260,66 @@ type
                             ttrOutros       // 5 - Outros
                             );
 
-  TVersaoReinf = (v1_03_00, v1_03_02, v1_04_00, v1_05_00, v1_05_01);
+  TtpDependente           = (
+                            ttdConjuge,          // 1 - Cônjuge
+                            ttdUniaoEstavel,     // 2 - Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco) anos ou possua declaração de união estável;
+                            ttdFilhoOuEnteado,   // 3 - Filho(a) ou enteado(a);
+                            ttdIrmaoNetoBisneto, // 6 - Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha a guarda judicial do(a) qual detenha a guarda judicial;
+                            ttdPaiMae,           // 8 - Pais;
+                            ttdAvoBisavo,        // 9 - Avós e bisavós;
+                            ttdMenorComGuarda,   // 10 - Menor pobre do qual detenha a guarda judicial;
+                            ttdIncapaz,          // 11 - A pessoa absolutamente incapaz, da qual seja tutor ou curador;
+                            ttdExConjuge,        // 12 - Ex-cônjuge;
+                            ttdAgregadoOutros    // 99 - Agregado/Outros
+                            );
+
+  TtpDeducao              = (
+                            ttePrevidenciaOficial,  // 1 - Previdência oficial
+                            ttePrevidenciaPrivada,  // 2 - Previdência privada
+                            tteFapi,                // 3 - Fundo de aposentadoria programada individual - Fapi
+                            tteFunpresp,            // 4 - Fundação de previdência complementar do servidor público - Funpresp
+                            ttePensaoAlimenticia,   // 5 - Pensão alimentícia
+                            tteDependentes          // 7 - Dependentes
+                            );
+
+  TtpEntLig               = (
+                            telFundoInvestimento,       // 1 - Fundo de investimento
+                            telFundoInvestImobiliario,  // 2 - Fundo de investimento imobiliário
+                            telClubeInvestimento,       // 3 - Clube de investimento
+                            telSociedadeParticipacao    // 4 - Sociedade em conta de participação
+                            );
+
+  TtpIsencaoImunidade     = (
+                            tiiTributacaoNormal,         // 1 - Entidade não isenta/não imune - Tributação normal
+                            tiiEducacao,                 // 2 - Instituição de educação e de assistência social sem fins lucrativos, a que se refere o art. 12 da Lei nº 9.532, de 10 de dezembro de 1997
+                            tiiFilanRecreCultCien        // 3 - Instituição de caráter filantrópico, recreativo, cultural, científico e às associações civis, a que se refere o art. 15 da Lei nº 9.532, de 1997
+                            );
+
+  TtpPerApurQui           = (
+                            paq01a15,   // 1 - ("DD") da data informada em {dtFG} no evento de origem for de 1 a 15
+                            paq16a31    // 2 - ("DD") da data informada em {dtFG} no evento de origem for de 16 a 31
+                            );
+
+  TtpPerApurDec           = (
+                            pad01a10,   // 1 - ("DD") da data informada em {dtFG} no evento de origem for de 1 a 10
+                            pad11a20,   // 1 - ("DD") da data informada em {dtFG} no evento de origem for de 11 a 20
+                            pad21a31    // 2 - ("DD") da data informada em {dtFG} no evento de origem for de 21 a 31
+                            );
+
+  TtpPerApurSem           = (              // número da semana dentro de um mês. O sábado deve ser considerado como o dia que define uma semana
+                            pasSemana01,   // 1 - Semana 01
+                            pasSemana02,   // 2 - Semana 02
+                            pasSemana03,   // 3 - Semana 03
+                            pasSemana04,   // 4 - Semana 04
+                            pasSemana05    // 5 - Semana 05
+                            );
+
+  TtpFechRet              = (
+                            tfrFechamento,   // 0 - Fechamento (fecha o movimento, caso esteja aberto)
+                            tfrReabertura    // 1 - Reabertura (reabre o movimento, caso esteja fechado)
+                            );
+
+  TVersaoReinf = (v1_03_00, v1_03_02, v1_04_00, v1_05_00, v1_05_01, v2_01_01);
 
   // ct00 não consta no manual mas consta no manual do desenvolvedor pg 85,
   // é usado para zerar a base de teste.
@@ -259,14 +329,17 @@ type
 const
   PrefixVersao = '-v';
 
-  TTipoEventoString: array[0..15] of String =('R-1000', 'R-2099', 'R-1070',
+  TTipoEventoString: array[0..25] of String =('R-1000', 'R-2099', 'R-1070',
                                               'R-2010', 'R-2020', 'R-2030',
                                               'R-2040', 'R-2050', 'R-2055',
                                               'R-2060', 'R-2070', 'R-2098',
                                               'R-3010', 'R-5001', 'R-5011',
-                                              'R-9000');
+                                              'R-9000', 'R-1050', 'R-4010',
+                                              'R-4020', 'R-4040', 'R-4080',
+                                              'R-4099', 'R-9001', 'R-9005',
+                                              'R-9011', 'R-9015');
 
-  TReinfSchemaStr: array[0..15] of string = ('evtInfoContribuinte',           // R-1000 - Informações do Contribuinte
+  TReinfSchemaStr: array[0..25] of string = ('evtInfoContribuinte',           // R-1000 - Informações do Contribuinte
                                              'evtFechamento',                 // R-2099 - Fechamento dos Eventos Periódicos
                                              'evtTabProcesso',                // R-1070 - Tabela de Processos Administrativos/Judiciais
                                              'evtTomadorServicos',            // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
@@ -281,10 +354,20 @@ const
                                              'evtEspDesportivo',              // R-3010 - Receita de Espetáculo Desportivo
                                              'evtTotal',                      // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
                                              'evtTotalConsolid',              // R-5011 - Informações de bases e tributos consolidadas por período de apuração
-                                             'evtExclusao'                    // R-9000 - Exclusão de Eventos
+                                             'evtExclusao',                   // R-9000 - Exclusão de Eventos
+                                             'evtTabLig',                     // R-1050 - Evento tabela de entidades ligadas
+                                             'evtRetPF',                      // R-4010 - Pagamentos/créditos a beneficiário pessoa física
+                                             'evtRetPJ',                      // R-4020 - Pagamentos/créditos a beneficiário pessoa jurídica
+                                             'evtBenefNId',                   // R-4040 - Pagamentos/créditos a beneficiários não identificados
+                                             'evtRetRec',                     // R-4080 - Retenção no recebimento
+                                             'evtFech',                       // R-4099 - Fechamento/reabertura dos eventos da série R-4000
+                                             'evtTotal',                      // R-9001 - Informações das bases e dos tributos consolidados por contribuinte
+                                             'evtRet',                        // R-9005 - Bases e tributos - retenções na fonte
+                                             'evtTotalConsolid',              // R-9011 - Informações de bases e tributos consolidadas por período de apuração
+                                             'evtRetConsolid'                 // R-9015 - Consolidação das retenções na fonte
                                             );
 
-  TReinfSchemaRegistro: array[0..15] of string = ('R-1000', // rsevtInfoContri    - Informações do Contribuinte
+  TReinfSchemaRegistro: array[0..25] of string = ('R-1000', // rsevtInfoContri    - Informações do Contribuinte
                                                   'R-2099', // rsevtFechaEvPer    - Fechamento dos Eventos Periódicos
                                                   'R-1070', // rsevtTabProcesso   - Tabela de Processos Administrativos/Judiciais
                                                   'R-2010', // rsevtServTom       - Retenção Contribuição Previdenciária - Serviços Tomados
@@ -299,17 +382,32 @@ const
                                                   'R-3010', // rsevtEspDesportivo - Receita de Espetáculo Desportivo
                                                   'R-5001', // rsevtTotal         - Informações das bases e dos tributos consolidados por contribuinte
                                                   'R-5011', // rsevtTotalConsolid - Informações de bases e tributos consolidadas por período de apuração
-                                                  'R-9000'  // rsevtExclusao      - Exclusão de Eventos
+                                                  'R-9000', // rsevtExclusao      - Exclusão de Eventos
+                                                  'R-1050', // rsevtTabLig        - Evento tabela de entidades ligadas
+                                                  'R-4010', // rsevtRetPF         - Pagamentos/créditos a beneficiário pessoa física
+                                                  'R-4020', // rsevtRetPJ         - Pagamentos/créditos a beneficiário pessoa jurídica
+                                                  'R-4040', // revtBenefNId       - Pagamentos/créditos a beneficiários não identificados
+                                                  'R-4080', // revtRetRec         - Retenção no recebimento
+                                                  'R-4099', // revt4099FechamentoDirf - Fechamento/reabertura dos eventos da série R-4000
+                                                  'R-9001', // rsevtTotal         - Informações das bases e dos tributos consolidados por contribuinte
+                                                  'R-9005', // revtRet            - Bases e tributos - retenções na fonte
+                                                  'R-9011', // rsevtTotalConsolid - Informações de bases e tributos consolidadas por período de apuração
+                                                  'R-9015'  // revtRetConsolid    - Consolidação das retenções na fonte
                                                  );
 
-  TEventoString: array[0..15] of String =('evtInfoContri', 'evtFechaEvPer',
+  TEventoString: array[0..25] of String =('evtInfoContri', 'evtFechaEvPer',
                                           'evtTabProcesso', 'evtServTom',
                                           'evtServPrest', 'evtAssocDespRec',
                                           'evtAssocDespRep', 'evtComProd',
                                           'evtAqProd', 'evtCPRB',
                                           'evtPgtosDivs', 'evtReabreEvPer',
                                           'evtEspDesportivo', 'evtTotal',
-                                          'evtTotalContrib', 'evtExclusao');
+                                          'evtTotalContrib', 'evtExclusao',
+                                          'evtTabLig', 'evtRetPF',
+                                          'evtRetPJ', 'evtBenefNId',
+                                          'evtRetRec', 'evtFech',
+                                          'evtTotal', 'evtRet',
+                                          'evtTotalContrib', 'evtRetConsolid');
 
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
@@ -425,6 +523,27 @@ function StrToTipoOperacao(var ok: boolean; const s: string): TTipoOperacao;
 function tpClassTribToStr(const t: TpClassTrib): string;
 function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
 
+function tpDependenteToStr(const t: TtpDependente): string;
+function StrToTpDependente(var ok: boolean; const s: string): TtpDependente;
+
+function tpEntLigToStr(const t: TtpEntLig): string;
+function StrToTpEntLig(var ok: boolean; const s: string): TtpEntLig;
+
+function tpIsencaoImunidadeToStr(const t: TtpIsencaoImunidade): string;
+function StrToTpIsencaoImunidade(var ok: boolean; const s: string): TtpIsencaoImunidade;
+
+function tpPerApurQuiToStr(const t: TtpPerApurQui): string;
+function StrToTpPerApurQui(var ok: boolean; const s: string): TtpPerApurQui;
+
+function tpPerApurDecToStr(const t: TtpPerApurDec): string;
+function StrToTpPerApurDec(var ok: boolean; const s: string): TtpPerApurDec;
+
+function tpPerApurSemToStr(const t: TtpPerApurSem): string;
+function StrToTpPerApurSem(var ok: boolean; const s: string): TtpPerApurSem;
+
+function tpFechRetToStr(const t: TtpFechRet): string;
+function StrTotpFechRet(var ok: boolean; const s: string): TtpFechRet;
+
 implementation
 
 uses
@@ -447,6 +566,7 @@ function TipoEventiToSchemaReinf(const t: TTipoEvento): TReinfSchema;
 begin
    case t of
      teR1000: Result := schevtInfoContribuinte;
+     teR1050: Result := schevt1050TabLig;
      teR1070: Result := schevtTabProcesso;
      teR2010: Result := schevtTomadorServicos;
      teR2020: Result := schevtPrestadorServicos;
@@ -459,9 +579,18 @@ begin
      teR2098: Result := schevtReabreEvPer;
      teR2099: Result := schevtFechamento;
      teR3010: Result := schevtEspDesportivo;
+     teR4010: Result := schevt4010PagtoBeneficiarioPF;
+     teR4020: Result := schevt4020PagtoBeneficiarioPJ;
+     teR4040: Result := schevt4040PagtoBenefNaoIdentificado;
+     teR4080: Result := schevt4080RetencaoRecebimento;
+     teR4099: Result := schevt4099FechamentoDirf;
      teR5001: Result := schevtTotal;
      teR5011: Result := schevtTotalConsolid;
      teR9000: Result := schevtExclusao;
+     teR9001: Result := schevtTotal;
+     teR9005: Result := schevtRet;
+     teR9011: Result := schevtTotalConsolid;
+     teR9015: Result := schevtRetConsolid;
   else
     Result := schErro;
   end;
@@ -494,6 +623,7 @@ begin
     v1_04_00: Result := 1.40;
     v1_05_00: Result := 1.50;
     v1_05_01: Result := 1.51;
+    v2_01_01: Result := 2.21;
   else
     result := 0;
   end;
@@ -502,17 +632,17 @@ end;
 function VersaoReinfToStr(const t: TVersaoReinf): String;
 begin
   result := EnumeradoToStr(t, ['1_03_00', '1_03_02', '1_04_00',
-                               '1_05_00', '1_05_01'],
+                               '1_05_00', '1_05_01', '2_01_01'],
                            [v1_03_00, v1_03_02, v1_04_00,
-                            v1_05_00, v1_05_01]);
+                            v1_05_00, v1_05_01, v2_01_01]);
 end;
 
 function StrToVersaoReinf(out ok: Boolean; const s: String): TVersaoReinf;
 begin
   result := StrToEnumerado(ok, s, ['1_03_00', '1_03_02', '1_04_00',
-                                   '1_05_00', '1_05_01'],
+                                   '1_05_00', '1_05_01', '2_01_01'],
                            [v1_03_00, v1_03_02, v1_04_00,
-                            v1_05_00, v1_05_01]);
+                            v1_05_00, v1_05_01, v2_01_01]);
 end;
 
 function TipoEventoToStr(const t: TTipoEvento): string;
@@ -783,25 +913,25 @@ end;
 
 function indTpDeducaoToStr(const t: TindTpDeducao): string;
 begin
-  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '6']);
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '7']);
 end;
 
 function StrToindTpDeducao(var ok: boolean; const s: string): TindTpDeducao;
 begin
   result := TindTpDeducao(StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5',
-                                                    '6']));
+                                                    '7']));
 end;
 
 function tpIsencaoToStr(const t: TtpIsencao): string;
 begin
   result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
-                                '10', '11']);
+                                '99']);
 end;
 
 function StrTotpIsencao(var ok: boolean; const s: string): TtpIsencao;
 begin
   result := TtpIsencao(StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5', '6',
-                                                 '7', '8', '9', '10', '11']));
+                                                 '7', '8', '9', '99']));
 end;
 
 function indPerReferenciaToStr(const t: TindPerReferencia): string;
@@ -903,6 +1033,78 @@ begin
                               [ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08,
                                ct09, ct10, ct11, ct13, ct14, ct21, ct22, ct60,
                                ct70, ct80, ct85, ct99]);
+end;
+
+function tpDependenteToStr(const t: TtpDependente): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '6', '8', '9',
+                                '10', '11', '12', '99']);
+end;
+
+function StrToTpDependente(var ok: boolean; const s: string): TtpDependente;
+begin
+  result := TtpDependente(StrToEnumerado2(ok , s, ['1', '2', '3', '6', '8', '9',
+                                                   '10', '11', '12', '99']));
+end;
+
+function tpEntLigToStr(const t: TtpEntLig): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4']);
+end;
+
+function StrToTpEntLig(var ok: boolean; const s: string): TtpEntLig;
+begin
+  result := TtpEntLig(StrToEnumerado2(ok , s, ['1', '2', '3', '4']));
+end;
+
+function tpIsencaoImunidadeToStr(const t: TtpIsencaoImunidade): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3']);
+end;
+
+function StrToTpIsencaoImunidade(var ok: boolean; const s: string): TtpIsencaoImunidade;
+begin
+  result := TTpIsencaoImunidade(StrToEnumerado2(ok , s, ['1', '2', '3']));
+end;
+
+function tpPerApurQuiToStr(const t: TtpPerApurQui): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2']);
+end;
+
+function StrToTpPerApurQui(var ok: boolean; const s: string): TtpPerApurQui;
+begin
+  result := TtpPerApurQui(StrToEnumerado2(ok , s, ['1', '2']));
+end;
+
+function tpPerApurDecToStr(const t: TtpPerApurDec): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3']);
+end;
+
+function StrToTpPerApurDec(var ok: boolean; const s: string): TtpPerApurDec;
+begin
+  result := TtpPerApurDec(StrToEnumerado2(ok , s, ['1', '2', '3']));
+end;
+
+function tpPerApurSemToStr(const t: TtpPerApurSem): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5']);
+end;
+
+function StrToTpPerApurSem(var ok: boolean; const s: string): TtpPerApurSem;
+begin
+  result := TtpPerApurSem(StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5']));
+end;
+
+function tpFechRetToStr(const t: TtpFechRet): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1']);
+end;
+
+function StrTotpFechRet(var ok: boolean; const s: string): TtpFechRet;
+begin
+  result := TtpFechRet(StrToEnumerado2(ok , s, ['0', '1']));
 end;
 
 end.

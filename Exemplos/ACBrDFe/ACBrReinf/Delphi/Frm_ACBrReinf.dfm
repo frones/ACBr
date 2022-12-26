@@ -1,9 +1,9 @@
 object frmACBrReinf: TfrmACBrReinf
   Left = 250
   Top = 77
+  Width = 898
+  Height = 651
   Caption = 'ACBrReinf - Programa Exemplo'
-  ClientHeight = 612
-  ClientWidth = 882
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -360,6 +360,7 @@ object frmACBrReinf: TfrmACBrReinf
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -369,6 +370,7 @@ object frmACBrReinf: TfrmACBrReinf
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -378,6 +380,7 @@ object frmACBrReinf: TfrmACBrReinf
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -387,6 +390,7 @@ object frmACBrReinf: TfrmACBrReinf
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -497,6 +501,7 @@ object frmACBrReinf: TfrmACBrReinf
                 Top = 104
                 Width = 248
                 Height = 21
+                ItemHeight = 0
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -535,6 +540,7 @@ object frmACBrReinf: TfrmACBrReinf
                 Top = 181
                 Width = 248
                 Height = 21
+                ItemHeight = 0
                 TabOrder = 7
               end
               object edtPathSchemas: TEdit
@@ -613,6 +619,7 @@ object frmACBrReinf: TfrmACBrReinf
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
+                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -685,6 +692,7 @@ object frmACBrReinf: TfrmACBrReinf
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
+                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -834,7 +842,7 @@ object frmACBrReinf: TfrmACBrReinf
               Top = 48
               Width = 279
               Height = 142
-              ActivePage = TabSheet2
+              ActivePage = TabSheet11
               TabOrder = 0
               object TabSheet2: TTabSheet
                 Caption = 'Contato'
@@ -1096,6 +1104,8 @@ object frmACBrReinf: TfrmACBrReinf
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1110,8 +1120,6 @@ object frmACBrReinf: TfrmACBrReinf
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
     end
   end
   object pnlCentral: TPanel
@@ -1125,7 +1133,7 @@ object frmACBrReinf: TfrmACBrReinf
       Left = 1
       Top = 1
       Width = 583
-      Height = 304
+      Height = 315
       ActivePage = tbsEventos
       Align = alTop
       TabOrder = 0
@@ -1169,7 +1177,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk1070: TCheckBox
           Left = 8
-          Top = 27
+          Top = 36
           Width = 201
           Height = 17
           Caption = 'R-1070 - Tabela de Processos'
@@ -1181,12 +1189,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 3
           OnClick = chk1000Click
         end
         object chk2010: TCheckBox
           Left = 8
-          Top = 48
+          Top = 51
           Width = 409
           Height = 17
           Caption = 'R-2010 - Reten'#231#227'o Contribui'#231#227'o Previdenci'#225'ria  Servi'#231'os Tomados '
@@ -1198,12 +1206,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 3
+          TabOrder = 4
           OnClick = chk1000Click
         end
         object chk2020: TCheckBox
           Left = 8
-          Top = 70
+          Top = 65
           Width = 409
           Height = 17
           Caption = 
@@ -1217,12 +1225,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 4
+          TabOrder = 5
           OnClick = chk1000Click
         end
         object chk2030: TCheckBox
           Left = 8
-          Top = 92
+          Top = 80
           Width = 353
           Height = 17
           Caption = 'R-2030 - Recursos Recebidos por Associa'#231#227'o Desportiva'
@@ -1234,12 +1242,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 5
+          TabOrder = 6
           OnClick = chk1000Click
         end
         object chk2040: TCheckBox
           Left = 8
-          Top = 113
+          Top = 94
           Width = 369
           Height = 17
           Caption = 'R-2040 - Recursos Repassados para Associa'#231#227'o Desportiva'
@@ -1251,12 +1259,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 6
+          TabOrder = 7
           OnClick = chk1000Click
         end
         object chk2050: TCheckBox
           Left = 8
-          Top = 134
+          Top = 109
           Width = 457
           Height = 17
           Caption = 
@@ -1270,12 +1278,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 7
+          TabOrder = 8
           OnClick = chk1000Click
         end
         object chk2060: TCheckBox
           Left = 8
-          Top = 169
+          Top = 138
           Width = 413
           Height = 17
           Caption = 
@@ -1289,12 +1297,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 9
+          TabOrder = 10
           OnClick = chk1000Click
         end
         object chk2070: TCheckBox
           Left = 8
-          Top = 190
+          Top = 153
           Width = 377
           Height = 17
           Caption = 'R-2070 - Reten'#231#245'es na Fonte - IR, CSLL, Cofins, PIS/PASEP'
@@ -1306,12 +1314,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 10
+          TabOrder = 11
           OnClick = chk1000Click
         end
         object chk2098: TCheckBox
           Left = 8
-          Top = 211
+          Top = 167
           Width = 289
           Height = 17
           Caption = 'R-2098 - Reabertura dos Eventos Peri'#243'dicos'
@@ -1323,12 +1331,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 11
+          TabOrder = 12
           OnClick = chk1000Click
         end
         object chk2099: TCheckBox
           Left = 8
-          Top = 228
+          Top = 182
           Width = 289
           Height = 17
           Caption = 'R-2099 - Fechamento dos Eventos Peri'#243'dicos'
@@ -1340,12 +1348,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 12
+          TabOrder = 13
           OnClick = chk1000Click
         end
         object chk3010: TCheckBox
           Left = 8
-          Top = 251
+          Top = 197
           Width = 265
           Height = 17
           Caption = 'R-3010 - Receita de Espet'#225'culo Desportivo'
@@ -1357,12 +1365,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 13
+          TabOrder = 14
           OnClick = chk1000Click
         end
         object chk9000: TCheckBox
-          Left = 368
-          Top = 251
+          Left = 250
+          Top = 21
           Width = 193
           Height = 17
           Caption = 'R-9000 - Exclus'#227'o de Eventos'
@@ -1374,12 +1382,12 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 14
+          TabOrder = 20
           OnClick = chk1000Click
         end
         object chk2055: TCheckBox
           Left = 8
-          Top = 152
+          Top = 124
           Width = 242
           Height = 17
           Caption = 'R-2055 - Aquisi'#231#227'o de Produ'#231#227'o Rural'
@@ -1391,16 +1399,118 @@ object frmACBrReinf: TfrmACBrReinf
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 8
+          TabOrder = 9
+          OnClick = chk1000Click
+        end
+        object chk4010: TCheckBox
+          Left = 8
+          Top = 212
+          Width = 357
+          Height = 17
+          Caption = 'R-4010 - Pagamentos/cr'#233'ditos a benefici'#225'rio pessoa f'#237'sica'
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 15
+          OnClick = chk1000Click
+        end
+        object chk1050: TCheckBox
+          Left = 8
+          Top = 21
+          Width = 201
+          Height = 17
+          Caption = 'R-1050 - Tabela de Entidades'
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 2
+          OnClick = chk1000Click
+        end
+        object chk4020: TCheckBox
+          Left = 8
+          Top = 226
+          Width = 387
+          Height = 17
+          Caption = 'R-4020 - Pagamentos/cr'#233'ditos a benefici'#225'rio pessoa jur'#237'dica'
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 16
+          OnClick = chk1000Click
+        end
+        object chk4040: TCheckBox
+          Left = 8
+          Top = 240
+          Width = 387
+          Height = 17
+          Caption = 'R-4040 - Pagamentos/cr'#233'ditos a benefici'#225'rios n'#227'o identificados'
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 17
+          OnClick = chk1000Click
+        end
+        object chk4080: TCheckBox
+          Left = 8
+          Top = 254
+          Width = 229
+          Height = 17
+          Caption = 'R-4080 - Reten'#231#227'o no recebimento'
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 18
+          OnClick = chk1000Click
+        end
+        object chk4099: TCheckBox
+          Left = 8
+          Top = 268
+          Width = 377
+          Height = 17
+          Caption = 'R-4099 - Fechamento/reabertura dos eventos da s'#233'rie R-4000'
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 19
           OnClick = chk1000Click
         end
       end
     end
     object pgRespostas: TPageControl
       Left = 1
-      Top = 305
+      Top = 316
       Width = 583
-      Height = 306
+      Height = 295
       ActivePage = tsFormaEnvio
       Align = alClient
       TabOrder = 1
@@ -1459,6 +1569,7 @@ object frmACBrReinf: TfrmACBrReinf
             Top = 66
             Width = 87
             Height = 21
+            ItemHeight = 13
             TabOrder = 2
             Visible = False
             Items.Strings = (
@@ -1469,7 +1580,11 @@ object frmACBrReinf: TfrmACBrReinf
               'R-2050'
               'R-2060'
               'R-2070'
-              'R-3010')
+              'R-3010'
+              'R-4010'
+              'R-4020'
+              'R-4040'
+              'R-4080')
           end
           object ChkRetificadora: TCheckBox
             Left = 356
@@ -1586,7 +1701,7 @@ object frmACBrReinf: TfrmACBrReinf
           Left = 0
           Top = 0
           Width = 575
-          Height = 278
+          Height = 267
           Align = alClient
           Lines.Strings = (
             'mmoRet')
@@ -1600,7 +1715,7 @@ object frmACBrReinf: TfrmACBrReinf
           Left = 0
           Top = 0
           Width = 575
-          Height = 278
+          Height = 267
           Align = alClient
           Lines.Strings = (
             'Memo1')
@@ -1615,7 +1730,7 @@ object frmACBrReinf: TfrmACBrReinf
           Left = 0
           Top = 0
           Width = 575
-          Height = 278
+          Height = 267
           Align = alClient
           Lines.Strings = (
             'Memo1')
@@ -1630,7 +1745,7 @@ object frmACBrReinf: TfrmACBrReinf
           Left = 0
           Top = 0
           Width = 575
-          Height = 278
+          Height = 267
           Align = alClient
           TabOrder = 0
         end

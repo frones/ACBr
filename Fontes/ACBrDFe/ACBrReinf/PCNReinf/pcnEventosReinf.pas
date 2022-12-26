@@ -40,15 +40,18 @@ uses
   SysUtils, Classes, synautil,
   ACBrUtil.Strings, ACBrUtil.FilesIO,
   pcnConversaoReinf,
-  pcnReinfR1000, pcnReinfR1070, pcnReinfR2010, pcnReinfR2020, pcnReinfR2030,
+  pcnReinfR1000, pcnReinfR1050, pcnReinfR1070, pcnReinfR2010, pcnReinfR2020,
+  pcnReinfR2030,
   pcnReinfR2040, pcnReinfR2050, pcnReinfR2055, pcnReinfR2060, pcnReinfR2070,
-  pcnReinfR2098, pcnReinfR2099, pcnReinfR3010, pcnReinfR9000;
+  pcnReinfR2098, pcnReinfR2099, pcnReinfR3010, pcnReinfR4010, pcnReinfR4020,
+  pcnReinfR4040, pcnReinfR4080, pcnReinfR4099, pcnReinfR9000;
 
 type
 
   TReinfEventos = class(TComponent)
   private
     FR1000: TR1000Collection;
+    FR1050: TR1050Collection;
     FR1070: TR1070Collection;
     FR2010: TR2010Collection;
     FR2020: TR2020Collection;
@@ -61,10 +64,16 @@ type
     FR2098: TR2098Collection;
     FR2099: TR2099Collection;
     FR3010: TR3010Collection;
+    FR4010: TR4010Collection;
+    FR4020: TR4020Collection;
+    FR4040: TR4040Collection;
+    FR4080: TR4080Collection;
+    FR4099: TR4099Collection;
     FR9000: TR9000Collection;
 
     function GetCount: integer;
     procedure setR1000(const Value: TR1000Collection);
+    procedure setR1050(const Value: TR1050Collection);
     procedure setR1070(const Value: TR1070Collection);
     procedure setR2010(const Value: TR2010Collection);
     procedure setR2020(const Value: TR2020Collection);
@@ -77,6 +86,11 @@ type
     procedure setR2098(const Value: TR2098Collection);
     procedure setR2099(const Value: TR2099Collection);
     procedure setR3010(const Value: TR3010Collection);
+    procedure setR4010(const Value: TR4010Collection);
+    procedure setR4020(const Value: TR4020Collection);
+    procedure setR4040(const Value: TR4040Collection);
+    procedure setR4080(const Value: TR4080Collection);
+    procedure setR4099(const Value: TR4099Collection);
     procedure setR9000(const Value: TR9000Collection);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -93,6 +107,7 @@ type
   published
     property Count: Integer read GetCount;
     property R1000: TR1000Collection read FR1000 write setR1000;
+    property R1050: TR1050Collection read FR1050 write setR1050;
     property R1070: TR1070Collection read FR1070 write setR1070;
     property R2010: TR2010Collection read FR2010 write setR2010;
     property R2020: TR2020Collection read FR2020 write setR2020;
@@ -105,6 +120,11 @@ type
     property R2098: TR2098Collection read FR2098 write setR2098;
     property R2099: TR2099Collection read FR2099 write setR2099;
     property R3010: TR3010Collection read FR3010 write setR3010;
+    property R4010: TR4010Collection read FR4010 write setR4010;
+    property R4020: TR4020Collection read FR4020 write setR4020;
+    property R4040: TR4040Collection read FR4040 write setR4040;
+    property R4080: TR4080Collection read FR4080 write setR4080;
+    property R4099: TR4099Collection read FR4099 write setR4099;
     property R9000: TR9000Collection read FR9000 write setR9000;
   end;
 
@@ -118,6 +138,7 @@ uses
 procedure TReinfEventos.Clear;
 begin
   FR1000.Clear;
+  FR1050.Clear;
   FR1070.Clear;
   FR2010.Clear;
   FR2020.Clear;
@@ -130,6 +151,11 @@ begin
   FR2098.Clear;
   FR2099.Clear;
   FR3010.Clear;
+  FR4010.Clear;
+  FR4020.Clear;
+  FR4040.Clear;
+  FR4080.Clear;
+  FR4099.Clear;
   FR9000.Clear;
 end;
 
@@ -138,6 +164,7 @@ begin
   inherited;
 
   FR1000 := TR1000Collection.Create(AOwner);
+  FR1050 := TR1050Collection.Create(AOwner);
   FR1070 := TR1070Collection.Create(AOwner);
   FR2010 := TR2010Collection.Create(AOwner);
   FR2020 := TR2020Collection.Create(AOwner);
@@ -150,12 +177,18 @@ begin
   FR2098 := TR2098Collection.Create(AOwner);
   FR2099 := TR2099Collection.Create(AOwner);
   FR3010 := TR3010Collection.Create(AOwner);
+  FR4010 := TR4010Collection.Create(AOwner);
+  FR4020 := TR4020Collection.Create(AOwner);
+  FR4040 := TR4040Collection.Create(AOwner);
+  FR4080 := TR4080Collection.Create(AOwner);
+  FR4099 := TR4099Collection.Create(AOwner);
   FR9000 := TR9000Collection.Create(AOwner);
 end;
 
 destructor TReinfEventos.Destroy;
 begin
   FR1000.Free;
+  FR1050.Free;
   FR1070.Free;
   FR2010.Free;
   FR2020.Free;
@@ -168,6 +201,11 @@ begin
   FR2098.Free;
   FR2099.Free;
   FR3010.Free;
+  FR4010.Free;
+  FR4020.Free;
+  FR4040.Free;
+  FR4080.Free;
+  FR4099.Free;
   FR9000.Free;
 
   inherited;
@@ -175,11 +213,14 @@ end;
 
 function TReinfEventos.GetCount: Integer;
 begin
-  Result := self.R1000.Count + self.R1070.Count + Self.R2010.Count +
+  Result := self.R1000.Count + self.R1050.Count + self.R1070.Count +
+            Self.R2010.Count +
             Self.R2020.Count + Self.R2030.Count + Self.R2040.Count +
             Self.R2050.Count + Self.R2055.Count + Self.R2060.Count +
             Self.R2070.Count + Self.R2098.Count + Self.R2099.Count +
-            Self.R3010.Count + Self.R9000.Count;
+            Self.R3010.Count + Self.R4010.Count + Self.R4020.Count +
+            Self.R4040.Count + Self.R4080.Count + Self.R4099.Count +
+            Self.R9000.Count;
 end;
 
 procedure TReinfEventos.Gerar;
@@ -188,6 +229,9 @@ var
 begin
   for i := 0 to Self.R1000.Count - 1 do
     Self.R1000.Items[i].evtInfoContri.GerarXML;
+
+  for i := 0 to Self.R1050.Count - 1 do
+    Self.R1050.Items[i].evtTabLig.GerarXML;
 
   for i := 0 to Self.R1070.Count - 1 do
     Self.R1070.Items[i].evtTabProcesso.GerarXML;
@@ -225,6 +269,21 @@ begin
   for i := 0 to Self.R3010.Count - 1 do
     Self.R3010.Items[i].evtEspDesportivo.GerarXML;
 
+  for i := 0 to Self.R4010.Count - 1 do
+    Self.R4010.Items[i].evtRetPF.GerarXML;
+
+  for i := 0 to Self.R4020.Count - 1 do
+    Self.R4020.Items[i].evtRetPJ.GerarXML;
+
+  for i := 0 to Self.R4040.Count - 1 do
+    Self.R4040.Items[i].evtBenefNId.GerarXML;
+
+  for i := 0 to Self.R4080.Count - 1 do
+    Self.R4080.Items[i].evtRetRec.GerarXML;
+
+  for i := 0 to Self.R4099.Count - 1 do
+    Self.R4099.Items[i].evtFech.GerarXML;
+
   for i := 0 to Self.R9000.Count - 1 do
     Self.R9000.Items[i].evtExclusao.GerarXML;
 end;
@@ -236,6 +295,10 @@ begin
   for i := 0 to Self.R1000.Count - 1 do
     Self.R1000.Items[i].evtInfoContri.XML :=
     Self.R1000.Items[i].evtInfoContri.Assinar(Self.R1000.Items[i].evtInfoContri.XML, 'evtInfoContri');
+
+  for i := 0 to Self.R1050.Count - 1 do
+    Self.R1050.Items[i].evtTabLig.XML :=
+    Self.R1050.Items[i].evtTabLig.Assinar(Self.R1050.Items[i].evtTabLig.XML, 'evtTabLig');
 
   for i := 0 to Self.R1070.Count - 1 do
     Self.R1070.Items[i].evtTabProcesso.XML :=
@@ -285,6 +348,26 @@ begin
     Self.R3010.Items[i].evtEspDesportivo.XML :=
     Self.R3010.Items[i].evtEspDesportivo.Assinar(Self.R3010.Items[i].evtEspDesportivo.XML, 'evtEspDesportivo');
 
+  for i := 0 to Self.R4010.Count - 1 do
+    Self.R4010.Items[i].evtRetPF.XML :=
+    Self.R4010.Items[i].evtRetPF.Assinar(Self.R4010.Items[i].evtRetPF.XML, 'evtRetPF');
+
+  for i := 0 to Self.R4020.Count - 1 do
+    Self.R4020.Items[i].evtRetPJ.XML :=
+    Self.R4020.Items[i].evtRetPJ.Assinar(Self.R4020.Items[i].evtRetPJ.XML, 'evtRetPJ');
+
+  for i := 0 to Self.R4040.Count - 1 do
+    Self.R4040.Items[i].evtBenefNId.XML :=
+    Self.R4040.Items[i].evtBenefNId.Assinar(Self.R4040.Items[i].evtBenefNId.XML, 'evtBenefNId');
+
+  for i := 0 to Self.R4080.Count - 1 do
+    Self.R4080.Items[i].evtRetRec.XML :=
+    Self.R4080.Items[i].evtRetRec.Assinar(Self.R4080.Items[i].evtRetRec.XML, 'evtRetRec');
+
+  for i := 0 to Self.R4099.Count - 1 do
+    Self.R4099.Items[i].evtFech.XML :=
+    Self.R4099.Items[i].evtFech.Assinar(Self.R4099.Items[i].evtFech.XML, 'evtFech');
+
   for i := 0 to Self.R9000.Count - 1 do
     Self.R9000.Items[i].evtExclusao.XML :=
     Self.R9000.Items[i].evtExclusao.Assinar(Self.R9000.Items[i].evtExclusao.XML, 'evtExclusao');
@@ -296,6 +379,9 @@ var
 begin
   for i := 0 to Self.R1000.Count - 1 do
     Self.R1000.Items[i].evtInfoContri.Validar(schevtInfoContribuinte);
+
+  for i := 0 to Self.R1050.Count - 1 do
+    Self.R1050.Items[i].evtTabLig.Validar(schevt1050TabLig);
 
   for i := 0 to Self.R1070.Count - 1 do
     Self.R1070.Items[i].evtTabProcesso.Validar(schevtTabProcesso);
@@ -335,6 +421,21 @@ begin
   for i := 0 to Self.R3010.Count - 1 do
     Self.R3010.Items[i].evtEspDesportivo.Validar(schevtEspDesportivo);
 
+  for i := 0 to Self.R4010.Count - 1 do
+    Self.R4010.Items[i].evtRetPF.Validar(schevt4010PagtoBeneficiarioPF);
+
+  for i := 0 to Self.R4020.Count - 1 do
+    Self.R4020.Items[i].evtRetPJ.Validar(schevt4020PagtoBeneficiarioPJ);
+
+  for i := 0 to Self.R4040.Count - 1 do
+    Self.R4040.Items[i].evtBenefNId.Validar(schevt4040PagtoBenefNaoIdentificado);
+
+  for i := 0 to Self.R4080.Count - 1 do
+    Self.R4080.Items[i].evtRetRec.Validar(schevt4080RetencaoRecebimento);
+
+  for i := 0 to Self.R4099.Count - 1 do
+    Self.R4099.Items[i].evtFech.Validar(schevt4099FechamentoDirf);
+
   for i := 0 to Self.R9000.Count - 1 do
     Self.R9000.Items[i].evtExclusao.Validar(schevtExclusao);
 end;
@@ -364,6 +465,22 @@ begin
       PathNome := PathName;
       IdEvento := OnlyNumber(Self.R1000.Items[i].evtInfoContri.Id);
       XML := Self.R1000.Items[i].evtInfoContri.XML;
+    end;
+  end;
+
+  for i := 0 to Self.R1050.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.R1050.Items[i].evtTabLig.Id) + '-' +
+     TipoEventoToStr(Self.R1050.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R1050.Items[i].evtTabLig.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teR1050;
+      PathNome := PathName;
+      IdEvento := OnlyNumber(Self.R1050.Items[i].evtTabLig.Id);
+      XML := Self.R1050.Items[i].evtTabLig.XML;
     end;
   end;
 
@@ -560,6 +677,86 @@ begin
     end;
   end;
 
+  for i := 0 to Self.R4010.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.R4010.Items[i].evtRetPF.Id) + '-' +
+     TipoEventoToStr(Self.R4010.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R4010.Items[i].evtRetPF.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teR4010;
+      PathNome := PathName;
+      IdEvento := OnlyNumber(Self.R4010.Items[i].evtRetPF.Id);
+      XML := Self.R4010.Items[i].evtRetPF.XML;
+    end;
+  end;
+
+  for i := 0 to Self.R4020.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.R4020.Items[i].evtRetPJ.Id) + '-' +
+     TipoEventoToStr(Self.R4020.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R4020.Items[i].evtRetPJ.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teR4020;
+      PathNome := PathName;
+      IdEvento := OnlyNumber(Self.R4020.Items[i].evtRetPJ.Id);
+      XML := Self.R4020.Items[i].evtRetPJ.XML;
+    end;
+  end;
+
+  for i := 0 to Self.R4040.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.R4040.Items[i].evtBenefNId.Id) + '-' +
+     TipoEventoToStr(Self.R4040.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R4040.Items[i].evtBenefNId.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teR4040;
+      PathNome := PathName;
+      IdEvento := OnlyNumber(Self.R4040.Items[i].evtBenefNId.Id);
+      XML := Self.R4040.Items[i].evtBenefNId.XML;
+    end;
+  end;
+
+  for i := 0 to Self.R4080.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.R4080.Items[i].evtRetRec.Id) + '-' +
+     TipoEventoToStr(Self.R4080.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R4080.Items[i].evtRetRec.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teR4080;
+      PathNome := PathName;
+      IdEvento := OnlyNumber(Self.R4080.Items[i].evtRetRec.Id);
+      XML := Self.R4080.Items[i].evtRetRec.XML;
+    end;
+  end;
+
+  for i := 0 to Self.R4099.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.R4099.Items[i].evtFech.Id) + '-' +
+     TipoEventoToStr(Self.R4099.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R4099.Items[i].evtFech.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teR4099;
+      PathNome := PathName;
+      IdEvento := OnlyNumber(Self.R4099.Items[i].evtFech.Id);
+      XML := Self.R4099.Items[i].evtFech.XML;
+    end;
+  end;
+
   for i := 0 to Self.R9000.Count - 1 do
   begin
     PathName := Path + OnlyNumber(Self.R9000.Items[i].evtExclusao.Id) + '-' +
@@ -580,6 +777,11 @@ end;
 procedure TReinfEventos.setR1000(const Value: TR1000Collection);
 begin
   FR1000.Assign(Value);
+end;
+
+procedure TReinfEventos.setR1050(const Value: TR1050Collection);
+begin
+  FR1050.Assign(Value);
 end;
 
 procedure TReinfEventos.setR1070(const Value: TR1070Collection);
@@ -642,6 +844,31 @@ begin
   FR3010.Assign(Value);
 end;
 
+procedure TReinfEventos.setR4010(const Value: TR4010Collection);
+begin
+  FR4010.Assign(Value);
+end;
+
+procedure TReinfEventos.setR4020(const Value: TR4020Collection);
+begin
+  FR4020.Assign(Value);
+end;
+
+procedure TReinfEventos.setR4040(const Value: TR4040Collection);
+begin
+  FR4040.Assign(Value);
+end;
+
+procedure TReinfEventos.setR4080(const Value: TR4080Collection);
+begin
+  FR4080.Assign(Value);
+end;
+
+procedure TReinfEventos.setR4099(const Value: TR4099Collection);
+begin
+  FR4099.Assign(Value);
+end;
+
 procedure TReinfEventos.setR9000(const Value: TR9000Collection);
 begin
   FR9000.Assign(Value);
@@ -653,6 +880,7 @@ var
 begin
   case StringXMLToTipoEvento(Ok, AXMLString) of
     teR1000: Self.R1000.New.evtInfoContri.XML    := AXMLString;
+    teR1050: Self.R1050.New.evtTabLig.XML        := AXMLString;
     teR1070: Self.R1070.New.evtTabProcesso.XML   := AXMLString;
     teR2010: Self.R2010.New.evtServTom.XML       := AXMLString;
     teR2020: Self.R2020.New.evtServPrest.XML     := AXMLString;
@@ -665,6 +893,11 @@ begin
     teR2098: Self.R2098.New.evtReabreEvPer.XML   := AXMLString;
     teR2099: Self.R2099.New.evtFechaEvPer.XML    := AXMLString;
     teR3010: Self.R3010.New.evtEspDesportivo.XML := AXMLString;
+    teR4010: Self.R4010.New.evtRetPF.XML         := AXMLString;
+    teR4020: Self.R4020.New.evtRetPJ.XML         := AXMLString;
+    teR4040: Self.R4040.New.evtBenefNId.XML      := AXMLString;
+    teR4080: Self.R4080.New.evtRetRec.XML        := AXMLString;
+    teR4099: Self.R4099.New.evtFech.XML          := AXMLString;
     teR9000: Self.R9000.New.evtExclusao.XML      := AXMLString;
   end;
 
@@ -677,6 +910,7 @@ var
 begin
   case StringINIToTipoEvento(Ok, AIniString) of
     teR1000: Self.R1000.New.evtInfoContri.LerArqIni(AIniString);
+    teR1050: Self.R1050.New.evtTabLig.LerArqIni(AIniString);
     teR1070: Self.R1070.New.evtTabProcesso.LerArqIni(AIniString);
     teR2010: Self.R2010.New.evtServTom.LerArqIni(AIniString);
     teR2020: Self.R2020.New.evtServPrest.LerArqIni(AIniString);
@@ -689,6 +923,11 @@ begin
     teR2098: Self.R2098.New.evtReabreEvPer.LerArqIni(AIniString);
     teR2099: Self.R2099.New.evtFechaEvPer.LerArqIni(AIniString);
     teR3010: Self.R3010.New.evtEspDesportivo.LerArqIni(AIniString);
+    teR4010: Self.R4010.New.evtRetPF.LerArqIni(AIniString);
+    teR4020: Self.R4020.New.evtRetPJ.LerArqIni(AIniString);
+    teR4040: Self.R4040.New.evtBenefNId.LerArqIni(AIniString);
+    teR4080: Self.R4080.New.evtRetRec.LerArqIni(AIniString);
+    teR4099: Self.R4099.New.evtFech.LerArqIni(AIniString);
     teR9000: Self.R9000.New.evtExclusao.LerArqIni(AIniString);
   end;
 

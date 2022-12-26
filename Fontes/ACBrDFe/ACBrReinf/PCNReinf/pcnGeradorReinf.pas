@@ -315,10 +315,8 @@ begin
   DecodeDate(emissao, nAno, nMes, nDia);
   DecodeTime(emissao, nHora, nMin, nSeg, nMSeg);
   Result := 'ID';
-                              //Para Órgão publico o CNPJ possui 8 Digitos exceto se a natureza jurídica do contribuinte
-                              //declarante for de administração pública direta federal ([101-5], [104-0], [107-4], [116-3]
-                              //de acordo com Leiautes da EFD-Reinf versão 1.5.1 Pag: 3
-  if (Length(CNPJF) = 14) or (TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte = tcOrgaoPublico) then
+
+  if (Length(CNPJF) = 14) then
     Result := Result + IntToStr(1)
   else
     Result := Result + IntToStr(2);
@@ -437,6 +435,13 @@ begin
       Gerador.wCampo(tcStr, '', 'nrInsc', 11, 11, 1, pEmp.NrInsc)
     else
       Gerador.wCampo(tcStr, '', 'nrInsc', 8, 8, 1, Copy(pEmp.NrInsc, 1, 8));
+  end;
+
+  if pEmp.infoComplContri.NatJur <> '' then
+  begin
+    Gerador.wGrupo('infoComplContri');
+    Gerador.wCampo(tcStr, '', 'natJur', 1, 4, 0, pEmp.infoComplContri.NatJur);
+    Gerador.wGrupo('/infoComplContri');
   end;
 
   if GeraGrupo then

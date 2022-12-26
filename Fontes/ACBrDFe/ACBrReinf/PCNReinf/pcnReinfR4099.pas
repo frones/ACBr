@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Leivio Ramos de Fontenele                       }
+{ Colaboradores nesse arquivo: Renato Tanchela Rubinho                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnReinfR2099;
+unit pcnReinfR4099;
 
 interface
 
@@ -49,48 +49,39 @@ uses
 
 type
   {Classes específicas deste evento}
+  TR4099Collection = class;
+  TR4099CollectionItem = class;
+  TevtFech = class;
+  TideRespInf = class;
+  TinfoFech = class;
 
-  { TinfoFech }
-
-  TinfoFech = class(TObject)
+  { TR4099Collection }
+  TR4099Collection = class(TReinfCollection)
   private
-    FevtServTm: TtpSimNao;
-    FevtServPr: TtpSimNao;
-    FevtAssDespRec: TtpSimNao;
-    FevtAssDespRep: TtpSimNao;
-    FevtComProd: TtpSimNao;
-    FevtCPRB: TtpSimNao;
-    FevtPgtos: TtpSimNao;
-    FcompSemMovto: string;
-    FevtAquis: TtpSimNao;
+    function GetItem(Index: Integer): TR4099CollectionItem;
+    procedure SetItem(Index: Integer; Value: TR4099CollectionItem);
   public
-    property evtServTm: TtpSimNao read FevtServTm write FevtServTm;
-    property evtServPr: TtpSimNao read FevtServPr write FevtServPr;
-    property evtAssDespRec: TtpSimNao read FevtAssDespRec write FevtAssDespRec;
-    property evtAssDespRep: TtpSimNao read FevtAssDespRep write FevtAssDespRep;
-    property evtComProd: TtpSimNao read FevtComProd write FevtComProd;
-    property evtCPRB: TtpSimNao read FevtCPRB write FevtCPRB;
-    property evtAquis: TtpSimNao read FevtAquis write FevtAquis;
-    property evtPgtos: TtpSimNao read FevtPgtos write FevtPgtos;
-    property compSemMovto: string read FcompSemMovto write FcompSemMovto;
+    function Add: TR4099CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR4099CollectionItem;
+
+    property Items[Index: Integer]: TR4099CollectionItem read GetItem write SetItem; default;
   end;
 
-  { TideRespInf }
-
-  TideRespInf = class(TObject)
+  { TR4099CollectionItem }
+  TR4099CollectionItem = class(TObject)
   private
-    FnmResp: string;
-    FcpfResp: string;
-    Ftelefone: string;
-    Femail: string;
+    FTipoEvento: TTipoEvento;
+    FevtFech: TevtFech;
   public
-    property nmResp: string read FnmResp write FnmResp;
-    property cpfResp: string read FcpfResp write FcpfResp;
-    property telefone: string read Ftelefone write Ftelefone;
-    property email: string read Femail write Femail;
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtFech: TevtFech read FevtFech write FevtFech;
   end;
 
-  TevtFechaEvPer = class(TReinfEvento) //Classe do elemento principal do XML do evento!
+  { TevtFech }
+  TevtFech = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento2;
     FideContri: TideContri;
@@ -113,27 +104,26 @@ type
     property infoFech: TinfoFech read FinfoFech write FinfoFech;
   end;
 
-  TR2099CollectionItem = class(TObject)
+  { TideRespInf }
+  TideRespInf = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FevtFechaEvPer: TevtFechaEvPer;
+    FnmResp: string;
+    FcpfResp: string;
+    Ftelefone: string;
+    Femail: string;
   public
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
-
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtFechaEvPer: TevtFechaEvPer read FevtFechaEvPer write FevtFechaEvPer;
+    property nmResp: string read FnmResp write FnmResp;
+    property cpfResp: string read FcpfResp write FcpfResp;
+    property telefone: string read Ftelefone write Ftelefone;
+    property email: string read Femail write Femail;
   end;
 
-  TR2099Collection = class(TReinfCollection)
+  { TinfoFech }
+  TinfoFech = class(TObject)
   private
-    function GetItem(Index: Integer): TR2099CollectionItem;
-    procedure SetItem(Index: Integer; Value: TR2099CollectionItem);
+    FfechRet: TtpFechRet;
   public
-    function Add: TR2099CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TR2099CollectionItem;
-
-    property Items[Index: Integer]: TR2099CollectionItem read GetItem write SetItem; default;
+    property fechRet: TtpFechRet read FfechRet write FfechRet;
   end;
 
 implementation
@@ -142,49 +132,49 @@ uses
   IniFiles,
   ACBrReinf, ACBrDFeUtil;
 
-{ TR2099Collection }
+{ TR4099Collection }
 
-function TR2099Collection.Add: TR2099CollectionItem;
+function TR4099Collection.Add: TR4099CollectionItem;
 begin
   Result := Self.New;
 end;
 
-function TR2099Collection.GetItem(Index: Integer): TR2099CollectionItem;
+function TR4099Collection.GetItem(Index: Integer): TR4099CollectionItem;
 begin
-  Result := TR2099CollectionItem(inherited Items[Index]);
+  Result := TR4099CollectionItem(inherited Items[Index]);
 end;
 
-function TR2099Collection.New: TR2099CollectionItem;
+function TR4099Collection.New: TR4099CollectionItem;
 begin
-  Result := TR2099CollectionItem.Create(FACBrReinf);
+  Result := TR4099CollectionItem.Create(FACBrReinf);
   Self.Add(Result);
 end;
 
-procedure TR2099Collection.SetItem(Index: Integer; Value: TR2099CollectionItem);
+procedure TR4099Collection.SetItem(Index: Integer; Value: TR4099CollectionItem);
 begin
   inherited Items[Index] := Value;
 end;
 
-{ TR2099CollectionItem }
+{ TR4099CollectionItem }
 
-constructor TR2099CollectionItem.Create(AOwner: TComponent);
+constructor TR4099CollectionItem.Create(AOwner: TComponent);
 begin
   inherited Create;
 
-  FTipoEvento    := teR2099;
-  FevtFechaEvPer := TevtFechaEvPer.Create(AOwner);
+  FTipoEvento    := teR4099;
+  FevtFech := TevtFech.Create(AOwner);
 end;
 
-destructor TR2099CollectionItem.Destroy;
+destructor TR4099CollectionItem.Destroy;
 begin
   inherited;
 
-  FevtFechaEvPer.Free;
+  FevtFech.Free;
 end;
 
-{ TevtFechaEvPer }
+{ TevtFech }
 
-constructor TevtFechaEvPer.Create(AACBrReinf: TObject);
+constructor TevtFech.Create(AACBrReinf: TObject);
 begin
   inherited Create(AACBrReinf);
 
@@ -194,7 +184,7 @@ begin
   FinfoFech   := TinfoFech.Create;
 end;
 
-destructor TevtFechaEvPer.Destroy;
+destructor TevtFech.Destroy;
 begin
   FideContri.Free;
   FIdeEvento.Free;
@@ -204,7 +194,7 @@ begin
   inherited;
 end;
 
-procedure TevtFechaEvPer.GerarideRespInf;
+procedure TevtFech.GerarideRespInf;
 begin
   if (FideRespInf.nmResp <> EmptyStr) and (FideRespInf.cpfResp <> EmptyStr) then
   begin
@@ -219,38 +209,22 @@ begin
   end;
 end;
 
-procedure TevtFechaEvPer.GerarinfoFech;
+procedure TevtFech.GerarinfoFech;
 begin
   Gerador.wGrupo('infoFech');
-
-  Gerador.wCampo(tcStr, '', 'evtServTm',     1, 1, 1, SimNaoToStr(FinfoFech.evtServTm));
-  Gerador.wCampo(tcStr, '', 'evtServPr',     1, 1, 1, SimNaoToStr(FinfoFech.evtServPr));
-  Gerador.wCampo(tcStr, '', 'evtAssDespRec', 1, 1, 1, SimNaoToStr(FinfoFech.evtAssDespRec));
-  Gerador.wCampo(tcStr, '', 'evtAssDespRep', 1, 1, 1, SimNaoToStr(FinfoFech.evtAssDespRep));
-  Gerador.wCampo(tcStr, '', 'evtComProd',    1, 1, 1, SimNaoToStr(FinfoFech.evtComProd));
-  Gerador.wCampo(tcStr, '', 'evtCPRB',       1, 1, 1, SimNaoToStr(FinfoFech.evtCPRB));
-  if VersaoDF >= v1_05_00 then
-     Gerador.wCampo(tcStr, '', 'evtAquis',      1, 1, 1, SimNaoToStr(FinfoFech.evtAquis));
-
-  // Excluídos na Versão 2.01
-  if (FIdeEvento.perApur <= '2018-10') then
-  begin
-    Gerador.wCampo(tcStr, '', 'evtPgtos',     1, 1, 1, SimNaoToStr(FinfoFech.evtPgtos));
-    Gerador.wCampo(tcStr, '', 'compSemMovto', 1, 7, 0, FinfoFech.compSemMovto);
-  end;
-
+  Gerador.wCampo(tcStr, '', 'fechRet', 1, 1, 1, tpFechRetToStr(FinfoFech.fechRet));
   Gerador.wGrupo('/infoFech');
 end;
 
-function TevtFechaEvPer.GerarXML: Boolean;
+function TevtFech.GerarXML: Boolean;
 begin
   try
     Self.VersaoDF := TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF;
 
     Self.Id := GerarChaveReinf(now, self.ideContri.NrInsc, self.Sequencial);
 
-    GerarCabecalho('evtFechamento');
-    Gerador.wGrupo('evtFechaEvPer id="' + Self.Id + '"');
+    GerarCabecalho('evt4099FechamentoDirf');
+    Gerador.wGrupo('evtFech id="' + Self.Id + '"');
 
     GerarIdeEvento2(Self.IdeEvento, True, False);
     GerarideContri(Self.ideContri);
@@ -258,14 +232,11 @@ begin
     GerarideRespInf;
     GerarinfoFech;
 
-    Gerador.wGrupo('/evtFechaEvPer');
+    Gerador.wGrupo('/evtFech');
 
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtFechaEvPer');
-
-//    Validar(schevtFechamento);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -273,7 +244,7 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '');
 end;
 
-function TevtFechaEvPer.LerArqIni(const AIniString: String): Boolean;
+function TevtFech.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
@@ -289,7 +260,7 @@ begin
 
     with Self do
     begin
-      sSecao := 'evtFechaEvPer';
+      sSecao := 'evtFech';
       Id         := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
@@ -299,9 +270,8 @@ begin
       ideEvento.VerProc := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
       sSecao := 'ideContri';
-      ideContri.OrgaoPublico := (TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte = tcOrgaoPublico);
-      ideContri.TpInsc       := StrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-      ideContri.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+      ideContri.TpInsc := StrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideContri.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
       sSecao := 'ideRespInf';
       if INIRec.ReadString(sSecao, 'nmResp', EmptyStr) <> '' then
@@ -313,16 +283,7 @@ begin
       end;
 
       sSecao := 'infoFech';
-      infoFech.evtServTm     := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtServTm', 'N'));
-      infoFech.evtServPr     := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtServPr', 'N'));
-      infoFech.evtAssDespRec := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtAssDespRec', 'N'));
-      infoFech.evtAssDespRep := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtAssDespRep', 'N'));
-      infoFech.evtComProd    := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtComProd', 'N'));
-      infoFech.evtCPRB       := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtCPRB', 'N'));
-      if VersaoDF >= v1_05_00 then
-         infoFech.evtAquis      := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtAquis', 'N'));
-      infoFech.evtPgtos      := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtPgtos', 'N'));
-      infoFech.compSemMovto  := INIRec.ReadString(sSecao, 'compSemMovto', EmptyStr);
+      infoFech.fechRet := StrTotpFechRet(Ok, INIRec.ReadString(sSecao, 'fechRet', '0'));
     end;
 
     GerarXML;

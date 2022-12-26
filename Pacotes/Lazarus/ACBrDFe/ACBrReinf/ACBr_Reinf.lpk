@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_Reinf"/>
     <Type Value="RunAndDesignTime"/>
@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr Escrituração Fiscal Digital de Retenções e Outras Informações Fiscais (www.projetoacbr.com.br)"/>
     <License Value="LGPL"/>
-    <Files Count="28">
+    <Files Count="38">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinf.pas"/>
         <AddToUsesPkgSection Value="False"/>
@@ -133,7 +133,48 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfConsulta.pas"/>
         <UnitName Value="pcnReinfConsulta"/>
       </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR1050.pas"/>
+        <UnitName Value="pcnReinfR1050"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR4010.pas"/>
+        <UnitName Value="pcnReinfR4010"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR4020.pas"/>
+        <UnitName Value="pcnReinfR4020"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR4040.pas"/>
+        <UnitName Value="pcnReinfR4040"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR4080.pas"/>
+        <UnitName Value="pcnReinfR4080"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR4099.pas"/>
+        <UnitName Value="pcnReinfR4099"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR9001.pas"/>
+        <UnitName Value="pcnReinfR9001"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR9005.pas"/>
+        <UnitName Value="pcnReinfR9005"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfRetConsulta_R9011.pas"/>
+        <UnitName Value="pcnReinfRetConsulta_R9011"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfRetConsulta_R9015.pas"/>
+        <UnitName Value="pcnReinfRetConsulta_R9015"/>
+      </Item38>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

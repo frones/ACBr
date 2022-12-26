@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2022
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Francisco Alves/PR, provedor é Elotech
+   Por: Alex Heinen
 
 23/12/2022
 -- ACBrNFSeXDANFSeFR --

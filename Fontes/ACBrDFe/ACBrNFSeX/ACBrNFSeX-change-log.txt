@@ -49,6 +49,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade de Francisco Alves/PR, provedor é Elotech
    Por: Alex Heinen
+[+] Incluída a cidade de Itapira/SP, provedor é SigISS
+   Por: Arimateia Jr
 
 23/12/2022
 -- ACBrNFSeXDANFSeFR --

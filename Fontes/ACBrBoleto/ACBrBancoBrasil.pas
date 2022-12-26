@@ -965,7 +965,7 @@ var
   aDataDesconto, aAgencia, aConta  :String;
   aModalidade,wLinha, aTipoCobranca:String;
   TamConvenioMaior6                :Boolean;
-  wCarteira : Integer;
+  wCarteira, LDiasProtesto : Integer;
   sDiasBaixa: String;
 begin
 
@@ -1064,8 +1064,8 @@ begin
        if (DataProtesto > 0) and (DataProtesto > Vencimento) then
        begin
          DiasProtesto := '  ';
-
-         case (WorkingDaysBetween(ACBrTitulo.Vencimento,ACBrTitulo.DataProtesto)) of  //TK-3371
+         LDiasProtesto := DaysBetween(DataProtesto,Vencimento);
+         case ( WorkingDaysBetween(ACBrTitulo.Vencimento,ACBrTitulo.DataProtesto) ) of  //TK-3371
             3: // Protestar no 3º dia util após vencimento
             begin
               if (trim(Instrucao1) = '') or (trim(Instrucao1) = '03') then
@@ -1083,9 +1083,16 @@ begin
             end;
          else
            if (trim(Instrucao1) = '') or (trim(Instrucao1) = '06') then
-             AInstrucao := '06'+ PadLeft(trim(Instrucao2),2,'0');
-            DiasProtesto:=IntToStr(DaysBetween(DataProtesto,Vencimento));
+             AInstrucao  := '06'+ PadLeft(trim(Instrucao2),2,'0');
+            DiasProtesto :=IntToStr(DaysBetween(DataProtesto,Vencimento));
          end;
+
+         if ( (ACBrTitulo.TipoDiasProtesto = diCorridos) and (LDiasProtesto >= 6) and ((trim(Instrucao1) = '') or (trim(Instrucao1) = '06')) ) then
+         begin
+           AInstrucao   := '06'+ PadLeft(trim(Instrucao2),2,'0');
+           DiasProtesto := IntToStr(LDiasProtesto);
+         end;
+
         end
        else if ATipoOcorrencia <> '02' then //para comando de baixa 02 é necessario informar a instrução [42,44 ou 46]
        begin

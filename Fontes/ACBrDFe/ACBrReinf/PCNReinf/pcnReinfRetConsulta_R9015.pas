@@ -840,7 +840,7 @@ end;
 function TRetornoEventosCollection.GetItem(
   Index: Integer): TRetornoEventosCollectionItem;
 begin
-  Result := TRetornoEventosCollectionItem(inherited GetItem(Index));
+  Result := TRetornoEventosCollectionItem(inherited Items[Index]);
 end;
 
 function TRetornoEventosCollection.New: TRetornoEventosCollectionItem;
@@ -852,7 +852,7 @@ end;
 procedure TRetornoEventosCollection.SetItem(Index: Integer;
   Value: TRetornoEventosCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
                     
 { TinfoCR_CNR }
@@ -886,7 +886,7 @@ end;
 function TtotApurMenCollection.GetItem(
   Index: Integer): TtotApurMenCollectionItem;
 begin
-  Result := TtotApurMenCollectionItem(inherited GetItem(Index));
+  Result := TtotApurMenCollectionItem(inherited items[Index]);
 end;
 
 function TtotApurMenCollection.New: TtotApurMenCollectionItem;
@@ -898,7 +898,7 @@ end;
 procedure TtotApurMenCollection.SetItem(Index: Integer;
   Value: TtotApurMenCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurQuiCollection }
@@ -911,7 +911,7 @@ end;
 function TtotApurQuiCollection.GetItem(
   Index: Integer): TtotApurQuiCollectionItem;
 begin
-  Result := TtotApurQuiCollectionItem(inherited GetItem(Index));
+  Result := TtotApurQuiCollectionItem(inherited  Items[Index]);
 end;
 
 function TtotApurQuiCollection.New: TtotApurQuiCollectionItem;
@@ -923,7 +923,7 @@ end;
 procedure TtotApurQuiCollection.SetItem(Index: Integer;
   Value: TtotApurQuiCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurDecCollection }
@@ -936,7 +936,7 @@ end;
 function TtotApurDecCollection.GetItem(
   Index: Integer): TtotApurDecCollectionItem;
 begin
-  Result := TtotApurDecCollectionItem(inherited GetItem(Index));
+  Result := TtotApurDecCollectionItem(inherited Items[Index]);
 end;
 
 function TtotApurDecCollection.New: TtotApurDecCollectionItem;
@@ -948,7 +948,7 @@ end;
 procedure TtotApurDecCollection.SetItem(Index: Integer;
   Value: TtotApurDecCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurSemCollection }
@@ -961,7 +961,7 @@ end;
 function TtotApurSemCollection.GetItem(
   Index: Integer): TtotApurSemCollectionItem;
 begin
-  Result := TtotApurSemCollectionItem(inherited GetItem(Index));
+  Result := TtotApurSemCollectionItem( inherited Items[Index]);
 end;
 
 function TtotApurSemCollection.New: TtotApurSemCollectionItem;
@@ -973,7 +973,7 @@ end;
 procedure TtotApurSemCollection.SetItem(Index: Integer;
   Value: TtotApurSemCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TtotApurDiaCollection }
@@ -986,7 +986,7 @@ end;
 function TtotApurDiaCollection.GetItem(
   Index: Integer): TtotApurDiaCollectionItem;
 begin
-  Result := TtotApurDiaCollectionItem(inherited GetItem(Index));
+  Result := TtotApurDiaCollectionItem(inherited Items[Index]);
 end;
 
 function TtotApurDiaCollection.New: TtotApurDiaCollectionItem;
@@ -998,7 +998,7 @@ end;
 procedure TtotApurDiaCollection.SetItem(Index: Integer;
   Value: TtotApurDiaCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfoTotalCR }

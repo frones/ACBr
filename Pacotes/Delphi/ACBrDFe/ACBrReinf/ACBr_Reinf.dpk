@@ -88,6 +88,7 @@ contains
   pcnReinfR2030 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2030.pas',
   pcnReinfR2040 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2040.pas',
   pcnReinfR2050 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2050.pas',
+  pcnReinfR2055 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2055.pas',
   pcnReinfR2060 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2060.pas',
   pcnReinfR2070 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2070.pas',
   pcnReinfR2098 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2098.pas',

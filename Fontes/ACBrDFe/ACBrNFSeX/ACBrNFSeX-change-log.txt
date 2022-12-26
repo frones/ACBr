@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/12/2022
+-- Bauhaus.LerJson --
+[*] Ajustes necessários para a correta leitura do Json da NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade de Francisco Alves/PR, provedor é Elotech
    Por: Alex Heinen

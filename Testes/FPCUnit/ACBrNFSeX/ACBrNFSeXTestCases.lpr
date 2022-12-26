@@ -10,7 +10,8 @@ uses
   ACBrNFSeXProvedorPadraoNacionalTests,
   ACBrNFSeXProvedorSigISSTests, 
   ACBrNFSeXProvedorSoftPlanTests, 
-  ACBrNFSeXProvedorWebFiscoTests;
+  ACBrNFSeXProvedorWebFiscoTests,
+  ACBrNFSeXProvedorAgiliTests;
 
 {$R *.res}
 

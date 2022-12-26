@@ -6,6 +6,7 @@ uses
   Interfaces, Forms, ACBrNFSeXTests, ACBrTests.Util, GuiTestRunner,
   ACBrNFSeXProvedorABRASFv1Tests, ACBrNFSeXProvedorABRASFv2Tests,
   ACBrNFSeXProvedorAssessorPublicoTests,
+  ACBrNFSeXProvedorBauhausTests,
   ACBrNFSeXProvedorPadraoNacionalTests,
   ACBrNFSeXProvedorSigISSTests, 
   ACBrNFSeXProvedorSoftPlanTests, 

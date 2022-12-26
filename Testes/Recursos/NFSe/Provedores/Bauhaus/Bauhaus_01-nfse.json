@@ -1,0 +1,97 @@
+{
+  "DadosNfse":
+  {
+    "NumeroNfse":653,
+    "DataEmissao":"2021-12-06",
+    "Competencia":202112,
+    "CodigoValidacao":"aa11bb22cc33dd44ee55ff66gg77hh88",
+    "SituacaoNfse":1,
+    "MunicipioPrestacao":4208302,
+    "IssRetido":"N",
+    "Observacoes":"",
+    "Prestador":
+    {
+      "InscricaoMunicipal":670,
+      "Cnpj":"11111111111111",
+      "RazaoSocial":"EMPRESA TESTE",
+      "NomeFantasia":"EMPRESA TESTE",
+      "Endereco":
+      {
+        "Logradouro":"LOGRADOURO DE TESTE1",
+        "Numero":"1010",
+        "Complemento":"CASA",
+        "Bairro":"CENTRO",
+        "Municipio":4210803,
+        "Cep":11111111
+      }
+,
+      "Contato":
+      {
+        "Telefone":"",
+        "Email":""
+      }
+    }
+,
+    "Tomador":
+    {
+      "TipoPessoa":"J",
+      "NrDocumento":"11111111000111",
+      "RazaoSocial":"RAZAO SOCIAL DE TESTE DO TOM",
+      "Endereco":
+      {
+        "Logradouro":"R TESTE1",
+        "Numero":"1669",
+        "Complemento":"********",
+        "Bairro":"NITEROI",
+        "Municipio":4208302,
+        "Cep":11111111
+      }
+,
+      "Contato":
+      {
+        "Telefone":"",
+        "Email":"enderecoemails@provedor.com.br"
+      }
+    }
+,
+    "Rps":
+    {
+      "Numero":500040,
+      "Serie":1,
+      "Tipo":1,
+      "DataEmissao":"2021-12-06"
+    }
+,
+    "Servicos":
+    [
+            {
+        "Unidade":"UN",
+        "Quantidade":1,
+        "Descricao":"ASSESSORIA - R$ 1,00",
+        "ValorUnitario":1
+      }
+    ]
+,
+    "Valores":
+    {
+      "ValorServicos":1,
+      "ValorDeducoes":0,
+      "ValorOutrasDeducoes":0,
+      "ValorPis":0,
+      "ValorCofins":0,
+      "ValorInss":0,
+      "ValorIr":0,
+      "ValorCsll":0,
+      "OutrasRetencoes":0,
+      "DescontoIncondicionado":0,
+      "DescontoCondicionado":0,
+      "BaseCalculo":1,
+      "Aliquota":4,
+      "ValorIss":0.04,
+      "ValorLiquidoNota":1,
+      "ValorTotalTributos":0.18,
+      "ValorCredito":0,
+      "ValorTotalNota":0
+    }
+  }
+}

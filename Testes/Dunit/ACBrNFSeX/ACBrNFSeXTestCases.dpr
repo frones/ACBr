@@ -39,6 +39,7 @@ uses
   ACBrNFSeXProvedorABRASFv1Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv1Tests.pas',
   ACBrNFSeXProvedorABRASFv2Tests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv2Tests.pas',
   ACBrNFSeXProvedorAssessorPublicoTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorAssessorPublicoTests.pas',
+  ACBrNFSeXProvedorBauhausTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorBauhausTests.pas',
   ACBrNFSeXProvedorPadraoNacionalTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorPadraoNacionalTests.pas',
   ACBrNFSeXProvedorSigISSTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSigISSTests.pas',
   ACBrNFSeXProvedorSoftPlanTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSoftPlanTests.pas',

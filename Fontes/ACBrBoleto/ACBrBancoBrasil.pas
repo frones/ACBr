@@ -1064,7 +1064,7 @@ begin
        if (DataProtesto > 0) and (DataProtesto > Vencimento) then
        begin
          DiasProtesto := '  ';
-         case (DaysBetween(DataProtesto,Vencimento)) of
+         case ( WorkingDaysBetween(Vencimento, DataProtesto) -1) of  //TK-3371
             3: // Protestar no 3º dia util após vencimento
             begin
               if (trim(Instrucao1) = '') or (trim(Instrucao1) = '03') then

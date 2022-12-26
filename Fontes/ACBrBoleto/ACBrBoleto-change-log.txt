@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2022
+[-] TK-3371 Alteração Case data Protesto para dias utei 3,4,5 por dias trabalhados (não leva em consideração feriados)
+  por suporteatinfo / Victor H Gonzales - Pandaa
+
 23/12/2022
 [-]TK-3389 ACBrBoletoW_Sicredi_API - Ajuste na função de alteração
   Por: Daniel Morais

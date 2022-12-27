@@ -50,7 +50,15 @@ type
     function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; override;
     function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; override;
 
-    function NormatizarXml(const aXml: string): string; override;
+  public
+
+  end;
+
+  { TNFSeR_SigCorp204 }
+
+  TNFSeR_SigCorp204 = class(TNFSeR_ABRASFv2)
+  protected
+
   public
 
   end;
@@ -116,13 +124,6 @@ begin
     xFormato := 'MM/DD/YYYY';
 
   result := EncodeDataHora(xDataHora, xFormato);
-end;
-
-function TNFSeR_SigCorp203.NormatizarXml(const aXml: string): string;
-begin
-  Result := inherited NormatizarXml(aXml);
-
-  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
 end;
 
 end.

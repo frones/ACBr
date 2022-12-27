@@ -456,7 +456,17 @@ begin
         Result := TACBrNFSeProviderSiapSistemas203.Create(ACBrNFSe);
 
       proSiat:    Result := TACBrNFSeProviderSiat.Create(ACBrNFSe);
-      proSigCorp: Result := TACBrNFSeProviderSigCorp203.Create(ACBrNFSe);
+
+      proSigCorp:
+        begin
+          case Versao of
+            ve203: Result := TACBrNFSeProviderSigCorp203.Create(ACBrNFSe);
+            ve204: Result := TACBrNFSeProviderSigCorp204.Create(ACBrNFSe);
+          else
+            Result := nil;
+          end;
+        end;
+
       proSigep:   Result := TACBrNFSeProviderSigep200.Create(ACBrNFSe);
 
       proSigISS:

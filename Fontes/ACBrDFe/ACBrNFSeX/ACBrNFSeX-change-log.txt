@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/12/2022
+-- SigCorp.Provider/SigCorp.GravarXml/SigCorp.LerXml/ACBrNFSeXProviderManager --
+[+] Implementado a versão 2.04 para o provedor SigCorp. 
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] As cidades: Avaré/SP, Pouso Alegre/MG e Chapecó/SC migraram para a versão 2.04
     do provedor SigCorp. 

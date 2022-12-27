@@ -62,6 +62,7 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure ImprimirDACTe(ACTe: TCTe = nil); override;
     procedure ImprimirDACTePDF(ACTe: TCTe = nil); override;
+    procedure ImprimirDACTePDF(AStream: TStream; ACTe: TCTe = nil); override;
     procedure ImprimirEVENTO(ACTe: TCTe = nil); override;
     procedure ImprimirEVENTOPDF(ACTe: TCTe = nil); override;
     procedure ImprimirINUTILIZACAO(ACTe: TCTe = nil); override;
@@ -157,6 +158,32 @@ begin
   end
   else
     FPArquivoPDF := ImprimirDACTEPDFTipo(ACTe);
+end;
+
+procedure TACBrCTeDACTeRL.ImprimirDACTePDF(AStream: TStream; ACTe: TCTe = nil);
+var
+  i:integer;
+  procedure StreamDANCTEPDFTipo(ACTe: TCTe; const AStream: TStream);
+  begin
+    AStream.Size := 0;
+    //case Self.TipoDACTE of
+      //tiPaisagem:
+        //TfrlDANFeRLPaisagem.SalvarPDF(Self, ACTe, AStream);
+    //else
+      TfrmDACTeRLRetrato.SalvarPDF(Self, ACTe, AStream);
+    //end;
+  end;
+begin
+  if not Assigned(AStream) then
+    raise EACBrCTeException.Create('AStream precisa estar definido');
+
+  if (ACTe = nil) then
+  begin
+    for i := 0 to (TACBrCTe(ACBrCTE).Conhecimentos.Count - 1) do
+      StreamDANCTEPDFTipo(TACBrCTe(ACBrCTE).Conhecimentos.Items[i].CTe, AStream);
+  end
+  else
+    StreamDANCTEPDFTipo(ACTe, AStream);
 end;
 
 procedure TACBrCTeDACTeRL.ImprimirEVENTO(ACTe: TCTe);

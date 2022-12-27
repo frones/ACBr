@@ -47,6 +47,9 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
+
+  { TACBrCTeDACTEClass }
+
   TACBrCTeDACTEClass = class(TACBrDFeReport)
   private
     procedure SetACBrCTE(const Value: TComponent);
@@ -72,7 +75,8 @@ type
     destructor Destroy; override;
 
     procedure ImprimirDACTe(ACTE: TCTE = nil); virtual;
-    procedure ImprimirDACTePDF(ACTE: TCTE = nil); virtual;
+    procedure ImprimirDACTePDF(ACTE: TCTE = nil);overload; virtual;
+    procedure ImprimirDACTePDF(AStream: TStream; ACTe: TCTe = nil); overload; virtual;
     procedure ImprimirEVENTO(ACTE: TCTe = nil); virtual;
     procedure ImprimirEVENTOPDF(ACTE: TCTe = nil); virtual;
     procedure ImprimirINUTILIZACAO(ACTE: TCTe = nil); virtual;
@@ -163,6 +167,11 @@ begin
 end;
 
 procedure TACBrCTeDACTEClass.ImprimirDACTePDF(ACTE: TCTE = nil);
+begin
+  ErroAbstract('ImprimirDACTEPDF');
+end;
+
+procedure TACBrCTeDACTEClass.ImprimirDACTePDF(AStream: TStream; ACTe: TCTe);
 begin
   ErroAbstract('ImprimirDACTEPDF');
 end;

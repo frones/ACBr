@@ -65,12 +65,15 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
+    procedure AdicionaInformacaoPDF;
+    procedure AjustarEscala;
 
   protected
     fpACBrCTe: TACBrCTe;
     fpCTe: TCTe;
     fpDACTe: TACBrCTeDACTeRL;
     fpSemValorFiscal: boolean;
+    fpAuxDiferencaPDF: Integer;
     fpTotalPages: integer;
 
     cdsDocumentos: {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
@@ -81,7 +84,8 @@ type
 
   public
     class procedure Imprimir(aDACTe: TACBrCTeDACTeRL; ACTes: array of TCTe);
-    class procedure SalvarPDF(aDACTe: TACBrCTeDACTeRL; ACTe: TCTe; AFile: string);
+    class procedure SalvarPDF(aDACTe: TACBrCTeDACTeRL; ACTe: TCTe; AFile: string);overload;
+    class procedure SalvarPDF(aDACTe: TACBrCTeDACTeRL; ACTe: TCTe; AStream: TStream); overload;
 
   end;
 
@@ -106,6 +110,10 @@ var
   DACTeReport: TfrmDACTeRL;
   ReportArray: array of TfrmDACTeRL;
 begin
+  if (Length(ACTes) < 1) then
+    exit;
+
+  DACTeReport := nil;
   try
     SetLength(ReportArray, Length(ACTes));
 
@@ -114,13 +122,10 @@ begin
       DACTeReport := Create(nil);
       DACTeReport.fpCTe := ACTes[i];
       DACTeReport.fpDACTe := aDACTe;
-      if aDACTe.AlterarEscalaPadrao then
-      begin
-        DACTeReport.Scaled := False;
-        DACTeReport.ScaleBy(aDACTe.NovaEscala , Screen.PixelsPerInch);
-      end;
+      DACTeReport.AjustarEscala;
 
       DACTeReport.RLCTe.CompositeOptions.ResetPageNumber := True;
+      DACTeReport.fpAuxDiferencaPDF := 0;
       ReportArray[i] := DACTeReport;
     end;
 
@@ -130,26 +135,25 @@ begin
     Report := ReportArray[0].RLCTe;
     for i := 1 to High(ReportArray) do
     begin
-      if Report.NextReport = nil then
-        Report.NextReport := ReportArray[i].RLCTe
-      else
+      ReportNext := Report;
+      while (ReportNext.NextReport <> nil) do
       begin
-        ReportNext := Report.NextReport;
-
-        repeat
-          if ReportNext.NextReport <> nil then
-            ReportNext := ReportNext.NextReport;
-        until ReportNext.NextReport = nil;
-
-        ReportNext.NextReport := ReportArray[i].RLCTe;
+        ReportNext := ReportNext.NextReport;
       end;
+      ReportNext.NextReport := ReportArray[i].RLCTe;
+
     end;
 
     TDFeReportFortes.AjustarReport(Report, aDACTe);
     TDFeReportFortes.AjustarMargem(Report, aDACTe);
 
     if aDACTe.MostraPreview then
-      Report.PreviewModal
+    begin
+      if Assigned(DACTeReport) then
+        SelectedFilter := DACTeReport.RLPDFFilter1;
+
+      Report.PreviewModal;
+    end
     else
       Report.Print;
   finally
@@ -173,32 +177,46 @@ begin
   try
     DACTeReport.fpCTe := ACTe;
     DACTeReport.fpDACTe := aDACTe;
-    if aDACTe.AlterarEscalaPadrao then
-    begin
-      DACTeReport.Scaled := False;
-      DACTeReport.ScaleBy(aDACTe.NovaEscala , Screen.PixelsPerInch);
-    end;
+    DACTeReport.AjustarEscala;
 
     TDFeReportFortes.AjustarReport(DACTeReport.RLCTe, DACTeReport.fpDACTe);
     TDFeReportFortes.AjustarMargem(DACTeReport.RLCTe, DACTeReport.fpDACTe);
     TDFeReportFortes.AjustarFiltroPDF(DACTeReport.RLPDFFilter1, DACTeReport.fpDACTe, AFile);
 
-    with DACTeReport.RLPDFFilter1.DocumentInfo do
-    begin
-      Title := 'DACTE - Conhecimento nº ' +
-        FormatFloat('000,000,000', DACTeReport.fpCTe.Ide.nCT);
-        KeyWords := 'Número:' + FormatFloat('000,000,000', DACTeReport.fpCTe.Ide.nCT) +
-          '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', DACTeReport.fpCTe.Ide.dhEmi) +
-          '; Destinatário: ' + DACTeReport.fpCTe.Dest.xNome +
-          '; CNPJ: ' + DACTeReport.fpCTe.Dest.CNPJCPF;
-    end;
+    DACTeReport.AdicionaInformacaoPDF;
 
+    DACTeReport.fpAuxDiferencaPDF := 10;
     DACTeReport.RLCTe.Prepare;
     DACTeReport.RLPDFFilter1.FilterPages(DACTeReport.RLCTe.Pages);
   finally
     if DACTeReport <> nil then
         FreeAndNil(DACTeReport);
   end;
+end;
+
+class procedure TfrmDACTeRL.SalvarPDF(aDACTe: TACBrCTeDACTeRL; ACTe: TCTe;
+  AStream: TStream);
+var
+  DACTeReport: TfrmDACTeRL;
+begin
+  DACTeReport := Create(nil);
+  try
+    DACTeReport.fpCTe := ACTe;
+    DACTeReport.fpDACTe := aDACTe;
+    DACTeReport.AjustarEscala;
+
+    TDFeReportFortes.AjustarReport(DACTeReport.RLCTe, DACTeReport.fpDACTe);
+    DACTeReport.RLPDFFilter1.ShowProgress := DACTeReport.fpDACTe.MostraStatus;
+
+    DACTeReport.AdicionaInformacaoPDF;
+
+    DACTeReport.fpAuxDiferencaPDF := 10;
+    DACTeReport.RLCTe.Prepare;
+    DACTeReport.RLPDFFilter1.FilterPages(DACTeReport.RLCTe.Pages, AStream);
+  finally
+    FreeAndNil(DACTeReport);
+  end;
+
 end;
 
 procedure TfrmDACTeRL.rllSemValorFiscalPrint(Sender: TObject; var Value: string);
@@ -214,8 +232,33 @@ begin
   FreeAndNil(cdsDocumentos);
 end;
 
+procedure TfrmDACTeRL.AdicionaInformacaoPDF;
+begin
+  with RLPDFFilter1.DocumentInfo do
+  begin
+    Title := 'DACTE - Conhecimento nº ' +
+    FormatFloat('000,000,000', fpCTe.Ide.nCT);
+    KeyWords := 'Número:' + FormatFloat('000,000,000', fpCTe.Ide.nCT) +
+      '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', fpCTe.Ide.dhEmi) +
+      '; Destinatário: ' + fpCTe.Dest.xNome +
+      '; CNPJ: ' + fpCTe.Dest.CNPJCPF;
+  end;
+end;
+
+procedure TfrmDACTeRL.AjustarEscala;
+begin
+  if fpDACTe.AlterarEscalaPadrao then
+  begin
+    Scaled := False;
+    ScaleBy(fpDACTe.NovaEscala, Screen.PixelsPerInch);
+  end;
+end;
+
 procedure TfrmDACTeRL.FormCreate(Sender: TObject);
 begin
+  {$IfNDef FPC}
+  Self.Scaled := False;
+  {$EndIf}
   ConfigDataSet;
 end;
 

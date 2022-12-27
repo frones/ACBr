@@ -44,6 +44,10 @@ Símbolo : Significado
 
 27/12/2022
 -- ACBrNFSeXServicos.ini --
+[*] As cidades: Avaré/SP, Pouso Alegre/MG e Chapecó/SC migraram para a versão 2.04
+    do provedor SigCorp. 
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
 [-] Remoção de URLs de homologação que estavam semelhantes as de produção para alguns provedores IPM versão 1.01
    Por: DiegoF
 

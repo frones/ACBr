@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2022
+-- ACBrNFSeXServicos.ini --
+[-] Remoção de URLs de homologação que estavam semelhantes as de produção para alguns provedores IPM versão 1.01
+   Por: DiegoF
+
 26/12/2022
 -- Bauhaus.LerJson --
 [*] Ajustes necessários para a correta leitura do Json da NFS-e.

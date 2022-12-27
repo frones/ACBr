@@ -278,7 +278,8 @@ begin
                                NFSe.ConstrucaoCivil.nNumeroEncapsulamento, ''));
 
   if (NFSe.TipoTributacaoRPS  <> ttTribnoMun) and
-     (NFSe.TipoTributacaoRPS  <> ttTribnoMunIsento) then
+     (NFSe.TipoTributacaoRPS  <> ttTribnoMunIsento) and
+     (NFSe.TipoTributacaoRPS  <> ttTribnoMunImune) then
     NFSeNode.AppendChild(AddNode(tcInt, '#1', 'MunicipioPrestacao', 1, 7, 0,
                                          NFSe.Servico.MunicipioIncidencia, ''));
 

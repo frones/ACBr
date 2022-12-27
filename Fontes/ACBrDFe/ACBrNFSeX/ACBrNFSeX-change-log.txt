@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/12/2022
+-- ISSSaoPaulo.GravarXml --
+[*] Acrescentado na condição o valor ttTribnoMunImune para determinar se vai
+    gerar ou não a tag MunicipioPrestacao
+   Por: Raphaelblc
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Melhorias visando retornar a lista de resumos ao consultar o Lote de Rps.
    Por: Lucas E. Correa

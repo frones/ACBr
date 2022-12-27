@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2022
+--- ACBrLibeSocialBase ---
+[*] Ajuste método CarregarXMLEventoeSocial
+    Por Antonio Carlos Junior/Elton Barbosa
+
 14/12/2022
 --- ACBrLibeSocialRespostas ---
 [*] Ajustes Resposta Consultar eSocial

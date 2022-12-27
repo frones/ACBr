@@ -360,7 +360,11 @@ begin
     eSocialDM.Travar;
 
     try
-      eSocialDM.ACBreSocial1.Eventos.LoadFromString(ArquivoOuXml);
+      if EhArquivo then
+      eSocialDM.ACBreSocial1.Eventos.LoadFromFile(ArquivoOuXml)
+      else
+       eSocialDM.ACBreSocial1.Eventos.LoadFromString(ArquivoOuXml);
+
       Result := SetRetornoEventoCarregados(eSocialDM.ACBreSocial1.Eventos.Count);
     finally
       eSocialDM.Destravar;

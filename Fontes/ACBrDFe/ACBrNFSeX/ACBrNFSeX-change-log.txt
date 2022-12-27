@@ -43,9 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/12/2022
+-- ISSNet.GravarXml --
+[*] Alterado o numero de ocorrências para zero do campo InformacoesComplementares
+    em Configurações para versão 2.04 
+   Por: Italo Giurizzato Junior
 -- Saatri.Provider/Saatri.LerXml --
 [*] Alteração visando a leitura de itens de serviço em formato JSON dentro da 
-    tag Discriminacao
+    tag Discriminacao.
    Por: Italo Giurizzato Junior
 -- ISSSaoPaulo.GravarXml --
 [*] Acrescentado na condição o valor ttTribnoMunImune para determinar se vai

@@ -279,16 +279,31 @@ var
   Resposta: PChar;
   Tamanho: Longint;
   Handle: THandle;
+  RetornoChamadaLib: LongInt;
 begin
   // Iniciando a consulta
-  Resposta := '';
-  Tamanho := 0;
+  Tamanho  := 0;
+  Resposta := PChar(Space(Tamanho));
 
   AssertEquals(ErrOK, eSocial_Inicializar( '', ''));
-  AssertEquals('Erro ao consultar', ErrExecutandoMetodo, eSocial_ConsultareSocial( '123456789', Resposta, Tamanho));
-
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  RetornoChamadaLib := eSocial_ConsultareSocial( '1.2.202212.0000000000123456789', Resposta, Tamanho);
+  if RetornoChamadaLib = ErrExecutandoMetodo then
+  begin
+    AssertEquals('Erro ao consultar', ErrExecutandoMetodo, RetornoChamadaLib);
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  //end
+  //else
+  //begin
+  //// Descomente esse código para testar o caso de sucesso. Atualmente impossível sem modificações que burlam o acesso ao certificado.
+  //  AssertEquals('Erro ao consultar', ErrOK, RetornoChamadaLib);
+  //  Resposta := PChar(Space(Tamanho));
+  //  RetornoChamadaLib := eSocial_UltimoRetorno(Resposta, Tamanho);
+  //
+  //  AssertEquals('RetornoChamadaLib= ' + IntToStr(RetornoChamadaLib), RetornoChamadaLib, RetornoChamadaLib);
+  //  AssertEquals('Resposta= ' + AnsiString(Resposta), '', Resposta);
+  //  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  end;
   AssertEquals(ErrOK, eSocial_Finalizar());
 end;
 

@@ -7,6 +7,7 @@ ErrConfigGravar = -4;
 ErrArquivoNaoExiste = -5;
 ErrDiretorioNaoExiste = -6;
 ErrHttp = -7;
+ErrParametroInvalido = -8;
 ErrExecutandoMetodo = -10;
 ErrCNPJInvalido = -11;
 ErrCPFInvalido = -12;

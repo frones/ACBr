@@ -183,8 +183,9 @@ begin
       end;
 
       eSocialDM.ACBreSocial1.Eventos.Clear;
+
       MoverStringParaPChar (AResposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, StrPas(sResposta));
+      Result := SetRetorno(ErrOK, AResposta);
 
     finally
        eSocialDM.Destravar;
@@ -228,7 +229,7 @@ begin
         end;
 
         MoverStringParaPChar(AResposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, AResposta);
 
       finally
         eSocialDM.Destravar;
@@ -263,7 +264,7 @@ begin
        GravarLog('eSocial_CriarEnviareSocial', logNormal);
 
      if not FileExists(AIniFile) then
-       raise Exception.Create(ACBrStr(Format(SErroeSocialAbrir, [AIniFile])));
+       raise EACBrLibException.Create(ErrArquivoNaoExiste, ACBrStr(Format(SErroeSocialAbrir, [AIniFile])));
 
         eSocialDM.Travar;
         try
@@ -281,7 +282,7 @@ begin
            ArqeSocial:= eSocialDM.ACBreSocial1.Eventos.Gerados.Items[iEvento].PathNome + '.xml';
 
            if not FileExists(ArqeSocial) then
-            raise Exception.Create(ACBrStr(Format(SErroeSocialAbrir, [ArqeSocial]) ));
+            raise EACBrLibException.Create(ErrArquivoNaoExiste, ACBrStr(Format(SErroeSocialAbrir, [ArqeSocial]) ));
 
            AResposta:= ArqeSocial + sLineBreak + ACBrStr(Format(SMsgeSocialEventoAdicionado, [TipoEventoToStr(eSocialDM.ACBreSocial1.Eventos.Gerados.Items[iEvento].TipoEvento)]) ) + sLineBreak;
 
@@ -419,7 +420,7 @@ begin
       GravarLog('eSocial_SetIDTransmissor', logNormal);
 
     if EstaVazio(idTransmissor)then
-         raise Exception.Create('Valor Nulo');
+         raise EACBrLibException.Create(ErrParametroInvalido, 'Valor Nulo');
 
       eSocialDM.Travar;
       try
@@ -521,7 +522,7 @@ begin
       try
 
         if ((APerApur <= 0) or (EstaVazio(idEmpregador))) then
-         raise Exception.Create(ACBrStr(SErroeSocialConsulta));
+         raise EACBrLibException.Create(ErrParametroInvalido, ACBrStr(SErroeSocialConsulta));
 
         AResposta:= '';
         eSocialDM.ACBreSocial1.Eventos.Clear;
@@ -536,6 +537,8 @@ begin
             Resp.Free;
           end;
 
+          MoverStringParaPChar(AResposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, AResposta);
         end;
 
       finally
@@ -576,7 +579,7 @@ begin
       eSocialDM.Travar;
       try
         if ( (EstaVazio(idEmpregador)) or (EstaVazio(Chave)) or (DataInicial <= 0 ) or (DataFinal <= 0) ) then
-          raise Exception.Create(ACBrStr(SErroeSocialConsulta));
+          raise EACBrLibException.Create(ErrParametroInvalido, ACBrStr(SErroeSocialConsulta));
 
         AResposta:= '';
         eSocialDM.ACBreSocial1.Eventos.Clear;
@@ -590,6 +593,8 @@ begin
             Resp.Free;
           end;
 
+          MoverStringParaPChar(AResposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, AResposta);
         end;
 
       finally
@@ -628,7 +633,7 @@ begin
       try
         if ((EstaVazio(idEmpregador)) or (EstaVazio(CPFTrabalhador))
            or (DataInicial <= 0)  or (DataFinal <= 0 )) then
-          raise Exception.Create(ACBrStr(SErroeSocialConsulta));
+          raise EACBrLibException.Create(ErrParametroInvalido, ACBrStr(SErroeSocialConsulta));
 
         AResposta:= '';
         eSocialDM.ACBreSocial1.Eventos.Clear;
@@ -643,6 +648,8 @@ begin
             Resp.Free;
           end;
 
+          MoverStringParaPChar(AResposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, AResposta);
         end;
 
       finally
@@ -685,7 +692,7 @@ begin
       try
 
         if ( (EstaVazio(idEmpregador)) ) then
-          raise Exception.Create(ACBrStr(SErroeSocialConsulta));
+          raise EACBrLibException.Create(ErrParametroInvalido, ACBrStr(SErroeSocialConsulta));
 
         AResposta:= '';
         eSocialDM.ACBreSocial1.Eventos.Clear;
@@ -699,6 +706,8 @@ begin
             Resp.Free;
           end;
 
+          MoverStringParaPChar(AResposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, AResposta);
         end;
 
       finally

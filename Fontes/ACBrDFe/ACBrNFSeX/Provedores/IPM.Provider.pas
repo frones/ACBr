@@ -687,48 +687,76 @@ var
   AErro: TNFSeEventoCollectionItem;
   TagSerie: string;
 begin
-  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := ACBrStr(Desc108);
-    Exit;
-  end;
-
-  if EstaVazio(Response.InfConsultaNFSe.SerieNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod112;
-    AErro.Descricao := ACBrStr(Desc112);
-    Exit;
-  end;
-
-  if EstaVazio(Response.InfConsultaNFSe.CadEconomico) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod112;
-    AErro.Descricao := ACBrStr(Desc112);
-    Exit;
-  end;
-
   if ConfigGeral.Versao = ve101 then
     TagSerie := 'serie_nfse'
   else
     TagSerie := 'serie';
 
-  Response.ArquivoEnvio := '<nfse>' +
-                             '<pesquisa>' +
-                               '<numero>' +
-                                 OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
-                               '</numero>' +
-                               '<' + TagSerie + '>' +
-                                 OnlyNumber(Response.InfConsultaNFSe.SerieNFSe) +
-                               '</' + TagSerie + '>' +
-                               '<cadastro>' +
-                                 OnlyNumber(Response.InfConsultaNFSe.CadEconomico) +
-                               '</cadastro>' +
-                             '</pesquisa>' +
-                           '</nfse>';
+  case Response.InfConsultaNFSe.tpConsulta of
+    tcPorNumero:
+      begin
+        if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod108;
+          AErro.Descricao := ACBrStr(Desc108);
+          Exit;
+        end;
+
+        if EstaVazio(Response.InfConsultaNFSe.SerieNFSe) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod112;
+          AErro.Descricao := ACBrStr(Desc112);
+          Exit;
+        end;
+
+        if EstaVazio(Response.InfConsultaNFSe.CadEconomico) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod121;
+          AErro.Descricao := ACBrStr(Desc121);
+          Exit;
+        end;
+
+        Response.ArquivoEnvio := '<nfse>' +
+                                   '<pesquisa>' +
+                                     '<numero>' +
+                                       OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
+                                     '</numero>' +
+                                     '<' + TagSerie + '>' +
+                                       OnlyNumber(Response.InfConsultaNFSe.SerieNFSe) +
+                                     '</' + TagSerie + '>' +
+                                     '<cadastro>' +
+                                       OnlyNumber(Response.InfConsultaNFSe.CadEconomico) +
+                                     '</cadastro>' +
+                                   '</pesquisa>' +
+                                 '</nfse>';
+
+      end;
+    tcPorFaixa: ;
+    tcPorPeriodo: ;
+    tcServicoPrestado: ;
+    tcServicoTomado: ;
+    tcPorCodigoVerificacao:
+      begin
+        if EstaVazio(Response.InfConsultaNFSe.CodVerificacao) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod117;
+          AErro.Descricao := ACBrStr(Desc117);
+          Exit;
+        end;
+
+        Response.ArquivoEnvio := '<nfse>' +
+                                   '<pesquisa>' +
+                                     '<codigo_autenticidade>' +
+                                       Response.InfConsultaNFSe.CodVerificacao +
+                                     '</codigo_autenticidade>' +
+                                   '</pesquisa>' +
+                                 '</nfse>';
+      end;
+  end;
 end;
 
 procedure TACBrNFSeProviderIPM.TratarRetornoConsultaNFSe(

@@ -132,7 +132,7 @@ const
   Cod120 = 'X120';
   Desc120	= 'Emitente.WSSenha não informada.';
   Cod121 = 'X121';
-  Desc121	= 'Cadastro Econômico.';
+  Desc121	= 'Cadastro Econômico não informado.';
   Cod122 = 'X122';
   Desc122 = 'Data Emissão da NFSe não informada.';
   Cod123 = 'X123';

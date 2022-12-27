@@ -47,14 +47,46 @@ type
   protected
 
   public
+    function LerXml: Boolean; override;
 
   end;
 
 implementation
 
+uses
+  ACBrJSON;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Saatri
 //==============================================================================
+
+{ TNFSeR_Saatri201 }
+
+function TNFSeR_Saatri201.LerXml: Boolean;
+var
+  xDiscriminacao: string;
+  json, jsonItem: TACBrJsonObject;
+  i: Integer;
+begin
+  Result := inherited LerXml;
+
+  // Tratar a Discriminacao do serviço
+  xDiscriminacao := '{"a": ' + NFSe.Servico.Discriminacao + '}';
+  Json := TACBrJsonObject.Parse(xDiscriminacao);
+
+  for i := 0 to json.AsJSONArray['a'].Count -1 do
+  begin
+    jsonItem := json.AsJSONArray['a'].ItemAsJSONObject[i];
+
+    with NFSe.Servico.ItemServico.New do
+    begin
+      Descricao := jsonItem.AsString['Descricao'];
+      ValorUnitario := jsonItem.AsCurrency['ValorUnitario'];
+      Quantidade := jsonItem.AsCurrency['Quantidade'];
+      ValorTotal := jsonItem.AsCurrency['ValorTotal'];
+    end;
+  end;
+end;
 
 end.

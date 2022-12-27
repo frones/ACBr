@@ -86,7 +86,11 @@ procedure TACBrNFSeProviderSaatri201.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.UseCertificateHTTP := False;
+  with ConfigGeral do
+  begin
+    DetalharServico := True;
+    UseCertificateHTTP := False;
+  end;
 
   with ConfigAssinar do
   begin

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/12/2022
+-- Saatri.Provider/Saatri.LerXml --
+[*] Alteração visando a leitura de itens de serviço em formato JSON dentro da 
+    tag Discriminacao
+   Por: Italo Giurizzato Junior
 -- ISSSaoPaulo.GravarXml --
 [*] Acrescentado na condição o valor ttTribnoMunImune para determinar se vai
     gerar ou não a tag MunicipioPrestacao

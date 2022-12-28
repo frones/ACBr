@@ -43,10 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/12/2022
+-- Equiplano.LerXml --
+[*] Ajustes necessários para a correta leitura do XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
-[*] Alterada a URL de produção para cidade de Itaitinga/CE, o provedor ainda é o SSInformatica, versão 2.03
+[*] Alterada a URL de produção para cidade de Itaitinga/CE, o provedor ainda 
+    é o SSInformatica, versão 2.03
    Por: jarbasdsw 
-[*] Alteradas as URLs de homologação e produção para a cidade de Dom Pedrito/RS, provedor ainda é Pronim, versão 2.02
+[*] Alteradas as URLs de homologação e produção para a cidade de Dom Pedrito/RS, 
+    provedor ainda é Pronim, versão 2.02
    Por: Gabriel Rogelin
 
 27/12/2022

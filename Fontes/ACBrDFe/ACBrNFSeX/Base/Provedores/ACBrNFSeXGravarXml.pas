@@ -123,7 +123,6 @@ type
     function GerarXml: Boolean; Override;
     function ConteudoTxt: String;
 
-
     property Opcoes: TACBrXmlWriterOptions read GetOpcoes write SetOpcoes;
 
     property NFSe: TNFSe                 read FNFSe           write FNFSe;

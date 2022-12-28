@@ -344,7 +344,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if (Pos('nfse', Arquivo) > 0) then
+  if (Pos('nfse', Arquivo) > 0) or (Pos('nfs', Arquivo) > 0) then
     tpXML := txmlNFSe
   else
     tpXML := txmlRPS;
@@ -379,12 +379,10 @@ begin
     NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
     NFSe.DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDatHor);
 
-    NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
-
-    LerNFS(AuxNode);
-    LerTomador(AuxNode);
-    LerListaServico(AuxNode);
-    LerRetencoes(AuxNode);
+    LerXmlRps(AuxNode);
+//    LerTomador(ANode);
+//    LerListaServico(ANode);
+//    LerRetencoes(ANode);
     LerCancelamento(AuxNode);
   end;
 end;
@@ -404,8 +402,8 @@ begin
       Serie := ObterConteudo(ANode.Childrens.FindAnyNs('nrEmissorRps'), tcStr);
     end;
 
-    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('dtEmissaoRps'), tcDatHor);
-    NaturezaOperacao := ObterConteudo(ANode.Childrens.FindAnyNs('tpTributacao'), tcStr);
+    DataEmissaoRps := ObterConteudo(ANode.Childrens.FindAnyNs('dtEmissaoRps'), tcDatHor);
+    NaturezaOperacao := StrToNaturezaOperacao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('tpTributacao'), tcStr));
 
     with Servico.Valores do
     begin
@@ -451,8 +449,8 @@ begin
         begin
           with IdentificacaoTomador do
           begin
-            CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrDocumento'), tcStr);
-            DocEstrangeiro := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
+            CpfCnpj := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('nrDocumento'), tcStr);
+            DocEstrangeiro := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
           end;
         end;
       end;

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2022
+[-] TK-3429 Alteração da case para que o comando 06 funcione com dias corridos e independente de estar na instrucao1 ou instrucao2
+    Obs: A TK-3429 com a sugestao do usuario isolopak ainda esta em analise para possivel refatoração da unidade.
+    Por Daniel Morais. 
+
 26/12/2022
 [-] TK-3371 Alteração Case data Protesto para dias utei 3,4,5 por dias trabalhados (não leva em consideração feriados)
   por suporteatinfo / Victor H Gonzales - Pandaa

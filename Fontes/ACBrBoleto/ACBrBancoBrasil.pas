@@ -1059,8 +1059,8 @@ begin
      end
      else
      begin
-
        AInstrucao := PadLeft(Trim(Instrucao1),2,'0') + PadLeft(Trim(Instrucao2),2,'0');
+
        if (DataProtesto > 0) and (DataProtesto > Vencimento) then
        begin
          DiasProtesto := '  ';
@@ -1084,12 +1084,23 @@ begin
          else
            if (trim(Instrucao1) = '') or (trim(Instrucao1) = '06') then
              AInstrucao  := '06'+ PadLeft(trim(Instrucao2),2,'0');
+
+
             DiasProtesto :=IntToStr(DaysBetween(DataProtesto,Vencimento));
          end;
 
-         if ( (ACBrTitulo.TipoDiasProtesto = diCorridos) and (LDiasProtesto >= 6) and ((trim(Instrucao1) = '') or (trim(Instrucao1) = '06')) ) then
+         if ( (ACBrTitulo.TipoDiasProtesto = diCorridos) and (LDiasProtesto >= 6)
+           and ( ((trim(Instrucao1) = '') or (trim(Instrucao1) = '06'))
+           or ((trim(Instrucao2) = '') or (trim(Instrucao2) = '06')) )) then
          begin
-           AInstrucao   := '06'+ PadLeft(trim(Instrucao2),2,'0');
+
+           if ((trim(Instrucao1) = '') or (trim(Instrucao1) = '06')) then
+              AInstrucao   := '06'+ PadLeft(trim(Instrucao2),2,'0');
+
+           if ((trim(Instrucao2) = '') or (trim(Instrucao2) = '06')) then
+              AInstrucao   := PadLeft(trim(Instrucao1),2,'0')+'06';
+
+
            DiasProtesto := IntToStr(LDiasProtesto);
          end;
 

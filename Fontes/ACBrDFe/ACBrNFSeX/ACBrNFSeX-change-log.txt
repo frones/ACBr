@@ -57,6 +57,8 @@ Símbolo : Significado
 [*] Alteradas as URLs de homologação e produção para a cidade de Dom Pedrito/RS, 
     provedor ainda é Pronim, versão 2.02
    Por: Gabriel Rogelin
+[+] Incluida a cidade de Angatuba/SP, provedor é o iiBrasil.
+   Por: adilsonpazzini
 
 27/12/2022
 -- ISSNet.GravarXml --

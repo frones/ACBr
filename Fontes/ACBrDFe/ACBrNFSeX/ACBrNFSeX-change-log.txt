@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/12/2022
+-- ACBrNFSeXWebserviceBase --
+[*] Possível solução para não incluir o encoding quando o arquivo for JSON e
+    não incluir um segundo encoding ao salvar o XML.
+   Por: Italo Giurizzato Junior
 -- Equiplano.LerXml --
 [*] Ajustes necessários para a correta leitura do XML da NFS-e.
    Por: Italo Giurizzato Junior

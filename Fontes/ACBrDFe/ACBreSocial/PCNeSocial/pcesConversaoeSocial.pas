@@ -727,7 +727,7 @@ const
                                           751, 761, 771, 781, 901, 902, 903, 904);
 
 const
-  __ARRAY_MATRIX_EVENTO_INFO: array [1 .. 73] of TRecMatrixEventoInfo =
+  __ARRAY_MATRIX_EVENTO_INFO: array [1 .. 76] of TRecMatrixEventoInfo =
     (
     (TipoEvento: teS1000                   ; TipoEventoString: 'S-1000'                    ; VersaoeSocial: veS01_00_00; Versao: 'vS1_00'; EventoString: 'evtInfoEmpregador'          ; Schema: schevtInfoEmpregador       ; StrEventoToTipoEvento: 'evtInfoEmpregador'          ; Observacao: ''),
     (TipoEvento: teS1005                   ; TipoEventoString: 'S-1005'                    ; VersaoeSocial: veS01_00_00; Versao: 'vS1_00'; EventoString: 'evtTabEstab'                ; Schema: schevtTabEstab             ; StrEventoToTipoEvento: 'evtTabEstab'                ; Observacao: ''),
@@ -780,7 +780,10 @@ const
     (TipoEvento: teS2416                   ; TipoEventoString: 'S-2416'                    ; VersaoeSocial: veS01_00_00; Versao: 'vS1_00'; EventoString: 'evtCdBenAlt'                ; Schema: schevtCdBenAlt             ; StrEventoToTipoEvento: 'evtCdBenAlt'                ; Observacao: ''),
     (TipoEvento: teS2418                   ; TipoEventoString: 'S-2418'                    ; VersaoeSocial: veS01_00_00; Versao: 'vS1_00'; EventoString: 'evtReativBen'               ; Schema: schevtReativBen            ; StrEventoToTipoEvento: 'evtReativBen'               ; Observacao: ''),
     (TipoEvento: teS2420                   ; TipoEventoString: 'S-2420'                    ; VersaoeSocial: veS01_00_00; Versao: 'vS1_00'; EventoString: 'evtCdBenTerm'               ; Schema: schevtCdBenTerm            ; StrEventoToTipoEvento: 'evtCdBenTerm'               ; Observacao: ''),
+    (TipoEvento: teS2500                   ; TipoEventoString: 'S-2500'                    ; VersaoeSocial: veS01_01_00; Versao: 'vS1_01'; EventoString: 'evtProcTrab'                ; Schema: schevtProcTrab             ; StrEventoToTipoEvento: 'evtProcTrab'                ; Observacao: ''),
+    (TipoEvento: teS2501                   ; TipoEventoString: 'S-2501'                    ; VersaoeSocial: veS01_01_00; Versao: 'vS1_01'; EventoString: 'evtContProc'                ; Schema: schevtContProc             ; StrEventoToTipoEvento: 'evtContProc'                ; Observacao: ''),
     (TipoEvento: teS3000                   ; TipoEventoString: 'S-3000'                    ; VersaoeSocial: veS01_00_00; Versao: 'vS1_00'; EventoString: 'evtExclusao'                ; Schema: schevtExclusao             ; StrEventoToTipoEvento: 'evtExclusao'                ; Observacao: ''),
+    (TipoEvento: teS3500                   ; TipoEventoString: 'S-3500'                    ; VersaoeSocial: veS01_01_00; Versao: 'vS1_01'; EventoString: 'evtExcProcTrab'             ; Schema: schevtExcProcTrab          ; StrEventoToTipoEvento: 'evtExcProcTrab'             ; Observacao: ''),
     (TipoEvento: teS4000                   ; TipoEventoString: 'S-4000'                    ; VersaoeSocial: veS01_00_00; Versao: 'NI'    ; EventoString: 'NI'                         ; Schema: schNaoIdentificado         ; StrEventoToTipoEvento: 'S-4000'                     ; Observacao: 'Evento não identificado'),
     (TipoEvento: teS4999                   ; TipoEventoString: 'S-4999'                    ; VersaoeSocial: veS01_00_00; Versao: 'NI'    ; EventoString: 'NI'                         ; Schema: schNaoIdentificado         ; StrEventoToTipoEvento: 'S-4999'                     ; Observacao: 'Evento não identificado'),
     (TipoEvento: teS5001                   ; TipoEventoString: 'S-5001'                    ; VersaoeSocial: veS01_00_00; Versao: 'vS1_00'; EventoString: 'evtBasesTrab'               ; Schema: schevtBasesTrab            ; StrEventoToTipoEvento: 'S-5001'                     ; Observacao: 'TeventoString <> StrEventoToTipoEvento'),

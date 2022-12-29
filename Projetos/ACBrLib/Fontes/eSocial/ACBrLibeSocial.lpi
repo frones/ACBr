@@ -263,7 +263,6 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <DebugInfoType Value="dsDwarf3"/>
               <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
             </Debugging>
@@ -534,13 +533,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value=".\ACBr\Projetos\ACBrLib\Testes\eSocial\bin\ACBrLibeSocialTest.exe"/>
+        <HostApplicationFilename Value="$(ProjSrcPath)\..\..\Testes\eSocial\bin\ACBrLibeSocialTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value=".\ACBr\Projetos\ACBrLib\Testes\eSocial\bin\ACBrLibeSocialTest.exe"/>
+            <HostApplicationFilename Value="$(ProjSrcPath)\..\..\Testes\eSocial\bin\ACBrLibeSocialTest.exe"/>
           </local>
         </Mode0>
       </Modes>

@@ -960,7 +960,7 @@ begin
       Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '';
 
-      Tomador.RazaoSocial := 'INSCRICAO DE TESTE';
+      Tomador.RazaoSocial := 'INSCRICAO DE TESTE & TESTE';
 
       // O campo EnderecoInformado é utilizado pelo provedor IPM
       // A tag <endereco_informado> é opcional, caso não deseje que ela seja
@@ -4463,7 +4463,7 @@ begin
   with ACBrNFSeX1.Configuracoes.Geral do
   begin
     LayoutNFSe := TLayoutNFSe(cbLayoutNFSe.ItemIndex);
-    CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
+    CodigoMunicipio := StrToIntDef(edtCodCidade.Text, -1);
   end;
 
   lblSchemas.Caption := ACBrNFSeX1.Configuracoes.Geral.xProvedor;

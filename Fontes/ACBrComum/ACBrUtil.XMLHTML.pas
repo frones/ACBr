@@ -101,6 +101,8 @@ procedure EncontrarInicioFinalTag(const aText, ATag: String; var PosIni, PosFim:
 function StripHTML(const AHTMLString : String) : String;
 procedure AcharProximaTag(const ABinaryString: AnsiString; const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
 
+function ExtrairTextoEntreTags(const UmXmlString: string; const UmaTag: string): string;
+
 implementation
 
 uses
@@ -433,6 +435,37 @@ begin
     AcharProximaTag( VHTMLString, PosTag, ATag, PosTag );
   end ;
   Result := VHTMLString;
+end;
+
+{-----------------------------------------------------------------------------
+   Extrai o texto entre uma Tag de XML.
+   Bug Conhecido:
+     Tags que são repetidas dentro de si mesmas podem gerar erro.
+     Isso deve ser corrigido numa versão posterior.
+     Mas o melhor nesses casos é usar um parse de XML e não uma função que manipula strings.
+   Por exemplo: Dados:
+    UmXmlString = '<xml>blabla<xml></xml>bloblo<xml></xml><xml>'
+    UmaTag = 'xml'
+    Retorno será = 'blabla<xml></xml>' e não 'blabla<xml></xml>bloblo<xml></xml>'
+ ---------------------------------------------------------------------------- }
+function ExtrairTextoEntreTags(const UmXmlString: string; const UmaTag: string): string;
+var
+  vTagAbertura, vTagFechamento: string;
+  posInicioDaTagAbertura, posFinalTagAbertura: integer;
+begin
+  vTagAbertura := '<'+UmaTag;
+  posInicioDaTagAbertura := pos(vTagAbertura, UmXmlString);
+
+  if (posInicioDaTagAbertura <= 0) then
+  begin
+    Result := UmXmlString;
+    Exit;
+  end;
+
+  posFinalTagAbertura := Pos('>', UmXmlString, posInicioDaTagAbertura);
+  vTagAbertura := Copy(UmXmlString, posInicioDaTagAbertura, posFinalTagAbertura - posInicioDaTagAbertura+1);
+  vTagFechamento := '</'+UmaTag+'>';
+  Result := Trim(RetornarConteudoEntre(UmXmlString, vTagAbertura, vTagAbertura));
 end;
 
 

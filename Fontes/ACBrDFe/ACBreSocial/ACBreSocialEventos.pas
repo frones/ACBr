@@ -128,7 +128,7 @@ implementation
 
 uses
   dateutils,
-  ACBrUtil.Strings,
+  ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeUtil, ACBreSocial;
 
 { TGeradosCollection }
@@ -299,34 +299,74 @@ begin
 end;
 
 function TEventos.LoadFromString(AXMLString: String): Boolean;
-var
-//  AXML: AnsiString;
-  AXML: String;
-  P: integer;
 
-  function PoseSocial: integer;
+  function PoseSocial(const UmXMLString: string): integer;
   begin
-    Result := pos('</eSocial>', AXMLString);
+    Result := pos('</eSocial>', UmXMLString);
   end;
 
-begin
-  Result := False;
-  P := PoseSocial;
-
-  while P > 0 do
+  function ExtrairStringEventosDeDentroDasTagsDeLote(const UmXmlString: string): string;
   begin
-    AXML := copy(AXMLString, 1, P + 9);
-    AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
+    Result := ExtrairTextoEntreTags(UmXmlString,'envioLoteEventos');
+    Result := ExtrairTextoEntreTags(Result, 'eventos');
+  end;
 
-    Result := Self.Iniciais.LoadFromString(AXML);
-    Result := Self.Tabelas.LoadFromString(AXML) or Result;
-    Result := Self.NaoPeriodicos.LoadFromString(AXML) or Result;
-    Result := Self.Periodicos.LoadFromString(AXML) or Result;
+  function EhXMlDeLoteDeEventos(const UmXmlString: string): Boolean;
+  begin
+    Result := (pos('<envioLoteEventos', UmXmlString) > 0);
+  end;
+
+  function CarregaXmlEvento(const UmaStringXML: String): Boolean;
+  begin
+    Result := Self.Iniciais.LoadFromString(UmaStringXML);
+    Result := Self.Tabelas.LoadFromString(UmaStringXML) or Result;
+    Result := Self.NaoPeriodicos.LoadFromString(UmaStringXML) or Result;
+    Result := Self.Periodicos.LoadFromString(UmaStringXML) or Result;
 
     if TACBreSocial(Self.FOwner).Configuracoes.Arquivos.Salvar then
       SaveToFiles;
+  end;
 
-    P := PoseSocial;
+
+
+var
+  AXML, AXMLStringDoEvento: String;
+  P: integer;
+  PosIdEvento, PosTagFechaEvento: Integer;
+begin
+  Result := False;
+
+  if EhXMlDeLoteDeEventos(AXMLString) then
+  begin
+    AXMLString := ExtrairStringEventosDeDentroDasTagsDeLote(AXMLString);
+    PosIdEvento := Pos('<evento Id=', AXMLString);
+    //Para Cada Evento Id
+    while PosIdEvento > 0 do
+    begin
+      //Extrair
+      PosTagFechaEvento := Pos('</evento>', AXMLString);
+      AXMLStringDoEvento := Trim(Copy(AXMLString, 1, PosTagFechaEvento + 9));
+      AXMLString := Trim(Copy(AXMLString, PosTagFechaEvento+10, Length(AXMLString)));
+
+      Result := CarregaXmlEvento(AXMLStringDoEvento);
+      //procurar próximo
+      PosIdEvento := Pos('<evento Id=', AXMLString);
+    end;
+
+  end
+  else
+  begin
+    P := PoseSocial(AXMLString);
+
+    while P > 0 do
+    begin
+      AXML := copy(AXMLString, 1, P + 9);
+      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
+
+      Result := CarregaXmlEvento(AXML);
+
+      P := PoseSocial(AXMLString);
+    end;
   end;
 end;
 

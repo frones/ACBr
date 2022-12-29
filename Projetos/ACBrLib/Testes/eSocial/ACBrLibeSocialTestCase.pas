@@ -252,7 +252,7 @@ begin
   // Lendo o arquivo INI
   AssertEquals(ErrOK, eSocial_Inicializar( '', ''));
   AssertEquals('Erro ao ler o arquivo INI', ErrOk,
-  eSocial_CriarEventoeSocial( 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\eSocial\S1000.ini'));
+  eSocial_CriarEventoeSocial( '.\..\..\eSocial\S1000.ini'));
   AssertEquals(ErrOK, eSocial_Finalizar());
 end;
 
@@ -310,9 +310,11 @@ end;
 procedure TTestACBreSocialLib.Test_eSocial_CriarEnviareSocial;
 var
   Handle: THandle;
+  RetornoChamadaLib: LongInt;
 begin
   AssertEquals(ErrOK, eSocial_Inicializar('', ''));
-  AssertEquals('Erro ao Criar e Enviar', ErrExecutandoMetodo, eSocial_CriarEnviareSocial('C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\eSocial\S1000.ini', 1));
+  RetornoChamadaLib := eSocial_CriarEnviareSocial('.\..\..\eSocial\S1000.ini', 1);
+  AssertEquals('Erro ao Criar e Enviar', ErrExecutandoMetodo, RetornoChamadaLib);
   AssertEquals(ErrOK, eSocial_Finalizar());
 end;
 
@@ -326,11 +328,18 @@ begin
 end;
 
 procedure TTestACBreSocialLib.Test_eSocial_CarregarXMLEventoeSocial;
+const
+  sNomeArquivoXml = '.\..\..\eSocial\S2220_UmXmlDeLoteEventosS2220_01.xml';
 var
-  Handle: THandle;
+  RetornoChamadaLib: LongInt;
 begin
   AssertEquals(ErrOK, eSocial_Inicializar('', ''));
-  AssertEquals('Erro ao carregar o XML e-Social', ErrOK, eSocial_CarregarXMLEventoeSocial('C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\eSocial\1038734840000002022060611235282164-S-2200-0.xml'));
+
+  AssertEquals('Erro ao Mudar configuração log', ErrOk, eSocial_ConfigGravarValor( CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOk, eSocial_SetVersaoDF('S01_00_00'));
+
+  RetornoChamadaLib := eSocial_CarregarXMLEventoeSocial(sNomeArquivoXml);
+  AssertEquals('Erro ao carregar o XML e-Social', ErrOK, RetornoChamadaLib );
   AssertEquals(ErrOK, eSocial_Finalizar());
 end;
 

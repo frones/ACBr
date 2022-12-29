@@ -309,20 +309,23 @@ var
   Handle: PLibHandle;
   Resposta: String;
   Tamanho: Longint;
+  ArquivoTemporario: string;
 const
-  ArquivoTemporario = 'C:\TEMP\NCMs.csv';
+  SmsgArquivoSalvoEm = 'Arquivo salvo em: ';
 begin
-  Resposta := Space(34);
-  Tamanho := 34;
+  ArquivoTemporario := ExtractFilePath(ParamStr(0)) + 'NCMsTemp.csv';
+
+  Tamanho := Length(SmsgArquivoSalvoEm) + Length(ArquivoTemporario);
+  Resposta := Space(Tamanho);
 
   AssertEquals(ErrOk, NCM_Inicializar(Handle, '',''));
   //AssertEquals('Erro ao Mudar configuração', ErrOk, NCM_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, '10'));
 
   AssertEquals('Erro ao BaixarLista', ErrOk,
-    NCM_BaixarLista(Handle, ArquivoTemporario, PChar(Resposta), Tamanho));
+    NCM_BaixarLista(Handle, PChar(ArquivoTemporario), PChar(Resposta), Tamanho));
   CheckTrue(FileExists(ArquivoTemporario), 'Arquivo não foi criado na pasta definida: '+ ArquivoTemporario);
 
-  AssertEquals('Resposta= ' + AnsiString(Resposta), 'Arquivo salvo em: '+ArquivoTemporario, Resposta);
+  AssertEquals('Resposta= ' + AnsiString(Resposta), SmsgArquivoSalvoEm+ArquivoTemporario, Resposta);
   //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
   AssertEquals(ErrOk, NCM_Finalizar(Handle));
 end;
@@ -348,6 +351,7 @@ begin
   RetornoFuncao := NCM_DescricaoNCM(Handle, PChar(cCodigoNCMValido01), PChar(Resposta), Tamanho);
   if RetornoFuncao < 0 then
   begin
+    Resposta := Space(Tamanho);
     NCM_UltimoRetorno(Handle, Pchar(Resposta), Tamanho );
   end;
   AssertEquals('Erro ao buscar descrição do NCM: '+ Resposta, ErrOk, RetornoFuncao);
@@ -393,6 +397,7 @@ begin
 
   if RetornoFuncao <0 then
   begin
+    Resposta := Space(Tamanho);
     NCM_UltimoRetorno(Handle, Pchar(Resposta), Tamanho );
   end;
   AssertEquals('Erro ao buscar descrição do NCM', ErrOk, RetornoFuncao);
@@ -409,7 +414,6 @@ var
   Resposta: string;
   Tamanho: Longint;
   Retorno: PChar;
-  Tamanho2: Longint;
 begin
   Tamanho := Length(cRetornoMultiplo01);
   Resposta := space(Tamanho);
@@ -423,7 +427,8 @@ begin
 
   if Qtde <0 then
   begin
-    NCM_UltimoRetorno(Handle, Retorno, Tamanho2 );
+    Retorno := PChar(Space(Tamanho));
+    NCM_UltimoRetorno(Handle, Retorno, Tamanho );
   end;
   AssertEquals('Erro ao buscar descrição do NCM', ErrOk, Qtde);
 
@@ -440,7 +445,6 @@ var
   Resposta: string;
   Tamanho: Longint;
   Retorno: PChar;
-  Tamanho2: Longint;
 begin
   // Buscando o Endereço por CEP
   Resposta := space(10240);
@@ -453,9 +457,10 @@ begin
 
   RetornoDaFuncao := NCM_BuscarPorDescricao(Handle, cDescricaoParcial01, 1, pchar(Resposta), Tamanho);
 
-  if RetornoDaFuncao <0 then
+  if RetornoDaFuncao < 0 then
   begin
-    NCM_UltimoRetorno(Handle, Retorno, Tamanho2 );
+    Retorno := PChar(Space(Tamanho));
+    NCM_UltimoRetorno(Handle, Retorno, Tamanho );
   end;
   AssertEquals('Erro ao fazer busca por descricao', ErrOk, RetornoDaFuncao);
 

@@ -75,6 +75,7 @@ type
     FLibXml2Inicializada: Boolean;
     function CanonC14n(const aDoc: xmlDocPtr; const infElement: String): Ansistring; overload;
     function CanonC14n(const aDoc: xmlDocPtr; const ANode: xmlNodePtr): Ansistring; overload;
+    function TentaPegarMensagemErroDetalhada(const MsgErroAtual: string): String;
 
   protected
     procedure InitLibXML2;
@@ -148,6 +149,7 @@ var
   Canon, DigestValue, Signaturevalue: AnsiString;
   TemDeclaracao: Boolean;
   XmlLength: Integer;
+  MsgErro: string;
 begin
   InitLibXML2;
 
@@ -171,7 +173,10 @@ begin
   try
     aDoc := xmlParseDoc(PAnsiChar(AnsiString(aXML)));
     if (aDoc = nil) then
-      raise EACBrDFeException.Create(cErrParseDoc);
+    begin
+      MsgErro := TentaPegarMensagemErroDetalhada(cErrParseDoc);
+      raise EACBrDFeException.Create(MsgErro);
+    end;
 
     SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
     if (SignNode <> Nil) then
@@ -387,6 +392,7 @@ begin
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
       MsgErro := ACBrStr(cErrParseDoc);
+      MsgErro := TentaPegarMensagemErroDetalhada(MsgErro);
       Exit;
     end;
 
@@ -395,6 +401,7 @@ begin
     if (parser_ctxt = nil) then
     begin
       MsgErro := cErrSchemaValidationContext;
+      MsgErro := TentaPegarMensagemErroDetalhada(MsgErro);
       Exit;
     end;
 
@@ -403,6 +410,7 @@ begin
     if (schema = nil) then
     begin
       MsgErro := cErrInvalidSchema;
+      MsgErro := TentaPegarMensagemErroDetalhada(MsgErro);
       Exit;
     end;
 
@@ -411,15 +419,14 @@ begin
     if (valid_ctxt = nil) then
     begin
       MsgErro := cErrCreateSchemaContext;
+      MsgErro := TentaPegarMensagemErroDetalhada(MsgErro);
       Exit;
     end;
 
     if (xmlSchemaValidateDoc(valid_ctxt, doc) <> 0) then
     begin
-      schemError := xmlGetLastError();
-      if (schemError <> nil) then
-        MsgErro := IntToStr(schemError^.code) + ' - ' + schemError^.message
-      else
+      MsgErro := TentaPegarMensagemErroDetalhada('');
+      if MsgErro = '' then
         MsgErro := cErrNotIdentfiedSchema;
     end
     else
@@ -463,6 +470,7 @@ begin
     if (aDoc = nil) then
     begin
        MsgErro := ACBrStr(cErrParseDoc);
+       MsgErro := TentaPegarMensagemErroDetalhada(MsgErro);
        Exit;
     end;
 
@@ -530,6 +538,22 @@ begin
     // Descarrega o Certificado Publico //
     FpDFeSSL.DescarregarCertificado;
   end;
+end;
+
+function TDFeSSLXmlSignLibXml2.TentaPegarMensagemErroDetalhada(const MsgErroAtual: string): String;
+var
+  prtUltimoErroXml: xmlErrorPtr;
+begin
+  Result := '';
+  prtUltimoErroXml := xmlGetLastError();
+  if (prtUltimoErroXml <> nil) then
+  begin
+    Result := MsgErroAtual + ' --> ' +
+              IntToStr(prtUltimoErroXml^.code) + ' - ' + prtUltimoErroXml^.message;
+  end
+  else
+    Result := MsgErroAtual;
+
 end;
 
 procedure TDFeSSLXmlSignLibXml2.VerificarValoresPadrao(var SignatureNode

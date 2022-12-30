@@ -107,7 +107,7 @@ type
 
   TACBrODPaymentType = (ptPrepaid, ptPending);
 
-  TACBrODServiceType = (stDelivery, stTakeout);
+  TACBrODServiceType = (stDelivery, stTakeout, stIndoor);
 
   TACBrODSponsor = (sMarketPlace, sMerchant);
 
@@ -844,6 +844,7 @@ begin
   case AValue of
     stDelivery: Result := 'DELIVERY';
     stTakeout: Result := 'TAKEOUT';
+    stIndoor: Result := 'INDOOR';
   else
     Result := '';
   end;
@@ -858,7 +859,9 @@ begin
   if LStr = 'DELIVERY' then
     Result := stDelivery
   else if LStr = 'TAKEOUT' then
-    Result := stTakeout;
+    Result := stTakeout
+  else if LStr = 'INDOOR' then
+    Result := stIndoor;
 end;
 
 function SponsorToStr(AValue: TACBrODSponsor): string;

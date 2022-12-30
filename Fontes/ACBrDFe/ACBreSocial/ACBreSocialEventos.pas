@@ -307,8 +307,8 @@ function TEventos.LoadFromString(AXMLString: String): Boolean;
 
   function ExtrairStringEventosDeDentroDasTagsDeLote(const UmXmlString: string): string;
   begin
-    Result := ExtrairTextoEntreTags(UmXmlString,'envioLoteEventos');
-    Result := ExtrairTextoEntreTags(Result, 'eventos');
+    Result := SeparaDados(UmXmlString,'envioLoteEventos');
+    Result := SeparaDados(Result, 'eventos');
   end;
 
   function EhXMlDeLoteDeEventos(const UmXmlString: string): Boolean;

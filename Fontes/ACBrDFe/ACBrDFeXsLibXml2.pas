@@ -375,7 +375,6 @@ var
   parser_ctxt: xmlSchemaParserCtxtPtr;
   schema: xmlSchemaPtr;
   valid_ctxt: xmlSchemaValidCtxtPtr;
-  schemError: xmlErrorPtr;
 begin
   InitLibXML2;
 

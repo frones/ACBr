@@ -813,7 +813,7 @@ begin
 
     if (Copy(Linha,1,1) = '8') then
     begin
-      Titulo.QrCode.txId := Copy(Linha,55,35);
+      Titulo.QrCode.txId := Copy(Linha,21,35);
       Titulo.QrCode.emv  := Copy(Linha,57,77);
     end;
   end;

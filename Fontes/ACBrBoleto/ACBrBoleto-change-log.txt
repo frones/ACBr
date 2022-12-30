@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2022
+[-] TK-3444 ACBrBancoSicredi Correção captura do QrCode.TxID Posição 21-35, conforme Manual.
+    Por Daniel Morais.
+
 28/12/2022
 [-] TK-3429 Alteração da case para que o comando 06 funcione com dias corridos e independente de estar na instrucao1 ou instrucao2
     Obs: A TK-3429 com a sugestao do usuario isolopak ainda esta em analise para possivel refatoração da unidade.

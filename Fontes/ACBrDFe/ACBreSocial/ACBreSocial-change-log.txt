@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2022
+-- pcesConversaoeSocial --
+[*] Remove tipos que só tinham ocorrência nesta unit e não são mais utilizados pelo componente.
+   Por: DiegoF
+
 16/12/2022
 -- pcesGerador--
 [*] Ajuste para que não haja problemas de codificação quando o XML precisar ter caracteres especiais

@@ -384,7 +384,7 @@ function TACBrNFSeXWebserviceISSNet.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := ParseText(AnsiString(Result), True, False);
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
@@ -576,12 +576,12 @@ end;
 function TACBrNFSeXWebserviceISSNet204.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(UTF8Decode(aXML));
+  Result := inherited TratarXmlRetornado(aXML);
 
-  Result := ParseText(AnsiString(Result), True, False);
-  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);  
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
   Result := RemoverIdentacao(Result);
-  Result := TiraAcentos(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 { TACBrNFSeProviderISSNet204 }

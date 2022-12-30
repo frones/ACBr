@@ -330,7 +330,7 @@ begin
 
   Result := NativeStringToUTF8(Result);
   Result := StringReplace(Result, '&#xd;', '\s\n', [rfReplaceAll]);
-  Result := ParseText(AnsiString(Result), True, False);
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverPrefixosDesnecessarios(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
 end;

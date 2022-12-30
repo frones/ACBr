@@ -100,14 +100,14 @@ begin
               '</ListaMensagemRetorno>' +
             '</a>';
 
-    Result := ParseText(AnsiString(Result), True, False);
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverCaracteresDesnecessarios(Result);
   end
   else
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
-    Result := ParseText(AnsiString(Result), True, False);
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   end;
 end;
 

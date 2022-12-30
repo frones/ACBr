@@ -1119,7 +1119,7 @@ begin
     Result := inherited TratarXmlRetornado(aXML);
 
     Result := String(NativeStringToUTF8(Result));
-    Result := ParseText(AnsiString(Result), True, False);
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
@@ -1143,7 +1143,7 @@ begin
                 '</mensagem>' +
               '</a>';
 
-    Result := ParseText(AnsiString(Result), True, False);
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := String(NativeStringToUTF8(Result));
   end;
 end;
@@ -1217,7 +1217,7 @@ begin
     Result := inherited TratarXmlRetornado(aXML);
 
     Result := String(NativeStringToUTF8(Result));
-    Result := ParseText(AnsiString(Result), True, False);
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
@@ -1241,7 +1241,7 @@ begin
                 '</mensagem>' +
               '</a>';
 
-    Result := ParseText(AnsiString(Result), True, False);
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := String(NativeStringToUTF8(Result));
   end;
 end;

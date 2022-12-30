@@ -156,7 +156,7 @@ function TACBrNFSeXWebserviceISSSalvador.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(UTF8Decode(aXML));
 
-  Result := ParseText(AnsiString(Result), True, False);
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
 end;
 
 { TACBrNFSeProviderISSSalvador }

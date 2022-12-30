@@ -42,14 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2022
+-- Diversos --
+[*] Ajustado a execução do ParseText para funcionar tanto em Delphi
+    quanto em Lazarus.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
+[*] Atualizado a URL de homologação de Brasilia/DF.
+   Por: Italo Giurizzato Junior
+
 29/12/2022
 -- ISSFortaleza.Provider --
 [*] Removido a chamada a função UTF8Decode dentro do TratarXmlRetornado.
-   Por: Italo Giurizzato Junior
-
-30/12/2022
--- ACBrNFSeXServicos.ini --
-[*] Atualizado a URL de homologação de Brasilia/DF.
    Por: Italo Giurizzato Junior
 
 28/12/2022

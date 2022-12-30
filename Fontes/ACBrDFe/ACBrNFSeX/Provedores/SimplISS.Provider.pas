@@ -599,12 +599,7 @@ function TACBrNFSeXWebserviceSimplISS203.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-{$IfDef FPC}
-  Result := ParseText(AnsiString(Result));
-{$Else}
-  Result := ParseText(AnsiString(Result), True, False);
-{$EndIf}
-
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
   Result := RemoverCaracteresDesnecessarios(Result);

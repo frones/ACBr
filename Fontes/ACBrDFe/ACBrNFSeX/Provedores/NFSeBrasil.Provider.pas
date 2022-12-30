@@ -198,7 +198,7 @@ begin
   // Troca do &amp;amp; utilizado para conseguir enviar o nome com '&', no retorno
   // estava quebrando a leitura
   Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
-  Result := ParseText(AnsiString(Result), True, False);
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverCDATA(Result);
   // O provedor tem mais de uma declaração no XML,
   // neste caso o segundo parâmentro tem que ser True para remover todas.

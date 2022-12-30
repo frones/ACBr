@@ -2261,7 +2261,7 @@ begin
       IdeEmpregador.TpInsc := tiCNPJ;
       IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
-      InfoSubstPatr.indSubstPatr := tpIndSubstPatrOpPort(0);
+      InfoSubstPatr.indSubstPatr := tpIndSubstPatr(0);
       InfoSubstPatr.percRedContrib := 500.20;
 
       InfoSubstPatrOpPort.Clear;

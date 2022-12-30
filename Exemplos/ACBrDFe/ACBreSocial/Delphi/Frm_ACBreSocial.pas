@@ -2730,7 +2730,7 @@ begin
 
       with infoSubstPatr do
       begin
-        indSubstPatr := tpIndSubstPatrOpPort(0);
+        indSubstPatr := tpIndSubstPatr(0);
         percRedContrib := 500.20;
 
         infoSubstPatrOpPort.Clear;

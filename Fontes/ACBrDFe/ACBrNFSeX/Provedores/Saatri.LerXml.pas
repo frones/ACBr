@@ -72,19 +72,29 @@ begin
   Result := inherited LerXml;
 
   // Tratar a Discriminacao do serviço
-  xDiscriminacao := '{"a": ' + NFSe.Servico.Discriminacao + '}';
-  Json := TACBrJsonObject.Parse(xDiscriminacao);
 
-  for i := 0 to json.AsJSONArray['a'].Count -1 do
+  xDiscriminacao := NFSe.Servico.Discriminacao;
+  FpAOwner.ConfigGeral.DetalharServico := False;
+
+  if (Pos('[', xDiscriminacao) > 0) and (Pos(']', xDiscriminacao) > 0) and
+     (Pos('{', xDiscriminacao) > 0) and (Pos('}', xDiscriminacao) > 0) then
   begin
-    jsonItem := json.AsJSONArray['a'].ItemAsJSONObject[i];
+    FpAOwner.ConfigGeral.DetalharServico := True;
 
-    with NFSe.Servico.ItemServico.New do
+    xDiscriminacao := '{"a": ' + xDiscriminacao + '}';
+    Json := TACBrJsonObject.Parse(xDiscriminacao);
+
+    for i := 0 to json.AsJSONArray['a'].Count -1 do
     begin
-      Descricao := jsonItem.AsString['Descricao'];
-      ValorUnitario := jsonItem.AsCurrency['ValorUnitario'];
-      Quantidade := jsonItem.AsCurrency['Quantidade'];
-      ValorTotal := jsonItem.AsCurrency['ValorTotal'];
+      jsonItem := json.AsJSONArray['a'].ItemAsJSONObject[i];
+
+      with NFSe.Servico.ItemServico.New do
+      begin
+        Descricao := jsonItem.AsString['Descricao'];
+        ValorUnitario := jsonItem.AsCurrency['ValorUnitario'];
+        Quantidade := jsonItem.AsCurrency['Quantidade'];
+        ValorTotal := jsonItem.AsCurrency['ValorTotal'];
+      end;
     end;
   end;
 end;

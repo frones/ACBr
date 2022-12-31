@@ -488,9 +488,10 @@ end;
 
 procedure TACBrPIXCobValor.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  AJSon
-    .AddPair('original', FormatarValorPIX(original))
-    .AddPair('modalidadeAlteracao', IfThen(modalidadeAlteracao, 1, 0));
+  AJSon.AddPair('original', FormatarValorPIX(original));
+  if modalidadeAlteracao then
+    AJSon.AddPair('modalidadeAlteracao', 1);
+
   fretirada.WriteToJSon(AJSon);
 end;
 
@@ -498,7 +499,6 @@ procedure TACBrPIXCobValor.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
   wAux: Integer;
 begin
-  {$IfDef FPC}wAux := 0;{$EndIf}
   AJSon
     .Value('original', foriginal)
     .Value('modalidadeAlteracao', wAux);

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2022
+-- ACBrPIXSchemasCob --
+[*] Ajuste para não gravar CobValor.modalidadeAlteracao, se o valor for Falso,
+    pois o campo é opcional, e se não existente é considerado Falso
+    por: DSA e djinfope
+
 23/12/2022
 -- ACBrPIXPSPGerenciaNet -- 
 [+] Inclusão do novo PSP GerenciaNet

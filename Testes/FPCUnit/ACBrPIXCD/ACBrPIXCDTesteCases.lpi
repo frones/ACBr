@@ -109,6 +109,7 @@
     </CodeGeneration>
     <Linking>
       <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
         <UseHeaptrc Value="True"/>
         <TrashVariables Value="True"/>
         <UseExternalDbgSyms Value="True"/>
@@ -121,13 +122,10 @@
     </Linking>
     <Other>
       <CustomOptions Value="-dDEBUG"/>
-      <OtherDefines Count="1">
-        <Define0 Value="DEBUG"/>
-      </OtherDefines>
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="4">
+    <Exceptions Count="5">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -140,6 +138,9 @@
       <Item4>
         <Name Value="EACBrPixException"/>
       </Item4>
+      <Item5>
+        <Name Value="EAssertionFailedError"/>
+      </Item5>
     </Exceptions>
   </Debugging>
 </CONFIG>

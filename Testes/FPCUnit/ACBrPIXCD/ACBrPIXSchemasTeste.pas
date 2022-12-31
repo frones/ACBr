@@ -102,6 +102,20 @@ type
     procedure AtribuirLerReatribuirEComparar;
   end;
 
+  { TTestCobrancaImediataComSaquePIX1 }
+
+  TTestCobrancaImediataComSaquePIX1 = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixCob: TACBrPIXCobSolicitada;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValores;
+    procedure AtribuirLerReatribuirEComparar;
+  end;
+
   { TTestCobrancaImediataComSaquePIX2 }
 
   TTestCobrancaImediataComSaquePIX2 = class(TTestCase)
@@ -323,6 +337,78 @@ implementation
 uses
   DateUtils,
   ACBrUtil.Strings;
+
+{ TTestCobrancaImediataComSaquePIX1 }
+
+procedure TTestCobrancaImediataComSaquePIX1.SetUp;
+begin
+  inherited;
+  fACBrPixCob := TACBrPIXCobSolicitada.Create('');
+
+  // Nota, os Fontes dessa Unit estão em CP1252, por isso usamos ACBrStr()
+  fJSON := ACBrStr(
+           '{'+
+            '"devedor": {'+
+              '"cnpj": "12345678000195",'+
+              '"nome": "Empresa de Serviços SA"'+
+            '},'+
+            '"valor": {'+
+              '"original": "0.00",'+
+              '"retirada": {'+
+                '"saque": {'+
+                  '"valor": "5.00",'+
+                  '"modalidadeAgente": "AGPSS",'+
+                  '"prestadorDoServicoDeSaque": "12345678"'+
+                '}'+
+              '}'+
+            '},'+
+            '"chave": "7d9f0335-8dcc-4054-9bf9-0dbd61d36906"'+
+           '}');
+end;
+
+procedure TTestCobrancaImediataComSaquePIX1.TearDown;
+begin
+  fACBrPixCob.Free;
+  inherited TearDown;
+end;
+
+procedure TTestCobrancaImediataComSaquePIX1.AtribuirELerValores;
+begin
+  fACBrPixCob.AsJSON := fJSON;
+  CheckEquals(fACBrPixCob.devedor.cnpj, '12345678000195');
+  CheckEquals(fACBrPixCob.devedor.nome, ACBrStr('Empresa de Serviços SA'));
+  CheckEquals(fACBrPixCob.valor.original, 0);
+  CheckEquals(fACBrPixCob.valor.modalidadeAlteracao, False);
+  CheckEquals(fACBrPixCob.valor.retirada.saque.valor, 5);
+  CheckEquals(fACBrPixCob.valor.retirada.saque.modalidadeAlteracao, False);
+  CheckTrue(fACBrPixCob.valor.retirada.saque.modalidadeAgente = maAGPSS);
+  CheckEquals(fACBrPixCob.valor.retirada.saque.prestadorDoServicoDeSaque, 12345678);
+  CheckEquals(fACBrPixCob.chave, '7d9f0335-8dcc-4054-9bf9-0dbd61d36906');
+end;
+
+procedure TTestCobrancaImediataComSaquePIX1.AtribuirLerReatribuirEComparar;
+var
+  pc: TACBrPIXCobSolicitada;
+  s: String;
+begin
+  fACBrPixCob.AsJSON := fJSON;
+  s := fACBrPixCob.AsJSON;
+  pc := TACBrPIXCobSolicitada.Create('');
+  try
+    pc.AsJSON := s;
+    CheckEquals(fACBrPixCob.devedor.cnpj, pc.devedor.cnpj);
+    CheckEquals(fACBrPixCob.devedor.nome, pc.devedor.nome);
+    CheckEquals(fACBrPixCob.valor.original, pc.valor.original);
+    CheckEquals(fACBrPixCob.valor.modalidadeAlteracao, pc.valor.modalidadeAlteracao);
+    CheckEquals(fACBrPixCob.valor.retirada.saque.valor, pc.valor.retirada.saque.valor);
+    CheckEquals(fACBrPixCob.valor.retirada.saque.modalidadeAlteracao, pc.valor.retirada.saque.modalidadeAlteracao);
+    CheckTrue(fACBrPixCob.valor.retirada.saque.modalidadeAgente = pc.valor.retirada.saque.modalidadeAgente);
+    CheckEquals(fACBrPixCob.valor.retirada.saque.prestadorDoServicoDeSaque, pc.valor.retirada.saque.prestadorDoServicoDeSaque);
+    CheckEquals(fACBrPixCob.chave, pc.chave);
+  finally
+    pc.Free;
+  end;
+end;
 
 { TTestQRCodeEstatico }
 
@@ -2512,6 +2598,7 @@ initialization
   _RegisterTest('ACBrPIXCD.QRCode', TTestQRCodeDinamico);
   _RegisterTest('ACBrPIXCD.Schemas.Cob', TTestCobrancaImediataExemplo1);
   _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX);
+  _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX1);
   _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX2);
   _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX3);
   _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaGerada);

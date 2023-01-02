@@ -417,19 +417,19 @@ type
     fArquivoCertificado: String;
     fArquivoChavePrivada: String;
     fArquivoPFX: String;
-    fSenhaPFX: String;
+    fSenhaPFX: AnsiString;
     fCertificado: AnsiString;
     fChavePrivada: AnsiString;
     fPFX: AnsiString;
                                                 
-    function GetSenhaPFX: String;
+    function GetSenhaPFX: AnsiString;
     procedure SetArquivoCertificado(aValue: String);
     procedure SetArquivoChavePrivada(aValue: String);
     procedure SetArquivoPFX(const aValue: String);
     procedure SetCertificado(aValue: AnsiString);
     procedure SetChavePrivada(aValue: AnsiString);
     procedure SetPFX(aValue: AnsiString);
-    procedure SetSenhaPFX(const aValue: String);
+    procedure SetSenhaPFX(const aValue: AnsiString);
 
   protected
     procedure ConfigurarHeaders(const Method, AURL: String); override;
@@ -447,7 +447,7 @@ type
     property Certificado: AnsiString read fCertificado write SetCertificado;
     property ChavePrivada: AnsiString read fChavePrivada write SetChavePrivada;
     property PFX: AnsiString read fPFX write SetPFX;
-    property SenhaPFX: String read GetSenhaPFX write SetSenhaPFX;
+    property SenhaPFX: AnsiString read GetSenhaPFX write SetSenhaPFX;
   end;
 
   { TACBrPixRecebedor }
@@ -841,7 +841,7 @@ end;
 
 { TACBrPSPCertificate }
 
-function TACBrPSPCertificate.GetSenhaPFX: String;
+function TACBrPSPCertificate.GetSenhaPFX: AnsiString;
 begin
   Result := StrCrypt(fSenhaPFX, fK)  // Descritografa a Senha
 end;
@@ -882,7 +882,7 @@ begin
   fArquivoPFX := EmptyStr;
 end;
 
-procedure TACBrPSPCertificate.SetSenhaPFX(const aValue: String);
+procedure TACBrPSPCertificate.SetSenhaPFX(const aValue: AnsiString);
 begin
   if NaoEstaVazio(fK) and (fSenhaPFX = StrCrypt(AValue, fK)) then
     Exit;

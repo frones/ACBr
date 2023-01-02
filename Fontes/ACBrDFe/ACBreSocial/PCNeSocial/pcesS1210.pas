@@ -1148,7 +1148,7 @@ begin
    
     if VersaoDF >= veS01_01_00 then
     begin   
-      if (StrToInt(objInfoPgto.Items[i].paisResidExt) > 0) and (StrToInt(objInfoPgto.Items[i].paisResidExt) > 105) and 
+      if (StrToIntDef(objInfoPgto.Items[i].paisResidExt, 0) > 0) and (StrToInt(objInfoPgto.Items[i].paisResidExt) > 105) and
          ((StrToInt(Copy(Self.ideEvento.perApur,1,4))*100)+StrToInt(Copy(Self.ideEvento.perApur,6,2)) >= 202303) then
       begin
         Gerador.wCampo(tcStr, '', 'paisResidExt',  1,  3, 1, objInfoPgto.Items[i].paisResidExt);

@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/01/2023
+-- pcesS1210 --
+[*] Alteração para que gere a infoPgtoExt apenas para residentes do exterior.
+   Por: EdmarFrazao/DiegoF
+
 30/12/2022
 -- pcesConversaoeSocial --
 [*] Remove tipos que só tinham ocorrência nesta unit e não são mais utilizados pelo componente.

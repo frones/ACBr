@@ -71,7 +71,7 @@ type
     function CodComplementoMovimento(const ACodMotivo: String): String;
     function TipoOcorrenciaToCodRemessa(const ATipoOcorrencia: TACBrTipoOcorrencia): String; override;
     procedure DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo); override;
-
+    function DefinerCnpjCPFRetorno240(const ALinha: String): String; override;         //Define retorno rCnpjCPF
   end;
 
 implementation
@@ -600,6 +600,18 @@ begin
     Result := 39
   else
     Result := 71;
+end;
+
+function TACBrBancoUnicredES.DefinerCnpjCPFRetorno240(
+  const ALinha: String): String;
+begin
+  case StrToIntDef(Copy(ALinha,18,1),0) of
+     1: result := Copy(ALinha,19,14);
+     2: result := Copy(ALinha,22,11);
+  else
+    result := Copy(ALinha,19,14);
+  end;
+
 end;
 
 procedure TACBrBancoUnicredES.DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo: TACBrTitulo);

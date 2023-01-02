@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/01/2023
+[-] TK-3432 UniCredES - ACBrBoleto Correcao ler retorno quando fo CPF criado a funcao DefineCnpjCpf240 para identificar e tratar CPF/CNPJ
+    Por Daniel Morais/ vinizioWOW
+
 30/12/2022
 [-] TK-3444 ACBrBancoSicredi Correção captura do QrCode.TxID Posição 21-35, conforme Manual.
     Por Daniel Morais.

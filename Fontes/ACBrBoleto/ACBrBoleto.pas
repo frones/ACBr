@@ -882,6 +882,7 @@ type
     function DefinePosicaoCarteiraRetorno:Integer; virtual;                         //Define posição para leitura de Retorno campo: NumeroDocumento
     function DefineDataOcorrencia(const ALinha: String): String; virtual;           //Define a data da ocorrencia
     function DefineSeuNumeroRetorno(const ALinha: String): String; virtual;         //Define o Seu Numero
+    function DefinerCnpjCPFRetorno240(const ALinha: String): String; virtual;         //Define retorno rCnpjCPF
     function DefineNumeroDocumentoRetorno(const ALinha: String): String; virtual;   //Define o Numero Documento do Retorno
     procedure DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo); virtual;   //Define o Motivo da Rejeição ou Complemento no Retorno
 
@@ -3589,7 +3590,7 @@ begin
       //Cedente
       if IniBoletos.SectionExists('Cedente') then
       begin
-        wTipoInscricao := IniBoletos.ReadInteger(CCedente,'TipoPessoa',1);
+        wTipoInscricao := IniBoletos.ReadInteger(CCedente,'TipoInscricao',1);
         try
            Cedente.TipoInscricao := TACBrPessoa( wTipoInscricao ) ;
         except
@@ -4978,7 +4979,9 @@ begin
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],158,6),0);
 
   rCedente         := trim(copy(ARetorno[0], 73, 30));
-  rCNPJCPF         := OnlyNumber( copy(ARetorno[0], 19, 14) );
+
+  rCNPJCPF         := DefinerCnpjCPFRetorno240(ARetorno[0]);
+
   rConvenioCedente := Trim(Copy(ARetorno[0], 33, 20));
 
   ValidarDadosRetorno('', '', rCNPJCPF);
@@ -5766,6 +5769,11 @@ begin
   Result := Space(20)                                        + // 172 a 191 - Uso reservado do banco
             PadRight('REMESSA-PRODUCAO', 20, ' ')            + // 192 a 211 - Uso reservado da empresa
             PadRight('', 29, ' ');                            // 212 a 240 - Uso Exclusivo FEBRABAN / CNAB
+end;
+
+function TACBrBancoClass.DefinerCnpjCPFRetorno240(const ALinha: String): String;
+begin
+  Result := OnlyNumber( copy(ALinha, 19, 14) );
 end;
 
 function TACBrBancoClass.DefineCodBeneficiarioHeader: String;

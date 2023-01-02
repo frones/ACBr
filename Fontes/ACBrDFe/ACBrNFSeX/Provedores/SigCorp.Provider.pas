@@ -628,7 +628,7 @@ begin
   Request := Request + '</ws:ConsultarLoteRps>';
 
   Result := Executar(SoapAction + 'ConsultarLoteRps', Request,
-                     ['ConsultarLoteRpsResult', 'GerarNfseResposta'],
+                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
                      [NameSpace]);
 end;
 
@@ -708,7 +708,7 @@ begin
   Request := Request + '</ws:CancelarNfse>';
 
   Result := Executar(SoapAction + 'CancelarNfse', Request,
-                     ['CancelarNfseResult', 'GerarNfseResposta'],
+                     ['CancelarNfseResult', 'CancelarNfseResposta'],
                      [NameSpace]);
 end;
 
@@ -724,7 +724,7 @@ begin
   Request := Request + '</ws:SubstituirNfse>';
 
   Result := Executar(SoapAction + 'SubstituirNfse', Request,
-                     ['SubstituirNfseResult', 'GerarNfseResposta'],
+                     ['SubstituirNfseResult', 'SubstituirNfseResposta'],
                      [NameSpace]);
 end;
 

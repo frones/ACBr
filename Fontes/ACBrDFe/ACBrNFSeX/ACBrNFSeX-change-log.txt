@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/01/2023
+-- SigCorp.Provider --
+[*] Correção nas tags de retorno de alguns serviços.
+   Por: Italo Giurizzato Junior
+
 30/12/2022
 -- Saatri.Provider/Saatri.LerXml --
 [*] Ajustes para detectar se a tag Discriminacao contem um JSON ou não.

@@ -6,8 +6,8 @@ namespace ACBrLib.NFe
     {
         [EnumValue("")] iiSemOperacao,
 
-        [EnumValue("0")] iiOperacaoSemIntermediador,
+        [EnumValue("0")] iiOperacaoSemIntermediador = 1,
 
-        [EnumValue("1")] iiOperacaoComIntermediador
+        [EnumValue("1")] iiOperacaoComIntermediador = 2
     }
 }

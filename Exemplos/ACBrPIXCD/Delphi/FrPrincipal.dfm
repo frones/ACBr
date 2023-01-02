@@ -5081,354 +5081,154 @@ object Form1: TForm1
             object tsGerenciaNet: TTabSheet
               Caption = 'GerenciaNet'
               ImageIndex = 7
-              object pgGerencianet: TPageControl
-                Left = 32
-                Top = 40
-                Width = 888
-                Height = 368
-                ActivePage = TabSheet1
+              DesignSize = (
+                984
+                492)
+              object pnGerenciaNet: TPanel
+                Left = 40
+                Top = 78
+                Width = 880
+                Height = 256
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
                 TabOrder = 0
-                object TabSheet1: TTabSheet
-                  Caption = 'Credenciais'
-                  object Panel13: TPanel
-                    Left = 0
-                    Top = 0
-                    Width = 880
-                    Height = 340
-                    Align = alClient
-                    Anchors = [akLeft, akRight]
-                    BevelOuter = bvNone
-                    TabOrder = 0
-                    DesignSize = (
-                      880
-                      340)
-                    object SpeedButton4: TSpeedButton
-                      Left = 856
-                      Top = 197
-                      Width = 23
-                      Height = 23
-                      AllowAllUp = True
-                      Anchors = [akTop, akRight]
-                      GroupIndex = 1
-                      Flat = True
-                      OnClick = sbSantanderVerSenhaPFXClick
-                    end
-                    object SpeedButton1: TSpeedButton
-                      Left = 852
-                      Top = 189
-                      Width = 24
-                      Height = 23
-                      Anchors = [akTop, akRight]
-                      Flat = True
-                      Font.Charset = DEFAULT_CHARSET
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Font.Style = []
-                      ParentFont = False
-                      ParentShowHint = False
-                      ShowHint = True
-                      OnClick = sbPagSeguroAcharChavePrivadaClick
-                    end
-                    object SpeedButton2: TSpeedButton
-                      Left = 852
-                      Top = 259
-                      Width = 24
-                      Height = 23
-                      Anchors = [akTop, akRight]
-                      Flat = True
-                      Font.Charset = DEFAULT_CHARSET
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Font.Style = []
-                      ParentFont = False
-                      ParentShowHint = False
-                      ShowHint = True
-                      OnClick = sbPagSeguroAcharArqCertificadoClick
-                    end
-                    object Label4: TLabel
-                      Left = 687
-                      Top = 16
-                      Width = 55
-                      Height = 13
-                      Anchors = [akTop, akRight]
-                      Caption = 'Tipo Chave'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object lbGerenciaNetErroChavePrivada: TLabel
-                      Left = 32
-                      Top = 214
-                      Width = 154
-                      Height = 13
-                      Caption = 'lbGerenciaNetErroChavePrivada'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object lbGerenciaNetErroCertificado: TLabel
-                      Left = 32
-                      Top = 286
-                      Width = 137
-                      Height = 13
-                      Caption = 'lbGerenciaNetErroCertificado'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object Label19: TLabel
-                      Left = 32
-                      Top = 124
-                      Width = 60
-                      Height = 13
-                      Caption = 'Client Secret'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object Label29: TLabel
-                      Left = 32
-                      Top = 67
-                      Width = 40
-                      Height = 13
-                      Caption = 'Client ID'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object Label30: TLabel
-                      Left = 32
-                      Top = 16
-                      Width = 51
-                      Height = 13
-                      Caption = 'Chave PIX'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object Label31: TLabel
-                      Left = 32
-                      Top = 173
-                      Width = 109
-                      Height = 13
-                      Caption = 'Arquivo Chave Privada'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object Label32: TLabel
-                      Left = 32
-                      Top = 243
-                      Width = 115
-                      Height = 13
-                      Caption = 'Arquivo Certificado PEM'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object imGerenciaNetErroChavePrivada: TImage
-                      Left = 10
-                      Top = 192
-                      Width = 16
-                      Height = 16
-                      Visible = False
-                    end
-                    object imGerenciaNetErroChavePix: TImage
-                      Left = 852
-                      Top = 36
-                      Width = 16
-                      Height = 16
-                      Anchors = [akTop, akRight]
-                      Visible = False
-                    end
-                    object imGerenciaNetErroCertificado: TImage
-                      Left = 10
-                      Top = 264
-                      Width = 16
-                      Height = 16
-                      Visible = False
-                    end
-                    object edGerenciaNetClientSecret: TEdit
-                      Left = 32
-                      Top = 143
-                      Width = 816
-                      Height = 21
-                      Anchors = [akLeft, akTop, akRight]
-                      TabOrder = 0
-                    end
-                    object edGerenciaNetClientID: TEdit
-                      Left = 32
-                      Top = 83
-                      Width = 816
-                      Height = 21
-                      Anchors = [akLeft, akTop, akRight]
-                      TabOrder = 1
-                    end
-                    object edGerenciaNetChavePIX: TEdit
-                      Left = 32
-                      Top = 35
-                      Width = 638
-                      Height = 21
-                      Anchors = [akLeft, akTop, akRight]
-                      TabOrder = 2
-                    end
-                    object edGerenciaNetArqChavePrivada: TEdit
-                      Left = 32
-                      Top = 192
-                      Width = 816
-                      Height = 23
-                      Anchors = [akLeft, akTop, akRight]
-                      AutoSize = False
-                      TabOrder = 3
-                      Text = 'GerenciaNetChavePrivada.key'
-                      OnChange = edGerenciaNetArqChavePrivadaChange
-                      OnExit = edGerenciaNetArqChavePrivadaExit
-                    end
-                    object edGerenciaNetArqCertificado: TEdit
-                      Left = 30
-                      Top = 262
-                      Width = 816
-                      Height = 23
-                      Anchors = [akLeft, akTop, akRight]
-                      AutoSize = False
-                      TabOrder = 4
-                      Text = 'GerenciaNetCertificado.pem'
-                      OnChange = edGerenciaNetArqCertificadoChange
-                      OnExit = edGerenciaNetArqCertificadoExit
-                    end
-                    object cbGerenciaNetTipoChave: TComboBox
-                      Left = 689
-                      Top = 35
-                      Width = 157
-                      Height = 21
-                      Style = csDropDownList
-                      Anchors = [akTop, akRight]
-                      ItemHeight = 13
-                      TabOrder = 5
-                      TabStop = False
-                    end
-                  end
+                DesignSize = (
+                  880
+                  256)
+                object sbGerenciaNetAcharPFX: TSpeedButton
+                  Left = 852
+                  Top = 192
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = sbGerenciaNetAcharPFXClick
                 end
-                object TabSheet2: TTabSheet
-                  Caption = 'Extrair Certificado'
-                  object Panel14: TPanel
-                    Left = 0
-                    Top = 0
-                    Width = 880
-                    Height = 340
-                    Align = alClient
-                    BevelOuter = bvNone
-                    TabOrder = 0
-                    DesignSize = (
-                      880
-                      340)
-                    object sbGerenciaNetExtrairCertificadoPFX: TSpeedButton
-                      Left = 600
-                      Top = 56
-                      Width = 24
-                      Height = 23
-                      Anchors = [akTop, akRight]
-                      Flat = True
-                      Font.Charset = DEFAULT_CHARSET
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Font.Style = []
-                      ParentFont = False
-                      ParentShowHint = False
-                      ShowHint = True
-                      OnClick = sbGerenciaNetExtrairCertificadoPFXClick
-                    end
-                    object Label52: TLabel
-                      Left = 40
-                      Top = 40
-                      Width = 112
-                      Height = 13
-                      Caption = 'Arquivo Certificado PFX'
-                      Color = clBtnFace
-                      ParentColor = False
-                      Transparent = False
-                    end
-                    object Label53: TLabel
-                      Left = 40
-                      Top = 160
-                      Width = 115
-                      Height = 13
-                      Caption = 'Arquivo Certificado PEM'
-                      Color = clBtnFace
-                      ParentColor = False
-                      Transparent = False
-                    end
-                    object Label54: TLabel
-                      Left = 640
-                      Top = 40
-                      Width = 84
-                      Height = 13
-                      Caption = 'Senha Certificado'
-                      Color = clBtnFace
-                      ParentColor = False
-                    end
-                    object SpeedButton6: TSpeedButton
-                      Left = 808
-                      Top = 56
-                      Width = 23
-                      Height = 23
-                      AllowAllUp = True
-                      Anchors = [akTop, akRight]
-                      GroupIndex = 1
-                      Flat = True
-                      OnClick = sbSantanderExtrairCertificadoVerSenhaPFXClick
-                    end
-                    object SpeedButton7: TSpeedButton
-                      Left = 224
-                      Top = 104
-                      Width = 30
-                      Height = 30
-                      Anchors = [akTop, akRight]
-                      Flat = True
-                      OnClick = sbSantanderExtrairCertificadoInfoClick
-                    end
-                    object edGerenciaNetExtrairCertificadoPFX: TEdit
-                      Left = 34
-                      Top = 59
-                      Width = 560
-                      Height = 23
-                      Anchors = [akLeft, akTop, akRight]
-                      AutoSize = False
-                      TabOrder = 0
-                    end
-                    object btGerenciaNetExtrairPEM: TBitBtn
-                      Left = 39
-                      Top = 104
-                      Width = 179
-                      Height = 30
-                      Caption = 'Extrair Certificado PEM'
-                      TabOrder = 1
-                      OnClick = btGerenciaNetExtrairPEMClick
-                    end
-                    object edGerenciaNetExtrairCertificadoPEM: TEdit
-                      Left = 40
-                      Top = 176
-                      Width = 791
-                      Height = 23
-                      Anchors = [akLeft, akTop, akRight]
-                      AutoSize = False
-                      TabOrder = 2
-                      Text = 'GerenciaNetCertificado.pem'
-                    end
-                    object edGerenciaNetExtrairCertificadoSenhaPFX: TEdit
-                      Left = 638
-                      Top = 59
-                      Width = 164
-                      Height = 21
-                      Anchors = [akLeft, akTop, akRight]
-                      PasswordChar = '*'
-                      TabOrder = 3
-                    end
-                    object btGerenciaNetBaixarConversor: TBitBtn
-                      Left = 224
-                      Top = 104
-                      Width = 179
-                      Height = 30
-                      Caption = 'Baixar Conversor GN'
-                      TabOrder = 4
-                      OnClick = btGerenciaNetBaixarConversorClick
-                    end
-                  end
+                object lbGerenciaNetTipoChave: TLabel
+                  Left = 687
+                  Top = 16
+                  Width = 55
+                  Height = 13
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbGerenciaNetErroPFX: TLabel
+                  Left = 32
+                  Top = 214
+                  Width = 107
+                  Height = 13
+                  Caption = 'lbGerenciaNetErroPFX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbGerenciaNetClientSecret: TLabel
+                  Left = 32
+                  Top = 124
+                  Width = 60
+                  Height = 13
+                  Caption = 'Client Secret'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbGerenciaNetClientID: TLabel
+                  Left = 32
+                  Top = 67
+                  Width = 40
+                  Height = 13
+                  Caption = 'Client ID'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbGerenciaNetChave: TLabel
+                  Left = 32
+                  Top = 16
+                  Width = 51
+                  Height = 13
+                  Caption = 'Chave PIX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbGerenciaNetPFX: TLabel
+                  Left = 32
+                  Top = 173
+                  Width = 148
+                  Height = 13
+                  Caption = 'Arquivo Certificado (P12 / PFX)'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object imGerenciaNetErroPFX: TImage
+                  Left = 10
+                  Top = 192
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object imGerenciaNetErroChavePix: TImage
+                  Left = 852
+                  Top = 38
+                  Width = 16
+                  Height = 17
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object edGerenciaNetClientSecret: TEdit
+                  Left = 32
+                  Top = 143
+                  Width = 816
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 0
+                end
+                object edGerenciaNetClientID: TEdit
+                  Left = 32
+                  Top = 83
+                  Width = 816
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 1
+                end
+                object edGerenciaNetChavePIX: TEdit
+                  Left = 32
+                  Top = 35
+                  Width = 638
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 2
+                  OnChange = edGerenciaNetChavePIXChange
+                end
+                object edGerenciaNetArqPFX: TEdit
+                  Left = 32
+                  Top = 192
+                  Width = 816
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 3
+                  Text = 'GerenciaNet.p12'
+                  OnChange = edGerenciaNetArqPFXChange
+                  OnExit = edGerenciaNetArqPFXExit
+                end
+                object cbGerenciaNetTipoChave: TComboBox
+                  Left = 689
+                  Top = 35
+                  Width = 157
+                  Height = 21
+                  Style = csDropDownList
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 13
+                  TabOrder = 4
+                  TabStop = False
                 end
               end
             end
@@ -6866,7 +6666,7 @@ object Form1: TForm1
     Top = 416
   end
   object ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet
-    Left = 356
-    Top = 403
+    Left = 354
+    Top = 416
   end
 end

@@ -67,25 +67,19 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrPSPSantander = class(TACBrPSP)
+  TACBrPSPSantander = class(TACBrPSPCertificate)
   private
-    fK: String;
     fRefreshURL: String;
-    fArquivoPFX: String;
-    fSenhaPFX: String;
     function GetConsumerKey: String;
     function GetConsumerSecret: String;
-    function GetSenhaPFX: String;
     procedure SetConsumerKey(AValue: String);
     procedure SetConsumerSecret(AValue: String);
-    procedure SetArquivoPFX(const AValue: String);
-    procedure SetSenhaPFX(const AValue: String);
     procedure QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String;
       var aResultCode: Integer; var aRespostaHttp: AnsiString);
     procedure QuandoAcessarEndPoint(const aEndPoint: String; var aURL: String; var aMethod: String);
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
-    procedure ConfigurarHeaders(const Method, AURL: String); override;
+    function VerificarSeIncluiPFX(const Method, AURL: String): Boolean; override;
   public
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
@@ -94,8 +88,6 @@ type
     property APIVersion;
     property ConsumerKey: String read GetConsumerKey write SetConsumerKey;
     property ConsumerSecret: String read GetConsumerSecret write SetConsumerSecret;
-    property ArquivoPFX: String read fArquivoPFX write SetArquivoPFX;
-    property SenhaPFX: String read GetSenhaPFX write SetSenhaPFX;
   end;
 
 implementation
@@ -108,24 +100,12 @@ uses
 
 { TACBrPSPSantander }
 
-procedure TACBrPSPSantander.ConfigurarHeaders(const Method, AURL: String);
-begin
- inherited ConfigurarHeaders(Method, AURL);
-
- if (ACBrPixCD.Ambiente = ambProducao) then
- begin
-   http.Sock.SSL.PFXfile     := ArquivoPFX;
-   http.Sock.SSL.KeyPassword := SenhaPFX;
- end;
-end;
-
 constructor TACBrPSPSantander.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
   fpQuandoAcessarEndPoint := QuandoAcessarEndPoint;
   fRefreshURL := EmptyStr;
-  fK := EmptyStr;
 end;
 
 procedure TACBrPSPSantander.Autenticar;
@@ -201,19 +181,6 @@ begin
   Result := ClientSecret;
 end;
 
-function TACBrPSPSantander.GetSenhaPFX: String;
-begin
-  Result := StrCrypt(fSenhaPFX, fK)  // Descritografa a Senha
-end;
-
-procedure TACBrPSPSantander.SetArquivoPFX(const AValue: String);
-begin
-  if (fArquivoPFX = AValue) then
-    Exit;
-
-  fArquivoPFX := Trim(AValue);
-end;
-
 procedure TACBrPSPSantander.SetConsumerKey(AValue: String);
 begin
   ClientID := AValue;
@@ -222,15 +189,6 @@ end;
 procedure TACBrPSPSantander.SetConsumerSecret(AValue: String);
 begin
   ClientSecret := AValue;
-end;
-
-procedure TACBrPSPSantander.SetSenhaPFX(const AValue: String);
-begin
-  if (fK <> '') and (fSenhaPFX = StrCrypt(AValue, fK)) then
-    Exit;
-
-  fK := FormatDateTime('hhnnsszzz', Now);
-  fSenhaPFX := StrCrypt(AValue, fK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
 end;
 
 procedure TACBrPSPSantander.QuandoReceberRespostaEndPoint(const aEndPoint,
@@ -260,6 +218,11 @@ begin
   else
     Result := cSantanderURLSandbox;
   end;
+end;
+
+function TACBrPSPSantander.VerificarSeIncluiPFX(const Method, AURL: String): Boolean;
+begin
+  Result := (inherited VerificarSeIncluiPFX(Method, AURL)) and (ACBrPixCD.Ambiente = ambProducao);
 end;
 
 end.

@@ -142,6 +142,7 @@ type
     cbCobVDescModalidade: TComboBox;
     cbCobVJurosModalidade: TComboBox;
     cbCobVMultaModalidade: TComboBox;
+    cbGerenciaNetTipoChave: TComboBox;
     cbSicoobTipoChave: TComboBox;
     cbSicrediTipoChave: TComboBox;
     cbPagSeguroTipoChave: TComboBox;
@@ -185,6 +186,10 @@ type
     edFluxoItemDescricao: TEdit;
     edFluxoItemEAN: TEdit;
     edFluxoItemValor: TEdit;
+    edGerenciaNetArqPFX: TEdit;
+    edGerenciaNetChavePIX: TEdit;
+    edGerenciaNetClientID: TEdit;
+    edGerenciaNetClientSecret: TEdit;
     edItauRenovarCertificadoArq: TEdit;
     edPagSeguroTokenPay: TEdit;
     edSantanderArqCertificadoPFX: TEdit;
@@ -269,6 +274,8 @@ type
     gbAutenticacaoManual: TGroupBox;
     imCobVQRCode: TImage;
     imFluxoQRCode: TImage;
+    imGerenciaNetErroChavePix: TImage;
+    imGerenciaNetErroPFX: TImage;
     imgErrCEP: TImage;
     imgErrNome: TImage;
     imgErrPSP: TImage;
@@ -301,11 +308,17 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
+    lbGerenciaNetClientSecret: TLabel;
     Label25: TLabel;
     Label26: TLabel;
     Label27: TLabel;
     Label28: TLabel;
+    lbGerenciaNetClientID: TLabel;
     Label3: TLabel;
+    lbGerenciaNetChave: TLabel;
+    lbGerenciaNetTipoChave: TLabel;
+    lbGerenciaNetErroPFX: TLabel;
+    lbGerenciaNetPFX: TLabel;
     lbPagSeguroTokenPay: TLabel;
     lbSantanderChavePIX: TLabel;
     lbSantanderTipoChave: TLabel;
@@ -452,6 +465,7 @@ type
     mConsultarDevolucaoPix: TMemo;
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
+    pnGerenciaNet: TPanel;
     pnAutenticacaoManual: TPanel;
     pnPagSeguroLimpar: TPanel;
     pnPagSeguroCabecalho: TPanel;
@@ -551,6 +565,7 @@ type
     sbArqLog: TSpeedButton;
     sbConsultaCEP: TSpeedButton;
     sbCriarCobrancaImediata_GerarTxId: TSpeedButton;
+    sbGerenciaNetAcharPFX: TSpeedButton;
     sbItauAcharArqCertificado: TSpeedButton;
     sbItauAcharArqChavePrivada: TSpeedButton;
     sbSantanderAcharCertificadoPFX: TSpeedButton;
@@ -644,42 +659,6 @@ type
     Valor: TLabel;
     ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet;
     tsGerenciaNet: TTabSheet;
-    pgGerencianet: TPageControl;
-    TabSheet1: TTabSheet;
-    Panel13: TPanel;
-    SpeedButton4: TSpeedButton;
-    TabSheet2: TTabSheet;
-    Panel14: TPanel;
-    sbGerenciaNetExtrairCertificadoPFX: TSpeedButton;
-    Label52: TLabel;
-    Label53: TLabel;
-    Label54: TLabel;
-    SpeedButton6: TSpeedButton;
-    SpeedButton7: TSpeedButton;
-    edGerenciaNetExtrairCertificadoPFX: TEdit;
-    btGerenciaNetExtrairPEM: TBitBtn;
-    edGerenciaNetExtrairCertificadoPEM: TEdit;
-    edGerenciaNetExtrairCertificadoSenhaPFX: TEdit;
-    SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
-    Label4: TLabel;
-    lbGerenciaNetErroChavePrivada: TLabel;
-    lbGerenciaNetErroCertificado: TLabel;
-    Label19: TLabel;
-    Label29: TLabel;
-    Label30: TLabel;
-    Label31: TLabel;
-    Label32: TLabel;
-    imGerenciaNetErroChavePrivada: TImage;
-    imGerenciaNetErroChavePix: TImage;
-    imGerenciaNetErroCertificado: TImage;
-    edGerenciaNetClientSecret: TEdit;
-    edGerenciaNetClientID: TEdit;
-    edGerenciaNetChavePIX: TEdit;
-    edGerenciaNetArqChavePrivada: TEdit;
-    edGerenciaNetArqCertificado: TEdit;
-    cbGerenciaNetTipoChave: TComboBox;
-    btGerenciaNetBaixarConversor: TBitBtn;
     procedure ACBrPixCD1QuandoGravarLog(const ALogLine: String; var Tratado: Boolean);
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL: String;
       const AMethod: String; RespHeaders: TStrings; var AResultCode: Integer;
@@ -712,7 +691,6 @@ type
     procedure btFluxoItemIncluirClick(Sender: TObject);
     procedure btFluxoNovaVendaClick(Sender: TObject);
     procedure btFluxoPagarClick(Sender: TObject);
-    procedure btGerenciaNetExtrairPEMClick(Sender: TObject);
     procedure btGerenciaNetBaixarConversorClick(Sender: TObject);
     procedure btItauGerarChavePrivadaClick(Sender: TObject);
     procedure btItauRenovarCertificadoClick(Sender: TObject);
@@ -745,8 +723,8 @@ type
     procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
     procedure edGerenciaNetChavePIXChange(Sender: TObject);
-    procedure edGerenciaNetArqChavePrivadaExit(Sender: TObject);
-    procedure edGerenciaNetArqChavePrivadaChange(Sender: TObject);
+    procedure edGerenciaNetArqPFXExit(Sender: TObject);
+    procedure edGerenciaNetArqPFXChange(Sender: TObject);
     procedure edGerenciaNetArqCertificadoExit(Sender: TObject);
     procedure edGerenciaNetArqCertificadoChange(Sender: TObject);
     procedure edPagSeguroArqCertificadoExit(Sender: TObject);
@@ -784,9 +762,9 @@ type
     procedure sbArqLogClick(Sender: TObject);
     procedure sbConsultaCEPClick(Sender: TObject);
     procedure sbCriarCobrancaImediata_GerarTxIdClick(Sender: TObject);
+    procedure sbGerenciaNetAcharPFXClick(Sender: TObject);
     procedure sbItauAcharArqCertificadoClick(Sender: TObject);
     procedure sbItauAcharArqChavePrivadaClick(Sender: TObject);
-    procedure sbGerenciaNetExtrairCertificadoPFXClick(Sender: TObject);
     procedure sbPagSeguroAcharArqCertificadoClick(Sender: TObject);
     procedure sbPagSeguroAcharChavePrivadaClick(Sender: TObject);
     procedure sbSantanderExtrairCertificadoPFXClick(Sender: TObject);
@@ -835,7 +813,6 @@ type
     procedure ValidarChavePSPSicredi;
     procedure ValidarChavePSPSicoob;
     procedure ValidarChavePSPPagSeguro;
-    procedure ValidarChavePSPGerenciaNet;
     procedure ValidarCertificadoPSPSicoob;
     procedure ValidarCertificadoPSPSicredi;
     procedure ValidarCertificadoPSPSantander;
@@ -898,7 +875,7 @@ uses
   TypInfo, Clipbrd, IniFiles, DateUtils, synacode, synautil, pcnConversao,
   ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil,
   ACBrPIXSchemasCobV, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrUtil.DateTime, ACBrJSON;
+  ACBrUtil.DateTime, ACBrUtil.Compatibilidade, ACBrJSON;
 
 {$R *.dfm}
 
@@ -970,6 +947,13 @@ begin
   edtCriarCobrancaImediata_TxId.Text := CriarTxId;
 end;
 
+procedure TForm1.sbGerenciaNetAcharPFXClick(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+    edGerenciaNetArqPFX.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+  ValidarCertificadoPSPGerenciaNet;
+end;
+
 procedure TForm1.sbItauAcharArqCertificadoClick(Sender: TObject);
 begin
   OpenDialog1.FileName := edtItauArqCertificado.Text;
@@ -984,12 +968,6 @@ begin
   if OpenDialog1.Execute then
     edtItauArqChavePrivada.Text := RemoverPathAplicacao(OpenDialog1.FileName);
   ValidarChavePSPItau;
-end;
-
-procedure TForm1.sbGerenciaNetExtrairCertificadoPFXClick(Sender: TObject);
-begin
-  if OpenDialog1.Execute then
-    edGerenciaNetExtrairCertificadoPFX.Text := RemoverPathAplicacao(OpenDialog1.FileName);
 end;
 
 procedure TForm1.sbPagSeguroAcharArqCertificadoClick(Sender: TObject);
@@ -1872,39 +1850,6 @@ begin
   end;
 end;
 
-procedure TForm1.btGerenciaNetExtrairPEMClick(Sender: TObject);
-var
-  wArqPEM: String;
-  wSL: TStringList;
-begin
-  if EstaVazio(edGerenciaNetExtrairCertificadoPFX.Text) or
-     (not FileExists(edGerenciaNetExtrairCertificadoPFX.Text)) then
-  begin
-    MessageDlg(ACBrStr('Arquivo P12 não informado/existe'), mtError, [mbOK], 0);
-    Exit;
-  end;
-
-  if EstaVazio(edGerenciaNetExtrairCertificadoPEM.Text) then
-  begin
-    MessageDlg(ACBrStr('Arquivo de destino PEM não informado'), mtError, [mbOK], 0);
-    Exit;
-  end;
-
-  wSL := TStringList.Create;
-  try
-    wArqPEM := edGerenciaNetExtrairCertificadoPEM.Text;
-    ACBrOpenSSLUtils1.LoadCertificateFromFile(
-      edGerenciaNetExtrairCertificadoPFX.Text,
-      edGerenciaNetExtrairCertificadoSenhaPFX.Text);
-    wSL.Text := ACBrOpenSSLUtils1.CertificateAsString;
-    wSL.SaveToFile(wArqPEM);
-
-    MessageDlg('Arquivo PEM gerado em: ' + wArqPEM, mtInformation, [mbOK], 0);
-  finally
-    wSL.Free;
-  end;
-end;
-
 procedure TForm1.btGerenciaNetBaixarConversorClick(Sender: TObject);
 begin
   shellexecute(0, 'open', 'https://pix.gerencianet.com.br/ferramentas/conversorGerencianet.exe', '', '', 1);
@@ -2280,15 +2225,14 @@ begin
   imGerenciaNetErroChavePix.Visible := NaoEstaVazio(edGerenciaNetChavePIX.Text) and (cbGerenciaNetTipoChave.ItemIndex = 0);
 end;
 
-procedure TForm1.edGerenciaNetArqChavePrivadaExit(Sender: TObject);
+procedure TForm1.edGerenciaNetArqPFXExit(Sender: TObject);
 begin
-  ValidarChavePSPGerenciaNet;
+  ValidarCertificadoPSPGerenciaNet;
 end;
 
-procedure TForm1.edGerenciaNetArqChavePrivadaChange(Sender: TObject);
+procedure TForm1.edGerenciaNetArqPFXChange(Sender: TObject);
 begin
-  lbGerenciaNetErroChavePrivada.Caption := '';
-  lbGerenciaNetErroCertificado.Caption := '';
+  lbGerenciaNetErroPFX.Caption := EmptyStr;
 end;
 
 procedure TForm1.edGerenciaNetArqCertificadoExit(Sender: TObject);
@@ -2363,8 +2307,7 @@ end;
 
 procedure TForm1.edGerenciaNetArqCertificadoChange(Sender: TObject);
 begin
-  lbGerenciaNetErroChavePrivada.Caption := '';
-  lbGerenciaNetErroCertificado.Caption := '';
+  lbGerenciaNetErroPFX.Caption := EmptyStr;
 end;
 
 procedure TForm1.edOnlyNumbersKeyPress(Sender: TObject; var Key: char);
@@ -2584,9 +2527,7 @@ end;
 procedure TForm1.LigarAlertasdeErrosDeConfiguracaoPSPGerenciaNet;
 begin
   edGerenciaNetChavePIXChange(Nil);
-  edGerenciaNetArqChavePrivadaChange(Nil);
   edGerenciaNetArqCertificadoChange(Nil);
-  ValidarChavePSPGerenciaNet;
   ValidarCertificadoPSPGerenciaNet;
 end;
 
@@ -2717,30 +2658,6 @@ begin
   imPagSeguroErroChavePrivada.Visible := (e <> 'OK');
 end;
 
-procedure TForm1.ValidarChavePSPGerenciaNet;
-var
-  a, e: String;
-begin
-  a := AdicionarPathAplicacao(edGerenciaNetArqChavePrivada.Text);
-  e := 'OK';
-  if (a = '') then
-    e := ACBrStr('Arquivo não especificado')
-  else if (not FileExists(a)) then
-    e := ACBrStr('Arquivo não encontrado')
-  else
-  begin
-    try
-      ACBrOpenSSLUtils1.LoadCertificateFromFile(a);
-    except
-      On Ex: Exception do
-        e := Ex.Message;
-    end;
-  end;
-
-  lbGerenciaNetErroChavePrivada.Caption := e;
-  imGerenciaNetErroChavePrivada.Visible := (e <> 'OK');
-end;
-
 procedure TForm1.ValidarCertificadoPSPSicoob;
 var
   a, e: String;
@@ -2845,7 +2762,7 @@ procedure TForm1.ValidarCertificadoPSPGerenciaNet;
 var
   a, e: String;
 begin
-  a := AdicionarPathAplicacao(edGerenciaNetArqCertificado.Text);
+  a := AdicionarPathAplicacao(edGerenciaNetArqPFX.Text);
   e := 'OK';
   if (a = '') then
     e := ACBrStr('Arquivo não especificado')
@@ -2854,15 +2771,15 @@ begin
   else
   begin
     try
-      ACBrOpenSSLUtils1.LoadCertificateFromFile(a);  // Verifica se o arquivo de Chave é válido
+      ACBrOpenSSLUtils1.LoadPFXFromFile(a);
     except
       On Ex: Exception do
         e := Ex.Message;
     end;
   end;
 
-  lbGerenciaNetErroCertificado.Caption := e;
-  imGerenciaNetErroChavePix.Visible := (e <> 'OK');
+  lbGerenciaNetErroPFX.Caption := e;
+  imGerenciaNetErroPFX.Visible := (e <> 'OK');
 end;
 
 procedure TForm1.ValidarChavePSPItau;
@@ -2986,8 +2903,7 @@ begin
     edGerenciaNetChavePIX.Text := Ini.ReadString('GerenciaNet', 'ChavePIX', '');
     edGerenciaNetClientID.Text := Ini.ReadString('GerenciaNet', 'ClientID', '');
     edGerenciaNetClientSecret.Text := Ini.ReadString('GerenciaNet', 'ClientSecret', '');
-    edGerenciaNetArqChavePrivada.Text := Ini.ReadString('GerenciaNet', 'ArqChavePrivada', edGerenciaNetArqChavePrivada.Text);
-    edGerenciaNetArqCertificado.Text := Ini.ReadString('GerenciaNet', 'ArqCertificado', edGerenciaNetArqCertificado.Text);
+    edGerenciaNetArqPFX.Text := Ini.ReadString('GerenciaNet', 'ArqPFX', edGerenciaNetArqPFX.Text);
   finally
     Ini.Free;
   end;
@@ -3072,8 +2988,7 @@ begin
     Ini.WriteString('GerenciaNet', 'ChavePIX', edGerenciaNetChavePIX.Text);
     Ini.WriteString('GerenciaNet', 'ClientID', edGerenciaNetClientID.Text);
     Ini.WriteString('GerenciaNet', 'ClientSecret', edGerenciaNetClientSecret.Text);
-    Ini.WriteString('GerenciaNet', 'ArqChavePrivada', edGerenciaNetArqChavePrivada.Text);
-    Ini.WriteString('GerenciaNet', 'ArqCertificado', edGerenciaNetArqCertificado.Text);
+    Ini.WriteString('GerenciaNet', 'ArqPFX', edGerenciaNetArqPFX.Text);
   finally
      Ini.Free ;
   end ;
@@ -3168,7 +3083,7 @@ begin
   ImageList1.GetBitmap(7, sbSantanderVerSenhaPFX.Glyph);
   ImageList1.GetBitmap(7, sbSantanderExtrairCertificadoVerSenhaPFX.Glyph);
   ImageList1.GetBitmap(7, btSicoobExtrairChaveCertificadoVerSenhaPFX.Glyph);
-  ImageList1.GetBitmap(7, sbGerenciaNetExtrairCertificadoPFX.Glyph);
+  ImageList1.GetBitmap(9, sbGerenciaNetAcharPFX.Glyph);
 
   ImageList1.GetBitmap(16, btItauValidarChaveCertificado.Glyph);
   ImageList1.GetBitmap(9, sbItauAcharArqChavePrivada.Glyph);
@@ -3363,8 +3278,7 @@ begin
   ACBrPSPGerenciaNet1.ChavePIX := edGerenciaNetChavePIX.Text;
   ACBrPSPGerenciaNet1.ClientID := edGerenciaNetClientID.Text;
   ACBrPSPGerenciaNet1.ClientSecret := edGerenciaNetClientSecret.Text;
-  ACBrPSPGerenciaNet1.ArquivoChavePrivada := edGerenciaNetArqChavePrivada.Text;
-  ACBrPSPGerenciaNet1.ArquivoCertificado := edGerenciaNetArqCertificado.Text;
+  ACBrPSPGerenciaNet1.ArquivoPFX := edGerenciaNetArqPFX.Text;
 end;
 
 procedure TForm1.LimparQRCodeEstatico;

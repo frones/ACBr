@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/01/2023
+-- ACBrPIXCD --
+[+] Incluídas na classe TACBrPSPCertificate as propriedades relacionadas ao certificado PFX, 
+    para que os PSPs que utilizam esse tipo de certificado também possam herdar dela.
+
+-- ACBrPIXPSPGerenciaNet --
+[*]	Alteração para o PSP GerenciaNET herdar da classe TACBrPSPCertificate
+
+-- ACBrPIXPSPSantander --
+[*] Alteração para o PSP Santander herdar da classe TACBrPSPCertificate
+    Por: Elias César
+
 30/12/2022
 -- ACBrPIXSchemasCob --
 [*] Ajuste para não gravar CobValor.modalidadeAlteracao, se o valor for Falso,

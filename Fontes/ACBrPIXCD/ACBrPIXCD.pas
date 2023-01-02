@@ -413,19 +413,28 @@ type
 
   TACBrPSPCertificate = class(TACBrPSP)
   private
+    fK: String;
     fArquivoCertificado: String;
     fArquivoChavePrivada: String;
+    fArquivoPFX: String;
+    fSenhaPFX: String;
     fCertificado: AnsiString;
     fChavePrivada: AnsiString;
-
+    fPFX: AnsiString;
+                                                
+    function GetSenhaPFX: String;
     procedure SetArquivoCertificado(aValue: String);
     procedure SetArquivoChavePrivada(aValue: String);
+    procedure SetArquivoPFX(const aValue: String);
     procedure SetCertificado(aValue: AnsiString);
     procedure SetChavePrivada(aValue: AnsiString);
+    procedure SetPFX(aValue: AnsiString);
+    procedure SetSenhaPFX(const aValue: String);
 
   protected
     procedure ConfigurarHeaders(const Method, AURL: String); override;
 
+    function VerificarSeIncluiPFX(const Method, AURL: String): Boolean;  virtual;
     function VerificarSeIncluiCertificado(const Method, AURL: String): Boolean; virtual;
     function VerificarSeIncluiChavePrivada(const Method, AURL: String): Boolean;  virtual;
   public
@@ -433,9 +442,12 @@ type
 
     property ArquivoCertificado: String read fArquivoCertificado write SetArquivoCertificado;
     property ArquivoChavePrivada: String read fArquivoChavePrivada write SetArquivoChavePrivada;
+    property ArquivoPFX: String read fArquivoPFX write SetArquivoPFX;
 
     property Certificado: AnsiString read fCertificado write SetCertificado;
     property ChavePrivada: AnsiString read fChavePrivada write SetChavePrivada;
+    property PFX: AnsiString read fPFX write SetPFX;
+    property SenhaPFX: String read GetSenhaPFX write SetSenhaPFX;
   end;
 
   { TACBrPixRecebedor }
@@ -829,6 +841,11 @@ end;
 
 { TACBrPSPCertificate }
 
+function TACBrPSPCertificate.GetSenhaPFX: String;
+begin
+  Result := StrCrypt(fSenhaPFX, fK)  // Descritografa a Senha
+end;
+
 procedure TACBrPSPCertificate.SetArquivoCertificado(aValue: String);
 begin
   fArquivoCertificado := Trim(aValue);
@@ -839,6 +856,12 @@ procedure TACBrPSPCertificate.SetArquivoChavePrivada(aValue: String);
 begin
   fArquivoChavePrivada := Trim(aValue);
   fChavePrivada := EmptyStr;
+end;
+
+procedure TACBrPSPCertificate.SetArquivoPFX(const aValue: String);
+begin
+  fArquivoPFX := Trim(AValue);
+  fPFX := EmptyStr;
 end;
 
 procedure TACBrPSPCertificate.SetCertificado(aValue: AnsiString);
@@ -853,37 +876,71 @@ begin
   fArquivoChavePrivada := EmptyStr;
 end;
 
+procedure TACBrPSPCertificate.SetPFX(aValue: AnsiString);
+begin
+  fPFX := Trim(aValue);
+  fArquivoPFX := EmptyStr;
+end;
+
+procedure TACBrPSPCertificate.SetSenhaPFX(const aValue: String);
+begin
+  if NaoEstaVazio(fK) and (fSenhaPFX = StrCrypt(AValue, fK)) then
+    Exit;
+
+  fK := FormatDateTime('hhnnsszzz', Now);
+  fSenhaPFX := StrCrypt(AValue, fK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
+end;
+
 procedure TACBrPSPCertificate.ConfigurarHeaders(const Method, AURL: String);
 begin
   inherited ConfigurarHeaders(Method, AURL);
-                                      
-  // Adicionando o Certificado
-  if VerificarSeIncluiCertificado(Method, AURL) then
-  begin
-    if NaoEstaVazio(Certificado) then
-    begin
-      if StringIsPEM(Certificado) then
-        Http.Sock.SSL.Certificate := ConvertPEMToASN1(Certificado)
-      else
-        Http.Sock.SSL.Certificate := Certificado;
-    end
-    else if NaoEstaVazio(ArquivoCertificado) then
-      Http.Sock.SSL.CertificateFile := ArquivoCertificado;
-  end;
 
-  // Adicionando a Chave Privada
-  if VerificarSeIncluiChavePrivada(Method, AURL) then
+  // Adicionando PFX
+  if VerificarSeIncluiPFX(Method, AURL) then
   begin
-    if NaoEstaVazio(ChavePrivada) then
+    if NaoEstaVazio(PFX) then
+      Http.Sock.SSL.PFX := PFX
+    else if NaoEstaVazio(ArquivoPFX) then
+      Http.Sock.SSL.PFXfile := ArquivoPFX;
+
+    if NaoEstaVazio(SenhaPFX) then
+      Http.Sock.SSL.KeyPassword := SenhaPFX;
+  end
+  else
+  begin
+    // Adicionando o Certificado
+    if VerificarSeIncluiCertificado(Method, AURL) then
     begin
-      if StringIsPEM(ChavePrivada) then
-        Http.Sock.SSL.PrivateKey := ConvertPEMToASN1(ChavePrivada)
-      else
-        Http.Sock.SSL.PrivateKey := ChavePrivada;
-    end
-    else if NaoEstaVazio(ArquivoChavePrivada) then
-      Http.Sock.SSL.PrivateKeyFile := ArquivoChavePrivada;
+      if NaoEstaVazio(Certificado) then
+      begin
+        if StringIsPEM(Certificado) then
+          Http.Sock.SSL.Certificate := ConvertPEMToASN1(Certificado)
+        else
+          Http.Sock.SSL.Certificate := Certificado;
+      end
+      else if NaoEstaVazio(ArquivoCertificado) then
+        Http.Sock.SSL.CertificateFile := ArquivoCertificado;
+    end;
+
+    // Adicionando a Chave Privada
+    if VerificarSeIncluiChavePrivada(Method, AURL) then
+    begin
+      if NaoEstaVazio(ChavePrivada) then
+      begin
+        if StringIsPEM(ChavePrivada) then
+          Http.Sock.SSL.PrivateKey := ConvertPEMToASN1(ChavePrivada)
+        else
+          Http.Sock.SSL.PrivateKey := ChavePrivada;
+      end
+      else if NaoEstaVazio(ArquivoChavePrivada) then
+        Http.Sock.SSL.PrivateKeyFile := ArquivoChavePrivada;
+    end;
   end;
+end;
+
+function TACBrPSPCertificate.VerificarSeIncluiPFX(const Method, AURL: String): Boolean;
+begin
+  Result := NaoEstaVazio(fPFX) or NaoEstaVazio(fArquivoPFX);
 end;
 
 function TACBrPSPCertificate.VerificarSeIncluiCertificado(const Method,
@@ -902,6 +959,7 @@ constructor TACBrPSPCertificate.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  fK := EmptyStr;
   fCertificado := EmptyStr;
   fChavePrivada := EmptyStr;
   fArquivoCertificado := EmptyStr;

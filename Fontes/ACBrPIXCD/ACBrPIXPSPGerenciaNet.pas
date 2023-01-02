@@ -64,9 +64,6 @@ type
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrPSPGerenciaNet = class(TACBrPSPCertificate)
-  private
-    fArquivoCertificado: String;
-    fArquivoChavePrivada: String;
   protected
     procedure ConfigurarHeaders(const aMethod, aURL: String); override;
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
@@ -76,7 +73,6 @@ type
   published
     property ClientID;
     property ClientSecret;
-
   end;
 
 implementation
@@ -104,7 +100,7 @@ end;
 
 procedure TACBrPSPGerenciaNet.Autenticar;
 var
-  wURL, BasicAutentication: String;
+  wURL: String;
   wRespostaHttp: AnsiString;
   wResultCode, sec: Integer;
   js: TACBrJSONObject;

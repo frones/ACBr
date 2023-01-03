@@ -110,6 +110,7 @@ Siappa               1.00  11/08/2022
 SiapSistemas         2.03
 Siat                 1.00
 SigCorp              2.03
+SigCorp              2.04
 Sigep                2.00
 SigISS               1.00
 SigISS               1.03  01/08/2022

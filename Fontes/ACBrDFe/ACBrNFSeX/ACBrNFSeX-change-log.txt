@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/01/2023
+-- Diversos --
+[*] Eliminação de possíveis AV nas procedures que tratam o retorno dos métodos.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluida a cidade de Brotas/SP, provedor é AssessorPublico.
    Por: FabioTellini

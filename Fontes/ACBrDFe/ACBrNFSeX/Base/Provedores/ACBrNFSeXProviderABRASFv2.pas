@@ -202,6 +202,7 @@ var
   DataAut: TDateTime;
   ANota: TNotaFiscal;
   AResumo: TNFSeResumoCollectionItem;
+  Node2: TACBrXmlNode;
 begin
   Result := False;
 
@@ -209,19 +210,27 @@ begin
   begin
     Node := Node.Childrens.FindAnyNs('InfNfse');
 
+    if not Assigned(Node) or (Node = nil) then Exit;
+
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
     CodVerif := ObterConteudoTag(Node.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
     DataAut := ObterConteudoTag(Node.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
 
-    Node := Node.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+    Node2 := Node.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
 
     // Tem provedor que mudou a tag de <DeclaracaoPrestacaoServico>
     // para <Rps>
-    if Node = nil then
-      Node := Node.Childrens.FindAnyNs('Rps');
+    if Node2 = nil then
+      Node2 := Node.Childrens.FindAnyNs('Rps');
 
-    Node := Node.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+    if not Assigned(Node2) or (Node2 = nil) then Exit;
+
+    Node := Node2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+    if not Assigned(Node) or (Node = nil) then Exit;
+
     Node := Node.Childrens.FindAnyNs('Rps');
+    if not Assigned(Node) or (Node = nil) then Exit;
+
     Node := Node.Childrens.FindAnyNs('IdentificacaoRps');
 
     NumRps := '';
@@ -538,6 +547,8 @@ begin
         begin
           ANode := ANodeArray[I];
           AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
 
           with Response do
@@ -552,12 +563,18 @@ begin
           // para <Rps>
           if AuxNode2 = nil then
             AuxNode2 := AuxNode.Childrens.FindAnyNs('Rps');
+          if not Assigned(AuxNode2) or (AuxNode2 = nil) then Exit;
 
           AuxNode := AuxNode2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
           AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-          AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-          NumRps := AuxNode.AsString;
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
@@ -903,7 +920,7 @@ end;
 procedure TACBrNFSeProviderABRASFv2.TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);
 var
   Document: TACBrXmlDocument;
-  ANode, AuxNode, AuxNodeConf, AuxNodeSubs: TACBrXmlNode;
+  ANode, AuxNode, AuxNode2, AuxNodeConf, AuxNodeSubs: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
   ANota: TNotaFiscal;
   NumNFSe, NumRps: String;
@@ -975,6 +992,8 @@ begin
       if AuxNode <> nil then
       begin
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
         with Response do
@@ -988,13 +1007,24 @@ begin
 
         if ANota = nil then
         begin
-          AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
-          AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+          AuxNode2 := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+
+          // Tem provedor que mudou a tag de <DeclaracaoPrestacaoServico>
+          // para <Rps>
+          if AuxNode2 = nil then
+            AuxNode2 := AuxNode.Childrens.FindAnyNs('Rps');
+          if not Assigned(AuxNode2) or (AuxNode2 = nil) then Exit;
+
+          AuxNode := AuxNode2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
 
           if AuxNode <> nil then
           begin
             AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+            if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
             NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
@@ -1286,8 +1316,14 @@ begin
       begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         NumNFSe := AuxNode.AsString;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
@@ -1527,8 +1563,14 @@ begin
       begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         NumNFSe := AuxNode.AsString;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
@@ -1776,8 +1818,14 @@ begin
       begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
         NumNFSe := AuxNode.AsString;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
@@ -2046,7 +2094,7 @@ begin
         Exit;
       end;
 
-      Ret :=  Response.RetCancelamento;
+      Ret := Response.RetCancelamento;
       Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
       if ConfigAssinar.IncluirURI then
@@ -2063,11 +2111,13 @@ begin
         ANode := AuxNode;
 
       ANode := ANode.Childrens.FindAnyNs('InfPedidoCancelamento');
+      if not Assigned(ANode) or (ANode = nil) then Exit;
 
       Ret.Pedido.InfID.ID := ObterConteudoTag(ANode.Attributes.Items[IdAttr]);
       Ret.Pedido.CodigoCancelamento := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
+      if not Assigned(ANode) or (ANode = nil) then Exit;
 
       with Ret.Pedido.IdentificacaoNfse do
       begin
@@ -2273,7 +2323,11 @@ var
     end;
 
     AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+    if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
     AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+    if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
     AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
 
     if AuxNode <> nil then
@@ -2343,6 +2397,8 @@ begin
         end;
 
         ANodeSubstituida := ANodeSubstituida.Childrens.FindAnyNs('Nfse');
+        if not Assigned(ANodeSubstituida) or (ANodeSubstituida = nil) then Exit;
+
         ANodeSubstituida := ANodeSubstituida.Childrens.FindAnyNs('InfNfse');
 
         with Response do

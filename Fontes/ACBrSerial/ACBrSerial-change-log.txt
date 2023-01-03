@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2023
+-- ACBrBAL, ACBrBALUranoUDC --
+[+] Inclusão do novo modelo ACBrBALUranoUDC; 
+    Por: -=MarcoS=-
+
 14/10/2022
 -- ACBrPosPrinterAndroidHelper, ACBrPosPrinterGEDI, ACBrPosPrinterElginE1Lib --
 [*] Refactoring para reaproveitamento de códigos em comum

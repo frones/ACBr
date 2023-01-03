@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a cidade de Brotas/SP, provedor é AssessorPublico.
+   Por: FabioTellini
+
 02/01/2023
 -- SigCorp.Provider --
 [*] Correção nas tags de retorno de alguns serviços.

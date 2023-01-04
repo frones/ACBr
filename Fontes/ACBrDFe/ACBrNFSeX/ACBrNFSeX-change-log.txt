@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2023
+-- ISSSalvador.Provider --
+[*] Possível solução para o erro de UTF-8 ao tratar o XML retornado.
+   Por: Italo Giurizzato Junior
 -- IPM.LerXml --
 [*] Correções realizadas com a ajuda do Teste Unitário criado para o provedor.
    Por: Italo Giurizzato Junior

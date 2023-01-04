@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2023
+-- ACBrNFSeXProviderBase --
+[*] Alteração visando obter o envelope soap de retorno mesmo que ocorra algum
+    erro de execução do serviço.
+   Por: Italo Giurizzato Junior
 -- ISSSalvador.Provider --
 [*] Possível solução para o erro de UTF-8 ao tratar o XML retornado.
    Por: Italo Giurizzato Junior

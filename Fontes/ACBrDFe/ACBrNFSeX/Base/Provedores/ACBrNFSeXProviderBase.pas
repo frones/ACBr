@@ -1641,6 +1641,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          EmiteResponse.EnvelopeEnvio := AService.Envio;
+          EmiteResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := EmiteResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -1706,6 +1712,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          ConsultaSituacaoResponse.EnvelopeEnvio := AService.Envio;
+          ConsultaSituacaoResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := ConsultaSituacaoResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -1770,6 +1782,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          ConsultaLoteRpsResponse.EnvelopeEnvio := AService.Envio;
+          ConsultaLoteRpsResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := ConsultaLoteRpsResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -1835,6 +1853,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          ConsultaNFSeporRpsResponse.EnvelopeEnvio := AService.Envio;
+          ConsultaNFSeporRpsResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := ConsultaNFSeporRpsResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -1900,6 +1924,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          ConsultarEventoResponse.EnvelopeEnvio := AService.Envio;
+          ConsultarEventoResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := ConsultarEventoResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -1966,6 +1996,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          ConsultarParamResponse.EnvelopeEnvio := AService.Envio;
+          ConsultarParamResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := ConsultarParamResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -2031,6 +2067,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          ConsultarDFeResponse.EnvelopeEnvio := AService.Envio;
+          ConsultarDFeResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := ConsultarDFeResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -2121,6 +2163,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          ConsultaNFSeResponse.EnvelopeEnvio := AService.Envio;
+          ConsultaNFSeResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := ConsultaNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -2196,6 +2244,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          CancelaNFSeResponse.EnvelopeEnvio := AService.Envio;
+          CancelaNFSeResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := CancelaNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -2294,6 +2348,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          SubstituiNFSeResponse.EnvelopeEnvio := AService.Envio;
+          SubstituiNFSeResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := SubstituiNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -2358,6 +2418,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          GerarTokenResponse.EnvelopeEnvio := AService.Envio;
+          GerarTokenResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := GerarTokenResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
@@ -2429,6 +2495,12 @@ begin
     except
       on E:Exception do
       begin
+        if AService <> nil then
+        begin
+          EnviarEventoResponse.EnvelopeEnvio := AService.Envio;
+          EnviarEventoResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
         AErro := EnviarEventoResponse.Erros.New;
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);

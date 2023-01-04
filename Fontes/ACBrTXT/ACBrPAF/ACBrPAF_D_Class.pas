@@ -50,8 +50,8 @@ type
     FRegistroD2: TRegistroD2List;   /// Lista de FRegistroD2
     FRegistroD9: TRegistroD9;       /// FRegistroD9
 
-    procedure WriteRegistroD3(RegD2: TRegistroD2);
-    procedure WriteRegistroD4(RegD2: TRegistroD2);
+    procedure WriteRegistroD3(RegD2: TRegistroD2; Layout: TLayoutPAF);
+    procedure WriteRegistroD4(RegD2: TRegistroD2; Layout: TLayoutPAF);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -197,10 +197,10 @@ begin
 
     // Registro FILHOS
     for intFor := 0 to FRegistroD2.Count - 1 do
-      WriteRegistroD3( FRegistroD2.Items[intFor] );
+      WriteRegistroD3( FRegistroD2.Items[intFor], Layout);
 
     for intFor := 0 to FRegistroD2.Count - 1 do
-      WriteRegistroD4( FRegistroD2.Items[intFor] );
+      WriteRegistroD4( FRegistroD2.Items[intFor], Layout);
 
   end;
 end;
@@ -221,7 +221,7 @@ begin
     Result := 0;
 end;
 
-procedure TPAF_D.WriteRegistroD3(RegD2: TRegistroD2);
+procedure TPAF_D.WriteRegistroD3(RegD2: TRegistroD2; Layout: TLayoutPAF);
 var
 intFor: integer;
 begin
@@ -231,6 +231,7 @@ begin
      for intFor := 0 to RegD2.RegistroD3.Count - 1 do
      begin
         with RegD2.RegistroD3.Items[intFor] do
+        if Layout = lpPAFECF then
         begin
           ///
           Add( LFill('D3') +
@@ -245,6 +246,24 @@ begin
                LFill(VL_DESCTO, 8, 2) +
                LFill(VL_ACRES, 8, 2) +
                LFill(VL_TOTAL, 14, 2) +
+               RFill(SIT_TRIB, 1) +
+               LFill(ALIQ, 4, 2) +
+               LFill(IND_CANC) +
+               LFill(DEC_QTDE_ITEM, 1) +
+               LFill(DEC_VL_UNIT, 1) );
+        end
+        else
+        begin
+          ///
+          Add( LFill('D3') +
+               RFill(RegD2.NUM_DAV, 13) +
+               LFill(DT_INCLUSAO, 'yyyymmdd') +
+               LFill(NUM_ITEM, 3, 0) +
+               RFill(COD_ITEM, 14) +
+               RFill(DESC_ITEM, 100, ifThen(RegistroValido, ' ', '?')) +
+               LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +
+               RFill(UNI_ITEM, 3) +
+               LFill(VL_UNIT, 14, DEC_VL_UNIT) +
                RFill(SIT_TRIB, 1) +
                LFill(ALIQ, 4, 2) +
                LFill(IND_CANC) +
@@ -273,7 +292,7 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-procedure TPAF_D.WriteRegistroD4(RegD2: TRegistroD2);
+procedure TPAF_D.WriteRegistroD4(RegD2: TRegistroD2; Layout: TLayoutPAF);
 var
   intFor: integer;
 begin
@@ -284,7 +303,9 @@ begin
     for intFor := 0 to RegD2.RegistroD4.Count - 1 do
     begin
       with RegD2.RegistroD4.Items[intFor] do
+      if Layout = lpPAFECF then
       begin
+        ///
         Add( LFill('D4') +
              RFill(NUM_DAV, 13) +
              LFill(DT_ALT, 'yyyymmddhhnnss') +
@@ -296,6 +317,24 @@ begin
              LFill(VL_DESCTO, 8, 2) +
              LFill(VL_ACRES, 8, 2) +
              LFill(VL_TOTAL, 14, 2) +
+             RFill(SIT_TRIB, 1) +
+             LFill(ALIQ, 4, 2) +
+             LFill(IND_CANC) +
+             LFill(DEC_QTDE_ITEM, 1) +
+             LFill(DEC_VL_UNIT, 1) +
+             RFill(TIP_ALT, 1) );
+      end
+      else
+      begin
+        ///
+        Add( LFill('D4') +
+             RFill(NUM_DAV, 13) +
+             LFill(DT_ALT, 'yyyymmddhhnnss') +
+             RFill(COD_ITEM, 14) +
+             RFill(DESC_ITEM, 100, ifThen(RegistroValido, ' ', '?')) +
+             LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +
+             RFill(UNI_ITEM, 3) +
+             LFill(VL_UNIT, 14, DEC_VL_UNIT) +
              RFill(SIT_TRIB, 1) +
              LFill(ALIQ, 4, 2) +
              LFill(IND_CANC) +

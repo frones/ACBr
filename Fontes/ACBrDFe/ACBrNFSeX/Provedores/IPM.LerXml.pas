@@ -54,6 +54,7 @@ type
     procedure LerPrestador(const ANode: TACBrXmlNode);
     procedure LerTomador(const ANode: TACBrXmlNode);
     procedure LerItens(const ANode: TACBrXmlNode);
+    procedure LerFormaPagamento(const ANode: TACBrXmlNode);
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -69,7 +70,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrDFeUtil;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -77,6 +78,27 @@ uses
 //==============================================================================
 
 { TNFSeR_IPM }
+
+procedure TNFSeR_IPM.LerFormaPagamento(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+  aValor: string;
+  Ok: Boolean;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('forma_pagamento');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.CondicaoPagamento do
+    begin
+      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('tipo_pagamento'), tcStr);
+
+      Condicao := StrToEnumerado(Ok, aValor,
+            ['1', '2', '3', '4', '5'],
+            [cpAVista, cpAPrazo, cpNaApresentacao, cpCartaoDebito, cpCartaoCredito]);
+    end;
+  end;
+end;
 
 procedure TNFSeR_IPM.LerItens(const ANode: TACBrXmlNode);
 var
@@ -172,7 +194,7 @@ begin
         aValor := aValor + ' ' +
                   ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_nfse'), tcStr);
 
-        DataEmissao := StrToDateTimeDef(aValor, 0);
+        DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY');
       end;
 
       SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr));
@@ -242,8 +264,8 @@ begin
     aValor := aValor + ' ' +
               ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_emissao_recibo_provisorio'), tcStr);
 
-    NFSe.DataEmissao := StrToDateTimeDef(aValor, 0);
-    NFSe.DataEmissaoRps := StrToDateTimeDef(aValor, 0);
+    NFSe.DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY');
+    NFSe.DataEmissaoRps := EncodeDataHora(aValor, 'DD/MM/YYYY');
 
     with NFSe.IdentificacaoRps do
     begin
@@ -368,6 +390,7 @@ begin
   LerPrestador(AuxNode);
   LerTomador(AuxNode);
   LerItens(AuxNode);
+  LerFormaPagamento(AuxNode);
 end;
 
 function TNFSeR_IPM.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2023
+[*] TK-3401 ACBrBoleto inclusão a espécie de título 'Boleto de Proposta', sigla BDP (CNAB400)
+    Por MLGoncalves, Daniel Morais 
+
 02/01/2023
 [-] TK-3432 UniCredES - ACBrBoleto Correcao ler retorno quando fo CPF criado a funcao DefineCnpjCpf240 para identificar e tratar CPF/CNPJ
     Por Daniel Morais/ vinizioWOW

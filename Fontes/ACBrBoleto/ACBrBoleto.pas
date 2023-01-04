@@ -882,7 +882,7 @@ type
     function DefinePosicaoCarteiraRetorno:Integer; virtual;                         //Define posição para leitura de Retorno campo: NumeroDocumento
     function DefineDataOcorrencia(const ALinha: String): String; virtual;           //Define a data da ocorrencia
     function DefineSeuNumeroRetorno(const ALinha: String): String; virtual;         //Define o Seu Numero
-    function DefinerCnpjCPFRetorno240(const ALinha: String): String; virtual;         //Define retorno rCnpjCPF
+    function DefinerCnpjCPFRetorno240(const ALinha: String): String; virtual;       //Define retorno rCnpjCPF
     function DefineNumeroDocumentoRetorno(const ALinha: String): String; virtual;   //Define o Numero Documento do Retorno
     procedure DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo); virtual;   //Define o Motivo da Rejeição ou Complemento no Retorno
 
@@ -5470,6 +5470,8 @@ begin
          Result:= '11'
       else if AnsiSameText(EspecieDoc, 'DS') then
          Result:= '12'
+      else if AnsiSameText(EspecieDoc, 'BDP') then
+         Result:= '32'
       else if AnsiSameText(EspecieDoc, 'OU') then
          Result:= '99'
       else
@@ -5605,10 +5607,10 @@ begin
   with ACBrTitulo do
   begin
     case TipoDiasProtesto of
-       diCorridos       : Result := '1';
-       diUteis          : Result := '2';
+      diCorridos       : Result := '1';
+      diUteis          : Result := '2';
     else
-       Result := '3';
+      Result := '3';
     end;
   end;
 end;

@@ -99,6 +99,7 @@ Pronim               1.00
 Pronim               2.02  17/08/2022
 Pronim               2.03
 Publica              1.00  08/08/2022
+PublicSoft           2.03  
 RLZ                  1.00
 RLZ                  2.03
 Saatri               2.01

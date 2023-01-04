@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2023
+-- PublicSoft.Provider/PublicSoft.GravarXml/PublicSoft.LerXml --
+[+] Inicio da implementação do provedor PublicSoft
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a cidade de Piloes/PB, provedor é PublicSoft
+   Por: C4Dev/Italo Giurizzato Junior
 -- Diversos --
 [*] Eliminação de possíveis AV nas procedures que tratam o retorno dos métodos.
    Por: Italo Giurizzato Junior

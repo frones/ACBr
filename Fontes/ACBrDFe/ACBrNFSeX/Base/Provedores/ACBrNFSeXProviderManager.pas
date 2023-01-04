@@ -118,6 +118,7 @@ uses
   NEAInformatica.Provider,
   NotaInteligente.Provider,
   Prodata.Provider,
+  PublicSoft.Provider,
   RLZ.Provider,
   Saatri.Provider,
   SafeWeb.Provider,
@@ -433,7 +434,8 @@ begin
           end;
         end;
 
-      proPublica: Result := TACBrNFSeProviderPublica.Create(ACBrNFSe);
+      proPublica:    Result := TACBrNFSeProviderPublica.Create(ACBrNFSe);
+      proPublicSoft: Result := TACBrNFSeProviderPublicSoft203.Create(ACBrNFSe);
 
       proRLZ:
         begin

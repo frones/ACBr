@@ -229,17 +229,19 @@ begin
     if not Assigned(Node) or (Node = nil) then Exit;
 
     Node := Node.Childrens.FindAnyNs('Rps');
-    if not Assigned(Node) or (Node = nil) then Exit;
-
-    Node := Node.Childrens.FindAnyNs('IdentificacaoRps');
 
     NumRps := '';
     SerieRps := '';
 
     if Node <> nil then
     begin
-      NumRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
-      SerieRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Serie'), tcStr);
+      Node := Node.Childrens.FindAnyNs('IdentificacaoRps');
+
+      if Node <> nil then
+      begin
+        NumRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
+        SerieRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Serie'), tcStr);
+      end;
     end;
 
     AResumo := Response.Resumos.New;
@@ -569,17 +571,19 @@ begin
           if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
 
-          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if AuxNode <> nil then
+          begin
+            AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+            if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
 
-          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+            NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
-          ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
-          SalvarXmlNfse(ANota);
+            ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+            SalvarXmlNfse(ANota);
+          end;
         end;
       end;
 

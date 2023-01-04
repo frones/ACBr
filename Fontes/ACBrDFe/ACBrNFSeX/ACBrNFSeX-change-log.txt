@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2023
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Melhorias no tratamento dos retornos, pois não estava considerando que o
+    grupo que contem as informações de numero/serie/tipo do Rps é opcional.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [*] Alteração visando obter o envelope soap de retorno mesmo que ocorra algum
     erro de execução do serviço.

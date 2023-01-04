@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2023
+-- Diversos --
+[*] Eliminação de possíveis AV nas procedures que tratam o retorno dos métodos.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Melhorias no tratamento dos retornos, pois não estava considerando que o
     grupo que contem as informações de numero/serie/tipo do Rps é opcional.

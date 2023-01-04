@@ -122,7 +122,15 @@
         <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXTests.pas"/>
         <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv1Tests.pas"/>
         <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorABRASFv2Tests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorAgiliTests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorAssessorPublicoTests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorBauhausTests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorEquiplanoTests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorPadraoNacionalTests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSigISSTests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSoftPlanTests.pas"/>
         <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorWebFiscoTests.pas"/>
+        <DCCReference Include="..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXRetornoSoapTests.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

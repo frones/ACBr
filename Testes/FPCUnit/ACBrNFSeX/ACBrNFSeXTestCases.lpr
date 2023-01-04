@@ -9,10 +9,12 @@ uses
   ACBrNFSeXProvedorAssessorPublicoTests,
   ACBrNFSeXProvedorBauhausTests,
   ACBrNFSeXProvedorEquiplanoTests,
+  ACBrNFSeXProvedorIPMTests,
   ACBrNFSeXProvedorPadraoNacionalTests,
   ACBrNFSeXProvedorSigISSTests, 
   ACBrNFSeXProvedorSoftPlanTests, 
-  ACBrNFSeXProvedorWebFiscoTests;
+  ACBrNFSeXProvedorWebFiscoTests,
+  ACBrNFSeXRetornoSoapTests;
 
 {$R *.res}
 

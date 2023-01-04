@@ -42,10 +42,12 @@ uses
   ACBrNFSeXProvedorAssessorPublicoTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorAssessorPublicoTests.pas',
   ACBrNFSeXProvedorBauhausTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorBauhausTests.pas',
   ACBrNFSeXProvedorEquiplanoTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorEquiplanoTests.pas',
+  ACBrNFSeXProvedorIPMTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorIPMTests.pas',
   ACBrNFSeXProvedorPadraoNacionalTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorPadraoNacionalTests.pas',
   ACBrNFSeXProvedorSigISSTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSigISSTests.pas',
   ACBrNFSeXProvedorSoftPlanTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSoftPlanTests.pas',
-  ACBrNFSeXProvedorWebFiscoTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorWebFiscoTests.pas';
+  ACBrNFSeXProvedorWebFiscoTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorWebFiscoTests.pas',
+  ACBrNFSeXRetornoSoapTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXRetornoSoapTests.pas';
 
 begin
   ACBrRunTests;

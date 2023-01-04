@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2023
+-- PublicSoft.GravarXml --
+[*] Corrigido o erro de compilação.
+   Por: Italo Giurizzato Junior
 -- PublicSoft.Provider/PublicSoft.GravarXml/PublicSoft.LerXml --
 [+] Inicio da implementação do provedor PublicSoft
    Por: Italo Giurizzato Junior

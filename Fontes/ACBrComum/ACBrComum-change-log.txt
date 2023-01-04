@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2023
+-- ACBrJSON --
+[*] Possível solução para evitar um AV ao executar a funcion CreateJsonObject
+    Por: Arimateia
+
 05/12/22
 -- ACBrUtil.DateTime --
 [-] Ajuste em "Iso8601ToDateTime", para processar Strings onde hora, minutos ou

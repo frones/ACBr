@@ -597,6 +597,7 @@ end;
 
 class function TACBrJSONObject.CreateJsonObject(const AJsonString: string): TJsonObject;
 begin
+  Result := nil;
   try
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
     JsonSerializationConfig.NullConvertsToValueTypes := True;

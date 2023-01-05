@@ -56,6 +56,8 @@ type
   protected
     procedure Configuracao; override;
 
+  public
+    function GerarXml: Boolean; Override;
   end;
 
 implementation
@@ -95,6 +97,14 @@ begin
   NrOcorrCodigoPaisTomador := -1;
 
   TagTomador := 'TomadorServico';
+end;
+
+function TNFSeW_SigCorp204.GerarXml: Boolean;
+begin
+  if NFSe.OptanteSimplesNacional = snSim then
+    NrOcorrAliquota := 1;
+
+  Result := inherited GerarXml;
 end;
 
 end.

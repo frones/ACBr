@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/01/2023
+-- SigCorp.GravarXml --
+[*] Acrescentado a função GerarXml para condicionar o valor de NrOcorrAliquota.
+   Por: Italo Giurizzato Junior
 -- Fiorilli.GravarXml --
 [*] Removido da configuração o parâmetro de numero de ocorrencias da tag
     CodigoCNAE.

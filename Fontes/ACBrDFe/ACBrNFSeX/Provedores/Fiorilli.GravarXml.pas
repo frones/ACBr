@@ -66,7 +66,6 @@ begin
 
   NrOcorrCodigoPaisTomador := -1;
   NrOcorrInscMunTomador := -1;
-  NrOcorrCodigoCNAE := -1;
 end;
 
 end.

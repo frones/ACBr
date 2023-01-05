@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2023
+-- Fiorilli.GravarXml --
+[*] Removido da configuração o parâmetro de numero de ocorrencias da tag
+    CodigoCNAE.
+   Por: Italo Giurizzato Junior
+
 04/01/2023
 -- PublicSoft.GravarXml --
 [*] Corrigido o erro de compilação.

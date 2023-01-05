@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/01/2023
+-- ACBrNFSeXServicos.ini --
+[+] https://www.projetoacbr.com.br/forum/topic/70326-inclus%C3%A3o-de-todas-as-cidades-brasileiras-no-arquivo-acbrnfsexservicosini/
+   Por: Italo Giurizzato Junior
 -- SigCorp.GravarXml --
 [*] Acrescentado a função GerarXml para condicionar o valor de NrOcorrAliquota.
    Por: Italo Giurizzato Junior

@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Juliana Tamizou, José M S Junior                }
+{ Colaboradores nesse arquivo: Juliana Tamizou, José M S Junior, Daniel Morais }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -191,6 +191,7 @@ var
   ACodJuros, ACodDesc, ACodProtesto : String;
   ACodMulta, AValorMulta : String;
   ListTransacao: TStringList;
+
 begin
   with ACBrTitulo do
   begin
@@ -269,7 +270,9 @@ begin
                Space(15)                                                               + // 166 a 180 - Brancos
                IntToStrZero( round(ValorAbatimento * 100), 15)                         + // 181 a 195 - Valor do abatimento
                PadRight(SeuNumero, 25, ' ')                                            + // 196 a 220 - Identificação do título na empresa
-               aCodProtesto                                                            + // 221 - Código para protesto.  '1’ = ProtestarDias Corridos '2’ = ProtestarDias Úteis '3’ = NãoProtestar
+               IfThen((DataProtesto > 0) and
+                      (DiasDeProtesto > 0), ACodProtesto, '3')                         + // 221 - Código para protesto.  '1’ = ProtestarDias Corridos '2’ = ProtestarDias Úteis '3’ = NãoProtestar
+               //aCodProtesto
                IfThen(aCodProtesto<>'3', PadLeft(IntToStr(DiasDeProtesto),2,'0'),'00')  + // 222 a 223 - Prazo para negativar (em dias corridos)
                Space(4)                                                                + // 224 a 227 - Brancos
                '09'                                                                    + // 228 a 229 - Código da moeda: 09-Real

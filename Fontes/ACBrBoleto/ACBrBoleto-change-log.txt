@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2023
+[*] TK-3445 ACBrBancoUnicredRS ajuste na hora de criar o arquivo de remessa. como nao existe o enumerado (tipoDiasProtesto) nao protestar, se a data do protesto nao for informada ele gera o arquivo com instrucao 3 de nÃ£o protestar.
+Por Daniel Morais 
+
 04/01/2023
 [*] TK-3401 ACBrBoleto inclusão a espécie de título 'Boleto de Proposta', sigla BDP (CNAB400)
     Por MLGoncalves, Daniel Morais 

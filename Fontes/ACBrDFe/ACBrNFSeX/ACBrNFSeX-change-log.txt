@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/01/2023
+-- ISSIntel.GravarXml --
+[*] Alterado a configuração para aceitar código de ItemListaServico sem o zero a 
+    esquerda.
+   Por: Joemil
 -- ACBrNFSeXServicos.ini --
 [*] As cidades que não sabemos qual provedor utiliza, resolvemos deixar sem o 
     nome do provedor, anteriormente foi enviado como sendo PadraoNacional.

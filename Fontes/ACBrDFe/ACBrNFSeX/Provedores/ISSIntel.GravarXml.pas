@@ -68,6 +68,8 @@ begin
   inherited Configuracao;
 
   DivAliq100  := True;
+
+  FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
 end;
 
 function TNFSeW_ISSIntel.GerarXml: Boolean;

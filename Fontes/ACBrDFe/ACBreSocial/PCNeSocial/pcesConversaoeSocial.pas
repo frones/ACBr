@@ -274,12 +274,6 @@ type
 
   tpExtDecisao            = (edContribPatronais, edContribPatronaisSegurados );
 
-  tpTpInscEstab           = (tpI1, tpI3, tpI4, tpVazio ); // Vazio para seguir regra do manual
-                                                          // Validação: O campo não deve ser preenchido se {tpLotacao} for
-                                                          // igual a [07,10,90]. Nos demais casos, observar conteúdo
-                                                          // exigido para o campo {nrInscEstab}, conforme tabela de tipos
-                                                          // de lotação.
-
   tpTpIntervalo           = (tinHorarioFixo, tinHorarioVariavel);
 
   tpIndSubstPatronalObra  = (ispVazio, ispPatronalSubstituida, ispPatronalNaoSubstituida);
@@ -828,9 +822,6 @@ function eSStrToIndSusp(var ok: Boolean; const s: string): tpIndSusp;
 
 function eSExtDecisaoToStr(const t: TpExtDecisao ): string;
 function eSStrToExtDecisao(var ok: boolean; const s: string): TpExtDecisao;
-
-function eSTpInscEstabToStr(const t: TpTpInscEstab ): string;
-function eSStrToTpInscEstab(var ok: boolean; const s: string): TpTpInscEstab;
 
 function eStpInscContratanteToStr(const t: TptpInscContratante ): string;
 function eSStrTotpInscContratante(var ok: boolean; const s: string): TptpInscContratante;
@@ -2005,16 +1996,6 @@ end;
 function eSStrToExtDecisao(var ok: boolean; const s: string): TpExtDecisao;
 begin
   result :=  TpExtDecisao( StrToEnumerado2(ok , s,TGenericosString1_2 ));
-end;
-
-function eSTpInscEstabToStr(const t:tpTpInscEstab ): string;
-begin
-  result := EnumeradoToStr2(t,['1','3','4','']  );
-end;
-
-function eSStrToTpInscEstab(var ok: boolean; const s: string): TpTpInscEstab;
-begin
-  result := TpTpInscEstab( StrToEnumerado2(ok , s,['1','3','4','']  ));
 end;
 
 function eStpInscContratanteToStr(const t:tptpInscContratante ): string;

@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2023
+-- pcesConversaoeSocial --
+[*] Remove o enumerado tpTpInscEstab e funções de conversão respectivas que não eram mais utilizadas.
+   Por: DiegoAF
+
 02/01/2023
 -- pcesS1210 --
 [*] Alteração para que gere a infoPgtoExt apenas para residentes do exterior.

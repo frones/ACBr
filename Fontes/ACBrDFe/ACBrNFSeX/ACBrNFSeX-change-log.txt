@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] As cidades que não sabemos qual provedor utiliza, resolvemos deixar sem o 
+    nome do provedor, anteriormente foi enviado como sendo PadraoNacional.
+   Por: Italo Giurizzato Junior
+
 05/01/2023
 -- ACBrNFSeXServicos.ini --
 [+] https://www.projetoacbr.com.br/forum/topic/70326-inclus%C3%A3o-de-todas-as-cidades-brasileiras-no-arquivo-acbrnfsexservicosini/

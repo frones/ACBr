@@ -105,6 +105,7 @@ begin
   NrOcorrValorInss := 1;
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
+  NrOcorrValorISS := 1;
 end;
 
 function TNFSeW_fintelISS202.GerarListaServicos: TACBrXmlNode;

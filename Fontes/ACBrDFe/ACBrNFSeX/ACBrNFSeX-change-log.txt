@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/01/2023
+-- fintelISS.GravarXml --
+[*] Alterado a configuração para gerar a tag ValorIss, pois ela é obrigatória.
+   Por: Arimateia Jr
 -- ACBrNFSeXServicos.ini --
 [*] Incluido a URL para o Link da nota - Cidade Foz do Iguaçu/PR
    Por: Arimateia Jr

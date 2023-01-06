@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Juliana Tamizou                                 }
+{ Colaboradores nesse arquivo: Juliana Tamizou,marcelo.hgv                     }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -813,8 +813,9 @@ begin
 
     if (Copy(Linha,1,1) = '8') then
     begin
-      Titulo.QrCode.txId := Copy(Linha,21,35);
-      Titulo.QrCode.emv  := Copy(Linha,57,77);
+      Titulo.QrCode.emv  := Copy(Linha,135,256);   //tem que ser lido por primeiro para aceitar a
+      Titulo.QrCode.txId := Copy(Linha,21,35);     //leitura dos outros campos
+      Titulo.QrCode.url  := Copy(Linha,57,77);
     end;
   end;
   fpTamanhoMaximoNossoNum := 5;
@@ -2283,4 +2284,3 @@ begin
 end;
 
 end.
-

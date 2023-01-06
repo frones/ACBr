@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2023
+[*] TK-3008-2 ACBrBancoSicredi contribuição para ler qrcode retorno boleto hibrido
+Por marcelo.hgv / validado Daniel Morais
+
 05/01/2023
 [*] TK-3445 ACBrBancoUnicredRS ajuste na hora de criar o arquivo de remessa. como nao existe o enumerado (tipoDiasProtesto) nao protestar, se a data do protesto nao for informada ele gera o arquivo com instrucao 3 de nÃ£o protestar.
 Por Daniel Morais 

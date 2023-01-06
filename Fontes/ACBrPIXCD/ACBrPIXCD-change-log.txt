@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2022
+-- ACBrPIXPSPGerenciaNet --
+[*] Exclusão de prcedure desnecessária
+
+-- ACBrPIXPSPBradesco, ACBrPIXCD --
+[+] Inclusão do novo PSP Bradesco
+    Por: Elias César
+
 02/01/2023
 -- ACBrPIXCD --
 [+] Incluídas na classe TACBrPSPCertificate as propriedades relacionadas ao certificado PFX, 

@@ -3506,7 +3506,7 @@ object Form1: TForm1
                     Left = 19
                     Top = 24
                     Width = 900
-                    Height = 371
+                    Height = 370
                     ActivePage = tsItauChaveCertificadoArquivos
                     Anchors = [akLeft, akTop, akRight, akBottom]
                     TabOrder = 0
@@ -3515,7 +3515,7 @@ object Form1: TForm1
                       Caption = 'Arquivos'
                       DesignSize = (
                         892
-                        343)
+                        342)
                       object lItauAvisoChaveCertificadoDesabilitado: TLabel
                         Left = 35
                         Top = 16
@@ -3656,12 +3656,12 @@ object Form1: TForm1
                       Caption = 'Gerar Chave e Certificado'
                       DesignSize = (
                         892
-                        343)
+                        342)
                       object pgPSPItauGerarChaveCertificado: TPageControl
                         Left = 16
                         Top = 16
                         Width = 842
-                        Height = 323
+                        Height = 322
                         ActivePage = tsItauCertPasso1
                         Anchors = [akLeft, akTop, akRight, akBottom]
                         TabOrder = 0
@@ -3669,7 +3669,7 @@ object Form1: TForm1
                           Caption = 'Passo 1 - Definir Chave Privada'
                           DesignSize = (
                             834
-                            295)
+                            294)
                           object Label39: TLabel
                             Left = 16
                             Top = 24
@@ -3702,7 +3702,7 @@ object Form1: TForm1
                             Left = 16
                             Top = 72
                             Width = 794
-                            Height = 206
+                            Height = 205
                             Anchors = [akLeft, akTop, akRight, akBottom]
                             Font.Charset = DEFAULT_CHARSET
                             Font.Color = clWindowText
@@ -3797,7 +3797,7 @@ object Form1: TForm1
                             Left = 0
                             Top = 136
                             Width = 834
-                            Height = 159
+                            Height = 158
                             Align = alClient
                             BevelOuter = bvNone
                             TabOrder = 2
@@ -5232,6 +5232,189 @@ object Form1: TForm1
                 end
               end
             end
+            object tsBradesco: TTabSheet
+              Caption = 'Bradesco'
+              DesignSize = (
+                984
+                492)
+              object pnBradesco: TPanel
+                Left = 40
+                Top = 78
+                Width = 880
+                Height = 256
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                TabOrder = 0
+                DesignSize = (
+                  880
+                  256)
+                object sbBradescoAcharPFX: TSpeedButton
+                  Left = 646
+                  Top = 192
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = sbBradescoAcharPFXClick
+                end
+                object lbBradescoTipoChave: TLabel
+                  Left = 687
+                  Top = 19
+                  Width = 55
+                  Height = 13
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbBradescoErroPFX: TLabel
+                  Left = 32
+                  Top = 214
+                  Width = 92
+                  Height = 13
+                  Caption = 'lbBradescoErroPFX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbBradescoClientSecret: TLabel
+                  Left = 32
+                  Top = 127
+                  Width = 60
+                  Height = 13
+                  Caption = 'Client Secret'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbBradescoClientKey: TLabel
+                  Left = 32
+                  Top = 68
+                  Width = 47
+                  Height = 13
+                  Caption = 'Client Key'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbBradescoChave: TLabel
+                  Left = 32
+                  Top = 19
+                  Width = 51
+                  Height = 13
+                  Caption = 'Chave PIX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbBradescoPFX: TLabel
+                  Left = 32
+                  Top = 176
+                  Width = 59
+                  Height = 13
+                  Caption = 'Arquivo PFX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object imBradescoErroPFX: TImage
+                  Left = 10
+                  Top = 192
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object imBradescoErroChavePix: TImage
+                  Left = 852
+                  Top = 38
+                  Width = 16
+                  Height = 17
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object sbBradescoVerSenhaPFX: TSpeedButton
+                  Left = 852
+                  Top = 192
+                  Width = 23
+                  Height = 23
+                  AllowAllUp = True
+                  Anchors = [akTop, akRight]
+                  GroupIndex = 1
+                  Flat = True
+                  OnClick = sbBradescoVerSenhaPFXClick
+                end
+                object lbBradescoSenhaPFX: TLabel
+                  Left = 687
+                  Top = 176
+                  Width = 84
+                  Height = 13
+                  Caption = 'Senha Certificado'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object edBradescoClientSecret: TEdit
+                  Left = 32
+                  Top = 143
+                  Width = 816
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 0
+                end
+                object edBradescoClientID: TEdit
+                  Left = 32
+                  Top = 83
+                  Width = 816
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 1
+                end
+                object edBradescoChavePIX: TEdit
+                  Left = 32
+                  Top = 35
+                  Width = 638
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 2
+                  OnChange = edBradescoChavePIXChange
+                end
+                object edBradescoArqPFX: TEdit
+                  Left = 32
+                  Top = 192
+                  Width = 612
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 3
+                  Text = 'Bradesco.pfx'
+                  OnChange = edBradescoArqPFXChange
+                  OnExit = edBradescoValidarPFXExit
+                end
+                object cbBradescoTipoChave: TComboBox
+                  Left = 687
+                  Top = 35
+                  Width = 161
+                  Height = 21
+                  Style = csDropDownList
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 13
+                  TabOrder = 4
+                  TabStop = False
+                end
+                object edBradescoSenhaPFX: TEdit
+                  Left = 687
+                  Top = 192
+                  Width = 161
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  PasswordChar = '*'
+                  TabOrder = 5
+                  OnExit = edBradescoValidarPFXExit
+                end
+              end
+            end
           end
         end
       end
@@ -6662,11 +6845,15 @@ object Form1: TForm1
     Top = 416
   end
   object ACBrPSPPagSeguro1: TACBrPSPPagSeguro
-    Left = 320
+    Left = 318
     Top = 416
   end
   object ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet
-    Left = 354
+    Left = 346
+    Top = 416
+  end
+  object ACBrPSPBradesco1: TACBrPSPBradesco
+    Left = 374
     Top = 416
   end
 end

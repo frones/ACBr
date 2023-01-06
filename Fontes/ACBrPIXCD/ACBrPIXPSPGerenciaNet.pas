@@ -30,13 +30,6 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-(*
-
-  Documentação
-
-
-*)
-
 {$I ACBr.inc}
 
 unit ACBrPIXPSPGerenciaNet;
@@ -65,7 +58,6 @@ type
   {$ENDIF RTL230_UP}
   TACBrPSPGerenciaNet = class(TACBrPSPCertificate)
   protected
-    procedure ConfigurarHeaders(const aMethod, aURL: String); override;
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
   public
     procedure Autenticar; override;
@@ -82,13 +74,6 @@ uses
   ACBrUtil.Base, ACBrUtil.Strings, ACBrPIXUtil;
 
 { TACBrPSPGerenciaNet }
-
-procedure TACBrPSPGerenciaNet.ConfigurarHeaders(const aMethod, aURL: String);
-begin
-  inherited ConfigurarHeaders(aMethod, aURL);
-  if NaoEstaVazio(fpToken) then
-    Http.Headers.Insert(0, ChttpHeaderAuthorization + ChttpAuthorizationBearer+' '+fpToken);
-end;
 
 function TACBrPSPGerenciaNet.ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String;
 begin

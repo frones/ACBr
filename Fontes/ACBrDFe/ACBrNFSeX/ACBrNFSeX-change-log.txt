@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluido a URL para o Link da nota - Cidade Foz do Iguaçu/PR
+   Por: Arimateia Jr
 -- ISSIntel.GravarXml --
 [*] Alterado a configuração para aceitar código de ItemListaServico sem o zero a 
     esquerda.

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/01/2023
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Possível solução para não gerar na lista de erros quando o provedor ISSGoiania
+    retorno o erro L000, pois não se trata de um erro.
+   Por: Italo Giurizzato Junior
 -- fintelISS.GravarXml --
 [*] Alterado a configuração para gerar a tag ValorIss, pois ela é obrigatória.
    Por: Arimateia Jr

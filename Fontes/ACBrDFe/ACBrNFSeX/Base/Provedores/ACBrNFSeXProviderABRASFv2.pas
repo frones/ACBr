@@ -2573,7 +2573,7 @@ begin
         Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
         Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
-        if Mensagem <> '' then
+        if (Mensagem <> '') and (Codigo <> 'L000') then
         begin
           AErro := Response.Erros.New;
           AErro.Codigo := Codigo;

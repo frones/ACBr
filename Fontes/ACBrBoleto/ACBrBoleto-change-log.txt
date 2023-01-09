@@ -50,7 +50,7 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/01/2023
-[*] TK-3771 ACBrBancoBrasil feito ajustes no tratamento das instruções codificadas para protesto
+[*] TK-3429-1 ACBrBancoBrasil feito ajustes no tratamento das instruções codificadas para protesto
 Por Daniel Morais
 
 06/01/2023

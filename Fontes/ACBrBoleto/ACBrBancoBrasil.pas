@@ -5,8 +5,8 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
-{                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior, Juliana Tamizou e Daniel }
+{ de Morais(InfoCotidiano)                                                     }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -74,6 +74,7 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     Procedure LerRetorno240(ARetorno:TStringList); override;
     procedure LerRetorno400(ARetorno: TStringList); override;
+
     function CodMotivoRejeicaoToDescricao(
       const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
 
@@ -299,6 +300,7 @@ begin
    else
       Result := ANossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
 end;
+
 
 function TACBrBancoBrasil.GerarRegistroHeader240(NumeroRemessa : Integer): String;
 var
@@ -965,7 +967,7 @@ var
   aDataDesconto, aAgencia, aConta  :String;
   aModalidade,wLinha, aTipoCobranca:String;
   TamConvenioMaior6                :Boolean;
-  wCarteira, LDiasProtesto : Integer;
+  wCarteira, LDiasProtesto, LDiasTrabalhados : Integer;
   sDiasBaixa: String;
 begin
 
@@ -1052,54 +1054,61 @@ begin
        aTipoCobranca:='     ';
      end;
 
+     if (((Instrucao1 <> '') or (Instrucao2 <> '')) and (Instrucao1 = Instrucao2 )) then
+        raise Exception.Create(ACBrStr('A Instrução1 não pode ser igual a Instrução2.'));
+
+     Instrucao1 := trim(IfThen(Instrucao1='00', '', Instrucao1));
+     Instrucao2 := trim(IfThen(Instrucao2='00', '', Instrucao2));
+
+     //Verifica se foi informado data instrucao de protesto e data de protesto
+
      if( ( Instrucao1='88' ) or (Instrucao2='88')) then
      begin
+       Instrucao1 := IfThen(Instrucao1='06', '00', Instrucao1);
+       Instrucao2 := IfThen(Instrucao2='06', '00', Instrucao2);
        DiasProtesto := IntToStr( DiasDeProtesto );
-       AInstrucao  := PadLeft(Trim(Instrucao1),2,'0') + PadLeft(Trim(Instrucao2),2,'0');
+       AInstrucao  := PadLeft(Instrucao1,2,'0') + PadLeft(Instrucao2,2,'0');
      end
      else
      begin
-       AInstrucao := PadLeft(Trim(Instrucao1),2,'0') + PadLeft(Trim(Instrucao2),2,'0');
+       AInstrucao := PadLeft(Instrucao1,2,'0') + PadLeft(Instrucao2,2,'0');
 
        if (DataProtesto > 0) and (DataProtesto > Vencimento) then
        begin
          DiasProtesto := '  ';
          LDiasProtesto := DaysBetween(DataProtesto,Vencimento);
-         case ( WorkingDaysBetween(ACBrTitulo.Vencimento,ACBrTitulo.DataProtesto) ) of  //TK-3371
-            3: // Protestar no 3º dia util após vencimento
-            begin
-              if (trim(Instrucao1) = '') or (trim(Instrucao1) = '03') then
-                AInstrucao := '03'+ PadLeft(trim(Instrucao2),2,'0');
-            end;
-            4: // Protestar no 4º dia util após vencimento
-            begin
-              if (trim(Instrucao1) = '') or (trim(Instrucao1) = '04') then
-                AInstrucao := '04'+ PadLeft(trim(Instrucao2),2,'0');
-            end;
-            5: // Protestar no 5º dia util após vencimento
-            begin
-              if (trim(Instrucao1) = '') or (trim(Instrucao1) = '05') then
-                AInstrucao := '05'+ PadLeft(trim(Instrucao2),2,'0');
-            end;
+         if TipoDiasProtesto = diCorridos then
+            LDiasTrabalhados := LDiasProtesto
          else
-           if (trim(Instrucao1) = '') or (trim(Instrucao1) = '06') then
-             AInstrucao  := '06'+ PadLeft(trim(Instrucao2),2,'0');
+            LDiasTrabalhados := WorkingDaysBetween(ACBrTitulo.Vencimento,ACBrTitulo.DataProtesto) ;
 
-
-            DiasProtesto :=IntToStr(DaysBetween(DataProtesto,Vencimento));
-         end;
+         if ((LDiasTrabalhados in [03,04,05])  or
+             (LDiasTrabalhados in [03,04,05]))  then
+          begin
+           if ((Instrucao1 = '') or (Instrucao1 = PadLeft(inttostr(LDiasTrabalhados),2,'0')))  then
+              AInstrucao  := PadLeft(inttostr(LDiasTrabalhados),2,'0') + IfThen(Instrucao2 = PadLeft(inttostr(LDiasTrabalhados),2,'0'), '00',PadLeft(Instrucao2,2,'0'))
+           else if ((Instrucao2 = '') or (Instrucao2 = PadLeft(inttostr(LDiasTrabalhados),2,'0'))) then
+              AInstrucao  := IfThen(Instrucao1 = PadLeft(inttostr(LDiasTrabalhados),2,'0'), '00',PadLeft(Instrucao1,2,'0')) +PadLeft(inttostr(LDiasTrabalhados),2,'0');
+          end
+         else
+          begin
+           if ((Instrucao1 = '') or (Instrucao1 = '06')) then
+              AInstrucao  := '06' + IfThen(Instrucao2 = '06', '00',PadLeft(Instrucao2,2,'0'))
+           else if ((Instrucao2 = '') or (Instrucao2 = '06')) then
+              AInstrucao  := IfThen(Instrucao1 = '06', '00',PadLeft(Instrucao1,2,'0')) +'06';
+           DiasProtesto :=IntToStr(DaysBetween(DataProtesto,Vencimento));
+          end;
 
          if ( (ACBrTitulo.TipoDiasProtesto = diCorridos) and (LDiasProtesto >= 6)
-           and ( ((trim(Instrucao1) = '') or (trim(Instrucao1) = '06'))
-           or ((trim(Instrucao2) = '') or (trim(Instrucao2) = '06')) )) then
+           and ( ((Instrucao1 = '') or (Instrucao1 = '06'))
+              or ((Instrucao2 = '') or (Instrucao2 = '06')) )) then
          begin
 
-           if ((trim(Instrucao1) = '') or (trim(Instrucao1) = '06')) then
-              AInstrucao   := '06'+ PadLeft(trim(Instrucao2),2,'0');
+           if ((Instrucao1 = '') or (Instrucao1 = '06')) then
+              AInstrucao   := '06'+ PadLeft(Instrucao2,2,'0');
 
-           if ((trim(Instrucao2) = '') or (trim(Instrucao2) = '06')) then
-              AInstrucao   := PadLeft(trim(Instrucao1),2,'0')+'06';
-
+           if ((Instrucao2 = '') or (Instrucao2 = '06')) then
+              AInstrucao   := PadLeft(Instrucao1,2,'0')+'06';
 
            DiasProtesto := IntToStr(LDiasProtesto);
          end;
@@ -1107,13 +1116,30 @@ begin
         end
        else if ATipoOcorrencia <> '02' then //para comando de baixa 02 é necessario informar a instrução [42,44 ou 46]
        begin
-         Instrucao1  := '07'; //Não Protestar
-         AInstrucao  := PadLeft(Trim(Instrucao1),2,'0') + PadLeft(Trim(Instrucao2),2,'0');
+         {
+         Comando 07 de nao protestar, somente em comando, devido os tipos de carteiras
+         if (((Instrucao1 = '') or (Instrucao1 = '07')) and (Instrucao2 <> '07')) then
+           AInstrucao  := '07' + IfThen(Instrucao2 = '07', '00',PadLeft(Instrucao2,2,'0'))
+         else if ((Instrucao2 = '') or (Instrucao2 = '07')) then
+           AInstrucao  := IfThen(Instrucao1 = '07', '00',PadLeft(Instrucao1,2,'0')) +'07';
+         }
          DiasProtesto:= '  ';
        end;
+
+       //Verificando se existir comandos 03,04,05,10,15,20,25,30,45 na Instrucao1 ou Instrucao2-> qtde dias 392 = ' '
+       if ((StrToIntDef(Instrucao1,0) in [03,04,05,10,15,20,25,30,35,40,45])  or
+           (StrToIntDef(Instrucao2,0) in [03,04,05,10,15,20,25,30,35,40,45]))  then
+       begin
+        Instrucao1  := IfThen(Instrucao1='06', '00', Instrucao1);
+        Instrucao2  := IfThen(Instrucao2='06', '00', Instrucao2);
+        DiasProtesto:= '  ';
+        AInstrucao  := PadLeft(Instrucao1,2,'0') + PadLeft(Instrucao2,2,'0');
+       end;
+
+
      end;
 
-     aDataDesconto:= '000000';
+      aDataDesconto:= '000000';
 
      if ValorDesconto > 0 then
      begin

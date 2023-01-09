@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2023
+[*] TK-3771 ACBrBancoBrasil feito ajustes no tratamento das instruções codificadas para protesto
+Por Daniel Morais
+
 06/01/2023
 [*] TK-3008-2 ACBrBancoSicredi contribuição para ler qrcode retorno boleto hibrido
 Por marcelo.hgv / validado Daniel Morais

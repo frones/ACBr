@@ -290,12 +290,26 @@ begin
         for I := Low(ANodeArray) to High(ANodeArray) do
         begin
           ANode := ANodeArray[I];
+
           AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+          with Response do
+          begin
+            NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+            CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          end;
+
           AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
           AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-          AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-          NumRps := AuxNode.AsString;
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 

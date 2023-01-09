@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+09/01/2023
+-- ISSGoiania.Provider --
+[*] Melhorias no TratarRetornoEmitir para capturar o numero da nota entre outras
+    informações
+   Por: Italo Giurizzato Junior
+
 06/01/2023
 -- ACBrNFSeXServicos.ini --
 [*] Atualizado a URL de homologação - Cidade de Itatiba/SP

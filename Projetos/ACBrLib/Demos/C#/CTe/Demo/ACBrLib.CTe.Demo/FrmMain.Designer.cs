@@ -141,6 +141,7 @@
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.btnValidarXml = new System.Windows.Forms.Button();
+            this.btnGerarChaveCTe = new System.Windows.Forms.Button();
             this.btnLimparLista = new System.Windows.Forms.Button();
             this.btnImprimirPDF = new System.Windows.Forms.Button();
             this.btnEnviarAssincrono = new System.Windows.Forms.Button();
@@ -163,8 +164,8 @@
             this.btnDFePorNSU = new System.Windows.Forms.Button();
             this.btnDFePorChave = new System.Windows.Forms.Button();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
-            this.btnGerarChaveCTe = new System.Windows.Forms.Button();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnClasseAltoNivel = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -239,7 +240,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(273, 381);
+            this.tabPage1.Size = new System.Drawing.Size(279, 426);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Geral";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -322,7 +323,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(273, 381);
+            this.tabPage2.Size = new System.Drawing.Size(279, 426);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Webservices";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -786,7 +787,7 @@
             this.tabPage4.Controls.Add(this.ckbSalvarArqs);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(273, 381);
+            this.tabPage4.Size = new System.Drawing.Size(279, 426);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Arquivos";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -952,7 +953,7 @@
             this.tbpDACTe.Location = new System.Drawing.Point(4, 22);
             this.tbpDACTe.Name = "tbpDACTe";
             this.tbpDACTe.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpDACTe.Size = new System.Drawing.Size(287, 413);
+            this.tbpDACTe.Size = new System.Drawing.Size(293, 458);
             this.tbpDACTe.TabIndex = 1;
             this.tbpDACTe.Text = "Documento Auxiliar";
             this.tbpDACTe.UseVisualStyleBackColor = true;
@@ -1030,7 +1031,7 @@
             this.tbpEmail.Location = new System.Drawing.Point(4, 22);
             this.tbpEmail.Name = "tbpEmail";
             this.tbpEmail.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpEmail.Size = new System.Drawing.Size(287, 413);
+            this.tbpEmail.Size = new System.Drawing.Size(293, 458);
             this.tbpEmail.TabIndex = 3;
             this.tbpEmail.Text = "Email";
             this.tbpEmail.UseVisualStyleBackColor = true;
@@ -1389,6 +1390,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.btnClasseAltoNivel);
             this.tabPage5.Controls.Add(this.btnValidarXml);
             this.tabPage5.Controls.Add(this.btnGerarChaveCTe);
             this.tabPage5.Controls.Add(this.btnLimparLista);
@@ -1419,6 +1421,17 @@
             this.btnValidarXml.Text = "Validar Xml";
             this.btnValidarXml.UseVisualStyleBackColor = true;
             this.btnValidarXml.Click += new System.EventHandler(this.btnValidarXmlClick);
+            // 
+            // btnGerarChaveCTe
+            // 
+            this.btnGerarChaveCTe.Location = new System.Drawing.Point(6, 151);
+            this.btnGerarChaveCTe.Name = "btnGerarChaveCTe";
+            this.btnGerarChaveCTe.Size = new System.Drawing.Size(118, 23);
+            this.btnGerarChaveCTe.TabIndex = 26;
+            this.btnGerarChaveCTe.Text = "Gerar Chave CTe";
+            this.btnGerarChaveCTe.UseVisualStyleBackColor = true;
+            this.btnGerarChaveCTe.Click += new System.EventHandler(this.BtnGerarChaveCTe_Click);
+            // 
             // btnLimparLista
             // 
             this.btnLimparLista.Location = new System.Drawing.Point(254, 35);
@@ -1479,7 +1492,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(378, 181);
+            this.tabPage6.Size = new System.Drawing.Size(378, 187);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Consultas";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1505,7 +1518,7 @@
             this.tabPage7.Controls.Add(this.btnCancelar);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(378, 181);
+            this.tabPage7.Size = new System.Drawing.Size(378, 187);
             this.tabPage7.TabIndex = 2;
             this.tabPage7.Text = "Eventos";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1577,7 +1590,7 @@
             this.tabPage8.Controls.Add(this.btnInutilizar);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(378, 181);
+            this.tabPage8.Size = new System.Drawing.Size(378, 187);
             this.tabPage8.TabIndex = 3;
             this.tabPage8.Text = "Inutilização";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1609,7 +1622,7 @@
             this.tabPage9.Controls.Add(this.btnDFePorChave);
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(378, 181);
+            this.tabPage9.Size = new System.Drawing.Size(378, 187);
             this.tabPage9.TabIndex = 4;
             this.tabPage9.Text = "Distribuição DFe";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1654,19 +1667,19 @@
             this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
             this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.BtnCarregarConfiguracoes_Click);
             // 
-            // btnGerarChaveCTe
-            // 
-            this.btnGerarChaveCTe.Location = new System.Drawing.Point(6, 151);
-            this.btnGerarChaveCTe.Name = "btnGerarChaveCTe";
-            this.btnGerarChaveCTe.Size = new System.Drawing.Size(118, 23);
-            this.btnGerarChaveCTe.TabIndex = 26;
-            this.btnGerarChaveCTe.Text = "Gerar Chave CTe";
-            this.btnGerarChaveCTe.UseVisualStyleBackColor = true;
-            this.btnGerarChaveCTe.Click += new System.EventHandler(this.BtnGerarChaveCTe_Click);
-            // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
+            // 
+            // btnClasseAltoNivel
+            // 
+            this.btnClasseAltoNivel.Location = new System.Drawing.Point(254, 154);
+            this.btnClasseAltoNivel.Name = "btnClasseAltoNivel";
+            this.btnClasseAltoNivel.Size = new System.Drawing.Size(118, 20);
+            this.btnClasseAltoNivel.TabIndex = 27;
+            this.btnClasseAltoNivel.Text = "Classe Alto Nivel";
+            this.btnClasseAltoNivel.UseVisualStyleBackColor = true;
+            this.btnClasseAltoNivel.Click += new System.EventHandler(this.btnClasseAltoNivel_Click);
             // 
             // FrmMain
             // 
@@ -1863,6 +1876,7 @@
         private System.Windows.Forms.Button btnGerarChaveCTe;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Button btnValidarXml;
+        private System.Windows.Forms.Button btnClasseAltoNivel;
     }
 }
 

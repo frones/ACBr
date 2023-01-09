@@ -49,10 +49,85 @@
   <ItemGroup>
     <Compile Include="..\Shared\CTeConfig.cs" Link="CTeConfig.cs" />
     <Compile Include="..\Shared\DACTeConfig.cs" Link="DACTeConfig.cs" />
+    <Compile Include="..\Shared\CTe\CTe.cs" Link="CTe\CTe.cs" />
+	<Compile Include="..\Shared\CTe\InfCTe.cs" Link="CTe\InfCTe.cs" />
+	<Compile Include="..\Shared\CTe\IdentificacaoCTe.cs" Link="CTe\IdentificacaoCTe.cs" />
+	<Compile Include="..\Shared\CTe\ComplementoCTe.cs" Link="CTe\ComplementoCTe.cs" />
+	<Compile Include="..\Shared\CTe\EmitenteCTe.cs" Link="CTe\EmitenteCTe.cs" />
+	<Compile Include="..\Shared\CTe\RemetenteCTe.cs" Link="CTe\RemetenteCTe.cs" />
+	<Compile Include="..\Shared\CTe\ExpedidorCTe.cs" Link="CTe\ExpedidorCTe.cs" />
+	<Compile Include="..\Shared\CTe\RecebedorCTe.cs" Link="CTe\RecebedorCTe.cs" />
+    <Compile Include="..\Shared\CTe\DestinatarioCTe.cs" Link="CTe\DestinatarioCTe.cs" />
+	<Compile Include="..\Shared\CTe\ValoresPrestacaoServicoCTe.cs" Link="CTe\ValoresPrestacaoServicoCTe.cs" />
+	<Compile Include="..\Shared\CTe\InformacoesRelativasImpostosCTe.cs" Link="CTe\InformacoesRelativasImpostosCTe.cs" />
+    <Compile Include="..\Shared\CTe\GrupoInformacoesNormalSubstitutoCTe.cs" Link="CTe\GrupoInformacoesNormalSubstitutoCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\DetalhamentoComplementadoCTe.cs" Link="CTe\DetalhamentoComplementadoCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\DetalhamentoAnulacaoCTe.cs" Link="CTe\DetalhamentoAnulacaoCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InformacoesSuplementaresCTe.cs" Link="CTe\InformacoesSuplementaresCTe.cs" />
+
+
+	<Compile Include="..\Shared\CTe\TipoCTe.cs" Link="CTe\TipoCTe.cs" />
+	<Compile Include="..\Shared\CTe\ModalCTe.cs" Link="CTe\ModalCTe.cs" />
+	<Compile Include="..\Shared\CTe\TipoServicoCTe.cs" Link="CTe\TipoServicoCTe.cs" />
+	<Compile Include="..\Shared\CTe\InfPercursoCTe.cs" Link="CTe\InfPercursoCTe.cs" />
+	<Compile Include="..\Shared\CTe\FluxoCTe.cs" Link="CTe\FluxoCTe.cs" />
+	<Compile Include="..\Shared\CTe\PassCTe.cs" Link="CTe\PassCTe.cs" />
+    <Compile Include="..\Shared\CTe\IndicadorTomadorCTe.cs" Link="CTe\IndicadorTomadorCTe.cs" />
+    <Compile Include="..\Shared\CTe\TomadorCTe.cs" Link="CTe\TomadorCTe.cs" />
+    <Compile Include="..\Shared\CTe\EnderecoTomadorCTe.cs" Link="CTe\EnderecoTomadorCTe.cs" />
+    <Compile Include="..\Shared\CTe\EntregaCTe.cs" Link="CTe\EntregaCTe.cs" />
+	<Compile Include="..\Shared\CTe\ObsContCTe.cs" Link="CTe\ObsContCTe.cs" />
+	<Compile Include="..\Shared\CTe\ObsFiscoCTe.cs" Link="CTe\ObsFiscoCTe.cs" />
+	<Compile Include="..\Shared\CTe\EnderEmitCTe.cs" Link="CTe\EnderEmitCTe.cs" />
+	<Compile Include="..\Shared\CTe\EnderRemeCTe.cs" Link="CTe\EnderRemeCTe.cs" />
+	<Compile Include="..\Shared\CTe\EnderExpedCTe.cs" Link="CTe\EnderExpedCTe.cs" />
+	<Compile Include="..\Shared\CTe\EnderRecebCTe.cs" Link="CTe\EnderRecebCTe.cs" />
+	<Compile Include="..\Shared\CTe\EnderDestCTe.cs" Link="CTe\EnderDestCTe.cs" />
+    <Compile Include="..\Shared\CTe\ComponentesValorPrestacaoCTe.cs" Link="CTe\ComponentesValorPrestacaoCTe.cs" />
+	<Compile Include="..\Shared\CTe\ICMSCTe.cs" Link="CTe\ICMSCTe.cs" />
+    <Compile Include="..\Shared\CTe\ICMSUFFimCTe.cs" Link="CTe\ICMSUFFimCTe.cs" />
+	<Compile Include="..\Shared\CTe\InfCargaCTe.cs" Link="CTe\InfCargaCTe.cs" />
+	<Compile Include="..\Shared\CTe\TipoPeriodoCTe.cs" Link="CTe\TipoPeriodoCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\TipoHorarioCTe.cs" Link="CTe\TipoHorarioCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfQCTe.cs" Link="CTe\InfQCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\CodUniMedidaCTe.cs" Link="CTe\CodUniMedidaCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfDocCTe.cs" Link="CTe\InfDocCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfNFeCTe.cs" Link="CTe\InfNFeCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfUnidCargaCTe.cs" Link="CTe\InfUnidCargaCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\TipoUnidCargaCTe.cs" Link="CTe\TipoUnidCargaCTe.cs" />
+    <Compile Include="..\Shared\CTe\LacreUnidadeCargaCTe.cs" Link="CTe\LacreUnidadeCargaCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfUnidTranspCTe.cs" Link="CTe\InfUnidTranspCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\TipoUnidTranspCTe.cs" Link="CTe\TipoUnidTranspCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\LacreUnidadeTranspCTe.cs" Link="CTe\LacreUnidadeTranspCTe.cs" />
+    <Compile Include="..\Shared\CTe\InfOutrosCTe.cs" Link="CTe\InfOutrosCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\TipoDocCTe.cs" Link="CTe\TipoDocCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\DocAntCTe.cs" Link="CTe\DocAntCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\EmiDocAntCTe.cs" Link="CTe\EmiDocAntCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\IdDocAntPapCTe.cs" Link="CTe\IdDocAntPapCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\TipoDocAnteriorCTe.cs" Link="CTe\TipoDocAnteriorCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\IdDocAntEleCTe.cs" Link="CTe\IdDocAntEleCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfModalCTe.cs" Link="CTe\InfModalCTe.cs" />  
+    <Compile Include="..\Shared\CTe\VeicNovosCTe.cs" Link="CTe\VeicNovosCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\CobrCTe.cs" Link="CTe\CobrCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\FatCTe.cs" Link="CTe\FatCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\DupCTe.cs" Link="CTe\DupCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfCteSubCTe.cs" Link="CTe\InfCteSubCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\TomaICMSCTe.cs" Link="CTe\TomaICMSCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\RefNFCTe.cs" Link="CTe\RefNFCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfGlobalizadoCTe.cs" Link="CTe\InfGlobalizadoCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfServVincCTe.cs" Link="CTe\InfServVincCTe.cs" /> 
+    <Compile Include="..\Shared\CTe\InfCTeMultimodalCTe.cs" Link="CTe\InfCTeMultimodalCTe.cs" />
+
+	<Compile Include="..\Shared\Respostas\ConsultaCTeResposta.cs" Link="Respostas\ConsultaCTeResposta.cs" />  
+
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Respostas\" />
+	</ItemGroup>
 
 </Project>

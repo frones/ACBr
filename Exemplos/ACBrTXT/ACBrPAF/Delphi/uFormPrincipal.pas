@@ -205,7 +205,7 @@ begin
     LRegistroZ4 := ACBrPAF.PAF_Z.RegistroZ4.New;
 
     LRegistroZ4.CPF_CNPJ:= '000000000';
-    LRegistroZ4.VL_TOTAL:= i;
+    LRegistroZ4.VL_TOTAL_MENSAL:= i;
     LRegistroZ4.DATA_INI:= now;
     LRegistroZ4.DATA_FIM:= now;
   end;

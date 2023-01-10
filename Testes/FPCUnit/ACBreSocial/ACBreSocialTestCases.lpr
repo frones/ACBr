@@ -3,7 +3,8 @@ program ACBreSocialTestCases;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, fpcunittestrunner, ACBreSocialTests;
+  Interfaces, Forms, GuiTestRunner, fpcunittestrunner, ACBreSocialTests, 
+ACBreSocialEventosNaoPeriodicosTests, ACBreSocialEventosPeriodicosTests;
 
 {$R *.res}
 

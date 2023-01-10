@@ -5,60 +5,8 @@ unit ACBreSocialTests;
 interface
 
 uses
-  Classes, SysUtils, ACBrTests.Util, ACBreSocial, pcesConversaoeSocial,
-  pcesCommon, pcesS2400, pcesS1202, pcesS1207;
-
-const
-  CAMINHORelativoACBR = '..\..\..\';
-
-  ARQINI_S1000 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1000.INI';
-  ARQINI_S1005 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1005.INI';
-  ARQINI_S1010 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1010.INI';
-  ARQINI_S1020 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1020.INI';
-  ARQINI_S1030 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1030.INI';
-  ARQINI_S1035 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1035.INI';
-  ARQINI_S1040 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1040.INI';
-  ARQINI_S1050 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1050.INI';
-  ARQINI_S1060 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1060.INI';
-  ARQINI_S1070 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1070.INI';
-  ARQINI_S1080 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1080.INI';
-  ARQINI_S2190 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2190.INI';
-  ARQINI_S2200 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2200.INI';
-  ARQINI_S2205 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2205.INI';
-  ARQINI_S2206 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2206.INI';
-  ARQINI_S2210 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2210.INI';
-  ARQINI_S2220 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2220.INI';
-  ARQINI_S2221 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2221.INI';
-  ARQINI_S2230 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2230.INI';
-  ARQINI_S2231 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2231.INI';
-  ARQINI_S2240 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2240.INI';
-  ARQINI_S2245 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2245.INI';
-  ARQINI_S2250 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2250.INI';
-  ARQINI_S2260 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2260.INI';
-  ARQINI_S2298 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2298.INI';
-  ARQINI_S2299 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2299.INI';
-  ARQINI_S2300 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2300.INI';
-  ARQINI_S2306 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2306.INI';
-  ARQINI_S2399 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2399.INI';
-  ARQINI_S2400 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2400.INI';
-  ARQINI_S2405 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2405.INI';
-  ARQINI_S2410 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2410.INI';
-  ARQINI_S2416 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2416.INI';
-  ARQINI_S2418 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2418.INI';
-  ARQINI_S2420 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S2420.INI';
-  ARQINI_S3000 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S3000.INI';
-  ARQINI_S1200 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1200.INI';
-  ARQINI_S1202 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1202.INI';
-  ARQINI_S1207 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1207.INI';
-  ARQINI_S1210 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1210.INI';
-  ARQINI_S1250 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1250.INI';
-  ARQINI_S1260 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1260.INI';
-  ARQINI_S1270 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1270.INI';
-  ARQINI_S1280 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\INI\S1280.INI';
-  ARQINI_S1295 = CAMINHORelativoACBR + '\Testes\Recursos\eSocial\INI\S1295.INI';
-  ARQINI_S1298 = CAMINHORelativoACBR + '\Testes\Recursos\eSocial\INI\S1298.INI';
-  ARQINI_S1299 = CAMINHORelativoACBR + '\Testes\Recursos\eSocial\INI\S1299.INI';
-  ARQINI_S1300 = CAMINHORelativoACBR + '\Testes\Recursos\eSocial\INI\S1300.INI';
+  Classes, SysUtils, ACBrTests.Util, pcesConversaoeSocial, ACBreSocialTestsConsts,
+  ACBreSocialEventosNaoPeriodicosTests, ACBreSocialEventosPeriodicosTests;
 
 type
 
@@ -122,272 +70,215 @@ type
       procedure ConversaoeSocial_StringINIToTipoEvento_RetornaS1300;
   end;
 
-  { TACBreSocialEventosNaoPeriodicosTest }
+  { TACBreSocialTipoToStrStrToTipoTest }
 
-  TACBreSocialEventosNaoPeriodicosTest = class(TTestCase)
+  TACBreSocialTipoToStrStrToTipoTest = class(TTestCase)
     private
-      FACBreSocial : TACBreSocial;
+      auxStr : String;
+      OK     : Boolean;
     public
       procedure Setup;override;
       procedure TearDown;override;
     published
-      procedure ACBreSocialEventosNaoPeriodicosS2400_Create_ListaVazia;
-      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS2400;
+      procedure VersaoeSocialToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure StrToVersaoeSocial_ConvertendoTodosTipos_RetornoCorreto;
+      procedure SimNaoToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure StrToSimNao_ConvertendoTodosTipos_RetornoCorreto;
+      procedure SimNaoFacultativoToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure StrToSimNaoFacultativo_ConvertendoTodosTipos_RetornoCorreto;
+      procedure ModoLancamentoToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure StrToModoLancamento_ConvertendoTodosTipos_RetornoCorreto;
+      procedure LayouteSocialToServico_ConvertendoTodosTipos_RetornoCorreto;
+      procedure ServicoToLayout_ConvertendoTodosTipos_RetornoCorreto;
+      procedure LayoutToSchema_ConvertendoTodosTipos_RetornoCorreto;
+
+
   end;
-
-  { TACBreSocialEventosPeriodicosTest }
-
-  TACBreSocialEventosPeriodicosTest = class(TTestCase)
-    private
-      FACBreSocial : TACBreSocial;
-    public
-      procedure Setup;override;
-      procedure TearDown;override;
-    published
-      procedure ACBreSocialEventosPeriodicosS1202_Create_ListaVazia;
-      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1202;
-      procedure ACBreSocialEventosPeriodicosS1207_Create_ListaVazia;
-      procedure ACBreSocualEventos_LoadFromINI_LeuePreencheuS1207;
-  end;
-
 
 implementation
 
-{ TACBreSocualEventosPeriodicosTest }
+{ TACBreSocialTipoToStrStrToTipoTest }
 
-procedure TACBreSocialEventosPeriodicosTest.Setup;
+procedure TACBreSocialTipoToStrStrToTipoTest.Setup;
 begin
   inherited Setup;
-  FACBreSocial := TACBreSocial.Create(nil);
 end;
 
-procedure TACBreSocialEventosPeriodicosTest.TearDown;
+procedure TACBreSocialTipoToStrStrToTipoTest.TearDown;
 begin
   inherited TearDown;
-  FACBreSocial.Free;
 end;
 
-procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventosPeriodicosS1202_Create_ListaVazia;
+procedure TACBreSocialTipoToStrStrToTipoTest.VersaoeSocialToStr_ConvertendoTodosTipos_RetornoCorreto;
 begin
-  Check(FACBreSocial.Eventos.Periodicos.S1202.Count = 0, 'Lista de eventos S-1202 não está vazia');
+  auxStr := EmptyStr;
+  auxStr := VersaoeSocialToStr(ve02_04_01);
+  CheckEquals('02_04_01', auxStr, 'Erro conversão: valor esperado "02_04_01", valor convertido "'+auxStr+'"');
+
+  auxStr := EmptyStr;
+  auxStr := VersaoeSocialToStr(ve02_04_02);
+  CheckEquals('02_04_02', auxStr, 'Erro conversão: valor esperado "02_04_02", valor convertido "'+auxStr+'"');
+
+  auxStr := EmptyStr;
+  auxStr := VersaoeSocialToStr(ve02_05_00);
+  CheckEquals('02_05_00', auxStr, 'Erro conversão: valor esperado "02_05_00", valor convertido "'+auxStr+'"');
+
+  auxStr := EmptyStr;
+  auxStr := VersaoeSocialToStr(veS01_00_00);
+  CheckEquals('S01_00_00', auxStr, 'Erro conversão: valor esperado "S01_00_00", valor convertido "'+auxStr+'"');
+
+  auxStr := EmptyStr;
+  auxStr := VersaoeSocialToStr(veS01_01_00);
+  CheckEquals('S01_01_00', auxStr, 'Erro conversão: valor esperado "S01_01_00", valor convertido "'+auxStr+'"');
 end;
 
-procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS1202;
+procedure TACBreSocialTipoToStrStrToTipoTest.StrToVersaoeSocial_ConvertendoTodosTipos_RetornoCorreto;
 var
-  eSS1202 : TEvtRmnRPPS;
-  InfoComp : TInfoComplem;
-  sucessVinc: TSucessaoVinc3;
-  dmDevI: pcesS1202.TDMDevCollectionItem;
-  ideEstabI: pcesS1202.TIdeEstabCollectionItem;
-  ideADVI : TIdeAdvCollectionItem;
-  itemRemun : TRubricaCollectionItem;
+  auxTipo: TVersaoeSocial;
 begin
-  try
-     FACBreSocial.Eventos.Clear;
-     FACBreSocial.Eventos.LoadFromIni(ARQINI_S1202);
-  except
-    Check(FACBreSocial.Eventos.Periodicos.S1202.Count > 0, 'Não instânciou o S-1202 na lista');
+  auxTipo := StrToVersaoeSocial(OK, '02_04_01');
+  CheckTrue(auxTipo = ve02_04_01, 'Erro conversão: valor esperado ve02_04_01');
 
-    eSS1202 := FACBreSocial.Eventos.Periodicos.S1202[0].evtRmnRPPS;
-    Check(eSS1202.ideEvento.indRetif = ireOriginal, 'ideEvento.indRetif diferente do valor esperado');
-    Check(eSS1202.ideEvento.nrRecibo = '123' , 'ideEvento.nrRecibo diferente do valor esperado');
-    Check(eSS1202.ideEvento.indApuracao = iapuMensal, 'ideEvento.indApuracao diferente do valor esperado');
-    Check(eSS1202.ideEvento.perApur = '2018-05', 'ideEvento.perApur diferente do valor esperado');
-    Check(eSS1202.ideEvento.ProcEmi = peAplicEmpregador, 'ideEvento.procEmi diferente do valor esperado');
+  auxTipo := StrToVersaoeSocial(OK, '02_04_02');
+  CheckTrue(auxTipo = ve02_04_02, 'Erro conversão: valor esperado ve02_04_02');
 
-    Check(eSS1202.ideEmpregador.TpInsc = tiCNPJ, 'ideEvento.tpInsc diferente do valor esperado');
-    Check(eSS1202.ideEmpregador.NrInsc = '12345678000123', 'ideEvento.nrInsc diferente do valor esperado');
+  auxTipo := StrToVersaoeSocial(OK, '02_05_00');
+  CheckTrue(auxTipo = ve02_05_00, 'Erro conversão: valor esperado ve02_05_00');
 
-    Check(eSS1202.ideTrabalhador.cpfTrab = '12345678901', 'ideTrabalhador.cpfTrab diferente do valor esperado');
+  auxTipo := StrToVersaoeSocial(OK, 'S01_00_00');
+  CheckTrue(auxTipo = veS01_00_00, 'Erro conversão: valor esperado veS01_00_00');
 
-    infoComp := eSS1202.ideTrabalhador.InfoComplem;
-    Check(InfoComp.nmTrab = 'Nome do Trabalhador', 'ideTrabalhador.infoComplem.nmTrab diferente do valor esperado');
-
-    sucessVinc := infoComp.sucessaoVinc;;
-    Check(sucessVinc.cnpjOrgaoAnt = '11111111111111', 'ideTrabalhador.infoComplem.sucessaoVinc.cnpjOrgaoAnt diferente do valor esperado');
-    Check(sucessVinc.matricAnt = '123456', 'ideTrabalhador.infoComplem.sucessaoVinc.matricAnt diferente do valor esperado');
-
-    dmDevI := eSS1202.dmDev[0];
-    Check(dmdevI.ideDmDev = '1234', 'dmDev.ideDmDev diferente do valor esperado');
-    Check(dmDevI.codCateg = 101, 'dmDev.codCategoria diferente do valor esperado');
-    Check(dmDevI.indRRA = snfSim, 'dmDev.indRRA diferente do valor esperado');
-    Check(dmDevI.infoRRA.qtdMesesRRA = 11, 'dmDev.infoRRA.qtdMesesRRA diferente do valor esperado');
-    Check(dmDevI.infoRRA.DespProcJud.vlrDespCustas = 2200.50, 'dmDev.infoRRA.vlrDespCustas diferente do valor esperado');
-
-    ideAdvI := dmDevI.infoRRA.ideAdv[0];
-    Check(ideADVI.NrInsc = '11111111111111', 'dmDev.infoRRA.ideADV.nrInsc diferente do valor esperado');
-    Check(ideADVI.vlrAdv = 350.00, 'dmDev.infoRRA.ideADV.vlrAdv diferente do valor esperado');
-
-    ideEstabI := dmDevI.infoPerApur.ideEstab.Items[0];
-    Check(ideEstabI.tpInsc = tiCNPJ, 'dmDev.infoPerApur.ideEstab.tpInsc diferente do valor esperado');
-    Check(ideEstabI.nrInsc = '11111111111111', 'dmDev.infoPerApur.ideEstab.nrInsc diferente do valor esperado');
-
-    Check(ideEstabI.remunPerApur.Items[0].matricula='1234567','dmDev.infoPerApur.ideEstab.remunPerApur.matricula diferente do valor esperado');
-
-    itemRemun := dmDevI.infoPerApur.ideEstab.Items[0].remunPerApur.Items[0].itensRemun[0];
-    Check(itemRemun.codRubr = '1000', 'dmDev.infoPerApur.IdeEstab.RemunPerApur.ItensRemun.codRubr diferente do valor esperado');
-    Check(itemRemun.ideTabRubr = '1000', 'dmDev.infoPerApur.ideEstab.RemunPerApur.ItensRemun.ideTabRubr diferente do valor esperado');
-    Check(itemRemun.qtdRubr = 500, 'dmDev.infoPerApur.ideEstab.RemunPerApur.ItensRemun.qtdRubr diferente do valor esperado');
-    Check(itemRemun.vrRubr = 800, 'dmDev.infoPerApur.ideEstab.RemunPerApur.itensRemun.vrRubr diferente do valor esperado');
-
-    Check(dmDevI.infoPerAnt.remunOrgSuc = tpNao, 'dmDev.infoPerAnt diferente de N');
-
-    Check(dmDevI.infoPerAnt.idePeriodo.Items[0].perRef = '2020-05', 'dmDev.infoPerAnt.idePeriodo.perRef diferente do valor esperado');
-
-    ideEstabI := dmDevI.infoPerAnt.idePeriodo.Items[0].ideEstab.Items[0];
-    Check(ideEstabI.tpInsc = tiCNPJ, 'dmDev.infoPerAnt.idePeriodo.ideEstab.tpInsc diferente do valor esperado');
-    Check(ideEstabI.nrInsc = '22222222222222', 'dmDev.infoPerAnt.idePeriodo.ideEstab.nrInsc diferente do valor esperado');
-
-    Check(ideEstabI.remunPerAnt.Items[0].matricula = '123456', 'dmDev.infoPerAnt.idePeriodo.ideEstab.remunPerAnt.matricula diferente do valor esperado');
-
-    itemRemun := ideEstabI.remunPerAnt.Items[0].itensRemun[0];
-    Check(itemRemun.qtdRubr = 450, 'dmDev.infoPerAnt.idePeriodo.ideEstab.remunPerAnt.itensRemun.qtdRubr diferente do valor esperado');
-    Check(itemRemun.fatorRubr = 11,'dmDev.infoPerAnt.idePeriodo.ideEstab.remunPerAnt.itensRemun.fatorRubr diferente do valor esperado');
-    Check(itemRemun.vrRubr = 900, 'dmDev.infoPerAnt.idePeriodo.ideEstab.remunPerAnt.itensRemun.vrRubr diferente do valor esperado');
-  end;
+  auxTipo := StrToVersaoeSocial(OK, 'S01_01_00');
+  CheckTrue(auxTipo = veS01_01_00, 'Erro conversão: valor esperado veS01_01_00');
 end;
 
-procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventosPeriodicosS1207_Create_ListaVazia;
+procedure TACBreSocialTipoToStrStrToTipoTest.SimNaoToStr_ConvertendoTodosTipos_RetornoCorreto;
 begin
-  Check(FACBreSocial.Eventos.Periodicos.S1207.Count = 0, 'Lista de eventos S-1207 não está vazia');
+  auxStr := EmptyStr;
+  auxStr := eSSimNaoToStr(tpSim);
+  CheckEquals('S', auxStr, 'Erro de conversão: valor esperado "S", valor convertido "'+auxStr+'"');
+
+  auxStr := EmptyStr;
+  auxStr := eSSimNaoToStr(tpNao);
+  CheckEquals('N', auxStr, 'Erro de conversão: valor esperado "N", valor convertido "'+auxStr+'"');
 end;
 
-procedure TACBreSocialEventosPeriodicosTest.ACBreSocualEventos_LoadFromINI_LeuePreencheuS1207;
+procedure TACBreSocialTipoToStrStrToTipoTest.StrToSimNao_ConvertendoTodosTipos_RetornoCorreto;
 var
-  eSS1207: TEvtBenPrRP;
-  dmDevI : pcesS1207.TDMDevCollectionItem;
-  ideADVI: TIdeAdvCollectionItem;
-  ideEstabI: pcesS1207.TIdeEstabCollectionItem;
-  itemRemun: TRubricaCollectionItem;
-  idePeriodoI: pcesS1207.TIdePeriodoCollectionItem;
+  auxTipo : tpSimNao;
 begin
-  try
-    FACBreSocial.Eventos.LoadFromIni(ARQINI_S1207);
-  except
-    Check(FACBreSocial.Eventos.Periodicos.S1207.Count > 0, 'Não instanciou o S-1207 na lista');
+  auxTipo := eSStrToSimNao(OK, 'S');
+  CheckTrue(auxTipo = tpSim, 'Erro de conversão, valor esperado "tpSim"');
 
-    eSS1207 := FACBreSocial.Eventos.Periodicos.S1207[0].evtBenPrRP;
-
-    Check(eSS1207.ideEvento.indRetif = ireOriginal, 'ideEvento.indRetif diferente do valor esperado');
-    Check(eSS1207.ideEvento.NrRecibo = '123', 'ideEvento.nrRecibo diferente do valor esperado');
-    Check(eSS1207.ideEvento.IndApuracao = iapuMensal, 'ideEvento.indApuracao do valor esperado');
-    Check(eSS1207.ideEvento.perApur='2018-05', 'ideEvento.perApur diferente do valor esperado');
-
-    Check(eSS1207.ideEmpregador.TpInsc = tiCNPJ, 'ideEmpregador.tpInsc diferente do valor esperado');
-    Check(eSS1207.ideEmpregador.NrInsc = '12345678000123', 'ideEmpregador.nrInsc diferente do valor esperado');
-
-    Check(eSS1207.ideBenef.cpfBenef = '12345678901', 'ideBenef.cpfBenef diferente do valor esperado');
-
-    dmDevI := eSS1207.dmDev[0];
-    Check(dmDevI.ideDMDev = '1A', 'dmDev.ideDMDev diferente do valor esperado');
-    Check(dmDevI.nrBeneficio = '123456', 'dmDev.nrBeneficio diferente do valor esperado');
-    Check(dmDevI.indRRA = snfSim, 'dmDev.indRRA diferente do valor esperado');
-    Check(dmDevI.infoRRA.tpProcRRA = tppAdministrativo, 'dmDev.infoRRA.tpProcRRA diferente do valor esperado');
-    Check(dmDevI.infoRRA.nrProcRRA = '12345678901234567', 'dmDev.infoRRA.nrProcRRA diferente do valor esperado');
-    Check(dmDevI.infoRRA.qtdMesesRRA = 5, 'dmDev.infoRRA.qtdMesesRRA diferente do valor esperado');
-    Check(dmDevI.infoRRA.despProcJud.vlrDespCustas = 1000.25, 'dmDev.infoRRA.descProcJud.vlrDespCustas diferente do valor esperado');
-    Check(dmDevI.infoRRA.despProcJud.vlrDespAdvogados = 250.50, 'dmDev.infoRRA.despProcJud.vlrDespAdvogados diferente do valor esperado');
-
-    ideADVI := dmDevI.infoRRA.ideAdv[0];
-    Check(ideADVI.tpInsc = tiCNPJ, 'dmDev.infoRRA.ideADV.tpInsc diferente do valor esperado');
-    Check(ideADVI.nrInsc = '11111111111111', 'dmDev.infoRRA.ideADV.nrInsc diferente do valor esperado');
-    Check(ideADVI.vlrAdv = 250, 'dmDev.infoRRA.ideADV.vlrADV diferente do esperado');
-
-    ideEstabI := dmDevI.infoPerApur.ideEstab.Items[0];
-    Check(ideEstabI.tpInsc = tiCNPJ, 'dmDev.infoPerAPur.ideEstab.tpInsc diferente do valor esperado');
-    Check(ideEstabI.NrInsc = '22222222222222', 'dmDev.infoPerApur.ideEstab.nrInsc diferente do valor esperado');
-
-    itemRemun := ideEstabI.itensRemun[0];
-    Check(itemRemun.codRubr = '1', 'dmDev.infoPerApur.ideEstab.ItensRemun.codRubr diferente do valor esperado');
-    Check(itemRemun.ideTabRubr = '100', 'dmDev.infoPerApur.ideEstab.itensRemun.ideTabRubr diferente do valor esperado');
-    Check(itemRemun.qtdRubr = 50, 'dmDev.infoPerApur.ideEstab.itensRemun.qtdRubr diferente do valor esperado');
-    Check(itemRemun.fatorRubr = 15, 'dmDev.infoPerApur.ideEstab.fatorRubr diferente do valor esperado');
-    Check(itemRemun.vrRubr = 500, 'dmDev.infoPerApur.ideEstab.vrRubr diferente do valor esperado');
-
-    idePeriodoI := dmDevI.infoPerAnt.idePeriodo.Items[0];
-    Check(idePeriodoI.perRef = '2022-05', 'dmDev.infoPerAnt.idePeriodo.perRef diferente do valor esperado');
-
-    ideEstabI := idePeriodoI.ideEstab.Items[0];
-    Check(ideEstabI.tpInsc = tiCNPJ, 'dmDev.infoPerAnt.idePeriodo.ideEstab.tpInsc diferente do valor esperado');
-    Check(ideEstabI.nrInsc = '33333333333333', 'dmDev.infoPerAnt.idePeriodo.ideEstab.nrInsc diferente do valor esperado');
-
-    itemRemun := ideEstabI.itensRemun[0];
-    Check(itemRemun.codRubr = '2', 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.codRubr diferente do valor esperado');
-    Check(itemRemun.ideTabRubr = '200', 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.ideTabRubr diferente do valor esperado');
-    Check(itemRemun.qtdRubr = 60, 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.qtdRubr diferente do valor esperado');
-    Check(itemRemun.fatorRubr = 10, 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.fatorRubr diferente do valor esperado');
-    Check(itemRemun.vrRubr = 300, 'dmDev.infoPerAnt.idePeriodo.ideEstab.itensRemun.vrRubr diferente do valor esperado');
-
-
-  end;
+  auxTipo := eSStrToSimNao(OK, 'N');
+  CheckTrue(auxTipo = tpNao, 'Erro de conversão, valor esperado "tpNao"');
 end;
 
-{ TACBreSocialEventosNaoPeriodicosTest }
-
-procedure TACBreSocialEventosNaoPeriodicosTest.Setup;
+procedure TACBreSocialTipoToStrStrToTipoTest.SimNaoFacultativoToStr_ConvertendoTodosTipos_RetornoCorreto;
 begin
-  inherited Setup;
-  FACBreSocial := TACBreSocial.Create(nil);
+  auxStr := EmptyStr;
+  auxStr := eSSimNaoFacultativoToStr(snfNada);
+  CheckEquals('', auxStr, 'Erro de conversão: valor esperado "", valor convertido "'+auxStr+'"');
+
+  auxStr := EmptyStr;
+  auxStr := eSSimNaoFacultativoToStr(snfSim);
+  CheckEquals('S', auxStr, 'Erro de conversão: valor esperado, "S", valor convertido "'+auxStr+'"');
+
+  auxStr := EmptyStr;
+  auxStr := eSSimNaoFacultativoToStr(snfNao);
+  CheckEquals('N', auxStr, 'Erro de conversão: valor esperado, "N", valor convertido "'+auxStr+'"');
+
 end;
 
-procedure TACBreSocialEventosNaoPeriodicosTest.TearDown;
-begin
-  inherited TearDown;
-  FACBreSocial.Free;
-end;
-
-procedure TACBreSocialEventosNaoPeriodicosTest.ACBreSocialEventosNaoPeriodicosS2400_Create_ListaVazia;
-begin
-  Check(FACBreSocial.Eventos.NaoPeriodicos.S2400.Count = 0, 'Lista de Eventos S-2400 não está vazia');
-end;
-
-procedure TACBreSocialEventosNaoPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS2400;
+procedure TACBreSocialTipoToStrStrToTipoTest.StrToSimNaoFacultativo_ConvertendoTodosTipos_RetornoCorreto;
 var
-  eSS2400 : TEvtCdBenefIn;
+  auxTipo: tpSimNaoFacultativo;
 begin
-  //Precisei fazer assim porque a rotina requer certificado digital e eu não tenho;
-  //então ela levanta uma exceção que faz o teste falhar.
-  try
-    FACBreSocial.Eventos.LoadFromIni(ARQINI_S2400);
-  except
-    Check(FACBreSocial.Eventos.NaoPeriodicos.S2400.Count > 0, 'Não instanciou o S-2400 na lista');
+  auxTipo := eSStrToSimNaoFacultativo(OK, '');
+  CheckTrue(auxTipo = snfNada, 'Erro de conversão, valor esperado ""');
 
-    eSS2400    := FACBreSocial.Eventos.NaoPeriodicos.S2400.Items[0].EvtCdBenefIn;
+  auxTipo := eSStrToSimNaoFacultativo(OK, 'S');
+  CheckTrue(auxTipo = snfSim, 'Erro de conversão, valor esperado "S"');
 
-    Check(eSS2400.IdeEvento.indRetif     = ireOriginal            , 'IdeEvento.indRetif diferente do valor esperado');
-    Check(eSS2400.IdeEvento.NrRecibo     = EmptyStr               , 'IdeEvento.NrRecibo diferente do valor esperado');
-    Check(eSS2400.IdeEvento.ProcEmi      = peAplicEmpregador      , 'IdeEvento.ProcEmi diferente do valor esperado');
-    Check(eSS2400.IdeEvento.VerProc      = '1.1'                  , 'IdeEvento.VerProc diferente do valor esperado');
+  auxTipo := eSStrToSimNaoFacultativo(OK, 'N');
+  CheckTrue(auxTipo = snfNao, 'Erro de conversão, valor esperado "N"');
+end;
 
-    Check(eSS2400.IdeEmpregador.TpInsc   = tiCNPJ                 , 'IdeEmpregador.tpInsc diferente do valor esperado');
-    Check(eSS2400.IdeEmpregador.NrInsc   = '12345678000123'       , 'IdeEmpregador.NrInsc diferente do valor esperado');
+procedure TACBreSocialTipoToStrStrToTipoTest.ModoLancamentoToStr_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  auxStr := eSModoLancamentoToStr(mlInclusao);
+  CheckEquals('inclusao', auxStr, 'Erro de conversão: valor esperado "inclusao", valor convertido "'+auxStr+'"');
 
-    Check(eSS2400.Beneficiario.cpfBenef  = '99999999999'          , 'Beneficiario.cpfBenef diferente do valor esperado');
-    Check(eSS2400.Beneficiario.nmBenefic = 'Beneficiario'         , 'Beneficiario.nmBenefic diferente do valor esperado');
-    Check(eSS2400.Beneficiario.dtNascto  = StrToDate('01/01/2000'), 'Beneficiario.dtNascto diferente do valor esperado');
-    Check(eSS2400.Beneficiario.dtInicio  = StrToDate('01/01/2022'), 'Beneficiario.dtInicio diferente do valor esperado');
-    Check(eSS2400.Beneficiario.sexo      = 'M'                    , 'Beneficiario.sexo diferente do valor esperado');
-    Check(eSS2400.Beneficiario.racaCor   = 1                      , 'Beneficiario.racaCor diferente do valor esperado');
-    Check(eSS2400.Beneficiario.estCiv    = 1                      , 'Beneficiario.estCiv diferente do valor esperado');
-    Check(eSS2400.Beneficiario.incFisMen = tpNao                  , 'Beneficiario.incFisMen diferente do valor esperado');
+  auxStr := eSModoLancamentoToStr(mlAlteracao);
+  CheckEquals('alteracao', auxStr, 'Erro de conversão: valor esperado "alteracao", valor convertido "'+auxStr+'"');
 
-    Check(eSS2400.Beneficiario.endereco.Brasil.TpLograd  = 'R'    , 'Beneficiario.endereco.Brasil.TpLograd diferente do valor esperado');
-    Check(eSS2400.Beneficiario.endereco.Brasil.dscLograd = 'Logradouro de teste', 'Beneficiario.endereco.Brasil.dscLograd diferente do valor esperado');
-    Check(eSS2400.Beneficiario.endereco.Brasil.nrLograd  = '100'  , 'Beneficiario.endereco.Brasil.nrLograd diferente do valor esperado');
-    Check(eSS2400.Beneficiario.endereco.Brasil.Complemento = 'Apto 10', 'Beneficiario.endereco.Brasil.Complemento diferente do valor esperado');
-    Check(eSS2400.Beneficiario.endereco.Brasil.Bairro = 'Centro' , 'Beneficiario.endereco.Brasil.Bairro diferente do valor esperado');
-    Check(eSS2400.Beneficiario.endereco.Brasil.cep = '14123456'  , 'Beneficiario.endereco.Brasil.cep diferente do valor esperado');
-    Check(eSS2400.Beneficiario.endereco.Brasil.CodMunic = 3512345, 'Beneficiario.endereco.Brasil.codMunic diferente do valor esperado');
-    Check(eSS2400.Beneficiario.endereco.Brasil.uf = 'SP'         , 'Beneficiario.endereco.Brasil.uf diferente do valor esperado');
+  auxStr := eSModoLancamentoToStr(mlExclusao);
+  CheckEquals('exclusao', auxStr, 'Erro de conversão: valor esperado "exclusao", valor convertido "'+auxStr+'"');
 
-    Check(eSS2400.Beneficiario.dependente.Items[0].tpDep = tdConjuge, 'Beneficiario.dependente.tpDep diferente do valor esperado');
-    Check(eSS2400.Beneficiario.dependente.Items[0].nmDep = 'Conjuge', 'Beneficiario.dependente.nmDep diferente do valor esperado');
-    Check(eSS2400.Beneficiario.dependente.Items[0].dtNascto = StrToDate('01/01/1995'), 'Beneficiario.depentente.dtNascto diferente do valor esperado');
-    Check(eSS2400.Beneficiario.dependente.Items[0].cpfDep = '11111111111', 'Beneficiario.dependente.cpfDep diferente do valor esperado');
-    Check(eSS2400.Beneficiario.dependente.Items[0].sexoDep   = 'F', 'Beneficiario.dependente.sexo diferente do valor esperado');
-    Check(eSS2400.Beneficiario.dependente.Items[0].depIRRF   = tpNao, 'Beneficiario.dependente.depIRRF diferente do valor esperado');
-    Check(eSS2400.Beneficiario.dependente.Items[0].incFisMen = tpNao, 'Beneficiario.depentente.incFisMen diferente do valor esperado');
-  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.StrToModoLancamento_ConvertendoTodosTipos_RetornoCorreto;
+var
+  auxTipo: TModoLancamento;
+begin
+  auxTipo := eSStrToModoLancamento(OK, 'inclusao');
+  CheckTrue(auxTipo = mlInclusao, 'Erro de conversão, valor esperado "inclusao"');
+
+  auxTipo := eSStrToModoLancamento(OK, 'alteracao');
+  CheckTrue(auxTipo = mlAlteracao, 'Erro de conversão, valor esperado "alteracao"');
+
+  auxTipo := eSStrToModoLancamento(OK, 'exclusao');
+  CheckTrue(auxTipo = mlExclusao, 'Erro de conversão, valor esperado "exclusao"');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.LayouteSocialToServico_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  auxStr := LayOuteSocialToServico(LayEnvioLoteEventos);
+  CheckEquals('EnviarLoteEventos', auxStr, 'Erro de conversão: valor esperado "EnviarLoteEventos", valor convertido "'+auxStr+'"');
+
+  auxStr := LayOuteSocialToServico(LayConsultaLoteEventos);
+  CheckEquals('ConsultarLoteEventos', auxStr, 'Erro de conversão: valor esperado "ConsultarLoteEventos", valor convertido "'+auxStr+'"');
+
+  auxStr := LayouteSocialToServico(LayConsultaIdentEventos);
+  CheckEquals('ConsultarIdentificadoresEventos', auxStr, 'Erro de conversão: valor esperado "ConsultarIdentificadoresEventos", valor convertido "'+auxStr+'"');
+
+  auxStr := LayouteSocialToServico(LayDownloadEventos);
+  CheckEquals('DownloadEventos', auxStr, 'Erro de conversão: valor esperado "DownloadEventos", valor convertido "'+auxStr+'"');
+
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.ServicoToLayout_ConvertendoTodosTipos_RetornoCorreto;
+var
+  auxTipo: TLayOut;
+begin
+  auxTipo := ServicoToLayOut(Ok, 'EnviarLoteEventos');
+  CheckTrue(auxTipo = LayEnvioLoteEventos, 'Erro de conversão, valor esperado "LayEnvioLoteEventos"');
+
+  auxTipo := ServicoToLayOut(Ok, 'ConsultarLoteEventos');
+  CheckTrue(auxTipo = LayConsultaLoteEventos, 'Erro de conversão, valor esperado "LayConsultaLoteEventos"');
+
+  auxTipo := ServicoToLayout(Ok, 'ConsultarIdentificadoresEventos');
+  CheckTrue(auxTipo = LayConsultaIdentEventos, 'Erro de conversão, valor esperado "LayLayConsultaIdentEventos"');
+
+  auxTipo := ServicoToLayout(Ok, 'DownloadEventos');
+  CheckTrue(auxTipo = LayDownloadEventos, 'Erro de conversão, valor esperado "LayDownloadEventos"')
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.LayoutToSchema_ConvertendoTodosTipos_RetornoCorreto;
+var
+  auxTipo: TeSocialSchema;
+begin
+  auxTipo := LayOutToSchema(LayEnvioLoteEventos);
+  CheckTrue(auxTipo = schEnvioLoteEventos, 'Erro de conversão, valor esperado "schEnvioLoteEventos"');
+
+  auxTipo := LayOutToSchema(LayConsultaLoteEventos);
+  CheckTrue(auxTipo = schConsultaLoteEventos, 'Erro de conversão, valor esperado "schConsultaLoteEventos"');
+
+  auxTipo := LayOutToSchema(LayConsultaIdentEventos);
+  CheckTrue(auxTipo = schConsultaIdentEventos, 'Erro de conversão, valor esperado "schConsultaIdentEventos"');
+
+  auxTipo := LayOutToSchema(LayDownloadEventos);
+  CheckTrue(auxTipo = schDownloadEventos, 'Erro de conversão, valor esperado "schDownloadEventos"');
 end;
 
 { TACBreSocialConversaoeSocialTest }
@@ -407,126 +298,126 @@ end;
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1000;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1000);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1000);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1000, 'Não encontrou o Evento S-1000');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1005;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1005);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1005);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1005, 'Não encontrou o Evento S-1005');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1010;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1010);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1010);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1010, 'Não encontrou o Evento S-1010');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1020;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1020);
+  FArqINI.LoadFromFile(ARQINI_s0100_S1020);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1020, 'Não encontrou o Evento S-1020');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1030;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1030);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1030);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1030, 'Não encontrou o Evento S-1030');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1035;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1035);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1035);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1035, 'Não encontrou o Evento S-1035');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1040;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1040);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1040);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1040, 'Não encontrou o Evento S-1040');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1050;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1050);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1050);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1050, 'Não encontrou o Evento S-1050');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1060;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1060);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1060);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1060, 'Não encontrou o Evento S-1060');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1070;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1070);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1070);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1070, 'Não encontrou o Evento S-1070');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1080;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1080);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1080);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1080, 'Não encontrou o Evento S-1080');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2190;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2190);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2190);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2190, 'Não encontrou o Evento S-2190');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2200;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2200);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2200);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2200, 'Não encontrei o Evento S-2200');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2205;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2205);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2205);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2205, 'Não encontrei o Evento S-2205');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2206;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2206);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2206);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2206, 'Não encontrei o Evento S-2206');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2210;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2210);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2210);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2210, 'Não encontrei o Evento S-2210');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2220;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2220);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2220);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2220, 'Não encontrei o Evento S-2220');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2221;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2221);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2221);
 //  Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2221, 'Não encontrei o Evento S-2221');
   Check(True,'S-2221 VERIFICAR!');
 end;
@@ -534,7 +425,7 @@ end;
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2230;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2230);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2230);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2230, 'Não encontrei o Evento S-2230');
 end;
 
@@ -547,70 +438,70 @@ end;
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2240;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2240);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2240);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2240, 'Não encontrei o Evento S-2240');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2245;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2245);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2245);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS2245, 'Não encontrei o Evento S-2245');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2250;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2250);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2250);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS2250, 'Não encontrei o Evento S-2250');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2260;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2260);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2260);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS2260, 'Não encontrei o Evento S-2260');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2298;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2298);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2298);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2298, 'Não encontrei o Evento S-2298');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2299;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2299);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2299);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2299, 'Não encontrei o Evento S-2299');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2300;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2300);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2300);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2300, 'Não encontrei o Evento S-2300');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2306;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2306);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2306);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2306, 'Não encontrei o Evento S-2306');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2399;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2399);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2399);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2399, 'Não encontrei o Evento S-2399');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2400;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S2400);
+  FArqINI.LoadFromFile(ARQINI_S0100_S2400);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2400, 'Não encontrei o Evento S-2400');
 end;
 
@@ -647,96 +538,97 @@ end;
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS3000;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S3000);
+  FArqINI.LoadFromFile(ARQINI_S0100_S3000);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS3000, 'Não encontrei o Evento S-3000');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1200;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1200);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1200);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1200, 'Não encontrei o Evento S-1200');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1202;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1202);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1202);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1202, 'Não encontrei o Evento S-1202');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1207;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1207);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1207);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1207, 'Não encontrei o Evento S-1207');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1210;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1210);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1210);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1210, 'Não encontrei o Evento S-1210');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1250;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1250);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1250);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1250, 'Não encontrei o Evento S-1250');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1260;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1260);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1260);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1260, 'Não encontrei o Evento S-1260');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1270;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1270);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1270);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1270, 'Não encontrei o Evento S-1270');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1280;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1280);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1280);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1280, 'Não encontrei o Evento S-1280');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1295;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1295);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1295);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1295, 'Não encontrei o Evento S-1295');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1298;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1298);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1298);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1298, 'Não encontrei o Evento S-1298');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1299;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1299);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1299);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1299, 'Não encontrei o Evento S-1299');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1300;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S1300);
+  FArqINI.LoadFromFile(ARQINI_S0100_S1300);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1300, 'Não encontrei o Evento S-1300');
 end;
 
 initialization
   _RegisterTest('pcesConversaoeSocial', TACBreSocialConversaoeSocialTest);
+  _RegisterTest('pcesConversaoeSocial', TACBreSocialTipoToStrStrToTipoTest);
   _RegisterTest('pcesNaoPeriodicos'   , TACBreSocialEventosNaoPeriodicosTest);
   _RegisterTest('pcesPeriodicos'      , TACBreSocialEventosPeriodicosTest);
 

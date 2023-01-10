@@ -219,7 +219,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
-                     ['nfseDadosMsg', 'ConsultarNfseRpsResposta'],
+                     ['outputXML', 'ConsultarNfseRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 

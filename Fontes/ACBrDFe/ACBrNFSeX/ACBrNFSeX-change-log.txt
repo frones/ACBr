@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/01/2023
+-- SH3.Provider --
+[*] Correção no nome da tag de retorno.
+   Por: Jeanny Paiva
 -- fintelISS.GravarXml --
 [*] Em Configuracoes setado o valor zero para NrOcorrOutrasInformacoes.
    Por: Arimateia Jr

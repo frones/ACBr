@@ -97,6 +97,10 @@ type
 
 implementation
 
+uses
+  typinfo;
+
+
 { TACBreSocialTipoToStrStrToTipoTest }
 
 procedure TACBreSocialTipoToStrStrToTipoTest.Setup;
@@ -110,26 +114,21 @@ begin
 end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.VersaoeSocialToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: TVersaoeSocial;
+  EhIgual, OK: Boolean;
+
 begin
-  auxStr := EmptyStr;
-  auxStr := VersaoeSocialToStr(ve02_04_01);
-  CheckEquals('02_04_01', auxStr, 'Erro conversão: valor esperado "02_04_01", valor convertido "'+auxStr+'"');
 
-  auxStr := EmptyStr;
-  auxStr := VersaoeSocialToStr(ve02_04_02);
-  CheckEquals('02_04_02', auxStr, 'Erro conversão: valor esperado "02_04_02", valor convertido "'+auxStr+'"');
-
-  auxStr := EmptyStr;
-  auxStr := VersaoeSocialToStr(ve02_05_00);
-  CheckEquals('02_05_00', auxStr, 'Erro conversão: valor esperado "02_05_00", valor convertido "'+auxStr+'"');
-
-  auxStr := EmptyStr;
-  auxStr := VersaoeSocialToStr(veS01_00_00);
-  CheckEquals('S01_00_00', auxStr, 'Erro conversão: valor esperado "S01_00_00", valor convertido "'+auxStr+'"');
-
-  auxStr := EmptyStr;
-  auxStr := VersaoeSocialToStr(veS01_01_00);
-  CheckEquals('S01_01_00', auxStr, 'Erro conversão: valor esperado "S01_01_00", valor convertido "'+auxStr+'"');
+  //for vElementoEnum in TVersaoeSocial do
+  for vElementoEnum:= Low(TVersaoeSocial) to High(TVersaoeSocial) do
+  begin
+    EhIgual := (StrToVersaoeSocial(OK, VersaoeSocialToStr(vElementoEnum)) = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro conversão no elemento Ord('+ GetEnumName(TypeInfo(vElementoEnum),ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'VersaoeSocialToStr => '+ VersaoeSocialToStr(vElementoEnum)+'  '+
+                       'StrToVersaoeSocial => '+ GetEnumName(TypeInfo(vElementoEnum), ord(StrToVersaoeSocial(OK, VersaoeSocialToStr(vElementoEnum))))
+              );
+  end;
 end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.StrToVersaoeSocial_ConvertendoTodosTipos_RetornoCorreto;

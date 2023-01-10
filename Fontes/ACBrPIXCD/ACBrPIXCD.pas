@@ -155,6 +155,13 @@ type
 
   TACBrPixCDAmbiente = (ambTeste, ambProducao, ambPreProducao);
 
+  TACBrPSPScope =
+    (scCobWrite, scCobRead, scCobVWrite, scCobVRead, scLoteCobVWrite,
+     scLoteCobVRead, scPixWrite, scPixRead, scWebhookWrite, scWebhookRead,
+     scPayloadLocationWrite, scPayloadLocationRead);
+
+  TACBrPSPScopes = set of TACBrPSPScope;
+
   { TACBrPixEndPoint - Classe com comandos básicos, para EndPoints}
 
   TACBrPixEndPoint = class
@@ -299,6 +306,7 @@ type
   private
     fAPIVersion: TACBrPIXAPIVersion;
     fChavePIX: String;
+    fScopes: TACBrPSPScopes;
     fURLPathParams: TStringList;
     fURLQueryParams: TACBrQueryParams;
     fQuandoReceberRespostaHttp: TACBrQuandoReceberRespostaHttp;
@@ -358,6 +366,8 @@ type
     function CalcularURLEndPoint(const Method, EndPoint: String): String; virtual;
     function CalcularEndPointPath(const Method, EndPoint: String): String; virtual;
     function EfetuarAutenticacaoManual: Boolean;
+    function ScopeToString(aScope: TACBrPSPScope): String; virtual;
+    function ScopesToString(aScopes: TACBrPSPScopes): String;
 
     procedure ChamarEventoQuandoAcessarEndPoint(const AEndPoint: String;
       var AURL: String; var AMethod: String);
@@ -402,6 +412,7 @@ type
 
     property ChavePIX: String read fChavePIX write SetChavePIX;
     property TipoChave: TACBrPIXTipoChave read fTipoChave write SetTipoChave stored false;
+    property Scopes: TACBrPSPScopes read fScopes write fScopes;
 
     property QuandoTransmitirHttp: TACBrQuandoTransmitirHttp read fQuandoTransmitirHttp write fQuandoTransmitirHttp;
     property QuandoReceberRespostaHttp: TACBrQuandoReceberRespostaHttp read fQuandoReceberRespostaHttp write fQuandoReceberRespostaHttp;
@@ -1429,6 +1440,7 @@ begin
   fepCobV := TACBrPixEndPointCobV.Create(Self);
   fURLQueryParams := TACBrQueryParams.Create;
   fURLPathParams := TStringList.Create;
+  fScopes := [scCobWrite, scCobRead, scPixWrite, scPixRead];
   
   fpQuandoAcessarEndPoint := Nil;
   fpQuandoReceberRespostaEndPoint := Nil;
@@ -1736,6 +1748,34 @@ begin
         ' - Token: ' + fpToken + sLineBreak +
         ' - Validade: ' + DateTimeToStr(fpValidadeToken)));
   end;
+end;
+
+function TACBrPSP.ScopeToString(aScope: TACBrPSPScope): String;
+begin
+  case aScope of
+    scCobWrite: Result := 'cob.write';
+    scCobRead: Result := 'cob.read';
+    scCobVWrite: Result := 'cobv.write';
+    scCobVRead: Result := 'cobv.read';
+    scLoteCobVWrite: Result := 'lotecobv.write';
+    scLoteCobVRead: Result := 'lotecobv.read';
+    scPixWrite: Result := 'pix.write';
+    scPixRead: Result := 'pix.read';
+    scWebhookWrite: Result := 'webhook.write';
+    scWebhookRead: Result := 'webhook.read';
+    scPayloadLocationWrite: Result := 'payloadlocation.write';
+    scPayloadLocationRead: Result := 'payloadlocation.read';
+  end;
+end;
+
+function TACBrPSP.ScopesToString(aScopes: TACBrPSPScopes): String;
+var
+  i: TACBrPSPScope;
+begin
+  Result := EmptyStr;
+  for i := Low(TACBrPSPScopes) to High(TACBrPSPScopes) do
+    if i in Scopes then
+      Result := Result + IfThen(NaoEstaVazio(Result), ' ') + ScopeToString(i);
 end;
 
 procedure TACBrPSP.ChamarEventoQuandoAcessarEndPoint(const AEndPoint: String;

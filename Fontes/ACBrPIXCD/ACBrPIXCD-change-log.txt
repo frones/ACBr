@@ -47,7 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-06/01/2022
+10/01/2023
+-- ACBrPIXCD --
+[+] Inclusão da property Scopes para definir quais os escopos serão enviados na Autenticação dos PSPs
+
+-- ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPPagSeguro, ACBrPIXPSPSicoob, ACBrPIXPSPSicredi --
+[*] Alteração para utilizar a nova property Scopes para enviar os escopos na Autenticação
+
+06/01/2023
 -- ACBrPIXPSPGerenciaNet --
 [*] Exclusão de prcedure desnecessária
 

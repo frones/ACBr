@@ -103,6 +103,7 @@ constructor TACBrPSPSicoob.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
+  Scopes := Scopes + [scCobVWrite, scCobVRead];
   Clear;
 end;
 
@@ -136,7 +137,7 @@ begin
   try
     qp.Values['grant_type'] := 'client_credentials';
     qp.Values['client_id'] := ClientID;
-    qp.Values['scope'] := 'cob.read cob.write pix.read pix.write cobv.read cobv.write';
+    qp.Values['scope'] := ScopesToString(Scopes);
     Body := qp.AsURL;
     WriteStrToStream(Http.Document, Body);
     Http.MimeType := CContentTypeApplicationWwwFormUrlEncoded;

@@ -160,7 +160,7 @@ begin
   js := TACBrJSONObject.Create;
   try
     js.AddPair('grant_type', 'client_credentials'); 
-    js.AddPair('scope', 'cob.read cob.write pix.read pix.write');
+    js.AddPair('scope', ScopesToString(Scopes));
     Http.Protocol := '1.1';
     Http.MimeType := CContentTypeApplicationJSon;
     WriteStrToStream(Http.Document, js.ToJSON);

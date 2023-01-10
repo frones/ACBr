@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/01/2023
+-- fintelISS.GravarXml --
+[*] Em Configuracoes setado o valor zero para NrOcorrOutrasInformacoes.
+   Por: Arimateia Jr
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Invertido a verificação, agora é verificado se a propriedade de configuração
     OutrasInformacaoesImp esta preenchica se não estiver verifica o campo 

@@ -92,11 +92,11 @@ procedure TNFSeW_fintelISS202.Configuracao;
 begin
   inherited Configuracao;
 
-  FormatoEmissao     := tcDatHor;
+  FormatoEmissao := tcDatHor;
   FormatoCompetencia := tcDatHor;
-  TagTomador         := 'TomadorServico';
-  GerarIDDeclaracao  := False;
-  GerarIDRps         := True;
+  TagTomador := 'TomadorServico';
+  GerarIDDeclaracao := False;
+  GerarIDRps := True;
 
   NrOcorrAliquota := 1;
   NrOcorrCodigoPaisServico := 1;
@@ -106,6 +106,8 @@ begin
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
   NrOcorrValorISS := 1;
+
+  NrOcorrOutrasInformacoes := 0;
 end;
 
 function TNFSeW_fintelISS202.GerarListaServicos: TACBrXmlNode;

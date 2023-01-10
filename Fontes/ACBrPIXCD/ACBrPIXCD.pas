@@ -1774,7 +1774,7 @@ var
 begin
   Result := EmptyStr;
   for i := Low(TACBrPSPScope) to High(TACBrPSPScope) do
-    if i in Scopes then
+    if i in aScopes then
       Result := Result + IfThen(NaoEstaVazio(Result), ' ') + ScopeToString(i);
 end;
 

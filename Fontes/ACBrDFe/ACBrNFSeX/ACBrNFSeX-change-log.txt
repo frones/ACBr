@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/01/2023
+-- Fiorilli.GravarXml --
+[*] Alteração na procedure Configuracao para deixar a tag InscricaoMunicipal do
+    tomador como opcional
+   Por: Renato Rubinho
+
 09/01/2023
 -- ISSGoiania.Provider --
 [*] Melhorias no TratarRetornoEmitir para capturar o numero da nota entre outras

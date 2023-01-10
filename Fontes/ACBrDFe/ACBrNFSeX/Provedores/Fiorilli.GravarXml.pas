@@ -65,7 +65,6 @@ begin
   FormatoCompetencia := tcDat;
 
   NrOcorrCodigoPaisTomador := -1;
-  NrOcorrInscMunTomador := -1;
 end;
 
 end.

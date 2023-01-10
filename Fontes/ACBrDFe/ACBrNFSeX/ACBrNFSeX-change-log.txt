@@ -67,6 +67,9 @@ Símbolo : Significado
 [*] Alteração na procedure Configuracao para deixar a tag InscricaoMunicipal do
     tomador como opcional
    Por: Renato Rubinho
+-- ACBrNFSeXServicos.ini --
+[*] Informado o provedor para cidade de Mambore, é IPM, versão 1.0
+   Por: Alex Heinen
 
 09/01/2023
 -- ISSGoiania.Provider --

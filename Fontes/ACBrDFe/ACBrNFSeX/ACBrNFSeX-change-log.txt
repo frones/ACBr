@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/01/2023
+-- ISSBarueri.LerXml --
+[*] Correções feitas com base nos testes unitários realizados.
+   Por: Italo Giurizzato Junior
 -- ISSGoiania.Provider --
 [*] Removido a condição para definir um código IBGE para o cancelamento em 
     ambiente de homologação.

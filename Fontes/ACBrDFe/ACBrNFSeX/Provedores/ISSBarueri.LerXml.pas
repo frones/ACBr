@@ -180,6 +180,7 @@ end;
 procedure TNFSeR_ISSBarueri.LerDeclaracaoServicoPrestado(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoServicoPrestado');
 
@@ -196,6 +197,8 @@ begin
   LerRps(AuxNode);
   LerServicoPrestado(AuxNode);
   LerTomadorServico(AuxNode);
+
+  NFSe.RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr));
 end;
 
 procedure TNFSeR_ISSBarueri.LerRps(const ANode: TACBrXmlNode);
@@ -216,6 +219,7 @@ end;
 procedure TNFSeR_ISSBarueri.LerServicoPrestado(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  OK: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('ServicoPrestado');
 
@@ -227,6 +231,8 @@ begin
   NFSe.Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
   NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('ObservacaoLocalTributado'), tcStr);
 
+  NFSe.Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(OK, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcInt));
+
   LerValoresServicoPrestado(AuxNode);
   LerFatura(AuxNode);
 end;
@@ -235,19 +241,15 @@ procedure TNFSeR_ISSBarueri.LerValoresServicoPrestado(const ANode: TACBrXmlNode)
 var
   AuxNode: TACBrXmlNode;
   //Item: TItemServicoCollectionItem;
-  OK: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('ValoresServicoPrestado');
 
   if AuxNode = nil then
     AuxNode := ANode;
 
-  NFSe.Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(OK, ObterConteudo(ANode.Childrens.FindAnyNs('IssRetido'), tcInt));
-
   NFSe.Servico.Valores.ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
   NFSe.Servico.Valores.Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe2);
 
-  NFSe.Servico.Valores.ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
   NFSe.Servico.Valores.ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
   NFSe.Servico.Valores.ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
   NFSe.Servico.Valores.ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);

@@ -10,6 +10,7 @@ uses
   ACBrNFSeXProvedorBauhausTests,
   ACBrNFSeXProvedorEquiplanoTests,
   ACBrNFSeXProvedorIPMTests,
+  ACBrNFSeXProvedorISSBarueriTests,
   ACBrNFSeXProvedorPadraoNacionalTests,
   ACBrNFSeXProvedorSigISSTests, 
   ACBrNFSeXProvedorSoftPlanTests, 

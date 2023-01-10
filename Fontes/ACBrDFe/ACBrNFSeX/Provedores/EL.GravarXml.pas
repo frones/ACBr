@@ -115,12 +115,13 @@ begin
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Id', 1, 15, 1, NFSe.InfID.ID, ''));
 
-  LocPrest := '2';
-  if NFSe.NaturezaOperacao = no2 then
-    LocPrest := '1';
-
   // Código para identificação do local de prestação do serviço:
   // 1-Fora do município 2-No município
+  LocPrest := '2';
+
+  if (NFSe.Prestador.Endereco.CodigoMunicipio <> NFSe.Servico.CodigoMunicipio) then
+    LocPrest := '1';
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'LocalPrestacao', 1, 1, 1,
                                                                  LocPrest, ''));
 
@@ -139,7 +140,7 @@ begin
   xmlNode := GerarDadosTomador;
   NFSeNode.AppendChild(xmlNode);
 
-  if (NFSe.Intermediario.RazaoSocial<>'') or
+  if (NFSe.Intermediario.RazaoSocial <> '') or
      (NFSe.Intermediario.Identificacao.CpfCnpj <> '') then
   begin
     xmlNode := GerarIntermediarioServico;
@@ -165,7 +166,7 @@ begin
                                            StatusRPSToStr(NFSe.StatusRps), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoMunicipioPrestacao', 7, 7, 0,
-                      OnlyNumber(NFSe.Prestador.Endereco.CodigoMunicipio), ''));
+                                 OnlyNumber(NFSe.Servico.CodigoMunicipio), ''));
 
   Result := True;
 end;

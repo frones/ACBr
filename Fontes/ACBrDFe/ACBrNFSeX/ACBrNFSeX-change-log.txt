@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/01/2023
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Possível solução para ler informações sobre o cancelamento ao consultar a 
+    NFS-e por RPS.
+   Por: Italo Giurizzato Junior
 -- Fiorilli.GravarXml --
 [*] Alteração na procedure Configuracao para deixar a tag InscricaoMunicipal do
     tomador como opcional

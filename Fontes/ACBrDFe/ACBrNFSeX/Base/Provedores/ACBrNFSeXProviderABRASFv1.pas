@@ -1529,9 +1529,24 @@ begin
   if AuxNodeCanc <> nil then
   begin
     AuxNodeCanc := AuxNodeCanc.Childrens.FindAnyNs('Confirmacao');
-    if not Assigned(AuxNodeCanc) or (AuxNodeCanc = nil) then Exit;
 
-    Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
+    if AuxNodeCanc = nil then
+      AuxNodeCanc := ANode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+
+    if AuxNodeCanc <> nil then
+    begin
+      AuxNodeCanc := AuxNodeCanc.Childrens.FindAnyNs('InfConfirmacaoCancelamento');
+
+      if AuxNodeCanc <> nil then
+        Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
+
+      if Response.DataCanc = 0 then
+        Response.DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcDatHor);
+
+      if Response.DataCanc = 0 then
+        Response.DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+    end;
+
     Response.DescSituacao := '';
 
     if Response.DataCanc > 0 then

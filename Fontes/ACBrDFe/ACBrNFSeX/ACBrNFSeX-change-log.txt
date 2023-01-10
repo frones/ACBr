@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/01/2023
+-- ISSGoiania.Provider --
+[*] Removido a condição para definir um código IBGE para o cancelamento em 
+    ambiente de homologação.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Possível solução para ler informações sobre o cancelamento ao consultar a 
     NFS-e por RPS.

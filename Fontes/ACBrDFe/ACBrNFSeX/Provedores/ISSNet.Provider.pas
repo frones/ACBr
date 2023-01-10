@@ -820,10 +820,7 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
   InfoCanc := Response.InfCancelamento;
 
-  if ConfigGeral.Ambiente = taProducao then
-    xCodMun := IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio)
-  else
-    xCodMun := '5002704';
+  xCodMun := IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio);
 
   with Params do
   begin

@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 10/01/2023
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Invertido a verificação, agora é verificado se a propriedade de configuração
+    OutrasInformacaoesImp esta preenchica se não estiver verifica o campo 
+    OutrasInformacoes.
+   Por: Gabriel Rogelin
 -- ISSBarueri.LerXml --
 [*] Correções feitas com base nos testes unitários realizados.
    Por: Italo Giurizzato Junior

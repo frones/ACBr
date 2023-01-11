@@ -349,7 +349,7 @@ var
 begin
   AXML := FXMLAssinado;
   Evento := SchemaeSocialToStr(Schema) + PrefixoVersao +
-          VersaoeSocialToStr(TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF);
+          VersaoeSocialToStrSchemas(TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF);
 
 
   if EstaVazio(AXML) then
@@ -394,7 +394,7 @@ begin
   with TACBreSocial(FACBreSocial) do
   begin
     SSL.NameSpaceURI := ACBRESOCIAL_NAMESPACE_URI + Namespace + '/v' +
-                        VersaoeSocialToStr(Configuracoes.Geral.VersaoDF);
+                        VersaoeSocialToStrSchemas(Configuracoes.Geral.VersaoDF);
 
     Gerador.wGrupo(ENCODING_UTF8, '', False);
     Gerador.wGrupo('eSocial xmlns="' + SSL.NameSpaceURI+'"');

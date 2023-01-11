@@ -205,7 +205,7 @@ var
   AVersao: String;
 begin
   AVersao := fpCmd.Params(0);
-  eVersao := StrToVersaoeSocial(OK, AVersao);
+  eVersao := StrToVersaoeSocialEX(OK, AVersao);
 
   if not OK then
     raise Exception.Create('Versão Inválida do eSocial.');
@@ -214,11 +214,7 @@ begin
   begin
     with MonitorConfig.DFE.WebService do
     begin
-      VersaoeSocial := VersaoeSocialToStr(eVersao);
-
-      if (VersaoeSocial = '_S_01_00_00') then
-        VersaoeSocial := 'S01_00_00';
-
+      VersaoeSocial := VersaoeSocialToStrEX(eVersao);
     end;
 
     MonitorConfig.SalvarArquivo;

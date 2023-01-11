@@ -468,7 +468,7 @@ begin
                          'Versão Aplicativo: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
                          'Status Descrição: %s ' + LineBreak),
-                 [VersaoeSocialToStr(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
+                 [VersaoeSocialToStrSchemas(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
                   TpAmbToStr(TACBreSocial(FPDFeOwner).Configuracoes.WebServices.Ambiente),
                   FRetEnvioLote.dadosRecLote.versaoAplicRecepcao,
                   IntToStr(FRetEnvioLote.Status.cdResposta),
@@ -590,7 +590,7 @@ begin
                          'Versão Aplicativo: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
                          'Status Descrição: %s ' + LineBreak),
-                 [VersaoeSocialToStr(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
+                 [VersaoeSocialToStrSchemas(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
                   TpAmbToStr(TACBreSocial(FPDFeOwner).Configuracoes.WebServices.Ambiente),
                   FRetConsultaLote.dadosRecLote.versaoAplicRecepcao,
                   IntToStr(FRetConsultaLote.Status.cdResposta),
@@ -838,7 +838,7 @@ begin
                          'Ambiente: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
                          'Status Descrição: %s ' + LineBreak),
-                 [VersaoeSocialToStr(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
+                 [VersaoeSocialToStrSchemas(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
                   TpAmbToStr(TACBreSocial(FPDFeOwner).Configuracoes.WebServices.Ambiente),
                   IntToStr(FRetConsultaIdentEvt.Status.cdResposta),
                   FRetConsultaIdentEvt.Status.descResposta]);
@@ -1034,7 +1034,7 @@ begin
                          'Ambiente: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
                          'Status Descrição: %s ' + LineBreak),
-                 [VersaoeSocialToStr(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
+                 [VersaoeSocialToStrSchemas(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
                   TpAmbToStr(TACBreSocial(FPDFeOwner).Configuracoes.WebServices.Ambiente),
                   IntToStr(FRetDownloadEvt.Status.cdResposta),
                   FRetDownloadEvt.Status.descResposta]);

@@ -1091,6 +1091,12 @@ function SchemaESocialToStr(const t: TeSocialSchema): String;
 function StrToSchemaESocial(const s: String): TeSocialSchema;
 function TipoEventoToSchemaeSocial(const t: TTipoEvento; AVersaoeSocial: TVersaoeSocial): TeSocialSchema;
 
+{-------------------------------------------------------------------------------
+Funções StrToVersaoeSocial e VersaoeSocialToStr foram tornadas obsoletas. Elas não são intercambiáveis.
+O valor retornado por uma não é compatível com a outra no caso das versões de leiaute simplificados.
+Para converter para string e vice versa, use StrToVersaoeSocialEX e VersaoeSocialToStrEX.
+Mas caso precise do valor string para usar nos schemas use as funções StrToVersaoeSocialSchemas e VersaoeSocialToStrSchemas.
+-------------------------------------------------------------------------------}
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use a função StrToVersaoeSocialEX ou StrToVersaoeSocialSchemas conforme sua necessidade.' {$ENDIF};
 function VersaoeSocialToStr(const t: TVersaoeSocial): String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use a função VersaoeSocialToStrEX ou VersaoeSocialToStrSchemas conforme sua necessidade.' {$ENDIF};
 function VersaoeSocialToStrEX(const t: TVersaoeSocial): String;

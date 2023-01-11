@@ -353,7 +353,7 @@ begin
     else
      GravarLog('eSocial_CarregarXMLEventoeSocial', logNormal);
 
-    EhArquivo:= StringEhArquivo(ArquivoOuXml);
+    EhArquivo := StringEhArquivo(ArquivoOuXml);
     if EhArquivo then
       VerificarArquivoExiste(ArquivoOuXml);
 
@@ -488,7 +488,7 @@ begin
 
       eSocialDM.Travar;
       try
-        eSocialDM.ACBreSocial1.Configuracoes.Geral.VersaoDF := StrToVersaoeSocial(OK, versao);
+        eSocialDM.ACBreSocial1.Configuracoes.Geral.VersaoDF := StrToVersaoeSocialEX(OK, versao);
         Result := SetRetorno(ErrOK);
       finally
         eSocialDM.Destravar;

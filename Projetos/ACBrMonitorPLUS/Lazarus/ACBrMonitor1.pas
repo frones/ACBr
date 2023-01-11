@@ -11586,7 +11586,7 @@ begin
     TConfiguracoeseSocial(Configuracoes).Arquivos.IniServicos       := edtArquivoWebServiceseSocial.Text;
     TConfiguracoeseSocial(Configuracoes).Arquivos.PatheSocial       := edtPathNFe.Text;
     TConfiguracoeseSocial(Configuracoes).Arquivos.EmissaoPatheSocial:= cbxEmissaoPathNFe.Checked;
-    TConfiguracoeseSocial(Configuracoes).Geral.VersaoDF             := StrToVersaoeSocial(ok, cbVersaoWSeSocial.Text);
+    TConfiguracoeseSocial(Configuracoes).Geral.VersaoDF             := StrToVersaoeSocialEX(ok, cbVersaoWSeSocial.Text);
     TConfiguracoeseSocial(Configuracoes).Geral.TipoEmpregador       := TEmpregador(cbTipoEmpregador.ItemIndex);
     TConfiguracoeseSocial(Configuracoes).Geral.IdEmpregador         := edtIDEmpregador.Text;
     TConfiguracoeseSocial(Configuracoes).Geral.IdTransmissor        := edtIDTransmissor.Text;

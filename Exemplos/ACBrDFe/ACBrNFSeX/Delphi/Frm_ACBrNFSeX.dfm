@@ -2142,6 +2142,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Height = 25
               Caption = 'Imprimir DANFSe'
               TabOrder = 1
+              OnClick = btnImprimirPNClick
             end
             object btnEnviaremailPN: TButton
               Left = 369
@@ -2150,6 +2151,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Height = 25
               Caption = 'Enviar e-mail'
               TabOrder = 2
+              OnClick = btnEnviaremailPNClick
             end
             object btnEmitirPN: TButton
               Left = 3
@@ -2164,6 +2166,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Font.Style = []
               ParentFont = False
               TabOrder = 0
+              OnClick = btnEmitirPNClick
             end
           end
           object tsEventos1: TTabSheet

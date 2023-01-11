@@ -353,6 +353,9 @@ type
     procedure btnConsultarParamMunicRegimesEspeciaisClick(Sender: TObject);
     procedure btnConsultarParamMunicRetencoesClick(Sender: TObject);
     procedure btnConsultarParamMunicBeneficioClick(Sender: TObject);
+    procedure btnEmitirPNClick(Sender: TObject);
+    procedure btnImprimirPNClick(Sender: TObject);
+    procedure btnEnviaremailPNClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -2028,7 +2031,72 @@ begin
   ChecarResposta(tmRecepcionar);
 end;
 
+procedure TfrmACBrNFSe.btnEmitirPNClick(Sender: TObject);
+var
+  vNumRPS, vNumLote: String;
+begin
+  vNumRPS := '';
+  if not(InputQuery('Gerar e Enviar um RPS', 'Numero do RPS', vNumRPS)) then
+    exit;
+
+  vNumLote := vNumRPS;
+  if not(InputQuery('Gerar e Enviar um RPS', 'Numero do Lote', vNumLote)) then
+    exit;
+
+  ACBrNFSeX1.NotasFiscais.Clear;
+  AlimentarNFSe(vNumRPS, vNumLote);
+
+  {
+     O método Emitir possui os seguintes parâmetros:
+     aNumLote (String)
+     aModEnvio [meAutomatico, meLoteAssincrono, meLoteSincrono, meUnitario]
+     aImprimir (Boolean) Valor Padrão = True, portanto imprime o DANFSE
+  }
+  // meUnitario: Ajusta o Emitir para enviar somente um Rps
+
+  // No caso do Padrão Nacional o envio é sempre unitário
+  ACBrNFSeX1.Emitir(vNumLote, meUnitario);
+
+  ChecarResposta(tmGerar);
+end;
+
 procedure TfrmACBrNFSe.btnEnviaremailClick(Sender: TObject);
+var
+  vAux: String;
+  sCC: TStrings;
+begin
+  OpenDialog1.Title := 'Selecione a NFSe';
+  OpenDialog1.DefaultExt := '*-NFSe.xml';
+  OpenDialog1.Filter :=
+    'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFSeX1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFSeX1.NotasFiscais.Clear;
+    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+
+    if not(InputQuery('Enviar e-mail', 'Destinatário', vAux)) then
+      exit;
+
+    sCC := TStringList.Create;
+    sCC.Clear; // Usando para add outros e-mail como Com-Cópia
+
+    ACBrNFSeX1.NotasFiscais.Items[0].EnviarEmail(vAux, edtEmailAssunto.Text,
+      mmEmailMsg.Lines, True // Enviar PDF junto
+      , nil // Lista com emails que serão enviado cópias - TStrings
+      , nil // Lista de anexos - TStrings
+      );
+
+    sCC.Free;
+
+    memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
+
+    pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmACBrNFSe.btnEnviaremailPNClick(Sender: TObject);
 var
   vAux: String;
   sCC: TStrings;
@@ -2582,6 +2650,55 @@ begin
 end;
 
 procedure TfrmACBrNFSe.btnImprimirClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione a NFSe';
+  OpenDialog1.DefaultExt := '*-NFSe.xml';
+  OpenDialog1.Filter :=
+    'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFSeX1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFSeX1.NotasFiscais.Clear;
+
+    // LoadFromFile - Usado para carregar o Xml de apenas uma nota
+    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+
+    // LoadFromLoteNfse - Usado para carregar um lote de notas
+//    ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(OpenDialog1.FileName);
+
+    {
+      Se o webservice não retorna o conteudo de OutrasInformacoes, mas a
+      prefeitura tem um texto padrão a ser impresso no DANFSE, pode-se alimentar
+      o campo OutrasInformacoes antes de executar o método Imprimir
+    }
+//    ACBrNFSeX1.NotasFiscais.Items[0].NFSe.OutrasInformacoes := 'Outras Informações 1;Outras Informações 2';
+    ACBrNFSeX1.NotasFiscais.Imprimir;
+
+    {
+      Se desejar gerar o PDF do DANFSE basta descomentar a linha abaixo
+    }
+//    ACBrNFSeX1.NotasFiscais.ImprimirPDF;
+
+    if ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps <> '' then
+      memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps)
+    else
+      memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
+
+    memoLog.Lines.Add('Nota Numero..........: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Numero);
+    memoLog.Lines.Add('Código de Verificação: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.CodigoVerificacao);
+    memoLog.Lines.Add('Data de Emissão......: ' + DateToStr(ACBrNFSeX1.NotasFiscais.Items[0].NFSe.DataEmissao));
+    memoLog.Lines.Add('Prestador............: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Prestador.RazaoSocial);
+    memoLog.Lines.Add('Tomador..............: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Tomador.RazaoSocial);
+
+    if ACBrNFSeX1.NotasFiscais.Items[0].NFSe.SituacaoNfse = ACBrNFSeXConversao.snCancelado then
+      memoLog.Lines.Add('A Nota encontra-se Cancelada.');
+
+    pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmACBrNFSe.btnImprimirPNClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione a NFSe';
   OpenDialog1.DefaultExt := '*-NFSe.xml';

@@ -42,7 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
 11/01/2023
+-- Pronim.GravarXml --
+[*] Alterações visando a geração ou não das tags ResponsavelRetencao e CodigoPais 
+    do tomador.
+   Por: Guilherme Costa
 -- ACBrNFSeXDANFSeFR --
 [-] ACBrNFSe - Ajuste DANFSe Fast quando a impressão do local de prestação do serviço 
   por Victor H Gonzales - Pandaaa

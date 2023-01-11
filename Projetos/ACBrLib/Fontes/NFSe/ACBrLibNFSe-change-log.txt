@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/01/2023
+--- ACBrLibNFSeBase ---
+[-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado
+	Por: Antonio Carlos Junior
+
 16/03/2021
 --- ACBrLiNFSeResposta, ACBrLibNFSeConsts ---
 [+] Adicionado classes bases de Resposta para métodos NFSe.

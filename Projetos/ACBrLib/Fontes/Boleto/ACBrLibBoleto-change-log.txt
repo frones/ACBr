@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/01/2023
+--- ACBrLibBoletoBase ---
+[-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado
+	Por: Antonio Carlos Junior
+
 25/11/2022
 ---ACBrLibBoletoConfig, ACBrLibBoletoConsts, ACBrLibBoletoDataModule---
 [*] Criação campos para leitura de novas propriedades do PIX (Y03) Santander CNAB240 - TK3201

@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/01/2023
+--- ACBrLibMailBase ---
+[-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado
+	Por: Antonio Carlos Junior
+
 20/07/2022
 --- ACBrLibEMAIL ---
 [*] Remoção de Warning @deprecated ref. ACBrUtils

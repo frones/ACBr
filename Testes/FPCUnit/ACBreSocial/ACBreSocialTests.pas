@@ -116,17 +116,18 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.VersaoeSocialToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
   vElementoEnum: TVersaoeSocial;
+  vauxString: string;
   EhIgual, OK: Boolean;
-
 begin
 
   //for vElementoEnum in TVersaoeSocial do
   for vElementoEnum:= Low(TVersaoeSocial) to High(TVersaoeSocial) do
   begin
-    EhIgual := (StrToVersaoeSocial(OK, VersaoeSocialToStr(vElementoEnum)) = vElementoEnum);
+    vauxString := VersaoeSocialToStrEX(vElementoEnum);
+    EhIgual := (StrToVersaoeSocialEX(OK, vauxString) = vElementoEnum);
     CheckTrue(EhIgual and OK, 'Erro conversão no elemento Ord('+ GetEnumName(TypeInfo(vElementoEnum),ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
-                       'VersaoeSocialToStr => '+ VersaoeSocialToStr(vElementoEnum)+'  '+
-                       'StrToVersaoeSocial => '+ GetEnumName(TypeInfo(vElementoEnum), ord(StrToVersaoeSocial(OK, VersaoeSocialToStr(vElementoEnum))))
+                       'VersaoeSocialToStrEX => '+ vauxString+'  '+
+                       'StrToVersaoeSocialEX => '+ GetEnumName(TypeInfo(vElementoEnum), ord(StrToVersaoeSocialEX(OK, vauxString)))
               );
   end;
 end;
@@ -134,21 +135,18 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.StrToVersaoeSocial_ConvertendoTodosTipos_RetornoCorreto;
 var
   auxTipo: TVersaoeSocial;
+  i: Integer;
+  EhIgual, OK: Boolean;
 begin
-  auxTipo := StrToVersaoeSocial(OK, '02_04_01');
-  CheckTrue(auxTipo = ve02_04_01, 'Erro conversão: valor esperado ve02_04_01');
+  for i := low(TVersaoeSocialArrayStrings) to High(TVersaoeSocialArrayStrings) do
+  begin
+    auxTipo := StrToVersaoeSocialEX(OK, TVersaoeSocialArrayStrings[i]);
+    EhIgual := VersaoeSocialToStrEX(auxTipo) = TVersaoeSocialArrayStrings[i];
+    CheckTrue(EhIgual and OK, 'Erro conversão no elemento '+ TVersaoeSocialArrayStrings[i] + ' (i='+ IntToStr(i)+')  '+
+                       'StrToVersaoeSocialEX => '+ GetEnumName(TypeInfo(auxTipo), ord(auxTipo))+'  '+
+                       'VersaoeSocialToStrEX => '+VersaoeSocialToStrEX(auxTipo));
 
-  auxTipo := StrToVersaoeSocial(OK, '02_04_02');
-  CheckTrue(auxTipo = ve02_04_02, 'Erro conversão: valor esperado ve02_04_02');
-
-  auxTipo := StrToVersaoeSocial(OK, '02_05_00');
-  CheckTrue(auxTipo = ve02_05_00, 'Erro conversão: valor esperado ve02_05_00');
-
-  auxTipo := StrToVersaoeSocial(OK, 'S01_00_00');
-  CheckTrue(auxTipo = veS01_00_00, 'Erro conversão: valor esperado veS01_00_00');
-
-  auxTipo := StrToVersaoeSocial(OK, 'S01_01_00');
-  CheckTrue(auxTipo = veS01_01_00, 'Erro conversão: valor esperado veS01_01_00');
+  end;
 end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.SimNaoToStr_ConvertendoTodosTipos_RetornoCorreto;

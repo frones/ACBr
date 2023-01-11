@@ -546,6 +546,12 @@ type
   tpNacProf               = (ttpProfissionalBrasileiro, ttpProfissionalEstrangeiro);
 
   TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00);
+const
+  TVersaoeSocialArrayStrings : array[0..4] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00');
+  TVersaoeSocialSchemasArrayStrings : array[0..4] of string = ('02_04_01', '02_04_02', '02_05_00', '_S_01_00_00', '_S_01_01_00');
+  TVersaoeSocialArrayReals : array[0..4] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000);
+
+type
 
   tpTmpParc               = (tpNaoeTempoParcial,
                              tpLimitado25HorasSemanais,
@@ -1085,11 +1091,14 @@ function SchemaESocialToStr(const t: TeSocialSchema): String;
 function StrToSchemaESocial(const s: String): TeSocialSchema;
 function TipoEventoToSchemaeSocial(const t: TTipoEvento; AVersaoeSocial: TVersaoeSocial): TeSocialSchema;
 
-function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
-function VersaoeSocialToStr(const t: TVersaoeSocial): String;
-
-function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
+function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use a função StrToVersaoeSocialEX ou StrToVersaoeSocialSchemas conforme sua necessidade.' {$ENDIF};
+function VersaoeSocialToStr(const t: TVersaoeSocial): String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use a função VersaoeSocialToStrEX ou VersaoeSocialToStrSchemas conforme sua necessidade.' {$ENDIF};
+function VersaoeSocialToStrEX(const t: TVersaoeSocial): String;
+function StrToVersaoeSocialEX(out ok: Boolean; const s: String): TVersaoeSocial;
+function VersaoeSocialToStrSchemas(const t: TVersaoeSocial): String;
+function StrToVersaoeSocialSchemas(out ok: Boolean; const s: String): TVersaoeSocial;
 function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
+function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
 
 function tpTmpParcToStr(const t: tpTmpParc ): string;
 function StrTotpTmpParc(var ok: boolean; const s: string): tpTmpParc;
@@ -2472,14 +2481,49 @@ end;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
 begin
-  result := StrToEnumerado(ok, s, ['02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00'],
-                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+  result := StrToVersaoeSocialEX(ok, s);
 end;
 
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
 begin
-  result := EnumeradoToStr(t, ['02_04_01', '02_04_02', '02_05_00', '_S_01_00_00', '_S_01_01_00'],
+  result := VersaoeSocialToStrSchemas(t);
+end;
+
+function VersaoeSocialToStrEx(const t: TVersaoeSocial): String;
+begin
+  result := EnumeradoToStr(t, TVersaoeSocialArrayStrings,
                           [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+end;
+
+function StrToVersaoeSocialEX(out ok: Boolean; const s: String): TVersaoeSocial;
+begin
+  result := StrToEnumerado(ok, s, TVersaoeSocialArrayStrings,
+                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+end;
+
+function VersaoeSocialToStrSchemas(const t: TVersaoeSocial): String;
+begin
+  result := EnumeradoToStr(t, TVersaoeSocialSchemasArrayStrings,
+                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+end;
+
+function StrToVersaoeSocialSchemas(out ok: Boolean; const s: String): TVersaoeSocial;
+begin
+  result := StrToEnumerado(ok, s, TVersaoeSocialSchemasArrayStrings,
+                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+end;
+
+function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
+begin
+  case t of
+    ve02_04_01:  result := 2.0401;
+    ve02_04_02:  result := 2.0402;
+    ve02_05_00:  result := 2.0500;
+    veS01_00_00: result := 10.0000;
+    veS01_01_00: result := 10.1000;
+  else
+    result := 0;
+  end;
 end;
 
 function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
@@ -2500,19 +2544,6 @@ begin
   begin
     result := veS01_00_00;
     ok := False;
-  end;
-end;
-
-function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
-begin
-  case t of
-    ve02_04_01:  result := 2.0401;
-    ve02_04_02:  result := 2.0402;
-    ve02_05_00:  result := 2.0500;
-    veS01_00_00: result := 10.0000;
-    veS01_01_00: result := 10.1000;
-  else
-    result := 0;
   end;
 end;
 

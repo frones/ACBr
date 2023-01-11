@@ -485,6 +485,7 @@ begin
       Add('ExigibilidadeISS', ftString, 60);
       Add('CodigoMunicipio', ftString, 60);
       Add('MunicipioIncidencia', ftString, 60);
+      Add('MunicipioPrestacao', ftString, 60);
       Add('OutrasInformacoes', ftString, 1000);
       Add('InformacoesComplementares', ftString, 1000);
       Add('CodigoObra', ftString, 60);
@@ -830,6 +831,7 @@ begin
         Add('ExigibilidadeISS=ExigibilidadeISS');
         Add('CodigoMunicipio=CodigoMunicipio');
         Add('MunicipioIncidencia=MunicipioIncidencia');
+        Add('MunicipioPrestacao=MunicipioPrestacao');
         Add('OutrasInformacoes=OutrasInformacoes');
         Add('InformacoesComplementares=InformacoesComplementares');
         Add('CodigoObra=CodigoObra');
@@ -1087,39 +1089,31 @@ begin
           FieldByName('ExigibilidadeISS').AsString := FProvider.ExigibilidadeISSDescricao(ExigibilidadeISS);
           FieldByName('TipoRecolhimento').AsString := TipoRecolhimento;
 
-          if Provedor = proAdm then
-          begin
-            FieldByName('CodigoMunicipio').AsString := CodigoMunicipio;
+          FieldByName('CodigoMunicipio').AsString := CodigoMunicipio;
 
-            try
-              xMunicipio := ObterNomeMunicipio(MunicipioIncidencia, xUF);
-            except
-              on E:Exception do
-              begin
-                xMunicipio := '';
-                xUF := '';
-              end;
+          try
+            xMunicipio := ObterNomeMunicipio(MunicipioIncidencia, xUF);
+          except
+            on E:Exception do
+            begin
+              xMunicipio := '';
+              xUF := '';
             end;
+          end;
 
-            FieldByName('MunicipioIncidencia').AsString := xMunicipio;
-          end
-          else
+          FieldByName('MunicipioIncidencia').AsString := xMunicipio;
+        end;
+
+        try
+          xMunicipio := ObterNomeMunicipio(strToIntDef(Servico.CodigoMunicipio,0), xUF);
+        except
+          on E:Exception do
           begin
-            FieldByName('CodigoMunicipio').AsString := CodigoMunicipio;
-
-            try
-              xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF);
-            except
-              on E:Exception do
-              begin
-                xMunicipio := '';
-                xUF := '';
-              end;
-            end;
-
-            FieldByName('MunicipioIncidencia').AsString := xMunicipio;
+            xMunicipio := '';
+            xUF := '';
           end;
         end;
+        FieldByName('MunicipioPrestacao').AsString := xMunicipio;
       end;
 
       with ConstrucaoCivil do

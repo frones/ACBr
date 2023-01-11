@@ -116,35 +116,40 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.VersaoeSocialToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
   vElementoEnum: TVersaoeSocial;
-  vauxString: string;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: TVersaoeSocial;
   EhIgual, OK: Boolean;
 begin
 
   //for vElementoEnum in TVersaoeSocial do
   for vElementoEnum:= Low(TVersaoeSocial) to High(TVersaoeSocial) do
   begin
-    vauxString := VersaoeSocialToStrEX(vElementoEnum);
-    EhIgual := (StrToVersaoeSocialEX(OK, vauxString) = vElementoEnum);
+    ConvertidoParaString := VersaoeSocialToStrEX(vElementoEnum);
+    ReconvertidoParaElementoEnum := StrToVersaoeSocialEX(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
     CheckTrue(EhIgual and OK, 'Erro conversão no elemento Ord('+ GetEnumName(TypeInfo(vElementoEnum),ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
-                       'VersaoeSocialToStrEX => '+ vauxString+'  '+
-                       'StrToVersaoeSocialEX => '+ GetEnumName(TypeInfo(vElementoEnum), ord(StrToVersaoeSocialEX(OK, vauxString)))
+                       'VersaoeSocialToStrEX => '+ ConvertidoParaString+'  '+
+                       'StrToVersaoeSocialEX => '+ GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
               );
   end;
 end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.StrToVersaoeSocial_ConvertendoTodosTipos_RetornoCorreto;
 var
-  auxTipo: TVersaoeSocial;
+  ConvertidoParaEnum: TVersaoeSocial;
+  ReconvertidoParaString: String;
   i: Integer;
   EhIgual, OK: Boolean;
 begin
   for i := low(TVersaoeSocialArrayStrings) to High(TVersaoeSocialArrayStrings) do
   begin
-    auxTipo := StrToVersaoeSocialEX(OK, TVersaoeSocialArrayStrings[i]);
-    EhIgual := VersaoeSocialToStrEX(auxTipo) = TVersaoeSocialArrayStrings[i];
+    ConvertidoParaEnum := StrToVersaoeSocialEX(OK, TVersaoeSocialArrayStrings[i]);
+    ReconvertidoParaString := VersaoeSocialToStrEX(ConvertidoParaEnum);
+    EhIgual := ReconvertidoParaString = TVersaoeSocialArrayStrings[i];
     CheckTrue(EhIgual and OK, 'Erro conversão no elemento '+ TVersaoeSocialArrayStrings[i] + ' (i='+ IntToStr(i)+')  '+
-                       'StrToVersaoeSocialEX => '+ GetEnumName(TypeInfo(auxTipo), ord(auxTipo))+'  '+
-                       'VersaoeSocialToStrEX => '+VersaoeSocialToStrEX(auxTipo));
+                       'StrToVersaoeSocialEX => '+ GetEnumName(TypeInfo(ConvertidoParaEnum), ord(ConvertidoParaEnum))+'  '+
+                       'VersaoeSocialToStrEX => '+ReconvertidoParaString
+             );
 
   end;
 end;

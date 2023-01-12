@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Ronda Alta/RS trocou de provedor, agora é Tcheinfo.
+   Por: Phoenixsistemas
+
 11/01/2023
 -- Pronim.GravarXml --
 [*] Alterações visando a geração ou não das tags ResponsavelRetencao e CodigoPais 

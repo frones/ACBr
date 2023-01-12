@@ -83,6 +83,8 @@ type
 
   TACBrODFeeType = (ftDeliveryFee, ftServiceFee, ftTip);
 
+  TACBrODIndoorMode = (imDefault, imPlace);
+
   TACBrODMerchantCategories = (mcBurgers, mcPizza, mcFastFood, mcHotDog,
     mcJapanese, mcDesserts, mcAmerican, mcIceCream, mcBBQ, mcSandwich,
     mcMexican, mcBrazilian, mcPastry, mcArabian, mcComfortFood,
@@ -101,11 +103,18 @@ type
   TACBrODMerchantUpdateEntity = (mueService, mueMenu, mueCategory, mueItem, mueItemOffer,
     mueOptionGroup, mueAvailability);
 
+  TACBrODOrderTiming = (otInstant, otScheduled);
+
+  TACBrODOrderTimingArray = array of TACBrODOrderTiming;
+
   TACBrODPaymentMethod = (pmCredit, pmDebit, pmMealVoucher, pmFoodVoucher,
     pmDigitalWallet, pmPix, pmCash, pmCreditDebit, pmCoupon, pmRedeem,
     pmPrepaidRedeem, pmOther);
 
   TACBrODPaymentType = (ptPrepaid, ptPending);
+
+  TACBrODScheduleTime = (st15Minutes, st30Minutes, st45Minutes, st60Minutes,
+    st90Minutes, st120Minutes);
 
   TACBrODServiceType = (stDelivery, stTakeout, stIndoor);
 
@@ -147,6 +156,9 @@ function StrToFeeReceivedBy(const AValue: string): TACBrODFeeReceivedBy;
 function FeeTypeToStr(AValue: TACBrODFeeType): string;
 function StrToFeeType(const AValue: string): TACBrODFeeType;
 
+function IndoorModeToStr(AValue: TACBrODIndoorMode): string;
+function StrToIndoorMode(const AValue: string): TACBrODIndoorMode;
+
 function MerchantCategoriesToStr(AValue: TACBrODMerchantCategories): string;
 function MerchantCategoriesToArray(AValue: TACBrODMerchantCategoriesArray): TSplitResult;
 function StrToMerchantCategories(const AValue: string): TACBrODMerchantCategories;
@@ -154,11 +166,18 @@ function StrToMerchantCategories(const AValue: string): TACBrODMerchantCategorie
 function MerchantTypeToStr(AValue: TACBrODMerchantType): string;
 function StrToMerchantType(const AValue: string): TACBrODMerchantType;
 
+function OrderTimingToStr(AValue: TACBrODOrderTiming): string;
+function OrderTimingToArray(AValue: TACBrODOrderTimingArray): TSplitResult;
+function StrToOrderTiming(const AValue: string): TACBrODOrderTiming;
+
 function PaymentMethodToStr(AValue: TACBrODPaymentMethod): string;
 function StrToPaymentMethod(const AValue: string): TACBrODPaymentMethod;
 
 function PaymentTypeToStr(AValue: TACBrODPaymentType): string;
 function StrToPaymentType(const AValue: string): TACBrODPaymentType;
+
+function ScheduleTimeToStr(AValue: TACBrODScheduleTime): string;
+function StrToScheduleTime(AValue: string): TACBrODScheduleTime;
 
 function ServiceTypeToStr(AValue: TACBrODServiceType): string;
 function StrToServiceType(AValue: string): TACBrODServiceType;
@@ -591,6 +610,28 @@ begin
     Result := ftTip;
 end;
 
+function IndoorModeToStr(AValue: TACBrODIndoorMode): string;
+begin
+  case AValue of
+    imDefault: Result := 'DEFAULT';
+    imPlace: Result := 'PLACE';
+  else
+    Result := '';
+  end;
+end;
+
+function StrToIndoorMode(const AValue: string): TACBrODIndoorMode;
+var
+  LStr: string;
+begin
+  Result := imDefault;
+  LStr := UpperCase(AValue);
+  if LStr = 'DEFAULT' then
+    Result := imDefault
+  else if LStr = 'PLACE' then
+    Result := imPlace;
+end;
+
 function MerchantCategoriesToStr(AValue: TACBrODMerchantCategories): string;
 begin
   case AValue of
@@ -765,6 +806,37 @@ begin
   Result := mtRestaurant;
 end;
 
+function OrderTimingToStr(AValue: TACBrODOrderTiming): string;
+begin
+  case AValue of
+    otInstant: Result := 'INSTANT';
+    otScheduled: Result := 'SCHEDULED';
+  else
+    Result := '';
+  end;
+end;
+
+function OrderTimingToArray(AValue: TACBrODOrderTimingArray): TSplitResult;
+var
+  I: Integer;
+begin
+  SetLength(Result, Length(AValue));
+  for I := 0 to Pred(Length(AValue)) do
+    Result[I] := OrderTimingToStr(AValue[I]);
+end;
+
+function StrToOrderTiming(const AValue: string): TACBrODOrderTiming;
+var
+  LStr: string;
+begin
+  Result := otInstant;
+  LStr := UpperCase(AValue);
+  if LStr = 'INSTANT' then
+    Result := otInstant
+  else if LStr = 'SCHEDULED' then
+    Result := otScheduled;
+end;
+
 function PaymentMethodToStr(AValue: TACBrODPaymentMethod): string;
 begin
   case AValue of
@@ -837,6 +909,40 @@ begin
     Result := ptPrepaid
   else if LStr = 'PENDING' then
     Result := ptPending;
+end;
+
+function ScheduleTimeToStr(AValue: TACBrODScheduleTime): string;
+begin
+  case AValue of
+    st15Minutes: Result := '15_MINUTES';
+    st30Minutes: Result := '30_MINUTES';
+    st45Minutes: Result := '45_MINUTES';
+    st60Minutes: Result := '60_MINUTES';
+    st90Minutes: Result := '90_MINUTES';
+    st120Minutes: Result := '120_MINUTES';
+  else
+    Result := '';
+  end;
+end;
+
+function StrToScheduleTime(AValue: string): TACBrODScheduleTime;
+var
+  LStr: string;
+begin
+  Result := st120Minutes;
+  LStr := UpperCase(AValue);
+  if LStr = '15_MINUTES' then
+    Result := st15Minutes
+  else if LStr = '30_MINUTES' then
+    Result := st30Minutes
+  else if LStr = '45_MINUTES' then
+    Result := st45Minutes
+  else if LStr = '60_MINUTES' then
+    Result := st60Minutes
+  else if LStr = '90_MINUTES' then
+    Result := st90Minutes
+  else if LStr = '120_MINUTES' then
+    Result := st120Minutes;
 end;
 
 function ServiceTypeToStr(AValue: TACBrODServiceType): string;

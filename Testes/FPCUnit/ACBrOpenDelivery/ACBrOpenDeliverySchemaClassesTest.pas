@@ -9,6 +9,7 @@ uses
   ACBrOpenDeliverySchema,
   ACBrOpenDeliverySchemaClasses,
   ACBrUtil.Strings,
+  ACBrJSON,
   pcnConversaoOD,
   Classes,
   SysUtils;
@@ -211,11 +212,9 @@ type
     FJSON: String;
     FJSONObject: TACBrJSONObject;
     FSchema: TACBrOpenDeliverySchemaItem;
-
   protected
     procedure SetUp; override;
     procedure TearDown; override;
-
   published
     procedure JSONToObject;
     procedure ObjectToJSON;
@@ -226,11 +225,9 @@ type
     FJSON: String;
     FJSONObject: TACBrJSONObject;
     FSchema: TACBrOpenDeliverySchemaItemOffer;
-
   protected
     procedure SetUp; override;
     procedure TearDown; override;
-
   published
     procedure JSONToObject;
     procedure ObjectToJSON;
@@ -268,14 +265,12 @@ type
 
   TTestOption = class(TTestCase)
   private
-    FJSON: String;
+    FJSON: string;
     FJSONObject: TACBrJSONObject;
     FSchema: TACBrOpenDeliverySchemaOption;
-
   protected
     procedure SetUp; override;
     procedure TearDown; override;
-
   published
     procedure JSONToObject;
     procedure ObjectToJSON;
@@ -1594,6 +1589,7 @@ begin
   CheckEquals('f080cfb3-5c4a-4eb7-907d-2de3bbb5dfb9', FSchema.Id);
   CheckEquals('732bd31e-77fc-47ee-88ee-a0437f97b198', FSchema.ItemId);
   CheckEquals(1, FSchema.Index);
+  CheckEquals('UNAVAILABLE', StatusToStr(FSchema.status));
   CheckEquals('43', FloatToStr(FSchema.Price.value));
   CheckEquals('BRL', FSchema.Price.currency);
   CheckEquals(1, Length(FSchema.AvailabilityId));
@@ -1610,6 +1606,7 @@ begin
   CheckEquals('f080cfb3-5c4a-4eb7-907d-2de3bbb5dfb9', FJSONObject.AsString['id']);
   CheckEquals('732bd31e-77fc-47ee-88ee-a0437f97b198', FJSONObject.AsString['itemId']);
   CheckEquals(1, FJSONObject.AsInteger['index']);
+  CheckEquals('UNAVAILABLE', FJSONObject.AsString['status']);
   CheckEquals('43', FloatToStr(FJSONObject.AsJSONObject['price'].AsFloat['value']));
   CheckEquals('BRL', FJSONObject.AsJSONObject['price'].AsString['currency']);
   CheckEquals(1, FJSONObject.AsJSONArray['availabilityId'].Count);
@@ -1627,6 +1624,7 @@ begin
     '    "id": "f080cfb3-5c4a-4eb7-907d-2de3bbb5dfb9",' +
     '    "itemId": "732bd31e-77fc-47ee-88ee-a0437f97b198",' +
     '    "index": 1,' +
+    '    "status": "UNAVAILABLE",' +
     '    "price": {' +
     '        "value": 43,' +
     '        "originalValue": 43,' +
@@ -1716,6 +1714,7 @@ begin
   CheckEquals('1/2 Mozzarella', FSchema.Name);
   CheckEquals('Delicious mozzarella pizza.', FSchema.Description);
   CheckEquals('24', FSchema.ExternalCode);
+  CheckEquals('UNAVAILABLE', StatusToStr(FSchema.status));
   CheckEquals('unit', FSchema._unit);
   CheckEquals('https://www.food-place.com/images/mozzarella.png', FSchema.Image.URL);
   CheckEquals('09345UIHF98', FSchema.Image.CRC_32);
@@ -1732,6 +1731,7 @@ begin
   CheckEquals('1/2 Mozzarella', FJSONObject.AsString['name']);
   CheckEquals('Delicious mozzarella pizza.', FJSONObject.AsString['description']);
   CheckEquals('24', FJSONObject.AsString['externalCode']);
+  CheckEquals('UNAVAILABLE', FJSONObject.AsString['status']);
   CheckEquals('unit', FJSONObject.AsString['unit']);
   CheckEquals('09345UIHF98', FJSONObject.AsJSONObject['image'].AsString['CRC-32']);
   CheckEquals('https://www.food-place.com/images/mozzarella.png', FJSONObject.AsJSONObject['image'].AsString['URL']);
@@ -1749,6 +1749,7 @@ begin
       '"name": "1/2 Mozzarella",' +
       '"description": "Delicious mozzarella pizza.",' +
       '"externalCode": "24",' +
+      '"status": "UNAVAILABLE",' +
       '"image": {' +
         '"URL": "https://www.food-place.com/images/mozzarella.png",' +
         '"CRC-32": "09345UIHF98"' +
@@ -1780,6 +1781,7 @@ begin
   CheckEquals('e5232f14-430c-4a94-8ff6-289d5a16a87b', FSchema.Id);
   CheckEquals('7e507cab-7235-4f75-a0c2-e955fb2f2048', FSchema.ItemId);
   CheckEquals(1, FSchema.Index);
+  CheckEquals('UNAVAILABLE', StatusToStr(FSchema.status));
   CheckEquals('43', FloatToStr(FSchema.Price.value));
   CheckEquals('BRL', FSchema.Price.currency);
   CheckEquals(1, FSchema.MaxPermitted);
@@ -1793,6 +1795,7 @@ begin
   CheckEquals('e5232f14-430c-4a94-8ff6-289d5a16a87b', FJSONObject.AsString['id']);
   CheckEquals('7e507cab-7235-4f75-a0c2-e955fb2f2048', FJSONObject.AsString['itemId']);
   CheckEquals(1, FJSONObject.AsInteger['index']);
+  CheckEquals('UNAVAILABLE', FJSONObject.AsString['status']);
   CheckEquals('43', FloatToStr(FJSONObject.AsJSONObject['price'].AsFloat['value']));
   CheckEquals('BRL', FJSONObject.AsJSONObject['price'].AsString['currency']);
   CheckEquals(1, FJSONObject.AsInteger['maxPermitted']);
@@ -1807,6 +1810,7 @@ begin
       '"id": "e5232f14-430c-4a94-8ff6-289d5a16a87b",' +
       '"itemId": "7e507cab-7235-4f75-a0c2-e955fb2f2048",' +
       '"index": 1,' +
+      '"status": "UNAVAILABLE",' +
       '"price": {' +
         '"value": 43,' +
         '"originalValue": 43,' +
@@ -2354,7 +2358,7 @@ begin
   CheckEquals('001111', FSchema.sourceAppId);
   CheckEquals('2019-08-24 14:15:22', FormatDateTime('yyyy-MM-dd hh:mm:ss', FSchema.createdAt));
   CheckEquals('2019-08-24 14:14:22', FormatDateTime('yyyy-MM-dd hh:mm:ss', FSchema.preparationStartDateTime));
-  CheckEquals('INSTANT', FSchema.orderTiming);
+  CheckEquals('SCHEDULED', OrderTimingToStr(FSchema.orderTiming));
   CheckEquals('2222222', FSchema.merchant.id);
   CheckEquals('Pizza Plaza', FSchema.merchant.name);
   CheckEquals('no onions', FSchema.extraInfo);
@@ -2442,6 +2446,10 @@ begin
   CheckEquals('Customer 123', FSchema.customer.name);
   CheckEquals(3, FSchema.customer.ordersCountOnMerchant);
 
+  // Schedule
+  CheckEquals('2019-08-24 14:15:22', FormatDateTime('yyyy-MM-dd hh:mm:ss', FSchema.schedule.scheduledDateTimeStart));
+  CheckEquals('2019-08-25 14:15:22', FormatDateTime('yyyy-MM-dd hh:mm:ss', FSchema.schedule.scheduledDateTimeEnd));
+
   // Delivery
   CheckEquals('MERCHANT', SponsorToStr(FSchema.delivery.deliveredBy));
   CheckEquals('BR', FSchema.delivery.deliveryAddress.country);
@@ -2462,6 +2470,10 @@ begin
   // Takeout
   CheckEquals('DEFAULT', TakeoutModeToStr(FSchema.takeout.mode));
   CheckEquals('2019-08-24 14:15:22', FormatDateTime('yyyy-MM-dd hh:mm:ss', FSchema.takeout.takeoutDateTime));
+
+  CheckEquals('PLACE', IndoorModeToStr(FSchema.indoor.mode));
+  CheckEquals('2019-08-28 14:15:22', FormatDateTime('yyyy-MM-dd hh:mm:ss', FSchema.indoor.indoorDateTime));
+  CheckEquals('test place', FSchema.indoor.place);
 end;
 
 procedure TTestOrder.ObjectToJson;
@@ -2477,7 +2489,7 @@ begin
   CheckEquals('001111', FJSONObject.AsString['sourceAppId']);
   CheckEquals('2019-08-24 14:15:22', FormatDateTime('yyyy-MM-dd hh:mm:ss', FJSONObject.AsISODateTime['createdAt']));
   CheckEquals('2019-08-24 14:14:22', FormatDateTime('yyyy-MM-dd hh:mm:ss', FJSONObject.AsISODateTime['preparationStartDateTime']));
-  CheckEquals('INSTANT', FJSONObject.AsString['orderTiming']);
+  CheckEquals('SCHEDULED', FJSONObject.AsString['orderTiming']);
   CheckEquals('2222222', FJSONObject.AsJSONObject['merchant'].AsString['id']);
   CheckEquals('Pizza Plaza', FJSONObject.AsJSONObject['merchant'].AsString['name']);
   CheckEquals('no onions', FJSONObject.AsString['extraInfo']);
@@ -2610,7 +2622,7 @@ begin
       '"displayId": "01111",' +
       '"sourceAppId": "001111",' +
       '"createdAt": "2019-08-24T14:15:22Z",' +
-      '"orderTiming": "INSTANT",' +
+      '"orderTiming": "SCHEDULED",' +
       '"preparationStartDateTime": "2019-08-24T14:14:22Z",' +
       '"merchant": {' +
         '"id": "2222222",' +
@@ -2734,6 +2746,10 @@ begin
         '"name": "Customer 123",' +
         '"ordersCountOnMerchant": 3' +
       '},' +
+      '"schedule": {' +
+        '"scheduledDateTimeStart": "2019-08-24T14:15:22Z",' +
+        '"scheduledDateTimeEnd": "2019-08-25T14:15:22Z"' +
+      '},' +
       '"delivery": {' +
         '"deliveredBy": "MERCHANT",' +
         '"deliveryAddress": {' +
@@ -2758,6 +2774,11 @@ begin
       '"takeout": {' +
         '"mode": "DEFAULT",' +
         '"takeoutDateTime": "2019-08-24T14:15:22Z"' +
+      '},' +
+      '"indoor": {' +
+        '"mode": "PLACE",' +
+        '"indoorDateTime": "2019-08-28T14:15:22Z",' +
+        '"place": "test place"' +
       '},' +
       '"extraInfo": "no onions"' +
     '}');

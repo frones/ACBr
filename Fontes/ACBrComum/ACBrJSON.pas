@@ -95,6 +95,7 @@ type
     property AsSplit[const AName: string]: TSplitResult read GetAsSplitResult;
     property AsJSONObject[const AName: string]: TACBrJSONObject read GetAsJSONObject;
     property AsJSONArray[const AName: string]: TACBrJSONArray read GetAsJSONArray;
+    property AsValue[const AName: string]: TACBrJSONValue read GetAsValue;
 
     function ToJSON: string; override;
     class function Parse(const AJSONString: string): TACBrJSONObject;

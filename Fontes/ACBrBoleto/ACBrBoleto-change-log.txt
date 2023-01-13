@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/01/2023
+[*] TK-3470 ACBrBoletoW_BancoBrasil_API Contribuição para correção do erro: "Para tipo de multa = 0 ( DISPENSADO ) , não informar valor ou percentual"
+Por Aggille Sistemas /  Daniel Morais
+
 09/01/2023
 [*] TK-3429-1 ACBrBancoBrasil feito ajustes no tratamento das instruções codificadas para protesto
 Por Daniel Morais

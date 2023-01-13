@@ -702,7 +702,10 @@ begin
         if (ATitulo.DataMulta > 0) then
         begin
           JsonMulta.Add('tipo').Value.AsInteger             := ACodMulta;
-          JsonMulta.Add('data').Value.AsString              := FormatDateBr(ATitulo.DataMulta, 'DD.MM.YYYY');
+
+          if( aCodMulta > 0 ) then
+            JsonMulta.Add('data').Value.AsString              := FormatDateBr(ATitulo.DataMulta, 'DD.MM.YYYY');
+
           case ACodMulta of
             1 : JsonMulta.Add('valor').Value.AsNumber       := ATitulo.PercentualMulta;
             2 : JsonMulta.Add('porcentagem').Value.AsNumber := ATitulo.PercentualMulta;

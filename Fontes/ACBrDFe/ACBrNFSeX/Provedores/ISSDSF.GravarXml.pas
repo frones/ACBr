@@ -237,7 +237,8 @@ begin
                                  NFSe.Servico.Valores.ValorDeducoes) ) ), 15);
   sValorDeducao   := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
                                  NFSe.Servico.Valores.ValorDeducoes)), 15);
-  sCodAtividade   := Poem_Zeros( OnlyNumber( NFSe.Servico.CodigoCnae ), 10);
+  sCodAtividade   := PadRight(NFSe.Servico.CodigoCnae, 9, '0');
+  sCodAtividade   := Poem_Zeros( OnlyNumber( sCodAtividade ), 10);
   sCPFCNPJTomador := Poem_Zeros( OnlyNumber( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
 
 

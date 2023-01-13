@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/01/2023
+-- ISSDSF.GravarXml --
+[*] Correção na montagem da string de assinatura.
+   Por: Arimateia Jr
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Mococa/SP trocou de provedor, agora é Conam.
    Por: Phoenixsistemas

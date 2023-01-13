@@ -202,7 +202,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorFaixaRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorFaixa', Request,
-                     ['outputXML', 'ConsultarNfsePorFaixaResposta'],
+                     ['outputXML', 'ConsultarNfseFaixaResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 

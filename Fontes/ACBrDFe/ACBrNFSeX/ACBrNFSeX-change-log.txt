@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/01/2023
+-- SH3.Provider --
+[*] Correção no nome da tag de retorno do Consultar NFSe por Faixa.
+   Por: Jeanny Paiva
 -- ISSDSF.GravarXml --
 [*] Correção na montagem da string de assinatura.
    Por: Arimateia Jr

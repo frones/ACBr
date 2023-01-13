@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Mococa/SP trocou de provedor, agora é Conam.
+   Por: Phoenixsistemas
+-- ACBrNFSeXServicos.ini --
+[+] Inclusão da URL do Link de Produção da cidade de Blumenau/SC.
+   Por: Diogo Weitz
+
 12/01/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Ronda Alta/RS trocou de provedor, agora é Tcheinfo.

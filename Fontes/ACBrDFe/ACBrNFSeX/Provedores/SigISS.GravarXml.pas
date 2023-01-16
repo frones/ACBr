@@ -183,23 +183,26 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_fax', 1, 15, 0,
                                             '', ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'rps_num', 1, 15, 0,
+  if NFSe.IdentificacaoRps.Tipo <> trNFConjugada then
+  begin
+    Result.AppendChild(AddNode(tcStr, '#1', 'rps_num', 1, 15, 0,
                                  OnlyNumber(NFSe.IdentificacaoRps.Numero), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'rps_serie', 1, 3, 0,
+    Result.AppendChild(AddNode(tcStr, '#1', 'rps_serie', 1, 3, 0,
                                               NFSe.IdentificacaoRps.Serie, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'rps_tipo', 1, 1, 0,
+    Result.AppendChild(AddNode(tcStr, '#1', 'rps_tipo', 1, 1, 0,
                         FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'rps_dia', 1, 2, 0,
-                                 FormatDateTime('dd',NFSe.DataEmissaoRps), ''));
+    Result.AppendChild(AddNode(tcStr, '#1', 'rps_dia', 1, 2, 0,
+                                FormatDateTime('dd', NFSe.DataEmissaoRps), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'rps_mes', 1, 2, 0,
-                                 FormatDateTime('MM',NFSe.DataEmissaoRps), ''));
+    Result.AppendChild(AddNode(tcStr, '#1', 'rps_mes', 1, 2, 0,
+                                FormatDateTime('MM', NFSe.DataEmissaoRps), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'rps_ano', 1, 4, 0,
-                               FormatDateTime('yyyy',NFSe.DataEmissaoRps), ''));
+    Result.AppendChild(AddNode(tcStr, '#1', 'rps_ano', 1, 4, 0,
+                              FormatDateTime('yyyy', NFSe.DataEmissaoRps), ''));
+  end;
 
 // <xsd:element name="nfse_substituida" type="xsd:int" minOccurs="0" maxOccurs="1"/>
 
@@ -237,6 +240,18 @@ begin
 
   Result.AppendChild(AddNode(tcDe4, '#1', 'csll', 1, 15, 1,
                                            NFSe.Servico.Valores.ValorCsll, ''));
+
+  if NFSe.IdentificacaoRps.Tipo = trNFConjugada then
+  begin
+    Result.AppendChild(AddNode(tcStr, '#1', 'dia_prest_servico', 1, 2, 0,
+                                FormatDateTime('dd', NFSe.DataEmissaoRps), ''));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'mes_prest_servico', 1, 2, 0,
+                                FormatDateTime('MM', NFSe.DataEmissaoRps), ''));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'ano_prest_servico', 1, 4, 0,
+                              FormatDateTime('yyyy', NFSe.DataEmissaoRps), ''));
+  end;
 end;
 
 {

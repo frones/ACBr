@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/01/2023
+-- NFSeBrasil.Provider --
+[*] Possível solução para o TratarXmlRetornado
+   Por: Italo Giurizzato Junior
 -- SigISS.GravarXml --
 [*] Alterações para gerar ou não algumas tags quando se tratar de Nota Conjulgada
    Por: Alexandre Felippeto Henzen

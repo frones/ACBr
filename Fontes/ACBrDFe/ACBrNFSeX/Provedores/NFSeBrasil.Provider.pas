@@ -96,6 +96,10 @@ uses
   ACBrNFSeXNotasFiscais, NFSeBrasil.GravarXml, NFSeBrasil.LerXml,
   ACBrNFSeXConsts;
 
+const
+  encodingStyle = ' soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"';
+  xsi = 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
+
 { TACBrNFSeXWebserviceNFSeBrasil }
 
 function TACBrNFSeXWebserviceNFSeBrasil.GetDatosUsuario: string;
@@ -114,14 +118,14 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<urn:tm_lote_rps_service.importarLoteRPS soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := '<urn:tm_lote_rps_service.importarLoteRPS' + encodingStyle +'>';
   Request := Request + '<xml xsi:type="xsd:string">' + XmlToStr(AMSG) + '</xml>';
   Request := Request + DadosUsuario;
   Request := Request + '</urn:tm_lote_rps_service.importarLoteRPS>';
 
   Result := Executar('urn:loterpswsdl#tm_lote_rps_service.importarLoteRPS', Request,
                      ['return', 'RespostaLoteRps'],
-                     ['xmlns:urn="urn:loterpswsdl"']);
+                     ['xmlns:urn="urn:loterpswsdl"', xsi]);
 end;
 
 function TACBrNFSeXWebserviceNFSeBrasil.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -130,7 +134,7 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<urn:tm_lote_rps_service.consultarLoteRPS>';
+  Request := '<urn:tm_lote_rps_service.consultarLoteRPS' + encodingStyle +'>';
   Request := Request + '<protocolo>' + XmlToStr(AMSG) + '</protocolo>';
   Request := Request + DadosUsuario;
   Request := Request + '</urn:tm_lote_rps_service.consultarLoteRPS>';
@@ -138,7 +142,7 @@ begin
   Result := Executar('urn:loterpswsdl#tm_lote_rps_service.consultarLoteRPS', Request,
 //                     ['return', 'ConsultarLoteRpsResposta'],
                      ['return'],
-                     ['xmlns:urn="urn:loterpswsdl"']);
+                     ['xmlns:urn="urn:loterpswsdl"', xsi]);
 end;
 
 function TACBrNFSeXWebserviceNFSeBrasil.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -147,7 +151,7 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<urn:tm_lote_rps_service.consultarRPS>';
+  Request := '<urn:tm_lote_rps_service.consultarRPS' + encodingStyle +'>';
   Request := Request + '<numeroRPS>' + XmlToStr(AMSG) + '</numeroRPS>';
   Request := Request + DadosUsuario;
   Request := Request + '</urn:tm_lote_rps_service.consultarRPS>';
@@ -155,7 +159,7 @@ begin
   Result := Executar('urn:loterpswsdl#tm_lote_rps_service.consultarRPS', Request,
 //                     ['return', 'ConsultarRpsResposta'],
                      ['return'],
-                     ['xmlns:urn="urn:loterpswsdl"']);
+                     ['xmlns:urn="urn:loterpswsdl"', xsi]);
 end;
 
 function TACBrNFSeXWebserviceNFSeBrasil.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -164,14 +168,14 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<urn:tm_lote_rps_service.consultarNFSE>';
+  Request := '<urn:tm_lote_rps_service.consultarNFSE' + encodingStyle +'>';
   Request := Request + '<numeroNFSE>' + XmlToStr(AMSG) + '</numeroNFSE>';
   Request := Request + DadosUsuario;
   Request := Request + '</urn:tm_lote_rps_service.consultarNFSE>';
 
   Result := Executar('urn:loterpswsdl#tm_lote_rps_service.consultarNFSE', Request,
                      ['return', 'ConsultarNfseResposta'],
-                     ['xmlns:urn="urn:loterpswsdl"']);
+                     ['xmlns:urn="urn:loterpswsdl"', xsi]);
 end;
 
 function TACBrNFSeXWebserviceNFSeBrasil.Cancelar(ACabecalho, AMSG: String): string;
@@ -180,14 +184,14 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<urn:tm_lote_rps_service.cancelarNFSE>';
+  Request := '<urn:tm_lote_rps_service.cancelarNFSE' + encodingStyle +'>';
   Request := Request + '<numeroNFSE>' + XmlToStr(AMSG) + '</numeroNFSE>';
   Request := Request + DadosUsuario;
   Request := Request + '</urn:tm_lote_rps_service.cancelarNFSE>';
 
   Result := Executar('urn:loterpswsdl#tm_lote_rps_service.cancelarNFSE', Request,
                      ['return', 'ConsultarNfseResposta'],
-                     ['xmlns:urn="urn:loterpswsdl"']);
+                     ['xmlns:urn="urn:loterpswsdl"', xsi]);
 end;
 
 function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
@@ -195,20 +199,18 @@ function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  // Troca do &amp;amp; utilizado para conseguir enviar o nome com '&', no retorno
-  // estava quebrando a leitura
+  if Pos('ISO-8859-1', Result) > 0 then
+    Result := AnsiToNativeString(Result);
+
+  Result := string(NativeStringToUTF8(Result));
   Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
-  Result := RemoverCDATA(Result);
-  // O provedor tem mais de uma declaração no XML,
-  // neste caso o segundo parâmentro tem que ser True para remover todas.
   Result := RemoverDeclaracaoXML(Result, True);
+  Result := RemoverCDATA(Result);
   Result := RemoverIdentacao(Result);
-  Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
   Result := RemoverPrefixosDesnecessarios(Result);
-  // Troca o & por &amp; no conteudo da tag <url>
+  Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
-  Result := string(NativeStringToUTF8(Result));
 end;
 
 { TACBrNFSeProviderNFSeBrasil }

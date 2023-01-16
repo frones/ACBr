@@ -547,9 +547,9 @@ type
 
   TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00);
 const
-  TVersaoeSocialArrayStrings : array[0..4] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00');
-  TVersaoeSocialSchemasArrayStrings : array[0..4] of string = ('02_04_01', '02_04_02', '02_05_00', '_S_01_00_00', '_S_01_01_00');
-  TVersaoeSocialArrayReals : array[0..4] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000);
+  TVersaoeSocialArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00');
+  TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', '_S_01_00_00', '_S_01_01_00');
+  TVersaoeSocialArrayReals : array[TVersaoeSocial] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000);
 
 type
 
@@ -1099,12 +1099,14 @@ Mas caso precise do valor string para usar nos schemas use as funções StrToVersa
 -------------------------------------------------------------------------------}
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use a função StrToVersaoeSocialEX ou StrToVersaoeSocialSchemas conforme sua necessidade.' {$ENDIF};
 function VersaoeSocialToStr(const t: TVersaoeSocial): String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use a função VersaoeSocialToStrEX ou VersaoeSocialToStrSchemas conforme sua necessidade.' {$ENDIF};
+function VersaoeSocialToDbl(const t: TVersaoeSocial): Real; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use a função VersaoeSocialToDblEX.' {$ENDIF};
+function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use a função DblToVersaoeSocialEX.' {$ENDIF};
 function VersaoeSocialToStrEX(const t: TVersaoeSocial): String;
-function StrToVersaoeSocialEX(out ok: Boolean; const s: String): TVersaoeSocial;
+function StrToVersaoeSocialEX(const s: String): TVersaoeSocial;
 function VersaoeSocialToStrSchemas(const t: TVersaoeSocial): String;
-function StrToVersaoeSocialSchemas(out ok: Boolean; const s: String): TVersaoeSocial;
-function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
-function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
+function StrToVersaoeSocialSchemas(const s: String): TVersaoeSocial;
+function VersaoeSocialToDblEX(const t: TVersaoeSocial): Real;
+function DblToVersaoeSocialEX(const d: Real): TVersaoeSocial;
 
 function tpTmpParcToStr(const t: tpTmpParc ): string;
 function StrTotpTmpParc(var ok: boolean; const s: string): tpTmpParc;
@@ -1189,7 +1191,7 @@ function eSStrTotpIndTpDedu(var ok: boolean; const s: string): tpIndTpDedu;
 implementation
 
 uses
-  pcnConversao, typinfo,
+  pcnConversao, typinfo, ACBrBase,
   ACBrUtil.Strings;
 
 const
@@ -2487,7 +2489,15 @@ end;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
 begin
-  result := StrToVersaoeSocialEX(ok, s);
+  try
+    Result := StrToVersaoeSocialEX(s);
+  except
+    On E: EACBrException do
+    begin
+      Result := low(TVersaoeSocial);
+      ok :=  False;
+    end;
+  end;
 end;
 
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
@@ -2497,26 +2507,42 @@ end;
 
 function VersaoeSocialToStrEx(const t: TVersaoeSocial): String;
 begin
-  result := EnumeradoToStr(t, TVersaoeSocialArrayStrings,
-                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+  result := TVersaoeSocialArrayStrings[t];
 end;
 
-function StrToVersaoeSocialEX(out ok: Boolean; const s: String): TVersaoeSocial;
+function StrToVersaoeSocialEX(const s: String): TVersaoeSocial;
+var
+  idx: TVersaoeSocial;
 begin
-  result := StrToEnumerado(ok, s, TVersaoeSocialArrayStrings,
-                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+  for idx := Low(TVersaoeSocialArrayStrings) to High(TVersaoeSocialArrayStrings) do
+  begin
+    if TVersaoeSocialArrayStrings[idx] = s then
+    begin
+      Result := idx;
+      Exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoeSocial: %s', [s]);
 end;
 
 function VersaoeSocialToStrSchemas(const t: TVersaoeSocial): String;
 begin
-  result := EnumeradoToStr(t, TVersaoeSocialSchemasArrayStrings,
-                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+  result := TVersaoeSocialSchemasArrayStrings[t];
 end;
 
-function StrToVersaoeSocialSchemas(out ok: Boolean; const s: String): TVersaoeSocial;
+function StrToVersaoeSocialSchemas(const s: String): TVersaoeSocial;
+var
+  idx: TVersaoeSocial;
 begin
-  result := StrToEnumerado(ok, s, TVersaoeSocialSchemasArrayStrings,
-                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
+  for idx := Low(TVersaoeSocialSchemasArrayStrings) to High(TVersaoeSocialSchemasArrayStrings) do
+  begin
+    if TVersaoeSocialSchemasArrayStrings[idx] = s then
+    begin
+      Result := idx;
+      Exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoeSocial: %s', [s]);
 end;
 
 function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
@@ -2551,6 +2577,26 @@ begin
     result := veS01_00_00;
     ok := False;
   end;
+end;
+
+function VersaoeSocialToDblEX(const t: TVersaoeSocial): Real;
+begin
+  result := TVersaoeSocialArrayReals[t];
+end;
+
+function DblToVersaoeSocialEX(const d: Real): TVersaoeSocial;
+var
+  idx: TVersaoeSocial;
+begin
+  for idx := Low(TVersaoeSocialArrayReals) to High(TVersaoeSocialArrayReals) do
+  begin
+    if TVersaoeSocialArrayReals[idx] = d then
+    begin
+      Result := idx;
+      Exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor "Real" inválido para TVersaoeSocial: %f', [d]);
 end;
 
 function tpTmpParcToStr(const t: tpTmpParc ): string;

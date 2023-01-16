@@ -73,15 +73,13 @@ type
   { TACBreSocialTipoToStrStrToTipoTest }
 
   TACBreSocialTipoToStrStrToTipoTest = class(TTestCase)
-    private
-      auxStr : String;
-      OK     : Boolean;
     public
       procedure Setup;override;
       procedure TearDown;override;
     published
       procedure VersaoeSocialToStrEX_ConvertendoTodosTipos_RetornoCorreto;
       procedure StrToVersaoeSocialEX_ConvertendoTodosTipos_RetornoCorreto;
+      procedure StrToVersaoeSocialEX_ConvertendoStringinvalida_RetornoException;
       procedure SimNaoToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure StrToSimNao_ConvertendoTodosTipos_RetornoCorreto;
       procedure SimNaoFacultativoToStr_ConvertendoTodosTipos_RetornoCorreto;
@@ -157,7 +155,7 @@ type
 implementation
 
 uses
-  typinfo;
+  typinfo, ACBrBase;
 
 
 { TACBreSocialTipoToStrStrToTipoTest }
@@ -177,14 +175,14 @@ var
   vElementoEnum: TVersaoeSocial;
   ConvertidoParaString: string;
   ReconvertidoParaElementoEnum: TVersaoeSocial;
-  EhIgual, OK: Boolean;
+  EhIgual: Boolean;
 begin
   for vElementoEnum:= Low(TVersaoeSocial) to High(TVersaoeSocial) do
   begin
     ConvertidoParaString := VersaoeSocialToStrEX(vElementoEnum);
-    ReconvertidoParaElementoEnum := StrToVersaoeSocialEX(OK, ConvertidoParaString);
+    ReconvertidoParaElementoEnum := StrToVersaoeSocialEX(ConvertidoParaString);
     EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
-    CheckTrue(EhIgual and OK, 'Erro conversão no elemento Ord('+ GetEnumName(TypeInfo(vElementoEnum),ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+    CheckTrue(EhIgual, 'Erro conversão no elemento Ord('+ GetEnumName(TypeInfo(vElementoEnum),ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
                        'VersaoeSocialToStrEX => '+ ConvertidoParaString+'  '+
                        'StrToVersaoeSocialEX => '+ GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
               );
@@ -193,17 +191,19 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.StrToVersaoeSocialEX_ConvertendoTodosTipos_RetornoCorreto;
 var
+  ElementoDoArray: string;
   ConvertidoParaEnum: TVersaoeSocial;
   ReconvertidoParaString: String;
-  i: Integer;
-  EhIgual, OK: Boolean;
+  i: TVersaoeSocial;
+  EhIgual: Boolean;
 begin
   for i := low(TVersaoeSocialArrayStrings) to High(TVersaoeSocialArrayStrings) do
   begin
-    ConvertidoParaEnum := StrToVersaoeSocialEX(OK, TVersaoeSocialArrayStrings[i]);
+    ElementoDoArray := TVersaoeSocialArrayStrings[i];
+    ConvertidoParaEnum := StrToVersaoeSocialEX(ElementoDoArray);
     ReconvertidoParaString := VersaoeSocialToStrEX(ConvertidoParaEnum);
-    EhIgual := ReconvertidoParaString = TVersaoeSocialArrayStrings[i];
-    CheckTrue(EhIgual and OK, 'Erro conversão no elemento '+ TVersaoeSocialArrayStrings[i] + ' (i='+ IntToStr(i)+')  '+
+    EhIgual := ReconvertidoParaString = ElementoDoArray;
+    CheckTrue(EhIgual, 'Erro conversão no elemento '+ ElementoDoArray + '  '+
                        'StrToVersaoeSocialEX => '+ GetEnumName(TypeInfo(ConvertidoParaEnum), ord(ConvertidoParaEnum))+'  '+
                        'VersaoeSocialToStrEX => '+ReconvertidoParaString
              );
@@ -211,10 +211,25 @@ begin
   end;
 end;
 
+procedure TACBreSocialTipoToStrStrToTipoTest.StrToVersaoeSocialEX_ConvertendoStringinvalida_RetornoException;
+var
+  ConvertidoParaEnum: TVersaoeSocial;
+begin
+  try
+    ConvertidoParaEnum := StrToVersaoeSocialEX('StringInvalidaParaConvesao');
+  except
+    on EACBrException do
+    begin
+      Exit;
+    end;
+  end;
+  Fail('Não foi gerada Exception para a string inválida.');
+end;
+
 procedure TACBreSocialTipoToStrStrToTipoTest.SimNaoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
   vElementoEnum: tpSimNao;
-  EhIgual: boolean;
+  EhIgual, OK: boolean;
   ConvertidoParaString: string;
   ReconvertidoParaElementoEnum : tpSimNao;
 begin
@@ -233,6 +248,7 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.StrToSimNao_ConvertendoTodosTipos_RetornoCorreto;
 var
   auxTipo : tpSimNao;
+  OK: Boolean;
 begin
   auxTipo := eSStrToSimNao(OK, 'S');
   CheckTrue(auxTipo = tpSim, 'Erro de conversão, valor esperado "tpSim"');
@@ -243,7 +259,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.SimNaoFacultativoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, Ok: Boolean;
   vEnumElemento: tpSimNaoFacultativo;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: tpSimNaoFacultativo;
@@ -263,6 +279,7 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.StrToSimNaoFacultativo_ConvertendoTodosTipos_RetornoCorreto;
 var
   auxTipo: tpSimNaoFacultativo;
+  OK: Boolean;
 begin
   auxTipo := eSStrToSimNaoFacultativo(OK, '');
   CheckTrue(auxTipo = snfNada, 'Erro de conversão, valor esperado ""');
@@ -276,7 +293,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.ModoLancamentoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vEnumElemento: TModoLancamento;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum : TModoLancamento;
@@ -296,6 +313,7 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.StrToModoLancamento_ConvertendoTodosTipos_RetornoCorreto;
 var
   auxTipo: TModoLancamento;
+  OK: Boolean;
 begin
   auxTipo := eSStrToModoLancamento(OK, 'inclusao');
   CheckTrue(auxTipo = mlInclusao, 'Erro de conversão, valor esperado "inclusao"');
@@ -309,7 +327,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.LayouteSocialToServico_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vEnumElemento: TLayout;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum : TLayout;
@@ -329,6 +347,7 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.ServicoToLayout_ConvertendoTodosTipos_RetornoCorreto;
 var
   auxTipo: TLayOut;
+  OK:Boolean;
 begin
   auxTipo := ServicoToLayOut(Ok, 'EnviarLoteEventos');
   CheckTrue(auxTipo = LayEnvioLoteEventos, 'Erro de conversão, valor esperado "LayEnvioLoteEventos"');
@@ -346,7 +365,7 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.TipoEventoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
   vEnumElemento: TTipoEvento;
-  EhIgual : Boolean;
+  EhIgual, OK: Boolean;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TTipoEvento;
 begin
@@ -364,11 +383,11 @@ begin
 end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.StrToTipoEvento_ConvertentoTodosTipos_RetornoCorreto;
-var
-  ConvertidoParaElementoEnum: TTipoEvento;
-  ReconvertidoParaString: String;
-  EhIgual: Boolean;
-  i: Integer;
+//var
+//  ConvertidoParaElementoEnum: TTipoEvento;
+//  ReconvertidoParaString: String;
+//  EhIgual: Boolean;
+//  i: Integer;
 begin
   Fail('Ainda falta implementar o teste');
 end;
@@ -376,7 +395,7 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.eSprocEmiToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
   vEnumElemento: TpProcEmi;
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpProcEmi;
 begin
@@ -399,7 +418,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSTpInscricaoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vEnumElemento: tpTpInsc;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: tpTpInsc;
@@ -424,7 +443,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eStpTpInscAmbTabToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vEnumElemento: tpTpInscAmbTab;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: tpTpInscAmbTab;
@@ -448,7 +467,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSTpInscPropToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vEnumElemento: TpTpInscProp;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpTpInscProp;
@@ -472,7 +491,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndCooperativaToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vEnumElemento: TpIndCoop;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpIndCoop;
@@ -496,7 +515,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndConstrutoraToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual : Boolean;
+  EhIgual, OK: Boolean;
   vEnumElemento: TpIndConstr;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpIndConstr;
@@ -520,7 +539,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndDesFolhaToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual : Boolean;
+  EhIgual, OK : Boolean;
   vEnumElemento: TpIndDesFolha;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum: TpIndDesFolha;
@@ -544,7 +563,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndOptRegEletronicoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual : Boolean;
+  EhIgual, OK : Boolean;
   vElementoEnum: TpIndOptRegEletron;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum: TpIndOptRegEletron;
@@ -568,7 +587,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndOpcCPToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpIndOpcCP;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpIndOpcCP;
@@ -592,7 +611,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSAliqRatToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpAliqRat;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpAliqRat;
@@ -616,7 +635,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSTpProcessoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: tpTpProc;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: tpTpProc;
@@ -640,7 +659,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndAcordoIsencaoMultaToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpIndAcordoIsencaoMulta;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpIndAcordoIsencaoMulta;
@@ -664,7 +683,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eStpInscContratanteToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TptpInscContratante;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TptpInscContratante;
@@ -688,7 +707,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSCodIncCPToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: tpCodIncCP;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum: tpCodIncCP;
@@ -712,7 +731,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSCodIncIRRFToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual : Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: tpCodIncIRRF;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum: tpCodIncIRRF;
@@ -736,7 +755,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSCodIncCPRPToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: boolean;
+  EhIgual, OK: boolean;
   vElementoEnum: TpCodIncCPRP;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum: TpCodIncCPRP;
@@ -760,7 +779,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSCodIncFGTSToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpCodIncFGTS;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum: TpCodIncFGTS;
@@ -784,7 +803,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSCodIncSINDToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual : Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpCodIncSIND;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpCodIncSIND;
@@ -811,7 +830,7 @@ var
   vElementoEnum: TpExtDecisao;
   ConvertidoParaString : String;
   ReConvertidoParaElementoEnum: TpExtDecisao;
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
 begin
   for vElementoEnum := Low(TpExtDecisao) to High(TpExtDecisao)do
   begin
@@ -832,7 +851,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSTpIntervaloToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpTpIntervalo;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpTpIntervalo;
@@ -856,7 +875,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndSubstPatronalObraToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual : Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpIndSubstPatronalObra;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpIndSubstPatronalObra;
@@ -881,7 +900,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSindAutoriaToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpindAutoria;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpindAutoria;
@@ -905,7 +924,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSTpIndMatProcToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual : Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: tpIndMatProc;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: tpIndMatProc;
@@ -929,7 +948,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndRetificacaoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpIndRetificacao;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpIndRetificacao;
@@ -953,7 +972,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndApuracaoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual : Boolean;
+  EhIgual, OK : Boolean;
   vElementoEnum: TpIndApuracao;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum: TpIndApuracao;
@@ -977,7 +996,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndMVToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpIndMV;
   ConvertidoParaString : String;
   ReconvertidoParaElementoEnum: TpIndMV;
@@ -1001,7 +1020,7 @@ end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSIndSimplesToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
-  EhIgual: Boolean;
+  EhIgual, OK: Boolean;
   vElementoEnum: TpIndSimples;
   ConvertidoParaString: String;
   ReconvertidoParaElementoEnum: TpIndSimples;

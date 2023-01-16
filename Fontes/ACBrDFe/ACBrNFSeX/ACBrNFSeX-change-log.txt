@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] Alteração das URLs para a cidade de Ibiuna/SP, provedor e versão continuam os mesmos, Sistemas4R 2.00
+   Por: danny
 
 13/01/2023
 -- SH3.Provider --

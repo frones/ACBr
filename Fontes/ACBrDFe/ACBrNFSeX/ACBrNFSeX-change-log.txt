@@ -46,6 +46,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] Alteração das URLs para a cidade de Ibiuna/SP, provedor e versão continuam os mesmos, Sistemas4R 2.00
    Por: danny
+[*] Inclusão da URL e alteração da versão para a cidade de Tijucas/SC, provedor ainda é IPM.
+   Por: Arimateia Jr.
 
 13/01/2023
 -- SH3.Provider --

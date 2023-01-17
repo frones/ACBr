@@ -475,7 +475,6 @@ end;
 
 function TACBrLibeSocial.SetVersaoDF (const sVersao: PChar):longint;
 var
-  OK: boolean;
   versao: AnsiString;
 begin
   try
@@ -488,7 +487,7 @@ begin
 
       eSocialDM.Travar;
       try
-        eSocialDM.ACBreSocial1.Configuracoes.Geral.VersaoDF := StrToVersaoeSocialEX(OK, versao);
+        eSocialDM.ACBreSocial1.Configuracoes.Geral.VersaoDF := StrToVersaoeSocialEX(versao);
         Result := SetRetorno(ErrOK);
       finally
         eSocialDM.Destravar;

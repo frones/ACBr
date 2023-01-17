@@ -517,11 +517,10 @@ begin
      )
   then
   begin
-    if Self.Cat.ultDiaTrab >= Self.Cat.dtAcid then
+    if Self.Cat.ultDiaTrab <= Now then
       Gerador.wCampo(tcDat, '', 'ultDiaTrab',     10,  10, 1, Self.Cat.ultDiaTrab);
 
-    if Self.Cat.dtAcid >= StrToDate('21/11/2022') then
-      Gerador.wCampo(tcStr, '', 'houveAfast',      1,   1, 1, eSSimNaoToStr(Self.Cat.houveAfast));
+    Gerador.wCampo(tcStr, '', 'houveAfast',      1,   1, 1, eSSimNaoToStr(Self.Cat.houveAfast));
   end;
 
   GerarLocalAcidente;

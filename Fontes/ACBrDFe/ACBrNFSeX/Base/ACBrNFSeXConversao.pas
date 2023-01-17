@@ -137,7 +137,7 @@ type
                    proSoftPlan, proSpeedGov, proSSInformatica, proSudoeste,
                    proSystemPro, proTcheInfo, proTecnos, proThema, proTinus,
                    proTiplan, proTributus, proVersaTecnologia, proVirtual,
-                   proWebFisco, proWebISS);
+                   proWebFisco, proWebISS, proGestaoISS);
 
   TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao, stNenhum);
 

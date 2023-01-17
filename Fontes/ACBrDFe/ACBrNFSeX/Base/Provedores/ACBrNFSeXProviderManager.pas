@@ -102,6 +102,7 @@ uses
   Fiorilli.Provider,
   Fisco.Provider,
   Futurize.Provider,
+  GestaoISS.Provider,
   Giss.Provider,
   GovDigital.Provider,
   iiBrasil.Provider,
@@ -319,6 +320,7 @@ begin
       proFuturize:   Result := TACBrNFSeProviderFuturize202.Create(ACBrNFSe);
       proGeisWeb:    Result := TACBrNFSeProviderGeisWeb.Create(ACBrNFSe);
       progeNFe:      Result := TACBrNFSeProvidergeNFe.Create(ACBrNFSe);
+      proGestaoISS:  Result := TACBrNFSeProviderGestaoISS202.Create(ACBrNFSe);
       proGiap:       Result := TACBrNFSeProviderGiap.Create(ACBrNFSe);
       proGinfes:     Result := TACBrNFSeProviderGinfes.Create(ACBrNFSe);
       proGiss:       Result := TACBrNFSeProviderGiss204.Create(ACBrNFSe);

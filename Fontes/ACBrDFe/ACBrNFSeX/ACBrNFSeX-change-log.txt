@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/01/2023
+-- ACBrNFSeXConversao/ACBrNFSeXProviderManager --
+[*] Ajustes para identificar o provedor GestaoISS
+   Por: Herber Germano/Italo Giurizzato Junior
 -- GestaoISS.Provider/GestaoISS.GravarXml/GestaoISS.LerXml --
 [+] Implementado o provedor GestaoISS
    Por: Herber Germano/Italo Giurizzato Junior

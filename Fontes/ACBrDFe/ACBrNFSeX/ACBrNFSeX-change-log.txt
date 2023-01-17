@@ -44,6 +44,9 @@ Símbolo : Significado
 
 17/01/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade Rio Bonito/RJ trocou de provedor, agora é : GestaoISS
+   Por: Heber Germano
+-- ACBrNFSeXServicos.ini --
 [+] Inclusão das informações para cidade de Joanopolis/SP, provedor é Sistemas4R.
    Por: HMAX AUTOMAÇÃO HOTELEIRA
 [+] Incluido as URLs de Consulta ao Lote para a cidade Joanopolis/SP

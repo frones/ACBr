@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/01/2023
+-- Fisco.Provider --
+[*] Ajustes na montagem do Envelope Soap para que o webservice processe com 
+    sucesso.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao/ACBrNFSeXProviderManager --
 [*] Ajustes para identificar o provedor GestaoISS
    Por: Herber Germano/Italo Giurizzato Junior

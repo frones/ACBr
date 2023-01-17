@@ -41,10 +41,10 @@ uses
   ACBrXmlBase,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceFisco203 = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceFisco203 = class(TACBrNFSeXWebserviceSoap12)
   private
     function GetSoapAction: string;
     function GetNameSpace: string;
@@ -74,6 +74,7 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
 implementation
@@ -88,6 +89,8 @@ uses
 procedure TACBrNFSeProviderFisco203.Configuracao;
 begin
   inherited Configuracao;
+
+  ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
 
   with ConfigWebServices do
   begin
@@ -129,6 +132,16 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderFisco203.ValidarSchema(
+  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
+begin
+  inherited ValidarSchema(Response, aMetodo);
+
+  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
+                             ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '',
+                             [rfReplaceAll]);
+end;
+
 { TACBrNFSeXWebserviceFisco203 }
 
 function TACBrNFSeXWebserviceFisco203.GetSoapAction: string;
@@ -149,7 +162,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:recepcionarLoteRps>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:recepcionarLoteRps>';
 
   Result := Executar(SoapAction + 'recepcionarLoteRps', Request,
@@ -165,11 +178,11 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:recepcionarLoteRpsSincrono>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:recepcionarLoteRpsSincrono>';
 
   Result := Executar(SoapAction + 'recepcionarLoteRpsSincrono', Request,
-                     ['recepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
+                     ['recepcionarLoteRpsSincronoResult', 'EnviarLoteRpsResposta'],
                      [NameSpace]);
 end;
 
@@ -181,7 +194,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:gerarNfse>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:gerarNfse>';
 
   Result := Executar(SoapAction + 'gerarNfse', Request,
@@ -197,7 +210,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarLoteRps>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:consultarLoteRps>';
 
   Result := Executar(SoapAction + 'consultarLoteRps', Request,
@@ -213,7 +226,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarNfsePorFaixa>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:consultarNfsePorFaixa>';
 
   Result := Executar(SoapAction + 'consultarNfsePorFaixa', Request,
@@ -229,7 +242,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarNfsePorRps>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:consultarNfsePorRps>';
 
   Result := Executar(SoapAction + 'consultarNfsePorRps', Request,
@@ -245,7 +258,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarNfseServicoPrestado>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:consultarNfseServicoPrestado>';
 
   Result := Executar(SoapAction + 'consultarNfseServicoPrestado', Request,
@@ -261,7 +274,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarNfseServicoTomado>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:consultarNfseServicoTomado>';
 
   Result := Executar(SoapAction + 'consultarNfseServicoTomado', Request,
@@ -276,7 +289,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:cancelarNfse>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:cancelarNfse>';
 
   Result := Executar(SoapAction + 'cancelarNfse', Request,
@@ -292,7 +305,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:substituirNfse>';
-  Request := Request + '<nfse:xml>' + XmlToStr(AMSG) + '</nfse:xml>';
+  Request := Request + '<nfse:xml>' + IncluirCDATA(AMSG) + '</nfse:xml>';
   Request := Request + '</nfse:substituirNfse>';
 
   Result := Executar(SoapAction + 'substituirNfse', Request,

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2023
+-- ACBrNFSeXServicos.ini --
+[+] Inclusão das informações para cidade de Joanopolis/SP, provedor é Sistemas4R.
+   Por: HMAX AUTOMAÇÃO HOTELEIRA
+
 16/01/2023
 -- NFSeBrasil.Provider --
 [*] Possível solução para o TratarXmlRetornado

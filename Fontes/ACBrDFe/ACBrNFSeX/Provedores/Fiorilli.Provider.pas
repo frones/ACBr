@@ -333,6 +333,7 @@ begin
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverPrefixosDesnecessarios(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
 end;
 
 end.

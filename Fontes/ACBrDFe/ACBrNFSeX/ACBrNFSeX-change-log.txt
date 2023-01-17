@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/01/2023
+-- Fiorilli.Provider --
+[*] Possível solução para o erro: xmlParseEntityRef: no name
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Alteração visando encontrar tanto o código L000 quanto L0000.
    Por: Italo Giurizzato Junior

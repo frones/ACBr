@@ -1137,7 +1137,7 @@ begin
      (NFSe.Servico.Valores.tribFed.vPis >0) or
      (NFSe.Servico.Valores.tribFed.vCofins >0) then
   begin
-    Result := CreateElement('tribNac');
+    Result := CreateElement('tribFed');
 
     Result.AppendChild(GerarTributacaoOutrosPisCofins);
 

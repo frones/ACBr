@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2023
+-- ACbrMonitor1, DoACBreSocial --
+[*] Corrige problema de número de parâmetros incorretos nas novas funções StrToVersaoeSocialEx
+   Por: DiegoAF
+
 21/12/2022
 --- ACBrMonitorConsts, ACBrMonitorConfig --- 
 [+] Adicionado propriedade ImprimeInscSuframa - #TK-2947-2

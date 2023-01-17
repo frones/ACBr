@@ -200,15 +200,11 @@ end;
 }
 procedure TMetodoSetVersaoDF.Executar;
 var
-  OK: boolean;
   eVersao: TVersaoeSocial;
   AVersao: String;
 begin
   AVersao := fpCmd.Params(0);
-  eVersao := StrToVersaoeSocialEX(OK, AVersao);
-
-  if not OK then
-    raise Exception.Create('Versão Inválida do eSocial.');
+  eVersao := StrToVersaoeSocialEX(AVersao);
 
   with TACBrObjetoeSocial(fpObjetoDono) do
   begin

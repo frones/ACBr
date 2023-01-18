@@ -345,8 +345,8 @@ begin
     begin
       //Extrair
       PosTagFechaEvento := Pos('</evento>', AXMLString);
-      AXMLStringDoEvento := Trim(Copy(AXMLString, 1, PosTagFechaEvento + 9));
-      AXMLString := Trim(Copy(AXMLString, PosTagFechaEvento+10, Length(AXMLString)));
+      AXMLStringDoEvento := Trim(Copy(AXMLString, 1, PosTagFechaEvento + 8));
+      AXMLString := Trim(Copy(AXMLString, PosTagFechaEvento+9, Length(AXMLString)));
 
       Result := CarregaXmlEvento(AXMLStringDoEvento);
       //procurar próximo

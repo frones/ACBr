@@ -820,13 +820,15 @@ begin
       ConfigGeral.LoadParams(IniParams, Sessao);
 
       // Depois verifica as URLs definidas para o provedor
-      if ConfigWebServices.Producao.Recepcionar = '' then
+      if (ConfigWebServices.Producao.Recepcionar = '') or
+         (Configuracoes.Geral.Provedor = proPadraoNacional) then
       begin
         Sessao := Configuracoes.Geral.xProvedor;
         ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
       end;
 
-      if ConfigWebServices.Homologacao.Recepcionar = '' then
+      if (ConfigWebServices.Homologacao.Recepcionar = '') or
+         (Configuracoes.Geral.Provedor = proPadraoNacional) then
       begin
         Sessao := Configuracoes.Geral.xProvedor;
         ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);

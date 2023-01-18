@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/01/2023
+-- ACBrNFSeXProviderBase --
+[*] Possível solução para que o componente pegue as URLs corretas do Padrão
+    Nacional.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A URL de produção da cidade Assis Chateaubriand/PR foi atualizada.
    Por: Alex Heinen

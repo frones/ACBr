@@ -89,10 +89,10 @@ uses
 function NumeroArquivoToStr(const AValue: TACBrPAFNFCe_NumeroArquivo): String;
 begin
   Result := EnumeradoToStr(AValue,
-    ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
-    [tnroArq_None, tnroArq_Identificacao, tnroArq_Registros,
-     tnroArq_SaidasIdentCPFCNPJ, tnroArq_ReqExternasReg, tnroArq_MesasAbertas,
-     tnroArq_ControleDAV, tnroArq_ControleEncerrantes, tnroArq_AbastecimentosPendentes]
+    ['', 'I', 'II', 'III', 'IV'],
+    [tnroArq_None, tnroArq_Registros,
+     tnroArq_SaidasIdentCPFCNPJ, tnroArq_ReqExternasReg,
+     tnroArq_ControleDAV]
   );
 end;
 
@@ -114,11 +114,11 @@ end;
 
 function StrToNumeroArquivo(var OK: Boolean; const AValue: String): TACBrPAFNFCe_NumeroArquivo;
 begin
-  Result := StrToEnumerado(OK, AValue,
-    ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
-    [tnroArq_None, tnroArq_Identificacao, tnroArq_Registros,
-     tnroArq_SaidasIdentCPFCNPJ, tnroArq_ReqExternasReg, tnroArq_MesasAbertas,
-     tnroArq_ControleDAV, tnroArq_ControleEncerrantes, tnroArq_AbastecimentosPendentes]
+   Result := StrToEnumerado(OK, AValue,
+    ['', 'I', 'II', 'III', 'IV'],
+    [tnroArq_None,  tnroArq_Registros,
+     tnroArq_SaidasIdentCPFCNPJ, tnroArq_ReqExternasReg,
+     tnroArq_ControleDAV]
   );
 end;
 

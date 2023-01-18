@@ -37,7 +37,7 @@ unit ACBrPAF_P_Class;
 interface
 
 uses SysUtils, Classes, DateUtils, ACBrTXTClass,
-     ACBrPAF_P;
+     ACBrPAF_P, ACBRPAFRegistros;
 
 type
   /// TPAF_P -
@@ -58,7 +58,7 @@ type
     procedure LimpaRegistros;
 
     procedure WriteRegistroP1;
-    procedure WriteRegistroP2;
+    procedure WriteRegistroP2(Layout: TLayoutPAF);
     procedure WriteRegistroP9;
 
     property RegistroP1: TRegistroP1 read FRegistroP1 write FRegistroP1;
@@ -134,7 +134,7 @@ begin
   );
 end;
 
-procedure TPAF_P.WriteRegistroP2;
+procedure TPAF_P.WriteRegistroP2(Layout: TLayoutPAF);
 var
 intFor: integer;
 begin
@@ -149,19 +149,37 @@ begin
      begin
         with FRegistroP2.Items[intFor] do
         begin
-          ///
-          Add( LFill('P2') +
-               LFill(FRegistroP1.CNPJ, 14) +
-               RFill(COD_MERC_SERV, 14) +
-               RFill(CEST, 7) +
-               RFill(NCM, 8) +
-               RFill(DESC_MERC_SERV, 50) +
-               RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
-               RFill(IAT, 1) +
-               RFill(IPPT, 1) +
-               RFill(ST, 1) +
-               LFill(ALIQ, 4) +
-               LFill(VL_UNIT, 12, 2) );
+            if Layout = lpPAFECF then
+            begin
+               Add( LFill('P2') +
+                   LFill(FRegistroP1.CNPJ, 14) +
+                   RFill(COD_MERC_SERV, 14) +
+                   RFill(CEST, 7) +
+                   RFill(NCM, 8) +
+                   RFill(DESC_MERC_SERV, 50) +
+                   RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
+                   RFill(IAT, 1) +
+                   RFill(IPPT, 1) +
+                   RFill(ST, 1) +
+                   LFill(ALIQ, 4) +
+                   LFill(VL_UNIT, 12, 2) );
+            end
+            else
+            begin
+              Add( LFill('P2') +
+                   LFill(FRegistroP1.CNPJ, 14) +
+                   RFill(COD_MERC_SERV, 14) +
+                   RFill(CEST, 7) +
+                   RFill(NCM, 8) +
+                   RFill(DESC_MERC_SERV, 50) +
+                   RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
+                   RFill(IAT, 1) +
+                   RFill(IPPT, 1) +
+                   RFill(ST, 1) +
+                   LFill(ALIQ, 4) +
+                   LFill(VL_UNIT, 14, 2) );
+            end;
+
         end;
         ///
         FRegistroP9.TOT_REG := FRegistroP9.TOT_REG + 1;

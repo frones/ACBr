@@ -133,7 +133,7 @@ begin
   if (ArquiteturaSistema <> tarqSist_None) then
     AtributoAdd('arqSist',ArquiteturaSistemaToStr(ArquiteturaSistema));
 
-  sArquivoBase64 := '<![CDATA[' + ArquivoBase64 + ']]>';
+  sArquivoBase64 := ArquivoBase64;
 
   FGerador.wCampo(tcStr, '', 'arquivo', 0, 0, 1, sArquivoBase64,'',True,sAtributo);
 

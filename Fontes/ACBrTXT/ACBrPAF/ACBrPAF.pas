@@ -773,7 +773,7 @@ begin
 
   if FPAF_P.RegistroP2.Count > 0 then
   begin
-    FPAF_P.WriteRegistroP2;
+    FPAF_P.WriteRegistroP2(Layout);
     FPAF_P.WriteBuffer;
   end;
 

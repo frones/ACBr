@@ -112,6 +112,7 @@ uses
   ISSJoinville.Provider,
   ISSPortoVelho.Provider,
   ISSVitoria.Provider,
+  Libre.Provider,
   Link3.Provider,
   MegaSoft.Provider,
   Mitra.Provider,
@@ -401,6 +402,7 @@ begin
       proISSSJP:      Result := TACBrNFSeProviderISSSJP.Create(ACBrNFSe);
       proISSVitoria:  Result := TACBrNFSeProviderISSVitoria200.Create(ACBrNFSe);
       proLexsom:      Result := TACBrNFSeProviderLexsom.Create(ACBrNFSe);
+      proLibre:       Result := TACBrNFSeProviderLibre204.Create(ACBrNFSe);
       proLink3:       Result := TACBrNFSeProviderLink3200.Create(ACBrNFSe);
       proMegaSoft:    Result := TACBrNFSeProviderMegaSoft200.Create(ACBrNFSe);
 

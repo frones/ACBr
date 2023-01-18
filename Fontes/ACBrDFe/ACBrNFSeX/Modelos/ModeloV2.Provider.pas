@@ -140,6 +140,9 @@ begin
   // Inicializa os parâmetros de configuração: Mensagem de Dados
   with ConfigMsgDados do
   begin
+    // Usado para gerar ou não o grupo <Prestador>
+    GerarPrestadorLoteRps := False;
+
     // Usado na tag raiz dos XML de envio do Lote, Consultas, etc.
     Prefixo := '';
 

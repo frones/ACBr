@@ -86,6 +86,7 @@ ISSSaoPaulo          1.00
 ISSSJP               1.00
 ISSVitoria           2.00
 Lexsom               1.00
+Libre                2.04
 Link3                2.00
 MegaSoft             2.00  26/10/2022
 MetropolisWeb        1.00

@@ -126,8 +126,7 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
-    property infCFe_versaoDadosEnt: real read FinfCFe_versaoDadosEnt
-      write FinfCFe_versaoDadosEnt;
+    property infCFe_versaoDadosEnt: real read FinfCFe_versaoDadosEnt write FinfCFe_versaoDadosEnt;
     property ide_CNPJ: string read Fide_CNPJ write Fide_CNPJ;
     property ide_numeroCaixa: integer read Fide_numeroCaixa write Fide_numeroCaixa;
     property ide_tpAmb: TpcnTipoAmbiente read Fide_tpAmb write Fide_tpAmb;
@@ -140,6 +139,7 @@ type
     property EhUTF8: boolean read GetEhUTF8 write SetEhUTF8;
     property PaginaDeCodigo: word read FPaginaDeCodigo write FPaginaDeCodigo;
     property ArqSchema: string read FArqSchema write FArqSchema;
+    property XmlSignLib: TSSLXmlSignLib read FXmlSignLib write FXmlSignLib;
   end;
 
   { TSATCertificado }
@@ -197,8 +197,7 @@ type
     property SepararPorMes: boolean read FSepararPorMes write FSepararPorMes;
     property SepararPorDia: boolean read FSepararPorDia write FSepararPorDia;
     property PastaCFeVenda: string read FPastaCFeVenda write FPastaCFeVenda;
-    property PastaCFeCancelamento: string read FPastaCFeCancelamento
-      write FPastaCFeCancelamento;
+    property PastaCFeCancelamento: string read FPastaCFeCancelamento write FPastaCFeCancelamento;
     property PastaEnvio: string read FPastaEnvio write FPastaEnvio;
     property PrefixoArqCFe: string read FPrefixoArqCFe write FPrefixoArqCFe;
     property PrefixoArqCFeCanc: string read FPrefixoArqCFeCanc write FPrefixoArqCFeCanc;
@@ -404,6 +403,7 @@ begin
   EhUTF8 := AIni.ReadBool(CSessaoSATConfig, CChaveEhUTF8, EhUTF8);
   PaginaDeCodigo := AIni.ReadInteger(CSessaoSATConfig, CChavePaginaDeCodigo, PaginaDeCodigo);
   ArqSchema := AIni.ReadString(CSessaoSATConfig, CChaveArqSchema, ArqSchema);
+  XmlSignLib := TSSLXmlSignLib(AIni.ReadInteger(CSessaoSATConfig, CChaveSSLXmlSignLib, Integer(FXmlSignLib)));
 end;
 
 procedure TSATConfig.GravarIni(const AIni: TCustomIniFile);
@@ -421,6 +421,7 @@ begin
   AIni.WriteBool(CSessaoSATConfig, CChaveEhUTF8, EhUTF8);
   AIni.WriteInteger(CSessaoSATConfig, CChavePaginaDeCodigo, PaginaDeCodigo);
   AIni.WriteString(CSessaoSATConfig, CChaveArqSchema, ArqSchema);
+  AIni.WriteInteger(CSessaoSATConfig, CChaveSSLXmlSignLib, Integer(FXmlSignLib));
 end;
 
 function TSATConfig.GetEhUTF8: boolean;

@@ -81,6 +81,7 @@ exports
 
   SAT_CriarCFe,
   SAT_CriarEnviarCFe,
+  SAT_ValidarCFe,
   SAT_EnviarCFe,
   SAT_CancelarCFe,
 

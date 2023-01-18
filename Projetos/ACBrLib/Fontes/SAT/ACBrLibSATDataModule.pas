@@ -130,6 +130,7 @@ begin
       EhUTF8 := LibConfig.Config.EhUTF8;
       PaginaDeCodigo := LibConfig.Config.PaginaDeCodigo;
       ArqSchema:= LibConfig.Config.ArqSchema;
+      XmlSignLib:= LibConfig.Config.XmlSignLib;
     end;
 
     with SSL do

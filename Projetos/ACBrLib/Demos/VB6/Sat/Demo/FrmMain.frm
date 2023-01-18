@@ -6,7 +6,7 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibSat Demo - Visual Basic 6"
-   ClientHeight    =   6480
+   ClientHeight    =   6900
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   11280
@@ -23,9 +23,17 @@ Begin VB.Form FrmMain
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   6480
+   ScaleHeight     =   6900
    ScaleWidth      =   11280
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton btnValidarCFe 
+      Caption         =   "Validar CFe"
+      Height          =   360
+      Left            =   120
+      TabIndex        =   92
+      Top             =   4680
+      Width           =   1590
+   End
    Begin VB.CommandButton btnAtivarSAT 
       Caption         =   "Ativar SAT"
       Height          =   360
@@ -78,7 +86,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   28
-      Top             =   5640
+      Top             =   6120
       Width           =   1590
    End
    Begin VB.CommandButton btnImprimiCFeRed 
@@ -94,7 +102,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   26
-      Top             =   5160
+      Top             =   5640
       Width           =   1590
    End
    Begin VB.CommandButton btnEnviarCFe 
@@ -102,7 +110,7 @@ Begin VB.Form FrmMain
       Height          =   360
       Left            =   120
       TabIndex        =   25
-      Top             =   4680
+      Top             =   5160
       Width           =   1590
    End
    Begin VB.CommandButton btnCriarEnviarCFe 
@@ -139,6 +147,8 @@ Begin VB.Form FrmMain
       _ExtentY        =   5318
       _Version        =   393216
       Style           =   1
+      Tabs            =   4
+      TabsPerRow      =   4
       TabHeight       =   520
       TabCaption(0)   =   "Configuração CFe"
       TabPicture(0)   =   "FrmMain.frx":25CA
@@ -186,41 +196,125 @@ Begin VB.Form FrmMain
       TabPicture(1)   =   "FrmMain.frx":25E6
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "Label1"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "lblNCopias"
+      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "lblSoftwareHouse"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).Control(3)=   "lblImpressora"
+      Tab(1).Control(3).Enabled=   0   'False
       Tab(1).Control(4)=   "lblSite"
+      Tab(1).Control(4).Enabled=   0   'False
       Tab(1).Control(5)=   "nudCopias"
+      Tab(1).Control(5).Enabled=   0   'False
       Tab(1).Control(6)=   "cmbImpressao"
+      Tab(1).Control(6).Enabled=   0   'False
       Tab(1).Control(7)=   "txtCopias"
+      Tab(1).Control(7).Enabled=   0   'False
       Tab(1).Control(8)=   "FraEscPos"
+      Tab(1).Control(8).Enabled=   0   'False
       Tab(1).Control(9)=   "txtSoftwareHouse"
+      Tab(1).Control(9).Enabled=   0   'False
       Tab(1).Control(10)=   "cbbImpressora"
+      Tab(1).Control(10).Enabled=   0   'False
       Tab(1).Control(11)=   "txtSite"
+      Tab(1).Control(11).Enabled=   0   'False
       Tab(1).Control(12)=   "chkPreview"
+      Tab(1).Control(12).Enabled=   0   'False
       Tab(1).Control(13)=   "chkSetup"
+      Tab(1).Control(13).Enabled=   0   'False
       Tab(1).Control(14)=   "chkUsaCodigoEanImpressao"
+      Tab(1).Control(14).Enabled=   0   'False
       Tab(1).Control(15)=   "chkImprimeEmUmaLinha"
+      Tab(1).Control(15).Enabled=   0   'False
       Tab(1).ControlCount=   16
       TabCaption(2)   =   "Email"
       TabPicture(2)   =   "FrmMain.frx":2602
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "lblNome"
+      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "lblEmail"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "lblUsuário"
+      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).Control(3)=   "lblSenha"
+      Tab(2).Control(3).Enabled=   0   'False
       Tab(2).Control(4)=   "lblHostSMTP"
+      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).Control(5)=   "lblPortaMail"
+      Tab(2).Control(5).Enabled=   0   'False
       Tab(2).Control(6)=   "nudPorta"
+      Tab(2).Control(6).Enabled=   0   'False
       Tab(2).Control(7)=   "txtNome"
+      Tab(2).Control(7).Enabled=   0   'False
       Tab(2).Control(8)=   "txtEmail"
+      Tab(2).Control(8).Enabled=   0   'False
       Tab(2).Control(9)=   "txtUsuario"
+      Tab(2).Control(9).Enabled=   0   'False
       Tab(2).Control(10)=   "txtSenha"
+      Tab(2).Control(10).Enabled=   0   'False
       Tab(2).Control(11)=   "txtHost"
+      Tab(2).Control(11).Enabled=   0   'False
       Tab(2).Control(12)=   "txtPorta"
+      Tab(2).Control(12).Enabled=   0   'False
       Tab(2).Control(13)=   "ckbSSL"
+      Tab(2).Control(13).Enabled=   0   'False
       Tab(2).Control(14)=   "ckbTLS"
+      Tab(2).Control(14).Enabled=   0   'False
       Tab(2).ControlCount=   15
+      TabCaption(3)   =   "Validação"
+      TabPicture(3)   =   "FrmMain.frx":261E
+      Tab(3).ControlEnabled=   0   'False
+      Tab(3).Control(0)=   "lblXMLSignLib"
+      Tab(3).Control(0).Enabled=   0   'False
+      Tab(3).Control(1)=   "lblCryptLib"
+      Tab(3).Control(1).Enabled=   0   'False
+      Tab(3).Control(2)=   "lblPastaSchemas"
+      Tab(3).Control(2).Enabled=   0   'False
+      Tab(3).Control(3)=   "cmbXmlSign"
+      Tab(3).Control(3).Enabled=   0   'False
+      Tab(3).Control(4)=   "cmbCrypt"
+      Tab(3).Control(4).Enabled=   0   'False
+      Tab(3).Control(5)=   "txtSchemaPath"
+      Tab(3).Control(5).Enabled=   0   'False
+      Tab(3).Control(6)=   "btnSelectSchema"
+      Tab(3).Control(6).Enabled=   0   'False
+      Tab(3).ControlCount=   7
+      Begin VB.CommandButton btnSelectSchema 
+         Caption         =   "..."
+         Height          =   260
+         Left            =   -70680
+         TabIndex        =   98
+         Top             =   1440
+         Width           =   390
+      End
+      Begin VB.TextBox txtSchemaPath 
+         Height          =   285
+         Left            =   -74760
+         TabIndex        =   97
+         Top             =   1440
+         Width           =   3975
+      End
+      Begin VB.ComboBox cmbCrypt 
+         Height          =   315
+         ItemData        =   "FrmMain.frx":263A
+         Left            =   -72480
+         List            =   "FrmMain.frx":264A
+         Style           =   2  'Dropdown List
+         TabIndex        =   94
+         Top             =   720
+         Width           =   2175
+      End
+      Begin VB.ComboBox cmbXmlSign 
+         Height          =   315
+         ItemData        =   "FrmMain.frx":267C
+         Left            =   -74760
+         List            =   "FrmMain.frx":268F
+         Style           =   2  'Dropdown List
+         TabIndex        =   93
+         Top             =   720
+         Width           =   2175
+      End
       Begin VB.TextBox txtCodEstFederacao 
          Height          =   315
          Left            =   4560
@@ -404,9 +498,9 @@ Begin VB.Form FrmMain
       End
       Begin VB.ComboBox cbbImpressora 
          Height          =   315
-         ItemData        =   "FrmMain.frx":261E
+         ItemData        =   "FrmMain.frx":26C9
          Left            =   -70920
-         List            =   "FrmMain.frx":2620
+         List            =   "FrmMain.frx":26CB
          TabIndex        =   37
          Text            =   "cbbImpressora"
          Top             =   720
@@ -437,9 +531,9 @@ Begin VB.Form FrmMain
          End
          Begin VB.ComboBox cbbPaginaCodigo 
             Height          =   315
-            ItemData        =   "FrmMain.frx":2622
+            ItemData        =   "FrmMain.frx":26CD
             Left            =   1680
-            List            =   "FrmMain.frx":2624
+            List            =   "FrmMain.frx":26CF
             Style           =   2  'Dropdown List
             TabIndex        =   51
             Top             =   480
@@ -517,9 +611,9 @@ Begin VB.Form FrmMain
          End
          Begin VB.ComboBox cbbModelo 
             Height          =   315
-            ItemData        =   "FrmMain.frx":2626
+            ItemData        =   "FrmMain.frx":26D1
             Left            =   120
-            List            =   "FrmMain.frx":2628
+            List            =   "FrmMain.frx":26D3
             Style           =   2  'Dropdown List
             TabIndex        =   45
             Top             =   480
@@ -535,7 +629,7 @@ Begin VB.Form FrmMain
             _ExtentY        =   503
             _Version        =   393216
             BuddyControl    =   "MasLinhasPular"
-            BuddyDispid     =   196685
+            BuddyDispid     =   196692
             OrigLeft        =   3120
             OrigTop         =   1680
             OrigRight       =   3375
@@ -570,7 +664,7 @@ Begin VB.Form FrmMain
             _ExtentY        =   503
             _Version        =   393216
             BuddyControl    =   "MasBuffer"
-            BuddyDispid     =   196687
+            BuddyDispid     =   196694
             OrigLeft        =   2280
             OrigTop         =   1680
             OrigRight       =   2535
@@ -605,7 +699,7 @@ Begin VB.Form FrmMain
             _ExtentY        =   503
             _Version        =   393216
             BuddyControl    =   "MaskEspacos"
-            BuddyDispid     =   196689
+            BuddyDispid     =   196696
             OrigLeft        =   1320
             OrigTop         =   1680
             OrigRight       =   1575
@@ -655,7 +749,7 @@ Begin VB.Form FrmMain
             _ExtentY        =   503
             _Version        =   393216
             BuddyControl    =   "MasColunas"
-            BuddyDispid     =   196690
+            BuddyDispid     =   196697
             OrigLeft        =   510
             OrigTop         =   1680
             OrigRight       =   765
@@ -810,9 +904,9 @@ Begin VB.Form FrmMain
       End
       Begin VB.ComboBox cmbImpressao 
          Height          =   315
-         ItemData        =   "FrmMain.frx":262A
+         ItemData        =   "FrmMain.frx":26D5
          Left            =   -74880
-         List            =   "FrmMain.frx":262C
+         List            =   "FrmMain.frx":26D7
          Style           =   2  'Dropdown List
          TabIndex        =   29
          Top             =   720
@@ -938,7 +1032,7 @@ Begin VB.Form FrmMain
          _ExtentY        =   503
          _Version        =   393216
          BuddyControl    =   "txtPaginaCodigo"
-         BuddyDispid     =   196658
+         BuddyDispid     =   196663
          OrigLeft        =   6240
          OrigTop         =   1320
          OrigRight       =   6495
@@ -967,9 +1061,9 @@ Begin VB.Form FrmMain
       End
       Begin VB.ComboBox cmbModeloSat 
          Height          =   315
-         ItemData        =   "FrmMain.frx":262E
+         ItemData        =   "FrmMain.frx":26D9
          Left            =   4560
-         List            =   "FrmMain.frx":2630
+         List            =   "FrmMain.frx":26DB
          Style           =   2  'Dropdown List
          TabIndex        =   7
          Top             =   720
@@ -1002,7 +1096,7 @@ Begin VB.Form FrmMain
          _Version        =   393216
          Value           =   1
          BuddyControl    =   "txtCopias"
-         BuddyDispid     =   196649
+         BuddyDispid     =   196654
          OrigLeft        =   6240
          OrigTop         =   1320
          OrigRight       =   6495
@@ -1023,7 +1117,7 @@ Begin VB.Form FrmMain
          _ExtentY        =   556
          _Version        =   393216
          BuddyControl    =   "txtPorta"
-         BuddyDispid     =   196621
+         BuddyDispid     =   196626
          OrigLeft        =   6240
          OrigTop         =   1320
          OrigRight       =   6495
@@ -1032,6 +1126,61 @@ Begin VB.Form FrmMain
          SyncBuddy       =   -1  'True
          BuddyProperty   =   0
          Enabled         =   -1  'True
+      End
+      Begin VB.Label lblPastaSchemas 
+         Caption         =   "Pasta dos Schemas"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   -74760
+         TabIndex        =   99
+         Top             =   1200
+         Width           =   1815
+      End
+      Begin VB.Label lblCryptLib 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "CryptLib"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   -72480
+         TabIndex        =   96
+         Top             =   480
+         Width           =   705
+      End
+      Begin VB.Label lblXMLSignLib 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "XmlSignLib"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   -74760
+         TabIndex        =   95
+         Top             =   480
+         Width           =   915
       End
       Begin VB.Label Label3 
          AutoSize        =   -1  'True
@@ -1535,6 +1684,36 @@ Private Sub btnSelDll_Click()
     txtDllPath.Text = CommonDialog1.FileName
 End Sub
 
+Private Sub btnSelectSchema_Click()
+
+    On Error Resume Next
+    CommonDialog1.DialogTitle = "xsd validação"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "xsd validação (*.xsd)|*.xsd|Todos os arquivos (*.*)|*.*"
+    CommonDialog1.ShowOpen
+            
+    If Err Then Exit Sub
+    
+    txtSchemaPath.Text = CommonDialog1.FileName
+
+End Sub
+
+Private Sub btnValidarCFe_Click()
+    
+    On Error Resume Next
+    CommonDialog1.DialogTitle = "Selecione o arquivo Xml"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*"
+    CommonDialog1.ShowOpen
+            
+    If Err Then Exit Sub
+    
+    Dim retorno As String
+    
+    sat.ValidarCFe (CommonDialog1.FileName)
+    
+End Sub
+
 Private Sub cmdCancelarCFe_Click()
 
     On Error Resume Next
@@ -1681,6 +1860,9 @@ Private Sub LoadConfig()
     txtAtivacao.Text = sat.ConfigLerValor(SESSAO_SAT, "CodigoDeAtivacao")
     txtVersaoCFe.Text = sat.ConfigLerValor(SESSAO_SATCONFIG, "infCFe_versaoDadosEnt")
     nudPaginaCodigo.Value = CLng(sat.ConfigLerValor(SESSAO_SATCONFIG, "PaginaDeCodigo"))
+    txtSchemaPath.Text = sat.ConfigLerValor(SESSAO_SATCONFIG, "ArqSchema")
+    cmbXmlSign.ListIndex = CLng(sat.ConfigLerValor(SESSAO_SATCONFIG, "SSLXmlSignLib"))
+    cmbCrypt.ListIndex = CLng(sat.ConfigLerValor(SESSAO_DFE, "SSLCryptLib"))
     txtSignAC.Text = sat.ConfigLerValor(SESSAO_SAT, "SignAC")
     chkSaveCFe.Value = CLng(sat.ConfigLerValor(SESSAO_SATCONFIGARQUIVOS, "SalvarCFe"))
     chkSaveEnvio.Value = CLng(sat.ConfigLerValor(SESSAO_SATCONFIGARQUIVOS, "SalvarEnvio"))
@@ -1722,6 +1904,9 @@ Private Sub SaveConfig()
     sat.ConfigGravarValor SESSAO_SAT, "CodigoDeAtivacao", txtAtivacao.Text
     sat.ConfigGravarValor SESSAO_SATCONFIG, "infCFe_versaoDadosEnt", txtVersaoCFe.Text
     sat.ConfigGravarValor SESSAO_SATCONFIG, "PaginaDeCodigo", CStr(nudPaginaCodigo.Value)
+    sat.ConfigGravarValor SESSAO_SATCONFIG, "ArqSchema", txtSchemaPath.Text
+    sat.ConfigGravarValor SESSAO_SATCONFIG, "SSLXmlSignLib", cmbXmlSign.ListIndex
+    sat.ConfigGravarValor SESSAO_DFE, "SSLCryptLib", cmbCrypt.ListIndex
     sat.ConfigGravarValor SESSAO_SAT, "SignAC", txtSignAC.Text
     sat.ConfigGravarValor SESSAO_SATCONFIGARQUIVOS, "SalvarCFe", CStr(chkSaveCFe.Value)
     sat.ConfigGravarValor SESSAO_SATCONFIGARQUIVOS, "SalvarEnvio", CStr(chkSaveEnvio.Value)

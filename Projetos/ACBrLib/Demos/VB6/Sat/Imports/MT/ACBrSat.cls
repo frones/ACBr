@@ -135,6 +135,10 @@ Private Declare Function SAT_ComunicarCertificadoICPBRASIL _
 Private Declare Function SAT_ExtrairLogs _
                 Lib "ACBrSAT32.dll" (ByVal libHandler As Long, _
                                      ByVal eArquivo As String) As Long
+                                     
+Private Declare Function SAT_ValidarCFe _
+                Lib "ACBrSAT32.dll" (ByVal libHandler As Long, _
+                                     ByVal eArquivoXml As String) As Long
                 
 Private Declare Function SAT_TesteFimAFim _
                 Lib "ACBrSAT32.dll" (ByVal libHandler As Long, _
@@ -509,6 +513,13 @@ Public Sub ExtrairLogs(ByVal eArquivo As String)
     Dim retorno   As Long
     
     retorno = SAT_ExtrairLogs(libHandler, eArquivo)
+    CheckResult (retorno)
+End Sub
+
+Public Sub ValidarCFe(ByVal eArquivoXml As String)
+    Dim retorno As Long
+    
+    retorno = SAT_ValidarCFe(libHandler, eArquivoXml)
     CheckResult (retorno)
 End Sub
 

@@ -183,6 +183,7 @@ begin
     begin
       Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
       Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
+      xSite    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xSite'), tcStr);
     end;
   end;
 end;

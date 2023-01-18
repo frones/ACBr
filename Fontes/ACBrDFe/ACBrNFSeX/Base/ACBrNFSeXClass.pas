@@ -155,11 +155,13 @@ type
     FEmail: string;
     FDDD: string;
     FTipoTelefone: string;
+    FxSite: string;
   public
     property Telefone: string read FTelefone write FTelefone;
     property Email: string read FEmail write FEmail;
     property DDD: string read FDDD write FDDD;
     property TipoTelefone: string read FTipoTelefone write FTipoTelefone;
+    property xSite: string read FxSite write FxSite;
   end;
 
   TEndereco = class(TObject)

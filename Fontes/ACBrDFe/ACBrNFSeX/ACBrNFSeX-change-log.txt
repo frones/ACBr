@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/01/2023
+-- ACBrNFSeXClass/Infisc.GravarXml/Infisc.LerXml --
+[*] Acrescentado o campo xSite dentro da classe Contato.
+   Por: Italo Giurizzato Junior
+
 17/01/2023
 -- Fiorilli.Provider --
 [*] Possível solução para o erro: xmlParseEntityRef: no name

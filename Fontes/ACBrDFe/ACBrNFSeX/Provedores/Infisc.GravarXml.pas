@@ -382,15 +382,20 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'xNome', 1, 100, 1,
                                                NFSe.Prestador.RazaoSocial, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'xFant', 1, 60, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'xFant', 1, 60, 0,
                                               NFSe.Prestador.NomeFantasia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'IM', 1, 15, 1,
                  NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, ''));
 
   if FPVersao = ve101 then
-    Result.AppendChild(AddNode(tcStr, '#1', 'xEmail', 1, 50, 1,
+  begin
+    Result.AppendChild(AddNode(tcStr, '#1', 'xEmail', 1, 50, 0,
                                              NFSe.Prestador.Contato.Email, ''));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'xSite', 1, 50, 0,
+                                             NFSe.Prestador.Contato.xSite, ''));
+  end;
 
   xmlNode := GerarEnderecoEmitente;
   Result.AppendChild(xmlNode);

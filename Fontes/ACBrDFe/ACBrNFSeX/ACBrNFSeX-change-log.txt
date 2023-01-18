@@ -44,6 +44,9 @@ Símbolo : Significado
 
 18/01/2023
 -- ACBrNFSeXServicos.ini --
+[*] A URL de produção da cidade Assis Chateaubriand/PR foi atualizada.
+   Por: Alex Heinen
+-- ACBrNFSeXServicos.ini --
 [*] A cidade Sete Lagoas/MG trocou de provedor, agora é : Libre
    Por: Vagner Amorim
 -- Diversos --

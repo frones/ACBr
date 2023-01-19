@@ -38,6 +38,31 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/01/2023
+-- ACBrDevice --
+[+] Adicionado o método:
+    procedure AcharPortas(const AStringList: TStrings);
+    que procura por Portas: USB, Serial, RAW e Bluetooth (conforme plataforma)
+
+[+] Adicionado os métodos:
+   function PedirPermissoes: Boolean;
+     (que chama as permissões do Dispositivo ativo)
+   function PedirPermissoesBlueTooth: Boolean;
+     (que chama as permissões do Dispositivo Bluetooth (usado em Android))
+
+-- ACBrDeviceClass --
+[+] Adicionado o método:
+    function PedirPermissoes: Boolean; virtual;
+    (que pode ser sobreescrito nas classes filhas, se necessário)
+
+-- ACBrDeviceBlueTooth --
+[*] Método "PedirPermissoes", modificado para ser sobrecarga da classe mãe.
+[*] Método "PedirPermissoes", modificado para lembrar da última resposta de
+    sucesso, e evitar pedir permissões de forma repetitiva.
+[*] Método "PedirPermissoes", modificado para ficar compatível com Android 12
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=70435
+    (por: DSA e Andrei Ricardo)
+
 03/01/2023
 -- ACBrBAL, ACBrBALUranoUDC --
 [+] Inclusão do novo modelo ACBrBALUranoUDC; 

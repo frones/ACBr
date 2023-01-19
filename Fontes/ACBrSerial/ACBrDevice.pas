@@ -348,14 +348,23 @@ type
     function IsTCPPort: Boolean;
     function IsRawPort: Boolean;
 
+    procedure AcharPortas(const AStringList: TStrings);
     procedure AcharPortasSeriais(const AStringList: TStrings; UltimaPorta: Integer = 64);
     procedure AcharPortasRAW(const AStringList: TStrings);
     {$IfDef MSWINDOWS}
     procedure AcharPortasUSB(const AStringList: TStrings);
-    procedure DetectarTipoEProtocoloDispositivoUSB(var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
     {$EndIf}
     {$IfDef HAS_BLUETOOTH}
     procedure AcharPortasBlueTooth(const AStringList: TStrings; TodasPortas: Boolean = True);
+    {$EndIf}
+
+    function PedirPermissoes: Boolean;
+    {$IfDef HAS_BLUETOOTH}
+    function PedirPermissoesBlueTooth: Boolean;
+    {$EndIf}
+
+    {$IfDef MSWINDOWS}
+    procedure DetectarTipoEProtocoloDispositivoUSB(var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
     {$EndIf}
     function DeviceToString(OnlyException: Boolean): String;
 
@@ -1081,6 +1090,20 @@ begin
   Result := (fsDeviceType = dtUSB);
 end;
 
+procedure TACBrDevice.AcharPortas(const AStringList: TStrings);
+begin
+  {$IfDef MSWINDOWS}
+   AcharPortasUSB(AStringList);
+  {$EndIf}
+
+  AcharPortasSeriais(AStringList);
+  AcharPortasRAW(AStringList);
+
+  {$IfDef HAS_BLUETOOTH}
+   AcharPortasBlueTooth(AStringList);
+  {$EndIf}
+end;
+
 procedure TACBrDevice.AcharPortasRAW(const AStringList: TStrings);
 begin
   fsDeviceRaw.AcharPortasRAW(AStringList);
@@ -1090,6 +1113,22 @@ procedure TACBrDevice.AcharPortasSeriais(const AStringList: TStrings; UltimaPort
 begin
   fsDeviceSerial.AcharPortasSeriais(AStringList, UltimaPorta);
 end;
+
+function TACBrDevice.PedirPermissoes: Boolean;
+begin
+  GravaLog('PedirPermissoes');
+  Result := fsDeviceAtivo.PedirPermissoes;
+  GravaLog('  ' + BoolToStr(Result, True));
+end;
+
+{$IfDef HAS_BLUETOOTH}
+function TACBrDevice.PedirPermissoesBlueTooth: Boolean;
+begin
+  GravaLog('PedirPermissoesBlueTooth');
+  Result := fsDeviceBlueTooth.PedirPermissoes;
+  GravaLog('  ' + BoolToStr(Result, True));
+end;
+{$EndIf}
 
 function TACBrDevice.DeviceToString(OnlyException: Boolean): String;
 begin

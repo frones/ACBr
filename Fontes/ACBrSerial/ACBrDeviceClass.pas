@@ -57,6 +57,7 @@ type
   public
     constructor Create(AOwner: TComponent);
 
+    function PedirPermissoes: Boolean; virtual;
     procedure Conectar(const APorta: String; const ATimeOutMilissegundos: Integer); virtual;
     procedure Desconectar(IgnorarErros: Boolean = True); virtual;
 
@@ -169,6 +170,11 @@ begin
   repeat
     Buffer := LeString(100);
   until (Length(Buffer) = 0)
+end;
+
+function TACBrDeviceClass.PedirPermissoes: Boolean;
+begin
+  Result := True;
 end;
 
 procedure TACBrDeviceClass.GravaLog(AString: AnsiString; Traduz: Boolean);

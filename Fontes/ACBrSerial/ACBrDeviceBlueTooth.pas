@@ -57,10 +57,10 @@ type
     fsBlueToothSocket: TBluetoothSocket;
     fsBlueToothDevice: TBluetoothDevice;
     fsInternalBuffer: AnsiString;
+    fsTemPermissao: Boolean;
 
     procedure AtivarBlueTooth;
     function GetDeviceName: String;
-    function PedirPermissoes: Boolean;
 
     procedure ReconectarSocket;
     procedure ConectarSocket;
@@ -76,6 +76,7 @@ type
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;
 
+    function PedirPermissoes: Boolean; override;
     procedure Conectar(const APorta: String; const ATimeOutMilissegundos: Integer); override;
     procedure Desconectar(IgnorarErros: Boolean = True); override;
     procedure AcharPortasBlueTooth(const AStringList: TStrings; TodasPortas: Boolean = True);
@@ -115,6 +116,7 @@ begin
   fsBluetooth := TBluetooth.Create(Nil);
   fsBlueToothSocket := Nil;
   fsInternalBuffer := '';
+  fsTemPermissao := False;
 end;
 
 destructor TACBrDeviceBlueTooth.Destroy;
@@ -127,37 +129,57 @@ end;
 function TACBrDeviceBlueTooth.PedirPermissoes: Boolean;
 Var
   Ok: Boolean;
+  {$ifdef ANDROID}
+  LPermissions: TArray<String>;
+  {$endif}
 begin
   {$IfDef ANDROID}
-    Ok := False;
-    PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.BLUETOOTH),
-                                            JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN)],
-      {$IfDef DELPHI28_UP}
-      procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
-      {$Else}
-      procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
-      {$EndIf}
-      var
-        GR: TPermissionStatus;
+    Ok := fsTemPermissao;
+    if not Ok then
+    begin
+      if (TOSVersion.Major < 12) then
       begin
-        Ok := (Length(AGrantResults) = 2);
+        SetLength(LPermissions, 2);
+        LPermissions[0] := JStringToString(TJManifest_permission.JavaClass.BLUETOOTH);
+        LPermissions[1] := JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN);
+      end
+      else
+      begin
+        SetLength(LPermissions, 3);
+        LPermissions[0] := 'android.permission.BLUETOOTH_ADVERTISE';
+        LPermissions[1] := 'android.permission.BLUETOOTH_CONNECT';
+        LPermissions[2] := 'android.permission.BLUETOOTH_SCAN';
+      end;
 
-        if Ok then
+      PermissionsService.RequestPermissions(LPermissions,
+        {$IfDef DELPHI28_UP}
+        procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+        {$Else}
+        procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
+        {$EndIf}
+        var
+          GR: TPermissionStatus;
         begin
-          for GR in AGrantResults do
+          Ok := (Length(AGrantResults) = Length(LPermissions));
+
+          if Ok then
           begin
-            if (GR <> TPermissionStatus.Granted) then
+            for GR in AGrantResults do
             begin
-              Ok := False;
-              Break;
+              if (GR <> TPermissionStatus.Granted) then
+              begin
+                Ok := False;
+                Break;
+              end;
             end;
           end;
-        end;
-      end, nil );
+        end, nil );
+    end;
   {$Else}
     Ok := True;
   {$EndIf}
 
+  fsTemPermissao := Ok;
   Result := Ok;
 end;
 
@@ -235,6 +257,7 @@ end;
 procedure TACBrDeviceBlueTooth.Desconectar(IgnorarErros: Boolean);
 begin
   FecharSocket;
+  fsTemPermissao := False;
 end;
 
 procedure TACBrDeviceBlueTooth.FecharSocket;

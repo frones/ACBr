@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/01/2023
+-- SigCorp.GravarXml --
+[*] Alterado a configuração para sempre gerar a tag Aliquota.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Guatambu/SC mudou de provedor, agora é Publica.
    Por: claudio algayer

@@ -93,6 +93,8 @@ public final class ACBrSat extends ACBrLibBase {
     int SAT_TesteFimAFim(Pointer libHandler, String eArquivoXmlVenda);
 
     int SAT_CriarCFe(Pointer libHandler, String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize);
+    
+    int SAT_ValidarCFe(Pointer libHandler, String eArquivoXml);
 
     int SAT_CriarEnviarCFe(Pointer libHandler, String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize);
 
@@ -317,6 +319,11 @@ public final class ACBrSat extends ACBrLibBase {
         checkResult(ret);
         
         return processResult(buffer, bufferLen);
+    }
+    
+     public void validarCFe(String eArquivoXml) throws Exception {
+        int ret = ACBrSatLib.INSTANCE.SAT_ValidarCFe(getHandle(), toUTF8(eArquivoXml));
+        checkResult(ret);
     }
     
     public String criarEnviarCFe(String eArquivoIni) throws Exception {

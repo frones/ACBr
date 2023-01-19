@@ -95,7 +95,7 @@ namespace ACBrLib.Sat
             set => SetProperty(value);
         }
 
-        public SSLXmlSignLib XmlSignLib
+        public SSLXmlSignLib SSLXmlSignLib
         {
             get => GetProperty<SSLXmlSignLib>();
             set => SetProperty(value);

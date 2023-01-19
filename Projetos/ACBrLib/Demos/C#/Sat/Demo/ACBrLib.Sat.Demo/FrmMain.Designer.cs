@@ -113,6 +113,14 @@
             this.nudPorta = new System.Windows.Forms.NumericUpDown();
             this.txtHost = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.cmbXmlSign = new System.Windows.Forms.ComboBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.cmbCrypt = new System.Windows.Forms.ComboBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.txtSchemaPath = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.btnSelectSchema = new System.Windows.Forms.Button();
             this.btnImprimirPDFCFe = new System.Windows.Forms.Button();
             this.btnConsultarStatus = new System.Windows.Forms.Button();
             this.btnConsultarSAT = new System.Windows.Forms.Button();
@@ -122,6 +130,7 @@
             this.btnImpMFe = new System.Windows.Forms.Button();
             this.btnAtivarSAT = new System.Windows.Forms.Button();
             this.btnClasseAltoNivel = new System.Windows.Forms.Button();
+            this.btnValidarCFe = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -137,6 +146,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudCopias)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).BeginInit();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnIniDesini
@@ -191,7 +201,7 @@
             // 
             // btnEnviarCFe
             // 
-            this.btnEnviarCFe.Location = new System.Drawing.Point(12, 324);
+            this.btnEnviarCFe.Location = new System.Drawing.Point(12, 353);
             this.btnEnviarCFe.Name = "btnEnviarCFe";
             this.btnEnviarCFe.Size = new System.Drawing.Size(112, 23);
             this.btnEnviarCFe.TabIndex = 32;
@@ -201,7 +211,7 @@
             // 
             // btnImprimirCFe
             // 
-            this.btnImprimirCFe.Location = new System.Drawing.Point(12, 353);
+            this.btnImprimirCFe.Location = new System.Drawing.Point(12, 382);
             this.btnImprimirCFe.Name = "btnImprimirCFe";
             this.btnImprimirCFe.Size = new System.Drawing.Size(112, 23);
             this.btnImprimirCFe.TabIndex = 33;
@@ -224,6 +234,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1065,9 +1076,102 @@
             this.label23.TabIndex = 18;
             this.label23.Text = "Host SMTP";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.cmbXmlSign);
+            this.tabPage4.Controls.Add(this.label27);
+            this.tabPage4.Controls.Add(this.cmbCrypt);
+            this.tabPage4.Controls.Add(this.label28);
+            this.tabPage4.Controls.Add(this.txtSchemaPath);
+            this.tabPage4.Controls.Add(this.label33);
+            this.tabPage4.Controls.Add(this.btnSelectSchema);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(710, 193);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Validação";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // cmbXmlSign
+            // 
+            this.cmbXmlSign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbXmlSign.FormattingEnabled = true;
+            this.cmbXmlSign.Items.AddRange(new object[] {
+            "xsNone",
+            "xsXmlSec",
+            "xsMsXml",
+            "xsMsXmlCapicom",
+            "xsLibXml2"});
+            this.cmbXmlSign.Location = new System.Drawing.Point(15, 30);
+            this.cmbXmlSign.Name = "cmbXmlSign";
+            this.cmbXmlSign.Size = new System.Drawing.Size(129, 21);
+            this.cmbXmlSign.TabIndex = 41;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(12, 14);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(69, 13);
+            this.label27.TabIndex = 40;
+            this.label27.Text = "XmlSignLib";
+            // 
+            // cmbCrypt
+            // 
+            this.cmbCrypt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCrypt.FormattingEnabled = true;
+            this.cmbCrypt.Items.AddRange(new object[] {
+            "cryNone",
+            "cryOpenSSL",
+            "cryCapicom",
+            "cryWinCrypt"});
+            this.cmbCrypt.Location = new System.Drawing.Point(150, 30);
+            this.cmbCrypt.Name = "cmbCrypt";
+            this.cmbCrypt.Size = new System.Drawing.Size(129, 21);
+            this.cmbCrypt.TabIndex = 39;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(147, 14);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(53, 13);
+            this.label28.TabIndex = 38;
+            this.label28.Text = "CryptLib";
+            // 
+            // txtSchemaPath
+            // 
+            this.txtSchemaPath.Location = new System.Drawing.Point(15, 70);
+            this.txtSchemaPath.Name = "txtSchemaPath";
+            this.txtSchemaPath.Size = new System.Drawing.Size(238, 20);
+            this.txtSchemaPath.TabIndex = 35;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(12, 54);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(118, 13);
+            this.label33.TabIndex = 36;
+            this.label33.Text = "Pasta dos Schemas";
+            // 
+            // btnSelectSchema
+            // 
+            this.btnSelectSchema.Location = new System.Drawing.Point(252, 69);
+            this.btnSelectSchema.Name = "btnSelectSchema";
+            this.btnSelectSchema.Size = new System.Drawing.Size(27, 22);
+            this.btnSelectSchema.TabIndex = 37;
+            this.btnSelectSchema.Text = "...";
+            this.btnSelectSchema.UseVisualStyleBackColor = true;
+            this.btnSelectSchema.Click += new System.EventHandler(this.btnSelectSchema_Click);
+            // 
             // btnImprimirPDFCFe
             // 
-            this.btnImprimirPDFCFe.Location = new System.Drawing.Point(12, 382);
+            this.btnImprimirPDFCFe.Location = new System.Drawing.Point(12, 411);
             this.btnImprimirPDFCFe.Name = "btnImprimirPDFCFe";
             this.btnImprimirPDFCFe.Size = new System.Drawing.Size(112, 23);
             this.btnImprimirPDFCFe.TabIndex = 36;
@@ -1107,7 +1211,7 @@
             // 
             // btnEmail
             // 
-            this.btnEmail.Location = new System.Drawing.Point(12, 411);
+            this.btnEmail.Location = new System.Drawing.Point(12, 440);
             this.btnEmail.Name = "btnEmail";
             this.btnEmail.Size = new System.Drawing.Size(112, 23);
             this.btnEmail.TabIndex = 40;
@@ -1155,11 +1259,22 @@
             this.btnClasseAltoNivel.UseVisualStyleBackColor = true;
             this.btnClasseAltoNivel.Click += new System.EventHandler(this.btnClasseAltoNivel_Click);
             // 
+            // btnValidarCFe
+            // 
+            this.btnValidarCFe.Location = new System.Drawing.Point(12, 324);
+            this.btnValidarCFe.Name = "btnValidarCFe";
+            this.btnValidarCFe.Size = new System.Drawing.Size(112, 23);
+            this.btnValidarCFe.TabIndex = 45;
+            this.btnValidarCFe.Text = "ValidarCFe";
+            this.btnValidarCFe.UseVisualStyleBackColor = true;
+            this.btnValidarCFe.Click += new System.EventHandler(this.btnValidarCFe_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 487);
+            this.Controls.Add(this.btnValidarCFe);
             this.Controls.Add(this.btnClasseAltoNivel);
             this.Controls.Add(this.btnAtivarSAT);
             this.Controls.Add(this.btnImpMFe);
@@ -1204,6 +1319,8 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1302,6 +1419,15 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Button btnAtivarSAT;
         private System.Windows.Forms.Button btnClasseAltoNivel;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button btnValidarCFe;
+        private System.Windows.Forms.ComboBox cmbXmlSign;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.ComboBox cmbCrypt;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TextBox txtSchemaPath;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button btnSelectSchema;
     }
 }
 

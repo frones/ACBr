@@ -16,6 +16,7 @@ namespace ACBrLib.Sat
             Extrato = new ExtratoConfig(acbrlib);
             PosPrinter = new PosPrinterConfig<ACBrSat>(acbrlib);
             Email = new EmailConfig<ACBrSat>(acbrlib);
+            DFe = new DFeConfig<ACBrSat>(acbrlib);
         }
 
         #endregion Constructors
@@ -33,6 +34,8 @@ namespace ACBrLib.Sat
         public PosPrinterConfig<ACBrSat> PosPrinter { get; }
 
         public EmailConfig<ACBrSat> Email { get; }
+
+        public DFeConfig<ACBrSat> DFe { get; }
 
         public SATModelo Modelo
         {

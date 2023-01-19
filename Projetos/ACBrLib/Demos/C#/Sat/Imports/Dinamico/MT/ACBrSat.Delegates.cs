@@ -97,6 +97,9 @@ namespace ACBrLib.Sat
         public delegate int SAT_EnviarCFe(IntPtr handle, string eArquivoXml, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int SAT_ValidarCFe(IntPtr handle, string eArquivoXml);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int SAT_CancelarCFe(IntPtr handle, string eArquivoXml, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -147,6 +150,7 @@ namespace ACBrLib.Sat
             AddMethod<SAT_TesteFimAFim>("SAT_TesteFimAFim");
             AddMethod<SAT_GerarAssinaturaSAT>("SAT_GerarAssinaturaSAT");
             AddMethod<SAT_CriarCFe>("SAT_CriarCFe");
+            AddMethod<SAT_ValidarCFe>("SAT_ValidarCFe");
             AddMethod<SAT_CriarEnviarCFe>("SAT_CriarEnviarCFe");
             AddMethod<SAT_EnviarCFe>("SAT_EnviarCFe");
             AddMethod<SAT_CancelarCFe>("SAT_CancelarCFe");

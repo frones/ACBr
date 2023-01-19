@@ -321,6 +321,14 @@ namespace ACBrLib.Sat
             return CFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
+        public void validarCFe(string eArquivoXml)
+        {
+            var method = GetMethod<SAT_ValidarCFe>();
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml)));
+
+            CheckResult(ret);
+        }
+
         public EnvioResposta CriarEnviarCFe(CupomFiscal CFe) => CriarEnviarCFe(CFe.ToString());
 
         public EnvioResposta CriarEnviarCFe(string eArquivoIni)

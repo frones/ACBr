@@ -233,44 +233,8 @@ begin
 end;
 
 function TPosPrinterAndroidTesteForm.PedirPermissoes: Boolean;
-Var
-  Ok: Boolean;
 begin
-  Ok := True;
-  {$IfDef ANDROID}
-  PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.BLUETOOTH),
-                                          JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN),
-                                          JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_PRIVILEGED)],
-      {$IfDef DELPHI28_UP}
-      procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
-      {$Else}
-      procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
-      {$EndIf}
-      var
-        GR: TPermissionStatus;
-      begin
-        Ok := (Length(AGrantResults) = 3);
-
-        if Ok then
-        begin
-          for GR in AGrantResults do
-            if (GR <> TPermissionStatus.Granted) then
-            begin
-              Ok := False;
-              Break;
-            end;
-        end;
-      end );
-
-  if not OK then
-  begin
-    TDialogService.MessageDialog( 'Sem permissões para acessar despositivo BlueTooth',
-                                  TMsgDlgType.mtError, [TMsgDlgBtn.mbOK],
-                                  TMsgDlgBtn.mbOk, 0, nil, nil);
-  end;
-  {$EndIf}
-
-  Result := Ok;
+  Result := ACBrPosPrinter1.Device.PedirPermissoesBlueTooth;
 end;
 
 procedure TPosPrinterAndroidTesteForm.rbMudaClasseImpressora(Sender: TObject);

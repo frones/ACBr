@@ -107,10 +107,10 @@ begin
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'pessoa_destinatario', 1, 1, 1,
                                                                tipoPessoa, ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ie_destinatario', 1, 16, 0,
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ie_destinatario', 1, 16, 1,
                       NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'im_destinatario', 1, 16, 0,
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'im_destinatario', 1, 16, 1,
                      NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
   end;
 

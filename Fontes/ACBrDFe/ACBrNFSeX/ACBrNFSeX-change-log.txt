@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2023
+-- SigISSWeb.Provider/SigISSWeb.GravarXml --
+[*] Implementado a TratarRetornoGerarToken.
+   Por: Italo Giurizzato Junior
+
 19/01/2023
 -- SigCorp.GravarXml --
 [*] Alterado a configuração para sempre gerar a tag Aliquota.

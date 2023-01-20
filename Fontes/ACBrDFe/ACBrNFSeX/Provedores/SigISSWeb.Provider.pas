@@ -47,6 +47,9 @@ uses
 
 type
   TACBrNFSeXWebserviceSigISSWeb = class(TACBrNFSeXWebserviceRest)
+  private
+    AjustaSetHeader:Boolean;
+
   protected
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
 
@@ -92,10 +95,13 @@ type
     function TributacaoDescricao(const t: TTributacao): String; override;
   end;
 
+var
+  xToken: string;
+
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.FilesIO,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   SigISSWeb.GravarXml, SigISSWeb.LerXml;
@@ -223,7 +229,7 @@ begin
 
   // Atenção: Neste xml todos os "Ws_" do início das tags devem ter o primeiro "W" em maiúsculo
   Response.ArquivoEnvio := '{"login":"' +
-                           OnlyNumber(Emitente.CNPJ) + '","senha":"' +
+                           OnlyNumber(Emitente.WSUser) + '","senha":"' +
                            Emitente.WSSenha + '"}';
 
   FpPath := 'rest/login';
@@ -233,9 +239,48 @@ end;
 
 procedure TACBrNFSeProviderSigISSWeb.TratarRetornoGerarToken(
   Response: TNFSeGerarTokenResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
 begin
-  inherited;
+  xToken := SeparaDados(Response.ArquivoRetorno, 'descricao');
 
+  if Pos('Bearer', xToken) = 0 then
+  begin
+    Document := TACBrXmlDocument.Create;
+
+    try
+      try
+        if Response.ArquivoRetorno = '' then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod201;
+          AErro.Descricao := ACBrStr(Desc201);
+          Exit
+        end;
+
+        Document.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := Document.Root;
+
+        ProcessarMensagemErros(ANode, Response);
+
+        Response.Sucesso := (Response.Erros.Count = 0);
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := ACBrStr(Desc999 + E.Message);
+        end;
+      end;
+    finally
+      FreeAndNil(Document);
+    end;
+  end
+  else
+    Response.Token := xToken;
 end;
 
 procedure TACBrNFSeProviderSigISSWeb.PrepararCancelaNFSe(
@@ -484,13 +529,9 @@ end;
 { TACBrNFSeXWebserviceSigISSWeb }
 
 procedure TACBrNFSeXWebserviceSigISSWeb.SetHeaders(aHeaderReq: THTTPHeader);
-var
-  Auth: string;
 begin
-  with TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente do
-    Auth := WSChaveAutoriz;
-
-  aHeaderReq.AddHeader('Authorization', Auth);
+  if AjustaSetHeader then
+    aHeaderReq.AddHeader('Authorization', xToken);
 end;
 
 function TACBrNFSeXWebserviceSigISSWeb.GerarToken(ACabecalho,
@@ -498,6 +539,7 @@ function TACBrNFSeXWebserviceSigISSWeb.GerarToken(ACabecalho,
 var
   Request: string;
 begin
+  AjustaSetHeader := False;
   FPMsgOrig := AMSG;
 
   Request := AMSG;
@@ -510,6 +552,7 @@ function TACBrNFSeXWebserviceSigISSWeb.GerarNFSe(ACabecalho,
 var
   Request: string;
 begin
+  AjustaSetHeader := True;
   FPMsgOrig := AMSG;
 
   Request := AMSG;
@@ -521,6 +564,7 @@ function TACBrNFSeXWebserviceSigISSWeb.Cancelar(ACabecalho, AMSG: String): strin
 var
   Request, xCabecalho: string;
 begin
+  AjustaSetHeader := True;
   FPMsgOrig := AMSG;
 
   xCabecalho := StringReplace(ACabecalho, 'cabecalhoNfseLote',
@@ -538,12 +582,30 @@ end;
 function TACBrNFSeXWebserviceSigISSWeb.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  if StringIsXML(aXML) then
+  begin
+    Result := inherited TratarXmlRetornado(aXML);
 
-  Result := ParseText(AnsiString(Result));
-  Result := RemoverDeclaracaoXML(Result);
-  Result := RemoverCaracteresDesnecessarios(Result);
-  Result := RemoverPrefixosDesnecessarios(Result);
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := RemoverDeclaracaoXML(Result);
+    Result := RemoverCaracteresDesnecessarios(Result);
+    Result := RemoverPrefixosDesnecessarios(Result);
+  end
+  else
+  begin
+    Result := '<a>' +
+                '<erros>' +
+                  '<erro>' +
+                    '<codigo>' + '</codigo>' +
+                    '<descricao>' + aXML + '</descricao>' +
+                    '<correcao>' + '</correcao>' +
+                  '</erro>' +
+                '</erros>' +
+              '</a>';
+
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := String(NativeStringToUTF8(Result));
+  end;
 end;
 
 end.

@@ -550,6 +550,7 @@ const
   TVersaoeSocialArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00');
   TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', '_S_01_00_00', '_S_01_01_00');
   TVersaoeSocialArrayReals : array[TVersaoeSocial] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000);
+  TtpIdeOCArrayStrings: array[tpIdeOC] of string = ('0', '1', '2', '3', '4', '9');
 
 type
 
@@ -1059,8 +1060,10 @@ function eSStrToTpLocal(var ok: boolean; const s: string): tpTpLocal;
 function eSLateralidadeToStr(const t: tpLateralidade ): string;
 function eSStrToLateralidade(var ok: boolean; const s: string): tpLateralidade;
 
-function eSIdeOCToStr(const t: tpIdeOC ): string;
-function eSStrToIdeOC(var ok: boolean; const s: string): tpIdeOC;
+function eSIdeOCToStr(const t: tpIdeOC ): string;deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS}'Use a função eSIdeOCToStrEX'{$ENDIF};
+function eSStrToIdeOC(var ok: boolean; const s: string): tpIdeOC;deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS}'Use a função esStrToIdeOCEX'{$ENDIF};
+function eSIdeOCToStrEX(const t: tpIdeOC): string;
+function esStrToIdeOCEX(const s: string): tpIdeOC;
 
 function eSTpAvPrevioToStr(const t: tpTpAvPrevio ): string;
 function eSStrToTpAvPrevio(var ok: boolean; const s: string): tpTpAvPrevio;
@@ -1756,9 +1759,29 @@ begin
   result := EnumeradoToStr2(t, ['0','1', '2', '3', '4', '9']);
 end;
 
+function eSIdeOCToStrEX(const t: tpIdeOC): string;
+begin
+  Result := TtpIdeOCArrayStrings[t];
+end;
+
 function eSStrToIdeOC(var ok: boolean; const s: string): tpIdeOC;
 begin
-  result := tpIdeOC( StrToEnumerado2(ok, s, ['1', '2', '3', '4', '9'] ) );
+  result := tpIdeOC( StrToEnumerado2(ok, s, ['0', '1', '2', '3', '4', '9'] ) );
+end;
+
+function esStrToIdeOCEX(const s: string): tpIdeOC;
+var
+  idx: tpIdeOC;
+begin
+  for idx:= Low(TtpIdeOCArrayStrings) to High(TtpIdeOCArrayStrings)do
+  begin
+    if(TtpIdeOCArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para tpIdeOC: %s', [s]);
 end;
 
 function eSTpAvPrevioToStr(const t: tpTpAvPrevio ): string;

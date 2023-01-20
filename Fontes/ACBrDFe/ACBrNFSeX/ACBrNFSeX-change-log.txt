@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] Corrigida a URL de produção da cidade de Chapecó/SC
+   Por: Douglas GV
 -- ACBrNFSeXWebServiceBase --
 [*] O provedor PradraoNacional retorna em JSON mensagens de rejeição com código
     de ResultCode diferentes de 200, 201 e 202 

@@ -5,8 +5,9 @@ unit ACBreSocialEventosNaoPeriodicosTests;
 interface
 
 uses
-  Classes, SysUtils, ACBrTests.Util, ACBreSocialTestsConsts, ACBreSocial,
-  pcesS2400, pcesCommon, pcesConversaoeSocial;
+  Classes, SysUtils, ACBrTests.Util, ACBrUtil.DateTime, ACBreSocialTestsConsts,
+  ACBrDFeException, ACBrDFeSSL, ACBreSocial, pcesS2400, pcesCommon,
+  pcesConversaoeSocial, pcesS2240;
 
 type
 
@@ -15,12 +16,16 @@ type
 TACBreSocialEventosNaoPeriodicosTest = class(TTestCase)
   private
     FACBreSocial : TACBreSocial;
+    procedure ES2240Tests;
   public
     procedure Setup;override;
     procedure TearDown;override;
   published
     procedure ACBreSocialEventosNaoPeriodicosS2400_Create_ListaVazia;
     procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS2400;
+    procedure ACBreSocialEventosNaoPeriodicosS2240_Create_ListaVazia;
+    procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS2240_S0100;
+    procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS2240_S0101;
 end;
 
 implementation
@@ -31,6 +36,7 @@ procedure TACBreSocialEventosNaoPeriodicosTest.Setup;
 begin
   inherited Setup;
   FACBreSocial := TACBreSocial.Create(nil);
+  FACBreSocial.Configuracoes.Geral.SSLLib := libOpenSSL;
 end;
 
 procedure TACBreSocialEventosNaoPeriodicosTest.TearDown;
@@ -90,6 +96,157 @@ begin
     Check(eSS2400.Beneficiario.dependente.Items[0].sexoDep   = 'F', 'Beneficiario.dependente.sexo diferente do valor esperado');
     Check(eSS2400.Beneficiario.dependente.Items[0].depIRRF   = tpNao, 'Beneficiario.dependente.depIRRF diferente do valor esperado');
     Check(eSS2400.Beneficiario.dependente.Items[0].incFisMen = tpNao, 'Beneficiario.depentente.incFisMen diferente do valor esperado');
+  end;
+end;
+
+procedure TACBreSocialEventosNaoPeriodicosTest.ACBreSocialEventosNaoPeriodicosS2240_Create_ListaVazia;
+begin
+  Check(FACBreSocial.Eventos.NaoPeriodicos.S2240.Count = 0, 'Lista de Eventos S-2240 não está vazia');
+end;
+
+procedure TACBreSocialEventosNaoPeriodicosTest.ES2240Tests;
+var
+  eS2240: TEvtExpRisco;
+  infoAmb: TInfoAmbCollectionItem;
+  agNoc: TAgNocCollectionItem;
+  epi: TEpiCollectionItem;
+  epiCompl: TEpiCompl;
+  respReg: TRespRegCollectionItem;
+begin
+
+  eS2240 := FACBreSocial.Eventos.NaoPeriodicos.S2240[0].EvtExpRisco;
+
+  Check(FACBreSocial.Eventos.NaoPeriodicos.S2240.Count > 0, 'Não instanciou o S-2240 na lista');
+
+  Check(eS2240.Sequencial = 0, 'Sequencial | Valor esperado:0 | Valor recebido:'+IntToStr(eS2240.Sequencial));
+  Check(eS2240.IdeEvento.indRetif = ireOriginal,
+        'ideEvento.indRetif | Valor esperado:1 | Valor recebido:'+eSIndRetificacaoToStr(eS2240.IdeEvento.indRetif));
+  Check(eS2240.IdeEvento.NrRecibo = '123',
+        'ideEvento.nrRecibo | Valor esperado:123 | Valor recebido:'+eS2240.IdeEvento.nrRecibo);
+  Check(eS2240.IdeEvento.ProcEmi  = peAplicEmpregador,
+        'ideEvento.procEmi | Valor esperado:1 | Valor recebido:'+eSprocEmiToStr(eS2240.IdeEvento.ProcEmi));
+  Check(eS2240.IdeEvento.VerProc  = '1.00',
+        'ideEvento.verProc | Valor esperado:1.00 | Valor recebido:'+eS2240.IdeEvento.VerProc);
+
+  Check(eS2240.IdeEmpregador.TpInsc =  tiCNPJ,
+        'ideEmpregador.tpInsc | Valor esperado:1 | Valor recebido:'+ eSTpInscricaoToStr(eS2240.IdeEmpregador.TpInsc));
+  Check(eS2240.IdeEmpregador.NrInsc = '12345678000123',
+        'ideEmpregador.nrInsc | Valor esperado:12345678000123 | Valor recebido:'+eS2240.IdeEmpregador.NrInsc);
+
+  Check(eS2240.IdeVinculo.cpfTrab = '12345678901',
+        'ideVinculo.cpfTrab | Valor esperado:12345678901 | Valor recebido:'+eS2240.IdeVinculo.cpfTrab);
+  Check(eS2240.ideVinculo.matricula = '123',
+        'ideVinculo.matricula | Valor esperado:123 | Valor recebido:'+eS2240.ideVinculo.matricula);
+  Check(eS2240.ideVinculo.codCateg = 101,
+        'ideVinculo.codCateg | Valor esperado:101 | Valor recebido:'+IntToStr(eS2240.ideVinculo.codCateg));
+
+  Check(eS2240.infoExpRisco.dtIniCondicao = StoD('20180508000000'),
+        'infoExpRisco.dtIniCondicao | Valor esperado:"08/05/2018" | Valor recebido:'+DateToStr(eS2240.infoExpRisco.dtIniCondicao));
+  Check(eS2240.infoExpRisco.dtFimCondicao = StoD('20180509000000'),
+        'infoExpRisco.dtFimCondicao | Valor esperado:"09/05/2018" | Valor recebido:'+DateToStr(eS2240.infoExpRisco.dtFimCondicao));
+
+  infoAmb := eS2240.infoExpRisco.InfoAmb.Items[0];
+  Check(infoAmb.localAmb = laEstabProprioEmpregador,
+        'infoExpRisco.infoAmb.localAmb | Valor esperado:1 | Valor recebido:'+eSLocalAmbToStr(infoAmb.localAmb));
+  Check(infoAmb.dscSetor = 'descicao',
+        'infoExpRisco.infoAmb.dscSetor | Valor esperado:descicao | Valor recebido:'+infoAmb.dscSetor);
+  Check(infoAmb.tpInsc = tiCNPJ,
+        'infoExpRisco.infoAmb.tpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(infoAmb.tpInsc));
+  Check(infoAmb.nrInsc = '99999999999',
+        'infoExpRisco.infoAmb.nrInsc | Valor esperado:99999999999 | Valor recebido:'+infoAmb.nrInsc);
+
+  Check(eS2240.infoExpRisco.infoAtiv.dscAtivDes = 'Descricao da atividade',
+        'infoExpRisco.infoAtiv.dscAtivDes | Valor esperado:Descricao da atividade | Valor recebido:"'+eS2240.infoExpRisco.infoAtiv.dscAtivDes);
+
+  agNoc := eS2240.infoExpRisco.agNoc.Items[0];
+  Check(agNoc.codAgNoc = '123456789',
+        'infoExpRisco.agNoc.codAgNoc | Valor esperado:123456789 | Valor recebido:'+agNoc.codAgNoc);
+  Check(agNoc.dscAgNoc = 'descicao',
+        'infoExpRisco.agNoc.dscAgNoc | Valor esperado:descicao | Valor recebido:'+agNoc.dscAgNoc);
+  Check(agNoc.tpAval   = tpaQuantitativo,
+        'infoExpRisco.agNoc.tpAval | Valor esperado:1 | Valor recebido:'+tpAvalToStr(agNoc.tpAval));
+  Check(agNoc.intConc  = 1,
+        'infoExpRisco.agNoc.intConc | Valor esperado:1 | Valor recebido:'+FormatFloat('#0.00', agNoc.intConc));
+  Check(agNoc.limTol   = 10,
+        'infoExpRisco.agNoc.limTol | Valor esperado:10 | Valor recebido:'+FormatFloat('#0.00', agNoc.limTol));
+  Check(agNoc.unMed    = 1 ,
+        'infoExpRisco.agNoc.unMed | Valor esperado:1 | Valor recebido:'+FormatFloat('#0.00', agNoc.unMed));
+  Check(agNoc.tecMedicao = 'descricao',
+        'infoExpRisco.agNoc.tecMedicao | Valor esperado:descricao | Valor recebido:'+agNoc.tecMedicao);
+
+  Check(agNoc.epcEpi.utilizEPC = uEPCImplementa,
+        'infoExpRisco.agNoc.epcEpi.utilizEPC | Valor esperado:2 | Valor recebido:'+eStpUtilizEPCToStr(agNoc.epcEpi.utilizEPC));
+  Check(agNoc.epcEpi.eficEpc = tpSim,
+        'infoExpRisco.agNoc.epcEpi.eficEpc | Valor esperado:S | Valor recebido:'+eSSimNaoToStr(agNoc.epcEpi.eficEpc));
+  Check(agNoc.epcEpi.utilizEPI = uEPIUtilizado,
+        'infoExpRisco.agNoc.epcEpi.utilizEpi | Valor esperado:2 | Valor recebido:'+eStpUtilizEPIToStr(agNoc.epcEpi.utilizEPI));
+  Check(agNoc.epcEpi.eficEpi = snfSim,
+        'infoExpRisco.agNoc.epcEpi.eficEpi | Valor esperado:S | Valor recebido:'+eSSimNaoFacultativoToStr(agNoc.epcEpi.eficEpi));
+
+  epi := agNoc.epcEpi.epi.Items[0];
+  Check(epi.docAval = 'TesteDocAval',
+        'infoExpRisco.agNoc.epcEpi.epi.docAval | Valor esperado:TesteDocAval | Valor recebido:'+epi.docAval);
+  if(FACBreSocial.Configuracoes.Geral.VersaoDF = veS01_00_00)then
+  begin
+    Check(epi.dscEPI = 'TesteDscEPI',
+          'infoExpRisco.agNoc.epcEpi.epi.dscEPI | Valor esperado:TesteDscEPI | Valor recebido:'+epi.dscEPI);
+  end;
+  epiCompl := agNoc.epcEpi.epiCompl;
+  Check(epiCompl.medProtecao = snfNao,
+        'infoExpRisco.agNoc.epcEpi.epiCompl.medProtecao | Valor esperado:N | Valor recebido:'+eSSimNaoFacultativoToStr(epiCompl.medProtecao));
+  Check(epiCompl.condFuncto  = snfNao,
+        'infoExpRisco.agNoc.epcEpi.epiCompl.condFuncto | Valor esperado:N | Valor recebido:'+eSSimNaoFacultativoToStr(epiCompl.condFuncto));
+  Check(epiCompl.usoInint    = snfNao,
+        'infoExpRisco.agNoc.epcEpi.epiCompl.usoInint | Valor esperado:N | Valor recebido:'+eSSimNaoFacultativoToStr(epiCompl.usoInint));
+  Check(epiCompl.przValid    = snfNao, 'infoExpRisco.agNoc.epcEpi.epiCompl.przValid diferente do valor esperado');
+  Check(epiCompl.periodicTroca = snfNao,
+        'infoExpRisco.agNoc.epcEpi.epiCompl.periodicTroca | Valor esperado:N | Valor recebido:'+eSSimNaoFacultativoToStr(epiCompl.periodicTroca));
+  Check(epiCompl.higienizacao  = snfNao,
+        'infoExpRisco.agNoc.epcEpi.epiCompl.higienizacao | Valor esperado:N | Valor recebido:'+eSSimNaoFacultativoToStr(epiCompl.higienizacao));
+
+  respReg := eS2240.infoExpRisco.respReg.Items[0];
+  Check(respReg.cpfResp = '00000000000',
+        'infoExpRisco.respReg.cpfResp | Valor esperado:00000000000 | Valor recebido:'+respReg.cpfResp);
+  Check(respReg.ideOC = idCRM,
+        'infoExpRisco.respReg.ideOC | Valor esperado:1 | Valor recebido:'+eSIdeOCToStr(respReg.ideOC));
+  Check(respReg.dscOC = 'CRM',
+        'infoExpRisco.respReg.dscOC | Valor esperado:CRM | Valor recebido:'+respReg.dscOC);
+  Check(respReg.nrOC  = '123',
+        'infoExpRisco.respReg.nrOc | Valor esperado:123 | Valor recedibo:'+respReg.nrOC);
+  Check(respReg.ufOC  = 'SP' ,
+        'infoExpRisco.respReg.ufOC | Valor esperado:SP | Valor recebido:'+respReg.ufOC);
+
+  Check(eS2240.infoExpRisco.obs.obsCompl = 'obsCompl',
+        'infoExpRisco.obs.obsCompl | Valor esperado:obsCompl | Valor recebido:'+eS2240.infoExpRisco.obs.obsCompl);
+
+
+end;
+
+procedure TACBreSocialEventosNaoPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS2240_S0100;
+begin
+  FACBreSocial.Configuracoes.Geral.VersaoDF := veS01_00_00;
+  try
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_S0100_S2240);
+  except
+    on E:Exception do
+    begin
+      CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi ' + E.ClassName);
+      ES2240Tests;
+    end;
+  end;
+end;
+
+procedure TACBreSocialEventosNaoPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS2240_S0101;
+begin
+  FACBreSocial.Configuracoes.Geral.VersaoDF := veS01_01_00;
+  try
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_S0101_S2240);
+  except
+    on E:Exception do
+    begin
+      CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi ' + E.ClassName);
+      ES2240Tests;
+    end;
   end;
 end;
 

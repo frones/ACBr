@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/01/2023
+-- ACBrNFSeXWebServiceBase --
+[*] O provedor PradraoNacional retorna em JSON mensagens de rejeição com código
+    de ResultCode diferentes de 200, 201 e 202 
+   Por: Italo Giurizzato Junior
 -- SigISSWeb.Provider/SigISSWeb.GravarXml --
 [*] Implementado a TratarRetornoGerarToken.
    Por: Italo Giurizzato Junior

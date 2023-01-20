@@ -762,6 +762,9 @@ begin
 //  if not (HttpClient.HTTPResultCode in [200..202]) then
 //    raise EACBrDFeException.Create('Erro de Conexão.');
 
+  if not XmlEhUTF8(FPRetorno) then
+    Exit;
+
   if not (HttpClient.HTTPResultCode in [200..202]) then
   begin
     aRetorno := TACBrXmlDocument.Create;

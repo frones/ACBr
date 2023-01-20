@@ -52,6 +52,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2023
+-- pcesConversaoeSocial --
+[*] As funções eSIdeOCToStr e eSStrToIdeOC não eram intercambiáveis, altera para que passem a ser. 
+[+] Marca as funções eSIdeOCToStr/eSStrToIdeOC como deprecated. Adiciona as funções eSIdeOCToStrEX/eSStrToIdeOCEX.
+   Por: Diego F
+
 06/01/2023
 -- pcesConversaoeSocial --
 [*] Remove o enumerado tpTpInscEstab e funções de conversão respectivas que não eram mais utilizadas.

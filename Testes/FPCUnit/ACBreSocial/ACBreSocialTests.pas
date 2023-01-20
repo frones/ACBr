@@ -155,6 +155,10 @@ type
       procedure eSIndNIFToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSIdeOCToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrToIdeOC_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSIdeOCToStrEX_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToIdeOCEx_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToIdeOCEX_ConvertendoStringinvalida_RetornoException;
+
 
 
 
@@ -1212,6 +1216,61 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToIdeOC_ConvertendoTodosTipos_RetornoCorreto;
 begin
   Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSIdeOCToStrEX_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpIdeOC;
+  ConvertidoParaString: String;
+  EhIgual: Boolean;
+  ReconvertidoParaElementoEnum: tpIdeOC;
+begin
+  for vElementoEnum := Low(tpIdeOC) to High(tpIdeOC)do
+  begin
+    ConvertidoParaString := eSIdeOCToStrEX(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToIdeOCEX(ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSIdeOCToStrEX => ' + ConvertidoParaString + '  '+
+                       'eSStrToIdeOCEX => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToIdeOCEx_ConvertendoTodosTipos_RetornoCorreto;
+var
+  i: tpIdeOC;
+  ConvertidoParaElementoEnum: tpIdeOC;
+  ReconvertidoParaString: String;
+  EhIgual: Boolean;
+  ElementoDoArray: String;
+begin
+  for i:= Low(TtpIdeOCArrayStrings) to High(TtpIdeOCArrayStrings)do
+  begin
+    ElementoDoArray := TtpIdeOCArrayStrings[i];
+    ConvertidoParaElementoEnum := eSStrToIdeOCEX(ElementoDoArray);
+    ReconvertidoParaString := eSIdeOCToStrEX(ConvertidoParaElementoEnum);
+    EhIgual := (ReconvertidoParaString = ElementoDoArray);
+    CheckTrue(EhIgual, 'Erro de conversão no elemento '+ ElementoDoArray + '  '+
+                       'eSStrToIdeOCEX => ' + GetEnumName(TypeInfo(ConvertidoParaElementoEnum), ord(ConvertidoParaElementoEnum))+'  '+
+                       'eSIdeOCToStrEX => ' + ReconvertidoParaString
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToIdeOCEX_ConvertendoStringinvalida_RetornoException;
+var
+  ConvertidoParaEnum : tpIdeOC;
+begin
+  try
+    ConvertidoParaEnum := esStrToIdeOCEX('StringInvalidaParaConversao');
+  except
+    on E:Exception do
+    begin
+      Exit;
+    end;
+  end;
+  Fail('Não foi gerada Exception para a string inválida');
 end;
 
 { TACBreSocialConversaoeSocialTest }

@@ -152,15 +152,15 @@ begin
         'infoExpRisco.infoAmb.dscSetor | Valor esperado:descicao | Valor recebido:'+infoAmb.dscSetor);
   Check(infoAmb.tpInsc = tiCNPJ,
         'infoExpRisco.infoAmb.tpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(infoAmb.tpInsc));
-  Check(infoAmb.nrInsc = '99999999999',
-        'infoExpRisco.infoAmb.nrInsc | Valor esperado:99999999999 | Valor recebido:'+infoAmb.nrInsc);
+  Check(infoAmb.nrInsc = '999999999999',
+        'infoExpRisco.infoAmb.nrInsc | Valor esperado:999999999999 | Valor recebido:'+infoAmb.nrInsc);
 
   Check(eS2240.infoExpRisco.infoAtiv.dscAtivDes = 'Descricao da atividade',
         'infoExpRisco.infoAtiv.dscAtivDes | Valor esperado:Descricao da atividade | Valor recebido:"'+eS2240.infoExpRisco.infoAtiv.dscAtivDes);
 
   agNoc := eS2240.infoExpRisco.agNoc.Items[0];
-  Check(agNoc.codAgNoc = '123456789',
-        'infoExpRisco.agNoc.codAgNoc | Valor esperado:123456789 | Valor recebido:'+agNoc.codAgNoc);
+  Check(agNoc.codAgNoc = '02.01.001',
+        'infoExpRisco.agNoc.codAgNoc | Valor esperado:02.01.001 | Valor recebido:'+agNoc.codAgNoc);
   Check(agNoc.dscAgNoc = 'descicao',
         'infoExpRisco.agNoc.dscAgNoc | Valor esperado:descicao | Valor recebido:'+agNoc.dscAgNoc);
   Check(agNoc.tpAval   = tpaQuantitativo,

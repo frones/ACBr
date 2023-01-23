@@ -876,8 +876,8 @@ begin
 
       sSecao := 'ideVinculo';
       ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
-//      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
       ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+      ideVinculo.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
 
       sSecao := 'infoExpRisco';
       if INIRec.ReadString(sSecao, 'dtIniCondicao', '') <> '' then
@@ -1008,9 +1008,15 @@ begin
       I := 1;
       while true do
       begin
-        // de 1 até 9
-        sSecao := 'respReg' + IntToStrZero(I, 1);
+        //S1.1.0
+        sSecao := 'respReg' + IntToStrZero(I, 2);
         sFim   := INIRec.ReadString(sSecao, 'cpfResp', 'FIM');
+        if(sFim = 'FIM') or (Length(sFim) <= 0)then
+        begin
+          // layout 2.5 de 1 até 9
+          sSecao := 'respReg' + IntToStrZero(I, 1);
+          sFim   := INIRec.ReadString(sSecao, 'cpfResp', 'FIM');
+        end;
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
@@ -1019,7 +1025,7 @@ begin
         begin
           cpfResp := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
           nmResp  := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
-          ideOC   := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', EmptyStr));
+          ideOC   := eSStrToIdeOCEX(INIRec.ReadString(sSecao, 'ideOC', EmptyStr));
           dscOC   := INIRec.ReadString(sSecao, 'dscOC', EmptyStr);
           nrOC    := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
           ufOC    := INIRec.ReadString(sSecao, 'ufOC', 'SP');
@@ -1027,6 +1033,9 @@ begin
 
         Inc(I);
       end;
+
+      sSecao := 'obs';
+      infoExpRisco.obs.obsCompl := INIRec.ReadString(sSecao, 'obsCompl', EmptyStr);
     end;
 
     GerarXML;

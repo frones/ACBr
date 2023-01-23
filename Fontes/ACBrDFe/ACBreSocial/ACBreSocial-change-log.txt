@@ -53,6 +53,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/01/2023
+-- pcesS2240 --
+[*] Altera rotina de leitura para ler respReg conforme versão S1.1 e outros campos que não eram lidos
+   Por: Diego F
+
 -- pcesConversaoeSocial --
 [*] Adiciona itens no array TTipoEventoString para ficar correspondente ao enumerado TTipoEvento.
 [*] Altera função eSStrToIndSubstPatronalObra para que o parâmetro OK seja devolvido como True quando o tipo convertido for ispVazio.

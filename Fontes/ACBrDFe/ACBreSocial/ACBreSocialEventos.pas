@@ -348,6 +348,7 @@ begin
       AXMLStringDoEvento := Trim(Copy(AXMLString, 1, PosTagFechaEvento + 8));
       AXMLString := Trim(Copy(AXMLString, PosTagFechaEvento+9, Length(AXMLString)));
 
+      AXMLStringDoEvento :=  SeparaDados(AXMLStringDoEvento, 'esocial', True);
       Result := CarregaXmlEvento(AXMLStringDoEvento);
       //procurar próximo
       PosIdEvento := Pos('<evento Id=', AXMLString);

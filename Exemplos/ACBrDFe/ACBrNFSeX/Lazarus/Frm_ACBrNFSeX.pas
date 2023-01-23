@@ -5,19 +5,43 @@ unit Frm_ACBrNFSeX;
 interface
 
 uses
-  LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics, SynEdit,
-  Controls, Forms, Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls,
+  LCLIntf,
+  LCLType,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  SynEdit,
+  Controls,
+  Forms,
+  Dialogs,
+  ExtCtrls,
+  StdCtrls,
+  Spin,
+  Buttons,
+  ComCtrls,
   SynHighlighterXML,
-  //SHDocVw, LMessages, Messages,
-//  XMLIntf, XMLDoc, zlib,
-  ACBrBase, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.FilesIO,
-  ACBrDFe, ACBrDFeReport, ACBrMail, ACBrNFSeX, ACBrNFSeXConversao,
+  ACBrBase,
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrDFe,
+  ACBrDFeReport,
+  ACBrMail,
+  ACBrNFSeX,
+  ACBrNFSeXConversao,
   ACBrNFSeXWebservicesResponse,
-//  ACBrNFSeXDANFSeClass,
   ACBrNFSeXDANFSeRLClass;
 
 type
+
+  { TfrmACBrNFSe }
+
   TfrmACBrNFSe = class(TForm)
+    cbLayoutNFSe: TComboBox;
+    Label48: TLabel;
+    Label49: TLabel;
+    lblLayout: TLabel;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
@@ -268,7 +292,9 @@ type
     btnConsultarParamMunicRegimesEspeciais: TButton;
     btnConsultarParamMunicRetencoes: TButton;
     btnConsultarParamMunicBeneficio: TButton;
-
+    procedure btnEmitirPNClick(Sender: TObject);
+    procedure btnEnviaremailPNClick(Sender: TObject);
+    procedure btnImprimirPNClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFSeClick(Sender: TObject);
@@ -959,7 +985,7 @@ begin
       Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '';
 
-      Tomador.RazaoSocial := 'INSCRICAO DE TESTE';
+      Tomador.RazaoSocial := 'INSCRICAO DE TESTE & TESTE';
 
       // O campo EnderecoInformado é utilizado pelo provedor IPM
       // A tag <endereco_informado> é opcional, caso não deseje que ela seja
@@ -1043,33 +1069,34 @@ var
   sNome, sCod, sUF: String;
 begin
   IniCidades := TMemIniFile.Create('');
-  Cidades    := TStringList.Create;
-
-  IniCidades.SetStrings(ACBrNFSeX1.Configuracoes.WebServices.Params);
-
   try
-    IniCidades.ReadSections(Cidades);
-    cbCidades.Items.Clear;
+    Cidades    := TStringList.Create;
+    try
+      IniCidades.SetStrings(ACBrNFSeX1.Configuracoes.WebServices.Params);
+      IniCidades.ReadSections(Cidades);
+      cbCidades.Items.Clear;
 
-    for I := 0 to Pred(Cidades.Count) do
-    begin
-      if (StrToIntdef(Cidades[I], 0) > 0) then
+      for I := 0 to Pred(Cidades.Count) do
       begin
-        //Exemplo: Alfenas/3101607/MG
-        sCod  := Cidades[I];
-        sNome := IniCidades.ReadString(sCod, 'Nome', '');
-        sUF   := IniCidades.ReadString(sCod, 'UF', '');
+        if (StrToIntdef(Cidades[I], 0) > 0) then
+        begin
+          //Exemplo: Alfenas/3101607/MG
+          sCod  := Cidades[I];
+          sNome := IniCidades.ReadString(sCod, 'Nome', '');
+          sUF   := IniCidades.ReadString(sCod, 'UF', '');
 
-        cbCidades.Items.Add(Format('%s/%s/%s', [sNome, sCod, sUF]));
+          cbCidades.Items.Add(Format('%s/%s/%s', [sNome, sCod, sUF]));
+        end;
       end;
-    end;
 
-    //Sort
-    cbCidades.Sorted := false;
-    cbCidades.Sorted := true;
-    edtTotalCidades.Text := IntToStr(cbCidades.Items.Count);
+      //Sort
+      cbCidades.Sorted := false;
+      cbCidades.Sorted := true;
+      edtTotalCidades.Text := IntToStr(cbCidades.Items.Count);
+    finally
+      FreeAndNil(Cidades);
+    end;
   finally
-    FreeAndNil(Cidades);
     IniCidades.Free;
   end;
 end;
@@ -2582,7 +2609,7 @@ end;
 
 procedure TfrmACBrNFSe.btnImprimirClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a NFSe';
+    OpenDialog1.Title := 'Selecione a NFSe';
   OpenDialog1.DefaultExt := '*-NFSe.xml';
   OpenDialog1.Filter :=
     'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
@@ -2853,7 +2880,7 @@ end;
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorTomadorClick(
   Sender: TObject);
 var
-  xTitulo, NumPagina, CPFCNPJTomador, IMTomador: String;
+  xTitulo, NumPagina, CPFCNPJTomador, IMTomador, DataIni, DataFin: String;
 begin
   xTitulo := 'Consultar NFSe Serviço Tomado Por Tomador';
 
@@ -2869,8 +2896,20 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proISSSaoPaulo then
+  begin
+    DataIni := DateToStr(Date);
+    if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
+      exit;
+
+    DataFin := DataIni;
+    if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
+      exit;
+  end;
+
   ACBrNFSeX1.ConsultarNFSeServicoTomadoPorTomador(CPFCNPJTomador,
-    IMTomador, StrToIntDef(NumPagina, 1));
+    IMTomador, StrToIntDef(NumPagina, 1), StrToDateDef(DataIni, 0),
+    StrToDateDef(DataFin, 0));
 
   ChecarResposta(tmConsultarNFSeServicoTomado);
 end;
@@ -3067,6 +3106,7 @@ var
   V: TSSLHttpLib;
   X: TSSLXmlSignLib;
   Y: TSSLType;
+  L: TLayoutNFSe;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -3098,9 +3138,128 @@ begin
     cbFormaEmissao.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I)));
   cbFormaEmissao.ItemIndex := 0;
 
+  cbLayoutNFSe.Items.Clear;
+  for L := Low(TLayoutNFSe) to High(TLayoutNFSe) do
+    cbLayoutNFSe.Items.Add(GetEnumName(TypeInfo(TLayoutNFSe), integer(L)));
+  cbLayoutNFSe.ItemIndex := 0;
+
   LerConfiguracao;
 
   pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TfrmACBrNFSe.btnEmitirPNClick(Sender: TObject);
+var
+  vNumRPS, vNumLote: String;
+begin
+  vNumRPS := '';
+  if not(InputQuery('Gerar e Enviar um RPS', 'Numero do RPS', vNumRPS)) then
+    exit;
+
+  vNumLote := vNumRPS;
+  if not(InputQuery('Gerar e Enviar um RPS', 'Numero do Lote', vNumLote)) then
+    exit;
+
+  ACBrNFSeX1.NotasFiscais.Clear;
+  AlimentarNFSe(vNumRPS, vNumLote);
+
+  {
+     O método Emitir possui os seguintes parâmetros:
+     aNumLote (String)
+     aModEnvio [meAutomatico, meLoteAssincrono, meLoteSincrono, meUnitario]
+     aImprimir (Boolean) Valor Padrão = True, portanto imprime o DANFSE
+  }
+  // meUnitario: Ajusta o Emitir para enviar somente um Rps
+
+  // No caso do Padrão Nacional o envio é sempre unitário
+  ACBrNFSeX1.Emitir(vNumLote, meUnitario);
+
+  ChecarResposta(tmGerar);
+end;
+
+procedure TfrmACBrNFSe.btnEnviaremailPNClick(Sender: TObject);
+var
+  vAux: String;
+  sCC: TStrings;
+begin
+  OpenDialog1.Title := 'Selecione a NFSe';
+  OpenDialog1.DefaultExt := '*-NFSe.xml';
+  OpenDialog1.Filter :=
+    'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFSeX1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFSeX1.NotasFiscais.Clear;
+    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+
+    if not(InputQuery('Enviar e-mail', 'Destinatário', vAux)) then
+      exit;
+
+    sCC := TStringList.Create;
+    sCC.Clear; // Usando para add outros e-mail como Com-Cópia
+
+    ACBrNFSeX1.NotasFiscais.Items[0].EnviarEmail(vAux, edtEmailAssunto.Text,
+      mmEmailMsg.Lines, True // Enviar PDF junto
+      , nil // Lista com emails que serão enviado cópias - TStrings
+      , nil // Lista de anexos - TStrings
+      );
+
+    sCC.Free;
+
+    memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
+
+    pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmACBrNFSe.btnImprimirPNClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione a NFSe';
+  OpenDialog1.DefaultExt := '*-NFSe.xml';
+  OpenDialog1.Filter :=
+    'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFSeX1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFSeX1.NotasFiscais.Clear;
+
+    // LoadFromFile - Usado para carregar o Xml de apenas uma nota
+    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+
+    // LoadFromLoteNfse - Usado para carregar um lote de notas
+//    ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(OpenDialog1.FileName);
+
+    {
+      Se o webservice não retorna o conteudo de OutrasInformacoes, mas a
+      prefeitura tem um texto padrão a ser impresso no DANFSE, pode-se alimentar
+      o campo OutrasInformacoes antes de executar o método Imprimir
+    }
+//    ACBrNFSeX1.NotasFiscais.Items[0].NFSe.OutrasInformacoes := 'Outras Informações 1;Outras Informações 2';
+    ACBrNFSeX1.NotasFiscais.Imprimir;
+
+    {
+      Se desejar gerar o PDF do DANFSE basta descomentar a linha abaixo
+    }
+//    ACBrNFSeX1.NotasFiscais.ImprimirPDF;
+
+    if ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps <> '' then
+      memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps)
+    else
+      memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
+
+    memoLog.Lines.Add('Nota Numero..........: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Numero);
+    memoLog.Lines.Add('Código de Verificação: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.CodigoVerificacao);
+    memoLog.Lines.Add('Data de Emissão......: ' + DateToStr(ACBrNFSeX1.NotasFiscais.Items[0].NFSe.DataEmissao));
+    memoLog.Lines.Add('Prestador............: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Prestador.RazaoSocial);
+    memoLog.Lines.Add('Tomador..............: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Tomador.RazaoSocial);
+
+    if ACBrNFSeX1.NotasFiscais.Items[0].NFSe.SituacaoNfse = ACBrNFSeXConversao.snCancelado then
+      memoLog.Lines.Add('A Nota encontra-se Cancelada.');
+
+    pgRespostas.ActivePageIndex := 0;
+  end;
 end;
 
 procedure TfrmACBrNFSe.GravarConfiguracao;
@@ -3136,6 +3295,8 @@ begin
     Ini.WriteBool(   'Geral', 'ConsultaAposEnvio',    chkConsultaLoteAposEnvio.Checked);
     Ini.WriteBool(   'Geral', 'ConsultaAposCancelar', chkConsultaAposCancelar.Checked);
     Ini.WriteBool(   'Geral', 'MontarPathSchemas',    chkMontarPathSchemas.Checked);
+
+    Ini.WriteInteger('Geral', 'LayoutNFSe',     cbLayoutNFSe.ItemIndex);
 
     Ini.WriteInteger('WebService', 'Ambiente',     rgTipoAmb.ItemIndex);
     Ini.WriteBool(   'WebService', 'Visualizar',   cbxVisualizar.Checked);
@@ -3255,8 +3416,6 @@ begin
     edtSenha.Text          := Ini.ReadString( 'Certificado', 'Senha',      '');
     edtNumSerie.Text       := Ini.ReadString( 'Certificado', 'NumSerie',   '');
 
-    AtualizarCidades;
-
     cbxAtualizarXML.Checked     := Ini.ReadBool(   'Geral', 'AtualizarXML',     True);
     cbxExibirErroSchema.Checked := Ini.ReadBool(   'Geral', 'ExibirErroSchema', True);
     edtFormatoAlerta.Text       := Ini.ReadString( 'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
@@ -3273,6 +3432,8 @@ begin
     chkConsultaLoteAposEnvio.Checked := Ini.ReadBool('Geral', 'ConsultaAposEnvio',    False);
     chkConsultaAposCancelar.Checked  := Ini.ReadBool('Geral', 'ConsultaAposCancelar', False);
     chkMontarPathSchemas.Checked     := Ini.ReadBool('Geral', 'MontarPathSchemas',    True);
+
+    cbLayoutNFSe.ItemIndex     := Ini.ReadInteger('Geral', 'LayoutNFSe',     0);
 
     rgTipoAmb.ItemIndex     := Ini.ReadInteger('WebService', 'Ambiente',     0);
     cbxVisualizar.Checked   := Ini.ReadBool(   'WebService', 'Visualizar',   False);
@@ -3314,8 +3475,6 @@ begin
     edtCodCidade.Text      := Ini.ReadString('Emitente', 'CodCidade',   '');
     edtEmitCidade.Text     := Ini.ReadString('Emitente', 'Cidade',      '');
     edtEmitUF.Text         := Ini.ReadString('Emitente', 'UF',          '');
-    cbCidades.ItemIndex    := cbCidades.Items.IndexOf(edtEmitCidade.Text + '/' +
-      edtCodCidade.Text + '/' + edtEmitUF.Text);
     edtCNPJPrefeitura.Text := Ini.ReadString('Emitente', 'CNPJPref',    '');
 
     edtSmtpHost.Text     := Ini.ReadString('Email', 'Host',    '');
@@ -3335,6 +3494,11 @@ begin
     edtPathPDF.Text        := Ini.ReadString( 'DANFSE', 'PathPDF',   '');
 
     ConfigurarComponente;
+
+    AtualizarCidades;
+
+    cbCidades.ItemIndex := cbCidades.Items.IndexOf(edtEmitCidade.Text + '/' +
+      edtCodCidade.Text + '/' + edtEmitUF.Text);
   finally
     Ini.Free;
   end;
@@ -4438,10 +4602,17 @@ begin
   // Pois ela se utiliza das demais configurações
   with ACBrNFSeX1.Configuracoes.Geral do
   begin
-    CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
+    LayoutNFSe := TLayoutNFSe(cbLayoutNFSe.ItemIndex);
+    CodigoMunicipio := StrToIntDef(edtCodCidade.Text, -1);
   end;
 
   lblSchemas.Caption := ACBrNFSeX1.Configuracoes.Geral.xProvedor;
+
+  if ACBrNFSeX1.Configuracoes.Geral.Layout = loABRASF then
+    lblLayout.Caption := 'ABRASF'
+  else
+    lblLayout.Caption := 'Próprio';
+
   lblVersaoSchemas.Caption := VersaoNFSeToStr(ACBrNFSeX1.Configuracoes.Geral.Versao);
 
   if ACBrNFSeX1.Configuracoes.Geral.Provedor = proPadraoNacional then

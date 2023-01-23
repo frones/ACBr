@@ -52,6 +52,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2023
+-- pcesConversaoeSocial --
+[*] Adiciona itens no array TTipoEventoString para ficar correspondente ao enumerado TTipoEvento.
+[*] Altera função eSStrToIndSubstPatronalObra para que o parâmetro OK seja devolvido como True quando o tipo convertido for ispVazio.
+   Por: Diego F
+
 20/01/2023
 -- pcesConversaoeSocial --
 [*] As funções eSIdeOCToStr e eSStrToIdeOC não eram intercambiáveis, altera para que passem a ser. 

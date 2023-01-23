@@ -1242,7 +1242,7 @@ uses
   ACBrUtil.Strings;
 
 const
-  TTipoEventoString   : array[0..62] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
+  TTipoEventoString   : array[0..76] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
                                                  'S-1035', 'S-1040', 'S-1050', 'S-1060', 'S-1070',
                                                  'S-1080', 'S-2100', 'S-1200', 'S-1202', 'S-1207',
                                                  'S-1210', 'S-1220', 'S-1250', 'S-1260', 'S-1270',
@@ -1254,7 +1254,13 @@ const
                                                  'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011',
                                                  'S-5012', 'S-5013', 'S-2221', 'S-2405', 'S-2410',
                                                  'S-2231', 'S-2416', 'S-2418', 'S-2420', 'S-2500',
-                                                 'S-2501', 'S-3500', 'S-5501');
+                                                 'S-2501', 'S-3500', 'S-5501', 'S-8299',
+                                                 'S-CONSULTAIDENTEVENTOS', 'S-CONSULTALOTEEVENTOS',
+                                                 'S-DOWNLOADEVENTOS', 'S-ENVIOLOTEEVENTOS',
+                                                 'S-ERRO','S-RETORNOENVIOLOTEEVENTOS',
+                                                 'S-RETORNOEVENTO', 'S-RETORNOPROCESSAMENTOLOTE',
+                                                 'S-EVTINSAPO', 'S-EVTADESAO', 'S-EVTCADINICIAL',
+                                                 'S-EVTASO', '');
 
   TUFString           : array[0..27] of String = ('AC','AL','AP','AM','BA','CE','DF','ES','GO',
                                                   'MA','MT','MS','MG','PA','PB','PR','PE','PI',
@@ -2123,9 +2129,13 @@ end;
 function eSStrToIndSubstPatronalObra(var ok: boolean; const s: string): TpIndSubstPatronalObra;
 begin
   if Trim(s) = '' then
-    result := ispVazio
-  else
+  begin
+    result := ispVazio;
+    ok := true;
+  end else
+  begin
     result := TpIndSubstPatronalObra(StrToEnumerado2(ok , s, TGenericosString0_2));
+  end;
 end;
 
 function eSindAutoriaToStr(const t:tpindAutoria ): string;

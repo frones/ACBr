@@ -44,7 +44,8 @@ unit ACBrPIXPSPPagSeguro;
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXCD;
+  Classes, SysUtils, ACBrPIXCD,
+	ACBrBase;
 
 const
   cPagSeguroURLProducao = 'https://secure.api.pagseguro.com';

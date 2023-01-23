@@ -44,6 +44,7 @@ interface
 
 uses
   Classes, SysUtils,
+	ACBrBase,
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const

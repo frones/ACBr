@@ -41,7 +41,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+23/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] Alterada as URLs e a versão para cidade de Anapolis/GO, provedor ainda é o ISSNet.
+   Por: PrimeSoftware
+   
 20/01/2023
 -- ACBrNFSeXServicos.ini --
 [*] Corrigida a URL de produção da cidade de Chapecó/SC

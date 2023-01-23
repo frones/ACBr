@@ -902,7 +902,7 @@ uses
   TypInfo, Clipbrd, IniFiles, DateUtils, synacode, synautil, pcnConversao,
   ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil,
   ACBrPIXSchemasCobV, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrUtil.DateTime, ACBrUtil.Compatibilidade, ACBrJSON;
+  ACBrUtil.DateTime, ACBrUtil.Compatibilidade, ACBrJSON, ACBrConsts;
 
 {$R *.dfm}
 
@@ -2227,8 +2227,8 @@ begin
                     'API PIX Sicredi',
                     'Porto Alegre',
                     'Rio Grande do Sul', 'BR',
-                    edSicrediGerarCSREmail.Text);
-  mmSicrediGerarCSR.Text := ChangeLineBreak(wCertificado, sLineBreak);
+                    edSicrediGerarCSREmail.Text, algSHA256);
+  mmSicrediGerarCSR.Text := ChangeLineBreak(wCertificado, CRLF);
   mmSicrediGerarCSR.Lines.SaveToFile(edSicrediGerarCSR.Text);
 end;
 

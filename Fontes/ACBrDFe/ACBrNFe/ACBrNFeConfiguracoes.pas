@@ -56,6 +56,7 @@ type
     FVersaoQRCode: TpcnVersaoQrCode;
     FCamposFatObrigatorios: Boolean;
     FForcarGerarTagRejeicao938: TForcarGeracaoTag;
+    FForcarGerarTagRejeicao906: TForcarGeracaoTag;
 
     procedure SetCSC(const AValue: String);
     procedure SetIdCSC(const AValue: String);
@@ -79,6 +80,7 @@ type
     property CamposFatObrigatorios: Boolean
       read FCamposFatObrigatorios write FCamposFatObrigatorios default True;
     property ForcarGerarTagRejeicao938: TForcarGeracaoTag read FForcarGerarTagRejeicao938 write FForcarGerarTagRejeicao938 default fgtNunca;
+    property ForcarGerarTagRejeicao906: TForcarGeracaoTag read FForcarGerarTagRejeicao906 write FForcarGerarTagRejeicao906 default fgtNunca;
   end;
 
   { TArquivosConfNFe }
@@ -201,6 +203,7 @@ begin
   FVersaoQRCode              := veqr200;
   FCamposFatObrigatorios     := True;
   FForcarGerarTagRejeicao938 := fgtNunca;
+  FForcarGerarTagRejeicao906 := fgtNunca;
 end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
@@ -215,6 +218,7 @@ begin
   VersaoQRCode := DeGeralConfNFe.VersaoQRCode;
   CamposFatObrigatorios := DeGeralConfNFe.CamposFatObrigatorios;
   ForcarGerarTagRejeicao938 := DeGeralConfNFe.ForcarGerarTagRejeicao938;
+  ForcarGerarTagRejeicao906 := DeGeralConfNFe.ForcarGerarTagRejeicao906;
 end;
 
 procedure TGeralConfNFe.GravarIni(const AIni: TCustomIniFile);
@@ -229,6 +233,7 @@ begin
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode));
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'CamposFatObrigatorios', CamposFatObrigatorios);
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'TagNT2018005', Integer(ForcarGerarTagRejeicao938));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'ForcarGerarTagRejeicao906', Integer(ForcarGerarTagRejeicao906));
 end;
 
 procedure TGeralConfNFe.LerIni(const AIni: TCustomIniFile);
@@ -243,6 +248,7 @@ begin
   VersaoQRCode              := TpcnVersaoQrCode(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode)));
   CamposFatObrigatorios     := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'CamposFatObrigatorios', CamposFatObrigatorios);
   ForcarGerarTagRejeicao938 := TForcarGeracaoTag(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'TagNT2018005', Integer(ForcarGerarTagRejeicao938)));
+  ForcarGerarTagRejeicao906 := TForcarGeracaoTag(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ForcarGerarTagRejeicao906', Integer(ForcarGerarTagRejeicao906)));
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);

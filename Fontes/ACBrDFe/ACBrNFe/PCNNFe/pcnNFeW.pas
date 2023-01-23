@@ -178,6 +178,7 @@ type
     FValidarListaServicos: Boolean;
     FCamposFatObrigatorios: Boolean;
     FForcarGerarTagRejeicao938: TForcarGeracaoTag;
+    FForcarGerarTagRejeicao906: TForcarGeracaoTag;
   published
     property GerarTagIPIparaNaoTributado: Boolean read FGerarTagIPIparaNaoTributado;
     property GerarTXTSimultaneamente: Boolean read FGerarTXTSimultaneamente write FGerarTXTSimultaneamente;
@@ -189,6 +190,7 @@ type
     property CamposFatObrigatorios: Boolean read FCamposFatObrigatorios write FCamposFatObrigatorios;
     // ForcarGerarTagRejeicao938 (NT 2018.005 v 1.20) -> Campo-Seq: N12-81 e N12a-50 | Campos: N26, N26a, N26b
     property ForcarGerarTagRejeicao938: TForcarGeracaoTag read FForcarGerarTagRejeicao938 write FForcarGerarTagRejeicao938;
+    property ForcarGerarTagRejeicao906: TForcarGeracaoTag read FForcarGerarTagRejeicao906 write FForcarGerarTagRejeicao906;
   end;
 
 implementation
@@ -218,6 +220,7 @@ begin
   FOpcoes.FValidarListaServicos        := False;
   FOpcoes.FCamposFatObrigatorios       := True;
   FOpcoes.FForcarGerarTagRejeicao938   := fgtNunca;
+  FOpcoes.FForcarGerarTagRejeicao906   := fgtNunca;
 end;
 
 destructor TNFeW.Destroy;
@@ -1387,6 +1390,20 @@ procedure TNFeW.GerarDetImpostoICMS(const i: Integer);
 	end;
   end;
 
+  function OcorrenciasICMSEfetivo : Integer;
+  begin
+	if (NFe.Ide.indFinal = cfConsumidorFinal) and ((FOpcoes.ForcarGerarTagRejeicao906 = fgtSempre) or
+	   ((FOpcoes.ForcarGerarTagRejeicao906 = fgtSomenteProducao) and (NFe.Ide.tpAmb = taProducao)) or
+	   ((FOpcoes.ForcarGerarTagRejeicao906 = fgtSomenteHomologacao) and (NFe.Ide.tpAmb = taHomologacao)))  then
+	begin
+	  Result := 1;
+	end
+	else
+	begin
+	  Result := 0;
+	end;
+  end;
+
 var
   sTagTemp : String;
 
@@ -1620,7 +1637,7 @@ begin
                           end;
 
                           if (NFe.Det[i].Imposto.ICMS.pRedBCEfet > 0) or (NFe.Det[i].Imposto.ICMS.vBCEfet > 0) or
-                             (NFe.Det[i].Imposto.ICMS.pICMSEfet > 0) or (NFe.Det[i].Imposto.ICMS.vICMSEfet > 0) then
+                             (NFe.Det[i].Imposto.ICMS.pICMSEfet > 0) or (NFe.Det[i].Imposto.ICMS.vICMSEfet > 0) or (OcorrenciasICMSEfetivo > 0) then
                           begin
                             Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N34', 'pRedBCEfet', 01, IIf(FUsar_tcDe4,07,05), 1, NFe.Det[i].Imposto.ICMS.pRedBCEfet, DSC_PREDBCEFET);
                             Gerador.wCampo(tcDe2, 'N35', 'vBCEfet ', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vBCEfet, DSC_VBCEFET);
@@ -1781,7 +1798,7 @@ begin
                     Gerador.wCampo(tcDe2, 'N32', 'vICMSSTDest', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSSTDest, DSC_VBCICMSSTDEST);
 
                     if (NFe.Det[i].Imposto.ICMS.pRedBCEfet > 0) or (NFe.Det[i].Imposto.ICMS.vBCEfet > 0) or
-                       (NFe.Det[i].Imposto.ICMS.pICMSEfet > 0) or (NFe.Det[i].Imposto.ICMS.vICMSEfet > 0) then
+                       (NFe.Det[i].Imposto.ICMS.pICMSEfet > 0) or (NFe.Det[i].Imposto.ICMS.vICMSEfet > 0) or (OcorrenciasICMSEfetivo > 0) then
                     begin
                       Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N34', 'pRedBCEfet', 01, IIf(FUsar_tcDe4,07,05), 1, NFe.Det[i].Imposto.ICMS.pRedBCEfet, DSC_PREDBCEFET);
                       Gerador.wCampo(tcDe2, 'N35', 'vBCEfet ', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vBCEfet, DSC_VBCEFET);
@@ -1885,7 +1902,7 @@ begin
                       end;
 
                       if (NFe.Det[i].Imposto.ICMS.pRedBCEfet > 0) or (NFe.Det[i].Imposto.ICMS.vBCEfet > 0) or
-                         (NFe.Det[i].Imposto.ICMS.pICMSEfet > 0) or (NFe.Det[i].Imposto.ICMS.vICMSEfet > 0) then
+                         (NFe.Det[i].Imposto.ICMS.pICMSEfet > 0) or (NFe.Det[i].Imposto.ICMS.vICMSEfet > 0) or (OcorrenciasICMSEfetivo > 0) then
                       begin
                         Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N34', 'pRedBCEfet', 01, IIf(FUsar_tcDe4,07,05), 1, NFe.Det[i].Imposto.ICMS.pRedBCEfet, DSC_PREDBCEFET);
                         Gerador.wCampo(tcDe2, 'N35', 'vBCEfet ', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vBCEfet, DSC_VBCEFET);

@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2023
+-- Diversos --
+[+] Incluido a propriedade de configuração: ForcarGerarTagRejeicao906 para definir se
+    vai gerar as tags do ICMS Efetivo ou não.
+    Valores aceitos pela nova propriedade: fgtNunca, fgtSomenteProducao, 
+    fgtSomenteHomologacao e fgtSempre. Valor padrão: fgtNunca
+  por : prevedello_sistemas
+
 21/12/2022
 --ACBrDFeDANFeReport--
 [*] TK-3373-1 Opção para impressão do xPED e nTemPed no Danfe (RL e FR) quadro de produtos

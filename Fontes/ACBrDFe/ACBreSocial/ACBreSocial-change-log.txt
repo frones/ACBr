@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2023
+-- pces22026 --
+[*] Altera a geração de algumas tags para que corresponda as regras de geração dos layouts simplificados.
+   Por: FranciscoFourInfo
+
 23/01/2023
 -- pcesS2240 --
 [*] Altera rotina de leitura para ler respReg conforme versão S1.1 e outros campos que não eram lidos

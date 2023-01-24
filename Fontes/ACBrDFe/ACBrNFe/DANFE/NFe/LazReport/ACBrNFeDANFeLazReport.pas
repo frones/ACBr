@@ -1922,9 +1922,9 @@ begin
       begin
         if FNFe.Ide.tpEmis <> teNormal then
           FieldByName('MensagemFiscal').AsString :=
-            'EMITIDA EM CONTINGÊNCIA' + LineBreak + 'Pendente de autorização'
-        else
-          FieldByName('MensagemFiscal').AsString := 'ÁREA DE MENSAGEM FISCAL';
+            'EMITIDA EM CONTINGÊNCIA' + LineBreak + 'Pendente de autorização';
+        //else
+        //  FieldByName('MensagemFiscal').AsString := 'ÁREA DE MENSAGEM FISCAL';
       end;
 
       FieldByName('URL').AsString :=

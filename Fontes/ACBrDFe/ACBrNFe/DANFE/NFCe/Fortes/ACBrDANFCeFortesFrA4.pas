@@ -661,9 +661,9 @@ begin
   End else
     begin
       if self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpEmis <> teNormal then
-         Text := ACBrStr('EMITIDA EM CONTINGÊNCIA')
-      else
-         Text := ACBrStr('ÁREA DE MENSAGEM FISCAL');
+         Text := ACBrStr('EMITIDA EM CONTINGÊNCIA');
+      //else
+      //   Text := ACBrStr('ÁREA DE MENSAGEM FISCAL');
     end;
 end;
 

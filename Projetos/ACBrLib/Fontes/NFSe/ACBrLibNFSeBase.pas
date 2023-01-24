@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                }
+{ Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -58,19 +58,21 @@ type
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
 
-    property DM: TLibNFSeDM read FNFSeDM;
+    property NFSeDM: TLibNFSeDM read FNFSeDM;
 
     function CarregarXML(const eArquivoOuXML: PChar): longint;
     function CarregarINI(const eArquivoOuINI: PChar): longint;
-    function ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    function ObterXml(aIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    function GravarXml(aIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
     function LimparLista: longint;
     function ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
-    function Emitir(const aLote, aModoEnvio: longint;  aImprimir: Boolean;
-                    const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarSituacao(const AProtocolo, ANumLote, sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarLoteRps(const AProtocolo, ANumLote, sResposta: PChar; var esTamanho: longint): longint;
-
+    function Emitir(const aLote:PChar; aModoEnvio: longint;  aImprimir: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+    function ConsultarSituacao(const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
+    function ConsultarLoteRps(const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
+    function ConsultarNFSePorRps(const aNumeroRps, aSerie, aTipo, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
+    function ConsultarNFSePorNumero(const aNumero:PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint):longint;
+    function ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: integer; aNumeroLote: PChar; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    function ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
 
   end;
 
@@ -78,7 +80,7 @@ implementation
 
 uses
   StrUtils, ACBrLibResposta, ACBrLibHelpers,
-  ACBrLibConsts, ACBrUtil, ACBrLibCertUtils,
+  ACBrLibConsts, ACBrUtil.Base, ACBrUtil.Strings, ACBrLibCertUtils,
   ACBrLibNFSeConsts, ACBrLibConfig, ACBrNFSeLibConfig,
   ACBrNFSeXConversao, ACBrNFSeXWebservicesResponse,
   ACBrLibNFSeRespostas;
@@ -139,16 +141,16 @@ begin
     if EhArquivo then
       VerificarArquivoExiste(ArquivoOuXml);
 
-    DM.Travar;
+    NFSeDM.Travar;
     try
       if EhArquivo then
-        DM.ACBrNFSeX1.NotasFiscais.LoadFromFile(ArquivoOuXml)
+        NFSeDM.ACBrNFSeX1.NotasFiscais.LoadFromFile(ArquivoOuXml)
       else
-        DM.ACBrNFSeX1.NotasFiscais.LoadFromString(ArquivoOuXml);
+        NFSeDM.ACBrNFSeX1.NotasFiscais.LoadFromString(ArquivoOuXml);
 
-      Result := SetRetornoNFSeRPSCarregadas(DM.ACBrNFSeX1.NotasFiscais.Count);
+      Result := SetRetornoNFSeRPSCarregadas(NFSeDM.ACBrNFSeX1.NotasFiscais.Count);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -174,12 +176,12 @@ begin
     if StringEhArquivo(ArquivoOuINI) then
       VerificarArquivoExiste(ArquivoOuINI);
 
-    DM.Travar;
+    NFSeDM.Travar;
     try
-      DM.ACBrNFSeX1.NotasFiscais.LoadFromIni(ArquivoOuIni);
-      Result := SetRetornoNFSeRPSCarregadas(DM.ACBrNFSeX1.NotasFiscais.Count);
+      NFSeDM.ACBrNFSeX1.NotasFiscais.LoadFromIni(ArquivoOuIni);
+      Result := SetRetornoNFSeRPSCarregadas(NFSeDM.ACBrNFSeX1.NotasFiscais.Count);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -190,31 +192,31 @@ begin
   end;
 end;
 
-function TACBrLibNFSe.ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ObterXml(aIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resposta: Ansistring;
 begin
   try
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFSE_ObterXml(' + IntToStr(AIndex) + ' )', logCompleto, True)
+      GravarLog('NFSE_ObterXml(' + IntToStr(aIndex) + ' )', logCompleto, True)
     else
       GravarLog('NFSE_ObterXml', logNormal);
 
-    DM.Travar;
+    NFSeDM.Travar;
 
     try
-      if (DM.ACBrNFSeX1.NotasFiscais.Count < 1) or (AIndex < 0) or
-         (AIndex >= DM.ACBrNFSeX1.NotasFiscais.Count) then
-         raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+      if (NFSeDM.ACBrNFSeX1.NotasFiscais.Count < 1) or (aIndex < 0) or
+         (aIndex >= NFSeDM.ACBrNFSeX1.NotasFiscais.Count) then
+         raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [aIndex]));
 
-      if EstaVazio(DM.ACBrNFSeX1.NotasFiscais.Items[AIndex].XMLOriginal) then
-        DM.ACBrNFSeX1.NotasFiscais.Items[AIndex].GerarXML;
+      if EstaVazio(NFSeDM.ACBrNFSeX1.NotasFiscais.Items[aIndex].XmlNfse) then
+        NFSeDM.ACBrNFSeX1.NotasFiscais.Items[aIndex].GerarXML;
 
-      Resposta := DM.ACBrNFSeX1.NotasFiscais.Items[AIndex].XMLOriginal;
+      Resposta := NFSeDM.ACBrNFSeX1.NotasFiscais.Items[aIndex].XmlNfse;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -225,7 +227,7 @@ begin
   end;
 end;
 
-function TACBrLibNFSe.GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function TACBrLibNFSe.GravarXml(aIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
 var
   ANomeArquivo, APathArquivo: string;
 begin
@@ -234,23 +236,23 @@ begin
     APathArquivo := ConverterAnsiParaUTF8(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFSE_GravarXml(' + IntToStr(AIndex) + ',' +
+      GravarLog('NFSE_GravarXml(' + IntToStr(aIndex) + ',' +
         ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
     else
       GravarLog('NFSE_GravarXml', logNormal);
 
-    DM.Travar;
+    NFSeDM.Travar;
     try
-      if (DM.ACBrNFSeX1.NotasFiscais.Count < 1) or (AIndex < 0) or
-         (AIndex >= DM.ACBrNFSeX1.NotasFiscais.Count) then
-         raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+      if (NFSeDM.ACBrNFSeX1.NotasFiscais.Count < 1) or (aIndex < 0) or
+         (aIndex >= NFSeDM.ACBrNFSeX1.NotasFiscais.Count) then
+         raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [aIndex]));
 
-      if DM.ACBrNFSeX1.NotasFiscais.Items[AIndex].GravarXML(ANomeArquivo, APathArquivo) then
+      if NFSeDM.ACBrNFSeX1.NotasFiscais.Items[aIndex].GravarXML(ANomeArquivo, APathArquivo) then
         Result := SetRetorno(ErrOK)
       else
         Result := SetRetorno(ErrGerarXml);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -266,12 +268,12 @@ begin
   try
     GravarLog('NFSE_LimparLista', logNormal);
 
-    DM.Travar;
+    NFSeDM.Travar;
     try
-      DM.ACBrNFSeX1.NotasFiscais.Clear;
-      Result := SetRetornoNFSeRPSCarregadas(DM.ACBrNFSeX1.NotasFiscais.Count);
+      NFSeDM.ACBrNFSeX1.NotasFiscais.Clear;
+      Result := SetRetornoNFSeRPSCarregadas(NFSeDM.ACBrNFSeX1.NotasFiscais.Count);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -289,16 +291,16 @@ begin
   try
     GravarLog('NFSE_ObterCertificados', logNormal);
 
-    DM.Travar;
+    NFSeDM.Travar;
 
     try
       Resposta := '';
-      Resposta := ObterCerticados(DM.ACBrNFSeX1.SSL);
+      Resposta := ObterCerticados(NFSeDM.ACBrNFSeX1.SSL);
       Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -309,8 +311,7 @@ begin
   end;
 end;
 
-function TACBrLibNFSe.Emitir(const aLote, aModoEnvio: longint; aImprimir: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.Emitir(const aLote: PChar; aModoEnvio: longint; aImprimir: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resp: TEmiteResposta;
   Response: TNFSeEmiteResponse;
@@ -322,15 +323,15 @@ begin
       ModoEnvio := TmodoEnvio.meAutomatico;
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFSE_Emitir(' + IntToStr(aLote) + ',' + ModoEnvioToStr(ModoEnvio) +
+      GravarLog('NFSE_Emitir(' + aLote + ',' + ModoEnvioToStr(ModoEnvio) +
                  ',' + BoolToStr(aImprimir, True) + ' )', logCompleto, True)
     else
       GravarLog('NFSE_Emitir', logNormal);
 
-    DM.Travar;
+    NFSeDM.Travar;
 
     try
-      Response := DM.ACBrNFSeX1.Emitir(aLote, ModoEnvio, aImprimir);
+      NFSeDM.ACBrNFSeX1.Emitir(aLote, ModoEnvio, aImprimir);
       Resp := TEmiteResposta.Create(Config.TipoResposta, Config.CodResposta);
       Resp.Processar(Response);
 
@@ -338,7 +339,7 @@ begin
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
       Resp.Free;
       Response.Free;
     end;
@@ -351,7 +352,7 @@ begin
   end;
 end;
 
-function TACBrLibNFSe.ConsultarSituacao(const AProtocolo, ANumLote, sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarSituacao(const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
 var
   Resp: TConsultaSituacaoResposta;
   Response: TNFSeConsultaSituacaoResponse;
@@ -359,18 +360,18 @@ var
   Resposta: Ansistring;
 begin
   try
-    Protocolo := ConverterAnsiParaUTF8(AProtocolo);
-    NumLote := ConverterAnsiParaUTF8(ANumLote);
+    Protocolo := ConverterAnsiParaUTF8(aProtocolo);
+    NumLote := ConverterAnsiParaUTF8(aNumLote);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarSituacao(' + Protocolo + ',' + NumLote + ' )', logCompleto, True)
     else
       GravarLog('NFSE_ConsultarSituacao', logNormal);
 
-    DM.Travar;
+    NFSeDM.Travar;
 
     try
-      Response := DM.ACBrNFSeX1.ConsultarSituacao(Protocolo, NumLote);
+      NFSeDM.ACBrNFSeX1.ConsultarSituacao(Protocolo, NumLote);
       Resp := TConsultaSituacaoResposta.Create(Config.TipoResposta, Config.CodResposta);
       Resp.Processar(Response);
 
@@ -378,7 +379,7 @@ begin
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
       Resp.Free;
       Response.Free;
     end;
@@ -391,7 +392,7 @@ begin
   end;
 end;
 
-function TACBrLibNFSe.ConsultarLoteRps(const AProtocolo, ANumLote, sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarLoteRps(const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
 var
   Resp: TConsultaSituacaoResposta;
   Response: TNFSeConsultaLoteRpsResponse;
@@ -399,26 +400,26 @@ var
   Resposta: Ansistring;
 begin
   try
-    Protocolo := ConverterAnsiParaUTF8(AProtocolo);
-    NumLote := ConverterAnsiParaUTF8(ANumLote);
+    Protocolo := ConverterAnsiParaUTF8(aProtocolo);
+    NumLote := ConverterAnsiParaUTF8(aNumLote);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarLoteRps(' + Protocolo + ',' + NumLote + ' )', logCompleto, True)
     else
       GravarLog('NFSE_ConsultarLoteRps', logNormal);
 
-    DM.Travar;
+    NFSeDM.Travar;
 
     try
-      Response := DM.ACBrNFSeX1.ConsultarLoteRps(Protocolo, NumLote);
-      //Resp := TConsultaSituacaoResposta.Create(Config.TipoResposta, Config.CodResposta);
+      NFSeDM.ACBrNFSeX1.ConsultarLoteRps(Protocolo, NumLote);
+      Resp := TConsultaSituacaoResposta.Create(Config.TipoResposta, Config.CodResposta);
       //Resp.Processar(Response);
 
-      //Resposta := Resp.Gerar;
+      Resposta := Resp.Gerar;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
-      DM.Destravar;
+      NFSeDM.Destravar;
       Resp.Free;
       Response.Free;
     end;
@@ -429,6 +430,26 @@ begin
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
   end;
+end;
+
+function TACBrLibNFSe.ConsultarNFSeporRps(const aNumeroRps, aSerie, aTipo, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
+begin
+
+end;
+
+function TACBrLibNFSe.ConsultarNFSeporNumero(const aNumero:PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+begin
+
+end;
+
+function TACBrLibNFSe.ConsultarNFSeporPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: integer; aNumeroLote: PChar; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+begin
+
+end;
+
+function TACBrLibNFSe.ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+begin
+
 end;
 
 end.

@@ -5,7 +5,7 @@
 {                                                                               }
 { Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida                }
 {                                                                               }
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                 }
+{ Colaboradores nesse arquivo: Antonio Carlos Junior                            }
 {                                                                               }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr       }
@@ -70,7 +70,12 @@ exports
   NFSE_ObterCertificados,
 
   NFSE_Emitir,
-  NFSE_ConsultarSituacao;
+  NFSE_ConsultarSituacao,
+  NFSE_ConsultarLoteRps,
+  NFSE_ConsultarNFSePorRps,
+  NFSE_ConsultarNFSePorNumero,
+  NFSE_ConsultarNFSePorPeriodo,
+  NFSE_ConsultarNFSePorFaixa;
 
 begin
   {$IFDEF DEBUG}

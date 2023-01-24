@@ -92,7 +92,7 @@ Var
   I: Integer;
   Item: TACBrLibRespostaBase;
 begin
-
+  Result := '';
   For I := 0 to High(Items) do
   begin
     Item := Items[I] as TACBrLibRespostaBase;
@@ -150,7 +150,7 @@ Var
   ListItem: TObject;
   FValue: Extended;
   Propertie: TRttiProperty;
-  AValue, ARValue: TValue;
+  AValue: TValue;
 begin
   PropList := TPropInfoList.Create(Target, tkProperties);
   try
@@ -316,124 +316,129 @@ begin
   try
     for Propertie in PropList.GetProperties do
     begin
-      if not Propertie.IsReadable then continue;
+      try
+        if (not Propertie.IsReadable) then
+        continue;
 
-      AValue := Propertie.GetValue(Target);
-      case AValue.Kind of
-        tkClass:
-          begin
-            ClassObject := AValue.AsObject;
-            if not Assigned(ClassObject) or (ClassObject = nil) then continue;
-
-            if (ClassObject.InheritsFrom(TCollection)) then
+        AValue := Propertie.GetValue(Target);
+        case AValue.Kind of
+          tkClass:
             begin
-              CollectionObject := TCollection(ClassObject);
-              for i := 0 to CollectionObject.Count - 1 do
+              ClassObject := AValue.AsObject;
+              if not Assigned(ClassObject) or (ClassObject = nil) then continue;
+
+              if (ClassObject.InheritsFrom(TCollection)) then
               begin
-                CollectionItem := CollectionObject.Items[i];
-
-                if ASufix.IsEmpty then
-                  FSufix := String.Format(CSufixFormat, [i+1])
-                else
-                  FSufix :=  String.Format(CSessionFormat, [ASufix, i+1]);
-
-                FSessao := Propertie.Name + FSufix;
-                GravarIni(AIni, FSessao, CollectionItem, FSufix);
-              end;
-            end
-            else if (ClassObject.InheritsFrom(TList)) then
-            begin
-              ListObject := TList(ClassObject);
-              for i := 0 to ListObject.Count - 1 do
-              begin
-                ListItem := ListObject.Items[i];
-
-                if (ListItem.InheritsFrom(TACBrLibRespostaBase)) then
+                CollectionObject := TCollection(ClassObject);
+                for i := 0 to CollectionObject.Count - 1 do
                 begin
-                  FSessao := TACBrLibRespostaBase(ListItem).Sessao;
-                  FSufix := '';
-                end
-                else
-                begin
+                  CollectionItem := CollectionObject.Items[i];
+
                   if ASufix.IsEmpty then
                     FSufix := String.Format(CSufixFormat, [i+1])
                   else
                     FSufix :=  String.Format(CSessionFormat, [ASufix, i+1]);
 
                   FSessao := Propertie.Name + FSufix;
+                  GravarIni(AIni, FSessao, CollectionItem, FSufix);
                 end;
+              end
+              else if (ClassObject.InheritsFrom(TList)) then
+              begin
+                ListObject := TList(ClassObject);
+                for i := 0 to ListObject.Count - 1 do
+                begin
+                  ListItem := ListObject.Items[i];
 
-                GravarIni(AIni, FSessao, ListItem, FSufix);
+                  if (ListItem.InheritsFrom(TACBrLibRespostaBase)) then
+                  begin
+                    FSessao := TACBrLibRespostaBase(ListItem).Sessao;
+                    FSufix := '';
+                  end
+                  else
+                  begin
+                    if ASufix.IsEmpty then
+                      FSufix := String.Format(CSufixFormat, [i+1])
+                    else
+                      FSufix :=  String.Format(CSessionFormat, [ASufix, i+1]);
+
+                    FSessao := Propertie.Name + FSufix;
+                  end;
+
+                  GravarIni(AIni, FSessao, ListItem, FSufix);
+                end;
+              end
+              else
+              begin
+                if (ClassObject.InheritsFrom(TACBrLibRespostaBase)) then
+                  GravarIni(AIni, TACBrLibRespostaBase(ClassObject).Sessao, ClassObject)
+                else
+                  GravarIni(AIni, Propertie.Name, ClassObject);
               end;
-            end
-            else
-            begin
-              if (ClassObject.InheritsFrom(TACBrLibRespostaBase)) then
-                GravarIni(AIni, TACBrLibRespostaBase(ClassObject).Sessao, ClassObject)
-              else
-                GravarIni(AIni, Propertie.Name, ClassObject);
             end;
-          end;
-        tkArray,
-        tkDynArray:
-          begin
-            //Aparentemente ainda não funciona direito apesar de ter colocado um TObject da erro ao fazer cast.
-            for i := 0 to Pred(AValue.GetArrayLength) do
+          tkArray,
+          tkDynArray:
             begin
-              ARValue := AValue.GetArrayElement(i);
-              ClassObject := ARValue.AsObject;
-              if not Assigned(ClassObject) or (ClassObject = nil) then continue;
+              //Aparentemente ainda não funciona direito apesar de ter colocado um TObject da erro ao fazer cast.
+              for i := 0 to Pred(AValue.GetArrayLength) do
+              begin
+                ARValue := AValue.GetArrayElement(i);
+                ClassObject := ARValue.AsObject;
+                if not Assigned(ClassObject) or (ClassObject = nil) then continue;
 
-              if (ClassObject.InheritsFrom(TACBrLibRespostaBase)) then
-                GravarIni(AIni, TACBrLibRespostaBase(ClassObject).Sessao, ClassObject)
-              else
-                GravarIni(AIni, Propertie.Name + IntToStr(i), ClassObject);
+                if (ClassObject.InheritsFrom(TACBrLibRespostaBase)) then
+                  GravarIni(AIni, TACBrLibRespostaBase(ClassObject).Sessao, ClassObject)
+                else
+                  GravarIni(AIni, Propertie.Name + IntToStr(i), ClassObject);
+              end;
             end;
-          end;
-        tkSet:
-            AIni.WriteStringLine(ASessao, Propertie.Name, GetSetProp(Target, Propertie.Name, True));
-        tkBool:
-          AIni.WriteBool(ASessao, Propertie.Name, AValue.AsBoolean);
-        tkEnumeration:
-          AIni.WriteInteger(ASessao, Propertie.Name, AValue.AsOrdinal);
-        tkInteger:
-          AIni.WriteInteger(ASessao, Propertie.Name, AValue.AsInteger);
-        tkInt64:
-          AIni.WriteInt64(ASessao, Propertie.Name, AValue.AsInt64);
-        tkWString,
-        tkUString,
-        tkSString,
-        tkLString,
-        tkAString:
-          AIni.WriteStringLine(ASessao, Propertie.Name, AValue.AsString);
-        tkFloat:
-          begin
-            FValue := AValue.AsExtended;
+          tkSet:
+              AIni.WriteStringLine(ASessao, Propertie.Name, GetSetProp(Target, Propertie.Name, True));
+          tkBool:
+            AIni.WriteBool(ASessao, Propertie.Name, AValue.AsBoolean);
+          tkEnumeration:
+            AIni.WriteInteger(ASessao, Propertie.Name, AValue.AsOrdinal);
+          tkInteger:
+            AIni.WriteInteger(ASessao, Propertie.Name, AValue.AsInteger);
+          tkInt64:
+            AIni.WriteInt64(ASessao, Propertie.Name, AValue.AsInt64);
+          tkWString,
+          tkUString,
+          tkSString,
+          tkLString,
+          tkAString:
+            AIni.WriteStringLine(ASessao, Propertie.Name, AValue.AsString);
+          tkFloat:
+            begin
+              FValue := AValue.AsExtended;
 
-            if AValue.IsType<TDate>() then
-            begin
-              if (FValue > 0) then
-                AIni.WriteDate(ASessao, Propertie.Name, FValue)
+              if AValue.IsType<TDate>() then
+              begin
+                if (FValue > 0) then
+                  AIni.WriteDate(ASessao, Propertie.Name, FValue)
+                else
+                  AIni.WriteString(ASessao, Propertie.Name, '');
+              end
+              else if AValue.IsType<TTime>() then
+              begin
+                if (FValue > 0) then
+                  AIni.WriteTime(ASessao, Propertie.Name, FValue)
+                else
+                  AIni.WriteString(ASessao, Propertie.Name, '');
+              end
+              else if AValue.IsType<TDateTime>() then
+              begin
+                if (FValue > 0) then
+                  AIni.WriteDateTime(ASessao, Propertie.Name, FValue)
+                else
+                  AIni.WriteString(ASessao, Propertie.Name, '');
+              end
               else
-                AIni.WriteString(ASessao, Propertie.Name, '');
-            end
-            else if AValue.IsType<TTime>() then
-            begin
-              if (FValue > 0) then
-                AIni.WriteTime(ASessao, Propertie.Name, FValue)
-              else
-                AIni.WriteString(ASessao, Propertie.Name, '');
-            end
-            else if AValue.IsType<TDateTime>() then
-            begin
-              if (FValue > 0) then
-                AIni.WriteDateTime(ASessao, Propertie.Name, FValue)
-              else
-                AIni.WriteString(ASessao, Propertie.Name, '');
-            end
-            else
-              AIni.WriteFloat(ASessao, Propertie.Name, FValue);
-          end;
+                AIni.WriteFloat(ASessao, Propertie.Name, FValue);
+            end;
+        end;
+      finally
+        Propertie.Free;
       end;
     end;
   finally
@@ -469,7 +474,7 @@ var
   ListItem: TObject;
   FValue: Extended;
   Propertie: TRttiProperty;
-  AValue, ARValue: TValue;
+  AValue: TValue;
 begin
   if Target = nil then Exit;
   if Target.ClassType = nil then Exit;

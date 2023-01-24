@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] Alterada as URLs da cidade Piloes/PB.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDAFSEFR --
 [*] Alteração visando imprimir a UF alem do nome do municipio.
    Por: Microsys Sistemas

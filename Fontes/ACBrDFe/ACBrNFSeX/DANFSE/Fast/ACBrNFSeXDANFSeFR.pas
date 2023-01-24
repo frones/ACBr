@@ -1093,6 +1093,7 @@ begin
 
           try
             xMunicipio := ObterNomeMunicipio(MunicipioIncidencia, xUF);
+			xMunicipio := xMunicipio + '/' + xUF;
           except
             on E:Exception do
             begin
@@ -1106,6 +1107,7 @@ begin
 
         try
           xMunicipio := ObterNomeMunicipio(strToIntDef(Servico.CodigoMunicipio,0), xUF);
+          xMunicipio := xMunicipio + '/' + xUF;
         except
           on E:Exception do
           begin

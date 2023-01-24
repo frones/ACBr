@@ -41,11 +41,18 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+
+24/01/2023
+-- ACBrNFSeXDAFSEFR --
+[*] Alteração visando imprimir a UF alem do nome do municipio.
+   Por: Microsys Sistemas
+
 23/01/2023
 -- ACBrNFSeXServicos.ini --
 [*] Alterada as URLs e a versão para cidade de Anapolis/GO, provedor ainda é o ISSNet.
    Por: PrimeSoftware
-   
+
 20/01/2023
 -- ACBrNFSeXServicos.ini --
 [*] Corrigida a URL de produção da cidade de Chapecó/SC

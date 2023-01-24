@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/01/2023
+-- PublicSoft.Provider/PublicSoft.GravarXml/PublicSoft.LerXml --
+[*] Ajustes na implementação do provedor PublicSoft
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Alterada as URLs da cidade Piloes/PB.
    Por: Italo Giurizzato Junior

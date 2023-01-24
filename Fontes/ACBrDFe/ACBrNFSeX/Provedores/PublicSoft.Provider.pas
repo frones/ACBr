@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -33,38 +33,36 @@
 {$I ACBr.inc}
 
 unit PublicSoft.Provider;
-{
-  Trocar todas as ocorrencias de "PublicSoft" pelo nome do provedor
-}
 
 interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase,
-  ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrBase, ACBrXmlBase, ACBrXmlDocument,
+  ACBrNFSeXClass, ACBrNFSeXConversao, ACBrNFSeXConsts,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebservicePublicSoft203 = class(TACBrNFSeXWebserviceSoap11)
+  private
+    SetHeaderTokenPrefeitura: Boolean;
+
+  protected
+    function GerarXmlHeader: string;
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function GerarToken(ACabecalho, AMSG: String): string; override;
 
-    {
-      Descomente a linha abaixo para definir um tratamento para o XML
-      retornado caso seja necessário.
-    }
-//    function TratarXmlRetornado(const aXML: string): string; override;
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderPublicSoft203 = class (TACBrNFSeProviderABRASFv2)
@@ -75,12 +73,21 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
+    procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
+
+    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
+
+var
+  xToken: string;
 
 implementation
 
 uses
   ACBrDFeException,
+  ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.FilesIO,
+  ACBrNFSeXConfiguracoes,
   PublicSoft.GravarXml, PublicSoft.LerXml;
 
 { TACBrNFSeProviderPublicSoft203 }
@@ -88,32 +95,20 @@ uses
 procedure TACBrNFSeProviderPublicSoft203.Configuracao;
 begin
   inherited Configuracao;
-  {
-     Todos os parâmetros de configuração estão com os seus valores padrões.
 
-     Se a configuração padrão atende o provedor ela pode ser excluida dessa
-     procedure.
+  with ConfigAssinar do
+  begin
+    Rps               := True;
+    LoteRps           := True;
+    CancelarNFSe      := True;
+    RpsGerarNFSe      := True;
+    RpsSubstituirNFSe := True;
+    SubstituirNFSe    := True;
+  end;
 
-     Portanto deixe somente os parâmetros de configuração que foram alterados
-     para atender o provedor.
-  }
-
-  // Inicializa os parâmetros de configuração: Geral
+  (*
   with ConfigGeral do
   begin
-    UseCertificateHTTP := True;
-    UseAuthorizationHeader := False;
-    NumMaxRpsGerar  := 1;
-    NumMaxRpsEnviar := 50;
-
-    TabServicosExt := False;
-    Identificador := 'Id';
-    QuebradeLinha := ';';
-
-    // meLoteAssincrono, meLoteSincrono ou meUnitario
-    ModoEnvio := meLoteSincrono;
-
-    ConsultaSitLote := False;
     ConsultaLote := True;
     ConsultaNFSe := True;
 
@@ -125,180 +120,11 @@ begin
     CancPreencherCodVerificacao := False;
   end;
 
-  // Inicializa os parâmetros de configuração: WebServices
-  with ConfigWebServices do
-  begin
-    VersaoDados := '2.00';
-    VersaoAtrib := '2.00';
-    AtribVerLote := 'versao';
-  end;
-
-  // Define o NameSpace utilizado por todos os serviços disponibilizados pelo
-  // provedor
-  SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
-
-  // Inicializa os parâmetros de configuração: Mensagem de Dados
   with ConfigMsgDados do
   begin
-    // Usado na tag raiz dos XML de envio do Lote, Consultas, etc.
-    Prefixo := '';
-
     UsarNumLoteConsLote := False;
-
-    DadosCabecalho := GetCabecalho('');
-
-    { caso tenha um cabeçalho fora do padrão montar ele conforme exemplo abaixo
-
-    DadosCabecalho := '<cabecalho versao="2.00" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                      '<versaoDados>2.00</versaoDados>' +
-                      '</cabecalho>';
-    }
-
-    // Usado para geração do Xml do Rps
-    with XmlRps do
-    begin
-      // Define o NameSpace do XML do Rps, sobrepõe a definição global: SetXmlNameSpace
-      xmlns := '';
-      InfElemento := 'InfDeclaracaoPrestacaoServico';
-      DocElemento := 'Rps';
-    end;
-
-    // Usado para geração do Envio do Lote em modo assíncrono
-    with LoteRps do
-    begin
-      xmlns := '';
-      InfElemento := 'LoteRps';
-      DocElemento := 'EnviarLoteRpsEnvio';
-    end;
-
-    // Usado para geração do Envio do Lote em modo Sincrono
-    with LoteRpsSincrono do
-    begin
-      xmlns := '';
-      InfElemento := 'LoteRps';
-      DocElemento := 'EnviarLoteRpsSincronoEnvio';
-    end;
-
-    // Usado para geração da Consulta a Situação do Lote
-    with ConsultarSituacao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarSituacaoLoteRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta do Lote
-    with ConsultarLote do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarLoteRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta da NFSe por RPS
-    with ConsultarNFSeRps do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta da NFSe
-    with ConsultarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseEnvio';
-    end;
-
-    // Usado para geração do Cancelamento
-    with CancelarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'InfPedidoCancelamento';
-      DocElemento := 'Pedido';
-    end;
-
-    // Usado para geração do Gerar
-    with GerarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'GerarNfseEnvio';
-    end;
-
-    // Usado para geração do Substituir
-    with SubstituirNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'SubstituicaoNfse';
-      DocElemento := 'SubstituirNfseEnvio';
-    end;
-
-    // Usado para geração da Abertura de Sessão
-    with AbrirSessao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
-
-    // Usado para geração do Fechamento de Sessão
-    with FecharSessao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
   end;
-
-  // Inicializa os parâmetros de configuração: Assinar
-  with ConfigAssinar do
-  begin
-    Rps               := False;
-    LoteRps           := False;
-    ConsultarSituacao := False;
-    ConsultarLote     := False;
-    ConsultarNFSeRps  := False;
-    ConsultarNFSe     := False;
-    CancelarNFSe      := False;
-    RpsGerarNFSe      := False;
-    LoteGerarNFSe     := False;
-    RpsSubstituirNFSe := False;
-    SubstituirNFSe    := False;
-    AbrirSessao       := False;
-    FecharSessao      := False;
-
-    IncluirURI := True;
-
-    AssinaturaAdicional := False;
-  end;
-
-  // Define o nome do arquivo XSD utilizado para todos os serviços disponibilizados
-  // pelo provedor
-  SetNomeXSD('nfse.xsd');
-
-  // Define o nome do arquivo XSD para cada serviços disponibilizado pelo
-  // provedor
-  with ConfigSchemas do
-  begin
-    Recepcionar := 'nfse.xsd';
-    ConsultarSituacao := 'nfse.xsd';
-    ConsultarLote := 'nfse.xsd';
-    ConsultarNFSeRps := 'nfse.xsd';
-    ConsultarNFSe := 'nfse.xsd';
-    ConsultarNFSePorFaixa := 'nfse.xsd';
-    ConsultarNFSeServicoPrestado := 'nfse.xsd';
-    ConsultarNFSeServicoTomado := 'nfse.xsd';
-    CancelarNFSe := 'nfse.xsd';
-    GerarNFSe := 'nfse.xsd';
-    RecepcionarSincrono := 'nfse.xsd';
-    SubstituirNFSe := 'nfse.xsd';
-    AbrirSessao := 'nfse.xsd';
-    FecharSessao := 'nfse.xsd';
-    Teste := 'nfse.xsd';
-    Validar := True;
-  end;
+  *)
 end;
 
 function TACBrNFSeProviderPublicSoft203.CriarGeradorXml(
@@ -333,189 +159,311 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderPublicSoft203.PrepararGerarToken(
+  Response: TNFSeGerarTokenResponse);
+begin
+  Response.Clear;
+
+  Response.ArquivoEnvio := '';
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.TratarRetornoGerarToken(
+  Response: TNFSeGerarTokenResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
+begin
+  xToken := SeparaDados(Response.ArquivoRetorno, 'Mensagem');
+
+  if Pos('Bearer', xToken) = 0 then
+  begin
+    Document := TACBrXmlDocument.Create;
+
+    try
+      try
+        if Response.ArquivoRetorno = '' then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod201;
+          AErro.Descricao := ACBrStr(Desc201);
+          Exit
+        end;
+
+        Document.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := Document.Root;
+
+        ProcessarMensagemErros(ANode, Response);
+
+        Response.Sucesso := (Response.Erros.Count = 0);
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := ACBrStr(Desc999 + E.Message);
+        end;
+      end;
+    finally
+      FreeAndNil(Document);
+    end;
+  end
+  else
+    Response.Token := xToken;
+end;
+
+procedure TACBrNFSeProviderPublicSoft203.ValidarSchema(
+  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
+begin
+  if aMetodo <> tmGerarToken then
+  begin
+    inherited ValidarSchema(Response, aMetodo);
+  end;
+end;
+
 { TACBrNFSeXWebservicePublicSoft203 }
+
+function TACBrNFSeXWebservicePublicSoft203.GerarXmlHeader: string;
+var
+  Producao: Boolean;
+  aToken: string;
+begin
+  Producao := (TConfiguracoesNFSe(FPConfiguracoes).WebServices.AmbienteCodigo = 1);
+
+  if SetHeaderTokenPrefeitura then
+    aToken := TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAcesso
+  else
+    aToken := xToken;
+
+  Result := '<producao xsi:type="xsd:boolean">' + BoolToStr(Producao, True) + '</producao>' +
+            '<token xsi:type="xsd:string">' + aToken + '</token>' +
+            '<codigoCidade xsi:type="xsd:string">' +              IntToStr(TConfiguracoesNFSe(FPConfiguracoes).Geral.CodigoMunicipio) +            '</codigoCidade>';end;
 
 function TACBrNFSeXWebservicePublicSoft203.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:RecepcionarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
+  Request := '<urn:EnviarLoteRpsEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+  Request := Request + '</urn:EnviarLoteRpsEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
-                     ['outputXML', 'EnviarLoteRpsResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.EnviarLoteRpsEnvio#EnviarLoteRpsEnvio', Request,
+                     xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.EnviarLoteRpsEnvio"']);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:RecepcionarLoteRpsSincronoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:RecepcionarLoteRpsSincronoRequest>';
+  Request := '<urn:EnviarLoteRpsSincronoEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</urn:EnviarLoteRpsSincronoEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono', Request,
-                     ['outputXML', 'EnviarLoteRpsSincronoResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.EnviarLoteRpsSincronoEnvio#EnviarLoteRpsSincronoEnvio',
+                     Request, xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.EnviarLoteRpsSincronoEnvio"']);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:GerarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:GerarNfseRequest>';
+  Request := '<urn:GerarNfseEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</urn:GerarNfseEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/GerarNfse', Request,
-                     ['outputXML', 'GerarNfseResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.GerarNfseEnvio#GerarNfseEnvio', Request,
+                     xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.GerarNfseEnvio"']);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:ConsultarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarLoteRpsRequest>';
+  Request := '<urn:ConsultarLoteRpsEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</urn:ConsultarLoteRpsEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarLoteRps', Request,
-                     ['outputXML', 'ConsultarLoteRpsResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
-end;
-
-function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSePorFaixa(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfse:ConsultarNfsePorFaixaRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarNfsePorFaixaRequest>';
-
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorFaixa', Request,
-                     ['outputXML', 'ConsultarNfseFaixaResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.ConsultarLoteRpsEnvio#ConsultarLoteRpsEnvio',
+                     Request, xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.ConsultarLoteRpsEnvio"']);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:ConsultarNfsePorRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarNfsePorRpsRequest>';
+  Request := '<urn:ConsultarNfseRpsEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</urn:ConsultarNfseRpsEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
-                     ['outputXML', 'ConsultarNfseRpsResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.ConsultarNfseRpsEnvio#ConsultarNfseRpsEnvio',
+                     Request, xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.ConsultarNfseRpsEnvio"']);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:ConsultarNfseServicoPrestadoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarNfseServicoPrestadoRequest>';
+  Request := '<urn:ConsultarNfseServicoPrestadoEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</urn:ConsultarNfseServicoPrestadoEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado', Request,
-                     ['outputXML', 'ConsultarNfseServicoPrestadoResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.ConsultarNfseServicoPrestadoEnvio#ConsultarNfseServicoPrestadoEnvio',
+                     Request, xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.ConsultarNfseServicoPrestadoEnvio"']);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:ConsultarNfseServicoTomadoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarNfseServicoTomadoRequest>';
+  Request := '<urn:ConsultarNfseServicoTomadoEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</urn:ConsultarNfseServicoTomadoEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoTomado', Request,
-                     ['outputXML', 'ConsultarNfseServicoTomadoResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.ConsultarNfseServicoTomadoEnvio#ConsultarNfseServicoTomadoEnvio',
+                     Request, xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.ConsultarNfseServicoTomadoEnvio"']);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.Cancelar(ACabecalho, AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:CancelarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:CancelarNfseRequest>';
+  Request := '<urn:CancelarNfseEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</urn:CancelarNfseEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/CancelarNfse', Request,
-                     ['outputXML', 'CancelarNfseResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.CancelarNfseEnvio#CancelarNfseEnvio',
+                     Request, xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.CancelarNfseEnvio"']);
 end;
 
 function TACBrNFSeXWebservicePublicSoft203.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, xHeader: string;
 begin
+  SetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-  Request := '<nfse:SubstituirNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:SubstituirNfseRequest>';
+  Request := '<urn:SubstituirNfseEnvio soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</urn:SubstituirNfseEnvio>';
 
-  Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
-                     ['outputXML', 'SubstituirNfseResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('urn:index.SubstituirNfseEnvio#SubstituirNfseEnvio',
+                     Request, xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.SubstituirNfseEnvio"']);
 end;
 
-    {
-      Descomente a definição da function abaixo para definir um tratamento para
-      o XML retornado caso seja necessário.
-    }
+function TACBrNFSeXWebservicePublicSoft203.GerarToken(ACabecalho,
+  AMSG: String): string;
+var
+  Request, xHeader: string;
+begin
+  SetHeaderTokenPrefeitura := True;
+  FPMsgOrig := AMSG;
+  xHeader := GerarXmlHeader;
 
-{
+  Request := '<urn:GerarToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  Request := Request + '</urn:GerarToken>';
+
+  Result := Executar('urn:index.GerarToken#GerarToken',  Request, xHeader,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:urn="urn:index.GerarToken"']);
+end;
+
 function TACBrNFSeXWebservicePublicSoft203.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  if StringIsXML(aXML) then
+  begin
+    Result := inherited TratarXmlRetornado(aXML);
 
-  // Reescrever se necessário;
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := RemoverDeclaracaoXML(Result);
+    Result := RemoverCaracteresDesnecessarios(Result);
+    Result := RemoverPrefixosDesnecessarios(Result);
+  end
+  else
+  begin
+    Result := '<a>' +
+                '<ListaMensagemRetorno>' +
+                  '<MensagemRetorno>' +
+                    '<Codigo>' + '</Codigo>' +
+                    '<Mensagem>' + aXML + '</Mensagem>' +
+                    '<Correcao>' + '</Correcao>' +
+                  '</MensagemRetorno>' +
+                '</ListaMensagemRetorno>' +
+              '</a>';
+
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := String(NativeStringToUTF8(Result));
+  end;
 end;
-}
+
 end.

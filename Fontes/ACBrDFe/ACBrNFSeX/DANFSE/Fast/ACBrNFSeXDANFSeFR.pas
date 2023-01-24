@@ -1093,7 +1093,7 @@ begin
 
           try
             xMunicipio := ObterNomeMunicipio(MunicipioIncidencia, xUF);
-			xMunicipio := xMunicipio + '/' + xUF;
+            xMunicipio := xMunicipio + '/' + xUF;
           except
             on E:Exception do
             begin

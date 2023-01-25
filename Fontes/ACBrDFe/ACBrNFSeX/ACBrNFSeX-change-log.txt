@@ -45,6 +45,9 @@ Símbolo : Significado
 
 25/01/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de Itauna/MG requer que a aliquota não seja dividida por 100.
+   Por: João Antônio
+-- ACBrNFSeXServicos.ini --
 [*] A cidade de Salto de Pirapora/SP trocou de provedor, agora é AssessorPublico.
    Por: Danny
 -- ISSSaoPaulo.LerXml --

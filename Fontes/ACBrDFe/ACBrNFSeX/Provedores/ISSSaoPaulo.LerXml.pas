@@ -285,6 +285,7 @@ begin
     ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
     BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
     Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaServicos'), tcDe2);
+    Aliquota := (Aliquota * 100);
     ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorISS'), tcDe2);
     ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPIS'), tcDe2);
     ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCOFINS'), tcDe2);
@@ -309,7 +310,7 @@ begin
     BaseCalculo := NFSe.Servico.Valores.BaseCalculo;
     Aliquota := NFSe.Servico.Valores.Aliquota;
     ValorIss := NFSe.Servico.Valores.ValorIss;
-    Aliquota := (NFSe.ValoresNfse.Aliquota * 100);
+//    Aliquota := (NFSe.ValoresNfse.Aliquota * 100);
   end;
 
   NFSe.Prestador.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('RazaoSocialPrestador'), tcStr);

@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/01/2023
+-- ISSSaoPaulo.LerXml --
+[*] O provedor retora a aliquota dividada por 100, ajuste para poder imprimir
+    corretamente a aliquota.
+   Por: Italo Giurizzato Junior
+
 24/01/2023
 -- PublicSoft.Provider/PublicSoft.GravarXml/PublicSoft.LerXml --
 [*] Ajustes na implementação do provedor PublicSoft

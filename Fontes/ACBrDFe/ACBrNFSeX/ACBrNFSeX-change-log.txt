@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Salto de Pirapora/SP trocou de provedor, agora é AssessorPublico.
+   Por: Danny
 -- ISSSaoPaulo.LerXml --
 [*] O provedor retora a aliquota dividada por 100, ajuste para poder imprimir
     corretamente a aliquota.

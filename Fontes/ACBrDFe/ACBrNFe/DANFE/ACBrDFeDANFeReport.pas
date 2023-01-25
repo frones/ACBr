@@ -224,7 +224,7 @@ end;
 function TACBrDFeDANFeReport.GetSeparadorPathPDF(const aInitialPath: String): String;
 var
   dhEmissao: TDateTime;
-  DescricaoModelo: String;
+  wLiteral, DescricaoModelo: String;
   ANFe: TNFe;
 begin
   Result := aInitialPath;
@@ -241,17 +241,18 @@ begin
         dhEmissao := Now;
 
       DescricaoModelo := '';
-      if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.AdicionarLiteral then
-      begin
-        case ANFe.Ide.modelo of
-          0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
-          55: DescricaoModelo := 'NFe';
-          65: DescricaoModelo := 'NFCe';
-        end;
+      case ANFe.Ide.modelo of
+        0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
+        55: DescricaoModelo := 'NFe';
+        65: DescricaoModelo := 'NFCe';
       end;
+                       
+      wLiteral := '';
+      if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.AdicionarLiteral then
+        wLiteral := DescricaoModelo;
 
       Result := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(Result,
-        DescricaoModelo, ANFe.Emit.CNPJCPF, ANFe.Emit.IE, dhEmissao, DescricaoModelo);
+        wLiteral, ANFe.Emit.CNPJCPF, ANFe.Emit.IE, dhEmissao, DescricaoModelo);
     end;
   end;
 end;

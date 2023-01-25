@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2023
+-- ACBrDFeDANFeReport --
+[-] Correção para o parâmetro "Separar arqs pelo Modelo(NFe/NFCe)" não depender do 
+    parâmetro "Adicionar Literal no nome das pastas".
+    por: Elias César
+
 24/01/2023
 --Diversos--
 [*] TK-3485 ACBrNFe - Verificar a possibilidade de tirar dos impressos(Fast/Fortes) a mensagem fixa AREÁ DA MENSAGEM FISCAL

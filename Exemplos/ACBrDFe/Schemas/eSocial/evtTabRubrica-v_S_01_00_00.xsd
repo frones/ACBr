@@ -389,6 +389,11 @@
                                 <xs:documentation>Suspensão de incidência em decorrência de decisão judicial</xs:documentation>
                             </xs:annotation>
                         </xs:enumeration>
+                        <xs:enumeration value="92">
+                            <xs:annotation>
+                                <xs:documentation>Suspensão de incidência em decorrência de decisão judicial - 13º salário</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

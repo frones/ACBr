@@ -123,7 +123,7 @@
                                             <xs:annotation>
                                                 <xs:documentation>Sucessão do vínculo trabalhista/estatutário</xs:documentation>
                                                 <xs:documentation>DESCRICAO_COMPLETA:Grupo preenchido exclusivamente nos casos de sucessão do vínculo trabalhista, com a identificação da empresa sucessora.</xs:documentation>
-                                                <xs:documentation>CONDICAO_GRUPO: O (se {mtvDeslig}(2299_infoDeslig_mtvDeslig) = [11, 12, 13, 28, 29, 30, 37, 43]); N (nos demais casos)</xs:documentation>
+                                                <xs:documentation>CONDICAO_GRUPO: O (se {mtvDeslig}(2299_infoDeslig_mtvDeslig) = [11, 12, 13, 28, 29, 37, 43]); N (nos demais casos)</xs:documentation>
                                             </xs:annotation>
                                             <xs:complexType>
                                                 <xs:sequence>
@@ -182,7 +182,7 @@
                                             <xs:annotation>
                                                 <xs:documentation>Verbas rescisórias</xs:documentation>
                                                 <xs:documentation>DESCRICAO_COMPLETA:Grupo onde são prestadas as informações relativas às verbas devidas ao trabalhador na rescisão contratual.</xs:documentation>
-                                                <xs:documentation>CONDICAO_GRUPO: N (se {mtvDeslig}(2299_infoDeslig_mtvDeslig) = [11, 12, 13, 25, 28, 29, 30, 34, 36, 43] OU {dtDeslig}(2299_infoDeslig_dtDeslig) for anterior ao início de obrigatoriedade dos eventos periódicos para o empregador OU {tpRegTrab}(2200_vinculo_tpRegTrab) em S-2200 = [2]); OC (nos demais casos)</xs:documentation>
+                                                <xs:documentation>CONDICAO_GRUPO: N (se {mtvDeslig}(2299_infoDeslig_mtvDeslig) = [11, 12, 13, 25, 28, 29, 30, 34, 36, 43, 44] OU {dtDeslig}(2299_infoDeslig_dtDeslig) for anterior ao início de obrigatoriedade dos eventos periódicos para o empregador OU {tpRegTrab}(2200_vinculo_tpRegTrab) em S-2200 = [2]); OC (nos demais casos)</xs:documentation>
                                             </xs:annotation>
                                             <xs:complexType>
                                                 <xs:sequence>

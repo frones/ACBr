@@ -46,6 +46,7 @@
                                             <xs:annotation>
                                                 <xs:documentation>Matrícula do servidor/militar constante no Sistema de Administração de Recursos Humanos do órgão cujo vínculo deu ensejo ao benefício. No caso de pensão por morte, informar a matrícula do instituidor da pensão.</xs:documentation>
                                                 <xs:documentation>Validação: Informação obrigatória se {cadIni}(2410_infoBenInicio_cadIni) = [N] e {tpBeneficio}(2410_infoBenInicio_dadosBeneficio_tpBeneficio) pertencer ao grupo [01, 02, 03, 04, 05, 06, 11] da Tabela 25.</xs:documentation>
+                                                <xs:documentation>REGRA:REGRA_CARACTERE_ESPECIAL</xs:documentation>
                                             </xs:annotation>
                                         </xs:element>
                                         <xs:element name="cnpjOrigem" minOccurs="0" type="TS_cnpj">
@@ -98,6 +99,7 @@
                                         <xs:element name="nrBeneficio" type="TS_nrBeneficio">
                                             <xs:annotation>
                                                 <xs:documentation>Número do benefício.</xs:documentation>
+                                                <xs:documentation>REGRA:REGRA_CARACTERE_ESPECIAL</xs:documentation>
                                             </xs:annotation>
                                         </xs:element>
                                         <xs:element name="dtIniBeneficio" type="xs:date">

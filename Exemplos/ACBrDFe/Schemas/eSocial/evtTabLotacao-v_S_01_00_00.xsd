@@ -193,6 +193,7 @@
                         <xs:element name="tpInscProp" type="TS_tpInsc_1_2" minOccurs="0">
                             <xs:annotation>
                                 <xs:documentation>Tipo de inscrição do proprietário do CNO.</xs:documentation>
+                                <xs:documentation>Validação: Preenchimento obrigatório e exclusivo quando o proprietário não for encontrado no CNO.</xs:documentation>
                             </xs:annotation>
                         </xs:element>
                         <xs:element name="nrInscProp" type="TS_nrInsc_11_14" minOccurs="0">

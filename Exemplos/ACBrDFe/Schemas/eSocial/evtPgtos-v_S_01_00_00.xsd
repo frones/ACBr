@@ -20,6 +20,7 @@
                         <xs:documentation>REGRA:REGRA_EXISTE_INFO_EMPREGADOR</xs:documentation>
                         <xs:documentation>REGRA:REGRA_MESMO_PROCEMI</xs:documentation>
                         <xs:documentation>REGRA:REGRA_PAGTO_IND_RETIFICACAO</xs:documentation>
+                        <xs:documentation>REGRA:REGRA_PAGTO_PERMITE_EXCLUSAO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_VALIDA_DT_PGTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_VALIDA_EMPREGADOR</xs:documentation>
                         <xs:documentation>REGRA:REGRA_VALIDA_PER_APUR_PGTO</xs:documentation>

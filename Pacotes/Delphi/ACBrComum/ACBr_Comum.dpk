@@ -1,6 +1,7 @@
 package ACBr_Comum;
 
 {$R *.res}
+{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -13,9 +14,9 @@ package ACBr_Comum;
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
 {$OPTIMIZATION OFF}
-{$OVERFLOWCHECKS OFF}
-{$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$DEFINITIONINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -51,9 +52,6 @@ contains
   ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas',
   StrUtilsEx in '..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas',
   ACBrDelphiZXingQRCode in '..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas',
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  JsonDataObjects_ACBr in '..\..\..\Fontes\Terceiros\JsonDataObjects\Source\JsonDataObjects_ACBr.pas',
-  {$EndIf}
   Jsons in '..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas',
   ACBrJSON in '..\..\..\Fontes\ACBrComum\ACBrJSON.pas';
 

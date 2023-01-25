@@ -1,0 +1,43 @@
+package ACBr_Android;
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr Android - SecondScreen, VideoPlayer, SunmiPrinter, SunmiLeds - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  fmx,
+  ACBr_Comum;
+
+contains
+  ACBr.Androidapi.JNI in '..\..\..\Fontes\ACBrAndroid\ACBr.Androidapi.JNI.pas',
+  ACBr.Android.SecondDisplay in '..\..\..\Fontes\ACBrAndroid\ACBr.Android.SecondDisplay.pas',
+  ACBr.Android.VideoPlayer in '..\..\..\Fontes\ACBrAndroid\ACBr.Android.VideoPlayer.pas',
+  ACBr.Android.Sunmi.Leds in '..\..\..\Fontes\ACBrAndroid\ACBr.Android.Sunmi.Leds.pas',
+  ACBr.Android.Sunmi.Printer in '..\..\..\Fontes\ACBrAndroid\ACBr.Android.Sunmi.Printer.pas';
+
+end.

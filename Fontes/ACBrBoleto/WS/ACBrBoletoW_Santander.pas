@@ -41,7 +41,8 @@ uses
   ACBrBoleto,
   ACBrBoletoConversao,
   ACBrutil.XMLHTML,
-  ACBrBoletoPcnConsts;
+  ACBrBoletoPcnConsts,
+  ACBrBoletoWS.SOAP;
   
 type
   { TBoletoW_Santander }

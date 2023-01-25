@@ -36,7 +36,15 @@ unit ACBrBoletoRet_Santander;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, ACBrBoletoWS, ACBrBoletoRetorno,  ACBrUtil, DateUtils, pcnConversao;
+  Classes,
+  SysUtils,
+  ACBrBoleto,
+  ACBrBoletoWS,
+  ACBrBoletoRetorno,
+  ACBrUtil,
+  DateUtils,
+  pcnConversao,
+  ACBrBoletoWS.SOAP;
 
 type
   { TRetornoEnvio_Santander }

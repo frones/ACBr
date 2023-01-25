@@ -37,13 +37,15 @@ unit ACBrBoletoW_Itau;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoletoWS, pcnConversao, ACBrBoletoConversao, ACBrBoleto,
-//  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-//    JsonDataObjects_ACBr,
-//  {$Else}
-    Jsons,
-//  {$EndIf}
-  ACBrUtil.Base;
+  Classes,
+  SysUtils,
+  ACBrBoletoWS,
+  pcnConversao,
+  ACBrBoletoConversao,
+  ACBrBoleto,
+  Jsons,
+  ACBrUtil.Base,
+  ACBrBoletoWS.Rest;
 
 type
 

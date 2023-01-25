@@ -37,7 +37,14 @@ unit ACBrBoletoW_Caixa;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoletoWS, pcnConversao, pcnGerador, ACBrBoletoConversao, ACBrBoleto;
+  Classes,
+  SysUtils,
+  ACBrBoletoWS,
+  pcnConversao,
+  pcnGerador,
+  ACBrBoletoConversao,
+  ACBrBoleto,
+  ACBrBoletoWS.SOAP;
 
 type
 

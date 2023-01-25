@@ -37,8 +37,15 @@ unit ACBrBoletoRet_BancoBrasil;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, ACBrBoletoWS, ACBrBoletoRetorno,
-  ACBrUtil, DateUtils, pcnConversao;
+  Classes,
+  SysUtils,
+  ACBrBoleto,
+  ACBrBoletoWS,
+  ACBrBoletoRetorno,
+  ACBrUtil,
+  DateUtils,
+  pcnConversao,
+  ACBrBoletoWS.SOAP;
 
 type
 

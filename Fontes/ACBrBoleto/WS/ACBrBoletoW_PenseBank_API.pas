@@ -37,8 +37,13 @@ unit ACBrBoletoW_PenseBank_API;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoletoWS, pcnConversao, ACBrBoletoConversao,
-  Jsons;
+  Classes,
+  SysUtils,
+  ACBrBoletoWS,
+  pcnConversao,
+  ACBrBoletoConversao,
+  Jsons,
+  ACBrBoletoWS.Rest;
 
 type
   { TBoletoW_PenseBank_API }

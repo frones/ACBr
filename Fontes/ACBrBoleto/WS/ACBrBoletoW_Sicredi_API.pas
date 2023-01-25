@@ -38,9 +38,19 @@ unit ACBrBoletoW_Sicredi_API;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoletoWS, pcnConversao, ACBrBoletoConversao,
-  synacode, strutils, DateUtils, ACBrDFeSSL, synautil, ACBrBoleto,
-  Jsons;
+  Classes,
+  SysUtils,
+  ACBrBoletoWS,
+  pcnConversao,
+  ACBrBoletoConversao,
+  synacode,
+  strutils,
+  DateUtils,
+  ACBrDFeSSL,
+  synautil,
+  ACBrBoleto,
+  Jsons,
+  ACBrBoletoWS.Rest;
 
 type
 

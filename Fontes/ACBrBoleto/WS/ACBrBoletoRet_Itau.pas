@@ -37,13 +37,15 @@ unit ACBrBoletoRet_Itau;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto,ACBrBoletoWS, ACBrBoletoRetorno,
-//  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-//    JsonDataObjects_ACBr,
-//  {$Else}
-    Jsons,
-//  {$EndIf}
-   DateUtils, pcnConversao;
+  Classes,
+  SysUtils,
+  ACBrBoleto,
+  ACBrBoletoWS,
+  ACBrBoletoRetorno,
+  Jsons,
+  DateUtils,
+  ACBrBoletoWS.Rest,
+  pcnConversao;
 
 type
 

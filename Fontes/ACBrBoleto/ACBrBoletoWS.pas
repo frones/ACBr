@@ -36,13 +36,26 @@ unit ACBrBoletoWS;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, pcnGerador, pcnLeitor, ACBrUtil.Strings, pcnConversao, synacode, synautil,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    JsonDataObjects_ACBr,
-  {$Else}
-    Jsons,
-  {$EndIf}
-  ACBrBoletoConversao, ACBrBoletoRetorno, ACBrDFeSSL, dateutils, strutils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.XMLHTML;
+  Classes,
+  SysUtils,
+  ACBrBoleto,
+  pcnGerador,
+  pcnLeitor,
+  ACBrUtil.Strings,
+  pcnConversao,
+  synacode,
+  synautil,
+  ACBrJSON,
+  ACBrBoletoConversao,
+  ACBrBoletoRetorno,
+  ACBrDFeSSL,
+  dateutils,
+  strutils,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.XMLHTML,
+  httpsend,
+  ACBrBoletoWS.Rest.OAuth;
 
 type
 
@@ -51,70 +64,22 @@ type
   TBoletoWS = class;
   TRetornoEnvioClass = class;
 
-  { TOAuth }
-  TOAuth = class
-  private
-    FSSL : TDFeSSL;
-    FURL : String;
-    FContentType : String;
-    FGrantType : String;
-    FScope : String;
-    FAmbiente : TpcnTipoAmbiente;
-    FClientID : String;
-    FClientSecret : String;
-    FToken : String;
-    FExpire : TDateTime;
-    FErroComunicacao : String;
-    FPayload : Boolean;
 
-    procedure setURL(const AValue: String);
-    procedure setContentType(const AValue: String);
-    procedure setGrantType(const AValue: String);
-    procedure setPayload(const AValue: Boolean);
-
-    function getURL: String;
-    function getContentType: String;
-    function getGrantType: String;
-    function getClientID : String;
-    function getClientSecret : String;
-    function getScope : String;
-
-    procedure ProcessarRespostaOAuth(const ARetorno: AnsiString);
-    function Executar(const AAuthBase64: String): Boolean;
-
-  public
-    constructor Create(ASSL: TDFeSSL; ATipoAmbiente: TpcnTipoAmbiente; AClientID, AClientSecret, AScope: String );
-    destructor  Destroy; Override;
-
-    function GerarToken: Boolean;
-
-    property SSL : TDFeSSL read FSSL;
-    property URL : String read getURL write setURL;
-    property ContentType : String read getContentType write setContentType;
-    property GrantType : String read getGrantType write setGrantType;
-    property Scope : String read getScope;
-    property ClientID : String read getClientID;
-    property ClientSecret : String read getClientSecret;
-    property Ambiente : TpcnTipoAmbiente read FAmbiente default taHomologacao;
-    property Expire : TDateTime read FExpire;
-    property ErroComunicacao : String read FErroComunicacao;
-    property Token : String read FToken;
-    property Payload : Boolean read FPayLoad write setPayload;
-
-  end;
 
   { TBoletoWSClass }
   TBoletoWSClass = class
   private
-    FDFeSSL: TDFeSSL;
-    FBoletoWS: TBoletoWS;
     FGerador: TGerador;
     FBoleto: TACBrBoleto;
+    FTitulo: TACBrTitulo;
+    FDFeSSL: TDFeSSL;
+    FHTTPSend: THTTPSend;
+    FBoletoWS: TBoletoWS;
     FRetornoBanco: TRetornoEnvioClass;
     FOAuth : TOAuth;
-    FTitulo: TACBrTitulo;
 
   protected
+
     FRetornoWS: String;
     FPDadosMsg: String;
     FTipoRegistro: String;
@@ -122,13 +87,14 @@ type
     function GerarRemessa: String; virtual;
     function Enviar: Boolean; virtual;
 
-    property DFeSSL: TDFeSSL read FDFeSSL;
+    property DFeSSL: TDFeSSL read FDFeSSL write FDFeSSL;
+    property HTTPSend: THTTPSend read FHTTPSend write FHTTPSend;
     property BoletoWS: TBoletoWS read FBoletoWS;
     property Gerador: TGerador read FGerador;
     property Boleto: TACBrBoleto read FBoleto;
     property ATitulo: TACBrTitulo read FTitulo;
-    property RetornoBanco: TRetornoEnvioClass read FRetornoBanco;
-    property OAuth: TOAuth read FOAuth;
+    property RetornoBanco: TRetornoEnvioClass read FRetornoBanco write FRetornoBanco;
+    property OAuth: TOAuth read FOAuth write FOAuth;
 
   public
     constructor Create(ABoletoWS: TBoletoWS ); virtual;
@@ -151,16 +117,17 @@ type
 
     procedure SetBanco(ABanco: TACBrTipoCobranca);
     procedure GravaLog(const AString : AnsiString );
-    procedure DoLog(const AString : String );
+
     procedure Clear;
 
   protected
+
     property Banco: TACBrTipoCobranca read FBanco write SetBanco;
 
   public
     constructor Create(AOwner: TComponent);Override;
     destructor Destroy; override;
-
+    procedure DoLog(const AString : String );
     function Enviar: Boolean; override;
     property RetornoBanco: TRetornoEnvioClass read FRetornoBanco;
 
@@ -180,7 +147,6 @@ type
     FMsg: String;
     FLeitor: TLeitor;
     FHTTPResultCode : Integer;
-
   protected
     function LerListaRetorno: Boolean; virtual;
     function LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean; virtual;
@@ -195,162 +161,51 @@ type
     constructor Create(ABoletoWS: TACBrBoleto); virtual;
     destructor  Destroy; Override;
 
-    property Msg: String read FMsg;
-    property CodRetorno: Integer read FCodRetorno;
-    property HTTPResultCode: Integer read FHTTPResultCode;
-
-  end;
-
-  { TBoletoWSSOAP }    //Bancos que utilizam XML
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}
-  TBoletoWSSOAP = class(TBoletoWSClass)
-  private
-    FPHeaderElement: String;
-
-  protected
-    FPSoapVersion: String;
-    FPSoapEnvelopeAtributtes: String;
-    FPEnvelopeSoap: String;
-    FPURL: String;
-    FPVersaoServico: String;
-    FPServico : String;
-    FPSoapAction : String;
-    FPContentType : String;
-    FPMimeType : String;
-    FPRootElement: String;
-    FPCloseRootElement: String;
-    FPAuthorization : String;
-    FSSLDigest: TSSLDgst;
-    FSSLHashOutput: TSSLHashOutput;
-
-    procedure DefinirEnvelopeSoap; virtual;
-    procedure DefinirURL; virtual;
-    procedure DefinirServicoEAction; virtual;
-    procedure DefinirContentType; virtual;
-    procedure DefinirMimeType; virtual;
-    procedure DefinirRootElement; virtual;
-    procedure DefinirAuthorization; virtual;
-
-    procedure GerarHeader; virtual;
-    procedure GerarDados; virtual;
-
-    function CalcularHash(AAut: String): String; virtual;
-    function GerarRemessa: String; override;
-    function Enviar: Boolean; override;
-
-    procedure Executar;
-
-  public
-    constructor Create(ABoletoWS: TBoletoWS); override;
-
-  end;
-
-  { TRetornoEnvioSOAP }  //Retorno Bancos que utilizam XML
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}
-  TRetornoEnvioSOAP = class(TRetornoEnvioClass)
-  private
-
-  protected
-    function RetornoEnvio(const AIndex: Integer): Boolean; Override;
-  public
-    constructor Create(ABoletoWS: TACBrBoleto); Override;
-
-  end;
-
-  { TBoletoWSREST }   //Implementar Bancos que utilizam JSON
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}
-  TBoletoWSREST = class(TBoletoWSClass)
-  private
-
-  protected
-    FPURL: String;
-    FPContentType: String;
-    FPKeyUser: String;
-    FPIdentificador: String;
-    FPAccept: String;
-    FPAuthorization: String;
-    FMetodoHTTP: TMetodoHTTP;
-
-    procedure setDefinirAccept(const AValue: String);
-    procedure setMetodoHTTP(const AValue: TMetodoHTTP);
-    procedure DefinirAuthorization; virtual;
-    procedure DefinirContentType; virtual;
-    procedure DefinirURL; virtual;
-    procedure GerarHeader; virtual;
-    procedure GerarDados; virtual;
-
-    function GerarTokenAutenticacao: String; virtual;
-    function GerarRemessa: String; override;
-    function Enviar: Boolean; override;
-
-    procedure Executar;
-
-  public
-    constructor Create(ABoletoWS: TBoletoWS); override;
-
-  end;
-
-  { TRetornoEnvioREST }  //Implementar Retornos em JSON
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}
-  TRetornoEnvioREST = class(TRetornoEnvioClass)
-  private
-
-  protected
-    //FSucessResponse: Boolean;
-    function RetornoEnvio(const AIndex: Integer): Boolean; Override;
-
-  public
-    constructor Create(ABoletoWS: TACBrBoleto); Override;
+    property Msg: String read FMsg write FMsg;
+    property CodRetorno: Integer read FCodRetorno write FCodRetorno;
+    property HTTPResultCode: Integer read FHTTPResultCode write FHTTPResultCode;
 
   end;
 
 
 
 Const
-  C_LER_RETORNO = 'LerRetorno';
-  C_LER_LISTA_RETORNO = 'LerListaRetorno';
-  C_RETORNO_ENVIO = 'Retorno Envio';
-  C_DFESSL = 'DFeSSL';
-  C_OBTER_NOME_ARQUIVO = 'Obter Nome Arquivo';
-  C_DOLOG = 'DoLog';
-  C_GERAR_REMESSA = 'Gerar Remessa';
-  C_ENVIAR = 'Enviar';
-  C_REGISTRO_BOLETO = 'registro_boleto';
+  C_LER_RETORNO             = 'LerRetorno';
+  C_LER_LISTA_RETORNO       = 'LerListaRetorno';
+  C_RETORNO_ENVIO           = 'Retorno Envio';
+  C_DFESSL                  = 'DFeSSL';
+  C_OBTER_NOME_ARQUIVO      = 'Obter Nome Arquivo';
+  C_DOLOG                   = 'DoLog';
+  C_GERAR_REMESSA           = 'Gerar Remessa';
+  C_ENVIAR                  = 'Enviar';
+  C_REGISTRO_BOLETO         = 'registro_boleto';
   C_DEFINIR_SERVICO_EACTION = 'DefinirServicoEAction';
-  C_DEFINIR_URL = 'DefinirURL';
-  c_DEFINIR_ENVELOPE_SOAP = 'DefinirEnvelopeSoap';
-  C_GERAR_HEADER = 'GerarHeader';
-  C_GERAR_DADOS = 'GerarDados';
-  C_DEFINIR_ROOT_ELEMENT = 'RootElement';
-  C_NO_CACHE = 'no-cache';
-  C_GRANT_TYPE = 'grant_type';
-  C_SCOPE = 'scope';
-  C_CONTENT_TYPE = 'Content-Type';
-  C_CACHE_CONTROL = 'Cache-Control';
-  C_AUTHORIZATION = 'Authorization';
-  C_ACCESS_TOKEN = 'access_token';
-  C_ACCEPT = 'Accept';
-  C_XML = 'xml';
-  C_JSON = 'json';
-  C_ID = 'id';
+  C_DEFINIR_URL             = 'DefinirURL';
+  c_DEFINIR_ENVELOPE_SOAP   = 'DefinirEnvelopeSoap';
+  C_GERAR_HEADER            = 'GerarHeader';
+  C_GERAR_DADOS             = 'GerarDados';
+  C_DEFINIR_ROOT_ELEMENT    = 'RootElement';
+  C_NO_CACHE                = 'no-cache';
+  C_GRANT_TYPE              = 'grant_type';
+  C_SCOPE                   = 'scope';
+  C_CONTENT_TYPE            = 'Content-Type';
+  C_CACHE_CONTROL           = 'Cache-Control';
+  C_AUTHORIZATION           = 'Authorization';
+  C_ACCESS_TOKEN            = 'access_token';
+  C_ACCEPT                  = 'Accept';
+  C_XML                     = 'xml';
+  C_JSON                    = 'json';
+  C_ID                      = 'id';
 
-  C_ARQBOLETOWS_LOG = 'ArqBoletoWS.log';
+  C_ARQBOLETOWS_LOG  = 'ArqBoletoWS.log';
   C_RETORNO_REGISTRO = 'retorno_registro';
-  C_ERRO = 'erro';
-  C_ERROR_CODE = 'Error_Code ';
+  C_ERRO             = 'erro';
+  C_ERROR_CODE       = 'Error_Code ';
   C_HTTP_RESULT_CODE = 'HTTP_Result_Code ';
-
+  C_SOAP_ATTRIBUTTES = '';
 ResourceString
-  S_METODO_NAO_IMPLEMENTADO =  'Metodo %s nao Implementado ';
-  S_OPERACAO_NAO_IMPLEMENTADO =  'Operação %s nao Implementado para este Banco';
+  S_METODO_NAO_IMPLEMENTADO       =  'Metodo %s nao Implementado ';
+  S_OPERACAO_NAO_IMPLEMENTADO     =  'Operação %s nao Implementado para este Banco';
   S_ERRO_GERAR_TOKEN_AUTENTICACAO = 'Erro ao gerar token de Autenticação: %s';
 
 implementation
@@ -371,608 +226,9 @@ uses
   ACBrBoletoW_PenseBank_API,
   ACBrBoletoRet_PenseBank_API,
   ACBrBoletoW_Santander,
-  ACBrBoletoRet_Santander;
-
-{ TOAuth }
-
-procedure TOAuth.setURL(const AValue: String);
-begin
-  if FURL <> AValue then
-    FURL := AValue;
-end;
-
-procedure TOAuth.setContentType(const AValue: String);
-begin
-  if FContentType <> AValue then
-    FContentType := AValue;
-end;
-
-procedure TOAuth.setGrantType(const AValue: String);
-begin
-  if FGrantType <> AValue then
-    FGrantType := AValue;
-
-end;
-
-procedure TOAuth.setPayload(const AValue: Boolean);
-begin
-  if FPayload <> AValue then
-    FPayload := AValue;
-end;
-
-function TOAuth.getURL: String;
-begin
-  if FURL = '' then
-    Raise Exception.Create(ACBrStr('Método de Autenticação inválido. URL não definida!'))
-  else
-    Result := FURL;
-end;
-
-function TOAuth.getContentType: String;
-begin
-  if FContentType = '' then
-    Result := 'application/x-www-form-urlencoded'
-  else
-    Result := FContentType;
-end;
-
-function TOAuth.getGrantType: String;
-begin
-  if FGrantType = '' then
-    Result := 'client_credentials'
-  else
-    Result := FGrantType;
-end;
-
-function TOAuth.getClientID: String;
-begin
-  if FClientID = '' then
-    Raise Exception.Create(ACBrStr('Client_ID não Informado'));
-
-  Result := FClientID;
-end;
-
-function TOAuth.getClientSecret: String;
-begin
-  if FClientSecret = '' then
-    Raise Exception.Create(ACBrStr('Client_Secret não Informado'));
-
-  Result := FClientSecret;
-end;
-
-function TOAuth.getScope: String;
-begin
-  if FScope = '' then
-    Raise Exception.Create(ACBrStr('Scope não Informado'));
-
-  Result := FScope;
-end;
-
-procedure TOAuth.ProcessarRespostaOAuth(const ARetorno: AnsiString);
-var
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    AJson: TJsonObject;
-  {$Else}
-    AJson: TJson;
-  {$EndIf}
-begin
-  FToken := '';
-  FExpire := 0;
-  FErroComunicacao := '';
-
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    JsonSerializationConfig.NullConvertsToValueTypes:=True;
-
-    try
-      AJSon := TJsonObject.Parse(ARetorno) as TJsonObject;
-      try
-        if (FSSL.HTTPResultCode in [200, 201, 202]) then
-        begin
-          FToken := AJson.S['access_token'];
-          try
-            FExpire := Now + (AJson.I['expires_in'] * OneSecond);
-          except
-            FExpire:= 0;
-          end;
-
-        end
-        else begin
-          FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode);
-          if Assigned(AJson) then
-            FErroComunicacao := FErroComunicacao +
-                              ' Erro='+ AJson.S['error_description'];
-        end;
-
-      finally
-        AJSon.Free;
-      end;
-    except
-      FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
-                        + ' Erro='+ ARetorno;
-    end;
-
-  {$Else}
-    AJSon := TJson.Create;
-    try
-      AJSon.Parse(ARetorno);
-      try
-        if (FSSL.HTTPResultCode in [200, 201, 202]) then
-        begin
-          FToken := AJson.Values['access_token'].AsString;
-          try
-            FExpire := Now + (AJson.Values['expires_in'].AsNumber * OneSecond);
-          except
-            FExpire:= 0;
-          end;
-
-        end
-        else
-          FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
-                             + ' Erro='+ AJson.Values['error_description'].AsString;
-      finally
-        AJson.Free;
-      end;
-    except
-      FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
-                        + ' Erro='+ ARetorno;
-    end;
-
-  {$EndIf}
-
-end;
-
-function TOAuth.Executar(const AAuthBase64: String): Boolean;
-var
-  Stream: TMemoryStream;
-  FParams: String;
-begin
-  FErroComunicacao := '';
-
-  if not Assigned(FSSL) then
-    raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DFESSL] ));
-
-  //Definindo Header da requisição OAuth
-  FSSL.SSLHttpClass.Clear;
-  FSSL.SSLHttpClass.MimeType := ContentType;
-  with FSSL.SSLHttpClass.HeaderReq do
-  begin
-    Clear;
-    AddHeader(C_CONTENT_TYPE, ContentType);
-    AddHeader(C_AUTHORIZATION, AAuthBase64);
-    AddHeader(C_CACHE_CONTROL, C_NO_CACHE);
-  end;
-
-  try
-    //Utiliza HTTPMethod para envio
-    Stream:= TMemoryStream.Create;
-    try
-      FParams:= C_GRANT_TYPE + '=' + GrantType
-              + '&' + C_SCOPE + '=' + Scope;
-      if FPayload then
-      begin
-        WriteStrToStream(Stream, FParams);
-        FSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-        FSSL.HTTPMethod(MetodoHTTPToStr(htPOST), URL);
-      end
-      else
-        FSSL.HTTPMethod(MetodoHTTPToStr(htPOST), URL + '?' + FParams);
-    finally
-      Stream.Free;
-    end;
-
-    FSSL.SSLHttpClass.DataResp.Position:= 0;
-    ProcessarRespostaOAuth( ReadStrFromStream(FSSL.SSLHttpClass.DataResp, FSSL.SSLHttpClass.DataResp.Size ) );
-
-    Result := (FErroComunicacao = '');
-  except
-    on E: Exception do
-    begin
-      Result := False;
-      FErroComunicacao := E.Message;
-      raise EACBrBoletoWSException.Create(ACBrStr('Falha na Autenticação: '+ E.Message));
-    end;
-
-  end;
-
-end;
-
-constructor TOAuth.Create(ASSL: TDFeSSL; ATipoAmbiente: TpcnTipoAmbiente; AClientID, AClientSecret, AScope: String);
-begin
-  if Assigned(ASSL) then
-    FSSL := ASSL;
-
-  FAmbiente := ATipoAmbiente;
-  FClientID := AClientID;
-  FClientSecret := AClientSecret;
-  FScope := AScope;
-  FURL := '';
-  FContentType := '';
-  FGrantType := '';
-  FToken := '';
-  FExpire := 0;
-  FErroComunicacao := '';
-  FPayload := False;
-
-end;
-
-destructor TOAuth.Destroy;
-begin
-  inherited Destroy;
-end;
-
-function TOAuth.GerarToken: Boolean;
-begin
-
-  if ( Token <> '' ) and ( CompareDateTime( Expire, Now ) = 1 ) then                                        //Token ja gerado e ainda válido
-    Result := True
-  else                                                                                                      //Converte Basic da Autenticação em Base64
-    Result := Executar( 'Basic ' + String(EncodeBase64(AnsiString(ClientID + ':' + ClientSecret))) );
-
-end;
-
-{ TRetornoEnvioREST }
-
-constructor TRetornoEnvioREST.Create(ABoletoWS: TACBrBoleto);
-begin
-  inherited Create(ABoletoWS);
-  //FSucessResponse:= False;
-end;
-
-function TRetornoEnvioREST.RetornoEnvio(const AIndex: Integer): Boolean;
-begin
-  if (ACBrBoleto.ListadeBoletos.Count > 0) and (ACBrBoleto.Configuracoes.WebService.Operacao <> tpConsulta) then
-  begin
-    Result:= LerRetorno(ACBrBoleto.ListadeBoletos[AIndex].RetornoWeb);
-    ACBrBoleto.ListadeBoletos[AIndex].QrCode; //GetQRCode valida campos no titulo
-  end
-  else
-    Result:= LerListaRetorno;
-
-end;
-
-{ TBoletoWSREST }
-
-procedure TBoletoWSREST.DefinirContentType;
-begin
-  if FPContentType = '' then
-    FPContentType:= S_CONTENT_TYPE;
-end;
-
-procedure TBoletoWSREST.setDefinirAccept(const AValue: String);
-begin
-  if AValue <> '' then
-    FPAccept := AValue;
-end;
-
-procedure TBoletoWSREST.setMetodoHTTP(const AValue: TMetodoHTTP);
-begin
-  FMetodoHTTP := AValue;
-end;
-
-procedure TBoletoWSREST.DefinirURL;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_URL] ));
-end;
-
-procedure TBoletoWSREST.GerarHeader;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_GERAR_HEADER] ));
-end;
-
-procedure TBoletoWSREST.GerarDados;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_GERAR_DADOS] ));
-end;
-
-procedure TBoletoWSREST.DefinirAuthorization;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_AUTHORIZATION] ));
-end;
-
-function TBoletoWSREST.GerarTokenAutenticacao: String;
-begin
-  result:= '';
-  if Assigned(OAuth) then
-  begin
-    BoletoWS.DoLog('Autenticando Token... ');
-    if OAuth.GerarToken then
-      result := OAuth.Token
-    else
-      BoletoWS.DoLog( Format( S_ERRO_GERAR_TOKEN_AUTENTICACAO, [OAuth.ErroComunicacao] ) );
-
-  end;
-
-end;
-
-procedure TBoletoWSREST.Executar;
-var
-  Stream: TMemoryStream;
-begin
-  try
-      try
-        FDFeSSL.SSLHttpClass.Clear;
-        //FDFeSSL.SSLHttpClass.MimeType := FPContentType;
-        with FDFeSSL.SSLHttpClass.HeaderReq do
-        begin
-          Clear;
-
-          if FPAccept <> '' then
-            Add(C_ACCEPT +': '+ FPAccept);
-          if FPAuthorization <> '' then
-            Add(FPAuthorization);
-          if FPKeyUser <> '' then
-            Add(FPKeyUser);
-          if FPIdentificador <> '' then
-            Add(FPIdentificador);
-          if FPContentType <> '' then
-            Add(C_CONTENT_TYPE +': '+ FPContentType);
-        end;
-
-        Stream:= TMemoryStream.Create;
-        try
-          WriteStrToStream(Stream, AnsiString(FPDadosMsg));
-
-          FDFeSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-          FDFeSSL.HTTPMethod(MetodoHTTPToStr(FMetodoHTTP), FPURL );
-
-        finally
-          Stream.Free;
-        end;
-
-      finally
-        FDFeSSL.SSLHttpClass.DataResp.Position:= 0;
-        FRetornoWS:= String(UTF8Decode(ReadStrFromStream(FDFeSSL.SSLHttpClass.DataResp, FDFeSSL.SSLHttpClass.DataResp.Size )));
-
-      end;
-
-  finally
-    BoletoWS.RetornoBanco.FCodRetorno     := FDFeSSL.InternalErrorCode;
-    BoletoWS.RetornoBanco.FMsg            := 'HTTP_Code='+ IntToStr(FDFeSSL.HTTPResultCode);
-    BoletoWS.RetornoBanco.FHTTPResultCode := FDFeSSL.HTTPResultCode;
-  end;
-end;
-
-constructor TBoletoWSREST.Create(ABoletoWS: TBoletoWS);
-begin
-  inherited Create(ABoletoWS);
-  FTipoRegistro:= C_JSON;
-  FMetodoHTTP:= htPOST;
-  FPContentType:= '';
-  FPAccept:= '';
-  FPDadosMsg:= '';
-  FPURL:= '';
-  FPAuthorization:= '';
-  FPKeyUser:= '';
-  FPIdentificador:= '';
-
-end;
-
-function TBoletoWSREST.GerarRemessa: String;
-begin
-  Result := '';
-
-  //Gera o Header, para REST
-  GerarHeader;
-  //Gera o Json, implementado na classe do Banco selecionado
-  GerarDados;
-
-  Result := FPDadosMsg;
-end;
-
-function TBoletoWSREST.Enviar: Boolean;
-begin
-  BoletoWS.RetornoBanco.FCodRetorno:= 0;
-  BoletoWS.RetornoBanco.FMsg := '';
-
-  DefinirAuthorization;
-  DefinirURL;
-  DefinirContentType;
-
-  //Grava json gerado
-  BoletoWS.DoLog('Comando Enviar: ' + FPDadosMsg);
-
-  try
-    Executar;
-  finally
-    Result := (FDFeSSL.HTTPResultCode in [200, 201, 202]);
-
-    if Result then //Grava retorno
-      BoletoWS.DoLog('Retorno Envio: ' + FRetornoWS)
-    else
-      BoletoWS.DoLog('Retorno Envio: ' +'HTTPCode=' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode)
-                                        + sLineBreak +'ErrorCode=' + IntToStr(BoletoWS.RetornoBanco.CodRetorno)
-                                        + sLineBreak +'Result=' + NativeStringToAnsi(FRetornoWS));
-  end;
-
-end;
-
-{ TRetornoEnvioSoap }
-
-constructor TRetornoEnvioSOAP.Create(ABoletoWS: TACBrBoleto);
-begin
-  inherited Create(ABoletoWS);
-end;
-
-function TRetornoEnvioSOAP.RetornoEnvio(const AIndex: Integer): Boolean;
-begin
-  leitor.Arquivo := ParseText(RetWS);
-  if (ACBrBoleto.ListadeBoletos.Count > 0) then
-    Result:= LerRetorno(ACBrBoleto.ListadeBoletos[AIndex].RetornoWeb)
-  else
-    Result:= LerListaRetorno;
-end;
-
-{ TBoletoWSSOAP }
-
-procedure TBoletoWSSOAP.DefinirEnvelopeSoap;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_ENVELOPE_SOAP] ));
-end;
-
-procedure TBoletoWSSOAP.DefinirURL;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_URL] ));
-end;
-
-procedure TBoletoWSSOAP.DefinirServicoEAction;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_SERVICO_EACTION] ));
-end;
-
-procedure TBoletoWSSOAP.DefinirContentType;
-begin
-  if FPContentType = '' then
-    FPContentType:= S_CONTENT_TYPE;
-end;
-
-procedure TBoletoWSSOAP.DefinirMimeType;
-begin
-  if FPMimeType = '' then
-    FPMimeType:= S_MIME_TYPE;
-end;
-
-procedure TBoletoWSSOAP.DefinirRootElement;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_ROOT_ELEMENT] ));
-end;
-
-procedure TBoletoWSSOAP.DefinirAuthorization;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_AUTHORIZATION] ));
-end;
-
-procedure TBoletoWSSOAP.GerarHeader;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_GERAR_HEADER] ));
-end;
-
-procedure TBoletoWSSOAP.GerarDados;
-begin
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_GERAR_DADOS] ));
-end;
-
-procedure TBoletoWSSOAP.Executar;
-var
-  Stream: TMemoryStream;
-begin
-  try
-    if FPAuthorization = '' then //Se Existir Autenticação deve utilizar HTTPMetod, anexando Token de Autorização no Header
-      FRetornoWS:= FDFeSSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType )
-    else
-    begin
-      try
-        FDFeSSL.SSLHttpClass.Clear;
-        FDFeSSL.SSLHttpClass.SoapAction:= FPSoapAction;
-        FDFeSSL.SSLHttpClass.MimeType:= FPMimeType;
-        with FDFeSSL.SSLHttpClass.HeaderReq do
-        begin
-          Clear;
-          Add(FPAuthorization);
-          Add(C_CONTENT_TYPE + ': ' + FPContentType);
-        end;
-
-        Stream:= TMemoryStream.Create;
-        try
-          WriteStrToStream(Stream, FPEnvelopeSoap);
-          FDFeSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-          FDFeSSL.HTTPMethod(MetodoHTTPToStr(htPOST), FPURL);
-        finally
-          Stream.Free;
-        end;
-
-      finally
-        FDFeSSL.SSLHttpClass.DataResp.Position:= 0;
-        FRetornoWS:=  ReadStrFromStream(FDFeSSL.SSLHttpClass.DataResp, FDFeSSL.SSLHttpClass.DataResp.Size );
-
-      end;
-    end;
-
-  finally
-    BoletoWS.RetornoBanco.FCodRetorno:= FDFeSSL.InternalErrorCode;
-    BoletoWS.RetornoBanco.FMsg := 'HTTP_Code='+ IntToStr(FDFeSSL.HTTPResultCode);
-
-  end;
-
-end;
-
-constructor TBoletoWSSOAP.Create(ABoletoWS: TBoletoWS);
-begin
-  inherited Create(ABoletoWS);
-  FTipoRegistro := C_XML;
-  FPSoapVersion := S_SOAP_VERSION;
-  FPMimeType := S_MIME_TYPE;
-  FPContentType:= S_CONTENT_TYPE;
-  FPHeaderElement := '';
-  FPDadosMsg:= '';
-  FPRootElement:= '';
-  FPCloseRootElement:= '';
-  FPEnvelopeSoap:= '';
-  FPURL:= '';
-  FPVersaoServico:= '';
-  FPServico := '';
-  FPAuthorization:= '';
-  FSSLDigest:= dgstSHA256;
-  FSSLHashOutput:= outBase64;
-  FPSoapAction := TipoOperacaoToStr(tpInclui);
-  FPSoapEnvelopeAtributtes := C_SOAP_ATTRIBUTTES;
-end;
-
-function TBoletoWSSOAP.CalcularHash(AAut: String): String;
-begin
-  Result:= FDFeSSL.CalcHash(AAut, FSSLDigest, FSSLHashOutput);
-end;
-
-function TBoletoWSSOAP.GerarRemessa: String;
-begin
-  Result:= '';
-  Gerador.ListaDeAlertas.Clear;
-  Gerador.ArquivoFormatoXML := '';
-
-  //Gera nameSpace Raiz do XML, implementado na classe do Banco selecionado
-  DefinirRootElement;
-
-  if NaoEstaVazio(FPRootElement) then
-    Gerador.wGrupo(FPRootElement);
-
-  //Gera o Cabeçalho XML, implementado na classe do Banco selecionado
-  GerarHeader;
-  //Gera os dados XML, implementado na classe do Banco selecionado
-  GerarDados;
-
-  if NaoEstaVazio(FPCloseRootElement) then
-    Gerador.wGrupo('/' + FPCloseRootElement);
-
-  FPDadosMsg := Gerador.ArquivoFormatoXML;
-  Result := FPDadosMsg;
-
-end;
-
-function TBoletoWSSOAP.Enviar: Boolean;
-begin
-  BoletoWS.RetornoBanco.FCodRetorno:= 0;
-  BoletoWS.RetornoBanco.FMsg := '';
-  FPAuthorization:= '';
-
-  DefinirURL;
-  DefinirEnvelopeSoap;
-  FPEnvelopeSoap := UTF8ToNativeString(FPEnvelopeSoap);
-  //Grava xml gerado
-  BoletoWS.DoLog('Comando Enviar: ' + FPEnvelopeSoap);
-
-  try
-    Executar;
-  finally
-    Result := (FDFeSSL.HTTPResultCode in [200, 201, 202]);
-    if Result then //Grava retorno
-      BoletoWS.DoLog('Retorno Envio: ' + FRetornoWS)
-    else
-      BoletoWS.DoLog('Retorno Envio: ' +'HTTPCode=' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode)
-                                        + sLineBreak + 'ErrorCode=' + IntToStr(BoletoWS.RetornoBanco.CodRetorno)
-                                        + sLineBreak + 'Result=' + NativeStringToAnsi(FRetornoWS));
-
-  end;
-
-end;
+  ACBrBoletoRet_Santander,
+  ACBrBoletoW_Inter_API,
+  ACBrBoletoRet_Inter_API;
 
 { TRetornoEnvioClass }
 
@@ -995,21 +251,21 @@ end;
 function TRetornoEnvioClass.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 begin
   Result := False;
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_LER_RETORNO] ));
+  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_LER_RETORNO] )));
 
 end;
 
 function TRetornoEnvioClass.LerListaRetorno: Boolean;
 begin
   Result := False;
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_LER_LISTA_RETORNO] ));
+  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_LER_LISTA_RETORNO] )));
 
 end;
 
 function TRetornoEnvioClass.RetornoEnvio(const AIndex: Integer): Boolean;
 begin
   Result := False;
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_RETORNO_ENVIO] ));
+  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_RETORNO_ENVIO] )));
 
 end;
 
@@ -1018,18 +274,21 @@ end;
 constructor TBoletoWSClass.Create(ABoletoWS: TBoletoWS);
 begin
   FTipoRegistro := C_XML;
-  FBoletoWS := ABoletoWS;
-  FGerador := TGerador.Create;
-  FTitulo := nil;
+  FBoletoWS     := ABoletoWS;
+  FGerador      := TGerador.Create;
+  FHTTPSend     := THTTPSend.Create;
+  FTitulo       := nil;
 
   if Assigned( ABoletoWS.FBoleto.Configuracoes.WebService ) then
     FDFeSSL := TDFeSSL(ABoletoWS.FBoleto.Configuracoes.WebService);
 
-  FOAuth := TOAuth.Create(FDFeSSL,
+  FOAuth := TOAuth.Create(FHTTPSend,
                           FBoletoWS.FBoleto.Configuracoes.WebService.Ambiente,
                           FBoletoWS.FBoleto.Cedente.CedenteWS.ClientID,
                           FBoletoWS.FBoleto.Cedente.CedenteWS.ClientSecret,
-                          FBoletoWS.FBoleto.Cedente.CedenteWS.Scope);
+                          FBoletoWS.FBoleto.Cedente.CedenteWS.Scope,
+                          FBoletoWS.FBoleto.Configuracoes.WebService.ArquivoCRT,
+                          FBoletoWS.FBoleto.Configuracoes.WebService.ArquivoKEY);
 
 end;
 
@@ -1037,19 +296,20 @@ destructor TBoletoWSClass.Destroy;
 begin
   FGerador.Free;
   FOAuth.Free;
+  FHTTPSend.Destroy;
   inherited Destroy;
 end;
 
 function TBoletoWSClass.GerarRemessa: String;
 begin
   Result := '';
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_GERAR_REMESSA] ));
+  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_GERAR_REMESSA] )));
 end;
 
 function TBoletoWSClass.Enviar: Boolean;
 begin
   Result := False;
-  raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_ENVIAR] ));
+  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_ENVIAR] )));
 end;
 
 { TBoletoWS }
@@ -1106,15 +366,17 @@ begin
         FBoletoWSClass := TBoletoW_Santander.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Santander.Create(FBoleto);
       end;
-
+    cobBancoInter :
+      begin
+        FBoletoWSClass := TBoletoW_Inter_API.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_Inter_API.Create(FBoleto);
+      end
   else
     FBoletoWSClass := TBoletoWSClass.Create(Self);
     FRetornoBanco := TRetornoEnvioClass.Create(FBoleto);
-
   end;
   FBoletoWSClass.FBoleto := FBoleto;
   FBanco := ABanco;
-
 end;
 
 constructor TBoletoWS.Create(AOwner: TComponent);
@@ -1179,24 +441,6 @@ begin
 
 end;
 
-{function TBoletoWS.GerarRemessa: String;
-var
-  indice: integer;
-begin
-  Result := '';
-  Banco := Boleto.Banco.TipoCobranca;
-
-  if Boleto.ListadeBoletos.Count > 0 then
-  begin
-    for indice:= 0 to Pred(Boleto.ListadeBoletos.Count) do
-    begin
-      BoletoWSClass.GerarRemessa(Boleto.ListadeBoletos[indice]);
-      DoLog('Comando GerarRemessa: ' + BoletoWSClass.DadosMsg);
-
-    end;
-  end;
-end;}
-
 function TBoletoWS.Enviar: Boolean;
 var
   indice: Integer;
@@ -1218,9 +462,7 @@ begin
         RetornoBanco.RetWS := FRetornoWS;
 		    RetornoBanco.FEnvWs := LJsonEnvio;
         RetornoBanco.RetornoEnvio(indice);
-
       end;
-
     end
     else
     if (FBoleto.Configuracoes.WebService.Operacao in [tpConsulta]) then //Apenas Consulta Genérica não precisa carregar Titulo na Lista
@@ -1231,7 +473,6 @@ begin
       RetornoBanco.RetWS   := FRetornoWS;
       RetornoBanco.RetornoEnvio(0);
     end;
-
   except
     on E: Exception do
     begin
@@ -1243,11 +484,8 @@ begin
                              + sLineBreak + FBoletoWSClass.RetornoBanco.Msg
                              + sLineBreak + E.Message ));
     end;
-
   end;
-
 end;
-
 end.
 
 

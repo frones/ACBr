@@ -40,15 +40,11 @@ Uses
    SysUtils,
    DateUtils,
    ACBrBoletoWS,
-
    pcnConversao,
    pcnGerador,
    ACBrBoletoConversao,
-   //Soap.InvokeRegistry,
-   //Soap.SOAPHTTPClient,
-   //Soap.XSBuiltIns,
+   ACBrBoletoWS.SOAP,
    Types,
-
    ACBrValidador,
    ACBrBoleto;
 

@@ -1253,6 +1253,8 @@ type
     fOperacao: TOperacao;
     fVersaoDF: String;
     FBoletoWSConsulta: TACBrBoletoWSFiltroConsulta;
+    FArquivoCRT: string;
+    FArquivoKEY: string;
     procedure SetWSBoletoConsulta(const Value: TACBrBoletoWSFiltroConsulta);
   public
     constructor Create(AOwner: TComponent); reintroduce; virtual;
@@ -1263,6 +1265,8 @@ type
     property Ambiente: TpcnTipoAmbiente read fAmbiente write fAmbiente;
     property Operacao: TOperacao read fOperacao write fOperacao;
     property VersaoDF: string read fVersaoDF write fVersaoDF;
+    property ArquivoCRT: string read FArquivoCRT write FArquivoCRT;
+    property ArquivoKEY: string read FArquivoKEY write FArquivoKEY;
   end;
 
   { TACBrArquivos }

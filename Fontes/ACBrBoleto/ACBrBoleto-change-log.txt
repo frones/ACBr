@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2023
+[*] Refatorações Diversas
+  Por : Victor H Gonzales - Pandaaa 
+
+[+] TK-3181 ACBrBoleto - Integração via API Banco Inter
+  Por : Victor H Gonzales - Pandaaa / Aggille Sistemas Gestão / Jean Peixoto
+
 13/01/2023
 [*] TK-3470 ACBrBoletoW_BancoBrasil_API Contribuição para correção do erro: "Para tipo de multa = 0 ( DISPENSADO ) , não informar valor ou percentual"
 Por Aggille Sistemas /  Daniel Morais

@@ -37,7 +37,13 @@ unit ACBrBoletoW_BancoBrasil_API;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoletoWS, pcnConversao, ACBrBoletoConversao, ACBrBoleto,
+  Classes,
+  SysUtils,
+  ACBrBoletoWS,
+  pcnConversao,
+  ACBrBoletoConversao,
+  ACBrBoleto,
+  ACBrBoletoWS.Rest,
   Jsons;
 
 

@@ -39,13 +39,16 @@ unit ACBrBoletoRet_Sicredi_API;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto,ACBrBoletoWS, ACBrBoletoRetorno,
-//  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-//    JsonDataObjects_ACBr,
-//  {$Else}
-    Jsons,
-//  {$EndIf}
-  DateUtils, pcnConversao, ACBrUtil.DateTime;
+  Classes,
+  SysUtils,
+  ACBrBoleto,
+  ACBrBoletoWS,
+  ACBrBoletoRetorno,
+  Jsons,
+  DateUtils,
+  pcnConversao,
+  ACBrUtil.DateTime,
+  ACBrBoletoWS.Rest;
 
 type
 

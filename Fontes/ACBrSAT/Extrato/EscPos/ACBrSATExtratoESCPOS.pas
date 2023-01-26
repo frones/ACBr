@@ -602,7 +602,7 @@ begin
       if (MsgAppQRCode <> '') then
         ATexto := ATexto + sLineBreak + MsgAppQRCode + sLineBreak;
 
-      if not Cancelamento then
+      if (not Cancelamento) and ImprimeMsgOlhoNoImposto then
         ATexto := ATexto + sLineBreak + '*Valor aproximado dos tributos do item';
 
       ColunasDireira := trunc(FPosPrinter.ColunasFonteCondensada/2)-2;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2023
+--ACBrSATExtratoESCPOS--
+[*] TK-3493 Extrato SAT - Ajuste imprimir de olho no imposto.
+  Por : Renato Ricci / Conf. Daniel Morais
+
 21/09/2022
 --ACBrSATExtratoFR--
 [*] TK-3072 Extrato SAT - Carregamento de Imagem Header

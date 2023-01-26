@@ -1123,7 +1123,8 @@ Var
    Tamanho, FatorF, FatorG, I, xMD, xTP, yMD, yTP, DV, DVX, DVY : Integer ;
    SOMA, SOMAq, nD, M : Integer ;
    OK : Boolean ;
-   Passo, D : Char ;
+   Passo, D : Char;
+   LPrefixo : String;
 
 begin
   if UpperCase( Trim(fsDocto) ) = 'ISENTO' then
@@ -1255,7 +1256,11 @@ begin
   begin
     Tamanho  := 9 ;
     vDigitos := VarArrayOf(
-       [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0,1,5','1','','','','',''] ) ;
+       [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0,1,2','1,2','','','','',''] ) ;
+    LPrefixo := fsDocto[1] + fsDocto[2];
+
+    if not (StrToIntDef(LPrefixo,0) in [10,11,20..29]) then
+      fsMsgErro := ACBrStr('Prefixo IE Inválido 10 ou 11 / 20 a 29');
 
     if (fsDocto >= '101031050') and (fsDocto <= '101199979') then
        FatorG := 1 ;

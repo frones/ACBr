@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2023
+[*] TK-3522 ACBrValidador - IE para o estado de GO agora pode começar com 20
+  Por : Victor H Gonzales - Pandaaa / Cleiver
+
 07/10/2022
 -- ACBrValidador --
 [-] Correção na validação do prefixo do GTIN quando documento continha algum

@@ -1256,7 +1256,7 @@ begin
   begin
     Tamanho  := 9 ;
     vDigitos := VarArrayOf(
-       [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0,1,2','1,2','','','','',''] ) ;
+       [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'1,2','','','','',''] ) ;
     LPrefixo := fsDocto[1] + fsDocto[2];
 
     if not (StrToIntDef(LPrefixo,0) in [10,11,20..29]) then

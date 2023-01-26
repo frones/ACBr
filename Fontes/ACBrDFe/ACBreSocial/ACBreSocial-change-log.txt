@@ -53,6 +53,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/01/2023
+-- pcesS2240 --
+[*] Adiciona regra para que a geração do grupo epiCompl obedeça a cardinalidade do layout.
+   Por: Edson
+
 -- pcesS3000 --
 [*] Altera a GerarXML para que a geração dos grupos ideTrabalhador e ideFolhaPagto englobem todos os eventos da regra no layout versão simplificada
    Por: Andergoncalves

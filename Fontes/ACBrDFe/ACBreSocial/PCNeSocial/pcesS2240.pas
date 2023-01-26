@@ -477,7 +477,8 @@ begin
   if pEpcEpi.epiInst() then
   begin
     GerarEPI(pEpcEpi.epi);
-    GerarEPICompl(pEpcEpi.epiCompl);
+    if(pEpcEpi.utilizEPI = uEPIUtilizado)then
+      GerarEPICompl(pEpcEpi.epiCompl);
   end;  
 
   Gerador.wGrupo('/epcEpi');

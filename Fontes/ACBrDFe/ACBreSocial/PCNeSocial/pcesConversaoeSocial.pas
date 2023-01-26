@@ -458,7 +458,10 @@ type
   tpLateralidade          = (laNaoAplicavel, laEsquerda, laDireita, laAmbas);
 
   tpIdeOC                 = (idNenhum, idCRM, idCRO, idRMS, idCREA, idOutros);
+const
+  TtpIdeOCArrayStrings: array[tpIdeOC] of string = ('0', '1', '2', '3', '4', '9');
 
+type
   tpTpAvPrevio            = (tpAvPrevTrabDadoPeloEmpregadorAoEmpregadoRed2horasDiarias, tpAvPrevTrabDadoPeloEmpregadorAoEmpregadoRedDiasCorridos,
                              tpAvPrevPeloEmpregadoNaoDispensadoDeSeuCumprimento, tpAvPrevTrabDadoPeloEmpregadorRuralComRed1DiaporSemana,
                              tpAvPrevTrabDecorrenteDeAcordoEmpregadoEmpregador);
@@ -550,7 +553,6 @@ const
   TVersaoeSocialArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00');
   TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', '_S_01_00_00', '_S_01_01_00');
   TVersaoeSocialArrayReals : array[TVersaoeSocial] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000);
-  TtpIdeOCArrayStrings: array[tpIdeOC] of string = ('0', '1', '2', '3', '4', '9');
 
 type
 

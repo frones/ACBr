@@ -104,8 +104,8 @@ contains
   ACBrBancoOriginal in '..\..\..\Fontes\ACBrBoleto\ACBrBancoOriginal.pas',
   ACBrBoletoW_Inter_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Inter_API.pas',
   ACBrBoletoRet_Inter_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Inter_API.pas',
-  ACBrBoletoWS.Rest.OAuth in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoWS.Rest.OAuth.pas',
-  ACBrBoletoWS.Rest in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoWS.Rest.pas',
+  ACBrBoletoWS.Rest.OAuth in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.OAuth.pas',
+  ACBrBoletoWS.Rest in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.pas',
   ACBrBoletoWS.SOAP in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.SOAP.pas';
   
 

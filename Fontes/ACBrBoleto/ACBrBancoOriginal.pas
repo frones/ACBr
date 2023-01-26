@@ -60,6 +60,7 @@ type
     procedure LerRetorno400(ARetorno: TStringList); override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String; override;
   end;
 
 implementation
@@ -367,6 +368,8 @@ var
   Linha: string;
   Titulo: TACBrTitulo;
   Boleto: TACBrBoleto;
+  ColunaMotivoRejeicao : integer;
+  QtdeMotivosRejeicao : integer;
 begin
   Boleto := ACBrBanco.ACBrBoleto;
 
@@ -415,7 +418,21 @@ begin
 
     if Titulo.OcorrenciaOriginal.Tipo in [toRetornoRegistroRecusado,
       toRetornoBaixaRejeitada, toRetornoInstrucaoRejeitada] then
-      Titulo.DescricaoMotivoRejeicaoComando.Add('Código do erro - Tabela 2.3 do manual:' + Trim(copy(Linha, 378, 2)));
+    begin
+      // Este banco permite 3 motivos rejeição
+      ColunaMotivoRejeicao := 378; // posição da primeira rejeicao
+      for QtdeMotivosRejeicao := 1 to 3 do
+      begin
+        if Copy(Linha, ColunaMotivoRejeicao, 2)<>'00' then
+        begin
+          Titulo.MotivoRejeicaoComando.Add(Copy(Linha, ColunaMotivoRejeicao, 2));
+          Titulo.DescricaoMotivoRejeicaoComando.add(CodMotivoRejeicaoToDescricao(Titulo.OcorrenciaOriginal.Tipo,copy(Linha, ColunaMotivoRejeicao, 2)));
+        end;
+        ColunaMotivoRejeicao := ColunaMotivoRejeicao + 2; // incrementa 2 posicoes para próxima rejeicao
+      end;
+
+
+    end;
 
     Titulo.DataOcorrencia := StringToDateTimeDef(Copy(Linha, 111, 2) + '/' + Copy(Linha, 113, 2) + '/' + Copy(Linha, 115, 2), 0, 'DD/MM/YY');
 
@@ -445,7 +462,7 @@ begin
     Titulo.ValorMoraJuros       := StrToFloatDef(Copy(Linha, 267, 13), 0) / 100;
     Titulo.ValorDespesaCobranca := StrToFloatDef(Copy(Linha, 176, 13), 0) / 100;
 
-    Titulo.NossoNumero := Copy(Linha, 63, 11);
+    Titulo.NossoNumero := Copy(Linha, 63, TamanhoMaximoNossoNum);// TamanhoNossoNumero 11
     if (StrToIntDef(Copy(Linha, 386, 6), 0) <> 0) then
       Titulo.DataCredito := StringToDateTimeDef(Copy(Linha, 386, 2)
         + '/'
@@ -454,6 +471,190 @@ begin
         + Copy(Linha, 390, 2), 0, 'DD/MM/YY');
   end;
 end;
+
+
+function TACBrBancoOriginal.CodMotivoRejeicaoToDescricao(
+  const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
+begin
+
+  case TipoOcorrencia of
+      toRetornoRegistroRecusado: // Ocorrencia 03
+        begin
+          case StrtoIntDef(CodMotivo, -1) of
+            -1:
+              begin
+                  if CodMotivo = 'AA' Then result := 'AA - Serviço de cobrança inválido'
+                  else if CodMotivo = 'AB' Then result := 'AB - Serviço de "0" ou "5" e banco cobrador <> zeros'
+                  else if CodMotivo = 'AE' Then result := 'AE - Título não possui abatimento'
+                  else if CodMotivo = 'AG' Then result := 'AG - Movto não permitido para título À Vista/Contra Apresentação'
+                  else if CodMotivo = 'AH' Then result := 'AH - Cancelamento de Valores Inválidos'
+                  else if CodMotivo = 'AI' Then result := 'AI - Nossa carteira inválida'
+                  else if CodMotivo = 'AJ' Then result := 'AJ - Modalidade com bancos correspondentes inválida'
+                  else if CodMotivo = 'AK' Then result := 'AK - Título pertence a outro cliente'
+                  else if CodMotivo = 'AL' Then result := 'AL - Sacado impedido de entrar nesta cobrança'
+                  else if CodMotivo = 'AT' Then result := 'AT - Valor Pago Inválido'
+                  else if CodMotivo = 'AU' Then result := 'AU - Data da ocorrência inválida'
+                  else if CodMotivo = 'AV' Then result := 'AV - Valor da tarifa de cobrança inválida'
+                  else if CodMotivo = 'AX' Then result := 'AX - Título em pagamento parcial'
+                  else if CodMotivo = 'AY' Then result := 'AY - Título em Aberto e Vencido para acatar protestol'
+                  else if CodMotivo = 'BA' Then result := 'BA - Banco Correspondente Recebedor não é o Cobrador Atual'
+                  else if CodMotivo = 'BB' Then result := 'BB - Título deve estar em cartório para baixar'
+                  else if CodMotivo = 'BC' Then result := 'BC - Análise gerencial-sacado inválido p/operação crédito'
+                  else if CodMotivo = 'BD' Then result := 'BD - Análise gerencial-sacado inadimplente'
+                  else if CodMotivo = 'BE' Then result := 'BE - Análise gerencial-sacado difere do exigido'
+                  else if CodMotivo = 'BF' Then result := 'BF - Análise gerencial-vencto excede vencto da operação de crédito'
+                  else if CodMotivo = 'BG' Then result := 'BG - Análise gerencial-sacado com baixa liquidez'
+                  else if CodMotivo = 'BH' Then result := 'BH - Análise gerencial-sacado excede concentração'
+                  else if CodMotivo = 'CC' Then result := 'CC - Valor de iof incompatível com a espécie documento'
+                  else if CodMotivo = 'CD' Then result := 'CD - Efetivação de protesto sem agenda válida'
+                  else if CodMotivo = 'CE' Then result := 'CE - Título não aceito - pessoa física'
+                  else if CodMotivo = 'CF' Then result := 'CF - Excede prazo máximo da entrada ao vencimento'
+                  else if CodMotivo = 'CG' Then result := 'CG - Título não aceito – por análise gerencial'
+                  else if CodMotivo = 'CH' Then result := 'CH - Título em espera – em análise pelo banco'
+                  else if CodMotivo = 'CJ' Then result := 'CJ - Análise gerencial-vencto do titulo abaixo przcurto'
+                  else if CodMotivo = 'CK' Then result := 'CK - Análise gerencial-vencto do titulo abaixo przlongo'
+                  else if CodMotivo = 'CS' Then result := 'CS - Título rejeitado pela checagem de duplicatas'
+                  else if CodMotivo = 'DA' Then result := 'DA - Análise gerencial – Entrada de Título Descontado com limite cancelado'
+                  else if CodMotivo = 'DB' Then result := 'DB - Análise gerencial – Entrada de Título Descontado com limite vencido'
+                  else if CodMotivo = 'DC' Then result := 'DC - Análise gerencial - cedente com limite cancelado'
+                  else if CodMotivo = 'DD' Then result := 'DD - Análise gerencial – cedente é sacado e teve seu limite cancelado'
+                  else if CodMotivo = 'DE' Then result := 'DE - Análise gerencial - apontamento no Serasa'
+                  else if CodMotivo = 'DG' Then result := 'DG - Endereço sacador/avalista não informado'
+                  else if CodMotivo = 'DH' Then result := 'DH - Cep do sacador/avalista não informado'
+                  else if CodMotivo = 'DI' Then result := 'DI - Cidade do sacador/avalista não informado'
+                  else if CodMotivo = 'DJ' Then result := 'DJ - Estado do sacador/avalista inválido ou n informado'
+                  else if CodMotivo = 'DM' Then result := 'DM - Cliente sem Código de Flash cadastrado no cobrador'
+                  else if CodMotivo = 'DN' Then result := 'DN - Título Descontado com Prazo ZERO – Recusado'
+                  else if CodMotivo = 'DP' Then result := 'DP - Data de Referência menor que a Data de Emissão do Título'
+                  else if CodMotivo = 'DT' Then result := 'DT - Nosso Número do Correspondente não deve ser informado'
+                  else if CodMotivo = 'EB' Then result := 'EB - HSBC não aceita endereço de sacado com mais de 38 caracteres'
+                  else if CodMotivo = 'G1' Then result := 'G1 - Endereço do sacador incompleto ( lei 12.039)'
+                  else if CodMotivo = 'G2' Then result := 'G2 - Sacador impedido de movimentar'
+                  else if CodMotivo = 'G3' Then result := 'G3 - Concentração de cep não permitida'
+                  else if CodMotivo = 'G4' Then result := 'G4 - Valor do título não permitido'
+                  else if CodMotivo = 'HA' Then result := 'HA - Serviço e Modalidade Incompatíveis'
+                  else if CodMotivo = 'HB' Then result := 'HB - Inconsistências entre Registros Título e Sacador'
+                  else if CodMotivo = 'HC' Then result := 'HC - Ocorrência não disponível'
+                  else if CodMotivo = 'HD' Then result := 'HD - Título com Aceite'
+                  else if CodMotivo = 'HF' Then result := 'HF - Baixa Liquidez do Sacado'
+                  else if CodMotivo = 'HG' Then result := 'HG - Sacado Informou que não paga Boletos'
+                  else if CodMotivo = 'HH' Then result := 'HH - Sacado não confirmou a Nota Fiscal'
+                  else if CodMotivo = 'HI' Then result := 'HI - Checagem Prévia não Efetuada'
+                  else if CodMotivo = 'HJ' Then result := 'HJ - Sacado desconhece compra e Nota Fiscal'
+                  else if CodMotivo = 'HK' Then result := 'HK - Compra e Nota Fiscal canceladas pelo sacado'
+                  else if CodMotivo = 'HL' Then result := 'HL - Concentração além do permitido pela área de Crédito'
+                  else if CodMotivo = 'HM' Then result := 'HM - Vencimento acima do permitido pelo área de Crédito'
+                  else if CodMotivo = 'HN' Then result := 'HN - Excede o prazo limite da operação'
+                  else if CodMotivo = 'IX' Then result := 'IX - Título de Cartão de Crédito não aceita instruções'
+                  else if CodMotivo = 'JB' Then result := 'JB - Título de Cartão de Crédito inválido para o Produto'
+                  else if CodMotivo = 'JC' Then result := 'JC - Produto somente para Cartão de Crédito'
+                  else if CodMotivo = 'JH' Then result := 'JH - CB Direta com operação de Desconto Automático'
+                  else if CodMotivo = 'JI' Then result := 'JI - Espécie de Documento incompatível para produto de Cartão de Crédito'
+                  else Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
+                end;
+            03: result := '03 - CEP inválido – Não temos cobrador – Cobrador não Localizado';
+            04: result := '04 - Sigla do Estado inválida';
+            05: result := '05 - Data de Vencimento inválida ou fora do prazo mínimo';
+            06: result := '06 - Código do Banco inválido';
+            08: result := '08 - Nome do sacado não informado';
+            10: result := '10 - Logradouro não informado';
+            14: result := '14 - Registro em duplicidade';
+            19: result := '19 - Data de desconto inválida ou maior que a data de vencimento';
+            20: result := '20 - Valor de IOF não numérico';
+            21: result := '21 - Movimento para título não cadastrado no sistema';
+            22: result := '22 - Valor de desconto + abatimento maior que o valor do título';
+            23: result := '25 - CNPJ ou CPF do sacado inválido (aceito com restrições)';
+            26: result := '26 - Espécie de documento inválida';
+            27: result := '27 - Data de emissão do título inválida';
+            28: result := '28 - Seu número não informado';
+            29: result := '29 - CEP é igual a espaço ou zeros; ou não numérico';
+            30: result := '30 - Valor do título não numérico ou inválido';
+            36: result := '36 - Valor de permanência (mora) não numérico ';
+            37: result := '37 - Valor de permanência inconsistente, pois, dentro de um mês, será maior que o valor do título';
+            38: result := '38 - Valor de desconto/abatimento não numérico ou inválido';
+            39: result := '39 - Valor de abatimento não numérico';
+            42: result := '42 - Título já existente em nossos registros. Nosso número não aceito ';
+            43: result := '43 - Título enviado em duplicidade nesse movimento';
+            44: result := '44 - Título zerado ou em branco; ou não numérico na remessa';
+            46: result := '46 - Título enviado fora da faixa de Nosso Número, es1ipulada para o cliente.';
+            51: result := '51 - Tipo/Número de Inscrição Sacador/Avalista Inválido';
+            52: result := '52 - Sacador/Avalista não informado';
+            53: result := '53 - Prazo de vencimento do título excede ao da contratação';
+            54: result := '54 - Banco informado não é nosso correspondente 140-142';
+            55: result := '55 - Banco correspondente informado não cobra este CEP ou não possui faixas de CEP cadastradas';
+            56: result := '56 - Nosso número no correspondente não foi informado';
+            57: result := '57 - Remessa contendo duas instruções incompatíveis – não protestar e dias de protesto ou prazo para protesto inválido.';
+            58: result := '58 - Entradas Rejeitadas – Reprovado no Represamento para Análise';
+            60: result := '60 - CNPJ/CPF do sacado inválido – título recusado';
+            87: result := '87 - Excede Prazo máximo entre emissão e vencimento';
+          else
+              Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
+          end;
+        end;
+      toRetornoBaixaRejeitada: // ocorrencia 15
+        begin
+           case StrtoIntDef(CodMotivo, 0) of
+             05: result := '05 - Solicitação de baixa para título já baixado ou liquidado';
+             06: result := '06 - Solicitação de baixa para título não registrado no sistema';
+             08: result := '08 - Solicitação de baixa para título em float';
+             else
+             Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
+           end;
+        end;
+      toRetornoInstrucaoRejeitada: // ocorrência16
+        begin
+          case StrtoIntDef(CodMotivo, -1) of
+             -1: begin
+               if CodMotivo = 'AA' Then result := 'AA - Serviço de cobrança inválido'
+               else if CodMotivo = 'AE' Then result := 'AE - Título não possui abatimento'
+               else if CodMotivo = 'AG' Then result := 'AG - Movimento não permitido – Título à vista ou contra apresentação'
+               else if CodMotivo = 'AH' Then result := 'AH - Cancelamento de valores inválidos'
+               else if CodMotivo = 'AI' Then result := 'AI - Nossa carteira inválida'
+               else if CodMotivo = 'AK' Then result := 'AK - Título pertence a outro cliente'
+               else if CodMotivo = 'AU' Then result := 'AU - Data da ocorrência inválida'
+               else if CodMotivo = 'AY' Then result := 'AY - Título deve estar em aberto e vencido para acatar protesto'
+               else if CodMotivo = 'CB' Then result := 'CB - Título possui protesto efetivado/a efetivar hoje'
+               else if CodMotivo = 'CT' Then result := 'CT - Título já baixado'
+               else if CodMotivo = 'CW' Then result := 'CW - Título já transferido'
+               else if CodMotivo = 'DO' Then result := 'DO - Título em Prejuízo'
+               else if CodMotivo = 'JK' Then result := 'JK - Produto não permite alteração de valor de título'
+               else if CodMotivo = 'JQ' Then result := 'JQ - Título em Correspondente – Não alterar Valor'
+               else if CodMotivo = 'JS' Then result := 'JS - Título possui Descontos/Abto/Mora/Multa'
+               else if CodMotivo = 'JT' Then result := 'JT - Título possui Agenda de Protesto/Devolução'
+               else Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
+
+             end;
+             04: result := '04 - Data de vencimento não numérica ou inválida';
+             05: result := '05 - Data de Vencimento inválida ou fora do prazo mínimo';
+             14: result := '14 - Registro em duplicidade';
+             19: result := '19 - Data de desconto inválida ou maior que a data de vencimento';
+             20: result := '20 - Campo livre não informado';
+             21: result := '21 - Título não registrado no sistema';
+             22: result := '22 - Título baixado ou liquidado';
+             26: result := '26 - Espécie de documento inválida';
+             27: result := '27 - Instrução não aceita, por não ter sido emitida ordem de protesto ao cartório';
+             28: result := '28 - Título tem instrução de cartório ativa';
+             29: result := '29 - Título não tem instrução de carteira ativa';
+             30: result := '30 - Existe instrução de não protestar, ativa para o título';
+             36: result := '36 - Valor de permanência (mora) não numérico';
+             37: result := '37 - Título Descontado – Instrução não permitida para a carteira';
+             38: result := '38 - Valor do abatimento não numérico ou maior que a soma do valor do título permanência + multa';
+             39: result := '39 - Título em cartório';
+             40: result := '40 - Instrução recusada – Reprovado no Represamento para Análise';
+             44: result := '44 - Título zerado ou em branco; ou não numérico na remessa';
+             51: result := '51 - Tipo/Número de Inscrição Sacador/Avalista Inválido';
+             53: result := '53 - Prazo de vencimento do título excede ao da contratação';
+             57: result := '57 - Remessa contendo duas instruções incompatíveis – não protestar e dias de protesto ou prazo para protesto inválido';
+             else
+             Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
+
+          end;
+        end;
+  end;
+
+
+end;
+
 
 function TACBrBancoOriginal.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;

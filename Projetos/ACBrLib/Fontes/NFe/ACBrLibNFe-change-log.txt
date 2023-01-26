@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2023
+--- ACBrLibNFeBase ---
+[*] Realizado ajuste no método ImprimirPDF - #TK-271
+Por: Antonio Carlos Junior / Juliomar Marchetti
+
 22/12/2022
 --- ACBrLibNFeConsts, ACBrLibNFeConfig ---
 [+] Adicionado propriedade ImprimeXPedNItemPed - #TK-3373-2

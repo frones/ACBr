@@ -1863,19 +1863,22 @@ var
 begin
   try
     GravarLog('NFe_ImprimirPDF', logNormal);
-
     NFeDM.Travar;
-    Resposta := TLibImpressaoResposta.Create(NFeDM.ACBrNFe1.NotasFiscais.Count, Config.TipoResposta, Config.CodResposta);
-
     try
-      NFeDM.ConfigurarImpressao('', True);
-      NFeDM.ACBrNFe1.NotasFiscais.ImprimirPDF;
-
-      Resposta.Msg := NFeDM.ACBrNFe1.DANFE.ArquivoPDF;
-      Result := SetRetorno(ErrOK, Resposta.Gerar);
+      Resposta := TLibImpressaoResposta.Create(NFeDM.ACBrNFe1.NotasFiscais.Count, Config.TipoResposta, Config.CodResposta);
+      try
+        NFeDM.ConfigurarImpressao('', True);
+        try
+          NFeDM.ACBrNFe1.NotasFiscais.ImprimirPDF;
+          Resposta.Msg := NFeDM.ACBrNFe1.DANFE.ArquivoPDF;
+          Result := SetRetorno(ErrOK, Resposta.Gerar);
+        finally
+          NFeDM.FinalizarImpressao;
+        end;
+      finally
+        Resposta.Free;
+      end;
     finally
-      NFeDM.FinalizarImpressao;
-      Resposta.Free;
       NFeDM.Destravar;
     end;
   except

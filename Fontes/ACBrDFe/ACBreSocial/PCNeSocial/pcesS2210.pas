@@ -517,8 +517,7 @@ begin
      )
   then
   begin
-    if Self.Cat.ultDiaTrab <= Now then
-      Gerador.wCampo(tcDat, '', 'ultDiaTrab',     10,  10, 1, Self.Cat.ultDiaTrab);
+    Gerador.wCampo(tcDat, '', 'ultDiaTrab',     10,  10, 1, Self.Cat.ultDiaTrab);
 
     Gerador.wCampo(tcStr, '', 'houveAfast',      1,   1, 1, eSSimNaoToStr(Self.Cat.houveAfast));
   end;

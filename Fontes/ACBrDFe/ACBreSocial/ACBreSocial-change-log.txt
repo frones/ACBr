@@ -53,8 +53,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/01/2023
---pces3000 --
+-- pcesS3000 --
 [*] Altera a GerarXML para que a geração dos grupos ideTrabalhador e ideFolhaPagto englobem todos os eventos da regra no layout versão simplificada
+   Por: Andergoncalves
+
+-- pcesS2210 --
+[*] Remove if desnecessário
    Por: Andergoncalves
 
 24/01/2023

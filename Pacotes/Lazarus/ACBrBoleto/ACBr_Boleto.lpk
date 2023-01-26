@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="37">
+    <Files Count="72">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -172,9 +172,145 @@
         <UnitName Value="ACBrBoletoRet_Santander"/>
       </Item37>
       <Item38>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoABCBrasil.pas"/>
+        <UnitName Value="ACBrBancoABCBrasil"/>
+      </Item38>
+      <Item39>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoAlfa.pas"/>
+        <UnitName Value="ACBrBancoAlfa"/>
+      </Item39>
+      <Item40>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoAmazonia.pas"/>
+        <UnitName Value="ACBrBancoAmazonia"/>
+      </Item40>
+      <Item41>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBanese.pas"/>
+        <UnitName Value="ACBrBancoBanese"/>
+      </Item41>
+      <Item42>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBradescoMoneyPlus.pas"/>
+        <UnitName Value="ACBrBancoBradescoMoneyPlus"/>
+      </Item42>
+      <Item43>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBradescoSICOOB.pas"/>
+        <UnitName Value="ACBrBancoBradescoSICOOB"/>
+      </Item43>
+      <Item44>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBS2.pas"/>
+        <UnitName Value="ACBrBancoBS2"/>
+      </Item44>
+      <Item45>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBTGPactual.pas"/>
+        <UnitName Value="ACBrBancoBTGPactual"/>
+      </Item45>
+      <Item46>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoC6.pas"/>
+        <UnitName Value="ACBrBancoC6"/>
+      </Item46>
+      <Item47>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCredisis.pas"/>
+        <UnitName Value="ACBrBancoCredisis"/>
+      </Item47>
+      <Item48>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas"/>
+        <UnitName Value="ACBrBancoCresol"/>
+      </Item48>
+      <Item49>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCresolSCRS.pas"/>
+        <UnitName Value="ACBrBancoCresolSCRS"/>
+      </Item49>
+      <Item50>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoDaycoval.pas"/>
+        <UnitName Value="ACBrBancoDaycoval"/>
+      </Item50>
+      <Item51>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoInter.pas"/>
+        <UnitName Value="ACBrBancoInter"/>
+      </Item51>
+      <Item52>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoOriginal.pas"/>
         <UnitName Value="ACBrBancoOriginal"/>
-      </Item38>
+      </Item52>
+      <Item53>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoRendimento.pas"/>
+        <UnitName Value="ACBrBancoRendimento"/>
+      </Item53>
+      <Item54>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSafra.pas"/>
+        <UnitName Value="ACBrBancoSafra"/>
+      </Item54>
+      <Item55>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSafraBradesco.pas"/>
+        <UnitName Value="ACBrBancoSafraBradesco"/>
+      </Item55>
+      <Item56>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSofisaSantander.pas"/>
+        <UnitName Value="ACBrBancoSofisaSantander"/>
+      </Item56>
+      <Item57>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredES.pas"/>
+        <UnitName Value="ACBrBancoUnicredES"/>
+      </Item57>
+      <Item58>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredRS.pas"/>
+        <UnitName Value="ACBrBancoUnicredRS"/>
+      </Item58>
+      <Item59>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredSC.pas"/>
+        <UnitName Value="ACBrBancoUnicredSC"/>
+      </Item59>
+      <Item60>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.OAuth.pas"/>
+        <UnitName Value="ACBrBoletoWS.Rest.OAuth"/>
+      </Item60>
+      <Item61>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.pas"/>
+        <UnitName Value="ACBrBoletoWS.Rest"/>
+      </Item61>
+      <Item62>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.SOAP.pas"/>
+        <UnitName Value="ACBrBoletoWS.SOAP"/>
+      </Item62>
+      <Item63>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrUniprime.pas"/>
+        <UnitName Value="ACBrUniprime"/>
+      </Item63>
+      <Item64>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrUniprimeNortePR.pas"/>
+        <UnitName Value="ACBrUniprimeNortePR"/>
+      </Item64>
+      <Item65>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Credisis.pas"/>
+        <UnitName Value="ACBrBoletoRet_Credisis"/>
+      </Item65>
+      <Item66>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Inter_API.pas"/>
+        <UnitName Value="ACBrBoletoRet_Inter_API"/>
+      </Item66>
+      <Item67>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Itau.pas"/>
+        <UnitName Value="ACBrBoletoRet_Itau"/>
+      </Item67>
+      <Item68>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Sicredi_API.pas"/>
+        <UnitName Value="ACBrBoletoRet_Sicredi_API"/>
+      </Item68>
+      <Item69>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Credisis.pas"/>
+        <UnitName Value="ACBrBoletoW_Credisis"/>
+      </Item69>
+      <Item70>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Inter_API.pas"/>
+        <UnitName Value="ACBrBoletoW_Inter_API"/>
+      </Item70>
+      <Item71>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Itau.pas"/>
+        <UnitName Value="ACBrBoletoW_Itau"/>
+      </Item71>
+      <Item72>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Sicredi_API.pas"/>
+        <UnitName Value="ACBrBoletoW_Sicredi_API"/>
+      </Item72>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

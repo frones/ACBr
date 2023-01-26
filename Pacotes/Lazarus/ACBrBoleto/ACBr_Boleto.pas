@@ -19,7 +19,18 @@ uses
   ACBrBoletoRet_BancoBrasil, ACBrBoletoW_BancoBrasil_API, 
   ACBrBoletoRet_BancoBrasil_API, ACBrBancoPenseBank, 
   ACBrBoletoW_PenseBank_API, ACBrBoletoRet_PenseBank_API, 
-  ACBrBoletoW_Santander, ACBrBoletoRet_Santander, LazarusPackageIntf;
+  ACBrBoletoW_Santander, ACBrBoletoRet_Santander, ACBrBancoABCBrasil, 
+  ACBrBancoAlfa, ACBrBancoAmazonia, ACBrBancoBanese, 
+  ACBrBancoBradescoMoneyPlus, ACBrBancoBradescoSICOOB, ACBrBancoBS2, 
+  ACBrBancoBTGPactual, ACBrBancoC6, ACBrBancoCredisis, ACBrBancoCresol, 
+  ACBrBancoCresolSCRS, ACBrBancoDaycoval, ACBrBancoInter, ACBrBancoOriginal, 
+  ACBrBancoRendimento, ACBrBancoSafra, ACBrBancoSafraBradesco, 
+  ACBrBancoSofisaSantander, ACBrBancoUnicredES, ACBrBancoUnicredRS, 
+  ACBrBancoUnicredSC, ACBrBoletoWS.Rest.OAuth, ACBrBoletoWS.Rest, 
+  ACBrBoletoWS.SOAP, ACBrUniprime, ACBrUniprimeNortePR, 
+  ACBrBoletoRet_Credisis, ACBrBoletoRet_Inter_API, ACBrBoletoRet_Itau, 
+  ACBrBoletoRet_Sicredi_API, ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, 
+  ACBrBoletoW_Itau, ACBrBoletoW_Sicredi_API, LazarusPackageIntf;
 
 implementation
 

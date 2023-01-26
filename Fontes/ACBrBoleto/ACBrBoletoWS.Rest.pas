@@ -252,7 +252,7 @@ begin
     FRetornoWS:= String(UTF8Decode(ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size )));
     BoletoWS.RetornoBanco.CodRetorno     := HTTPSend.Sock.LastError;
 
-    LStream := TStringStream.Create;
+    LStream := TStringStream.Create('');
     try
       LStream.CopyFrom(HTTPSend.Document,0);
       BoletoWS.RetornoBanco.Msg            := Trim('HTTP_Code='+ IntToStr(HTTPSend.ResultCode)+' '+ HTTPSend.ResultString+' '+LStream.DataString);

@@ -399,7 +399,9 @@ begin
             IntToStrZero(round(PercentualMulta * 100), 15),
           PadRight('', 15, '0'))                               + //Multa Valor/Percentual a Ser Aplicado 75 89 13 2 Num G075
           PadRight('', 10, ' ')                                + //Informação ao Pagador Informação ao Pagador 90 99 10 - Alfa *C036
-          PadRight('', 40, ' ')                                + //Informação 3 Mensagem 3 100 139 40 - Alfa *C037
+          PadRight('', 28, ' ')                                + //Informação 3 Mensagem 3 (Tipo de Operação, Utilização do Cheque Especial, Consulta Saldo após o Vencimento, Número Cód. Identificação/Contrato 100 127 28) - Alfa *C037
+          PadRight('', 8, '0')                                 + //Informação 3 Mensagem 3 Prazo de Validade do Contrato/Autorização 128 135 8 - Num *C037
+          PadRight('', 4, ' ')                                 + //Informação 3 Mensagem 3 Branco 136 139 4 - Alfa *C037
           PadRight('', 40, ' ')                                + //Mensagem 4 140 179 40 - Alfa *C037
           PadRight('', 20, ' ')                                + //CNAB Uso Exclusivo FEBRABAN/CNAB 180 199 20 - Alfa Brancos G004
           PadLeft('', 8, '0')                                  +//Cód. Ocor. do Pagador 200 207 8 - Num *C038

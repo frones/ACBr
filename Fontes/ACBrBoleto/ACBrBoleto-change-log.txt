@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2023
+[*] TK-3523 ACBrBancoBradesco segmento R (envio) qdo não tiver data do contrato passar 00000000
+  Por : Renfer / conf. Daniel Morais
+
 26/01/2023
 [*] TK-3501 ACBrBancoOriginal ajustado a funcao CodMotivoRejeicaoToDescricao para tratar os erros de retorno conf manual.
   Por : Daniel de Morais / Renato Pavan 

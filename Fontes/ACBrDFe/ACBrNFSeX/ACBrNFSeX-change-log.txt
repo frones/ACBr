@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 27/01/2023
+-- SigCorp.GravarXml --
+[*] Alteração na Configuração visando gerar o endereço no exterior, para tomador
+    fora do Brasil
+   Por: Microsys Sistemas
 -- Prodata.GravarXml --
 [*] Incluída na Configuração a linha alterando o Formato do ItemListaServico.
    Por: Massao Aihara

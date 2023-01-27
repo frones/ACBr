@@ -41,7 +41,7 @@ uses
   ACBrXmlBase,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceLibre204 = class(TACBrNFSeXWebserviceSoap11)
@@ -70,6 +70,7 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
   end;
 
 implementation
@@ -84,10 +85,18 @@ procedure TACBrNFSeProviderLibre204.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
-  ConfigGeral.ModoEnvio := meLoteAssincrono;
+  with ConfigGeral do
+  begin
+    ConsultaPorFaixaPreencherNumNfseFinal := True;
+    ModoEnvio := meLoteAssincrono;
+    Identificador := '';
+  end;
+
+  ConfigWebServices.AtribVerLote := '';
 
   ConfigMsgDados.GerarPrestadorLoteRps := True;
+
+  SetXmlNameSpace('http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd');
 end;
 
 function TACBrNFSeProviderLibre204.CriarGeradorXml(
@@ -122,16 +131,40 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderLibre204.TratarRetornoEmitir(
+  Response: TNFSeEmiteResponse);
+var
+  XmlTratado: string;
+begin
+  XmlTratado := Response.ArquivoRetorno;
+
+  if (Pos('CodigoErro', XmlTratado) > 0) and
+     (Pos('<ListaMensagemRetorno></ListaMensagemRetorno>', XmlTratado) > 0) then
+  begin
+    XmlTratado := SeparaDados(XmlTratado, 'EnviarLoteRpsResposta');
+
+    XmlTratado :=
+      '<EnviarLoteRpsResposta>' +
+        '<ListaMensagemRetorno>' +
+          '<MensagemRetorno>' +
+            '<Codigo>' + SepararDados(XmlTratado, 'CodigoErro') + '</Codigo>' +
+            '<Mensagem>' + SepararDados(XmlTratado, 'MensagemErro') + '</Mensagem>' +
+            '<Correcao>' + '</Correcao>' +
+          '</MensagemRetorno>' +
+        '</ListaMensagemRetorno>' +
+      '</EnviarLoteRpsResposta>';
+  end;
+
+  Response.ArquivoRetorno := XmlTratado;
+
+  inherited TratarRetornoEmitir(Response);
+end;
+
 { TACBrNFSeXWebserviceLibre204 }
 
 function TACBrNFSeXWebserviceLibre204.GetNameSpace: string;
 begin
-  if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.NameSpace
-  else
-    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.NameSpace;
-
-  Result := 'xmlns:nfse="' + Result + '"';
+  Result := 'xmlns:nfse="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"';
 end;
 
 function TACBrNFSeXWebserviceLibre204.Recepcionar(ACabecalho,
@@ -256,8 +289,9 @@ begin
   Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
   Request := Request + '</nfse:SubstituirNfse>';
 
+  // Retorno do Substituir retornando tag com grafia errada
   Result := Executar('', Request,
-                     ['return', 'SubstituirNfseResposta'],
+                     ['return', 'SubstutuirNfseResposta'],
                      [NameSpace]);
 end;
 

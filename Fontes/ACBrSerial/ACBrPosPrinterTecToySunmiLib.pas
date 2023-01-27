@@ -41,7 +41,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrConsts, ACBrDevice, ACBrBase, ACBrPosPrinter,
-  FMX.ACBr.SunmiPrinter;
+  ACBr.Android.Sunmi.Printer;
 
 const
   cTagBR = '<br>';
@@ -176,7 +176,7 @@ begin
     DesligaInvertido        := GS  + 'B' + #0;
   end;
 
-  fLibPrinter := TACBrSunmiPrinter.Create;
+  fLibPrinter := TACBrSunmiPrinter.Create(Nil);
 end;
 
 destructor TACBrPosPrinterTecToySunmiLib.Destroy;

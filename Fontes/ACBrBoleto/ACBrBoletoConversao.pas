@@ -78,7 +78,7 @@ type
   TACBrCodigoNegativacao = (cnNenhum, cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar, cnNaoNegativar, cnCancelamento);
 
   {Definir Tipo de Operação para Registro de Cobrança via WebService}
-  TOperacao = (tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe, tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar);
+  TOperacao = (tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe, tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar, tpTicket);
 
   {Definir Tipo de Pagamento Aceito para Registro de Cobrança via WebService }
   TTipo_Pagamento = (tpAceita_Qualquer_Valor, tpAceita_Valores_entre_Minimo_Maximo,
@@ -125,14 +125,14 @@ uses
 
 function StrToTipoOperacao(out ok: Boolean; const s: String): TOperacao;
 begin
-  Result := StrToEnumerado(ok, s, ['INCLUI_BOLETO', 'ALTERA_BOLETO','BAIXA_BOLETO','CONSULTA_BOLETO'],
-         [tpInclui, tpAltera, tpBaixa, tpConsulta]);
+  Result := StrToEnumerado(ok, s, ['INCLUI_BOLETO', 'ALTERA_BOLETO','BAIXA_BOLETO','CONSULTA_BOLETO','GERA_TICKET'],
+         [tpInclui, tpAltera, tpBaixa, tpConsulta, tpTicket]);
 end;
 
 function TipoOperacaoToStr(const t: TOperacao): String;
 begin
-  Result := EnumeradoToStr(t, ['INCLUI_BOLETO', 'ALTERA_BOLETO', 'BAIXA_BOLETO', 'CONSULTA_BOLETO'],
-         [tpInclui, tpAltera, tpBaixa, tpConsulta]);
+  Result := EnumeradoToStr(t, ['INCLUI_BOLETO', 'ALTERA_BOLETO', 'BAIXA_BOLETO', 'CONSULTA_BOLETO','GERA_TICKET'],
+         [tpInclui, tpAltera, tpBaixa, tpConsulta, tpTicket]);
 end;
 
 function StrToTipoJuros(out ok: Boolean; const s: String): TACBrCodigoJuros;

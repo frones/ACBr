@@ -136,13 +136,13 @@ begin
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui:   Acao := TipoOperacaoToStr( tpInclui );
-    {tpTicket:
+    tpTicket:
       begin
         Acao  := TipoOperacaoToStr( tpTicket );
         FPURL := C_TICKET_URL;
         FPSoapEnvelopeAtributtes := C_TICKET_SOAP_ATTRIBUTTES;
         FPSoapAction  := 'TICKET';
-      end;}
+      end;
   end;
 
   FPServico := FPURL;

@@ -1620,6 +1620,7 @@ end;
 function TEvtProcTrab.GerarXML: boolean;
 begin
   try
+    inherited GerarXML;
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
 
     Self.Id := GerarChaveEsocial(Now, Self.ideEmpregador.NrInsc, Self.Sequencial);

@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2023
+-- ACBreSocial --
+[*] Possível solução para o problema de não respeitar a flag RetirarAcentos
+   Por: Diego F
+
 26/01/2023
 -- pcesS2240 --
 [*] Adiciona regra para que a geração do grupo epiCompl obedeça a cardinalidade do layout.

@@ -5816,6 +5816,70 @@ object Form1: TForm1
                 end
               end
             end
+            object tsPIXPDV: TTabSheet
+              Caption = 'PIXPDV'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnPixPDV: TPanel
+                Left = 34
+                Height = 240
+                Top = 125
+                Width = 932
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                ClientHeight = 240
+                ClientWidth = 932
+                TabOrder = 0
+                object lbPixPDVCNPJ: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 50
+                  Width = 27
+                  Caption = 'CNPJ'
+                  ParentColor = False
+                end
+                object lbPixPDVToken: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 101
+                  Width = 31
+                  Caption = 'Token'
+                  ParentColor = False
+                end
+                object lbPixPDVSecretKey: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 157
+                  Width = 54
+                  Caption = 'Secret Key'
+                  ParentColor = False
+                end
+                object edPixPDVCNPJ: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 65
+                  Width = 884
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 0
+                end
+                object edPixPDVToken: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 115
+                  Width = 884
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 1
+                end
+                object edPixPDVSecretKey: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 171
+                  Width = 884
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+              end
+            end
           end
         end
       end
@@ -6046,15 +6110,17 @@ object Form1: TForm1
     Top = 416
   end
   object ACBrPSPItau1: TACBrPSPItau
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 196
     Top = 416
   end
   object ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil
-    ACBrPixCD = ACBrPixCD1
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 168
     Top = 416
   end
   object ACBrPSPSantander1: TACBrPSPSantander
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 140
     Top = 416
   end
@@ -6074,6 +6140,7 @@ object Form1: TForm1
     Top = 560
   end
   object ACBrPSPShipay1: TACBrPSPShipay
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 224
     Top = 416
   end
@@ -6092,23 +6159,34 @@ object Form1: TForm1
     Top = 448
   end
   object ACBrPSPSicredi1: TACBrPSPSicredi
+    Scopes = [scCobWrite, scCobRead, scCobVWrite, scCobVRead, scPixWrite, scPixRead]
     Left = 256
     Top = 416
   end
   object ACBrPSPSicoob1: TACBrPSPSicoob
+    Scopes = [scCobWrite, scCobRead, scCobVWrite, scCobVRead, scPixWrite, scPixRead]
     Left = 288
     Top = 416
   end
   object ACBrPSPPagSeguro1: TACBrPSPPagSeguro
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 318
     Top = 416
   end
   object ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 349
     Top = 416
   end
   object ACBrPSPBradesco1: TACBrPSPBradesco
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 379
+    Top = 416
+  end
+  object ACBrPSPPixPDV1: TACBrPSPPixPDV
+    ACBrPixCD = ACBrPixCD1
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 411
     Top = 416
   end
 end

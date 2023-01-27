@@ -65,6 +65,7 @@ contains
   ACBrPIXPSPSicredi in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPSicredi.pas',
   ACBrPIXPSPPagSeguro in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPagSeguro.pas',
   ACBrPIXPSPGerenciaNet in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPGerenciaNet.pas',
-  ACBrPIXPSPBradesco in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBradesco.pas';
+  ACBrPIXPSPBradesco in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBradesco.pas',
+  ACBrPIXPSPPixPDV in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPixPDV.pas';
 
 end.

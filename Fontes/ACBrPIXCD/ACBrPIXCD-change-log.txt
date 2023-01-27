@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2023
+-- ACBrPIXPSPPixPDV, ACBrPIXCD --
+[+] Inclusão do novo PSP PIX PDV
+    Por: Elias César
+
 10/01/2023
 -- ACBrPIXCD --
 [+] Inclusão da property Scopes para definir quais os escopos serão enviados na Autenticação dos PSPs

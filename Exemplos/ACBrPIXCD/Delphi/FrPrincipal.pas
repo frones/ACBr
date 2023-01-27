@@ -43,7 +43,7 @@ uses
   ACBrPIXSchemasDevolucao, ACBrPIXSchemasCob, ACBrPIXPSPShipay, ShellAPI,
   ACBrOpenSSLUtils, ACBrPIXPSPSicredi, ACBrPIXBRCode, ACBrSocket, ACBrBase,
   ImgList, ACBrPIXPSPSicoob, ACBrPIXPSPPagSeguro, ACBrPIXPSPGerenciaNet,
-  ACBrPIXPSPBradesco
+  ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV
   {$IfDef FPC}
   , DateTimePicker
   {$EndIf};
@@ -76,6 +76,7 @@ type
     ACBrPSPBradesco1: TACBrPSPBradesco;
     ACBrPSPItau1: TACBrPSPItau;
     ACBrPSPPagSeguro1: TACBrPSPPagSeguro;
+    ACBrPSPPixPDV1: TACBrPSPPixPDV;
     ACBrPSPSantander1: TACBrPSPSantander;
     ACBrPSPShipay1: TACBrPSPShipay;
     ACBrPSPSicoob1: TACBrPSPSicoob;
@@ -199,6 +200,9 @@ type
     edBradescoClientSecret: TEdit;
     edItauRenovarCertificadoArq: TEdit;
     edPagSeguroTokenPay: TEdit;
+    edPixPDVCNPJ: TEdit;
+    edPixPDVSecretKey: TEdit;
+    edPixPDVToken: TEdit;
     edSantanderArqCertificadoPFX: TEdit;
     edSantanderExtrairCertificadoPFX: TEdit;
     edSantanderExtrairCertificadoPEM: TEdit;
@@ -336,6 +340,9 @@ type
     lbGerenciaNetPFX: TLabel;
     lbBradescoTipoChave: TLabel;
     lbPagSeguroTokenPay: TLabel;
+    lbPixPDVCNPJ: TLabel;
+    lbPixPDVSecretKey: TLabel;
+    lbPixPDVToken: TLabel;
     lbSantanderChavePIX: TLabel;
     lbBradescoSenhaPFX: TLabel;
     lbSantanderTipoChave: TLabel;
@@ -482,6 +489,7 @@ type
     mConsultarDevolucaoPix: TMemo;
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
+    pnPixPDV: TPanel;
     pnGerenciaNet: TPanel;
     pnAutenticacaoManual: TPanel;
     pnBradesco: TPanel;
@@ -627,6 +635,7 @@ type
     btSicoobExtrairChaveCertificadoInfo: TSpeedButton;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
+    tsPIXPDV: TTabSheet;
     tsBradesco: TTabSheet;
     tsPagSeguro: TTabSheet;
     tsPagSeguroSimularPagamento: TTabSheet;
@@ -3000,6 +3009,10 @@ begin
     edBradescoClientSecret.Text := Ini.ReadString('Bradesco', 'ClientSecret', '');
     edBradescoArqPFX.Text := Ini.ReadString('Bradesco', 'ArqPFX', edBradescoArqPFX.Text);
     edBradescoSenhaPFX.Text := Ini.ReadString('Bradesco', 'SenhaPFX', '');
+
+    edPixPDVCNPJ.Text := Ini.ReadString('PixPDV', 'CNPJ', '');
+    edPixPDVToken.Text := Ini.ReadString('PixPDV', 'Token', '');
+    edPixPDVSecretKey.Text := Ini.ReadString('PixPDV', 'SecretKey', '');
   finally
     Ini.Free;
   end;
@@ -3091,6 +3104,10 @@ begin
     Ini.WriteString('Bradesco', 'ClientSecret', edBradescoClientSecret.Text);
     Ini.WriteString('Bradesco', 'ArqPFX', edBradescoArqPFX.Text);
     Ini.WriteString('Bradesco', 'SenhaPFX', edBradescoSenhaPFX.Text);
+
+    Ini.WriteString('PixPDV', 'CNPJ', edPixPDVCNPJ.Text);
+    Ini.WriteString('PixPDV', 'Token', edPixPDVToken.Text);
+    Ini.WriteString('PixPDV', 'SecretKey', edPixPDVSecretKey.Text);
   finally
      Ini.Free ;
   end ;
@@ -3328,6 +3345,7 @@ begin
     6: ACBrPixCD1.PSP := ACBrPSPPagSeguro1;
     7: ACBrPixCD1.PSP := ACBrPSPGerenciaNet1;
     8: ACBrPixCD1.PSP := ACBrPSPBradesco1;
+    9: ACBrPixCD1.PSP := ACBrPSPPixPDV1;
   else
     raise Exception.Create('PSP configurado é inválido');
   end;
@@ -3391,6 +3409,10 @@ begin
   ACBrPSPBradesco1.ClientSecret := edBradescoClientSecret.Text;
   ACBrPSPBradesco1.ArquivoPFX := edBradescoArqPFX.Text;
   ACBrPSPBradesco1.SenhaPFX := edBradescoSenhaPFX.Text;
+
+  ACBrPSPPixPDV1.CNPJ := edPixPDVCNPJ.Text;
+  ACBrPSPPixPDV1.Token := edPixPDVToken.Text;
+  ACBrPSPPixPDV1.ClientSecret := edPixPDVSecretKey.Text;
 end;
 
 procedure TForm1.LimparQRCodeEstatico;

@@ -19,7 +19,7 @@ uses
   ACBrPIXSchemasCobV, ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
   ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLotesCobVConsultadas, 
   ACBrShipaySchemas, ACBrPIXPSPPagSeguro, ACBrPIXPSPGerenciaNet, 
-  ACBrPIXPSPBradesco, LazarusPackageIntf;
+  ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV, LazarusPackageIntf;
 
 implementation
 

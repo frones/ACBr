@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Elias César Vieira                              }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,39 +32,91 @@
 
 {$I ACBr.inc}
 
-unit ACBrPIXCDReg;
+unit ACBrPIXPSPPixPDV;
 
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXCD,
-  ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander,
-  ACBrPIXPSPShipay, ACBrPIXPSPSicredi, ACBrPIXPSPSicoob, ACBrPIXPSPPagSeguro,
-  ACBrPIXPSPGerenciaNet, ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV
-  {$IFDEF FPC}, LResources {$ENDIF};
+  Classes, SysUtils, ACBrPIXCD;
 
-procedure Register;
+const
+
+  cPixPDVURLSandbox = 'https://pixpdv.com.br/api-h/v1';
+  cPixPDVURLProducao = 'https://pixpdv.com.br/api/v1';
+
+type
+
+  TACBrPSPPixPDV = class(TACBrPSP)
+  private
+    fCNPJ: String;
+    fToken: String;
+
+  protected
+    function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
+
+    procedure ConfigurarAutenticacao(const Method: string; const EndPoint: string); override;
+    procedure ConfigurarHeaders(const Method: string; const AURL: string); override;
+  public
+    constructor Create(AOwner: TComponent); override;
+  published
+    property CNPJ: String read fCNPJ write fCNPJ;
+    property Token: String read fToken write fToken;
+    property ClientSecret;
+  end;
 
 implementation
 
-{$IFNDEF FPC}
-   {$R ACBrPIXCD.dcr}
-{$ENDIF}
+uses
+  ACBrOpenSSLUtils;
 
-procedure Register;
+{ TACBrPSPPixPDV }
+
+procedure TACBrPSPPixPDV.ConfigurarAutenticacao(const Method, EndPoint: string);
 begin
-  RegisterComponents('ACBrPIXCD', [TACBrPixCD,
-    TACBrPSPItau, TACBrPSPBancoDoBrasil, TACBrPSPSantander, TACBrPSPShipay,
-    TACBrPSPSicredi, TACBrPSPSicoob, TACBrPSPPagSeguro, TACBrPSPGerenciaNet,
-    TACBrPSPBradesco, TACBrPSPPixPDV]);
+  inherited ConfigurarAutenticacao(Method, EndPoint);
+
+  Http.UserName := CNPJ;
+  Http.Password := Token;
 end;
 
-{$IFDEF FPC}
-{$IFNDEF NOGUI}
-initialization
-   {$I ACBrPIXCD.lrs}
-{$ENDIF}
-{$ENDIF}
+procedure TACBrPSPPixPDV.ConfigurarHeaders(const Method, AURL: string);
+var
+  wHash: String;
+  wStrStream: TStringStream;
+  wOpenSSL: TACBrOpenSSLUtils;
+begin
+  inherited ConfigurarHeaders(Method, AURL);
+
+  if (Http.Document.Size <= 0) then
+    Exit;
+
+  wStrStream := TStringStream.Create('');
+  wOpenSSL := TACBrOpenSSLUtils.Create(Nil);
+  try
+    wStrStream.CopyFrom(Http.Document, 0);
+    wHash := wOpenSSL.HMACFromString(wStrStream.DataString, ClientSecret, algSHA256);
+
+    Http.Headers.Add('Json-Hash: ' + wHash);
+  finally
+    wOpenSSL.Free;
+    wStrStream.Free;
+  end;
+end;
+
+constructor TACBrPSPPixPDV.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  fCNPJ := EmptyStr;
+  fToken := EmptyStr;
+end;
+
+function TACBrPSPPixPDV.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
+begin
+  if (Ambiente = ambProducao) then
+    Result := cPixPDVURLProducao
+  else
+    Result := cPixPDVURLSandbox;
+end;
 
 end.
-

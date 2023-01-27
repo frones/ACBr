@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 27/01/2023
+-- eGoverneISS.Provider --
+[*] Alteração visando obter do retorno do envio o código a ser utilizado como
+    numero do lote ao consultar o lote.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Ajustes visando atender o provedor Libre.
    Por: Vagner Amorim/Italo Giurizzato Junior

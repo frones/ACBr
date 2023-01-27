@@ -165,7 +165,8 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
-  Mensagem: string;
+  AAlerta: TNFSeEventoCollectionItem;
+  Mensagem, Codigo: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -178,22 +179,39 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('MensagemErro'), tcStr);
+    Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Erro'), tcStr);
 
-    if Mensagem = '' then
+    if Codigo = 'false' then
     begin
       Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
-      if ( Mensagem = '' ) and ( ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Erro'), tcStr) = 'true' ) then
-        Mensagem := 'Ocorreu um erro, sem retorno do provedor';
-    end;
-
-    if Mensagem <> '' then
+      if Mensagem <> '' then
+      begin
+        AAlerta := Response.Erros.New;
+        AAlerta.Codigo := '';
+        AAlerta.Descricao := ACBrStr(Mensagem);
+        AAlerta.Correcao := '';
+      end;
+    end
+    else
     begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := '';
-      AErro.Descricao := ACBrStr(Mensagem);
-      AErro.Correcao := '';
+      Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('MensagemErro'), tcStr);
+
+      if Mensagem = '' then
+      begin
+        Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+
+        if Mensagem = '' then
+          Mensagem := 'Ocorreu um erro, sem retorno do provedor';
+      end;
+
+      if Mensagem <> '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := '';
+        AErro.Descricao := ACBrStr(Mensagem);
+        AErro.Correcao := '';
+      end;
     end;
   end;
 end;
@@ -260,6 +278,11 @@ begin
       ProcessarMensagemErros(Document.Root, Response, '', AMessageTag);
 
       Response.Sucesso := (Response.Erros.Count = 0);
+
+      if Response.Alertas.Count > 0 then
+      begin
+        Response.Lote := OnlyNumber(RightStrNativeString(Response.Alertas[0].Descricao, 20));
+      end;
 
       ANode := Document.Root.Childrens.FindAnyNs(AMessageTag);
 

@@ -465,7 +465,8 @@ begin
   for i := 0 to NFe.ide.NFref.Count - 1 do
   begin
     Gerador.wGrupo('NFref', 'B12a');
-    if NFe.ide.NFref[i].refNFe      <> '' then (**)GerarIdeNFrerefNFe(i);
+    if (NFe.ide.NFref[i].refNFe    <> '') or
+       (NFe.ide.NFref[i].refNFeSig <> '') then (**)GerarIdeNFrerefNFe(i);
     if NFe.Ide.NFref[i].RefNF.nNF    >  0 then (**)GerarIdeNFrefRefNF(i);
     if NFe.ide.NFref[i].RefNFP.nNF   >  0 then (**)GerarRefNFP(i);
     if NFe.ide.NFref[i].refCTe      <> '' then (**)GerarIdeNFrerefCTe(i);
@@ -473,14 +474,21 @@ begin
     Gerador.wGrupo('/NFref');
   end;
 
-  if NFe.ide.NFref.Count > 500 then
-    Gerador.wAlerta('B12a', 'NFref', DSC_QNF, ERR_MSG_MAIOR_MAXIMO + '500');
+  if NFe.ide.NFref.Count > 999 then
+    Gerador.wAlerta('B12a', 'NFref', DSC_QNF, ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 procedure TNFeW.GerarIdeNFrerefNFe(const i: Integer);
 begin
-  Gerador.wCampo(tcEsp, 'B13', 'refNFe', 44, 44, 1, OnlyNumber(NFe.ide.NFref[i].refNFe), DSC_REFNFE);
-  if not ValidarChave(NFe.ide.NFref[i].refNFe) then Gerador.wAlerta('B13', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
+  if NFe.ide.NFref[i].refNFe <> '' then
+  begin
+    Gerador.wCampo(tcEsp, 'B13', 'refNFe', 44, 44, 1, OnlyNumber(NFe.ide.NFref[i].refNFe), DSC_REFNFE);
+
+    if not ValidarChave(NFe.ide.NFref[i].refNFe) then
+      Gerador.wAlerta('B13', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
+  end
+  else
+    Gerador.wCampo(tcEsp, 'B13', 'refNFeSig', 44, 44, 1, OnlyNumber(NFe.ide.NFref[i].refNFeSig), DSC_REFNFE);
 end;
 
 procedure TNFeW.GerarIdeNFrefRefNF(const i: Integer);

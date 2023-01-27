@@ -1625,7 +1625,8 @@ begin
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
         begin
-          if INIRec.ReadString(sSecao,'refNFe','') <> '' then
+          if (INIRec.ReadString(sSecao,'refNFe','') <> '') or
+             (INIRec.ReadString(sSecao,'refNFeSig','') <> '') then
             sType := 'NFE'
           else if INIRec.ReadString(  sSecao,'refCTe'  ,'') <> '' then
             sType := 'CTE'
@@ -1642,8 +1643,10 @@ begin
         with Ide.NFref.New do
         begin
           if sType = 'NFE' then
-            refNFe :=  INIRec.ReadString(sSecao,'refNFe','')
-
+          begin
+            refNFe :=  INIRec.ReadString(sSecao,'refNFe','');
+            refNFeSig :=  INIRec.ReadString(sSecao,'refNFeSig','');
+          end
           else if sType = 'NF' then
           begin
             RefNF.cUF    := INIRec.ReadInteger( sSecao,'cUF'   ,0);
@@ -2735,6 +2738,11 @@ begin
           begin
             INIRec.WriteString(sSecao, 'Tipo', 'NFe');
             INIRec.WriteString(sSecao, 'refNFe', refNFe);
+          end
+          else if trim(refNFeSig) <> '' then
+          begin
+            INIRec.WriteString(sSecao, 'Tipo', 'NFe');
+            INIRec.WriteString(sSecao, 'refNFeSig', refNFeSig);
           end
           else if trim(RefNF.CNPJ) <> '' then
           begin

@@ -281,6 +281,7 @@ begin
   NFe.Ide.NFref.New;
   i := NFe.Ide.NFref.Count - 1;
   (*B13*) NFe.ide.NFref[i].refNFe := ObterConteudo(ANode.Childrens.Find('refNFe'), tcEsp);
+          NFe.ide.NFref[i].refNFeSig := ObterConteudo(ANode.Childrens.Find('refNFeSig'), tcEsp);
 
   refNode := ANode.Childrens.Find('refNF');
   if refNode <> nil then

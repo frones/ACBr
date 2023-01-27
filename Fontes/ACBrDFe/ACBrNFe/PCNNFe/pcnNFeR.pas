@@ -180,6 +180,7 @@ begin
     begin
       NFe.Ide.NFref.New;
       (*B13*) NFe.ide.NFref[i].refNFe := Leitor.rCampo(tcEsp, 'refNFe');
+              NFe.ide.NFref[i].refNFeSig := Leitor.rCampo(tcEsp, 'refNFeSig');
 
       if Length(Trim(Leitor.rCampo(tcEsp,'refNF'))) > 0 then // Verificação adicionada
       begin

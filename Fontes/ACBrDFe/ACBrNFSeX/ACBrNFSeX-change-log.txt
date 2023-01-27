@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/01/2023
+-- Prodata.GravarXml --
+[*] Incluída na Configuração a linha alterando o Formato do ItemListaServico.
+   Por: Massao Aihara
 -- ACBrNFSeXServicos.ini --
 [*] Incluída a cidade: Campestre da Serra/RS - Provedor DataSmart
    Por: Rogerio Rizzon

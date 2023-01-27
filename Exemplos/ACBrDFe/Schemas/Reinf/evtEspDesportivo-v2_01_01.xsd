@@ -259,7 +259,7 @@
                                   <xs:simpleType>
                                     <xs:restriction base="xs:string">
                                       <xs:length value="2"/>
-                                      <xs:pattern value="[AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO]"/>
+                                      <xs:pattern value="AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO"/>
                                     </xs:restriction>
                                   </xs:simpleType>
                                 </xs:element>

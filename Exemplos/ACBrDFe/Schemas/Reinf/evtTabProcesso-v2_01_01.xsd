@@ -174,7 +174,7 @@
                                           </xs:annotation>
                                           <xs:simpleType>
                                             <xs:restriction base="xs:string">
-                                              <xs:pattern value="[01|02|03|04|05|08|09|10|11|12|13|90|92]"/>
+                                              <xs:pattern value="01|02|03|04|05|08|09|10|11|12|13|90|92"/>
                                             </xs:restriction>
                                           </xs:simpleType>
                                         </xs:element>
@@ -332,7 +332,7 @@
                                           </xs:annotation>
                                           <xs:simpleType>
                                             <xs:restriction base="xs:string">
-                                              <xs:pattern value="[01|02|03|04|05|08|09|10|11|12|13|90|92]"/>
+                                              <xs:pattern value="01|02|03|04|05|08|09|10|11|12|13|90|92"/>
                                             </xs:restriction>
                                           </xs:simpleType>
                                         </xs:element>

@@ -564,7 +564,7 @@ begin
     end;
 
     if pRespReg[i].ideOC <> idNenhum then
-      Gerador.wCampo(tcStr, '', 'ideOC',   1,  1, 1, eSIdeOCToStr(pRespReg[i].ideOC));
+      Gerador.wCampo(tcStr, '', 'ideOC',   1,  1, 1, eSIdeOCToStrEX(pRespReg[i].ideOC));
 
     if pRespReg[i].ideOC = idOutros then
       Gerador.wCampo(tcStr, '', 'dscOC',   1, 20, 1, pRespReg[i].dscOC);
@@ -1053,8 +1053,8 @@ var
   i, j: integer;
 begin
   Result := False;
+  Leitor := TLeitor.Create;
   try
-    Leitor := TLeitor.Create;
     Leitor.Arquivo := XML;
 
     if Leitor.rExtrai(1, 'evtExpRisco') <> '' then
@@ -1161,7 +1161,7 @@ begin
             with respReg.New do
             begin
               cpfResp := Leitor.rCampo(tcStr, 'cpfResp');
-              ideOC   := eSStrToIdeOC(ok, Leitor.rCampo(tcStr, 'ideOC'));
+              ideOC   := eSStrToIdeOCEX(Leitor.rCampo(tcStr, 'ideOC'));
               dscOC   := Leitor.rCampo(tcStr, 'dscOC');
               nrOC    := Leitor.rCampo(tcStr, 'nrOC');
               ufOC    := Leitor.rCampo(tcStr, 'ufOC');

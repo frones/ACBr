@@ -553,8 +553,8 @@ var
   i: integer;
 begin
   Result := False;
+  Leitor := TLeitor.Create;
   try
-    Leitor := TLeitor.Create;
     Leitor.Arquivo := XML;
 
     if Leitor.rExtrai(1, 'evtMonit') <> '' then

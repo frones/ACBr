@@ -776,7 +776,7 @@ begin
 
           sSecao := 'emitente' + IntToStrZero(I, 1);
           emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
-          emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
+          emitente.ideOC  := eSStrToIdeOCEX(INIRec.ReadString(sSecao, 'ideOC', '1'));
           emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
           emitente.ufOC   := INIRec.ReadString(sSecao, 'ufOC', 'SP');
         end;

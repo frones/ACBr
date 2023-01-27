@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/01/2023
+-- Centi.LerXml --
+[*] Alteração visando a leitura da tag ValorServicos.
+   Por: Márcio Baroni
 -- eGoverneISS.Provider --
 [*] Alteração visando obter do retorno do envio o código a ser utilizado como
     numero do lote ao consultar o lote.

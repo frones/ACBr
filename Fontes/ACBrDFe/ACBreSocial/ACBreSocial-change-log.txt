@@ -53,6 +53,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/01/2023
+-- pcesGerador --
+[*] Possível solução para o problema de não respeitar a flag RetirarAcentos.
+   Por: Elton / Diego F
+
 -- ACBreSocial --
 [*] Possível solução para o problema de não respeitar a flag RetirarAcentos
    Por: Diego F

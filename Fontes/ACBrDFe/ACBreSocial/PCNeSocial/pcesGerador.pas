@@ -239,8 +239,7 @@ begin
   ArqXML := XMLEvento;
 
   // XML já deve estar em UTF8, para poder ser assinado //
-  ArqXML := RemoverDeclaracaoXML(ArqXML);//Para forçar a conversão em UTF8.
-  ArqXML := ConverteXMLtoUTF8(ArqXML);
+  ArqXML := NativeStringToUTF8(ArqXML);
   FXMLOriginal := ArqXML;
 
   with TACBreSocial(FACBreSocial) do
@@ -307,7 +306,7 @@ begin
   lFileName := CaminhoArquivo;
   lStr:= TStringList.Create;
   try
-    lStr.Text := NativeStringToUTF8(string(XML));
+    lStr.Text := string(XML);
     lStr.SaveToFile(ChangeFileExt(lFileName,'.xml'));
   finally
     lStr.Free;

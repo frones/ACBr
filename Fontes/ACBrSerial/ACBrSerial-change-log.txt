@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2023
+[*] TK-3548 Alterar Exceção do ACBrDevice Bluetooth quando não há dispositivo
+  por : Victor H Gonzales - Pandaaa
+
 19/01/2023
 -- ACBrDevice --
 [+] Adicionado o método:

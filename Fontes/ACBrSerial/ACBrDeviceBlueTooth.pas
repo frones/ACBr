@@ -37,7 +37,7 @@ unit ACBrDeviceBlueTooth;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, StrUtils,
   ACBrDeviceClass, ACBrBase,
   System.Bluetooth, System.Bluetooth.Components;
 
@@ -190,7 +190,10 @@ var
 begin
   GravaLog('AcharPortasBlueTooth');
   AtivarBlueTooth;
-  if (fsBluetooth.PairedDevices <> nil) then
+
+  GravaLog(IfThen(fsBluetooth.ConnectionState = TBluetoothConnectionState.Connected,'BlueTooth Conectado!','BlueTooth Desconetado!'));
+
+  if (fsBluetooth.ConnectionState = TBluetoothConnectionState.Connected) and (fsBluetooth.PairedDevices <> nil) then
     for DevBT in fsBluetooth.PairedDevices do
       if TodasPortas or IsPrinterDevice(DevBT) then
         AStringList.Add('BTH:'+DevBT.DeviceName {+ ' - ' + IntToStr(DevBT.ClassDevice)});

@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -36,7 +36,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrUtil, ACBrBase, ACBrDFe,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrBase, ACBrDFe,
   ACBrReinf, pcnConversaoReinf;
 
 type
@@ -1756,7 +1757,7 @@ begin
         with ideEstabObra do
         begin
           tpInscEstab := tiCNPJ;
-          nrInscEstab := '123';
+          nrInscEstab := '12345678000123';
           indObra     := ioNaoeObraDeConstrucaoCivil;
 
           with idePrestServ do
@@ -2408,7 +2409,7 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.perApur := '2018-04';
+      ideEvento.perApur := FormatDateBr(Date-30, 'yyyy-mm');
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 

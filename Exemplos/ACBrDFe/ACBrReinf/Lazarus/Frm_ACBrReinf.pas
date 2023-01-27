@@ -37,7 +37,8 @@ interface
 uses
   LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls,
-  ACBrUtil, ACBrDFe,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrDFe,
   ACBrReinf, pcnConversaoReinf;
 
 type
@@ -1748,7 +1749,7 @@ begin
         with ideEstabObra do
         begin
           tpInscEstab := tiCNPJ;
-          nrInscEstab := '123';
+          nrInscEstab := '12345678000123';
           indObra     := ioNaoeObraDeConstrucaoCivil;
 
           with idePrestServ do
@@ -2349,7 +2350,7 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.perApur := '2018-04';
+      ideEvento.perApur := FormatDateBr(Date-30, 'yyyy-mm');
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 

@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluída a cidade: Campestre da Serra/RS - Provedor DataSmart
+   Por: Rogerio Rizzon
+[*] Incluída a cidade: Luziania/GO - Provedor Prodata
+   Por: Massao Aihara
+
 25/01/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Itauna/MG requer que a aliquota não seja dividida por 100.

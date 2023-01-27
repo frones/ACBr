@@ -1,0 +1,90 @@
+object FrameVendaProduto: TFrameVendaProduto
+  Size.Width = 608.000000000000000000
+  Size.Height = 472.000000000000000000
+  Size.PlatformDefault = False
+  object Rectangle1: TRectangle
+    Align = Bottom
+    Fill.Color = xFF71A8F7
+    Margins.Left = 16.000000000000000000
+    Margins.Top = 16.000000000000000000
+    Margins.Right = 16.000000000000000000
+    Margins.Bottom = 16.000000000000000000
+    Position.X = 16.000000000000000000
+    Position.Y = 406.000000000000000000
+    Size.Width = 576.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    XRadius = 8.000000000000000000
+    YRadius = 8.000000000000000000
+    object Text1: TText
+      Align = Client
+      Margins.Left = 8.000000000000000000
+      Margins.Top = 8.000000000000000000
+      Margins.Right = 8.000000000000000000
+      Margins.Bottom = 8.000000000000000000
+      Size.Width = 560.000000000000000000
+      Size.Height = 34.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Total'
+      TextSettings.Font.Size = 24.000000000000000000
+      TextSettings.HorzAlign = Leading
+      object Total: TText
+        Align = Right
+        Position.X = 327.000000000000000000
+        Size.Width = 233.000000000000000000
+        Size.Height = 34.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 28.000000000000000000
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Trailing
+      end
+    end
+  end
+  object Layout1: TLayout
+    Align = Center
+    Margins.Top = 16.000000000000000000
+    Size.Width = 556.000000000000000000
+    Size.Height = 360.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object ImagemProduto: TImage
+      MultiResBitmap.Height = 196
+      MultiResBitmap.Width = 196
+      MultiResBitmap = <
+        item
+        end>
+      Align = Center
+      Size.Width = 500.000000000000000000
+      Size.Height = 220.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object PrecoUnitario: TText
+      Align = Bottom
+      Position.Y = 320.000000000000000000
+      Size.Width = 556.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 24.000000000000000000
+    end
+    object DescricaoProduto: TText
+      Align = Bottom
+      Position.Y = 239.000000000000000000
+      Size.Width = 556.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 24.000000000000000000
+      TextSettings.FontColor = claGray
+    end
+    object QuantidadeProduto: TText
+      Align = Bottom
+      Margins.Top = 16.000000000000000000
+      Position.Y = 295.000000000000000000
+      Size.Width = 556.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 24.000000000000000000
+      TextSettings.FontColor = claGray
+    end
+  end
+end

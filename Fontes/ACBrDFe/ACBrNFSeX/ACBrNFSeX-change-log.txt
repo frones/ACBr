@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Ipatinga/MG mudou da versão 2.03 para 2.04
+   Por: Paulo Aquino
+
 27/01/2023
 -- Centi.LerXml --
 [*] Alteração visando a leitura da tag ValorServicos.

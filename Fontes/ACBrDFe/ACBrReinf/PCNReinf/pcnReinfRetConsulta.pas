@@ -551,7 +551,7 @@ end;
 
 procedure TRAquisCollection.SetItem(Index: Integer; Value: TRAquisCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 { TinfoCRTomCollection }

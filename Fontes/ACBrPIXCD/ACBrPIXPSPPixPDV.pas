@@ -43,6 +43,7 @@ const
 
   cPixPDVURLSandbox = 'https://pixpdv.com.br/api-h/v1';
   cPixPDVURLProducao = 'https://pixpdv.com.br/api/v1';
+  cPixPDVHeaderPoweredBy = 'X-PoweredBy: Projeto ACBr';
 
 type
 
@@ -86,6 +87,8 @@ var
   wOpenSSL: TACBrOpenSSLUtils;
 begin
   inherited ConfigurarHeaders(Method, AURL);
+
+  Http.Headers.Add(cPixPDVHeaderPoweredBy);
 
   if (Http.Document.Size <= 0) then
     Exit;

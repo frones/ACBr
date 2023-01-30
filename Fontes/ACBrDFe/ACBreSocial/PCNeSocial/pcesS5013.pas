@@ -412,7 +412,8 @@ begin
     // Capturar a versão do evento
     s := Copy(FXML, Pos('/evt/evtFGTS/', FXML)+13, 16);
     s := Copy(s, 1, Pos('"', s)-1);
-    VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
+    VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00', 'v_S_01_01_00'], 
+                                          [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00]);
 
     if leitor.rExtrai(1, 'evtFGTS') <> '' then
     begin

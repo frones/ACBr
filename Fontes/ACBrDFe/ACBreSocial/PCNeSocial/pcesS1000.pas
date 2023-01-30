@@ -172,7 +172,7 @@ type
     FInfoComplementares: TInfoComplementares;
     FcnpjEFR: String;
     FdtTrans11096: TDatetime;
-    FIndTribFolhaPisCofins: TpSimNao;
+    FIndTribFolhaPisCofins: TpSimNaoFacultativo;
 
     function getDadosIsencao(): TDadosIsencao;
     function getInfoOrgInternacional(): TInfoOrgInternacional;
@@ -204,7 +204,7 @@ type
     property SoftwareHouse: TSoftwareHouseCollection read FSoftwareHouse write FSoftwareHouse;
     property InfoComplementares: TInfoComplementares read FInfoComplementares write FInfoComplementares;
     property dtTrans11096 : TDatetime read FdtTrans11096 write FdtTrans11096;
-    property indTribFolhaPisCofins: tpSimNao read FIndTribFolhaPisCofins write FIndTribFolhaPisCofins default tpNao;
+    property indTribFolhaPisCofins: tpSimNaoFacultativo read FIndTribFolhaPisCofins write FIndTribFolhaPisCofins default snfNao;
   end;
 
   TInfoComplementares = class(TObject)
@@ -535,8 +535,8 @@ begin
     if DateToStr(infoEmpregador.infoCadastro.dtTrans11096) <> dDataBrancoNula then
       Gerador.wCampo(tcDat, '', 'dtTrans11096', 10, 10, 0, infoEmpregador.infoCadastro.dtTrans11096);
 
-    if (VersaoDF >= veS01_01_00) and (infoEmpregador.infoCadastro.indTribFolhaPisCofins = tpSim) then
-      Gerador.wCampo(tcStr, '', 'indTribFolhaPisCofins',  0, 1, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.indTribFolhaPisCofins));
+    if (VersaoDF >= veS01_01_00) and (infoEmpregador.infoCadastro.indTribFolhaPisCofins = snfSim) then
+      Gerador.wCampo(tcStr, '', 'indTribFolhaPisCofins',  0, 1, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.indTribFolhaPisCofins));
   end;
 
   GerarDadosIsencao;
@@ -712,7 +712,7 @@ begin
         infoEmpregador.infoCadastro.IndEtt                := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEtt', 'S'));
         infoEmpregador.infoCadastro.nrRegEtt              := INIRec.ReadString(sSecao, 'nrRegEtt', EmptyStr);
         infoEmpregador.infoCadastro.cnpjEFR               := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
-        infoEmpregador.infoCadastro.indTribFolhaPisCofins := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indTribFolhaPisCofins', 'S'));
+        infoEmpregador.infoCadastro.indTribFolhaPisCofins := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indTribFolhaPisCofins', 'S'));
 
         sSecao := 'dadosIsencao';
         if INIRec.ReadString(sSecao, 'ideMinLei', '') <> '' then

@@ -1076,10 +1076,14 @@ type
     property vICMSOutraUF: Currency  read FvICMSOutraUF  write FvICMSOutraUF;
   end;
 
+  { TICMSSN }
+
   TICMSSN = class(TObject)
   private
+    FCST: TpcnCSTIcms;
     FindSN : Integer;
   public
+    property CST: TpcnCSTIcms        read FCST           write FCST default cst90;
     property indSN: Integer read FindSN write FindSN default 1;
   end;
 

@@ -709,6 +709,8 @@ begin
       begin
        // ICMS Simples Nacional
        CTe.Imp.ICMS.SituTrib     := cstICMSSN;
+       if CTe.infCTe.versao >= 3 then
+         CTe.Imp.ICMS.ICMSSN.CST := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
        CTe.Imp.ICMS.ICMSSN.indSN := Leitor.rCampo(tcInt,'indSN');
       end;
 

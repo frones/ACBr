@@ -540,7 +540,7 @@ end;
 
 function TRAquisCollection.GetItem(Index: Integer): TRAquisCollectionItem;
 begin
-  Result := TRAquisCollectionItem(inherited GetItem(Index));
+  Result := TRAquisCollectionItem(inherited Items[Index]);
 end;
 
 function TRAquisCollection.New: TRAquisCollectionItem;

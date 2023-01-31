@@ -329,11 +329,11 @@ begin
   '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/v1_1_1">'+
     '<envioLoteEventos grupo="' + Inttostr(ord(AGrupo)) + '">'+
       '<ideEmpregador>'+
-        '<tpInsc>' + Inttostr(ord(FIdeEmpregador.TpInsc) + 1) + '</tpInsc>'+
+        '<tpInsc>' + eSTpInscricaoToStr(FIdeEmpregador.TpInsc) + '</tpInsc>'+
         '<nrInsc>' + IIf((FIdeEmpregador.TpInsc <> tiCNPJ) or (FIdeEmpregador.OrgaoPublico), FIdeEmpregador.NrInsc, Copy(FIdeEmpregador.NrInsc, 1, 8)) +'</nrInsc>'+
       '</ideEmpregador>'+
       '<ideTransmissor>'+
-        '<tpInsc>' + Inttostr(ord(FIdeTransmissor.TpInsc) + 1) +'</tpInsc>'+
+        '<tpInsc>' + eSTpInscricaoToStr(FIdeTransmissor.TpInsc) +'</tpInsc>'+
         '<nrInsc>' + FIdeTransmissor.NrInsc +'</nrInsc>'+
     '</ideTransmissor>'+
     '<eventos>';

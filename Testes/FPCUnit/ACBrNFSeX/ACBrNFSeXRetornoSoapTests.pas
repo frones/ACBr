@@ -21,7 +21,7 @@ type
   published
     procedure AoCriarComponente_ContadorDeNotas_DeveSerZero;
     procedure LoadFromFile_TratarXmlRetornado;
-    procedure Fiorilli200_LoadFromFile_TratarXMLRetornado;
+//    procedure Fiorilli200_LoadFromFile_TratarXMLRetornado;
 
   end;
 
@@ -36,7 +36,7 @@ uses
 const
   SArquivoRetornoSoap  = '..\..\..\..\Recursos\NFSe\RetornoSoap.xml';
   SArquivoRetorno  = '..\..\..\..\Recursos\NFSe\Retorno.xml';
-  UmMunicipioWebFisco = 3527603;
+  UmMunicipioWebFisco = 3545803;
 
 { ACBrNFSeXRetornoSoapTest }
 
@@ -78,18 +78,61 @@ begin
     sxml := Copy(sxml, 0, Length(sxml) - Length(sLineBreak));
   end;
 
-  sxml := SeparaDados(sxml, 'Body');
+  if Pos('Body', sxml) > 0 then
+    sxml := SeparaDados(sxml, 'Body');
 
+  // SigISSWeb - 3545803
+  sxml := NativeStringToUTF8(sxml);
+  sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  sxml := RemoverDeclaracaoXML(sxml);
+  sxml := RemoverIdentacao(sxml);
+  sxml := RemoverCaracteresDesnecessarios(sxml);
+  sxml := RemoverPrefixosDesnecessarios(sxml);
+  sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
+
+  (*
+  // Fiorilli - 3544004
+  sxml := SeparaDados(sxml, 'ns2:ListaNfse');
+
+  sxml := NativeStringToUTF8(sxml);
+  sxml := StringReplace(sxml, '&#xd;', '\s\n', [rfReplaceAll]);
+  sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  sxml := RemoverPrefixosDesnecessarios(sxml);
+  sxml := RemoverCaracteresDesnecessarios(sxml);
+  sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
+  *)
+  (*
   sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
 
   sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
   sxml := RemoverIdentacao(sxml);
   sxml := RemoverCaracteresDesnecessarios(sxml);
   sxml := InserirDeclaracaoXMLSeNecessario(sxml);
+  *)
+
+  (*
+  NFSeBrasil - 3169356
+  sxml := SeparaDados(sxml, 'return');
+
+  if Pos('ISO-8859-1', sxml) > 0 then
+    sxml := AnsiToNativeString(sXML);
+
+  sxml := string(NativeStringToUTF8(sxml));
+  sxml := StringReplace(sxml, '&amp;amp;', 'e',[rfReplaceAll]);
+  sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  sxml := RemoverDeclaracaoXML(sxml, True);
+  sxml := RemoverCDATA(sxml);
+  sxml := RemoverIdentacao(sxml);
+  sxml := RemoverPrefixosDesnecessarios(sxml);
+  sxml := StringReplace(sxml, 'R$', '', [rfReplaceAll]);
+  sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
+  *)
+  sxml := InserirDeclaracaoXMLSeNecessario(sxml);
 
   WriteToTXT(SArquivoRetorno, sxml, False, False);
 end;
 
+(*
 procedure ACBrNFSeXRetornoSoapTest.Fiorilli200_LoadFromFile_TratarXMLRetornado;
 var
   lStrList: TStringList;
@@ -120,7 +163,7 @@ begin
 
   WriteToTXT(SArquivoRetorno, sxml, False, False);
 end;
-
+*)
 initialization
 
   _RegisterTest('ACBrNFSeXRetornoSoapTests', ACBrNFSeXRetornoSoapTest);

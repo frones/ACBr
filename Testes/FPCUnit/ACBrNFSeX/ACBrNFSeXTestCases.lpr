@@ -12,8 +12,9 @@ uses
   ACBrNFSeXProvedorIPMTests,
   ACBrNFSeXProvedorISSBarueriTests,
   ACBrNFSeXProvedorPadraoNacionalTests,
-  ACBrNFSeXProvedorSigISSTests, 
-  ACBrNFSeXProvedorSoftPlanTests, 
+  ACBrNFSeXProvedorSigISSTests,
+  ACBrNFSeXProvedorSigISSWebTests,
+  ACBrNFSeXProvedorSoftPlanTests,
   ACBrNFSeXProvedorWebFiscoTests,
   ACBrNFSeXRetornoSoapTests;
 

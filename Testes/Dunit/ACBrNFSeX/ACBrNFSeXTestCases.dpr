@@ -46,6 +46,7 @@ uses
   ACBrNFSeXProvedorISSBarueriTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorISSBarueriTests.pas',
   ACBrNFSeXProvedorPadraoNacionalTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorPadraoNacionalTests.pas',
   ACBrNFSeXProvedorSigISSTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSigISSTests.pas',
+  ACBrNFSeXProvedorSigISSWebTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSigISSWebTests.pas',
   ACBrNFSeXProvedorSoftPlanTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorSoftPlanTests.pas',
   ACBrNFSeXProvedorWebFiscoTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXProvedorWebFiscoTests.pas',
   ACBrNFSeXRetornoSoapTests in '..\..\FPCUnit\ACBrNFSeX\ACBrNFSeXRetornoSoapTests.pas';

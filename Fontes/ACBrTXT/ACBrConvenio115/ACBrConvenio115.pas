@@ -287,6 +287,8 @@ type
     FNumeroFaturaComercial: string;
     FValorFaturaComecial: Currency;
     FObservacoes: string;
+    FDataLeituraAtual: string;
+    FDataLeituraAnterior: string;
     function GetGrupoTensao: string;
     procedure SetTipoAssinanteAte201612(const Value: TTipoAssinanteConv115_Tab11_1);
     procedure SetTipoUtilizacao(const Value: TProdutoConv115_Tab11_2);
@@ -321,8 +323,8 @@ type
     property NumeroTelefonePrincipal: string read FNumeroTelefonePrincipal write FNumeroTelefonePrincipal;
     property NumeroFaturaComercial: string read FNumeroFaturaComercial write FNumeroFaturaComercial;
     property ValorFaturaComecial: Currency read FValorFaturaComecial write FValorFaturaComecial;
-    property DataLeituraAnterior: string read GetDataLeituraAnterior;
-    property DataLeituraAtual: string read GetDataLeituraAtual;
+    property DataLeituraAnterior: string read GetDataLeituraAnterior write FDataLeituraAnterior;
+    property DataLeituraAtual: string read GetDataLeituraAtual write FDataLeituraAtual;
     property Observacoes: string read FObservacoes write FObservacoes;
     property Detalhes: TACBrConvenio115Items read FDetalhes;
     function AutenticacaoDocumentoFiscal: string;
@@ -501,14 +503,18 @@ end;
 
 function TACBrConvenio115Mestre.GetDataLeituraAnterior: string;
 begin
-  // Somente energia elétrica
+  // Somente energia elétrica/comunicao/telecomunicao
   Result := '00000000';
+  if FDataLeituraAnterior <> '' then
+    Result := FormatDateTime('yyyymmdd', StrtoDateDef(FDataLeituraAnterior, 0));
 end;
 
 function TACBrConvenio115Mestre.GetDataLeituraAtual: string;
 begin
-  // Somente energia elétrica
+  // Somente energia elétrica/comunicao/telecomunicao
   Result := '00000000';
+  if FDataLeituraAtual <> '' then
+    Result := FormatDateTime('yyyymmdd', StrtoDateDef(FDataLeituraAnterior, 0));
 end;
 
 function TACBrConvenio115Mestre.GetGrupoTensao: string;

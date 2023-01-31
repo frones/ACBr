@@ -312,6 +312,18 @@ begin
         UF := xUF;
     end;
   end;
+  AuxNode := ANode.Childrens.FindAnyNs('EnderecoExterior');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.Tomador.Endereco do
+    begin
+      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('EnderecoCompletoExterior'), tcStr);
+      CodigoPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcStr);
+      UF := 'EX';
+    end;
+  end;
+
 end;
 
 procedure TNFSeR_ABRASFv2.LerIdentificacaoNfse(const ANode: TACBrXmlNode);

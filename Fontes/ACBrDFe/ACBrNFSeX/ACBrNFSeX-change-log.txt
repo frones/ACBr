@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 31/01/2023
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Alterações visando a leitura do grupo EnderecoExterior.
+   Por: Rogério Xavier
 -- SigISSWeb.Provider/SigISSWeb.LerXml --
 [*] Alterações com base nos testes unitários, visando a leitura correta do XML 
     da NFS-e.

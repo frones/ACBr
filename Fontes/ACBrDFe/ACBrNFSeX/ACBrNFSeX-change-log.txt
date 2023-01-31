@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 31/01/2023
+-- ACBrNFSeXServicos.ini --
+[*] Correção na URL do NameSpace de homologação da cidade Marituba/PA.
+   Por: Italo Giurizzato Junior
 -- PublicSoft.Provider --
 [*] Alteração visando obter acesso ao webservice do provedor.
     Observação quanto a configuração:

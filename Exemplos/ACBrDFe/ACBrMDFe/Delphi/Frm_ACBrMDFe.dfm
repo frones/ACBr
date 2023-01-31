@@ -10,10 +10,8 @@ object frmACBrMDFe: TfrmACBrMDFe
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -1711,6 +1709,7 @@ object frmACBrMDFe: TfrmACBrMDFe
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    Usuario = 'ACBr'
     MargemInferior = 8.000000000000000000
     MargemSuperior = 8.000000000000000000
     MargemEsquerda = 6.000000000000000000
@@ -1733,6 +1732,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     Cancelada = False
     Encerrado = False
     ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
+    ExibirMunicipioDescarregamento = False
     PrintDialog = True
     Left = 430
     Top = 238

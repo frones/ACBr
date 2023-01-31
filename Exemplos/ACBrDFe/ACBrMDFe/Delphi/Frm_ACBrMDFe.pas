@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{																			                                         }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -1836,6 +1836,7 @@ begin
     ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName, True);
 
     try
+      ACBrMDFe1.Manifestos.Assinar;
       ACBrMDFe1.Manifestos.Validar;
 
       if ACBrMDFe1.Manifestos.Items[0].Alertas <> '' then
@@ -2256,6 +2257,7 @@ begin
 //    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [];
 //    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [deRelacaoDFe];
     ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [deRelacaoDFe, deValorTotal];
+    ACBrMDFe1.DAMDFE.ExibirMunicipioDescarregamento := True;
   end;
 end;
 

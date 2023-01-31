@@ -960,10 +960,10 @@ begin
       // Para o provedor SigISS usar os valores acima de forma adquada
       Tomador.IdentificacaoTomador.Tipo := tpPF;
       Tomador.IdentificacaoTomador.CpfCnpj := '12345678901';
-      Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
-      Tomador.IdentificacaoTomador.InscricaoEstadual := '';
+      Tomador.IdentificacaoTomador.InscricaoMunicipal := '123';
+      Tomador.IdentificacaoTomador.InscricaoEstadual := '123';
 
-      Tomador.RazaoSocial := 'INSCRICAO DE TESTE & TESTE';
+      Tomador.RazaoSocial := 'INSCRICAO DE TESTE E TESTE';
 
       // O campo EnderecoInformado é utilizado pelo provedor IPM
       // A tag <endereco_informado> é opcional, caso não deseje que ela seja

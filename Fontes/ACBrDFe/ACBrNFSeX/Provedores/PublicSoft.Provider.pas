@@ -227,7 +227,7 @@ end;
 function TACBrNFSeXWebservicePublicSoft203.GerarXmlHeader: string;
 var
   Producao: Boolean;
-  aToken: string;
+  aToken, aCodigo: string;
 begin
   Producao := (TConfiguracoesNFSe(FPConfiguracoes).WebServices.AmbienteCodigo = 1);
 
@@ -236,9 +236,16 @@ begin
   else
     aToken := xToken;
 
-  Result := '<producao xsi:type="xsd:boolean">' + BoolToStr(Producao, True) + '</producao>' +
+  aCodigo := TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSSenha;
+
+  Result := '<producao xsi:type="xsd:boolean">' +
+              LowerCase(BoolToStr(Producao, True)) +
+            '</producao>' +
             '<token xsi:type="xsd:string">' + aToken + '</token>' +
-            '<codigoCidade xsi:type="xsd:string">' +              IntToStr(TConfiguracoesNFSe(FPConfiguracoes).Geral.CodigoMunicipio) +            '</codigoCidade>';end;
+            '<codigoCidade xsi:type="xsd:string">' +
+              aCodigo +
+            '</codigoCidade>';
+end;
 
 function TACBrNFSeXWebservicePublicSoft203.Recepcionar(ACabecalho,
   AMSG: String): string;

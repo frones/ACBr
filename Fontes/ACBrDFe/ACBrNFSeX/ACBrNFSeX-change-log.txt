@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/01/2023
+-- PublicSoft.Provider --
+[*] Alteração visando obter acesso ao webservice do provedor.
+    Observação quanto a configuração:
+     Configuracoes.Geral.Emitente.WSChaveAcesso := 'Token de Acesso';
+     Configuracoes.Geral.Emitente.WSSenha:= 'Senha NFS-e';
+    Tanto o Token quanto a senha se encontra no cadastro do contribuinte.
+   Por: Italo Giurizzato Junior
+
 30/01/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Ipatinga/MG mudou da versão 2.03 para 2.04

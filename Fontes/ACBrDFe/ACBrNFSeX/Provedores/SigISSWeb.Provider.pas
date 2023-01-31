@@ -586,10 +586,13 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
+    Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
+    Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
     Result := RemoverPrefixosDesnecessarios(Result);
+    Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
   end
   else
   begin
@@ -603,8 +606,8 @@ begin
                 '</erros>' +
               '</a>';
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := String(NativeStringToUTF8(Result));
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   end;
 end;
 

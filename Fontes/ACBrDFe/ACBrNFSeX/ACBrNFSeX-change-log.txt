@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 31/01/2023
+-- SigISSWeb.Provider/SigISSWeb.LerXml --
+[*] Alterações com base nos testes unitários, visando a leitura correta do XML 
+    da NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade São Domingos das Dores/MG trocou de provedor, agora é Fiorilli.
    Por: Glauber Bernardo

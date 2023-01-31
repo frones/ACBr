@@ -132,6 +132,12 @@ begin
         xMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('cidade_prestador'), tcStr);
         UF := ObterConteudo(ANode.Childrens.FindAnyNs('uf_prestador'), tcStr);
       end;
+
+      with Contato do
+      begin
+        Telefone := ObterConteudo(ANode.Childrens.FindAnyNs('fone_prestador'), tcStr);
+        Email := ObterConteudo(ANode.Childrens.FindAnyNs('email_prestador'), tcStr);
+      end;
     end;
 
     with Tomador do
@@ -181,7 +187,7 @@ begin
       ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('valor_nf'), tcDe2);
     end;
 
-    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('data_emissao'), tcDat);
+    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('data_emissao'), tcDatVcto);
 //    <forma_de_pagamento></forma_de_pagamento>
 
     with Servico do

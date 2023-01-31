@@ -70,6 +70,9 @@ Símbolo : Significado
      Configuracoes.Geral.Emitente.WSSenha:= 'Senha NFS-e';
     Tanto o Token quanto a senha se encontra no cadastro do contribuinte.
    Por: Italo Giurizzato Junior
+-- Fiorilli.Provider --
+[*] Adiciona StringReplace para corrigir problema de quebra de linha na discriminação
+   Por: Edson.pol
 
 30/01/2023
 -- ACBrNFSeXServicos.ini --

@@ -44,9 +44,12 @@ Símbolo : Significado
 
 
 31/01/2023
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Alterações visando a impressão dos dados do Prestador.
+   Por: Imbua
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Alterações visando a leitura do grupo EnderecoExterior.
-   Por: Rogério Xavier
+   Por: Imbua
 -- SigISSWeb.Provider/SigISSWeb.LerXml --
 [*] Alterações com base nos testes unitários, visando a leitura correta do XML 
     da NFS-e.

@@ -36,7 +36,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrDFeReport, ACBrBase, ACBrDFe, ACBrMail, ACBrUtil,
+  ACBrDFeReport, ACBrBase, ACBrDFe, ACBrMail,
   ACBrGNREGuiaClass, ACBrGNReGuiaRLClass, ACBrGNRE2;
 
 type
@@ -267,6 +267,7 @@ uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
   pcnAuxiliar, pcnConversao, pgnreConversao, ACBrDFeSSL, ACBrDFeOpenSSL,
+  ACBrUtil.DateTime, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.XMLHTML,
   Frm_Status, Frm_SelecionarCertificado;
 
 const
@@ -890,8 +891,8 @@ end;
 
 procedure TfrmACBrGNRe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ACBrUtil.ConverteXMLtoUTF8(RetWS), False, False);
+  WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
+                      ConverteXMLtoUTF8(RetWS), False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 end;

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/01/2023
+[-] TK-3549 ACBrBancoBrasil Correção tratamento Instrucao1 e Instrucao2
+    https://www.projetoacbr.com.br/forum/topic/70582-erro-ao-gerar-remessa-banco-do-brasil/#comment-458669
+  Por: New Line System Desenvolvimento / conf. Daniel Morais
+
 27/01/2023
 [*] TK-3523 ACBrBancoBradesco segmento R (envio) qdo não tiver data do contrato passar 00000000
   Por : Renfer / conf. Daniel Morais

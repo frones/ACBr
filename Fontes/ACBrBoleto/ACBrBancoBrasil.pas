@@ -1054,11 +1054,11 @@ begin
        aTipoCobranca:='     ';
      end;
 
-     if (((Instrucao1 <> '') or (Instrucao2 <> '')) and (Instrucao1 = Instrucao2 )) then
-        raise Exception.Create(ACBrStr('A Instrução1 não pode ser igual a Instrução2.'));
-
      Instrucao1 := trim(IfThen(Instrucao1='00', '', Instrucao1));
      Instrucao2 := trim(IfThen(Instrucao2='00', '', Instrucao2));
+
+     if (((Instrucao1 <> '') or (Instrucao2 <> '')) and (Instrucao1 = Instrucao2 )) then
+           raise Exception.Create(ACBrStr('A Instrução1 não pode ser igual a Instrução2.'));
 
      //Verifica se foi informado data instrucao de protesto e data de protesto
 

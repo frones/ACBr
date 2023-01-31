@@ -347,7 +347,7 @@ var
   Evento: string;
 begin
   AXML := FXMLAssinado;
-  Evento := SchemaeSocialToStr(Schema) + PrefixoVersao +
+  Evento := SchemaeSocialToStr(Schema) + '-' +
           VersaoeSocialToStrSchemas(TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF);
 
 
@@ -392,7 +392,7 @@ procedure TeSocialEvento.GerarCabecalho(const Namespace: String);
 begin
   with TACBreSocial(FACBreSocial) do
   begin
-    SSL.NameSpaceURI := ACBRESOCIAL_NAMESPACE_URI + Namespace + '/v' +
+    SSL.NameSpaceURI := ACBRESOCIAL_NAMESPACE_URI + Namespace + '/' +
                         VersaoeSocialToStrSchemas(Configuracoes.Geral.VersaoDF);
 
     Gerador.wGrupo(ENCODING_UTF8, '', False);

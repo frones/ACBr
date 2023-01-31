@@ -551,7 +551,7 @@ type
   TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00);
 const
   TVersaoeSocialArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00');
-  TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', '_S_01_00_00', '_S_01_01_00');
+  TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ('v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00', 'v_S_01_01_00');
   TVersaoeSocialArrayReals : array[TVersaoeSocial] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000);
 
 type
@@ -638,8 +638,6 @@ type
   end;
 
 const
-  PrefixoVersao = '-v';
-
   TEventoString: array[0..52] of String =('evtInfoEmpregador', 'evtTabEstab',
                                           'evtTabRubrica', 'evtTabLotacao',
                                           'evtTabCargo', 'evtTabCarreira',

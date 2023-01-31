@@ -58,6 +58,8 @@ type
   end;
 
   TACBrNFSeProvidereGoverneISS = class (TACBrNFSeProviderProprio)
+  private
+    FPCodigoLote: string;
   protected
     procedure Configuracao; override;
 
@@ -282,6 +284,7 @@ begin
       if Response.Alertas.Count > 0 then
       begin
         Response.Lote := OnlyNumber(RightStrNativeString(Response.Alertas[0].Descricao, 20));
+        FPCodigoLote := Response.Lote;
       end;
 
       ANode := Document.Root.Childrens.FindAnyNs(AMessageTag);
@@ -330,7 +333,10 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(FPCodigoLote) then
+    FPCodigoLote := Response.Lote;
+
+  if EstaVazio(FPCodigoLote) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
@@ -344,7 +350,7 @@ begin
                               Emitente.WSChaveAcesso +
                            '</eis:ChaveAutenticacao>' +
                            '<eis:CodigoLote>' +
-                              Response.Lote +
+                              FPCodigoLote +
                            '</eis:CodigoLote>';
 end;
 

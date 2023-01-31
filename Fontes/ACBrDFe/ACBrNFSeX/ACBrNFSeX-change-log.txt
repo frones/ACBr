@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 31/01/2023
+-- eGoverneISS.Provider --
+[*] Alteração visando usar o Código Lote retornado pelo envio no consultar o lote.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Alterações visando a impressão dos dados do Prestador.
    Por: Imbua

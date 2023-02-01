@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/02/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Nova Itaberaba/SC - Provedor Pronim
+   Por: Claudio Algayer
+
 31/01/2023
 -- eGoverneISS.Provider --
 [*] Alteração visando usar o Código Lote retornado pelo envio no consultar o lote.

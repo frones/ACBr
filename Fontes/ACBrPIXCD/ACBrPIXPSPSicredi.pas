@@ -106,7 +106,6 @@ begin
   inherited Create(AOwner);
   fSSLUtils := TACBrOpenSSLUtils.Create(Self);  // Self irá destruir ele...
   fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
-  Scopes := Scopes + [scCobVWrite, scCobVRead];
   Clear;
 end;
 

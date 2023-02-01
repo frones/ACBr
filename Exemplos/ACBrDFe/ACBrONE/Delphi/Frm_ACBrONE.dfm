@@ -10,10 +10,8 @@ object frmACBrONE: TfrmACBrONE
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -1304,6 +1302,15 @@ object frmACBrONE: TfrmACBrONE
           Caption = 'Consultar Foto'
           TabOrder = 3
           OnClick = btnConsultaFotoClick
+        end
+        object btnConsPorPlaca: TButton
+          Left = 192
+          Top = 41
+          Width = 177
+          Height = 25
+          Caption = 'Consultar Por Placa'
+          TabOrder = 4
+          OnClick = btnConsPorPlacaClick
         end
       end
     end

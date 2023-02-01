@@ -204,6 +204,7 @@ type
     btnRecepcaoLeitura: TButton;
     btnDistLeituras: TButton;
     btnConsultaFoto: TButton;
+    btnConsPorPlaca: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathONEClick(Sender: TObject);
@@ -238,6 +239,7 @@ type
     procedure btnRecepcaoLeituraClick(Sender: TObject);
     procedure btnDistLeiturasClick(Sender: TObject);
     procedure btnConsultaFotoClick(Sender: TObject);
+    procedure btnConsPorPlacaClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -325,6 +327,30 @@ end;
 procedure TfrmACBrONE.btnCNPJClick(Sender: TObject);
 begin
   ShowMessage(ACBrONE1.SSL.CertCNPJ);
+end;
+
+procedure TfrmACBrONE.btnConsPorPlacaClick(Sender: TObject);
+var
+  VerAplic, Placa, xDataRef: string;
+begin
+  VerAplic := '';
+  if not(InputQuery('Consultar Por Placa', 'Versão do Aplicativo', VerAplic)) then
+     exit;
+
+  Placa := '';
+  if not(InputQuery('Consultar Por Placa', 'Placa', Placa)) then
+     exit;
+
+  xDataRef := '';
+  if not(InputQuery('Consultar Por Placa', 'Data de Referencia', xDataRef)) then
+     exit;
+
+  ACBrONE1.ConsultarPlaca(VerAplic, Placa, StrToDateTimeDef(xDataRef, 0));
+
+  MemoResp.Lines.Text := ACBrONE1.WebServices.ConsultarPlaca.RetWS;
+  memoRespWS.Lines.Text := ACBrONE1.WebServices.ConsultarPlaca.RetornoWS;
+
+  LoadXML(ACBrONE1.WebServices.ConsultarPLaca.RetWS, WBResposta);
 end;
 
 procedure TfrmACBrONE.btnConsultaFotoClick(Sender: TObject);

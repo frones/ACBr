@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2023
+[*] TK-3476 Inclusão do QrCode no Carnê no arquivo fast BoletoCarne.fr3
+Por  Daniel de Morais
+
 24/02/2022
 [-] TK-2409 Correção na geração de senha do PDF quando o boleto é gerado individualmente.
 Por : Pandaaa

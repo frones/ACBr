@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2023
+-- Diversos --
+[*] Alterações visando atender o consumo de API Rest utilizado pela versão
+    2.1.1
+  Por: Renato Rubinho/Italo Giurizzato Junior
+
 20/09/2022
 -- pcnConversaoReinf -- 
 [*] Remoção do enumerador v1_02_00, uma vez que nem existe no arquivo 

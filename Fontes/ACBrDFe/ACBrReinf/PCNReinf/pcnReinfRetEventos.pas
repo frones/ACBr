@@ -45,7 +45,8 @@ uses
   {$IFEND}
   ACBrBase,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pcnCommonReinf, pcnConversaoReinf;
+  pcnCommonReinf, pcnConversaoReinf,
+  pcnReinfR9005;
 
 type
   TRetEnvioLote = class;
@@ -343,6 +344,7 @@ type
     FId: string;
     FArquivoReinf: string;
     FevtTotal: TEvtTotal;
+    FevtRet: TevtRet;
   public
     constructor Create;
     destructor Destroy; override;
@@ -350,6 +352,29 @@ type
     property Id: string read FId write FId;
     property ArquivoReinf: string read FArquivoReinf write FArquivoReinf;
     property evtTotal: TEvtTotal read FevtTotal write FevtTotal;
+    property evtRet: TevtRet read FevtRet write FevtRet;
+  end;
+
+  { TdadosRecepcaoLote }
+
+  TdadosRecepcaoLote = class(TObject)
+  private
+    FdhRecepcao: TDateTime;
+    FversaoAplicativoRecepcao: String;
+    FprotocoloEnvio: String;
+  public
+    property dhRecepcao: TDateTime read FdhRecepcao write FdhRecepcao;
+    property versaoAplicativoRecepcao: String read FversaoAplicativoRecepcao write FversaoAplicativoRecepcao;
+    property protocoloEnvio: String read FprotocoloEnvio write FprotocoloEnvio;
+  end;
+
+  { TdadosProcessamentoLote }
+
+  TdadosProcessamentoLote = class(TObject)
+  private
+    FversaoAplicativoProcessamentoLote: String;
+  public
+    property versaoAplicativoProcessamentoLote: String read FversaoAplicativoProcessamentoLote write FversaoAplicativoProcessamentoLote;
   end;
 
   { TRetEnvioLote }
@@ -362,18 +387,29 @@ type
     FIdeTransmissor: TIdeTransmissor;
     FStatus: TStatus;
     Fevento: TeventoCollection;
+    FIdeContribuinte: TideContrib;
+    FdadosRecepcaoLote: TdadosRecepcaoLote;
+    FdadosProcessamentoLote: TdadosProcessamentoLote;
   public
     constructor Create;
     destructor Destroy; override;
 
     function LerXml: boolean;
+    function LerXmlRetornadoWebService: boolean;
+    function LerXmlRetornadoAPIRest: boolean;
+
+    procedure LerRetornoEventos;
+
     function SalvarINI(nCont: Integer): boolean;
 
     property Leitor: TLeitor read FLeitor write FLeitor;
 
     property Id: String read FId write FId;
     property IdeTransmissor: TIdeTransmissor read FIdeTransmissor write FIdeTransmissor;
+    property IdeContribuinte: TideContrib read FIdeContribuinte write FIdeContribuinte;
     property Status: TStatus read FStatus write FStatus;
+    property dadosRecepcaoLote: TdadosRecepcaoLote read FdadosRecepcaoLote write FdadosRecepcaoLote;
+    property dadosProcessamentoLote: TdadosProcessamentoLote read FdadosProcessamentoLote write FdadosProcessamentoLote;
     property evento: TeventoCollection read Fevento write Fevento;
   end;
 
@@ -598,13 +634,15 @@ end;
 
 constructor TeventoCollectionItem.Create;
 begin
-  evtTotal := TEvtTotal.Create;
+  FevtTotal := TEvtTotal.Create;
+  FevtRet := TevtRet.Create;
   FId := EmptyStr;
 end;
 
 destructor TeventoCollectionItem.destroy;
 begin
-  evtTotal.Free;
+  FevtTotal.Free;
+  FevtRet.Free;
 
   inherited;
 end;
@@ -638,8 +676,11 @@ begin
   FLeitor := TLeitor.Create;
 
   FIdeTransmissor := TIdeTransmissor.Create;
-  FStatus         := TStatus.Create;
-  Fevento         := TeventoCollection.Create;
+  FIdeContribuinte := TideContrib.Create;
+  FStatus := TStatus.Create;
+  FdadosRecepcaoLote := TdadosRecepcaoLote.Create;
+  FdadosProcessamentoLote := TdadosProcessamentoLote.Create;
+  Fevento := TeventoCollection.Create;
 end;
 
 destructor TRetEnvioLote.Destroy;
@@ -647,21 +688,280 @@ begin
   FLeitor.Free;
 
   FIdeTransmissor.Free;
+  FIdeContribuinte.Free;
   FStatus.Free;
+  FdadosRecepcaoLote.Free;
+  FdadosProcessamentoLote.Free;
   Fevento.Free;
 
   inherited;
 end;
 
-function TRetEnvioLote.LerXml: boolean;
+procedure TRetEnvioLote.LerRetornoEventos;
 var
   i, j: Integer;
+  Ok: Boolean;
+begin
+  if leitor.rExtrai(2, 'retornoEventos') <> '' then
+  begin
+    i := 0;
+    while Leitor.rExtrai(3, 'evento', '', i + 1) <> '' do
+    begin
+      evento.New;
+      evento.Items[i].Id           := FLeitor.rAtributo('id', 'evento');
+      evento.Items[i].ArquivoReinf := RetornarConteudoEntre(Leitor.Grupo, '>', '</evento');
+
+      if leitor.rExtrai(4, 'evtRet') <> '' then
+      begin
+        evento.Items[i].evtRet.Leitor.Arquivo := evento.Items[i].ArquivoReinf;
+        evento.Items[i].evtRet.LerXML;
+      end
+      else
+      begin
+        with evento.Items[i].evtTotal do
+        begin
+          if leitor.rExtrai(4, 'evtTotal') <> '' then
+          begin
+            FId := Leitor.rAtributo('id=');
+
+            if leitor.rExtrai(5, 'ideEvento') <> '' then
+              IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
+
+            if leitor.rExtrai(5, 'ideContri') <> '' then
+            begin
+              IdeContrib.TpInsc := StrToTpInscricao(Ok, leitor.rCampo(tcStr, 'tpInsc'));
+              IdeContrib.NrInsc := leitor.rCampo(tcStr, 'nrInsc');
+            end;
+
+            if leitor.rExtrai(5, 'ideRecRetorno') <> '' then
+            begin
+              if leitor.rExtrai(6, 'ideStatus') <> '' then
+              begin
+                IdeStatus.cdRetorno   := leitor.rCampo(tcStr, 'cdRetorno');
+                IdeStatus.descRetorno := leitor.rCampo(tcStr, 'descRetorno');
+
+                j := 0;
+                while Leitor.rExtrai(7, 'regOcorrs', '', j + 1) <> '' do
+                begin
+                  IdeStatus.regOcorrs.New;
+                  IdeStatus.regOcorrs.Items[j].tpOcorr        := leitor.rCampo(tcInt, 'tpOcorr');
+                  IdeStatus.regOcorrs.Items[j].localErroAviso := leitor.rCampo(tcStr, 'localErroAviso');
+                  IdeStatus.regOcorrs.Items[j].codResp        := leitor.rCampo(tcStr, 'codResp');
+                  IdeStatus.regOcorrs.Items[j].dscResp        := leitor.rCampo(tcStr, 'dscResp');
+
+                  inc(j);
+                end;
+              end;
+            end;
+
+            if leitor.rExtrai(5, 'infoRecEv') <> '' then
+            begin
+              infoRecEv.FnrProtEntr := leitor.rCampo(tcStr, 'nrProtEntr');
+              infoRecEv.FdhProcess  := leitor.rCampo(tcDatHor, 'dhProcess');
+              infoRecEv.FtpEv       := leitor.rCampo(tcStr, 'tpEv');
+              infoRecEv.FidEv       := leitor.rCampo(tcStr, 'idEv');
+              infoRecEv.Fhash       := leitor.rCampo(tcStr, 'hash');
+            end;
+
+            if leitor.rExtrai(5, 'infoTotal') <> '' then
+            begin
+              with InfoTotal do
+              begin
+                FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
+
+                if leitor.rExtrai(6, 'RTom') <> '' then
+                begin
+                  RTom.FcnpjPrestador     := leitor.rCampo(tcStr, 'cnpjPrestador');
+                  RTom.FvlrTotalBaseRet   := leitor.rCampo(tcDe2, 'vlrTotalBaseRet');
+                  RTom.FvlrTotalRetPrinc  := leitor.rCampo(tcDe2, 'vlrTotalRetPrinc');
+                  RTom.FvlrTotalRetAdic   := leitor.rCampo(tcDe2, 'vlrTotalRetAdic');
+                  RTom.FvlrTotalNRetPrinc := leitor.rCampo(tcDe2, 'vlrTotalNRetPrinc');
+                  RTom.FvlrTotalNRetAdic  := leitor.rCampo(tcDe2, 'vlrTotalNRetAdic');
+
+                  // Versão 1.03.02
+                  j := 0;
+                  while Leitor.rExtrai(7, 'infoCRTom', '', j + 1) <> '' do
+                  begin
+                    RTom.infoCRTom.New;
+                    RTom.infoCRTom.Items[j].FCRTom        := leitor.rCampo(tcStr, 'CRTom');
+                    RTom.infoCRTom.Items[j].FVlrCRTom     := leitor.rCampo(tcDe2, 'VlrCRTom');
+                    RTom.infoCRTom.Items[j].FVlrCRTomSusp := leitor.rCampo(tcDe2, 'VlrCRTomSusp');
+
+                    inc(j);
+                  end;
+                end;
+
+                if leitor.rExtrai(6, 'RPrest') <> '' then
+                begin
+                  RPrest.FtpInscTomador := StrToTpInscricao(Ok, leitor.rCampo(tcStr, 'tpInscTomador'));
+                  RPrest.FnrInscTomador := leitor.rCampo(tcStr, 'nrInscTomador');
+                  RPrest.FvlrTotalBaseRet   := leitor.rCampo(tcDe2, 'vlrTotalBaseRet');
+                  RPrest.FvlrTotalRetPrinc  := leitor.rCampo(tcDe2, 'vlrTotalRetPrinc');
+                  RPrest.FvlrTotalRetAdic   := leitor.rCampo(tcDe2, 'vlrTotalRetAdic');
+                  RPrest.FvlrTotalNRetPrinc := leitor.rCampo(tcDe2, 'vlrTotalNRetPrinc');
+                  RPrest.FvlrTotalNRetAdic  := leitor.rCampo(tcDe2, 'vlrTotalNRetAdic');
+                end;
+
+                j := 0;
+                while Leitor.rExtrai(6, 'RRecRepAD', '', j + 1) <> '' do
+                begin
+                  RRecRepAD.New;
+                  RRecRepAD.Items[j].FcnpjAssocDesp := leitor.rCampo(tcStr, 'cnpjAssocDesp');
+                  RRecRepAD.Items[j].FvlrTotalRep   := leitor.rCampo(tcDe2, 'vlrTotalRep');
+                  RRecRepAD.Items[j].FvlrTotalRet   := leitor.rCampo(tcDe2, 'vlrTotalRet');
+                  RRecRepAD.Items[j].FvlrTotalNRet  := leitor.rCampo(tcDe2, 'vlrTotalNRet');
+
+                  // Versão 1.03.02
+                  RRecRepAD.Items[j].FCRRecRepAD        := leitor.rCampo(tcStr, 'CRRecRepAD');
+                  RRecRepAD.Items[j].FvlrCRRecRepAD     := leitor.rCampo(tcDe2, 'vlrCRRecRepAD');
+                  RRecRepAD.Items[j].FvlrCRRecRepADSusp := leitor.rCampo(tcDe2, 'vlrCRRecRepADSusp');
+
+                  inc(j);
+                end;
+
+                j := 0;
+                while Leitor.rExtrai(6, 'RComl', '', j + 1) <> '' do
+                begin
+                  RComl.New;
+                  RComl.Items[j].FvlrCPApur    := leitor.rCampo(tcDe2, 'vlrCPApur');
+                  RComl.Items[j].FvlrRatApur   := leitor.rCampo(tcDe2, 'vlrRatApur');
+                  RComl.Items[j].FvlrSenarApur := leitor.rCampo(tcDe2, 'vlrSenarApur');
+                  RComl.Items[j].FvlrCPSusp    := leitor.rCampo(tcDe2, 'vlrCPSusp');
+                  RComl.Items[j].FvlrRatSusp   := leitor.rCampo(tcDe2, 'vlrRatSusp');
+                  RComl.Items[j].FvlrSenarSusp := leitor.rCampo(tcDe2, 'vlrSenarSusp');
+
+                  // Versão 1.03.02
+                  RComl.Items[j].FCRComl        := leitor.rCampo(tcStr, 'CRComl');
+                  RComl.Items[j].FvlrCRComl     := leitor.rCampo(tcDe2, 'vlrCRComl');
+                  RComl.Items[j].FvlrCRComlSusp := leitor.rCampo(tcDe2, 'vlrCRComlSusp');
+
+                  inc(j);
+                end;
+
+                j := 0;
+                while Leitor.rExtrai(6, 'RAquis', '', j + 1) <> '' do
+                begin
+                  RAquis.New;
+                  RAquis.Items[j].FCRAquis        := leitor.rCampo(tcStr, 'CRAquis');
+                  RAquis.Items[j].FvlrCRAquis     := leitor.rCampo(tcDe2, 'vlrCRAquis');
+                  RAquis.Items[j].FvlrCRAquisSusp := leitor.rCampo(tcDe2, 'vlrCRAquisSusp');
+
+                  inc(j);
+                end;
+
+                j := 0;
+                while Leitor.rExtrai(6, 'RCPRB', '', j + 1) <> '' do
+                begin
+                  RCPRB.New;
+                  RCPRB.Items[j].FcodRec         := leitor.rCampo(tcInt, 'codRec');
+                  RCPRB.Items[j].FvlrCPApurTotal := leitor.rCampo(tcDe2, 'vlrCPApurTotal');
+                  RCPRB.Items[j].FvlrCPRBSusp    := leitor.rCampo(tcDe2, 'vlrCPRBSusp');
+
+                  // Versão 1.03.02
+                  RCPRB.Items[j].FCRCPRB        := leitor.rCampo(tcStr, 'CRCPRB');
+                  RCPRB.Items[j].FvlrCRCPRB     := leitor.rCampo(tcDe2, 'vlrCRCPRB');
+                  RCPRB.Items[j].FvlrCRCPRBSusp := leitor.rCampo(tcDe2, 'vlrCRCPRBSusp');
+
+                  inc(j);
+                end;
+
+                if leitor.rExtrai(6, 'RRecEspetDesp') <> '' then
+                begin
+                  RRecEspetDesp.FvlrReceitaTotal := leitor.rCampo(tcDe2, 'vlrReceitaTotal');
+                  RRecEspetDesp.FvlrCPApurTotal  := leitor.rCampo(tcDe2, 'vlrCPApurTotal');
+                  RRecEspetDesp.FvlrCPSuspTotal  := leitor.rCampo(tcDe2, 'vlrCPSuspTotal');
+
+                  // Versão 1.03.02
+                  RRecEspetDesp.FCRRecEspetDesp        := leitor.rCampo(tcStr, 'CRRecEspetDesp');
+                  RRecEspetDesp.FvlrCRRecEspetDesp     := leitor.rCampo(tcDe2, 'vlrCRRecEspetDesp');
+                  RRecEspetDesp.FvlrCRRecEspetDespSusp := leitor.rCampo(tcDe2, 'vlrCRRecEspetDespSusp');
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+
+      inc(i);
+    end;
+  end;
+end;
+
+function TRetEnvioLote.LerXml: boolean;
+begin
+  if Pos('retornoLoteEventosAssincrono',Leitor.Arquivo) > 0 then
+    Result := LerXmlRetornadoAPIRest
+  else
+    Result := LerXmlRetornadoWebService;
+end;
+
+function TRetEnvioLote.LerXmlRetornadoAPIRest: boolean;
+var
+  i: Integer;
   Ok: Boolean;
 begin
   Result := True;
 
   try
     Leitor.Grupo := Leitor.Arquivo;
+
+    if leitor.rExtrai(1, 'retornoLoteEventosAssincrono') <> '' then
+    begin
+      if leitor.rExtrai(2, 'ideContribuinte') <> '' then
+      begin
+        IdeContribuinte.TpInsc := StrToTpInscricao(Ok, leitor.rCampo(tcStr, 'tpInsc'));
+        IdeContribuinte.NrInsc := leitor.rCampo(tcStr, 'nrInsc');
+      end;
+
+      if leitor.rExtrai(2, 'status') <> '' then
+      begin
+        Status.cdstatus := leitor.rCampo(tcStr, 'cdResposta');
+        Status.descRetorno := leitor.rCampo(tcStr, 'descResposta');
+
+        if leitor.rExtrai(3, 'ocorrencias') <> '' then
+        begin
+          i := 0;
+          while Leitor.rExtrai(4, 'ocorrencia', '', i + 1) <> '' do
+          begin
+            Status.Ocorrencias.New;
+
+            Status.Ocorrencias.Items[i].Codigo := FLeitor.rCampo(tcInt, 'codigo');
+            Status.Ocorrencias.Items[i].Descricao := FLeitor.rCampo(tcStr, 'descricao');
+            Status.Ocorrencias.Items[i].Tipo := FLeitor.rCampo(tcInt, 'tipo');
+            Status.Ocorrencias.Items[i].Localizacao := FLeitor.rCampo(tcStr, 'localizacao');
+            inc(i);
+          end;
+        end;
+      end;
+
+      if leitor.rExtrai(2, 'dadosRecepcaoLote') <> '' then
+      begin
+        dadosRecepcaoLote.dhRecepcao := leitor.rCampo(tcDatHor, 'dhRecepcao');
+        dadosRecepcaoLote.versaoAplicativoRecepcao := leitor.rCampo(tcStr, 'versaoAplicativoRecepcao');
+        dadosRecepcaoLote.protocoloEnvio := leitor.rCampo(tcStr, 'protocoloEnvio');
+      end;
+
+      if leitor.rExtrai(2, 'dadosProcessamentoLote') <> '' then
+      begin
+        dadosProcessamentoLote.versaoAplicativoProcessamentoLote := leitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
+      end;
+
+      LerRetornoEventos;
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+function TRetEnvioLote.LerXmlRetornadoWebService: boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+
+  try
+    Leitor.Grupo := Leitor.Arquivo;
+
     if leitor.rExtrai(1, 'retornoLoteEventos') <> '' then
     begin
       FId := Leitor.rAtributo('id=');
@@ -689,181 +989,7 @@ begin
         end;
       end;
 
-      if leitor.rExtrai(2, 'retornoEventos') <> '' then
-      begin
-        i := 0;
-        while Leitor.rExtrai(3, 'evento', '', i + 1) <> '' do
-        begin
-          evento.New;
-          evento.Items[i].Id           := FLeitor.rAtributo('id', 'evento');
-          evento.Items[i].ArquivoReinf := RetornarConteudoEntre(Leitor.Grupo, '>', '</evento');
-
-          with evento.Items[i].evtTotal do
-          begin
-            if leitor.rExtrai(4, 'evtTotal') <> '' then
-            begin
-              FId := Leitor.rAtributo('id=');
-
-              if leitor.rExtrai(5, 'ideEvento') <> '' then
-                IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
-
-              if leitor.rExtrai(5, 'ideContri') <> '' then
-              begin
-                IdeContrib.TpInsc := StrToTpInscricao(Ok, leitor.rCampo(tcStr, 'tpInsc'));
-                IdeContrib.NrInsc := leitor.rCampo(tcStr, 'nrInsc');
-              end;
-
-              if leitor.rExtrai(5, 'ideRecRetorno') <> '' then
-              begin
-                if leitor.rExtrai(6, 'ideStatus') <> '' then
-                begin
-                  IdeStatus.cdRetorno   := leitor.rCampo(tcStr, 'cdRetorno');
-                  IdeStatus.descRetorno := leitor.rCampo(tcStr, 'descRetorno');
-
-                  j := 0;
-                  while Leitor.rExtrai(7, 'regOcorrs', '', j + 1) <> '' do
-                  begin
-                    IdeStatus.regOcorrs.New;
-                    IdeStatus.regOcorrs.Items[j].tpOcorr        := leitor.rCampo(tcInt, 'tpOcorr');
-                    IdeStatus.regOcorrs.Items[j].localErroAviso := leitor.rCampo(tcStr, 'localErroAviso');
-                    IdeStatus.regOcorrs.Items[j].codResp        := leitor.rCampo(tcStr, 'codResp');
-                    IdeStatus.regOcorrs.Items[j].dscResp        := leitor.rCampo(tcStr, 'dscResp');
-
-                    inc(j);
-                  end;
-                end;
-              end;
-
-              if leitor.rExtrai(5, 'infoRecEv') <> '' then
-              begin
-                infoRecEv.FnrProtEntr := leitor.rCampo(tcStr, 'nrProtEntr');
-                infoRecEv.FdhProcess  := leitor.rCampo(tcDatHor, 'dhProcess');
-                infoRecEv.FtpEv       := leitor.rCampo(tcStr, 'tpEv');
-                infoRecEv.FidEv       := leitor.rCampo(tcStr, 'idEv');
-                infoRecEv.Fhash       := leitor.rCampo(tcStr, 'hash');
-              end;
-
-              if leitor.rExtrai(5, 'infoTotal') <> '' then
-              begin
-                with InfoTotal do
-                begin
-                  FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
-
-                  if leitor.rExtrai(6, 'RTom') <> '' then
-                  begin
-                    RTom.FcnpjPrestador     := leitor.rCampo(tcStr, 'cnpjPrestador');
-                    RTom.FvlrTotalBaseRet   := leitor.rCampo(tcDe2, 'vlrTotalBaseRet');
-                    RTom.FvlrTotalRetPrinc  := leitor.rCampo(tcDe2, 'vlrTotalRetPrinc');
-                    RTom.FvlrTotalRetAdic   := leitor.rCampo(tcDe2, 'vlrTotalRetAdic');
-                    RTom.FvlrTotalNRetPrinc := leitor.rCampo(tcDe2, 'vlrTotalNRetPrinc');
-                    RTom.FvlrTotalNRetAdic  := leitor.rCampo(tcDe2, 'vlrTotalNRetAdic');
-
-                    // Versão 1.03.02
-                    j := 0;
-                    while Leitor.rExtrai(7, 'infoCRTom', '', j + 1) <> '' do
-                    begin
-                      RTom.infoCRTom.New;
-                      RTom.infoCRTom.Items[j].FCRTom        := leitor.rCampo(tcStr, 'CRTom');
-                      RTom.infoCRTom.Items[j].FVlrCRTom     := leitor.rCampo(tcDe2, 'VlrCRTom');
-                      RTom.infoCRTom.Items[j].FVlrCRTomSusp := leitor.rCampo(tcDe2, 'VlrCRTomSusp');
-
-                      inc(j);
-                    end;
-                  end;
-
-                  if leitor.rExtrai(6, 'RPrest') <> '' then
-                  begin
-                    RPrest.FtpInscTomador := StrToTpInscricao(Ok, leitor.rCampo(tcStr, 'tpInscTomador'));
-                    RPrest.FnrInscTomador := leitor.rCampo(tcStr, 'nrInscTomador');
-                    RPrest.FvlrTotalBaseRet   := leitor.rCampo(tcDe2, 'vlrTotalBaseRet');
-                    RPrest.FvlrTotalRetPrinc  := leitor.rCampo(tcDe2, 'vlrTotalRetPrinc');
-                    RPrest.FvlrTotalRetAdic   := leitor.rCampo(tcDe2, 'vlrTotalRetAdic');
-                    RPrest.FvlrTotalNRetPrinc := leitor.rCampo(tcDe2, 'vlrTotalNRetPrinc');
-                    RPrest.FvlrTotalNRetAdic  := leitor.rCampo(tcDe2, 'vlrTotalNRetAdic');
-                  end;
-
-                  j := 0;
-                  while Leitor.rExtrai(6, 'RRecRepAD', '', j + 1) <> '' do
-                  begin
-                    RRecRepAD.New;
-                    RRecRepAD.Items[j].FcnpjAssocDesp := leitor.rCampo(tcStr, 'cnpjAssocDesp');
-                    RRecRepAD.Items[j].FvlrTotalRep   := leitor.rCampo(tcDe2, 'vlrTotalRep');
-                    RRecRepAD.Items[j].FvlrTotalRet   := leitor.rCampo(tcDe2, 'vlrTotalRet');
-                    RRecRepAD.Items[j].FvlrTotalNRet  := leitor.rCampo(tcDe2, 'vlrTotalNRet');
-
-                    // Versão 1.03.02
-                    RRecRepAD.Items[j].FCRRecRepAD        := leitor.rCampo(tcStr, 'CRRecRepAD');
-                    RRecRepAD.Items[j].FvlrCRRecRepAD     := leitor.rCampo(tcDe2, 'vlrCRRecRepAD');
-                    RRecRepAD.Items[j].FvlrCRRecRepADSusp := leitor.rCampo(tcDe2, 'vlrCRRecRepADSusp');
-
-                    inc(j);
-                  end;
-
-                  j := 0;
-                  while Leitor.rExtrai(6, 'RComl', '', j + 1) <> '' do
-                  begin
-                    RComl.New;
-                    RComl.Items[j].FvlrCPApur    := leitor.rCampo(tcDe2, 'vlrCPApur');
-                    RComl.Items[j].FvlrRatApur   := leitor.rCampo(tcDe2, 'vlrRatApur');
-                    RComl.Items[j].FvlrSenarApur := leitor.rCampo(tcDe2, 'vlrSenarApur');
-                    RComl.Items[j].FvlrCPSusp    := leitor.rCampo(tcDe2, 'vlrCPSusp');
-                    RComl.Items[j].FvlrRatSusp   := leitor.rCampo(tcDe2, 'vlrRatSusp');
-                    RComl.Items[j].FvlrSenarSusp := leitor.rCampo(tcDe2, 'vlrSenarSusp');
-
-                    // Versão 1.03.02
-                    RComl.Items[j].FCRComl        := leitor.rCampo(tcStr, 'CRComl');
-                    RComl.Items[j].FvlrCRComl     := leitor.rCampo(tcDe2, 'vlrCRComl');
-                    RComl.Items[j].FvlrCRComlSusp := leitor.rCampo(tcDe2, 'vlrCRComlSusp');
-
-                    inc(j);
-                  end;
-
-                  j := 0;
-                  while Leitor.rExtrai(6, 'RAquis', '', j + 1) <> '' do
-                  begin
-                    RAquis.New;
-                    RAquis.Items[j].FCRAquis        := leitor.rCampo(tcStr, 'CRAquis');
-                    RAquis.Items[j].FvlrCRAquis     := leitor.rCampo(tcDe2, 'vlrCRAquis');
-                    RAquis.Items[j].FvlrCRAquisSusp := leitor.rCampo(tcDe2, 'vlrCRAquisSusp');
-
-                    inc(j);
-                  end;
-
-                  j := 0;
-                  while Leitor.rExtrai(6, 'RCPRB', '', j + 1) <> '' do
-                  begin
-                    RCPRB.New;
-                    RCPRB.Items[j].FcodRec         := leitor.rCampo(tcInt, 'codRec');
-                    RCPRB.Items[j].FvlrCPApurTotal := leitor.rCampo(tcDe2, 'vlrCPApurTotal');
-                    RCPRB.Items[j].FvlrCPRBSusp    := leitor.rCampo(tcDe2, 'vlrCPRBSusp');
-
-                    // Versão 1.03.02
-                    RCPRB.Items[j].FCRCPRB        := leitor.rCampo(tcStr, 'CRCPRB');
-                    RCPRB.Items[j].FvlrCRCPRB     := leitor.rCampo(tcDe2, 'vlrCRCPRB');
-                    RCPRB.Items[j].FvlrCRCPRBSusp := leitor.rCampo(tcDe2, 'vlrCRCPRBSusp');
-
-                    inc(j);
-                  end;
-
-                  if leitor.rExtrai(6, 'RRecEspetDesp') <> '' then
-                  begin
-                    RRecEspetDesp.FvlrReceitaTotal := leitor.rCampo(tcDe2, 'vlrReceitaTotal');
-                    RRecEspetDesp.FvlrCPApurTotal  := leitor.rCampo(tcDe2, 'vlrCPApurTotal');
-                    RRecEspetDesp.FvlrCPSuspTotal  := leitor.rCampo(tcDe2, 'vlrCPSuspTotal');
-
-                    // Versão 1.03.02
-                    RRecEspetDesp.FCRRecEspetDesp        := leitor.rCampo(tcStr, 'CRRecEspetDesp');
-                    RRecEspetDesp.FvlrCRRecEspetDesp     := leitor.rCampo(tcDe2, 'vlrCRRecEspetDesp');
-                    RRecEspetDesp.FvlrCRRecEspetDespSusp := leitor.rCampo(tcDe2, 'vlrCRRecEspetDespSusp');
-                  end;
-                end;
-              end;
-            end;
-          end;
-
-          inc(i);
-        end;
-      end;
+      LerRetornoEventos;
     end;
   except
     Result := False;

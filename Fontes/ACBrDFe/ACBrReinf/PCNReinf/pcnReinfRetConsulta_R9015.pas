@@ -66,22 +66,6 @@ type
   TtotApurDiaCollectionItem = class;
   TinfoTotalCR = class;
 
-
-
-(*
-  TRTomCollectionItem = class;
-  TRPrestCollection = class;
-  TRPrestCollectionItem = class;
-  TRRecRepADCollection = class;
-  TRRecRepADCollectionItem = class;
-  TRComlCollection = class;
-  TRComlCollectionItem = class;
-  TRCPRBCollection = class;
-  TRCPRBCollectionItem = class;
-  TinfoCRTomCollection = class;
-  TinfoCRTomCollectionItem = class;
-*)
-
   { TRetConsulta_R9015 }
   TRetConsulta_R9015 = class(TObject)
   private

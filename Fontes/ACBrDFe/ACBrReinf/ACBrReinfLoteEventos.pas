@@ -225,26 +225,58 @@ procedure TLoteEventos.GerarXML;
 var
   i: Integer;
   EventosXml: AnsiString;
+  tpInsc, nrInsc: string;
 begin
   CarregarXmlEventos;
 
   EventosXml := EmptyStr;
 
-  FXML :=
-  '<Reinf xmlns="http://www.reinf.esocial.gov.br/schemas/envioLoteEventos/v'+
-       VersaoReinfToStr(TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF) + '">'+
-    '<loteEventos>';
+  if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF < v2_01_01 then
+  begin
+    FXML :=
+    '<Reinf xmlns="http://www.reinf.esocial.gov.br/schemas/envioLoteEventos/v'+
+         VersaoReinfToStr(TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF) + '">'+
+      '<loteEventos>';
 
-   for i := 0 to Self.Count - 1 do
-     EventosXml := EventosXml +
-                   '<evento id="' + Self.Items[i].IDEvento +'"> ' +
-                     RemoverDeclaracaoXML(Self.Items[i].XML) +
-                   '</evento>';
+     for i := 0 to Self.Count - 1 do
+       EventosXml := EventosXml +
+                     '<evento id="' + Self.Items[i].IDEvento + '"> ' +
+                       RemoverDeclaracaoXML(Self.Items[i].XML) +
+                     '</evento>';
 
-  FXML := FXML + EventosXml;
-  FXML := FXML +
-            '</loteEventos>'+
-          '</Reinf>';
+    FXML := FXML + EventosXml +
+              '</loteEventos>' +
+            '</Reinf>';
+  end
+  else
+  begin
+    nrInsc := TACBrReinf(FACBrReinf).Configuracoes.Geral.IdContribuinte;
+
+    if Length(nrInsc) = 14 then
+      tpInsc := '1'
+    else
+      tpInsc := '2';
+
+    FXML :=
+      '<Reinf xmlns="http://www.reinf.esocial.gov.br/schemas/envioLoteEventosAssincrono/v1_00_00">' +
+        '<envioLoteEventos>' +
+          '<ideContribuinte>' +
+            '<tpInsc>' + tpInsc + '</tpInsc>' +
+            '<nrInsc>' + Copy(nrInsc, 1, 8) + '</nrInsc>' +
+          '</ideContribuinte>' +
+          '<eventos>';
+
+    for i := 0 to Self.Count - 1 do
+      EventosXml := EventosXml +
+                    '<evento Id="' + Self.Items[i].IDEvento +'"> ' +
+                      RemoverDeclaracaoXML(Self.Items[i].XML) +
+                    '</evento>';
+
+    FXML := FXML + EventosXml +
+                   '</eventos>' +
+                 '</envioLoteEventos>'+
+               '</Reinf>';
+  end;
 
   FXML := AnsiToUtf8(FXML);
 //  Validar;

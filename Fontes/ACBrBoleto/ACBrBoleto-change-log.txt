@@ -49,6 +49,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[-] TK-3563 Banco do Brasil WS erro no Envelope Soap
+ Por : Victor H Gonzales - Pandaaa
+
 01/02/2023
 [-] digito verificador da agencia/conta deve ter o default 0
   Por : Regys Silveira 

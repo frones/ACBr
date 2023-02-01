@@ -202,7 +202,7 @@ Const
   C_ERRO             = 'erro';
   C_ERROR_CODE       = 'Error_Code ';
   C_HTTP_RESULT_CODE = 'HTTP_Result_Code ';
-  C_SOAP_ATTRIBUTTES = '';
+
 ResourceString
   S_METODO_NAO_IMPLEMENTADO       =  'Metodo %s nao Implementado ';
   S_OPERACAO_NAO_IMPLEMENTADO     =  'Operação %s nao Implementado para este Banco';
@@ -229,6 +229,8 @@ uses
   ACBrBoletoRet_Santander,
   ACBrBoletoW_Inter_API,
   ACBrBoletoRet_Inter_API;
+  //ACBrBoletoW_Bancoob,
+  //ACBrBoletoRet_Bancoob;
 
 { TRetornoEnvioClass }
 
@@ -370,7 +372,12 @@ begin
       begin
         FBoletoWSClass := TBoletoW_Inter_API.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Inter_API.Create(FBoleto);
-      end
+      end;
+    {cobBancoob :
+      begin
+        FBoletoWSClass := TBoletoW_Bancoob.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_Bancoob.Create(FBoleto);
+      end}
   else
     FBoletoWSClass := TBoletoWSClass.Create(Self);
     FRetornoBanco := TRetornoEnvioClass.Create(FBoleto);

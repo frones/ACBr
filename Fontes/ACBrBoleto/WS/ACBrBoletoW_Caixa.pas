@@ -50,6 +50,8 @@ type
 
   { TBoletoW_Caixa }
   TBoletoW_Caixa  = class(TBoletoWSSOAP)
+  private
+    function DefinirSOAPAtributtes: string; override;
   protected
 
     procedure DefinirEnvelopeSoap; override;
@@ -107,6 +109,11 @@ uses
  synacode, ACBrBoletoPcnConsts, pcnConsts, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML;
 
 { TBoletoW_Caixa }
+
+function TBoletoW_Caixa.DefinirSOAPAtributtes: string;
+begin
+  Result := C_SOAP_ATTRIBUTTES;
+end;
 
 procedure TBoletoW_Caixa.DefinirEnvelopeSoap;
 var

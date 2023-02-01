@@ -63,6 +63,7 @@ type
     FPAuthorization : String;
     FMetodoHTTP     : TMetodoHTTP;
     FParamsOAuth    : String;
+    FPHeaders       : TStringList;
     procedure setDefinirAccept(const AValue: String);
     procedure setMetodoHTTP(const AValue: TMetodoHTTP);
     procedure DefinirAuthorization; virtual;
@@ -70,18 +71,19 @@ type
     procedure DefinirURL; virtual;
     procedure DefinirCertificado;
     procedure DefinirProxy;
-    procedure DefinirParamOAuth; virtual;
+
     procedure GerarHeader; virtual;
     procedure GerarDados; virtual;
 
     function GerarTokenAutenticacao: String; virtual;
     function GerarRemessa: String; override;
     function Enviar: Boolean; override;
-
+    procedure DefinirParamOAuth; virtual;
     procedure Executar;
 
   public
     constructor Create(ABoletoWS: TBoletoWS); override;
+    destructor Destroy; override;
 
   end;
 
@@ -184,6 +186,12 @@ begin
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_URL] ));
 end;
 
+destructor TBoletoWSREST.Destroy;
+begin
+  FPHeaders.Free;
+  inherited;
+end;
+
 procedure TBoletoWSREST.GerarHeader;
 begin
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_GERAR_HEADER] ));
@@ -219,10 +227,13 @@ var
   LHeaders : TStringList;
   LStream : TStringStream;
 begin
-  HTTPSend.Headers.Clear;
+  LStream  := TStringStream.Create('');
   LHeaders := TStringList.Create;
   try
-    if FPAccept <> '' then
+    HTTPSend.OutputStream := LStream;
+    HTTPSend.Headers.Clear;
+
+     if FPAccept <> '' then
       LHeaders.Add(C_ACCEPT  + ': ' + FPAccept);
 
     if FPAuthorization <> '' then
@@ -238,23 +249,27 @@ begin
     //  LHeaders.Add(C_CONTENT_TYPE +': '+ FPContentType);
 
     HTTPSend.Headers.AddStrings(LHeaders);
+
+    if FPHeaders.Count > 0 then
+      HTTPSend.Headers.AddStrings(FPHeaders);
+
     HTTPSend.MimeType := FPContentType;
   finally
     LHeaders.Free;
   end;
-
+  HTTPSend.Document.Clear;
   try
     HTTPSend.Document.Position:= 0;
-    WriteStrToStream(HTTPSend.Document, AnsiString(FPDadosMsg));
+    if FPDadosMsg <> '' then
+      WriteStrToStream(HTTPSend.Document, AnsiString(FPDadosMsg));
     HTTPSend.HTTPMethod(MetodoHTTPToStr(FMetodoHTTP), FPURL );
   finally
     HTTPSend.Document.Position:= 0;
-    FRetornoWS:= String(UTF8Decode(ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size )));
+    FRetornoWS:= String(UTF8Decode(LStream.DataString));
     BoletoWS.RetornoBanco.CodRetorno     := HTTPSend.Sock.LastError;
 
-    LStream := TStringStream.Create('');
     try
-      LStream.CopyFrom(HTTPSend.Document,0);
+//      LStream.CopyFrom(HTTPSend.Document,0);
       BoletoWS.RetornoBanco.Msg            := Trim('HTTP_Code='+ IntToStr(HTTPSend.ResultCode)+' '+ HTTPSend.ResultString+' '+LStream.DataString);
       BoletoWS.RetornoBanco.HTTPResultCode := HTTPSend.ResultCode;
     finally
@@ -275,12 +290,13 @@ begin
   FPAuthorization := '';
   FPKeyUser       := '';
   FPIdentificador := '';
+  FPHeaders := TStringList.Create;
 end;
 
 function TBoletoWSREST.GerarRemessa: String;
 begin
   Result := '';
-
+  HTTPSend.Headers.Clear;
   //Gera o Header, para REST
   GerarHeader;
   //Gera o Json, implementado na classe do Banco selecionado

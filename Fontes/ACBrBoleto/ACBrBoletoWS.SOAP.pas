@@ -42,9 +42,11 @@ type
     procedure DefinirRootElement; virtual;
     procedure DefinirAuthorization; virtual;
 
+
     procedure GerarHeader; virtual;
     procedure GerarDados; virtual;
 
+    function DefinirSOAPAtributtes:string; virtual;
     function CalcularHash(AAut: String): String; virtual;
     function GerarRemessa: String; override;
     function Enviar: Boolean; override;
@@ -115,6 +117,11 @@ begin
 end;
 
 procedure TBoletoWSSOAP.DefinirServicoEAction;
+begin
+  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_SERVICO_EACTION] )));
+end;
+
+function TBoletoWSSOAP.DefinirSOAPAtributtes: string;
 begin
   raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_SERVICO_EACTION] )));
 end;
@@ -214,7 +221,7 @@ begin
   FSSLDigest               := dgstSHA256;
   FSSLHashOutput           := outBase64;
   FPSoapAction             := TipoOperacaoToStr(tpInclui);
-  FPSoapEnvelopeAtributtes := C_SOAP_ATTRIBUTTES;
+  FPSoapEnvelopeAtributtes := DefinirSOAPAtributtes;
 end;
 
 function TBoletoWSSOAP.CalcularHash(AAut: String): String;

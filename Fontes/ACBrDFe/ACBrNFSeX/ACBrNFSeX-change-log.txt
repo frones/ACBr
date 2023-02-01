@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/02/2023
+-- eGoverneISS.Provider --
+[*] Correção, em vez de criar a lista de alertas estava criando a lista de erros.
+   Por: Italo Giurizzato Junior
 -- SisPMSJ.GravarXml --
 [*] Removido a flag NrOcorrValorISS que recebia o valor -1, com a remoção a tag
     ValorISS passa a ser opcional, conforme consta no schema do provedor.

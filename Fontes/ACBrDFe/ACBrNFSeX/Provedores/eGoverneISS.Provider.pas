@@ -189,7 +189,7 @@ begin
 
       if Mensagem <> '' then
       begin
-        AAlerta := Response.Erros.New;
+        AAlerta := Response.Alertas.New;
         AAlerta.Codigo := '';
         AAlerta.Descricao := ACBrStr(Mensagem);
         AAlerta.Correcao := '';

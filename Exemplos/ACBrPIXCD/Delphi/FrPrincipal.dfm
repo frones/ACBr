@@ -6905,12 +6905,12 @@ object Form1: TForm1
     Top = 448
   end
   object ACBrPSPSicredi1: TACBrPSPSicredi
-    Scopes = [scCobWrite, scCobRead, scCobVWrite, scCobVRead, scPixWrite, scPixRead]
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 256
     Top = 416
   end
   object ACBrPSPSicoob1: TACBrPSPSicoob
-    Scopes = [scCobWrite, scCobRead, scCobVWrite, scCobVRead, scPixWrite, scPixRead]
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 288
     Top = 416
   end

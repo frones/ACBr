@@ -45,6 +45,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+01/02/2023
+--ACBrBoletoFCFortesFr--
+[*]TK-3476 ACBrBoleto - Inclusão QrCode na impressão do carnê
+https://www.projetoacbr.com.br/forum/topic/68586-boleto-hibrido-sicredi/page/3/#comment-457118
+  por : Marcelo HGV, Ajustado Daniel Morais
+
 28/11/2022
 --ACBrBoletoFCFortesFr--
 [*]TK-3334 ACBrBoleto - Alteração no dfm para Logos com tamanho maior do que o componente

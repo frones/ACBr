@@ -1252,6 +1252,14 @@ type
     txtEnderecoCedente1CA5: TRLMemo;
     logoBanco2CA5: TRLImage;
     imgLogoEmpresaBoleto: TRLImage;
+    imgQRCodePixCarne: TRLImage;
+    RLBand9: TRLBand;
+    lblCopiaeCola: TRLLabel;
+    RLDraw302: TRLDraw;
+    RLDraw303: TRLDraw;
+    lblCopiaeColaCarne: TRLLabel;
+    RLDraw298: TRLDraw;
+    RLLabel339: TRLLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -1303,8 +1311,6 @@ type
     procedure LayoutCarneA5DataRecord(Sender: TObject; RecNo, CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
     procedure RLBandCarneA5TopoBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
-
-
 
 
   private
@@ -1557,6 +1563,7 @@ begin
   else
     Result := fBoletoFC.ACBrBoleto.ListadeBoletos[ fIndice ];
 end;
+
 
 procedure TACBrBoletoFCFortesFr.LayoutBoletoBeforePrint(Sender: TObject;
    var PrintIt: boolean);
@@ -1923,6 +1930,20 @@ begin
       imgBarrasCarne.Caption := CodBarras;
       txtOrientacoesBancoCarne.Lines.Text:=Banco.OrientacoesBanco.Text;
 
+    if not EstaVazio(Trim(Titulo.QrCode.emv)) then
+    begin
+      imgQRCodePixCarne.Visible := True;
+      PintarQRCode( Titulo.QrCode.emv, imgQRCodePixCarne.Picture.Bitmap, qrAuto );
+      lblCopiaeColaCarne.Visible := True;
+      lblCopiaeColaCarne.Caption := Titulo.QrCode.emv;
+    end
+    else
+    begin
+      imgQRCodePixCarne.Visible := False;
+      lblCopiaeColaCarne.Visible := False;
+    end;
+
+
       with Titulo.Sacado.SacadoAvalista do
       begin
         case Pessoa of
@@ -2105,12 +2126,15 @@ begin
     begin
       imgQRCodePix.Visible := True;
       lblPaguePix.Visible := True;
-      PintarQRCode( Titulo.QrCode.emv, imgQRCodePix.Picture.Bitmap, qrAuto )
+      PintarQRCode( Titulo.QrCode.emv, imgQRCodePix.Picture.Bitmap, qrAuto );
+      lblCopiaeCola.Visible := True;
+      lblCopiaeCola.Caption := Titulo.QrCode.emv;
     end
     else
     begin
       imgQRCodePix.Visible := False;
       lblPaguePix.Visible := False;
+      lblCopiaeCola.Visible := False;
     end;
 
   end;

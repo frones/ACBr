@@ -79,6 +79,10 @@ contains
   pcnRetManutencaoEQP in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetManutencaoEQP.pas',
   pcnEnvRecepcaoLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnEnvRecepcaoLeitura.pas',
   pcnRetRecepcaoLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetRecepcaoLeitura.pas',
+  pcnConsFoto in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnConsFoto.pas',
+  pcnRetConsFoto in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetConsFoto.pas',
+  pcnConsPlaca in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnConsPlaca.pas',
+  pcnRetConsPlaca in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetConsPlaca.pas',
   pcnDistLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnDistLeitura.pas',
   pcnRetDistLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetDistLeitura.pas';
 

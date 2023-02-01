@@ -40,6 +40,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/02/2023
+-- ACBrDFeSSL/ACBrDFeWebService --
+[*] Alterações visando atender o consumo de API Rest.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Incluído o parâmetro sBCC (com cópia oculta) no método EnviarEmail em diversos
     componentes.

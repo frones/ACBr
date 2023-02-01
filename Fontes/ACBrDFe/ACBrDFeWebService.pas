@@ -368,7 +368,7 @@ begin
   }
 
   if (EstaVazio(FPMimeType) or (Pos('xml',LowerCase(FPMimeType)) > 0 )) and
-     ( not XmlEstaAssinado(FPEnvelopeSoap)) then
+     ( not XmlEstaAssinado(FPEnvelopeSoap)) and (not EstaVazio(FPEnvelopeSoap)) then
   begin
     FPEnvelopeSoap := ConverteXMLtoUTF8(FPEnvelopeSoap);
   end;

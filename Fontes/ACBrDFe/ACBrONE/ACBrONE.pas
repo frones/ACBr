@@ -114,6 +114,7 @@ type
                                  const NSUFin: string = ''): Boolean;
 
     function ConsultarFoto(const aVerAplic, aNSULeitura: string): Boolean;
+    function ConsultarPlaca(const aVerAplic, aPlaca: string; aDataRef: TDateTime): Boolean;
   published
     property Configuracoes: TConfiguracoesONE read GetConfiguracoes write SetConfiguracoes;
   end;
@@ -141,6 +142,15 @@ begin
 
   if not Result then
     GerarException( WebServices.ConsultarFoto.Msg );
+end;
+
+function TACBrONE.ConsultarPlaca(const aVerAplic, aPlaca: string;
+  aDataRef: TDateTime): Boolean;
+begin
+  Result := WebServices.ConsultaPlaca(aVerAplic, aPlaca, aDataRef);
+
+  if not Result then
+    GerarException( WebServices.ConsultarPlaca.Msg );
 end;
 
 constructor TACBrONE.Create(AOwner: TComponent);

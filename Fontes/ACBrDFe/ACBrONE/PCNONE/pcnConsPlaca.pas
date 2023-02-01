@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -30,46 +30,73 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrONE
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit pcnConsPlaca;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
-01/02/2023
--- Diversos --
-[+] Implementado a consulta por placa.
-   Por: Italo Giurizzato Junior
+uses
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil.Base,
+  pcnConsts, pcnONEConsts;
 
-29/03/2022
--- Diversos --
-[*] Remoção de Warnings e Hints.
-   Por: Waldir Paim
+type
 
-21/12/2020
--- pcnRetRecepcaoLeitura --
-[+] Inclusão de um novo campo no retorno do envio da leitura.
-   Por: Italo Giurizzato Junior
+  TConsPlaca = class
+  private
+    FGerador: TGerador;
+    FtpAmb: TpcnTipoAmbiente;
+    FverAplic: String;
+    FPlaca: String;
+    FVersao: String;
+    FdtRef: TDateTime;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function GerarXML: Boolean;
 
-10/11/2020
--- Diversos --
-[+] Novo método de Consulta a Foto.
-   Por: Italo Giurizzato Junior
+    property Gerador: TGerador       read FGerador    write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
+    property verAplic: String        read FverAplic   write FverAplic;
+    property Placa: String           read FPlaca      write FPlaca;
+    property Versao: String          read FVersao     write FVersao;
+    property dtRef: TDateTime        read FdtRef      write FdtRef;
+  end;
 
-22/07/2020
--- Diversos --
-[+] Acrescentado a unit pcnConsts em algumas units do componente.
-    Por conta da migração de algumas constantes de pcnGerador para
-    pcnConsts.
-   Por: Italo Jurisato Junior
+implementation
 
-14/10/2019
-[+] Doação do componente para o Projeto ACBr
-   Por: Italo Jurisato Junior
+{ TConsPlaca }
+
+constructor TConsPlaca.Create;
+begin
+  FGerador := TGerador.Create;
+end;
+
+destructor TConsPlaca.Destroy;
+begin
+  FGerador.Free;
+
+  inherited;
+end;
+
+function TConsPlaca.GerarXML: Boolean;
+var
+  sNSULei: string;
+begin
+  Gerador.ArquivoFormatoXML := '';
+
+  Gerador.wGrupo('oneConsPorPlaca ' + NAME_SPACE_ONE + ' versao="' + Versao + '"');
+
+  Gerador.wCampo(tcStr, 'EP03', 'tpAmb     ', 01, 01, 1, tpAmbToStr(tpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, 'EP04', 'verAplic  ', 01, 20, 1, verAplic, DSC_verAplic);
+  Gerador.wCampo(tcStr, 'EP06', 'placa     ', 07, 07, 1, Placa, DSC_Placa);
+  Gerador.wCampo(tcDat, 'EP07', 'dtRef     ', 10, 10, 0, FdtRef, DSC_DataRef);
+  Gerador.wCampo(tcStr, 'EP08', 'indCompRet', 01, 01, 1, '1');
+
+  Gerador.wGrupo('/oneConsPorPlaca');
+
+  Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
+
+end.
 

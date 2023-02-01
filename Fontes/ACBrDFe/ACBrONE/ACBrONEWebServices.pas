@@ -43,7 +43,7 @@ uses
   pcnEnvManutencaoEQP, pcnRetManutencaoEQP,
   pcnEnvRecepcaoLeitura, pcnRetRecepcaoLeitura,
   pcnDistLeitura, pcnRetDistLeitura,
-  pcnConsFoto, pcnRetConsFoto,
+  pcnConsFoto, pcnRetConsFoto, pcnConsPlaca, pcnRetConsPlaca,
   ACBrONEConfiguracoes;
 
 type
@@ -270,6 +270,46 @@ type
     property RetConsFoto: TRetConsFoto read FRetConsFoto;
   end;
 
+  { TONEConsultaPlaca }
+
+  TONEConsultaPlaca = class(TONEWebService)
+  private
+    FtpAmb: TpcnTipoAmbiente;
+    Fversao: String;
+    FverAplic: String;
+    FcStat: integer;
+    FxMotivo: String;
+    FdhResp: TDateTime;
+    Ffoto: String;
+    FPlaca: String;
+
+    FRetConsPlaca: TRetConsPlaca;
+    FDataRef: TDateTime;
+
+  protected
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+
+    function GerarMsgLog: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+
+    property tpAmb: TpcnTipoAmbiente read FtpAmb;
+    property versao: String read Fversao;
+    property cStat: integer read FcStat;
+    property xMotivo: String read FxMotivo;
+    property dhResp: TDateTime read FdhResp;
+    property foto: String read Ffoto;
+    property verAplic: String read FverAplic;
+    property Placa: String read FPlaca;
+    property DataRef: TDateTime read FDataRef;
+
+    property RetConsPlaca: TRetConsPlaca read FRetConsPlaca;
+  end;
+
   { TWebServices }
 
   TWebServices = class
@@ -281,11 +321,13 @@ type
     FEnvLeitura: TEnvLeitura;
     FDistLeituras: TDistLeituras;
     FConsultarFoto: TONEConsultaFoto;
+    FConsultarPlaca: TONEConsultaPlaca;
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
     function ConsultaFoto(const aVerAplic, aNSULeitura: string): Boolean;
+    function ConsultaPlaca(const aVerAplic, aPlaca: string; aDataRef: TDateTime): Boolean;
 
     property ACBrONE: TACBrDFe read FACBrONE write FACBrONE;
 
@@ -294,6 +336,7 @@ type
     property EnvLeitura: TEnvLeitura read FEnvLeitura write FEnvLeitura;
     property DistLeituras: TDistLeituras read FDistLeituras write FDistLeituras;
     property ConsultarFoto: TONEConsultaFoto read FConsultarFoto write FConsultarFoto;
+    property ConsultarPlaca: TONEConsultaPlaca read FConsultarPlaca write FConsultarPlaca;
   end;
 
 implementation
@@ -383,13 +426,27 @@ end;
 function TWebServices.ConsultaFoto(const aVerAplic, aNSULeitura: string): Boolean;
 begin
   ConsultarFoto.Clear;
-  ConsultarFoto.Clear;
 
   ConsultarFoto.FverAplic   := aVerAplic;
   ConsultarFoto.FNSULeitura := aNSULeitura;
 
   if not ConsultarFoto.Executar then
     ConsultarFoto.GerarException( ConsultarFoto.Msg );
+
+  Result := True;
+end;
+
+function TWebServices.ConsultaPlaca(const aVerAplic, aPlaca: string;
+  aDataRef: TDateTime): Boolean;
+begin
+  ConsultarPlaca.Clear;
+
+  ConsultarPlaca.FverAplic   := aVerAplic;
+  ConsultarPlaca.FPlaca := aPlaca;
+  ConsultarPlaca.FDataRef := aDataRef;
+
+  if not ConsultarPlaca.Executar then
+    ConsultarPlaca.GerarException( ConsultarPlaca.Msg );
 
   Result := True;
 end;
@@ -407,6 +464,7 @@ begin
 
   FEnvioWebService := TONEEnvioWebService.Create(FACBrONE);
   FConsultarFoto := TONEConsultaFoto.Create(FACBrONE);
+  FConsultarPlaca := TONEConsultaPlaca.Create(FACBrONE);
 end;
 
 destructor TWebServices.Destroy;
@@ -416,6 +474,7 @@ begin
   FDistLeituras.Free;
   FEnvioWebService.Free;
   FConsultarFoto.Free;
+  FConsultarPlaca.Free;
 
   inherited Destroy;
 end;
@@ -1116,6 +1175,108 @@ begin
   FxMotivo  := FRetConsFoto.xMotivo;
   FdhResp   := FRetConsFoto.dhResp;
   Ffoto     := FRetConsFoto.foto;
+  FPMsg     := FxMotivo;
+
+  Result := (FcStat = 104);
+end;
+
+{ TONEConsultaPlaca }
+
+procedure TONEConsultaPlaca.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stConsPlaca;
+  FPLayout := LayConsPlaca;
+  FPArqEnv := 'cons-placa';
+  FPArqResp := 'placa';
+
+  FcStat := 0;
+  FxMotivo := '';
+  Fversao := '';
+
+  if Assigned(FPConfiguracoesONE) then
+  begin
+    FtpAmb := FPConfiguracoesONE.WebServices.Ambiente;
+  end;
+
+  if Assigned(FRetConsPlaca) then
+    FRetConsPlaca.Free;
+
+  FRetConsPlaca := TRetConsPlaca.Create;
+end;
+
+constructor TONEConsultaPlaca.Create(AOwner: TACBrDFe);
+begin
+  inherited Create(AOwner);
+
+end;
+
+procedure TONEConsultaPlaca.DefinirDadosMsg;
+var
+  ConsPlaca: TConsPlaca;
+begin
+  ConsPlaca := TConsPlaca.Create;
+  try
+    ConsPlaca.TpAmb := TpAmb;
+    ConsPlaca.verAplic := verAplic;
+    ConsPlaca.Placa := Placa;
+    ConsPlaca.dtRef := DataRef;
+    ConsPlaca.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsPlaca.Gerador.Opcoes );
+
+    ConsPlaca.GerarXML;
+
+    FPDadosMsg := ConsPlaca.Gerador.ArquivoFormatoXML;
+  finally
+    ConsPlaca.Free;
+  end;
+end;
+
+procedure TONEConsultaPlaca.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'oneConsPorPlaca';
+  FPSoapAction := FPServico + '/oneConsPorPlaca';
+end;
+
+destructor TONEConsultaPlaca.Destroy;
+begin
+  FRetConsPlaca.Free;
+
+  inherited Destroy;
+end;
+
+function TONEConsultaPlaca.GerarMsgLog: String;
+begin
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                           'Ambiente: %s ' + LineBreak +
+                           'Versão Aplicativo: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'Resposta: %s ' + LineBreak),
+                   [FRetConsPlaca.versao,
+                    TpAmbToStr(FRetConsPlaca.TpAmb),
+                    FRetConsPlaca.verAplic,
+                    IntToStr(FRetConsPlaca.cStat),
+                    FRetConsPlaca.xMotivo,
+                    IfThen(FRetConsPlaca.dhResp = 0, '',
+                           FormatDateTimeBr(FRetConsPlaca.dhResp))]);
+end;
+
+function TONEConsultaPlaca.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS);
+
+  FRetConsPlaca.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  FRetConsPlaca.LerXml;
+
+  Fversao   := FRetConsPlaca.versao;
+  FtpAmb    := FRetConsPlaca.tpAmb;
+  FverAplic := FRetConsPlaca.verAplic;
+  FcStat    := FRetConsPlaca.cStat;
+  FxMotivo  := FRetConsPlaca.xMotivo;
+  FdhResp   := FRetConsPlaca.dhResp;
   FPMsg     := FxMotivo;
 
   Result := (FcStat = 104);

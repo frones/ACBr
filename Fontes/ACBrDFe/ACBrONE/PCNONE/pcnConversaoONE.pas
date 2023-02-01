@@ -44,12 +44,13 @@ type
   TVersaoONE = (ve200);
 
   TStatusACBrONE = (stIdleONE, stManutencao, stRecepcaoLeitura,
-                    stDistLeitura, stConsFoto);
+                    stDistLeitura, stConsFoto, stConsPlaca);
 
-  TLayOutONE = (LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto);
+  TLayOutONE = (LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto,
+                LayConsPlaca);
 
   TSchemaONE = (schErro, schONEManutencaoEQP, schONERecepcaoLeitura,
-                schONEDistLeitura, schONEConsFoto);
+                schONEDistLeitura, schONEConsFoto, schONEConsPorPlaca);
 
   TtpMan = (tmCadastramento, tmAlteracao, tmDesativacao, tmReativacao);
 
@@ -146,6 +147,7 @@ begin
     LayRecepcaoLeitura:  Result := schONERecepcaoLeitura;
     LayDistLeitura:      Result := schONEDistLeitura;
     LayConsFoto:         Result := schONEConsFoto;
+    LayConsPlaca:        Result := schONEConsPorPlaca;
   else
     Result := schErro;
   end;
@@ -185,15 +187,19 @@ end;
 function LayOutONEToServico(const t: TLayOutONE): String;
 begin
   Result := EnumeradoToStr(t,
-    ['ONEManutencaoEQP', 'ONERecepcaoLeitura', 'ONEDistLeitura', 'ONEConsFoto'],
-    [LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto] );
+    ['ONEManutencaoEQP', 'ONERecepcaoLeitura', 'ONEDistLeitura', 'ONEConsFoto',
+     'ONEConsPorPlaca'],
+    [LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto,
+     LayConsPlaca]);
 end;
 
 function ServicoToLayOutONE(out ok: Boolean; const s: String): TLayOutONE;
 begin
   Result := StrToEnumerado(ok, s,
-    ['ONEManutencaoEQP', 'ONERecepcaoLeitura', 'ONEDistLeitura', 'ONEConsFoto'],
-    [LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto] );
+    ['ONEManutencaoEQP', 'ONERecepcaoLeitura', 'ONEDistLeitura', 'ONEConsFoto',
+     'ONEConsPorPlaca'],
+    [LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto,
+     LayConsPlaca]);
 end;
 
 function StrToTpEventoONE(out ok: boolean; const s: string): TpcnTpEvento;

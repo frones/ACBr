@@ -63,6 +63,7 @@ const
   DSC_NSUFin = 'NSU Final';
   DSC_xREFCOMPL = 'Detalhe da Localização do Equiplamento';
   DSC_NSULeitura = 'NSU Geral da leitura';
+  DSC_DataRef = 'Data de Referencia';
 
 implementation
 

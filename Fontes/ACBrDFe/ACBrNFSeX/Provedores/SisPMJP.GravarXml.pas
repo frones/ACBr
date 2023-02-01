@@ -65,7 +65,6 @@ begin
 
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
   FormatoAliq := tcDe2;
-  NrOcorrValorISS := -1;
 end;
 
 end.

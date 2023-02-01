@@ -79,7 +79,8 @@ type
 
     procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamBPe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+      StreamBPe: TStream = nil; const NomeArq: String = '';
+      sReplyTo: TStrings = nil; sBCC: TStrings = nil); override;
 
     function Enviar(ALote: Int64; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(const ALote: String; Imprimir: Boolean = True): Boolean; overload;
@@ -176,13 +177,13 @@ end;
 
 procedure TACBrBPe.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   sCC: TStrings; Anexos: TStrings; StreamBPe: TStream; const NomeArq: String;
-  sReplyTo: TStrings);
+  sReplyTo: TStrings; sBCC: TStrings);
 begin
   SetStatus( stBPeEmail );
 
   try
     inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamBPe, NomeArq,
-      sReplyTo);
+      sReplyTo, sBCC);
   finally
     SetStatus( stIdleBPe );
   end;

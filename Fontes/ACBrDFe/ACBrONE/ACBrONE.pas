@@ -75,7 +75,8 @@ type
 
     procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamONE: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+      StreamONE: TStream = nil; const NomeArq: String = ''; 
+	  sReplyTo: TStrings = nil; sBCC: TStrings = nil); override;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -173,14 +174,14 @@ end;
 
 procedure TACBrONE.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   sCC: TStrings; Anexos: TStrings; StreamONE: TStream; const NomeArq: String;
-  sReplyTo: TStrings);
+  sReplyTo: TStrings; sBCC: TStrings);
 begin
 {
   SetStatus( stONEEmail );
 
   try
     inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamONE, NomeArq,
-      sReplyTo);
+      sReplyTo, sBCC);
   finally
     SetStatus( stIdleONE );
   end;

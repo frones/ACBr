@@ -101,7 +101,7 @@ type
       ConteudoEhUTF8: Boolean = True): Boolean;
     procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); virtual;
+      StreamNFe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil; sBCC: TStrings = nil); virtual;
 
     procedure LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
       var Versao: Double; var URL: String);
@@ -275,7 +275,7 @@ end;
 
 procedure TACBrDFe.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; const NomeArq: String;
-  sReplyTo: TStrings);
+  sReplyTo: TStrings; sBCC: TStrings);
 var
   i: Integer;
 begin
@@ -306,6 +306,12 @@ begin
   begin
     for i := 0 to sCC.Count - 1 do
       MAIL.AddCC(sCC[i]);
+  end;
+
+  if Assigned(sBCC) then
+  begin
+    for i := 0 to sBCC.Count - 1 do
+      MAIL.AddBCC(sBCC[i]);
   end;
 
   //ReplyTo

@@ -79,7 +79,8 @@ type
 
     procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamDCe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+      StreamDCe: TStream = nil; const NomeArq: String = ''; 
+	  sReplyTo: TStrings = nil; sBCC: TStrings = nil); override;
 
     procedure EnviarEmailEvento(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
@@ -176,13 +177,13 @@ end;
 
 procedure TACBrDCe.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   sCC: TStrings; Anexos: TStrings; StreamDCe: TStream; const NomeArq: String;
-  sReplyTo: TStrings);
+  sReplyTo: TStrings; sBCC: TStrings);
 begin
   SetStatus( stDCeEmail );
 
   try
     inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamDCe, NomeArq,
-      sReplyTo);
+      sReplyTo, sBCC);
   finally
     SetStatus( stDCeIdle );
   end;

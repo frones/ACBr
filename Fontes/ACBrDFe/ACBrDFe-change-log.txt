@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2023
+-- Diversos --
+[+] Incluído o parâmetro sBCC (com cópia oculta) no método EnviarEmail em diversos
+    componentes.
+  Por: Alex Heinen
+
 30/12/2022
 -- ACBrDFeXsLibXml2 --
 [*] Remoção de Warnings e Hints.

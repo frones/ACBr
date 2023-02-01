@@ -88,7 +88,7 @@ type
 
     procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       sCC: TStrings = nil; Anexos: TStrings = nil; StreamGNRE: TStream = nil;
-      const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+      const NomeArq: String = ''; sReplyTo: TStrings = nil; sBCC: TStrings = nil); override;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -153,13 +153,13 @@ end;
 
 procedure TACBrGNRE.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   sCC: TStrings; Anexos: TStrings; StreamGNRE: TStream; const NomeArq: String;
-  sReplyTo: TStrings);
+  sReplyTo: TStrings; sBCC: TStrings);
 begin
   SetStatus( stGNREEmail );
 
   try
     inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamGNRE,
-                          NomeArq, sReplyTo);
+                          NomeArq, sReplyTo, sBCC);
   finally
     SetStatus( stGNREIdle );
   end;

@@ -1023,6 +1023,11 @@ begin
         end;
 
         Add('');
+        Add(' **dadosRecepcaoLote');
+        Add('   dhRecepcao....: ' + FormatDateBr(dadosRecepcaoLote.dhRecepcao, 'dd-mm-yyyy'));
+        Add('   protocoloEnvio: ' + dadosRecepcaoLote.protocoloEnvio);
+
+        Add('');
         Add('retornoEventos');
 
         for i:=0 to evento.Count - 1 do
@@ -1135,7 +1140,7 @@ end;
 procedure TfrmACBrReinf.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
-  i: Integer;
+  i, j: Integer;
 begin
   Protocolo := '';
   if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo))
@@ -1151,89 +1156,213 @@ begin
     begin
       if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_01 then
       begin
-        with ACBrReinf1.WebServices.Consultar.RetConsulta_R9011 do
+        with ACBrReinf1.WebServices.Consultar.RetEnvioLote do
         begin
+          Add('ideTransmissor: ' + IdeTransmissor.IdTransmissor);
+          Add('cdStatus      : ' + IntToStr(Status.cdStatus));
+          Add('descRetorno   : ' + Status.descRetorno);
+
           Add('');
-          Add(' Evento: 9011');
+          Add(' **Ocorrencias');
 
-          with evtTotalContrib do
+          for i := 0 to Status.Ocorrencias.Count - 1 do
           begin
-            Add('   Id...........: ' + Id);
-            Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
-            Add('   Descrição....: ' + IdeStatus.descRetorno);
-
-            if IdeStatus.regOcorrs.Count > 0 then
+            with Status.Ocorrencias.Items[i] do
             begin
-              Add('');
-              Add(' **Ocorrencias');
+              Add('   tipo: ' + Inttostr(tipo));
+              Add('   localizacaoErroAviso: ' + localizacao);
+              Add('   codigo: ' + inttostr(codigo));
+              Add('   descricao: ' + descricao);
+            end;
+          end;
 
-              for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+          Add('');
+          Add(' **dadosRecepcaoLote');
+          Add('   dhRecepcao....: ' + FormatDateBr(dadosRecepcaoLote.dhRecepcao, 'dd-mm-yyyy'));
+          Add('   protocoloEnvio: ' + dadosRecepcaoLote.protocoloEnvio);
+
+          Add('');
+          Add('retornoEventos');
+
+          for i:=0 to evento.Count - 1 do
+          begin
+            with evento.Items[i] do
+            begin
+              if evtTotal.id <> '' then
               begin
-                with IdeStatus.regOcorrs.Items[i] do
+                Add('');
+                Add(' Evento: 9001');
+                Add(' Evento Id: ' + Id);
+
+                with evtTotal do
                 begin
-                  Add('   Tipo............: ' + IntToStr(tpOcorr));
-                  Add('   Local Erro Aviso: ' + localErroAviso);
-                  Add('   Código Resp.... : ' + codResp);
-                  Add('   Descricao Resp..: ' + dscResp);
+                  Add('   Id...........: ' + Id);
+                  Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+                  Add('   Descrição....: ' + IdeStatus.descRetorno);
+                  Add('   Nro Recibo...: ' + InfoTotal.nrRecArqBase);
+
+                  Add('');
+                  Add(' **Ocorrencias');
+
+                  for j := 0 to IdeStatus.regOcorrs.Count - 1 do
+                  begin
+                    with IdeStatus.regOcorrs.Items[j] do
+                    begin
+                      Add('   Tipo............: ' + Inttostr(tpOcorr));
+                      Add('   Local Erro Aviso: ' + localErroAviso);
+                      Add('   Código Resp.... : ' + codResp);
+                      Add('   Descricao Resp..: ' + dscResp);
+                    end;
+                  end;
+
+                  Add('');
+                  Add(' **Informações de processamento dos eventos ');
+
+                  with InfoRecEv do
+                  begin
+                    Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
+                    Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+                    Add('   Tipo do Evento......................: ' + tpEv);
+                    Add('   ID do Evento........................: ' + idEv);
+                    Add('   Hash do arquivo processado..........: ' + hash);
+                  end;
+                end;
+              end;
+
+              if evtRet.Id <> '' then
+              begin
+                Add('');
+                Add(' Evento: 9005');
+                Add(' Evento Id: ' + Id);
+
+                with evtTotal do
+                begin
+                  Add('   Id...........: ' + Id);
+                  Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+                  Add('   Descrição....: ' + IdeStatus.descRetorno);
+                  Add('   Nro Recibo...: ' + InfoTotal.nrRecArqBase);
+
+                  Add('');
+                  Add(' **Ocorrencias');
+
+                  for j := 0 to IdeStatus.regOcorrs.Count - 1 do
+                  begin
+                    with IdeStatus.regOcorrs.Items[j] do
+                    begin
+                      Add('   Tipo............: ' + Inttostr(tpOcorr));
+                      Add('   Local Erro Aviso: ' + localErroAviso);
+                      Add('   Código Resp.... : ' + codResp);
+                      Add('   Descricao Resp..: ' + dscResp);
+                    end;
+                  end;
+
+                  Add('');
+                  Add(' **Informações de processamento dos eventos ');
+
+                  with InfoRecEv do
+                  begin
+                    Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
+                    Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+                    Add('   Tipo do Evento......................: ' + tpEv);
+                    Add('   ID do Evento........................: ' + idEv);
+                    Add('   Hash do arquivo processado..........: ' + hash);
+                  end;
                 end;
               end;
             end;
+          end;
 
+        end;
+
+        with ACBrReinf1.WebServices.Consultar.RetConsulta_R9011 do
+        begin
+          if evtTotalContrib.Id <> '' then
+          begin
             Add('');
-            Add(' **Informações de processamento dos eventos ');
+            Add(' Evento: 9011');
 
-            with InfoRecEv do
+            with evtTotalContrib do
             begin
-              Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
-              Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
-              Add('   Tipo do Evento......................: ' + tpEv);
-              Add('   ID do Evento........................: ' + idEv);
-              Add('   Hash do arquivo processado..........: ' + hash);
-            end;
+              Add('   Id...........: ' + Id);
+              Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+              Add('   Descrição....: ' + IdeStatus.descRetorno);
 
+              if IdeStatus.regOcorrs.Count > 0 then
+              begin
+                Add('');
+                Add(' **Ocorrencias');
+
+                for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+                begin
+                  with IdeStatus.regOcorrs.Items[i] do
+                  begin
+                    Add('   Tipo............: ' + IntToStr(tpOcorr));
+                    Add('   Local Erro Aviso: ' + localErroAviso);
+                    Add('   Código Resp.... : ' + codResp);
+                    Add('   Descricao Resp..: ' + dscResp);
+                  end;
+                end;
+              end;
+
+              Add('');
+              Add(' **Informações de processamento dos eventos ');
+
+              with InfoRecEv do
+              begin
+                Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
+                Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+                Add('   Tipo do Evento......................: ' + tpEv);
+                Add('   ID do Evento........................: ' + idEv);
+                Add('   Hash do arquivo processado..........: ' + hash);
+              end;
+
+            end;
           end;
         end;
 
         with ACBrReinf1.WebServices.Consultar.RetConsulta_R9015 do
         begin
-          Add('');
-          Add(' Evento: 9015');
-
-          with evtRetCons do
+          if evtRetCons.Id <> '' then
           begin
-            Add('   Id...........: ' + Id);
-            Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
-            Add('   Descrição....: ' + IdeStatus.descRetorno);
+            Add('');
+            Add(' Evento: 9015');
 
-            if IdeStatus.regOcorrs.Count > 0 then
+            with evtRetCons do
             begin
-              Add('');
-              Add(' **Ocorrencias');
+              Add('   Id...........: ' + Id);
+              Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+              Add('   Descrição....: ' + IdeStatus.descRetorno);
 
-              for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+              if IdeStatus.regOcorrs.Count > 0 then
               begin
-                with IdeStatus.regOcorrs.Items[i] do
+                Add('');
+                Add(' **Ocorrencias');
+
+                for i := 0 to IdeStatus.regOcorrs.Count - 1 do
                 begin
-                  Add('   Tipo............: ' + IntToStr(tpOcorr));
-                  Add('   Local Erro Aviso: ' + localErroAviso);
-                  Add('   Código Resp.... : ' + codResp);
-                  Add('   Descricao Resp..: ' + dscResp);
+                  with IdeStatus.regOcorrs.Items[i] do
+                  begin
+                    Add('   Tipo............: ' + IntToStr(tpOcorr));
+                    Add('   Local Erro Aviso: ' + localErroAviso);
+                    Add('   Código Resp.... : ' + codResp);
+                    Add('   Descricao Resp..: ' + dscResp);
+                  end;
                 end;
               end;
+
+              Add('');
+              Add(' **Informações de processamento dos eventos ');
+
+              with InfoRecEv do
+              begin
+                Add('   Num. Protocolo de Entrega do Lote...: ' + nrProtLote);
+                Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+                Add('   Tipo do Evento......................: ' + tpEv);
+                Add('   ID do Evento........................: ' + idEv);
+                Add('   Hash do arquivo processado..........: ' + hash);
+              end;
+
             end;
-
-            Add('');
-            Add(' **Informações de processamento dos eventos ');
-
-            with InfoRecEv do
-            begin
-              Add('   Num. Protocolo de Entrega do Lote...: ' + nrProtLote);
-              Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
-              Add('   Tipo do Evento......................: ' + tpEv);
-              Add('   ID do Evento........................: ' + idEv);
-              Add('   Hash do arquivo processado..........: ' + hash);
-            end;
-
           end;
         end;
       end

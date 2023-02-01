@@ -45,6 +45,9 @@ Símbolo : Significado
 
 01/02/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de Cabo Frio/RJ - trocou de versão agora é 2.04 - provedor SigCorp.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade de Nova Itaberaba/SC - Provedor Pronim
    Por: Claudio Algayer
 

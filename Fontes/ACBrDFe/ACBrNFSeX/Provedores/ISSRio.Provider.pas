@@ -201,7 +201,7 @@ procedure TACBrNFSeProviderISSRio.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.QuebradeLinha := ''#$A'';
+  ConfigGeral.QuebradeLinha := '&#xA;';
 
   with ConfigAssinar do
   begin

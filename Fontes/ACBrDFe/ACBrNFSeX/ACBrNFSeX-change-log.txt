@@ -45,6 +45,9 @@ Símbolo : Significado
 
 02/02/2023
 -- eGoverneISS.Provider --
+[*] Alteração visando ler o retorno da consulta ao lote.
+   Por: Italo Giurizzato Junior
+-- eGoverneISS.Provider --
 [*] Correção, não estava limpado o CodigoLote após a consulta.
    Por: Italo Giurizzato Junior
 

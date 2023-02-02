@@ -298,13 +298,15 @@ begin
         begin
           for I := Low(ANodeArray) to High(ANodeArray) do
           begin
+            ANode := ANodeArray[I];
+
             with Response do
             begin
-              NumeroNota := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Numero'), tcStr);
+              NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
 
-              CodVerificacao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Autenticador'), tcStr);
+              CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Autenticador'), tcStr);
 
-              Link := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Link'), tcStr);
+              Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('Link'), tcStr);
               Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
             end;
 
@@ -361,6 +363,11 @@ procedure TACBrNFSeProvidereGoverneISS.TratarRetornoConsultaLoteRps(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
+  AResumo: TNFSeResumoCollectionItem;
+  ANode: TACBrXmlNode;
+  I: Integer;
+  ANodeArray: TACBrXmlNodeArray;
+  xMensagemErro: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -379,6 +386,45 @@ begin
       ProcessarMensagemErros(Document.Root, Response, '', 'ConsultarLoteResult');
 
       Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANode := Document.Root.Childrens.FindAnyNs('NotasGeradas');
+
+      if ANode <> nil then
+      begin
+        ANodeArray := ANode.Childrens.FindAllAnyNs('NotaFiscalLoteGeradaDTO');
+
+        if Assigned(ANodeArray) then
+        begin
+          for I := Low(ANodeArray) to High(ANodeArray) do
+          begin
+            ANode := ANodeArray[I];
+
+            xMensagemErro := ObterConteudoTag(ANode.Childrens.FindAnyNs('MensagemErro'), tcStr);
+
+            if xMensagemErro <> '' then
+            begin
+              AErro := Response.Erros.New;
+              AErro.Codigo := '';
+              AErro.Descricao := ACBrStr(xMensagemErro);
+            end;
+
+            with Response do
+            begin
+              NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+
+              CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Autenticador'), tcStr);
+
+              Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('Link'), tcStr);
+              Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
+            end;
+
+            AResumo := Response.Resumos.New;
+            AResumo.NumeroNota := Response.NumeroNota;
+            AResumo.CodigoVerificacao := Response.CodVerificacao;
+            AResumo.Link := Response.Link;
+          end;
+        end;
+      end;
     except
       on E:Exception do
       begin

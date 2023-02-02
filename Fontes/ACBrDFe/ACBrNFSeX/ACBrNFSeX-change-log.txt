@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/02/2023
+-- ACBrNFSeXServicos.ini --
+[*] Atualizado a URL do link de produção da cidade de Jaú/SP.
+   Por: Ronaldo Danieli
 -- eGoverneISS.Provider --
 [*] Alteração visando ler o retorno da consulta ao lote.
    Por: Italo Giurizzato Junior

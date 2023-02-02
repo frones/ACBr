@@ -13,7 +13,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsDescricao">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="20"/>
+			<xsd:maxLength value="4000"/>
 			<xsd:minLength value="1"/>
 			<xsd:whiteSpace value="collapse"/>
 		</xsd:restriction>

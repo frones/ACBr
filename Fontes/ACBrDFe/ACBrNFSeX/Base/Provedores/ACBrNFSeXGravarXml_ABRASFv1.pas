@@ -357,12 +357,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,
     StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
                                      [rfReplaceAll, rfIgnoreCase]), DSC_DISCR));
-{
-  Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,
-    StringReplace(NFSe.Servico.Discriminacao, ';', FAOwner.ConfigGeral.QuebradeLinha,
-                                       [rfReplaceAll, rfIgnoreCase]), DSC_DISCR,
-                       (NFSe.Prestador.Endereco.CodigoMunicipio <> '3304557')));
-}
+
   Result.AppendChild(AddNode(tcStr, '#', 'InformacoesComplementares', 1, 255, NrOcorrInformacoesComplemetares,
                                            NFSe.InformacoesComplementares, ''));
 

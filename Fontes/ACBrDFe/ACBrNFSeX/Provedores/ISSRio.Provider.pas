@@ -201,13 +201,12 @@ procedure TACBrNFSeProviderISSRio.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.QuebradeLinha := '';
+  ConfigGeral.QuebradeLinha := ''#$A'';
 
   with ConfigAssinar do
-   begin
-     CancelarNFSe := True;
-//     RpsGerarNFSe := True;
-   end;
+  begin
+    CancelarNFSe := True;
+  end;
 end;
 
 function TACBrNFSeProviderISSRio.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/02/2023
+-- ISSRio.Provider --
+[*] Possível Solução para quebra de linha no provedor ISSRio.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Alteração visando imprimir com mais detalhes os itens de serviço.
    Por: Italo Giurizzato Junior

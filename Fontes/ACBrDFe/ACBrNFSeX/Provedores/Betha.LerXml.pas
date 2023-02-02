@@ -119,6 +119,7 @@ begin
       ValorUnitario := fValorUnitario;
       ValorTotal := fValorServico;
       ValorBCINSS := fValorBC;
+      BaseCalculo := fValorBC;
       Aliquota := fAliquota;
     end;
   end;

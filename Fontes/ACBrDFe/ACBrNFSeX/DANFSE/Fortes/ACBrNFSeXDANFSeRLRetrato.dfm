@@ -3,7 +3,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Top = 76
   Caption = 'frlXDANFSeRLRetrato'
   ClientHeight = 750
-  PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Left = 32
@@ -861,7 +860,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbItens: TRLBand
       Left = 23
-      Top = 453
+      Top = 457
       Width = 752
       Height = 21
       Borders.Sides = sdCustom
@@ -887,7 +886,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbISSQN: TRLBand
       Left = 23
-      Top = 492
+      Top = 496
       Width = 752
       Height = 318
       BandType = btSummary
@@ -1913,7 +1912,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 810
+      Top = 814
       Width = 752
       Height = 40
       BandType = btSummary
@@ -1956,7 +1955,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 868
+      Top = 872
       Width = 752
       Height = 73
       BandType = btSummary
@@ -2121,7 +2120,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Left = 23
       Top = 437
       Width = 752
-      Height = 16
+      Height = 20
       BandType = btColumnHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -2129,7 +2128,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawRight = True
       Borders.DrawBottom = True
       object RLLabel65: TRLLabel
-        Left = 5
+        Left = 460
         Top = 1
         Width = 25
         Height = 14
@@ -2143,7 +2142,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel66: TRLLabel
-        Left = 57
+        Left = 4
         Top = 1
         Width = 48
         Height = 14
@@ -2159,9 +2158,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel67: TRLLabel
         Left = 710
         Top = 1
-        Width = 29
+        Width = 17
         Height = 14
-        Caption = 'Total'
+        Caption = 'ISS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2171,11 +2170,39 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel68: TRLLabel
-        Left = 640
+        Left = 384
         Top = 1
-        Width = 28
+        Width = 70
         Height = 14
-        Caption = 'Valor'
+        Caption = 'Valor Unit'#225'rio'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel5: TRLLabel
+        Left = 505
+        Top = 1
+        Width = 79
+        Height = 14
+        Caption = 'Valor do Servi'#231'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel9: TRLLabel
+        Left = 601
+        Top = 1
+        Width = 94
+        Height = 14
+        Caption = 'Base de C'#225'lculo (%)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2187,7 +2214,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object subItens: TRLSubDetail
       Left = 23
-      Top = 474
+      Top = 478
       Width = 752
       Height = 18
       Borders.Sides = sdCustom
@@ -2203,9 +2230,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 16
         BeforePrint = rlbItensServicoBeforePrint
         object txtServicoQtde: TRLLabel
-          Left = 5
-          Top = 2
-          Width = 46
+          Left = 459
+          Top = 1
+          Width = 36
           Height = 14
           Alignment = taCenter
           AutoSize = False
@@ -2218,9 +2245,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object rlmServicoDescricao: TRLMemo
-          Left = 57
-          Top = 2
-          Width = 549
+          Left = 4
+          Top = 1
+          Width = 373
           Height = 14
           Behavior = [beSiteExpander]
           Font.Charset = DEFAULT_CHARSET
@@ -2232,9 +2259,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object txtServicoUnitario: TRLLabel
-          Left = 611
-          Top = 2
-          Width = 54
+          Left = 383
+          Top = 1
+          Width = 70
           Height = 14
           Alignment = taRightJustify
           AutoSize = False
@@ -2247,9 +2274,39 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object txtServicoTotal: TRLLabel
-          Left = 670
-          Top = 2
+          Left = 506
+          Top = 1
           Width = 76
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Times New Roman'
+          Font.Style = []
+          ParentFont = False
+          Transparent = False
+        end
+        object txtBaseCalculo: TRLLabel
+          Left = 601
+          Top = 1
+          Width = 93
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Times New Roman'
+          Font.Style = []
+          ParentFont = False
+          Transparent = False
+        end
+        object txtISS: TRLLabel
+          Left = 709
+          Top = 1
+          Width = 35
           Height = 14
           Alignment = taRightJustify
           AutoSize = False
@@ -2265,7 +2322,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object RLBand1: TRLBand
       Left = 23
-      Top = 850
+      Top = 854
       Width = 752
       Height = 18
       BandType = btSummary

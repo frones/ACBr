@@ -227,6 +227,10 @@ type
     RLBand1: TRLBand;
     rllDataHoraImpressao: TRLLabel;
     rllSistema: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLLabel9: TRLLabel;
+    txtBaseCalculo: TRLLabel;
+    txtISS: TRLLabel;
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -300,8 +304,10 @@ begin
   if fpNFSe.InformacoesComplementares <> '' then
     rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
 
-  if ((pos('http://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or (pos('http://', LowerCase(fpNFSe.Link)) > 0) or
-    (pos('https://', LowerCase(fpNFSe.Link)) > 0)) then
+  if ((pos('http://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or
+      (pos('https://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or
+      (pos('http://', LowerCase(fpNFSe.Link)) > 0) or
+      (pos('https://', LowerCase(fpNFSe.Link)) > 0)) then
   begin
     rlmDadosAdicionais.Width := 643;
     rbOutrasInformacoes.AutoSize := True;
@@ -405,15 +411,21 @@ procedure TfrlXDANFSeRLRetrato.rlbItensServicoBeforePrint(Sender: TObject; var P
 begin
   with fpNFSe.Servico.ItemServico.Items[FNumItem] do
   begin
-    txtServicoQtde.Caption := FormatFloatBr(Quantidade);
     rlmServicoDescricao.Lines.Clear;
     rlmServicoDescricao.Lines.Add(StringReplace(Descricao, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
     txtServicoUnitario.Caption := FormatFloatBr(ValorUnitario);
+    txtServicoQtde.Caption := FormatFloatBr(Quantidade);
 
     if ValorTotal = 0.0 then
       ValorTotal := Quantidade * ValorUnitario;
 
     txtServicoTotal.Caption := FormatFloatBr(ValorTotal);
+    txtBaseCalculo.Caption := FormatFloatBr(BaseCalculo);
+
+    if ValorISS = 0.0 then
+      ValorISS := BaseCalculo * Aliquota/100;
+
+    txtISS.Caption := FormatFloatBr(ValorISS);
   end;
 end;
 

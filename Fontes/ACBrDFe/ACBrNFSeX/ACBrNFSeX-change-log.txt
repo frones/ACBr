@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/02/2023
+-- Diversos --
+[*] Alteração visando imprimir com mais detalhes os itens de serviço.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Atualizado a URL do link de produção da cidade de Jaú/SP.
    Por: Ronaldo Danieli

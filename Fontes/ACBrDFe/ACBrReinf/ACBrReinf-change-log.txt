@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+02/02/2023
+-- ACBrReinfWebServices --
+[*] Para as versões anteriores a 2.1.1 a separação do XML de retorno da consulta
+    R5001 estava errada.
+  Por: Renato Rubinho
+
 01/02/2023
 -- Diversos --
 [*] Alterações visando atender o consumo de API Rest utilizado pela versão

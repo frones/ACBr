@@ -629,7 +629,9 @@ var
 begin
   if FPConfiguracoesReinf.Geral.VersaoDF < v2_01_01 then
   begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'ReceberLoteEventosResult');
+    FPRetWS := SeparaDadosArray(['ConsultaInformacoesConsolidadasResult',
+                                 'ConsultaResultadoFechamento2099Response'],
+                                 FPRetornoWS);
 
     FRetConsulta_R5011.Leitor.Arquivo := ParseText(FPRetWS);
     FRetConsulta_R5011.LerXml;

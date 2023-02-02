@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/02/2023
+-- eGoverneISS.Provider --
+[*] Correção, não estava limpado o CodigoLote após a consulta.
+   Por: Italo Giurizzato Junior
+
 01/02/2023
 -- eGoverneISS.Provider --
 [*] Correção, em vez de criar a lista de alertas estava criando a lista de erros.

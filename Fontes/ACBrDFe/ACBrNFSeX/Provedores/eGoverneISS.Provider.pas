@@ -258,6 +258,7 @@ var
   AMessageTag: string;
   ANodeArray: TACBrXmlNodeArray;
 begin
+  FPCodigoLote := '';
   Document := TACBrXmlDocument.Create;
 
   try
@@ -352,6 +353,7 @@ begin
                            '<eis:CodigoLote>' +
                               FPCodigoLote +
                            '</eis:CodigoLote>';
+  FPCodigoLote := '';
 end;
 
 procedure TACBrNFSeProvidereGoverneISS.TratarRetornoConsultaLoteRps(

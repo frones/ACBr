@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/02/2023
+-- eGoverneISS.Provider --
+[*] Ficou faltando a leitura de um nó do XML.
+   Por: Italo Giurizzato Junior
 -- ISSRio.Provider --
 [*] Possível Solução para quebra de linha no provedor ISSRio.
    Por: Italo Giurizzato Junior

@@ -387,41 +387,46 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := Document.Root.Childrens.FindAnyNs('NotasGeradas');
+      ANode := Document.Root.Childrens.FindAnyNs('ConsultarLoteResult');
 
       if ANode <> nil then
       begin
-        ANodeArray := ANode.Childrens.FindAllAnyNs('NotaFiscalLoteGeradaDTO');
+        ANode := ANode.Childrens.FindAnyNs('NotasGeradas');
 
-        if Assigned(ANodeArray) then
+        if ANode <> nil then
         begin
-          for I := Low(ANodeArray) to High(ANodeArray) do
+          ANodeArray := ANode.Childrens.FindAllAnyNs('NotaFiscalLoteGeradaDTO');
+
+          if Assigned(ANodeArray) then
           begin
-            ANode := ANodeArray[I];
-
-            xMensagemErro := ObterConteudoTag(ANode.Childrens.FindAnyNs('MensagemErro'), tcStr);
-
-            if xMensagemErro <> '' then
+            for I := Low(ANodeArray) to High(ANodeArray) do
             begin
-              AErro := Response.Erros.New;
-              AErro.Codigo := '';
-              AErro.Descricao := ACBrStr(xMensagemErro);
+              ANode := ANodeArray[I];
+
+              xMensagemErro := ObterConteudoTag(ANode.Childrens.FindAnyNs('MensagemErro'), tcStr);
+
+              if xMensagemErro <> '' then
+              begin
+                AErro := Response.Erros.New;
+                AErro.Codigo := '';
+                AErro.Descricao := ACBrStr(xMensagemErro);
+              end;
+
+              with Response do
+              begin
+                NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+
+                CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Autenticador'), tcStr);
+
+                Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('Link'), tcStr);
+                Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
+              end;
+
+              AResumo := Response.Resumos.New;
+              AResumo.NumeroNota := Response.NumeroNota;
+              AResumo.CodigoVerificacao := Response.CodVerificacao;
+              AResumo.Link := Response.Link;
             end;
-
-            with Response do
-            begin
-              NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
-
-              CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Autenticador'), tcStr);
-
-              Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('Link'), tcStr);
-              Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
-            end;
-
-            AResumo := Response.Resumos.New;
-            AResumo.NumeroNota := Response.NumeroNota;
-            AResumo.CodigoVerificacao := Response.CodVerificacao;
-            AResumo.Link := Response.Link;
           end;
         end;
       end;

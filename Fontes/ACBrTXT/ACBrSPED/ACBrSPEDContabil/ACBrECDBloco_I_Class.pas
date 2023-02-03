@@ -273,7 +273,7 @@ begin
        ///
        Add( LFill('I010') +
             LFill(IND_ESC, 1) +
-            LFill(COD_VER_LC) 
+            LFill(COD_VER_LC)
             );
        ///
        FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
@@ -624,32 +624,55 @@ end;
 
 procedure TBloco_I.WriteRegistroI155(RegI150: TRegistroI150);
 var
-intFor: integer;
+  intFor: integer;
+  vRegI155: TRegistroI155;
 begin
   if Assigned(RegI150.RegistroI155) then
   begin
      for intFor := 0 to RegI150.RegistroI155.Count - 1 do
      begin
-        with RegI150.RegistroI155.Items[intFor] do
-        begin
-           Check(((IND_DC_INI = 'D') or (IND_DC_INI = 'C') or (IND_DC_INI = '')), '(I-I155) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
-           Check(((IND_DC_FIN = 'D') or (IND_DC_FIN = 'C') or (IND_DC_FIN = '')), '(I-I155) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
-           ///
-           Add( LFill('I155') +
-                LFill(COD_CTA) +
-                LFill(COD_CCUS) +
-                LFill(VL_SLD_INI, 19, 2) +
-                LFill(IND_DC_INI, 0) +
-                LFill(VL_DEB, 19, 2) +
-                LFill(VL_CRED, 19, 2) +
-                LFill(VL_SLD_FIN, 19, 2) +
-                LFill(IND_DC_FIN, 0)
-                );
-        end;
-        // Registro Filho
-        WriteRegistroI157(RegI150.RegistroI155.Items[intFor]);
+       vRegI155 := RegI150.RegistroI155.Items[intFor];
+       Check(((vRegI155.IND_DC_INI = 'D') or (vRegI155.IND_DC_INI = 'C') or (vRegI155.IND_DC_INI = '')), '(I-I155) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
+       Check(((vRegI155.IND_DC_FIN = 'D') or (vRegI155.IND_DC_FIN = 'C') or (vRegI155.IND_DC_FIN = '')), '(I-I155) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
 
-        FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
+       ///  Deve preencher campos adicionais?
+       if //( Leiaute >= 4.0 )  and
+          ((vRegI155.IND_DC_INI_MF <> '') and (vRegI155.IND_DC_FIN_MF <> '')) then
+       begin
+         Add( LFill('I155') +
+              LFill(vRegI155.COD_CTA) +
+              LFill(vRegI155.COD_CCUS) +
+              LFill(vRegI155.VL_SLD_INI, 19, 2) +
+              LFill(vRegI155.IND_DC_INI, 0) +
+              LFill(vRegI155.VL_DEB, 19, 2) +
+              LFill(vRegI155.VL_CRED, 19, 2) +
+              LFill(vRegI155.VL_SLD_FIN, 19, 2) +
+              LFill(vRegI155.IND_DC_FIN, 0) +
+              LFill(vRegI155.VL_SLD_INI_MF, 19, 2) +
+              LFill(vRegI155.IND_DC_INI_MF, 0) +
+              LFill(vRegI155.VL_DEB_MF, 19, 2) +
+              LFill(vRegI155.VL_CRED_MF, 19, 2) +
+              LFill(vRegI155.VL_SLD_FIN_MF, 19, 2) +
+              LFill(vRegI155.IND_DC_FIN_MF, 0)
+             );
+       end
+       else
+       begin
+         Add( LFill('I155') +
+              LFill(vRegI155.COD_CTA) +
+              LFill(vRegI155.COD_CCUS) +
+              LFill(vRegI155.VL_SLD_INI, 19, 2) +
+              LFill(vRegI155.IND_DC_INI, 0) +
+              LFill(vRegI155.VL_DEB, 19, 2) +
+              LFill(vRegI155.VL_CRED, 19, 2) +
+              LFill(vRegI155.VL_SLD_FIN, 19, 2) +
+              LFill(vRegI155.IND_DC_FIN, 0)
+              );
+       end;
+       // Registro Filho
+       WriteRegistroI157(vRegI155);
+
+       FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
      end;
      FRegistroI155Count := FRegistroI155Count + RegI150.RegistroI155.Count;
   end;
@@ -666,13 +689,29 @@ begin
         with RegI155.RegistroI157.Items[intFor] do
         begin
            Check(((IND_DC_INI = 'D') or (IND_DC_INI = 'C') or (IND_DC_INI = '')), '(I-I157) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
-           ///
+
+
+          /// gerar Campos adicionais ?
+          if IND_DC_INI_MF <> '' then
+          begin
+           Add( LFill('I157') +
+                LFill(COD_CTA) +
+                LFill(COD_CCUS) +
+                LFill(VL_SLD_INI, 19, 2) +
+                LFill(IND_DC_INI, 0) +
+                LFill(VL_SLD_INI_MF, 19, 2) +
+                LFill(IND_DC_INI_MF, 0)
+                );
+          end
+          else
+          begin
            Add( LFill('I157') +
                 LFill(COD_CTA) +
                 LFill(COD_CCUS) +
                 LFill(VL_SLD_INI, 19, 2) +
                 LFill(IND_DC_INI, 0)
                 );
+          end;
         end;
 
         FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
@@ -691,6 +730,19 @@ begin
      begin
         with FRegistroI200.Items[intFor] do
         begin
+           /// Imprimir Campos Adicionais?
+           if False then
+           begin
+             Add( LFill('I200') +
+                  LFill(NUM_LCTO) +
+                  LFill(DT_LCTO) +
+                  LFill(VL_LCTO, 19, 2) +
+                  LFill(IND_LCTO) +
+                  LFill(DT_LCTO_EXT) +
+                  LFill(VL_LCTO_MF, 19, 2)
+                  );
+           end
+           else
            /// Layout 7 a partir da escrituração ano calendário 2018
            if DT_INI >= EncodeDate(2018,01,01) then
            begin

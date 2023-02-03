@@ -73,6 +73,7 @@ type
     FIND_ESC_CONS_ECD_REC: string;
     FIND_CENTRALIZADA_ECD_REC: integer;
     FIND_MUDANCA_PC_ECD_REC: integer;
+    FIND_PLANO_REF_ECD_REC: integer;
 
     FRegistroC050: TRegistroC050List;
     FRegistroC150: TRegistroC150List;
@@ -98,6 +99,7 @@ type
     property IND_ESC_CONS_ECD_REC: string      read FIND_ESC_CONS_ECD_REC write FIND_ESC_CONS_ECD_REC;
     property IND_CENTRALIZADA_ECD_REC: integer read FIND_CENTRALIZADA_ECD_REC write FIND_CENTRALIZADA_ECD_REC;
     property IND_MUDANCA_PC_ECD_REC: integer   read FIND_MUDANCA_PC_ECD_REC write FIND_MUDANCA_PC_ECD_REC;
+    property IND_PLANO_REF_ECD_REC: integer   read FIND_PLANO_REF_ECD_REC write FIND_PLANO_REF_ECD_REC;
 
     /// Registros FILHOS
     property RegistroC050: TRegistroC050List read FRegistroC050 write FRegistroC050;

@@ -153,6 +153,7 @@ procedure TBloco_C.WriteRegistroC040;
 begin
   if Assigned(fRegistroC040) then
   begin
+    Self.Bloco_0.
     Add(LFill('C040') +
         LFill(fRegistroC040.HASH_ECD_REC, 40) +
         LFill(fRegistroC040.DT_INI_ECD_REC) +
@@ -170,7 +171,8 @@ begin
         LFill(fRegistroC040.IDENT_MF_ECD_REC, 1) +
         LFill(fRegistroC040.IND_ESC_CONS_ECD_REC, 1) +
         LFill(fRegistroC040.IND_CENTRALIZADA_ECD_REC, 1) +
-        LFill(fRegistroC040.IND_MUDANCA_PC_ECD_REC, 1)
+        LFill(fRegistroC040.IND_MUDANCA_PC_ECD_REC, 1) +
+        LFill(fRegistroC040.IND_PLANO_REF_ECD_REC, 1)
        );
 
     FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;

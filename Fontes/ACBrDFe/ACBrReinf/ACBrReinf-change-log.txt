@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/02/2023
+-- ACBrReinfWebServices --
+[*] Trava da Consulta por Recibo na versão 2.1 em diante.
+  Por: Renato Rubinho
+
 02/02/2023
 -- ACBrReinfWebServices --
 [*] Para as versões anteriores a 2.1.1 a separação do XML de retorno da consulta

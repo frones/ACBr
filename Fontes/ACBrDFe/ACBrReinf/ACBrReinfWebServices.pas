@@ -1005,6 +1005,9 @@ function TWebServices.ConsultaReciboEvento(const APerApur: String;
                                   const AnrInscTomador: string;
                                   AdtApur: TDateTime): Boolean;
 begin
+  if FConsultarReciboEvento.FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
+    FConsultarReciboEvento.GerarException('Método não implementado pela Receita, utilize a Consulta de Protocolo');
+
 {$IFDEF FPC}
   Result := False;
 {$ENDIF}

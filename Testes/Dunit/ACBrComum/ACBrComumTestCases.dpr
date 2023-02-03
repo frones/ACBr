@@ -36,7 +36,8 @@ uses
   ACBrTests.Runner in '..\..\ACBrTests.Runner.pas',
   ACBrTests.Util in '..\..\ACBrTests.Util.pas',
   acbrutiltest in '..\..\FPCUnit\ACBrComum\acbrutiltest.pas',
-  ACBrUtil.StringsTests in '..\..\FPCUnit\ACBrComum\ACBrUtil.StringsTests.pas';
+  ACBrUtil.StringsTests in '..\..\FPCUnit\ACBrComum\ACBrUtil.StringsTests.pas',
+  ACBrUtil.DateTimeTests in '..\..\FPCUnit\ACBrComum\ACBrUtil.DateTimeTests.pas';
 
 begin
   ACBrRunTests;

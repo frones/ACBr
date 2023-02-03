@@ -5,7 +5,7 @@ unit ACBrUtil.StringsTests;
 interface
 
 uses
-  Classes, SysUtils, Math,
+  Classes, SysUtils,
   {$ifdef FPC}
   LConvEncoding,
   {$endif}

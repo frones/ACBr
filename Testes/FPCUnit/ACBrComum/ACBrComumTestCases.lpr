@@ -3,7 +3,7 @@ program ACBrComumTestCases;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, ACBrUtilTest, ACBrUtil.StringsTests, ACBrTests.Util,
+  Interfaces, Forms, ACBrUtilTest, ACBrUtil.StringsTests, ACBrUtil.DateTimeTests, ACBrTests.Util,
   GuiTestRunner, ACBrCompress;
 
 {$R *.res}

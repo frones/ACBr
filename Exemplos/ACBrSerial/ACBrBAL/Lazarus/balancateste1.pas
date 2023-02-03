@@ -48,6 +48,7 @@ type
     btnDesconectar: TButton;
     btnLerPeso: TButton;
     btEnviarPrecoKg: TButton;
+    btSearchPorts: TSpeedButton;
     edPrecoKg: TEdit;
     edLog: TEdit;
     Label12: TLabel;
@@ -80,6 +81,7 @@ type
     procedure btnDesconectarClick(Sender: TObject);
     procedure btnLerPesoClick(Sender: TObject);
     procedure btEnviarPrecoKgClick(Sender: TObject);
+    procedure btSearchPortsClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure edtTimeOutKeyPress(Sender: TObject; var Key: Char);
     procedure chbMonitorarClick(Sender: TObject);
@@ -190,6 +192,28 @@ begin
     Memo1.Lines.Add('Preço/Kg enviado com sucesso')
   else
     Memo1.Lines.Add('Erro ao enviar Preço/Kg');
+end;
+
+procedure TForm1.btSearchPortsClick(Sender: TObject);
+var
+  K: Integer;
+begin
+  cmbPortaSerial.Items.Clear;
+  ACBrBAL1.Device.AcharPortasSeriais( cmbPortaSerial.Items );
+  {$IfDef MSWINDOWS}
+   ACBrBAL1.Device.AcharPortasUSB( cmbPortaSerial.Items );
+  {$EndIf}
+  {$IfDef HAS_BLUETOOTH}
+   ACBrBAL1.Device.AcharPortasBlueTooth( cmbPortaSerial.Items, True );
+  {$EndIf}
+
+  cmbPortaSerial.Items.Add('LPT1') ;
+  cmbPortaSerial.Items.Add('TCP:192.168.0.31:9100') ;
+
+  {$IfNDef MSWINDOWS}
+   cmbPortaSerial.Items.Add('/dev/ttyS0') ;
+   cmbPortaSerial.Items.Add('/dev/ttyUSB0') ;
+  {$EndIf}
 end;
 
 procedure TForm1.edtTimeOutKeyPress(Sender: TObject; var Key: Char);

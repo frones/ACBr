@@ -28,13 +28,15 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+{$I ACBr.inc}
+
 unit BalancaTeste1;
 
 interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Buttons, ExtCtrls, ACBrDevice, ACBrBAL;
+  Buttons, ExtCtrls, ACBrDevice, ACBrBAL, ACBrBase;
 
 type
 
@@ -74,6 +76,7 @@ type
     cmbParity: TComboBox;
     Label11: TLabel;
     cmbStopBits: TComboBox;
+    btSearchPorts: TSpeedButton;
     procedure btnConectarClick(Sender: TObject);
     procedure btnDesconectarClick(Sender: TObject);
     procedure btnLerPesoClick(Sender: TObject);
@@ -81,9 +84,10 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure edtTimeOutKeyPress(Sender: TObject; var Key: Char);
     procedure chbMonitorarClick(Sender: TObject);
-    procedure ACBrBAL1LePeso(Peso: Double; Resposta: String);
+    procedure ACBrBAL1LePeso(Peso: Double; Resposta: AnsiString);
     procedure FormCreate(Sender : TObject) ;
     procedure SbArqLogClick(Sender: TObject);
+    procedure btSearchPortsClick(Sender: TObject);
   private
     { private declarations }
     function Converte(cmd: String): String;
@@ -174,6 +178,28 @@ begin
    ACBrBAL1.LePeso( TimeOut );
 end;
 
+procedure TForm1.btSearchPortsClick(Sender: TObject);
+var
+  K: Integer;
+begin
+  cmbPortaSerial.Items.Clear;
+  ACBrBAL1.Device.AcharPortasSeriais( cmbPortaSerial.Items );
+  {$IfDef MSWINDOWS}
+   ACBrBAL1.Device.AcharPortasUSB( cmbPortaSerial.Items );
+  {$EndIf}
+  {$IfDef HAS_BLUETOOTH}
+   ACBrBAL1.Device.AcharPortasBlueTooth( cmbPortaSerial.Items, True );
+  {$EndIf}
+
+  cmbPortaSerial.Items.Add('LPT1') ;
+  cmbPortaSerial.Items.Add('TCP:192.168.0.31:9100') ;
+
+  {$IfNDef MSWINDOWS}
+   cmbPortaSerial.Items.Add('/dev/ttyS0') ;
+   cmbPortaSerial.Items.Add('/dev/ttyUSB0') ;
+  {$EndIf}
+end;
+
 procedure TForm1.btEnviarPrecoKgClick(Sender: TObject);
 var
   wTimeOut: Integer;
@@ -201,7 +227,7 @@ begin
    ACBrBAL1.MonitorarBalanca := chbMonitorar.Checked ;
 end;
 
-procedure TForm1.ACBrBAL1LePeso(Peso: Double; Resposta: String);
+procedure TForm1.ACBrBAL1LePeso(Peso: Double; Resposta: AnsiString);
 var valid : integer;
 begin
    sttPeso.Caption     := formatFloat('##0.000', Peso );

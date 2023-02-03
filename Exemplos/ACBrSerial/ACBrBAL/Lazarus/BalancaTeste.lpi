@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <LRSInOutputDirectory Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
-      <MainUnit Value="0"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <XPManifest>
@@ -25,11 +25,14 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
+      <local>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T &apos;Lazarus Run Output&apos; -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+            <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T &apos;Lazarus Run Output&apos; -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
           </local>
         </Mode0>
       </Modes>
@@ -42,11 +45,11 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="50">
+    <Units Count="54">
       <Unit0>
         <Filename Value="BalancaTeste.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="46"/>
+        <UsageCount Value="53"/>
       </Unit0>
       <Unit1>
         <Filename Value="balancateste1.pas"/>
@@ -56,9 +59,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="BalancaTeste1"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="42"/>
-        <CursorPos X="29" Y="72"/>
-        <UsageCount Value="46"/>
+        <TopLine Value="184"/>
+        <CursorPos Y="198"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -96,33 +99,35 @@
       </Unit6>
       <Unit7>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDevice.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1219"/>
-        <CursorPos X="3" Y="1218"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="990"/>
+        <CursorPos X="3" Y="995"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrSerial-change-log.txt"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="32"/>
-        <CursorPos X="38" Y="56"/>
-        <UsageCount Value="19"/>
+        <EditorIndex Value="11"/>
+        <TopLine Value="29"/>
+        <CursorPos X="43" Y="51"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="129"/>
-        <CursorPos X="89" Y="138"/>
-        <UsageCount Value="15"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="130"/>
+        <CursorPos X="31" Y="146"/>
+        <UsageCount Value="18"/>
         <Loaded Value="True"/>
       </Unit9>
       <Unit10>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALFilizola.pas"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="106"/>
-        <UsageCount Value="11"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="78"/>
+        <CursorPos X="10" Y="86"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit10>
       <Unit11>
@@ -134,10 +139,11 @@
       </Unit11>
       <Unit12>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALDigitron.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="46"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="73"/>
         <CursorPos X="24" Y="59"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit12>
       <Unit13>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALLider.pas"/>
@@ -183,17 +189,18 @@
       </Unit18>
       <Unit19>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUrano.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="52"/>
-        <CursorPos X="3" Y="75"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="64"/>
+        <CursorPos Y="81"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit19>
       <Unit20>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoPOP.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="112"/>
-        <CursorPos X="102" Y="131"/>
-        <UsageCount Value="11"/>
+        <CursorPos X="33" Y="120"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit20>
       <Unit21>
@@ -324,18 +331,18 @@
       </Unit38>
       <Unit39>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALClass.pas"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="38"/>
-        <CursorPos X="25" Y="44"/>
-        <UsageCount Value="19"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="199"/>
+        <CursorPos X="78" Y="218"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit39>
       <Unit40>
         <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="1688"/>
-        <CursorPos X="3" Y="1697"/>
-        <UsageCount Value="13"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="1543"/>
+        <CursorPos X="22" Y="1542"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit40>
       <Unit41>
@@ -401,43 +408,156 @@
         <CursorPos X="3" Y="61"/>
         <UsageCount Value="10"/>
       </Unit49>
+      <Unit50>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\rtl-objpas\src\inc\strutils.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="83"/>
+        <CursorPos X="10" Y="100"/>
+        <UsageCount Value="13"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALDigitron_UL.pas"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="85"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoUDC.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="39"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDeviceWinUSB.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="94"/>
+        <CursorPos X="3" Y="98"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit53>
     </Units>
-    <JumpHistory Count="9" HistoryIndex="8">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
-        <Caret Line="149" Column="29" TopLine="140"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALFilizola.pas"/>
+        <Caret Line="108" TopLine="79"/>
       </Position1>
       <Position2>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoPOP.pas"/>
-        <Caret Line="109" Column="37" TopLine="97"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALFilizola.pas"/>
+        <Caret Line="110" TopLine="81"/>
       </Position2>
       <Position3>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoPOP.pas"/>
-        <Caret Line="136" Column="30" TopLine="113"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALFilizola.pas"/>
+        <Caret Line="111" TopLine="82"/>
       </Position3>
       <Position4>
-        <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <Caret Line="243" Column="10" TopLine="225"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALFilizola.pas"/>
+        <Caret Line="113" TopLine="84"/>
       </Position4>
       <Position5>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
-        <Caret Line="138" Column="89" TopLine="129"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALFilizola.pas"/>
+        <Caret Line="116" TopLine="88"/>
       </Position5>
       <Position6>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUranoPOP.pas"/>
-        <Caret Line="131" Column="102" TopLine="112"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALFilizola.pas"/>
+        <Caret Line="126" TopLine="94"/>
       </Position6>
       <Position7>
-        <Filename Value="balancateste1.pas"/>
-        <Caret Line="89" Column="31" TopLine="80"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="311" Column="25" TopLine="303"/>
       </Position7>
       <Position8>
-        <Filename Value="balancateste1.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="60" Column="52" TopLine="42"/>
       </Position8>
       <Position9>
-        <Filename Value="balancateste1.pas"/>
-        <Caret Line="8" Column="5"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="64" Column="43" TopLine="42"/>
       </Position9>
+      <Position10>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="152" Column="18" TopLine="120"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="66" Column="45" TopLine="36"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="146" Column="31" TopLine="130"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUrano.pas"/>
+        <Caret Line="54" Column="24" TopLine="41"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUrano.pas"/>
+        <Caret Line="81" Column="3" TopLine="79"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALClass.pas"/>
+        <Caret Line="73" Column="34" TopLine="56"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALClass.pas"/>
+        <Caret Line="147" Column="3" TopLine="142"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALClass.pas"/>
+        <Caret Line="81" Column="26" TopLine="61"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUrano.pas"/>
+        <Caret Line="93" TopLine="79"/>
+      </Position19>
+      <Position20>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="176" TopLine="148"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUrano.pas"/>
+        <Caret Line="81" TopLine="64"/>
+      </Position21>
+      <Position22>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="165" Column="61" TopLine="148"/>
+      </Position22>
+      <Position23>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="157" Column="32" TopLine="148"/>
+      </Position23>
+      <Position24>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="159" Column="32" TopLine="150"/>
+      </Position24>
+      <Position25>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="214" TopLine="197"/>
+      </Position25>
+      <Position26>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="204" Column="56" TopLine="184"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDevice.pas"/>
+        <Caret Line="355" Column="15" TopLine="340"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDevice.pas"/>
+        <Caret Line="995" Column="3" TopLine="990"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDeviceWinUSB.pas"/>
+        <Caret Line="60" Column="15" TopLine="43"/>
+      </Position29>
+      <Position30>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="192" Column="51" TopLine="185"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -454,6 +574,7 @@
     </Parsing>
     <Linking>
       <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
         <UseHeaptrc Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>
@@ -465,7 +586,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="1">
+    <BreakPoints Count="3">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
@@ -473,6 +594,20 @@
         <Source Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALToledo.pas"/>
         <Line Value="108"/>
       </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUrano.pas"/>
+        <Line Value="93"/>
+      </Item2>
+      <Item3>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\..\Fontes\ACBrSerial\ACBrBALUrano.pas"/>
+        <Line Value="81"/>
+      </Item3>
     </BreakPoints>
     <Exceptions Count="5">
       <Item1>

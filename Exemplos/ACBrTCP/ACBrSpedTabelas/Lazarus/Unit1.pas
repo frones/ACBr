@@ -1,32 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {																			   }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
+
 
 unit Unit1;
 
@@ -69,14 +70,15 @@ type
     procedure BtnDowClick(Sender: TObject);
     procedure BtnDowTClick(Sender: TObject);
   private
-    { Private declarations }
+    FID:string;
+    FVersao :string;
   public
     { Public declarations }
   end;
 
 var
   Form1: TForm1;
-  bId, bversao: string;
+
 
 implementation
 
@@ -84,11 +86,11 @@ implementation
 
 procedure TForm1.BtnDowClick(Sender: TObject);
 begin
-  bId := BufDataset1.FieldByName('Id').AsString;
-  bVersao := BufDataset1.FieldByName('Versao').AsString;
+  FId := BufDataset1.FieldByName('Id').AsString;
+  FVersao := BufDataset1.FieldByName('Versao').AsString;
 
   ACBrSpedTabelas1.CodSistema := TACBrCodSistema( ComboBox1.ItemIndex ) ;
-  if ACBrSpedTabelas1.Download(bId, bVersao, bId + bVersao + '.txt') then
+  if ACBrSpedTabelas1.Download(FId, FVersao, FId + FVersao + '.txt') then
     MessageDlg('Download comcluido com sucesso', mtInformation, [mbOK], 0)
   else
     MessageDlg('Falha ao efetuar o download', mtError, [mbOK], 0);
@@ -103,9 +105,9 @@ begin
   BufDataset1.First;
   while not BufDataset1.EOF do
   begin
-    bId := BufDataset1.FieldByName('Id').AsString;
-    bVersao := BufDataset1.FieldByName('Versao').AsString;
-    Ok1 := ACBrSpedTabelas1.Download(bId, bVersao, bId + bVersao + '.txt');
+    FId := BufDataset1.FieldByName('Id').AsString;
+    FVersao := BufDataset1.FieldByName('Versao').AsString;
+    Ok1 := ACBrSpedTabelas1.Download(FId, FVersao, FId + FVersao + '.txt');
 
     if Ok1 = False then
       Ok := False;

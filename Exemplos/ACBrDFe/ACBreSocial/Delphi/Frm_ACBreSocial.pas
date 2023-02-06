@@ -442,7 +442,7 @@ begin
           dtTrans11096 := Date;
 
           if VersaoDFx > veS01_00_00 then
-            indTribFolhaPisCofins := tpSim;
+            indTribFolhaPisCofins := snfSim;
 
           if VersaoDFx <= ve02_05_00 then
           begin
@@ -503,14 +503,7 @@ begin
               email := 'teste@teste.com';
             end;
 
-            with infoComplementares do
-            begin
-              with situacaoPJ do
-                indSitPJ := tpIndSitPJ(0);
 
-              with situacaoPF do
-                indSitPF := tpIndSitPF(0);
-            end;
           end;
         end;
 
@@ -595,13 +588,11 @@ begin
 
           with infoTrab do
           begin
-            if VersaoDFx <= ve02_05_00 then
-              regPt := tpRegPt(3);
+
 
             with infoApr do
             begin
-              if VersaoDFx <= ve02_05_00 then
-                contApr := tpContApr(2);
+
 {
               nrProcJud := '20150612';
 }
@@ -678,8 +669,7 @@ begin
           if VersaoDFx >= veS01_00_00 then
             codIncCPRP := cicpSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicialDecimo;
 
-          if VersaoDFx <= ve02_05_00 then
-            codIncSIND := tpCodIncSIND(1);
+
 
           observacao := 'Rubrica Teste';
  {
@@ -860,7 +850,7 @@ begin
 
             leiCargo.nrLei := '11111';
             leiCargo.dtLei := Now;
-            leiCargo.sitCargo := tpSitCargo(0);
+
           end;
         end;
 
@@ -912,7 +902,6 @@ begin
           dscCarreira := 'Juiz';
           leiCarr := 'lei89489/77';
           dtLeiCarr := Now;
-          sitCarr := tpSitCarr(0);
         end;
 
         with novaValidade do
@@ -1018,7 +1007,6 @@ begin
 
           with horarioIntervalo.New do
           begin
-            tpInterv := tptpIntervalo(0);
             durInterv := 90;
             iniInterv := '1200';
             termInterv := '1330';
@@ -1026,7 +1014,6 @@ begin
 
           with horarioIntervalo.New do
           begin
-            tpInterv := tptpIntervalo(1);
             durInterv := 15;
             iniInterv := '1645';
             termInterv := '1700';
@@ -2078,7 +2065,6 @@ begin
 
           with infoComplemDed.New do
           begin
-            indTpDeducao := itdPensaoAlimenticia;
 
             with penAlim.New do
             begin
@@ -2923,7 +2909,6 @@ begin
       with contribSind.New do
       begin
         cnpjSindic := '01234567891111';
-        tpContribSind := tpTpContribSind(0);
         vlrContribSind := 1500.50;
       end;
     end;
@@ -3217,8 +3202,6 @@ begin
             begin
               hipLeg := 1;
               justContr := 'teste';
-              if VersaoDFx <= ve02_05_00 then
-                tpinclContr := icLocaisSemFiliais;
 
               if VersaoDFx <= ve02_05_00 then
               begin
@@ -4474,7 +4457,6 @@ begin
           begin
             dtAvPrv := Now;
             dtPrevDeslig := Now + 30;
-            tpAvPrevio := tpTpAvPrevio(0);
             observacao := 'Observacao aviso previo';
           end;
         end
@@ -4483,7 +4465,6 @@ begin
           with cancAvPrevio do
           begin
             dtCancAvPrv := Now;
-            mtvCancAvPrevio := tpMtvCancAvPrevio(0);
             observacao := 'Observacao cancelamento aviso previo';
           end;
         end;

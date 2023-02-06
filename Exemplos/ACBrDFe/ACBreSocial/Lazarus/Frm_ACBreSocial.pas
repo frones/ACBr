@@ -485,18 +485,7 @@ begin
               email := 'teste@teste.com';
             end;
 
-            with infoComplementares do
-            begin
-              with situacaoPJ do
-              begin
-                indSitPJ := tpIndSitPJ(0);
-              end;
 
-              with situacaoPF do
-              begin
-                indSitPF := tpIndSitPF(0);
-              end;
-            end;
           end;
         end;
 
@@ -581,13 +570,11 @@ begin
 
           with infoTrab do
           begin
-            if VersaoDFx <= ve02_05_00 then
-              regPt := tpRegPt(3);
+
 
             with infoApr do
             begin
-              if VersaoDFx <= ve02_05_00 then
-                contApr := tpContApr(2);
+
 {
               nrProcJud := '20150612';
 }
@@ -661,10 +648,8 @@ begin
           codIncIRRF := tpCodIncIRRF(1);
           codIncFGTS := tpCodIncFGTS(1);
 
-          if VersaoDFx <= ve02_05_00 then
-            codIncSIND := tpCodIncSIND(1)
-          else
-            codIncCPRP := cicpNaoeBasedeCalculodeContribuicoesDevidasaoRPPSRegimeMilitar;
+
+          codIncCPRP := cicpNaoeBasedeCalculodeContribuicoesDevidasaoRPPSRegimeMilitar;
 
           observacao := 'Rubrica Teste';
  {
@@ -836,7 +821,7 @@ begin
 
             leiCargo.nrLei := '11111';
             leiCargo.dtLei := Now;
-            leiCargo.sitCargo := tpSitCargo(0);
+
           end;
         end;
 
@@ -874,7 +859,7 @@ begin
         dadosCarreira.dscCarreira := 'Juiz';
         dadosCarreira.leiCarr := 'lei89489/77';
         dadosCarreira.dtLeiCarr := Now;
-        dadosCarreira.sitCarr := tpSitCarr(0);
+
 
         NovaValidade.IniValid := '2015-05';
         NovaValidade.FimValid := '2099-12';
@@ -952,7 +937,6 @@ begin
 
           with horarioIntervalo.New do
           begin
-            tpInterv := tptpIntervalo(0);
             durInterv := 90;
             iniInterv := '1200';
             termInterv := '1330';
@@ -960,7 +944,6 @@ begin
 
           with horarioIntervalo.New do
           begin
-            tpInterv := tptpIntervalo(1);
             durInterv := 15;
             iniInterv := '1645';
             termInterv := '1700';
@@ -2405,7 +2388,6 @@ begin
       with ContribSind.New do
       begin
         cnpjSindic := '01234567891111';
-        tpContribSind := tpTpContribSind(0);
         vlrContribSind := 1500.50;
       end;
     end;
@@ -2613,7 +2595,7 @@ begin
             begin
               hipLeg := 1;
               justContr := 'teste';
-              tpinclContr := icLocaisSemFiliais;
+
 
               with IdeTomadorServ do
               begin
@@ -3563,13 +3545,11 @@ begin
         begin
           DetAvPrevio.dtAvPrv := Now;
           DetAvPrevio.dtPrevDeslig := Now + 30;
-          DetAvPrevio.tpAvPrevio := tpTpAvPrevio(0);
           DetAvPrevio.observacao := 'Observacao aviso previo';
         end
         else // cancelamento aviso
         begin
           CancAvPrevio.dtCancAvPrv := Now;
-          CancAvPrevio.mtvCancAvPrevio := tpMtvCancAvPrevio(0);
           CancAvPrevio.observacao := 'Observacao cancelamento aviso previo';
         end;
       end;

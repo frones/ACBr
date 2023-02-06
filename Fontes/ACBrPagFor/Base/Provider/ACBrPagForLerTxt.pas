@@ -90,10 +90,11 @@ var
   iDecimais: Integer;
 begin
   ConteudoCampo := Copy(Trim(Linha), Inicio, Tamanho);
+  ConteudoCampo := Trim(ConteudoCampo);
 
   case Tipo of
     tcStr:
-      result := Trim(ConteudoCampo);
+      result := ConteudoCampo;
 
     tcDat:
       begin

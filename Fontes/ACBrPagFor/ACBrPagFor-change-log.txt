@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/02/2023
+-- ACBrPagForLerTxt --
+[*] Ajustes na leitura de datas em branco
+   Por: Adriano Lucas
+
 30/11/2022
 -- ACBrPagForClass/CNAB240.LerTxtRetorno --
 [*] Ajustes na leitura do Registro 1.

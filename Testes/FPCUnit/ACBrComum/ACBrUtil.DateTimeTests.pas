@@ -121,7 +121,8 @@ type
 
   Iso8601ToDateTimeTest = class(TTestCase)
   published
-    procedure ConverteString_DataEHoraSemMilisegundosSemFuso_Sucesso;
+    procedure ConverteString_DataEHoraSemMilisegundosConsiderandoZonaLocal_Sucesso;
+    procedure ConverteString_DataEHoraSemMilisegundosZonaDiferenteDaLocal_Sucesso;
   end;
 
 
@@ -130,7 +131,67 @@ implementation
 
 uses
   dateutils,
+  {$IFDEF FPC}
+
+  {$ELSE}
+  TimeSpan,
+  {$ENDIF}
   ACBrConsts, ACBrUtil.DateTime;
+
+  // Em teste possivelmente adicionar na ACBrUtil.DateTime depois...
+  // ...No momento não é compatível com Delphi 7
+  function PegaOffsetUTCZonaLocal(): string;
+  {$IFDEF FPC}
+  var
+    Hora, Min: Integer;
+  begin
+    Hora := GetLocalTimeOffset div 60;
+    Min  := GetLocalTimeOffset mod 60;
+
+    if Abs(Hora) < 10 then
+      Result := '0'+ abs(Hora).ToString
+    else
+      Result := abs(Hora).ToString;
+    Result := Result +':';
+    if Abs(min) < 10 then
+      Result := Result+ '0'+ abs(Min).ToString
+    else
+      Result := Result+ abs(Min).ToString;
+
+    if (Min < 0) or (Hora < 0) then
+      Result := '-'+Result
+    else
+      Result := '+'+Result;
+  end;
+  {$ELSE}
+  var
+    ttsp: TTimeSpan;
+    Hora, Min: Integer;
+  begin
+    ttsp := TTimeZone.Local.GetUtcOffset(now);
+    Hora := ttsp.Hours;
+    Min  := ttsp.Minutes;
+
+    if Abs(Hora) < 10 then
+      Result := '0'+ abs(Hora).ToString
+    else
+      Result := abs(Hora).ToString;
+    Result := Result +':';
+    if Abs(min) < 10 then
+      Result := Result+ '0'+ abs(Min).ToString
+    else
+      Result := Result+ abs(Min).ToString;
+
+    if (Min < 0) or (Hora < 0) then
+      Result := '-'+Result
+    else
+      Result := '+'+Result;
+
+  end;
+  {$ENDIF}
+
+
+
 
 { IncWorkingDayTest }
 
@@ -575,14 +636,41 @@ end;
 
 { Iso8601ToDateTimeTest }
 
-procedure Iso8601ToDateTimeTest.ConverteString_DataEHoraSemMilisegundosSemFuso_Sucesso;
+procedure Iso8601ToDateTimeTest.ConverteString_DataEHoraSemMilisegundosConsiderandoZonaLocal_Sucesso;
 var
   UmaDataHora: TDateTime;
   DataEmString: string;
+  zona: string;
 begin
+  zona := PegaOffsetUTCZonaLocal;
   UmaDataHora  := EncodeDate(2017,06,17) + EncodeTime(12,11,10,0);
-  DataEmString := '2017-06-17T12:11:10.000Z';
+  DataEmString := '2017-06-17T12:11:10.000' + zona;
   CheckEquals(UmaDataHora, Iso8601ToDateTime(DataEmString))
+end;
+
+procedure Iso8601ToDateTimeTest.ConverteString_DataEHoraSemMilisegundosZonaDiferenteDaLocal_Sucesso;
+const
+  zona1 = '-01:00';
+  zona2 = '-02:00';
+var
+  UmaDataHora: TDateTime;
+  DataEmString: string;
+  zona, zonalocal: string;
+begin
+  zonalocal := PegaOffsetUTCZonaLocal;
+  //garantir que a zona informada na string é diferente da zona local
+  if zonalocal <> zona1 then
+    zona := zona1
+  else
+    zona := zona2;
+
+  DataEmString := '2017-06-17T12:11:10.000' + zona;
+  UmaDataHora  := EncodeDate(2017,06,17) + EncodeTime(12,11,10,0);
+
+  //Se o fuso é outro o resultado deveria ser diferente também.
+  //... no momento estamos apenas testando que o resultado é diferente.
+  //... Mas o correto seria prever o resultado e comparar.
+  CheckNotEquals(UmaDataHora, Iso8601ToDateTime(DataEmString))
 end;
 
 

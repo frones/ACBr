@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/02/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluído a URL do Link da NFS-e da cidade de Silvania/GO
+   Por: Lucio Bittes
+
 02/02/2023
 -- eGoverneISS.Provider --
 [*] Ficou faltando a leitura de um nó do XML.

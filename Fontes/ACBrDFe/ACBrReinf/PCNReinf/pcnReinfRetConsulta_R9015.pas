@@ -398,7 +398,7 @@ end;
 
 function TRetConsulta_R9015.LerXml: boolean;
 var
-  i, j: Integer;
+  i: Integer;
   Ok: Boolean;
 begin
   Result := True;
@@ -656,8 +656,6 @@ end;
 function TRetConsulta_R9015.SalvarINI: boolean;
 var
   AIni: TMemIniFile;
-  sSecao: String;
-  i, j: Integer;
 begin
   Result := True;
 

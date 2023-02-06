@@ -254,7 +254,7 @@ end;
 
 function TReinfWebService.GerarPrefixoArquivo: String;
 begin
-  Result := 'Reinf';
+  Result := FormatDateTime('yyyymmddhhnnss', Now);
 end;
 
 function TReinfWebService.GerarVersaoDadosSoap: String;

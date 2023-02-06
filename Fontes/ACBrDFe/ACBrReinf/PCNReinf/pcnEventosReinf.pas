@@ -887,7 +887,7 @@ begin
     teR2030: Self.R2030.New.evtAssocDespRec.XML  := AXMLString;
     teR2040: Self.R2040.New.evtAssocDespRep.XML  := AXMLString;
     teR2050: Self.R2050.New.evtComProd.XML       := AXMLString;
-    teR2055: Self.R2055.New.evtAqProd.XML       := AXMLString;
+    teR2055: Self.R2055.New.evtAqProd.XML        := AXMLString;
     teR2060: Self.R2060.New.evtCPRB.XML          := AXMLString;
     teR2070: Self.R2070.New.evtPgtosDivs.XML     := AXMLString;
     teR2098: Self.R2098.New.evtReabreEvPer.XML   := AXMLString;

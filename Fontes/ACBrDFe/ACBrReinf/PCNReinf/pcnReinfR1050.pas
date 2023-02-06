@@ -250,7 +250,7 @@ function TevtTabLig.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
+  sSecao: String;
 begin
   Result := True;
 

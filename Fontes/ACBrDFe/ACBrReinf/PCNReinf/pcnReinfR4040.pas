@@ -432,7 +432,7 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
-  I, I2, I3, I4, I5: Integer;
+  I, I2, I3: Integer;
 begin
   Result := True;
 

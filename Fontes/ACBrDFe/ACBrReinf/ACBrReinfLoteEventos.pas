@@ -212,6 +212,18 @@ begin
   for i := 0 to FEventos.ReinfEventos.R4010.Count - 1 do
     LoadFromString(FEventos.ReinfEventos.R4010[i].evtRetPF.XML);
 
+  {R4020}
+  for i := 0 to FEventos.ReinfEventos.R4020.Count - 1 do
+    LoadFromString(FEventos.ReinfEventos.R4020[i].evtRetPJ.XML);
+
+  {R4040}
+  for i := 0 to FEventos.ReinfEventos.R4040.Count - 1 do
+    LoadFromString(FEventos.ReinfEventos.R4040[i].evtBenefNId.XML);
+
+  {R4080}
+  for i := 0 to FEventos.ReinfEventos.R4080.Count - 1 do
+    LoadFromString(FEventos.ReinfEventos.R4080[i].evtRetRec.XML);
+
   {R4099}
   for i := 0 to FEventos.ReinfEventos.R4099.Count - 1 do
     LoadFromString(FEventos.ReinfEventos.R4099[i].evtFech.XML);

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2023
+[-] TK-3580 ACBrBoletoWS.Rest Certificados não Carregando
+  Por : Victor H Gonzales - Pandaaa
+
+03/02/2023
 [-] TK-3563 Banco do Brasil WS erro no Envelope Soap
  Por : Victor H Gonzales - Pandaaa
 

@@ -137,6 +137,9 @@ end;
 
 procedure TBoletoWSREST.DefinirCertificado;
 begin
+  BoletoWS.ArquivoCRT := Boleto.Configuracoes.WebService.ArquivoCRT;
+  BoletoWS.ArquivoKEY := Boleto.Configuracoes.WebService.ArquivoKEY;
+
   // Adicionando o Certificado
   if NaoEstaVazio(BoletoWS.ArquivoCRT) then
     HTTPSend.Sock.SSL.CertificateFile := BoletoWS.ArquivoCRT;

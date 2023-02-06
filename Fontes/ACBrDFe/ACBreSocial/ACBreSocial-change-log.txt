@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2023
+-- ACBreSocial --
+[*] Remove algumas propertys de versão anterior a Simplificada 1.0
+   Por: Diego F
+
 30/01/2023
 -- pcesS5013 --
 [*] Corrigido retorno para VersaoDF que estava faltando o enumerado ('v_S_01_01_00') veS01_01_00

@@ -156,7 +156,6 @@ type
     FCodIncCP: tpCodIncCP;
     FCodIncIRRF : tpCodIncIRRF;
     FCodIncFGTS : tpCodIncFGTS;
-    FCodIncSIND: tpCodIncSIND;
     FCodIncCPRP: tpCodIncCPRP;
     FTetoRemun: tpSimNaoFacultativo;
     FObservacao: string;
@@ -184,7 +183,6 @@ type
     property codIncCP: tpCodIncCP read FCodIncCP write FCodIncCP;
     property codIncIRRF: tpCodIncIRRF read FCodIncIRRF write FCodIncIRRF;
     property codIncFGTS: tpCodIncFGTS read FCodIncFGTS write FCodIncFGTS;
-    property codIncSIND: tpCodIncSIND read FCodIncSIND write FCodIncSIND;
     property codIncCPRP: tpCodIncCPRP read FCodIncCPRP write FCodIncCPRP;
     property tetoRemun: tpSimNaoFacultativo read FTetoRemun write FTetoRemun;
     property observacao: string read FObservacao write FObservacao;
@@ -318,9 +316,6 @@ begin
     Gerador.wCampo(tcInt, '', 'codIncIRRF', 1,   4, 1, StrToInt(eSCodIncIRRFToStr(InfoRubrica.dadosRubrica.codIncIRRF)));
 
   Gerador.wCampo(tcStr, '', 'codIncFGTS', 2,   2, 1, eSCodIncFGTSToStr(InfoRubrica.dadosRubrica.codIncFGTS));
-
-  if VersaoDF <= ve02_05_00 then
-     Gerador.wCampo(tcStr, '', 'codIncSIND', 2,   2, 1, eSCodIncSINDToStr(InfoRubrica.dadosRubrica.codIncSIND));
 
   if VersaoDF >= veS01_00_00 then
   begin
@@ -499,7 +494,6 @@ begin
           infoRubrica.dadosRubrica.codIncIRRF := eSStrToCodIncIRRF(Ok, INIRec.ReadString(sSecao, 'codIncIRRF', '09'));
 
         infoRubrica.dadosRubrica.codIncFGTS := eSStrToCodIncFGTS(Ok, INIRec.ReadString(sSecao, 'codIncFGTS', '00'));
-        infoRubrica.dadosRubrica.codIncSIND := eSStrToCodIncSIND(Ok, INIRec.ReadString(sSecao, 'codIncSIND', '00'));
         infoRubrica.dadosRubrica.codIncCPRP := eSStrToCodIncCPRP(Ok, INIRec.ReadString(sSecao, 'codIncCPRP', '99'));
         infoRubrica.dadosRubrica.observacao := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
         infoRubrica.dadosRubrica.tetoRemun  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'tetoRemun', EmptyStr));

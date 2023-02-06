@@ -116,7 +116,6 @@ type
 
   TInfoApr = class(TObject)
   private
-    FContApr: tpContApr;
     FNrProcJud: string;
     FContEntEd: tpSimNaoFacultativo;
     FInfoEntEduc: TInfoEntEducCollection;
@@ -124,7 +123,6 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property contApr: tpContApr read FContApr write FContApr;
     property nrProcJud: String read FNrProcJud write FNrProcJud;
     property contEntEd: tpSimNaoFacultativo read FContEntEd write FContEntEd;
     property infoEntEduc: TInfoEntEducCollection read FInfoEntEduc write FInfoEntEduc;
@@ -132,16 +130,13 @@ type
 
   TInfoPCD = class(TObject)
   private
-    FContPCD: tpContPCD;
     FNrProcJud: string;
   public
-    property contPCD: tpContPCD read FContPCD write FContPCD;
     property nrProcJud: string read FNrProcJud write FNrProcJud;
   end;
 
   TInfoTrab = class(TObject)
   private
-    FRegPt: tpRegPt;
     FInfoApr: TInfoApr;
     FInfoPCD: TInfoPCD;
 
@@ -154,7 +149,6 @@ type
     function infoPCDInst(): Boolean;
     function infoAprInst(): Boolean;
 
-    property regPt: tpRegPt read FRegPt write FRegPt;
     property infoApr: TInfoApr read getInfoApr write FInfoApr;
     property infoPCD: TInfoPCD read getInfoPCD write FInfoPCD;
   end;
@@ -339,7 +333,6 @@ begin
   FInfoApr := nil;
   FInfoPCD := nil;
 
-  FRegPt := rpNaoInformado;
 end;
 
 destructor TInfoTrab.Destroy;
@@ -519,10 +512,6 @@ begin
     begin
       Gerador.wGrupo('infoTrab');
 
-      if VersaoDF <= ve02_05_00 then
-        if (infoEstab.DadosEstab.infoTrab.regPt <> rpNaoInformado) then
-          Gerador.wCampo(tcInt, '', 'regPt', 1, 1, 1, eStpRegPtToStr(infoEstab.DadosEstab.infoTrab.regPt));
-
       GerarInfoApr;
       GerarInfoPCD;
 
@@ -540,8 +529,6 @@ begin
     begin
       Gerador.wGrupo('infoPCD');
 
-      if VersaoDF <= ve02_05_00 then
-        Gerador.wCampo(tcInt, '', 'contPCD',   1,  1, 1, eSTpContPCDToStr(infoEstab.DadosEstab.infoTrab.infoPCD.contPCD));
       Gerador.wCampo(tcStr, '', 'nrProcJud', 0, 20, 0, infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud);
 
       Gerador.wGrupo('/infoPCD');
@@ -559,15 +546,8 @@ begin
     begin
       Gerador.wGrupo('infoApr');
 
-      if VersaoDF <= ve02_05_00 then
-        Gerador.wCampo(tcStr, '', 'contApr',   1,  1, 1, eStpContAprToStr(infoEstab.DadosEstab.infoTrab.infoApr.contApr));
-
       if (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') then
         Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
-
-      if VersaoDF <= ve02_05_00 then
-        if infoEstab.DadosEstab.infoTrab.infoApr.contApr <> caDispensado then
-          Gerador.wCampo(tcStr, '', 'contEntEd', 0, 1, 0, eSSimNaoFacultativoToStr(infoEstab.DadosEstab.infoTrab.infoApr.contEntEd));
 
       GerarInfoEntEduc;
 
@@ -712,13 +692,8 @@ begin
         if INIRec.ReadString(sSecao, 'indSubstPatrObra', '') <> '' then
           infoEstab.DadosEstab.InfoObra.indSubstPatrObra := eSStrToIndSubstPatronalObra(Ok, INIRec.ReadString(sSecao, 'indSubstPatrObra', '1'));
 
-        sSecao := 'infoTrab';
-        infoEstab.DadosEstab.infoTrab.regPt := eSStrToTpRegPt(Ok, INIRec.ReadString(sSecao, 'regPt', '0'));
-
         sSecao := 'infoApr';
-        infoEstab.DadosEstab.infoTrab.infoApr.contApr   := eSStrToTpContApr(Ok, INIRec.ReadString(sSecao, 'contApr', '0'));
         infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
-        infoEstab.DadosEstab.infoTrab.infoApr.contEntEd := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'contEntEd', 'S'));
 
         I := 1;
         while true do
@@ -739,11 +714,7 @@ begin
         end;
 
         sSecao := 'infoPCD';
-        if INIRec.ReadString(sSecao, 'contPCD', '') <> '' then
-        begin
-          infoEstab.DadosEstab.infoTrab.infoPCD.contPCD   := eSStrToTpContPCD(Ok, INIRec.ReadString(sSecao, 'contPCD', '0'));
-          infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
-        end;
+        infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
 
         if ModoLancamento = mlAlteracao then
         begin

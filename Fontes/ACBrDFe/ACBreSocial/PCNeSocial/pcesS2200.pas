@@ -339,6 +339,13 @@ begin
         trabalhador.TrabEstrangeiro.FilhosBr         := INIRec.ReadString(sSecao, 'filhosBr', 'S');
       end;
 
+      sSecao := 'trabImig';
+      if INIRec.ReadString(sSecao, 'condIng', '0') <> '0' then
+      begin
+        trabalhador.trabImig.tmpResid := StrTotpTmpResid(OK, INIRec.ReadString(sSecao, 'tmpResid', '0'));
+        trabalhador.trabImig.condIng  := StrTotpCondIng(OK, INIRec.ReadString(sSecao, 'condIng', '0'));
+      end;
+
       sSecao := 'infoDeficiencia';
       if INIRec.ReadString(sSecao, 'defFisica', '') <> '' then
       begin
@@ -419,7 +426,6 @@ begin
       begin
         vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.hipLeg      := INIRec.ReadInteger(sSecao, 'hipLeg', 1);
         vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr   := INIRec.ReadString(sSecao, 'justContr', '');
-        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.tpinclContr := eSStrToTpInclContr(Ok, INIRec.ReadString(sSecao, 'tpinclContr', ''));
 
         sSecao := 'ideTomadorServ';
         vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));

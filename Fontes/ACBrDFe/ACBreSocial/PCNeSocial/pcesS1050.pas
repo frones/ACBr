@@ -95,7 +95,6 @@ type
 
     {Geradores específicos da classe}
     procedure GerarDadosHorContratual;
-    procedure GerarHorarioIntervalo;
     procedure GerarIdeHorContratual;
   public
     constructor Create(AACBreSocial: TObject); override;
@@ -294,37 +293,8 @@ begin
   Gerador.wCampo(tcStr, '', 'durJornada',     1, 4, 1, self.InfoHorContratual.dadosHorContratual.durJornada);
   Gerador.wCampo(tcStr, '', 'perHorFlexivel', 1, 1, 1, eSSimNaoToStr(self.InfoHorContratual.dadosHorContratual.perHorFlexivel));
 
-  GerarHorarioIntervalo;
 
   Gerador.wGrupo('/dadosHorContratual');
-end;
-
-
-procedure TEvtTabHorTur.GerarHorarioIntervalo;
-var
-  i: Integer;
-  objHorarioIntervalo: THorarioIntervaloCollectionItem;
-begin
-  for i := 0 to InfoHorContratual.dadosHorContratual.horarioIntervalo.Count - 1 do
-  begin
-    objHorarioIntervalo := InfoHorContratual.dadosHorContratual.horarioIntervalo.Items[i];
-
-    Gerador.wGrupo('horarioIntervalo');
-
-    Gerador.wCampo(tcStr, '', 'tpInterv',  1, 1, 1, eSTpIntervaloToStr(objHorarioIntervalo.tpInterv));
-    Gerador.wCampo(tcStr, '', 'durInterv', 1, 3, 1, objHorarioIntervalo.durInterv);
-
-    if (objHorarioIntervalo.tpInterv = tinHorarioFixo) then
-    begin
-      Gerador.wCampo(tcStr, '', 'iniInterv',  4, 4, 1, objHorarioIntervalo.iniInterv);
-      Gerador.wCampo(tcStr, '', 'termInterv', 4, 4, 1, objHorarioIntervalo.termInterv);
-    end;
-
-    Gerador.wGrupo('/horarioIntervalo');
-  end;
-
-  if InfoHorContratual.dadosHorContratual.horarioIntervalo.Count > 99 then
-    Gerador.wAlerta('', 'horarioIntervalo', 'Lista de Horário de Intervalo', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtTabHorTur.GerarIdeHorContratual;
@@ -425,27 +395,6 @@ begin
         infoHorContratual.dadosHorContratual.hrSaida        := INIRec.ReadString(sSecao, 'hrSaida', EmptyStr);
         infoHorContratual.dadosHorContratual.durJornada     := INIRec.ReadInteger(sSecao, 'durJornada', 0);
         infoHorContratual.dadosHorContratual.perHorFlexivel := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'perHorFlexivel', 'S'));
-
-        I := 1;
-        while true do
-        begin
-          // de 01 até 99
-          sSecao := 'horarioIntervalo' + IntToStrZero(I, 2);
-          sFim   := INIRec.ReadString(sSecao, 'tpInterv', 'FIM');
-
-          if (sFim = 'FIM') or (Length(sFim) <= 0) then
-            break;
-
-          with infoHorContratual.dadosHorContratual.horarioIntervalo.New do
-          begin
-            tpInterv   := eSStrToTpIntervalo(Ok, sFim);
-            durInterv  := INIRec.ReadInteger(sSecao, 'durInterv', 0);
-            iniInterv  := INIRec.ReadString(sSecao, 'iniInterv', '');
-            termInterv := INIRec.ReadString(sSecao, 'termInterv', '');
-          end;
-
-          Inc(I);
-        end;
 
         if ModoLancamento = mlAlteracao then
         begin

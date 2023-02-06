@@ -250,7 +250,6 @@ type
 
   TInfoComplemDedCollectionItem = class(TObject)
   private
-    FindTpDeducao: tpIndTpDedu;
     FpenAlim: TPenAlimCollection;
     FprevidCompl: TPrevidComplCollection;
 
@@ -263,7 +262,6 @@ type
     function instPenAlim(): boolean;
     function instPrevidCompl(): boolean;
 
-    property indTpDeducao: tpIndTpDedu read FindTpDeducao write FindTpDeducao;
     property penAlim: TPenAlimCollection read getPenAlim write FpenAlim;
     property previdCompl: TPrevidComplCollection read getPrevidCompl write FprevidCompl;
   end;
@@ -1179,8 +1177,6 @@ begin
   for i := 0 to obj.Count - 1 do
   begin
     Gerador.wGrupo('infoComplemDed');
-
-    Gerador.wCampo(tcStr, '', 'indTpDeducao', 1, 2, 1, eStpIndTpDeduToStr(obj.Items[i].indTpDeducao));
 
     if obj.Items[i].instPenAlim() then
       GerarPenAlim(obj.Items[i].penAlim);

@@ -980,10 +980,6 @@ begin
     Gerador.wCampo(tcStr, '', 'justContr',   1, 999, 1, pTrabTemporario.justContr);
 
     if VersaoDF <= ve02_05_00 then
-      if (pTrabTemporario.tpinclContr <> icNenhum) then
-        Gerador.wCampo(tcInt, '', 'tpInclContr', 1,   1, 1, eSTpInclContrToStr(pTrabTemporario.tpinclContr));
-
-    if VersaoDF <= ve02_05_00 then
       GerarIdeTomadorServ(pTrabTemporario.ideTomadorServ)
     else
       GerarIdeEstabVinc(pTrabTemporario.ideEstabVinc);

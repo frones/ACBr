@@ -116,12 +116,10 @@ type
     FDSCCarreira: string;
     FLeiCarr: string;
     FDTLeiCarr: TDate;
-    FSitCarr: tpSitCarr;
   public
     property dscCarreira: string read FDSCCarreira write FDSCCarreira;
     property leiCarr: string read FLeiCarr write FLeiCarr;
     property dtLeiCarr: TDate read FDTLeiCarr write FDTLeiCarr;
-    property sitCarr: tpSitCarr read FSitCarr write FSitCarr;
   end;
 
   TIdeCarreira = class(TObject)
@@ -260,7 +258,6 @@ begin
   Gerador.wCampo(tcStr, '', 'dscCarreira',  1, 100, 1, InfoCarreira.dadosCarreira.dscCarreira);
   Gerador.wCampo(tcStr, '', 'leiCarr',      1,  12, 0, InfoCarreira.dadosCarreira.leiCarr);
   Gerador.wCampo(tcDat, '', 'dtLeiCarr',   10,  10, 1, InfoCarreira.dadosCarreira.dtLeiCarr);
-  Gerador.wCampo(tcInt, '', 'sitCarr',      1,   1, 1, eStpSitCarrToStr(InfoCarreira.dadosCarreira.sitCarr));
 
   Gerador.wGrupo('/dadosCarreira');
 end;
@@ -361,7 +358,6 @@ begin
         infoCarreira.dadosCarreira.dscCarreira := INIRec.ReadString(sSecao, 'dscCarreira', EmptyStr);
         infoCarreira.dadosCarreira.leiCarr     := INIRec.ReadString(sSecao, 'leiCarr', EmptyStr);
         infoCarreira.dadosCarreira.dtleiCarr   := StringToDateTime(INIRec.ReadString(sSecao, 'dtleiCarr', '0'));
-        infoCarreira.dadosCarreira.sitCarr     := eSStrToSitCarr(Ok, INIRec.ReadString(sSecao, 'sitCarr', '1'));
 
         if ModoLancamento = mlAlteracao then
         begin

@@ -123,12 +123,10 @@ type
   private
     FdtAvPrv: TDateTime;
     FdtPrevDeslig: TDateTime;
-    FtpAvPrevio: tpTpAvPrevio;
     Fobservacao: string;
   public
     property dtAvPrv: TDateTime read FdtAvPrv write FdtAvPrv;
     property dtPrevDeslig: TDateTime read FdtPrevDeslig write FdtPrevDeslig;
-    property tpAvPrevio: tpTpAvPrevio read FtpAvPrevio write FtpAvPrevio;
     property observacao: string read Fobservacao write Fobservacao;
   end;
 
@@ -136,11 +134,9 @@ type
   private
     FdtCancAvPrv: TDateTime;
     Fobservacao: string;
-    FmtvCancAvPrevio: tpMtvCancAvPrevio;
   public
     property dtCancAvPrv: TDateTime read FdtCancAvPrv write FdtCancAvPrv;
     property observacao: string read Fobservacao write Fobservacao;
-    property mtvCancAvPrevio: tpMtvCancAvPrevio read FmtvCancAvPrevio write FmtvCancAvPrevio;
   end;
 
 implementation
@@ -237,7 +233,6 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtCancAvPrv',     10,  10, 1, self.InfoAvPrevio.CancAvPrevio.dtCancAvPrv);
   Gerador.wCampo(tcStr, '', 'observacao',       1, 255, 0, self.InfoAvPrevio.CancAvPrevio.observacao);
-  Gerador.wCampo(tcStr, '', 'mtvCancAvPrevio',  1,   1, 1, eSMtvCancAvPrevioToStr(self.InfoAvPrevio.CancAvPrevio.mtvCancAvPrevio));
 
   Gerador.wGrupo('/cancAvPrevio');
 end;
@@ -248,7 +243,6 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtAvPrv',      10,  10, 1, self.InfoAvPrevio.DetAvPrevio.dtAvPrv);
   Gerador.wCampo(tcDat, '', 'dtPrevDeslig', 10,  10, 1, self.InfoAvPrevio.DetAvPrevio.dtPrevDeslig);
-  Gerador.wCampo(tcStr, '', 'tpAvPrevio',    1,   1, 1, eSTpAvPrevioToStr(self.InfoAvPrevio.DetAvPrevio.tpAvPrevio));
   Gerador.wCampo(tcStr, '', 'observacao',    1, 255, 0, self.InfoAvPrevio.DetAvPrevio.observacao);
 
   Gerador.wGrupo('/detAvPrevio');
@@ -337,7 +331,6 @@ begin
       begin
         InfoAvPrevio.detAvPrevio.dtAvPrv      := StringToDateTime(INIRec.ReadString(sSecao, 'dtAvPrv', '0'));
         InfoAvPrevio.detAvPrevio.dtPrevDeslig := StringToDateTime(INIRec.ReadString(sSecao, 'dtPrevDeslig', '0'));
-        InfoAvPrevio.DetAvPrevio.tpAvPrevio   := eSStrToTpAvPrevio(Ok, INIRec.ReadString(sSecao, 'tpAvPrevio', '1'));
         InfoAvPrevio.DetAvPrevio.observacao   := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
       end;
 
@@ -346,7 +339,6 @@ begin
       begin
         InfoAvPrevio.cancAvPrevio.dtCancAvPrv     := StringToDateTime(INIRec.ReadString(sSecao, 'dtCancAvPrv', '0'));
         InfoAvPrevio.cancAvPrevio.observacao      := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
-        InfoAvPrevio.cancAvPrevio.mtvCancAvPrevio := eSStrToMtvCancAvPrevio(Ok, INIRec.ReadString(sSecao, 'mtvCancAvPrevio', '1'));
       end;
     end;
 

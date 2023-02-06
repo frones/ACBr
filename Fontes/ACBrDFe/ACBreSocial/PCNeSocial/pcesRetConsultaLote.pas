@@ -463,7 +463,6 @@ begin
                       while Leitor.rExtrai(10, 'horarioIntervalo', '', k + 1) <> '' do
                       begin
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.New;
-                        RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].tpInterv   := eSStrToTpIntervalo(ok, FLeitor.rCampo(tcStr, 'tpInterv'));
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].durInterv  := FLeitor.rCampo(tcInt, 'durInterv');
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].iniInterv  := FLeitor.rCampo(tcStr, 'iniInterv');
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].termInterv := FLeitor.rCampo(tcStr, 'termInterv');

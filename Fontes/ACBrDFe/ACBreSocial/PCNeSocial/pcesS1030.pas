@@ -171,11 +171,9 @@ type
   private
     FNrLei: string;
     FDtLei: TDate;
-    FSitCargo: tpSitCargo;
   public
     property nrLei: string read FNrLei write FNrLei;
     property dtLei: TDate read FDtLei write FDtLei;
-    property sitCargo: tpSitCargo read FSitCargo write FSitCargo;
   end;
 
   TCargoPublico = class(TObject)
@@ -349,7 +347,6 @@ begin
 
   Gerador.wCampo(tcStr, '', 'nrLei',     1, 12, 1, infoCargo.DadosCargo.cargoPublico.leiCargo.nrLei);
   Gerador.wCampo(tcDat, '', 'dtLei',    10, 10, 1, infoCargo.DadosCargo.cargoPublico.leiCargo.dtLei);
-  Gerador.wCampo(tcStr, '', 'sitCargo',  1,  1, 1, eStpSitCargoToStr(infoCargo.DadosCargo.cargoPublico.leiCargo.sitCargo));
 
   Gerador.wGrupo('/leiCargo');
 end;
@@ -449,7 +446,6 @@ begin
           sSecao := 'leiCargo';
           infoCargo.dadosCargo.cargoPublico.leiCargo.nrLei    := INIRec.ReadString(sSecao, 'nrLei', '');
           infoCargo.dadosCargo.cargoPublico.leiCargo.dtLei    := StringToDateTime(INIRec.ReadString(sSecao, 'dtLei', '0'));
-          infoCargo.dadosCargo.cargoPublico.leiCargo.sitCargo := eSStrToSitCargo(Ok, INIRec.ReadString(sSecao, 'sitCargo', '1'));
         end;
 
         if ModoLancamento = mlAlteracao then

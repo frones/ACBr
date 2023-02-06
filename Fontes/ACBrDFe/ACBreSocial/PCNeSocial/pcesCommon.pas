@@ -545,12 +545,10 @@ type
 
   THorarioIntervaloCollectionItem = class(TObject)
   private
-    FTpInterv : tpTpIntervalo;
     FDurInterv: integer;
     FIniInterv: string;
     FTermInterv : string;
   public
-    property tpInterv: tpTpIntervalo read FTpInterv write FTpInterv;
     property durInterv: integer read FDurInterv write FDurInterv;
     property iniInterv: string read FIniInterv write FIniInterv;
     property termInterv: string read FTermInterv write FTermInterv;
@@ -1064,7 +1062,6 @@ type
   private
     FHipLeg: integer;
     FJustContr: string;
-    FTpInclContr: tpInclContr;
     FJustProrr: string;
     FIdeEstabVinc: TIdeEstabVinc;
     FIdeTomadorServ: TIdeTomadorServ;
@@ -1075,7 +1072,6 @@ type
 
     property hipLeg: integer read FHipLeg write FHipLeg;
     property justContr: string read FJustContr write FJustContr;
-    property tpinclContr: tpinclContr read FTpInclContr write FTpInclContr;
     property justProrr: string read FJustProrr write FJustProrr;
     property IdeTomadorServ: TIdeTomadorServ read FIdeTomadorServ write FIdeTomadorServ;
     property IdeTrabSubstituido: TIdeTrabSubstituidoCollection read FIdeTrabSubstituido write FIdeTrabSubstituido;

@@ -74,7 +74,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="5">
       <Unit0>
         <Filename Value="ACBreSocialTestCases.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -83,6 +83,18 @@
         <Filename Value="ACBreSocialTests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="ACBreSocialSoapTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="ACBreSocialEventosIniciaisTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="ACBreSocialEventosTabelasTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

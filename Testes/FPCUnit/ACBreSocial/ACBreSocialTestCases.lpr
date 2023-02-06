@@ -4,7 +4,9 @@ program ACBreSocialTestCases;
 
 uses
   Interfaces, Forms, GuiTestRunner, fpcunittestrunner, ACBreSocialTests, 
-ACBreSocialEventosNaoPeriodicosTests, ACBreSocialEventosPeriodicosTests;
+ACBreSocialEventosNaoPeriodicosTests, ACBreSocialEventosPeriodicosTests, 
+ACBreSocialSoapTests, ACBreSocialEventosIniciaisTests, 
+ACBreSocialEventosTabelasTests;
 
 {$R *.res}
 

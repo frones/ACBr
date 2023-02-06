@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, ACBrTests.Util, pcesConversaoeSocial, ACBreSocialTestsConsts,
-  ACBreSocialEventosNaoPeriodicosTests, ACBreSocialEventosPeriodicosTests;
+  ACBreSocialEventosNaoPeriodicosTests, ACBreSocialEventosPeriodicosTests,
+  ACBreSocialEventosIniciaisTests, ACBreSocialEventosTabelasTests,ACBreSocialSoapTests;
 
 type
 
@@ -124,12 +125,8 @@ type
       procedure eSStrToCodIncCPRT_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSCodIncFGTSToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrToCodIncFGTS_ConvertendoTodosTipos_RetornoCorreto;
-      procedure eSCodIncSINDToStr_ConvertendoTodosTipos_RetornoCorreto;
-      procedure eSStrToCodIncSIND_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSExtDecisaoToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrToExtDecisao_ConvertendoTodosTipos_RetornoCorreto;
-      procedure eSTpIntervaloToStr_ConvertendoTodosTipos_RetornoCorreto;
-      procedure eSStrToTpIntervalo_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSIndSubstPatronalObraToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrToIndSubstPatronalObra_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSindAutoriaToStr_ConvertendoTodosTipos_RetornoCorreto;
@@ -158,6 +155,47 @@ type
       procedure eSIdeOCToStrEX_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrToIdeOCEx_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrToIdeOCEX_ConvertendoStringinvalida_RetornoException;
+      procedure eSTpProcRRAToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpProcRRA_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eStpTpProcRetToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrTotpTpProcRet_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSTpInscAdvogadoToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpInscAdvogado_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSIndIncidenciaToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToIndIncidencia_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSIndAbrangenciaToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToIndAbrangencia_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSIndComercializacaoToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToIndComercializacao_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSTpRubrToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpRubr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSAcumCargoToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToAcumCargo_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSContagemEspToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToContagemEsp_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eStpUtilizEPCToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrTotpUtilizEPC_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eStpUtilizEPIToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrTotpUtilizEPI_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSLocalAmbToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToLocalAmb_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSTpAcConvToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpAcConv_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSCnhToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToCnh_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSClassTrabEstrangToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToClassTrabEstrang_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eStpDepToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrTotpDep_ConvertentoTodosTipos_RetornoCorreto;
+      procedure eSTpRegTrabToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpRegTrab_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSTpRelDepToStr_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpRelDep_ConvertendoTodosTipos_RetornoCorreto;
+
+
+
+
+
 
 
 
@@ -817,30 +855,6 @@ begin
   Fail('Ainda falta implementar o teste');
 end;
 
-procedure TACBreSocialTipoToStrStrToTipoTest.eSCodIncSINDToStr_ConvertendoTodosTipos_RetornoCorreto;
-var
-  EhIgual, OK: Boolean;
-  vElementoEnum: TpCodIncSIND;
-  ConvertidoParaString: String;
-  ReconvertidoParaElementoEnum: TpCodIncSIND;
-begin
-  for vElementoEnum := Low(TpCodIncSIND) to High(TpCodIncSIND)do
-  begin
-    ConvertidoParaString         := eSCodIncSINDToStr(vElementoEnum);
-    ReconvertidoParaElementoEnum := eSStrToCodIncSIND(OK, ConvertidoParaString);
-    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
-    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum),ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
-                       'eSCodIncSINDToStr => ' + ConvertidoParaString +'  '+
-                       'eSStrToCodIncSIND => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
-             );
-  end;
-end;
-
-procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToCodIncSIND_ConvertendoTodosTipos_RetornoCorreto;
-begin
-  Fail('Ainda falta implementar o teste');
-end;
-
 procedure TACBreSocialTipoToStrStrToTipoTest.eSExtDecisaoToStr_ConvertendoTodosTipos_RetornoCorreto;
 var
   vElementoEnum: TpExtDecisao;
@@ -861,30 +875,6 @@ begin
 end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToExtDecisao_ConvertendoTodosTipos_RetornoCorreto;
-begin
-  Fail('Ainda falta implementar o teste');
-end;
-
-procedure TACBreSocialTipoToStrStrToTipoTest.eSTpIntervaloToStr_ConvertendoTodosTipos_RetornoCorreto;
-var
-  EhIgual, OK: Boolean;
-  vElementoEnum: TpTpIntervalo;
-  ConvertidoParaString: String;
-  ReconvertidoParaElementoEnum: TpTpIntervalo;
-begin
-  for vElementoEnum := Low(TpTpIntervalo) to High(TpTpIntervalo)do
-  begin
-    ConvertidoParaString := eSTpIntervaloToStr(vElementoEnum);
-    ReconvertidoParaElementoEnum := eSStrToTpIntervalo(OK, ConvertidoParaString);
-    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
-    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
-                       'eSTpIntervaloToStr => ' + ConvertidoParaString + '  ' +
-                       'eSStrToTpIntervalo => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
-             );
-  end;
-end;
-
-procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpIntervalo_ConvertendoTodosTipos_RetornoCorreto;
 begin
   Fail('Ainda falta implementar o teste');
 end;
@@ -1273,6 +1263,458 @@ begin
   Fail('Não foi gerada Exception para a string inválida');
 end;
 
+procedure TACBreSocialTipoToStrStrToTipoTest.eSTpProcRRAToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum : TpTpProcRRA;
+  ConvertidoParaString: string;
+  EhIgual: boolean;
+  OK: boolean;
+  ReconvertidoParaElementoEnum: TpTpProcRRA;
+begin
+  for vElementoEnum := Low(TpTpProcRRA) to High(TpTpProcRRA)do
+  begin
+    ConvertidoParaString := eSTpProcRRAToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToTpProcRRA(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSTpProcRRAToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrToTpProcRRA => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpProcRRA_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eStpTpProcRetToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpTpProcRet;
+  EhIgual: boolean;
+  ConvertidoParaString: string;
+  OK: boolean;
+  ReconvertidoParaElementoEnum: tpTpProcRet;
+begin
+  for vElementoEnum := Low(tpTpProcRet) to High(tpTpProcRet)do
+  begin
+    ConvertidoParaString         := eStpTpProcRetToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrTotpTpProcRet(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eStpTpProcRetToStr => ' + ConvertidoParaString + '  '+
+                       'eSStrTotpTpProcRet => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrTotpTpProcRet_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSTpInscAdvogadoToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: TpTpInscAdvogado;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: String;
+  ReconvertidoParaElementoEnum: TpTpInscAdvogado;
+begin
+  for vElementoEnum := Low(TpTpInscAdvogado) to High(TpTpInscAdvogado)do
+  begin
+    ConvertidoParaString         := eSTpInscAdvogadoToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToTpInscAdvogado(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+ '  '+
+                       'eSTpInscAdvogadoToStr => '+ ConvertidoParaString +'  '+
+                       'eSStrToTpInscAdvogado => '+ GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpInscAdvogado_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSIndIncidenciaToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: TpIndIncidencia;
+  OK: boolean;
+  EhIgual: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: TpIndIncidencia;
+begin
+  for vElementoEnum := Low(TpIndIncidencia) to High(TpIndIncidencia)do
+  begin
+    ConvertidoParaString         := eSIndIncidenciaToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToIndIncidencia(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSIndIncidenciaToStr => ' + ConvertidoParaString + '  ' +
+                       'eSStrToIndIncidencia => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToIndIncidencia_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSIndAbrangenciaToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: TpIndAbrangencia;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: TpIndAbrangencia;
+begin
+  for vElementoEnum := Low(TpIndAbrangencia) to High(TpIndAbrangencia)do
+  begin
+    ConvertidoParaString         := eSIndAbrangenciaToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToIndAbrangencia(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSIndAbrangenciaToStr => ' + ConvertidoParaString +
+                       'eSStrToIndAbrangencia => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToIndAbrangencia_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSIndComercializacaoToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: TpIndComercializacao;
+  EhIgual: boolean;
+  OK: boolean;
+  ReconvertidoParaElementoEnum: TpIndComercializacao;
+  ConvertidoParaString: String;
+begin
+  for vElementoEnum := Low(TpIndComercializacao) to High(TpIndComercializacao)do
+  begin
+    ConvertidoParaString         := eSIndComercializacaoToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToIndComercializacao(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversao no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSIndComercializacaoToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrToIndComercializacao => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToIndComercializacao_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSTpRubrToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpTpRubr;
+  EhIgual: boolean;
+  OK: boolean;
+  ReconvertidoParaElementoEnum: tpTpRubr;
+  ConvertidoParaString: String;
+begin
+  for vElementoEnum := Low(tpTpRubr) to High(tpTpRubr)do
+  begin
+    ConvertidoParaString         := eSTpRubrToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToTpRubr(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSTpRubrToStr => ' + ConvertidoParaString +
+                       'eSStrToTpRubr => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpRubr_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSAcumCargoToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpAcumCargo;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: String;
+  ReconvertidoParaElementoEnum: tpAcumCargo;
+begin
+  for vElementoEnum := Low(tpAcumCargo) to High(tpAcumCargo)do
+  begin
+    ConvertidoParaString         := eSAcumCargoToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToAcumCargo(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+ IntToStr(ord(vElementoEnum))+'  '+
+                       'eSAcumCargoToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrToAcumCargo => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToAcumCargo_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste!');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSContagemEspToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpContagemEsp;
+  ConvertidoParaString: string;
+  EhIgual: boolean;
+  OK: boolean;
+  ReconvertidoParaElementoEnum: tpContagemEsp;
+begin
+  for vElementoEnum := Low(tpContagemEsp) to High(tpContagemEsp)do
+  begin
+    ConvertidoParaString         := eSContagemEspToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToContagemEsp(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSContagemEspToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrToContagemEsp => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToContagemEsp_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar os testes');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eStpUtilizEPCToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpUtilizEPC;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpUtilizEPC;
+begin
+  for vElementoEnum := Low(tpUtilizEPC) to High(tpUtilizEPC)do
+  begin
+    ConvertidoParaString         := eStpUtilizEPCToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrTotpUtilizEPC(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eStpUtilizEPCToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrTotpUtilizEPC => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrTotpUtilizEPC_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eStpUtilizEPIToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpUtilizEPI;
+  OK: boolean;
+  EhIgual: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpUtilizEPI;
+begin
+  for vElementoEnum := Low(tpUtilizEPI) to High(tpUtilizEPI)do
+  begin
+    ConvertidoParaString         := eStpUtilizEPIToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrTotpUtilizEPI(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum),ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eStpUtilizEPIToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrTotpUtilizEPI => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrTotpUtilizEPI_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSLocalAmbToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpLocalAmb;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpLocalAmb;
+begin
+  for vElementoEnum := Low(tpLocalAmb) to High(tpLocalAmb)do
+  begin
+    ConvertidoParaString         := eSLocalAmbToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToLocalAmb(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSLocalAmbToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrToLocalAmb => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToLocalAmb_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSTpAcConvToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpTpAcConv;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpTpAcConv;
+begin
+  for vElementoEnum := Low(tpTpAcConv) to High(tpTpAcConv)do
+  begin
+    ConvertidoParaString         := eSTpAcConvToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToTpAcConv(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSTpAcConvToStr => ' + ConvertidoParaString + '  '+
+                       'eSStrToTpAcConv => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpAcConv_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSCnhToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpCnh;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpCnh;
+begin
+  for vElementoEnum := Low(tpCnh) to High(tpCnh)do
+  begin
+    ConvertidoParaString         := eSCnhToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToCnh(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSCnhToStr => ' + ConvertidoParaString + '  '+
+                       'eSStrToCnh => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToCnh_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSClassTrabEstrangToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpClassTrabEstrang;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpClassTrabEstrang;
+begin
+  for vElementoEnum := Low(tpClassTrabEstrang) to High(tpClassTrabEstrang)do
+  begin
+    ConvertidoParaString         := eSClassTrabEstrangToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToClassTrabEstrang(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSClassTrabEstrangToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrToClassTrabEstrang => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToClassTrabEstrang_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eStpDepToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpTpDep;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpTpDep;
+begin
+  for vElementoEnum := Low(tpTpDep) to High(tpTpDep)do
+  begin
+    ConvertidoParaString         := eStpDepToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrTotpDep(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eStpDepToStr => ' + ConvertidoParaString + '  '+
+                       'eSStrTotpDep => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrTotpDep_ConvertentoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSTpRegTrabToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpTpRegTrab;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpTpRegTrab;
+begin
+  for vElementoEnum := Low(tpTpRegTrab) to High(tpTpRegTrab)do
+  begin
+    ConvertidoParaString         := eSTpRegTrabToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToTpRegTrab(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eSTpRegTrabToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrToTpRegTrab => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpRegTrab_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSTpRelDepToStr_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpRelDep;
+  EhIgual: boolean;
+  OK: boolean;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpRelDep;
+begin
+  for vElementoEnum := Low(tpRelDep) to High(tpRelDep)do
+  begin
+    ConvertidoParaString         := eStpRelDepToStr(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToTpRelDep(OK, ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual and OK, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eStpRelDepToStr => ' + ConvertidoParaString +'  '+
+                       'eSStrTotpRelDep => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpRelDep_ConvertendoTodosTipos_RetornoCorreto;
+begin
+  Fail('Ainda precisa implementar o teste');
+end;
+
 { TACBreSocialConversaoeSocialTest }
 
 procedure TACBreSocialConversaoeSocialTest.SetUp;
@@ -1290,126 +1732,126 @@ end;
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1000;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1000);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1000);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1000, 'Não encontrou o Evento S-1000');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1005;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1005);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1005);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1005, 'Não encontrou o Evento S-1005');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1010;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1010);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1010);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1010, 'Não encontrou o Evento S-1010');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1020;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_s0100_S1020);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1020);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1020, 'Não encontrou o Evento S-1020');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1030;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1030);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1030);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1030, 'Não encontrou o Evento S-1030');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1035;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1035);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1035);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1035, 'Não encontrou o Evento S-1035');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1040;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1040);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1040);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1040, 'Não encontrou o Evento S-1040');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1050;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1050);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1050);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1050, 'Não encontrou o Evento S-1050');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1060;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1060);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1060);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1060, 'Não encontrou o Evento S-1060');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1070;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1070);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1070);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1070, 'Não encontrou o Evento S-1070');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1080;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1080);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1080);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1080, 'Não encontrou o Evento S-1080');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2190;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2190);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2190);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2190, 'Não encontrou o Evento S-2190');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2200;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2200);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2200);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2200, 'Não encontrei o Evento S-2200');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2205;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2205);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2205);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2205, 'Não encontrei o Evento S-2205');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2206;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2206);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2206);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2206, 'Não encontrei o Evento S-2206');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2210;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2210);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2210);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2210, 'Não encontrei o Evento S-2210');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2220;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2220);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2220);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2220, 'Não encontrei o Evento S-2220');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2221;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2221);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2221);
 //  Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2221, 'Não encontrei o Evento S-2221');
   Check(True,'S-2221 VERIFICAR!');
 end;
@@ -1417,7 +1859,7 @@ end;
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2230;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2230);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2230);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2230, 'Não encontrei o Evento S-2230');
 end;
 
@@ -1430,70 +1872,70 @@ end;
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2240;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2240);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2240);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2240, 'Não encontrei o Evento S-2240');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2245;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2245);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2245);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS2245, 'Não encontrei o Evento S-2245');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2250;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2250);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2250);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS2250, 'Não encontrei o Evento S-2250');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2260;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2260);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2260);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS2260, 'Não encontrei o Evento S-2260');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2298;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2298);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2298);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2298, 'Não encontrei o Evento S-2298');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2299;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2299);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2299);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2299, 'Não encontrei o Evento S-2299');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2300;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2300);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2300);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2300, 'Não encontrei o Evento S-2300');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2306;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2306);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2306);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2306, 'Não encontrei o Evento S-2306');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2399;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2399);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2399);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2399, 'Não encontrei o Evento S-2399');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS2400;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S2400);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S2400);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS2400, 'Não encontrei o Evento S-2400');
 end;
 
@@ -1530,91 +1972,91 @@ end;
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS3000;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S3000);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S3000);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS3000, 'Não encontrei o Evento S-3000');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1200;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1200);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1200);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1200, 'Não encontrei o Evento S-1200');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1202;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1202);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1202);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1202, 'Não encontrei o Evento S-1202');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1207;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1207);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1207);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1207, 'Não encontrei o Evento S-1207');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1210;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1210);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1210);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1210, 'Não encontrei o Evento S-1210');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1250;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1250);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1250);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1250, 'Não encontrei o Evento S-1250');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1260;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1260);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1260);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1260, 'Não encontrei o Evento S-1260');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1270;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1270);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1270);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1270, 'Não encontrei o Evento S-1270');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1280;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1280);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1280);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1280, 'Não encontrei o Evento S-1280');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1295;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1295);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1295);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1295, 'Não encontrei o Evento S-1295');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1298;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1298);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1298);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1298, 'Não encontrei o Evento S-1298');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1299;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1299);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1299);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, veS01_00_00) = teS1299, 'Não encontrei o Evento S-1299');
 end;
 
 procedure TACBreSocialConversaoeSocialTest.ConversaoeSocial_StringINIToTipoEvento_RetornaS1300;
 begin
   FArqINI.Clear;
-  FArqINI.LoadFromFile(ARQINI_S0100_S1300);
+  FArqINI.LoadFromFile(ARQINI_vS0100_S1300);
   Check(StringINIToTipoEvento(OK, FArqINI.Text, ve02_05_00) = teS1300, 'Não encontrei o Evento S-1300');
 end;
 
@@ -1623,6 +2065,9 @@ initialization
   _RegisterTest('pcesConversaoeSocial', TACBreSocialTipoToStrStrToTipoTest);
   _RegisterTest('pcesNaoPeriodicos'   , TACBreSocialEventosNaoPeriodicosTest);
   _RegisterTest('pcesPeriodicos'      , TACBreSocialEventosPeriodicosTest);
+  _RegisterTest('pcesIniciais'        , TACBreSocialEventosIniciaisTest);
+  _RegisterTest('pcesTabelas'         , TACBreSocialEventosTabelasTest);
+  _RegisterTest('ACBreSocialSoapTests', TACBreSocialSoapTests);
 
 end.
 

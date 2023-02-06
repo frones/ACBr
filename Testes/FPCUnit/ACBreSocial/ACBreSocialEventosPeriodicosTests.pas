@@ -58,7 +58,7 @@ var
 begin
   try
      FACBreSocial.Eventos.Clear;
-     FACBreSocial.Eventos.LoadFromIni(ARQINI_S0100_S1202);
+     FACBreSocial.Eventos.LoadFromIni(ARQINI_vS0100_S1202);
   except
     Check(FACBreSocial.Eventos.Periodicos.S1202.Count > 0, 'Não instânciou o S-1202 na lista');
 
@@ -136,7 +136,7 @@ var
   idePeriodoI: pcesS1207.TIdePeriodoCollectionItem;
 begin
   try
-    FACBreSocial.Eventos.LoadFromIni(ARQINI_S0100_S1207);
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_vS0100_S1207);
   except
     Check(FACBreSocial.Eventos.Periodicos.S1207.Count > 0, 'Não instanciou o S-1207 na lista');
 

@@ -66,7 +66,7 @@ implementation
 uses
   ACBrUtil.FilesIO,
   ACBrNFSeX, ACBrNFSeXConversao, ACBrNFSeXDANFSeRL,
-  ACBrNFSeXDANFSeRLRetrato, ACBrNFSeXDANFSeRLSimplISS;
+  ACBrNFSeXDANFSeRLRetrato, ACBrNFSeXDANFSeRLSimplISS, ACBrNFSeXDANFSeRLISSNet;
 
 constructor TACBrNFSeXDANFSeRL.Create(AOwner: TComponent);
 begin
@@ -89,6 +89,8 @@ begin
   case TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor of
     proSimplISS:
       fqrXDANFSeRLRetrato := TfrlXDANFSeRLSimplISS.Create(Self);
+    proIssNet:
+      fqrXDANFSeRLRetrato := TfrlXDANFSeRLISSNet.Create(Self);
   else
     fqrXDANFSeRLRetrato := TfrlXDANFSeRLRetrato.Create(Self);
   end;
@@ -121,6 +123,8 @@ begin
   case TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor of
     proSimplISS:
       fqrXDANFSeRLRetrato := TfrlXDANFSeRLSimplISS.Create(Self);
+    proIssNet:
+      fqrXDANFSeRLRetrato := TfrlXDANFSeRLISSNet.Create(Self);
   else
     fqrXDANFSeRLRetrato := TfrlXDANFSeRLRetrato.Create(Self);
   end;
@@ -157,6 +161,8 @@ begin
   case TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor of
     proSimplISS:
       fqrXDANFSeRLRetrato := TfrlXDANFSeRLSimplISS.Create(Self);
+    proIssNet:
+      fqrXDANFSeRLRetrato := TfrlXDANFSeRLISSNet.Create(Self);
   else
     fqrXDANFSeRLRetrato := TfrlXDANFSeRLRetrato.Create(Self);
   end;

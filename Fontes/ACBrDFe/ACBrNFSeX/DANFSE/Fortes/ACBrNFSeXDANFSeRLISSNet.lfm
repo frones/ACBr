@@ -1,0 +1,2439 @@
+inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
+  Left = 280
+  Top = 115
+  Caption = 'frlXDANFSeRLISSNet'
+  inherited RLNFSe: TRLReport
+    Left = 32
+    Top = 0
+    Margins.LeftMargin = 6
+    Margins.TopMargin = 8
+    Margins.RightMargin = 6
+    Margins.BottomMargin = 8
+    BeforePrint = RLNFSeBeforePrint
+    object rlbCabecalho: TRLBand[0]
+      Left = 23
+      Height = 78
+      Top = 30
+      Width = 748
+      BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Margins.BottomMargin = 1
+      BeforePrint = rlbCabecalhoBeforePrint
+      object rllNumNF0: TRLLabel
+        Left = 601
+        Height = 16
+        Top = 54
+        Width = 143
+        Alignment = taCenter
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rliLogo: TRLImage
+        Left = 7
+        Height = 62
+        Top = 4
+        Width = 49
+        Center = True
+        Stretch = True
+      end
+      object rlmPrefeitura1: TRLLabel
+        Left = 61
+        Height = 19
+        Top = 10
+        Width = 111
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rlmPrefeitura2: TRLLabel
+        Left = 61
+        Height = 18
+        Top = 30
+        Width = 102
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rlmPrefeitura3: TRLLabel
+        Left = 61
+        Height = 16
+        Top = 49
+        Width = 84
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw18: TRLDraw
+        Left = 598
+        Height = 70
+        Top = 2
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw19: TRLDraw
+        Left = 598
+        Height = 1
+        Top = 41
+        Width = 154
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel73: TRLLabel
+        Left = 603
+        Height = 10
+        Top = 2
+        Width = 71
+        Caption = 'Série do Documento'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLMemo1: TRLMemo
+        Left = 614
+        Height = 28
+        Top = 12
+        Width = 118
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Nota FIscal de Serviço'
+          'Eletrônica - NFS-e'
+        )
+        ParentFont = False
+      end
+      object RLLabel74: TRLLabel
+        Left = 603
+        Height = 10
+        Top = 43
+        Width = 81
+        Caption = 'Número do Documento'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rlbPrestador: TRLBand[1]
+      Left = 23
+      Height = 160
+      Top = 108
+      Width = 748
+      BandType = btTitle
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Margins.BottomMargin = 1
+      BeforePrint = rlbPrestadorBeforePrint
+      object RLLabel29: TRLLabel
+        Left = 119
+        Height = 14
+        Top = 78
+        Width = 59
+        Caption = 'Município:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel30: TRLLabel
+        Left = 119
+        Height = 14
+        Top = 134
+        Width = 25
+        Caption = 'I.M.:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel32: TRLLabel
+        Left = 119
+        Height = 14
+        Top = 120
+        Width = 58
+        Caption = 'CPF/CNPJ:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestMunicipio: TRLLabel
+        Left = 180
+        Height = 14
+        Top = 78
+        Width = 80
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object rllPrestInscMunicipal: TRLLabel
+        Left = 146
+        Height = 14
+        Top = 134
+        Width = 100
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestEndereco: TRLLabel
+        Left = 119
+        Height = 14
+        Top = 64
+        Width = 82
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestCNPJ: TRLLabel
+        Left = 179
+        Height = 14
+        Top = 120
+        Width = 61
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rliPrestLogo: TRLImage
+        Left = 8
+        Height = 110
+        Top = 35
+        Width = 101
+        Center = True
+        Scaled = True
+      end
+      object rllPrestNome: TRLLabel
+        Left = 119
+        Height = 16
+        Top = 33
+        Width = 86
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel9: TRLLabel
+        Left = 318
+        Height = 14
+        Top = 78
+        Width = 19
+        Caption = 'UF:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestUF: TRLLabel
+        Left = 339
+        Height = 14
+        Top = 78
+        Width = 35
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel23: TRLLabel
+        Left = 119
+        Height = 14
+        Top = 92
+        Width = 55
+        Caption = 'Telefone:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestTelefone: TRLLabel
+        Left = 176
+        Height = 14
+        Top = 92
+        Width = 78
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel24: TRLLabel
+        Left = 119
+        Height = 14
+        Top = 106
+        Width = 40
+        Caption = 'e-mail:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestEmail: TRLLabel
+        Left = 161
+        Height = 14
+        Top = 106
+        Width = 60
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel69: TRLLabel
+        Left = 294
+        Height = 14
+        Top = 134
+        Width = 21
+        Caption = 'I.E.:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestInscEstadual: TRLLabel
+        Left = 317
+        Height = 14
+        Top = 134
+        Width = 97
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel75: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 6
+        Width = 200
+        Caption = 'Dados do Prestador de Serviço'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw20: TRLDraw
+        Left = 1
+        Height = 1
+        Top = 27
+        Width = 751
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object rllPrestCEP: TRLLabel
+        Left = 412
+        Height = 14
+        Top = 78
+        Width = 55
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel2: TRLLabel
+        Left = 383
+        Height = 14
+        Top = 78
+        Width = 27
+        Caption = 'CEP:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw12: TRLDraw
+        Left = 483
+        Height = 128
+        Top = 27
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw21: TRLDraw
+        Left = 483
+        Height = 1
+        Top = 58
+        Width = 136
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw22: TRLDraw
+        Left = 483
+        Height = 1
+        Top = 90
+        Width = 136
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw23: TRLDraw
+        Left = 483
+        Height = 1
+        Top = 122
+        Width = 136
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw24: TRLDraw
+        Left = 618
+        Height = 128
+        Top = 27
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel1: TRLLabel
+        Left = 490
+        Height = 10
+        Top = 28
+        Width = 94
+        Caption = 'Data de Geração da NFS-e'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel22: TRLLabel
+        Left = 490
+        Height = 10
+        Top = 59
+        Width = 107
+        Caption = 'Data de Competência/Emissão'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel31: TRLLabel
+        Left = 490
+        Height = 10
+        Top = 91
+        Width = 73
+        Caption = 'Cód de Autenticidade'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel76: TRLLabel
+        Left = 490
+        Height = 10
+        Top = 124
+        Width = 96
+        Caption = 'Responsável pela Retenção'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rlImgQrCode: TRLImage
+        Left = 625
+        Height = 115
+        Top = 34
+        Width = 115
+        Center = True
+        Stretch = True
+      end
+      object rllEmissao: TRLLabel
+        Left = 488
+        Height = 16
+        Top = 40
+        Width = 125
+        Alignment = taCenter
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object rllCompetencia: TRLLabel
+        Left = 495
+        Height = 16
+        Top = 69
+        Width = 117
+        Alignment = taCenter
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object rllCodVerificacao: TRLLabel
+        Left = 497
+        Height = 16
+        Top = 102
+        Width = 114
+        Alignment = taCenter
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object rllPrestFantasia: TRLLabel
+        Left = 119
+        Height = 15
+        Top = 49
+        Width = 93
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rlbTomador: TRLBand[2]
+      Left = 23
+      Height = 145
+      Top = 368
+      Width = 748
+      BandType = btTitle
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Margins.BottomMargin = 1
+      BeforePrint = rlbTomadorBeforePrint
+      object RLLabel5: TRLLabel
+        Left = 4
+        Height = 15
+        Top = 34
+        Width = 62
+        Caption = 'CPF/CNPJ:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaCNPJ: TRLLabel
+        Left = 68
+        Height = 16
+        Top = 33
+        Width = 79
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel11: TRLLabel
+        Left = 561
+        Height = 15
+        Top = 34
+        Width = 25
+        Caption = 'I.M.:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaInscMunicipal: TRLLabel
+        Left = 588
+        Height = 16
+        Top = 33
+        Width = 125
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel15: TRLLabel
+        Left = 4
+        Height = 15
+        Top = 51
+        Width = 115
+        Caption = 'Nome/Razão Social:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaNome: TRLLabel
+        Left = 121
+        Height = 16
+        Top = 50
+        Width = 80
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel17: TRLLabel
+        Left = 4
+        Height = 15
+        Top = 68
+        Width = 60
+        Caption = 'Endereço:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaEndereco: TRLLabel
+        Left = 67
+        Height = 16
+        Top = 67
+        Width = 101
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel19: TRLLabel
+        Left = 4
+        Height = 15
+        Top = 102
+        Width = 60
+        Caption = 'Município:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaMunicipio: TRLLabel
+        Left = 66
+        Height = 16
+        Top = 101
+        Width = 101
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object RLLabel21: TRLLabel
+        Left = 345
+        Height = 15
+        Top = 102
+        Width = 20
+        Caption = 'UF:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaUF: TRLLabel
+        Left = 367
+        Height = 16
+        Top = 101
+        Width = 63
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel10: TRLLabel
+        Left = 254
+        Height = 15
+        Top = 119
+        Width = 41
+        Caption = 'E-mail:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaEmail: TRLLabel
+        Left = 297
+        Height = 16
+        Top = 118
+        Width = 79
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel25: TRLLabel
+        Left = 4
+        Height = 15
+        Top = 85
+        Width = 85
+        Caption = 'Complemento:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaComplemento: TRLLabel
+        Left = 92
+        Height = 16
+        Top = 84
+        Width = 126
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object RLLabel27: TRLLabel
+        Left = 4
+        Height = 15
+        Top = 119
+        Width = 55
+        Caption = 'Telefone:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaTelefone: TRLLabel
+        Left = 61
+        Height = 16
+        Top = 118
+        Width = 94
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel61: TRLLabel
+        Left = 353
+        Height = 15
+        Top = 34
+        Width = 22
+        Caption = 'I.E.:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaInscEstadual: TRLLabel
+        Left = 377
+        Height = 16
+        Top = 33
+        Width = 121
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw2: TRLDraw
+        Left = -1
+        Height = 1
+        Top = 27
+        Width = 752
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel7: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 7
+        Width = 196
+        Caption = 'Dados do Tomador de Serviço'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel4: TRLLabel
+        Left = 451
+        Height = 15
+        Top = 102
+        Width = 29
+        Caption = 'CEP:'
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaCEP: TRLLabel
+        Left = 482
+        Height = 16
+        Top = 101
+        Width = 73
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rlbHeaderItens: TRLBand[3]
+      Left = 23
+      Height = 27
+      Top = 513
+      Width = 748
+      BandType = btColumnHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      object RLLabel8: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 5
+        Width = 150
+        Caption = 'Descrição dos Serviços'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rlbItens: TRLBand[4]
+      Left = 23
+      Height = 26
+      Top = 556
+      Width = 748
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = False
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Margins.BottomMargin = 1
+      BeforePrint = rlbItensBeforePrint
+      object rlmDescricao: TRLMemo
+        Left = 10
+        Height = 14
+        Top = 6
+        Width = 737
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rlbISSQN: TRLBand[5]
+      Left = 23
+      Height = 130
+      Top = 650
+      Width = 748
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Margins.BottomMargin = 1
+      BeforePrint = rlbISSQNBeforePrint
+      object rllBaseCalc: TRLLabel
+        Left = 315
+        Height = 16
+        Top = 72
+        Width = 107
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorISS: TRLLabel
+        Left = 430
+        Height = 16
+        Top = 72
+        Width = 88
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllAliquota: TRLLabel
+        Left = 390
+        Height = 16
+        Top = 40
+        Width = 45
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorCOFINS: TRLLabel
+        Left = 114
+        Height = 16
+        Top = 105
+        Width = 98
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorIR: TRLLabel
+        Left = 312
+        Height = 16
+        Top = 105
+        Width = 53
+        Alignment = taRightJustify
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorINSS: TRLLabel
+        Left = 218
+        Height = 16
+        Top = 105
+        Width = 85
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorCSLL: TRLLabel
+        Left = 370
+        Height = 16
+        Top = 105
+        Width = 54
+        Alignment = taRightJustify
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorServicos1: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 72
+        Width = 103
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllDescIncondicionado1: TRLLabel
+        Left = 113
+        Height = 16
+        Top = 72
+        Width = 99
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllDescCondicionado: TRLLabel
+        Left = 610
+        Height = 16
+        Top = 72
+        Width = 133
+        Alignment = taRightJustify
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllOutrasRetencoes: TRLLabel
+        Left = 430
+        Height = 16
+        Top = 105
+        Width = 89
+        Alignment = taRightJustify
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorIssRetido: TRLLabel
+        Left = 526
+        Height = 16
+        Top = 105
+        Width = 77
+        Alignment = taRightJustify
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorLiquido: TRLLabel
+        Left = 611
+        Height = 16
+        Top = 105
+        Width = 132
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorDeducoes: TRLLabel
+        Left = 219
+        Height = 16
+        Top = 72
+        Width = 84
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllISSReter: TRLLabel
+        Left = 526
+        Height = 16
+        Top = 72
+        Width = 71
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel44: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 6
+        Width = 174
+        Caption = 'Detalhamento dos Tributos'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw13: TRLDraw
+        Left = 0
+        Height = 1
+        Top = 26
+        Width = 752
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw26: TRLDraw
+        Left = 1
+        Height = 1
+        Top = 58
+        Width = 752
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw27: TRLDraw
+        Left = -2
+        Height = 1
+        Top = 91
+        Width = 752
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel63: TRLLabel
+        Left = 4
+        Height = 10
+        Top = 28
+        Width = 78
+        Caption = 'Atividade do Município'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllAtividade: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 40
+        Width = 376
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object RLDraw28: TRLDraw
+        Left = 386
+        Height = 33
+        Top = 26
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel64: TRLLabel
+        Left = 390
+        Height = 10
+        Top = 28
+        Width = 29
+        Caption = 'Alíquota'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw29: TRLDraw
+        Left = 438
+        Height = 33
+        Top = 26
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel77: TRLLabel
+        Left = 442
+        Height = 10
+        Top = 28
+        Width = 69
+        Caption = 'Item da LC116/2003'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllItem: TRLLabel
+        Left = 442
+        Height = 16
+        Top = 40
+        Width = 69
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel78: TRLLabel
+        Left = 529
+        Height = 10
+        Top = 28
+        Width = 36
+        Caption = 'Cód. NBS'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllCodNBS: TRLLabel
+        Left = 529
+        Height = 16
+        Top = 40
+        Width = 69
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw30: TRLDraw
+        Left = 526
+        Height = 33
+        Top = 26
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel79: TRLLabel
+        Left = 618
+        Height = 10
+        Top = 28
+        Width = 42
+        Caption = 'Cód. CNAE'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllCodCNAE: TRLLabel
+        Left = 618
+        Height = 16
+        Top = 40
+        Width = 69
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw31: TRLDraw
+        Left = 615
+        Height = 33
+        Top = 26
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel81: TRLLabel
+        Left = 4
+        Height = 10
+        Top = 61
+        Width = 92
+        Caption = 'Valor Total dos Serviços'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw32: TRLDraw
+        Left = 110
+        Height = 34
+        Top = 58
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel47: TRLLabel
+        Left = 114
+        Height = 10
+        Top = 61
+        Width = 98
+        Caption = 'Desconto Incondicionado'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw34: TRLDraw
+        Left = 216
+        Height = 34
+        Top = 58
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel82: TRLLabel
+        Left = 218
+        Height = 10
+        Top = 61
+        Width = 87
+        Caption = 'Deduções Base Cáculo'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw35: TRLDraw
+        Left = 309
+        Height = 34
+        Top = 58
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel83: TRLLabel
+        Left = 312
+        Height = 10
+        Top = 61
+        Width = 59
+        Caption = 'Base de Cáculo'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw36: TRLDraw
+        Left = 426
+        Height = 34
+        Top = 58
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel84: TRLLabel
+        Left = 430
+        Height = 10
+        Top = 61
+        Width = 59
+        Caption = 'Total do ISSQN'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw37: TRLDraw
+        Left = 522
+        Height = 34
+        Top = 58
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel85: TRLLabel
+        Left = 526
+        Height = 10
+        Top = 61
+        Width = 53
+        Caption = 'ISSQN Retido'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw33: TRLDraw
+        Left = 607
+        Height = 34
+        Top = 58
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel80: TRLLabel
+        Left = 613
+        Height = 10
+        Top = 61
+        Width = 93
+        Caption = 'Desconto Condicionado'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel94: TRLLabel
+        Left = 4
+        Height = 10
+        Top = 94
+        Width = 14
+        Caption = 'PIS'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw39: TRLDraw
+        Left = 110
+        Height = 34
+        Top = 91
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel95: TRLLabel
+        Left = 114
+        Height = 10
+        Top = 94
+        Width = 32
+        Caption = 'COFINS'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw40: TRLDraw
+        Left = 216
+        Height = 34
+        Top = 91
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel96: TRLLabel
+        Left = 218
+        Height = 10
+        Top = 94
+        Width = 20
+        Caption = 'INSS'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw41: TRLDraw
+        Left = 309
+        Height = 34
+        Top = 91
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel97: TRLLabel
+        Left = 312
+        Height = 10
+        Top = 94
+        Width = 21
+        Caption = 'IRRF'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw42: TRLDraw
+        Left = 426
+        Height = 34
+        Top = 91
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel98: TRLLabel
+        Left = 430
+        Height = 10
+        Top = 94
+        Width = 68
+        Caption = 'Outras Retenções'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw43: TRLDraw
+        Left = 522
+        Height = 34
+        Top = 91
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel99: TRLLabel
+        Left = 526
+        Height = 10
+        Top = 94
+        Width = 74
+        Caption = 'Valor ISSQN Retido'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw44: TRLDraw
+        Left = 607
+        Height = 34
+        Top = 91
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel100: TRLLabel
+        Left = 613
+        Height = 10
+        Top = 94
+        Width = 106
+        Caption = 'Valor Líquido da Nota Fiscal'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllValorPIS: TRLLabel
+        Left = 6
+        Height = 16
+        Top = 105
+        Width = 101
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw45: TRLDraw
+        Left = 367
+        Height = 34
+        Top = 91
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel86: TRLLabel
+        Left = 370
+        Height = 10
+        Top = 94
+        Width = 23
+        Caption = 'CSLL'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rbOutrasInformacoes: TRLBand[6]
+      Left = 23
+      Height = 50
+      Top = 780
+      Width = 748
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      BeforePrint = rbOutrasInformacoesBeforePrint
+      object rlmDadosAdicionais: TRLMemo
+        Left = 5
+        Height = 14
+        Top = 31
+        Width = 743
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Dados Adicionais....'
+        )
+        ParentFont = False
+      end
+      object RLLabel3: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 7
+        Width = 152
+        Caption = 'Informações Adicionais'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw4: TRLDraw
+        Left = 0
+        Height = 1
+        Top = 26
+        Width = 752
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+    end
+    object rlbCanhoto: TRLBand[7]
+      Left = 23
+      Height = 73
+      Top = 853
+      Width = 748
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = False
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
+      BeforePrint = rbOutrasInformacoesBeforePrint
+      object RLDraw7: TRLDraw
+        Left = 1
+        Height = 64
+        Top = 6
+        Width = 744
+      end
+      object RLLabel26: TRLLabel
+        Left = 5
+        Height = 14
+        Top = 7
+        Width = 85
+        Caption = 'Recebi(emos) de'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object rllPrestNomeEnt: TRLLabel
+        Left = 88
+        Height = 15
+        Top = 7
+        Width = 505
+        AutoSize = False
+        Caption = '<Nome do Tomador>'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel28: TRLLabel
+        Left = 6
+        Height = 14
+        Top = 19
+        Width = 374
+        Caption = 'os serviços constantes da Nota Fiscal Eletronica de Serviço  (NFSe) ao lado.'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object RLDraw1: TRLDraw
+        Left = 603
+        Height = 64
+        Top = 6
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+      end
+      object RLLabel57: TRLLabel
+        Left = 620
+        Height = 16
+        Top = 15
+        Width = 108
+        Alignment = taCenter
+        Caption = 'Número da Nota'
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel33: TRLLabel
+        Left = 202
+        Height = 10
+        Top = 53
+        Width = 137
+        Caption = 'Identificação e Assinatura do Recebedor'
+        Font.Color = clWindowText
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw5: TRLDraw
+        Left = 345
+        Height = 1
+        Top = 64
+        Width = 248
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel58: TRLLabel
+        Left = 12
+        Height = 10
+        Top = 53
+        Width = 23
+        Caption = 'DATA'
+        Font.Color = clWindowText
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel59: TRLLabel
+        Left = 54
+        Height = 12
+        Top = 53
+        Width = 141
+        Caption = '_______ / _______ / __________'
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rlbHeaderItensDetalhado: TRLBand[8]
+      Left = 23
+      Height = 16
+      Top = 540
+      Width = 748
+      BandType = btColumnHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = False
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      object RLLabel65: TRLLabel
+        Left = 5
+        Height = 14
+        Top = 1
+        Width = 26
+        Caption = 'Qtde'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel66: TRLLabel
+        Left = 57
+        Height = 14
+        Top = 1
+        Width = 52
+        Caption = 'Descrição'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel67: TRLLabel
+        Left = 710
+        Height = 14
+        Top = 1
+        Width = 26
+        Caption = 'Total'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel68: TRLLabel
+        Left = 640
+        Height = 14
+        Top = 1
+        Width = 29
+        Caption = 'Valor'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object subItens: TRLSubDetail[9]
+      Left = 23
+      Height = 18
+      Top = 582
+      Width = 748
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = False
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      OnDataRecord = subItensDataRecord
+      object rlbItensServico: TRLBand
+        Left = 1
+        Height = 16
+        Top = 0
+        Width = 746
+        BeforePrint = rlbItensServicoBeforePrint
+        object txtServicoQtde: TRLLabel
+          Left = 5
+          Height = 14
+          Top = 2
+          Width = 46
+          Alignment = taCenter
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          ParentFont = False
+          Transparent = False
+        end
+        object rlmServicoDescricao: TRLMemo
+          Left = 57
+          Height = 14
+          Top = 2
+          Width = 549
+          Behavior = [beSiteExpander]
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          ParentFont = False
+          Transparent = False
+        end
+        object txtServicoUnitario: TRLLabel
+          Left = 611
+          Height = 14
+          Top = 2
+          Width = 54
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          ParentFont = False
+          Transparent = False
+        end
+        object txtServicoTotal: TRLLabel
+          Left = 670
+          Height = 14
+          Top = 2
+          Width = 76
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          ParentFont = False
+          Transparent = False
+        end
+      end
+    end
+    object RLBand1: TRLBand[10]
+      Left = 23
+      Height = 23
+      Top = 830
+      Width = 748
+      BandType = btSummary
+      BeforePrint = RLBand1BeforePrint
+      object rllDataHoraImpressao: TRLLabel
+        Left = 3
+        Height = 10
+        Top = 1
+        Width = 78
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllSistema: TRLLabel
+        Left = 709
+        Height = 10
+        Top = 1
+        Width = 37
+        Alignment = taRightJustify
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllSite: TRLLabel
+        Left = 3
+        Height = 12
+        Top = 10
+        Width = 742
+        Alignment = taCenter
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rlbDadosNota: TRLBand[11]
+      Left = 23
+      Height = 100
+      Top = 268
+      Width = 748
+      BandType = btTitle
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Margins.BottomMargin = 1
+      BeforePrint = rlbDadosNotaBeforePrint
+      object RLDraw3: TRLDraw
+        Left = -1
+        Height = 1
+        Top = 27
+        Width = 752
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel88: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 7
+        Width = 248
+        Caption = 'Identificação da Nota Fiscal Eletrônica'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw8: TRLDraw
+        Left = -1
+        Height = 1
+        Top = 61
+        Width = 752
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = True
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw9: TRLDraw
+        Left = 205
+        Height = 33
+        Top = 28
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw10: TRLDraw
+        Left = 309
+        Height = 33
+        Top = 28
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw11: TRLDraw
+        Left = 562
+        Height = 33
+        Top = 28
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw25: TRLDraw
+        Left = 379
+        Height = 34
+        Top = 62
+        Width = 1
+        Angle = 90
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = False
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel12: TRLLabel
+        Left = 4
+        Height = 10
+        Top = 29
+        Width = 78
+        Caption = 'Natureza da Operação'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel13: TRLLabel
+        Left = 209
+        Height = 10
+        Top = 29
+        Width = 58
+        Caption = 'Número do RPS'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllNumeroRPS: TRLLabel
+        Left = 209
+        Height = 16
+        Top = 41
+        Width = 94
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object RLLabel14: TRLLabel
+        Left = 312
+        Height = 10
+        Top = 29
+        Width = 48
+        Caption = 'Série do RPS'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel18: TRLLabel
+        Left = 312
+        Height = 16
+        Top = 41
+        Width = 244
+        AutoSize = False
+        Caption = 'RPS - Recibo Provisórios de Serviço'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object RLLabel20: TRLLabel
+        Left = 565
+        Height = 10
+        Top = 29
+        Width = 88
+        Caption = 'Data de Emissão do RPS'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllDataRPS: TRLLabel
+        Left = 565
+        Height = 16
+        Top = 41
+        Width = 183
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object RLLabel60: TRLLabel
+        Left = 4
+        Height = 10
+        Top = 64
+        Width = 66
+        Caption = 'Local dos Serviços'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllLocalServico: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 75
+        Width = 369
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object RLLabel62: TRLLabel
+        Left = 384
+        Height = 10
+        Top = 64
+        Width = 71
+        Caption = 'Município Incidência'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllMunicipioIncidencia: TRLLabel
+        Left = 383
+        Height = 16
+        Top = 75
+        Width = 365
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+      object rllNatOperacao: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 41
+        Width = 199
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        ParentFont = False
+      end
+    end
+    object rbConstrucao: TRLBand[12]
+      Left = 23
+      Height = 50
+      Top = 600
+      Width = 748
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Margins.BottomMargin = 1
+      BeforePrint = rbConstrucaoBeforePrint
+      object rllTituloConstCivil: TRLLabel
+        Left = 4
+        Height = 16
+        Top = 6
+        Width = 108
+        Alignment = taCenter
+        Caption = 'Construção Civil'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllCodigoObra: TRLLabel
+        Left = 422
+        Height = 14
+        Top = 8
+        Width = 90
+        Caption = 'Código da Obra:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllCodObra: TRLLabel
+        Left = 515
+        Height = 14
+        Top = 8
+        Width = 62
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllCodigoArt: TRLLabel
+        Left = 590
+        Height = 14
+        Top = 8
+        Width = 70
+        Caption = 'Código ART:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllCodART: TRLLabel
+        Left = 663
+        Height = 14
+        Top = 8
+        Width = 51
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllMsgTeste: TRLLabel
+        Left = 5
+        Height = 32
+        Top = 8
+        Width = 738
+        Alignment = taCenter
+        Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
+        Font.Color = clBlack
+        Font.Height = -27
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+  end
+  inherited RLPDFFilter1: TRLPDFFilter
+    Left = 264
+    Top = 40
+  end
+end

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 07/02/2023
+-- ACBrNFSeXServicos.ini --
+[*] Corrigido a URL de produção do provedor PadraoNacional.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado o DANFSE em Fortes Report com layout bem próximo ao usado pelo
     provedor ISSNet.

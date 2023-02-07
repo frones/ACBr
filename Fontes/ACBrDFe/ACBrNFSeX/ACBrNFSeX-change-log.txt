@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 07/02/2023
+-- ACBrNFSeXWebserviceBase --
+[*] Alteração visando salvar os arquivo JSON com a extensão json em vez de xml.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Corrigido a URL de produção do provedor PadraoNacional.
    Por: Italo Giurizzato Junior

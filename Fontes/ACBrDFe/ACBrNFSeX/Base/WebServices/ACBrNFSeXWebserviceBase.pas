@@ -642,32 +642,32 @@ begin
 
   if FPConfiguracoes.Geral.Salvar then
   begin
-    ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
+    ArqEnv := Prefixo + '-' + FPArqEnv;
 
     if ConteudoEhXml then
     begin
       if not XmlEhUTF8(ADadosMsg) then
         ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
 
-      FPDFeOwner.Gravar(ArqEnv, ADadosMsg, Path);
+      FPDFeOwner.Gravar(ArqEnv + '.xml', ADadosMsg, Path);
     end
     else
-      GravarJSON(ArqEnv, ADadosMsg, Path);
+      GravarJSON(ArqEnv + '.json', ADadosMsg, Path);
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
-    ArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
+    ArqEnv := Prefixo + '-' + FPArqEnv;
 
     if ConteudoEhXml then
     begin
       if not XmlEhUTF8(ADadosSoap) then
         ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
 
-      FPDFeOwner.Gravar(ArqEnv, ADadosSoap, Path);
+      FPDFeOwner.Gravar(ArqEnv + '-soap.xml', ADadosSoap, Path);
     end
     else
-      GravarJSON(ArqEnv, ADadosSoap, Path);
+      GravarJSON(ArqEnv + '-soap.json', ADadosSoap, Path);
   end;
 end;
 
@@ -692,17 +692,17 @@ begin
 
   if FPDFeOwner.Configuracoes.Geral.Salvar then
   begin
-    ArqEnv := Prefixo + '-' + FPArqResp + '.xml';
+    ArqEnv := Prefixo + '-' + FPArqResp;
 
     if ConteudoEhXml then
     begin
       if not XmlEhUTF8(ADadosMsg) then
         ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
 
-      FPDFeOwner.Gravar(ArqEnv, ADadosMsg, Path);
+      FPDFeOwner.Gravar(ArqEnv + '.xml', ADadosMsg, Path);
     end
     else
-      GravarJSON(ArqEnv, ADadosMsg, Path);
+      GravarJSON(ArqEnv + '.json', ADadosMsg, Path);
   end;
 end;
 
@@ -727,17 +727,17 @@ begin
 
   if FPDFeOwner.Configuracoes.WebServices.Salvar then
   begin
-    ArqEnv := Prefixo + '-' + FPArqResp + '-soap.xml';
+    ArqEnv := Prefixo + '-' + FPArqResp;
 
     if ConteudoEhXml then
     begin
       if not XmlEhUTF8(ADadosSoap) then
         ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
 
-      FPDFeOwner.Gravar(ArqEnv, ADadosSoap, Path);
+      FPDFeOwner.Gravar(ArqEnv + '-soap.xml', ADadosSoap, Path);
     end
     else
-      GravarJSON(ArqEnv, ADadosSoap, Path);
+      GravarJSON(ArqEnv + '-soap.json', ADadosSoap, Path);
   end;
 end;
 

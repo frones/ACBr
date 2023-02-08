@@ -377,7 +377,7 @@ end;
 
 procedure TfrlXDANFSeRLISSnet.rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
-  strPrefeitura : TStringDynArray;
+  strPrefeitura : TSplitResult;
 begin
   inherited;
 
@@ -388,7 +388,7 @@ begin
     rllNumNF0.Caption := Numero;
 
     // Somente as 3 primeiras linhas serão utilizadas
-    strPrefeitura := SplitString(fpDANFSe.Prefeitura,FQuebradeLinha);
+    strPrefeitura := ACBrUtil.Strings.Split(fQuebradeLinha[1], fpDANFSe.Prefeitura);
 
     if (Length(strPrefeitura) >= 1) then
       rlmPrefeitura1.Caption := strPrefeitura[0];

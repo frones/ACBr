@@ -889,7 +889,8 @@ end;
 
 function TRetEnvioLote.LerXml: boolean;
 begin
-  if Pos('retornoLoteEventosAssincrono',Leitor.Arquivo) > 0 then
+  if ( ( Pos('retornoLoteEventosAssincrono',Leitor.Arquivo) > 0 ) or
+       ( Pos('retornoRecibosChaveEvento',Leitor.Arquivo) > 0 ) ) then
     Result := LerXmlRetornadoAPIRest
   else
     Result := LerXmlRetornadoWebService;
@@ -944,6 +945,16 @@ begin
       if leitor.rExtrai(2, 'dadosProcessamentoLote') <> '' then
       begin
         dadosProcessamentoLote.versaoAplicativoProcessamentoLote := leitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
+      end;
+
+      LerRetornoEventos;
+    end
+    else if leitor.rExtrai(1, 'Reinf') <> '' then
+    begin
+      if leitor.rExtrai(2, 'ideStatus') <> '' then
+      begin
+        Status.cdstatus := leitor.rCampo(tcStr, 'cdRetorno');
+        Status.descRetorno := leitor.rCampo(tcStr, 'descRetorno');
       end;
 
       LerRetornoEventos;

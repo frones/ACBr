@@ -58,10 +58,13 @@ type
     FdtApur: TDateTime;
     FnrInscAdq: String;
     FtpInscProd : String;
+    FcpfCnpjBenef: String;
+    FcnpjFonte: String;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
+    procedure DefinirParametros(var URL: String);
 
     property Gerador: TGerador       read FGerador       write FGerador;
     property SoapEnvelope: String    read FSoapEnvelope  write FSoapEnvelope;
@@ -74,6 +77,8 @@ type
     property nrInscTomador: String   read FnrInscTomador write FnrInscTomador;
     property dtApur: TDateTime       read FdtApur        write FdtApur;
     property nrInscAdq: String       read FnrInscAdq     write FnrInscAdq;
+    property cpfCnpjBenef: String    read FcpfCnpjBenef  write FcpfCnpjBenef;
+    property cnpjFonte: String       read FcnpjFonte     write FcnpjFonte;
   end;
 
 implementation
@@ -85,6 +90,173 @@ Uses pcnAuxiliar;
 constructor TReinfConsulta.Create;
 begin
   FGerador := TGerador.Create;
+end;
+
+procedure TReinfConsulta.DefinirParametros(var URL: String);
+begin
+  URL := URL +
+         '/' + StringReplace(TipoEventoToStr(TipoEvento),'-','',[rfReplaceAll]);
+
+  if Length(nrInscContrib) = 14 then
+  begin
+    nrInscAdq := nrInscContrib;
+    nrInscContrib := Copy( nrInscContrib, 1, 8 );
+    FtpInscContrib := '1';
+  end
+  else
+    FtpInscContrib := '2';
+
+  if Length(nrInscEstab) = 14 then
+  begin
+    FtpInscEstab := '1';
+  end
+  else
+    FtpInscEstab := '4';
+
+  if Length(nrInscTomador) = 14 then
+  begin
+    FtpInscTomador := '1';
+  end
+  else
+    FtpInscTomador := '4';
+
+  if Length(nrInscEstab) = 14 then
+  begin
+    FtpInscProd := '1';
+  end
+  else
+    FtpInscProd := '2';
+
+  case TipoEvento of
+    teR1000,
+    teR1050,
+    teR1070:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib;
+      end;
+
+    teR2010:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + FtpInscEstab +
+               '/' + nrInscEstab +
+               '/' + cnpjPrestador;
+      end;
+
+    teR2020:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + nrInscEstab +
+               '/' + FtpInscTomador +
+               '/' + nrInscTomador;
+      end;
+
+    teR2030,
+    teR2040,
+    teR2050:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + FtpInscEstab +
+               '/' + nrInscEstab;
+      end;
+
+    teR2055:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + FtpInscContrib +
+               '/' + nrInscAdq +
+               '/' + FtpInscProd +
+               '/' + nrInscEstab;
+      end;
+
+    teR2060:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + FtpInscEstab +
+               '/' + nrInscEstab;
+      end;
+
+    teR2098,
+    teR2099:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur;
+      end;
+
+    teR3010:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + nrInscEstab;
+      end;
+
+    teR4010,
+    teR4020:
+      begin
+        if cpfCnpjBenef = '' then
+          URL := URL + '/semCpfBeneficiario';
+
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + FtpInscEstab +
+               '/' + nrInscEstab;
+
+        if cpfCnpjBenef <> '' then
+          URL := URL + '/' + cpfCnpjBenef;
+      end;
+
+    teR4040:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + FtpInscEstab +
+               '/' + nrInscEstab;
+      end;
+
+    teR4080:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur +
+               '/' + FtpInscEstab +
+               '/' + nrInscEstab +
+               '/' + cnpjFonte;
+      end;
+
+    teR4099:
+      begin
+        URL := URL +
+               '/' + FtpInscContrib +
+               '/' + nrInscContrib +
+               '/' + perApur;
+      end;
+  end;
 end;
 
 destructor TReinfConsulta.Destroy;
@@ -130,7 +302,6 @@ begin
   end
   else
     FtpInscProd := '2';
-
 
   Gerador.Prefixo := '';
 

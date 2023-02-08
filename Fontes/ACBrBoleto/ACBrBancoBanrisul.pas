@@ -964,7 +964,11 @@ begin
             Sacado.NomeSacado := Trim(Copy(FSegT, 149, 40));
 
             NumeroDocumento      := Trim(Copy(FSegT, 59, 15));
-            SeuNumero            := NumeroDocumento;
+            if trim(Copy(FSegT,106, 25)) <> '' then
+               SeuNumero            := Copy(FSegT,106, 25)
+            else
+               SeuNumero            := NumeroDocumento;
+
             Carteira             := Copy(FSegT, 58, 1);
             NossoNumero          := Trim(Copy(FSegT, 38, TamanhoMaximoNossoNum));
 //            NossoNumero          := Trim(Copy(FSegT, 38, 20));

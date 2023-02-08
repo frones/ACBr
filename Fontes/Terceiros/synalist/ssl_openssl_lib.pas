@@ -96,7 +96,9 @@ uses
   SysUtils, Classes,
   synafpc
 {$IfDef ANDROID}
-  ,System.IOUtils
+  {$IFNDEF FPC}
+    ,System.IOUtils
+  {$ENDIF}
 {$EndIf}
 {$IFDEF POSIX}
   ,System.Generics.Collections, System.Generics.Defaults
@@ -1992,8 +1994,7 @@ begin
 {$ELSE}
       {$IfDef ANDROID}
       if (SSLLibPath = '') then     // Try to load from "./assets/internal/" first
-        SSLLibPath := TPath.GetDocumentsPath;
-
+        SSLLibPath := {$IFNDEF FPC}TPath.GetDocumentsPath{$ELSE}'./assets/internal/'{$ENDIF} ;
       Ok := LoadLibraries;
       if (not Ok) then         // Try System Default Lib
       begin

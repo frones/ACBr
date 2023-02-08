@@ -292,6 +292,11 @@
   {$DEFINE NOGUI}
 {$ENDIF}
 
+//  lazrus Android com LAMW, não suporta Dialogs, Forms,
+{$IFDEF LAMW}
+  {$DEFINE NOGUI}
+{$ENDIF}
+
 {$IFDEF NOGUI}
   {$DEFINE CONSOLE}
 {$ENDIF}

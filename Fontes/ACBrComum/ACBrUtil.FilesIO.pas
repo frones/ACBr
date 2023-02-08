@@ -456,9 +456,13 @@ end;
 function ApplicationPath: String;
 begin
   {$IfDef ANDROID}
-  Result := PathWithDelim(TPath.GetHomePath);
+    {$IFDEF FPC}
+      Result := PathWithDelim(ExtractFilePath(ParamStr(0)));
+    {$ELSE}
+      Result := PathWithDelim(TPath.GetHomePath);
+    {$ENDIF}
   {$Else}
-  Result := PathWithDelim(ExtractFilePath(ParamStr(0)));
+    Result := PathWithDelim(ExtractFilePath(ParamStr(0)));
   {$EndIf}
 end;
 

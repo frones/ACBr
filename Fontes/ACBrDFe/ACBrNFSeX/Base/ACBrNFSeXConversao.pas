@@ -91,7 +91,11 @@ type
                                    retLucroReal, retLucroPresumido, retSimplesNacional,
                                    retImune, retEmpresaIndividualRELI, retEmpresaPP,
                                    retMicroEmpresario, retOutros, retMovimentoMensal,
-                                   retISSQNAutonomos, retISSQNSociedade, retNotarioRegistrador);
+                                   retISSQNAutonomos, retISSQNSociedade,
+                                   retNotarioRegistrador,
+                                   retTribFaturamentoVariavel, retFixo,
+                                   retIsencao,retExigibSuspensaJudicial,
+                                   retExigibSuspensaAdm);
 
   TnfseSimNao = (snSim, snNao);
 

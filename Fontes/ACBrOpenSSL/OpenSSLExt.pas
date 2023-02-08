@@ -6037,7 +6037,7 @@ begin
 
     {$IfDef ANDROID}
     if (SSLLibPath = '') then     // Try to load from "./assets/internal/" first
-      SSLLibPath := TPath.GetDocumentsPath;
+      SSLLibPath := {$IFNDEF LAMW}TPath.GetDocumentsPath{$ELSE} './assets/internal/' {$ENDIF};
 
     Result := LoadLibraries;
     if (not Result) then         // Try System Default Lib

@@ -1600,7 +1600,9 @@ implementation
 uses
   strutils
   {$IfDef ANDROID}
-  ,System.IOUtils
+    {$IFNDEF LAMW}
+      ,System.IOUtils
+    {$ENDIF}
   {$EndIf} ;
 
 {

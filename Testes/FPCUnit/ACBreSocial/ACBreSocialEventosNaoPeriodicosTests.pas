@@ -211,7 +211,7 @@ begin
   Check(respReg.cpfResp = '00000000000',
         'infoExpRisco.respReg.cpfResp | Valor esperado:00000000000 | Valor recebido:'+respReg.cpfResp);
   Check(respReg.ideOC = idCRM,
-        'infoExpRisco.respReg.ideOC | Valor esperado:1 | Valor recebido:'+eSIdeOCToStr(respReg.ideOC));
+        'infoExpRisco.respReg.ideOC | Valor esperado:1 | Valor recebido:'+eSIdeOCToStrEX(respReg.ideOC));
   Check(respReg.dscOC = 'CRM',
         'infoExpRisco.respReg.dscOC | Valor esperado:CRM | Valor recebido:'+respReg.dscOC);
   Check(respReg.nrOC  = '123',

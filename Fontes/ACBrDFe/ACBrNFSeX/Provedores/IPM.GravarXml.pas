@@ -40,7 +40,8 @@ uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase, ACBrXmlDocument,
   pcnConsts,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao, ACBrNFSeXConsts;
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXGravarXml_ABRASFv2,
+  ACBrNFSeXConversao, ACBrNFSeXConsts;
 
 type
   { TNFSeW_IPM }
@@ -74,6 +75,14 @@ type
   { TNFSeW_IPM101 }
 
   TNFSeW_IPM101 = class(TNFSeW_IPM)
+  protected
+    procedure Configuracao; override;
+
+  end;
+
+  { TNFSeW_IPM204 }
+
+  TNFSeW_IPM204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -532,6 +541,20 @@ begin
 
   if FpAOwner.ConfigGeral.Params.ParamTemValor('GerarTag', 'codigo_atividade') then
     FpNrOcorrCodigoAtividade := 1;
+end;
+
+{ TNFSeW_IPM204 }
+
+procedure TNFSeW_IPM204.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoAliq := tcDe2;
+
+  NrOcorrInformacoesComplemetares := 0;
+  NrOcorrCodigoPaisTomador := -1;
+
+  TagTomador := 'TomadorServico';
 end;
 
 end.

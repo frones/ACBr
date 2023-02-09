@@ -157,6 +157,7 @@ uses
   // layout da ABRASF
   EL.Provider,
   Infisc.Provider,
+  IPM.Provider,
   SmarAPD.Provider,
 
   // Provedores que tem layout próprio
@@ -173,7 +174,6 @@ uses
   GeisWeb.Provider,
   Giap.Provider,
   Governa.Provider,
-  IPM.Provider,
   ISSBarueri.Provider,
   ISSCambe.Provider,
   ISSDSF.Provider,
@@ -351,6 +351,8 @@ begin
             // Layout Próprio
             ve100: Result := TACBrNFSeProviderIPM.Create(ACBrNFSe);
             ve101: Result := TACBrNFSeProviderIPM101.Create(ACBrNFSe);
+            // Layout ABRASF
+            ve204: Result := TACBrNFSeProviderIPM204.Create(ACBrNFSe);
           else
             Result := nil;
           end;

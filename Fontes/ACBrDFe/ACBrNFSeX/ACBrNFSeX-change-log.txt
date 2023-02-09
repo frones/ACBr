@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2023
+-- Diversos --
+[+] Implementado nas units do provedor IPM a versão 2.04 do layout da ABRASF a 
+    ser usado pela cidade: Novo Hamburgo/RS
+   Por: Italo Giurizzato Junior
+
 08/02/2023
 -- ACBrNFSeXConversao/SimplISS.Provider --
 [*] Sobrescrito as funções de conversão de Regime Especial de Tributação.

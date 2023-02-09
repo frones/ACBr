@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXConversao, ACBrNFSeXLerXml;
+  ACBrNFSeXConversao, ACBrNFSeXLerXml, ACBrNFSeXLerXml_ABRASFv2;
 
 type
   { Provedor com layout próprio }
@@ -64,6 +64,15 @@ type
   { TNFSeR_IPM101 }
 
   TNFSeR_IPM101 = class(TNFSeR_IPM)
+
+  end;
+
+  { TNFSeR_IPM204 }
+
+  TNFSeR_IPM204 = class(TNFSeR_ABRASFv2)
+  protected
+
+  public
 
   end;
 

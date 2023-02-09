@@ -97,9 +97,10 @@ begin
   URL := URL +
          '/' + StringReplace(TipoEventoToStr(TipoEvento),'-','',[rfReplaceAll]);
 
-  if Length(nrInscContrib) = 14 then
+  if Length(nrInscContrib) in [8,14] then
   begin
-    nrInscAdq := nrInscContrib;
+    if Length(nrInscContrib) = 14 then
+      nrInscAdq := nrInscContrib;
     nrInscContrib := Copy( nrInscContrib, 1, 8 );
     FtpInscContrib := '1';
   end
@@ -273,9 +274,10 @@ begin
   Gerador.ArquivoFormatoXML := '';
   tpEvento := Copy(TipoEventoToStr(TipoEvento), 3, 4);
 
-  if Length(nrInscContrib) = 14 then
+  if Length(nrInscContrib) in [8,14] then
   begin
-    nrInscAdq := nrInscContrib;
+    if Length(nrInscContrib) = 14 then
+      nrInscAdq := nrInscContrib;
     nrInscContrib := Copy( nrInscContrib, 1, 8 );
     FtpInscContrib := '1';
   end

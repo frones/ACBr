@@ -149,6 +149,7 @@ type
     FnrInscTomador: string;
     FdtApur: TDateTime;
     FcpfCnpjBenef: String;
+    FcnpjFonte: String;
 
     FRetConsulta_R5011: TRetConsulta_R5011;
     FRetConsulta_R9011: TRetConsulta_R9011;
@@ -156,7 +157,6 @@ type
     FVersaoDF: TVersaoReinf;
     FConsulta: TReinfConsulta;
     FRetEnvioLote: TRetEnvioLote;
-    FcnpjFonte: String;
 
     function GetRetConsulta: TRetConsulta; // Remover após entrar em vigor a versão 2_01_01 ou colocar exceção alertanto para usar a RetConsulta_R5011
     function GetRetConsulta_R5011: TRetConsulta_R5011;
@@ -608,7 +608,7 @@ begin
   TACBrReinf(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 
-  if FPConfiguracoesReinf.Geral.VersaoDF >= v1_05_01 then
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
     FPURL := FPURL + '/lotes';
 end;
 
@@ -869,7 +869,7 @@ begin
   TACBrReinf(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 
-  if FPConfiguracoesReinf.Geral.VersaoDF >= v1_05_01 then
+  if FPConfiguracoesReinf.Geral.VersaoDF >= v2_01_01 then
     FPURL := FPURL + '/reciboevento';
 end;
 

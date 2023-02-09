@@ -78,6 +78,7 @@ type
     btnOrderGetDetails: TButton;
     btnOrderConfirm: TButton;
     btnOrderDispatch: TButton;
+    btnOrderDelivered: TButton;
     btnOrderReadyForPickup: TButton;
     btnOrderRequestCancellation: TButton;
     btnOrderAcceptCancellation: TButton;
@@ -227,6 +228,7 @@ type
     procedure btnOrderConfirmClick(Sender: TObject);
     procedure btnOrderDenyCancellationClick(Sender: TObject);
     procedure btnOrderDispatchClick(Sender: TObject);
+    procedure btnOrderDeliveredClick(Sender: TObject);
     procedure btnOrderGetDetailsClick(Sender: TObject);
     procedure btnOrderReadyForPickupClick(Sender: TObject);
     procedure btnOrderRequestCancellationClick(Sender: TObject);
@@ -363,6 +365,13 @@ begin
   ACBrOpenDelivery1.WebServices.OrderConfirm.OrderExternalCode := '';
 
   ACBrOpenDelivery1.WebServices.OrderConfirm.Executar;
+end;
+
+procedure TFMain.btnOrderDeliveredClick(Sender: TObject);
+begin
+  ConfigurarComponente;
+  ACBrOpenDelivery1.WebServices.OrderDelivered.OrderId := edtOrderOrderId.Text;
+  ACBrOpenDelivery1.WebServices.OrderDelivered.Executar;
 end;
 
 procedure TFMain.btnOrderDenyCancellationClick(Sender: TObject);
@@ -578,7 +587,7 @@ begin
 
     edtDisplayId.Text := Order.displayId;
     edtCreateAt.Text := FormatDateTime('YYYY-MM-DD hh:mm:ss', Order.createdAt);
-    edtOrderTiming.Text := Order.orderTiming;
+    edtOrderTiming.Text := OrderTimingToStr(Order.orderTiming);
 
     //Total
     lblItemsPriceValue.Text := ACBrOpenDelivery1.WebServices.OrderDetails.Order.total.itemsPrice.value.ToString;
@@ -614,7 +623,7 @@ begin
       gridItens.Cells[1 , I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].index.ToString;
       gridItens.Cells[2 , I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].name;
       gridItens.Cells[3 , I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].externalCode;
-      gridItens.Cells[4 , I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I]._unit;
+      gridItens.Cells[4 , I] := UnitToStr(ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I]._unit);
       gridItens.Cells[5 , I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].quantity.ToString;
       gridItens.Cells[6 , I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].specialInstructions;
       gridItens.Cells[7 , I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].unitPrice.value.ToString;
@@ -630,7 +639,7 @@ begin
       gridOptions.Cells[0, I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.items[I].options[I].id;
       gridOptions.Cells[1, I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].name;
       gridOptions.Cells[2, I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].externalCode;
-      gridOptions.Cells[3, I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I]._unit;
+      gridOptions.Cells[3, I] := UnitToStr(ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I]._unit);
       gridOptions.Cells[4, I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].quantity.ToString;
       gridOptions.Cells[5, I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].unitPrice.value.ToString;
       gridOptions.Cells[6, I] := ACBrOpenDelivery1.WebServices.OrderDetails.Order.Items[I].unitPrice.currency;

@@ -58,6 +58,13 @@ type
 
   TACBrODAllergenArray = array of TACBrODAllergen;
 
+  TACBrODBrand = (caVisa, caMasterCard, caDiners, caAmex, caHipercard, caElo,
+    caAura, caDiscover, caVRBeneficios, caSodexo, caTicket, caGoodCard,
+    caBanescard, caSoroCard, caPoliCard, caValeCard, caAgiCard, caJCB,
+    caCredSystem, caCabal, caGreenCard, caVeroCheque, caAVista, caOther);
+
+  TACBrODBrandArray = array of TACBrODBrand;
+
   TACBrODCancelRequestCode = (crcSystemicIssues, crcDuplicateApplication, crcUnavailableItem,
     crcRestaurantWithoutDeliveryMan, crcOutdatedMenu, crcOrderOutsideTheDeliveryArea, crcBlockedCustomer,
     crcOutsideDeliveryHours, crcInternalDifficultiesOfTheRestaurant, crcRiskArea);
@@ -74,7 +81,7 @@ type
   TACBrODDiscountTarget = (dtCart, dtDeliveryFee, dtItem);
 
   TACBrODEventType = (etCreated, etConfirmed, etDispatched, etReadyForPickup,
-    etPickupAreaAssigned, etConcluded, etCancellationRequested,
+    etPickupAreaAssigned, etDelivered, etConcluded, etCancellationRequested,
     etCancellationRequestDenied, etCancelled, etOrderCancellationRequest);
 
   TACBrODEventTypeArray = array of TACBrODEventType;
@@ -100,8 +107,8 @@ type
 
   TACBrODMerchantUpdateType = (mutEmptyBody, mutOnlyStatus, mutEntityType, mutStatusEntityType);
 
-  TACBrODMerchantUpdateEntity = (mueService, mueMenu, mueCategory, mueItem, mueItemOffer,
-    mueOptionGroup, mueAvailability);
+  TACBrODMerchantUpdateEntity = (mueMerchant, mueBasicInfo, mueService, mueMenu, mueCategory,
+    mueItem, mueItemOffer, mueOptionGroup, mueAvailability);
 
   TACBrODOrderTiming = (otInstant, otScheduled);
 
@@ -130,9 +137,15 @@ type
 
   TACBrODTakeoutMode = (tmDefault, tmPickupArea);
 
+  TACBrODUnit = (unUnit, unKilogram, unLiter, unOunce, unPound, unGallon);
+
 function AllergenToStr(AValue: TACBrODAllergen): string;
 function AllergensToArray(AValue: TACBrODAllergenArray): TSplitResult;
 function StrToAllergen(const AValue: string): TACBrODAllergen;
+
+function BrandToStr(aValue: TACBrODBrand): String;
+function StrToBrand(aValue: String): TACBrODBrand;
+function BrandsToArray(aValue: TACBrODBrandArray): TSplitResult;
 
 function CancelRequestCodeToStr(const AValue: TACBrODCancelRequestCode): string;
 
@@ -194,6 +207,9 @@ function StrToSuitableDiet(const AValue: string): TACBrODSuitableDiet;
 
 function TakeoutModeToStr(AValue: TACBrODTakeoutMode): string;
 function StrToTakeoutMode(AValue: string): TACBrODTakeoutMode;
+
+function UnitToStr(aValue: TACBrODUnit): String;
+function StrToUnit(aValue: String): TACBrODUnit;
 
 implementation
 
@@ -405,6 +421,102 @@ begin
     Result := aWheat;
 end;
 
+function BrandToStr(aValue: TACBrODBrand): String;
+begin
+  case aValue of
+    caVisa: Result := 'VISA';
+    caMasterCard: Result := 'MASTERCARD';
+    caDiners: Result := 'DINERS';
+    caAmex: Result := 'AMEX';
+    caHipercard: Result := 'HIPERCARD';
+    caElo: Result := 'ELO';
+    caAura: Result := 'AURA';
+    caDiscover: Result := 'DISCOVER';
+    caVRBeneficios: Result := 'VR_BENEFICIOS';
+    caSodexo: Result := 'SODEXO';
+    caTicket: Result := 'TICKET';
+    caGoodCard: Result := 'GOOD_CARD';
+    caBanescard: Result := 'BANESCARD';
+    caSoroCard: Result := 'SOROCARD';
+    caPoliCard: Result := 'POLICARD';
+    caValeCard: Result := 'VALECARD';
+    caAgiCard: Result := 'AGICARD';
+    caJCB: Result := 'JCB';
+    caCredSystem: Result := 'CREDSYSTEM';
+    caCabal: Result := 'CABAL';
+    caGreenCard: Result := 'GREEN_CARD';
+    caVeroCheque: Result := 'VEROCHEQUE';
+    caAVista: Result := 'AVISTA';
+    caOther: Result := 'OTHER';
+  else
+    Result := EmptyStr;
+  end;
+end;
+
+function StrToBrand(aValue: String): TACBrODBrand;
+var
+  wUpStr: String;
+begin
+  Result := caOther;
+  wUpStr := UpperCase(aValue);
+
+  if wUpStr = 'VISA' then
+    Result := caVisa
+  else if wUpStr = 'MASTERCARD' then
+    Result := caMasterCard
+  else if wUpStr = 'DINERS' then
+    Result := caDiners
+  else if wUpStr = 'AMEX' then
+    Result := caAmex
+  else if wUpStr = 'HIPERCARD' then
+    Result := caHipercard
+  else if wUpStr = 'ELO' then
+    Result := caElo
+  else if wUpStr = 'AURA' then
+    Result := caAura
+  else if wUpStr = 'DISCOVER' then
+    Result := caDiscover
+  else if wUpStr = 'VR_BENEFICIOS' then
+    Result := caVRBeneficios
+  else if wUpStr = 'SODEXO' then
+    Result := caSodexo
+  else if wUpStr = 'TICKET' then
+    Result := caTicket
+  else if wUpStr = 'GOOD_CARD' then
+    Result := caGoodCard
+  else if wUpStr = 'BANESCARD' then
+    Result := caBanescard
+  else if wUpStr = 'SOROCARD' then
+    Result := caSoroCard
+  else if wUpStr = 'POLICARD' then
+    Result := caPoliCard
+  else if wUpStr = 'VALECARD' then
+    Result := caValeCard
+  else if wUpStr = 'AGICARD' then
+    Result := caAgiCard
+  else if wUpStr = 'JCB' then
+    Result := caJCB
+  else if wUpStr = 'CREDSYSTEM' then
+    Result := caCredSystem
+  else if wUpStr = 'CABAL' then
+    Result := caCabal
+  else if wUpStr = 'GREEN_CARD' then
+    Result := caGreenCard
+  else if wUpStr = 'VEROCHEQUE' then
+    Result := caVeroCheque
+  else if wUpStr = 'AVISTA' then
+    Result := caAVista;
+end;
+
+function BrandsToArray(aValue: TACBrODBrandArray): TSplitResult;
+var
+  I: Integer;
+begin
+  SetLength(Result, Length(aValue));
+  for I := 0 to Pred(Length(aValue)) do
+    Result[I] := BrandToStr(aValue[I]);
+end;
+
 function CancelRequestCodeToStr(const AValue: TACBrODCancelRequestCode): string;
 begin
   case AValue of
@@ -522,6 +634,7 @@ begin
     etDispatched: Result := 'DISPATCHED';
     etReadyForPickup: Result := 'READY_FOR_PICKUP';
     etPickupAreaAssigned: Result := 'PICKUP_AREA_ASSIGNED';
+    etDelivered: Result := 'DELIVERED';
     etConcluded: Result := 'CONCLUDED';
     etCancellationRequested: Result := 'CANCELLATION_REQUESTED';
     etCancellationRequestDenied: Result := 'CANCELLATION_REQUEST_DENIED';
@@ -548,6 +661,8 @@ begin
     Result := etReadyForPickup
   else if LStr = 'PICKUP_AREA_ASSIGNED' then
     Result := etPickupAreaAssigned
+  else if LStr = 'DELIVERED' then
+    Result := etDelivered
   else if LStr = 'CONCLUDED' then
     Result := etConcluded
   else if LStr = 'CANCELLATION_REQUESTED' then
@@ -1092,6 +1207,37 @@ begin
     Result := tmDefault
   else if LStr = 'PICKUP_AREA' then
     Result := tmPickupArea
+end;
+
+function UnitToStr(aValue: TACBrODUnit): String;
+begin
+  case aValue of
+    unKilogram: Result := 'KG';
+    unLiter: Result := 'L';
+    unOunce: Result := 'OZ';
+    unPound: Result := 'LB';
+    unGallon: Result := 'GAL';
+  else
+    Result := 'UN';
+  end;
+end;
+
+function StrToUnit(aValue: String): TACBrODUnit;
+var
+  wUpStr: String;
+begin
+  Result := unUnit;
+  wUpStr := UpperCase(aValue);
+  if (wUpStr = 'KG') then
+    Result := unKilogram
+  else if (wUpStr = 'L') then
+    Result := unLiter
+  else if (wUpStr = 'OZ') then
+    Result := unOunce
+  else if (wUpStr = 'LB') then
+    Result := unPound
+  else if (wUpStr = 'GAL') then
+    Result := unGallon;
 end;
 
 end.

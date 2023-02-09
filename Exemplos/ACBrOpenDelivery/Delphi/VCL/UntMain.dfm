@@ -1211,6 +1211,15 @@ object FMain: TFMain
           DataSource = DM.dtsOrder
           TabOrder = 22
         end
+        object btnOrderDelivered: TButton
+          Left = 872
+          Top = 64
+          Width = 130
+          Height = 25
+          Caption = 'Delivered'
+          TabOrder = 23
+          OnClick = btnOrderDeliveredClick
+        end
       end
       object tbiMerchant: TTabSheet
         Caption = 'Merchant (Estabelecimento)'
@@ -1412,6 +1421,7 @@ object FMain: TFMain
     MarketPlace.Resources.OrderConfirm = 'orders/api/v1/{orderId}/confirm'
     MarketPlace.Resources.OrderReadyForPickup = 'orders/api/v1/{orderId}/readyForPickup'
     MarketPlace.Resources.OrderDispatch = 'orders/api/v1/{orderId}/dispatch'
+    MarketPlace.Resources.OrderDelivered = 'orders/api/v1/{orderId}/delivered'
     MarketPlace.Resources.OrderRequestCancellation = 'orders/api/v1/{orderId}/requestCancellation'
     MarketPlace.Resources.OrderAcceptCancellation = 'orders/api/v1/{orderId}/acceptCancellation'
     MarketPlace.Resources.OrderDenyCancellation = 'orders/api/v1/{orderId}/denyCancellation'

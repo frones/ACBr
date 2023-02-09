@@ -86,6 +86,8 @@ type
     property ClientSecret: string read FClientSecret write FClientSecret;
   end;
 
+  { TACBrOpenDeliveryResources }
+
   TACBrOpenDeliveryResources = class(TPersistent)
   private
     FOwner: TACBrComponent;
@@ -98,6 +100,7 @@ type
     FOrderConfirm: string;
     FOrderReadyForPickup: string;
     FOrderDispatch: string;
+    FOrderDelivered: string;
     FOrderRequestCancellation: string;
     FOrderAcceptCancellation: string;
     FOrderDenyCancellation: string;
@@ -117,6 +120,7 @@ type
     function GetOrderConfirm(const AOrderId, AMerchantId: string): string;
     function GetOrderReadyForPickup(const AOrderId, AMerchantId: string): string;
     function GetOrderDispatch(const AOrderId, AMerchantId: string): string;
+    function GetOrderDelivered(const AOrderId, AMerchantId: string): string;
     function GetOrderRequestCancellation(const AOrderId, AMerchantId: string): string;
     function GetOrderAcceptCancellation(const AOrderId, AMerchantId: string): string;
     function GetOrderDenyCancellation(const AOrderId, AMerchantId: string): string;
@@ -130,6 +134,7 @@ type
     property OrderConfirm: string read FOrderConfirm write FOrderConfirm;
     property OrderReadyForPickup: string read FOrderReadyForPickup write FOrderReadyForPickup;
     property OrderDispatch: string read FOrderDispatch write FOrderDispatch;
+    property OrderDelivered: string read FOrderDelivered write FOrderDelivered;
     property OrderRequestCancellation: string read FOrderRequestCancellation write FOrderRequestCancellation;
     property OrderAcceptCancellation: string read FOrderAcceptCancellation write FOrderAcceptCancellation;
     property OrderDenyCancellation: string read FOrderDenyCancellation write FOrderDenyCancellation;
@@ -152,6 +157,7 @@ const
   CEndPointOrderConfirm = 'orders/{orderId}/confirm';
   CEndPointOrderReadyForPickup = 'orders/{orderId}/readyForPickup';
   CEndPointOrderDispatch = 'orders/{orderId}/dispatch';
+  CEndPointOrderDelivered = 'orders/{orderId}/delivered';
   CEndPointOrderRequestCancellation = 'orders/{orderId}/requestCancellation';
   CEndPointOrderAcceptCancellation = 'orders/{orderId}/acceptCancellation';
   CEndPointOrderDenyCancellation = 'orders/{orderId}/denyCancellation';
@@ -168,6 +174,7 @@ const
   CHubDeliveryEndPointOrderConfirm = 'orders/api/v1/{orderId}/confirm';
   CHubDeliveryEndPointOrderReadyForPickup = 'orders/api/v1/{orderId}/readyForPickup';
   CHubDeliveryEndPointOrderDispatch = 'orders/api/v1/{orderId}/dispatch';
+  CHubDeliveryEndPointOrderDelivered = 'orders/api/v1/{orderId}/delivered';
   CHubDeliveryEndPointOrderRequestCancellation = 'orders/api/v1/{orderId}/requestCancellation';
   CHubDeliveryEndPointOrderAcceptCancellation = 'orders/api/v1/{orderId}/acceptCancellation';
   CHubDeliveryEndPointOrderDenyCancellation = 'orders/api/v1/{orderId}/denyCancellation';
@@ -200,6 +207,7 @@ begin
   AMarketPlace.Resources.OrderDetails := CEndPointOrderDetails;
   AMarketPlace.Resources.OrderConfirm := CEndPointOrderConfirm;
   AMarketPlace.Resources.OrderDispatch := CEndPointOrderDispatch;
+  AMarketPlace.Resources.OrderDelivered := CEndPointOrderDelivered;
   AMarketPlace.Resources.OrderReadyForPickup := CEndPointOrderReadyForPickup;
   AMarketPlace.Resources.OrderRequestCancellation := CEndPointOrderRequestCancellation;
   AMarketPlace.Resources.OrderAcceptCancellation := CEndPointOrderAcceptCancellation;
@@ -218,6 +226,7 @@ begin
   AMarketPlace.Resources.OrderDetails := CHubDeliveryEndPointOrderDetails;
   AMarketPlace.Resources.OrderConfirm := CHubDeliveryEndPointOrderConfirm;
   AMarketPlace.Resources.OrderDispatch := CHubDeliveryEndPointOrderDispatch;
+  AMarketPlace.Resources.OrderDelivered := CHubDeliveryEndPointOrderDelivered;
   AMarketPlace.Resources.OrderReadyForPickup := CHubDeliveryEndPointOrderReadyForPickup;
   AMarketPlace.Resources.OrderRequestCancellation := CHubDeliveryEndPointOrderRequestCancellation;
   AMarketPlace.Resources.OrderAcceptCancellation := CHubDeliveryEndPointOrderAcceptCancellation;
@@ -284,6 +293,7 @@ begin
   FOrderDetails := ASource.OrderDetails;
   FOrderConfirm := ASource.OrderConfirm;
   FOrderDispatch := ASource.OrderDispatch;
+  FOrderDelivered := ASource.OrderDelivered;
   FOrderReadyForPickup := ASource.OrderReadyForPickup;
   FOrderDenyCancellation := ASource.OrderDenyCancellation;
   FOrderAcceptCancellation := ASource.OrderAcceptCancellation;
@@ -300,6 +310,7 @@ begin
   FOrderDetails := '';
   FOrderConfirm := '';
   FOrderDispatch := '';
+  FOrderDelivered := '';
   FOrderReadyForPickup := '';
   FOrderDenyCancellation := '';
   FOrderAcceptCancellation := '';
@@ -318,6 +329,7 @@ begin
   FOrderDetails := CEndPointOrderDetails;
   FOrderConfirm := CEndPointOrderConfirm;
   FOrderDispatch := CEndPointOrderDispatch;
+  FOrderDelivered := CEndPointOrderDelivered;
   FOrderReadyForPickup := CEndPointOrderReadyForPickup;
   FOrderRequestCancellation := CEndPointOrderRequestCancellation;
   FOrderAcceptCancellation := CEndPointOrderAcceptCancellation;
@@ -375,6 +387,12 @@ function TACBrOpenDeliveryResources.GetOrderDispatch(const AOrderId,
   AMerchantId: string): string;
 begin
   Result := ReplaceResource(FOrderDispatch, AOrderId, AMerchantId);
+end;
+
+function TACBrOpenDeliveryResources.GetOrderDelivered(const AOrderId,
+  AMerchantId: string): string;
+begin
+  Result := ReplaceResource(FOrderDelivered, AOrderId, AMerchantId);
 end;
 
 function TACBrOpenDeliveryResources.GetOrderReadyForPickup(const AOrderId,

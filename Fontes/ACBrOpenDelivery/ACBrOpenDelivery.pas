@@ -71,6 +71,7 @@ type
     FOnEventDispatched: TOnEventStatus;
     FOnEventReadyForPickup: TOnEventStatus;
     FOnEventPickupAreaAssigned: TOnEventStatus;
+    FOnEventDelivered: TOnEventStatus;
     FOnEventConcluded: TOnEventStatus;
     FOnEventCancellationRequested: TOnEventStatus;
     FOnEventCancellationRequestDenied: TOnEventStatus;
@@ -104,6 +105,7 @@ type
     property OnEventDispatched: TOnEventStatus read FOnEventDispatched write FOnEventDispatched;
     property OnEventReadyForPickup: TOnEventStatus read FOnEventReadyForPickup write FOnEventReadyForPickup;
     property OnEventPickupAreaAssigned: TOnEventStatus read FOnEventPickupAreaAssigned write FOnEventPickupAreaAssigned;
+    property OnEventDelivered: TOnEventStatus read FOnEventDelivered write FOnEventDelivered;
     property OnEventConcluded: TOnEventStatus read FOnEventConcluded write FOnEventConcluded;
     property OnEventCancellationRequested: TOnEventStatus read FOnEventCancellationRequested write FOnEventCancellationRequested;
     property OnEventCancellationRequestDenied: TOnEventStatus read FOnEventCancellationRequestDenied write FOnEventCancellationRequestDenied;

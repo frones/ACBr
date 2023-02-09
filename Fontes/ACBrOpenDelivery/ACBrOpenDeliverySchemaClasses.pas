@@ -225,6 +225,8 @@ type
     property Items[Index: Integer]: TACBrOpenDeliverySchemaAvailability read GetItem write SetItem; default;
   end;
 
+  { TACBrOpenDeliverySchemaBasicInfo }
+
   TACBrOpenDeliverySchemaBasicInfo = class(TACBrOpenDeliverySchema)
   private
     Fname: string;
@@ -242,6 +244,7 @@ type
     FlogoImage: TACBrOpenDeliverySchemaImage;
     FbannerImage: TACBrOpenDeliverySchemaImage;
     FcreatedAt: TDateTime;
+    FacceptedCards: TACBrODBrandArray;
   protected
     procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
@@ -266,6 +269,7 @@ type
     property logoImage: TACBrOpenDeliverySchemaImage read FlogoImage write FlogoImage;
     property bannerImage: TACBrOpenDeliverySchemaImage read FbannerImage write FbannerImage;
     property createdAt: TDateTime read FcreatedAt write FcreatedAt;
+    property acceptedCards: TACBrODBrandArray read FacceptedCards write FacceptedCards;
   end;
 
   TACBrOpenDeliverySchemaCategory = class(TACBrOpenDeliverySchema)
@@ -470,7 +474,7 @@ type
     Fimage: TACBrOpenDeliverySchemaImage;
     FnutritionalInfo: TACBrOpenDeliverySchemaNutritionalInfo;
     Fserving: Integer;
-    Funit: string;
+    Funit: TACBrODUnit;
     Fean: string;
     Fstatus: TACBrODStatus;
   protected
@@ -490,7 +494,7 @@ type
     property image: TACBrOpenDeliverySchemaImage read Fimage write Fimage;
     property nutritionalInfo: TACBrOpenDeliverySchemaNutritionalInfo read FnutritionalInfo write FnutritionalInfo;
     property serving: Integer read Fserving write Fserving;
-    property _unit: string read Funit write Funit;
+    property _unit: TACBrODUnit read Funit write Funit;
     property ean: string read Fean write Fean;
   end;
 
@@ -724,6 +728,7 @@ type
     FdisplayId: string;
     FsourceAppId: string;
     FcreatedAt: TDateTime;
+    FlastEvent: TACBrODEventType;
     ForderTiming: TACBrODOrderTiming;
     FpreparationStartDateTime: TDateTime;
     FextraInfo: string;
@@ -752,6 +757,7 @@ type
     property displayId: string read FdisplayId write FdisplayId;
     property sourceAppId: string read FsourceAppId write FsourceAppId;
     property createdAt: TDateTime read FcreatedAt write FcreatedAt;
+    property lastEvent: TACBrODEventType read FlastEvent write FlastEvent;
     property orderTiming: TACBrODOrderTiming read ForderTiming write ForderTiming;
     property preparationStartDateTime: TDateTime read FpreparationStartDateTime write FpreparationStartDateTime;
     property extraInfo: string read FextraInfo write FextraInfo;
@@ -1038,7 +1044,7 @@ type
 
   TACBrOpenDeliverySchemaOrderItem = class(TACBrOpenDeliverySchema)
   private
-    Funit: string;
+    Funit: TACBrODUnit;
     Fname: string;
     FoptionsPrice: TACBrOpenDeliverySchemaPrice;
     FunitPrice: TACBrOpenDeliverySchemaPrice;
@@ -1063,7 +1069,7 @@ type
     property id: string read Fid write Fid;
     property name: string read Fname write Fname;
     property externalCode: string read FexternalCode write FexternalCode;
-    property _unit: string read Funit write Funit;
+    property _unit: TACBrODUnit read Funit write Funit;
     property ean: string read Fean write Fean;
     property quantity: Double read Fquantity write Fquantity;
     property specialInstructions: string read FspecialInstructions write FspecialInstructions;
@@ -1176,6 +1182,7 @@ type
     Fvalue: Currency;
     Fcurrency: string;
     Fmethod: TACBrODPaymentMethod;
+    Fbrand: TACBrODBrand;
     Ftype: TACBrODPaymentType;
     FmethodInfo: string;
     FchangeFor: Currency;
@@ -1191,6 +1198,7 @@ type
     property currency: string read Fcurrency write Fcurrency;
     property _type: TACBrODPaymentType read Ftype write Ftype;
     property method: TACBrODPaymentMethod read Fmethod write Fmethod;
+    property brand: TACBrODBrand read Fbrand write Fbrand;
     property methodInfo: string read FmethodInfo write FmethodInfo;
     property changeFor: Currency read FchangeFor write FchangeFor;
   end;
@@ -1333,12 +1341,15 @@ type
     property Items[Index: Integer]: TACBrOpenDeliverySchemaRadius read GetItem write SetItem; default;
   end;
 
+  { TACBrOpenDeliverySchemaService }
+
   TACBrOpenDeliverySchemaService = class(TACBrOpenDeliverySchema)
   private
     Fid: string;
     Fstatus: TACBrODStatus;
     FserviceType: TACBrODServiceType;
     FmenuId: string;
+    FtargetAppId: string;
     FserviceArea: TACBrOpenDeliverySchemaServiceArea;
     FserviceHours: TACBrOpenDeliverySchemaServiceHour;
     FserviceTiming: TACBrOpenDeliverySchemaServiceTiming;
@@ -1356,6 +1367,7 @@ type
     property serviceType: TACBrODServiceType read FserviceType write FserviceType;
     property serviceTiming: TACBrOpenDeliverySchemaServiceTiming read FserviceTiming write FserviceTiming;
     property menuId: string read FmenuId write FmenuId;
+    property targetAppId: string read FtargetAppId write FtargetAppId;
     property serviceArea: TACBrOpenDeliverySchemaServiceArea read FserviceArea write FserviceArea;
     property serviceHours: TACBrOpenDeliverySchemaServiceHour read FserviceHours write FserviceHours;
   end;
@@ -1513,6 +1525,7 @@ begin
   FcreatedAt := 0;
   SetLength(FmerchantCategories, 0);
   SetLength(FcontactEmails, 0);
+  SetLength(FacceptedCards, 0);
 
   FminOrderValue.Clear;
   Faddress.Clear;
@@ -1543,7 +1556,7 @@ end;
 
 procedure TACBrOpenDeliverySchemaBasicInfo.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
-  LCategories: TSplitResult;
+  LCategories, wAcceptedCards: TSplitResult;
   I: Integer;
 begin
   AJson
@@ -1555,7 +1568,8 @@ begin
     .Value('averagePreparationTime', FaveragePreparationTime)
     .Value('merchantCategories', LCategories)
     .Value('contactEmails', FcontactEmails)
-    .ValueISODate('createdAt', FcreatedAt);
+    .ValueISODate('createdAt', FcreatedAt)
+    .Value('acceptedCards', wAcceptedCards);
 
   FmerchantType := StrToMerchantType(AJson.AsString['merchantType']);
   FminOrderValue.ReadFromJSon(AJSon);
@@ -1567,6 +1581,10 @@ begin
   SetLength(FmerchantCategories, Length(LCategories));
   for I := 0 to Pred(Length(LCategories)) do
     FmerchantCategories[I] := StrToMerchantCategories(LCategories[I]);
+
+  SetLength(FacceptedCards, Length(wAcceptedCards));
+  for I := 0 to Pred(Length(wAcceptedCards)) do
+    FacceptedCards[I] := StrToBrand(wAcceptedCards[I]);
 end;
 
 procedure TACBrOpenDeliverySchemaBasicInfo.DoWriteToJSon(AJSon: TACBrJSONObject);
@@ -1586,8 +1604,8 @@ begin
     .AddPairJSONObject('contactPhones', FcontactPhones.AsJSON)
     .AddPairJSONObject('logoImage', FlogoImage.AsJSON)
     .AddPairJSONObject('bannerImage', FbannerImage.AsJSON)
-    .AddPairISODateTime('createdAt', FcreatedAt);
-
+    .AddPairISODateTime('createdAt', FcreatedAt)
+    .AddPair('acceptedCards', BrandsToArray(FacceptedCards));
 end;
 
 function TACBrOpenDeliverySchemaBasicInfo.IsEmpty: Boolean;
@@ -1606,7 +1624,8 @@ begin
     (Faddress.IsEmpty) and
     (FcontactPhones.IsEmpty) and
     (FlogoImage.IsEmpty) and
-    (FbannerImage.IsEmpty);
+    (FbannerImage.IsEmpty) and
+    (Length(FacceptedCards) = 0);
 end;
 
 { TACBrOpenDeliverySchemaAddress }
@@ -2253,6 +2272,7 @@ begin
   Fstatus := sAvailable;
   FserviceType := stDelivery;
   FmenuId := '';
+  FtargetAppId := '';
   FserviceTiming.Clear;
   FserviceArea.Clear;
   FserviceHours.Clear;
@@ -2280,7 +2300,8 @@ var
 begin
   AJson
     .Value('id', Fid)
-    .Value('menuId', FmenuId);
+    .Value('menuId', FmenuId)
+    .Value('targetAppId', FtargetAppId);
 
   LStrEnum := AJSon.AsString['status'];
   Fstatus := StrToStatus(LStrEnum);
@@ -2300,6 +2321,7 @@ begin
     .AddPair('status', StatusToStr(Fstatus))
     .AddPair('serviceType', ServiceTypeToStr(FserviceType))
     .AddPair('menuId', FmenuId)
+    .AddPair('targetAppId', FtargetAppId)
     .AddPairJSONObject('serviceTiming', FserviceTiming.AsJSON)
     .AddPairJSONObject('serviceArea', FserviceArea.AsJSON)
     .AddPairJSONObject('serviceHours', FserviceHours.AsJSON);
@@ -2311,6 +2333,7 @@ begin
     (Fstatus = sAvailable) and
     (FserviceType = stDelivery) and
     (FmenuId = '') and
+    (FtargetAppId = '') and
     (FserviceTiming.IsEmpty) and
     (FserviceArea.IsEmpty) and
     (FserviceHours.IsEmpty);
@@ -2665,7 +2688,7 @@ begin
   FexternalCode := '';
   Fstatus := sAvailable;
   Fserving := 0;
-  Funit := '';
+  Funit := unUnit;
   Fean := '';
   Fimage.Clear;
   FnutritionalInfo.Clear;
@@ -2687,7 +2710,7 @@ end;
 
 procedure TACBrOpenDeliverySchemaItem.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
-  LStr: string;
+  LStr, wUnit: string;
 begin
   AJSon
     .Value('id', Fid)
@@ -2696,10 +2719,11 @@ begin
     .Value('externalCode', FexternalCode)
     .Value('status', LStr)
     .Value('serving', Fserving)
-    .Value('unit', Funit)
+    .Value('unit', wUnit)
     .Value('ean', Fean);
 
   Fstatus := StrToStatus(LStr);
+  Funit := StrToUnit(wUnit);
   Fimage.ReadFromJSon(AJSon);
   FnutritionalInfo.ReadFromJSon(AJSon);
 end;
@@ -2715,7 +2739,7 @@ begin
     .AddPairJSONObject('image', Fimage.AsJSON)
     .AddPairJSONObject('nutritionalInfo', FnutritionalInfo.AsJSON)
     .AddPair('serving', Fserving)
-    .AddPair('unit', Funit)
+    .AddPair('unit', UnitToStr(Funit))
     .AddPair('ean', Fean);
 end;
 
@@ -2727,7 +2751,7 @@ begin
     (FexternalCode = '') and
     (Fstatus = sAvailable) and
     (Fserving = 0) and
-    (Funit = '') and
+    (Funit = unUnit) and
     (Fean = '') and
     (Fimage.IsEmpty) and
     (FnutritionalInfo.IsEmpty);
@@ -3693,7 +3717,7 @@ begin
   Fid := '';
   Fname := '';
   FexternalCode := '';
-  Funit := '';
+  Funit := unUnit;
   Fean := '';
   Fquantity := 0;
   FunitPrice.Clear;
@@ -3722,17 +3746,20 @@ begin
 end;
 
 procedure TACBrOpenDeliverySchemaOrderItem.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  wUnit: String;
 begin
   AJSon
     .Value('index', Findex)
     .Value('id', Fid)
     .Value('name', Fname)
     .Value('externalCode', FexternalCode)
-    .Value('unit', Funit)
+    .Value('unit', wUnit)
     .Value('ean', Fean)
     .Value('quantity', Fquantity)
     .Value('specialInstructions', FspecialInstructions);
 
+  Funit := StrToUnit(wUnit);
   FunitPrice.ReadFromJSon(AJSon);
   FtotalPrice.ReadFromJSon(AJSon);
   FoptionsPrice.ReadFromJSon(AJSon);
@@ -3746,7 +3773,7 @@ begin
     .AddPair('id', Fid)
     .AddPair('name', Fname)
     .AddPair('externalCode', FexternalCode)
-    .AddPair('unit', Funit)
+    .AddPair('unit', UnitToStr(Funit))
     .AddPair('ean', Fean)
     .AddPair('quantity', Fquantity)
     .AddPair('specialInstructions', FspecialInstructions);
@@ -3763,7 +3790,7 @@ begin
             (Fid = '') and
             (Fname = '') and
             (FexternalCode = '') and
-            (Funit = '') and
+            (Funit = unUnit) and
             (Fean = '') and
             (Fquantity = 0) and
             (FunitPrice.IsEmpty) and
@@ -4084,25 +4111,27 @@ begin
   Fcurrency := '';
   Ftype := ptPrepaid;
   Fmethod := pmCredit;
+  Fbrand := caOther;
   FmethodInfo := '';
   FchangeFor := 0;
 end;
 
 procedure TACBrOpenDeliverySchemaOrderPaymentMethod.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
-  LStrType: string;
-  LStrMethod: string;
+  LStrType, LStrMethod, wBrand: string;
 begin
   AJSon
     .Value('value', Fvalue)
     .Value('currency', Fcurrency)
     .Value('type', LStrType)
     .Value('method', LStrMethod)
+    .Value('brand', wBrand)
     .Value('methodInfo', FmethodInfo)
     .Value('changeFor', FchangeFor);
 
   Ftype := StrToPaymentType(LStrType);
   Fmethod := StrToPaymentMethod(LStrMethod);
+  Fbrand := StrToBrand(wBrand);
 end;
 
 procedure TACBrOpenDeliverySchemaOrderPaymentMethod.DoWriteToJSon(AJSon: TACBrJSONObject);
@@ -4112,6 +4141,7 @@ begin
     .AddPair('currency', Fcurrency)
     .AddPair('type', PaymentTypeToStr(Ftype))
     .AddPair('method', PaymentMethodToStr(Fmethod))
+    .AddPair('brand', BrandToStr(Fbrand))
     .AddPair('methodInfo', FmethodInfo)
     .AddPair('changeFor', FchangeFor);
 end;
@@ -4122,6 +4152,7 @@ begin
             (Fcurrency = '') and
             (Ftype = ptPrepaid) and
             (Fmethod = pmCredit) and
+            (Fbrand = caOther) and
             (FmethodInfo = '') and
             (FchangeFor = 0);
 end;
@@ -4227,6 +4258,7 @@ begin
   FdisplayId := '';
   FsourceAppId := '';
   FcreatedAt := 0;
+  FlastEvent := etCreated;
   ForderTiming := otInstant;
   FpreparationStartDateTime := 0;
   FextraInfo := '';
@@ -4278,8 +4310,7 @@ end;
 
 procedure TACBrOpenDeliverySchemaOrder.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
-  LStrType: string;
-  LStrOrderTiming: string;
+  LStrType, LStrOrderTiming, wLastEvent: string;
 begin
   AJSon
     .Value('id', Fid)
@@ -4287,11 +4318,13 @@ begin
     .Value('displayId', FdisplayId)
     .Value('sourceAppId', FsourceAppId)
     .ValueISODateTime('createdAt', FcreatedAt)
+    .Value('lastEvent', wLastEvent)
     .Value('orderTiming', LStrOrderTiming)
     .ValueISODateTime('preparationStartDateTime', FpreparationStartDateTime)
     .Value('extraInfo', FextraInfo);
 
   Ftype := StrToServiceType(LStrType);
+  FlastEvent := StrToEventType(wLastEvent);
   ForderTiming := StrToOrderTiming(LStrOrderTiming);
   Fmerchant.ReadFromJSon(AJSon);
   Fitems.ReadFromJSon(AJSon);
@@ -4314,6 +4347,7 @@ begin
     .AddPair('displayId', FdisplayId)
     .AddPair('sourceAppId', FsourceAppId)
     .AddPairISODateTime('createdAt', FcreatedAt)
+    .AddPair('lastEvent', EventTypeToStr(FlastEvent))
     .AddPair('orderTiming', OrderTimingToStr(ForderTiming))
     .AddPairISODateTime('preparationStartDateTime', FpreparationStartDateTime)
     .AddPair('extraInfo', FextraInfo);

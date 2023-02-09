@@ -3078,7 +3078,7 @@ object FMain: TFMain
           Size.Width = 140.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 12
+          TabOrder = 13
           Text = 'Ready For Pickup'
           OnClick = btnOrderReadyForPickupClick
         end
@@ -3088,7 +3088,7 @@ object FMain: TFMain
           Size.Width = 140.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 13
+          TabOrder = 14
           Text = 'Request Cancellation'
           OnClick = btnOrderRequestCancellationClick
         end
@@ -3098,7 +3098,7 @@ object FMain: TFMain
           Size.Width = 140.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 14
+          TabOrder = 15
           Text = 'Accept Cancellation'
           OnClick = btnOrderAcceptCancellationClick
         end
@@ -3108,7 +3108,7 @@ object FMain: TFMain
           Size.Width = 140.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 15
+          TabOrder = 16
           Text = 'Deny Cancellation'
           OnClick = btnOrderDenyCancellationClick
         end
@@ -3121,7 +3121,7 @@ object FMain: TFMain
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           Text = 'Merchant ID (ID Estabelecimento)'
-          TabOrder = 16
+          TabOrder = 17
         end
         object Label15: TLabel
           StyledSettings = [Family, Size, FontColor]
@@ -3132,11 +3132,11 @@ object FMain: TFMain
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           Text = 'Merchant Name (Nome Estabelecimento)'
-          TabOrder = 17
+          TabOrder = 18
         end
         object edtMerchantNameOrder: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 18
+          TabOrder = 19
           Position.X = 280.000000000000000000
           Position.Y = 140.000000000000000000
           Size.Width = 288.000000000000000000
@@ -3145,7 +3145,7 @@ object FMain: TFMain
         end
         object edtMerchantIDOrder: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 19
+          TabOrder = 20
           Position.X = 16.000000000000000000
           Position.Y = 140.000000000000000000
           Size.Width = 241.000000000000000000
@@ -3154,7 +3154,7 @@ object FMain: TFMain
         end
         object edtID: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 20
+          TabOrder = 21
           Position.X = 16.000000000000000000
           Position.Y = 186.000000000000000000
           Size.Width = 241.000000000000000000
@@ -3163,7 +3163,7 @@ object FMain: TFMain
         end
         object edtType: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 21
+          TabOrder = 22
           Position.X = 280.000000000000000000
           Position.Y = 186.000000000000000000
           Size.Width = 120.000000000000000000
@@ -3172,7 +3172,7 @@ object FMain: TFMain
         end
         object edtCreateAt: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 23
+          TabOrder = 24
           Position.X = 520.000000000000000000
           Position.Y = 186.000000000000000000
           Size.Width = 185.000000000000000000
@@ -3189,7 +3189,7 @@ object FMain: TFMain
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           Text = 'ID'
-          TabOrder = 24
+          TabOrder = 25
         end
         object Label19: TLabel
           AutoSize = True
@@ -3201,7 +3201,7 @@ object FMain: TFMain
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           Text = 'Type (Tipo Entrega)'
-          TabOrder = 25
+          TabOrder = 26
         end
         object Label20: TLabel
           AutoSize = True
@@ -3213,7 +3213,7 @@ object FMain: TFMain
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           Text = 'displayID'
-          TabOrder = 26
+          TabOrder = 27
         end
         object Label21: TLabel
           AutoSize = True
@@ -3225,11 +3225,11 @@ object FMain: TFMain
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           Text = 'createAt (Dt. do Pedido)'
-          TabOrder = 28
+          TabOrder = 29
         end
         object edtDisplayId: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 29
+          TabOrder = 30
           Position.X = 412.000000000000000000
           Position.Y = 186.000000000000000000
         end
@@ -3243,11 +3243,11 @@ object FMain: TFMain
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00070000000000000004000000}
           Text = 'orderTiming (Agendado para)'
-          TabOrder = 27
+          TabOrder = 28
         end
         object edtOrderTiming: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 22
+          TabOrder = 23
           Position.X = 713.000000000000000000
           Position.Y = 186.000000000000000000
           Size.Width = 185.000000000000000000
@@ -3260,7 +3260,7 @@ object FMain: TFMain
           Size.Width = 140.000000000000000000
           Size.Height = 121.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 34
+          TabOrder = 35
           object Rectangle1: TRectangle
             Align = Contents
             Fill.Color = xFFF2F1F1
@@ -3331,7 +3331,7 @@ object FMain: TFMain
           Size.Width = 140.000000000000000000
           Size.Height = 121.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 32
+          TabOrder = 33
           object Rectangle2: TRectangle
             Align = Contents
             Fill.Color = xFFF2F1F1
@@ -3401,7 +3401,7 @@ object FMain: TFMain
           Size.Width = 140.000000000000000000
           Size.Height = 121.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 31
+          TabOrder = 32
           object Rectangle3: TRectangle
             Align = Contents
             Fill.Color = xFFF2F1F1
@@ -3471,7 +3471,7 @@ object FMain: TFMain
           Size.Width = 140.000000000000000000
           Size.Height = 121.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 30
+          TabOrder = 31
           object Rectangle4: TRectangle
             Align = Contents
             Fill.Color = xFFF2F1F1
@@ -3542,7 +3542,7 @@ object FMain: TFMain
           Size.Height = 297.000000000000000000
           Size.PlatformDefault = False
           TabIndex = 0
-          TabOrder = 35
+          TabOrder = 36
           TabPosition = PlatformDefault
           Sizes = (
             1051s
@@ -4067,7 +4067,7 @@ object FMain: TFMain
           Size.Width = 447.000000000000000000
           Size.Height = 121.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 33
+          TabOrder = 34
           object Rectangle5: TRectangle
             Align = Contents
             Fill.Color = xFFF2F1F1
@@ -4213,6 +4213,16 @@ object FMain: TFMain
               TabOrder = 2
             end
           end
+        end
+        object btnOrderDelivered: TButton
+          Position.X = 869.000000000000000000
+          Position.Y = 53.000000000000000000
+          Size.Width = 140.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 12
+          Text = 'Delivered'
+          OnClick = btnOrderDeliveredClick
         end
       end
       object tbiMerchant: TTabItem
@@ -4442,6 +4452,7 @@ object FMain: TFMain
     MarketPlace.Resources.OrderConfirm = 'orders/api/v1/{orderId}/confirm'
     MarketPlace.Resources.OrderReadyForPickup = 'orders/api/v1/{orderId}/readyForPickup'
     MarketPlace.Resources.OrderDispatch = 'orders/api/v1/{orderId}/dispatch'
+    MarketPlace.Resources.OrderDelivered = 'orders/api/v1/{orderId}/delivered'
     MarketPlace.Resources.OrderRequestCancellation = 'orders/api/v1/{orderId}/requestCancellation'
     MarketPlace.Resources.OrderAcceptCancellation = 'orders/api/v1/{orderId}/acceptCancellation'
     MarketPlace.Resources.OrderDenyCancellation = 'orders/api/v1/{orderId}/denyCancellation'

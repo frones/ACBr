@@ -113,8 +113,15 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodObra', 1, 15, 0,
                                           NFSe.ConstrucaoCivil.CodigoObra, ''));
 
+  if NFSe.IdentificacaoRps.Numero <> '' then
+    NFSeNode.AppendChild(AddNode(tcDat, '#1', 'DataRecibo', 1, 10, 0,
+                                                      NFSe.DataEmissaoRps, ''));
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'EnderecoPrestacaoServico', 1, 36, 1,
                                            NFSe.Tomador.Endereco.Endereco, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'EqptoRecibo', 1, 5, 0,
+                                                         NFSe.EqptoRecibo, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'EstadoPrestacaoServico', 2, 2, 1,
                                                  NFSe.Tomador.Endereco.UF, ''));
@@ -125,11 +132,35 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InformacoesAdicionais', 1, 2300, 0,
                                                    NFSe.OutrasInformacoes, ''));
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NotaSubstituida', 1, 10, 0,
+                                                     NFSe.NfseSubstituida, ''));
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NotificarTomadorPorEmail', 4, 5, 1,
                  ifThen(NFSe.Tomador.Contato.Email = '', 'false', 'true'), ''));
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NumeroCDC', 1, 15, 0,
+                                                 NFSe.ConstrucaoCivil.Art, ''));
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NumeroCei', 1, 15, 0,
                                                 NFSe.ConstrucaoCivil.nCei, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NumeroRecibo', 1, 15, 0,
+                                             NFSe.IdentificacaoRps.Numero, ''));
+
+  if (Trim(NFSe.Tomador.Endereco.xPais) <> '') and
+     (NFSe.Tomador.Endereco.xPais <> 'BRASIL') then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SemIncidenciaISS', 4, 5, 1,
+                                                                    'true', ''))
+  else
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SemIncidenciaISS', 4, 5, 1,
+                                                                  'false', ''));
+
+  if NFSe.OptanteSimplesNacional = snSim then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SimplesNacional', 4, 5, 1,
+                                                                    'true', ''))
+  else
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SimplesNacional', 4, 5, 1,
+                                                                  'false', ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SubstituicaoTributaria', 5, 5, 1,
                                                                   'false', ''));
@@ -173,6 +204,9 @@ begin
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorPisPasep', 1, 15, 0,
                                             NFSe.Servico.Valores.ValorPis, ''));
+
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorRepasse', 1, 15, 0,
+                                        NFSe.Servico.Valores.ValorRepasse, ''));
 
   Result := True;
 end;

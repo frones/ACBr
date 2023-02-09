@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/02/2023
+-- ACBrNFSeXClass/eGoverneISS.GravarXml --
+[*] Acrescentados tags opcionais que constam no manual e que o componente não 
+    estava gerando ao ser alimentadas.
+   Por: Italo Giurizzato Junior
 -- GeisWeb.LerXml --
 [*] Alterações para deixar em conformidade com a ultima versão do manual.
    Por: Rodrigo - Digibyte

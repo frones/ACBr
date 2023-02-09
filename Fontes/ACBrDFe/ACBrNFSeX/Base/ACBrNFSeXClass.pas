@@ -1279,6 +1279,7 @@ type
 
     FinfNFSe: TinfNFSe;
     FDescricaoCodigoTributacaoMunicipio: string;
+    FEqptoRecibo: string;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: string);
@@ -1391,6 +1392,9 @@ type
     property subst: TSubstituicao read Fsubst write Fsubst;
 
     property infNFSe: TinfNFSe read FinfNFSe write FinfNFSe;
+    // Provedor eGoverneISS
+    property EqptoRecibo: string read FEqptoRecibo write FEqptoRecibo;
+
   end;
 
   TSubstituicaoNfse = class(TObject)

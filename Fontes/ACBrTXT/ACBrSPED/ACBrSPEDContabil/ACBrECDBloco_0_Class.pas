@@ -49,6 +49,9 @@ interface
 
 uses SysUtils, Classes, DateUtils, ACBrSped, ACBrECDBloco_0;
 
+const
+  sIndicadorQTDLinhasArquivo = '[*******]';
+
 type
   /// TBLOCO_0 - Abertura, Identificação e Referências
   TBloco_0 = class(TACBrSPED)

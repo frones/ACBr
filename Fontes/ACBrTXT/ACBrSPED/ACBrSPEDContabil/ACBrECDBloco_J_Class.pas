@@ -365,8 +365,6 @@ begin
                   LFill(IND_DC_CTA_INI) +
                   LFill(VL_CTA_FIN, 19, 2) +
                   LFill(IND_DC_CTA_FIN) +
-                  // LFill(VL_CTA, 19, 2) +
-                  // LFill(IND_DC_CTA) +
                   LFill(IND_GRP_DRE) +
                   LFill(NOTAS_EXP_REF)
                   );
@@ -571,29 +569,6 @@ begin
   end;
 end;
 
-{
-procedure TBloco_J.WriteRegistroJ800;
-var
-intFor: integer;
-begin
-  if Assigned(FRegistroJ800) then
-  begin
-     for intFor := 0 to FRegistroJ800.Count - 1 do
-     begin
-        with FRegistroJ800.Items[intFor] do
-        begin
-           ///
-           Add( LFill('J800') +
-                LFill(ARQ_RTF) +
-                LFill('J800FIM')
-                );
-        end;
-        FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
-     end;
-  end;
-end;
-}
-
 procedure TBloco_J.WriteRegistroJ800(RegJ005: TRegistroJ005);
 var
 intFor: integer;
@@ -688,7 +663,7 @@ begin
             LFill(NUM_ORD) +
             LFill(NAT_LIVRO) +
             LFill(NOME) +
-            LFill('[*******]') +
+            LFill(sIndicadorQTDLinhasArquivo) +
             LFill(DT_INI_ESCR) +
             LFill(DT_FIN_ESCR);
        ///

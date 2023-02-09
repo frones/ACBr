@@ -370,7 +370,7 @@ begin
                        LFill('TERMO DE ABERTURA') +
                        LFill(NUM_ORD) +
                        LFill(NAT_LIVR) +
-                       LFill('[*******]') +
+                       LFill(sIndicadorQTDLinhasArquivo) +
                        LFill(NOME) +
                        LFill(NIRE) +
                        LFill(CNPJ) +

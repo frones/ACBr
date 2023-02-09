@@ -637,7 +637,7 @@ begin
 
        ///  Deve preencher campos adicionais?
        if //( Leiaute >= 4.0 )  and
-          ((vRegI155.IND_DC_INI_MF <> '') and (vRegI155.IND_DC_FIN_MF <> '')) then
+          (Bloco_0.Registro0000.IDENT_MF = 'S') then
        begin
          Add( LFill('I155') +
               LFill(vRegI155.COD_CTA) +
@@ -692,7 +692,7 @@ begin
 
 
           /// gerar Campos adicionais ?
-          if IND_DC_INI_MF <> '' then
+          if (Bloco_0.Registro0000.IDENT_MF = 'S') then
           begin
            Add( LFill('I157') +
                 LFill(COD_CTA) +
@@ -731,7 +731,7 @@ begin
         with FRegistroI200.Items[intFor] do
         begin
            /// Imprimir Campos Adicionais?
-           if False then
+           if (Bloco_0.Registro0000.IDENT_MF = 'S') then
            begin
              Add( LFill('I200') +
                   LFill(NUM_LCTO) +
@@ -775,31 +775,48 @@ end;
 
 procedure TBloco_I.WriteRegistroI250(RegI200: TRegistroI200);
 var
-intFor: integer;
+  intFor: integer;
+  umRegI250: TRegistroI250;
 begin
   if Assigned(RegI200.RegistroI250) then
   begin
-     for intFor := 0 to RegI200.RegistroI250.Count - 1 do
-     begin
-        with RegI200.RegistroI250.Items[intFor] do
-        begin
+    for intFor := 0 to RegI200.RegistroI250.Count - 1 do
+    begin
+      umRegI250 := RegI200.RegistroI250.Items[intFor];
            /// Checagem das informações que formarão o registro
-           Check(((IND_DC = 'D') or (IND_DC = 'C')), '(I-I250) Indicador da natureza da partida, deve ser informado: D ou C!');
-           ///
-           Add( LFill('I250') +
-                LFill(COD_CTA) +
-                LFill(COD_CCUS) +
-                LFill(VL_DC, 19, 2) +
-                LFill(IND_DC) +
-                LFill(NUM_ARQ) +
-                LFill(COD_HIST_PAD) +
-                LFill(HIST) +
-                LFill(COD_PART) 
-                );
-        end;
-       FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
-     end;
-     FRegistroI250Count := FRegistroI250Count + RegI200.RegistroI250.Count;
+      Check(((umRegI250.IND_DC = 'D') or (umRegI250.IND_DC = 'C')), '(I-I250) Indicador da natureza da partida, deve ser informado: D ou C!');
+
+      if (Bloco_0.Registro0000.IDENT_MF = 'S') then
+      begin
+        Add( LFill('I250') +
+             LFill(umRegI250.COD_CTA) +
+             LFill(umRegI250.COD_CCUS) +
+             LFill(umRegI250.VL_DC, 19, 2) +
+             LFill(umRegI250.IND_DC) +
+             LFill(umRegI250.NUM_ARQ) +
+             LFill(umRegI250.COD_HIST_PAD) +
+             LFill(umRegI250.HIST) +
+             LFill(umRegI250.COD_PART) +
+             LFill(umRegI250.VL_DC_MF, 19, 2) +
+             LFill(umRegI250.IND_DC_MF)
+           );
+      end
+      else
+      begin
+        Add( LFill('I250') +
+             LFill(umRegI250.COD_CTA) +
+             LFill(umRegI250.COD_CCUS) +
+             LFill(umRegI250.VL_DC, 19, 2) +
+             LFill(umRegI250.IND_DC) +
+             LFill(umRegI250.NUM_ARQ) +
+             LFill(umRegI250.COD_HIST_PAD) +
+             LFill(umRegI250.HIST) +
+             LFill(umRegI250.COD_PART)
+           );
+      end;
+      FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
+    end;
+    FRegistroI250Count := FRegistroI250Count + RegI200.RegistroI250.Count;
   end;
 end;
 
@@ -816,7 +833,7 @@ begin
         begin
            ///
            Add( LFill('I300') +
-                LFill(DT_BCTE) 
+                LFill(DT_BCTE)
                 );
         end;
         // Registro Filho
@@ -829,25 +846,38 @@ end;
 
 procedure TBloco_I.WriteRegistroI310(RegI300: TRegistroI300);
 var
-intFor: integer;
+  intFor: integer;
+  UmRegI310: TRegistroI310;
 begin
   if Assigned(RegI300.RegistroI310) then
   begin
-     for intFor := 0 to RegI300.RegistroI310.Count - 1 do
-     begin
-        with RegI300.RegistroI310.Items[intFor] do
-        begin
-           ///
-           Add( LFill('I310') +
-                LFill(COD_CTA) +
-                LFill(COD_CCUS) +
-                LFill(VAL_DEBD, 19, 2) +
-                LFill(VAL_CRED, 19, 2)
-                );
-        end;
-       FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
-     end;
-     FRegistroI310Count := FRegistroI310Count + RegI300.RegistroI310.Count;
+    for intFor := 0 to RegI300.RegistroI310.Count - 1 do
+    begin
+      UmRegI310 := RegI300.RegistroI310.Items[intFor];
+
+      if (Bloco_0.Registro0000.IDENT_MF = 'S') then
+      begin
+        Add( LFill('I310') +
+             LFill(UmRegI310.COD_CTA) +
+             LFill(UmRegI310.COD_CCUS) +
+             LFill(UmRegI310.VAL_DEBD, 19, 2) +
+             LFill(UmRegI310.VAL_CRED, 19, 2) +
+             LFill(UmRegI310.VAL_DEBD_MF, 19, 2) +
+             LFill(UmRegI310.VAL_CRED_MF, 19, 2)
+           );
+      end
+      else
+      begin
+        Add( LFill('I310') +
+             LFill(UmRegI310.COD_CTA) +
+             LFill(UmRegI310.COD_CCUS) +
+             LFill(UmRegI310.VAL_DEBD, 19, 2) +
+             LFill(UmRegI310.VAL_CRED, 19, 2)
+           );
+      end;
+      FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
+    end;
+    FRegistroI310Count := FRegistroI310Count + RegI300.RegistroI310.Count;
   end;
 end;
 
@@ -876,28 +906,42 @@ end;
 
 procedure TBloco_I.WriteRegistroI355(RegI350: TRegistroI350);
 var
-intFor: integer;
+  intFor: integer;
+  UmRegI355: TRegistroI355;
 begin
   if Assigned(RegI350.RegistroI355) then
   begin
-     for intFor := 0 to RegI350.RegistroI355.Count - 1 do
-     begin
-        with RegI350.RegistroI355.Items[intFor] do
-        begin
-           /// Checagem das informações que formarão o registro
-           Check(((IND_DC = 'D') or (IND_DC = 'C') or (IND_DC = '')), '(I-I355) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
-           Check(((IND_DC = 'D') or (IND_DC = 'C') or (IND_DC = '')), '(I-I355) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
-           ///
-           Add( LFill('I355') +
-                LFill(COD_CTA) +
-                LFill(COD_CCUS) +
-                LFill(VL_CTA, 19, 2) +
-                LFill(IND_DC, 0) 
-                );
-        end;
-       FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
-     end;
-     FRegistroI355Count := FRegistroI355Count + RegI350.RegistroI355.Count;
+    for intFor := 0 to RegI350.RegistroI355.Count - 1 do
+    begin
+      UmRegI355 := RegI350.RegistroI355.Items[intFor];
+
+      /// Checagem das informações que formarão o registro
+      Check(((UmRegI355.IND_DC = 'D') or (UmRegI355.IND_DC = 'C') or (UmRegI355.IND_DC = '')), '(I-I355) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
+
+      if (Bloco_0.Registro0000.IDENT_MF = 'S') then
+      begin
+        Add( LFill('I355') +
+             LFill(UmRegI355.COD_CTA) +
+             LFill(UmRegI355.COD_CCUS) +
+             LFill(UmRegI355.VL_CTA, 19, 2) +
+             LFill(UmRegI355.IND_DC, 0) +
+             LFill(UmRegI355.VL_CTA_MF, 19, 2) +
+             LFill(UmRegI355.IND_DC_MF, 0)
+             );
+      end
+      else
+      begin
+        Add( LFill('I355') +
+             LFill(UmRegI355.COD_CTA) +
+             LFill(UmRegI355.COD_CCUS) +
+             LFill(UmRegI355.VL_CTA, 19, 2) +
+             LFill(UmRegI355.IND_DC, 0)
+             );
+      end;
+
+      FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
+    end;
+    FRegistroI355Count := FRegistroI355Count + RegI350.RegistroI355.Count;
   end;
 end;
 

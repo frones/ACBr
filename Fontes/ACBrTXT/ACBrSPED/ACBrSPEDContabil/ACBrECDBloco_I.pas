@@ -531,6 +531,8 @@ type
     fCOD_CCUS: String;
     fVL_DC: Currency;
     fIND_DC: String;
+    fVL_DC_MF: Currency;
+    fIND_DC_MF: String;
     fNUM_ARQ: String;
     fCOD_HIST_PAD: String;
     fHIST: String;
@@ -544,6 +546,8 @@ type
     property COD_HIST_PAD: String  read fCOD_HIST_PAD write fCOD_HIST_PAD;
     property HIST: String read fHIST write fHIST;
     property COD_PART: String read fCOD_PART write fCOD_PART;
+    property VL_DC_MF: Currency read fVL_DC_MF write fVL_DC_MF;
+    property IND_DC_MF: String read fIND_DC_MF write fIND_DC_MF;
 
   end;
 
@@ -589,15 +593,19 @@ type
 
   TRegistroI310 = class
   private
-    fCOD_CTA: String;     /// Código da conta analítica debitada/creditada.
-    fCOD_CCUS: String;    /// Código do centro de custos.
+    fCOD_CTA: String;       /// Código da conta analítica debitada/creditada.
+    fCOD_CCUS: String;      /// Código do centro de custos.
     fVAL_DEBD: Currency;    /// Total dos débitos do dia.
     fVAL_CRED: Currency;    /// Total dos créditos do dia.
+    fVAL_DEBD_MF: Currency;
+    fVAL_CRED_MF: Currency;
   public
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
     property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
     property VAL_DEBD: Currency read fVAL_DEBD write fVAL_DEBD;
     property VAL_CRED: Currency read fVAL_CRED write fVAL_CRED;
+    property VAL_DEBD_MF: Currency read fVAL_DEBD_MF write fVAL_DEBD_MF;
+    property VAL_CRED_MF: Currency read fVAL_CRED_MF write fVAL_CRED_MF;
   end;
 
   /// Registro I310 - Lista
@@ -645,13 +653,17 @@ type
     fCOD_CTA: String;     /// Código da conta analítica de resultado.
     fCOD_CCUS: String;    /// Código do centro de custos.
     fVL_CTA: Currency;    /// Valor do saldo final antes do lançamento de encerramento.
-    fIND_DC: String;  /// Indicador da situação do saldo final: D - Devedor; C - Credor.
+    fIND_DC: String;      /// Indicador da situação do saldo final: D - Devedor; C - Credor.
+    fIND_DC_MF: String;
+    fVL_CTA_MF: Currency;
 
   public
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
     property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
     property VL_CTA: Currency read fVL_CTA write fVL_CTA;
     property IND_DC: String read fIND_DC write fIND_DC;
+    property VL_CTA_MF: Currency read fVL_CTA_MF write fVL_CTA_MF;
+    property IND_DC_MF: String read fIND_DC_MF write fIND_DC_MF;
   end;
 
   /// Registro I355 - Lista

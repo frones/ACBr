@@ -369,7 +369,8 @@ begin
   // acertar quebras de linhas e abertura e fechamento da lista de parametros
   ParamAdic := StringReplace(Trim(ParametrosAdicionais.Text), sLineBreak, ';', [rfReplaceAll]);
 
-  ParamAdic := '['+ ParamAdic + ']';
+  if not(ParamAdic = EmptyStr) then
+    ParamAdic := '['+ ParamAdic + ']';
 
   if NaoEstaVazio(CNPJEstabelecimento) and NaoEstaVazio(CNPJSoftwareHouse) then
      ParamAdic := ParamAdic + '[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']';

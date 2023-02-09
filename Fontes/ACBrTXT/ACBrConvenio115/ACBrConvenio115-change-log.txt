@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2023
+[*] TK-3592 Correção Enviar data data atual no caso das notas modelo 21/22, por Innovae Brasil Engenharia / Conf. Daniel Morais
+		https://www.projetoacbr.com.br/forum/topic/70774-acbrconvenio115-dataleituraanteriordataleituraatual-2023/
+
 31/01/2023
 [*] Correção Enviar datas no caso das notas modelo 21/22, conforme alteracao do Portaria CAT 79/2003, por Joemil. / Conf. Daniel Morais
 		https://www.projetoacbr.com.br/forum/topic/70593-acbrconvenio115-dataleituraanteriordataleituraatual-2023/

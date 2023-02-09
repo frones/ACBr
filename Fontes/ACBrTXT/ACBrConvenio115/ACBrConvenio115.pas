@@ -514,7 +514,7 @@ begin
   // Somente energia elétrica/comunicao/telecomunicao
   Result := '00000000';
   if FDataLeituraAtual <> '' then
-    Result := FormatDateTime('yyyymmdd', StrtoDateDef(FDataLeituraAnterior, 0));
+    Result := FormatDateTime('yyyymmdd', StrtoDateDef(FDataLeituraAtual, 0));
 end;
 
 function TACBrConvenio115Mestre.GetGrupoTensao: string;

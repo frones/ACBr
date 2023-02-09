@@ -1634,6 +1634,7 @@ begin
           AService := CriarServiceClient(tmGerar);
           AService.Prefixo := EmiteResponse.Lote;
           EmiteResponse.ArquivoRetorno := AService.GerarNFSe(ConfigMsgDados.DadosCabecalho, EmiteResponse.ArquivoEnvio);
+          EmiteResponse.HtmlRetorno    := AService.HtmlRetorno;
         end;
       end;
 

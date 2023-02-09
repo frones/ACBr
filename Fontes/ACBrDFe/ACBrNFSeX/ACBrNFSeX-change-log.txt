@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/02/2023
+-- ACBrNFSeXWebserviceBase/ACBrNFSeXWebserviceResponse/ACBrNFSeXProviderBase --
+[+] Implementado a propriedade HTMLRetorno que recebera o HTML retornado pelo
+    provedor dentro da tag <conteudo_html>.
+   Por: Fabio Tellini
 -- Diversos --
 [+] Implementado nas units do provedor IPM a versão 2.04 do layout da ABRASF a 
     ser usado pela cidade: Novo Hamburgo/RS

@@ -219,6 +219,7 @@ type
     FEnvelopeRetorno: string;
     FArquivoEnvio: string;
     FArquivoRetorno: string;
+    FHtmlRetorno: string;
 
     function GetXmlEnvio: string;
     procedure SetXmlEnvio(const Value: string);
@@ -254,6 +255,7 @@ type
 
     property XmlEnvio: string read GetXmlEnvio write SetXmlEnvio;
     property XmlRetorno: string read GetXmlRetorno write SetXmlRetorno;
+    property HtmlRetorno: string read FHtmlRetorno write FHtmlRetorno;
 
     property EnvelopeEnvio: string read FEnvelopeEnvio write FEnvelopeEnvio;
     property EnvelopeRetorno: string read FEnvelopeRetorno write FEnvelopeRetorno;
@@ -583,6 +585,7 @@ begin
   idEvento := '';
   tpEvento := teCancelamento;
   nSeqEvento := 0;
+  HtmlRetorno := '';
 
   if Assigned(FErros) then
   begin

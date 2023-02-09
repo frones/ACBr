@@ -63,6 +63,7 @@ type
   private
     FPrefixo: string;
     FPath: string;
+    FHtmlRetorno: string;
 
     function GetBaseUrl: string;
 
@@ -106,6 +107,7 @@ type
 
     function ExtrairRetorno(const ARetorno: string; responseTag: array of string): string; virtual;
     function TratarXmlRetornado(const aXML: string): string; virtual;
+    function RetornaHTMLNota(const Retorno: string): String;
 
     procedure VerificarErroNoRetorno(const ADocument: TACBrXmlDocument); virtual;
     procedure UsarCertificado; virtual;
@@ -155,6 +157,7 @@ type
     property Prefixo: string read FPrefixo write FPrefixo;
     property Method: string read FPMethod;
     property Path: string read FPath write FPath;
+    property HtmlRetorno: string read FHtmlRetorno;
 
   end;
 
@@ -1016,6 +1019,8 @@ begin
   EnviarDados(SoapAction);
   SalvarRetornoWebService(FPRetorno);
 
+  FHtmlRetorno := RetornaHTMLNota(FPRetorno);
+
   Result := ExtrairRetorno(FPRetorno, responseTag);
   SalvarRetornoDadosMsg(Result);
 end;
@@ -1102,6 +1107,23 @@ function TACBrNFSeXWebservice.RecepcionarSincrono(ACabecalho, AMSG: string): str
 begin
   Result := '';
   raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+function TACBrNFSeXWebservice.RetornaHTMLNota(const Retorno: string): String;
+var pInicio, pFim: Integer;
+begin
+  Result := EmptyStr;
+
+  pInicio := Pos('<codigo_html>', Retorno);
+  pFim    := Pos('</codigo_html>', Retorno);
+
+  if pInicio > 0 then
+  begin
+    Result := Copy(Retorno, pInicio, pFim -1) + '</codigo_html>';
+    Result := StringReplace(Result, '&lt;', '<', [rfReplaceAll]);
+    Result := StringReplace(Result, '&gt;', '>', [rfReplaceAll]);
+    Result := StringReplace(Result, '&quot;', '"', [rfReplaceAll]);
+  end;
 end;
 
 function TACBrNFSeXWebservice.SubstituirNFSe(ACabecalho, AMSG: string): string;

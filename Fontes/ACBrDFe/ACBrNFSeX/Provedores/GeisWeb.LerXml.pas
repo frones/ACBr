@@ -147,7 +147,7 @@ begin
   begin
     with NFSe do
     begin
-      Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
+      Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
       IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
     end;
@@ -366,8 +366,8 @@ begin
   begin
     LerIdentificacaoNfse(ANode);
 
-    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatVcto);
-    dhRecebimento := ObterConteudo(ANode.Childrens.FindAnyNs('DataLancamento'), tcDatVcto);
+    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDat);
+    dhRecebimento := ObterConteudo(ANode.Childrens.FindAnyNs('DataLancamento'), tcDat);
     Competencia := ObterConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcDatVcto);
     RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Regime'), tcStr));
 

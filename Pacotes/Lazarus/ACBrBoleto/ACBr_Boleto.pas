@@ -30,7 +30,8 @@ uses
   ACBrBoletoWS.SOAP, ACBrUniprime, ACBrUniprimeNortePR, 
   ACBrBoletoRet_Credisis, ACBrBoletoRet_Inter_API, ACBrBoletoRet_Itau, 
   ACBrBoletoRet_Sicredi_API, ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, 
-  ACBrBoletoW_Itau, ACBrBoletoW_Sicredi_API, LazarusPackageIntf;
+  ACBrBoletoW_Itau, ACBrBoletoW_Sicredi_API, ACBrBancoVotorantim, 
+  LazarusPackageIntf;
 
 implementation
 

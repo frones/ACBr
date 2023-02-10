@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="72">
+    <Files Count="73">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -311,6 +311,10 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Sicredi_API.pas"/>
         <UnitName Value="ACBrBoletoW_Sicredi_API"/>
       </Item72>
+      <Item73>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoVotorantim.pas"/>
+        <UnitName Value="ACBrBancoVotorantim"/>
+      </Item73>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

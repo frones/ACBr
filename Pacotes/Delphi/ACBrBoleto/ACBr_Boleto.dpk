@@ -106,7 +106,6 @@ contains
   ACBrBoletoRet_Inter_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Inter_API.pas',
   ACBrBoletoWS.Rest.OAuth in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.OAuth.pas',
   ACBrBoletoWS.Rest in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.pas',
-  ACBrBoletoWS.SOAP in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.SOAP.pas';
-  
-
+  ACBrBoletoWS.SOAP in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.SOAP.pas',
+  ACBrBancoVotorantim.pas in '..\..\..\Fontes\ACBrBoleto\ACBrBancoVotorantim.pas';
 end.

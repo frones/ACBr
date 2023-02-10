@@ -100,6 +100,18 @@ function NFSE_ObterCertificados(const sResposta: PChar; var esTamanho: longint):
 function NFSE_Emitir(const aLote: PChar; aModoEnvio: longint;  aImprimir: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function NFSE_SubstituirNFSe(const aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_LinkNFSe(aNumeroNFSe: PChar; const aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_GerarLote(const aLote: PChar; aQtdMaximaRps, aModoEnvio: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_GerarToken(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function NFSE_ConsultarSituacao(const AProtocolo, ANumLote, sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -112,11 +124,53 @@ function NFSE_ConsultarNFSePorRps(const ANumeroRps, ASerie, ATipo, ACodigoVerifi
 function NFSE_ConsultarNFSePorNumero(const ANumero:PChar; APagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function NFSE_ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: integer; aNumeroLote: PChar; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aNumeroLote: PChar; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function NFSE_ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeGenerico(aInfConsultaNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_EnviarEmail(const ePara, eXmlNFSe: PChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar):longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_Imprimir(const cImpressora: PChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ImprimirPDF: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoPrestadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoTomadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoTomadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function NFSE_ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+{%endregion}
+
 {%endregion}
 
 implementation
@@ -303,6 +357,66 @@ begin
   end;
 end;
 
+function NFSE_SubstituirNFSe(const aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).SubstituirNFSe(aNumeroLote, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoCancelamento, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_LinkNFSe(aNumeroNFSe: PChar; const aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).LinkNFSe(aNumeroNFSe, aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_GerarLote(const aLote: PChar; aQtdMaximaRps, aModoEnvio: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).GerarLote(aLote, aQtdMaximaRps, aModoEnvio, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_GerarToken(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result:= TACBrLibNFSe(pLib^.Lib).GerarToken(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
 function NFSE_ConsultarSituacao(const AProtocolo, ANumLote, sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -384,6 +498,201 @@ begin
   try
     VerificarLibInicializada(pLib);
     Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSePorFaixa(aNumeroFinal, aNumeroFinal, aPagina, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeGenerico(aInfConsultaNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeGenerico(aInfConsultaNFSe, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_EnviarEmail(const ePara, eXmlNFSe: PChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar):longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).EnviarEmail(ePara, eXmlNFSe, AEnviaPDF, eAssunto, eCC, eAnexos, eMensagem);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_Imprimir(const cImpressora: PChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PChar): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).Imprimir(cImpressora, nNumCopias, bGerarPDF, bMostrarPreview, cCancelada);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ImprimirPDF: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ImprimirPDF;
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoPrestadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint ): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoPrestadoPorNumero(aNumero, aPagina, aDataInicial, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal, aPagina, aTipoPeriodo, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoPrestadoPorTomador(aCNPJ, aInscMun, aPagina, aDataInicial, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoPrestadoPorIntermediario(aCNPJ, aInscMun, aPagina, aDataInicial, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoTomadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoTomadoPorNumero(aNumero, aPagina, aDataFinal, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoTomadoPorPrestador(aCNPJ, aInscMun, aPagina, aDataFinal, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoTomadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoTomadoPorTomador(aCNPJ, aInscMun, aPagina, aDataInicial, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal, aPagina, aTipoPeriodo, sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibNFSe(pLib^.Lib).ConsultarNFSeServicoTomadoPorIntermediario(aCNPJ, aInscMun, aPagina, aDataFinal, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
   except
       on E: EACBrLibException do
        Result := E.Erro;

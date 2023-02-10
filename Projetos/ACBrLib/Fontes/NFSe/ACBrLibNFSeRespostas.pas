@@ -43,6 +43,19 @@ uses
 
 type
 
+  { TLibNFSeResposta }
+  TLibNFSeResposta = class (TACBrLibRespostaBase)
+    private
+      FMsg: String;
+
+    public
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+
+    published
+      property Msg: String read FMsg write FMsg;
+  end;
+
   { TNFSeEventoItem }
   TNFSeEventoItem = class(TACBrLibRespostaBase)
   private
@@ -106,7 +119,7 @@ type
 
   { TConsultaSituacaoResposta }
   TConsultaSituacaoResposta = class(TLibNFSeServiceResposta)
-  Private
+  private
     FLote: string;
     FSituacao: string;
     FProtocolo: string;
@@ -124,6 +137,96 @@ type
 
   end;
 
+  { TConsultaLoteRpsResposta }
+  TConsultaLoteRpsResposta = class(TLibNFSeServiceResposta)
+  private
+      FLote: string;
+      FProtocolo: string;
+      FSituacao: string;
+      FCodVerificacao: string;
+
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy;
+
+    procedure Processar(const Response: TNFSeConsultaLoteRpsResponse); reintroduce;
+
+  published
+    property Lote: string read FLote write FLote;
+    property Protocolo: string read FProtocolo write FProtocolo;
+    property Situacao: string read FSituacao write FSituacao;
+    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+  end;
+
+  { TConsultaNFSePorRpsResposta }
+  TConsultaNFSePorRpsResposta = class (TLibNFSeServiceResposta)
+  private
+    FNumRPS: string;
+    FSerie: string;
+    FTipo: string;
+    FCodVerificacao: string;
+    FCancelamento: TNFSeCancelamento;
+    FNumNotaSubstituidora: string;
+
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy;
+
+    procedure Processar(const Response: TNFSeConsultaNFSeporRpsResponse); reintroduce;
+
+  published
+    property NumRPS: string read FNumRPS write FNumRPS;
+    property Serie: string read FSerie write FSerie;
+    property Tipo: string read FTipo write FTipo;
+    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property Cancelamento: TNFSeCancelamento read FCancelamento write FCancelamento;
+    property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
+  end;
+
+  { TSubstituirNFSeResposta }
+  TSubstituirNFSeResposta = class(TLibNFSeServiceResposta)
+  private
+    FNumRPS: string;
+    FSerie: string;
+    FTipo: string;
+    FCodVerificacao: string;
+    FPedCanc: string;
+    FNumNotaSubstituida: string;
+    FNumNotaSubstituidora: string;
+  
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy;
+
+    procedure Processar(const Response: TNFSeSubstituiNFSeResponse); reintroduce;
+
+  published
+    property NumRPS: string read FNumRPS write FNumRPS;
+    property Serie: string read FSerie write FSerie;
+    property Tipo: string read FTipo write FTipo;
+    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property PedCanc: string read FPedCanc write FPedCanc;
+    property NumNotaSubstituida: string read FNumNotaSubstituida write FNumNotaSubstituida;
+    property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;    
+  end;
+
+  { TGerarTokenResposta }
+  TGerarTokenResposta = class(TLibNFSeServiceResposta)
+  private
+    FToken: string;
+    FDataExpiracao: TDateTime;
+
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy;
+
+    procedure Processar(const Response: TNFSeGerarTokenResponse); reintroduce;
+
+  published
+    property Token: string read FToken write FToken;
+    property DataExpiracao: TDateTime read FDataExpiracao write FDataExpiracao;
+  end;
+
 implementation
 
 uses
@@ -137,6 +240,13 @@ begin
   Codigo := Evento.Codigo;
   Descricao := Evento.Descricao;
   Correcao := Evento.Correcao;
+end;
+
+{ TLibNFSeResposta }
+constructor TLibNFSeResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(ASessao, ATipo, AFormato);
 end;
 
 { TLibNFSeServiceResposta }
@@ -226,6 +336,93 @@ begin
   Lote := Response.Lote;
   Protocolo := Response.Protocolo;
   Situacao := Response.Situacao;
+end;
+
+{ TConsultaLoteRpsResposta }
+constructor TConsultaLoteRpsResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespConsultaLoteRps, ATipo, AFormato);
+end;
+
+destructor TConsultaLoteRpsResposta.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TConsultaLoteRpsResposta.Processar(const Response: TNFSeConsultaLoteRpsResponse);
+begin
+  inherited Processar(Response);
+
+  Lote:= Response.Lote;
+  Protocolo:= Response.Protocolo;
+  Situacao:= Response.Situacao;
+  CodVerificacao:= Response.CodVerificacao;
+end;
+
+ { TConsultaNFSePorRpsResposta }
+constructor TConsultaNFSePorRpsResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespConsultaNFSePorRps, ATipo, AFormato);
+end;
+
+destructor TConsultaNFSePorRpsResposta.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TConsultaNFSePorRpsResposta.Processar(const Response: TNFSeConsultaNFSeporRpsResponse);
+begin
+  inherited Processar(Response);
+
+  NumRPS:= Response.NumRPS;
+  Serie:= Response.Serie;
+  Tipo:= Response.Tipo;
+  CodVerificacao:= Response.CodVerificacao;
+  Cancelamento:= Response.Cancelamento;
+  NumNotaSubstituidora:= Response.NumNotaSubstituidora;
+end;
+
+ { TSubstituirNFSeResposta }
+constructor TSubstituirNFSeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespSubstituirNFSe, ATipo, AFormato);
+end;
+
+destructor TSubstituirNFSeResposta.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TSubstituirNFSeResposta.Processar(const Response: TNFSeSubstituiNFSeResponse);
+begin
+  inherited Processar(Response);
+
+  NumRPS:= Response.NumRPS;
+  Serie:= Response.Serie;
+  Tipo:= Response.Tipo;
+  CodVerificacao:= Response.CodVerificacao;
+  PedCanc:= Response.PedCanc;
+  NumNotaSubstituida:= Response.NumNotaSubstituida;
+  NumNotaSubstituidora:= Response.NumNotaSubstituidora;
+end;
+
+{ TGerarTokenResposta }
+constructor TGerarTokenResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespGerarToken, ATipo, AFormato);
+end;
+
+destructor TGerarTokenResposta.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TGerarTokenResposta.Processar(const Response: TNFSeGerarTokenResponse);
+begin
+  inherited Processar(Response);
+
+  Token:= Response.Token;
+  DataExpiracao:= Response.DataExpiracao;
 end;
 
 end.

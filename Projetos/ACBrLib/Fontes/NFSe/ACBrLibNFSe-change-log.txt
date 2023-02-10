@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2023
+---ACBrLibNFSeBase, ACBrLibNFSeRespostas---
+[*] Novos métodos implementados e adicionado classes bases de Resposta para métodos NFSe.
+    Por: Antonio Carlos Junior
+
 24/01/2023
 --- ACBrLibNFSe ---
 [*] Ajustes ACBrLibNFSe

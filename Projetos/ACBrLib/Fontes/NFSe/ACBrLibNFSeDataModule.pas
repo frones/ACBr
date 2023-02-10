@@ -55,6 +55,7 @@ type
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   MostrarPreview: String = ''; Cancelada: String = '');
 
+    procedure FinalizarImpressao;
   end;
 
 implementation
@@ -132,6 +133,15 @@ begin
     ACBrNFSeXDANFSeRL1.Cancelada := StrToBoolDef(Cancelada, False);
 
   GravarLog('ConfigurarImpressao - Feito', logNormal);
+end;
+
+procedure TLibNFSeDM.FinalizarImpressao();
+begin
+   GravarLog('FinalizarImpressao - Iniciado', logNormal);
+
+   ACBrNFSeX1.DANFSE := nil;
+
+   GravarLog('FinalizarImpressao - Feito', logNormal);
 end;
 
 end.

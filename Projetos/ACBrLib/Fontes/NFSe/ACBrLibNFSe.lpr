@@ -69,13 +69,34 @@ exports
   NFSE_LimparLista,
   NFSE_ObterCertificados,
 
+  // Servicos
   NFSE_Emitir,
+  NFSE_SubstituirNFSe,
+  NFSE_LinkNFSe,
+  NFSE_GerarLote,
   NFSE_ConsultarSituacao,
   NFSE_ConsultarLoteRps,
   NFSE_ConsultarNFSePorRps,
   NFSE_ConsultarNFSePorNumero,
   NFSE_ConsultarNFSePorPeriodo,
-  NFSE_ConsultarNFSePorFaixa;
+  NFSE_ConsultarNFSePorFaixa,
+  NFSE_ConsultarNFSeGenerico,
+  NFSE_EnviarEmail,
+  NFSE_Imprimir,
+  NFSE_ImprimirPDF,
+
+  // Servico Prestado
+  NFSE_ConsultarNFSeServicoPrestadoPorNumero,
+  NFSE_ConsultarNFSeServicoPrestadoPorPeriodo,
+  NFSE_ConsultarNFSeServicoPrestadoPorTomador,
+  NFSE_ConsultarNFSeServicoPrestadoPorIntermediario,
+
+  // Servico Tomado
+  NFSE_ConsultarNFSeServicoTomadoPorNumero,
+  NFSE_ConsultarNFSeServicoTomadoPorPrestador,
+  NFSE_ConsultarNFSeServicoTomadoPorTomador,
+  NFSE_ConsultarNFSeServicoTomadoPorPeriodo,
+  NFSE_ConsultarNFSeServicoTomadoPorIntermediario;
 
 begin
   {$IFDEF DEBUG}

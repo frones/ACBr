@@ -46,6 +46,10 @@ const
   CSessaoRespEnvio = 'Envio';
   CSessaoRespSituacao = 'Situacao';
   CSessaoRespConsultaLote = 'ConsultaLote';
+  CSessaoRespConsultaLoteRps = 'ConsultaLoteRps';
+  CSessaoRespConsultaNFSePorRps = 'ConsultaNFSePorRps';
+  CSessaoRespSubstituirNFSe = 'SubstituirNFSe';
+  CSessaoRespGerarToken = 'GerarToken';
   CSessaoRespErro = 'Erro';
   CSessaoRespAlerta = 'Alerta';
 

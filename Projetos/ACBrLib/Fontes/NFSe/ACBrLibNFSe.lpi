@@ -604,7 +604,9 @@
       <Unit9>
         <Filename Value="..\Comum\ACBrLibDataModule.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="LibDataModule"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
       </Unit9>
       <Unit10>
         <Filename Value="ACBrLibNFSeDataModule.pas"/>

@@ -608,6 +608,9 @@ type
                              tpisbMudandaDeCPFDoBeneficiario);
 
   tpTpPenMorte            = (pmNada, pmVitalicia, pmTemporaria);
+  const
+  tpTpPenMorteArrayStrings:array[tpTpPenMorte] of string = ('', '1', '2');
+  type
 
   tpMotCessBenef          = (tmcbNenhum,
                              tmcbObito,
@@ -1177,8 +1180,10 @@ function StrTotpCondIng(var ok: boolean; const s: string): tpCondIng;
 function eSTpIndSitBenefToStr(const t: tpIndSitBenef): string;
 function eSStrToTpIndSitBenef(var ok: boolean; const s: string): tpIndSitBenef;
 
-function eStpTpPenMorteToStr(const t: tpTpPenMorte): string;
-function eSStrTotpTpPenMorte(var ok: boolean; const s: string): tpTpPenMorte;
+function eStpTpPenMorteToStr(const t: tpTpPenMorte): string;deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS}'Use a função eStpTpPenMorteToStrEX conforme a sua necessidade' {$ENDIF};
+function eSStrTotpTpPenMorte(var ok: boolean; const s: string): tpTpPenMorte;deprecated{$IfDef SUPPORTS_DEPRECATED_DETAILS}'Use a função eSStrTotpTpPenMorteEX conforme a sua necessidade' {$ENDIF};
+function eStpTpPenMorteToStrEX(const t: tpTpPenMorte):string;
+function eSStrTotpTpPenMorteEX(const s: string): tpTpPenMorte;
 
 function eStpTpMotCessBenefToStr(const t: tpMotCessBenef): string;
 function eSStrToTpMotCessBenef(var ok: boolean; const s: string): tpMotCessBenef;
@@ -2690,9 +2695,29 @@ begin
   result := EnumeradoToStr2(t, TGenericosString1_2);
 end;
 
+function eStpTpPenMorteToStrEX(const t: tpTpPenMorte):string;
+begin
+  result := tpTpPenMorteArrayStrings[t];
+end;
+
 function eSStrTotpTpPenMorte(var ok: boolean; const s: string): tpTpPenMorte;
 begin
   result := tpTpPenMorte(StrToEnumerado2(ok, s, TGenericosString1_2) );
+end;
+
+function eSStrTotpTpPenMorteEX(const s: string): tpTpPenMorte;
+var
+  idx: tpTpPenMorte;
+begin
+  for idx := Low(tpTpPenMorteArrayStrings) to High(tpTpPenMorteArrayStrings)do
+  begin
+    if(tpTpPenMorteArrayStrings[idx] = s)then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para tpTpPenMorte: %s', [s]);
 end;
 
 function eStptpMotCessBenefToStr(const t: tpMotCessBenef): string;

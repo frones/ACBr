@@ -513,7 +513,7 @@ begin
     
   Gerador.wGrupo('infoPenMorte');
 
-  Gerador.wCampo(tcStr, '', 'tpPenMorte',  1,  1, 1, eStpTpPenMorteToStr(pInfoPenMorte.tpPenMorte));
+  Gerador.wCampo(tcStr, '', 'tpPenMorte',  1,  1, 1, eStpTpPenMorteToStrEX(pInfoPenMorte.tpPenMorte));
 
   GerarInstPenMorte(pInfoPenMorte.instPenMorte);
     

@@ -542,9 +542,7 @@ type
                              prpSemSegregacaoDaMassa,
                              prpFundoEmCapitalizacao,
                              prpFundoEmReparticao,
-                             prpMantidoPeloTesouro,
-                             prpPlanoPrevidenciarioOuUnico,
-                             prpPlanoFinanceiro);
+                             prpMantidoPeloTesouro);
 
   tpMtvAlt                = (maPromocao, maReadaptacao, maAproveitamento, maOutros);
 
@@ -1449,12 +1447,12 @@ end;
 
 function eStpPlanRPToStr(const t: tpPlanRP): string;
 begin
-  result := EnumeradoToStr2(t, [ '0', '1', '2', '3', '1', '2' ] );
+  result := EnumeradoToStr2(t, [ '0', '1', '2', '3' ] );
 end;
 
 function eSStrTotpPlanRP(var ok: Boolean; const s: string): tpPlanRP;
 begin
-  result := tpPlanRP( StrToEnumerado2(ok, s, [ '0', '1', '2', '3', '1', '2' ]) );
+  result := tpPlanRP( StrToEnumerado2(ok, s, [ '0', '1', '2', '3' ]) );
 end;
 
 function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;

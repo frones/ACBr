@@ -55,6 +55,8 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property NameSpace: string read GetNameSpace;
     property SoapAction: string read GetSoapAction;
   end;
@@ -73,6 +75,7 @@ implementation
 
 uses
   ACBrXmlBase, ACBrNFSeX, ACBrDFeException,
+  ACBrUtil.XMLHTML,
   ISSIntel.GravarXml, ISSIntel.LerXml;
 
 { TACBrNFSeProviderISSIntel }
@@ -229,6 +232,16 @@ begin
   Result := Executar(SoapAction + 'CancelarNfse', Request,
                      ['CancelarNfseResposta'],
                      [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceISSIntel.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  Result := RemoverIdentacao(Result);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

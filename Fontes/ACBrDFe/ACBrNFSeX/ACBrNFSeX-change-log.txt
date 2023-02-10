@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+10/02/2023
+-- ISSIntel.Provider --
+[+] Incluída a função TratarXmlRetornado para tratar o XML retornado do
+    WebService.
+   Por: Italo Giurizzato Junior
+
 09/02/2023
 -- ACBrNFSeXClass/eGoverneISS.GravarXml --
 [*] Acrescentados tags opcionais que constam no manual e que o componente não 

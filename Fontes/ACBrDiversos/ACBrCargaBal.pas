@@ -1107,7 +1107,9 @@ begin
       GetTipoProdutoFilizola(Produtos[i].Tipo) +
       RFIll(Produtos[i].Descricao, 22) +
       LFIll(Produtos[i].ValorVenda, 7, 2) +
-      LFIll(Produtos[i].Validade, 3)
+      LFIll(Produtos[i].Validade, 3)+
+      RFill(' ',126)+
+      LFIll(Produtos[i].Tara.Valor, 4, 3)
     );
 
     if (Produtos[i].Setor.Descricao <> '') or (Produtos[i].Teclado.Tecla > 0) then

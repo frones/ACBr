@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2023
+[+] TK-3564 ACBrBancoVotorantim - Inclusão do novo banco, contribuição LucasSantos8
+  Por : LucasSantos8 / Rev. Daniel Morais
+
 08/02/2023
 [-] TK-3572 ACBrBancoBanrisul - qdo existir Identificacao do Titulo (SegT - 106,25) alimenta SeuNumero, caso contrário, seunumero = NumeroDocumento.
   Por : SuporteAtInfo / Conf. Daniel Morais

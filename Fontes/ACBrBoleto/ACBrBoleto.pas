@@ -428,7 +428,8 @@ type
     cobBS2,
     cobPenseBankAPI,
     cobBTGPactual,
-    cobBancoOriginal
+    cobBancoOriginal,
+    cobBancoVotorantim   
     );
 
   TACBrTitulo = class;
@@ -537,6 +538,17 @@ type
     toRemessaRecusaAlegacaoSacado,
     toRemessaProtestoAutomatico,
     toRemessaAlterarStatusDesconto,
+    toRemessaProtestarUrgente,
+    toRemessaRegistrarDireta,
+    toRemessaAlterarNumeroDiasBaixa,
+    toRemessaAlterarValorMinimoMaximo,
+    toRemessaAlteracaoQuantidadeParcela,
+    toRemessaAlteracaoValorNominal,
+    toRemessaNaoBaixarAutomaticamente,
+    toRemessaAlteracaoPercentualParaMinimo,
+    toRemessaAlteracaoPercentualParaMaximo,
+    toRemessaAlteracaoPercentualParaMinimoMaximo,
+    toRemessaProrrogarVencimento,
 
     {Ocorrências para arquivo retorno}
     toRetornoAbatimentoCancelado,
@@ -776,7 +788,23 @@ type
     toRetornoConfirmacaoPedidoDispensaMulta,
     toRetornoConfirmacaoPedidoCobrancaMulta,
     toRetornoConfirmacaoPedidoAlteracaoBeneficiarioTitulo,
-    toRetornoExcluirProtestoCartaAnuencia
+    toRetornoExcluirProtestoCartaAnuencia,
+    toRetornoConfirmacaoCancelamentoBaixaAutomatica,
+    toRetornoConfAlteracaoDiasBaixaAutomatica,
+    toRetornoConfInstrucaoProtesto,
+    toRetornoConfInstrucaoSustacaoProtesto,
+    toRetornoConfInstrucaoNaoProtestar,
+    toRetornoConfInstrucaoNaoBaixarAutomaticamente,
+    toRetornoAlteracaoPercentualMinimo,
+    toRetornoAlteracaoPercentualMaximo,
+    toRetornoAlteracaoPercentualMinimoMaximo,
+    toRetornoRecebimentoInstrucaoNaoBaixar,
+    toRetornoConfirmacaoProtesto,
+    toRetornoConfirmacaoSustacao,
+    toRetornoProtestoSustadoJudicialmente,
+    toRetornoConfInstrucaoSustarProtesto,
+    toRetornoConfInstrucaoAlteracaoDiasBaixaAutomatica,
+    toRetornoAlteracaoQuantidadeParcela
   );
 
   //Complemento de instrução para alterar outros dados
@@ -1906,7 +1934,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
      ACBrBancoBradescoMoneyPlus, ACBrBancoC6, ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
-     ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual, ACBrBancoOriginal;
+     ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual, ACBrBancoOriginal, ACBrBancoVotorantim;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3560,6 +3588,7 @@ begin
            else
              Result := cobBancoPine;
          end;
+    655: Result := cobBancoVotorantim;
     707: Result := cobDaycoval;
     745: Result := cobCitiBank;
     748: Result := cobSicred;
@@ -4368,6 +4397,7 @@ begin
      cobPenseBankAPI         : fBancoClass := TACBrBancoPenseBank.Create(Self);
      cobBTGPactual           : fBancoClass := TACBrBancoBTGPactual.create(Self);     {208}
      cobBancoOriginal        : fBancoClass := TACBrBancoOriginal.Create(Self);        {212}
+     cobBancoVotorantim      : fBancoClass := TACBrBancoVotorantim.create(Self);     {655}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

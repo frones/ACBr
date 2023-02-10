@@ -1123,7 +1123,7 @@ begin
 
   if (pEmp.TpInsc = tiCNPJ) then
   begin
-    if (VersaoDF <= veS01_00_00) or bProcJudFap or (pTpInscEstab = tiCNO) then
+    if (pAliqRat.Fap > 0) or bProcJudFap or (pTpInscEstab = tiCNO) then
       Gerador.wCampo(tcDe4, '', 'fap',          1, 5, 0, pAliqRat.Fap);
 
     if (VersaoDF <= ve02_05_00) then

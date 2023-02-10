@@ -455,7 +455,7 @@ begin
     with Servico.Valores  do
     begin
       rllAtividade.Caption := Servico.CodigoTributacaoMunicipio + ' - ' +
-              CodItemServToDesc(Format('%.*d',[4, StrToInt(Servico.CodigoTributacaoMunicipio)]));
+        CodItemServToDesc(Format('%.*d',[4, StrToIntDef(Servico.CodigoTributacaoMunicipio, 0)]));
       rllItem.Caption := Servico.ItemListaServico;
       rllCodNBS.Caption := Servico.CodigoNBS;
       rllCodCNAE.Caption := Servico.CodigoCnae;

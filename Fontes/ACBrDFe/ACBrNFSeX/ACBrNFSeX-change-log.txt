@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/02/2023
+-- ACBrNFSeXDANFSeRLISSNet --
+[-] Estava gerando um erro ao converter uma string em integer.
+   Por: Italo Giurizzato Junior
 -- ISSIntel.Provider --
 [+] Incluída a função TratarXmlRetornado para tratar o XML retornado do
     WebService.

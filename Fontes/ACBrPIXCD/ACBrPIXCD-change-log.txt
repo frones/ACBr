@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2023
+-- ACBrPIXPSPShipay --
+[*] Alteração para sempre utilizar o endpoint /order quando a wallet for 'shipay-pagador'
+
 27/01/2023
 -- ACBrPIXPSPPixPDV, ACBrPIXCD --
 [+] Inclusão do novo PSP PIX PDV

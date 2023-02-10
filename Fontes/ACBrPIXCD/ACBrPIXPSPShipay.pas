@@ -59,6 +59,7 @@ const
   cShipayEndPointOrderV = '/orderv';
   cShipayPathRefund = 'refund';
   cShipayWalletPix = 'pix';
+  cShipayWalletPagador = 'shipay-pagador';
   cShipayHeaderOrderType = 'x-shipay-order-type';
   cShipayEOrder = 'e-order';
   cItemTitleNotInformed = 'Item Vendido';
@@ -951,7 +952,8 @@ begin
     // Possui mais de um parâmetro de query?  ...Então é consulta por período
     if (URLQueryParams.Count > 1) then
       Result := cShipayEndPointOrdersList
-    else if (aMethod = ChttpMethodPATCH) or (aMethod = ChttpMethodDELETE) then
+    else if ((aMethod = ChttpMethodPATCH) or (aMethod = ChttpMethodDELETE)) or
+            (fOrder.wallet = cShipayWalletPagador) then
       Result := cShipayEndPointOrder
     else
       Result := cShipayEndPointOrderV;

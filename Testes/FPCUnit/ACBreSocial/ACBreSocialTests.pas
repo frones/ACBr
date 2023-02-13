@@ -295,8 +295,14 @@ type
       procedure eSStrToTpIndSitBenef_ConvertendoTodosTipos_RetornoCorreto;
       procedure eStpTpPenMorteToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrTotpTpPenMorte_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eStpTpPenMorteToStrEX_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrTotpTpPenMorteEX_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpTpPenMorteEX_ConvertendoStringInvalida_RetornoException;
       procedure eStpTpMotCessBenefToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrToTpMotCessBenef_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eStpTpMotCessBenefToStrEX_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpMotCessBenefEX_ConvertendoTodosTipos_RetornoCorreto;
+      procedure eSStrToTpMotCessBenefEX_ConvertendoStringInvalida_RetornoException;
       procedure eStpTpMtvSuspensaoToStr_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSStrToTpMtvSuspensao_ConvertendoTodosTipos_RetornoCorreto;
       procedure eSTpPercTransfToStr_ConvertendoTodosTipos_RetornoCorreto;
@@ -3244,8 +3250,6 @@ var
 begin
   for vElementoEnum := Low(tpTpPenMorte) to High(tpTpPenMorte)do
   begin
-    if(vElementoEnum = pmNada)then//Valor definido pelo ACBr e usado para não gerar a tag, não tem conversão válida para o e-Social
-      continue;
     ConvertidoParaString         := eStpTpPenMorteToStr(vElementoEnum);
     ReconvertidoParaElementoEnum := eSStrTotpTpPenMorte(OK, ConvertidoParaString);
     EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
@@ -3256,9 +3260,61 @@ begin
   end;
 end;
 
+procedure TACBreSocialTipoToStrStrToTipoTest.eStpTpPenMorteToStrEX_ConvertendoTodosTipos_RetornoCorreto;
+var
+  vElementoEnum: tpTpPenMorte;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpTpPenMorte;
+  EhIgual: boolean;
+begin
+  for vElementoEnum := Low(tpTpPenMorte) to High(tpTpPenMorte)do
+  begin
+    ConvertidoParaString         := eStpTpPenMorteToStrEX(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrTotpTpPenMorteEX(ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eStpTpPenMorteToStrEX => ' + ConvertidoParaString + '  '+
+                       'eSStrTotpTpPenMorteEX => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+             );
+  end;
+end;
+
 procedure TACBreSocialTipoToStrStrToTipoTest.eSStrTotpTpPenMorte_ConvertendoTodosTipos_RetornoCorreto;
 begin
   Fail('Ainda precisa implementar o teste');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrTotpTpPenMorteEX_ConvertendoTodosTipos_RetornoCorreto;
+var
+  ReconvertidoParaString: string;
+  ElementoConvertido: tpTpPenMorte;
+  ElementoDoArray: string;
+  i: tpTpPenMorte;
+  EhIgual: boolean;
+begin
+  for i := Low(tpTpPenMorteArrayStrings) to High(tpTpPenMorteArrayStrings)do
+  begin
+    ElementoDoArray        := tpTpPenMorteArrayStrings[i];
+    ElementoConvertido     := eSStrTotpTpPenMorteEX(ElementoDoArray);
+    ReconvertidoParaString := eStpTpPenMorteToStrEX(ElementoConvertido);
+    EhIgual := (ReconvertidoParaString = ElementoDoArray);
+    CheckTrue(EhIgual, 'Erro de conversão no elemento ' + ElementoDoArray + '  '+
+                       'eSStrTotpTpPenMorteEX => ' + GetEnumName(TypeInfo(ElementoConvertido), ord(ElementoConvertido))+'  '+
+                       'eStpTpPenMorteToStrEX => ' + ReconvertidoParaString);
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpTpPenMorteEX_ConvertendoStringInvalida_RetornoException;
+var
+  ConvertidoParaEnum: tpTpPenMorte;
+begin
+  try
+    ConvertidoParaEnum := eSStrTotpTpPenMorteEx('StringInválida');
+  except
+    on E:Exception do
+      Exit;
+  end;
+  Fail('Não foi gerada Exception para string inválida');
 end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eStpTpMotCessBenefToStr_ConvertendoTodosTipos_RetornoCorreto;
@@ -3271,8 +3327,6 @@ var
 begin
   for vElementoEnum := Low(tpMotCessBenef) to High(tpMotCessBenef)do
   begin
-    if(vElementoEnum = tmcbNenhum)then //Valor definido pelo ACBr e usado para não gerar a tag, não tem conversão no e-Social.
-      continue;
     ConvertidoParaString         := eStpTpMotCessBenefToStr(vElementoEnum);
     ReconvertidoParaElementoEnum := eSStrToTpMotCessBenef(OK, ConvertidoParaString);
     EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
@@ -3286,6 +3340,58 @@ end;
 procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpMotCessBenef_ConvertendoTodosTipos_RetornoCorreto;
 begin
   Fail('Ainda precisa implementar');
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eStpTpMotCessBenefToStrEX_ConvertendoTodosTipos_RetornoCorreto;
+var
+  EhIgual: boolean;
+  vElementoEnum: tpMotCessBenef;
+  ConvertidoParaString: string;
+  ReconvertidoParaElementoEnum: tpMotCessBenef;
+begin
+  for vElementoEnum := Low(tpMotCessBenef) to High(tpMotCessBenef)do
+  begin
+    ConvertidoParaString         := eStpTpMotCessBenefToStrEX(vElementoEnum);
+    ReconvertidoParaElementoEnum := eSStrToTpMotCessBenefEX(ConvertidoParaString);
+    EhIgual := (ReconvertidoParaElementoEnum = vElementoEnum);
+    CheckTrue(EhIgual, 'Erro de conversão no elemento ord('+GetEnumName(TypeInfo(vElementoEnum), ord(vElementoEnum))+')='+IntToStr(ord(vElementoEnum))+'  '+
+                       'eStpTpMotCessBenefToStrEX => ' + ConvertidoParaString + '  '+
+                       'eSStrToTpMotCessBenefEX => ' + GetEnumName(TypeInfo(ReconvertidoParaElementoEnum), ord(ReconvertidoParaElementoEnum))
+               );
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpMotCessBenefEX_ConvertendoTodosTipos_RetornoCorreto;
+var
+  ElementoDoArray: string;
+  ElementoConvertido: tpMotCessBenef;
+  ReconvertidoParaString: string;
+  i: tpMotCessBenef;
+  EhIgual: boolean;
+begin
+  for i:=Low(tpMotCessBenefArrayStrings) to High(tpMotCessBenefArrayStrings)do
+  begin
+    ElementoDoArray        := tpMotCessBenefArrayStrings[i];
+    ElementoConvertido     := eSStrToTpMotCessBenefEX(ElementoDoArray);
+    ReconvertidoParaString := eStpTpMotCessBenefToStrEX(ElementoConvertido);
+    EhIgual := (ReconvertidoParaString = ElementoDoArray);
+    CheckTrue(EhIgual, 'Erro de conversão no elemento ' + ElementoDoArray +'  '+
+                       'eSStrToTpMotCessBenefEX => ' + GetEnumName(TypeInfo(ElementoConvertido), ord(ElementoConvertido))+'  '+
+                       'eStpTpMotCessBenefToStrEX => ' + ReconvertidoParaString);
+  end;
+end;
+
+procedure TACBreSocialTipoToStrStrToTipoTest.eSStrToTpMotCessBenefEX_ConvertendoStringInvalida_RetornoException;
+var
+  ElementoConvertido: tpMotCessBenef;
+begin
+  try
+    ElementoConvertido := eSStrToTpMotCessBenefEX('StringInválida');
+  except
+    on E:Exception do
+      exit;
+  end;
+  Fail('Não foi gerada Exception para String inválida');
 end;
 
 procedure TACBreSocialTipoToStrStrToTipoTest.eStpTpMtvSuspensaoToStr_ConvertendoTodosTipos_RetornoCorreto;

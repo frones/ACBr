@@ -530,7 +530,7 @@ begin
   Gerador.wGrupo('infoBenTermino');
 
   Gerador.wCampo(tcDat, '', 'dtTermBeneficio', 10, 10, 1, pInfoBenTermino.dtTermBeneficio);
-  Gerador.wCampo(tcInt, '', 'mtvTermino',       2,  2, 1, eStpTpMotCessBenefToStr(pInfoBenTermino.mtvTermino));
+  Gerador.wCampo(tcInt, '', 'mtvTermino',       2,  2, 1, eStpTpMotCessBenefToStrEX(pInfoBenTermino.mtvTermino));
 
   Gerador.wGrupo('/infoBenTermino');
 end;

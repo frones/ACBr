@@ -624,6 +624,10 @@ type
                              tmcbTransferenciaDeOrgaoAdministrador,
                              tmcbMudancaDeCPFDoBeneficiario,
                              tmcbNaoRecadastramento);
+  const
+  tpMotCessBenefArrayStrings:array[tpMotCessBenef] of string = (''  ,'01','02','03','04','05',
+                                                                '06','07','08','09','10','11');
+  type
 
   tpMtvTermino            = tpMotCessBenef;
 
@@ -1185,8 +1189,10 @@ function eSStrTotpTpPenMorte(var ok: boolean; const s: string): tpTpPenMorte;dep
 function eStpTpPenMorteToStrEX(const t: tpTpPenMorte):string;
 function eSStrTotpTpPenMorteEX(const s: string): tpTpPenMorte;
 
-function eStpTpMotCessBenefToStr(const t: tpMotCessBenef): string;
-function eSStrToTpMotCessBenef(var ok: boolean; const s: string): tpMotCessBenef;
+function eStpTpMotCessBenefToStr(const t: tpMotCessBenef): string;deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS}'Use a função eStpTpMotCessBenefToStrEX conforme a sua necessidade' {$ENDIF};
+function eSStrToTpMotCessBenef(var ok: boolean; const s: string): tpMotCessBenef;deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS}'Use a função eSStrToTpMotCessBenefEX conforme a sua necessidade' {$ENDIF};
+function eStpTpMotCessBenefToStrEX(const t: tpMotCessBenef): string;
+function eSStrToTpMotCessBenefEX(const s: string): tpMotCessBenef;
 
 function eStpTpMtvSuspensaoToStr(const t: tpMtvSuspensao): string;
 function eSStrToTpMtvSuspensao(var ok: boolean; const s: string): tpMtvSuspensao;
@@ -2728,6 +2734,26 @@ end;
 function eSStrTotpMotCessBenef(var ok: boolean; const s: string): tpMotCessBenef;
 begin
   result := tpMotCessBenef(StrToEnumerado2(ok, s, TGenericosString01_11) );
+end;
+
+function eStpTpMotCessBenefToStrEX(const t: tpMotCessBenef): string;
+begin
+  Result := tpMotCessBenefArrayStrings[t];
+end;
+
+function eSStrToTpMotCessBenefEX(const s: string): tpMotCessBenef;
+var
+  idx: tpMotCessBenef;
+begin
+  for idx := Low(tpMotCessBenefArrayStrings) to High(tpMotCessBenefArrayStrings)do
+  begin
+    if(tpMotCessBenefArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      Exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para tpMotCessBenef: %s', [s]);
 end;
 
 function eStpTpMtvSuspensaoToStr(const t: tpMtvSuspensao): string;

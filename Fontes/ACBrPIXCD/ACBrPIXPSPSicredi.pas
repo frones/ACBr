@@ -173,8 +173,8 @@ procedure TACBrPSPSicredi.QuandoReceberRespostaEndPoint(const aEndPoint, aURL,
   aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
 begin
   // Sicredi responde HTTP_OK ao método PUT do Endpoint PIX, de forma diferente da especificada
-  if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointPix) and (AResultCode = HTTP_CREATED) then
-    AResultCode := HTTP_OK;
+  if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointPix) and (AResultCode = HTTP_OK) then
+    AResultCode := HTTP_CREATED;
 end;
 
 function TACBrPSPSicredi.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;

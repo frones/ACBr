@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2023
+-- ACBrPIXPSPSicredi --
+[*] Correção da resposta do PSP Sicredi a uma devolução PIX.
+    Por: José Luis
+
 10/02/2023
 -- ACBrPIXPSPShipay --
 [*] Alteração para sempre utilizar o endpoint /order quando a wallet for 'shipay-pagador'

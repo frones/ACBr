@@ -566,6 +566,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'totApurMen', '', i + 1) <> '' do
           begin
+            infoTotal.ideEstab.totApurMen.New;
             infoTotal.ideEstab.totApurMen.Items[i].FCRMen            := leitor.rCampo(tcStr, 'CRMen');
             infoTotal.ideEstab.totApurMen.Items[i].FvlrBaseCRMen     := leitor.rCampo(tcDe2, 'vlrBaseCRMen');
             infoTotal.ideEstab.totApurMen.Items[i].FvlrBaseCRMenSusp := leitor.rCampo(tcDe2, 'vlrBaseCRMenSusp');
@@ -583,6 +584,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'totApurQui', '', i + 1) <> '' do
           begin
+            infoTotal.ideEstab.totApurQui.New;
             infoTotal.ideEstab.totApurQui.Items[i].FperApurQui       := StrToTpPerApurQui(ok, leitor.rCampo(tcStr, 'perApurQui'));
             infoTotal.ideEstab.totApurQui.Items[i].FCRQui            := leitor.rCampo(tcStr, 'CRQui');
             infoTotal.ideEstab.totApurQui.Items[i].FvlrBaseCRQui     := leitor.rCampo(tcDe2, 'vlrBaseCRQui');
@@ -601,6 +603,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'totApurDec', '', i + 1) <> '' do
           begin
+            infoTotal.ideEstab.totApurDec.New;
             infoTotal.ideEstab.totApurDec.Items[i].FperApurDec       := StrToTpPerApurDec(ok, leitor.rCampo(tcStr, 'perApurDec'));
             infoTotal.ideEstab.totApurDec.Items[i].FCRDec            := leitor.rCampo(tcStr, 'CRDec');
             infoTotal.ideEstab.totApurDec.Items[i].FvlrBaseCRDec     := leitor.rCampo(tcDe2, 'vlrBaseCRDec');
@@ -619,6 +622,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'totApurSem', '', i + 1) <> '' do
           begin
+            infoTotal.ideEstab.totApurSem.New;
             infoTotal.ideEstab.totApurSem.Items[i].FperApurSem       := StrToTpPerApurSem(ok, leitor.rCampo(tcStr, 'perApurSem'));
             infoTotal.ideEstab.totApurSem.Items[i].FCRSem            := leitor.rCampo(tcStr, 'CRSem');
             infoTotal.ideEstab.totApurSem.Items[i].FvlrBaseCRSem     := leitor.rCampo(tcDe2, 'vlrBaseCRSem');
@@ -637,6 +641,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'totApurDia', '', i + 1) <> '' do
           begin
+            infoTotal.ideEstab.totApurDia.New;
             infoTotal.ideEstab.totApurDia.Items[i].FperApurDia       := leitor.rCampo(tcStr, 'perApurDia');
             infoTotal.ideEstab.totApurDia.Items[i].FCRDia            := leitor.rCampo(tcStr, 'CRDia');
             infoTotal.ideEstab.totApurDia.Items[i].FvlrBaseCRDia     := leitor.rCampo(tcDe2, 'vlrBaseCRDia');
@@ -828,12 +833,20 @@ end;
 
 constructor TideEstab.Create;
 begin
-  FtotApurMen := TtotApurMenCollection.Create
+  FtotApurMen := TtotApurMenCollection.Create;
+  FtotApurQui := TtotApurQuiCollection.Create;
+  FtotApurDec := TtotApurDecCollection.Create;
+  FtotApurSem := TtotApurSemCollection.Create;
+  FtotApurDia := TtotApurDiaCollection.Create;
 end;
 
 destructor TideEstab.Destroy;
 begin
   FtotApurMen.Free;
+  FtotApurQui.Free;
+  FtotApurDec.Free;
+  FtotApurSem.Free;
+  FtotApurDia.Free;
 
   inherited;
 end;

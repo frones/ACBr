@@ -389,7 +389,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:RecepcionarLoteRps>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:RecepcionarLoteRps>';
 
   Result := Executar('http://tempuri.org/INFSEGeracao/RecepcionarLoteRps', Request,
@@ -406,7 +406,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:EnviarLoteRpsSincrono>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:EnviarLoteRpsSincrono>';
 
   Result := Executar('http://tempuri.org/INFSEGeracao/EnviarLoteRpsSincrono', Request,
@@ -423,7 +423,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:GerarNfse>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:GerarNfse>';
 
   Result := Executar('http://tempuri.org/INFSEGeracao/GerarNfse', Request,
@@ -444,7 +444,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:ConsultarLoteRps>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:ConsultarLoteRps>';
 
   Result := Executar('http://tempuri.org/INFSEConsultas/ConsultarLoteRps', Request,
@@ -461,7 +461,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:ConsultarNfsePorFaixa>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:ConsultarNfsePorFaixa>';
 
   Result := Executar('http://tempuri.org/INFSEConsultas/ConsultarNfsePorFaixa', Request,
@@ -478,7 +478,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:ConsultarNfsePorRps>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:ConsultarNfsePorRps>';
 
   Result := Executar('http://tempuri.org/INFSEConsultas/ConsultarNfsePorRps', Request,
@@ -495,7 +495,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:ConsultarNfseServicoPrestado>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:ConsultarNfseServicoPrestado>';
 
   Result := Executar('http://tempuri.org/INFSEConsultas/ConsultarNfseServicoPrestado', Request,
@@ -512,7 +512,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:ConsultarNfseServicoTomado>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:ConsultarNfseServicoTomado>';
 
   Result := Executar('http://tempuri.org/INFSEConsultas/ConsultarNfseServicoTomado', Request,
@@ -528,7 +528,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:CancelarNfse>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:CancelarNfse>';
 
   Result := Executar('http://tempuri.org/INFSEGeracao/CancelarNfse', Request,
@@ -545,7 +545,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<tem:SubstituirNfse>';
-  Request := Request + '<tem:xmlEnvio>' + XmlToStr(AMSG) + '</tem:xmlEnvio>';
+  Request := Request + '<tem:xmlEnvio>' + IncluirCDATA(AMSG) + '</tem:xmlEnvio>';
   Request := Request + '</tem:SubstituirNfse>';
 
   Result := Executar('http://tempuri.org/INFSEGeracao/SubstituirNfse', Request,

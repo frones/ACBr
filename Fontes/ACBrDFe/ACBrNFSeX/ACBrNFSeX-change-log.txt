@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/02/2023
+-- Pronim.Provider --
+[*] Trocado o XmlToStr por IncluirCDATA para que seja possível enviar um XML 
+    contendo o caracter "&".
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Correção para ler a tag <OutrasInformacoes> quando esta é gerada dentro do
     grupo <InfDeclaracaoPrestacaoServico>

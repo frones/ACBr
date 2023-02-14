@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2023
+-- pcnReinfR4010 --
+[*] Adiciona validação para que verifique se o conteúdo de compFP é diferente de zero para decidir se vai ou não gerar a Tag.
+   Por: Diego F 
 
 14/02/2023
 -- pcnReinfRetConsulta_R9011 --

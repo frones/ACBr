@@ -858,11 +858,13 @@ begin
     Gerador.wGrupo('infoPgto');
     Gerador.wCampo(tcDat, '', 'dtFG', 10,  10, 1, item.dtFG);
 
-    if item.indDecTerc = 'S' then
-      Gerador.wCampo(tcStr, '', 'compFP', 4,  4, 0, FormatDateTime('yyyy',item.compFP))
-    else
-      Gerador.wCampo(tcStr, '', 'compFP', 7,  7, 0, FormatDateTime('yyyy-mm',item.compFP));
-
+    if(item.compFP > 0)then
+    begin
+      if item.indDecTerc = 'S' then
+        Gerador.wCampo(tcStr, '', 'compFP', 4,  4, 0, FormatDateTime('yyyy',item.compFP))
+      else
+        Gerador.wCampo(tcStr, '', 'compFP', 7,  7, 0, FormatDateTime('yyyy-mm',item.compFP));
+    end;
     Gerador.wCampo(tcStr, '', 'indDecTerc',     1,   1,  0, item.indDecTerc);
     Gerador.wCampo(tcDe2, '', 'vlrRendBruto',   1,  14,  1, item.vlrRendBruto);
     Gerador.wCampo(tcDe2, '', 'vlrRendTrib',    1,  14,  0, item.vlrRendTrib);

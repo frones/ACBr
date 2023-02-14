@@ -308,6 +308,10 @@ type
     FiniValid: String;
     FfimValid: string;
     FnrProtocolo: String;
+    FtpEntLig: String;
+    FcnpjLig: String;
+    FtpProc: String;
+    FnrProc: String;
   public
     property id: String read FId write FId;
     property dtHoraRecebimento: String read FdtHoraRecebimento write FdtHoraRecebimento;
@@ -317,6 +321,10 @@ type
     property iniValid: String read FiniValid write FiniValid;
     property fimValid: String read FfimValid write FfimValid;
     property nrProtocolo : string read FnrProtocolo write FnrProtocolo;
+    property tpEntLig: String read FtpEntLig write FtpEntLig;
+    property cnpjLig: String read FcnpjLig write FcnpjLig;
+    property tpProc: String read FtpProc write FtpProc;
+    property nrProc: String read FnrProc write FnrProc;
   end;
 
   TEvtTotalContrib = class(TObject)
@@ -821,6 +829,10 @@ begin
               nrRecibo          := leitor.rCampo(tcStr, 'nrRecibo');
               situacaoEvento    := leitor.rCampo(tcStr, 'situacaoEvento');
               aplicacaoRecepcao := leitor.rCampo(tcStr, 'aplicacaoRecepcao');
+              tpEntLig          := leitor.rCampo(tcStr, 'tpEntLig');
+              cnpjLig           := leitor.rCampo(tcStr, 'cnpjLig');
+              tpProc            := leitor.rCampo(tcStr, 'tpProc');
+              nrProc            := leitor.rCampo(tcStr, 'nrProc');
 
               inc(i);
             end;

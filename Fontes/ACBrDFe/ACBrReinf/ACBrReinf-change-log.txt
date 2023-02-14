@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+14/02/2023
+-- pcnReinfRetConsulta_R9011 --
+[*] Não estava tratando os campos de retorno do R-1050 e R-1070.
+   Por: Renato Rubinho
+
 13/02/2023
 -- pcnReinfR9005 --
 [*] Correção para evitar erro ao consultar protocolo.

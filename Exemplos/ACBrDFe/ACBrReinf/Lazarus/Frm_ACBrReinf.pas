@@ -1498,13 +1498,20 @@ begin
                 begin
                   Add('   ID................: ' + Id);
                   Add('   Inicio da Validade: ' + iniValid);
+                  Add('   Fim da Validade...: ' + fimValid);
                   Add('   Data/Hora Receb...: ' + dtHoraRecebimento);
                   Add('   Numero do Recibo..: ' + nrRecibo);
+                  Add('   Numero Protocolo..: ' + nrProtocolo);
                   Add('   Situação do Evento: ' + situacaoEvento);
                   Add('   Aplicacao Recepção: ' + aplicacaoRecepcao);
+                  Add('   Clas. Ent. ligada.: ' + tpEntLig);
+                  Add('   CNPJ Ent. ligada..: ' + cnpjLig);
+                  Add('   Clas. Ent. ligada.: ' + tpEntLig);
+                  Add('   CNPJ Ent. ligada..: ' + cnpjLig);
+                  Add('   Tipo de Processo..: ' + tpProc);
+                  Add('   Numero do Processo: ' + nrProc);
                 end;
               end;
-
             end;
           end;
         end;

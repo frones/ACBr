@@ -37,7 +37,7 @@ uses
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
-  ACBrBase, ACBrDFe,
+  ACBrBase, ACBrDFe, 
   ACBrReinf, pcnConversaoReinf;
 
 type
@@ -1432,40 +1432,53 @@ end;
 
 procedure TfrmACBrReinf.btnConsultarReciboClick(Sender: TObject);
 var
-  PerApur, TipoEvento, nrInscEstab, cnpjPrestador, nrInscTomador, DataApur: string;
+  Titulo, PerApur, TipoEvento, nrInscEstab, cnpjPrestador, nrInscTomador,
+  DataApur, cpfCnpjBenef, cnpjFonte: string;
   Ok: Boolean;
   i: Integer;
   dtApur: TDateTime;
 begin
+  Titulo := 'Consulta Recibo';
+
   PerApur := '';
-  if not (InputQuery('WebServices: Consulta Recibo', 'Período de Apuração (AAAA-MM):', PerApur)) then
+  if not (InputQuery(Titulo, 'Período de Apuração (AAAA-MM):', PerApur)) then
     Exit;
 
   TipoEvento := '';
-  if not (InputQuery('WebServices: Consulta Recibo', 'Tipo do Evento (R-xxxx):', TipoEvento)) then
+  if not (InputQuery(Titulo, 'Tipo do Evento (R-xxxx):', TipoEvento)) then
     Exit;
 
   nrInscEstab := '';
-  if not (InputQuery('WebServices: Consulta Recibo', 'Nr. Inscrição do Estabelecimento:', nrInscEstab)) then
+  if not (InputQuery(Titulo, 'Nr. Inscrição do Estabelecimento:', nrInscEstab)) then
     Exit;
 
   cnpjPrestador := '';
-  if not (InputQuery('WebServices: Consulta Recibo', 'Nr. CNPJ do Prestador de Serviço:', cnpjPrestador)) then
+  if not (InputQuery(Titulo, 'Nr. CNPJ do Prestador de Serviço:', cnpjPrestador)) then
     Exit;
 
   nrInscTomador := '';
-  if not (InputQuery('WebServices: Consulta Recibo', 'Nr. Inscrição do Tomador:', nrInscTomador)) then
+  if not (InputQuery(Titulo, 'Nr. Inscrição do Tomador:', nrInscTomador)) then
     Exit;
 
   DataApur := '';
-  if not (InputQuery('WebServices: Consulta Recibo', 'Data de Apuração (DD/MM/AAAA):', DataApur)) then
+  if not (InputQuery(Titulo, 'Data de Apuração (DD/MM/AAAA):', DataApur)) then
+    Exit;
+
+  cpfCnpjBenef := '';
+  if not (InputQuery(Titulo, 'CPF/CNPJ do Beneficiário:', cpfCnpjBenef)) then
+    Exit;
+
+  cnpjFonte := '';
+  if not (InputQuery(Titulo, 'CNPJ da Fonte Pagadora:', cnpjFonte)) then
     Exit;
 
   dtApur := StrToDateDef(DataApur, 0);
 
+  {PerApur e TipoEvento são obrigatórios, os demais são opcionais}
   if ACBrReinf1.ConsultaReciboEvento(PerApur, StrToTipoEvento(Ok, TipoEvento),
                                      nrInscEstab, cnpjPrestador,
-                                     nrInscTomador, dtApur) then
+                                     nrInscTomador, dtApur,
+                                     cpfCnpjBenef, cnpjFonte) then
   begin
     memoLog.Clear;
     memoLog.Lines.Text := ACBrReinf1.WebServices.Consultar.RetWS;
@@ -1511,13 +1524,20 @@ begin
                 begin
                   Add('   ID................: ' + Id);
                   Add('   Inicio da Validade: ' + iniValid);
+                  Add('   Fim da Validade...: ' + fimValid);
                   Add('   Data/Hora Receb...: ' + dtHoraRecebimento);
                   Add('   Numero do Recibo..: ' + nrRecibo);
+                  Add('   Numero Protocolo..: ' + nrProtocolo);
                   Add('   Situação do Evento: ' + situacaoEvento);
                   Add('   Aplicacao Recepção: ' + aplicacaoRecepcao);
+                  Add('   Clas. Ent. ligada.: ' + tpEntLig);
+                  Add('   CNPJ Ent. ligada..: ' + cnpjLig);
+                  Add('   Clas. Ent. ligada.: ' + tpEntLig);
+                  Add('   CNPJ Ent. ligada..: ' + cnpjLig);
+                  Add('   Tipo de Processo..: ' + tpProc);
+                  Add('   Numero do Processo: ' + nrProc);
                 end;
               end;
-
             end;
           end;
         end;

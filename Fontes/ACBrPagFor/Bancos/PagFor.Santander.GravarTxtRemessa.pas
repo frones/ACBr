@@ -81,9 +81,7 @@ begin
   GravarCampo(' ', 9, tcStr);
   GravarCampo(TpInscricaoToStr(PagFor.Registro0.Empresa.Inscricao.Tipo), 1, tcStr);
   GravarCampo(PagFor.Registro0.Empresa.Inscricao.Numero, 14, tcStrZero);
-  GravarCampo(BancoToStr(PagFor.Geral.Banco), 4, tcStrZero);
-  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Agencia.Codigo, 4, tcInt);
-  GravarCampo(PagFor.Registro0.Empresa.Convenio, 12, tcStrZero);
+  GravarCampo(PagFor.Registro0.Empresa.Convenio, 20, tcStrZero);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Agencia.DV, 1, tcStr);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
@@ -143,11 +141,9 @@ begin
   GravarCampo(' ', 1, tcStr);
   GravarCampo(TpInscricaoToStr(PagFor.Lote.Items[I].Registro1.Empresa.Inscricao.Tipo), 1, tcStr);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Inscricao.Numero, 14, tcStrZero);
-  GravarCampo(BancoToStr(PagFor.Geral.Banco), 4, tcStrZero);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.Codigo, 4, tcInt);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Convenio, 12, tcStrZero);
+  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Convenio, 20, tcStrZero);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.TipoConta, 1, tcInt);
+  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.DV, 1, tcInt);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.DV, 1, tcStr);
   GravarCampo(' ', 1, tcStr);
@@ -199,8 +195,7 @@ begin
   GravarCampo(' ', 9, tcStr);
   GravarCampo(FQtdeLotes, 6, tcInt);
   GravarCampo(FQtdeRegistros, 6, tcInt);
-  GravarCampo(' ', 6, tcStr);
-  GravarCampo(' ', 205, tcStr);
+  GravarCampo(' ', 211, tcStr);
 
   ValidarLinha('9');
   IncluirLinha;

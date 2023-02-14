@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/02/2023
+-- PagFor.Santander.GravarTxtRemessa --
+[*] Correção nos registros 0, 1 e 9, para deixar em conformidade com o manual 
+    do Banco.
+   Por: Keiller Rodrigues
+
 06/02/2023
 -- ACBrPagForLerTxt --
 [*] Ajustes na leitura de datas em branco

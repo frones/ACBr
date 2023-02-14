@@ -85,6 +85,7 @@ type
   TACBrPIXCalendarioCobVBase = class(TACBrPIXSchema)
   private
     fcriacao: TDateTime;
+    fcriacao_Bias: Integer;
     fdataDeVencimento: TDateTime;
     fvalidadeAposVencimento: Integer;
     procedure SetCriacao(AValue: TDateTime);
@@ -94,6 +95,7 @@ type
     procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
 
     property criacao: TDateTime read fcriacao write SetCriacao;
+    property criacao_Bias: Integer read fcriacao_Bias write fcriacao_Bias;
     property dataDeVencimento: TDateTime read fdataDeVencimento write SetDataDeVencimento;
     property validadeAposVencimento: Integer read fvalidadeAposVencimento write fvalidadeAposVencimento;
   public
@@ -117,6 +119,7 @@ type
   TACBrPIXCalendarioCobVGerada = class(TACBrPIXCalendarioCobVSolicitada)
   public
     property criacao;
+    property criacao_Bias;
   end;
 
   { TACBrPIXModalidadeValor }
@@ -360,7 +363,9 @@ implementation
 uses
   DateUtils, Math,
   ACBrPIXUtil,
-  ACBrUtil.Strings;
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 function ValoresModalidadeToString(aValue: TACBrPIXValoresModalidade): String;
 begin
@@ -457,6 +462,7 @@ end;
 procedure TACBrPIXCalendarioCobVBase.Clear;
 begin
   fcriacao := 0;
+  fcriacao_Bias := 0;
   fdataDeVencimento := 0;
   fvalidadeAposVencimento := 0;
 end;
@@ -464,6 +470,7 @@ end;
 function TACBrPIXCalendarioCobVBase.IsEmpty: Boolean;
 begin
   Result := (fcriacao = 0) and
+            (fcriacao_Bias = 0) and
             (fdataDeVencimento = 0) and
             (fvalidadeAposVencimento = 0);
 end;
@@ -471,6 +478,7 @@ end;
 procedure TACBrPIXCalendarioCobVBase.Assign(Source: TACBrPIXCalendarioCobVBase);
 begin
   fcriacao := Source.criacao;
+  fcriacao_Bias := Source.criacao_Bias;
   fdataDeVencimento := Source.dataDeVencimento;
   fvalidadeAposVencimento := Source.validadeAposVencimento;
 end;
@@ -491,20 +499,31 @@ end;
 
 procedure TACBrPIXCalendarioCobVBase.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  AJSon
-    .AddPairISODateTime('criacao', fcriacao, False)
-    .AddPairISODate('dataDeVencimento', fdataDeVencimento, False);
+  if (fcriacao > 0) then
+    AJSon.AddPair('criacao', DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias)));
+
+  AJSon.AddPairISODate('dataDeVencimento', fdataDeVencimento, False);
 
   if (fvalidadeAposVencimento > 0) then
     AJSon.AddPair('validadeAposVencimento', fvalidadeAposVencimento);
 end;
 
 procedure TACBrPIXCalendarioCobVBase.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  wC: String;
 begin
+  {$IfDef FPC}wC := EmptyStr;{$EndIf}
+
   AJSon
-    .ValueISODateTime('criacao', fcriacao)
+    .Value('criacao', wC)
     .ValueISODate('dataDeVencimento', fdataDeVencimento)
     .Value('validadeAposVencimento', fvalidadeAposVencimento);
+
+  if NaoEstaVazio(wC) then
+  begin
+    fcriacao := Iso8601ToDateTime(wC);
+    fcriacao_Bias := TimeZoneToBias(wC);
+  end;
 end;
 
 { TACBrPIXModalidadeValor }

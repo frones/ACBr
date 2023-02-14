@@ -53,7 +53,9 @@ type
   TACBrPIXHorario = class(TACBrPIXSchema)
   private
     fliquidacao: TDateTime;
+    fliquidacao_Bias: Integer;
     fsolicitacao: TDateTime;
+    fsolicitacao_Bias: Integer;
   protected
     procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
@@ -64,7 +66,9 @@ type
     procedure Assign(Source: TACBrPIXHorario);
 
     property solicitacao: TDateTime read fsolicitacao write fsolicitacao;
+    property solicitacao_Bias: Integer read fsolicitacao_Bias write fsolicitacao_Bias;
     property liquidacao: TDateTime read fliquidacao write fliquidacao;
+    property liquidacao_Bias: Integer read fliquidacao_Bias write fliquidacao_Bias;
   end;
 
   { TACBrPIXDevolucaoSolicitada }
@@ -139,7 +143,8 @@ implementation
 uses
   ACBrPIXUtil,
   ACBrUtil.Base,
-  ACBrUtil.Strings;
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 { TACBrPIXHorario }
 
@@ -152,33 +157,58 @@ end;
 procedure TACBrPIXHorario.Clear;
 begin
   fsolicitacao := 0;
+  fsolicitacao_Bias := 0;
   fliquidacao := 0;
+  fliquidacao_Bias := 0;
 end;
 
 function TACBrPIXHorario.IsEmpty: Boolean;
 begin
   Result := (fsolicitacao = 0) and
-            (fliquidacao = 0);
+            (fsolicitacao_Bias = 0) and
+            (fliquidacao = 0) and
+            (fliquidacao_Bias = 0);
 end;
 
 procedure TACBrPIXHorario.Assign(Source: TACBrPIXHorario);
 begin
   fsolicitacao := Source.solicitacao;
+  fsolicitacao_Bias := Source.solicitacao_Bias;
   fliquidacao := Source.liquidacao;
+  fliquidacao_Bias := Source.liquidacao_Bias;
 end;
 
 procedure TACBrPIXHorario.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   AJSon
-    .AddPairISODateTime('solicitacao', fsolicitacao)
-    .AddPairISODateTime('liquidacao', fliquidacao);
+    .AddPair('solicitacao', DateTimeToIso8601(fsolicitacao, BiasToTimeZone(fsolicitacao_Bias)))
+    .AddPair('liquidacao', DateTimeToIso8601(fliquidacao, BiasToTimeZone(fliquidacao_Bias)));
 end;
 
 procedure TACBrPIXHorario.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  wL, wS: String;
 begin
+  {$IfDef FPC}
+  wL := EmptyStr;
+  wS := EmptyStr;
+  {$EndIf}
+
   AJSon
-    .ValueISODateTime('solicitacao', fsolicitacao)
-    .ValueISODateTime('liquidacao', fliquidacao);
+    .Value('solicitacao', wS)
+    .Value('liquidacao', wL);
+
+  if NaoEstaVazio(wS) then
+  begin
+    fsolicitacao := Iso8601ToDateTime(wS);
+    fsolicitacao_Bias := TimeZoneToBias(wS);
+  end;
+
+  if NaoEstaVazio(wL) then
+  begin
+    fliquidacao := Iso8601ToDateTime(wL);
+    fliquidacao_Bias := TimeZoneToBias(wL);
+  end;
 end;
 
 { TACBrPIXDevolucaoSolicitada }

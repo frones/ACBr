@@ -53,6 +53,7 @@ type
   TACBrPIXLocationBase = class(TACBrPIXSchema)
   private
     fcriacao: TDateTime;
+    fcriacao_Bias: Integer;
     fid: Int64;
     flocation: String;
     ftipoCob: TACBrPIXTipoCobranca;
@@ -62,7 +63,9 @@ type
     property id: Int64 read fid write fid;
     property txId: String read ftxId write SetTxId;
     property location: String read flocation write flocation;
+
     property criacao: TDateTime read fcriacao;
+    property criacao_Bias: Integer read fcriacao_Bias;
 
     procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
@@ -89,6 +92,7 @@ type
     property id;
     property location;
     property criacao;
+    property criacao_Bias;
   end;
 
   { TACBrPIXLocationCompleta }
@@ -99,12 +103,15 @@ type
     property txId;
     property location;
     property criacao;
+    property criacao_Bias;
   end;
 
 implementation
 
 uses
+  ACBrUtil.DateTime,
   ACBrUtil.Strings,
+  ACBrUtil.Base,
   ACBrPIXUtil;
 
 { TACBrPIXLocationBase }
@@ -118,6 +125,7 @@ end;
 procedure TACBrPIXLocationBase.Clear;
 begin
   fcriacao := 0;
+  fcriacao_Bias := 0;
   fid := 0;
   flocation := '';
   ftipoCob := tcoNenhuma;
@@ -127,6 +135,7 @@ end;
 function TACBrPIXLocationBase.IsEmpty: Boolean;
 begin
   Result := (fcriacao = 0) and
+            (fcriacao_Bias = 0) and
             (fid = 0) and
             (flocation = '') and
             (ftipoCob = tcoNenhuma) and
@@ -136,6 +145,7 @@ end;
 procedure TACBrPIXLocationBase.Assign(Source: TACBrPIXLocationBase);
 begin
   fcriacao := Source.criacao;
+  fcriacao_Bias := Source.criacao_Bias;
   fid := Source.id;
   flocation := Source.location;
   ftipoCob := Source.tipoCob;
@@ -152,22 +162,32 @@ begin
   AJSon
     .AddPair('txid', ftxId, False)
     .AddPair('location', flocation, False)
-    .AddPairISODateTime('criacao', fcriacao, False);
+    .AddPair('criacao', DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias)));
 end;
 
 procedure TACBrPIXLocationBase.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
-  s: String;
+  s, wC: String;
 begin 
-  {$IfDef FPC}s := EmptyStr;{$EndIf}
+  {$IfDef FPC}
+  s := EmptyStr;
+  wC := EmptyStr;
+  {$EndIf}
+
   AJSon
     .Value('id', fid)
     .Value('txid', ftxId)
     .Value('location', flocation)
     .Value('tipoCob', s)
-    .ValueISODateTime('criacao', fcriacao);
+    .Value('criacao', wC);
 
   ftipoCob := StringToPIXTipoCobranca(s);
+
+  if NaoEstaVazio(wC) then
+  begin
+    fcriacao := Iso8601ToDateTime(wC);
+    fcriacao_Bias := TimeZoneToBias(wC);
+  end;
 end;
 
 procedure TACBrPIXLocationBase.SetTxId(AValue: String);

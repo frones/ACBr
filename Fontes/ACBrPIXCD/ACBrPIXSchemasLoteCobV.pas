@@ -54,6 +54,7 @@ type
   TACBrPIXLoteCobV = class(TACBrPIXSchema)
   private
     fcriacao: TDateTime;
+    fcriacao_Bias: Integer;
     fproblema: TACBrPIXProblema;
     fstatus: TACBrPIXStatusLoteCobranca;
     ftxId: String;
@@ -73,6 +74,7 @@ type
     property status: TACBrPIXStatusLoteCobranca read fstatus write fstatus;
     property problema: TACBrPIXProblema read fproblema;
     property criacao: TDateTime read fcriacao write fcriacao;
+    property criacao_Bias: Integer read fcriacao_Bias write fcriacao_Bias;
   end;
 
   { TACBrPIXLoteCobVArray }
@@ -96,6 +98,7 @@ type
   private
     fcobsv: TACBrPIXLoteCobVArray;
     fcriacao: TDateTime;
+    fcriacao_Bias: Integer;
     fdescricao: String;
     fid: Int64;
   protected
@@ -112,6 +115,7 @@ type
     property id: Int64 read fid write fid;
     property descricao: String read fdescricao write fdescricao;
     property criacao: TDateTime read fcriacao write fcriacao;
+    property criacao_Bias: Integer read fcriacao_Bias write fcriacao_Bias;
     property cobsv: TACBrPIXLoteCobVArray read fcobsv;
   end;
 
@@ -240,6 +244,7 @@ implementation
 
 uses
   ACBrPIXUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime;
 
@@ -260,6 +265,7 @@ end;
 procedure TACBrPIXLoteCobV.Clear;
 begin
   fcriacao := 0;
+  fcriacao_Bias := 0;
   fproblema.Clear;
   fstatus := stlNENHUM;
   ftxId := '';
@@ -268,6 +274,7 @@ end;
 function TACBrPIXLoteCobV.IsEmpty: Boolean;
 begin
   Result := (fcriacao = 0) and
+            (fcriacao_Bias = 0) and
             (fstatus = stlNENHUM) and
             (ftxId = '') and
             fproblema.IsEmpty;
@@ -276,6 +283,7 @@ end;
 procedure TACBrPIXLoteCobV.Assign(Source: TACBrPIXLoteCobV);
 begin
   fcriacao := Source.criacao;
+  fcriacao_Bias := Source.criacao_Bias;
   fstatus := Source.status;
   ftxId := Source.txId;
   fproblema.Assign(Source.problema);
@@ -309,7 +317,7 @@ procedure TACBrPIXLoteCobV.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   AJSon
     .AddPair('txid', ftxId, False)
-    .AddPairISODateTime('criacao', fcriacao, False);
+    .AddPair('criacao', DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias)));
 
   if (fstatus <> stlNENHUM) then
     AJSon.AddPair('status', PIXStatusLoteCobrancaToString(fstatus));
@@ -319,16 +327,26 @@ end;
 
 procedure TACBrPIXLoteCobV.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
-  s: String;
+  s, wC: String;
 begin
-  {$IfDef FPC}s := EmptyStr;{$EndIf}
+  {$IfDef FPC}
+  s := EmptyStr;
+  wC := EmptyStr;
+  {$EndIf}
+
   AJSon
     .Value('txid', ftxId)
     .Value('status', s)
-    .ValueISODateTime('criacao', fcriacao);
+    .Value('criacao', wC);
 
   fstatus := StringToPIXStatusLoteCobranca(s);
   fproblema.ReadFromJSon(AJSon);
+
+  if NaoEstaVazio(wC) then
+  begin
+    fcriacao := Iso8601ToDateTime(wC);
+    fcriacao_Bias := TimeZoneToBias(wC);
+  end;
 end;
 
 { TACBrPIXLoteCobVArray }
@@ -382,6 +400,7 @@ procedure TACBrPIXLoteCobVConsultado.Clear;
 begin
   fcobsv.Clear;
   fcriacao := 0;
+  fcriacao_Bias := 0;
   fdescricao := '';
   fid := 0;
 end;
@@ -390,6 +409,7 @@ function TACBrPIXLoteCobVConsultado.IsEmpty: Boolean;
 begin
   Result := fcobsv.IsEmpty and
             (fcriacao = 0) and
+            (fcriacao_Bias = 0) and
             (fdescricao = '') and
             (fid = 0);
 end;
@@ -398,6 +418,7 @@ procedure TACBrPIXLoteCobVConsultado.Assign(Source: TACBrPIXLoteCobVConsultado);
 begin
   fcobsv.Assign(Source.cobsv);
   fcriacao := Source.criacao;
+  fcriacao_Bias := Source.criacao_Bias;
   fdescricao := Source.descricao;
   fid := Source.id;
 end;
@@ -413,17 +434,28 @@ begin
   AJSon
     .AddPair('id', fid, False)
     .AddPair('descricao', fdescricao, False)
-    .AddPairISODateTime('criacao', fcriacao, False);
+    .AddPair('criacao', DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias)));
   fcobsv.WriteToJSon(AJSon);
 end;
 
 procedure TACBrPIXLoteCobVConsultado.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  wC: String;
 begin
+  {$IfDef FPC}wC := EmptyStr;{$EndIf}
+
   AJSon
     .Value('id', fid)
     .Value('descricao', fdescricao)
-    .ValueISODateTime('criacao', fcriacao);
+    .Value('criacao', wC);
+
   fcobsv.ReadFromJSon(AJSon);
+
+  if NaoEstaVazio(wC) then
+  begin
+    fcriacao := Iso8601ToDateTime(wC);
+    fcriacao_Bias := TimeZoneToBias(wC);
+  end;
 end;
 
 { TACBrPIXLoteCobVConsultadoArray }

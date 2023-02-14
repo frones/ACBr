@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2023
+-- ACBrPIXSchemasCobV, ACBrPIXSchemasDevolucao, ACBrPIXSchemasLocation, ACBrPIXSchemasLoteCobV --
+[*] Criadas propriedades "Bias" para armazenar informação do TimeZone em propriedades TDateTime.
+    Por: Elias César
+
 13/02/2023
 -- ACBrPIXPSPSicredi --
 [*] Correção da resposta do PSP Sicredi a uma devolução PIX.

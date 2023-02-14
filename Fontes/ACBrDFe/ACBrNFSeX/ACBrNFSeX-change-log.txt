@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/02/2023
+-- ACBrNFSeX --
+[+] Implementado os métodos: ConsultarDPSPorChave e ConsultarNFSePorChave,
+    métodos especificos para o Padrão Nacional.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLISSNet --
 [*] Melhorias no quadro do tomador.
    Por: Imbua

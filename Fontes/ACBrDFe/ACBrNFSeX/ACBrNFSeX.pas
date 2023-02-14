@@ -167,10 +167,15 @@ type
       const ACodCancelamento: string; const AMotCancelamento: String = '';
       const ANumLote: String = ''; const ACodVerificacao: String = '');
 
+    function LinkNFSe(ANumNFSe: String; const ACodVerificacao: String;
+      const AChaveAcesso: String = ''; const AValorServico: String = ''): String;
+
     // Usado pelos provedores que geram token por WebService
     procedure GerarToken;
 
     // Usado pelo provedor PadraoNacional
+    procedure ConsultarDPSPorChave(const aChave: string);
+    procedure ConsultarNFSePorChave(const aChave: string);
     procedure ObterDANFSE(const aChave: String);
     procedure EnviarEvento(aInfEvento: TInfEvento);
     procedure ConsultarEvento(const aChave: string); overload;
@@ -183,9 +188,6 @@ type
     procedure ConsultarParametros(ATipoParamMunic: TParamMunic;
       const ACodigoServico: string = ''; ACompetencia: TDateTime = 0;
       const ANumeroBeneficio: string = '');
-
-    function LinkNFSe(ANumNFSe: String; const ACodVerificacao: String;
-      const AChaveAcesso: String = ''; const AValorServico: String = ''): String;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -566,6 +568,17 @@ begin
   FProvider.ConsultarDFe;
 end;
 
+procedure TACBrNFSeX.ConsultarDPSPorChave(const aChave: string);
+begin
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.ConsultaNFSeporRps.Clear;
+  FWebService.ConsultaNFSeporRps.NumRPS := aChave;
+
+  FProvider.ConsultaNFSeporRps;
+end;
+
 procedure TACBrNFSeX.ConsultarLoteRps(const AProtocolo, ANumLote: String);
 begin
   if not Assigned(FProvider) then
@@ -612,6 +625,22 @@ begin
     CodVerificacao := aInfConsultaNFSe.CodVerificacao;
     tpDocumento := aInfConsultaNFSe.tpDocumento;
     tpRetorno := aInfConsultaNFSe.tpRetorno;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSePorChave(const aChave: string);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcPorNumero;
+    tpRetorno := trXml;
+
+    NumeroIniNFSe := aChave;
+    NumeroFinNFSe := aChave;
   end;
 
   ConsultarNFSe;

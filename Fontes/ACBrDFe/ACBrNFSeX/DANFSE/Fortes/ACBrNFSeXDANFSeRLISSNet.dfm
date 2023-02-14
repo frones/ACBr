@@ -2,7 +2,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
   Left = 709
   Top = 76
   Caption = 'frlXDANFSeRLISSNet'
-  ClientHeight = 1031
+  ClientHeight = 750
   ClientWidth = 933
   PixelsPerInch = 96
   TextHeight = 13
@@ -175,22 +175,8 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
       Borders.DrawRight = True
       Borders.DrawBottom = True
       BeforePrint = rlbPrestadorBeforePrint
-      object RLLabel29: TRLLabel
-        Left = 119
-        Top = 78
-        Width = 59
-        Height = 14
-        Caption = 'Munic'#237'pio:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-      end
       object RLLabel30: TRLLabel
-        Left = 119
+        Left = 118
         Top = 134
         Width = 25
         Height = 14
@@ -217,35 +203,10 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         ParentFont = False
         Transparent = False
       end
-      object rllPrestMunicipio: TRLLabel
-        Left = 180
-        Top = 78
-        Width = 80
-        Height = 14
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object rllPrestInscMunicipal: TRLLabel
-        Left = 146
+        Left = 145
         Top = 134
         Width = 100
-        Height = 14
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-      end
-      object rllPrestEndereco: TRLLabel
-        Left = 119
-        Top = 64
-        Width = 82
         Height = 14
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -289,89 +250,8 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         ParentFont = False
         Transparent = False
       end
-      object RLLabel9: TRLLabel
-        Left = 318
-        Top = 78
-        Width = 19
-        Height = 14
-        Caption = 'UF:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-      end
-      object rllPrestUF: TRLLabel
-        Left = 339
-        Top = 78
-        Width = 35
-        Height = 14
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-      end
-      object RLLabel23: TRLLabel
-        Left = 119
-        Top = 92
-        Width = 55
-        Height = 14
-        Caption = 'Telefone:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-      end
-      object rllPrestTelefone: TRLLabel
-        Left = 176
-        Top = 92
-        Width = 78
-        Height = 14
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-      end
-      object RLLabel24: TRLLabel
-        Left = 119
-        Top = 106
-        Width = 40
-        Height = 14
-        Caption = 'e-mail:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-      end
-      object rllPrestEmail: TRLLabel
-        Left = 161
-        Top = 106
-        Width = 60
-        Height = 14
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-      end
       object RLLabel69: TRLLabel
-        Left = 294
+        Left = 255
         Top = 134
         Width = 21
         Height = 14
@@ -385,7 +265,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rllPrestInscEstadual: TRLLabel
-        Left = 317
+        Left = 278
         Top = 134
         Width = 97
         Height = 14
@@ -423,33 +303,6 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Borders.DrawBottom = True
         Brush.Style = bsClear
         DrawKind = dkLine
-      end
-      object rllPrestCEP: TRLLabel
-        Left = 412
-        Top = 78
-        Width = 55
-        Height = 14
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-      end
-      object RLLabel2: TRLLabel
-        Left = 383
-        Top = 78
-        Width = 27
-        Height = 14
-        Caption = 'CEP:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
       end
       object RLDraw12: TRLDraw
         Left = 483
@@ -637,6 +490,21 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         ParentFont = False
         Transparent = False
       end
+      object rllPrestEndereco: TRLMemo
+        Left = 119
+        Top = 67
+        Width = 358
+        Height = 47
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
     end
     object rlbTomador: TRLBand
       Left = 23
@@ -651,20 +519,6 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
       Borders.DrawRight = True
       Borders.DrawBottom = True
       BeforePrint = rlbTomadorBeforePrint
-      object RLLabel5: TRLLabel
-        Left = 4
-        Top = 34
-        Width = 62
-        Height = 15
-        Caption = 'CPF/CNPJ:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-      end
       object rllTomaCNPJ: TRLLabel
         Left = 68
         Top = 33
@@ -970,6 +824,22 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Font.Height = -13
         Font.Name = 'Arial'
         Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object lbIdentificacao: TRLLabel
+        Left = 6
+        Top = 34
+        Width = 59
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'CPFCNPJ:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
@@ -2657,7 +2527,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 264
+    Left = 272
     Top = 40
   end
 end

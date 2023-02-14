@@ -537,6 +537,9 @@ begin
       NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('InformacoesComplementares'), tcStr);
       NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares, '&lt;br&gt;', ';', [rfReplaceAll]);
     end;
+
+    if NFSe.OutrasInformacoes = '' then
+      NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
   end;
 end;
 
@@ -830,6 +833,8 @@ begin
     begin
       AuxNode := ANodes[i].Childrens.FindAnyNs('Valores');
 
+      Quantidade := 1;
+
       if AuxNode <> nil then
       begin
         ValorUnitario := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
@@ -838,9 +843,9 @@ begin
         Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);
         Aliquota := NormatizarAliquota(Aliquota);
         BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('BaseCalculo'), tcDe2);
-      end;
 
-      Quantidade := 1;
+        ValorTotal := Quantidade * ValorUnitario;
+      end;
 
       CodigoItemServico := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ItemListaServico'), tcStr);
       ItemListaServico := NormatizarItemListaServico(CodigoItemServico);

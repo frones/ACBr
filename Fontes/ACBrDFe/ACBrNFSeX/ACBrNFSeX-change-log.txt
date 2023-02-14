@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/02/2023
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Correção para ler a tag <OutrasInformacoes> quando esta é gerada dentro do
+    grupo <InfDeclaracaoPrestacaoServico>
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX --
 [+] Implementado os métodos: ConsultarDPSPorChave e ConsultarNFSePorChave,
     métodos especificos para o Padrão Nacional.

@@ -2257,22 +2257,23 @@ object frmACBrNFSe: TfrmACBrNFSe
           object tsConsultas1: TTabSheet
             Caption = 'Consultas'
             ImageIndex = 3
-            object btnConsultarNFSeRPSPN: TButton
+            object btnConsultarDPSPorChavePN: TButton
               Left = 3
               Top = 10
               Width = 177
               Height = 25
-              Caption = 'Consultar NFSe por DPS'
+              Caption = 'Consultar DPS por Chave'
               TabOrder = 0
-              OnClick = btnConsultarNFSeRPSPNClick
+              OnClick = btnConsultarDPSPorChavePNClick
             end
-            object btnConsultarNFSePeloNumeroPN: TButton
+            object btnConsultarNFSePelaChavePN: TButton
               Left = 186
               Top = 10
               Width = 177
               Height = 25
               Caption = 'Consultar NFSe por Chave'
               TabOrder = 1
+              OnClick = btnConsultarNFSePelaChavePNClick
             end
             object btnObterPDFdoDANFSEPN: TButton
               Left = 3

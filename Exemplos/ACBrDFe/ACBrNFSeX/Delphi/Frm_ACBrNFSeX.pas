@@ -253,8 +253,8 @@ type
     btnEventoRejTomPN: TButton;
     btnEventoRejInterPN: TButton;
     tsConsultas1: TTabSheet;
-    btnConsultarNFSeRPSPN: TButton;
-    btnConsultarNFSePeloNumeroPN: TButton;
+    btnConsultarDPSPorChavePN: TButton;
+    btnConsultarNFSePelaChavePN: TButton;
     btnObterPDFdoDANFSEPN: TButton;
     btnConsultarEventoChavPN: TButton;
     btnConsultarDFe: TButton;
@@ -344,7 +344,7 @@ type
     procedure btnEventoRejPrestPNClick(Sender: TObject);
     procedure btnEventoRejTomPNClick(Sender: TObject);
     procedure btnEventoRejInterPNClick(Sender: TObject);
-    procedure btnConsultarNFSeRPSPNClick(Sender: TObject);
+    procedure btnConsultarDPSPorChavePNClick(Sender: TObject);
     procedure btnConsultarEventoChavPNClick(Sender: TObject);
     procedure btnConsultarDFeClick(Sender: TObject);
     procedure btnConsultarParamMunicConvenioClick(Sender: TObject);
@@ -356,6 +356,7 @@ type
     procedure btnEmitirPNClick(Sender: TObject);
     procedure btnImprimirPNClick(Sender: TObject);
     procedure btnEnviaremailPNClick(Sender: TObject);
+    procedure btnConsultarNFSePelaChavePNClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -607,8 +608,8 @@ begin
       // TnfseSimNao = ( snSim, snNao );
       OptanteSimplesNacional := snSim;
 
-      // Provedor PadraoNacional
-      OptanteSN := osnNaoOptante;
+      // Provedor PadraoNacional (osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP)
+      OptanteSN := osnOptanteMEI;
 
       // TnfseSimNao = ( snSim, snNao );
       IncentivadorCultural := snNao;
@@ -1719,6 +1720,21 @@ begin
   ChecarResposta(tmConsultarNFSe);
 end;
 
+procedure TfrmACBrNFSe.btnConsultarNFSePelaChavePNClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe: String;
+begin
+  xTitulo := 'Consultar NFSe pela Chave da NFSe';
+
+  xChaveNFSe := '';
+  if not (InputQuery(xTitulo, 'Chave da NFSe:', xChaveNFSe)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarNFSePorChave(xChaveNFSe);
+
+  ChecarResposta(tmConsultarNFSePorRps);
+end;
+
 procedure TfrmACBrNFSe.btnConsultarNFSePeriodoClick(Sender: TObject);
 var
   xTitulo, DataIni, DataFin, NumPagina, NumLote: String;
@@ -1810,17 +1826,17 @@ begin
   ChecarResposta(tmConsultarNFSePorRps);
 end;
 
-procedure TfrmACBrNFSe.btnConsultarNFSeRPSPNClick(Sender: TObject);
+procedure TfrmACBrNFSe.btnConsultarDPSPorChavePNClick(Sender: TObject);
 var
   xTitulo, xChaveDPS: String;
 begin
-  xTitulo := 'Consultar NFSe pela Chave do DPS';
+  xTitulo := 'Consultar DPS por Chave';
 
   xChaveDPS := '';
   if not (InputQuery(xTitulo, 'Chave do DPS:', xChaveDPS)) then
     exit;
 
-  ACBrNFSeX1.ConsultarNFSeporRps(xChaveDPS, '', '');
+  ACBrNFSeX1.ConsultarDPSPorChave(xChaveDPS);
 
   ChecarResposta(tmConsultarNFSePorRps);
 end;
@@ -1986,7 +2002,7 @@ end;
 
 procedure TfrmACBrNFSe.btnDataValidadeClick(Sender: TObject);
 begin
-  ShowMessage(FormatDateBr(ACBrNFSeX1.SSL.CertDataVenc));
+  ShowMessage(FormatDateTimeBr(ACBrNFSeX1.SSL.CertDataVenc));
 end;
 
 procedure TfrmACBrNFSe.btnEmitirClick(Sender: TObject);

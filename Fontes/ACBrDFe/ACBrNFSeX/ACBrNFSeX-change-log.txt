@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/02/2023
+-- SH3.Provider --
+[*] Possível solução para a captura correta dos retornos dos serviços.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Incluída a cidade Lucelia/SP - Provedor: Sistemas4R.
    Por: Italo Giurizzato Junior

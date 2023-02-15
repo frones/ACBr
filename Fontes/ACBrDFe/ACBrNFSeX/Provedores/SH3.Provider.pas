@@ -134,7 +134,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
-                     ['outputXML', 'EnviarLoteRpsResposta'],
+                     ['nfseDadosMsg', 'EnviarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -151,7 +151,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsSincronoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono', Request,
-                     ['outputXML', 'EnviarLoteRpsSincronoResposta'],
+                     ['nfseDadosMsg', 'EnviarLoteRpsSincronoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -168,7 +168,7 @@ begin
   Request := Request + '</nfse:GerarNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/GerarNfse', Request,
-                     ['outputXML', 'GerarNfseResposta'],
+                     ['nfseDadosMsg', 'GerarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -185,7 +185,7 @@ begin
   Request := Request + '</nfse:ConsultarLoteRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarLoteRps', Request,
-                     ['outputXML', 'ConsultarLoteRpsResposta'],
+                     ['nfseDadosMsg', 'ConsultarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -202,7 +202,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorFaixaRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorFaixa', Request,
-                     ['outputXML', 'ConsultarNfseFaixaResposta'],
+                     ['nfseDadosMsg', 'ConsultarNfseFaixaResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -219,7 +219,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
-                     ['outputXML', 'ConsultarNfseRpsResposta'],
+                     ['nfseDadosMsg', 'ConsultarNfseRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -236,7 +236,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoPrestadoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado', Request,
-                     ['outputXML', 'ConsultarNfseServicoPrestadoResposta'],
+                     ['nfseDadosMsg', 'ConsultarNfseServicoPrestadoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -253,7 +253,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoTomadoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoTomado', Request,
-                     ['outputXML', 'ConsultarNfseServicoTomadoResposta'],
+                     ['nfseDadosMsg', 'ConsultarNfseServicoTomadoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -269,7 +269,7 @@ begin
   Request := Request + '</nfse:CancelarNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/CancelarNfse', Request,
-                     ['outputXML', 'CancelarNfseResposta'],
+                     ['nfseDadosMsg', 'CancelarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -286,7 +286,7 @@ begin
   Request := Request + '</nfse:SubstituirNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
-                     ['outputXML', 'SubstituirNfseResposta'],
+                     ['nfseDadosMsg', 'SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 

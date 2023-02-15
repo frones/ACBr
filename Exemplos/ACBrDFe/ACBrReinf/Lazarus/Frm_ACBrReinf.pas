@@ -1235,7 +1235,7 @@ begin
                 Add(' Evento: 9005');
                 Add(' Evento Id: ' + Id);
 
-                with evtTotal do
+                with evtRet do
                 begin
                   Add('   Id...........: ' + Id);
                   Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
@@ -1261,7 +1261,7 @@ begin
 
                   with InfoRecEv do
                   begin
-                    Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
+                    Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtLote);
                     Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
                     Add('   Tipo do Evento......................: ' + tpEv);
                     Add('   ID do Evento........................: ' + idEv);

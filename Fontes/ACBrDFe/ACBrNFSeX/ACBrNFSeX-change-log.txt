@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/02/2023
+-- IPM.Provider --
+[*] Iguala a propriedade CodVerificacao ao Protocolo para manter o padrão de resposta.
+  Por: Diego F
 
 14/02/2023
 -- Pronim.Provider --

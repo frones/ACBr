@@ -366,6 +366,7 @@ begin
             Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
             Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
             Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+            CodVerificacao := Protocolo;
             Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
             DescSituacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
           end;
@@ -376,6 +377,7 @@ begin
           AResumo.Data := Response.Data;
           AResumo.Link := Response.Link;
           AResumo.Protocolo := Response.Protocolo;
+          AResumo.CodigoVerificacao := Response.CodVerificacao;
           AResumo.Situacao := Response.Situacao;
           AResumo.DescSituacao := Response.DescSituacao;
 

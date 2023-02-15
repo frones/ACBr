@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 15/02/2023
+-- ISSIntel.Provider --
+[*] Acrescentado no TratarXmlRetornado a função: RemoverCaracteresDesnecessarios
+    e o tratamento para o caracter &.
+   Por: Italo Giurizzato Junior
 -- SH3.Provider --
 [*] Possível solução para a captura correta dos retornos dos serviços.
    Por: Italo Giurizzato Junior

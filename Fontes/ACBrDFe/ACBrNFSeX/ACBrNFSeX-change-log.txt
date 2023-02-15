@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/02/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade Nova Serrana/MG - Trocou de versão, agora é 2.04
+   Por: Rogério Xavier
 -- ISSIntel.Provider --
 [*] Acrescentado no TratarXmlRetornado a função: RemoverCaracteresDesnecessarios
     e o tratamento para o caracter &.

@@ -402,6 +402,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -419,15 +420,21 @@ begin
 
       ANode := Document.Root;
 
-      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
-      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoStatus'), tcStr);
+      Response.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigo'), tcStr);
+      Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numero_nf'), tcStr);
+      Response.NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('rps'), tcStr);
 
       ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      // Precisamos de um retorno sem erros para terminar a implementação da
-      // leitura do retorno
+      if Response.Sucesso then
+      begin
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroRps);
+
+        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+        SalvarXmlNfse(ANota);
+      end;
     except
       on E:Exception do
       begin

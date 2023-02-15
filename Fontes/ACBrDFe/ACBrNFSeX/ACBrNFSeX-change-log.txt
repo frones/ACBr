@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/02/2023
+-- SigISSWeb.Provider --
+[*] Ajustes para retornar o código de verificação e salvar o XML da nota.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade Nova Serrana/MG - Trocou de versão, agora é 2.04
    Por: Rogério Xavier

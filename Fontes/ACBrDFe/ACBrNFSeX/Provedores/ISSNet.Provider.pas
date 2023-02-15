@@ -708,13 +708,13 @@ begin
                                '<Pedido>' +
                                  '<IdentificacaoRps>' +
                                    '<Numero>' +
-                                     Response.NumRPS +
+                                     Response.NumeroRps +
                                    '</Numero>' +
                                    '<Serie>' +
-                                     Response.Serie +
+                                     Response.SerieRps +
                                    '</Serie>' +
                                    '<Tipo>' +
-                                     Response.Tipo +
+                                     Response.TipoRps +
                                    '</Tipo>' +
                                  '</IdentificacaoRps>' +
                                  Prestador +
@@ -839,7 +839,7 @@ begin
                                      '<CodigoMunicipio>' +
                                        xCodMun +
                                      '</CodigoMunicipio>' +
-                                     CodVerif +
+                                     CodigoVerificacao +
                                    '</IdentificacaoNfse>' +
                                    '<CodigoCancelamento>' +
                                       InfoCanc.CodCancelamento +

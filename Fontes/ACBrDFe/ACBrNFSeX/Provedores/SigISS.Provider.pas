@@ -353,7 +353,7 @@ begin
         begin
           Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
           NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nota'), tcStr);
-          CodVerif := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
+          CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
           Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
           Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
         end;

@@ -823,7 +823,7 @@ var
   aParams: TNFSeParamsResponse;
   NameSpace, Prefixo, PrefixoTS, TagEnvio: string;
 begin
-  if EstaVazio(Response.NumRPS) then
+  if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod102;
@@ -900,13 +900,13 @@ begin
     Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'IdentificacaoRps>' +
                              '<' + Prefixo2 + 'Numero>' +
-                               Response.NumRPS +
+                               Response.NumeroRps +
                              '</' + Prefixo2 + 'Numero>' +
                              '<' + Prefixo2 + 'Serie>' +
-                               Response.Serie +
+                               Response.SerieRps +
                              '</' + Prefixo2 + 'Serie>' +
                              '<' + Prefixo2 + 'Tipo>' +
-                               Response.Tipo +
+                               Response.TipoRps +
                              '</' + Prefixo2 + 'Tipo>' +
                            '</' + Prefixo + 'IdentificacaoRps>' +
                            '<' + Prefixo + 'Prestador>' +
@@ -986,7 +986,7 @@ begin
         begin
           NumeroNota := NumNFSe;
           idNota := InfNfseID;
-          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
           Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
         end;
 
@@ -1351,7 +1351,7 @@ begin
     aParams.Versao := '';
     aParams.Serie := '';
     aParams.Motivo := xMotivo;
-    aParams.CodVerif := '';
+    aParams.CodigoVerificacao := '';
 
     GerarMsgDadosCancelaNFSe(Response, aParams);
   finally

@@ -349,7 +349,7 @@ begin
         NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfenumero'), tcStr);
         Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfedata'), tcDat);
         Data := Data + ObterConteudoTag(ANode.Childrens.FindAnyNs('nfehora'), tcHor);
-        CodVerif := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfeautenticacao'), tcStr);
+        CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfeautenticacao'), tcStr);
         Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfelink'), tcStr);
         Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
         xStatus := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfestatus'), tcStr);

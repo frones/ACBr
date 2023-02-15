@@ -574,7 +574,7 @@ begin
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FWebService.ConsultaNFSeporRps.Clear;
-  FWebService.ConsultaNFSeporRps.NumRPS := aChave;
+  FWebService.ConsultaNFSeporRps.NumeroRps := aChave;
 
   FProvider.ConsultaNFSeporRps;
 end;
@@ -708,10 +708,10 @@ begin
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FWebService.ConsultaNFSeporRps.Clear;
-  FWebService.ConsultaNFSeporRps.NumRPS := ANumRPS;
-  FWebService.ConsultaNFSeporRps.Serie := ASerie;
-  FWebService.ConsultaNFSeporRps.Tipo := ATipo;
-  FWebService.ConsultaNFSeporRps.CodVerificacao := ACodVerificacao;
+  FWebService.ConsultaNFSeporRps.NumeroRps := ANumRPS;
+  FWebService.ConsultaNFSeporRps.SerieRps := ASerie;
+  FWebService.ConsultaNFSeporRps.TipoRps := ATipo;
+  FWebService.ConsultaNFSeporRps.CodigoVerificacao := ACodVerificacao;
 
   FProvider.ConsultaNFSeporRps;
 end;
@@ -922,7 +922,7 @@ begin
 
   FWebService.ConsultarParam.Clear;
   FWebService.ConsultarParam.tpParamMunic := ATipoParamMunic;
-  FWebService.ConsultarParam.CodigoMunic := Configuracoes.Geral.CodigoMunicipio;
+  FWebService.ConsultarParam.CodigoMunicipio := Configuracoes.Geral.CodigoMunicipio;
   FWebService.ConsultarParam.CodigoServico := ACodigoServico;
   FWebService.ConsultarParam.Competencia := ACompetencia;
   FWebService.ConsultarParam.NumeroBeneficio := ANumeroBeneficio;

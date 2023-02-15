@@ -47,6 +47,15 @@ Símbolo : Significado
 [*] Iguala a propriedade CodVerificacao ao Protocolo para manter o padrão de resposta.
   Por: Diego F
 
+15/02/2023
+-- Diversos --
+[*] Padronização de algumas propriedades de retorno e uso interno do componente.
+    CodVerif e CodVerificacao => CodigoVerificacao
+    NumRPS => NumeroRps
+    Serie  => SerieRps
+    Tipo   => TipoRps 
+   Por: Italo Giurizzato Junior
+
 14/02/2023
 -- Pronim.Provider --
 [*] Trocado o XmlToStr por IncluirCDATA para que seja possível enviar um XML 
@@ -3594,7 +3603,7 @@ Símbolo : Significado
    Por: Italo Giurizzato Junior
 -- IPM.Provider/IPM.GravarXml --
 [*] Removido a condição de versão para gerar o grupo Forma de Pagamento.
-[+] Implementado o seriço de ConsultarNfsePorRps.
+[+] Implementado o serviço de ConsultarNfsePorRps.
    Por: Italo Giurizzato Junior
 -- SilTecnologia.Provider/SilTecnologia.GravarXml --
 [*] Ajustes para a correta emissão e consulta da NFS-e.

@@ -180,7 +180,7 @@ begin
                                      '<CodigoMunicipio>' +
                                         IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                                      '</CodigoMunicipio>' +
-                                     CodVerif +
+                                     CodigoVerificacao +
                                      Motivo +
                                      '<Id>' +
                                         InfoCanc.ChaveNFSe +
@@ -280,7 +280,7 @@ begin
           with Response do
           begin
             NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-            CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
           end;
 
           NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('IdentificacaoRps'), tcStr);
@@ -379,7 +379,7 @@ begin
         with Response do
         begin
           NumeroNota := NumNFSe;
-          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
           Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
         end;
 

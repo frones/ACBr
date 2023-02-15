@@ -1013,7 +1013,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.NumRPS) then
+  if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod102;
@@ -1025,7 +1025,7 @@ begin
 
   Response.ArquivoEnvio := '<el:ConsultarNfseRpsEnvio>' +
                              '<identificacaoRps>' +
-                                Response.NumRPS +
+                                Response.NumeroRps +
                              '</identificacaoRps>' +
                              '<identificacaoPrestador>' +
                                 OnlyNumber(Emitente.CNPJ) +

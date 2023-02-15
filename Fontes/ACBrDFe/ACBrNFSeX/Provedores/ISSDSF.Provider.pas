@@ -656,7 +656,7 @@ begin
             with Response do
             begin
               NumeroNota := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('NumeroNFe'), tcStr);
-              CodVerificacao := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+              CodigoVerificacao := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
             end;
           end;
         end;
@@ -847,7 +847,7 @@ begin
           with Response do
           begin
             NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroNFe'), tcStr);
-            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
             NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroRPS'), tcStr);
             SerieRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr);
           end;
@@ -885,7 +885,7 @@ var
   Emitente: TEmitenteConfNFSe;
   NameSpace, Prefixo, PrefixoTS: string;
 begin
-  if EstaVazio(Response.NumRPS) then
+  if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod102;
@@ -893,7 +893,7 @@ begin
     Exit;
   end;
 
-  if EstaVazio(Response.Serie) then
+  if EstaVazio(Response.SerieRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod103;
@@ -961,8 +961,8 @@ begin
                                    '<InscricaoMunicipalPrestador>' +
                                      OnlyNumber(Emitente.InscMun) +
                                    '</InscricaoMunicipalPrestador>' +
-                                   '<NumeroRPS>' + Response.NumRPS + '</NumeroRPS>' +
-                                   '<SeriePrestacao>' + Response.Serie + '</SeriePrestacao>' +
+                                   '<NumeroRPS>' + Response.NumeroRps + '</NumeroRPS>' +
+                                   '<SeriePrestacao>' + Response.SerieRps + '</SeriePrestacao>' +
                                  '</RPS>' +
                                '</RPSConsulta>' +
                              '</Lote>' +

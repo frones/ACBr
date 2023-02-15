@@ -336,7 +336,7 @@ begin
           with Response do
           begin
             NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
-            CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
           end;
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
@@ -344,7 +344,7 @@ begin
           ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
 
           ANota.NFSe.Numero := Response.NumeroNota;
-          ANota.NFSe.CodigoVerificacao := Response.CodVerificacao;
+          ANota.NFSe.CodigoVerificacao := Response.CodigoVerificacao;
 
           SalvarXmlNfse(ANota);
         end;

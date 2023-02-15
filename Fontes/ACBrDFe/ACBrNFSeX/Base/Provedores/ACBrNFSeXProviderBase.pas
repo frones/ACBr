@@ -1846,7 +1846,7 @@ begin
       TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
 
       AService := CriarServiceClient(tmConsultarNFSePorRps);
-      AService.Prefixo := ConsultaNFSeporRpsResponse.NumRPS + ConsultaNFSeporRpsResponse.Serie;
+      AService.Prefixo := ConsultaNFSeporRpsResponse.NumeroRps + ConsultaNFSeporRpsResponse.SerieRps;
       ConsultaNFSeporRpsResponse.ArquivoRetorno := AService.ConsultarNFSePorRps(ConfigMsgDados.DadosCabecalho,
                                                                             ConsultaNFSeporRpsResponse.ArquivoEnvio);
 
@@ -1987,7 +1987,7 @@ begin
     try
       TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
       AService := CriarServiceClient(tmConsultarParam);
-      AService.Prefixo := IntToStr(ConsultarParamResponse.CodigoMunic) +
+      AService.Prefixo := IntToStr(ConsultarParamResponse.CodigoMunicipio) +
         '-' + ParamMunicToStr(ConsultarParamResponse.tpParamMunic);
 
       ConsultarParamResponse.ArquivoRetorno := AService.ConsultarParam(ConfigMsgDados.DadosCabecalho,

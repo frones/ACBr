@@ -281,7 +281,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.NumRPS) then
+  if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod102;
@@ -291,7 +291,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.ArquivoEnvio := '<iRPS>' + Response.NumRPS + '</iRPS>' +
+  Response.ArquivoEnvio := '<iRPS>' + Response.NumeroRps + '</iRPS>' +
                        '<sCPFCNPJ>' + OnlyNumber(Emitente.CNPJ) + '</sCPFCNPJ>' +
                        '<dDataRecibo>' + '</dDataRecibo>';
 end;

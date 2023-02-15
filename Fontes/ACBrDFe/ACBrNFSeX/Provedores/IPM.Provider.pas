@@ -366,7 +366,7 @@ begin
             Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
             Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
             Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
-            CodVerificacao := Protocolo;
+            CodigoVerificacao := Protocolo;
             Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
             DescSituacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
           end;
@@ -377,7 +377,7 @@ begin
           AResumo.Data := Response.Data;
           AResumo.Link := Response.Link;
           AResumo.Protocolo := Response.Protocolo;
-          AResumo.CodigoVerificacao := Response.CodVerificacao;
+          AResumo.CodigoVerificacao := Response.CodigoVerificacao;
           AResumo.Situacao := Response.Situacao;
           AResumo.DescSituacao := Response.DescSituacao;
 
@@ -565,7 +565,7 @@ procedure TACBrNFSeProviderIPM.PrepararConsultaNFSeporRps(
 var
   AErro: TNFSeEventoCollectionItem;
 begin
-  if EstaVazio(Response.NumRPS) then
+  if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod102;
@@ -573,7 +573,7 @@ begin
     Exit;
   end;
 
-  if EstaVazio(Response.Serie) then
+  if EstaVazio(Response.SerieRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod103;
@@ -586,10 +586,10 @@ begin
                                CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                              '</cidade>' +
                              '<serie_rps>' +
-                               OnlyNumber(Response.Serie) +
+                               OnlyNumber(Response.SerieRps) +
                              '</serie_rps>' +
                              '<numero_rps>' +
-                               OnlyNumber(Response.NumRPS) +
+                               OnlyNumber(Response.NumeroRps) +
                              '</numero_rps>' +
                            '</consulta_rps>';
 end;

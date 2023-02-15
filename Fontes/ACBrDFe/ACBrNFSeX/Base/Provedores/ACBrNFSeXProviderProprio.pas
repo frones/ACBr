@@ -629,7 +629,7 @@ begin
     aParams.Versao := '';
     aParams.Serie := '';
     aParams.Motivo := '';
-    aParams.CodVerif := '';
+    aParams.CodigoVerificacao := '';
 
     GerarMsgDadosSubstituiNFSe(Response, aParams);
   finally

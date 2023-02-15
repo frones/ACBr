@@ -285,7 +285,7 @@ begin
           begin
             NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumRps'), tcStr);
             NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumNot'), tcStr);
-            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsCodVer'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsCodVer'), tcStr);
             Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
             DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsDesOco'), tcStr);
           end;
@@ -310,7 +310,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.NumRPS) then
+  if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod102;
@@ -318,7 +318,7 @@ begin
     Exit;
   end;
 
-  if EstaVazio(Response.CodVerificacao) then
+  if EstaVazio(Response.CodigoVerificacao) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod117;
@@ -339,8 +339,8 @@ begin
                              Emitente.WSChaveAcesso +
                           '</tsChvAcs>' +
                           '<tcInfConsultaRPS>' +
-                            '<tsNumRPS>' + Response.NumRPS + '</tsNumRPS>' +
-                            '<tsCodVer>' + Response.CodVerificacao + '</tsCodVer>' +
+                            '<tsNumRPS>' + Response.NumeroRps + '</tsNumRPS>' +
+                            '<tsCodVer>' + Response.CodigoVerificacao + '</tsCodVer>' +
                           '</tcInfConsultaRPS>' +
                        '</tcConsultaRPS>';
 end;
@@ -388,7 +388,7 @@ begin
           begin
             NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsNumRps'), tcStr);
             NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsNumNot'), tcStr);
-            CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsCodVer'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsCodVer'), tcStr);
             Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
             DescSituacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsDesOco'), tcStr);
           end;
@@ -523,7 +523,7 @@ begin
           with Response do
           begin
             NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumNot'), tcStr);
-            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsCodVer'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsCodVer'), tcStr);
             Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
             DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsDesOco'), tcStr);
           end;

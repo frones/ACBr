@@ -174,7 +174,7 @@ type
     FVersao: string;
     FSerie: string;
     FMotivo: string;
-    FCodVerif: string;
+    FCodigoVerificacao: string;
   public
     procedure Clear;
 
@@ -188,7 +188,7 @@ type
     property Versao: string read FVersao write FVersao;
     property Serie: string read FSerie write FSerie;
     property Motivo: string read FMotivo write FMotivo;
-    property CodVerif: string read FCodVerif write FCodVerif;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
   end;
 
   TNFSeWebserviceResponse = class
@@ -206,7 +206,7 @@ type
     FProtocolo: string;
     FNumeroRps: string;
     FSerieRps: string;
-    FCodVerif: string;
+    FCodigoVerificacao: string;
     FidEvento: string;
     FtpEvento: TtpEvento;
     FnSeqEvento: Integer;
@@ -244,7 +244,7 @@ type
     property Protocolo: string read FProtocolo write FProtocolo;
     property NumeroRps: string read FNumeroRps write FNumeroRps;
     property SerieRps: string read FSerieRps write FSerieRps;
-    property CodVerif: string read FCodVerif write FCodVerif;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property idEvento: string read FidEvento write FidEvento;
     property tpEvento: TtpEvento read FtpEvento write FtpEvento;
     property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
@@ -267,7 +267,7 @@ type
   private
     FMaxRps: Integer;
     FModoEnvio: TmodoEnvio;
-    FCodVerificacao: string;
+    FCodigoVerificacao: string;
     FNomeArq: string;
   public
     constructor Create;
@@ -277,7 +277,7 @@ type
 
     property MaxRps: Integer read FMaxRps write FMaxRps;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
-    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property NomeArq: string read FNomeArq write FNomeArq;
   end;
 
@@ -305,7 +305,7 @@ type
 
   TNFSeConsultaLoteRpsResponse = class(TNFSeWebserviceResponse)
   private
-    FCodVerificacao: string;
+    FCodigoVerificacao: string;
 
   public
     constructor Create;
@@ -313,15 +313,15 @@ type
 
     procedure Clear; override;
 
-    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
   end;
 
   TNFSeConsultaNFSeporRpsResponse = class(TNFSeWebserviceResponse)
   private
-    FNumRPS: string;
-    FSerie: string;
-    FTipo: string;
-    FCodVerificacao: string;
+    FNumeroRps: string;
+    FSerieRps: string;
+    FTipoRps: string;
+    FCodigoVerificacao: string;
     FCancelamento: TNFSeCancelamento;
     FNumNotaSubstituidora: string;
   public
@@ -330,10 +330,10 @@ type
 
     procedure Clear; override;
 
-    property NumRPS: string read FNumRPS write FNumRPS;
-    property Serie: string read FSerie write FSerie;
-    property Tipo: string read FTipo write FTipo;
-    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property NumeroRps: string read FNumeroRps write FNumeroRps;
+    property SerieRps: string read FSerieRps write FSerieRps;
+    property TipoRps: string read FTipoRps write FTipoRps;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property Cancelamento: TNFSeCancelamento read FCancelamento write FCancelamento;
     property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
   end;
@@ -354,7 +354,7 @@ type
 
   TNFSeCancelaNFSeResponse = class(TNFSeWebserviceResponse)
   private
-    FCodVerificacao: string;
+    FCodigoVerificacao: string;
     FInfCancelamento: TInfCancelamento;
     FRetCancelamento: TRetCancelamento;
   public
@@ -363,17 +363,17 @@ type
 
     procedure Clear; override;
 
-    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property InfCancelamento: TInfCancelamento read FInfCancelamento write FInfCancelamento;
     property RetCancelamento: TRetCancelamento read FRetCancelamento;
   end;
 
   TNFSeSubstituiNFSeResponse = class(TNFSeCancelaNFSeResponse)
   private
-    FNumRPS: string;
-    FSerie: string;
-    FTipo: string;
-    FCodVerificacao: string;
+    FNumeroRps: string;
+    FSerieRps: string;
+    FTipoRps: string;
+    FCodigoVerificacao: string;
     FPedCanc: string;
     FNumNotaSubstituida: string;
     FNumNotaSubstituidora: string;
@@ -383,10 +383,10 @@ type
 
     procedure Clear; override;
 
-    property NumRPS: string read FNumRPS write FNumRPS;
-    property Serie: string read FSerie write FSerie;
-    property Tipo: string read FTipo write FTipo;
-    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property NumeroRps: string read FNumeroRps write FNumeroRps;
+    property SerieRps: string read FSerieRps write FSerieRps;
+    property TipoRps: string read FTipoRps write FTipoRps;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property PedCanc: string read FPedCanc write FPedCanc;
     property NumNotaSubstituida: string read FNumNotaSubstituida write FNumNotaSubstituida;
     property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
@@ -465,7 +465,7 @@ type
   TNFSeConsultarParamResponse = class(TNFSeWebserviceResponse)
   private
     FtpParamMunic: TParamMunic;
-    FCodigoMunic: Integer;
+    FCodigoMunicipio: Integer;
     FCodigoServico: string;
     FCompetencia: TDateTime;
     FNumeroBeneficio: string;
@@ -477,7 +477,7 @@ type
     procedure Clear; override;
 
     property tpParamMunic: TParamMunic read FtpParamMunic write FtpParamMunic;
-    property CodigoMunic: Integer read FCodigoMunic write FCodigoMunic;
+    property CodigoMunicipio: Integer read FCodigoMunicipio write FCodigoMunicipio;
     property CodigoServico: string read FCodigoServico write FCodigoServico;
     property Competencia: TDateTime read FCompetencia write FCompetencia;
     property NumeroBeneficio: string read FNumeroBeneficio write FNumeroBeneficio;
@@ -744,7 +744,7 @@ begin
 
   MaxRps := 0;
   ModoEnvio := meLoteAssincrono;
-  CodVerificacao := '';
+  CodigoVerificacao := '';
   NomeArq := '';
 end;
 
@@ -792,7 +792,7 @@ begin
   Lote := '';
   Protocolo := '';
   Situacao := '';
-  CodVerificacao := '';
+  CodigoVerificacao := '';
 end;
 
 constructor TNFSeConsultaLoteRpsResponse.Create;
@@ -814,10 +814,10 @@ procedure TNFSeConsultaNFSeporRpsResponse.Clear;
 begin
   inherited Clear;
 
-  NumRPS := '';
-  Serie := '';
-  Tipo := '';
-  CodVerificacao := '';
+  NumeroRps := '';
+  SerieRps := '';
+  TipoRps := '';
+  CodigoVerificacao := '';
   NumNotaSubstituidora := '';
 
   if Assigned(FCancelamento) then
@@ -855,7 +855,7 @@ begin
   Versao := '';
   Serie := '';
   Motivo := '';
-  CodVerif := '';
+  CodigoVerificacao := '';
 end;
 
 { TNFSeCancelamento }
@@ -994,7 +994,7 @@ begin
   inherited Clear;
 
   tpParamMunic := pmConvenio;
-  CodigoMunic := 0;
+  CodigoMunicipio := 0;
   CodigoServico := '';
   Competencia := 0;
   NumeroBeneficio := '';

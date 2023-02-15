@@ -349,7 +349,7 @@ begin
         begin
           with Response do
           begin
-            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
             Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataEmissao'), tcDat);
             DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDat);
             DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('motivoCancelamento'), tcStr);
@@ -578,7 +578,7 @@ begin
         begin
           with Response do
           begin
-            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
             Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataEmissao'), tcDat);
             DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDat);
             DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('motivoCancelamento'), tcStr);
@@ -678,7 +678,7 @@ var
   procedure LerJson(AJson: TACBrJsonObject);
   begin
     idNFSe := AJson.AsInteger['id'];
-    Response.CodVerif := AJson.AsString['cdVerificacao'];
+    Response.CodigoVerificacao := AJson.AsString['cdVerificacao'];
     Response.Data := AJson.AsISODateTime['dataEmissao'];
     Response.DataCanc := AJson.AsISODateTime['dataCancelamento'];
     Response.DescSituacao := AJson.AsString['motivoCancelamento'];
@@ -926,7 +926,7 @@ begin
         begin
           with Response do
           begin
-            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
             Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataEmissao'), tcDat);
             DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDat);
             DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('motivoCancelamento'), tcStr);

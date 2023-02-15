@@ -571,7 +571,7 @@ var
   Emitente: TEmitenteConfNFSe;
   NameSpace: string;
 begin
-  if EstaVazio(Response.NumRPS) then
+  if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod102;
@@ -579,7 +579,7 @@ begin
     Exit;
   end;
 
-  if EstaVazio(Response.Serie) then
+  if EstaVazio(Response.SerieRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod103;
@@ -587,7 +587,7 @@ begin
     Exit;
   end;
 
-  if EstaVazio(Response.Tipo) then
+  if EstaVazio(Response.TipoRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod104;
@@ -608,13 +608,13 @@ begin
                          '</UnidadeGestora>' +
                          '<IdentificacaoRps>' +
                            '<Numero>' +
-                              Response.NumRPS +
+                              Response.NumeroRps +
                            '</Numero>' +
                            '<Serie>' +
-                              Response.Serie +
+                              Response.SerieRps +
                            '</Serie>' +
                            '<Tipo>' +
-                              Response.Tipo +
+                              Response.TipoRps +
                            '</Tipo>' +
                          '</IdentificacaoRps>' +
                          '<IdentificacaoPrestador>' +
@@ -688,9 +688,9 @@ begin
 
             if AuxNode <> nil then
             begin
-                NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+              NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
-              ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+              ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumeroRps);
 
               ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
               SalvarXmlNfse(ANota);

@@ -356,13 +356,13 @@ begin
     Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'IdentificacaoRps>' +
                              '<' + Prefixo2 + 'Numero>' +
-                               Response.NumRPS +
+                               Response.NumeroRps +
                              '</' + Prefixo2 + 'Numero>' +
                              '<' + Prefixo2 + 'Serie>' +
-                               Response.Serie +
+                               Response.SerieRps +
                              '</' + Prefixo2 + 'Serie>' +
                              '<' + Prefixo2 + 'Tipo>' +
-                               Response.Tipo +
+                               Response.TipoRps +
                              '</' + Prefixo2 + 'Tipo>' +
                            '</' + Prefixo + 'IdentificacaoRps>' +
                            Requerente +

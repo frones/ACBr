@@ -247,7 +247,7 @@ begin
           NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ws_001_out_nfse_numero'), tcStr);
           Data := EncodeDataHora( ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ws_001_out_nfse_data_hora'), tcStr),
                                   'DD/MM/YYYY HH:NN:SS' );
-          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ws_001_out_nfse_cod_validacao'), tcStr);
+          CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ws_001_out_nfse_cod_validacao'), tcStr);
           Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ws_001_out_nfse_url_emissao'), tcStr);
         end;
       end;

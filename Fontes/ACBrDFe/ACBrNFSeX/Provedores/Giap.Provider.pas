@@ -273,7 +273,7 @@ begin
         with Response do
         begin
           NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
-          CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+          CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
           Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('statusEmissao'), tcStr);
           Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('link'), tcStr);
           Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
@@ -281,7 +281,7 @@ begin
 
           AResumo := Response.Resumos.New;
           AResumo.NumeroNota := NumeroNota;
-          AResumo.CodigoVerificacao := CodVerificacao;
+          AResumo.CodigoVerificacao := CodigoVerificacao;
           AResumo.NumeroRps := NumeroRps;
           AResumo.Link := Link;
           AResumo.Situacao := Situacao;
@@ -314,7 +314,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.CodVerificacao) then
+  if EstaVazio(Response.CodigoVerificacao) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod117;
@@ -329,7 +329,7 @@ begin
                             OnlyNumber(Emitente.InscMun) +
                           '</inscricaoMunicipal>' +
                           '<codigoVerificacao>' +
-                            Response.CodVerificacao +
+                            Response.CodigoVerificacao +
                           '</codigoVerificacao>' +
                        '</consulta>';
 end;
@@ -363,7 +363,7 @@ begin
 
       if ANode <> nil then
       begin
-        Response.CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+        Response.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
 
         if ObterConteudoTag(ANode.Childrens.FindAnyNs('notaExiste'), tcStr) = 'Sim' then
           Response.DescSituacao := 'Nota Autorizada'

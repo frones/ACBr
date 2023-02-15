@@ -423,7 +423,7 @@ procedure TACBrNFSeProviderPadraoNacional.PrepararConsultaNFSeporRps(
 var
   AErro: TNFSeEventoCollectionItem;
 begin
-  if EstaVazio(Response.NumRPS) then
+  if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod126;
@@ -431,7 +431,7 @@ begin
     Exit;
   end;
 
-  FpPath := '/dps/' + Response.NumRPS;
+  FpPath := '/dps/' + Response.NumeroRps;
   Response.ArquivoEnvio := FpPath;
   FpMethod := 'GET';
 end;
@@ -1052,7 +1052,7 @@ procedure TACBrNFSeProviderPadraoNacional.PrepararConsultarParam(
 var
   CodSer, Compet, NumBenef: string;
 begin
-  FpPath := '/parametros_municipais/' + IntToStr(Response.CodigoMunic);
+  FpPath := '/parametros_municipais/' + IntToStr(Response.CodigoMunicipio);
 
   CodSer := OnlyNumber(Response.CodigoServico);
   CodSer := Copy(CodSer, 1, 2) + '.' + Copy(CodSer, 3, 2) + '.' +

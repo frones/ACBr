@@ -177,7 +177,7 @@ begin
 
       Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
       Response.SerieNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieNfse'), tcStr);
-      Response.CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+      Response.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
       Response.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('LinkNfse'), tcStr);
       Response.Link := DecodeBase64(Response.Link);
     except
@@ -230,7 +230,7 @@ begin
 
       Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
       Response.SerieNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieNfse'), tcStr);
-      Response.CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+      Response.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
       Response.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('LinkNfse'), tcStr);
       Response.Link := DecodeBase64(Response.Link);
     except

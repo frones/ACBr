@@ -548,7 +548,7 @@ begin
                                  '<' + Prefixo2 + 'CodigoMunicipio>' +
                                     IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                                  '</' + Prefixo2 + 'CodigoMunicipio>' +
-                                 CodVerif +
+                                 CodigoVerificacao +
                                '</' + Prefixo2 + 'IdentificacaoNfse>' +
                                '<' + Prefixo2 + 'CodigoCancelamento>' +
                                   InfoCanc.CodCancelamento +

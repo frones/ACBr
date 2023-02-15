@@ -603,7 +603,7 @@ end;
 procedure TACBrNFSeProviderNFSeBrasil.PrepararConsultaNFSeporRps(
   Response: TNFSeConsultaNFSeporRpsResponse);
 begin
-  Response.ArquivoEnvio := Response.NumRPS;
+  Response.ArquivoEnvio := Response.NumeroRps;
 end;
 
 procedure TACBrNFSeProviderNFSeBrasil.TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);

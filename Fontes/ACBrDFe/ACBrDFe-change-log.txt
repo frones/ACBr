@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/02/2023
+-- ACBrDFeSSL --
+[*] Revertido a alteração, pois poderia gerar um efeito colateral nos demais
+    componentes.
+  Por: Italo Giurizzato Junior
+
 01/02/2023
 -- ACBrDFeSSL/ACBrDFeWebService --
 [*] Alterações visando atender o consumo de API Rest.

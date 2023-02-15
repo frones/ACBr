@@ -1058,6 +1058,11 @@ begin
 
     FDataResp.Position := 0;
     Result := ReadStrFromStream(FDataResp, FDataResp.Size);
+
+    // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
+    // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+    if not (FpHTTPResultCode in [200..202]) then
+      raise EACBrDFeException.Create('');
   except
     on E:Exception do
     begin

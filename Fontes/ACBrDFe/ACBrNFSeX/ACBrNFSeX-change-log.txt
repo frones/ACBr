@@ -42,12 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-15/02/2023
--- IPM.Provider --
-[*] Iguala a propriedade CodVerificacao ao Protocolo para manter o padrão de resposta.
-  Por: Diego F
 
 15/02/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluída a cidade Lucelia/SP - Provedor: Sistemas4R.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Padronização de algumas propriedades de retorno e uso interno do componente.
     CodVerif e CodVerificacao => CodigoVerificacao
@@ -55,6 +54,9 @@ Símbolo : Significado
     Serie  => SerieRps
     Tipo   => TipoRps 
    Por: Italo Giurizzato Junior
+-- IPM.Provider --
+[*] Iguala a propriedade CodVerificacao ao Protocolo para manter o padrão de resposta.
+  Por: Diego F
 
 14/02/2023
 -- Pronim.Provider --

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/02/2023
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Alteração para ler o Link quando este se encontra na tag LinkPdf.
+   Por: Italo Giurizzato Junior
+
 15/02/2023
 -- SigISSWeb.Provider --
 [*] Ajustes para retornar o código de verificação e salvar o XML da nota.

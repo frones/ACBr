@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/02/2023
+-- ACBrPIXPSPPixPDV --
+[*] Alteração para incluir endpoints específicos da API PixPDV
+
+-- ACBrSchemasPixPDV --
+[+] Inclusão dos Schemas utilizados nos endpoints específicos da API PixPDV
+
 14/02/2023
 -- ACBrPIXSchemasCobV, ACBrPIXSchemasDevolucao, ACBrPIXSchemasLocation, ACBrPIXSchemasLoteCobV --
 [*] Criadas propriedades "Bias" para armazenar informação do TimeZone em propriedades TDateTime.

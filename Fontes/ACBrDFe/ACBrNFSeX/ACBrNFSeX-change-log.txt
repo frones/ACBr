@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/02/2023
+-- Diversos --
+[*] Implementado o provedor Contass
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Alteração para ler o Link quando este se encontra na tag LinkPdf.
    Por: Italo Giurizzato Junior

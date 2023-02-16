@@ -20,6 +20,7 @@ Centi                2.02
 CIGA                 1.00
 Citta                2.03
 Conam                1.00
+Contass              1.00
 Coplan               2.01
 CTA                  2.00 
 CTAConsult           1.00

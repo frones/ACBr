@@ -50,6 +50,9 @@ Símbolo : Significado
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Alteração para ler o Link quando este se encontra na tag LinkPdf.
    Por: Italo Giurizzato Junior
+-- Saatri.GravarXML --
+[*] Adiciona o paramêtro NrOcorrNIFTomador com valor zero, para que gere a tag quando Tomador do Exterior.
+   Por: Diego F
 
 15/02/2023
 -- SigISSWeb.Provider --

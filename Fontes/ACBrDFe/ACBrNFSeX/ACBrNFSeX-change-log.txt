@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/02/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluído oa cidade: Guarani das Missões - Provedor Pronim
+   Por: Emanuel - Quality/Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado o provedor PriMax
    Por: Italo Giurizzato Junior

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/02/2023
+-- Diversos --
+[+] Implementado o provedor PriMax
+   Por: Italo Giurizzato Junior
 -- SH3.Provider--
 [*] Alteração visando o uso do Params - ResponseTag.
    Por: Jeanny Paiva Lopes

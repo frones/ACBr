@@ -84,55 +84,40 @@ begin
 
   FDocument.Root := NFSeNode;
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#', 'usuario', 1, 6, 1,
+                                                    Usuario, '', True, xAtrib));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#', 'pass', 1, 6, 1,
+                                                      Senha, '', True, xAtrib));
+
   // as Tags abaixo só devem ser geradas em ambinte de produção
   if Ambiente = taProducao then
   begin
-    NFSeNode.AppendChild(AddNode(tcStr, '#', 'usuario', 1, 6, 1,
-                                                    Usuario, '', True, xAtrib));
-    NFSeNode.AppendChild(AddNode(tcStr, '#', 'pass', 1, 6, 1,
-                                                      Senha, '', True, xAtrib));
     NFSeNode.AppendChild(AddNode(tcStr, '#', 'prf', 1, 18, 1,
                                              CNPJPrefeitura, '', True, xAtrib));
+
     NFSeNode.AppendChild(AddNode(tcStr, '#', 'usr', 1, 18, 1,
               NFSe.Prestador.IdentificacaoPrestador.CpfCnpj, '', True, xAtrib));
   end
   else
   begin
+    // No campo prf, usar 00.000.000/0000-00 para a fase de Homologação.
+    NFSeNode.AppendChild(AddNode(tcStr, '#', 'prf', 1, 18, 1,
+                                       '00.000.000/0000-00', '', True, xAtrib));
+
     {
       TESTE PARA PRESTADOR DO SIMPLES NACIONAL
-      No campo usuario, usar 142826 para a fase de Homologação.
-      No campo pass, usar 123456 para a fase de Homologação.
-      No campo prf, usar 00.000.000/0000-00 para a fase de Homologação.
       No campo usr, usar 44.232.272/0001-92 para a fase de Homologação.
 
       TESTE PARA PRESTADOR NÃO OPTANTE DO SIMPLES NACIONAL
-      No campo usuario, usar 901567 para a fase de Homologação.
-      No campo pass, usar 123456 para a fase de Homologação.
-      No campo prf, usar 00.000.000/0000-00 para a fase de Homologação.
       No campo usr, usar 57.657.017/0001-33 para a fase de Homologação.
     }
     if cSimples then
-    begin
-      NFSeNode.AppendChild(AddNode(tcStr, '#', 'usuario', 1, 6, 1,
-                                                   '142826', '', True, xAtrib));
-      NFSeNode.AppendChild(AddNode(tcStr, '#', 'pass', 1, 6, 1,
-                                                   '123456', '', True, xAtrib));
-      NFSeNode.AppendChild(AddNode(tcStr, '#', 'prf', 1, 18, 1,
-                                       '00.000.000/0000-00', '', True, xAtrib));
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'usr', 1, 18, 1,
-                                       '44.232.272/0001-92', '', True, xAtrib));
-    end
+                                       '44.232.272/0001-92', '', True, xAtrib))
     else
-    begin
-      NFSeNode.AppendChild(AddNode(tcInt, '#', 'usuario', 1, 6, 1,
-                                                     901567, '', True, xAtrib));
-      NFSeNode.AppendChild(AddNode(tcInt, '#', 'pass', 1, 6, 1,
-                                                     123456, '', True, xAtrib));
-      NFSeNode.AppendChild(AddNode(tcStr, '#', 'prf', 1, 18, 1,
-                                       '00.000.000/0000-00', '', True, xAtrib));
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'usr', 1, 18, 1,
                                        '57.657.017/0001-33', '', True, xAtrib));
-    end;
   end;
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'ctr', 1, 8, 1,

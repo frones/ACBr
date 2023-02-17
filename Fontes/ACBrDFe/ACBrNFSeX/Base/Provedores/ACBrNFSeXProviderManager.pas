@@ -180,6 +180,7 @@ uses
   ISSDSF.Provider,
   ISSLencois.Provider,
   ISSSaoPaulo.Provider,
+  PriMax.Provider,
   Siappa.Provider,
   Siat.Provider,
   SigISS.Provider,
@@ -429,6 +430,7 @@ begin
       proPadraoNacional:
         Result := TACBrNFSeProviderPadraoNacional.Create(ACBrNFSe);
 
+      proPriMax:  Result := TACBrNFSeProviderPriMax.Create(ACBrNFSe);
       proProdata: Result := TACBrNFSeProviderProdata201.Create(ACBrNFSe);
 
       proPronim:

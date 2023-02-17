@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/02/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluído o Params - ResponseTag para as cidades atendidas pelo provedor SH3.
+   Por: Jeanny Paiva Lopes
 -- Diversos --
 [*] Padronização da propriedade de retorno e uso interno do componente.
     Lote => NumeroLote

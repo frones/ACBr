@@ -294,6 +294,10 @@ const
   TIOCMSET = $5418;
   TIOCMGET = $5415;
   TCSBRK   = $5409;
+
+  TCSETS  = $5402;
+  TCSETSW = $5403;
+  TCSETSF = $5404;
 {$ENDIF}
 
 const
@@ -1707,10 +1711,11 @@ procedure TBlockSerial.SetCommState;
 begin
   DcbToTermios(dcb, termiosstruc);
   {$IfDeF ANDROID}
+    // TCSETS = TCSANOW
     {$IfNDef FPC}
-      ioctl(Fhandle, TCSAFLUSH, PInteger(@TermiosStruc));
+      ioctl(Fhandle, TCSETS, PInteger(@TermiosStruc));
     {$Else}
-      fpioctl(Fhandle, TCSAFLUSH, PInteger(@TermiosStruc));
+      fpioctl(Fhandle, TCSETS, PInteger(@TermiosStruc));
     {$EndIf}
   {$Else}
     {$IfDef POSIX}

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/02/2023
+-- SH3.Provider--
+[*] Alteração visando o uso do Params - ResponseTag.
+   Por: Jeanny Paiva Lopes
 -- ACBrNFSeXServicos.ini --
 [*] Incluído o Params - ResponseTag para as cidades atendidas pelo provedor SH3.
    Por: Jeanny Paiva Lopes

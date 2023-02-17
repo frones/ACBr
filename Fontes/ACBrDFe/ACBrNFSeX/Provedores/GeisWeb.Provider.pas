@@ -257,7 +257,7 @@ begin
                              OnlyNumber(Emitente.CNPJ) +
                            '</CnpjCpf>' +
                            '<NumeroLote>' +
-                             Response.Lote +
+                             Response.NumeroLote +
                            '</NumeroLote>' +
                            Xml +
                          '</EnviaLoteRps>';
@@ -368,7 +368,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.NumeroLote) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
@@ -387,7 +387,7 @@ begin
                              OnlyNumber(Emitente.CNPJ) +
                            '</CnpjCpfPrestador>' +
                            '<NumeroLote>' +
-                             Response.Lote +
+                             Response.NumeroLote +
                            '</NumeroLote>' +
                          '</Consulta>' +
                        '</ConsultaLoteRps>';
@@ -670,7 +670,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      Response.Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+      Response.NumeroLote := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
 

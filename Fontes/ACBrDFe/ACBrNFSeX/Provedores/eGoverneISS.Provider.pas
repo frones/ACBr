@@ -284,8 +284,8 @@ begin
 
       if Response.Alertas.Count > 0 then
       begin
-        Response.Lote := OnlyNumber(RightStrNativeString(Response.Alertas[0].Descricao, 20));
-        FPCodigoLote := Response.Lote;
+        Response.NumeroLote := OnlyNumber(RightStrNativeString(Response.Alertas[0].Descricao, 20));
+        FPCodigoLote := Response.NumeroLote;
       end;
 
       ANode := Document.Root.Childrens.FindAnyNs(AMessageTag);
@@ -335,7 +335,7 @@ var
   Emitente: TEmitenteConfNFSe;
 begin
   if EstaVazio(FPCodigoLote) then
-    FPCodigoLote := Response.Lote;
+    FPCodigoLote := Response.NumeroLote;
 
   if EstaVazio(FPCodigoLote) then
   begin

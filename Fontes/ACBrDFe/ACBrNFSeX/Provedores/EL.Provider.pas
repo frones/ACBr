@@ -417,7 +417,7 @@ begin
   AAbreSessao := TNFSeAbreSessaoResponse.Create;
 
   try
-    AAbreSessao.Lote := aLote;
+    AAbreSessao.NumeroLote := aLote;
 
     PrepararAbrirSessao(AAbreSessao);
 
@@ -434,7 +434,7 @@ begin
         TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
 
         AService := CriarServiceClient(tmAbrirSessao);
-        AService.Prefixo := AAbreSessao.Lote;
+        AService.Prefixo := AAbreSessao.NumeroLote;
         AAbreSessao.ArquivoRetorno := AService.AbrirSessao(ConfigMsgDados.DadosCabecalho, AAbreSessao.ArquivoEnvio);
 
         AAbreSessao.Sucesso := True;
@@ -480,7 +480,7 @@ begin
   AFechaSessao := TNFSeFechaSessaoResponse.Create;
 
   try
-    AFechaSessao.Lote := aLote;
+    AFechaSessao.NumeroLote := aLote;
     AFechaSessao.HashIdent := FPHash;
 
     PrepararFecharSessao(AFechaSessao);
@@ -498,7 +498,7 @@ begin
         TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
 
         AService := CriarServiceClient(tmFecharSessao);
-        AService.Prefixo := AFechaSessao.Lote;
+        AService.Prefixo := AFechaSessao.NumeroLote;
         AFechaSessao.ArquivoRetorno := AService.FecharSessao(ConfigMsgDados.DadosCabecalho, AFechaSessao.ArquivoEnvio);
 
         AFechaSessao.Sucesso := True;
@@ -534,11 +534,11 @@ end;
 
 procedure TACBrNFSeProviderEL.Emite;
 begin
-  AbreSessao(EmiteResponse.Lote);
+  AbreSessao(EmiteResponse.NumeroLote);
 
   inherited Emite;
 
-  FechaSessao(EmiteResponse.Lote);
+  FechaSessao(EmiteResponse.NumeroLote);
 end;
 
 function TACBrNFSeProviderEL.PrepararRpsParaLote(const aXml: string): string;
@@ -631,7 +631,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.NumeroLote) then
   begin
     AErro := EmiteResponse.Erros.New;
     AErro.Codigo := Cod111;
@@ -751,10 +751,10 @@ begin
     else
       xTipoDoc := '1';
 
-    if Length(Response.Lote) < 13 then
-      lote := PadLeft(Response.Lote, 13, '0')
+    if Length(Response.NumeroLote) < 13 then
+      lote := PadLeft(Response.NumeroLote, 13, '0')
     else
-      lote := Response.Lote;
+      lote := Response.NumeroLote;
 
 
     Arquivo := '<LoteRps xmlns="http://www.el.com.br/nfse/xsd/el-nfse.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.el.com.br/nfse/xsd/el-nfse.xsd el-nfse.xsd ">' +
@@ -762,7 +762,7 @@ begin
                       lote+
                  '</Id>' +
                  '<NumeroLote>' +
-                    Response.Lote +
+                    Response.NumeroLote +
                  '</NumeroLote>' +
                  '<QuantidadeRps>' +
                     IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
@@ -831,7 +831,7 @@ begin
         with Response do
         begin
           Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dataRecebimento'), tcDatHor);
-          Lote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
+          NumeroLote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
           Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroProtocolo'), tcStr);
         end;
       end;
@@ -908,7 +908,7 @@ begin
       begin
         with Response do
         begin
-          Lote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
+          NumeroLote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacaoLoteRps'), tcStr);
         end;
       end;

@@ -394,7 +394,7 @@ begin
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FWebService.Gerar.Clear;
-  FWebService.Gerar.Lote := aLote;
+  FWebService.Gerar.NumeroLote := aLote;
   FWebService.Gerar.MaxRps := aqMaxRps;
   FWebService.Gerar.ModoEnvio := aModoEnvio;
 
@@ -409,7 +409,7 @@ begin
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FWebService.Emite.Clear;
-  FWebService.Emite.Lote := aLote;
+  FWebService.Emite.NumeroLote := aLote;
   FWebService.Emite.ModoEnvio := aModoEnvio;
 
   FProvider.Emite;
@@ -417,7 +417,7 @@ begin
   if Configuracoes.Geral.ConsultaLoteAposEnvio and
      (FWebService.Emite.ModoEnvio = meLoteAssincrono) then
   begin
-    if (FWebService.Emite.Protocolo <> '') or (FWebService.Emite.Lote <> '') then
+    if (FWebService.Emite.Protocolo <> '') or (FWebService.Emite.NumeroLote <> '') then
     begin
       if FProvider.ConfigGeral.ConsultaSitLote then
       begin
@@ -425,7 +425,7 @@ begin
         begin
           FWebService.ConsultaSituacao.Clear;
           FWebService.ConsultaSituacao.Protocolo := FWebService.Emite.Protocolo;
-          FWebService.ConsultaSituacao.Lote := FWebService.Emite.Lote;
+          FWebService.ConsultaSituacao.NumeroLote := FWebService.Emite.NumeroLote;
 
           Sleep(AguardarConsultaRet);
 
@@ -451,12 +451,12 @@ begin
         if FProvider.ConfigMsgDados.UsarNumLoteConsLote then
         begin
           FWebService.ConsultaLoteRps.Protocolo := FWebService.Emite.Protocolo;
-          FWebService.ConsultaLoteRps.Lote := FWebService.Emite.Lote;
+          FWebService.ConsultaLoteRps.NumeroLote := FWebService.Emite.NumeroLote;
         end
         else
         begin
           FWebService.ConsultaLoteRps.Protocolo := FWebService.Emite.Protocolo;
-          FWebService.ConsultaLoteRps.Lote := '';
+          FWebService.ConsultaLoteRps.NumeroLote := '';
         end;
 
         if not FProvider.ConfigGeral.ConsultaSitLote then
@@ -586,7 +586,7 @@ begin
 
   FWebService.ConsultaLoteRps.Clear;
   FWebService.ConsultaLoteRps.Protocolo := AProtocolo;
-  FWebService.ConsultaLoteRps.Lote := ANumLote;
+  FWebService.ConsultaLoteRps.NumeroLote := ANumLote;
 
   FProvider.ConsultaLoteRps;
 end;
@@ -937,7 +937,7 @@ begin
 
   FWebService.ConsultaSituacao.Clear;
   FWebService.ConsultaSituacao.Protocolo := AProtocolo;
-  FWebService.ConsultaSituacao.Lote := ANumLote;
+  FWebService.ConsultaSituacao.NumeroLote := ANumLote;
 
   FProvider.ConsultaSituacao;
 end;

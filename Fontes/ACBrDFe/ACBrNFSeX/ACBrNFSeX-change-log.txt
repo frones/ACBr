@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/02/2023
+-- Diversos --
+[*] Padronização da propriedade de retorno e uso interno do componente.
+    Lote => NumeroLote
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade Tres Cachoeiras/RS - Trocou de Provedor, agora é Fiorilli
    Por: Mario Inacio

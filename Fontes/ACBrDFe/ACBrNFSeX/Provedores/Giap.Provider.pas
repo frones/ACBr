@@ -451,7 +451,7 @@ begin
 
       ANode := Document.Root;
 
-      Response.Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+      Response.NumeroLote := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('notaFiscal');
 

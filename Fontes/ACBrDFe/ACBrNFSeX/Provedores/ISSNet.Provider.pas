@@ -677,7 +677,7 @@ begin
 
     if ConfigMsgDados.UsarNumLoteConsLote then
       NumeroLote := '<NumeroLote>' +
-                      Response.Lote +
+                      Response.NumeroLote +
                     '</NumeroLote>';
 
     Response.ArquivoEnvio := '<' + TagEnvio + NameSpace + '>' +

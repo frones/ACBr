@@ -300,7 +300,7 @@ begin
               Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
               Protocolo := jNfse.AsString['CodigoValidacao'];
               Situacao := jNfse.AsString['SituacaoNfse'];
-              Lote := NumRps;
+              NumeroLote := NumRps;
 
               if Situacao = '2' then
               begin

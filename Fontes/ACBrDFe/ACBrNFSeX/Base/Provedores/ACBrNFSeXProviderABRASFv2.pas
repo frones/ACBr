@@ -415,7 +415,7 @@ begin
   else
     Versao := '';
 
-  IdAttr := DefinirIDLote(Response.Lote);
+  IdAttr := DefinirIDLote(Response.NumeroLote);
 
   ListaRps := ChangeLineBreak(ListaRps, '');
 
@@ -467,7 +467,7 @@ begin
       Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                              '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
                                '<' + Prefixo2 + 'NumeroLote>' +
-                                  Response.Lote +
+                                  Response.NumeroLote +
                                '</' + Prefixo2 + 'NumeroLote>' +
                                Prestador +
                                '<' + Prefixo2 + 'QuantidadeRps>' +
@@ -711,7 +711,7 @@ begin
 
     if ConfigMsgDados.UsarNumLoteConsLote then
       NumeroLote := '<' + Prefixo + 'NumeroLote>' +
-                      Response.Lote +
+                      Response.NumeroLote +
                     '</' + Prefixo + 'NumeroLote>';
 
     Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +

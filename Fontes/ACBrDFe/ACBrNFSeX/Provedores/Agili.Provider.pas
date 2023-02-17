@@ -316,7 +316,7 @@ begin
 
         Xml := '<LoteRps>' +
                  '<NumeroLote>' +
-                    Response.Lote +
+                    Response.NumeroLote +
                  '</NumeroLote>' +
                  '<IdentificacaoPrestador>' +
                    '<ChaveDigital>' +

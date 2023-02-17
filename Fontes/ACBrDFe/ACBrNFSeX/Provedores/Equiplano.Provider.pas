@@ -260,7 +260,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.NumeroLote) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
@@ -275,7 +275,7 @@ begin
     Response.ArquivoEnvio := '<es:enviarLoteRpsEnvio' + NameSpace + '>' +
                                '<lote>' +
                                  '<nrLote>' +
-                                    Response.Lote +
+                                    Response.NumeroLote +
                                  '</nrLote>' +
                                  '<qtRps>' +
                                     IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
@@ -390,7 +390,7 @@ var
   Emitente: TEmitenteConfNFSe;
   NameSpace, xConsulta: string;
 begin
-  if EstaVazio(Response.Protocolo) and EstaVazio(Response.Lote) then
+  if EstaVazio(Response.Protocolo) and EstaVazio(Response.NumeroLote) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod101;
@@ -412,7 +412,7 @@ begin
                  '</nrProtocolo>'
   else
     xConsulta := '<nrLoteRps>' +
-                   Response.Lote +
+                   Response.NumeroLote +
                  '</nrLoteRps>';
 
   Response.ArquivoEnvio := '<es:esConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
@@ -463,7 +463,7 @@ begin
 
       with Response do
       begin
-        Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
+        NumeroLote := ObterConteudoTag(ANode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
         Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('stLote'), tcStr);
       end;
     except
@@ -486,7 +486,7 @@ var
   Emitente: TEmitenteConfNFSe;
   NameSpace, xConsulta: string;
 begin
-  if EstaVazio(Response.Protocolo) and EstaVazio(Response.Lote) then
+  if EstaVazio(Response.Protocolo) and EstaVazio(Response.NumeroLote) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod101;
@@ -508,7 +508,7 @@ begin
                  '</nrProtocolo>'
   else
     xConsulta := '<nrLoteRps>' +
-                   Response.Lote +
+                   Response.NumeroLote +
                  '</nrLoteRps>';
 
   Response.ArquivoEnvio := '<es:esConsultarLoteRpsEnvio' + NameSpace + '>' +

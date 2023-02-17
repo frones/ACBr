@@ -398,7 +398,7 @@ begin
   Versao := ' versao="1"';
 
   if ConfigGeral.Identificador <> '' then
-    IdAttr := ' ' + ConfigGeral.Identificador + '="' + Response.Lote + '"'
+    IdAttr := ' ' + ConfigGeral.Identificador + '="' + Response.NumeroLote + '"'
   else
     IdAttr := '';
 
@@ -435,7 +435,7 @@ begin
     if Response.ModoEnvio in [meLoteAssincrono] then
       Response.ArquivoEnvio := '<' + TagEnvio + NameSpace + '>' +
                              '<' + 'LoteRps codMunicipio="' + CodMun + '"' + Versao + NameSpace2 + IdAttr + '>' +
-                               '<' + Prefixo2 + 'NumeroLote>' + Response.Lote + '</' + Prefixo2 + 'NumeroLote>' +
+                               '<' + Prefixo2 + 'NumeroLote>' + Response.NumeroLote + '</' + Prefixo2 + 'NumeroLote>' +
                                '<' + Prefixo2 + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + Prefixo2 + 'Cnpj>' +
                                GetInscMunic(Emitente.InscMun, Prefixo2) +
                                '<' + Prefixo2 + 'QuantidadeRps>' +

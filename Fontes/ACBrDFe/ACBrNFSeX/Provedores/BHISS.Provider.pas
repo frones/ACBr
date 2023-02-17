@@ -408,7 +408,7 @@ begin
     Versao := '';
 
   if ConfigAssinar.IncluirURI then
-    IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.Lote + '"'
+    IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.NumeroLote + '"'
   else
     IdAttr := '';
 
@@ -416,7 +416,7 @@ begin
 
   Response.ArquivoEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
                              '<LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
-                               '<NumeroLote>' + Response.Lote + '</NumeroLote>' +
+                               '<NumeroLote>' + Response.NumeroLote + '</NumeroLote>' +
                                '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
                                '<InscricaoMunicipal>' +
                                   OnlyNumber(Emitente.InscMun) +

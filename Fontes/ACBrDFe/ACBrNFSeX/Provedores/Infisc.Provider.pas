@@ -257,7 +257,7 @@ begin
 
       with Response do
       begin
-        Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('cLote'), tcStr);
+        NumeroLote := ObterConteudoTag(ANode.Childrens.FindAnyNs('cLote'), tcStr);
         Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
         Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
       end;
@@ -285,7 +285,7 @@ var
   Emitente: TEmitenteConfNFSe;
   Versao: string;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.NumeroLote) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
@@ -303,7 +303,7 @@ begin
                                 OnlyNumber(Emitente.CNPJ) +
                              '</CNPJ>' +
                              '<cLote>' +
-                                Response.Lote +
+                                Response.NumeroLote +
                              '</cLote>' +
                            '</pedidoStatusLote>';
 end;
@@ -340,7 +340,7 @@ begin
 
       with Response do
       begin
-        Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('cLote'), tcStr);
+        NumeroLote := ObterConteudoTag(ANode.Childrens.FindAnyNs('cLote'), tcStr);
         Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
         Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
       end;

@@ -303,7 +303,7 @@ begin
   else
     Versao := '';
 
-  IdAttr := DefinirIDLote(Response.Lote);
+  IdAttr := DefinirIDLote(Response.NumeroLote);
 
   ListaRps := AplicarLineBreak(ListaRps, '');
 

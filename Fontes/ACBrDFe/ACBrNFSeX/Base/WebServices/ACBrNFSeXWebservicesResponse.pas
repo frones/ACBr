@@ -195,7 +195,7 @@ type
   private
     FSituacao: string;
     FDescSituacao: string;
-    FLote: string;
+    FNumeroLote: string;
     FSucesso: Boolean;
     FNumeroNota: string;
     FSerieNota: string;
@@ -233,7 +233,7 @@ type
 
     property Situacao: string read FSituacao write FSituacao;
     property DescSituacao: string read FDescSituacao write FDescSituacao;
-    property Lote: string read FLote write FLote;
+    property NumeroLote: string read FNumeroLote write FNumeroLote;
     property Sucesso: Boolean read FSucesso write FSucesso;
     property NumeroNota: string read FNumeroNota write FNumeroNota;
     property SerieNota: string read FSerieNota write FSerieNota;
@@ -572,7 +572,7 @@ var
 begin
   Situacao := '';
   DescSituacao := '';
-  Lote := '';
+  NumeroLote := '';
   Sucesso := False;
   NumeroNota := '';
   SerieNota := '';
@@ -766,7 +766,7 @@ procedure TNFSeConsultaSituacaoResponse.Clear;
 begin
   inherited Clear;
 
-  Lote := '';
+  NumeroLote := '';
   Situacao := '';
   Protocolo := '';
 end;
@@ -789,7 +789,7 @@ procedure TNFSeConsultaLoteRpsResponse.Clear;
 begin
   inherited Clear;
 
-  Lote := '';
+  NumeroLote := '';
   Protocolo := '';
   Situacao := '';
   CodigoVerificacao := '';

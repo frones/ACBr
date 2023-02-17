@@ -554,7 +554,7 @@ begin
     end;
   end;
 
-  IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.Lote + '"';
+  IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.NumeroLote + '"';
 
   NameSpace := NameSpace +
     ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
@@ -681,7 +681,7 @@ var
   Emitente: TEmitenteConfNFSe;
   NameSpace, Prefixo, PrefixoTS: string;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.NumeroLote) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;

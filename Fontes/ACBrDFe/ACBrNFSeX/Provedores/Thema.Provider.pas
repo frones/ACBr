@@ -385,13 +385,13 @@ begin
     Versao := '';
 
   if ConfigGeral.Identificador <> '' then
-    IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.Lote + '"'
+    IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.NumeroLote + '"'
   else
     IdAttr := '';
 
   Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                          '<' + Prefixo + 'LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
-                           '<' + PrefixoTS + 'NumeroLote>' + Response.Lote + '</' + PrefixoTS + 'NumeroLote>' +
+                           '<' + PrefixoTS + 'NumeroLote>' + Response.NumeroLote + '</' + PrefixoTS + 'NumeroLote>' +
                            '<' + PrefixoTS + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + PrefixoTS + 'Cnpj>' +
                            GetInscMunic(Emitente.InscMun, PrefixoTS) +
                            '<' + PrefixoTS + 'QuantidadeRps>' +

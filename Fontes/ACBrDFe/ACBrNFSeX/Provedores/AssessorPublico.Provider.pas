@@ -268,7 +268,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.NumeroLote) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
@@ -284,7 +284,7 @@ begin
                               Emitente.InscMun +
                            '</INSCRICAO>' +
                            '<LOTE>' +
-                              Response.Lote +
+                              Response.NumeroLote +
                            '</LOTE>' +
                          '</IDENTIFICACAO>' +
                        '</NFSE>';

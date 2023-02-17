@@ -354,7 +354,7 @@ begin
       Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                              '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
                                '<' + Prefixo2 + 'NumeroLote>' +
-                                  Response.Lote +
+                                  Response.NumeroLote +
                                '</' + Prefixo2 + 'NumeroLote>' +
                                Prestador +
                                '<' + Prefixo2 + 'Token>' +

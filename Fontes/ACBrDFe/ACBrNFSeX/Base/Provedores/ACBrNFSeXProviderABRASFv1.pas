@@ -394,7 +394,7 @@ begin
   else
     Versao := '';
 
-  IdAttr := DefinirIDLote(Response.Lote);
+  IdAttr := DefinirIDLote(Response.NumeroLote);
 
   ListaRps := ChangeLineBreak(ListaRps, '');
 
@@ -428,7 +428,7 @@ begin
     if Response.ModoEnvio in [meLoteAssincrono] then
       Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                              '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
-                               '<' + Prefixo2 + 'NumeroLote>' + Response.Lote + '</' + Prefixo2 + 'NumeroLote>' +
+                               '<' + Prefixo2 + 'NumeroLote>' + Response.NumeroLote + '</' + Prefixo2 + 'NumeroLote>' +
                                '<' + Prefixo2 + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + Prefixo2 + 'Cnpj>' +
                                GetInscMunic(Emitente.InscMun, Prefixo2) +
                                '<' + Prefixo2 + 'QuantidadeRps>' +
@@ -601,7 +601,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      Response.Lote := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('NumeroLote'), tcStr);
+      Response.NumeroLote := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('NumeroLote'), tcStr);
       Response.Situacao := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('Situacao'), tcStr);
 
       if not Response.Sucesso then

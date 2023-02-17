@@ -198,6 +198,8 @@ type
     ACBr_OpenDelivery_dpk: TCheckBox;
     ACBr_PAFNFCe_dpk: TCheckBox;
     ACBr_PIXCD_dpk: TCheckBox;
+    ACBr_Android_dpk: TCheckBox;
+    lblacb: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

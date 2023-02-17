@@ -655,8 +655,8 @@ begin
       // Provedores que permitem informar mais de 1 serviço:
       if (ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
            proCTA, proCTAConsult, proEloTech, proEquiplano, proFacundo, proFGMaiss,
-           profintelISS, proGoverna, proInfisc, proIPM, proISSDSF, proRLZ,
-           proSimple, proSimplISS, proSmarAPD, proWebFisco, proBauhaus,
+           profintelISS, proGoverna, proInfisc, proIPM, proISSDSF, proPriMax,
+           proRLZ, proSimple, proSimplISS, proSmarAPD, proWebFisco, proBauhaus,
            proSoftPlan]) or
          ((ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEL]) and
           (ACBrNFSeX1.Configuracoes.Geral.Versao = ve100)) then
@@ -1131,7 +1131,7 @@ begin
       exit;
 
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasil, proWebFisco,
-      proSimple, proFGMaiss, proIPM] then
+      proSimple, proFGMaiss, proIPM, proPriMax] then
     begin
       SerNFSe := '1';
       if not (InputQuery(Titulo, 'Série da NFSe', SerNFSe)) then
@@ -1196,8 +1196,8 @@ begin
     // Os Provedores da lista requerem que seja informado o motivo do cancelamento
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
       proConam, proEquiplano, proFGMaiss, proGoverna, proIPM, proISSBarueri,
-      proISSDSF, proISSLencois, proModernizacaoPublica, proPublica, proSiat,
-      proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
+      proISSDSF, proISSLencois, proModernizacaoPublica, proPriMax, proPublica,
+      proSiat, proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
       proWebFisco, proCenti, proCTA, proBauhaus] then
     begin
       Motivo := 'Motivo do Cancelamento';
@@ -1268,7 +1268,7 @@ begin
   end;
 
   xTipo := '';
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proWebFisco] then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proPriMax, proWebFisco] then
   begin
     if not(InputQuery(Titulo, 'Tipo (1 = NFSe, 2 = Rps):', xTipo)) then
       exit;
@@ -1585,7 +1585,7 @@ begin
     end;
 
     xTipo := '';
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proWebFisco] then
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proPriMax, proWebFisco] then
     begin
       if not(InputQuery(xTitulo, 'Tipo (1 = NFSe, 2 = Rps):', xTipo)) then
         exit;
@@ -1634,6 +1634,7 @@ begin
       end;
 
     proFGMaiss,
+    proPriMax,
     proWebFisco:
       begin
         InfConsultaNFSe := TInfConsultaNFSe.Create;
@@ -3524,7 +3525,7 @@ begin
             memoLog.Lines.Add('Método Executado: ' + ModoEnvioToStr(ModoEnvio));
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Envio');
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
@@ -3565,7 +3566,7 @@ begin
           end;
 
           if ACBrNFSeX1.Configuracoes.Geral.ConsultaLoteAposEnvio and
-             ((Emite.Protocolo <> '') or (Emite.Lote <> '')) then
+             ((Emite.Protocolo <> '') or (Emite.NumeroLote <> '')) then
           begin
             if ACBrNFSeX1.Provider.ConfigGeral.ConsultaSitLote then
             begin
@@ -3577,7 +3578,7 @@ begin
                 memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Parâmetros de Envio');
                 memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-                memoLog.Lines.Add('Numero do Lote: ' + Lote);
+                memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
                 memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Parâmetros de Retorno');
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
@@ -3624,7 +3625,7 @@ begin
                 memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Parâmetros de Envio');
                 memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-                memoLog.Lines.Add('Numero do Lote: ' + Lote);
+                memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
                 memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Parâmetros de Retorno');
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
@@ -3685,7 +3686,7 @@ begin
             memoLog.Lines.Add('Método Executado: ' + ModoEnvioToStr(ModoEnvio));
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Envio');
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
@@ -3734,7 +3735,7 @@ begin
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Envio');
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
@@ -3779,7 +3780,7 @@ begin
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Envio');
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
@@ -3841,7 +3842,7 @@ begin
             memoLog.Lines.Add('Série do Rps  : ' + SerieRps);
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
             memoLog.Lines.Add('Situação      : ' + Situacao);
             memoLog.Lines.Add('Data          : ' + DateToStr(Data));
@@ -4091,7 +4092,7 @@ begin
             memoLog.Lines.Add('Método Executado: ' + ModoEnvioToStr(ModoEnvio));
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Envio');
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Nome Arquivo : ' + NomeArq);

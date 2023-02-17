@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/02/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade Tres Cachoeiras/RS - Trocou de Provedor, agora é Fiorilli
+   Por: Mario Inacio
+[*] A cidade Pirassununga/SP - Trocou de Provedor, agora é AssessorPublico
+   Por: Glauber Bernardo
+
 16/02/2023
 -- Diversos --
 [*] Implementado o provedor Contass

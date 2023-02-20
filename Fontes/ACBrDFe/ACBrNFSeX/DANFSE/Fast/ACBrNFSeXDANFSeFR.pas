@@ -124,7 +124,7 @@ uses
   StrUtils, Math,
   ACBrUtil.Strings, ACBrDFeUtil,
   ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.XMLHTML,
-  ACBrNFSeXConversao, ACBrNFSeXInterface;
+  ACBrNFSeXConversao, ACBrNFSeXInterface, ACBrImage,ACBrDelphiZXingQRCode ;
 
 constructor TACBrNFSeXDANFSeFR.Create(AOwner: TComponent);
 begin
@@ -1123,6 +1123,12 @@ begin
 
           try
             xMunicipio := ObterNomeMunicipio(MunicipioIncidencia, xUF);
+            if estaVazio(xMunicipio) then
+            begin
+              xUF        := OrgaoGerador.Uf;
+              xMunicipio := ObterNomeMunicipio(StrToInt(OrgaoGerador.CodigoMunicipio),
+                                               xUF);
+            end;
             xMunicipio := xMunicipio + '/' + xUF;
           except
             on E:Exception do
@@ -1479,6 +1485,9 @@ begin
 end;
 
 procedure TACBrNFSeXDANFSeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+var LQrCode,LOutrasInformacoes: String;
+    LOutrasInformacoesLength : Integer;
+    LDiscriminacao, LNomeArqFr3 : string;
 begin
   if Provedor <> proEL then
   begin
@@ -1497,6 +1506,28 @@ begin
         FindObject('Memo73').Visible := DANFSeXClassOwner.ImprimeCanhoto;
     end;
   end;
+
+  frxReport.FindObject('Memo13').Visible := (not ((cdsItensServico.RecordCount > 0) and (frxReport.FindObject('Page2') <> nil))
+                                            or (frxReport.FindObject('Page2') = nil));
+
+  LOutrasInformacoes       := LowerCase(cdsParametros.FieldByName('outrasinformacoes').Value);
+  LOutrasInformacoesLength := Length(LOutrasInformacoes);
+
+  if pos('http://', LOutrasInformacoes) > 0 then
+     LQrCode := Trim(MidStr(LOutrasInformacoes, pos('http://', LOutrasInformacoes), LOutrasInformacoesLength))
+  else if pos('https://', LowerCase(LOutrasInformacoes)) > 0 then
+     LQrCode := Trim(MidStr(LOutrasInformacoes, pos('https://', LOutrasInformacoes), LOutrasInformacoesLength));
+
+  if cdsIdentificacao.FieldByName('LinkNFSe').Value <> '' then
+     LQrCode :=cdsIdentificacao.FieldByName('LinkNFSe').Value;
+
+  if Assigned(Sender) and (Sender.Name = 'imgQrCode') then
+  begin
+    TfrxPictureView(Sender).Visible := not (LQrCode = '');
+    if (LQrCode <> '') then
+      PintarQRCode(LQrCode, TfrxPictureView(Sender).Picture.Bitmap, qrAuto);
+  end;
+
 end;
 
 end.

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2023
+[*] TK-3535 ACBrNFSeX - Geração do QRCode automática para Fast no DANFSe
+  por : Victor H Gonzales - Pandaaa - Daniel de Morais
+[-] TK-3460-1 Impressão NFSe em Fast parece ainda não estar correto quanto as cidades envolvidas
+  por : Victor H Gonzales
 
 17/02/2023
 -- ACBrNFSeXServicos.ini --

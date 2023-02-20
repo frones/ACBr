@@ -47,6 +47,8 @@ Símbolo : Significado
   por : Victor H Gonzales - Pandaaa - Daniel de Morais
 [-] TK-3460-1 Impressão NFSe em Fast parece ainda não estar correto quanto as cidades envolvidas
   por : Victor H Gonzales
+[+] TK-3541 ACBrNFSeX - DANFSe em Fast Report para o Lazarus.
+  por : Izaque / Victor H Gonzales
 
 17/02/2023
 -- ACBrNFSeXServicos.ini --

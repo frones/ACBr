@@ -38,9 +38,14 @@ unit ACBrNFSeXDANFSeFRReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrNFSeXDANFSeFR, ACBrReg, DesignIntf
+  SysUtils, Classes, ACBrNFSeXDANFSeFR, ACBrReg
   {$IFDEF FPC}
-     , LResources
+    ,LResources
+    ,LazarusPackageIntf
+    ,PropEdits
+    ,componenteditors
+  {$ELSE}
+    ,DesignIntf
   {$ENDIF} ;
 
 type

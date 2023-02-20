@@ -39,7 +39,13 @@ interface
 uses
   SysUtils, Classes,
   ACBrBase, ACBrNFSeX, ACBrNFSeXDANFSeClass, ACBrNFSeXClass, frxClass,
-  DB, DBClient, frxDBSet, frxExportPDF, frxBarcode, ACBrValidador;
+  DB, frxDBSet, frxExportPDF, frxBarcode, ACBrValidador
+  {$IFDEF FPC}
+    ,BufDataset
+    ,ACBrUtil.FR.FCP
+  {$ELSE}
+    ,DBClient
+  {$ENDIF};
 
 type
   EACBrNFSeXDANFSeFR = class(Exception);
@@ -80,15 +86,15 @@ type
     frxReport: TfrxReport; // Está como public, pois quando declarado em datamodule, tem acesso externo, e pode ser que alguem esteja usando.
     frxPDFExport: TfrxPDFExport;
     // CDSs
-    cdsIdentificacao: TClientDataSet;
-    cdsPrestador: TClientDataSet;
-    cdsServicos: TClientDataSet;
-    cdsParametros: TClientDataSet;
-    cdsTomador: TClientDataSet;
-    cdsTransportadora: TClientDataSet;
-    cdsItensServico: TClientDataSet;
-    cdsCondicaoPagamento: TClientDataSet;
-    cdsCondicaoPagamentoParcelas : TClientDataSet;
+    cdsIdentificacao: {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
+    cdsPrestador: {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
+    cdsServicos: {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
+    cdsParametros: {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
+    cdsTomador: {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
+    cdsTransportadora: {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
+    cdsItensServico: {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
+    cdsCondicaoPagamento: {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
+    cdsCondicaoPagamentoParcelas : {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
 
     // FrxDBs
     frxIdentificacao: TfrxDBDataset;
@@ -133,8 +139,8 @@ begin
   FFastFile := '';
   FEspessuraBorda := 1;
   CriarDataSetsFrx;
-	FIncorporarFontesPdf := false;
-	FIncorporarBackgroundPdf := false;
+  FIncorporarFontesPdf := false;
+  FIncorporarBackgroundPdf := false;
 end;
 
 destructor TACBrNFSeXDANFSeFR.Destroy;
@@ -209,7 +215,7 @@ begin
     frxPDFExport.Subject := TITULO_PDF;
     frxPDFExport.EmbeddedFonts := False;
     frxPDFExport.Background := IncorporarBackgroundPdf;
-		frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+    frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
 
     OldShowDialog := frxPDFExport.ShowDialog;
     try
@@ -238,7 +244,7 @@ begin
     frxPDFExport.Subject := TITULO_PDF;
     frxPDFExport.EmbeddedFonts := False;
     frxPDFExport.Background := IncorporarBackgroundPdf;
-		frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+    frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
 
     OldShowDialog := frxPDFExport.ShowDialog;
     try
@@ -408,7 +414,7 @@ begin
 
   RttiSetProp(frxPDFExport, 'Transparency', 'False');
 
-  cdsIdentificacao := TClientDataSet.Create(nil);
+  cdsIdentificacao := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsIdentificacao do
   begin
     Close;
@@ -427,10 +433,14 @@ begin
       Add('LinkNFSe', ftString, 500);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
-  cdsPrestador := TClientDataSet.Create(nil);
+  cdsPrestador := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsPrestador do
   begin
     Close;
@@ -455,10 +465,14 @@ begin
       Add('Email', ftString, 60);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
-  cdsServicos := TClientDataSet.Create(nil);
+  cdsServicos := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsServicos do
   begin
     Close;
@@ -503,15 +517,20 @@ begin
       Add('FonteCargaTributaria', ftString, 10);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
-  cdsParametros := TClientDataSet.Create(nil);
+  cdsParametros := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsParametros do
   begin
     Close;
     with FieldDefs do
     begin
+      Clear;
       Add('ExigibilidadeISS', ftString, 60);
       Add('CodigoMunicipio', ftString, 60);
       Add('MunicipioIncidencia', ftString, 60);
@@ -541,10 +560,14 @@ begin
       Add('ValorCredito', ftCurrency);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
-  cdsTomador := TClientDataSet.Create(nil);
+  cdsTomador := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsTomador do
   begin
     Close;
@@ -569,10 +592,14 @@ begin
       Add('Email', ftString, 60);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
-  cdsTransportadora := TClientDataSet.Create(nil);
+  cdsTransportadora := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsTransportadora do
   begin
     Close;
@@ -592,10 +619,14 @@ begin
       Add('TipoFrete', ftInteger);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
-  cdsItensServico := TClientDataSet.Create(nil);
+  cdsItensServico := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsItensServico do
   begin
     Close;
@@ -614,10 +645,14 @@ begin
       Add('DescontoIncondicionado', ftString, 30);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
-  cdsCondicaoPagamento := TClientDataSet.Create(nil);
+  cdsCondicaoPagamento := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsCondicaoPagamento do
   begin
     Close;
@@ -629,10 +664,14 @@ begin
       Add('Parcela', ftString, 10);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
-  cdsCondicaoPagamentoParcelas := TClientDataSet.Create(nil);
+  cdsCondicaoPagamentoParcelas := {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF}.Create(nil);
   with cdsCondicaoPagamentoParcelas do
   begin
     Close;
@@ -646,7 +685,11 @@ begin
       Add('Valor', ftCurrency);
     end;
     CreateDataSet;
-    LogChanges := False;
+    {$IFNDEF FPC}
+      LogChanges := False;
+    {$ELSE}
+      Open;
+    {$ENDIF}
   end;
 
   frxIdentificacao := TfrxDBDataset.Create(Self);

@@ -48,6 +48,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+22/02/2023
+[-] TK-3629 ACBrBoleto - Inter - Erro no Filtro Vencimento
+  Por : Aggille Sistemas de Gestão
 
 10/02/2023
 [+] TK-3564 ACBrBancoVotorantim - Inclusão do novo banco, contribuição LucasSantos8

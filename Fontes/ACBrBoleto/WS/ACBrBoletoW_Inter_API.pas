@@ -262,8 +262,8 @@ begin
             begin
               Consulta.Add( 'filtrarDataPor=VENCIMENTO' );
               Consulta.Add('situacao=EMABERTO,VENCIDO');
-              Consulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio));
-              Consulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal));
+              Consulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio));
+              Consulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal));
               Consulta.Add( 'ordenarPor=DATAVENCIMENTO' );
             end;
 

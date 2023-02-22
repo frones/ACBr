@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2023
+-- ACBrPIXPSPBancoDoBrasil --
+[-] Correção para não disparar exception indevidamente quando ocorrerem erros na resposta do método GET
+    Por: Elias César
+
 16/02/2023
 -- ACBrPIXPSPPixPDV --
 [*] Alteração para incluir endpoints específicos da API PixPDV

@@ -95,7 +95,7 @@ begin
     for I := 1 to 5 do
     begin
       fpUltimaResposta := fpDevice.LeString(MillisecTimeOut, 0, #13);
-      GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
+      GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
 
       wPesos[I] := InterpretarRepostaPeso(fpUltimaResposta);
     end;
@@ -109,8 +109,8 @@ begin
     fpUltimoPesoLido := -9;
   end;
 
-  GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
-           ' - Resposta: ' + fpUltimaResposta);
+  GravarLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
+            ' - Resposta: ' + fpUltimaResposta);
 end;
 
 function TACBrBALToledoTi420.InterpretarRepostaPeso(const aResposta: AnsiString): Double;

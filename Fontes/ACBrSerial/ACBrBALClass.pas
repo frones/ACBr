@@ -43,10 +43,7 @@ uses
   {$ELSE}
    Windows
   {$ENDIF},
-  ACBrDevice
-  {$IFDEF NEXTGEN}
-   ,ACBrBase
-  {$ENDIF};
+  ACBrDevice, ACBrBase;
 
 type
 
@@ -57,19 +54,21 @@ type
 
 TACBrBALClass = class
   private
+    fAtivo: Boolean;
+    fOnGravarLog: TACBrGravarLog;
+    fArqLOG: String;
+    fPosIni: Integer;
+    fPosFim: Integer;
+
     procedure SetAtivo(const Value: Boolean);
   protected
     fpDevice: TACBrDevice;
-    fpAtivo: Boolean;
     fpModeloStr: String;
     fpUltimoPesoLido: Double;
     fpUltimaResposta: AnsiString;
-    fpArqLOG: String;
-    fpPosIni: Integer;
-    fpPosFim: Integer;
 
-    procedure GravaLog(const AString: AnsiString; Traduz: Boolean = True);
-
+    procedure GravarLog(AString: AnsiString; Traduz: Boolean = False;
+      AdicionaTempo: Boolean = True);
     function AguardarRespostaPeso(aMillisecTimeOut: Integer = 3000;
       aReenviarSolicitarPeso: Boolean = False): Double; virtual;
   public
@@ -86,10 +85,13 @@ TACBrBALClass = class
     function EnviarPrecoKg(const aValor: Currency; aMillisecTimeOut: Integer = 3000): Boolean; virtual;
 
     property ModeloStr: String  read fpModeloStr;
-    property Ativo    : Boolean read fpAtivo  write SetAtivo;
-    property ArqLOG   : String  read fpArqLOG write fpArqLOG;
-    property PosIni   : Integer read fpPosIni write fpPosIni;
-    property PosFim   : Integer read fpPosFim write fpPosFim;
+    property Ativo: Boolean read fAtivo write SetAtivo;
+
+    property ArqLOG: String read fArqLOG write fArqLOG;
+    property OnGravarLog: TACBrGravarLog read fOnGravarLog write fOnGravarLog;
+
+    property PosIni: Integer read fPosIni write fPosIni;
+    property PosFim: Integer read fPosFim write fPosFim;
 
     property UltimaResposta: AnsiString read fpUltimaResposta;
     property UltimoPesoLido: Double     read fpUltimoPesoLido;
@@ -114,9 +116,10 @@ begin
   fpDevice := (AOwner as TACBrBAL).Device;
   fpDevice.SetDefaultValues;
 
-  fpAtivo     := False;
-  fpArqLOG    := '';
-  fpModeloStr := 'Generica';
+  fAtivo  := False;
+  fArqLOG := '';
+  fOnGravarLog := Nil;
+  fpModeloStr  := 'Generica';
 end;
 
 destructor TACBrBALClass.Destroy;
@@ -134,9 +137,26 @@ begin
     Desativar;
 end;
 
-procedure TACBrBALClass.GravaLog(const AString: AnsiString; Traduz: Boolean);
+procedure TACBrBALClass.GravarLog(AString: AnsiString; Traduz: Boolean;
+  AdicionaTempo: Boolean);
+var
+  Tratado: Boolean;
 begin
-  WriteLog(fpArqLOG, AString, Traduz);
+  Tratado := False;
+
+  if Traduz then
+    AString := TranslateUnprintable(AString);
+
+  if Assigned(fOnGravarLog) then
+    fOnGravarLog(AString, Tratado);
+
+  if (not Tratado) and (fArqLog <> '') then
+  begin
+    if AdicionaTempo then
+      AString := '-- ' + FormatDateTime('dd/mm hh:nn:ss:zzz', now) + ' - ' + AString;
+
+    WriteLog(fArqLog, AString, Traduz);
+  end;
 end;
 
 function TACBrBALClass.AguardarRespostaPeso(aMillisecTimeOut: Integer;
@@ -165,40 +185,40 @@ end;
 
 procedure TACBrBALClass.Ativar;
 begin
-  if fpAtivo then
+  if fAtivo then
     Exit;
 
-  GravaLog( sLineBreak   + StringOfChar('-',80)+ sLineBreak +
-            'ATIVAR - '  + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', Now) +
-            ' - Modelo: '+ ModeloStr +
-            ' - Porta: ' + fpDevice.Porta + '         Device: ' +
-            fpDevice.DeviceToString(False) + sLineBreak +
-            StringOfChar('-', 80) + sLineBreak, False);
+  GravarLog( sLineBreak   + StringOfChar('-',80)+ sLineBreak +
+             'ATIVAR - '  + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', Now) +
+             ' - Modelo: '+ ModeloStr +
+             ' - Porta: ' + fpDevice.Porta + '         Device: ' +
+             fpDevice.DeviceToString(False) + sLineBreak +
+             StringOfChar('-', 80) + sLineBreak, False);
 
   if (fpDevice.Porta <> '') then
     fpDevice.Ativar;
 
-  fpAtivo          := True;
+  fAtivo := True;
   fpUltimaResposta := '';
   fpUltimoPesoLido := 0;
 end;
 
 procedure TACBrBALClass.Desativar;
 begin
-  if (not fpAtivo) then
+  if (not fAtivo) then
     Exit;
 
   if (fpDevice.Porta <> '') then
     fpDevice.Desativar;
 
-  fpAtivo := False;
+  fAtivo := False;
 end;
 
 procedure TACBrBALClass.SolicitarPeso;
 begin
   { Envia comando Padrão para solicitar Peso }
   { As classes filhas podem reescrever se necessário }
-  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #05);
+  GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #05);
   fpDevice.Limpar;
   fpDevice.EnviaString(#05);
 end;
@@ -210,7 +230,7 @@ begin
 
   try
     fpUltimaResposta := fpDevice.LeString(MillisecTimeOut);
-    GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
+    GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
 
     fpUltimoPesoLido := InterpretarRepostaPeso(fpUltimaResposta);
   except
@@ -218,8 +238,8 @@ begin
     fpUltimoPesoLido := -9;
   end;
 
-  GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
-           ' - Resposta: ' + fpUltimaResposta);
+  GravarLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
+            ' - Resposta: ' + fpUltimaResposta);
 end;
 
 function TACBrBALClass.LePeso(MillisecTimeOut: Integer): Double;
@@ -255,11 +275,11 @@ var
 begin
   Result := 0;
 
-  if (aResposta = EmptyStr) or ((fpPosIni = 0) and (fpPosFim = 0)) then
+  if (aResposta = EmptyStr) or ((PosIni = 0) and (PosFim = 0)) then
     Exit;
 
   wDecimais := 1000;
-  wResposta := Trim(Copy(aResposta, fpPosIni, fpPosFim));
+  wResposta := Trim(Copy(aResposta, PosIni, PosFim));
 
   { Ajustando o separador de Decimal corretamente }
   wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);

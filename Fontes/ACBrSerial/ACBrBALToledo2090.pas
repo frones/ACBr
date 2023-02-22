@@ -77,7 +77,7 @@ end;
 
 procedure TACBrBALToledo2090.SolicitarPeso;
 begin
-  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #05);
+  GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #05);
   //fpDevice.Limpar;          { Limpa a Porta }
   fpDevice.EnviaString(#05);  { Envia comando solicitando o Peso }
 end;

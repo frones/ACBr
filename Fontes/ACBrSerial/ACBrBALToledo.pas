@@ -338,7 +338,7 @@ begin
 
   try
     fpUltimaResposta := fpDevice.LeString(MillisecTimeOut);
-    GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
+    GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
 
     fpUltimoPesoLido := InterpretarRepostaPeso(fpUltimaResposta);
   except
@@ -346,8 +346,8 @@ begin
     fpUltimoPesoLido := -9;
   end;
 
-  GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
-           ' - Resposta: ' + fpUltimaResposta + ' - Protocolo: ' + fpProtocolo);
+  GravarLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
+            ' - Resposta: ' + fpUltimaResposta + ' - Protocolo: ' + fpProtocolo);
 end;
 
 function TACBrBALToledo.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
@@ -401,7 +401,7 @@ begin
   s := PadLeft(FloatToIntStr(aValor), 6, '0');
   cmd := STX + s + ETX;
 
-  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + cmd);
+  GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + cmd);
 
   fpDevice.Limpar;
   fpDevice.EnviaString(cmd);

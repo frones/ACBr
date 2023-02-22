@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2023
+-- ACBrBAL* --
+[+] Adicionado o evento OnGravarLog
+    (por: DSA)
+
 27/01/2023
 [*] TK-3548 Alterar Exceção do ACBrDevice Bluetooth quando não há dispositivo
   por : Victor H Gonzales - Pandaaa

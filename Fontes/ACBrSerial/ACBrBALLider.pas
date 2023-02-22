@@ -168,7 +168,7 @@ begin
     StrDebug.Free;
     {$ELSE}
     fpUltimaResposta := fpDevice.LeString(MillisecTimeOut);
-    GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
+    GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
     {$ENDIF}
 
     fpUltimoPesoLido := InterpretarRepostaPeso(fpUltimaResposta);
@@ -177,7 +177,7 @@ begin
     fpUltimoPesoLido := -9;
   end;
 
-  GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
+  GravarLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
            ' , Resposta: ' + fpUltimaResposta);
 end;
 

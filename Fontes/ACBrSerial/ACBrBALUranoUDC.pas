@@ -63,7 +63,7 @@ end;
 
 procedure TACBrBALUranoUDC.SolicitarPeso;
 begin
-  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #04);
+  GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #04);
   fpDevice.Limpar;
   fpDevice.EnviaString(#04);
 end;

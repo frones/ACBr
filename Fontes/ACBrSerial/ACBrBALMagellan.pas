@@ -161,7 +161,7 @@ end;
 
 procedure TACBrBALMagellan.SolicitarPeso;
 begin
-  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #87);
+  GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #87);
   fpDevice.Limpar;
   fpDevice.EnviaString(#87);
 end;

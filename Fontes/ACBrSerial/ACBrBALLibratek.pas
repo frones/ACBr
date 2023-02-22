@@ -69,8 +69,8 @@ begin
   inherited Create(AOwner);
 
   fpModeloStr := 'Libratek';
-  fpPosIni := 7;
-  fpPosFim := 9;
+  PosIni := 7;
+  PosFim := 9;
 end;
 
 function TACBrBALLibratek.LePeso(MillisecTimeOut: Integer): Double;
@@ -101,9 +101,9 @@ begin
 
   Try
     fpUltimaResposta := fpDevice.LeString(MillisecTimeOut);
-    GravaLog('- ' + FormatDateTime('hh:nn:ss:zzz', now) + ' RX <- ' + fpUltimaResposta);
+    GravarLog('- ' + FormatDateTime('hh:nn:ss:zzz', now) + ' RX <- ' + fpUltimaResposta);
 
-    Resposta := Trim(Copy(fpUltimaResposta, fpPosIni, fpPosFim));
+    Resposta := Trim(Copy(fpUltimaResposta, PosIni, PosFim));
 
     { Ajustando o separador de Decimal corretamente }
     Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
@@ -125,7 +125,7 @@ begin
     fpUltimoPesoLido := -9;
   end;
 
-  GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) + ' , Resposta: ' + Resposta);
+  GravarLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) + ' , Resposta: ' + Resposta);
 end;
 
 end.

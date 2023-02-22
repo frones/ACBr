@@ -123,7 +123,7 @@ end;
 
 procedure TACBrBALMagna.SolicitarPeso;
 begin
-  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #80);
+  GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #80);
   fpDevice.Limpar;
   fpDevice.EnviaString(#80);  { Envia comando Solicitando o Peso }
 end;

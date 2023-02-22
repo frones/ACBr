@@ -94,7 +94,7 @@ begin
     sResposta := StringReplace(sResposta, '[', '', [rfReplaceAll]);
     sResposta := StringReplace(sResposta, ']', '', [rfReplaceAll]);
 
-    GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
+    GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
 
     if sResposta = EmptyStr then
     begin
@@ -108,7 +108,7 @@ begin
       fpUltimoPesoLido := -1 // Instavel;
 
   except
-    GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) + ' , Resposta: ' + sResposta);
+    GravarLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) + ' , Resposta: ' + sResposta);
     fpUltimoPesoLido := -9;
   end;
 

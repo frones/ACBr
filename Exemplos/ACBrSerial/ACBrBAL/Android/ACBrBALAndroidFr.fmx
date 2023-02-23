@@ -628,7 +628,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
         ControlCollection = <
           item
             Column = 1
-            Control = btnImprimir
+            Control = btnLerPeso
             Row = 0
           end
           item
@@ -648,7 +648,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           item
             SizeStyle = Auto
           end>
-        object btnImprimir: TCornerButton
+        object btnLerPeso: TCornerButton
           Align = Client
           CornerType = InnerRound
           Images = ImageList1
@@ -666,7 +666,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           Text = 'Ler Peso'
           XRadius = 3.000000000000000000
           YRadius = 3.000000000000000000
-          OnClick = btnImprimirClick
+          OnClick = btnLerPesoClick
         end
         object btnLimpar: TCornerButton
           Align = Client
@@ -733,21 +733,15 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           end>
         RowCollection = <
           item
-            Value = 50.000000000000000000
+            Value = 69.996378902652840000
           end
           item
-            Value = 50.000000000000000000
-          end
-          item
-            SizeStyle = Auto
-          end
-          item
-            SizeStyle = Auto
+            Value = 30.003621097347170000
           end>
         object Layout8: TLayout
           Align = Client
           Size.Width = 448.000000000000000000
-          Size.Height = 244.500000000000000000
+          Size.Height = 342.282287597656300000
           Size.PlatformDefault = False
           TabOrder = 2
           object Label6: TLabel
@@ -764,17 +758,17 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             DataDetectorTypes = []
             Align = Client
             Size.Width = 448.000000000000000000
-            Size.Height = 221.500000000000000000
+            Size.Height = 319.282287597656300000
             Size.PlatformDefault = False
             TabOrder = 2
             Viewport.Width = 440.000000000000000000
-            Viewport.Height = 213.500000000000000000
+            Viewport.Height = 311.300000000000000000
           end
         end
         object Layout9: TLayout
           Align = Client
           Size.Width = 448.000000000000000000
-          Size.Height = 244.500000000000000000
+          Size.Height = 146.717712402343800000
           Size.PlatformDefault = False
           TabOrder = 1
           object Label7: TLabel
@@ -791,11 +785,11 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             DataDetectorTypes = []
             Align = Client
             Size.Width = 448.000000000000000000
-            Size.Height = 221.500000000000000000
+            Size.Height = 123.717712402343800000
             Size.PlatformDefault = False
             TabOrder = 2
             Viewport.Width = 440.000000000000000000
-            Viewport.Height = 213.500000000000000000
+            Viewport.Height = 115.700000000000000000
           end
         end
       end

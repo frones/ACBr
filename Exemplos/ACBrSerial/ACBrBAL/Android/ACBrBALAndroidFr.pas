@@ -89,7 +89,7 @@ type
     btLerConfig: TCornerButton;
     btSalvarConfig: TCornerButton;
     GridPanelLayout4: TGridPanelLayout;
-    btnImprimir: TCornerButton;
+    btnLerPeso: TCornerButton;
     btnLimpar: TCornerButton;
     ImageList1: TImageList;
     StyleBook1: TStyleBook;
@@ -136,13 +136,14 @@ type
     procedure btLerConfigClick(Sender: TObject);
     procedure btSalvarConfigClick(Sender: TObject);
     procedure btnLimparClick(Sender: TObject);
-    procedure btnImprimirClick(Sender: TObject);
+    procedure btnLerPesoClick(Sender: TObject);
     procedure ACBrBAL1LePeso(Peso: Double; Resposta: AnsiString);
     procedure ACBrBAL1GravarLog(const ALogLine: string; var Tratado: Boolean);
   private
     { Private declarations }
     FVKService: IFMXVirtualKeyboardService;
     fLeituras: Integer;
+    fUltPeso: Double;
 
     function CalcularNomeArqINI: String;
     procedure CarregarModelos;
@@ -154,6 +155,9 @@ type
 
     procedure IrParaTestes;
     procedure LimparLogs;
+    procedure MudarInterfaceParaCancelarLeitura;
+    procedure MudarInterfaceParaAcionarLeitura;
+    function LendoPeso: Boolean;
 
     function PedirPermissoes: Boolean;
   public
@@ -228,14 +232,55 @@ begin
   tabsPrincipal.Previous;
 end;
 
-procedure TBALAndroidTesteForm.btnImprimirClick(Sender: TObject);
+procedure TBALAndroidTesteForm.btnLerPesoClick(Sender: TObject);
 begin
+  if LendoPeso then
+  begin
+    btnLerPeso.Tag := 0;
+    Exit;
+  end;
+
+  fUltPeso := -1;
   TTask.Run(
     procedure
+    var
+      PesoLido: Boolean;
     begin
-      repeat
-        ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOut );
-      until (ACBrBAL1.UltimoPesoLido > 0) or (not swTentar.IsChecked);
+      if (not swTentar.IsChecked) then
+        ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOut )
+      else
+      begin
+        try
+          PesoLido := False;
+          MudarInterfaceParaCancelarLeitura;
+          while LendoPeso and (not PesoLido) do
+          begin
+            ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOut );
+
+            PesoLido := (ACBrBAL1.UltimoPesoLido > 0) and
+                        (ACBrBAL1.UltimoPesoLido = fUltPeso);    // lê o mesmo peso, 2x, para evitar leitura instável
+            fUltPeso := ACBrBAL1.UltimoPesoLido;
+          end;
+        finally
+          TThread.Synchronize( nil,
+            procedure
+            begin
+              mMsgs.Lines.Add('');
+              mMsgs.Lines.Add('-----');
+              if PesoLido then
+                mMsgs.Lines.Add('SUCESSO! O peso lido foi: '+FormatFloatBr(fUltPeso, FloatMask(4) ))
+              else if not LendoPeso then
+                mMsgs.Lines.Add('CANCELADO pelo usuário')
+              else
+                mMsgs.Lines.Add('FALHA ao Ler o Peso');
+
+              mMsgs.Lines.Add('-----');
+              mMsgs.GoToTextEnd;
+            end);
+
+          MudarInterfaceParaAcionarLeitura;
+        end;
+      end;
     end );
 end;
 
@@ -444,6 +489,33 @@ begin
   mMsgs.Lines.Clear;
   mLog.Lines.Clear;
   fLeituras := 0;
+end;
+
+procedure TBALAndroidTesteForm.MudarInterfaceParaAcionarLeitura;
+begin
+  TThread.Synchronize( nil,
+    procedure
+    begin
+      btnLerPeso.Text := 'Ler Peso';
+      btnLerPeso.ImageIndex := 6;
+      btnLerPeso.Tag := 0;
+    end);
+end;
+
+procedure TBALAndroidTesteForm.MudarInterfaceParaCancelarLeitura;
+begin
+  TThread.Synchronize( nil,
+    procedure
+    begin
+      btnLerPeso.Text := 'Cancelar';
+      btnLerPeso.ImageIndex := 5;
+      btnLerPeso.Tag := 1;
+    end);
+end;
+
+function TBALAndroidTesteForm.LendoPeso: Boolean;
+begin
+  Result := (btnLerPeso.Tag > 0);
 end;
 
 procedure TBALAndroidTesteForm.SalvarConfiguracao;

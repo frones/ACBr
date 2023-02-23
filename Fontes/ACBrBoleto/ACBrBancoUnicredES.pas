@@ -606,8 +606,8 @@ function TACBrBancoUnicredES.DefinerCnpjCPFRetorno240(
   const ALinha: String): String;
 begin
   case StrToIntDef(Copy(ALinha,18,1),0) of
-     1: result := Copy(ALinha,19,14);
-     2: result := Copy(ALinha,22,11);
+     1: result := Copy(ALinha,22,11);
+     2: result := Copy(ALinha,19,14);
   else
     result := Copy(ALinha,19,14);
   end;

@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+23/02/2023
+[-] TK-3564 ACBrBancoUnicredES - Correção leitura do campo 19, invertido cpf/cnpj
+  Por : Francisco IBS / Rev. Daniel Morais
+
 22/02/2023
 [-] TK-3629 ACBrBoleto - Inter - Erro no Filtro Vencimento
   Por : Aggille Sistemas de Gestão

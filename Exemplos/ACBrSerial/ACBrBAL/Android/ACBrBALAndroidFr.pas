@@ -125,6 +125,8 @@ type
     Layout9: TLayout;
     Label7: TLabel;
     mLog: TMemo;
+    swTentar: TSwitch;
+    Label8: TLabel;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -168,6 +170,7 @@ uses
   System.IniFiles,
   System.StrUtils,
   System.Permissions,
+  System.Threading,
   {$IfDef ANDROID}
   Androidapi.Helpers,
   Androidapi.JNI.Os,
@@ -227,7 +230,13 @@ end;
 
 procedure TBALAndroidTesteForm.btnImprimirClick(Sender: TObject);
 begin
-   ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOut );
+  TTask.Run(
+    procedure
+    begin
+      repeat
+        ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOut );
+      until (ACBrBAL1.UltimoPesoLido > 0) or (not swTentar.IsChecked);
+    end );
 end;
 
 procedure TBALAndroidTesteForm.btnLimparClick(Sender: TObject);
@@ -288,9 +297,14 @@ end;
 procedure TBALAndroidTesteForm.ACBrBAL1GravarLog(const ALogLine: string;
   var Tratado: Boolean);
 begin
-  mLog.Lines.Add( TranslateUnprintable(ALogLine) );
-  mLog.GoToTextEnd;
   Tratado := True;
+  TThread.Synchronize(nil,
+    procedure
+    begin
+     mLog.Lines.Add( TranslateUnprintable(ALogLine) );
+     mLog.GoToTextEnd;
+    end
+  );
 end;
 
 procedure TBALAndroidTesteForm.ACBrBAL1LePeso(Peso: Double;
@@ -299,29 +313,34 @@ var
   valid : integer;
 begin
   Inc(fLeituras);
-  mMsgs.Lines.Add('');
-  mMsgs.Lines.Add('-- '+FormatDateTime('hh:nn:ss.zzz', now)+' - Leitura '+IntToStr(fLeituras)+' --');
 
-  if (Peso > 0) then
-  begin
-     mMsgs.Lines.Add('* Leitura OK !');
-     mMsgs.Lines.Add('Peso Lido: '+FormatFloatBr(Peso, FloatMask(4) ));
-  end
-  else
-  begin
-    valid := Trunc(ACBrBAL1.UltimoPesoLido);
-    case valid of
-       0 : mMsgs.Lines.Add('* TimeOut !'+sLineBreak+
-                           'Coloque o produto sobre a Balança!');
-      -1 : mMsgs.Lines.Add('* Peso Instavel ! ' +sLineBreak+
-                           'Tente Nova Leitura');
-      -2 : mMsgs.Lines.Add('* Peso Negativo !');
-     -10 : mMsgs.Lines.Add('* Sobrepeso !');
-    end;
-  end;
+  TThread.Synchronize( nil,
+    procedure
+    begin
+      mMsgs.Lines.Add('');
+      mMsgs.Lines.Add('-- '+FormatDateTime('hh:nn:ss.zzz', now)+' - Leitura '+IntToStr(fLeituras)+' --');
 
-//  mMsgs.ScrollToTop(False);
-  mMsgs.GoToTextEnd;
+      if (Peso > 0) then
+      begin
+         mMsgs.Lines.Add('* Leitura OK !');
+         mMsgs.Lines.Add('Peso Lido: '+FormatFloatBr(Peso, FloatMask(4) ));
+      end
+      else
+      begin
+        valid := Trunc(ACBrBAL1.UltimoPesoLido);
+        case valid of
+           0 : mMsgs.Lines.Add('* TimeOut !'+sLineBreak+
+                               'Coloque o produto sobre a Balança!');
+          -1 : mMsgs.Lines.Add('* Peso Instavel ! ' +sLineBreak+
+                               'Tente Nova Leitura');
+          -2 : mMsgs.Lines.Add('* Peso Negativo !');
+         -10 : mMsgs.Lines.Add('* Sobrepeso !');
+        end;
+      end;
+
+      mMsgs.GoToTextEnd;
+    end
+  );
 end;
 
 procedure TBALAndroidTesteForm.AplicarConfiguracao;

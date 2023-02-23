@@ -3,7 +3,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
   Top = 0
   Caption = 'ACBrPosPrinter Android Teste'
   ClientHeight = 640
-  ClientWidth = 404
+  ClientWidth = 448
   StyleBook = StyleBook1
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -16,7 +16,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
     OnGesture = GestureDone
     Align = Client
     FullSize = True
-    Size.Width = 404.000000000000000000
+    Size.Width = 448.000000000000000000
     Size.Height = 640.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
@@ -24,16 +24,16 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
     TabOrder = 0
     TabPosition = Top
     Sizes = (
-      404s
+      448s
       591s
-      404s
+      448s
       591s)
     object tabConfig: TTabItem
       CustomIcon = <
         item
         end>
       IsSelected = False
-      Size.Width = 202.000000000000000000
+      Size.Width = 224.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -42,14 +42,14 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
       ExplicitSize.cx = 8.000000000000000000
       ExplicitSize.cy = 8.000000000000000000
       object ToolBar1: TToolBar
-        Size.Width = 404.000000000000000000
+        Size.Width = 448.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object lblTituloConfig: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 404.000000000000000000
+          Size.Width = 448.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -60,7 +60,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
       end
       object ListBox1: TListBox
         Align = Client
-        Size.Width = 404.000000000000000000
+        Size.Width = 448.000000000000000000
         Size.Height = 493.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
@@ -69,7 +69,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
         DefaultItemStyles.ItemStyle = ''
         DefaultItemStyles.GroupHeaderStyle = ''
         DefaultItemStyles.GroupFooterStyle = ''
-        Viewport.Width = 404.000000000000000000
+        Viewport.Width = 448.000000000000000000
         Viewport.Height = 493.000000000000000000
         object ListBoxGroupHeader5: TListBoxGroupHeader
           Selectable = False
@@ -81,7 +81,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           Margins.Bottom = 2.000000000000000000
           Position.X = 10.000000000000000000
           Position.Y = 2.000000000000000000
-          Size.Width = 384.000000000000000000
+          Size.Width = 428.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 2
@@ -90,7 +90,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
         object lbModelos: TListBoxItem
           Selectable = False
           Position.Y = 34.000000000000000000
-          Size.Width = 404.000000000000000000
+          Size.Width = 448.000000000000000000
           Size.Height = 52.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
@@ -100,7 +100,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 388.000000000000000000
+            Size.Width = 432.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -116,7 +116,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           Margins.Bottom = 2.000000000000000000
           Position.X = 10.000000000000000000
           Position.Y = 88.000000000000000000
-          Size.Width = 384.000000000000000000
+          Size.Width = 428.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 4
@@ -125,7 +125,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
         object lbPortas: TListBoxItem
           Selectable = False
           Position.Y = 120.000000000000000000
-          Size.Width = 404.000000000000000000
+          Size.Width = 448.000000000000000000
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -135,7 +135,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 2.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 192.000000000000000000
+            Size.Width = 236.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -148,7 +148,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Position.X = 210.000000000000000000
+            Position.X = 254.000000000000000000
             Position.Y = 4.000000000000000000
             Sides = [Top, Left, Bottom, Right]
             Size.Width = 109.000000000000000000
@@ -164,7 +164,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           object chbTodasBth: TCheckBox
             Align = Right
             IsChecked = True
-            Position.X = 327.000000000000000000
+            Position.X = 371.000000000000000000
             Size.Width = 77.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
@@ -182,7 +182,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           Margins.Bottom = 2.000000000000000000
           Position.X = 10.000000000000000000
           Position.Y = 162.000000000000000000
-          Size.Width = 384.000000000000000000
+          Size.Width = 428.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 3
@@ -191,13 +191,13 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
         object lbSerialConfig: TListBoxItem
           Selectable = False
           Position.Y = 194.000000000000000000
-          Size.Width = 404.000000000000000000
+          Size.Width = 448.000000000000000000
           Size.Height = 167.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 6
           object GridPanelLayout1: TGridPanelLayout
             Align = Client
-            Size.Width = 404.000000000000000000
+            Size.Width = 448.000000000000000000
             Size.Height = 167.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -251,7 +251,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
               end>
             object Layout2: TLayout
               Align = Client
-              Size.Width = 202.000000000000000000
+              Size.Width = 224.000000000000000000
               Size.Height = 55.666667938232420000
               Size.PlatformDefault = False
               TabOrder = 5
@@ -267,14 +267,14 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
                 Margins.Top = 1.000000000000000000
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Size.Width = 186.000000000000000000
+                Size.Width = 208.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
               end
               object Label1: TLabel
                 Align = Top
-                Size.Width = 202.000000000000000000
+                Size.Width = 224.000000000000000000
                 Size.Height = 23.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -284,7 +284,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             end
             object Layout3: TLayout
               Align = Client
-              Size.Width = 202.000000000000000000
+              Size.Width = 224.000000000000000000
               Size.Height = 55.666667938232420000
               Size.PlatformDefault = False
               TabOrder = 3
@@ -308,14 +308,14 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
                 Margins.Top = 1.000000000000000000
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Size.Width = 186.000000000000000000
+                Size.Width = 208.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
               end
               object Label2: TLabel
                 Align = Top
-                Size.Width = 202.000000000000000000
+                Size.Width = 224.000000000000000000
                 Size.Height = 23.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -325,7 +325,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             end
             object Layout4: TLayout
               Align = Client
-              Size.Width = 202.000000000000000000
+              Size.Width = 224.000000000000000000
               Size.Height = 55.666667938232420000
               Size.PlatformDefault = False
               TabOrder = 2
@@ -342,14 +342,14 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
                 Margins.Top = 1.000000000000000000
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Size.Width = 186.000000000000000000
+                Size.Width = 208.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
               end
               object Label3: TLabel
                 Align = Top
-                Size.Width = 202.000000000000000000
+                Size.Width = 224.000000000000000000
                 Size.Height = 23.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -359,7 +359,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             end
             object Layout5: TLayout
               Align = Client
-              Size.Width = 202.000000000000000000
+              Size.Width = 224.000000000000000000
               Size.Height = 55.666667938232420000
               Size.PlatformDefault = False
               TabOrder = 1
@@ -374,14 +374,14 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
                 Margins.Top = 1.000000000000000000
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Size.Width = 186.000000000000000000
+                Size.Width = 208.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
               end
               object S: TLabel
                 Align = Top
-                Size.Width = 202.000000000000000000
+                Size.Width = 224.000000000000000000
                 Size.Height = 23.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -391,7 +391,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             end
             object Layout6: TLayout
               Align = Client
-              Size.Width = 202.000000000000000000
+              Size.Width = 224.000000000000000000
               Size.Height = 55.666664123535160000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -407,14 +407,14 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
                 Margins.Top = 1.000000000000000000
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Size.Width = 186.000000000000000000
+                Size.Width = 208.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
               end
               object Label5: TLabel
                 Align = Top
-                Size.Width = 202.000000000000000000
+                Size.Width = 224.000000000000000000
                 Size.Height = 23.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -424,13 +424,13 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             end
             object Layout7: TLayout
               Align = Client
-              Size.Width = 202.000000000000000000
+              Size.Width = 224.000000000000000000
               Size.Height = 55.666664123535160000
               Size.PlatformDefault = False
               TabOrder = 4
               object Label4: TLabel
                 Align = Top
-                Size.Width = 202.000000000000000000
+                Size.Width = 224.000000000000000000
                 Size.Height = 23.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -445,7 +445,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
                 Max = 999999.000000000000000000
                 Value = 2000.000000000000000000
                 Increment = 10.000000000000000000
-                Size.Width = 202.000000000000000000
+                Size.Width = 224.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
               end
@@ -455,13 +455,13 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
         object lbBotoes: TListBoxItem
           Selectable = False
           Position.Y = 361.000000000000000000
-          Size.Width = 404.000000000000000000
+          Size.Width = 448.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 5
           object GridPanelLayout2: TGridPanelLayout
             Align = Client
-            Size.Width = 404.000000000000000000
+            Size.Width = 448.000000000000000000
             Size.Height = 50.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
@@ -499,7 +499,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
               Margins.Right = 5.000000000000000000
               Margins.Bottom = 5.000000000000000000
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 192.000000000000000000
+              Size.Width = 214.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -517,7 +517,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
               Margins.Right = 5.000000000000000000
               Margins.Bottom = 5.000000000000000000
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 192.000000000000000000
+              Size.Width = 214.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
@@ -532,13 +532,13 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
       object Layout1: TLayout
         Align = Bottom
         Position.Y = 541.000000000000000000
-        Size.Width = 404.000000000000000000
+        Size.Width = 448.000000000000000000
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         object SpeedButton1: TSpeedButton
           Align = Right
-          Position.X = 356.000000000000000000
+          Position.X = 400.000000000000000000
           Position.Y = 1.000000000000000000
           Size.Width = 48.000000000000000000
           Size.Height = 48.000000000000000000
@@ -556,7 +556,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 400.000000000000000000
+          Size.Width = 444.000000000000000000
           Size.Height = 46.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
@@ -572,7 +572,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
         item
         end>
       IsSelected = True
-      Size.Width = 202.000000000000000000
+      Size.Width = 224.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -581,14 +581,14 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
       ExplicitSize.cx = 8.000000000000000000
       ExplicitSize.cy = 8.000000000000000000
       object ToolBar2: TToolBar
-        Size.Width = 404.000000000000000000
+        Size.Width = 448.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object lblTituloTestes: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 404.000000000000000000
+          Size.Width = 448.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -611,16 +611,19 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
       object GridPanelLayout4: TGridPanelLayout
         Align = Bottom
         Position.Y = 537.000000000000000000
-        Size.Width = 404.000000000000000000
+        Size.Width = 448.000000000000000000
         Size.Height = 54.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         ColumnCollection = <
           item
-            Value = 32.822786510815530000
+            Value = 24.134401846187890000
           end
           item
-            Value = 67.177213489184470000
+            Value = 49.395009918517990000
+          end
+          item
+            Value = 26.470588235294120000
           end>
         ControlCollection = <
           item
@@ -631,6 +634,11 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           item
             Column = 0
             Control = btnLimpar
+            Row = 0
+          end
+          item
+            Column = 2
+            Control = swTentar
             Row = 0
           end>
         RowCollection = <
@@ -650,7 +658,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 263.395935058593800000
+          Size.Width = 213.289642333984400000
           Size.Height = 46.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'btnImprimirStyle1'
@@ -670,7 +678,7 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 124.604064941406300000
+          Size.Width = 100.122123718261700000
           Size.Height = 46.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -679,10 +687,32 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           YRadius = 3.000000000000000000
           OnClick = btnLimparClick
         end
+        object swTentar: TSwitch
+          Align = Client
+          IsChecked = True
+          Margins.Left = 8.000000000000000000
+          Margins.Top = 4.000000000000000000
+          Margins.Right = 8.000000000000000000
+          Margins.Bottom = 4.000000000000000000
+          Size.Width = 78.000000000000000000
+          Size.Height = 30.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          object Label8: TLabel
+            Align = Client
+            Opacity = 0.500000000000000000
+            Size.Width = 78.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            Text = 'Tentar'
+            TabOrder = 0
+          end
+        end
       end
       object GridPanelLayout3: TGridPanelLayout
         Align = Client
-        Size.Width = 404.000000000000000000
+        Size.Width = 448.000000000000000000
         Size.Height = 489.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
@@ -716,13 +746,13 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
           end>
         object Layout8: TLayout
           Align = Client
-          Size.Width = 404.000000000000000000
+          Size.Width = 448.000000000000000000
           Size.Height = 244.500000000000000000
           Size.PlatformDefault = False
           TabOrder = 2
           object Label6: TLabel
             Align = Top
-            Size.Width = 404.000000000000000000
+            Size.Width = 448.000000000000000000
             Size.Height = 23.000000000000000000
             Size.PlatformDefault = False
             TextSettings.HorzAlign = Center
@@ -733,23 +763,23 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
             DataDetectorTypes = []
             Align = Client
-            Size.Width = 404.000000000000000000
+            Size.Width = 448.000000000000000000
             Size.Height = 221.500000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
-            Viewport.Width = 396.000000000000000000
+            Viewport.Width = 440.000000000000000000
             Viewport.Height = 213.500000000000000000
           end
         end
         object Layout9: TLayout
           Align = Client
-          Size.Width = 404.000000000000000000
+          Size.Width = 448.000000000000000000
           Size.Height = 244.500000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
           object Label7: TLabel
             Align = Top
-            Size.Width = 404.000000000000000000
+            Size.Width = 448.000000000000000000
             Size.Height = 23.000000000000000000
             Size.PlatformDefault = False
             TextSettings.HorzAlign = Center
@@ -760,11 +790,11 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
             DataDetectorTypes = []
             Align = Client
-            Size.Width = 404.000000000000000000
+            Size.Width = 448.000000000000000000
             Size.Height = 221.500000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
-            Viewport.Width = 396.000000000000000000
+            Viewport.Width = 440.000000000000000000
             Viewport.Height = 213.500000000000000000
           end
         end
@@ -35881,19 +35911,19 @@ object BALAndroidTesteForm: TBALAndroidTesteForm
             PNG = {
               89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
               F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              017149444154484BED94DB518360108589C03B25A4836005C60E52424AB0034B
-              60ACC0746009DA816305DA813C734BCE590EE407B94DD417C76F86F997DDB30B
-              EC6EE2FD33C74AA77704327F8415E0796577BF88FB80DBAAAA0EB22F22CFF314
-              355E605ED79E1120BA83F89D6D5B425996CFCC8119A9C43290B045F2A355E991
-              65D9270BC38C25FF1E75D90E8BDEB6DDA2395851A6D16CC91CB35B84BA6C53A2
-              DB16FA10BBBC3D2C5C14C52BDF7C0ACD61ABB4657023384416E043707F0F33E6
-              BDD8D1E76E1A73943E8D8A19B2DB61D6DEEE2CFA7AB98781266EDE9CA845A3DB
-              C2185AF464E233E373513FD9D784C5F5B0D104C4D6D4386D3CB26D0A77416CD7
-              087044BAD60A8F424DA37366B2B72068D7144E13F9BE7FC08AA7BA3E2C380135
-              8D8EB93CF1351B9EC47DC00D4F88DFCCE18058C416B015536B89DC07995FBFBC
-              FFE7461F0E0E3171074F86FAAC9041BDDCE72F088260A8DFF44561187636096F
-              9ACA1CA4AF5F045A643F3EB5A81DE25FC7F34EFBE40684B3A48BDB0000000049
-              454E44AE426082}
+              017349444154484BED94DB4DC34010451D6CF9DB25A4034C05840E52424AA003
+              4AB0A880744009D001A202E800FFFA19EE9D5C3B6BE39702FC208E64EDECBC76
+              776612EF9F39565ABD0390F823AC00D70BDBFD22EE0137755DEF259F459EE729
+              723C43BC3A6A4680D36D51146F2CDB12AAAA7A620CC448299681800D821F2C4B
+              8F2CCB3E9818622CF7EF714CDB61D16DDB299A8319251ACD94CC313B45C8CB32
+              25DAB65007DBF9E561E2B22C5F78F329D4878DC296C1896013998087607F0731
+              E65E6CA973278D310A9F46C90CC96D338FDA6E2FFAFE520F039FB8B939518946
+              A7853694E8D19C4F8CF745F5645D1326D761A301B0ADE9E394F1C0B2C9DC05B6
+              6DE38025D2B7967914FA347E4E4F766604ED9842694EBEEFEF31E2A9BE77334E
+              409FC68FB15CF19A4BAEC43DE09A2B9C5F4DE1005BC412B014536389D87B895F
+              5FDEFF73A30E0B9B98B88D27437596C9A0BFD4A717044130546FEAA2300C3B93
+              849BA61207E9FB2F0225B21F9F4AD436F1AFE3799FA397066F63F9E648000000
+              0049454E44AE426082}
             FileName = 'C:\temp\Ismael\scale-custom.png'
           end>
         Name = 'scale-custom'

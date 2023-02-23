@@ -149,6 +149,8 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse);override;
+
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -1588,6 +1590,122 @@ begin
     AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
     AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
     AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+  end;
+end;
+
+procedure TACBrNFSeProviderIPM204.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode, AuxNode, AuxNode2: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  NumRps: String;
+  ANota: TNotaFiscal;
+  I: Integer;
+begin
+  Document := TACBrXmlDocument.Create;
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit;
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      with Response do
+      begin
+        Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
+        Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+      end;
+
+      if Response.ModoEnvio in [meLoteSincrono, meUnitario] then
+      begin
+        ANode := ANode.Childrens.FindAnyNs('ListaNfse');
+
+        if not Assigned(ANode) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod202;
+          AErro.Descricao := ACBrStr(Desc202);
+          Exit;
+        end;
+
+        ProcessarMensagemErros(ANode, Response);
+
+        ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
+
+        if not Assigned(ANodeArray) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit;
+        end;
+
+        for I := Low(ANodeArray) to High(ANodeArray) do
+        begin
+          ANode := ANodeArray[I];
+          AuxNode := ANode.Childrens.FindAnyNs('item');
+          if(Assigned(AuxNode))then
+            AuxNode := AuxNode.Childrens.FindAnyNs('Nfse')
+          else
+            AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+          AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+
+          with Response do
+          begin
+            NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+            CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          end;
+
+          AuxNode2 := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+
+          if AuxNode2 = nil then
+            AuxNode2 := AuxNode.Childrens.FindAnyNs('Rps');
+          if not Assigned(AuxNode2) or (AuxNode2 = nil) then Exit;
+
+          AuxNode := AuxNode2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+          AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
+
+          if AuxNode <> nil then
+          begin
+            AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+            if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+            NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+            ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+            SalvarXmlNfse(ANota);
+          end;
+        end;
+      end;
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
   end;
 end;
 

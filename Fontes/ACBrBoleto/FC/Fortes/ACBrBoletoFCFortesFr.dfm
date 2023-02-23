@@ -12,7 +12,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Style = []
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  TextHeight = 14
+  TextHeight = 13
   object LayoutBoleto: TRLReport
     Left = 18
     Top = 8

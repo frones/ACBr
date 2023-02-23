@@ -46,6 +46,9 @@ Símbolo : Significado
 -- IPM.Provider --
 [*] Possível correção para que entenda a tag Item que está vindo a mais na resposta do envio de lote da versão 2.04
    Por: Diego F
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Barreiras trocou de provedor, agora é EL, versão 2.04
+   Por: dreamsoft_PR / Diego F 
 
 20/02/2023
 [*] TK-3535 ACBrNFSeX - Geração do QRCode automática para Fast no DANFSe

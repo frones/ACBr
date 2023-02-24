@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/03/2023
+-- ACBrNFSeXServicos.ini --
+[+] Adiciona a cidade de Torixoreu/MT, provedor é Fiorilli, versão 2.00
+  Por: Márcio Baroni
+
 23/20/2023
 -- IPM.Provider --
 [*] Possível correção para que entenda a tag Item que está vindo a mais na resposta do envio de lote da versão 2.04

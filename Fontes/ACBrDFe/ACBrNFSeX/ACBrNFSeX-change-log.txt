@@ -46,6 +46,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [+] Adiciona a cidade de Torixoreu/MT, provedor é Fiorilli, versão 2.00
   Por: Márcio Baroni
+[*] Remove as URLs de homologação para as cidades que usam a versão 1.00 do provedor Tiplan.
+  Por: Diego F
 
 23/20/2023
 -- IPM.Provider --

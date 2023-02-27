@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/02/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Vazante/MG, provedor: NFSeBrasil.
+  Por: Vanderlei Soares
 -- ACBrNFSeXNotasFiscais --
 [+] Implementado as funções GerarNFSeIni e GerarIni, funções estas que geram
     um arquivo INI com as informações de um Rps carregado previamente no componente.

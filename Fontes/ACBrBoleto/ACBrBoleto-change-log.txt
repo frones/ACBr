@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2023
+[-] TK-3635 ACBrBancoCresol.pas - Correção CodigoMora posição 118 
+  Por : Daniel Morais
+
 23/02/2023
 [-] TK-3564 ACBrBancoUnicredES - Correção leitura do campo 19, invertido cpf/cnpj
   Por : Francisco IBS / Rev. Daniel Morais

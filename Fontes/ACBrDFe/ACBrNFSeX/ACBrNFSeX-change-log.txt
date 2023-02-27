@@ -63,6 +63,9 @@ Símbolo : Significado
 -- Sistemas4R.Provider --
 [*] Altera a RecepcionarSincrono para usar IncluirCDATA.
    Por: Diego F
+-- Etherium.GravarXML --
+[*] Adiciona config para que gere a tag Aliquota com 2 casas decimais.
+   Por: Diego F
 
 24/02/2023
 -- ACBrNFSeXServicos.ini --

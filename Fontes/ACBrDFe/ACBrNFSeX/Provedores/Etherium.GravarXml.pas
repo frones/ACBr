@@ -52,7 +52,7 @@ type
 implementation
 
 uses
-  ACBrNFSeXConversao;
+  ACBrNFSeXConversao, ACBrXmlBase;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -66,6 +66,7 @@ begin
   inherited Configuracao;
 
   FormatoItemListaServico := filsComFormatacao;
+  FormatoAliq := tcDe2;
 end;
 
 end.

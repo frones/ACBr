@@ -42,14 +42,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-24/03/2023
+27/02/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Caiapônia/GO, provedor: ISSIntel.
+  Por: Fernando
+[-] Correção na URL de produção da cidade de Nova Serrana/MG.
+  Por: Rogério Xavier
+[*] A cidade de Parobe/RS trocou de provedor, agora é IPM.
+  Por: Marco Moreira
+
+24/02/2023
 -- ACBrNFSeXServicos.ini --
 [+] Adiciona a cidade de Torixoreu/MT, provedor é Fiorilli, versão 2.00
   Por: Márcio Baroni
 [*] Remove as URLs de homologação para as cidades que usam a versão 1.00 do provedor Tiplan.
   Por: Diego F
 
-23/20/2023
+23/02/2023
 -- IPM.Provider --
 [*] Possível correção para que entenda a tag Item que está vindo a mais na resposta do envio de lote da versão 2.04
    Por: Diego F

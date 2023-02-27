@@ -44,6 +44,8 @@ Símbolo : Significado
 
 27/02/2023
 -- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Forquilhinha/SC, provedor: Betha.
+  Por: C. A. Beretta
 [+] Incluída a cidade de Vazante/MG, provedor: NFSeBrasil.
   Por: Vanderlei Soares
 -- ACBrNFSeXNotasFiscais --

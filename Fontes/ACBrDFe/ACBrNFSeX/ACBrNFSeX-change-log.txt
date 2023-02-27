@@ -60,6 +60,8 @@ Símbolo : Significado
   Por: Rogério Xavier
 [*] A cidade de Parobe/RS trocou de provedor, agora é IPM.
   Por: Marco Moreira
+[*] Acrescentado o parâmetro NaoDividir100 na cidade de Dourados/MS - Provedor ISSNet Versão 1.00
+  Por: leonard.miranda
 -- Sistemas4R.Provider --
 [*] Altera a RecepcionarSincrono para usar IncluirCDATA.
    Por: Diego F

@@ -44,6 +44,8 @@ Símbolo : Significado
 
 27/02/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de Ribeirão Preto/SP, passou a usar a versão 2.04 do provedor: ISSNet.
+  Por: Leandro Coelho
 [+] Incluída a cidade de Forquilhinha/SC, provedor: Betha.
   Por: C. A. Beretta
 [+] Incluída a cidade de Vazante/MG, provedor: NFSeBrasil.

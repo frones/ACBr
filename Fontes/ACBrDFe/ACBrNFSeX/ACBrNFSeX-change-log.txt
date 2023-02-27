@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/02/2023
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Quanto a nota é emitida via site não tem numero de Rps e o componente 
+    estava salvando somente uma das varias notas retornadas pela consulta,
+    por o provedor ABACO retorna essas notas com Numero do Rps igual a zero.
+    Realizado uma alteração visando contornar esse problema.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade de Caiapônia/GO, provedor: ISSIntel.
   Por: Fernando

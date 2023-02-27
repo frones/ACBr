@@ -203,6 +203,7 @@ var
   ANota: TNotaFiscal;
   AResumo: TNFSeResumoCollectionItem;
   Node2: TACBrXmlNode;
+  NumeroRps: Integer;
 begin
   Result := False;
 
@@ -240,6 +241,7 @@ begin
       if Node <> nil then
       begin
         NumRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
+        NumeroRps := StrToIntDef(NumRps, 0);
         SerieRps := ObterConteudoTag(Node.Childrens.FindAnyNs('Serie'), tcStr);
       end;
     end;
@@ -251,7 +253,7 @@ begin
     AResumo.NumeroRps := NumRps;
     AResumo.SerieRps := SerieRps;
 
-    if NumRps <> '' then
+    if NumeroRps > 0 then
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
     else
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);

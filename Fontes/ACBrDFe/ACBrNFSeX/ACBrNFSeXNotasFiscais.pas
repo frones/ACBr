@@ -51,7 +51,7 @@ type
 
   { TNotaFiscal }
 
-  TNotaFiscal = class
+  TNotaFiscal = class(TCollectionItem)
   private
     FNFSe: TNFSe;
     FACBrNFSe: TACBrDFe;
@@ -76,6 +76,7 @@ type
 
     function LerXML(const AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
+    function GerarNFSeIni: String;
 
     function GerarXML: String;
     function GravarXML(const NomeArquivo: String = '';
@@ -145,6 +146,7 @@ type
     function LoadFromIni(const AIniString: String): Boolean;
     function LoadFromLoteNfse(const CaminhoArquivo: String): Boolean;
 
+    function GerarIni: String;
     function GravarXML(const PathNomeArquivo: String = ''): Boolean;
 
     property XMLLoteOriginal: String read FXMLLoteOriginal write FXMLLoteOriginal;
@@ -563,6 +565,193 @@ begin
   end;
 end;
 
+function TNotaFiscal.GerarNFSeIni: String;
+var
+  I: integer;
+  sSecao: String;
+  INIRec: TMemIniFile;
+  IniNFSe: TStringList;
+  FProvider: IACBrNFSeXProvider;
+begin
+  Result:= '';
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
+
+  if not ValidarChave(NFSe.infNFSe.ID) then
+  raise EACBrNFSeException.Create('Inconsistente para gerar INI. Chave Inválida.');
+
+  INIRec := TMemIniFile.Create('');
+  try
+    with FNFSe do
+    begin
+      //Provedor Infisc - Layout Proprio
+      sSecao:= 'IdentificacaoNFSe';
+      INIRec.WriteString(sSecao, 'Numero', Numero);
+
+      sSecao:= 'IdentificacaoRps';
+      INIRec.WriteString(sSecao, 'SituacaoTrib', FProvider.SituacaoTribToStr(SituacaoTrib));
+      INIRec.WriteString(sSecao, 'Producao', FProvider.SimNaoToStr(Producao));
+      INIRec.WriteString(sSecao, 'Status', StatusRPSToStr(StatusRps));
+      INIRec.WriteString(sSecao, 'OutrasInformacoes', OutrasInformacoes);
+
+      // Provedores ISSDSF e Siat
+      INIRec.WriteString(sSecao, 'SeriePrestacao', SeriePrestacao);
+      INIRec.WriteString(sSecao, 'Numero', IdentificacaoRps.Numero);
+      INIRec.WriteString(sSecao, 'Serie', IdentificacaoRps.Serie);
+      INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoRPSToStr(IdentificacaoRps.Tipo));
+      INIRec.WriteDate(sSecao, 'DataEmissao', Now);
+      INIRec.WriteDate(sSecao, 'Competencia', Now);
+      INIRec.WriteString(sSecao, 'NaturezaOperacao', NaturezaOperacaoToStr(NaturezaOperacao));
+
+      // Provedor Tecnos
+      INIRec.WriteFloat(sSecao, 'PercentualCargaTributaria', PercentualCargaTributaria);
+      INIRec.WriteFloat(sSecao, 'ValorCargaTributaria', ValorCargaTributaria);
+      INIRec.WriteFloat(sSecao, 'PercentualCargaTributariaMunicipal', PercentualCargaTributariaMunicipal);
+      INIRec.WriteFloat(sSecao, 'ValorCargaTributariaMunicipal', ValorCargaTributariaMunicipal);
+      INIRec.WriteFloat(sSecao, 'PercentualCargaTributariaEstadual', PercentualCargaTributariaEstadual);
+      INIRec.WriteFloat(sSecao, 'ValorCargaTributariaEstadual', ValorCargaTributariaEstadual);
+
+      sSecao:= 'RpsSubstituido';
+      INIRec.WriteString(sSecao, 'Numero', RpsSubstituido.Numero);
+      INIRec.WriteString(sSecao, 'Serie', RpsSubstituido.Serie);
+      INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoRPSToStr(RpsSubstituido.Tipo));
+
+
+      sSecao:= 'Prestador';
+      INIRec.WriteString(sSecao, 'Regime', FProvider.RegimeEspecialTributacaoToStr(RegimeEspecialTributacao));
+      INIRec.WriteString(sSecao, 'OptanteSN', FProvider.SimNaoToStr(OptanteSimplesNacional));
+      INIRec.WriteString(sSecao, 'IncentivadorCultural', FProvider.SimNaoToStr(IncentivadorCultural));
+      INIRec.WriteString(sSecao, 'CNPJ', Prestador.IdentificacaoPrestador.CpfCnpj);
+      INIRec.WriteString(sSecao, 'InscricaoMunicipal', Prestador.IdentificacaoPrestador.InscricaoMunicipal);
+
+      // Para o provedor ISSDigital deve-se informar tambem:
+      INIRec.WriteString(sSecao, 'RazaoSocial', Prestador.RazaoSocial);
+      INIRec.WriteString(sSecao, 'NomeFantasia', Prestador.NomeFantasia);
+      INIRec.WriteString(sSecao, 'Logradouro', Prestador.Endereco.Endereco);
+      INIRec.WriteString(sSecao, 'Numero', Prestador.Endereco.Numero);
+      INIRec.WriteString(sSecao, 'Bairro', Prestador.Endereco.Bairro);
+      INIRec.WriteString(sSecao, 'CodigoMunicipio', Prestador.Endereco.CodigoMunicipio);
+      INIRec.WriteString(sSecao, 'UF',  Prestador.Endereco.UF);
+      INIRec.WriteInteger(sSecao, 'CodigoPais', Prestador.Endereco.CodigoPais);
+      INIRec.WriteString(sSecao, 'xPais', Prestador.Endereco.xPais);
+      INIRec.WriteString(sSecao, 'CEP', Prestador.Endereco.CEP);
+      INIRec.WriteString(sSecao, 'Telefone', Prestador.Contato.Telefone);
+      INIRec.WriteString(sSecao, 'Email', Prestador.Contato.Email);
+
+      sSecao:= 'Tomador';
+      INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoPessoaToStr(Tomador.IdentificacaoTomador.Tipo));
+      INIRec.WriteString(sSecao, 'CNPJCPF', Tomador.IdentificacaoTomador.CpfCnpj);
+      INIRec.WriteString(sSecao, 'InscricaoMunicipal', Tomador.IdentificacaoTomador.InscricaoMunicipal);
+      //Exigido pelo provedor Equiplano
+      INIRec.WriteString(sSecao, 'InscricaoEstadual', Tomador.IdentificacaoTomador.InscricaoEstadual);
+      INIRec.WriteString(sSecao, 'RazaoSocial', Tomador.RazaoSocial);
+      INIRec.WriteString(sSecao, 'TipoLogradouro', Tomador.Endereco.TipoLogradouro);
+      INIRec.WriteString(sSecao, 'Logradouro', Tomador.Endereco.Endereco);
+      INIRec.WriteString(sSecao, 'Numero', Tomador.Endereco.Numero);
+      INIRec.WriteString(sSecao, 'Complemento', Tomador.Endereco.Complemento);
+      INIRec.WriteString(sSecao, 'Bairro', Tomador.Endereco.Bairro);
+      INIRec.WriteString(sSecao, 'CodigoMunicipio', Tomador.Endereco.CodigoMunicipio);
+      INIRec.WriteString(sSecao, 'UF', Tomador.Endereco.UF);
+      INIRec.WriteInteger(sSecao, 'CodigoPais', Tomador.Endereco.CodigoPais);
+      INIRec.WriteString(sSecao, 'CEP', Tomador.Endereco.CEP);
+      //Exigido pelo provedor Equiplano
+      INIRec.WriteString(sSecao, 'xPais', Tomador.Endereco.xPais);
+      INIRec.WriteString(sSecao, 'Telefone', Tomador.Contato.Telefone);
+      INIRec.WriteString(sSecao, 'Email', Tomador.Contato.Email);
+      INIRec.WriteString(sSecao, 'AtualizaTomador', FProvider.SimNaoToStr(Tomador.AtualizaTomador));
+      INIRec.WriteString(sSecao, 'TomadorExterior', FProvider.SimNaoToStr(Tomador.TomadorExterior));
+
+      sSecao:= 'Intermediario';
+      INIRec.WriteString(sSecao, 'CNPJCPF', Intermediario.Identificacao.CpfCnpj);
+      INIRec.WriteString(sSecao, 'InscricaoMunicipal', Intermediario.Identificacao.InscricaoMunicipal);
+      INIRec.WriteString(sSecao, 'RazaoSocial', Intermediario.RazaoSocial);
+
+      sSecao:= 'ConstrucaoCivil';
+      INIRec.WriteString(sSecao, 'CodigoObra', ConstrucaoCivil.CodigoObra);
+      INIRec.WriteString(sSecao, 'Art', ConstrucaoCivil.Art);
+
+      sSecao:= 'Servico';
+      INIRec.WriteString(sSecao, 'ItemListaServico', Servico.ItemListaServico);
+      INIRec.WriteString(sSecao, 'CodigoCnae', Servico.CodigoCnae);
+      INIRec.WriteString(sSecao, 'CodigoTributacaoMunicipio', Servico.CodigoTributacaoMunicipio);
+      INIRec.WriteString(sSecao, 'Discriminacao', Servico.Discriminacao);
+      INIRec.WriteString(sSecao, 'CodigoMunicipio', Servico.CodigoMunicipio);
+      INIRec.WriteInteger(sSecao, 'CodigoPais', Servico.CodigoPais);
+      INIRec.WriteString(sSecao, 'ExigibilidadeISS', FProvider.ExigibilidadeISSToStr(Servico.ExigibilidadeISS));
+      INIRec.WriteInteger(sSecao, 'MunicipioIncidencia', Servico.MunicipioIncidencia);
+      INIRec.WriteString(sSecao, 'UFPrestacao', Servico.UFPrestacao);
+      INIRec.WriteString(sSecao, 'ResponsavelRetencao', FProvider.ResponsavelRetencaoToStr(Servico.ResponsavelRetencao));
+
+      //Lista de Itens, xxx pode variar de 001-999
+      for I := 0 to Servico.ItemServico.Count - 1 do
+      begin
+        sSecao:= 'Itens' + IntToStrZero(I + 1, 3);
+        with Servico.ItemServico.Items[I] do
+        begin
+          INIRec.WriteString(sSecao, 'Descricao', Descricao);
+          INIRec.WriteString(sSecao, 'CodServico', CodServ);
+          INIRec.WriteString(sSecao, 'codLCServico', CodLCServ);
+          INIRec.WriteString(sSecao, 'ItemListaServico', ItemListaServico);
+          INIRec.WriteFloat(sSecao, 'Quantidade', Quantidade);
+          INIRec.WriteFloat(sSecao, 'ValorUnitario', ValorUnitario);
+          INIRec.WriteFloat(sSecao, 'ValorDeducoes', ValorDeducoes);
+          INIRec.WriteFloat(sSecao, 'ValorIss', ValorISS);
+          INIRec.WriteFloat(sSecao, 'Aliquota', Aliquota);
+          INIRec.WriteFloat(sSecao, 'BaseCalculo', BaseCalculo);
+          INIRec.WriteFloat(sSecao, 'DescontoIncondicionado', DescontoIncondicionado);
+          INIRec.WriteFloat(sSecao, 'ValorTotal', ValorTotal);
+          INIRec.WriteString(sSecao, 'Tributavel', FProvider.SimNaoToStr(Tributavel));
+        end;
+      end;
+
+      sSecao:= 'Valores';
+      INIRec.WriteFloat(sSecao, 'ValorServicos', Servico.Valores.ValorServicos);
+      INIRec.WriteFloat(sSecao, 'ValorDeducoes', Servico.Valores.ValorDeducoes);
+      INIRec.WriteFloat(sSecao, 'ValorPis', Servico.Valores.ValorPis);
+      INIRec.WriteFloat(sSecao, 'AliquotaPis', Servico.Valores.AliquotaPis);
+      INIRec.WriteFloat(sSecao, 'ValorCofins', Servico.Valores.ValorCofins);
+      INIRec.WriteFloat(sSecao, 'AliquotaCofins', Servico.Valores.AliquotaCofins);
+      INIRec.WriteFloat(sSecao, 'ValorInss', Servico.Valores.ValorInss);
+      INIRec.WriteFloat(sSecao, 'ValorIr', Servico.Valores.ValorIr);
+      INIRec.WriteFloat(sSecao, 'ValorCsll', Servico.Valores.ValorCsll);
+      INIRec.WriteString(sSecao, 'ISSRetido', FProvider.SituacaoTributariaToStr(Servico.Valores.IssRetido));
+      INIRec.WriteFloat(sSecao, 'OutrasRetencoes', Servico.Valores.OutrasRetencoes);
+      INIRec.WriteFloat(sSecao, 'DescontoIncondicionado', Servico.Valores.DescontoIncondicionado);
+      INIRec.WriteFloat(sSecao, 'DescontoCondicionado', Servico.Valores.DescontoCondicionado);
+      INIRec.WriteFloat(sSecao, 'BaseCalculo', Servico.Valores.BaseCalculo);
+      INIRec.WriteFloat(sSecao, 'Aliquota', Servico.Valores.Aliquota);
+      INIRec.WriteFloat(sSecao, 'ValorIss', Servico.Valores.ValorIss);
+      INIRec.WriteFloat(sSecao, 'ValorIssRetido', Servico.Valores.ValorIssRetido);
+      INIRec.WriteFloat(sSecao, 'ValorLiquidoNfse', Servico.Valores.ValorLiquidoNfse);
+
+      //Condição de Pagamento usado pelo provedor Betha versão 1 do Layout da ABRASF
+      sSecao:= 'CondicaoPagamento';
+      INIRec.WriteInteger(sSecao, 'QtdParcela', CondicaoPagamento.QtdParcela);
+      INIRec.WriteString(sSecao, 'Condicao', CondicaoToStr(CondicaoPagamento.Condicao));
+
+      //Lista de parcelas, xx pode variar de 01-99 (provedor Betha versão 1 do Layout da ABRASF)
+      for I := 0 to CondicaoPagamento.Parcelas.Count - 1 do
+      begin
+        sSecao:= 'Parcelas' + IntToStrZero(I + 1, 2);
+        with CondicaoPagamento.Parcelas.Items[I] do
+        begin
+          INIRec.WriteString(sSecao, 'Parcela', Parcela);
+          INIRec.WriteDate(sSecao, 'DataVencimento', DataVencimento);
+          INIRec.WriteFloat(sSecao, 'Valor', Valor);
+        end;
+      end;
+    end;
+  finally
+    IniNFSe := TStringList.Create;
+    try
+      INIRec.GetStrings(IniNFSe);
+      INIRec.Free;
+      Result := StringReplace(IniNFSe.Text, sLineBreak + sLineBreak, sLineBreak, [rfReplaceAll]);
+    finally
+      IniNFSe.Free;
+    end;
+  end;
+end;
+
 function TNotaFiscal.LerXML(const AXML: String): Boolean;
 var
   FProvider: IACBrNFSeXProvider;
@@ -759,6 +948,14 @@ end;
 function TNotasFiscais.Add(ANota: TNotaFiscal): Integer;
 begin
   Result := inherited Add(ANota);
+end;
+
+function TNotasFiscais.GerarIni: String;
+begin
+  Result := '';
+
+  if (Self.Count > 0) then
+    Result := Self.Items[0].GerarNFSeIni;
 end;
 
 procedure TNotasFiscais.GerarNFSe;

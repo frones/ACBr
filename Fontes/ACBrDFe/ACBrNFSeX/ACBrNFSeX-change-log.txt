@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/02/2023
+-- ACBrNFSeXNotasFiscais --
+[+] Implementado as funções GerarNFSeIni e GerarIni, funções estas que geram
+    um arquivo INI com as informações de um Rps carregado previamente no componente.
+  Por: Antonio Carlos/Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Quanto a nota é emitida via site não tem numero de Rps e o componente 
     estava salvando somente uma das varias notas retornadas pela consulta,

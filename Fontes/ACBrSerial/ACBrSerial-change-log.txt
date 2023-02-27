@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2023
+-- ACBrBALToledo --
+[*] Alteração para converter o retorno de resposta de balanças com pesagem maior que 30kg
+[+] Inclusão de novos comandos 'AtivarTara', 'DesativarTara' e 'ZerarDispositivo' (Incluídos 
+    apenas na classe TACBrBALToledo)
+    Por: Warquia Pereira e Daniel Infocotidiano
+
 22/02/2023
 -- ACBrBAL* --
 [+] Adicionado o evento OnGravarLog

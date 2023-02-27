@@ -50,6 +50,9 @@ Símbolo : Significado
   Por: Rogério Xavier
 [*] A cidade de Parobe/RS trocou de provedor, agora é IPM.
   Por: Marco Moreira
+-- Sistemas4R.Provider --
+[*] Altera a RecepcionarSincrono para usar IncluirCDATA.
+   Por: Diego F
 
 24/02/2023
 -- ACBrNFSeXServicos.ini --

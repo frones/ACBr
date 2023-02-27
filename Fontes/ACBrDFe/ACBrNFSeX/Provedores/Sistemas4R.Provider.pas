@@ -92,7 +92,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<' + xTag + ' xmlns="Abrasf2">';
-  Request := Request + '<Entrada>' + XmlToStr(AMSG) + '</Entrada>';
+  Request := Request + '<Entrada>' + IncluirCDATA(AMSG) + '</Entrada>';
   Request := Request + '</' + xTag + '>';
 
   Result := Executar(xSoap, Request, ['Resposta', 'EnviarLoteRpsSincronoResposta'], []);

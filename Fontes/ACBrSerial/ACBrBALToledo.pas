@@ -37,7 +37,7 @@ interface
 
 uses
   Classes,
-  ACBrBALClass
+  ACBrBALSelfCheckout
   {$IFDEF NEXTGEN}
    ,ACBrBase
   {$ENDIF};
@@ -46,7 +46,7 @@ type
 
   { TACBrBALToledo }
 
-  TACBrBALToledo = class(TACBrBALClass)
+  TACBrBALToledo = class(TACBrBALSelfCheckout)
   private
     fpProtocolo: AnsiString;
     fpDecimais: Integer;
@@ -60,15 +60,11 @@ type
     function InterpretarProtocoloC(const aResposta: AnsiString): AnsiString;
     function InterpretarProtocoloEth(const aResposta: AnsiString): AnsiString;
     function InterpretarProtocoloP03(const aResposta: AnsiString): AnsiString;
-    function CorrigirRespostaPeso(const aResposta: AnsiString) : AnsiString;
   public
     constructor Create(AOwner: TComponent);
     procedure LeSerial( MillisecTimeOut : Integer = 500) ; override;
     function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
     function EnviarPrecoKg(const aValor: Currency; aMillisecTimeOut: Integer = 3000): Boolean; override;
-    function AtivarTara : Boolean;
-    function DesativarTara : Boolean;
-    function ZerarDispositivo : Boolean;
   end;
 
 implementation
@@ -123,18 +119,6 @@ begin
       l_posfim := Length(aResposta) + 1;
 
     Result := l_posfim - l_posini = 16;
-  end;
-end;
-
-
-function TACBrBALToledo.ZerarDispositivo : Boolean;
-begin
-  try
-    fpDevice.EnviaString('Z');
-    GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' Zerar Dispositivo');
-    Result := True;
-  except
-    Result := False;
   end;
 end;
 
@@ -335,41 +319,6 @@ begin
   Result := Copy(l_strpso, 5, 6);
 end;
 
-function TACBrBALToledo.AtivarTara: Boolean;
-begin
-  try
-    fpDevice.EnviaString('T');
-    GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' Ativar Tara ');
-    Result := True;
-  except
-    Result := False;
-  end;
-end;
-
-function TACBrBALToledo.CorrigirRespostaPeso(
-  const aResposta: AnsiString): AnsiString;
-begin
-    Result := Trim(aResposta);
-
-    if Result = EmptyStr then
-      Exit;
-
-    {
-    Linha Self-Checkout retorno diferente:
-      [ STX ] [ +PPP,PPP ] [ ETX ]  - Peso Estável;
-      [ STX ] [ +III,III ] [ ETX ]  - Peso Instável;
-      [ STX ] [ -III,III ] [ ETX ]  - Peso Negativo;
-      [ STX ] [ +SSS,SSS ] [ ETX ]  - Peso Acima (Sobrecarga)
-    }
-
-    Result := StringReplace(Result, '+III,III', 'IIIII', [rfReplaceAll]);
-    Result := StringReplace(Result, '-III,III', 'NNNNN', [rfReplaceAll]);
-    Result := StringReplace(Result, '+SSS,SSS', 'SSSSS', [rfReplaceAll]);
-    Result := StringReplace(Result, '+', '', [rfReplaceAll]);
-    Result := StringReplace(Result, '-', '', [rfReplaceAll]);
-
-end;
-
 constructor TACBrBALToledo.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -377,18 +326,6 @@ begin
   fpModeloStr := 'Toledo';
   fpProtocolo := 'Não Definido';
   fpDecimais  := 1000;
-end;
-
-function TACBrBALToledo.DesativarTara: Boolean;
-begin
-  try
-    fpDevice.EnviaString('T');
-    GravarLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' Desativar Tara ');
-    Result := True;
-  except
-    Result := False;
-  end;
-
 end;
 
 procedure TACBrBALToledo.LeSerial(MillisecTimeOut: Integer);

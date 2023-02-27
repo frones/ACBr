@@ -44,44 +44,56 @@ type
 
   TForm1 = class(TForm)
     ACBrBAL1: TACBrBAL;
+    btAtivarTara: TButton;
+    btDesativarTara: TButton;
+    btDesligarDisplay: TButton;
+    btEnviarPrecoKg: TButton;
+    btLigarDisplay: TButton;
     btnConectar: TButton;
     btnDesconectar: TButton;
     btnLerPeso: TButton;
-    btEnviarPrecoKg: TButton;
     btSearchPorts: TSpeedButton;
-    edPrecoKg: TEdit;
+    btZerarDispositivo: TButton;
+    chbMonitorar: TCheckBox;
     edLog: TEdit;
-    Label12: TLabel;
-    SbArqLog: TSpeedButton;
-    sttPeso: TStaticText;
-    sttResposta: TStaticText;
+    edPrecoKg: TEdit;
+    edtTimeOut: TEdit;
+    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    edtTimeOut: TEdit;
-    Label9: TLabel;
-    chbMonitorar: TCheckBox;
-    Label10: TLabel;
-    Memo1: TMemo;
-    Panel1: TPanel;
-    Label1: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label12: TLabel;
+    Label11: TLabel;
+    Memo1: TMemo;
     cmbBalanca: TComboBox;
-    cmbPortaSerial: TComboBox;
     cmbBaudRate: TComboBox;
     cmbDataBits: TComboBox;
     cmbHandShaking: TComboBox;
     cmbParity: TComboBox;
-    Label11: TLabel;
+    cmbPortaSerial: TComboBox;
     cmbStopBits: TComboBox;
+    pnConfig: TPanel;
+    pnOpcoesAdicionais: TPanel;
+    pnOpcoes: TPanel;
+    SbArqLog: TSpeedButton;
+    sttPeso: TStaticText;
+    sttResposta: TStaticText;
+    procedure btAtivarTaraClick(Sender: TObject);
+    procedure btDesativarTaraClick(Sender: TObject);
+    procedure btDesligarDisplayClick(Sender: TObject);
+    procedure btLigarDisplayClick(Sender: TObject);
     procedure btnConectarClick(Sender: TObject);
     procedure btnDesconectarClick(Sender: TObject);
     procedure btnLerPesoClick(Sender: TObject);
     procedure btEnviarPrecoKgClick(Sender: TObject);
     procedure btSearchPortsClick(Sender: TObject);
+    procedure btZerarDispositivoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure edtTimeOutKeyPress(Sender: TObject; var Key: Char);
     procedure chbMonitorarClick(Sender: TObject);
@@ -95,17 +107,17 @@ type
     procedure InicializarBalanca(Ativar: Boolean);
   public
     { public declarations }
-  end; 
+  end;
 
 var
-  Form1: TForm1; 
+  Form1: TForm1;
 
 implementation
 
 {$R *.lfm}
 
 uses
-  typinfo, ACBrDeviceSerial,
+  typinfo, ACBrDeviceSerial, ACBrBALSelfCheckout,
   ACBrUtil.Base,
   ACBrUtil.FilesIO;
 
@@ -148,17 +160,43 @@ begin
   btnLerPeso.Enabled := Ativar;
   edPrecoKg.Enabled := Ativar;
   btEnviarPrecoKg.Enabled := Ativar;
-  Panel1.Enabled := (not Ativar);
+  pnConfig.Enabled := (not Ativar);
 
   btnConectar.Enabled    := (not Ativar);
   btnConectar.Visible    := (not Ativar);
   btnDesconectar.Enabled := Ativar;
   btnDesconectar.Visible := Ativar;
+
+  pnOpcoesAdicionais.Visible := Ativar and (ACBrBAL1.BAL is TACBrBALSelfCheckout);
 end;
 
 procedure TForm1.btnConectarClick(Sender: TObject);
 begin
   InicializarBalanca(True);
+end;
+
+procedure TForm1.btDesativarTaraClick(Sender: TObject);
+begin
+  if (ACBrBAL1.BAL is TACBrBALSelfCheckout) then
+    TACBrBALSelfCheckout(ACBrBAL1.BAL).DesativarTara;
+end;
+
+procedure TForm1.btDesligarDisplayClick(Sender: TObject);
+begin
+  if (ACBrBAL1.BAL is TACBrBALSelfCheckout) then
+    TACBrBALSelfCheckout(ACBrBAL1.BAL).DesligarDisplay;
+end;
+
+procedure TForm1.btLigarDisplayClick(Sender: TObject);
+begin
+  if (ACBrBAL1.BAL is TACBrBALSelfCheckout) then
+    TACBrBALSelfCheckout(ACBrBAL1.BAL).LigarDisplay;
+end;
+
+procedure TForm1.btAtivarTaraClick(Sender: TObject);
+begin
+  if (ACBrBAL1.BAL is TACBrBALSelfCheckout) then
+    TACBrBALSelfCheckout(ACBrBAL1.BAL).AtivarTara;
 end;
 
 procedure TForm1.btnDesconectarClick(Sender: TObject);
@@ -195,8 +233,6 @@ begin
 end;
 
 procedure TForm1.btSearchPortsClick(Sender: TObject);
-var
-  K: Integer;
 begin
   cmbPortaSerial.Items.Clear;
   ACBrBAL1.Device.AcharPortasSeriais( cmbPortaSerial.Items );
@@ -216,6 +252,12 @@ begin
   {$EndIf}
 end;
 
+procedure TForm1.btZerarDispositivoClick(Sender: TObject);
+begin
+  if (ACBrBAL1.BAL is TACBrBALSelfCheckout) then
+    TACBrBALSelfCheckout(ACBrBAL1.BAL).ZerarDispositivo;
+end;
+
 procedure TForm1.edtTimeOutKeyPress(Sender: TObject; var Key: Char);
 begin
   if not (Key in ['0'..'9',#13,#8]) then
@@ -228,7 +270,8 @@ begin
 end;
 
 procedure TForm1.ACBrBAL1LePeso(Peso: Double; Resposta: String);
-var valid : integer;
+var
+  valid: Integer;
 begin
    sttPeso.Caption     := formatFloat('##0.000', Peso );
    sttResposta.Caption := Converte( Resposta ) ;

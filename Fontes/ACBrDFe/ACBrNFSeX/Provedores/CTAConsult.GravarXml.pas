@@ -185,7 +185,7 @@ begin
                                               NFSe.Prestador.Endereco.CEP, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'codigoMunipio', 1, 5, 1,
-       CodIBGEToCodTOM(StrToInt(NFSe.Prestador.Endereco.CodigoMunicipio)), ''));
+    CodIBGEToCodTOM(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricaoMunicipio', 1, 60, 1,
                                        NFSe.Prestador.Endereco.xMunicipio, ''));
@@ -269,7 +269,7 @@ begin
                                                 NFSe.Tomador.Endereco.CEP, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'codigoMunipio', 1, 5, 1,
-         CodIBGEToCodTOM(StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio)), ''));
+    CodIBGEToCodTOM(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricaoMunicipio', 1, 60, 1,
                                          NFSe.Tomador.Endereco.xMunicipio, ''));
@@ -340,7 +340,7 @@ begin
                                           NFSe.Intermediario.Endereco.CEP, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'codigoMunipio', 1, 5, 1,
-    CodIBGEToCodTOM(StrToInt(NFSe.Intermediario.Endereco.CodigoMunicipio)), ''));
+    CodIBGEToCodTOM(StrToIntDef(NFSe.Intermediario.Endereco.CodigoMunicipio, 0)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricaoMunicipio', 1, 60, 1,
                                    NFSe.Intermediario.Endereco.xMunicipio, ''));
@@ -398,7 +398,7 @@ begin
                                                  NFSe.Servico.UFPrestacao, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'codigoMunipio', 1, 5, 1,
-                  CodIBGEToCodTOM(StrToInt(NFSe.Servico.CodigoMunicipio)), ''));
+            CodIBGEToCodTOM(StrToIntDef(NFSe.Servico.CodigoMunicipio, 0)), ''));
 
   CodigoIBGE := StrToIntDef(NFSe.Servico.CodigoMunicipio, 0);
   xMunicipio := '';

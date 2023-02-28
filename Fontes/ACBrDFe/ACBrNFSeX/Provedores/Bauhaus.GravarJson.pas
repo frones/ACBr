@@ -116,8 +116,8 @@ begin
     AJSon
       .AddPairJSONObject('DadosNota', EmptyStr)
       .AsJSONObject['DadosNota']
-        .AddPair('MunicipioPrestacao', StrToInt(NFSe.Prestador.Endereco.CodigoMunicipio))
-        .AddPair('NaturezaOperacao', StrToInt(NaturezaOperacaoToStr(NFSe.NaturezaOperacao)))
+        .AddPair('MunicipioPrestacao', StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0))
+        .AddPair('NaturezaOperacao', StrToIntDef(NaturezaOperacaoToStr(NFSe.NaturezaOperacao), 0))
         .AddPair('IssRetido', IfThen((NFSe.Servico.Valores.IssRetido = stRetencao), 'S' , 'N'))
         .AddPair('Observacoes', NFSe.OutrasInformacoes)
         .AddPair('Atividade', GerarAtividade)
@@ -140,7 +140,7 @@ begin
   wCodTribMun := NFSe.Servico.CodigoTributacaoMunicipio;
 
   Result := TACBrJSONObject.Create
-              .AddPair('Codigo', StrToInt(IfThen((EstaVazio(wCodTribMun)), '0' , wCodTribMun)))
+              .AddPair('Codigo', StrToIntDef(wCodTribMun, 0))
               .AddPair('CodigoCnae', NFSe.Servico.CodigoCnae);
 end;
 
@@ -176,8 +176,8 @@ begin
               .AddPair('Numero', NFSe.Tomador.Endereco.Numero)
               .AddPair('Complemento', NFSe.Tomador.Endereco.Complemento)
               .AddPair('Bairro', NFSe.Tomador.Endereco.Bairro)
-              .AddPair('Municipio', StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio))
-              .AddPair('Cep', StrToInt(NFSe.Tomador.Endereco.CEP));
+              .AddPair('Municipio', StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0))
+              .AddPair('Cep', StrToIntDef(NFSe.Tomador.Endereco.CEP, 0));
 end;
 
 function TNFSeW_Bauhaus.GerarTomadorContato: TACBrJSONObject;
@@ -190,8 +190,8 @@ end;
 function TNFSeW_Bauhaus.GerarRps: TACBrJSONObject;
 begin
   Result := TACBrJSONObject.Create
-              .AddPair('Numero', StrToInt(NFSe.IdentificacaoRps.Numero))
-              .AddPair('Serie', StrToInt(NFSe.IdentificacaoRps.Serie))
+              .AddPair('Numero', StrToIntDef(NFSe.IdentificacaoRps.Numero, 0))
+              .AddPair('Serie', StrToIntDef(NFSe.IdentificacaoRps.Serie, 0))
               .AddPair('Tipo', 1)
               .AddPairISODate('DataEmissao', NFSe.DataEmissaoRps);
 end;

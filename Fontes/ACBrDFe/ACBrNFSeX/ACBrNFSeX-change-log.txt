@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/03/2023
+-- Diversos --
+[*] Trocado a função StrToInt para StrToIntDef para evitar erros de conversão.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Alterações visando a leitura correta do XML da NFS-e provedor IPM
   Por: Italo Giurizzato Junior

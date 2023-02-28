@@ -152,8 +152,8 @@ begin
 
     SCompet := ObterConteudo(AuxNode.Childrens.FindAnyNs('Competencia'), tcStr);
 
-    NFSe.Competencia := EncodeDate(StrToInt(Copy(SCompet, 1, 4)),
-                                   StrToInt(Copy(SCompet, 5, 2)), 1);
+    NFSe.Competencia := EncodeDate(StrToIntDef(Copy(SCompet, 1, 4), 0),
+                                   StrToIntDef(Copy(SCompet, 5, 2), 0), 1);
 
     NFSe.NfseSubstituida := ObterConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);

@@ -367,11 +367,11 @@ begin
       jo
         .AddPairJSONObject('DadosNota', EmptyStr)
         .AsJSONObject['DadosNota']
-          .AddPair('Numero', StrToInt(NumeroNFSe))
+          .AddPair('Numero', StrToIntDef(NumeroNFSe, 0))
           .AddPair('Cancelamento', TACBrJSONObject.Create
                                      .AddPair('Motivo', MotCancelamento))
           .AddPair('Prestador', TACBrJSONObject.Create
-                                  .AddPair('InscricaoMunicipal', StrToInt(OnlyNumber(Emitente.InscMun))));
+                                  .AddPair('InscricaoMunicipal', StrToIntDef(OnlyNumber(Emitente.InscMun), 0)));
     Response.ArquivoEnvio := jo.ToJSON;
   finally
     jo.Free;

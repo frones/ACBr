@@ -164,7 +164,7 @@ var
 
   procedure tratarSerItem(AItemServico: string);
   begin
-    iAux := StrToInt(OnlyNumber(AItemServico)); //Ex.: 1402, 901
+    iAux := StrToIntDef(OnlyNumber(AItemServico), 0); //Ex.: 1402, 901
 
     if (iAux > 999) then //Ex.: 1402
     begin

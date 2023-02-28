@@ -322,8 +322,8 @@ begin
       InfID.ID := OnlyNumber(CodigoVerificacao);
 
       hEmi   := ObterConteudo(AuxNode.Childrens.FindAnyNs('hEmi'), tcStr);
-      Hora   := strToInt(Copy(hEmi, 1 , 2));
-      Minuto := strToInt(copy(hEmi, 4 , 2));
+      Hora   := strToIntDef(Copy(hEmi, 1 , 2), 0);
+      Minuto := strToIntDef(copy(hEmi, 4 , 2), 0);
 
       Ano := YearOf(Competencia);
       Mes := MonthOf(Competencia);

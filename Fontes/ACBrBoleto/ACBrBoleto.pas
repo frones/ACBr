@@ -2096,11 +2096,12 @@ begin
 end;
 
 procedure TACBrBoletoPIXQRCode.PIXQRCodeDinamico(const AURL, ATXID: String);
-var LEMV : TACBrPIXQRCodeDinamico;
+var
+  LEMV : TACBrPIXQRCodeDinamico;
 begin
-  LEMV := TACBrPIXQRCodeDinamico.Create;
   if (EstaVazio(AURL) or EstaVazio(ATXID)) then
     raise Exception.Create(ACBrStr('URL e TXID é obrigatório!'));
+  LEMV := TACBrPIXQRCodeDinamico.Create;
   try
     LEMV.IgnoreErrors := True;
     LEMV.URL          := AURL;

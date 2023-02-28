@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/03/2023
+-- SmarAPD.GravarXml --
+[*] Diversos ajustes para que o Rps seja processado com sucesso pelo provedor.
+  Por: Claudney dbmgroup
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de São Gabriel do Oeste/MS mudou de provedor, agora é Fiorilli, versão 2.00
   Por: DouglasGV

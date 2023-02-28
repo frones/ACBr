@@ -2231,10 +2231,8 @@ begin
 
         OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(SegT, 16, 2), 0));
 
-        if Trim(Copy(SegY,82,77))<>'' then begin
-          QrCode.url := Copy(SegY,82,77);
-          QrCode.txId:= Copy(SegY,159,35);
-        end;
+        if Trim(Copy(SegY,82,77))<>'' then
+          QrCode.PIXQRCodeDinamico(Copy(SegY,82,77),Copy(SegY,159,35));
 
 
         IdxMotivo := 214;

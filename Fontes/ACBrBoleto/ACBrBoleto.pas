@@ -46,7 +46,7 @@ uses Classes, Graphics, Contnrs, IniFiles,
      SysUtils, typinfo,
      ACBrBase, ACBrMail, ACBrValidador,
      ACBrDFeSSL, pcnConversao, ACBrBoletoConversao, ACBrBoletoRetorno,
-     ACBrPIXBase;
+     ACBrPIXBase, ACBrPIXBRCode;
 
 const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
@@ -1467,7 +1467,7 @@ type
     property url : String read Furl write Seturl;
     property txId  : String read FtxId write SettxId;
     property emv   : String read Femv write Setemv;
-
+    procedure PIXQRCodeDinamico(const AURL: String; const ATXID :String);
   end;
 
   { TACBrTitulo }
@@ -2093,6 +2093,24 @@ end;
 destructor TACBrBoletoPIXQRCode.Destroy;
 begin
   inherited;
+end;
+
+procedure TACBrBoletoPIXQRCode.PIXQRCodeDinamico(const AURL, ATXID: String);
+var LEMV : TACBrPIXQRCodeDinamico;
+begin
+  LEMV := TACBrPIXQRCodeDinamico.Create;
+  if (EstaVazio(AURL) or EstaVazio(ATXID)) then
+    raise Exception.Create(ACBrStr('URL e TXID é obrigatório!'));
+  try
+    LEMV.IgnoreErrors := True;
+    LEMV.URL          := AURL;
+    LEMV.TxId         := ATXID;
+    Seturl(AURL);
+    SettxId(ATXID);
+    Setemv(LEMV.AsString);
+  finally
+    LEMV.Free;
+  end;
 end;
 
 { TACBrArquivos }

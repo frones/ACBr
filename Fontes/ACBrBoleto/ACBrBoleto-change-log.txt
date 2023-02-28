@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2023
+[+] Função para criação do EMV a partir do TXID / URL
+  Por : Victor H Gonzales - Pandaaa
+
 24/02/2023
 [-] TK-3635 ACBrBancoCresol.pas - Correção CodigoMora posição 118 
   Por : Daniel Morais

@@ -289,7 +289,7 @@ end;
 procedure TNFSeR_ABRASFv2.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  xUF: string;
+  xUF, xEndereco: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -312,18 +312,24 @@ begin
         UF := xUF;
     end;
   end;
+
   AuxNode := ANode.Childrens.FindAnyNs('EnderecoExterior');
 
   if AuxNode <> nil then
   begin
     with NFSe.Tomador.Endereco do
     begin
-      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('EnderecoCompletoExterior'), tcStr);
-      CodigoPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcStr);
-      UF := 'EX';
+      xEndereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('EnderecoCompletoExterior'), tcStr);
+
+      if xEndereco <> '' then
+        Endereco := xEndereco;
+
+      CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
+
+      if (CodigoPais <> 1058) and (CodigoPais > 0) then
+        UF := 'EX';
     end;
   end;
-
 end;
 
 procedure TNFSeR_ABRASFv2.LerIdentificacaoNfse(const ANode: TACBrXmlNode);
@@ -1175,7 +1181,12 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+  AuxNode := ANode.Childrens.FindAnyNs('item');
+
+  if AuxNode = nil then
+    AuxNode := ANode.Childrens.FindAnyNs('Nfse')
+  else
+    AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
 
   if AuxNode = nil then
     AuxNode := ANode;

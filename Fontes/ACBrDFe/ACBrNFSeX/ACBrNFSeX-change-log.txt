@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluído o param NaoGerarGrupoRps para a cidade de Palhoça/SC.
+  Por: Willian Delan
 -- SmarAPD.GravarXml --
 [*] Diversos ajustes para que o Rps seja processado com sucesso pelo provedor.
   Por: Claudney dbmgroup

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de São Gabriel do Oeste/MS mudou de provedor, agora é Fiorilli, versão 2.00
+  Por: DouglasGV
+
 27/02/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Ribeirão Preto/SP, passou a usar a versão 2.04 do provedor: ISSNet.

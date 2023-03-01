@@ -878,6 +878,29 @@ type
     property descr: String read Fdescr write Fdescr;
   end;
 
+  TorigCombCollectionItem = class(TObject)
+  private
+    FindImport: TindImport;
+    FcUFOrig: Integer;
+    FpOrig: Currency;
+  public
+    procedure Assign(Source: TorigCombCollectionItem);
+
+    property indImport: TindImport read FindImport write FindImport;
+    property cUFOrig: Integer read FcUFOrig write FcUFOrig;
+    property pOrig: Currency read FpOrig write FpOrig;
+  end;
+
+  TorigCombCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TorigCombCollectionItem;
+    procedure SetItem(Index: Integer; Value: TorigCombCollectionItem);
+  public
+    function Add: TorigCombCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TorigCombCollectionItem;
+    property Items[Index: Integer]: TorigCombCollectionItem read GetItem write SetItem; default;
+  end;
+
   Tencerrante = class(TObject)
   private
     FnBico: Integer;
@@ -885,13 +908,19 @@ type
     FnTanque: Integer;
     FvEncIni: Currency;
     FvEncFin: Currency;
+    FpBio: Currency;
+    ForigComb: TorigCombCollection;
+    procedure SetorigComb(const Value: TorigCombCollection);
   public
     procedure Assign(Source: Tencerrante);
+
     property nBico: Integer read FnBico write FnBico;
     property nBomba: Integer read FnBomba write FnBomba;
     property nTanque: Integer read FnTanque write FnTanque;
     property vEncIni: Currency read FvEncIni write FvEncIni;
     property vEncFin: Currency read FvEncFin write FvEncFin;
+    property pBio: Currency read FpBio write FpBio;
+    property origComb: TorigCombCollection read ForigComb write SetorigComb;
   end;
 
   TComb = class(TObject)
@@ -1171,8 +1200,17 @@ type
     FvFCPDif: Currency;
     FvFCPEfet: Currency;
     FpFCPDif: Currency;
+    FadRemICMS: Currency;
+    FvICMSMono: Currency;
+    FadRemICMSReten: Currency;
+    FvICMSMonoReten: Currency;
+    FadRemICMSDif: Currency;
+    FvICMSMonoDif: Currency;
+    FadRemICMSRet: Currency;
+    FvICMSMonoRet: Currency;
   public
     procedure Assign(Source: TICMS);
+
     property orig: TpcnOrigemMercadoria read Forig write Forig default oeNacional;
     property CST: TpcnCSTIcms read FCST write FCST default cst00;
     property CSOSN: TpcnCSOSNIcms read FCSOSN write FCSOSN;
@@ -1220,6 +1258,18 @@ type
     property pFCPDif: Currency read FpFCPDif write FpFCPDif;
     property vFCPDif: Currency read FvFCPDif write FvFCPDif;
     property vFCPEfet: Currency read FvFCPEfet write FvFCPEfet;
+    // CST 02, 15
+    property adRemICMS: Currency read FadRemICMS write FadRemICMS;
+    property vICMSMono: Currency read FvICMSMono write FvICMSMono;
+    // CST 15
+    property adRemICMSReten: Currency read FadRemICMSReten write FadRemICMSReten;
+    property vICMSMonoReten: Currency read FvICMSMonoReten write FvICMSMonoReten;
+    // CST 53
+    property adRemICMSDif: Currency read FadRemICMSDif write FadRemICMSDif;
+    property vICMSMonoDif: Currency read FvICMSMonoDif write FvICMSMonoDif;
+    // CST 61
+    property adRemICMSRet: Currency read FadRemICMSRet write FadRemICMSRet;
+    property vICMSMonoRet: Currency read FvICMSMonoRet write FvICMSMonoRet;
   end;
 
   TIPI = class(TObject)
@@ -1360,8 +1410,12 @@ type
     FvOutro: Currency;
     FvNF: Currency;
     FvTotTrib: Currency;
+    FvICMSMono: Currency;
+    FvICMSMonoReten: Currency;
+    FvICMSMonoRet: Currency;
   public
     procedure Assign(Source: TICMSTot);
+
     property vBC: Currency read FvBC write FvBC;
     property vICMS: Currency read FvICMS write FvICMS;
     property vICMSDeson: Currency read FvICMSDeson write FvICMSDeson;
@@ -1385,6 +1439,9 @@ type
     property vOutro: Currency read FvOutro write FvOutro;
     property vNF: Currency read FvNF write FvNF;
     property vTotTrib: Currency read FvTotTrib write FvTotTrib;
+    property vICMSMono: Currency read FvICMSMono write FvICMSMono;
+    property vICMSMonoReten: Currency read FvICMSMonoReten write FvICMSMonoReten;
+    property vICMSMonoRet: Currency read FvICMSMonoRet write FvICMSMonoRet;
   end;
 
   TISSQNtot = class(TObject)
@@ -3613,6 +3670,14 @@ begin
   pFCPDif  := Source.pFCPDif;
   vFCPDif  := Source.vFCPDif;
   vFCPEfet := Source.vFCPEfet;
+  adRemICMS := Source.adRemICMS;
+  vICMSMono := Source.vICMSMono;
+  adRemICMSReten := Source.adRemICMSReten;
+  vICMSMonoReten := Source.vICMSMonoReten;
+  adRemICMSDif := Source.adRemICMSDif;
+  vICMSMonoDif := Source.vICMSMonoDif;
+  adRemICMSRet := Source.adRemICMSRet;
+  vICMSMonoRet := Source.vICMSMonoRet;
 end;
 
 { TIPI }
@@ -3706,6 +3771,10 @@ begin
   vFCP         := Source.vFCP;
   vFCPST       := Source.vFCPST;
   vFCPSTRet    := Source.vFCPSTRet;
+
+  vICMSMono := Source.vICMSMono;
+  vICMSMonoReten := Source.vICMSMonoReten;
+  vICMSMonoRet := Source.vICMSMonoRet;
 end;
 
 { TISSQNtot }
@@ -3945,6 +4014,14 @@ begin
   nTanque := Source.nTanque;
   vEncIni := Source.vEncIni;
   vEncFin := Source.vEncFin;
+  pBio    := Source.pBio;
+
+  origComb.Assign(Source.origComb);
+end;
+
+procedure Tencerrante.SetorigComb(const Value: TorigCombCollection);
+begin
+  ForigComb := Value;
 end;
 
 { TinfNFeSupl }
@@ -3996,6 +4073,39 @@ procedure TobsItem.Assign(Source: TobsItem);
 begin
   xCampo := Source.xCampo;
   xTexto := Source.xTexto;
+end;
+
+{ TorigCombCollection }
+
+function TorigCombCollection.Add: TorigCombCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TorigCombCollection.GetItem(Index: Integer): TorigCombCollectionItem;
+begin
+  Result := TorigCombCollectionItem(inherited Items[Index]);
+end;
+
+function TorigCombCollection.New: TorigCombCollectionItem;
+begin
+  Result := TorigCombCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TorigCombCollection.SetItem(Index: Integer;
+  Value: TorigCombCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TorigCombCollectionItem }
+
+procedure TorigCombCollectionItem.Assign(Source: TorigCombCollectionItem);
+begin
+  indImport := Source.indImport;
+  cUFOrig := Source.cUFOrig;
+  pOrig := Source.pOrig;
 end;
 
 end.

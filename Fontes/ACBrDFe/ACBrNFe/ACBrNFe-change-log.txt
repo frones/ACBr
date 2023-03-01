@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2023
+-- Diversos --
+[*] Alterações visando atender a NT 2023/001 onde foi incluído novos campos.
+    Observação: Essas alterações só vão ser validadas no ambiente de homologação 
+                a partir de 03/03/2023 e no de produção: 30/03/2023.
+    por: Italo Giurizzato Junior
+
 27/01/2023
 -- Diversos --
 [*] Alterações visando atender a NT 2022/003 onde foi alterado a quantidade de

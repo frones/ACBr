@@ -92,7 +92,9 @@ type
 implementation
 
 uses
-  pcnConversao, pcnConversaoNFe;
+  ACBrUtil.Base, ACBrXmlBase,
+  pcnConversao,
+  pcnConversaoNFe;
 
 { TNFeXmlReader }
 constructor TNFeXmlReader.Create(AOwner: TNFe);
@@ -737,6 +739,9 @@ end;
 procedure TNFeXmlReader.LerDetProdComb(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
 Var
   AuxNode: TACBrXmlNode;
+  i: Integer;
+  ANodes: TACBrXmlNodeArray;
+  Ok: Boolean;
 begin
   if not Assigned(Item) or (Item = nil) then Exit;
   if not Assigned(ANode) or (ANode = nil) then Exit;
@@ -769,6 +774,16 @@ begin
     (*LA14*)Item.Prod.comb.encerrante.nTanque := ObterConteudo(AuxNode.Childrens.Find('nTanque'), tcInt);
     (*LA15*)Item.Prod.comb.encerrante.vEncIni := ObterConteudo(AuxNode.Childrens.Find('vEncIni'), tcDe3);
     (*LA16*)Item.Prod.comb.encerrante.vEncFin := ObterConteudo(AuxNode.Childrens.Find('vEncFin'), tcDe3);
+    (*LA17*)Item.Prod.comb.encerrante.pBio := ObterConteudo(AuxNode.Childrens.Find('pBio'), tcDe4);
+
+    ANodes := AuxNode.Childrens.FindAll('origComb');
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      Item.Prod.comb.encerrante.origComb.New;
+      Item.Prod.comb.encerrante.origComb[i].indImport := StrToindImport(Ok, ObterConteudo(ANodes[i]).Childrens.Find('indImport'), tcStr));
+      Item.Prod.comb.encerrante.origComb[i].cUFOrig := ObterConteudo(ANodes[i]).Childrens.Find('cUFOrig'), tcInt);
+      Item.Prod.comb.encerrante.origComb[i].pOrig := ObterConteudo(ANodes[i]).Childrens.Find('pOrig'), tcDe4);
+    end;
   end;
 
   AuxNode := ANode.Childrens.Find('ICMSComb');
@@ -858,6 +873,15 @@ begin
             Item.Imposto.ICMS.pFCPDif     := ObterConteudo(AuxNode.Childrens.Find('pFCPDif'), tcDe4);
             Item.Imposto.ICMS.vFCPDif     := ObterConteudo(AuxNode.Childrens.Find('vFCPDif'), tcDe2);
             Item.Imposto.ICMS.vFCPEfet    := ObterConteudo(AuxNode.Childrens.Find('vFCPEfet'), tcDe2);
+
+            Item.Imposto.ICMS.adRemICMS := ObterConteudo(AuxNode.Childrens.Find('adRemICMS'), tcDe4);
+            Item.Imposto.ICMS.vICMSMono := ObterConteudo(AuxNode.Childrens.Find('vICMSMono'), tcDe2);
+            Item.Imposto.ICMS.adRemICMSReten := ObterConteudo(AuxNode.Childrens.Find('adRemICMSReten'), tcDe4);
+            Item.Imposto.ICMS.vICMSMonoReten := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoReten'), tcDe2);
+            Item.Imposto.ICMS.adRemICMSDif := ObterConteudo(AuxNode.Childrens.Find('adRemICMSDif'), tcDe4);
+            Item.Imposto.ICMS.vICMSMonoDif := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoDif'), tcDe2);
+            Item.Imposto.ICMS.adRemICMSRet := ObterConteudo(AuxNode.Childrens.Find('adRemICMSRet'), tcDe4);
+            Item.Imposto.ICMS.vICMSMonoRet := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoRet'), tcDe2);
 
     if (AuxNode.Name = 'ICMSPart') then
     begin
@@ -1058,6 +1082,11 @@ begin
     (*W06*)NFe.Total.ICMSTot.vST           := ObterConteudo(AuxNode.Childrens.Find('vST'), tcDe2);
     (*W06a*)NFe.Total.ICMSTot.vFCPST       := ObterConteudo(AuxNode.Childrens.Find('vFCPST'), tcDe2);
     (*W06b*)NFe.Total.ICMSTot.vFCPSTRet    := ObterConteudo(AuxNode.Childrens.Find('vFCPSTRet'), tcDe2);
+
+    NFe.Total.ICMSTot.vICMSMono := ObterConteudo(AuxNode.Childrens.Find('vICMSMono'), tcDe2);
+    NFe.Total.ICMSTot.vICMSMonoReten := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoReten'), tcDe2);
+    NFe.Total.ICMSTot.vICMSMonoRet := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoRet'), tcDe2);
+
     (*W07*)NFe.Total.ICMSTot.vProd         := ObterConteudo(AuxNode.Childrens.Find('vProd'), tcDe2);
     (*W08*)NFe.Total.ICMSTot.vFrete        := ObterConteudo(AuxNode.Childrens.Find('vFrete'), tcDe2);
     (*W09*)NFe.Total.ICMSTot.vSeg          := ObterConteudo(AuxNode.Childrens.Find('vSeg'), tcDe2);

@@ -269,6 +269,17 @@ const
   DSC_INDSOMAPISST = 'Indica se o valor do PIS ST compõe o valor total da NF-e';
   DSC_INDSOMACOFINSST = 'Indica se o valor da COFINS ST compõe o valor total da NF-e';
   DSC_TPATO = 'Tipo do Ato Concessório';
+  DSC_PBIO = 'Percentual do índice de mistura do Biodiesel';
+  DSC_INDIMPORT = 'indicador de importação';
+  DSC_PORIG = 'Percentual originário para a UF';
+  DSC_ADREMICMS = 'Alíquota ad rem do imposto';
+  DSC_VICMSMONO = 'Valor do ICMS próprio';
+  DSC_ADREMICMSRETEN = 'Alíquota ad rem do imposto com retenção ';
+  DSC_VICMSMONORETEN = 'Valor do ICMS com retenção';
+  DSC_ADREMICMSDIF = 'Alíquota ad rem do imposto diferido';
+  DSC_VICMSMONODIF = 'Valor do ICMS diferido';
+  DSC_ADREMICMSRET = 'Alíquota ad rem do imposto retido anteriormente';
+  DSC_VICMSMONORET = 'Valor do ICMS retido anteriormente';
 
 implementation
 

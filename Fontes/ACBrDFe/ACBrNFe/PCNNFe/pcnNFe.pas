@@ -912,6 +912,8 @@ type
     ForigComb: TorigCombCollection;
     procedure SetorigComb(const Value: TorigCombCollection);
   public
+    constructor Create;
+    destructor Destroy; override;
     procedure Assign(Source: Tencerrante);
 
     property nBico: Integer read FnBico write FnBico;
@@ -943,8 +945,8 @@ type
   public
     constructor Create();
     destructor Destroy; override;
-
     procedure Assign(Source: TComb);
+
     property cProdANP: Integer read FcProdANP write FcProdANP;
     property pMixGN: Currency read FpMixGN write FpMixGN;
     property descANP: String read FdescANP write FdescANP;
@@ -4017,6 +4019,18 @@ begin
   pBio    := Source.pBio;
 
   origComb.Assign(Source.origComb);
+end;
+
+constructor Tencerrante.Create;
+begin
+  inherited Create;
+  origComb := TorigCombCollection.Create;
+end;
+
+destructor Tencerrante.Destroy;
+begin
+  origComb.Free;
+  inherited;
 end;
 
 procedure Tencerrante.SetorigComb(const Value: TorigCombCollection);

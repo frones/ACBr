@@ -59,6 +59,12 @@ Símbolo : Significado
 [*] A cidade de São Gabriel do Oeste/MS mudou de provedor, agora é Fiorilli, versão 2.00
   Por: DouglasGV
 
+[*] TK-3663 Refatoração ACBrNFSeXDANFSeFR Remoção IFDEF / WITH
+  Por: Victor H Gonzales - Pandaaa
+
+[*] TK-3646 ACBrNFSeX - Impressão do DANFSE em Fast Report
+  Por: Victor H Gonzales - Pandaaa / Paulo Sergio de Almeida
+
 27/02/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Ribeirão Preto/SP, passou a usar a versão 2.04 do provedor: ISSNet.

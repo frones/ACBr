@@ -1,9 +1,9 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 
 
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
@@ -36,27 +36,35 @@
 
 {$I ACBr.inc}
 
-{$IFDEF FPC}
- {$IFNDEF NOGUI}
-  {$DEFINE USE_LCLIntf}
- {$ENDIF}
-{$ENDIF}
 
-unit ACBrUtil.FR.FCP;
+
+unit ACBrUtil.FR;
 
 interface
-uses BufDataset;
+uses
+{$IFDEF FPC}
+  BufDataset
+{$ELSE}
+  DBClient
+{$ENDIF}
+;
 type
 
-  { THBufDataset }
+  TACBrFRDataSet = {$IFDEF FPC}TBufDataset{$ELSE}TClientDataSet{$ENDIF};
 
+
+{$IFDEF FPC}
+{ THBufDataset }
   THBufDataset = class helper for TBufDataset // Cria-se o helper
   public
     procedure EmptyDataSet; // Declaração dos novos métodos
   end;
 
+{$ENDIF}
+
 implementation
 
+{$IFDEF FPC}
 { THBufDataset }
 
 procedure THBufDataset.EmptyDataSet;
@@ -67,5 +75,6 @@ begin
   TBufDataset(Self).Close;
   TBufDataset(Self).Open;
 end;
+{$ENDIF}
 
 end.

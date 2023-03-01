@@ -84,6 +84,7 @@ type
     FPSoapAction: String;
     FPMimeType: String;
     FPAuthorizationHeader: string;
+    FPValidateReturnCode: Boolean;
   protected
     procedure FazerLog(const Msg: String; Exibir: Boolean = False); virtual;
     procedure GerarException(const Msg: String; E: Exception = nil); virtual;
@@ -140,6 +141,7 @@ type
     property Msg: String read FPMsg;
     property ArqEnv: String read FPArqEnv;
     property ArqResp: String read FPArqResp;
+    property ValidateReturnCode: Boolean read FPValidateReturnCode;
   end;
 
 implementation
@@ -178,6 +180,7 @@ begin
   FPSoapAction := '';
   FPMimeType := '';  // Vazio, usará por default: 'application/soap+xml'
   FPAuthorizationHeader := '';
+  FPValidateReturnCode := True;
 
   Clear;
 end;
@@ -416,7 +419,7 @@ begin
       begin
         try
           FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction,
-                                             FPMimeType, FPAuthorizationHeader);
+                                 FPMimeType, FPAuthorizationHeader, FPValidateReturnCode);
         finally
           HTTPResultCode := FPDFeOwner.SSL.HTTPResultCode;
           InternalErrorCode := FPDFeOwner.SSL.InternalErrorCode;

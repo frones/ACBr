@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+01/03/2023
+-- ACBrDFeSSL/ACBrDFeWebService --
+[+] Acrescentado a propriedade ValidateReturnCode para não gerar uma Exception
+    quando o código estiver fora da faixa 200..202
+  Por: Italo Giurizzato Junior
+
 15/02/2023
 -- ACBrDFeSSL --
 [*] Revertido a alteração, pois poderia gerar um efeito colateral nos demais

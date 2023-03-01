@@ -217,7 +217,7 @@ type
 
     function Enviar(const ConteudoXML: String; const AURL: String;
       const ASoapAction: String; const AMimeType: String = '';
-      const AAuthorizationHeader : String = ''): String;
+      const AAuthorizationHeader : String = ''; AValidateReturnCode: Boolean = True): String;
     procedure HTTPMethod(const AMethod, AURL: String);
 
     procedure Execute; virtual;
@@ -369,7 +369,7 @@ type
     // Envia por SoapAction o ConteudoXML (em UTF8) para URL. Retorna a resposta do Servico //
     function Enviar(var ConteudoXML: String; const AURL: String;
       const ASoapAction: String; AMimeType: String = ''; 
-      const AAuthorizationHeader : String = '' ): String;
+      const AAuthorizationHeader : String = ''; AValidateReturnCode: Boolean = True): String;
     // Valida um Arquivo contra o seu Schema. Retorna True se OK, preenche MsgErro se False //
     // ConteudoXML, DEVE estar em UTF8
     procedure HTTPMethod(const AMethod, AURL: String);
@@ -1033,7 +1033,7 @@ end;
 
 function TDFeSSLHttpClass.Enviar(const ConteudoXML: String; const AURL: String;
   const ASoapAction: String; const AMimeType: String = '';
-  const AAuthorizationHeader : String = ''): String;
+  const AAuthorizationHeader : String = ''; AValidateReturnCode: Boolean = True): String;
 var
   AMethod: String;
 begin
@@ -1061,7 +1061,7 @@ begin
 
     // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
     // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-    if not (FpHTTPResultCode in [200..202]) then
+    if (not (FpHTTPResultCode in [200..202])) and AValidateReturnCode then
       raise EACBrDFeException.Create('');
   except
     on E:Exception do
@@ -1385,7 +1385,7 @@ end;
 
 function TDFeSSL.Enviar(var ConteudoXML: String; const AURL: String;
   const ASoapAction: String; AMimeType: String;
-  const AAuthorizationHeader: String): String;
+  const AAuthorizationHeader: String; AValidateReturnCode: Boolean): String;
 var
   SendThread : TDFeSendThread;
   EndTime : TDateTime ;
@@ -1429,7 +1429,8 @@ begin
   begin
     FHttpSendCriticalSection.Acquire;
     try
-      Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction, AMimeType, AAuthorizationHeader);
+      Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction,
+             AMimeType, AAuthorizationHeader, AValidateReturnCode);
     finally
       FHttpSendCriticalSection.Release;
     end;

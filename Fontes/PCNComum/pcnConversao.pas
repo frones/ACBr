@@ -80,9 +80,12 @@ type
                           oeEstrangeiraImportacaoDiretaSemSimilar, oeEstrangeiraAdquiridaBrasilSemSimilar,
                           oeNacionalConteudoImportacaoSuperior70, oeReservadoParaUsoFuturo, 
                           oeVazio);
+
   TpcnCSTIcms = (cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
                  cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
-                 cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60); //80 e 81 apenas para CTe
+                 cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60,
+                 cst02, cst15, cst53, cst61); //80 e 81 apenas para CTe
+
   TpcnCSOSNIcms = (csosnVazio,csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900 );
   TpcnDeterminacaoBaseIcms = (dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum);
   TpcnDeterminacaoBaseIcmsST = (dbisPrecoTabelado, dbisListaNegativa,
@@ -814,26 +817,33 @@ begin
   // ID -> N12  - Outros
   result := EnumeradoToStr(t, ['', '00', '10', '20', '30', '40', '41', '45', '50', '51',
                                '60', '70', '80', '81', '90', '90', 'SN',
-                               '10', '90', '41', '60'],
+                               '10', '90', '41', '60', '02', '15', '53', '61'],
                               [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
                               cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
-                              cstPart10, cstPart90, cstRep41, cstRep60]);
+                              cstPart10, cstPart90, cstRep41, cstRep60,
+                              cst02, cst15, cst53, cst61]);
 end;
 
 function StrToCSTICMS(out ok: boolean; const s: string): TpcnCSTIcms;
 begin
   result := StrToEnumerado(ok, s, ['', '00', '10', '20', '30', '40', '41', '45', '50', '51', '60',
                                    '70', '80', '81', '90', '91', 'SN',
-                                   '10part', '90part', '41rep', '60rep'],
+                                   '10part', '90part', '41rep', '60rep',
+                                   '02', '15', '53', '61'],
                                   [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60,
                                    cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
-                                   cstPart10, cstPart90, cstRep41, cstRep60]);
+                                   cstPart10, cstPart90, cstRep41, cstRep60,
+                                   cst02, cst15, cst53, cst61]);
 end;
 
 function CSTICMSToStrTagPos(const t: TpcnCSTIcms): string;
 begin
-  result := EnumeradoToStr(t, ['02', '03', '04', '05', '06', '06', '06', '07', '08', '09', '10', '11', '12', '10a', '10a', '10b', '10b'],
-    [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstPart10 , cstPart90 , cstRep41, cstRep60]);
+  result := EnumeradoToStr(t, ['02', '03', '04', '05', '06', '06', '06', '07',
+                     '08', '09', '10', '11', '12', '10a', '10a', '10b', '10b',
+                     '13', '14', '15', '16'],
+    [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70,
+     cst80, cst81, cst90, cstPart10 , cstPart90 , cstRep41, cstRep60,
+     cst02, cst15, cst53, cst61]);
 end;
 
 function CSTICMSToStrTagPosText(const t: TpcnCSTIcms): string;
@@ -859,10 +869,15 @@ begin
     '10 - TRIBUTADA E COM COBRANÇA DO ICMS POR SUBSTITUIÇÃO TRIBUTÁRIA - PARTILHA',
     '90 - OUTROS - PARTILHA',
     '41 - NÃO TRIBUTADO - REPASSE',
-    '60 - COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA - REPASSE'
+    '60 - COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA - REPASSE',
+    '02 - Tributação monofásica própria sobre combustíveis',
+    '15 - Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis',
+    '53 - Tributação monofásica sobre combustíveis com recolhimento diferido',
+    '61 - Tributação monofásica sobre combustíveis cobrada anteriormente'
     ],
     [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70,
-    cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN, cstPart10, cstPart90, cstRep41, cstRep60]);
+    cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN, cstPart10, cstPart90, cstRep41, cstRep60,
+    cst02, cst15, cst53, cst61]);
 end;
 
 // N13 - Modalidade de determinação da BC do ICMS ******************************

@@ -42,7 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-28/03/2023
+01/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Cubatão/SP mudou para a versão 2.03 do provedor SmarAPD.
+  Por: C. Almeida
+
+28/02/2023
 -- Diversos --
 [*] Trocado a função StrToInt para StrToIntDef para evitar erros de conversão.
   Por: Italo Giurizzato Junior

@@ -973,8 +973,6 @@ begin
     memoLog.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBrReinf1.Eventos.Gerados.Items[i].TipoEvento));
     memoLog.Lines.Add('Evento Salvo: ' + ACBrReinf1.Eventos.Gerados.Items[i].PathNome);
   end;
-
-  PageControl1.ActivePageIndex := 1;
 end;
 
 procedure TfrmACBrReinf.btnLerArqXMLClick(Sender: TObject);
@@ -1000,8 +998,6 @@ begin
     memoLog.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBrReinf1.Eventos.Gerados.Items[i].TipoEvento));
     memoLog.Lines.Add('Evento Salvo: ' + ACBrReinf1.Eventos.Gerados.Items[i].PathNome);
   end;
-
-  PageControl1.ActivePageIndex := 1;
 end;
 
 procedure TfrmACBrReinf.btnEnviarClick(Sender: TObject);
@@ -1088,8 +1084,6 @@ begin
         end;
       end;
     end;
-
-    PageControl1.ActivePageIndex := 1;
   end
   else
     ShowMessage('Falha');
@@ -1425,8 +1419,6 @@ begin
         end;
       end;
     end;
-
-    PageControl1.ActivePageIndex := 1;
   end;
 end;
 
@@ -1641,8 +1633,6 @@ begin
         end;
       end
     end;
-
-    PageControl1.ActivePageIndex := 1;
   end;
 end;
 

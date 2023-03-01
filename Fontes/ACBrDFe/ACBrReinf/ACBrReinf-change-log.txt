@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2023
+-- ACBrReinfWebServices --
+[*] Ajustes nas chamadas a API Rest do Reinf versão 2.1.1
+  Por: Italo Giurizzato Junior
+
 14/02/2023
 -- pcnReinfR4010 --
 [*] Adiciona validação para que verifique se o conteúdo de compFP é diferente de zero para decidir se vai ou não gerar a Tag.

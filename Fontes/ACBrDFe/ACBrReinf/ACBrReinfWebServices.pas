@@ -395,6 +395,7 @@ begin
   else
   begin
     FPMimeType := 'application/xml';
+    FPValidateReturnCode := False;
     FPEnvelopeSoap := InserirDeclaracaoXMLSeNecessario(DadosMsg);
   end;
 end;
@@ -580,6 +581,7 @@ begin
   else
   begin
     FPMimeType := 'application/xml';
+    FPValidateReturnCode := False;
     FPURL := FPURL + '/' + FProtocolo;
     FPEnvelopeSoap := '';
   end;
@@ -846,6 +848,7 @@ begin
   else
   begin
     FPMimeType := 'application/xml';
+    FPValidateReturnCode := False;
     Consulta.DefinirParametros(FPURL);
     FPEnvelopeSoap := '';
   end;

@@ -330,7 +330,8 @@ begin
         140: DataEntradaCDC := Linha.Informacao.AsDate;
         156: Rede := LinStr;
         157: Estabelecimento := LinStr;
-        158: CodigoRedeAutorizada := LinStr;
+        158: CodigoRedeAutorizada := LinStr; 
+        161: IdPagamento := StrToInt(LinStr); { indice de pagamento naquela operação }
         501: TipoPessoa := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0, 'J', 'F')[1]);
         502: DocumentoPessoa := LinStr;
         504: TaxaServico := Linha.Informacao.AsFloat;

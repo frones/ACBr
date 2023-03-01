@@ -565,11 +565,10 @@ begin
     DataStr := copy(DataStr,1,4) + copy(AnoStr,1,2) + copy(DataStr,5,2);
   end;
 
-  try
-    Result := EncodeDate( StrToInt(copy(DataStr,5,4)),
-                          StrToInt(copy(DataStr,3,2)),
-                          StrToInt(copy(DataStr,1,2)) ) ;
-  except
+  if (DataStr = EmptyStr) or (not TryEncodeDate( StrToInt(copy(DataStr,5,4)),
+                                                StrToInt(copy(DataStr,3,2)),
+                                                StrToInt(copy(DataStr,1,2)) , Result)) then
+  begin
     Result := 0 ;
   end;
 end;

@@ -111,6 +111,7 @@ type
     MsgErroDadoMenor: String;
     MsgConfirmacaoDuplaDigitacao: String;
     TipoEntradaCodigoBarras: TACBrTEFAPITipoBarras;
+    TipoCampo: integer;
   end;
 
   TACBrTEFAPIQuandoEsperarFluxoAPI = procedure(

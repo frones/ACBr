@@ -263,7 +263,7 @@ begin
            0,
            PAnsiChar(ParamAdic) );
 
-  fTEFCliSiTefAPI.TraduzirErroInicializacao(Sts);
+  Erro := fTEFCliSiTefAPI.TraduzirErroInicializacao(Sts);
   if (Erro <> '') then
     fpACBrTEFAPI.DoException(ACBrStr(Erro));
 
@@ -285,6 +285,11 @@ begin
     ContinuarRequisicaoSiTef;
 
   Result := (fUltimoRetornoAPI = 0);
+
+  if Result then
+    fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( Valor * 100 ,0))) );
+
+  fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(899, 102, fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao);
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.FazerRequisicaoSiTef(Funcao: Integer;
@@ -373,7 +378,6 @@ begin
 
   TefAPI := TACBrTEFAPI(fpACBrTEFAPI);
   RespCliSiTef := TACBrTEFRespCliSiTef(fpACBrTEFAPI.UltimaRespostaTEF);
-  RespCliSiTef.Clear;
   try
     repeat
       fpACBrTEFAPI.GravarLog( 'ContinuaFuncaoSiTefInterativo, Chamando: Continua = '+
@@ -547,10 +551,12 @@ begin
 
            30:  // Deve ser lido um campo cujo tamanho está entre TamMinimo e TamMaximo
            begin
+             DefinicaoCampo.TipoCampo := TipoCampo;
              DefinicaoCampo.TituloPergunta := ACBrStr(Mensagem);
              DefinicaoCampo.TipoDeEntrada := tedTodos;
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
+             DefinicaoCampo.MascaraDeCaptura := EmptyStr;
 
              Validado := True;
              TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
@@ -559,6 +565,7 @@ begin
 
            31:  // Deve ser lido o número de um cheque. A coleta pode ser feita via leitura de CMC-7, digitação do CMC-7 ou pela digitação da primeira linha do cheque
            begin
+             DefinicaoCampo.TipoCampo := TipoCampo;
              DefinicaoCampo.TituloPergunta := ACBrStr(Mensagem);
              DefinicaoCampo.TipoDeEntrada := tedNumerico;
              DefinicaoCampo.TipoEntradaCodigoBarras := tbQualquer;
@@ -573,6 +580,7 @@ begin
 
            34:  // Deve ser lido um campo monetário ou seja, aceita o delimitador de centavos e devolvido no parâmetro Buffer
            begin
+             DefinicaoCampo.TipoCampo := TipoCampo;
              DefinicaoCampo.TituloPergunta := ACBrStr(Mensagem);
              DefinicaoCampo.TipoDeEntrada := tedNumerico;
              DefinicaoCampo.MascaraDeCaptura := '@@@@@@@@@,@@';
@@ -589,6 +597,7 @@ begin
 
            35:  // Deve ser lido um código em barras ou o mesmo deve ser coletado manualmente.
            begin
+             DefinicaoCampo.TipoCampo := TipoCampo;
              DefinicaoCampo.TituloPergunta := ACBrStr(Mensagem);
              DefinicaoCampo.TipoDeEntrada := tedNumerico;
              DefinicaoCampo.TipoEntradaCodigoBarras := tbLeitor;
@@ -603,6 +612,7 @@ begin
 
            41:  // Análogo ao Comando 30, porém o campo deve ser coletado de forma mascarada
            begin
+             DefinicaoCampo.TipoCampo := TipoCampo;
              DefinicaoCampo.TituloPergunta := ACBrStr(Mensagem);
              DefinicaoCampo.TipoDeEntrada := tedTodos;
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
@@ -693,7 +703,8 @@ begin
                           IfThen(Finalizacao = 1,'SIM','NAO')+
                           ' Documento: ' +DoctoStr+
                           ' Data: '      +DataStr+
-                          ' Hora: '      +HoraStr ) ;
+                          ' Hora: '      +HoraStr+
+                          ' ParametrosAdicionais: '+ParamAdic ) ;
 
   fTEFCliSiTefAPI.FinalizaFuncaoSiTefInterativo( Finalizacao,
                                                  PAnsiChar(DoctoStr),
@@ -734,9 +745,11 @@ end;
 
 procedure TACBrTEFAPIClassCliSiTef.InterpretarRespostaAPI;
 begin
-  inherited;
   fpACBrTEFAPI.GravarLog( fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.Conteudo.Text );
   fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
+  fpACBrTEFAPI.UltimaRespostaTEF.Sucesso := (fUltimoRetornoAPI = 0);
+
+
   fpACBrTEFAPI.UltimaRespostaTEF.ConteudoToProperty;
   if (fUltimoRetornoAPI <> 0) then
     fpACBrTEFAPI.UltimaRespostaTEF.TextoEspecialOperador := fTEFCliSiTefAPI.TraduzirErroTransacao(fUltimoRetornoAPI);
@@ -782,7 +795,7 @@ function TACBrTEFAPIClassCliSiTef.EfetuarAdministrativa(const CodOperacaoAdm: st
 var
   OP: Integer;
 begin
-  VerificarIdentificadorVendaInformado;
+
   Op := StrToIntDef(CodOperacaoAdm, CSITEF_OP_Administrativo);
   Result := ExecutarTransacaoSiTef(Op, 0);
 end;
@@ -893,7 +906,7 @@ begin
   if (DataPreDatado <> 0) then
     fRespostasPorTipo.ValueInfo[506] := FormatDateTime('DDMMYYYY', DataPreDatado);
 
-  Result := ExecutarTransacaoSiTef(fOperacaoVenda, ValorPagto);
+  Result := ExecutarTransacaoSiTef(op, ValorPagto);
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.FinalizarTransacao(const Rede, NSU,

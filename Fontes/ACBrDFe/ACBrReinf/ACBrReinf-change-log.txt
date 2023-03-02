@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2023
+-- pcnReinfR1000 --
+[*] Adiciona a propriedade PossuiNaturezaJuridicaNaRegra para ser usada em validação para geração do grupo infoEFR
+   Por: MessiasNatal13 / Renato Rubinho   
+
 01/03/2023
 -- ACBrReinfWebServices --
 [*] Ajustes nas chamadas a API Rest do Reinf versão 2.1.1

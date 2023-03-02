@@ -50,6 +50,9 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] Removido parâmetro GerarTag:codigo_atividade da cidade de Sao Jose/SC.
   Por: Destak
+-- IPM.Provider --
+[*] Implementado os métodos ConsultaNFSePorFaixa, ConsultaNFSeServicoPrestado e as rotinas de tratamento de retorno considernado a tag Item.
+  Por: Italo Giurizzato Junior / Diego F
 
 01/03/2023
 -- ACBrNFSeXServicos.ini --

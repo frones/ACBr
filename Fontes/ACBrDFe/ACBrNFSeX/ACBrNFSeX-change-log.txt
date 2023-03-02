@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/03/2023
+-- IPM.Provider/IPM/LerXml/ACBrNFSeXLerXml_ABRASFv2 --
+[*] Mais alguns ajustes para a leitura do XML da NFS-e e na consulta da NFS-e por Faixa.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Batatais/SP mudou de provedor agora é Betha
   Por: Italo Giurizzato Junior
@@ -54,7 +57,8 @@ Símbolo : Significado
 [*] Removido parâmetro GerarTag:codigo_atividade da cidade de Sao Jose/SC.
   Por: Destak
 -- IPM.Provider --
-[*] Implementado os métodos ConsultaNFSePorFaixa, ConsultaNFSeServicoPrestado e as rotinas de tratamento de retorno considernado a tag Item.
+[*] Implementado os métodos ConsultaNFSePorFaixa, ConsultaNFSeServicoPrestado e as 
+    rotinas de tratamento de retorno considernado a tag Item.
   Por: Italo Giurizzato Junior / Diego F
 
 01/03/2023

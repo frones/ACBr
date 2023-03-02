@@ -101,7 +101,7 @@ type
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
-    function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+    function LerXmlNfse(const ANode: TACBrXmlNode): Boolean; virtual;
   end;
 
 implementation
@@ -1181,12 +1181,7 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('item');
-
-  if AuxNode = nil then
-    AuxNode := ANode.Childrens.FindAnyNs('Nfse')
-  else
-    AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
+  AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
   if AuxNode = nil then
     AuxNode := ANode;

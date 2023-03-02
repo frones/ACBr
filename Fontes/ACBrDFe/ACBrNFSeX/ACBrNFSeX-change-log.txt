@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Batatais/SP mudou de provedor agora é Betha
+  Por: Italo Giurizzato Junior
 -- Fiorilli.Provider --
 [*] Alteração no TratarXmlRetornado
   Por: Italo Giurizzato Junior

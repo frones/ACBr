@@ -331,7 +331,7 @@ function TACBrNFSeXWebserviceFiorilli200.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  if UTF8Decode(Result) = '' then
+//  if UTF8Decode(Result) = '' then
     Result := NativeStringToUTF8(Result);
 
   Result := StringReplace(Result, '&#xd;', '\s\n', [rfReplaceAll]);

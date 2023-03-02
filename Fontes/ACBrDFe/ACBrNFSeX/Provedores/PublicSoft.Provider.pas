@@ -322,7 +322,7 @@ begin
 
   Result := Executar('urn:index.ConsultarLoteRpsEnvio#ConsultarLoteRpsEnvio',
                      Request, xHeader,
-                     ['return', 'EnviarLoteRpsResposta'],
+                     ['return', 'ConsultarLoteRpsResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.ConsultarLoteRpsEnvio"']);
 end;
@@ -342,7 +342,7 @@ begin
 
   Result := Executar('urn:index.ConsultarNfseRpsEnvio#ConsultarNfseRpsEnvio',
                      Request, xHeader,
-                     ['return', 'EnviarLoteRpsResposta'],
+                     ['return', 'ConsultarNfseRpsResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.ConsultarNfseRpsEnvio"']);
 end;
@@ -362,7 +362,7 @@ begin
 
   Result := Executar('urn:index.ConsultarNfseServicoPrestadoEnvio#ConsultarNfseServicoPrestadoEnvio',
                      Request, xHeader,
-                     ['return', 'EnviarLoteRpsResposta'],
+                     ['return', 'ConsultarNfseServicoPrestadoResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.ConsultarNfseServicoPrestadoEnvio"']);
 end;
@@ -382,7 +382,7 @@ begin
 
   Result := Executar('urn:index.ConsultarNfseServicoTomadoEnvio#ConsultarNfseServicoTomadoEnvio',
                      Request, xHeader,
-                     ['return', 'EnviarLoteRpsResposta'],
+                     ['return', 'ConsultarNfseServicoTomadoResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.ConsultarNfseServicoTomadoEnvio"']);
 end;
@@ -401,7 +401,7 @@ begin
 
   Result := Executar('urn:index.CancelarNfseEnvio#CancelarNfseEnvio',
                      Request, xHeader,
-                     ['return', 'EnviarLoteRpsResposta'],
+                     ['return', 'CancelarNfseResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.CancelarNfseEnvio"']);
 end;
@@ -421,7 +421,7 @@ begin
 
   Result := Executar('urn:index.SubstituirNfseEnvio#SubstituirNfseEnvio',
                      Request, xHeader,
-                     ['return', 'EnviarLoteRpsResposta'],
+                     ['return', 'SubstituirNfseResposta'],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:urn="urn:index.SubstituirNfseEnvio"']);
 end;
@@ -453,6 +453,7 @@ begin
 
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
+    Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
     Result := RemoverPrefixosDesnecessarios(Result);
   end

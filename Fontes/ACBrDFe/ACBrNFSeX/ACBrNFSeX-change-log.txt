@@ -47,6 +47,9 @@ Símbolo : Significado
 -- Fiorilli.Provider --
 [*] Alteração no TratarXmlRetornado
   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
+[*] Removido parâmetro GerarTag:codigo_atividade da cidade de Sao Jose/SC.
+  Por: Destak
 
 01/03/2023
 -- ACBrNFSeXServicos.ini --

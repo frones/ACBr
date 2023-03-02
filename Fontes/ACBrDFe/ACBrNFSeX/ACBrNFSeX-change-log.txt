@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/03/2023
+-- EL.GravarXml --
+[*] Ajustes, alterado a posição do atributo ID no XML do RPS, a pedido do provedor.
+  Por: Italo Giurizzato Junior
 -- IPM.Provider/IPM/LerXml/ACBrNFSeXLerXml_ABRASFv2 --
 [*] Mais alguns ajustes para a leitura do XML da NFS-e e na consulta da NFS-e por Faixa.
   Por: Italo Giurizzato Junior

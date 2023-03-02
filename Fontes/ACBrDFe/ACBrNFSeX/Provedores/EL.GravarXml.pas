@@ -529,6 +529,9 @@ begin
   NrOcorrCodigoPaisTomador := -1;
 
   TagTomador := 'TomadorServico';
+
+  GerarIDDeclaracao := False;
+  GerarIDRps := True;
 end;
 
 end.

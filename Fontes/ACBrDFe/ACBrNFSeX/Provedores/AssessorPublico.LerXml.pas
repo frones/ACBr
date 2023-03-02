@@ -158,6 +158,8 @@ begin
 
     if aValor = 'N' then
       IssRetido := stNormal;
+    if aValor = 'S' then
+      IssRetido := stRetencao;
 
     BaseCalculo   := ObterConteudo(AuxNode.Childrens.FindAnyNs('BASECALC'), tcDe2);
     ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('VALORTOTALSERVICOS'), tcDe2);
@@ -169,6 +171,7 @@ begin
     ValorInss     := ObterConteudo(AuxNode.Childrens.FindAnyNs('INSS'), tcDe2);
     ValorIr       := ObterConteudo(AuxNode.Childrens.FindAnyNs('IR'), tcDe2);
     ValorCsll     := ObterConteudo(AuxNode.Childrens.FindAnyNs('CSLL'), tcDe2);
+    ValorIssRetido  := ObterConteudo(AuxNode.Childrens.FindAnyNs('RETENCAO'), tcDe2);
 
     OutrasRetencoes := OutrasRetencoes +
            ObterConteudo(AuxNode.Childrens.FindAnyNs('ICMS'), tcDe2) +

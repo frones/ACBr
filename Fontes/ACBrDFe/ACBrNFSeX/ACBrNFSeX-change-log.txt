@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/03/2023
+-- AssessorPublico.LerXml --
+[*] Incluída a linha para ler a tag com o valor retido.
+   Por: Paulo Henrique Panico
 -- EL.GravarXml --
 [*] Ajustes, alterado a posição do atributo ID no XML do RPS, a pedido do provedor.
   Por: Italo Giurizzato Junior

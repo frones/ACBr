@@ -50,6 +50,11 @@ const
   CSessaoRespConsultaNFSePorRps = 'ConsultaNFSePorRps';
   CSessaoRespSubstituirNFSe = 'SubstituirNFSe';
   CSessaoRespGerarToken = 'GerarToken';
+  CSessaoRespConsultaNFSe = 'ConsultaNFSe';
+  CSessaoRespCancelarNFSe = 'CancelarNFSe';
+  CSessaoRespLinkNFSe = 'LinkNFSe';
+  CSessaoRespGerarLote = 'GerarLote';
+  CSessaoRespConsultaNFSePorNumero = 'ConsultaNFSePorNumero';
   CSessaoRespErro = 'Erro';
   CSessaoRespAlerta = 'Alerta';
 

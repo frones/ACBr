@@ -293,6 +293,7 @@ begin
     with ACBrTitulo do
     begin
       {REGISTRO P}
+      inc(fpQtdRegsLote);
       ListTransacao.Add(IntToStrZero(ACBrBanco.Numero, 3)    + //1 a 3 - Código do banco
         '0001'                                               + //4 a 7 - Lote de serviço
         '3'                                                  + //8 - Tipo do registro: Registro detalhe
@@ -349,6 +350,7 @@ begin
         ' ');                                                 //240 - Uso exclusivo FEBRABAN/CNAB
 
       {SEGMENTO Q}
+      inc(fpQtdRegsLote);
       ListTransacao.Add(IntToStrZero(ACBrBanco.Numero, 3) + //Código do Banco na Compensação 1 3 3 - Num G001
         '0001'                                              + //Lote Lote de Serviço 4 7 4 - Num *G002
         '3'                                                 + //Tipo de Registro 8 8 1 - Num ‘3’ *G003
@@ -380,6 +382,7 @@ begin
          (TipoDesconto3<>tdNaoConcederDesconto) or
          (PercentualMulta > 0) then
       begin
+        inc(fpQtdRegsLote);
         ListTransacao.Add(IntToStrZero(ACBrBanco.Numero, 3)    + //Código do Banco na Compensação 1 3 3 - Num G001
           '0001'                                               + //Lote de Serviço 4 7 4 - Num *G002
           '3'                                                  + //Tipo de Registro 8 8 1 - Num ‘3’ *G003

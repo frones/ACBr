@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2023
+-- ACBrNFeServicos --
+[*] Atualização das URL de Consulta via QR-Code de MG Produção e Homologação.
+   Por: Italo Giurizzato Junior
+
 01/03/2023
 -- Diversos --
 [*] Alterações visando atender a NT 2023/001 onde foi incluído novos campos.

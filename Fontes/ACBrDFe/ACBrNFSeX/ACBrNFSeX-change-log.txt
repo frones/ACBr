@@ -47,6 +47,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] Incluída a cidade de Santo Antonio de Jesus/BA - Provedor: WebISS.
   Por: Furka
+[*] A cidade de Ananindeua/PA mudou de provedor, agora é Desenvolve
+  Por: C4Dev
 -- Infisc.Provider/Infisc.LerXml --
 [*] Ajustes na leitura do retorno dos serviços de consulta e cancelamento.
   Por: Italo Giurizzato Junior

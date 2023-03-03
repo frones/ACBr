@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2023
+-- ACBrGNREGuiasRetorno.pas --
+[-] Estava duplicando o valor da guia quando tem tipo 22.
+  Por: Isolopak
+
 07/12/2022
 -- Diversos --
 [*] Melhorias para obter o nome do municipio ao carregar o XML para posterior

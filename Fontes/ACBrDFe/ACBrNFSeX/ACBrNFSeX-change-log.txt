@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/03/2023
+-- Infisc.Provider/Infisc.LerXml --
+[*] Ajustes na leitura do retorno dos serviços de consulta e cancelamento.
+  Por: Italo Giurizzato Junior
+
 02/03/2023
 -- AssessorPublico.LerXml --
 [*] Incluída a linha para ler a tag com o valor retido.

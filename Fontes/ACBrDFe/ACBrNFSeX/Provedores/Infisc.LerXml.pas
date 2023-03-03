@@ -342,7 +342,10 @@ begin
       ModeloNFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('mod'), tcStr);
 
       aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('cancelada'), tcStr);
-      SituacaoNfse := StrToStatusNFSe(Ok, aValor);
+
+      SituacaoNfse := snNormal;
+      if aValor = 'S' then
+        SituacaoNfse := snCancelado;
 
       MotivoCancelamento := ObterConteudo(AuxNode.Childrens.FindAnyNs('motCanc'), tcStr);
 

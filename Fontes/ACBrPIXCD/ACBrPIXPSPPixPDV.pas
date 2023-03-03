@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrPIXSchemasPIXPDV,
+  ACBrPIXCD, ACBrPIXSchemasPixPDV,
   ACBrPIXBase, ACBrPIXSchemasProblema;
 
 const

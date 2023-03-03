@@ -16,7 +16,7 @@
     <Description Value="ACBrPIXCD - Package para componentes relacionados a PIX e Carteira Digitais"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="33">
+    <Files Count="34">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXCDReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -150,6 +150,10 @@
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPixPDV.pas"/>
         <UnitName Value="ACBrPIXPSPPixPDV"/>
       </Item33>
+      <Item34>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPixPDV.pas"/>
+        <UnitName Value="ACBrPIXSchemasPixPDV"/>
+      </Item34>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

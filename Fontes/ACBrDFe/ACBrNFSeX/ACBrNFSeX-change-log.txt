@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 03/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluída a cidade de Santo Antonio de Jesus/BA - Provedor: WebISS.
+  Por: Furka
 -- Infisc.Provider/Infisc.LerXml --
 [*] Ajustes na leitura do retorno dos serviços de consulta e cancelamento.
   Por: Italo Giurizzato Junior

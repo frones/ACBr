@@ -150,17 +150,29 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'tsFrmRec', 1, 2, 1,
                                                  FrmRecToStr(NFSe.FrmRec), ''));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsRps', 8, 8, 1,
-      StringReplace(FormatDateTime('yyyymmdd',NFSe.DataEmissao),'/', '',[rfReplaceAll]), ''));
-
-    Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsNFSe', 8, 8, 1,
-      StringReplace(FormatDateTime('yyyymmdd',NFSe.DataEmissao),'/', '',[rfReplaceAll]), ''));
-
-    Result.AppendChild(AddNode(tcStr, '#1', 'tsMesCmp', 1, 4, 1,
+    if FpAOwner.ConfigGeral.Versao = ve101 then
+    begin
+      Result.AppendChild(AddNode(tcStr, '#1', 'tsMesCmp', 1, 4, 1,
                                    FormatDateTime('MM', NFSe.Competencia), ''));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'tsAnoCmp', 1, 4, 1,
+      Result.AppendChild(AddNode(tcStr, '#1', 'tsAnoCmp', 1, 4, 1,
                                  FormatDateTime('YYYY', NFSe.Competencia), ''));
+
+      Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsRps', 8, 8, 1,
+        StringReplace(FormatDateTime('yyyymmdd', NFSe.DataEmissao), '/', '', [rfReplaceAll]), ''));
+    end;
+
+    if FpAOwner.ConfigGeral.Versao = ve100 then
+    begin
+      Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsRps', 8, 8, 1,
+        StringReplace(FormatDateTime('yyyymmdd', NFSe.DataEmissao), '/', '', [rfReplaceAll]), ''));
+
+      Result.AppendChild(AddNode(tcStr, '#1', 'tsAnoCpt', 1, 4, 1,
+                                 FormatDateTime('YYYY', NFSe.Competencia), ''));
+
+      Result.AppendChild(AddNode(tcStr, '#1', 'tsMesCpt', 1, 4, 1,
+                                   FormatDateTime('MM', NFSe.Competencia), ''));
+    end;
   end
   else
   begin

@@ -45,6 +45,12 @@ Símbolo : Significado
 
 03/03/2023
 -- ACBrNFSeXServicos.ini --
+[*] Definido a versão 1.01 para as cidades: Iturama/MG e Valparaiso de Goias/GO.
+  Por: Italo Giurizzato Junior
+-- Governa.GravarXml --
+[*] Dependendo da versão 1.00 ou 1.01 o XML do Rps deve ser gerado com layout diferente.
+  Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
 [*] A cidade de Mogi Mirim/SP mudou para a versão 2.04 o Provedor continua o mesmo.
   Por: Renan - infonacci
 -- Bauhaus.Provider --

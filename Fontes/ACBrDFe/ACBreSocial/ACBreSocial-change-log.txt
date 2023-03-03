@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2023
+-- pcesS2501 --
+[*] Corrige a geração do evento que estava gerando parâmetros como se fossem campos.
+   Por: Marcelo Pontes Melim / Diego F
+
 09/02/2023
 -- pcesConversaoeSocial --
 [*] Declara alguns arrays específicos para alguns tipos e altera as funções de conversão respectivas para que use os novos arrays ao invés de manter o conteúdo chumbado na função.

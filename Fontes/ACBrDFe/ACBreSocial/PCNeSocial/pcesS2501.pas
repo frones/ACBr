@@ -231,6 +231,7 @@ implementation
 uses
   IniFiles,
   ACBrUtil.FilesIO,
+  ACBrUtil.Base,
   ACBreSocial;
 
 { TS2501Collection }
@@ -442,9 +443,7 @@ var
 begin
   for i := 0 to obj.Count - 1 do
   begin
-    Gerador.wGrupo('ideTrab');
-
-    Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, obj.Items[i].cpfTrab);
+    Gerador.wGrupo('ideTrab cpfTrab="'+obj.Items[i].cpfTrab+'"');
 
     if obj.Items[i].instCalcTrib() then
       GerarCalcTrib(obj.Items[i].calcTrib);
@@ -462,10 +461,9 @@ var
 begin
   for i := 0 to obj.Count - 1 do
   begin
-    Gerador.wGrupo('infoCRContrib');
-
-    Gerador.wCampo(tcStr, '', 'tpCR', 6,  6, 1, obj.Items[i].tpCR);
-    Gerador.wCampo(tcDe2, '', 'vrCR', 1, 14, 1, obj.Items[i].vrCR);
+    Gerador.wGrupo('infoCRContrib tpCR="'+obj.Items[i].tpCR+'"'+
+                                ' vrCR="'+FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False)) +'"'
+                  );
 
     Gerador.wGrupo('/infoCRContrib');
   end;
@@ -477,13 +475,12 @@ var
 begin
   for i := 0 to obj.Count - 1 do
   begin
-    Gerador.wGrupo('calcTrib');
-
-    Gerador.wCampo(tcStr, '', 'perRef',       7,  7, 1, obj.Items[i].perRef);
-    Gerador.wCampo(tcDe2, '', 'vrBcCpMensal', 1, 14, 1, obj.Items[i].vrBcCpMensal);
-    Gerador.wCampo(tcDe2, '', 'vrBcCp13',     1, 14, 1, obj.Items[i].vrBcCp13);
-    Gerador.wCampo(tcDe2, '', 'vrRendIRRF',   1, 14, 1, obj.Items[i].vrRendIRRF);
-    Gerador.wCampo(tcDe2, '', 'vrRendIRRF13', 1, 14, 1, obj.Items[i].vrRendIRRF13);
+    Gerador.wGrupo('calcTrib perRef="'+obj.Items[i].perRef+'"' +
+                           ' vrBcCpMensal="'+ FloatToString(obj.Items[i].VrBcCpMensal, '.', FloatMask(2, False))+'"' +
+                           ' vrBcCp13="'+FloatToString(obj.Items[i].VrBcCp13, '.', FloatMask(2, False))+'"' +
+                           ' vrRendIRRF="'+ FloatToString(obj.Items[i].vrRendIRRF, '.', FloatMask(2, False))+'"' +
+                           ' vrRendIRRF13="' + FloatToString(obj.Items[i].vrRendIRRF13, '.', FloatMask(2, False))+'"'
+                  );
 
     if obj.Items[i].instInfoCRContrib() then
       GerarInfoCRContrib(obj.Items[i].infoCrContrib);
@@ -498,10 +495,9 @@ var
 begin
   for i := 0 to obj.Count - 1 do
   begin
-    Gerador.wGrupo('infoCRIRRF');
-
-    Gerador.wCampo(tcStr, '', 'tpCR', 6,  6, 1, obj.Items[i].tpCR);
-    Gerador.wCampo(tcDe2, '', 'vrCR', 1, 14, 1, obj.Items[i].vrCR);
+    Gerador.wGrupo('infoCRIRRF tpCR="' + obj.Items[i].tpCR + '"' +
+                             ' vrCR="'+ FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False))+'"'
+                  );
 
     Gerador.wGrupo('/infoCRIRRF');
   end;

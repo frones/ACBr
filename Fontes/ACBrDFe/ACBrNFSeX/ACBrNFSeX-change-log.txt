@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 03/03/2023
+-- Bauhaus.Provider --
+[*] Ajustes na leitura do retorno do envio.
+  Por: Adriano Luiz de Souza
 -- ACBrNFSeXServicos.ini --
 [*] Incluída a cidade de Santo Antonio de Jesus/BA - Provedor: WebISS.
   Por: Furka

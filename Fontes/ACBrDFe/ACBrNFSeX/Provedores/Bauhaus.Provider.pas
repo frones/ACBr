@@ -221,7 +221,21 @@ begin
         if Assigned(jNfse) then
         begin
           with Response do
+          begin
             NumeroNota := jNfse.AsString['Numero'];
+
+            if AnsiPos('AMBIENTE DE TESTE', jNfse.AsString['Mensagem'] ) > 0 then
+            begin
+              Sucesso := false;
+              NumeroNota := '';
+              DescSituacao := 'ATENÇÃO! AMBIENTE DE TESTE PARA VALIDAÇÃO DE INTEGRAÇÃO.';
+
+              AErro := Response.Erros.New;
+              AErro.Codigo := Cod999;
+              AErro.Descricao := ACBrStr(jNfse.AsString['Mensagem']);
+              AErro.Correcao :=  'ENTRAR EM CONTATO COM A PREFEITURA PARA PEDIR A MUDANÇA PARA AMBIENTE EM PRODUÇÃO DO CNPJ DO EMISSOR';
+            end;
+          end;
         end;
       end;
     except

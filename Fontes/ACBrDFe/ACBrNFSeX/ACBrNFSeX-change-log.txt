@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/03/2023
+-- Betha.Provider --
+[*] Alterado o TratarXmlRetornado para executar: ParseText.
+  Por: Italo Giurizzato Junior
 -- DSF.Provider --
 [*] Alterado o TratarXmlRetornado para não executar: NativeStringToUTF8,
     estava gerando erro de UTF-8.

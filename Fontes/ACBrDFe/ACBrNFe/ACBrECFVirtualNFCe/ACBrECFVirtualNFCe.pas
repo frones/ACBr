@@ -68,6 +68,7 @@ type
   private
     function GetACBrNFCe: TACBrNFe;
     function GetImprimir2ViaOffLine: Boolean;
+    function GetTratarDescontoNoItem: Boolean;
     function GetQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
     function GetQuandoEfetuarPagamento: TACBrECFVirtualNFCeQuandoEfetuarPagamento;
     function GetQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
@@ -86,6 +87,7 @@ type
       AValue: TACBrECFVirtualNFCeQuandoCancelarDocumento);
     procedure SetACBrNFCe(AValue: TACBrNFe);
     procedure SetImprimir2ViaOffLine(AValue: Boolean);
+    procedure SetTratarDescontoNoItem(AValue: Boolean);
     procedure SetQuandoImprimirDocumento(const AValue: TACBrECFVirtualNFCeQuandoImprimirDocumento);
   protected
     procedure CreateVirtualClass; override;
@@ -94,6 +96,7 @@ type
     property NomeArqINI;
     property ACBrNFCe: TACBrNFe read GetACBrNFCe write SetACBrNFCe;
     property Imprimir2ViaOffLine : Boolean read GetImprimir2ViaOffLine write SetImprimir2ViaOffLine default True;
+    property TratarDescontoNoItem : Boolean read GetTratarDescontoNoItem write SetTratarDescontoNoItem default false;
     property QuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento
       read GetQuandoAbrirDocumento write SetQuandoAbrirDocumento;
     property QuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem
@@ -130,6 +133,7 @@ type
     fsQuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento;
     fsQuandoImprimirDocumento: TACBrECFVirtualNFCeQuandoImprimirDocumento;
     fsImprimir2ViaOffLine : Boolean;
+    fsTratarDescontoNoItem : Boolean;
     fsEhVenda: Boolean;
     fsDestCNPJ: string;
     fsDestNome: string;
@@ -163,6 +167,7 @@ type
     constructor Create(AECFVirtualPrinter: TACBrECFVirtualPrinter); overload; override;
     property ACBrNFCe: TACBrNFe read fsACBrNFCe write fsACBrNFCe;
     property Imprimir2ViaOffLine : Boolean read fsImprimir2ViaOffLine write fsImprimir2ViaOffLine;
+    property TratarDescontoNoItem : Boolean read fsTratarDescontoNoItem write fsTratarDescontoNoItem;
     property QuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento
       read fsQuandoAbrirDocumento write fsQuandoAbrirDocumento;
     property QuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem
@@ -211,6 +216,11 @@ begin
   Result := TACBrECFVirtualNFCeClass(fpECFVirtualClass).fsImprimir2ViaOffLine;
 end;
 
+function TACBrECFVirtualNFCe.GetTratarDescontoNoItem: Boolean;
+begin
+  Result := TACBrECFVirtualNFCeClass(fpECFVirtualClass).fsTratarDescontoNoItem;
+end;
+
 procedure TACBrECFVirtualNFCe.SetACBrNFCe(AValue: TACBrNFe);
 begin
   if AValue <> ACBrNFCe then
@@ -228,6 +238,11 @@ end;
 procedure TACBrECFVirtualNFCe.SetImprimir2ViaOffLine(AValue: Boolean);
 begin
   TACBrECFVirtualNFCeClass(fpECFVirtualClass).fsImprimir2ViaOffLine := AValue;
+end;
+
+procedure TACBrECFVirtualNFCe.SetTratarDescontoNoItem(AValue: Boolean);
+begin
+  TACBrECFVirtualNFCeClass(fpECFVirtualClass).fsTratarDescontoNoItem := AValue;
 end;
 
 function TACBrECFVirtualNFCe.GetQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
@@ -315,6 +330,7 @@ begin
   fsDestCNPJ := '';
   fsEhVenda := False;
   fsImprimir2ViaOffLine := True;
+  fsTratarDescontoNoItem:= False;
 end;
 
 procedure TACBrECFVirtualNFCeClass.FazerImpressaoDocumento;
@@ -668,6 +684,16 @@ begin
   begin
     with fsACBrNFCe do
     begin
+      if (fsTratarDescontoNoItem) then
+      begin
+        //Verifica se já tem desconto no item , caso tenha não faz o rateio nos itens
+        for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+        begin
+          if (NotasFiscais.Items[0].NFe.Det[i].Prod.cProd <> cItemCancelado) and (NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc > 0) then
+            Exit;
+        end;
+      end;
+
       if fpCupom.DescAcresSubtotal > 0 then
         VlDescAcres := fpCupom.DescAcresSubtotal
       else
@@ -742,9 +768,6 @@ begin
         NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc :=
           NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc + VlDescAcres;
 
-      // removido porque estava duplicando o rodape
-      // ACBrECF já guarda internamente e utiliza no fechacupom
-      //NotasFiscais.Items[0].NFe.InfAdic.infCpl := MensagemRodape;
     end;
   end
   else
@@ -772,7 +795,6 @@ begin
       if (NFCePagto.tPag in [fpCartaoCredito, fpCartaoDebito]) then
       begin
         NFCePagto.tpIntegra := tiPagNaoIntegrado;
-        //        NFCePagto.tBand:= bc
       end;
 
       if Assigned(fsQuandoEfetuarPagamento) then
@@ -853,8 +875,6 @@ begin
         if Configuracoes.Geral.FormaEmissao = teOffLine then
         begin
           NotasFiscais.Assinar;
-          //NotasFiscais.Validar;
-          //NotasFiscais.Items[0].Confirmada := True;
 
           if DANFE is TACBrNFeDANFCEClass then
           begin

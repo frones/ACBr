@@ -217,7 +217,8 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
-  Result := string(NativeStringToUTF8(RemoverDeclaracaoXML(Result)));
+  Result := RemoverDeclaracaoXML(Result);
+//  Result := string(NativeStringToUTF8(Result));
 end;
 
 { TACBrNFSeProviderDSF }

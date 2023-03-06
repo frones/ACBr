@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/03/2023
+-- DSF.Provider --
+[*] Alterado o TratarXmlRetornado para não executar: NativeStringToUTF8,
+    estava gerando erro de UTF-8.
+  Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] Alterado o TratarXmlRetornado da versão 2.04 para tratar o caracter "&".
   Por: Italo Giurizzato Junior

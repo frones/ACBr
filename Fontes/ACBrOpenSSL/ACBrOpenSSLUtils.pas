@@ -64,6 +64,10 @@ const
   CPFX = 'PFX';
   CPEM = 'PEM';
   CX509 = 'X509';
+  CBeginCertificate = 'BEGIN CERTIFICATE';
+  CEndCertificate = 'END CERTIFICATE';
+  CBeginRSA = 'BEGIN RSA';
+  CEndRSA = 'END RSA';
 
 type
   TACBrOpenSSLAlgorithm = ( algMD2, algMD4, algMD5, algRMD160, algSHA, algSHA1,
@@ -407,12 +411,14 @@ begin
 
     for I := 0 to sl.Count - 1 do
     begin
-      if (Pos('BEGIN', UpperCase(sl[I])) > 0) then
+      if (Pos(CBeginCertificate, UpperCase(sl[I])) > 0) or
+         (Pos(CBeginRSA, UpperCase(sl[I])) > 0) then
       begin
         b64 := True;
         Continue;
       end
-      else if b64 and (Pos('END', UpperCase(sl[I])) > 0) then
+      else if b64 and
+        ((Pos(CEndCertificate, UpperCase(sl[I])) > 0) or (Pos(CEndRSA, UpperCase(sl[I])) > 0)) then
         Break;
 
       if b64 then

@@ -34,7 +34,7 @@
     <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="4" Minor="3" Release="9"/>
-    <Files Count="24">
+    <Files Count="26">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -132,6 +132,14 @@
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPICliSiTef.pas"/>
         <UnitName Value="ACBrTEFAPICliSiTef"/>
       </Item24>
+      <Item25>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTefModular.pas"/>
+        <UnitName Value="ACBrTEFDCliSiTefModular"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDirecao.pas"/>
+        <UnitName Value="ACBrTEFDDirecao"/>
+      </Item26>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

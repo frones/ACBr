@@ -152,12 +152,12 @@ type
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSeServicoPrestado(Response: TNFSeConsultaNFSeResponse); override;
-
+    {
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
                                      const AMessageTag: string = 'item'); override;
-
+    }
   end;
 
 implementation
@@ -1539,7 +1539,19 @@ function TACBrNFSeXWebserviceIPM204.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  if Pos('<retorno><msg>', Result) > 0 then
+  begin
+    Result := '<ListaMensagemRetorno>' +
+                '<MensagemRetorno>' +
+                  '<Codigo>' + SeparaDados(Result, 'code') + '</Codigo>' +
+                  '<Mensagem>' + SeparaDados(Result, 'msg') + '</Mensagem>' +
+                  '<Correcao>' + '</Correcao>' +
+                '</MensagemRetorno>' +
+              '</ListaMensagemRetorno>';
+  end;
+
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
 end;
 
 { TACBrNFSeProviderIPM204 }
@@ -1587,7 +1599,7 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
 end;
-
+{
 procedure TACBrNFSeProviderIPM204.ProcessarMensagemErros(RootNode: TACBrXmlNode;
   Response: TNFSeWebserviceResponse; const AListTag, AMessageTag: string);
 var
@@ -1617,7 +1629,7 @@ begin
     AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
   end;
 end;
-
+}
 procedure TACBrNFSeProviderIPM204.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
 var
   Document: TACBrXmlDocument;

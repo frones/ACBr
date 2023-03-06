@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/03/2023
+-- IPM.Provider --
+[*] Alterado o TratarXmlRetornado da versão 2.04 para tratar o caracter "&".
+  Por: Italo Giurizzato Junior
+-- IPM.Provider --
+[*] Alterado o TratarXmlRetornado da versão 2.04 para obter a mensagem de erro 
+    quando vem fora do padrão.
+  Por: Italo Giurizzato Junior
+-- IPM.GravarXml --
+[*] Alterado a formatação do ItemListaServico para sem formatação.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Novo Hamburgo/RS mudou de provedor, agora é IPM na versão 2.04
    Por: Diego F

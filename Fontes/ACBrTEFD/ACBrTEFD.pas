@@ -41,7 +41,7 @@ uses
   ACBrTEFDAuttar, ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, ACBrTEFDCliSiTef,
   ACBrTEFDGpu, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
   ACBrTEFDCliDTEF, ACBrTEFDPetroCard, ACBrTEFDCrediShop, ACBrTEFDTicketCar,
-  ACBrTEFDConvCard, ACBrTEFDCappta
+  ACBrTEFDConvCard, ACBrTEFDCappta, ACBrTEFDCliSiTefModular, ACBrTEFDDirecao
   {$IfNDef NOGUI}
     {$IfDef FPC}
       ,LResources
@@ -157,6 +157,8 @@ type
      fTefTicketCar : TACBrTEFDTicketCar ;
      fTefConvCard  : TACBrTEFDConvCard ;
      fTefCappta    : TACBrTEFDCappta;
+     fTefCliSiTefModular: TACBrTEFDCliSiTefModular;
+     fTefDirecao   : TACBrTEFDDirecao;
 
      fEsperaSTS    : Integer;
      fEsperaMinimaMensagemFinal: Integer;
@@ -321,6 +323,8 @@ type
      property TEFTicketCar : TACBrTEFDTicketCar  read fTefTicketCar ;
      property TEFConvCard : TACBrTEFDConvCard read fTefConvCard ;     
      property TEFCappta    : TACBrTEFDCappta    read fTefCappta;
+     property TEFCliSiTefModular : TACBrTEFDCliSiTefModular read fTefCliSiTefModular ;
+     property TEFDirecao   : TACBrTEFDDirecao  read fTefDirecao;
 
      property OnAguardaResp : TACBrTEFDAguardaRespEvent read fOnAguardaResp
         write fOnAguardaResp ;
@@ -598,6 +602,21 @@ begin
    fTefCappta.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
   {$ENDIF}
 
+
+  { Criando Classe TEF CliSiTEFMODULAR }
+  fTefCliSiTefmodular := TACBrTEFDCliSiTefModular.Create(self);
+  fTEFList.Add(fTefCliSiTefModular);     // Adicionando "fTefCliSiTefModular" na Lista Objetos de Classes de TEF
+  {$IFDEF COMPILER6_UP}
+   fTefCliSiTefmodular.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
+  {$ENDIF}
+
+  { Criando Classe TEF_DIRECAO }
+  fTefDirecao := TACBrTEFDDirecao.Create(self);
+  fTEFList.Add(fTefDirecao);     // Adicionando "fTefDiracao" na Lista Objetos de Classes de TEF
+  {$IFDEF COMPILER6_UP}
+   fTefDirecao.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
+  {$ENDIF}
+
   GPAtual := gpPayGo;
 end;
 
@@ -717,6 +736,8 @@ begin
     gpTicketCar : fTefClass := fTefTicketCar ;
     gpConvCard  : fTefClass := fTefConvCard ;
     gpCappta    : fTefClass := fTefCappta ;
+    gpCliSiTefModular : fTefClass := fTefCliSiTefModular;
+    gpTefDirecao : fTefClass := fTefDirecao ;
   end;
 
   fGPAtual := AValue;

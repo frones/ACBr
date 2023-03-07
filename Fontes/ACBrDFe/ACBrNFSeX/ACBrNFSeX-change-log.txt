@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] Atualização da URL de produção da cidade de Novo Hamburgo/RS
+  Por: Duarte RS
+
 06/03/2023
 -- Betha.Provider --
 [*] Alterado o TratarXmlRetornado para executar: ParseText.

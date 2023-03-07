@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/03/2023
+-- Sistemas4R.Provider --
+[*] Revertido a alteração na RecepcionarSincrono para usar IncluirCDATA.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Atualização da URL de produção da cidade de Novo Hamburgo/RS
   Por: Duarte RS

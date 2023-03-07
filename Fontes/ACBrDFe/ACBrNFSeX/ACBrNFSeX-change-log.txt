@@ -49,6 +49,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] Atualização da URL de produção da cidade de Novo Hamburgo/RS
   Por: Duarte RS
+[*] Atualização da URL de produção da cidade de Gravatai/RS
+  Por: Gabriel Rogelin
 
 06/03/2023
 -- Betha.Provider --

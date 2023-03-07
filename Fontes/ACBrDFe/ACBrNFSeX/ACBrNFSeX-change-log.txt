@@ -51,6 +51,8 @@ Símbolo : Significado
   Por: Duarte RS
 [*] Atualização da URL de produção da cidade de Gravatai/RS
   Por: Gabriel Rogelin
+[*] Incluida a cidade de Ouro Fino/MG, provedor é o Fiorilli na versão 2.00
+  Por: DIMAS - DBSOFT
 
 06/03/2023
 -- Betha.Provider --

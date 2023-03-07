@@ -774,16 +774,17 @@ begin
     (*LA14*)Item.Prod.comb.encerrante.nTanque := ObterConteudo(AuxNode.Childrens.Find('nTanque'), tcInt);
     (*LA15*)Item.Prod.comb.encerrante.vEncIni := ObterConteudo(AuxNode.Childrens.Find('vEncIni'), tcDe3);
     (*LA16*)Item.Prod.comb.encerrante.vEncFin := ObterConteudo(AuxNode.Childrens.Find('vEncFin'), tcDe3);
-    (*LA17*)Item.Prod.comb.encerrante.pBio := ObterConteudo(AuxNode.Childrens.Find('pBio'), tcDe4);
+  end;
 
-    ANodes := AuxNode.Childrens.FindAll('origComb');
-    for i := 0 to Length(ANodes) - 1 do
-    begin
-      Item.Prod.comb.encerrante.origComb.New;
-      Item.Prod.comb.encerrante.origComb[i].indImport := StrToindImport(Ok, ObterConteudo(ANodes[i]).Childrens.Find('indImport'), tcStr));
-      Item.Prod.comb.encerrante.origComb[i].cUFOrig := ObterConteudo(ANodes[i]).Childrens.Find('cUFOrig'), tcInt);
-      Item.Prod.comb.encerrante.origComb[i].pOrig := ObterConteudo(ANodes[i]).Childrens.Find('pOrig'), tcDe4);
-    end;
+  Item.Prod.comb.pBio := ObterConteudo(ANode.Childrens.Find('pBio'), tcDe4);
+
+  ANodes := ANode.Childrens.FindAll('origComb');
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    Item.Prod.comb.origComb.New;
+    Item.Prod.comb.origComb[i].indImport := StrToindImport(Ok, ObterConteudo(ANodes[i]).Childrens.Find('indImport'), tcStr));
+    Item.Prod.comb.origComb[i].cUFOrig := ObterConteudo(ANodes[i]).Childrens.Find('cUFOrig'), tcInt);
+    Item.Prod.comb.origComb[i].pOrig := ObterConteudo(ANodes[i]).Childrens.Find('pOrig'), tcDe4);
   end;
 
   AuxNode := ANode.Childrens.Find('ICMSComb');

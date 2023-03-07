@@ -2078,6 +2078,25 @@ begin
               CODIF    := INIRec.ReadString(  sSecao,'CODIF'   ,'');
               qTemp    := StringToFloatDef(INIRec.ReadString( sSecao,'qTemp',''),0);
               UFcons   := INIRec.ReadString( sSecao,'UFCons','');
+              pBio     := StringToFloatDef(INIRec.ReadString( sSecao,'pBio',''),0);
+
+              J := 1;
+              while true do
+              begin
+                sSecao := 'origComb' + IntToStrZero(I,3) + IntToStrZero(J,2);
+                sFim   := INIRec.ReadString(sSecao,'cUFOrig','FIM');
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with origComb.New do
+                begin
+                  indImport := StrToindImport(OK, INIRec.ReadString( sSecao,'indImport', '0'));
+                  cUFOrig := StrToIntDef(sFim, 0);
+                  pOrig  := StringToFloatDef(INIRec.ReadString( sSecao,'pOrig',''),0);
+                end;
+
+                Inc(J)
+              end;
 
               sSecao := 'CIDE'+IntToStrZero(I,3);
               CIDE.qBCprod   := StringToFloatDef(INIRec.ReadString( sSecao,'qBCprod'  ,''),0);
@@ -2090,25 +2109,6 @@ begin
               encerrante.nTanque  := INIRec.ReadInteger( sSecao,'nTanque',0);
               encerrante.vEncIni  := StringToFloatDef(INIRec.ReadString( sSecao,'vEncIni',''),0);
               encerrante.vEncFin  := StringToFloatDef(INIRec.ReadString( sSecao,'vEncFin',''),0);
-              encerrante.pBio     := StringToFloatDef(INIRec.ReadString( sSecao,'pBio',''),0);
-
-              J := 1;
-              while true do
-              begin
-                sSecao := 'origComb' + IntToStrZero(I,3) + IntToStrZero(J,2);
-                sFim   := INIRec.ReadString(sSecao,'cUFOrig','FIM');
-                if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                  break;
-
-                with encerrante.origComb.New do
-                begin
-                  indImport := StrToindImport(OK, INIRec.ReadString( sSecao,'indImport', '0'));
-                  cUFOrig := StrToIntDef(sFim, 0);
-                  pOrig  := StringToFloatDef(INIRec.ReadString( sSecao,'pOrig',''),0);
-                end;
-
-                Inc(J)
-              end;
 
               sSecao := 'ICMSComb'+IntToStrZero(I,3);
               ICMS.vBCICMS   := StringToFloatDef(INIRec.ReadString( sSecao,'vBCICMS'  ,''),0);
@@ -3107,6 +3107,18 @@ begin
               INIRec.WriteString(sSecao, 'CODIF', CODIF);
               INIRec.WriteFloat(sSecao, 'qTemp', qTemp);
               INIRec.WriteString(sSecao, 'UFCons', UFcons);
+              INIRec.WriteFloat(sSecao, 'pBio', pBio);
+
+              for J := 0 to origComb.Count - 1 do
+              begin
+                sSecao := 'origComb' + IntToStrZero(I + 1 , 3) + IntToStrZero(J + 1, 2);
+                with origComb.Items[J] do
+                begin
+                  INIRec.WriteString(sSecao, 'indImport', indImportToStr(indImport));
+                  INIRec.WriteInteger(sSecao, 'cUFOrig', cUFOrig);
+                  INIRec.WriteFloat(sSecao, 'pOrig', pOrig);
+                end;
+              end;
 
               sSecao := 'CIDE' + IntToStrZero(I + 1, 3);
               INIRec.WriteFloat(sSecao, 'qBCprod', CIDE.qBCprod);
@@ -3119,18 +3131,6 @@ begin
               INIRec.WriteInteger(sSecao, 'nTanque', encerrante.nTanque);
               INIRec.WriteFloat(sSecao, 'vEncIni', encerrante.vEncIni);
               INIRec.WriteFloat(sSecao, 'vEncFin', encerrante.vEncFin);
-              INIRec.WriteFloat(sSecao, 'pBio', encerrante.pBio);
-
-              for J := 0 to encerrante.origComb.Count - 1 do
-              begin
-                sSecao := 'origComb' + IntToStrZero(I + 1 , 3) + IntToStrZero(J + 1, 2);
-                with encerrante.origComb.Items[J] do
-                begin
-                  INIRec.WriteString(sSecao, 'indImport', indImportToStr(indImport));
-                  INIRec.WriteInteger(sSecao, 'cUFOrig', cUFOrig);
-                  INIRec.WriteFloat(sSecao, 'pOrig', pOrig);
-                end;
-              end;
 
               sSecao := 'ICMSComb' + IntToStrZero(I + 1, 3);
               INIRec.WriteFloat(sSecao, 'vBCICMS', ICMS.vBCICMS);

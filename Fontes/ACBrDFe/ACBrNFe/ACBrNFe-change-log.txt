@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2023
+-- Diversos --
+[*] Correção na implementação dos novos campos, foram implementados dentro do 
+    grupo <encerrante> sendo que o correto é no mesmo nível do grupo <encerrante>.
+    por: Italo Giurizzato Junior
+
 03/03/2023
 -- ACBrNFeServicos --
 [*] Atualização das URL de Consulta via QR-Code de MG Produção e Homologação.

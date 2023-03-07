@@ -594,6 +594,20 @@ begin
 
       (*L120*)NFe.Det[i].Prod.comb.ICMSCons.UFcons := Leitor.rCampo(tcStr, 'UFcons');
 
+      NFe.Det[i].Prod.comb.pBio := Leitor.rCampo(tcDe4, 'pBio');
+
+      j := 0;
+      NFe.Det[i].Prod.comb.origComb.Clear;
+      while Leitor.rExtrai(4, 'origComb', '', j + 1) <> '' do
+      begin
+        NFe.Det[i].Prod.comb.origComb.New;
+        NFe.Det[i].Prod.comb.origComb[j].indImport := StrToindImport(ok, Leitor.rCampo(tcStr, 'indImport'));
+        NFe.Det[i].Prod.comb.origComb[j].cUFOrig := Leitor.rCampo(tcInt, 'cUFOrig');
+        NFe.Det[i].Prod.comb.origComb[j].pOrig := Leitor.rCampo(tcDe4, 'pOrig');
+
+        inc(j);
+      end;
+
       if Leitor.rExtrai(4, 'CIDE') <> '' then
       begin
         (*L106*)NFe.Det[i].Prod.comb.CIDE.qBCprod   := Leitor.rCampo(tcDe4, 'qBCProd');
@@ -608,19 +622,6 @@ begin
         (*LA14*)NFe.Det[i].Prod.comb.encerrante.nTanque := Leitor.rCampo(tcInt, 'nTanque');
         (*LA15*)NFe.Det[i].Prod.comb.encerrante.vEncIni := Leitor.rCampo(tcDe3, 'vEncIni');
         (*LA16*)NFe.Det[i].Prod.comb.encerrante.vEncFin := Leitor.rCampo(tcDe3, 'vEncFin');
-        (*LA17*)NFe.Det[i].Prod.comb.encerrante.pBio    := Leitor.rCampo(tcDe4, 'pBio');
-
-        j := 0;
-        NFe.Det[i].Prod.comb.encerrante.origComb.Clear;
-        while Leitor.rExtrai(5, 'origComb', '', j + 1) <> '' do
-        begin
-          NFe.Det[i].Prod.comb.encerrante.origComb.New;
-          NFe.Det[i].Prod.comb.encerrante.origComb[j].indImport := StrToindImport(ok, Leitor.rCampo(tcStr, 'indImport'));
-          NFe.Det[i].Prod.comb.encerrante.origComb[j].cUFOrig := Leitor.rCampo(tcInt, 'cUFOrig');
-          NFe.Det[i].Prod.comb.encerrante.origComb[j].pOrig := Leitor.rCampo(tcDe4, 'pOrig');
-
-          inc(j);
-        end;
       end;
 
       if Leitor.rExtrai(4, 'ICMSComb') <> '' then

@@ -908,12 +908,7 @@ type
     FnTanque: Integer;
     FvEncIni: Currency;
     FvEncFin: Currency;
-    FpBio: Currency;
-    ForigComb: TorigCombCollection;
-    procedure SetorigComb(const Value: TorigCombCollection);
   public
-    constructor Create;
-    destructor Destroy; override;
     procedure Assign(Source: Tencerrante);
 
     property nBico: Integer read FnBico write FnBico;
@@ -921,8 +916,6 @@ type
     property nTanque: Integer read FnTanque write FnTanque;
     property vEncIni: Currency read FvEncIni write FvEncIni;
     property vEncFin: Currency read FvEncFin write FvEncFin;
-    property pBio: Currency read FpBio write FpBio;
-    property origComb: TorigCombCollection read ForigComb write SetorigComb;
   end;
 
   TComb = class(TObject)
@@ -942,6 +935,10 @@ type
     FICMSInter: TICMSInter;
     FICMSCons: TICMSCons;
     Fencerrante: Tencerrante;
+    FpBio: Currency;
+    ForigComb: TorigCombCollection;
+
+    procedure SetorigComb(const Value: TorigCombCollection);
   public
     constructor Create();
     destructor Destroy; override;
@@ -962,6 +959,8 @@ type
     property ICMSInter: TICMSInter read FICMSInter write FICMSInter;
     property ICMSCons: TICMSCons read FICMSCons write FICMSCons;
     property encerrante: Tencerrante read Fencerrante write Fencerrante;
+    property pBio: Currency read FpBio write FpBio;
+    property origComb: TorigCombCollection read ForigComb write SetorigComb;
   end;
 
   TCIDE = class(TObject)
@@ -2627,16 +2626,21 @@ begin
   ICMSInter.Assign(Source.ICMSInter);
   ICMSCons.Assign(Source.ICMSCons);
   encerrante.Assign(Source.encerrante);
+
+  pBio    := Source.pBio;
+  origComb.Assign(Source.origComb);
 end;
 
 constructor TComb.Create();
 begin
   inherited Create;
+
   FCIDE := TCIDE.Create;
   FICMS := TICMSComb.Create;
   FICMSInter  := TICMSInter.Create;
   FICMScons   := TICMScons.Create;
   Fencerrante := Tencerrante.Create;
+  origComb := TorigCombCollection.Create;
 end;
 
 destructor TComb.Destroy;
@@ -2646,7 +2650,14 @@ begin
   FICMSInter.Free;
   FICMScons.Free;
   Fencerrante.Free;
+  origComb.Free;
+
   inherited;
+end;
+
+procedure TComb.SetorigComb(const Value: TorigCombCollection);
+begin
+  ForigComb := Value;
 end;
 
 { TDICollection }
@@ -4016,26 +4027,6 @@ begin
   nTanque := Source.nTanque;
   vEncIni := Source.vEncIni;
   vEncFin := Source.vEncFin;
-  pBio    := Source.pBio;
-
-  origComb.Assign(Source.origComb);
-end;
-
-constructor Tencerrante.Create;
-begin
-  inherited Create;
-  origComb := TorigCombCollection.Create;
-end;
-
-destructor Tencerrante.Destroy;
-begin
-  origComb.Free;
-  inherited;
-end;
-
-procedure Tencerrante.SetorigComb(const Value: TorigCombCollection);
-begin
-  ForigComb := Value;
 end;
 
 { TinfNFeSupl }

@@ -1264,6 +1264,11 @@ begin
 
       if NFe.Det[i].Prod.comb.encerrante.nBico > 0 then
         GerarDetProdCombencerrante(i);
+
+      Gerador.wCampo(tcDe4, 'LA17', 'pBio', 01,  5, 0, NFe.Det[i].Prod.comb.pBio, DSC_PBIO);
+
+      if NFe.Det[i].Prod.comb.origComb.Count > 0 then
+        GerarDetProdCombencerranteorigComb(i);
     end;
 
     Gerador.wGrupo('/comb');
@@ -1292,10 +1297,6 @@ begin
   Gerador.wCampo(tcInt, 'LA14', 'nTanque', 01, 03, 1, NFe.Det[i].Prod.comb.encerrante.nTanque, DSC_NTANQUE);
   Gerador.wCampo(tcDe3, 'LA15', 'vEncIni', 01, 15, 1, NFe.Det[i].Prod.comb.encerrante.vEncIni, DSC_VENCINI);
   Gerador.wCampo(tcDe3, 'LA16', 'vEncFin', 01, 15, 1, NFe.Det[i].Prod.comb.encerrante.vEncFin, DSC_VENCFIN);
-  Gerador.wCampo(tcDe4, 'LA17', 'pBio'   , 01,  5, 0, NFe.Det[i].Prod.comb.encerrante.pBio, DSC_PBIO);
-
-  if NFe.Det[i].Prod.comb.encerrante.origComb.Count > 0 then
-    GerarDetProdCombencerranteorigComb(i);
 
   Gerador.wGrupo('/encerrante');
 end;
@@ -1304,23 +1305,23 @@ procedure TNFeW.GerarDetProdCombencerranteorigComb(const i: Integer);
 var
   j: Integer;
 begin
-  for j := 0 to NFe.Det[i].Prod.comb.encerrante.origComb.Count - 1 do
+  for j := 0 to NFe.Det[i].Prod.comb.origComb.Count - 1 do
   begin
     Gerador.wGrupo('origComb', 'LA18');
 
     Gerador.wCampo(tcStr, 'LA19', 'indImport', 1, 1, 1,
-      indImportToStr(NFe.Det[i].Prod.comb.encerrante.origComb[j].indImport), DSC_INDIMPORT);
+      indImportToStr(NFe.Det[i].Prod.comb.origComb[j].indImport), DSC_INDIMPORT);
 
     Gerador.wCampo(tcInt, 'LA20', 'cUFOrig', 2, 2, 1,
-      NFe.Det[i].Prod.comb.encerrante.origComb[j].cUFOrig, DSC_CUF);
+      NFe.Det[i].Prod.comb.origComb[j].cUFOrig, DSC_CUF);
 
     Gerador.wCampo(tcDe4, 'LA21', 'pOrig ', 1, 5, 1,
-      NFe.Det[i].Prod.comb.encerrante.origComb[j].pOrig, DSC_PORIG);
+      NFe.Det[i].Prod.comb.origComb[j].pOrig, DSC_PORIG);
 
     Gerador.wGrupo('/origComb');
   end;
 
-  if NFe.Det[i].Prod.comb.encerrante.origComb.Count > 30 then
+  if NFe.Det[i].Prod.comb.origComb.Count > 30 then
     Gerador.wAlerta('LA18', 'origComb', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '30');
 end;
 

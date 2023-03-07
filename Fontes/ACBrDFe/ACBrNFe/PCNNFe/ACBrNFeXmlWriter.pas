@@ -1467,6 +1467,9 @@ begin
 end;
 
 function TNFeXmlWriter.GerarDetProdComb(const i: integer): TACBrXmlNode;
+var
+  nodeArray: TACBrXmlNodeArray;
+  j: Integer;
 begin
   Result := nil;
   if (NFe.Det[i].Prod.comb.cProdANP > 0) then
@@ -1546,6 +1549,16 @@ begin
 
       if NFe.Det[i].Prod.comb.encerrante.nBico > 0 then
         Result.AppendChild(GerarDetProdCombencerrante(i));
+
+      Result.AppendChild(AddNode(tcDe4, 'LA17', 'pBio', 01, 5, 0,
+        NFe.Det[i].Prod.comb.pBio, DSC_PBIO));
+
+      nodeArray := GerarDetProdCombencerranteOrigComb(i);
+
+      for j := 0 to NFe.Det[i].Prod.comb.origComb.Count - 1 do
+      begin
+        Result.AppendChild(nodeArray[j]);
+      end;
     end;
   end;
 end;
@@ -1568,9 +1581,6 @@ begin
 end;
 
 function TNFeXmlWriter.GerarDetProdCombencerrante(const i: integer): TACBrXmlNode;
-var
-  j: Integer;
-  nodeArray: TACBrXmlNodeArray;
 begin
   Result := FDocument.CreateElement('encerrante');
   Result.AppendChild(AddNode(tcInt, 'LA12', 'nBico', 01, 03, 1,
@@ -1583,15 +1593,6 @@ begin
     NFe.Det[i].Prod.comb.encerrante.vEncIni, DSC_VENCINI));
   Result.AppendChild(AddNode(tcDe3, 'LA16', 'vEncFin', 01, 15, 1,
     NFe.Det[i].Prod.comb.encerrante.vEncFin, DSC_VENCFIN));
-  Result.AppendChild(AddNode(tcDe4, 'LA17', 'pBio', 01, 5, 0,
-    NFe.Det[i].Prod.comb.encerrante.pBio, DSC_PBIO));
-
-  nodeArray := GerarDetProdCombencerranteOrigComb(i);
-
-  for j := 0 to NFe.Det[i].Prod.comb.encerrante.origComb.Count - 1 do
-  begin
-    Result.AppendChild(nodeArray[j]);
-  end;
 end;
 
 function TNFeXmlWriter.GerarDetProdCombencerranteOrigComb(
@@ -1600,23 +1601,23 @@ var
   j: integer;
 begin
   Result := nil;
-  SetLength(Result, NFe.Det[i].Prod.comb.encerrante.origComb.Count);
+  SetLength(Result, NFe.Det[i].Prod.comb.origComb.Count);
 
-  for j := 0 to NFe.Det[i].Prod.comb.encerrante.origComb.Count - 1 do
+  for j := 0 to NFe.Det[i].Prod.comb.origComb.Count - 1 do
   begin
     Result[j] := FDocument.CreateElement('origComb');
 
     Result[j].AppendChild(AddNode(tcStr, 'LA19', 'indImport', 1, 1, 1,
-      indImportToStr(NFe.Det[i].Prod.comb.encerrante.origComb[j].indImport)));
+      indImportToStr(NFe.Det[i].Prod.comb.origComb[j].indImport)));
 
     Result[j].AppendChild(AddNode(tcInt, 'LA20', 'cUFOrig', 2, 2, 1,
-      NFe.Det[i].Prod.comb.encerrante.origComb[j].cUFOrig));
+      NFe.Det[i].Prod.comb.origComb[j].cUFOrig));
 
     Result[j].AppendChild(AddNode(tcDe4, 'LA21', 'pOrig', 1, 5, 1,
-      NFe.Det[i].Prod.comb.encerrante.origComb[j].pOrig));
+      NFe.Det[i].Prod.comb.origComb[j].pOrig));
   end;
 
-  if NFe.Det[i].Prod.comb.encerrante.origComb.Count > 30 then
+  if NFe.Det[i].Prod.comb.origComb.Count > 30 then
     wAlerta('LA18', 'origComb', '', ERR_MSG_MAIOR_MAXIMO + '30');
 end;
 

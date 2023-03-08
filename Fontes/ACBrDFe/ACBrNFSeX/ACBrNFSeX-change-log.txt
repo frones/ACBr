@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluída a cidade de Santiago do Sul/SC, provedor é o Pronim na versão 2.03
+  Por: Fernando - C4Dev
 -- ISSCuritiba.Provider --
 [*] Alterado as URL dos namespace e soapaction de http para https.
   Por: Italo Giurizzato Junior
@@ -62,7 +65,7 @@ Símbolo : Significado
     alterou novamente como tem que ser informado esse campo.
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
-[*] Incluida a cidade de Saltinho/SP, provedor é o Fiorilli na versão 2.00
+[*] Incluída a cidade de Saltinho/SP, provedor é o Fiorilli na versão 2.00
   Por: Daniel
 
 07/03/2023

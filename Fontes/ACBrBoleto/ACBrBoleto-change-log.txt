@@ -48,10 +48,16 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+08/03/2023
+
+[*]TK-3666 ACBrBoleto Nosso Numero BS2 Layout 006
+  Por: Victor H Gonzales - Pandaaa
+
 03/03/2023
 [-] ACBrBancoBradesco 
 TK-3671 - Correção totalizador dos registros para gerar GerarRegistroTrailler240 sem e com segmento "R"
-Por : Daniel Morais
+  Por : Daniel Morais
 
 28/02/2023
 [+] Função para criação do EMV a partir do TXID / URL

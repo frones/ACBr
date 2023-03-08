@@ -96,6 +96,7 @@ begin
   fValorTotalDocs         := 0;
   fQtRegLote              := 0;
   fpCodigosMoraAceitos    := '012';
+  fpLayoutVersaoArquivo    := 1;
 end;
 
 function TACBrBancoBS2.DefineCampoLivreCodigoBarras(
@@ -478,7 +479,10 @@ begin
    Modulo.Calcular;
 
    if (Modulo.ModuloFinal = 0) or (Modulo.ModuloFinal = 1) then
-      Result:= '1'
+     if fpLayoutVersaoArquivo >= 6 then
+       Result:= '0'
+     else
+       Result:= '1'
    else
       Result:= IntToStr(Modulo.DigitoFinal);
 end;

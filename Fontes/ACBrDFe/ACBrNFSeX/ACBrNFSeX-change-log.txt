@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 08/03/2023
+-- IPM.GravarXml --
+[*] Removido a linha que definia a formatação do ItemListaServico, o provedor
+    alterou novamente como tem que ser informado esse campo.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Incluida a cidade de Saltinho/SP, provedor é o Fiorilli na versão 2.00
   Por: Daniel

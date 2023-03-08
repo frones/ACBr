@@ -550,7 +550,6 @@ begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
-  FormatoItemListaServico := filsSemFormatacao;
 
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrCodigoPaisTomador := -1;

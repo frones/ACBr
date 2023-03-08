@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/03/2023
+-- ISSCuritiba.Provider --
+[*] Alterado as URL dos namespace e soapaction de http para https.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais --
 [*] Alterado a função GravarXml para respeitar o nome do XML passado como 
     parâmetro.

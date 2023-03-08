@@ -121,11 +121,11 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<RecepcionarLoteRps xmlns="http://www.e-governeapps2.com.br/">';
+  Request := '<RecepcionarLoteRps xmlns="https://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
   Request := Request + '</RecepcionarLoteRps>';
 
-  Result := Executar('http://www.e-governeapps2.com.br/RecepcionarLoteRps', Request,
+  Result := Executar('https://www.e-governeapps2.com.br/RecepcionarLoteRps', Request,
                      ['RecepcionarLoteRpsResult'], []);
 end;
 
@@ -135,11 +135,11 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ConsultarLoteRps xmlns="http://www.e-governeapps2.com.br/">';
+  Request := '<ConsultarLoteRps xmlns="https://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
   Request := Request + '</ConsultarLoteRps>';
 
-  Result := Executar('http://www.e-governeapps2.com.br/ConsultarLoteRps', Request,
+  Result := Executar('https://www.e-governeapps2.com.br/ConsultarLoteRps', Request,
                      ['ConsultarLoteRpsResult'], []);
 end;
 
@@ -149,11 +149,11 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ConsultarSituacaoLoteRps xmlns="http://www.e-governeapps2.com.br/">';
+  Request := '<ConsultarSituacaoLoteRps xmlns="https://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
   Request := Request + '</ConsultarSituacaoLoteRps>';
 
-  Result := Executar('http://www.e-governeapps2.com.br/ConsultarSituacaoLoteRps', Request,
+  Result := Executar('https://www.e-governeapps2.com.br/ConsultarSituacaoLoteRps', Request,
                      ['ConsultarSituacaoLoteRpsResult'], []);
 end;
 
@@ -163,11 +163,11 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ConsultarNfsePorRps xmlns="http://www.e-governeapps2.com.br/">';
+  Request := '<ConsultarNfsePorRps xmlns="https://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
   Request := Request + '</ConsultarNfsePorRps>';
 
-  Result := Executar('http://www.e-governeapps2.com.br/ConsultarNfsePorRps', Request,
+  Result := Executar('https://www.e-governeapps2.com.br/ConsultarNfsePorRps', Request,
                      ['ConsultarNfsePorRpsResult'], []);
 end;
 
@@ -177,11 +177,11 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ConsultarNfse xmlns="http://www.e-governeapps2.com.br/">';
+  Request := '<ConsultarNfse xmlns="https://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
   Request := Request + '</ConsultarNfse>';
 
-  Result := Executar('http://www.e-governeapps2.com.br/ConsultarNfse', Request,
+  Result := Executar('https://www.e-governeapps2.com.br/ConsultarNfse', Request,
                      ['ConsultarNfseResult'], []);
 end;
 
@@ -191,11 +191,11 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<CancelarNfse xmlns="http://www.e-governeapps2.com.br/">';
+  Request := '<CancelarNfse xmlns="https://www.e-governeapps2.com.br/">';
   Request := Request + AMSG;
   Request := Request + '</CancelarNfse>';
 
-  Result := Executar('http://www.e-governeapps2.com.br/CancelarNfse', Request,
+  Result := Executar('https://www.e-governeapps2.com.br/CancelarNfse', Request,
                      ['CancelarNfseResult'], []);
 end;
 

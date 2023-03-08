@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/03/2023
+-- NFSeBrasil.GravarXml --
+[-] Estava pegando o campo errado para gerar a tag <CodigoMunicipio>.
+  Por: Vanderlei Soares
 -- Bauhaus.Provider --
 [+] Implementado o método ConsultarNFSePorRps.
   Por: Andre Azeredo

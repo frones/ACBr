@@ -129,10 +129,10 @@ begin
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
 
     Result.AppendChild(AddNode(tcStr, '#43', 'CodigoMunicipio', 1, 7, 0,
-                                    NFSe.Tomador.Endereco.xMunicipio, DSC_CMUN));
+                              NFSe.Tomador.Endereco.CodigoMunicipio, DSC_CMUN));
 
     Result.AppendChild(AddNode(tcStr, '#44', 'Uf', 1, 2, 0,
-                                    NFSe.Tomador.Endereco.UF, DSC_UF));
+                                             NFSe.Tomador.Endereco.UF, DSC_UF));
 
     Result.AppendChild(AddNode(tcStr, '#45', 'Cep', 8, 8, 0,
                                OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP));

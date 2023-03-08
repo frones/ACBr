@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/03/2023
+-- Bauhaus.Provider --
+[+] Implementado o método ConsultarNFSePorRps.
+  Por: Andre Azeredo
 -- IPM.GravarXml --
 [*] Removido a linha que definia a formatação do ItemListaServico, o provedor
     alterou novamente como tem que ser informado esse campo.

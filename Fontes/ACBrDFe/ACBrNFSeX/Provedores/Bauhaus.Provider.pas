@@ -54,6 +54,7 @@ type
 
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
@@ -77,6 +78,9 @@ type
     procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
+
+    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
@@ -246,6 +250,101 @@ begin
         AErro.Codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
+    end;
+  finally
+    FreeAndNil(jDocument);
+  end;
+end;
+
+procedure TACBrNFSeProviderBauhaus.PrepararConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+begin
+  if EstaVazio(Response.NumeroRps) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod102;
+      AErro.Descricao := ACBrStr(Desc102);
+      Exit;
+    end;
+
+  Response.ArquivoEnvio := '?NumeroRps=' +
+    Response.NumeroRps;
+
+  FpPath := Response.ArquivoEnvio;
+  FpMethod := 'GET';
+end;
+
+procedure TACBrNFSeProviderBauhaus.TratarRetornoConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
+  AErro: TNFSeEventoCollectionItem;
+  NumRps: string;
+  ANota: TNotaFiscal;
+begin
+  if Response.ArquivoRetorno = '' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod201;
+      AErro.Descricao := ACBrStr(Desc201);
+      Exit
+    end;
+
+  jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
+
+  try
+    try
+      ProcessarMensagemDeErros(jDocument, Response);
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      if Response.Sucesso then
+        begin
+          jNfse := jDocument.AsJSONObject['DadosNfse'];
+          jRps := jNfse.AsJSONObject['Rps'];
+          NumRps := jRps.AsString['Numero'];
+
+          if Assigned(jNfse) then
+            begin
+              with Response do
+                begin
+                  NumeroNota := jNfse.AsString['NumeroNfse'];
+                  SerieNota := jRps.AsString['Serie'];
+                  Data := jNfse.AsISODateTime['DataEmissao'];
+                  Link := jNfse.AsString['LinkNfse'];
+                  Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
+                  Protocolo := jNfse.AsString['CodigoValidacao'];
+                  Situacao := jNfse.AsString['SituacaoNfse'];
+                  NumeroLote := NumRps;
+
+                  if Situacao = '2' then
+                    begin
+                      DescSituacao := 'Cancelada';
+                      jCancel := jNfse.AsJSONObject['Cancelamento'];
+                      DataCanc := jCancel.AsISODate['Data'];
+                    end
+                  else
+                    DescSituacao := 'Normal';
+                end;
+
+              if NumRps <> '' then
+                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
+              else
+                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
+
+              ANota := CarregarXmlNfse(ANota, Response.ArquivoRetorno);
+              SalvarXmlNfse(ANota);
+            end;
+        end;
+    except
+      on E: Exception do
+        begin
+          Response.Sucesso := False;
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := ACBrStr(Desc999 + E.Message);
+        end;
     end;
   finally
     FreeAndNil(jDocument);
@@ -467,6 +566,14 @@ begin
 end;
 
 function TACBrNFSeXWebserviceBauhaus.GerarNFSe(ACabecalho, AMSG: String): string;
+begin
+  FPMsgOrig := AMSG;
+
+  Result := Executar('', AMSG, [], []);
+end;
+
+function TACBrNFSeXWebserviceBauhaus.ConsultarNFSePorRps(ACabecalho,
+  AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+08/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluida a cidade de Saltinho/SP, provedor é o Fiorilli na versão 2.00
+  Por: Daniel
+
 07/03/2023
 -- Sistemas4R.Provider --
 [*] Revertido a alteração na RecepcionarSincrono para usar IncluirCDATA.

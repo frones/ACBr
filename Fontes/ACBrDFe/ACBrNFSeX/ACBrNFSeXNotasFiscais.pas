@@ -801,7 +801,12 @@ begin
     if EstaVazio(NomeArquivo) then
       FNomeArq := TACBrNFSeX(FACBrNFSe).GetNumID(NFSe) + '-nfse.xml'
     else
-      FNomeArq := NomeArquivo + '-nfse.xml';
+    begin
+      FNomeArq := ExtractFileName(NomeArquivo);
+
+      if ExtractFileExt(FNomeArq) = '' then
+        FNomeArq := FNomeArq + '.xml';
+    end;
 
     Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArq, FXmlNfse, PathArquivo, ConteudoEhXml);
   end

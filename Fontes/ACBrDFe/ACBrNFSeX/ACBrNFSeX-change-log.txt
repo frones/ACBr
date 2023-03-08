@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 08/03/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Alterado a função GravarXml para respeitar o nome do XML passado como 
+    parâmetro.
+  Por: Helius_ERP/Italo Giurizzato Junior
 -- NFSeBrasil.GravarXml --
 [-] Estava pegando o campo errado para gerar a tag <CodigoMunicipio>.
   Por: Vanderlei Soares

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2023
+-- ACBrPIXPSPSantander --
+[*] Ajuste na consulta de Pix Recebidos por Período para formatar os parâmetros de inicio e fim
+    sem os milissegundos, pois o PSP estava retornando erro.
+    por: Elias César
+
 22/02/2023
 -- ACBrPIXPSPBancoDoBrasil --
 [-] Correção para não disparar exception indevidamente quando ocorrerem erros na resposta do método GET

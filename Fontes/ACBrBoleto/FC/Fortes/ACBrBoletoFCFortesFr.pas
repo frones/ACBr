@@ -2219,8 +2219,8 @@ begin
       end;
 
       lTertxtLinhaDigitavel.Caption   := LinhaDigitavel;
-      lTertxtCodBarras.AutoSize       := False;
-      lTertxtCodBarras.Width          := 432;
+      lTertxtCodBarras.AutoSize       := false;
+      lTertxtCodBarras.Width          := 641;
       lTertxtCodBarras.Caption        := CodBarras;
 
       MensagemPadrao.Clear;

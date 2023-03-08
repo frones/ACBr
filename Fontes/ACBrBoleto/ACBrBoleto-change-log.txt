@@ -50,6 +50,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/03/2023
+--ACBrBoletoFCFortesFr--
+[-]TK-3476 ACBrBoletoFCFortesFr/dfm Alterado o boleto impressora térmica
+aumentando espacamento (codigo barras) para o app poder ler codigo barras.
+  Por: Daniel Morais
 
 [*]TK-3666 ACBrBoleto Nosso Numero BS2 Layout 006
   Por: Victor H Gonzales - Pandaaa

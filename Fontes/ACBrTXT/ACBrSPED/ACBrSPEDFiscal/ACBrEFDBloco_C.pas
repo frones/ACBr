@@ -1182,9 +1182,9 @@ type
    fDT_DOC_SAIDA : TDateTime;   /// Data da emissão do documento fiscal de saída
    fNUM_ITEM_SAIDA : String;   /// Número do item em que foi escriturada a saída em um registro C185, C380, C480 ou C815 quando o contribuinte informar a saída em um arquivo de perfil A.
    fVL_UNIT_CONV_SAIDA : Double;   /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”, correspondente ao valor do campo VL_UNIT_CONV, preenchido na ocasião da saída
-   fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA : Double;   /// Valor médio unitário do ICMS OP, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_OP_ESTOQUE_CONV, preenchido na ocasião da saída
-   fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA : Double;   /// Valor médio unitário do ICMS ST, incluindo FCP ST, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
-   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA : Double;   /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
+   fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA : Variant;   /// Valor médio unitário do ICMS OP, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_OP_ESTOQUE_CONV, preenchido na ocasião da saída
+   fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA : Variant;   /// Valor médio unitário do ICMS ST, incluindo FCP ST, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
+   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA : Variant;   /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
    fVL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA : Variant;   /// Valor unitário para o ICMS na operação, correspondente ao valor do campo VL_UNIT_ICMS_NA_OPERACAO_CONV, preenchido na ocasião da saída
    fVL_UNIT_ICMS_OP_CONV_SAIDA : Variant;   /// Valor unitário do ICMS correspondente ao valor do campo VL_UNIT_ICMS_OP_CONV, preenchido na ocasião da saída
    fVL_UNIT_ICMS_ST_CONV_REST : Variant;   /// Valor unitário do total do ICMS ST, incluindo FCP ST, a ser restituído/ressarcido, correspondente ao estorno do complemento apurado na operação de saída.
@@ -1203,9 +1203,9 @@ type
    property DT_DOC_SAIDA: TDateTime read fDT_DOC_SAIDA  write fDT_DOC_SAIDA ;
    property NUM_ITEM_SAIDA: String read fNUM_ITEM_SAIDA  write fNUM_ITEM_SAIDA ;
    property VL_UNIT_CONV_SAIDA: Double read fVL_UNIT_CONV_SAIDA  write fVL_UNIT_CONV_SAIDA ;
-   property VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA: Double read fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA  write fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA ;
-   property VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA: Double read fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA  write fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA ;
-   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA: Double read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA  write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA ;
+   property VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA: Variant read fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA  write fVL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA ;
+   property VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA: Variant read fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA  write fVL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA ;
+   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA: Variant read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA  write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA ;
    property VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA: Variant read fVL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA  write fVL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA ;
    property VL_UNIT_ICMS_OP_CONV_SAIDA: Variant read fVL_UNIT_ICMS_OP_CONV_SAIDA  write fVL_UNIT_ICMS_OP_CONV_SAIDA ;
    property VL_UNIT_ICMS_ST_CONV_REST: Variant read fVL_UNIT_ICMS_ST_CONV_REST  write fVL_UNIT_ICMS_ST_CONV_REST ;

@@ -2347,9 +2347,9 @@ begin
                LFill( DT_DOC_SAIDA, 'ddmmyyyy' ) +
                LFill( NUM_ITEM_SAIDA) +
                DFill( VL_UNIT_CONV_SAIDA,6,True ) +
-               DFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA,6,True ) +
-               DFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA,6,True ) +
-               DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA,6,True ) +
+               VDFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA, 6) +
+               VDFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA, 6) +
+               VDFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA, 6) +
                VDFill( VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA, 6) +
                VDFill( VL_UNIT_ICMS_OP_CONV_SAIDA, 6) +
                VDFill( VL_UNIT_ICMS_ST_CONV_REST, 6) +
@@ -2387,9 +2387,9 @@ begin
                DFill( VL_UNIT_CONV,6, False ) +
                VDFill(VL_UNIT_ICMS_NA_OPERACAO_CONV, 6) +
                VDFill(VL_UNIT_ICMS_OP_CONV,6) +
-               DFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,6, VarIsNull(VL_UNIT_ICMS_OP_ESTOQUE_CONV) ) +
-               DFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,6,VarIsNull(VL_UNIT_ICMS_ST_ESTOQUE_CONV) ) +
-               DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,6, VarIsNull(VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV) ) +
+               VDFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV, 6) +
+               VDFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV, 6) +
+               VDFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, 6) +
                VDFill(VL_UNIT_ICMS_ST_CONV_REST, 6) +
                VDFill(VL_UNIT_FCP_ST_CONV_REST, 6) +
                VDFill(VL_UNIT_ICMS_ST_CONV_COMPL, 6) +

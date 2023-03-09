@@ -63,8 +63,9 @@ uses
 
 procedure TNFSeW_Libre204.Configuracao;
 begin
-  // Executa a Configuração Padrão
   inherited Configuracao;
+
+  GerarEnderecoExterior := True;
 
   TagTomador := 'TomadorServico';
 

@@ -81,6 +81,8 @@ begin
 
   TagTomador := 'TomadorServico';
 
+  GerarEnderecoExterior := True;
+
   NrOcorrCodigoPaisTomador := -1;
   NrOcorrCodigoPaisServico := -1;
 

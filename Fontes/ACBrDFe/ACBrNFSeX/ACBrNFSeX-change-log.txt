@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 09/03/2023
+-- Diversos --
+[*] Alterado a procedure de configuração dos provedores que usam a versão 2.04 da
+    ABRASF para poder gerar se necessário o Endereço do Exterior do tomador.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv2/SystemPro.GravarXml --
 [*] Criada a propriedade GerarTagRps Boolean para definir se vai gerar o grupo <Rps>
     ou não.

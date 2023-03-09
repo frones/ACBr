@@ -92,6 +92,8 @@ procedure TNFSeW_Abaco204.Configuracao;
 begin
   inherited Configuracao;
 
+  GerarEnderecoExterior := True;
+
   NrOcorrCodigoPaisTomador := -1;
 
   TagTomador := 'TomadorServico';

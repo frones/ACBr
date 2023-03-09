@@ -65,6 +65,8 @@ begin
 
   FormatoAliq := tcDe2;
 
+  GerarEnderecoExterior := True;
+
   NrOcorrCodigoPaisTomador := -1;
 
   TagTomador := 'TomadorServico';

@@ -366,8 +366,8 @@ begin
   begin
     LerIdentificacaoNfse(ANode);
 
-    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDat);
-    dhRecebimento := ObterConteudo(ANode.Childrens.FindAnyNs('DataLancamento'), tcDat);
+    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatVcto);
+    dhRecebimento := ObterConteudo(ANode.Childrens.FindAnyNs('DataLancamento'), tcDatVcto);
     Competencia := ObterConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcDatVcto);
     RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Regime'), tcStr));
 
@@ -388,7 +388,7 @@ begin
 
   with NFSe do
   begin
-    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDat);
+    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatVcto);
 
     LerIdentificacaoRps(ANode);
     LerServico(ANode);

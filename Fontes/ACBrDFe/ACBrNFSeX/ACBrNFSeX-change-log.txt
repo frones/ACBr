@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/03/2023
+-- GeisWeb.LerXml --
+[*] Alterado o formato de leitura das datas para atender a cidade de Campo Limpo Paulista.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Alterado a procedure de configuração dos provedores que usam a versão 2.04 da
     ABRASF para poder gerar se necessário o Endereço do Exterior do tomador.

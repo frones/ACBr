@@ -339,10 +339,10 @@ begin
             // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
             with Itens.New do
             begin
-              NCM           := Item.Strings[0];
-              Excecao       := Item.Strings[1];
+              NCM           := Trim(Item.Strings[0]);
+              Excecao       := Trim(Item.Strings[1]);
               Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2]))) ;
-              Descricao     := Item.Strings[3];
+              Descricao     := Trim(Item.Strings[3]);
 
               FederalNacional  := StringToFloatDef(Item.Strings[4], 0.00);
               FederalImportado := StringToFloatDef(Item.Strings[5], 0.00);

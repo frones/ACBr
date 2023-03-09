@@ -72,6 +72,7 @@ begin
   NrOcorrValorTTS := 0;
   NrOcorrQuantDiarias := 0;
 
+  GerarTagRps := False;
 end;
 
 end.

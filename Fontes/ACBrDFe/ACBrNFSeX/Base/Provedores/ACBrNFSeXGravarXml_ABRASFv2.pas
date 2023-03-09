@@ -140,6 +140,7 @@ type
     FNrOcorrValorTTS: Integer;
     FNrOcorrQuantDiarias: Integer;
     FNrOcorrCodigoNBS: Integer;
+    FGerarTagRps: Boolean;
 
   protected
     procedure Configuracao; override;
@@ -268,8 +269,9 @@ type
     property NrOcorrQuantDiarias: Integer read FNrOcorrQuantDiarias write FNrOcorrQuantDiarias;
     property NrOcorrCodigoNBS: Integer read FNrOcorrCodigoNBS write FNrOcorrCodigoNBS;
 
-    property GerarTagServicos: Boolean  read FGerarTagServicos  write FGerarTagServicos;
+    property GerarTagServicos: Boolean read FGerarTagServicos write FGerarTagServicos;
     property GerarIDDeclaracao: Boolean read FGerarIDDeclaracao write FGerarIDDeclaracao;
+    property GerarTagRps: Boolean read FGerarTagRps write FGerarTagRps;
 
     property GerarEnderecoExterior: Boolean read FGerarEnderecoExterior write FGerarEnderecoExterior;
 
@@ -391,9 +393,10 @@ begin
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
   FGerarEnderecoExterior := False;
+  FGerarTagRps := True;
 
   // Propriedades de Formatação de informações
-  FormatoEmissao     := tcDat;
+  FormatoEmissao := tcDat;
   FormatoCompetencia := tcDat;
 
   FTagTomador := 'Tomador';
@@ -449,7 +452,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#4', 'Id', 1, 15, NrOcorrID,
                                                             NFSe.infID.ID, ''));
 
-  Result.AppendChild(GerarRps);
+  if (NFSe.IdentificacaoRps.Numero <> '') and GerarTagRps then
+    Result.AppendChild(GerarRps);
 
   Result.AppendChild(GerarListaServicos);
 

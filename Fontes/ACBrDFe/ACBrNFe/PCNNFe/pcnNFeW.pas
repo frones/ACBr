@@ -500,7 +500,7 @@ begin
   if not ValidarCodigoUF(NFe.Ide.NFref[i].RefNF.cUF) then Gerador.wAlerta('B15', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcEsp, 'B16', 'AAMM  ', 04, 04, 1, NFe.Ide.NFref[i].RefNF.AAMM, DSC_AAMM);
   if not ValidarAAMM(NFe.Ide.NFref[i].RefNF.AAMM) then  Gerador.wAlerta('B16', 'AAMM', DSC_AAMM, 'Periodo inválido');
-  Gerador.wCampoCNPJCPF('B17', 'B17', NFe.Ide.NFref[i].RefNF.CNPJ);
+  Gerador.wCampoCNPJ('B17', NFe.Ide.NFref[i].RefNF.CNPJ, CODIGO_BRASIL, True);
   Gerador.wCampo(tcInt, 'B18', 'mod   ', 02, 02, 1, NFe.Ide.NFref[i].RefNF.Modelo, DSC_MOD);
   if not ValidarMod(NFe.Ide.NFref[i].RefNF.Modelo, NFe.infNFe.Versao) then Gerador.wAlerta('B18', 'mod', DSC_MOD, 'Modelo de documento inválido');
   Gerador.wCampo(tcInt, 'B19', 'serie ', 01, 03, 1, NFe.ide.NFref[i].RefNF.serie, DSC_SERIE);

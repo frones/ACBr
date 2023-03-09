@@ -566,7 +566,7 @@ begin
   if not ValidarAAMM(NFe.Ide.NFref[i].RefNF.AAMM) then
     wAlerta('B16', 'AAMM', DSC_AAMM, 'Periodo inválido');
 
-  Result.AppendChild(AddNodeCNPJCPF('B17', 'B17', NFe.Ide.NFref[i].RefNF.CNPJ));
+  Result.AppendChild(AddNodeCNPJ('B17', NFe.Ide.NFref[i].RefNF.CNPJ, CODIGO_BRASIL, True));
   Result.AppendChild(AddNode(tcInt, 'B18', 'mod', 02, 02, 1,
     NFe.Ide.NFref[i].RefNF.Modelo, DSC_MOD));
 

@@ -5,17 +5,17 @@
     </ProjectExtensions>
     <PropertyGroup>
         <DeviceId Condition="'$(Platform)'=='Android'">DM04218E40335</DeviceId>
-        <DeviceId Condition="'$(Platform)'=='Android64'">DM04218E40335</DeviceId>
+        <DeviceId Condition="'$(Platform)'=='Android64'"/>
     </PropertyGroup>
     <ItemGroup Condition="'$(Platform)'=='Win64'"/>
     <ItemGroup Condition="'$(Platform)'=='Linux64'"/>
     <ItemGroup Condition="'$(Platform)'=='Win32'"/>
     <ItemGroup Condition="'$(Platform)'=='Android64'"/>
     <ItemGroup Condition="'$(Platform)'=='Android'">
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-large\</RemoteDir>
-            <RemoteName>splash_image.png</RemoteName>
-            <DeployClass>Android_SplashImage640</DeployClass>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-xhdpi\</RemoteDir>
+            <RemoteName>ic_notification.png</RemoteName>
+            <DeployClass>Android_NotificationIcon48</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -30,15 +30,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-xhdpi\</RemoteDir>
-            <RemoteName>ic_notification.png</RemoteName>
-            <DeployClass>Android_NotificationIcon48</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="Android\Debug\styles-v21.xml" Condition="'$(Config)'=='Debug'">
             <RemoteDir>ACBrBALAndroid\res\values-v21\</RemoteDir>
             <RemoteName>styles.xml</RemoteName>
@@ -48,10 +39,46 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-hdpi\</RemoteDir>
+            <RemoteName>ic_notification.png</RemoteName>
+            <DeployClass>Android_NotificationIcon36</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-xxhdpi\</RemoteDir>
+            <RemoteName>ic_notification.png</RemoteName>
+            <DeployClass>Android_NotificationIcon72</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-xxxhdpi\</RemoteDir>
+            <RemoteName>ic_notification.png</RemoteName>
+            <DeployClass>Android_NotificationIcon96</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Android\Debug\colors.xml" Condition="'$(Config)'=='Debug'">
             <RemoteDir>ACBrBALAndroid\res\values\</RemoteDir>
             <RemoteName>colors.xml</RemoteName>
             <DeployClass>Android_Colors</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-xlarge\</RemoteDir>
+            <RemoteName>splash_image.png</RemoteName>
+            <DeployClass>Android_SplashImage960</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -94,91 +121,10 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-mdpi\</RemoteDir>
-            <RemoteName>ic_notification.png</RemoteName>
-            <DeployClass>Android_NotificationIcon24</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="$(BDS)\lib\android\debug\mips\libnative-activity.so" Condition="'$(Config)'=='Debug'">
             <RemoteDir>ACBrBALAndroid\library\lib\mips\</RemoteDir>
             <RemoteName>libACBrBALAndroid.so</RemoteName>
             <DeployClass>AndroidLibnativeMipsFile</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-small\</RemoteDir>
-            <RemoteName>splash_image.png</RemoteName>
-            <DeployClass>Android_SplashImage426</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\library\lib\armeabi-v7a\</RemoteDir>
-            <RemoteName>gdbserver</RemoteName>
-            <DeployClass>AndroidGDBServer</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-ldpi\</RemoteDir>
-            <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon36</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-hdpi\</RemoteDir>
-            <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon72</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-xxhdpi\</RemoteDir>
-            <RemoteName>ic_notification.png</RemoteName>
-            <DeployClass>Android_NotificationIcon72</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-normal\</RemoteDir>
-            <RemoteName>splash_image.png</RemoteName>
-            <DeployClass>Android_SplashImage470</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-hdpi\</RemoteDir>
-            <RemoteName>ic_notification.png</RemoteName>
-            <DeployClass>Android_NotificationIcon36</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_192_192.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-xxxhdpi\</RemoteDir>
-            <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon192</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -193,28 +139,37 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-mdpi\</RemoteDir>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_192_192.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-xxxhdpi\</RemoteDir>
             <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon48</DeployClass>
+            <DeployClass>Android_LauncherIcon192</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-xhdpi\</RemoteDir>
-            <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon96</DeployClass>
+        <DeployFile Include="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\library\lib\armeabi-v7a\</RemoteDir>
+            <RemoteName>gdbserver</RemoteName>
+            <DeployClass>AndroidGDBServer</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-xlarge\</RemoteDir>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-normal\</RemoteDir>
             <RemoteName>splash_image.png</RemoteName>
-            <DeployClass>Android_SplashImage960</DeployClass>
+            <DeployClass>Android_SplashImage470</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-mdpi\</RemoteDir>
+            <RemoteName>ic_notification.png</RemoteName>
+            <DeployClass>Android_NotificationIcon24</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -238,10 +193,19 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>ACBrBALAndroid\res\drawable-xxxhdpi\</RemoteDir>
-            <RemoteName>ic_notification.png</RemoteName>
-            <DeployClass>Android_NotificationIcon96</DeployClass>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-large\</RemoteDir>
+            <RemoteName>splash_image.png</RemoteName>
+            <DeployClass>Android_SplashImage640</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="..\..\..\..\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>ACBrBALAndroid\res\drawable-small\</RemoteDir>
+            <RemoteName>splash_image.png</RemoteName>
+            <DeployClass>Android_SplashImage426</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>

@@ -79,7 +79,7 @@ begin
 
   ConfigGeral.Identificador := 'id';
 
-  SetXmlNameSpace('http://srv2-isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd');
+  SetXmlNameSpace('http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd');
 
   ConfigAssinar.LoteRps := True;
 end;

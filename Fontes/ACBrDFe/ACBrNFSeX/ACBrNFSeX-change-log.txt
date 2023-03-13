@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a informação para a cidade de Iranduba/AM, provedor é o Betha na versão 2.02
+   Por: Diego Reckziegel
 
 09/03/2023
 -- GeisWeb.LerXml --

@@ -396,7 +396,7 @@ begin
   xTexto := Registro.IdRegistro + OnlyNumber(Registro.CNPJEmissorNF)        +
                    FTxt.RFill(Registro.SerieNF,3)                           +
                    FTxt.LFill(Registro.nNF, iif( Versao = ve50, 9, 8) )     +
-                   FTxt.LFill(Registro.cOcorrencia, 3)                      +
+                   FTxt.LFill(Registro.cOcorrencia, iif(Versao = ve50, 3, 2))+
                    FTxt.LFill(Registro.dtOcorrencia, 'ddmmyyyy', false)     +
                    FTxt.LFill(Registro.hrOcorrencia, 'hhmm', false)         +
                    FTxt.LFill(Registro.cObsOcorrencia, 2)                   ;

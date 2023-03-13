@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-            targetNamespace="http://srv2-isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd" 
-            xmlns="http://srv2-isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd" 
+            targetNamespace="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd" 
+            xmlns="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd" 
             xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
             attributeFormDefault="unqualified"
             elementFormDefault="qualified">

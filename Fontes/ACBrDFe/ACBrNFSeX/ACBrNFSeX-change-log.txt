@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Barra do Bugres/MT mudou de provedor agora é Coplan.
+   Por: Diego Reckziegel
 -- Diversos --
 [+] Implementado na classe base as procedures: VerificarSeConteudoEhLista,
     LerListaJson e LerListaTabulada, visando detectar na tag <Discriminacao>

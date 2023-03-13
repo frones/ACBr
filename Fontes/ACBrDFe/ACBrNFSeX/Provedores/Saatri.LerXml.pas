@@ -47,7 +47,7 @@ type
   protected
 
   public
-    function LerXml: Boolean; override;
+//    function LerXml: Boolean; override;
 
   end;
 
@@ -62,7 +62,7 @@ uses
 //==============================================================================
 
 { TNFSeR_Saatri201 }
-
+(*
 function TNFSeR_Saatri201.LerXml: Boolean;
 var
   xDiscriminacao: string;
@@ -98,5 +98,5 @@ begin
     end;
   end;
 end;
-
+*)
 end.

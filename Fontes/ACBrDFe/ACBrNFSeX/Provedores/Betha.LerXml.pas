@@ -47,7 +47,7 @@ type
   protected
 
   public
-    function LerXml: Boolean; override;
+//    function LerXml: Boolean; override;
 
   end;
 
@@ -68,7 +68,7 @@ implementation
 //==============================================================================
 
 { TNFSeR_Betha }
-
+{
 function TNFSeR_Betha.LerXml: Boolean;
 var
   xDiscriminacao, xDescricao, xItemServico: string;
@@ -124,5 +124,5 @@ begin
     end;
   end;
 end;
-
+}
 end.

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/03/2023
+-- Diversos --
+[+] Implementado na classe base as procedures: VerificarSeConteudoEhLista,
+    LerListaJson e LerListaTabulada, visando detectar na tag <Discriminacao>
+    as informações dos serviços no formato Json ou Tabulado.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluida a informação para a cidade de Iranduba/AM, provedor é o Betha na versão 2.02
    Por: Diego Reckziegel

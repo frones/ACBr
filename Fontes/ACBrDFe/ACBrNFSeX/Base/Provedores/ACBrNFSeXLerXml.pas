@@ -59,6 +59,10 @@ type
     function TipodeXMLLeitura(const aArquivo: string): TtpXML; virtual;
     function NormatizarXml(const aXml: string): string; virtual;
     function NormatizarAliquota(const Aliquota: Double): Double;
+
+    procedure VerificarSeConteudoEhLista(const aDiscriminacao: string);
+    procedure LerListaJson(const aDiscriminacao: string);
+    procedure LerListaTabulada(const aDiscriminacao: string);
   public
     constructor Create(AOwner: IACBrNFSeXProvider);
 
@@ -73,7 +77,8 @@ type
 implementation
 
 uses
-  StrUtilsEx,
+  StrUtils, StrUtilsEx,
+  ACBrJSON,
   ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException;
 
@@ -146,6 +151,101 @@ begin
     Result := txmlNFSe
   else
     Result := txmlRPS;
+end;
+
+procedure TNFSeRClass.VerificarSeConteudoEhLista(const aDiscriminacao: string);
+var
+  xDiscriminacao: string;
+begin
+  xDiscriminacao := NFSe.Servico.Discriminacao;
+  FpAOwner.ConfigGeral.DetalharServico := False;
+
+  if (Pos('[', xDiscriminacao) > 0) and (Pos(']', xDiscriminacao) > 0) and
+     (Pos('{', xDiscriminacao) > 0) and (Pos('}', xDiscriminacao) > 0) then
+  begin
+    FpAOwner.ConfigGeral.DetalharServico := True;
+
+    if Pos('":', xDiscriminacao) > 0 then
+      LerListaJson(xDiscriminacao)
+    else
+      LerListaTabulada(xDiscriminacao);
+  end;
+end;
+
+procedure TNFSeRClass.LerListaJson(const aDiscriminacao: string);
+var
+  xDiscriminacao: string;
+  json, jsonItem: TACBrJsonObject;
+  i: Integer;
+begin
+  xDiscriminacao := '{"a": ' + aDiscriminacao + '}';
+  Json := TACBrJsonObject.Parse(xDiscriminacao);
+
+  for i := 0 to json.AsJSONArray['a'].Count -1 do
+  begin
+    jsonItem := json.AsJSONArray['a'].ItemAsJSONObject[i];
+
+    with NFSe.Servico.ItemServico.New do
+    begin
+      Descricao := jsonItem.AsString['Descricao'];
+      ValorUnitario := jsonItem.AsCurrency['ValorUnitario'];
+      Quantidade := jsonItem.AsCurrency['Quantidade'];
+      ValorTotal := jsonItem.AsCurrency['ValorTotal'];
+    end;
+  end;
+end;
+
+procedure TNFSeRClass.LerListaTabulada(const aDiscriminacao: string);
+var
+  xDiscriminacao, xDescricao, xItemServico: string;
+  fQuantidade, fValorUnitario, fValorServico, fValorBC, fAliquota: Double;
+  i, j: Integer;
+
+  function ExtraiValorCampo(aCampo: string; aCampoNumerico: Boolean): string;
+  begin
+    i := PosEx(aCampo, xDiscriminacao, j) + Length(aCampo) + 1;
+
+    if i = Length(aCampo) + 1 then
+      Result := ''
+    else
+    begin
+      j := PosEx(']', xDiscriminacao, i);
+      Result := Copy(xDiscriminacao, i, j-i);
+
+      if aCampoNumerico then
+        Result := StringReplace(Result, '.', ',', [rfReplaceAll])
+    end;
+  end;
+begin
+  xDiscriminacao := aDiscriminacao;
+  J := 1;
+
+  while true do
+  begin
+    xDescricao := ExtraiValorCampo('Descricao', False);
+
+    if xDescricao = '' then
+      Break;
+
+    xItemServico := ExtraiValorCampo('ItemServico', False);
+    fQuantidade := StrToFloatDef(ExtraiValorCampo('Quantidade', True), 0);
+    fValorUnitario := StrToFloatDef(ExtraiValorCampo('ValorUnitario', True), 0);
+    fValorServico := StrToFloatDef(ExtraiValorCampo('ValorServico', True), 0);
+    fValorBC := StrToFloatDef(ExtraiValorCampo('ValorBaseCalculo', True), 0);
+    fAliquota := StrToFloatDef(ExtraiValorCampo('Aliquota', True), 0);
+
+    with NFSe.Servico.ItemServico.New do
+    begin
+      Descricao := xDescricao;
+      ItemListaServico := xItemServico;
+      Quantidade := fQuantidade;
+      ValorUnitario := fValorUnitario;
+      ValorTotal := fValorServico;
+      ValorBCINSS := fValorBC;
+      BaseCalculo := fValorBC;
+      Aliquota := fAliquota;
+    end;
+  end;
 end;
 
 end.

@@ -90,7 +90,7 @@
                                                   <xsd:element name="ResponsavelRetencao" type="xsd:unsignedByte" />
                                                   <xsd:element name="ItemListaServico" type="xsd:decimal" />
                                                   <xsd:element name="CodigoCnae" type="xsd:unsignedLong" />
-                                                  <xsd:element name="CodigoTributacaoMunicipio" type="xsd:unsignedLong" />
+                                                  <xsd:element name="CodigoTributacaoMunicipio" type="xsd:decimal" />
                                                   <xsd:element name="Discriminacao" />
                                                   <xsd:element name="CodigoMunicipio" type="xsd:unsignedLong" />
                                                   <xsd:element name="CodigoPais" type="xsd:unsignedShort" />

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/03/2023
+-- Diversos --
+[+] Implementado o provedor Prescon que atende a cidade de Vargem/SP. 
+   Por: Renato Rubinho
+-- ACBrNFSeXServicos.ini --
 [*] A cidade de Sao Gabriel/RS mudou para o provedor Pronim.
    Por: C4Dev
 -- SmarAPD.Provider --

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/03/2023
+-- SmarAPD.Provider --
+[*] Comentado a linha que instrui o componente a assinar o Rps.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade Atibaia/SP - Provedor Giap.
    Por: Glauber Bernardo/Italo Giurizzato Junior

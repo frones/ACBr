@@ -621,7 +621,11 @@ begin
 
   with ConfigAssinar do
   begin
-    Rps := True;
+    {
+      Comentado a linha abaixo para atender a cidade de Cubatão/SP
+      14/03/2023
+    }
+//    Rps := True;
     LoteRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;

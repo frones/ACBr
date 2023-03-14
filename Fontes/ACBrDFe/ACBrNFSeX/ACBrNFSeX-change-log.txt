@@ -44,6 +44,8 @@ Símbolo : Significado
 
 
 14/03/2023
+[*] A cidade de Sao Gabriel/RS mudou para o provedor Pronim.
+   Por: C4Dev
 -- SmarAPD.Provider --
 [*] Comentado a linha que instrui o componente a assinar o Rps.
    Por: Italo Giurizzato Junior

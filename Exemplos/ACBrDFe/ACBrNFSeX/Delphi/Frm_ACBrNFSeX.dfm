@@ -1834,7 +1834,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Top = 40
               Width = 177
               Height = 25
-              Caption = 'Enviar um RPS'
+              Caption = 'Enviar um RPS (Unit'#225'rio)'
               TabOrder = 4
               OnClick = btnGerarEnviarNFSeClick
             end

@@ -841,6 +841,13 @@ begin
           - Servico.Valores.DescontoCondicionado;
       end;
 
+      DeducaoMateriais := snSim;
+      with Servico.Deducao.New do
+      begin
+        TipoDeducao := tdMateriais;
+        ValorDeduzir := 10.00;
+      end;
+
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
         proSiapSistemas:
           // código padrão ABRASF acrescido de um sub-item
@@ -1196,7 +1203,7 @@ begin
     // Os Provedores da lista requerem que seja informado o motivo do cancelamento
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
       proConam, proEquiplano, proFGMaiss, proGoverna, proIPM, proISSBarueri,
-      proISSDSF, proISSLencois, proModernizacaoPublica, proPriMax, proPublica,
+      proISSDSF, proISSLencois, proModernizacaoPublica, proPrescon, proPriMax, proPublica,
       proSiat, proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
       proWebFisco, proCenti, proCTA, proBauhaus] then
     begin
@@ -1394,19 +1401,26 @@ procedure TfrmACBrNFSe.btnConsultarNFSeFaixaClick(Sender: TObject);
 var
   xTitulo, NumNFSeIni, NumNFSeFin, NumPagina: String;
 begin
-  xTitulo := 'Consultar NFSe Por Faixa';
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proPrescon] then
+  begin
+    NumPagina := '1';
+  end
+  else
+  begin
+    xTitulo := 'Consultar NFSe Por Faixa';
 
-  NumNFSeIni := '';
-  if not(InputQuery(xTitulo, 'Numero da NFSe Inicial:', NumNFSeIni)) then
-    exit;
+    NumNFSeIni := '';
+    if not(InputQuery(xTitulo, 'Numero da NFSe Inicial:', NumNFSeIni)) then
+      exit;
 
-  NumNFSeFin := NumNFSeIni;
-  if not(InputQuery(xTitulo, 'Numero da NFSe Final:', NumNFSeFin)) then
-    exit;
+    NumNFSeFin := NumNFSeIni;
+    if not(InputQuery(xTitulo, 'Numero da NFSe Final:', NumNFSeFin)) then
+      exit;
 
-  NumPagina := '1';
-  if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
-    exit;
+    NumPagina := '1';
+    if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
+      exit;
+  end;
 
   ACBrNFSeX1.ConsultarNFSePorFaixa(NumNFSeIni, NumNFSeFin, StrToIntDef(NumPagina, 1));
 
@@ -3899,6 +3913,9 @@ begin
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+
+            if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proPrescon] then
+              memoLog.Lines.Add('Número NFSe   : ' + NumeroNota);
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');

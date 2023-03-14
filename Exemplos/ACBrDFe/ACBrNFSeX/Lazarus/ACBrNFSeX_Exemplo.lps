@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="7">
+    <Units Count="8">
       <Unit0>
         <Filename Value="ACBrNFSeX_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -77,8 +77,15 @@
         <TopLine Value="37"/>
         <UsageCount Value="10"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXConfiguracoes.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="450"/>
+        <CursorPos Y="462"/>
+        <UsageCount Value="10"/>
+      </Unit7>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
         <Caret Line="1125" Column="95" TopLine="1115"/>
@@ -194,6 +201,10 @@
         <Filename Value="Frm_ACBrNFSeX.pas"/>
         <Caret Line="1612" Column="73" TopLine="1603"/>
       </Position29>
+      <Position30>
+        <Filename Value="Frm_ACBrNFSeX.pas"/>
+        <Caret Line="1663" Column="5" TopLine="1656"/>
+      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

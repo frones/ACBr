@@ -186,6 +186,15 @@ namespace ACBrLib.Sat.Demo
             rtbRespostas.AppendLine("Impressão efetuada com sucesso.");
         }
 
+        private void btnGerarPDF_Click(object sender, EventArgs e)
+        {
+            var xmlPath = Helpers.OpenFile("Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(xmlPath)) return;
+
+            acbrSat.GerarPDFExtratoVenda(xmlPath, "PDF CFe-SAT");
+            rtbRespostas.AppendLine("PDF salvo com sucesso.");
+        }
+
         private void btnImprimirCFeCanc_Click(object sender, EventArgs e)
         {
             var xmlPath = Helpers.OpenFile("Arquivo Xml CFe Venda (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*");
@@ -430,6 +439,5 @@ namespace ACBrLib.Sat.Demo
         }
 
         #endregion Methods
-
     }
 }

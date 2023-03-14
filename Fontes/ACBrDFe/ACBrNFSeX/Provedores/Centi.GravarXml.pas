@@ -68,6 +68,9 @@ begin
   FormatoAliq := tcDe2;
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
 
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoFormatarItemServico') then
+    FormatoItemListaServico := filsSemFormatacao;
+
   NrOcorrCodTribMun_1 := 1;
 
   NrOcorrValorISS := -1;

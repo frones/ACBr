@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/03/2023
+-- SisPMSJ.GravarXml --
+[*] Incluída na configuração a checagem do parâmetro NaoGerarTag:ValorIss.
+   Por: Guilherme Costa
 -- ACBrNFSeXServicos.ini --
 [*] Incluída o parâmetro NaoGerarTag:ValorIss na cidade: João Pessoa/PB
    Por: Guilherme Costa

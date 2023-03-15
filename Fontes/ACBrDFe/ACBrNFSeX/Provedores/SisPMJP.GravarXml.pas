@@ -65,6 +65,9 @@ begin
 
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
   FormatoAliq := tcDe2;
+  
+  if FpAOwner.ConfigGeral.Params.ParamTemValor('NaoGerarTag', 'ValorIss') then
+    NrOcorrValorIss := -1;
 end;
 
 end.

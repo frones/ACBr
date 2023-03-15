@@ -1932,7 +1932,7 @@ ambiente.</xs:documentation>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
-																<xs:element name="pBio" type="TDec_0302a04Max100" minOccurs="0">
+																<xs:element name="pBio" type="TDec_0304Max100Opc" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B instituído pelo órgão regulamentador</xs:documentation>
 																	</xs:annotation>
@@ -1960,7 +1960,7 @@ ambiente.</xs:documentation>
 																					<xs:documentation>UF de origem do produtor ou do importado</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
-																			<xs:element name="pOrig" type="TDec_0302a04Max100">
+																			<xs:element name="pOrig" type="TDec_0304Max100Opc">
 																				<xs:annotation>
 																					<xs:documentation>Percentual originário para a UF</xs:documentation>
 																				</xs:annotation>
@@ -2102,6 +2102,11 @@ ambiente.</xs:documentation>
 																							<xs:enumeration value="02"/>
 																						</xs:restriction>
 																					</xs:simpleType>
+																				</xs:element>
+																				<xs:element name="qBCMono" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada.</xs:documentation>
+																					</xs:annotation>
 																				</xs:element>
 																				<xs:element name="adRemICMS" type="TDec_0302a04">
 																					<xs:annotation>
@@ -2303,6 +2308,11 @@ ambiente.</xs:documentation>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
+																				<xs:element name="qBCMono" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
 																				<xs:element name="adRemICMS" type="TDec_0302a04">
 																					<xs:annotation>
 																						<xs:documentation>Alíquota ad rem do imposto.</xs:documentation>
@@ -2311,6 +2321,11 @@ ambiente.</xs:documentation>
 																				<xs:element name="vICMSMono" type="TDec_1302">
 																					<xs:annotation>
 																						<xs:documentation>Valor do ICMS próprio</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="qBCMonoReten" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada sujeita a retenção.</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
 																				<xs:element name="adRemICMSReten" type="TDec_0302a04">
@@ -2323,6 +2338,27 @@ ambiente.</xs:documentation>
 																						<xs:documentation>Valor do ICMS com retenção</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
+																				<xs:sequence minOccurs="0">
+																					<xs:element name="pRedAdRem" type="TDec_0302Max100">
+																						<xs:annotation>
+																							<xs:documentation>Percentual de redução do valor da alíquota ad rem do ICMS.</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element name="motRedAdRem">
+																						<xs:annotation>
+																							<xs:documentation>Motivo da redução do adrem
+																							1= Transporte coletivo de passageiros; 9=Outros; 
+																						</xs:documentation>
+																						</xs:annotation>
+																						<xs:simpleType>
+																							<xs:restriction base="xs:string">
+																								<xs:whiteSpace value="preserve"/>
+																								<xs:enumeration value="1"/>
+																								<xs:enumeration value="9"/>
+																							</xs:restriction>
+																						</xs:simpleType>
+																					</xs:element>
+																				</xs:sequence>
 																			</xs:sequence>
 																		</xs:complexType>
 																	</xs:element>
@@ -2769,12 +2805,17 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element name="adRemICMSDif" type="TDec_0302a04">
+																				<xs:element name="qBCMonoDif" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada diferida.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="adRemICMSDif" type="TDec_0302a04" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Alíquota ad rem do imposto diferido</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element name="vICMSMonoDif" type="TDec_1302">
+																				<xs:element name="vICMSMonoDif" type="TDec_1302" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Valor do ICMS diferido</xs:documentation>
 																					</xs:annotation>
@@ -2898,9 +2939,14 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
+																				<xs:element name="qBCMonoRet" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada retida anteriormente</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
 																				<xs:element name="adRemICMSRet" type="TDec_0302a04">
 																					<xs:annotation>
-																						<xs:documentation>Alíquota ad rem do imposto retido anteriormen</xs:documentation>
+																						<xs:documentation>Alíquota ad rem do imposto retido anteriormente</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
 																				<xs:element name="vICMSMonoRet" type="TDec_1302">
@@ -5006,14 +5052,29 @@ Substituição Tributaria;</xs:documentation>
 														<xs:documentation>Valor Total do FCP (Fundo de Combate à Pobreza) retido anteriormente por substituição tributária.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
+												<xs:element name="qBCMono" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total da quantidade tributada do ICMS monofásico próprio</xs:documentation>
+													</xs:annotation>
+												</xs:element>
 												<xs:element name="vICMSMono" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor total do ICMS monofásico próprio</xs:documentation>
 													</xs:annotation>
 												</xs:element>
+												<xs:element name="qBCMonoReten" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total da quantidade tributada do ICMS monofásico sujeito a retenção</xs:documentation>
+													</xs:annotation>
+												</xs:element>
 												<xs:element name="vICMSMonoReten" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor total do ICMS monofásico sujeito a retenção</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="qBCMonoRet" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total da quantidade tributada do ICMS monofásico retido anteriormente</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="vICMSMonoRet" type="TDec_1302" minOccurs="0">

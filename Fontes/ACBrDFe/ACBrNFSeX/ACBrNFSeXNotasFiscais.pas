@@ -802,7 +802,7 @@ begin
       FNomeArq := TACBrNFSeX(FACBrNFSe).GetNumID(NFSe) + '-nfse.xml'
     else
     begin
-      FNomeArq := ExtractFileName(NomeArquivo);
+      FNomeArq := NomeArquivo;
 
       if ExtractFileExt(FNomeArq) = '' then
         FNomeArq := FNomeArq + '.xml';

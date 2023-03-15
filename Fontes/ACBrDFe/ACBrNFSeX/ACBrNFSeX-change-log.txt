@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 15/03/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Alterado a função GravarXml para respeitar o path do nome do XML passado como 
+    parâmetro.
+  Por: Italo Giurizzato Junior
 -- SisPMSJ.GravarXml --
 [*] Incluída na configuração a checagem do parâmetro NaoGerarTag:ValorIss.
    Por: Guilherme Costa

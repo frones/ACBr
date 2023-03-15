@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluída o parâmetro NaoGerarTag:ValorIss na cidade: João Pessoa/PB
+   Por: Guilherme Costa
+-- ACBrNFSeXServicos.ini --
+[+] Incluída as cidades: Mauá da Serra e Bodoquena
+   Por: Rodrigo - Digibyte
+
 14/03/2023
 -- Diversos --
 [+] Implementado o provedor Prescon que atende a cidade de Vargem/SP. 

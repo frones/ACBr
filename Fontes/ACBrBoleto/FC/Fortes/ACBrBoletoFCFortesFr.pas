@@ -287,7 +287,6 @@ type
     txtNumeroDocto: TRLLabel;
     txtValorCarne: TRLLabel;
     RLDraw30: TRLDraw;
-    RLDraw31: TRLDraw;
     RLDraw32: TRLDraw;
     RLDraw51: TRLDraw;
     RLDraw52: TRLDraw;
@@ -1257,9 +1256,7 @@ type
     lblCopiaeCola: TRLLabel;
     RLDraw302: TRLDraw;
     RLDraw303: TRLDraw;
-    lblCopiaeColaCarne: TRLLabel;
     RLDraw298: TRLDraw;
-    RLLabel339: TRLLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -1934,13 +1931,10 @@ begin
     begin
       imgQRCodePixCarne.Visible := True;
       PintarQRCode( Titulo.QrCode.emv, imgQRCodePixCarne.Picture.Bitmap, qrAuto );
-      lblCopiaeColaCarne.Visible := True;
-      lblCopiaeColaCarne.Caption := Titulo.QrCode.emv;
     end
     else
     begin
       imgQRCodePixCarne.Visible := False;
-      lblCopiaeColaCarne.Visible := False;
     end;
 
 

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2023
+--ACBrBoletoFCFortesFr--
+[-]TK-3701 TK-3716 ACBrBoletoFCFortesFr.lfm feito a conversão para dfm para lfm para manter a compatibilidade entre boletos delphi, lazarus, ACBrMonitor e Acbrlib. Ajustado altura barras carnê para leitura em leitores de mesa.
+  Por: Daniel Morais
+
 08/03/2023
 --ACBrBoletoFCFortesFr--
 [-]TK-3476 ACBrBoletoFCFortesFr/dfm Alterado o boleto impressora térmica

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2023
+-- pcnReinfRetConsulta_R9015 --
+[*] Adicionadas propriedades perApurXXX nos grupos totApurQui, totApurDec, totApurSem e totApurDia do R9015
+   Por: Rogerio Morato Scarazatti / Renato Rubinho   
+
 02/03/2023
 -- pcnReinfR1000 --
 [*] Adiciona a propriedade PossuiNaturezaJuridicaNaRegra para ser usada em validação para geração do grupo infoEFR

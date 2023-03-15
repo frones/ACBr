@@ -234,6 +234,7 @@ type
   { TtotApurQuiCollectionItem }
   TtotApurQuiCollectionItem = class(TObject)
   private
+    FperApurQui: string;
     FCRQui: string;
     FvlrCRQuiInf: double;
     FvlrCRQuiCalc: double;
@@ -243,6 +244,7 @@ type
     FvlrCRQuiSuspDCTF: double;
     FnatRend: string;
   public
+    property perApurQui: string read FperApurQui;
     property CRQui: string read FCRQui;
     property vlrCRQuiInf: double read FvlrCRQuiInf;
     property vlrCRQuiCalc: double read FvlrCRQuiCalc;
@@ -268,6 +270,7 @@ type
   { TtotApurDecCollectionItem }
   TtotApurDecCollectionItem = class(TObject)
   private
+    FperApurDec: string;
     FCRDec: string;
     FvlrCRDecInf: double;
     FvlrCRDecCalc: double;
@@ -277,6 +280,7 @@ type
     FvlrCRDecSuspDCTF: double;
     FnatRend: string;
   public
+    property perApurDec: string read FperApurDec;
     property CRDec: string read FCRDec;
     property vlrCRDecInf: double read FvlrCRDecInf;
     property vlrCRDecCalc: double read FvlrCRDecCalc;
@@ -302,6 +306,7 @@ type
   { TtotApurSemCollectionItem }
   TtotApurSemCollectionItem = class(TObject)
   private
+    FperApurSem: string;
     FCRSem: string;
     FvlrCRSemInf: double;
     FvlrCRSemCalc: double;
@@ -311,6 +316,7 @@ type
     FvlrCRSemSuspDCTF: double;
     FnatRend: string;
   public
+    property perApurSem: string read FperApurSem;
     property CRSem: string read FCRSem;
     property vlrCRSemInf: double read FvlrCRSemInf;
     property vlrCRSemCalc: double read FvlrCRSemCalc;
@@ -336,6 +342,7 @@ type
   { TtotApurDiaCollectionItem }
   TtotApurDiaCollectionItem = class(TObject)
   private
+    FperApurDia: string;
     FCRDia: string;
     FvlrCRDiaInf: double;
     FvlrCRDiaCalc: double;
@@ -345,6 +352,7 @@ type
     FvlrCRDiaSuspDCTF: double;
     FnatRend: string;
   public
+    property perApurDia: string read FperApurDia;
     property CRDia: string read FCRDia;
     property vlrCRDiaInf: double read FvlrCRDiaInf;
     property vlrCRDiaCalc: double read FvlrCRDiaCalc;
@@ -479,6 +487,7 @@ begin
             while Leitor.rExtrai(3, 'totApurQui', '', i + 1) <> '' do
             begin
               totApurQui.New;
+              totApurQui.Items[i].FperApurQui       := leitor.rCampo(tcStr, 'perApurQui');
               totApurQui.Items[i].FCRQui            := leitor.rCampo(tcStr, 'CRQui');
               totApurQui.Items[i].FvlrCRQuiInf      := leitor.rCampo(tcDe2, 'vlrCRQuiInf');
               totApurQui.Items[i].FvlrCRQuiCalc     := leitor.rCampo(tcDe2, 'vlrCRQuiCalc');
@@ -495,6 +504,7 @@ begin
             while Leitor.rExtrai(3, 'totApurDec', '', i + 1) <> '' do
             begin
               totApurDec.New;
+              totApurDec.Items[i].FperApurDec       := leitor.rCampo(tcStr, 'perApurDec');
               totApurDec.Items[i].FCRDec            := leitor.rCampo(tcStr, 'CRDec');
               totApurDec.Items[i].FvlrCRDecInf      := leitor.rCampo(tcDe2, 'vlrCRDecInf');
               totApurDec.Items[i].FvlrCRDecCalc     := leitor.rCampo(tcDe2, 'vlrCRDecCalc');
@@ -511,6 +521,7 @@ begin
             while Leitor.rExtrai(3, 'totApurSem', '', i + 1) <> '' do
             begin
               totApurSem.New;
+              totApurSem.Items[i].FperApurSem       := leitor.rCampo(tcStr, 'perApurSem');
               totApurSem.Items[i].FCRSem            := leitor.rCampo(tcStr, 'CRSem');
               totApurSem.Items[i].FvlrCRSemInf      := leitor.rCampo(tcDe2, 'vlrCRSemInf');
               totApurSem.Items[i].FvlrCRSemCalc     := leitor.rCampo(tcDe2, 'vlrCRSemCalc');
@@ -527,6 +538,7 @@ begin
             while Leitor.rExtrai(3, 'totApurDia', '', i + 1) <> '' do
             begin
               totApurDia.New;
+              totApurDia.Items[i].FperApurDia       := leitor.rCampo(tcStr, 'perApurDia');
               totApurDia.Items[i].FCRDia            := leitor.rCampo(tcStr, 'CRDia');
               totApurDia.Items[i].FvlrCRDiaInf      := leitor.rCampo(tcDe2, 'vlrCRDiaInf');
               totApurDia.Items[i].FvlrCRDiaCalc     := leitor.rCampo(tcDe2, 'vlrCRDiaCalc');
@@ -560,6 +572,7 @@ begin
             while Leitor.rExtrai(3, 'totApurQui', '', i + 1) <> '' do
             begin
               totApurQui.New;
+              totApurQui.Items[i].FperApurQui       := leitor.rCampo(tcStr, 'perApurQui');
               totApurQui.Items[i].FCRQui            := leitor.rCampo(tcStr, 'CRQui');
               totApurQui.Items[i].FvlrCRQuiDCTF     := leitor.rCampo(tcDe2, 'vlrCRQuiDCTF');
               totApurQui.Items[i].FvlrCRQuiSuspDCTF := leitor.rCampo(tcDe2, 'vlrCRQuiSuspDCTF');
@@ -571,6 +584,7 @@ begin
             while Leitor.rExtrai(3, 'totApurDec', '', i + 1) <> '' do
             begin
               totApurDec.New;
+              totApurDec.Items[i].FperApurDec       := leitor.rCampo(tcStr, 'perApurDec');
               totApurDec.Items[i].FCRDec            := leitor.rCampo(tcStr, 'CRDec');
               totApurDec.Items[i].FvlrCRDecDCTF     := leitor.rCampo(tcDe2, 'vlrCRDecDCTF');
               totApurDec.Items[i].FvlrCRDecSuspDCTF := leitor.rCampo(tcDe2, 'vlrCRDecSuspDCTF');
@@ -582,6 +596,7 @@ begin
             while Leitor.rExtrai(3, 'totApurSem', '', i + 1) <> '' do
             begin
               totApurSem.New;
+              totApurSem.Items[i].FperApurSem       := leitor.rCampo(tcStr, 'perApurSem');
               totApurSem.Items[i].FCRSem            := leitor.rCampo(tcStr, 'CRSem');
               totApurSem.Items[i].FvlrCRSemDCTF     := leitor.rCampo(tcDe2, 'vlrCRSemDCTF');
               totApurSem.Items[i].FvlrCRSemSuspDCTF := leitor.rCampo(tcDe2, 'vlrCRSemSuspDCTF');
@@ -593,6 +608,7 @@ begin
             while Leitor.rExtrai(3, 'totApurDia', '', i + 1) <> '' do
             begin
               totApurDia.New;
+              totApurDia.Items[i].FperApurDia       := leitor.rCampo(tcStr, 'perApurDia');
               totApurDia.Items[i].FCRDia            := leitor.rCampo(tcStr, 'CRDia');
               totApurDia.Items[i].FvlrCRDiaDCTF     := leitor.rCampo(tcDe2, 'vlrCRDiaDCTF');
               totApurDia.Items[i].FvlrCRDiaSuspDCTF := leitor.rCampo(tcDe2, 'vlrCRDiaSuspDCTF');

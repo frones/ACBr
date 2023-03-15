@@ -884,6 +884,13 @@ begin
             Item.Imposto.ICMS.adRemICMSRet := ObterConteudo(AuxNode.Childrens.Find('adRemICMSRet'), tcDe4);
             Item.Imposto.ICMS.vICMSMonoRet := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoRet'), tcDe2);
 
+            Item.Imposto.ICMS.qBCMono := ObterConteudo(AuxNode.Childrens.Find('qBCMono'), tcDe2);
+            Item.Imposto.ICMS.qBCMonoReten := ObterConteudo(AuxNode.Childrens.Find('qBCMonoReten'), tcDe2);
+            Item.Imposto.ICMS.pRedAdRem := ObterConteudo(AuxNode.Childrens.Find('pRedAdRem'), tcDe2);
+            Item.Imposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, ObterConteudo(AuxNode.Childrens.Find('motRedAdRem'), tcStr));
+            Item.Imposto.ICMS.qBCMonoDif := ObterConteudo(AuxNode.Childrens.Find('qBCMonoDif'), tcDe2);
+            Item.Imposto.ICMS.qBCMonoRet := ObterConteudo(AuxNode.Childrens.Find('qBCMonoRet'), tcDe2);
+
     if (AuxNode.Name = 'ICMSPart') then
     begin
       case Item.Imposto.ICMS.CST of
@@ -1084,8 +1091,11 @@ begin
     (*W06a*)NFe.Total.ICMSTot.vFCPST       := ObterConteudo(AuxNode.Childrens.Find('vFCPST'), tcDe2);
     (*W06b*)NFe.Total.ICMSTot.vFCPSTRet    := ObterConteudo(AuxNode.Childrens.Find('vFCPSTRet'), tcDe2);
 
+    NFe.Total.ICMSTot.qBCMono := ObterConteudo(AuxNode.Childrens.Find('qBCMono'), tcDe2);
     NFe.Total.ICMSTot.vICMSMono := ObterConteudo(AuxNode.Childrens.Find('vICMSMono'), tcDe2);
+    NFe.Total.ICMSTot.qBCMonoReten := ObterConteudo(AuxNode.Childrens.Find('qBCMonoReten'), tcDe2);
     NFe.Total.ICMSTot.vICMSMonoReten := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoReten'), tcDe2);
+    NFe.Total.ICMSTot.qBCMonoRet := ObterConteudo(AuxNode.Childrens.Find('qBCMonoRet'), tcDe2);
     NFe.Total.ICMSTot.vICMSMonoRet := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoRet'), tcDe2);
 
     (*W07*)NFe.Total.ICMSTot.vProd         := ObterConteudo(AuxNode.Childrens.Find('vProd'), tcDe2);

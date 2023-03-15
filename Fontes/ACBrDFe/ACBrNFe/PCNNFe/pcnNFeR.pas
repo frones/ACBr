@@ -706,6 +706,13 @@ begin
              NFe.Det[i].Imposto.ICMS.adRemICMSRet := Leitor.rCampo(tcDe4, 'adRemICMSRet');
              NFe.Det[i].Imposto.ICMS.vICMSMonoRet := Leitor.rCampo(tcDe2, 'vICMSMonoRet');
 
+             NFe.Det[i].Imposto.ICMS.qBCMono := Leitor.rCampo(tcDe4, 'qBCMono');
+             NFe.Det[i].Imposto.ICMS.qBCMonoReten := Leitor.rCampo(tcDe4, 'qBCMonoReten');
+             NFe.Det[i].Imposto.ICMS.pRedAdRem := Leitor.rCampo(tcDe4, 'pRedAdRem');
+             NFe.Det[i].Imposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, Leitor.rCampo(tcStr, 'motRedAdRem'));
+             NFe.Det[i].Imposto.ICMS.qBCMonoDif := Leitor.rCampo(tcDe4, 'qBCMonoDif');
+             NFe.Det[i].Imposto.ICMS.qBCMonoRet := Leitor.rCampo(tcDe4, 'qBCMonoRet');
+
       (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := Leitor.rCampo(tcDe2, 'vICMSSubstituto');
 
       if Leitor.rExtrai(4, 'ICMSPart') <> '' then
@@ -880,8 +887,11 @@ begin
       (*W06a*)NFe.Total.ICMSTot.vFCPST       := Leitor.rCampo(tcDe2, 'vFCPST');
       (*W06b*)NFe.Total.ICMSTot.vFCPSTRet    := Leitor.rCampo(tcDe2, 'vFCPSTRet');
 
+      NFe.Total.ICMSTot.qBCMono := Leitor.rCampo(tcDe2, 'qBCMono');
       NFe.Total.ICMSTot.vICMSMono := Leitor.rCampo(tcDe2, 'vICMSMono');
+      NFe.Total.ICMSTot.qBCMonoReten := Leitor.rCampo(tcDe2, 'qBCMonoReten');
       NFe.Total.ICMSTot.vICMSMonoReten := Leitor.rCampo(tcDe2, 'vICMSMonoReten');
+      NFe.Total.ICMSTot.qBCMonoRet := Leitor.rCampo(tcDe2, 'qBCMonoRet');
       NFe.Total.ICMSTot.vICMSMonoRet := Leitor.rCampo(tcDe2, 'vICMSMonoRet');
 
       (*W07*)NFe.Total.ICMSTot.vProd         := Leitor.rCampo(tcDe2, 'vProd');

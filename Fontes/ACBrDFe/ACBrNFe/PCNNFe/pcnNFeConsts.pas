@@ -280,6 +280,12 @@ const
   DSC_VICMSMONODIF = 'Valor do ICMS diferido';
   DSC_ADREMICMSRET = 'Alíquota ad rem do imposto retido anteriormente';
   DSC_VICMSMONORET = 'Valor do ICMS retido anteriormente';
+  DSC_QBCMONO = 'Quantidade tributada';
+  DSC_QBCMONORETEN = 'Quantidade tributada sujeita a retenção';
+  DSC_PREDADREM = 'Percentual de redução do valor da alíquota adrem do ICMS';
+  DSC_MOTREDADREM = 'Motivo da redução do adrem';
+  DSC_QBCMONODIF = 'Quantidade tributada diferida';
+  DSC_QBCMONORET = 'Quantidade tributada retida anteriormente';
 
 implementation
 

@@ -2207,6 +2207,13 @@ begin
                 ICMS.vICMSMonoDif := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMonoDif','') ,0);
                 ICMS.adRemICMSRet := StringToFloatDef( INIRec.ReadString(sSecao,'adRemICMSRet','') ,0);
                 ICMS.vICMSMonoRet := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMonoRet','') ,0);
+
+                ICMS.qBCMono := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMono','') ,0);
+                ICMS.qBCMonoReten := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMonoReten','') ,0);
+                ICMS.pRedAdRem := StringToFloatDef( INIRec.ReadString(sSecao,'pRedAdRem','') ,0);
+                ICMS.motRedAdRem := StrTomotRedAdRem(OK, INIRec.ReadString(sSecao,'motRedAdRem','0'));
+                ICMS.qBCMonoDif := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMonoDif','') ,0);
+                ICMS.qBCMonoRet := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMonoRet','') ,0);
               end;
             end;
 
@@ -2390,9 +2397,14 @@ begin
       Total.ICMSTot.vST     := StringToFloatDef( INIRec.ReadString('Total','vST'       ,INIRec.ReadString('Total','ValorICMSSubstituicao'  ,'')) ,0);
       Total.ICMSTot.vFCPST  := StringToFloatDef( INIRec.ReadString('Total','vFCPST'    ,INIRec.ReadString('Total','ValorFCPST' ,'')) ,0);
       Total.ICMSTot.vFCPSTRet:= StringToFloatDef( INIRec.ReadString('Total','vFCPSTRet',INIRec.ReadString('Total','ValorFCPSTRet' ,'')) ,0);
+
+      Total.ICMSTot.qBCMono := StringToFloatDef( INIRec.ReadString('Total','qBCMono', '') , 0);
       Total.ICMSTot.vICMSMono := StringToFloatDef( INIRec.ReadString('Total','vICMSMono', '') , 0);
+      Total.ICMSTot.qBCMonoReten := StringToFloatDef( INIRec.ReadString('Total','qBCMonoReten', '') , 0);
       Total.ICMSTot.vICMSMonoReten := StringToFloatDef( INIRec.ReadString('Total','vICMSMonoReten' ,''), 0);
+      Total.ICMSTot.qBCMonoRet := StringToFloatDef( INIRec.ReadString('Total','qBCMonoRet', '') , 0);
       Total.ICMSTot.vICMSMonoRet := StringToFloatDef( INIRec.ReadString('Total','vICMSMonoRet', ''), 0);
+
       Total.ICMSTot.vProd   := StringToFloatDef( INIRec.ReadString('Total','vProd'     ,INIRec.ReadString('Total','ValorProduto' ,'')) ,0);
       Total.ICMSTot.vFrete  := StringToFloatDef( INIRec.ReadString('Total','vFrete'    ,INIRec.ReadString('Total','ValorFrete' ,'')) ,0);
       Total.ICMSTot.vSeg    := StringToFloatDef( INIRec.ReadString('Total','vSeg'      ,INIRec.ReadString('Total','ValorSeguro' ,'')) ,0);
@@ -3217,6 +3229,13 @@ begin
               INIRec.WriteFloat(sSecao, 'vICMSMonoDif', ICMS.vICMSMonoDif);
               INIRec.WriteFloat(sSecao, 'adRemICMSRet', ICMS.adRemICMSRet);
               INIRec.WriteFloat(sSecao, 'vICMSMonoRet', ICMS.vICMSMonoRet);
+
+              INIRec.WriteFloat(sSecao, 'qBCMono', ICMS.qBCMono);
+              INIRec.WriteFloat(sSecao, 'qBCMonoReten', ICMS.qBCMonoReten);
+              INIRec.WriteFloat(sSecao, 'pRedAdRem', ICMS.pRedAdRem);
+              INIRec.WriteString(sSecao, 'motRedAdRem', motRedAdRemToStr(ICMS.motRedAdRem));
+              INIRec.WriteFloat(sSecao, 'qBCMonoDif', ICMS.qBCMonoDif);
+              INIRec.WriteFloat(sSecao, 'qBCMonoRet', ICMS.qBCMonoRet);
             end;
             sSecao := 'ICMSUFDEST' + IntToStrZero(I + 1, 3);
             with ICMSUFDest do
@@ -3390,8 +3409,11 @@ begin
       INIRec.WriteFloat('Total', 'vST', Total.ICMSTot.vST);
       INIRec.WriteFloat('Total', 'vFCPST', Total.ICMSTot.vFCPST);
       INIRec.WriteFloat('Total', 'vFCPSTRet', Total.ICMSTot.vFCPSTRet);
+      INIRec.WriteFloat('Total', 'qBCMono', Total.ICMSTot.qBCMono);
       INIRec.WriteFloat('Total', 'vICMSMono', Total.ICMSTot.vICMSMono);
+      INIRec.WriteFloat('Total', 'qBCMonoReten', Total.ICMSTot.qBCMonoReten);
       INIRec.WriteFloat('Total', 'vICMSMonoReten', Total.ICMSTot.vICMSMonoReten);
+      INIRec.WriteFloat('Total', 'qBCMonoRet', Total.ICMSTot.qBCMonoRet);
       INIRec.WriteFloat('Total', 'vICMSMonoRet', Total.ICMSTot.vICMSMonoRet);
       INIRec.WriteFloat('Total', 'vProd', Total.ICMSTot.vProd);
       INIRec.WriteFloat('Total', 'vFrete', Total.ICMSTot.vFrete);

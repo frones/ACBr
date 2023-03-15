@@ -1209,6 +1209,12 @@ type
     FvICMSMonoDif: Currency;
     FadRemICMSRet: Currency;
     FvICMSMonoRet: Currency;
+    FqBCMono: Currency;
+    FqBCMonoReten: Currency;
+    FpRedAdRem: Currency;
+    FmotRedAdRem: TmotRedAdRem;
+    FqBCMonoDif: Currency;
+    FqBCMonoRet: Currency;
   public
     procedure Assign(Source: TICMS);
 
@@ -1271,6 +1277,16 @@ type
     // CST 61
     property adRemICMSRet: Currency read FadRemICMSRet write FadRemICMSRet;
     property vICMSMonoRet: Currency read FvICMSMonoRet write FvICMSMonoRet;
+    // CST 02, 15
+    property qBCMono: Currency read FqBCMono write FqBCMono;
+    // CST 15
+    property qBCMonoReten: Currency read FqBCMonoReten write FqBCMonoReten;
+    property pRedAdRem: Currency read FpRedAdRem write FpRedAdRem;
+    property motRedAdRem: TmotRedAdRem read FmotRedAdRem write FmotRedAdRem;
+    // CST 53
+    property qBCMonoDif: Currency read FqBCMonoDif write FqBCMonoDif;
+    // CST 61
+    property qBCMonoRet: Currency read FqBCMonoRet write FqBCMonoRet;
   end;
 
   TIPI = class(TObject)
@@ -1414,6 +1430,9 @@ type
     FvICMSMono: Currency;
     FvICMSMonoReten: Currency;
     FvICMSMonoRet: Currency;
+    FqBCMono: Currency;
+    FqBCMonoReten: Currency;
+    FqBCMonoRet: Currency;
   public
     procedure Assign(Source: TICMSTot);
 
@@ -1443,6 +1462,9 @@ type
     property vICMSMono: Currency read FvICMSMono write FvICMSMono;
     property vICMSMonoReten: Currency read FvICMSMonoReten write FvICMSMonoReten;
     property vICMSMonoRet: Currency read FvICMSMonoRet write FvICMSMonoRet;
+    property qBCMono: Currency read FqBCMono write FqBCMono;
+    property qBCMonoReten: Currency read FqBCMonoReten write FqBCMonoReten;
+    property qBCMonoRet: Currency read FqBCMonoRet write FqBCMonoRet;
   end;
 
   TISSQNtot = class(TObject)
@@ -3691,6 +3713,12 @@ begin
   vICMSMonoDif := Source.vICMSMonoDif;
   adRemICMSRet := Source.adRemICMSRet;
   vICMSMonoRet := Source.vICMSMonoRet;
+  qBCMono := Source.qBCMono;
+  qBCMonoReten := Source.qBCMonoReten;
+  pRedAdRem := Source.pRedAdRem;
+  motRedAdRem := Source.motRedAdRem;
+  qBCMonoDif := Source.qBCMonoDif;
+  qBCMonoRet := Source.qBCMonoRet;
 end;
 
 { TIPI }
@@ -3788,6 +3816,9 @@ begin
   vICMSMono := Source.vICMSMono;
   vICMSMonoReten := Source.vICMSMonoReten;
   vICMSMonoRet := Source.vICMSMonoRet;
+  qBCMono := Source.qBCMono;
+  qBCMonoReten := Source.qBCMonoReten;
+  qBCMonoRet := Source.qBCMonoRet;
 end;
 
 { TISSQNtot }

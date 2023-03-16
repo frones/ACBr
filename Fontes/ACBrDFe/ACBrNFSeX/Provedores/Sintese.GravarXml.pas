@@ -66,6 +66,7 @@ begin
 
   TagTomador := 'TomadorServico';
 
+  NrOcorrNIFTomador := 0;
   NrOcorrCodigoPaisTomador := -1;
 end;
 

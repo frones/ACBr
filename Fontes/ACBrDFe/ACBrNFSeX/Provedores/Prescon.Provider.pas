@@ -73,8 +73,8 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    procedure PrepararConsultaNFSePorFaixa(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -336,7 +336,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderPrescon.PrepararConsultaNFSePorFaixa(
+procedure TACBrNFSeProviderPrescon.PrepararConsultaNFSeporFaixa(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -361,7 +361,7 @@ begin
                            '</ws:getNextInvoice>';
 end;
 
-procedure TACBrNFSeProviderPrescon.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderPrescon.TratarRetornoConsultaNFSeporFaixa(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrXmlDocument;

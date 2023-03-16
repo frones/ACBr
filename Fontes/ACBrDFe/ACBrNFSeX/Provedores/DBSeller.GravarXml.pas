@@ -83,6 +83,7 @@ begin
 
   GerarEnderecoExterior := True;
 
+  NrOcorrNIFTomador := 0;
   NrOcorrCodigoPaisTomador := -1;
   NrOcorrCodigoPaisServico := -1;
 

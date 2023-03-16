@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/03/2023
+-- Diversos --
+[*] Alterado o valor do parâmentro NrOcorrNIFTomador para zero para que a tag
+    <NifTomador> possa ser gerada ou não se tratando de tomador extrangeiro.
+  Por: Italo Giurizzato Junior
+
 15/03/2023
 -- ACBrNFSeXNotasFiscais --
 [*] Alterado a função GravarXml para respeitar o path do nome do XML passado como 

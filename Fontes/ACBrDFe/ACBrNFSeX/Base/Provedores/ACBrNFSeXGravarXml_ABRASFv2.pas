@@ -812,16 +812,14 @@ begin
   begin
     Result := CreateElement(FTagTomador);
 
+    if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
+       (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') then
+      Result.AppendChild(GerarIdentificacaoTomador);
+
     if (NFSe.Tomador.Endereco.UF = 'EX') and
        (NFSe.Tomador.IdentificacaoTomador.Nif <> '') then
       Result.AppendChild(AddNode(tcStr, '#38', 'NifTomador', 1, 40, NrOcorrNIFTomador,
-                                         NFSe.Tomador.IdentificacaoTomador.Nif))
-    else
-    begin
-      if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
-         (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') then
-        Result.AppendChild(GerarIdentificacaoTomador);
-    end;
+                                        NFSe.Tomador.IdentificacaoTomador.Nif));
 
     Result.AppendChild(AddNode(tcStr, '#38', 'RazaoSocial', 1, 115, 0,
                                           NFSe.Tomador.RazaoSocial, DSC_XNOME));

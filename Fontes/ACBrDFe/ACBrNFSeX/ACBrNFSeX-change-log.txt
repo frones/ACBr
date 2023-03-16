@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/03/2023
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Ajustes para gerar o grupo <Tomador> conforme consta nos Schemas.
+  Por: Italo Giurizzato Junior
 -- Centi.Provider --
 [+] Incluído o TratarRetornoCancelarNFSe
    Por: Diego Reckziegel

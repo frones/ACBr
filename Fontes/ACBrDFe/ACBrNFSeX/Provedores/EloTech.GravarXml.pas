@@ -74,16 +74,23 @@ begin
   NrOcorrCodTribMun_1 := -1;
   NrOcorrCodigoMunic_1 := -1;
 
-  NrOcorrAliquotaPis := 0;
-  NrOcorrRetidoPis := 0;
-  NrOcorrAliquotaCofins := 0;
-  NrOcorrRetidoCofins := 0;
-  NrOcorrAliquotaInss := 0;
-  NrOcorrRetidoInss := 0;
-  NrOcorrAliquotaIr := 0;
-  NrOcorrRetidoIr := 0;
-  NrOcorrAliquotaCsll := 0;
-  NrOcorrRetidoCsll := 0;
+  FormatoItemListaServico := filsSemFormatacao;
+  NrOcorrRespRetencao := -1;
+  NrOcorrValorDeducoes := 1;
+  NrOcorrDescIncond := 1;
+  NrOcorrDescCond := 1;
+  NrOcorrOutrasRet := 1;
+
+  NrOcorrAliquotaPis := 1;
+  NrOcorrRetidoPis := 1;
+  NrOcorrAliquotaCofins := 1;
+  NrOcorrRetidoCofins := 1;
+  NrOcorrAliquotaInss := 1;
+  NrOcorrRetidoInss := 1;
+  NrOcorrAliquotaIr := 1;
+  NrOcorrRetidoIr := 1;
+  NrOcorrAliquotaCsll := 1;
+  NrOcorrRetidoCsll := 1;
   NrOcorrInscEstTomador_2 := 0;
 
   GerarIDDeclaracao := False;
@@ -92,6 +99,7 @@ end;
 function TNFSeW_Elotech203.GerarItemServico: TACBrXmlNodeArray;
 var
   i: integer;
+  item: string;
 begin
   Result := nil;
   SetLength(Result, NFSe.Servico.ItemServico.Count);
@@ -100,8 +108,10 @@ begin
   begin
     Result[i] := CreateElement('ItemServico');
 
+    item := FormatarItemServico(NFSe.Servico.ItemServico[i].ItemListaServico, FormatoItemListaServico);
+
     Result[i].AppendChild(AddNode(tcStr, '#', 'ItemListaServico', 1, 6, 1,
-                                 NFSe.Servico.ItemServico[i].ItemListaServico));
+                                                          item, DSC_CLISTSERV));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'CodigoCnae', 1, 7, 0,
                                        NFSe.Servico.ItemServico[i].CodigoCnae));

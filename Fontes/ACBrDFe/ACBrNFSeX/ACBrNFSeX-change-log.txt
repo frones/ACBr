@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 16/03/2023
+-- EloTech.GravarXml --
+[*] Alterado os parâmetros de configuração.
+   Por: Guilherme Vaz
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade: Pirai do Sul/PR
+   Por: Guilherme Vaz
 -- Diversos --
 [*] Alterado o valor do parâmentro NrOcorrNIFTomador para zero para que a tag
     <NifTomador> possa ser gerada ou não se tratando de tomador extrangeiro.

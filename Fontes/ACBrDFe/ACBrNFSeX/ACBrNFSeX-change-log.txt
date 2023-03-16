@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/03/2023
+-- Centi.Provider --
+[+] Incluído o TratarRetornoCancelarNFSe
+   Por: Diego Reckziegel
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Alterado a formatação do CNPJ/CPF do tomador.
    Por: Diego Reckziegel

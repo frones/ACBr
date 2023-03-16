@@ -174,6 +174,7 @@ var
   NumeroRps: Integer;
 begin
   Result := False;
+  NumeroRps := 0;
 
   if Node <> nil then
   begin
@@ -221,6 +222,7 @@ var
   NumeroRps: Integer;
 begin
   Result := False;
+  NumeroRps := 0;
 
   if Node <> nil then
   begin

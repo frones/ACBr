@@ -66,6 +66,7 @@ type
 
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
@@ -293,6 +294,82 @@ begin
       end;
 
       Response.Sucesso := (Response.Erros.Count = 0);
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderCenti202.TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse);
+var
+  Document: TACBrXmlDocument;
+  Status: string;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
+begin
+  Status := '';
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ProcessarMensagemErros(Document.Root, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANode := Document.Root;
+
+      ANode := ANode.Childrens.FindAnyNs('ListaNfse');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod202;
+        AErro.Descricao := ACBrStr(Desc202);
+        Exit;
+      end;
+
+      ANode := ANode.Childrens.FindAnyNs('CompNfse');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := ACBrStr(Desc203);
+        Exit;
+      end;
+
+      ANode := ANode.Childrens.FindAnyNs('Nfse');
+      if not Assigned(ANode) or (ANode = nil) then Exit;
+
+      ANode := ANode.Childrens.FindAnyNs('InfNfse');
+      if not Assigned(ANode) or (ANode = nil) then Exit;
+
+      Status := ObterConteudoTag(ANode.Childrens.FindAnyNs('Status'), tcStr);
+
+      if Status <> '3' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod204;
+        AErro.Descricao := ACBrStr(Desc204);
+        Exit;
+      end;
     except
       on E:Exception do
       begin

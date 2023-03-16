@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/03/2023
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Alterado a formatação do CNPJ/CPF do tomador.
+   Por: Diego Reckziegel
 -- EloTech.GravarXml --
 [*] Alterado os parâmetros de configuração.
    Por: Guilherme Vaz

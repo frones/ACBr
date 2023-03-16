@@ -592,12 +592,8 @@ begin
         rllTomaCNPJ.Caption := Nif;
       end
       else
-      begin
-        if Length(CpfCnpj) <= 11 then
-          rllTomaCNPJ.Caption := FormatarCPF(CpfCnpj)
-        else
-          rllTomaCNPJ.Caption := FormatarCNPJ(CpfCnpj);
-      end;
+        rllTomaCNPJ.Caption := FormatarCNPJouCPF(CpfCnpj);
+
       rllTomaInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.Tomador.InscricaoMunicipal);
 
       rllTomaInscEstadual.Caption := IfThen(InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.Tomador.InscricaoEstadual);

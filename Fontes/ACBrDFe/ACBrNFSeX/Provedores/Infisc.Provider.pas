@@ -342,6 +342,9 @@ begin
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('NFS-e');
 
+      if ANodeArray = nil then
+        ANodeArray := ANode.Childrens.FindAllAnyNs('NFSe');
+
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
@@ -459,6 +462,9 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('NFS-e');
+
+      if ANodeArray = nil then
+        ANodeArray := ANode.Childrens.FindAllAnyNs('NFSe');
 
       if not Assigned(ANodeArray) then
       begin

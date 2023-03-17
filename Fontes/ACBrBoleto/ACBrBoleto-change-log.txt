@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+17/03/2023
+--ACBrBancoSicredi--
+[*]TK-3705 Colaboração para tratamento retorno pix.
+  Contribuição: EasySoft Sistemas, Conferido: Daniel Morais
 
 15/03/2023
 --ACBrBoletoFCFortesFr--

@@ -870,7 +870,15 @@ begin
               else if(CodMotivo = 'A7') Then
                 Result := 'A7 -  Título já se encontra na situação Pretendida'
               else if(CodMotivo = 'A8') Then
-                Result := 'A8 -  Valor do Abatimento inválido para cancelamento';
+                Result := 'A8 -  Valor do Abatimento inválido para cancelamento'
+              else if(CodMotivo = 'P1') Then
+                Result := 'P1 -  Confirmado COM QrCode'
+              else if(CodMotivo = 'P2') Then
+                Result := 'P2 -  Confirmado SEM QrCode'
+              else if(CodMotivo = 'P3') Then
+                Result := 'P3 -  Chave Inválida'
+              else if(CodMotivo = 'P6') Then
+                Result := 'P6 -  txid em duplicidade/invalido';
             end;
             01: Result := '01 - Código do banco inválido';
             02: Result := '02 - Código do registro detalhe inválido';
@@ -1005,6 +1013,7 @@ begin
             08: Result := '08 - Em cartório';
             30: Result := '30 - Liquidação no guichê de caixa em cheque';
             31: Result := '31 - Liquidação em banco correspondente';
+            61: Result := '61 - Liquidação PIX ';
           else
             Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
           end;
@@ -2115,7 +2124,12 @@ begin
                                        '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
    rCedente       := Trim(Copy(ARetorno[0],73,30));
-   rCNPJCPF       := Copy(ARetorno[0],19,14);
+
+   if ACBrBanco.ACBrBoleto.Cedente.TipoInscricao = pJuridica then
+    rCNPJCPF       := Copy(ARetorno[0],19,14)
+   else
+    rCNPJCPF       := Copy(ARetorno[0],22,11);
+    
    rCodCedente    := Copy(ARetorno[0],33,5);
    rAgencia       := Copy(ARetorno[0],54,4);
    rDigitoAgencia := Copy(ARetorno[0],58,1);

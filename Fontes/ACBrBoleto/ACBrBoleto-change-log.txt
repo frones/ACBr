@@ -53,6 +53,10 @@ Símbolo : Significado
 [*]TK-3705 Colaboração para tratamento retorno pix.
   Contribuição: EasySoft Sistemas, Conferido: Daniel Morais
 
+--ACBrBancoCecred.pas--
+[-]TK-3660 Recebemos uma contribuição do usuário Dercide Alvarez, mais tivemos que alterar o tratamento das mensagens de retorno e tipo de ocorrencia CNAB240/400;
+  Por: Daniel Morais
+
 15/03/2023
 --ACBrBoletoFCFortesFr--
 [-]TK-3701 TK-3716 ACBrBoletoFCFortesFr.lfm feito a conversão para dfm para lfm para manter a compatibilidade entre boletos delphi, lazarus, ACBrMonitor e Acbrlib. Ajustado altura barras carnê para leitura em leitores de mesa.

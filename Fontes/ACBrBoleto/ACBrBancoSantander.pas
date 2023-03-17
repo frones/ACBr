@@ -50,6 +50,7 @@ type
   protected
     function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
+    function DefinePosicaoNossoNumeroRetorno: Integer; override;
     function DefineCaracTitulo(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineTipoDiasProtesto(const ACBrTitulo: TACBrTitulo): String; override;
@@ -80,6 +81,7 @@ type
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodEspecieDocToTipo(const EspecieDoc: String): String;
+    function DefineNossoNumeroRetorno(const Retorno: String): String; override;
   end;
 
 implementation
@@ -108,6 +110,14 @@ begin
    fpModuloMultiplicadorAtual:= 0;
 end;
 
+function TACBrBancoSantander.DefineNossoNumeroRetorno(const Retorno: String): String;
+begin
+  if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+    Result := Copy(Retorno,DefinePosicaoNossoNumeroRetorno,13)
+  else
+    Result := Copy(Retorno,DefinePosicaoNossoNumeroRetorno,12);
+end;
+
 function TACBrBancoSantander.DefineNumeroDocumentoModulo(
   const ACBrTitulo: TACBrTitulo): String;
 begin
@@ -115,6 +125,14 @@ begin
   begin
     Result:= NossoNumero;
   end;
+end;
+
+function TACBrBancoSantander.DefinePosicaoNossoNumeroRetorno: Integer;
+begin
+  if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
+    Result := 41
+  else
+    Result := 63;
 end;
 
 function TACBrBancoSantander.DefineCampoLivreCodigoBarras(
@@ -1049,8 +1067,6 @@ begin
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],158,6),0);
 
-  ACBrBanco.TamanhoMaximoNossoNum := 13;
-
   for iLinha := 1 to ARetorno.Count - 2 do
   begin
     Linha := ARetorno[iLinha];
@@ -1062,7 +1078,7 @@ begin
     begin
       if copy(Linha, 14, 1) = 'T' then
       begin
-        NossoNumero          := Copy(Linha, 41, ACBrBanco.TamanhoMaximoNossoNum);
+        NossoNumero          := DefineNossoNumeroRetorno(Linha);
         NumeroDocumento      := Copy(Linha, 55, 15);
         SeuNumero            := Copy(Linha, 101, 25);
         Carteira             := Copy(Linha, 54, 1);
@@ -1106,7 +1122,6 @@ begin
       end;
     end;
   end;
-  ACBrBanco.TamanhoMaximoNossoNum := 12;
 end;
 
 procedure TACBrBancoSantander.LerRetorno400(ARetorno: TStringList);

@@ -25,8 +25,8 @@
         <UnitName Value="ACBrNFSeXDANFSeFRReg"/>
       </Item>
       <Item>
-        <Filename Value="..\..\..\..\..\..\Fontes\ACBrComum\ACBrUtil.FR.FCP.pas"/>
-        <UnitName Value="ACBrUtil.FR.FCP"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrComum\ACBrUtil.FR.pas"/>
+        <UnitName Value="ACBrUtil.FR"/>
       </Item>
     </Files>
     <RequiredPkgs>

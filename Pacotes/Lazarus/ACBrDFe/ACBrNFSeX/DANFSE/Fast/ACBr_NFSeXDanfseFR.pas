@@ -8,7 +8,7 @@ unit ACBr_NFSeXDANFSeFR;
 interface
 
 uses
-  ACBrNFSeXDANFSeFRReg, ACBrUtil.FR.FCP, LazarusPackageIntf;
+  ACBrNFSeXDANFSeFRReg, ACBrUtil.FR, LazarusPackageIntf;
 
 implementation
 

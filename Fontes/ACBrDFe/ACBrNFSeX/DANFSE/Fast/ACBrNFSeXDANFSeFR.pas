@@ -441,7 +441,7 @@ begin
 {$IFNDEF FPC}
   cdsIdentificacao.LogChanges := false;
 {$ELSE}
-  Open;
+  cdsIdentificacao.Open;
 {$ENDIF}
   cdsPrestador := TACBrFRDataSet.Create(nil);
 

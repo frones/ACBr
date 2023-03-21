@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2023
+-- IPM.Provider --
+[*] Iguala a propriedade CodigoVerificacao ao Protocolo na TratarRetornoConsultaLoteRPS para padronizar.
+   Por: Diego F
 
 17/03/2023
 -- Infisc.Provider --

@@ -46,6 +46,9 @@ Símbolo : Significado
 -- IPM.Provider --
 [*] Iguala a propriedade CodigoVerificacao ao Protocolo na TratarRetornoConsultaLoteRPS para padronizar.
    Por: Diego F
+-- ACBrNFSeXServicos.ini --
+[+] Incluida as informações para cidade de Ibiraçu/ES, provedor é o EL na versão 1.0
+   Por: Victor Gomes - DSV Bremen
 
 17/03/2023
 -- Infisc.Provider --

@@ -50,7 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/03/2023
+-- ACBrBoleto --
 [*]TK-3738-1 Campos de Certificado ACBrBoleto INI Componente
+  por : Victor H Gonzales - Pandaaa
+
+-- ACBrBoletoW_BancoBrasil_API --
+Tratamento para erro 400, campo com pontuação
   por : Victor H Gonzales - Pandaaa
 
 17/03/2023

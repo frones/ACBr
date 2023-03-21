@@ -358,7 +358,7 @@ begin
         Json.Add('indicadorPermissaoRecebimentoParcial').Value.AsString := 'S';
 
       Json.Add('numeroTituloBeneficiario').Value.AsString               := Copy(Trim(UpperCase(ATitulo.NumeroDocumento)),0,15);
-      Json.Add('campoUtilizacaoBeneficiario').Value.AsString            := Copy(Trim(StringReplace(UpperCase(ATitulo.Mensagem.Text),'\r\n',' ',[rfReplaceAll])),0,30);
+      Json.Add('campoUtilizacaoBeneficiario').Value.AsString            := Copy(Trim(StringReplace(UpperCase(TiraPontos(ATitulo.Mensagem.Text)),'\r\n',' ',[rfReplaceAll])),0,30);
       Json.Add('numeroTituloCliente').Value.AsString                    := Boleto.Banco.MontarCampoNossoNumero(ATitulo);
       Json.Add('mensagemBloquetoOcorrencia').Value.AsString             := UpperCase(Copy(Trim(ATitulo.Instrucao1 +' '+ATitulo.Instrucao2+' '+ATitulo.Instrucao3),0,165));
       GerarDesconto(Json);

@@ -109,7 +109,7 @@ begin
   GravarCampo(PagFor.Registro0.Arquivo.DataGeracao, 8, tcDat);
   GravarCampo(PagFor.Registro0.Arquivo.HoraGeracao, 6, tcHor);
   GravarCampo(PagFor.Registro0.Arquivo.Sequencia, 6, tcInt);
-  GravarCampo('084', 3, tcStr);
+  GravarCampo('082', 3, tcStr);
   GravarCampo(PagFor.Registro0.Arquivo.Densidade, 5, tcInt);
   GravarCampo(PagFor.Registro0.ReservadoBanco, 20, tcStr);
   GravarCampo(PagFor.Registro0.ReservadoEmpresa, 20, tcStr);

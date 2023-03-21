@@ -3788,9 +3788,16 @@ begin
         CedenteWS.Scope                     := IniBoletos.ReadString(CWebService,'Scope', CedenteWS.Scope);
         Configuracoes.WebService.Ambiente   := TpcnTipoAmbiente(IniBoletos.ReadInteger(CWebService,'Ambiente', Integer(Configuracoes.WebService.Ambiente)));
         Configuracoes.WebService.SSLHttpLib := TSSLHttpLib(IniBoletos.ReadInteger(CWebService,'SSLHttpLib', Integer(Configuracoes.WebService.SSLHttpLib)));
-        Configuracoes.WebService.ArquivoCRT := IniBoletos.ReadString(CWebService,'ArquivoCRT', Configuracoes.WebService.ArquivoCRT);
-        Configuracoes.WebService.ArquivoKEY := IniBoletos.ReadString(CWebService,'ArquivoKEY', Configuracoes.WebService.ArquivoKEY);
-        Configuracoes.WebService.ArquivoPFX := IniBoletos.ReadString(CWebService,'ArquivoPFX', Configuracoes.WebService.ArquivoPFX);
+
+        if IniBoletos.ValueExists(CWebService,'ArquivoCRT') then
+          Configuracoes.WebService.ArquivoCRT := IniBoletos.ReadString(CWebService,'ArquivoCRT', Configuracoes.WebService.ArquivoCRT);
+
+        if IniBoletos.ValueExists(CWebService,'ArquivoKEY') then
+          Configuracoes.WebService.ArquivoKEY := IniBoletos.ReadString(CWebService,'ArquivoKEY', Configuracoes.WebService.ArquivoKEY);
+
+        if IniBoletos.ValueExists(CWebService,'ArquivoPFX') then
+          Configuracoes.WebService.ArquivoPFX := IniBoletos.ReadString(CWebService,'ArquivoPFX', Configuracoes.WebService.ArquivoPFX);
+
         Result := True;
       end;
     end;

@@ -1362,6 +1362,8 @@ const
   CKeyBOLETOTimeOut =                       'TimeOut';
   CKeyBOLETOCertificadoHTTP =               'CertificadoHTTP';
   CKeyBOLETOVersaoDF =                      'VersaoDF';
+  CKeyBOLETOArquivoCRT =                    'ArquivoCRT';
+  CKeyBOLETOArquivoKEY =                    'ArquivoKEY';
 
   CValueTipoEmpregador =                    'tePessoaJuridica';
   CValueTipoContribuinte =                  'tcPessoaJuridica';

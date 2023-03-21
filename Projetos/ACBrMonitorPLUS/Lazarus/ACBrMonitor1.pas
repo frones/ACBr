@@ -501,6 +501,8 @@ type
     edIBGECodNome: TEdit;
     edConsultarGTIN: TEdit;
     edtBOLChavePix: TEdit;
+    edtBolArquivoKey: TEdit;
+    edtBolArquivoCRT: TEdit;
     edtVersaoArquivo: TEdit;
     edtVersaoLote: TEdit;
     edNCMCodigo: TEdit;
@@ -791,6 +793,8 @@ type
     Label118: TLabel;
     Label152: TLabel;
     Label260: TLabel;
+    Label261: TLabel;
+    Label262: TLabel;
     lbConsultarGTIN: TLabel;
     Label254: TLabel;
     lblBOLChavePix: TLabel;
@@ -1202,6 +1206,8 @@ type
     SbArqLog3: TSpeedButton;
     SbArqLog4: TSpeedButton;
     sbArquivoCert: TSpeedButton;
+    sbArquivoKEY: TSpeedButton;
+    sbArquivoCRT: TSpeedButton;
     sbArquivoWebServicesBPe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
     sbArquivoWebServiceseSocial: TSpeedButton;
@@ -1646,6 +1652,8 @@ type
     procedure SbArqLog4Click(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure sbArquivoCertClick(Sender: TObject);
+    procedure sbArquivoCRTClick(Sender: TObject);
+    procedure sbArquivoKEYClick(Sender: TObject);
     procedure sbArquivoWebServicesCTeClick(Sender: TObject);
     procedure sbArquivoWebServiceseSocialClick(Sender: TObject);
     procedure sbArquivoWebServicesGNReClick(Sender: TObject);
@@ -5640,6 +5648,8 @@ begin
        cbHttpLibBoleto.ItemIndex := HttpLib;
        edtTimeoutWebServicesBoleto.Value := TimeOut ;
        cbSSLTypeBoleto.ItemIndex := SSLType;
+       edtBolArquivoKey.Text := ArquivoKEY;
+       edtBolArquivoCRT.Text := ArquivoCRT;
      end;
 
   end;
@@ -6501,6 +6511,8 @@ begin
     Configuracoes.WebService.SSLHttpLib := TSSLHttpLib( cbHttpLibBoleto.ItemIndex );
     Configuracoes.WebService.TimeOut := edtTimeoutWebServicesBoleto.Value * 1000;
     Configuracoes.WebService.SSLType := TSSLType( cbSSLTypeBoleto.ItemIndex );
+    Configuracoes.WebService.ArquivoKEY:=edtBolArquivoKey.Text;
+    Configuracoes.WebService.ArquivoCRT:=edtBolArquivoCRT.Text;
 
   end;
 
@@ -7470,6 +7482,8 @@ begin
        HttpLib := cbHttpLibBoleto.ItemIndex;
        TimeOut := edtTimeoutWebServicesBoleto.Value;
        SSLType := cbSSLTypeBoleto.ItemIndex;
+       ArquivoKEY:=edtBolArquivoKey.Text;
+       ArquivoCRT:=edtBolArquivoCRT.Text;
      end;
 
    end;
@@ -8330,6 +8344,34 @@ begin
 
     edtArquivoPFX.Text := AFile;
   end;
+end;
+
+procedure TFrmACBrMonitor.sbArquivoCRTClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o arquivo crt';
+  OpenDialog1.DefaultExt := '*.crt';
+  OpenDialog1.Filter :=
+    'Arquivos CRT (*.crt)|*.crt|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtBolArquivoCRT.Text := OpenDialog1.FileName;
+  end;
+
+end;
+
+procedure TFrmACBrMonitor.sbArquivoKEYClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o arquivo Key';
+  OpenDialog1.DefaultExt := '*.key';
+  OpenDialog1.Filter :=
+    'Arquivos KEY (*.key)|*.key|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtBolArquivoKey.Text := OpenDialog1.FileName;
+  end;
+
 end;
 
 procedure TFrmACBrMonitor.sbArquivoWebServicesCTeClick(Sender: TObject);

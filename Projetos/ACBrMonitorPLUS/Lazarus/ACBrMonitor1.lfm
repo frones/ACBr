@@ -20,7 +20,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '2.2.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -17319,12 +17318,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1008
-        ActivePage = tsDFe
+        ActivePage = tsCadastro
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 16
+        TabIndex = 1
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -17939,11 +17938,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 348
                 Top = 0
                 Width = 992
-                ActivePage = tsCadSwChaveRSA
+                ActivePage = tsCadSwDados
                 Align = alClient
                 Font.Height = -13
                 ParentFont = False
-                TabIndex = 1
+                TabIndex = 0
                 TabOrder = 0
                 object tsCadSwDados: TTabSheet
                   Caption = 'Dados Cadastrais'
@@ -23094,7 +23093,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object Label106: TLabel
                   Left = 8
                   Height = 17
-                  Top = 24
+                  Top = 12
                   Width = 44
                   Caption = 'ClientID'
                   Font.Height = -13
@@ -23104,7 +23103,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object Label107: TLabel
                   Left = 8
                   Height = 17
-                  Top = 56
+                  Top = 44
                   Width = 75
                   Caption = 'Client Secret:'
                   Font.Height = -13
@@ -23114,7 +23113,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object edtClientID: TEdit
                   Left = 96
                   Height = 24
-                  Top = 16
+                  Top = 4
                   Width = 843
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
@@ -23125,7 +23124,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object edtClientSecret: TEdit
                   Left = 96
                   Height = 24
-                  Top = 48
+                  Top = 36
                   Width = 843
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
@@ -23136,7 +23135,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object edtKeyUser: TEdit
                   Left = 96
                   Height = 24
-                  Top = 80
+                  Top = 68
                   Width = 368
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
@@ -23147,7 +23146,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object Label114: TLabel
                   Left = 8
                   Height = 17
-                  Top = 88
+                  Top = 76
                   Width = 48
                   Caption = 'KeyUser'
                   Font.Height = -13
@@ -23157,7 +23156,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object edtScope: TEdit
                   Left = 96
                   Height = 24
-                  Top = 112
+                  Top = 100
                   Width = 368
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
@@ -23168,7 +23167,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object Label118: TLabel
                   Left = 8
                   Height = 17
-                  Top = 120
+                  Top = 108
                   Width = 36
                   Caption = 'Scope'
                   Font.Height = -13
@@ -23178,11 +23177,105 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object ChkPix: TCheckBox
                   Left = 840
                   Height = 21
-                  Top = 110
+                  Top = 128
                   Width = 95
                   Anchors = [akRight]
                   Caption = 'Indicador Pix'
                   TabOrder = 4
+                end
+                object edtBolArquivoKey: TEdit
+                  Left = 571
+                  Height = 24
+                  Top = 68
+                  Width = 336
+                  Anchors = [akTop, akLeft, akRight]
+                  Font.Height = -13
+                  Font.Name = 'Arial'
+                  ParentFont = False
+                  TabOrder = 5
+                end
+                object Label261: TLabel
+                  Left = 495
+                  Height = 17
+                  Top = 71
+                  Width = 67
+                  Caption = 'ArquivoKEY'
+                  Font.Height = -13
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object edtBolArquivoCRT: TEdit
+                  Left = 571
+                  Height = 24
+                  Top = 100
+                  Width = 336
+                  Anchors = [akTop, akLeft, akRight]
+                  Font.Height = -13
+                  Font.Name = 'Arial'
+                  ParentFont = False
+                  TabOrder = 6
+                end
+                object Label262: TLabel
+                  Left = 495
+                  Height = 17
+                  Top = 103
+                  Width = 67
+                  Caption = 'ArquivoCRT'
+                  Font.Height = -13
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object sbArquivoKEY: TSpeedButton
+                  AnchorSideTop.Control = edtURLPFX
+                  AnchorSideTop.Side = asrBottom
+                  Left = 912
+                  Height = 23
+                  Top = 68
+                  Width = 23
+                  Anchors = [akTop, akRight]
+                  Glyph.Data = {
+                    76010000424D7601000000000000760000002800000020000000100000000100
+                    04000000000000010000130B0000130B00001000000000000000000000000000
+                    800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                    FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                    333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                    0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                    07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                    07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                    0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                    33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                    B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                    3BB33773333773333773B333333B3333333B7333333733333337
+                  }
+                  Images = ImageList2
+                  ImageIndex = 17
+                  OnClick = sbArquivoKEYClick
+                end
+                object sbArquivoCRT: TSpeedButton
+                  AnchorSideTop.Control = edtURLPFX
+                  AnchorSideTop.Side = asrBottom
+                  Left = 912
+                  Height = 23
+                  Top = 100
+                  Width = 23
+                  Anchors = [akTop, akRight]
+                  Glyph.Data = {
+                    76010000424D7601000000000000760000002800000020000000100000000100
+                    04000000000000010000130B0000130B00001000000000000000000000000000
+                    800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                    FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                    333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                    0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                    07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                    07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                    0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                    33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                    B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                    3BB33773333773333773B333333B3333333B7333333733333337
+                  }
+                  Images = ImageList2
+                  ImageIndex = 17
+                  OnClick = sbArquivoCRTClick
                 end
               end
               object grbWsConfig: TGroupBox
@@ -24788,12 +24881,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1000
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsCertificadoDFe
             Align = alClient
             Font.Height = -13
             Images = ImageList1
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 1
             TabOrder = 0
             OnChange = pgDFeChange
             object tsConfiguracaoDFe: TTabSheet
@@ -33712,6 +33805,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.CasasDecimaisMoraJuros = 2
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
+    Cedente.PIX.TipoChavePIX = tchNenhuma
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoFCFortes1
     Configuracoes.Arquivos.LogRegistro = False

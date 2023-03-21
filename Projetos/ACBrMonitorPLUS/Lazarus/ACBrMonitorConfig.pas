@@ -691,6 +691,8 @@ type
     SSLType                    : Integer;
     TimeOut                    : Integer;
     CertificadoHTTP            : Boolean;
+    ArquivoCRT                 : String;
+    ArquivoKEY                 : String;
   end;
 
   TBoletoConfig = record
@@ -1520,6 +1522,8 @@ begin
       ini.WriteInteger( CSecBOLETO, CKeyBOLETOTimeOut, TimeOut);
       ini.WriteBool( CSecBOLETO, CKeyBOLETOCertificadoHTTP, CertificadoHTTP);
       ini.WriteString( CSecBOLETO, CKeyBOLETOVersaoDF, VersaoDF);
+      ini.WriteString( CSecBOLETO, CKeyBOLETOArquivoCRT, ArquivoCRT);
+      ini.WriteString( CSecBOLETO, CKeyBOLETOArquivoKEY, ArquivoKEY);
     end;
 
     SL := TStringList.Create;
@@ -2274,6 +2278,8 @@ begin
       TimeOut := ini.ReadInteger( CSecBOLETO, CKeyBOLETOTimeOut, TimeOut);
       CertificadoHTTP := ini.ReadBool( CSecBOLETO, CKeyBOLETOCertificadoHTTP, CertificadoHTTP);
       VersaoDF := ini.ReadString( CSecBOLETO, CKeyBOLETOVersaoDF, VersaoDF);
+      ArquivoKEY := ini.ReadString( CSecBOLETO, CKeyBOLETOArquivoKEY, ArquivoKEY);
+      ArquivoCRT := ini.ReadString( CSecBOLETO, CKeyBOLETOArquivoCRT, ArquivoCRT);
     end;
 
   finally
@@ -2992,6 +2998,8 @@ begin
     TimeOut := 30;
     CertificadoHTTP := False;
     VersaoDF := '1.2';
+    ArquivoKEY := '';
+    ArquivoCRT := '';
   end;
 
 

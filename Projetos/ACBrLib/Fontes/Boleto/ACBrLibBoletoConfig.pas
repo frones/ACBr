@@ -255,6 +255,8 @@ type
     FOperacao: TOperacao;
     FVersaoDF: String;
     FUseCertificateHTTP: Boolean;
+    FArquivoCRT: String;
+    FArquivoKEY: String;
 
   public
     constructor Create;
@@ -267,6 +269,8 @@ type
     property Operacao: TOperacao read FOperacao write FOperacao;
     property VersaoDF: String read FVersaoDF write FVersaoDF;
     property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP;
+    property ArquivoCRT: String read FArquivoCRT write FArquivoCRT;
+    property ArquivoKEY: String read FArquivoKEY write FArquivoKEY;
 
   end;
 
@@ -341,6 +345,8 @@ begin
   FOperacao:= tpInclui;
   FVersaoDF:= '1.2';
   FUseCertificateHTTP:= False;
+  FArquivoCRT:= '';
+  FArquivoKEY:= '';
 
 end;
 
@@ -351,6 +357,8 @@ begin
   Operacao:= TOperacao( AIni.ReadInteger(CSessaoBoletoWebService, CChaveOperacao, integer(Operacao) ) );
   VersaoDF:= AIni.ReadString(CSessaoBoletoWebService, CChaveVersaoDF, VersaoDF );
   UseCertificateHTTP:= AIni.ReadBool(CSessaoBoletoWebService, CChaveUseCertificateHTTP, UseCertificateHTTP );
+  ArquivoCRT:= AIni.ReadString(CSessaoBoletoWebService, CChaveArquivoCRT, ArquivoCRT);
+  ArquivoKEY:= AIni.ReadString(CSessaoBoletoWebService, CChaveArquivoKEY, ArquivoKEY);
 end;
 
 procedure TBoletoConfigWS.GravarIni(const AIni: TCustomIniFile);
@@ -360,6 +368,8 @@ begin
   AIni.WriteInteger(CSessaoBoletoWebService, CChaveOperacao, integer(Operacao) );
   AIni.WriteString(CSessaoBoletoWebService, CChaveVersaoDF, VersaoDF );
   AIni.WriteBool(CSessaoBoletoWebService, CChaveUseCertificateHTTP, UseCertificateHTTP );
+  AIni.WriteString(CSessaoBoletoWebService, CChaveArquivoCRT, ArquivoCRT);
+  AIni.WriteString(CSessaoBoletoWebService, CChaveArquivoKEY, ArquivoKEY);
 end;
 
 { TBoletoCedenteWS }

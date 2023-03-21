@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2023
+--- ACBrLibBoletoConfig, ACBrLibBoletoConsts, ACBrLibBoletoDataModule ---
+[+] Criação dos campos ArquivoCRT e ArquivoKEY para Inter e Sicoob
+    Por: Antonio Carlos Junior
+
 11/01/2023
 --- ACBrLibBoletoBase ---
 [-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado

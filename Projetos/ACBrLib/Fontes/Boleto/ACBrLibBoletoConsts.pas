@@ -123,6 +123,8 @@ const
   CChaveLogRegistro = 'LogRegistro';
   CChavePathGravarRegistro = 'PathGravarRegistro';
   CChaveAmbiente = 'Ambiente';
+  CChaveArquivoCRT = 'ArquivoCRT';
+  CChaveArquivoKEY = 'ArquivoKEY';
   CChaveVersaoDF = 'VersaoDF';
   CChaveUseCertificateHTTP = 'UseCertificateHTTP';
   CChaveSSLType = 'SSLType';

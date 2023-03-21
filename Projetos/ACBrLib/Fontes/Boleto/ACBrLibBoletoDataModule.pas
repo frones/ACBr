@@ -181,7 +181,8 @@ begin
     WebService.Ambiente := LibConfig.BoletoDFeConfigWS.WebServices.Ambiente;
     WebService.Operacao := LibConfig.BoletoConfigWS.Operacao;
     WebService.VersaoDF := LibConfig.BoletoConfigWS.VersaoDF;
-
+    WebService.ArquivoCRT:= LibConfig.BoletoConfigWS.ArquivoCRT;
+    WebService.ArquivoKEY:= LibConfig.BoletoConfigWS.ArquivoKEY;
     WebService.UseCertificateHTTP := LibConfig.BoletoConfigWS.UseCertificateHTTP;
     WebService.ProxyHost := LibConfig.BoletoDFeConfigWS.WebServices.ProxyHost;
     WebService.ProxyPass := LibConfig.BoletoDFeConfigWS.WebServices.ProxyPass;

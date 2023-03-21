@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+21/03/2023
+[*]TK-3738-1 Campos de Certificado ACBrBoleto INI Componente
+  por : Victor H Gonzales - Pandaaa
+
 17/03/2023
 --ACBrBancoSicredi--
 [*]TK-3705 Colaboração para tratamento retorno pix.

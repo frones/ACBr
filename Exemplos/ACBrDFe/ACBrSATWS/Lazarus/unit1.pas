@@ -36,7 +36,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  EditBtn, ComCtrls, ACBrSATWS, dateutils, ACBrDFeSSL;
+  EditBtn, ComCtrls, ExtCtrls, Spin, Buttons, ACBrSATWS, dateutils, ACBrDFeSSL,
+  Types;
 
 type
 
@@ -45,21 +46,78 @@ type
   TForm1 = class(TForm)
     ACBrSATWS1: TACBrSATWS;
     btConsultar: TButton;
+    btnSalvarConfig: TBitBtn;
+    cbxSalvarSOAP: TCheckBox;
+    cbxVisualizar: TCheckBox;
+    cbxExibirErrosSchema: TCheckBox;
+    cbxRetirarAcentos: TCheckBox;
+    cbxRetirarEspacos: TCheckBox;
+    cbSSLType: TComboBox;
+    cbFormaEmissao: TComboBox;
+    cbSSLLib: TComboBox;
+    cbCryptLib: TComboBox;
+    cbHttpLib: TComboBox;
+    cbXMLSignLib: TComboBox;
+    cbVersaoDados: TComboBox;
     eddInicial: TDateEdit;
     eddFinal: TDateEdit;
+    edtProxyHost: TEdit;
+    edtProxyPorta: TEdit;
+    edtProxyUser: TEdit;
+    edtProxySenha: TEdit;
+    edtFormatoAlerta: TEdit;
     ednserieSAT: TEdit;
     edchaveSeguranca: TEdit;
+    gbProxy: TGroupBox;
+    gbGeral: TGroupBox;
+    gbLib: TGroupBox;
+    gbWebService: TGroupBox;
     Label1: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     edhInicial: TTimeEdit;
     edhFinal: TTimeEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    PageControl1: TPageControl;
+    PageControl2: TPageControl;
+    Panel1: TPanel;
+    PanelClient: TPanel;
+    rgTipoAmbiente: TRadioGroup;
+    seTimeOut: TSpinEdit;
+    Shape1: TShape;
+    TabConfiguracoes: TTabSheet;
+    TabGeral: TTabSheet;
+    TabWebService: TTabSheet;
     trvwNFe: TTreeView;
     procedure btConsultarClick(Sender: TObject);
+    procedure btnSalvarConfigClick(Sender: TObject);
+    procedure cbCryptLibChange(Sender: TObject);
+    procedure cbHttpLibChange(Sender: TObject);
+    procedure cbSSLLibChange(Sender: TObject);
+    procedure cbSSLTypeChange(Sender: TObject);
+    procedure cbVersaoDadosChange(Sender: TObject);
+    procedure cbXMLSignLibChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Label18Click(Sender: TObject);
   private
-    { private declarations }
+    procedure AtualizarSSLLibsCombo;
+    procedure GravarConfiguracao;
+    procedure LerConfiguracao;
+    procedure ConfigurarComponente;
   public
     { public declarations }
   end;
@@ -70,7 +128,7 @@ var
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil, blcksock, pcnConversao, TypInfo, ACBrUtil.FilesIO, IniFiles;
 
 {$R *.lfm}
 
@@ -83,12 +141,6 @@ var
 begin
   trvwNFe.Items.Clear;
 
-  ACBrSATWS1.Configuracoes.Geral.SSLLib := libOpenSSL;
-  ACBrSATWS1.Configuracoes.WebServices.UF := 'SP';
-  //ACBrSATWS1.Configuracoes.WebServices.ProxyHost := '192.168.92.1';
-  //ACBrSATWS1.Configuracoes.WebServices.ProxyPort := '3128';
-
-  ACBrSATWS1.WebServices.ConsultarSATWS.versaoDados := '0.07';
   ACBrSATWS1.WebServices.ConsultarSATWS.nserieSAT := StrToIntDef(ednserieSAT.Text,0);
   ACBrSATWS1.WebServices.ConsultarSATWS.dhInicial := eddInicial.Date + TimeOf(edhInicial.Time);
   ACBrSATWS1.WebServices.ConsultarSATWS.dhFinal := eddFinal.Date + TimeOf(edhFinal.Time);
@@ -133,12 +185,213 @@ begin
 
 end;
 
+procedure TForm1.btnSalvarConfigClick(Sender: TObject);
+begin
+  GravarConfiguracao;
+end;
+
+procedure TForm1.cbCryptLibChange(Sender: TObject);
+begin
+  try
+    if(cbCryptLib.ItemIndex <> -1)then
+      ACBrSATWS1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+  finally
+    AtualizarSSLLibsCombo;
+  end;
+end;
+
+procedure TForm1.cbHttpLibChange(Sender: TObject);
+begin
+  try
+    if(cbHttpLib.ItemIndex <> -1)then
+      ACBrSATWS1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+  finally
+    AtualizarSSLLibsCombo;
+  end;
+end;
+
+procedure TForm1.cbSSLLibChange(Sender: TObject);
+begin
+  try
+    if(cbSSLLib.ItemIndex <> -1)then
+      ACBrSATWS1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+  finally
+    AtualizarSSLLibsCombo;
+  end;
+end;
+
+procedure TForm1.cbSSLTypeChange(Sender: TObject);
+begin
+  if(cbSSLType.ItemIndex <> -1)then
+    ACBrSATWS1.Configuracoes.WebServices.SSLType := TSSLType(cbSSLType.ItemIndex);
+end;
+
+procedure TForm1.cbVersaoDadosChange(Sender: TObject);
+begin
+  ACBrSATWS1.WebServices.ConsultarSATWS.versaoDados := cbVersaoDados.Text;
+end;
+
+procedure TForm1.cbXMLSignLibChange(Sender: TObject);
+begin
+  try
+    if(cbXMLSignLib.ItemIndex <> -1)then
+      ACBrSATWS1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXMLSignLib.ItemIndex);
+  finally
+    AtualizarSSLLibsCombo;
+  end;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
+var
+  T: TSSLLib;
+  I: TpcnTipoEmissao;
+  J: TSSLCryptLib;
+  K: TSSLHttpLib;
+  L: TSSLXmlSignLib;
+  M: TSSLType;
 begin
   eddInicial.Date := IncDay(Now,-10);
   edhInicial.Time := Now;
   eddFinal.Date := Now;
   edhFinal.Time := Now;
+
+  cbFormaEmissao.Clear;
+  for I:=Low(TpcnTipoEmissao) to High(TpcnTipoEmissao)do
+    cbFormaEmissao.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), Integer(I)));
+  cbFormaEmissao.ItemIndex := 0;
+
+  cbSSLLib.Clear;
+  for T:= Low(TSSLLib) to High(TSSLLib)do
+    cbSSLLib.Items.Add(GetEnumName(TypeInfo(TSSLLib), Integer(T)));
+  cbSSLLib.ItemIndex := 0;
+
+  cbCryptLib.Clear;
+  for J:= Low(TSSLCryptLib) to High(TSSLCryptLib)do
+    cbCryptLib.Items.Add(GetEnumName(TypeInfo(TSSLCryptLib), Integer(J)));
+  cbCryptLib.ItemIndex := 0;
+
+  cbHttpLib.Clear;
+  for K:=Low(TSSLHttpLib) to High(TSSLHttpLib)do
+    cbHttpLib.Items.Add(GetEnumName(TypeInfo(TSSLHttpLib), Integer(K)));
+  cbHttpLib.ItemIndex := 0;
+
+  cbXMLSignLib.Clear;
+  for L:=Low(TSSLXmlSignLib) to High(TSSLXmlSignLib)do
+    cbXMLSignLib.Items.Add(GetEnumName(TypeInfo(TSSLXmlSignLib), Integer(L)));
+  cbXMLSignLib.ItemIndex := 0;
+
+  cbSSLType.Clear;
+  for M:=Low(TSSLType) to High(TSSLType)do
+    cbSSLType.Items.Add(GetEnumName(TypeInfo(TSSLType), Integer(M)));
+  cbSSLType.ItemIndex := 0;
+
+  LerConfiguracao;
+end;
+
+procedure TForm1.Label18Click(Sender: TObject);
+begin
+  OpenURL('https://projetoacbr.com.br/');
+end;
+
+procedure TForm1.AtualizarSSLLibsCombo;
+begin
+  cbSSLLib.ItemIndex     := Integer(ACBrSATWS1.Configuracoes.Geral.SSLLib);
+  cbCryptLib.ItemIndex   := Integer(ACBrSATWS1.Configuracoes.Geral.SSLCryptLib);
+  cbHttpLib.ItemIndex    := Integer(ACBrSATWS1.Configuracoes.Geral.SSLHttpLib);
+  cbXMLSignLib.ItemIndex := Integer(ACBrSATWS1.Configuracoes.Geral.SSLXmlSignLib);
+
+  cbSSLType.Enabled := (ACBrSATWS1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
+end;
+
+procedure TForm1.GravarConfiguracao;
+var
+  IniFile: String;
+  Ini: TIniFile;
+begin
+  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+  Ini := TIniFile.Create(IniFile);
+  try
+    Ini.WriteBool('Geral'  , 'ExibirErroSchema', cbxExibirErrosSchema.Checked);
+    Ini.WriteString('Geral', 'FormatoAlerta', edtFormatoAlerta.Text);
+    Ini.WriteInteger('Geral', 'FormaEmissao', cbFormaEmissao.ItemIndex);
+    Ini.WriteInteger('Geral', 'VersaoDados', cbVersaoDados.ItemIndex);
+    Ini.WriteBool('Geral', 'RetirarAcentos', cbxRetirarAcentos.Checked);
+    Ini.WriteBool('Geral', 'RetirarEspacos', cbxRetirarEspacos.Checked);
+
+    Ini.WriteInteger('Geral', 'SSLLib', cbSSLLib.ItemIndex);
+    Ini.WriteInteger('Geral', 'CryptLib', cbCryptLib.ItemIndex);
+    Ini.WriteInteger('Geral', 'HttpLib', cbHttpLib.ItemIndex);
+    Ini.WriteInteger('Geral', 'XMLSignLib', cbXMLSignLib.ItemIndex);
+
+    Ini.WriteInteger('WebService', 'Ambiente', rgTipoAmbiente.ItemIndex);
+    Ini.WriteBool('WebService', 'VisualizarMensagem', cbxVisualizar.Checked);
+    Ini.WriteBool('WebService', 'SalvarSOAP', cbxSalvarSOAP.Checked);
+    Ini.WriteInteger('WebService', 'TimeOut', seTimeOut.Value);
+    Ini.WriteInteger('WebService', 'SSLType', cbSSLType.ItemIndex);
+
+    ConfigurarComponente;
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TForm1.LerConfiguracao;
+var
+  IniFile: String;
+  Ini: TIniFile;
+begin
+  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+  Ini := TIniFile.Create(IniFile);
+  try
+    cbxExibirErrosSchema.Checked := Ini.ReadBool('Geral', 'ExibirErroSchema', True);
+    edtFormatoAlerta.Text := Ini.ReadString('Geral', 'FormatoAlerta', 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
+    cbFormaEmissao.ItemIndex := Ini.ReadInteger('Geral', 'FormaEmissao', Integer(teNormal));
+    cbVersaoDados.ItemIndex := Ini.ReadInteger('Geral', 'VersaoDados', 0);
+    cbxRetirarAcentos.Checked := Ini.ReadBool('Geral', 'RetirarAcentos', True);
+    cbxRetirarEspacos.Checked := Ini.ReadBool('Geral', 'RetirarEspacos', True);
+
+    cbSSLLib.ItemIndex := Ini.ReadInteger('Geral', 'SSLLib', Integer(libWinCrypt));
+    cbCryptLib.ItemIndex := Ini.ReadInteger('Geral', 'CryptLib', Integer(cryWinCrypt));
+    cbHttpLib.ItemIndex := Ini.ReadInteger('Geral', 'HttpLib', Integer(httpWinHttp));
+    cbXMLSignLib.ItemIndex := Ini.ReadInteger('Geral', 'XMLSignLib', Integer(xsLibXml2));
+
+    rgTipoAmbiente.ItemIndex := Ini.ReadInteger('WebService', 'Ambiente', 0);
+    cbxVisualizar.Checked := Ini.ReadBool('WebService', 'VisualizarMensagem', False);
+    cbxSalvarSOAP.Checked := Ini.ReadBool('WebService', 'SalvarSOAP', False);
+    seTimeOut.Value := Ini.ReadInteger('WebService', 'TimeOut', 5000);
+    cbSSLType.ItemIndex := Ini.ReadInteger('WebService', 'SSLType', Integer(LT_TLSv1_2));
+
+    ConfigurarComponente;
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TForm1.ConfigurarComponente;
+begin
+  ACBrSATWS1.Configuracoes.Geral.ExibirErroSchema := cbxExibirErrosSchema.Checked;
+  ACBrSATWS1.Configuracoes.Geral.FormatoAlerta := edtFormatoAlerta.Text;
+  ACBrSATWS1.Configuracoes.Geral.FormaEmissao := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
+  ACBrSATWS1.Configuracoes.Geral.RetirarAcentos := cbxRetirarAcentos.Checked;
+  ACBrSATWS1.Configuracoes.Geral.RetirarEspacos := cbxRetirarEspacos.Checked;
+  ACBrSATWS1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+  ACBrSATWS1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+  ACBrSATWS1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+  ACBrSATWS1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXMLSignLib.ItemIndex);
+
+  ACBrSATWS1.WebServices.ConsultarSATWS.versaoDados := cbVersaoDados.Text;
+
+  ACBrSATWS1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(rgTipoAmbiente.ItemIndex);
+  ACBrSATWS1.Configuracoes.WebServices.Visualizar := cbxVisualizar.Checked;
+  ACBrSATWS1.Configuracoes.WebServices.Salvar := cbxSalvarSOAP.Checked;
+  ACBrSATWS1.Configuracoes.WebServices.TimeOut := seTimeOut.Value;
+  ACBrSATWS1.Configuracoes.WebServices.SSLType := TSSLType(cbSSLType.ItemIndex);
+  ACBrSATWS1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
+  ACBrSATWS1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
+  ACBrSATWS1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
+  ACBrSATWS1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
+  ACBrSATWS1.Configuracoes.WebServices.UF := 'SP';
+
 end;
 
 end.

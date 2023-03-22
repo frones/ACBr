@@ -1,116 +1,563 @@
 object Form1: TForm1
   Left = 550
-  Height = 495
+  Height = 614
   Top = 232
-  Width = 657
+  Width = 1009
   Caption = 'Consulta de lotes enviados de CF-e-SAT'
-  ClientHeight = 495
-  ClientWidth = 657
+  ClientHeight = 614
+  ClientWidth = 1009
+  DesignTimePPI = 120
   OnCreate = FormCreate
-  LCLVersion = '2.2.0.4'
-  object Label1: TLabel
-    Left = 8
-    Height = 15
-    Top = 16
-    Width = 132
-    Caption = 'Número de série do  SAT:'
-  end
-  object Label2: TLabel
-    Left = 47
-    Height = 15
-    Top = 48
-    Width = 94
-    Caption = 'Data e hora incial:'
-  end
-  object Label3: TLabel
-    Left = 48
-    Height = 15
-    Top = 80
-    Width = 93
-    Caption = 'Data e Hora Final:'
-  end
-  object Label4: TLabel
-    Left = 32
-    Height = 15
-    Top = 112
-    Width = 109
-    Caption = 'Chave de segurança:'
-  end
-  object ednserieSAT: TEdit
-    Left = 152
-    Height = 23
-    Top = 8
-    Width = 160
+  object PanelClient: TPanel
+    Left = 282
+    Height = 614
+    Top = 0
+    Width = 727
+    Align = alClient
+    ClientHeight = 614
+    ClientWidth = 727
     TabOrder = 0
+    object Label1: TLabel
+      Left = 10
+      Height = 20
+      Top = 20
+      Width = 168
+      Caption = 'Número de série do  SAT:'
+      ParentColor = False
+    end
+    object Label2: TLabel
+      Left = 59
+      Height = 20
+      Top = 60
+      Width = 120
+      Caption = 'Data e hora incial:'
+      ParentColor = False
+    end
+    object Label3: TLabel
+      Left = 60
+      Height = 20
+      Top = 100
+      Width = 119
+      Caption = 'Data e Hora Final:'
+      ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 40
+      Height = 20
+      Top = 140
+      Width = 135
+      Caption = 'Chave de segurança:'
+      ParentColor = False
+    end
+    object ednserieSAT: TEdit
+      Left = 190
+      Height = 28
+      Top = 10
+      Width = 200
+      TabOrder = 0
+    end
+    object edchaveSeguranca: TEdit
+      Left = 190
+      Height = 28
+      Top = 130
+      Width = 436
+      TabOrder = 1
+    end
+    object btConsultar: TButton
+      Left = 526
+      Height = 35
+      Top = 168
+      Width = 100
+      Caption = 'Consultar'
+      OnClick = btConsultarClick
+      TabOrder = 2
+    end
+    object eddInicial: TDateEdit
+      Left = 190
+      Height = 28
+      Top = 50
+      Width = 129
+      CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+      DateOrder = doNone
+      ButtonWidth = 29
+      NumGlyphs = 1
+      MaxLength = 0
+      TabOrder = 3
+    end
+    object edhInicial: TTimeEdit
+      Left = 340
+      Height = 28
+      Top = 50
+      Width = 129
+      ButtonWidth = 29
+      NumGlyphs = 1
+      MaxLength = 0
+      TabOrder = 4
+    end
+    object eddFinal: TDateEdit
+      Left = 190
+      Height = 28
+      Top = 90
+      Width = 129
+      CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+      DateOrder = doNone
+      ButtonWidth = 29
+      NumGlyphs = 1
+      MaxLength = 0
+      TabOrder = 5
+    end
+    object edhFinal: TTimeEdit
+      Left = 340
+      Height = 28
+      Top = 90
+      Width = 129
+      ButtonWidth = 29
+      NumGlyphs = 1
+      MaxLength = 0
+      TabOrder = 6
+    end
+    object trvwNFe: TTreeView
+      Left = 10
+      Height = 261
+      Top = 231
+      Width = 616
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      TabOrder = 7
+    end
   end
-  object edchaveSeguranca: TEdit
-    Left = 152
-    Height = 23
-    Top = 104
-    Width = 488
-    TabOrder = 5
-  end
-  object btConsultar: TButton
-    Left = 565
-    Height = 25
-    Top = 136
-    Width = 75
-    Caption = 'Consultar'
-    OnClick = btConsultarClick
-    TabOrder = 6
-  end
-  object eddInicial: TDateEdit
-    Left = 152
-    Height = 23
-    Top = 40
-    Width = 103
-    CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-    DateOrder = doNone
-    ButtonWidth = 23
-    NumGlyphs = 1
-    MaxLength = 0
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 614
+    Top = 0
+    Width = 282
+    ActivePage = TabConfiguracoes
+    Align = alLeft
+    TabIndex = 0
     TabOrder = 1
-  end
-  object edhInicial: TTimeEdit
-    Left = 272
-    Height = 23
-    Top = 40
-    Width = 103
-    ButtonWidth = 23
-    NumGlyphs = 1
-    MaxLength = 0
-    TabOrder = 2
-  end
-  object eddFinal: TDateEdit
-    Left = 152
-    Height = 23
-    Top = 72
-    Width = 103
-    CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-    DateOrder = doNone
-    ButtonWidth = 23
-    NumGlyphs = 1
-    MaxLength = 0
-    TabOrder = 3
-  end
-  object edhFinal: TTimeEdit
-    Left = 272
-    Height = 23
-    Top = 72
-    Width = 103
-    ButtonWidth = 23
-    NumGlyphs = 1
-    MaxLength = 0
-    TabOrder = 4
-  end
-  object trvwNFe: TTreeView
-    Left = 16
-    Height = 312
-    Top = 168
-    Width = 624
-    Anchors = [akTop, akLeft, akRight, akBottom]
-    Indent = 19
-    TabOrder = 7
+    object TabConfiguracoes: TTabSheet
+      Caption = 'Configurações'
+      ClientHeight = 581
+      ClientWidth = 274
+      object PageControl2: TPageControl
+        Left = 0
+        Height = 510
+        Top = 0
+        Width = 274
+        ActivePage = TabGeral
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        object TabGeral: TTabSheet
+          Caption = 'Geral'
+          ClientHeight = 477
+          ClientWidth = 266
+          Font.Height = -13
+          ParentFont = False
+          object gbGeral: TGroupBox
+            Left = 8
+            Height = 288
+            Top = 11
+            Width = 245
+            Caption = 'Geral'
+            ClientHeight = 266
+            ClientWidth = 241
+            TabOrder = 0
+            object cbxExibirErrosSchema: TCheckBox
+              Left = 8
+              Height = 23
+              Top = 8
+              Width = 134
+              Caption = 'Exibir Erro Schema'
+              TabOrder = 0
+            end
+            object Label11: TLabel
+              Left = 8
+              Height = 17
+              Top = 40
+              Width = 87
+              Caption = 'Formato Alerta'
+              ParentColor = False
+            end
+            object edtFormatoAlerta: TEdit
+              Left = 8
+              Height = 25
+              Top = 58
+              Width = 221
+              TabOrder = 1
+            end
+            object Label12: TLabel
+              Left = 8
+              Height = 17
+              Top = 96
+              Width = 108
+              Caption = 'Forma de Emissão'
+              ParentColor = False
+            end
+            object cbFormaEmissao: TComboBox
+              Left = 8
+              Height = 24
+              Top = 115
+              Width = 221
+              ItemHeight = 18
+              Style = csOwnerDrawFixed
+              TabOrder = 2
+            end
+            object Label13: TLabel
+              Left = 8
+              Height = 17
+              Top = 152
+              Width = 82
+              Caption = 'Versão Dados'
+              ParentColor = False
+            end
+            object cbxRetirarAcentos: TCheckBox
+              Left = 8
+              Height = 23
+              Top = 207
+              Width = 231
+              Caption = 'Retirar Acentos dos XMLs enviados'
+              TabOrder = 3
+            end
+            object cbxRetirarEspacos: TCheckBox
+              Left = 8
+              Height = 23
+              Top = 234
+              Width = 233
+              Caption = 'Retirar Espacos dos XMLs enviados'
+              TabOrder = 4
+            end
+            object cbVersaoDados: TComboBox
+              Left = 8
+              Height = 24
+              Top = 170
+              Width = 125
+              ItemHeight = 18
+              ItemIndex = 0
+              Items.Strings = (
+                '0.07'
+                '0.08'
+                '0.09'
+              )
+              OnChange = cbVersaoDadosChange
+              Style = csOwnerDrawFixed
+              TabOrder = 5
+              Text = '0.07'
+            end
+          end
+          object gbLib: TGroupBox
+            Left = 8
+            Height = 163
+            Top = 309
+            Width = 231
+            Caption = 'Lib'
+            ClientHeight = 141
+            ClientWidth = 227
+            TabOrder = 1
+            object Label14: TLabel
+              Left = 8
+              Height = 17
+              Top = 8
+              Width = 37
+              Caption = 'SSLLib'
+              ParentColor = False
+            end
+            object cbSSLLib: TComboBox
+              Left = 81
+              Height = 24
+              Top = 2
+              Width = 137
+              ItemHeight = 18
+              OnChange = cbSSLLibChange
+              Style = csOwnerDrawFixed
+              TabOrder = 0
+            end
+            object Label15: TLabel
+              Left = 8
+              Height = 17
+              Top = 43
+              Width = 48
+              Caption = 'CryptLib'
+              ParentColor = False
+            end
+            object cbCryptLib: TComboBox
+              Left = 81
+              Height = 24
+              Top = 37
+              Width = 137
+              ItemHeight = 18
+              OnChange = cbCryptLibChange
+              Style = csOwnerDrawFixed
+              TabOrder = 1
+            end
+            object Label16: TLabel
+              Left = 8
+              Height = 17
+              Top = 78
+              Width = 42
+              Caption = 'HttpLib'
+              ParentColor = False
+            end
+            object cbHttpLib: TComboBox
+              Left = 81
+              Height = 24
+              Top = 72
+              Width = 137
+              ItemHeight = 18
+              OnChange = cbHttpLibChange
+              Style = csOwnerDrawFixed
+              TabOrder = 2
+            end
+            object cbXMLSignLib: TComboBox
+              Left = 81
+              Height = 24
+              Top = 106
+              Width = 137
+              ItemHeight = 18
+              OnChange = cbXMLSignLibChange
+              Style = csOwnerDrawFixed
+              TabOrder = 3
+            end
+            object Label17: TLabel
+              Left = 8
+              Height = 17
+              Top = 112
+              Width = 68
+              Caption = 'XMLSignLib'
+              ParentColor = False
+            end
+          end
+        end
+        object TabWebService: TTabSheet
+          Caption = 'WebService'
+          ClientHeight = 477
+          ClientWidth = 266
+          Font.Height = -13
+          ParentFont = False
+          object gbProxy: TGroupBox
+            Left = 8
+            Height = 131
+            Top = 255
+            Width = 248
+            Caption = 'Proxy'
+            ClientHeight = 109
+            ClientWidth = 244
+            TabOrder = 0
+            object Label7: TLabel
+              Left = 8
+              Height = 17
+              Top = 8
+              Width = 27
+              Caption = 'Host'
+              ParentColor = False
+            end
+            object Label8: TLabel
+              Left = 179
+              Height = 17
+              Top = 8
+              Width = 31
+              Caption = 'Porta'
+              ParentColor = False
+            end
+            object Label9: TLabel
+              Left = 8
+              Height = 17
+              Top = 56
+              Width = 45
+              Caption = 'Usuário'
+              ParentColor = False
+            end
+            object Label10: TLabel
+              Left = 133
+              Height = 17
+              Top = 56
+              Width = 35
+              Caption = 'Senha'
+              ParentColor = False
+            end
+            object edtProxyHost: TEdit
+              Left = 8
+              Height = 25
+              Top = 26
+              Width = 160
+              TabOrder = 0
+            end
+            object edtProxyPorta: TEdit
+              Left = 179
+              Height = 25
+              Top = 26
+              Width = 58
+              TabOrder = 1
+            end
+            object edtProxyUser: TEdit
+              Left = 8
+              Height = 25
+              Top = 74
+              Width = 111
+              TabOrder = 2
+            end
+            object edtProxySenha: TEdit
+              Left = 133
+              Height = 25
+              Top = 74
+              Width = 104
+              EchoMode = emPassword
+              PasswordChar = '*'
+              TabOrder = 3
+            end
+          end
+          object gbWebService: TGroupBox
+            Left = 8
+            Height = 228
+            Top = 8
+            Width = 248
+            Caption = 'WebService'
+            ClientHeight = 206
+            ClientWidth = 244
+            TabOrder = 1
+            object rgTipoAmbiente: TRadioGroup
+              Left = 8
+              Height = 80
+              Top = 8
+              Width = 229
+              AutoFill = True
+              Caption = 'Selecione o ambiente de Destino'
+              ChildSizing.LeftRightSpacing = 6
+              ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+              ChildSizing.EnlargeVertical = crsHomogenousChildResize
+              ChildSizing.ShrinkHorizontal = crsScaleChilds
+              ChildSizing.ShrinkVertical = crsScaleChilds
+              ChildSizing.Layout = cclLeftToRightThenTopToBottom
+              ChildSizing.ControlsPerLine = 2
+              ClientHeight = 59
+              ClientWidth = 225
+              Columns = 2
+              Font.CharSet = ANSI_CHARSET
+              Font.Height = -13
+              Font.Name = 'Tahoma'
+              Font.Pitch = fpVariable
+              Font.Quality = fqDraft
+              ItemIndex = 0
+              Items.Strings = (
+                'Produção'
+                'Homologação'
+              )
+              ParentFont = False
+              TabOrder = 0
+            end
+            object cbxSalvarSOAP: TCheckBox
+              Left = 8
+              Height = 23
+              Top = 125
+              Width = 152
+              Caption = 'Salvar envelope SOAP'
+              TabOrder = 1
+            end
+            object Label5: TLabel
+              Left = 172
+              Height = 17
+              Top = 103
+              Width = 49
+              Caption = 'TimeOut'
+              ParentColor = False
+            end
+            object seTimeOut: TSpinEdit
+              Left = 172
+              Height = 25
+              Top = 123
+              Width = 65
+              Increment = 10
+              MaxValue = 999999
+              MinValue = 1000
+              TabOrder = 2
+              Value = 5000
+            end
+            object cbxVisualizar: TCheckBox
+              Left = 8
+              Height = 23
+              Top = 103
+              Width = 148
+              Caption = 'Visualizar Mensagem'
+              TabOrder = 3
+            end
+            object Label6: TLabel
+              Left = 8
+              Height = 17
+              Top = 169
+              Width = 46
+              Caption = 'SSLType'
+              ParentColor = False
+            end
+            object cbSSLType: TComboBox
+              Left = 64
+              Height = 24
+              Top = 167
+              Width = 168
+              ItemHeight = 18
+              OnChange = cbSSLTypeChange
+              Style = csOwnerDrawFixed
+              TabOrder = 4
+            end
+          end
+        end
+      end
+      object Panel1: TPanel
+        Left = 0
+        Height = 71
+        Top = 510
+        Width = 274
+        Align = alBottom
+        BevelOuter = bvNone
+        ClientHeight = 71
+        ClientWidth = 274
+        TabOrder = 1
+        object Shape1: TShape
+          Left = 0
+          Height = 1
+          Top = 0
+          Width = 274
+          Align = alTop
+          Pen.Color = clSilver
+        end
+        object btnSalvarConfig: TBitBtn
+          Cursor = crHandPoint
+          Left = 44
+          Height = 30
+          Top = 9
+          Width = 190
+          Caption = 'Salvar Configurações'
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000130B0000130B00001000000000000000000000000000
+            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333330070
+            7700333333337777777733333333008088003333333377F73377333333330088
+            88003333333377FFFF7733333333000000003FFFFFFF77777777000000000000
+            000077777777777777770FFFFFFF0FFFFFF07F3333337F3333370FFFFFFF0FFF
+            FFF07F3FF3FF7FFFFFF70F00F0080CCC9CC07F773773777777770FFFFFFFF039
+            99337F3FFFF3F7F777F30F0000F0F09999937F7777373777777F0FFFFFFFF999
+            99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
+            99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
+            93337FFFF7737777733300000033333333337777773333333333
+          }
+          NumGlyphs = 2
+          OnClick = btnSalvarConfigClick
+          TabOrder = 0
+        end
+        object Label18: TLabel
+          Cursor = crHandPoint
+          Left = 72
+          Height = 15
+          Top = 48
+          Width = 144
+          Caption = 'Mais sobre o Projeto ACBr'
+          Font.Height = -12
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          OnClick = Label18Click
+        end
+      end
+    end
   end
   object ACBrSATWS1: TACBrSATWS
     Configuracoes.Geral.SSLLib = libWinCrypt
@@ -123,8 +570,7 @@ object Form1: TForm1
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.TimeOut = 20000
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.WebServices.SSLType = LT_TLSv1
-    Left = 444
-    Top = 26
+    Left = 555
+    Top = 33
   end
 end

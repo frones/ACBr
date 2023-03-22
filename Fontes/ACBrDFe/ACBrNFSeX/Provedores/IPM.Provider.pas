@@ -407,6 +407,7 @@ begin
           Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
           Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
           Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          CodigoVerificacao := Protocolo;
         end;
 
         AResumo := Response.Resumos.New;
@@ -415,6 +416,7 @@ begin
         AResumo.Data := Response.Data;
         AResumo.Link := Response.Link;
         AResumo.Protocolo := Response.Protocolo;
+        AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
       end;
@@ -542,6 +544,7 @@ begin
           Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
           Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
           Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          CodigoVerificacao := Protocolo;
         end;
 
         AResumo := Response.Resumos.New;
@@ -550,6 +553,7 @@ begin
         AResumo.Data := Response.Data;
         AResumo.Link := Response.Link;
         AResumo.Protocolo := Response.Protocolo;
+        AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
       end;
@@ -649,6 +653,7 @@ begin
           Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
           Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
           Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          CodigoVerificacao := Protocolo;
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
           DescSituacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
         end;
@@ -659,6 +664,7 @@ begin
         AResumo.Data := Response.Data;
         AResumo.Link := Response.Link;
         AResumo.Protocolo := Response.Protocolo;
+        AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
 
@@ -702,6 +708,8 @@ begin
           Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
           if Protocolo = '' then
             Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('codigo_autenticidade'), tcStr);
+
+          CodigoVerificacao := Protocolo;
         end;
 
         AResumo := Response.Resumos.New;
@@ -710,6 +718,7 @@ begin
         AResumo.Data := Response.Data;
         AResumo.Link := Response.Link;
         AResumo.Protocolo := Response.Protocolo;
+        AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
       end;
@@ -857,6 +866,7 @@ begin
           Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
           DescSituacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
+          CodigoVerificacao := Protocolo;
         end;
 
         AResumo := Response.Resumos.New;
@@ -865,6 +875,7 @@ begin
         AResumo.Data := Response.Data;
         AResumo.Link := Response.Link;
         AResumo.Protocolo := Response.Protocolo;
+        AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
@@ -885,6 +896,7 @@ begin
           Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
           Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
           Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          CodigoVerificacao := Protocolo;
         end;
 
         AResumo := Response.Resumos.New;
@@ -893,6 +905,7 @@ begin
         AResumo.Data := Response.Data;
         AResumo.Link := Response.Link;
         AResumo.Protocolo := Response.Protocolo;
+        AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
       end;
@@ -1086,6 +1099,7 @@ begin
             Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
             Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
             Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+            CodigoVerificacao := Protocolo;
             Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
             DescSituacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
           end;
@@ -1096,6 +1110,7 @@ begin
           AResumo.Data := Response.Data;
           AResumo.Link := Response.Link;
           AResumo.Protocolo := Response.Protocolo;
+          AResumo.CodigoVerificacao := Response.CodigoVerificacao;
           AResumo.Situacao := Response.Situacao;
           AResumo.DescSituacao := Response.DescSituacao;
 
@@ -1121,6 +1136,7 @@ begin
           Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
           Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
           Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          CodigoVerificacao := Protocolo;
         end;
 
         AResumo := Response.Resumos.New;
@@ -1129,6 +1145,7 @@ begin
         AResumo.Data := Response.Data;
         AResumo.Link := Response.Link;
         AResumo.Protocolo := Response.Protocolo;
+        AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
       end;

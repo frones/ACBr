@@ -108,6 +108,7 @@ type
       fPortaPinPad: Integer;
       fUsaUTF8: Boolean;
       fArqBackUp: String;
+      fUltimoSTS: Integer;
 
      procedure AvaliaErro(Sts : Integer);
      function GetDataHoraFiscal: TDateTime;
@@ -138,6 +139,8 @@ type
      property PathDLL: string read GetPathDLL write SetPathDLL;
      property PinPadChaveAcesso: AnsiString read fPinPadChaveAcesso write fPinPadChaveAcesso;
      property PinPadIdentificador: AnsiString read fPinPadIdentificador write fPinPadIdentificador;
+
+     property UltimoSTS : Integer read fUltimoSTS;
 
      constructor Create( AOwner : TComponent ) ; override;
      destructor Destroy ; override;
@@ -373,7 +376,10 @@ begin
     ParamAdic := '['+ ParamAdic + ']';
 
   if NaoEstaVazio(CNPJEstabelecimento) and NaoEstaVazio(CNPJSoftwareHouse) then
-     ParamAdic := ParamAdic + '[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']';
+    if (ParamAdic <> '') then
+      ParamAdic := ParamAdic + ';[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']'
+    else
+      ParamAdic := '[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']';
 
   GravaLog( '*** ConfiguraIntSiTefInterativoEx. EnderecoIP: '   +fEnderecoIP+
                                             ' CodigoLoja: '     +fCodigoLoja+
@@ -1072,6 +1078,8 @@ begin
             GravaLog( Self.Resp.Conteudo.Conteudo.Text );
 
          TACBrTEFDRespCliSiTef( Self.Resp ).ConteudoToProperty ;
+
+         fUltimoSTS := Result;
 
          if (HouveImpressao and fCancelamento) then
             DoExibeMsg( opmOK,

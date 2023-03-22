@@ -1270,7 +1270,8 @@ begin
     LCDS.FieldByName('ValorServicos').AsFloat := LValores.ValorServicos;
     LCDS.FieldByName('ValorIss').AsFloat      := LValoresNFSe.ValorIss;
     LCDS.FieldByName('BaseCalculo').AsFloat   := LValoresNFSe.BaseCalculo;
-    LCDS.FieldByName('Aliquota').AsFloat      := LValoresNFSe.Aliquota;
+    if LValoresNFSe.Aliquota <> 0 then
+      LCDS.FieldByName('Aliquota').AsFloat      := LValoresNFSe.Aliquota;
 
     if LValoresNFSe.ValorLiquidoNfse = 0 then
       LValoresNFSe.ValorLiquidoNfse := LValoresNFSe.BaseCalculo;

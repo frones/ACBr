@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/03/2023
+--ACBrNFSeXDANFSeFR--
+[-]TK-3741 Correção na leitura da aliquota, 2 propriedades mesmo nome
+  por: Victor H Gonzales - Pandaaa
+
+
+22/03/2023
 -- IPM.Provider --
 [*] Iguala nas procedures que faltavam o CodigoVerificacao ao Protocolo para padronização.
    Por: Diego F

@@ -542,7 +542,7 @@ procedure TBloco_K.WriteRegistroK275(RegK270: TRegistroK270);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if (FBloco_0.Registro0000.COD_VER > vlVersao116) and (TipoLeiaute <> itlCompleto) then
     Exit;
 
   if Assigned( RegK270.RegistroK275 ) then

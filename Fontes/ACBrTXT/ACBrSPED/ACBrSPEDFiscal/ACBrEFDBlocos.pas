@@ -79,7 +79,7 @@ type
                                   vlVersao113,  // Código 014 - Versão 113 Ato COTEPE 01/01/2020
                                   vlVersao114,  // Código 015 - Versão 114 Ato COTEPE 01/01/2021
                                   vlVersao115,  // Código 016 - Versão 115 Ato COTEPE 01/01/2022
-                                  vlVersao116   // Código 016 - Versão 116 Ato COTEPE 01/01/2023
+                                  vlVersao116   // Código 017 - Versão 116 Ato COTEPE 01/01/2023
                                  );
   TACBrVersaoLeiaute = TACBrVersaoLeiauteSPEDFiscal {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf}{$EndIf};
   TACBrCodVer = TACBrVersaoLeiauteSPEDFiscal {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf}{$EndIf};

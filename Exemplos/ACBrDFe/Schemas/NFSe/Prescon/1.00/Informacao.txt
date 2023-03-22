@@ -1,0 +1,2 @@
+O provedor não disponibilizou os schemas.
+Logo o componente não tem como validar o envio do RPS, consulta ou cancelamento antes de enviar para o WebService.

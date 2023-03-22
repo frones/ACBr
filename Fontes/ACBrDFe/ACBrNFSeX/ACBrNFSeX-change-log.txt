@@ -42,16 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-22/03/2023
---ACBrNFSeXDANFSeFR--
-[-]TK-3741 Correção na leitura da aliquota, 2 propriedades mesmo nome
-  por: Victor H Gonzales - Pandaaa
-
 
 22/03/2023
 -- IPM.Provider --
 [*] Iguala nas procedures que faltavam o CodigoVerificacao ao Protocolo para padronização.
    Por: Diego F
+--ACBrNFSeXDANFSeFR--
+[-]TK-3741 Correção na leitura da aliquota, 2 propriedades mesmo nome
+  por: Victor H Gonzales - Pandaaa
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Simoes Filho/BA mudou de provedor, agora é EL na versão 2.04
+   Por: Furquim / renemelo
 
 21/03/2023
 -- IPM.Provider --

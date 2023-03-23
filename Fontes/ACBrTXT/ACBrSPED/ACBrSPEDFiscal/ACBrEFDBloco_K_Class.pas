@@ -543,7 +543,7 @@ procedure TBloco_K.WriteRegistroK275(RegK270: TRegistroK270);
 var
   intFor: integer;
 begin
-
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK270.RegistroK275 ) then

@@ -104,13 +104,13 @@ function NFSE_CarregarINI(const libHandle: TLibHandle; const eArquivoOuINI: PCha
 function NFSE_ObterXml(const libHandle: TLibHandle; AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_GravarXml(const libHandle: TLibHandle): longint;
+function NFSE_GravarXml(const libHandle: TLibHandle; AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint):longint;
+function NFSE_ObterIni(const libHandle: TLibHandle; AIndex: longint; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar):longint;
+function NFSE_GravarIni(const libHandle: TLibHandle; AIndex: longint; const eNomeArquivo, ePathArquivo: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
 function NFSE_LimparLista(const libHandle: TLibHandle): longint;

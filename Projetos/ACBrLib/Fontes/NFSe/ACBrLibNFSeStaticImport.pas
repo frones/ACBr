@@ -104,7 +104,7 @@ function NFSE_CarregarINI(const eArquivoOuINI: PChar): longint;
 function NFSE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_GravarXml(): longint;
+function NFSE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
 function NFSE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint):longint;

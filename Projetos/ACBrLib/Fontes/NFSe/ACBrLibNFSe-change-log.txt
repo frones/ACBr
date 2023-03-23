@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2023
+--- ACBrLibNFSeBase, ACBrLibNFSeConsts, ACBrLibNFSeStaticImport, ACBrLibNFSeStaticImportMT ---
+[*] Ajustes para realização dos testes unitários
+    Por: Antonio Carlos Junior 
+
 03/03/2023
 --- ACBrLibNFSeBase, ACBrLibNFSeResposta, ACBrLibNFSeConsts, ACBrLibNFSeST, ACBrLibNFSeMT, ACBrLibNFSeStaticImport, ACBrLibNFSeStaticImportMT ---
 [*] Novos métodos implementados e correções na unit ACBrLibNFSeBase

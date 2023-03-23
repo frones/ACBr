@@ -112,6 +112,7 @@ begin
   inherited Create(ArqConfig, ChaveCrypt);
   FNFSeDM := TLibNFSeDM.Create(nil);
   FNFSeDM.Lib := self;
+  FNFSeDM.ACBrNFSeX1.LerCidades;
 end;
 
 destructor TACBrLibNFSe.Destroy;

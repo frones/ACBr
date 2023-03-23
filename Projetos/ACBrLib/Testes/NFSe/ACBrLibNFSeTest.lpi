@@ -44,9 +44,8 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="acbrlibnfsetestcase.pas"/>
+        <Filename Value="ACBrLibNFSeTestCase.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrLibNFSeTestCase"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\Fontes\NFSe\ACBrLibNFSeStaticImportMT.pas"/>

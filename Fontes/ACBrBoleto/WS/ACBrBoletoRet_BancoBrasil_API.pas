@@ -210,11 +210,12 @@ begin
           begin
             ARetornoWS.DadosRet.IDBoleto.CodBarras      := AJson.Values['textoCodigoBarrasTituloCobranca'].AsString;
             ARetornoWS.DadosRet.IDBoleto.LinhaDig       := AJson.Values['codigoLinhaDigitavel'].AsString;
-            ARetornoWS.DadosRet.IDBoleto.NossoNum       := AJson.Values['numeroTituloCedenteCobranca'].AsString;
+            ARetornoWS.DadosRet.IDBoleto.NossoNum       := AJson.Values['id'].AsString;
 
             ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
+            ARetornoWS.DadosRet.TituloRet.SeuNumero     := AJson.Values['numeroTituloCedenteCobranca'].AsString;
             ARetornoWS.DadosRet.TituloRet.Carteira      := AJson.Values['numeroCarteiraCobranca'].AsString;
             ARetornoWS.DadosRet.TituloRet.Modalidade    := AJson.Values['numeroVariacaoCarteiraCobranca'].AsInteger;
             ARetornoWS.DadosRet.TituloRet.Contrato      := AJson.Values['numeroContratoCobranca'].AsString;

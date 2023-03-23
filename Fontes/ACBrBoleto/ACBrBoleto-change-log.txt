@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2023
+[*] 174 Pefisa
+  por : Victor H Gonzales - Pandaaa
+
 21/03/2023
 -- ACBrBoleto --
 [*]TK-3738-1 Campos de Certificado ACBrBoleto INI Componente

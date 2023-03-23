@@ -429,7 +429,8 @@ type
     cobPenseBankAPI,
     cobBTGPactual,
     cobBancoOriginal,
-    cobBancoVotorantim   
+    cobBancoVotorantim,
+    cobPefisa
     );
 
   TACBrTitulo = class;
@@ -1934,7 +1935,8 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
      ACBrBancoBradescoMoneyPlus, ACBrBancoC6, ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
-     ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual, ACBrBancoOriginal, ACBrBancoVotorantim;
+     ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual, ACBrBancoOriginal, ACBrBancoVotorantim,
+     ACBrBancoPefisa;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3588,6 +3590,7 @@ begin
     104: Result := cobCaixaEconomica;
     133: Result := cobBancoCresol;
     136: Result := cobUnicredES;
+    174: Result := cobPefisa;
     208: Result := cobBTGPactual;
     212: Result := cobBancoOriginal;
     218: Result := cobBS2;
@@ -4427,6 +4430,7 @@ begin
      cobBTGPactual           : fBancoClass := TACBrBancoBTGPactual.create(Self);     {208}
      cobBancoOriginal        : fBancoClass := TACBrBancoOriginal.Create(Self);        {212}
      cobBancoVotorantim      : fBancoClass := TACBrBancoVotorantim.create(Self);     {655}
+     cobPefisa               : fBancoClass := TACBrBancoPefisa.create(Self);         {174}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

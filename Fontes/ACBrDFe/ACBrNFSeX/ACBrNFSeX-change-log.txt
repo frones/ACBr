@@ -46,6 +46,9 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] A URL de produção para cidade de Guaira/SP foi alterada, provedor ainda permanece o Fiorilli na versão 2.0
    Por: ffb
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Adiciona mais possibilidade de leitura da DataHoraCancelamento lendo a tag <Datahora>
+   Por: Diego F
 
 22/03/2023
 -- IPM.Provider --

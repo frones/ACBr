@@ -134,6 +134,9 @@ begin
 
   if Result = 0 then
     Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+
+  if Result = 0 then
+    Result := ObterConteudo(ANode.Childrens.FindAnyNs('Datahora'), tcDatHor);
 end;
 
 procedure TNFSeR_ABRASFv1.LerConfirmacao(const ANode: TACBrXmlNode);

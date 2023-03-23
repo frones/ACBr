@@ -39,7 +39,7 @@ uses
   {$IFDEF demo_forte} uDMForte,{$ELSE}uDMFast,{$ENDIF}
   ACBrBase, ACBrBoleto, ACBrUtil,
   {$IFDEF VER150} ComCtrls,{$ENDIF}
-  ACBrBoletoConversao, ACBrBoletoRetorno, ComCtrls;
+  ACBrBoletoConversao, ACBrBoletoRetorno;
 
 type
   TfrmDemo = class(TForm)

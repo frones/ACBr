@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A URL de produção para cidade de Guaira/SP foi alterada, provedor ainda permanece o Fiorilli na versão 2.0
+   Por: ffb
 
 22/03/2023
 -- IPM.Provider --

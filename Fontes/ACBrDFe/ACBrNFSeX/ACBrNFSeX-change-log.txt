@@ -46,6 +46,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] A URL de produção para cidade de Guaira/SP foi alterada, provedor ainda permanece o Fiorilli na versão 2.0
    Por: ffb
+[*] A cidade de Porto Seguro/BA mudou de provedor, agora é GestaoISS na versão 2.02
+   Por: João Antônio
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Adiciona mais possibilidade de leitura da DataHoraCancelamento lendo a tag <Datahora>
    Por: Diego F

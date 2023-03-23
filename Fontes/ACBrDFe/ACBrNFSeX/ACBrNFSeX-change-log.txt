@@ -48,6 +48,8 @@ Símbolo : Significado
    Por: ffb
 [*] A cidade de Porto Seguro/BA mudou de provedor, agora é GestaoISS na versão 2.02
    Por: João Antônio
+[*] Adiciona parametro NaoFormatarItemServico para a cidade de Formosa/CE
+   Por: João Paulo Alcântara
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Adiciona mais possibilidade de leitura da DataHoraCancelamento lendo a tag <Datahora>
    Por: Diego F

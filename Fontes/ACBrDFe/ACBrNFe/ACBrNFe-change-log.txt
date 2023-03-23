@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/03/2023
+-- ACBrNFeXmlWriter, pcnNFeW --
+[*] Ajustes para atender a versão 1.10 da NT 2023/001, permitindo informar CST's monofásicos no regime Simples Nacional e ajustando as casas decimais das tags "pBio" e "pOrig", de acordo com o valor da tag, para atender ao Schema.
+  Por: BigWings
+
 15/03/2023
 -- Diversos --
 [*] Alterações visando atender a versão 1.10 da NT 2023/001 onde foi incluído novos campos.

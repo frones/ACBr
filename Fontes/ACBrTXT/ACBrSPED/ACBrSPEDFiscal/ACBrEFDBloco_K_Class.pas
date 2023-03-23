@@ -105,6 +105,7 @@ type
     procedure CriaRegistros;
     procedure LiberaRegistros;
     function TipoLeiaute: TACBrIndTipoLeiaute;
+    function ValidacaoVersaoeLeiaute: Boolean;
   public
     constructor Create;           /// Create
     destructor Destroy; override; /// Destroy
@@ -252,7 +253,7 @@ procedure TBloco_K.WriteRegistroK210(RegK100: TRegistroK100);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK100.RegistroK210 ) then
@@ -292,7 +293,7 @@ procedure TBloco_K.WriteRegistroK215(RegK210: TRegistroK210);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK210.RegistroK215 ) then
@@ -375,7 +376,7 @@ procedure TBloco_K.WriteRegistroK235(RegK230: TRegistroK230);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK230.RegistroK235 ) then
@@ -430,7 +431,7 @@ procedure TBloco_K.WriteRegistroK255(RegK250: TRegistroK250);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK250.RegistroK255 ) then
@@ -456,7 +457,7 @@ procedure TBloco_K.WriteRegistroK260(RegK100: TRegistroK100);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK100.RegistroK260 ) then
@@ -489,7 +490,7 @@ procedure TBloco_K.WriteRegistroK265(RegK260: TRegistroK260);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK260.RegistroK265 ) then
@@ -542,7 +543,7 @@ procedure TBloco_K.WriteRegistroK275(RegK270: TRegistroK270);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER > vlVersao116) and (TipoLeiaute <> itlCompleto) then
+
     Exit;
 
   if Assigned( RegK270.RegistroK275 ) then
@@ -650,7 +651,7 @@ procedure TBloco_K.WriteRegistroK292(RegK290: TRegistroK290);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK290.RegistroK292 ) then
@@ -727,7 +728,7 @@ procedure TBloco_K.WriteRegistroK302(RegK300: TRegistroK300);
 var
   intFor: integer;
 begin
-  if (FBloco_0.Registro0000.COD_VER >= vlVersao116) and (TipoLeiaute <> itlCompleto) then
+  if ValidacaoVersaoeLeiaute then
     Exit;
 
   if Assigned( RegK300.RegistroK302 ) then
@@ -785,6 +786,12 @@ begin
     Result := FRegistroK001.RegistroK010.IND_TIPO_LEIAUTE
   else
     Result := itlCompleto;
+end;
+
+function TBloco_K.ValidacaoVersaoeLeiaute: Boolean;
+begin
+  Result := (FBloco_0.Registro0000.COD_VER > vlVersao116)
+         and (TipoLeiaute <> itlCompleto);
 end;
 
 constructor TBloco_K.Create;

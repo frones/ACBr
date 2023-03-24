@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/03/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluidas as informações para a cidade de Sobral/CE, provedor é o SpeedGov.
+  Por: PrimeSoftware
+
 23/03/2023
 -- ACBrNFSeXServicos.ini --
 [*] A URL de produção para cidade de Guaira/SP foi alterada, provedor ainda permanece o Fiorilli na versão 2.0

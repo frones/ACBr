@@ -192,7 +192,7 @@ public class FrmMain extends javax.swing.JFrame {
         ckbIndicadorPix = new javax.swing.JCheckBox();
         jLabel51 = new javax.swing.JLabel();
         txtPathLog = new javax.swing.JTextField();
-        btnPathLog = new javax.swing.JButton();
+        btnArquivoKEY = new javax.swing.JButton();
         chkGravarLog = new javax.swing.JCheckBox();
         jPanel20 = new javax.swing.JPanel();
         rdbHomologacao = new javax.swing.JRadioButton();
@@ -207,6 +207,12 @@ public class FrmMain extends javax.swing.JFrame {
         nudTimeOut = new javax.swing.JSpinner();
         jLabel56 = new javax.swing.JLabel();
         txtVersao = new javax.swing.JTextField();
+        jLabel57 = new javax.swing.JLabel();
+        txtArquivoCRT = new javax.swing.JTextField();
+        jLabel58 = new javax.swing.JLabel();
+        txtArquivoKEY = new javax.swing.JTextField();
+        btnArquivoCRT = new javax.swing.JButton();
+        btnPathLog = new javax.swing.JButton();
         btnGravarConfig = new javax.swing.JButton();
         btnCarregarConfiguracoes = new javax.swing.JButton();
 
@@ -412,7 +418,6 @@ public class FrmMain extends javax.swing.JFrame {
         });
 
         btnEnviarBoletoWebService.setText("Enviar Boleto (WebService)");
-        btnEnviarBoletoWebService.setActionCommand("Enviar Boleto (WebService)");
         btnEnviarBoletoWebService.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEnviarBoletoWebServiceActionPerformed(evt);
@@ -522,7 +527,6 @@ public class FrmMain extends javax.swing.JFrame {
 
         btnIncluirTitulo.getAccessibleContext().setAccessibleName("Incluir Titulos");
         btnIncluirTitulo.getAccessibleContext().setAccessibleDescription("");
-        btnEnviarBoletoWebService.getAccessibleContext().setAccessibleName("Enviar Boleto (WebService)");
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel33.setText("Nome/ Rz Social");
@@ -724,7 +728,7 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel43)
@@ -1029,7 +1033,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(jLabel26)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCodCedente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Conta Bancária", jPanel2);
@@ -1325,10 +1329,10 @@ public class FrmMain extends javax.swing.JFrame {
 
         txtPathLog.setPreferredSize(new java.awt.Dimension(269, 20));
 
-        btnPathLog.setText("...");
-        btnPathLog.addActionListener(new java.awt.event.ActionListener() {
+        btnArquivoKEY.setText("...");
+        btnArquivoKEY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPathLogActionPerformed(evt);
+                btnArquivoKEYActionPerformed(evt);
             }
         });
 
@@ -1394,14 +1398,40 @@ public class FrmMain extends javax.swing.JFrame {
 
         txtVersao.setPreferredSize(new java.awt.Dimension(269, 20));
 
+        jLabel57.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel57.setText("Arquivo CRT");
+        jLabel57.setToolTipText("");
+
+        txtArquivoCRT.setPreferredSize(new java.awt.Dimension(269, 20));
+
+        jLabel58.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel58.setText("Arquivo KEY");
+        jLabel58.setToolTipText("");
+
+        txtArquivoKEY.setPreferredSize(new java.awt.Dimension(269, 20));
+
+        btnArquivoCRT.setText("...");
+        btnArquivoCRT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArquivoCRTActionPerformed(evt);
+            }
+        });
+
+        btnPathLog.setText("...");
+        btnPathLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPathLogActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1422,20 +1452,40 @@ public class FrmMain extends javax.swing.JFrame {
                                         .addComponent(txtScope, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(jPanel8Layout.createSequentialGroup()
                                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel8Layout.createSequentialGroup()
                                             .addComponent(jLabel51)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(chkGravarLog))
-                                        .addComponent(txtPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(txtPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(ckbIndicadorPix))
+                                    .addComponent(btnPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(67, 67, 67)
                         .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(363, 363, 363)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbOperacao, 0, 103, Short.MAX_VALUE)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(jLabel57)
+                                        .addGap(38, 38, 38))
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(txtArquivoCRT, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnArquivoCRT, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel58)
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(txtArquivoKEY, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnArquivoKEY, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(72, 72, 72))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(ckbIndicadorPix)
+                                .addGap(74, 74, 74)
+                                .addComponent(chkGravarLog)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbOperacao, 0, 99, Short.MAX_VALUE)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel56)
@@ -1504,19 +1554,33 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtKeyUser, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ckbIndicadorPix)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel58)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtArquivoKEY, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnArquivoKEY)))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel57)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtArquivoCRT, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnArquivoCRT))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel51)
+                            .addComponent(ckbIndicadorPix)
                             .addComponent(chkGravarLog))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPathLog))))
+                        .addComponent(jLabel51)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnPathLog)
+                            .addComponent(txtPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
-        jLabel47.getAccessibleContext().setAccessibleName("ClientID");
+        jLabel57.getAccessibleContext().setAccessibleName("ArquivoCRT");
 
         jTabbedPane5.addTab("WebService", jPanel8);
 
@@ -1556,14 +1620,14 @@ public class FrmMain extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(2, 2, 2)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(8, Short.MAX_VALUE))
+                        .addContainerGap(12, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGravarConfig)
                             .addComponent(btnCarregarConfiguracoes))
@@ -1601,7 +1665,6 @@ public class FrmMain extends javax.swing.JFrame {
             acbrBoleto.configGravarValor(ACBrSessao.Principal, "LogNivel", NivelLog.logParanoico);  
             acbrBoleto.configGravarValor(ACBrSessao.Principal, "LogPath", path);
             acbrBoleto.configGravar();
-            loadConfig();
             
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1796,6 +1859,12 @@ public class FrmMain extends javax.swing.JFrame {
             ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "Timeout");
             nudTimeOut.setValue(Integer.parseInt(ret));
             
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "ArquivoCRT");
+            txtArquivoCRT.setText(ret);
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "ArquivoKEY");
+            txtArquivoKEY.setText(ret);
+            
         }catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1870,6 +1939,8 @@ public class FrmMain extends javax.swing.JFrame {
             acbrBoleto.configGravarValor(ACBrSessao.DFe, "SSLHttpLib", Integer.toString(cmbHttp.getSelectedIndex()));
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "VersaoDF", txtVersao.getText());
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "Timeout", nudTimeOut.getValue().toString());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "ArquivoCRT", txtArquivoCRT.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "ArquivoKEY", txtArquivoKEY.getText());
             
             acbrBoleto.configGravar(); 
             
@@ -1878,8 +1949,7 @@ public class FrmMain extends javax.swing.JFrame {
         }
         
      }
-    
-    
+     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
@@ -2266,6 +2336,38 @@ public class FrmMain extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnEnviarBoletoWebServiceActionPerformed
 
+    private void btnArquivoKEYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoKEYActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("key", "Arquivo KEY (*.key)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            txtArquivoKEY.setText(chooser.getSelectedFile().toString());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "ArquivoPFX", txtArquivoKEY.getText());
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnArquivoKEYActionPerformed
+
+    private void btnArquivoCRTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoCRTActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("crt", "Arquivo CRT (*.crt)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            txtArquivoCRT.setText(chooser.getSelectedFile().toString());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "ArquivoCRT", txtArquivoCRT.getText());
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnArquivoCRTActionPerformed
+
     private void btnPathLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathLogActionPerformed
         txtPathLog.setText(
                 selecionarDiretorio("Selecione o diretorio do Log"));
@@ -2273,6 +2375,8 @@ public class FrmMain extends javax.swing.JFrame {
 
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnArquivoCRT;
+    private javax.swing.JButton btnArquivoKEY;
     private javax.swing.JButton btnCarregarConfiguracoes;
     private javax.swing.JButton btnCodigoBarras;
     private javax.swing.JButton btnCodigoMoraAceitos;
@@ -2372,6 +2476,8 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -2392,6 +2498,8 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdbProducao;
     private javax.swing.JTextArea rtbRespostas;
     private javax.swing.JTextField txtAgencia;
+    private javax.swing.JTextField txtArquivoCRT;
+    private javax.swing.JTextField txtArquivoKEY;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCEP;
     private javax.swing.JTextField txtCNPJCPF;

@@ -48,7 +48,11 @@ public enum BancoBoleto {
     cobBancoRendimento(41),
     cobBancoInter(42),
     cobBancoSofisaSantander(43),
-    cobBS2(44);
+    cobBS2(44),
+    cobPenseBank(45),
+    cobBTGPactual(46),
+    cobBancoOriginal(47),
+    cobBancoVotorantin(48);
     
     private static final Map<Integer, BancoBoleto> map;
     private final int enumValue;

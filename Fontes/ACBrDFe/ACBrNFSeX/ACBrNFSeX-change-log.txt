@@ -46,6 +46,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [+] Incluidas as informações para a cidade de Sobral/CE, provedor é o SpeedGov.
   Por: PrimeSoftware
+[+] Incluidas as informações para a cidade Nova Maringa/MT, provedor: Coplan v2.01.
+  Por:  Diego Reckziegel, Verificado: Daniel Morais
 
 23/03/2023
 -- ACBrNFSeXServicos.ini --

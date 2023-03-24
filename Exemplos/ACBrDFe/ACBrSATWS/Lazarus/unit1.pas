@@ -128,7 +128,7 @@ var
 implementation
 
 uses
-  ACBrUtil, blcksock, pcnConversao, TypInfo, ACBrUtil.FilesIO, IniFiles;
+  blcksock, IniFiles, pcnConversao, TypInfo, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.FilesIO;
 
 {$R *.lfm}
 

@@ -46,6 +46,10 @@
         cobBancoRendimento = 41,
         cobBancoInter = 42,
         cobBancoSofisaSantander = 43,
-		cobBS2 = 44
+		cobBS2 = 44,
+        cobPenseBankAPI = 45,
+        cobBTGPactual = 46,
+        cobBancoOriginal = 47,
+        cobBancoVotorantin = 48
     }
 }

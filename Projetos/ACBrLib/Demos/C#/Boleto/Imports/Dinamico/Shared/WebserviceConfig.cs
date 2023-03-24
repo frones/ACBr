@@ -65,6 +65,18 @@ namespace ACBrLib.Boleto
             set => SetProperty(value);
         }
 
+        public string ArquivoCRT
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string ArquivoKEY
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

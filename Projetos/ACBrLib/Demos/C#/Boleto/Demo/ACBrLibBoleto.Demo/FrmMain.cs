@@ -25,8 +25,8 @@ namespace ACBrLibBoleto.Demo
             InitializeComponent();
 
             // Inicializando a dll
-            //boleto = new ACBrBoleto();
-            boleto = new ACBrBoleto("[Memory]");
+            boleto = new ACBrBoleto();
+            //boleto = new ACBrBoleto("[Memory]"); -- Exemplo utilizar ACBrlib.ini em memória.
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -144,6 +144,8 @@ namespace ACBrLibBoleto.Demo
             cmbHttp.SetSelectedValue(boleto.Config.DFe.SSLHttpLib);
             txtVersao.Text = boleto.Config.Webservice.VersaoDF;
             nudTimeOut.Value = boleto.Config.Webservice.Timeout;
+            txtArquivoCRT.Text = boleto.Config.Webservice.ArquivoCRT;
+            txtArquivoKEY.Text = boleto.Config.Webservice.ArquivoKEY;
 
         }
 
@@ -208,6 +210,8 @@ namespace ACBrLibBoleto.Demo
             boleto.Config.DFe.SSLHttpLib = cmbHttp.GetSelectedValue<SSLHttpLib>();
             boleto.Config.Webservice.VersaoDF = txtVersao.Text;
             boleto.Config.Webservice.Timeout = (int)nudTimeOut.Value;
+            boleto.Config.Webservice.ArquivoCRT = txtArquivoCRT.Text;
+            boleto.Config.Webservice.ArquivoKEY = txtArquivoKEY.Text;
 
             boleto.ConfigGravar();
         }
@@ -624,6 +628,16 @@ namespace ACBrLibBoleto.Demo
         private void btnPathLog_Click(object sender, EventArgs e)
         {
             txtPathLog.Text = Helpers.SelectFolder();
+        }
+
+        private void btnArquivoCRT_Click(object sender, EventArgs e)
+        {
+            txtArquivoCRT.Text = Helpers.OpenFile("Arquivos CRT (*.crt)|*.crt|Todos os Arquivos (*.*)|*.*");
+        }
+
+        private void btnArquivoKEY_Click(object sender, EventArgs e)
+        {
+            txtArquivoKEY.Text = Helpers.OpenFile("Arquivos KEY (*.key)|*.key|Todos os Arquivos (*.*)|*.*");
         }
     }
 }

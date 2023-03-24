@@ -484,6 +484,10 @@ Public Enum BancoBoleto
     cobBancoInter = 42
     cobBancoSofisaSantander = 43
     cobBS2 = 44
+    cobPenseBankAPI = 45
+    cobBTGPactual = 46
+    cobBancoOriginal = 47
+    cobBancoVotorantin = 48
 End Enum
 
 Public Enum IndicadorPix

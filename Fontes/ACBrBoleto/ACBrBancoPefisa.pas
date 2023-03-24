@@ -77,9 +77,9 @@ type
 implementation
 
 uses
+  StrUtils,
   ACBrBase,
   ACBrUtil.Strings,
-  StrUtils,
   ACBrUtil.Base;
 
   { TACBrBancoPefisa }

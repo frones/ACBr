@@ -48,6 +48,8 @@ Símbolo : Significado
   Por: PrimeSoftware
 [+] Incluidas as informações para a cidade Nova Maringa/MT, provedor: Coplan v2.01.
   Por:  Diego Reckziegel, Verificado: Daniel Morais
+[*] A cidade de Sao Sepe/RS mudou de provedor, agora é IPM na versão 2.04
+  Por: C4Dev
 
 23/03/2023
 -- ACBrNFSeXServicos.ini --

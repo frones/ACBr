@@ -48,6 +48,8 @@ Símbolo : Significado
    Por: cleyton44
 [*] A cidade de Santos Dumont/MG mudou de provedor, agora é Fiorilli na versão 2.00
    Por: Pegasus Aut e Desenv
+[+] Incluida a cidade de Itabaiana/SE, provedor é o WebISS na versão 2.00
+   Por: PrimeSoftware
 
 24/03/2023
 -- ACBrNFSeXServicos.ini --

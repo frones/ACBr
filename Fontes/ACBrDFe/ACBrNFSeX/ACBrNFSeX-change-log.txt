@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Araucária/PR mudou a versão, agora é 2.04, provedor ainda é IPM.
+   Por: cleyton44
+
 24/03/2023
 -- ACBrNFSeXServicos.ini --
 [+] Incluidas as informações para a cidade de Sobral/CE, provedor é o SpeedGov.

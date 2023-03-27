@@ -46,6 +46,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Araucária/PR mudou a versão, agora é 2.04, provedor ainda é IPM.
    Por: cleyton44
+[*] A cidade de Santos Dumont/MG mudou de provedor, agora é Fiorilli na versão 2.00
+   Por: Pegasus Aut e Desenv
 
 24/03/2023
 -- ACBrNFSeXServicos.ini --

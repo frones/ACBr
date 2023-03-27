@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+27/03/2023
+-- ACBrBoleto,ACBrBancoItau --
+[*]TK-3714 Contribuição add codigo de ocorrrência 71-RemessaBolecode pelo usuario. Alterado ler retorno CNAB400 para capturar o qrcode.emv q não estava sendo tratado. 
+  por : Antônio José Medeiros Schneider Jr / Daniel Morais
 
 23/03/2023
 [*] 174 Pefisa

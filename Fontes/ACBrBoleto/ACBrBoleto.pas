@@ -550,6 +550,7 @@ type
     toRemessaAlteracaoPercentualParaMaximo,
     toRemessaAlteracaoPercentualParaMinimoMaximo,
     toRemessaProrrogarVencimento,
+    toRemessaHibrido,
 
     {Ocorrências para arquivo retorno}
     toRetornoAbatimentoCancelado,

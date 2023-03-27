@@ -917,14 +917,14 @@ begin
     else
       Cedente.TipoInscricao:= pJuridica;
     end;
-	  
+
     Cedente.Nome         := rCedente;
     Cedente.CNPJCPF      := rCNPJCPF;
     Cedente.Agencia      := rAgencia;
     Cedente.AgenciaDigito:= '0';
     Cedente.Conta        := rConta;
     Cedente.ContaDigito  := rDigitoConta;
-      
+
     ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
   end;
 
@@ -932,90 +932,93 @@ begin
   begin
     Linha := ARetorno[ContLinha] ;
 
-    if Copy(Linha,1,1)<> '1' then
-      Continue;
-
-    Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+    if Linha[1] = '1' then
+      Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
     with Titulo do
     begin
-      SeuNumero                   := copy(Linha,38,25);
-      NumeroDocumento             := copy(Linha,117,10);
-      Carteira                    := copy(Linha,83,3);
-
-      OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
-      Sacado.NomeSacado           := copy(Linha,325,30);
-
-      if OcorrenciaOriginal.Tipo in [toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente,
-                                     toRetornoAlegacaoDoSacado, toRetornoInstrucaoCancelada] then
+      if Linha[1] = '1' then
       begin
-        MotivoLinha := 302;
-        wMotivoRejeicaoCMD:= StrToIntDef(Copy(Linha, MotivoLinha, 4), 0);
+        SeuNumero                   := copy(Linha,38,25);
+        NumeroDocumento             := copy(Linha,117,10);
+        Carteira                    := copy(Linha,83,3);
+
+        OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
+        Sacado.NomeSacado           := copy(Linha,325,30);
+
+        if OcorrenciaOriginal.Tipo in [toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente,
+                                       toRetornoAlegacaoDoSacado, toRetornoInstrucaoCancelada] then
+        begin
+          MotivoLinha := 302;
+          wMotivoRejeicaoCMD:= StrToIntDef(Copy(Linha, MotivoLinha, 4), 0);
+
+          if wMotivoRejeicaoCMD <> 0 then
+          begin
+            MotivoRejeicaoComando.Add(Copy(Linha, MotivoLinha, 4));
+            CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[0], 0);
+            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
+          end;
+        end
+        else
+        begin
+          MotivoLinha := 378;
+        for I := 0 to 3 do
+        begin
+          wMotivoRejeicaoCMD:= StrToIntDef(Copy(Linha, MotivoLinha, 2),0);
 
         if wMotivoRejeicaoCMD <> 0 then
         begin
-          MotivoRejeicaoComando.Add(Copy(Linha, MotivoLinha, 4));
-          CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[0], 0);
-          DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
+          MotivoRejeicaoComando.Add(Copy(Linha, MotivoLinha, 2));
+          CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[I], 0) ;
+         DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
         end;
-      end
-     else
-      begin
-       MotivoLinha := 378;
-       for I := 0 to 3 do
-       begin
-         wMotivoRejeicaoCMD:= StrToIntDef(Copy(Linha, MotivoLinha, 2),0);
 
-         if wMotivoRejeicaoCMD <> 0 then
-         begin
-           MotivoRejeicaoComando.Add(Copy(Linha, MotivoLinha, 2));
-           CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[I], 0) ;
-           DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
-         end;
-                         
-         MotivoLinha := MotivoLinha + 2;
-       end;
-     end;
+          MotivoLinha := MotivoLinha + 2;
+        end;
+      end;
 
-     DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+        DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
                                             Copy(Linha,113,2)+'/'+
                                             Copy(Linha,115,2),0, 'DD/MM/YY' );
 
-     {Espécie do documento}
-       EspecieDoc := ConverteEspecieDoc(StrToIntDef(Copy(Linha,174,2),0));
+        {Espécie do documento}
+        EspecieDoc := ConverteEspecieDoc(StrToIntDef(Copy(Linha,174,2),0));
 
-       Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+        Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
                                           Copy(Linha,149,2)+'/'+
                                           Copy(Linha,151,2),0, 'DD/MM/YY' );
 
-       ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
-       ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
-       ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
-       ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-       ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-       ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
-       ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-       NossoNumero          := Copy(Linha,63,8);
-       Carteira             := Copy(Linha,83,3);
-       ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
-       CodigoLiquidacao     := Copy(Linha,393,2);
-       CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( CodigoLiquidacao );
-       // informações do local de pagamento
-       Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
-       Liquidacao.Agencia    := Copy(Linha,169,4);
-       Liquidacao.Origem     := '';
+        ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+        ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
+        ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+        ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+        ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+        ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
+        ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+        NossoNumero          := Copy(Linha,63,8);
+        Carteira             := Copy(Linha,83,3);
+        ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+        CodigoLiquidacao     := Copy(Linha,393,2);
+        CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( CodigoLiquidacao );
+        // informações do local de pagamento
+        Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
+        Liquidacao.Agencia    := Copy(Linha,169,4);
+        Liquidacao.Origem     := '';
 
-       if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
+        if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
          DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
                                             Copy(Linha,298,2)+'/'+
                                             Copy(Linha,300,2),0, 'DD/MM/YY' );
 
-       if StrToIntDef(Copy(Linha,111,6),0) <> 0 then
+        if StrToIntDef(Copy(Linha,111,6),0) <> 0 then
          DataBaixa := StringToDateTimeDef(Copy(Linha,111,2)+'/'+
                                           Copy(Linha,113,2)+'/'+
                                           Copy(Linha,115,2),0,'DD/MM/YY');
 
-     end;
+      end;
+      if Linha[1] = '3' then
+        QrCode.emv := trim(copy(Linha,2,390));
+    end;
    end;
 end;
 
@@ -1816,6 +1819,7 @@ begin
     38 : Result:= toRemessaCedenteDiscordaSacado;           {Cedente não Concorda com Alegação do Sacado }
     47 : Result:= toRemessaCedenteSolicitaDispensaJuros;    {Cedente Solicita Dispensa de Juros}
     49 : Result:= toRemessaAlterarOutrosDados;              {49-Alteração de dados extras}
+    71 : Result:= toRemessaHibrido                          {71-REMESSA – BOLECODE (emissão do boleto e QR Code pix)}
   else
      Result:= toRemessaRegistrar;                           {Remessa}
   end;
@@ -1912,10 +1916,10 @@ begin
       toRemessaAlterarVencSustarProtesto    : Result := '37';
       toRemessaCedenteDiscordaSacado        : Result := '38';
       toRemessaCedenteSolicitaDispensaJuros : Result := '47';
-      else
-        Result := '01';
-      end;
-
+      toRemessaHibrido                      : Result := '71';
+    else
+      Result := '01';
+    end;
   end;
 
 end;

@@ -149,6 +149,7 @@ begin
   Tracos  := '' ;
   ACBrEXT := TACBrExtenso.Create(nil);
   try
+     ACBrEXT.Idioma := idiPortuguesBr;
      ACBrEXT.Valor := fpValor ;
 
      // Utilizar pagina de codigo para substituir acentos

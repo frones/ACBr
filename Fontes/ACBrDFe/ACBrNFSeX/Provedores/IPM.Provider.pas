@@ -1579,6 +1579,7 @@ procedure TACBrNFSeProviderIPM204.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.QuebradeLinha := sLineBreak;
   ConfigGeral.Identificador := '';
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
 

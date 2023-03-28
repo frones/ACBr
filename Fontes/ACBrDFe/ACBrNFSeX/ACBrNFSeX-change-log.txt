@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/03/2023
+-- IPM.Provider --
+[*] Alteração do valor do parâmetro QuebradeLinha da versão 2.04.
+   Por: Marcio ST
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Duque de Caxias/RJ mudou a versão, agora é 2.04, provedor ainda é ISSNet.
    Por: drsmoreira

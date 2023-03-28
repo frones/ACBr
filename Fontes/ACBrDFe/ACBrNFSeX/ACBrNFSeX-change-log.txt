@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Duque de Caxias/RJ mudou a versão, agora é 2.04, provedor ainda é ISSNet.
+   Por: drsmoreira
+[+] Incluida a cidade de Monte Mor/SP, provedor: Sistemas4R
+   Por: Thailer Graciano
+[+] Incluida a cidade de Poções/BA, provedor: EL - versão 2.04
+   Por: Emanuel - Quality
+
 27/03/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Araucária/PR mudou a versão, agora é 2.04, provedor ainda é IPM.

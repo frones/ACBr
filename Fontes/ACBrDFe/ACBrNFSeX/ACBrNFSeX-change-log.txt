@@ -50,6 +50,8 @@ Símbolo : Significado
    Por: Pegasus Aut e Desenv
 [+] Incluida a cidade de Itabaiana/SE, provedor é o WebISS na versão 2.00
    Por: PrimeSoftware
+[+] Incluidas cidades de Ubatuba/SP e Vinhedo/SP, provedor Prescon.
+   Por: Renato Rubinho
 
 24/03/2023
 -- ACBrNFSeXServicos.ini --

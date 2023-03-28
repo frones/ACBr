@@ -7,7 +7,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   PixelsPerInch = 96
   TextHeight = 24
   inherited RLNFe: TRLReport
-    Top = 0
+    Left = 10
+    Top = 10
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -290,10 +291,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object lblCST: TRLLabel
+      object lblCST1: TRLLabel
         Tag = 10
         Left = 284
-        Top = 18
+        Top = 14
         Width = 22
         Height = 7
         Alignment = taCenter
@@ -648,6 +649,23 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object lblCST2: TRLLabel
+        Tag = 10
+        Left = 284
+        Top = 21
+        Width = 22
+        Height = 7
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'CST'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7

@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/03/2023
+-- ACBrNFeDANFeReport, ACBrNFeDANFEFRDM, ACBrNFeDANFeRL, ACBrNFeDANFeLazReport --
+[*] Ajustes para impressão do CST no DANFE, no regime Simples Nacional.
+  Por: BigWings
+
 23/03/2023
 -- ACBrNFeXmlWriter, pcnNFeW --
 [*] Ajustes para atender a versão 1.10 da NT 2023/001, permitindo informar CST's monofásicos no regime Simples Nacional e ajustando as casas decimais das tags "pBio" e "pOrig", de acordo com o valor da tag, para atender ao Schema.

@@ -1773,7 +1773,7 @@ begin
       FieldByName('CRT').AsString := CRTToStr(CRT);
 
       if Trim(FieldByName('CRT').AsString) = '1' then
-        FieldByName('DESCR_CST').AsString := 'CSOSN'
+        FieldByName('DESCR_CST').AsString := 'CSOSN/CST'
       else
         FieldByName('DESCR_CST').AsString := 'CST';
 

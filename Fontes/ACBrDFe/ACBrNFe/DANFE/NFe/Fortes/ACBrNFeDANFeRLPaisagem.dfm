@@ -298,10 +298,10 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           DrawKind = dkLine
           HoldStyle = hsRelatively
         end
-        object lblCST: TRLLabel
+        object lblCST1: TRLLabel
           Tag = 10
           Left = 48
-          Top = 8
+          Top = 2
           Width = 22
           Height = 7
           Alignment = taCenter
@@ -824,6 +824,22 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Alignment = taCenter
           AutoSize = False
           Caption = 'AL'#205'QUOTAS'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          HoldStyle = hsRelatively
+          ParentFont = False
+        end
+        object lblCST2: TRLLabel
+          Tag = 10
+          Left = 48
+          Top = 10
+          Width = 22
+          Height = 7
+          Alignment = taCenter
+          AutoSize = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4480,7 +4496,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             Font.Name = 'Arial'
             Font.Style = []
             ParentFont = False
-            SecondHolder = lblCST
+            SecondHolder = lblCST1
           end
           object linhaCFOP1: TRLDraw
             Left = 71

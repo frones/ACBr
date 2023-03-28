@@ -1236,10 +1236,10 @@ begin
       FieldByName('IEST').AsString      := IEST;
       FieldByName('CRT').AsString       := CRTToStr(CRT);
 
-      if (Trim(FieldByName('CRT').AsString) = '1') then
-        FieldByName('DESCR_CST').AsString := 'CSOSN'
-      else
-        FieldByName('DESCR_CST').AsString := 'CST';
+      case CRT of
+        crtSimplesNacional: FieldByName('DESCR_CST').AsString := 'CSOSN / CST';
+        crtRegimeNormal, crtSimplesExcessoReceita: FieldByName('DESCR_CST').AsString := 'CST';
+      end;
 
       cdsEmitente.FieldByName('DADOS_ENDERECO').AsString    := Trim(FieldByName('XLgr').AsString) + ', ' +
                                                                 Trim(FieldByName('Nro').AsString);

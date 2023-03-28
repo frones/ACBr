@@ -557,7 +557,7 @@ begin
         end;
       crtSimplesNacional: begin
         rlmProdutoCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
-        rlCST.Caption:= 'Csosn';
+        rlCST.Caption:= 'Csosn/Cst';
         end;
     end;
     rlmProdutoValor.Caption := fpDANFe.FormatarValorUnitario(Prod.vUnCom);

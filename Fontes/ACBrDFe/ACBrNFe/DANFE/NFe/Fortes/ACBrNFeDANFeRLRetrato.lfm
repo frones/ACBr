@@ -280,15 +280,29 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object lblCST: TRLLabel
+      object lblCST1: TRLLabel
         Tag = 10
         Left = 284
         Height = 7
-        Top = 18
+        Top = 14
         Width = 22
         Alignment = taCenter
         AutoSize = False
         Caption = 'CST'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object lblCST2: TRLLabel
+        Tag = 10
+        Left = 284
+        Height = 7
+        Top = 21
+        Width = 22
+        Alignment = taCenter
+        AutoSize = False
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'

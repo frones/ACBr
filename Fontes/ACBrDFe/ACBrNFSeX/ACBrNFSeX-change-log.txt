@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] Diversas cidades atendidas pelo provedor ISSNet (versão 1 do layout da ABRASF)
+    tiveram as suas URLs de homologação e de produção alteradas.
+   Por: Italo Giurizzato Junior
 -- NFSeBrasil.Provider --
 [*] Alteração na função TratarXmlRetornado visando a leitura correta do XML.
    Por: Italo Giurizzato Junior

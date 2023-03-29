@@ -367,7 +367,7 @@ begin
   if ACBrTitulo.ListaDadosNFe.Count > 0 then
       GerarRegistrosNFe(ACBrTitulo, aRemessa);
 
-  if (Pagador.Email <> '') or (Pagador.SacadoAvalista.CNPJCPF <> '') then
+  if (Pagador.SacadoAvalista.CNPJCPF <> '') then
   begin
 
    LLinha := '5' +                                                              // 001 - 001 Tipo de registro - 5 IDENTIFICAÇÃO DO REGISTRO TRANSAÇÃO

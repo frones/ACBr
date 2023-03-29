@@ -442,6 +442,14 @@ begin
         if AuxNode <> nil then
           NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
 
+        if NumRps = '' then
+        begin
+          AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoRps');
+
+          if AuxNode <> nil then
+            NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
+        end;
+
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         ANota := CarregarXmlNfse(ANota, ANode.OuterXml);

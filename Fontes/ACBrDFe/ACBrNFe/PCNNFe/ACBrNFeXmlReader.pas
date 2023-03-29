@@ -1282,6 +1282,7 @@ begin
      NFe.pag.New;
      (*YA01b*)NFe.pag[i].indPag := StrToIndpag(Ok, ObterConteudo(ANodes[i].Childrens.Find('indPag'), tcStr));
      (*YA02*)NFe.pag[i].tPag := StrToFormaPagamento(ok, ObterConteudo(ANodes[i].Childrens.Find('tPag'), tcStr));
+     (*YA02a*)NFe.pag[i].xPag := ObterConteudo(ANodes[i].Childrens.Find('xPag'), tcStr));
      (*YA03*)NFe.pag[i].vPag := ObterConteudo(ANodes[i].Childrens.Find('vPag'), tcDe2);
 
      AuxNode := ANode.Childrens.Find('card');

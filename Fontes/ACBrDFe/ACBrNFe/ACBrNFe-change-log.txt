@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/03/2023
+-- ACBrNFeXmlReader, ACBrNFeXmlWriter --
+[-] Alterações visando atender a NT 2020/006 versão 1.20.
+  Por: BigWings
+
 28/03/2023
 -- ACBrNFeDANFeReport, ACBrNFeDANFEFRDM, ACBrNFeDANFeRL, ACBrNFeDANFeLazReport --
 [*] Ajustes para impressão do CST no DANFE, no regime Simples Nacional.

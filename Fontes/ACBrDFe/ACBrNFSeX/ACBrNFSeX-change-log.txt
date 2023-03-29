@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Araçatuba/SP mudou a URL.
+   Por: Antonio Paulo Mangili
+[*] A cidade de Aparecida de Goiania/GO mudou para a versão 2.04
+   Por: Hugo Fabricio
 -- ACBrNFSeX --
 [*] Ajustes no método LinkNFSe
    Por: Italo Giurizzato Junior

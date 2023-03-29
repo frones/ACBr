@@ -57,6 +57,7 @@ type
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineCarteira(const ACBrTitulo: TACBrTitulo): String;
     function DefineCarteiraRemessa(const ACBrTitulo: TACBrTitulo): String;
+    function GetLocalPagamento: String; override;
   public
     Constructor create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String; override;
@@ -72,6 +73,8 @@ type
     function DefineTipoMulta(const ATitulo : TACBrTitulo):String;
     procedure EhObrigatorioAgenciaDV; override;
     procedure EhObrigatorioContaDV; override;
+    function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+    const CInstrucaoPagamentoFibra = 'PAGÁVEL EM TODA REDE BANCÁRIA';
   end;
 
 implementation
@@ -80,7 +83,7 @@ uses
   StrUtils,
   ACBrBase,
   ACBrUtil.Strings,
-  ACBrUtil.Base;
+  ACBrUtil.Base, ACBrValidador;
 
   { TACBrBancoFibra }
 
@@ -99,7 +102,7 @@ begin
    PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 4, '0') +
    PadLeft(DefineCarteira(ACBrTitulo), 3, '0') +
    PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Operacao, 7, '0') +
-   PadLeft(ACBrTitulo.NossoNumero, 11, '0') +
+   PadLeft(ACBrTitulo.NossoNumero, 10, '0') +
    CalcularDigitoVerificador(ACBrTitulo);
 
 
@@ -182,31 +185,31 @@ end;
 constructor TACBrBancoFibra.create(AOwner: TACBrBanco);
 begin
   inherited create(AOwner);
-  fpDigito                     := 2;
+  fpDigito                     := 0;
   fpNome                       := 'FIBRA';
   fpNumero                     := 224;
   fpTamanhoMaximoNossoNum      := 10;
   fpTamanhoAgencia             := 4;
-  fpTamanhoConta               := 7;
+  fpTamanhoConta               := 9;
   fpTamanhoCarteira            := 3;
   fpLayoutVersaoArquivo        := 22;
   fpLayoutVersaoLote           := 0;
   fpDensidadeGravacao          := '';
-  fpModuloMultiplicadorInicial := 2;
-  fpModuloMultiplicadorFinal   := 7;
   fpCodParametroMovimento      := '';
+  fpOrientacoesBanco.Add(ACBrStr('TÍTULO CEDIDO AO BANCO FIBRA SA A SER PAGO APENAS POR ESTE BOLETO.'));
 end;
 
 function TACBrBancoFibra.MontarCampoCodigoCedente(
   const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result :=  ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+  Result := PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Agencia,4,'0') +
+    '/'+
+    PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Conta,9,'0');
 end;
 
 function TACBrBancoFibra.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
-    '/'+
+  Result := 
     DefineCarteira(ACBrTitulo) +
     '/'+
     ACBrTitulo.NossoNumero +
@@ -231,7 +234,7 @@ begin
     'REMESSA' +                                                                 // 003 a 009 - Literal Remessa
     '01' +                                                                      // 010 a 011 - Código Serviço
     PadRight('COBRANCA', 15) +                                                  // 012 a 026 - Literal Cobranca
-    PadLeft(Beneficiario.CodigoCedente, 20, '0') +                              // 027 a 046 - Código do Cedente
+    PadRight(Beneficiario.CodigoCedente, 20) +                                  // 027 a 046 - Código do Cedente
     PadRight(Beneficiario.Nome, 30) +                                           // 047 a 076 - Nome da Empresa
     IntToStrZero(Numero, 3) +                                                   // 077 a 079 - Código do Banco
     PadRight(Nome, 15) +                                                        // 080 a 094 - Uso do Banco Brancos
@@ -306,10 +309,11 @@ begin
   LLinha := '1' +                                                               // 001 a 001 - Tipo de Registro
     PadLeft(DefineTipoInscricao, 2, '0') +                                      // 002 a 003 - Tipo de Inscrição Empresa
     PadLeft(OnlyNumber(Beneficiario.CNPJCPF), 14, '0') +                        // 004 a 017 - CNPJ Empresa
-    PadRight(Beneficiario.CodigoTransmissao, 20) +                              // 018 a 037 - Código da Empresa
+    PadRight(Beneficiario.CodigoCedente, 20) +                                  // 018 a 037 - Código da Empresa
     PadRight(LTitulo.NumeroDocumento, 25) +                                     // 038 a 062 - Uso da Empresa
-    PadRight(LTitulo.NossoNumero, 11) +                                         // 063 a 073 - Nosso Número
-    Space(13) +                                                                 // 074 a 086 - Uso do Banco Brancos
+    PadRight(LTitulo.NossoNumero+
+             CalcularDigitoVerificador(ACBrTitulo), 11) +                       // 063 a 073 - Nosso Número
+    Poem_Zeros('',13) +                                                         // 074 a 086 - Uso do Banco Brancos
     Space(3) +                                                                  // 087 a 089 - Uso do Banco Brancos
     DefineTipoMulta(LTitulo) +                                                  // 090 a 090 - Tipo de Multa
     PadRight(ifThen(LTitulo.PercentualMulta > 0,
@@ -325,8 +329,8 @@ begin
     IntToStrZero(Numero, 3) +                                                   // 140 a 142 - Código do Banco
     Poem_Zeros('', 4) +                                                         // 143 a 146 - Agencia Cobradora Zeros
     Poem_Zeros('', 1) +                                                         // 147 a 147 - DAC da Agencia Cobradora Zeros
-     DefineEspecieDoc(ACBrTitulo) +                                              // 148 a 149 - Espécie do Título
-     DefineAceite(LTitulo) +                                                     // 150 a 150 - Aceite
+    DefineEspecieDoc(ACBrTitulo) +                                              // 148 a 149 - Espécie do Título
+    DefineAceite(LTitulo) +                                                     // 150 a 150 - Aceite
     FormatDateTime('ddmmyy', LTitulo.DataDocumento) +                           // 151 a 156 - Data Emissão Título
     InstrucoesProtesto(LTitulo) +                                               // 157 a 158 - Instrucao 1 159 a 160 - Instrucao 2
     IntToStrZero(round(LTitulo.ValorMoraJuros*100),13) +                        // 161 a 173 - Juros ao Dia
@@ -386,6 +390,11 @@ begin
   end;
 end;
 
+function TACBrBancoFibra.GetLocalPagamento: String;
+begin
+  Result := ACBrStr(CInstrucaoPagamentoTodaRede);
+end;
+
 function TACBrBancoFibra.MontaInstrucoesCNAB400(const ACBrTitulo: TACBrTitulo; const nRegistro: Integer): String;
 begin
   Result := '';
@@ -414,6 +423,24 @@ begin
     Result := PadRight(Result,392,' ') +
               IntToStrZero(nRegistro + 1, 6);                                   // 395 a 400 - Sequencial
 
+end;
+
+function TACBrBancoFibra.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): String;
+var
+  LDocto: String;
+begin
+   Result := '0';
+   LDocto := PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 4, '0') +
+     PadLeft(DefineCarteira(ACBrTitulo), 3, '0') +
+     PadLeft(ACBrTitulo.NossoNumero, 10, '0');
+
+   Modulo.MultiplicadorInicial := 2;
+   Modulo.MultiplicadorFinal   := 1;
+   Modulo.MultiplicadorAtual   := 2;
+   Modulo.FormulaDigito := frModulo10;
+   Modulo.Documento:= LDocto;
+   Modulo.Calcular;
+   Result := IntToStr(Modulo.DigitoFinal);
 end;
 
 function TACBrBancoFibra.CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia;

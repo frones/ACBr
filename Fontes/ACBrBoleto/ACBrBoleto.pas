@@ -52,6 +52,7 @@ const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
   CInstrucaoPagamentoRegistro = 'Pagavel em qualquer banco até o vencimento.';
+  CInstrucaoPagamentoTodaRede = 'Pagavel em toda rede bancaria';
   CCedente    = 'CEDENTE';
   CBanco      = 'BANCO';
   CConta      = 'CONTA';

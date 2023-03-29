@@ -187,7 +187,7 @@ begin
   Request := Request + '</e:ConsultarNfsePorRps>';
 
   Result := Executar('', Request,
-                     ['return', 'ConsultarNfsePorRpsResposta'], [Namespace]);
+                     ['return', 'ConsultarNfseRpsResposta'], [Namespace]);
 end;
 
 function TACBrNFSeXWebserviceDBSeller.ConsultarNFSe(ACabecalho, AMSG: String): string;

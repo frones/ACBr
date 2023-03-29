@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/03/2023
+-- ACBrNFSeX --
+[*] Ajustes no método LinkNFSe
+   Por: Italo Giurizzato Junior
 -- ISSDSF.Provider/Tecnos.Provider --
 [*] Remoção de caracteres acentuados ao montar o Envelope Soap.
    Por: Italo Giurizzato Junior

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Linhares/ES mudou a versão, agora é 2.04, provedor ainda é EL.
+   Por: carlessoflu
+
 28/03/2023
 -- IPM.Provider --
 [*] Alteração do valor do parâmetro QuebradeLinha da versão 2.04.

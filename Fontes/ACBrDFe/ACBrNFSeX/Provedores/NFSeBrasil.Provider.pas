@@ -89,9 +89,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrXmlBase,
   ACBrNFSeXNotasFiscais, NFSeBrasil.GravarXml, NFSeBrasil.LerXml,
   ACBrNFSeXConsts;
@@ -106,9 +104,15 @@ function TACBrNFSeXWebserviceNFSeBrasil.GetDatosUsuario: string;
 begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
-    Result := '<codMunicipio xsi:type="xsd:string">' + IntToStr(CodigoMunicipio) + '</codMunicipio>' +
-              '<cnpjPrestador xsi:type="xsd:string">' + OnlyNumber(Emitente.CNPJ) + '</cnpjPrestador>' +
-              '<hashValidador xsi:type="xsd:string">' + LowerCase(Emitente.WSChaveAcesso) + '</hashValidador>';
+    Result := '<codMunicipio xsi:type="xsd:string">' +
+                 IntToStr(CodigoMunicipio) +
+              '</codMunicipio>' +
+              '<cnpjPrestador xsi:type="xsd:string">' +
+                 OnlyNumber(Emitente.CNPJ) +
+              '</cnpjPrestador>' +
+              '<hashValidador xsi:type="xsd:string">' +
+                 LowerCase(Emitente.WSChaveAcesso) +
+              '</hashValidador>';
   end;
 end;
 
@@ -202,15 +206,16 @@ begin
   if Pos('ISO-8859-1', Result) > 0 then
     Result := AnsiToNativeString(Result);
 
-  Result := string(NativeStringToUTF8(Result));
   Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result, True);
   Result := RemoverCDATA(Result);
   Result := RemoverIdentacao(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
   Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+  Result := NativeStringToUTF8(Result);
 end;
 
 { TACBrNFSeProviderNFSeBrasil }
@@ -434,22 +439,22 @@ begin
   begin
     if Response.ModoEnvio in [meLoteAssincrono] then
       Response.ArquivoEnvio := '<' + TagEnvio + NameSpace + '>' +
-                             '<' + 'LoteRps codMunicipio="' + CodMun + '"' + Versao + NameSpace2 + IdAttr + '>' +
-                               '<' + Prefixo2 + 'NumeroLote>' + Response.NumeroLote + '</' + Prefixo2 + 'NumeroLote>' +
-                               '<' + Prefixo2 + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + Prefixo2 + 'Cnpj>' +
-                               GetInscMunic(Emitente.InscMun, Prefixo2) +
-                               '<' + Prefixo2 + 'QuantidadeRps>' +
-                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
-                               '</' + Prefixo2 + 'QuantidadeRps>' +
-                               '<' + Prefixo2 + 'ListaRps>' +
-                                 Xml +
-                               '</' + Prefixo2 + 'ListaRps>' +
-                             '</' + 'LoteRps>' +
-                           '</' + TagEnvio + '>'
+                                 '<' + 'LoteRps codMunicipio="' + CodMun + '"' + Versao + NameSpace2 + IdAttr + '>' +
+                                   '<' + Prefixo2 + 'NumeroLote>' + Response.NumeroLote + '</' + Prefixo2 + 'NumeroLote>' +
+                                   '<' + Prefixo2 + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + Prefixo2 + 'Cnpj>' +
+                                   GetInscMunic(Emitente.InscMun, Prefixo2) +
+                                   '<' + Prefixo2 + 'QuantidadeRps>' +
+                                      IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                                   '</' + Prefixo2 + 'QuantidadeRps>' +
+                                   '<' + Prefixo2 + 'ListaRps>' +
+                                     Xml +
+                                   '</' + Prefixo2 + 'ListaRps>' +
+                                 '</' + 'LoteRps>' +
+                               '</' + TagEnvio + '>'
     else
       Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
-                              Xml +
-                           '</' + Prefixo + TagEnvio + '>';
+                                  Xml +
+                               '</' + Prefixo + TagEnvio + '>';
   end;
 end;
 
@@ -567,14 +572,14 @@ begin
 
         if AuxNode <> nil then
         begin
-          AuxNode := AuxNode.Childrens.FindAnyNs('CompNfse');
-          AuxNodeNota := AuxNode.Childrens.FindAnyNs('Nfse');
+          AuxNodeNota := AuxNode.Childrens.FindAnyNs('CompNfse');
+          AuxNodeNota := AuxNodeNota.Childrens.FindAnyNs('Nfse');
           AuxNodeNota := AuxNodeNota.Childrens.FindAnyNs('InfNfse');
           NumRps := ObterConteudoTag(AuxNodeNota.Childrens.FindAnyNs('Numero'), tcStr);
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
 
-          ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+          ANota := CarregarXmlNfse(ANota, AuxNode.OuterXml);
           SalvarXmlNfse(ANota);
 
           Response.Situacao := '4'; // Processado com sucesso pois retornou a nota
@@ -674,15 +679,15 @@ begin
 
         if AuxNode <> nil then
         begin
-          AuxNode := AuxNode.Childrens.FindAnyNs('CompNfse');
-          AuxNodeNota := AuxNode.Childrens.FindAnyNs('Nfse');
+          AuxNodeNota := AuxNode.Childrens.FindAnyNs('CompNfse');
+          AuxNodeNota := AuxNodeNota.Childrens.FindAnyNs('Nfse');
           AuxNodeNota := AuxNodeNota.Childrens.FindAnyNs('InfNfse');
 
           NumRps := ObterConteudoTag(AuxNodeNota.Childrens.FindAnyNs('Numero'), tcStr);
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
 
-          ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+          ANota := CarregarXmlNfse(ANota, AuxNode.OuterXml);
           SalvarXmlNfse(ANota);
 
           Response.Situacao := '4'; // Processado com sucesso pois retornou a nota

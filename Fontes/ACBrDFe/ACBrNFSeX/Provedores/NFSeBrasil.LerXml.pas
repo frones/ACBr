@@ -325,7 +325,7 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode1 := ANode.Childrens.FindAnyNs('tcCompNfse');
+  AuxNode1 := ANode.Childrens.FindAnyNs('CompNfse');
 
   if AuxNode1 = nil then
   begin

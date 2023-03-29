@@ -108,6 +108,7 @@ begin
   NrOcorrValorISS := 1;
 
   NrOcorrOutrasInformacoes := 0;
+  NrOcorrDataPagamento := 0;
 end;
 
 function TNFSeW_fintelISS202.GerarListaServicos: TACBrXmlNode;

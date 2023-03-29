@@ -1212,6 +1212,7 @@ type
     FConstrucaoCivil: TDadosConstrucaoCivil;
     FDeducaoMateriais: TnfseSimNao;
     FCondicaoPagamento: TCondicaoPagamento;
+    FDataPagamento: TDateTime;
     // NFSe
     FNumero: string;
     FCodigoVerificacao: string;
@@ -1321,6 +1322,8 @@ type
     property ConstrucaoCivil: TDadosConstrucaoCivil read FConstrucaoCivil write FConstrucaoCivil;
     property DeducaoMateriais: TnfseSimNao read FDeducaoMateriais write FDeducaoMateriais;
     property CondicaoPagamento: TCondicaoPagamento read FCondicaoPagamento write FCondicaoPagamento;
+    // Provedor FintelISS
+    property DataPagamento: TDateTime read FDataPagamento write FDataPagamento;
     // NFSe
     property Numero: string read FNumero write FNumero;
     property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;

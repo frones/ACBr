@@ -141,6 +141,7 @@ type
     FNrOcorrQuantDiarias: Integer;
     FNrOcorrCodigoNBS: Integer;
     FGerarTagRps: Boolean;
+    FNrOcorrDataPagamento: Integer;
 
   protected
     procedure Configuracao; override;
@@ -268,6 +269,7 @@ type
     property NrOcorrValorTTS: Integer read FNrOcorrValorTTS write FNrOcorrValorTTS;
     property NrOcorrQuantDiarias: Integer read FNrOcorrQuantDiarias write FNrOcorrQuantDiarias;
     property NrOcorrCodigoNBS: Integer read FNrOcorrCodigoNBS write FNrOcorrCodigoNBS;
+    property NrOcorrDataPagamento: Integer read FNrOcorrDataPagamento write FNrOcorrDataPagamento;
 
     property GerarTagServicos: Boolean read FGerarTagServicos write FGerarTagServicos;
     property GerarIDDeclaracao: Boolean read FGerarIDDeclaracao write FGerarIDDeclaracao;
@@ -389,6 +391,7 @@ begin
   FNrOcorrValorTTS := -1;
   FNrOcorrQuantDiarias := -1;
   FNrOcorrCodigoNBS := -1;
+  FNrOcorrDataPagamento := -1;
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
@@ -529,6 +532,9 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#9', 'Producao', 1, 1, NrOcorrProducao,
                                FpAOwner.SimNaoToStr(NFSe.Producao), DSC_TPAMB));
+
+  Result.AppendChild(AddNode(tcDat, '#9', 'DataPagamento', 10, 10, NrOcorrDataPagamento,
+                                                       NFSe.DataPagamento, ''));
 
   Result.AppendChild(GerarValoresServico);
 

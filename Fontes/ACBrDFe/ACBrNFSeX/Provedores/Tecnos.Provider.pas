@@ -115,7 +115,7 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   xXml := Copy(xXml, 1, i) +
-          '<RazaoSocial>' + Emitente.RazSocial + '</RazaoSocial>' +
+          '<RazaoSocial>' + TiraAcentos(Emitente.RazSocial) + '</RazaoSocial>' +
           Copy(xXml, i +1, length(xXml));
 
   Response.ArquivoEnvio := xXml;
@@ -136,7 +136,7 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   xXml := Copy(xXml, 1, i) +
-          '<RazaoSocial>' + Emitente.RazSocial + '</RazaoSocial>' +
+          '<RazaoSocial>' + TiraAcentos(Emitente.RazSocial) + '</RazaoSocial>' +
           Copy(xXml, i +1, length(xXml));
 
   Response.ArquivoEnvio := xXml;

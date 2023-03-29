@@ -500,7 +500,7 @@ begin
                     OnlyNumber(Emitente.CNPJ) +
                   '</CPFCNPJRemetente>' +
                   '<RazaoSocialRemetente>' +
-                    Trim(Emitente.RazSocial) +
+                    TiraAcentos(Trim(Emitente.RazSocial)) +
                   '</RazaoSocialRemetente>' +
                   '<transacao>' +
                      LowerCase(BoolToStr(TACBrNFSeX(FAOwner).NotasFiscais.Transacao, True)) +

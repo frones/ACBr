@@ -60,7 +60,7 @@ type
   public
     Constructor create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String; override;
-
+    function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; override;
     procedure GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList); override;
     procedure GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; ARemessa: TStringList); override;
     function MontaInstrucoesCNAB400(const ACBrTitulo: TACBrTitulo; const nRegistro: Integer): String; override;
@@ -71,6 +71,7 @@ type
     function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String; override;
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
+    procedure EhObrigatorioAgenciaDV; override;
 
   end;
 
@@ -162,10 +163,15 @@ begin
   if AnsiSameText(ACBrTitulo.EspecieDoc, 'FT') then
     Result := '31'
   else
-  if AnsiSameText(ACBrTitulo.EspecieDoc, 'OU') then
+  if AnsiSameText(ACBrTitulo.EspecieDoc, 'OUT') then
     Result := '99'
   else
     Result := ACBrTitulo.EspecieDoc;
+end;
+
+procedure TACBrBancoPefisa.EhObrigatorioAgenciaDV;
+begin
+//
 end;
 
 function TACBrBancoPefisa.ConverterMultaPercentual(const ACBrTitulo: TACBrTitulo): Double;
@@ -215,6 +221,12 @@ begin
   fpCodParametroMovimento      := '';
 end;
 
+function TACBrBancoPefisa.MontarCampoCodigoCedente(
+  const ACBrTitulo: TACBrTitulo): String;
+begin
+  Result :=  ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+end;
+
 function TACBrBancoPefisa.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 begin
   Result := '0' + 
@@ -244,7 +256,7 @@ begin
     Space(7) +                                                                  // 020 a 026 - Uso do Banco Brancos
     PadLeft(Beneficiario.CodigoCedente, 12, '0') +                              // 027 a 038 - Código do Cedente
     Space(8) +                                                                  // 039 a 046 - Uso do Banco Brancos
-    PadRight(Nome, 30) +                                                        // 047 a 076 - Nome da Empresa
+    PadRight(Beneficiario.Nome, 30) +                                           // 047 a 076 - Nome da Empresa
     IntToStrZero(fpNumero, 3) +                                                 // 077 a 079 - Código do Banco
     Space(15) +                                                                 // 080 a 094 - Uso do Banco Brancos
     FormatDateTime('ddmmyy', Now) +                                             // 095 a 100 - Data de Gravação
@@ -272,7 +284,7 @@ begin
   LLinha := '1' +                                                               // 001 a 001 - Tipo de Registro
     PadLeft(DefineTipoInscricao, 2, '0') +                                      // 002 a 003 - Tipo de Inscrição Empresa
     PadLeft(OnlyNumber(Beneficiario.CNPJCPF), 14, '0') +                        // 004 a 017 - CNPJ Empresa
-    PadRight(Beneficiario.Conta, 12) +                                          // 018 a 029 - Código da Empresa
+    PadRight(Beneficiario.CodigoTransmissao, 12) +                              // 018 a 029 - Código da Empresa
     Space(8) +                                                                  // 030 a 037 - Uso do Banco Brancos
     PadRight(LTitulo.NumeroDocumento, 25) +                                     // 038 a 062 - Uso da Empresa
     PadRight(LTitulo.NossoNumero, 12) +                                         // 063 a 074 - Nosso Número

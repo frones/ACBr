@@ -454,6 +454,7 @@ begin
           teEPEC,
           teMultiModal,
           tePrestDesacordo,
+          teCancPrestDesacordo,
           teGTV,
           teComprEntrega,
           teCancComprEntrega: Result := schEventoCTe;
@@ -682,17 +683,10 @@ begin
 
   // Checar esse trecho
 
-{$IFDEF PL_103}
-  if (NaoEstaZerado(FCTe.Imp.ICMS.CST00.vICMS)) then
-    wicms_p := '1';
-  if (NaoEstaZerado(FCTe.Imp.ICMS.CST80.vICMS)) then
-    wicms_s := '1';
-{$ELSE}
   if (NaoEstaZerado(FCTe.Imp.ICMS.ICMS00.vICMS)) then
     wicms_p := '1';
   if (NaoEstaZerado(FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF)) then
     wicms_s := '1';
-{$ENDIF}
 
   wchave := wchave + wicms_p + wicms_s;
 
@@ -734,6 +728,9 @@ begin
 
   if Conhecimentos.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum CT-e adicionado ao Lote'));
+
+  if Configuracoes.Geral.VersaoDF >= ve400 then
+    ASincrono := True;
 
   if ASincrono then
   begin
@@ -905,6 +902,9 @@ end;
 function TACBrCTe.Inutilizar(const ACNPJ, AJustificativa: String; AAno, ASerie,
   ANumInicial, ANumFinal: Integer): Boolean;
 begin
+  if Configuracoes.Geral.VersaoDF >= ve400 then
+    GerarException('A partir da versão 4.00 o serviço de Inutilizadação foi descontinuado.');
+
   Result := True;
   WebServices.Inutiliza(ACNPJ, AJustificativa, AAno,
                         Configuracoes.Geral.ModeloDFCodigo,

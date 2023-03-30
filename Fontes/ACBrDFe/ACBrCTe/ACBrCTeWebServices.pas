@@ -594,7 +594,11 @@ begin
   FPConfiguracoesCTe := TConfiguracoesCTe(FPConfiguracoes);
   FPLayout := LayCTeStatusServico;
 
-  FPHeaderElement := 'cteCabecMsg';
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
+
   FPBodyElement := 'cteDadosMsg';
 end;
 
@@ -855,13 +859,21 @@ begin
              else
              begin
                FPLayout := LayCTeRecepcao;
-               FPHeaderElement := 'cteCabecMsg';
+
+               if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+                 FPHeaderElement := 'cteCabecMsg'
+               else
+                 FPHeaderElement := '';
              end;
            end;
     moCTeOS:
       begin
         FPLayout := LayCTeRecepcaoOS;
-        FPHeaderElement := 'cteCabecMsg';
+
+        if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+          FPHeaderElement := 'cteCabecMsg'
+        else
+          FPHeaderElement := '';
       end
   else
     begin
@@ -2908,7 +2920,8 @@ begin
     os outros eventos como manifestação do destinatário serão tratados diretamente pela RFB }
 
   if (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento,
-      teMultiModal, tePrestDesacordo, teGTV, teComprEntrega, teCancComprEntrega]) then
+      teMultiModal, tePrestDesacordo, teGTV, teComprEntrega, teCancComprEntrega,
+      teCancPrestDesacordo]) then
     FPLayout := LayCTeEvento
   else
     FPLayout := LayCTeEventoAN;
@@ -3015,6 +3028,12 @@ begin
           begin
             SchemaEventoCTe := schevPrestDesacordo;
             infEvento.detEvento.xOBS := FEvento.Evento[i].InfEvento.detEvento.xOBS;
+          end;
+
+          teCancPrestDesacordo:
+          begin
+            SchemaEventoCTe := schevCancPrestDesacordo;
+            infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
           end;
 
           teGTV:

@@ -459,6 +459,7 @@ begin
     teautorizadoServMultimodal    : Desc := 'Autorizado Servico Vinculado Multimodal';
     teComprEntrega                : Desc := 'Comprovante de Entrega do CT-e';
     teCancComprEntrega            : Desc := 'Cancelamento do Comprovante de Entrega do CT-e';
+    teCancPrestDesacordo          : Desc := 'Cancelamento Prestacao do Servico em Desacordo';
   else
     Result := '';
   end;
@@ -516,6 +517,7 @@ begin
     teautorizadoServMultimodal    : Result := 'Autorizado Servico Vinculado Multimodal';
     teComprEntrega                : Result := 'Comprovante de Entrega do CT-e';
     teCancComprEntrega            : Result := 'Cancelamento do Comprovante de Entrega do CT-e';
+    teCancPrestDesacordo          : Result := 'Cancelamento Prestacao do Servico em Desacordo';
   else
     Result := 'Não Definido';
   end;

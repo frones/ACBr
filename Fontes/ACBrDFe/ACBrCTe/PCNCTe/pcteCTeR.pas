@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnLeitor, pcteCTe;
+  pcnConversao, pcteConversaoCTe, pcnLeitor, pcteCTe;
 
 type
 
@@ -46,6 +46,7 @@ type
   private
     FLeitor: TLeitor;
     FCTe: TCTe;
+    FVersaoDF: TVersaoCTe;
   public
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
@@ -53,15 +54,15 @@ type
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property CTe: TCTe       read FCTe    write FCTe;
+    property VersaoDF: TVersaoCTe read FVersaoDF write FVersaoDF;
   end;
 
 implementation
 
 uses
-  pcnAuxiliar, pcteConversaoCTe,
+  pcnAuxiliar,
   ACBrConsts,
-  ACBrUtil.Base,
-  ACBrUtil.Strings;
+  ACBrUtil.Base, ACBrUtil.Strings;
 
 { TCTeR }
 
@@ -77,22 +78,6 @@ begin
   FLeitor.Free;
   inherited Destroy;
 end;
-
-{$IFDEF PL_103}
- {$I pcteCTeR_V103.inc}
-{$ENDIF}
-
-{$IFDEF PL_104}
- {$I pcteCTeR_V104.inc}
-{$ENDIF}
-
-{$IFDEF PL_200}
-// {$I pcteCTeR_V200.inc}
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-//              Le o XML da versão 2.00                                       //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
 
 function TCTeR.LerXml: Boolean;
 var
@@ -118,8 +103,11 @@ begin
     raise Exception.Create('Não encontrei o atributo: Id');
 
   CTe.infCTe.versao := StringToFloatDef(Leitor.rAtributo('versao=', 'infCte'), -1);
+
   if CTe.infCTe.versao = -1 then
     raise Exception.Create('Não encontrei o atributo: versao');
+
+  VersaoDF := DblToVersaoCTe(Ok, CTe.infCTe.versao);
 
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
@@ -129,7 +117,7 @@ begin
     (*B04*)CTe.Ide.CFOP     := Leitor.rCampo(tcStr, 'CFOP');
     (*B05*)CTe.Ide.natOp    := Leitor.rCampo(tcStr, 'natOp');
 
-    if CTe.infCTe.versao < 3 then
+    if VersaoDF < ve300 then
       (*B06*)CTe.Ide.forPag   := StrTotpforPag(ok, Leitor.rCampo(tcStr, 'forPag'));
 
     (*B07*)CTe.Ide.modelo   := Leitor.rCampo(tcStr, 'mod');
@@ -144,7 +132,7 @@ begin
     (*B15a*)CTe.Ide.procEmi := StrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
     (*B15b*)CTe.Ide.verProc := Leitor.rCampo(tcStr, 'verProc');
 
-    if CTe.infCTe.versao >= 3 then
+    if VersaoDF >= ve300 then
     begin
       if Leitor.rCampo(tcStr, 'indGlobalizado') = '1' then
         CTe.ide.indGlobalizado := tiSim
@@ -169,7 +157,7 @@ begin
     (*#57*)CTe.Ide.dhCont   := Leitor.rCampo(tcDatHor, 'dhCont');
     (*#58*)CTe.Ide.xJust    := Leitor.rCampo(tcStr, 'xJust');
 
-    if CTe.infCTe.versao >= 3 then
+    if VersaoDF >= ve300 then
       CTe.ide.indIEToma := StrToindIEDest(Ok, Leitor.rCampo(tcStr, 'indIEToma'));
 
     CTe.Ide.dhSaidaOrig   := Leitor.rCampo(tcDatHor, 'dhSaidaOrig');
@@ -350,7 +338,7 @@ begin
     end;
   end;
 
-  if CTe.infCTe.versao >= 3 then
+  if VersaoDF >= ve300 then
   begin
     if Leitor.rExtrai(1, 'toma') <> '' then
     begin
@@ -416,7 +404,8 @@ begin
 
     i01 := 0;
     CTe.infCTeNorm.infDoc.InfNFE.Clear;
-    if CTe.infCTe.versao < 2 then
+
+    if VersaoDF < ve200 then
     begin
       while Leitor.rExtrai(2, 'infNFe', '', i01 + 1) <> '' do
       begin
@@ -708,9 +697,11 @@ begin
       if Leitor.rExtrai(3, 'ICMSSN') <> '' then
       begin
        // ICMS Simples Nacional
-       CTe.Imp.ICMS.SituTrib     := cstICMSSN;
-       if CTe.infCTe.versao >= 3 then
+       CTe.Imp.ICMS.SituTrib := cstICMSSN;
+
+       if VersaoDF >= ve300 then
          CTe.Imp.ICMS.ICMSSN.CST := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
+
        CTe.Imp.ICMS.ICMSSN.indSN := Leitor.rCampo(tcInt,'indSN');
       end;
 
@@ -1109,10 +1100,12 @@ begin
           while Leitor.rExtrai(5, 'idDocAntEle', '', i03 + 1) <> '' do
           begin
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle.New;
-            if (CTe.infCTe.versao >= 3) then
+
+            if (VersaoDF >= ve300) then
               CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle[i03].chCTe := Leitor.rCampo(tcStr, 'chCTe')
             else
               CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle[i03].chave := Leitor.rCampo(tcStr, 'chave');
+
             inc(i03);
           end;
           inc(i02);
@@ -1141,7 +1134,7 @@ begin
       CTe.infCTeNorm.rodo.lota  := StrToTpLotacao(ok, Leitor.rCampo(tcStr,'lota'));
       CTe.infCTeNorm.rodo.CIOT  := Leitor.rCampo(tcStr, 'CIOT');
 
-      if CTe.infCTe.versao < 2 then
+      if VersaoDF < ve200 then
       begin
         for i01 := 0 to CTe.infCTeNorm.infDoc.InfNFE.count-1 do
         begin
@@ -1294,7 +1287,8 @@ begin
          while Leitor.rExtrai(4, 'cInfManu', '', i01 + 1) <> '' do
          begin
            CTe.infCTeNorm.aereo.natCarga.cinfManu.New;
-           if CTe.infCTe.versao >= 3 then
+
+           if VersaoDF >= ve300 then
              CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManu(ok, Leitor.rCampo(tcStr,'cInfManu'))
            else
              CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManuV2(ok, Leitor.rCampo(tcStr,'cInfManu'));
@@ -1373,7 +1367,7 @@ begin
       CTe.infCTeNorm.ferrov.fluxo  := Leitor.rCampo(tcStr,'fluxo');
       CTe.infCTeNorm.ferrov.idTrem := Leitor.rCampo(tcStr,'idTrem');
 
-      if CTe.infCTe.versao >= 3 then
+      if VersaoDF >= ve300 then
       begin
         if Leitor.rExtrai(3, 'trafMut') <> '' then
         begin
@@ -1550,7 +1544,7 @@ begin
     begin
       CTe.infCTeNorm.infCTeSub.chCte := Leitor.rCampo(tcStr, 'chCte');
 
-      if CTe.infCTe.versao >= 3 then
+      if VersaoDF >= ve300 then
         CTe.infCTeNorm.infCTeSub.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
 
       if Leitor.rCampo(tcStr, 'indAlteraToma') <> '' then
@@ -1593,13 +1587,28 @@ begin
   end; // fim do infCTeNorm
 
   (* Grupo da TAG <infCteComp> ************************************************)
-  if Leitor.rExtrai(1, 'infCteComp') <> ''
-  then begin
-    if (CTe.infCTe.versao >= 3) then
-       CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chCTe')
-    else
-      CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chave');
-  end; // fim de infCteComp
+
+  if VersaoDF <= ve300 then
+  begin
+    if Leitor.rExtrai(1, 'infCteComp') <> ''
+    then begin
+      if (VersaoDF >= ve300) then
+         CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chCTe')
+      else
+        CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chave');
+    end; // fim de infCteComp
+  end
+  else
+  begin
+    i01 := 0;
+    CTe.InfCTeComp10.Clear;
+    while Leitor.rExtrai(1, 'infCteComp', '', i01 + 1) <> '' do
+    begin
+      CTe.InfCTeComp10.New;
+      CTe.InfCTeComp10[i01].chCTe := Leitor.rCampo(tcStr, 'chCTe');
+      inc(i01);
+    end;
+  end;
 
   (* Grupo da TAG <infCteAnu> ************************************************)
   if Leitor.rExtrai(1, 'infCteAnu') <> '' then
@@ -1661,7 +1670,6 @@ begin
 
   Result := true;
 end;
-{$ENDIF}
 
 end.
 

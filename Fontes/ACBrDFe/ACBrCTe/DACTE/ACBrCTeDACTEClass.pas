@@ -52,6 +52,7 @@ type
 
   TACBrCTeDACTEClass = class(TACBrDFeReport)
   private
+    FPosCanhotoLayout: TPosReciboLayout;
     procedure SetACBrCTE(const Value: TComponent);
     procedure ErroAbstract(const NomeProcedure: string);
 
@@ -92,6 +93,7 @@ type
     property ExibeResumoCanhoto: boolean read FResumoCanhoto write FResumoCanhoto;
     property EPECEnviado: boolean read FEPECEnviado write FEPECEnviado;
     property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto default prCabecalho;
+    property PosCanhotoLayout: TPosReciboLayout read FPosCanhotoLayout write FPosCanhotoLayout default prlPadrao;
     property ImprimeDescPorc: boolean read FImprimirDescPorc write FImprimirDescPorc;
   end;
 
@@ -111,6 +113,8 @@ begin
   FCancelada := False;
   FResumoCanhoto := False;
   FEPECEnviado := False;
+  FPosCanhoto := prCabecalho;
+  FPosCanhotoLayout := prlPadrao;
 end;
 
 destructor TACBrCTeDACTEClass.Destroy;

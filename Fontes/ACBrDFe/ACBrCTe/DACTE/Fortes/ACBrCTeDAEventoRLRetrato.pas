@@ -253,6 +253,9 @@ begin
     tePrestDesacordo:
       rllLinha1.Caption := 'PRESTAÇÃO DE SERVIÇO EM DESACORDO';
 
+    teCancPrestDesacordo:
+      rllLinha1.Caption := 'CANCELAMENTO PRESTAÇÃO DE SERVIÇO EM DESACORDO';
+
     teMultiModal:
       rllLinha1.Caption := 'REGISTROS DO MULTIMODAL';
 
@@ -311,6 +314,9 @@ begin
 
       tePrestDesacordo:
         rllTituloEvento.Caption := ACBrStr('PRESTAÇÃO DE SERVIÇO EM DESACORDO');
+
+      teCancPrestDesacordo:
+        rllTituloEvento.Caption := ACBrStr('CANCELAMENTO PRESTAÇÃO DE SERVIÇO EM DESACORDO');
 
       teMultiModal:
         rllTituloEvento.Caption := 'REGISTROS DO MULTIMODAL';
@@ -483,7 +489,8 @@ begin
             (fpEventoCTe.InfEvento.tpEvento = teGTV) or
             (fpEventoCTe.InfEvento.tpEvento = teComprEntrega) or
             (fpEventoCTe.InfEvento.tpEvento = teCancComprEntrega) or
-            (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
+            (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo) or
+            (fpEventoCTe.InfEvento.tpEvento = teCancPrestDesacordo);
 
   PrintIt := Exibir or (fpEventoCTe.InfEvento.tpAmb = taHomologacao);
 
@@ -548,6 +555,13 @@ begin
     begin
       lblTitulo_06.Caption := ACBrStr('JUSTIFICATIVA');
       rlmCondicoes.Lines.Add(fpEventoCTe.InfEvento.detEvento.xOBS);
+    end;
+
+    teCancPrestDesacordo:
+    begin
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
+      rlmCondicoes.Lines.Add('Protocolo do Evento de Prestação Cancelado: ' +
+        fpEventoCTe.InfEvento.detEvento.nProt);
     end;
 
     teMultiModal:

@@ -56,7 +56,8 @@ type
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
                  schevEPECCTe, schevCancCTe, schevRegMultimodal, schevCCeCTe,
                  schdistDFeInt, schcteModalRodoviarioOS, schevPrestDesacordo,
-                 schevGTV, schevCECTe, schevCancCECTe{, schprocCTeOS} );
+                 schevGTV, schevCECTe, schevCancCECTe, schevCancPrestDesacordo
+                 {, schprocCTeOS} );
 
   TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
                     stCTeConsulta, stCTeCancelamento, stCTeInutilizacao,
@@ -64,7 +65,7 @@ type
                     stCTeEvento, stCTeDistDFeInt, stCTeEnvioWebService);
 
   TModeloCTe = (moCTe, moCTeOS, moGTVe);
-  TVersaoCTe = (ve200, ve300);
+  TVersaoCTe = (ve200, ve300, ve400);
 
   TpcteFormaPagamento = (fpPago, fpAPagar, fpOutros);
   TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe);
@@ -99,7 +100,8 @@ type
 
   TtpNumerario = (tnNacional, tnEstrangeiro);
 
-  TCRT = (crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
+  TCRT = (crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal,
+          crtSimplesNacionalMEI);
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -294,12 +296,13 @@ end;
 
 function StrToVersaoCTe(out ok: Boolean; const s: String): TVersaoCTe;
 begin
-  Result := StrToEnumerado(ok, s, ['2.00', '3.00'], [ve200, ve300]);
+  Result := StrToEnumerado(ok, s, ['2.00', '3.00', '4.00'],
+                                  [ve200, ve300, ve400]);
 end;
 
 function VersaoCTeToStr(const t: TVersaoCTe): String;
 begin
-  Result := EnumeradoToStr(t, ['2.00', '3.00'], [ve200, ve300]);
+  Result := EnumeradoToStr(t, ['2.00', '3.00', '4.00'], [ve200, ve300, ve400]);
 end;
 
 function DblToVersaoCTe(out ok: Boolean; const d: Double): TVersaoCTe;
@@ -312,6 +315,9 @@ begin
   if d = 3.0 then
     Result := ve300
   else
+  if d = 4.0 then
+    Result := ve400
+  else
   begin
     Result := ve200;
     ok := False;
@@ -323,6 +329,7 @@ begin
   case t of
     ve200: Result := 2.0;
     ve300: Result := 3.0;
+    ve400: Result := 4.0;
   else
     Result := 0;
   end;
@@ -616,6 +623,16 @@ begin
                mdMultimodal:  result := '3.00';
              end;
            end;
+    ve400: begin
+             case AModal of
+               mdRodoviario:  result := '4.00';
+               mdAereo:       result := '4.00';
+               mdAquaviario:  result := '4.00';
+               mdFerroviario: result := '4.00';
+               mdDutoviario:  result := '4.00';
+               mdMultimodal:  result := '4.00';
+             end;
+           end;
   end;
 end;
 
@@ -753,14 +770,16 @@ end;
 
 function CRTCTeToStr(const t: TCRT): string;
 begin
-  result := EnumeradoToStr(t, ['', '1', '2', '3'],
-    [crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal]);
+  result := EnumeradoToStr(t, ['', '1', '2', '3', '4'],
+    [crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal,
+     crtSimplesNacionalMEI]);
 end;
 
 function StrToCRTCTe(out ok: boolean; const s: string): TCRT;
 begin
-  result := StrToEnumerado(ok, s, ['', '1', '2', '3'],
-    [crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal]);
+  result := StrToEnumerado(ok, s, ['', '1', '2', '3', '4'],
+    [crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal,
+     crtSimplesNacionalMEI]);
 end;
 
 
@@ -768,10 +787,10 @@ function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110110', '110111', '110113', '110160', '110170',
-             '110180', '110181', '610110', '310610', '310611'],
+             '110180', '110181', '610110', '310610', '310611', '610111'],
             [teNaoMapeado, teCCe, teCancelamento, teEPEC, teMultiModal,
              teGTV, teComprEntrega, teCancComprEntrega, tePrestDesacordo,
-             teMDFeAutorizado2, teMDFeCancelado2]);
+             teMDFeAutorizado2, teMDFeCancelado2, teCancPrestDesacordo]);
 end;
 
 initialization

@@ -1654,26 +1654,8 @@ procedure TACBrCTeDACTEFR.CarregaCalculoImposto;
 begin
   with cdsCalculoImposto do
   begin
-
     Append;
 
-{$IFDEF PL_103}
-    case FCTe.Imp.ICMS.SituTrib of
-      cst00:
-        begin
-          FieldByName('TXTSITTRIB').AsString := CSTICMSToStrTagPosText(cst00);
-          FieldByName('vBC').AsFloat         := FCTe.Imp.ICMS.cst00.vBC;
-          FieldByName('pICMS').AsFloat       := FCTe.Imp.ICMS.cst00.pICMS;
-          FieldByName('vICMS').AsFloat       := FCTe.Imp.ICMS.cst00.VICMS;
-        end;
-      cst45:
-        begin
-          FieldByName('TXTSITTRIB').AsString := CSTICMSToStrTagPosText(cst45);
-        end;
-    end;
-    // {$ENDIF}
-    // {$IFDEF PL_104}
-{$ELSE}
     case FCTe.Imp.ICMS.SituTrib of
       cst00:
         begin
@@ -1740,7 +1722,6 @@ begin
           FieldByName('vIndSN').AsFloat      := FCTe.Imp.ICMS.ICMSSN.indSN;
         end;
     end;
-{$ENDIF}
     Post;
   end;
 end;
@@ -1783,21 +1764,10 @@ begin
   begin
 
     Append;
-{$IFDEF PL_200}
     if CTE.ide.tpCTe = tcComplemento then
       FieldByName('Chave').AsString := CTE.infCteComp.chave
     else if CTE.ide.tpCTe = tcAnulacao then
       FieldByName('Chave').AsString := CTE.infCteAnu.chCTe;
-{$ELSE}
-    if CTE.ide.tpCTe = tcComplemento then
-    begin
-      if CTE.infCteComp.Count >= 1 then
-        FieldByName('Chave').AsString := CTE.infCteComp.Items[0].chave;
-    end
-    else
-      if CTE.ide.tpCTe = tcAnulacao then
-      FieldByName('Chave').AsString := CTE.InfCTeAnuEnt.chCTe;
-{$ENDIF}
     Post;
   end;
 
@@ -1857,6 +1827,33 @@ begin
           tePrestDesacordo:
             begin
               TipoEvento := tePrestDesacordo;
+              Append;
+              FieldByName('DescricaoTipoEvento').AsString := InfEvento.DescricaoTipoEvento(InfEvento.tpEvento);
+              FieldByName('Modelo').AsString              := Copy(InfEvento.chCTe, 21, 2);
+              FieldByName('Serie').AsString               := Copy(InfEvento.chCTe, 23, 3);
+              FieldByName('Numero').AsString              := Copy(InfEvento.chCTe, 26, 9);
+              FieldByName('MesAno').AsString              := Copy(InfEvento.chCTe, 05, 2) + '/' + Copy(InfEvento.chCTe, 03, 2);
+              FieldByName('Barras').AsString              := InfEvento.chCTe;
+              FieldByName('ChaveAcesso').AsString         := FormatarChaveAcesso(InfEvento.chCTe);
+              FieldByName('cOrgao').AsInteger             := InfEvento.cOrgao;
+              FieldByName('nSeqEvento').AsInteger         := InfEvento.nSeqEvento;
+              FieldByName('tpAmb').AsString               := MantertpAmb( InfEvento.tpAmb );
+              FieldByName('dhEvento').AsDateTime          := InfEvento.dhEvento;
+              FieldByName('TipoEvento').AsString          := InfEvento.TipoEvento;
+              FieldByName('DescEvento').AsString          := InfEvento.DescEvento;
+              FieldByName('versaoEvento').AsString        := InfEvento.versaoEvento;
+              FieldByName('cStat').AsInteger              := RetInfEvento.cStat;
+              FieldByName('xMotivo').AsString             := RetInfEvento.xMotivo;
+              FieldByName('nProt').AsString               := RetInfEvento.nProt;
+              FieldByName('dhRegEvento').AsDateTime       := RetInfEvento.dhRegEvento;
+              FieldByName('xJust').AsString               := InfEvento.detEvento.xOBS;
+              FieldByName('xCondUso').AsString            := '';
+              frxReport.Variables['HOMOLOGACAO']          := ( InfEvento.tpAmb = taHomologacao);
+              Post;
+            end;
+          teCancPrestDesacordo:
+            begin
+              TipoEvento := teCancPrestDesacordo;
               Append;
               FieldByName('DescricaoTipoEvento').AsString := InfEvento.DescricaoTipoEvento(InfEvento.tpEvento);
               FieldByName('Modelo').AsString              := Copy(InfEvento.chCTe, 21, 2);
@@ -2080,15 +2077,9 @@ begin
   with cdsDadosNotasFiscais do
   begin
 
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.infDoc.infNF.Count - 1 do
     begin
       with FCTe.infCTeNorm.infDoc.infNF.Items[i] do
-{$ELSE}
-    for i := 0 to CTE.Rem.infNF.Count - 1 do
-    begin
-      with FCTe.Rem.infNF.Items[i] do
-{$ENDIF}
       begin
         Append;
         FieldByName('tpDoc').AsString       := 'NF';
@@ -2102,15 +2093,9 @@ begin
       Post;
     end;
 
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.infDoc.InfNFE.Count - 1 do
     begin
       with FCTe.infCTeNorm.infDoc.InfNFE.Items[i] do
-{$ELSE}
-    for i := 0 to CTE.Rem.InfNFE.Count - 1 do
-    begin
-      with FCTe.Rem.InfNFE.Items[i] do
-{$ENDIF}
       begin
         Append;
         FieldByName('tpDoc').AsString       := 'NFe';
@@ -2124,15 +2109,9 @@ begin
       Post;
     end;
 
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.infDoc.infOutros.Count - 1 do
     begin
       with FCTe.infCTeNorm.infDoc.infOutros.Items[i] do
-{$ELSE}
-    for i := 0 to CTE.Rem.infOutros.Count - 1 do
-    begin
-      with FCTe.Rem.infOutros.Items[i] do
-{$ENDIF}
       begin
         Append;
         FieldByName('tpDoc').AsString       := 'Outros';
@@ -2205,17 +2184,10 @@ begin
   with cdsDocAnterior do
   begin
 
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.docAnt.emiDocAnt.Count - 1 do
     begin
       with CTE.infCTeNorm.docAnt.emiDocAnt.Items[i] do
       begin
-{$ELSE}
-    for i := 0 to CTE.infCTeNorm.emiDocAnt.Count - 1 do
-    begin
-      with CTE.infCTeNorm.emiDocAnt.Items[i] do
-      begin
-{$ENDIF}
         for ii := 0 to idDocAnt.Count - 1 do
         begin
           for iii := 0 to idDocAnt.Items[ii].idDocAntPap.Count - 1 do
@@ -2390,17 +2362,10 @@ begin
         tcAnulacao: FieldByName('TpCT').AsString    := 'Anulação';
         tcSubstituto: FieldByName('TpCT').AsString  := 'Substituto';
       end;
-{$IFDEF PL_103}
-      FieldByName('cMunEmi').AsString := IntToStr(cMunEmi);
-      FieldByName('xMunEmi').AsString := xMunEmi;
-      FieldByName('UFEmi').AsString   := UFEmi;
-      // {$ENDIF}
-      // {$IFDEF PL_104}
-{$ELSE}
+
       FieldByName('cMunEmi').AsString := IntToStr(cMunEnv);
       FieldByName('xMunEmi').AsString := xMunEnv;
       FieldByName('UFEmi').AsString   := UFEnv;
-{$ENDIF}
       FieldByName('modal').AsString := TpModalToStr(CTe.ide.modal);
 
       case tpServ of
@@ -2758,20 +2723,12 @@ begin
   begin
     Append;
     //
-{$IFDEF PL_200}
     case CTE.infCTeNorm.rodo.lota of
-{$ELSE}
-    case CTE.rodo.lota of
-{$ENDIF}
       ltNao: FieldByName('LOTACAO').AsString := 'Não';
       ltSim: FieldByName('LOTACAO').AsString := 'Sim';
     end;
 
-{$IFDEF PL_200}
     with CTE.infCTeNorm.rodo do
-{$ELSE}
-    with CTE.rodo do
-{$ENDIF}
     begin
       FieldByName('RNTRC').AsString := RNTRC;
 
@@ -2786,15 +2743,9 @@ begin
       FieldByName('CIOT').AsString := CIOT;
     end;
 
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.rodo.lacRodo.Count - 1 do
     begin
       with CTE.infCTeNorm.rodo.lacRodo.Items[i] do
-{$ELSE}
-    for i := 0 to CTE.rodo.Lacres.Count - 1 do
-    begin
-      with CTE.rodo.Lacres.Items[i] do
-{$ENDIF}
       begin
         if Trim(FieldByName('LACRES').AsString) <> '' then
            FieldByName('LACRES').AsString := FieldByName('LACRES').AsString + '/';
@@ -2809,17 +2760,10 @@ begin
   with cdsRodoVeiculos do
   begin
 
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.rodo.veic.Count - 1 do
     begin
       with CTE.infCTeNorm.rodo.veic.Items[i] do
       begin
-{$ELSE}
-    for i := 0 to CTE.rodo.veic.Count - 1 do
-    begin
-      with CTE.rodo.veic.Items[i] do
-      begin
-{$ENDIF}
         Append;
         case tpVeic of
           tvTracao: FieldByName('tpVeic').AsString  := 'Tração';
@@ -2838,18 +2782,6 @@ begin
 
   with cdsRodoValePedagio do
   begin
-
-{$IFDEF PL_104}
-    for i := 0 to CTE.rodo.valePed.Count - 1 do
-    begin
-      Append;
-      FieldByName('CNPJForn').AsString := FormatarCNPJouCPF(CTE.rodo.valePed.Items[i].CNPJForn);
-      FieldByName('CNPJPg').AsString   := FormatarCNPJouCPF(CTE.rodo.valePed.Items[i].CNPJPg);
-      FieldByName('nCompra').AsString  := CTE.rodo.valePed.Items[i].nCompra;
-      Post;
-    end;
-{$ENDIF}
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.rodo.valePed.Count - 1 do
     begin
       Append;
@@ -2859,23 +2791,14 @@ begin
       FieldByName('vValePed').AsFloat := CTe.infCTeNorm.rodo.valePed.Items[i].vValePed;
       Post;
     end;
-{$ENDIF}
   end;
 
   with cdsRodoMotorista do
   begin
-
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.rodo.moto.Count - 1 do
     begin
       with CTE.infCTeNorm.rodo.moto.Items[i] do
       begin
-{$ELSE}
-    for i := 0 to CTE.rodo.moto.Count - 1 do
-    begin
-      with CTE.rodo.moto.Items[i] do
-      begin
-{$ENDIF}
         Append;
         FieldByName('xNome').AsString := xNome;
         FieldByName('CPF').AsString   := CPF;
@@ -2933,18 +2856,10 @@ begin
 	else
 	if DACTEClassOwner.PosCanhoto = prEsquerda then
 	  FieldByName('PrintCanhoto').AsString := '2';
-{$IFDEF PL_103}
-    FieldByName('Versao').AsString := '1.03';
-{$ENDIF}
-{$IFDEF PL_104}
-    FieldByName('Versao').AsString := '1.04';
-{$ENDIF}
-{$IFDEF PL_200}
     if FCTe.infCTe.versao = 2 then
       FieldByName('Versao').AsString := '2.00'
     else
       FieldByName('Versao').AsString := '3.00';
-{$ENDIF}
     if (FCTe.ide.tpAmb = taHomologacao) then
     begin
       if FCTe.Ide.modelo = 67 then
@@ -3250,22 +3165,12 @@ var
 begin
   with cdsSeguro do
   begin
-    //
-{$IFDEF PL_200}
     if CTE.infCTeNorm.seg.Count > 0 then
     begin
       for i := 0 to CTE.infCTeNorm.seg.Count - 1 do
       begin
         with CTE.infCTeNorm.seg.Items[i] do
         begin
-{$ELSE}
-    if CTE.InfSeg.Count > 0 then
-    begin
-      for i := 0 to CTE.InfSeg.Count - 1 do
-      begin
-        with CTE.InfSeg.Items[i] do
-        begin
-{$ENDIF}
           Append;
           case respSeg of
             rsRemetente     : FieldByName('RESPONSAVEL').AsString := 'Remetente';
@@ -3441,25 +3346,14 @@ begin
     MCub       := 0;
     Volumes    := 0;
 
-{$IFDEF PL_200}
     for i := 0 to CTE.infCTeNorm.infCarga.infQ.Count - 1 do
     begin
       with CTE.infCTeNorm.infCarga do
       begin
-{$ELSE}
-    for i := 0 to CTE.infCarga.infQ.Count - 1 do
-    begin
-      with CTE.infCarga do
-      begin
-{$ENDIF}
         ProdutoPred  := proPred;
         OutrasCaract := xOutCat;
-
-{$IFDEF PL_103}
-        VlrServico := CTE.infCarga.vMerc;
-{$ELSE}
         VlrServico := vCarga;
-{$ENDIF}
+
         case infQ.Items[i].cUnid of
           uM3: MCub         := MCub + infQ.Items[i].qCarga;
           uUNIDADE: Volumes := Volumes + infQ.Items[i].qCarga;

@@ -1804,4 +1804,12 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
       end
     end
   end
+  inherited RLPDFFilter1: TRLPDFFilter
+    Left = 47
+    Top = 23
+  end
+  inherited Datasource1: TDataSource
+    Left = 120
+    Top = 20
+  end
 end

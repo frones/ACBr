@@ -51,6 +51,10 @@ Símbolo : Significado
    Por: Diego F
 [*] Incluido a cidade de Riqueza/SC, provedor é o Pronim na versão 2.02
    Por: Microsys Sistemas
+[*] Altera a URL para mais algumas cidades que usam ISSNet na versão 1.00 que foi possível testar.
+   Por: Diego F
+[*] Adiciona Param NaoDividir100 para cidade de Cruz Alta/RS
+   Por: Patrick Knopf
 
 29/03/2023
 -- ACBrNFSeXServicos.ini --

@@ -74,7 +74,7 @@ type
     procedure EhObrigatorioAgenciaDV; override;
     procedure EhObrigatorioContaDV; override;
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
-    const CInstrucaoPagamentoFibra = 'PAGÁVEL EM TODA REDE BANCÁRIA';
+
   end;
 
 implementation

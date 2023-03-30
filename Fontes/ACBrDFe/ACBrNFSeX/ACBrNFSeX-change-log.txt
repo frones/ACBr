@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/03/2023
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Adiciona possibilidade de leitura do endereço quando tag EnderecoDescricao
+   Por: Diego F
 -- ISSFortaleza.Provider --
 [*] Alteração na função TratarXmlRetornado visando a leitura correta do XML.
    Por: Italo Giurizzato Junior

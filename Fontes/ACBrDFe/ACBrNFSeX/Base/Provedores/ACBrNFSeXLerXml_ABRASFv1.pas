@@ -237,6 +237,10 @@ begin
     with NFSe.Prestador.Endereco do
     begin
       Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+
+      if Endereco = '' then
+        Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('EnderecoDescricao'), tcStr);
+
       Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
       Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
@@ -275,6 +279,10 @@ begin
     with NFSe.Tomador.Endereco do
     begin
       Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+
+      if Endereco = '' then
+        Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('EnderecoDescricao'), tcStr);
+
       Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
       Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);

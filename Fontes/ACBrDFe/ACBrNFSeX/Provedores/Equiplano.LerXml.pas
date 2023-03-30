@@ -391,6 +391,7 @@ function TNFSeR_Equiplano.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 var
   AuxNode, AuxNodeDoc: TACBrXmlNode;
   Ok: Boolean;
+  xUF: string;
 begin
   Result := True;
 
@@ -429,6 +430,7 @@ begin
         with IdentificacaoTomador do
         begin
           InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoEstadual'), tcStr);
+          InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoMunicipal'), tcStr);
         end;
 
         with Endereco do
@@ -441,6 +443,9 @@ begin
           UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
           xPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
           CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
+          xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+          if UF = '' then
+            UF := xUF;
         end;
 
         AuxNodeDoc := AuxNode.Childrens.FindAnyNs('documento');

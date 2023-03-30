@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/03/2023
+-- Equiplano.GravarXml/Equiplano.LerXml --
+[*] Alteração visando a geração e a leitura da tag de Insc. Municipal.
+   Por: Microsys Sistemas
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Adiciona possibilidade de leitura do endereço quando tag EnderecoDescricao
    Por: Diego F

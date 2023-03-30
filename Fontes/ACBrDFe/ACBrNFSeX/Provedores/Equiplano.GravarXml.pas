@@ -335,6 +335,9 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'nrInscricaoEstadual', 1, 20, 0,
                       NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, ''));
 
+    Result.AppendChild(AddNode(tcStr, '#1', 'nrInscricaoMunicipal', 1, 20, 0,
+                      NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
+
     Result.AppendChild(AddNode(tcStr, '#1', 'dsEndereco', 1, 40, 1,
                                            NFSe.Tomador.Endereco.Endereco, ''));
 

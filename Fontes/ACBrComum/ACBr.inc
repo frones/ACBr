@@ -53,14 +53,14 @@
 // Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2. (NAO RECOMENDADO)
 {.$DEFINE DFE_SEM_LIBXML2}
 // Descomente a linha abaixo, se você não utiliza a obsoleta Capicom para Criptografia (RECOMENDADO)
-{.$DEFINE DFE_SEM_CAPICOM}
+{$DEFINE DFE_SEM_CAPICOM}
 // Descomente a linha abaixo, se você não utiliza a obsoleta MSXML para Assinatura de XML (RECOMENDADO)
 {.$DEFINE DFE_SEM_MSXML}
 // Descomente a linha abaixo, se você não deseja adicionar a Dependência da INDY nos seus Projetos
 {.$DEFINE DFE_SEM_INDY}
 
 // Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL  (Apenas Delphi)
-{.$DEFINE USE_DELAYED}
+{$DEFINE USE_DELAYED}
 
 // Descomente essa linha, para usar ZLibExGZ de \ACBr\Fontes\Terceiros\ZLibExGZ
 // ZLib de D7 contém bugs e está incompleta. Caso contrário usará compactação nativa, unit "ZLib"
@@ -272,19 +272,6 @@
     {$WARN UNSAFE_CAST OFF}
   {$ENDIF}
 {$ENDIF}
-
-// Definições para o Quick Report
-// Descomente a linha abaixo caso o Quick Report tenha suporte a PDF
-//------------------------------------------------------------------------------
-{$DEFINE QReport_PDF}
-
-// Definições para o compomente ACBrCTe
-// Define o Pacote de Liberação / Descomente o pacote a ser utilizado 
-// Atenção: descomente apenas uma das definições
-//------------------------------------------------------------------------------
-//{$DEFINE PL_103}
-//{$DEFINE PL_104}
-{$DEFINE PL_200}
 
 // Verificando se a compilação deve sem em modo texto "NOGUI"
 // Nota: FPC no Linux sempre liga a diretiva "CONSOLE", por isso criamos a NOGUI

@@ -402,7 +402,6 @@ end;
 function TACBrNFSeXWebserviceISSFortaleza.TratarXmlRetornado(
   const aXML: string): string;
 begin
-//  Result := inherited TratarXmlRetornado(UTF8Decode(aXML));
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
@@ -410,6 +409,7 @@ begin
   Result := RemoverIdentacao(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := NativeStringToUTF8(Result);
 end;
 
 end.

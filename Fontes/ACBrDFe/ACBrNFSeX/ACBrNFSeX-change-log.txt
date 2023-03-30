@@ -52,12 +52,16 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] Alterada URL para cidade de Cruz Alta/RS que é atendida pelo ISSNet na versão 1.00
    Por: Diego F
-[*] Incluido a cidade de Riqueza/SC, provedor é o Pronim na versão 2.02
+[+] Incluido a cidade de Riqueza/SC, provedor é o Pronim na versão 2.02
    Por: Microsys Sistemas
 [*] Altera a URL para mais algumas cidades que usam ISSNet na versão 1.00 que foi possível testar.
    Por: Diego F
 [*] Adiciona Param NaoDividir100 para cidade de Cruz Alta/RS
    Por: Patrick Knopf
+[+] Incluido a cidade de Jaci/SP, provedor: Fiorilli
+   Por: Neto
+[+] Incluido a cidade de Lontras/SC, provedor: IPM
+   Por: Jhonatan Sinprod
 
 29/03/2023
 -- ACBrNFSeXServicos.ini --

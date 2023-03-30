@@ -46,6 +46,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] Alterada URL para cidade de Cruz Alta/RS que é atendida pelo ISSNet na versão 1.00
    Por: Diego F
+[*] Incluido a cidade de Riqueza/SC, provedor é o Pronim na versão 2.02
+   Por: Microsys Sistemas
 
 29/03/2023
 -- ACBrNFSeXServicos.ini --

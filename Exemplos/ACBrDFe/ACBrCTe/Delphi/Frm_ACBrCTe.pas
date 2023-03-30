@@ -3186,6 +3186,11 @@ begin
     ACBrCTe1.DACTe.MargemEsquerda := 7;
     ACBrCTe1.DACTe.MargemSuperior := 5;
     ACBrCTe1.DACTe.MargemInferior := 5;
+
+    // (prCabecalho, prRodape);
+    ACBrCTe1.DACTE.PosCanhoto := prRodape;
+    // (prlPadrao, prlBarra);
+    ACBrCTe1.DACTE.PosCanhotoLayout := prlPadrao;
   end;
 end;
 

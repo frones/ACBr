@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="7">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ACBrCTe_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -70,6 +70,22 @@
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRL.pas"/>
+        <ComponentName Value="frmDACTeRL"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetrato.pas"/>
+        <ComponentName Value="frmDACTeRLRetrato"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit8>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>

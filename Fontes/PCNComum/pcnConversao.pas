@@ -61,7 +61,8 @@ type
                   // tcEsp = String: somente numeros;
   TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
-                   tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64, tcDe1);
+                   tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64, tcDe1,
+                   tcDatBol);
   TpcnFormatoGravacao = (fgXML, fgTXT);
   TpcnTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada, taSomenteParaNaoAssinada);
 
@@ -142,7 +143,8 @@ type
                   teLiberacaoPrazoCancelado, tePagamentoOperacao, teExcessoBagagem,
                   teEncerramentoFisco, teComprEntregaNFe, teCancComprEntregaNFe,
                   teAtorInteressadoNFe, teComprEntregaCTe, teCancComprEntregaCTe,
-                  teConfirmaServMDFe, teAlteracaoPagtoServMDFe);
+                  teConfirmaServMDFe, teAlteracaoPagtoServMDFe,
+                  teCancPrestDesacordo);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -220,7 +222,7 @@ type
   end;
 
 const
-  TpcnTpEventoString : array[0..70] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..71] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -243,7 +245,7 @@ const
                                                 '240170', '110116', '110117',
                                                 '310112', '110130', '110131',
                                                 '110150', '610130', '610131',
-                                                '110117', '110118');
+                                                '110117', '110118', '610111');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1158,7 +1160,8 @@ begin
               'AutorizadoServMultimodal', 'CancelamentoPorSubstituicao',
               'AlteracaoPoltrona', 'ExcessoBagagem', 'EncerramentoFisco',
               'teComprEntregaNFe', 'CancComprEntregaNFe',
-              'AtorInteressadoNFe', 'teComprEntregaCTe', 'CancComprEntregaCTe'],
+              'AtorInteressadoNFe', 'teComprEntregaCTe', 'CancComprEntregaCTe',
+              'CancPrestDesacordo'],
              [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1179,7 +1182,7 @@ begin
               teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona,
               teExcessoBagagem, teEncerramentoFisco, teComprEntregaNFe,
               teCancComprEntregaNFe, teAtorInteressadoNFe, teComprEntregaCTe,
-              teCancComprEntregaCTe]);
+              teCancComprEntregaCTe, teCancPrestDesacordo]);
 end;
 
 

@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2023
+-- pcnConversao --
+[*] Novos enumerados a serem utilizados pela versão 4.00 do CT-e
+  Por: Italo Giurizzato Junior
+-- pcnLeitor --
+[*] Novo tipo de campo tcDatBol
+  Por: Italo Giurizzato Junior
+
 11/10/2022
 -- pcnAuxiliar --
 [*] Ajuste no método "ExtrairCNPJCPFChaveAcesso" para tratar NFe emitida pela

@@ -257,6 +257,14 @@ begin
           Result := 0;
       end;
 
+    tcDatBol:
+      begin
+        if length(ConteudoTag) > 0 then
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 05, 4)), StrToInt(copy(ConteudoTag, 03, 2)), StrToInt(copy(ConteudoTag, 01, 2)))
+        else
+          Result := 0;
+      end;
+
     tcDatCFe:
       begin
         if length(ConteudoTag) > 0 then

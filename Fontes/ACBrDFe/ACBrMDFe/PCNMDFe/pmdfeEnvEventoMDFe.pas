@@ -103,11 +103,8 @@ implementation
 
 uses
   IniFiles,
-  pcnAuxiliar, pmdfeRetEnvEventoMDFe,  pmdfeConversaoMDFe,
-  ACBrUtil.Strings,
-  ACBrUtil.FilesIO,
-  ACBrUtil.Base,
-  ACBrUtil.DateTime,
+  pcnAuxiliar, pmdfeRetEnvEventoMDFe, pmdfeConversaoMDFe,
+  ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime,
   ACBrDFeUtil;
 
 { TEventoMDFe }
@@ -115,14 +112,16 @@ uses
 constructor TEventoMDFe.Create;
 begin
   inherited Create;
-  FGerador   := TGerador.Create;
-  FEvento    := TInfEventoCollection.Create;
+
+  FGerador := TGerador.Create;
+  FEvento := TInfEventoCollection.Create;
 end;
 
 destructor TEventoMDFe.Destroy;
 begin
   FGerador.Free;
   FEvento.Free;
+
   inherited;
 end;
 
@@ -135,10 +134,17 @@ begin
   Gerador.wGrupo('eventoMDFe ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
 
   Evento.Items[0].InfEvento.Id := 'ID'+ Evento.Items[0].InfEvento.TipoEvento +
-                                        OnlyNumber(Evento.Items[0].InfEvento.chMDFe) +
-                                        Format('%.2d', [Evento.Items[0].InfEvento.nSeqEvento]);
+                                   OnlyNumber(Evento.Items[0].InfEvento.chMDFe);
+
+  if Evento.Items[0].InfEvento.nSeqEvento < 99 then
+    Evento.Items[0].InfEvento.Id := Evento.Items[0].InfEvento.Id +
+                         Format('%.2d', [Evento.Items[0].InfEvento.nSeqEvento])
+  else
+    Evento.Items[0].InfEvento.Id := Evento.Items[0].InfEvento.Id +
+                         Format('%.3d', [Evento.Items[0].InfEvento.nSeqEvento]);
 
   Gerador.wGrupo('infEvento Id="' + Evento.Items[0].InfEvento.id + '"');
+
   if Length(Evento.Items[0].InfEvento.Id) < 54 then
     Gerador.wAlerta('EP04', 'ID', '', 'ID de Evento inválido');
 
@@ -150,9 +156,9 @@ begin
   // Verifica a Série do Documento, caso esteja no intervalo de 910-969
   // o emitente é pessoa fisica, logo na chave temos um CPF.
   Serie := ExtrairSerieChaveAcesso(Evento.Items[0].InfEvento.chMDFe);
+
   if (Length(sDoc) = 14) and (Serie >= 910) and (Serie <= 969) then
     sDoc := Copy(sDoc, 4, 11);
-
 
   case Length(sDoc) of
     14: begin
@@ -182,7 +188,7 @@ begin
      FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento));
 
   Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 6, 6, 1, Evento.Items[0].InfEvento.TipoEvento);
-  Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 1, 2, 1, Evento.Items[0].InfEvento.nSeqEvento);
+  Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 1, 3, 1, Evento.Items[0].InfEvento.nSeqEvento);
 
   Gerador.wGrupo('detEvento versaoEvento="' + Versao + '"');
 

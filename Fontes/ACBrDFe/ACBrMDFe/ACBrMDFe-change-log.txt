@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/03/2023
+-- pmdfeEnvEventoMDFe --
+[*] Alteração para suportar numero sequencial de eventos com 3 digitos.
+   Por: Italo Giurizzato Junior
+
 23/11/2022
 -- pmdfeMDFeW  --
 [*] Alterado para zero o numero de ocorrências, com isso a tag <dhTrem> passa a ser opcional

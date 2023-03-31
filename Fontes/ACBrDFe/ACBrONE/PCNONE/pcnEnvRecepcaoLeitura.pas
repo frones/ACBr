@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -72,6 +72,8 @@ type
     FnroEixos: Integer;
     FNSULeitura: String;
     FtpLeitura: TtpLeitura;
+    FtpEQP: TtpEQP;
+    FxRefCompl: String;
 
   public
     property tpTransm: TtpTransm      read FtpTransm        write FtpTransm;
@@ -94,6 +96,8 @@ type
     property nroEixos: Integer        read FnroEixos        write FnroEixos;
     property NSULeitura: String       read FNSULeitura      write FNSULeitura;
     property tpLeitura: TtpLeitura    read FtpLeitura       write FtpLeitura;
+    property tpEQP: TtpEQP            read FtpEQP           write FtpEQP;
+    property xRefCompl: String        read FxRefCompl       write FxRefCompl;
   end;
 
   { TRecepcaoLeitura }
@@ -133,9 +137,7 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar, pcnRetRecepcaoLeitura,
-  ACBrUtil.Base,
-  ACBrUtil.DateTime,
-  ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrDFeUtil;
 
 { TRecepcaoLeitura }
@@ -179,12 +181,19 @@ begin
   Gerador.wCampo(tcStr, 'BP10', 'CNPJOper', 01, 14, 1, infLeitura.CNPJOper, DSC_CNPJOper);
 
   if sEQP <> '' then
-    Gerador.wCampo(tcStr, 'BP11', 'cEQP     ', 01, 15, 1, sEQP, DSC_cEQP)
+    Gerador.wCampo(tcStr, 'BP11', 'cEQP', 01, 15, 1, sEQP, DSC_cEQP)
   else
   begin
     Gerador.wCampo(tcDe6, 'BP12', 'latitude ', 01, 10, 1, infLeitura.latitude, DSC_Latitude);
     Gerador.wCampo(tcDe6, 'BP13', 'longitude', 01, 10, 1, infLeitura.longitude, DSC_Longitude);
     Gerador.wCampo(tcStr, 'BP14', 'tpSentido', 01, 01, 1, TpSentidoToStr(infLeitura.tpSentido), DSC_tpSentido);
+
+    if infLeitura.xEQP <> '' then
+    begin
+      Gerador.wCampo(tcStr, 'BP15', 'xEQP     ', 50, 050, 0, infLeitura.xEQP, DSC_xEQP);
+      Gerador.wCampo(tcStr, 'BP16', 'tpEQP    ', 01, 001, 0, TpEQPToStr(infLeitura.tpEQP), DSC_tpEQP);
+      Gerador.wCampo(tcStr, 'BP17', 'xRefCompl', 02, 200, 0, infLeitura.xRefCompl, DSC_xRefCompl);
+    end;
   end;
 
   Gerador.wCampo(tcStr, 'BP15', 'placa          ', 07, 07, 1, infLeitura.placa, DSC_Placa);
@@ -237,6 +246,9 @@ begin
         indiceConfianca := INIRec.ReadInteger(sSecao, 'indiceConfianca', 0);
         pesoBrutoTotal  := INIRec.ReadInteger(sSecao, 'pesoBrutoTotal', 0);
         nroEixos        := INIRec.ReadInteger(sSecao, 'nroEixos', 0);
+        xEQP            := INIRec.ReadString(sSecao, 'xEQP', '');
+        tpEQP           := StrTotpEQP(ok,INIRec.ReadString(sSecao, 'tpEQP', '1'));
+        xRefCompl       := INIRec.ReadString(sSecao, 'xRefCompl', '');
       end;
     end;
   finally

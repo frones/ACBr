@@ -261,7 +261,7 @@ begin
     Space(15) +                                                                 // 080 a 094 - Uso do Banco Brancos
     FormatDateTime('ddmmyy', Now) +                                             // 095 a 100 - Data de Gravação
     Space(8) +                                                                  // 101 a 108 - Uso do Banco Brancos
-    PadLeft(Beneficiario.Conta, 12, '0') +                                      // 109 a 120 - Conta Cobrança Direta
+    PadLeft(' ', 12) +                                                          // 109 a 120 - Conta Cobrança Direta
     Space(266) +                                                                // 121 a 386 - Uso do Banco Brancos
     IntToStrZero(NumeroRemessa, 8) +                                            // 387 a 394 - Sequecial de Remessa
     IntToStrZero(1, 6);                                                         // 395 a 400 - Sequencial
@@ -289,7 +289,7 @@ begin
     PadRight(LTitulo.NumeroDocumento, 25) +                                     // 038 a 062 - Uso da Empresa
     PadRight(LTitulo.NossoNumero, 12) +                                         // 063 a 074 - Nosso Número
     Space(8) +                                                                  // 075 a 082 - Uso do Banco Brancos
-    IntToStrZero(fpNumero, 3) +                                                 // 083 a 085 - Código do Banco
+    Space(3) +                                                                  // 083 a 085 - Código do Banco
     Space(21) +                                                                 // 086 a 106 - Uso do Banco Brancos
     PadLeft(LTitulo.Carteira, 2, '0') +                                         // 107 a 108 - Código da Carteira
     TipoOcorrenciaToCodRemessa(LTitulo.OcorrenciaOriginal.Tipo) +               // 109 a 110 - Código Ocorrência Remessa

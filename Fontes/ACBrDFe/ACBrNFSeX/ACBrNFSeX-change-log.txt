@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Barra Mansa/RJ mudou para a versão 2.04, provedor ainda é o ISSNet.
+   Por: Destak
+
 30/03/2023
 -- Equiplano.GravarXml/Equiplano.LerXml --
 [*] Alteração visando a geração e a leitura da tag de Insc. Municipal.

@@ -42,7 +42,7 @@ unit Frm_ACBreSocial;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib, ACBrBase, ACBrDFe, pcnConversao,
   pcesConversaoeSocial, ACBreSocial;

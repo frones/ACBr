@@ -44,6 +44,8 @@ Símbolo : Significado
 
 31/03/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de Delmiro Gouveia/AL trocou de provedor, agora é Agili.
+   Por: Neto
 [*] A cidade de Barra Mansa/RJ mudou para a versão 2.04, provedor ainda é o ISSNet.
    Por: Destak
 

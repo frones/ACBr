@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2023
+-- pcesS3500 --
+[*] Ajuste do número de ocorrências das tags cpftrab e PerApurPgto. 
+   Por: Sandro Felipe Adad - Conferido: Daniel Morais
+
 06/03/2023
 -- pcsS1200 --
 [*] Adiciona leitura do IndApurIR dentro do bloco ItensRemun do idePeriodo.

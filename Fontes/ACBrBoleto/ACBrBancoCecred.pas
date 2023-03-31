@@ -1343,16 +1343,18 @@ begin
 
    rCedente := trim(copy(ARetorno[0], 73, 30));
    rCNPJCPF := OnlyNumber( copy(ARetorno[0], 19, 14) );
-   rConta := OnlyNumber( copy(ARetorno[0], 60, 11) ); //OnlyNumber( copy(ARetorno[0], 67, 4) );
+   rConta := OnlyNumber( copy(ARetorno[0], 60, 11) );
 
    ValidarDadosRetorno('', '', rCNPJCPF);
    with ACBrBanco.ACBrBoleto do
    begin
      if LeCedenteRetorno then
      begin
-       Cedente.Nome    := rCedente;
-       Cedente.CNPJCPF := rCNPJCPF;
-       Cedente.Conta   := rConta;
+       Cedente.Nome     := rCedente;
+       Cedente.CNPJCPF  := rCNPJCPF;
+       Cedente.Conta    := rConta;
+       Cedente.Agencia  := OnlyNumber(Copy(ARetorno[0], 53, 5));
+       Cedente.Convenio := OnlyNumber(Trim(Copy(ARetorno[0], 33, 20)));
 
        if StrToIntDef(copy(ARetorno[0], 18, 1), 0) = 1 then
          Cedente.TipoInscricao := pFisica

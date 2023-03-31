@@ -53,6 +53,11 @@ Símbolo : Significado
 [*] TK-3750 CNAB240 Informações faltando na leitura do arquivo retorno banco Cecred - Ailos
   Por : Forbostec
 
+-- ACBrBancoSantander --
+[*]TK-3727 Contribuição para sair desconto2 e desconto3 que não estavam sendo gerado na remessa.
+  Cliente validou com 0 (zeros) quando não informado.
+  por : Allan Almeida / Verificado: Daniel Morais
+
 27/03/2023
 -- ACBrBoleto,ACBrBancoItau --
 [*]TK-3714 Contribuição add codigo de ocorrrência 71-RemessaBolecode pelo usuario. Alterado ler retorno CNAB400 para capturar o qrcode.emv q não estava sendo tratado. 

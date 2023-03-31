@@ -718,13 +718,12 @@ begin
                   'R'                                                        + // 014 - 014 / Cód. Segmento do registro detalhe
                   Space(1)                                                   + // 015 - 015 / Reservado (uso Banco)
                   sCodMovimento                                              + // 016 - 017 / Código de movimento remessa
-                  '0'                                                        + // 018 - 018 / Código do desconto 2
-                  PadLeft('', 8, '0')                                        + // 019 - 026 / Data do desconto 2
-                  IntToStrZero(0, 15)                                        + // 027 - 041 / Valor/Percentual a ser concedido 2
-                  '0'                                                        + // 042 - 042 / Código do desconto 3
-                  PadLeft('', 8, '0')                                        + // 043 - 050 / Data do desconto 3
-                  IntToStrZero(0, 15)                                        + // 051 - 065 / Valor/Percentual a ser concedido 3
-
+                  TipoDescontoToString(TipoDesconto2)                        + // 018 - 018 / Código do desconto 2
+                  PadLeft(IfThen(TipoDesconto2<>tdNaoConcederDesconto,IfThen(DataDesconto2 > 0, FormatDateTime( 'ddmmyyyy', DataDesconto2),''),''),8,'0')      + // 019 - 026 / Data do desconto 2
+                  PadLeft(IfThen(TipoDesconto2<>tdNaoConcederDesconto,IfThen(ValorDesconto2 > 0, IntToStrZero(round(ValorDesconto2 * 100), 15),''),''),15,'0') + // 027 - 041 / Valor/Percentual a ser concedido 2
+                  TipoDescontoToString(TipoDesconto3)                        + // 042 - 042 / Código do desconto 3
+                  PadLeft(IfThen(TipoDesconto3<>tdNaoConcederDesconto,IfThen(DataDesconto3 > 0, FormatDateTime( 'ddmmyyyy', DataDesconto3),''),''),8,'0')      + // 043 - 050 / Data do desconto 3
+                  PadLeft(IfThen(TipoDesconto3<>tdNaoConcederDesconto,IfThen(ValorDesconto3 > 0, IntToStrZero(round(ValorDesconto3 * 100), 15),''),''),15,'0') + // 051 - 065 / Valor/Percentual a ser concedido 3
                   IfThen((PercentualMulta > 0),
                          IfThen(MultaValorFixo,'1','2'), '2')                                           + // 66 - 66 1-Cobrar Multa Valor Fixo / 2-Percentual / 0-Não cobrar multa
                   IfThen((PercentualMulta > 0),

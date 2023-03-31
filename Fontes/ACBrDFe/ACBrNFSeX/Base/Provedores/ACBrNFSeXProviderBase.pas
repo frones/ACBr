@@ -785,21 +785,14 @@ end;
 procedure TACBrNFSeXProvider.CarregarURL;
 var
   IniParams: TMemIniFile;
-  Sessao, Msg: String;
+  Sessao: String;
 begin
-  Msg := 'Arquivos:' + #13 +
-         'ACBrNFSeXServicos.ini e ou ACBrNFSeXServicos.res desatualizados' + #13 +
-         'Favor atualizar.';
-
   IniParams := TMemIniFile.Create('');
 
   with TACBrNFSeX(FAOwner) do
   begin
     IniParams.SetStrings(Configuracoes.WebServices.Params);
   end;
-
-  if IniParams.ReadString('3130309', 'Params1', '') <> '' then
-    raise EACBrDFeException.Create(Msg);
 
   try
     with TACBrNFSeX(FAOwner) do

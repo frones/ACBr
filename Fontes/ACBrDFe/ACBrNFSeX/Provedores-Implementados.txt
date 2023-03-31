@@ -50,7 +50,7 @@ FISSLex              1.00
 Futurize             2.02
 GeisWeb              1.00
 geNFe                1.00
-GestaoISS            2.02  
+GestaoISS            2.02  31/03/2023
 Giap                 1.00  02/08/2022
 Ginfes               1.00  19/09/2022
 Giss                 2.04

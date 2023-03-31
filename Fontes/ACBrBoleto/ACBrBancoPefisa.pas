@@ -224,7 +224,9 @@ end;
 function TACBrBancoPefisa.MontarCampoCodigoCedente(
   const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result :=  ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+  Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+
+   '/'+
+   ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
 end;
 
 function TACBrBancoPefisa.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;

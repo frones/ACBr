@@ -35,7 +35,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="91">
+    <Files Count="92">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -401,6 +401,10 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrTERWilbor.pas"/>
         <UnitName Value="ACBrTERWilbor"/>
       </Item91>
+      <Item92>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSIN.pas"/>
+        <UnitName Value="ACBrSIN"/>
+      </Item92>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="3">

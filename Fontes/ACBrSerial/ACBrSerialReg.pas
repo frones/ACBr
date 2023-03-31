@@ -65,7 +65,7 @@ procedure Register;
 
 implementation
 Uses ACBrReg,
-     ACBrECF, ACBrGAV, ACBrCHQ, ACBrLCB, ACBrDIS, ACBrTER, ACBrBAL, ACBrETQ,
+     ACBrECF, ACBrGAV, ACBrCHQ, ACBrLCB, ACBrDIS, ACBrTER, ACBrBAL, ACBrSIN, ACBrETQ,
      ACBrRFD, ACBrSMS, ACBrPosPrinter, ACBrECFVirtualNaoFiscal,
      SysUtils;
 
@@ -76,7 +76,7 @@ Uses ACBrReg,
 procedure Register;
 begin
   RegisterComponents('ACBrSerial', [TACBrECF, TACBrRFD, TACBrGAV, TACBrCHQ,
-     TACBrLCB, TACBrDIS, TACBrTER, TACBrBAL, TACBrETQ, TACBrSMS, TACBrPosPrinter,
+     TACBrLCB, TACBrDIS, TACBrTER, TACBrBAL, TACBrSIN, TACBrETQ, TACBrSMS, TACBrPosPrinter,
      TACBrECFVirtualNaoFiscal]);
 
   { Registrando os Editores de Propriedade }
@@ -99,6 +99,8 @@ begin
   RegisterPropertyEditor(TypeInfo(TACBrDevice), TACBrDIS, 'Device',
     TClassProperty);
   RegisterPropertyEditor(TypeInfo(TACBrDevice), TACBrBAL, 'Device',
+    TClassProperty);
+  RegisterPropertyEditor(TypeInfo(TACBrDevice), TACBrSIN, 'Device',
     TClassProperty);
   RegisterPropertyEditor(TypeInfo(TACBrDevice), TACBrTER, 'Device',
     TClassProperty);

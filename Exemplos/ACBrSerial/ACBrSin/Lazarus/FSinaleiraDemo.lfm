@@ -1,0 +1,283 @@
+object FormSinaleiraDemo: TFormSinaleiraDemo
+  Left = 0
+  Height = 361
+  Top = 0
+  Width = 467
+  Caption = 'Sinaleira Teste'
+  ClientHeight = 361
+  ClientWidth = 467
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  object Panel1: TPanel
+    Left = 8
+    Height = 328
+    Top = 17
+    Width = 177
+    BevelOuter = bvLowered
+    ClientHeight = 328
+    ClientWidth = 177
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 16
+      Height = 15
+      Top = 6
+      Width = 88
+      Caption = 'Modelo Sinaleira'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label4: TLabel
+      Left = 16
+      Height = 15
+      Top = 49
+      Width = 59
+      Caption = 'Porta Serial'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label5: TLabel
+      Left = 16
+      Height = 15
+      Top = 92
+      Width = 50
+      Caption = 'Baud rate'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label6: TLabel
+      Left = 16
+      Height = 15
+      Top = 137
+      Width = 46
+      Caption = 'Data Bits'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label7: TLabel
+      Left = 16
+      Height = 15
+      Top = 181
+      Width = 30
+      Caption = 'Parity'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label8: TLabel
+      Left = 16
+      Height = 15
+      Top = 271
+      Width = 70
+      Caption = 'Handshaking'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label11: TLabel
+      Left = 16
+      Height = 15
+      Top = 224
+      Width = 46
+      Caption = 'Stop Bits'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object cmbSinaleira: TComboBox
+      Left = 16
+      Height = 23
+      Top = 22
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        'Nenhuma'
+        'Laurenti'
+      )
+      Style = csDropDownList
+      TabOrder = 0
+      Text = 'Nenhuma'
+    end
+    object cmbPortaSerial: TComboBox
+      Left = 16
+      Height = 23
+      Top = 65
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        'COM1'
+        'COM2'
+        'COM3'
+        'COM4'
+        'COM5'
+        'COM6'
+        'COM7'
+        'COM8'
+      )
+      TabOrder = 1
+      Text = 'COM1'
+    end
+    object cmbBaudRate: TComboBox
+      Left = 16
+      Height = 23
+      Top = 110
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 6
+      Items.Strings = (
+        '110'
+        '300'
+        '600'
+        '1200'
+        '2400'
+        '4800'
+        '9600'
+        '14400'
+        '19200'
+        '38400'
+        '56000'
+        '57600'
+      )
+      Style = csDropDownList
+      TabOrder = 2
+      Text = '9600'
+    end
+    object cmbDataBits: TComboBox
+      Left = 16
+      Height = 23
+      Top = 153
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 3
+      Items.Strings = (
+        '5'
+        '6'
+        '7'
+        '8'
+      )
+      Style = csDropDownList
+      TabOrder = 3
+      Text = '8'
+    end
+    object cmbHandShaking: TComboBox
+      Left = 16
+      Height = 23
+      Top = 289
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        'Nenhum'
+        'XON/XOFF'
+        'RTS/CTS'
+        'DTR/DSR'
+      )
+      Style = csDropDownList
+      TabOrder = 6
+      Text = 'Nenhum'
+    end
+    object cmbParity: TComboBox
+      Left = 16
+      Height = 23
+      Top = 198
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        'none'
+        'odd'
+        'even'
+        'mark'
+        'space'
+      )
+      Style = csDropDownList
+      TabOrder = 4
+      Text = 'none'
+    end
+    object cmbStopBits: TComboBox
+      Left = 16
+      Height = 23
+      Top = 242
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        's1'
+        's1,5'
+        's2'
+        ''
+      )
+      Style = csDropDownList
+      TabOrder = 5
+      Text = 's1'
+    end
+  end
+  object ButtonAtivar: TButton
+    Left = 191
+    Height = 41
+    Top = 17
+    Width = 122
+    Caption = 'Ativar/Conectar'
+    OnClick = ButtonAtivarClick
+    TabOrder = 1
+  end
+  object ButtonDesativar: TButton
+    Left = 337
+    Height = 41
+    Top = 17
+    Width = 122
+    Caption = 'Desativar'
+    OnClick = ButtonDesativarClick
+    TabOrder = 2
+  end
+  object GroupBox1: TGroupBox
+    Left = 191
+    Height = 119
+    Top = 82
+    Width = 272
+    Caption = 'Define Led'
+    ClientHeight = 99
+    ClientWidth = 268
+    TabOrder = 3
+    object ButtonRed: TButton
+      Left = 181
+      Height = 82
+      Top = 27
+      Width = 86
+      Caption = 'Red'
+      OnClick = ButtonRedClick
+      TabOrder = 0
+    end
+    object ButtonYellow: TButton
+      Left = 93
+      Height = 82
+      Top = 27
+      Width = 86
+      Caption = 'Yellow'
+      OnClick = ButtonYellowClick
+      TabOrder = 1
+    end
+    object ButtonGreen: TButton
+      Left = 5
+      Height = 82
+      Top = 27
+      Width = 86
+      Caption = 'Green'
+      OnClick = ButtonGreenClick
+      TabOrder = 2
+    end
+  end
+  object ACBrSIN1: TACBrSIN
+    Modelo = sinLaurenti
+    Porta = 'COM1'
+    Left = 312
+    Top = 80
+  end
+end

@@ -56,7 +56,7 @@ type
   protected
     function ConverterDigitoModuloFinal(): String; override;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
-
+    function GetLocalPagamento: String; override;
   public
     Constructor create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String; override;
@@ -109,7 +109,10 @@ begin
 
   Result :=
 
-    PadLeft(OnlyNumber(Beneficiario.CodigoCedente), 12, '0') + PadLeft(ACBrTitulo.NossoNumero, 10, '0') + PadLeft(ACBrTitulo.Carteira, 2, '0') + LEmissao;
+    PadLeft(OnlyNumber(Beneficiario.CodigoCedente), 12, '0') +
+    PadLeft(ACBrTitulo.NossoNumero, 10, '0') +
+    PadLeft(ACBrTitulo.Carteira, 2, '0') +
+    LEmissao;
 
 end;
 
@@ -206,7 +209,7 @@ end;
 constructor TACBrBancoPefisa.create(AOwner: TACBrBanco);
 begin
   inherited create(AOwner);
-  fpDigito                     := 2;
+  fpDigito                     := 0;
   fpNome                       := 'PEFISA';
   fpNumero                     := 174;
   fpTamanhoMaximoNossoNum      := 10;
@@ -233,7 +236,8 @@ function TACBrBancoPefisa.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo):
 begin
   Result := '0' + 
     ACBrTitulo.Carteira + 
-    ACBrTitulo.NossoNumero + 
+    '0'+
+    ACBrTitulo.NossoNumero +
     ' ' + 
     CalcularDigitoVerificador(ACBrTitulo);
 end;
@@ -376,6 +380,11 @@ begin
 
   if not (LLinha = EmptyStr) then
     ARemessa.Add(UpperCase(LLinha));
+end;
+
+function TACBrBancoPefisa.GetLocalPagamento: String;
+begin
+  Result := ACBrStr(CInstrucaoPagamentoTodaRede);
 end;
 
 function TACBrBancoPefisa.MontaInstrucoesCNAB400(const ACBrTitulo: TACBrTitulo; const nRegistro: Integer): String;

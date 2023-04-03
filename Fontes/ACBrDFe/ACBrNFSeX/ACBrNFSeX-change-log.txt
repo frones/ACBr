@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2023
+-- IssGoiania.LerXml --
+[+] Adiciona uma função para ler o nome do município usando o código específico que vem no XML e arquivo disponibilizado pelo provedor.
+   Por: Diego F
+
 31/03/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Delmiro Gouveia/AL trocou de provedor, agora é Agili.

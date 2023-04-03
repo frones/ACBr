@@ -59,7 +59,7 @@ type
     procedure LerValoresNfse(const ANode: TACBrXmlNode);
 
     procedure LerPrestadorServico(const ANode: TACBrXmlNode);
-    procedure LerEnderecoPrestadorServico(const ANode: TACBrXmlNode; aTag: string);
+    procedure LerEnderecoPrestadorServico(const ANode: TACBrXmlNode; aTag: string); virtual;
     procedure LerContatoPrestadorServico(const ANode: TACBrXmlNode);
     procedure LerContatoPrestador(const ANode: TACBrXmlNode);
 
@@ -81,7 +81,7 @@ type
 
     procedure LerTomadorServico(const ANode: TACBrXmlNode);
     procedure LerIdentificacaoTomador(const ANode: TACBrXmlNode);
-    procedure LerEnderecoTomador(const ANode: TACBrXmlNode);
+    procedure LerEnderecoTomador(const ANode: TACBrXmlNode); virtual;
     procedure LerContatoTomador(const ANode: TACBrXmlNode);
 
     procedure LerIntermediarioServico(const ANode: TACBrXmlNode);

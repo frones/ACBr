@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+03/04/2023
+-- ACBrBancoItau --
+[*]TK-3714-1 Criado na geração CNAB 400 a emissão remessa opcional 03 (quando informado Pix.Chave ou QrCode.txID)
+Por: Daniel de Morais
 
 31/03/2023
 [*] TK-3750 CNAB240 Informações faltando na leitura do arquivo retorno banco Cecred - Ailos

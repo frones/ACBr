@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2023
+--- ACBrLibNFeConfig, ACBrLibNFeConsts, ACBrLibNFeDataModule ---
+[+] Adicionado propriedade ImprimeDescAcrescItemNFe - #TK-3788
+    Por: Antonio Carlos Junior
+
 26/01/2023
 --- ACBrLibNFeBase ---
 [*] Realizado ajuste no método ImprimirPDF - #TK-271

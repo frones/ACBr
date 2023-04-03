@@ -100,6 +100,7 @@ const
   CChaveFonteTamanhoFonteEndereco = 'Fonte.TamanhoFonteEndereco';
   CChaveFonteTamanhoFonteInformacoesComplementares = 'Fonte.TamanhoFonteInformacoesComplementares';
   CChaveFonteTamanhoFonteDemaisCampos = 'Fonte.TamanhoFonteDemaisCampos';
+  CChaveImprimeDescAcrescItemNFe = 'ImprimeDescAcrescItemNFe';
 
   CSessaoDANFENFCE = 'DANFENFCe';
   CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';

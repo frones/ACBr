@@ -236,6 +236,7 @@ begin
     begin
        NFeDANFe := TACBrNFeDANFeRL.Create(nil);
        ACBrNFe1.DANFE := NFeDANFe;
+       NFeDANFe.ImprimeDescAcrescItem:=LibConfig.DANFe.NFe.ImprimeDescAcrescItemNFe;
     end;
 
     if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then

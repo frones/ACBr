@@ -86,6 +86,7 @@ type
     FExibeCampoDePagamento: TpcnInformacoesDePagamento;
     FImprimeInscSuframa: Boolean;
     FImprimeXPedNitemPed: Boolean;
+    FImprimeDescAcrescItemNFe: TpcnImprimeDescAcrescItem;
 
   public
     constructor Create;
@@ -133,6 +134,7 @@ type
     property ExibeCampoDePagamento: TpcnInformacoesDePagamento read FExibeCampoDePagamento write FExibeCampoDePagamento;
     property ImprimeInscSuframa: Boolean read FImprimeInscSuframa write FImprimeInscSuframa;
     property ImprimeXPedNitemPed: Boolean read FImprimeXPedNitemPed write FImprimeXPedNitemPed;
+    property ImprimeDescAcrescItemNFe: TpcnImprimeDescAcrescItem read FImprimeDescAcrescItemNFe write FImprimeDescAcrescItemNFe;
 
   end;
 
@@ -328,6 +330,7 @@ begin
   FExibeCampoDePagamento := eipNunca;
   FImprimeInscSuframa:= True;
   FImprimeXPedNitemPed:= False;
+  FImprimeDescAcrescItemNFe:= idaiSempre;
 
   if Assigned(FFonte) then FFonte.Free;
   FFonte := TFonte.Create(nil);
@@ -374,6 +377,7 @@ begin
   ExibeCampoDePagamento := TpcnInformacoesDePagamento(AIni.ReadInteger(CSessaoDANFENFE, CChaveExibeCampoDePagamento, Integer(ExibeCampoDePagamento)));
   ImprimeInscSuframa:= AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeInscSuframa, ImprimeInscSuframa);
   ImprimeXPedNitemPed:= AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeXPedNitemPed, ImprimeXPedNitemPed);
+  ImprimeDescAcrescItemNFe:= TpcnImprimeDescAcrescItem(AIni.ReadInteger(CSessaoDANFENFE, CChaveImprimeDescAcrescItemNFe, Integer(ImprimeDescAcrescItemNFe)));
 
   with Fonte do
   begin
@@ -426,6 +430,7 @@ begin
   AIni.WriteInteger(CSessaoDANFENFE, CChaveExibeCampoDePagamento, Integer(ExibeCampoDePagamento));
   AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeInscSuframa, ImprimeInscSuframa);
   AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeXPedNitemPed, ImprimeXPedNitemPed);
+  AIni.WriteInteger(CSessaoDANFENFE, CChaveImprimeDescAcrescItemNFe, Integer(ImprimeDescAcrescItemNFe));
 
   with Fonte do
   begin
@@ -479,6 +484,8 @@ begin
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := FImprimeContDadosAdPrimeiraPagina;
     ExibeCampoDePagamento := FExibeCampoDePagamento;
     ImprimeInscSuframa:= FImprimeInscSuframa;
+    ImprimeXPedNItemPed:= FImprimeXPedNitemPed;
+    ImprimeDescAcrescItemNFe:= FImprimeDescAcrescItemNFe;
 
     with Fonte do
     begin

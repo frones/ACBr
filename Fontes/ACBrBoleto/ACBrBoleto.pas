@@ -1471,7 +1471,7 @@ type
     property url : String read Furl write Seturl;
     property txId  : String read FtxId write SettxId;
     property emv   : String read Femv write Setemv;
-    procedure PIXQRCodeDinamico(const AURL: String; const ATXID :String);
+    procedure PIXQRCodeDinamico(const AURL, ATXID: String; ATitulo : TACBrTitulo);
   end;
 
   { TACBrTitulo }
@@ -2100,7 +2100,7 @@ begin
   inherited;
 end;
 
-procedure TACBrBoletoPIXQRCode.PIXQRCodeDinamico(const AURL, ATXID: String);
+procedure TACBrBoletoPIXQRCode.PIXQRCodeDinamico(const AURL, ATXID: String; ATitulo : TACBrTitulo);
 var
   LEMV : TACBrPIXQRCodeDinamico;
 begin
@@ -2109,8 +2109,11 @@ begin
   LEMV := TACBrPIXQRCodeDinamico.Create;
   try
     LEMV.IgnoreErrors := True;
+    LEMV.MerchantName := ATitulo.ACBrBoleto.Cedente.Nome;
+    LEMV.MerchantCity := ATitulo.ACBrBoleto.Cedente.Cidade;
+    LEMV.PostalCode   := Poem_Zeros(ATitulo.ACBrBoleto.Cedente.CEP,8);
     LEMV.URL          := AURL;
-    LEMV.TxId         := ATXID;
+    //LEMV.TxId         := ATXID;
     Seturl(AURL);
     SettxId(ATXID);
     Setemv(LEMV.AsString);

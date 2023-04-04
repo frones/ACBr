@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2023
+-- ACBrReinfWebServices --
+[*] Alterados prefixos das consultas de protocolo e recibo para melhor identificação dos arquivos gerados
+  Por: Renato Rubinho
+
 15/03/2023
 -- pcnReinfRetConsulta_R9015 --
 [*] Adicionadas propriedades perApurXXX nos grupos totApurQui, totApurDec, totApurSem e totApurDia do R9015

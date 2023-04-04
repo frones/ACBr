@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Farroupilha/RS mudou de provedor, agora é Infisc, na versão 1.01
+   Por: Patrick Knopf/Diego F
+
 03/04/2023
 -- IssGoiania.LerXml --
 [+] Adiciona uma função para ler o nome do município usando o código específico que vem no XML e arquivo disponibilizado pelo provedor.

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/04/2023
+-- BHISS.Provider --
+[*] Trocado o XmlToStr por IncluirCDATA na montagem das mensagens.
+   Por: Italo Giurizzato Junior
 -- ISSSaoPaulo.LerXml --
 [*] Ajuste para ler a data do cancelamento.
    Por: bochnia

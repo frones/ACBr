@@ -383,7 +383,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumNFSe: String;
+  NumNFSe, NumRPS: String;
   ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -427,10 +427,10 @@ begin
         if AuxNode <> nil then
         begin
           NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroNota'), tcStr);
-
           Response.NumeroNota := NumNFSe;
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+          NumRPS := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRPS);
 
           ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
           SalvarXmlNfse(ANota);

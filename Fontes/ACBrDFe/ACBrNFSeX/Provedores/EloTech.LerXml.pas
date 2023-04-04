@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlDocument, ACBrXmlBase,
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -46,6 +47,9 @@ type
   TNFSeR_EloTech203 = class(TNFSeR_ABRASFv2)
   protected
 
+    procedure LerListaServicos(const ANode: TACBrXmlNode); override;
+    procedure LerServicos(const ANode: TACBrXmlNode); override;
+    procedure LerDadosDeducao(const ANode: TACBrXmlNode; Item: Integer);
   public
 
   end;
@@ -56,5 +60,80 @@ implementation
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     EloTech
 //==============================================================================
+
+{ TNFSeR_EloTech203 }
+
+procedure TNFSeR_EloTech203.LerListaServicos(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('ListaItensServico');
+
+  if AuxNode <> nil then
+    LerServicos(AuxNode);
+end;
+
+procedure TNFSeR_EloTech203.LerServicos(const ANode: TACBrXmlNode);
+var
+  ANodes: TACBrXmlNodeArray;
+  AuxNode: TACBrXmlNode;
+  i: Integer;
+  CodigoItemServico: string;
+  Ok: Boolean;
+  ValorLiq: Double;
+begin
+  ANodes := ANode.Childrens.FindAllAnyNs('ItemServico');
+
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    NFSe.Servico.ItemServico.New;
+
+    with NFSe.Servico.ItemServico[i] do
+    begin
+      CodigoItemServico := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ItemListaServico'), tcStr);
+      ItemListaServico := NormatizarItemListaServico(CodigoItemServico);
+
+      CodigoCnae := ObterConteudo(ANodes[i].Childrens.FindAnyNs('CodigoCnae'), tcStr);
+      Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Descricao'), tcStr);
+      Tributavel := FpAOwner.StrToSimNao(Ok, ObterConteudo(ANodes[i].Childrens.FindAnyNs('Tributavel'), tcStr));
+      Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Quantidade'), tcDe2);
+      ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorUnitario'), tcDe2);
+      DescontoCondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorDesconto'), tcDe2);
+      ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorLiquido'), tcDe2);
+
+      LerDadosDeducao(ANodes[i], i);
+    end;
+  end;
+end;
+
+procedure TNFSeR_EloTech203.LerDadosDeducao(const ANode: TACBrXmlNode; Item: Integer);
+var
+  AuxNode: TACBrXmlNode;
+  Ok: Boolean;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('DadosDeducao');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.Servico.ItemServico[Item].DadosDeducao do
+    begin
+      TipoDeducao := FpAOwner.StrToTipoDeducao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('TipoDeducao'), tcStr));
+
+      CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+
+      if CpfCnpj = '' then
+        CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
+
+      NumeroNotaFiscalReferencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroNotaFiscalReferencia'), tcStr);
+      ValorTotalNotaFiscal := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorTotalNotaFiscal'), tcDe2);
+      PercentualADeduzir := ObterConteudo(AuxNode.Childrens.FindAnyNs('PercentualADeduzir'), tcDe2);
+      ValorADeduzir := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorADeduzir'), tcDe2);
+    end;
+  end;
+end;
 
 end.

@@ -51,6 +51,7 @@ type
 
     function GerarListaItensServico: TACBrXmlNode; override;
     function GerarItemServico: TACBrXmlNodeArray; override;
+    function GerarDadosDeducao(Item: Integer): TACBrXmlNode;
   end;
 
 implementation
@@ -96,6 +97,28 @@ begin
   GerarIDDeclaracao := False;
 end;
 
+function TNFSeW_Elotech203.GerarDadosDeducao(Item: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('DadosDeducao');
+
+  Result.AppendChild(AddNode(tcStr, '#', 'TipoDeducao', 1, 1, 1,
+    FpAOwner.TipoDeducaoToStr(NFSe.Servico.ItemServico[Item].DadosDeducao.TipoDeducao)));
+
+  Result.AppendChild(GerarCPFCNPJ(NFSe.Servico.ItemServico[Item].DadosDeducao.CpfCnpj));
+
+  Result.AppendChild(AddNode(tcStr, '#', 'NumeroNotaFiscalReferencia', 1, 15, 0,
+       NFSe.Servico.ItemServico[Item].DadosDeducao.NumeroNotaFiscalReferencia));
+
+  Result.AppendChild(AddNode(tcDe2, '#', 'ValorTotalNotaFiscal', 1, 15, 0,
+             NFSe.Servico.ItemServico[Item].DadosDeducao.ValorTotalNotaFiscal));
+
+  Result.AppendChild(AddNode(tcDe2, '#', 'PercentualADeduzir', 1, 15, 0,
+               NFSe.Servico.ItemServico[Item].DadosDeducao.PercentualADeduzir));
+
+  Result.AppendChild(AddNode(tcDe2, '#', 'ValorADeduzir', 1, 15, 0,
+                    NFSe.Servico.ItemServico[Item].DadosDeducao.ValorADeduzir));
+end;
+
 function TNFSeW_Elotech203.GerarItemServico: TACBrXmlNodeArray;
 var
   i: integer;
@@ -133,6 +156,8 @@ begin
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'ValorLiquido', 1, 17, 1,
                                        NFSe.Servico.ItemServico[i].ValorTotal));
+
+    Result[i].AppendChild(GerarDadosDeducao(i));
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then

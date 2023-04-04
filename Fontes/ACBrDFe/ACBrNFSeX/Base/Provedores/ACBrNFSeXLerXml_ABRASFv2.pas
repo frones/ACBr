@@ -71,8 +71,8 @@ type
     procedure LerIdentificacaoRps(const ANode: TACBrXmlNode);
     procedure LerRpsSubstituido(const ANode: TACBrXmlNode);
 
-    procedure LerListaServicos(const ANode: TACBrXmlNode);
-    procedure LerServicos(const ANode: TACBrXmlNode);
+    procedure LerListaServicos(const ANode: TACBrXmlNode); virtual;
+    procedure LerServicos(const ANode: TACBrXmlNode); virtual;
     procedure LerServico(const ANode: TACBrXmlNode);
     procedure LerValores(const ANode: TACBrXmlNode);
 

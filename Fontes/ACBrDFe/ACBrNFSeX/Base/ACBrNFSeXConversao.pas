@@ -112,7 +112,7 @@ type
   TDeducaoPor = (dpNenhum, dpPercentual, dpValor);
 
   TTipoDeducao = (tdNenhum, tdMateriais, tdSubEmpreitada, tdValor, tdVeiculacao,
-                  tdPercentual, tdPercMateriais, tdIntermediacao);
+                  tdPercentual, tdPercMateriais, tdIntermediacao, tdEquipamento);
 
   TnfseProvedor = (proNenhum,
                    proPadraoNacional,
@@ -471,9 +471,6 @@ function StrToprocEmi(out ok: Boolean; const s: string): TprocEmi;
 function tpEventoToStr(const t: TtpEvento): string;
 function StrTotpEvento(out ok: Boolean; const s: string): TtpEvento;
 function tpEventoToDesc(const t: TtpEvento): string;
-
-function TipoDeducaoToStr(const t: TTipoDeducao): string;
-function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao;
 
 function ParamMunicToStr(const t: TParamMunic): string;
 function StrToParamMunic(out ok: Boolean; const s: string): TParamMunic;
@@ -13179,22 +13176,6 @@ begin
                     teRejeicaoIntermediario, teAnulacaoRejeicao,
                     teCancelamentoPorOficio, teBloqueioPorOficio,
                     teDesbloqueioPorOficio]);
-end;
-
-function TipoDeducaoToStr(const t: TTipoDeducao): string;
-begin
-  result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5', '6', '7'],
-                 [tdNenhum, tdMateriais, tdPercentual, tdValor, tdPercMateriais,
-                  tdVeiculacao, tdIntermediacao]);
-end;
-
-function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao;
-begin
-  result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5', '6', '7'],
-                 [tdNenhum, tdMateriais, tdPercentual, tdValor, tdPercMateriais,
-                  tdVeiculacao, tdIntermediacao]);
 end;
 
 function ParamMunicToStr(const t: TParamMunic): string;

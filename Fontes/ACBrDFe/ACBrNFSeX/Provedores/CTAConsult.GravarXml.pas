@@ -423,7 +423,7 @@ begin
   Result := CreateElement('deducoes');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1,
-                       TipoDeducaoToStr(NFSe.Servico.Valores.TipoDeducao), ''));
+              FpAOwner.TipoDeducaoToStr(NFSe.Servico.Valores.TipoDeducao), ''));
 end;
 
 function TNFSeW_CTAConsult.GerarDetalhamentoNota: TACBrXmlNode;

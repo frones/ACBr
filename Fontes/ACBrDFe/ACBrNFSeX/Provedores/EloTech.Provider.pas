@@ -88,6 +88,9 @@ type
       Params: TNFSeParamsResponse); override;
 
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+  public
+    function TipoDeducaoToStr(const t: TTipoDeducao): string; override;
+    function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao; override;
   end;
 
 implementation
@@ -504,6 +507,22 @@ begin
                            '</' + Prefixo + 'SubstituicaoNfse>' +
                          '</' + Prefixo + TagEnvio + '>';
   end;
+end;
+
+function TACBrNFSeProviderEloTech203.TipoDeducaoToStr(
+  const t: TTipoDeducao): string;
+begin
+  result := EnumeradoToStr(t,
+                           ['M', 'S', 'E'],
+                           [tdMateriais, tdSubEmpreitada, tdEquipamento]);
+end;
+
+function TACBrNFSeProviderEloTech203.StrToTipoDeducao(out ok: Boolean;
+  const s: string): TTipoDeducao;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['M', 'S', 'E'],
+                           [tdMateriais, tdSubEmpreitada, tdEquipamento]);
 end;
 
 { TACBrNFSeXWebserviceEloTech203 }

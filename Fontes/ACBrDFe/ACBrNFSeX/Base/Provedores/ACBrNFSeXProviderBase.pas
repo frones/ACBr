@@ -264,6 +264,9 @@ type
     function TributacaoToStr(const t: TTributacao): string; virtual;
     function StrToTributacao(out ok: boolean; const s: string): TTributacao; virtual;
     function TributacaoDescricao(const t: TTributacao): String; virtual;
+
+    function TipoDeducaoToStr(const t: TTipoDeducao): string; virtual;
+    function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao; virtual;
   end;
 
 implementation
@@ -1422,6 +1425,23 @@ begin
                            [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
                             ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
                             ttTributavelFixo, ttTributavelSN, ttMEI]);
+end;
+
+function TACBrNFSeXProvider.TipoDeducaoToStr(const t: TTipoDeducao): string;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5', '6', '7'],
+                 [tdNenhum, tdMateriais, tdPercentual, tdValor, tdPercMateriais,
+                  tdVeiculacao, tdIntermediacao]);
+end;
+
+function TACBrNFSeXProvider.StrToTipoDeducao(out ok: Boolean;
+  const s: string): TTipoDeducao;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5', '6', '7'],
+                 [tdNenhum, tdMateriais, tdPercentual, tdValor, tdPercMateriais,
+                  tdVeiculacao, tdIntermediacao]);
 end;
 
 function TACBrNFSeXProvider.PrepararRpsParaLote(const aXml: string): string;

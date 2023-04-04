@@ -2137,20 +2137,30 @@ begin
 
       case ConsultaNFSeResponse.Metodo of
         tmConsultarNFSePorFaixa:
-          ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSePorFaixa(ConfigMsgDados.DadosCabecalho,
-                                                                            ConsultaNFSeResponse.ArquivoEnvio);
-
+          begin
+            ConsultaNFSeResponse.InfConsultaNFSe.tpConsulta := tcPorFaixa;
+            ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSePorFaixa(ConfigMsgDados.DadosCabecalho,
+                                                                              ConsultaNFSeResponse.ArquivoEnvio);
+          end;
         tmConsultarNFSeServicoPrestado:
-          ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSeServicoPrestado(ConfigMsgDados.DadosCabecalho,
-                                                                                   ConsultaNFSeResponse.ArquivoEnvio);
+          begin
+            ConsultaNFSeResponse.InfConsultaNFSe.tpConsulta := tcServicoPrestado;
+            ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSeServicoPrestado(ConfigMsgDados.DadosCabecalho,
+                                                                                     ConsultaNFSeResponse.ArquivoEnvio);
 
+          end;
         tmConsultarNFSeServicoTomado:
-          ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSeServicoTomado(ConfigMsgDados.DadosCabecalho,
-                                                                                 ConsultaNFSeResponse.ArquivoEnvio);
-
+          begin
+            ConsultaNFSeResponse.InfConsultaNFSe.tpConsulta := tcServicoTomado;
+            ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSeServicoTomado(ConfigMsgDados.DadosCabecalho,
+                                                                                   ConsultaNFSeResponse.ArquivoEnvio);
+          end;
       else
-        ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSe(ConfigMsgDados.DadosCabecalho,
-                                                                  ConsultaNFSeResponse.ArquivoEnvio);
+        begin
+          ConsultaNFSeResponse.InfConsultaNFSe.tpConsulta := tcPorNumero;
+          ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSe(ConfigMsgDados.DadosCabecalho,
+                                                                    ConsultaNFSeResponse.ArquivoEnvio);
+        end;
       end;
 
       ConsultaNFSeResponse.Sucesso := True;

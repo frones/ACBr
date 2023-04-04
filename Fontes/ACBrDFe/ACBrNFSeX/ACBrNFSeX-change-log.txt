@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/04/2023
+-- ACBrNFSeXProviderProprio/ACBrNFSeXProviderBase --
+[*] Ajustes para o acionamento correto dos respectivos tratamentos de retorno das
+    consultas.
+   Por: Renato Rubinho
 -- SmarAPD.Provider --
 [*] Ajuste no retorno da consulta por lote.
    Por: Massao Aihara

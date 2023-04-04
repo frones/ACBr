@@ -424,7 +424,15 @@ end;
 
 procedure TACBrNFSeProviderProprio.TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
 begin
-  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  case Response.InfConsultaNFSe.tpConsulta of
+    tcPorPeriodo,
+    tcPorFaixa:
+      TratarRetornoConsultaNFSeporFaixa(Response);
+    tcServicoPrestado:
+      TratarRetornoConsultaNFSeServicoPrestado(Response);
+    tcServicoTomado:
+      TratarRetornoConsultaNFSeServicoTomado(Response);
+  end;
 end;
 
 procedure TACBrNFSeProviderProprio.PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse);

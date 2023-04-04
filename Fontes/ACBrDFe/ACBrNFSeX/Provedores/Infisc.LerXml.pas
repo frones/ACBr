@@ -204,12 +204,17 @@ begin
       Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
       Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
+      xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
-      xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
 
-      if UF = '' then
-        UF := xUF;
+      if xMunicipio = '' then
+      begin
+        xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+
+        if UF = '' then
+          UF := xUF;
+      end;
 
       // versão 1.1
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);
@@ -240,12 +245,17 @@ begin
       Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
       Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
+      xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
-      xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
 
-      if UF = '' then
-        UF := xUF;
+      if xMunicipio = '' then
+      begin
+        xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+
+        if UF = '' then
+          UF := xUF;
+      end;
 
       // versão 1.1
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);

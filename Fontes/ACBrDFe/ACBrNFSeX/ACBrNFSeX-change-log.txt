@@ -44,6 +44,12 @@ Símbolo : Significado
 
 04/04/2023
 -- ACBrNFSeXServicos.ini --
+[*] As cidades: Guia Lopes da Laguna/MS e Aral Moreira/MS mudaram para o provedor Fiorilli
+   Por: Rodrigo - Digibyte
+[*] A cidade de São Vicente/SP mudou para a versão 2.04, o provedor continua o mesmo.
+   Por: Heber Germano
+[+] Incluída a cidade Ibitirama/ES - Provedor EL.
+   Por: pcbonetti
 [*] A cidade de Farroupilha/RS mudou de provedor, agora é Infisc, na versão 1.01
    Por: Patrick Knopf/Diego F
 

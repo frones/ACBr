@@ -261,7 +261,10 @@ begin
   aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
 
   if aValor = 'C' then
+  begin
     NFSe.SituacaoNfse := snCancelado;
+    NFSe.NfseCancelamento.DataHora := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataCancelamento'), tcDat);
+  end;
 
   NFSe.TipoTributacaoRPS := StrToTipoTributacaoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('TributacaoNFe'), tcStr));
 

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/04/2023
+-- ISSSaoPaulo.LerXml --
+[*] Ajuste para ler a data do cancelamento.
+   Por: bochnia
 -- ACBrNFSeXProviderProprio/ACBrNFSeXProviderBase --
 [*] Ajustes para o acionamento correto dos respectivos tratamentos de retorno das
     consultas.

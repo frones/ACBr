@@ -558,7 +558,7 @@ begin
   cdsEntrega := TClientDataSet.Create(Self);
   with cdsEntrega, FieldDefs do
   begin
-    Add('EnderecoEntrega', ftString, 50);
+    Add('EnderecoEntrega', ftString, 310);
     CreateDataSet;
   end;
 
@@ -867,7 +867,7 @@ begin
     if xLgr <> '' then
     begin
       Append;
-      FieldByName('EnderecoEntrega').AsString := Format('%s, nº %s - %s - %s', [xLgr, nro, xBairro, xMun]);
+      FieldByName('EnderecoEntrega').AsString := Format('%s, nº %s - %s - %s %s', [xLgr, nro, xBairro, xMun, UF]);
       Post;
     end;
   end;

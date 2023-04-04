@@ -1829,7 +1829,7 @@ begin
     end;
   end;
 
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proGiap, proGoverna] then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proGiap, proGoverna, proPrescon] then
   begin
     CodVerificacao := '123';
     if not (InputQuery('Consultar NFSe por RPS', 'Codigo Verificação:', CodVerificacao)) then

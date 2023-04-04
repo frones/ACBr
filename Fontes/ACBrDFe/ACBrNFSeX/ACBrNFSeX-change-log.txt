@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/04/2023
+-- Diversos --
+[+] Implementada ConsultarNFSePorRps no provedor Prescon
+   Por: Andre Azeredo/Renato Rubinho
 -- Infisc.LerXml --
 [*] Incluído a leitura da tag xMun tando do Tomador quando do Prestador.
    Por: Italo Giurizzato Junior

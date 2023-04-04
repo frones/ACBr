@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, StrUtils, Classes, Variants,
-  ACBrDFeSSL,
+  ACBrDFeSSL, ACBrUtil.XMLHTML, StrUtilsEx,
   ACBrXmlBase, ACBrXmlDocument, ACBrJSON,
   ACBrNFSeXNotasFiscais,
   ACBrNFSeXClass, ACBrNFSeXConversao,
@@ -51,6 +51,7 @@ type
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function GerarToken(ACabecalho, AMSG: String): string; override;
 
@@ -75,6 +76,9 @@ type
 
     procedure PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
+
+    procedure PrepararConsultaNFSePorRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure TratarRetornoConsultaNFSePorRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -340,7 +344,7 @@ procedure TACBrNFSeProviderPrescon.PrepararConsultaNFSeporFaixa(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
+  Emitente: TEmitenteConfNFSe;                                           
 begin
   Response.Clear;
 
@@ -415,6 +419,83 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderPrescon.PrepararConsultaNFSePorRps(Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  if EstaVazio(Emitente.WSChaveAutoriz) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.codigo := Cod125;
+    AErro.Descricao := ACBrStr(Desc125);
+    Exit;
+  end;
+
+  if EstaVazio(Response.CodigoVerificacao) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod117;
+    AErro.Descricao := ACBrStr(Desc117);
+    Exit;
+  end;
+end;
+
+procedure TACBrNFSeProviderPrescon.TratarRetornoConsultaNFSePorRps(Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANota: TNotaFiscal;
+  ANode: TACBrXmlNode;
+  NumNFSe: string;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit;
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + 'Webservice não retornou informações');
+        Exit;
+      end;
+
+      NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
+
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumNFSe);
+
+      ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+
+      SalvarXmlNfse(ANota);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+    except
+      on E: Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.codigo := Cod999;
         AErro.Descricao := ACBrStr(Desc999 + E.Message);
       end;
     end;
@@ -724,7 +805,7 @@ begin
     38 : Result := 'Campo deducaoMaterial não encontrado no arquivo JSON';
     39 : Result := 'Erro na sequência das Data onde ' + Valor + ' é o número da NF.' +
       ' Verificar com o responsável pela geração do arquivo JSON se data de emissão está de forma sequencial.';
-    40 : Result := 'Erro na sequência das Notas Fiscais on ' + Valor + ' é o número da NF.' +
+    40 : Result := 'Erro na sequência das Notas Fiscais onde ' + Valor + ' é o número da NF.' +
       ' Verificar com o responsável pela geração do  arquivo JSON se a numeração das notas fiscais estão de forma sequencial.';
     41 : Result := 'Erro no formato do arquivo enviado.' +
       ' Verificar se o JSON enviado está de acordo, com os campos definidos na documentação.';
@@ -757,6 +838,19 @@ begin
   Result := Executar('', AMSG, [''], []);
 end;
 
+function TACBrNFSeXWebservicePrescon.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+var
+  CodVerif: string;
+begin
+  CodVerif := TACBrNFSeX(FPDFeOwner).WebService.ConsultaNFSeporRps.CodigoVerificacao;
+
+  FPMsgOrig := AMSG;
+  FPUrl := FPUrl + '?codigo=' + CodVerif + '&nome=xml';
+  FPMethod := 'GET';
+
+  Result := Executar('', AMSG, [], []);
+end;
+
 function TACBrNFSeXWebservicePrescon.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -774,10 +868,16 @@ end;
 function TACBrNFSeXWebservicePrescon.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  Result := aXML;
+  // Tratamentos para o xml da NFSe identificando a chave com grafia errada e prevendo a correção pelo provedor
+  // Não usar o método herdado, pois a consulta já devolve apenas o xml da NFe, sem body 
+  if (Pos('<NfeCabecario>',Result) = 0) and (Pos('<NfeCabecalho>',Result) = 0) then
+    Result := inherited TratarXmlRetornado(Result);
 
   Result := RemoverIdentacao(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

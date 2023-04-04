@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluído o Parâmetro para não dividir por 100 a aliquota na cidade Oriximina-PA
+   Por: Italo Giurizzato Junior
 -- ISSNet.Provider --
 [*] Ajustes para mudar o numero de ocorrencias das tag ValorIss e Aliquota,
     dependendo do regime do prestador.

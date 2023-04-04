@@ -546,7 +546,10 @@ begin
     end;
 
     if NFSe.OutrasInformacoes = '' then
+    begin
       NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
+      NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, '&lt;br&gt;', ';', [rfReplaceAll]);
+    end;
   end;
 end;
 

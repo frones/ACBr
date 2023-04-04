@@ -44,6 +44,9 @@ Símbolo : Significado
 
 04/04/2023
 -- Diversos --
+[+] Ajustes para que o provedor SimplISS gere a tag OutrasInformacoes no XML do RPS e leia o retorno da mesma corretamente.
+   Por: lucasecorrea
+-- Diversos --
 [+] Implementado a geração e a leitura do grupo DadosDeducao do provedor Elotech.
    Por: Italo Giurizzato Junior
 -- Diversos --

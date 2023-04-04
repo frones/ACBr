@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/04/2023
+-- ISSNet.Provider --
+[*] Ajustes para mudar o numero de ocorrencias das tag ValorIss e Aliquota,
+    dependendo do regime do prestador.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Ajustes para que o provedor SimplISS gere a tag OutrasInformacoes no XML do RPS e leia o retorno da mesma corretamente.
    Por: lucasecorrea

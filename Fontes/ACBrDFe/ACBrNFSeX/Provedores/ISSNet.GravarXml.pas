@@ -161,6 +161,13 @@ begin
      (NFSe.Tomador.Endereco.UF = 'EX') then
     NrOcorrCodigoPaisServico := 1;
 
+  if (NFSe.OptanteSimplesNacional = snSim) or
+     (NFSe.RegimeEspecialTributacao = retMicroempresarioIndividual) then
+  begin
+    NrOcorrValorIss := 1;
+    NrOcorrAliquota := 1;
+  end;
+
   Result := inherited GerarXml;
 end;
 

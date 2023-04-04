@@ -78,11 +78,9 @@ end;
 procedure TNFSeR_EloTech203.LerServicos(const ANode: TACBrXmlNode);
 var
   ANodes: TACBrXmlNodeArray;
-  AuxNode: TACBrXmlNode;
   i: Integer;
   CodigoItemServico: string;
   Ok: Boolean;
-  ValorLiq: Double;
 begin
   ANodes := ANode.Childrens.FindAllAnyNs('ItemServico');
 

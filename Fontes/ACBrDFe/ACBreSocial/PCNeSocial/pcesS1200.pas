@@ -1318,6 +1318,7 @@ begin
       ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
       ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
       ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.indGuia     := INIRec.ReadString(sSecao, 'indGuia', EmptyStr);
       ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
       ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
@@ -1339,7 +1340,7 @@ begin
         while true do
         begin
           // de 01 até 10
-          sSecao := 'remunOutrEmpr' + IntToStrZero(I, 2);
+          sSecao := 'remunOutrEmpr' + IntToStrZero(I, 3);
           sFim   := INIRec.ReadString(sSecao, 'nrInsc', 'FIM');
 
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -1362,9 +1363,6 @@ begin
       begin
         ideTrabalhador.infoComplem.nmTrab       := INIRec.ReadString(sSecao, 'nmTrab', '');
         ideTrabalhador.infoComplem.dtNascto     := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
-        ideTrabalhador.infoComplem.codCBO       := INIRec.ReadString(sSecao, 'codCBO', '');
-        ideTrabalhador.infoComplem.natAtividade := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
-        ideTrabalhador.infoComplem.qtdDiasTrab  := INIRec.ReadInteger(sSecao, 'qtdDiasTrab', 0);
       end;
 
       sSecao := 'sucessaoVinc';
@@ -1448,6 +1446,38 @@ begin
         begin
           ideDmDev := sFim;
           codCateg := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+          indRRA   := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indRRA', EmptyStr));
+
+          sSecao := 'infoRRA' + IntToStrZero(I, 3);
+          with infoRRA do
+          begin
+            tpProcRRA := eSStrToTpProcRRA(Ok, sFim);
+            nrProcRRA := INIRec.ReadString(sSecao, 'nrProcRRA', EmptyStr);
+            descRRA := INIRec.ReadString(sSecao, 'descRRA', EmptyStr);
+            qtdMesesRRA := INIRec.ReadInteger(sSecao, 'qtdMesesRRA', 0);
+            despProcJud.vlrDespCustas := INIRec.ReadFloat(sSecao, 'vlrDespCustas',0);
+            despProcJud.vlrDespAdvogados := INIRec.ReadFloat(sSecao, 'vlrDespAdvogados',0);
+
+            J := 1;
+            while True do
+            begin
+              // de 01 até 99
+              sSecao := 'ideAdv' + IntToStrZero(I, 3) + IntToStrZero(J, 2);
+              sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with ideAdv.New do
+              begin
+                tpInsc := eSStrToTpInscricao(Ok, sFim);
+                nrInsc := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+                vlrAdv := INIRec.ReadFloat(sSecao, 'vlrAdv',0);
+              end;
+
+              Inc(J);
+            end;
+          end;
 
           J := 1;
           while true do

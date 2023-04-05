@@ -52,10 +52,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-31/03/2023
--- pcesS3500 --
-[*] Ajuste do número de ocorrências das tags cpftrab e PerApurPgto. 
-   Por: Sandro Felipe Adad - Conferido: Daniel Morais
+29/03/2023
+-- pcesS1200 --
+[*] Ajustada quantidade de digitos do contador da seção remunOutrEmpr
+[*] Removidos campos não existentes na seção ideTrabalhador.infoComplem
+[*] Adicionada carga de dados do INI para o bloco infoRRA
+   Por: Alexandre de Paula
 
 06/03/2023
 -- pcsS1200 --

@@ -443,8 +443,7 @@ begin
   with fpNFSe do
     with Servico.Valores do
     begin
-      rllAtividade.Caption := Servico.CodigoTributacaoMunicipio + ' - ' +
-        CodItemServToDesc(Format('%.*d', [4, StrToIntDef(Servico.CodigoTributacaoMunicipio, 0)]));
+      rllAtividade.Caption := fpNFSe.DescricaoCodigoTributacaoMunicipio;
       rllItem.Caption := Servico.ItemListaServico;
       rllCodNBS.Caption := Servico.CodigoNBS;
       rllCodCNAE.Caption := Servico.CodigoCnae;

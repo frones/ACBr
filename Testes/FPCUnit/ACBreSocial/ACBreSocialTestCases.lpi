@@ -74,7 +74,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="8">
       <Unit0>
         <Filename Value="ACBreSocialTestCases.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -95,6 +95,18 @@
         <Filename Value="ACBreSocialEventosTabelasTests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="ACBreSocialEventosPeriodicosTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="ACBreSocialEventosNaoPeriodicosTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="ACBreSocialTestsConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -136,7 +148,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="7" IgnoreAll="True">
+    <Exceptions Count="10" IgnoreAll="True">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -158,6 +170,15 @@
       <Item7>
         <Name Value="EOleException"/>
       </Item7>
+      <Item8>
+        <Name Value="EAssertionFailedError"/>
+      </Item8>
+      <Item9>
+        <Name Value="EACBrException"/>
+      </Item9>
+      <Item10>
+        <Name Value="EACBreSocialException"/>
+      </Item10>
     </Exceptions>
   </Debugging>
 </CONFIG>

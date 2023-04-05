@@ -6,7 +6,9 @@ interface
 
 uses
   Classes, SysUtils, ACBrTests.Util, ACBreSocialTestsConsts, ACBreSocial,
-  pcesS1202, pcesS1207, pcesS1210, pcesS1260, pcesCommon, pcesConversaoeSocial, ACBrDFeException,
+  pcesS1200, pcesS1202, pcesS1207, pcesS1210, pcesS1260, pcesCommon,
+  pcesConversaoeSocial, ACBrDFeException,
+  ACBreSocialEventos,
   ACBrUtil.DateTime;
 
 type
@@ -16,6 +18,7 @@ type
   TACBreSocialEventosPeriodicosTest = class(TTestCase)
     private
       FACBreSocial : TACBreSocial;
+      procedure ES1200Tests;
       procedure ES1202Tests;
       procedure ES1207Tests;
       procedure ES1210Tests;
@@ -44,6 +47,233 @@ type
 implementation
 
 { TACBreSocialEventosPeriodicosTest }
+
+procedure TACBreSocialEventosPeriodicosTest.ES1200Tests;
+var
+  eSS1200 : TevtRemun;
+  infoMV : TInfoMV;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1200.Count > 0, 'Não instânciou o S-1200 na lista');
+
+  eSS1200 := FACBreSocial.Eventos.Periodicos.S1200[0].evtRemun;
+  Check(eSS1200.ideEvento.indRetif = ireOriginal,
+        'ideEvento.indRetif | Valor esperado:1 | Valor recebido:'+eSIndRetificacaoToStr(eSS1200.ideEvento.indRetif));
+
+  Check(eSS1200.ideEvento.nrRecibo = '123' ,
+        'ideEvento.nrRecibo | Valor esperado:123 | Valor recebido:'+eSS1200.ideEvento.nrRecibo);
+
+  Check(eSS1200.ideEvento.indApuracao = iapuMensal,
+        'ideEvento.indApuracao | Valor esperado:1 | Valor recebido:'+eSIndApuracaoToStr(eSS1200.ideEvento.indApuracao));
+
+  Check(eSS1200.ideEvento.perApur = '2018-05',
+        'ideEvento.perApur | Valor esperado:2018-05 | Valor recebido:'+eSS1200.ideEvento.perApur);
+
+  Check(eSS1200.ideEvento.indGuia = '1',
+        'ideEvento.indGuia | Valor esperado:1 | Valor recebido:'+ eSS1200.ideEvento.indGuia);
+
+  Check(eSS1200.ideEvento.ProcEmi = peAplicEmpregador,
+        'ideEvento.procEmi | Valor esperado:1 | Valor recebido:'+eSprocEmiToStr(eSS1200.ideEvento.ProcEmi));
+
+  Check(eSS1200.ideEvento.VerProc = '1.00',
+        'ideEvento.VerProc | Valor esperado:1.00 | Valor recebido:'+eSS1200.ideEvento.VerProc);
+
+  Check(eSS1200.ideEmpregador.TpInsc = tiCNPJ,
+        'ideEmpregador.tpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(eSS1200.ideEmpregador.TpInsc));
+
+  Check(eSS1200.ideEmpregador.NrInsc = '12345678000123',
+        'ideEmpregador.nrInsc | Valor esperado:12345678000123 | Valor recebido:'+eSS1200.ideEmpregador.NrInsc);
+
+  Check(eSS1200.ideTrabalhador.cpfTrab = '12345678901',
+        'ideTrabalhador.cpfTrab | Valor esperado: 12345678901 | Valor recebido: '+eSS1200.ideTrabalhador.cpfTrab);
+
+  infoMV := eSS1200.ideTrabalhador.infoMV;
+
+  Check(infoMV.indMV = imvDescontadaempregador,
+        'ideTrabalhador.infoMV | Valor esperado: 1 | Valor recebido: '+eSIndMVToStr(infoMV.indMV));
+
+  Check(infoMV.remunOutrEmpr.Items[0].tpInsc = tiCNPJ,
+        'ideTrabalhador.infoMV.remunOutrEmpr.tpInsc | Valor esperado: 1 | Valor recebido: '+eSTpInscricaoToStr(infoMV.remunOutrEmpr.Items[0].tpInsc));
+
+  Check(infoMV.remunOutrEmpr.Items[0].nrInsc = '12345678000123',
+        'ideTrabalhador.infoMV.remunOutrEmpr.nrInsc | Valor esperado: 12345678000123 | Valor recebido: '+infoMV.remunOutrEmpr.Items[0].nrInsc);
+
+  Check(infoMV.remunOutrEmpr.Items[0].codCateg = 222,
+        'ideTrabalhador.infoMV.remunOutrEmpr.codCateg | Valor esperado: 222 | Valor recebido: '+IntToStr(infoMV.remunOutrEmpr.Items[0].codCateg));
+
+  Check(infoMV.remunOutrEmpr.Items[0].vlrRemunOE = 100,
+        'ideTrabalhador.infoMV.remunOutrEmpr.vlrRemunOE | Valor esperado: 100 | Valor recebido: '+FloatToStr(infoMV.remunOutrEmpr.Items[0].vlrRemunOE));
+
+  Check(eSS1200.ideTrabalhador.infoComplem.nmTrab = 'Nome',
+        'ideTrabalhador.infoComplem.nmTrab | Valor esperado: ''Nome'' | Valor recebido: '+eSS1200.ideTrabalhador.infoComplem.nmTrab);
+
+  Check(eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.tpInsc = tiCNPJ,
+        'ideTrabalhador.infoComplem.sucessaoVinc.tpInsc | Valor esperado: 1 | Valor recebido: '+eSTpInscricaoToStr(eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.tpInsc));
+
+  Check(eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.nrInsc = '12345678000123',
+        'ideTrabalhador.infoComplem.sucessaoVinc.nrInsc | Valor esperado: 12345678000123 | Valor recebido: '+eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.nrInsc);
+
+  Check(eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.matricAnt = '123',
+        'ideTrabalhador.infoComplem.sucessaoVinc.nrInsc | Valor esperado: 123 | Valor recebido: '+eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.matricAnt);
+
+  Check(eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.dtAdm = StrToDateTime('10/04/2018'),
+        'ideTrabalhador.infoComplem.sucessaoVinc.nrInsc | Valor esperado: 10/04/2018 | Valor recebido: '+DateTimeToStr(eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.dtAdm));
+
+  Check(eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.observacao = 'observacao do emprego anterior',
+        'ideTrabalhador.infoComplem.sucessaoVinc.observacao | Valor esperado: observacao do emprego anterior | Valor recebido: '+eSS1200.ideTrabalhador.infoComplem.sucessaoVinc.observacao);
+
+  Check(eSS1200.ideTrabalhador.procJudTrab.Items[0].tpTrib = tptIRRF,
+        'ideTrabalhador.procJudTrab.tpTrib | Valor esperado: 1 | Valor recebido: '+eSTpTributoToStr(eSS1200.ideTrabalhador.procJudTrab.Items[0].tpTrib));
+
+  Check(eSS1200.ideTrabalhador.procJudTrab.Items[0].nrProcJud = '123',
+        'ideTrabalhador.procJudTrab.nrProcJud | Valor esperado: 123 | Valor recebido: '+eSS1200.ideTrabalhador.procJudTrab.Items[0].nrProcJud);
+
+  Check(eSS1200.ideTrabalhador.procJudTrab.Items[0].codSusp = '456',
+        'ideTrabalhador.procJudTrab.codSusp | Valor esperado: 456 | Valor recebido: '+eSS1200.ideTrabalhador.procJudTrab.Items[0].codSusp);
+
+  Check(eSS1200.ideTrabalhador.infoInterm.Items[0].dia = 28,
+        'ideTrabalhador.infoInterm.dia | Valor esperado: 28 | Valor recebido: '+IntToStr(eSS1200.ideTrabalhador.infoInterm.Items[0].dia));
+
+  Check(eSS1200.dmDev.Items[0].ideDmDev = '123',
+        'dmDev.ideDmDev | Valor esperado: 123 | Valor recebido: '+eSS1200.dmDev.Items[0].ideDmDev);
+
+  Check(eSS1200.dmDev.Items[0].codCateg = 456,
+        'dmDev.codCateg | Valor esperado: 456 | Valor recebido: '+IntToStr(eSS1200.dmDev.Items[0].codCateg));
+
+  if(FACBreSocial.Configuracoes.Geral.VersaoDF = veS01_01_00)then
+  begin
+    Check(eSS1200.dmDev.Items[0].indRRA = snfSim,
+          'dmDev.indRRA | Valor esperado: S | Valor recebido: '+eSSimNaoFacultativoToStr(eSS1200.dmDev.Items[0].indRRA));
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.tpProcRRA = tppAdministrativo,
+          'dmDev.infoRRA.tpProcRRA | Valor esperado: 1 | Valor recebido: '+eSTpProcRRAToStr(eSS1200.dmDev.Items[0].infoRRA.tpProcRRA));
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.nrProcRRA = '123',
+          'dmDev.infoRRA.nrProcRRA | Valor esperado: 123 | Valor recebido: '+eSS1200.dmDev.Items[0].infoRRA.nrProcRRA);
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.descRRA = 'Rendimentos Receb Acum.',
+      'dmDev.infoRRA.descRRA | Valor esperado: Rendimentos Receb Acum. | Valor recebido: '+eSS1200.dmDev.Items[0].infoRRA.descRRA);
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.qtdMesesRRA = 5,
+      'dmDev.infoRRA.qtdMesesRRA | Valor esperado: 5 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoRRA.qtdMesesRRA));
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.despProcJud.vlrDespCustas = 0,
+      'dmDev.infoRRA.despProcJud.vlrDespCustas | Valor esperado: 0 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoRRA.despProcJud.vlrDespCustas));
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.despProcJud.vlrDespAdvogados = 0,
+      'dmDev.infoRRA.despProcJud.vlrDespAdvogados | Valor esperado: 0 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoRRA.despProcJud.vlrDespAdvogados));
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.ideAdv.Items[0].tpInsc = tiCNPJ,
+          'dmDev.infoRRA.ideAdv.tpInsc | Valor esperado: 1 | Valor recebido: '+eSTpInscricaoToStr(eSS1200.dmDev.Items[0].infoRRA.ideAdv.Items[0].tpInsc));
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.ideAdv.Items[0].nrInsc = '11111111111111',
+          'dmDev.infoRRA.ideAdv.nrInsc | Valor esperado: 11111111111111 | Valor recebido: '+eSS1200.dmDev.Items[0].infoRRA.ideAdv.Items[0].nrInsc);
+
+    Check(eSS1200.dmDev.Items[0].infoRRA.ideAdv.Items[0].vlrAdv = 1,
+      'dmDev.infoRRA.ideAdv.vlrAdv | Valor esperado: 1 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoRRA.ideAdv.Items[0].vlrAdv));
+  end;
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].tpInsc = tiCNPJ,
+        'dmDev.infoPerApur.ideEstabLot.tpInsc | Valor esperado: 1 | Valor recebido: '+eSTpInscricaoToStr(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].tpInsc));
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].nrInsc = '12345678000123',
+        'dmDev.infoPerApur.ideEstabLot.nrInsc | Valor esperado: 12345678000123 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].nrInsc);
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].codLotacao = '123',
+        'dmDev.infoPerApur.ideEstabLot.codLotacao | Valor esperado: 123 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].codLotacao);
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].qtdDiasAv = 20,
+        'dmDev.infoPerApur.ideEstabLot.qtdDiasAv | Valor esperado: 20 | Valor recebido: '+IntToStr(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].qtdDiasAv));
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].matricula = '123',
+        'dmDev.infoPerApur.ideEstabLot.remunPerApur.matricula | Valor esperado: 123 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].matricula);
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].indSimples = idsIntegralmente,
+      'dmDev.infoPerApur.ideEstabLot.remunPerApur.indSimples | Valor esperado: 1 | Valor recebido: '+eSIndSimplesToStr(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].indSimples));
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun.Items[0].codRubr = '123',
+      'dmDev.infoPerApur.ideEstabLot.remunPerApur.itensRemun.codRubr | Valor esperado: 123 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun[0].codRubr);
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun.Items[0].ideTabRubr = '456',
+      'dmDev.infoPerApur.ideEstabLot.remunPerApur.itensRemun.ideTabRubr | Valor esperado: 456 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun[0].ideTabRubr);
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun.Items[0].qtdRubr = 10,
+      'dmDev.infoPerApur.ideEstabLot.remunPerApur.itensRemun.qtdRubr | Valor esperado: 10 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun[0].qtdRubr));
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun.Items[0].fatorRubr = 2,
+      'dmDev.infoPerApur.ideEstabLot.remunPerApur.itensRemun.fatorRubr | Valor esperado: 2 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun[0].fatorRubr));
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun.Items[0].vrRubr = 30,
+      'dmDev.infoPerApur.ideEstabLot.remunPerApur.itensRemun.vrRubr | Valor esperado: 30 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun[0].vrRubr));
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun.Items[0].indApurIR = tiaiNormal,
+      'dmDev.infoPerApur.ideEstabLot.remunPerApur.itensRemun.indApurIR | Valor esperado: 0 | Valor recebido: '+eSTpIndApurIRToStr(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].itensRemun[0].indApurIR));
+
+  Check(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].infoAgNocivo.grauExp = ge1,
+      'dmDev.infoPerApur.ideEstabLot.remunPerApur.infoAgNocivo.grauExp | Valor esperado: 1 | Valor recebido: '+eSGrauExpToStr(eSS1200.dmDev.Items[0].infoPerApur.ideEstabLot.Items[0].remunPerApur.Items[0].infoAgNocivo.grauExp));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].dtAcConv = StrToDate('03/05/2018'),
+      'dmDev.infoPerAnt.ideADC.dtAcConv | Valor esperado: 03/05/2018 | Valor recebido: '+DateToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].dtAcConv));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].tpAcConv = tacAcordoColTrab,
+      'dmDev.infoPerAnt.ideADC.tpAcConv | Valor esperado: A | Valor recebido: '+eSTpAcConvToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].tpAcConv));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].dsc = 'Descricao',
+      'dmDev.infoPerAnt.ideADC.dsc | Valor esperado: Descricao | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].dsc);
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].remunSuc = tpSim,
+      'dmDev.infoPerAnt.ideADC.remunSuc | Valor esperado: S | Valor recebido: '+eSSimNaoToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].remunSuc));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].perRef = '201805',
+      'dmDev.infoPerAnt.ideADC.idePeriodo.perRef | Valor esperado: 201805 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].perRef);
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].tpInsc = tiCNPJ,
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.tpInsc | Valor esperado: 1 | Valor recebido: '+eSTpInscricaoToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].tpInsc));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].nrInsc = '12345678000123',
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.nrInsc | Valor esperado: 12345678000123 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].nrInsc);
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].codLotacao = '123',
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.codLotacao | Valor esperado: 123 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].codLotacao);
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].matricula = '1234',
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.matricula | Valor esperado: 1234 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].matricula);
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].indSimples = idsIntegralmente,
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.indSimples | Valor esperado: 1 | Valor recebido: '+eSIndSimplesToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].indSimples));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].codRubr = '123',
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.itensRemun.codRubr | Valor esperado: 123 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].codRubr);
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].ideTabRubr = '456',
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.itensRemun.ideTabRubr | Valor esperado: 456 | Valor recebido: '+eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].ideTabRubr);
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].qtdRubr = 10,
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.itensRemun.qtdRubr | Valor esperado: 10 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].qtdRubr));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].fatorRubr = 1,
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.itensRemun.fatorRubr | Valor esperado: 1 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].fatorRubr));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].vrRubr = 80,
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.itensRemun.vrRubr | Valor esperado: 80 | Valor recebido: '+FloatToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].vrRubr));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].indApurIR = tiaiNormal,
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.itensRemun.indApurIR | Valor esperado: 0 | Valor recebido: '+eSTpIndApurIRToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].itensRemun.Items[0].indApurIR));
+
+  Check(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].infoAgNocivo.grauExp = ge1,
+      'dmDev.infoPerAnt.ideADC.idePeriodo.ideEstabLot.remunPerAnt.infoAgNocivo.grauExp | Valor esperado: 1 | Valor recebido: '+eSGrauExpToStr(eSS1200.dmDev.Items[0].infoPerAnt.ideADC.Items[0].idePeriodo.Items[0].ideEstabLot.Items[0].remunPerAnt.Items[0].infoAgNocivo.grauExp));
+
+  Check(eSS1200.dmDev.Items[0].infoComplCont.codCBO = '000001',
+      'dmDev.infoComplCont.codCBO | Valor esperado: 000001 | Valor recebido: '+eSS1200.dmDev.Items[0].infoComplCont.codCBO);
+
+  Check(eSS1200.dmDev.Items[0].infoComplCont.natAtividade = navUrbano,
+      'dmDev.infoComplCont.natAtividade | Valor esperado: 1 | Valor recebido: '+eSNatAtividadeToStr(eSS1200.dmDev.Items[0].infoComplCont.natAtividade));
+
+  Check(eSS1200.dmDev.Items[0].infoComplCont.qtdDiasTrab = 20,
+      'dmDev.infoComplCont.qtdDiasTrab | Valor esperado: 20 | Valor recebido: '+IntToStr(eSS1200.dmDev.Items[0].infoComplCont.qtdDiasTrab));
+
+
+end;
+
 
 procedure TACBreSocialEventosPeriodicosTest.ES1202Tests;
 var
@@ -82,8 +312,8 @@ begin
   Check(eSS1202.ideTrabalhador.cpfTrab = '12345678901', 'ideTrabalhador.cpfTrab diferente do valor esperado');
 
   infoComp := eSS1202.ideTrabalhador.InfoComplem;
-  Check(InfoComp.nmTrab = 'Nome do traballhador',
-        'ideTrabalhador.infoComplem.nmTrab | Valor esperado:Nome do traballhador | Valor recebido:'+InfoComp.nmTrab);
+  Check(InfoComp.nmTrab = 'Nome do trabalhador',
+        'ideTrabalhador.infoComplem.nmTrab | Valor esperado:Nome do trabalhador | Valor recebido:'+InfoComp.nmTrab);
 
   sucessVinc := infoComp.sucessaoVinc;
   Check(sucessVinc.cnpjOrgaoAnt = '11111111111111',
@@ -388,8 +618,7 @@ begin
     on E:Exception do
     begin
       CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi ' + E.ClassName);
-//      ES1200Tests;
-      Fail('Precisa implementar os testes do S-1200');
+      ES1200Tests;
     end;
   end;
 end;
@@ -404,8 +633,7 @@ begin
     on E:Exception do
     begin
       CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi ' + E.ClassName);
-//      ES1200Tests;
-      Fail('Precisa implementar os testes do S-1200');
+      ES1200Tests;
     end;
   end;
 end;

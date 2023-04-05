@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] Alterado a URL de produção da cidade de Poções/BA
+   Por: Emanuel - Quality
+
 04/04/2023
 -- ACBrNFSeXServicos.ini --
 [*] Incluído o Parâmetro para não dividir por 100 a aliquota na cidade Oriximina-PA

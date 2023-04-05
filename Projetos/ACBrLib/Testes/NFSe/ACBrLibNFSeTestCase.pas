@@ -267,6 +267,8 @@ var
 begin
   AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
 
+
+
   AssertEquals('Erro ao carregar XML NFSe', ErrOK,
    NFSE_CarregarXML(Handle, 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin\NFSe.xml'));
 
@@ -279,7 +281,7 @@ var
 begin
   AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
 
-  AssertEquals('Erro ao carregar o INI NFSe', ErrExecutandoMetodo,
+  AssertEquals('Erro ao carregar o INI NFSe', ErrOK,
   NFSE_CarregarINI(Handle, 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin\NFSe.ini'));
 
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
@@ -355,7 +357,7 @@ begin
   Resposta:= '';
   Tamanho:= 0;
 
-  AssertEquals('Erro ao Obter Certificados', ErrExecutandoMetodo,
+  AssertEquals('Erro ao Obter Certificados', ErrOK,
   NFSE_ObterCertificados(Handle, Resposta, Tamanho));
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');

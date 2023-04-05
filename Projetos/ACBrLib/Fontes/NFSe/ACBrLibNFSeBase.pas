@@ -112,11 +112,16 @@ begin
   inherited Create(ArqConfig, ChaveCrypt);
   FNFSeDM := TLibNFSeDM.Create(nil);
   FNFSeDM.Lib := self;
+  //xxxx
+  FNFSeDM.ACBrNFSeX1.InsertComponent(TLibNFSeConfig(Self.fpConfig).NFSe);
+  //TLibNFSeConfig(Self.fpConfig).NFSe.MudaOwner();
   FNFSeDM.ACBrNFSeX1.LerCidades;
+  FNFSeDM.AplicarConfiguracoes;
 end;
 
 destructor TACBrLibNFSe.Destroy;
 begin
+  FNFSeDM.ACBrNFSeX1.RemoveComponent(TLibNFSeConfig(Self.fpConfig).NFSe);
   FNFSeDM.Free;
 
   inherited Destroy;

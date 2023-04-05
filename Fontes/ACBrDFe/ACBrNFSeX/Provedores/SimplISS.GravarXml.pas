@@ -115,6 +115,9 @@ begin
 
   FormatoAliq := tcDe2;
 
+  if FpAOwner.ConfigGeral.Params.TemParametro('Aliquota4Casas') then
+    FormatoAliq := tcDe4;
+
   NrOcorrValorDeducoes := 1;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

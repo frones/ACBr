@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/04/2023
+-- SimplISS.GravarXml --
+[*] Uso do Params: Aliquota4Casas (Boolean) para definir se a aliquota deve ter
+    2 ou 4 casas decimais.
+   Por: Renato Rubinho/Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
+[*] Criado o Params: Aliquota4Casas (Boolean) para ser utilizado no provedor
+   SimplISS na cidade Blumenau/SC
+   Por: Renato Rubinho/Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLISSNet --
 [*] Alteração visando a impressão da Atividade do Município.
    Por: Italo Giurizzato Junior

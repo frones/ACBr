@@ -568,6 +568,8 @@ procedure TArquivosConfNFSe.SetTabServicosExt(const Value: Boolean);
 begin
   FTabServicosExt := Value;
 
+  if not Assigned(Owner) then Exit;
+  if not Assigned(TConfiguracoesNFSe(Owner).Owner) then Exit;
   if not Assigned(TACBrNFSeX(TConfiguracoesNFSe(Owner).Owner).Provider) then Exit;
 
   with TACBrNFSeX(TConfiguracoesNFSe(Owner).Owner).Provider.ConfigGeral do
@@ -640,7 +642,7 @@ end;
 
 procedure TDadosEmitente.Assign(Source: TPersistent);
 begin
-  if Source is TDownloadConf then
+  if Source is TDadosEmitente then
   begin
     FNomeFantasia := TDadosEmitente(Source).NomeFantasia;
     FInscricaoEstadual := TDadosEmitente(Source).InscricaoEstadual;

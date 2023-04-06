@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase, ACBrXmlDocument,
-  pcnConsts,
+  pcnConsts, ACBrUtil.Strings,
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
@@ -98,18 +98,30 @@ begin
 end;
 
 function TNFSeW_Elotech203.GerarDadosDeducao(Item: Integer): TACBrXmlNode;
+var
+  aDoc: string;
 begin
+  Result := nil;
+
+  if NFSe.Servico.ItemServico[Item].DadosDeducao.TipoDeducao = tdNenhum then
+    Exit;
+
   Result := CreateElement('DadosDeducao');
 
   Result.AppendChild(AddNode(tcStr, '#', 'TipoDeducao', 1, 1, 1,
     FpAOwner.TipoDeducaoToStr(NFSe.Servico.ItemServico[Item].DadosDeducao.TipoDeducao)));
 
-  Result.AppendChild(GerarCPFCNPJ(NFSe.Servico.ItemServico[Item].DadosDeducao.CpfCnpj));
+  aDoc := OnlyNumber(NFSe.Servico.ItemServico[Item].DadosDeducao.CpfCnpj);
+
+  if length(aDoc) <= 11 then
+    Result.AppendChild(AddNode(tcStr, '#', 'Cpf ', 11, 11, 1, aDoc, DSC_CPF))
+  else
+    Result.AppendChild(AddNode(tcStr, '#', 'Cnpj', 14, 14, 1, aDoc, DSC_CNPJ));
 
   Result.AppendChild(AddNode(tcStr, '#', 'NumeroNotaFiscalReferencia', 1, 15, 0,
        NFSe.Servico.ItemServico[Item].DadosDeducao.NumeroNotaFiscalReferencia));
 
-  Result.AppendChild(AddNode(tcDe2, '#', 'ValorTotalNotaFiscal', 1, 15, 0,
+  Result.AppendChild(AddNode(tcDe2, '#', 'ValorTotalNotaFiscal', 1, 15, 1,
              NFSe.Servico.ItemServico[Item].DadosDeducao.ValorTotalNotaFiscal));
 
   Result.AppendChild(AddNode(tcDe2, '#', 'PercentualADeduzir', 1, 15, 0,

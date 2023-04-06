@@ -79,8 +79,6 @@ type
     FAttributeEnumerator: TACBrXMLAttributeListEnumerator;
     FFloatIsIntString: Boolean;
 
-    constructor Create(xmlDoc: TACBrXmlDocument; xmlNode: xmlNodePtr);
-
     function GetName: string;
     function GetLocalName: string;
     function GetContent: string;
@@ -89,6 +87,7 @@ type
     procedure SetContent(AContent: string);
 
   public
+    constructor Create(xmlDoc: TACBrXmlDocument; xmlNode: xmlNodePtr);
     destructor Destroy; override;
 
     property Document: TACBrXmlDocument read FXmlDoc;
@@ -132,9 +131,8 @@ type
     procedure SetPrefixo(AName: string);
     procedure SetContent(AContent: string);
 
-    constructor Create(ParentNode: TACBrXmlNode; xmlNs: xmlNsPtr);
-
   public
+    constructor Create(ParentNode: TACBrXmlNode; xmlNs: xmlNsPtr);
     destructor Destroy; override;
 
     property Node: TACBrXmlNode read FParentNode;
@@ -154,9 +152,8 @@ type
     procedure SetName(AName: string);
     procedure SetContent(AContent: string);
 
-    constructor Create(ParentNode: TACBrXmlNode; xmlAtt: xmlAttrPtr);
-
   public
+    constructor Create(ParentNode: TACBrXmlNode; xmlAtt: xmlAttrPtr);
     destructor Destroy; override;
 
     property Node: TACBrXmlNode read FParentNode;
@@ -174,9 +171,8 @@ type
     function GetItem(Index: integer): TACBrXmlNamespace;
     procedure Insert(Item: TACBrXmlNamespace);
 
-    constructor Create(AParent: TACBrXmlNode);
-
   public
+    constructor Create(AParent: TACBrXmlNode);
     destructor Destroy; override;
 
     property Parent: TACBrXmlNode read FParent;

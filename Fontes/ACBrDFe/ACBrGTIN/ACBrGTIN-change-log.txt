@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2023
+-- ACBrGTINWebServices --
+[*] Formatado o NCM para 8 digitos, incluindo zeros a esquerda.
+   Por: Ademar DC/Italo Giurizzato Junior
+
 11/10/2022
 -- ACBrGTINReg -- 
 [*] Ajustes de propriedades ACBrGTIN

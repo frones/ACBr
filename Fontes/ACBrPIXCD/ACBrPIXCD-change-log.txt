@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2023
+-- ACBrPIXPSPInter --
+[+] Inclusão do novo PSP Inter
+    Por: Cristian Carvalho e Sidney Alves
+
 08/03/2023
 -- ACBrPIXPSPSantander --
 [*] Ajuste na consulta de Pix Recebidos por Período para formatar os parâmetros de inicio e fim

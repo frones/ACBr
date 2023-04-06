@@ -77,9 +77,9 @@ type
     procedure QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String;
       var aResultCode: Integer; var aRespostaHttp: AnsiString);
     procedure QuandoAcessarEndPoint(const aEndPoint: String; var aURL: String; var aMethod: String);
-    procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
+    procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
     function VerificarSeIncluiPFX(const Method, AURL: String): Boolean; override;
   public
     constructor Create(AOwner: TComponent); override;

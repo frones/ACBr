@@ -16,7 +16,7 @@
     <Description Value="ACBrPIXCD - Package para componentes relacionados a PIX e Carteira Digitais"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="34">
+    <Files Count="35">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXCDReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -135,25 +135,29 @@
         <UnitName Value="ACBrShipaySchemas"/>
       </Item29>
       <Item30>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPagSeguro.pas"/>
-        <UnitName Value="ACBrPIXPSPPagSeguro"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPInter.pas"/>
+        <UnitName Value="ACBrPIXPSPInter"/>
       </Item30>
       <Item31>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPGerenciaNet.pas"/>
-        <UnitName Value="ACBrPIXPSPGerenciaNet"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPagSeguro.pas"/>
+        <UnitName Value="ACBrPIXPSPPagSeguro"/>
       </Item31>
       <Item32>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBradesco.pas"/>
-        <UnitName Value="ACBrPIXPSPBradesco"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPGerenciaNet.pas"/>
+        <UnitName Value="ACBrPIXPSPGerenciaNet"/>
       </Item32>
       <Item33>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPixPDV.pas"/>
-        <UnitName Value="ACBrPIXPSPPixPDV"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBradesco.pas"/>
+        <UnitName Value="ACBrPIXPSPBradesco"/>
       </Item33>
       <Item34>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPixPDV.pas"/>
+        <UnitName Value="ACBrPIXPSPPixPDV"/>
+      </Item34>
+      <Item35>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPixPDV.pas"/>
         <UnitName Value="ACBrPIXSchemasPixPDV"/>
-      </Item34>
+      </Item35>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

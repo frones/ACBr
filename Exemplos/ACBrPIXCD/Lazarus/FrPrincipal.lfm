@@ -669,7 +669,7 @@ object Form1: TForm1
             Align = alClient
             TabIndex = 0
             TabOrder = 0
-            TabWidth = 100
+            TabWidth = 120
             object tsEndPointPix: TTabSheet
               Caption = '/pix'
               ClientHeight = 522
@@ -2500,11 +2500,11 @@ object Form1: TForm1
                 Height = 522
                 Top = 0
                 Width = 616
-                ActivePage = tsPagSeguroSimularPagamento
+                ActivePage = tsBBSimularPagamento
                 Align = alClient
                 TabIndex = 0
                 TabOrder = 0
-                TabWidth = 117
+                TabWidth = 116
                 object tsBBSimularPagamento: TTabSheet
                   Caption = 'Banco do Brasil'
                   ClientHeight = 494
@@ -2668,6 +2668,79 @@ object Form1: TForm1
                       Width = 213
                       Caption = 'Token Pay (Gerado no Portal PagSeguro)'
                       ParentColor = False
+                    end
+                  end
+                end
+                object tsPIXPDVSimularPagamento: TTabSheet
+                  Caption = 'PIXPDV'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnPixPDVSimularPagto: TPanel
+                    Left = 0
+                    Height = 88
+                    Top = 0
+                    Width = 608
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 88
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object lbPixPDVQRCodeID: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 21
+                      Width = 58
+                      Caption = 'QRCode ID'
+                      ParentColor = False
+                    end
+                    object edPixPDVSimularPagtoQRCodeID: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 36
+                      Width = 472
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                    end
+                    object btPixPDVSimularPagto: TBitBtn
+                      Left = 504
+                      Height = 26
+                      Top = 33
+                      Width = 88
+                      Anchors = [akTop, akRight]
+                      Caption = 'Pagar'
+                      ImageIndex = 4
+                      OnClick = btPixPDVSimularPagtoClick
+                      TabOrder = 1
+                    end
+                  end
+                  object mmPixPDVSimularPagto: TMemo
+                    Left = 0
+                    Height = 377
+                    Top = 88
+                    Width = 608
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnPixPDVSimularPagtoLimpar: TPanel
+                    Left = 0
+                    Height = 29
+                    Top = 465
+                    Width = 608
+                    Align = alBottom
+                    ClientHeight = 29
+                    ClientWidth = 608
+                    TabOrder = 2
+                    object btPixPDVSimularPagtoLimpar: TBitBtn
+                      Left = 508
+                      Height = 26
+                      Top = 1
+                      Width = 84
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      ImageIndex = 18
+                      OnClick = btPixPDVSimularPagtoLimparClick
+                      TabOrder = 0
                     end
                   end
                 end
@@ -5880,6 +5953,203 @@ object Form1: TForm1
                 end
               end
             end
+            object tsInter: TTabSheet
+              Caption = 'Inter'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnInter: TPanel
+                Left = 48
+                Height = 322
+                Top = 72
+                Width = 880
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                ClientHeight = 322
+                ClientWidth = 880
+                TabOrder = 0
+                object lbInterTipoChave: TLabel
+                  Left = 679
+                  Height = 15
+                  Top = 24
+                  Width = 59
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  ParentColor = False
+                end
+                object lbInterClientSecret: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 132
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object lbInterClientID: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object lbInterChave: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 53
+                  Caption = 'Chave PIX'
+                  ParentColor = False
+                end
+                object imInterErroChavePix: TImage
+                  Left = 844
+                  Height = 17
+                  Top = 43
+                  Width = 16
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object edInterClientSecret: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 148
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 3
+                end
+                object edInterClientID: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 90
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+                object edInterChavePIX: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 638
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = edInterChavePIXChange
+                  TabOrder = 0
+                end
+                object cbInterTipoChave: TComboBox
+                  Left = 681
+                  Height = 23
+                  Top = 40
+                  Width = 157
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 15
+                  Style = csDropDownList
+                  TabOrder = 1
+                  TabStop = False
+                end
+                object edInterChavePrivada: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 197
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edInterArqsChange
+                  OnExit = edInterChavePrivadaExit
+                  TabOrder = 4
+                  Text = 'InterChavePrivada.key'
+                end
+                object lbInterChavePrivada: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 181
+                  Width = 120
+                  Caption = 'Arquivo Chave Privada'
+                  ParentColor = False
+                end
+                object lbInterErroChavePrivada: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 222
+                  Width = 127
+                  Caption = 'lbInterErroChavePrivada'
+                  ParentColor = False
+                end
+                object imInterErroChavePrivada: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 200
+                  Width = 16
+                  Visible = False
+                end
+                object btInterAcharChavePrivada: TSpeedButton
+                  Left = 844
+                  Height = 23
+                  Top = 197
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btInterAcharChavePrivadaClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btInterAcharCertificado: TSpeedButton
+                  Left = 844
+                  Height = 23
+                  Top = 267
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btInterAcharCertificadoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edInterCertificado: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 267
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edInterArqsChange
+                  OnExit = edInterCertificadoExit
+                  TabOrder = 5
+                  Text = 'InterCertificado.pem'
+                end
+                object imInterErroCertificado: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 271
+                  Width = 16
+                  Visible = False
+                end
+                object lbInterErroCertificado: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 294
+                  Width = 113
+                  Caption = 'lbInterErroCertificado'
+                  ParentColor = False
+                end
+                object lbInterCertificado: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 251
+                  Width = 130
+                  Caption = 'Arquivo Certificado PEM'
+                  ParentColor = False
+                end
+              end
+            end
           end
         end
       end
@@ -6115,7 +6385,9 @@ object Form1: TForm1
     Top = 416
   end
   object ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil
+    ACBrPixCD = ACBrPixCD1
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    QuandoReceberRespostaHttp = ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp
     Left = 168
     Top = 416
   end
@@ -6186,6 +6458,11 @@ object Form1: TForm1
   object ACBrPSPPixPDV1: TACBrPSPPixPDV
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 411
+    Top = 416
+  end
+  object ACBrPSPInter1: TACBrPSPInter
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 443
     Top = 416
   end
 end

@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade Pontes E Lacerda/MT - Provedor RLZ.
+   Por: Destak
+[*] Atualizado a URL da cidade de Itápolis/SP
+   Por: Natanael Sanches
+
 05/04/2023
 -- SimplISS.GravarXml --
 [*] Uso do Params: Aliquota4Casas (Boolean) para definir se a aliquota deve ter

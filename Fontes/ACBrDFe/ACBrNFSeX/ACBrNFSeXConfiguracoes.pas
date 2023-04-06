@@ -282,6 +282,7 @@ constructor TConfiguracoesNFSe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FPSessaoIni := 'NFSe';
   WebServices.ResourceName := 'ACBrNFSeXServicos';
 end;
 

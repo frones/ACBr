@@ -130,7 +130,9 @@ begin
   GravarCampo(PagFor.Registro0.Arquivo.Densidade, 5, tcInt);
   GravarCampo(PagFor.Registro0.ReservadoBanco, 20, tcStr);
   GravarCampo(PagFor.Registro0.ReservadoEmpresa, 20, tcStr, True);
-  GravarCampo(' ', 29, tcStr);
+  GravarCampo(' ', 14, tcStr);
+  GravarCampo(0, 3, tcInt);
+  GravarCampo(' ', 12, tcStr);
 
   ValidarLinha('0');
   IncluirLinha;

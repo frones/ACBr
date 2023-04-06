@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2023
+-- PagFor.Caixa.GravarTxtRemessa --
+[*] Altera o final do registro 0 para que fique condizente com o manual.
+   Por: Grupo FS/ Diego F
+
 21/03/2023
 -- PagFor.Sicredi.GravarTxtRemessa --
 [*] Altera a informação do Layout do Arquivo no Header do Arquivo para coincidir com o manual disponível.

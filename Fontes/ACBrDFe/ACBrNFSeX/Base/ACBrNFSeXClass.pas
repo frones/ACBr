@@ -1301,6 +1301,7 @@ type
     FinfNFSe: TinfNFSe;
     FDescricaoCodigoTributacaoMunicipio: string;
     FEqptoRecibo: string;
+    FVencimento: TDateTime;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: string);
@@ -1417,6 +1418,8 @@ type
     property infNFSe: TinfNFSe read FinfNFSe write FinfNFSe;
     // Provedor eGoverneISS
     property EqptoRecibo: string read FEqptoRecibo write FEqptoRecibo;
+    // Provedor RLZ
+    property Vencimento: TDateTime read FVencimento write FVencimento;
 
   end;
 

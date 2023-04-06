@@ -305,6 +305,7 @@ begin
       DataEmissao := INIRec.ReadDate(sSecao, 'DataEmissao', Now);
       Competencia := INIRec.ReadDate(sSecao, 'Competencia', Now);
       DataEmissaoRPS := INIRec.ReadDate(sSecao, 'DataEmissao', Now);
+      Vencimento := INIRec.ReadDate(sSecao, 'Vencimento', Now);
       NaturezaOperacao := StrToNaturezaOperacao(Ok, INIRec.ReadString(sSecao, 'NaturezaOperacao', '0'));
 
       // Provedor Tecnos

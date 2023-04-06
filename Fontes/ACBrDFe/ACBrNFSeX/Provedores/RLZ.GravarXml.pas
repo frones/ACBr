@@ -229,7 +229,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'orcamento', 1, 10, 0, '', ''));
 
   NFSeNode.AppendChild(AddNode(tcDat, '#1', 'vencimento', 1, 10, 1,
-                                                         NFse.DataEmissao, ''));
+                                                          NFse.Vencimento, ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'pis', 1, 15, 1,
                                             NFSe.Servico.Valores.ValorPis, ''));

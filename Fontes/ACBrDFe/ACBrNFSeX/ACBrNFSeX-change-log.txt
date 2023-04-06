@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/04/2023
+-- Diversos --
+[*] Acrescentado o campo Vencimento do tipo TDateTime para atender o provedor
+    RLZ.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade Pontes E Lacerda/MT - Provedor RLZ.
    Por: Destak

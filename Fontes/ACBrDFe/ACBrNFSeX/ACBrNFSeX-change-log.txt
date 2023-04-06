@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 06/04/2023
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Redução da fontes do objeto Codigo Verificação para apresentar todos os 
+    caracteres.
+   Por: Helius - ERP
 -- EloTech.GravarXml --
 [*] Ajustes para não gerar o grupo DadosDeducoes quando não tem deduções.
    Por: Alex Leiva - CS Sistemas

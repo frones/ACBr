@@ -131,7 +131,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = []
         ParentFont = False

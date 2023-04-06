@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] Corrigida a versão do layout da cidade Santiago do Sul/SC
+   Por: Fernando - C4Dev
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Redução da fontes do objeto Codigo Verificação para apresentar todos os 
     caracteres.

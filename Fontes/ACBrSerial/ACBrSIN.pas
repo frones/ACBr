@@ -104,7 +104,7 @@ TACBrSINModelo = (sinNenhum, sinLaurenti);
 implementation
 
 uses
-  ACBrSinLaurenti,
+  ACBrSINLaurenti,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF}, ACBrUtil.Strings;
 
 { TACBrSIN }

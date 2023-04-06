@@ -176,6 +176,8 @@ begin
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
 
+            ARetornoWS.DadosRet.TituloRet.SeuNumero       := AJson.Values['seuNumero'].AsString;
+
           end else
           if (TipoOperacao = tpConsultaDetalhe) then
           begin

@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+06/04/2023
+-- ACACBrBoletoRet_Inter_API,ACBrBoletoW_Inter_API  --
+[-] TK-3798-1 ATENÇÃO ! ACBRBoleto Inter API, alterado a regra de registro, campo obrigatório seuNumero deve ser informado e controlado pela aplicação!
+   Por: Jean Peixoto - Conferido: Daniel Morais
+
 04/04/2023
 [-]TK-3806 Correção QRCodeDinamico não enviar TXID
   por Victor H Gonzales - Pandaaa

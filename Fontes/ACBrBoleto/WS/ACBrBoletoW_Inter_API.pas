@@ -321,15 +321,14 @@ procedure TBoletoW_Inter_API.RequisicaoJson;
 var
   Data: string;
   Json: TJsonObject;
-  aSeuNumero, aNossoNumero: String;
+  aSeuNumero: String;
 begin
   if Assigned(aTitulo) then
   begin
     Json := TJsonObject.Create;
     try
 
-      aNossoNumero := OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo));
-      aSeuNumero := aTitulo.NossoNumero; // ATitulo.SeuNumero;
+      aSeuNumero := ATitulo.SeuNumero;
 
       Json.Add('seuNumero').Value.asString := aSeuNumero;
       Json.Add('valorNominal').Value.asNumber := aTitulo.ValorDocumento;

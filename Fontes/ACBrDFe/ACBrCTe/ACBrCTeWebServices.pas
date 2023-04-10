@@ -86,6 +86,7 @@ type
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    procedure DefinirURL; override;
     function TratarResposta: Boolean; override;
 
     function GerarMsgLog: String; override;
@@ -594,11 +595,7 @@ begin
   FPConfiguracoesCTe := TConfiguracoesCTe(FPConfiguracoes);
   FPLayout := LayCTeStatusServico;
 
-  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
-    FPHeaderElement := 'cteCabecMsg'
-  else
-    FPHeaderElement := '';
-
+  FPHeaderElement := 'cteCabecMsg';
   FPBodyElement := 'cteDadosMsg';
 end;
 
@@ -682,6 +679,16 @@ procedure TCTeStatusServico.DefinirServicoEAction;
 begin
   FPServico    := GetUrlWsd + 'CteStatusServico';
   FPSoapAction := FPServico + '/cteStatusServicoCT';
+end;
+
+procedure TCTeStatusServico.DefinirURL;
+begin
+  inherited DefinirURL;
+
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
 end;
 
 procedure TCTeStatusServico.DefinirDadosMsg;
@@ -1498,6 +1505,11 @@ var
   Modelo: TModeloCTe;
   Ok: Boolean;
 begin
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
+
   FPLayout := LayCTeRetRecepcao;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
@@ -1810,6 +1822,11 @@ var
   Modelo: TModeloCTe;
   Ok: Boolean;
 begin
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
+
   FPLayout := LayCTeRetRecepcao;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
@@ -1981,6 +1998,11 @@ var
   Modelo, xUF: String;
   Ok: Boolean;
 begin
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
+
   FPVersaoServico := '';
   FPURL   := '';
   Modelo  := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FCTeChave) ));
@@ -2505,6 +2527,11 @@ var
   VerServ: Double;
   ModeloTemp: String;
 begin
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
+
   FPVersaoServico := '';
   FPURL  := '';
 
@@ -2733,6 +2760,11 @@ procedure TCTeConsultaCadastro.DefinirURL;
 var
   VersaoTemp: Double;
 begin
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
+
   FPVersaoServico := '';
   FPURL := '';
   VersaoTemp := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
@@ -2902,6 +2934,11 @@ var
   VerServ: Double;
   Ok: Boolean;
 begin
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
+
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FIE     := FEvento.Evento.Items[0].InfEvento.detEvento.IE;
@@ -3427,6 +3464,11 @@ var
   UF : String;
   Versao: Double;
 begin
+  if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
+    FPHeaderElement := 'cteCabecMsg'
+  else
+    FPHeaderElement := '';
+
   { Esse método é tratado diretamente pela RFB }
 
   UF := 'AN';

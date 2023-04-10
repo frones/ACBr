@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2023
+-- ACBrCTeWebServices --
+[*] Ajuste para não gerar o grupo <Header> quando a versão for 4.00
+   por: Italo Giurizzato Junior
+
 30/03/2023
 -- Diversos--
 [*] Alteração visando a versão 4.00 do CT-e.

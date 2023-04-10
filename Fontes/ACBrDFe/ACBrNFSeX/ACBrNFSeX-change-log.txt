@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] A URL da cidade de Alto Feliz/RS mudou de URL, provedor ainda é o Pronim na versão 2.02
+   Por: C4Dev
 
 06/04/2023
 -- ACBrNFSeXServicos.ini --

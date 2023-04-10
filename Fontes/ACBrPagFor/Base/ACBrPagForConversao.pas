@@ -201,7 +201,7 @@ type
                          cpgContribuicaoRetidaSobreNfFaturaEmpresaPrestadoraServicoCNPJ,
                          cpgReclamatoriaTrabalhistaCNPJ);
 
-  TTipoChavePix = (tcpNenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria);
+  TTipoChavePix = (tcpNenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria, tcpDadosBancarios);
 
   TTipoCampo = (tcStr, tcStrZero, tcInt, tcInt64, tcDe2, tcDe5, tcDe8, tcDat,
                 tcHor, tcDatISO);
@@ -998,14 +998,14 @@ end;
 
 function TipoChavePixToStr(const t: TTipoChavePIX): String;
 begin
-  result := EnumeradoToStr(t, ['  ', '01', '02', '03', '04'],
-                  [tcpnenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria]);
+  result := EnumeradoToStr(t, ['  ', '01', '02', '03', '04', '05'],
+                  [tcpnenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria, tcpDadosBancarios]);
 end;
 
 function StrToTipoChavePIX(var ok:boolean; const s: string): TTipoChavePIX;
 begin
-  result := StrToEnumerado(ok, s, ['', '  ', '01', '02', '03', '04'],
-       [tcpNenhum, tcpNenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria]);
+  result := StrToEnumerado(ok, s, ['', '  ', '01', '02', '03', '04', '05'],
+       [tcpNenhum, tcpNenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria, tcpDadosBancarios]);
 end;
 
 function TpTributoToStr(const t: TTipoTributo): String;

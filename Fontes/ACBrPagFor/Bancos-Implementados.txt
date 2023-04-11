@@ -1,12 +1,13 @@
 Bancos            Funcional (Data)
 ------            ----------------
 Banco do Brasil
+BancoCECRED
+Banrisul
 Bradesco
 Caixa
+HSBC
 Itau
-Santander
 Safra
+Santander
 Sicoob
 Sicredi
-BancoCECRED
-HSBC

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Santa Luzia/MG mudou para a versão 2.04 o provedor é o mesmo: Etherium.
+   Por: SMF/Italo Giurizzato Junior
+
 10/04/2023
 -- ACBrNFSeXServicos.ini --
 [*] A URL da cidade de Alto Feliz/RS mudou de URL, provedor ainda é o Pronim na versão 2.02

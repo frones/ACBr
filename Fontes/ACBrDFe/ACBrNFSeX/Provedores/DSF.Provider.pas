@@ -218,7 +218,6 @@ begin
 
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result);
-//  Result := string(NativeStringToUTF8(Result));
 end;
 
 { TACBrNFSeProviderDSF }
@@ -439,6 +438,7 @@ begin
 
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+  Result := string(NativeStringToUTF8(Result));
 end;
 
 { TACBrNFSeProviderDSF200 }

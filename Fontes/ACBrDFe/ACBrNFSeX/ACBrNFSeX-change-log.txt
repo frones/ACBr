@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/04/2023
+-- DSF.Provider --
+[*] Alterado o TratarXmlRFetornado da versão 2.00 do provedor DSF para executar a
+    função: NativeStringToUTF8.
+   Por: Paulo C. L. Vicente
 -- ACBrNFSeXProviderBase --
 [*] As chamadas aos metodos: ValidarSchema, CriarServiceClient para o método Teste
     estavam usando o enumerado errado, sendo que o correto é tmTeste.

@@ -579,6 +579,8 @@ begin
       DataEmissao := Now;
       Competencia := Now;
       DataEmissaoRPS := Now;
+      // Provedor RLZ
+      Vencimento := Now + 1;
 
       (*
         TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
@@ -656,9 +658,9 @@ begin
       if (ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
            proCTA, proCTAConsult, proEloTech, proEquiplano, proFacundo, proFGMaiss,
            profintelISS, proGoverna, proInfisc, proIPM, proISSDSF, proPriMax,
-           proRLZ, proSimple, proSimplISS, proSmarAPD, proWebFisco, proBauhaus,
+           proRLZ, proSimple, proSmarAPD, proWebFisco, proBauhaus,
            proSoftPlan]) or
-         ((ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEL]) and
+         ((ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEL, proSimplISS]) and
           (ACBrNFSeX1.Configuracoes.Geral.Versao = ve100)) then
       begin
         // Provedor Elotech

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/04/2023
+-- ACBrNFSeXProviderBase --
+[*] As chamadas aos metodos: ValidarSchema, CriarServiceClient para o método Teste
+    estavam usando o enumerado errado, sendo que o correto é tmTeste.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado a versão 2.04 para o provedor: Etherium.
    Por: Italo Giurizzato Junior

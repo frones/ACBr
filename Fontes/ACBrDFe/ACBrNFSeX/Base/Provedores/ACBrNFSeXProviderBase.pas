@@ -1546,9 +1546,9 @@ begin
   end;
 
   case GerarResponse.ModoEnvio of
-    meLoteAssincrono,
-    meTeste: ValidarSchema(GerarResponse, tmRecepcionar);
-    meLoteSincrono: ValidarSchema(GerarResponse, tmRecepcionarSincrono);
+    meLoteAssincrono: ValidarSchema(EmiteResponse, tmRecepcionar);
+    meLoteSincrono: ValidarSchema(EmiteResponse, tmRecepcionarSincrono);
+    meTeste: ValidarSchema(EmiteResponse, tmTeste);
   else
     // meUnitario
     ValidarSchema(GerarResponse, tmGerar);
@@ -1630,7 +1630,7 @@ begin
 
         meTeste:
           begin
-            AService := CriarServiceClient(tmRecepcionar);
+            AService := CriarServiceClient(tmTeste);
             AService.Prefixo := EmiteResponse.NumeroLote;
             EmiteResponse.ArquivoRetorno := AService.TesteEnvio(ConfigMsgDados.DadosCabecalho, EmiteResponse.ArquivoEnvio);
           end;

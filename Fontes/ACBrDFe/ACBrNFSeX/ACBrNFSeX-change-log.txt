@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Santa Maria/RS mudou para a versão 2.04 o provedor é o mesmo: ISSNet
+   Por: SIDesenvolvimento
 -- DSF.Provider --
 [*] Alterado o TratarXmlRFetornado da versão 2.00 do provedor DSF para executar a
     função: NativeStringToUTF8.

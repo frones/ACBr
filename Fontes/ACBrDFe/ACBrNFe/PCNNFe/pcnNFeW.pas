@@ -240,7 +240,7 @@ end;
 
 function TNFeW.ObterTipoCampo_TDec_0304Max100Opc(const Valor: Variant): TpcnTipoCampo;
 begin
-  if (Valor = 0) or ((Valor < 1) and ((Trunc(Valor * 10000) mod 10) < 1)) then
+  if (Valor = 0) or ((Valor < 1) and ((Trunc(Double(Valor) * 10000) mod 10) < 1)) then
     Result := tcDe3
   else if Valor = 100 then
     Result := tcInt

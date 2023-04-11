@@ -50,6 +50,15 @@ type
 
   end;
 
+  { TNFSeR_Etherium204 }
+
+  TNFSeR_Etherium204 = class(TNFSeR_ABRASFv2)
+  protected
+
+  public
+
+  end;
+
 implementation
 
 //==============================================================================

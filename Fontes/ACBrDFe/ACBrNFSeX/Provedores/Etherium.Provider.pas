@@ -68,11 +68,46 @@ type
 
   end;
 
+  TACBrNFSeXWebserviceEtherium204 = class(TACBrNFSeXWebserviceSoap11)
+  private
+    function GetNameSpace: string;
+    function GetSoapAction: string;
+    function GetURL: string;
+  public
+    function Recepcionar(ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
+    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+
+    function TratarXmlRetornado(const aXML: string): string; override;
+
+    property URL: string read GetURL;
+    property NameSpace: string read GetNameSpace;
+    property SoapAction: string read GetSoapAction;
+  end;
+
+  TACBrNFSeProviderEtherium204 = class (TACBrNFSeProviderABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+  end;
+
 implementation
 
 uses
   ACBrDFeException,
   ACBrUtil.XMLHTML,
+  ACBrNFSeX,
   Etherium.GravarXml, Etherium.LerXml;
 
 { TACBrNFSeProviderEtherium203 }
@@ -289,6 +324,261 @@ begin
   if Pos('RecepcionarLoteRpsSincronoResult', Result) > 0 then
     Result := StringReplace(Result, 'EnviarLoteRpsResposta',
                                   'RecepcionarLoteRpsSincrono', [rfReplaceAll]);
+end;
+
+{ TACBrNFSeXWebserviceEtherium204 }
+
+function TACBrNFSeXWebserviceEtherium204.GetNameSpace: string;
+begin
+  Result := 'xmlns:ws="' + URL + '"';
+end;
+
+function TACBrNFSeXWebserviceEtherium204.GetSoapAction: string;
+begin
+  Result := URL + '#';
+end;
+
+function TACBrNFSeXWebserviceEtherium204.GetURL: string;
+begin
+  if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.NameSpace
+  else
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.NameSpace;
+end;
+
+function TACBrNFSeXWebserviceEtherium204.Recepcionar(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:RecepcionarLoteRps>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:RecepcionarLoteRps>';
+
+  Result := Executar(SoapAction + 'RecepcionarLoteRps', Request,
+                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.RecepcionarSincrono(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:RecepcionarLoteRpsSincrono>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:RecepcionarLoteRpsSincrono>';
+
+  Result := Executar(SoapAction + 'RecepcionarLoteRpsSincrono', Request,
+                     ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.GerarNFSe(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:GerarNfse>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:GerarNfse>';
+
+  Result := Executar(SoapAction + 'GerarNfse', Request,
+                     ['GerarNfseResult', 'GerarNfseResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.ConsultarLote(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:ConsultarLoteRps>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:ConsultarLoteRps>';
+
+  Result := Executar(SoapAction + 'ConsultarLoteRps', Request,
+                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.ConsultarNFSePorRps(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:ConsultarNfsePorRps>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:ConsultarNfsePorRps>';
+
+  Result := Executar(SoapAction + 'ConsultarNfsePorRps', Request,
+                     ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.ConsultarNFSePorFaixa(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:ConsultarNfseFaixa>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:ConsultarNfseFaixa>';
+
+  Result := Executar(SoapAction + 'ConsultarNfseFaixa', Request,
+                     ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.ConsultarNFSeServicoPrestado(
+  ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:ConsultarNfseServicoPrestado>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:ConsultarNfseServicoPrestado>';
+
+  Result := Executar(SoapAction + 'ConsultarNfseServicoPrestado', Request,
+                     ['ConsultarNfseServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.ConsultarNFSeServicoTomado(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:ConsultarNfseServicoTomado>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:ConsultarNfseServicoTomado>';
+
+  Result := Executar(SoapAction + 'ConsultarNfseServicoTomado', Request,
+                     ['ConsultarNfseServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.Cancelar(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:CancelarNfse>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:CancelarNfse>';
+
+  Result := Executar(SoapAction + 'CancelarNfse', Request,
+                     ['CancelarNfseResult', 'CancelarNfseResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.SubstituirNFSe(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:SubstituirNfse>';
+  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '</ws:SubstituirNfse>';
+
+  Result := Executar(SoapAction + 'SubstituirNfse', Request,
+                     ['SubstituirNfseResult', 'SubstituirNfseResposta'],
+                     [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceEtherium204.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
+end;
+
+{ TACBrNFSeProviderEtherium204 }
+
+procedure TACBrNFSeProviderEtherium204.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigGeral do
+  begin
+    ConsultaPorFaixaPreencherNumNfseFinal := True;
+  end;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+    LoteRps := True;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
+    SubstituirNFSe := True;
+  end;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.04';
+    VersaoAtrib := '2.04';
+  end;
+
+  with ConfigMsgDados do
+  begin
+    GerarPrestadorLoteRps := True;
+    DadosCabecalho := GetCabecalho('');
+  end;
+end;
+
+function TACBrNFSeProviderEtherium204.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_Etherium204.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderEtherium204.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_Etherium204.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderEtherium204.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceEtherium204.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 end.

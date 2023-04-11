@@ -305,7 +305,17 @@ begin
         Result := TACBrNFSeProviderEquiplano.Create(ACBrNFSe);
 
       proeReceita: Result := TACBrNFSeProvidereReceita202.Create(ACBrNFSe);
-      proEtherium: Result := TACBrNFSeProviderEtherium203.Create(ACBrNFSe);
+
+      proEtherium:
+        begin
+          case Versao of
+            ve203: Result := TACBrNFSeProviderEtherium203.Create(ACBrNFSe);
+            ve204: Result := TACBrNFSeProviderEtherium204.Create(ACBrNFSe);
+          else
+            Result := nil;
+          end;
+        end;
+
       proFacundo:  Result :=TACBrNFSeProviderFacundo.Create(ACBrNFSe);
       proFGMaiss:  Result :=TACBrNFSeProviderFGMaiss.Create(ACBrNFSe);
 

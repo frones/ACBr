@@ -70,6 +70,7 @@ type
     function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar; opcao: integer; novoCodigo: PChar;
                                     const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
+    function ConsultarUltimaSessaoFiscal(const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarStatusOperacional(const sResposta: PChar;  var esTamanho: longint): longint;
     function ConsultarNumeroSessao(cNumeroDeSessao: integer; const sResposta: PChar; var esTamanho: longint): longint;
     function SetNumeroSessao(cNumeroDeSessao: PChar):longint;
@@ -376,6 +377,38 @@ begin
     try
       Resposta := '';
       SatDM.ACBrSAT1.ConsultarSAT;
+      RespSat.Processar(SatDM.ACBrSAT1);
+      Resposta := RespSat.Gerar;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      RespSat.Free;
+      SatDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibSAT.ConsultarUltimaSessaoFiscal(const sResposta: PChar; var esTamanho: longint): longint;
+var
+  Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
+begin
+  try
+    GravarLog('SAT_ConsultarUltimaSessaoFiscal', logNormal);
+
+    SatDM.Travar;
+
+    RespSat := TACBrLibSATResposta.Create(Config.TipoResposta, Config.CodResposta);
+
+    try
+      Resposta := '';
+      SatDM.ACBrSAT1.ConsultarUltimaSessaoFiscal;
       RespSat.Processar(SatDM.ACBrSAT1);
       Resposta := RespSat.Gerar;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);

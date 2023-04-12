@@ -75,6 +75,7 @@ function SAT_DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): lon
 function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar; opcao: integer; novoCodigo: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_ConsultarUltimaSessaoFiscal(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ConsultarStatusOperacional(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -325,6 +326,22 @@ begin
       Result := ErrExecutandoMetodo;
   end;
 end;
+
+function SAT_ConsultarUltimaSessaoFiscal(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibSAT(pLib^.Lib).ConsultarUltimaSessaoFiscal(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
 
 function SAT_ConsultarStatusOperacional(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};

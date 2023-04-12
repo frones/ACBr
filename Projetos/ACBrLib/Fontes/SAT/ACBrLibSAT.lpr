@@ -70,6 +70,7 @@ exports
   SAT_DesbloquearSAT,
   SAT_TrocarCodigoDeAtivacao,
   SAT_ConsultarSAT,
+  SAT_ConsultarUltimaSessaoFiscal,
   SAT_ConsultarStatusOperacional,
   SAT_ConsultarNumeroSessao,
   SAT_SetNumeroSessao,

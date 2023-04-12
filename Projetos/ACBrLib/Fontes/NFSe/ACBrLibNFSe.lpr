@@ -73,10 +73,11 @@ exports
 
   // Servicos
   NFSE_Emitir,
-  NFSe_Cancelar,
+  NFSE_Cancelar,
   NFSE_SubstituirNFSe,
   NFSE_LinkNFSe,
   NFSE_GerarLote,
+  NFSE_GerarToken,
   NFSE_ConsultarSituacao,
   NFSE_ConsultarLoteRps,
   NFSE_ConsultarNFSePorRps,

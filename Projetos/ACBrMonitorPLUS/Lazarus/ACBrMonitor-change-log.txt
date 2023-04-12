@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2023
+-- ACBrMonitorConsts, DoSATUnit  --
+[*] Novo método para ConsultarUltimaSessaoFiscal do SAT 
+   Por: Daniel Morais
+
 17/01/2023
 -- ACbrMonitor1, DoACBreSocial --
 [*] Corrige problema de número de parâmetros incorretos nas novas funções StrToVersaoeSocialEx

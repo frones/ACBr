@@ -127,6 +127,14 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoConsultarUltimaSessaoFiscal }
+
+TMetodoConsultarUltimaSessaoFiscal = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+
 { TMetodoConsultarStatusOperacional }
 
 TMetodoConsultarStatusOperacional = class(TACBrMetodo)
@@ -1032,6 +1040,17 @@ procedure TMetodoConsultarStatusOperacional.Executar;
 begin
   with TACBrObjetoSAT(fpObjetoDono) do
   begin
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_ConsultarUltimaSessaoFiscal>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ConsultarUltimaSessaoFiscalResposta.LerResposta(ProcessResult(buffer, bufferLen));
+        }
     fpCmd.Resposta := ACBrSAT.ConsultarStatusOperacional;
 
     if (ACBrSAT.Resposta.codigoDeRetorno = 10000) then
@@ -1049,6 +1068,16 @@ begin
     fpCmd.Resposta := ACBrSAT.ConsultarSAT;
 
 end;
+
+{ TMetodoConsultarUltimaSessaoFiscal }
+
+procedure TMetodoConsultarUltimaSessaoFiscal.Executar;
+begin
+  with TACBrObjetoSAT(fpObjetoDono) do
+    fpCmd.Resposta := ACBrSAT.ConsultarUltimaSessaoFiscal;
+
+end;
+
 
 { TMetodoTrocarCodigoAtivacao }
 
@@ -1238,6 +1267,7 @@ begin
   ListaDeMetodos.Add(CMetodoEnviarEmailCFe);
   ListaDeMetodos.Add(CMetodoConsultarModeloSAT);
   ListaDeMetodos.Add(CMetodoGerarPDFExtratoCancelamento);
+  ListaDeMetodos.Add(CMetodoConsultarUltimaSessaoFiscal);
 
 
   // DoACBr
@@ -1306,6 +1336,8 @@ begin
     31 : AMetodoClass := TMetodoEnviarEmailCFe;
     32 : AMetodoClass := TMetodoConsultarModeloSAT;
     33 : AMetodoClass := TMetodoGerarPDFExtratoCancelamento;
+    34 : AMetodoClass := TMetodoConsultarUltimaSessaoFiscal;
+
 
     else
       begin

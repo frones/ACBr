@@ -140,6 +140,7 @@ const
   CMetodoGerarAssinaturaSAT =          'gerarassinaturasat';
   CMetodoEnviarEmailCFe =              'enviaremailcfe';
   CMetodoConsultarModeloSAT =          'consultarmodelosat';
+  CMetodoConsultarUltimaSessaoFiscal=  'consultarultimasessaofiscal';
 
   CMetodoECFachar =                                      'achar';
   CMetodoECFativar =                                     'ativar';

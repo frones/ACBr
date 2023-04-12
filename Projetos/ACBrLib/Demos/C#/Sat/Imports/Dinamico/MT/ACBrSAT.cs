@@ -246,6 +246,19 @@ namespace ACBrLib.Sat
             return ConsultarSessaoSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
+        public ConsultarUltimaSessaoFiscalResposta ConsultarUltimaSessaoFiscal()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_ConsultarUltimaSessaoFiscal>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ConsultarUltimaSessaoFiscalResposta.LerResposta(ProcessResult(buffer, bufferLen));
+        }
+
         public AtualizarSoftwareSatResposta AtualizarSoftwareSAT()
         {
             var bufferLen = BUFFER_LEN;

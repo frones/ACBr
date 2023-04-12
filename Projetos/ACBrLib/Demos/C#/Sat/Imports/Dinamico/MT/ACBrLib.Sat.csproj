@@ -79,6 +79,7 @@
     <Compile Include="..\Shared\Respostas\ComunicarCertificadoICPBRASILResposta.cs" Link="Respostas\ComunicarCertificadoICPBRASILResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultarSatResposta.cs" Link="Respostas\ConsultarSatResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultarSessaoCanceladoResposta.cs" Link="Respostas\ConsultarSessaoCanceladoResposta.cs" />
+	<Compile Include="..\Shared\Respostas\ConsultarUltimaSessaoFiscalResposta.cs" Link="Respostas\ConsultarUltimaSessaoFiscalResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultarSessaoResposta.cs" Link="Respostas\ConsultarSessaoResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultarSessaoSatResposta.cs" Link="Respostas\ConsultarSessaoSatResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultarStatusOperacionalResposta.cs" Link="Respostas\ConsultarStatusOperacionalResposta.cs" />

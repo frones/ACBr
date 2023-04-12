@@ -123,6 +123,12 @@ namespace ACBrLib.Sat.Demo
             rtbRespostas.AppendLine(ret.Resposta);
         }
 
+        private void btnConsultarUltimaSessaoFiscal_Click(object sender, EventArgs e)
+        {
+            var ret = acbrSat.ConsultarUltimaSessaoFiscal();
+            rtbRespostas.AppendLine(ret.Resposta);
+        }
+
         private void btnCriarCFe_Click(object sender, EventArgs e)
         {
             var iniPath = Helpers.OpenFile("Arquivo Ini CFe (*.ini)|*.ini|Todo os Arquivos (*.*)|*.*");

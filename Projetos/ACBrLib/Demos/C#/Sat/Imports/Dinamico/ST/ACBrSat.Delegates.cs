@@ -73,6 +73,9 @@ namespace ACBrLib.Sat
         public delegate int SAT_ConsultarNumeroSessao(int cNumeroDeSessao, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int SAT_ConsultarUltimaSessaoFiscal(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int SAT_AtualizarSoftwareSAT(StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -144,6 +147,7 @@ namespace ACBrLib.Sat
             AddMethod<SAT_ConsultarSAT>("SAT_ConsultarSAT");
             AddMethod<SAT_ConsultarStatusOperacional>("SAT_ConsultarStatusOperacional");
             AddMethod<SAT_ConsultarNumeroSessao>("SAT_ConsultarNumeroSessao");
+            AddMethod<SAT_ConsultarUltimaSessaoFiscal>("SAT_ConsultarUltimaSessaoFiscal");
             AddMethod<SAT_AtualizarSoftwareSAT>("SAT_AtualizarSoftwareSAT");
             AddMethod<SAT_ComunicarCertificadoICPBRASIL>("SAT_ComunicarCertificadoICPBRASIL");
             AddMethod<SAT_ExtrairLogs>("SAT_ExtrairLogs");

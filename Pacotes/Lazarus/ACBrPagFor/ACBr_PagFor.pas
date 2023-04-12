@@ -25,7 +25,9 @@ uses
   ACBrPagForInterface, ACBrPagForLerTxt, ACBrPagForProviderBase, 
   ACBrPagForProviderManager, CNAB240.GravarTxtRemessa, CNAB240.LerTxtRetorno, 
   CNAB240.Provider, PagFor.Modelo.GravarTxtRemessa, 
-  PagFor.Modelo.LerTxtRetorno, PagFor.Modelo.Provider, LazarusPackageIntf;
+  PagFor.Modelo.LerTxtRetorno, PagFor.Modelo.Provider, 
+  PagFor.Banrisul.GravarTxtRemessa, PagFor.Banrisul.LerTxtRetorno, 
+  PagFor.Banrisul.Provider, LazarusPackageIntf;
 
 implementation
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2023
+-- ACBrSAT --
+[*] Correção da função para ConsultarUltimaSessaoFiscal do SAT 
+   Por: (DSA)
+
 26/01/2023
 --ACBrSATExtratoESCPOS--
 [*] TK-3493 Extrato SAT - Ajuste imprimir de olho no imposto.

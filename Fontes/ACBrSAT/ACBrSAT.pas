@@ -184,6 +184,7 @@ type
      function ConfigurarInterfaceDeRede( dadosConfiguracao : AnsiString = '') :
        String ;
      function ConsultarNumeroSessao( cNumeroDeSessao : Integer) : String ;
+     function ConsultarUltimaSessaoFiscal : String ;
      function ConsultarSAT : String ;
      function ConsultarStatusOperacional : String ;
      function DesbloquearSAT : String ;
@@ -196,7 +197,6 @@ type
      function TrocarCodigoDeAtivacao(const codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao: Integer; const novoCodigo: AnsiString): String;
      function ValidarDadosVenda( dadosVenda : AnsiString; out msgErro: String) : Boolean;
-     function ConsultarUltimaSessaoFiscal : String ;
 
     procedure ImprimirExtrato;
     procedure ImprimirExtratoResumido;
@@ -1020,7 +1020,7 @@ begin
 
   if (Resposta.numeroSessao <> numeroSessao) then
   begin
-    if (Resposta.numeroSessao <> fsSessaoAVerificar) then
+    if (fsSessaoAVerificar >= 0) and (Resposta.numeroSessao <> fsSessaoAVerificar) then
     begin
       if fsSessaoAVerificar = 0 then
         SessaoEnviada := numeroSessao
@@ -1301,6 +1301,29 @@ begin
   DecodificaRetorno7000;
 end ;
 
+function TACBrSAT.ConsultarUltimaSessaoFiscal: String;
+var
+  SATResp: String;
+begin
+  fsComandoLog := 'ConsultarUltimaSessaoFiscal';
+  IniciaComando;
+  try
+    fsSessaoAVerificar := -1;  // Não sabemos qual será o Número de sessão retornado...
+
+    SATResp := '';
+    if Assigned(fsOnConsultarUltimaSessaoFiscal) then
+      fsOnConsultarUltimaSessaoFiscal(SATResp);
+
+    if EstaVazio(SATResp) then
+      SATResp := fsSATClass.ConsultarUltimaSessaoFiscal;
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
+
+  DecodificaRetorno6000;
+  DecodificaRetorno7000;
+end;
+
 function TACBrSAT.ConsultarSAT : String ;
 var
   SATResp: String;
@@ -1391,27 +1414,6 @@ begin
     end;
   end;
 end ;
-
-function TACBrSAT.ConsultarUltimaSessaoFiscal: String;
-var
-  SATResp: String;
-begin
-  fsComandoLog := 'ConsultarUltimaSessaoFiscal';
-  IniciaComando;
-  try
-    SATResp := '';
-    if Assigned(fsOnConsultarUltimaSessaoFiscal) then
-      fsOnConsultarUltimaSessaoFiscal(SATResp);
-
-    if EstaVazio(SATResp) then
-      SATResp := fsSATClass.ConsultarUltimaSessaoFiscal;
-  finally
-    Result := FinalizaComando( SATResp );
-  end;
-
-  DecodificaRetorno6000;
-  DecodificaRetorno7000;
-end;
 
 function TACBrSAT.DesbloquearSAT : String ;
 var

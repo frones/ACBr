@@ -441,7 +441,13 @@ begin
   if fpConfiguracoes <> ACBrNFSeXLocal.Configuracoes then
   begin
     // Necessário para LIB.
-    fpConfiguracoes.WebServices.Params.SetStrings(ACBrNFSeXLocal.Configuracoes.WebServices.Params);
+    fpConfiguracoes.WebServices.Params.BeginUpdate;
+    try
+      fpConfiguracoes.WebServices.Params.Clear;
+      fpConfiguracoes.WebServices.Params.AddStrings(ACBrNFSeXLocal.Configuracoes.WebServices.Params);
+    finally
+      fpConfiguracoes.WebServices.Params.EndUpdate;
+    end;
   end;
 
   fpConfiguracoes.WebServices.Params.SaveToFile('websrvs_params01.ini');

@@ -421,8 +421,8 @@ begin
 end;
 
 function TACBrLib.UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
-Var
-  Ret: Ansistring;
+//Var
+  //Ret: Ansistring;
 begin
   try
     GravarLog('LIB_UltimoRetorno', logNormal);

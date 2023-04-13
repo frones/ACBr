@@ -44,6 +44,10 @@ type
   { TTestACBrNFSeLib }
 
   TTestACBrNFSeLib= class(TTestCase)
+  private
+    fCaminhoExec: string;
+  public
+    procedure SetUp; override;
   published
     procedure Test_NFSE_Inicializar_Com_DiretorioInvalido;
     procedure Test_NFSE_Inicializar;
@@ -73,6 +77,12 @@ implementation
 
 uses
   ACBrLibNFSeStaticImportMT, ACBrLibNFSeConsts, ACBrLibConsts, Dialogs;
+
+procedure TTestACBrNFSeLib.SetUp;
+begin
+  inherited SetUp;
+  fCaminhoExec := ExtractFileDir(ParamStr(0));
+end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_Inicializar_Com_DiretorioInvalido;
 var
@@ -250,7 +260,7 @@ begin
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;
 
-procedure TTestACBrNFSeLib.Test_NFSe_LimparLista;
+procedure TTestACBrNFSeLib.Test_NFSE_LimparLista;
 var
   Handle: THandle;
 begin
@@ -261,7 +271,7 @@ begin
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;
 
-procedure TTestACBrNFSeLib.Test_NFSe_CarregarXML;
+procedure TTestACBrNFSeLib.Test_NFSE_CarregarXML;
 var
   Handle: THandle;
 begin
@@ -270,19 +280,21 @@ begin
 
 
   AssertEquals('Erro ao carregar XML NFSe', ErrOK,
-   NFSE_CarregarXML(Handle, 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin\NFSe.xml'));
+   NFSE_CarregarXML(Handle, PChar(fCaminhoExec+'\NFSe.xml')));
 
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;
 
-procedure TTestACBrNFSeLib.Test_NFSe_CarregarINI;
+procedure TTestACBrNFSeLib.Test_NFSE_CarregarINI;
 var
   Handle: THandle;
 begin
   AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
 
+  AssertTrue('Handle não iniciado', Handle <> 0);
+
   AssertEquals('Erro ao carregar o INI NFSe', ErrOK,
-  NFSE_CarregarINI(Handle, 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin\NFSe.ini'));
+  NFSE_CarregarINI(Handle, PChar(fCaminhoExec +'\NFSe.ini')));
 
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;
@@ -312,7 +324,7 @@ begin
   AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
 
   AssertEquals('Erro ao Gravar XML', ErrIndex,
-  NFSE_GravarXml(Handle, 0, 'NFSeTeste', 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin'));
+  NFSE_GravarXml(Handle, 0, 'NFSeTeste', PChar(fCaminhoExec)));//'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin'));
 
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;
@@ -342,7 +354,7 @@ begin
   AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
 
   AssertEquals('Erro ao Gravar Ini', ErrIndex,
-  NFSE_GravarIni(Handle, 0, 'NFSeTeste', 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin'));
+  NFSE_GravarIni(Handle, 0, 'NFSeTeste', PChar(fCaminhoExec)));//'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin'));
 
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;

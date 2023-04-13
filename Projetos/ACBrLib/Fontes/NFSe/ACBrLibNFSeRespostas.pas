@@ -83,7 +83,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeWebserviceResponse); virtual;
 
@@ -104,7 +104,7 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeEmiteResponse); reintroduce;
 
@@ -126,7 +126,7 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeConsultaSituacaoResponse); reintroduce;
 
@@ -147,7 +147,7 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeConsultaLoteRpsResponse); reintroduce;
 
@@ -170,7 +170,7 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeConsultaNFSeporRpsResponse); reintroduce;
 
@@ -196,7 +196,7 @@ type
   
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeSubstituiNFSeResponse); reintroduce;
 
@@ -218,7 +218,7 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeGerarTokenResponse); reintroduce;
 
@@ -235,7 +235,7 @@ type
 
   public 
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeConsultaNFSeResponse); reintroduce;
 
@@ -253,7 +253,7 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const Response: TNFSeCancelaNFSeResponse); reintroduce;
 
@@ -270,7 +270,7 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const LinkNFSe: string); reintroduce;
 
@@ -287,7 +287,7 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure Processar(const GerarLote: string); reintroduce;
 
@@ -300,7 +300,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnConversao, ACBrUtil, ACBrLibNFSeConsts;
+  pcnAuxiliar, pcnConversao, {ACBrUtil,} ACBrLibNFSeConsts;
 
 { TNFSeEventoItem }
 procedure TNFSeEventoItem.Processar(const Evento: TNFSeEventoCollectionItem);

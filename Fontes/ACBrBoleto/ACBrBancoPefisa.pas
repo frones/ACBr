@@ -235,10 +235,9 @@ end;
 function TACBrBancoPefisa.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 begin
   Result := '0' + 
-    ACBrTitulo.Carteira + 
-    '0'+
+    ACBrTitulo.Carteira +
     ACBrTitulo.NossoNumero +
-    ' ' + 
+    ' ' +
     CalcularDigitoVerificador(ACBrTitulo);
 end;
 
@@ -272,7 +271,7 @@ begin
     IntToStrZero(NumeroRemessa, 8) +                                            // 387 a 394 - Sequecial de Remessa
     IntToStrZero(1, 6);                                                         // 395 a 400 - Sequencial
 
-  ARemessa.Add(UpperCase(LLinha));
+  ARemessa.Add(TiraAcentos(UpperCase(LLinha)));
 end;
 
 procedure TACBrBancoPefisa.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; ARemessa: TStringList);
@@ -293,7 +292,9 @@ begin
     PadRight(Beneficiario.CodigoTransmissao, 12) +                              // 018 a 029 - Código da Empresa
     Space(8) +                                                                  // 030 a 037 - Uso do Banco Brancos
     PadRight(LTitulo.NumeroDocumento, 25) +                                     // 038 a 062 - Uso da Empresa
-    PadRight(LTitulo.NossoNumero, 12) +                                         // 063 a 074 - Nosso Número
+    PadRight( '0'+
+              LTitulo.NossoNumero +
+              CalcularDigitoVerificador(LTitulo), 12) +                         // 063 a 074 - Nosso Número
     Space(8) +                                                                  // 075 a 082 - Uso do Banco Brancos
     Space(3) +                                                                  // 083 a 085 - Código do Banco
     Space(21) +                                                                 // 086 a 106 - Uso do Banco Brancos
@@ -326,7 +327,7 @@ begin
         ' ' + 
         Pagador.Complemento, 40) +                                              // 275 a 314 - Endereço Sacado
     PadRight(Pagador.Bairro, 12) +                                              // 315 a 326 - Bairro Sacado
-    PadRight(Pagador.CEP, 8) +                                                  // 327 a 334 - CEP Sacado
+    PadRight(OnlyNumber(Pagador.CEP), 8) +                                      // 327 a 334 - CEP Sacado
     PadRight(Pagador.Cidade, 15) +                                              // 335 a 349 - Cidade Sacado
     PadRight(Pagador.UF, 2) +                                                   // 350 a 351 - UF Sacado
     Space(30) +                                                                 // 352 a 381 - Sacador / Mensagem / Código CMC7
@@ -351,35 +352,51 @@ begin
          Beneficiario.Complemento, 40) +                                        // 457 a 496 - Endereço Emitente
     PadRight(Beneficiario.Cidade, 15) +                                         // 497 a 511 - Cidade Emitente
     PadRight(Beneficiario.UF, 2) +                                              // 512 a 513 - UF Emitente
-    PadRight(Beneficiario.CEP, 8) +                                             // 514 a 521 - CEP Emitente
+    PadRight(OnlyNumber(Beneficiario.CEP), 8) +                                 // 514 a 521 - CEP Emitente
     PadRight(Pagador.Email, 120) +                                              // 522 a 641 - Email
     IfThen(LTitulo.DataDesconto2 < EncodeDate(2000, 01, 01), 
-         '000000', 
+         '      ',
          FormatDateTime('ddmmyy', LTitulo.DataDesconto2)) +                     // 642 a 647 - Data Desconto2
-    IntToStrZero(Round(LTitulo.ValorDesconto2 * 100), 13) +                     // 648 a 660 - Valor Desconto2
-    IfThen(LTitulo.DataDesconto3 < EncodeDate(2000, 01, 01), 
-         '000000', 
-         FormatDateTime('ddmmyy', LTitulo.DataDesconto3)) +                     // 661 a 666 - Data Desconto3
-    IntToStrZero(Round(LTitulo.ValorDesconto3 * 100), 13) +                     // 667 a 679 - Valor Desconto3
-    ConverterTipoPagamento(LTitulo.TipoPagamento) +                             // 680 a 680 - Indicativo de Autorização para Recebimento de Valor Divergente
-    IfThen(LTitulo.PercentualMinPagamento > 0, 
-         'P', 
-         'V') +                                                                 // 681 a 681 - Indicativo de valor ou percentual para o range mínimo e máximo de aceitação do pagamento
-    PadLeft(IfThen(LTitulo.ValorMinPagamento > 0, 
-         CurrToStr(LTitulo.ValorMinPagamento), 
-         CurrToStr(LTitulo.PercentualMinPagamento)), 13, '0') +                 // 682 a 694 - Valor ou Percentual Mínimo para aceitação do pagamento
-    PadLeft(IfThen(LTitulo.ValorMaxPagamento > 0, 
-         CurrToStr(LTitulo.ValorMaxPagamento), 
-         CurrToStr(LTitulo.PercentualMaxPagamento)), 13, '0') +                 // 695 a 707 - Valor ou Percentual Maximo para aceitação do pagamento
-    Space(1) +                                                                  // 708 a 708 - Uso do Banco Brancos
-    IntToStrZero(LTitulo.QtdePagamentoParcial, 2);                              // 709 a 710 - Quantidade de pagamentos parciais
+    PadRight(IfThen(LTitulo.ValorDesconto2 > 0 ,
+      IntToStrZero(Round(LTitulo.ValorDesconto2 * 100), 13), ' '),13) +         // 648 a 660 - Valor Desconto2
 
-  ARemessa.Add(UpperCase(LLinha));
+    IfThen(LTitulo.DataDesconto3 < EncodeDate(2000, 01, 01),
+         '      ',
+         FormatDateTime('ddmmyy', LTitulo.DataDesconto3)) +                     // 661 a 666 - Data Desconto3
+    PadRight(IfThen(LTitulo.ValorDesconto3 > 0 ,
+    IntToStrZero(Round(LTitulo.ValorDesconto3 * 100), 13), ' '),13) +           // 667 a 679 - Valor Desconto3
+    ConverterTipoPagamento(LTitulo.TipoPagamento) +                             // 680 a 680 - Indicativo de Autorização para Recebimento de Valor Divergente
+    IfThen((LTitulo.ValorMinPagamento = 0)
+           or (LTitulo.ValorMaxPagamento = 0),
+           ' ',
+      IfThen(LTitulo.PercentualMinPagamento > 0,
+             'P',
+             'V')
+    ) +                                                                         // 681 a 681 - Indicativo de valor ou percentual para o range mínimo e máximo de aceitação do pagamento
+    IfThen(LTitulo.ValorMinPagamento = 0,
+      PadLeft(' ',13),
+        IfThen(LTitulo.ValorMinPagamento > 0,
+           IntToStrZero(Round(LTitulo.ValorMinPagamento * 100), 13),
+           IntToStrZero(Round(LTitulo.PercentualMinPagamento * 100), 13))
+    ) +                                                                         // 682 a 694 - Valor ou Percentual Mínimo para aceitação do pagamento
+    IfThen(LTitulo.ValorMaxPagamento = 0,
+      PadLeft(' ',13),
+        IfThen(LTitulo.ValorMaxPagamento > 0,
+         IntToStrZero(Round(LTitulo.ValorMaxPagamento * 100), 13),
+         IntToStrZero(Round(LTitulo.PercentualMaxPagamento * 100), 13))
+    ) +                                                                         // 695 a 707 - Valor ou Percentual Maximo para aceitação do pagamento
+    Space(1) +                                                                  // 708 a 708 - Uso do Banco Brancos
+    ifThen(LTitulo.QtdePagamentoParcial=0,
+      PadLeft(' ',2),
+      IntToStrZero(LTitulo.QtdePagamentoParcial, 2)
+    );                                                                          // 709 a 710 - Quantidade de pagamentos parciais
+
+  ARemessa.Add(TiraAcentos(UpperCase(LLinha)));
 
   LLinha := MontaInstrucoesCNAB400(ACBrTitulo, ARemessa.Count);
 
   if not (LLinha = EmptyStr) then
-    ARemessa.Add(UpperCase(LLinha));
+    ARemessa.Add(TiraAcentos(UpperCase(LLinha)));
 end;
 
 function TACBrBancoPefisa.GetLocalPagamento: String;

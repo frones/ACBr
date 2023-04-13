@@ -500,6 +500,7 @@ var
   I: Integer;
 begin
   Document := TACBrXmlDocument.Create;
+  NumRps := '';
 
   try
     try
@@ -581,12 +582,15 @@ begin
             if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
 
             NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-
-            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
-
-            ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
-            SalvarXmlNfse(ANota);
           end;
+
+          if NumRps <> '' then
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
+          else
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
+
+          ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+          SalvarXmlNfse(ANota);
         end;
       end;
 

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2023
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Ajustes para salvar corretamente o XML da nota quando este não contem informações sobre
+    o Rps.
+   Por: Italo Giurizzato Junior
+
 11/04/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Santa Maria/RS mudou para a versão 2.04 o provedor é o mesmo: ISSNet

@@ -1436,7 +1436,9 @@ begin
           MoverStringParaPChar(Resposta, sResposta, esTamanho);
           Result := SetRetorno(ErrOK, Resposta);
         except
-          raise EACBrLibException.Create(ErrRetorno, ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
+          on E: Exception do
+            raise EACBrLibException.Create(ErrRetorno, E.ToString + sLineBreak +
+                'retDistDFeInt.xMotivo: '+ ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
         end;
       end;
     finally

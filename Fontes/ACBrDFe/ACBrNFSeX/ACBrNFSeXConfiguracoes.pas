@@ -466,7 +466,7 @@ begin
   FVersao := StrToVersaoNFSe(Ok, FPIniParams.ReadString(CodIBGE, 'Versao', '1.00'));
 
   if (FxMunicipio <> '') and (FxProvedor = '') and (FLayoutNFSe = lnfsProvedor) then
-    raise EACBrDFeException.Create('Município [CodIBGE:' + CodIBGE +'/'+FxMunicipio +
+    raise EACBrDFeException.Create('CodIBGE/Município: [' + CodIBGE +'/'+FxMunicipio +
             '] não está associado a nenhum Provedor.');
 
   FProvedor := StrToProvedor(FxProvedor);

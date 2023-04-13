@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/04/2023
+-- ACBrNFSeXConfiguracoes --
+[*] Alterado a mensagem para constar o código IBGE e o nome do municipio na 
+    mensagem de erro quando a cidade não possui provedor.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Atualizado a URL de Produção da cidade de: Presidente Medici.
    Por: Gabriel Bobello

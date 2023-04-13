@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] Atualizado a URL de Produção da cidade de: Presidente Medici.
+   Por: Gabriel Bobello
+[+] Incluída a cidade Conquista do Oeste/MT - Provedor: Agili
+   Por: Diego Reckziegel
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Ajustes para salvar corretamente o XML da nota quando este não contem informações sobre
     o Rps.

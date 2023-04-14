@@ -116,6 +116,9 @@ contains
   PagFor.Sicredi.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.Provider.pas',
   PagFor.Banrisul.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.GravarTxtRemessa.pas',
   PagFor.Banrisul.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.LerTxtRetorno.pas',
-  PagFor.Banrisul.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.Provider.pas';
+  PagFor.Banrisul.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.Provider.pas',
+  PagFor.UnicredCooperativa.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.GravarTxtRemessa.pas',
+  PagFor.UnicredCooperativa.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.LerTxtRetorno.pas',
+  PagFor.UnicredCooperativa.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.Provider.pas';
 
 end.

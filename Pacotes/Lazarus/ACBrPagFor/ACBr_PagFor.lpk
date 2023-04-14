@@ -22,7 +22,7 @@
     <Description Value="ACBr - PagFor - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="1"/>
-    <Files Count="45">
+    <Files Count="48">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -205,6 +205,18 @@
         <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.Provider.pas"/>
         <UnitName Value="PagFor.Banrisul.Provider"/>
       </Item45>
+      <Item46>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.GravarTxtRemessa.pas"/>
+        <UnitName Value="PagFor.UnicredCooperativa.GravarTxtRemessa"/>
+      </Item46>
+      <Item47>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.LerTxtRetorno.pas"/>
+        <UnitName Value="PagFor.UnicredCooperativa.LerTxtRetorno"/>
+      </Item47>
+      <Item48>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.Provider.pas"/>
+        <UnitName Value="PagFor.UnicredCooperativa.Provider"/>
+      </Item48>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

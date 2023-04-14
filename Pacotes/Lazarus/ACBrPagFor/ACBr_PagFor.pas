@@ -27,7 +27,9 @@ uses
   CNAB240.Provider, PagFor.Modelo.GravarTxtRemessa, 
   PagFor.Modelo.LerTxtRetorno, PagFor.Modelo.Provider, 
   PagFor.Banrisul.GravarTxtRemessa, PagFor.Banrisul.LerTxtRetorno, 
-  PagFor.Banrisul.Provider, LazarusPackageIntf;
+  PagFor.Banrisul.Provider, PagFor.UnicredCooperativa.GravarTxtRemessa, 
+  PagFor.UnicredCooperativa.LerTxtRetorno, PagFor.UnicredCooperativa.Provider, 
+  LazarusPackageIntf;
 
 implementation
 

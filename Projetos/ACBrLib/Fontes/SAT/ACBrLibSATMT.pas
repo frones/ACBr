@@ -334,8 +334,8 @@ begin
   end;
 end;
 
-function SAT_ConsultarUltimaSessaoFiscal(const libHandle: PLibHandle;
-  const sResposta: PChar; var esTamanho: longint): longint; cdecl;
+function SAT_ConsultarUltimaSessaoFiscal(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);

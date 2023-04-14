@@ -31,7 +31,7 @@ Agradecimentos:
 - Daniel Simões de Almeida
 
 {******************************************************************************
-|* ACBrLibMDFe
+|* ACBrLibSAT
 |*
 |* PROPÓSITO: Registro de Alterações
 ******************************************************************************}
@@ -41,6 +41,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+14/04/2023
+-- ACBrLibSATMT  --
+[-] corrigido a função ConsultarUltimaSessaoFiscal do SAT 
+   Por: Daniel Morais
 
 12/04/2023
 -- ACBrLibSAT, ACBrLibSATBase, ACBrLibSATMT, ACBrLibSATST, ACBrLibSATStaticImport, ACBrLibSATStaticImportMT  --

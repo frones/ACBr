@@ -11,3 +11,4 @@ Safra
 Santander
 Sicoob
 Sicredi
+UnicredCooperativa

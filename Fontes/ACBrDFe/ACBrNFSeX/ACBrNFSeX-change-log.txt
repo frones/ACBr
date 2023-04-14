@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/04/2023
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Ao ler o XML não estava alimentando o campo MunicipioIncidencia.
+   Por: Italo Giurizzato Junior
 -- Prescon.GravarJson --
 [*] Alterado para levar o ValorLiquidoNfse no Total da NFSe.
    Por: Renato Rubinho

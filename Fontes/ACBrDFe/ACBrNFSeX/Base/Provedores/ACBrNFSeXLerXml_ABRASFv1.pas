@@ -700,6 +700,8 @@ begin
 
       if CodigoMunicipio = '' then
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcStr);
+
+      MunicipioIncidencia := StrToIntDef(CodigoMunicipio, 0);
     end;
 
     LerItensServico(AuxNode);

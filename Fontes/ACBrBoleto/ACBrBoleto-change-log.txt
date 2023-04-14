@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+14/04/2023
+[-]TK-3815 Validar C400 Santander Nosso Número quando passando mais de 7 digitos para NN e calculando DV errado / Linha Digitavel
+  Por : Victor H Gonzales - Pandaaa
+
 06/04/2023
 -- ACACBrBoletoRet_Inter_API,ACBrBoletoW_Inter_API  --
 [-] TK-3798-1 ATENÇÃO ! ACBRBoleto Inter API, alterado a regra de registro, campo obrigatório seuNumero deve ser informado e controlado pela aplicação!

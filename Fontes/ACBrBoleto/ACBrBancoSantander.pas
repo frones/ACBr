@@ -121,10 +121,10 @@ end;
 function TACBrBancoSantander.DefineNumeroDocumentoModulo(
   const ACBrTitulo: TACBrTitulo): String;
 begin
-   with ACBrTitulo do
-  begin
-    Result:= NossoNumero;
-  end;
+  case ACBrTitulo.ACBrBoleto.LayoutRemessa of
+    c240 : Result:= ACBrTitulo.NossoNumero;
+    c400 : Result:= PadLeft(RightStr(ACBrTitulo.NossoNumero,7),7,'0');
+  end
 end;
 
 function TACBrBancoSantander.DefinePosicaoNossoNumeroRetorno: Integer;

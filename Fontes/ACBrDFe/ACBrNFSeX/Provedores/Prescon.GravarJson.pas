@@ -201,7 +201,7 @@ begin
       .AddPair('valorDeducao', NFSe.Servico.Valores.ValorDeducoes)
       .AddPair('baseCalculo', NFSe.Servico.Valores.BaseCalculo)
       .AddPair('valorIss', NFSe.Servico.Valores.ValorIss)
-      .AddPair('valorTotalNota', NFSe.Servico.Valores.ValorServicos)
+      .AddPair('valorTotalNota', NFSe.Servico.Valores.ValorLiquidoNfse)
       .AddPair('tipoEnquadramento', tipoEnquadramento)
       .AddPair('tipoIss', 'F')
       .AddPair('hashMd5', '');

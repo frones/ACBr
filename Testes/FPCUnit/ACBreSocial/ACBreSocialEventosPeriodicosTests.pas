@@ -6,7 +6,9 @@ interface
 
 uses
   Classes, SysUtils, ACBrTests.Util, ACBreSocialTestsConsts, ACBreSocial,
-  pcesS1200, pcesS1202, pcesS1207, pcesS1210, pcesS1260, pcesCommon,
+  pcesS1200, pcesS1202, pcesS1207, pcesS1210, pcesS1260, pcesS1270, pcesS1280,
+  pcesS1298, pcesS1299,
+  pcesCommon,
   pcesConversaoeSocial, ACBrDFeException,
   ACBreSocialEventos,
   ACBrUtil.DateTime;
@@ -23,6 +25,10 @@ type
       procedure ES1207Tests;
       procedure ES1210Tests;
       procedure ES1260Tests;
+      procedure ES1270Tests;
+      procedure ES1280Tests;
+      procedure ES1298Tests;
+      procedure ES1299Tests;
     public
       procedure Setup;override;
       procedure TearDown;override;
@@ -40,8 +46,15 @@ type
       procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1210_vS0100;
       procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1210_vS0101;
       procedure ACBreSocialEventosPeriodicosS1260_Create_ListaVazia;
-      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1260_vS0100;
       procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1260_vS0101;
+      procedure ACBreSocialEventosPeriodicosS1270_Create_ListaVazia;
+      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1270_vS0101;
+      procedure ACBreSocialEventosPeriodicosS1280_Create_ListaVazia;
+      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1280_vS0101;
+      procedure ACBreSocialEventosPeriodicosS1298_Create_ListaVazia;
+      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1298_vS0101;
+      procedure ACBreSocialEventosPeriodicosS1299_Create_ListaVazia;
+      procedure ACBreSocialEventos_LoadFromINI_LeuePreencheuS1299_vS0101;
   end;
 
 implementation
@@ -332,7 +345,7 @@ begin
     Check(dmDevI.infoRRA.qtdMesesRRA = 11, 'dmDev.infoRRA.qtdMesesRRA | Valor esperado:11 | Valor recebido:'+FormatFloat('00', dmDevI.infoRRA.qtdMesesRRA));
     Check(dmDevI.infoRRA.DespProcJud.vlrDespCustas = 2200.50, 'dmDev.infoRRA.vlrDespCustas | Valor esperado:2200,50 | Valor recebido:'+FormatFloat('0,000.00', dmDevI.infoRRA.DespProcJud.vlrDespCustas));
 
-    ideAdvI := dmDevI.infoRRA.ideAdv[0];
+    ideAdvI := dmDevI.infoRRA.ideAdv.Items[0];
     Check(ideADVI.NrInsc = '11111111111111', 'dmDev.infoRRA.ideADV.nrInsc | Valor esperado:11111111111111 | Valor recebido:'+ideADVI.NrInsc);
     Check(ideADVI.vlrAdv = 350.00, 'dmDev.infoRRA.ideADV.vlrAdv | Valor esperado:350,00 | Valor recebido:'+FormatFloat('0.000,00', ideADVI.vlrAdv));
   end;
@@ -539,41 +552,45 @@ begin
   Check(eS1210.ideBenef.infoPgto.Items[0].vrLiq=0,
         'ideBenef.infoPgto.VrLiq | Valor esperado:0 | Valor recebido:'+FormatFloat('#,###.##', eS1210.ideBenef.InfoPgto.Items[0].vrLiq));
 
-  Check(eS1210.ideBenef.InfoPgto.Items[0].paisResidExt='105',
-        'ideBenef.infoPgto.paisResidExt | Valor esperado:105 | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].paisResidExt);
+  if(FACBreSocial.Configuracoes.Geral.VersaoDF = veS01_01_00)then
+    begin
+      Check(eS1210.ideBenef.InfoPgto.Items[0].paisResidExt='105',
+            'ideBenef.infoPgto.paisResidExt | Valor esperado:105 | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].paisResidExt);
 
-  Check(eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.indNIF = infPaisnaoNIF,
-        'ideBenef.infoPgto.infoPgtoExt.indNIF | Valor esperado:3 | Valor recebido:'+eSIndNIFToStr(eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.indNIF));
+      Check(eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.indNIF = infPaisnaoNIF,
+            'ideBenef.infoPgto.infoPgtoExt.indNIF | Valor esperado:3 | Valor recebido:'+eSIndNIFToStr(eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.indNIF));
 
-  Check(eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.nifBenef = '01',
-        'ideBenef.infoPgto.infoPgtoExt.nifBenf | Valor esperado:01 | Valor recebiddo:'+eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.nifBenef);
+      Check(eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.nifBenef = '01',
+            'ideBenef.infoPgto.infoPgtoExt.nifBenf | Valor esperado:01 | Valor recebiddo:'+eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.nifBenef);
 
-  Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.frmTribut = 10,
-        'ideBenef.infoPgto.infoPgtoExt.frmTribut | Valor esperado:10 | Valor recebido:'+IntToStr(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.frmTribut));
+      Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.frmTribut = 10,
+            'ideBenef.infoPgto.infoPgtoExt.frmTribut | Valor esperado:10 | Valor recebido:'+IntToStr(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.frmTribut));
 
-  Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endDscLograd = 'descricao do logradouro',
-        'ideBenef.infoPgto.infoPgtoExt.endExt.endDscLograd | Valor esperado:descricao do logradouro | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endDscLograd);
+      Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endDscLograd = 'descricao do logradouro',
+            'ideBenef.infoPgto.infoPgtoExt.endExt.endDscLograd | Valor esperado:descricao do logradouro | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endDscLograd);
 
-  Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endNrLograd = '1',
-        'ideBenef.infoPgto.infoPgtoExt.endExt.endNrLograd | Valor esperado:1 | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endNrLograd);
+      Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endNrLograd = '1',
+            'ideBenef.infoPgto.infoPgtoExt.endExt.endNrLograd | Valor esperado:1 | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endNrLograd);
 
-  Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endComplem='complemento do logradouro',
-        'ideBenef.infoPgto.infoPgtoExt.endExt.endComplem | Valor esperado:complemento do logradouro | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endComplem);
+      Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endComplem='complemento do logradouro',
+            'ideBenef.infoPgto.infoPgtoExt.endExt.endComplem | Valor esperado:complemento do logradouro | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endComplem);
 
-  Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endBairro='Bairro/distrito',
-        'ideBenef.infoPgto.infoPgtoExt.endExt.endBairro | Valor esperado:Bairro/distrito | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endBairro);
+      Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endBairro='Bairro/distrito',
+            'ideBenef.infoPgto.infoPgtoExt.endExt.endBairro | Valor esperado:Bairro/distrito | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endBairro);
 
-  Check(eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.endExt.endCidade='Nome Cidade',
-        'ideBenef.infoPgto.infoPgtoExt.endExt.endCidade | Valor esperado:Nome Cidade | Valor recebido:'+eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.endExt.endCidade);
+      Check(eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.endExt.endCidade='Nome Cidade',
+            'ideBenef.infoPgto.infoPgtoExt.endExt.endCidade | Valor esperado:Nome Cidade | Valor recebido:'+eS1210.ideBenef.InfoPgto.Items[0].infoPgtoExt.endExt.endCidade);
 
-  Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endEstado='Provincia/Estado',
-        'ideBenef.infoPgto.infoPgtoExt.endExt.endEstado | Valor esperado:Provincia/Estado | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endEstado);
+      Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endEstado='Provincia/Estado',
+            'ideBenef.infoPgto.infoPgtoExt.endExt.endEstado | Valor esperado:Provincia/Estado | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endEstado);
 
-  Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endCodPostal='12345678',
-        'ideBenef.infoPgto.infoPgtoExt.endExt.endCodPostal | Valor esperado:12345678 | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endCodPostal);
+      Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endCodPostal='12345678',
+            'ideBenef.infoPgto.infoPgtoExt.endExt.endCodPostal | Valor esperado:12345678 | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.endCodPostal);
 
-  Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.telef='12345678',
-        'ideBenef.infoPgto.infoPgtoExt.endExt.telef | Valor esperado:12345678 | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.telef);
+      Check(eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.telef='12345678',
+            'ideBenef.infoPgto.infoPgtoExt.endExt.telef | Valor esperado:12345678 | Valor recebido:'+eS1210.ideBenef.infoPgto.Items[0].infoPgtoExt.endExt.telef);
+
+    end;
 
 
 end;
@@ -588,7 +605,291 @@ begin
 
   eS1260 := FACBreSocial.Eventos.Periodicos.S1260[0].EvtComProd;
 
+  Check(eS1260.IdeEvento.indRetif = ireOriginal,
+        'ideEvento.indRetif | Valor esperado:1 | Valor recebido:'+eSIndRetificacaoToStr(eS1260.IdeEvento.indRetif));
 
+  Check(eS1260.IdeEvento.nrRecibo = '123',
+        'ideEvento.nrRecibo | Valor esperado:123 | Valor recebido:'+eS1260.IdeEvento.nrRecibo);
+
+  Check(eS1260.IdeEvento.perApur = '2018-05',
+        'ideEvento.perApur | Valor esperado:2018-05 | Valor recebido:'+eS1260.IdeEvento.perApur);
+
+  Check(eS1260.IdeEvento.indGuia = '1',
+        'ideEvento.indGuia | Valor esperado:1 | Valor recebido:'+eS1260.IdeEvento.indGuia);
+
+  Check(eS1260.IdeEvento.ProcEmi = peAplicEmpregador,
+        'ideEvento.procEmi | Valor esperado:1 | Valor recebido:'+eSprocEmiToStr(eS1260.IdeEvento.procEmi));
+
+  Check(eS1260.IdeEvento.verProc = '1.00',
+        'ideEvento.indRetif | Valor esperado:1.00 | Valor recebido:'+eS1260.IdeEvento.verProc);
+
+  Check(eS1260.IdeEmpregador.TpInsc = tiCNPJ,
+        'IdeEmpregador.TpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(eS1260.IdeEmpregador.TpInsc));
+
+  Check(eS1260.IdeEmpregador.NrInsc = '12345678000123',
+        'IdeEmpregador.NrInsc | Valor esperado:12345678000123 | Valor recebido:'+eS1260.IdeEmpregador.NrInsc);
+
+  Check(eS1260.InfoComProd.IdeEstabel.nrInscEstabRural = '12345678000123',
+        'InfoComProd.IdeEstabel.nrInscEstabRural | Valor esperado:12345678000123 | Valor recebido:'+eS1260.InfoComProd.IdeEstabel.nrInscEstabRural);
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].indComerc = icComProdPorProdRuralPFInclusiveSegEspEfetuadaDirVarejoConsFinal,
+        'InfoComProd.IdeEstabel.TpComerc.indComerc | Valor esperado:1 | Valor recebido:'+eSIndComercStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].indComerc));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].vrTotCom = 1000,
+        'InfoComProd.IdeEstabel.TpComerc.vrTotCom | Valor esperado:1000 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].vrTotCom));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].tpInsc = tiCNPJ,
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.tpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].tpInsc));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nrInsc = '12345678000123',
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.nrInsc | Valor esperado:12345678000123 | Valor recebido:'+eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nrInsc);
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].vrComerc = 2000,
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.vrComerc | Valor esperado:2000 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].vrComerc));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].serie = '1',
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.nfs.serie | Valor esperado:1 | Valor recebido:'+eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].serie);
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].nrDocto = '50',
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.nfs.serie | Valor esperado:50 | Valor recebido:'+eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].nrDocto);
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].dtEmisNF = StrToDateTime('04/05/2018'),
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.nfs.dtEmisNF | Valor esperado:04/05/2018 | Valor recebido:'+DateTimeToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].dtEmisNF));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].vlrBruto = 5000,
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.nfs.vlrBruto | Valor esperado:5000 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].vlrBruto));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].vrCPDescPR = 0,
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.nfs.vrCPDescPR | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].vrCPDescPR));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].vrRatDescPR = 0,
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.nfs.vrRatDescPR | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].vrRatDescPR));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].vrSenarDesc = 0,
+        'InfoComProd.IdeEstabel.TpComerc.IdeAdquir.nfs.vrSenarDesc | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Items[0].nfs.Items[0].vrSenarDesc));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].tpProc = tpAdministrativo,
+        'InfoComProd.IdeEstabel.TpComerc.InfoProcJud.tpProc | Valor esperado:1 | Valor recebido:'+eSTpProcessoToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].tpProc));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].nrProcJud = '123',
+        'InfoComProd.IdeEstabel.TpComerc.InfoProcJud.nrProc | Valor esperado:123 | Valor recebido:'+eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].nrProcJud);
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].codSusp = 456,
+        'InfoComProd.IdeEstabel.TpComerc.InfoProcJud.codSusp | Valor esperado:456 | Valor recebido:'+IntToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].codSusp));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].vrCPSusp = 0,
+        'InfoComProd.IdeEstabel.TpComerc.InfoProcJud.vrCPSusp | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].vrCPSusp));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].vrRatSusp = 0,
+      'InfoComProd.IdeEstabel.TpComerc.InfoProcJud.vrRatSusp | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].vrRatSusp));
+
+  Check(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].vrSenarSusp = 0,
+        'InfoComProd.IdeEstabel.TpComerc.InfoProcJud.vrSenarSusp | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1260.InfoComProd.IdeEstabel.TpComerc.Items[0].InfoProcJud.Items[0].vrSenarSusp));
+
+
+
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ES1270Tests;
+var
+  eS1270: TEvtContratAvNP;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1270.Count > 0, 'Não instanciou o S-1270 na lista!');
+
+  eS1270 := FACBreSocial.Eventos.Periodicos.S1270[0].EvtContratAvNP;
+
+  Check(eS1270.IdeEvento.indRetif = ireOriginal,
+        'IdeEvento.indRetif | Valor esperado:1 | Valor recebido:'+eSIndRetificacaoToStr(eS1270.ideEvento.indRetif));
+
+  Check(eS1270.IdeEvento.nrRecibo = '123',
+        'IdeEvento.nrRecibo | Valor esperado:123 | Valor recebido:'+eS1270.ideEvento.nrRecibo);
+
+  Check(eS1270.IdeEvento.perApur = '2018-05' ,
+        'IdeEvento.perApur | Valor esperado:2018-05 | Valor recebido:'+eS1270.ideEvento.perApur);
+
+  Check(eS1270.IdeEvento.indGuia = '1',
+        'IdeEvento.indGuia | Valor esperado:1 | Valor recebido:'+eS1270.ideEvento.indGuia);
+
+  Check(eS1270.IdeEvento.procEmi = peAplicEmpregador ,
+        'IdeEvento.procEmi | Valor esperado:1 | Valor recebido:'+eSprocEmiToStr(eS1270.ideEvento.procEmi));
+
+  Check(eS1270.IdeEvento.verProc = '1.00' ,
+        'IdeEvento.verProc | Valor esperado:1.00 | Valor recebido:'+eS1270.ideEvento.verProc);
+
+  Check(eS1270.IdeEmpregador.TpInsc = tiCNPJ,
+        'IdeEmpregador.TpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(eS1270.IdeEmpregador.TpInsc));
+
+  Check(eS1270.IdeEmpregador.nrInsc = '12345678000123' ,
+        'IdeEmpregador.nrInsc | Valor esperado:12345678000123 | Valor recebido:'+eS1270.IdeEmpregador.nrInsc);
+
+  Check(eS1270.remunAvNp.Items[0].tpInsc = tiCNPJ,
+        'remunAvNp.tpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(eS1270.remunAvNp.Items[0].tpInsc));
+
+  Check(eS1270.remunAvNp.Items[0].nrInsc = '12345678000123',
+        'remunAvNp.nrInsc | Valor esperado:12345678000123 | Valor recebido:'+eS1270.remunAvNp.Items[0].nrInsc);
+
+  Check(eS1270.remunAvNp.Items[0].codLotacao = '123',
+        'remunAvNp.codLotacao | Valor esperado:123 | Valor recebido:'+eS1270.remunAvNp.Items[0].codLotacao);
+
+  Check(eS1270.remunAvNp.Items[0].vrBcCp00 = 0,
+        'remunAvNp.vrBcCp00 | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1270.remunAvNp.Items[0].vrBcCp00));
+
+  Check(eS1270.remunAvNp.Items[0].vrBcCp15 = 0,
+        'remunAvNp.vrBcCp15 | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1270.remunAvNp.Items[0].vrBcCp15));
+
+  Check(eS1270.remunAvNp.Items[0].vrBcCp20 = 0,
+        'remunAvNp.vrBcCp20 | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1270.remunAvNp.Items[0].vrBcCp20));
+
+  Check(eS1270.remunAvNp.Items[0].vrBcCp25 = 0,
+        'remunAvNp.vrBcCp25 | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1270.remunAvNp.Items[0].vrBcCp25));
+
+  Check(eS1270.remunAvNp.Items[0].vrBcCp13 = 0,
+        'remunAvNp.vrBcCp13 | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1270.remunAvNp.Items[0].vrBcCp13));
+
+  Check(eS1270.remunAvNp.Items[0].vrBcFgts = 0,
+        'remunAvNp.vrBcFgts | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1270.remunAvNp.Items[0].vrBcFgts));
+
+  Check(eS1270.remunAvNp.Items[0].vrDescCP = 0,
+        'remunAvNp.vrDescCP | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1270.remunAvNp.Items[0].vrDescCP));
+
+
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ES1280Tests;
+var
+  eS1280: TEvtInfoComplPer;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1280.Count > 0, 'Não instanciou o S-1280 na lista!');
+
+  eS1280 := FACBreSocial.Eventos.Periodicos.S1280[0].EvtInfoComplPer;
+
+  Check(eS1280.IdeEvento.indRetif = ireOriginal,
+        'IdeEvento.indRetif | Valor esperado:1 | Valor recebido:'+eSIndRetificacaoToStr(eS1280.ideEvento.indRetif));
+
+  Check(eS1280.IdeEvento.nrRecibo = '123',
+        'IdeEvento.nrRecibo | Valor esperado:123 | Valor recebido:'+eS1280.ideEvento.nrRecibo);
+
+  Check(eS1280.IdeEvento.perApur = '2018-05' ,
+        'IdeEvento.perApur | Valor esperado:2018-05 | Valor recebido:'+eS1280.ideEvento.perApur);
+
+  Check(eS1280.IdeEvento.indGuia = '1',
+        'IdeEvento.indGuia | Valor esperado:1 | Valor recebido:'+eS1280.ideEvento.indGuia);
+
+  Check(eS1280.IdeEvento.procEmi = peAplicEmpregador ,
+        'IdeEvento.procEmi | Valor esperado:1 | Valor recebido:'+eSprocEmiToStr(eS1280.ideEvento.procEmi));
+
+  Check(eS1280.IdeEvento.verProc = '1.00' ,
+        'IdeEvento.verProc | Valor esperado:1.00 | Valor recebido:'+eS1280.ideEvento.verProc);
+
+  Check(eS1280.IdeEmpregador.TpInsc = tiCNPJ,
+        'IdeEmpregador.TpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(eS1280.IdeEmpregador.TpInsc));
+
+  Check(eS1280.IdeEmpregador.nrInsc = '12345678000123' ,
+        'IdeEmpregador.nrInsc | Valor esperado:12345678000123 | Valor recebido:'+eS1280.IdeEmpregador.nrInsc);
+
+  Check(eS1280.InfoSubstPatr.indSubstPatr = spIntegralmenteSubstituida,
+        'InfoSubstPatr.indSubstPatr | Valor esperado:1 | Valor recebido:'+eSIndSubstPatrStr(eS1280.InfoSubstPatr.indSubstPatr));
+
+  Check(eS1280.InfoSubstPatr.percRedContrib = 0,
+        'InfoSubstPatr.percRedContrib | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1280.InfoSubstPatr.percRedContrib));
+
+  Check(eS1280.InfoSubstPatrOpPort.Items[0].codLotacao = '05',
+        'InfoSubstPatrOpPort.codLotacao | Valor esperado:05 | Valor recebido:'+eS1280.InfoSubstPatrOpPort.Items[0].codLotacao);
+
+  Check(eS1280.InfoAtivConcom.fatorMes = 0,
+        'InfoAtivConcom.fatorMes | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1280.InfoAtivConcom.fatorMes));
+
+  Check(eS1280.InfoAtivConcom.fator13 = 0,
+        'InfoAtivConcom.fator13 | Valor esperado:0 | Valor recebido:'+FloatToStr(eS1280.InfoAtivConcom.fator13));
+
+  Check(eS1280.infoPercTransf11096.percTransf = 1,
+        'infoPercTransf11096.percTransf | Valor esperado:1 | Valor recebido:'+IntToStr(eS1280.infoPercTransf11096.percTransf));
+
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ES1298Tests;
+var
+  eS1298: TEvtReabreEvPer;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1298.Count > 0, 'Não instanciou o S-1298 na lista!');
+
+  eS1298 := FACBreSocial.Eventos.Periodicos.S1298[0].EvtReabreEvPer;
+
+  Check(eS1298.IdeEvento.IndApuracao = iapuMensal,
+        'IdeEvento.IndApuracao | Valor esperado:1 | Valor recebido:'+eSIndApuracaoToStr(eS1298.ideEvento.IndApuracao));
+
+  Check(eS1298.IdeEvento.perApur = '2018-05' ,
+        'IdeEvento.perApur | Valor esperado:2018-05 | Valor recebido:'+eS1298.ideEvento.perApur);
+
+  Check(eS1298.IdeEvento.indGuia = '1',
+        'IdeEvento.indGuia | Valor esperado:1 | Valor recebido:'+eS1298.ideEvento.indGuia);
+
+  Check(eS1298.IdeEvento.procEmi = peAplicEmpregador ,
+        'IdeEvento.procEmi | Valor esperado:1 | Valor recebido:'+eSprocEmiToStr(eS1298.ideEvento.procEmi));
+
+  Check(eS1298.IdeEvento.verProc = '1.00' ,
+        'IdeEvento.verProc | Valor esperado:1.00 | Valor recebido:'+eS1298.ideEvento.verProc);
+
+  Check(eS1298.IdeEmpregador.TpInsc = tiCNPJ,
+        'IdeEmpregador.TpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(eS1298.IdeEmpregador.TpInsc));
+
+  Check(eS1298.IdeEmpregador.nrInsc = '12345678000123' ,
+        'IdeEmpregador.nrInsc | Valor esperado:12345678000123 | Valor recebido:'+eS1298.IdeEmpregador.nrInsc);
+
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ES1299Tests;
+var
+  eS1299: TEvtFechaEvPer;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1299.Count > 0, 'Não instanciou o S-1299 na lista!');
+
+  eS1299 := FACBreSocial.Eventos.Periodicos.S1299[0].EvtFechaEvPer;
+
+  Check(eS1299.IdeEvento.IndApuracao = iapuMensal,
+        'IdeEvento.IndApuracao | Valor esperado:1 | Valor recebido:'+eSIndApuracaoToStr(eS1299.ideEvento.IndApuracao));
+
+  Check(eS1299.IdeEvento.perApur = '2018-05' ,
+        'IdeEvento.perApur | Valor esperado:2018-05 | Valor recebido:'+eS1299.ideEvento.perApur);
+
+  Check(eS1299.IdeEvento.indGuia = '1',
+        'IdeEvento.indGuia | Valor esperado:1 | Valor recebido:'+eS1299.ideEvento.indGuia);
+
+  Check(eS1299.IdeEvento.procEmi = peAplicEmpregador ,
+        'IdeEvento.procEmi | Valor esperado:1 | Valor recebido:'+eSprocEmiToStr(eS1299.ideEvento.procEmi));
+
+  Check(eS1299.IdeEvento.verProc = '1.00' ,
+        'IdeEvento.verProc | Valor esperado:1.00 | Valor recebido:'+eS1299.ideEvento.verProc);
+
+  Check(eS1299.IdeEmpregador.TpInsc = tiCNPJ,
+        'IdeEmpregador.TpInsc | Valor esperado:1 | Valor recebido:'+eSTpInscricaoToStr(eS1299.IdeEmpregador.TpInsc));
+
+  Check(eS1299.IdeEmpregador.nrInsc = '12345678000123' ,
+        'IdeEmpregador.nrInsc | Valor esperado:12345678000123 | Valor recebido:'+eS1299.IdeEmpregador.nrInsc);
+
+  Check(eS1299.InfoFech.evtRemun = tpSim ,
+        'InfoFech.evtRemun | Valor esperado:S | Valor recebido:'+eSSimNaoToStr(eS1299.InfoFech.evtRemun));
+
+  Check(eS1299.InfoFech.evtPgtos = tpSim ,
+        'InfoFech.evtPgtos | Valor esperado:S | Valor recebido:'+eSSimNaoToStr(eS1299.InfoFech.evtPgtos));
+
+  Check(eS1299.InfoFech.evtComProd = tpSim ,
+        'InfoFech.evtComProd | Valor esperado:S | Valor recebido:'+eSSimNaoToStr(eS1299.InfoFech.evtComProd));
+
+  Check(eS1299.InfoFech.evtContratAvNP = tpSim ,
+        'InfoFech.evtContratAvNP | Valor esperado:S | Valor recebido:'+eSSimNaoToStr(eS1299.InfoFech.evtContratAvNP));
+
+  Check(eS1299.InfoFech.evtInfoComplPer = tpSim ,
+        'InfoFech.evtInfoComplPer | Valor esperado:S | Valor recebido:'+eSSimNaoToStr(eS1299.InfoFech.evtInfoComplPer));
+
+  Check(eS1299.InfoFech.indExcApur1250 = snfSim ,
+        'InfoFech.indExcApur1250 | Valor esperado:S | Valor recebido:'+eSSimNaoFacultativoToStr(eS1299.InfoFech.indExcApur1250));
+
+  Check(eS1299.InfoFech.transDCTFWeb = snfSim ,
+        'InfoFech.transDCTFWeb | Valor esperado:S | Valor recebido:'+eSSimNaoFacultativoToStr(eS1299.InfoFech.transDCTFWeb));
+
+  Check(eS1299.InfoFech.naoValid = snfSim ,
+        'InfoFech.naoValid | Valor esperado:S | Valor recebido:'+eSSimNaoFacultativoToStr(eS1299.InfoFech.naoValid));
 end;
 
 procedure TACBreSocialEventosPeriodicosTest.Setup;
@@ -748,21 +1049,6 @@ begin
   Check(FACBreSocial.Eventos.Periodicos.S1260.Count = 0, 'Lista de eventos S-1260 não está vazia!');
 end;
 
-procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS1260_vS0100;
-begin
-  try
-    FACBreSocial.Eventos.Periodicos.S1260.Clear;
-    FACBreSocial.Configuracoes.Geral.VersaoDF := veS01_00_00;
-    FACBreSocial.Eventos.LoadFromIni(ARQINI_vS0100_S1260);
-  except
-    on E:Exception do
-    begin
-      CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi '+ E.ClassName);
-      ES1260Tests;
-    end;
-  end;
-end;
-
 procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS1260_vS0101;
 begin
   try
@@ -774,6 +1060,86 @@ begin
     begin
       CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi '+ E.ClassName);
       ES1260Tests;
+    end;
+  end;
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventosPeriodicosS1270_Create_ListaVazia;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1270.Count = 0, 'Lista de eventos S-1270 não está vazia!');
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS1270_vS0101;
+begin
+  try
+    FACBreSocial.Eventos.Periodicos.S1270.Clear;
+    FACBreSocial.Configuracoes.Geral.VersaoDF := veS01_01_00;
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_vS0101_S1270);
+  except
+    on E:Exception do
+    begin
+      CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi '+ E.ClassName);
+      ES1270Tests;
+    end;
+  end;
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventosPeriodicosS1280_Create_ListaVazia;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1280.Count = 0, 'Lista de eventos S-1280 não está vazia!');
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS1280_vS0101;
+begin
+  try
+    FACBreSocial.Eventos.Periodicos.S1280.Clear;
+    FACBreSocial.Configuracoes.Geral.VersaoDF := veS01_01_00;
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_vS0101_S1280);
+  except
+    on E:Exception do
+    begin
+      CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi '+ E.ClassName);
+      ES1280Tests;
+    end;
+  end;
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventosPeriodicosS1298_Create_ListaVazia;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1298.Count = 0, 'Lista de eventos S-1298 não está vazia!');
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS1298_vS0101;
+begin
+  try
+    FACBreSocial.Eventos.Periodicos.S1298.Clear;
+    FACBreSocial.Configuracoes.Geral.VersaoDF := veS01_01_00;
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_vS0101_S1298);
+  except
+    on E:Exception do
+    begin
+      CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi '+ E.ClassName);
+      ES1298Tests;
+    end;
+  end;
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventosPeriodicosS1299_Create_ListaVazia;
+begin
+  Check(FACBreSocial.Eventos.Periodicos.S1299.Count = 0, 'Lista de eventos S-1299 não está vazia!');
+end;
+
+procedure TACBreSocialEventosPeriodicosTest.ACBreSocialEventos_LoadFromINI_LeuePreencheuS1299_vS0101;
+begin
+  try
+    FACBreSocial.Eventos.Periodicos.S1299.Clear;
+    FACBreSocial.Configuracoes.Geral.VersaoDF := veS01_01_00;
+    FACBreSocial.Eventos.LoadFromIni(ARQINI_vS0101_S1299);
+  except
+    on E:Exception do
+    begin
+      CheckIs(E, EACBrDFeException, 'Era esperado EACBrDFeException, mas o erro foi '+ E.ClassName);
+      ES1299Tests;
     end;
   end;
 end;

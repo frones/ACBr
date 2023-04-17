@@ -450,7 +450,7 @@ begin
     end;
   end;
 
-  fpConfiguracoes.WebServices.Params.SaveToFile('websrvs_params01.ini');
+
 
   // ===========================================================================
   // Verifica se o código IBGE consta no arquivo: ACBrNFSeXServicos

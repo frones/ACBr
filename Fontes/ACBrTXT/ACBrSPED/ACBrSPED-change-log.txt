@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/04/2023
+-- ACBrECFBloco_0_Class.pas, ACBrECFBloco_Y_Class --
+[*] Alteração para considerar do último leiaute que houve alteração em diante para levar os Registros: 0010, 0020 e Y800
+   Por: Renato Rubinho
+
 09/03/2023
 -- ACBrEFDBloco_C, ACBrEFDBloco_C_Class --
 [*] Ajuste no registro C181 para alguns campos que podem ser nulos de acordo com o COD_MOT_REST_COMPL informado e alteração no C185 par não causar erro quando valor for nulo.

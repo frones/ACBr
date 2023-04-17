@@ -961,7 +961,9 @@ begin
                   LFill(ARQ_RTF) +
                   LFill(IND_FIM_RTF));
 
-          ECFVersao300, ECFVersao400, ECFVersao500, ECFVersao600, ECFVersao700,ECFVersao800:
+        // Mantido ECFVersao300 em diante no else para não precisar de nova manutenção
+        //   enquanto o leiaute não mudar
+        else
                Add( LFill('Y800') +
                     LFill(TIPO_DOC) +
                     LFill(DESC_RTF) +

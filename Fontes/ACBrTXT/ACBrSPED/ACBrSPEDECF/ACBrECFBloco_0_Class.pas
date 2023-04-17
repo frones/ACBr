@@ -327,8 +327,10 @@ begin
                LFill(APUR_CSLL) +
                LFill(strIND_REC_RECEITA) );
 			   
-	    ECFVersao700,ECFVersao800:
-		Add( LFill('0010') +
+      // Mantido ECFVersao700 em diante no else para não precisar de nova manutenção
+      //   enquanto o leiaute não mudar
+      else
+          Add( LFill('0010') +
                LFill(HASH_ECF_ANTERIOR) +
                LFill(strOPT_REFIS) +
                LFill(strFORMA_TRIB) +
@@ -458,7 +460,9 @@ begin
                LFill(IND_PAIS_A_PAIS) +
                LFill(IND_DEREX));
 			   
-		  ECFVersao700,ECFVersao800:
+    // Mantido ECFVersao700 em diante no else para não precisar de nova manutenção
+    //   enquanto o leiaute não mudar
+    else
           Add( LFill('0020') +
                LFill(IND_ALIQ_CSLL) +
                LFill(IND_QTE_SCP, 3) +

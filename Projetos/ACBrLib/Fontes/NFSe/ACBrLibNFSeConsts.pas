@@ -41,7 +41,7 @@ uses
 
 const
   CLibNFSeNome = 'ACBrLibNFSe';
-  CLibNFSeVersao = '1.0.0.7';
+  CLibNFSeVersao = '1.0.0.9';
 
   CSessaoRespEnvio = 'Envio';
   CSessaoRespSituacao = 'Situacao';

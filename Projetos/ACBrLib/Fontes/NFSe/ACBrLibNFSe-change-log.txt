@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/04/2023
+--- ACBrLibNFSeBase ---
+[*] Remoção da variavel Response dos métodos para correção de A.V
+    Por: Antonio Carlos Junior e Elton Barbosa
+
 12/04/2023
 --- ACBrLibNFSe, ACBrLibNFSeConsts, ACBrLibNFSeStaticImport, ACBrLibNFSeStaticImportMT ---
 [*] Inclusão métodos que estavam faltando na unit ACBrLibNFSe, ACBrLibNFSeStaticImport e ACBrLibNFSeStaticImportMT

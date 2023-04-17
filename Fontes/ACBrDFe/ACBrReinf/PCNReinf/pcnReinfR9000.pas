@@ -188,7 +188,7 @@ begin
   try
     Self.VersaoDF := TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF;
 
-    Self.Id := GerarChaveReinf(now, self.ideContri.NrInsc, self.Sequencial);
+    Self.Id := GerarChaveReinf(now, self.ideContri.NrInsc, self.Sequencial, self.ideContri.TpInsc);
 
     GerarCabecalho('evtExclusao');
     Gerador.wGrupo('evtExclusao id="' + Self.Id + '"');

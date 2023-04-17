@@ -192,6 +192,32 @@ object Form1: TForm1
         OnClick = Button3Click
       end
     end
+    object TabSheet4: TTabSheet
+      Caption = 'Arquivo AEJ'
+      ImageIndex = 3
+      object Memo4: TMemo
+        Left = 3
+        Top = 3
+        Width = 650
+        Height = 374
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Consolas'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object Button4: TButton
+        Left = 212
+        Top = 394
+        Width = 249
+        Height = 25
+        Caption = 'Gerar Arquivo AEJ'
+        TabOrder = 1
+        OnClick = Button4Click
+      end
+    end
   end
   object ACBrPonto: TACBrPonto
     Path = '.\'

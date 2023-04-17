@@ -46,7 +46,8 @@ uses
   ACBrTXTClass, ACBrUtil.Strings,
   ACBrPonto_AFD, ACBrPonto_AFD_Class,
   ACBrPonto_AFDT, ACBrPonto_AFDT_Class,
-  ACBrPonto_ACJEF, ACBrPonto_ACJEF_Class;
+  ACBrPonto_ACJEF, ACBrPonto_ACJEF_Class,
+  ACBrPonto.AEJ;
 
 type
 
@@ -69,6 +70,7 @@ type
     FPonto_AFD: TPonto_AFD;
     FPonto_AFDT: TPonto_AFDT;
     FPonto_ACJEF: TPonto_ACJEF;
+    FAEJ: TAEJ;
 
     function GetDelimitador: String;
     function GetReplaceDelimitador: Boolean;
@@ -91,6 +93,7 @@ type
     function SaveFileTXT_AFD(const Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
     function SaveFileTXT_AFDT(const Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
     function SaveFileTXT_ACJEF(const Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
+    function SaveFileTXT_AEJ(const Arquivo: String): boolean;
 
     function ProcessarArquivo_AFD(const Arquivo: String): TPonto_AFD;
     function ProcessarArquivo_AFDT(const Arquivo: String): TPonto_AFDT;
@@ -98,6 +101,7 @@ type
     property Ponto_AFD: TPonto_AFD read FPonto_AFD write FPonto_AFD;
     property Ponto_AFDT: TPonto_AFDT read FPonto_AFDT write FPonto_AFDT;
     property Ponto_ACJEF: TPonto_ACJEF read FPonto_ACJEF write FPonto_ACJEF;
+    property AEJ: TAEJ read FAEJ write FAEJ;
 
   published
     property Path: String read FPath write FPath;
@@ -125,6 +129,7 @@ begin
   FPonto_AFD := TPonto_AFD.Create;
   FPonto_AFDT := TPonto_AFDT.Create;
   FPonto_ACJEF := TPonto_ACJEF.Create;
+  FAEJ := TAEJ.Create;
 
 
   FPath := ExtractFilePath(ParamStr(0));
@@ -140,6 +145,7 @@ begin
   FPonto_AFD.Free;
   FPonto_AFDT.Free;
   FPonto_ACJEF.Free;
+  FAEJ.Free;
 
   inherited;
 end;
@@ -156,6 +162,7 @@ begin
   FPonto_AFD.Delimitador := Value;
   FPonto_AFDT.Delimitador := Value;
   FPonto_ACJEF.Delimitador := Value;
+  FAEJ.Delimitador := Value;
 end;
 
 function TACBrPonto.GetCurMascara: String;
@@ -170,6 +177,7 @@ begin
   FPonto_AFD.CurMascara := Value;
   FPonto_AFDT.CurMascara := Value;
   FPonto_ACJEF.CurMascara := Value;
+  FAEJ.CurMascara := Value;
 end;
 
 function TACBrPonto.GetTrimString: boolean;
@@ -184,6 +192,7 @@ begin
   FPonto_AFD.TrimString := Value;
   FPonto_AFDT.TrimString := Value;
   FPonto_ACJEF.TrimString := Value;
+  FAEJ.TrimString := Value;
 end;
 
 function TACBrPonto.GetOnError: TErrorEvent;
@@ -203,6 +212,7 @@ begin
   FPonto_AFD.OnError := Value;
   FPonto_AFDT.OnError := Value;
   FPonto_ACJEF.OnError := Value;
+  FAEJ.OnError := Value;
 end;
 
 procedure TACBrPonto.SetReplaceDelimitador(const Value: Boolean);
@@ -212,6 +222,7 @@ begin
   FPonto_AFD.ReplaceDelimitador   := Value;
   FPonto_AFDT.ReplaceDelimitador  := Value;
   FPonto_ACJEF.ReplaceDelimitador := Value;
+  FAEJ.ReplaceDelimitador := Value;
 end;
 
 function TACBrPonto.SaveFileTXT_AFD(const Arquivo: String): boolean;
@@ -322,6 +333,61 @@ begin
 
     // Limpa todos os registros.
     FPonto_ACJEF.LimpaRegistros;
+  except
+    on E: Exception do
+    begin
+      raise Exception.Create(E.Message);
+    end;
+  end;
+end;
+
+function TACBrPonto.SaveFileTXT_AEJ(const Arquivo: String): boolean;
+var
+  txtFile: TextFile;
+begin
+  Result := True;
+
+  if (Trim(Arquivo) = '') or (Trim(FPath) = '') then
+    raise Exception.Create('Caminho ou nome do arquivo não informado!');
+
+  try
+    AssignFile(txtFile, FPath + Arquivo);
+    try
+      Rewrite(txtFile);
+
+      if FAEJ.Cabecalho.Count > 0 then
+        Write(txtFile, FAEJ.Cabecalho.GetStr);
+
+      if FAEJ.Registro02.Count > 0 then
+        Write(txtFile, FAEJ.Registro02.GetStr);
+
+      if FAEJ.Registro03.Count > 0 then
+        Write(txtFile, FAEJ.Registro03.GetStr);
+
+      if FAEJ.Registro04.Count > 0 then
+        Write(txtFile, FAEJ.Registro04.GetStr);
+
+      if FAEJ.Registro05.Count > 0 then
+        Write(txtFile, FAEJ.Registro05.GetStr);
+
+      if FAEJ.Registro06.Count > 0 then
+        Write(txtFile, FAEJ.Registro06.GetStr);
+
+      if FAEJ.Registro07.Count > 0 then
+        Write(txtFile, FAEJ.Registro07.GetStr);
+
+      if FAEJ.Registro08.Count > 0 then
+        Write(txtFile, FAEJ.Registro08.GetStr);
+
+      Write(txtFile, FAEJ.Trailer.GetStr);
+
+      Write(txtFile, FAEJ.AssinaturaDigital.GetStr);
+
+    finally
+      CloseFile(txtFile);
+    end;
+
+    AEJ.LimpaRegistros;
   except
     on E: Exception do
     begin

@@ -36,7 +36,7 @@ interface
 
 uses
   LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ACBrPonto, ComCtrls, StdCtrls, ExtCtrls;
+  Dialogs, ACBrPonto, ComCtrls, StdCtrls, ExtCtrls, ACBrPonto.Conversao;
 
 type
   TForm1 = class(TForm)
@@ -62,9 +62,13 @@ type
     LabeledEdit10: TLabeledEdit;
     Memo3: TMemo;
     Button3: TButton;
+    TabSheet4: TTabSheet;
+    Memo4: TMemo;
+    Button4: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -325,6 +329,220 @@ begin
 
   //Gera arquivo
   ACBrPonto.SaveFileTXT_ACJEF('teste_acjef.txt');
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+var
+  ACBrPonto :  TACBrPonto;
+begin
+  ACBrPonto :=  TACBrPonto.Create(nil);
+  try
+    //Registro 1 - Cabecalho
+    with ACBrPonto.AEJ.Cabecalho.New do
+    begin
+      tpIdtEmpregador := empCNPJ;
+      idtEmpregador   := '70474867000164';
+      caepf           := '98475693040001';
+      cno             := '';
+      razaoOuNome     := 'ti ltda';
+      dataInicialAej  := StrToDate('01/01/2023');
+      dataFinalAej    := StrToDate('31/01/2023');
+      dataHoraGerAej  := Now;
+
+      Memo4.Lines.Add('============ CABECALHO ============');
+      Memo4.Lines.Add('tipoReg         = ' + tipoReg);
+      Memo4.Lines.Add('tpIdtEmpregador = ' + tpIdtEmpregadorToStr(tpIdtEmpregador));
+      Memo4.Lines.Add('idtEmpregador   = ' + idtEmpregador);
+      Memo4.Lines.Add('caepf           = ' + caepf);
+      Memo4.Lines.Add('cno             = ' + cno);
+      Memo4.Lines.Add('razaoOuNome     = ' + razaoOuNome);
+      Memo4.Lines.Add('dataInicialAej  = ' + DateToStr(dataInicialAej));
+      Memo4.Lines.Add('dataFinalAej    = ' + DateToStr(dataFinalAej));
+      Memo4.Lines.Add('dataHoraGerAej  = ' + DateTimeToStr(dataHoraGerAej));
+    end;
+
+    Memo4.Lines.Add('============ REPS ============');
+    with ACBrPonto.AEJ.Registro02.New do
+    begin
+      idRepAej := '1';
+      tpRep    := tpRepC;
+      nrRep    := '11111111111111111';
+
+      Memo4.Lines.Add('tipoReg  = ' + tipoReg);
+      Memo4.Lines.Add('idRepAej = ' + idRepAej);
+      Memo4.Lines.Add('tpRep    = ' + tpRepToStr(tpRep));
+      Memo4.Lines.Add('nrRep    = ' + nrRep);
+    end;
+
+    with ACBrPonto.AEJ.Registro02.New do
+    begin
+      idRepAej := '2';
+      tpRep    := tpRepC;
+      nrRep    := '22222222222222222';
+
+      Memo4.Lines.Add('------------------------------');
+      Memo4.Lines.Add('tipoReg  = ' + tipoReg);
+      Memo4.Lines.Add('idRepAej = ' + idRepAej);
+      Memo4.Lines.Add('tpRep    = ' + tpRepToStr(tpRep));
+      Memo4.Lines.Add('nrRep    = ' + nrRep);
+    end;
+
+    Memo4.Lines.Add('============ VINCULOS ============');
+    with ACBrPonto.AEJ.Registro03.New do
+    begin
+      idtVinculoAej := '1';
+      cpf           := '29233164527';
+      nomeEmp       := 'ALISSON SOUZA';
+
+      Memo4.Lines.Add('tipoReg       = ' + tipoReg);
+      Memo4.Lines.Add('idtVinculoAej = ' + idtVinculoAej);
+      Memo4.Lines.Add('cpf           = ' + cpf);
+      Memo4.Lines.Add('nomeEmp       = ' + nomeEmp);
+    end;
+
+    with ACBrPonto.AEJ.Registro03.New do
+    begin
+      idtVinculoAej := '2';
+      cpf           := '72208167589';
+      nomeEmp       := 'PAULO COSTA PEREIRA';
+
+      Memo4.Lines.Add('------------------------------');
+      Memo4.Lines.Add('tipoReg       = ' + tipoReg);
+      Memo4.Lines.Add('idtVinculoAej = ' + idtVinculoAej);
+      Memo4.Lines.Add('cpf           = ' + cpf);
+      Memo4.Lines.Add('nomeEmp       = ' + nomeEmp);
+    end;
+
+    Memo4.Lines.Add('============ HORÁRIO CONTRATUAL ============');
+    with ACBrPonto.AEJ.Registro04.New do
+    begin
+      codHorContratual := '0001';
+      durJornada       := 400;
+      hrEntrada01      := '0700';
+      hrSaida01        := '1130';
+      hrEntrada02      := '1330';
+      hrSaida02        := '1630';
+
+      Memo4.Lines.Add('tipoReg          = ' + tipoReg);
+      Memo4.Lines.Add('codHorContratual = ' + codHorContratual);
+      Memo4.Lines.Add('durJornada       = ' + IntToStr(durJornada));
+      Memo4.Lines.Add('hrEntrada01      = ' + hrEntrada01);
+      Memo4.Lines.Add('hrSaida01        = ' + hrSaida01);
+      Memo4.Lines.Add('hrEntrada02      = ' + hrEntrada02);
+      Memo4.Lines.Add('hrSaida02        = ' + hrSaida02);
+    end;
+
+    with ACBrPonto.AEJ.Registro04.New do
+    begin
+      codHorContratual := '0002';
+      durJornada       := 200;
+      hrEntrada01      := '0700';
+      hrSaida01        := '1100';
+
+      Memo4.Lines.Add('------------------------------');
+      Memo4.Lines.Add('tipoReg          = ' + tipoReg);
+      Memo4.Lines.Add('codHorContratual = ' + codHorContratual);
+      Memo4.Lines.Add('durJornada       = ' + IntToStr(durJornada));
+      Memo4.Lines.Add('hrEntrada01      = ' + hrEntrada01);
+      Memo4.Lines.Add('hrSaida01        = ' + hrSaida01);
+      Memo4.Lines.Add('hrEntrada02      = ' + hrEntrada02);
+      Memo4.Lines.Add('hrSaida02        = ' + hrSaida02);
+    end;
+
+    Memo4.Lines.Add('============ MARCACOES ============');
+    with ACBrPonto.AEJ.Registro05.New do
+    begin
+      idtVinculoAej := '1';
+      dataHoraMarc  := Now;
+      idRepAej      := '1';
+      tpMarc        := marcEntrada;
+      seqEntSaida   := 1;
+      fonteMarc     := fontOriginal;
+      codHorContratual := '0001';
+
+      Memo4.Lines.Add('tipoReg          = ' + tipoReg);
+      Memo4.Lines.Add('idtVinculoAej    = ' + idtVinculoAej);
+      Memo4.Lines.Add('dataHoraMarc     = ' + DateTimeToStr(dataHoraMarc));
+      Memo4.Lines.Add('idRepAej         = ' + idRepAej);
+      Memo4.Lines.Add('tpMarc           = ' + tpMarcToStr(tpMarc));
+      Memo4.Lines.Add('seqEntSaida      = ' + IntToStr(seqEntSaida));
+      Memo4.Lines.Add('fonteMarc        = ' + fonteMarcToStr(fonteMarc));
+      Memo4.Lines.Add('codHorContratual = ' + codHorContratual);
+    end;
+
+    with ACBrPonto.AEJ.Registro05.New do
+    begin
+      idtVinculoAej := '1';
+      dataHoraMarc  := StrToDateTime('01/01/2023 07:15');
+      idRepAej      := '1';
+      tpMarc        := marcSaida;
+      seqEntSaida   := 1;
+      fonteMarc     := fontOriginal;
+      codHorContratual := '0001';
+
+      Memo4.Lines.Add('------------------------------');
+      Memo4.Lines.Add('tipoReg          = ' + tipoReg);
+      Memo4.Lines.Add('idtVinculoAej    = ' + idtVinculoAej);
+      Memo4.Lines.Add('dataHoraMarc     = ' + DateTimeToStr(dataHoraMarc));
+      Memo4.Lines.Add('idRepAej         = ' + idRepAej);
+      Memo4.Lines.Add('tpMarc           = ' + tpMarcToStr(tpMarc));
+      Memo4.Lines.Add('seqEntSaida      = ' + IntToStr(seqEntSaida));
+      Memo4.Lines.Add('fonteMarc        = ' + fonteMarcToStr(fonteMarc));
+      Memo4.Lines.Add('codHorContratual = ' + codHorContratual);
+    end;
+
+    Memo4.Lines.Add('============ IDENTIFICACAO ============');
+    with ACBrPonto.AEJ.Registro06.New do
+    begin
+      idtVinculoAej := '1';
+      mateSocial    := '0035421';
+
+      Memo4.Lines.Add('tipoReg          = ' + tipoReg);
+      Memo4.Lines.Add('idtVinculoAej    = ' + idtVinculoAej);
+      Memo4.Lines.Add('mateSocial     = ' + mateSocial);
+    end;
+
+    Memo4.Lines.Add('============ AUSENCIAS E BANCO DE HORAS ============');
+    with ACBrPonto.AEJ.Registro07.New do
+    begin
+      idtVinculoAej  := '1';
+      tipoAusenOuComp:= acDSR;
+      data := Now;
+      qtMinutos := '50';
+      tipoMovBH := '1';
+
+      Memo4.Lines.Add('tipoReg        = ' + tipoReg);
+      Memo4.Lines.Add('idtVinculoAej  = ' + idtVinculoAej);
+      Memo4.Lines.Add('tipoAusenOuComp= ' + tipoAusenOuCompToStr(tipoAusenOuComp));
+      Memo4.Lines.Add('data           = ' + DateTimeToStr(data));
+      Memo4.Lines.Add('qtMinutos      = ' + qtMinutos);
+      Memo4.Lines.Add('tipoMovBH      = ' + tipoMovBH);
+    end;
+
+    Memo4.Lines.Add('============ SISTEMA ============');
+    with ACBrPonto.AEJ.Registro08.New do
+    begin
+      nomeProg := 'ERP';
+      versaoProg := '1.5';
+      tpIdtDesenv := devCNPJ;
+      idtDesenv := '12345678901234';
+      razaoNomeDesenv := 'ALISSON';
+      emailDesenv := 'alisson@gmail.com';
+
+      Memo4.Lines.Add('tipoReg        = ' + tipoReg);
+      Memo4.Lines.Add('nomeProg       = ' + nomeProg);
+      Memo4.Lines.Add('versaoProg     = ' + versaoProg);
+      Memo4.Lines.Add('tpIdtDesenv    = ' + tpIdtDesenvToStr(tpIdtDesenv));
+      Memo4.Lines.Add('razaoNomeDesenv= ' + razaoNomeDesenv);
+      Memo4.Lines.Add('emailDesenv    = ' + emailDesenv);
+    end;
+
+    //Gera arquivo
+    ACBrPonto.SaveFileTXT_AEJ('teste_AEJ.txt');
+
+  finally
+    FreeAndNil(ACBrPonto);
+  end;
 end;
 
 end.

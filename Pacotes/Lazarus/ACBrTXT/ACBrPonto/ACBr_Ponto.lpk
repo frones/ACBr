@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_Ponto"/>
     <Type Value="RunAndDesignTime"/>
@@ -53,13 +53,17 @@ Gera arquivo TXT para ponto eletrônico na &quot;Portaria Nº 1.510, de 21 de Ag
         <UnitName Value="ACBrPontoReg"/>
       </Item8>
     </Files>
-    <RequiredPkgs Count="2">
+    <CompatibilityMode Value="True"/>
+    <RequiredPkgs Count="3">
       <Item1>
-        <PackageName Value="ACBrTXTComum"/>
+        <PackageName Value="PCNComum"/>
       </Item1>
       <Item2>
-        <PackageName Value="FCL"/>
+        <PackageName Value="ACBrTXTComum"/>
       </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

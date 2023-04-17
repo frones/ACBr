@@ -191,7 +191,6 @@ type
     cbS1260: TCheckBox;
     cbS1270: TCheckBox;
     cbS1280: TCheckBox;
-    cbS1295: TCheckBox;
     cbS1298: TCheckBox;
     cbS1299: TCheckBox;
     cbS1300: TCheckBox;
@@ -309,7 +308,6 @@ type
     procedure GerareSocial1260;
     procedure GerareSocial1270;
     procedure GerareSocial1280;
-    procedure GerareSocial1295;
     procedure GerareSocial1298;
     procedure GerareSocial1299;
     procedure GerareSocial1300;
@@ -2746,44 +2744,6 @@ begin
 
         with infoPercTransf11096 do
           percTransf := 20;
-      end;
-    end;
-  end;
-end;
-
-procedure TfrmACBreSocial.GerareSocial1295;
-begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
-
-  with ACBreSocial1.Eventos.Periodicos.S1295.New do
-  begin
-    with evtTotConting do
-    begin
-      sequencial := 0;
-
-      with ideEvento do
-      begin
-//        indRetif := ireOriginal;
-        // nrRecibo := '1.2.0000000000000000000'; - obrigatorio se indRetif = ireRetificacao.
-        indApuracao := iapuMensal;
-        perApur := '2015-06';
-        procEmi := peAplicEmpregador;
-        verProc := '1.0';
-      end;
-
-      with ideEmpregador do
-      begin
-        tpInsc := tiCNPJ;
-        nrInsc := edtIdEmpregador.Text;
-      end;
-
-      with IdeRespInf do
-      begin
-        nmResp := 'Responsavel teste';
-        cpfResp := '12345678950';
-        Telefone := '46 - 22222222';
-        email := 'Responsavelteste@email.com';
       end;
     end;
   end;
@@ -7386,8 +7346,6 @@ begin
     GerareSocial1270;
   if (cbS1280.Checked) then
     GerareSocial1280;
-  if (cbS1295.Checked) then
-    GerareSocial1295;
   if (cbS1298.Checked) then
     GerareSocial1298;
   if (cbS1299.Checked) then

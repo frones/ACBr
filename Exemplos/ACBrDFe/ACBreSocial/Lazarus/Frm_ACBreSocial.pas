@@ -191,7 +191,6 @@ type
     cbS1260: TCheckBox;
     cbS1270: TCheckBox;
     cbS1280: TCheckBox;
-    cbS1295: TCheckBox;
     cbS1298: TCheckBox;
     cbS1299: TCheckBox;
     cbS1300: TCheckBox;
@@ -304,7 +303,6 @@ type
     procedure GerareSocial1260;
     procedure GerareSocial1270;
     procedure GerareSocial1280;
-    procedure GerareSocial1295;
     procedure GerareSocial1298;
     procedure GerareSocial1299;
     procedure GerareSocial1300;
@@ -1166,6 +1164,20 @@ begin
       begin
         ideDmDev := '1';
         CodCateg := 111;
+
+        if VersaoDFx > veS01_00_00 then
+        begin
+          indRRA:= snfSim;
+          with infoRRA do
+          begin
+            tpProcRRA := tppAdministrativo;
+            nrProcRRA := '123';
+            descRRA := 'Rendimentos Receb Acum.';
+            qtdMesesRRA := 5;
+            despProcJud.vlrDespCustas:= 0;
+            despProcJud.vlrDespAdvogados := 0;
+          end;
+        end;
 
         with infoPerApur.ideEstabLot.New do
         begin
@@ -2261,38 +2273,6 @@ begin
 
       InfoAtivConcom.fatorMes := 9.00;
       InfoAtivConcom.fator13 := 1.00;
-    end;
-  end;
-end;
-
-procedure TfrmACBreSocial.GerareSocial1295;
-begin
-  with ACBreSocial1.Eventos.Periodicos.S1295.New do
-  begin
-    with evtTotConting do
-    begin
-      Sequencial := 0;
-
-      with IdeEvento do
-      begin
-//        indRetif := tpIndRetificacao(0);
-//        NrRecibo := '65.5454.987798798798';
-        IndApuracao := iapuMensal;
-        perApur := '2015-06';
-        ProcEmi := TpProcEmi(0);
-        VerProc := '1.0';
-      end;
-
-      IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
-
-      with IdeRespInf do
-      begin
-        nmResp := 'Responsavel teste';
-        cpfResp := '12345678950';
-        Telefone := '46 - 22222222';
-        email := 'Responsavelteste@email.com';
-      end;
     end;
   end;
 end;
@@ -5817,8 +5797,6 @@ begin
     GerareSocial1270;
   if (cbS1280.Checked) then
     GerareSocial1280;
-  if (cbS1295.Checked) then
-    GerareSocial1295;
   if (cbS1298.Checked) then
     GerareSocial1298;
   if (cbS1299.Checked) then

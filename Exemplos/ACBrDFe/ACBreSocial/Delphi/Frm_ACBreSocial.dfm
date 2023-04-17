@@ -20,7 +20,7 @@ object frmACBreSocial: TfrmACBreSocial
     Height = 752
     Align = alLeft
     TabOrder = 0
-    ExplicitHeight = 751
+    ExplicitHeight = 743
     object lblColaborador: TLabel
       Left = 18
       Top = 540
@@ -1001,6 +1001,8 @@ object frmACBreSocial: TfrmACBreSocial
     Height = 752
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 796
+    ExplicitHeight = 743
     object pgcBotoes: TPageControl
       Left = 1
       Top = 1
@@ -1009,6 +1011,7 @@ object frmACBreSocial: TfrmACBreSocial
       ActivePage = tbsEventosPeriodicos
       Align = alTop
       TabOrder = 0
+      ExplicitWidth = 794
       object tbsEventosTabela: TTabSheet
         Caption = 'Eventos de Tabela'
         ImageIndex = 4
@@ -1204,43 +1207,35 @@ object frmACBreSocial: TfrmACBreSocial
           ParentCtl3D = False
           TabOrder = 8
         end
-        object cbS1295: TCheckBox
-          Left = 402
-          Top = 59
-          Width = 381
-          Height = 17
-          Caption = 'S-1295 Solicita'#231#227'o de Totaliza'#231#227'o para Pagamento em Conting'#234'ncia'
-          TabOrder = 9
-        end
         object cbS1298: TCheckBox
           Left = 401
-          Top = 82
+          Top = 61
           Width = 289
           Height = 17
           Caption = 'S-1298 Reabertura dos Eventos Peri'#243'dicos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 10
+          TabOrder = 9
         end
         object cbS1299: TCheckBox
           Left = 401
-          Top = 105
+          Top = 84
           Width = 289
           Height = 17
           Caption = 'S-1299 Fechamento dos Eventos Peri'#243'dicos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 11
+          TabOrder = 10
         end
         object cbS1300: TCheckBox
           Left = 401
-          Top = 128
+          Top = 107
           Width = 289
           Height = 15
           Caption = 'S-1300 Contribui'#231#227'o Sindical Patronal'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 12
+          TabOrder = 11
         end
         object CBS1220: TCheckBox
           Left = 12
@@ -1528,6 +1523,8 @@ object frmACBreSocial: TfrmACBreSocial
       ActivePage = tsComandos
       Align = alClient
       TabOrder = 1
+      ExplicitWidth = 794
+      ExplicitHeight = 321
       object tsFormaEnvio: TTabSheet
         Caption = 'Forma de Envio'
         ImageIndex = 7
@@ -1698,9 +1695,10 @@ object frmACBreSocial: TfrmACBreSocial
           Height = 302
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 262
+          ExplicitWidth = 990
+          ExplicitHeight = 377
           ControlData = {
-            4C000000DB510000361F00000000000000000000000000000000000000000000
+            4C0000007C410000F81800000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1726,8 +1724,8 @@ object frmACBreSocial: TfrmACBreSocial
         object trvwDocumento: TTreeView
           Left = 0
           Top = 0
-          Width = 788
-          Height = 301
+          Width = 792
+          Height = 302
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1752,8 +1750,8 @@ object frmACBreSocial: TfrmACBreSocial
         object MemoDados: TMemo
           Left = 0
           Top = 0
-          Width = 788
-          Height = 301
+          Width = 792
+          Height = 302
           Align = alClient
           Lines.Strings = (
             '')

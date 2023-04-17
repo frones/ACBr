@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/04/2023
+-- Diversos --
+[*] Ajusta nas funções de leitura de INI dos eventos periódicos.
+   Por: Alexandre de Paula
+
 31/03/2023
 -- pcesS3500 --
 [*] Ajuste do número de ocorrências das tags cpftrab e PerApurPgto. 

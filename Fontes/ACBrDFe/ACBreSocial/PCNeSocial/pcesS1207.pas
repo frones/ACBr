@@ -532,11 +532,13 @@ begin
         dmDevI.nrBeneficio := INIRec.ReadString(sSecao, 'nrBeneficio', EmptyStr);
         dmDevI.indRRA := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indRRA', EmptyStr));
 
+        sSecao := 'infoRRA'+ IntToStrZero(I, 3);
         dmDevI.infoRRA.tpProcRRA   := eSStrToTpProcRRA(Ok, INIRec.ReadString(sSecao, 'tpProcRRA', EmptyStr));
         dmDevI.infoRRA.nrProcRRA   := INIRec.ReadString(sSecao, 'nrProcRRA', EmptyStr);
         dmDevI.infoRRA.descRRA     := INIRec.ReadString(sSecao, 'descRRA' , EmptyStr);
         dmDevI.infoRRA.qtdMesesRRA := StrToFloatDef(INIRec.ReadString(sSecao, 'qtdMesesRRA','0'),0);
 
+        sSecao := 'despProcJud'+ IntToStrZero(I, 3);
         dmDevI.infoRRA.despProcJud.vlrDespCustas := StrToFloatDef(INIRec.ReadString(sSecao, 'vlrDespCustas', '0'), 0);
         dmDevI.infoRRA.despProcJud.vlrDespAdvogados := StrToFloatDef(INIRec.ReadString(sSecao, 'vlrDespAdvogados', '0'), 0);
 

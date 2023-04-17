@@ -541,6 +541,7 @@ begin
       ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
       ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
       ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      IdeEvento.indGuia     := INIRec.ReadString(sSecao, 'indGuia', EmptyStr);
       ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
       ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
@@ -608,33 +609,34 @@ begin
                 Inc(K);
               end;
 
-              K := 1;
-              while true do
-              begin
-                // de 00 até 10
-                sSecao := 'infoProcJud' + IntToStrZero(I, 1) + IntToStrZero(J, 4) +
-                               IntToStrZero(K, 2);
-                sFim   := INIRec.ReadString(sSecao, 'nrProc', 'FIM');
-
-                if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                  break;
-
-                with infoProcJud.New do
-                begin
-                  tpProc      := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
-                  nrProcJud   := sFim;
-                  codSusp     := INIRec.ReadInteger(sSecao, 'codSusp', 0);
-                  vrCPSusp    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrCPSusp', ''), 0);
-                  vrRatSusp   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRatSusp', ''), 0);
-                  vrSenarSusp := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSenarSusp', ''), 0);
-                end;
-
-                Inc(K);
-              end;
             end;
 
             Inc(J);
           end;
+
+          J := 1;
+          while true do
+          begin
+            // de 00 até 10
+            sSecao := 'infoProcJud' + IntToStrZero(I, 1) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'nrProc', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with infoProcJud.New do
+            begin
+              tpProc      := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
+              nrProcJud   := sFim;
+              codSusp     := INIRec.ReadInteger(sSecao, 'codSusp', 0);
+              vrCPSusp    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrCPSusp', ''), 0);
+              vrRatSusp   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRatSusp', ''), 0);
+              vrSenarSusp := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSenarSusp', ''), 0);
+            end;
+
+            Inc(J);
+          end;
+
         end;
 
         Inc(I);

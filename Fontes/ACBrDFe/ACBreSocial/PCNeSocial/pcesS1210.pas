@@ -1223,6 +1223,7 @@ begin
       ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
       ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
       ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      IdeEvento.indGuia     := INIRec.ReadString(sSecao, 'indGuia', EmptyStr);
       ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
       ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
@@ -1241,8 +1242,8 @@ begin
       I := 1;
       while true do
       begin
-        // de 01 até 60
-        sSecao := 'infoPgto' + IntToStrZero(I, 2);
+        // de 01 até 999
+        sSecao := 'infoPgto' + IntToStrZero(I, 3);
         sFim   := INIRec.ReadString(sSecao, 'dtPgto', 'FIM');
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -1257,6 +1258,7 @@ begin
           PerRef   := INIRec.ReadString(sSecao, 'PerRef', EmptyStr);
           IdeDmDev := INIRec.ReadString(sSecao, 'IdeDmDev', EmptyStr);
           VrLiq    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
+          paisResidExt := INIRec.ReadString(sSecao, 'paisResidExt', EmptyStr);
 
           J := 1;
           while true do
@@ -1531,6 +1533,21 @@ begin
             idePgtoExt.endExt.nmCid     := INIRec.ReadString(sSecao, 'nmCid', EmptyStr);
             idePgtoExt.endExt.codPostal := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
           end;
+
+          sSecao := 'infoPgtoExt' + IntToStrZero(I, 3);
+          infoPgtoExt.indNIF    := eSStrToIndNIF(Ok, INIRec.ReadString(sSecao, 'indNIF', '1'));
+          infoPgtoExt.nifBenef  := INIRec.ReadString(sSecao, 'nifBenef', EmptyStr);
+          infoPgtoExt.frmTribut := INIRec.ReadInteger(sSecao, 'frmTribut', 0);
+
+          sSecao := 'endExt' + IntToStrZero(I, 3);
+          infoPgtoExt.endExt.endDscLograd := INIRec.ReadString(sSecao, 'endDscLograd', EmptyStr);
+          infoPgtoExt.endExt.endNrLograd  := INIRec.ReadString(sSecao, 'endNrLograd', EmptyStr);
+          infoPgtoExt.endExt.endComplem   := INIRec.ReadString(sSecao, 'endComplem', EmptyStr);
+          infoPgtoExt.endExt.endBairro    := INIRec.ReadString(sSecao, 'endBairro', EmptyStr);
+          infoPgtoExt.endExt.endCidade    := INIRec.ReadString(sSecao, 'endCidade', EmptyStr);
+          infoPgtoExt.endExt.endEstado    := INIRec.ReadString(sSecao, 'endEstado', EmptyStr);
+          infoPgtoExt.endExt.endCodPostal := INIRec.ReadString(sSecao, 'endCodPostal', EmptyStr);
+          infoPgtoExt.endExt.telef        := INIRec.ReadString(sSecao, 'telef', EmptyStr);
         end;
 
         Inc(I);

@@ -3004,16 +3004,15 @@ begin
     Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(NFe.pag[i].tPag), DSC_TPAG);
     Gerador.wCampo(tcStr, 'YA02a', 'xPag', 02, 60, 0, NFe.pag[i].xPag, DSC_XPAG);
     Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, NFe.pag[i].vPag, DSC_VPAG);
-    if(NFe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) and
-      ((NFe.pag[i].CNPJ <> '') or (NFe.pag[i].tpIntegra <> tiNaoInformado))then
-      begin
-        Gerador.wGrupo('card', 'YA04');
-        Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 1, tpIntegraToStr(NFe.pag[i].tpIntegra), DSC_TPINTEGRA);
-        Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, NFe.pag[i].CNPJ, DSC_CNPJ);
-        Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(NFe.pag[i].tBand), DSC_TBAND);
-        Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, NFe.pag[i].cAut, DSC_CAUT);
-        Gerador.wGrupo('/card');
-      end;
+    if (NFe.pag[i].tpIntegra <> tiNaoInformado) then
+    begin
+      Gerador.wGrupo('card', 'YA04');
+      Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 1, tpIntegraToStr(NFe.pag[i].tpIntegra), DSC_TPINTEGRA);
+      Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, NFe.pag[i].CNPJ, DSC_CNPJ);
+      Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(NFe.pag[i].tBand), DSC_TBAND);
+      Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, NFe.pag[i].cAut, DSC_CAUT);
+      Gerador.wGrupo('/card');
+    end;
     if (NFe.infNFe.Versao >= 4) then
       Gerador.wGrupo('/detPag')
     else

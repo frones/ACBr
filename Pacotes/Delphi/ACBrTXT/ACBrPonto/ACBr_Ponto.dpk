@@ -32,7 +32,8 @@ package ACBr_Ponto;
 requires
   rtl,
   vcl,
-  ACBr_TXTComum;
+  ACBr_TXTComum,
+	ACBr_PCNComum;
 
 contains
   ACBrPonto in '..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto.pas',

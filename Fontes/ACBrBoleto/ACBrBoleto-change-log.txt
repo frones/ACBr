@@ -49,6 +49,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2023
+[+]Tk-3540 Implementação/Integração SICOOB via API
+  Por : Victor H Gonzales - Pandaaa / Victor Hugo Gonzales - Panda, Marcelo Santos, Delmar de Lima, Delcio 
 14/04/2023
 [-]TK-3815 Validar C400 Santander Nosso Número quando passando mais de 7 digitos para NN e calculando DV errado / Linha Digitavel
   Por : Victor H Gonzales - Pandaaa

@@ -67,12 +67,12 @@ type
   function strTotpIdtDesenv(var ok: boolean; const s: string): TtpIdtDesenv;
 
 const
-  C_TPIDEMPREGADOR: array of string = ['1','2' ];
-  C_TPREP: array of string = ['1','2','3'];
-  C_TPMARC: array of string = ['E','S','D'];
-  C_FONTEMARCACAO: array of string = ['O','I','P','X','T'];
-  C_TIPO_AUSENCIA_MARCACAO: array of string = ['1','2','3','4'];
-  C_TPIDDESENVOLVEDOR: array of string = ['1','2' ];
+  C_TPIDEMPREGADOR: array[TtpIdtEmpregador] of String = ('1','2');
+  C_TPREP: array[TtpRep] of string = ('1','2','3');
+  C_TPMARC: array[TtpMarc] of string = ('E','S','D');
+  C_FONTEMARCACAO: array[TfonteMarc] of string = ('O','I','P','X','T');
+  C_TIPO_AUSENCIA_MARCACAO: array[TtipoAusenOuComp] of string = ('1','2','3','4');
+  C_TPIDDESENVOLVEDOR: array[TtpIdtDesenv] of string = ('1','2');
 
 implementation
 

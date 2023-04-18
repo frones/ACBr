@@ -52,8 +52,8 @@ type
     Fcaepf: String;
     Fcno: String;
     FrazaoOuNome: String;
-    FdataInicialAej: TDate;
-    FdataFinalAej: TDate;
+    FdataInicialAej: TDateTime;
+    FdataFinalAej: TDateTime;
     FdataHoraGerAej: TDateTime;
     FversaoAej: String;
   public
@@ -66,8 +66,8 @@ type
     property caepf          : String           read Fcaepf           write Fcaepf;
     property cno            : String           read Fcno             write Fcno;
     property razaoOuNome    : String           read FrazaoOuNome     write FrazaoOuNome;
-    property dataInicialAej : TDate            read FdataInicialAej  write FdataInicialAej;
-    property dataFinalAej   : TDate            read FdataFinalAej    write FdataFinalAej;
+    property dataInicialAej : TDateTime        read FdataInicialAej  write FdataInicialAej;
+    property dataFinalAej   : TDateTime        read FdataFinalAej    write FdataFinalAej;
     property dataHoraGerAej : TDateTime        read FdataHoraGerAej  write FdataHoraGerAej;
     property versaoAej      : String           read FversaoAej;
   end;
@@ -231,7 +231,7 @@ type
     FtipoReg: String;
     FidtVinculoAej: String;
     FtipoAusenOuComp: TtipoAusenOuComp;
-    Fdata: TDate;
+    Fdata: TDateTime;
     FqtMinutos: String;
     FtipoMovBH: String;
   public
@@ -241,7 +241,7 @@ type
     property tipoReg: String read FtipoReg;
     property idtVinculoAej: String read FidtVinculoAej write FidtVinculoAej;
     property tipoAusenOuComp: TtipoAusenOuComp read FtipoAusenOuComp write FtipoAusenOuComp;
-    property data: TDate read Fdata write Fdata;
+    property data: TDateTime read Fdata write Fdata;
     property qtMinutos: String read FqtMinutos write FqtMinutos;
     property tipoMovBH: String read FtipoMovBH write FtipoMovBH;
   end;
@@ -361,6 +361,9 @@ type
 
 implementation
 
+uses
+  ACBrUtil.DateTime;
+
 { TCabecalho }
 
 constructor TCabecalho.Create;
@@ -380,7 +383,7 @@ begin
     RFill(razaoOuNome, 150) +
     LFill(FormatDateTime('yyyy-mm-dd', dataInicialAej ), 10) +
     LFill(FormatDateTime('yyyy-mm-dd', dataFinalAej), 10) +
-    LFill( DateToISO8601(dataHoraGerAej), 24) +
+    LFill(DateTimeToIso8601(dataHoraGerAej), 24) +
     LFill(versaoAej) +
     sLineBreak;
 end;
@@ -394,10 +397,10 @@ end;
 
 function TCabecalhoList.GetStr: String;
 var
-  iTem: TCabecalho;
+  i: Integer;
 begin
-  for iTem in Self do
-    Result := Result + iTem.GetStr;
+  for i := 0 to Self.Count - 1 do
+    Result := Result + Self.Items[i].GetStr;
 end;
 
 function TCabecalhoList.New: TCabecalho;
@@ -432,10 +435,10 @@ end;
 
 function TRegistro02List.GetStr: String;
 var
-  iTem: TRegistro02;
+  i: Integer;
 begin
-  for iTem in Self do
-    Result := Result + iTem.GetStr;
+  for i := 0 to Self.Count - 1 do
+    Result := Result + Self.Items[i].GetStr;
 end;
 
 function TRegistro02List.GetItem(Index: Integer): TRegistro02;
@@ -480,10 +483,10 @@ end;
 
 function TRegistro03List.GetStr: String;
 var
-  iTem: TRegistro03;
+  i: Integer;
 begin
-  for iTem in Self do
-    Result := Result + iTem.GetStr;
+  for i := 0 to Self.Count - 1 do
+    Result := Result + Self.Items[i].GetStr;
 end;
 
 function TRegistro03List.New: TRegistro03;
@@ -526,10 +529,10 @@ end;
 
 function TRegistro04List.GetStr: String;
 var
-  iTem: TRegistro04;
+  i: Integer;
 begin
-  for iTem in Self do
-    Result := Result + iTem.GetStr;
+  for i := 0 to Self.Count - 1 do
+    Result := Result + Self.Items[i].GetStr;
 end;
 
 function TRegistro04List.New: TRegistro04;
@@ -555,7 +558,7 @@ begin
   Result :=
     LFill(tipoReg) +
     RFill(idtVinculoAej,9) +
-    LFill(DateToISO8601(dataHoraMarc),24) +
+    LFill(DateTimeToIso8601(dataHoraMarc),24) +
     RFill(idRepAej, 9) +
     LFill(tpMarcToStr(tpMarc)) +
     LFill(IntToStr(seqEntSaida), 3) +
@@ -574,10 +577,10 @@ end;
 
 function TRegistro05List.GetStr: String;
 var
-  iTem: TRegistro05;
+  i: Integer;
 begin
-  for iTem in Self do
-    Result := Result + iTem.GetStr;
+  for i := 0 to Self.Count - 1 do
+    Result := Result + Self.Items[i].GetStr;
 end;
 
 function TRegistro05List.New: TRegistro05;
@@ -616,10 +619,10 @@ end;
 
 function TRegistro06List.GetStr: String;
 var
-  iTem: TRegistro06;
+  i: Integer;
 begin
-  for iTem in Self do
-    Result := Result + iTem.GetStr;
+  for i := 0 to Self.Count - 1 do
+    Result := Result + Self.Items[i].GetStr;
 end;
 
 function TRegistro06List.New: TRegistro06;
@@ -661,10 +664,10 @@ end;
 
 function TRegistro07List.GetStr: String;
 var
-  iTem: TRegistro07;
+  i: Integer;
 begin
-  for iTem in Self do
-    Result := Result + iTem.GetStr;
+  for i := 0 to Self.Count - 1 do
+    Result := Result + Self.Items[i].GetStr;
 end;
 
 function TRegistro07List.New: TRegistro07;
@@ -707,10 +710,10 @@ end;
 
 function TRegistro08List.GetStr: String;
 var
-  iTem: TRegistro08;
+  i: Integer;
 begin
-  for iTem in Self do
-    Result := Result + iTem.GetStr;
+  for i := 0 to Self.Count - 1 do
+    Result := Result + Self.Items[i].GetStr;
 end;
 
 function TRegistro08List.New: TRegistro08;

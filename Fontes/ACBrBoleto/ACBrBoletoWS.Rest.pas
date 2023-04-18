@@ -325,7 +325,7 @@ begin
   try
     Executar;
   finally
-    Result := (BoletoWS.RetornoBanco.HTTPResultCode in [200, 201, 202]);
+    Result := (BoletoWS.RetornoBanco.HTTPResultCode in [200..207]);
 
     if Result then //Grava retorno
       BoletoWS.DoLog('Retorno Envio: ' + FRetornoWS)

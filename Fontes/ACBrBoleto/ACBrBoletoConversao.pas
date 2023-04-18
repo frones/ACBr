@@ -91,7 +91,7 @@ type
   TACBrIndicadorBoletoVencido     = (ibvNenhum,ibvNao,ibvSim);
 
   {Definir Metodo HTTP}
-  TMetodoHTTP = (htPOST, htGET, htPATCH, htPUT);
+  TMetodoHTTP = (htPOST, htGET, htPATCH, htPUT, htDELETE);
 
 
   function StrToTipoOperacao(out ok: Boolean; const s: String): TOperacao;
@@ -197,14 +197,14 @@ end;
 
 function StrToMetodoHTTP(out ok: Boolean; const s: String): TMetodoHTTP;
 begin
-  Result := StrToEnumerado(ok, s, ['POST', 'GET', 'PATCH'],
-                                  [htPOST, htGET, htPATCH]);
+  Result := StrToEnumerado(ok, s, ['POST', 'GET', 'PATCH', 'PUT', 'DELETE'],
+                                  [htPOST, htGET, htPATCH, htPUT, htDELETE]);
 end;
 
 function MetodoHTTPToStr(const t: TMetodoHTTP): String;
 begin
-  Result := EnumeradoToStr(t, ['POST', 'GET', 'PATCH'],
-                              [htPOST, htGET, htPATCH]);
+  Result := EnumeradoToStr(t, ['POST', 'GET', 'PATCH', 'PUT', 'DELETE'],
+                              [htPOST, htGET, htPATCH, htPUT, htDELETE]);
 end;
 
 

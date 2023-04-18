@@ -228,9 +228,9 @@ uses
   ACBrBoletoW_Santander,
   ACBrBoletoRet_Santander,
   ACBrBoletoW_Inter_API,
-  ACBrBoletoRet_Inter_API;
-  //ACBrBoletoW_Bancoob,
-  //ACBrBoletoRet_Bancoob;
+  ACBrBoletoRet_Inter_API,
+  ACBrBoletoW_Bancoob,
+  ACBrBoletoRet_Bancoob;
 
 { TRetornoEnvioClass }
 
@@ -373,11 +373,11 @@ begin
         FBoletoWSClass := TBoletoW_Inter_API.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Inter_API.Create(FBoleto);
       end;
-    {cobBancoob :
+    cobBancoob :
       begin
         FBoletoWSClass := TBoletoW_Bancoob.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Bancoob.Create(FBoleto);
-      end}
+      end
   else
     FBoletoWSClass := TBoletoWSClass.Create(Self);
     FRetornoBanco := TRetornoEnvioClass.Create(FBoleto);

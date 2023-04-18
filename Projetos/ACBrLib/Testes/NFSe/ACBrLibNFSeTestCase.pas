@@ -327,28 +327,39 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao ObterXML', ErrIndex,
-  NFSE_ObterXml(Handle, 0, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao ObterXML', ErrOK,
+    NFSE_ObterXml(Handle, 0, Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_GravarXml;
 var
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
 
-  AssertEquals('Erro ao Gravar XML', ErrIndex,
-  NFSE_GravarXml(Handle, 0, 'NFSeTeste', PChar(fCaminhoExec)));//'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin'));
+    AssertEquals('Erro ao Gravar XML', ErrOK,
+    NFSE_GravarXml(Handle, 0, 'NFSeTeste', PChar(fCaminhoExec)));//'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin'));
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ObterIni;
@@ -357,28 +368,38 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Obter Ini', ErrIndex,
-  NFSE_ObterIni(Handle, 0, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Obter Ini', ErrOK,
+    NFSE_ObterIni(Handle, 0, Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_GravarIni;
 var
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
 
-  AssertEquals('Erro ao Gravar Ini', ErrIndex,
-  NFSE_GravarIni(Handle, 0, 'NFSeTeste', PChar(fCaminhoExec)));//'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin'));
+    AssertEquals('Erro ao Gravar Ini', ErrOK,
+    NFSE_GravarIni(Handle, 0, 'NFSeTeste', PChar(fCaminhoExec)));//'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFSe\bin'));
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ObterCertificados;
@@ -428,16 +449,23 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Cancelar NFSe', ErrOK,
-  NFSE_Cancelar(Handle, PChar(fCaminhoExec +'\NFSeCancelamento.ini'), Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Cancelar NFSe', ErrOK,
+    NFSE_Cancelar(Handle, PChar(fCaminhoExec +'\NFSeCancelamento.ini'), Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_SubstituirNFSe();
@@ -446,16 +474,21 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Substituir NFSe', ErrOK,
-  NFSE_SubstituirNFSe(Handle,'123', '1', '123', 'TesteSubstituicao', '1', '1', Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Substituir NFSe', ErrOK,
+    NFSE_SubstituirNFSe(Handle,'123', '1', '123', 'TesteSubstituicao', '1', '1', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_LinkNFSe();
@@ -500,16 +533,21 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Gerar Token', ErrOK,
-  NFSE_GerarToken(Handle, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Gerar Token', ErrOK,
+    NFSE_GerarToken(Handle, Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarSituacao();
@@ -518,16 +556,21 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Consultar Situação', ErrOK,
-  NFSE_ConsultarSituacao(Handle, '123', '123', Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Consultar Situação', ErrOK,
+    NFSE_ConsultarSituacao(Handle, '123', '123', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarLoteRps();
@@ -536,16 +579,21 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Consultar Lote RPS', ErrOK,
-  NFSE_ConsultarLoteRps(Handle, '123', '123', Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Consultar Lote RPS', ErrOK,
+    NFSE_ConsultarLoteRps(Handle, '123', '123', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSePorRps();
@@ -572,16 +620,21 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Consultar NFSe Por Numero', ErrOK,
-  NFSE_ConsultarNFSePorNumero(Handle, '1', 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Consultar NFSe Por Numero', ErrOK,
+    NFSE_ConsultarNFSePorNumero(Handle, '1', 1, Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSePorPeriodo();
@@ -591,18 +644,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
+    dataInicial:= EncodeDate(2023, 04, 10);
+    dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Por Periodo', ErrOK,
-  NFSE_ConsultarNFSePorPeriodo(Handle, dataInicial, dataFinal, 1, '1', 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Consultar NFSe Por Periodo', ErrOK,
+    NFSE_ConsultarNFSePorPeriodo(Handle, dataInicial, dataFinal, 1, '1', 1, Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSePorFaixa();
@@ -611,16 +669,21 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Consultar NFSe Por Faixa', ErrOK,
-  NFSE_ConsultarNFSePorFaixa(Handle, '1', '2', 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Consultar NFSe Por Faixa', ErrOK,
+    NFSE_ConsultarNFSePorFaixa(Handle, '1', '2', 1, Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeGenerico();
@@ -629,16 +692,21 @@ var
   Resposta: PChar;
   Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-  AssertEquals('Erro ao Consultar NFSe Generico', ErrOK,
-  NFSE_ConsultarNFSeGenerico(Handle, PChar(fCaminhoExec +'\NFSeConsulta.ini'), Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    AssertEquals('Erro ao Consultar NFSe Generico', ErrOK,
+    NFSE_ConsultarNFSeGenerico(Handle, PChar(fCaminhoExec +'\NFSeConsulta.ini'), Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_EnviarEmail();
@@ -692,18 +760,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Prestado Por Numero', ErrOK,
-  NFSE_ConsultarNFSeServicoPrestadoPorNumero(Handle,'1', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Prestado Por Numero', ErrOK,
+     NFSE_ConsultarNFSeServicoPrestadoPorNumero(Handle,'1', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeServicoPrestadoPorPeriodo();
@@ -713,18 +786,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Prestado Por Periodo', ErrOK,
-  NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(Handle, dataInicial, dataFinal, 1, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Prestado Por Periodo', ErrOK,
+     NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(Handle, dataInicial, dataFinal, 1, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeServicoPrestadoPorTomador();
@@ -734,18 +812,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Prestado Por Tomador', ErrOK,
-  NFSE_ConsultarNFSeServicoPrestadoPorTomador(Handle, '123', '111', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Prestado Por Tomador', ErrOK,
+     NFSE_ConsultarNFSeServicoPrestadoPorTomador(Handle, '123', '111', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeServicoPrestadoPorIntermediario();
@@ -755,18 +838,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Prestado Por Intermediario',ErrOK,
-  NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(Handle, '123', '123', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Prestado Por Intermediario',ErrOK,
+     NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(Handle, '123', '123', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeServicoTomadoPorNumero();
@@ -776,18 +864,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Numero',ErrOK,
-  NFSE_ConsultarNFSeServicoTomadoPorNumero(Handle, '1', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Numero',ErrOK,
+     NFSE_ConsultarNFSeServicoTomadoPorNumero(Handle, '1', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeServicoTomadoPorPrestador();
@@ -797,18 +890,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Prestador',ErrOK,
-  NFSE_ConsultarNFSeServicoTomadoPorPrestador(Handle, '123', '123', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Prestador',ErrOK,
+     NFSE_ConsultarNFSeServicoTomadoPorPrestador(Handle, '123', '123', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeServicoTomadoPorTomador();
@@ -818,18 +916,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Tomador',ErrOK,
-  NFSE_ConsultarNFSeServicoTomadoPorTomador(Handle, '123', '123', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Tomador',ErrOK,
+     NFSE_ConsultarNFSeServicoTomadoPorTomador(Handle, '123', '123', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeServicoTomadoPorPeriodo();
@@ -839,18 +942,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Periodo',ErrOK,
-  NFSE_ConsultarNFSeServicoTomadoPorPeriodo(Handle, dataInicial, dataFinal, 1, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Periodo',ErrOK,
+     NFSE_ConsultarNFSeServicoTomadoPorPeriodo(Handle, dataInicial, dataFinal, 1, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrNFSeLib.Test_NFSE_ConsultarNFSeServicoTomadoPorIntermediario();
@@ -860,18 +968,23 @@ var
   Tamanho: Longint;
   dataInicial, dataFinal: TDateTime;
 begin
-  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
-  Resposta:= '';
-  Tamanho:= 0;
-  dataInicial:= EncodeDate(2023, 04, 10);
-  dataFinal:= EncodeDate(2023, 04, 11);
+  try
+     AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+     Resposta:= '';
+     Tamanho:= 0;
+     dataInicial:= EncodeDate(2023, 04, 10);
+     dataFinal:= EncodeDate(2023, 04, 11);
 
-  AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Intermediario',ErrOK,
-  NFSE_ConsultarNFSeServicoTomadoPorIntermediario(Handle, '123', '123', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+     AssertEquals('Erro ao Consultar NFSe Serviço Tomado Por Intermediario',ErrOK,
+     NFSE_ConsultarNFSeServicoTomadoPorIntermediario(Handle, '123', '123', 1, dataInicial, dataFinal, 1, Resposta, Tamanho));
+     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+     AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 initialization

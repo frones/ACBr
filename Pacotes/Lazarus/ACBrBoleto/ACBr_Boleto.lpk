@@ -315,6 +315,22 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoVotorantim.pas"/>
         <UnitName Value="ACBrBancoVotorantim"/>
       </Item73>
+      <Item74>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoFibra.pas.pas"/>
+        <UnitName Value="ACBrBancoFibra.pas"/>
+      </Item74>
+      <Item75>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoPefisa.pas"/>
+        <UnitName Value="ACBrBancoPefisa"/>
+      </Item75>
+      <Item76>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Bancoob.pas"/>
+        <UnitName Value="ACBrBoletoW_Bancoob"/>
+      </Item76>
+      <Item77>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Bancoob.pas"/>
+        <UnitName Value="ACBrBoletoRet_Bancoob"/>
+      </Item77>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

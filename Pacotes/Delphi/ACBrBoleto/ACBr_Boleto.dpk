@@ -107,5 +107,9 @@ contains
   ACBrBoletoWS.Rest.OAuth in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.OAuth.pas',
   ACBrBoletoWS.Rest in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.pas',
   ACBrBoletoWS.SOAP in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.SOAP.pas',
-  ACBrBancoVotorantim in '..\..\..\Fontes\ACBrBoleto\ACBrBancoVotorantim.pas';
+  ACBrBancoVotorantim in '..\..\..\Fontes\ACBrBoleto\ACBrBancoVotorantim.pas',
+  ACBrBoletoRet_Bancoob in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Bancoob.pas',
+  ACBrBoletoW_Bancoob in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Bancoob.pas',
+  ACBrBancoPefisa in '..\..\..\Fontes\ACBrBoleto\ACBrBancoPefisa.pas',
+  ACBrBancoFibra in '..\..\..\Fontes\ACBrBoleto\ACBrBancoFibra.pas';
 end.

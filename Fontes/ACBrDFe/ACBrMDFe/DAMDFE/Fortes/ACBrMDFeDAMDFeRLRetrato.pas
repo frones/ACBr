@@ -734,8 +734,8 @@ begin
 
       with fpMDFe.infDoc.infMunDescarga.Items[FNumItem] do
       begin
-        rlbMunicipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
-
+        if rlbMunicipio.Visible then
+          rlbMunicipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
 
        // Lista de CT-e
         for J := 0 to ( infCTe.Count - 1) do
@@ -786,7 +786,7 @@ begin
           LDocumento2:= LDocumentos2[j];
         rlmChave1.Lines.Add(Format('%s         %s', [LDocumento1,LDocumento2])   );
       end;
-      rlmChave1.Lines.Add('');
+      rlmChave1.Lines.Add(' ');
     finally
       LDocumentos2.free;
     end;

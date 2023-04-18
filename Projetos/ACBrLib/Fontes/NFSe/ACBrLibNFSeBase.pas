@@ -434,14 +434,17 @@ begin
     try
       NFSeDM.ACBrNFSeX1.Emitir(aLote, ModoEnvio, aImprimir);
       Resp := TEmiteResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.Emite);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.Emite);
 
-      Resposta := Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -474,17 +477,20 @@ begin
          InfCancelamentoNFSe.LerFromIni(aInfCancelamentoNFSe);
          NFSeDM.ACBrNFSeX1.CancelarNFSe(InfCancelamentoNFSe);
          Resp := TCancelarNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.CancelaNFSe);
+         try
+           Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.CancelaNFSe);
 
-         Resposta:= Resp.Gerar;
-         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-         Result := SetRetorno(ErrOK, Resposta);
+           Resposta:= Resp.Gerar;
+           MoverStringParaPChar(Resposta, sResposta, esTamanho);
+           Result := SetRetorno(ErrOK, Resposta);
+         finally
+           Resp.Free;
+         end;
        finally
-        InfCancelamentoNFSe.Destroy;
+         InfCancelamentoNFSe.Free;
       end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -515,18 +521,20 @@ begin
       GravarLog('NFSE_SubstituirNFSe', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.SubstituirNFSe(NumeroNFSe, SerieNFSe, CodigoCancelamento, MotivoCancelamento, NumeroLote, CodigoCancelamento);
       Resp := TSubstituirNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.SubstituiNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.SubstituiNFSe);
 
-      Resposta := Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -555,17 +563,18 @@ begin
       GravarLog('NFSE_LinkNFSe', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.LinkNFSe(NumeroNFSe, CodigoVerificacao, ChaveAcesso, ValorServico);
       Resp := TLinkNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-
-      Resposta := Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+      try
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -589,17 +598,18 @@ begin
       GravarLog('NFSE_GerarLote', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.GerarLote(aLote, aQtdMaximaRps, ModoEnvio);
       Resp := TGerarLoteResposta.Create(Config.TipoResposta, Config.CodResposta);
-
-      Resposta := Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+      try
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -619,18 +629,20 @@ begin
     GravarLog('NFSE_GerarToken', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.GerarToken;
       Resp:= TGerarTokenResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.GerarToken);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.GerarToken);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -657,18 +669,20 @@ begin
       GravarLog('NFSE_ConsultarSituacao', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarSituacao(Protocolo, NumLote);
       Resp := TConsultaSituacaoResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaSituacao);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaSituacao);
 
-      Resposta := Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -695,18 +709,20 @@ begin
       GravarLog('NFSE_ConsultarLoteRps', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarLoteRps(Protocolo, NumLote);
       Resp := TConsultaLoteRpsResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaLoteRps);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaLoteRps);
 
-      Resposta := Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -735,18 +751,20 @@ begin
         GravarLog('NFSE_ConsultarNFSePorRps', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSePorRps(NumeroRps, Serie, Tipo, CodigoVerificacao);
       Resp := TConsultaNFSePorRpsResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSeporRps);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSeporRps);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -772,18 +790,20 @@ begin
       GravarLog('NFSE_ConsultarNFSePorNumero', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSePorNumero(Numero, aPagina);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -809,18 +829,20 @@ begin
         GravarLog('NFSE_ConsultarNFSePorPeriodo', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSePorPeriodo(aDataInicial, aDataFinal, aPagina, NumeroLote, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -847,18 +869,20 @@ begin
         GravarLog('NFSE_ConsultarNFSePorFaixa', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSePorFaixa(NumeroInicial, NumeroFinal, aPagina);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -891,19 +915,21 @@ begin
         InfConsultaNFSe.LerFromIni(aInfConsultaNFSe);
         NFSeDM.ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
         Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+        try
+          Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Resposta:= Resp.Gerar;
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
 
-        Result := SetRetorno(ErrOK, Resposta);
-
+          Result := SetRetorno(ErrOK, Resposta);
+        finally
+          Resp.Free;
+        end;
     finally
-        InfConsultaNFSe.Destroy;
+      InfConsultaNFSe.Free;
     end;
     finally
       NFSeDM.Destravar;
-      Resp.Free;
     end;
   except
     on E: EACBrLibException do
@@ -936,7 +962,6 @@ begin
       GravarLog('NFe_EnviarEmail', logNormal);
 
     NFSeDM.Travar;
-
     try
       with NFSeDM do
       begin
@@ -957,9 +982,7 @@ begin
             slMensagemEmail := TStringList.Create;
             slCC := TStringList.Create;
             slAnexos := TStringList.Create;
-
             Resp := TLibNFSeResposta.Create('EnviarEmail', Config.TipoResposta, Config.CodResposta);
-
             try
               with ACBrNFSeX1 do
               begin
@@ -1093,18 +1116,20 @@ begin
         GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorNumero', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorNumero(aNumero, aPagina, aDataFinal, aDataFinal, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1127,18 +1152,20 @@ begin
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorPeriodo', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal, aPagina, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1165,18 +1192,20 @@ begin
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorTomador', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorTomador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1203,18 +1232,20 @@ begin
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorIntermediario', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorIntermediario(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1240,18 +1271,20 @@ begin
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorNumero', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorNumero(Numero, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1278,18 +1311,20 @@ begin
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorPrestador ', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPrestador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1316,18 +1351,20 @@ begin
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorTomador ', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorTomador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1350,18 +1387,20 @@ begin
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorPeriodo', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPeriodo(aDataFinal, aDataFinal, aPagina, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1388,18 +1427,20 @@ begin
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorIntermediario', logNormal);
 
     NFSeDM.Travar;
-
     try
       NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorIntermediario(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, config.CodResposta);
-      Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
-      Resposta:= Resp.Gerar;
-      MoverStringParaPChar(Resposta, sResposta, esTamanho);
-      Result := SetRetorno(ErrOK, Resposta);
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
     finally
-    NFSeDM.Destravar;
-    Resp.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do

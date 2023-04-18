@@ -119,7 +119,7 @@ const
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Base, ACBrPIXCD, ACBrJSON, Winapi.Windows;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Base, ACBrPIXCD, ACBrJSON, Windows;
 
 { TBoletoW_Bancoob}
 

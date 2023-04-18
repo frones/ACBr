@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2023
+--- ACBrLibNFSeBase ---
+[*] Correção variaveis que não estavam sendo utilizadas.
+    Por: Antonio Carlos Junior
+
 17/04/2023
 --- ACBrLibNFSeBase ---
 [*] Remoção da variavel Response dos métodos para correção de A.V

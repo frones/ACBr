@@ -512,7 +512,7 @@ begin
     SerieNFSe := ConverterAnsiParaUTF8(aSerieNFSe);
     CodigoCancelamento := ConverterAnsiParaUTF8(aCodigoCancelamento);
     MotivoCancelamento := ConverterAnsiParaUTF8(aMotivoCancelamento);
-    NumeroLote := ConverterAnsiParaUTF8(NumeroLote);
+    NumeroLote := ConverterAnsiParaUTF8(aNumeroLote);
     CodigoVerificacao := ConverterAnsiParaUTF8(aCodigoVerificacao);
 
     if Config.Log.Nivel > logNormal then

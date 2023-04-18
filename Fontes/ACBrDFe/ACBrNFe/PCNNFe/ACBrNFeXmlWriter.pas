@@ -3336,8 +3336,7 @@ begin
     xmlNode.AppendChild(AddNode(tcStr, 'YA02a', 'xPag', 02, 60, 0, NFe.pag[i].xPag, DSC_XPAG));
     xmlNode.AppendChild(AddNode(tcDe2, 'YA03', 'vPag', 01, 15, 1, NFe.pag[i].vPag, DSC_VPAG));
 
-    if(NFe.pag[i].tPag in [fpCartaoDebito, fpCartaoCredito]) and
-      ((NFe.pag[i].CNPJ <> '') or (NFe.pag[i].tpIntegra <> tiNaoInformado)) then
+    if NFe.pag[i].tpIntegra <> tiNaoInformado then
     begin
       xmlCardNode := xmlNode.AddChild('card');
       xmlCardNode.AppendChild(AddNode(tcStr, 'YA04a', 'tpIntegra', 01, 01, 1, tpIntegraToStr(NFe.pag[i].tpIntegra), DSC_TPINTEGRA));

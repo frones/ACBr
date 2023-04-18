@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade Caraguatatuba/SP - Provedor: SigCorp
+   Por: Bruno Lucas
+
 14/04/2023
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Ao ler o XML não estava alimentando o campo MunicipioIncidencia.

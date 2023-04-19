@@ -1205,7 +1205,7 @@ type
     FvICMSMono: Currency;
     FadRemICMSReten: Currency;
     FvICMSMonoReten: Currency;
-    FadRemICMSDif: Currency;
+//    FadRemICMSDif: Currency;
     FvICMSMonoDif: Currency;
     FadRemICMSRet: Currency;
     FvICMSMonoRet: Currency;
@@ -1213,7 +1213,7 @@ type
     FqBCMonoReten: Currency;
     FpRedAdRem: Currency;
     FmotRedAdRem: TmotRedAdRem;
-    FqBCMonoDif: Currency;
+    FvICMSMonoOp: Currency;
     FqBCMonoRet: Currency;
   public
     procedure Assign(Source: TICMS);
@@ -1268,24 +1268,20 @@ type
     // CST 02, 15
     property adRemICMS: Currency read FadRemICMS write FadRemICMS;
     property vICMSMono: Currency read FvICMSMono write FvICMSMono;
+    property qBCMono: Currency read FqBCMono write FqBCMono;
     // CST 15
     property adRemICMSReten: Currency read FadRemICMSReten write FadRemICMSReten;
     property vICMSMonoReten: Currency read FvICMSMonoReten write FvICMSMonoReten;
-    // CST 53
-    property adRemICMSDif: Currency read FadRemICMSDif write FadRemICMSDif;
-    property vICMSMonoDif: Currency read FvICMSMonoDif write FvICMSMonoDif;
-    // CST 61
-    property adRemICMSRet: Currency read FadRemICMSRet write FadRemICMSRet;
-    property vICMSMonoRet: Currency read FvICMSMonoRet write FvICMSMonoRet;
-    // CST 02, 15
-    property qBCMono: Currency read FqBCMono write FqBCMono;
-    // CST 15
     property qBCMonoReten: Currency read FqBCMonoReten write FqBCMonoReten;
     property pRedAdRem: Currency read FpRedAdRem write FpRedAdRem;
     property motRedAdRem: TmotRedAdRem read FmotRedAdRem write FmotRedAdRem;
     // CST 53
-    property qBCMonoDif: Currency read FqBCMonoDif write FqBCMonoDif;
+//    property adRemICMSDif: Currency read FadRemICMSDif write FadRemICMSDif;
+    property vICMSMonoOp: Currency read FvICMSMonoOp write FvICMSMonoOp;
+    property vICMSMonoDif: Currency read FvICMSMonoDif write FvICMSMonoDif;
     // CST 61
+    property adRemICMSRet: Currency read FadRemICMSRet write FadRemICMSRet;
+    property vICMSMonoRet: Currency read FvICMSMonoRet write FvICMSMonoRet;
     property qBCMonoRet: Currency read FqBCMonoRet write FqBCMonoRet;
   end;
 
@@ -3709,7 +3705,7 @@ begin
   vICMSMono := Source.vICMSMono;
   adRemICMSReten := Source.adRemICMSReten;
   vICMSMonoReten := Source.vICMSMonoReten;
-  adRemICMSDif := Source.adRemICMSDif;
+//  adRemICMSDif := Source.adRemICMSDif;
   vICMSMonoDif := Source.vICMSMonoDif;
   adRemICMSRet := Source.adRemICMSRet;
   vICMSMonoRet := Source.vICMSMonoRet;
@@ -3717,7 +3713,7 @@ begin
   qBCMonoReten := Source.qBCMonoReten;
   pRedAdRem := Source.pRedAdRem;
   motRedAdRem := Source.motRedAdRem;
-  qBCMonoDif := Source.qBCMonoDif;
+  FvICMSMonoOp := Source.FvICMSMonoOp;
   qBCMonoRet := Source.qBCMonoRet;
 end;
 

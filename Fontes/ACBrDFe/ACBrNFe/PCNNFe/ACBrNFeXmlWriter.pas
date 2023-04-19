@@ -1817,12 +1817,18 @@ begin
 
         cst53 :
         begin
-          xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'qBCMonoDif',
-            01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMonoDif, DSC_QBCMONODIF));
-          xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'adRemICMSDif',
-            01, 5, 1, NFe.Det[i].Imposto.ICMS.adRemICMSDif, DSC_ADREMICMSDIF));
+          xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'qBCMono',
+            01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO));
+          xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'adRemICMS',
+            01, 5, 0, NFe.Det[i].Imposto.ICMS.adRemICMS, DSC_ADREMICMS));
+          xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'vICMSMonoOp',
+            01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMonoOp, DSC_VICMSMONOOP));
+          xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'pDif',
+            01, 5, 0, NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF));
           xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMSMonoDif',
             01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSMonoDif, DSC_VICMSMONODIF));
+          xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMSMono',
+            01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSMono, DSC_VICMSMONO));
         end;
 
         cst61 :
@@ -2092,7 +2098,7 @@ begin
               01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSOp, DSC_VICMS));
             xmlNode.AppendChild(AddNode(IIf(Usar_tcDe4, tcDe4, tcDe2),
               'N16b', 'pDif', 01, IIf(Usar_tcDe4, 07, 05), 0,
-              NFe.Det[i].Imposto.ICMS.pDif, DSC_PICMS));
+              NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF));
             xmlNode.AppendChild(AddNode(tcDe2, 'N16c', 'vICMSDif',
               01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSDif, DSC_VICMS));
 

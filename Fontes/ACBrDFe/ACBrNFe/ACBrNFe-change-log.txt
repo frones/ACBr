@@ -45,6 +45,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/04/2023
+-- Diversos --
+[*] Alterações visando atender a versão 1.20 da NT 2023/001 onde foi incluído novos campos.
+    Observação: Essas alterações só vão ser validadas no ambiente de homologação 
+                a partir de 20/04/2023 e no de produção: 01/05/2023.
+    por: Italo Giurizzato Junior
+
 29/03/2023
 -- ACBrNFeXmlReader, ACBrNFeXmlWriter --
 [-] Alterações visando atender a NT 2020/006 versão 1.20.

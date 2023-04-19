@@ -879,7 +879,6 @@ begin
             Item.Imposto.ICMS.vICMSMono := ObterConteudo(AuxNode.Childrens.Find('vICMSMono'), tcDe2);
             Item.Imposto.ICMS.adRemICMSReten := ObterConteudo(AuxNode.Childrens.Find('adRemICMSReten'), tcDe4);
             Item.Imposto.ICMS.vICMSMonoReten := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoReten'), tcDe2);
-            Item.Imposto.ICMS.adRemICMSDif := ObterConteudo(AuxNode.Childrens.Find('adRemICMSDif'), tcDe4);
             Item.Imposto.ICMS.vICMSMonoDif := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoDif'), tcDe2);
             Item.Imposto.ICMS.adRemICMSRet := ObterConteudo(AuxNode.Childrens.Find('adRemICMSRet'), tcDe4);
             Item.Imposto.ICMS.vICMSMonoRet := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoRet'), tcDe2);
@@ -888,8 +887,8 @@ begin
             Item.Imposto.ICMS.qBCMonoReten := ObterConteudo(AuxNode.Childrens.Find('qBCMonoReten'), tcDe2);
             Item.Imposto.ICMS.pRedAdRem := ObterConteudo(AuxNode.Childrens.Find('pRedAdRem'), tcDe2);
             Item.Imposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, ObterConteudo(AuxNode.Childrens.Find('motRedAdRem'), tcStr));
-            Item.Imposto.ICMS.qBCMonoDif := ObterConteudo(AuxNode.Childrens.Find('qBCMonoDif'), tcDe2);
             Item.Imposto.ICMS.qBCMonoRet := ObterConteudo(AuxNode.Childrens.Find('qBCMonoRet'), tcDe2);
+            Item.Imposto.ICMS.vICMSMonoOp := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoOp'), tcDe2);
 
     if (AuxNode.Name = 'ICMSPart') then
     begin

@@ -2203,7 +2203,6 @@ begin
                 ICMS.vICMSMono := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMono','') ,0);
                 ICMS.adRemICMSReten := StringToFloatDef( INIRec.ReadString(sSecao,'adRemICMSReten','') ,0);
                 ICMS.vICMSMonoReten := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMonoReten','') ,0);
-                ICMS.adRemICMSDif := StringToFloatDef( INIRec.ReadString(sSecao,'adRemICMSDif','') ,0);
                 ICMS.vICMSMonoDif := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMonoDif','') ,0);
                 ICMS.adRemICMSRet := StringToFloatDef( INIRec.ReadString(sSecao,'adRemICMSRet','') ,0);
                 ICMS.vICMSMonoRet := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMonoRet','') ,0);
@@ -2212,8 +2211,8 @@ begin
                 ICMS.qBCMonoReten := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMonoReten','') ,0);
                 ICMS.pRedAdRem := StringToFloatDef( INIRec.ReadString(sSecao,'pRedAdRem','') ,0);
                 ICMS.motRedAdRem := StrTomotRedAdRem(OK, INIRec.ReadString(sSecao,'motRedAdRem','0'));
-                ICMS.qBCMonoDif := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMonoDif','') ,0);
                 ICMS.qBCMonoRet := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMonoRet','') ,0);
+                ICMS.vICMSMonoOp := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMonoOp','') ,0);
               end;
             end;
 
@@ -3225,7 +3224,6 @@ begin
               INIRec.WriteFloat(sSecao, 'vICMSMono', ICMS.vICMSMono);
               INIRec.WriteFloat(sSecao, 'adRemICMSReten', ICMS.adRemICMSReten);
               INIRec.WriteFloat(sSecao, 'vICMSMonoReten', ICMS.vICMSMonoReten);
-              INIRec.WriteFloat(sSecao, 'adRemICMSDif', ICMS.adRemICMSDif);
               INIRec.WriteFloat(sSecao, 'vICMSMonoDif', ICMS.vICMSMonoDif);
               INIRec.WriteFloat(sSecao, 'adRemICMSRet', ICMS.adRemICMSRet);
               INIRec.WriteFloat(sSecao, 'vICMSMonoRet', ICMS.vICMSMonoRet);
@@ -3234,8 +3232,8 @@ begin
               INIRec.WriteFloat(sSecao, 'qBCMonoReten', ICMS.qBCMonoReten);
               INIRec.WriteFloat(sSecao, 'pRedAdRem', ICMS.pRedAdRem);
               INIRec.WriteString(sSecao, 'motRedAdRem', motRedAdRemToStr(ICMS.motRedAdRem));
-              INIRec.WriteFloat(sSecao, 'qBCMonoDif', ICMS.qBCMonoDif);
               INIRec.WriteFloat(sSecao, 'qBCMonoRet', ICMS.qBCMonoRet);
+              INIRec.WriteFloat(sSecao, 'vICMSMonoOp', ICMS.vICMSMonoOp);
             end;
             sSecao := 'ICMSUFDEST' + IntToStrZero(I + 1, 3);
             with ICMSUFDest do

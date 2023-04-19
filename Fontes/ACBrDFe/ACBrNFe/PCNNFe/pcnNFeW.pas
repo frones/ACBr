@@ -1499,9 +1499,12 @@ begin
               end;
            cst53 :
               begin
-                Gerador.wCampo(tcDe4, 'N15', 'qBCMonoDif', 01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMonoDif, DSC_QBCMONODIF);
-                Gerador.wCampo(tcDe4, 'N15', 'adRemICMSDif', 01, 5, 0, NFe.Det[i].Imposto.ICMS.adRemICMSDif, DSC_ADREMICMSDIF);
+                Gerador.wCampo(tcDe4, 'N15', 'qBCMono     ', 01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO);
+                Gerador.wCampo(tcDe4, 'N15', 'adRemICMS   ', 01, 5, 0, NFe.Det[i].Imposto.ICMS.adRemICMS, DSC_ADREMICMS);
+                Gerador.wCampo(tcDe2, 'N17', 'vICMSMonoOp ', 01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMonoOp, DSC_VICMSMONOOP);
+                Gerador.wCampo(tcDe4, 'N17', 'pDif        ', 01, 5, 0, NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF);
                 Gerador.wCampo(tcDe2, 'N17', 'vICMSMonoDif', 01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMonoDif, DSC_VICMSMONODIF);
+                Gerador.wCampo(tcDe2, 'N17', 'vICMSMono   ', 01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMono, DSC_VICMSMONO);
               end;
            cst61 :
               begin
@@ -1679,7 +1682,7 @@ begin
                       Gerador.wCampo(tcDe2, 'N15', 'vBC      ', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
                       Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N16', 'pICMS    ', 01, IIf(FUsar_tcDe4,07,05), 1, NFe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
                       Gerador.wCampo(tcDe2, 'N16a', 'vICMSOp ', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSOp, DSC_VICMS);
-                      Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N16b', 'pDif    ', 01, IIf(FUsar_tcDe4,07,05), 1, NFe.Det[i].Imposto.ICMS.pDif, DSC_PICMS);
+                      Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N16b', 'pDif    ', 01, IIf(FUsar_tcDe4,07,05), 1, NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF);
                       Gerador.wCampo(tcDe2, 'N16c', 'vICMSDif', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSDif, DSC_VICMS);
 
             //          if (NFe.Det[i].Imposto.ICMS.pICMS = 0) and (NFe.Det[i].Imposto.ICMS.pDif = 0) then

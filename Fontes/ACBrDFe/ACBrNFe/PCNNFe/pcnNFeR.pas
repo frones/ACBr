@@ -701,7 +701,6 @@ begin
              NFe.Det[i].Imposto.ICMS.vICMSMono := Leitor.rCampo(tcDe2, 'vICMSMono');
              NFe.Det[i].Imposto.ICMS.adRemICMSReten := Leitor.rCampo(tcDe4, 'adRemICMSReten');
              NFe.Det[i].Imposto.ICMS.vICMSMonoReten := Leitor.rCampo(tcDe2, 'vICMSMonoReten');
-             NFe.Det[i].Imposto.ICMS.adRemICMSDif := Leitor.rCampo(tcDe4, 'adRemICMSDif');
              NFe.Det[i].Imposto.ICMS.vICMSMonoDif := Leitor.rCampo(tcDe2, 'vICMSMonoDif');
              NFe.Det[i].Imposto.ICMS.adRemICMSRet := Leitor.rCampo(tcDe4, 'adRemICMSRet');
              NFe.Det[i].Imposto.ICMS.vICMSMonoRet := Leitor.rCampo(tcDe2, 'vICMSMonoRet');
@@ -710,8 +709,8 @@ begin
              NFe.Det[i].Imposto.ICMS.qBCMonoReten := Leitor.rCampo(tcDe4, 'qBCMonoReten');
              NFe.Det[i].Imposto.ICMS.pRedAdRem := Leitor.rCampo(tcDe4, 'pRedAdRem');
              NFe.Det[i].Imposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, Leitor.rCampo(tcStr, 'motRedAdRem'));
-             NFe.Det[i].Imposto.ICMS.qBCMonoDif := Leitor.rCampo(tcDe4, 'qBCMonoDif');
              NFe.Det[i].Imposto.ICMS.qBCMonoRet := Leitor.rCampo(tcDe4, 'qBCMonoRet');
+             NFe.Det[i].Imposto.ICMS.vICMSMonoOp := Leitor.rCampo(tcDe2, 'vICMSMonoOp');
 
       (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := Leitor.rCampo(tcDe2, 'vICMSSubstituto');
 

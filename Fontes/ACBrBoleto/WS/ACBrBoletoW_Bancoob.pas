@@ -58,7 +58,6 @@ type
   private
     function DateBancoobtoDateTime(const AValue: String): TDateTime;
     function DateTimeToDateBancoob( const AValue:TDateTime ):String;
-    function PegaTimeZone: string;
     procedure GerarInstrucao(AJson: TJsonObject);
     procedure AlterarEspecie(AJson: TJsonObject);
   protected
@@ -119,7 +118,7 @@ const
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Base, ACBrPIXCD, ACBrJSON, Windows;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Base, ACBrPIXCD, ACBrJSON;
 
 { TBoletoW_Bancoob}
 
@@ -267,15 +266,9 @@ end;
 
 function TBoletoW_Bancoob.DateTimeToDateBancoob(const AValue: TDateTime): String;
 begin
-  result := FormatDateBr( aValue, 'YYYY-MM-DD') + 'T' + FormatDateTime('hh:nn:ss', AValue) + PegaTimeZone;
+  result := DateTimeToIso8601(DateTimeUniversal('',AValue));
+  //FormatDateBr( aValue, 'YYYY-MM-DD') + 'T' + FormatDateTime('hh:nn:ss', AValue) + PegaTimeZone;
 
-end;
-
-function TBoletoW_Bancoob.PegaTimeZone: string;
-var TimeZone: TTimeZoneInformation;
-begin
- GetTimeZoneInformation(TimeZone);
- Result := FormatFloat('00', TimeZone.Bias div -60) + ':00';
 end;
 
 procedure TBoletoW_Bancoob.DefinirAutenticacao;

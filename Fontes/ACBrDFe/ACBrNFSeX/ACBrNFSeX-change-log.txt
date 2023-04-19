@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/04/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade Treze Tilias/SC trocou de provedor, agora é: IPM.
+   Por: Adriano Wolff
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Alteração visando retornar informações tais como (numero da nota, codigo de verificação,
    numero e série do Rps) nas diversas consultas.

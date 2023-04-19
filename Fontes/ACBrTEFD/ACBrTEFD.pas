@@ -175,6 +175,7 @@ type
      function GetPathBackup : String;
      function GetReq : TACBrTEFDReq;
      function GetResp : TACBrTEFDResp;
+     procedure SetAutoAtivarGP(AValue: Boolean);
      procedure SetAutoEfetuarPagamento(const AValue : Boolean);
      procedure SetAutoFinalizarCupom(const AValue : Boolean);
      procedure SetEsperaSleep(const AValue : Integer);
@@ -278,8 +279,7 @@ type
        write SetMultiplosCartoes default False ;
      property NumeroMaximoCartoes : Integer read fNumeroMaximoCartoes
        write SetNumeroMaximoCartoes default 0;
-     property AutoAtivarGP : Boolean read fAutoAtivarGP write fAutoAtivarGP
-       default True ;
+     property AutoAtivarGP : Boolean read fAutoAtivarGP write SetAutoAtivarGP default True ;
      property ExibirMsgAutenticacao : Boolean read fExibirMsgAutenticacao
        write fExibirMsgAutenticacao default True ;
      property AutoEfetuarPagamento : Boolean read fAutoEfetuarPagamento
@@ -1949,6 +1949,22 @@ end;
 function TACBrTEFD.GetResp : TACBrTEFDResp;
 begin
    Result := fTefClass.Resp;
+end;
+
+procedure TACBrTEFD.SetAutoAtivarGP(AValue: Boolean);
+var
+   I : Integer;
+begin
+  For I := 0 to fTEFList.Count-1 do
+  begin
+    if fTEFList[I] is TACBrTEFDClass then
+    begin
+       with TACBrTEFDClass( fTEFList[I] ) do
+         AutoAtivarGP := AValue;
+    end;
+  end;
+
+  fAutoAtivarGP := AValue;
 end;
 
 procedure TACBrTEFD.SetPathBackup(const AValue : String);

@@ -591,7 +591,7 @@ end;
 function TACBrTEFCliSiTefAPI.TraduzirErroInicializacao(Sts: Integer): String;
 begin
   Case Sts of
-     1 :	Result := CACBrTEFCliSiTef_Erro1;
+     1 : Result := CACBrTEFCliSiTef_Erro1;
      2 : Result := CACBrTEFCliSiTef_Erro2;
      3 : Result := CACBrTEFCliSiTef_Erro3;
      6 : Result := CACBrTEFCliSiTef_Erro6;

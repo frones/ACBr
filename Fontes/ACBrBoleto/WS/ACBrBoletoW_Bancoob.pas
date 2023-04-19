@@ -770,19 +770,17 @@ begin
   FPAccept := C_ACCEPT;
 
   if Assigned(OAuth) then
-    begin
-      if Boleto.Configuracoes.WebService.Ambiente = taHomologacao then
-        raise Exception.Create('Sicoob API v2 tem somente ambiente de produção.');
-
-      OAuth.URL := C_URL_OAUTH_PROD;
-
-      OAuth.Payload := True;
-    end;
+  begin
+    OAuth.URL := C_URL_OAUTH_PROD;
+    OAuth.Payload := True;
+  end;
 
 end;
 
 function TBoletoW_Bancoob.GerarRemessa: string;
 begin
+  if Boleto.Configuracoes.WebService.Ambiente = taHomologacao then
+    raise Exception.Create('Sicoob API v2 tem somente ambiente de produção.');
   result := inherited GerarRemessa;
 end;
 

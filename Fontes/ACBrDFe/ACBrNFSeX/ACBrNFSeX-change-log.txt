@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/04/2023
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Alteração visando retornar informações tais como (numero da nota, codigo de verificação,
+   numero e série do Rps) nas diversas consultas.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLISSNet --
 [*] Adiciona no canhoto o nome completo do tomador e o Nº da Nota para ficar semelhante ao impresso padrão.
    Por: Diego F

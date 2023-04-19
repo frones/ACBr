@@ -202,6 +202,14 @@ begin
     AResumo.NumeroRps := NumRps;
     AResumo.SerieRps := SerieRps;
 
+    with Response do
+    begin
+      NumeroNota := NumNFSe;
+      CodigoVerificacao := CodVerif;
+      NumeroRps := NumRps;
+      SerieRps := SerieRps;
+    end;
+
     if NumeroRps > 0 then
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
     else
@@ -249,6 +257,14 @@ begin
     AResumo.CodigoVerificacao := CodVerif;
     AResumo.NumeroRps := NumRps;
     AResumo.SerieRps := SerieRps;
+
+    with Response do
+    begin
+      NumeroNota := NumNFSe;
+      CodigoVerificacao := CodVerif;
+      NumeroRps := NumRps;
+      SerieRps := SerieRps;
+    end;
 
     if NumeroRps > 0 then
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)

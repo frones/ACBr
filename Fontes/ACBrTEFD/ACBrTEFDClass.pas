@@ -338,6 +338,7 @@ type
      procedure SetArqResp(const AValue : String);
      procedure SetArqSTS(const AValue : String);
      procedure SetArqTmp(const AValue : String);
+     procedure SetAutoAtivarGP(AValue: Boolean);
      procedure SetInicializado(const AValue : Boolean);
      procedure SetGPExeName(const AValue : String);
 
@@ -376,9 +377,6 @@ type
      Function TransacaoEPagamento( AHeader: String ): Boolean;
 
    protected
-     property AutoAtivarGP : Boolean read fAutoAtivarGP write fAutoAtivarGP
-       default True ;
-
      property EsperaSTS : Integer read fEsperaSTS write fEsperaSTS
         default CACBrTEFD_EsperaSTS ;
 
@@ -391,10 +389,10 @@ type
      constructor Create( AOwner : TComponent ) ; override;
      destructor Destroy ; override;
 
+     property AutoAtivarGP : Boolean read fAutoAtivarGP write SetAutoAtivarGP default True ;
      property Tipo : TACBrTEFDTipo read fpTipo ;
 
-     property NumVias : Integer read fpNumVias write SetNumVias
-        default CACBrTEFD_NumVias ;
+     property NumVias : Integer read fpNumVias write SetNumVias default CACBrTEFD_NumVias ;
 
      property Req  : TACBrTEFDReq  read fpReq  ;
      property Resp : TACBrTEFDResp read fpResp ;
@@ -2231,6 +2229,11 @@ end;
 procedure TACBrTEFDClass.SetArqTmp(const AValue : String);
 begin
   fArqTmp := Trim( AValue ) ;
+end;
+
+procedure TACBrTEFDClass.SetAutoAtivarGP(AValue: Boolean);
+begin
+  fAutoAtivarGP:=AValue;
 end;
 
 procedure TACBrTEFDClass.SetGPExeName(const AValue : String);

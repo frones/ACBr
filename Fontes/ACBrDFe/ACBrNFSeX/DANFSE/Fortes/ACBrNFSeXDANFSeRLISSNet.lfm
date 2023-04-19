@@ -1800,6 +1800,32 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Arial'
+      end
+      object rllTomadorNomeEnt: TRLLabel
+        Left = 6
+        Height = 15
+        Top = 32
+        Width = 591
+        AutoSize = False
+        Caption = '<Nome do Tomador>'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllNumNF0Ent: TRLLabel
+        Left = 609
+        Height = 18
+        Top = 42
+        Width = 128
+        Alignment = taCenter
+        AutoSize = False
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end

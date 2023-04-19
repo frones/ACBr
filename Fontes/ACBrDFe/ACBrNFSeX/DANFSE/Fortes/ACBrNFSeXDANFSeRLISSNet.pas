@@ -58,6 +58,8 @@ type
 
   { TfrlXDANFSeRLRetrato }
 
+  { TfrlXDANFSeRLISSnet }
+
   TfrlXDANFSeRLISSnet = class(TfrlXDANFSeRL)
     rlbCabecalho: TRLBand;
     rllNumNF0: TRLLabel;
@@ -244,6 +246,8 @@ type
     rllSite: TRLLabel;
     rllPrestEndereco: TRLMemo;
     lbIdentificacao: TRLLabel;
+    rllTomadorNomeEnt: TRLLabel;
+    rllNumNF0Ent: TRLLabel;
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -563,6 +567,14 @@ begin
       QrCodeBitmap.Free;
     end;
   end;
+
+  rllNumNF0Ent.Caption := FormatFloat('00000000000', StrToFloatDef(fpNFSe.Numero, 0));
+  rllTomadorNomeEnt.Caption := ACBrStr('Emissão:') +
+    FormatDateTime('dd/mm/yy', fpNFSe.DataEmissao) +
+    '-Tomador:' + fpNFSe.Tomador.RazaoSocial +
+    '-Total:' +
+    FormatFloat(',0.00', fpNFSe.Servico.Valores.ValorLiquidoNfse);
+
 end;
 
 procedure TfrlXDANFSeRLISSnet.rlbTomadorBeforePrint(Sender: TObject;

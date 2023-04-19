@@ -1958,6 +1958,35 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         ParentFont = False
         Transparent = False
       end
+      object rllTomadorNomeEnt: TRLLabel
+        Left = 6
+        Top = 32
+        Width = 587
+        Height = 15
+        AutoSize = False
+        Caption = '<Nome do Tomador>'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object rllNumNF0Ent: TRLLabel
+        Left = 609
+        Top = 42
+        Width = 128
+        Height = 18
+        Alignment = taCenter
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
     end
     object rlbHeaderItensDetalhado: TRLBand
       Left = 23

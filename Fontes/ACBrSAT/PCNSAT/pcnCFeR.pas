@@ -355,6 +355,8 @@ begin
       (*WA03*)CFe.Pagto[i].cMP := StrToCodigoMP(ok, Leitor.rCampo(tcStr, 'cMP'));
       (*WA04*)CFe.Pagto[i].vMP := Leitor.rCampo(tcDe2, 'vMP');
       (*WA05*)CFe.Pagto[i].cAdmC := Leitor.rCampo(tcInt, 'cAdmC');
+      if CFe.infCFe.versao >= 0.09 then
+        (*WA07*)CFe.Pagto[i].cAut := Leitor.rCampo(tcStr, 'cAut');
       inc(i);
     end;
   end;

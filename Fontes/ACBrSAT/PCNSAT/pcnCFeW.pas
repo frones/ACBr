@@ -743,6 +743,8 @@ begin
     Gerador.wCampo(tcStr, 'WA03', 'cMP  ', 02, 02, 0, CodigoMPToStr(CFe.Pagto[i].cMP), DSC_CMP);
     Gerador.wCampo(tcDe2, 'WA04', 'vMP  ', 03, 15, 1, CFe.Pagto[i].vMP, DSC_VMP);
     Gerador.wCampo(tcInt, 'WA05', 'cAdmC', 03, 03, 0, CFe.Pagto[i].cAdmC, DSC_CADMC);
+    if CFe.infCFe.versaoDadosEnt >= 0.09 then
+	  Gerador.wCampo(tcStr, 'WA07', 'cAut  ', 01, 20, 0, CFe.Pagto[i].cAut, DSC_CAUT);
     Gerador.wGrupo('/MP');
   end;
 

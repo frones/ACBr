@@ -46,6 +46,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+20/04/2023
+[*] TK-3849 adicionado o campo cAut (Código de Autorização), mas no componente ACBrSAT não possui esse campo;
+https://www.projetoacbr.com.br/forum/topic/71785-campo-caut-layout-009-mfe/
+  por : cromao / Victor H Gonzales - Pandaaa
 
 12/04/2023
 -- ACBrSAT --

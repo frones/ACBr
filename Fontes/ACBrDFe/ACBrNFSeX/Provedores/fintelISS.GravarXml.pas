@@ -84,6 +84,7 @@ begin
 
   NrOcorrAliquota := 1;
   NrOcorrCodigoPaisServico := 1;
+  NrOcorrDataPagamento := 0;
 end;
 
 { TNFSeW_fintelISS202 }
@@ -108,7 +109,6 @@ begin
   NrOcorrValorISS := 1;
 
   NrOcorrOutrasInformacoes := 0;
-  NrOcorrDataPagamento := 0;
 end;
 
 function TNFSeW_fintelISS202.GerarListaServicos: TACBrXmlNode;

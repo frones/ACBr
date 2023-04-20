@@ -47,6 +47,9 @@ Símbolo : Significado
 [*] Movido o parâmentro: NrOcorrDataPagamento de TNFSeW_fintelISS202 para
     TNFSeW_fintelISS200.
    Por: Italo Giurizzato Junior
+-- EloTech.GravarXML --
+[*] Altera o tamanho máximo do campo descrição para coincidir com o schema do provedor.
+   Por: Diego F
 
 19/04/2023
 -- ACBrNFSeXServicos.ini --

@@ -151,7 +151,7 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#', 'CodigoCnae', 1, 7, 0,
                                        NFSe.Servico.ItemServico[i].CodigoCnae));
 
-    Result[i].AppendChild(AddNode(tcStr, '#', 'Descricao', 1, 20, 0,
+    Result[i].AppendChild(AddNode(tcStr, '#', 'Descricao', 1, 4000, 0,
                                         NFSe.Servico.ItemServico[i].Descricao));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'Tributavel', 1, 1, 0,

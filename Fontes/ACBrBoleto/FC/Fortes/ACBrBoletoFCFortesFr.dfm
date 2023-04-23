@@ -13942,9 +13942,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtNomeCedente: TRLLabel
-        Left = 154
-        Top = 80
-        Width = 409
+        Left = 200
+        Top = 70
+        Width = 363
         Height = 13
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -14194,8 +14194,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtEndCedenteCarne: TRLLabel
-        Left = 198
-        Top = 71
+        Left = 154
+        Top = 80
         Width = 365
         Height = 12
         AutoSize = False

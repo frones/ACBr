@@ -45,6 +45,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+15/04/2023
+--ACBrBoletoFCFortesFr--
+[-]TK-3818 Corrigido posições do cedente e endereco do boleto carnê (dfm e lfm)
+Por: Daniel Morais
 
 01/02/2023
 --ACBrBoletoFCFortesFr--

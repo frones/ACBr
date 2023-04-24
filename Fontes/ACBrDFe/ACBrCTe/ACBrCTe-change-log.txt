@@ -44,6 +44,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2023
+-- Diversos --
+[+] Implementação dos eventos: Insucesso na Entrega e Cancelamento de Insucesso
+    na Entrega.
+    Atenção: Disponível nos WebServices a partir de:
+               15/05/2023 - Homologação
+               17/07/2023 - Produção
+   por: Italo Giurizzato Junior
+-- ACBrCTeWebServices --
+[*] Mas ajustes visando atender a versão 4.00
+   por: Italo Giurizzato Junior
+
 10/04/2023
 -- ACBrCTeWebServices --
 [*] Ajuste para não gerar o grupo <Header> quando a versão for 4.00

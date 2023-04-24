@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -102,7 +102,6 @@ type
     FEvento: TInfEventoCollection;
     FVersao: String;
     FXML: String;
-//    FXML: AnsiString;
     FVersaoDF: TVersaoCTe;
 
     procedure SetEvento(const Value: TInfEventoCollection);
@@ -121,7 +120,6 @@ type
     property Evento: TInfEventoCollection read FEvento   write SetEvento;
     property Versao: String               read FVersao   write FVersao;
     property XML: String                  read FXML      write FXML;
-//    property XML: AnsiString              read FXML      write FXML;
     property VersaoDF: TVersaoCTe         read FVersaoDF write FVersaoDF;
   end;
 
@@ -444,6 +442,44 @@ begin
        Gerador.wCampo(tcStr, 'IP04', 'nProtCE   ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProtCE);
        Gerador.wGrupo('/evCancCECTe');
      end;
+
+   teInsucessoEntregaCTe:
+     begin
+       Gerador.wGrupo('evIECTe');
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento   ', 28, 46, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP03', 'nProt        ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
+       Gerador.wCampo(tcStr, 'EP05', 'dhTentativaEntrega', 25, 25, 1, DateTimeTodh(Evento.Items[0].InfEvento.detEvento.dhTentativaEntrega) +
+                                  GetUTC(Evento.Items[0].InfEvento.detEvento.UF,
+                                  Evento.Items[0].InfEvento.detEvento.dhTentativaEntrega), DSC_DEMI);
+       Gerador.wCampo(tcInt, 'EP04', 'nTentativa ', 3, 3, 0, Evento.Items[0].InfEvento.detEvento.nTentativa);
+       Gerador.wCampo(tcStr, 'EP06', 'tpMotivo   ', 1, 1, 1, tpMotivoToStr(Evento.Items[0].InfEvento.detEvento.tpMotivo));
+       Gerador.wCampo(tcStr, 'EP07', 'xJustMotivo', 25, 250, 1, Evento.Items[0].InfEvento.detEvento.xJustMotivo);
+       Gerador.wCampo(tcDe6, 'EP08', 'latitude     ', 01, 10, 0, Evento.Items[0].InfEvento.detEvento.latitude);
+       Gerador.wCampo(tcDe6, 'EP09', 'longitude    ', 01, 11, 0, Evento.Items[0].InfEvento.detEvento.longitude);
+
+       Gerador.wCampo(tcStr, 'EP10', 'hashTentativaEntrega  ', 28, 28, 1, Evento.Items[0].InfEvento.detEvento.hashTentativaEntrega);
+       Gerador.wCampo(tcStr, 'EP11', 'dhHashTentativaEntrega', 25, 25, 1, DateTimeTodh(Evento.Items[0].InfEvento.detEvento.dhHashTentativaEntrega) +
+                                  GetUTC(Evento.Items[0].InfEvento.detEvento.UF,
+                                  Evento.Items[0].InfEvento.detEvento.dhHashTentativaEntrega), DSC_DEMI);
+
+       for i := 0 to Evento.Items[0].FInfEvento.detEvento.infEntrega.Count - 1 do
+       begin
+         Gerador.wGrupo('infEntrega');
+         Gerador.wCampo(tcStr, 'EP12', 'chNFe', 44, 44, 1, Evento.Items[0].InfEvento.detEvento.infEntrega.Items[i].chNFe);
+         Gerador.wGrupo('/infEntrega');
+       end;
+
+       Gerador.wGrupo('/evIECTe');
+     end;
+
+   teCancInsucessoEntregaCTe:
+     begin
+       Gerador.wGrupo('evCancIECTe');
+       Gerador.wCampo(tcStr, 'IP02', 'descEvento', 12, 44, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'IP03', 'nProt     ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
+       Gerador.wCampo(tcStr, 'IP04', 'nProtIE   ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProtIE);
+       Gerador.wGrupo('/evCancIECTe');
+     end;
   end;
   Gerador.wGrupo('/detEvento');
   Gerador.wGrupo('/infEvento');
@@ -526,6 +562,13 @@ begin
       infEvento.detEvento.dhHashEntrega := RetEventoCTe.InfEvento.detEvento.dhHashEntrega;
 
       infEvento.detEvento.nProtCE := RetEventoCTe.InfEvento.detEvento.nProtCE;
+
+      infEvento.detEvento.dhTentativaEntrega := RetEventoCTe.InfEvento.detEvento.dhTentativaEntrega;
+      infEvento.detEvento.nTentativa := RetEventoCTe.InfEvento.detEvento.nTentativa;
+      infEvento.detEvento.tpMotivo := RetEventoCTe.InfEvento.detEvento.tpMotivo;
+      infEvento.detEvento.xJustMotivo := RetEventoCTe.InfEvento.detEvento.xJustMotivo;
+      infEvento.detEvento.hashTentativaEntrega := RetEventoCTe.InfEvento.detEvento.hashTentativaEntrega;
+      infEvento.detEvento.dhHashTentativaEntrega := RetEventoCTe.InfEvento.detEvento.dhHashTentativaEntrega;
 
       signature.URI             := RetEventoCTe.signature.URI;
       signature.DigestValue     := RetEventoCTe.signature.DigestValue;
@@ -651,6 +694,7 @@ begin
         infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');
         infEvento.detEvento.nProt    := INIRec.ReadString(sSecao, 'nProt', '');
         infEvento.detEvento.nProtCE  := INIRec.ReadString(sSecao, 'nProtCE', '');
+        infEvento.detEvento.nProtIE  := INIRec.ReadString(sSecao, 'nProtIE', '');
 
         case InfEvento.tpEvento of
           teEPEC:
@@ -795,6 +839,37 @@ begin
 
               infEvento.detEvento.hashEntrega   := INIRec.ReadString(sSecao, 'hashEntrega', '');
               infEvento.detEvento.dhHashEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhHashEntrega', ''));
+
+              Self.Evento.Items[I-1].InfEvento.detEvento.infEntrega.Clear;
+
+              J := 1;
+              while true do
+              begin
+                // J varia de 0000 até 2000
+                sSecao := 'infEntrega' + IntToStrZero(J, 4);
+                sFim   := INIRec.ReadString(sSecao, 'chNFe', 'FIM');
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with Self.Evento.Items[I-1].InfEvento.detEvento.infEntrega.New do
+                  chNFe := sFim;
+
+                Inc(J);
+              end;
+            end;
+
+          teInsucessoEntregaCTe:
+            begin
+              infEvento.detEvento.nProt := INIRec.ReadString(sSecao, 'nProt', '');
+              infEvento.detEvento.dhTentativaEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhTentativaEntrega', ''));
+              infEvento.detEvento.nTentativa := INIRec.ReadInteger(sSecao, 'nTentativa', 0);
+              infEvento.detEvento.tpMotivo := StrTotpMotivo(ok, INIRec.ReadString(sSecao, 'tpMotivo', '1'));
+              infEvento.detEvento.xJustMotivo := INIRec.ReadString(sSecao, 'xJustMotivo', '');
+              infEvento.detEvento.latitude  := StringToFloatDef(INIRec.ReadString(sSecao, 'latitude', ''), 0);
+              infEvento.detEvento.longitude := StringToFloatDef(INIRec.ReadString(sSecao, 'longitude', ''), 0);
+
+              infEvento.detEvento.hashTentativaEntrega := INIRec.ReadString(sSecao, 'hashTentativaEntrega', '');
+              infEvento.detEvento.dhHashTentativaEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhHashTentativaEntrega', ''));
 
               Self.Evento.Items[I-1].InfEvento.detEvento.infEntrega.Clear;
 

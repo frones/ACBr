@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -85,7 +85,6 @@ type
     FInfEvento: TInfEvento;
     FretEvento: TRetInfEventoCollection;
     FXML: String;
-//    FXML: AnsiString;
     Fsignature: Tsignature;
   public
     constructor Create;
@@ -103,7 +102,6 @@ type
     property signature: Tsignature              read Fsignature write Fsignature;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
     property XML: String                        read FXML       write FXML;
-//    property XML: AnsiString                    read FXML       write FXML;
   end;
 
 implementation
@@ -217,6 +215,15 @@ begin
            infEvento.detEvento.dhHashEntrega := Leitor.rCampo(tcDatHor, 'dhHashEntrega');
 
            infEvento.detEvento.nProtCE := Leitor.rCampo(tcStr, 'nProtCE');
+
+           infEvento.detEvento.dhTentativaEntrega := Leitor.rCampo(tcDatHor, 'dhTentativaEntrega');
+           infEvento.detEvento.nTentativa := Leitor.rCampo(tcInt, 'nTentativa');
+           infEvento.detEvento.tpMotivo := StrTotpMotivo(ok, Leitor.rCampo(tcStr, 'tpMotivo'));
+           infEvento.detEvento.xJustMotivo := Leitor.rCampo(tcStr, 'xJustMotivo');
+           infEvento.detEvento.hashTentativaEntrega := Leitor.rCampo(tcStr, 'hashTentativaEntrega');
+           infEvento.detEvento.dhHashTentativaEntrega := Leitor.rCampo(tcDatHor, 'dhHashTentativaEntrega');
+
+           infEvento.detEvento.nProtIE := Leitor.rCampo(tcStr, 'nProtIE');
 
            // Carrega os dados da informação da Correção aplicada
            i := 0;

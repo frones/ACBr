@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -161,6 +161,15 @@ type
     FinfEntrega: TInfEntregaCollection;
      // Cancelamento do Comprovante de Entrega
     FnProtCE: String;
+    // Insucesso na Entrega
+    FdhTentativaEntrega: TDateTime;
+    FnTentativa: Integer;
+    FtpMotivo: TtpMotivo;
+    FxJustMotivo: String;
+    FhashTentativaEntrega: String;
+    FdhHashTentativaEntrega: TDateTime;
+    // Cancelamento do Insucesso na Entrega
+    FnProtIE: String;
 
     procedure SetinfCorrecao(const Value: TInfCorrecaoCollection);
     procedure SetxCondUso(const Value: String);
@@ -205,6 +214,15 @@ type
     property infEntrega: TInfEntregaCollection read FinfEntrega write FinfEntrega;
 
     property nProtCE: String read FnProtCE write FnProtCE;
+
+    property dhTentativaEntrega: TDateTime read FdhTentativaEntrega write FdhTentativaEntrega;
+    property nTentativa: Integer read FnTentativa write FnTentativa;
+    property tpMotivo: TtpMotivo read FtpMotivo write FtpMotivo;
+    property xJustMotivo: String read FxJustMotivo write FxJustMotivo;
+    property hashTentativaEntrega: String read FhashTentativaEntrega write FhashTentativaEntrega;
+    property dhHashTentativaEntrega: TDateTime read FdhHashTentativaEntrega write FdhHashTentativaEntrega;
+
+    property nProtIE: String read FnProtIE write FnProtIE;
   end;
 
   TInfCorrecaoCollection = class(TACBrObjectList)
@@ -325,7 +343,6 @@ type
     FdhRegEvento: TDateTime;
     FnProt: String;
     FXML: String;
-//    FXML: AnsiString;
     FNomeArquivo: String;
   public
     property Id: String              read FId          write FId;
@@ -343,7 +360,6 @@ type
     property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
     property nProt: String           read FnProt       write FnProt;
     property XML: String             read FXML         write FXML;
-//    property XML: AnsiString         read FXML         write FXML;
     property NomeArquivo: String     read FNomeArquivo write FNomeArquivo;
   end;
 
@@ -460,6 +476,8 @@ begin
     teComprEntrega                : Desc := 'Comprovante de Entrega do CT-e';
     teCancComprEntrega            : Desc := 'Cancelamento do Comprovante de Entrega do CT-e';
     teCancPrestDesacordo          : Desc := 'Cancelamento Prestacao do Servico em Desacordo';
+    teInsucessoEntregaCTe         : Desc := 'Insucesso na Entrega do CT-e';
+    teCancInsucessoEntregaCTe     : Desc := 'Cancelamento do Insucesso de Entrega do CT-e';
   else
     Result := '';
   end;
@@ -518,6 +536,8 @@ begin
     teComprEntrega                : Result := 'Comprovante de Entrega do CT-e';
     teCancComprEntrega            : Result := 'Cancelamento do Comprovante de Entrega do CT-e';
     teCancPrestDesacordo          : Result := 'Cancelamento Prestacao do Servico em Desacordo';
+    teInsucessoEntregaCTe         : Result := 'Insucesso na Entrega do CT-e';
+    teCancInsucessoEntregaCTe     : Result := 'Cancelamento do Insucesso de Entrega do CT-e';
   else
     Result := 'Não Definido';
   end;

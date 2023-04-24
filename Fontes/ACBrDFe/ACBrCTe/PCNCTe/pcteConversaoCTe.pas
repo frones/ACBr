@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -56,8 +56,8 @@ type
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
                  schevEPECCTe, schevCancCTe, schevRegMultimodal, schevCCeCTe,
                  schdistDFeInt, schcteModalRodoviarioOS, schevPrestDesacordo,
-                 schevGTV, schevCECTe, schevCancCECTe, schevCancPrestDesacordo
-                 {, schprocCTeOS} );
+                 schevGTV, schevCECTe, schevCancCECTe, schevCancPrestDesacordo,
+                 schevIECTe, schevCancIECTe);
 
   TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
                     stCTeConsulta, stCTeCancelamento, stCTeInutilizacao,
@@ -102,6 +102,8 @@ type
 
   TCRT = (crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal,
           crtSimplesNacionalMEI);
+
+  TtpMotivo = (tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro);
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -210,6 +212,9 @@ function StrTotpNumerario(out ok: Boolean; const s: String): TtpNumerario;
 
 function CRTCTeToStr(const t: TCRT): string;
 function StrToCRTCTe(out ok: boolean; const s: string): TCRT;
+
+function tpMotivoToStr(const t: TtpMotivo): string;
+function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
 
 function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 
@@ -782,15 +787,28 @@ begin
      crtSimplesNacionalMEI]);
 end;
 
+function tpMotivoToStr(const t: TtpMotivo): string;
+begin
+  result := EnumeradoToStr(t, ['1', '2', '3', '4'],
+    [tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro]);
+end;
+
+function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
+begin
+  result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
+    [tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro]);
+end;
 
 function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110110', '110111', '110113', '110160', '110170',
-             '110180', '110181', '610110', '310610', '310611', '610111'],
+             '110180', '110181', '610110', '310610', '310611', '610111',
+             '110190', '110191'],
             [teNaoMapeado, teCCe, teCancelamento, teEPEC, teMultiModal,
              teGTV, teComprEntrega, teCancComprEntrega, tePrestDesacordo,
-             teMDFeAutorizado2, teMDFeCancelado2, teCancPrestDesacordo]);
+             teMDFeAutorizado2, teMDFeCancelado2, teCancPrestDesacordo,
+             teInsucessoEntregaCTe, teCancInsucessoEntregaCTe]);
 end;
 
 initialization

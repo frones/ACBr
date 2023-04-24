@@ -2510,7 +2510,7 @@ begin
           DefMental := tpNao;
           DefIntelectual := tpNao;
           ReabReadap := tpSim;
-          infoCota := tpNao;
+          infoCota := snfNao;
           observacao := 'sem deficiencia';
         end;
 
@@ -2816,7 +2816,7 @@ begin
           DefMental := tpNao;
           DefIntelectual := tpNao;
           ReabReadap := tpSim;
-          infoCota := tpNao;
+          infoCota := snfNao;
           observacao := 'sem deficiencia';
         end;
 

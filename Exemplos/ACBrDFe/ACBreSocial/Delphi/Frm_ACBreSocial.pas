@@ -3079,7 +3079,7 @@ begin
           defMental := tpNao;
           defIntelectual := tpNao;
           reabReadap := tpSim;
-          infoCota := tpNao;
+          infoCota := snfNao;
           observacao := 'sem deficiêcia';
         end;
 
@@ -3131,7 +3131,7 @@ begin
       with vinculo do
       begin
         matricula := '54545';
-        tpRegTrab := tpTpRegTrab(1);
+        tpRegTrab :=  trCLT;
         tpRegPrev := tpTpRegPrev(1);
         if VersaoDFx <= ve02_05_00 then
           nrRecInfPrelim := '9999999999';
@@ -3558,7 +3558,7 @@ begin
           defMental := tpNao;
           defIntelectual := tpNao;
           reabReadap := tpSim;
-          infoCota := tpNao;
+          infoCota := snfNao;
           observacao := 'sem deficiencia';
         end;
 

@@ -220,8 +220,8 @@ begin
                ( AJSonObject.Values['situacao'].asString = C_PAGO ) or
                ( AJSonObject.Values['situacao'].asString = C_EXPIRADO ) then
                begin
-                    ARetornoWS.DadosRet.TituloRet.ValorPago                   := AJSonObject.Values['valorNominal'].AsNumber;
-                    ARetornoWS.DadosRet.TituloRet.DataBaixa                   := DateIntertoDateTime( AJSonObject.Values['dataHoraSituacao'].asString )
+                 //   ARetornoWS.DadosRet.TituloRet.ValorPago                   := AJSonObject.Values['valorNominal'].AsNumber;
+                 ARetornoWS.DadosRet.TituloRet.DataBaixa                   := DateIntertoDateTime( AJSonObject.Values['dataHoraSituacao'].asString )
                end;
 
 

@@ -144,7 +144,8 @@ type
                   teEncerramentoFisco, teComprEntregaNFe, teCancComprEntregaNFe,
                   teAtorInteressadoNFe, teComprEntregaCTe, teCancComprEntregaCTe,
                   teConfirmaServMDFe, teAlteracaoPagtoServMDFe,
-                  teCancPrestDesacordo);
+                  teCancPrestDesacordo, teInsucessoEntregaCTe,
+                  teCancInsucessoEntregaCTe);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -222,7 +223,7 @@ type
   end;
 
 const
-  TpcnTpEventoString : array[0..71] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..73] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -245,7 +246,8 @@ const
                                                 '240170', '110116', '110117',
                                                 '310112', '110130', '110131',
                                                 '110150', '610130', '610131',
-                                                '110117', '110118', '610111');
+                                                '110117', '110118', '610111',
+                                                '110190', '110191');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1159,9 +1161,9 @@ begin
               'AutorizadoRedespacho', 'AutorizadoRedespIntermed', 'AutorizadoSubcontratacao',
               'AutorizadoServMultimodal', 'CancelamentoPorSubstituicao',
               'AlteracaoPoltrona', 'ExcessoBagagem', 'EncerramentoFisco',
-              'teComprEntregaNFe', 'CancComprEntregaNFe',
-              'AtorInteressadoNFe', 'teComprEntregaCTe', 'CancComprEntregaCTe',
-              'CancPrestDesacordo'],
+              'ComprEntregaNFe', 'CancComprEntregaNFe',
+              'AtorInteressadoNFe', 'ComprEntregaCTe', 'CancComprEntregaCTe',
+              'CancPrestDesacordo', 'InsucessoEntregaCTe', 'CancInsucessoEntregaCTe'],
              [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1182,7 +1184,8 @@ begin
               teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona,
               teExcessoBagagem, teEncerramentoFisco, teComprEntregaNFe,
               teCancComprEntregaNFe, teAtorInteressadoNFe, teComprEntregaCTe,
-              teCancComprEntregaCTe, teCancPrestDesacordo]);
+              teCancComprEntregaCTe, teCancPrestDesacordo, teInsucessoEntregaCTe,
+              teCancInsucessoEntregaCTe]);
 end;
 
 

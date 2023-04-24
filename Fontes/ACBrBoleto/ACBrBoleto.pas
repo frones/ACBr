@@ -6090,8 +6090,13 @@ begin
 end;
 
 function TACBrBoletoFCClass.GetArquivoLogo: String;
+var LArquivo : String;
 begin
-   Result := PathWithDelim(DirLogo) + IntToStrZero( ACBrBoleto.Banco.Numero, 3)+'.bmp';
+  LArquivo := PathWithDelim(DirLogo) + IntToStrZero( ACBrBoleto.Banco.Numero, 3);
+  if FileExists(LArquivo+'.bmp') then
+    Result := LArquivo+'.bmp'
+  else
+    Result := LArquivo+'.png';
 end;
 
 function TACBrBoletoFCClass.ComponentStateDesigning: Boolean;

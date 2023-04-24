@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2023
+-- Diversos --
+[*] Altera o tipo da propriedade infoCota de tpSimNao para tpSimNaoFacultativo para que a responsabilidade de geração da tag passe a ser da aplicação.
+   Por: Diego F
+
 17/04/2023
 -- Diversos --
 [*] Ajusta nas funções de leitura de INI dos eventos periódicos.

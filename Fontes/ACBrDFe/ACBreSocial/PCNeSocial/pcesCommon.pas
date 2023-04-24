@@ -788,7 +788,7 @@ type
     FDefAuditiva: tpSimNao;
     FDefFisica: tpSimNao;
     FReabReadap: tpSimNao;
-    FInfoCota: tpSimNao;
+    FInfoCota: tpSimNaoFacultativo;
     FObservacao: string;
   public
     property DefFisica: tpSimNao read FDefFisica  write FDefFisica;
@@ -798,7 +798,7 @@ type
     property DefVisual: tpSimNao read FDefVisual write FDefVisual;
     property DefAuditiva: tpSimNao read FDefAuditiva write FDefAuditiva;
     property ReabReadap: tpSimNao read FReabReadap write FReabReadap;
-    property infoCota: tpSimNao read FInfoCota write FInfoCota;
+    property infoCota: tpSimNaoFacultativo read FInfoCota write FInfoCota;
     property Observacao: string read FObservacao write FObservacao;
   end;
 

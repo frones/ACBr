@@ -1477,8 +1477,8 @@ begin
     Gerador.wCampo(tcStr, '', 'defIntelectual', 1, 1, 1, eSSimNaoToStr(pInfoDeficiencia.DefIntelectual));
     Gerador.wCampo(tcStr, '', 'reabReadap',     1, 1, 1, eSSimNaoToStr(pInfoDeficiencia.reabReadap));
 
-    if (pTipo <> 3) then
-      Gerador.wCampo(tcStr, '', 'infoCota', 1, 1, 1, eSSimNaoToStr(pInfoDeficiencia.infoCota));
+    if (pTipo <> 3) and (pInfoDeficiencia.infoCota <> snfNada) then
+      Gerador.wCampo(tcStr, '', 'infoCota', 1, 1, 1, eSSimNaoFacultativoToStr(pInfoDeficiencia.infoCota));
 
     Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, pInfoDeficiencia.Observacao);
 

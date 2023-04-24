@@ -146,7 +146,6 @@ type
   private
     FStringList: TStringList;
     FACBrTEFDLinha: TACBrTEFLinha;
-    function AchaLinha(const Identificacao: Integer; const Sequencia: Integer = 0): Integer;
     function GetCount: Integer;
     function GetLinha(Index: Integer): TACBrTEFLinha;
   public
@@ -167,6 +166,7 @@ type
     procedure GravaInformacao(const Identificacao: Integer; const Sequencia: Integer; const Informacao: TACBrInformacao); overload; virtual;
     function LeInformacao(const Identificacao: Integer; const Sequencia: Integer = 0): TACBrInformacao; virtual;
 
+    function AchaLinha(const Identificacao: Integer; const Sequencia: Integer = 0): Integer;
     function LeLinha(const Identificacao: Integer; const Sequencia: Integer = 0): TACBrTEFLinha; virtual;
   end;
 

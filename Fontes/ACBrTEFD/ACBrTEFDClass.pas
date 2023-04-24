@@ -867,12 +867,11 @@ begin
        Inc(I);
      end;
 
-     LinhaComprovante := Trim(LeInformacao(29 , I).AsString);
-     while (LinhaComprovante <> '' ) do
+     while (Conteudo.AchaLinha(29, I) >= 0 ) do
      begin
+       LinhaComprovante := Trim(LeInformacao(29 , I).AsString);
        fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante(LinhaComprovante) );
        Inc(I);
-       LinhaComprovante := Trim(LeInformacao(29 , I).AsString);
      end;
 
      if (fpImagemComprovante2aVia.Count = 0) then

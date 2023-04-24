@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2023
+-- ACBrTEFComum, ACBrTEFDClass --
+[-] Correção para impressão de 2a Via, quando retorno vem no final do campo 029
+    www.projetoacbr.com.br/forum/index.php?showtopic=71768
+    (por: DSA)
+
 18/10/2022
 -- ACBrTEFAndroidPayGo --
 [*] Correção de erro de grafia em "QuandoFinalizarTransacaoAPI"

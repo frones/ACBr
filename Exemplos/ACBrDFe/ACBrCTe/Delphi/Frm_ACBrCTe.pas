@@ -498,7 +498,11 @@ begin
   //CTeOS
   with ACBrCTe1.Conhecimentos.Add.CTe do
   begin
-    infCTe.versao := 3.0;
+    case cbVersaoDF.ItemIndex of
+      0: infCTe.versao := 2.0;
+      1: infCTe.versao := 3.0;
+      2: infCTe.versao := 4.0;
+    end;
 
     Ide.cUF    := UFtoCUF(edtEmitUF.Text);
     Ide.CFOP   := 6932;
@@ -536,6 +540,7 @@ begin
     //ide.infPercurso.Add.UFPer := 'PR';
 
     {Dados do Emitente}
+    Emit.CRT               := crtRegimeNormal; {Obrigatório na versão 4.00}
     Emit.CNPJ              := Trim(edtEmitCNPJ.Text);
     Emit.IE                := Trim(edtEmitIE.Text);
     Emit.xNome             := Trim(edtEmitRazao.Text);
@@ -730,10 +735,11 @@ begin
   //CTe
   with ACBrCTe1.Conhecimentos.Add.CTe do
   begin
-    if cbVersaoDF.ItemIndex = 0 then
-      infCTe.versao := 2.0
-    else
-      infCTe.versao := 3.0;
+    case cbVersaoDF.ItemIndex of
+      0: infCTe.versao := 2.0;
+      1: infCTe.versao := 3.0;
+      2: infCTe.versao := 4.0;
+    end;
 
     Ide.cUF    := UFtoCUF(edtEmitUF.Text);
     Ide.CFOP   := 5353;
@@ -861,6 +867,7 @@ begin
     end;
 
     {Dados do Emitente}
+    Emit.CRT               := crtRegimeNormal; {Obrigatório na versão 4.00}
     Emit.CNPJ              := Trim(edtEmitCNPJ.Text);
     Emit.IE                := Trim(edtEmitIE.Text);
     Emit.xNome             := Trim(edtEmitRazao.Text);
@@ -1221,7 +1228,11 @@ begin
   //GTVe
   with ACBrCTe1.Conhecimentos.Add.CTe do
   begin
-    infCTe.versao := 3.0;
+    case cbVersaoDF.ItemIndex of
+      0: infCTe.versao := 2.0;
+      1: infCTe.versao := 3.0;
+      2: infCTe.versao := 4.0;
+    end;
 
     Ide.cUF    := UFtoCUF(edtEmitUF.Text);
     Ide.CFOP   := 5353;
@@ -1284,6 +1295,7 @@ begin
     end;
 
     {Dados do Emitente}
+    Emit.CRT               := crtRegimeNormal; {Obrigatório na versão 4.00}
     Emit.CNPJ              := Trim(edtEmitCNPJ.Text);
     Emit.IE                := Trim(edtEmitIE.Text);
     Emit.xNome             := Trim(edtEmitRazao.Text);

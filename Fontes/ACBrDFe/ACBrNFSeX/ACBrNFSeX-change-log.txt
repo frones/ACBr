@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/04/2023
+-- ISSLencois.Provider/ISSLencois.GravarXml/ISSLencois.LerXml --
+[*] Ajustes e implementação do tratamento dos retornos.
+  Por: Willians WSAC
 -- Fiorilli.Provider --
 [*] Removido a condição para assinar somente em ambiente de produção.
   Por: Italo Giurizzato Junior

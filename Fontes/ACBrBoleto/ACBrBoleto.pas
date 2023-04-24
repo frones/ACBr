@@ -58,7 +58,7 @@ const
   CConta      = 'CONTA';
   CTitulo     = 'TITULO';
   CWebService = 'WEBSERVICE';
-  cACBrTipoOcorrenciaDecricao: array[0..315] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..344] of String = (
     {Ocorrências para arquivo remessa}
     'Remessa Registrar',
     'Remessa Baixar',
@@ -139,6 +139,18 @@ const
     'Remessa Resusa Alegação do Sacado',
     'Remessa Protestar Automaticamente',
     'Remessa Alteração de Status Desconto',
+    'Remessa Protestar Urgente',
+    'Remessa Registrar Direta',
+    'Remessa Alterar Numero Dias Baixa',
+    'Remessa Alterar Valor Mínimo/Máximo',
+    'Remessa Alteração Quantidade Parcelas',
+    'Remessa Alteração Valor Nominal',
+    'Remessa Não Baixar Automaticamente',
+    'Remessa Alteração Percentual Para Mínimo',
+    'Remessa Alteração Percentual Para Máximo',
+    'Remessa Alteração Percentual Para Mínimo/Máximo',
+    'Remessa Prorrogar Vencimento',
+    'Remessa Boleto Hibrido',
 
     {Ocorrências para arquivo retorno}
     'Retorno Abatimento Cancelado',
@@ -377,7 +389,24 @@ const
     'Retorno Confirmação de alteração do valor máximo/percentual',
     'Retorno Confirmação de Pedido de Dispensa de Multa',
     'Retorno Confirmação do Pedido de Cobrança de Multa',
-    'Retorno Confirmação do Pedido de Alteração do Beneficiário do Título'
+    'Retorno Confirmação do Pedido de Alteração do Beneficiário do Título',
+    'Retorno Excluir Protesto Carta Anuencia',
+    'Retorno Confirmação Cancelamento Baixa Automatica',
+    'Retorno Confirmação Alteracao Dias Baixa Automatica',
+    'Retorno Confirmação Instrucao Protesto',
+    'Retorno Confirmação Instrucao Sustacao Protesto',
+    'Retorno Confirmação Instrucao Nao Protestar',
+    'Retorno Confirmação Instrucao Nao Baixar Automaticamente',
+    'Retorno Alteracao Percentual Minimo',
+    'Retorno Alteracao Percentual Maximo',
+    'Retorno Alteracao Percentual Minimo Maximo',
+    'Retorno Recebimento Instrucao Nao Baixar',
+    'Retorno Confirmacao Protesto',
+    'Retorno Confirmacao Sustacao',
+    'Retorno Protesto Sustado Judicialmente',
+    'Retorno Confirmação Instrucao Sustar Protesto',
+    'Retorno Confirmação Instrucao Alteracao Dias Baixa Automatica',
+    'Retorno Alteracao Quantidade Parcela'
 );
 
 type

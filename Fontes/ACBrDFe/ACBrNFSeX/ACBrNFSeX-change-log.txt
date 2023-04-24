@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2023
+-- Fiorilli.Provider --
+[*] Removido a condição para assinar somente em ambiente de produção.
+  Por: Italo Giurizzato Junior
+
 20/04/2023
 -- fintelISS.GravarXml --
 [*] Movido o parâmentro: NrOcorrDataPagamento de TNFSeW_fintelISS202 para

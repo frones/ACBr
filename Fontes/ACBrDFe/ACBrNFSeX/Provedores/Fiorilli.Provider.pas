@@ -90,17 +90,14 @@ begin
   ConfigGeral.QuebradeLinha := '\s\n';
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := true;
   
-  if ConfigGeral.Ambiente = taProducao then
+  with ConfigAssinar do
   begin
-    with ConfigAssinar do
-    begin
-      Rps := True;
-      LoteRps := True;
-      CancelarNFSe := True;
-      RpsGerarNFSe := True;
-      RpsSubstituirNFSe := True;
-      SubstituirNFSe := True;
-    end;
+    Rps := True;
+    LoteRps := True;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
+    RpsSubstituirNFSe := True;
+    SubstituirNFSe := True;
   end;
 end;
 

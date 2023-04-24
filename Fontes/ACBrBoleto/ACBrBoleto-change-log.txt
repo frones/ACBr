@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2023
+--ACBrBancoUnicredES.pas--
+[-]TK-3835 Corrigido leitura dos 04 codigos instrução posição 319/8
+Por: Daniel Morais
+
 18/04/2023
 [+]Tk-3540 Implementação/Integração SICOOB via API
   Por : Victor H Gonzales - Pandaaa / Victor Hugo Gonzales - Panda, Marcelo Santos, Delmar de Lima, Delcio 

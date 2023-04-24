@@ -91,6 +91,7 @@ type
     fQuandoEnviarOrder: TShipayQuandoEnviarOrder;
     fWallets: TShipayWalletArray;
     function GetSecretKey: String;
+    function GetWallets: TShipayWalletArray;
     procedure SetSecretKey(AValue: String);
 
     procedure DoPostOrder(aEndPoint: String; IsEOrder: Boolean);
@@ -125,7 +126,6 @@ type
 
     procedure Autenticar; override;
     procedure RenovarToken; override;
-    procedure GetWallets;
 
     procedure PostOrder(IsEOrder: Boolean = False);
     procedure PostOrderV(IsEOrder: Boolean = False);
@@ -142,7 +142,7 @@ type
     function PatchOrderDueDate(const order_id: String): Boolean;   // Cancelar OrderDueDate
     function DeleteOrderDueDate(const order_id: String): Boolean;  // Estornar OrderDueDate
 
-    property Wallets: TShipayWalletArray read fWallets;
+    property Wallets: TShipayWalletArray read GetWallets;
     property Order: TShipayOrder read fOrder;
     property OrderDueDate: TShipayOrderDueDate read fOrderDueDate;
     property OrderCreated: TShipayOrderCreated read fOrderCreated;
@@ -209,6 +209,38 @@ end;
 function TACBrPSPShipay.GetSecretKey: String;
 begin
    Result := ClientSecret;
+end;
+
+function TACBrPSPShipay.GetWallets: TShipayWalletArray;
+var
+  RespostaHttp: AnsiString;
+  ResultCode: Integer;
+  AURL: String;
+  Ok: Boolean;
+begin
+  Result := fWallets;
+
+  if (fWallets.Count > 0) then
+    Exit;
+
+  PrepararHTTP;
+  Ok := AcessarEndPoint(ChttpMethodGET, cShipayEndPointWallets, ResultCode, RespostaHttp);
+  Ok := Ok and (ResultCode = HTTP_OK);
+
+  if Ok then
+  begin
+    RespostaHttp := '{"wallets":'+RespostaHttp+'}';   // Transforma Array em Object
+    fWallets.AsJSON := String(RespostaHttp);
+
+    if (fWallets.Count < 1) then
+      DispararExcecao(EACBrPixHttpException.Create(sErrNoWallet));
+  end
+  else
+  begin
+    AURL := CalcularURLEndPoint(ChttpMethodGET, cShipayEndPointWallets);
+    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
+       [Http.ResultCode, ChttpMethodPOST, AURL]));
+  end;
 end;
 
 procedure TACBrPSPShipay.SetSecretKey(AValue: String);
@@ -316,31 +348,6 @@ begin
   Http.Headers.Insert(0, ChttpHeaderAuthorization + ChttpAuthorizationBearer+' '+fpRefreshToken);
   TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
   ProcessarAutenticacao(AURL, ResultCode, RespostaHttp);
-end;
-
-procedure TACBrPSPShipay.GetWallets;
-var
-  RespostaHttp: AnsiString;
-  ResultCode: Integer;
-  AURL: String;
-  Ok: Boolean;
-begin
-  fWallets.Clear;
-  PrepararHTTP;
-  Ok := AcessarEndPoint(ChttpMethodGET, cShipayEndPointWallets, ResultCode, RespostaHttp);
-  Ok := Ok and (ResultCode = HTTP_OK);
-
-  if Ok then
-  begin
-    RespostaHttp := '{"wallets":'+RespostaHttp+'}';   // Transforma Array em Object
-    fWallets.AsJSON := String(RespostaHttp)
-  end
-  else
-  begin
-    AURL := CalcularURLEndPoint(ChttpMethodGET, cShipayEndPointWallets);
-    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
-       [Http.ResultCode, ChttpMethodPOST, AURL]));
-  end;
 end;
 
 procedure TACBrPSPShipay.PostOrder(IsEOrder: Boolean);
@@ -600,9 +607,8 @@ begin
     fpValidadeToken := IncHour(Now, 24);
     fpAutenticado := True;
 
+    fWallets.Clear;  // Força o carregamento das carteiras em toda autenticação
     GetWallets;
-    if (fWallets.Count < 1) then
-      DispararExcecao(EACBrPixHttpException.Create(sErrNoWallet));
   end
   else
     DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
@@ -723,20 +729,20 @@ begin
     if (Trim(fOrder.wallet) = '') then
     begin
       // Não especificou Wallet, usando a única Wallet retornada ou "pix"
-      if (fWallets.Count = 1) then
-        fOrder.wallet := fWallets[0].wallet
+      if (Wallets.Count = 1) then
+        fOrder.wallet := Wallets[0].wallet
       else
       begin
-        for i := 0 to fWallets.Count-1 do
+        for i := 0 to Wallets.Count-1 do
         begin
-          if (fWallets[i].wallet = cShipayWalletPix) then  // Tem Pix ?
+          if (Wallets[i].wallet = cShipayWalletPix) then  // Tem Pix ?
           begin
             fOrder.wallet := cShipayWalletPix;
             Break;
           end;
         end;
         if (Trim(fOrder.wallet) = '') then  // Não tem PIX, pegue a primeira da Lista
-          fOrder.wallet := fWallets[0].wallet;
+          fOrder.wallet := Wallets[0].wallet;
       end;
     end;
 

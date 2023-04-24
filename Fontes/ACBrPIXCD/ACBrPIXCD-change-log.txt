@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2023
+-- ACBrPIXPSPShipay --
+[-] Correção no carregamento das carteiras ao utilizar o PSP Shipay controlando o Token manualmente
+    Por: Elias César
+
 06/04/2023
 -- ACBrPIXPSPInter --
 [+] Inclusão do novo PSP Inter

@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2023
+--ACBrSedex--
+[*] Ajuste na função Rastrear para encontrar informações na nova estrutura HTML.
+  Por: Adhelmar Rondon
+
 12/12/2022
 --ACBrSedex --
 [*] Ajuste na função Rastrear para encontrar informações na nova estrutura HTML.

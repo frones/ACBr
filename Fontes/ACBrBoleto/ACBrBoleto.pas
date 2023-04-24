@@ -432,7 +432,8 @@ type
     cobBancoOriginal,
     cobBancoVotorantim,
     cobBancoPefisa,
-    cobBancoFibra
+    cobBancoFibra,
+    cobBancoSofisaItau
     );
 
   TACBrTitulo = class;
@@ -1939,7 +1940,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
      ACBrBancoBradescoMoneyPlus, ACBrBancoC6, ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
      ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual, ACBrBancoOriginal, ACBrBancoVotorantim,
-     ACBrBancoPefisa, ACBrBancoFibra;
+     ACBrBancoPefisa, ACBrBancoFibra, ACBrBancoSofisaItau;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3610,7 +3611,12 @@ begin
     399: Result := cobHSBC;
     422: Result := cobBancoSafra;
     633: Result := cobBancoRendimento;
-    637: Result := cobBancoSofisaSantander;
+    637: begin
+           if StrToInt(Carteira) = 109 then
+             Result := cobBancoSofisaItau
+           else
+             Result := cobBancoSofisaSantander;
+         end;
     643: begin
            if StrToInt(Carteira) = 9 then
              Result := cobBancoPineBradesco
@@ -4439,6 +4445,7 @@ begin
      cobBancoVotorantim      : fBancoClass := TACBrBancoVotorantim.create(Self);     {655}
      cobBancoPefisa          : fBancoClass := TACBrBancoPefisa.create(Self);         {174}
      cobBancoFibra           : fBancoClass := TACBrBancoFibra.create(Self);          {224}
+     cobBancoSofisaItau      : fBancoClass := TACBrBancoSofisaItau.Create(Self);      {637}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

@@ -142,7 +142,7 @@ type
     function PatchOrderDueDate(const order_id: String): Boolean;   // Cancelar OrderDueDate
     function DeleteOrderDueDate(const order_id: String): Boolean;  // Estornar OrderDueDate
 
-    property Wallets: TShipayWalletArray read GetWallets;
+    property Wallets: TShipayWalletArray read fWallets;
     property Order: TShipayOrder read fOrder;
     property OrderDueDate: TShipayOrderDueDate read fOrderDueDate;
     property OrderCreated: TShipayOrderCreated read fOrderCreated;
@@ -340,10 +340,8 @@ var
 begin
   Result := fWallets;
 
+  fWallets.Clear;
   PrepararHTTP;
-  if (fWallets.Count > 0) then
-    Exit;
-
   Ok := AcessarEndPoint(ChttpMethodGET, cShipayEndPointWallets, ResultCode, RespostaHttp);
   Ok := Ok and (ResultCode = HTTP_OK);
 
@@ -607,8 +605,6 @@ begin
 
     fpValidadeToken := IncHour(Now, 24);
     fpAutenticado := True;
-
-    GetWallets;
   end
   else
     DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
@@ -728,6 +724,12 @@ begin
 
     if (Trim(fOrder.wallet) = '') then
     begin
+      if (Wallets.Count <= 0) then
+      begin
+        GetWallets;
+        LimparHTTP;
+      end;
+
       // Não especificou Wallet, usando a única Wallet retornada ou "pix"
       if (Wallets.Count = 1) then
         fOrder.wallet := Wallets[0].wallet

@@ -292,8 +292,8 @@
         <UnitName Value="ACBrBoletoRet_Itau"/>
       </Item67>
       <Item68>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Sicredi_API.pas"/>
-        <UnitName Value="ACBrBoletoRet_Sicredi_API"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Sicredi_APIECOMM.pas"/>
+        <UnitName Value="ACBrBoletoRet_Sicredi_APIECOMM"/>
       </Item68>
       <Item69>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Credisis.pas"/>
@@ -308,8 +308,8 @@
         <UnitName Value="ACBrBoletoW_Itau"/>
       </Item71>
       <Item72>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Sicredi_API.pas"/>
-        <UnitName Value="ACBrBoletoW_Sicredi_API"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Sicredi_APIECOMM.pas"/>
+        <UnitName Value="ACBrBoletoW_Sicredi_APIECOMM"/>
       </Item72>
       <Item73>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoVotorantim.pas"/>

@@ -128,8 +128,8 @@ type
 
     procedure PostOrder(IsEOrder: Boolean = False);
     procedure PostOrderV(IsEOrder: Boolean = False);
+    procedure GetWallets;
 
-    function GetWallets: TShipayWalletArray;
     function DeleteOrder(const order_id: String): Boolean;
     function RefundOrder(const order_id: String; ValorReembolso: Currency): Boolean;
 
@@ -204,6 +204,7 @@ begin
   fOrderInfo.Clear;
   fOrderList.Clear;
   fOrderError.Clear;
+  fWallets.Clear;
 end;
 
 function TACBrPSPShipay.GetSecretKey: String;
@@ -331,15 +332,13 @@ begin
   DoPostOrder(cShipayEndPointOrderV, IsEOrder);
 end;
 
-function TACBrPSPShipay.GetWallets: TShipayWalletArray;
+procedure TACBrPSPShipay.GetWallets;
 var
   RespostaHttp: AnsiString;
   ResultCode: Integer;
   AURL: String;
   Ok: Boolean;
 begin
-  Result := fWallets;
-
   fWallets.Clear;
   PrepararHTTP;
   Ok := AcessarEndPoint(ChttpMethodGET, cShipayEndPointWallets, ResultCode, RespostaHttp);
@@ -588,8 +587,6 @@ procedure TACBrPSPShipay.ProcessarAutenticacao(const AURL: String;
 var
   js: TACBrJSONObject;
 begin
-  fWallets.Clear;  // Força o carregamento das carteiras em toda autenticação
-
   if (ResultCode = HTTP_OK) then
   begin
     js := TACBrJSONObject.Parse(RespostaHttp);

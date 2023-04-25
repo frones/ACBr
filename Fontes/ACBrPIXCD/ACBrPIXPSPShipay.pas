@@ -590,7 +590,8 @@ procedure TACBrPSPShipay.ProcessarAutenticacao(const AURL: String;
 var
   js: TACBrJSONObject;
 begin
-  Wallets.Clear;
+  fWallets.Clear;  // Força o carregamento das carteiras em toda autenticação
+
   if (ResultCode = HTTP_OK) then
   begin
     js := TACBrJSONObject.Parse(RespostaHttp);
@@ -607,7 +608,6 @@ begin
     fpValidadeToken := IncHour(Now, 24);
     fpAutenticado := True;
 
-    fWallets.Clear;  // Força o carregamento das carteiras em toda autenticação
     GetWallets;
   end
   else

@@ -54,6 +54,7 @@ type
     FImprimirMensagemPadrao: Boolean;
     FLayoutRemessa: TACBrLayoutRemessa;
     FLeCedenteRetorno: Boolean;
+    FLerNossoNumeroCompleto: Boolean;
     FNomeArqRemessa: String;
     FNomeArqRetorno: String;
     FNumeroArquivo: Integer;
@@ -74,6 +75,7 @@ type
     property ImprimirMensagemPadrao: Boolean read FImprimirMensagemPadrao write FImprimirMensagemPadrao;
     property LayoutRemessa: TACBrLayoutRemessa read FLayoutRemessa write FLayoutRemessa;
     property LeCedenteRetorno: Boolean read FLeCedenteRetorno write FLeCedenteRetorno;
+    property LerNossoNumeroCompleto: Boolean read FLerNossoNumeroCompleto write FLerNossoNumeroCompleto;
     property NomeArqRemessa: String read FNomeArqRemessa write FNomeArqRemessa;
     property NomeArqRetorno: String read FNomeArqRetorno write FNomeArqRetorno;
     property NumeroArquivo: Integer read FNumeroArquivo write FNumeroArquivo;
@@ -739,6 +741,7 @@ begin
     LayoutRemessa:= c400;
   end;
   LeCedenteRetorno := AIni.ReadBool(CSessaoBoletoDiretorioConfig, CChaveLeCedenteRetorno, LeCedenteRetorno);
+  LerNossoNumeroCompleto:= AIni.ReadBool(CSessaoBoletoDiretorioConfig, CChaveLerNossoNumeroCompleto, LerNossoNumeroCompleto);
   NomeArqRemessa := AIni.ReadString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRemessa, NomeArqRemessa);
   NomeArqRetorno := AIni.ReadString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRetorno, NomeArqRetorno);
   NumeroArquivo := AIni.ReadInteger(CSessaoBoletoDiretorioConfig, CChaveNumeroArquivo, NumeroArquivo);
@@ -761,6 +764,7 @@ begin
     AIni.WriteInteger(CSessaoBoletoDiretorioConfig, CChaveLayoutRemessa, 0 );
   end;
   AIni.WriteBool(CSessaoBoletoDiretorioConfig, CChaveLeCedenteRetorno, LeCedenteRetorno);
+  Aini.WriteBool(CSessaoBoletoDiretorioConfig, CChaveLerNossoNumeroCompleto, LerNossoNumeroCompleto);
   AIni.WriteString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRemessa, NomeArqRemessa);
   AIni.WriteString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRetorno, NomeArqRetorno);
   AIni.WriteInteger(CSessaoBoletoDiretorioConfig, CChaveNumeroArquivo, NumeroArquivo);

@@ -50,6 +50,7 @@ const
   CChaveImprimirMensagemPadrao = 'ImprimirMensagemPadrao';
   CChaveLayoutRemessa = 'LayoutRemessa';
   CChaveLeCedenteRetorno = 'LeCedenteRetorno';
+  CChaveLerNossoNumeroCompleto = 'LerNossoNumeroCompleto';
   CChaveNomeArqRemessa = 'NomeArqRemessa';
   CChaveNomeArqRetorno = 'NomeArqRetorno';
   CChaveNumeroArquivo = 'NumeroArquivo';

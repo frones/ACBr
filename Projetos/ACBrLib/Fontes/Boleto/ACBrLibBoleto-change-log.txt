@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/04/2023
+--- ACBrLibBoletoConfig, ACBrLibBoletoConsts, ACBrLibBoletoDataModule ---
+[+] Criação do campo LerNossoNumeroCompleto - #TK-3857
+    Por Antonio Carlos Junior
+
 21/03/2023
 --- ACBrLibBoletoConfig, ACBrLibBoletoConsts, ACBrLibBoletoDataModule ---
 [+] Criação dos campos ArquivoCRT e ArquivoKEY para Inter e Sicoob

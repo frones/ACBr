@@ -96,6 +96,7 @@ begin
     ImprimirMensagemPadrao := LibConfig.BoletoDiretorioConfig.ImprimirMensagemPadrao;
     LayoutRemessa := LibConfig.BoletoDiretorioConfig.LayoutRemessa;
     LeCedenteRetorno := LibConfig.BoletoDiretorioConfig.LeCedenteRetorno;
+    LerNossoNumeroCompleto:= LibConfig.BoletoDiretorioConfig.LerNossoNumeroCompleto;
     NomeArqRemessa := LibConfig.BoletoDiretorioConfig.NomeArqRemessa;
     NomeArqRetorno := LibConfig.BoletoDiretorioConfig.NomeArqRetorno;
     NumeroArquivo := LibConfig.BoletoDiretorioConfig.NumeroArquivo;

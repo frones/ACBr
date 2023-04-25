@@ -222,7 +222,6 @@ function TNFSeR_ISSLencois.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 var
   AuxNode, AuxNode2: TACBrXmlNode;
 begin
-  Result := False;
   if ObterConteudo(ANode.Childrens.FindAnyNs('Situacao'), tcStr) = '0' then
   begin
     NFSe.SituacaoNfse := snCancelado;

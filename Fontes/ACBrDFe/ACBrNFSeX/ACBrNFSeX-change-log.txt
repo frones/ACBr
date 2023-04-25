@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/04/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Possível solução para evitar o erro de UFT-8 no método LoadFromLoteNfse.
+  Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos.ini --
+[*] Atualização das URLs da cidade Andradina/SP.
+   Por: Renfer
+
 24/04/2023
 -- ISSLencois.Provider/ISSLencois.GravarXml/ISSLencois.LerXml --
 [*] Ajustes e implementação do tratamento dos retornos.

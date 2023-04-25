@@ -1211,9 +1211,7 @@ begin
 
   l := Self.Count; // Indice da última nota já existente
 
-  // Converte de UTF8 para a String nativa da IDE //
-  XMLStr := DecodeToString(XMLUTF8, True);
-  XMLStr := LimparXml(XMLStr);
+  XMLStr := LimparXml(XMLUTF8);
 
   aXmlLote := XMLStr;
   Result := False;

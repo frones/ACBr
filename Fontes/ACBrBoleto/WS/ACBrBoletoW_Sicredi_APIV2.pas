@@ -137,10 +137,10 @@ begin
             TCompDesconto : FPURL := FPURL + '/boletos/'+ ID + '/desconto';
             TCompJurosDia : FPURL := FPURL + '/boletos/'+ ID + '/juros';
             TCompDataLimiteDesconto : FPURL := FPURL + '/boletos/'+ ID + '/data-desconto';
-            else raise EACBrBoletoWSException.Create(ClassName + ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência 31 - Complemento - '+Integer(ATitulo.OcorrenciaOriginal.ComplementoOutrosDados).ToString);
+            else raise EACBrBoletoWSException.Create(ClassName + ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência 31 - Complemento - '+inttostr(integer( ATitulo.OcorrenciaOriginal.ComplementoOutrosDados)));
           end;//case ATitulo.OcorrenciaOriginal.Tipo of
         End;//31
-        else raise EACBrBoletoWSException.Create(ClassName + ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência '+Integer(ATitulo.OcorrenciaOriginal.Tipo).ToString);
+        else raise EACBrBoletoWSException.Create(ClassName + ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência '+inttostr(Integer(ATitulo.OcorrenciaOriginal.Tipo)));
       end;//case Integer(ATitulo.OcorrenciaOriginal.Tipo) of
     End;//tpAltera                :
   end;//case Boleto.Configuracoes.WebService.Operacao of
@@ -412,12 +412,12 @@ begin
                 TCompDataLimiteDesconto : RequisicaoAlteraDataDesconto;
                 else
                 raise EACBrBoletoWSException.Create(ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO, [
-                '  RequisicaoAltera/Operação/tpAltera para ocorrência 31 - Complemento - '+Integer(ATitulo.OcorrenciaOriginal.ComplementoOutrosDados).ToString]));
+                '  RequisicaoAltera/Operação/tpAltera para ocorrência 31 - Complemento - '+inttostr(Integer(ATitulo.OcorrenciaOriginal.ComplementoOutrosDados))]));
               end;//case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados ofof
             End;//toRemessaAlterarOutrosDados
         else
           raise EACBrBoletoWSException.Create(ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO, [
-           ' RequisicaoAltera/Operação/tpAltera para ocorrência '+Integer(ATitulo.OcorrenciaOriginal.Tipo).ToString]));
+           ' RequisicaoAltera/Operação/tpAltera para ocorrência '+inttostr(Integer(ATitulo.OcorrenciaOriginal.Tipo))]));
       end;//case Integer(ATitulo.OcorrenciaOriginal.Tipo) of
     finally
     end;

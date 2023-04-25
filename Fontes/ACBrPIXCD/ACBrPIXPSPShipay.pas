@@ -91,7 +91,6 @@ type
     fQuandoEnviarOrder: TShipayQuandoEnviarOrder;
     fWallets: TShipayWalletArray;
     function GetSecretKey: String;
-    function GetWallets: TShipayWalletArray;
     procedure SetSecretKey(AValue: String);
 
     procedure DoPostOrder(aEndPoint: String; IsEOrder: Boolean);
@@ -130,6 +129,7 @@ type
     procedure PostOrder(IsEOrder: Boolean = False);
     procedure PostOrderV(IsEOrder: Boolean = False);
 
+    function GetWallets: TShipayWalletArray;
     function DeleteOrder(const order_id: String): Boolean;
     function RefundOrder(const order_id: String; ValorReembolso: Currency): Boolean;
 
@@ -209,38 +209,6 @@ end;
 function TACBrPSPShipay.GetSecretKey: String;
 begin
    Result := ClientSecret;
-end;
-
-function TACBrPSPShipay.GetWallets: TShipayWalletArray;
-var
-  RespostaHttp: AnsiString;
-  ResultCode: Integer;
-  AURL: String;
-  Ok: Boolean;
-begin
-  Result := fWallets;
-
-  if (fWallets.Count > 0) then
-    Exit;
-
-  PrepararHTTP;
-  Ok := AcessarEndPoint(ChttpMethodGET, cShipayEndPointWallets, ResultCode, RespostaHttp);
-  Ok := Ok and (ResultCode = HTTP_OK);
-
-  if Ok then
-  begin
-    RespostaHttp := '{"wallets":'+RespostaHttp+'}';   // Transforma Array em Object
-    fWallets.AsJSON := String(RespostaHttp);
-
-    if (fWallets.Count < 1) then
-      DispararExcecao(EACBrPixHttpException.Create(sErrNoWallet));
-  end
-  else
-  begin
-    AURL := CalcularURLEndPoint(ChttpMethodGET, cShipayEndPointWallets);
-    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
-       [Http.ResultCode, ChttpMethodPOST, AURL]));
-  end;
 end;
 
 procedure TACBrPSPShipay.SetSecretKey(AValue: String);
@@ -361,6 +329,38 @@ begin
     DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroPropriedadeNaoDefinida),['expiration']));
 
   DoPostOrder(cShipayEndPointOrderV, IsEOrder);
+end;
+
+function TACBrPSPShipay.GetWallets: TShipayWalletArray;
+var
+  RespostaHttp: AnsiString;
+  ResultCode: Integer;
+  AURL: String;
+  Ok: Boolean;
+begin
+  Result := fWallets;
+
+  PrepararHTTP;
+  if (fWallets.Count > 0) then
+    Exit;
+
+  Ok := AcessarEndPoint(ChttpMethodGET, cShipayEndPointWallets, ResultCode, RespostaHttp);
+  Ok := Ok and (ResultCode = HTTP_OK);
+
+  if Ok then
+  begin
+    RespostaHttp := '{"wallets":'+RespostaHttp+'}';   // Transforma Array em Object
+    fWallets.AsJSON := String(RespostaHttp);
+
+    if (fWallets.Count < 1) then
+      DispararExcecao(EACBrPixHttpException.Create(sErrNoWallet));
+  end
+  else
+  begin
+    AURL := CalcularURLEndPoint(ChttpMethodGET, cShipayEndPointWallets);
+    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
+       [Http.ResultCode, ChttpMethodPOST, AURL]));
+  end;
 end;
 
 // Retorna Verdadeiro se a Order foi cancelada com sucesso //

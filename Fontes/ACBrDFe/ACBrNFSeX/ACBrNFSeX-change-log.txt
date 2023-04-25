@@ -49,6 +49,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] Atualização das URLs da cidade Andradina/SP.
    Por: Renfer
+[+] Incluída a cidade de Barretos/SP - Provedor: SigISS
+   Por: Lucas Crippa
 
 24/04/2023
 -- ISSLencois.Provider/ISSLencois.GravarXml/ISSLencois.LerXml --

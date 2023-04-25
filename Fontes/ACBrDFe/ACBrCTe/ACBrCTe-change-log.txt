@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/04/2023
+-- ACBrCTeServicos --
+[+] Incluída as URLs de Homologação (versão 4.00) das UF: MG, MS e SP/SVSP
+[+] Incluída as URLs de Homologação e Produção (versão 4.00) da UF: RS/SVRS
+    Observação: SVSP atende as UF: AP, PE, RR e SP
+                SVRS atende as UF: AC, AL, AM, BA, CE, DF, ES, GO, MA, PA, PB, PI, RJ, RN, RO, RS, SC, SE e TO
+  Por: Italo Giurizzato Junior
+
 24/04/2023
 -- Diversos --
 [+] Implementação dos eventos: Insucesso na Entrega e Cancelamento de Insucesso

@@ -344,7 +344,7 @@ begin
     Json := TJsonObject.Create;
     try
       Json.Add('tipoCobranca').Value.AsString                           := IfThen(Boleto.Cedente.CedenteWS.IndicadorPix,'HIBRIDO','NORMAL');
-      Json.Add('codigoBeneficiario').Value.AsString                     := Boleto.Cedente.Convenio;
+      Json.Add('codigoBeneficiario').Value.AsString                     := Boleto.Cedente.CodigoCedente;
       Json.Add('especieDocumento').Value.AsString                       := self.codigoTipoTitulo(ATitulo.EspecieDoc);
       Json.Add('nossoNumero').Value.AsString                            := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
       Json.Add('seuNumero').Value.AsString                              := ATitulo.SeuNumero;

@@ -33,7 +33,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBoletoW_Sicredi_API;
+unit ACBrBoletoW_Sicredi_APIECOMM;
 
 interface
 
@@ -54,8 +54,8 @@ uses
 
 type
 
-  { TBoletoW_Sicredi_API }
-  TBoletoW_Sicredi_API = class(TBoletoWSREST)
+  { TBoletoW_Sicredi_APIECOMM }
+  TBoletoW_Sicredi_APIECOMM = class(TBoletoWSREST)
   private
     FDFeSSL:TDFeSSL;
     function CodigoTipoTitulo(AEspecieDoc:String): String;
@@ -128,9 +128,9 @@ implementation
    		ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 
-{ TBoletoW_Sicredi_API }
+{ TBoletoW_Sicredi_APIECOMM }
 
-procedure TBoletoW_Sicredi_API.DefinirURL;
+procedure TBoletoW_Sicredi_APIECOMM.DefinirURL;
 var
 aNossoNumero  : string;
 begin
@@ -156,19 +156,19 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.DefinirContentType;
+procedure TBoletoW_Sicredi_APIECOMM.DefinirContentType;
 begin
  FPContentType := C_CONTENT_TYPE;
 end;
 
 
-procedure TBoletoW_Sicredi_API.GerarHeader;
+procedure TBoletoW_Sicredi_APIECOMM.GerarHeader;
 begin
   DefinirContentType;
   DefinirKeyUser;
 end;
 
-procedure TBoletoW_Sicredi_API.GerarDados;
+procedure TBoletoW_Sicredi_APIECOMM.GerarDados;
 begin
   if Assigned(Boleto) then
    case Boleto.Configuracoes.WebService.Operacao of
@@ -207,12 +207,12 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.DefinirAuthorization;
+procedure TBoletoW_Sicredi_APIECOMM.DefinirAuthorization;
 begin
   FPAuthorization := C_ACCESS_TOKEN + ': ' + GerarTokenAutenticacao;
 end;
 
-function TBoletoW_Sicredi_API.GerarTokenAutenticacao: string;
+function TBoletoW_Sicredi_APIECOMM.GerarTokenAutenticacao: string;
 var
   Data  : string;
   Json  : TJSONObject;
@@ -262,13 +262,13 @@ begin
   end;
 end;
 
-procedure TBoletoW_Sicredi_API.DefinirKeyUser;
+procedure TBoletoW_Sicredi_APIECOMM.DefinirKeyUser;
 begin
   if Assigned(ATitulo) then
     FPKeyUser := '';
 end;
 
-function TBoletoW_Sicredi_API.DefinirParametros: String;
+function TBoletoW_Sicredi_APIECOMM.DefinirParametros: String;
 var
   Consulta : TStringList;
   Documento : String;
@@ -323,17 +323,17 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.DefinirAutenticacao;
+procedure TBoletoW_Sicredi_APIECOMM.DefinirAutenticacao;
 begin
   FPAuthorization := C_ACCESS_TOKEN + ': ' + GerarTokenAutenticacao;
 end;
 
-function TBoletoW_Sicredi_API.ValidaAmbiente: Integer;
+function TBoletoW_Sicredi_APIECOMM.ValidaAmbiente: Integer;
 begin
   Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, '1','2'),2);
 end;
 
-procedure TBoletoW_Sicredi_API.RequisicaoJson;
+procedure TBoletoW_Sicredi_APIECOMM.RequisicaoJson;
 var
   Data: string;
   Json: TJSONObject;
@@ -380,7 +380,7 @@ begin
   end;
 end;
 
-procedure TBoletoW_Sicredi_API.RequisicaoAltera;
+procedure TBoletoW_Sicredi_APIECOMM.RequisicaoAltera;
 var
   Data: string;
   Json: TJSONObject;
@@ -506,7 +506,7 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.GeraDadosInstrucao(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GeraDadosInstrucao(AJson: TJsonObject);
 var
 aNossoNumero:String;
 begin
@@ -518,7 +518,7 @@ begin
 end;
 
 
-procedure TBoletoW_Sicredi_API.RequisicaoBaixa;
+procedure TBoletoW_Sicredi_APIECOMM.RequisicaoBaixa;
 var
   Data: string;
   AJson: TJSONObject;
@@ -544,17 +544,17 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.RequisicaoConsulta;
+procedure TBoletoW_Sicredi_APIECOMM.RequisicaoConsulta;
 begin
    //Sem Payload - Define Método GET
 end;
 
-procedure TBoletoW_Sicredi_API.RequisicaoConsultaDetalhe;
+procedure TBoletoW_Sicredi_APIECOMM.RequisicaoConsultaDetalhe;
 begin
     //Sem Payload - Define Método GET
 end;
 
-procedure TBoletoW_Sicredi_API.GerarPagador(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarPagador(AJson: TJsonObject);
 
 begin
   if Assigned(ATitulo) then
@@ -576,7 +576,7 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.GerarBenificiarioFinal(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarBenificiarioFinal(AJson: TJsonObject);
 begin
   if Assigned(ATitulo) then
   begin
@@ -591,7 +591,7 @@ begin
   end;
 end;
 
-procedure TBoletoW_Sicredi_API.GerarJuros(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarJuros(AJson: TJsonObject);
 begin
   if Assigned(ATitulo) then
   begin
@@ -605,7 +605,7 @@ begin
   end;
 end;
 
-procedure TBoletoW_Sicredi_API.GerarMulta(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarMulta(AJson: TJsonObject);
 begin
   if Assigned(ATitulo) then
   begin
@@ -620,7 +620,7 @@ begin
   end;
 end;
 
-procedure TBoletoW_Sicredi_API.GerarDesconto(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.GerarDesconto(AJson: TJsonObject);
 begin
 
   if Assigned(ATitulo) then
@@ -653,7 +653,7 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.AlteraDataVencimento(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlteraDataVencimento(AJson: TJsonObject);
 begin
 
   if Assigned(ATitulo) then
@@ -666,7 +666,7 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.AtribuirDesconto(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirDesconto(AJson: TJsonObject);
 begin
 
   if Assigned(ATitulo) then
@@ -681,7 +681,7 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.AlteracaoDesconto(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoDesconto(AJson: TJsonObject);
 begin
 
   if Assigned(ATitulo) then
@@ -694,7 +694,7 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.AlteracaoDataDesconto(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoDataDesconto(AJson: TJsonObject);
 begin
 
   if Assigned(ATitulo) then
@@ -708,7 +708,7 @@ begin
 end;
 
 
-procedure TBoletoW_Sicredi_API.AlterarProtesto(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlterarProtesto(AJson: TJsonObject);
 begin
 
   if Assigned(ATitulo) then
@@ -720,7 +720,7 @@ begin
   end;
 end;
 
-procedure TBoletoW_Sicredi_API.AtribuirAbatimento(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirAbatimento(AJson: TJsonObject);
 
 begin
 
@@ -734,7 +734,7 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.AlteracaoAbatimento(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoAbatimento(AJson: TJsonObject);
 
 begin
   if Assigned(ATitulo) then
@@ -747,7 +747,7 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.AtribuirJuros(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirJuros(AJson: TJsonObject);
 
 begin
 
@@ -761,17 +761,17 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.AtribuirMulta(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirMulta(AJson: TJsonObject);
 begin
   //Sem Payload
 end;
 
-procedure TBoletoW_Sicredi_API.AtribuirNegativacao(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AtribuirNegativacao(AJson: TJsonObject);
 begin
   //Sem Payload
 end;
 
-procedure TBoletoW_Sicredi_API.AlteracaoSeuNumero(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoSeuNumero(AJson: TJsonObject);
 
 begin
 
@@ -785,19 +785,19 @@ begin
 
 end;
 
-procedure TBoletoW_Sicredi_API.AlteracaoEnderecoPagador(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoEnderecoPagador(AJson: TJsonObject);
 
 begin
   //Sem Payload
 end;
 
-procedure TBoletoW_Sicredi_API.AlteracaoPrazo(AJson: TJsonObject);
+procedure TBoletoW_Sicredi_APIECOMM.AlteracaoPrazo(AJson: TJsonObject);
 
 begin
 // sem Payload
 end;
 
-function TBoletoW_Sicredi_API.CodigoTipoTitulo(AEspecieDoc : String): String;
+function TBoletoW_Sicredi_APIECOMM.CodigoTipoTitulo(AEspecieDoc : String): String;
 begin
 
   result := 'A';
@@ -827,7 +827,7 @@ begin
 
 end;
 
-constructor TBoletoW_Sicredi_API.Create(ABoletoWS: TBoletoWS);
+constructor TBoletoW_Sicredi_APIECOMM.Create(ABoletoWS: TBoletoWS);
 begin
   inherited Create(ABoletoWS);
 
@@ -845,13 +845,13 @@ begin
 
 end;
 
-function TBoletoW_Sicredi_API.GerarRemessa: string;
+function TBoletoW_Sicredi_APIECOMM.GerarRemessa: string;
 begin
   Result := inherited GerarRemessa;
 
 end;
 
-function TBoletoW_Sicredi_API.Enviar: boolean;
+function TBoletoW_Sicredi_APIECOMM.Enviar: boolean;
 begin
   Result := inherited Enviar;
 

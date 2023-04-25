@@ -34,7 +34,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBoletoRet_Sicredi_API;
+unit ACBrBoletoRet_Sicredi_APIECOMM;
 
 interface
 
@@ -52,9 +52,9 @@ uses
 
 type
 
-{ TRetornoEnvio_Sicredi_API }
+{ TRetornoEnvio_Sicredi_APIECOMM }
 
- TRetornoEnvio_Sicredi_API = class(TRetornoEnvioREST)
+ TRetornoEnvio_Sicredi_APIECOMM = class(TRetornoEnvioREST)
  private
    function DateSicrediToDateTime(Const AValue : String) : TDateTime;
  public
@@ -77,24 +77,24 @@ resourcestring
 
 { TRetornoEnvio }
 
-constructor TRetornoEnvio_Sicredi_API.Create(ABoletoWS: TACBrBoleto);
+constructor TRetornoEnvio_Sicredi_APIECOMM.Create(ABoletoWS: TACBrBoleto);
 begin
   inherited Create(ABoletoWS);
 
 end;
 
-function TRetornoEnvio_Sicredi_API.DateSicrediToDateTime(
+function TRetornoEnvio_Sicredi_APIECOMM.DateSicrediToDateTime(
   const AValue: String): TDateTime;
 begin
   Result :=EncodeDataHora(StringReplace(AValue,'-','/',[rfReplaceAll]));
 end;
 
-destructor TRetornoEnvio_Sicredi_API.Destroy;
+destructor TRetornoEnvio_Sicredi_APIECOMM.Destroy;
 begin
   inherited Destroy;
 end;
 
-function TRetornoEnvio_Sicredi_API.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
+function TRetornoEnvio_Sicredi_APIECOMM.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
   //Retorno: TRetEnvio;
   AJson: TJson;
@@ -202,7 +202,7 @@ begin
 
 end;
 
-function TRetornoEnvio_Sicredi_API.LerListaRetorno: Boolean;
+function TRetornoEnvio_Sicredi_APIECOMM.LerListaRetorno: Boolean;
 var
   ListaRetorno: TACBrBoletoRetornoWS;
   AJson: TJson;
@@ -290,7 +290,7 @@ begin
   end;
 end;
 
-function TRetornoEnvio_Sicredi_API.RetornoEnvio(const AIndex: Integer): Boolean;
+function TRetornoEnvio_Sicredi_APIECOMM.RetornoEnvio(const AIndex: Integer): Boolean;
 begin
 
   Result:=inherited RetornoEnvio(AIndex);

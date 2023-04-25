@@ -93,7 +93,10 @@ type
   {Definir Metodo HTTP}
   TMetodoHTTP = (htPOST, htGET, htPATCH, htPUT, htDELETE);
 
-
+  {Type Generico para passar parametros para Body e Header das requisicoes}
+  TParams = record
+    prName,PrValue:String;
+  end;
   function StrToTipoOperacao(out ok: Boolean; const s: String): TOperacao;
   function TipoOperacaoToStr(const t: TOperacao): String;
 

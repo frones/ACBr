@@ -221,8 +221,10 @@ uses
   ACBrBoletoRet_Itau,
   ACBrBoletoW_Credisis,
   ACBrBoletoRet_Credisis,
-  ACBrBoletoW_Sicredi_API,
-  ACBrBoletoRet_Sicredi_API,
+  ACBrBoletoW_Sicredi_APIECOMM,
+  ACBrBoletoRet_Sicredi_APIECOMM,
+  ACBrBoletoW_Sicredi_APIV2,
+  ACBrBoletoRet_Sicredi_APIV2,
   ACBrBoletoW_PenseBank_API,
   ACBrBoletoRet_PenseBank_API,
   ACBrBoletoW_Santander,
@@ -330,8 +332,15 @@ begin
   case ABanco of
     cobSicred:
       begin
-        FBoletoWSClass := TBoletoW_Sicredi_API.Create(Self);
-        FRetornoBanco  := TRetornoEnvio_Sicredi_API.Create(FBoleto);
+        if UpperCase(FBoleto.Configuracoes.WebService.VersaoDF) = 'V2' then
+        begin //API V2 (NOVA 2022)
+          FBoletoWSClass := TBoletoW_Sicredi_APIV2.Create(Self);
+          FRetornoBanco  := TRetornoEnvio_Sicredi_APIV2.Create(FBoleto);
+        end else
+        begin //API ECOMM
+          FBoletoWSClass := TBoletoW_Sicredi_APIECOMM.Create(Self);
+          FRetornoBanco  := TRetornoEnvio_Sicredi_APIECOMM.Create(FBoleto);
+        end;
       end;
     cobCaixaEconomica:
       begin

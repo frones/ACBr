@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/04/2023
+--- ACBrLibNFSeBase ---
+[*] Correção parametro TipoPeriodo dos métodos de Consulta ACBrLibNFSe.
+    Por: Antonio Carlos Junior
+
 18/04/2023
 --- ACBrLibNFSeBase ---
 [*] Correção variaveis que não estavam sendo utilizadas.

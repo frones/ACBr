@@ -100,8 +100,7 @@ implementation
 uses
   StrUtils, ACBrLibResposta, ACBrLibHelpers,
   ACBrLibConsts, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrLibCertUtils,
-  ACBrLibNFSeConsts, ACBrLibConfig, ACBrNFSeLibConfig,
-  ACBrNFSeXConversao, ACBrNFSeXWebservicesResponse,
+  ACBrLibNFSeConsts, ACBrLibConfig, ACBrNFSeLibConfig, ACBrNFSeXConversao,
   ACBrLibNFSeRespostas, ACBrNFSeXWebserviceBase;
 
 { TACBrLibNFSe }
@@ -593,10 +592,11 @@ var
 begin
   try
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFSE_GerarLote(' + aLote + ',' + IntToStr(aQtdMaximaRps) + ',' + ModoEnvioToStr(ModoEnvio) + ' )', logCompleto, True)
+      GravarLog('NFSE_GerarLote(' + aLote + ',' + IntToStr(aQtdMaximaRps) + ',' + IntToStr(aModoEnvio) + ' )', logCompleto, True)
       else
       GravarLog('NFSE_GerarLote', logNormal);
 
+    ModoEnvio:= TmodoEnvio(aModoEnvio);
     NFSeDM.Travar;
     try
       NFSeDM.ACBrNFSeX1.GerarLote(aLote, aQtdMaximaRps, ModoEnvio);
@@ -819,6 +819,7 @@ var
   Resp: TConsultaNFSeResposta;
   NumeroLote: String;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     NumeroLote:= ConverterAnsiParaUTF8(aNumeroLote);
@@ -828,9 +829,10 @@ begin
       else
         GravarLog('NFSE_ConsultarNFSePorPeriodo', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSePorPeriodo(aDataInicial, aDataFinal, aPagina, NumeroLote, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSePorPeriodo(aDataInicial, aDataFinal, aPagina, NumeroLote, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1106,6 +1108,7 @@ var
   Resp: TConsultaNFSeResposta;
   Numero: String;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     Numero:= ConverterAnsiParaUTF8(aNumero);
@@ -1115,9 +1118,10 @@ begin
       else
         GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorNumero', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorNumero(aNumero, aPagina, aDataFinal, aDataFinal, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorNumero(aNumero, aPagina, aDataFinal, aDataFinal, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1144,6 +1148,7 @@ function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aData
 var
   Resp: TConsultaNFSeResposta;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -1151,9 +1156,10 @@ begin
       else
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorPeriodo', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal, aPagina, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal, aPagina, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1181,6 +1187,7 @@ var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
@@ -1191,9 +1198,10 @@ begin
       else
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorTomador', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorTomador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorTomador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1221,6 +1229,7 @@ var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
@@ -1231,9 +1240,10 @@ begin
       else
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorIntermediario', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorIntermediario(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorIntermediario(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1261,6 +1271,7 @@ var
   Resp: TConsultaNFSeResposta;
   Numero: String;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     Numero:= ConverterAnsiParaUTF8(aNumero);
@@ -1270,9 +1281,10 @@ begin
       else
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorNumero', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorNumero(Numero, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorNumero(Numero, aPagina, aDataInicial, aDataFinal, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1300,6 +1312,7 @@ var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
@@ -1310,9 +1323,10 @@ begin
       else
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorPrestador ', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPrestador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPrestador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1340,6 +1354,7 @@ var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
@@ -1350,9 +1365,10 @@ begin
       else
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorTomador ', logNormal);
 
+    TipoPeriodo:=TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorTomador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorTomador(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1379,6 +1395,7 @@ function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFi
 var
   Resp: TConsultaNFSeResposta;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -1386,9 +1403,10 @@ begin
       else
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorPeriodo', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPeriodo(aDataFinal, aDataFinal, aPagina, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPeriodo(aDataFinal, aDataFinal, aPagina, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1416,6 +1434,7 @@ var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
   Resposta: AnsiString;
+  TipoPeriodo: TtpPeriodo;
 begin
   try
     CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
@@ -1426,9 +1445,10 @@ begin
       else
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorIntermediario', logNormal);
 
+    TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorIntermediario(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TtpPeriodo.tpEmissao);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorIntermediario(CNPJ, InscMunicipal, aPagina, aDataInicial, aDataFinal, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);

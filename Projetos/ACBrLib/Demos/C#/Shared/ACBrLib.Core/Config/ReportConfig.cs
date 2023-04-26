@@ -8,6 +8,7 @@
         {
             CasasDecimais = new CasasDecimaisConfig<TLib>(acbrlib, sessao);
             LogoMarca = new ExpandeLogoMarcaConfig<TLib>(acbrlib, sessao);
+            Prestador = new PrestadorConfig<TLib>(acbrlib, sessao);
         }
 
         #endregion Constructors
@@ -113,6 +114,8 @@
         public CasasDecimaisConfig<TLib> CasasDecimais { get; }
 
         public ExpandeLogoMarcaConfig<TLib> LogoMarca { get; }
+
+        public PrestadorConfig<TLib> Prestador { get; }
 
         #endregion Properties
     }

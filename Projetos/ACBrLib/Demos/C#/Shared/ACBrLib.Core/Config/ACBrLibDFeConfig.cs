@@ -11,6 +11,7 @@ namespace ACBrLib.Core.Config
             DFe = new DFeConfig<TLib>(Parent);
             Email = new EmailConfig<TLib>(Parent);
             Download = new DownloadConfig<TLib>(Parent, sessao);
+            Emitente = new EmitenteConfig<TLib>(Parent, sessao);
         }
 
         #endregion Constructors
@@ -22,6 +23,8 @@ namespace ACBrLib.Core.Config
         public EmailConfig<TLib> Email { get; set; }
 
         public DownloadConfig<TLib> Download { get; }
+
+        public EmitenteConfig<TLib> Emitente { get; }
 
         public TipoAmbiente Ambiente
         {

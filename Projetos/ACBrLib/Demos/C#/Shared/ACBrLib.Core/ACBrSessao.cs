@@ -49,5 +49,7 @@
         GTIN,
         ConsultaCNPJ,
         NCM,
+        NFSe,
+        DANFSe,
     }
 }

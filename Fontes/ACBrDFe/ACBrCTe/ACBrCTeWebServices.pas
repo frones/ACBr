@@ -59,6 +59,8 @@ type
     procedure InicializarServico; override;
     procedure DefinirURL; override;
     function GerarVersaoDadosSoap: String; override;
+    function GetVersaoV4: string;
+    function GetPrefixoServico: string;
     procedure FinalizarServico; override;
 
   public
@@ -641,6 +643,22 @@ begin
   Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
 end;
 
+function TCTeWebService.GetPrefixoServico: string;
+begin
+  Result := 'CTe';
+
+  if FPConfiguracoesCTe.WebServices.UFCodigo in [14, 16, 26, 35] then
+    Result := 'Cte';
+end;
+
+function TCTeWebService.GetVersaoV4: string;
+begin
+  Result := 'V4';
+
+  if FPConfiguracoesCTe.WebServices.UFCodigo in [14, 16, 26, 35] then
+    Result := '';
+end;
+
 procedure TCTeWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
@@ -680,7 +698,7 @@ begin
   if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
     FPServico := GetUrlWsd + 'CteStatusServico'
   else
-    FPServico := GetUrlWsd + 'CTeStatusServicoV4';
+    FPServico := GetUrlWsd + GetPrefixoServico + 'StatusServico' + GetVersaoV4;
 
   FPSoapAction := FPServico + '/cteStatusServicoCT';
 end;
@@ -715,7 +733,6 @@ begin
   try
     ConsStatServ.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesCTe.WebServices.UFCodigo;
-//    ConsStatServ.Versao := FPVersaoServico;
 
     AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
 
@@ -957,7 +974,7 @@ begin
           end
           else
           begin
-            FPServico := GetUrlWsd + 'CTeRecepcaoSincV4';
+            FPServico := GetUrlWsd + 'CTeRecepcaoSinc' + GetVersaoV4;
             FPSoapAction := FPServico + '/cteRecepcao';
           end;
         end
@@ -977,7 +994,7 @@ begin
         end
         else
         begin
-          FPServico := GetUrlWsd + 'CTeRecepcaoOSV4';
+          FPServico := GetUrlWsd + GetPrefixoServico + 'RecepcaoOS' + GetVersaoV4;
           FPSoapAction := FPServico + '/cteRecepcaoOS';
         end;
       end;
@@ -987,7 +1004,7 @@ begin
       if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
         FPServico := GetUrlWsd + 'CTeRecepcaoGTVe'
       else
-        FPServico := GetUrlWsd + 'CTeRecepcaoGTVeV4';
+        FPServico := GetUrlWsd + GetPrefixoServico + 'RecepcaoGTVe' + GetVersaoV4;
 
       FPSoapAction := FPServico + '/cteRecepcaoGTVe';
     end;
@@ -2077,7 +2094,7 @@ begin
   if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
     FPServico := GetUrlWsd + 'CteConsulta'
   else
-    FPServico := GetUrlWsd + 'CTeConsultaV4';
+    FPServico := GetUrlWsd + GetPrefixoServico + 'Consulta' + GetVersaoV4;
 
   FPSoapAction := FPServico + '/cteConsultaCT';
 end;
@@ -3025,7 +3042,7 @@ begin
   if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
     FPServico := GetUrlWsd + 'CteRecepcaoEvento'
   else
-    FPServico := GetUrlWsd + 'CTeRecepcaoEventoV4';
+    FPServico := GetUrlWsd + GetPrefixoServico + 'RecepcaoEvento' + GetVersaoV4;
 
   FPSoapAction := FPServico + '/cteRecepcaoEvento';
 end;

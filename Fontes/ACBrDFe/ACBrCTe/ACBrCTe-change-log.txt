@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2023
+-- ACBrCTeWebServices --
+[*] Criado as funções: GetVersaoV4 e GetPrefixoServico, para contornar as diferenças
+    nos NameSpaces e SoapActions dos serviços da versão 4.00 entre algumas UFs.
+  Por: Italo Giurizzato Junior
+
 25/04/2023
 -- ACBrCTeServicos --
 [+] Incluída as URLs de Homologação (versão 4.00) das UF: MG, MS e SP/SVSP

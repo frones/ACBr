@@ -1105,7 +1105,7 @@ begin
     end;
 
   end;
-  LCDS.FieldByName('MunicipioPrestacao').AsString := ANFSe.Tomador.Endereco.xMunicipio + ' / ' + ANFSe.Tomador.Endereco.UF;
+  LCDS.FieldByName('MunicipioPrestacao').AsString := ObterNomeMunicipio(LDadosServico.CodigoMunicipio, LUF) + ' / ' + LUF;
   LCDS.FieldByName('CodigoObra').AsString         := ANFSe.ConstrucaoCivil.CodigoObra;
   LCDS.FieldByName('Art').AsString                := ANFSe.ConstrucaoCivil.Art;
 

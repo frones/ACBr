@@ -1105,7 +1105,7 @@ begin
     end;
 
   end;
-  LCDS.FieldByName('MunicipioPrestacao').AsString := ObterNomeMunicipio(LDadosServico.CodigoMunicipio, LUF) + ' / ' + LUF;
+  LCDS.FieldByName('MunicipioPrestacao').AsString := ObterNomeMunicipio(StrToInt64Def(LDadosServico.CodigoMunicipio,0), LUF) + ' / ' + LUF;
   LCDS.FieldByName('CodigoObra').AsString         := ANFSe.ConstrucaoCivil.CodigoObra;
   LCDS.FieldByName('Art').AsString                := ANFSe.ConstrucaoCivil.Art;
 

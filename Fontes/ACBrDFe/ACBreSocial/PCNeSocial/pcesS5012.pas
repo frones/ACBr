@@ -282,8 +282,7 @@ begin
     FXML := Leitor.Arquivo;
 
     // Capturar a versão do evento
-    s := Copy(FXML, Pos('/evt/evtIrrf/', FXML)+18, 16);
-    s := Copy(s, 1, Pos('"', s)-1);
+    s := Copy(FXML, Pos('/evt/evtIrrf/', FXML)+13, 9);
     Self.VersaoDF := StrToVersaoeSocialSchemas(s);
 
     if leitor.rExtrai(1, 'evtIrrf') <> '' then

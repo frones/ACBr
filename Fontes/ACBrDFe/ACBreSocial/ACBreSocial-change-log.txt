@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2023
+-- pcesS5012 --
+[*] Alteração visando pegar corretamente a versão do evento.
+  Por: CarlosSolla/Diego F
+
 24/04/2023
 -- Diversos --
 [*] Altera o tipo da propriedade infoCota de tpSimNao para tpSimNaoFacultativo para que a responsabilidade de geração da tag passe a ser da aplicação.

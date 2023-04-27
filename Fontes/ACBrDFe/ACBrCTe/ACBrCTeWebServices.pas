@@ -751,7 +751,11 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteStatusServicoCTResult');
 
-  CTeRetorno := TRetConsStatServ.Create('Cte');
+  if FPConfiguracoesCTe.Geral.VersaoDF >= ve400 then
+    CTeRetorno := TRetConsStatServ.Create('CTe')
+  else
+    CTeRetorno := TRetConsStatServ.Create('Cte');
+
   try
     CTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     CTeRetorno.LerXml;

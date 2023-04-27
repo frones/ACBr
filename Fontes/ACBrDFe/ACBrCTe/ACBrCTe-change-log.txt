@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2023
+-- ACBrCTeWebServices --
+[*] Ajuste na leitura do retorno do método Consultar Status de Serviço.
+  Por: Italo Giurizzato Junior
+
 26/04/2023
 -- ACBrCTeWebServices --
 [*] Criado as funções: GetVersaoV4 e GetPrefixoServico, para contornar as diferenças

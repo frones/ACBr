@@ -1591,7 +1591,7 @@ begin
   // Provedor Infisc Versão XML 1.1
   FTipoEmissao := teNormalNFSe;
   FEmpreitadaGlobal := EgOutros;
-  FModeloNFSe := '55';
+  FModeloNFSe := '';
   FCanhoto := tcNenhum;
 
   FLogradouroLocalPrestacaoServico := llpTomador;

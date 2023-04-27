@@ -45,7 +45,8 @@ uses
   ACBrBoleto,
   StrUtils,
   ACBrBoletoConversao,
-  fpdf;
+  fpdf,
+  fpdf_ext;
 
 type
   EACBrBoletoFPDF = class(Exception);
@@ -83,7 +84,7 @@ type
     INSTRUCOES_PAGAMENTO        = 'Informações de responsabilidades do beneficiário:';
 
   private
-    FPDF               : TFPDF;
+    FPDF               : TFPDFExt;
     FLinhaDigitavel    : String;
     FBanco             : String;
     FCodigoBarras      : String;
@@ -167,6 +168,7 @@ end;
 procedure TACBrBoletoFPDF.GeraFichaPagamento(const AACBrTitulo: TACBrTitulo);
 var LArquivoLogo : String;
 begin
+  FPDF.SetUTF8(False);
   LArquivoLogo := ChangeFileExt(ArquivoLogo,'.png');
   FPDF.SetFont('arial', '', 8);
   FPDF.Ln(35);
@@ -175,7 +177,7 @@ begin
   FPDF.SetFont('arial', '', 9);
   FPDF.Cell(50, 10, '', 'B', 0, 'L');
   if FileExists(LArquivoLogo) then
-    FPDF.Image(LArquivoLogo, 10, 43, 40, 10);
+    FPDF.Image(LArquivoLogo, 10, 45, 40, 10);
 
   FPDF.SetFont('arial', 'B', 14);
   FPDF.Cell(20, 10, FBanco, 'LBR', 0, 'C');
@@ -226,8 +228,9 @@ begin
   FPDF.Ln(20);
 
   FPDF.Cell(50, 10, '', 'B', 0, 'L');
+
   if FileExists(LArquivoLogo) then
-    FPDF.Image(LArquivoLogo, 10, 130, 40, 10);
+    FPDF.Image(LArquivoLogo, 10, 172, 40, 10);
 
   FPDF.SetFont('arial', 'B', 14);
   FPDF.Cell(20, 10, FBanco, 'LBR', 0, 'C');
@@ -317,7 +320,7 @@ begin
 
   FPDF.SetFont('arial', 'B', 6);
   FPDF.Cell(190, 3, AUTENTICACAO_MECANICA + ' - ' + FICHA_COMPENSACAO, '', 1, 'R');
-  //FPDF.Code25(FPDF.GetX, FPDF.GetY + 5, FCodigoBarras);
+  FPDF.CodeI25(FCodigoBarras, FPDF.GetX, FPDF.GetY + 5);
 end;
 
 procedure TACBrBoletoFPDF.Imprimir;
@@ -363,8 +366,7 @@ end;
 
 procedure TACBrBoletoFPDF.InicializarArquivo;
 begin
-  //FPDF := TFPDF.Create(poPortrait, puMM, pfA4);
-  FPDF := TFPDF.Create();
+  FPDF := TFPDFExt.Create();
 end;
 
 end.

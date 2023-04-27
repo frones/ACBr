@@ -44,6 +44,8 @@ Símbolo : Significado
 
 27/04/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de Guaporé/RS mudou para a versão 2.03 - Provedor: Pronim
+   Por: Ábacus TI
 [+] Incluída a cidade de Sao Felix do Xingo/PA - Provedor: Desenvolve
    Por: Joemil
 -- Diversos --

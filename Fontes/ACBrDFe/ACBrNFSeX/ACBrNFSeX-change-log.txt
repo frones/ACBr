@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2023
+-- Diversos --
+[*] Criada função para definir o NameSpaceURI tanto para provedores com o mesmo NameSpace para provedores com NameSpaces diferentes.
+  Por: Diego Reckziegel/Diego F
+
 25/04/2023
 -- ACBrNFSeXNotasFiscais --
 [*] Possível solução para evitar o erro de UFT-8 no método LoadFromLoteNfse.

@@ -51,6 +51,7 @@ type
     FConfigMsgDados: TConfigMsgDados;
     FConfigAssinar: TConfigAssinar;
     FConfigSchemas: TConfigSchemas;
+    FDefaultNameSpaceURI: string;
 
     function GetConfigGeral: TConfigGeral;
     function GetConfigWebServices: TConfigWebServices;
@@ -80,6 +81,7 @@ type
     procedure CarregarURL; virtual;
     procedure SetNomeXSD(const aNome: string);
     procedure SetXmlNameSpace(const aNameSpace: string);
+    procedure SetNameSpaceURI(const aMetodo: TMetodo);
     procedure SalvarXmlRps(aNota: TNotaFiscal);
     procedure SalvarXmlNfse(aNota: TNotaFiscal);
     procedure SalvarPDFNfse(const aNome: string; const aPDF: AnsiString);
@@ -508,6 +510,7 @@ begin
       end;
     end;
   end;
+
 end;
 
 function TACBrNFSeXProvider.GetConfigMsgDados: TConfigMsgDados;
@@ -969,6 +972,35 @@ begin
     WriteToTXT(aNomeArq, aEvento, False, False);
 end;
 
+procedure TACBrNFSeXProvider.SetNameSpaceURI(const aMetodo: TMetodo);
+var
+  xNameSpaceURI: String;
+begin
+  case aMetodo of
+    tmRecepcionar: xNameSpaceURI := ConfigMsgDados.LoteRps.xmlns;
+    tmRecepcionarSincrono: xNameSpaceURI := ConfigMsgDados.LoteRpsSincrono.xmlns;
+    tmConsultarSituacao: xNameSpaceURI := ConfigMsgDados.ConsultarSituacao.xmlns;
+    tmConsultarLote: xNameSpaceURI := ConfigMsgDados.ConsultarLote.xmlns;
+    tmConsultarNFSePorRps: xNameSpaceURI := ConfigMsgDados.ConsultarNFSeRps.xmlns;
+    tmConsultarNFSe: xNameSpaceURI := ConfigMsgDados.ConsultarNFSe.xmlns;
+    tmConsultarNFSePorFaixa: xNameSpaceURI := ConfigMsgDados.ConsultarNFSePorFaixa.xmlns;
+    tmConsultarNFSeServicoPrestado: xNameSpaceURI := ConfigMsgDados.ConsultarNFSeServicoPrestado.xmlns;
+    tmConsultarNFSeServicoTomado: xNameSpaceURI := ConfigMsgDados.ConsultarNFSeServicoTomado.xmlns;
+    tmCancelarNFSe: xNameSpaceURI := ConfigMsgDados.CancelarNFSe.xmlns;
+    tmGerar: xNameSpaceURI := ConfigMsgDados.GerarNFSe.xmlns;
+    tmSubstituirNFSe: xNameSpaceURI := ConfigMsgDados.SubstituirNFSe.xmlns;
+    tmAbrirSessao: xNameSpaceURI := ConfigMsgDados.AbrirSessao.xmlns;
+    tmFecharSessao: xNameSpaceURI := ConfigMsgDados.FecharSessao.xmlns;
+    tmGerarToken: xNameSpaceURI := ConfigMsgDados.GerarToken.xmlns;
+    tmEnviarEvento: xNameSpaceURI := ConfigMsgDados.EnviarEvento.xmlns;
+    tmConsultarEvento: xNameSpaceURI := ConfigMsgDados.ConsultarEvento.xmlns;
+    tmConsultarDFe: xNameSpaceURI := ConfigMsgDados.ConsultarDFe.xmlns;
+    tmConsultarParam: xNameSpaceURI := ConfigMsgDAdos.ConsultarParam.xmlns;
+    else xNameSpaceURI := FDefaultNameSpaceURI;
+  end;
+  TACBrNFSeX(FAOwner).SSL.NameSpaceURI := xNameSpaceURI
+end;
+
 procedure TACBrNFSeXProvider.SetNomeXSD(const aNome: string);
 begin
   with ConfigSchemas do
@@ -1024,7 +1056,7 @@ begin
     ConsultarParam.xmlns := aNameSpace;
   end;
 
-  TACBrNFSeX(FAOwner).SSL.NameSpaceURI := aNameSpace;
+  FDefaultNameSpaceURI := aNameSpace;
 end;
 
 function TACBrNFSeXProvider.SimNaoToStr(const t: TnfseSimNao): string;
@@ -1465,6 +1497,8 @@ var
   Erros, Schema: string;
 begin
   if not ConfigSchemas.Validar Then Exit;
+
+  SetNameSpaceURI(aMetodo);
 
   Erros := '';
   Schema := '';

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2023
+-- Diversos --
+[+] Implementado o campo TipoMovimento no SegmentoO, pois estava gerando o 
+    segmento com um valor fixo.
+   Por: Centrodata Sistemas
+
 14/04/2023
 -- Diversos --
 [+] Implementação do Banco UnicredCooperativa

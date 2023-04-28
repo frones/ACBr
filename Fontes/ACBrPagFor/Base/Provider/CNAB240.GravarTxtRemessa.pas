@@ -1,33 +1,33 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -65,40 +65,40 @@ type
     procedure GeraRegistro9; virtual;
 
     {
-      Pagamento atravÈs de CrÈdito em Conta Corrente, Cheque,
-      OP, DOC, Pagamento com AutenticaÁ„o ou Pix
+      Pagamento atrav√©s de Cr√©dito em Conta Corrente, Cheque,
+      OP, DOC, Pagamento com Autentica√ß√£o ou Pix
     }
     procedure GeraSegmentoA(I: Integer); virtual;
 
     {
-      Pagamento atravÈs de CrÈdito em Conta Corrente, Cheque,
-      OP, DOC, Pagamento com AutenticaÁ„o ou Pix
+      Pagamento atrav√©s de Cr√©dito em Conta Corrente, Cheque,
+      OP, DOC, Pagamento com Autentica√ß√£o ou Pix
     }
     procedure GeraSegmentoB(mSegmentoBList: TSegmentoBList); virtual;
 
     {
-      Pagamento atravÈs de CrÈdito em Conta Corrente, Cheque,
-      OP, DOC, Pagamento com AutenticaÁ„o ou Pix
+      Pagamento atrav√©s de Cr√©dito em Conta Corrente, Cheque,
+      OP, DOC, Pagamento com Autentica√ß√£o ou Pix
     }
     procedure GeraSegmentoC(mSegmentoCList: TSegmentoCList); virtual;
 
     {
-      Pagamento de TÌtulos de CobranÁa e QRCode Pix
+      Pagamento de T√≠tulos de Cobran√ßa e QRCode Pix
     }
     procedure GeraSegmentoJ(I: Integer); virtual;
 
     {
-      Pagamento de TÌtulos de CobranÁa e QRCode Pix
+      Pagamento de T√≠tulos de Cobran√ßa e QRCode Pix
     }
     procedure GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List); virtual;
 
     {
       Pagamento de Tributos
-      Pagamento de Tributos sem CÛdigo de Barras
+      Pagamento de Tributos sem C√≥digo de Barras
     }
     procedure GeraSegmentoN(mSegmentoN: TSegmentoN); virtual;
-    // Registros de InformaÁıes complementares do Segmento N
-    // (Registro de Pagamento de Tributos e Impostos sem CÛdigo de Barras)
+    // Registros de Informa√ß√µes complementares do Segmento N
+    // (Registro de Pagamento de Tributos e Impostos sem C√≥digo de Barras)
     procedure GeraSegmentoN1(I: Integer); virtual;
 
     procedure GeraSegmentoN2(I: Integer); virtual;
@@ -115,21 +115,21 @@ type
 
     {
       Pagamento de Tributos
-      Pagamento de Contas e Tributos com CÛdigo de Barras
+      Pagamento de Contas e Tributos com C√≥digo de Barras
     }
     procedure GeraSegmentoO(I: Integer); virtual;
 
     {
       Pagamento de Tributos
-      Pagamento de Tributos sem CÛdigo de Barras
-      Pagamento de Contas e Tributos com CÛdigo de Barras
+      Pagamento de Tributos sem C√≥digo de Barras
+      Pagamento de Contas e Tributos com C√≥digo de Barras
     }
     procedure GeraSegmentoW(mSegmentoWList: TSegmentoWList); virtual;
 
     {
       Pagamento de Tributos
-      Pagamento de Tributos sem CÛdigo de Barras
-      Pagamento de Contas e Tributos com CÛdigo de Barras
+      Pagamento de Tributos sem C√≥digo de Barras
+      Pagamento de Contas e Tributos com C√≥digo de Barras
     }
     procedure GeraSegmentoZ(mSegmentoZList: TSegmentoZList); virtual;
 
@@ -158,7 +158,7 @@ uses
 
 procedure TArquivoW_CNAB240.GeraRegistro0;
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   FpLinha := '';
   FQtdeRegistros := 1;
   FQtdeLotes := 0;
@@ -197,7 +197,7 @@ procedure TArquivoW_CNAB240.GeraRegistro1(I: Integer);
 var
   Versao: string;
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   FpLinha := '';
   Inc(FQtdeRegistros);
   Inc(FQtdeLotes);
@@ -266,7 +266,7 @@ end;
 
 procedure TArquivoW_CNAB240.GeraRegistro5(I: Integer);
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   FpLinha := '';
   Inc(FQtdeRegistros);
   Inc(FQtdeRegistrosLote);
@@ -296,7 +296,7 @@ end;
 
 procedure TArquivoW_CNAB240.GeraRegistro9;
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   FpLinha := '';
   Inc(FQtdeRegistros);
 
@@ -317,7 +317,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoA(I: Integer);
 var
   J: Integer;
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   for J := 0 to PagFor.Lote.Items[I].SegmentoA.Count - 1 do
   begin
     FpLinha := '';
@@ -373,7 +373,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoB(mSegmentoBList: TSegmentoBList);
 var
   J: Integer;
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   for J := 0 to mSegmentoBList.Count - 1 do
   begin
     FpLinha := '';
@@ -423,7 +423,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoC(mSegmentoCList: TSegmentoCList);
 var
   J: Integer;
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   for J := 0 to mSegmentoCList.Count - 1 do
   begin
     FpLinha := '';
@@ -463,7 +463,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoJ(I: Integer);
 var
   J: Integer;
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   for J := 0 to PagFor.Lote.Items[I].SegmentoJ.Count - 1 do
   begin
     FpLinha := '';
@@ -511,7 +511,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List);
 var
   J: Integer;
 begin
-  // Em conformidade com o layout da Febraban vers„o 10.7
+  // Em conformidade com o layout da Febraban vers√£o 10.7
   for J := 0 to mSegmentoJ52List.Count - 1 do
   begin
     FpLinha := '';
@@ -557,7 +557,7 @@ end;
 
 procedure TArquivoW_CNAB240.GeraSegmentoN(mSegmentoN: TSegmentoN);
 begin
-  // Pagamento de Tributos e Impostos sem cÛdigo de barras
+  // Pagamento de Tributos e Impostos sem c√≥digo de barras
   with mSegmentoN do
   begin
     Inc(FQtdeRegistros);
@@ -583,7 +583,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN1(I: Integer);
 var
   J: Integer;
 begin
-  // InformaÁıes complementares para pagamento da GPS
+  // Informa√ß√µes complementares para pagamento da GPS
   for J := 0 to PagFor.Lote.Items[I].SegmentoN1.Count - 1 do
   begin
     FpLinha := '';
@@ -618,7 +618,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN2(I: Integer);
 var
   J: Integer;
 begin
-  // InformaÁıes complementares para pagamento de DARF
+  // Informa√ß√µes complementares para pagamento de DARF
   for J := 0 to PagFor.Lote.Items[I].SegmentoN2.Count - 1 do
   begin
     FpLinha := '';
@@ -655,7 +655,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN3(I: Integer);
 var
   J: Integer;
 begin
-  // InformaÁıes complementares para pagamento de DARF SIMPLES
+  // Informa√ß√µes complementares para pagamento de DARF SIMPLES
   for J := 0 to PagFor.Lote.Items[I].SegmentoN3.Count - 1 do
   begin
     FpLinha := '';
@@ -692,7 +692,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN4(I: Integer);
 var
   J: Integer;
 begin
-  // InformaÁıes complementares para pagamento de GARE-SP (ICMS/DR/ITCMD)
+  // Informa√ß√µes complementares para pagamento de GARE-SP (ICMS/DR/ITCMD)
   for J := 0 to PagFor.Lote.Items[I].SegmentoN4.Count - 1 do
   begin
     FpLinha := '';
@@ -731,9 +731,9 @@ procedure TArquivoW_CNAB240.GeraSegmentoN567(I: Integer);
 var
   J: Integer;
 begin
-  // N5 - InformaÁıes complementares para pagamento de IPVA
-  // N6 - InformaÁıes complementares para pagamento de DPVAT
-  // N7 - InformaÁıes complementares para pagamento de LICENCIAMENTO
+  // N5 - Informa√ß√µes complementares para pagamento de IPVA
+  // N6 - Informa√ß√µes complementares para pagamento de DPVAT
+  // N7 - Informa√ß√µes complementares para pagamento de LICENCIAMENTO
   for J := 0 to PagFor.Lote.Items[I].SegmentoN567.Count - 1 do
   begin
     FpLinha := '';
@@ -799,7 +799,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN8(I: Integer);
 var
   J: Integer;
 begin
-  // InformaÁıes complementares para pagamento de DARJ
+  // Informa√ß√µes complementares para pagamento de DARJ
   for J := 0 to PagFor.Lote.Items[I].SegmentoN8.Count - 1 do
   begin
     FpLinha := '';
@@ -877,7 +877,7 @@ begin
       GravarCampo('3', 1, tcStr);
       GravarCampo(FSequencialDeLote, 5, tcInt);
       GravarCampo('O', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
+      GravarCampo(TpMovimentoToStr(TipoMovimento), 1, tcStr);
       GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);
       GravarCampo(CodigoBarras, 44, tcStr);
       GravarCampo(NomeConcessionaria, 30, tcStr, True);
@@ -984,10 +984,10 @@ begin
     Titulo := 'Segmento ['+ Tipo;
 
   if Length(FpLinha) <> 240 then
-    raise Exception.Create(#13 + Titulo + '] inv·lido!' + #13 +
-     'Deve conter 240 posiÁıes.' + #13 +
+    raise Exception.Create(#13 + Titulo + '] inv√°lido!' + #13 +
+     'Deve conter 240 posi√ß√µes.' + #13 +
      'Registro: [' + FpLinha + ']' + #13 +
-     'possui ' + IntToStr(Length(FpLinha)) + ' posiÁıes.');
+     'possui ' + IntToStr(Length(FpLinha)) + ' posi√ß√µes.');
 end;
 
 procedure TArquivoW_CNAB240.IncluirLinha;
@@ -1079,7 +1079,7 @@ begin
   except
     on E: Exception do
     begin
-      raise Exception.Create('N„o Foi PossÌvel incluir Registros no Arquivo: ' +
+      raise Exception.Create('N√£o Foi Poss√≠vel incluir Registros no Arquivo: ' +
               FNomeArquivo + #13 + E.Message);
     end;
   end;

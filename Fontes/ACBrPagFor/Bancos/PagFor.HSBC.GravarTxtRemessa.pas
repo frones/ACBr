@@ -1,33 +1,33 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -96,7 +96,7 @@ begin
   GravarCampo(PagFor.Registro0.Arquivo.DataGeracao, 8, tcDat);
   GravarCampo(PagFor.Registro0.Arquivo.HoraGeracao, 6, tcHor);
   GravarCampo(PagFor.Registro0.Arquivo.Sequencia, 6, tcInt);
-  // HSBC í020î ou  ì030î
+  // HSBC ‚Äô020‚Äù ou  ‚Äú030‚Äù
   GravarCampo('020', 3, tcStr);
   GravarCampo(PagFor.Registro0.Arquivo.Densidade, 5, tcInt);
   // Fixo "CPG"
@@ -147,7 +147,7 @@ begin
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Cidade, 20, tcStr, True);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.CEP, 8, tcInt);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Estado, 2, tcStr);
-  // Comprovante de Pagamento Emiss„o em Lote  ìS=Simî ou ìN=N„oî
+  // Comprovante de Pagamento Emiss√£o em Lote  ‚ÄúS=Sim‚Äù ou ‚ÄúN=N√£o‚Äù
   GravarCampo('S', 1, tcStr);
   GravarCampo(' ', 17, tcStr);
 
@@ -327,7 +327,7 @@ begin
       GravarCampo(ReferenciaSacado, 20, tcStr);
       GravarCampo(' ', 20, tcStr);
       GravarCampo(' ', 2, tcStr);
-      // Comprovante de Pagto. Emiss„o Individual ìS=Sim ou N=N„oî
+      // Comprovante de Pagto. Emiss√£o Individual ‚ÄúS=Sim ou N=N√£o‚Äù
       GravarCampo('N', 1, tcStr);
       GravarCampo(' ', 15, tcStr);
 
@@ -359,7 +359,7 @@ begin
       GravarCampo('3', 1, tcStr);
       GravarCampo(FSequencialDeLote, 5, tcInt);
       GravarCampo('O', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
+      GravarCampo(TpMovimentoToStr(TipoMovimento), 1, tcStr);
       GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);
       GravarCampo(CodigoBarras, 44, tcStr);
       GravarCampo(NomeConcessionaria, 30, tcStr);
@@ -368,7 +368,7 @@ begin
       GravarCampo(ValorPagamento, 15, tcDe2);
       GravarCampo(SeuNumero, 20, tcStr);
       GravarCampo(NossoNumero, 19, tcStr);
-      // Comprovante Pagamento Emiss„o Individual  ìS = Simî ou ìN = N„oî
+      // Comprovante Pagamento Emiss√£o Individual  ‚ÄúS = Sim‚Äù ou ‚ÄúN = N√£o‚Äù
       GravarCampo('N', 1, tcStr);
       GravarCampo(' ', 68, tcStr);
       GravarCampo(' ', 10, tcStr);

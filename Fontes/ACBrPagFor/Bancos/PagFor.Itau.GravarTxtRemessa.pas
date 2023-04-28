@@ -1,33 +1,33 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -153,10 +153,10 @@ begin
   GravarCampo(TpServicoToStr(PagFor.Lote.Items[I].Registro1.Servico.TipoServico), 2, tcStr);
   GravarCampo(FmLancamentoToStr(PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento), 2, tcStr);
 
-  // Se for parte do Header (Pagamentos atravÈs de cheque, OP, DOC, TED e
-  //   crÈdito em conta corrente)
-  // Segmento A - Pagamentos atravÈs de cheque, OP, DOC, TED e crÈdito em conta corrente
-  // Segmento A - Pagamentos atravÈs de Nota Fiscal ñ LiquidaÁ„o EletrÙnica
+  // Se for parte do Header (Pagamentos atrav√©s de cheque, OP, DOC, TED e
+  //   cr√©dito em conta corrente)
+  // Segmento A - Pagamentos atrav√©s de cheque, OP, DOC, TED e cr√©dito em conta corrente
+  // Segmento A - Pagamentos atrav√©s de Nota Fiscal ‚Äì Liquida√ß√£o Eletr√¥nica
   if PagFor.Lote.Items[I].SegmentoA.Count > 0 then
     Versao := '040'
   else
@@ -207,7 +207,7 @@ begin
 
   if (PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento = flPagamentoConcessionarias) then
   begin
-    // Contas de Concession·rias e Tributos com cÛdigo de barras
+    // Contas de Concession√°rias e Tributos com c√≥digo de barras
     GravarCampo(PagFor.Lote.Items[I].Registro5.Valor, 18, tcDe2);
     GravarCampo(PagFor.Lote.Items[I].Registro5.QtdeMoeda, 15, tcDe8);
     GravarCampo(' ', 174, tcStr);
@@ -227,10 +227,10 @@ begin
   end
   else
   begin
-    // Pagamentos atravÈs de cheque, OP, DOC, TED e crÈdito em conta corrente
-    // LiquidaÁ„o de tÌtulos (bloquetos) em cobranÁa no Ita˙ e em outros Bancos
+    // Pagamentos atrav√©s de cheque, OP, DOC, TED e cr√©dito em conta corrente
+    // Liquida√ß√£o de t√≠tulos (bloquetos) em cobran√ßa no Ita√∫ e em outros Bancos
 
-    // informe de rendimento, este valor È 0
+    // informe de rendimento, este valor √© 0
     if PadRight(PagFor.Lote.Items[I].Registro1.Informacao1, 2) = '06' then
       GravarCampo('0', 18, tcStrZero)
     else
@@ -316,12 +316,12 @@ begin
       GravarCampo(Credito.SeuNumero, 20, tcStr);
       GravarCampo(Credito.DataPagamento, 8, tcDat);
       GravarCampo('REA', 3, tcStr);
-      //C”DIGO ISPB IDENTIFICA«√O DA INSTITUI«√O PARA O SPB
+      //C√ìDIGO ISPB IDENTIFICA√á√ÉO DA INSTITUI√á√ÉO PARA O SPB
       GravarCampo(CodigoISPB, 8, tcInt);
       // 9 = PIX
       if (Favorecido.Camara = 9) then
       begin
-        // IDENTIFICA«√O DO TIPO DE TRANSFER NCIA
+        // IDENTIFICA√á√ÉO DO TIPO DE TRANSFER√äNCIA
         GravarCampo(Favorecido.IDTipoTransfencia, 2, tcStrZero);
         GravarCampo(0, 5, tcInt);
       end
@@ -553,7 +553,7 @@ end;
 
 procedure TArquivoW_Itau.GeraSegmentoN(mSegmentoN: TSegmentoN);
 begin
-  // Pagamento de Tributos e Impostos sem cÛdigo de barras
+  // Pagamento de Tributos e Impostos sem c√≥digo de barras
   with mSegmentoN do
   begin
     Inc(FQtdeRegistros);
@@ -862,7 +862,7 @@ begin
       GravarCampo('11', 2, tcStr); // FGTS- GRF/GRRF/GRDE
       GravarCampo(Receita, 4, tcInt);
 
-      // N„o segue o padr„o de codificaÁ„o usado nos outros segmentos
+      // N√£o segue o padr√£o de codifica√ß√£o usado nos outros segmentos
       if TipoContribuinte = tiCNPJ then
         GravarCampo('1', 1, tcStr) // 1 = CNPJ
       else
@@ -911,7 +911,7 @@ begin
       GravarCampo('3', 1, tcStr);
       GravarCampo(FSequencialDeLote, 5, tcInt);
       GravarCampo('O', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
+      GravarCampo(TpMovimentoToStr(TipoMovimento), 1, tcStr);
       GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);
       GravarCampo(CodigoBarras, 48, tcStr);
       GravarCampo(NomeConcessionaria, 30, tcStr);

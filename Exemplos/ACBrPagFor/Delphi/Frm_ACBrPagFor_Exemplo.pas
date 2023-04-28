@@ -976,6 +976,7 @@ begin
         ////////////////////////////////////////////////////////////////////////
         with SegmentoO.New do
         begin
+          TipoMovimento      := tmInclusao;
           CodMovimento       := imInclusaoRegistroDetalheLiberado;
           CodigoBarras       := '83650000001353501620000010102016216594218917';
           NomeConcessionaria := 'CELESC AD CEN';

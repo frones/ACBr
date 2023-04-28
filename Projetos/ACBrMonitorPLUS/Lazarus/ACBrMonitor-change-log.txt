@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2023
+--- ACBrMonitorPLUS.iss ---
+[*] Correção diretório logos Boleto
+    Por: Daniel Morais
+
 12/04/2023
 -- ACBrMonitorConsts, DoSATUnit  --
 [*] Novo método para ConsultarUltimaSessaoFiscal do SAT 

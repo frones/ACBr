@@ -101,7 +101,8 @@ Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBrReinf\ACBrReinfServicos.ini; DestDir: {app
 Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBrBPe\ACBrBPeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Logotipos de Bancos
-Source: {#ACBrDIR}\Fontes\ACBrBoleto\Logos\Colorido\*.*; DestDir: {app}\Logos; Flags: ; Components: programa
+Source: {#ACBrDIR}\Fontes\ACBrBoleto\Logos\Colorido\bmp\*.*; DestDir: {app}\Logos; Flags: ; Components: programa
+Source: {#ACBrDIR}\Fontes\ACBrBoleto\Logos\Colorido\png\*.*; DestDir: {app}\Logos; Flags: ; Components: programa
 ;Licença de uso
 Source: {#ACBrMonitorPLUSDir}\LICENCA.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: {#ACBrMonitorPLUSDir}\LICENSE.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa

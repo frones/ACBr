@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2023
+-- ACBrNFSeXWebserviceBase --
+[*] Alterado a função GetSoapBody para retornar todo o conteúdo caso o XML não contenha a tag <Body>
+  Por: Italo Giurizzato Junior
+
 27/04/2023
 -- ACBrNFSeXClass --
 [*] Alterado o valor padrão do campo ModeloNFSe de '55' para uma string vazia.

@@ -753,6 +753,9 @@ end;
 function TACBrNFSeXWebservice.GetSoapBody(const Response: string): string;
 begin
   Result := SeparaDados(Response, 'Body');
+
+  if Result = '' then
+    Result := Response;
 end;
 
 procedure TACBrNFSeXWebservice.LevantarExcecaoHttp;

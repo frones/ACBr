@@ -45,7 +45,7 @@ uses
   ACBrBoleto,
   StrUtils,
   ACBrBoletoConversao,
-  fpdf_ext;
+  ACBr_fpdf_ext;
 
 type
   EACBrBoletoFPDF = class(Exception);

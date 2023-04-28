@@ -630,6 +630,7 @@ begin
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
+    ConsultarNFSeRps := True;
 
     IncluirURI := False;
   end;

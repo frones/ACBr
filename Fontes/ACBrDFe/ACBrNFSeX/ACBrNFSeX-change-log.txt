@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/04/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Bataguassu/MS - Provedor: Fiorilli
+   Por: Gabriel Rogelin
+[*] A cidade de Dourados/MS mudou para a versão 2.04 - Provedor: ISSNet
+   Por: Alex Heinen
 -- SmarAPD.Provider --
 [*] Altera para que a Consulta NFSe por RPS também seja assinada
   Por: Diego F

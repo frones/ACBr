@@ -45,7 +45,6 @@ uses
   ACBrBoleto,
   StrUtils,
   ACBrBoletoConversao,
-  fpdf,
   fpdf_ext;
 
 type
@@ -144,8 +143,8 @@ end;
 procedure TACBrBoletoFPDF.GeraBoleto(const AACBrTitulo: TACBrTitulo);
 begin
   GeraDados(AACBrTitulo);
-  FPDF.SetUTF8(True);
-  FPDF.SetCompression(False);
+  FPDF.SetUTF8({$IfDef USE_UTF8}True{$Else}False{$EndIf});
+  FPDF.SetCompression(True);
   FPDF.AddPage();
   FPDF.SetFont('arial', '', 8);
   GeraFichaPagamento(AACBrTitulo);
@@ -168,7 +167,6 @@ end;
 procedure TACBrBoletoFPDF.GeraFichaPagamento(const AACBrTitulo: TACBrTitulo);
 var LArquivoLogo : String;
 begin
-  FPDF.SetUTF8(False);
   LArquivoLogo := ChangeFileExt(ArquivoLogo,'.png');
   FPDF.SetFont('arial', '', 8);
   FPDF.Ln(35);
@@ -320,7 +318,8 @@ begin
 
   FPDF.SetFont('arial', 'B', 6);
   FPDF.Cell(190, 3, AUTENTICACAO_MECANICA + ' - ' + FICHA_COMPENSACAO, '', 1, 'R');
-  FPDF.CodeI25(FCodigoBarras, FPDF.GetX, FPDF.GetY + 5);
+  FPDF.CodeI25(FCodigoBarras, FPDF.GetX, FPDF.GetY + 5, 15, 1);
+
 end;
 
 procedure TACBrBoletoFPDF.Imprimir;
@@ -332,7 +331,6 @@ begin
     ImpressaoIndividual
   else
     ImpressaoUnificada;
-
 end;
 
 procedure TACBrBoletoFPDF.ImpressaoIndividual;
@@ -342,10 +340,13 @@ begin
   for I := 0 to Pred(ACBrBoleto.ListadeBoletos.Count) do
   begin
     InicializarArquivo;
-    if EstaVazio(FNomeArquivo) or (ExtractFileName(Self.NomeArquivo) = 'boleto') then
-      FNomeArquivo := OnlyAlphaNum(ACBrBoleto.ListadeBoletos[ I ].NossoNumero);
-    GeraBoleto(ACBrBoleto.ListadeBoletos[ I ]);
-    FinalizarArquivo;
+    try
+      if EstaVazio(FNomeArquivo) or (ExtractFileName(Self.NomeArquivo) = 'boleto') then
+        FNomeArquivo := OnlyAlphaNum(ACBrBoleto.ListadeBoletos[ I ].NossoNumero);
+      GeraBoleto(ACBrBoleto.ListadeBoletos[ I ]);
+    finally
+      FinalizarArquivo;
+    end;
   end;
 end;
 
@@ -354,9 +355,12 @@ var
   I: Integer;
 begin
   InicializarArquivo;
-  for I := 0 to Pred(ACBrBoleto.ListadeBoletos.Count) do
-    GeraBoleto(ACBrBoleto.ListadeBoletos[ I ]);
-  FinalizarArquivo;
+  try
+    for I := 0 to Pred(ACBrBoleto.ListadeBoletos.Count) do
+      GeraBoleto(ACBrBoleto.ListadeBoletos[ I ]);
+  finally
+    FinalizarArquivo;
+  end;
 end;
 
 procedure TACBrBoletoFPDF.Imprimir(AStream: TStream);

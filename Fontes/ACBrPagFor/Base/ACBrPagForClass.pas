@@ -1,33 +1,33 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -423,8 +423,8 @@ type
     property Totais: TTotais read FTotais write FTotais;
   end;
 
-  // Estrutura do Registro 1 utilizado para os Servi√ßos
-  // uma para cada lote de servi√ßos - Identifica o Inicio do Lote
+  // Estrutura do Registro 1 utilizado para os ServiÁos
+  // uma para cada lote de serviÁos - Identifica o Inicio do Lote
 
   TRegistro1 = class(TObject)
   private
@@ -469,8 +469,8 @@ type
     property CodigoCompromisso: Integer read FCodigoCompromisso write FCodigoCompromisso;
   end;
 
-  // Estrutura do Registro 5 utilizado para os Servi√ßos
-  // uma para cada lote de servi√ßos - Identifica o Fim do Lote
+  // Estrutura do Registro 5 utilizado para os ServiÁos
+  // uma para cada lote de serviÁos - Identifica o Fim do Lote
 
   TRegistro5 = class(TObject)
   private
@@ -673,8 +673,8 @@ type
     property Items[Index: Integer]: TSegmentoC read GetItem write SetItem; default;
   end;
 
-  // Estrutura do Segmento E (Obrigat√≥rio - Retorno)
-  // Extrato de Conta Corrente para Concilia√ß√£o Banc√°ria
+  // Estrutura do Segmento E (ObrigatÛrio - Retorno)
+  // Extrato de Conta Corrente para ConciliaÁ„o Banc·ria
 
   TSegmentoE = class(TObject)
   private
@@ -721,8 +721,8 @@ type
     property Items[Index: Integer]: TSegmentoE read GetItem write SetItem; default;
   end;
 
-  // Estrutura do Segmento F (Obrigat√≥rio - Retorno)
-  // Extrato para Gest√£o de Caixa
+  // Estrutura do Segmento F (ObrigatÛrio - Retorno)
+  // Extrato para Gest„o de Caixa
 
   TSegmentoF = class(TObject)
   private
@@ -769,14 +769,14 @@ type
   end;
 
 
-  // Lote: Pagamento Atrav√©s de Cr√©dito em Conta, Cheque, OP, DOC, TED ou
-  //       Pagamento com Autentica√ß√£o
-  // Servi√ßo: 20 = Pagamento
+  // Lote: Pagamento AtravÈs de CrÈdito em Conta, Cheque, OP, DOC, TED ou
+  //       Pagamento com AutenticaÁ„o
+  // ServiÁo: 20 = Pagamento
 
-  // Lote: D√©bito em Conta Corrente
-  // Servi√ßo: xx = D√©bito em Conta Corrente
+  // Lote: DÈbito em Conta Corrente
+  // ServiÁo: xx = DÈbito em Conta Corrente
 
-  // Segmentos Obrigat√≥rios de Remessa: A
+  // Segmentos ObrigatÛrios de Remessa: A
   // Segmentos Opcionais de Remessa: B, C
 
   // Estrutura do Segmento A (Obrigatorio)
@@ -1031,10 +1031,10 @@ type
     property Items[Index: Integer]: TSegmentoJ99 read GetItem write SetItem; default;
   end;
 
-  // Lote: Pagamento de Titulos de Cobran√ßa
-  // Servi√ßo: 20 = Pagamentos
+  // Lote: Pagamento de Titulos de CobranÁa
+  // ServiÁo: 20 = Pagamentos
 
-  // Segmentos Obrigat√≥rios de Remessa: J
+  // Segmentos ObrigatÛrios de Remessa: J
   // Segmentos Opcionais de Remessa:
 
   // Estrutura do Segmento J (Obrigatorio)
@@ -1112,7 +1112,7 @@ type
   end;
 
   // Estrutura do Segmento W* (Opcional)
-  // * = obrigat√≥rio para FGTS convenio 0181 e 0182
+  // * = obrigatÛrio para FGTS convenio 0181 e 0182
 
   TSegmentoW = class(TObject)
   private
@@ -1160,10 +1160,10 @@ type
     property Items[Index: Integer]: TSegmentoW read GetItem write SetItem; default;
   end;
 
-  // Lote: Pagamento de Tributos sem c√≥digo de barras
-  // Servi√ßo: 22 = Pagamento de Contas, Tributos e Impostos
+  // Lote: Pagamento de Tributos sem cÛdigo de barras
+  // ServiÁo: 22 = Pagamento de Contas, Tributos e Impostos
 
-  // Segmentos Obrigat√≥rios de Remessa: N
+  // Segmentos ObrigatÛrios de Remessa: N
   // Segmentos Opcionais de Remessa: B, W e Z
 
   // Estrutura do Segmento N (Obrigatorio)
@@ -1512,12 +1512,12 @@ type
     property Items[Index: Integer]: TSegmentoN9 read GetItem write SetItem; default;
   end;
 
-  // Lote: Pagamento de Tributos com c√≥digo de barras
-  // Servi√ßo: 22 = Pagamento de Contas, Tributos e Impostos
+  // Lote: Pagamento de Tributos com cÛdigo de barras
+  // ServiÁo: 22 = Pagamento de Contas, Tributos e Impostos
 
-  // Segmentos Obrigat√≥rios de Remessa: O
+  // Segmentos ObrigatÛrios de Remessa: O
   // Segmentos Opcionais de Remessa: W*, Z e B
-  // * = obrigat√≥rio para FGTS convenio 0181 e 0182
+  // * = obrigatÛrio para FGTS convenio 0181 e 0182
 
   // Estrutura do Segmento O (Obrigatorio)
 
@@ -1667,15 +1667,15 @@ type
   end;
 
 const
-  // Os c√≥digos de aprova√ß√£o de pagamento (pagamento efetuado)
+  // Os cÛdigos de aprovaÁ„o de pagamento (pagamento efetuado)
   PAGAMENTO_LIBERADO_BANCO = '00 BD BDCI BDCD BDCN';
-  // Os c√≥digos que n√£o vai gerar aviso
+  // Os cÛdigos que n„o vai gerar aviso
   PAGAMENTO_LIBERADO_AVISO = '00';
 // OBS: estes dados foram pegos do manual do ITAU.
 // BD   - Pagamento Agendado.
-// BDCI - Pagamento acatado, por√©m o CPF/CNPJ √© inv√°lido.
-// BDCD - Pagamento acatado, por√©m o CPF/CNPJ informado n√£o √© o mesmo que est√° cadastrado para a ag√™ncia conta creditada.
-// BDCN - Pagamento acatado, por√©m a ag√™ncia/conta informada (ainda) n√£o existe.
+// BDCI - Pagamento acatado, porÈm o CPF/CNPJ È inv·lido.
+// BDCD - Pagamento acatado, porÈm o CPF/CNPJ informado n„o È o mesmo que est· cadastrado para a agÍncia conta creditada.
+// BDCN - Pagamento acatado, porÈm a agÍncia/conta informada (ainda) n„o existe.
 
 implementation
 

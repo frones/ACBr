@@ -56,9 +56,11 @@ unit ACBr_fpdf_ext;
 
 {$IfNDef FPC}
   {$IFDEF REMOVE_CAST_WARN}
+   {$IF CompilerVersion >= 16}
     {$WARN IMPLICIT_STRING_CAST OFF}
     {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
-  {$ENDIF}
+   {$IfEnd}
+  {$EndIf}
 {$EndIf}
 
 {$IfDef FPC}
@@ -383,7 +385,6 @@ const
      (0, 1, 0, 1, 1, 0),
      (0, 1, 1, 0, 1, 0));
 var
-  BinCode: string;
   v, i, l, p, m: integer;
   pa: TParity;
 
@@ -823,8 +824,6 @@ begin
          crypt := crypt + chr(StrToInt(Copy(s, i, 2)));                         // 2 by 2 conversion
          Inc(i, 2);
        end;
-
-       set128 := code128C;
      end
      else
      begin
@@ -1240,7 +1239,7 @@ begin
 end;
 
 {$IfDef HAS_HTTP}
-{$IfDef USESYNAPSE}
+{$IfDef USE_SYNAPSE}
 procedure TFPDFExt.GetImageFromURL(const aURL: string; const aResponse: TStream);
 var
   vHTTP: THTTPSend;

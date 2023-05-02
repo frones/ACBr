@@ -94,6 +94,7 @@ type
     procedure Test_NFSE_ConsultarNFSeServicoTomadoPorTomador;
     procedure Test_NFSE_ConsultarNFSeServicoTomadoPorPeriodo;
     procedure Test_NFSE_ConsultarNFSeServicoTomadoPorIntermediario;
+    procedure Test_NFSe_SalvarProvedor;
 
   end;
 
@@ -985,6 +986,32 @@ begin
   on E: Exception do
     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
   end;
+end;
+
+procedure TTestACBrNFSeLib.Test_NFSe_SalvarProvedor();
+var
+  AStr: String;
+  Handle: THandle;
+  Bufflen: Integer;
+begin
+  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, NFSE_ConfigLerValor(Handle, 'NFSe', 'CodigoMunicipio', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar configuração', ErrOk, NFSE_ConfigGravarValor(Handle, 'NFSe', 'CodigoMunicipio', '5106224'));
+
+  AssertEquals(ErrOK, NFSE_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals('Erro ao Mudar configuração', ErrOk, NFSE_ConfigGravarValor(Handle, 'NFSe', 'CodigoMunicipio', '3501608'));
+
+  AssertEquals(ErrOK, NFSE_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AStr := copy(AStr,1,Bufflen);
+
+
+  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;
 
 initialization

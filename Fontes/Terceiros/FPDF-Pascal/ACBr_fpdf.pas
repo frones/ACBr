@@ -69,18 +69,12 @@ unit ACBr_fpdf;
 interface
 
 uses
-  Classes,
+  Classes,Contnrs,
   {$IfDef FPC}
-   zstream, Contnrs
+   zstream
   {$Else}
    {$IfDef HAS_SYSTEM_GENERICS}
-    System.Generics.Collections, System.Generics.Defaults
-   {$Else}
-    {$IF CompilerVersion >= 16}
-     System.Contnrs
-    {$Else}
-     Contnrs
-    {$IfEnd},
+    System.Generics.Collections, System.Generics.Defaults,
    {$EndIf}
    ZLib
   {$EndIf},

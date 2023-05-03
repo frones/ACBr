@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/05/2023
+-- ACBrGNREGuiasRetorno.pas --
+[-] Alteração visando a não deduzir o valor do FECP quando este for diferente de
+    zero.
+   Por: Italo Giurizzato Junior
+
 03/03/2023
 -- ACBrGNREGuiasRetorno.pas --
 [-] Estava duplicando o valor da guia quando tem tipo 22.

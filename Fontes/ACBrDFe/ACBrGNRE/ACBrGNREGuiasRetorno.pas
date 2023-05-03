@@ -401,7 +401,11 @@ begin
             if Leitor.rAtributo('tipo=', 'valor') = '12' then
               GNRERetorno.ValorFECP := Leitor.rCampo(tcDe2, 'valor');
 
-            GNRERetorno.ValorPrincipal := GNRERetorno.ValorPrincipal - GNRERetorno.ValorFECP;
+            {
+              a linha abaixo foi comentada para gerar a Gria corretamente.
+              03/05/2023 - Italo Giurizzato Junior
+            }
+//            GNRERetorno.ValorPrincipal := GNRERetorno.ValorPrincipal - GNRERetorno.ValorFECP;
 
             if Leitor.rAtributo('tipo=', 'valor') = '21' then
               GNRERetorno.ValorICMS := Leitor.rCampo(tcDe2, 'valor');

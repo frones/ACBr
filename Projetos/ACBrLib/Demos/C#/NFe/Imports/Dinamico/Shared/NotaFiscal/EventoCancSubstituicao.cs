@@ -15,6 +15,7 @@ namespace ACBrLib.NFe
         #endregion Constructor
 
         #region Properties
+        public int cOrgaoAutor { get; set; }
 
         public string verAplic { get; set; }
 

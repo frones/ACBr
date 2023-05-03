@@ -96,6 +96,8 @@ begin
 
       CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
 
+      Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('link'), tcStr);
+
       with Prestador.IdentificacaoPrestador do
       begin
         InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('im'), tcStr);

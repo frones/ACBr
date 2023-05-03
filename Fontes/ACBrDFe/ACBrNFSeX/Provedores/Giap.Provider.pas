@@ -293,6 +293,19 @@ begin
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroRps);
         ANota := CarregarXmlNfse(ANota, Response.XmlEnvio);
+
+        {
+         Carregando dados da NFS-e emitida que não constam no XML de envio e
+         só retornam no Response
+        }
+        with ANota.NFSe do
+        begin
+           Numero := AResumo.NumeroNota;
+           CodigoVerificacao := AResumo.CodigoVerificacao;
+           Link := AResumo.Link;
+           ANota.LerXML(ANota.GerarXML);
+        end;
+
         SalvarXmlNfse(ANota);
       end;
     except
@@ -369,7 +382,11 @@ begin
           Response.DescSituacao := 'Nota Autorizada'
         else
         if ObterConteudoTag(ANode.Childrens.FindAnyNs('notaExiste'), tcStr) = 'Cancelada' then
-          Response.DescSituacao := 'Nota Cancelada'
+        begin
+          Response.DescSituacao := 'Nota Cancelada';
+          Response.Cancelamento.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDatVcto);
+          Response.Cancelamento.Motivo := 'Nota Cancelada';
+        end
         else
           Response.DescSituacao := 'Nota não Encontrada';
 

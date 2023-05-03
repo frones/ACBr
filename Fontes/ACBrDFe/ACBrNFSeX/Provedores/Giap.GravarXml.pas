@@ -110,7 +110,7 @@ begin
   Result.AppendChild(AddNode(tcDatVcto, '#1', 'dataEmissao', 1, 21, 1,
                                                       NFSe.DataEmissaoRps, ''));
 
-  Result.AppendChild(AddNode(tcInt, '#1', 'im', 1, 11, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'im', 1, 11, 1,
                  NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, ''));
 
   Result.AppendChild(AddNode(tcInt, '#1', 'numeroRps', 1, 11, 1,

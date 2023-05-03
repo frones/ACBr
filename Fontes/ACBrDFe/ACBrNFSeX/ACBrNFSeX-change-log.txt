@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/05/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Santa Helena/PR mudou para o provedor IPM
+   Por: Marcos
 -- Giap.Provider/Giap.GravarXml/Giap.LerXml --
 [*] Ajustes no tratamento de retorno, na gravação e leitura do XML da nota.
    Por: Innovae Brasil Engenharia

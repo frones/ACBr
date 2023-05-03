@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/05/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Perdeneiras/SP mudou para o provedor Giap
+   Por: Innovae Brasil Engenharia
+
 28/04/2023
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade de Bataguassu/MS - Provedor: Fiorilli

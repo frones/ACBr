@@ -89,6 +89,8 @@ begin
       Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nAliquota'), tcDe2);
       ValorISS := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nValorIss'), tcDe2);
       ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nValorTotal'), tcDe2);
+
+      Quantidade := ValorTotal / ValorUnitario;
     end;
 
     NFSe.Servico.CodigoCnae := ObterConteudo(ANodes[i].Childrens.FindAnyNs('sCNAE'), tcStr);

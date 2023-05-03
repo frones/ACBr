@@ -742,6 +742,7 @@ type
     FxCodigoTributacaoMunicipio: string;
     FDiscriminacao: string;
     FCodigoMunicipio: string;
+    FMunicipioPrestacaoServico: string;
     FCodigoPais: Integer;
     FExigibilidadeISS: TnfseExigibilidadeISS;
     FMunicipioIncidencia: Integer;
@@ -788,6 +789,7 @@ type
     property xCodigoTributacaoMunicipio: string read FxCodigoTributacaoMunicipio write FxCodigoTributacaoMunicipio;
     property Discriminacao: string read FDiscriminacao write FDiscriminacao;
     property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
+    property MunicipioPrestacaoServico: string read FMunicipioPrestacaoServico write FMunicipioPrestacaoServico;
     property CodigoPais: Integer read FCodigoPais write FCodigoPais;
     property ExigibilidadeISS: TnfseExigibilidadeISS read FExigibilidadeISS write FExigibilidadeISS;
     property IdentifNaoExigibilidade: string read FIdentifNaoExigibilidade write FIdentifNaoExigibilidade;

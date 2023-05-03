@@ -898,7 +898,7 @@ procedure TNFSeR_ABRASFv2.LerServico(const ANode: TACBrXmlNode);
 var
   AuxNode, AuxNode2: TACBrXmlNode;
   Ok: Boolean;
-  CodigoItemServico, Responsavel: string;
+  CodigoItemServico, Responsavel, xUF: string;
   ValorLiq: Double;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
@@ -942,6 +942,9 @@ begin
 
       if CodigoMunicipio = '' then
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcStr);
+
+      MunicipioPrestacaoServico := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      MunicipioPrestacaoServico := MunicipioPrestacaoServico + '/' + xUF;
 
       CodigoPais          := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       ExigibilidadeISS    := FpAOwner.StrToExigibilidadeISS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ExigibilidadeISS'), tcStr));

@@ -674,7 +674,7 @@ end;
 procedure TNFSeR_ABRASFv1.LerServico(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  CodigoItemServico: string;
+  CodigoItemServico, xUF: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -700,6 +700,9 @@ begin
 
       if CodigoMunicipio = '' then
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcStr);
+
+      MunicipioPrestacaoServico := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      MunicipioPrestacaoServico := MunicipioPrestacaoServico + '/' + xUF;
 
       MunicipioIncidencia := StrToIntDef(CodigoMunicipio, 0);
     end;

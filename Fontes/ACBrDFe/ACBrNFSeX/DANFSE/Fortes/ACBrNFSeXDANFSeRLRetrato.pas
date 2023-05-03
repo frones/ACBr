@@ -246,7 +246,6 @@ type
   private
     { Private declarations }
     FNumItem: Integer;
-    function ManterAliquota(dAliquota: Double): String;
   public
     { Public declarations }
     class procedure QuebradeLinha(const sQuebradeLinha: String); override;
@@ -286,14 +285,16 @@ procedure TfrlXDANFSeRLRetrato.rbOutrasInformacoesBeforePrint(Sender: TObject;
 var
   QrCode: TDelphiZXingQRCode;
   QrCodeBitmap: TBitmap;
-  QRCodeData: String;
+  QRCodeData: string;
   rlImgQrCode: TRLImage;
   Row, Column: Integer;
+  Link: string;
 begin
   inherited;
 
   rlmDadosAdicionais.Lines.BeginUpdate;
   rlmDadosAdicionais.Lines.Clear;
+  Link := '';
 
   if fpDANFSe.OutrasInformacaoesImp <> '' then
     rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]))
@@ -304,10 +305,15 @@ begin
   if fpNFSe.InformacoesComplementares <> '' then
     rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
 
-  if ((pos('http://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or
-      (pos('https://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or
-      (pos('http://', LowerCase(fpNFSe.Link)) > 0) or
-      (pos('https://', LowerCase(fpNFSe.Link)) > 0)) then
+  if (pos('http://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or
+     (pos('https://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) then
+    Link := fpNFSe.OutrasInformacoes;
+
+  if (Link = '') and ((pos('http://', LowerCase(fpNFSe.Link)) > 0) or
+     (pos('https://', LowerCase(fpNFSe.Link)) > 0)) then
+    Link := fpNFSe.Link;
+
+  if Link <> '' then
   begin
     rlmDadosAdicionais.Width := 643;
     rbOutrasInformacoes.AutoSize := True;
@@ -320,12 +326,10 @@ begin
     rlImgQrCode.SetBounds(648, 3, 90, 90);
     rlImgQrCode.BringToFront;
 
-    if pos('http://', LowerCase(fpNFSe.Link)) > 0 then
-      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('http://', LowerCase(fpNFSe.Link)), Length(fpNFSe.Link)))
-    else if pos('https://', LowerCase(fpNFSe.Link)) > 0 then
-      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('https://', LowerCase(fpNFSe.Link)), Length(fpNFSe.Link)))
+    if pos('http://', LowerCase(Link)) > 0 then
+      QRCodeData := Trim(MidStr(Link, pos('http://', LowerCase(Link)), Length(Link)))
     else
-      QRCodeData := Trim(MidStr(fpNFSe.OutrasInformacoes, pos('http://', LowerCase(fpNFSe.OutrasInformacoes)), Length(fpNFSe.OutrasInformacoes)));
+      QRCodeData := Trim(MidStr(Link, pos('https://', LowerCase(Link)), Length(Link)));
 
     QrCode := TDelphiZXingQRCode.Create;
     QrCodeBitmap := TBitmap.Create;
@@ -372,9 +376,6 @@ begin
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
-var
-  CodigoIBGE: Integer;
-  xUF: string;
 begin
   inherited;
 
@@ -398,12 +399,7 @@ begin
 
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
-    // Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
-    // do tomador em vez do que foi informado em Serviço.
-    CodigoIBGE := StrToIntDef(Servico.CodigoMunicipio, 0);
-    xUF := '';
-
-    rllMunicipioPrestacaoServico.Caption := ObterNomeMunicipio(CodigoIBGE, xUF, '', False);
+    rllMunicipioPrestacaoServico.Caption := Servico.MunicipioPrestacaoServico;
   end;
 end;
 
@@ -514,7 +510,7 @@ begin
       rllValorDeducoes.Caption := FormatFloat(',0.00', ValorDeducoes);
       rllDescIncondicionado2.Caption := FormatFloat(',0.00', DescontoIncondicionado);
       rllBaseCalc.Caption := FormatFloat(',0.00', BaseCalculo);
-      rllAliquota.Caption := ManterAliquota(Aliquota);
+      rllAliquota.Caption := FormatFloat(',0.00', Aliquota);
       rllISSReter.Caption := FProvider.SituacaoTributariaDescricao(IssRetido);
       rllValorISS.Caption := FormatFloat(',0.00', ValorIss);
     end;
@@ -659,14 +655,6 @@ begin
   rlbItens.Visible := not Detalhar;
   rlbHeaderItensDetalhado.Visible := Detalhar;
   subItens.Visible := Detalhar;
-
-  // rlbItens.Visible := not (fpDANFSe.DetalharServico);
-  // rlbHeaderItensDetalhado.Visible := fpDANFSe.DetalharServico;
-  // subItens.Visible := fpDANFSe.DetalharServico;
-
-  // Estudar a melhor forma de não especificar o provedor.
-  RLLabel65.Visible := not (ACBrNFSe.Configuracoes.Geral.Provedor in [proSimple]);
-  txtServicoQtde.Visible := not (ACBrNFSe.Configuracoes.Geral.Provedor in [proSimple]);
 end;
 
 procedure TfrlXDANFSeRLRetrato.subItensDataRecord(Sender: TObject;
@@ -678,12 +666,6 @@ begin
   FNumItem := RecNo - 1;
   Eof := (RecNo > fpNFSe.Servico.ItemServico.Count);
   RecordAction := raUseIt;
-end;
-
-function TfrlXDANFSeRLRetrato.ManterAliquota(dAliquota: Double): String;
-begin
-  // Agora a multiplicação por 100 é feita pela rotina que lê o XML.
-  Result := FormatFloat(',0.00', dAliquota);
 end;
 
 end.

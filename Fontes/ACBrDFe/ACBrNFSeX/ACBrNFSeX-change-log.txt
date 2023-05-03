@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/05/2023
+-- Diversos --
+[*] Removido regras de negócio do componente de impressão do DANFSE (Fortes Report)
+    - Retrato e passado essas regras para as units de leitura do XML.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Santa Helena/PR mudou para o provedor IPM
    Por: Marcos

@@ -51,7 +51,7 @@ procedure Register;
 
 implementation
 
-{$R ACBrBoleto.dcr}
+
 
 procedure Register;
 begin

@@ -5,6 +5,10 @@ namespace ACBrLib.Core.NFSe
 {
     public enum CodigoMunicipio
     {
+        [EnumValue("0")]
+        [Description("Nenhuma Cidade Selecionada")]
+        NenhumaCidadeSelecionada = 0,
+
         [EnumValue("3101607")] 
         [Description("Alfenas - MG")] 
         Alfenas = 3101607,

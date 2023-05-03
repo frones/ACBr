@@ -44,7 +44,7 @@ namespace ACBrLibNFSe.Demo
 
             try
             {
-                cmbCidadeEmitente.EnumDataSource(CodigoMunicipio.SaoPaulo);
+                cmbCidadeEmitente.EnumDataSource(CodigoMunicipio.NenhumaCidadeSelecionada);
                 cmbLayoutNFSe.EnumDataSource(LayoutNFSe.lnfsProvedor);
                 cmbFormaEmissao.EnumDataSource(TipoEmissao.teNormal);
                 cmbUfDestino.SelectedItem = "SP";
@@ -101,7 +101,6 @@ namespace ACBrLibNFSe.Demo
             try
             {
                 //Config Geral
-                //ACBrNFSe.Config.AtualizarXMLCancelado = ckbAtualizarXML.Checked;
                 ACBrNFSe.Config.ExibirErroSchema = ckbExibirErroSchema.Checked;
                 ACBrNFSe.Config.FormatoAlerta = txtFormatoAlerta.Text;
                 ACBrNFSe.Config.FormaEmissao = cmbFormaEmissao.GetSelectedValue<TipoEmissao>();
@@ -160,8 +159,6 @@ namespace ACBrLibNFSe.Demo
                 ACBrNFSe.Config.Email.Porta = nudPorta.Text;
                 ACBrNFSe.Config.Email.SSL = ckbSSL.Checked;
                 ACBrNFSe.Config.Email.TLS = ckbTLS.Checked;
-
-
 
                 //Emitente
                 ACBrNFSe.Config.Emitente.CNPJ = txtCNPJEmitente.Text;

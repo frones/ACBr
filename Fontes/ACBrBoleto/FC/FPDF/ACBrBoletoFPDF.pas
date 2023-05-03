@@ -39,8 +39,6 @@ interface
 uses
   SysUtils,
   Classes,
-  DB,
-  DBClient,
   ACBrBase,
   ACBrBoleto,
   StrUtils,

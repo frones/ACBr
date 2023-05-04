@@ -94,6 +94,8 @@ type
   end;
 
   TACBrNFSeProviderISSNet204 = class (TACBrNFSeProviderABRASFv2)
+  public
+    function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao): string; override;
   protected
     procedure Configuracao; override;
 
@@ -445,6 +447,21 @@ begin
 //                     ['outputXML', 'GerarNfseResposta'],
                      ['GerarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeProviderISSNet204.NaturezaOperacaoDescricao(
+  const t: TnfseNaturezaOperacao): string;
+begin
+  case t of
+    no1 : Result := '1 - Exigível';
+    no2 : Result := '2 - Não Incidência';
+    no4 : Result := '4 - Exportação';
+    no5 : Result := '5 - Imunidade';
+    no6 : Result := '6 - Exigibilidade Suspensa por Decisão Judicial';
+    no7 : Result := '7 - Exigibilidade Suspensa por Processo Administrativo';
+  else
+    Result := inherited NaturezaOperacaoDescricao(t);
+  end;
 end;
 
 function TACBrNFSeXWebserviceISSNet204.ConsultarLote(ACabecalho,

@@ -1354,11 +1354,13 @@ begin
       35: Result := toRetornoTituloDDAReconhecidoPagador;
       36: Result := toRetornoTituloDDANaoReconhecidoPagador;
       37: Result := toRetornoTituloDDARecusadoCIP;
+      91: Result := toRetornoConfirmacaoAlteracaoValorMinimoOuPercentual;
+      92: Result := toRetornoConfirmacaoAlteracaoValorMaximoOuPercentual;
     end;
   end
   else
   begin
-    case CodOcorrencia of
+    case CodOcorrencia of // CNAB 400
       17: Result := toRetornoLiquidadoEmCartorio;
       24: Result := toRetornoCustasCartorio;
       25: Result := toRetornoRecebimentoInstrucaoProtestar;
@@ -1366,6 +1368,8 @@ begin
       51: Result := toRetornoTituloDDAReconhecidoPagador;
       52: Result := toRetornoTituloDDANaoReconhecidoPagador;
       53: Result := toRetornoTituloDDARecusadoCIP;
+      62: Result := toRetornoConfirmacaoAlteracaoValorMinimoOuPercentual;
+      63: Result := toRetornoConfirmacaoAlteracaoValorMaximoOuPercentual;
     end;
   end;
 
@@ -1400,6 +1404,8 @@ begin
     30: Result := toRetornoAlteracaoDadosRejeitados;
     32: Result := toRetornoIOFInvalido;
     38: Result := toRetornoRecebimentoInstrucaoNaoProtestar;
+    61: Result := toRetornoConfirmacaoAlteracaoValorNominal;
+
   else
     Result := toRetornoOutrasOcorrencias;
   end;
@@ -1419,7 +1425,10 @@ begin
     11 : Result:= toRemessaCancelarDesconto;                {Cancelamento de desconto}
     18 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}
     31 : Result:= toRemessaAlterarOutrosDados;              {Alteração de outros dados}
-    98 : Result:= toRemessaNaoProtestar;                    {Sustar protesto antes do início do ciclo de protesto}
+    47 : Result:= toRemessaAlteracaoValorNominal;           {Alteração do valor nominal do boleto}
+    48 : Result:= toRemessaAlterarValorMinimo;              {Alteração do valor mínimo/percentual}
+    49 : Result:= toRemessaAlterarValorMaximo;              {Alteração do valor máximo/percentual}
+    98 : Result:= toRemessaNaoProtestar;                    {Sustar protesto antes do início do ciclo de protesto *}
   else
      Result:= toRemessaRegistrar;                           {Remessa}
   end;
@@ -1442,6 +1451,9 @@ begin
          toRemessaConcederDesconto              : Result := '10'; {Concessão de Desconto}
          toRemessaCancelarDesconto              : Result := '11'; {Cancelamento de Desconto}
          toRemessaAlterarOutrosDados            : Result := '31'; {Alteração de outros dados}
+         toRemessaAlteracaoValorNominal         : Result := '47'; {Alteração do valor nominal do boleto}
+         toRemessaAlterarValorMinimo	        : Result := '48'; {Alteração do valor mínimo/percentual}
+         toRemessaAlterarValorMaximo	        : Result := '49'; {Alteração do valor máximo/percentual}
          toRemessaNaoProtestar                  : Result := '98'; {Não Protestar (Antes de iniciar o ciclo de protesto )}
       else
          Result := '01';                                          {Remessa}
@@ -1450,7 +1462,7 @@ begin
   end
   else
   begin
-    case TipoOcorrencia of
+    case TipoOcorrencia of  // 400
          toRemessaBaixar                        : Result := '02'; {Pedido de Baixa}
          toRemessaConcederAbatimento            : Result := '04'; {Concessão de Abatimento}
          toRemessaCancelarAbatimento            : Result := '05'; {Cancelamento de Abatimento concedido}
@@ -1459,6 +1471,9 @@ begin
          toRemessaAlterarNumeroControle         : Result := '08'; {Alteração de seu número}
          toRemessaProtestar                     : Result := '09'; {Pedido de protesto}
          toRemessaCancelarInstrucaoProtesto     : Result := '18'; {Sustar protesto e manter na carteira}
+         toRemessaAlteracaoValorNominal         : Result := '47'; {Alteração do valor nominal do boleto}
+         toRemessaAlterarValorMinimo	        : Result := '48'; {Alteração do valor mínimo/percentual}
+         toRemessaAlterarValorMaximo	        : Result := '49'; { Alteração do valor máximo/percentual}
          toRemessaNaoProtestar                  : Result := '98'; {Sustar protesto antes do início do ciclo de protesto}
       else
          Result := '01';                                          {Remessa}
@@ -1498,6 +1513,9 @@ begin
       toRetornoTituloDDAReconhecidoPagador                   : Result := '35';
       toRetornoTituloDDANaoReconhecidoPagador                : Result := '36';
       toRetornoTituloDDARecusadoCIP                          : Result := '37';
+      toRetornoConfirmacaoAlteracaoValorNominal              : Result := '61';
+      toRetornoConfirmacaoAlteracaoValorMinimoOuPercentual	 : Result := '91';
+      toRetornoConfirmacaoAlteracaoValorMaximoOuPercentual   : Result := '92';
     end;
   end
   else
@@ -1510,6 +1528,9 @@ begin
       toRetornoTituloDDAReconhecidoPagador                   : Result := '51';
       toRetornoTituloDDANaoReconhecidoPagador                : Result := '52';
       toRetornoTituloDDARecusadoCIP                          : Result := '53';
+      toRetornoConfirmacaoAlteracaoValorNominal              : Result := '61';
+      toRetornoConfirmacaoAlteracaoValorMinimoOuPercentual	 : Result := '62';
+      toRetornoConfirmacaoAlteracaoValorMaximoOuPercentual   : Result := '63';
     end;
   end;
 

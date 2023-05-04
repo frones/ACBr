@@ -277,11 +277,11 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NumeroEncapsulamento', 1, 12, 0,
                                NFSe.ConstrucaoCivil.nNumeroEncapsulamento, ''));
 
-  if (NFSe.TipoTributacaoRPS  <> ttTribnoMun) and
-     (NFSe.TipoTributacaoRPS  <> ttTribnoMunIsento) and
-     (NFSe.TipoTributacaoRPS  <> ttTribnoMunImune) then
-    NFSeNode.AppendChild(AddNode(tcInt, '#1', 'MunicipioPrestacao', 1, 7, 0,
-                                         NFSe.Servico.MunicipioIncidencia, ''));
+  if (NFSe.TipoTributacaoRPS <> ttTribnoMun) and
+     (NFSe.TipoTributacaoRPS <> ttTribnoMunIsento) and
+     (NFSe.TipoTributacaoRPS <> ttTribnoMunImune) then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacao', 1, 7, 0,
+                                         NFSe.Servico.CodigoMunicipio, ''));
 
   Result := True;
 end;

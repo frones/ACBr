@@ -201,8 +201,6 @@ begin
       if UF = '' then
         UF := xUF;
     end;
-
-    NFSe.Servico.CodigoMunicipio := NFSe.Tomador.Endereco.CodigoMunicipio;
   end;
 end;
 
@@ -328,6 +326,24 @@ begin
   LerEnderecoPrestador(AuxNode);
   LerCPFCNPJTomador(AuxNode);
   LerEnderecoTomador(AuxNode);
+
+  {
+   TipoTributacaoRPS = ttTribnoMun, ttTribforaMun, ttTribnoMunIsento,
+                       ttTribforaMunIsento, ttTribnoMunImune, ttTribforaMunImune,
+                       ttTribnoMunSuspensa, ttTribforaMunSuspensa, ttExpServicos,
+                       ttSimplesNacional, ttRetidonoMun
+  }
+
+  if NFSe.TipoTributacaoRPS in [ttTribnoMun, ttTribnoMunIsento,
+                                ttTribnoMunImune, ttTribnoMunSuspensa] then
+    NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0)
+  else
+    NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
+
+  NFSe.Servico.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacao'), tcStr);
+
+  if NFSe.Servico.CodigoMunicipio = '' then
+    NFSe.Servico.CodigoMunicipio := NFSe.Prestador.Endereco.CodigoMunicipio;
 end;
 
 function TNFSeR_ISSSaoPaulo.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

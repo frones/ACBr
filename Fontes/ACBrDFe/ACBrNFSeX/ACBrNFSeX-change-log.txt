@@ -43,11 +43,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/05/2023
+-- ISSSaoPaulo.GravarXml --
+[*] Alterado o campo que vai alimentar a tag MunicipioPrestacao, em vez de
+    MunicipioIncidencia, agora é CodigoMunicipio, pois é este o campo que 
+    contem o código do municipio onde o serviço foi prestado.
+-- ISSSaoPaulo.LerXml --
+[*] O campo CodigoMunicipio agora recebe o conteudo da tag MunicipioPrestacao
+    e o campo MunicipioIncidencia depende de onde ocorre a incidencia do ISS.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Porto Ferreira/SP - Agora o Provedor é: Giap
    Por: Igcastellucci
 -- ISSNet.Provider --
-[*] Override da função NaturezaOperacaoDescricao na versão 2.04 para que fique de acordo com atualização promovida pelo provedor.
+[*] Override da função NaturezaOperacaoDescricao na versão 2.04 para que fique 
+    de acordo com atualização promovida pelo provedor.
    Por: PoliDados Desenvolvimento
 
 03/05/2023

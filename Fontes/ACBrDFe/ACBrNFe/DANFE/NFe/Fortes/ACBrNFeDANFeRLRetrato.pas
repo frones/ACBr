@@ -941,6 +941,8 @@ begin
         rllXmotivo.Caption := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ');
         rllDadosVariaveis3_Descricao.Visible := False;
         rllDadosVariaveis3.Visible := False;
+        rllHomologacao.Visible := true;
+        rllHomologacao.Caption := ACBrStr('NF-e NÃO PROTOCOLADA NA SEFAZ - SEM VALOR FISCAL')
       end;
     end;
   end;

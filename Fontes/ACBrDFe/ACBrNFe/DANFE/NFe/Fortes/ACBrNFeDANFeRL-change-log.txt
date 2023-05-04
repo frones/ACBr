@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/2023
+-- ACBrNFeDANFeRLRetrato --
+[*] TK-2275 - add msg NFe não protocolada na sefaz na area central rllHomologacao, qdo nao enviada a sefaz
+  por : Daniel Morais
+
 03/10/2022
 -- ACBrNFeDANFeRLPaisagem ACBrNFeDANFeRLRetrato --
 [*] TK-3097 ACBrNFe - Ocultar info De Olho no Imposto do quadro do calculo dos tributos ImprimeTributos <> trbNormal

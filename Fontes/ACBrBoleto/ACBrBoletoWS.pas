@@ -287,12 +287,7 @@ begin
     FDFeSSL := TDFeSSL(ABoletoWS.FBoleto.Configuracoes.WebService);
 
   FOAuth := TOAuth.Create(FHTTPSend,
-                          FBoletoWS.FBoleto.Configuracoes.WebService.Ambiente,
-                          FBoletoWS.FBoleto.Cedente.CedenteWS.ClientID,
-                          FBoletoWS.FBoleto.Cedente.CedenteWS.ClientSecret,
-                          FBoletoWS.FBoleto.Cedente.CedenteWS.Scope,
-                          FBoletoWS.FBoleto.Configuracoes.WebService.ArquivoCRT,
-                          FBoletoWS.FBoleto.Configuracoes.WebService.ArquivoKEY);
+                          ABoletoWS.FBoleto);
 
 end;
 
@@ -386,7 +381,7 @@ begin
       begin
         FBoletoWSClass := TBoletoW_Bancoob.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Bancoob.Create(FBoleto);
-      end
+      end;
   else
     FBoletoWSClass := TBoletoWSClass.Create(Self);
     FRetornoBanco := TRetornoEnvioClass.Create(FBoleto);

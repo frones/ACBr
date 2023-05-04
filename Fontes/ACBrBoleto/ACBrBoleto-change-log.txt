@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+03/05/2023
+-- ACBrBoleto, ACBrBoletoWS.Rest.OAuth, ACBrBoletoWS.Rest,ACBrBoletoWS --
+[*] TK-3798 Criado os eventos OnAntesAutenticar e OnDepoisAutenticar para que o usuario possa ler ou passar como parametro o token e vencimento em OAuth
+   Por: Victor H Gonzales - Pandaaa, Daniel Morais
+
 24/04/2023
 -- ACBrBoletoRet_Inter_API --
 [*] TK-3800 Retorno da consulta o ValorPago nao está correto qdo existe descontos ou acrescimos.

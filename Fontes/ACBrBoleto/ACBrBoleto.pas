@@ -1306,6 +1306,8 @@ type
   end;
 
   { TACBrWebService }
+  TACBrWebServiceOnAntesAutenticar  = procedure(var aToken: String; var aValidadeToken: TDateTime) of object;
+  TACBrWebServiceOnDepoisAutenticar = procedure(const aToken: String; const aValidadeToken: TDateTime) of object;
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
@@ -1781,6 +1783,9 @@ type
     fConfiguracoes: TConfiguracoes;
     fListaConsultaRetornoWeb: TListaACBrBoletoRetornoWS;
     fPrefixArqRemessa : string;
+    fOnAntesAutenticar:  TACBrWebServiceOnAntesAutenticar;
+    fOnDepoisAutenticar: TACBrWebServiceOnDepoisAutenticar;
+
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
     procedure SetMAIL(AValue: TACBrMail);
 
@@ -1868,6 +1873,8 @@ type
     property RemoveAcentosArqRemessa: Boolean    read fRemoveAcentosArqRemessa write fRemoveAcentosArqRemessa default False;
     property LerNossoNumeroCompleto : Boolean    read fLerNossoNumeroCompleto write fLerNossoNumeroCompleto default False;
     property Configuracoes: TConfiguracoes       read fConfiguracoes          write fConfiguracoes;
+    property OnAntesAutenticar : TACBrWebServiceOnAntesAutenticar  read fOnAntesAutenticar  write fOnAntesAutenticar;
+    property OnDepoisAutenticar: TACBrWebServiceOnDepoisAutenticar read fOnDepoisAutenticar write fOnDepoisAutenticar;
   end;
 
   {TACBrBoletoFCClass}
@@ -2874,6 +2881,8 @@ begin
    {$IFDEF COMPILER6_UP}
    fConfiguracoes.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
    {$ENDIF}
+   FOnAntesAutenticar  := nil;
+   FOnDepoisAutenticar := nil;
 end;
 
 destructor TACBrBoleto.Destroy;

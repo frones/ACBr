@@ -5,7 +5,8 @@ interface
 uses
   pcnConversao,
   httpsend,
-  ACBrBoletoConversao;
+  ACBrBoletoConversao,
+  ACBrBoleto;
 type
   TpAuthorizationType = (atNoAuth,atBearer);
   { TOAuth }
@@ -26,7 +27,7 @@ type
     FParamsOAuth : string;
     FAuthorizationType: TpAuthorizationType;
     FHeaderParamsList : Array of TParams;
-
+    FACBrBoleto       : TACBrBoleto;
     procedure setURL(const AValue: String);
     procedure setContentType(const AValue: String);
     procedure setGrantType(const AValue: String);
@@ -46,7 +47,7 @@ type
   protected
 
   public
-    constructor Create(ASSL: THTTPSend; ATipoAmbiente: TpcnTipoAmbiente; AClientID, AClientSecret, AScope: String; ACertificateCRT : string = ''; ACertificateKEY : String = ''  );
+    constructor Create(ASSL: THTTPSend; AACBrBoleto : TACBrBoleto = nil );
     destructor  Destroy; Override;
     property URL             : String           read getURL         write setURL;
     function GerarToken      : Boolean;
@@ -264,21 +265,24 @@ begin
   SetLength(FHeaderParamsList,0);
 end;
 
-constructor TOAuth.Create(ASSL: THTTPSend; ATipoAmbiente: TpcnTipoAmbiente; AClientID, AClientSecret, AScope: String; ACertificateCRT : string = ''; ACertificateKEY : String = '' );
+constructor TOAuth.Create(ASSL: THTTPSend; AACBrBoleto : TACBrBoleto = nil );
 begin
   if Assigned(ASSL) then
     FHTTPSend := ASSL;
 
-  // Adicionando o Certificado
-  if NaoEstaVazio(ACertificateCRT) then
-    FHTTPSend.Sock.SSL.CertificateFile := ACertificateCRT;
+  FACBrBoleto      := AACBrBoleto;
 
-  if NaoEstaVazio(ACertificateKEY) then
-    FHTTPSend.Sock.SSL.PrivateKeyFile := ACertificateKEY;
-  FAmbiente        := ATipoAmbiente;
-  FClientID        := AClientID;
-  FClientSecret    := AClientSecret;
-  FScope           := AScope;
+  // Adicionando o Certificado
+  if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoCRT) then
+    FHTTPSend.Sock.SSL.CertificateFile := AACBrBoleto.Configuracoes.WebService.ArquivoCRT;
+
+  if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoKEY) then
+    FHTTPSend.Sock.SSL.PrivateKeyFile := AACBrBoleto.Configuracoes.WebService.ArquivoKEY;
+
+  FAmbiente        := AACBrBoleto.Configuracoes.WebService.Ambiente;
+  FClientID        := AACBrBoleto.Cedente.CedenteWS.ClientID;
+  FClientSecret    := AACBrBoleto.Cedente.CedenteWS.ClientSecret;
+  FScope           := AACBrBoleto.Cedente.CedenteWS.Scope;
   FURL             := '';
   FContentType     := '';
   FGrantType       := '';
@@ -295,12 +299,23 @@ begin
 end;
 
 function TOAuth.GerarToken: Boolean;
+var LToken : String;
+  LExpire : TDateTime;
 begin
+
+  if(Assigned(FACBrBoleto.OnAntesAutenticar)) then
+  begin
+    FACBrBoleto.OnAntesAutenticar( LToken, LExpire);
+    fToken  := LToken;
+    fExpire := LExpire;
+  end;
 
   if ( Token <> '' ) and ( CompareDateTime( Expire, Now ) = 1 ) then                                        //Token ja gerado e ainda válido
     Result := True
   else                                                                                                      //Converte Basic da Autenticação em Base64
     Result := Executar( 'Basic ' + String(EncodeBase64(AnsiString(ClientID + ':' + ClientSecret))) );
 
+  if(Assigned(FACBrBoleto.OnDepoisAutenticar)) then
+    FACBrBoleto.OnDepoisAutenticar( Token, Expire);
 end;
 end.

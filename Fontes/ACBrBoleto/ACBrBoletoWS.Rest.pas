@@ -156,6 +156,7 @@ end;
 
 procedure TBoletoWSREST.DefinirParamOAuth;
 begin
+  DefinirCertificado;
   FParamsOAuth := C_GRANT_TYPE
                  + '=' + OAuth.GrantType
                  + '&' + C_SCOPE

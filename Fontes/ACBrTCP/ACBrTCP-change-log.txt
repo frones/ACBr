@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/2023
+-- ACBrCEP --
+[*] Alteração para evitar AcessViolation quando a busca não retornar um endereço.
+   Por: Andergoncalves
+
 24/04/2023
 --ACBrSedex--
 [*] Ajuste na função Rastrear para encontrar informações na nova estrutura HTML.

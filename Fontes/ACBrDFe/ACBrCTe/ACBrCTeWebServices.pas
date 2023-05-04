@@ -1038,7 +1038,6 @@ begin
               '</CTe>';
 
           FMsgUnZip := FPDadosMsg;
-
           FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
         end
         else
@@ -1065,6 +1064,12 @@ begin
         if FConhecimentos.Count > 0 then
           FPDadosMsg := '<CTeOS' + RetornarConteudoEntre(
                   FConhecimentos.Items[0].XMLAssinado, '<CTeOS', '</CTeOS>') + '</CTeOS>';
+
+        if FPConfiguracoesCTe.Geral.VersaoDF >= ve400 then
+        begin
+          FMsgUnZip := FPDadosMsg;
+          FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
+        end;
       end;
   else
     begin
@@ -1079,7 +1084,6 @@ begin
                 FConhecimentos.Items[0].XMLAssinado, '<GTVe', '</GTVe>') + '</GTVe>';
 
       FMsgUnZip := FPDadosMsg;
-
       FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
     end;
   end;

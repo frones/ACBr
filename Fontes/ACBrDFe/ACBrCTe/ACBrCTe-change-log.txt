@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/2023
+-- ACBrCTeWebServices --
+[*] Ajustes para o envio correto para os modelos CT-e OS e GTV-e.
+  Por: Italo Giurizzato Junior
+
 27/04/2023
 -- ACBrCTeWebServices --
 [*] Ajuste na leitura do retorno do método Consultar Status de Serviço.

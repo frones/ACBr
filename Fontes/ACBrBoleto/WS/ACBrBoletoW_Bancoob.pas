@@ -118,7 +118,7 @@ const
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Base, ACBrPIXCD, ACBrJSON;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Base, ACBrJSON, pcnAuxiliar;
 
 { TBoletoW_Bancoob}
 
@@ -257,6 +257,7 @@ begin
   FParamsOAuth := Format( 'client_id=%s&scope=%s&grant_type=client_credentials',
                    [Boleto.Cedente.CedenteWS.ClientID,
                     Boleto.Cedente.CedenteWS.Scope] );
+  
 end;
 
 function TBoletoW_Bancoob.DateBancoobtoDateTime(const AValue: String): TDateTime;
@@ -266,8 +267,8 @@ end;
 
 function TBoletoW_Bancoob.DateTimeToDateBancoob(const AValue: TDateTime): String;
 begin
-  result := DateTimeToIso8601(DateTimeUniversal('',AValue));
-  //FormatDateBr( aValue, 'YYYY-MM-DD') + 'T' + FormatDateTime('hh:nn:ss', AValue) + PegaTimeZone;
+  //result := DateTimeToIso8601(DateTimeUniversal('',AValue),BiasToTimeZone(LTZ.Bias));
+  result := FormatDateBr( aValue, 'YYYY-MM-DD') + 'T' + FormatDateTime('hh:nn:ss', AValue) + GetUTCSistema;
 
 end;
 
@@ -335,8 +336,8 @@ begin
       GerarBenificiarioFinal(Json);
       GerarInstrucao(Json);
 
-      Json.Add('gerarPdf').Value.AsBoolean              := true;
-      Json.Add('codigoCadastrarPIX').Value.AsInteger    := 1;
+      Json.Add('gerarPdf').Value.AsBoolean              := false;
+      Json.Add('codigoCadastrarPIX').Value.AsInteger    := StrToInt(IfThen(Boleto.Cedente.CedenteWS.IndicadorPix,'1','0'));
 
       Data := Json.Stringify;
 
@@ -781,11 +782,13 @@ function TBoletoW_Bancoob.GerarRemessa: string;
 begin
   if Boleto.Configuracoes.WebService.Ambiente = taHomologacao then
     raise Exception.Create('Sicoob API v2 tem somente ambiente de produção.');
+  DefinirCertificado;
   result := inherited GerarRemessa;
 end;
 
 function TBoletoW_Bancoob.Enviar: boolean;
 begin
+  DefinirCertificado;
   result := inherited Enviar;
 end;
 

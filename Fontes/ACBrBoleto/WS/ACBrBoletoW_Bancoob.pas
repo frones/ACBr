@@ -550,39 +550,38 @@ begin
   begin
     if Assigned(AJson) then
     begin
-      if (aTitulo.ValorMoraJuros > 0) then
+      if ATitulo.CodigoMora = '' then
       begin
-
-        if ATitulo.CodigoMora = '' then
-        begin
-          case aTitulo.CodigoMoraJuros of
-            cjValorDia   : aTitulo.CodigoMora := '1';
-            cjTaxaMensal : aTitulo.CodigoMora := '2';
-            cjIsento     : aTitulo.CodigoMora := '0';
-          end;
+        case aTitulo.CodigoMoraJuros of
+          cjValorDia   : aTitulo.CodigoMora := '1';
+          cjTaxaMensal : aTitulo.CodigoMora := '2';
+          cjIsento     : aTitulo.CodigoMora := '3';
+          else
+            aTitulo.CodigoMora := '3';
         end;
-
-        case (StrToIntDef(aTitulo.CodigoMora, 0)) of
-          0:    // Isento
-            begin
-              AJson.Add('tipoJurosMora').Value.AsInteger :=  0;
-              AJson.Add('valorJurosMora').Value.asNumber := 0;
-            end;
-          1:     // Dia
-            begin
-             // AJson.Add('taxa').Value.asNumber := aTitulo.ValorMoraJuros;
-              AJson.Add('tipoJurosMora').Value.AsInteger :=  Integer(aTitulo.CodigoMoraJuros);
-              AJson.Add('dataJurosMora').Value.asString := DateTimeToDateBancoob(aTitulo.DataMulta);
-              AJson.Add('valorJurosMora').Value.asNumber := aTitulo.ValorMoraJuros;
-            end;
-          2: // Mês
-            begin
-              AJson.Add('tipoJurosMora').Value.AsInteger :=  Integer(aTitulo.CodigoMoraJuros);
-              AJson.Add('dataJurosMora').Value.asString := DateTimeToDateBancoob(aTitulo.DataMulta);
-              AJson.Add('valorJurosMora').Value.asNumber := aTitulo.ValorMoraJuros;
-            end;
-         end;
       end;
+
+      case (StrToIntDef(aTitulo.CodigoMora, 0)) of
+        0:    // Isento
+          begin
+            AJson.Add('tipoJurosMora').Value.AsInteger :=  0;
+            AJson.Add('valorJurosMora').Value.asNumber := 0;
+          end;
+        1:     // Dia
+          begin
+           // AJson.Add('taxa').Value.asNumber := aTitulo.ValorMoraJuros;
+            AJson.Add('tipoJurosMora').Value.AsInteger :=  Integer(aTitulo.CodigoMoraJuros);
+            AJson.Add('dataJurosMora').Value.asString  := DateTimeToDateBancoob(aTitulo.DataMulta);
+            AJson.Add('valorJurosMora').Value.asNumber := aTitulo.ValorMoraJuros;
+          end;
+        2: // Mês
+          begin
+            AJson.Add('tipoJurosMora').Value.AsInteger :=  Integer(aTitulo.CodigoMoraJuros);
+            AJson.Add('dataJurosMora').Value.asString  := DateTimeToDateBancoob(aTitulo.DataMulta);
+            AJson.Add('valorJurosMora').Value.asNumber := aTitulo.ValorMoraJuros;
+          end;
+       end;
+
     end;
   end;
 end;

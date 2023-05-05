@@ -48,6 +48,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+05/05/2023
+[-] TK-3540-1 Ajuste SicoobWS Dominio Juros
+  Por : Victor H Gonzales - Pandaaa / Willian Mattos
 
 03/05/2023
 -- ACBrBoleto, ACBrBoletoWS.Rest.OAuth, ACBrBoletoWS.Rest,ACBrBoletoWS --

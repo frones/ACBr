@@ -46,6 +46,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2023
+-- ACBrTEFAndroid, ACBrTEFAndroidElginIDH, ACBrTEFElginIDHAndroidAPI, ACBrTEFElginIDHComum --
+[+] Adicionado o modelo "tefElginIDH" em TACBrTEFAndroid
+
+-- ACBrTEFAndroid, ACBrTEFAndroidMSitef, ACBrTEFMSitefAndroidAPI, ACBrTEFMSitefComum --
+[+] Adicionado o modelo "tefMSitef" em TACBrTEFAndroid
+https://www.projetoacbr.com.br/forum/topic/71696-componente-elgintef-e-msitef-android/
+   (por: Warquia)
+
+-- ACBrTEFPayGoAndroidAPI --
+[*] Adcionada chamada de Log em TACBrTEFPGWebAndroid.HandleActivityMessage
+[*] PWINFO_RESULTMSG tratado de UTF8 para String Nativa
+    (por: DSA)
+
 24/04/2023
 -- ACBrTEFComum, ACBrTEFDClass --
 [-] Correção para impressão de 2a Via, quando retorno vem no final do campo 029

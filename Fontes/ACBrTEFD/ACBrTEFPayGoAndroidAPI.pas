@@ -1026,6 +1026,7 @@ end;
 procedure TACBrTEFPGWebAndroid.HandleActivityMessage(const Sender: TObject;
   const M: TMessage);
 begin
+  GravarLog('TACBrTEFPGWebAndroid.HandleActivityMessage');
   if (M is TMessageResultNotification) then
   begin
     OnActivityResult( TMessageResultNotification(M).RequestCode,
@@ -1401,7 +1402,7 @@ begin
       else if (ParamKey = 'aid') then
         fDadosTransacao.ValueInfo[PWINFO_AID] := ParamValue
       else if (ParamKey = 'resultMessage') then
-        fDadosTransacao.ValueInfo[PWINFO_RESULTMSG] := ParamValue
+        fDadosTransacao.ValueInfo[PWINFO_RESULTMSG] := UTF8ToNativeString(ParamValue)
       else if (ParamKey = 'authorizerResponse') then
         fDadosTransacao.ValueInfo[PWINFO_AUTRESPCODE] := ParamValue
       else if (ParamKey = 'printReceipts') then

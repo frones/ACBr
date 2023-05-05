@@ -49,7 +49,7 @@ resourcestring
   sACBrTEFAndroidPlataformException = '%s disponível apenas para Android';
 
 type
-  TACBrTEFAndroidModelo = (tefNenhum, tefPayGo);
+  TACBrTEFAndroidModelo = (tefNenhum, tefPayGo, tefMSitef, tefElginIDH);
 
   EACBrTEFAndroidErro = class(EACBrTEFAPIErro);
 
@@ -139,6 +139,8 @@ uses
   ACBrUtil
   {$IfDef ANDROID}
   ,ACBrTEFAndroidPayGo
+  ,ACBrTEFAndroidMSitef
+  ,ACBrTEFAndroidElginIDH
   {$EndIf}
   ;
 
@@ -202,21 +204,19 @@ begin
 
   FreeAndNil( fpTEFAPIClass ) ;
 
-  { Instanciando uma nova classe de acordo com AValue }
-  case AValue of
-    tefPayGo :
-      begin
-       // IfDef Abaixo, permite que o Modelo fique disponível no ObjectInspector (Win)
-       {$IfDef ANDROID}
-        fpTEFAPIClass := TACBrTEFAndroidPayGoClass.Create( Self );
-       {$Else}
-        fpTEFAPIClass := TACBrTEFAPIComumClass.Create( Self );
-        DoException( Format( sACBrTEFAndroidPlataformException, ['tefPayGo']));
-       {$EndIf}
-      end
-  else
+  {$IfNDef ANDROID}
     fpTEFAPIClass := TACBrTEFAPIComumClass.Create( Self );
-  end;
+    DoException( Format( sACBrTEFAndroidPlataformException, ['Tef']));
+  {$Else}
+  { Instanciando uma nova classe de acordo com AValue }
+    case AValue of
+      tefPayGo : fpTEFAPIClass := TACBrTEFAndroidPayGoClass.Create( Self );
+      tefMSitef : fpTEFAPIClass := TACBrTEFAndroidMSitefClass.Create( Self );
+      tefElginIDH : fpTEFAPIClass := TACBrTEFAndroidElginIDHClass.Create( Self );
+    else
+      fpTEFAPIClass := TACBrTEFAPIComumClass.Create( Self );
+    end;
+  {$EndIf}
 
   fTEFModelo := AValue;
 end;

@@ -127,6 +127,18 @@ begin
         ARetornoWS.JSON := (aJson.Values['resultado'].Stringify);
 
         case HttpResultCode of
+          207:
+          begin
+            aJsonViolacoes := aJson.Values['resultado'].AsArray;
+            for x := 0 to aJsonViolacoes.Count -1 do
+            begin
+              aJsonViolacao        := aJsonViolacoes[x].AsObject;
+			  aJsonViolacoes       := aJsonViolacao['status'].AsArray;
+              ARejeicao            := ARetornoWS.CriarRejeicaoLista;
+              ARejeicao.Codigo     := aJsonViolacao.Values['codigo'].AsString;
+              ARejeicao.mensagem   := aJsonViolacao.Values['mensagem'].AsString;  
+            end;
+          end;
           400,406,500 :
             begin
               aJsonViolacoes := aJson.Values['mensagens'].AsArray;

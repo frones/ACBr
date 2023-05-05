@@ -375,132 +375,134 @@ procedure TfrlGuiaRLRetrato.RLBand1BeforePrint(Sender: TObject; var PrintIt: Boo
   end;
 begin
   // 1ª Via
-  RLLabel18.Caption             := FGNRe.DocDestinatario;
-  RLLabel26.Caption             := IntToStrZero( FGNRe.Parcela,3);
-  RLLabel28.Caption             := FormatFloat('R$ ,0.00',  FGNRe.ValorPrincipal + FGNRe.ValorFECP);
-  RLLabel30.Caption             := IfThen( FGNRe.AtualizacaoMonetaria = 0 , '' ,
-                                    FormatFloat('R$ ,0.00', FGNRe.AtualizacaoMonetaria));
-  RLLabel32.Caption             := IfThen( FGNRe.Juros = 0 , '' ,
-                                    FormatFloat('R$ ,0.00', FGNRe.Juros));
-  RLLabel34.Caption             := IfThen( FGNRe.Multa = 0 , '' ,
-                                    FormatFloat('R$ ,0.00', FGNRe.Multa));
-  RLLabel36.Caption             := FormatFloat('R$ ,0.00',( FGNRe.ValorPrincipal +
-                                                            FGNRe.AtualizacaoMonetaria+
-                                                            FGNRe.Juros +
-                                                            FGNRe.Multa +
-                                                            FGNRe.ValorFECP));
-  RLMemo2.Visible               := FGNRe.InfoCabec.Ambiente = 9;
+  RLLabel18.Caption := FGNRe.DocDestinatario;
+  RLLabel26.Caption := IntToStrZero(FGNRe.Parcela,3);
+  RLLabel28.Caption := FormatFloat('R$ ,0.00', FGNRe.ValorPrincICMS +
+                                               FGNRe.ValorFECP);
+  RLLabel30.Caption := IfThen(FGNRe.AtualizacaoMonetaria = 0 , '' ,
+                              FormatFloat('R$ ,0.00', FGNRe.AtualizacaoMonetaria));
+  RLLabel32.Caption := IfThen(FGNRe.Juros = 0 , '' ,
+                              FormatFloat('R$ ,0.00', FGNRe.Juros));
+  RLLabel34.Caption := IfThen(FGNRe.Multa = 0 , '' ,
+                              FormatFloat('R$ ,0.00', FGNRe.Multa));
+  RLLabel36.Caption := FormatFloat('R$ ,0.00', (FGNRe.ValorPrincICMS +
+                                                FGNRe.ValorFECP +
+                                                FGNRe.AtualizacaoMonetaria +
+                                                FGNRe.Juros +
+                                                FGNRe.Multa));
+  RLMemo2.Visible := FGNRe.InfoCabec.Ambiente = 9;
 
   // 2ª Via
-  RLLabel55.Caption             := RLLabel18.Caption;
-  RLLabel63.Caption             := RLLabel26.Caption;
-  RLLabel65.Caption             := RLLabel28.Caption;
-  RLLabel66.Caption             := RLLabel30.Caption;
-  RLLabel67.Caption             := RLLabel32.Caption;
-  RLLabel69.Caption             := RLLabel34.Caption;
-  RLLabel71.Caption             := RLLabel36.Caption;
-  RLMemo3.Visible               := RLMemo2.Visible;
+  RLLabel55.Caption := RLLabel18.Caption;
+  RLLabel63.Caption := RLLabel26.Caption;
+  RLLabel65.Caption := RLLabel28.Caption;
+  RLLabel66.Caption := RLLabel30.Caption;
+  RLLabel67.Caption := RLLabel32.Caption;
+  RLLabel69.Caption := RLLabel34.Caption;
+  RLLabel71.Caption := RLLabel36.Caption;
+  RLMemo3.Visible := RLMemo2.Visible;
 
   // 3ª Via
-  RLLabel92.Caption             := RLLabel18.Caption;
-  RLLabel100.Caption            := RLLabel26.Caption;
-  RLLabel102.Caption            := RLLabel28.Caption;
-  RLLabel103.Caption            := RLLabel30.Caption;
-  RLLabel104.Caption            := RLLabel32.Caption;
-  RLLabel106.Caption            := RLLabel34.Caption;
-  RLLabel108.Caption            := RLLabel36.Caption;
-  RLMemo5.Visible               := RLMemo2.Visible;
+  RLLabel92.Caption := RLLabel18.Caption;
+  RLLabel100.Caption := RLLabel26.Caption;
+  RLLabel102.Caption := RLLabel28.Caption;
+  RLLabel103.Caption := RLLabel30.Caption;
+  RLLabel104.Caption := RLLabel32.Caption;
+  RLLabel106.Caption := RLLabel34.Caption;
+  RLLabel108.Caption := RLLabel36.Caption;
+  RLMemo5.Visible := RLMemo2.Visible;
 
-  UFFavorecida.Caption          := FGNRe.UFFavorecida;
-  UFFavorecida2.Caption         := UFFavorecida.Caption;
-  UFFavorecida3.Caption         := UFFavorecida.Caption;
+  UFFavorecida.Caption := FGNRe.UFFavorecida;
+  UFFavorecida2.Caption := UFFavorecida.Caption;
+  UFFavorecida3.Caption := UFFavorecida.Caption;
 
-  CodReceita.Caption            := IntToStr( FGNRe.codReceita );
-  CodReceita2.Caption           := CodReceita.Caption;
-  CodReceita3.Caption           := CodReceita.Caption;
+  CodReceita.Caption := IntToStr( FGNRe.codReceita );
+  CodReceita2.Caption := CodReceita.Caption;
+  CodReceita3.Caption := CodReceita.Caption;
 
-  RazaoSocialEmitente.Caption   := FGNRe.RazaoSocialEmitente;
-  RazaoSocialEmitente2.Caption  := RazaoSocialEmitente.Caption;
-  RazaoSocialEmitente3.Caption  := RazaoSocialEmitente.Caption;
+  RazaoSocialEmitente.Caption := FGNRe.RazaoSocialEmitente;
+  RazaoSocialEmitente2.Caption := RazaoSocialEmitente.Caption;
+  RazaoSocialEmitente3.Caption := RazaoSocialEmitente.Caption;
 
-  DocEmitente.Caption           := FormaDoc( FGNRe.TipoDocEmitente , FGNRe.DocEmitente );
-  DocEmitente2.Caption          := DocEmitente.Caption;
-  DocEmitente3.Caption          := DocEmitente.Caption;
+  DocEmitente.Caption := FormaDoc( FGNRe.TipoDocEmitente , FGNRe.DocEmitente );
+  DocEmitente2.Caption := DocEmitente.Caption;
+  DocEmitente3.Caption := DocEmitente.Caption;
 
-  EnderecoEmitente.Caption      := FGNRe.EnderecoEmitente;
-  EnderecoEmitente2.Caption     := EnderecoEmitente.Caption;
-  EnderecoEmitente3.Caption     := EnderecoEmitente.Caption;
+  EnderecoEmitente.Caption := FGNRe.EnderecoEmitente;
+  EnderecoEmitente2.Caption := EnderecoEmitente.Caption;
+  EnderecoEmitente3.Caption := EnderecoEmitente.Caption;
 
-  CEPEmitente.Caption           := FGNRe.CEPEmitente;
-  CEPEmitente2.Caption          := CEPEmitente.Caption;
-  CEPEmitente3.Caption          := CEPEmitente.Caption;
+  CEPEmitente.Caption := FGNRe.CEPEmitente;
+  CEPEmitente2.Caption := CEPEmitente.Caption;
+  CEPEmitente3.Caption := CEPEmitente.Caption;
 
-  MunicipioEmitente.Caption     := FGNRe.MunicipioEmitenteNome;
-  MunicipioEmitente2.Caption    := MunicipioEmitente.Caption;
-  MunicipioEmitente3.Caption    := MunicipioEmitente.Caption;
+  MunicipioEmitente.Caption := FGNRe.MunicipioEmitenteNome;
+  MunicipioEmitente2.Caption := MunicipioEmitente.Caption;
+  MunicipioEmitente3.Caption := MunicipioEmitente.Caption;
 
-  UFEmitente.Caption            := FGNRe.UFEmitente;
-  UFEmitente2.Caption           := UFEmitente.Caption;
-  UFEmitente3.Caption           := UFEmitente.Caption;
+  UFEmitente.Caption := FGNRe.UFEmitente;
+  UFEmitente2.Caption := UFEmitente.Caption;
+  UFEmitente3.Caption := UFEmitente.Caption;
 
-  TelefoneEmitente.Caption      := FGNRe.TelefoneEmitente;
-  TelefoneEmitente2.Caption     := FGNRe.TelefoneEmitente;
-  TelefoneEmitente3.Caption     := FGNRe.TelefoneEmitente;
+  TelefoneEmitente.Caption := FGNRe.TelefoneEmitente;
+  TelefoneEmitente2.Caption := FGNRe.TelefoneEmitente;
+  TelefoneEmitente3.Caption := FGNRe.TelefoneEmitente;
 
-  NumeroControle.Caption        := FGNRe.NumeroControle;
-  NumeroControle2.Caption       := FGNRe.NumeroControle;
-  NumeroControle3.Caption       := FGNRe.NumeroControle;
+  NumeroControle.Caption := FGNRe.NumeroControle;
+  NumeroControle2.Caption := FGNRe.NumeroControle;
+  NumeroControle3.Caption := FGNRe.NumeroControle;
 
-  NumDocOrigem.Caption          := FGNRe.NumDocOrigem;
-  NumDocOrigem2.Caption         := NumDocOrigem.Caption;
-  NumDocOrigem3.Caption         := NumDocOrigem.Caption;
+  NumDocOrigem.Caption := FGNRe.NumDocOrigem;
+  NumDocOrigem2.Caption := NumDocOrigem.Caption;
+  NumDocOrigem3.Caption := NumDocOrigem.Caption;
 
   MunicipioDestinatario.Caption := FGNRe.MunicipioDestinatarioNome;
-  MunicipioDestinatario2.Caption:= MunicipioDestinatario.Caption;
-  MunicipioDestinatario3.Caption:= MunicipioDestinatario.Caption;
+  MunicipioDestinatario2.Caption := MunicipioDestinatario.Caption;
+  MunicipioDestinatario3.Caption := MunicipioDestinatario.Caption;
 
-  Convenio.Caption              := FGNRe.Convenio;
-  Convenio2.Caption             := Convenio.Caption;
-  Convenio3.Caption             := Convenio.Caption;
+  Convenio.Caption := FGNRe.Convenio;
+  Convenio2.Caption := Convenio.Caption;
+  Convenio3.Caption := Convenio.Caption;
 
-  Produto.Caption               := FGNRe.Produto;
-  Produto2.Caption              := Produto.Caption;
-  Produto3.Caption              := Produto.Caption;
+  Produto.Caption := FGNRe.Produto;
+  Produto2.Caption := Produto.Caption;
+  Produto3.Caption := Produto.Caption;
 
-  PerMesAnoRef.Caption          := FormataPeriodoReferencia( FGNRe.PeriodoReferencia )+
+  PerMesAnoRef.Caption := FormataPeriodoReferencia( FGNRe.PeriodoReferencia )+
                                     FormataMesAnoReferencia( FGNRe.MesAnoReferencia );
-  PerMesAnoRef2.Caption         := PerMesAnoRef.Caption;
-  PerMesAnoRef3.Caption         := PerMesAnoRef.Caption;
+  PerMesAnoRef2.Caption := PerMesAnoRef.Caption;
+  PerMesAnoRef3.Caption := PerMesAnoRef.Caption;
 
-  DataVencimento.Caption        := FormatarData(FGNRe.DataVencimento);
-  DataVencimento2.Caption       := DataVencimento.Caption;
-  DataVencimento3.Caption       := DataVencimento.Caption;
+  DataVencimento.Caption := FormatarData(FGNRe.DataVencimento);
+  DataVencimento2.Caption := DataVencimento.Caption;
+  DataVencimento3.Caption := DataVencimento.Caption;
 
-  DataLimitePagamento.Caption   := FormatarData( IfThen( FGNRe.DataLimitePagamento = '00000000' ,
-                                                          FGNRe.DataVencimento ,
-                                                          FGNRe.DataLimitePagamento));
+  DataLimitePagamento.Caption := FormatarData(IfThen(FGNRe.DataLimitePagamento = '00000000' ,
+                                                     FGNRe.DataVencimento ,
+                                                     FGNRe.DataLimitePagamento));
 
-  DataLimitePagamento2.Caption  := DataLimitePagamento.Caption;
-  DataLimitePagamento3.Caption  := DataLimitePagamento.Caption;
+  DataLimitePagamento2.Caption := DataLimitePagamento.Caption;
+  DataLimitePagamento3.Caption := DataLimitePagamento.Caption;
 
   RepresentacaoNumerica.Caption := FormatMaskText('00000000000 0 00000000000 0 00000000000 0 00000000000 0;0',
-                                    FGNRe.RepresentacaoNumerica);
-  RepresentacaoNumerica2.Caption:= RepresentacaoNumerica.Caption;
-  RepresentacaoNumerica3.Caption:= RepresentacaoNumerica.Caption;
+                                   FGNRe.RepresentacaoNumerica);
+  RepresentacaoNumerica2.Caption := RepresentacaoNumerica.Caption;
+  RepresentacaoNumerica3.Caption := RepresentacaoNumerica.Caption;
 
-  CodigoBarras.Caption          := OnlyNumber(FGNRe.CodigoBarras);
-  CodigoBarras2.Caption         := CodigoBarras.Caption;
-  CodigoBarras3.Caption         := CodigoBarras.Caption;
+  CodigoBarras.Caption := OnlyNumber(FGNRe.CodigoBarras);
+  CodigoBarras2.Caption := CodigoBarras.Caption;
+  CodigoBarras3.Caption := CodigoBarras.Caption;
 
   InfoComplementares.Lines.Text := FGNRe.InfoComplementares;
-  InfoComplementares2.Lines     := InfoComplementares.Lines;
-  InfoComplementares3.Lines     := InfoComplementares.Lines;
+  InfoComplementares2.Lines := InfoComplementares.Lines;
+  InfoComplementares3.Lines := InfoComplementares.Lines;
 end;
 
 procedure TfrlGuiaRLRetrato.RLGNReDataRecord(Sender: TObject; RecNo,
   CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
 begin
   inherited;
+
   Eof := (RecNo > 1);
   RecordAction := raUseIt;
 end;
@@ -509,8 +511,9 @@ procedure TfrlGuiaRLRetrato.subItensDataRecord(Sender: TObject; RecNo,
   CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
 begin
   inherited;
+
   FNumItem := RecNo - 1 ;
-  Eof := (RecNo > 1 ) ;
+  Eof := (RecNo > 1) ;
   RecordAction := raUseIt;
 end;
 

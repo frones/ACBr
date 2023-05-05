@@ -5,8 +5,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
   ClientHeight = 749
   ClientWidth = 812
   Font.Name = 'Tahoma'
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object RLDraw41: TRLDraw [0]
     Left = 511

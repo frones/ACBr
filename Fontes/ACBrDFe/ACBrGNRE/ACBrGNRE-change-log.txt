@@ -45,6 +45,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2023
+-- Diversos --
+[*] Alteração para imprimir a guia na versão 2.00 corretamente independente se 
+    tem ou não tem FECP e quando só tem o valor FECP.
+    Alteração feita na impressão em Fortes Report.
+   Por: Italo Giurizzato Junior
+
 03/05/2023
 -- ACBrGNREGuiasRetorno.pas --
 [-] Alteração visando a não deduzir o valor do FECP quando este for diferente de

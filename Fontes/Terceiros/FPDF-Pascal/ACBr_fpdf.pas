@@ -40,7 +40,7 @@ unit ACBr_fpdf;
 
 {$IfNDef FPC}
   {$IFDEF REMOVE_CAST_WARN}
-   {$IF CompilerVersion >= 16}
+   {$IF CompilerVersion >= 20}
     {$WARN IMPLICIT_STRING_CAST OFF}
     {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
    {$IfEnd}
@@ -707,7 +707,7 @@ begin
   // Default display mode
   SetDisplayMode(zmDefault);
   // Enable compression
-  SetCompression(False);
+  SetCompression(True);
   // Metadata
   Self.metadata := TStringList.Create;
   Self.metadata.Values['Producer'] := 'FPDF Pascal '+FPDF_VERSION;
@@ -2826,19 +2826,22 @@ begin
     else if (idLink < Length(Self.links)) then
     begin
       lk := Self.links[idLink];
-      vh := -1;
-      vs := Self.PageInfo[lk.Page-1].Values['size'];
-      if (vs <> '') then
+      if (lk.Page > 0) then
       begin
-        PageSizeInfo := Split(vs);
-        if (Length(PageSizeInfo) > 1) then
-          vh := StrToFloatDef(PageSizeInfo[1], -1);
+        vh := -1;
+        vs := Self.PageInfo[lk.Page-1].Values['size'];
+        if (vs <> '') then
+        begin
+          PageSizeInfo := Split(vs);
+          if (Length(PageSizeInfo) > 1) then
+            vh := StrToFloatDef(PageSizeInfo[1], -1);
+        end;
+
+        if (vh = -1) then
+          vh := IfThen(Self.DefOrientation=poPortrait, Self.DefPageSize.h * Self.k,  Self.DefPageSize.w * Self.k);
+
+        s := s + Format('/Dest [%s 0 R /XYZ 0 %.2f null]>>', [Self.PageInfo[lk.Page-1].Values['n'], vh-lk.y*Self.k], FPDFFormatSetings);
       end;
-
-      if (vh = -1) then
-        vh := IfThen(Self.DefOrientation=poPortrait, Self.DefPageSize.h * Self.k,  Self.DefPageSize.w * Self.k);
-
-      s := s + Format('/Dest [%s 0 R /XYZ 0 %.2f null]>>', [Self.PageInfo[lk.Page-1].Values['n'], vh-lk.y*Self.k], FPDFFormatSetings);
     end;
 
     _put(s);

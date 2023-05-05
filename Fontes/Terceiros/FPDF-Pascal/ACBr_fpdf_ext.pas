@@ -56,7 +56,7 @@ unit ACBr_fpdf_ext;
 
 {$IfNDef FPC}
   {$IFDEF REMOVE_CAST_WARN}
-   {$IF CompilerVersion >= 16}
+   {$IF CompilerVersion >= 20}
     {$WARN IMPLICIT_STRING_CAST OFF}
     {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
    {$IfEnd}
@@ -195,10 +195,14 @@ type
   TByteArray = array of Byte;
   TFPDF2DMatrix = array of TByteArray;
 
+  TFPDFEvent = procedure (APDF: TFPDF) of object;
+
   { TFPDFExt }
 
   TFPDFExt = class(TFPDF)
   private
+    fOnFooter: TFPDFEvent;
+    fOnHeader: TFPDFEvent;
     fProxyHost: string;
     fProxyPass: string;
     fProxyPort: string;
@@ -213,6 +217,8 @@ type
     current_layer: Integer;
     open_layer_pane: Boolean;
 
+    procedure Header; override;
+    procedure Footer; override;
     procedure _endpage; override;
     procedure _putresourcedict; override;
     procedure _putresources; override;
@@ -258,6 +264,9 @@ type
     {$EndIf}
     procedure Draw2DMatrix(AMatrix: TFPDF2DMatrix; vX: double; vY: double;
       DotSize: Double = 0);
+
+    property OnHeader: TFPDFEvent read fOnHeader write fOnHeader;
+    property OnFooter: TFPDFEvent read fOnFooter write fOnFooter;
 
     property ProxyHost: string read fProxyHost write fProxyHost;
     property ProxyPort: string read fProxyPort write fProxyPort;
@@ -902,9 +911,10 @@ begin
   fProxyPass := '';
   fProxyPort := '';
   fProxyUser := '';
+  fOnFooter := Nil;
+  fOnHeader := Nil;
 
   angle := 0;
-
   SetLength(layers,0);
   current_layer := -1;
   open_layer_pane := False;
@@ -1236,6 +1246,18 @@ begin
     end;
     vY := vY + DotSize;
   end;
+end;
+
+procedure TFPDFExt.Header;
+begin
+  if Assigned(fOnHeader) then
+    fOnHeader(Self);
+end;
+
+procedure TFPDFExt.Footer;
+begin
+  if Assigned(fOnFooter) then
+    fOnFooter(Self);
 end;
 
 {$IfDef HAS_HTTP}

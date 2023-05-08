@@ -827,6 +827,7 @@ var
   SL: TStringList;
   //i: Integer;
 begin
+  AplicarConfiguracoesComponenteEmail;
   SL := TStringList.Create;
   try
     SL.Add('Olá,');

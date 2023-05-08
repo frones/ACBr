@@ -48,6 +48,8 @@ type
   protected
     procedure Configuracao; override;
 
+  public
+    function GerarXml: Boolean; Override;
   end;
 
 implementation
@@ -65,9 +67,17 @@ begin
 
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
   FormatoAliq := tcDe2;
-  
-  if FpAOwner.ConfigGeral.Params.ParamTemValor('NaoGerarTag', 'ValorIss') then
+end;
+
+function TNFSeW_SisPMJP202.GerarXml: Boolean;
+begin
+  if (NFSe.OptanteSimplesNacional = snNao) and
+     (NFSe.RegimeEspecialTributacao in [retMicroempresaMunicipal, retMicroempresarioEmpresaPP]) then
+    NrOcorrValorIss := 1
+  else
     NrOcorrValorIss := -1;
+
+  Result := inherited GerarXml;
 end;
 
 end.

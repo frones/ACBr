@@ -288,6 +288,7 @@ begin
   FcdsTitulo.FieldDefs.Add('OcorrenciaOriginal', ftInteger);
   FcdsTitulo.FieldDefs.Add('Instrucao1', ftString, 300);
   FcdsTitulo.FieldDefs.Add('Instrucao2', ftString, 300);
+  FcdsTitulo.FieldDefs.Add('Instrucao3', ftString, 300);
   FcdsTitulo.FieldDefs.Add('TextoLivre', ftMemo, 2000);
   FcdsTitulo.FieldDefs.Add('Asbace', ftString, 40);
   FcdsTitulo.FieldDefs.Add('EMV', ftString, 500);
@@ -558,6 +559,7 @@ var
   Field_OcorrenciaOriginal: TField;
   Field_Instrucao1: TField;
   Field_Instrucao2: TField;
+  Field_Instrucao3: TField;
   Field_TextoLivre: TField;
   Field_Asbace: TField;
   Field_EMV: TField;
@@ -628,6 +630,7 @@ var
         Field_OcorrenciaOriginal.AsInteger := Integer(ListadeBoletos[Indice].OcorrenciaOriginal);
         Field_Instrucao1.AsString := ListadeBoletos[Indice].Instrucao1;
         Field_Instrucao2.AsString := ListadeBoletos[Indice].Instrucao2;
+        Field_Instrucao3.AsString := ListadeBoletos[Indice].Instrucao3;
         Field_TextoLivre.AsString := ListadeBoletos[Indice].TextoLivre;
         if ACBrBoleto.Banco.Numero = 21 then
           Field_Asbace.AsString := TACBrBancoBanestes(Banco).CalcularCampoASBACE(ListadeBoletos[Indice]);
@@ -728,6 +731,7 @@ begin
       Field_OcorrenciaOriginal := FieldByName('OcorrenciaOriginal');
       Field_Instrucao1 := FieldByName('Instrucao1');
       Field_Instrucao2 := FieldByName('Instrucao2');
+      Field_Instrucao3 := FieldByName('Instrucao3');
       Field_TextoLivre := FieldByName('TextoLivre');
       Field_Asbace := FieldByName('Asbace');
       Field_EMV := FieldByName('EMV');

@@ -2692,7 +2692,12 @@ begin
     txtCidadeSacadoServicos.Caption              := 'CEP: '+ Titulo.Sacado.CEP + ', ' + Titulo.Sacado.Bairro + ', ' + Titulo.Sacado.Cidade + ' ' + Titulo.Sacado.UF;
     txtCpfCnpjSacadoServicos.Caption             := FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
     txtInstrucoesServicos.Lines.Text             := MensagemPadrao.Text;
-
+    if (Titulo.Instrucao1 <> '') then
+      txtInstrucoesServicos.Lines.Add(Titulo.Instrucao1);
+    if (Titulo.Instrucao2 <> '') then
+      txtInstrucoesServicos.Lines.Add(Titulo.Instrucao2);
+    if (Titulo.Instrucao3 <> '') then
+      txtInstrucoesServicos.Lines.Add(Titulo.Instrucao3);
     //txtOrientacoesBanco.Lines.Text        := Banco.OrientacoesBanco.Text;
     //txtSacadorAvalistaDet.Caption           := Titulo.Sacado.Avalista;
 

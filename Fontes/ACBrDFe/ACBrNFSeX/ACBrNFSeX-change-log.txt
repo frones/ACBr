@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/05/2023
+-- fintelISS.Provider --
+[*] Incluído no TratarXmlRetornado a função para remover o atributo que pode
+    estar gerando problemas na leitura do XML.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Iguatama/MG trocou de provedor, agora é: Governa
   Por: SupraMAIS

@@ -336,6 +336,7 @@ begin
 
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result);
+  Result := StringReplace(Result, ' xsi:nil="true"', '', [rfReplaceAll]);
 end;
 
 { TACBrNFSeProviderfintelISS202 }

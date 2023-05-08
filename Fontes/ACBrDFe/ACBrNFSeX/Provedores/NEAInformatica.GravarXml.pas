@@ -68,7 +68,6 @@ begin
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
-  NrOcorrValorISS := 1;
 end;
 
 end.

@@ -65,6 +65,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="ACBrTCP"/>
+      </Item>
+      <Item>
         <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item>
       <Item>

@@ -37,12 +37,16 @@ unit uDMForte;
 interface
 
 uses
-  SysUtils, Classes, ACBrBoleto, ACBrBase, ACBrBoletoFCFortesFr;
+  SysUtils, Classes, ACBrBoleto, ACBrBase, ACBrMail, ACBrBoletoFCFortesFr;
 
 type
+
+  { TdmForte }
+
   TdmForte = class(TDataModule)
     ACBrBoletoReport: TACBrBoletoFCFortes;
     ACBrBoleto: TACBrBoleto;
+    ACBrMail1: TACBrMail;
   private
     { Private declarations }
   public

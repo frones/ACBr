@@ -1,7 +1,8 @@
 object dmFast: TdmFast
-  Height = 150
-  Width = 215
+  Height = 188
+  Width = 269
   object ACBrBoleto: TACBrBoleto
+    MAIL = ACBrMail1
     Banco.Numero = 341
     Banco.TamanhoMaximoNossoNum = 8
     Banco.TipoCobranca = cobItau
@@ -17,6 +18,7 @@ object dmFast: TdmFast
     Cedente.ContaDigito = '9'
     Cedente.CNPJCPF = '05.481.336/0001-37'
     Cedente.TipoInscricao = pJuridica
+    Cedente.PIX.TipoChavePIX = tchNenhuma
     DirArqRemessa = 'c:\temp'
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoReport
@@ -26,8 +28,8 @@ object dmFast: TdmFast
     Configuracoes.WebService.Ambiente = taHomologacao
     Configuracoes.WebService.Operacao = tpInclui
     Configuracoes.WebService.VersaoDF = '1.2'
-    Left = 40
-    Top = 38
+    Left = 50
+    Top = 48
   end
   object ACBrBoletoReport: TACBrBoletoFCFR
     DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
@@ -35,7 +37,18 @@ object dmFast: TdmFast
     ModoThread = False
     IncorporarBackgroundPdf = False
     IncorporarFontesPdf = False
-    Left = 136
-    Top = 32
+    Left = 170
+    Top = 40
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = CP1252
+    Left = 114
+    Top = 100
   end
 end

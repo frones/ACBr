@@ -13,11 +13,10 @@ object frmDemo: TfrmDemo
   OnCreate = FormCreate
   TextHeight = 13
   object PageControl1: TPageControl
-    AlignWithMargins = True
-    Left = 3
-    Top = 3
-    Width = 980
-    Height = 517
+    Left = 0
+    Top = 0
+    Width = 986
+    Height = 523
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
@@ -664,9 +663,9 @@ object frmDemo: TfrmDemo
       object GroupBox6: TGroupBox
         Left = 186
         Top = 417
-        Width = 596
+        Width = 500
         Height = 61
-        Caption = 'Impress'#227'o / Email '
+        Caption = 'Impress'#227'o'
         TabOrder = 6
         object btnImpressaoHTML: TButton
           Left = 6
@@ -687,30 +686,21 @@ object frmDemo: TfrmDemo
           OnClick = btnImpressaoPDFClick
         end
         object btnImpressaoSpooler: TButton
-          Left = 467
+          Left = 391
           Top = 20
           Width = 98
           Height = 25
           Caption = 'Imprimir'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnImpressaoSpoolerClick
         end
-        object btnEnviarEmail: TButton
-          Left = 286
-          Top = 20
-          Width = 75
-          Height = 25
-          Caption = 'Enviar Email'
-          TabOrder = 2
-          OnClick = btnEnviarEmailClick
-        end
         object btnImpressaoStream: TButton
-          Left = 365
+          Left = 289
           Top = 20
           Width = 98
           Height = 25
           Caption = 'Imprimir Stream'
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btnImpressaoStreamClick
         end
         object btnImpressaoPDFIndividual: TButton
@@ -719,7 +709,7 @@ object frmDemo: TfrmDemo
           Width = 122
           Height = 25
           Caption = 'Gerar PDF Individual'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnImpressaoPDFIndividualClick
         end
       end
@@ -1318,6 +1308,160 @@ object frmDemo: TfrmDemo
         Caption = '...'
         TabOrder = 12
         OnClick = btnRetornoClick
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'E-Mail'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ImageIndex = 2
+      ParentFont = False
+      object Label72: TLabel
+        Left = 17
+        Top = 13
+        Width = 74
+        Height = 16
+        Caption = 'From e-Mail:'
+      end
+      object Label73: TLabel
+        Left = 336
+        Top = 13
+        Width = 74
+        Height = 16
+        Caption = 'From Name:'
+      end
+      object Label74: TLabel
+        Left = 17
+        Top = 69
+        Width = 31
+        Height = 16
+        Caption = 'Host:'
+      end
+      object Label75: TLabel
+        Left = 336
+        Top = 69
+        Width = 27
+        Height = 16
+        Caption = 'Port:'
+      end
+      object Label76: TLabel
+        Left = 488
+        Top = 69
+        Width = 112
+        Height = 16
+        Caption = 'Tipo Autentica'#231#227'o:'
+      end
+      object Label77: TLabel
+        Left = 17
+        Top = 126
+        Width = 72
+        Height = 16
+        Caption = 'User Name:'
+      end
+      object Label78: TLabel
+        Left = 336
+        Top = 126
+        Width = 63
+        Height = 16
+        Caption = 'Password:'
+      end
+      object Label79: TLabel
+        Left = 17
+        Top = 462
+        Width = 542
+        Height = 16
+        Cursor = crHandPoint
+        Caption = 
+          'Configura'#231#245'es do ACBrMail para os principais servi'#231'os de emails ' +
+          'do mercado'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        OnClick = Label79Click
+      end
+      object edtFrom: TEdit
+        Left = 17
+        Top = 32
+        Width = 304
+        Height = 24
+        TabOrder = 0
+      end
+      object edtFromName: TEdit
+        Left = 336
+        Top = 32
+        Width = 417
+        Height = 24
+        TabOrder = 1
+      end
+      object edtHost: TEdit
+        Left = 17
+        Top = 88
+        Width = 304
+        Height = 24
+        TabOrder = 2
+      end
+      object edtPort: TEdit
+        Left = 336
+        Top = 88
+        Width = 121
+        Height = 24
+        TabOrder = 3
+      end
+      object chkTLS: TCheckBox
+        Left = 488
+        Top = 91
+        Width = 57
+        Height = 17
+        Caption = 'TLS'
+        TabOrder = 4
+      end
+      object chkSSL: TCheckBox
+        Left = 560
+        Top = 91
+        Width = 65
+        Height = 17
+        Caption = 'SSL'
+        TabOrder = 5
+      end
+      object edtUserName: TEdit
+        Left = 17
+        Top = 147
+        Width = 304
+        Height = 24
+        TabOrder = 6
+      end
+      object chkMostrarSenha: TCheckBox
+        Left = 405
+        Top = 127
+        Width = 84
+        Height = 17
+        Caption = 'Mostrar?'
+        TabOrder = 7
+        OnClick = chkMostrarSenhaClick
+      end
+      object edtPassword: TEdit
+        Left = 336
+        Top = 147
+        Width = 289
+        Height = 24
+        TabOrder = 8
+      end
+      object btnEnviarEmail: TButton
+        Left = 637
+        Top = 147
+        Width = 116
+        Height = 25
+        Caption = 'Enviar Email'
+        TabOrder = 9
+        OnClick = btnEnviarEmailClick
       end
     end
   end

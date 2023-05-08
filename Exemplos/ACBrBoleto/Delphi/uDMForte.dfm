@@ -1,16 +1,16 @@
 object dmForte: TdmForte
-  OldCreateOrder = False
-  Height = 150
-  Width = 215
+  Height = 188
+  Width = 269
   object ACBrBoletoReport: TACBrBoletoFCFortes
     MostrarSetup = False
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
     DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
     NomeArquivo = 'boleto.pdf'
-    Left = 128
-    Top = 30
+    Left = 160
+    Top = 38
   end
   object ACBrBoleto: TACBrBoleto
+    MAIL = ACBrMail1
     Banco.Numero = 341
     Banco.TamanhoMaximoNossoNum = 8
     Banco.TipoCobranca = cobItau
@@ -28,6 +28,7 @@ object dmForte: TdmForte
     Cedente.TipoInscricao = pJuridica
     Cedente.CedenteWS.ClientID = 'SGCBS02P'
     Cedente.IdentDistribuicao = tbBancoDistribui
+    Cedente.PIX.TipoChavePIX = tchNenhuma
     DirArqRemessa = 'c:\temp'
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoReport
@@ -40,7 +41,18 @@ object dmForte: TdmForte
     Configuracoes.WebService.Ambiente = taHomologacao
     Configuracoes.WebService.Operacao = tpInclui
     Configuracoes.WebService.VersaoDF = '1.2'
-    Left = 32
-    Top = 30
+    Left = 40
+    Top = 38
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = CP1252
+    Left = 40
+    Top = 112
   end
 end

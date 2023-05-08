@@ -33,12 +33,13 @@ unit uDMFast;
 interface
 
 uses
-  SysUtils, Classes, ACBrBoleto, ACBrBoletoFCFR, ACBrBase;
+  SysUtils, Classes, ACBrBoleto, ACBrBoletoFCFR, ACBrBase, ACBrMail;
 
 type
   TdmFast = class(TDataModule)
     ACBrBoleto: TACBrBoleto;
     ACBrBoletoReport: TACBrBoletoFCFR;
+	ACBrMail1: TACBrMail;
   private
     { Private declarations }
   public

@@ -44,14 +44,35 @@ uses
   Masks, LCLIntf, LCLType, LMessages,
 {$ENDIF}
   Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, ComCtrls, MaskEdit,
+  Dialogs, StdCtrls, ExtCtrls, ComCtrls, MaskEdit, IniFiles,
   uDMForte,
-  ACBrBase, ACBrBoleto, ACBrUtil,
+  ACBrBase, ACBrBoleto, ACBrUtil, ACBrMail, ACBrUtil.FilesIO,
 //  {$IFDEF VER150} ComCtrls,{$ENDIF}
   ACBrBoletoConversao, ACBrBoletoRetorno;
 
 type
+
+  { TfrmDemo }
+
   TfrmDemo = class(TForm)
+    btnEnviarEmail: TButton;
+    chkTLS: TCheckBox;
+    chkSSL: TCheckBox;
+    chkMostrarSenha: TCheckBox;
+    edtFrom: TEdit;
+    edtFromName: TEdit;
+    edtHost: TEdit;
+    edtPort: TEdit;
+    edtUserName: TEdit;
+    edtPassWord: TEdit;
+    Label72: TLabel;
+    Label73: TLabel;
+    Label74: TLabel;
+    Label75: TLabel;
+    Label76: TLabel;
+    Label77: TLabel;
+    Label78: TLabel;
+    Label79: TLabel;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
@@ -167,6 +188,7 @@ type
     Label31: TLabel;
     cbxImprimirVersoFatura: TCheckBox;
     PageControl2: TPageControl;
+    TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
     edtCidade: TEdit;
@@ -217,7 +239,6 @@ type
     btnImpressaoHTML: TButton;
     btnImpressaoPDF: TButton;
     btnImpressaoSpooler: TButton;
-    btnEnviarEmail: TButton;
     btnImpressaoStream: TButton;
     edtPathRemessa: TEdit;
     Label65: TLabel;
@@ -245,6 +266,7 @@ type
     procedure Button5Click(Sender: TObject);
     procedure btnGerarRemessaClick(Sender: TObject);
     procedure btnImpressaoSpoolerClick(Sender: TObject);
+    procedure chkMostrarSenhaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure cbxLayOutChange(Sender: TObject);
@@ -257,6 +279,7 @@ type
     procedure btnImpressaoStreamClick(Sender: TObject);
     procedure btnRetornoClick(Sender: TObject);
     procedure btnWSConsultaClick(Sender: TObject);
+    procedure Label79Click(Sender: TObject);
   private
     dm: TdmForte;
     { Private declarations }
@@ -271,6 +294,8 @@ type
     procedure LerIniComponente;
     procedure AplicarConfiguracoesAoComponente;
     procedure AplicarConfiguracoesComponenteATela;
+    procedure AplicarConfiguracoesEmailNaTela(IniConfig: TMemIniFile);
+    procedure AplicarConfiguracoesComponenteEmail;
   public
     { Public declarations }
   end;
@@ -291,18 +316,44 @@ Uses TypInfo, DateUtils, pcnConversao, ACBrDFeSSL;
 procedure TfrmDemo.GravarIniComponente;
 var
   xPath, xArquivo : String;
+  IniFile: TMemIniFile;
 begin
   xPath    := ExtractFilePath(ParamStr(0));
   xArquivo := ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
   dm.ACBrBoleto.GravarConfiguracao(xPath,xArquivo);
+
+  IniFile := TMemIniFile.Create(xPath+xArquivo);
+  try
+    IniFile.WriteString('EMAIL', 'FromEmail', edtFrom.Text);
+    IniFile.WriteString('EMAIL', 'FromName' , edtFromName.Text);
+    IniFile.WriteString('EMAIL', 'Host', edtHost.Text);
+    IniFile.WriteString('EMAIL', 'Port', edtPort.Text);
+    IniFile.WriteBool('EMAIL', 'SSL', chkSSL.Checked);
+    IniFile.WriteBool('EMAIL', 'TLS', chkTLS.Checked);
+    IniFile.WriteString('EMAIL', 'UserName', edtUserName.Text);
+    IniFile.WriteString('EMAIL', 'PassWord', edtPassword.Text);
+    IniFile.WriteBool('EMAIL', 'MostrarSenha', chkMostrarSenha.Checked);
+    IniFile.UpdateFile;
+
+  finally
+    IniFile.FRee;
+  end;
 end;
 
 procedure TfrmDemo.LerIniComponente;
 var xArquivo : String;
+  IniFile: TMemIniFile;
 begin
   xArquivo := ExtractFilePath(ParamStr(0)) + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
   if (FileExists(xArquivo)) then
     dm.ACBrBoleto.LerConfiguracao(xArquivo);
+
+  IniFile := TMemIniFile.Create(xArquivo);
+  try
+    AplicarConfiguracoesEmailNaTela(IniFile);
+  finally
+    IniFile.Free;
+  end;
 end;
 
 procedure TfrmDemo.AplicarConfiguracoesAoComponente;
@@ -391,6 +442,8 @@ begin
   BeneficiarioWS.IndicadorPix := chkIndicadorPix.Checked;
   WebService.Ambiente         := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
   WebService.SSLHttpLib       := TSSLHttpLib(cbxSSLLib.ItemIndex);
+
+  AplicarConfiguracoesComponenteEmail;
 end;
 
 procedure TfrmDemo.AplicarConfiguracoesComponenteATela;
@@ -446,6 +499,38 @@ begin
   edtKeyUser.Text           := BeneficiarioWS.KeyUser;
   chkIndicadorPix.Checked   := BeneficiarioWS.IndicadorPix;
   edtScope.Text             := BeneficiarioWS.Scope;
+end;
+
+procedure TfrmDemo.AplicarConfiguracoesEmailNaTela(IniConfig: TMemIniFile);
+begin
+  edtFrom.Text := IniConfig.ReadString('EMAIL', 'FromEmail', '');
+  edtFromName.Text := IniConfig.ReadString('EMAIL', 'FromName', '');
+  edtHost.Text := IniConfig.ReadString('EMAIL', 'Host', '');
+  edtPort.Text := IniConfig.ReadString('EMAIL', 'Port', '');
+  chkTLS.Checked := IniConfig.ReadBool('EMAIL', 'TLS', True);
+  chkSSL.Checked := IniConfig.ReadBool('EMAIL', 'SSL', True);
+  edtUserName.Text := IniConfig.ReadString('EMAIL', 'UserName', '');
+  edtPassword.Text := IniConfig.ReadString('EMAIL', 'PassWord', '');
+  chkMostrarSenha.Checked := IniConfig.ReadBool('EMAIL', 'MostrarSenha', False);
+
+  chkMostrarSenhaClick(chkMostrarSenha);
+  AplicarConfiguracoesComponenteEmail;
+end;
+
+procedure TfrmDemo.AplicarConfiguracoesComponenteEmail;
+var
+  Mail: TACBrMail;
+begin
+  Mail := dm.ACBrMail1;
+
+  Mail.From := edtFrom.Text;
+  Mail.FromName := edtFromName.Text;
+  Mail.Host := edtHost.Text;
+  Mail.Port := edtPort.Text;
+  Mail.SetTLS := chkTLS.Checked;
+  Mail.SetSSL := chkSSL.Checked;
+  Mail.Username := edtUserName.Text;
+  Mail.Password := edtPassword.Text;
 end;
 
 procedure TfrmDemo.btnLerRetornoClick(Sender: TObject);
@@ -625,6 +710,14 @@ begin
    end; }
 end;
 
+procedure TfrmDemo.chkMostrarSenhaClick(Sender: TObject);
+begin
+  if chkMostrarSenha.Checked then
+    edtPassword.PasswordChar := #0
+  else
+    edtPassword.PasswordChar := '@';
+end;
+
 procedure TfrmDemo.FormCreate(Sender: TObject);
 var
   I: TACBrBolLayOut;
@@ -657,7 +750,7 @@ begin
   edtPathRetorno.Text := ExtractFilePath(ParamStr(0))+'Retorno';
 end;
 
-procedure TfrmDemo.carregarBancos;
+procedure TfrmDemo.CarregarBancos;
 var
   Banco: TACBrTipoCobranca;
 begin
@@ -820,6 +913,11 @@ begin
     end;
   end;
   showMessage('Fim');
+end;
+
+procedure TfrmDemo.Label79Click(Sender: TObject);
+begin
+  OpenURL('https://www.projetoacbr.com.br/forum/topic/56101-configura%C3%A7%C3%B5es-do-acbrmail-para-os-principais-servi%C3%A7os-de-emails-do-mercado/');
 end;
 
 {

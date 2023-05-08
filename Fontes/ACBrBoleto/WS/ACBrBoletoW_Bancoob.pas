@@ -320,8 +320,8 @@ begin
       Json.Add('especieDocumento').Value.AsString                 := aTitulo.EspecieDoc;
       Json.Add('dataEmissao').Value.AsString                      := DateTimeToDateBancoob(aTitulo.DataDocumento);
       Json.Add('nossoNumero').Value.AsString                      := OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo));
-      Json.Add('seuNumero').Value.asString                        := OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)); //ATitulo.SeuNumero;
-      Json.Add('identificacaoBoletoEmpresa').Value.AsString       := OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo));
+      Json.Add('seuNumero').Value.asString                        := IfThen(ATitulo.SeuNumero <> '', ATitulo.SeuNumero, OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)));
+      Json.Add('identificacaoBoletoEmpresa').Value.AsString       := IfThen(ATitulo.SeuNumero <> '', ATitulo.SeuNumero, OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)));
       Json.Add('identificacaoEmissaoBoleto').Value.AsInteger      := 1;
       Json.Add('identificacaoDistribuicaoBoleto').Value.AsInteger := 1;
       Json.Add('valor').Value.asNumber                            := aTitulo.ValorDocumento;

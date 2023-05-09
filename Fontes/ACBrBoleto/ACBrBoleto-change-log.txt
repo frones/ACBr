@@ -48,9 +48,14 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+09/05/2023
+[-]TK-3805 Boleto Sicoob via WebService - LerRetorno
+   por: Victor H Gonzales - Pandaaa / mlgoncalves
+
 08/05/2023
 [-]TK-3897 Boleto Sicoob via WebService - SeuNumero
-  por Victor H Gonzales - Pandaaa / mlgoncalves
+  por: Victor H Gonzales - Pandaaa / mlgoncalves
 
 05/05/2023
 [-] TK-3540-1 Ajuste SicoobWS Dominio Juros

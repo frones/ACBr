@@ -133,10 +133,12 @@ begin
             for x := 0 to aJsonViolacoes.Count -1 do
             begin
               aJsonViolacao        := aJsonViolacoes[x].AsObject;
-			  aJsonViolacoes       := aJsonViolacao['status'].AsArray;
-              ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-              ARejeicao.Codigo     := aJsonViolacao.Values['codigo'].AsString;
-              ARejeicao.mensagem   := aJsonViolacao.Values['mensagem'].AsString;  
+              if (aJSonViolacao.Values['status'].AsObject.Values['codigo'].AsString <> '200') then
+              begin
+                ARejeicao            := ARetornoWS.CriarRejeicaoLista;
+                ARejeicao.Codigo     := aJsonViolacao.Values['codigo'].AsString;
+                ARejeicao.mensagem   := aJsonViolacao.Values['mensagem'].AsString;  
+              end;
             end;
           end;
           400,406,500 :

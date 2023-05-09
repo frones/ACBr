@@ -44,6 +44,10 @@ Símbolo : Significado
 
 09/05/2023
 -- ACBrNFSeXServicos.ini --
+[+] Incluída as cidades: Rondon/PR, Prado Ferreira/PR, Lupionópolis/PR, 
+    Rancho Alegre/PR e Cafeara/PR - Provedor: SysISS
+  Por: Everson Clei
+-- ACBrNFSeXServicos.ini --
 [*] A cidade de Macapa/AP trocou de provedor, agora é ISSNet na versão 2.04
   Por: Milton Campanhã 
 

@@ -136,8 +136,8 @@ begin
               if (aJSonViolacao.Values['status'].AsObject.Values['codigo'].AsString <> '200') then
               begin
                 ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-                ARejeicao.Codigo     := aJsonViolacao.Values['codigo'].AsString;
-                ARejeicao.mensagem   := aJsonViolacao.Values['mensagem'].AsString;  
+                ARejeicao.Codigo     := aJSonViolacao.Values['status'].AsObject.Values['codigo'].AsString;
+                ARejeicao.mensagem   := aJSonViolacao.Values['status'].AsObject.Values['mensagem'].AsString;
               end;
             end;
           end;

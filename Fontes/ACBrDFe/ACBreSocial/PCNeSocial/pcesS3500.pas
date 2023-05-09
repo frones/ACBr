@@ -228,8 +228,11 @@ begin
     Gerador.wGrupo('ideProcTrab');
 
     Gerador.wCampo(tcStr, '', 'nrProcTrab' ,  20, 20, 1, self.InfoExclusao.ideProcTrab.nrProcTrab);
-    Gerador.wCampo(tcStr, '', 'cpfTrab'    ,  11, 11, 0, self.InfoExclusao.ideProcTrab.cpfTrab);
-    Gerador.wCampo(tcStr, '', 'perApurPgto',   7,  7, 0, self.InfoExclusao.ideProcTrab.perApurPgto);
+
+    if self.InfoExclusao.tpEvento = teS2500 then
+      Gerador.wCampo(tcStr, '', 'cpfTrab'    ,  11, 11, 1, self.InfoExclusao.ideProcTrab.cpfTrab)
+    else if self.InfoExclusao.tpEvento = teS2501 then
+      Gerador.wCampo(tcStr, '', 'perApurPgto',   7,  7, 1, self.InfoExclusao.ideProcTrab.perApurPgto);
 
     Gerador.wGrupo('/ideProcTrab');
     Gerador.wGrupo('/infoExclusao');

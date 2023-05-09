@@ -138,6 +138,7 @@ SoftPlan             1.00
 SpeedGov             1.00
 SSInformatica        2.03
 Sudoeste             2.02
+SysISS               2.02
 SystemPro            2.01
 TcheInfo             2.04
 Tecnos               2.01

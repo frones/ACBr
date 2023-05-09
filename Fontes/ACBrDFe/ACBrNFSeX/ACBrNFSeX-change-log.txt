@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/05/2023
+-- Diversos --
+[+] Implementado o Provedor: SysISS - versão 2.02 do layout da ABRASF.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída as cidades: Rondon/PR, Prado Ferreira/PR, Lupionópolis/PR, 
     Rancho Alegre/PR e Cafeara/PR - Provedor: SysISS

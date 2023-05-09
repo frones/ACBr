@@ -274,6 +274,7 @@ begin
   FNFSeConfig.ChaveCryptINI := AChaveCrypt;
 
   FDANFSeConfig := TDANFSeReportConfig.Create;
+  FNFSeConfig.WebServices.LerParams;
 end;
 
 destructor TLibNFSeConfig.Destroy;

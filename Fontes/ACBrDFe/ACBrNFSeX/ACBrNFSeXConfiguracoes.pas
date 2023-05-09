@@ -438,20 +438,6 @@ begin
   if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
     ACBrNFSeXLocal.LerCidades;
 
-  if fpConfiguracoes <> ACBrNFSeXLocal.Configuracoes then
-  begin
-    // Necessário para LIB.
-    fpConfiguracoes.WebServices.Params.BeginUpdate;
-    try
-      fpConfiguracoes.WebServices.Params.Clear;
-      fpConfiguracoes.WebServices.Params.AddStrings(ACBrNFSeXLocal.Configuracoes.WebServices.Params);
-    finally
-      fpConfiguracoes.WebServices.Params.EndUpdate;
-    end;
-  end;
-
-
-
   // ===========================================================================
   // Verifica se o código IBGE consta no arquivo: ACBrNFSeXServicos
   // se encontrar carrega os parâmetros definidos.

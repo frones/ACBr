@@ -60,7 +60,7 @@ type
     FDANFSE: TACBrNFSeXDANFSeClass;
     FNotasFiscais: TNotasFiscais;
     FStatus: TStatusACBrNFSe;
-    fpCidadesJaCarregadas: Boolean;
+//    fpCidadesJaCarregadas: Boolean; //Não precisa desse campo. Já existe o FPIniParamsCarregado.
     FWebService: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesNFSe;
@@ -232,7 +232,7 @@ begin
   FNotasFiscais := TNotasFiscais.Create(Self);
   FWebService := TWebservices.Create;
 
-  fpCidadesJaCarregadas := False;
+  //fpCidadesJaCarregadas := False;
 end;
 
 destructor TACBrNFSeX.Destroy;
@@ -371,11 +371,11 @@ end;
 
 procedure TACBrNFSeX.LerCidades;
 begin
-  if not fpCidadesJaCarregadas then
-  begin
+  //if not fpCidadesJaCarregadas then
+  //begin
     LerParamsIni(True);
-    fpCidadesJaCarregadas := True;
-  end;
+  //  fpCidadesJaCarregadas := True;
+  //end;
 end;
 
 procedure TACBrNFSeX.SetStatus(const stNewStatus: TStatusACBrNFSe);

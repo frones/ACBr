@@ -46,7 +46,10 @@ interface
 uses
   Classes, SysUtils, math, Graphics,
   RLReport, RLPrinters, RLPDFFilter,
-  ACBrDFeReport;
+  ACBrDFeReport
+	{$IFDEF DELPHI14_UP}// delphi 2010 pra cima existe
+	,pngimage           
+	{$ENDIF}	;
 
 type
   TDFeReportFortes = class

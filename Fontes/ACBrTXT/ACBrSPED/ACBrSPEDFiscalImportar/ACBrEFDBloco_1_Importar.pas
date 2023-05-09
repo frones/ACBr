@@ -47,6 +47,10 @@ type
   private
     procedure Reg1001;
     procedure Reg1010;
+    procedure Reg1200;
+    procedure Reg1210;
+    procedure Reg1250;
+    procedure Reg1255;
     procedure Reg1300;
     procedure Reg1310;
     procedure Reg1320;
@@ -87,6 +91,10 @@ begin
 
   if (vHead = '1001')      then Reg1001
   else if (vHead = '1010') then Reg1010
+  else if (vHead = '1200') then Reg1200
+  else if (vHead = '1210') then Reg1210
+  else if (vHead = '1250') then Reg1250
+  else if (vHead = '1255') then Reg1255
   else if (vHead = '1300') then Reg1300
   else if (vHead = '1310') then Reg1310
   else if (vHead = '1320') then Reg1320
@@ -135,6 +143,55 @@ begin
     IND_GIAF3 := Valor;
     IND_GIAF4 := Valor;
     IND_REST_RESSARC_COMPL_ICMS := Valor;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1200;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1200New do
+  begin
+    COD_AJ_APUR := Valor;
+    SLD_CRED := ValorF;
+    CRED_APR := ValorF;
+    CRED_RECEB := ValorF;
+    CRED_UTIL := ValorF;
+    SLD_CRED_FIM := ValorF;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1210;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1210New do
+  begin
+    TIPO_UTIL := Valor;
+    NR_DOC := Valor;
+    VL_CRED_UTIL := ValorF;
+    CHV_DOCe := Valor;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1250;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1250New do
+  begin
+    VL_CREDITO_ICMS_OP := ValorF;
+    VL_ICMS_ST_REST := ValorF;
+    VL_FCP_ST_REST := ValorF;
+    VL_ICMS_ST_COMPL := ValorF;
+    VL_FCP_ST_COMPL := ValorF;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1255;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1255New do
+  begin
+    COD_MOT_REST_COMPL := Valor;
+    VL_CREDITO_ICMS_OP_MOT := ValorF;
+    VL_ICMS_ST_REST_MOT := ValorF;
+    VL_FCP_ST_REST_MOT := ValorF;
+    VL_ICMS_ST_COMPL_MOT := ValorF;
+    VL_FCP_ST_COMPL_MOT := ValorF;
   end;
 end;
 

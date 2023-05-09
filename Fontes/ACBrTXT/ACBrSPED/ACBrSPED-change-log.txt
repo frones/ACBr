@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2023
+-- ACBrEFDBloco_1_Importar, ACBrEFDBloco_C_Importar --
+[*] Adiciona a geração dos blocos 1200, 1210, 1250, 1255 e C177.
+  Por: Ricardo Greco / Revisão: Alexandre de Paula 
+
 17/04/2023
 -- ACBrECFBloco_0_Class.pas, ACBrECFBloco_Y_Class --
 [*] Alteração para considerar do último leiaute que houve alteração em diante para levar os Registros: 0010, 0020 e Y800

@@ -456,6 +456,7 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC177;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC177New do
   begin
+    COD_INF_ITEM := Valor;
   end;
 end;
 

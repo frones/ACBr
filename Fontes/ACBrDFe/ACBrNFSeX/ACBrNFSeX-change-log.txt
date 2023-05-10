@@ -48,6 +48,8 @@ Símbolo : Significado
   Por: willians.wsac
 [*] A cidade de Getulio Vargas/RS mudou a versão para a 2.03, provedor ainda é o Pronim.
   Por: Doglas Stumpf
+[*] Incluida a cidade de Xambioá/TO, provedor é o WebISS na versão 2.03
+  Por: maxdatasistema
 
 09/05/2023
 -- Diversos --

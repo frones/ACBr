@@ -46,6 +46,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Avara/SP trocou de provedor, agora é Fiorilli.
   Por: willians.wsac
+[*] A cidade de Getulio Vargas/RS mudou a versão para a 2.03, provedor ainda é o Pronim.
+  Por: Doglas Stumpf
 
 09/05/2023
 -- Diversos --

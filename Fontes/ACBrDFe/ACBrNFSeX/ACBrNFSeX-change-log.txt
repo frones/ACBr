@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/05/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade: Camaçari/BA - Provedor: ISSCamacari
+  Por: Raphael BLC
+
 10/05/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Avara/SP trocou de provedor, agora é Fiorilli.

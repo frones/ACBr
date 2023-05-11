@@ -107,6 +107,7 @@ uses
   Giss.Provider,
   GovDigital.Provider,
   iiBrasil.Provider,
+  ISSCamacari.Provider,
   ISSDigital.Provider,
   ISSe.Provider,
   ISSGoiania.Provider,
@@ -375,8 +376,10 @@ begin
 
       proISSBarueri: Result := TACBrNFSeProviderISSBarueri.Create(ACBrNFSe);
 
-      proISSCambe:
-        Result := TACBrNFSeProviderISSCambe.Create(ACBrNFSe);
+      proISSCamacari:
+        Result := TACBrNFSeProviderISSCamacari201.Create(ACBrNFSe);
+
+      proISSCambe: Result := TACBrNFSeProviderISSCambe.Create(ACBrNFSe);
 
       proISSCuritiba:
         Result := TACBrNFSeProviderISSCuritiba.Create(ACBrNFSe);

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/05/2023
+-- Diversos --
+[+] Implementado o Provedor: ISSCamacari - versão 2.01 do layout da ABRASF.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluída a cidade: Camaçari/BA - Provedor: ISSCamacari
   Por: Raphael BLC

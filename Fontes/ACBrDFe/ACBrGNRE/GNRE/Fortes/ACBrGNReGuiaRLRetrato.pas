@@ -377,19 +377,22 @@ begin
   // 1ª Via
   RLLabel18.Caption := FGNRe.DocDestinatario;
   RLLabel26.Caption := IntToStrZero(FGNRe.Parcela,3);
-  RLLabel28.Caption := FormatFloat('R$ ,0.00', FGNRe.ValorPrincICMS +
-                                               FGNRe.ValorFECP);
+  RLLabel28.Caption := FormatFloat('R$ ,0.00', FGNRe.ValorPrincipal);
   RLLabel30.Caption := IfThen(FGNRe.AtualizacaoMonetaria = 0 , '' ,
                               FormatFloat('R$ ,0.00', FGNRe.AtualizacaoMonetaria));
   RLLabel32.Caption := IfThen(FGNRe.Juros = 0 , '' ,
                               FormatFloat('R$ ,0.00', FGNRe.Juros));
   RLLabel34.Caption := IfThen(FGNRe.Multa = 0 , '' ,
                               FormatFloat('R$ ,0.00', FGNRe.Multa));
+
+  RLLabel36.Caption := FormatFloat('R$ ,0.00', FGNRe.valorGNRE);
+{
   RLLabel36.Caption := FormatFloat('R$ ,0.00', (FGNRe.ValorPrincICMS +
                                                 FGNRe.ValorFECP +
                                                 FGNRe.AtualizacaoMonetaria +
                                                 FGNRe.Juros +
                                                 FGNRe.Multa));
+}
   RLMemo2.Visible := FGNRe.InfoCabec.Ambiente = 9;
 
   // 2ª Via

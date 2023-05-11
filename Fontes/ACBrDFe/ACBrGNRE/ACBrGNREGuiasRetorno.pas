@@ -282,11 +282,7 @@ begin
       GNRERetorno.SituacaoGuia          := Leitor.rCampo(tcStr, 'situacaoGuia');
       GNRERetorno.UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
       GNRERetorno.tipoGnre              := Leitor.rCampo(tcStr, 'tipoGnre');
-      {
-        a tag valorGNRE sempre vai estar presente no XML da Guia retornado
-        pelo webservice.
-      }
-      GNRERetorno.ValorPrincipal        := Leitor.rCampo(tcDe2, 'valorGNRE');
+      GNRERetorno.valorGNRE             := Leitor.rCampo(tcDe2, 'valorGNRE');
       GNRERetorno.DataLimitePagamento   := DateToStr(Leitor.rCampo(tcDat, 'dataLimitePagamento'));
       GNRERetorno.IdentificadorGuia     := Leitor.rCampo(tcInt, 'identificadorGuia');
       GNRERetorno.NumeroControle        := Leitor.rCampo(tcStr, 'nossoNumero');
@@ -395,20 +391,9 @@ begin
             }
             if Leitor.rAtributo('tipo=', 'valor') = '11' then
               GNRERetorno.ValorPrincICMS := Leitor.rCampo(tcDe2, 'valor');
-{
-            if GNRERetorno.ValorPrincICMS <> 0 then
-              GNRERetorno.ValorPrincipal := GNRERetorno.ValorPrincICMS
-            else
-              GNRERetorno.ValorPrincipal := ValorTotal;
-}
+
             if Leitor.rAtributo('tipo=', 'valor') = '12' then
               GNRERetorno.ValorFECP := Leitor.rCampo(tcDe2, 'valor');
-
-            {
-              a linha abaixo foi comentada para gerar a Gria corretamente.
-              03/05/2023 - Italo Giurizzato Junior
-            }
-//            GNRERetorno.ValorPrincipal := GNRERetorno.ValorPrincipal - GNRERetorno.ValorFECP;
 
             if Leitor.rAtributo('tipo=', 'valor') = '21' then
               GNRERetorno.ValorICMS := Leitor.rCampo(tcDe2, 'valor');
@@ -436,6 +421,9 @@ begin
 
             Inc(k);
           end;
+
+          GNRERetorno.ValorPrincipal := GNRERetorno.ValorPrincICMS +
+                                        GNRERetorno.ValorFECP;
 
           if Leitor.rExtrai(Nivel, 'contribuinteDestinatario') <> '' then
           begin

@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/05/2023
+-- Diversos --
+[*] Remoção de regras de negócio na impressão da Guia em Fortes Report.
+   Por: Italo Giurizzato Junior
+
 05/05/2023
 -- Diversos --
 [*] Alteração para imprimir a guia na versão 2.00 corretamente independente se 

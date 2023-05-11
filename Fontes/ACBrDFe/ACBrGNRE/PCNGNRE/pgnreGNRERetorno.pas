@@ -98,6 +98,7 @@ type
     FMultaICMS: Currency;
     FValorFECP: Currency;
     FValorPrincICMS: Currency;
+    FvalorGNRE: Currency;
   public
     constructor Create;
     destructor Destroy; override;
@@ -157,6 +158,7 @@ type
     property AtualMonetICMS: Currency read FAtualMonetICMS write FAtualMonetICMS;
     property AtualMonetFECP: Currency read FAtualMonetFECP write FAtualMonetFECP;
     property ValorPrincICMS: Currency read FValorPrincICMS write FValorPrincICMS;
+    property valorGNRE: Currency read FvalorGNRE write FvalorGNRE;
   end;
 
 implementation
@@ -207,6 +209,7 @@ begin
   FIdentificadorGuia := '';
   FGuiaGeradaContingencia := 0;
   FReservado := '';
+  FvalorGNRE := 0;
   FInfoCabec := TInfoCabec.Create;
 end;
 

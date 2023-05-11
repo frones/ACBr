@@ -730,11 +730,19 @@ end;
 function TCTeStatusServico.TratarResposta: Boolean;
 var
   CTeRetorno: TRetConsStatServ;
+  xTag: string;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteStatusServicoCTResult');
 
   if FPConfiguracoesCTe.Geral.VersaoDF >= ve400 then
-    CTeRetorno := TRetConsStatServ.Create('CTe')
+  begin
+    xTag := 'Cte';
+
+    if FPConfiguracoesCTe.WebServices.UFCodigo in [14, 16, 26, 35] then
+      xTag := 'CTe';
+
+    CTeRetorno := TRetConsStatServ.Create(xTag);
+  end
   else
     CTeRetorno := TRetConsStatServ.Create('Cte');
 

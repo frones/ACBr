@@ -427,7 +427,7 @@ begin
   if Assigned( FBoleto.Configuracoes.Arquivos.OnGravarLog ) then
     FBoleto.Configuracoes.Arquivos.OnGravarLog( AString, Tratado );
 
-  if not Tratado then
+  if Tratado or FBoleto.Configuracoes.Arquivos.LogRegistro then
     GravaLog( AString );
 
 end;

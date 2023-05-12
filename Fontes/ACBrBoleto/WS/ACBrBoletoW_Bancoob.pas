@@ -320,8 +320,17 @@ begin
       Json.Add('especieDocumento').Value.AsString                 := aTitulo.EspecieDoc;
       Json.Add('dataEmissao').Value.AsString                      := DateTimeToDateBancoob(aTitulo.DataDocumento);
       Json.Add('nossoNumero').Value.AsString                      := OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo));
-      Json.Add('seuNumero').Value.asString                        := IfThen(ATitulo.SeuNumero <> '', ATitulo.SeuNumero, OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)));
-      Json.Add('identificacaoBoletoEmpresa').Value.AsString       := IfThen(ATitulo.SeuNumero <> '', ATitulo.SeuNumero, OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)));
+      Json.Add('seuNumero').Value.asString                        := IfThen(ATitulo.NumeroDocumento <> '',
+                                                                       ATitulo.NumeroDocumento,
+                                                                       IfThen(ATitulo.SeuNumero <> '',
+                                                                         ATitulo.SeuNumero,
+                                                                         OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo))
+                                                                       )
+                                                                     );
+      Json.Add('identificacaoBoletoEmpresa').Value.AsString       := IfThen(ATitulo.SeuNumero <> '',
+                                                                       ATitulo.SeuNumero,
+                                                                       OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo))
+                                                                     );
       Json.Add('identificacaoEmissaoBoleto').Value.AsInteger      := 1;
       Json.Add('identificacaoDistribuicaoBoleto').Value.AsInteger := 1;
       Json.Add('valor').Value.asNumber                            := aTitulo.ValorDocumento;
@@ -562,21 +571,21 @@ begin
       end;
 
       case (StrToIntDef(aTitulo.CodigoMora, 0)) of
-        0:    // Isento
+        0,3:    // Isento
           begin
-            AJson.Add('tipoJurosMora').Value.AsInteger :=  0;
+            AJson.Add('tipoJurosMora').Value.AsInteger := 0;
             AJson.Add('valorJurosMora').Value.asNumber := 0;
           end;
         1:     // Dia
           begin
            // AJson.Add('taxa').Value.asNumber := aTitulo.ValorMoraJuros;
-            AJson.Add('tipoJurosMora').Value.AsInteger :=  Integer(aTitulo.CodigoMoraJuros);
+            AJson.Add('tipoJurosMora').Value.AsInteger := Integer(aTitulo.CodigoMora);
             AJson.Add('dataJurosMora').Value.asString  := DateTimeToDateBancoob(aTitulo.DataMulta);
             AJson.Add('valorJurosMora').Value.asNumber := aTitulo.ValorMoraJuros;
           end;
         2: // Mês
           begin
-            AJson.Add('tipoJurosMora').Value.AsInteger :=  Integer(aTitulo.CodigoMoraJuros);
+            AJson.Add('tipoJurosMora').Value.AsInteger := Integer(aTitulo.CodigoMora);
             AJson.Add('dataJurosMora').Value.asString  := DateTimeToDateBancoob(aTitulo.DataMulta);
             AJson.Add('valorJurosMora').Value.asNumber := aTitulo.ValorMoraJuros;
           end;

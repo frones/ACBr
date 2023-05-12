@@ -44,7 +44,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+12/05/2023
+[*]TK-3925 [Atualização FR3 Obrigatória] GNRE FR Valores FCP
+  Por : Victor H Gonzales - Pandaaa
 11/05/2023
 -- Diversos --
 [*] Remoção de regras de negócio na impressão da Guia em Fortes Report.

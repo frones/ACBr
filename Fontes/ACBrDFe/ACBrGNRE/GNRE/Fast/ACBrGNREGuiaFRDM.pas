@@ -137,6 +137,7 @@ begin
     FieldDefs.Add('MesAnoReferencia', ftString, 6);
     FieldDefs.Add('Parcela', ftString, 2);
     FieldDefs.Add('ValorPrincipal', ftFloat);
+    FieldDefs.Add('ValorGNRE', ftFloat);
     FieldDefs.Add('AtualizacaoMonetaria', ftFloat);
     FieldDefs.Add('Juros', ftFloat);
     FieldDefs.Add('Multa', ftFloat);
@@ -205,6 +206,7 @@ begin
       FieldByName('MesAnoReferencia').AsString       := MesAnoReferencia;
       FieldByName('Parcela').AsString                := IntToStr(Parcela);
       FieldByName('ValorPrincipal').AsCurrency       := ValorPrincipal;
+      FieldByName('ValorGNRE').AsCurrency            := ValorGNRE;
       FieldByName('AtualizacaoMonetaria').AsCurrency := AtualizacaoMonetaria;
       FieldByName('Juros').AsCurrency                := Juros;
       FieldByName('Multa').AsCurrency                := Multa;

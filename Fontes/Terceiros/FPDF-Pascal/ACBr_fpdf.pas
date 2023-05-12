@@ -224,7 +224,6 @@ type
 
   TFPDF = class
   private
-    function FloatToStr(Value: Double): String;
     procedure DefineDefaultPageSizes;
     function FindUsedFontIndex(const AFontName: String): Integer;
 
@@ -290,6 +289,7 @@ type
     UseUTF8: boolean;                     // Set True if your compiler uses UTF8 as default (no convertions needed)
     TimeZone: String;                     // TimeZone to be used on Date values
 
+    function FloatToStr(Value: Double): String;
     function ConvertTextToAnsi(const AText: String): String;
     procedure PopulateCoreFonts; virtual;
     function FindUsedImage(const ImageName:String): TFPDFImageInfo;
@@ -307,7 +307,7 @@ type
     function _UTF8toUTF16(const AString: String): WideString;
 
     function _escape(const sText: AnsiString): AnsiString;
-    function _textstring(const AString: String): String;
+    function _textstring(const AString: String): String; virtual;
     function _dounderline(vX, vY: Double; const vText: String): String;
     function _parseimage(vImageStream: TStream; const vImageExt: String): TFPDFImageInfo; overload;
     function _parsejpg(vImageStream: TStream): TFPDFImageInfo;
@@ -316,7 +316,7 @@ type
     procedure _put(const AData: AnsiString);
     function _getoffset: Int64;
     procedure _newobj(vn: Integer = - 1);
-    procedure _putstream(const Adata: AnsiString);
+    procedure _putstream(const Adata: AnsiString); virtual;
     procedure _putstreamobject(const Adata: AnsiString);
     procedure _putlinks(const APage: Integer);
     procedure _putpage(const APage: Integer);
@@ -331,7 +331,7 @@ type
     procedure _putinfo;
     procedure _putcatalog; virtual;
     procedure _putheader;
-    procedure _puttrailer;
+    procedure _puttrailer; virtual;
     procedure _enddoc; virtual;
 
     function GzCompress(const StrIn: AnsiString; CompLevel: TCompressionLevel = clMax): AnsiString;

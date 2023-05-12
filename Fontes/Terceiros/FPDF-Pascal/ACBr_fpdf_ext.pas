@@ -28,14 +28,15 @@
  this Software without prior written authorization from <Projeto ACBr>.
 
  Based on:
- - The FPDF Scripts    - http://www.fpdf.org/en/script/index.php
-   TFPDFScriptCodeEAN  - http://www.fpdf.org/en/script/script5.php  - Olivier
-   TFPDFScriptCode39   - http://www.fpdf.org/en/script/script46.php - The-eh
-   TFPDFScriptCodeI25  - http://www.fpdf.org/en/script/script67.php - Matthias Lau
-   TFPDFScriptCode128  - http://www.fpdf.org/en/script/script88.php - Roland Gautier
-   TFPDFExt.Rotate     - http://www.fpdf.org/en/script/script2.php  - Olivier
-   TFPDFExt.RoundedRect- http://www.fpdf.org/en/script/script35.php - Christophe Prugnaud
-   TFPDFExt.AddLayer   - http://www.fpdf.org/en/script/script97.php - Oliver
+ - The FPDF Scripts       http://www.fpdf.org/en/script/index.php
+   TFPDFScriptCodeEAN     http://www.fpdf.org/en/script/script5.php  - Olivier
+   TFPDFScriptCode39      http://www.fpdf.org/en/script/script46.php - The-eh
+   TFPDFScriptCodeI25     http://www.fpdf.org/en/script/script67.php - Matthias Lau
+   TFPDFScriptCode128     http://www.fpdf.org/en/script/script88.php - Roland Gautier
+   TFPDFExt.Rotate        http://www.fpdf.org/en/script/script2.php  - Olivier
+   TFPDFExt.RoundedRect   http://www.fpdf.org/en/script/script35.php - Christophe Prugnaud
+   TFPDFExt.AddLayer      http://www.fpdf.org/en/script/script97.php - Oliver
+   TFPDFExt.SetProtection http://www.fpdf.org/en/script/script37.php - Klemen Vodopivec
 
 - Free JPDF Pascal from Jean Patrick e Gilson Nunes
    https://github.com/jepafi/Free-JPDF-Pascal
@@ -43,8 +44,9 @@
 
 unit ACBr_fpdf_ext;
 
-// Define USE_SYNAPSE if you want to force use of Unit synapse.pas
-// http://www.ararat.cz/synapse
+// Define USE_SYNAPSE if you want to force use of Units from synapse
+//   Used from HTTPS downlaod em PDF Protection Script  (password)
+//   http://www.ararat.cz/synapse
 {$DEFINE USE_SYNAPSE}
 
 // If you don't want the AnsiString vs String warnings to bother you
@@ -53,6 +55,10 @@ unit ACBr_fpdf_ext;
 // If you have DelphiZXingQRCode Unit on you LibPath
 // https://github.com/foxitsoftware/DelphiZXingQRCode
 {$DEFINE DelphiZXingQRCode}
+
+{$IfDef USE_SYNAPSE}
+  {$DEFINE HAS_PROTECTION}
+{$EndIf}
 
 {$IfNDef FPC}
   {$IFDEF REMOVE_CAST_WARN}
@@ -95,7 +101,7 @@ uses
   {$EndIf}
   {$IFDEF HAS_HTTP}
    {$IFDEF USE_SYNAPSE}
-    ,httpsend, ssl_openssl
+    ,httpsend, ssl_openssl, synacode
    {$ELSE}
     ,fphttpclient, opensslsockets
    {$ENDIF}
@@ -113,6 +119,16 @@ type
 const
   cDefBarHeight = 8;
   cDefBarWidth = 0.5; //0.35;
+
+type
+  TByteArray = array of Byte;
+  TFPDF2DMatrix = array of TByteArray;
+
+  TFPDFTypePermissions = (canCopy, canPrint, canModify, canAannotForms);
+  TFPDFPermissions = set of TFPDFTypePermissions;
+
+const
+    canAllPermissions = [canCopy, canPrint, canModify, canAannotForms];
 
 type
 
@@ -192,9 +208,6 @@ type
     n: Integer;
   end;
 
-  TByteArray = array of Byte;
-  TFPDF2DMatrix = array of TByteArray;
-
   TFPDFEvent = procedure (APDF: TFPDF) of object;
 
   { TFPDFExt }
@@ -211,19 +224,47 @@ type
     {$IfDef HAS_HTTP}
      procedure GetImageFromURL(const aURL: string; const aResponse: TStream);
     {$EndIf}
+
+    {$IfDef HAS_PROTECTION}
+    function CreateUniqID: AnsiString;
+    procedure _generateencryptionkey(const UserPass: AnsiString;
+      const OwnerPass: AnsiString; protection: Integer);
+    function _md5_16(AStr: AnsiString): AnsiString;
+    function packVXxx(vn: Integer): AnsiString;
+    function _objectkey(vn: Integer): AnsiString;
+    function _Ovalue(const UserPass: AnsiString; const OwnerPass: AnsiString
+      ): AnsiString;
+    function _Uvalue: AnsiString;
+    function RC4(const AKey: AnsiString; const AData: AnsiString): AnsiString;
+    {$EndIf}
   protected
     angle: Double;
     layers: array of TFPDFLayer;
     current_layer: Integer;
     open_layer_pane: Boolean;
 
+    encrypted: Boolean;
+    padding: String;
+    encryption_key: AnsiString;
+    Uvalue: AnsiString;             //U entry in pdf document
+    Ovalue: AnsiString;             //O entry in pdf document
+    Pvalue: Integer;                //P entry in pdf document
+    enc_obj_id: Integer;            //encryption object id
+    last_key: AnsiString;
+    last_state: array[0..255] of Byte;
+
     procedure Header; override;
     procedure Footer; override;
     procedure _endpage; override;
+    procedure _putstream(const Adata: AnsiString); override;
+    function _textstring(const AString: String): String; override;
+    procedure _putencryption;
+
     procedure _putresourcedict; override;
     procedure _putresources; override;
     procedure _putlayers;
     procedure _putcatalog; override;
+    procedure _puttrailer; override;
     procedure _enddoc; override;
 
     procedure _Arc(vX1, vY1, vX2, vY2, vX3, vY3: Double);
@@ -240,6 +281,11 @@ type
     procedure BeginLayer(const LayerName: String); overload;
     procedure EndLayer;
     procedure OpenLayerPane;
+
+    {$IfDef HAS_PROTECTION}
+    procedure SetProtection(Permissions: TFPDFPermissions;
+      const UserPass: AnsiString = ''; const OwnerPass: AnsiString = '');
+    {$EndIf}
 
     {$IfDef HAS_HTTP}
     procedure Image(const vFileOrURL: string; vX: double = -9999;
@@ -274,10 +320,12 @@ type
     property ProxyPass: string read fProxyPass write fProxyPass;
   end;
 
+
 implementation
 
 uses
   Math, StrUtils;
+
 
 { TFPDFScripts }
 
@@ -918,6 +966,17 @@ begin
   SetLength(layers,0);
   current_layer := -1;
   open_layer_pane := False;
+
+  encrypted := false;
+  padding := #$28#$BF#$4E#$5E#$4E#$75#$8A#$41#$64#$00#$4E#$56#$FF#$FA#$01#$08+
+             #$2E#$2E#$00#$B6#$D0#$68#$3E#$80#$2F#$0C#$A9#$FE#$64#$53#$69#$7A;
+  encryption_key := '';
+  Uvalue := '';
+  Ovalue := '';
+  Pvalue := 0;
+  enc_obj_id := 0;
+  last_key := '';
+  FillChar(last_state, 256, 0);
 end;
 
 { http://www.fpdf.org/en/script/script2.php - Olivier }
@@ -1075,6 +1134,162 @@ procedure TFPDFExt.OpenLayerPane();
 begin
   Self.open_layer_pane := true;
 end;
+
+{$IfDef HAS_PROTECTION}
+procedure TFPDFExt.SetProtection(Permissions: TFPDFPermissions;
+  const UserPass: AnsiString; const OwnerPass: AnsiString);
+var
+  protection: Integer;
+  op: AnsiString;
+begin
+  protection := 192;
+  if (canPrint in Permissions) then
+    Inc(protection, 4);
+  if (canModify in Permissions) then
+    Inc(protection, 8);
+  if (canCopy in Permissions) then
+    Inc(protection, 16);
+  if (canAannotForms in Permissions) then
+    Inc(protection, 32);
+
+  if (OwnerPass = '') then
+    op := CreateUniqID
+  else
+    op := OwnerPass;
+
+  Self.encrypted := true;
+  _generateencryptionkey(UserPass, op, protection);
+end;
+
+function TFPDFExt.CreateUniqID: AnsiString;
+var
+  guid: TGUID;
+begin
+  if (CreateGUID(guid) = 0) then
+  begin
+    Result := GUIDToString(guid);
+    Result := StringReplace(Result, '-', '', [rfReplaceAll]);
+    Result := copy(Result, 2, Length(Result)-2);
+  end
+  else
+    Result := '';
+end;
+
+procedure TFPDFExt._generateencryptionkey(const UserPass: AnsiString;
+  const OwnerPass: AnsiString; protection: Integer);
+var
+  up, op, tmp: AnsiString;
+begin
+  // Pad passwords
+  up := Copy(UserPass+Self.padding, 1, 32);
+  op := Copy(OwnerPass+Self.padding, 1, 32);
+  // Compute O value
+  Self.Ovalue := _Ovalue(up, op);
+  // Compute encyption key
+  tmp := _md5_16(up + Self.Ovalue + chr(protection) + chr(255)+chr(255)+chr(255));
+  Self.encryption_key := Copy(tmp,1,5);
+  // Compute U value
+  Self.Uvalue := _Uvalue();
+  // Compute P value
+  Self.Pvalue := -((protection xor 255)+1);
+end;
+
+function TFPDFExt._md5_16(AStr: AnsiString): AnsiString;
+begin
+  result := md5(AStr);
+end;
+
+function TFPDFExt.packVXxx(vn: Integer): AnsiString;
+begin
+  // https://gist.github.com/pifantastic/290042/548987bc88501ad48cf3efdc71ef65e77b9d85eb
+  Result := chr(vn and $000000FF);
+  Result := Result + chr((vn shr 8) and $000000ff);
+  Result := Result + chr((vn shr 16) and $000000ff);
+  Result := Result + chr(0) + chr(0);
+end;
+
+// Compute key depending on object number where the encrypted data is stored
+function TFPDFExt._objectkey(vn: Integer): AnsiString;
+begin
+  Result := Copy(_md5_16( Self.encryption_key + packVXxx(vn)), 1, 10);
+end;
+
+function TFPDFExt._Ovalue(const UserPass: AnsiString; const OwnerPass: AnsiString): AnsiString;
+var
+  tmp, owner_RC4_key: AnsiString;
+begin
+  tmp := _md5_16(OwnerPass);
+  owner_RC4_key := copy(tmp, 1, 5);
+  Result := RC4(owner_RC4_key, UserPass);
+end;
+
+function TFPDFExt._Uvalue(): AnsiString;
+begin
+  Result := RC4(Self.encryption_key, Self.padding);
+end;
+
+function TFPDFExt.RC4(const AKey: AnsiString; const AData: AnsiString): AnsiString;
+var
+  kd: AnsiString;
+  st: array [0..255] of Byte;
+  l, j, i: Integer;
+  t, a, b, kp: Byte;
+  ch: Char;
+
+  Function DupeString(const AText: AnsiString; ACount: Integer): AnsiString;
+  var
+    i, l: Integer;
+  begin
+    Result:='';
+    if (ACount < 1) then
+      Exit;
+
+    l := length(AText);
+    SetLength(Result ,ACount*l);
+    for i := 0 to ACount-1 do
+      move(AText[1], Result[l*i+1], l);
+  end;
+
+begin
+  if (AKey <> Self.last_key) then
+  begin
+    l := Ceil(256/Length(AKey));
+    kd := DupeString(AKey, l);
+    for i := 0 to 255 do
+      st[i] := i;
+
+    j := 0;
+    for i := 0 to 255 do
+    begin
+      t := st[i];
+      j := (j + t + ord(kd[i+1])) mod 256;
+      st[i] := st[j];
+      st[j] := t;
+    end;
+    Self.last_key := AKey;
+    move(st[0], Self.last_state[0], 256);
+  end
+  else
+    move(Self.last_state[0], st[0], 256);
+
+  l := Length(AData);
+  a := 0;
+  b := 0;
+  Result :='';
+  SetLength(Result, l);
+  for i := 1 to l do
+  begin
+    a := (a+1) mod 256;
+    t := st[a];
+    b := (b+t) mod 256;
+    st[a] := st[b];
+    st[b] := t;
+    kp := st[(st[a]+st[b]) mod 256];
+    ch := chr(ord(AData[i]) xor kp);
+    move(ch, Result[i], 1)
+  end;
+end;
+{$EndIf}
 
 {$IfDef HAS_HTTP}
 procedure TFPDFExt.Image(const vFileOrURL: string; vX: double; vY: double;
@@ -1325,6 +1540,46 @@ begin
   inherited _endpage;
 end;
 
+procedure TFPDFExt._putstream(const Adata: AnsiString);
+{$IfDef HAS_PROTECTION}
+var
+  s: AnsiString;
+{$EndIf}
+begin
+  {$IfDef HAS_PROTECTION}
+   if Self.encrypted then
+     s := RC4(_objectkey(Self.n), Adata)
+   else
+     s := Adata;
+
+   inherited _putstream(s);
+  {$Else}
+   inherited _putstream(Adata);
+  {$EndIf}
+end;
+
+function TFPDFExt._textstring(const AString: String): String;
+{$IfDef HAS_PROTECTION}
+var
+  s: AnsiString;
+{$EndIf}
+begin
+  {$IfDef HAS_PROTECTION}
+   // Format a text string
+   if (not _isascii(AString)) then
+     s := AnsiString(_UTF8toUTF16(AString))
+   else
+     s := AString;
+
+   if Self.encrypted then
+     s := RC4( _objectkey(Self.n), s);
+
+   Result := '('+_escape(s)+')';
+  {$Else}
+   Result := inherited _textstring(AString);
+  {$EndIf}
+end;
+
 procedure TFPDFExt._putresourcedict;
 var
   i, l: Integer;
@@ -1345,6 +1600,26 @@ procedure TFPDFExt._putresources;
 begin
   _putlayers;
   inherited _putresources;
+
+  if (Self.encrypted) then
+  begin
+    _newobj();
+    Self.enc_obj_id := self.n;
+    _put('<<');
+    _putencryption();
+    _put('>>');
+    _put('endobj');
+  end;
+end;
+
+procedure TFPDFExt._putencryption;
+begin
+  _put('/Filter /Standard');
+  _put('/V 1');
+  _put('/R 2');
+  _put('/O ('+_escape(Self.Ovalue)+')');
+  _put('/U ('+_escape(Self.Uvalue)+')');
+  _put('/P '+FloatToStr(Self.Pvalue));
 end;
 
 procedure TFPDFExt._putlayers;
@@ -1367,6 +1642,7 @@ var
   l, i: Integer;
 begin
   inherited _putcatalog;
+
   s := '';
   l_off := '';
   l := Length(Self.layers)-1;
@@ -1377,14 +1653,28 @@ begin
       l_off := l_off + IntToStr(Self.layers[i].n)+' 0 R ';
   end;
 
-  _put('/OCProperties <</OCGs ['+s+'] /D <</OFF ['+l_off+'] /Order ['+s+']>>>>');
-  if (Self.open_layer_pane) then
-    _put('/PageMode /UseOC');
+  if (s <> '') then
+  begin
+    _put('/OCProperties <</OCGs ['+s+'] /D <</OFF ['+l_off+'] /Order ['+s+']>>>>');
+    if (Self.open_layer_pane) then
+      _put('/PageMode /UseOC');
+  end;
+end;
+
+procedure TFPDFExt._puttrailer;
+begin
+  inherited _puttrailer;
+
+  if Self.encrypted then
+  begin
+    _put('/Encrypt '+IntToStr(Self.enc_obj_id)+' 0 R');
+    _put('/ID [()()]');
+  end;
 end;
 
 procedure TFPDFExt._enddoc;
 begin
-  if (Self.PDFVersion < 1.5) then
+  if (Self.PDFVersion < 1.5) and (Length(Self.layers) > 0) then
     Self.PDFVersion := 1.5;
 
   inherited _enddoc;

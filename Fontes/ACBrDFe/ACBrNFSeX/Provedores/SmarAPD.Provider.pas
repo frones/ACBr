@@ -547,7 +547,7 @@ begin
   begin
     Result := '<cpfUsuario>' + Emitente.WSUser + '</cpfUsuario>' +
               '<hashSenha>' +
-                string(EncodeBase64(SHA1(AnsiString(Emitente.WSSenha)))) +
+                string(EncodeBase64(SHA1(AnsiString(UpperCase(Emitente.WSSenha))))) +
               '</hashSenha>';
   end;
 end;

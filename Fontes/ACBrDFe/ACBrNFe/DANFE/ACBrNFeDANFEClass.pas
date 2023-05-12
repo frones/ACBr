@@ -674,20 +674,27 @@ begin
 
   with aPagto do
   begin
-    if ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (tpIntegra = tiPagIntegrado)) or
-       ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (cAut <>'')) then
-    begin
-      descBandeira:= BandeiraCartaoToDescStr(tBand);
-      CodigoAutorizacao := '- Aut: ' + cAut;
+    try
+      if ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (tpIntegra = tiPagIntegrado)) or
+         ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (cAut <>'')) then
+      begin
+        descBandeira:= BandeiraCartaoToDescStr(tBand);
+        CodigoAutorizacao := '- Aut: ' + cAut;
+      end;
+
+      if (icaTipo in FDescricaoPagamentos) then
+        Result:= ACBrStr(FormaPagamentoToDescricao(tPag, xPag)) + Space(1);
+      if (icaBandeira in FDescricaoPagamentos) then
+        Result := Result + descBandeira + Space(1);
+      if (icaAutorizacao in FDescricaoPagamentos) then
+        Result := Result + CodigoAutorizacao;
+
+    except
+      Result:= ACBrStr(FormaPagamentoToDescricao(tPag, xPag)) + Space(1);
     end;
 
-    if (icaTipo in FDescricaoPagamentos) then
-      Result:= ACBrStr(FormaPagamentoToDescricao(tPag, xPag)) + Space(1);
-    if (icaBandeira in FDescricaoPagamentos) then
-      Result := Result + descBandeira + Space(1);
-    if (icaAutorizacao in FDescricaoPagamentos) then
-      Result := Result + CodigoAutorizacao;
   end;
+
 end;
 
 procedure TACBrNFeDANFCEClass.setImprimeEmDuasLinhas(const Value: Boolean);

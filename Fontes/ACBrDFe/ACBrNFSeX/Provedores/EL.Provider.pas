@@ -157,6 +157,8 @@ procedure TACBrNFSeProviderEL204.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
+
   with ConfigWebServices do
   begin
     VersaoDados := '2.04';

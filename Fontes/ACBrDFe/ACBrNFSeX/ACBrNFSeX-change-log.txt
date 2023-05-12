@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/05/2023
+-- EL.Provider --
+[*] Alterado o método Configuracao para pedir o NumeroNFSeFinal ao realizar
+    a consultar de NFS-e por faixa
+  Por: Italo Giurizzato Junior
+
 11/05/2023
 -- ACBrNFSeXServicos.ini --
 [*] Atualizado as URLs de homologação da cidade de Birigui/SP

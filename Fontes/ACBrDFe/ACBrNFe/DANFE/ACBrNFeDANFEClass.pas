@@ -678,7 +678,10 @@ begin
       if ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (tpIntegra = tiPagIntegrado)) or
          ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (cAut <>'')) then
       begin
-        descBandeira:= BandeiraCartaoToDescStr(tBand);
+
+        if Ord(aPagto.tBand) >= 0 then
+          descBandeira:= BandeiraCartaoToDescStr(tBand);
+
         CodigoAutorizacao := '- Aut: ' + cAut;
       end;
 

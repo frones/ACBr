@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/05/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Porangatu/GO mudou de provedor, agora é Centi
+  Por: Katia Carvalho
 -- SmarAPD.Provider --
 [*] Ao gerar os dados do Usuário a senha tem que ser UpperCase.
   Por: José Carlos Alves Junior

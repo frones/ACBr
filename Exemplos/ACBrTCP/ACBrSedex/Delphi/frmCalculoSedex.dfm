@@ -804,7 +804,9 @@ object Form1: TForm1
             '04510 PAC Varejo'
             '04669 PAC Contrato'
             '04162 SEDEX Contrato'
-            '20150 IMPRESSO Contrato')
+            '20150 IMPRESSO Contrato'
+            '03220 SEDEX Contrato'
+            '03298 PAC Contrato')
         end
         object EditValorDeclarado: TEdit
           Left = 176

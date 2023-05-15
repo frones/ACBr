@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2023
+[*] TK-3881 Alterado a forma como é definido se o tipo do lançamento é Débido ou Crédito.
+  Por: Douglas Colombo
+
 01/11/2022
 [+] TK-3190 Adicionado leitura da tag <Name> do grupo <STMTTRN>
    Por: evandromira

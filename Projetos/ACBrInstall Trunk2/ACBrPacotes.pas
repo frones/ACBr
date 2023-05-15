@@ -38,8 +38,54 @@ uses
   Generics.Collections, Generics.Defaults, StdCtrls;
 
 type
-  TPacotes = TList<TCheckBox>;
+  TPacote = class(TObject)
+  private
+    FNome: string;
+    FNumeroVersaoIDEPackageMinSuportada: Integer;
+  public
+    MarcadoParaInstalar: Boolean;
+    OrdemListagem: Integer;//TabOrder
+
+    constructor Create(umchkbx: TCheckBox);
+
+    function GetNome: string;
+    function SuportaVersao(const IDEPackageVersionNumber: Integer): Boolean;
+//    destructor Destroy; override;
+  end;
+  TPacotes = TList<TPacote>;
 
 implementation
+
+{ TPacoteNovo }
+
+constructor TPacote.Create(umchkbx: TCheckBox);
+begin
+  inherited Create;
+  MarcadoParaInstalar := umchkbx.Checked;
+  OrdemListagem       := umchkbx.TabOrder;
+  FNome               := umchkbx.Caption;
+  FNumeroVersaoIDEPackageMinSuportada := 0;
+  if FNome = 'ACBr_Android.dpk' then
+  begin
+    FNumeroVersaoIDEPackageMinSuportada := 26;
+  end;
+
+end;
+
+//destructor TPacoteNovo.Destroy;
+//begin
+//
+//  inherited;
+//end;
+
+function TPacote.GetNome: string;
+begin
+ Result := FNome;
+end;
+
+function TPacote.SuportaVersao(const IDEPackageVersionNumber: Integer): Boolean;
+begin
+  Result := (IDEPackageVersionNumber >= FNumeroVersaoIDEPackageMinSuportada);
+end;
 
 end.

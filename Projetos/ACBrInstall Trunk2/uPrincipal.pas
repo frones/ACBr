@@ -184,9 +184,9 @@ begin
   // verificar se os pacotes existem antes de seguir para o próximo passo
   for I := 0 to ListaPacotes.Count - 1 do
   begin
-    if ListaPacotes[I].Checked then
+    if ListaPacotes[I].MarcadoParaInstalar then
     begin
-      NomePacote := ListaPacotes[I].Caption;
+      NomePacote := ListaPacotes[I].GetNome;
       // Busca diretório do pacote
       sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
       if Trim(sDirPackage) = '' then

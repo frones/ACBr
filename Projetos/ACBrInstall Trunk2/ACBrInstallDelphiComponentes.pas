@@ -1137,50 +1137,59 @@ var
   NomePacote: string;
   sDirPackage: string;
 begin
-  with FUmaPlataformaDestino do
+  FUmaPlataformaDestino.ConfiguraDCCPelaPlataformaAtual;
+
+  for iDpk := 0 to listaPacotes.Count - 1 do
   begin
-    FUmaPlataformaDestino.ConfiguraDCCPelaPlataformaAtual;
-
-    for iDpk := 0 to listaPacotes.Count - 1 do
+    if (not listaPacotes[iDpk].MarcadoParaInstalar) then
     begin
-      if (not listaPacotes[iDpk].Checked) then
-      begin
-        InformaProgresso;
-        Continue;
-      end;
-
-      NomePacote := listaPacotes[iDpk].Caption;
-      if (IsDelphiPackage(NomePacote)) then
-      begin
-        FazLog('');
-        // Busca diretório do pacote
-        sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
-        FPacoteAtual := sDirPackage + NomePacote;
-        CompilaPacotePorNomeArquivo(NomePacote);
-        if FCountErros> 0 then
-        begin
-          // Parar no primeiro erro para evitar de compilar outros pacotes que
-          // dependem desse que ocasionou erro.
-          Break;
-        end;
-
-        //Compilar também o pacote Design Time se a plataforma form Win32
-        if (tPlatformAtual = bpWin32) and FileExists(sDirPackage + 'DCL'+ NomePacote) then
-        begin
-          FazLog('');
-          FPacoteAtual := sDirPackage + 'DCL'+ NomePacote;
-          CompilaPacotePorNomeArquivo('DCL'+ NomePacote);
-          if FCountErros> 0 then
-          begin
-            // Parar no primeiro erro para evitar de compilar outros pacotes que
-            // dependem desse que ocasionou erro.
-            Break;
-          end;
-        end;
-      end;
       InformaProgresso;
+      Continue;
     end;
-  end;//---endwith
+
+    NomePacote := listaPacotes[iDpk].GetNome;
+    if not (IsDelphiPackage(NomePacote)) then
+    begin
+      InformaProgresso;
+      Continue;
+    end;
+
+    if not (listaPacotes[iDpk].SuportaVersao(FUmaPlataformaDestino.InstalacaoAtual.IDEPackageVersionNumber)) then
+    begin
+      FazLog(Format('Versão "%s" não suportada para o pacote "%s". Pulando pacote.',
+                    [IntToStr(FUmaPlataformaDestino.InstalacaoAtual.VersionNumber), NomePacote]) );
+      InformaProgresso;
+      Continue;
+    end;
+    FazLog('');
+
+    // Busca diretório completo do pacote
+    sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
+    FPacoteAtual := sDirPackage + NomePacote;
+
+    CompilaPacotePorNomeArquivo(NomePacote);
+    if FCountErros> 0 then
+    begin
+      // Parar no primeiro erro para evitar de compilar outros pacotes que
+      // dependem desse que ocasionou erro.
+      Break;
+    end;
+
+    //Compilar também o pacote Design Time se a plataforma form Win32
+    if (FUmaPlataformaDestino.tPlatformAtual = bpWin32) and FileExists(sDirPackage + 'DCL'+ NomePacote) then
+    begin
+      FazLog('');
+      FPacoteAtual := sDirPackage + 'DCL'+ NomePacote;
+      CompilaPacotePorNomeArquivo('DCL'+ NomePacote);
+      if FCountErros> 0 then
+      begin
+        // Parar no primeiro erro para evitar de compilar outros pacotes que
+        // dependem desse que ocasionou erro.
+        Break;
+      end;
+    end;
+    InformaProgresso;
+  end;
 end;
 
 procedure TACBrInstallComponentes.InstalarPacotes(const PastaACBr: string; listaPacotes: TPacotes);
@@ -1194,7 +1203,7 @@ begin
   begin
     for iDpk := 0 to listaPacotes.Count - 1 do
     begin
-      NomePacote := listaPacotes[iDpk].Caption;
+      NomePacote := listaPacotes[iDpk].GetNome;
       if IsDelphiPackage(NomePacote) then
       begin
         // Busca diretório do pacote
@@ -1216,7 +1225,7 @@ begin
         if not bRunOnly then
         begin
           // se o pacote estiver marcado instalar, senão desinstalar
-          if listaPacotes[iDpk].Checked then
+          if listaPacotes[iDpk].MarcadoParaInstalar then
           begin
             if InstalacaoAtual.InstallPackage(FPacoteAtual, sDirLibrary, sDirLibrary) then
               InformaSituacao(Format('Pacote "%s" instalado com sucesso.', [NomePacote]))

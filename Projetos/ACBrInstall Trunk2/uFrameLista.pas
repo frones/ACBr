@@ -235,7 +235,7 @@ begin
   try
     //Não usar ArqIni.ReadSection porque pode ser que houveram mudanças nos pacotes...
     for I := 0 to Pacotes.Count - 1 do
-      Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', Pacotes[I].Caption, False);
+      Pacotes[I].MarcadoParaInstalar := ArqIni.ReadBool('PACOTES', Pacotes[I].GetNome, False);
   finally
     ArqIni.Free;
   end;
@@ -250,7 +250,7 @@ begin
   try
     ArqIni.EraseSection('PACOTES');
     for I := 0 to Pacotes.Count - 1 do
-      ArqIni.WriteBool('PACOTES', Pacotes[I].Caption, Pacotes[I].Checked);
+      ArqIni.WriteBool('PACOTES', Pacotes[I].GetNome, Pacotes[I].MarcadoParaInstalar);
   finally
     ArqIni.Free;
   end;
@@ -277,12 +277,12 @@ begin
   for I := 0 to Self.ComponentCount - 1 do
   begin
     if Self.Components[I] is TCheckBox then
-       FPacotes.Add(TCheckBox(Self.Components[I]));
+       FPacotes.Add(TPacote.Create(TCheckBox(Self.Components[I])));
   end;
-  FPacotes.Sort(TComparer<TCheckBox>.Construct(
-      function(const Dpk1, Dpk2: TCheckBox): Integer
+  FPacotes.Sort(TComparer<TPacote>.Construct(
+      function(const Dpk1, Dpk2: TPacote): Integer
       begin
-         Result := CompareStr( FormatFloat('0000', Dpk1.TabOrder), FormatFloat('0000', Dpk2.TabOrder) );
+         Result := CompareStr( FormatFloat('0000', Dpk1.OrdemListagem), FormatFloat('0000', Dpk2.OrdemListagem) );
       end));
 end;
 

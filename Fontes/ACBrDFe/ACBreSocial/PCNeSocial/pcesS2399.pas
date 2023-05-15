@@ -389,7 +389,8 @@ begin
        (Self.IdeTrabSemVInc.codCateg = 721)
      ) and (VersaoDF >= ve02_05_00) then
   begin
-    Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
+    if obj.pensAlim <> paNenhum then
+      Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
     Gerador.wCampo(tcDe2, '', 'percAliment', 1,  5, 0, obj.percAliment);
     Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
     Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
@@ -532,7 +533,7 @@ begin
            (IdeTrabSemVInc.codCateg = 721)
          ) and (VersaoDF >= ve02_05_00) then
       begin
-        infoTSVTermino.pensAlim := eSStrToTpPensaoAlim(Ok, INIREC.ReadString(sSecao, 'pensAlim', EmptyStr));
+        infoTSVTermino.pensAlim := eSStrToTpPensaoAlimEx(INIREC.ReadString(sSecao, 'pensAlim', EmptyStr));
 
         if (InfoTSVTermino.pensAlim <> paNaoExistePensaoAlimenticia) then
         begin

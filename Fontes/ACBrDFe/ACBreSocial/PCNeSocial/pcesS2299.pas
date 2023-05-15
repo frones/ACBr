@@ -821,7 +821,8 @@ begin
   if obj.indPagtoAPI = tpSim then
     Gerador.wCampo(tcDat, '', 'dtProjFimAPI', 10, 10, 0, obj.dtProjFimAPI);
 
-  Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
+  if obj.pensAlim <> paNenhum then
+    Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
   Gerador.wCampo(tcDe2, '', 'percAliment', 1,  5, 0, obj.percAliment);
   Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
 
@@ -1186,7 +1187,7 @@ begin
       infoDeslig.dtDeslig     := StringToDateTime(INIRec.ReadString(sSecao, 'dtDeslig', '0'));
       infoDeslig.indPagtoAPI  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPagtoAPI', 'S'));
       infoDeslig.dtProjFimAPI := StringToDateTime(INIRec.ReadString(sSecao, 'dtProjFimAPI', '0'));
-      infoDeslig.pensAlim     := eSStrToTpPensaoAlim(Ok, INIRec.ReadString(sSecao, 'pensAlim', '0'));
+      infoDeslig.pensAlim     := eSStrToTpPensaoAlimEx(INIRec.ReadString(sSecao, 'pensAlim', '0'));
       infoDeslig.percAliment  := StringToFloatDef(INIRec.ReadString(sSecao, 'percAliment', ''), 0);
       infoDeslig.vrAlim       := StringToFloatDef(INIRec.ReadString(sSecao, 'vrAlim', ''), 0);
       infoDeslig.nrCertObito  := INIRec.ReadString(sSecao, 'nrCertObito', EmptyStr);

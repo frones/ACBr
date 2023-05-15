@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2023
+-- pcesConversaoeSocial, pcesS2299, pcesS2399 --
+[*] Adiciona opção paNenhum no enumerado tpPensaoAlim para que a tag não seja gerada caso defina este valor.
+  Por: Diego F
+
 09/05/2023
 -- pcesS3500 --
 [*] Altera para que a geração da cpfTrab e perApurPgto respeitem regra de geração por tipo de evento imposta no leiaute.

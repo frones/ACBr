@@ -200,6 +200,9 @@ type
     ACBr_PIXCD_dpk: TCheckBox;
     ACBr_Android_dpk: TCheckBox;
     lblacb: TLabel;
+    lblSubTituloFPDF: TLabel;
+    lblFPDF_BoletoDPK: TLabel;
+    ACBr_BoletoFPDF_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -384,6 +387,7 @@ begin
       begin
         ACBr_BoletoFR_dpk.Checked := False;
         ACBr_BoletoRL_dpk.Checked := False;
+        ACBr_BoletoFPDF_dpk.Checked := False;
       end;
 
       // quando não for selecionado o MDF-e devemos desmarcar

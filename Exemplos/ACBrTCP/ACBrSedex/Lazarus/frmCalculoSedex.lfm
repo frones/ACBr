@@ -7,11 +7,11 @@ object Form1: TForm1
   ClientHeight = 536
   ClientWidth = 565
   Color = clBtnFace
+  DesignTimePPI = 120
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   OnShow = FormShow
-  LCLVersion = '1.6.4.0'
   object TabbedNotebook1: TPageControl
     Left = 0
     Height = 536
@@ -813,6 +813,16 @@ object Form1: TForm1
             '16012 CARTAO POSTAL'
             '20010 IMPRESSO'
             '14010 MALA DIRETA'
+            '04014 SEDEX Varejo'
+            '40045 SEDEX a Cobrar Varejo'
+            '40215 SEDEX 10 Varejo'
+            '40290 SEDEX Hoje Varejo'
+            '04510 PAC Varejo'
+            '04669 PAC Contrato'
+            '04162 SEDEX Contrato'
+            '20150 IMPRESSO Contrato'
+            '03220 SEDEX Contrato'
+            '03298 PAC Contrato'
           )
           Style = csDropDownList
           TabOrder = 2
@@ -1092,27 +1102,21 @@ object Form1: TForm1
   end
   object ACBrSedex1: TACBrSedex
     ProxyPort = '8080'
-    Peso = 0
     Formato = TpfCaixaPacote
-    Comprimento = 0
-    Altura = 0
-    Largura = 0
-    ValorDeclarado = 0
     Servico = Tps04510PAC
-    Diametro = 0
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
-    left = 488
-    top = 48
+    Left = 488
+    Top = 48
   end
   object DataSource1: TDataSource
     DataSet = ClientDataSet1
-    left = 188
-    top = 416
+    Left = 188
+    Top = 416
   end
   object ClientDataSet1: TBufDataset
     FieldDefs = <>
-    left = 148
-    top = 136
+    Left = 148
+    Top = 136
     object ClientDataSet1Data: TDateTimeField
       FieldKind = fkData
       FieldName = 'Data'

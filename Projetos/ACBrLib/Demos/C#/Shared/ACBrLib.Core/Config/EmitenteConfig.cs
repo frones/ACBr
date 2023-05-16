@@ -35,6 +35,36 @@
             set => SetProperty(value);
         }
 
+        public string WSUser
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string WSSenha
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string WSFraseSecr
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string WSChaveAcesso
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string WSChaveAutoriz
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

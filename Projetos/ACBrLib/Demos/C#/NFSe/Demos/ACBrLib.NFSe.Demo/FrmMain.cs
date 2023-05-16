@@ -164,6 +164,11 @@ namespace ACBrLibNFSe.Demo
                 ACBrNFSe.Config.Emitente.CNPJ = txtCNPJEmitente.Text;
                 ACBrNFSe.Config.Emitente.InscMun = txtInscMunicipalEmitente.Text;
                 ACBrNFSe.Config.Emitente.RazSocial = txtRazaoSocialEmitente.Text;
+                ACBrNFSe.Config.Emitente.WSUser = txtEmitenteUsuário.Text;
+                ACBrNFSe.Config.Emitente.WSSenha = txtEmitenteSenha.Text;
+                ACBrNFSe.Config.Emitente.WSFraseSecr = txtEmitenteFraseSecreta.Text;
+                ACBrNFSe.Config.Emitente.WSChaveAcesso = txtEmitenteChaveAcesso.Text;
+                ACBrNFSe.Config.Emitente.WSChaveAutoriz = txtEmitenteChaveAutorizacao.Text;
                 ACBrNFSe.Config.Emitente.Dados.NomeFantasia = txtFantasiaEmitente.Text;
                 ACBrNFSe.Config.Emitente.Dados.Telefone = txtFoneEmitente.Text;
                 ACBrNFSe.Config.Emitente.Dados.CEP = txtCEPEmitente.Text;
@@ -268,6 +273,11 @@ namespace ACBrLibNFSe.Demo
             txtCNPJEmitente.Text = ACBrNFSe.Config.Emitente.CNPJ;
             txtInscMunicipalEmitente.Text = ACBrNFSe.Config.Emitente.InscMun;
             txtRazaoSocialEmitente.Text = ACBrNFSe.Config.Emitente.RazSocial;
+            txtEmitenteUsuário.Text = ACBrNFSe.Config.Emitente.WSUser;
+            txtEmitenteSenha.Text = ACBrNFSe.Config.Emitente.WSSenha;
+            txtEmitenteFraseSecreta.Text = ACBrNFSe.Config.Emitente.WSFraseSecr;
+            txtEmitenteChaveAcesso.Text = ACBrNFSe.Config.Emitente.WSChaveAcesso;
+            txtEmitenteChaveAutorizacao.Text = ACBrNFSe.Config.Emitente.WSChaveAutoriz;
             txtFantasiaEmitente.Text = ACBrNFSe.Config.Emitente.Dados.NomeFantasia;
             txtFoneEmitente.Text = ACBrNFSe.Config.Emitente.Dados.Telefone;
             txtCEPEmitente.Text = ACBrNFSe.Config.Emitente.Dados.CEP;

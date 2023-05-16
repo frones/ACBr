@@ -9,8 +9,8 @@ namespace ACBrLib.Core.NFSe
         [Description("Nenhuma Cidade Selecionada")]
         NenhumaCidadeSelecionada = 0,
 
-        [EnumValue("3101607")] 
-        [Description("Alfenas - MG")] 
+        [EnumValue("3101607")]
+        [Description("Alfenas - MG")]
         Alfenas = 3101607,
 
         [EnumValue("3501608")]
@@ -332,6 +332,10 @@ namespace ACBrLib.Core.NFSe
         [EnumValue("4208302")]
         [Description("Itapema - SC")]
         Itapema = 4208302,
+
+        [EnumValue("3522604")]
+        [Description("Itapira - SP")]
+        Itapira = 3522604,
 
         [EnumValue("3523503")]
         [Description("Itatinga - SP")]

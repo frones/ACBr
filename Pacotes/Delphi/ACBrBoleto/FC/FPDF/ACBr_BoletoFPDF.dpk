@@ -30,12 +30,10 @@ package ACBr_BoletoFPDF;
 {$IMPLICITBUILD OFF}
 
 requires
-  ACBr_Boleto,
-  dsnap;
+  ACBr_Comum,
+  ACBr_Boleto;
 
 contains
-  ACBrBoletoFPDF in '..\..\..\..\..\Fontes\ACBrBoleto\FC\FPDF\ACBrBoletoFPDF.pas',
-  ACBr_fpdf in '..\..\..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf.pas',
-  ACBr_fpdf_ext in '..\..\..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf_ext.pas';
+  ACBrBoletoFPDF in '..\..\..\..\..\Fontes\ACBrBoleto\FC\FPDF\ACBrBoletoFPDF.pas';
 
 end.

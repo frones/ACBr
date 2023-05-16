@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/05/2023
+-- Giap.Provider --
+[*] Melhorias na TratarRetornoEmitir
+  Por: Igcastellucci
 -- Systempro.Provider --
 [*] Ao consultar a NFS-e por Faixa esta exigindo o numero final da nota.
   Por: Italo Giurizzato Junior

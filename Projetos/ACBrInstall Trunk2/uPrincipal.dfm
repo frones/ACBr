@@ -13,9 +13,11 @@ object frmPrincipal: TfrmPrincipal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  PixelsPerInch = 96
   TextHeight = 13
   object wizPrincipal: TJvWizard
     Left = 0
@@ -23,7 +25,7 @@ object frmPrincipal: TfrmPrincipal
     Width = 720
     Height = 612
     ActivePage = wizPgInicio
-    ButtonBarHeight = 52
+    ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
     ButtonStart.Width = 100
@@ -1619,7 +1621,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 0
       Top = 71
       Width = 166
-      Height = 489
+      Height = 499
       ItemHeight = 30
       AllowClickableNodes = False
       Color = 5875712

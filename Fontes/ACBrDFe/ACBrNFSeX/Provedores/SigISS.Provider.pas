@@ -351,7 +351,7 @@ begin
       begin
         with Response do
         begin
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
+          Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
           NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nota'), tcStr);
           CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
           Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);

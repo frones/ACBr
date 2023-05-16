@@ -46,6 +46,9 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Carapicuiba/SP mudou de provedor, agora é Giap.
   Por: Glauber Bernardo
+-- SigISS.Provider --
+[*] Altera na TratarRetornoConsultaNFSe uma ocorrência do campo Sucesso onde na verdade seria Situacao.
+  Por: Diego F
 
 12/05/2023
 -- ACBrNFSeXServicos.ini --

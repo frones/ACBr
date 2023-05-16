@@ -502,14 +502,8 @@ procedure TGeralConfNFSe.SetCodigoMunicipio(const Value: Integer);
 begin
   FCodigoMunicipio := Value;
 
-  {
-    Se a configuração referente ao código do municipio não foi previamente
-    informada, seta com o código do municipio de Araraquara/SP
-  }
-  if FCodigoMunicipio <= 0 then
-    FCodigoMunicipio := 3503208;
-
-  LerParamsMunicipio;
+  if FCodigoMunicipio <> 0 then
+    LerParamsMunicipio;
 end;
 
 { TArquivosConfNFSe }

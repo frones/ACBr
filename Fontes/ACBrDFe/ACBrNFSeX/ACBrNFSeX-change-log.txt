@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/05/2023
+-- ACBrNFSeXConfiguracoes --
+[*] Revertido a alteração feita na Unit definindo um código de município padrão.
+   Por: Italo Giurizzato Junior
 -- ACBrDANFSeRLRetrado.dfm --
 [*] Ajustes no cabeçalho para caber um Número de RPS/Série maiores.
   Por: Diego F

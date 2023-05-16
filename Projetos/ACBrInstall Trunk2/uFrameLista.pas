@@ -209,6 +209,8 @@ type
   private
     FPacotes: TPacotes;
     FUtilizarBotoesMarcar: Boolean;
+    procedure AtualizarTelaConformeListaDePacotes(ListaPacotes: TPacotes);
+    procedure AtualizarListaDePacotesConformeTela(ListaPacotes: TPacotes);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -239,6 +241,9 @@ begin
   finally
     ArqIni.Free;
   end;
+
+  AtualizarTelaConformeListaDePacotes(Pacotes);
+
 end;
 
 procedure TframePacotes.SalvarEmArquivoIni(const ArquivoIni: string);
@@ -246,6 +251,8 @@ var
   ArqIni: TIniFile;
   I: Integer;
 begin
+  AtualizarListaDePacotesConformeTela(Pacotes);
+
   ArqIni := TIniFile.Create(ArquivoIni);
   try
     ArqIni.EraseSection('PACOTES');
@@ -255,6 +262,49 @@ begin
     ArqIni.Free;
   end;
 
+end;
+
+procedure TframePacotes.AtualizarTelaConformeListaDePacotes(ListaPacotes: TPacotes);
+var
+  I: Integer;
+  j: Integer;
+  achkBox: TCheckBox;
+begin
+  for I := 0 to ListaPacotes.Count - 1 do
+  begin
+    for j := 0 to Self.ComponentCount - 1 do
+    begin
+      if (Self.Components[j] is TCheckBox) then
+      begin
+        achkBox := (Self.Components[j] as TCheckBox);
+        if achkBox.Caption = ListaPacotes[i].GetNome then
+          achkBox.Checked := ListaPacotes[i].MarcadoParaInstalar;
+      end;
+    end;
+  end;
+end;
+
+procedure TframePacotes.AtualizarListaDePacotesConformeTela(ListaPacotes: TPacotes);
+var
+  I: Integer;
+  j: Integer;
+  achkBox: TCheckBox;
+begin
+  for I := 0 to ListaPacotes.Count - 1 do
+  begin
+    for j := 0 to Self.ComponentCount - 1 do
+    begin
+      if (Self.Components[j] is TCheckBox) then
+      begin
+        achkBox := (Self.Components[j] as TCheckBox);
+        if achkBox.Caption = ListaPacotes[i].GetNome then
+        begin
+          ListaPacotes[i].MarcadoParaInstalar := achkBox.Checked;
+          Break;
+        end;
+      end;
+    end;
+  end;
 end;
 
 constructor TframePacotes.Create(AOwner: TComponent);

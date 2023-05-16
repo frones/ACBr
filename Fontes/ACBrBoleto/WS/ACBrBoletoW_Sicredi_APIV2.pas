@@ -592,8 +592,8 @@ begin
         JsonDadosPagador.Add('cep').Value.AsString              := OnlyNumber(ATitulo.Sacado.CEP);
         if ATitulo.Sacado.Fone <> '' then
           JsonDadosPagador.Add('telefone').Value.AsString         := ATitulo.Sacado.Fone;
-        JsonDadosPagador.Add('email').Value.AsString            := ATitulo.Sacado.Email;
-
+        if ATitulo.Sacado.Email <> '' then
+          JsonDadosPagador.Add('email').Value.AsString            := ATitulo.Sacado.Email;
         JsonPairPagador := TJsonPair.Create(AJson, 'pagador');
         try
           JsonPairPagador.Value.AsObject := JsonDadosPagador;
@@ -626,17 +626,26 @@ begin
         JsonSacadorAvalista := TJSONObject.Create;
 
         try
-          JsonSacadorAvalista.Add('tipoPessoa').Value.AsInteger         :=  StrToInt(IfThen( Length( OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11,'PESSOA_FISICA','PESSOA_JURIDICA'));
+          JsonSacadorAvalista.Add('tipoPessoa').Value.AsString         :=  IfThen( Length( OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11,'PESSOA_FISICA','PESSOA_JURIDICA');
           JsonSacadorAvalista.Add('documento').Value.AsString           :=  OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF);
           JsonSacadorAvalista.Add('nome').Value.AsString                :=  ATitulo.Sacado.SacadoAvalista.NomeAvalista;
-          JsonSacadorAvalista.Add('logradouro').Value.AsString          :=  ATitulo.Sacado.SacadoAvalista.Logradouro;
-          JsonSacadorAvalista.Add('complemento').Value.AsString         :=  ATitulo.Sacado.SacadoAvalista.Complemento;
-          JsonSacadorAvalista.Add('numeroEndereco').Value.AsString      :=  ATitulo.Sacado.SacadoAvalista.Numero;
-          JsonSacadorAvalista.Add('cidade').Value.AsString              :=  ATitulo.Sacado.SacadoAvalista.Cidade;
-          JsonSacadorAvalista.Add('uf').Value.AsString                  :=  ATitulo.Sacado.SacadoAvalista.UF;
-          JsonSacadorAvalista.Add('cep').Value.AsString                 :=  ATitulo.Sacado.SacadoAvalista.CEP;
-          JsonSacadorAvalista.Add('telefone').Value.AsString            :=  ATitulo.Sacado.SacadoAvalista.Fone;
-          JsonSacadorAvalista.Add('email').Value.AsString               :=  ATitulo.Sacado.SacadoAvalista.Email;
+
+          if ATitulo.Sacado.SacadoAvalista.Logradouro <> '' then
+            JsonSacadorAvalista.Add('logradouro').Value.AsString          :=  ATitulo.Sacado.SacadoAvalista.Logradouro;
+          if ATitulo.Sacado.SacadoAvalista.Complemento <> '' then
+            JsonSacadorAvalista.Add('complemento').Value.AsString         :=  ATitulo.Sacado.SacadoAvalista.Complemento;
+          if ATitulo.Sacado.SacadoAvalista.Numero <> '' then
+            JsonSacadorAvalista.Add('numeroEndereco').Value.AsString      :=  ATitulo.Sacado.SacadoAvalista.Numero;
+          if ATitulo.Sacado.SacadoAvalista.Cidade <> '' then
+            JsonSacadorAvalista.Add('cidade').Value.AsString              :=  ATitulo.Sacado.SacadoAvalista.Cidade;
+          if ATitulo.Sacado.SacadoAvalista.UF <> '' then
+            JsonSacadorAvalista.Add('uf').Value.AsString                  :=  ATitulo.Sacado.SacadoAvalista.UF;
+          if ATitulo.Sacado.SacadoAvalista.CEP <> '' then
+            JsonSacadorAvalista.Add('cep').Value.AsString                 :=  ATitulo.Sacado.SacadoAvalista.CEP;
+          if ATitulo.Sacado.SacadoAvalista.Fone <> '' then
+            JsonSacadorAvalista.Add('telefone').Value.AsString            :=  ATitulo.Sacado.SacadoAvalista.Fone;
+          if ATitulo.Sacado.SacadoAvalista.Email <> '' then
+            JsonSacadorAvalista.Add('email').Value.AsString               :=  ATitulo.Sacado.SacadoAvalista.Email;
 
           JsonPairSacadorAvalista := TJsonPair.Create(AJson, 'beneficiarioFinal');
           try

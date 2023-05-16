@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/05/2023
+-- Publica.Provider --
+[*] Ao consultar uma NFS-e por faixa se faz necessario informar o numero da nota
+    final e foi alterado de Integer para Int64 pois devemos informar o ano + numero
+    da nota dessa consulta.
+  Por: Delcio
 -- Giap.Provider --
 [*] Melhorias na TratarRetornoEmitir
   Por: Igcastellucci

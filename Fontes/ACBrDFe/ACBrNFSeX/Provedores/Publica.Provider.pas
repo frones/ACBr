@@ -553,31 +553,26 @@ procedure TACBrNFSeProviderPublica.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
   Emitente: TEmitenteConfNFSe;
-  xConsulta, NameSpace, NumFinal, IdAttr: string;
-  NumNFSeI, NumNFSeF: Integer;
+  xConsulta, NameSpace, IdAttr: string;
+  NumNFSeI, NumNFSeF: Int64;
 begin
-  NumNFSeI := StrToIntDef(Response.InfConsultaNFSe.NumeroIniNFSe, 0);
+  NumNFSeI := StrToInt64Def(Response.InfConsultaNFSe.NumeroIniNFSe, 0);
   Response.InfConsultaNFSe.NumeroIniNFSe := FormatFloat('000000000000000', NumNFSeI);
 
-  NumNFSeF := StrToIntDef(Response.InfConsultaNFSe.NumeroFinNFSe, 0);
+  NumNFSeF := StrToInt64Def(Response.InfConsultaNFSe.NumeroFinNFSe, 0);
   Response.InfConsultaNFSe.NumeroFinNFSe := FormatFloat('000000000000000', NumNFSeF);
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.Metodo := tmConsultarNFSe;
 
-  if (NumNFSeF <> 0) and (NumNFSeF <> NumNFSeI) then
-    NumFinal := '<NumeroNfseFinal>' +
-                  OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
-                '</NumeroNfseFinal>'
-  else
-    NumFinal := '';
-
   xConsulta := '<Faixa>' +
                  '<NumeroNfseInicial>' +
                     OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
                  '</NumeroNfseInicial>' +
-                 NumFinal +
+                 '<NumeroNfseFinal>' +
+                    OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
+                '</NumeroNfseFinal>' +
                '</Faixa>';
 
   if ConfigGeral.Identificador <> '' then

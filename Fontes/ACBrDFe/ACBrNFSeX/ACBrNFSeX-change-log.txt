@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Carapicuiba/SP mudou de provedor, agora é Giap.
+  Por: Glauber Bernardo
+
 12/05/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Porangatu/GO mudou de provedor, agora é Centi

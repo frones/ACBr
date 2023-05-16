@@ -44,6 +44,8 @@ Símbolo : Significado
 
 16/05/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de Camaquã/RS mudou de provedor, agora é IPM.
+  Por: MC Sistemas
 [*] A cidade de Carapicuiba/SP mudou de provedor, agora é Giap.
   Por: Glauber Bernardo
 -- SigISS.Provider --

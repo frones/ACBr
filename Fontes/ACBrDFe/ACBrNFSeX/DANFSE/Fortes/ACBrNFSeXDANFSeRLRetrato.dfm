@@ -109,15 +109,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
       end
       object RLLabel8: TRLLabel
-        Left = 427
+        Left = 429
         Top = 139
-        Width = 122
+        Width = 118
         Height = 15
         Alignment = taCenter
         Caption = 'C'#243'digo de Verifica'#231#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
@@ -153,7 +153,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel7: TRLLabel
-        Left = 10
+        Left = 5
         Top = 139
         Width = 77
         Height = 15
@@ -167,20 +167,20 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCompetencia: TRLLabel
-        Left = 13
+        Left = 3
         Top = 157
-        Width = 88
+        Width = 86
         Height = 15
         Alignment = taCenter
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object RLDraw9: TRLDraw
-        Left = 106
+        Left = 93
         Top = 138
         Width = 1
         Height = 40
@@ -189,7 +189,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel18: TRLLabel
-        Left = 113
+        Left = 98
         Top = 139
         Width = 94
         Height = 15
@@ -203,21 +203,21 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllNumeroRps: TRLLabel
-        Left = 113
+        Left = 96
         Top = 157
-        Width = 94
+        Width = 118
         Height = 15
         Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object RLDraw10: TRLDraw
-        Left = 214
+        Left = 218
         Top = 139
         Width = 1
         Height = 39
@@ -346,28 +346,28 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel64: TRLLabel
-        Left = 219
+        Left = 221
         Top = 139
-        Width = 193
+        Width = 186
         Height = 15
         Caption = 'Munic'#237'pio de Presta'#231#227'o do Servi'#231'o:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object rllMunicipioPrestacaoServico: TRLLabel
-        Left = 219
+        Left = 221
         Top = 157
         Width = 196
         Height = 15
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False

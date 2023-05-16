@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/05/2023
+-- ACBrDANFSeRLRetrado.dfm --
+[*] Ajustes no cabeçalho para caber um Número de RPS/Série maiores.
+  Por: Diego F
 -- Publica.Provider --
 [*] Ao consultar uma NFS-e por faixa se faz necessario informar o numero da nota
     final e foi alterado de Integer para Int64 pois devemos informar o ano + numero

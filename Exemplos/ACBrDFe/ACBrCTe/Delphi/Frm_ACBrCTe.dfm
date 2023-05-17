@@ -94,7 +94,7 @@ object frmACBrCTe: TfrmACBrCTe
           Top = 0
           Width = 287
           Height = 476
-          ActivePage = TabSheet4
+          ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -1369,7 +1369,7 @@ object frmACBrCTe: TfrmACBrCTe
       Top = 1
       Width = 567
       Height = 197
-      ActivePage = tsEnvios
+      ActivePage = tsEventos
       Align = alTop
       TabOrder = 0
       object tsEnvios: TTabSheet
@@ -1556,7 +1556,7 @@ object frmACBrCTe: TfrmACBrCTe
         end
         object btnImprimirEvento: TButton
           Left = 8
-          Top = 103
+          Top = 141
           Width = 177
           Height = 25
           Caption = 'Imprimir Evento'
@@ -1565,7 +1565,7 @@ object frmACBrCTe: TfrmACBrCTe
         end
         object btnEnviarEventoEmail: TButton
           Left = 374
-          Top = 103
+          Top = 141
           Width = 177
           Height = 25
           Caption = 'Enviar Evento Email'
@@ -1610,12 +1610,21 @@ object frmACBrCTe: TfrmACBrCTe
         end
         object btnGerarPDFEvento: TButton
           Left = 191
-          Top = 103
+          Top = 141
           Width = 177
           Height = 25
           Caption = 'Gerar PDF Evento'
           TabOrder = 9
           OnClick = btnGerarPDFEventoClick
+        end
+        object btnInsucessoEntrega: TButton
+          Left = 8
+          Top = 103
+          Width = 177
+          Height = 25
+          Caption = 'Insucesso de Entrega'
+          TabOrder = 10
+          OnClick = btnInsucessoEntregaClick
         end
       end
       object tsInutilizacao: TTabSheet

@@ -246,6 +246,7 @@ type
     btnGerarPDFInut: TButton;
     btnDistrDFePorNSU: TButton;
     btnDistrDFePorChave: TButton;
+    btnInsucessoEntrega: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathCTeClick(Sender: TObject);
@@ -311,6 +312,7 @@ type
     procedure btnGerarPDFInutClick(Sender: TObject);
     procedure btnDistrDFePorNSUClick(Sender: TObject);
     procedure btnDistrDFePorChaveClick(Sender: TObject);
+    procedure btnInsucessoEntregaClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1990,7 +1992,7 @@ begin
     Lines.Add('cUF: '       + IntToStr(ACBrCTe1.WebServices.Enviar.cUF));
     Lines.Add('xMsg: '      + ACBrCTe1.WebServices.Enviar.Msg);
     Lines.Add('Recibo: '    + ACBrCTe1.WebServices.Enviar.Recibo);
-//    Lines.Add('Protocolo: ' + ACBrCTe1.WebServices.Enviar.Protocolo);
+    Lines.Add('Protocolo: ' + ACBrCTe1.WebServices.Enviar.Protocolo);
   end;
 end;
 
@@ -2481,6 +2483,88 @@ begin
     ACBrCTe1.EventoCTe.Evento.Clear;
     ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName);
     ACBrCTe1.ImprimirEvento;
+  end;
+end;
+
+procedure TfrmACBrCTe.btnInsucessoEntregaClick(Sender: TObject);
+var
+  vData, vHora, vNumTentativa, vJustificativa, vPathImg, vChaveNFe: String;
+  iLote: Integer;
+begin
+  OpenDialog1.Title := 'Selecione o CTe para enviar o Evento de Insucesso de Entrega';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+
+    if not(InputQuery('Insucesso de Entrega:', 'Data da Tentativa de Entrega (DD/MM/AAAA)', vData)) then
+      exit;
+
+    if not(InputQuery('Insucesso de Entrega:', 'Hora da Tentativa de Entrega (HH:MM:SS)', vHora)) then
+      exit;
+
+    if not(InputQuery('Insucesso de Entrega:', 'Numero da Tentativa', vNumTentativa)) then
+      exit;
+
+    if not(InputQuery('Insucesso de Entrega:', 'Justificativa/Motivo (15-255)', vJustificativa)) then
+      exit;
+
+    if not(InputQuery('Insucesso de Entrega:', 'Chave da NFe Entregue', vChaveNFe)) then
+      exit;
+
+    OpenDialog1.Title := 'Selecione a Imagem da Entrega';
+    OpenDialog1.DefaultExt := '*.jpg';
+    OpenDialog1.Filter := 'Arquivos de Imagem (*.jpg)|*.jpg|Todos os Arquivos (*.*)|*.*';
+    OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+    if OpenDialog1.Execute then
+      vPathImg := OpenDialog1.FileName
+    else
+      exit;
+
+    ACBrCTe1.EventoCTe.Evento.Clear;
+
+    with ACBrCTe1.EventoCTe.Evento.New do
+    begin
+      // Para o Evento de Cancelamento: nSeqEvento sempre = 1
+      infEvento.nSeqEvento := 1;
+      infEvento.chCTe := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.CNPJ := edtEmitCNPJ.Text;
+      infEvento.dhEvento := now;
+      infEvento.tpEvento := teInsucessoEntregaCTe;
+
+      infEvento.detEvento.nProt := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.dhTentativaEntrega := StrToDateTime(vData + ' ' + vHora);
+      infEvento.detEvento.nTentativa := StrToIntDef(vNumTentativa, 1);
+
+      // (tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro);
+      InfEvento.detEvento.tpMotivo := tmNaoEncontrado;
+      infEvento.detEvento.xJustMotivo := vJustificativa;
+      infEvento.detEvento.hashTentativaEntrega := CalcularHashArquivo(vPathImg, infEvento.chCTe);
+      infEvento.detEvento.dhHashTentativaEntrega := Now;
+
+      InfEvento.detEvento.infEntrega.Clear;
+
+      with InfEvento.detEvento.infEntrega.New do
+      begin
+        chNFe := vChaveNFe;
+      end;
+    end;
+
+    iLote := 1; // Numero do Lote do Evento
+    ACBrCTe1.EnviarEvento(iLote);
+
+    MemoResp.Lines.Text   := ACBrCTe1.WebServices.EnvEvento.RetWS;
+    memoRespWS.Lines.Text := ACBrCTe1.WebServices.EnvEvento.RetornoWS;
+
+    LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
+
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
   end;
 end;
 

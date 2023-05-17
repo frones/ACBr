@@ -120,8 +120,12 @@ implementation
 procedure TArquivoR_CNAB240.GerarAvisos(const aCodOcorrencia, aDescOcorrencia,
   aSegmento, aSegmentoFilho, aSeuNumero: string);
 begin
-  if (Length(aCodOcorrencia) > 0) and
-     (POS(aCodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0) then
+  {
+    17/05/2023
+    removido a condição: and (POS(aCodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0)
+    para que na lista de avisos consta também os pagamentos efetuados
+  }
+  if Length(aCodOcorrencia) > 0 then
   begin
     PagFor.Registro0.Aviso.New;
 
@@ -999,14 +1003,6 @@ begin
   begin
     LerSegmentoN(SegmentoN);
 
-    {
-    SegmentoN.CodMovimento := StrToInMovimento(mOk, LerCampo(Linha, 16, 2, tcStr));
-    SegmentoN.SeuNumero := LerCampo(Linha, 18, 20, tcStr);
-    SegmentoN.NossoNumero := LerCampo(Linha, 38, 20, tcStr);
-    SegmentoN.NomeContribuinte := LerCampo(Linha, 58, 30, tcStr);
-    SegmentoN.DataPagamento := LerCampo(Linha, 88, 8, tcDat);
-    SegmentoN.ValorPagamento := LerCampo(Linha, 96, 15, tcDe2);
-    }
     Receita := LerCampo(Linha, 111, 6, tcInt);
     TipoContribuinte := StrToTpInscricao(mOk, LerCampo(Linha, 117, 2, tcStr));
     idContribuinte := LerCampo(Linha, 119, 14, tcStr);
@@ -1014,21 +1010,6 @@ begin
     ValorTributo := LerCampo(Linha, 141, 15, tcDe2);
     ValorOutrasEntidades := LerCampo(Linha, 156, 15, tcDe2);
     AtualizacaoMonetaria := LerCampo(Linha, 171, 15, tcDe2);
-    {
-    SegmentoN.CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    SegmentoN.DescOcorrencia := DescricaoRetorno(SegmentoN.CodOcorrencia);
-
-    if POS(SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
-    begin
-      PagFor.Registro0.Aviso.New;
-
-      PagFor.Registro0.Aviso.Last.CodigoRetorno := SegmentoN.CodOcorrencia;
-      PagFor.Registro0.Aviso.Last.MensagemRetorno := SegmentoN.DescOcorrencia;
-      PagFor.Registro0.Aviso.Last.Segmento := 'N';
-      PagFor.Registro0.Aviso.Last.SegmentoFilho := '';
-      PagFor.Registro0.Aviso.Last.SeuNumero := SegmentoN.SeuNumero;
-    end;
-    }
   end;
 
   {Adicionais segmento N}
@@ -1070,14 +1051,6 @@ begin
   begin
     LerSegmentoN(SegmentoN);
 
-    {
-    SegmentoN.CodMovimento := StrToInMovimento(mOk, LerCampo(Linha, 16, 2, tcStr));
-    SegmentoN.SeuNumero := LerCampo(Linha, 18, 20, tcStr);
-    SegmentoN.NossoNumero := LerCampo(Linha, 38, 20, tcStr);
-    SegmentoN.NomeContribuinte := LerCampo(Linha, 58, 30, tcStr);
-    SegmentoN.DataPagamento := LerCampo(Linha, 88, 8, tcDat);
-    SegmentoN.ValorPagamento := LerCampo(Linha, 96, 15, tcDe2);
-    }
     Receita := LerCampo(Linha, 111, 6, tcInt);
     TipoContribuinte := StrToTpInscricao(mOk, LerCampo(Linha, 117, 2, tcStr));
     idContribuinte := LerCampo(Linha, 119, 14, tcStr);
@@ -1087,21 +1060,6 @@ begin
     Multa := LerCampo(Linha, 175, 15, tcDe2);
     Juros := LerCampo(Linha, 190, 15, tcDe2);
     DataVencimento := LerCampo(Linha, 205, 8, tcDat);
-    {
-    SegmentoN.CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    SegmentoN.DescOcorrencia := DescricaoRetorno(SegmentoN.CodOcorrencia);
-
-    if POS(SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
-    begin
-      PagFor.Registro0.Aviso.New;
-
-      PagFor.Registro0.Aviso.Last.CodigoRetorno := SegmentoN.CodOcorrencia;
-      PagFor.Registro0.Aviso.Last.MensagemRetorno := SegmentoN.DescOcorrencia;
-      PagFor.Registro0.Aviso.Last.Segmento := 'N';
-      PagFor.Registro0.Aviso.Last.SegmentoFilho := '';
-      PagFor.Registro0.Aviso.Last.SeuNumero := SegmentoN.SeuNumero;
-    end;
-    }
   end;
 
   {Adicionais segmento N}
@@ -1143,14 +1101,6 @@ begin
   begin
     LerSegmentoN(SegmentoN);
 
-    {
-    SegmentoN.CodMovimento := StrToInMovimento(mOk, LerCampo(Linha, 16, 2, tcStr));
-    SegmentoN.SeuNumero := LerCampo(Linha, 18, 20, tcStr);
-    SegmentoN.NossoNumero := LerCampo(Linha, 38, 20, tcStr);
-    SegmentoN.NomeContribuinte := LerCampo(Linha, 58, 30, tcStr);
-    SegmentoN.DataPagamento := LerCampo(Linha, 88, 8, tcDat);
-    SegmentoN.ValorPagamento := LerCampo(Linha, 96, 15, tcDe2);
-    }
     Receita := LerCampo(Linha, 111, 6, tcInt);
     TipoContribuinte := StrToTpInscricao(mOk, LerCampo(Linha, 117, 2, tcStr));
     idContribuinte := LerCampo(Linha, 119, 14, tcStr);
@@ -1160,21 +1110,6 @@ begin
     ValorPrincipal := LerCampo(Linha, 165, 15, tcDe2);
     Multa := LerCampo(Linha, 180, 15, tcDe2);
     Juros := LerCampo(Linha, 195, 15, tcDe2);
-    {
-    SegmentoN.CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    SegmentoN.DescOcorrencia := DescricaoRetorno(SegmentoN.CodOcorrencia);
-
-    if POS(SegmentoN.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
-    begin
-      PagFor.Registro0.Aviso.New;
-
-      PagFor.Registro0.Aviso.Last.CodigoRetorno := SegmentoN.CodOcorrencia;
-      PagFor.Registro0.Aviso.Last.MensagemRetorno := SegmentoN.DescOcorrencia;
-      PagFor.Registro0.Aviso.Last.Segmento := 'N';
-      PagFor.Registro0.Aviso.Last.SegmentoFilho := '';
-      PagFor.Registro0.Aviso.Last.SeuNumero := SegmentoN.SeuNumero;
-    end;
-    }
   end;
 
   {Adicionais segmento N}

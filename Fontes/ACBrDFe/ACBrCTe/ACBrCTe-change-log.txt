@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2023
+-- ACBrCTeWebServices --
+[*] Correção, não estava separando o grupo do evento de insucesso e cancelamento de 
+    insucesso de entrega para poder validar o mesmo.
+  Por: Italo Giurizzato Junior
+
 11/05/2023
 -- ACBrCTeWebServices --
 [*] SEFAZ-RS alterou a grafia da tag de retorno de consulta ao status de serviço.

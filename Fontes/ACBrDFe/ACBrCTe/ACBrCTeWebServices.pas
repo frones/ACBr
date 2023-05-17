@@ -3319,6 +3319,20 @@ begin
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evCancCECTe>', '</evCancCECTe>')) +
                         '</evCancCECTe>';
         end;
+
+      schevIECTe:
+        begin
+          AXMLEvento := '<evIECTe xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evIECTe>', '</evIECTe>')) +
+                        '</evIECTe>';
+        end;
+
+      schevCancIECTe:
+        begin
+          AXMLEvento := '<evCancIECTe xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCancIECTe>', '</evCancIECTe>')) +
+                        '</evCancIECTe>';
+        end;
     end;
 
     AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;

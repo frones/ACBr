@@ -46,6 +46,10 @@ Símbolo : Significado
 
 17/05/2023
 -- ACBrCTeWebServices --
+[*] A SEFAZ-RS trocou novamente a nomenclatura da tag de retorno da consulta ao status
+    de servico, antes era Cte agora é CTe.
+  Por: Italo Giurizzato Junior
+-- ACBrCTeWebServices --
 [*] Alteração na procedure SalvarEventos, antes de salvar remove todos os prefixos
     "ds:" que por ventura estejam presentes no XML.
   Por: Italo Giurizzato Junior

@@ -34,6 +34,7 @@ requires
   ACBr_Boleto;
 
 contains
-  ACBrBoletoFPDF in '..\..\..\..\..\Fontes\ACBrBoleto\FC\FPDF\ACBrBoletoFPDF.pas';
+  ACBrBoletoFPDF in '..\..\..\..\..\Fontes\ACBrBoleto\FC\FPDF\ACBrBoletoFPDF.pas',
+  ACBrBoletoFPDFConst in '..\..\..\..\..\Fontes\ACBrBoleto\FC\FPDF\ACBrBoletoFPDFConst.pas';
 
 end.

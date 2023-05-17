@@ -641,7 +641,7 @@ begin
           if ATitulo.Sacado.SacadoAvalista.UF <> '' then
             JsonSacadorAvalista.Add('uf').Value.AsString                  :=  ATitulo.Sacado.SacadoAvalista.UF;
           if ATitulo.Sacado.SacadoAvalista.CEP <> '' then
-            JsonSacadorAvalista.Add('cep').Value.AsString                 :=  ATitulo.Sacado.SacadoAvalista.CEP;
+            JsonSacadorAvalista.Add('cep').Value.AsString                 :=  OnlyNumber(ATitulo.Sacado.SacadoAvalista.CEP);
           if ATitulo.Sacado.SacadoAvalista.Fone <> '' then
             JsonSacadorAvalista.Add('telefone').Value.AsString            :=  ATitulo.Sacado.SacadoAvalista.Fone;
           if ATitulo.Sacado.SacadoAvalista.Email <> '' then

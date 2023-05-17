@@ -53,7 +53,7 @@ type
 
  TRetornoEnvio_Sicredi_APIV2 = class(TRetornoEnvioREST)
  private
-   function DateBBtoDateTime(Const AValue : String) : TDateTime;
+   function DateSicreditoDateTime(Const AValue : String) : TDateTime;
  public
    constructor Create(ABoletoWS: TACBrBoleto); override;
    destructor  Destroy; Override;
@@ -76,10 +76,18 @@ begin
 
 end;
 
-function TRetornoEnvio_Sicredi_APIV2.DateBBtoDateTime(
-  const AValue: String): TDateTime;
+function TRetornoEnvio_Sicredi_APIV2.DateSicreditoDateTime(const AValue: String): TDateTime;
+var
+  data,
+  ano,
+  mes,
+  dia : String;
 begin
-  Result := StrToDateDef( StringReplace( AValue,'.','/', [rfReplaceAll] ),0);
+  ano := Copy( aValue, 0,4 );
+  mes := Copy( aValue, 6,2 );
+  dia := Copy( aValue, 9,2 );
+  data := Format( '%s-%s-%s' , [dia,mes,ano]);
+  Result := StrToDateDef( data ,0 );
 end;
 
 destructor TRetornoEnvio_Sicredi_APIV2.Destroy;
@@ -188,13 +196,13 @@ begin
           if (TipoOperacao = tpBaixa) then
           begin
             ARetornoWS.DadosRet.TituloRet.NossoNumero      := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataBaixa     := DateBBtoDateTime( AJson.Values['dataMovimento'].AsString);
+            ARetornoWS.DadosRet.TituloRet.DataBaixa     := DateSicreditoDateTime( AJson.Values['dataMovimento'].AsString);
 
           end else
           if (TipoOperacao in [tpAltera]) then//,tpAlteraSeuNumero
           begin
             ARetornoWS.DadosRet.TituloRet.NossoNumero      := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataMovimento     := DateBBtoDateTime( AJson.Values['dataMovimento'].AsString);
+            ARetornoWS.DadosRet.TituloRet.DataMovimento     := DateSicreditoDateTime( AJson.Values['dataMovimento'].AsString);
 
           end else
           {if (TipoOperacao = tpConsultarPDF) then
@@ -320,7 +328,7 @@ begin
 
 
             ListaRetorno.DadosRet.TituloRet.NossoNumero                := ListaRetorno.DadosRet.IDBoleto.NossoNum;
-            ListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateBBtoDateTime(AJSonObject.Values['dataPagamento'].AsString);
+            ListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(AJSonObject.Values['dataPagamento'].AsString);
             ListaRetorno.DadosRet.TituloRet.SeuNumero                  := AJSonObject.Values['seuNumero'].AsString;
             ListaRetorno.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
             ListaRetorno.DadosRet.TituloRet.ValorRecebido              := AJSonObject.Values['valorLiquidado'].AsNumber;

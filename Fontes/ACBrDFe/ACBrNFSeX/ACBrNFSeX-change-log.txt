@@ -44,6 +44,10 @@ Símbolo : Significado
 
 17/05/2023
 -- ACBrNFSeXServicos.ini --
+[*] Incluida a cidade de Abre Campo/MG - Provedor: EL
+  Por: PrimeSoftware
+[*] Atualizado a URL do Link em homologação da cidade de Luiz Eduardo Magalhaes/BA
+  Por: Marcos
 [*] Incluida a cidade de Timéteo/MG - Provedor: Betha
   Por: Paulo Aquino
 -- SigISS.Provider --

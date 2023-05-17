@@ -57,6 +57,9 @@ Símbolo : Significado
 [-]TK-3912 ACBrBoletoW_Sicredi_APIV2, ACBrBoletoRet_Sicredi_APIV2
    Correção data retorno, no envio correção  tipo pessoa e CEP.
    por: Desenvolvimento Farol Soft, Daniel Morais
+[-]TK-3916 ACBrBoletoW_BancoBrasil_API
+   Correção das instruções abatimento
+   por: Desenvolvimento Farol Soft, Daniel Morais
 
 12/05/2023
 [*]TK-38996 Usuário reportou que mesmo desabilitada ou sem o path do arquivo a api continua gerando o ArqBoletoWS.log

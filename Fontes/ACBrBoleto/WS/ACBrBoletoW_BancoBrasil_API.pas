@@ -438,13 +438,13 @@ begin
 
       case Integer(ATitulo.OcorrenciaOriginal.Tipo) of
         3:  // RemessaConcederAbatimento
-          begin
-            Json.Add('RemessaConcederAbatimento').Value.AsString := 'S';
+          begin                                 
+            Json.Add('indicadorIncluirAbatimento').Value.AsString := 'S';
             AtribuirAbatimento(Json);
           end;
         4:  // RemessaCancelarAbatimento
-          begin
-            Json.Add('RemessaCancelarAbatimento').Value.AsString := 'S';
+          begin                                 
+            Json.Add('indicadorAlterarAbatimento').Value.AsString := 'S';
             AlteracaoAbatimento(Json);
           end;
         5: //RemessaConcederDesconto

@@ -46,6 +46,10 @@ Símbolo : Significado
 
 17/05/2023
 -- ACBrCTeWebServices --
+[*] Alteração na procedure SalvarEventos, antes de salvar remove todos os prefixos
+    "ds:" que por ventura estejam presentes no XML.
+  Por: Italo Giurizzato Junior
+-- ACBrCTeWebServices --
 [*] Correção, não estava separando o grupo do evento de insucesso e cancelamento de 
     insucesso de entrega para poder validar o mesmo.
   Por: Italo Giurizzato Junior

@@ -2151,40 +2151,12 @@ begin
       sCNPJ       := SeparaDados(XML, 'CNPJ');
       sPathEvento := PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
 
+      XML := StringReplace(XML, 'ds:', '', [rfReplaceAll]);
+
       if FPConfiguracoesCTe.Arquivos.Salvar then
         FPDFeOwner.Gravar( aIDEvento + '-procEventoCTe.xml', XML, sPathEvento);
     end;
   end;
-(*
-  while Retorno <> '' do
-  begin
-    Inicio := Pos('<procEventoCTe', Retorno);
-    Fim    := Pos('</procEventoCTe>', Retorno) + 15;
-
-    aEvento := Copy(Retorno, Inicio, Fim - Inicio + 1);
-
-    Retorno := Copy(Retorno, Fim + 1, Length(Retorno));
-
-    aProcEvento := '<procEventoCTe versao="' + FVersao + '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                      SeparaDados(aEvento, 'procEventoCTe') +
-                   '</procEventoCTe>';
-
-    Inicio := Pos('Id=', aProcEvento) + 6;
-    Fim    := 52;
-
-    if Inicio = 6 then
-      aIDEvento := FormatDateTime('yyyymmddhhnnss', Now)
-    else
-      aIDEvento := Copy(aProcEvento, Inicio, Fim);
-
-    TipoEvento  := StrToTpEventoCTe(Ok, SeparaDados(aEvento, 'tpEvento'));
-    sCNPJ       := SeparaDados(aEvento, 'CNPJ');
-    sPathEvento := PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
-
-    if (aProcEvento <> '') then
-      FPDFeOwner.Gravar( aIDEvento + '-procEventoCTe.xml', aProcEvento, sPathEvento);
-  end;
-*)
 end;
 
 var
@@ -2433,7 +2405,6 @@ begin
                                      aEventos +
                                    '</procEventoCTe>' +
                                   '</CTeDFe>';
-
                   end;
                 finally
                   AProcCTe.Free;
@@ -2453,7 +2424,7 @@ begin
 
                   sPathCTe := PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(dhEmissao, CTe.Emit.CNPJ, CTe.emit.IE));
 
-                  if (FRetCTeDFe <> '') {and FPConfiguracoesCTe.Geral.Salvar} then
+                  if (FRetCTeDFe <> '') then
                     FPDFeOwner.Gravar( FCTeChave + '-CTeDFe.xml', FRetCTeDFe, sPathCTe);
 
                   // Salva o XML do CT-e assinado e protocolado
@@ -2467,13 +2438,10 @@ begin
                   // Salva na pasta baseado nas configurações do PathCTe
                   if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
                     GravarXML;
-
-                  // Salva o XML de eventos retornados ao consultar um CT-e
-//                  if ExtrairEventos then
-//                    SalvarEventos(aEventos);
                 end;
               end;
 
+              // Salva o XML de eventos retornados ao consultar um CT-e
               if ExtrairEventos then
                 SalvarEventos(CTeRetorno);
 
@@ -2484,17 +2452,10 @@ begin
       end
       else
       begin
+        // Salva o XML de eventos retornados ao consultar um CT-e
         if ExtrairEventos and FPConfiguracoesCTe.Arquivos.Salvar and
            (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
-        begin
-//          Inicio := Pos('<procEventoCTe', FPRetWS);
-//          Fim    := Pos('</retConsSitCTe', FPRetWS) -1;
-
-//          aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-          // Salva o XML de eventos retornados ao consultar um CT-e
           SalvarEventos(CTeRetorno);
-        end;
       end;
     end;
   finally

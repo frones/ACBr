@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/05/2023
+-- PagFor.Sicredi.GravarTxtRemessa --
+[*] Correção no Segmento B para gerar correntamente quando se tratar de PIX com
+    Dados.
+   Por: Raphael F. B. Soares
+
+17/05/2023
 -- CNAB240.LerTxtRetorno --
 [*] Removido a condição que verifica a ocorrencia de pagamento para que na lista
     de avisos conste também os pagamentos efetuados.

@@ -297,9 +297,19 @@ begin
         GravarCampo(' ', 1, tcStr);
         GravarCampo(TpInscricaoToStr(Inscricao.Tipo), 1, tcStr);
         GravarCampo(Inscricao.Numero, 14, tcStrZero);
-        GravarCampo(PixTXID, 30, tcStr);
-        GravarCampo(PixMensagem, 65, tcStr);
-        GravarCampo(PixChave, 99, tcStr);
+
+        if (PixTipoChave = tcpDadosBancarios) then
+        begin
+          GravarCampo(PixTXID, 35, tcStr);
+          GravarCampo(PixMensagem, 24, tcStr);
+          GravarCampo(PixChave, 135, tcStr);
+        end
+        else
+        begin
+          GravarCampo(PixTXID, 30, tcStr);
+          GravarCampo(PixMensagem, 65, tcStr);
+          GravarCampo(PixChave, 99, tcStr);
+        end;
       end
       else
       begin

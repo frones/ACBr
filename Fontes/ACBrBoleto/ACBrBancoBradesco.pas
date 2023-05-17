@@ -106,7 +106,7 @@ begin
 
   if (ACBrTitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) then
   begin
-    if (ACBrTitulo.NossoNumero = '') or (ACBrTitulo.NossoNumero = PadLeft(ACBrTitulo.NossoNumero,ACBrBanco.TamanhoMaximoNossoNum,'0')) then
+    if (ACBrTitulo.NossoNumero = '') or (ACBrTitulo.NossoNumero = PadLeft('0',ACBrBanco.TamanhoMaximoNossoNum,'0')) then
     begin
       ANossoNumero := StringOfChar('0', CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira, ACBrTitulo.NossoNumero) );
       ADigVerificador := '0';

@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2023
+[-]TK-3932 ACBrBancoBradesco - Correção nossonumero qdo existir e o responsável pela emissão for bancoEmite CNAB400
+   por: Daniel Morais
+
 12/05/2023
 [*]TK-38996 Usuário reportou que mesmo desabilitada ou sem o path do arquivo a api continua gerando o ArqBoletoWS.log
   por Victor H Gonzales - Pandaaa

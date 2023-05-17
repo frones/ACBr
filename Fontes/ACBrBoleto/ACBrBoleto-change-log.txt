@@ -52,6 +52,8 @@ Símbolo : Significado
 17/05/2023
 [-]TK-3932 ACBrBancoBradesco - Correção nossonumero qdo existir e o responsável pela emissão for bancoEmite CNAB400
    por: Daniel Morais
+[-]TK-3904 ACBrBoletoW_Bancoob - correção tipoJurosMora 
+   por: MLGonçalves, Daniel Morais
 
 12/05/2023
 [*]TK-38996 Usuário reportou que mesmo desabilitada ou sem o path do arquivo a api continua gerando o ArqBoletoWS.log

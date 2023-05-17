@@ -349,17 +349,19 @@ begin
 
       if AuxNode <> nil then
       begin
+        NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('num_rps'), tcStr);
+
         with Response do
         begin
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
           NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nota'), tcStr);
           CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
+          Protocolo := CodigoVerificacao;
           Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
           Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
+          NumeroRps := NumRps;
         end;
       end;
-
-      NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('num_rps'), tcStr);
 
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 

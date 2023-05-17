@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2023
+-- SigISS.Provider --
+[*] Adiciona a leitura de algumas propriedades na TratarConsultaNFse
+  Por: Diego F
+
 16/05/2023
 -- ACBrNFSeXConfiguracoes --
 [*] Revertido a alteração feita na Unit definindo um código de município padrão.

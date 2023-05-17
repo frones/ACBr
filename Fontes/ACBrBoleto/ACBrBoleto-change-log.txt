@@ -60,7 +60,9 @@ Símbolo : Significado
 [-]TK-3916 ACBrBoletoW_BancoBrasil_API
    Correção das instruções abatimento
    por: Desenvolvimento Farol Soft, Daniel Morais
-
+--ACBrBoletoFCFortesFr--
+[-]TK-3927 Corrigido posições do endereço dp pagador no carnê
+ Por: Daniel Morais
 12/05/2023
 [*]TK-38996 Usuário reportou que mesmo desabilitada ou sem o path do arquivo a api continua gerando o ArqBoletoWS.log
   por Victor H Gonzales - Pandaaa

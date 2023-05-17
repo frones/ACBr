@@ -65,6 +65,8 @@ Símbolo : Significado
  Por: Daniel Morais
 [*]TK3897-2 Sicoob WS - Novos ajustes semelhantes a lógica do Seu Numero
  Por :mlGoncalves 
+[-]TK-3895 Erro boleto sicoob via webservice ao informar instruções de pagamento
+  Por : Allan_HS / Victor H Gonzales - Pandaaa
 12/05/2023
 [*]TK-38996 Usuário reportou que mesmo desabilitada ou sem o path do arquivo a api continua gerando o ArqBoletoWS.log
   por Victor H Gonzales - Pandaaa

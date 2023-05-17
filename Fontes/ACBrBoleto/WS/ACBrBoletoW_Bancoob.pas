@@ -488,7 +488,8 @@ end;
 procedure TBoletoW_Bancoob.GerarInstrucao(AJson: TJsonObject);
 var
   JsonDadosInstrucao: TJsonObject;
-  JsonPairInstrucao: TJSONPair;
+  JsonArrayInstrucao: TJsonArray;
+  JsonPairInstrucao, JsonPairMensagem : TJSONPair;
 begin
   if Assigned(aTitulo) then
   begin
@@ -497,17 +498,24 @@ begin
       if ATitulo.Instrucao1 <> '' then
       begin
         JsonDadosInstrucao := TJsonObject.Create;
-
+        JsonArrayInstrucao := TJsonArray.Create;
         try
           JsonDadosInstrucao.Add('tipoInstrucao').Value.AsInteger := 1;
-          JsonDadosInstrucao.Add('mensagens').Value.asString := ATitulo.Instrucao1;
+
+          JsonPairMensagem := TJSONPair.Create(JsonArrayInstrucao, 'mensagens');
+
+          JsonArrayInstrucao.Add.AsString := ATitulo.Instrucao1;
 
 
           if ATitulo.Instrucao2 <> '' then
-           JsonDadosInstrucao.Add('mensagens').Value.asString := ATitulo.Instrucao2;
+           JsonArrayInstrucao.Add.AsString := ATitulo.Instrucao2;
 
           if ATitulo.Instrucao3 <> '' then
-           JsonDadosInstrucao.Add('mensagens').Value.asString := ATitulo.Instrucao3;
+           JsonArrayInstrucao.Add.AsString := ATitulo.Instrucao3;
+
+
+          JsonPairMensagem.Value.AsArray := JsonArrayInstrucao;
+          JsonDadosInstrucao.Add('mensagens').Assign(JsonPairMensagem);
 
 
           JsonPairInstrucao := TJSONPair.Create(AJson, 'mensagensInstrucao');
@@ -519,6 +527,8 @@ begin
           end;
         finally
           JsonDadosInstrucao.Free;
+          JsonArrayInstrucao.Free;
+          JsonPairMensagem.Free;
         end;
 
       end;

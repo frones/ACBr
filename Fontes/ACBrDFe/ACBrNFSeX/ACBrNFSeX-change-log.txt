@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/05/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluida a cidade de Timéteo/MG - Provedor: Betha
+  Por: Paulo Aquino
 -- SigISS.Provider --
 [*] Adiciona a leitura de algumas propriedades na TratarConsultaNFse
   Por: Diego F

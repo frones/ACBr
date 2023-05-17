@@ -94,8 +94,8 @@ uses
 constructor TACBrBoletoFPDF.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-
-  DecimalSeparator := ',';
+  
+  {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator := ',';
 end;
 
 destructor TACBrBoletoFPDF.Destroy;

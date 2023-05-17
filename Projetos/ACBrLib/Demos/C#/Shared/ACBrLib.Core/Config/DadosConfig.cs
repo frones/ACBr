@@ -55,6 +55,30 @@
             set => SetProperty(value);
         }
 
+        public string Municipio
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string UF
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string CodigoMunicipio
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string Email
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

@@ -105,7 +105,13 @@ begin
 end;
 
 procedure TACBrBoletoFPDF.FinalizarArquivo;
+var LSenhaPDF : String;
 begin
+  LSenhaPDF := Trim(Self.PdfSenha);
+
+  if LSenhaPDF <> '' then
+    FPDF.SetProtection([canPrint, canCopy],LSenhaPDF,'');
+
   if Self.CalcularNomeArquivoPDFIndividual then
     FPDF.SaveToFile(Self.NomeArquivo + FNomeArquivo + '.pdf')
   else

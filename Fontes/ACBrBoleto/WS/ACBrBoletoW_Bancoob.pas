@@ -294,7 +294,13 @@ begin
       Json.Add('numeroContrato').Value.AsInteger := StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0);
       Json.Add('modalidade').Value.AsInteger     := strtoIntdef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1);
       Json.Add('nossoNumero').Value.AsInteger    := StrtoIntdef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0);
-      Json.Add('seuNumero').Value.AsString       := ATitulo.SeuNumero;
+      Json.Add('seuNumero').Value.asString       := IfThen(ATitulo.SeuNumero <> '',
+                                                      ATitulo.SeuNumero,
+                                                      IfThen(ATitulo.NumeroDocumento <> '',
+                                                        ATitulo.NumeroDocumento,
+                                                        OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo))
+                                                      )
+                                                    );
 
       Data := Json.Stringify;
 
@@ -373,7 +379,13 @@ begin
       case Integer(aTitulo.ACBrBoleto.ListadeBoletos.Objects[0].OcorrenciaOriginal.Tipo) of
          1 : // Baixa
           begin
-            Json.Add('seuNumero').Value.AsString  :=  ATitulo.SeuNumero;
+            Json.Add('seuNumero').Value.AsString  :=  IfThen(ATitulo.SeuNumero <> '',
+                                                      ATitulo.SeuNumero,
+                                                      IfThen(ATitulo.NumeroDocumento <> '',
+                                                        ATitulo.NumeroDocumento,
+                                                        OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo))
+                                                      )
+                                                    );
           end;
         5: //RemessaConcederDesconto
           begin

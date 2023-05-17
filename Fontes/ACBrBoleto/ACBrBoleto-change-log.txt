@@ -63,6 +63,8 @@ Símbolo : Significado
 --ACBrBoletoFCFortesFr--
 [-]TK-3927 Corrigido posições do endereço dp pagador no carnê
  Por: Daniel Morais
+[*]TK3897-2 Sicoob WS - Novos ajustes semelhantes a lógica do Seu Numero
+ Por :mlGoncalves 
 12/05/2023
 [*]TK-38996 Usuário reportou que mesmo desabilitada ou sem o path do arquivo a api continua gerando o ArqBoletoWS.log
   por Victor H Gonzales - Pandaaa

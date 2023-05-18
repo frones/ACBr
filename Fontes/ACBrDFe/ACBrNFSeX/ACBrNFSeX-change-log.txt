@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/05/2023
+-- ACBrNFSeXProviderABRASFv2/MegaSoft.Provider --
+[*] Ajustes para a leitura correta de alertas.
+   Por: Italo Giurizzato Junior
 -- ABase.GravarXml --
 [*] Alterado a configuração para poder gerar a tag OutrasInformacoes.
   Por: Diego Oliveira

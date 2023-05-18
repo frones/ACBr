@@ -2707,12 +2707,22 @@ begin
         Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
         Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
-        if (Mensagem <> '') and (Pos('L000', Codigo)= 0) then
+        if (Mensagem <> '') and (Pos('L000', Codigo) = 0) then
         begin
           AErro := Response.Erros.New;
           AErro.Codigo := Codigo;
           AErro.Descricao := ACBrStr(Mensagem);
           AErro.Correcao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr));
+        end
+        else
+        begin
+          if (Mensagem <> '') and (Pos('L000', Codigo) > 0) then
+          begin
+            AAlerta := Response.Alertas.New;
+            AAlerta.Codigo := Codigo;
+            AAlerta.Descricao := ACBrStr(Mensagem);
+            AAlerta.Correcao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr));
+          end;
         end;
       end;
     end
@@ -2727,6 +2737,16 @@ begin
         AErro.Codigo := Codigo;
         AErro.Descricao := ACBrStr(Mensagem);
         AErro.Correcao := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr));
+      end
+      else
+      begin
+        if (Mensagem <> '') and (Pos('L000', Codigo) > 0) then
+        begin
+          AAlerta := Response.Alertas.New;
+          AAlerta.Codigo := Codigo;
+          AAlerta.Descricao := ACBrStr(Mensagem);
+          AAlerta.Correcao := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr));
+        end;
       end;
     end;
   end;

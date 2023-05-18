@@ -94,7 +94,13 @@ begin
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 
-  SetNomeXSD('nfse_v01.xsd');
+  SetNomeXSD('***');
+
+  with ConfigSchemas do
+  begin
+    GerarNFSe := 'nfse_v01.xsd';
+    ConsultarNFSeRps := 'nfse_v01.xsd';
+  end;
 end;
 
 function TACBrNFSeProviderMegaSoft200.CriarGeradorXml(

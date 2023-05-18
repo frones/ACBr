@@ -47,5 +47,7 @@ public enum  ACBrSessao {
     eSocial,
     GTIN,
     ConsultaCNPJ,
-    NCM;
+    NCM,
+    NFSe,
+    DANFSe;
 }

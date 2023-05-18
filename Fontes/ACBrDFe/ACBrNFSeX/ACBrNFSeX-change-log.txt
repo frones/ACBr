@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/05/2023
+-- ABase.GravarXml --
+[*] Alterado a configuração para poder gerar a tag OutrasInformacoes.
+  Por: Diego Oliveira
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Macatuba/SP trocou de provedor, agora é Fiorilli
   Por: Paulo Henrique Panico

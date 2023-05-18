@@ -61,6 +61,8 @@ implementation
 procedure TNFSeW_ABase201.Configuracao;
 begin
   inherited Configuracao;
+
+  NrOcorrOutrasInformacoes := 0;
 end;
 
 end.

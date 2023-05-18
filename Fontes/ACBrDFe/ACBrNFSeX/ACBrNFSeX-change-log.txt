@@ -58,6 +58,9 @@ Símbolo : Significado
   Por: Paulo Henrique Panico
 [*] A cidade de Cunha Pora/SC trocou de provedor, agora é IPM na versão 1.01
   Por: Leo
+-- ACBrNFSeXConfiguracoes --
+[*] Altera a posição de algumas propriedades visando corrigir problema de montagem automática do PathSchemas na Lib
+  Por: Diego F
 
 17/05/2023
 -- ACBrNFSeXServicos.ini --

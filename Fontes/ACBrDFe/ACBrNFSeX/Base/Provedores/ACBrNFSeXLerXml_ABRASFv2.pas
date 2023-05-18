@@ -270,7 +270,11 @@ begin
   begin
     with NFSe.Prestador.Endereco do
     begin
-      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+      Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+
+      if Endereco = '' then
+        Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Logradouro'), tcStr);
+
       Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
       Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
@@ -299,7 +303,11 @@ begin
   begin
     with NFSe.Tomador.Endereco do
     begin
-      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+      Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+
+      if Endereco = '' then
+        Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Logradouro'), tcStr);
+
       Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
       Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
@@ -1179,6 +1187,10 @@ begin
     Result := LerXmlNfse(XmlNode)
   else
     Result := LerXmlRps(XmlNode);
+
+  {==== Implementação Futura ====}
+//  if NFSe.Link = '' then
+//    NFSe.Link := LerLinkURL;
 
   FreeAndNil(FDocument);
 end;

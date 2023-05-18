@@ -841,6 +841,10 @@ begin
   else
     Result := LerXmlRps(XmlNode);
 
+  {==== Implementação Futura ====}
+//  if NFSe.Link = '' then
+//    NFSe.Link := LerLinkURL;
+
   FreeAndNil(FDocument);
 end;
 

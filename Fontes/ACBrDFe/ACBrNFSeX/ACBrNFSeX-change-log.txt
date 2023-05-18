@@ -52,6 +52,8 @@ Símbolo : Significado
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Macatuba/SP trocou de provedor, agora é Fiorilli
   Por: Paulo Henrique Panico
+[*] A cidade de Cunha Pora/SC trocou de provedor, agora é IPM na versão 1.01
+  Por: Leo
 
 17/05/2023
 -- ACBrNFSeXServicos.ini --

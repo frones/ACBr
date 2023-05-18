@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/05/2023
+-- Diversos --
+[*] Alteração para leitura e gravação correta da tag indAntecipaAdiant.
+   Por: Hudson G Leite
+
 30/03/2023
 -- pmdfeEnvEventoMDFe --
 [*] Alteração para suportar numero sequencial de eventos com 3 digitos.

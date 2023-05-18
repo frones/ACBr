@@ -402,7 +402,7 @@ type
     property indAltoDesemp: TIndicador     read FindAltoDesemp write FindAltoDesemp;
     property indPag: TIndPag               read FindPag        write FindPag;
     property vAdiant: Double               read FvAdiant       write FvAdiant;
-    property indAntecipaAdiant: TIndicador read FindAntecipaAdiant write FindAntecipaAdiant;
+    property indAntecipaAdiant: TIndicador read FindAntecipaAdiant write FindAntecipaAdiant default tiNao;
     property infPrazo: TInfPrazoCollection read FinfPrazo      write FinfPrazo;
     property tpAntecip: TtpAntecip         read FtpAntecip     write FtpAntecip;
     property infBanc: TinfBanc             read FinfBanc       write FinfBanc;
@@ -2492,6 +2492,7 @@ begin
   FComp     := TCompCollection.Create;
   FinfPrazo := TInfPrazoCollection.Create;
   FinfBanc  := TinfBanc.Create;
+  FindAntecipaAdiant := tiNao;
 end;
 
 destructor TinfPagCollectionItem.Destroy;

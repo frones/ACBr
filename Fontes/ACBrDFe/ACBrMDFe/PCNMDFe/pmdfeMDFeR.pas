@@ -255,7 +255,9 @@ begin
             MDFe.rodo.infANTT.infPag[i01].indPag        := StrToTIndPag(ok, Leitor.rCampo(tcStr, 'indPag'));
             MDFe.rodo.infANTT.infPag[i01].vAdiant       := Leitor.rCampo(tcDe2, 'vAdiant');
 
-            MDFe.rodo.infANTT.infPag[i01].indAntecipaAdiant := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indAntecipaAdiant'));
+            if Leitor.rCampo(tcStr, 'indAntecipaAdiant') <> '' then
+              MDFe.rodo.infANTT.infPag[i01].indAntecipaAdiant := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indAntecipaAdiant'));
+
             MDFe.rodo.infANTT.infPag[i01].tpAntecip := StrTotpAntecip(ok, Leitor.rCampo(tcStr, 'tpAntecip'));
 
             i02 := 0;

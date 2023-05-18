@@ -872,6 +872,8 @@ begin
       Restricoes := Restricoes + CSITEF_RestricoesAVista + ';';
       Restricoes := Restricoes + CSITEF_RestricoesParcelaAministradora + ';';
     end;
+    if (TACBrTEFAPI(fpACBrTEFAPI).ExibicaoQRCode = qrapiExibirAplicacao) then
+       Restricoes := Restricoes + '{DevolveStringQRCode=1};';
 
     SL := TStringList.Create;
     try
@@ -899,6 +901,7 @@ begin
       SL.Free;
     end;
   end;
+
 
   if (Parcelas <> 0) then
     fRespostasPorTipo.ValueInfo[505] := IntToStr(Parcelas);

@@ -105,17 +105,21 @@ begin
     if (leitor.rExtrai(1, 'retEnviCte') <> '') or
        (leitor.rExtrai(1, 'retEnviCTe') <> '') then
     begin
-               Fversao   := Leitor.rAtributo('versao', 'retEnviCte');
-      (*AR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      (*AR03a*)FcUF      := Leitor.rCampo(tcInt, 'cUF');
-      (*AR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      (*AR05 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
-      (*AR06 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+      Fversao := Leitor.rAtributo('versao', 'retEnviCte');
 
-      //       Grupo infRec - Dados do Recibo do Lote (Só é gerado se o Lote for aceito)
-      (*AR08 *)infRec.nRec      := Leitor.rCampo(tcStr, 'nRec');
-      (*AR09 *)infRec.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-      (*AR10 *)infRec.FtMed     := Leitor.rCampo(tcInt, 'tMed');
+      if Fversao = '' then
+        Fversao := Leitor.rAtributo('versao', 'retEnviCTe');
+
+      FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      FcUF := Leitor.rCampo(tcInt, 'cUF');
+      FverAplic := Leitor.rCampo(tcStr, 'verAplic');
+      FcStat := Leitor.rCampo(tcInt, 'cStat');
+      FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
+
+      // Grupo infRec - Dados do Recibo do Lote (Só é gerado se o Lote for aceito)
+      infRec.nRec := Leitor.rCampo(tcStr, 'nRec');
+      infRec.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+      infRec.FtMed := Leitor.rCampo(tcInt, 'tMed');
 
       Result := True;
     end;

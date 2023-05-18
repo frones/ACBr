@@ -46,6 +46,9 @@ Símbolo : Significado
 
 18/05/2023
 -- pcteRetEnvCTe --
+[*] Ajuste na leitura do atributo
+  Por: Italo Giurizzato Junior
+-- pcteRetEnvCTe --
 [*] A SEFAZ-MG trocou a nomenclatura da tag de retorno do envio de lote.
   Por: Leandro
 

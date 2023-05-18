@@ -101,7 +101,9 @@ begin
   Result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
-    if leitor.rExtrai(1, 'retEnviCte') <> '' then
+
+    if (leitor.rExtrai(1, 'retEnviCte') <> '') or
+       (leitor.rExtrai(1, 'retEnviCTe') <> '') then
     begin
                Fversao   := Leitor.rAtributo('versao', 'retEnviCte');
       (*AR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));

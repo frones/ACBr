@@ -343,7 +343,7 @@ begin
       with RegistroZ4.New do
         begin
           CPF_CNPJ := '99.999.999/9999-11';
-          VL_TOTAL := 10 * I;
+          VL_TOTAL_MENSAL := 10 * I;
           DATA_INI := Now;
           DATA_FIM := Now;
         end;
@@ -369,10 +369,10 @@ begin
         VERSAO := '1.00';
       end;
     // registro Z4
-    RegistroV4.Clear;
+    RegistrosV4.Clear;
     for I := 1 to 5 do
     begin
-      with RegistroV4.New do
+      with RegistrosV4.New do
         begin
           NUMUMEROFABRICACAO := '99.999.999/9999-1'+ IntToStr(I);
           MARCAECF := 'MARCA'+IntToStr(I);

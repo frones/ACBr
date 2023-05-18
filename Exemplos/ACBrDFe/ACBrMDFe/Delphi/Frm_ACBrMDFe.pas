@@ -36,7 +36,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrBase, ACBrUtil, ACBrDFe, ACBrDFeReport,
+  ACBrBase, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
+  ACBrUtil.Strings,
+  ACBrDFe, ACBrDFeReport,
   ACBrMDFe, ACBrMail, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFeRLClass;
 
 type
@@ -2203,7 +2205,7 @@ begin
 
     AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
 
-    if NaoEstaVazio(edtAguardar.Text)then
+    if NaoEstaVazio(edtAguardar.Text) then
       AguardarConsultaRet := ifThen(StrToInt(edtAguardar.Text) < 1000, StrToInt(edtAguardar.Text) * 1000, StrToInt(edtAguardar.Text))
     else
       edtAguardar.Text := IntToStr(AguardarConsultaRet);
@@ -2278,8 +2280,8 @@ end;
 
 procedure TfrmACBrMDFe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ACBrUtil.ConverteXMLtoUTF8(RetWS), False, False);
+  WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
+                      ConverteXMLtoUTF8(RetWS), False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 

@@ -742,6 +742,7 @@ begin
   FPAF_V.Conteudo.Clear;
   FPAF_Z.Conteudo.Clear;
   FPAF_J.Conteudo.Clear;
+  FPAF_W.Conteudo.Clear;
 
   FPAF_U.NomeArquivo := Arquivo;
   FPAF_A.NomeArquivo := Arquivo;
@@ -761,6 +762,7 @@ begin
   FPAF_V.NomeArquivo := Arquivo;
   FPAF_Z.NomeArquivo := Arquivo;
   FPAF_J.NomeArquivo := Arquivo;
+  FPAF_W.NomeArquivo := Arquivo;
 
   PAF_U.WriteRegistroU1;
   PAF_U.WriteBuffer;
@@ -865,6 +867,12 @@ begin
   begin
     FPAF_J.WriteRegistroJ1(Layout);  //J1 e J2
     FPAF_J.WriteBuffer;
+  end;
+
+  if (FPAF_W.RegistroW4.Count > 0) and (Layout = lpPAFNFCe) then
+  begin
+    FPAF_W.WriteRegistroW1(Layout);
+    FPAF_W.WriteBuffer;
   end;
 
   // Assinatura EAD

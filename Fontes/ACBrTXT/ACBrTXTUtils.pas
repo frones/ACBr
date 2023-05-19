@@ -138,7 +138,7 @@ const
 begin
    Result := False;
    // Se o modelo for 06 (energia elétrica) ou 28 (gás canalizado), os valores válidos são [01, 02, 03, 04, 05, 06, 07, 08]
-   if MatchText(COD_MOD, ['06', '28']) then
+   if MatchText(COD_MOD, ['06', '28', '66']) then
    begin
       Result := MatchText(COD_CONS, ListaEnergia);
    end

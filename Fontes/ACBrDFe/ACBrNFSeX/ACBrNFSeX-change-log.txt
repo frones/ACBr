@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a cidade de Francisco Sa/MG, provedor é o Sintese na versão 2.04
+  Por: M3Software Sistemas
+
 18/05/2023
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] O provedor Sigep mudou a tag de Endereco para Logradouro, ajuste para 

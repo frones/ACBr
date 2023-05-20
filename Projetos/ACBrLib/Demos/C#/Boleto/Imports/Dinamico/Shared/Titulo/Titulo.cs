@@ -116,7 +116,9 @@ namespace ACBrLib.Boleto
 
         public bool Verso { get; set; }
 
-        public List<BoletoNotaFiscal> NotaFiscais { get; } = new List<BoletoNotaFiscal>();
+        public QrCode QrCode { get; set; } = new QrCode();
+
+    public List<BoletoNotaFiscal> NotaFiscais { get; } = new List<BoletoNotaFiscal>();
 
         #endregion Properties
 

@@ -1017,6 +1017,10 @@ namespace ACBrLib.Core.NFSe
         [Description("Frutal - MG")]
         Frutal = 3127107,
 
+        [EnumValue("3127206")]
+        [Description("Funilandia - MG")]
+        Funilandia = 3127206,
+
         [EnumValue("3127701")]
         [Description("Governador Valadares - MG")]
         GovernadorValadares = 3127701,
@@ -1223,7 +1227,7 @@ namespace ACBrLib.Core.NFSe
 
         [EnumValue("3144805")]
         [Description("Nova Lima - MG")]
-        NovaLime = 3144805,
+        NovaLima = 3144805,
 
         [EnumValue("3145208")]
         [Description("Nova Serrana - MG")]

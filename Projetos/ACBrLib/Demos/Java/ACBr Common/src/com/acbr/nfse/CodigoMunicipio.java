@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum CodigoMunicipio {
-     
+
     NenhumaCidadeSelecionada(0),
-    
-    //Rondônia
+
+    // Rondônia
     Ariquemes_RO(1100023),
     Cabixi_RO(1100031),
     Cacoal_RO(1100049),
@@ -27,23 +27,23 @@ public enum CodigoMunicipio {
     Cujubim_RO(1100940),
     Itapua_do_Oeste_RO(1101104),
     ValedoAnari_RO(1101757),
-    
-    //Acre
+
+    // Acre
     Rio_Branco_AC(1200401),
     Rodrigues_Alves_AC(1200427),
     Senador_Guiomard_AC(1200450),
     Tarauaca_AC(1200609),
-    
-    //Amazonas
+
+    // Amazonas
     Iranduba_AM(1301852),
     Manaus_AM(1302603),
-    
-    //Roraima
+
+    // Roraima
     Boa_Vista_RR(1400100),
     Bonfim_RR(1400159),
     Caracarai_RR(1400209),
-    
-    //Pará
+
+    // Pará
     Altamira_PA(1500602),
     Ananindeua_PA(1500800),
     Aurora_do_Para_PA(1500958),
@@ -66,8 +66,8 @@ public enum CodigoMunicipio {
     Tucuma_PA(1508084),
     Xinguara_PA(1508407),
     Macapa_PA(1600303),
-    
-    //Tocantins
+
+    // Tocantins
     Araguaina_TO(1702109),
     Colinas_do_Tocantins_TO(1705508),
     Guarai_TO(1709302),
@@ -77,8 +77,8 @@ public enum CodigoMunicipio {
     Porto_Nacional_TO(1718204),
     Palmas_TO(1721000),
     Xambioa_TO(1722107),
-    
-    //Maranhão
+
+    // Maranhão
     Acailandia_MA(2100055),
     Alcantara_MA(2100204),
     Alto_Parnaiba_MA(2100501),
@@ -92,7 +92,7 @@ public enum CodigoMunicipio {
     Sao_Luis_MA(2111300),
     Timon_MA(2112209),
 
-    //Piauí
+    // Piauí
     Luis_Correia_PI(2205706),
     Oeiras_PI(2207009),
     Parnaiba_PI(2207702),
@@ -100,8 +100,8 @@ public enum CodigoMunicipio {
     Teresina_PI(2211001),
     Urucui_PI(2211209),
     Valenca_do_Piaui_PI(2211308),
-    
-    //Ceará
+
+    // Ceará
     Aquiraz_CE(2301000),
     Aracati_CE(2301109),
     Barbalha_CE(2301901),
@@ -110,7 +110,7 @@ public enum CodigoMunicipio {
     Crato_CE(2304202),
     Eusebio_CE(2304285),
     Fortaleza_CE(2304400),
-    Guaraciaba_do_Norte_CE(2305001),    
+    Guaraciaba_do_Norte_CE(2305001),
     Itaitinga_CE(2306256),
     Jijoca_de_Jericoacoara_CE(2307254),
     Juazeiro_do_Norte_CE(2307304),
@@ -119,8 +119,8 @@ public enum CodigoMunicipio {
     Quixeramobim_CE(2311405),
     Sobral_CE(2312908),
     Taua_CE(2313302),
-    
-    //Rio Grande do Norte
+
+    // Rio Grande do Norte
     Parnamirim_RN(2403251),
     Macaiba_RN(2407104),
     Mossoro_RN(2408003),
@@ -128,16 +128,16 @@ public enum CodigoMunicipio {
     Rodolfo_Fernandes_RN(2411007),
     Tibau_RN(2411056),
     Sao_Goncalo_do_Amarante_RN(2412005),
-    
-    //Paraíba
+
+    // Paraíba
     Cabedelo_PB(2503209),
     Campina_Grande_PB(2504009),
     Conde_PB(2504603),
     Joao_Pessoa_PB(2507507),
     Piloes_PB(2511608),
     Santarem_PB(2513653),
-    
-    //Pernambuco
+
+    // Pernambuco
     Bezerros_PE(2601904),
     Cabode_Santo_Agostinho_PE(2602902),
     Camaragibe_PE(2603454),
@@ -149,15 +149,15 @@ public enum CodigoMunicipio {
     Petrolina_PE(2611101),
     Recife_PE(2611606),
     Vitoria_de_Santo_Antao_PE(2616407),
-    
-    //Alagoas
+
+    // Alagoas
     Arapiraca_AL(2700300),
     DelmiroGouveia_AL(2702405),
     Maceio_AL(2704302),
     Marechal_Deodoro_AL(2704708),
     Santana_do_Ipanema_AL(2708006),
-    
-    //Sergipe
+
+    // Sergipe
     Aracaju_SE(2800308),
     Barrados_Coqueiros_SE(2800605),
     Campo_do_Brito_SE(2801009),
@@ -166,8 +166,8 @@ public enum CodigoMunicipio {
     Japaratuba_SE(2803302),
     Lagarto_SE(2803500),
     Nossa_Senhora_do_Socorro_SE(2804805),
-    
-    //Bahia
+
+    // Bahia
     Alcobaca_BA(2900801),
     Amargosa_BA(2901007),
     Amelia_Rodrigues_BA(2901106),
@@ -226,8 +226,8 @@ public enum CodigoMunicipio {
     Utinga_BA(2932804),
     Vera_Cruz_BA(2933208),
     Vitoria_da_Conquista_BA(2933307),
-    
-    //Minas Gerais
+
+    // Minas Gerais
     Albertina_MG(3101409),
     Alem_Paraiba_MG(3101508),
     Alpinopolis_MG(3101904),
@@ -286,6 +286,7 @@ public enum CodigoMunicipio {
     Formiga_MG(3126109),
     Fronteira_MG(3127008),
     Frutal_MG(3127107),
+    Funilandia_MG(3127206),
     Governador_Valadares_MG(3127701),
     Guanhaes_MG(3128006),
     Guape_MG(3128105),
@@ -417,8 +418,8 @@ public enum CodigoMunicipio {
     Vespasiano_MG(3171204),
     Vicosa_MG(3171303),
     Viscondedo_Rio_Branco_MG(3172004),
-    
-    //Espírito Santo
+
+    // Espírito Santo
     Afonso_Claudio_ES(3200102),
     Aguia_Branca_ES(3200136),
     Alfredo_Chaves_ES(3200300),
@@ -449,8 +450,8 @@ public enum CodigoMunicipio {
     Viana_ES(3205101),
     Vila_Velha_ES(3205200),
     Vitoria_ES(3205309),
-    
-    //Rio de Janeiro
+
+    // Rio de Janeiro
     Angra_dos_Reis_RJ(3300100),
     Araruama_RJ(3300209),
     Areal_RJ(3300225),
@@ -511,8 +512,8 @@ public enum CodigoMunicipio {
     Valenca_RJ(3306107),
     Vassouras_RJ(3306206),
     Volta_Redonda_RJ(3306206),
-    
-    //São Paulo
+
+    // São Paulo
     Adamantina_SP(3500105),
     Aguai_SP(3500303),
     Agudos_SP(3500709),
@@ -749,8 +750,8 @@ public enum CodigoMunicipio {
     Vinhedo_SP(3556701),
     Votorantim_SP(3557105),
     Votuporanga_SP(3557154),
-    
-    //Paraná
+
+    // Paraná
     Adrianopolis_PR(4100202),
     Agudos_do_Sul_PR(4100301),
     Almirante_Tamandare_PR(4100400),
@@ -904,8 +905,8 @@ public enum CodigoMunicipio {
     Wenceslau_Braz_PR(4128500),
     Vera_Cruz_do_Oeste_PR(4128559),
     Vitorino_PR(4128708),
-    
-    //Santa Catarina
+
+    // Santa Catarina
     Abdon_Batista_SC(4200051),
     Agrolandia_SC(4200200),
     Agronomica_SC(4200309),
@@ -1137,8 +1138,8 @@ public enum CodigoMunicipio {
     Xaxim_SC(4219705),
     Zortea_SC(4219853),
     Balneario_Rincao_SC(4220000),
-    
-    //Rio Grande do Sul
+
+    // Rio Grande do Sul
     Agua_Santa_RS(4300059),
     Alegrete_RS(4300406),
     Alpestre_RS(4300505),
@@ -1339,8 +1340,8 @@ public enum CodigoMunicipio {
     Vila_Langaro_RS(4323358),
     Vista_Alegre_RS(4323507),
     Westfalia_RS(4323770),
-    
-    //Mato Grosso do Sul
+
+    // Mato Grosso do Sul
     Anastacio_MS(5000708),
     Aquidauana_MS(5001102),
     Aral_Moreira_MS(5001243),
@@ -1382,8 +1383,8 @@ public enum CodigoMunicipio {
     Sidrolandia_MS(5007901),
     Taquarussu_MS(5007976),
     Tres_Lagoas_MS(5008305),
-    
-    //Mato Grosso
+
+    // Mato Grosso
     Agua_Boa_MT(5100201),
     Alta_Floresta_MT(5100250),
     Alto_Araguaia_MT(5100300),
@@ -1452,8 +1453,8 @@ public enum CodigoMunicipio {
     Varzea_Grande_MT(5108402),
     Vila_Rica_MT(5108600),
     Nova_Maringa_MT(5108907),
-    
-    //Goiás
+
+    // Goiás
     Acreuna_GO(5200134),
     Adelandia_GO(5200159),
     Agua_Limpa_GO(5200209),
@@ -1532,28 +1533,28 @@ public enum CodigoMunicipio {
     Trindade_GO(5221403),
     Uruacu_GO(5221601),
     Valparaiso_de_Goias_GO(5221858),
-    
-    //Distrito Federal
+
+    // Distrito Federal
     Brasilia_DF(5300108);
-    
+
     public static final Map<Integer, CodigoMunicipio> map;
     public final int enumValue;
-    
+
     static {
         map = new HashMap<>();
         for (CodigoMunicipio value : CodigoMunicipio.values()) {
             map.put(value.asInt(), value);
         }
     }
-    
-    public static CodigoMunicipio valueOf(int value){
+
+    public static CodigoMunicipio valueOf(int value) {
         return map.get(value);
     }
-    
-    CodigoMunicipio(int id){
+
+    CodigoMunicipio(int id) {
         this.enumValue = id;
     }
-    
+
     public int asInt() {
         return enumValue;
     }

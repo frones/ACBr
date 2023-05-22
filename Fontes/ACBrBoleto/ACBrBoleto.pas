@@ -3696,7 +3696,7 @@ begin
       //Cedente
       if IniBoletos.SectionExists('Cedente') then
       begin
-        wTipoInscricao := IniBoletos.ReadInteger(CCedente,'TipoInscricao',1);
+        wTipoInscricao := IniBoletos.ReadInteger(CCedente,'TipoInscricao', IniBoletos.ReadInteger(CCedente,'TipoPessoa', 1 ) );
         try
            Cedente.TipoInscricao := TACBrPessoa( wTipoInscricao ) ;
         except

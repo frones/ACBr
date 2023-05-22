@@ -46,6 +46,9 @@ Símbolo : Significado
 -- ACBrNFSeXNotasFiscais --
 [*] Adiciona na rotina de leitura do INI validações se a seção existe para que caso negativo, não preencha com valor padrão.
   Por: Diego F 
+-- ACBrNFSeXServicos.ini --
+[+] Incluida a cidade de Funilandia/MG, provedor é o NFSeBrasil
+  Por: jovitomg
 
 19/05/2023
 -- ACBrNFSeXServicos.ini --

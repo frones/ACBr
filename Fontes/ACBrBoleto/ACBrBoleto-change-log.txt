@@ -48,6 +48,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+22/05/2023
+[*]TK-3908 Ajuste Segmento Q Boleto CNAB240 Banrisul - Endereço Completo
+  por : Alexandre de Paula
 
 17/05/2023
 [-]TK-3932 ACBrBancoBradesco - Correção nossonumero qdo existir e o responsável pela emissão for bancoEmite CNAB400

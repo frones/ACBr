@@ -802,7 +802,9 @@ begin
                 TipoInscSacado +
                 PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0') +
                 PadRight(Sacado.NomeSacado, 40) +
-                PadRight(Sacado.Logradouro, 40) +
+                PadRight(Sacado.Logradouro+' '+
+                    Sacado.Numero+' '+
+                    Sacado.Complemento, 40) +
                 PadRight(Sacado.Bairro, 15) +
                 StringReplace(Sacado.CEP, '-', '', []) +
                 PadRight(Sacado.Cidade, 15) +

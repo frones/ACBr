@@ -70,6 +70,7 @@
     <Compile Include="..\Shared\Titulo\CodigoNegativacao.cs" Link="Titulo\CodigoNegativacao.cs" />
     <Compile Include="..\Shared\Titulo\Conta.cs" Link="Titulo\Conta.cs" />
     <Compile Include="..\Shared\Titulo\Ocorrencia.cs" Link="Titulo\Ocorrencia.cs" />
+	<Compile Include="..\Shared\Titulo\QRCode.cs" Link="Titulo\QRCode.cs" />
     <Compile Include="..\Shared\Titulo\RetornoBanco.cs" Link="Titulo\RetornoBanco.cs" />
     <Compile Include="..\Shared\Titulo\RetornoBoleto.cs" Link="Titulo\RetornoBoleto.cs" />
     <Compile Include="..\Shared\Titulo\RetornoCedente.cs" Link="Titulo\RetornoCedente.cs" />

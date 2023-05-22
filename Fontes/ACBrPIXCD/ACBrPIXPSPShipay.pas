@@ -89,8 +89,12 @@ type
     fOrderInfo: TShipayOrderInfo;
     fOrderList: TShipayOrdersList;
     fQuandoEnviarOrder: TShipayQuandoEnviarOrder;
+    fURLProducao: String;
+    fURLSandBox: String;
     fWallets: TShipayWalletArray;
     function GetSecretKey: String;
+    function GetURLProducao: String;
+    function GetURLSandBox: String;
     procedure SetSecretKey(AValue: String);
 
     procedure DoPostOrder(aEndPoint: String; IsEOrder: Boolean);
@@ -153,6 +157,8 @@ type
     property ClientID;
     property SecretKey: String read GetSecretKey write SetSecretKey;
     property AccessKey: String read fAccessKey write fAccessKey;
+    property URLSandBox: String read GetURLSandBox write fURLSandBox;
+    property URLProducao: String read GetURLProducao write fURLProducao;
 
     property QuandoEnviarOrder: TShipayQuandoEnviarOrder read fQuandoEnviarOrder
       write fQuandoEnviarOrder;
@@ -177,7 +183,9 @@ begin
   fOrderInfo := TShipayOrderInfo.Create;
   fOrderList := TShipayOrdersList.Create;
   fOrderError := TShipayOrderError.Create;
-  fAccessKey := '';
+  fAccessKey := EmptyStr;
+  fURLSandBox := EmptyStr;
+  fURLProducao := EmptyStr;
   fQuandoEnviarOrder := Nil;
   fpQuandoAcessarEndPoint := QuandoAcessarEndPoint;
   fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
@@ -210,6 +218,20 @@ end;
 function TACBrPSPShipay.GetSecretKey: String;
 begin
    Result := ClientSecret;
+end;
+
+function TACBrPSPShipay.GetURLProducao: String;
+begin
+  Result := fURLProducao;
+  if EstaVazio(fURLProducao) then
+    Result := cShipayURLProducao;
+end;
+
+function TACBrPSPShipay.GetURLSandBox: String;
+begin
+  Result := fURLSandBox;
+  if EstaVazio(fURLSandBox) then
+    Result := cShipayURLStaging;
 end;
 
 procedure TACBrPSPShipay.SetSecretKey(AValue: String);

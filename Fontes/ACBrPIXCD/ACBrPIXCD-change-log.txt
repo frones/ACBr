@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2023
+-- ACBrPIXPSPShipay --
+[+] Inclusão de propriedades para possibilitar a definição das URLs de produção e 
+    sandbox para o PSP Shipay.
+    Por: Elias César
+
 24/04/2023
 -- ACBrPIXPSPShipay --
 [-] Correção no carregamento das carteiras ao utilizar o PSP Shipay controlando o Token manualmente

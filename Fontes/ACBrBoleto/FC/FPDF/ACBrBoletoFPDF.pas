@@ -107,16 +107,24 @@ end;
 
 procedure TACBrBoletoFPDF.FinalizarArquivo;
 var LSenhaPDF : String;
+    LPath : String;
+    LFile : String;
 begin
   LSenhaPDF := Trim(Self.PdfSenha);
 
   if LSenhaPDF <> '' then
     FPDF.SetProtection([canPrint, canCopy],LSenhaPDF,'');
 
+  LPath := IncludeTrailingPathDelimiter(ExtractFilePath(Self.NomeArquivo));
+  LFile := ChangeFileExt(ExtractFileName(Self.NomeArquivo),'');
+
+  if LFile <> '' then
+    LFile := LFile+'_';
+
   if Self.CalcularNomeArquivoPDFIndividual then
-    FPDF.SaveToFile(Self.NomeArquivo + FNomeArquivo + '.pdf')
+    FPDF.SaveToFile( ChangeFileExt(LPath + LFile+FNomeArquivo, '.pdf'))
   else
-    FPDF.SaveToFile(Self.NomeArquivo + '.pdf');
+    FPDF.SaveToFile(ChangeFileExt(Self.NomeArquivo, '.pdf'));
   FPDF.Free;
 end;
 

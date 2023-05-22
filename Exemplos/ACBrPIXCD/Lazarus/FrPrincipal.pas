@@ -1626,7 +1626,17 @@ begin
       juros.valorPerc := StrToFloatDef(edCobVJurosValor.Text, 0);
 
       desconto.modalidade := TACBrPIXDescontoModalidade(cbCobVDescModalidade.ItemIndex);
-      desconto.valorPerc := StrToFloatDef(edCobVDescValor.Text, 0);
+
+      if desconto.modalidade in [pdmValorFixo, pdmPercentual] then
+      begin
+        with desconto.descontosDataFixa.New do
+        begin
+          data := edCobVVencimento.DateTime;
+          valorPerc := StrToFloatDef(edCobVDescValor.Text, 0);
+        end;
+      end
+      else
+        desconto.valorPerc := StrToFloatDef(edCobVDescValor.Text, 0);
     end;
   end;
 

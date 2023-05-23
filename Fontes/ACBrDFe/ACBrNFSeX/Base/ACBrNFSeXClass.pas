@@ -1577,7 +1577,11 @@ begin
   FOptanteMEISimei := snNao;
   FIncentivadorCultural := snNao;
   FStatusRps := srNormal;
+
+  FRpsSubstituido.FNumero := '';
+  FRpsSubstituido.FSerie := '';
   FRpsSubstituido.FTipo := trRPS;
+
   FSituacaoNfse := snNormal;
   FNfseCancelamento.DataHora := 0;
   FNfseSubstituidora := '';

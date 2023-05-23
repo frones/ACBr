@@ -323,8 +323,8 @@ begin
       sSecao := 'RpsSubstituido';
       if INIRec.SectionExists(sSecao) then
       begin
-        RpsSubstituido.Numero := INIRec.ReadString(sSecao, 'Numero', '0');
-        RpsSubstituido.Serie := INIRec.ReadString(sSecao, 'Serie', '0');
+        RpsSubstituido.Numero := INIRec.ReadString(sSecao, 'Numero', '');
+        RpsSubstituido.Serie := INIRec.ReadString(sSecao, 'Serie', '');
         RpsSubstituido.Tipo := FProvider.StrToTipoRPS(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
       end;
 
@@ -630,11 +630,13 @@ begin
       INIRec.WriteFloat(sSecao, 'PercentualCargaTributariaEstadual', PercentualCargaTributariaEstadual);
       INIRec.WriteFloat(sSecao, 'ValorCargaTributariaEstadual', ValorCargaTributariaEstadual);
 
-      sSecao:= 'RpsSubstituido';
-      INIRec.WriteString(sSecao, 'Numero', RpsSubstituido.Numero);
-      INIRec.WriteString(sSecao, 'Serie', RpsSubstituido.Serie);
-      INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoRPSToStr(RpsSubstituido.Tipo));
-
+      if RpsSubstituido.Numero <> '' then
+      begin
+        sSecao:= 'RpsSubstituido';
+        INIRec.WriteString(sSecao, 'Numero', RpsSubstituido.Numero);
+        INIRec.WriteString(sSecao, 'Serie', RpsSubstituido.Serie);
+        INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoRPSToStr(RpsSubstituido.Tipo));
+      end;
 
       sSecao:= 'Prestador';
       INIRec.WriteString(sSecao, 'Regime', FProvider.RegimeEspecialTributacaoToStr(RegimeEspecialTributacao));
@@ -680,14 +682,20 @@ begin
       INIRec.WriteString(sSecao, 'AtualizaTomador', FProvider.SimNaoToStr(Tomador.AtualizaTomador));
       INIRec.WriteString(sSecao, 'TomadorExterior', FProvider.SimNaoToStr(Tomador.TomadorExterior));
 
-      sSecao:= 'Intermediario';
-      INIRec.WriteString(sSecao, 'CNPJCPF', Intermediario.Identificacao.CpfCnpj);
-      INIRec.WriteString(sSecao, 'InscricaoMunicipal', Intermediario.Identificacao.InscricaoMunicipal);
-      INIRec.WriteString(sSecao, 'RazaoSocial', Intermediario.RazaoSocial);
+      if Intermediario.Identificacao.CpfCnpj <> '' then
+      begin
+        sSecao:= 'Intermediario';
+        INIRec.WriteString(sSecao, 'CNPJCPF', Intermediario.Identificacao.CpfCnpj);
+        INIRec.WriteString(sSecao, 'InscricaoMunicipal', Intermediario.Identificacao.InscricaoMunicipal);
+        INIRec.WriteString(sSecao, 'RazaoSocial', Intermediario.RazaoSocial);
+      end;
 
-      sSecao:= 'ConstrucaoCivil';
-      INIRec.WriteString(sSecao, 'CodigoObra', ConstrucaoCivil.CodigoObra);
-      INIRec.WriteString(sSecao, 'Art', ConstrucaoCivil.Art);
+      if ConstrucaoCivil.CodigoObra <> '' then
+      begin
+        sSecao:= 'ConstrucaoCivil';
+        INIRec.WriteString(sSecao, 'CodigoObra', ConstrucaoCivil.CodigoObra);
+        INIRec.WriteString(sSecao, 'Art', ConstrucaoCivil.Art);
+      end;
 
       sSecao:= 'Servico';
       INIRec.WriteString(sSecao, 'ItemListaServico', Servico.ItemListaServico);
@@ -744,19 +752,22 @@ begin
       INIRec.WriteFloat(sSecao, 'ValorLiquidoNfse', Servico.Valores.ValorLiquidoNfse);
 
       //Condição de Pagamento usado pelo provedor Betha versão 1 do Layout da ABRASF
-      sSecao:= 'CondicaoPagamento';
-      INIRec.WriteInteger(sSecao, 'QtdParcela', CondicaoPagamento.QtdParcela);
-      INIRec.WriteString(sSecao, 'Condicao', CondicaoToStr(CondicaoPagamento.Condicao));
-
-      //Lista de parcelas, xx pode variar de 01-99 (provedor Betha versão 1 do Layout da ABRASF)
-      for I := 0 to CondicaoPagamento.Parcelas.Count - 1 do
+      if CondicaoPagamento.QtdParcela > 0 then
       begin
-        sSecao:= 'Parcelas' + IntToStrZero(I + 1, 2);
-        with CondicaoPagamento.Parcelas.Items[I] do
+        sSecao:= 'CondicaoPagamento';
+        INIRec.WriteInteger(sSecao, 'QtdParcela', CondicaoPagamento.QtdParcela);
+        INIRec.WriteString(sSecao, 'Condicao', CondicaoToStr(CondicaoPagamento.Condicao));
+
+        //Lista de parcelas, xx pode variar de 01-99 (provedor Betha versão 1 do Layout da ABRASF)
+        for I := 0 to CondicaoPagamento.Parcelas.Count - 1 do
         begin
-          INIRec.WriteString(sSecao, 'Parcela', Parcela);
-          INIRec.WriteDate(sSecao, 'DataVencimento', DataVencimento);
-          INIRec.WriteFloat(sSecao, 'Valor', Valor);
+          sSecao:= 'Parcelas' + IntToStrZero(I + 1, 2);
+          with CondicaoPagamento.Parcelas.Items[I] do
+          begin
+            INIRec.WriteString(sSecao, 'Parcela', Parcela);
+            INIRec.WriteDate(sSecao, 'DataVencimento', DataVencimento);
+            INIRec.WriteFloat(sSecao, 'Valor', Valor);
+          end;
         end;
       end;
     end;

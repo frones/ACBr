@@ -990,9 +990,9 @@ end;
 function TACBrPSPShipay.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
   if (Ambiente = ambProducao) then
-    Result := cShipayURLProducao
+    Result := URLProducao
   else
-    Result := cShipayURLStaging;
+    Result := URLSandBox;
 end;
 
 procedure TACBrPSPShipay.ConfigurarBody(const aMethod, aEndPoint: String;

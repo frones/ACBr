@@ -56,14 +56,13 @@ type
 
     procedure GeraSegmentoJ(I: Integer); override;
 
+    procedure GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List); override;
     {
     procedure GeraRegistro5(I: Integer); override;
 
     procedure GeraRegistro9; override;
 
     procedure GeraSegmentoC(mSegmentoCList: TSegmentoCList); override;
-
-    procedure GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List); override;
 
     procedure GeraSegmentoN1(I: Integer); override;
 
@@ -243,14 +242,14 @@ begin
       GravarCampo(Favorecido.ContaCorrente.Conta.DV, 1, tcStr);
       GravarCampo(Favorecido.ContaCorrente.DV, 1, tcStr);
       GravarCampo(Favorecido.Nome, 30, tcStr, True);
-      GravarCampo(Credito.SeuNumero, 6, tcStr);
+      GravarCampo(Credito.SeuNumero, 6, tcStrZero);
       GravarCampo(' ', 13, tcStr);
       GravarCampo(Favorecido.ContaCorrente.Conta.TipoConta, 1, tcInt);
       GravarCampo(Credito.DataPagamento, 8, tcDat);
       GravarCampo(TpMoedaToStr(Credito.Moeda.Tipo), 3, tcStr);
       GravarCampo(Credito.Moeda.Qtde, 15, tcDe5);
       GravarCampo(Credito.ValorPagamento, 15, tcDe2);
-      GravarCampo(Credito.NossoNumero, 9, tcStr);
+      GravarCampo(Credito.NossoNumero, 9, tcStrZero);
       GravarCampo(' ', 3, tcStr);
       GravarCampo(Credito.QtdeParcelas, 2, tcInt);
       GravarCampo(Credito.IndBloqueio, 1, tcStr);
@@ -287,6 +286,7 @@ begin
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
       GravarCampo(FQtdeLotes, 4, tcInt);
@@ -368,7 +368,7 @@ begin
       GravarCampo(QtdeMoeda, 15, tcDe5);
       GravarCampo(SeuNumero, 6, tcStrZero);
       GravarCampo(' ', 14, tcStr);
-      GravarCampo(NossoNumero, 9, tcStrZero);
+      GravarCampo(NossoNumero, 9, tcStr);
       GravarCampo(' ', 11, tcStr);
       GravarCampo(CodigoMoeda, 2, tcInt);
       GravarCampo(' ', 6, tcStr);
@@ -381,6 +381,46 @@ begin
       GeraSegmentoJ52(SegmentoJ52);
 //      GeraSegmentoB(SegmentoB);
 //      GeraSegmentoC(SegmentoC);
+    end;
+  end;
+end;
+
+procedure TArquivoW_Caixa.GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List);
+var
+  J: Integer;
+begin
+  for J := 0 to mSegmentoJ52List.Count - 1 do
+  begin
+    FpLinha := '';
+
+    with mSegmentoJ52List.Items[J] do
+    begin
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
+
+      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
+      GravarCampo(FQtdeLotes, 4, tcInt);
+      GravarCampo('3', 1, tcStr);
+      GravarCampo(FSequencialDeLote, 5, tcInt);
+      GravarCampo('J', 1, tcStr);
+      GravarCampo(' ', 1, tcStr);
+      GravarCampo(' ', 2, tcStr);
+      GravarCampo('52', 2, tcStr);
+      GravarCampo(TpInscricaoToStr(Pagador.Inscricao.Tipo), 1, tcStr);
+      GravarCampo(Pagador.Inscricao.Numero, 15, tcStrZero);
+      GravarCampo(Pagador.Nome, 40, tcStr, True);
+      GravarCampo(TpInscricaoToStr(Beneficiario.Inscricao.Tipo), 1, tcStr);
+      GravarCampo(Beneficiario.Inscricao.Numero, 15, tcStrZero);
+      GravarCampo(Beneficiario.Nome, 40, tcStr, True);
+
+      GravarCampo(TpInscricaoToStr(SacadorAvalista.Inscricao.Tipo), 1, tcStr);
+      GravarCampo(SacadorAvalista.Inscricao.Numero, 15, tcStrZero);
+      GravarCampo(SacadorAvalista.Nome, 40, tcStr, True);
+      GravarCampo(' ', 53, tcStr);
+
+      ValidarLinha('J52');
+      IncluirLinha;
     end;
   end;
 end;

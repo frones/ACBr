@@ -596,9 +596,6 @@ begin
   Result:= '';
   FProvider := TACBrNFSeX(FACBrNFSe).Provider;
 
-  if not ValidarChave(NFSe.infNFSe.ID) then
-  raise EACBrNFSeException.Create('Inconsistente para gerar INI. Chave Inválida.');
-
   INIRec := TMemIniFile.Create('');
   try
     with FNFSe do

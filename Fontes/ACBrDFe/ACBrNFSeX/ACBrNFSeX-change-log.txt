@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/05/2023
+-- ACBrNFSeXConfiguracoes/ACBrNFSeXNotasFiscais --
+[*] Melhoria na aparencia do código e remoção de validação inexistente para a 
+    NFS-e/RPS.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluida a cidade de Cajati/SP, provedor é o Sistemas4R
   Por: EasySoft Sistemas

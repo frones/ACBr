@@ -482,19 +482,21 @@ begin
   inherited Assign(DeGeralConfNFSe);
 
   //FPIniParams.SetStrings(DeGeralConfNFSe.FPIniParams);
-  FVersao                := DeGeralConfNFSe.Versao;
-  FxProvedor             := DeGeralConfNFSe.xProvedor;
-  FxMunicipio            := DeGeralConfNFSe.xMunicipio;
-  FxUF                   := DeGeralConfNFSe.xUF;
-  CodigoMunicipio        := DeGeralConfNFSe.CodigoMunicipio;
+  FVersao     := DeGeralConfNFSe.Versao;
+  FxProvedor  := DeGeralConfNFSe.xProvedor;
+  FxMunicipio := DeGeralConfNFSe.xMunicipio;
+  FxUF        := DeGeralConfNFSe.xUF;
+
+  CodigoMunicipio := DeGeralConfNFSe.CodigoMunicipio;
+
   FCNPJPrefeitura        := DeGeralConfNFSe.CNPJPrefeitura;
   FConsultaLoteAposEnvio := DeGeralConfNFSe.ConsultaLoteAposEnvio;
   FConsultaAposCancelar  := DeGeralConfNFSe.ConsultaAposCancelar;
   FMontarPathSchema      := DeGeralConfNFSe.MontarPathSchema;
   FLayout                := DeGeralConfNFSe.Layout;
   FLayoutNFSe            := DeGeralConfNFSe.LayoutNFSe;
+  FProvedor              := DeGeralConfNFSe.Provedor;
 
-  FProvedor := DeGeralConfNFSe.Provedor;
   FEmitente.Assign(DeGeralConfNFSe.Emitente);
 end;
 

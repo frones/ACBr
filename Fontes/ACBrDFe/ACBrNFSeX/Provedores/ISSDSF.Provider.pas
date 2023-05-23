@@ -344,9 +344,12 @@ begin
       AErro.Codigo := Codigo;
       AErro.Descricao := ACBrStr(Descricao);
       AErro.Correcao := '';
+    end;
 
-      if AErro.Descricao = '' then
-        AErro.Descricao := ACBrStr(ANodeArray[I].AsString);
+    if Descricao = '' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Descricao := ACBrStr(ANodeArray[0].AsString);
     end;
   end;
 
@@ -369,8 +372,11 @@ begin
       AAlerta.Descricao := ACBrStr(Descricao);
       AAlerta.Correcao := '';
 
-      if AAlerta.Descricao = '' then
-        AAlerta.Descricao := ACBrStr(ANodeArray[I].AsString);
+      if Descricao = '' then
+      begin
+        AAlerta := Response.Alertas.New;
+        AAlerta.Descricao := ACBrStr(ANodeArray[0].AsString);
+      end;
     end;
   end;
 end;
@@ -586,7 +592,7 @@ begin
       end;
 
       Document.LoadFromXml(Response.ArquivoRetorno);
-
+      {
       ANode := Document.Root.Childrens.FindAnyNs('RetornoEnvioLoteRPS');
 
       if ANode = nil then
@@ -599,6 +605,8 @@ begin
         AErro.Descricao := ACBrStr(Desc201);
         Exit
       end;
+      }
+      ANode := Document.Root;
 
       ProcessarMensagemErros(ANode, Response);
 
@@ -1485,7 +1493,8 @@ begin
   Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:enviarSincrono>';
 
-  Result := Executar('', Request, ['enviarSincronoReturn'], [NameSpace]);
+  Result := Executar('', Request, ['enviarSincronoReturn', 'RetornoEnvioLoteRPS'],
+                     [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.TesteEnvio(ACabecalho, AMSG: String): string;

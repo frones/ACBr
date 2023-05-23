@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/05/2023
+-- ACBrNFSeXServicos.ini --
+[*] Incluída a URL de homologação da cidade de São Luis/MA
+  Por: Everton Ferreira Gonçalves
+[+] Incluida a cidade de Brasilia de Minas/MG, provedor é o Sintese
+  Por: João Antonio
+[*] A cidade de Cordeiropolis/SP trocou de provedor, agora é SigISSWeb
+  Por: Glauber Bernado
+[*] A cidade de Campos Altos/MG trocou de provedor, agora é NFSeBrasil
+  Por: Danio
 -- Diversos --
 [*] Possível solução para o problema de gerar indevidamente o grupo RpsSubstituido
   Por: Italo Giurizzato Junior

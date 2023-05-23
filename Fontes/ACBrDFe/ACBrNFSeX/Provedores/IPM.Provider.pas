@@ -128,8 +128,8 @@ type
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
-//    Não foi implementado no ambiente de homologação
-//    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+//    Implementado e testado em produção usando como referencia a cidade de Camaquã
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
 //    Não foi implementado no ambiente de homologação
@@ -1473,13 +1473,25 @@ begin
   Result := Executar('net.atende#ConsultarLoteRpsEnvio', Request,
               ['return', 'ConsultarLoteRpsResposta'], ['xmlns:net="net.atende"']);
 end;
-{
+
 function TACBrNFSeXWebserviceIPM204.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
+var
+  Request: string;
 begin
+  FPMsgOrig := AMSG;
+
+  AMSG := SeparaDados(AMSG, 'ConsultarNfseRpsEnvio');
+
+  Request := '<net:ConsultarNfseRpsEnvio>';
+  Request := Request + AMSG;
+  Request := Request + '</net:ConsultarNfseRpsEnvio>';
+
+  Result := Executar('net.atende#ConsultarNfseRpsEnvio', Request,
+              ['return', 'ConsultarNFSePorRpsResposta'], ['xmlns:net="net.atende"']);
 
 end;
-}
+
 function TACBrNFSeXWebserviceIPM204.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var

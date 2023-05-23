@@ -164,7 +164,12 @@ end;
 
 function TACBrNFSeXWebserviceLibre204.GetNameSpace: string;
 begin
-  Result := 'xmlns:nfse="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"';
+  if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.NameSpace
+  else
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.NameSpace;
+
+  Result := 'xmlns:nfse="' + Result + '"';
 end;
 
 function TACBrNFSeXWebserviceLibre204.Recepcionar(ACabecalho,

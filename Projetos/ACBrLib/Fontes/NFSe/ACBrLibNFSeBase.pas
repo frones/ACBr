@@ -1121,7 +1121,7 @@ begin
     TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorNumero(aNumero, aPagina, aDataFinal, aDataFinal, TipoPeriodo);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoPrestadoPorNumero(aNumero, aPagina, aDataInicial, aDataFinal, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
@@ -1406,7 +1406,7 @@ begin
     TipoPeriodo:= TtpPeriodo(aTipoPeriodo);
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPeriodo(aDataFinal, aDataFinal, aPagina, TipoPeriodo);
+      NFSeDM.ACBrNFSeX1.ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal, aPagina, TipoPeriodo);
       Resp := TConsultaNFSeResposta.Create(Config.TipoResposta, config.CodResposta);
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);

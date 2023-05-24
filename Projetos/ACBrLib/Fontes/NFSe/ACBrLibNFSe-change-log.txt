@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2023
+--- ACBrLibNFSeBase ---
+[*] Correção dos métodos ConsultarNFSeServicoPrestadoPorNumero e ConsultarNFSeServicoTomadoPorPeriodo
+    Por: Antonio Carlos Junior
+
 02/05/2023
 --- ACBrLibNFSeDemo.lpi ---
 [+] Criação versão Demonstração ACBrLibNFSe

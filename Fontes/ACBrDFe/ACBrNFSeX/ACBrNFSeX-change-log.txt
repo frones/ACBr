@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2023
+-- ACBrNFSeXServicos.ini --
+[*] Atualizado as URLs da cidade de Duartina/SP
+  Por: Alexandre Soares
+[+] Incluída a cidade de Três Pontas/MG - Provedor: IPM
+  Por: Leandro Guindani Gehlen
+
 23/05/2023
 -- ACBrNFSeXConfiguracoes/ACBrNFSeXNotasFiscais --
 [*] Melhoria na aparencia do código e remoção de validação inexistente para a 

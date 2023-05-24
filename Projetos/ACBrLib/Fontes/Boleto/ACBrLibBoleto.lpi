@@ -19,7 +19,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="2"/>
-      <BuildNr Value="240"/>
+      <BuildNr Value="241"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibBoleto - Biblioteca para geração de Arquivos de Remessa e Retorno, e impressão de Boletos" InternalName="ACBrLibBoleto" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>

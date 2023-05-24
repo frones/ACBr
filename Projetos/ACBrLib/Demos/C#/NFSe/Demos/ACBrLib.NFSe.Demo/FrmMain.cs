@@ -106,7 +106,7 @@ namespace ACBrLibNFSe.Demo
                 ACBrNFSe.Config.FormaEmissao = cmbFormaEmissao.GetSelectedValue<TipoEmissao>();
                 ACBrNFSe.Config.RetirarAcentos = ckbRetirarAcentos.Checked;
                 ACBrNFSe.Config.SalvarGer = ckbSalvarArqeResp.Checked;
-                ACBrNFSe.Config.PathSalvar = txtLogs.Text;
+                ACBrNFSe.Config.PathSalvar = txtArqNFSe.Text;
                 ACBrNFSe.Config.MontarPathSchema = ckbMontarPathSchemas.Checked;
                 ACBrNFSe.Config.PathSchemas = txtSchemaPath.Text;
                 ACBrNFSe.Config.ConsultaLoteAposEnvio = ckbConsultarLoteAposEnvio.Checked;
@@ -138,7 +138,6 @@ namespace ACBrLibNFSe.Demo
 
                 //Arquivos
                 ACBrNFSe.Config.SalvarArq = ckbSalvarArqs.Checked;
-                ACBrNFSe.Config.PathNFSe = txtArqNFSe.Text;
                 ACBrNFSe.Config.SepararPorMes = ckbPastaMensal.Checked;
                 ACBrNFSe.Config.AdicionarLiteral = ckbAdicionarLiteralNomePastas.Checked;
                 ACBrNFSe.Config.EmissaoPathNFSe = ckbEmissaoPathNFSe.Checked;
@@ -207,7 +206,7 @@ namespace ACBrLibNFSe.Demo
             cmbFormaEmissao.SetSelectedValue(ACBrNFSe.Config.FormaEmissao);
             ckbRetirarAcentos.Checked = ACBrNFSe.Config.RetirarAcentos;
             ckbSalvarArqeResp.Checked = ACBrNFSe.Config.SalvarGer;
-            txtLogs.Text = ACBrNFSe.Config.PathSalvar;
+            txtArqNFSe.Text = ACBrNFSe.Config.PathSalvar;
             ckbMontarPathSchemas.Checked = ACBrNFSe.Config.MontarPathSchema;
             txtSchemaPath.Text = ACBrNFSe.Config.PathSchemas;
             ckbConsultarLoteAposEnvio.Checked = ACBrNFSe.Config.ConsultaLoteAposEnvio;
@@ -247,7 +246,6 @@ namespace ACBrLibNFSe.Demo
 
             //Config Arquivos
             ckbSalvarArqs.Checked = ACBrNFSe.Config.SalvarArq;
-            txtArqNFSe.Text = ACBrNFSe.Config.PathNFSe;
             ckbPastaMensal.Checked = ACBrNFSe.Config.SepararPorMes;
             ckbAdicionarLiteralNomePastas.Checked = ACBrNFSe.Config.AdicionarLiteral;
             ckbEmissaoPathNFSe.Checked = ACBrNFSe.Config.EmissaoPathNFSe;

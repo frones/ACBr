@@ -659,6 +659,12 @@ begin
     Titulo.ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
     Titulo.ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
 
+    if (StrToIntDef(Copy(Linha, 386, 6), 0) <> 0) then
+      Titulo.DataCredito := StringToDateTimeDef(Copy(Linha, 386, 2)
+                                               + '/'
+                                               + Copy(Linha, 388, 2)
+                                               + '/'
+                                               + Copy(Linha, 390, 2), 0, 'DD/MM/YY');
 
     Titulo.ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
     //Titulo.ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;

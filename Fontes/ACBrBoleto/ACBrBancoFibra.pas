@@ -52,6 +52,7 @@ type
   TACBrBancoFibra = class(TACBrBancoClass)
   private
     procedure GerarRegistrosNFe(ACBrTitulo : TACBrTitulo; aRemessa: TStringList);
+
   protected
     function ConverterDigitoModuloFinal(): String; override;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
@@ -74,7 +75,9 @@ type
     procedure EhObrigatorioAgenciaDV; override;
     procedure EhObrigatorioContaDV; override;
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
-
+    function DefinePosicaoNossoNumeroRetorno: Integer; Override;
+    function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
+    procedure LerRetorno400(ARetorno: TStringList); override;
   end;
 
 implementation
@@ -83,6 +86,7 @@ uses
   StrUtils,
   ACBrBase,
   ACBrUtil.Strings,
+  ACBrUtil.DateTime,
   ACBrUtil.Base, ACBrValidador;
 
   { TACBrBancoFibra }
@@ -160,6 +164,14 @@ begin
     Result := '99'
   else
     Result := ACBrTitulo.EspecieDoc;
+end;
+
+function TACBrBancoFibra.DefinePosicaoNossoNumeroRetorno: Integer;
+begin
+  if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
+    Result := 38
+  else
+    Result := 63;
 end;
 
 function TACBrBancoFibra.DefineTipoMulta(const ATitulo: TACBrTitulo): String;
@@ -523,4 +535,140 @@ begin
   end;
 end;
 
+function TACBrBancoFibra.TipoOcorrenciaToDescricao(
+  const TipoOcorrencia: TACBrTipoOcorrencia): String;
+var
+  CodOcorrencia: Integer;
+begin
+  Result := '';
+  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+
+  case CodOcorrencia of
+    02: Result := '02-Entrada Confirmada';
+    03: Result := '03-Entrada Rejeitada';
+    05: Result := '05-Campo Livre Alterado';
+    06: Result := '06-Liquidação Normal';
+    08: Result := '08-Liquidação em Cartório';
+    09: Result := '09-Baixa Automática';
+    10: Result := '10-Baixa por ter sido liquidado';
+    12: Result := '12-Abatimento Concedido';
+    13: Result := '13-Abatimento Cancelado';
+    14: Result := '14-Vencimento Alterado';
+    15: Result := '15-Baixa Rejeitada';
+    16: Result := '16-Instrução Rejeitada';
+    19: Result := '19-Confirma instrução de protesto';
+    20: Result := '20-Confirma instruão de sustação de protesto';
+    22: Result := '22-Confirma recebimento de ordem de não protestar';
+    23: Result := '23-Protesto enviado a cartório';
+    24: Result := '24-Confirma recebimento de ordem de não protestar';
+    28: Result := '28-Débito de Tarifas/Custas – Correspondentes';
+    40: Result := '40-Tarifa de Entrada (debitada na Liquidação)';
+    43: Result := '43-Baixado por ter sido protestado';
+    96: Result := '96-Tarifa Sobre Instruções - Mês Anterior';
+    97: Result := '97-Tarifa de Baixas - Mês Anterior';
+    98: Result := '98-Tarifa de Entradas - Mês Anterior';
+    99: Result := '99-Custas de protesto - Mês Anterior';
+    end;
+end;
+procedure TACBrBancoFibra.LerRetorno400(ARetorno: TStringList);
+var
+  ContLinha: Integer;
+  Linha, rCedente,rConvenioCedente: string;
+  Titulo: TACBrTitulo;
+  Boleto : TACBrBoleto;
+begin
+  Boleto := ACBrBanco.ACBrBoleto;
+
+  if (StrToIntDef(copy(ARetorno.Strings[0], 77, 3), -1) <> Numero) then
+    raise Exception.create(ACBrStr(Boleto.NomeArqRetorno + 'não é um arquivo de retorno do ' + Nome));
+
+  rCedente := trim(Copy(ARetorno[0], 47, 30));
+  rConvenioCedente := Trim(Copy(ARetorno[0], 27, 20));
+  if (not Boleto.LeCedenteRetorno) and (Boleto.Cedente.CodigoCedente <> rConvenioCedente) then
+    raise Exception.CreateFmt(ACBrStr('Convênio: %s do arquivo não correspondem aos dados do Cedente!')
+                  ,[Boleto.Cedente.CodigoTransmissao]);
+  Boleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0], 95, 2)
+                        + '/'
+                        + Copy(ARetorno[0], 97, 2)
+                        + '/'
+                        + Copy(ARetorno[0], 99, 2), 0, 'DD/MM/YY');
+
+  case StrToIntDef(Copy(ARetorno[1],2,2),0) of
+     11: Boleto.Cedente.TipoInscricao:= pFisica;
+     14: Boleto.Cedente.TipoInscricao:= pJuridica;
+  else
+     Boleto.Cedente.TipoInscricao := pJuridica;
+  end;
+  Boleto.ListadeBoletos.Clear;
+
+  for ContLinha := 1 to ARetorno.Count - 2 do
+  begin
+    Linha := ARetorno[ContLinha];
+
+    if (Copy(Linha, 1, 1) <> '1') then
+      Continue;
+
+    Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+
+    if ACBrBanco.ACBrBoleto.LeCedenteRetorno then
+    begin
+      ACBrBanco.ACBrBoleto.Cedente.Nome    := rCedente;
+      Titulo.Carteira                      := copy(Linha, 83, 3);
+      ACBrBanco.ACBrBoleto.Cedente.Agencia := copy(Linha, 18, 4);
+      ACBrBanco.ACBrBoleto.Cedente.Conta   := copy(Linha, 22,16);
+    end;
+
+
+    Titulo.SeuNumero               := copy(Linha, 38, 25);
+    Titulo.NumeroDocumento         := copy(Linha, 117, 10);
+    Titulo.EspecieDoc              := copy(Linha, 174,2);
+    Titulo.EspecieDoc              := DefineEspecieDoc(Titulo);
+    Titulo.OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 90, 2), 0));
+
+    if Titulo.OcorrenciaOriginal.Tipo = toRetornoRegistroRecusado then
+      Titulo.DescricaoMotivoRejeicaoComando.Add(copy(Linha, 241, 140));
+
+    //Titulo.Sacado.NomeSacado       := copy(Linha, 325, 30);
+
+
+    if (StrToIntDef(Copy(Linha, 119, 6), 0) <> 0) then
+      Titulo.Vencimento := StringToDateTimeDef(Copy(Linha, 119, 2)
+                                               + '/'
+                                               + Copy(Linha, 121, 2)
+                                               + '/'
+                                               + Copy(Linha, 123, 2), 0, 'DD/MM/YY');
+
+
+    Titulo.NossoNumero             := Copy(Linha, 63, 10);
+
+    if (StrToIntDef(Copy(Linha,111,6),0) > 0) then
+      Titulo.DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                           Copy(Linha,113,2)+'/'+
+                                           Copy(Linha,115,2),0, 'DD/MM/YY' );
+    if (StrToIntDef(Copy(Linha,147,6),0) > 0) then
+       Titulo.Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+                                          Copy(Linha,149,2)+'/'+
+                                          Copy(Linha,151,2),0, 'DD/MM/YY' );
+
+    Titulo.ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+    Titulo.ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
+    Titulo.ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+    Titulo.ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+    Titulo.ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+    //Titulo.ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
+    Titulo.ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+    Titulo.ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
+
+
+    Titulo.ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+    //Titulo.ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
+
+    // informações do local de pagamento
+    Titulo.Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
+    Titulo.Liquidacao.Agencia    := Copy(Linha,169,4);
+    Titulo.Liquidacao.Origem     := '';
+
+
+  end;
+end;
 end.

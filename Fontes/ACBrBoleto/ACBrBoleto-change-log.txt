@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+25/05/2023
+[+]TK-3976 ABCrBoletoFibra Retorno400 Conta Vinculada
+  por : Victor H Gonzales
+  
 22/05/2023
 [*]TK-3908 Ajuste Segmento Q Boleto CNAB240 Banrisul - Endereço Completo
   por : Alexandre de Paula

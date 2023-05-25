@@ -738,14 +738,19 @@ namespace ACBrLibNFSe.Demo
         {
             try
             {
-                var protocolo = "";
-                if (InputBox.Show("Consultar NFSe Por RPS", "Número do Protocolo", ref protocolo) != DialogResult.OK) return;
+                var numeroRps = "";
+                if (InputBox.Show("Consultar NFSe Por RPS", "Número do Protocolo", ref numeroRps) != DialogResult.OK) return;
 
-                var numLote = "";
-                if (InputBox.Show("Consultar NFSe Por RPS", "Número do Lote", ref numLote) != DialogResult.OK) return;
+                var serie = "";
+                if (InputBox.Show("Consultar NFSe Por RPS", "Número do Lote", ref serie) != DialogResult.OK) return;
 
+                var tipo = "";
+                if (InputBox.Show("Consultar NFSe Por RPS", "Tipo", ref tipo) != DialogResult.OK) return;
 
-                var ret = ACBrNFSe.ConsultarLoteRps(protocolo, numLote);
+                var codVerificacao = "";
+                if (InputBox.Show("Consultar NFSe Por RPS", "Código de Verificação", ref codVerificacao) != DialogResult.OK) return;
+
+                var ret = ACBrNFSe.ConsultarNFSePorRps(numeroRps, serie, tipo, codVerificacao);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)

@@ -254,7 +254,7 @@ begin
             IntToStrZero(round(ACBrTitulo.ValorMoraJuros * 100), 12)                               + // 162 a 173 Percentual a ser cobrado juros/mora
             ADataDesconto                                                                          + // 174 a 181 Data limite descont
             IntToStrZero(Round(ACBrTitulo.ValorDesconto * 100), 13)                                + // 182 a 194 Valor do desconto
-            IfThen(LayoutVersaoArquivo > 1, ' ',
+            IfThen(LayoutVersaoArquivo > 1, PadLeft(' ',11),
                    IntToStrZero(round(ACBrTitulo.PercentualMulta * 100),
               11))                                                                                 + // 195 a 205 Valor da multa
             IfThen(LayoutVersaoArquivo > 1, IntToStrZero(round(ACBrTitulo.ValorAbatimento * 100), 13),

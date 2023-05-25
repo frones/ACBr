@@ -51,7 +51,8 @@ Símbolo : Significado
 25/05/2023
 [+]TK-3976 ABCrBoletoFibra Retorno400 Conta Vinculada
   por : Victor H Gonzales
-  
+[+]ACBrBoleto BS2 - CNAB400 - Ajuste para Layout 006 e controle de densidade
+  por : Victor H Gonzales  
 22/05/2023
 [*]TK-3908 Ajuste Segmento Q Boleto CNAB240 Banrisul - Endereço Completo
   por : Alexandre de Paula

@@ -50,6 +50,8 @@ type
     fValorTotalDocs : Double;
     fQtRegLote      : Integer;
     fNumeroRemessa  : Integer;
+    function EspecieDocumentoToIndex(const AValue : String) : String;
+    function EspecieDocumentoToStr(const AValue : String) : String;
   protected
     function GetLocalPagamento: String; override;
   public
@@ -96,7 +98,7 @@ begin
   fValorTotalDocs         := 0;
   fQtRegLote              := 0;
   fpCodigosMoraAceitos    := '012';
-  fpLayoutVersaoArquivo    := 1;
+  fpLayoutVersaoArquivo   := 1;
 end;
 
 function TACBrBancoBS2.DefineCampoLivreCodigoBarras(
@@ -111,6 +113,26 @@ begin
   end;
 end;
 
+
+function TACBrBancoBS2.EspecieDocumentoToIndex(const AValue: String): String;
+begin
+  case AnsiIndexStr(UpperCase(AValue),['DM' ,'DS']) of
+    0  : Result := '0'; //Duplicata mercantil
+    1  : Result := '6'; //Duplicata serviço
+  else
+    Result := '9';      { Outros}
+  end;
+end;
+
+function TACBrBancoBS2.EspecieDocumentoToStr(const AValue: String): String;
+begin
+  case StrToIntDef(AValue,0) of
+    0  : Result := 'DM'; //Duplicata mercantil
+    1  : Result := 'DS'; //Duplicata serviço
+  else
+    Result := 'OUT';      { Outros}
+  end;
+end;
 
 function TACBrBancoBS2.MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): string;
 begin
@@ -153,9 +175,9 @@ begin
             FormatDateTime('ddmmyyyy', Now)                     + // 095 a 102 Data da gravação do arquivo
             IntToStrZero(0, 9)                                  + // 103 a 111 Zeros
             Space(8)                                            + // 112 a 119 Branco
-            IntToStrZero(0, 3)                                  + // 120 a 122 Zeros
+            PadLeft(DensidadeGravacao,3,'0')                    + // 120 a 122 Parâmetro de Movimento
             Space(164)                                          + // 123 a 286 Branco
-            '001'                                               + // 287 a 289 Versão Layout
+            PadLeft(IntToStr(LayoutVersaoArquivo), 3, '0')      + // 287 a 289 Versão Layout
             Space(100)                                          + // 290 a 389 Branco
             IntToStrZero(ACBrBanco.ACBrBoleto.NumeroArquivo, 5) + // 390 a 394 Número sequencial do arquivo  //'00001'
             '000001'                                ;             // 395 a 400 Número sequencial do registro
@@ -207,46 +229,48 @@ begin
   end;
 
 
- wLinha := '1'                                                                                                                                          + // 1 a 1 Identificação do registro de transação
-            PadLeft('', 10, '0')                                                                                                                        + // 002 a 011 Zeros
-            Space(5)                                                                                                                                    + // 012 a 016 Branco
-            ATipoCedente                                                                                                                                + // 017 a 017 Tipo de inscrição Sacador/Avalista
-            PadLeft(ACBrTitulo.Sacado.CNPJCPF, 14, '0')                                                                                                 + // 018 a 031 Identificação da empresa CNPJ
-            Space(3)                                                                                                                                    + // 032 a 034 Branco
-            PadLeft('', 25, '0')                                                                                                                        + // 035 a 059 Número de controle para uso da empresa.
-            MontarCampoNossoNumero(ACBrTitulo)                                                                                                          + // 060 a 070 Nosso numero
-            PadLeft('', 10, '0')                                                                                                                        + // 071 a 080 Zeros
-            Space(27)                                                                                                                                   + // 081 a 107 Branco
-            '21'                                                                                                                                        + // 108 a 109 Código da carteira - ‘21’ cobrança Simples
-            codigoServico                                                                                                                               + // 110 a 111 Código do serviço 01 - Entrada / 09 - Baixa
-            PadLeft(ACBrTitulo.NumeroDocumento, 10, '0')                                                                                                + // 112 a 121 Seu numero
-            FormatDateTime('ddmmyyyy', ACBrTitulo.Vencimento)                                                                                           + // 122 a 129 Data do vencimento do título
-            IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 13)                                                                                    + // 130 a 142 Valor do título
-            Space(5)                                                                                                                                    + // 143 a 147 Branco
-            '0'                                                                                                                                         + // 148 a 148 Zero
-            '9'                                                                                                                                         + // 149 a 149 Especie do documento
-            'N'                                                                                                                                         + // 150 a 150 Aceite (Envia "N" Padrao)
-            FormatDateTime('ddmmyyyy', ACBrTitulo.DataDocumento)                                                                                        + // 151 a 158 Data de emissao do título
-            Space(2)                                                                                                                                    + // 159 a 160 Brancos
-            '0'                                                                                                                                         + // 161 a 161 Zero
-            IntToStrZero(round(ACBrTitulo.ValorMoraJuros * 100), 12)                                                                                    + // 162 a 173 Percentual a ser cobrado juros/mora
-            ADataDesconto                                                                                                                               + // 174 a 181 Data limite descont
-            IntToStrZero(Round(ACBrTitulo.ValorDesconto * 100), 13)                                                                                     + // 182 a 194 Valor do desconto
-            IntToStrZero(round(ACBrTitulo.PercentualMulta * 100), 11)                                                                                   + // 195 a 205 Valor da multa
-            FormatDateTime('ddmmyyyy', IncDay(ACBrTitulo.Vencimento, 20))                                                                               + // 206 a 213 Data limite pagamento
-            PadLeft('', 5, '0')                                                                                                                         + // 214 a 218 Zeros
-            ATipoSacado                                                                                                                                 + // 219 a 220 Identificação do tipo de inscrição do pagador
-            PadLeft(OnlyNumber(ACBrTitulo.Sacado.CNPJCPF), 14, '0')                                                                                     + // 221 a 234 Nº Inscrição do pagador
-            PadRight(TiraAcentos(ACBrTitulo.Sacado.NomeSacado), 40, ' ')                                                                                + // 235 a 274 Nome do pagador
-            PadRight(TiraAcentos(ACBrTitulo.Sacado.Logradouro), 40, ' ')                                                                                + // 275 a 314 Endereco
-            PadRight(TiraAcentos(ACBrTitulo.Sacado.Bairro), 12, ' ')                                                                                    + // 315 a 326 Bairro
-            PadRight(TiraAcentos(ACBrTitulo.Sacado.CEP), 8, ' ')                                                                                        + // 327 a 334 CEP
-            PadRight(TiraAcentos(ACBrTitulo.Sacado.Cidade), 15, ' ')                                                                                    + // 335 a 349 Cidade
-            PadRight(TiraAcentos(ACBrTitulo.Sacado.UF), 2, ' ')                                                                                         + // 350 a 351 UF
-            PadRight(TiraAcentos(ACBrTitulo.Sacado.NomeSacado), 40, ' ')                                                                                + // 352 a 391 Nome do avalista
-            PadLeft('', 2, '0')                                                                                                                         + // 392 a 393 Zeros
-            '0'                                                                                                                                         + // 394 a 394 Codigo moeda 0 Real
-            IntToStrZero(ARemessa.Count + 1, 6);                                                                                                          // 395 a 400 Nº sequencial do registro
+ wLinha := '1'                                                                                     + // 001 a 001 Identificação do registro de transação
+            PadLeft('', 10, '0')                                                                   + // 002 a 011 Zeros
+            Space(5)                                                                               + // 012 a 016 Branco
+            ATipoCedente                                                                           + // 017 a 017 Tipo de inscrição Sacador/Avalista
+            PadLeft(ACBrTitulo.Sacado.CNPJCPF, 14, '0')                                            + // 018 a 031 Identificação da empresa CNPJ
+            Space(3)                                                                               + // 032 a 034 Branco
+            PadLeft(ACBrTitulo.SeuNumero, 25, '0')                                                 + // 035 a 059 Número de controle para uso da empresa.
+            MontarCampoNossoNumero(ACBrTitulo)                                                     + // 060 a 070 Nosso numero
+            PadLeft('', 10, '0')                                                                   + // 071 a 080 Zeros
+            Space(27)                                                                              + // 081 a 107 Branco
+            PadLeft(wCarteira,2,'0')                                                               + // 108 a 109 Código da carteira - ‘21’ cobrança Simples
+            codigoServico                                                                          + // 110 a 111 Código do serviço 01 - Entrada / 09 - Baixa
+            PadLeft(ACBrTitulo.NumeroDocumento, 10, '0')                                           + // 112 a 121 Seu numero
+            FormatDateTime('ddmmyyyy', ACBrTitulo.Vencimento)                                      + // 122 a 129 Data do vencimento do título
+            IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 13)                               + // 130 a 142 Valor do título
+            Space(5)                                                                               + // 143 a 147 Branco
+            IfThen(LayoutVersaoArquivo > 1, 'M','0')                                               + // 148 a 148 Zero
+            EspecieDocumentoToIndex(ACBrTitulo.EspecieDoc)                                         + // 149 a 149 Especie do documento
+            IfThen(ACBrTitulo.Aceite = atSim,'A','N')                                              + // 150 a 150 Aceite (Envia "N" Padrao)
+            FormatDateTime('ddmmyyyy', ACBrTitulo.DataDocumento)                                   + // 151 a 158 Data de emissao do título
+            Space(2)                                                                               + // 159 a 160 Brancos
+            '0'                                                                                    + // 161 a 161 Zero
+            IntToStrZero(round(ACBrTitulo.ValorMoraJuros * 100), 12)                               + // 162 a 173 Percentual a ser cobrado juros/mora
+            ADataDesconto                                                                          + // 174 a 181 Data limite descont
+            IntToStrZero(Round(ACBrTitulo.ValorDesconto * 100), 13)                                + // 182 a 194 Valor do desconto
+            IfThen(LayoutVersaoArquivo > 1, ' ',
+                   IntToStrZero(round(ACBrTitulo.PercentualMulta * 100),
+              11))                                                                                 + // 195 a 205 Valor da multa
+            IfThen(LayoutVersaoArquivo > 1, IntToStrZero(round(ACBrTitulo.ValorAbatimento * 100), 13),
+              FormatDateTime('ddmmyyyy', ACBrTitulo.DataLimitePagto) + PadLeft('', 5, '0') )       + // 206 a 213 Data limite pagamento + // 214 a 218 Zeros
+            ATipoSacado                                                                            + // 219 a 220 Identificação do tipo de inscrição do pagador
+            PadLeft(OnlyNumber(ACBrTitulo.Sacado.CNPJCPF), 14, '0')                                + // 221 a 234 Nº Inscrição do pagador
+            PadRight(TiraAcentos(ACBrTitulo.Sacado.NomeSacado), 40, ' ')                           + // 235 a 274 Nome do pagador
+            PadRight(TiraAcentos(ACBrTitulo.Sacado.Logradouro), 40, ' ')                           + // 275 a 314 Endereco
+            PadRight(TiraAcentos(ACBrTitulo.Sacado.Bairro), 12, ' ')                               + // 315 a 326 Bairro
+            PadRight(TiraAcentos(ACBrTitulo.Sacado.CEP), 8, ' ')                                   + // 327 a 334 CEP
+            PadRight(TiraAcentos(ACBrTitulo.Sacado.Cidade), 15, ' ')                               + // 335 a 349 Cidade
+            PadRight(TiraAcentos(ACBrTitulo.Sacado.UF), 2, ' ')                                    + // 350 a 351 UF
+            PadRight(TiraAcentos(ACBrTitulo.Sacado.NomeSacado), 40, ' ')                           + // 352 a 391 Nome do avalista
+            PadLeft('', 2, '0')                                                                    + // 392 a 393 Zeros
+            '0'                                                                                    + // 394 a 394 Codigo moeda 0 Real
+            IntToStrZero(ARemessa.Count + 1, 6);                                                     // 395 a 400 Nº sequencial do registro
 
   ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
 
@@ -314,7 +338,7 @@ begin
 
     Titulo.Carteira                := copy(Linha, 108, 2);
     Titulo.OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 110, 2), 0));
-    Titulo.EspecieDoc              := 'DM';
+    Titulo.EspecieDoc              := EspecieDocumentoToStr(copy(Linha, 175, 1));
 
     Titulo.ValorDocumento          := StrToFloatDef(Copy(Linha, 154, 13), 0) / 100;
     Titulo.ValorRecebido           := StrToFloatDef(Copy(Linha, 253, 13), 0) / 100;

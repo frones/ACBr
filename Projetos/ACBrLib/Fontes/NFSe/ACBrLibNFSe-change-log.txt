@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2023
+--- ACBrLibNFSeRespostas ---
+[*] Novos campos na resposta para o método Emitir
+    https://www.projetoacbr.com.br/forum/topic/72328-ajuste-no-retorno-da-resposta-ao-emitir-uma-nfse-pela-lib-acbrlibnfse/
+    Contribuição: Emerson Teixeira / Revisão: Antonio Carlos Junior
+
 24/05/2023
 --- ACBrLibNFSeBase ---
 [*] Correção dos métodos ConsultarNFSeServicoPrestadoPorNumero e ConsultarNFSeServicoTomadoPorPeriodo

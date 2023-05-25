@@ -49,11 +49,13 @@ type
 
  TRegistro9900 = class
  private
-   fREG_BLC: String;       /// Registro que será totalizado no próximo campo.
+   fREG_BLC: String;      /// Registro que será totalizado no próximo campo.
    fQTD_REG_BLC: Integer; /// Total de registros do tipo informado no campo anterior.
+   fIndice: Integer;       /// Index do registro na lista de totalizadores.
  public
    property REG_BLC: String read fREG_BLC write fREG_BLC;
    property QTD_REG_BLC: Integer read fQTD_REG_BLC write fQTD_REG_BLC;
+//   property Indice: Integer read fIndice write fIndice;
  end;
 
   /// Registro 9900 - Lista
@@ -64,6 +66,9 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistro9900); /// SetItem
   public
     function New: TRegistro9900;
+    function FindByREG_BLC(const pValue: String; out pReg: TRegistro9900): Boolean;
+    procedure AddRegistro9900(const pREG_BLC: String; const pQTD_REG_BLC: Integer);
+
     property Items[Index: Integer]: TRegistro9900 read GetItem write SetItem;
   end;
 
@@ -97,12 +102,44 @@ end;
 function TRegistro9900List.New: TRegistro9900;
 begin
   Result := TRegistro9900.Create;
-  Add(Result);
+  Result.fIndice := Add(Result);
 end;
 
 procedure TRegistro9900List.SetItem(Index: Integer; const Value: TRegistro9900);
 begin
   Put(Index, Value);
+end;
+
+procedure TRegistro9900List.AddRegistro9900(const pREG_BLC: String;
+  const pQTD_REG_BLC: Integer);
+var
+  Reg: TRegistro9900;
+begin
+  if (pQTD_REG_BLC > 0) then
+  begin
+    if not(FindByREG_BLC(pREG_BLC, Reg)) then
+    begin
+      Reg := New;
+      Reg.REG_BLC := pREG_BLC;
+    end;
+
+    Reg.QTD_REG_BLC := Reg.QTD_REG_BLC + pQTD_REG_BLC;
+  end;
+end;
+
+function TRegistro9900List.FindByREG_BLC(const pValue: String; out pReg: TRegistro9900): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+
+  for i := 0 to (Count - 1) do
+    if (Items[i].REG_BLC = pValue) then
+    begin
+      pReg := Items[i];
+      Result := True;
+      Break;
+    end;
 end;
 
 end.

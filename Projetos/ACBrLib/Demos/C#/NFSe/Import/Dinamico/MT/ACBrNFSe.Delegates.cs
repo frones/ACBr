@@ -171,7 +171,7 @@ namespace ACBrLib.NFSe
             AddMethod<NFSE_GerarToken>("NFSE_GerarToken");
             AddMethod<NFSE_ConsultarSituacao>("NFSE_ConsultarSituacao");
             AddMethod<NFSE_ConsultarLoteRps>("NFSE_ConsultarLoteRps");
-            AddMethod<NFSE_ConsultarNFSePorRps>("ConsultarNFSePorRps");
+            AddMethod<NFSE_ConsultarNFSePorRps>("NFSE_ConsultarNFSePorRps");
             AddMethod<NFSE_ConsultarNFSePorNumero>("NFSE_ConsultarNFSePorNumero");
             AddMethod<NFSE_ConsultarNFSePorPeriodo>("NFSE_ConsultarNFSePorPeriodo");
             AddMethod<NFSE_ConsultarNFSePorFaixa>("NFSE_ConsultarNFSePorFaixa");
@@ -187,7 +187,7 @@ namespace ACBrLib.NFSe
             AddMethod<NFSE_ConsultarNFSeServicoTomadoPorPrestador>("NFSE_ConsultarNFSeServicoTomadoPorPrestador");
             AddMethod<NFSE_ConsultarNFSeServicoTomadoPorTomador>("NFSE_ConsultarNFSeServicoTomadoPorTomador");
             AddMethod<NFSE_ConsultarNFSeServicoTomadoPorPeriodo>("NFSE_ConsultarNFSeServicoTomadoPorPeriodo");
-            AddMethod<NFSE_ConsultarNFSeServicoTomadoPorIntermediario>("ConsultarNFSeServicoTomadoPorIntermediario");
+            AddMethod<NFSE_ConsultarNFSeServicoTomadoPorIntermediario>("NFSE_ConsultarNFSeServicoTomadoPorIntermediario");
         }
     }
 }

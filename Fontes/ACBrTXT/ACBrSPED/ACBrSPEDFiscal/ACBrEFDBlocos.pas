@@ -838,6 +838,8 @@ type
   function StrToFinEmissaoFatElet(const aValue: string): TACBrFinEmissaoFaturaEletronica;
   function TipoFaturamentoDOCeToStr(aValue: TACBrTipoFaturamentoDocumentoEletronico): String;
   function StrToTipoFaturamentoDOCe(const aValue: String): TACBrTipoFaturamentoDocumentoEletronico;
+  function IndTipoLeiauteToStr(aValue: TACBrIndTipoLeiaute): string;
+  function StrToIndTipoLeiaute(const aValue: string): TACBrIndTipoLeiaute;
 
 implementation
 
@@ -2112,6 +2114,31 @@ begin
     Result := tfdeFaturamentoCentralizado
   else if (aValue = '2') then
     Result := tfdeCofaturamento;
+  else
+    raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrTipoFaturamentoDocumentoEletronico.', [aValue]);
+end;
+
+function IndTipoLeiauteToStr(aValue: TACBrIndTipoLeiaute): string;
+begin
+  case (aValue) of
+    itlSimplificado: Result := '0';
+    itlCompleto: Result := '1';
+    itlRestritoSaldoEstoque: Result := '2';
+  else
+    raise EACBrSPEDFiscalException.Create('TACBrIndTipoLeiaute com valor inválido');
+  end;
+end;
+
+function StrToIndTipoLeiaute(const aValue: string): TACBrIndTipoLeiaute;
+begin
+  if (aValue = '0') then
+    Result := itlSimplificado
+  else if (aValue = '1') then
+    Result := itlCompleto
+  else if (aValue = '2') then
+    Result := itlRestritoSaldoEstoque
+  else
+    raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrIndTipoLeiaute.', [aValue]);
 end;
 
 end.

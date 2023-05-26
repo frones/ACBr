@@ -41,8 +41,8 @@ uses
   Windows, Messages,
 {$ENDIF}
   SysUtils, Variants, Classes, Graphics, Controls, Forms, ACBrEFDBlocos,
-  Dialogs, StdCtrls, ExtCtrls, ComCtrls, ACBrUtil, ACBrTXTClass,
-  ACBrSpedContabil;
+  Dialogs, StdCtrls, ExtCtrls, ComCtrls, ACBrTXTClass,
+  ACBrSpedContabil, ACBrBase;
 
 type
 

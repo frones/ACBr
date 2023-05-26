@@ -272,11 +272,11 @@ var
 begin
   for I := 0 to ListaPacotes.Count - 1 do
   begin
-    for j := 0 to Self.ComponentCount - 1 do
+    for j := 0 to ScrollBox1.ControlCount  - 1 do
     begin
-      if (Self.Components[j] is TCheckBox) then
+      if (ScrollBox1.Controls[j] is TCheckBox) then
       begin
-        achkBox := (Self.Components[j] as TCheckBox);
+        achkBox := (ScrollBox1.Controls[j] as TCheckBox);
         if achkBox.Caption = ListaPacotes[i].GetNome then
           achkBox.Checked := ListaPacotes[i].MarcadoParaInstalar;
       end;
@@ -292,11 +292,11 @@ var
 begin
   for I := 0 to ListaPacotes.Count - 1 do
   begin
-    for j := 0 to Self.ComponentCount - 1 do
+    for j := 0 to ScrollBox1.ControlCount - 1 do
     begin
-      if (Self.Components[j] is TCheckBox) then
+      if (ScrollBox1.Controls[j] is TCheckBox) then
       begin
-        achkBox := (Self.Components[j] as TCheckBox);
+        achkBox := (ScrollBox1.Controls[j] as TCheckBox);
         if achkBox.Caption = ListaPacotes[i].GetNome then
         begin
           ListaPacotes[i].MarcadoParaInstalar := achkBox.Checked;

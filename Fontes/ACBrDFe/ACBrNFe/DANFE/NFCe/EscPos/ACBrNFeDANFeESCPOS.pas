@@ -88,6 +88,7 @@ type
     procedure GerarObservacoesEvento;
 
     function CalcularDadosQRCode: String;
+    function ValidaLogoBmp(const APathLogo:string):Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -108,11 +109,19 @@ type
 implementation
 
 uses
-  strutils, Math,
-  ACBrNFe, ACBrValidador,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
-  ACBrDFeUtil, ACBrConsts, ACBrDFeDANFeReport,
-  pcnConversao, pcnAuxiliar;
+  strutils,
+  Math,
+  ACBrNFe,
+  ACBrValidador,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrDFeUtil,
+  ACBrConsts,
+  ACBrDFeDANFeReport,
+  pcnConversao,
+  pcnAuxiliar,
+  ACBrImage;
 
 { TACBrNFeDANFeESCPOS }
 
@@ -215,15 +224,18 @@ begin
       DadosCabecalho.Free;
     end;
     FPosPrinter.Buffer.Add('</zera><mp>' +
-                           FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda) +
-                           '</logo>');
+                          FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda));
+
+    FPosPrinter.Buffer.Add(IfThen(ValidaLogoBmp(logo),'<bmp>'+Logo+'</bmp>','</logo>'));
+
     FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
-                           TextoLateral +
-                           '</mp>');
+                          TextoLateral +
+                          '</mp>');
   end
   else
   begin
-    FPosPrinter.Buffer.Add('</zera></ce></logo>');
+
+    FPosPrinter.Buffer.Add('</zera></ce>'+ IfThen(FileExists(Logo),'<bmp>'+Logo+'</bmp>','</logo>') );
 
     if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
        FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+'<n>' +  FpNFe.Emit.xFant + '</n>');
@@ -956,6 +968,28 @@ begin
       FpNFe.infNfe.Versao)
   else
     Result := FpNFe.infNFeSupl.qrCode;
+end;
+
+function TACBrNFeDANFeESCPOS.ValidaLogoBmp(const APathLogo: string): Boolean;
+var
+  LFileStream : TFileStream;
+begin
+   Result := False;
+
+   if not FileExists(APathLogo) then
+     Exit;
+
+   LFileStream := TFileStream.Create(APathLogo, fmOpenRead or fmShareDenyWrite);
+   try
+     if not IsBMP(LFileStream, True) then
+       Exit;
+
+     //if LFileStream.Size <= 5000 then // Menor ou igual a 5 KB -- se necessário validar, ficar para futuro
+       Result := True;
+
+   finally
+     LFileStream.Free;
+   end;
 end;
 
 function TACBrNFeDANFeESCPOS.ColunasCondensado: Integer;

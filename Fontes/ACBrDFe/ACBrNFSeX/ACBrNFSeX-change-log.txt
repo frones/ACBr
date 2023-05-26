@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2023
+-- Centi.LerXml --
+[*] Acrescentado a leitura da tag: DescontoIncondicionado
+  Por: Diego Reckziegel
+
 25/05/2023
 -- Saatri.Provider --
 [*] Invertido a chamada a função: RemoverCaracteresDesnecessarios no TratarXmlRetornado

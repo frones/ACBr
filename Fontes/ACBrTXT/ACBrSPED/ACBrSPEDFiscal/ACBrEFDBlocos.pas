@@ -2113,7 +2113,7 @@ begin
   else if (aValue = '1') then
     Result := tfdeFaturamentoCentralizado
   else if (aValue = '2') then
-    Result := tfdeCofaturamento;
+    Result := tfdeCofaturamento
   else
     raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrTipoFaturamentoDocumentoEletronico.', [aValue]);
 end;

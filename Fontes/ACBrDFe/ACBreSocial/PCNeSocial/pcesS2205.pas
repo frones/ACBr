@@ -358,6 +358,10 @@ begin
         trabalhador.Endereco.Exterior.CodPostal   := INIRec.ReadString(sSecao, 'codPostal', '');
       end;
 
+      sSecao := 'trabImig';
+      trabalhador.trabImig.tmpResid   := StrTotpTmpResid(Ok, INIRec.ReadString(sSecao, 'tmpResid', '0'));
+      trabalhador.trabImig.condIng    := StrTotpCondIng(Ok, INIRec.ReadString(sSecao, 'condIng', '0'));
+
       sSecao := 'trabEstrangeiro';
       if INIRec.ReadString(sSecao, 'dtChegada', '') <> '' then
       begin

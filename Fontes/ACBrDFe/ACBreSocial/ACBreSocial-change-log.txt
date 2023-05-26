@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2023
+-- Diversos --
+[*] Revisa as rotinas de leitura de ini visando maior compatibilidade com o layout da versão Simplificada 1.1
+  Por: Alexandre de Paula / Rev: Diego F
+
 15/05/2023
 -- pcesConversaoeSocial, pcesS2299, pcesS2399 --
 [*] Adiciona opção paNenhum no enumerado tpPensaoAlim para que a tag não seja gerada caso defina este valor.

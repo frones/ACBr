@@ -265,7 +265,7 @@ begin
 
     with Self do
     begin
-      sSecao := 'evtExclusao';
+      sSecao := 'evtExcProcTrab';
       Id         := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
@@ -285,7 +285,7 @@ begin
       sSecao := 'ideProcTrab';
       infoExclusao.ideProcTrab.cpfTrab     := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
       infoExclusao.ideProcTrab.nrProcTrab  := INIRec.ReadString(sSecao, 'nrProcTrab', EmptyStr);
-      infoExclusao.ideProcTrab.perApurPgto := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      infoExclusao.ideProcTrab.perApurPgto := INIRec.ReadString(sSecao, 'perApurPgto', EmptyStr);
     end;
 
     GerarXML;

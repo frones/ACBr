@@ -150,6 +150,8 @@ implementation
 
 uses
   IniFiles,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
   ACBreSocial;
 
 { TS2231Collection }
@@ -323,13 +325,57 @@ begin
 end;
 
 function TEvtCessao.LerArqIni(const AIniString: String): Boolean;
-//var
-//  INIRec: TMemIniFile;
-//  Ok: Boolean;
-//  sSecao, sFim: String;
-//  I: Integer;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
 begin
   Result := True;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      sSecao := 'evtCessao';
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+
+      sSecao := 'iniCessao';
+      if INIRec.ReadString(sSecao, 'dtIniCessao', '') <> '' then
+      begin
+        InfoCessao.iniCessao.dtIniCessao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCessao', '0'));
+        InfoCessao.iniCessao.cnpjCess    := INIRec.ReadString(sSecao, 'cnpjCess', '00');
+        InfoCessao.iniCessao.respRemun   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'respRemun', 'S'));
+      end;
+
+      sSecao := 'fimCessao';
+      InfoCessao.fimCessao.dtTermCessao := StringToDateTime(INIRec.ReadString(sSecao, 'dtTermCessao', '0'));
+
+    end;
+
+    GerarXML;
+    XML := FXML;
+  finally
+    INIRec.Free;
+  end;
+
 end;
 
 end.

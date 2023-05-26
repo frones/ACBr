@@ -1150,7 +1150,7 @@ function TEvtDeslig.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
+  teste, sSecao, sFim: String;
   I, J, K, L, M, N: Integer;
 begin
   Result := True;
@@ -1168,6 +1168,7 @@ begin
       sSecao := 'ideEvento';
       ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
       ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      IdeEvento.indGuia     := INIRec.ReadString(sSecao, 'indGuia', EmptyStr);
       ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
       ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
@@ -1215,6 +1216,24 @@ begin
         Inc(K);
       end;
 
+      K := 1;
+      while true do
+      begin
+        // de 00 até 99
+        sSecao := 'observacoes' + IntToStrZero(K, 2);
+        sFim   := INIRec.ReadString(sSecao, 'observacao', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with InfoDeslig.observacoes.New do
+        begin
+          observacao := sFim;
+        end;
+
+        Inc(K);
+      end;
+
       sSecao := 'sucessaoVinc';
       if INIRec.ReadString(sSecao, 'tpInscSuc', '') <> '' then
         infoDeslig.sucessaoVinc.tpInscSuc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscSuc', EmptyStr));
@@ -1232,6 +1251,12 @@ begin
         infoDeslig.transfTit.dtNascto      := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
       end;
 
+      sSecao := 'mudancaCPF';
+      if INIRec.ReadString(sSecao, 'novoCPF', '') <> '' then
+      begin
+        infoDeslig.mudancaCPF.novoCPF := INIRec.ReadString(sSecao, 'novoCPF', EmptyStr);
+      end;
+
       I := 1;
       while true do
       begin
@@ -1245,6 +1270,37 @@ begin
         with infoDeslig.VerbasResc.dmDev.New do
         begin
           ideDmDev := sFim;
+          indRRA   := eSStrToSimNaoFacultativo(OK, INIRec.ReadString(sSecao, 'indRRA', EmptyStr));
+
+          sSecao := 'infoRRA' + IntToStrZero(I, 2);
+          infoRRA.tpProcRRA   := eSStrToTpProcRRA(Ok, INIRec.ReadString(sSecao, 'tpProcRRA', EmptyStr));
+          infoRRA.nrProcRRA   := INIRec.ReadString(sSecao, 'nrProcRRA', EmptyStr);
+          infoRRA.descRRA     := INIRec.ReadString(sSecao, 'descRRA', EmptyStr);
+          infoRRA.qtdMesesRRA := INIRec.ReadFloat(sSecao, 'qtdMesesRRA', 0);
+
+          sSecao := 'despProcJud' + IntToStrZero(I, 2);
+          infoRRA.despProcJud.vlrDespCustas    := INIRec.ReadFloat(sSecao, 'vlrDespCustas', 0);
+          infoRRA.despProcJud.vlrDespAdvogados := INIRec.ReadFloat(sSecao, 'vlrDespAdvogados', 0);
+
+          J := 1;
+          while true do
+          begin
+            // de 00 até 99
+            sSecao := 'ideAdv' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with infoRRA.ideAdv.New do
+            begin
+              tpInsc := eSStrToTpInscricao(Ok, sFim);
+              nrInsc := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+              vlrAdv := INIRec.ReadFloat(sSecao, 'vlrAdv', 0);;
+            end;
+
+            Inc(J);
+          end;
 
           J := 1;
           while true do
@@ -1340,107 +1396,110 @@ begin
               sSecao := 'infoSimples' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
               if INIRec.ReadString(sSecao, 'indSimples', '') <> '' then
                 infoSimples.indSimples := eSStrToIndSimples(Ok, INIRec.ReadString(sSecao, 'indSimples', '1'));
+            end;
 
-              K := 1;
+            Inc(J);
+          end;
+
+          K := 1;
+          while true do
+          begin
+            // de 1 até 8
+            sSecao := 'ideADC' + IntToStrZero(I, 2) + IntToStrZero(K, 1);
+            sFim   := INIRec.ReadString(sSecao, 'dtAcConv', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with infoPerAnt.ideADC.New do
+            begin
+              dtAcConv   := StringToDateTime(sFim);
+              tpAcConv   := eSStrToTpAcConv(Ok, INIRec.ReadString(sSecao, 'tpAcConv', 'A'));
+              compAcConv := INIRec.ReadString(sSecao, 'compAcConv', EmptyStr);
+              if VersaoDF <= ve02_05_00 then
+                dtEfAcConv := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfAcConv', '0'));
+              dsc        := INIRec.ReadString(sSecao, 'dsc', EmptyStr);
+
+              L := 1;
               while true do
               begin
-                // de 1 até 8
-                sSecao := 'ideADC' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
-                            IntToStrZero(K, 1);
-                sFim   := INIRec.ReadString(sSecao, 'dtAcConv', 'FIM');
+                // de 001 até 180
+                sSecao := 'idePeriodo' + IntToStrZero(I, 2) +
+                            IntToStrZero(K, 1) + IntToStrZero(L, 3);
+                sFim   := INIRec.ReadString(sSecao, 'perRef', 'FIM');
 
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with infoPerAnt.ideADC.New do
+                with idePeriodo.New do
                 begin
-                  dtAcConv   := StringToDateTime(sFim);
-                  tpAcConv   := eSStrToTpAcConv(Ok, INIRec.ReadString(sSecao, 'tpAcConv', 'A'));
-                  compAcConv := INIRec.ReadString(sSecao, 'compAcConv', EmptyStr);
-                  if VersaoDF <= ve02_05_00 then
-                    dtEfAcConv := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfAcConv', '0'));
-                  dsc        := INIRec.ReadString(sSecao, 'dsc', EmptyStr);
+                  perRef := sFim;
 
-                  L := 1;
+                  M := 1;
                   while true do
                   begin
-                    // de 001 até 180
-                    sSecao := 'idePeriodo' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
-                                IntToStrZero(K, 1) + IntToStrZero(L, 3);
-                    sFim   := INIRec.ReadString(sSecao, 'perRef', 'FIM');
+                    // de 01 até 24
+                    sSecao := 'ideEstabLot' + IntToStrZero(I, 2) +
+                                IntToStrZero(K, 1) + IntToStrZero(L, 3) +
+                                IntToStrZero(M, 2);
+                    sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
 
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with idePeriodo.New do
+                    with ideEstabLot.New do
                     begin
-                      perRef := sFim;
+                      tpInsc     := eSStrToTpInscricao(Ok, sFim);
+                      NrInsc     := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+                      codLotacao := INIRec.ReadString(sSecao, 'codLotacao', EmptyStr);
 
-                      M := 1;
+                      N := 1;
                       while true do
                       begin
-                        // de 01 até 24
-                        sSecao := 'ideEstabLot' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
-                                    IntToStrZero(K, 1) + IntToStrZero(L, 3) +
-                                    IntToStrZero(M, 2);
-                        sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
+                        // de 001 até 200
+                        sSecao := 'detVerbas' + IntToStrZero(I, 2) +
+                                IntToStrZero(K, 1) + IntToStrZero(L, 3) +
+                                IntToStrZero(M, 2) + IntToStrZero(N, 3);
+                        sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
 
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with ideEstabLot.New do
+                        with detVerbas.New do
                         begin
-                          tpInsc     := eSStrToTpInscricao(Ok, sFim);
-                          NrInsc     := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
-                          codLotacao := INIRec.ReadString(sSecao, 'codLotacao', EmptyStr);
-
-                          N := 1;
-                          while true do
-                          begin
-                            // de 001 até 200
-                            sSecao := 'detVerbas' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
-                                    IntToStrZero(K, 1) + IntToStrZero(L, 3) +
-                                    IntToStrZero(M, 2) + IntToStrZero(N, 3);
-                            sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
-
-                            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                              break;
-
-                            with detVerbas.New do
-                            begin
-                              codRubr    := sFim;
-                              ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
-                              qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);
-                              fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
-                              vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
-                              vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
-                            end;
-
-                            Inc(N);
-                          end;
+                          codRubr    := sFim;
+                          ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
+                          qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);
+                          fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
+                          vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
+                          vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
                         end;
 
-                        Inc(M);
+                        Inc(N);
                       end;
+
+                      sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) +
+                                IntToStrZero(K, 1) + IntToStrZero(L, 3) +
+                                IntToStrZero(M, 2);
+                      if INIRec.ReadString(sSecao, 'grauExp', '') <> '' then
+                        infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
+
+                      sSecao := 'infoSimples' + IntToStrZero(I, 2) +
+                                IntToStrZero(K, 1) + IntToStrZero(L, 3) +
+                                IntToStrZero(M, 2);
+                      if INIRec.ReadString(sSecao, 'indSimples', '') <> '' then
+                        infoSimples.indSimples := eSStrToIndSimples(Ok, INIRec.ReadString(sSecao, 'indSimples', '1'));
                     end;
 
-                    Inc(L);
+                    Inc(M);
                   end;
                 end;
 
-                Inc(K);
+                Inc(L);
               end;
-
-              sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
-              if INIRec.ReadString(sSecao, 'grauExp', '') <> '' then
-                infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
-
-              sSecao := 'infoSimples' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
-              if INIRec.ReadString(sSecao, 'indSimples', '') <> '' then
-                infoSimples.indSimples := eSStrToIndSimples(Ok, INIRec.ReadString(sSecao, 'indSimples', '1'));
             end;
 
-            Inc(J);
+            Inc(K);
           end;
 
           J := 1;
@@ -1494,7 +1553,7 @@ begin
         while true do
         begin
           // de 01 até 10
-          sSecao := 'remunOutrEmpr' + IntToStrZero(I, 2);
+          sSecao := 'remunOutrEmpr' + IntToStrZero(I, 3);
           sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
 
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -1520,20 +1579,27 @@ begin
       if INIRec.ReadString(sSecao, 'dtFimQuar', '') <> '' then
         infoDeslig.quarentena.dtFimQuar := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimQuar', '0'));
 
+      sSecao := 'remunAposDeslig';
+      teste := INIRec.ReadString(sSecao, 'indRemun', '');
+      if teste <> '' then
+      begin
+        infoDeslig.remunAposDeslig.indRemun := StrToTpIndRemun(Ok, INIRec.ReadString(sSecao, 'indRemun', '0'));
+        infoDeslig.remunAposDeslig.dtFimRemun := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimRemun', '0'));
+      end;
+
       I := 1;
       while true do
       begin
         // de 01 até 10
         sSecao := 'consigFGTS' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'idConsig', 'FIM');
+        sFim   := INIRec.ReadString(sSecao, 'insConsig', 'FIM');
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
         with infoDeslig.consigFGTS.New do
         begin
-          idConsig  := eSStrToSimNao(Ok, sFim);
-          insConsig := INIRec.ReadString(sSecao, 'insConsig', EmptyStr);
+          insConsig  := sFim;
           nrContr   := INIRec.ReadString(sSecao, 'nrContr', EmptyStr);
         end;
 

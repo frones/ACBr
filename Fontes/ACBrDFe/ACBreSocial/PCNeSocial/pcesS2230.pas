@@ -803,6 +803,13 @@ begin
         infoAfastamento.iniAfastamento.infoMandSind.infOnusRemun := StrTotpOnusRemun(Ok, INIRec.ReadString(sSecao, 'infOnusRemun', '1'));
       end;
 
+      sSecao := 'infoMandElet';
+      if INIRec.ReadString(sSecao, 'cnpjMandElet', '') <> '' then
+      begin
+        infoAfastamento.iniAfastamento.infoMandElet.cnpjMandElet  := INIRec.ReadString(sSecao, 'cnpjMandElet', EmptyStr);
+        infoAfastamento.iniAfastamento.infoMandElet.indRemunCargo := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indRemunCargo', ''));
+      end;
+
       sSecao := 'infoRetif';
       if INIRec.ReadString(sSecao, 'origRetif', '') <> '' then
       begin

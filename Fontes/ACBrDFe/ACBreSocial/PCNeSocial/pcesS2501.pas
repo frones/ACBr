@@ -548,8 +548,129 @@ begin
 end;
 
 function TEvtContProc.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I, J, K: Integer;
 begin
   Result := True;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      sSecao := 'evtContProc';
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideProc';
+      ideProc.nrProcTrab  := INIRec.ReadString(sSecao, 'nrProcTrab', EmptyStr);
+      ideProc.perApurPgto := INIRec.ReadString(sSecao, 'perApurPgto', EmptyStr);
+      ideProc.obs         := INIRec.ReadString(sSecao, 'obs', EmptyStr);
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 9999
+        sSecao := 'ideTrab' + IntToStrZero(I, 4);
+        sFim   := INIRec.ReadString(sSecao, 'cpfTrab', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with ideTrab.New do
+        begin
+          cpfTrab  := sFim;
+
+          J := 1;
+          while true do
+          begin
+            // de 01 até 999
+            sSecao := 'calcTrib' + IntToStrZero(I, 4) + IntToStrZero(J, 3);
+            sFim   := INIRec.ReadString(sSecao, 'perRef', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with calcTrib.New do
+            begin
+              perRef       := sFim;
+              vrBcCpMensal := StringToFloat(INIRec.ReadString(sSecao, 'vrBcCpMensal', '0'));
+              vrBcCp13     := StringToFloat(INIRec.ReadString(sSecao, 'vrBcCp13', '0'));
+              vrRendIRRF   := StringToFloat(INIRec.ReadString(sSecao, 'vrRendIRRF', '0'));
+              vrRendIRRF13 := StringToFloat(INIRec.ReadString(sSecao, 'vrRendIRRF13', '0'));
+
+              K := 1;
+              while true do
+              begin
+                // de 01 até 999
+                sSecao := 'infoCRContrib' + IntToStrZero(I, 4) + IntToStrZero(J, 3) + IntToStrZero(K, 2);
+                sFim   := INIRec.ReadString(sSecao, 'tpCR', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with infoCRContrib.New do
+                begin
+                  tpCR := sFim;
+                  vrCR := StringToFloat(INIRec.ReadString(sSecao, 'vrCR', '0'));
+
+                end;
+
+                Inc(K);
+              end;
+
+            end;
+
+            Inc(J);
+          end;
+
+          J := 1;
+          while true do
+          begin
+            // de 01 até 99
+            sSecao := 'infoCRIRRF' + IntToStrZero(I, 4) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'tpCR', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with infoCRIRRF.New do
+            begin
+              tpCR := sFim;
+              vrCR := StringToFloat(INIRec.ReadString(sSecao, 'vrCR', '0'));
+
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        Inc(I);
+      end;
+
+    end;
+
+    GerarXML;
+    XML := FXML;
+  finally
+    INIRec.Free;
+  end;
 end;
 
 end.

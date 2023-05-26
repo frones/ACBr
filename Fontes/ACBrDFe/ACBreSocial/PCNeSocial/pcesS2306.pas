@@ -582,7 +582,7 @@ begin
       infoTSVAlteracao.dtAlteracao    := StringToDateTime(INIRec.ReadString(sSecao, 'dtAlteracao', '0'));
       infoTSVAlteracao.natAtividade := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
 
-      sSecao := 'infoComplementares';
+      sSecao := 'cargoFuncao';
       if INIRec.ReadString(sSecao, 'codCargo', '') <> '' then
       begin
         infoTSVAlteracao.infoComplementares.cargoFuncao.CodCargo  := INIRec.ReadString(sSecao, 'codCargo', '');
@@ -600,6 +600,16 @@ begin
         infoTSVAlteracao.infoComplementares.remuneracao.UndSalFixo := eSStrToUndSalFixo(Ok, INIRec.ReadString(sSecao, 'undSalFixo', ''));
         infoTSVAlteracao.infoComplementares.remuneracao.DscSalVar  := INIRec.ReadString(sSecao, 'dscSalVar', '');
       end;
+
+      sSecao := 'infoDirigenteSindical';
+      infoTSVAlteracao.infoComplementares.infoDirigenteSindical.tpRegPrev  := eSStrTotpRegPrevFacultativo(Ok, INIRec.ReadString(sSecao, 'tpRegPrev', '0'));
+
+      sSecao := 'infoTrabCedido';
+      infoTSVAlteracao.infoComplementares.infoTrabCedido.tpRegPrev := eSStrTotpRegPrevFacultativo(Ok, INIRec.ReadString(sSecao, 'tpRegPrev', '0'));
+
+      sSecao := 'infoMandElet';
+      infoTSVAlteracao.infoComplementares.infoMandElet.indRemunCargo := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indRemunCargo', '0'));
+      infoTSVAlteracao.infoComplementares.infoMandElet.tpRegPrev     := eSStrToTpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpRegPrev', '0'));
 
       sSecao := 'infoEstagiario';
       if INIRec.ReadString(sSecao, 'natEstagio', '') <> '' then

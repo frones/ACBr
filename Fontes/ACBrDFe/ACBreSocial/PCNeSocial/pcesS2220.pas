@@ -476,6 +476,7 @@ begin
       ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
 //      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
       ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+      ideVinculo.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
 
       sSecao := 'aso';
       exMedOcup.aso.DtAso  := StringToDateTime(INIRec.ReadString(sSecao, 'dtAso', '0'));
@@ -508,7 +509,7 @@ begin
 
 
       // I vai vir com o o valor do último exame + 1
-      sSecao := 'respMonit' + IntToStrZero(I-1, 2);
+      sSecao := 'respMonit'; // + IntToStrZero(I-1, 2);
       exMedOcup.RespMonit.cpfResp := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
       exMedOcup.RespMonit.nmResp := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
       exMedOcup.RespMonit.nrCRM := INIRec.ReadString(sSecao, 'nrCRM', EmptyStr);

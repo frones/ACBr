@@ -274,22 +274,28 @@ end;
 
 procedure TEvtCessao.GerarIniCessao(pIniCessao: TIniCessao);
 begin
-  Gerador.wGrupo('iniCessao');
-  
-  Gerador.wCampo(tcDat, '', 'dtIniCessao', 10, 10, 1, pIniCessao.dtIniCessao);
-  Gerador.wCampo(tcStr, '', 'cnpjCess',    14, 14, 1, pIniCessao.cnpjCess);
-  Gerador.wCampo(tcStr, '', 'respRemun',    1,  1, 1, eSSimNaoToStr(pIniCessao.respRemun));
-  
-  Gerador.wGrupo('/iniCessao');
+  if pIniCessao.dtIniCessao > 0 then
+  begin
+    Gerador.wGrupo('iniCessao');
+
+    Gerador.wCampo(tcDat, '', 'dtIniCessao', 10, 10, 1, pIniCessao.dtIniCessao);
+    Gerador.wCampo(tcStr, '', 'cnpjCess',    14, 14, 1, pIniCessao.cnpjCess);
+    Gerador.wCampo(tcStr, '', 'respRemun',    1,  1, 1, eSSimNaoToStr(pIniCessao.respRemun));
+
+    Gerador.wGrupo('/iniCessao');
+  end;
 end;
 
 procedure TEvtCessao.GerarFimCessao(pFimCessao: TFimCessao);
 begin
-  Gerador.wGrupo('fimCessao');
-  
-  Gerador.wCampo(tcDat, '', 'dtTermCessao', 10, 10, 1, pFimCessao.dtTermCessao);
+  if pFimCessao.dtTermCessao > 0 then
+  begin
+    Gerador.wGrupo('fimCessao');
 
-  Gerador.wGrupo('/fimCessao');
+    Gerador.wCampo(tcDat, '', 'dtTermCessao', 10, 10, 1, pFimCessao.dtTermCessao);
+
+    Gerador.wGrupo('/fimCessao');
+  end;
 end;
 
 function TEvtCessao.GerarXML: boolean;

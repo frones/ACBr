@@ -327,11 +327,11 @@ procedure TEvtAltContratual.GerarTrabTemp(pTrabTemp: TTrabTemporario);
 begin
   if pTrabTemp.justProrr <> '' then
   begin
-    Gerador.wGrupo('trabTemp');
+    Gerador.wGrupo('trabTemporario');
 
     Gerador.wCampo(tcStr, '', 'justProrr', 1, 999, 1, pTrabTemp.justProrr);
 
-    Gerador.wGrupo('/trabTemp');
+    Gerador.wGrupo('/trabTemporario');
   end;
 end;
 

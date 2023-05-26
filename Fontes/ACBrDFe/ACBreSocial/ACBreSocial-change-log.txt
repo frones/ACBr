@@ -56,6 +56,12 @@ Símbolo : Significado
 -- Diversos --
 [*] Revisa as rotinas de leitura de ini visando maior compatibilidade com o layout da versão Simplificada 1.1
   Por: Alexandre de Paula / Rev: Diego F
+-- pcesS2206 --
+[*] Altera a tag trabTemp para trabTemporario de forma a ficar de acordo com os leiautes de versão simplificada do eSocial.
+  Por: Diego F
+-- pcesS2231 --
+[*] Adiciona validação na função que gera os grupos iniCessao e fimCessao para que não crie o grupo caso não tenha dados preenchidos.
+  Por: Diego F
 
 15/05/2023
 -- pcesConversaoeSocial, pcesS2299, pcesS2399 --

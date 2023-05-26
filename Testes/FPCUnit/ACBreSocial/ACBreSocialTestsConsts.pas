@@ -89,7 +89,10 @@ const
   ARQINI_vS0101_S2416 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S2416.INI';
   ARQINI_vS0101_S2418 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S2418.INI';
   ARQINI_vS0101_S2420 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S2420.INI';
+  ARQINI_vS0101_S2500 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S2500.INI';
+  ARQINI_vS0101_S2501 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S2501.INI';
   ARQINI_vS0101_S3000 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S3000.INI';
+  ARQINI_vS0101_S3500 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S3500.INI';
   ARQINI_vS0101_S1200 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S1200.INI';
   ARQINI_vS0101_S1202 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S1202.INI';
   ARQINI_vS0101_S1207 = CAMINHORelativoACBR + 'Testes\Recursos\eSocial\Layout S-1.1\INI\S1207.INI';

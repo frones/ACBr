@@ -333,8 +333,11 @@ begin
      (*********)'<tpAmb>'+TpAmbToStr(NFe.procNFe.tpAmb)+'</tpAmb>'+
      (*********)'<verAplic>'+NFe.procNFe.verAplic+'</verAplic>'+
      (*********)'<chNFe>'+NFe.procNFe.chNFe+'</chNFe>'+
-     (*********)'<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',NFe.procNFe.dhRecbto)+
-                             IIf(FNFe.infNFe.Versao >= 3.10, GetUTC(CodigoParaUF(FNFe.Ide.cUF),NFe.procNFe.dhRecbto),'')+'</dhRecbto>'+
+     (*********)'<dhRecbto>'+
+                   IIf(FNFe.infNFe.Versao >= 3.10,
+                     DateTimeWithTimeZone(NFe.procNFe.dhRecbto, FNFe.Ide.cUF),
+                     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', AjustarDataHoraParaUf(NFe.procNFe.dhRecbto, FNFe.Ide.cUF)))+
+                '</dhRecbto>'+
      (*********)'<nProt>'+NFe.procNFe.nProt+'</nProt>'+
      (*********)'<digVal>'+NFe.procNFe.digVal+'</digVal>'+
      (*********)'<cStat>'+IntToStr(NFe.procNFe.cStat)+'</cStat>'+
@@ -409,10 +412,10 @@ begin
 
   if NFe.infNFe.Versao >= 3 then
    begin
-     Gerador.wCampo(tcStr, 'B09', 'dhEmi   ', 25, 25, 1, DateTimeTodh(NFe.ide.dEmi) + GetUTC(CodigoParaUF(NFe.ide.cUF), NFe.ide.dEmi), DSC_DEMI);
+     Gerador.wCampo(tcStr, 'B09', 'dhEmi   ', 25, 25, 1, DateTimeWithTimeZone(NFe.ide.dEmi, NFe.ide.cUF), DSC_DEMI);
 
      if (NFe.ide.modelo = 55) and (NFe.ide.dSaiEnt <> 0) then
-       Gerador.wCampo(tcStr, 'B10', 'dhSaiEnt', 25, 25, 0, DateTimeTodh(NFe.ide.dSaiEnt) + GetUTC(CodigoParaUF(NFe.ide.cUF), NFe.ide.dSaiEnt), DSC_DSAIENT);
+       Gerador.wCampo(tcStr, 'B10', 'dhSaiEnt', 25, 25, 0, DateTimeWithTimeZone(NFe.ide.dSaiEnt, NFe.ide.cUF), DSC_DSAIENT);
    end
   else
    begin
@@ -457,7 +460,7 @@ begin
   if (NFe.Ide.dhCont > 0) or (NFe.Ide.xJust <> '') then
    begin
     if NFe.infNFe.Versao >= 3 then
-       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 25, 25, 1, DateTimeTodh(NFe.ide.dhCont) + GetUTC(CodigoParaUF(NFe.ide.cUF), NFe.ide.dhCont), DSC_DHCONT)
+       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 25, 25, 1, DateTimeWithTimeZone(NFe.ide.dhCont, NFe.ide.cUF), DSC_DHCONT)
     else
        Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 1, DateTimeTodh(NFe.Ide.dhCont), DSC_DHCONT);
 

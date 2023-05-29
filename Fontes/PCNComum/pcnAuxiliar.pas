@@ -80,6 +80,15 @@ type
     property TimeZoneStr: String read FTimeZoneStr write SetTimeZoneStr;
   end;
 
+  TAjustarDataHoraParaUfFunc = function(DataHora: TDateTime; const UF: string; out TimeZoneStr: string): TDateTime;
+
+function DateTimeWithTimeZone(DataHora: TDateTime; cUF: integer): string; overload;
+function DateTimeWithTimeZone(DataHora: TDateTime; const UF: string): string; overload;
+function AjustarDataHoraParaUf(DataHora: TDateTime; cUF: integer): TDateTime; overload;
+function AjustarDataHoraParaUf(DataHora: TDateTime; const UF: string): TDateTime; overload;
+function AjustarDataHoraParaUf(DataHora: TDateTime; cUF: integer; out TimeZoneStr: string): TDateTime; overload;
+function AjustarDataHoraParaUf(DataHora: TDateTime; const UF: string; out TimeZoneStr: string): TDateTime; overload;
+
 function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
 function TimeToDecimal(const ATime: TDateTime): Double;
@@ -113,6 +122,7 @@ function RetornarPosEx(const SubStr, S: String; Offset: Cardinal = 1): Integer;
 function DateTimeTodhUTC(DataHora: TDateTime; const TZD: string): string;
 function GetUTC(UF: string; const dataHora: TDateTime): string;
 function GetUTCSistema: String;
+function GetUTCUF(UF: string; const dataHora: TDateTime): String;
 function IsHorarioDeVerao(const UF: string; const dataHora: TDateTime): Boolean;
 function GetPrimeiroDomingoDoMes(const ano, mes: Integer): TDateTime;
 function GetTerceiroDomingoDoMes(const ano, mes: Integer): TDateTime;
@@ -143,6 +153,7 @@ function ExtrairReciboMsg(const AMsg: String): String;
 
 var
   TimeZoneConfInstance: TTimeZoneConf;
+  OnAjustarDataHoraParaUf: TAjustarDataHoraParaUfFunc;
 
 implementation
 
@@ -152,6 +163,48 @@ uses
   ACBrUtil.Math,
   ACBrUtil.XMLHTML,
   ACBrValidador;
+
+function DateTimeWithTimeZone(DataHora: TDateTime; cUF: integer): string; overload;
+begin
+  Result := DateTimeWithTimeZone(DataHora, CodigoParaUF(cUF));
+end;
+
+function DateTimeWithTimeZone(DataHora: TDateTime; const UF: string): string; overload;
+var
+  TimeZoneStr: string;
+begin
+  DataHora := AjustarDataHoraParaUf(DataHora, UF, TimeZoneStr);
+  Result := DateTimeTodhUTC(DataHora, TimeZoneStr);
+end;
+
+function AjustarDataHoraParaUf(DataHora: TDateTime; cUF: integer): TDateTime; overload;
+begin
+  Result := AjustarDataHoraParaUf(DataHora, CodigoParaUF(cUF));
+end;
+
+function AjustarDataHoraParaUf(DataHora: TDateTime; const UF: string): TDateTime; overload;
+var
+  TimeZoneStr: string;
+begin
+  Result := AjustarDataHoraParaUf(DataHora, UF, TimeZoneStr);
+end;
+
+function AjustarDataHoraParaUf(DataHora: TDateTime; cUF: integer; out TimeZoneStr: string): TDateTime; overload;
+begin
+  Result := AjustarDataHoraParaUf(DataHora, CodigoParaUF(cUF), TimeZoneStr);
+end;
+
+function AjustarDataHoraParaUf(DataHora: TDateTime; const UF: string; out TimeZoneStr: string): TDateTime; overload;
+begin
+  if Assigned(OnAjustarDataHoraParaUf) then
+    Result := OnAjustarDataHoraParaUf(DataHora, UF, TimeZoneStr)
+  else
+  begin
+    // Sem conversão para não quebrar o comportamento atual do ACBr
+    Result := DataHora;
+    TimeZoneStr := GetUTC(UF, DataHora);
+  end;
+end;
 
 function CodigoParaUF(const codigo: integer): string;
 const
@@ -658,6 +711,20 @@ begin
 end;
 
 function GetUTC(UF: string; const dataHora: TDateTime): string;
+begin
+  case TimeZoneConf.ModoDeteccao of
+    tzSistema:
+      Result := GetUTCSistema;
+
+    tzPCN:
+      Result := GetUTCUF(UF, dataHora);
+
+    tzManual:
+      Result := TimeZoneConf.TimeZoneStr;
+  end;
+end;
+
+function GetUTCUF(UF: string; const dataHora: TDateTime): String;
 const
   UTC5 = '.AC.';
   UTC4 = '.AM.RR.RO.MT.MS.';
@@ -665,40 +732,29 @@ const
 var
   HorarioDeVerao: Boolean;
 begin
-  case TimeZoneConf.ModoDeteccao of
-    tzSistema:
-        Result := GetUTCSistema;
+  if (UF = '90') or (UF = '91') or (UF = '') then
+    UF := 'DF';
 
-    tzPCN:
-      begin
-        if (UF = '90') or (UF = '91') or (UF = '') then
-           UF := 'DF';
+  HorarioDeVerao := IsHorarioDeVerao(UF, dataHora);
+  Result := '-03:00';  // TimeZone de Brasília
 
-        HorarioDeVerao := IsHorarioDeVerao(UF, dataHora);
-        Result := '-03:00';  // TimeZone de Brasília
-
-        if AnsiPos('.' + UF + '.', UTC4) > 0 then
-        begin
-          Result := '-04:00';
-          if HorarioDeVerao then
-            Result := '-03:00';
-        end
-        else
-        if AnsiPos('.' + UF + '.', UTC3) > 0 then
-        begin
-          Result := '-03:00';
-          if HorarioDeVerao then
-            Result := '-02:00';
-        end
-        else
-        if AnsiPos('.' + UF + '.', UTC5) > 0 then
-        begin
-          Result := '-05:00';
-        end;
-      end;
-
-    tzManual:
-      Result := TimeZoneConf.TimeZoneStr;
+  if AnsiPos('.' + UF + '.', UTC4) > 0 then
+  begin
+    Result := '-04:00';
+    if HorarioDeVerao then
+      Result := '-03:00';
+  end
+  else
+  if AnsiPos('.' + UF + '.', UTC3) > 0 then
+  begin
+    Result := '-03:00';
+    if HorarioDeVerao then
+      Result := '-02:00';
+  end
+  else
+  if AnsiPos('.' + UF + '.', UTC5) > 0 then
+  begin
+    Result := '-05:00';
   end;
 end;
 
@@ -1200,6 +1256,7 @@ end;
 
 initialization
   TimeZoneConfInstance := nil;
+  OnAjustarDataHoraParaUf := nil;
 
 finalization;
   if Assigned( TimeZoneConfInstance ) then

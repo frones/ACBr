@@ -282,8 +282,7 @@ begin
   if VersaoDF = ve100 then
     Gerador.wCampo(tcDatHor, '#014', 'dhEmi', 19, 19, 1, MDFe.ide.dhEmi, DSC_DEMI)
   else
-    Gerador.wCampo(tcStr, '#014', 'dhEmi', 25, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ide.dhEmi) +
-                                                      GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ide.dhEmi), DSC_DEMI);
+    Gerador.wCampo(tcStr, '#014', 'dhEmi', 25, 25, 1, DateTimeWithTimeZone(MDFe.ide.dhEmi, MDFe.ide.cUF), DSC_DEMI);
 
   Gerador.wCampo(tcStr, '#015', 'tpEmis  ', 01, 01, 1, tpEmisToStr(MDFe.Ide.tpEmis), DSC_TPEMIS);
   Gerador.wCampo(tcStr, '#016', 'procEmi ', 01, 01, 1, procEmiToStr(MDFe.Ide.procEmi), DSC_PROCEMI);
@@ -303,8 +302,7 @@ begin
     if VersaoDF = ve100 then
       Gerador.wCampo(tcDatHor, '#024a', 'dhIniViagem', 19, 19, 0, MDFe.ide.dhIniViagem, DSC_DHINIVIAGEM)
     else
-      Gerador.wCampo(tcStr, '#024a', 'dhIniViagem', 25, 25, 0, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ide.dhIniViagem) +
-                                                               GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ide.dhIniViagem), DSC_DHINIVIAGEM);
+      Gerador.wCampo(tcStr, '#024a', 'dhIniViagem', 25, 25, 0, DateTimeWithTimeZone(MDFe.ide.dhIniViagem, MDFe.ide.cUF), DSC_DHINIVIAGEM);
   end;
 
   if (MDFe.infMDFe.versao >= 3) and (MDFe.ide.indCanalVerde = tiSim) then
@@ -803,8 +801,7 @@ begin
   if VersaoDF = ve100 then
     Gerador.wCampo(tcDatHor, '#04', 'dhTrem', 19, 19, 0, MDFe.ferrov.dhTrem, DSC_DHTREM)
   else
-    Gerador.wCampo(tcStr, '#04', 'dhTrem', 25, 25, 0, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ferrov.dhTrem) +
-                                                      GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ferrov.dhTrem), DSC_DHTREM);
+    Gerador.wCampo(tcStr, '#04', 'dhTrem', 25, 25, 0, DateTimeWithTimeZone(MDFe.ferrov.dhTrem, MDFe.ide.cUF), DSC_DHTREM);
 
   Gerador.wCampo(tcStr, '#05', 'xOri     ', 01, 03, 1, MDFe.ferrov.xOri, DSC_XORI);
   Gerador.wCampo(tcStr, '#06', 'xDest    ', 01, 03, 1, MDFe.ferrov.xDest, DSC_XDEST);

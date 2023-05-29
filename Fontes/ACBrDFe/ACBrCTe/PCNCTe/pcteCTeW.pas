@@ -314,7 +314,7 @@ begin
               '<tpAmb>'+TpAmbToStr(CTe.procCTe.tpAmb)+'</tpAmb>'+
               '<verAplic>'+CTe.procCTe.verAplic+'</verAplic>'+
               '<chCTe>'+CTe.procCTe.chCTe+'</chCTe>'+
-              '<dhRecbto>'+DateTimeTodh(CTe.procCTe.dhRecbto) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.procCTe.dhRecbto)+'</dhRecbto>'+
+              '<dhRecbto>'+DateTimeWithTimeZone(CTe.procCTe.dhRecbto, CTe.ide.cUF)+'</dhRecbto>'+
               '<nProt>'+CTe.procCTe.nProt+'</nProt>'+
               '<digVal>'+CTe.procCTe.digVal+'</digVal>'+
               '<cStat>'+IntToStr(CTe.procCTe.cStat)+'</cStat>'+
@@ -409,7 +409,7 @@ begin
   Gerador.wCampo(tcInt, '#012', 'nCT  ', 01, 09, 1, CTe.ide.nCT, DSC_NNF);
 
   if VersaoDF >= ve300 then
-    Gerador.wCampo(tcStr, '#013', 'dhEmi', 25, 25, 1, DateTimeTodh(CTe.ide.dhEmi) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.ide.dhEmi), DSC_DEMI)
+    Gerador.wCampo(tcStr, '#013', 'dhEmi', 25, 25, 1, DateTimeWithTimeZone(CTe.ide.dhEmi, CTe.ide.cUF), DSC_DEMI)
   else
     Gerador.wCampo(tcDatHor, '#013', 'dhEmi', 19, 19, 1, CTe.ide.dhEmi, DSC_DEMI);
 
@@ -494,8 +494,8 @@ begin
 
   if CTe.ide.modelo = 64 then
   begin
-    Gerador.wCampo(tcStr, '#013', 'dhSaidaOrig  ', 25, 25, 1, DateTimeTodh(CTe.ide.dhSaidaOrig) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.ide.dhSaidaOrig), DSC_DEMI);
-    Gerador.wCampo(tcStr, '#013', 'dhChegadaDest', 25, 25, 1, DateTimeTodh(CTe.ide.dhChegadaDest) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.ide.dhChegadaDest), DSC_DEMI);
+    Gerador.wCampo(tcStr, '#013', 'dhSaidaOrig  ', 25, 25, 1, DateTimeWithTimeZone(CTe.ide.dhSaidaOrig, CTe.ide.cUF), DSC_DEMI);
+    Gerador.wCampo(tcStr, '#013', 'dhChegadaDest', 25, 25, 1, DateTimeWithTimeZone(CTe.ide.dhChegadaDest, CTe.ide.cUF), DSC_DEMI);
   end;
 
   if (CTe.ide.modelo <> 67) then
@@ -510,7 +510,7 @@ begin
   if CTe.Ide.tpEmis = teFSDA then
   begin
     if VersaoDF >= ve300 then
-      Gerador.wCampo(tcStr, '#057', 'dhCont', 25, 25, 1, DateTimeTodh(CTe.ide.dhCont) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.ide.dhCont), DSC_DHCONT)
+      Gerador.wCampo(tcStr, '#057', 'dhCont', 25, 25, 1, DateTimeWithTimeZone(CTe.ide.dhCont, CTe.ide.cUF), DSC_DHCONT)
     else
       Gerador.wCampo(tcDatHor, '#057', 'dhCont', 19, 019, 1, CTe.ide.dhCont, DSC_DHCONT);
 
@@ -2227,7 +2227,7 @@ begin
       Gerador.wCampo(tcStr, '#18', 'tpFretamento', 01, 01, 1, TpFretamentoToStr(tpFretamento), DSC_TPFRETAMENTO);
 
       if tpFretamento = tfEventual then
-        Gerador.wCampo(tcStr, '#19', 'dhViagem', 25, 25, 0, DateTimeTodh(dhViagem) + GetUTC(CodigoParaUF(CTe.ide.cUF), dhViagem), DSC_DHVIAGEM);
+        Gerador.wCampo(tcStr, '#19', 'dhViagem', 25, 25, 0, DateTimeWithTimeZone(dhViagem, CTe.ide.cUF), DSC_DHVIAGEM);
 
       Gerador.wGrupo('/infFretamento');
     end;

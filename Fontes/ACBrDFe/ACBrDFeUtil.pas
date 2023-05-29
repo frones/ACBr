@@ -167,7 +167,7 @@ begin
     ACodigo := 0;
 
   vUF          := ACBrUtil.Strings.Poem_Zeros(AUF, 2);
-  vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
+  vDataEmissao := FormatDateTime('YYMM', AjustarDataHoraParaUf(ADataEmissao, AUF));
   vCNPJ        := PadLeft(OnlyNumber(ACNPJ), 14, '0');
   vModelo      := ACBrUtil.Strings.Poem_Zeros(AModelo, 2);
   vSerie       := ACBrUtil.Strings.Poem_Zeros(ASerie, 3);

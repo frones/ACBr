@@ -426,13 +426,13 @@ begin
   if NFe.infNFe.Versao >= 3 then
   begin
     Result.AppendChild(AddNode(tcStr, 'B09', 'dhEmi', 25, 25, 1,
-      DateTimeTodh(NFe.ide.dEmi) + GetUTC(CodigoParaUF(NFe.ide.cUF), NFe.ide.dEmi),
+      DateTimeWithTimeZone(NFe.ide.dEmi, NFe.ide.cUF),
       DSC_DEMI));
 
     if (NFe.ide.modelo = 55) and (NFe.ide.dSaiEnt <> 0) then
       Result.AppendChild(AddNode(tcStr, 'B10', 'dhSaiEnt', 25, 25,
-        0, DateTimeTodh(NFe.ide.dSaiEnt) + GetUTC(CodigoParaUF(NFe.ide.cUF),
-        NFe.ide.dSaiEnt), DSC_DSAIENT));
+        0, DateTimeWithTimeZone(NFe.ide.dSaiEnt, NFe.ide.cUF),
+        DSC_DSAIENT));
   end
   else
   begin
@@ -500,8 +500,8 @@ begin
   begin
     if NFe.infNFe.Versao >= 3 then
       Result.AppendChild(AddNode(tcStr, 'B28', 'dhCont', 25, 25,
-        1, DateTimeTodh(NFe.ide.dhCont) + GetUTC(CodigoParaUF(NFe.ide.cUF),
-        NFe.ide.dhCont), DSC_DHCONT))
+        1, DateTimeWithTimeZone(NFe.ide.dhCont, NFe.ide.cUF),
+        DSC_DHCONT))
     else
       Result.AppendChild(AddNode(tcStr, 'B28', 'dhCont', 19, 19,
         1, DateTimeTodh(NFe.Ide.dhCont), DSC_DHCONT));
@@ -3788,9 +3788,9 @@ begin
   xmlNode.AddChild('verAplic').Content := NFe.procNFe.verAplic;
   xmlNode.AddChild('chNFe').Content := NFe.procNFe.chNFe;
   xmlNode.AddChild('dhRecbto').Content :=
-    FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', NFe.procNFe.dhRecbto) +
-    IIf(FNFe.infNFe.Versao >= 3.10, GetUTC(CodigoParaUF(FNFe.Ide.cUF),
-    NFe.procNFe.dhRecbto), '');
+    IIf(FNFe.infNFe.Versao >= 3.10,
+      DateTimeWithTimeZone(NFe.procNFe.dhRecbto, FNFe.Ide.cUF),
+      FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', AjustarDataHoraParaUf(NFe.procNFe.dhRecbto, FNFe.Ide.cUF)));
   xmlNode.AddChild('nProt').Content := NFe.procNFe.nProt;
   xmlNode.AddChild('digVal').Content := NFe.procNFe.digVal;
   xmlNode.AddChild('cStat').Content := IntToStr(NFe.procNFe.cStat);

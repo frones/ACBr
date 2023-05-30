@@ -114,6 +114,9 @@ begin
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
+  ACBrNFSeXDANFSeRL1 := TACBrNFSeXDANFSeRL.Create(nil);
+  ACBrNFSeX1.DANFSE := ACBrNFSeXDANFSeRL1;
+
    if GerarPDF then
   begin
     if (LibConfig.DANFSe.PathPDF <> '') then
@@ -140,6 +143,7 @@ begin
    GravarLog('FinalizarImpressao - Iniciado', logNormal);
 
    ACBrNFSeX1.DANFSE := nil;
+   if Assigned(ACBrNFSeXDANFSeRL1) then FreeAndNil(ACBrNFSeXDANFSeRL1);
 
    GravarLog('FinalizarImpressao - Feito', logNormal);
 end;

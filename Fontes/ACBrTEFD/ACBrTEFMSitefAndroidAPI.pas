@@ -499,7 +499,8 @@ begin
   fDadosTransacao.ValueInfo[PWINFO_FINTYPE]      := buscarStringExtra('TIPO_PARC');
   fDadosTransacao.ValueInfo[PWINFO_CASHBACKAMT]  := buscarStringExtra('VLTROCO');
   fDadosTransacao.ValueInfo[PWINFO_AUTHSYST]     := buscarStringExtra('REDE_AUT');
-  fDadosTransacao.ValueInfo[PWINFO_CARDNAME]     := buscarStringExtra('BADEIRA');
+  fDadosTransacao.ValueInfo[PWINFO_CARDNAME]     := buscarStringExtra('BANDEIRA');
+  fDadosTransacao.ValueInfo[PWINFO_BANDCODE]     := buscarStringExtra('BANDEIRA');
   fDadosTransacao.ValueInfo[PWINFO_AUTLOCREF]    := buscarStringExtra('NSU_SITEF');
   fDadosTransacao.ValueInfo[PWINFO_REQNUM]       := buscarStringExtra('NSU_SITEF');
   fDadosTransacao.ValueInfo[PWINFO_AUTEXTREF]    := buscarStringExtra('NSU_HOST');

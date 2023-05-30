@@ -87,6 +87,7 @@ const
   PWINFO_DISCOUNTAMT    = 73;     // Valor do desconto concedido pelo Provedor, considerando PWINFO_CURREXP, já deduzido em PWINFO_TOTAMNT
   PWINFO_CASHBACKAMT    = 74;     // Valor do saque/troco, considerando PWINFO_CURREXP, já incluído em PWINFO_TOTAMNT
   PWINFO_CARDNAME       = 75;     // Nome do cartão ou do emissor do cartão
+  PWINFO_BANDCODE       = 76;     // Código da bandeira do emissor do cartão
   PWINFO_BOARDINGTAX    = 77;     // Valor da taxa de embarque, considerando PWINFO_CURREXP, já incluído em PWINFO_TOTAMNT
   PWINFO_TIPAMOUNT      = 78;     // Valor da taxa de serviço (gorjeta), considerando PWINFO_CURREXP, já incluído em PWINFO_TOTAMNT
   PWINFO_INSTALLM1AMT   = 79;     // Valor da entrada para um pagamento parcelado, considerando PWINFO_CURREXP, já incluído em PWINFO_TOTAMNT
@@ -362,10 +363,12 @@ begin
 
         PWINFO_CARDNAME:
         begin
-          CodigoBandeiraPadrao := LinStr;
           if (NFCeSAT.Bandeira = '') then
             NFCeSAT.Bandeira := LinStr;
         end;
+
+        PWINFO_BANDCODE:
+          CodigoBandeiraPadrao := LinStr;
 
         PWINFO_CARDNAMESTD:
         begin

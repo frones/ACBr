@@ -95,6 +95,7 @@ type
     procedure Test_NFSE_ConsultarNFSeServicoTomadoPorPeriodo;
     procedure Test_NFSE_ConsultarNFSeServicoTomadoPorIntermediario;
     procedure Test_NFSe_SalvarProvedor;
+    procedure Test_NFSe_ImprimirXML;
 
   end;
 
@@ -1010,6 +1011,37 @@ begin
 
   AStr := copy(AStr,1,Bufflen);
 
+
+  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+end;
+
+procedure TTestACBrNFSeLib.Test_NFSe_ImprimirXML();
+var
+  AStr: String;
+  Handle: THandle;
+  Bufflen: Integer;
+begin
+  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+
+  AssertEquals(ErrOk, NFSE_ConfigLerValor(Handle, 'NFSe', 'CodigoMunicipio', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar configuração', ErrOk, NFSE_ConfigGravarValor(Handle, 'NFSe', 'CodigoMunicipio', '3506003'));
+
+  AssertEquals(ErrOK, NFSE_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals('Erro ao carregar XML NFSe', ErrOK,
+  NFSE_CarregarXML(Handle, PChar(fCaminhoExec+'\540-nfse.xml')));
+
+  AssertEquals('Erro ao Imprimir NFSe', ErrOK,
+  NFSE_Imprimir(Handle, '', 1, '', '1', ''));
+
+  AssertEquals('Erro ao Limpar Lista NFSe', ErrOK, NFSE_LimparLista(Handle));
+
+  AssertEquals('Erro ao carregar XML NFSe', ErrOK,
+  NFSE_CarregarXML(Handle, PChar(fCaminhoExec+'\540-nfse.xml')));
+
+  AssertEquals('Erro ao Imprimir NFSe', ErrOK,
+  NFSE_Imprimir(Handle, '', 1, '', '1', ''));
 
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;

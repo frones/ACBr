@@ -551,7 +551,7 @@ namespace ACBrLibNFSe.Demo
                 if (InputBox.Show("Link NFSe", "Informe o Valor do Serviço", ref valorServico) != DialogResult.OK) return;
                 if (string.IsNullOrEmpty(valorServico)) return;
 
-                var ret = ACBrNFSe.LinkNFSE(numeroNFSe, codVerificacao, chaveAcesso, valorServico);
+                var ret = ACBrNFSe.LinkNFSe(numeroNFSe, codVerificacao, chaveAcesso, valorServico);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)

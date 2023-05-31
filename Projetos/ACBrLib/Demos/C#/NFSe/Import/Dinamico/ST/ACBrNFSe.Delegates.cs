@@ -76,7 +76,7 @@ namespace ACBrLib.NFSe
         public delegate int NFSE_SubstituirNFSe(string aNumeroNFSe, string aSerieNFSe, string aCodigoCancelamento, string aMotivoCancelamento, string aNumeroLote, string aCodigoVerificacao, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int NFSE_LinkNFSE(string aNumeroNFSe, string aCodigoVerificacao, string aChaveAcesso, string aValorServico, StringBuilder buffer, ref int bufferSize);
+        public delegate int NFSE_LinkNFSe(string aNumeroNFSe, string aCodigoVerificacao, string aChaveAcesso, string aValorServico, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFSE_GerarLote(string aLote, int aQtdMaximaRps, int aModoEnvio, StringBuilder buffer, ref int bufferSize);
@@ -165,7 +165,7 @@ namespace ACBrLib.NFSe
             AddMethod<NFSE_Emitir>("NFSE_Emitir");
             AddMethod<NFSE_Cancelar>("NFSE_Cancelar");
             AddMethod<NFSE_SubstituirNFSe>("NFSE_SubstituirNFSe");
-            AddMethod<NFSE_LinkNFSE>("NFSE_LinkNFSE");
+            AddMethod<NFSE_LinkNFSe>("NFSE_LinkNFSe");
             AddMethod<NFSE_GerarLote>("NFSE_GerarLote");
             AddMethod<NFSE_GerarToken>("NFSE_GerarToken");
             AddMethod<NFSE_ConsultarSituacao>("NFSE_ConsultarSituacao");

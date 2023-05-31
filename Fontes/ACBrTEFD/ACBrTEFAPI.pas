@@ -151,6 +151,7 @@ type
     procedure ExibirMensagemPinPad(const MsgPinPad: String); virtual;
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
       TimeOut: SmallInt = 30000): String; virtual;
+    function VerificarPresencaPinPad: Byte; virtual;
   end;
 
   { TACBrTEFAPI }
@@ -181,6 +182,7 @@ type
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000): String;
+    function VerificarPresencaPinPad: Byte;
 
     property TEF: TACBrTEFAPIClass read GetTEFAPIClass;
   published
@@ -227,6 +229,12 @@ function TACBrTEFAPIClass.ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
 begin
   Result := '';
   ErroAbstract('ObterDadoPinPad');
+end;
+
+function TACBrTEFAPIClass.VerificarPresencaPinPad: Byte;
+begin
+  Result := 0;
+  ErroAbstract('VerificarPresencaPinPad');
 end;
 
 { TACBrTEFAPI }
@@ -280,6 +288,13 @@ begin
             IntToStr(TimeOut)+' )');
   Result := TEF.ObterDadoPinPad(TipoDado, TimeOut);
   GravarLog('   '+Result);
+end;
+
+function TACBrTEFAPI.VerificarPresencaPinPad: Byte;
+begin
+  GravarLog('VerificarPresencaPinPad');
+  Result := TEF.VerificarPresencaPinPad;
+  GravarLog('   '+IntToStr(Result));
 end;
 
 procedure TACBrTEFAPI.SetModelo(const AValue: TACBrTEFAPITipo);

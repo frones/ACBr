@@ -644,6 +644,9 @@ type
               bMinLen: Byte; bMaxLen: Byte; iToutSec: SmallInt;
               const pszPrompt: PAnsiChar; pszData: PAnsiChar): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xPW_iPPCommTest: function(pszMsg: PAnsiChar; uiMsgSize: Word;
+              var pbCommPort: Byte): SmallInt;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xPW_iTransactionInquiry: function(const pszXmlRequest: PAnsiChar;
               pszXmlResponse: PAnsiChar; ulXmlResponseLen: Word): SmallInt;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -718,6 +721,7 @@ type
       const pszAuthSyst: String);
     procedure EstornarTransacaoEmAndamento;
     procedure TratarTransacaoPendente;
+    function VerificarPresencaPinPad: Byte;
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
     function ObterDadoPinPad(iMessageId: Word; MinLen, MaxLen: Byte;
       TimeOutSec: SmallInt): String;
@@ -1239,6 +1243,7 @@ begin
   xPW_iPPWaitEvent := Nil;
   xPW_iPPRemoveCard := Nil;
   xPW_iPPGetPINBlock := Nil;
+  xPW_iPPCommTest := Nil;
   xPW_iTransactionInquiry := Nil;
 end;
 
@@ -1680,6 +1685,53 @@ begin
 
   if (AStatus > 0) then
     FinalizarTransacao(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst);
+end;
+
+function TACBrTEFPGWebAPI.VerificarPresencaPinPad: Byte;
+var
+  iRetPP: SmallInt;
+  pszMsg: PAnsiChar;
+  uiMsgSize: Word;
+  pbCommPort: Byte;
+  MsgError: String;
+begin
+  Result := 0;
+  pbCommPort := 0;
+  uiMsgSize := 512;
+  pszMsg := AllocMem(uiMsgSize); // 512 bytes
+  try
+    iRetPP := PWRET_NOTHING;
+    while (iRetPP = PWRET_NOTHING) do
+    begin
+      GravarLog('PW_iPPCommTest');
+      iRetPP := xPW_iPPCommTest( pszMsg, uiMsgSize, pbCommPort );
+      GravarLog('  '+PWRETToString(iRetPP)+', '+String(pszMsg)+', '+IntToStr(pbCommPort));
+      MsgError := '';
+      case iRetPP of
+        PWRET_OK:
+          begin
+            Result := pbCommPort;
+            Break;
+          end;
+        PWRET_DLLNOTINIT:
+          MsgError := sErrPWRET_DLLNOTINIT;
+        PWRET_INVPARAM:
+          MsgError := sErrPWRET_INVPARAM2;
+        PWRET_NOTHING:
+          ExibirMensagem(String(pszMsg), tmOperador);
+      else
+        MsgError := ObterUltimoRetorno;
+      end;
+
+      if (MsgError <> '') then
+      begin
+        DoException(ACBrStr(MsgError));
+        Break;
+      end;
+    end;
+  finally
+    Freemem(pszMsg);
+  end;
 end;
 
 procedure TACBrTEFPGWebAPI.ExibirMensagemPinPad(const MsgPinPad: String);
@@ -2740,6 +2792,7 @@ procedure TACBrTEFPGWebAPI.LoadLibFunctions;
    PGWebFunctionDetect('PW_iPPWaitEvent', @xPW_iPPWaitEvent);
    PGWebFunctionDetect('PW_iPPRemoveCard', @xPW_iPPRemoveCard);
    PGWebFunctionDetect('PW_iPPGetPINBlock', @xPW_iPPGetPINBlock, False);
+   PGWebFunctionDetect('PW_iPPCommTest', @xPW_iPPCommTest, False);
    PGWebFunctionDetect('PW_iTransactionInquiry', @xPW_iTransactionInquiry);
    PGWebFunctionDetect('PW_iPPDataConfirmation', @xPW_iPPDataConfirmation, False);
    PGWebFunctionDetect('PW_iPPTestKey', @xPW_iPPTestKey, False);

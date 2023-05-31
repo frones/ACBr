@@ -336,7 +336,7 @@ begin
       PA.ValueInfo[PWINFO_INSTALLMENTS] := IntToStr(Parcelas);
 
     if (DataPreDatado <> 0) then
-      PA.ValueInfo[PWINFO_INSTALLMDATE] := FormatDateTime('ddmmaa', DataPreDatado);
+      PA.ValueInfo[PWINFO_INSTALLMDATE] := FormatDateTime('ddmmyy', DataPreDatado);
 
     fTEFMSitefAPI.ValorTotalPagamento := ValorPagto; //Valor de pagamento não é retornado via intents
 

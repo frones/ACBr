@@ -46,6 +46,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2023
+-- ACBrTEFAndroidPayGo, ACBrTEFAPIPayGoWeb, ACBrTEFAndroidElginIDH, ACBrTEFAndroidMSitef --
+[-] Correção no método "EfetuarPagamento", que estava compondo a Data de forma errada
+    no Parâmetro "PWINFO_INSTALLMDATE"
+    https://www.projetoacbr.com.br/forum/topic/72464-poss%C3%ADvel-erro-nas-rotinas-do-tef-paygo/
+    (por:  Valdir Dill)
+
+-- ACBrTEFAPI, ACBrTEFAPIPayGoWeb, ACBrTEFPayGoWebComum --
+[+] Adicionado o método "VerificarPresencaPinPad"
+    (por: DSA)
+
 05/05/2023
 -- ACBrTEFAndroid, ACBrTEFAndroidElginIDH, ACBrTEFElginIDHAndroidAPI, ACBrTEFElginIDHComum --
 [+] Adicionado o modelo "tefElginIDH" em TACBrTEFAndroid

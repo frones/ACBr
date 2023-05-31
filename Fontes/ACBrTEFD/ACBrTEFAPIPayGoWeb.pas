@@ -124,6 +124,7 @@ type
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000
       ): String; override;
+    function VerificarPresencaPinPad: Byte; override;
 
     property TEFPayGoAPI: TACBrTEFPGWebAPI read fTEFPayGoAPI;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
@@ -482,7 +483,7 @@ begin
       PA.ValueInfo[PWINFO_INSTALLMENTS] := IntToStr(Parcelas);
 
     if (DataPreDatado <> 0) then
-      PA.ValueInfo[PWINFO_INSTALLMDATE] := FormatDateTime('ddmmaa', DataPreDatado);
+      PA.ValueInfo[PWINFO_INSTALLMDATE] := FormatDateTime('ddmmyy', DataPreDatado);
 
     if (fAutorizador <> '') then
       PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
@@ -606,8 +607,7 @@ begin
   fTEFPayGoAPI.AbortarTransacao;
 end;
 
-procedure TACBrTEFAPIClassPayGoWeb.ExibirMensagemPinPad(const MsgPinPad: String
-  );
+procedure TACBrTEFAPIClassPayGoWeb.ExibirMensagemPinPad(const MsgPinPad: String);
 begin
   fTEFPayGoAPI.ExibirMensagemPinPad(MsgPinPad);
 end;
@@ -699,6 +699,11 @@ begin
   Result := fTEFPayGoAPI.ObterDadoPinPad( TipoMsg,
                                           MinLen, MaxLen,
                                           Trunc(TimeOut/1000) );
+end;
+
+function TACBrTEFAPIClassPayGoWeb.VerificarPresencaPinPad: Byte;
+begin
+  Result := fTEFPayGoAPI.VerificarPresencaPinPad;
 end;
 
 procedure TACBrTEFAPIClassPayGoWeb.LimparUltimaTransacaoPendente;

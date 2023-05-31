@@ -254,12 +254,12 @@ namespace ACBrLib.NFSe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string LinkNFSE(string aNumeroNFSe, string aCodigoVerificacao, string aChaveAcesso, string aValorServico)
+        public string LinkNFSe(string aNumeroNFSe, string aCodigoVerificacao, string aChaveAcesso, string aValorServico)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<NFSE_LinkNFSE>();
+            var method = GetMethod<NFSE_LinkNFSe>();
             var ret = ExecuteMethod(() => method(libHandle, ToUTF8(aNumeroNFSe), ToUTF8(aCodigoVerificacao), ToUTF8(aChaveAcesso), ToUTF8(aValorServico), buffer, ref bufferLen));
 
             CheckResult(ret);

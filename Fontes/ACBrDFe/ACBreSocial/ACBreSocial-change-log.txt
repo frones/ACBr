@@ -56,6 +56,9 @@ Símbolo : Significado
 -- pcesS1200 --
 [*] Altera valor padrão da propriedade IndApurIR na rotina de leitura do INI para que não gere caso não seja informado.
   Por: Alexandre de Paula / Rev: Diego F
+-- pcesSConversaoeSocial --
+[+] Adiciona a opção Estabalizados no enumerado e funções de conversão correspondentes de tpTpProv para que fique de acordo com S1.1
+  Por: Andergoncalves / Rev: Alexandre de Paula
 
 26/05/2023
 -- Diversos --

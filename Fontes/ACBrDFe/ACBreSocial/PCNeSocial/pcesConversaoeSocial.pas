@@ -453,6 +453,7 @@ type
                              tpRemocao,                                                { Item válido a partir da versão simplificada }
                              tpDesignacao,                                             { Item válido a partir da versão simplificada }
                              tpMudancaDeCpf,                                           { Item válido a partir da versão simplificada }
+                             tpEstabilizados,                                          { Item válido a partir da versão simplificada }
                              tpOutros);
 
   tpUndSalFixo            = (sfPorHora, sfPorDia, sfPorSemana, sfPorQuinzena, sfPorMes, sfPorTarefa, sfNaoaplicavel);
@@ -1555,12 +1556,12 @@ end;
 
 function eSTpProvToStr(const t: tpTpProv ): string;
 begin
-  result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '99' ] );
+  result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '99' ] );
 end;
 
 function eSStrToTpProv(var ok: boolean; const s: string): tpTpProv;
 begin
-  result := tpTpProv( StrToEnumerado2(ok , s, [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '99' ] ) );
+  result := tpTpProv( StrToEnumerado2(ok , s, [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '99' ] ) );
 end;
 
 function eSTpIndMatProcToStr(const t: tpIndMatProc): string;

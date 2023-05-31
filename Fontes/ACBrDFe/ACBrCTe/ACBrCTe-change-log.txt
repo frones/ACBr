@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2023
+-- ACBrCTeWebServices --
+[+] A SEFAZ-MT informou as URL de homologação para a versão 4.00
+  Por: Italo Giurizzato Junior
+
 18/05/2023
 -- pcteRetEnvCTe --
 [*] Ajuste na leitura do atributo

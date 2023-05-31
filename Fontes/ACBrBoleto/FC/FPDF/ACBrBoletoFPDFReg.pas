@@ -56,6 +56,27 @@ implementation
 procedure Register;
 begin
   RegisterComponents('ACBrBoleto', [TACBrBoletoFPDF]);
+  {$IFDEF FPC}
+    RegisterPropertyEditor(TypeInfo(Boolean), TACBrBoletoFPDF, 'MostrarPreview', THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(Boolean), TACBrBoletoFPDF, 'MostrarSetup', THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(Boolean), TACBrBoletoFPDF, 'MostrarProgresso', THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(Integer), TACBrBoletoFPDF, 'NumCopias', THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(String), TACBrBoletoFPDF,  'Filtro', THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(String), TACBrBoletoFPDF,  'PrinterName', THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(Boolean), TACBrBoletoFPDF, 'AlterarEscalaPadrao', THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(Integer), TACBrBoletoFPDF, 'NovaEscala', THiddenPropertyEditor);
+    RegisterPropertyEditor(TypeInfo(String), TACBrBoletoFPDF,  'TituloPreview', THiddenPropertyEditor);
+  {$ELSE}
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'MostrarPreview');
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'MostrarSetup');
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'MostrarProgresso');
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'NumCopias');
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'Filtro');
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'PrinterName');
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'AlterarEscalaPadrao');
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'NovaEscala');
+    UnlistPublishedProperty(TACBrBoletoFPDF, 'TituloPreview');
+  {$ENDIF}
 end;
 
 end.

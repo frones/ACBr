@@ -563,15 +563,9 @@ begin
 
     NFSeDM.Travar;
     try
-      NFSeDM.ACBrNFSeX1.LinkNFSe(NumeroNFSe, CodigoVerificacao, ChaveAcesso, ValorServico);
-      Resp := TLinkNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resposta := Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
-      end;
+      Resposta := 'LinkNFSe: '+ NFSeDM.ACBrNFSeX1.LinkNFSe(NumeroNFSe, CodigoVerificacao, ChaveAcesso, ValorServico);
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       NFSeDM.Destravar;
     end;

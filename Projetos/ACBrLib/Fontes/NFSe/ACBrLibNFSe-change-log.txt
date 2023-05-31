@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2023
+--- ACBrLibNFSeBase, ACBrLibNFSeResposta ---
+[*] Ajuste no método NFSE_LinkNFSe para retornar um LinkNFSe
+[*] Novos campos para retornar Erros e Alertas TLibNFSeServiceResposta
+    Contribuição: Emerson Teixeira / Revisão: Diego Foliene, Antonio Carlos Junior
+
 30/02/2023
 --- ACBrLibNFSeDataModule ---
 [*] Correção nas Procedures ConfigurarImpressao e FinalizarImpressao para evitar de ocorrer Access Violation

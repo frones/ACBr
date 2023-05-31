@@ -38,8 +38,9 @@ unit ACBrLibNFSeRespostas;
 interface
 
 uses
-  SysUtils, Classes, contnrs,
-  ACBrLibResposta, ACBrNFSeXNotasFiscais, ACBrNFSeX, ACBrNFSeXWebservicesResponse, ACBrNFSeXWebserviceBase, ACBrNFSeXConversao;
+  SysUtils, Classes, contnrs, ACBrLibResposta, ACBrNFSeXNotasFiscais,
+  ACBrNFSeX, ACBrNFSeXWebservicesResponse, ACBrNFSeXWebserviceBase,
+  ACBrNFSeXConversao;
 
 type
 
@@ -90,6 +91,8 @@ type
   published
     property XmlEnvio: String read FXmlEnvio write FXmlEnvio;
     property XmlRetorno: String read FXmlRetorno write FXmlRetorno;
+    property Erros: TObjectList read FErros write FErros;
+    property Alertas: TObjectList read FAlertas write FAlertas;
 
   end;
 

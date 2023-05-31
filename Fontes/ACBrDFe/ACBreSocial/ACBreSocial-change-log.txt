@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2023
+-- pcesS1200 --
+[*] Altera valor padrão da propriedade IndApurIR na rotina de leitura do INI para que não gere caso não seja informado.
+  Por: Alexandre de Paula / Rev: Diego F
+
 26/05/2023
 -- Diversos --
 [*] Revisa as rotinas de leitura de ini visando maior compatibilidade com o layout da versão Simplificada 1.1

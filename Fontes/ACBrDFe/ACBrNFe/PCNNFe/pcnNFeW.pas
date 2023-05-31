@@ -155,8 +155,6 @@ type
 
     procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer;
       cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
-
-    function ObterTipoCampo_TDec_0304Max100Opc(const Valor: Variant): TpcnTipoCampo;
   public
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
@@ -236,16 +234,6 @@ end;
 function TNFeW.ObterNomeArquivo: String;
 begin
   Result := OnlyNumber(NFe.infNFe.ID) + '-nfe.xml';
-end;
-
-function TNFeW.ObterTipoCampo_TDec_0304Max100Opc(const Valor: Variant): TpcnTipoCampo;
-begin
-  if (Valor = 0) or ((Valor < 1) and ((Trunc(Double(Valor) * 10000) mod 10) < 1)) then
-    Result := tcDe3
-  else if Valor = 100 then
-    Result := tcInt
-  else
-    Result := tcDe4;
 end;
 
 function TNFeW.GerarXml: Boolean;
@@ -1279,7 +1267,7 @@ begin
       if NFe.Det[i].Prod.comb.encerrante.nBico > 0 then
         GerarDetProdCombencerrante(i);
 
-      Gerador.wCampo(ObterTipoCampo_TDec_0304Max100Opc(NFe.Det[i].Prod.comb.pBio), 'LA17', 'pBio', 01,  5, 0, NFe.Det[i].Prod.comb.pBio, DSC_PBIO);
+      Gerador.wCampo(tcDe4, 'LA17', 'pBio', 01, 07, 0, NFe.Det[i].Prod.comb.pBio, DSC_PBIO);
 
       if NFe.Det[i].Prod.comb.origComb.Count > 0 then
         GerarDetProdCombencerranteorigComb(i);
@@ -1329,8 +1317,7 @@ begin
     Gerador.wCampo(tcInt, 'LA20', 'cUFOrig', 2, 2, 1,
       NFe.Det[i].Prod.comb.origComb[j].cUFOrig, DSC_CUF);
 
-    Gerador.wCampo(ObterTipoCampo_TDec_0304Max100Opc(NFe.Det[i].Prod.comb.origComb[j].pOrig),
-      'LA21', 'pOrig ', 1, 5, 1, NFe.Det[i].Prod.comb.origComb[j].pOrig, DSC_PORIG);
+    Gerador.wCampo(tcDe4, 'LA21', 'pOrig ', 1, 7, 1, NFe.Det[i].Prod.comb.origComb[j].pOrig, DSC_PORIG);
 
     Gerador.wGrupo('/origComb');
   end;

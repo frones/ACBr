@@ -157,8 +157,6 @@ type
 
     procedure AjustarMunicipioUF(out xUF: string; out xMun: string;
       out cMun: integer; cPais: integer; const vxUF, vxMun: string; vcMun: integer);
-    function ObterTipoCampo_TDec_0304Max100Opc(const Valor: Variant): TACBrTipoCampo;
-
   protected
     function CreateOptions: TACBrXmlWriterOptions; override;
 
@@ -241,16 +239,6 @@ end;
 function TNFeXmlWriter.ObterNomeArquivo: string;
 begin
   Result := OnlyNumber(FNFe.infNFe.ID) + '-nfe.xml';
-end;
-
-function TNFeXmlWriter.ObterTipoCampo_TDec_0304Max100Opc(const Valor: Variant): TACBrTipoCampo;
-begin
-  if (Valor = 0) or ((Valor < 1) and ((Trunc(Valor * 10000) mod 10) < 1)) then
-    Result := tcDe3
-  else if Valor = 100 then
-    Result := tcInt
-  else
-    Result := tcDe4;
 end;
 
 function TNFeXmlWriter.GerarXml: boolean;
@@ -1561,8 +1549,7 @@ begin
       if NFe.Det[i].Prod.comb.encerrante.nBico > 0 then
         Result.AppendChild(GerarDetProdCombencerrante(i));
 
-      Result.AppendChild(AddNode(ObterTipoCampo_TDec_0304Max100Opc(NFe.Det[i].Prod.comb.pBio),
-        'LA17', 'pBio', 01, 5, 0, NFe.Det[i].Prod.comb.pBio, DSC_PBIO));
+      Result.AppendChild(AddNode(tcDe4, 'LA17', 'pBio', 01, 7, 0, NFe.Det[i].Prod.comb.pBio, DSC_PBIO));
 
       nodeArray := GerarDetProdCombencerranteOrigComb(i);
 
@@ -1624,8 +1611,7 @@ begin
     Result[j].AppendChild(AddNode(tcInt, 'LA20', 'cUFOrig', 2, 2, 1,
       NFe.Det[i].Prod.comb.origComb[j].cUFOrig));
 
-    Result[j].AppendChild(AddNode(ObterTipoCampo_TDec_0304Max100Opc(NFe.Det[i].Prod.comb.origComb[j].pOrig),
-      'LA21', 'pOrig', 1, 5, 1, NFe.Det[i].Prod.comb.origComb[j].pOrig));
+    Result[j].AppendChild(AddNode(tcDe4, 'LA21', 'pOrig', 1, 7, 1, NFe.Det[i].Prod.comb.origComb[j].pOrig));
   end;
 
   if NFe.Det[i].Prod.comb.origComb.Count > 30 then
@@ -1825,10 +1811,10 @@ begin
             01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMonoOp, DSC_VICMSMONOOP));
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'pDif',
             01, 5, 0, NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF));
-          xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMSMonoDif',
-            01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSMonoDif, DSC_VICMSMONODIF));
-          xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMSMono',
-            01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSMono, DSC_VICMSMONO));
+          xmlNode.AppendChild(AddNode(tcDe2, 'N43', 'vICMSMonoDif',
+            01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMonoDif, DSC_VICMSMONODIF));
+          xmlNode.AppendChild(AddNode(tcDe2, 'N39', 'vICMSMono',
+            01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMono, DSC_VICMSMONO));
         end;
 
         cst61 :

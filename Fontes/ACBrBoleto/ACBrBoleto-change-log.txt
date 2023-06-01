@@ -54,6 +54,8 @@ Símbolo : Significado
   por : Marcos Lenharo 
 [*]TK-4003 ACBrBoleto - Contribuição: Banco Daycoval Ajustes de Local Pagamento
   por : Marcos Lenharo 
+[*]TK-3985 Devolução/Baixa Automática – BANRISUL CNAB 400
+  por : suporteatinfo
 25/05/2023
 [+]TK-3976 ABCrBoletoFibra Retorno400 Conta Vinculada
   por : Victor H Gonzales - Pandaaa

@@ -385,6 +385,12 @@ begin
         Instrucao1 := '09';  //Protestar caso impago em NN dias após vencimento.
     end
     else
+    if (DataBaixa <> 0) and (DataBaixa > Vencimento) then  // Devolução / BAixa
+    begin
+      if (Trim(Instrucao1) = '') then
+        Instrucao1 := '15';  //Devolver caso impago em NN dias após vencimento.
+    end
+    else
       Instrucao1 := '23'; //Não protestar
 
     if (PercentualMulta > 0) then
@@ -452,8 +458,11 @@ begin
                PadRight(Sacado.UF, 2)                                               + // UF do Sacado
                space(18)                                                            + // Brancos
                IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento),
-                      PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)),
-                      2, '0'), Space(2))                                            + // Dias para protesto/devolução automática
+                      PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)),2,'0'),   // Dias para protesto/
+                      IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento),
+                            PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)),2,'0'),  // Dias para devolução automática
+                      Space(2)) )                                                      +
+
                space(23)                                                        + // Brancos
                IntToStrZero(aRemessa.Count + 1, 6);                               // Número sequencial do registro  
 

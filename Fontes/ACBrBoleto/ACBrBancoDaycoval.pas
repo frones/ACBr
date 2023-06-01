@@ -43,6 +43,7 @@ type
 
   TACBrBancoDaycoval = class(TACBrBancoClass)
   protected
+    function GetLocalPagamento: String; override;
   private
     procedure GerarRegistrosNFe(ACBrTitulo : TACBrTitulo; aRemessa: TStringList);
   public
@@ -834,6 +835,11 @@ begin
   else
      Result:= toRemessaRegistrar;                           {Remessa}
   end;
+end;
+
+function TACBrBancoDaycoval.GetLocalPagamento: String;
+begin
+  Result := ACBrStr(CInstrucaoPagamentoTodaRede);
 end;
 
 end.

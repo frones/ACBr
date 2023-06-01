@@ -45,6 +45,8 @@ uses
 type
   { TACBrBancoOriginal }
   TACBrBancoOriginal = class(TACBrBancoClass)
+  protected
+    function GetLocalPagamento: String; override;
   private
     function MontarConvenio: string;
     procedure MontarRegistroMensagem400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
@@ -273,7 +275,7 @@ begin
     Linha.Add(IfThen(DiasProtesto > 0, '00', '10')); //                         157 a 158 Instrução 1 - Se “INSTRO1 ou INSTRO2 = 10”, o Sistema entenderá que o cedente não deseja, de forma alguma, que ao título seja anexada a informação de DIAS DE PROTESTO.
     Linha.Add('00'); //                                                         159 a 160 Instrução 2
     Linha.Add(IntToStrZero(Round(ACBrTitulo.ValorMoraJuros * 100), 13)); //     161 a 173 Valor de mora por dia de atraso
-    Linha.Add(IfThen(ACBrTitulo.DataDocumento > 0,
+    Linha.Add(IfThen(ACBrTitulo.DataDesconto > 0,
       FormatDateTime('ddmmyy', ACBrTitulo.DataDesconto), '000000')); //         174 a 179 Data Limite para concessão de desconto
     Linha.Add(IntToStrZero(Round(ACBrTitulo.ValorDesconto * 100), 13)); //      180 a 192 Valor do desconto a ser concedido
     Linha.Add(IntToStrZero(0, 13)); //                                          193 a 205 Valor do I.O.F. a ser recolhido pelo Banco no caso de seguro
@@ -717,6 +719,11 @@ begin
   else
     Result := 'Outras ocorrências';
   end;
+end;
+
+function TACBrBancoOriginal.GetLocalPagamento: String;
+begin
+  Result := ACBrStr(CInstrucaoPagamentoRegistro);
 end;
 
 end.

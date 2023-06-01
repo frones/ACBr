@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+01/06/2023
+[-]TK-4004 ACBrBoleto - Contribuição Banco Original
+  por : Marcos Lenharo 
+
 25/05/2023
 [+]TK-3976 ABCrBoletoFibra Retorno400 Conta Vinculada
   por : Victor H Gonzales - Pandaaa

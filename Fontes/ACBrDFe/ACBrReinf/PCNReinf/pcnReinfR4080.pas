@@ -189,6 +189,7 @@ type
     FvlrBruto: double;
     FvlrBaseIR: double;
     FvlrIR: double;
+    Fobserv: string;
     FinfoProcRet: TinfoProcRetCollection;
   public
     constructor Create;
@@ -198,6 +199,7 @@ type
     property vlrBruto: double read FvlrBruto write FvlrBruto;
     property vlrBaseIR: double read FvlrBaseIR write FvlrBaseIR;
     property vlrIR: double read FvlrIR write FvlrIR;
+    property observ: string read Fobserv write Fobserv;
     property infoProcRet: TinfoProcRetCollection read FinfoProcRet write FinfoProcRet;
   end;
 
@@ -388,6 +390,8 @@ begin
     Gerador.wCampo(tcDe2, '', 'vlrBruto',   1,  14, 1, item.vlrBruto);
     Gerador.wCampo(tcDe2, '', 'vlrBaseIR',  1,  14, 1, item.vlrBaseIR);
     Gerador.wCampo(tcDe2, '', 'vlrIR',      1,  14, 1, item.vlrIR);
+    if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+      Gerador.wCampo(tcStr, '', 'observ',1, 200, 0, item.observ);
 
     GerarinfoProcRet(item.infoProcRet);
     Gerador.wGrupo('/infoRec');
@@ -521,6 +525,8 @@ begin
                 vlrBruto  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBruto', ''), 0);
                 vlrBaseIR := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBaseIR', ''), 0);
                 vlrIR     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrIR', ''), 0);
+                if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+                  observ  := INIRec.ReadString(sSecao, 'observ', '');
 
                 I3 := 1;
                 while true do

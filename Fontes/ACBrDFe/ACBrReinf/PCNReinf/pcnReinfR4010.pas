@@ -177,6 +177,7 @@ type
   private
     FcpfBenef: string;
     FnmBenef: string;
+    FideEvtAdic: string;
     FideDep: TideDepCollection;
     FidePgto: TidePgtoCollection;
     FideOpSaude: TideOpSaudeCollection;
@@ -186,6 +187,7 @@ type
 
     property cpfBenef: string read FcpfBenef write FcpfBenef;
     property nmBenef: string read FnmBenef write FnmBenef;
+    property ideEvtAdic: string read FideEvtAdic write FideEvtAdic;
     property ideDep: TideDepCollection read FideDep write FideDep;
     property idePgto: TidePgtoCollection read FidePgto write FidePgto;
     property ideOpSaude: TideOpSaudeCollection read FideOpSaude write FideOpSaude;
@@ -269,6 +271,8 @@ type
     FpercSCP: double;
     FindJud: string;
     FpaisResidExt: string;
+    FdtEscrCont: TDateTime;
+    Fobserv: string;
     FdetDed: TdetDedCollection;
     FrendIsento: TrendIsentoCollection;
     FinfoProcRet: TinfoProcRetCollection;
@@ -291,6 +295,8 @@ type
     property percSCP: double read FpercSCP write FpercSCP;
     property indJud: string read FindJud write FindJud;
     property paisResidExt: string read FpaisResidExt write FpaisResidExt;
+    property dtEscrCont: TDateTime read FdtEscrCont write FdtEscrCont;
+    property observ: string read Fobserv write Fobserv;
     property detDed: TdetDedCollection read FdetDed write FdetDed;
     property rendIsento: TrendIsentoCollection read FrendIsento write FrendIsento;
     property infoProcRet: TinfoProcRetCollection read FinfoProcRet write FinfoProcRet;
@@ -792,6 +798,8 @@ begin
   begin
     Gerador.wCampo(tcStr, '', 'cpfBenef', 11, 11, 1, ideBenef.cpfBenef);
     Gerador.wCampo(tcStr, '', 'nmBenef',   1, 70, 0, ideBenef.nmBenef);
+    if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+      Gerador.wCampo(tcStr, '', 'ideEvtAdic',1,  8, 0, ideBenef.ideEvtAdic);
 
     GerarideDep(ideBenef.ideDep);
     GeraridePgto(ideBenef.idePgto);
@@ -875,6 +883,12 @@ begin
     Gerador.wCampo(tcDe1, '', 'percSCP',        1,   4,  0, item.percSCP);
     Gerador.wCampo(tcStr, '', 'indJud',         1,   1,  0, item.indJud);
     Gerador.wCampo(tcStr, '', 'paisResidExt',   1,   3,  0, item.paisResidExt);
+
+    if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+    begin
+      Gerador.wCampo(tcDat, '', 'dtEscrCont', 1,  10, 0, item.dtEscrCont);
+      Gerador.wCampo(tcStr, '', 'observ',     1, 200, 0, item.observ);
+    end;
 
     GerardetDed(item.detDed);
     GerarrendIsento(item.rendIsento);
@@ -1307,6 +1321,8 @@ begin
         sSecao := 'ideBenef';
         ideBenef.cpfBenef := INIRec.ReadString(sSecao, 'cpfBenef', EmptyStr);
         ideBenef.nmBenef  := INIRec.ReadString(sSecao, 'nmBenef', EmptyStr);
+        if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+          ideBenef.ideEvtAdic := INIRec.ReadString(sSecao, 'ideEvtAdic', EmptyStr);
 
         I := 1;
         while true do
@@ -1379,6 +1395,12 @@ begin
                 percSCP      := StringToFloatDef(INIRec.ReadString(sSecao, 'percSCP', ''), 0);
                 indJud       := INIRec.ReadString(sSecao, 'indJud', '');
                 paisResidExt := INIRec.ReadString(sSecao, 'paisResidExt', '');
+
+                if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+                begin
+                  dtEscrCont := StringToDateTime(INIRec.ReadString(sSecao, 'dtEscrCont', ''));
+                  observ     := INIRec.ReadString(sSecao, 'observ', '');
+                end;
 
                 I3 := 1;
                 while true do
@@ -1532,7 +1554,7 @@ begin
 
                 with infoRRA do
                 begin
-                  tpProcRRA       := StrToTpProc(Ok, INIRec.ReadString(sSecao, 'tpProcRRA', 'FIM'));
+                  tpProcRRA       := StrToTpProc(Ok, INIRec.ReadString(sSecao, 'tpProcRRA', ''));
                   nrProcRRA       := INIRec.ReadString(sSecao, 'nrProcRRA', '');
                   indOrigRec      := StrToindOrigemRecursos(Ok, INIRec.ReadString(sSecao, 'indOrigRec', ''));
                   descRRA         := INIRec.ReadString(sSecao, 'descRRA', '');

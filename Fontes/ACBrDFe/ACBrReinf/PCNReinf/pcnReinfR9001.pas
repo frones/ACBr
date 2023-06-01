@@ -56,12 +56,14 @@ type
 
   TInfoRecEv = class(TObject)
   private
+    FnrRecArqBase: String;
     FnrProtEntr: String;
     FdhProcess: TDateTime;
     FtpEv: String;
     FidEv: String;
     Fhash: String;
   public
+    property nrRecArqBase: String read FnrRecArqBase;
     property nrProtEntr: String read FnrProtEntr;
     property dhProcess: TDateTime read FdhProcess;
     property tpEv: String read FtpEv;
@@ -589,6 +591,7 @@ begin
 
       if leitor.rExtrai(2, 'infoRecEv') <> '' then
       begin
+        infoRecEv.FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
         infoRecEv.FnrProtEntr := leitor.rCampo(tcStr, 'nrProtEntr');
         infoRecEv.FdhProcess  := leitor.rCampo(tcDatHor, 'dhProcess');
         infoRecEv.FtpEv       := leitor.rCampo(tcStr, 'tpEv');
@@ -740,6 +743,7 @@ begin
       end;
 
       sSecao := 'infoRecEv';
+      AIni.WriteString(sSecao, 'nrRecArqBase', infoRecEv.nrRecArqBase);
       AIni.WriteString(sSecao, 'nrProtEntr', infoRecEv.nrProtEntr);
       AIni.WriteString(sSecao, 'dhProcess',  DateToStr(infoRecEv.dhProcess));
       AIni.WriteString(sSecao, 'tpEv',       infoRecEv.tpEv);

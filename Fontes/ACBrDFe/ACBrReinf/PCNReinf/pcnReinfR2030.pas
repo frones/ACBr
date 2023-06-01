@@ -138,6 +138,8 @@ type
   TrecursosRecCollectionItem = class(TObject)
   private
     FcnpjOrigRecurso: string;
+    FrecEmprExt: string;
+    FnmEmprExt: string;
     FvlrTotalRec: Double;
     FvlrTotalRet: Double;
     FvlrTotalNRet: Double;
@@ -148,6 +150,8 @@ type
     destructor Destroy; override;
 
     property cnpjOrigRecurso: string read FcnpjOrigRecurso write FcnpjOrigRecurso;
+    property recEmprExt: string read FrecEmprExt write FrecEmprExt;
+    property nmEmprExt: string read FnmEmprExt write FnmEmprExt;
     property vlrTotalRec: Double read FvlrTotalRec write FvlrTotalRec;
     property vlrTotalRet: Double read FvlrTotalRet write FvlrTotalRet;
     property vlrTotalNRet: Double read FvlrTotalNRet write FvlrTotalNRet;
@@ -397,7 +401,12 @@ begin
 
     Gerador.wGrupo('recursosRec');
 
-    Gerador.wCampo(tcStr, '', 'cnpjOrigRecurso', 14, 14, 1, item.cnpjOrigRecurso);
+    Gerador.wCampo(tcStr, '', 'cnpjOrigRecurso', 14, 14, 0, item.cnpjOrigRecurso);
+    if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+    begin
+      Gerador.wCampo(tcStr, '', 'recEmprExt',       1,  1, 0, item.recEmprExt);
+      Gerador.wCampo(tcStr, '', 'nmEmprExt',        1, 70, 0, item.nmEmprExt);
+    end;
     Gerador.wCampo(tcDe2, '', 'vlrTotalRec',      1, 14, 1, item.vlrTotalRec);
     Gerador.wCampo(tcDe2, '', 'vlrTotalRet',      1, 14, 1, item.vlrTotalRet);
     Gerador.wCampo(tcDe2, '', 'vlrTotalNRet',     1, 14, 0, item.vlrTotalNRet);
@@ -536,11 +545,22 @@ begin
           sFim   := INIRec.ReadString(sSecao, 'cnpjOrigRecurso', 'FIM');
 
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
-            break;
+          begin
+            if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+              sFim := INIRec.ReadString(sSecao, 'recEmprExt', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+          end;
 
           with recursosRec.New do
           begin
-            cnpjOrigRecurso := sFim;
+            cnpjOrigRecurso := INIRec.ReadString(sSecao, 'cnpjOrigRecurso', '');
+            if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+            begin
+              recEmprExt := INIRec.ReadString(sSecao, 'recEmprExt', '');
+              nmEmprExt  := INIRec.ReadString(sSecao, 'nmEmprExt', '');
+            end;
             vlrTotalRec     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalRec', ''), 0);
             vlrTotalRet     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalRet', ''), 0);
             vlrTotalNRet    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalNRet', ''), 0);

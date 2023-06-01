@@ -118,7 +118,7 @@ type
   private
     FtpInscEstab: TtpInsc;
     FnrInscEstab: string;
-
+    FideEvtAdic: string;
     FideNat: TideNatCollection;
   public
     constructor Create;
@@ -126,6 +126,7 @@ type
 
     property tpInscEstab: TtpInsc read FtpInscEstab write FtpInscEstab default tiCNPJ;
     property nrInscEstab: string read FnrInscEstab write FnrInscEstab;
+    property ideEvtAdic: string read FideEvtAdic write FideEvtAdic;
     property ideNat: TideNatCollection read FideNat write FideNat;
   end;
 
@@ -173,6 +174,7 @@ type
     FvlrLiq: double;
     FvlrBaseIR: double;
     FvlrIR: double;
+    FdtEscrCont: TDateTime;
     Fdescr: string;
     FinfoProcRet: TinfoProcRetCollection;
   public
@@ -183,6 +185,7 @@ type
     property vlrLiq: double read FvlrLiq write FvlrLiq;
     property vlrBaseIR: double read FvlrBaseIR write FvlrBaseIR;
     property vlrIR: double read FvlrIR write FvlrIR;
+    property dtEscrCont: TDateTime read FdtEscrCont write FdtEscrCont;
     property descr: string read Fdescr write Fdescr;
     property infoProcRet: TinfoProcRetCollection read FinfoProcRet write FinfoProcRet;
   end;
@@ -320,6 +323,9 @@ begin
   Gerador.wCampo(tcStr, '', 'tpInscEstab', 1,  1, 1, TpInscricaoToStr(Self.ideEstab.tpInscEstab));
   Gerador.wCampo(tcStr, '', 'nrInscEstab', 1, 14, 1, Self.ideEstab.nrInscEstab);
 
+  if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+    Gerador.wCampo(tcStr, '', 'ideEvtAdic', 1, 8, 0, Self.ideEstab.ideEvtAdic);
+
   GerarideNat(Self.ideEstab.ideNat);
 
   Gerador.wGrupo('/ideEstab');
@@ -359,9 +365,13 @@ begin
 
     Gerador.wGrupo('infoPgto');
     Gerador.wCampo(tcDat, '', 'dtFG',       10,  10,  1, item.dtFG);
-    Gerador.wCampo(tcDe2, '', 'vlrLiq',      1,  14,  1, item.vlrLiq);
+    Gerador.wCampo(tcDe2, '', 'vlrLiq',      1,  14,  0, item.vlrLiq);
     Gerador.wCampo(tcDe2, '', 'vlrBaseIR',   1,  14,  1, item.vlrBaseIR);
     Gerador.wCampo(tcDe2, '', 'vlrIR',       1,  14,  0, item.vlrIR);
+
+    if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+      Gerador.wCampo(tcDat, '', 'dtEscrCont', 1,  10, 0, item.dtEscrCont);
+
     Gerador.wCampo(tcStr, '', 'descr',       1, 200,  1, item.descr);
 
     GerarinfoProcRet(item.infoProcRet);
@@ -460,6 +470,8 @@ begin
       sSecao := 'ideEstab';
       ideEstab.tpInscEstab := StrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscEstab', '1'));
       ideEstab.nrInscEstab := INIRec.ReadString(sSecao, 'nrInscEstab', EmptyStr);
+      if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+        ideEstab.ideEvtAdic := INIRec.ReadString(sSecao, 'ideEvtAdic', EmptyStr);
 
       with ideEstab do
       begin
@@ -493,6 +505,10 @@ begin
                 vlrLiq    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrLiq', ''), 0);
                 vlrBaseIR := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBaseIR', ''), 0);
                 vlrIR     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrIR', ''), 0);
+
+                if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+                  dtEscrCont := StringToDateTime(INIRec.ReadString(sSecao, 'dtEscrCont', ''));
+
                 descr     := INIRec.ReadString(sSecao, 'descr', '');
 
                 I3 := 1;

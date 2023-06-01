@@ -1269,6 +1269,7 @@ begin
 
                   with InfoRecEv do
                   begin
+                    Add('   Nro Recibo..........................: ' + nrRecArqBase);
                     Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtLote);
                     Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
                     Add('   Tipo do Evento......................: ' + tpEv);
@@ -2073,6 +2074,13 @@ begin
         with recursosRec.New do
         begin
           cnpjOrigRecurso := '12345678000123';
+
+          if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
+          begin
+            recEmprExt := ''; // Preencher "S" para empresa do exterior
+            nmEmprExt := ''; // Preencher nome da empresa quando recEmprExt = S
+          end;
+
           vlrTotalRec     := 100.00;
           vlrTotalRet     := 0;
           vlrTotalNRet    := 0;
@@ -2708,6 +2716,8 @@ begin
         begin
           cpfBenef := '12345678909';
           nmBenef  := 'Beneficiario';
+          if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
+            ideEvtAdic := '12345678';
 
           ideDep.Clear;
           with ideDep.New do
@@ -2739,6 +2749,12 @@ begin
               percSCP      := 12.3;
               indJud       := 'N';
               paisResidExt := '063';
+
+              if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
+              begin
+                //dtEscrCont := Date; // preencher quando natRend = 12052
+                observ     := 'Observações';
+              end;
 
               with detDed.New do
               begin
@@ -2924,7 +2940,9 @@ begin
         begin
           cnpjBenef := '12345678000123';
           nmBenef   := 'Beneficiario';
-          isenImun  := tiiTributacaoNormal;
+          isenImun  := tiiEducacao;
+          if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
+            ideEvtAdic:= '12345678';
 
           idePgto.Clear;
           with idePgto.New do
@@ -2942,6 +2960,12 @@ begin
               percSCP      := 12.3;
               indJud       := 'N';
               paisResidExt := '063';
+
+              if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
+              begin
+                //dtEscrCont := Date; // preencher quando natRend = 12052
+                observ     := 'Observações';
+              end;
 
               with retencoes do
               begin
@@ -3052,6 +3076,8 @@ begin
       begin
         tpInscEstab := tiCNPJ;
         nrInscEstab := '12345678000123';
+        if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
+          ideEvtAdic := '12345678';
 
         ideNat.Clear;
         with ideNat.New do
@@ -3065,6 +3091,10 @@ begin
             vlrLiq    := 10;
             vlrBaseIR := 100;
             vlrIR     := 10;
+
+            //if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
+            //  dtEscrCont := Date; // preencher quando natRend = 12052
+
             descr     := 'Descrição';
 
             with infoProcRet.New do
@@ -3134,6 +3164,8 @@ begin
               vlrBruto  := 100;
               vlrBaseIR := 100;
               vlrIR     := 10;
+              if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
+                observ := 'Observações';
 
               with infoProcRet.New do
               begin

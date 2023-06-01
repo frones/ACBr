@@ -113,12 +113,14 @@ type
   { TInfoRecEv }
   TInfoRecEv = class(TObject)
   private
+    FnrRecArqBase: String;
     FnrProtLote: String;
     FdhProcess: TDateTime;
     FtpEv: String;
     FidEv: String;
     Fhash: String;
   public
+    property nrRecArqBase: String read FnrRecArqBase;
     property nrProtLote: String read FnrProtLote;
     property dhProcess: TDateTime read FdhProcess;
     property tpEv: String read FtpEv;
@@ -165,6 +167,7 @@ type
   private
     FnrRecArqBase: String;
     FindExistInfo: TindExistInfo;
+    FidentEscritDCTF: String;
 
     FtotApurMen: TtotApurMenCollection;
     FtotApurQui: TtotApurQuiCollection;
@@ -177,6 +180,7 @@ type
 
     property nrRecArqBase: String read FnrRecArqBase;
     property indExistInfo: TindExistInfo read FindExistInfo;
+    property identEscritDCTF: String read FidentEscritDCTF;
 
     property totApurMen: TtotApurMenCollection read FtotApurMen;
     property totApurQui: TtotApurQuiCollection read FtotApurQui;
@@ -453,6 +457,7 @@ begin
 
         if leitor.rExtrai(2, 'infoRecEv') <> '' then
         begin
+          infoRecEv.FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
           infoRecEv.FnrProtLote := leitor.rCampo(tcStr, 'nrProtLote');
           infoRecEv.FdhProcess  := leitor.rCampo(tcDatHor, 'dhProcess');
           infoRecEv.FtpEv       := leitor.rCampo(tcStr, 'tpEv');
@@ -466,6 +471,7 @@ begin
           begin
             FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
             FindExistInfo := StrToindExistInfo(Ok, leitor.rCampo(tcStr, 'indExistInfo'));
+            FidentEscritDCTF := leitor.rCampo(tcStr, 'identEscritDCTF');
 
             i := 0;
             while Leitor.rExtrai(3, 'totApurMen', '', i + 1) <> '' do

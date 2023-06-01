@@ -150,6 +150,7 @@ type
     FcnpjBenef: string;
     FnmBenef: string;
     FisenImun: TtpIsencaoImunidade;
+    FideEvtAdic: string;
     FidePgto: TidePgtoCollection;
   public
     constructor Create;
@@ -158,6 +159,7 @@ type
     property cnpjBenef: string read FcnpjBenef write FcnpjBenef;
     property nmBenef: string read FnmBenef write FnmBenef;
     property isenImun: TtpIsencaoImunidade read FisenImun write FisenImun;
+    property ideEvtAdic: string read FideEvtAdic write FideEvtAdic;
     property idePgto: TidePgtoCollection read FidePgto write FidePgto;
   end;
 
@@ -210,6 +212,8 @@ type
     FpercSCP: double;
     FindJud: string;
     FpaisResidExt: string;
+    FdtEscrCont: TDateTime;
+    Fobserv: string;
     Fretencoes: Tretencoes;
     FinfoProcRet: TinfoProcRetCollection;
     FinfoProcJud: TinfoProcJud;
@@ -225,6 +229,8 @@ type
     property percSCP: double read FpercSCP write FpercSCP;
     property indJud: string read FindJud write FindJud;
     property paisResidExt: string read FpaisResidExt write FpaisResidExt;
+    property dtEscrCont: TDateTime read FdtEscrCont write FdtEscrCont;
+    property observ: string read Fobserv write Fobserv;
     property retencoes: Tretencoes read Fretencoes write Fretencoes;
     property infoProcRet: TinfoProcRetCollection read FinfoProcRet write FinfoProcRet;
     property infoProcJud: TinfoProcJud read FinfoProcJud write FinfoProcJud;
@@ -520,7 +526,9 @@ begin
   begin
     Gerador.wCampo(tcStr, '', 'cnpjBenef', 14, 14, 1, ideBenef.cnpjBenef);
     Gerador.wCampo(tcStr, '', 'nmBenef',   1,  70, 0, ideBenef.nmBenef);
-    Gerador.wCampo(tcStr, '', 'isenImun',  1,   1, 1, tpIsencaoImunidadeToStr(ideBenef.isenImun));
+    Gerador.wCampo(tcStr, '', 'isenImun',  1,   1, 0, tpIsencaoImunidadeToStr(ideBenef.isenImun));
+    if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+      Gerador.wCampo(tcStr, '', 'ideEvtAdic',   1,  8, 0, ideBenef.ideEvtAdic);
 
     GeraridePgto(ideBenef.idePgto);
   end;
@@ -568,6 +576,12 @@ begin
     Gerador.wCampo(tcDe1, '', 'percSCP',        1,   4,  0, item.percSCP);
     Gerador.wCampo(tcStr, '', 'indJud',         1,   1,  0, item.indJud);
     Gerador.wCampo(tcStr, '', 'paisResidExt',   1,   3,  0, item.paisResidExt);
+
+    if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+    begin
+      Gerador.wCampo(tcDat, '', 'dtEscrCont', 1,  10, 0, item.dtEscrCont);
+      Gerador.wCampo(tcStr, '', 'observ',     1, 200, 0, item.observ);
+    end;
 
     Gerarretencoes(item.retencoes);
     GerarinfoProcRet(item.infoProcRet);
@@ -796,6 +810,8 @@ begin
         ideBenef.cnpjBenef := INIRec.ReadString(sSecao, 'cnpjBenef', EmptyStr);
         ideBenef.nmBenef   := INIRec.ReadString(sSecao, 'nmBenef', EmptyStr);
         ideBenef.isenImun  := StrToTpIsencaoImunidade(Ok, INIRec.ReadString(sSecao, 'isenImun', EmptyStr));
+        if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+          ideBenef.ideEvtAdic := INIRec.ReadString(sSecao, 'ideEvtAdic', EmptyStr);
 
         I := 1;
         while true do
@@ -831,6 +847,12 @@ begin
                 percSCP      := StringToFloatDef(INIRec.ReadString(sSecao, 'percSCP', ''), 0);
                 indJud       := INIRec.ReadString(sSecao, 'indJud', '');
                 paisResidExt := INIRec.ReadString(sSecao, 'paisResidExt', '');
+
+                if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then
+                begin
+                  dtEscrCont := StringToDateTime(INIRec.ReadString(sSecao, 'dtEscrCont', ''));
+                  observ     := INIRec.ReadString(sSecao, 'observ', '');
+                end;
 
                 sSecao := 'retencoes' + IntToStrZero(I, 3) +
                                         IntToStrZero(I2, 3);

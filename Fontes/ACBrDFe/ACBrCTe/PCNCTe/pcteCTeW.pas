@@ -157,6 +157,7 @@ type
     procedure GerardetGTV; // Nivel 1
 
     procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
+    function DefineArredondamentoQtdRat: TpcnTipoCampo;
 
   public
     constructor Create(AOwner: TCTe);
@@ -210,6 +211,14 @@ begin
   FOpcoes.FGerarTagAssinatura   := taSomenteSeAssinada;
   FOpcoes.FValidarInscricoes    := False;
   FOpcoes.FValidarListaServicos := False;
+end;
+
+function TCTeW.DefineArredondamentoQtdRat: TpcnTipoCampo;
+begin
+  if VersaoDF <= ve300 then
+    Result := tcDe2
+  else
+    Result := tcDe3;
 end;
 
 destructor TCTeW.Destroy;
@@ -1667,7 +1676,7 @@ begin
         Gerador.wGrupo('/lacUnidCarga');
       end;
 
-      Gerador.wCampo(tcDe2, '#296', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidCarga[j].qtdRat, DSC_QTDRAT);
+      Gerador.wCampo(DefineArredondamentoQtdRat, '#296', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidCarga[j].qtdRat, DSC_QTDRAT);
 
       Gerador.wGrupo('/infUnidCarga');
     end;
@@ -1697,12 +1706,12 @@ begin
           Gerador.wCampo(tcStr, '#288', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga[l].nLacre, DSC_NLACRE);
           Gerador.wGrupo('/lacUnidCarga');
         end;
-        Gerador.wCampo(tcDe2, '#289', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga[k].qtdRat, DSC_QTDRAT);
+        Gerador.wCampo(DefineArredondamentoQtdRat, '#289', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga[k].qtdRat, DSC_QTDRAT);
 
         Gerador.wGrupo('/infUnidCarga');
       end;
 
-      Gerador.wCampo(tcDe2, '#290', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].qtdRat, DSC_QTDRAT);
+      Gerador.wCampo(DefineArredondamentoQtdRat, '#290', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].qtdRat, DSC_QTDRAT);
 
       Gerador.wGrupo('/infUnidTransp');
     end;
@@ -1748,7 +1757,7 @@ begin
         Gerador.wGrupo('/lacUnidCarga');
       end;
 
-      Gerador.wCampo(tcDe2, '#318', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidCarga[j].qtdRat, DSC_QTDRAT);
+      Gerador.wCampo(DefineArredondamentoQtdRat, '#318', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidCarga[j].qtdRat, DSC_QTDRAT);
 
       Gerador.wGrupo('/infUnidCarga');
     end;
@@ -1779,12 +1788,12 @@ begin
           Gerador.wGrupo('/lacUnidCarga');
         end;
 
-        Gerador.wCampo(tcDe2, '#311', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].infUnidCarga[k].qtdRat, DSC_QTDRAT);
+        Gerador.wCampo(DefineArredondamentoQtdRat, '#311', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].infUnidCarga[k].qtdRat, DSC_QTDRAT);
 
         Gerador.wGrupo('/infUnidCarga');
       end;
 
-      Gerador.wCampo(tcDe2, '#312', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].qtdRat, DSC_QTDRAT);
+      Gerador.wCampo(DefineArredondamentoQtdRat, '#312', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].qtdRat, DSC_QTDRAT);
 
       Gerador.wGrupo('/infUnidTransp');
     end;
@@ -1823,7 +1832,7 @@ begin
         Gerador.wGrupo('/lacUnidCarga');
       end;
 
-      Gerador.wCampo(tcDe2, '#343', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga[j].qtdRat, DSC_QTDRAT);
+      Gerador.wCampo(DefineArredondamentoQtdRat, '#343', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga[j].qtdRat, DSC_QTDRAT);
 
       Gerador.wGrupo('/infUnidCarga');
     end;
@@ -1854,11 +1863,11 @@ begin
           Gerador.wGrupo('/lacUnidCarga');
         end;
 
-        Gerador.wCampo(tcDe2, '#336', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].infUnidCarga[k].qtdRat, DSC_QTDRAT);
+        Gerador.wCampo(DefineArredondamentoQtdRat, '#336', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].infUnidCarga[k].qtdRat, DSC_QTDRAT);
 
         Gerador.wGrupo('/infUnidCarga');
       end;
-      Gerador.wCampo(tcDe2, '#337', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].qtdRat, DSC_QTDRAT);
+      Gerador.wCampo(DefineArredondamentoQtdRat, '#337', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].qtdRat, DSC_QTDRAT);
 
       Gerador.wGrupo('/infUnidTransp');
     end;

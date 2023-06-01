@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/06/2023
+-- pcteCTeW --
+[*] Cria função e altera nas ocorrências do campo qtdRat para que o arredondamente seja por 2 ou 3 casas decimais de acordo com a versão do CTe.
+  Por: Diego F
+
 31/05/2023
 -- ACBrCTeWebServices --
 [+] A SEFAZ-MT informou as URL de homologação para a versão 4.00

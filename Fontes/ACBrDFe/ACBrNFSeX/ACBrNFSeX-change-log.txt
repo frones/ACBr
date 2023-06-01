@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/06/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Aruja/SP trocou de provedor, agora é SilTecnologia na versão 2.03
+  Por: Heber Germano 
+
 30/05/2023
 -- NFSeBrasil.LerXml --
 [*] Adiciona leitura da tag: MunicipioPrestacaoServico

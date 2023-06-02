@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/06/2023
+-- ACBrPIXPSPAilos --
+[+] Inclusão do novo PSP Ailos
+    Por: MaagraowaR
+
 22/05/2023
 -- ACBrPIXPSPShipay --
 [+] Inclusão de propriedades para possibilitar a definição das URLs de produção e 

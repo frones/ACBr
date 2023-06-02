@@ -20,7 +20,7 @@ uses
   ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLotesCobVConsultadas, 
   ACBrShipaySchemas, ACBrPIXPSPInter, ACBrPIXPSPPagSeguro, 
   ACBrPIXPSPGerenciaNet, ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV, 
-  ACBrPIXSchemasPixPDV, LazarusPackageIntf;
+  ACBrPIXSchemasPixPDV, ACBrPIXPSPAilos, LazarusPackageIntf;
 
 implementation
 

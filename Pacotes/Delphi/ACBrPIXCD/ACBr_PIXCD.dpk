@@ -68,6 +68,7 @@ contains
   ACBrPIXPSPGerenciaNet in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPGerenciaNet.pas',
   ACBrPIXPSPBradesco in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBradesco.pas',
   ACBrPIXPSPPixPDV in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPixPDV.pas',
-  ACBrPIXPSPInter in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPInter.pas';
+  ACBrPIXPSPInter in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPInter.pas',
+  ACBrPIXPSPAilos in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAilos.pas';
 
 end.

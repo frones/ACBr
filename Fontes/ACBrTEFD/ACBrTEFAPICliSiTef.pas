@@ -848,9 +848,6 @@ begin
   Restricoes := '';
   if (pos('[', fParamAdicFuncao.Text) = 0) then   // Não especificou Restrições de Menu ?
   begin
-    if (TACBrTEFAPI(fpACBrTEFAPI).ExibicaoQRCode = qrapiExibirAplicacao) then
-       Restricoes := Restricoes + '{DevolveStringQRCode=1};';
-
     if (Op <> 1) then       // Débito
       Restricoes := Restricoes + CSITEF_RestricoesCueque + ';';
 
@@ -880,6 +877,7 @@ begin
     SL := TStringList.Create;
     try
       SL.Text := StringReplace(Restricoes, ';', sLineBreak, [rfReplaceAll]);
+
       // Removendo Itens repetidos
       i := 0;
       Restr := '';
@@ -896,6 +894,8 @@ begin
       if (SL.Count > 0) then
       begin
         Restricoes := StringReplace(Trim(SL.Text), sLineBreak, ';', [rfReplaceAll]);
+        if fParamAdicConfig.Count > 0 then
+           Restricoes := Restricoes + ';'+ Trim(fParamAdicConfig.Text);
         if (Restricoes <> '') then
           fParamAdicFuncao.Add( '['+Restricoes+']' );
       end;

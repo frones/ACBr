@@ -63,6 +63,8 @@ Public Const SESSAO_eSocial                   As String = "eSocial"
 Public Const SESSAO_GTIN                      As String = "GTIN"
 Public Const SESSAO_ConsultaCNPJ              As String = "ConsultaCNPJ"
 Public Const SESSAO_NCM                       As String = "NCM"
+Public Const SESSAO_NFSe                      As String = "NFSe"
+Public Const SESSAO_DANFSe                    As String = "DANFSe"
 
 Public Enum NivelLog
     logNenhum = 0
@@ -636,6 +638,11 @@ End Enum
 Public Enum AmbienteeSocial
     taProducao = 0
     taProducaoRestrita = 1
+End Enum
+
+Public Enum LayoutNFSe
+    lnfsProvedor = 0
+    lnfsPadraoNacionalv1 = 1
 End Enum
 
 Public Function HasPosTipoStatus(Check As ACBrPosTipoStatus, Flag As ACBrPosTipoStatus) As Boolean

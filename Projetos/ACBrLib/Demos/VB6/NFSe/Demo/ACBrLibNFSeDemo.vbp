@@ -1,0 +1,54 @@
+Type=Exe
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
+Object={86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCT2.OCX
+Object={38911DA0-E448-11D0-84A3-00DD01104159}#1.1#0; COMCT332.OCX
+Object={BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0; TABCTL32.OCX
+Object={F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0; COMDLG32.OCX
+Module=ACBrComum; ..\..\Comum\ACBrComum.bas
+Module=FolderBrowser; ..\..\Comum\FolderBrowser.bas
+Class=ACBrNFSe; ..\Imports\ACBrNFSe.cls
+Module=ACBrNFSeUtils; ..\Imports\ACBrNFSeUtils.bas
+Form=FrmMain.frm
+Class=ACBrCodigoMunicipioNFSe; ..\Imports\ACBrCodigoMunicipioNFSe.cls
+Startup="FrmMain"
+HelpFile=""
+ExeName32="ACBrLibNFSeDemo.exe"
+Command32=""
+Name="ACBrLibNFSeDemo"
+HelpContextID="0"
+CompatibleMode="0"
+MajorVer=1
+MinorVer=0
+RevisionVer=0
+AutoIncrementVer=0
+ServerSupportFiles=0
+CompilationType=0
+OptimizationType=0
+FavorPentiumPro(tm)=0
+CodeViewDebugInfo=0
+NoAliasing=0
+BoundsCheck=0
+OverflowCheck=0
+FlPointCheck=0
+FDIVCheck=0
+UnroundedFP=0
+StartMode=0
+Unattended=0
+Retained=0
+ThreadPerObject=0
+MaxNumberOfThreads=1
+
+[CodeSMART]
+Task_UID=15_05_19_09_50_58
+
+[vbAdvance]
+IsConsole=0
+HasStubFile=0
+GenerateMap=0
+TSAware=0
+XPManifest=1
+ResBuildName=.\ACBrLibNFeDemo.dll
+ReplaceIcon=0
+SendCommandArgs=0
+SymbDbgPref=0
+RevisionVersion=0

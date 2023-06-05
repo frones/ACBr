@@ -44,6 +44,8 @@ Símbolo : Significado
 
 05/06/2023
 -- ACBrNFSeXServicos.ini --
+[+] Incluido a cidade de Barra de Sao Francisco/ES, provedor é o EL
+  Por: billbarsch
 [*] A cidade de Concordia/SC mudou para a versão 1.01, provedor ainda é o IPM.
   Por: C4Dev
 [+] Incluido a cidade de Campos Belos/GO, provedor é o MegaSoft na versão 2.00

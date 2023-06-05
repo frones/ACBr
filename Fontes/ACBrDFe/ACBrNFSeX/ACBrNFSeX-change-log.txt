@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Concordia/SC mudou para a versão 1.01, provedor ainda é o IPM.
+  Por: C4Dev
+
 01/06/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Aruja/SP trocou de provedor, agora é SilTecnologia na versão 2.03

@@ -270,7 +270,7 @@ begin
   begin
     with NFSe.Prestador.Endereco do
     begin
-      Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
 
       if Endereco = '' then
         Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Logradouro'), tcStr);
@@ -303,7 +303,7 @@ begin
   begin
     with NFSe.Tomador.Endereco do
     begin
-      Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
+      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Endereco'), tcStr);
 
       if Endereco = '' then
         Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Logradouro'), tcStr);
@@ -1188,10 +1188,6 @@ begin
   else
     Result := LerXmlRps(XmlNode);
 
-  {==== Implementação Futura ====}
-//  if NFSe.Link = '' then
-//    NFSe.Link := LerLinkURL;
-
   FreeAndNil(FDocument);
 end;
 
@@ -1212,6 +1208,9 @@ begin
 
   LerNfseCancelamento(ANode);
   LerNfseSubstituicao(ANode);
+
+  if NFSe.Link = '' then
+    NFSe.Link := LerLinkURL;
 end;
 
 function TNFSeR_ABRASFv2.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

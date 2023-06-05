@@ -399,6 +399,13 @@ var
   vTotServicos, vTotDeducoes: Double;
   wAno, wMes, wDia: Word;
 begin
+  if Response.ModoEnvio = meLoteSincrono then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod001;
+    AErro.Descricao := ACBrStr(Desc001);
+  end;
+
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
     AErro := Response.Erros.New;

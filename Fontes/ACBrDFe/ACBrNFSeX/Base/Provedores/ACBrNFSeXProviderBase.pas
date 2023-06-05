@@ -571,6 +571,7 @@ begin
     begin
       Provedor := Configuracoes.Geral.Provedor;
       Versao := Configuracoes.Geral.Versao;
+      xMunicipio := Configuracoes.Geral.xMunicipio;
 
       if Configuracoes.WebServices.AmbienteCodigo = 1 then
         Ambiente := taProducao

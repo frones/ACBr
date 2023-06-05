@@ -59,6 +59,7 @@ type
     function TipodeXMLLeitura(const aArquivo: string): TtpXML; virtual;
     function NormatizarXml(const aXml: string): string; virtual;
     function NormatizarAliquota(const Aliquota: Double): Double;
+    function LerLinkURL: string;
 
     procedure VerificarSeConteudoEhLista(const aDiscriminacao: string);
     procedure LerListaJson(const aDiscriminacao: string);
@@ -169,6 +170,23 @@ begin
       LerListaJson(xDiscriminacao)
     else
       LerListaTabulada(xDiscriminacao);
+  end;
+end;
+
+function TNFSeRClass.LerLinkURL: string;
+var
+  LinkNFSeParam: TLinkNFSeParam;
+begin
+  LinkNFSeParam := TLinkNFSeParam.Create;
+  try
+    LinkNFSeParam.Ambiente := Integer(FpAOwner.ConfigGeral.Ambiente);
+    LinkNFSeParam.ProLinkURL := FpAOwner.ConfigWebServices.Producao.LinkURL;
+    LinkNFSeParam.HomLinkURL := FpAOwner.ConfigWebServices.Homologacao.LinkURL;
+    LinkNFSeParam.xMunicipio := FpAOwner.ConfigGeral.xMunicipio;
+
+    Result := NFSe.LinkNFSe(LinkNFSeParam);
+  finally
+    LinkNFSeParam.Free;
   end;
 end;
 

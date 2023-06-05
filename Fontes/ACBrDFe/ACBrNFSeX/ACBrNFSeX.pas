@@ -1080,31 +1080,39 @@ end;
 function TACBrNFSeX.LinkNFSe(ANumNFSe: String; const ACodVerificacao,
   AChaveAcesso, AValorServico: String): String;
 var
-  Texto: String;
+  NFSe: TNFSe;
+  NFSeTemp: Boolean;
+  LinkNFSeParam: TLinkNFSeParam;
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  if Configuracoes.WebServices.AmbienteCodigo = 1 then
-    Texto := Provider.ConfigWebServices.Producao.LinkURL
+  LinkNFSeParam := TLinkNFSeParam.Create;
+  NFSeTemp := (FNotasFiscais.Count = 0);
+  if NFSeTemp then
+    NFSe := TNFSe.Create
   else
-    Texto := Provider.ConfigWebServices.Homologacao.LinkURL;
+    NFSe := FNotasFiscais.Items[0].NFSe;
 
-  // %CodVerif%     : Representa o Código de Verificação da NFS-e
-  // %NumeroNFSe%   : Representa o Numero da NFS-e
-  // %ChaveAcesso%  : Representa a Chave de Acesso
-  // %ValorServico% : Representa o Valor do Serviço
-  // %Cnpj%         : Representa o CNPJ do Emitente - Configuração
-  // %InscMunic%    : Representa a Inscrição Municipal do Emitente - Configuração
+  try
+    LinkNFSeParam.Ambiente := Configuracoes.WebServices.AmbienteCodigo - 1;
+    LinkNFSeParam.ProLinkURL := Provider.ConfigWebServices.Producao.LinkURL;
+    LinkNFSeParam.HomLinkURL := Provider.ConfigWebServices.Homologacao.LinkURL;
+    LinkNFSeParam.NumNFSe := ANumNFSe;
+    LinkNFSeParam.CodVerificacao := ACodVerificacao;
+    LinkNFSeParam.ChaveAcesso := AChaveAcesso;
+    LinkNFSeParam.ValorServico := AValorServico;
+    LinkNFSeParam.CNPJ := Configuracoes.Geral.Emitente.CNPJ;
+    LinkNFSeParam.InscMun := Configuracoes.Geral.Emitente.InscMun;
+    LinkNFSeParam.xMunicipio := Configuracoes.Geral.xMunicipio;
 
-  Texto := StringReplace(Texto, '%CodVerif%', ACodVerificacao, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%NumeroNFSe%', ANumNFSe, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%ChaveAcesso%', AChaveAcesso, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%ValorServico%', AValorServico, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%Cnpj%', Configuracoes.Geral.Emitente.CNPJ, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%InscMunic%', Configuracoes.Geral.Emitente.InscMun, [rfReplaceAll]);
+    Result := NFSe.LinkNFSe(LinkNFSeParam);
+  finally
+    if NFSeTemp and Assigned(NFSe) then
+      NFSe.Free;
 
-  Result := Texto;
+    LinkNFSeParam.Free;
+  end;
 end;
 
 end.

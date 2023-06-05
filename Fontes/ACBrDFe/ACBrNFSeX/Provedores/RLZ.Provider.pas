@@ -524,7 +524,7 @@ begin
         Exit;
       end;
 
-      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumNfse);
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNfse);
 
       ANota := CarregarXmlNfse(ANota, AuxNode.OuterXml);
       SalvarXmlNfse(ANota);

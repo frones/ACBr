@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/06/2023
+-- Diversos --
+[*] Alteração visando a montagem automatica do Link para QR-Code ao ler o XML
+    da NFS-e dos provedores que seguem o layout da ABRASF quando o provedor
+    não retorna o link e caso no arquivo ACBrNFSeXServicos.ini contenha o link.
+  Por: Italo Giurizzato Junior/Renato Rubinho
 -- ACBrNFSeXServicos.ini --
 [+] Incluido a cidade de Barra de Sao Francisco/ES, provedor é o EL
   Por: billbarsch

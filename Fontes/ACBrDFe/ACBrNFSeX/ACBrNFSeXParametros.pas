@@ -104,6 +104,8 @@ type
     FProvedor: TnfseProvedor;
     // Versão lido do arquivo ACBrNFSeXServicos
     FVersao: TVersaoNFSe;
+    // Nome lido do arquivo ACBrNFSeXServicos
+    FxMunicipio: string;
     // Ambiente setando na configuração do componente
     FAmbiente: TACBrTipoAmbiente;
     // Código IBGE da Cidade lido do arquivo ACBrNFSeXServicos
@@ -142,6 +144,7 @@ type
 
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
     property Versao: TVersaoNFSe read FVersao write FVersao;
+    property xMunicipio: string read FxMunicipio write FxMunicipio;
     property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente;
     property CodIBGE: string read FCodIBGE write FCodIBGE;
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico;

@@ -48,6 +48,8 @@ Símbolo : Significado
   Por: C4Dev
 [+] Incluido a cidade de Campos Belos/GO, provedor é o MegaSoft na versão 2.00
   Por: Marcos Giordani
+[*] A URL para a cidade de Patos de Minas/MG foi alterada, provedor ainda é o Governa na versão 1.00
+  Por: Diego Reckziegel
 
 01/06/2023
 -- ACBrNFSeXServicos.ini --

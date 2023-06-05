@@ -2821,9 +2821,23 @@ begin
         end;
       end;
 
-      if INIRec.ReadString('infCteComp', 'chCte', INIRec.ReadString('infCteComp', 'chave', '') ) <> '' then
+      if INIRec.SectionExists('infCteComp01') then
+        infCTeComp.chave := INIRec.ReadString('infCteComp01', 'chCte', INIRec.ReadString('infCteComp01', 'chave', '') );
+
+      I := 1;
+      while True do
       begin
-        infCTeComp.chave := INIRec.ReadString('infCteComp', 'chCte', INIRec.ReadString('infCteComp', 'chave', '') );
+        sSecao := 'infCteComp' + IntToStrZero(I, 2);
+
+        sFim := INIRec.ReadString(sSecao, 'chCte', INIRec.ReadString(sSecao, 'chave', 'FIM') );
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with infCteComp10.New do
+          chCTe := sFim;
+
+        Inc(I);
       end;
 
       if INIRec.ReadString( 'infCteAnu','chCte','') <> '' then

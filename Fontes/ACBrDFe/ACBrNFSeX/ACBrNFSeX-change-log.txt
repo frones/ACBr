@@ -50,6 +50,8 @@ Símbolo : Significado
   Por: Marcos Giordani
 [*] A URL para a cidade de Patos de Minas/MG foi alterada, provedor ainda é o Governa na versão 1.00
   Por: Diego Reckziegel
+[*] A cidade de Praia Grande trocou para a versão 2.04 do provedor ISSNet.
+  Por: imbua
 
 01/06/2023
 -- ACBrNFSeXServicos.ini --

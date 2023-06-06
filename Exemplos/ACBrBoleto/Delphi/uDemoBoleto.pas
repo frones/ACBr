@@ -33,9 +33,9 @@ unit uDemoBoleto;
 interface
 
 //descomentar o motor de relatório que desejar utilizar! removendo o ponto
-{$DEFINE GERADOR_FORTES_REPORT}
-{$DEFINE GERADOR_FAST_REPORT}
-{$DEFINE GERADOR_FPDF}
+{.$DEFINE GERADOR_FORTES_REPORT}
+{.$DEFINE GERADOR_FAST_REPORT}
+{.$DEFINE GERADOR_FPDF}
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,

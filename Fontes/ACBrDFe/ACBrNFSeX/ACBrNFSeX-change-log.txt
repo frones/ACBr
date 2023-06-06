@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluido ProLinkURL para a cidade de Araxa/MG
+  Por: Diego Reckziegel
+
 05/06/2023
 -- Diversos --
 [*] Alteração visando a montagem automatica do Link para QR-Code ao ler o XML

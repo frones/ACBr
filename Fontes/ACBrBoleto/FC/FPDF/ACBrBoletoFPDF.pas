@@ -262,7 +262,8 @@ begin
     IndexDetalhamento := FACBrTitulo.Detalhamento.Count;
     for I := 0 to 39 do
      if IndexDetalhamento > I then
-       LDetalhamento.AddStrings(FACBrTitulo.Detalhamento.Strings[I])
+       //LDetalhamento.AddStrings(FACBrTitulo.Detalhamento.Strings[I])
+       LDetalhamento.Add(FACBrTitulo.Detalhamento.Strings[I])
      else
        LDetalhamento.Add(''); 
 

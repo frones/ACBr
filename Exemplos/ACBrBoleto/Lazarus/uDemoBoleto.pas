@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 {																		                                      	   }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -28,8 +28,7 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-
-unit uDemo;
+unit uDemoBoleto;
 
 {$IFDEF FPC}
   {$MODE Delphi}
@@ -37,42 +36,27 @@ unit uDemo;
 
 interface
 
+//descomentar o motor de relatório que desejar utilizar! removendo o ponto
+{$DEFINE GERADOR_FORTES_REPORT}
+{.$DEFINE GERADOR_FAST_REPORT}
+{$DEFINE GERADOR_FPDF}
+
 uses
-{$IFnDEF FPC}
-  Mask, Windows,
-{$ELSE}
-  Masks, LCLIntf, LCLType, LMessages,
-{$ENDIF}
-  Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, ComCtrls, MaskEdit, IniFiles,
-  uDMForte,
-  ACBrBase, ACBrBoleto, ACBrUtil, ACBrMail, ACBrUtil.FilesIO,
-//  {$IFDEF VER150} ComCtrls,{$ENDIF}
-  ACBrBoletoConversao, ACBrBoletoRetorno;
-
+  {$IFnDEF FPC}
+    Mask, Windows,
+  {$ELSE}
+    Masks, LCLIntf, LCLType, LMessages,
+  {$ENDIF}
+    Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+    Dialogs, StdCtrls, ExtCtrls, ComCtrls, MaskEdit, IniFiles,
+    ACBrBase, ACBrBoleto, ACBrUtil, ACBrMail, ACBrUtil.FilesIO,
+    ACBrBoletoConversao, ACBrBoletoRetorno
+  {$IFDEF GERADOR_FORTES_REPORT},ACBrBoletoFCFortesFr{$ENDIF}
+  {$IFDEF GERADOR_FAST_REPORT},ACBrBoletoFCFR{$ENDIF}
+  {$IFDEF GERADOR_FPDF},ACBrBoletoFPDF{$ENDIF}
+  ;
 type
-
-  { TfrmDemo }
-
   TfrmDemo = class(TForm)
-    btnEnviarEmail: TButton;
-    chkTLS: TCheckBox;
-    chkSSL: TCheckBox;
-    chkMostrarSenha: TCheckBox;
-    edtFrom: TEdit;
-    edtFromName: TEdit;
-    edtHost: TEdit;
-    edtPort: TEdit;
-    edtUserName: TEdit;
-    edtPassWord: TEdit;
-    Label72: TLabel;
-    Label73: TLabel;
-    Label74: TLabel;
-    Label75: TLabel;
-    Label76: TLabel;
-    Label77: TLabel;
-    Label78: TLabel;
-    Label79: TLabel;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
@@ -184,11 +168,7 @@ type
     Label52: TLabel;
     cbxTipoCarteira: TComboBox;
     GroupBox14: TGroupBox;
-    cbxLayOut: TComboBox;
-    Label31: TLabel;
-    cbxImprimirVersoFatura: TCheckBox;
     PageControl2: TPageControl;
-    TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
     edtCidade: TEdit;
@@ -260,13 +240,44 @@ type
     btnImpressaoPDFIndividual: TButton;
     Label71: TLabel;
     edtScope: TEdit;
+    TabSheet3: TTabSheet;
+    Label72: TLabel;
+    edtFrom: TEdit;
+    Label73: TLabel;
+    edtFromName: TEdit;
+    Label74: TLabel;
+    edtHost: TEdit;
+    Label75: TLabel;
+    edtPort: TEdit;
+    Label76: TLabel;
+    chkTLS: TCheckBox;
+    chkSSL: TCheckBox;
+    Label77: TLabel;
+    edtUserName: TEdit;
+    Label78: TLabel;
+    chkMostrarSenha: TCheckBox;
+    edtPassword: TEdit;
+    btnEnviarEmail: TButton;
+    Label79: TLabel;
+    PageControl3: TPageControl;
+    TabSheet6: TTabSheet;
+    TabSheet7: TTabSheet;
+    edtPathFR3: TEdit;
+    Label80: TLabel;
+    cbxMotorRelatorio: TComboBox;
+    Label31: TLabel;
+    cbxLayOut: TComboBox;
+    cbxImprimirVersoFatura: TCheckBox;
+    Label81: TLabel;
+    edtPathLogoMarca: TEdit;
+    Label82: TLabel;
+    Label83: TLabel;
     procedure btnImpressaoHTMLClick(Sender: TObject);
     procedure btnImpressaoPDFClick(Sender: TObject);
     procedure btnBoletoIndividualClick(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure btnGerarRemessaClick(Sender: TObject);
     procedure btnImpressaoSpoolerClick(Sender: TObject);
-    procedure chkMostrarSenhaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure cbxLayOutChange(Sender: TObject);
@@ -279,9 +290,24 @@ type
     procedure btnImpressaoStreamClick(Sender: TObject);
     procedure btnRetornoClick(Sender: TObject);
     procedure btnWSConsultaClick(Sender: TObject);
+    procedure cbxMotorRelatorioChange(Sender: TObject);
+    procedure chkMostrarSenhaClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Label79Click(Sender: TObject);
   private
-    dm: TdmForte;
+    FACBrBoleto : TACBrBoleto;
+    FACBrMail   : TACBrMail;
+    {$IFDEF GERADOR_FORTES_REPORT}
+      FACBrBoletoFCRL   : TACBrBoletoFCFortes;
+    {$ENDIF}
+
+    {$IFDEF GERADOR_FAST_REPORT}
+      FACBrBoletoFCFR   : TACBrBoletoFCFR;
+    {$ENDIF}
+
+    {$IFDEF GERADOR_FPDF}
+      FACBrBoletoFPDF   : TACBrBoletoFPDF;
+    {$ENDIF}
     { Private declarations }
     procedure CarregarBancos;
     procedure CarregarTipoDistribuicao;
@@ -320,7 +346,7 @@ var
 begin
   xPath    := ExtractFilePath(ParamStr(0));
   xArquivo := ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
-  dm.ACBrBoleto.GravarConfiguracao(xPath,xArquivo);
+  FACBrBoleto.GravarConfiguracao(xPath,xArquivo);
 
   IniFile := TMemIniFile.Create(xPath+xArquivo);
   try
@@ -333,11 +359,19 @@ begin
     IniFile.WriteString('EMAIL', 'UserName', edtUserName.Text);
     IniFile.WriteString('EMAIL', 'PassWord', edtPassword.Text);
     IniFile.WriteBool('EMAIL', 'MostrarSenha', chkMostrarSenha.Checked);
+
+    IniFile.WriteString('PATH', 'BOLETOFR3', edtPathFR3.Text);
+    IniFile.WriteString('PATH', 'LOGOMARCA', edtPathLogoMarca.Text);
     IniFile.UpdateFile;
 
   finally
     IniFile.FRee;
   end;
+end;
+
+procedure TfrmDemo.Label79Click(Sender: TObject);
+begin
+  OpenURL('https://www.projetoacbr.com.br/forum/topic/56101-configura%C3%A7%C3%B5es-do-acbrmail-para-os-principais-servi%C3%A7os-de-emails-do-mercado/');
 end;
 
 procedure TfrmDemo.LerIniComponente;
@@ -346,10 +380,13 @@ var xArquivo : String;
 begin
   xArquivo := ExtractFilePath(ParamStr(0)) + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
   if (FileExists(xArquivo)) then
-    dm.ACBrBoleto.LerConfiguracao(xArquivo);
+    FACBrBoleto.LerConfiguracao(xArquivo);
 
   IniFile := TMemIniFile.Create(xArquivo);
   try
+    edtPathFR3.Text := IniFile.ReadString('PATH', 'BOLETOFR3', ExtractFilePath(ParamStr(0))+'Report\Boleto.fr3');
+    edtPathLogoMarca.Text := IniFile.ReadString('PATH', 'LOGOMARCA', '..\..\..\Fontes\ACBrBoleto\Logos\Colorido\png\');
+
     AplicarConfiguracoesEmailNaTela(IniFile);
   finally
     IniFile.Free;
@@ -364,7 +401,7 @@ var Beneficiario   : TACBrCedente;
     BeneficiarioWS : TACBrCedenteWS;
     CobAnterior    : TACBrTipoCobranca;
 begin
-  Boleto := dm.ACBrBoleto;
+  Boleto := FACBrBoleto;
   WebService := Boleto.Configuracoes.WebService;
 
   CobAnterior := Boleto.Banco.TipoCobranca;
@@ -444,6 +481,14 @@ begin
   WebService.SSLHttpLib       := TSSLHttpLib(cbxSSLLib.ItemIndex);
 
   AplicarConfiguracoesComponenteEmail;
+
+  FACBrBoleto.ACBrBoletoFC.DirLogo := edtPathLogoMarca.Text;
+
+  {$IFDEF GERADOR_FAST_REPORT}
+    FACBrBoletoFCFR.FastReportFile := edtPathFR3.Text;
+    FACBrBoletoFCFR.MostrarPreview := True;
+    FACBrBoletoFCFR.MostrarSetup   := True;
+  {$ENDIF}
 end;
 
 procedure TfrmDemo.AplicarConfiguracoesComponenteATela;
@@ -452,7 +497,7 @@ var Beneficiario : TACBrCedente;
     Banco : TACBrBanco;
     Boleto : TACBrBoleto;
 begin
-  Boleto := dm.ACBrBoleto;
+  Boleto := FACBrBoleto;
   Boleto.ListadeBoletos.Clear;
 
   edtPrefixRemessa.Text               := Boleto.PrefixArqRemessa;
@@ -466,16 +511,16 @@ begin
 
   Beneficiario := Boleto.Cedente;
 
-  edtAgencia.Text                   := Beneficiario.Agencia;
-  edtAgenciaDV.Text                 := Beneficiario.AgenciaDigito;
-  edtConta.Text                     := Beneficiario.Conta;
-  edtContaDV.Text                   := Beneficiario.ContaDigito;
-  edtAgenciaContaDV.Text            := Beneficiario.DigitoVerificadorAgenciaConta;
-  edtConvenio.Text                  := Beneficiario.Convenio;
-  edtModalidade.Text                := Beneficiario.Modalidade;
-  edtOperacao.Text                  := Beneficiario.Operacao;
-  edtCodigoTransmissao.Text         := Beneficiario.CodigoTransmissao;
-  edtCodigoCedente.Text             := Beneficiario.CodigoCedente;
+  edtAgencia.Text           := Beneficiario.Agencia;
+  edtAgenciaDV.Text         := Beneficiario.AgenciaDigito;
+  edtConta.Text             := Beneficiario.Conta;
+  edtContaDV.Text           := Beneficiario.ContaDigito;
+  edtAgenciaContaDV.Text    := Beneficiario.DigitoVerificadorAgenciaConta;
+  edtConvenio.Text          := Beneficiario.Convenio;
+  edtModalidade.Text        := Beneficiario.Modalidade;
+  edtOperacao.Text          := Beneficiario.Operacao;
+  edtCodigoTransmissao.Text := Beneficiario.CodigoTransmissao;
+  edtCodigoCedente.Text     := Beneficiario.CodigoCedente;
 
   cbxTipoDistribuicao.ItemIndex     := Ord(Beneficiario.IdentDistribuicao);
   cbxCaracteristicaTitulo.ItemIndex := Ord(Beneficiario.CaracTitulo);
@@ -493,12 +538,27 @@ begin
   edtDensidadeGravacao.Text := Banco.DensidadeGravacao;
   edtLocalPag.Text          := Banco.LocalPagamento;
 
-  BeneficiarioWS            := Beneficiario.CedenteWS;
+  BeneficiarioWS := Beneficiario.CedenteWS;
   edtClientID.Text          := BeneficiarioWS.ClientID;
   edtClientSecret.Text      := BeneficiarioWS.ClientSecret;
   edtKeyUser.Text           := BeneficiarioWS.KeyUser;
-  chkIndicadorPix.Checked   := BeneficiarioWS.IndicadorPix;
   edtScope.Text             := BeneficiarioWS.Scope;
+end;
+
+procedure TfrmDemo.AplicarConfiguracoesComponenteEmail;
+var
+  Mail: TACBrMail;
+begin
+  Mail := FACBrMail;
+
+  Mail.From := edtFrom.Text;
+  Mail.FromName := edtFromName.Text;
+  Mail.Host := edtHost.Text;
+  Mail.Port := edtPort.Text;
+  Mail.SetTLS := chkTLS.Checked;
+  Mail.SetSSL := chkSSL.Checked;
+  Mail.Username := edtUserName.Text;
+  Mail.Password := edtPassword.Text;
 end;
 
 procedure TfrmDemo.AplicarConfiguracoesEmailNaTela(IniConfig: TMemIniFile);
@@ -512,25 +572,10 @@ begin
   edtUserName.Text := IniConfig.ReadString('EMAIL', 'UserName', '');
   edtPassword.Text := IniConfig.ReadString('EMAIL', 'PassWord', '');
   chkMostrarSenha.Checked := IniConfig.ReadBool('EMAIL', 'MostrarSenha', False);
-
   chkMostrarSenhaClick(chkMostrarSenha);
+
   AplicarConfiguracoesComponenteEmail;
-end;
 
-procedure TfrmDemo.AplicarConfiguracoesComponenteEmail;
-var
-  Mail: TACBrMail;
-begin
-  Mail := dm.ACBrMail1;
-
-  Mail.From := edtFrom.Text;
-  Mail.FromName := edtFromName.Text;
-  Mail.Host := edtHost.Text;
-  Mail.Port := edtPort.Text;
-  Mail.SetTLS := chkTLS.Checked;
-  Mail.SetSSL := chkSSL.Checked;
-  Mail.Username := edtUserName.Text;
-  Mail.Password := edtPassword.Text;
 end;
 
 procedure TfrmDemo.btnLerRetornoClick(Sender: TObject);
@@ -539,7 +584,7 @@ var Boleto  : TACBrBoleto;
     I       : Integer;
     RetText : TStringList;
 begin
-  Boleto := dm.ACBrBoleto;
+  Boleto := FACBrBoleto;
 
   Boleto.DirArqRetorno  := ExtractFilePath(edtPathRetorno.Text);
   Boleto.NomeArqRetorno := ExtractFileName(edtPathRetorno.Text);
@@ -556,7 +601,6 @@ begin
       RetText.Add( 'Valor Documento :: ' + CurrToStr(Retorno[i].ValorDocumento));
       RetText.Add( 'Valor Pago :: '      + CurrToStr(Retorno[i].ValorPago));
       RetText.Add( 'Data Ocorrencia :: ' + DateToStr(Retorno[i].DataOcorrencia));
-      RetText.Add( 'Banco           :: ' + Boleto.Banco.Nome);
       //[...] demais propriedades do titulo a gosto
     end;
     RetText.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoProcessado.txt' );
@@ -568,13 +612,13 @@ end;
 
 procedure TfrmDemo.btnImpressaoHTMLClick(Sender: TObject);
 begin
-  dm.ACBrBoleto.ACBrBoletoFC.NomeArquivo := ExtractFilePath(Application.ExeName) + 'teste.html';
-  dm.ACBrBoleto.GerarHTML;
+  FACBrBoleto.ACBrBoletoFC.NomeArquivo := ExtractFilePath(Application.ExeName) + 'teste.html';
+  FACBrBoleto.GerarHTML;
 end;
 
 procedure TfrmDemo.btnImpressaoPDFClick(Sender: TObject);
 begin
-  dm.ACBrBoleto.GerarPDF;
+  FACBrBoleto.GerarPDF;
 end;
 
 procedure TfrmDemo.btnBoletoIndividualClick(Sender: TObject);
@@ -584,12 +628,13 @@ var
   VLinha, logo : string;
   i: Integer;
 begin
-  Titulo := dm.ACBrBoleto.CriarTituloNaLista;
+  Titulo := FACBrBoleto.CriarTituloNaLista;
 
   Titulo.Vencimento        := StrToDate(edtVencimento.Text);
   Titulo.DataDocumento     := StrToDate(edtDataDoc.Text);
   Titulo.NumeroDocumento   := edtNumeroDoc.Text;
   Titulo.EspecieDoc        := edtEspecieDoc.Text;
+  Titulo.EspecieMod        := edtEspecieMod.Text;
 
   if cbxAceite.ItemIndex = 0 then
      Titulo.Aceite := atSim
@@ -633,7 +678,7 @@ begin
   Titulo.ValorMaxPagamento      := 0;
   //QrCode.emv := '00020101021226870014br.gov.bcb.pix2565qrcodepix-h.bb.com.br/pix/v2/22657e83-ecac-4631-a767-65e16fc56bff5204000053039865802BR5925EMPRORT AMBIENTAL        6008BRASILIA62070503***6304BD3D';
 
- // dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
+ // FACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
 
   if cbxLayOut.ItemIndex = 6 then
   begin
@@ -689,33 +734,25 @@ end;
 procedure TfrmDemo.btnGerarRemessaClick(Sender: TObject);
 var NumRemessa : string;
 begin
-  dm.ACBrBoleto.DirArqRemessa := edtPathRemessa.Text;
+  FACBrBoleto.DirArqRemessa := edtPathRemessa.Text;
   NumRemessa := '1';
   InputQuery('Num. Remessa','Informe o Numero da Remessa :',NumRemessa);
 
-  dm.ACBrBoleto.GerarRemessa(StrToInt64Def(NumRemessa,0));
+  FACBrBoleto.GerarRemessa(StrToInt64Def(NumRemessa,0));
 end;
 
 procedure TfrmDemo.btnImpressaoSpoolerClick(Sender: TObject);
 //var
 //  i: Integer; 
 begin
-  dm.ACBrBoleto.Imprimir;
+  FACBrBoleto.Imprimir;
 
   //Método para impressao de cada titulo de forma individual
-   {for i:= 0 to ACBrBoleto1.ListadeBoletos.Count -1 do
+   {for i:= 0 to FACBrBoleto1.ListadeBoletos.Count -1 do
    begin
-     ACBrBoleto1.ListadeBoletos[i].Imprimir();
+     FACBrBoleto1.ListadeBoletos[i].Imprimir();
 
    end; }
-end;
-
-procedure TfrmDemo.chkMostrarSenhaClick(Sender: TObject);
-begin
-  if chkMostrarSenha.Checked then
-    edtPassword.PasswordChar := #0
-  else
-    edtPassword.PasswordChar := '@';
 end;
 
 procedure TfrmDemo.FormCreate(Sender: TObject);
@@ -723,6 +760,26 @@ var
   I: TACBrBolLayOut;
   CurrentStyle : longint;
 begin
+  FACBrBoleto := TACBrBoleto.Create(Self);
+  FACBrMail   := TACBrMail.Create(FACBrBoleto);
+  {$IFDEF GERADOR_FORTES_REPORT}
+    FACBrBoletoFCRL   := TACBrBoletoFCFortes.Create(FACBrBoleto);
+    cbxMotorRelatorio.AddItem('Fortes Reports', FACBrBoletoFCRL);
+  {$ENDIF}
+
+  {$IFDEF GERADOR_FAST_REPORT}
+    FACBrBoletoFCFR   := TACBrBoletoFCFR.Create(FACBrBoleto);
+    cbxMotorRelatorio.AddItem('Fast Reports', FACBrBoletoFCFR);
+  {$ENDIF}
+
+  {$IFDEF GERADOR_FPDF}
+    FACBrBoletoFPDF   := TACBrBoletoFPDF.Create(FACBrBoleto);
+    cbxMotorRelatorio.AddItem('FDPF', FACBrBoletoFPDF);
+  {$ENDIF}
+
+
+
+
   CurrentStyle := GetWindowLong(edtCNABLVLote.Handle, GWL_STYLE);
   CurrentStyle := CurrentStyle or ES_NUMBER;
   SetWindowLong(edtCNABLVLote.Handle, GWL_STYLE, CurrentStyle);
@@ -736,7 +793,7 @@ begin
   For I := Low(TACBrBolLayOut) to High(TACBrBolLayOut) do
     cbxLayOut.Items.Add(GetEnumName(TypeInfo(TACBrBolLayOut), Integer(I)));
   cbxLayOut.ItemIndex := 0;
-  dm := dmForte;
+
   CarregarBancos;
   CarregarTipoDistribuicao;
   CarregarCaracteristicaTitulo;
@@ -748,9 +805,15 @@ begin
   AplicarConfiguracoesComponenteATela;
   edtPathRemessa.Text := ExtractFilePath(ParamStr(0))+'Remessa';
   edtPathRetorno.Text := ExtractFilePath(ParamStr(0))+'Retorno';
+
+  if cbxMotorRelatorio.Items.Count > 0 then
+  begin
+    cbxMotorRelatorio.ItemIndex := 0;
+    cbxMotorRelatorio.OnChange(cbxMotorRelatorio);
+  end;
 end;
 
-procedure TfrmDemo.CarregarBancos;
+procedure TfrmDemo.carregarBancos;
 var
   Banco: TACBrTipoCobranca;
 begin
@@ -815,16 +878,24 @@ end;
 
 procedure TfrmDemo.Button3Click(Sender: TObject);
 begin
-  dm.ACBrBoleto.ListadeBoletos.Clear;
+  FACBrBoleto.ListadeBoletos.Clear;
 end;
 
 procedure TfrmDemo.cbxLayOutChange(Sender: TObject);
 begin
-  dm.ACBrBoleto.ACBrBoletoFC.LayOut := TACBrBolLayOut( cbxLayOut.ItemIndex );
+  FACBrBoleto.ACBrBoletoFC.LayOut := TACBrBolLayOut( cbxLayOut.ItemIndex );
 
   cbxImprimirVersoFatura.Enabled := (cbxLayOut.ItemIndex = 6); // lFaturaDetal
   if cbxLayOut.ItemIndex <> 6 then
    cbxImprimirVersoFatura.Checked := false;
+end;
+
+procedure TfrmDemo.chkMostrarSenhaClick(Sender: TObject);
+begin
+  if chkMostrarSenha.Checked then
+    edtPassword.PasswordChar := #0
+  else
+    edtPassword.PasswordChar := '@';
 end;
 
 procedure TfrmDemo.btnEnviarEmailClick(Sender: TObject);
@@ -837,13 +908,13 @@ begin
   try
     SL.Add('Olá,');
     SL.Add('Atenção, Boleto está em Anexo');
-    dm.ACBrBoleto.EnviarEmail(edtEmail.Text ,'Teste de Envio de Email', SL, True);
+    FACBrBoleto.EnviarEmail(edtEmail.Text ,'Teste de Envio de Email', SL, True);
 
     //Método para envio e-mail de forma individual para cada título
-    {for i := 0 to dm.ACBrBoleto.ListadeBoletos.Count -1 do
+    {for i := 0 to FACBrBoleto.ListadeBoletos.Count -1 do
     begin
-      if (dm.ACBrBoleto.ListadeBoletos[i].Sacado.Email <> '') then
-        dm.ACBrBoleto.ListadeBoletos[i].EnviarEmail(dm.ACBrBoleto.ListadeBoletos[i].Sacado.Email ,'Teste de Envio de Email', SL, True);
+      if (FACBrBoleto.ListadeBoletos[i].Sacado.Email <> '') then
+        FACBrBoleto.ListadeBoletos[i].EnviarEmail(FACBrBoleto.ListadeBoletos[i].Sacado.Email ,'Teste de Envio de Email', SL, True);
 
     end;}
 
@@ -862,7 +933,7 @@ var
   I: Integer;
 begin
   //Exemplo utilizando como Banco do Brasil API
-  Boleto     := dm.ACBrBoleto;
+  Boleto     := FACBrBoleto;
   FiltrosAPI := Boleto.Configuracoes.WebService.Filtro;
 
   FiltrosAPI.Clear;
@@ -905,20 +976,13 @@ begin
         SLRetorno.Add('valorAtual = '                 + CurrToStr(Retorno[I].DadosRet.TituloRet.valorAtual));
         SLRetorno.Add('valorPago = '                  + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorPago));
         SLRetorno.Add('  ---  ');
-
       end;
-      ShowMessage(PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt');
       SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt' );
     finally
       SLRetorno.Free;
     end;
   end;
   showMessage('Fim');
-end;
-
-procedure TfrmDemo.Label79Click(Sender: TObject);
-begin
-  OpenURL('https://www.projetoacbr.com.br/forum/topic/56101-configura%C3%A7%C3%B5es-do-acbrmail-para-os-principais-servi%C3%A7os-de-emails-do-mercado/');
 end;
 
 {
@@ -934,7 +998,7 @@ var
   i, j: Integer;
   Boleto : TACBrBoleto;
 begin
-  Boleto := dm.ACBrBoleto;
+  Boleto := FACBrBoleto;
 
   //Função de Envio
   Boleto.Configuracoes.WebService.Operacao := tpInclui;
@@ -1046,37 +1110,64 @@ end;
 procedure TfrmDemo.btnImpressaoPDFIndividualClick(Sender: TObject);
 var Index : Cardinal;
 begin
-  for Index := 0 to Pred(dm.ACBrBoleto.ListadeBoletos.Count) do
+  for Index := 0 to Pred(FACBrBoleto.ListadeBoletos.Count) do
   begin
-    dm.ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := True;
+    FACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := True;
     if Index + 1 = 5 then
-      dm.ACBrBoleto.ACBrBoletoFC.PdfSenha := ''
+      FACBrBoleto.ACBrBoletoFC.PdfSenha := ''
     else
-      dm.ACBrBoleto.ACBrBoletoFC.PdfSenha := IntToStr(Index+1);
+      FACBrBoleto.ACBrBoletoFC.PdfSenha := IntToStr(Index+1);
 
-    dm.ACBrBoleto.GerarPDF(Index);
+    FACBrBoleto.GerarPDF(Index);
   end;
 end;
 
 procedure TfrmDemo.btnImpressaoStreamClick(Sender: TObject);
-var MeuStream : TStream;
+var LMeuStream : TStream;
     xPath : string;
 begin
   xPath := ExtractFilePath(Application.ExeName) + 'testeStream.pdf';
   InputQuery('Salvando Boleto em Stream','Caminho + Arquivo + Extenção a salvar o Stream',xPath);
-  MeuStream := TFileStream.Create(xPath,fmCreate or fmOpenWrite);
+  LMeuStream := TFileStream.Create(xPath,fmCreate or fmOpenWrite);
   try
-    dm.ACBrBoletoReport.Imprimir(MeuStream);
+    FACBrBoleto.Imprimir(LMeuStream);
   finally
-    MeuStream.Free;
+    LMeuStream.Free;
   end;
-
 end;
 
 procedure TfrmDemo.btnRetornoClick(Sender: TObject);
 begin
   if flpndlgRetorno.Execute then
     edtPathRetorno.Text := flpndlgRetorno.FileName;
+end;
+
+procedure TfrmDemo.cbxMotorRelatorioChange(Sender: TObject);
+var
+  LSelectedItemIndex: Integer;
+  LSelectedObject: TObject;
+begin
+  LSelectedItemIndex := cbxMotorRelatorio.ItemIndex;
+
+  if LSelectedItemIndex <> -1 then
+    LSelectedObject := TObject(cbxMotorRelatorio.Items.Objects[LSelectedItemIndex]);
+
+  if Assigned(LSelectedObject) then
+  begin
+    FACBrBoleto.ACBrBoletoFC := TACBrBoletoFCClass(LSelectedObject);
+    FACBrBoleto.ACBrBoletoFC.DirLogo := edtPathLogoMarca.Text;
+    {$IFDEF GERADOR_FAST_REPORT}
+      if FACBrBoleto.ACBrBoletoFC is TACBrBoletoFCFR then
+        TACBrBoletoFCFR(FACBrBoleto.ACBrBoletoFC).FastReportFile := edtPathFR3.Text;
+    {$ENDIF}
+  end;
+
+  GravarIniComponente;
+end;
+
+procedure TfrmDemo.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FACBrBoleto.Free;
 end;
 
 end.

@@ -10,12 +10,11 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  uDemo, uDMForte;
+  uDemoBoleto in 'uDemoBoleto.pas' {frmDemoBoleto};
 
 {$R *.res}
 begin
   Application.Initialize;
-  Application.CreateForm(TdmForte, dmForte);
   Application.CreateForm(TfrmDemo, frmDemo);
   Application.Run;
 end.

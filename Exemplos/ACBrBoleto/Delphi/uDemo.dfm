@@ -10,6 +10,7 @@ object frmDemo: TfrmDemo
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  OnClose = FormClose
   OnCreate = FormCreate
   TextHeight = 13
   object PageControl1: TPageControl
@@ -22,15 +23,6 @@ object frmDemo: TfrmDemo
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Ficha de Pagamento'
-      object Label31: TLabel
-        Left = 3
-        Top = 401
-        Width = 101
-        Height = 13
-        Caption = 'LayOut Fortes Report'
-        Color = clBtnFace
-        ParentColor = False
-      end
       object GroupBox2: TGroupBox
         Left = -2
         Top = 0
@@ -313,31 +305,13 @@ object frmDemo: TfrmDemo
           TabOrder = 3
         end
       end
-      object cbxLayOut: TComboBox
-        Left = 3
-        Top = 417
-        Width = 161
-        Height = 21
-        Style = csDropDownList
-        TabOrder = 3
-        OnChange = cbxLayOutChange
-      end
-      object cbxImprimirVersoFatura: TCheckBox
-        Left = 3
-        Top = 444
-        Width = 161
-        Height = 17
-        Caption = 'Imprimir Verso da Fatura'
-        Enabled = False
-        TabOrder = 4
-      end
       object PageControl2: TPageControl
         Left = 3
         Top = 231
         Width = 779
         Height = 157
         ActivePage = TabSheet5
-        TabOrder = 5
+        TabOrder = 3
         object TabSheet5: TTabSheet
           Caption = 'Pagador'
           ImageIndex = 1
@@ -661,15 +635,15 @@ object frmDemo: TfrmDemo
         end
       end
       object GroupBox6: TGroupBox
-        Left = 186
-        Top = 417
-        Width = 500
-        Height = 61
+        Left = 680
+        Top = 405
+        Width = 277
+        Height = 73
         Caption = 'Impress'#227'o'
-        TabOrder = 6
+        TabOrder = 4
         object btnImpressaoHTML: TButton
-          Left = 6
-          Top = 20
+          Left = 4
+          Top = 14
           Width = 75
           Height = 25
           Caption = 'Gerar HTML'
@@ -678,7 +652,7 @@ object frmDemo: TfrmDemo
         end
         object btnImpressaoPDF: TButton
           Left = 85
-          Top = 20
+          Top = 14
           Width = 75
           Height = 25
           Caption = 'Gerar PDF'
@@ -686,8 +660,8 @@ object frmDemo: TfrmDemo
           OnClick = btnImpressaoPDFClick
         end
         object btnImpressaoSpooler: TButton
-          Left = 391
-          Top = 20
+          Left = 135
+          Top = 43
           Width = 98
           Height = 25
           Caption = 'Imprimir'
@@ -695,8 +669,8 @@ object frmDemo: TfrmDemo
           OnClick = btnImpressaoSpoolerClick
         end
         object btnImpressaoStream: TButton
-          Left = 289
-          Top = 20
+          Left = 166
+          Top = 12
           Width = 98
           Height = 25
           Caption = 'Imprimir Stream'
@@ -704,13 +678,101 @@ object frmDemo: TfrmDemo
           OnClick = btnImpressaoStreamClick
         end
         object btnImpressaoPDFIndividual: TButton
-          Left = 163
-          Top = 20
+          Left = 7
+          Top = 45
           Width = 122
           Height = 25
           Caption = 'Gerar PDF Individual'
           TabOrder = 4
           OnClick = btnImpressaoPDFIndividualClick
+        end
+      end
+      object PageControl3: TPageControl
+        Left = 5
+        Top = 394
+        Width = 669
+        Height = 98
+        ActivePage = TabSheet6
+        TabOrder = 5
+        object TabSheet6: TTabSheet
+          Caption = 'Motores'
+          object Label80: TLabel
+            Left = 2
+            Top = 3
+            Width = 72
+            Height = 13
+            Caption = 'Motor Relat'#243'rio'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label31: TLabel
+            Left = 224
+            Top = 3
+            Width = 137
+            Height = 13
+            Caption = 'Layout Fortes Report / FPDF'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object cbxMotorRelatorio: TComboBox
+            Left = 2
+            Top = 22
+            Width = 198
+            Height = 21
+            Style = csDropDownList
+            TabOrder = 0
+            OnChange = cbxMotorRelatorioChange
+          end
+          object cbxLayOut: TComboBox
+            Left = 224
+            Top = 22
+            Width = 161
+            Height = 21
+            Style = csDropDownList
+            TabOrder = 1
+            OnChange = cbxLayOutChange
+          end
+          object cbxImprimirVersoFatura: TCheckBox
+            Left = 224
+            Top = 49
+            Width = 161
+            Height = 17
+            Caption = 'Imprimir Verso da Fatura'
+            Enabled = False
+            TabOrder = 2
+          end
+        end
+        object TabSheet7: TTabSheet
+          Caption = 'Path'#39's'
+          ImageIndex = 1
+          object Label81: TLabel
+            Left = 3
+            Top = 3
+            Width = 20
+            Height = 13
+            Caption = 'FR3'
+          end
+          object Label82: TLabel
+            Left = 255
+            Top = 3
+            Width = 53
+            Height = 13
+            Caption = 'Logomarca'
+          end
+          object edtPathFR3: TEdit
+            Left = 2
+            Top = 19
+            Width = 247
+            Height = 21
+            TabOrder = 0
+          end
+          object edtPathLogoMarca: TEdit
+            Left = 255
+            Top = 19
+            Width = 247
+            Height = 21
+            TabOrder = 1
+          end
         end
       end
     end

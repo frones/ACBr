@@ -1420,7 +1420,9 @@ begin
   Count := 0;
   for i := 1 to Length(str) do
   begin
-    if not CharInSet(str[i], [ '/',',','-','.',')','(',' ' ]) then
+    if not CharInSet(str[i], [ '/', ',', '-', '.', ')', '(',
+                               ' ', '\', '!', '@', '#', '$',
+                               '%', '&', '*', '_', '+', '=' ]) then
     begin
       inc(Count);
       Result[Count] := str[i];

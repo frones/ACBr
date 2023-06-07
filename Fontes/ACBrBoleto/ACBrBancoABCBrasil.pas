@@ -939,6 +939,13 @@ var
       Titulo.MotivoRejeicaoComando.Clear;
       Titulo.DescricaoMotivoRejeicaoComando.Clear;
       pMotivoRejeicao := 214;
+      if Tipo = toRetornoTituloDDARecusadoCIP then
+      begin
+        CodMotivoRejeicao := copy(Linha, pMotivoRejeicao, 8);
+        Titulo.MotivoRejeicaoComando.Add(CodMotivoRejeicao);
+        Titulo.DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicao);
+        Exit;
+      end;
       //Adiciona as Rejeiçoes caso existam
       for I := 0 to 4 do
       begin
@@ -1224,6 +1231,7 @@ begin
     28: Result := '28-Débito de Tarifas/Custas';
     29: Result := '29-Ocorrências do Sacado';
     30: Result := '30-Alteração de Dados Rejeitada';
+    53: Result := '53-Título DDA recusado pela CIP';
     94: Result := '94-Confirma Recebimento de Instrução de Sustar e Alterar Vencimento';
     95: Result := '95-Confirma Recebimento de Instrução de Alteração do ‘Campo Livre’';
     96: Result := '96-Confirma Recebimento de Instrução de Alteração do ‘Seu Número’';
@@ -1296,6 +1304,7 @@ begin
     28: Result := toRetornoDebitoTarifas;
     29: Result := toRetornoOcorrenciasDoSacado;
     30: Result := toRetornoAlteracaoDadosRejeitados;
+    53: Result := toRetornoTituloDDARecusadoCIP;
     94: Result := toRemessaAlterarVencSustarProtesto;
     //95: Result := toRetornoAlterarCampoLivre;
     96: Result := toRemessaAlterarSeuNumero;
@@ -1316,17 +1325,17 @@ begin
   begin
     case TipoOcorrencia of
       toRetornoLiquidadoAposBaixaOuNaoRegistro: Result := '17';
-      toRetornoRetiradoDeCartorio: Result := '24';
-      toRetornoBaixaPorProtesto: Result := '25';
-      toRetornoInstrucaoRejeitada: Result := '26';
+      toRetornoRetiradoDeCartorio: Result              := '24';
+      toRetornoBaixaPorProtesto: Result                := '25';
+      toRetornoInstrucaoRejeitada: Result              := '26';
     end;
   end
   else
   begin
     case TipoOcorrencia of
-      toRetornoLiquidadoEmCartorio: Result := '17';
-      toRetornoCustasCartorio: Result := '24';
-      toRetornoRecebimentoInstrucaoProtestar: Result := '25';
+      toRetornoLiquidadoEmCartorio: Result                := '17';
+      toRetornoCustasCartorio: Result                     := '24';
+      toRetornoRecebimentoInstrucaoProtestar: Result      := '25';
       toRetornoRecebimentoInstrucaoSustarProtesto: Result := '26';
     end;
   end;
@@ -1355,6 +1364,7 @@ begin
     toRetornoDebitoTarifas: Result := '28';
     toRetornoOcorrenciasDoSacado: Result := '29';
     toRetornoAlteracaoDadosRejeitados: Result := '30';
+    toRetornoTituloDDARecusadoCIP: Result := '53';
     toRemessaAlterarVencSustarProtesto: Result := '94';
     //toRetornoAlterarCampoLivre                               : Result := '95';
     toRemessaAlterarSeuNumero: Result := '96';
@@ -1373,10 +1383,10 @@ var
 begin
   vlCodOcorrencia := TipoOCorrenciaToCod(TipoOcorrencia);
 
-  if (vlCodOcorrencia = '02') or
-    (vlCodOcorrencia = '03') or
-    (vlCodOcorrencia = '26') or
-    (vlCodOcorrencia = '30') then
+  if (vlCodOcorrencia = '02') or    //Entrada Confirmada
+    (vlCodOcorrencia = '03') or     //Entrada Rejeitada
+    (vlCodOcorrencia = '26') or     //Instrução Rejeitada
+    (vlCodOcorrencia = '30') then   //Alteração de Dados Rejeitada
   begin
     if CodMotivo = '01' then
       Result := 'BANCO INVÁLIDO'

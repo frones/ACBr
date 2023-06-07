@@ -113,9 +113,14 @@ end;
 function TACBrBancoSantander.DefineNossoNumeroRetorno(const Retorno: String): String;
 begin
   if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+  begin
+    ACBrBanco.TamanhoMaximoNossoNum := 13;
     Result := Copy(Retorno,DefinePosicaoNossoNumeroRetorno,13)
-  else
+  end else
+  begin
+    ACBrBanco.TamanhoMaximoNossoNum := 12;
     Result := Copy(Retorno,DefinePosicaoNossoNumeroRetorno,12);
+  end;
 end;
 
 function TACBrBancoSantander.DefineNumeroDocumentoModulo(
@@ -1073,52 +1078,56 @@ begin
     if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo Titulo
        Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
-    with Titulo do
-    begin
-      if copy(Linha, 14, 1) = 'T' then
+    try
+      with Titulo do
       begin
-        NossoNumero          := DefineNossoNumeroRetorno(Linha);
-        NumeroDocumento      := Copy(Linha, 55, 15);
-        SeuNumero            := Copy(Linha, 101, 25);
-        Carteira             := Copy(Linha, 54, 1);
-        Vencimento           := StringToDateTimeDef(Copy(Linha, 70, 2)+'/'+
-                                                    Copy(Linha, 72, 2)+'/'+
-                                                    Copy(Linha, 74,4),0, 'DD/MM/YYYY' );
-        ValorDocumento       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
-        ValorDespesaCobranca := StrToFloatDef(copy(Linha, 194, 15), 0) / 100;
-        // Sacado
-        if Copy(Linha, 128, 1) = '1' then
+        if copy(Linha, 14, 1) = 'T' then
         begin
-          Sacado.Pessoa  := pFisica;
-          Sacado.CNPJCPF := Trim(Copy(Linha, 133, 11));
-        end
-        else
-        begin
-          Sacado.Pessoa := pJuridica;
-          Sacado.CNPJCPF    := Trim(Copy(Linha, 129, 15));
-        end;
-        Sacado.NomeSacado := Trim(Copy(Linha, 144, 40));
+          NossoNumero          := DefineNossoNumeroRetorno(Linha);
+          NumeroDocumento      := Copy(Linha, 55, 15);
+          SeuNumero            := Copy(Linha, 101, 25);
+          Carteira             := Copy(Linha, 54, 1);
+          Vencimento           := StringToDateTimeDef(Copy(Linha, 70, 2)+'/'+
+                                                      Copy(Linha, 72, 2)+'/'+
+                                                      Copy(Linha, 74,4),0, 'DD/MM/YYYY' );
+          ValorDocumento       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+          ValorDespesaCobranca := StrToFloatDef(copy(Linha, 194, 15), 0) / 100;
+          // Sacado
+          if Copy(Linha, 128, 1) = '1' then
+          begin
+            Sacado.Pessoa  := pFisica;
+            Sacado.CNPJCPF := Trim(Copy(Linha, 133, 11));
+          end
+          else
+          begin
+            Sacado.Pessoa := pJuridica;
+            Sacado.CNPJCPF    := Trim(Copy(Linha, 129, 15));
+          end;
+          Sacado.NomeSacado := Trim(Copy(Linha, 144, 40));
 
-        // Algumas ocorrências estão diferentes do cnab400, farei uma separada aqui
-        DoVerOcorrencia(Copy(Linha, 16, 2));
-      end
-      else if copy(Linha, 14, 1) = 'U' then
-      begin
-        ValorMoraJuros      := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
-        ValorDesconto       := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
-        ValorAbatimento     := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
-        ValorIOF            := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
-        ValorPago           := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
-        ValorRecebido       := StrToFloatDef(copy(Linha, 93, 15), 0) / 100;
-        ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
-        ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
-        DataOcorrencia      := StringToDateTimeDef(Copy(Linha, 138, 2)+'/'+
-                                                   Copy(Linha, 140, 2)+'/'+
-                                                   Copy(Linha, 142,4),0, 'DD/MM/YYYY' );
-        DataCredito := StringToDateTimeDef(Copy(Linha, 146, 2)+'/'+
-                                           Copy(Linha, 148, 2)+'/'+
-                                           Copy(Linha, 150,4),0, 'DD/MM/YYYY' );
+          // Algumas ocorrências estão diferentes do cnab400, farei uma separada aqui
+          DoVerOcorrencia(Copy(Linha, 16, 2));
+        end
+        else if copy(Linha, 14, 1) = 'U' then
+        begin
+          ValorMoraJuros      := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
+          ValorDesconto       := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
+          ValorAbatimento     := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
+          ValorIOF            := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
+          ValorPago           := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+          ValorRecebido       := StrToFloatDef(copy(Linha, 93, 15), 0) / 100;
+          ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
+          ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
+          DataOcorrencia      := StringToDateTimeDef(Copy(Linha, 138, 2)+'/'+
+                                                     Copy(Linha, 140, 2)+'/'+
+                                                     Copy(Linha, 142,4),0, 'DD/MM/YYYY' );
+          DataCredito := StringToDateTimeDef(Copy(Linha, 146, 2)+'/'+
+                                             Copy(Linha, 148, 2)+'/'+
+                                             Copy(Linha, 150,4),0, 'DD/MM/YYYY' );
+        end;
       end;
+    finally
+      ACBrBanco.TamanhoMaximoNossoNum := 12;
     end;
   end;
 end;

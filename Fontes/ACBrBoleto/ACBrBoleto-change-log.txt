@@ -48,7 +48,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+07/06/2023
+[-]TK-4045 Erro na Leitura do retorno CNAB 240 Banco Santander quando ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto = True
+  Por : Pedro E. Braga / Victor H Gonzales - Pandaaa
 01/06/2023
 [-]TK-4004 ACBrBoleto - Contribuição Banco Original
   por : Marcos Lenharo 

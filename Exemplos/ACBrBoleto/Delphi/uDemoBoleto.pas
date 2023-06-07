@@ -47,7 +47,7 @@ uses
   {$IFDEF GERADOR_FPDF},ACBrBoletoFPDF{$ENDIF}
   ;
 type
-  TfrmDemo = class(TForm)
+  TfrmDemoBoleto = class(TForm)
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
@@ -318,7 +318,7 @@ type
   end;
 
 var
-  frmDemo: TfrmDemo;
+  frmDemoBoleto: TfrmDemoBoleto;
 
 implementation
 
@@ -326,7 +326,7 @@ Uses TypInfo, DateUtils, pcnConversao, ACBrDFeSSL;
 
 {$R *.dfm}
 
-procedure TfrmDemo.GravarIniComponente;
+procedure TfrmDemoBoleto.GravarIniComponente;
 var
   xPath, xArquivo : String;
   IniFile: TMemIniFile;
@@ -356,12 +356,12 @@ begin
   end;
 end;
 
-procedure TfrmDemo.Label79Click(Sender: TObject);
+procedure TfrmDemoBoleto.Label79Click(Sender: TObject);
 begin
   OpenURL('https://www.projetoacbr.com.br/forum/topic/56101-configura%C3%A7%C3%B5es-do-acbrmail-para-os-principais-servi%C3%A7os-de-emails-do-mercado/');
 end;
 
-procedure TfrmDemo.LerIniComponente;
+procedure TfrmDemoBoleto.LerIniComponente;
 var xArquivo : String;
   IniFile: TMemIniFile;
 begin
@@ -380,7 +380,7 @@ begin
   end;
 end;
 
-procedure TfrmDemo.AplicarConfiguracoesAoComponente;
+procedure TfrmDemoBoleto.AplicarConfiguracoesAoComponente;
 var Beneficiario   : TACBrCedente;
     Banco          : TACBrBanco;
     Boleto         : TACBrBoleto;
@@ -478,7 +478,7 @@ begin
   {$ENDIF}
 end;
 
-procedure TfrmDemo.AplicarConfiguracoesComponenteATela;
+procedure TfrmDemoBoleto.AplicarConfiguracoesComponenteATela;
 var Beneficiario : TACBrCedente;
     BeneficiarioWS : TACBrCedenteWS;
     Banco : TACBrBanco;
@@ -532,7 +532,7 @@ begin
   edtScope.Text             := BeneficiarioWS.Scope;
 end;
 
-procedure TfrmDemo.AplicarConfiguracoesComponenteEmail;
+procedure TfrmDemoBoleto.AplicarConfiguracoesComponenteEmail;
 var
   Mail: TACBrMail;
 begin
@@ -548,7 +548,7 @@ begin
   Mail.Password := edtPassword.Text;
 end;
 
-procedure TfrmDemo.AplicarConfiguracoesEmailNaTela(IniConfig: TMemIniFile);
+procedure TfrmDemoBoleto.AplicarConfiguracoesEmailNaTela(IniConfig: TMemIniFile);
 begin
   edtFrom.Text := IniConfig.ReadString('EMAIL', 'FromEmail', '');
   edtFromName.Text := IniConfig.ReadString('EMAIL', 'FromName', '');
@@ -565,7 +565,7 @@ begin
 
 end;
 
-procedure TfrmDemo.btnLerRetornoClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnLerRetornoClick(Sender: TObject);
 var Boleto  : TACBrBoleto;
     Retorno : TListadeBoletos;
     I       : Integer;
@@ -597,18 +597,18 @@ begin
   end;
 end;
 
-procedure TfrmDemo.btnImpressaoHTMLClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnImpressaoHTMLClick(Sender: TObject);
 begin
   FACBrBoleto.ACBrBoletoFC.NomeArquivo := ExtractFilePath(Application.ExeName) + 'teste.html';
   FACBrBoleto.GerarHTML;
 end;
 
-procedure TfrmDemo.btnImpressaoPDFClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnImpressaoPDFClick(Sender: TObject);
 begin
   FACBrBoleto.GerarPDF;
 end;
 
-procedure TfrmDemo.btnBoletoIndividualClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnBoletoIndividualClick(Sender: TObject);
 var
   Titulo : TACBrTitulo;
   VQtdeCarcA, VQtdeCarcB, VQtdeCarcC :Integer;
@@ -696,7 +696,7 @@ begin
 
 end;
 
-procedure TfrmDemo.Button5Click(Sender: TObject);
+procedure TfrmDemoBoleto.Button5Click(Sender: TObject);
 var
   Titulo: TACBrTitulo;
   I: Integer;
@@ -718,7 +718,7 @@ begin
   end;
 end;
 
-procedure TfrmDemo.btnGerarRemessaClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnGerarRemessaClick(Sender: TObject);
 var NumRemessa : string;
 begin
   FACBrBoleto.DirArqRemessa := edtPathRemessa.Text;
@@ -728,7 +728,7 @@ begin
   FACBrBoleto.GerarRemessa(StrToInt64Def(NumRemessa,0));
 end;
 
-procedure TfrmDemo.btnImpressaoSpoolerClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnImpressaoSpoolerClick(Sender: TObject);
 //var
 //  i: Integer; 
 begin
@@ -742,7 +742,7 @@ begin
    end; }
 end;
 
-procedure TfrmDemo.FormCreate(Sender: TObject);
+procedure TfrmDemoBoleto.FormCreate(Sender: TObject);
 var
   I: TACBrBolLayOut;
   CurrentStyle : longint;
@@ -800,7 +800,7 @@ begin
   end;
 end;
 
-procedure TfrmDemo.carregarBancos;
+procedure TfrmDemoBoleto.carregarBancos;
 var
   Banco: TACBrTipoCobranca;
 begin
@@ -809,7 +809,7 @@ begin
     cbxBanco.Items.Add( GetEnumName(TypeInfo(TACBrTipoCobranca), integer(Banco) ) );
 end;
 
-procedure TfrmDemo.CarregarCaracteristicaTitulo;
+procedure TfrmDemoBoleto.CarregarCaracteristicaTitulo;
 var
   Caracteristica: TACBrCaracTitulo;
 begin
@@ -818,7 +818,7 @@ begin
     cbxCaracteristicaTitulo.Items.Add( GetEnumName(TypeInfo(TACBrCaracTitulo), integer(Caracteristica) ) );
 end;
 
-procedure TfrmDemo.CarregarResponsavelEmissao;
+procedure TfrmDemoBoleto.CarregarResponsavelEmissao;
 var
   ResponsavelEmissao: TACBrResponEmissao;
 begin
@@ -827,7 +827,7 @@ begin
     cbxResponsavelEmissao.Items.Add( GetEnumName(TypeInfo(TACBrResponEmissao), integer(ResponsavelEmissao) ) );
 end;
 
-procedure TfrmDemo.CarregarSSLLib;
+procedure TfrmDemoBoleto.CarregarSSLLib;
 var
   SSLLib: TSSLHttpLib;
 begin
@@ -836,7 +836,7 @@ begin
     cbxSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(SSLLib) ) );
 end;
 
-procedure TfrmDemo.CarregarTipoCarteira;
+procedure TfrmDemoBoleto.CarregarTipoCarteira;
 var
   TipoCarteira: TACBrTipoCarteira;
 begin
@@ -845,7 +845,7 @@ begin
     cbxTipoCarteira.Items.Add( GetEnumName(TypeInfo(TACBrTipoCarteira), integer(TipoCarteira) ) );
 end;
 
-procedure TfrmDemo.CarregarTipoDistribuicao;
+procedure TfrmDemoBoleto.CarregarTipoDistribuicao;
 var
   Distribuicao: TACBrIdentDistribuicao;
 begin
@@ -854,7 +854,7 @@ begin
     cbxTipoDistribuicao.Items.Add( GetEnumName(TypeInfo(TACBrIdentDistribuicao), integer(Distribuicao) ) );
 end;
 
-procedure TfrmDemo.CarregarTipoDocumento;
+procedure TfrmDemoBoleto.CarregarTipoDocumento;
 var
   TipoDocumento: TACBrTipoDocumento;
 begin
@@ -863,12 +863,12 @@ begin
   cbxTipoDocumento.Items.Add('Escritural');
 end;
 
-procedure TfrmDemo.Button3Click(Sender: TObject);
+procedure TfrmDemoBoleto.Button3Click(Sender: TObject);
 begin
   FACBrBoleto.ListadeBoletos.Clear;
 end;
 
-procedure TfrmDemo.cbxLayOutChange(Sender: TObject);
+procedure TfrmDemoBoleto.cbxLayOutChange(Sender: TObject);
 begin
   FACBrBoleto.ACBrBoletoFC.LayOut := TACBrBolLayOut( cbxLayOut.ItemIndex );
 
@@ -877,7 +877,7 @@ begin
    cbxImprimirVersoFatura.Checked := false;
 end;
 
-procedure TfrmDemo.chkMostrarSenhaClick(Sender: TObject);
+procedure TfrmDemoBoleto.chkMostrarSenhaClick(Sender: TObject);
 begin
   if chkMostrarSenha.Checked then
     edtPassword.PasswordChar := #0
@@ -885,7 +885,7 @@ begin
     edtPassword.PasswordChar := '@';
 end;
 
-procedure TfrmDemo.btnEnviarEmailClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnEnviarEmailClick(Sender: TObject);
 var
   SL: TStringList;
   //i: Integer;
@@ -911,7 +911,7 @@ begin
 end;
 
 
-procedure TfrmDemo.btnWSConsultaClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnWSConsultaClick(Sender: TObject);
 var
   FiltrosAPI : TACBrBoletoWSFiltroConsulta;
   Boleto : TACBrBoleto;
@@ -979,7 +979,7 @@ Até o momento disponível para Caixa Economica, Banco do Brasil e Itau
 No Object Inspector verifique as propriedades: CedenteWS e Configuracoes/WebService
 Verifique no arquivo "configWebService.txt" quais as configurações necessárias para cada Banco
 }
-procedure TfrmDemo.btnWSRegistrarClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnWSRegistrarClick(Sender: TObject);
 var
   SLRemessa: TStringList;
   i, j: Integer;
@@ -1081,20 +1081,20 @@ begin
 
 end;
 
-procedure TfrmDemo.btnConfigLerClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnConfigLerClick(Sender: TObject);
 begin
   LerIniComponente;
   AplicarConfiguracoesComponenteATela;
 end;
 
-procedure TfrmDemo.btnConfigGravarClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnConfigGravarClick(Sender: TObject);
 var teste : TStringList;
 begin
   AplicarConfiguracoesAoComponente;
   GravarIniComponente;
 end;
 
-procedure TfrmDemo.btnImpressaoPDFIndividualClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnImpressaoPDFIndividualClick(Sender: TObject);
 var Index : Cardinal;
 begin
   for Index := 0 to Pred(FACBrBoleto.ListadeBoletos.Count) do
@@ -1109,7 +1109,7 @@ begin
   end;
 end;
 
-procedure TfrmDemo.btnImpressaoStreamClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnImpressaoStreamClick(Sender: TObject);
 var LMeuStream : TStream;
     xPath : string;
 begin
@@ -1123,13 +1123,13 @@ begin
   end;
 end;
 
-procedure TfrmDemo.btnRetornoClick(Sender: TObject);
+procedure TfrmDemoBoleto.btnRetornoClick(Sender: TObject);
 begin
   if flpndlgRetorno.Execute then
     edtPathRetorno.Text := flpndlgRetorno.FileName;
 end;
 
-procedure TfrmDemo.cbxMotorRelatorioChange(Sender: TObject);
+procedure TfrmDemoBoleto.cbxMotorRelatorioChange(Sender: TObject);
 var
   LSelectedItemIndex: Integer;
   LSelectedObject: TObject;
@@ -1152,7 +1152,7 @@ begin
   GravarIniComponente;
 end;
 
-procedure TfrmDemo.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmDemoBoleto.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   FACBrBoleto.Free;
 end;

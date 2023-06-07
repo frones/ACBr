@@ -1,4 +1,4 @@
-object frmDemo: TfrmDemo
+object frmDemoBoleto: TfrmDemoBoleto
   Left = 288
   Top = 133
   Caption = 'Demo ACBrBoleto '

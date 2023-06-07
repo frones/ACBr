@@ -7,6 +7,6 @@ uses
 {$R *.res}
 begin
   Application.Initialize;
-  Application.CreateForm(TfrmDemo, frmDemo);
+  Application.CreateForm(TfrmDemoBoleto, frmDemoBoleto);
   Application.Run;
 end.

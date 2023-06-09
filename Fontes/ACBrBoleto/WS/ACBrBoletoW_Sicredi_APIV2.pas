@@ -166,6 +166,7 @@ end;
 
 procedure TBoletoW_Sicredi_APIV2.GerarHeader;
 begin
+	FPHeaders.Clear;
   DefinirContentType;
   DefinirKeyUser;
   DefinirPosto;

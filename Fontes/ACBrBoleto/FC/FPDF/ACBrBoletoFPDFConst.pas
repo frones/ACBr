@@ -11,6 +11,7 @@ resourcestring
     CARTEIRA                    = 'Carteira';
     ESPECIE                     = 'Espécie';
     QUANTIDADE                  = 'Quantidade';
+    PARCELA                     = 'Parcela';
     XVALOR                      = 'x Valor';
     ACEITE                      = 'Aceite';
     NR_DOCUMENTO                = 'Nr do Documento';

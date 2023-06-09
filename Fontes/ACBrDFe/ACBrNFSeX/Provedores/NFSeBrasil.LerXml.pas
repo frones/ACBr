@@ -218,7 +218,6 @@ begin
       Discriminacao             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
       CodigoMunicipio           := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
 
-      CodMunicipioPrestacao := 0;
       CodMunicipioPrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcInt);
       if CodMunicipioPrestacao > 0 then
         MunicipioPrestacaoServico := ObterNomeMunicipio(CodMunicipioPrestacao, UFMunicipioPrestacao, '', False);

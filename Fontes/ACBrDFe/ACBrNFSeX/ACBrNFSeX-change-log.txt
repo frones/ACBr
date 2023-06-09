@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2023
+-- ISSDSF.Provider --
+[*] Ajustes na leitura do retorno dos métodos Recepcioar e Teste.
+  Por: Italo Giurizzato Junior
+
 06/06/2023
 -- ACBrNFSeXServicos.ini --
 [+] Incluido ProLinkURL para a cidade de Araxa/MG

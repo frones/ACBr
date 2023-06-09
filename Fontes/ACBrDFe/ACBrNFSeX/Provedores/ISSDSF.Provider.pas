@@ -1479,7 +1479,8 @@ begin
   Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:enviar>';
 
-  Result := Executar('', Request, ['enviarReturn'], [NameSpace]);
+  Result := Executar('', Request, ['enviarReturn', 'RetornoEnvioLoteRPS'],
+                     [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.RecepcionarSincrono(ACabecalho,
@@ -1507,7 +1508,8 @@ begin
   Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:testeEnviar>';
 
-  Result := Executar('', Request, ['testeEnviarReturn'], [NameSpace]);
+  Result := Executar('', Request, ['testeEnviarReturn', 'RetornoEnvioLoteRPS'],
+                     [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.ConsultarLote(ACabecalho,

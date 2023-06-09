@@ -645,6 +645,7 @@ begin
   with Homologacao do
   begin
     FRecepcionar         := AINI.ReadString(ASession, 'HomRecepcionar'        , '');
+    FTesteEnvio := FRecepcionar;
     FConsultarSituacao   := AINI.ReadString(ASession, 'HomConsultarSituacao'  , FRecepcionar);
     FConsultarLote       := AINI.ReadString(ASession, 'HomConsultarLote'      , FRecepcionar);
     FConsultarNFSeRPS    := AINI.ReadString(ASession, 'HomConsultarNFSeRps'   , FRecepcionar);
@@ -672,6 +673,7 @@ begin
   with Producao do
   begin
     FRecepcionar         := AINI.ReadString(ASession, 'ProRecepcionar'        , '');
+    FTesteEnvio := FRecepcionar;
     FConsultarSituacao   := AINI.ReadString(ASession, 'ProConsultarSituacao'  , FRecepcionar);
     FConsultarLote       := AINI.ReadString(ASession, 'ProConsultarLote'      , FRecepcionar);
     FConsultarNFSeRPS    := AINI.ReadString(ASession, 'ProConsultarNFSeRps'   , FRecepcionar);

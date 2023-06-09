@@ -46,6 +46,9 @@ Símbolo : Significado
 -- ISSDSF.Provider --
 [*] Ajustes na leitura do retorno dos métodos Recepcioar e Teste.
   Por: Italo Giurizzato Junior
+-- ACBrNFSeXParametros --
+[*] Altera as rotinas que fazem a Leitura das URLs para que preencha a URL de teste com a mesma URL de envio do ambiente correspondente.
+  Por: Diego F
 
 06/06/2023
 -- ACBrNFSeXServicos.ini --

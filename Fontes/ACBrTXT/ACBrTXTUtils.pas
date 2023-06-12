@@ -137,9 +137,9 @@ const
      '97',    // - 01 registro consolidando os documentos de outros tipos de consumo acima de R$ 1.000,01
      '99');   // - 01 registro por documento fiscal emitido
 begin
-   Result := False;
+   Result := True;
    // Se o modelo for 06 (energia elétrica) ou 28 (gás canalizado), os valores válidos são [01, 02, 03, 04, 05, 06, 07, 08]
-   if MatchText(COD_MOD, ['06', '28', '66']) then
+   if MatchText(COD_MOD, ['06', '28']) then
    begin
       Result := MatchText(COD_CONS, ListaEnergia);
    end

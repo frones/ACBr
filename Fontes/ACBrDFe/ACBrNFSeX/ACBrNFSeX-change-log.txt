@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/06/2023
+-- ISSDSF.Provider --
+[*] Ajustes na procedure ProcessarMensagemErros ao consultar o status do lote 
+    quando este continha erros, estava ocorrendo erro na consulta.
+  Por: Andre Luis Guimaraes
 -- ACBrNFSeXServicos.ini --
 [*] Acrescentado o Params: SolicitarCancelamento para a cidade Cascavel/PR
   Por: MDO Gomes

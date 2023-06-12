@@ -320,11 +320,11 @@ procedure TACBrNFSeProviderISSDSF.ProcessarMensagemErros(
   const AListTag, AMessageTag: string);
 var
   I: Integer;
-  ANode: TACBrXmlNode;
+  ANode, ANodeAux: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
   AAlerta: TNFSeEventoCollectionItem;
-  Codigo, Descricao: string;
+  Codigo, Descricao, RPS: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -338,18 +338,21 @@ begin
     Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
     Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
 
+    ANodeAux := ANodeArray[I].Childrens.FindAnyNs('ChaveRPS');
+    if (ANodeAux <> nil) then
+      RPS := 'RPS '+ ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('NumeroRPS'), tcStr)
+    else
+      RPS := '';
+
     if (Codigo <> '') or (Descricao <> '') then
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Codigo;
       AErro.Descricao := ACBrStr(Descricao);
-      AErro.Correcao := '';
-    end;
+      AErro.Correcao := RPS;
 
-    if Descricao = '' then
-    begin
-      AErro := Response.Erros.New;
-      AErro.Descricao := ACBrStr(ANodeArray[0].AsString);
+      if AErro.Descricao = '' then
+        AErro.Descricao := ACBrStr(ANodeArray[I].AsString);
     end;
   end;
 
@@ -372,11 +375,8 @@ begin
       AAlerta.Descricao := ACBrStr(Descricao);
       AAlerta.Correcao := '';
 
-      if Descricao = '' then
-      begin
-        AAlerta := Response.Alertas.New;
-        AAlerta.Descricao := ACBrStr(ANodeArray[0].AsString);
-      end;
+      if AAlerta.Descricao = '' then
+        AAlerta.Descricao := ACBrStr(ANodeArray[I].AsString);
     end;
   end;
 end;
@@ -592,20 +592,7 @@ begin
       end;
 
       Document.LoadFromXml(Response.ArquivoRetorno);
-      {
-      ANode := Document.Root.Childrens.FindAnyNs('RetornoEnvioLoteRPS');
 
-      if ANode = nil then
-        ANode := Document.Root;
-
-      if ANode = nil then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod201;
-        AErro.Descricao := ACBrStr(Desc201);
-        Exit
-      end;
-      }
       ANode := Document.Root;
 
       ProcessarMensagemErros(ANode, Response);

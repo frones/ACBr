@@ -1183,10 +1183,10 @@ namespace ACBrLibNFSe.Demo
                 if (InputBox.Show("Consultar Parametros", "Informe o Código de Serviço", ref codigoServico) != DialogResult.OK) return;
 
                 var competencia = "dd/MM/yyyy";
-                if (InputBox.Show("Consultar Parametros", "Informe o Código de Serviço", ref competencia) != DialogResult.OK) return;
+                if (InputBox.Show("Consultar Parametros", "Informe a Competencia", ref competencia) != DialogResult.OK) return;
 
                 var numeroBeneficio = "";
-                if (InputBox.Show("Consultar Parametros", "Informe o Código de Serviço", ref numeroBeneficio) != DialogResult.OK) return;
+                if (InputBox.Show("Consultar Parametros", "Informe o Numero do Beneficio", ref numeroBeneficio) != DialogResult.OK) return;
 
                 var ret = ACBrNFSe.ConsultarParametros(tipoParametroMunicipio, codigoServico, DateTime.Parse(competencia), numeroBeneficio);
                 rtbRespostas.AppendText(ret);

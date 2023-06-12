@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/06/2023
+-- Betha.Provider --
+[*] Ajuste na function TratarXmlRetornado por conta de caracteres desnecessarios
+    em mensagens de erros.
+  Por: Procel Software
 -- Equiplano.Provider --
 [*] Ajuste na function TratarXmlRetornado por conta de caracteres desnecessarios
     em mensagens de erros.

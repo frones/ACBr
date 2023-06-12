@@ -353,7 +353,7 @@ namespace ACBrLibNFSe.Demo
             txtDadosPFX.Text = Convert.ToBase64String(dados);
         }
 
-        private void btnArqGTIN_Click(object sender, EventArgs e)
+        private void btnArqNFSe_Click(object sender, EventArgs e)
         {
             txtArqNFSe.Text = Helpers.SelectFolder();
         }
@@ -566,11 +566,13 @@ namespace ACBrLibNFSe.Demo
         {
             try
             {
+                CheckNFSeLista();
+
                 var aLote = "1";
-                if (InputBox.Show("Gerar Lote EPS", "Número do Lote", ref aLote) != DialogResult.OK) return;
+                if (InputBox.Show("Gerar Lote RPS", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var qtdNaximaRPS = 1;
-                if (InputBox.Show("Gerar Lote EPS", "Quantidade Máxima RPS", ref qtdNaximaRPS) != DialogResult.OK) return;
+                if (InputBox.Show("Gerar Lote RPS", "Quantidade Máxima RPS", ref qtdNaximaRPS) != DialogResult.OK) return;
 
                 var ret = ACBrNFSe.GerarLote(aLote, qtdNaximaRPS, 0);
                 rtbRespostas.AppendText(ret);
@@ -1127,7 +1129,7 @@ namespace ACBrLibNFSe.Demo
                 if (InputBox.Show("Consultar Evento", "Informe o Tipo do Evento", ref tipoEvento) != DialogResult.OK) return;
 
                 var numeroSequencia = 0;
-                if (InputBox.Show("Consultar Evento", "Informe o Número Sequencia", ref tipoEvento) != DialogResult.OK) return;
+                if (InputBox.Show("Consultar Evento", "Informe o Número Sequencia", ref numeroSequencia) != DialogResult.OK) return;
 
                 var ret = ACBrNFSe.ConsultarEvento(chave, tipoEvento, numeroSequencia);
                 rtbRespostas.AppendText(ret);

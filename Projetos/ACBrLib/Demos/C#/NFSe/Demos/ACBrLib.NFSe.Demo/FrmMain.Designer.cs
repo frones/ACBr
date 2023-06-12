@@ -1527,7 +1527,7 @@
             this.btnArqNFSe.TabIndex = 27;
             this.btnArqNFSe.Text = "...";
             this.btnArqNFSe.UseVisualStyleBackColor = true;
-            this.btnArqNFSe.Click += new System.EventHandler(this.btnArqGTIN_Click);
+            this.btnArqNFSe.Click += new System.EventHandler(this.btnArqNFSe_Click);
             // 
             // label36
             // 

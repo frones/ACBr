@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/06/2023
+-- Giap.Provider --
+[*] Possível solução ao obter o XML de retorno do Emitir.
+  Por: Italo Giurizzato Junior
+
 09/06/2023
 -- ISSDSF.Provider --
 [*] Ajustes na leitura do retorno dos métodos Recepcioar e Teste.

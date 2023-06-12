@@ -288,20 +288,20 @@ begin
             Link := aLink;
             NumeroRps := aNumeroRps;
           end;
-
-          AResumo := Response.Resumos.New;
-          AResumo.NumeroNota := aNumeroNota;
-          AResumo.CodigoVerificacao := aCodigoVerificacao;
-          AResumo.NumeroRps := aNumeroRps;
-          AResumo.Link := aLink;
-          AResumo.Situacao := aSituacao;
         end;
+
+        AResumo := Response.Resumos.New;
+        AResumo.NumeroNota := aNumeroNota;
+        AResumo.CodigoVerificacao := aCodigoVerificacao;
+        AResumo.NumeroRps := aNumeroRps;
+        AResumo.Link := aLink;
+        AResumo.Situacao := aSituacao;
 
         // GIAP Não retorna o XML da Nota sendo necessário imprimir a Nota já
         // gerada. Se Não der erro, passo a Nota de Envio para ser impressa já
         // que não deu erro na emissão.
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(aNumeroRps);
         ANota := CarregarXmlNfse(ANota, Response.XmlEnvio);
 
         {
@@ -310,10 +310,10 @@ begin
         }
         with ANota.NFSe do
         begin
-           Numero := AResumo.NumeroNota;
-           CodigoVerificacao := AResumo.CodigoVerificacao;
-           Link := AResumo.Link;
-           IdentificacaoRps.Numero := AResumo.NumeroRps;
+           Numero := aNumeroNota;
+           CodigoVerificacao := aCodigoVerificacao;
+           Link := aLink;
+           IdentificacaoRps.Numero := aNumeroRps;
            ANota.LerXML(ANota.GerarXML);
         end;
 
@@ -349,13 +349,13 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<consulta>' +
-                          '<inscricaoMunicipal>' +
-                            OnlyNumber(Emitente.InscMun) +
-                          '</inscricaoMunicipal>' +
-                          '<codigoVerificacao>' +
-                            Response.CodigoVerificacao +
-                          '</codigoVerificacao>' +
-                       '</consulta>';
+                              '<inscricaoMunicipal>' +
+                                OnlyNumber(Emitente.InscMun) +
+                              '</inscricaoMunicipal>' +
+                              '<codigoVerificacao>' +
+                                Response.CodigoVerificacao +
+                              '</codigoVerificacao>' +
+                           '</consulta>';
 end;
 
 procedure TACBrNFSeProviderGiap.TratarRetornoConsultaNFSeporRps(
@@ -438,15 +438,15 @@ begin
   end;
 
   Response.ArquivoEnvio := '<nfe>' +
-                         '<cancelaNota>' +
-                           '<codigoMotivo>' +
-                              Response.InfCancelamento.CodCancelamento +
-                           '</codigoMotivo>' +
-                           '<numeroNota>' +
-                              Response.InfCancelamento.NumeroNFSe +
-                           '</numeroNota>' +
-                         '</cancelaNota>' +
-                       '</nfe>';
+                             '<cancelaNota>' +
+                               '<codigoMotivo>' +
+                                  Response.InfCancelamento.CodCancelamento +
+                               '</codigoMotivo>' +
+                               '<numeroNota>' +
+                                  Response.InfCancelamento.NumeroNFSe +
+                               '</numeroNota>' +
+                             '</cancelaNota>' +
+                           '</nfe>';
 end;
 
 procedure TACBrNFSeProviderGiap.TratarRetornoCancelaNFSe(

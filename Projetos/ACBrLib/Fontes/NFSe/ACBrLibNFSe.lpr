@@ -100,7 +100,16 @@ exports
   NFSE_ConsultarNFSeServicoTomadoPorPrestador,
   NFSE_ConsultarNFSeServicoTomadoPorTomador,
   NFSE_ConsultarNFSeServicoTomadoPorPeriodo,
-  NFSE_ConsultarNFSeServicoTomadoPorIntermediario;
+  NFSE_ConsultarNFSeServicoTomadoPorIntermediario,
+
+  //Padrao Nacional
+  NFSE_EnviarEvento,
+  NFSE_ConsultarDPSPorChave,
+  NFSE_ConsultarNFSePorChave,
+  NFSE_ConsultarEvento,
+  NFSE_ConsultarDFe,
+  NFSE_ObterDANFSE,
+  NFSE_ConsultarParametros;
 
 begin
   {$IFDEF DEBUG}

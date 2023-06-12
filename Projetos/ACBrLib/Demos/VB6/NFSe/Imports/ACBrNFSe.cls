@@ -279,7 +279,47 @@ Private Declare Function NFSE_ConsultarNFSeServicoTomadoPorIntermediario _
                                       ByVal aTipoPeriodo As Long, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
-
+                                      
+Private Declare Function NFSE_EnviarEvento _
+               Lib "ACBrNFSe32.dll" (ByVal aInfEvento As String, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                                     
+Private Declare Function NFSE_ConsultarDPSPorChave _
+               Lib "ACBrNFSe32.dll" (ByVal aChaveDPS As String, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                                     
+Private Declare Function NFSE_ConsultarNFSePorChave _
+               Lib "ACBrNFSe32.dll" (ByVal aChaveNFSe As String, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                                                                          
+Private Declare Function NFSE_ConsultarEvento _
+                Lib "ACBrNFSe32.dll" (ByVal aChave As String, _
+                                      ByVal aTipoEvento As Long, _
+                                      ByVal aNumSeq As Long, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferLen As Long) As Long
+                                      
+Private Declare Function NFSE_ConsultarDFe _
+                Lib "ACBrNFSe32.dll" (ByVal aNSU As Long, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferLen As Long) As Long
+                                      
+Private Declare Function NFSE_ObterDANFSE _
+               Lib "ACBrNFSe32.dll" (ByVal aChaveNFSe As String, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                                     
+Private Declare Function NFSE_ConsultarParametros _
+               Lib "ACBrNFSe32.dll" (ByVal aTipoParametroMunicipio As Long, _
+                                     ByVal aCodigoServico As String, _
+                                     ByVal aCompetencia As Date, _
+                                     ByVal aNumeroBeneficio As String, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                                                                          
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
 
@@ -852,6 +892,118 @@ Public Function ConsultarNFSeServicoTomadoPorIntermediario(ByVal aCNPJ As String
     CheckResult retorno
     
     ConsultarNFSeServicoTomadoPorIntermediario = processResult(buffer, bufferLen)
+
+End Function
+
+Public Function EnviarEvento(ByVal aInfEvento As String) As String
+
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_EnviarEvento(aInfEvento, buffer, bufferLen)
+    CheckResult retorno
+    
+    EnviarEvento = processResult(buffer, bufferLen)
+
+End Function
+
+Public Function ConsultarDPSPorChave(ByVal aChaveDPS As String) As String
+    
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_ConsultarDPSPorChave(aChaveDPS, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConsultarDPSPorChave = processResult(buffer, bufferLen)
+    
+End Function
+
+Public Function ConsultarNFSePorChave(ByVal aChaveNFSe As String) As String
+
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_ConsultarNFSePorChave(aChaveNFSe, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConsultarNFSePorChave = processResult(buffer, bufferLen)
+
+End Function
+
+Public Function ConsultarEvento(ByVal aChave As String, ByVal aTipoEvento As Long, ByVal aNumSeq As Long) As String
+
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_ConsultarEvento(aChave, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConsultarEvento = processResult(buffer, bufferLen)
+
+End Function
+
+Public Function ConsultarDFe(ByVal aNSU As Long) As String
+
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_ConsultarDFe(aNSU, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConsultarDFe = processResult(buffer, bufferLen)
+
+End Function
+
+Public Function ObterDANFSE(ByVal aChaveNFSe As String) As String
+
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_ObterDANFSE(aChaveNFSe, buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterDANFSE = processResult(buffer, bufferLen)
+
+End Function
+
+Public Function ConsultarParametros(ByVal aTipoParametroMunicipio As Long, ByVal aCodigoServico As String, ByVal aCompetencia As Date, ByVal aNumeroBeneficio As String) As String
+
+    Dim retorno As Long
+    Dim buffer As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_ConsultarParametros(aTipoParametroMunicipio, aCodigoServico, aCompetencia, aNumeroBeneficio, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConsultarParametros = processResult(buffer, bufferLen)
 
 End Function
 

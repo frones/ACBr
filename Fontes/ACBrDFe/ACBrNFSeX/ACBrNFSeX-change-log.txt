@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/06/2023
+-- Equiplano.Provider --
+[*] Ajuste na function TratarXmlRetornado por conta de caracteres desnecessarios
+    em mensagens de erros.
+  Por: Marcos
 -- Giap.Provider --
 [*] Possível solução ao obter o XML de retorno do Emitir.
   Por: Italo Giurizzato Junior

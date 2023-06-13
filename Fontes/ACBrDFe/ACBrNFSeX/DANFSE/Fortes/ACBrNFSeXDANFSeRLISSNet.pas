@@ -527,22 +527,9 @@ begin
     rllPrestNomeEnt.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
   end;
 
-  if ((pos('http://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or
-    (pos('https://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or
-    (pos('http://', LowerCase(fpNFSe.Link)) > 0) or
-    (pos('https://', LowerCase(fpNFSe.Link)) > 0)) then
+  if fpNFSe.Link <> '' then
   begin
-    QRCodeData := Trim(MidStr(fpNFSe.Link, pos('http://', LowerCase(fpNFSe.Link)), Length(fpNFSe.Link)));
-
-    if QRCodeData = '' then
-      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('https://', LowerCase(fpNFSe.Link)), Length(fpNFSe.Link)));
-
-    if QRCodeData = '' then
-      QRCodeData := Trim(MidStr(fpNFSe.OutrasInformacoes, pos('http://', LowerCase(fpNFSe.OutrasInformacoes)), Length(fpNFSe.OutrasInformacoes)));
-
-    if QRCodeData = '' then
-      QRCodeData := Trim(MidStr(fpNFSe.OutrasInformacoes, pos('https://', LowerCase(fpNFSe.OutrasInformacoes)), Length(fpNFSe.OutrasInformacoes)));
-
+    QRCodeData := fpNFSe.Link;
     QrCode := TDelphiZXingQRCode.Create;
     QrCodeBitmap := TBitmap.Create;
 

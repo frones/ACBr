@@ -318,6 +318,8 @@ begin
     //valores dos tributos
     LerReg30(AuxNode);
   end;
+
+  LerCampoLink;
 end;
 
 function TNFSeR_Conam.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

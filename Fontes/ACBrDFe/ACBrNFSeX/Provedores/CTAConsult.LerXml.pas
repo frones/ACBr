@@ -105,6 +105,8 @@ begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   // Precisamos de um retorno com o XML da nota para terminar a implementação
+
+  LerCampoLink;
 end;
 
 function TNFSeR_CTAConsult.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

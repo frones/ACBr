@@ -106,6 +106,7 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
+  LerCampoLink;
 end;
 
 function TNFSeR_CTA200.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

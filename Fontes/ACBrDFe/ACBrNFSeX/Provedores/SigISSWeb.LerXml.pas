@@ -245,6 +245,8 @@ begin
 
     CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('codigo'), tcStr);
   end;
+
+  LerCampoLink;
 end;
 
 function TNFSeR_SigISSWeb.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

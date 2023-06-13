@@ -326,7 +326,7 @@ begin
   if fpNFSe.InformacoesComplementares <> '' then
     rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]));
 
-  if ((pos('http://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or (pos('http://', LowerCase(fpNFSe.Link)) > 0) or (pos('https://', LowerCase(fpNFSe.Link)) > 0)) then
+  if fpNFSe.Link <> '' then
   begin
     rlmDadosAdicionais.Width := 643;
 
@@ -338,13 +338,7 @@ begin
     rlImgQrCode.SetBounds(648, 3, 90, 90);
     rlImgQrCode.BringToFront;
 
-    if pos('http://', LowerCase(fpNFSe.Link)) > 0 then
-      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('http://', LowerCase(fpNFSe.Link)), Length(fpNFSe.Link)))
-    else if pos('https://', LowerCase(fpNFSe.Link)) > 0 then
-      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('https://', LowerCase(fpNFSe.Link)), Length(fpNFSe.Link)))
-    else
-      QRCodeData := Trim(MidStr(fpNFSe.OutrasInformacoes, pos('http://', LowerCase(fpNFSe.OutrasInformacoes)), Length(fpNFSe.OutrasInformacoes)));
-
+    QRCodeData   := fpNFSe.Link;
     QRCode       := TDelphiZXingQRCode.Create;
     QRCodeBitmap := TBitmap.Create;
     try

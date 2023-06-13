@@ -39,6 +39,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrXmlBase, ACBrXmlReader,
+  ACBrXmlDocument,
   ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao;
 
 type
@@ -68,6 +69,7 @@ type
     constructor Create(AOwner: IACBrNFSeXProvider);
 
     function LerXml: Boolean; Override;
+    procedure LerCampoLink;
 
     property NFSe: TNFSe             read FNFSe     write FNFSe;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
@@ -263,6 +265,52 @@ begin
       BaseCalculo := fValorBC;
       Aliquota := fAliquota;
     end;
+  end;
+end;
+
+procedure TNFSeRClass.LerCampoLink;
+var
+  Link: string;
+  i: Integer;
+
+function ExtrairURL(PosIni: Integer; Texto: string): string;
+var
+  j: Integer;
+  Url: string;
+begin
+  Url := '';
+  j := PosIni;
+
+  while (j < Length(Texto)) and (Texto[j] <> ' ') do
+  begin
+    Url := Url + Texto[j];
+    Inc(j);
+  end;
+
+  Result := Url;
+end;
+
+begin
+  if NFSe.Link = '' then
+  begin
+    Link := '';
+
+    i := pos('http://', LowerCase(NFSe.OutrasInformacoes));
+
+    if i > 0 then
+      Link := ExtrairURL(i, NFSe.OutrasInformacoes)
+    else
+    begin
+      i := pos('https://', LowerCase(NFSe.OutrasInformacoes));
+
+      if i > 0 then
+        Link := ExtrairURL(i, NFSe.OutrasInformacoes);
+    end;
+
+    if Link = '' then
+      Link := LerLinkURL;
+
+    NFSe.Link := Trim(Link);
   end;
 end;
 

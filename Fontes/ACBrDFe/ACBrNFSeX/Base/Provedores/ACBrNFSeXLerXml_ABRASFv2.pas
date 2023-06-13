@@ -1209,8 +1209,7 @@ begin
   LerNfseCancelamento(ANode);
   LerNfseSubstituicao(ANode);
 
-  if NFSe.Link = '' then
-    NFSe.Link := LerLinkURL;
+  LerCampoLink;
 end;
 
 function TNFSeR_ABRASFv2.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

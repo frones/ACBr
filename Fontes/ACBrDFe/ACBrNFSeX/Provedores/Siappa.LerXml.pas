@@ -178,6 +178,8 @@ begin
   end;
 
   NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('NFS_E_DES_RES'), tcStr);
+
+  LerCampoLink;
 end;
 
 function TNFSeR_Siappa.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

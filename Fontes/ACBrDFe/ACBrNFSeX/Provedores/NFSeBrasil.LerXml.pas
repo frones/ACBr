@@ -344,6 +344,8 @@ begin
 
   LerNfseCancelamento(AuxNode1);
   LerNfseSubstituicao(AuxNode1);
+
+  LerCampoLink;
 end;
 
 end.

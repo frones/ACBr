@@ -668,6 +668,8 @@ begin
   LerIdentificacaoOrgaoGerador(ANode);
   LerDadosPrestador(ANode);
   LerNfseDeclaracaoPrestacaoServico(ANode);
+
+  LerCampoLink;
 end;
 
 function TNFSeR_Agili.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

@@ -374,6 +374,8 @@ begin
 
   NFSe.NomeArq := NFSe.Numero + '-nfse.xml';
   Result := True;
+
+  LerCampoLink;
 end;
 
 function TNFSeR_ISSLencois.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

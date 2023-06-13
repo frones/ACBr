@@ -176,17 +176,19 @@ function TNFSeR_eGoverneISS.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := True;
 
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   // Falta Implementar (Não tem schema para tomar como base)
 
   (*
-
-  if not Assigned(ANode) or (ANode = nil) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('notasFiscais');
 
   if AuxNode = nil then
     AuxNode := ANode.Childrens.FindAnyNs('nfeRpsNotaFiscal');
   *)
+
+  LerCampoLink;
 end;
 
 function TNFSeR_eGoverneISS.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

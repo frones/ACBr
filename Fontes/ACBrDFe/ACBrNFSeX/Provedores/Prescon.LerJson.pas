@@ -130,6 +130,8 @@ begin
   LerDadosLocalServico(ANode);
   LerDetalhesServico(ANode);
   LerTotais(ANode);
+
+  LerCampoLink;
 end;
 
 procedure TNFSeR_Prescon.LerDadosPrestador(const ANode: TACBrXmlNode);

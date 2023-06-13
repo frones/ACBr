@@ -385,6 +385,8 @@ begin
 //    LerRetencoes(ANode);
     LerCancelamento(AuxNode);
   end;
+
+  LerCampoLink;
 end;
 
 function TNFSeR_Equiplano.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

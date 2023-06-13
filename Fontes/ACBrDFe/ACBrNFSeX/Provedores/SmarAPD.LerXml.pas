@@ -409,6 +409,8 @@ begin
       BaseCalculo      := ValorLiquidoNfse;
     end;
   end;
+
+  LerCampoLink;
 end;
 
 function TNFSeR_SmarAPD.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

@@ -4,7 +4,6 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
   Caption = 'frlXDANFSeRLISSNet'
   ClientHeight = 750
   ClientWidth = 933
-  PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Left = 32

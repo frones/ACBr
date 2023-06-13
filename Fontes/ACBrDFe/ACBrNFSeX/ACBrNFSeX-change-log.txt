@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/06/2023
+-- Diversos --
+[*] Remoção da regra de negócio (procurar pelo Link) para montar o QR-Code
+    no DANFSE feito em Fortes Report.
+  Por: Italo Giurizzato Junior/Renato Rubinho
 -- Centi.Provider/Centi.GravarXml/Centi.LerXml --
 [*] Ajustes na geração e leitura da tag IssRetido.
   Por: Diego Reckziegel

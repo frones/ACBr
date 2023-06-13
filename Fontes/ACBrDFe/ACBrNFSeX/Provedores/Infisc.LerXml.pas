@@ -692,6 +692,8 @@ begin
   LerTransportadora(AuxNode);
   LerFaturas(AuxNode);
   LerInformacoesAdic(AuxNode);
+
+  LerCampoLink;
 end;
 
 function TNFSeR_Infisc.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

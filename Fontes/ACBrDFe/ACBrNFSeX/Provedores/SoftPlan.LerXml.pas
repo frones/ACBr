@@ -192,6 +192,8 @@ begin
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('dadosAdicionais'), tcStr);
   	// <valorISSQNSubstituicao>0</valorISSQNSubstituicao>
   end;
+
+  LerCampoLink;
 end;
 
 function TNFSeR_SoftPlan.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

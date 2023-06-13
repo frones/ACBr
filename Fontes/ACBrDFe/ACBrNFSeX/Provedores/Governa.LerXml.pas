@@ -242,6 +242,8 @@ begin
       end;
     end;
   end;
+
+  LerCampoLink;
 end;
 
 function TNFSeR_Governa.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

@@ -584,6 +584,8 @@ begin
   LerCartaCorrecao(ANode);
   LerCancelamentoNFe(ANode);
 
+  LerCampoLink;
+
   Result := True;
 end;
 

@@ -817,6 +817,8 @@ begin
 
 //  LerNfseCancelamento(ANode);
 //  LerNfseSubstituicao(ANode);
+
+  LerCampoLink;
 end;
 
 function TNFSeR_Centi202.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2023
+-- Centi.Provider/Centi.GravarXml/Centi.LerXml --
+[*] Ajustes na geração e leitura da tag IssRetido.
+  Por: Diego Reckziegel
+
 12/06/2023
 -- ISSDSF.Provider --
 [*] Ajustes na procedure ProcessarMensagemErros ao consultar o status do lote 

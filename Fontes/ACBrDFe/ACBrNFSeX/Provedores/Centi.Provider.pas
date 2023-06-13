@@ -200,8 +200,8 @@ function TACBrNFSeProviderCenti202.SituacaoTributariaToStr(
   const t: TnfseSituacaoTributaria): string;
 begin
   Result := EnumeradoToStr(t,
-                             ['0', '1', '2'],
-                             [stRetencao, stNormal, stSubstituicao]);
+                             ['1', '2'],
+                             [stRetencao, stNormal]);
 end;
 
 function TACBrNFSeProviderCenti202.StrToSituacaoTributaria(out ok: boolean;

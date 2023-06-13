@@ -77,15 +77,13 @@ begin
   NrOcorrDescCond := -1;
   NrOcorrRespRetencao := -1;
 
-  NrOcorrIssRetido := -1;
+  NrOcorrIssRetido := 0;
   NrOcorrExigibilidadeISS := -1;
   NrOcorrCodigoCNAE := -1;
 
   NrOcorrCompetencia := -1;
   NrOcorrOptanteSimplesNacional := -1;
   NrOcorrIncentCultural := -1;
-
-//  GerarIDDeclaracao := False;
 end;
 
 end.

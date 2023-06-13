@@ -593,8 +593,6 @@ begin
 
       with Valores do
       begin
-        IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
-
         if IssRetido = stRetencao then
           ValorIssRetido := ValorIss
         else

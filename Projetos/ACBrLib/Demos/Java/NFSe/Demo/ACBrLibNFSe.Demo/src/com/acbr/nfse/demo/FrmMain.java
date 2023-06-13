@@ -57,47 +57,6 @@ public class FrmMain extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup8 = new javax.swing.ButtonGroup();
         buttonGroup9 = new javax.swing.ButtonGroup();
-        jPanel8 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        rtbRespostas = new javax.swing.JTextArea();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel14 = new javax.swing.JPanel();
-        btnEmitirNota = new javax.swing.JButton();
-        btnGerarEnviarLoteAssincrono = new javax.swing.JButton();
-        btnSubstituirNFSe = new javax.swing.JButton();
-        btnImprimirDANFSe = new javax.swing.JButton();
-        btnLimparListaNFSe = new javax.swing.JButton();
-        btnGerarLotaRPS = new javax.swing.JButton();
-        btnCarregarXMLNFse = new javax.swing.JButton();
-        btnGravarXMLNFSe = new javax.swing.JButton();
-        btnEnviarEmail = new javax.swing.JButton();
-        btnGerarEnviarLoteSincrono = new javax.swing.JButton();
-        btnEnviarRPS = new javax.swing.JButton();
-        btnImprimirNFSe = new javax.swing.JButton();
-        btnLinkNFSe = new javax.swing.JButton();
-        btnGerarToken = new javax.swing.JButton();
-        btnObterXMLNFSe = new javax.swing.JButton();
-        jPanel15 = new javax.swing.JPanel();
-        btnConsultarSituacaoLote = new javax.swing.JButton();
-        btnConsultarNFSePorNumero = new javax.swing.JButton();
-        btnConsultarNFSeGenerico = new javax.swing.JButton();
-        btnConsultarLoteRPS = new javax.swing.JButton();
-        btnConsultarNFSePorPeriodo = new javax.swing.JButton();
-        btnConsultarNFSePorRPS = new javax.swing.JButton();
-        btnConsultarNFSePorFaixa = new javax.swing.JButton();
-        jPanel16 = new javax.swing.JPanel();
-        btnConsultarNFSeServicoPrestadoPorNumero = new javax.swing.JButton();
-        btnConsultarNFSeServicoPrestadoPorTomador = new javax.swing.JButton();
-        btnConsultarNFSeServicoPrestadoPorPeriodo = new javax.swing.JButton();
-        btnConsultarNFSeServicoPrestadoPorIntermediario = new javax.swing.JButton();
-        jPanel17 = new javax.swing.JPanel();
-        btnConsultarNFSeServicoTomadoPorNumero = new javax.swing.JButton();
-        btnConsultarNFSeServicoTomadoPorPrestador = new javax.swing.JButton();
-        btnConsultarNFSeServicoTomadoPorTomador = new javax.swing.JButton();
-        btnConsultarNFSeServicoTomadoPorPeriodo = new javax.swing.JButton();
-        btnConsultarNFSeServicoTomadoPorIntermediario = new javax.swing.JButton();
-        jPanel18 = new javax.swing.JPanel();
-        btnCancelarNFSe = new javax.swing.JButton();
         btnCarregarConfiguracoes = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -248,6 +207,57 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         txtMensagem = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
+        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel14 = new javax.swing.JPanel();
+        btnEmitirNota = new javax.swing.JButton();
+        btnGerarEnviarLoteAssincrono = new javax.swing.JButton();
+        btnSubstituirNFSe = new javax.swing.JButton();
+        btnImprimirDANFSe = new javax.swing.JButton();
+        btnLimparListaNFSe = new javax.swing.JButton();
+        btnGerarLotaRPS = new javax.swing.JButton();
+        btnCarregarXMLNFse = new javax.swing.JButton();
+        btnGravarXMLNFSe = new javax.swing.JButton();
+        btnEnviarEmail = new javax.swing.JButton();
+        btnGerarEnviarLoteSincrono = new javax.swing.JButton();
+        btnEnviarRPS = new javax.swing.JButton();
+        btnImprimirNFSe = new javax.swing.JButton();
+        btnLinkNFSe = new javax.swing.JButton();
+        btnGerarToken = new javax.swing.JButton();
+        btnObterXMLNFSe = new javax.swing.JButton();
+        jPanel15 = new javax.swing.JPanel();
+        btnConsultarSituacaoLote = new javax.swing.JButton();
+        btnConsultarNFSePorNumero = new javax.swing.JButton();
+        btnConsultarNFSeGenerico = new javax.swing.JButton();
+        btnConsultarLoteRPS = new javax.swing.JButton();
+        btnConsultarNFSePorPeriodo = new javax.swing.JButton();
+        btnConsultarNFSePorRPS = new javax.swing.JButton();
+        btnConsultarNFSePorFaixa = new javax.swing.JButton();
+        jPanel16 = new javax.swing.JPanel();
+        btnConsultarNFSeServicoPrestadoPorNumero = new javax.swing.JButton();
+        btnConsultarNFSeServicoPrestadoPorTomador = new javax.swing.JButton();
+        btnConsultarNFSeServicoPrestadoPorPeriodo = new javax.swing.JButton();
+        btnConsultarNFSeServicoPrestadoPorIntermediario = new javax.swing.JButton();
+        jPanel17 = new javax.swing.JPanel();
+        btnConsultarNFSeServicoTomadoPorNumero = new javax.swing.JButton();
+        btnConsultarNFSeServicoTomadoPorPrestador = new javax.swing.JButton();
+        btnConsultarNFSeServicoTomadoPorTomador = new javax.swing.JButton();
+        btnConsultarNFSeServicoTomadoPorPeriodo = new javax.swing.JButton();
+        btnConsultarNFSeServicoTomadoPorIntermediario = new javax.swing.JButton();
+        jPanel18 = new javax.swing.JPanel();
+        btnCancelarNFSe = new javax.swing.JButton();
+        jTabbedPane5 = new javax.swing.JTabbedPane();
+        jPanel5 = new javax.swing.JPanel();
+        btnEnviarEvento = new javax.swing.JButton();
+        btnConsultarDPSPorChave = new javax.swing.JButton();
+        btnConsultarNFSePorChave = new javax.swing.JButton();
+        btnConsultarEvento = new javax.swing.JButton();
+        btnConsultarDFe = new javax.swing.JButton();
+        btnObterDANFSe = new javax.swing.JButton();
+        btnConsultarParametros = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        rtbRespostas = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ACBrLibNFSe Demo");
@@ -259,437 +269,6 @@ public class FrmMain extends javax.swing.JFrame {
                 formWindowActivated(evt);
             }
         });
-
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Respostas"));
-
-        rtbRespostas.setColumns(20);
-        rtbRespostas.setRows(5);
-        jScrollPane1.setViewportView(rtbRespostas);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-
-        jTabbedPane2.setToolTipText("");
-        jTabbedPane2.setName("Envio"); // NOI18N
-
-        btnEmitirNota.setText("Emitir Nota (Novo)");
-        btnEmitirNota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmitirNotaActionPerformed(evt);
-            }
-        });
-
-        btnGerarEnviarLoteAssincrono.setText("Enviar Lote RPS (Assíncrono)");
-        btnGerarEnviarLoteAssincrono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGerarEnviarLoteAssincronoActionPerformed(evt);
-            }
-        });
-
-        btnSubstituirNFSe.setText("Substituir NFSe");
-        btnSubstituirNFSe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubstituirNFSeActionPerformed(evt);
-            }
-        });
-
-        btnImprimirDANFSe.setText("Imprimir DANFSe");
-        btnImprimirDANFSe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirDANFSeActionPerformed(evt);
-            }
-        });
-
-        btnLimparListaNFSe.setText("Limpar Lista NFSe");
-        btnLimparListaNFSe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparListaNFSeActionPerformed(evt);
-            }
-        });
-
-        btnGerarLotaRPS.setText("Gerar Lote RPS");
-        btnGerarLotaRPS.setToolTipText("");
-        btnGerarLotaRPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGerarLotaRPSActionPerformed(evt);
-            }
-        });
-
-        btnCarregarXMLNFse.setText("Carregar XML NFSe");
-        btnCarregarXMLNFse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarregarXMLNFseActionPerformed(evt);
-            }
-        });
-
-        btnGravarXMLNFSe.setText("Gravar XML NFSe");
-        btnGravarXMLNFSe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGravarXMLNFSeActionPerformed(evt);
-            }
-        });
-
-        btnEnviarEmail.setText("Enviar Email");
-        btnEnviarEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarEmailActionPerformed(evt);
-            }
-        });
-
-        btnGerarEnviarLoteSincrono.setText("Enviar Lote RPS (Síncrono)");
-        btnGerarEnviarLoteSincrono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGerarEnviarLoteSincronoActionPerformed(evt);
-            }
-        });
-
-        btnEnviarRPS.setText("Enviar um RPS");
-        btnEnviarRPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarRPSActionPerformed(evt);
-            }
-        });
-
-        btnImprimirNFSe.setText("Imprimir NFSe");
-        btnImprimirNFSe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirNFSeActionPerformed(evt);
-            }
-        });
-
-        btnLinkNFSe.setText("Link NFSe");
-        btnLinkNFSe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLinkNFSeActionPerformed(evt);
-            }
-        });
-
-        btnGerarToken.setText("Gerar Token");
-        btnGerarToken.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGerarTokenActionPerformed(evt);
-            }
-        });
-
-        btnObterXMLNFSe.setText("Obter XML NFSe");
-        btnObterXMLNFSe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnObterXMLNFSeActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGerarEnviarLoteAssincrono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEmitirNota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSubstituirNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnImprimirDANFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLimparListaNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGerarLotaRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCarregarXMLNFse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGravarXMLNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEnviarEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGerarEnviarLoteSincrono, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                    .addComponent(btnEnviarRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnImprimirNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLinkNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGerarToken, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnObterXMLNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(156, Short.MAX_VALUE))
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEmitirNota)
-                    .addComponent(btnEnviarEmail))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGerarEnviarLoteAssincrono)
-                    .addComponent(btnGerarEnviarLoteSincrono))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSubstituirNFSe)
-                    .addComponent(btnEnviarRPS))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnImprimirDANFSe)
-                    .addComponent(btnImprimirNFSe))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLimparListaNFSe)
-                    .addComponent(btnLinkNFSe))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGerarLotaRPS)
-                    .addComponent(btnGerarToken))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCarregarXMLNFse)
-                    .addComponent(btnObterXMLNFSe))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGravarXMLNFSe)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Envios", jPanel14);
-
-        btnConsultarSituacaoLote.setText("Consultar Situação do Lote");
-        btnConsultarSituacaoLote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarSituacaoLoteActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSePorNumero.setText("Consultar NFSe Por Numero");
-        btnConsultarNFSePorNumero.setActionCommand("Consultar NFSe Por Número");
-        btnConsultarNFSePorNumero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSePorNumeroActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSeGenerico.setText("Consultar NFSe Genérico");
-        btnConsultarNFSeGenerico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeGenericoActionPerformed(evt);
-            }
-        });
-
-        btnConsultarLoteRPS.setText("Consultar Lote RPS");
-        btnConsultarLoteRPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarLoteRPSActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSePorPeriodo.setText("Consultar NFSe Por Periodo");
-        btnConsultarNFSePorPeriodo.setActionCommand("Consultar NFSe Por Período");
-        btnConsultarNFSePorPeriodo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSePorPeriodoActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSePorRPS.setText("Consultar NFSe Por RPS");
-        btnConsultarNFSePorRPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSePorRPSActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSePorFaixa.setText("Consultar NFSe Por Faixa");
-        btnConsultarNFSePorFaixa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSePorFaixaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnConsultarSituacaoLote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSePorNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeGenerico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarLoteRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnConsultarNFSePorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSePorRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSePorFaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(153, Short.MAX_VALUE))
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConsultarSituacaoLote)
-                    .addComponent(btnConsultarNFSePorPeriodo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConsultarNFSePorNumero)
-                    .addComponent(btnConsultarNFSePorRPS))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConsultarNFSeGenerico)
-                    .addComponent(btnConsultarNFSePorFaixa))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarLoteRPS)
-                .addContainerGap(188, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Consultas", jPanel15);
-
-        btnConsultarNFSeServicoPrestadoPorNumero.setText("Consultar NFSe Serviço Prestado Por Número");
-        btnConsultarNFSeServicoPrestadoPorNumero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoPrestadoPorNumeroActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSeServicoPrestadoPorTomador.setText("Consultar NFSe Serviço Prestado Por Tomador");
-        btnConsultarNFSeServicoPrestadoPorTomador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoPrestadoPorTomadorActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSeServicoPrestadoPorPeriodo.setText("Consultar NFSe Serviço Prestado Por Período");
-        btnConsultarNFSeServicoPrestadoPorPeriodo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoPrestadoPorPeriodoActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSeServicoPrestadoPorIntermediario.setText("Consultar NFSe Serviço Prestado Por Intermediário");
-        btnConsultarNFSeServicoPrestadoPorIntermediario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoPrestadoPorIntermediarioActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnConsultarNFSeServicoPrestadoPorNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoPrestadoPorTomador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoPrestadoPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoPrestadoPorIntermediario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(232, Short.MAX_VALUE))
-        );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnConsultarNFSeServicoPrestadoPorNumero)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarNFSeServicoPrestadoPorTomador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarNFSeServicoPrestadoPorPeriodo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarNFSeServicoPrestadoPorIntermediario)
-                .addContainerGap(188, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Cons. Serv. Prestados", jPanel16);
-
-        btnConsultarNFSeServicoTomadoPorNumero.setText("Consultar NFSe Serviço Tomado Por Número");
-        btnConsultarNFSeServicoTomadoPorNumero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoTomadoPorNumeroActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSeServicoTomadoPorPrestador.setText("Consultar NFSe Serviço Tomado Por Prestador");
-        btnConsultarNFSeServicoTomadoPorPrestador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoTomadoPorPrestadorActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSeServicoTomadoPorTomador.setText("Consultar NFSe Serviço Tomado Por Tomador");
-        btnConsultarNFSeServicoTomadoPorTomador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoTomadoPorTomadorActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSeServicoTomadoPorPeriodo.setText("Consultar NFSe Serviço Tomado Por Período");
-        btnConsultarNFSeServicoTomadoPorPeriodo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoTomadoPorPeriodoActionPerformed(evt);
-            }
-        });
-
-        btnConsultarNFSeServicoTomadoPorIntermediario.setText("Consultar NFSe Serviço Tomado Por Intermediário");
-        btnConsultarNFSeServicoTomadoPorIntermediario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarNFSeServicoTomadoPorIntermediarioActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnConsultarNFSeServicoTomadoPorNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoTomadoPorPrestador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoTomadoPorTomador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoTomadoPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoTomadoPorIntermediario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(234, Short.MAX_VALUE))
-        );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnConsultarNFSeServicoTomadoPorNumero)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarNFSeServicoTomadoPorPrestador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarNFSeServicoTomadoPorTomador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarNFSeServicoTomadoPorPeriodo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarNFSeServicoTomadoPorIntermediario)
-                .addContainerGap(152, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Cons. Serv. Tomados", jPanel17);
-
-        btnCancelarNFSe.setText("Cancelar NFSe");
-        btnCancelarNFSe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarNFSeActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCancelarNFSe)
-                .addContainerGap(422, Short.MAX_VALUE))
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCancelarNFSe)
-                .addContainerGap(296, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Cancelamento", jPanel18);
 
         btnCarregarConfiguracoes.setLabel("Carregar Configurações");
         btnCarregarConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
@@ -1107,16 +686,14 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(txtEmitenteFraseSecreta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel60)
-                        .addGap(33, 33, 33))
+                    .addComponent(jLabel60)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel61)
                         .addGap(3, 3, 3)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtEmitenteChaveAutorizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEmitenteChaveAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1524,7 +1101,7 @@ public class FrmMain extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jTabbedPane3)
-                .addGap(352, 352, 352))
+                .addGap(472, 472, 472))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1760,6 +1337,529 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jTabbedPane2.setToolTipText("");
+        jTabbedPane2.setName("Envio"); // NOI18N
+
+        btnEmitirNota.setText("Emitir Nota (Novo)");
+        btnEmitirNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmitirNotaActionPerformed(evt);
+            }
+        });
+
+        btnGerarEnviarLoteAssincrono.setText("Enviar Lote RPS (Assíncrono)");
+        btnGerarEnviarLoteAssincrono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarEnviarLoteAssincronoActionPerformed(evt);
+            }
+        });
+
+        btnSubstituirNFSe.setText("Substituir NFSe");
+        btnSubstituirNFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubstituirNFSeActionPerformed(evt);
+            }
+        });
+
+        btnImprimirDANFSe.setText("Imprimir DANFSe");
+        btnImprimirDANFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirDANFSeActionPerformed(evt);
+            }
+        });
+
+        btnLimparListaNFSe.setText("Limpar Lista NFSe");
+        btnLimparListaNFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparListaNFSeActionPerformed(evt);
+            }
+        });
+
+        btnGerarLotaRPS.setText("Gerar Lote RPS");
+        btnGerarLotaRPS.setToolTipText("");
+        btnGerarLotaRPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarLotaRPSActionPerformed(evt);
+            }
+        });
+
+        btnCarregarXMLNFse.setText("Carregar XML NFSe");
+        btnCarregarXMLNFse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarXMLNFseActionPerformed(evt);
+            }
+        });
+
+        btnGravarXMLNFSe.setText("Gravar XML NFSe");
+        btnGravarXMLNFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarXMLNFSeActionPerformed(evt);
+            }
+        });
+
+        btnEnviarEmail.setText("Enviar Email");
+        btnEnviarEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarEmailActionPerformed(evt);
+            }
+        });
+
+        btnGerarEnviarLoteSincrono.setText("Enviar Lote RPS (Síncrono)");
+        btnGerarEnviarLoteSincrono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarEnviarLoteSincronoActionPerformed(evt);
+            }
+        });
+
+        btnEnviarRPS.setText("Enviar um RPS");
+        btnEnviarRPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarRPSActionPerformed(evt);
+            }
+        });
+
+        btnImprimirNFSe.setText("Imprimir NFSe");
+        btnImprimirNFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirNFSeActionPerformed(evt);
+            }
+        });
+
+        btnLinkNFSe.setText("Link NFSe");
+        btnLinkNFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLinkNFSeActionPerformed(evt);
+            }
+        });
+
+        btnGerarToken.setText("Gerar Token");
+        btnGerarToken.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarTokenActionPerformed(evt);
+            }
+        });
+
+        btnObterXMLNFSe.setText("Obter XML NFSe");
+        btnObterXMLNFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObterXMLNFSeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnGerarEnviarLoteAssincrono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEmitirNota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSubstituirNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnImprimirDANFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimparListaNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGerarLotaRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCarregarXMLNFse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGravarXMLNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEnviarEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGerarEnviarLoteSincrono, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                    .addComponent(btnEnviarRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnImprimirNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLinkNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGerarToken, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnObterXMLNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEmitirNota)
+                    .addComponent(btnEnviarEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGerarEnviarLoteAssincrono)
+                    .addComponent(btnGerarEnviarLoteSincrono))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSubstituirNFSe)
+                    .addComponent(btnEnviarRPS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnImprimirDANFSe)
+                    .addComponent(btnImprimirNFSe))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimparListaNFSe)
+                    .addComponent(btnLinkNFSe))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGerarLotaRPS)
+                    .addComponent(btnGerarToken))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCarregarXMLNFse)
+                    .addComponent(btnObterXMLNFSe))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGravarXMLNFSe)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Envios", jPanel14);
+
+        btnConsultarSituacaoLote.setText("Consultar Situação do Lote");
+        btnConsultarSituacaoLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarSituacaoLoteActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSePorNumero.setText("Consultar NFSe Por Numero");
+        btnConsultarNFSePorNumero.setActionCommand("Consultar NFSe Por Número");
+        btnConsultarNFSePorNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSePorNumeroActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSeGenerico.setText("Consultar NFSe Genérico");
+        btnConsultarNFSeGenerico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeGenericoActionPerformed(evt);
+            }
+        });
+
+        btnConsultarLoteRPS.setText("Consultar Lote RPS");
+        btnConsultarLoteRPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarLoteRPSActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSePorPeriodo.setText("Consultar NFSe Por Periodo");
+        btnConsultarNFSePorPeriodo.setActionCommand("Consultar NFSe Por Período");
+        btnConsultarNFSePorPeriodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSePorPeriodoActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSePorRPS.setText("Consultar NFSe Por RPS");
+        btnConsultarNFSePorRPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSePorRPSActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSePorFaixa.setText("Consultar NFSe Por Faixa");
+        btnConsultarNFSePorFaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSePorFaixaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnConsultarSituacaoLote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSePorNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSeGenerico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarLoteRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnConsultarNFSePorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSePorRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSePorFaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConsultarSituacaoLote)
+                    .addComponent(btnConsultarNFSePorPeriodo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConsultarNFSePorNumero)
+                    .addComponent(btnConsultarNFSePorRPS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConsultarNFSeGenerico)
+                    .addComponent(btnConsultarNFSePorFaixa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarLoteRPS)
+                .addContainerGap(145, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Consultas", jPanel15);
+
+        btnConsultarNFSeServicoPrestadoPorNumero.setText("Consultar NFSe Serviço Prestado Por Número");
+        btnConsultarNFSeServicoPrestadoPorNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoPrestadoPorNumeroActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSeServicoPrestadoPorTomador.setText("Consultar NFSe Serviço Prestado Por Tomador");
+        btnConsultarNFSeServicoPrestadoPorTomador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoPrestadoPorTomadorActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSeServicoPrestadoPorPeriodo.setText("Consultar NFSe Serviço Prestado Por Período");
+        btnConsultarNFSeServicoPrestadoPorPeriodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoPrestadoPorPeriodoActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSeServicoPrestadoPorIntermediario.setText("Consultar NFSe Serviço Prestado Por Intermediário");
+        btnConsultarNFSeServicoPrestadoPorIntermediario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoPrestadoPorIntermediarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnConsultarNFSeServicoPrestadoPorNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSeServicoPrestadoPorTomador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSeServicoPrestadoPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSeServicoPrestadoPorIntermediario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(199, Short.MAX_VALUE))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnConsultarNFSeServicoPrestadoPorNumero)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarNFSeServicoPrestadoPorTomador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarNFSeServicoPrestadoPorPeriodo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarNFSeServicoPrestadoPorIntermediario)
+                .addContainerGap(145, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Cons. Serv. Prestados", jPanel16);
+
+        btnConsultarNFSeServicoTomadoPorNumero.setText("Consultar NFSe Serviço Tomado Por Número");
+        btnConsultarNFSeServicoTomadoPorNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoTomadoPorNumeroActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSeServicoTomadoPorPrestador.setText("Consultar NFSe Serviço Tomado Por Prestador");
+        btnConsultarNFSeServicoTomadoPorPrestador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoTomadoPorPrestadorActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSeServicoTomadoPorTomador.setText("Consultar NFSe Serviço Tomado Por Tomador");
+        btnConsultarNFSeServicoTomadoPorTomador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoTomadoPorTomadorActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSeServicoTomadoPorPeriodo.setText("Consultar NFSe Serviço Tomado Por Período");
+        btnConsultarNFSeServicoTomadoPorPeriodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoTomadoPorPeriodoActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSeServicoTomadoPorIntermediario.setText("Consultar NFSe Serviço Tomado Por Intermediário");
+        btnConsultarNFSeServicoTomadoPorIntermediario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSeServicoTomadoPorIntermediarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnConsultarNFSeServicoTomadoPorNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSeServicoTomadoPorPrestador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSeServicoTomadoPorTomador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSeServicoTomadoPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSeServicoTomadoPorIntermediario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnConsultarNFSeServicoTomadoPorNumero)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarNFSeServicoTomadoPorPrestador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarNFSeServicoTomadoPorTomador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarNFSeServicoTomadoPorPeriodo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarNFSeServicoTomadoPorIntermediario)
+                .addContainerGap(113, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Cons. Serv. Tomados", jPanel17);
+
+        btnCancelarNFSe.setText("Cancelar NFSe");
+        btnCancelarNFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarNFSeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCancelarNFSe)
+                .addContainerGap(389, Short.MAX_VALUE))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCancelarNFSe)
+                .addContainerGap(241, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Cancelamento", jPanel18);
+
+        jTabbedPane4.addTab("Demais Provedores", jTabbedPane2);
+        jTabbedPane2.getAccessibleContext().setAccessibleName("Envio");
+
+        btnEnviarEvento.setText("Enviar Evento");
+        btnEnviarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarEventoActionPerformed(evt);
+            }
+        });
+
+        btnConsultarDPSPorChave.setText("Consultar DPS Por Chave");
+        btnConsultarDPSPorChave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarDPSPorChaveActionPerformed(evt);
+            }
+        });
+
+        btnConsultarNFSePorChave.setText("Consultar DPS Por Chave");
+        btnConsultarNFSePorChave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarNFSePorChaveActionPerformed(evt);
+            }
+        });
+
+        btnConsultarEvento.setText("Consultar Evento");
+        btnConsultarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarEventoActionPerformed(evt);
+            }
+        });
+
+        btnConsultarDFe.setText("Consultar DFe");
+        btnConsultarDFe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarDFeActionPerformed(evt);
+            }
+        });
+
+        btnObterDANFSe.setText("Obter DANFSe");
+        btnObterDANFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObterDANFSeActionPerformed(evt);
+            }
+        });
+
+        btnConsultarParametros.setText("Consultar Parametros");
+        btnConsultarParametros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarParametrosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnConsultarParametros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnObterDANFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarDFe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarEvento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarNFSePorChave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarDPSPorChave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEnviarEvento, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
+                .addGap(314, 314, 314))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnEnviarEvento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarDPSPorChave)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarNFSePorChave)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarEvento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarDFe)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnObterDANFSe)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarParametros)
+                .addContainerGap(49, Short.MAX_VALUE))
+        );
+
+        jTabbedPane5.addTab("Métodos", jPanel5);
+
+        jTabbedPane4.addTab("Provedor Padrão Nacional", jTabbedPane5);
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Respostas"));
+
+        rtbRespostas.setColumns(20);
+        rtbRespostas.setRows(5);
+        jScrollPane1.setViewportView(rtbRespostas);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1767,40 +1867,37 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTabbedPane2))
-                        .addGap(105, 105, 105))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCarregarConfiguracoes)
                         .addGap(89, 89, 89)
-                        .addComponent(btnSalvar)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(btnSalvar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTabbedPane4)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalvar)
                     .addComponent(btnCarregarConfiguracoes))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
-        jTabbedPane2.getAccessibleContext().setAccessibleName("Envio");
         btnCarregarConfiguracoes.getAccessibleContext().setAccessibleName("Salvar Carregar Configurações");
 
-        setSize(new java.awt.Dimension(1035, 851));
+        setSize(new java.awt.Dimension(996, 815));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -2602,6 +2699,120 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCancelarNFSeActionPerformed
 
+    private void btnEnviarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEventoActionPerformed
+        try 
+        {
+            acbrNFSe.limparLista();
+            JFileChooser chooser = new JFileChooser();
+                OpenFileFilter filter = new OpenFileFilter("ini", "Arquivo ini (*.ini)");
+                chooser.addChoosableFileFilter(filter);
+                chooser.setFileFilter(filter);
+                
+                if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+                acbrNFSe.carregarIni(chooser.getSelectedFile().getAbsolutePath());
+                
+                String ret = acbrNFSe.enviarEvento(chooser.getSelectedFile().getAbsolutePath());
+                rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEnviarEventoActionPerformed
+
+    private void btnConsultarDPSPorChaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarDPSPorChaveActionPerformed
+        try 
+        {
+            String chaveDPS = JOptionPane.showInputDialog("Informe a Chave DPS");
+            
+            String ret = acbrNFSe.consultarDPSPorChave(chaveDPS);
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarDPSPorChaveActionPerformed
+
+    private void btnConsultarNFSePorChaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSePorChaveActionPerformed
+        try 
+        {
+            String chaveNFSe = JOptionPane.showInputDialog("Informe a Chave NFSe");
+            
+            String ret = acbrNFSe.consultarNFSePorChave(chaveNFSe);
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarNFSePorChaveActionPerformed
+
+    private void btnConsultarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarEventoActionPerformed
+        try
+        {
+            String chave = JOptionPane.showInputDialog("Informe a Chave");
+            String tipoEvento = JOptionPane.showInputDialog("Informe o Tipo do Evento");
+            String numSeq = JOptionPane.showInputDialog("Informe o Número Sequencia");
+            
+            String ret = acbrNFSe.consultarEvento(chave, Integer.parseInt(tipoEvento), Integer.parseInt(numSeq));
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarEventoActionPerformed
+
+    private void btnConsultarDFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarDFeActionPerformed
+        try
+        {
+            String nsu = JOptionPane.showInputDialog("Informe o NSU");
+            
+            String ret = acbrNFSe.consultarDFe(Integer.parseInt(nsu));
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarDFeActionPerformed
+
+    private void btnObterDANFSeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObterDANFSeActionPerformed
+        try
+        {
+            String chaveNFSe = JOptionPane.showInputDialog("Informe a Chave NFSe");
+            
+            String ret = acbrNFSe.obterDANFSE(chaveNFSe);
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnObterDANFSeActionPerformed
+
+    private void btnConsultarParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarParametrosActionPerformed
+        
+        String competencia = JOptionPane.showInputDialog("Informe a Competencia");
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+       
+        try
+        {
+            String tipoParametroMunicipio = JOptionPane.showInputDialog("Informe o Parametro do Municipio");
+            String codigoServico = JOptionPane.showInputDialog("Informe o Código de Serviço");
+            Date Competencia = formato.parse(competencia);
+            String numeroBeneficio = JOptionPane.showInputDialog("Informe o Numero do Beneficio");
+            
+            String ret = acbrNFSe.consultarParametros(Integer.parseInt(tipoParametroMunicipio), codigoServico, Competencia, numeroBeneficio);
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+    }//GEN-LAST:event_btnConsultarParametrosActionPerformed
+
     private void loadConfig() {
         try {
             
@@ -2806,8 +3017,12 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelarNFSe;
     private javax.swing.JButton btnCarregarConfiguracoes;
     private javax.swing.JButton btnCarregarXMLNFse;
+    private javax.swing.JButton btnConsultarDFe;
+    private javax.swing.JButton btnConsultarDPSPorChave;
+    private javax.swing.JButton btnConsultarEvento;
     private javax.swing.JButton btnConsultarLoteRPS;
     private javax.swing.JButton btnConsultarNFSeGenerico;
+    private javax.swing.JButton btnConsultarNFSePorChave;
     private javax.swing.JButton btnConsultarNFSePorFaixa;
     private javax.swing.JButton btnConsultarNFSePorNumero;
     private javax.swing.JButton btnConsultarNFSePorPeriodo;
@@ -2821,9 +3036,11 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultarNFSeServicoTomadoPorPeriodo;
     private javax.swing.JButton btnConsultarNFSeServicoTomadoPorPrestador;
     private javax.swing.JButton btnConsultarNFSeServicoTomadoPorTomador;
+    private javax.swing.JButton btnConsultarParametros;
     private javax.swing.JButton btnConsultarSituacaoLote;
     private javax.swing.JButton btnEmitirNota;
     private javax.swing.JButton btnEnviarEmail;
+    private javax.swing.JButton btnEnviarEvento;
     private javax.swing.JButton btnEnviarRPS;
     private javax.swing.JButton btnGerarEnviarLoteAssincrono;
     private javax.swing.JButton btnGerarEnviarLoteSincrono;
@@ -2837,6 +3054,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnLogoMarcaPrestadorServico;
     private javax.swing.JButton btnLogomarcaPrefeitura;
     private javax.swing.JButton btnObterCertificados;
+    private javax.swing.JButton btnObterDANFSe;
     private javax.swing.JButton btnObterXMLNFSe;
     private javax.swing.JButton btnPastaPDF;
     private javax.swing.JButton btnSalvar;
@@ -2940,6 +3158,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -2948,6 +3167,8 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTabbedPane jTabbedPane4;
+    private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JSpinner nudAguardar;
     private javax.swing.JSpinner nudIntervalos;
     private javax.swing.JSpinner nudPorta;

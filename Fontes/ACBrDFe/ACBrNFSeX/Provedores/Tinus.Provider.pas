@@ -70,6 +70,12 @@ type
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
+  TACBrNFSeProviderTinus102 = class (TACBrNFSeProviderTinus)
+  protected
+    procedure Configuracao; override;
+
+  end;
+
 implementation
 
 uses
@@ -85,12 +91,18 @@ begin
   else
     Result := 'http://www2.tinus.com.br';
 
+  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Versao = ve102 then
+    Result := 'http://www.abrasf.org.br/nfse.xsd';
+
   Result := 'xmlns:tin="' + Result + '"';
 end;
 
 function TACBrNFSeXWebserviceTinus.GetSoapAction: string;
 begin
-  Result := 'http://www.tinus.com.br/WSNFSE.';
+  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Versao = ve102 then
+    Result := 'http://www.abrasf.org.br/nfse.xsd/WSNFSE.'
+  else
+    Result := 'http://www.tinus.com.br/WSNFSE.';
 end;
 
 function TACBrNFSeXWebserviceTinus.Recepcionar(ACabecalho, AMSG: String): string;
@@ -270,6 +282,19 @@ begin
   end;
 
   Response.ArquivoEnvio := xXml;
+end;
+
+{ TACBrNFSeProviderTinus102 }
+
+procedure TACBrNFSeProviderTinus102.Configuracao;
+begin
+  inherited Configuracao;
+
+  ConfigGeral.Identificador := 'Id';
+
+  SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
+
+  SetNomeXSD('nfse.xsd');
 end;
 
 end.

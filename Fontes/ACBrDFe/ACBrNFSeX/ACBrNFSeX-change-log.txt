@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/06/2023
+-- Diversos --
+[+] Implementado a versão 1.02 do provedor Tinus para atender 
+    a cidade de Ipojuca/PE.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [+] Incluído a cidade de Ipojuca/PE - provedor Tinus
   Por: Italo Giurizzato Junior

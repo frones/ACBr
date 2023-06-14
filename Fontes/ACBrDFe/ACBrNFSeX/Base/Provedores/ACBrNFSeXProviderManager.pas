@@ -565,6 +565,7 @@ begin
           case Versao of
             ve100: Result := TACBrNFSeProviderTinus.Create(ACBrNFSe);
             ve101: Result := TACBrNFSeProviderTinus.Create(ACBrNFSe);
+            ve102: Result := TACBrNFSeProviderTinus102.Create(ACBrNFSe);
           else
             Result := nil;
           end;

@@ -53,7 +53,7 @@ type
                      stNFSeConsultarEvento, stNFSeConsultarDFe,
                      stNFSeConsultarParam);
 
-  TVersaoNFSe = (ve100, ve101, ve103,
+  TVersaoNFSe = (ve100, ve101, ve102, ve103,
                  ve200, ve201, ve202, ve203, ve204);
 
   TLayout =(loABRASF, loProprio);
@@ -12433,17 +12433,17 @@ end;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: string): TVersaoNFSe;
 begin
-  Result := StrToEnumerado(ok, s, ['1.00', '1.01', '1.03',
+  Result := StrToEnumerado(ok, s, ['1.00', '1.01', '1.02', '1.03',
                                    '2.00', '2.01', '2.02', '2.03', '2.04'],
-                                  [ve100, ve101, ve103,
+                                  [ve100, ve101, ve102, ve103,
                                    ve200, ve201, ve202, ve203, ve204]);
 end;
 
 function VersaoNFSeToStr(const t: TVersaoNFSe): string;
 begin
-  Result := EnumeradoToStr(t, ['1.00', '1.01', '1.03',
+  Result := EnumeradoToStr(t, ['1.00', '1.01', '1.02', '1.03',
                                '2.00', '2.01', '2.02', '2.03', '2.04'],
-                              [ve100, ve101, ve103,
+                              [ve100, ve101, ve102, ve103,
                                ve200, ve201, ve202, ve203, ve204]);
 end;
 

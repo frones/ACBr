@@ -44,6 +44,8 @@ Símbolo : Significado
 
 14/06/2023
 -- ACBrNFSeXServicos.ini --
+[+] Incluído a cidade de Ipojuca/PE - provedor Tinus
+  Por: Italo Giurizzato Junior
 [*] A cidade de Piracanjuba-GO trocou de URL, provedor ainda é Centi na versão 2.02
   Por: maxdatasistema
 

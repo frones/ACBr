@@ -66,7 +66,8 @@ type
     procedure DefinirAuthorization; override;
     function GerarTokenAutenticacao: string; override;
     procedure DefinirParamOAuth; override;
-    function DefinirParametros:String;
+    function DefinirParametros: String;
+    function DefinirParametrosDetalhe: String;
     procedure DefinirKeyUser;
     procedure DefinirAutenticacao;
     procedure DefinirPosto;
@@ -118,12 +119,17 @@ var ID: String;
 begin
   FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
 
-  if ATitulo <> nil then
-    ID      := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
+  if ATitulo <> nil then begin
+    if ATitulo.NossoNumero = EmptyStr then
+      ID      := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo))
+    else
+      ID      := OnlyNumber(ATitulo.NossoNumero);
+  end;
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui                : FPURL := FPURL+'/boletos' ;
     tpConsulta              : FPURL := FPURL + '/boletos/liquidados/dia' + '?' + DefinirParametros;
+    tpConsultaDetalhe       : FPURL := FPURL + '/boletos?' + DefinirParametrosDetalhe;
     //tpAlteraSeuNumero       : FPURL := FPURL + '/boletos/'+ ID + '/seu-numero';
     tpBaixa                 : FPURL := FPURL + '/boletos/'+ ID + '/baixa';
     //tpConsultarPDF          : FPURL := FPURL + '/boletos/pdf?linhaDigitavel='+ATitulo.LinhaDigitada;
@@ -239,6 +245,11 @@ begin
          FMetodoHTTP:= htGET;   //Define Método GET Consulta
          RequisicaoConsulta;
        end;
+       tpConsultaDetalhe :
+       begin
+         FMetodoHTTP:= htGET;   //Define Método GET Consulta
+         RequisicaoConsultaDetalhe;
+       end;
      //tpConsultarPDF :
      //  begin
      //   FMetodoHTTP:= htGET;   //Define Método GET Consulta
@@ -310,6 +321,30 @@ begin
 
   end;
 
+end;
+
+function TBoletoW_Sicredi_APIV2.DefinirParametrosDetalhe: String;
+var
+  Consulta : TStringList;
+  Documento : String;
+begin
+  if Assigned(Boleto.Configuracoes.WebService.Filtro) then
+  begin
+      if (Boleto.Cedente.CodigoCedente = EmptyStr) then
+        raise EACBrBoletoWSException.Create(ClassName + ' Obrigatório informar o codigoCedente. ');
+
+      Documento := OnlyNumber(Boleto.Cedente.CNPJCPF);
+
+      Consulta := TStringList.Create;
+      try
+        Consulta.Add('codigoBeneficiario='+Boleto.Cedente.CodigoCedente);
+        Consulta.Delimiter := '&';
+        Consulta.Add('nossoNumero='+OnlyNumber(ATitulo.NossoNumero));
+      finally
+        Result := Consulta.DelimitedText;
+        Consulta.Free;
+      end;
+  end;
 end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirParamOAuth;

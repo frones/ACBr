@@ -939,7 +939,11 @@ begin
               PadRight(SeuNumero,25)                                                         + //  38 a  62 - Uso exclusivo da Empresa
               IfThen(NossoNumero = '000000000', '000000000',
                                  PadLeft(RightStr(NossoNumero,9),9,'0'))                     + //  63 a  71 - Número do título no banco
-              Space(30)                                                                      + //  72 a 101 - "Brancos"
+              Space(14)                                                                      + //  72 a  85 - "Brancos"
+              IfThen(DataMoraJuros > 0,
+                FormatDateTime('ddmmyy', DataMoraJuros),
+                Space(6))                                                                    + //  86 a  91 -  Data início de cobrança de Juros de Mora
+              Space(10)                                                                      + //  92 a 101 - "Brancos"
               '0'                                                                            + // 102 a 102 - Código de IOF sobre Operações de Seguro
               '00'                                                                           + // 103 a 104 - Identificação do Tipo de Moeda, 00=Real
               Space(1)                                                                       + // 105 a 105 - "Branco"

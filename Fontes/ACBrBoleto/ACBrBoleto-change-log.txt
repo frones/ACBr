@@ -59,6 +59,8 @@ Símbolo : Significado
   Sugestão : Pegasus Aut e Desenv /Por: Daniel Morais
 [+]TK-3990 ACBrBoletoRet_Sicredi_APIV2, ACBrBoletoW_Sicredi_APIV2 - Implementação da consulta detalhe.
   Por : willian_delan / Daniel Morais
+[*]TK-4015 ACBrBancoSafra - Inclusão do campo DataMoraJuros ao gerar remessa pos 86
+  Por : renato.pavan /Conferido: Daniel Morais
 07/06/2023
 [-]TK-4045 Erro na Leitura do retorno CNAB 240 Banco Santander quando ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto = True
   Por : Pedro E. Braga / Victor H Gonzales - Pandaaa

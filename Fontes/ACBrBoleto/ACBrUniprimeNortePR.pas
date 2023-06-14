@@ -165,6 +165,8 @@ var
   Protesto, TipoSacado, MensagemCedente, aConta     :String;
   aCarteira, wLinha, ANossoNumero: String;
   TipoBoleto :Char;
+  iInstrucao1: Integer;
+  aIdentificacaoOcorrencia :String;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -278,15 +280,38 @@ begin
       else
          aEspecie := EspecieDoc;
 
+      iInstrucao1 := StrToIntDef(trim(Instrucao1),0);
+      { Para casos onde se preenche os dias de protesto/negativacao sem necessitar de preencher instrucao. }
+      if (iInstrucao1 = 0) then
+        if (DiasDeProtesto > 0) then
+          case TipoDiasProtesto of
+            diCorridos: iInstrucao1 := 1;
+            diUteis:    iInstrucao1 := 2;
+          end
+        else if (DiasDeNegativacao > 0) then
+            iInstrucao1 := 7 // Negativar dias corridos
+        else
+            iInstrucao1 := 3; // sem protesto
+
       {Pegando campo Intruções}
       //01, 02, 07 [05..55]
-      case StrToIntDef(trim(Instrucao1),0) of
-        1,2,7 :
-               Protesto := PadLeft(trim(Instrucao1),2,'0') + IntToStrZero(DaysBetween(DataProtesto,Vencimento),2);
-        3  :   Protesto := '0300';
-        99 :   Protesto := '9900';
-        else   Protesto := '0000';
+      case iInstrucao1 of
+        1    :   aIdentificacaoOcorrencia := IntToStrZero(DaysBetween(Vencimento,DataProtesto), 2);
+        2    :   aIdentificacaoOcorrencia := IntToStrZero(WorkingDaysBetween(Vencimento,DataProtesto), 2);
+        7    :   aIdentificacaoOcorrencia := IntToStrZero(DaysBetween(Vencimento,DataNegativacao), 2);
+        3,99 :   aIdentificacaoOcorrencia := '00';
+        else
+            iInstrucao1 := 0;
+            aIdentificacaoOcorrencia := '00';
       end;
+
+      if (StrToIntDef(aIdentificacaoOcorrencia,0) < 5) or (StrToIntDef(aIdentificacaoOcorrencia,0) > 55) then
+         raise Exception.Create(ACBrStr('O número de dias a protestar / negativar '+
+                                       'deve ser mínimo 05 a máximo 55 dias'));
+
+      
+      Protesto := IntToStrZero(iInstrucao1,2) + aIdentificacaoOcorrencia;
+
       {Pegando Tipo de Sacado}
       case Sacado.Pessoa of
          pFisica   : TipoSacado := '01';

@@ -48,6 +48,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+14/06/2023
+[-]TK-4024 ACBrUniprimeNortePR - identificacao de ocorrencia sem instrucao,usar os campos de dias/datas de Protesto/Negativacao para preencher remessa.
+  Por : Marcos Lenharo / Daniel Morais
 07/06/2023
 [-]TK-4045 Erro na Leitura do retorno CNAB 240 Banco Santander quando ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto = True
   Por : Pedro E. Braga / Victor H Gonzales - Pandaaa

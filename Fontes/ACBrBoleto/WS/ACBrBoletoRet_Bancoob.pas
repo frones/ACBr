@@ -268,7 +268,7 @@ begin
                  ARetornoWS.DadosRet.TituloRet.ValorPago := 0;
 
                  if vpos > 0 then
-                  ARetornoWS.DadosRet.TituloRet.ValorPago := StrToCurrDef(copy(AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString, vPos+2, length(AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString)), 0);
+                  ARetornoWS.DadosRet.TituloRet.ValorPago := StringToFloatDef(copy(AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString, vPos+2, length(AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString)), 0);
                 end;
               end;
             end;

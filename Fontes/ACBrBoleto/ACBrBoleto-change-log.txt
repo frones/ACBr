@@ -53,6 +53,8 @@ Símbolo : Significado
   Por : Marcos Lenharo / Daniel Morais
 [-]TK-4027 ACBrBancoUnicredES - Estava utilizando CodigoNegativacao e não o TipoDiasProtesto conforme manual
   Por : Marcos Lenharo / Daniel Morais
+[-]TK-4008 ACBrBoletoRet_Bancoob - Correção qdo valor do pgto for maior que 999,99 pois o banco retorna json com separação de milhar.
+  Por : Cleonir / Daniel Morais  
 07/06/2023
 [-]TK-4045 Erro na Leitura do retorno CNAB 240 Banco Santander quando ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto = True
   Por : Pedro E. Braga / Victor H Gonzales - Pandaaa

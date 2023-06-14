@@ -337,8 +337,10 @@ begin
                                                                        ATitulo.SeuNumero,
                                                                        OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo))
                                                                      );
-      Json.Add('identificacaoEmissaoBoleto').Value.AsInteger      := 1;
-      Json.Add('identificacaoDistribuicaoBoleto').Value.AsInteger := 1;
+      Json.Add('identificacaoEmissaoBoleto').Value.AsInteger      := StrToInt(IfThen(ATitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite,'1','2')); // 2 Cliente Emite - 1 Banco Emite
+      Json.Add('identificacaoDistribuicaoBoleto').Value.AsInteger := StrToInt(IfThen(ATitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite,'1','2')); // 2 Cliente Dist - 1 Banco Dist
+
+
       Json.Add('valor').Value.asNumber                            := aTitulo.ValorDocumento;
       Json.Add('dataVencimento').Value.asString                   := DateTimeToDateBancoob(aTitulo.Vencimento);
       Json.Add('numeroParcela').Value.AsInteger                   := 1;

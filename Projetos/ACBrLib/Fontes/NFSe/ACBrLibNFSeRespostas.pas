@@ -296,17 +296,19 @@ type
     FLote: string;
     FQtdMaxRps: integer;
     FModoEnvio: TmodoEnvio;
+    FNomeArq: string;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
-    procedure Processar(const GerarLote: string); reintroduce;
+    procedure Processar(const Response: TNFSeEmiteResponse); reintroduce;
 
   published
     property Lote: string read FLote write FLote;
     property MaxRps: integer read FQtdMaxRps write FQtdMaxRps;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
+    property NomeArq: string read FNomeArq write FNomeArq;
   end;
 
   { TEnviarEventoResposta }
@@ -650,11 +652,12 @@ begin
   inherited Destroy;
 end;
 
-procedure TGerarLoteResposta.Processar(const GerarLote: string);
+procedure TGerarLoteResposta.Processar(const Response: TNFSeEmiteResponse);
 begin
-  FLote:= Lote;
-  FQtdMaxRps:= MaxRps;
-  FModoEnvio:= ModoEnvio;
+  FLote:= Response.NumeroLote;
+  FQtdMaxRps:= Response.MaxRps;
+  FModoEnvio:= Response.ModoEnvio;
+  FNomeArq:= Response.NomeArq;
 end;
 
 { TEnviarEventoResposta }

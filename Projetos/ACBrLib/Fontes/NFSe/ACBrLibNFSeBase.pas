@@ -604,6 +604,7 @@ begin
       NFSeDM.ACBrNFSeX1.GerarLote(aLote, aQtdMaximaRps, ModoEnvio);
       Resp := TGerarLoteResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.Gerar);
         Resposta := Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);

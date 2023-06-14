@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2023
+--- ACBrLibNFSeBase, ACBrLibNFSeRespostas ---
+[*] Correção no método e resposta NFSE_GerarLote
+    Por: Antonio Carlos Junior
+
 12/06/2023
 --- ACBrLibNFSeBase, ACBrLibNFSeConsts, ACBrLibNFSeRespostas, ACBrLibNFSeStaticImport, ACBrLibNFSeStaticImportMT, ACBrLibNFSeST, ACBrLibNFSeMT ---
 [+] Novos métodos ACBrLibNFSe para uso do Layout no Padrão Nacional

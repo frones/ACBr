@@ -531,7 +531,13 @@ type
                    sticmsSimplesNacionalImune                                , // '300' // Simples Nacional - Imune
                    sticmsSimplesNacionalNaoTributada                         , // '400' // Simples Nacional - Não tributada pelo Simples Nacional
                    sticmsSimplesNacionalCobradoAnteriormentePorST            , // '500' // Simples Nacional - ICMS cobrado anteriormente por substituição tributária (substituído) ou por antecipação
-                   sticmsSimplesNacionalOutros                                 // '900' // Simples Nacional - Outros
+                   sticmsSimplesNacionalOutros                               , // '900' // Simples Nacional - Outros
+
+                   sticmsTributacaoMonofasicaPropriaCombustives              , // '002' // Tributação Monofásica Própria do ICMS nas operações com combustíveis
+                   sticmsTributacaoMonofasicaPropriacomRetencaoCombustiveis  , // '015' // Tributação Monofásica Própria e com responsabilidade pela retenção do ICMS nas operações com combustíveis
+                   sticmsTributacaoMonofasicaRecolhimentoDiferidoCombustiveis, // '053' // Tributação Monofásica com recolhimento diferido do ICMS nas operações com combustíveis
+                   sticmsTributacaoMonofasicaCombustiveisCobradoAnteriormente  // '061' // Tributação Monofásica sobre combustíveis com ICMS cobrado anteriormente
+
                 );
   TACBrSituacaoTribICMS = TACBrCstIcms;
 

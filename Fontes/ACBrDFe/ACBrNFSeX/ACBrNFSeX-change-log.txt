@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2023
+-- ACBrNFSeXClass --
+[+] Acrescentado a variável %CodVerifSoAlfanum% na URL do Link, pois tem cidade
+    que o código de verificação só deve conter caracteres alfanumericos.
+  Por: Renato Rubinho/Italo Giurizzato Junior
+
 14/06/2023
 -- Diversos --
 [+] Implementado a versão 1.02 do provedor Tinus para atender 

@@ -1785,16 +1785,19 @@ begin
   else
     Texto := LinkNFSeParam.FHomLinkURL;
 
-  // %CodVerif%     : Representa o Código de Verificação da NFS-e
-  // %NumeroNFSe%   : Representa o Numero da NFS-e
-  // %ChaveAcesso%  : Representa a Chave de Acesso
-  // %ValorServico% : Representa o Valor do Serviço
-  // %Cnpj%         : Representa o CNPJ do Emitente - Configuração
-  // %InscMunic%    : Representa a Inscrição Municipal do Emitente - Configuração
-  // %xMunicipio%   : Representa o Nome do Município - Configuração
+  // %CodVerif%          : Representa o Código de Verificação da NFS-e
+  // %CodVerifSoAlfanum% : Representa o Código de Verificação da NFS-e sem formatação
+  // %NumeroNFSe%        : Representa o Numero da NFS-e
+  // %ChaveAcesso%       : Representa a Chave de Acesso
+  // %ValorServico%      : Representa o Valor do Serviço
+  // %Cnpj%              : Representa o CNPJ do Emitente - Configuração
+  // %InscMunic%         : Representa a Inscrição Municipal do Emitente - Configuração
+  // %xMunicipio%        : Representa o Nome do Município - Configuração
   // %DataEmissao:X..X%: : Representa a Data de Emissão da NFSe com o formato preenchido após os ":" - Dados da NFSe
 
   Texto := StringReplace(Texto, '%CodVerif%', LinkNFSeParam.CodVerificacao, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%CodVerifSoAlfanum%',
+             OnlyAlphaNum(LinkNFSeParam.CodVerificacao), [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NumeroNFSe%', LinkNFSeParam.NumNFSe, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%ChaveAcesso%', LinkNFSeParam.ChaveAcesso, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%ValorServico%', LinkNFSeParam.ValorServico, [rfReplaceAll]);

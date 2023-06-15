@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/06/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluído o link da NFS-e para cidade de Tangara da Serra/MT
+  Por: Diego Reckziegel
 -- SigISS.Provider --
 [*] Melhorias no ProcessarMensagemErros, existem mensagens que não são erros e 
     sim alertas.

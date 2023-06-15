@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/06/2023
+-- SigISS.Provider --
+[*] Melhorias no ProcessarMensagemErros, existem mensagens que não são erros e 
+    sim alertas.
+  Por: Italo Giurizzato Junior
 -- Governa.LerXml --
 [*] Correção para a leitura do XML do RPS.
   Por: Diego Reckziegel

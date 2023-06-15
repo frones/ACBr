@@ -171,8 +171,8 @@ var
   I: Integer;
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  AErro: TNFSeEventoCollectionItem;
-  Correcao: string;
+  AErro, AAlerta: TNFSeEventoCollectionItem;
+  Correcao, Mensagem: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -189,12 +189,26 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr);
+    Mensagem := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr));
 
-    if Correcao <> 'Sem erros' then
+    if (Correcao = '') or (Correcao = 'Sem erros') then
+    begin
+      if Mensagem <> '' then
+      begin
+        AAlerta := Response.Alertas.New;
+        AAlerta.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('id'), tcStr);
+        AAlerta.Descricao := Mensagem;
+        AAlerta.Correcao := '';
+
+        if AAlerta.Descricao = '' then
+          AAlerta.Descricao := ACBrStr(ANodeArray[I].AsString);
+      end;
+    end
+    else
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('id'), tcStr);
-      AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr));
+      AErro.Descricao := Mensagem;
       AErro.Correcao := ACBrStr(Correcao);
 
       if AErro.Descricao = '' then

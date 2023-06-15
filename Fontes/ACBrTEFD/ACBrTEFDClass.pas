@@ -763,7 +763,7 @@ end;
 procedure TACBrTEFDRespTXT.ConteudoToProperty;
 var
    Linha: TACBrTEFLinha ;
-   I: Integer;
+   I, L: Integer;
    Parc: TACBrTEFRespParcela;
    TemParcelas: Boolean ;
    LinhaComprovante: String;
@@ -849,7 +849,14 @@ begin
        601 : fpNFCeSAT.Bandeira := Linha.Informacao.AsString;
        602 : fpNFCeSAT.Autorizacao := Linha.Informacao.AsString;
        603 : fpNFCeSAT.CodCredenciadora := Linha.Informacao.AsString;
-
+       565 :
+        case Linha.Sequencia of
+           10 :
+           begin
+             L := StrToIntDef(copy(Linha.Informacao.AsString,3,2),2);
+             fpDocumentoPessoa := copy(Linha.Informacao.AsString, 5, L);
+           end;
+        end;
        999 : fpTrailer := Linha.Informacao.AsString ;
      else
         ProcessarTipoInterno(Linha);

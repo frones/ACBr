@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/06/2023
+-- Governa.LerXml --
+[*] Correção para a leitura do XML do RPS.
+  Por: Diego Reckziegel
 -- ACBrNFSeXClass --
 [+] Acrescentado a variável %CodVerifSoAlfanum% na URL do Link, pois tem cidade
     que o código de verificação só deve conter caracteres alfanumericos.

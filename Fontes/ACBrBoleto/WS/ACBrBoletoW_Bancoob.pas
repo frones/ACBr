@@ -151,7 +151,7 @@ begin
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaCobrarJurosMora then
            FPURL := FPURL + '/boletos/encargos/juros-mora'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarMulta then
-          FPURL := FPURL + '/boletos/encargos/multa'
+          FPURL := FPURL + '/boletos/encargos/multas'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarDesconto then
            FPURL := FPURL +  '/boletos/descontos'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarValorAbatimento then

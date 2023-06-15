@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2023
+-- ACBrCTeWebServices --
+[+] Incluído o tratamento para validar o evento de cancelamento de prestação em
+    desacordo.
+  Por: Túlio de Pádua
+
 05/06/2023
 -- ACBrCTeConhecimentos --
 [*] Altera a leitura do INI para que preencha a tag da versão 3.00 e também as da versão 4.00

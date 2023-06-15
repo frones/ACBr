@@ -3252,6 +3252,13 @@ begin
                         '</evPrestDesacordo>';
         end;
 
+      schevCancPrestDesacordo:
+        begin
+          AXMLEvento := '<evCancPrestDesacordo xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCancPrestDesacordo>', '</evCancPrestDesacordo>')) +
+                        '</evCancPrestDesacordo>';
+        end;
+
       schevGTV:
         begin
           AXMLEvento := '<evGTV xmlns="' + ACBRCTE_NAMESPACE + '">' +

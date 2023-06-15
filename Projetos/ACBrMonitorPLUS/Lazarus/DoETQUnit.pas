@@ -256,6 +256,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoImprimirQRCode}
+TMetodoImprimirQRCode = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+
 implementation
 
 { TACBrObjetoETQ }
@@ -300,6 +307,7 @@ begin
   ListaDeMetodos.Add(CMetodoCarregarImagem);
   ListaDeMetodos.Add(CMetodoLimparMemoria);
   ListaDeMetodos.Add(CMetodoSetLimparMemoria);
+  ListaDeMetodos.Add(cMetodoImprimirQRCode);
 end;
 
 procedure TACBrObjetoETQ.Executar(ACmd: TACBrCmd);
@@ -348,6 +356,7 @@ begin
    31  : AMetodoClass := TMetodoCarregarImagem;
    32  : AMetodoClass := TMetodoLimparMemoria;
    33  : AMetodoClass := TMetodoSetLimparMemoria;
+   34  : AMetodoClass := TMetodoImprimirQRCode;
   end;
 
   if Assigned(AMetodoClass) then
@@ -832,6 +841,29 @@ begin
   with TACBrObjetoETQ(fpObjetoDono) do
   begin
     ACBrETQ.LimparMemoria := StrToBool( Trim(fpCmd.Params(0)))
+  end;
+end;
+
+{ TMetodoImprimirQRCode }
+
+{ Params: 0 - Inteiro - Vertical
+          1 - Inteiro - Horizontal
+          2 - String  - Texto
+          3 - Inteiro - LarguraModulo
+          4 - Inteiro - ErrorLevel
+          5 - Inteiro - Tipo
+
+}
+procedure TMetodoImprimirQRCode.Executar;
+begin
+  with TACBrObjetoETQ(fpObjetoDono) do
+  begin
+    ACBrETQ.ImprimirQRCode(StrToInt(fpCmd.Params(0)),
+                   StrToInt(fpCmd.Params(1)),
+                   fpCmd.Params(2),
+                   StrToInt(fpCmd.Params(3)),
+                   StrToInt(fpCmd.Params(4)),
+                   StrToInt(fpCmd.Params(5)));
   end;
 end;
 

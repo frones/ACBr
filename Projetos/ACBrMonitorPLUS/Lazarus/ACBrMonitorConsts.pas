@@ -718,6 +718,7 @@ const
   CMetodoCarregarImagem    = 'carregarimagem';
   CMetodoLimparMemoria     = 'limparmemoria';
   CMetodoSetLimparMemoria  = 'setlimparmemoria';
+  CMetodoImprimirQRCode    = 'imprimirqrcode';
 
   CMetodoConsultaConfig  = 'consultaconfig';
   CMetodoImprimirGNRe    = 'imprimirgnre';

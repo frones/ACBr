@@ -2,16 +2,16 @@
 <CONFIG>
   <Package Version="5">
     <PathDelim Value="\"/>
-    <Name Value="ACBr_PagFor"/>
+    <Name Value="ACBr_DebitoAutomatico"/>
     <Type Value="RunAndDesignTime"/>
     <Author Value="Italo Giurizzato Junior"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="..\..\..\Fontes\ACBrPagFor"/>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrPagFor;..\..\..\Fontes\ACBrPagFor\Bancos;..\..\..\Fontes\ACBrPagFor\Base;..\..\..\Fontes\ACBrPagFor\Base\Provider;..\..\..\Fontes\ACBrPagFor\Modelos"/>
-        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrPagFor\$(TargetCPU)-$(TargetOS)"/>
+        <IncludeFiles Value="..\..\..\Fontes\ACBrDebitoAutomatico"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDebitoAutomatico;..\..\..\Fontes\ACBrDebitoAutomatico\Bancos;..\..\..\Fontes\ACBrDebitoAutomatico\Base;..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDebitoAutomatico\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>
@@ -19,204 +19,87 @@
         </SyntaxOptions>
       </Parsing>
     </CompilerOptions>
-    <Description Value="ACBr - PagFor - (http://www.projetoacbr.com.br/)"/>
+    <Description Value="ACBr - Debito Automático - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="1"/>
-    <Files Count="48">
+    <Files Count="19">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForReg.pas"/>
-        <HasRegisterProc Value="True"/>
-        <UnitName Value="ACBrPagForReg"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\ACBrDebitoAutomatico.pas"/>
+        <UnitName Value="ACBrDebitoAutomatico"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagFor.pas"/>
-        <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="ACBrPagFor"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\ACBrDebitoAutomaticoArquivo.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoArquivo"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivo.pas"/>
-        <UnitName Value="ACBrPagForArquivo"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\ACBrDebitoAutomaticoArquivoClass.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoArquivoClass"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivoClass.pas"/>
-        <UnitName Value="ACBrPagForArquivoClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\ACBrDebitoAutomaticoConfiguracoes.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoConfiguracoes"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancoCECRED.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.BancoCECRED.GravarTxtRemessa"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\ACBrDebitoAutomaticoReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrDebitoAutomaticoReg"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancoCECRED.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.BancoCECRED.LerTxtRetorno"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.GravarTxtRemessa.pas"/>
+        <UnitName Value="DebitoAutomatico.Santander.GravarTxtRemessa"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancoCECRED.Provider.pas"/>
-        <UnitName Value="PagFor.BancoCECRED.Provider"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.LerTxtRetorno.pas"/>
+        <UnitName Value="DebitoAutomatico.Santander.LerTxtRetorno"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancodoBrasil.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.BancodoBrasil.GravarTxtRemessa"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.Provider.pas"/>
+        <UnitName Value="DebitoAutomatico.Santander.Provider"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancodoBrasil.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.BancodoBrasil.LerTxtRetorno"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoClass.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoClass"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancodoBrasil.Provider.pas"/>
-        <UnitName Value="PagFor.BancodoBrasil.Provider"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoConversao.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoConversao"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Bradesco.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.Bradesco.GravarTxtRemessa"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoParametros.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoParametros"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Bradesco.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.Bradesco.LerTxtRetorno"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoGravarTxt.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoGravarTxt"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Bradesco.Provider.pas"/>
-        <UnitName Value="PagFor.Bradesco.Provider"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoInterface.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoInterface"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.HSBC.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.HSBC.GravarTxtRemessa"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoLerTxt.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoLerTxt"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.HSBC.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.HSBC.LerTxtRetorno"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoProviderBase.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoProviderBase"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.HSBC.Provider.pas"/>
-        <UnitName Value="PagFor.HSBC.Provider"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoProviderManager.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoProviderManager"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Itau.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.Itau.GravarTxtRemessa"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.GravarTxtRemessa.pas"/>
+        <UnitName Value="Febraban150.GravarTxtRemessa"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Itau.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.Itau.LerTxtRetorno"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.LerTxtRetorno.pas"/>
+        <UnitName Value="Febraban150.LerTxtRetorno"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Itau.Provider.pas"/>
-        <UnitName Value="PagFor.Itau.Provider"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.Provider.pas"/>
+        <UnitName Value="Febraban150.Provider"/>
       </Item19>
-      <Item20>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Safra.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.Safra.GravarTxtRemessa"/>
-      </Item20>
-      <Item21>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Safra.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.Safra.LerTxtRetorno"/>
-      </Item21>
-      <Item22>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Safra.Provider.pas"/>
-        <UnitName Value="PagFor.Safra.Provider"/>
-      </Item22>
-      <Item23>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.Santander.GravarTxtRemessa"/>
-      </Item23>
-      <Item24>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.Santander.LerTxtRetorno"/>
-      </Item24>
-      <Item25>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.Provider.pas"/>
-        <UnitName Value="PagFor.Santander.Provider"/>
-      </Item25>
-      <Item26>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.Sicredi.GravarTxtRemessa"/>
-      </Item26>
-      <Item27>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.Sicredi.LerTxtRetorno"/>
-      </Item27>
-      <Item28>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.Provider.pas"/>
-        <UnitName Value="PagFor.Sicredi.Provider"/>
-      </Item28>
-      <Item29>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\ACBrPagForClass.pas"/>
-        <UnitName Value="ACBrPagForClass"/>
-      </Item29>
-      <Item30>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\ACBrPagForConversao.pas"/>
-        <UnitName Value="ACBrPagForConversao"/>
-      </Item30>
-      <Item31>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\ACBrPagForParametros.pas"/>
-        <UnitName Value="ACBrPagForParametros"/>
-      </Item31>
-      <Item32>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForGravarTxt.pas"/>
-        <UnitName Value="ACBrPagForGravarTxt"/>
-      </Item32>
-      <Item33>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForInterface.pas"/>
-        <UnitName Value="ACBrPagForInterface"/>
-      </Item33>
-      <Item34>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForLerTxt.pas"/>
-        <UnitName Value="ACBrPagForLerTxt"/>
-      </Item34>
-      <Item35>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForProviderBase.pas"/>
-        <UnitName Value="ACBrPagForProviderBase"/>
-      </Item35>
-      <Item36>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForProviderManager.pas"/>
-        <UnitName Value="ACBrPagForProviderManager"/>
-      </Item36>
-      <Item37>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\CNAB240.GravarTxtRemessa.pas"/>
-        <UnitName Value="CNAB240.GravarTxtRemessa"/>
-      </Item37>
-      <Item38>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\CNAB240.LerTxtRetorno.pas"/>
-        <UnitName Value="CNAB240.LerTxtRetorno"/>
-      </Item38>
-      <Item39>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\CNAB240.Provider.pas"/>
-        <UnitName Value="CNAB240.Provider"/>
-      </Item39>
-      <Item40>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Modelos\PagFor.Modelo.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.Modelo.GravarTxtRemessa"/>
-      </Item40>
-      <Item41>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Modelos\PagFor.Modelo.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.Modelo.LerTxtRetorno"/>
-      </Item41>
-      <Item42>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Modelos\PagFor.Modelo.Provider.pas"/>
-        <UnitName Value="PagFor.Modelo.Provider"/>
-      </Item42>
-      <Item43>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.Banrisul.GravarTxtRemessa"/>
-      </Item43>
-      <Item44>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.Banrisul.LerTxtRetorno"/>
-      </Item44>
-      <Item45>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.Provider.pas"/>
-        <UnitName Value="PagFor.Banrisul.Provider"/>
-      </Item45>
-      <Item46>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.UnicredCooperativa.GravarTxtRemessa"/>
-      </Item46>
-      <Item47>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.UnicredCooperativa.LerTxtRetorno"/>
-      </Item47>
-      <Item48>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.UnicredCooperativa.Provider.pas"/>
-        <UnitName Value="PagFor.UnicredCooperativa.Provider"/>
-      </Item48>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

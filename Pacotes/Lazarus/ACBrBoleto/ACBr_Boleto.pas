@@ -29,8 +29,8 @@ uses
   ACBrBancoUnicredSC, ACBrBoletoWS.Rest.OAuth, ACBrBoletoWS.Rest, 
   ACBrBoletoWS.SOAP, ACBrUniprime, ACBrUniprimeNortePR, 
   ACBrBoletoRet_Credisis, ACBrBoletoRet_Inter_API, ACBrBoletoRet_Itau, 
-  ACBrBoletoRet_Sicredi_API, ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, 
-  ACBrBoletoW_Itau, ACBrBoletoW_Sicredi_API, ACBrBancoVotorantim, 
+  ACBrBoletoRet_Sicredi_APIECOMM, ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, 
+  ACBrBoletoW_Itau, ACBrBoletoW_Sicredi_APIECOMM, ACBrBancoVotorantim, 
   LazarusPackageIntf;
 
 implementation

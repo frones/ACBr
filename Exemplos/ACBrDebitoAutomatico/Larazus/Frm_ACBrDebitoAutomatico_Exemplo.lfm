@@ -1,0 +1,599 @@
+object frmACBrDebitoAutomatico_Exemplo: TfrmACBrDebitoAutomatico_Exemplo
+  Left = 192
+  Height = 648
+  Top = 114
+  Width = 1014
+  Caption = 'Programa exemplo do Componente ACBrDebitoAutomatico (Padrão FEBRABAN 150 Posições)'
+  ClientHeight = 648
+  ClientWidth = 1014
+  Color = clBtnFace
+  DesignTimePPI = 120
+  Font.Color = clWindowText
+  Font.Height = -14
+  Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  object Label1: TLabel
+    Left = 379
+    Height = 16
+    Top = 168
+    Width = 119
+    Caption = 'Log de Mensagens:'
+    ParentColor = False
+  end
+  object btnGerar: TButton
+    Left = 380
+    Height = 31
+    Top = 90
+    Width = 211
+    Caption = 'Gerar Arquivo Remessa'
+    OnClick = btnGerarClick
+    TabOrder = 0
+  end
+  object Memo1: TMemo
+    Left = 380
+    Height = 71
+    Top = 10
+    Width = 621
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Lines.Strings = (
+      'Arquivo padrão FEBRABAN de 150 Posições, para o Intercâmbio de '
+      'Informações entre Bancos e Empresas (Débito Automatico).'
+    )
+    ParentFont = False
+    TabOrder = 1
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 648
+    Top = 0
+    Width = 371
+    Align = alLeft
+    ClientHeight = 648
+    ClientWidth = 371
+    TabOrder = 2
+    object lblColaborador: TLabel
+      Cursor = crHandPoint
+      Left = 19
+      Height = 16
+      Top = 565
+      Width = 324
+      Caption = 'Veja a lista de Colaboradores do Projeto ACBr'
+      Font.Color = clNavy
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblColaboradorClick
+    end
+    object lblPatrocinador: TLabel
+      Cursor = crHandPoint
+      Left = 19
+      Height = 16
+      Top = 584
+      Width = 326
+      Caption = 'Veja a lista de Patrocinadores do Projeto ACBr'
+      Font.Color = clGreen
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblPatrocinadorClick
+    end
+    object lblDoar1: TLabel
+      Cursor = crHandPoint
+      Left = 26
+      Height = 16
+      Top = 604
+      Width = 311
+      Caption = 'Para se tornar Patrocinador do Projeto ACBr,'
+      Font.Color = clRed
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblDoar1Click
+    end
+    object lblDoar2: TLabel
+      Cursor = crHandPoint
+      Left = 145
+      Height = 16
+      Top = 624
+      Width = 77
+      Caption = 'clique aqui'
+      Font.Color = clRed
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblDoar2Click
+    end
+    object gbConfiguracoes: TGroupBox
+      Left = 10
+      Height = 510
+      Top = 9
+      Width = 351
+      Caption = 'Configurações'
+      ClientHeight = 489
+      ClientWidth = 347
+      TabOrder = 0
+      object PageControl1: TPageControl
+        Left = 2
+        Height = 488
+        Top = 19
+        Width = 346
+        ActivePage = TabSheet2
+        MultiLine = True
+        TabIndex = 1
+        TabOrder = 0
+        Options = [nboMultiLine]
+        object TabSheet4: TTabSheet
+          Caption = 'Dados da Empresa'
+          ClientHeight = 459
+          ClientWidth = 338
+          ImageIndex = 3
+          object Label12: TLabel
+            Left = 10
+            Height = 16
+            Top = 5
+            Width = 35
+            Caption = 'CNPJ'
+            ParentColor = False
+          end
+          object Label13: TLabel
+            Left = 170
+            Height = 16
+            Top = 5
+            Width = 49
+            Caption = 'Insc.Est.'
+            ParentColor = False
+          end
+          object Label14: TLabel
+            Left = 10
+            Height = 16
+            Top = 55
+            Width = 81
+            Caption = 'Razão Social'
+            ParentColor = False
+          end
+          object Label15: TLabel
+            Left = 10
+            Height = 16
+            Top = 105
+            Width = 52
+            Caption = 'Fantasia'
+            ParentColor = False
+          end
+          object Label16: TLabel
+            Left = 10
+            Height = 16
+            Top = 205
+            Width = 70
+            Caption = 'Logradouro'
+            ParentColor = False
+          end
+          object Label17: TLabel
+            Left = 260
+            Height = 16
+            Top = 205
+            Width = 48
+            Caption = 'Número'
+            ParentColor = False
+          end
+          object Label18: TLabel
+            Left = 10
+            Height = 16
+            Top = 255
+            Width = 84
+            Caption = 'Complemento'
+            ParentColor = False
+          end
+          object Label19: TLabel
+            Left = 170
+            Height = 16
+            Top = 255
+            Width = 36
+            Caption = 'Bairro'
+            ParentColor = False
+          end
+          object Label20: TLabel
+            Left = 10
+            Height = 16
+            Top = 305
+            Width = 78
+            Caption = 'Cód. Cidade '
+            ParentColor = False
+          end
+          object Label21: TLabel
+            Left = 95
+            Height = 16
+            Top = 305
+            Width = 44
+            Caption = 'Cidade'
+            ParentColor = False
+          end
+          object Label22: TLabel
+            Left = 281
+            Height = 16
+            Top = 305
+            Width = 18
+            Caption = 'UF'
+            ParentColor = False
+          end
+          object Label23: TLabel
+            Left = 170
+            Height = 16
+            Top = 155
+            Width = 27
+            Caption = 'CEP'
+            ParentColor = False
+          end
+          object Label24: TLabel
+            Left = 10
+            Height = 16
+            Top = 155
+            Width = 31
+            Caption = 'Fone'
+            ParentColor = False
+          end
+          object edtEmitCNPJ: TEdit
+            Left = 10
+            Height = 24
+            Top = 25
+            Width = 154
+            TabOrder = 0
+          end
+          object edtEmitIE: TEdit
+            Left = 171
+            Height = 24
+            Top = 25
+            Width = 154
+            TabOrder = 1
+          end
+          object edtEmitRazao: TEdit
+            Left = 10
+            Height = 24
+            Top = 75
+            Width = 315
+            TabOrder = 2
+          end
+          object edtEmitFantasia: TEdit
+            Left = 10
+            Height = 24
+            Top = 125
+            Width = 315
+            TabOrder = 3
+          end
+          object edtEmitFone: TEdit
+            Left = 10
+            Height = 24
+            Top = 175
+            Width = 156
+            TabOrder = 4
+          end
+          object edtEmitCEP: TEdit
+            Left = 171
+            Height = 24
+            Top = 175
+            Width = 154
+            TabOrder = 5
+          end
+          object edtEmitLogradouro: TEdit
+            Left = 10
+            Height = 24
+            Top = 225
+            Width = 245
+            TabOrder = 6
+          end
+          object edtEmitNumero: TEdit
+            Left = 262
+            Height = 24
+            Top = 225
+            Width = 62
+            TabOrder = 7
+          end
+          object edtEmitComp: TEdit
+            Left = 10
+            Height = 24
+            Top = 275
+            Width = 154
+            TabOrder = 8
+          end
+          object edtEmitBairro: TEdit
+            Left = 171
+            Height = 24
+            Top = 275
+            Width = 154
+            TabOrder = 9
+          end
+          object edtEmitCodCidade: TEdit
+            Left = 10
+            Height = 24
+            Top = 325
+            Width = 76
+            TabOrder = 10
+          end
+          object edtEmitCidade: TEdit
+            Left = 95
+            Height = 24
+            Top = 325
+            Width = 178
+            TabOrder = 11
+          end
+          object edtEmitUF: TEdit
+            Left = 281
+            Height = 24
+            Top = 325
+            Width = 44
+            TabOrder = 12
+          end
+        end
+        object TabSheet2: TTabSheet
+          Caption = 'Dados do Banco'
+          ClientHeight = 459
+          ClientWidth = 338
+          ImageIndex = 1
+          object Label30: TLabel
+            Left = 10
+            Height = 16
+            Top = 10
+            Width = 39
+            Caption = 'Banco'
+            ParentColor = False
+          end
+          object sbtnPathSalvar: TSpeedButton
+            Left = 305
+            Height = 30
+            Top = 389
+            Width = 29
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000130B0000130B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+              333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+              0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+              07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+              07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+              0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+              33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+              B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+              3BB33773333773333773B333333B3333333B7333333733333337
+            }
+            NumGlyphs = 2
+            OnClick = sbtnPathSalvarClick
+          end
+          object Label2: TLabel
+            Left = 11
+            Height = 16
+            Top = 121
+            Width = 57
+            Caption = 'Convênio'
+            ParentColor = False
+          end
+          object Label10: TLabel
+            Left = 11
+            Height = 16
+            Top = 64
+            Width = 106
+            Caption = 'Versão do Layout'
+            ParentColor = False
+          end
+          object cbBanco: TComboBox
+            Left = 10
+            Height = 28
+            Top = 30
+            Width = 311
+            Font.Color = clWindowText
+            Font.Height = -16
+            Font.Name = 'MS Sans Serif'
+            ItemHeight = 20
+            ParentFont = False
+            Style = csDropDownList
+            TabOrder = 0
+          end
+          object ckSalvar: TCheckBox
+            Left = 12
+            Height = 23
+            Top = 362
+            Width = 248
+            Caption = 'Salvar Arquivos de Envio e Resposta'
+            Font.Color = clWindowText
+            Font.Height = -14
+            Font.Name = 'MS Sans Serif'
+            ParentFont = False
+            TabOrder = 1
+          end
+          object edtPathSalvar: TEdit
+            Left = 12
+            Height = 24
+            Top = 392
+            Width = 285
+            TabOrder = 2
+          end
+          object edtConvenio: TEdit
+            Left = 11
+            Height = 24
+            Top = 141
+            Width = 154
+            TabOrder = 3
+          end
+          object grpConta: TGroupBox
+            Left = 11
+            Height = 181
+            Top = 176
+            Width = 312
+            Caption = 'Conta'
+            ClientHeight = 160
+            ClientWidth = 308
+            TabOrder = 4
+            object Label3: TLabel
+              Left = 10
+              Height = 16
+              Top = 19
+              Width = 50
+              Caption = 'Agência'
+              ParentColor = False
+            end
+            object Label4: TLabel
+              Left = 175
+              Height = 16
+              Top = 19
+              Width = 19
+              Caption = 'DV'
+              ParentColor = False
+            end
+            object Label5: TLabel
+              Left = 9
+              Height = 16
+              Top = 71
+              Width = 35
+              Caption = 'Conta'
+              ParentColor = False
+            end
+            object Label6: TLabel
+              Left = 174
+              Height = 16
+              Top = 71
+              Width = 19
+              Caption = 'DV'
+              ParentColor = False
+            end
+            object Label7: TLabel
+              Left = 10
+              Height = 16
+              Top = 126
+              Width = 19
+              Caption = 'DV'
+              ParentColor = False
+            end
+            object Label8: TLabel
+              Left = 52
+              Height = 16
+              Top = 126
+              Width = 85
+              Caption = 'Tipo de Conta'
+              ParentColor = False
+            end
+            object edtAgencia: TEdit
+              Left = 10
+              Height = 24
+              Top = 39
+              Width = 154
+              TabOrder = 0
+            end
+            object edtAgenciaDV: TEdit
+              Left = 175
+              Height = 24
+              Top = 39
+              Width = 31
+              TabOrder = 1
+            end
+            object edtContaNumero: TEdit
+              Left = 9
+              Height = 24
+              Top = 91
+              Width = 154
+              TabOrder = 2
+            end
+            object edtContaDV: TEdit
+              Left = 174
+              Height = 24
+              Top = 91
+              Width = 31
+              TabOrder = 3
+            end
+            object edtDV: TEdit
+              Left = 10
+              Height = 24
+              Top = 146
+              Width = 31
+              TabOrder = 4
+            end
+            object edtTipoConta: TEdit
+              Left = 52
+              Height = 24
+              Top = 146
+              Width = 154
+              TabOrder = 5
+            end
+          end
+          object cbLayoutVersao: TComboBox
+            Left = 11
+            Height = 28
+            Top = 84
+            Width = 311
+            Font.Color = clWindowText
+            Font.Height = -16
+            Font.Name = 'MS Sans Serif'
+            ItemHeight = 20
+            ParentFont = False
+            Style = csDropDownList
+            TabOrder = 5
+          end
+        end
+      end
+    end
+    object btnSalvarConfig: TBitBtn
+      Left = 80
+      Height = 31
+      Top = 526
+      Width = 191
+      Caption = 'Salvar Configurações'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000130B0000130B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333330070
+        7700333333337777777733333333008088003333333377F73377333333330088
+        88003333333377FFFF7733333333000000003FFFFFFF77777777000000000000
+        000077777777777777770FFFFFFF0FFFFFF07F3333337F3333370FFFFFFF0FFF
+        FFF07F3FF3FF7FFFFFF70F00F0080CCC9CC07F773773777777770FFFFFFFF039
+        99337F3FFFF3F7F777F30F0000F0F09999937F7777373777777F0FFFFFFFF999
+        99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
+        99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
+        93337FFFF7737777733300000033333333337777773333333333
+      }
+      NumGlyphs = 2
+      OnClick = btnSalvarConfigClick
+      TabOrder = 1
+    end
+  end
+  object LogMsg: TMemo
+    Left = 379
+    Height = 460
+    Top = 188
+    Width = 625
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    ParentFont = False
+    ScrollBars = ssVertical
+    TabOrder = 3
+  end
+  object btnLer: TButton
+    Left = 380
+    Height = 31
+    Top = 129
+    Width = 211
+    Caption = 'Ler Arquivo Retorno'
+    OnClick = btnLerClick
+    TabOrder = 4
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 460
+    Top = 270
+  end
+  object ACBrDebitoAutomatico1: TACBrDebitoAutomatico
+    Configuracoes.Arquivos.PathSalvar = 'C:\Program Files (x86)\Embarcadero\Studio\22.0\bin\'
+    Configuracoes.Arquivos.Salvar = True
+    Left = 496
+    Top = 208
+  end
+end

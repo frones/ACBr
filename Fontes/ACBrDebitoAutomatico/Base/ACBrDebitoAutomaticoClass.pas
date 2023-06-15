@@ -105,7 +105,7 @@ type
     FNomeEmpresa: string; // Versão 8 = Nome da Destinatária
     FCodigoBanco: Integer; // Versão 8 = Código da Depositaria
     FNomeBanco: string; // Versão 8 = Nome da Depositaria
-    FGeracao: TDate;
+    FGeracao: TDateTime;
     FNSA: Integer;
     FLayoutVersao: TDebitoLayoutVersao;
     FAviso: TAvisoList;
@@ -118,7 +118,7 @@ type
     property NomeEmpresa: string read FNomeEmpresa write FNomeEmpresa;
     property CodigoBanco: Integer read FCodigoBanco write FCodigoBanco;
     property NomeBanco: string read FNomeBanco write FNomeBanco;
-    property Geracao: TDate read FGeracao write FGeracao;
+    property Geracao: TDateTime read FGeracao write FGeracao;
     property NSA: Integer read FNSA write FNSA;
     property LayoutVersao: TDebitoLayoutVersao read FLayoutVersao write FLayoutVersao;
     property Aviso: TAvisoList read FAviso write FAviso;
@@ -129,13 +129,13 @@ type
     FIdentificacaoClienteEmpresa: string; // Versão 8 = Identificação do Cliente na Destinatária
     FAgenciaDebito: string;
     FIdentificacaoClienteBanco: string; // Versão 8 = Identificação do Cliente na Destinatária
-    FDataOpcaoExclusao: TDate;
+    FDataOpcaoExclusao: TDateTime;
     FCodigoMovimento: TDebitoMovimentoCadastro;
   public
     property IdentificacaoClienteEmpresa: string read FIdentificacaoClienteEmpresa write FIdentificacaoClienteEmpresa;
     property AgenciaDebito: string read FAgenciaDebito write FAgenciaDebito;
     property IdentificacaoClienteBanco: string read FIdentificacaoClienteBanco write FIdentificacaoClienteBanco;
-    property DataOpcaoExclusao: TDate read FDataOpcaoExclusao write FDataOpcaoExclusao;
+    property DataOpcaoExclusao: TDateTime read FDataOpcaoExclusao write FDataOpcaoExclusao;
     property CodigoMovimento: TDebitoMovimentoCadastro read FCodigoMovimento write FCodigoMovimento;
   end;
 
@@ -185,7 +185,7 @@ type
     FIdentificacaoClienteBanco: string; // Versão 8 = Identificação do Cliente no Depositária
     FIdentificacaoClienteEmpresaAtual: string; // Versão 8 = Identificação do Cliente na Destinatária - Atual
     FOcorrencia: string;
-    FNovaDataVencAutorizacao: TDate; // Versão 8 = Nova data de vencimento da autorização
+    FNovaDataVencAutorizacao: TDateTime; // Versão 8 = Nova data de vencimento da autorização
     FAlteracaoOpcaoUsoChequeEspecial: TDebitoAlteracaoOpcao; // Versão 8 = Alteração da Opção de uso do cheque especial
     FAlteracaoOpcaoDebParcialIntegralPosVenc: TDebitoAlteracaoOpcao; // Campo da Versão 8 = Alteração da Opção de débito parcial ou integral após o vencimento
     FCodigoMovimento: TDebitoMovimentoAlteracao;
@@ -195,7 +195,7 @@ type
     property IdentificacaoClienteBanco: string read FIdentificacaoClienteBanco write FIdentificacaoClienteBanco;
     property IdentificacaoClienteEmpresaAtual: string read FIdentificacaoClienteEmpresaAtual write FIdentificacaoClienteEmpresaAtual;
     property Ocorrencia: string read FOcorrencia write FOcorrencia;
-    property NovaDataVencAutorizacao: TDate read FNovaDataVencAutorizacao write FNovaDataVencAutorizacao;
+    property NovaDataVencAutorizacao: TDateTime read FNovaDataVencAutorizacao write FNovaDataVencAutorizacao;
     property AlteracaoOpcaoUsoChequeEspecial: TDebitoAlteracaoOpcao read FAlteracaoOpcaoUsoChequeEspecial write FAlteracaoOpcaoUsoChequeEspecial;
     property AlteracaoOpcaoDebParcialIntegralPosVenc: TDebitoAlteracaoOpcao read FAlteracaoOpcaoDebParcialIntegralPosVenc write FAlteracaoOpcaoDebParcialIntegralPosVenc;
     property CodigoMovimento: TDebitoMovimentoAlteracao read FCodigoMovimento write FCodigoMovimento;
@@ -217,7 +217,7 @@ type
     FIdentificacaoClienteEmpresa: string; // Versão 8 = Identificação do Cliente na Destinatária
     FAgenciaDebito: string;
     FIdentificacaoClienteBanco: string; // Versão 8 = Identificação do Cliente na Depositária
-    FVencimento: TDate; // Versão 8 = Data do Vencimento ou prazo de validade do contrato
+    FVencimento: TDateTime; // Versão 8 = Data do Vencimento ou prazo de validade do contrato
     FValor: Double;
     FDebitoMoeda: TDebitoMoeda;
     FUsoEmpresa: string; // Versão 8 = Uso da Instituição Destinatária
@@ -233,7 +233,7 @@ type
     property IdentificacaoClienteEmpresa: string read FIdentificacaoClienteEmpresa write FIdentificacaoClienteEmpresa;
     property AgenciaDebito: string read FAgenciaDebito write FAgenciaDebito;
     property IdentificacaoClienteBanco: string read FIdentificacaoClienteBanco write FIdentificacaoClienteBanco;
-    property Vencimento: TDate read FVencimento write FVencimento;
+    property Vencimento: TDateTime read FVencimento write FVencimento;
     property Valor: Double read FValor write FValor;
     property DebitoMoeda: TDebitoMoeda read FDebitoMoeda write FDebitoMoeda;
     property UsoEmpresa: string read FUsoEmpresa write FUsoEmpresa;
@@ -263,7 +263,7 @@ type
     FIdentificacaoClienteEmpresa: string; // Versão 8 = Identificação do Cliente na Destinatária
     FAgenciaDebito: string;
     FIdentificacaoClienteBanco: string; // Versão 8 = Identificação do Cliente na Depositária
-    FVencimento: TDate;
+    FVencimento: TDateTime;
     FValor: Double;
     FCodigoRetorno: TDebitoRetorno;
     FDescRetorno: string;
@@ -275,7 +275,7 @@ type
     property IdentificacaoClienteEmpresa: string read FIdentificacaoClienteEmpresa write FIdentificacaoClienteEmpresa;
     property AgenciaDebito: string read FAgenciaDebito write FAgenciaDebito;
     property IdentificacaoClienteBanco: string read FIdentificacaoClienteBanco write FIdentificacaoClienteBanco;
-    property Vencimento: TDate read FVencimento write FVencimento;
+    property Vencimento: TDateTime read FVencimento write FVencimento;
     property Valor: Double read FValor write FValor;
     property CodigoRetorno: TDebitoRetorno read FCodigoRetorno write FCodigoRetorno;
     property DescRetorno: string read FDescRetorno write FDescRetorno;
@@ -371,16 +371,16 @@ type
   TRegistroJ = class(TObject)
   private
     FNSA: Integer;
-    FGeracao: TDate;
+    FGeracao: TDateTime;
     FTotalRegistros: Integer;
     FValorTotal: Double;
-    FProcessamento: TDate;
+    FProcessamento: TDateTime;
   public
     property NSA: Integer read FNSA write FNSA;
-    property Geracao: TDate read FGeracao write FGeracao;
+    property Geracao: TDateTime read FGeracao write FGeracao;
     property TotalRegistros: Integer read FTotalRegistros write FTotalRegistros;
     property ValorTotal: Double read FValorTotal write FValorTotal;
-    property Processamento: TDate read FProcessamento write FProcessamento;
+    property Processamento: TDateTime read FProcessamento write FProcessamento;
   end;
 
   TRegistroJList = class(TObjectList)
@@ -428,15 +428,15 @@ type
 
   TRegistroL = class(TObject)
   private
-    FFaturamentoContas: TDate;
-    FVencimentoFatura: TDate;
-    FRemessaArquivoBanco: TDate;
-    FRemessaContasFisicas: TDate;
+    FFaturamentoContas: TDateTime;
+    FVencimentoFatura: TDateTime;
+    FRemessaArquivoBanco: TDateTime;
+    FRemessaContasFisicas: TDateTime;
   public
-    property FaturamentoContas: TDate read FFaturamentoContas write FFaturamentoContas;
-    property VencimentoFatura: TDate read FVencimentoFatura write FVencimentoFatura;
-    property RemessaArquivoBanco: TDate read FRemessaArquivoBanco write FRemessaArquivoBanco;
-    property RemessaContasFisicas: TDate read FRemessaContasFisicas write FRemessaContasFisicas;
+    property FaturamentoContas: TDateTime read FFaturamentoContas write FFaturamentoContas;
+    property VencimentoFatura: TDateTime read FVencimentoFatura write FVencimentoFatura;
+    property RemessaArquivoBanco: TDateTime read FRemessaArquivoBanco write FRemessaArquivoBanco;
+    property RemessaContasFisicas: TDateTime read FRemessaContasFisicas write FRemessaContasFisicas;
   end;
 
   TRegistroLList = class(TObjectList)

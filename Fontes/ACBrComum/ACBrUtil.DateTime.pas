@@ -187,6 +187,7 @@ Var
   // Remove qualquer TimeZone da String. Exemplos:
   // - '2022-02-20 02:02:55Z'      Result: '2022-02-20 02:02:55'
   // - '2022-11-11 11:11:11-03:00' Result: '2022-11-11 11:11:11'
+  // - '2022-11-11 11:11:11-03'    Result: '2022-11-11 11:11:11'
   function RemoverTimeZone(const aDateTimeString: String): String;
   var
     wTMZ: String;
@@ -199,6 +200,11 @@ Var
 
     if (RightStr(wTMZ, 1) = 'Z') then
       Result := LeftStr(aDateTimeString, Length(wTMZ)-1)
+    else if (Copy(wTMZ, Length(wTMZ) - 2, 1) = '-') then
+    begin
+      wTMZ := RightStr(wTMZ, 3);
+      Result := StringReplace(aDateTimeString, wTMZ, EmptyStr, [rfReplaceAll]);
+    end
     else
     begin
       wTMZ := RightStr(wTMZ, 6);
@@ -211,6 +217,7 @@ Var
     AStr: String;
   begin
     AStr := RemoverTimeZone(DateTimeString);
+
     if (DS <> '.') then
       AStr := StringReplace(AStr, '.', DS, [rfReplaceAll]);
 
@@ -431,6 +438,10 @@ begin
     Delete(wS, 4, 1);
     Delete(wS, 1, 1);
     Result := StrIsNumber(wS);
+  end else if (not Result) and (Tam = 3) and CharInSet(wS[1], ['-', '+']) then
+  begin
+    Delete(wS, 1, 1);
+    Result := StrIsNumber(wS);
   end;
 end;
 
@@ -438,6 +449,7 @@ function StrHasTimeZone(const aStr: String): Boolean;
 begin
   Result := NaoEstaVazio(aStr) and
     (StrIsTimeZone(aStr[Length(aStr)]) or
+     StrIsTimeZone(RightStr(aStr, 3)) or
      StrIsTimeZone(RightStr(aStr, 6)));
 end;
 

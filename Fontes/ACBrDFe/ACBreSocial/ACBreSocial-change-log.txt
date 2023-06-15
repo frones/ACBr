@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2023
+-- pcesS5012 --
+[*] Corrige leitura da versão do layout do eSocial a partir do XML.
+  Por: EdmarFrazao
+
 31/05/2023
 -- pcesS1200 --
 [*] Altera valor padrão da propriedade IndApurIR na rotina de leitura do INI para que não gere caso não seja informado.

@@ -559,7 +559,7 @@ begin
     Gerador.wCampo(tcDat, '', 'dtNascto', 10, 10, 1, pDependente.Items[i].DtNascto);
     Gerador.wCampo(tcStr, '', 'cpfDep',   11, 11, 0, pDependente.Items[i].CpfDep);
 
-    if (VersaoDF > ve02_05_00) then
+    if (VersaoDF = ve02_05_00) then
       if (pDependente.Items[i].sexoDep = 'F') or (pDependente.Items[i].sexoDep = 'M') then
         Gerador.wCampo(tcStr, '', 'sexoDep',   1,  1, 0, pDependente.Items[i].sexoDep);
 

@@ -66,7 +66,9 @@ type
     FNomeArquivo       : String;
     FACBrTitulo        : TACBrTitulo;
     FNumeroPassadas    : Cardinal;
-    
+    FNossoNumero       : String;
+    FCarteira          : String;
+
       { Private declarations }
     procedure GeraDados(const AACBrTitulo: TACBrTitulo);
 
@@ -156,18 +158,16 @@ procedure TACBrBoletoFPDF.GeraDados(const AACBrTitulo: TACBrTitulo);
 begin
   FCodigoBarras       := ACBrBoleto.Banco.MontarCodigoBarras(AACBrTitulo);
   FLinhaDigitavel     := ACBrBoleto.Banco.MontarLinhaDigitavel(FCodigoBarras, AACBrTitulo);
-  FBeneficiarioCodigo := AACBrTitulo.ACBrBoleto.Cedente.Agencia + ' / ' +
-                         AACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+  //FBeneficiarioCodigo := AACBrTitulo.ACBrBoleto.Cedente.Agencia + ' / ' + AACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+  FBeneficiarioCodigo := ACBrBoleto.Banco.MontarCampoCodigoCedente(AACBrTitulo);
+  FNossoNumero        := ACBrBoleto.Banco.MontarCampoNossoNumero(AACBrTitulo);
+  FCarteira           := ACBrBoleto.Banco.MontarCampoCarteira(AACBrTitulo);
 
-  FBeneficiarioNome := Copy(NativeStringToAnsi(AACBrTitulo.ACBrBoleto.Cedente.Nome) + ' ' +
-                            AACBrTitulo.ACBrBoleto.Cedente.CNPJCPF + ' ' +
-                            NativeStringToAnsi(AACBrTitulo.ACBrBoleto.Cedente.Logradouro) + ' ' +
-                            NativeStringToAnsi(AACBrTitulo.ACBrBoleto.Cedente.Cidade) + ' ' +
-                            AACBrTitulo.ACBrBoleto.Cedente.UF, 1, 86);
+  FBeneficiarioNome := Copy(AACBrTitulo.ACBrBoleto.Cedente.Nome + ' ' + AACBrTitulo.ACBrBoleto.Cedente.CNPJCPF + ' ' + AACBrTitulo.ACBrBoleto.Cedente.Logradouro + ' ' +
+      AACBrTitulo.ACBrBoleto.Cedente.Cidade + ' ' + AACBrTitulo.ACBrBoleto.Cedente.UF, 1, 86);
 
-  FBanco := FormatFloat('000', AACBrTitulo.ACBrBoleto.Banco.Numero) + '-' +
-            IfThen(AACBrTitulo.ACBrBoleto.Banco.Digito >= 10, 'X',
-            IntToStrZero(AACBrTitulo.ACBrBoleto.Banco.Digito, 1));
+  FBanco := FormatFloat('000', AACBrTitulo.ACBrBoleto.Banco.Numero) + '-' + IfThen(AACBrTitulo.ACBrBoleto.Banco.Digito >= 10, 'X',
+    IntToStrZero(AACBrTitulo.ACBrBoleto.Banco.Digito, 1));
 
   FACBrTitulo := AACBrTitulo;
   ModeloImpressao;
@@ -192,9 +192,9 @@ begin
   begin
     ModeloImpressao(True);
     try
-      if EstaVazio(FNomeArquivo) or (ExtractFileName(Self.NomeArquivo) = 'boleto') then
-        FNomeArquivo := OnlyAlphaNum(ACBrBoleto.ListadeBoletos[ I ].NossoNumero);
       GeraDados(ACBrBoleto.ListadeBoletos[ I ]);
+      if EstaVazio(FNomeArquivo) or (ExtractFileName(Self.NomeArquivo) = 'boleto') then
+        FNomeArquivo := OnlyAlphaNum(FNossoNumero);
     finally
       FinalizarArquivo;
     end;
@@ -234,14 +234,14 @@ begin
     FPDF.Image(LArquivoLogo, FPDF.GetX, FPDF.GetY-2, 50, 10);
   FPDF.Cell(50, 5, '', '', 0, 'L');
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(140, 5, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Nome), 1, 86)
+  FPDF.Cell(140, 5, Copy(FACBrTitulo.ACBrBoleto.Cedente.Nome, 1, 86)
                     + ' - '
                     + CNPJ
                     + ' '
                     +Copy(FACBrTitulo.ACBrBoleto.Cedente.CNPJCPF, 1, 86), 'LR', 1, 'L');
   FPDF.SetFont('arial', '', 7);
   FPDF.Cell(50, 5, '', 'B', 0, 'L');
-  FPDF.Cell(140, 5, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Cidade)
+  FPDF.Cell(140, 5, Copy(FACBrTitulo.ACBrBoleto.Cedente.Cidade
                     + ' '
                     + FACBrTitulo.ACBrBoleto.Cedente.UF
                     + ' '
@@ -255,10 +255,10 @@ begin
   FPDF.Cell(31.66, 3, DATA_VENCIMENTO, 'R', 1, 'C');
 
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(31.67, 3, FACBrTitulo.NossoNumero, 'BLR', 0, 'C');
+  FPDF.Cell(31.67, 3, FNossoNumero, 'BLR', 0, 'C');
   FPDF.Cell(31.67, 3, FACBrTitulo.NumeroDocumento, 'BR', 0, 'C');
   FPDF.Cell(31.67, 3, DateToStr(FACBrTitulo.DataDocumento), 'BR', 0, 'C');
-  FPDF.Cell(31.67, 3, NativeStringToAnsi(FACBrTitulo.Competencia), 'BR', 0, 'C');
+  FPDF.Cell(31.67, 3, FACBrTitulo.Competencia, 'BR', 0, 'C');
   FPDF.Cell(31.66, 3, FormatFloatBr(FACBrTitulo.ValorDocumento), 'BR', 0, 'C');
   FPDF.Cell(31.66, 3, DateToStr(FACBrTitulo.Vencimento), 'BR', 1, 'C');
   FPDF.SetFont('arial', 'B', 5);
@@ -384,7 +384,7 @@ begin
   FPDF.Cell(20, 3, FACBrTitulo.EspecieDoc, 'BR', 0, 'C');
   FPDF.Cell(15, 3, IfThen(FACBrTitulo.ACEITE = atSim, 'Sim', 'Não'), 'BR', 0, 'C');
   FPDF.Cell(27, 3, DateToStr(FACBrTitulo.DataProcessamento), 'BR', 0, 'C');
-  FPDF.Cell(60 - LReducaoCanhoto, 3, FACBrTitulo.NossoNumero, 'BR', 1, 'R');
+  FPDF.Cell(60 - LReducaoCanhoto, 3, FNossoNumero, 'BR', 1, 'R');
 
   if ACanhoto then
   begin
@@ -408,7 +408,7 @@ begin
 
   FPDF.SetFont('arial', 'B', 7);
   FPDF.Cell(28, 3, FACBrTitulo.UsoBanco, 'BLR', 0, 'C');
-  FPDF.Cell(25- (LReducaoCanhoto/2), 3, FACBrTitulo.CARTEIRA, 'BR', 0, 'C');
+  FPDF.Cell(25- (LReducaoCanhoto/2), 3, FCarteira, 'BR', 0, 'C');
   FPDF.Cell(15, 3, FACBrTitulo.EspecieMod, 'BR', 0, 'C');
   FPDF.Cell(35, 3, '', 'BR', 0, 'C');
   FPDF.Cell(27, 3, '', 'BR', 0, 'C');
@@ -486,29 +486,29 @@ begin
   if ACanhoto then
   begin
     FPDF.SetFont('arial', '', 5);
-    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 3, Copy(NativeStringToAnsi(FACBrTitulo.Sacado.NomeSacado) + ' ' + FACBrTitulo.Sacado.CNPJCPF,1,37), '', 0, 'L');
+    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 3, Copy(FACBrTitulo.Sacado.NomeSacado + ' ' + FACBrTitulo.Sacado.CNPJCPF,1,37), '', 0, 'L');
   end;
 
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), 3, NativeStringToAnsi(FACBrTitulo.Sacado.NomeSacado) + ' ' + FACBrTitulo.Sacado.CNPJCPF, 'LR', 1, 'L');
+  FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), 3, FACBrTitulo.Sacado.NomeSacado + ' ' + FACBrTitulo.Sacado.CNPJCPF, 'LR', 1, 'L');
   if ACanhoto then
   begin
     FPDF.SetFont('arial', '', 5);
-    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 8, Copy(NativeStringToAnsi(FACBrTitulo.Sacado.NomeSacado) + ' ' + FACBrTitulo.Sacado.CNPJCPF,37,37), 'B', 0, 'L');
+    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 8, Copy(FACBrTitulo.Sacado.NomeSacado + ' ' + FACBrTitulo.Sacado.CNPJCPF,37,37), 'B', 0, 'L');
 
   end;
 
-  FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), 3, NativeStringToAnsi(FACBrTitulo.Sacado.Logradouro) + ' ' + FACBrTitulo.Sacado.Numero+ ' ' + NativeStringToAnsi(FACBrTitulo.Sacado.Complemento), 'LR', 1, 'L');
+  FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), 3, FACBrTitulo.Sacado.Logradouro + ' ' + FACBrTitulo.Sacado.Numero+ ' ' + FACBrTitulo.Sacado.Complemento, 'LR', 1, 'L');
 
   if ACanhoto then
-    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 3, Copy(NativeStringToAnsi(FACBrTitulo.Sacado.Logradouro) + ' ' + FACBrTitulo.Sacado.Numero+ ' ' + NativeStringToAnsi(FACBrTitulo.Sacado.Complemento),1,37), '', 0, 'L');
+    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 3, Copy(FACBrTitulo.Sacado.Logradouro + ' ' + FACBrTitulo.Sacado.Numero+ ' ' + FACBrTitulo.Sacado.Complemento,1,37), '', 0, 'L');
 
-  FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), 3, NativeStringToAnsi(FACBrTitulo.Sacado.Bairro + ' ' + FACBrTitulo.Sacado.Cidade) + ' ' + FACBrTitulo.Sacado.UF + ' ' + FACBrTitulo.Sacado.CEP, 'LR', 1, 'L');
+  FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), 3, FACBrTitulo.Sacado.Bairro + ' ' + FACBrTitulo.Sacado.Cidade + ' ' + FACBrTitulo.Sacado.UF + ' ' + FACBrTitulo.Sacado.CEP, 'LR', 1, 'L');
 
   if ACanhoto then
-    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 3, Copy(NativeStringToAnsi(FACBrTitulo.Sacado.Logradouro) + ' ' + FACBrTitulo.Sacado.Numero+ ' ' + NativeStringToAnsi(FACBrTitulo.Sacado.Complemento),37,37), '', 0, 'L');
+    FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 3, Copy(FACBrTitulo.Sacado.Logradouro + ' ' + FACBrTitulo.Sacado.Numero+ ' ' + FACBrTitulo.Sacado.Complemento,37,37), '', 0, 'L');
 
-  FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), 3, BENFICIARIO_FINAL + ': ' + NativeStringToAnsi(FACBrTitulo.Sacado.SacadoAvalista.NomeAvalista), 'BLR', 1, 'L');
+  FPDF.Cell(190 - LReducaoCanhoto - (LReducaoCanhoto/2), 3, BENFICIARIO_FINAL + ': ' + FACBrTitulo.Sacado.SacadoAvalista.NomeAvalista, 'BLR', 1, 'L');
 
   FPDF.SetFont('arial', 'B', StrToFloat(IfThen(ACanhoto,'4','6')));
 
@@ -584,7 +584,7 @@ begin
   FPDF.SetFont('arial', 'B', 5);
   FPDF.Cell(41, 3, MOTIVO_NAO_ENTREGA, 'R', 1, 'L');
   FPDF.SetFont('arial', 'B', 6);
-  FPDF.Cell(149, 3, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Nome), 1, 86), 'LR', 0, 'L');
+  FPDF.Cell(149, 3, Copy(FACBrTitulo.ACBrBoleto.Cedente.Nome, 1, 86), 'LR', 0, 'L');
   FPDF.SetFont('arial', 'B', 5);
   FPDF.Cell(16.25, 3, MOTIVO_MUDOU, '', 0, 'L');
   FPDF.Cell(24.75, 3, MOTIVO_FALECIDO, 'R', 1, 'L');
@@ -594,13 +594,13 @@ begin
   FPDF.Cell(16.25, 3, MOTIVO_RECUSADO, '', 0, 'L');
   FPDF.Cell(24.75, 3, MOTIVO_NUM_NAO_EXISTE, 'R', 1, 'L');
   FPDF.SetFont('arial', 'B', 6);
-  FPDF.Cell(109, 3, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Logradouro), 1, 86), 'LR', 0, 'L');
+  FPDF.Cell(109, 3, Copy(FACBrTitulo.ACBrBoleto.Cedente.Logradouro, 1, 86), 'LR', 0, 'L');
   FPDF.Cell(40, 3, AGENCIA_CODIGO_BENEFICIARIO, 'LRT', 0, 'C');
   FPDF.SetFont('arial', 'B', 5);
   FPDF.Cell(16.25, 3, MOTIVO_DESCONHECIDO, '', 0, 'L');
   FPDF.Cell(24.75, 3, MOTIVO_END_INSUFICIENTE, 'R', 1, 'L');
   FPDF.SetFont('arial', 'B', 6);
-  FPDF.Cell(109, 3, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Cidade)
+  FPDF.Cell(109, 3, Copy(FACBrTitulo.ACBrBoleto.Cedente.Cidade
                          + ' '
                          + FACBrTitulo.ACBrBoleto.Cedente.UF
                          + ' '
@@ -627,7 +627,7 @@ begin
 
 
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(23.75, 3, FACBrTitulo.NossoNumero, 'BLR', 0, 'C');
+  FPDF.Cell(23.75, 3, FNossoNumero, 'BLR', 0, 'C');
   FPDF.Cell(23.75, 3, FACBrTitulo.NumeroDocumento, 'BR', 0, 'C');
   FPDF.Cell(23.75, 3, DateToStr(FACBrTitulo.Vencimento), 'BR', 0, 'C');
   FPDF.Cell(23.75, 3, FormatFloatBr(FACBrTitulo.ValorDocumento), 'BL', 0, 'C');
@@ -641,10 +641,10 @@ begin
   FPDF.Cell(190, 3, NOME_PAGADOR, 'LR', 1, 'L');
 
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(190, 3, NativeStringToAnsi(FACBrTitulo.Sacado.NomeSacado) + ' ' + FACBrTitulo.Sacado.CNPJCPF, 'LR', 1, 'L');
-  FPDF.Cell(190, 3, NativeStringToAnsi(FACBrTitulo.Sacado.Logradouro + ' ' + FACBrTitulo.Sacado.Complemento), 'LR', 1, 'L');
-  FPDF.Cell(190, 3, NativeStringToAnsi(FACBrTitulo.Sacado.Bairro + ' ' + FACBrTitulo.Sacado.Cidade) + ' ' + FACBrTitulo.Sacado.UF + ' ' + FACBrTitulo.Sacado.CEP, 'LR', 1, 'L');
-  FPDF.Cell(190, 3, BENFICIARIO_FINAL + ': ' + NativeStringToAnsi(FACBrTitulo.Sacado.SacadoAvalista.NomeAvalista), 'BLR', 1, 'L');
+  FPDF.Cell(190, 3, FACBrTitulo.Sacado.NomeSacado + ' ' + FACBrTitulo.Sacado.CNPJCPF, 'LR', 1, 'L');
+  FPDF.Cell(190, 3, FACBrTitulo.Sacado.Logradouro + ' ' + FACBrTitulo.Sacado.Complemento, 'LR', 1, 'L');
+  FPDF.Cell(190, 3, FACBrTitulo.Sacado.Bairro + ' ' + FACBrTitulo.Sacado.Cidade + ' ' + FACBrTitulo.Sacado.UF + ' ' + FACBrTitulo.Sacado.CEP, 'LR', 1, 'L');
+  FPDF.Cell(190, 3, BENFICIARIO_FINAL + ': ' + FACBrTitulo.Sacado.SacadoAvalista.NomeAvalista, 'BLR', 1, 'L');
 
 
   if AEspacoDepois > 0 then
@@ -675,10 +675,10 @@ begin
   FPDF.SetFont('arial', '', 6);
   FPDF.Cell(190, 3, NOME_BENEFICIARIO, 'LR', 1, 'L');
   FPDF.SetFont('arial', 'B', 6);
-  FPDF.Cell(190, 3, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Nome), 1, 86), 'LR', 1, 'L');
+  FPDF.Cell(190, 3, Copy(FACBrTitulo.ACBrBoleto.Cedente.Nome, 1, 86), 'LR', 1, 'L');
   FPDF.Cell(190, 3, Copy(FACBrTitulo.ACBrBoleto.Cedente.CNPJCPF, 1, 86), 'LR', 1, 'L');
-  FPDF.Cell(190, 3, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Logradouro), 1, 86), 'LR', 1, 'L');
-  FPDF.Cell(190, 3, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Cidade)
+  FPDF.Cell(190, 3, Copy(FACBrTitulo.ACBrBoleto.Cedente.Logradouro, 1, 86), 'LR', 1, 'L');
+  FPDF.Cell(190, 3, Copy(FACBrTitulo.ACBrBoleto.Cedente.Cidade
                          + ' '
                          + FACBrTitulo.ACBrBoleto.Cedente.UF
                          + ' '
@@ -691,7 +691,7 @@ begin
   FPDF.Cell(38, 3, VALOR_PAGO, 'LR', 1, 'L');
 
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(38, 5, FACBrTitulo.NossoNumero, 'BLR', 0, 'C');
+  FPDF.Cell(38, 5, FNossoNumero, 'BLR', 0, 'C');
   FPDF.Cell(38, 5, FACBrTitulo.NumeroDocumento, 'BR', 0, 'C');
   FPDF.Cell(38, 5, DateToStr(FACBrTitulo.Vencimento), 'BR', 0, 'C');
   FPDF.Cell(38, 5, FormatFloatBr(FACBrTitulo.ValorDocumento), 'BL', 0, 'C');
@@ -701,10 +701,10 @@ begin
   FPDF.Cell(190, 3, NOME_PAGADOR, 'LR', 1, 'L');
 
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(190, 3, NativeStringToAnsi(FACBrTitulo.Sacado.NomeSacado) + ' ' + FACBrTitulo.Sacado.CNPJCPF, 'LR', 1, 'L');
-  FPDF.Cell(190, 3, NativeStringToAnsi(FACBrTitulo.Sacado.Logradouro + ' ' + FACBrTitulo.Sacado.Complemento), 'LR', 1, 'L');
-  FPDF.Cell(190, 3, NativeStringToAnsi(FACBrTitulo.Sacado.Bairro + ' ' + FACBrTitulo.Sacado.Cidade) + ' ' + FACBrTitulo.Sacado.UF + ' ' + FACBrTitulo.Sacado.CEP, 'LR', 1, 'L');
-  FPDF.Cell(190, 3, BENFICIARIO_FINAL + ': ' + NativeStringToAnsi(FACBrTitulo.Sacado.SacadoAvalista.NomeAvalista), 'BLR', 1, 'L');
+  FPDF.Cell(190, 3, FACBrTitulo.Sacado.NomeSacado + ' ' + FACBrTitulo.Sacado.CNPJCPF, 'LR', 1, 'L');
+  FPDF.Cell(190, 3, FACBrTitulo.Sacado.Logradouro + ' ' + FACBrTitulo.Sacado.Complemento, 'LR', 1, 'L');
+  FPDF.Cell(190, 3, FACBrTitulo.Sacado.Bairro + ' ' + FACBrTitulo.Sacado.Cidade + ' ' + FACBrTitulo.Sacado.UF + ' ' + FACBrTitulo.Sacado.CEP, 'LR', 1, 'L');
+  FPDF.Cell(190, 3, BENFICIARIO_FINAL + ': ' + FACBrTitulo.Sacado.SacadoAvalista.NomeAvalista, 'BLR', 1, 'L');
   FPDF.SetFont('arial', 'B', 6);
   FPDF.Text(FPDF.GetX + 30, FPDF.GetY + 2, AGENCIA_CODIGO_BENEFICIARIO);
   FPDF.Text(FPDF.GetX + 30, FPDF.GetY + 5, FBeneficiarioCodigo);
@@ -734,14 +734,14 @@ begin
     FPDF.Image(LArquivoLogo, FPDF.GetX, FPDF.GetY-2, 50, 10);
   FPDF.Cell(50, 5, '', '', 0, 'L');
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(140, 5, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Nome), 1, 86)
+  FPDF.Cell(140, 5, Copy(FACBrTitulo.ACBrBoleto.Cedente.Nome, 1, 86)
                     + ' - '
                     + CNPJ
                     + ' '
                     +Copy(FACBrTitulo.ACBrBoleto.Cedente.CNPJCPF, 1, 86), 'LR', 1, 'L');
   FPDF.SetFont('arial', '', 7);
   FPDF.Cell(50, 5, '', 'B', 0, 'L');
-  FPDF.Cell(140, 5, Copy(NativeStringToAnsi(FACBrTitulo.ACBrBoleto.Cedente.Cidade)
+  FPDF.Cell(140, 5, Copy(FACBrTitulo.ACBrBoleto.Cedente.Cidade
                     + ' '
                     + FACBrTitulo.ACBrBoleto.Cedente.UF
                     + ' '
@@ -800,6 +800,7 @@ end;
 procedure TACBrBoletoFPDF.InicializarArquivo(const AOrientation: TFPDFOrientation; APageUnit: TFPDFUnit; APageFormat: TFPDFPageFormat);
 begin
   FPDF := TFPDFExt.Create(AOrientation, APageUnit, APageFormat);
+  //FPDF.SetUTF8({$IfDef USE_UTF8}True{$Else}False{$EndIf});
   FPDF.SetUTF8(False);
   FPDF.SetCompression(True);
   FNumeroPassadas := 0;

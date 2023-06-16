@@ -154,10 +154,11 @@ end;
 procedure TACBrTEFAndroidMSitefClass.Inicializar;
 begin
   //Dados automação
-  fTEFMSitefAPI.NomeEstabelecimento            := fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial;
-  fTEFMSitefAPI.CNPJEstabelecimento            := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
-  fTEFMSitefAPI.DadosAutomacao.SuportaSaque    := fpACBrTEFAPI.DadosAutomacao.SuportaSaque;
-  fTEFMSitefAPI.DadosAutomacao.SuportaDesconto := fpACBrTEFAPI.DadosAutomacao.SuportaDesconto;
+  fTEFMSitefAPI.NomeEstabelecimento              := fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial;
+  fTEFMSitefAPI.CNPJEstabelecimento              := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
+  fTEFMSitefAPI.DadosAutomacao.CNPJSoftwareHouse := fpACBrTEFAPI.DadosAutomacao.CNPJSoftwareHouse;
+  fTEFMSitefAPI.DadosAutomacao.SuportaSaque      := fpACBrTEFAPI.DadosAutomacao.SuportaSaque;
+  fTEFMSitefAPI.DadosAutomacao.SuportaDesconto   := fpACBrTEFAPI.DadosAutomacao.SuportaDesconto;
   fTEFMSitefAPI.DadosAutomacao.SuportaViasDiferenciadas  := fpACBrTEFAPI.DadosAutomacao.SuportaViasDiferenciadas;
   fTEFMSitefAPI.DadosAutomacao.ImprimeViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
   fTEFMSitefAPI.DadosAutomacao.UtilizaSaldoTotalVoucher  := fpACBrTEFAPI.DadosAutomacao.UtilizaSaldoTotalVoucher;

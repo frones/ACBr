@@ -170,7 +170,7 @@ object Form1: TForm1
                 Font.Name = 'Arial'
                 ParentFont = False
                 TabOrder = 0
-                Text = 'Elias Cesar Vieira'
+                Text = 'Nome Consumidor'
               end
               object lbFluxoClienteDoc: TLabel
                 Left = 24
@@ -5968,7 +5968,7 @@ object Form1: TForm1
                 ClientWidth = 880
                 TabOrder = 0
                 object lbInterTipoChave: TLabel
-                  Left = 679
+                  Left = 681
                   Height = 15
                   Top = 24
                   Width = 59
@@ -6147,6 +6147,254 @@ object Form1: TForm1
                   Width = 130
                   Caption = 'Arquivo Certificado PEM'
                   ParentColor = False
+                end
+              end
+            end
+            object tsAilos: TTabSheet
+              Caption = 'Ailos'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnAilos: TPanel
+                Left = 48
+                Height = 625
+                Top = 56
+                Width = 888
+                Align = alCustom
+                BevelOuter = bvNone
+                ClientHeight = 625
+                ClientWidth = 888
+                TabOrder = 0
+                object lbAilosTipoChave: TLabel
+                  Left = 683
+                  Height = 15
+                  Top = 24
+                  Width = 59
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  ParentColor = False
+                end
+                object lbAilosErroChavePrivada: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 222
+                  Width = 129
+                  Caption = 'lbAilosErroChavePrivada'
+                  ParentColor = False
+                end
+                object lbAilosErroCertificadoRoot: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 371
+                  Width = 140
+                  Caption = 'lbAilosErroCertificadoRoot'
+                  ParentColor = False
+                end
+                object lbAilosClientSecret: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 132
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object lbAilosClienteID: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object lbAilosChave: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 53
+                  Caption = 'Chave PIX'
+                  ParentColor = False
+                end
+                object lbAilosChavePrivada: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 181
+                  Width = 120
+                  Caption = 'Arquivo Chave Privada'
+                  ParentColor = False
+                end
+                object lbAilosCertificadoRoot: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 328
+                  Width = 131
+                  Caption = 'Arquivo Certificado Root'
+                  ParentColor = False
+                end
+                object imAilosErroChavePIX: TImage
+                  Left = 844
+                  Height = 16
+                  Top = 44
+                  Width = 16
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object imAilosErroCertificadoRoot: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 348
+                  Width = 16
+                  Visible = False
+                end
+                object imAilosErroChavePrivada: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 200
+                  Width = 16
+                  Visible = False
+                end
+                object imAilosErroCertificado: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 274
+                  Width = 16
+                  Visible = False
+                end
+                object lbAilosCertificado: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 254
+                  Width = 120
+                  Caption = 'Arquivo Certificado crt'
+                  ParentColor = False
+                end
+                object lbAilosErroCertificado: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 297
+                  Width = 115
+                  Caption = 'lbAilosErroCertificado'
+                  ParentColor = False
+                end
+                object btAilosAcharCertificado: TSpeedButton
+                  Left = 845
+                  Height = 23
+                  Top = 270
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btAilosAcharCertificadoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btAilosAcharchavePrivada: TSpeedButton
+                  Left = 845
+                  Height = 23
+                  Top = 197
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btAilosAcharchavePrivadaClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btAilosAcharCertificadoRoot: TSpeedButton
+                  Left = 845
+                  Height = 23
+                  Top = 344
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btAilosAcharCertificadoRootClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edAilosClientSecret: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 147
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 3
+                end
+                object edAilosClientID: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 91
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+                object edAilosChavePIX: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 638
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = edAilosChavePIXChange
+                  TabOrder = 0
+                end
+                object edAilosChavePrivada: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 197
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edAilosArqsChange
+                  OnExit = edAilosChavePrivadaExit
+                  TabOrder = 4
+                  Text = 'AilosChavePrivada.key'
+                end
+                object edAilosCertificadoRoot: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 344
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnExit = edAilosCertificadoRootExit
+                  TabOrder = 6
+                  Text = 'AilosCertificadoRoot.crt'
+                end
+                object cbAilosTipoChave: TComboBox
+                  Left = 683
+                  Height = 23
+                  Top = 40
+                  Width = 157
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 15
+                  Style = csDropDownList
+                  TabOrder = 1
+                  TabStop = False
+                end
+                object edAilosCertificado: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 270
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edAilosArqsChange
+                  OnExit = edAilosCertificadoExit
+                  TabOrder = 5
+                  Text = 'AilosCertificado.crt'
                 end
               end
             end
@@ -6413,6 +6661,8 @@ object Form1: TForm1
   end
   object ACBrPSPShipay1: TACBrPSPShipay
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    URLSandBox = 'https://api-staging.shipay.com.br'
+    URLProducao = 'https://api.shipay.com.br'
     Left = 224
     Top = 416
   end
@@ -6463,6 +6713,11 @@ object Form1: TForm1
   object ACBrPSPInter1: TACBrPSPInter
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 443
+    Top = 416
+  end
+  object ACBrPSPAilos1: TACBrPSPAilos
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 474
     Top = 416
   end
 end

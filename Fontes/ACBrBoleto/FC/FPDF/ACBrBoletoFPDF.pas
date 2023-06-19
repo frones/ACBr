@@ -826,12 +826,12 @@ end;
 procedure TACBrBoletoFPDF.ModeloBoletoCarneA5(const AInicializarArquivo : Boolean);
 begin
   if AInicializarArquivo then
-    InicializarArquivo(poPortrait, puMM, pfA5)
+    InicializarArquivo(poLandscape, puMM, pfA5)
   else
   begin
     FPDF.AddPage();
-    ModeloEstruturaReciboPagador();//<<<canhoto precisa sair na lateral da ficha de pagamento
-    ModeloEstruturaLinhaPontinhada();//<<< precisa ser na vertical
+    ModeloEstruturaReciboEntrega(0,0);
+    ModeloEstruturaLinhaPontinhada(0,2);
     ModeloEstruturaFichaPagamento(0,0,True);
   end;
 end;

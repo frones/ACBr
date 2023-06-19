@@ -157,26 +157,27 @@ end;
 procedure TACBrBoletoFPDF.GeraDados(const AACBrTitulo: TACBrTitulo);
 begin
   FMensagem           := TStringList.Create;
-  FCodigoBarras       := ACBrBoleto.Banco.MontarCodigoBarras(AACBrTitulo);
-  FLinhaDigitavel     := ACBrBoleto.Banco.MontarLinhaDigitavel(FCodigoBarras, AACBrTitulo);
-  //FBeneficiarioCodigo := AACBrTitulo.ACBrBoleto.Cedente.Agencia + ' / ' + AACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
-  FBeneficiarioCodigo := ACBrBoleto.Banco.MontarCampoCodigoCedente(AACBrTitulo);
-  FNossoNumero        := ACBrBoleto.Banco.MontarCampoNossoNumero(AACBrTitulo);
-  FCarteira           := ACBrBoleto.Banco.MontarCampoCarteira(AACBrTitulo);
+  try
+    FCodigoBarras       := ACBrBoleto.Banco.MontarCodigoBarras(AACBrTitulo);
+    FLinhaDigitavel     := ACBrBoleto.Banco.MontarLinhaDigitavel(FCodigoBarras, AACBrTitulo);
+    //FBeneficiarioCodigo := AACBrTitulo.ACBrBoleto.Cedente.Agencia + ' / ' + AACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+    FBeneficiarioCodigo := ACBrBoleto.Banco.MontarCampoCodigoCedente(AACBrTitulo);
+    FNossoNumero        := ACBrBoleto.Banco.MontarCampoNossoNumero(AACBrTitulo);
+    FCarteira           := ACBrBoleto.Banco.MontarCampoCarteira(AACBrTitulo);
 
-  FBeneficiarioNome := Copy(AACBrTitulo.ACBrBoleto.Cedente.Nome + ' ' + AACBrTitulo.ACBrBoleto.Cedente.CNPJCPF + ' ' + AACBrTitulo.ACBrBoleto.Cedente.Logradouro + ' ' +
-      AACBrTitulo.ACBrBoleto.Cedente.Cidade + ' ' + AACBrTitulo.ACBrBoleto.Cedente.UF, 1, 86);
+    FBeneficiarioNome := Copy(AACBrTitulo.ACBrBoleto.Cedente.Nome + ' ' + AACBrTitulo.ACBrBoleto.Cedente.CNPJCPF + ' ' + AACBrTitulo.ACBrBoleto.Cedente.Logradouro + ' ' +
+        AACBrTitulo.ACBrBoleto.Cedente.Cidade + ' ' + AACBrTitulo.ACBrBoleto.Cedente.UF, 1, 86);
 
-  FBanco := FormatFloat('000', AACBrTitulo.ACBrBoleto.Banco.Numero) + '-' + IfThen(AACBrTitulo.ACBrBoleto.Banco.Digito >= 10, 'X',
-    IntToStrZero(AACBrTitulo.ACBrBoleto.Banco.Digito, 1));
+    FBanco := FormatFloat('000', AACBrTitulo.ACBrBoleto.Banco.Numero) + '-' + IfThen(AACBrTitulo.ACBrBoleto.Banco.Digito >= 10, 'X',
+      IntToStrZero(AACBrTitulo.ACBrBoleto.Banco.Digito, 1));
 
-
-
-  FACBrTitulo := AACBrTitulo;
-  FMensagem.Text := FACBrTitulo.Mensagem.Text;
-  ACBrBoleto.AdicionarMensagensPadroes(FACBrTitulo,FMensagem);
-  ModeloImpressao;
-  FMensagem.Free;
+    FACBrTitulo := AACBrTitulo;
+    FMensagem.Text := FACBrTitulo.Mensagem.Text;
+    ACBrBoleto.AdicionarMensagensPadroes(FACBrTitulo,FMensagem);
+    ModeloImpressao;
+  finally
+    FMensagem.Free;
+  end;
 end;
 
 procedure TACBrBoletoFPDF.Imprimir;

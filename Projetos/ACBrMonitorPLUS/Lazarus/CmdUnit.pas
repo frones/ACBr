@@ -37,7 +37,7 @@ Uses
   SysUtils, Classes, Math, ACBrMonitorConfig, ACBrLibResposta, ACBrMonitorConsts, DateUtils;
 
 Const
-   Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","CTE","MDFE","SAT","ESCPOS","GNRE","ESOCIAL","REINF","BPE","CNPJ","CPF","GTIN"';
+   Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","CTE","MDFE","SAT","ESCPOS","GNRE","ESOCIAL","REINF","BPE","CNPJ","CPF","GTIN","NFSE"';
    TIME_EXPIRES = 60;
 type
 
@@ -98,6 +98,7 @@ TACBrEventoPrepararImpressaoSAT = procedure(NomeImpressora : String; GerarPDF : 
 TACBrEventoRespostaIntegrador = function():String of object;
 TACBrEventoSubstituirVariaveis = function(const ATexto: String): String of object;
 TACBrEventoConfiguraDABPe = procedure(GerarPDF: Boolean; MostrarPreview : String) of  object;
+TACBrEventoConfiguraDANFSe = procedure(GerarPDF: Boolean; MostrarPreview : String) of  object;
 
 { TACBrObjetoDFe }
 
@@ -105,6 +106,7 @@ TACBrObjetoDFe = class(TACBrObjeto)
 private
   FOnAntesDeImprimir: TACBrEventoAntesImprimir;
   FOnConfiguraDABPe: TACBrEventoConfiguraDABPe;
+  FOnConfiguraDANFSe: TACBrEventoConfiguraDANFSe;
   FOnDepoisDeImprimir: TACBrEventoDepoisImprimir;
   FOnConfiguraDANFe: TACBrEventoConfiguraDANFe;
   FOnValidarIntegradorNFCe: TACBrEventoValidarIntegradorNFCe;
@@ -122,6 +124,7 @@ public
   function  DoRespostaIntegrador():String;
   function  DoSubstituirVariaveis(const ATexto: String): String;
   procedure DoConfiguraDABPe(GerarPDF: Boolean; MostrarPreview : String);
+  procedure DoConfiguraDANFSe(GerarPDF: Boolean; MostrarPreview : String);
 
   property OnAntesDeImprimir: TACBrEventoAntesImprimir read FOnAntesDeImprimir write FOnAntesDeImprimir;
   property OnDepoisDeImprimir: TACBrEventoDepoisImprimir read FOnDepoisDeImprimir write FOnDepoisDeImprimir;
@@ -132,6 +135,7 @@ public
   property OnRespostaIntegrador: TACBrEventoRespostaIntegrador read FOnRespostaIntegrador write FOnRespostaIntegrador;
   property OnSubstituirVariaveis: TACBrEventoSubstituirVariaveis read FOnSubstituirVariaveis write FOnSubstituirVariaveis;
   property OnConfiguraDABPe: TACBrEventoConfiguraDABPe read FOnConfiguraDABPe write FOnConfiguraDABPe;
+  property OnConfiguraDANFSe: TACBrEventoConfiguraDANFSe read FOnConfiguraDANFSe write FOnConfiguraDANFSe;
 end;
 
 { TACBrMetodo }
@@ -207,6 +211,12 @@ procedure TACBrObjetoDFe.DoConfiguraDABPe(GerarPDF: Boolean;
 begin
   if Assigned(FOnConfiguraDABPe) then
     FOnConfiguraDABPe(GerarPDF, MostrarPreview);
+end;
+
+procedure TACBrObjetoDFe.DoConfiguraDANFSe(GerarPDF: Boolean; MostrarPreview : String);
+begin
+  if Assigned(FOnConfiguraDANFSe) then
+    FOnConfiguraDANFSe(GerarPDF, MostrarPreview);
 end;
 
 { TACBrObjeto }

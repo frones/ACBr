@@ -48,20 +48,23 @@ uses
   ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto,
   ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids, LazHelpHTML,
   SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml, TreeFilterEdit,
+  ACBrNFSeXConversao,
   pcnConversao, pcnConversaoNFe, pcteConversaoCTe, pcnConversaoBPe, ACBrSAT,
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   pgnreConversao, ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX,
   ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types,
   fileinfo, ACBrDFeConfiguracoes, ACBrBPe, ACBrBPeDABPeESCPOS, ACBrReinf,
-  ACBreSocial, ACBrIntegrador, pmdfeConversaoMDFe,
-  pcesConversaoeSocial, pcnConversaoReinf, ACBrMonitorConfig, ACBrMonitorConsts,
-  DOACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit, DoBoletoUnit, DoACBrReinfUnit,
-  DoBALUnit, DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit, DoIBGEUnit,
-  DoNcmUnit, DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit, DoACBrGNReUnit,
+  ACBreSocial, ACBrIntegrador, pmdfeConversaoMDFe, pcesConversaoeSocial,
+  pcnConversaoReinf, ACBrMonitorConfig, ACBrMonitorConsts, DOACBrNFeUnit,
+  DoACBrCTeUnit, DoACBrMDFeUnit, DoBoletoUnit, DoACBrReinfUnit, DoBALUnit,
+  DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit, DoIBGEUnit, DoNcmUnit,
+  DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit, DoACBrGNReUnit,
   DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32, DoSATUnit,
   DoACBreSocialUnit, DoACBrBPeUnit, ACBrLibResposta, DoACBrUnit, DoCNPJUnit,
   DoCPFUnit, ACBrBoletoConversao, FormConsultaCNPJ, ACBrMonitorMenu,
-  ACBrDFeReport, ACBrGTIN, DoACBrGTINUnit,ACBrPIXBase;
+  ACBrDFeReport, ACBrNFSeX, ACBrNFSeXDANFSeRLClass,
+  DoACBrNFSeUnit, ACBrGTIN, DoACBrGTINUnit,
+  ACBrPIXBase;
 
 const
   CEstados: array[TACBrECFEstado] of string =
@@ -135,6 +138,8 @@ type
     ACBrNFeDANFCeFortesA4_1: TACBrNFeDANFCeFortesA4;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrNFSeX1: TACBrNFSeX;
+    ACBrNFSeXDANFSeRL1: TACBrNFSeXDANFSeRL;
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrReinf1: TACBrReinf;
     ACBrSAT1: TACBrSAT;
@@ -273,6 +278,7 @@ type
     bvCadastro4: TBevel;
     bvCadastro5: TBevel;
     bvCadastro6: TBevel;
+    bvCadastro7: TBevel;
     cbAbas: TCheckBox;
     cbBackFeed: TComboBox;
     cbBALModelo: TComboBox;
@@ -313,6 +319,8 @@ type
     cbHttpLib: TComboBox;
     cbHttpLibBoleto: TComboBox;
     cbIgnorarTags: TCheckBox;
+    cbLayoutNFSe: TComboBox;
+    cbMunicipio: TComboBox;
     cbLCBDispositivo: TComboBox;
     cbLCBPorta: TComboBox;
     cbLCBSufixo: TComboBox;
@@ -355,6 +363,7 @@ type
     cbVersaoWSReinf: TComboBox;
     cbxAdicionaLiteral: TCheckBox;
     cbxAjustarAut: TCheckBox;
+    cbxMontarPathSchemas: TCheckBox;
     cbxAmbiente: TComboBox;
     cbxAtualizarXMLCancelado: TCheckBox;
     cbxBOLBanco: TComboBox;
@@ -390,6 +399,8 @@ type
     cbxImprimirDescAcresItemSAT: TCheckBox;
     cbxImprimirItem1LinhaNFCe: TCheckBox;
     cbxImprimirItem1LinhaSAT: TCheckBox;
+    cbxConsultarLoteAposEnvio: TCheckBox;
+    cbxConsultarAposCancelar: TCheckBox;
     cbxMostrarStatusSAT: TCheckBox;
     cbxImprimirLogoLateralNFCe: TCheckBox;
     cbxImprimeItens: TCheckBox;
@@ -500,9 +511,25 @@ type
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
     edConsultarGTIN: TEdit;
+    edtArquivoWebServicesNFSe: TEdit;
     edtBOLChavePix: TEdit;
     edtBolArquivoKey: TEdit;
     edtBolArquivoCRT: TEdit;
+    edtCodigoCidade: TEdit;
+    edtCNPJPrefeitura: TEdit;
+    edtNomeCidade: TEdit;
+    edtUFCidade: TEdit;
+    edtEmailAssuntoNFSe: TEdit;
+    edtLogoMarcaPrefeitura: TEdit;
+    edtNomeEmitenteNFSe: TEdit;
+    edtFraseSecretaNFSe: TEdit;
+    edtChaveAutenticacaoNFSe: TEdit;
+    edtIMEmitenteNFSe: TEdit;
+    edtNomePrefeitura: TEdit;
+    edtUsuarioNFSe: TEdit;
+    edtSenhaNFSe: TEdit;
+    edtChaveAcessoNFSe: TEdit;
+    edtCNPJEmitenteNFSe: TEdit;
     edtVersaoArquivo: TEdit;
     edtVersaoLote: TEdit;
     edNCMCodigo: TEdit;
@@ -696,9 +723,12 @@ type
     gbTCP: TGroupBox;
     gbTXT: TGroupBox;
     gbWiFi: TGroupBox;
+    gbxEmitenteNFSe: TGroupBox;
+    gbxLauoutMunicipio: TGroupBox;
     gbxConfeSocial: TGroupBox;
     gbxConfigSSL: TGroupBox;
     gbxConfReinf: TGroupBox;
+    gbxAutenticacaoNFSe: TGroupBox;
     gbxMargem: TGroupBox;
     gbxMargem1: TGroupBox;
     gbxProxy: TGroupBox;
@@ -795,6 +825,26 @@ type
     Label260: TLabel;
     Label261: TLabel;
     Label262: TLabel;
+    Label263: TLabel;
+    Label264: TLabel;
+    Label265: TLabel;
+    Label266: TLabel;
+    Label267: TLabel;
+    Label268: TLabel;
+    Label269: TLabel;
+    Label270: TLabel;
+    Label271: TLabel;
+    Label272: TLabel;
+    Label273: TLabel;
+    Label274: TLabel;
+    Label275: TLabel;
+    Label276: TLabel;
+    Label277: TLabel;
+    Label278: TLabel;
+    Label279: TLabel;
+    Label280: TLabel;
+    Label281: TLabel;
+    Label282: TLabel;
     lbConsultarGTIN: TLabel;
     Label254: TLabel;
     lblBOLChavePix: TLabel;
@@ -1143,6 +1193,7 @@ type
     mmEmailMsgCTe: TMemo;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
+    mmEmailMsgNFSe: TMemo;
     mmEmailMsgSAT: TMemo;
     mResp: TMemo;
     mResposta: TSynMemo;
@@ -1209,6 +1260,7 @@ type
     sbArquivoKEY: TSpeedButton;
     sbArquivoCRT: TSpeedButton;
     sbArquivoWebServicesBPe: TSpeedButton;
+    sbArquivoWebServicesNFSe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
     sbArquivoWebServiceseSocial: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
@@ -1228,6 +1280,7 @@ type
     sbLogoMarca: TSpeedButton;
     sbLogoMarca1: TSpeedButton;
     sbLogoMarcaNFCeSAT: TSpeedButton;
+    sbLogoMarcaPrefeitura: TSpeedButton;
     sbNomeDLL: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
     sbPathArqTXT: TSpeedButton;
@@ -1340,6 +1393,9 @@ type
     SynXMLSyn1: TSynXMLSyn;
     TabControl1: TTabControl;
     TabSheet1: TTabSheet;
+    tsEmailNFSe: TTabSheet;
+    tsImpNFSe: TTabSheet;
+    tsWSNFSe: TTabSheet;
     tsTesteGTIN: TTabSheet;
     tsImpMDFe: TTabSheet;
     tsNCM: TTabSheet;
@@ -1531,6 +1587,7 @@ type
     procedure cbLogCompClick(Sender: TObject);
     procedure cbHRIChange(Sender: TObject);
     procedure cbMonitorarPastaChange(Sender: TObject);
+    procedure cbMunicipioChange(Sender: TObject);
     procedure cbSATMarcaChange(Sender: TObject);
     procedure cbSSLLibChange(Sender: TObject);
     procedure cbSSLTypeChange(Sender: TObject);
@@ -1660,6 +1717,7 @@ type
     procedure sbArquivoWebServicesMDFeClick(Sender: TObject);
     procedure sbArquivoWebServicesNFeClick(Sender: TObject);
     procedure sbArquivoWebServicesBPeClick(Sender: TObject);
+    procedure sbArquivoWebServicesNFSeClick(Sender: TObject);
     procedure sbArquivoWebServicesReinfClick(Sender: TObject);
     procedure sbBALSerialClick(Sender: TObject);
     procedure sbConsultaCEPClick(Sender: TObject);
@@ -1668,6 +1726,7 @@ type
     procedure sbLogoMarcaNFCeSATClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
+    procedure sbLogoMarcaPrefeituraClick(Sender: TObject);
     procedure sbNomeDLLClick(Sender: TObject);
     procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbPathArqTXTClick(Sender: TObject);
@@ -1813,6 +1872,8 @@ type
     procedure ACT_ButtonMouseEnter(Sender: TObject);
     procedure ACT_ButtonMouseLeave(Sender: TObject);
     function ValidaArquivo(APath:String; AArquivoDefault: String = ''): String;
+    // Italo
+    procedure AtualizarCidades;
   private
     ACBrMonitorINI: string;
     Inicio, fsMonitorarPasta: boolean;
@@ -1865,6 +1926,7 @@ type
     FDoCNPJ: TACBrObjetoConsultaCNPJ;
     FDoCPF: TACBrObjetoConsultaCPF;
     FDoGTIN: TACBrObjetoGTIN;
+    FDoNFSe: TACBrObjetoNFSe;
 
     FMenuTreeView: TMenu;
 
@@ -1956,6 +2018,7 @@ type
     procedure ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview : String);    //MostrarPreview está sendo Tratado como String, pois pode receber três parâmetros: True, False, Vazio ''
     procedure ConfiguraDACTe(GerarPDF: Boolean; MostrarPreview : String);
     procedure ConfiguraDABPe(GerarPDF: Boolean; MostrarPreview : String);
+    procedure ConfiguraDANFSe(GerarPDF: Boolean; MostrarPreview : String);
     procedure VerificaDiretorios;
     procedure LimparResp;
     procedure ExibeResp(Documento: ansistring);
@@ -1997,6 +2060,7 @@ uses
   ACBrNFeConfiguracoes, ACBrNFeDANFEClass, ACBrCTeConfiguracoes,
   ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes, ACBreSocialConfiguracoes,
   ACBrReinfConfiguracoes, ACBrGTINConfiguracoes, ACBrBPeConfiguracoes,
+  ACBrNFSeXConfiguracoes,
   ACBrDFeDANFeReport, ACBrETQClass, ACBrUtil.Base, ACBrUtil.FilesIO,
   ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math;
 
@@ -2030,6 +2094,7 @@ var
   iMDF: TVersaoMDFe;
   iCTE: TVersaoCTe;
   iNFe: TpcnVersaoDF;
+  iNFSe: TLayoutNFSe;
   IPosReciboLayout: TPosReciboLayout;
   SPosReciboLayout: String;
 
@@ -2151,6 +2216,11 @@ begin
   FDoBPe.OnDepoisDeImprimir := @DepoisDeImprimir;
 
   FDoGTIN := TACBrObjetoGTIN.Create(MonitorConfig, ACBrGTIN1);
+
+  FDoNFSe := TACBrObjetoNFSe.Create(MonitorConfig, ACBrNFSeX1);
+  FDoNFSe.OnAntesDeImprimir := @AntesDeImprimir;
+  FDoNFSe.OnDepoisDeImprimir := @DepoisDeImprimir;
+  FDoNFSe.OnConfiguraDANFSe   := @ConfiguraDANFSe;
 
 // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);
@@ -2312,6 +2382,15 @@ begin
     cbVersaoWS.Items.Add( FormatFloat('0.00', (StrToFloat(copy( GetEnumName(TypeInfo(TpcnVersaoDF ), integer(iNFe)), 3, 3))) /100
                               , vFormatSettings ) );
     Inc(iNFe);
+  end;
+
+  { Criando lista Layouts NFSe disponiveis }
+  cbLayoutNFSe.Items.Clear;
+  iNFSe := Low(TLayoutNFSe);
+  while iNFSe <= High(TLayoutNFSe) do
+  begin
+    cbLayoutNFSe.Items.Add( GetEnumName(TypeInfo(TLayoutNFSe ), integer(iNFSe)));
+    Inc(iNFSe);
   end;
 
   { Criando lista versões e-social disponiveis }
@@ -4346,6 +4425,7 @@ begin
       ACBrReinf1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
       ACBrBPe1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
       ACBrGTIN1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+      ACBrNFSeX1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -4460,6 +4540,7 @@ begin
   ACBrCTe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
   ACBrMDFe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
   ACBrBPe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
+  ACBrNFSeX1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
 end;
 
 procedure TFrmACBrMonitor.cbxTimeZoneModeChange(Sender: TObject);
@@ -4477,6 +4558,7 @@ begin
   ACBrReinf1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
   ACBrBPe1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
   ACBrGTIN1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
+  ACBrNFSeX1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
 end;
 
 procedure TFrmACBrMonitor.cbxUTF8Change(Sender: TObject);
@@ -4985,6 +5067,7 @@ begin
   FDoPosPrinter.Free;
   FDoBPe.Free;
   FDoGTIN.Free;
+  FDoNFSe.Free;
 
   FMenuTreeView.Free;
 
@@ -5687,6 +5770,28 @@ begin
     edNCMDiasValidade.Value := DiasValidadeCache;
   end;
 
+  {Parâmetro NFSe}
+  with FMonitorConfig.NFSE do
+  begin
+    cbLayoutNFSe.ItemIndex             := LayoutProvedor;
+    edtCodigoCidade.Text               := IntToStr(CodigoMunicipio);
+    edtNomeCidade.Text                 := NomeMunicipio;
+    edtUFCidade.Text                   := UFMunicipio;
+    edtUsuarioNFSe.Text                := Usuario;
+    edtSenhaNFSe.Text                  := Senha;
+    edtChaveAcessoNFSe.Text            := ChaveAcesso;
+    edtChaveAutenticacaoNFSe.Text      := ChaveAutenticacao;
+    edtFraseSecretaNFSe.Text           := FraseSecreta;
+    edtCNPJEmitenteNFSe.Text           := CNPJEmitente;
+    edtIMEmitenteNFSe.Text             := IMEmitente;
+    edtNomeEmitenteNFSe.Text           := NomeEmitente;
+    cbxMontarPathSchemas.Checked       := MontarAutoPathSchema;
+    cbxConsultarLoteAposEnvio.Checked  := ConsultarLoteAposEnvio;
+    cbxConsultarAposCancelar.Checked   := ConsultarAposCancelar;
+    edtNomePrefeitura.Text             := NomePrefeitura;
+    edtCNPJPrefeitura.Text             := CNPJPrefeitura;
+  end;
+
   {Parametro DFe}
   with FMonitorConfig.DFE do
   begin
@@ -5706,6 +5811,7 @@ begin
     edtArquivoWebServicesGNRe.Text     := ValidaArquivo(ArquivoWebServicesGNRe, CACBrGNREServicosIni);
     edtArquivoWebServiceseSocial.Text  := ValidaArquivo(ArquivoWebServiceseSocial, CACBreSocialServicosIni);
     edtArquivoWebServicesReinf.Text    := ValidaArquivo(ArquivoWebServicesReinf, CACBrReinfServicosIni);
+    edtArquivoWebServicesNFSe.Text     := ValidaArquivo(ArquivoWebServicesNFSe, CACBrNFSeServicosIni);
     cbValidarDigest.Checked            := ValidarDigest;
     edtTimeoutWebServices.Value        := TimeoutWebService;
     cbModoEmissao.Checked              := IgnorarComandoModoEmissao;
@@ -5733,6 +5839,7 @@ begin
       rgTipoDanfe.ItemIndex            := DANFE;
       edtLogoMarca.Text                := LogoMarca;
       edtLogoMarcaNFCeSAT.Text         := LogoMarcaNFCeSAT;
+      edtLogoMarcaPrefeitura.Text      := LogoMarcaPrefeitura;
     end;
 
     with WebService do
@@ -5813,6 +5920,8 @@ begin
       mmEmailMsgCTe.Lines.Text           := StringToBinaryString(MensagemCTe);
       edtEmailAssuntoMDFe.Text           := AssuntoMDFe;
       mmEmailMsgMDFe.Lines.Text          := StringToBinaryString(MensagemMDFe);
+      edtEmailAssuntoNFSe.Text           := AssuntoNFSe;
+      mmEmailMsgNFSe.Lines.Text          := StringToBinaryString(MensagemNFSe);
     end;
 
     with WebService.NFe do
@@ -5955,9 +6064,13 @@ begin
     SetComumConfig(ACBrReinf1.Configuracoes);
     SetComumConfig(ACBrBPe1.Configuracoes);
     SetComumConfig(ACBrGTIN1.Configuracoes);
+    SetComumConfig(ACBrNFSeX1.Configuracoes);
 
     AtualizaSSLLibsCombo;
-
+    // Italo;
+    AtualizarCidades;
+    cbMunicipio.ItemIndex := cbMunicipio.Items.IndexOf(edtNomeCidade.Text + '/' +
+                               edtCodigoCidade.Text + '/' + edtUFCidade.Text);
 
     if EstaVazio(edtAguardar.Text) then
       edtAguardar.Text := IntToStr(ACBrNFe1.Configuracoes.WebServices.AguardarConsultaRet);
@@ -5979,6 +6092,7 @@ begin
        ACBrCTe1.DACTE           := ACBrCTeDACTeRL1;
        ACBrMDFe1.DAMDFE         := ACBrMDFeDAMDFeRL1;
        ACBrGNRE1.GNREGuia       := ACBrGNREGuiaRL1;
+       ACBrNFSeX1.DANFSE        := ACBrNFSeXDANFSeRL1;
     end;
 
     if ckNFCeUsarIntegrador.Checked then
@@ -6054,6 +6168,24 @@ begin
     ACBrBPe1.DABPe.MostraStatus      := cbxMostraStatus.Checked;
     ACBrBPe1.DABPe.ExpandeLogoMarca  := cbxExpandirLogo.Checked;
     ACBrBPe1.DABPe.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+
+    ACBrNFSeX1.DANFSe.TipoDANFSE        := tpPadrao; //StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
+    ACBrNFSeX1.DANFSe.Logo              := edtLogoMarcaPrefeitura.Text;
+    ACBrNFSeX1.DANFSe.Sistema           := edSH_RazaoSocial.Text;
+    ACBrNFSeX1.DANFSe.Site              := edtSiteEmpresa.Text;
+    ACBrNFSeX1.DANFSe.Email             := edtEmailEmpresa.Text;
+    ACBrNFSeX1.DANFSe.MostraPreview     := cbxMostrarPreview.Checked;
+    ACBrNFSeX1.DANFSe.Impressora        := cbxImpressora.Text;
+    ACBrNFSeX1.DANFSe.NumCopias         := edtNumCopia.Value;
+    ACBrNFSeX1.DANFSe.MargemInferior    := fspeMargemInf.Value;
+    ACBrNFSeX1.DANFSe.MargemSuperior    := fspeMargemSup.Value;
+    ACBrNFSeX1.DANFSe.MargemDireita     := fspeMargemDir.Value;
+    ACBrNFSeX1.DANFSe.MargemEsquerda    := fspeMargemEsq.Value;
+    ACBrNFSeX1.DANFSe.PathPDF           := edtPathPDF.Text;
+    ACBrNFSeX1.DANFSe.MostraStatus      := cbxMostraStatus.Checked;
+    ACBrNFSeX1.DANFSe.ExpandeLogoMarca  := cbxExpandirLogo.Checked;
+    ACBrNFSeX1.DANFSe.Prefeitura        := edtNomePrefeitura.Text;
+    ACBrNFSeX1.DANFSe.Prestador.Logo    := edtLogoMarca.Text;
 
     VerificaDiretorios;
 
@@ -6918,6 +7050,28 @@ begin
       DiasValidadeCache := edNCMDiasValidade.Value;
     end;
 
+    { Parametros NFSe }
+    with FMonitorConfig.NFSe do
+    begin
+      LayoutProvedor         := cbLayoutNFSe.ItemIndex;
+      CodigoMunicipio        := StrToIntDef(edtCodigoCidade.Text, 0);
+      NomeMunicipio          := edtNomeCidade.Text;
+      UFMunicipio            := edtUFCidade.Text;
+      Usuario                := edtUsuarioNFSe.Text;
+      Senha                  := edtSenhaNFSe.Text;
+      ChaveAcesso            := edtChaveAcessoNFSe.Text;
+      ChaveAutenticacao      := edtChaveAutenticacaoNFSe.Text;
+      FraseSecreta           := edtFraseSecretaNFSe.Text;
+      CNPJEmitente           := edtCNPJEmitenteNFSe.Text;
+      IMEmitente             := edtIMEmitenteNFSe.Text;
+      NomeEmitente           := edtNomeEmitenteNFSe.Text;
+      MontarAutoPathSchema   := cbxMontarPathSchemas.Checked;
+      ConsultarLoteAposEnvio := cbxConsultarLoteAposEnvio.Checked;
+      ConsultarAposCancelar  := cbxConsultarAposCancelar.Checked;
+      NomePrefeitura         := edtNomePrefeitura.Text;
+      CNPJPrefeitura         := edtCNPJPrefeitura.Text;
+    end;
+
     { Parametros DFe }
     with FMonitorConfig.DFE do
     begin
@@ -6960,6 +7114,7 @@ begin
         Salvar                   := ckSalvar.Checked;
         PathSalvar               := edtPathLogs.Text;
         Impressora               := cbxImpressora.Text;
+        LogoMarcaPrefeitura      := edtLogoMarcaPrefeitura.Text;
       end;
 
       with WebService do
@@ -7037,6 +7192,8 @@ begin
         MensagemCTe              := BinaryStringToString(mmEmailMsgCTe.Lines.Text);
         AssuntoMDFe              := edtEmailAssuntoMDFe.Text;
         MensagemMDFe             := BinaryStringToString(mmEmailMsgMDFe.Lines.Text);
+        AssuntoNFSe              := edtEmailAssuntoNFSe.Text;
+        MensagemNFSe             := BinaryStringToString(mmEmailMsgNFSe.Lines.Text);
       end;
 
       with Impressao.NFCe.Emissao do
@@ -7745,7 +7902,9 @@ begin
         else if fsCmd.Objeto = 'ESCPOS' then
           FDoPosPrinter.Executar(fsCmd)
         else if fsCmd.Objeto = 'GTIN' then
-          FDoGTIN.Executar(fsCmd);
+          FDoGTIN.Executar(fsCmd)
+        else if fsCmd.Objeto = 'NFSE' then
+          FDoNFSe.Executar(fsCmd);
 
         // Atualiza Memo de Entrada //
         mCmd.Lines.Assign(fsProcessar);
@@ -8451,6 +8610,19 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.sbArquivoWebServicesNFSeClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o arquivo';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtArquivoWebServicesNFSe.Text := OpenDialog1.FileName;
+  end;
+end;
+
 procedure TFrmACBrMonitor.sbArquivoWebServicesReinfClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione o arquivo';
@@ -8598,6 +8770,19 @@ begin
   if OpenDialog1.Execute then
   begin
     edtLogoMarca.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbLogoMarcaPrefeituraClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Logo';
+  OpenDialog1.DefaultExt := '*.png';
+  OpenDialog1.Filter :=
+    'Arquivos PNG (*.png)|*.png|Arquivos JPG (*.jpg)|*.jpg|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtLogoMarcaPrefeitura.Text := OpenDialog1.FileName;
   end;
 end;
 
@@ -10050,6 +10235,7 @@ begin
      or (AfsCmd.Objeto = 'REINF')
      or (AfsCmd.Objeto = 'GNRE')
      or (AfsCmd.Objeto = 'BPE')
+     or (AfsCmd.Objeto = 'NFSE')
      or (AfsCmd.Objeto = 'GTIN') then
        MsgErro :=  VerificarErrosConfiguracaoDFe;
 
@@ -10998,21 +11184,69 @@ end;
 procedure TFrmACBrMonitor.ConfiguraDABPe(GerarPDF: Boolean;
   MostrarPreview: String);
 begin
-    GerarPDF:= False;
-    MostrarPreview:= '';
-    ACBrBPe1.DABPE := ACBrBPeDABPeESCPOS1;
-    ACBrBPeDABPeESCPOS1.PosPrinter.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
-    ACBrBPeDABPeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
-    ACBrBPeDABPeESCPOS1.ImprimeNomeFantasia := cbxImprimirNomeFantasiaNFCe.Checked;
+  GerarPDF:= False;
+  MostrarPreview:= '';
+  ACBrBPe1.DABPE := ACBrBPeDABPeESCPOS1;
+  ACBrBPeDABPeESCPOS1.PosPrinter.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
+  ACBrBPeDABPeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
+  ACBrBPeDABPeESCPOS1.ImprimeNomeFantasia := cbxImprimirNomeFantasiaNFCe.Checked;
 
-    if not ACBrPosPrinter1.ControlePorta then
-    begin
-       ACBrBPeDABPeESCPOS1.PosPrinter.Ativar;
-       if not ACBrBPeDABPeESCPOS1.PosPrinter.Device.Ativo then
-         ACBrBPeDABPeESCPOS1.PosPrinter.Device.Ativar;
-    end
+  if not ACBrPosPrinter1.ControlePorta then
+  begin
+     ACBrBPeDABPeESCPOS1.PosPrinter.Ativar;
+     if not ACBrBPeDABPeESCPOS1.PosPrinter.Device.Ativo then
+       ACBrBPeDABPeESCPOS1.PosPrinter.Device.Ativar;
+  end
+end;
 
+procedure TFrmACBrMonitor.ConfiguraDANFSe(GerarPDF: Boolean;
+  MostrarPreview: String);
+//MostrarPreview está sendo Tratado como String, pois pode receber três parâmetros: True, False, Vazio
+//(a definição vazio '' permite utilizar a configuração preview definida em tela)
+var
+  OK: boolean;
+begin
+  if ACBrNFSeX1.NotasFiscais.Count > 0 then
+  begin
+    ACBrNFSeX1.DANFSE := ACBrNFSeXDANFSeRL1;
+    if NaoEstaVazio(cbxImpressora.Text) then
+      ACBrNFSeX1.DANFSE.Impressora := cbxImpressora.Text;
+  end;
 
+  if GerarPDF and not DirectoryExists(PathWithDelim(edtPathPDF.Text))then
+    ForceDirectories(PathWithDelim(edtPathPDF.Text));
+
+  if ACBrNFSeX1.DANFSE <> nil then
+  begin
+    ACBrNFSeX1.DANFSE.Logo := edtLogoMarcaPrefeitura.Text;
+    ACBrNFSeX1.DANFSE.Prefeitura := edtNomePrefeitura.Text;
+    ACBrNFSeX1.DANFSE.Email := edtEmailEmpresa.Text;
+    ACBrNFSeX1.DANFSE.NumCopias := edtNumCopia.Value;
+    ACBrNFSeX1.DANFSE.MargemInferior := fspeMargemInf.Value;
+    ACBrNFSeX1.DANFSE.MargemSuperior := fspeMargemSup.Value;
+    ACBrNFSeX1.DANFSE.MargemDireita := fspeMargemDir.Value;
+    ACBrNFSeX1.DANFSE.MargemEsquerda := fspeMargemEsq.Value;
+    ACBrNFSeX1.DANFSE.PathPDF := PathWithDelim(edtPathPDF.Text);
+    ACBrNFSeX1.DANFSE.MostraStatus := cbxMostraStatus.Checked;
+    ACBrNFSeX1.DANFSE.ExpandeLogoMarca := cbxExpandirLogo.Checked;
+    ACBrNFSeX1.DANFSE.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+
+    ACBrNFSeX1.DANFSE.Prestador.Logo := edtLogoMarca.Text;
+
+    {$IFDEF Demo}
+    AtualizarImpressaoHomologacaoDFe(ACBrCTe1.DACTE);
+    {$ELSE}
+    ACBrNFSeX1.DANFSE.Sistema := edSH_RazaoSocial.Text;
+    ACBrNFSeX1.DANFSE.Site := edtSiteEmpresa.Text;
+    {$ENDIF}
+  end;
+
+  ACBrNFSeX1.DANFSE.MostraPreview := False;
+  if (not GerarPDF) then
+    if EstaVazio(MostrarPreview) then
+      ACBrNFSeX1.DANFSE.MostraPreview := cbxMostrarPreview.Checked
+    else
+      ACBrNFSeX1.DANFSE.MostraPreview := StrToBoolDef(MostrarPreview, False);
 end;
 
 
@@ -11607,6 +11841,40 @@ begin
       TConfiguracoesBPe(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
 
   end
+  else if Configuracoes is TConfiguracoesNFSe then
+  begin
+    // Italo
+    TConfiguracoesNFSe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoNFe.ItemIndex + 1));
+    TConfiguracoesNFSe(Configuracoes).Geral.ConsultaLoteAposEnvio := cbxConsultarLoteAposEnvio.Checked;
+    TConfiguracoesNFSe(Configuracoes).Geral.ConsultaAposCancelar := cbxConsultarAposCancelar.Checked;
+    TConfiguracoesNFSe(Configuracoes).Geral.MontarPathSchema := cbxMontarPathSchemas.Checked;
+    TConfiguracoesNFSe(Configuracoes).Geral.CNPJPrefeitura := edtCNPJPrefeitura.Text;
+
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.CNPJ := edtCNPJEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.InscMun := edtIMEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.RazSocial := edtNomeEmitenteNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.WSUser := edtUsuarioNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.WSSenha := edtSenhaNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.WSChaveAcesso := edtChaveAcessoNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.WSChaveAutoriz := edtChaveAutenticacaoNFSe.Text;
+    TConfiguracoesNFSe(Configuracoes).Geral.Emitente.WSFraseSecr := edtFraseSecretaNFSe.Text;
+
+    with TConfiguracoesNFSe(Configuracoes).Arquivos do
+    begin
+      NomeLongoNFSe := True;
+      EmissaoPathNFSe := cbxEmissaoPathNFe.Checked;
+      PathGer := edtPathLogs.Text;
+      PathSalvar := GetPathGer(0);
+
+      PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'NFSe';
+      if DirectoryExists(PathSchemaDFe) then
+        PathSchemas := PathSchemaDFe;
+    end;
+
+    // As duas configurações abaixo devem sempre ser as ultimas.
+    TConfiguracoesNFSe(Configuracoes).Geral.LayoutNFSe := TLayoutNFSe(cbLayoutNFSe.ItemIndex);
+    TConfiguracoesNFSe(Configuracoes).Geral.CodigoMunicipio := StrToIntDef(edtCodigoCidade.Text, -1);
+  end
   else if Configuracoes is TConfiguracoesGNRE then
   begin
     TConfiguracoesGNRE(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoGNRe.ItemIndex + 1));
@@ -11622,7 +11890,6 @@ begin
     if DirectoryExists(PathSchemaDFe) then
       TConfiguracoesGNRE(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
   end
-
   else if Configuracoes is TConfiguracoeseSocial then
   begin
     TConfiguracoeseSocial(Configuracoes).Arquivos.IniServicos       := edtArquivoWebServiceseSocial.Text;
@@ -11885,6 +12152,7 @@ begin
       ACBrReinf1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
       ACBrBPe1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
       ACBrGTIN1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+      ACBrNFSeX1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -11905,6 +12173,7 @@ begin
       ACBrReinf1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
       ACBrBPe1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
       ACBrGTIN1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+      ACBrNFSeX1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -11966,6 +12235,17 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.cbMunicipioChange(Sender: TObject);
+var
+  Tamanho: Integer;
+begin
+  Tamanho := Length(Trim(cbMunicipio.Text));
+
+  edtNomeCidade.Text := Copy(cbMunicipio.Text, 1, Tamanho - 11);
+  edtUFCidade.Text := Copy(cbMunicipio.Text, Tamanho - 1, 2);
+  edtCodigoCidade.Text := Copy(cbMunicipio.Text, Tamanho - 9, 7);
+end;
+
 procedure TFrmACBrMonitor.cbSATMarcaChange(Sender: TObject);
 begin
   OnSATManual;
@@ -11984,8 +12264,9 @@ begin
       ACBrBlocoX1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
       ACBreSocial1.Configuracoes.Geral.SSLLib:= TSSLLib(cbSSLLib.ItemIndex);
       ACBrReinf1.Configuracoes.Geral.SSLLib  := TSSLLib(cbSSLLib.ItemIndex);
-      ACBrBPe1.Configuracoes.Geral.SSLLib  := TSSLLib(cbSSLLib.ItemIndex);  
-      ACBrGTIN1.Configuracoes.Geral.SSLLib  := TSSLLib(cbSSLLib.ItemIndex);
+      ACBrBPe1.Configuracoes.Geral.SSLLib    := TSSLLib(cbSSLLib.ItemIndex);
+      ACBrGTIN1.Configuracoes.Geral.SSLLib   := TSSLLib(cbSSLLib.ItemIndex);
+      ACBrNFSeX1.Configuracoes.Geral.SSLLib  := TSSLLib(cbSSLLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -12345,6 +12626,7 @@ begin
   ACBrReinf1.SSL.SSLType  := TSSLType( cbSSLType.ItemIndex );
   ACBrBPe1.SSL.SSLType    := TSSLType( cbSSLType.ItemIndex );
   ACBrGTIN1.SSL.SSLType   := TSSLType( cbSSLType.ItemIndex );
+  ACBrNFSeX1.SSL.SSLType  := TSSLType( cbSSLType.ItemIndex );
 end;
 
 procedure TFrmACBrMonitor.SetColorSubButtons(Sender: TObject);
@@ -12361,6 +12643,47 @@ begin
    end;
    TPanel(Sender).Font.Bold := True;
 
+end;
+
+// Italo
+procedure TFrmACBrMonitor.AtualizarCidades;
+var
+  IniCidades: TMemIniFile;
+  Cidades: TStringList;
+  I: Integer;
+  sNome, sCod, sUF: String;
+begin
+  IniCidades := TMemIniFile.Create('');
+  Cidades    := TStringList.Create;
+
+  ACBrNFSeX1.LerCidades;
+  IniCidades.SetStrings(ACBrNFSeX1.Configuracoes.WebServices.Params);
+
+  try
+    IniCidades.ReadSections(Cidades);
+    cbMunicipio.Items.Clear;
+
+    for I := 0 to Pred(Cidades.Count) do
+    begin
+      if (StrToIntdef(Cidades[I], 0) > 0) then
+      begin
+        //Exemplo: Alfenas/3101607/MG
+        sCod  := Cidades[I];
+        sNome := ACBrStr(IniCidades.ReadString(sCod, 'Nome', ''));
+        sUF   := IniCidades.ReadString(sCod, 'UF', '');
+
+        cbMunicipio.Items.Add(Format('%s/%s/%s', [sNome, sCod, sUF]));
+      end;
+    end;
+
+    //Sort
+    cbMunicipio.Sorted := false;
+    cbMunicipio.Sorted := true;
+//    edtTotalCidades.Text := IntToStr(cbCidades.Items.Count);
+  finally
+    FreeAndNil(Cidades);
+    IniCidades.Free;
+  end;
 end;
 
 end.

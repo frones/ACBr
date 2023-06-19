@@ -225,6 +225,7 @@ begin
 
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 { TACBrNFSeProviderDBSeller }

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/06/2023
+-- Prescon.GravarJson --
+[*] Preenchidos cep e país da obra ao gerar o json
+  Por: Renato Rubinho
+
+19/06/2023
 -- DBSeller.Provider --
 [*] Adiciona chamada a RemoverPrefixosDesnecessarios na TratarXMLRetornado da versão 1.00, visando resolver erro reportado na Lib.
   Por: Diego F

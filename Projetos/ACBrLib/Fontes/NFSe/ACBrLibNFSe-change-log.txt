@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/06/2023
+--- ACBrLibNFSeStaticImportMT ---
+[*] Ajuste unit ACBrLibNFSeStaticImportMT
+    Por: Antonio Carlos Junior
+
 14/06/2023
 --- ACBrLibNFSeBase, ACBrLibNFSeRespostas ---
 [*] Correção no método e resposta NFSE_GerarLote

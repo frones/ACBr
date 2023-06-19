@@ -194,25 +194,25 @@ function NFSE_ConsultarNFSeServicoTomadoPorPeriodo(const libHandle: TLibHandle; 
 function NFSE_ConsultarNFSeServicoTomadoPorIntermediario(const libHandle: TLibHandle; const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_EnviarEvento(const libHandle: PLibHandle; aInfEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_EnviarEvento(const libHandle: TLibHandle; aInfEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarDPSPorChave(const libHandle: PLibHandle; const aChaveDPS: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarDPSPorChave(const libHandle: TLibHandle; const aChaveDPS: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSePorChave(const libHandle: PLibHandle; const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSePorChave(const libHandle: TLibHandle; const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarEvento(const libHandle: PLibHandle; const aChave: PChar; aTipoEvento: longint; aNumSeq: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarEvento(const libHandle: TLibHandle; const aChave: PChar; aTipoEvento: longint; aNumSeq: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarDFe(const libHandle: PLibHandle; aNSU: longint; sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarDFe(const libHandle: TLibHandle; aNSU: longint; sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ObterDANFSE(const libHandle: PLibHandle; const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ObterDANFSE(const libHandle: TLibHandle; const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarParametros(const libHandle: PLibHandle; aTipoParametroMunicipio: longint; const aCodigoServico: PChar; aCompetencia: TDateTime; aNumeroBeneficio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarParametros(const libHandle: TLibHandle; aTipoParametroMunicipio: longint; const aCodigoServico: PChar; aCompetencia: TDateTime; aNumeroBeneficio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
 {%endregion}

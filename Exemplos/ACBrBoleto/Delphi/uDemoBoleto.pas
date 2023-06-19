@@ -263,6 +263,9 @@ type
     edtPathLogoMarca: TEdit;
     Label82: TLabel;
     Label83: TLabel;
+    Label84: TLabel;
+    edtSenhaPDF: TEdit;
+    btnImprimirTeste: TButton;
     procedure btnImpressaoHTMLClick(Sender: TObject);
     procedure btnImpressaoPDFClick(Sender: TObject);
     procedure btnBoletoIndividualClick(Sender: TObject);
@@ -279,6 +282,7 @@ type
     procedure btnConfigGravarClick(Sender: TObject);
     procedure btnImpressaoPDFIndividualClick(Sender: TObject);
     procedure btnImpressaoStreamClick(Sender: TObject);
+    procedure btnImprimirTesteClick(Sender: TObject);
     procedure btnRetornoClick(Sender: TObject);
     procedure btnWSConsultaClick(Sender: TObject);
     procedure cbxMotorRelatorioChange(Sender: TObject);
@@ -319,6 +323,8 @@ type
 
 var
   frmDemoBoleto: TfrmDemoBoleto;
+
+  CONST MOTOR_NAO_SELECIONADO = 'MOTOR DE RELATÓRIO NÃO FOI SELECIONADO, VERIFIQUE!!!';
 
 implementation
 
@@ -599,12 +605,20 @@ end;
 
 procedure TfrmDemoBoleto.btnImpressaoHTMLClick(Sender: TObject);
 begin
+  if not Assigned(FACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create(MOTOR_NAO_SELECIONADO);
+
   FACBrBoleto.ACBrBoletoFC.NomeArquivo := ExtractFilePath(Application.ExeName) + 'teste.html';
   FACBrBoleto.GerarHTML;
 end;
 
 procedure TfrmDemoBoleto.btnImpressaoPDFClick(Sender: TObject);
 begin
+  if not Assigned(FACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create(MOTOR_NAO_SELECIONADO);
+
+  FACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := False;
+  FACBrBoleto.ACBrBoletoFC.PdfSenha := edtSenhaPDF.Text;
   FACBrBoleto.GerarPDF;
 end;
 
@@ -707,7 +721,7 @@ begin
   NrTitulos := '10';
   InputQuery('Geração Lote','Quantidade a Gerar :',NrTitulos);
 
-  for I := 0 to StrToIntDef(NrTitulos,0) do
+  for I := 0 to Pred(StrToIntDef(NrTitulos,0)) do
   begin
     Valor := StrToFloatDef(edtValorDoc.Text,1);
     Valor := Valor + Random;
@@ -732,6 +746,10 @@ procedure TfrmDemoBoleto.btnImpressaoSpoolerClick(Sender: TObject);
 //var
 //  i: Integer; 
 begin
+  if not Assigned(FACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create(MOTOR_NAO_SELECIONADO);
+
+  FACBrBoleto.ACBrBoletoFC.PdfSenha := edtSenhaPDF.Text;
   FACBrBoleto.Imprimir;
 
   //Método para impressao de cada titulo de forma individual
@@ -1097,14 +1115,13 @@ end;
 procedure TfrmDemoBoleto.btnImpressaoPDFIndividualClick(Sender: TObject);
 var Index : Cardinal;
 begin
+  if not Assigned(FACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create(MOTOR_NAO_SELECIONADO);
+
   for Index := 0 to Pred(FACBrBoleto.ListadeBoletos.Count) do
   begin
     FACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := True;
-    if Index + 1 = 5 then
-      FACBrBoleto.ACBrBoletoFC.PdfSenha := ''
-    else
-      FACBrBoleto.ACBrBoletoFC.PdfSenha := IntToStr(Index+1);
-
+    FACBrBoleto.ACBrBoletoFC.PdfSenha := edtSenhaPDF.Text;
     FACBrBoleto.GerarPDF(Index);
   end;
 end;
@@ -1113,14 +1130,43 @@ procedure TfrmDemoBoleto.btnImpressaoStreamClick(Sender: TObject);
 var LMeuStream : TStream;
     xPath : string;
 begin
+  if not Assigned(FACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create(MOTOR_NAO_SELECIONADO);
+
   xPath := ExtractFilePath(Application.ExeName) + 'testeStream.pdf';
   InputQuery('Salvando Boleto em Stream','Caminho + Arquivo + Extenção a salvar o Stream',xPath);
   LMeuStream := TFileStream.Create(xPath,fmCreate or fmOpenWrite);
   try
+    FACBrBoleto.ACBrBoletoFC.PdfSenha := edtSenhaPDF.Text;
     FACBrBoleto.Imprimir(LMeuStream);
   finally
     LMeuStream.Free;
   end;
+end;
+
+procedure TfrmDemoBoleto.btnImprimirTesteClick(Sender: TObject);
+var
+  LNrTitulos : Cardinal;
+  LValor : Currency;
+  I : Integer;
+begin
+  if not Assigned(FACBrBoleto.ACBrBoletoFC) then
+    raise Exception.Create(MOTOR_NAO_SELECIONADO);
+
+  FACBrBoleto.ListadeBoletos.Clear;
+  LNrTitulos := 10;
+  for I := 1 to Pred(LNrTitulos) do
+  begin
+    LValor := StrToFloatDef(edtValorDoc.Text,1);
+    LValor := LValor + Random;
+    edtValorDoc.Text  := CurrToStr(LValor);
+    edtNossoNro.Text  := IntToStr(StrToIntDef(edtNossoNro.Text,0)+1);
+    edtNumeroDoc.Text := IntToStr(StrToIntDef(edtNumeroDoc.Text,0)+1);
+    btnBoletoIndividual.Click;
+  end;
+
+  FACBrBoleto.ACBrBoletoFC.PdfSenha := edtSenhaPDF.Text;
+  FACBrBoleto.Imprimir;
 end;
 
 procedure TfrmDemoBoleto.btnRetornoClick(Sender: TObject);

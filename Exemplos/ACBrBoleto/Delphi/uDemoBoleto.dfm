@@ -635,15 +635,15 @@ object frmDemoBoleto: TfrmDemoBoleto
         end
       end
       object GroupBox6: TGroupBox
-        Left = 680
+        Left = 575
         Top = 405
-        Width = 277
-        Height = 73
+        Width = 382
+        Height = 87
         Caption = 'Impress'#227'o'
         TabOrder = 4
         object btnImpressaoHTML: TButton
-          Left = 4
-          Top = 14
+          Left = 52
+          Top = 22
           Width = 75
           Height = 25
           Caption = 'Gerar HTML'
@@ -651,8 +651,8 @@ object frmDemoBoleto: TfrmDemoBoleto
           OnClick = btnImpressaoHTMLClick
         end
         object btnImpressaoPDF: TButton
-          Left = 85
-          Top = 14
+          Left = 133
+          Top = 22
           Width = 75
           Height = 25
           Caption = 'Gerar PDF'
@@ -660,8 +660,8 @@ object frmDemoBoleto: TfrmDemoBoleto
           OnClick = btnImpressaoPDFClick
         end
         object btnImpressaoSpooler: TButton
-          Left = 135
-          Top = 43
+          Left = 151
+          Top = 53
           Width = 98
           Height = 25
           Caption = 'Imprimir'
@@ -675,8 +675,8 @@ object frmDemoBoleto: TfrmDemoBoleto
           OnClick = btnImpressaoSpoolerClick
         end
         object btnImpressaoStream: TButton
-          Left = 166
-          Top = 12
+          Left = 214
+          Top = 22
           Width = 98
           Height = 25
           Caption = 'Imprimir Stream'
@@ -684,19 +684,34 @@ object frmDemoBoleto: TfrmDemoBoleto
           OnClick = btnImpressaoStreamClick
         end
         object btnImpressaoPDFIndividual: TButton
-          Left = 7
-          Top = 45
+          Left = 23
+          Top = 53
           Width = 122
           Height = 25
           Caption = 'Gerar PDF Individual'
           TabOrder = 4
           OnClick = btnImpressaoPDFIndividualClick
         end
+        object btnImprimirTeste: TButton
+          Left = 255
+          Top = 53
+          Width = 98
+          Height = 25
+          Caption = 'Imprimir Teste'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 5
+          OnClick = btnImprimirTesteClick
+        end
       end
       object PageControl3: TPageControl
         Left = 5
         Top = 394
-        Width = 669
+        Width = 564
         Height = 98
         ActivePage = TabSheet6
         TabOrder = 5
@@ -741,6 +756,13 @@ object frmDemoBoleto: TfrmDemoBoleto
             ParentColor = False
             ParentFont = False
           end
+          object Label84: TLabel
+            Left = 411
+            Top = 3
+            Width = 55
+            Height = 13
+            Caption = 'Senha PDF'
+          end
           object cbxMotorRelatorio: TComboBox
             Left = 2
             Top = 22
@@ -767,6 +789,14 @@ object frmDemoBoleto: TfrmDemoBoleto
             Caption = 'Imprimir Verso da Fatura'
             Enabled = False
             TabOrder = 2
+          end
+          object edtSenhaPDF: TEdit
+            Left = 411
+            Top = 22
+            Width = 135
+            Height = 21
+            TabOrder = 3
+            Text = 'ABC123'
           end
         end
         object TabSheet7: TTabSheet
@@ -1670,7 +1700,7 @@ object frmDemoBoleto: TfrmDemoBoleto
   object flpndlgRetorno: TOpenDialog
     Filter = '*.txt|*.txt|*.ret|*.ret|*.*|*.*'
     Options = []
-    Left = 879
-    Top = 459
+    Left = 711
+    Top = 371
   end
 end

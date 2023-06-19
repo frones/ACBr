@@ -426,7 +426,7 @@ begin
   FPDF.Cell(27, 3, '', 'BR', 0, 'C');
   FPDF.Cell(60 - LReducaoCanhoto, 3, FormatFloatBr(FACBrTitulo.ValorDocumento), 'BR', 1, 'R');
   if FACBrTitulo.ACBrBoleto.ACBrBoletoFC.LayOut <> lPadraoPIX  then
-    FPDF.QRCode(FPDF.GetX + 111, FPDF.GetY,FACBrTitulo.QrCode.emv, 0.35);
+    FPDF.QRCode(FPDF.GetX + 111 + LReducaoCanhoto, FPDF.GetY,FACBrTitulo.QrCode.emv, 0.35);
   if ACanhoto then
   begin
     FPDF.SetFont('arial', '', 5);
@@ -444,7 +444,7 @@ begin
   end;
 
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(130 - (LReducaoCanhoto/2), 3, Copy(FMensagem.Text, 1, 106 - LReducaoEMV), 'L', 0, 'L');
+  FPDF.Cell(130 - (LReducaoCanhoto/2), 3, Copy(FMensagem.Text, 1, 106 - LReducaoEMV - trunc(LReducaoCanhoto/2)), 'L', 0, 'L');
   FPDF.Cell(60 - LReducaoCanhoto, 3, '', 'LBR', 1, 'R');
 
   if ACanhoto then
@@ -452,8 +452,8 @@ begin
     FPDF.SetFont('arial', '', 5);
     FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 3, VALOR_PAGO, 'B', 0, 'L');
   end;
-
-  FPDF.Cell(130 - (LReducaoCanhoto/2), 3, Copy(FMensagem.Text, 107 - LReducaoEMV, 106 - LReducaoEMV), 'LR', 0, 'L');
+  FPDF.SetFont('arial', 'B', 7);
+  FPDF.Cell(130 - (LReducaoCanhoto/2), 3, Copy(FMensagem.Text, 107 - LReducaoEMV - trunc(LReducaoCanhoto/2), 106 - LReducaoEMV - trunc(LReducaoCanhoto/2)), 'LR', 0, 'L');
   FPDF.SetFont('arial', '', 6);
   FPDF.Cell(60 - LReducaoCanhoto, 3, JUROS_MULTA, 'LR', 1, 'L');
 
@@ -464,7 +464,7 @@ begin
   end;
 
   FPDF.SetFont('arial', 'B', 7);
-  FPDF.Cell(130 - (LReducaoCanhoto/2), 3, Copy(FMensagem.Text, 194 - LReducaoEMV, 106 - LReducaoEMV), 'LR', 0, 'L');
+  FPDF.Cell(130 - (LReducaoCanhoto/2), 3, Copy(FMensagem.Text, 194 - LReducaoEMV - trunc(LReducaoCanhoto/2), 106 - LReducaoEMV - trunc(LReducaoCanhoto/2)), 'LR', 0, 'L');
   FPDF.Cell(60 - LReducaoCanhoto, 3, '', 'LBR', 1, 'R');
 
   if ACanhoto then
@@ -472,8 +472,8 @@ begin
     FPDF.SetFont('arial', '', 5);
     FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), 3, Copy(FBeneficiarioNome,1,37), '', 0, 'L');
   end;
-
-  FPDF.Cell(130 - (LReducaoCanhoto/2), 3, Copy(FMensagem.Text, 281 - LReducaoEMV, 106 - LReducaoEMV), 'LR', 0, 'L');
+  FPDF.SetFont('arial', 'B', 7);
+  FPDF.Cell(130 - (LReducaoCanhoto/2), 3, Copy(FMensagem.Text, 281 - LReducaoEMV - trunc(LReducaoCanhoto/2), 106 - LReducaoEMV - trunc(LReducaoCanhoto/2)), 'LR', 0, 'L');
   FPDF.SetFont('arial', '', 6);
   FPDF.Cell(60 - LReducaoCanhoto, 3, VALOR_PAGO, 'LR', 1, 'L');
 
@@ -860,6 +860,7 @@ begin
     ModeloEstruturaLinhaPontinhada(15,15);
     ModeloEstruturaReciboPagador(0,0);
     ModeloEstruturaLinhaPontinhada(15,15);
+    ModeloEstruturaFichaPagamento(0,2);
   end;
 end;
 
@@ -951,11 +952,9 @@ begin
       FPDF.AddPage();
     ModeloEstruturaReciboEntrega(0,0);
     ModeloEstruturaLinhaPontinhada(2,3);
-    //ModeloEstruturaReciboPagador(0,0);
-    //ModeloEstruturaLinhaPontinhada(5,5);
     ModeloEstruturaFichaPagamento(0,5);
     if LPassadas = 1 then
-      ModeloEstruturaLinhaPontinhada(5,5);
+      ModeloEstruturaLinhaPontinhada(10,5);
   end;
 end;
 

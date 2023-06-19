@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/06/2023
+-- ACBrPIXPSPBancoDoBrasil --
+[+] Criação de propriedade para definir qual versão da API utilizar;
+[*] Alteração do PSP para utilizar certificados (Necessário em ambiente de Produção
+    na versão 2 da API).
+    por: Elias César
+
 02/06/2023
 -- ACBrPIXPSPAilos --
 [+] Inclusão do novo PSP Ailos

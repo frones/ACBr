@@ -50,9 +50,10 @@ uses
 const
   cBBParamDevAppKey = 'gw-dev-app-key';
   cBBParamAppKey = 'gw-app-key';
-  cBBURLSandbox = 'https://api.hm.bb.com.br';  // 'https://api.sandbox.bb.com.br';
+  cBBURLSandbox = 'https://api.hm.bb.com.br';
   cBBURLProducao = 'https://api.bb.com.br';
   cBBPathAPIPix = '/pix/v1';
+  cBBPathAPIPixV2 = '/pix/v2';
   cBBURLAuthTeste = 'https://oauth.hm.bb.com.br/oauth/token';
   cBBURLAuthProducao = 'https://oauth.bb.com.br/oauth/token';
   cBBPathSandboxPagarPix = '/testes-portal-desenvolvedor/v1';
@@ -61,15 +62,21 @@ const
   cBBKeySandboxPagarPix = '95cad3f03fd9013a9d15005056825665';
   cBBEndPointCobHomologacao = '/cobqrcode';
 
+resourcestring
+  sErroCertificadoNaoInformado = 'Certificado e/ou Chave Privada não informados';
+
 type
+        
+  TACBrBBAPIVersao = (apiVersao1, apiVersao2);
 
   { TACBrPSPBancoDoBrasil }
   
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrPSPBancoDoBrasil = class(TACBrPSP)
+  TACBrPSPBancoDoBrasil = class(TACBrPSPCertificate)
   private
+    fBBAPIVersao: TACBrBBAPIVersao;
     fDeveloperApplicationKey: String;
 
     procedure QuandoAcessarEndPoint(const AEndPoint: String;
@@ -94,8 +101,8 @@ type
     property ClientID;
     property ClientSecret;
 
-    property DeveloperApplicationKey: String read fDeveloperApplicationKey
-      write fDeveloperApplicationKey;
+    property BBAPIVersao: TACBrBBAPIVersao read fBBAPIVersao write fBBAPIVersao default apiVersao1;
+    property DeveloperApplicationKey: String read fDeveloperApplicationKey write fDeveloperApplicationKey;
   end;
 
 implementation
@@ -103,6 +110,7 @@ implementation
 uses
   synautil, synacode,
   ACBrUtil.Strings,
+  ACBrUtil.Base,
   ACBrJSON,
   ACBrPIXBase,
   DateUtils;
@@ -216,9 +224,14 @@ end;
 procedure TACBrPSPBancoDoBrasil.QuandoAcessarEndPoint(
   const AEndPoint: String; var AURL: String; var AMethod: String);
 begin
-  // BB não tem: POST /cob - Mudando para /PUT com "txid" vazio
-  if (UpperCase(AMethod) = ChttpMethodPOST) then
+  // BB v1 não tem: POST /cob - Mudando para /PUT com "txid" vazio
+  if (BBAPIVersao = apiVersao1) and (UpperCase(AMethod) = ChttpMethodPOST) then
     AMethod := ChttpMethodPUT;
+
+  // Certificado é obrigatório em Produção na API BB versão 2
+  if (BBAPIVersao = apiVersao2) and (ACBrPixCD.Ambiente = ambProducao) and
+     (EstaVazio(ArquivoCertificado) or EstaVazio(ArquivoChavePrivada)) then
+    raise EACBrPixHttpException.Create(ACBrStr(sErroCertificadoNaoInformado));
 end;
 
 procedure TACBrPSPBancoDoBrasil.QuandoReceberRespostaEndPoint(const AEndPoint,
@@ -251,23 +264,29 @@ begin
   else
     Result := cBBURLSandbox;
 
-  Result := Result + cBBPathAPIPix;
+  if (BBAPIVersao = apiVersao2) then
+    Result := Result + cBBPathAPIPixV2
+  else
+    Result := Result + cBBPathAPIPix;
 end;
 
-function TACBrPSPBancoDoBrasil.CalcularEndPointPath(const aMethod,
-  aEndPoint: String): String;
+function TACBrPSPBancoDoBrasil.CalcularEndPointPath(const aMethod, aEndPoint: String): String;
 begin
   Result := Trim(aEndPoint);
 
-  // BB deve utilizar /cobqrcode em ambiente de homologação
-  if ((UpperCase(aMethod) = ChttpMethodPOST) or
-      (UpperCase(aMethod) = ChttpMethodPUT)) and
-      (aEndPoint = cEndPointCob) and (ACBrPixCD.Ambiente = ambTeste) then
-    Result := cBBEndPointCobHomologacao;
+  // Alterações devem ser feitas apenas na versão 1 da API do BB
+  if (BBAPIVersao = apiVersao1) then
+  begin
+    // BB v1 deve utilizar /cobqrcode em ambiente de homologação
+    if ((UpperCase(aMethod) = ChttpMethodPOST) or
+        (UpperCase(aMethod) = ChttpMethodPUT)) and
+        (aEndPoint = cEndPointCob) and (ACBrPixCD.Ambiente = ambTeste) then
+      Result := cBBEndPointCobHomologacao;
 
-  // BB utiliza delimitador antes dos parâmetros de query
-  if (aEndPoint = cEndPointCob) then
-    Result := URLComDelimitador(Result);
+    // BB utiliza delimitador antes dos parâmetros de query
+    if (aEndPoint = cEndPointCob) then
+      Result := URLComDelimitador(Result);
+  end;
 end;
 
 procedure TACBrPSPBancoDoBrasil.ConfigurarQueryParameters(const Method, EndPoint: String);

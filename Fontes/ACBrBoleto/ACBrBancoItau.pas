@@ -463,7 +463,7 @@ begin
     with ACBrTitulo do
     begin
        {SEGMENTO P}
-
+       inc(fpQtdRegsLote);
        {Tipo de Ocorrencia}
        TipoOcorrenciaRemessa := TipoOcorrenciaToCodRemessa(ACBrTitulo.OcorrenciaOriginal.Tipo);
 
@@ -540,9 +540,9 @@ begin
                         PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)), 2, '0'), '00')  + // 225 A 226 - Dias para baixa
                 '0000000000000 ');
 
-       Inc(fpQtdRegsLote);
 
        {SEGMENTO Q}
+       inc(fpQtdRegsLote);
        ListTransacao.Add( IntToStrZero(ACBrBanco.Numero, 3)                + //Código do banco
                 '0001'                                                     + //Número do lote
                 '3'                                                        + //Tipo do registro: Registro detalhe
@@ -568,11 +568,12 @@ begin
                 PadRight('0',3, '0')                                       + //Uso exclusivo FEBRABAN/CNAB
                 space(28));                                                   //Uso exclusivo FEBRABAN/CNAB
 
-       Inc(fpQtdRegsLote);
+
 
        {Segmento R}
        if(MatchText(TipoOcorrenciaRemessa,['01','49','31']))then
        begin
+         inc(fpQtdRegsLote);
          ListTransacao.Add(IntToStrZero(ACBrBanco.Numero,3)                         + // 001 a 003 - Codigo do Banco
                 '0001'                                                              + // 004 a 007 - Lote de Serviço
                 '3'                                                                 + // 008 a 008 - Registro Detalhe
@@ -611,7 +612,6 @@ begin
                 '0'                                                                 + // 231 a 231 Complemento de Registro
                 StringOfChar(' ',9));                                                  // 232 a 240 Complemento de Registro
 
-         Inc(fpQtdRegsLote);
        end;
 
     end;
@@ -623,15 +623,9 @@ end;
 
 function TACBrBancoItau.GerarRegistroTrailler240(ARemessa: TStringList): String;
 begin
-   fpQtdRegsLote := 0;
-   if(MatchText(TipoOcorrenciaRemessa,['01','49','31']))then
-     fpQtdRegsLote:= (ARemessa.Count -1) * 3
-   else
-     fpQtdRegsLote:= (ARemessa.Count -1) * 2;
-
-   fpQtdRegsCobranca:= fpQtdRegsLote;
-
+  fpQtdRegsCobranca:= fpQtdRegsLote;
   Result:= inherited GerarRegistroTrailler240(ARemessa);
+  fpQtdRegsLote := 0;
 end;
 
 procedure TACBrBancoItau.GerarRegistroHeader400(

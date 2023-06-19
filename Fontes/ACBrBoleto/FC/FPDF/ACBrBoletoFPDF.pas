@@ -325,7 +325,7 @@ begin
   if ACanhoto then
   begin
     FPDF.SetFont('arial', '', 5);
-    FPDF.Cell((LReducaoCanhoto + (LReducaoCanhoto / 2))/2, 3, FormatFloat('000',FACBrTitulo.Parcela) + ' / ' +FormatFloat('000',FACBrTitulo.QtdeParcelas), 'BR', 0, 'C');
+    FPDF.Cell((LReducaoCanhoto + (LReducaoCanhoto / 2))/2, 3, FormatFloat('000',FACBrTitulo.Parcela) + ' / ' +FormatFloat('000',FACBrTitulo.TotalParcelas), 'BR', 0, 'C');
     FPDF.SetFont('arial', 'B', 5);
     FPDF.Cell((LReducaoCanhoto + (LReducaoCanhoto / 2))/2, 3,  DateToStr(FACBrTitulo.Vencimento), 'B', 0, 'C');
 
@@ -375,7 +375,7 @@ begin
   begin
     FPDF.SetFont('arial', '', 5);
     FPDF.Cell((LReducaoCanhoto + (LReducaoCanhoto / 2))/2, 3, FACBrTitulo.EspecieMod, 'BR', 0, 'C');
-    FPDF.Cell((LReducaoCanhoto + (LReducaoCanhoto / 2))/2, 3, IntToStr(FACBrTitulo.QtdeParcelas), 'B', 0, 'C');
+    FPDF.Cell((LReducaoCanhoto + (LReducaoCanhoto / 2))/2, 3, IntToStr(FACBrTitulo.TotalParcelas), 'B', 0, 'C');
   end;
 
   FPDF.SetFont('arial', 'B', 7);

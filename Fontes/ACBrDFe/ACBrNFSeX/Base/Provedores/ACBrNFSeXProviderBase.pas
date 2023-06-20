@@ -780,6 +780,7 @@ begin
     IncluirURI := True;
 
     AssinaturaAdicional := False;
+    Assinaturas := TACBrNFSeX(FAOwner).Configuracoes.Geral.Assinaturas;
   end;
 
   SetNomeXSD('nfse.xsd');

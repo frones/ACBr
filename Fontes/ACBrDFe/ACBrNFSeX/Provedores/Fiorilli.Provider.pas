@@ -89,15 +89,18 @@ begin
 
   ConfigGeral.QuebradeLinha := '\s\n';
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := true;
-  
-  with ConfigAssinar do
+
+  if ConfigAssinar.Assinaturas = taConfigProvedor then
   begin
-    Rps := True;
-    LoteRps := True;
-    CancelarNFSe := True;
-    RpsGerarNFSe := True;
-    RpsSubstituirNFSe := True;
-    SubstituirNFSe := True;
+    with ConfigAssinar do
+    begin
+      Rps := True;
+      LoteRps := True;
+      CancelarNFSe := True;
+      RpsGerarNFSe := True;
+      RpsSubstituirNFSe := True;
+      SubstituirNFSe := True;
+    end;
   end;
 end;
 

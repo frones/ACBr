@@ -129,6 +129,7 @@ type
     FMontarPathSchema: Boolean;
     FLayout: TLayout;
     FLayoutNFSe: TLayoutNFSe;
+    FAssinaturas: TAssinaturas;
 
     procedure SetCodigoMunicipio(const Value: Integer);
   public
@@ -156,6 +157,7 @@ type
       write FMontarPathSchema default True;
     property Layout: TLayout read FLayout;
     property LayoutNFSe: TLayoutNFSe read FLayoutNFSe write FLayoutNFSe default lnfsProvedor;
+    property Assinaturas: TAssinaturas read FAssinaturas write FAssinaturas default taConfigProvedor;
   end;
 
   { TArquivosConfNFSe }
@@ -330,6 +332,7 @@ begin
   FConsultaAposCancelar := True;
   FMontarPathSchema := True;
   FLayoutNFSe := lnfsProvedor;
+  FAssinaturas := taConfigProvedor;
 end;
 
 destructor TGeralConfNFSe.Destroy;
@@ -350,6 +353,7 @@ begin
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'ConsultaAposCancelar', ConsultaAposCancelar);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'MontarPathSchema', MontarPathSchema);
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'LayoutNFSe', Integer(LayoutNFSe));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'Assinaturas', Integer(Assinaturas));
 
   // Emitente
   with Emitente do
@@ -391,6 +395,7 @@ begin
   ConsultaAposCancelar := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'ConsultaAposCancelar', ConsultaAposCancelar);
   MontarPathSchema := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'MontarPathSchema', MontarPathSchema);
   LayoutNFSe := TLayoutNFSe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'LayoutNFSe', Integer(LayoutNFSe)));
+  Assinaturas := TAssinaturas(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Assinaturas', Integer(Assinaturas)));
 
   // Emitente
   with Emitente do
@@ -495,6 +500,7 @@ begin
   FMontarPathSchema      := DeGeralConfNFSe.MontarPathSchema;
   FLayout                := DeGeralConfNFSe.Layout;
   FLayoutNFSe            := DeGeralConfNFSe.LayoutNFSe;
+  FAssinaturas           := DeGeralConfNFSe.Assinaturas;
   FProvedor              := DeGeralConfNFSe.Provedor;
 
   FEmitente.Assign(DeGeralConfNFSe.Emitente);

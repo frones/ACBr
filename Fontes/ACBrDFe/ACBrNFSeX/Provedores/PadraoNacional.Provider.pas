@@ -221,7 +221,7 @@ begin
   LerErro := True;
   JSonErros := LJson.AsJSONArray[AListTag];
 
-  if JSonErros.Count = 0 then
+  if JSonErros.Count > 0 then
   begin
     JSonErros := LJson.AsJSONArray['erro'];
     LerErro := False;
@@ -581,7 +581,7 @@ begin
   end
   else
   begin
-    Response.ArquivoRetorno := RemoverDeclaracaoXML(Response.ArquivoRetorno);
+//    Response.ArquivoRetorno := RemoverDeclaracaoXML(Response.ArquivoRetorno);
     SalvarPDFNfse(Response.InfConsultaNFSe.NumeroIniNFSe, Response.ArquivoRetorno);
   end;
 end;

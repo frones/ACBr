@@ -426,6 +426,8 @@ type
     FIncluirURI: boolean;
     // Se True gera uma assinatura adicional
     FAssinaturaAdicional: boolean;
+    // Tipo de Assinaturas
+    FAssinaturas: TAssinaturas;
 
   public
     property Rps: boolean read FRps write FRps;
@@ -452,6 +454,7 @@ type
 
     property IncluirURI: boolean read FIncluirURI write FIncluirURI;
     property AssinaturaAdicional: boolean read FAssinaturaAdicional write FAssinaturaAdicional;
+    property Assinaturas: TAssinaturas read FAssinaturas write FAssinaturas;
   end;
 
   { TConfigSchemas }

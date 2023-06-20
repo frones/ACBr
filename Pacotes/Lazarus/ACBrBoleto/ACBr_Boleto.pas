@@ -31,7 +31,7 @@ uses
   ACBrBoletoRet_Credisis, ACBrBoletoRet_Inter_API, ACBrBoletoRet_Itau, 
   ACBrBoletoRet_Sicredi_APIECOMM, ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, 
   ACBrBoletoW_Itau, ACBrBoletoW_Sicredi_APIECOMM, ACBrBancoVotorantim, 
-  LazarusPackageIntf;
+  ACBrBoletoRet_Sicredi_APIV2, ACBrBoletoW_Sicredi_APIV2, LazarusPackageIntf;
 
 implementation
 

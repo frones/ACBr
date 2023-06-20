@@ -50,8 +50,8 @@ uses
   ACBrBoletoWS,
   ACBrBoletoWS.Rest,
   ACBrBoleto;
-type
 
+type
   { TBoletoW_Sicredi_APIV2 }
   TBoletoW_Sicredi_APIV2 = class(TBoletoWSREST)
   private
@@ -59,21 +59,21 @@ type
     function TipoDescontoToString(const AValue: TACBrTipoDesconto): String;
     function TipoJuros(const AValue: String): String;
   protected
+    function GerarTokenAutenticacao: string; override;
+    function DefinirParametros: String;
+    function DefinirParametrosDetalhe: String;
+    function ValidaAmbiente: Integer;
     procedure DefinirURL; override;
     procedure DefinirContentType; override;
     procedure GerarHeader; override;
     procedure GerarDados; override;
     procedure DefinirAuthorization; override;
-    function GerarTokenAutenticacao: string; override;
-    procedure DefinirParamOAuth; override;
-    function DefinirParametros: String;
-    function DefinirParametrosDetalhe: String;
     procedure DefinirKeyUser;
     procedure DefinirAutenticacao;
     procedure DefinirPosto;
     procedure DefinirCooperativa;
     procedure DefinirCodigoBeneficiario;
-    function ValidaAmbiente: Integer;
+    procedure DefinirParamOAuth; override;
     procedure RequisicaoJson;
     procedure RequisicaoAltera;
     procedure RequisicaoAlteraVencto;
@@ -106,16 +106,19 @@ const
   C_ACCEPT         = 'application/json';
   C_AUTHORIZATION  = 'Authorization';
   C_GRANDTYPE      = 'password';
+
 implementation
 
 uses
-  ACBrBoletoWS.Rest.OAuth, ACBrBoletoConversao;
+  ACBrBoletoWS.Rest.OAuth,
+  ACBrBoletoConversao;
 
 
 { TBoletoW_Sicredi_APIV2 }
 
 procedure TBoletoW_Sicredi_APIV2.DefinirURL;
-var ID: String;
+var 
+  ID: String;
 begin
   FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
 
@@ -130,27 +133,34 @@ begin
     tpBaixa                 : FPURL := FPURL + '/boletos/'+ ID + '/baixa';
     //tpConsultarPDF          : FPURL := FPURL + '/boletos/pdf?linhaDigitavel='+ATitulo.LinhaDigitada;
     tpAltera                :
-    Begin
+    begin
       case ATitulo.OcorrenciaOriginal.Tipo of
         toRemessaAlterarVencimento : FPURL := FPURL + '/boletos/'+ ID + '/data-vencimento';
         toRemessaAlterarOutrosDados:
-        Begin
+        begin
           case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados of
             TCompDesconto : FPURL := FPURL + '/boletos/'+ ID + '/desconto';
             TCompJurosDia : FPURL := FPURL + '/boletos/'+ ID + '/juros';
             TCompDataLimiteDesconto : FPURL := FPURL + '/boletos/'+ ID + '/data-desconto';
-            else raise EACBrBoletoWSException.Create(ClassName + ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência 31 - Complemento - '+inttostr(integer( ATitulo.OcorrenciaOriginal.ComplementoOutrosDados)));
-          end;//case ATitulo.OcorrenciaOriginal.Tipo of
-        End;//31
-        else raise EACBrBoletoWSException.Create(ClassName + ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência '+inttostr(Integer(ATitulo.OcorrenciaOriginal.Tipo)));
-      end;//case Integer(ATitulo.OcorrenciaOriginal.Tipo) of
-    End;//tpAltera                :
-  end;//case Boleto.Configuracoes.WebService.Operacao of
+            else 
+              raise EACBrBoletoWSException.Create(ClassName +
+                ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência 31 - Complemento - '+
+                inttostr(integer( ATitulo.OcorrenciaOriginal.ComplementoOutrosDados)));
+          end;
+        end;
+        else 
+          raise EACBrBoletoWSException.Create(ClassName +
+            ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência '+
+            inttostr(Integer(ATitulo.OcorrenciaOriginal.Tipo)));
+      end;
+    End;
+  end;
 end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirCodigoBeneficiario;
 begin
-  FPHeaders.Add('codigoBeneficiario: ' + Boleto.Cedente.CodigoCedente);
+  FPHeaders.Add(
+    Format('codigoBeneficiario: %s',[Boleto.Cedente.CodigoCedente]));
 end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirContentType;
@@ -163,7 +173,8 @@ end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirCooperativa;
 begin
-  FPHeaders.Add('cooperativa: ' + OnlyNumber(Boleto.Cedente.Agencia));
+  FPHeaders.Add(
+    Format('cooperativa: %s',[OnlyNumber(Boleto.Cedente.Agencia)]));
 end;
 
 procedure TBoletoW_Sicredi_APIV2.GerarHeader;
@@ -175,9 +186,8 @@ begin
   DefinirCooperativa;
   case Boleto.Configuracoes.WebService.Operacao of
     tpBaixa,
-    tpAltera//,
-  //  tpAlteraSeuNumero
-    :DefinirCodigoBeneficiario;
+    tpAltera
+      :DefinirCodigoBeneficiario;
   end;
 end;
 
@@ -195,7 +205,8 @@ begin
         for I := 0 to ATitulo.Informativo.Count - 1 do
         begin
           JSOnArray.Add().AsString := Copy(Atitulo.Informativo.Strings[I],1,80);
-          if I = 4 then break;//Somente 4 infos
+          if I = 4 then 
+            break;
         end;
         JsonPair := TJSONPair.Create(AJson, 'informativos');
         try
@@ -261,7 +272,7 @@ end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirAuthorization;
 begin
-  FPAuthorization := C_Authorization + ': ' + 'Bearer ' + GerarTokenAutenticacao;
+  FPAuthorization := Format(  '%s: Bearer %s',[C_Authorization , GerarTokenAutenticacao]);
 end;
 
 function TBoletoW_Sicredi_APIV2.GerarTokenAutenticacao: string;
@@ -271,15 +282,13 @@ begin
   OAuth.Payload := true;
   OAuth.AuthorizationType := atNoAuth;
   OAuth.AddHeaderParam('context','COBRANCA');
-   OAuth.AddHeaderParam('x-api-key',Boleto.Cedente.CedenteWS.KeyUser);
-   // OAuth.AddBodyField('username',Boleto.Cedente.CedenteWS.ClientID);
-    //OAuth.AddBodyField('password',Boleto.Cedente.CedenteWS.ClientSecret);
+  OAuth.AddHeaderParam('x-api-key',Boleto.Cedente.CedenteWS.KeyUser);
   Result := inherited GerarTokenAutenticacao;
 end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirKeyUser;
 begin
-  FPKeyUser := 'x-api-key: '+Boleto.Cedente.CedenteWS.KeyUser;
+  FPKeyUser := Format('x-api-key: %s', [Boleto.Cedente.CedenteWS.KeyUser]);
 end;
 
 function TBoletoW_Sicredi_APIV2.DefinirParametros: String;
@@ -295,28 +304,22 @@ begin
       if (Boleto.Cedente.CodigoCedente = EmptyStr) then
         raise EACBrBoletoWSException.Create(ClassName + ' Obrigatório informar o codigoCedente. ');
 
-      //if (Boleto.Cedente.CNPJCPF = EmptyStr) then
-      //  raise EACBrBoletoWSException.Create(ClassName + ' Obrigatório informar o CPF/CNPJ do beneficiário. ');
-
       Documento := OnlyNumber(Boleto.Cedente.CNPJCPF);
 
       Consulta := TStringList.Create;
       try
         Consulta.Delimiter := '&';
-        Consulta.Add('codigoBeneficiario='+Boleto.Cedente.CodigoCedente);
-        Consulta.Add('dia='+FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'DD/MM/YYYY'));
+        Consulta.Add(Format('codigoBeneficiario=%s',[Boleto.Cedente.CodigoCedente]));
+        Consulta.Add(Format('dia=%s', [FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'DD/MM/YYYY')]));
         if Documento <> '' then
-          Consulta.Add('cpfCnpjBeneficiarioFinal='+Documento);
-
+          Consulta.Add(Format('cpfCnpjBeneficiarioFinal=%s',[Documento]));
         if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
-          Consulta.Add('pagina='+ FloatToStr(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade));
+          Consulta.Add(Format('pagina=%s',[FloatToStr(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)]));
       finally
         Result := Consulta.DelimitedText;
         Consulta.Free;
       end;
-
   end;
-
 end;
 
 function TBoletoW_Sicredi_APIV2.DefinirParametrosDetalhe: String;
@@ -333,11 +336,11 @@ begin
 
       Consulta := TStringList.Create;
       try
-        Consulta.Add('codigoBeneficiario='+Boleto.Cedente.CodigoCedente);
         Consulta.Delimiter := '&';
-        Consulta.Add('nossoNumero='+OnlyNumber(ATitulo.NossoNumero));
-      finally
+        Consulta.Add(Format('codigoBeneficiario=%s',[Boleto.Cedente.CodigoCedente]));        
+        Consulta.Add(Format('nossoNumero=%s',[OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo))]));
         Result := Consulta.DelimitedText;
+      finally
         Consulta.Free;
       end;
   end;
@@ -353,12 +356,13 @@ end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirPosto;
 begin
-  FPHeaders.Add('posto: ' + OnlyNumber(Boleto.Cedente.AgenciaDigito));
+  FPHeaders.Add(
+    Format('posto: %s', [OnlyNumber(Boleto.Cedente.AgenciaDigito)]));
 end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirAutenticacao;
 begin
-  FPAuthorization := C_ACCESS_TOKEN + ': ' + GerarTokenAutenticacao;
+  FPAuthorization := Format( '%s: %s', [C_ACCESS_TOKEN , GerarTokenAutenticacao]);
 end;
 
 function TBoletoW_Sicredi_APIV2.ValidaAmbiente: Integer;
@@ -385,7 +389,7 @@ begin
         Json.Add('diasProtestoAuto').Value.AsInteger                    := Trunc(ATitulo.DataProtesto - ATitulo.Vencimento);
       if (ATitulo.DiasDeNegativacao > 0) then
         Json.Add('diasNegativacaoAuto').Value.AsInteger                 := ATitulo.DiasDeNegativacao;
-      //Json.Add('validadeAposVencimento').Value.AsInteger              := ;//Dias QrCode(Boleto Hibrido) Valido apos vencimento. Se nao informado, padrao do cadastro beneficiario no banco
+     
       Json.Add('valor').Value.AsNumber                                  := ATitulo.ValorDocumento;
       if ((ATitulo.DataDesconto > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
       Begin
@@ -433,25 +437,22 @@ procedure TBoletoW_Sicredi_APIV2.RequisicaoAltera;
 begin
   if Assigned(ATitulo) then
   begin
-    try
-      case ATitulo.OcorrenciaOriginal.Tipo of
-        toRemessaAlterarVencimento  : RequisicaoAlteraVencto;
-        toRemessaAlterarOutrosDados :
-            Begin
-              case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados of
-                TCompDesconto           : RequisicaoAlteraDesconto;
-                TCompJurosDia           : RequisicaoAlteraJuros;
-                TCompDataLimiteDesconto : RequisicaoAlteraDataDesconto;
-                else
-                raise EACBrBoletoWSException.Create(ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO, [
-                '  RequisicaoAltera/Operação/tpAltera para ocorrência 31 - Complemento - '+inttostr(Integer(ATitulo.OcorrenciaOriginal.ComplementoOutrosDados))]));
-              end;//case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados ofof
-            End;//toRemessaAlterarOutrosDados
-        else
-          raise EACBrBoletoWSException.Create(ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO, [
-           ' RequisicaoAltera/Operação/tpAltera para ocorrência '+inttostr(Integer(ATitulo.OcorrenciaOriginal.Tipo))]));
-      end;//case Integer(ATitulo.OcorrenciaOriginal.Tipo) of
-    finally
+    case ATitulo.OcorrenciaOriginal.Tipo of
+      toRemessaAlterarVencimento  : RequisicaoAlteraVencto;
+      toRemessaAlterarOutrosDados :
+          Begin
+            case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados of
+              TCompDesconto           : RequisicaoAlteraDesconto;
+              TCompJurosDia           : RequisicaoAlteraJuros;
+              TCompDataLimiteDesconto : RequisicaoAlteraDataDesconto;
+              else
+              raise EACBrBoletoWSException.Create(ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO, [
+              '  RequisicaoAltera/Operação/tpAltera para ocorrência 31 - Complemento - '+inttostr(Integer(ATitulo.OcorrenciaOriginal.ComplementoOutrosDados))]));
+            end;
+          End;
+      else
+        raise EACBrBoletoWSException.Create(ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO, [
+         ' RequisicaoAltera/Operação/tpAltera para ocorrência '+inttostr(Integer(ATitulo.OcorrenciaOriginal.Tipo))]));
     end;
   end;
 end;
@@ -466,19 +467,16 @@ begin
     Json := TJsonObject.Create;
     try
       if ((ATitulo.DataDesconto > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
         Json.Add('dataDesconto1').Value.AsString                        := FormatDateBr(ATitulo.DataDesconto, 'YYYY-MM-DD');
-      End;
+
       if ((ATitulo.DataDesconto2 > EncodeDate(2000,01,01))and(ATitulo.ValorDesconto2 > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
         Json.Add('dataDesconto2').Value.AsString                        := FormatDateBr(ATitulo.DataDesconto2, 'YYYY-MM-DD');
-      End;
+
       if ((ATitulo.DataDesconto3 > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto3 > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
         Json.Add('dataDesconto3').Value.AsString                        := FormatDateBr(ATitulo.DataDesconto3, 'YYYY-MM-DD');
-      End;
+
       if (Json.Count = 0) then
-              raise EACBrBoletoWSException.Create(ClassName + ' Para requisições de alteração de data desconto é necessário informar ao menos um dos campo de data desconto!');
+        raise EACBrBoletoWSException.Create(ClassName + ' Para requisições de alteração de data desconto é necessário informar ao menos um dos campo de data desconto!');
       Data := Json.Stringify;
 
       FPDadosMsg := Data;
@@ -499,19 +497,17 @@ begin
     Json := TJsonObject.Create;
     try
       if ((ATitulo.DataDesconto > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
         Json.Add('valorDesconto1').Value.AsNumber                       := ATitulo.ValorDesconto;
-      End;
+
       if ((ATitulo.DataDesconto2 > EncodeDate(2000,01,01))and(ATitulo.ValorDesconto2 > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
         Json.Add('valorDesconto2').Value.AsNumber                       := ATitulo.ValorDesconto2;
-      End;
+
       if ((ATitulo.DataDesconto3 > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto3 > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
         Json.Add('valorDesconto3').Value.AsNumber                       := ATitulo.ValorDesconto3;
-      End;
+
       if (Json.Count = 0) then
          raise EACBrBoletoWSException.Create(ClassName + 'Para requisições de alteração de desconto é necessário informar ao menos um dos campo de desconto!');
+				 
       Data := Json.Stringify;
       FPDadosMsg := Data;
     finally
@@ -778,13 +774,11 @@ end;
 function TBoletoW_Sicredi_APIV2.GerarRemessa: string;
 begin
   Result := inherited GerarRemessa;
-
 end;
 
 function TBoletoW_Sicredi_APIV2.Enviar: boolean;
 begin
   Result := inherited Enviar;
-
 end;
 
 function TBoletoW_Sicredi_APIV2.TipoDescontoToString(const AValue: TACBrTipoDesconto

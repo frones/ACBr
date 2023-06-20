@@ -561,7 +561,7 @@ function TACBrBancoVotorantim.MontarCodigoBarras(const ACBrTitulo: TACBrTitulo):
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras ,
   valorDocumento, agencia, convenio,
-  ContaDigito, NossoNumero: string;
+   NossoNumero: string;
 begin
   with ACBrTitulo.ACBrBoleto do
   begin

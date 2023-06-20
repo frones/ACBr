@@ -119,12 +119,8 @@ var ID: String;
 begin
   FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
 
-  if ATitulo <> nil then begin
-    if ATitulo.NossoNumero = EmptyStr then
-      ID      := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo))
-    else
-      ID      := OnlyNumber(ATitulo.NossoNumero);
-  end;
+  if ATitulo <> nil then 
+		ID      := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui                : FPURL := FPURL+'/boletos' ;

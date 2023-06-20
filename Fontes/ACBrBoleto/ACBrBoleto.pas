@@ -2249,7 +2249,6 @@ end;
 
 function TACBrWebService.Enviar: Boolean;
 begin
-  Result := False;
   Raise Exception.Create(ACBrStr('Método Enviar não ' +
             'implementado no ACBrBoleto!'));
 end;
@@ -5081,7 +5080,6 @@ var
   Titulo: TACBrTitulo;
   TempData, Linha, rCedente, rCNPJCPF: String;
   ContLinha : Integer;
-  idxMotivo: Integer;
   rConvenioCedente: String;
   ACodBeneficiario: String;
 begin
@@ -5656,7 +5654,8 @@ begin
 end;
 
 procedure TACBrBancoClass.DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo);
-var LIdxMotivo : Integer;
+var 
+	LIdxMotivo : Integer;
 begin
   LIdxMotivo := 214;
 

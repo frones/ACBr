@@ -515,7 +515,7 @@ var
   Titulo : TACBrTitulo;
   ContLinha, CodOcorrencia  :Integer;
   CodMotivo, i, MotivoLinha :Integer;
-  CodMotivo_19, rAgencia    :String;
+  CodMotivo_19    :String;
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
   rCodEmpresa               :String;

@@ -147,7 +147,7 @@ begin
   begin
     Result := '9'
                + PadLeft(trim(Cedente.CodigoCedente),7,'0')
-               + PadLeft(ACBrTitulo.NossoNumero + CalcularDigitoVerificador(ACBrTitulo), 13,'0')
+               + PadLeft(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 13,'0')
                + '0'
                + PadLeft(trim(Cedente.Modalidade),3,'0');
   end;
@@ -436,6 +436,7 @@ end;
 
 function TACBrBancoSantander.MontarCampoNossoNumero (
    const ACBrTitulo: TACBrTitulo ) : String;
+var LDV : String;
 begin
    with ACBrTitulo do
    begin
@@ -446,7 +447,10 @@ begin
       end;
    end;
 
-   Result:= PadLeft(ACBrTitulo.NossoNumero,12,'0')+ ' '+ CalcularDigitoVerificador(ACBrTitulo);
+   if not (ACBrTitulo.ACBrBoleto.Configuracoes.WebService.VersaoDF = 'V1') then
+     LDV := ' ' + CalcularDigitoVerificador(ACBrTitulo);
+
+   Result:= PadLeft(ACBrTitulo.NossoNumero,12,'0') + LDV;
 end;
 
 function TACBrBancoSantander.MontarCampoCodigoCedente (

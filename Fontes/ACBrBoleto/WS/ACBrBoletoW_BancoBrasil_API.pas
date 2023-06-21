@@ -110,10 +110,10 @@ const
   C_ACCEPT         = 'application/json';
   C_AUTHORIZATION  = 'Authorization';
 
-const LCharValido : TSetOfChars = ['A'..'Z','0'..'9',' ',',','-','.',
-                                   'À','Á','Â','Ã','Ä','Å','È','É','Ê',
-                                   'Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ',
-                                   'Ö','Ù','Ú','Û','Ü'];
+const CHARS_VALIDOS : TSetOfChars = ['A'..'Z','0'..'9',' ',',','-','.',
+                                     'À','Á','Â','Ã','Ä','Å','È','É','Ê',
+                                     'Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ',
+                                     'Ö','Ù','Ú','Û','Ü'];
 implementation
 
 uses
@@ -364,7 +364,7 @@ begin
 
       Json.Add('numeroTituloBeneficiario').Value.AsString               := Copy(Trim(UpperCase(ATitulo.NumeroDocumento)),0,15);
 
-      Json.Add('campoUtilizacaoBeneficiario').Value.AsString            := Copy(Trim(OnlyCharsInSet(AnsiUpperCase(ATitulo.Mensagem.Text),LCharValido)),0,30);
+      Json.Add('campoUtilizacaoBeneficiario').Value.AsString            := Copy(Trim(OnlyCharsInSet(AnsiUpperCase(ATitulo.Mensagem.Text),CHARS_VALIDOS)),0,30);
       Json.Add('numeroTituloCliente').Value.AsString                    := Boleto.Banco.MontarCampoNossoNumero(ATitulo);
       Json.Add('mensagemBloquetoOcorrencia').Value.AsString             := UpperCase(Copy(Trim(ATitulo.Instrucao1 +' '+ATitulo.Instrucao2+' '+ATitulo.Instrucao3),0,165));
       GerarDesconto(Json);

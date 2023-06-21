@@ -44,7 +44,7 @@ uses
   ACBrBoletoConversao,
   ACBrBoleto,
   ACBrBoletoWS.Rest,
-  Jsons;
+  Jsons, ACBrUtil.Strings;
 
 
 type
@@ -110,14 +110,14 @@ const
   C_ACCEPT         = 'application/json';
   C_AUTHORIZATION  = 'Authorization';
 
-const LCharValido : TSetOfChars = ['A'..'Z','0'..'9',' ',',','-','.'
+const LCharValido : TSetOfChars = ['A'..'Z','0'..'9',' ',',','-','.',
                                    'À','Á','Â','Ã','Ä','Å','È','É','Ê',
                                    'Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ',
-                                   'Ö','Ù','Ú','Û','Ü',];
+                                   'Ö','Ù','Ú','Û','Ü'];
 implementation
 
 uses
-  synacode, strutils, DateUtils, ACBrUtil.Strings, ACBrUtil.DateTime;
+  synacode, strutils, DateUtils, ACBrUtil.DateTime;
 
 { TBoletoW_BancoBrasil_API }
 

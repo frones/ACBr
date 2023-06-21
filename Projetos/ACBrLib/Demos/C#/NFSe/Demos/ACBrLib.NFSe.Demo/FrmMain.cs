@@ -54,6 +54,7 @@ namespace ACBrLibNFSe.Demo
                 cmbCrypt.EnumDataSource(SSLCryptLib.cryWinCrypt);
                 cmbHttp.EnumDataSource(SSLHttpLib.httpWinHttp);
                 cmbXmlSign.EnumDataSource(SSLXmlSignLib.xsLibXml2);
+                ACBrNFSe.Config.IniServicos = "";
 
                 // Altera as config de log
                 ACBrNFSe.Config.Principal.LogNivel = NivelLog.logParanoico;
@@ -111,6 +112,7 @@ namespace ACBrLibNFSe.Demo
                 ACBrNFSe.Config.PathSalvar = txtArqNFSe.Text;
                 ACBrNFSe.Config.MontarPathSchema = ckbMontarPathSchemas.Checked;
                 ACBrNFSe.Config.PathSchemas = txtSchemaPath.Text;
+                ACBrNFSe.Config.IniServicos = txtServicosIni.Text;
                 ACBrNFSe.Config.ConsultaLoteAposEnvio = ckbConsultarLoteAposEnvio.Checked;
                 ACBrNFSe.Config.ConsultaAposCancelar = ckbConsultarAposCancelar.Checked;
                 ACBrNFSe.Config.LayoutNFSe = cmbLayoutNFSe.GetSelectedValue<LayoutNFSe>();
@@ -211,6 +213,7 @@ namespace ACBrLibNFSe.Demo
             txtArqNFSe.Text = ACBrNFSe.Config.PathSalvar;
             ckbMontarPathSchemas.Checked = ACBrNFSe.Config.MontarPathSchema;
             txtSchemaPath.Text = ACBrNFSe.Config.PathSchemas;
+            txtServicosIni.Text = ACBrNFSe.Config.IniServicos;
             ckbConsultarLoteAposEnvio.Checked = ACBrNFSe.Config.ConsultaLoteAposEnvio;
             ckbConsultarAposCancelar.Checked = ACBrNFSe.Config.ConsultaAposCancelar;
             cmbLayoutNFSe.SetSelectedValue(ACBrNFSe.Config.LayoutNFSe);
@@ -351,6 +354,11 @@ namespace ACBrLibNFSe.Demo
 
             var dados = File.ReadAllBytes(file);
             txtDadosPFX.Text = Convert.ToBase64String(dados);
+        }
+
+        private void btnServicosIni_Click(object sender, EventArgs e)
+        {
+            txtServicosIni.Text = Helpers.OpenFile("Arquivos INI (*.ini)|*.pfx|Todos os Arquivos (*.*)|*.*");
         }
 
         private void btnArqNFSe_Click(object sender, EventArgs e)

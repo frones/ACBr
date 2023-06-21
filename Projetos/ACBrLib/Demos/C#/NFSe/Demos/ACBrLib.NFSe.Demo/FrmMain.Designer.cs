@@ -229,6 +229,9 @@
             this.btnConsultarNFSePorChave = new System.Windows.Forms.Button();
             this.btnConsultarDPSPorChave = new System.Windows.Forms.Button();
             this.btnEnviarEvento = new System.Windows.Forms.Button();
+            this.txtServicosIni = new System.Windows.Forms.TextBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.btnServicosIni = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -319,6 +322,9 @@
             // 
             // tbpGeral
             // 
+            this.tbpGeral.Controls.Add(this.txtServicosIni);
+            this.tbpGeral.Controls.Add(this.label54);
+            this.tbpGeral.Controls.Add(this.btnServicosIni);
             this.tbpGeral.Controls.Add(this.label11);
             this.tbpGeral.Controls.Add(this.cmbLayoutNFSe);
             this.tbpGeral.Controls.Add(this.ckbConsultarAposCancelar);
@@ -349,7 +355,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(3, 313);
+            this.label11.Location = new System.Drawing.Point(3, 359);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(80, 13);
             this.label11.TabIndex = 44;
@@ -359,7 +365,7 @@
             // 
             this.cmbLayoutNFSe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLayoutNFSe.FormattingEnabled = true;
-            this.cmbLayoutNFSe.Location = new System.Drawing.Point(6, 329);
+            this.cmbLayoutNFSe.Location = new System.Drawing.Point(6, 375);
             this.cmbLayoutNFSe.Name = "cmbLayoutNFSe";
             this.cmbLayoutNFSe.Size = new System.Drawing.Size(156, 21);
             this.cmbLayoutNFSe.TabIndex = 45;
@@ -367,7 +373,7 @@
             // ckbConsultarAposCancelar
             // 
             this.ckbConsultarAposCancelar.AutoSize = true;
-            this.ckbConsultarAposCancelar.Location = new System.Drawing.Point(6, 293);
+            this.ckbConsultarAposCancelar.Location = new System.Drawing.Point(6, 339);
             this.ckbConsultarAposCancelar.Name = "ckbConsultarAposCancelar";
             this.ckbConsultarAposCancelar.Size = new System.Drawing.Size(142, 17);
             this.ckbConsultarAposCancelar.TabIndex = 43;
@@ -377,7 +383,7 @@
             // ckbConsultarLoteAposEnvio
             // 
             this.ckbConsultarLoteAposEnvio.AutoSize = true;
-            this.ckbConsultarLoteAposEnvio.Location = new System.Drawing.Point(6, 270);
+            this.ckbConsultarLoteAposEnvio.Location = new System.Drawing.Point(6, 316);
             this.ckbConsultarLoteAposEnvio.Name = "ckbConsultarLoteAposEnvio";
             this.ckbConsultarLoteAposEnvio.Size = new System.Drawing.Size(151, 17);
             this.ckbConsultarLoteAposEnvio.TabIndex = 42;
@@ -2408,6 +2414,33 @@
             this.btnEnviarEvento.UseVisualStyleBackColor = true;
             this.btnEnviarEvento.Click += new System.EventHandler(this.btnEnviarEvento_Click);
             // 
+            // txtServicosIni
+            // 
+            this.txtServicosIni.Location = new System.Drawing.Point(6, 288);
+            this.txtServicosIni.Name = "txtServicosIni";
+            this.txtServicosIni.Size = new System.Drawing.Size(238, 20);
+            this.txtServicosIni.TabIndex = 46;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.Location = new System.Drawing.Point(3, 272);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(142, 13);
+            this.label54.TabIndex = 47;
+            this.label54.Text = "Arquivo .ini de Serviços";
+            // 
+            // btnServicosIni
+            // 
+            this.btnServicosIni.Location = new System.Drawing.Point(243, 287);
+            this.btnServicosIni.Name = "btnServicosIni";
+            this.btnServicosIni.Size = new System.Drawing.Size(27, 22);
+            this.btnServicosIni.TabIndex = 48;
+            this.btnServicosIni.Text = "...";
+            this.btnServicosIni.UseVisualStyleBackColor = true;
+            this.btnServicosIni.Click += new System.EventHandler(this.btnServicosIni_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2675,6 +2708,9 @@
         private System.Windows.Forms.Button btnConsultarDFe;
         private System.Windows.Forms.Button btnObterDANFSe;
         private System.Windows.Forms.Button btnConsultarParametros;
+        private System.Windows.Forms.TextBox txtServicosIni;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Button btnServicosIni;
     }
 }
 

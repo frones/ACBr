@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/06/2023
+-- ACBrCTe/pcteCTeW --
+[*] Remoção do CDATA do conteudo da tag qrCodCTe, alguns sistemas ao carregar o XML
+    do CT-e não intepretam corretamente o CDATA.
+  Por: Márcio B.
+
 15/06/2023
 -- ACBrCTeWebServices --
 [+] Incluído o tratamento para validar o evento de cancelamento de prestação em

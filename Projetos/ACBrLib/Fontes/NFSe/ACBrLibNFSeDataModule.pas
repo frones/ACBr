@@ -73,6 +73,7 @@ begin
   ACBrNFSeX1.SSL.DescarregarCertificado;
   pLibConfig := TLibNFSeConfig(Lib.Config);
   ACBrNFSeX1.Configuracoes.Assign(pLibConfig.NFSe);
+  ACBrNFSeX1.Configuracoes.WebServices.LerParams;
 
 {$IFDEF Demo}
   ACBrNFSeX1.Configuracoes.WebServices.Ambiente := taHomologacao;

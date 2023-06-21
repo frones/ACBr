@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/06/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Sao Sebastiao do Maranhao/MG - Provedor: EL
+  Por: Robson Pinheiro
+[*] Atualizado a URL da cidade de Conde/PB
+  Por: Gabriel Herdt
+
 20/06/2023
 -- Diversos --
 [*] Acrescentado a propriedade Assinaturas em Geral com os seguintes valores:

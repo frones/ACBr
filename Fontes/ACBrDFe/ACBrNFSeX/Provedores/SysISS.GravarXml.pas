@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrNFSeXGravarXml_ABRASFv2,
+  ACBrNFSeXConversao;
 
 type
   { TNFSeW_SysISS202 }
@@ -62,6 +63,7 @@ procedure TNFSeW_SysISS202.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
 end;
 
 end.

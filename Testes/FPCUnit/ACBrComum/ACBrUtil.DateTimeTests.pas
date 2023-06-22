@@ -125,6 +125,14 @@ type
     procedure ConverteString_DataEHoraSemMilisegundosZonaDiferenteDaLocal_Sucesso;
   end;
 
+  { StrHasTimeZone }
+
+  StrHasTimeZoneTest = class(TTestCase)
+  published
+    procedure DataComTimeZone;
+    procedure DataSemTimeZone;
+  end;
+
 
 
 implementation
@@ -163,6 +171,119 @@ uses
     else
       Result := '+'+Result;
   end;
+
+{ StrHasTimeZone }
+
+procedure StrHasTimeZoneTest.DataComTimeZone;
+var
+  hasTMZ: boolean;
+begin
+  hasTMZ := StrHasTimeZone('21/06/2023 12:35:25-03:00');
+  CheckTrue(hasTMZ,'Str:21/06/2023 12:35:25-03:00|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21/06/2023 12:35:25Z');
+  CheckTrue(hasTMZ,'Str:21/06/2023 12:35:25Z|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21/06/2023 12:35:25-03');
+  CheckTrue(hasTMZ,'Str:21/06/2023 12:35:25-03|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21-06-2023 12:35:25-03:00');
+  CheckTrue(hasTMZ,'Str:21-06-2023 12:35:25-03:00|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21-06-2023 12:35:25Z');
+  CheckTrue(hasTMZ,'Str:21-06-2023 12:35:25Z|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21-06-2023 12:35:25-03');
+  CheckTrue(hasTMZ,'Str:21-06-2023 12:35:25-03|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('2023-06-21 12:35:25-03:00');
+  CheckTrue(hasTMZ,'Str:2023-06-21 12:35:25-03:00|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('2023-06-21 12:35:25Z');
+  CheckTrue(hasTMZ,'Str:2023-06-21 12:35:25Z|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('2023-06-21 12:35:25-03');
+  CheckTrue(hasTMZ,'Str:2023-06-21 12:35:25-03|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21/06/2023 00:00:00-03:00');
+  CheckTrue(hasTMZ,'Str:21/06/2023 00:00:00-03:00|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21/06/2023 00:00:00Z');
+  CheckTrue(hasTMZ,'Str:21/06/2023 00:00:00Z|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21/06/2023 00:00:00-03');
+  CheckTrue(hasTMZ,'Str:21/06/2023 00:00:00-03|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21-06-2023 00:00:00-03:00');
+  CheckTrue(hasTMZ,'Str:21-06-2023 00:00:00-03:00|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21-06-2023 00:00:00Z');
+  CheckTrue(hasTMZ,'Str:21-06-2023 00:00:00Z|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('21-06-2023 00:00:00-03');
+  CheckTrue(hasTMZ,'Str:21-06-2023 00:00:00-03|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('2023-06-21 00:00:00-03:00');
+  CheckTrue(hasTMZ,'Str:2023-06-21 00:00:00-03:00|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('2023-06-21 00:00:00Z');
+  CheckTrue(hasTMZ,'Str:2023-06-21 00:00:00Z|Esperado:True|Resultado:False');
+
+  hasTMZ := StrHasTimeZone('2023-06-21 00:00:00-03');
+  CheckTrue(hasTMZ,'Str:2023-06-21 00:00:00-03|Esperado:True|Resultado:False');
+end;
+
+procedure StrHasTimeZoneTest.DataSemTimeZone;
+var
+  hasTMZ: boolean;
+begin
+  hasTMZ := StrHasTimeZone('22/06/2023');
+  CheckFalse(hasTMZ, 'Str:22/06/2023|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22/06/2023 08:55:20');
+  CheckFalse(hasTMZ, 'Str:22/06/2023 08:55:20|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22/06/2023 08:55');
+  CheckFalse(hasTMZ, 'Str:22/06/2023 08:55|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22/06/2023 00:00:00');
+  CheckFalse(hasTMZ, 'Str:22/06/2023 00:00:00|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22/06/2023 00:00');
+  CheckFalse(hasTMZ, 'Str:22/06/2023 00:00|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22-06-2023');
+  CheckFalse(hasTMZ, 'Str:22-06-2023|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22-06-2023 08:55:20');
+  CheckFalse(hasTMZ, 'Str:22-06-2023 08:55:20|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22-06-2023 08:55');
+  CheckFalse(hasTMZ, 'Str:22-06-2023 08:55|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22-06-2023 00:00:00');
+  CheckFalse(hasTMZ, 'Str:22-06-2023 00:00:00|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('22-06-2023 00:00');
+  CheckFalse(hasTMZ, 'Str:22-06-2023 00:00|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('2023-06-22');
+  CheckFalse(hasTMZ, 'Str:2023-06-22|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('2023-06-22 08:55:20');
+  CheckFalse(hasTMZ, 'Str:2023-06-22 08:55:20|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('2023-06-22 08:55');
+  CheckFalse(hasTMZ, 'Str:2023-06-22 08:55|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('2023-06-22 00:00:00');
+  CheckFalse(hasTMZ, 'Str:2023-06-22 00:00:00|Esperado:False|Resultado:True');
+
+  hasTMZ := StrHasTimeZone('2023-06-22 00:00');
+  CheckFalse(hasTMZ, 'Str:2023-06-22 00:00|Esperado:False|Resultado:True');
+
+end;
+
   {$ELSE}
   var
     ttsp: TTimeSpan;
@@ -570,9 +691,19 @@ var
   ADateTime: TDateTime;
 begin
   ADateTime := EncodeDate(2015,02,03);
-  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'd/m/yyyy'));
-  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'dd/mm/yyyy'));
-  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'dd-mm-yyyy'));
+  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'd/m/yyyy'),
+                         'Falha ao converter 03/02/2015 no formato d/m/yyyy');
+
+  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'dd/mm/yyyy'),
+                         'Falha ao converter 03/02/2015 no formato dd/mm/yyyy');
+
+  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'dd-mm-yyyy'),
+                         'Falha ao converter 03/02/2015 no formato dd-mm-yyyy');
+
+  CheckEquals(ADateTime, StringToDateTime('2015-02-03', 'yyyy-mm-dd'),
+                         'Falha ao converter 2015-02-03 no formato yyyy-mm-dd');
+
+  CheckEquals(ADateTime, StringToDateTime('2015-02-03'), 'Falha ao converter 2015-02-03 sem formato específico');
 end;
 
 procedure StringToDateTimeTest.DataAno2Digitos;
@@ -583,6 +714,12 @@ begin
   CheckEquals(ADateTime, StringToDateTime('28/02/15', 'd/m/yyyy'));
   CheckEquals(ADateTime, StringToDateTime('28/02/15', 'dd/mm/yy'));
   CheckEquals(ADateTime, StringToDateTime('28/02/15', 'dd-mm-yy'));
+
+  CheckEquals(ADateTime, StringToDateTime('15-02-03', 'yy-mm-dd'),
+                         'Falha ao converter 15-02-03 no formato yyyy-mm-dd');
+
+  CheckEquals(ADateTime, StringToDateTime('15-02-03'),
+                         'Falha ao converter 15-02-03 sem formato específico');
 end;
 
 procedure StringToDateTimeTest.Hora;
@@ -615,6 +752,141 @@ begin
     ADateTime := EncodeDateTime(2015,01,14,12,45,12,0);
     CheckEquals(ADateTime, StringToDateTime('14-01-2015 12;45;12', 'd/m/yyyy h:n:s'));
     CheckEquals(ADateTime, StringToDateTime('14/01/2015 12:45:12', 'd/m/yyyy h:n:s'));
+
+    ADateTime := EncodeDateTime(2023, 06, 19, 06, 30, 25, 00);
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25-03:00', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25-03:00 no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25-03:00', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25-03:00 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25-03:00', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25-03:00 no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25Z', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25Z no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25Z', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25Z no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25Z', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25Z no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25-03', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25-03 no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25-03', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25-03 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 06:30:25-03', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 06:30:25-03 no formato dd-mm-yyyy hh:nn:ss');
+
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25-03:00', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25-03:00 no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25-03:00', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25-03:00 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25-03:00', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25-03:00 no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25Z', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25Z no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25Z', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25Z no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25Z', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25Z no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25-03', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25-03 no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25-03', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25-03 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 06:30:25-03', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 06:30:25-03 no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('2023-06-19 06:30:25-03:00', 'yyyy-mm-dd hh:nn:ss'),
+                           'Falha ao converter 2023-06-19 06:30:25-03:00 no formato yyyy-mm-dd hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('2023-06-19 06:30:25Z', 'yyyy-mm-dd hh:nn:ss'),
+                           'Falha ao converter 2023-06-19 06:30:25Z no formato yyyy-mm-dd hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('2023-06-19 06:30:25-03', 'yyyy-mm-dd hh:nn:ss'),
+                           'Falha ao converter 2023-06-19 06:30:25-03 no formato yyyy-mm-dd hh:nn:ss');
+
+    ADateTime := EncodeDateTime(2023, 06, 19, 0, 0, 0, 0);
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00-03:00', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00-03:00 no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00-03:00', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00-03:00 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00-03:00', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00-03:00 no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00Z', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00Z no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00Z', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00Z no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00Z', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00Z no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00-03', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00-03 no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00-03', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00-03 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00-03', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00-03 no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19-06-2023 00:00:00', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19-06-2023 00:00:00 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00-03:00', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00-03:00 no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00-03:00', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00-03:00 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00-03:00', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00-03:00 no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00Z', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00Z no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00Z', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00Z no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00Z', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00Z no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00-03', 'd/m/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00-03 no formato d/m/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00-03', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00-03 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00-03', 'dd-mm-yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00-03 no formato dd-mm-yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('19/06/2023 00:00:00', 'dd/mm/yyyy hh:nn:ss'),
+                           'Falha ao converter 19/06/2023 00:00:00 no formato dd/mm/yyyy hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('2023-06-19 00:00:00-03:00', 'yyyy-mm-dd hh:nn:ss'),
+                           'Falha ao converter 2023-06-19 00:00:00-03:00 no formato yyyy-mm-dd hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('2023-06-19 00:00:00Z', 'yyyy-mm-dd hh:nn:ss'),
+                           'Falha ao converter 2023-06-19 00:00:00Z no formato yyyy-mm-dd hh:nn:ss');
+
+    CheckEquals(ADateTime, StringToDateTime('2023-06-19 00:00:00-03', 'yyyy-mm-dd hh:nn:ss'),
+                           'Falha ao converter 2023-06-19 00:00:00-03 no formato yyyy-mm-dd hh:nn:ss');
   finally
     DateSeparator := OldDateSeprator;
     TimeSeparator := OldTimeSeparator;
@@ -690,5 +962,6 @@ initialization
   _RegisterTest('ACBrComum.ACBrUtil.DateTime', DTtoSTest);
   _RegisterTest('ACBrComum.ACBrUtil.DateTime', DateTimeToIso8601Test);
   _RegisterTest('ACBrComum.ACBrUtil.DateTime', Iso8601ToDateTimeTest);
+  _RegisterTest('ACBrComum.ACBrUtil.DateTime', StrHasTimeZoneTest);
 
 end.

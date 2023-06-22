@@ -43,10 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/06/2023
+-- Insfisc.Provider --
+[*] Alterado a montagem do XML do ConsultarNFSe, pois na versão 1.01 o provedor
+    exige que seja informado o numero inicial e final da nota.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeFR --
 [*] Alteração visando imprimir a data do Rps em vez da nota caso o XML seja do Rps.
   Por: Neski Soluções
-
 -- SysISS.GravarXml --
 [*] Alterado a configuração para não formatar o ItemListaServico ao gerar o XML do Rps.
   Por: Everson Clei

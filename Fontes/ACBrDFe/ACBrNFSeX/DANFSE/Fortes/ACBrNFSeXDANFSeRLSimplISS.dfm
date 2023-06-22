@@ -953,7 +953,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
       Left = 23
       Top = 555
       Width = 752
-      Height = 272
+      Height = 274
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1650,21 +1650,6 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         ParentFont = False
         Transparent = False
       end
-      object RLLabel38: TRLLabel
-        Left = 10
-        Top = 211
-        Width = 73
-        Height = 14
-        AutoSize = False
-        Caption = 'Observa'#231#245'es:'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-      end
       object RLLabel106: TRLLabel
         Left = 10
         Top = 229
@@ -1694,22 +1679,6 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         Font.Style = []
         ParentFont = False
         Transparent = False
-      end
-      object rlmDadosAdicionais: TRLMemo
-        Left = 85
-        Top = 211
-        Width = 663
-        Height = 14
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        Lines.Strings = (
-          '')
-        ParentFont = False
       end
       object rllCNAE: TRLLabel
         Left = 46
@@ -2176,17 +2145,42 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 827
+      Top = 829
       Width = 752
       Height = 19
+      AutoExpand = False
+      AutoSize = True
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      Visible = False
       BeforePrint = rbOutrasInformacoesBeforePrint
+      object RLLabel38: TRLLabel
+        Left = 10
+        Top = 4
+        Width = 73
+        Height = 14
+        AutoSize = False
+        Caption = 'Observa'#231#245'es:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rlmDadosAdicionais: TRLMemo
+        Left = 85
+        Top = 2
+        Width = 663
+        Height = 16
+        Behavior = [beSiteExpander]
+        Lines.Strings = (
+          '')
+      end
     end
     object rlbHeaderItensDetalhado: TRLBand
       Left = 23
@@ -2437,7 +2431,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 846
+      Top = 848
       Width = 752
       Height = 73
       BandType = btSummary

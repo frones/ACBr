@@ -197,10 +197,8 @@ type
     RLLabel36: TRLLabel;
     RLLabel56: TRLLabel;
     RLLabel40: TRLLabel;
-    RLLabel38: TRLLabel;
     RLLabel106: TRLLabel;
     rllDataHoraImpressao: TRLLabel;
-    rlmDadosAdicionais: TRLMemo;
     rllCNAE: TRLLabel;
     rllIncentivador: TRLLabel;
     rllRecolhimento: TRLLabel;
@@ -253,6 +251,8 @@ type
     RLDraw4: TRLDraw;
     rlmDescricao: TRLMemo;
     rliPrestLogo: TRLImage;
+    RLLabel38: TRLLabel;
+    rlmDadosAdicionais: TRLMemo;
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -367,7 +367,7 @@ begin
     end;
   end;
 
-//  rlmDadosAdicionais.Lines.EndUpdate;
+  rlmDadosAdicionais.Lines.EndUpdate;
 //  //rllDataHoraImpressao.Caption := Format(ACBrStr('DATA E HORA DA IMPRESSÃO: %s') , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
 //  rllDataHoraImpressao.Caption := FormatDateTime('dd/mm/yyyy hh:nn',Now);
 //

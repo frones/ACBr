@@ -1,16 +1,8 @@
 inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
-  Left = 339
-  Height = 654
-  Top = 10
-  HorzScrollBar.Page = 794
-  HorzScrollBar.Range = 794
-  VertScrollBar.Page = 654
-  VertScrollBar.Range = 747
+  Left = 349
+  Top = 55
   Caption = 'frlXDANFSeRLSimplISS'
-  ClientHeight = 654
-  ClientWidth = 833
   inherited RLNFSe: TRLReport
-    Left = 0
     Top = 0
     Margins.LeftMargin = 6
     Margins.TopMargin = 8
@@ -930,7 +922,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
     end
     object rlbISSQN: TRLBand[5]
       Left = 23
-      Height = 272
+      Height = 274
       Top = 555
       Width = 752
       BandType = btSummary
@@ -1610,20 +1602,6 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         ParentFont = False
         Transparent = False
       end
-      object RLLabel38: TRLLabel
-        Left = 10
-        Height = 14
-        Top = 211
-        Width = 73
-        AutoSize = False
-        Caption = 'Observações:'
-        Font.CharSet = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        ParentFont = False
-        Transparent = False
-      end
       object RLLabel106: TRLLabel
         Left = 10
         Height = 10
@@ -1651,22 +1629,6 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
         Font.Name = 'Arial'
         ParentFont = False
         Transparent = False
-      end
-      object rlmDadosAdicionais: TRLMemo
-        Left = 85
-        Height = 14
-        Top = 211
-        Width = 663
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Font.CharSet = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Lines.Strings = (
-          ''
-        )
-        ParentFont = False
       end
       object rllCNAE: TRLLabel
         Left = 46
@@ -2116,16 +2078,41 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
     object rbOutrasInformacoes: TRLBand[6]
       Left = 23
       Height = 19
-      Top = 827
+      Top = 829
       Width = 752
+      AutoExpand = False
+      AutoSize = True
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      Visible = False
       BeforePrint = rbOutrasInformacoesBeforePrint
+      object RLLabel38: TRLLabel
+        Left = 10
+        Height = 14
+        Top = 4
+        Width = 73
+        AutoSize = False
+        Caption = 'Observações:'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
+      end
+      object rlmDadosAdicionais: TRLMemo
+        Left = 85
+        Height = 16
+        Top = 2
+        Width = 663
+        Behavior = [beSiteExpander]
+        Lines.Strings = (
+          ''
+        )
+      end
     end
     object rlbHeaderItensDetalhado: TRLBand[7]
       Left = 23
@@ -2372,7 +2359,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
     object rlbCanhoto: TRLBand[9]
       Left = 23
       Height = 73
-      Top = 846
+      Top = 848
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -2541,7 +2528,7 @@ inherited frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 128
-    Top = 56
+    Left = 152
+    Top = 40
   end
 end

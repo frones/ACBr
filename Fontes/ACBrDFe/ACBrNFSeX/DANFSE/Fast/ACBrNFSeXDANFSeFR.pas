@@ -977,7 +977,17 @@ begin
   if (Provedor in [ proGINFES, proBetha, proDSF ]) then
     LCDS.FieldByName('DataEmissao').AsString := FormatDateTimeBr(ANFSe.DataEmissao)
   else
-    LCDS.FieldByName('DataEmissao').AsString := FormatDateBr(ANFSe.DataEmissao);
+  begin
+    if ANFSe.Numero <> '' then
+      LCDS.FieldByName('DataEmissao').AsString := FormatDateBr(ANFSe.DataEmissao)
+    else
+    begin
+      if frxReport.findcomponent('Memo12') <> nil then
+        TfrxMemoView(frxReport.findcomponent('Memo12')).Text := 'Data do RPS';
+
+      LCDS.FieldByName('DataEmissao').AsString := FormatDateBr(ANFSe.DataEmissaoRps);
+    end;
+  end;
 
   LCDS.FieldByName('CodigoVerificacao').AsString := ANFSe.CodigoVerificacao;
   LCDS.FieldByName('LinkNFSe').AsString          := ANFSe.Link;

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/06/2023
+-- NFSeBrasil.Provider --
+[*] Alterado a procedure TratarRetornoConsultaNFSeporRps para que retorne o numero
+    da nota no resumo.
+  Por: Italo Giurizzato Junior
 -- Insfisc.Provider --
 [*] Alterado a montagem do XML do ConsultarNFSe, pois na versão 1.01 o provedor
     exige que seja informado o numero inicial e final da nota.

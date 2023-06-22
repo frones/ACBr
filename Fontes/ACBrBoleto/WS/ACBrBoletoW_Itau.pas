@@ -598,7 +598,7 @@ begin
             if MultaValorFixo then
               JsonMulta.Add('valor_multa').Value.AsString := IntToStrZero(round(PercentualMulta * 100), 17)
             else
-              JsonMulta.Add('percentual_multa').Value.AsString := IntToStrZero(round(PercentualMulta * 10000), 12);
+              JsonMulta.Add('percentual_multa').Value.AsString := IntToStrZero(round(PercentualMulta * 100000), 12);
 
           end;
 

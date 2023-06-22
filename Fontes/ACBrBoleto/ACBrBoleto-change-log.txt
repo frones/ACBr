@@ -48,6 +48,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+22/06/2023
+[-]TK-4040 ACBrBoletoW_Itau "percentual_multa" deve ser alimentado com 7 dígitos inteiros e 5 casas decimais, ou seja, para representar 2% deve ser: 000000200000.
+   por : ARConsultoria, Validado: Daniel Morais
 14/06/2023
 [-]TK-4024 ACBrUniprimeNortePR - identificacao de ocorrencia sem instrucao,usar os campos de dias/datas de Protesto/Negativacao para preencher remessa.
   Por : Marcos Lenharo / Daniel Morais

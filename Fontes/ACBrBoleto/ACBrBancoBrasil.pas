@@ -1005,7 +1005,7 @@ begin
        toRemessaCancelarInstrucaoProtesto      : ATipoOcorrencia := '10'; {Sustar protesto e manter na carteira}
        toRemessaDispensarJuros                 : ATipoOcorrencia := '11'; {Instrução para dispensar juros}
        toRemessaAlterarNomeEnderecoSacado      : ATipoOcorrencia := '12'; {Alteração de nome e endereço do Sacado}
-       toRemessaOutrasOcorrencias              : ATipoOcorrencia := '31'; {Alteração de Outros Dados}
+       toRemessaConcederDesconto               : ATipoOcorrencia := '31'; {Conceder desconto}
        toRemessaCancelarDesconto               : ATipoOcorrencia := '32'; {Não conceder desconto}
        toRemessaDispensarMulta                 : ATipoOcorrencia := '36';
        toRemessaDispensarPrazoLimiteRecebimento: ATipoOcorrencia := '38';
@@ -1107,7 +1107,7 @@ begin
            if ((Instrucao1 = '') or (Instrucao1 = '06')) then
               AInstrucao   := '06'+ PadLeft(Instrucao2,2,'0');
 
-           if ((Instrucao2 = '') or (Instrucao2 = '06')) then
+           if ((Instrucao2 = '') or (Instrucao2 = '06')) and (Instrucao1 <> '06') then
               AInstrucao   := PadLeft(Instrucao1,2,'0')+'06';
 
            DiasProtesto := IntToStr(LDiasProtesto);
@@ -1126,7 +1126,7 @@ begin
          DiasProtesto:= '  ';
        end;
 
-       //Verificando se existir comandos 03,04,05,10,15,20,25,30,45 na Instrucao1 ou Instrucao2-> qtde dias 392 = ' '
+       //Verificando se existir comandos 09 - 03,04,05,10,15,20,25,30,45 na Instrucao1 ou Instrucao2-> qtde dias 392 = ' '
        if ((StrToIntDef(Instrucao1,0) in [03,04,05,10,15,20,25,30,35,40,45])  or
            (StrToIntDef(Instrucao2,0) in [03,04,05,10,15,20,25,30,35,40,45]))  then
        begin
@@ -1465,7 +1465,7 @@ begin
      case TipoOcorrencia of
        toRetornoComandoRecusado                    : Result := '03';
        toRetornoLiquidadoSemRegistro               : Result := '05';
-       toRetornoLiquidadoPorConta                  : Result := '08';
+       toRetornoLiquidadoPorConta                  : Result := '07';
        toRetornoLiquidadoSaldoRestante             : Result := '08';
        toRetornoBaixaSolicitada                    : Result := '10';
        toRetornoLiquidadoEmCartorio                : Result := '15';
@@ -1473,6 +1473,7 @@ begin
        toRetornoDebitoEmConta                      : Result := '20';
        toRetornoNomeSacadoAlterado                 : Result := '21';
        toRetornoEnderecoSacadoAlterado             : Result := '22';
+	   toRetornoEncaminhadoACartorio               : Result := '23';
        toRetornoProtestoSustado                    : Result := '24';
        toRetornoJurosDispensados                   : Result := '25';
        toRetornoManutencaoTituloVencido            : Result := '28';
@@ -1485,7 +1486,8 @@ begin
        toRetornoDispensarIndexador                 : Result := '37';
        toRetornoDispensarPrazoLimiteRecebimento    : Result := '38';
        toRetornoAlterarPrazoLimiteRecebimento      : Result := '39';
-       toRetornoChequePendenteCompensacao          : Result := '46';
+       toRetornoAcertoControleParticipante         : Result := '41';
+       toRetornoTituloPagoEmCheque                 : Result := '46';
        toRetornoTipoCobrancaAlterado               : Result := '72';
        toRetornoInclusaoNegativacao                : Result := '85';
        toRetornoExclusaoNegativacao                : Result := '86';
@@ -1570,6 +1572,7 @@ begin
       14: Result:= '14-Alteração de Vencimento do Titulo';
       15: Result:= '15-Liquidação em Cartório';
       16: Result:= '16-Confirmação de alteração de juros de mora';
+      17: Result:= '17-Liquidação Após Baixa ou Liquidação de Título Não Registrado';
       19: Result:= '19-Confirmação de recebimento de instruções para protesto';
       20: Result:= '20-Débito em Conta';
       21: Result:= '21-Alteração do Nome do Sacado';
@@ -1577,6 +1580,7 @@ begin
       23: Result:= '23-Indicação de encaminhamento a cartório';
       24: Result:= '24-Sustar Protesto';
       25: Result:= '25-Dispensar Juros';
+      26: Result:= '26-Alteração do número do título dado pelo Cedente (Seu número) - 10 e 15 posições';
       28: Result:= '28-Manutenção de titulo vencido';
       31: Result:= '31-Conceder desconto';
       32: Result:= '32-Não conceder desconto';
@@ -1587,6 +1591,7 @@ begin
       37: Result:= '37-Dispensar indexador';
       38: Result:= '38-Dispensar prazo limite para recebimento';
       39: Result:= '39-Alterar prazo limite para recebimento';
+      41: Result:= '41-Alteração do número do controle do participante (25 posições)';
       44: Result:= '44-Título pago com cheque devolvido';
       46: Result:= '46-Título pago com cheque, aguardando compensação';
       72: Result:= '72-Alteração de tipo de cobrança';
@@ -1637,9 +1642,11 @@ begin
       10: Result := toRetornoBaixaSolicitada;
       15: Result := toRetornoLiquidadoEmCartorio;
       16: Result := toRetornoConfirmacaoAlteracaoJurosMora;
+      17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
       20: Result := toRetornoDebitoEmConta;
-      21: Result := toRetornoNomeSacadoAlterado;
-      22: Result := toRetornoEnderecoSacadoAlterado;
+      21: Result := toRetornoRecebimentoInstrucaoAlterarNomeSacado;
+      22: Result := toRetornoRecebimentoInstrucaoAlterarEnderecoSacado;
+      23: Result := toRetornoEncaminhadoACartorio;
       24: Result := toRetornoProtestoSustado;
       25: Result := toRetornoJurosDispensados;
       28: Result := toRetornoManutencaoTituloVencido;
@@ -1652,12 +1659,13 @@ begin
       37: Result := toRetornoDispensarIndexador;
       38: Result := toRetornoDispensarPrazoLimiteRecebimento;
       39: Result := toRetornoAlterarPrazoLimiteRecebimento;
+      41: Result := toRetornoAcertoControleParticipante;
       46: Result := toRetornoChequePendenteCompensacao;
       72: Result := toRetornoTipoCobrancaAlterado;
       85: Result := toRetornoInclusaoNegativacao;
       86: Result := toRetornoExclusaoNegativacao;
       96: Result := toRetornoDespesasProtesto;
-      97: Result := toRetornoProtestoSustado;
+      97: Result := toRetornoDespesasSustacaoProtesto;
       98: Result := toRetornoDebitoCustasAntecipadas;
     end;
   end;
@@ -1777,7 +1785,7 @@ begin
         64: Result:='64-Título não passivel de debito/baixa - situação anormal' ;
         65: Result:='65-Título com ordem de não protestar-não pode ser encaminhado a cartorio' ;
         66: Result:='66-Número do documento do sacado (CNPJ/CPF) inválido';
-        67: Result:='66-Título/carne rejeitado' ;
+        67: Result:='67-Título/carne rejeitado';
         68: Result:='68-Código/Data/Percentual de multa inválido';
         69: Result:='69-Valor/Percentual de Juros Inválido';
         70: Result:='70-Título já se encontra isento de juros';
@@ -1795,8 +1803,12 @@ begin
         84: Result:='84-Título não localizado na existencia' ;
         99: Result:='99-Outros motivos' ;
       end;
-    toRetornoLiquidadoSemRegistro, toRetornoLiquidado, toRetornoLiquidadoPorConta,
-       toRetornoLiquidadoSaldoRestante, toRetornoLiquidadoEmCartorio: // 05, 06, 07, 08 e 15 (Liquidado)
+    toRetornoLiquidadoSemRegistro, 
+    toRetornoLiquidado, 
+    toRetornoLiquidadoPorConta,
+    toRetornoLiquidadoSaldoRestante,
+    toRetornoLiquidadoEmCartorio,
+    toRetornoChequePendenteCompensacao: // 05, 06, 07, 08 , 15 e 46 (Liquidado)
       case CodMotivo of
         01: Result:='01-Liquidação normal';
         02: Result:='02-Liquidação parcial';
@@ -2014,7 +2026,9 @@ begin
         17: Result:='17-Por alteração da variação';
         18: Result:='18-Por alteração de carteira';
       end;
-    toRetornoBaixaAutomatica, toRetornoBaixaSolicitada, toRetornoDebitoEmConta: // 09, 10 ou 20 (Baixa)
+    toRetornoBaixaAutomatica, 
+    toRetornoBaixaSolicitada, 
+    toRetornoDebitoEmConta: // 09, 10 ou 20 (Baixa)
       case CodMotivo of
         00: Result:='00-Solicitada pelo cliente';
         14: Result:='14-Protestado';

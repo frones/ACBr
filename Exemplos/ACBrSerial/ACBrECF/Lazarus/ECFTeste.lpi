@@ -22,7 +22,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="10"/>
-      <BuildNr Value="600"/>
+      <BuildNr Value="601"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ECFTeste - Programa de teste do ACBrECF" ProductVersion="0.9.0.114"/>

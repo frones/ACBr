@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Jequie/BA - Provedor: EL
+  Por: PrimeSoftware
+[+] Incluída a cidade de Lins/MG - Provedor: AssessorPublico
+  Por: Antonio Paulo Mangili
+
 22/06/2023
 -- ACBrNFSeXDANFSeRLSimplISS --
 [*] Alteração visando a impressão do conteudo da tag OutrasInformacoes.

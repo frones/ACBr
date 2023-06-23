@@ -291,7 +291,7 @@ namespace ACBrLib.NFSe
             CheckResult(ret);
         }
 
-        public string ConsultarSitucao(string aProtocolo, string aNumeroLote)
+        public string ConsultarSituacao(string aProtocolo, string aNumeroLote)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);

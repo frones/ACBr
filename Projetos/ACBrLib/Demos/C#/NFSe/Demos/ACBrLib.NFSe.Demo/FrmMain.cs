@@ -650,7 +650,7 @@ namespace ACBrLibNFSe.Demo
                 var aLote = "";
                 if (InputBox.Show("Consultar Situação", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
-                var ret = ACBrNFSe.ConsultarSitucao(protocolo, aLote);
+                var ret = ACBrNFSe.ConsultarSituacao(protocolo, aLote);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)

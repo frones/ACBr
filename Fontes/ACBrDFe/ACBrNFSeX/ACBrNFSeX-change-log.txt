@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/06/2023
+-- SigCorp.Provider --
+[*] Alteração visando o uso de caracteres especiais em nome de tomadores.
+  Por: Delcio
 -- Infisc.Provider/Agili.Provider --
 [*] Trocado a chamada ConsultarNFSe por ConsultarNFSeporFaixa.
   Por: Italo Giurizzato Junior

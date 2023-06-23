@@ -221,6 +221,9 @@ type
     fProxyPort: string;
     fProxyUser: string;
 
+    fHREF: String;
+    fFontStyle: String;
+
     {$IfDef HAS_HTTP}
      procedure GetImageFromURL(const aURL: string; const aResponse: TStream);
     {$EndIf}
@@ -230,13 +233,18 @@ type
     procedure _generateencryptionkey(const UserPass: AnsiString;
       const OwnerPass: AnsiString; protection: Integer);
     function _md5_16(AStr: AnsiString): AnsiString;
-    function packVXxx(vn: Integer): AnsiString;
     function _objectkey(vn: Integer): AnsiString;
     function _Ovalue(const UserPass: AnsiString; const OwnerPass: AnsiString
       ): AnsiString;
     function _Uvalue: AnsiString;
     function RC4(const AKey: AnsiString; const AData: AnsiString): AnsiString;
     {$EndIf}
+
+    function FindNextTagPos(const AHtml: String; out ATag: String; OffSet: Integer): Integer;
+    procedure OpenTag(const ATag: String);
+    procedure CloseTag(const ATag: String);
+    procedure SetStyle(const ATag: String; Enable: Boolean);
+    procedure PutLink(const AURL, AText: String);
   protected
     angle: Double;
     layers: array of TFPDFLayer;
@@ -281,6 +289,8 @@ type
     procedure BeginLayer(const LayerName: String); overload;
     procedure EndLayer;
     procedure OpenLayerPane;
+
+    procedure WriteHTML(const AHtml: String);
 
     {$IfDef HAS_PROTECTION}
     procedure SetProtection(Permissions: TFPDFPermissions;
@@ -1135,6 +1145,49 @@ begin
   Self.open_layer_pane := true;
 end;
 
+procedure TFPDFExt.WriteHTML(const AHtml: String);
+var
+  s, ATag, AText: String;
+  l, lt, p1, p2: Integer;
+begin
+  // HTML parser
+  s := StringReplace(AHtml, #13+#10, ' ', [rfReplaceAll]);
+  s := StringReplace(s, #10, ' ', [rfReplaceAll]);
+  l := Length(s);
+  p1 := 1; p2 := 0;
+  while p1 <= l do
+  begin
+    p2 := FindNextTagPos(AHtml, ATag, p1);
+    if (p2 = 0) then
+      p2 := l+1;
+
+    AText := copy(AHtml, p1, p2-p1);
+    if (AText <> '') then
+    begin
+      if (Self.fHREF <> '') then
+        PutLink(Self.fHREF, AText)
+      else
+        Write(5, AText);
+    end;
+
+    if (ATag <> '') then
+    begin
+      lt := Length(ATag);
+      if ATag[1] = '/' then
+      begin
+        Delete(ATag, 1, 1);
+        CloseTag(ATag);
+      end
+      else
+        OpenTag(ATag);
+
+      Inc(p2, lt+2);
+    end;
+
+    p1 := p2;
+  end;
+end;
+
 {$IfDef HAS_PROTECTION}
 procedure TFPDFExt.SetProtection(Permissions: TFPDFPermissions;
   const UserPass: AnsiString; const OwnerPass: AnsiString);
@@ -1199,17 +1252,16 @@ begin
   result := md5(AStr);
 end;
 
-function TFPDFExt.packVXxx(vn: Integer): AnsiString;
-begin
-  // https://gist.github.com/pifantastic/290042/548987bc88501ad48cf3efdc71ef65e77b9d85eb
-  Result := chr(vn and $000000FF);
-  Result := Result + chr((vn shr 8) and $000000ff);
-  Result := Result + chr((vn shr 16) and $000000ff);
-  Result := Result + chr(0) + chr(0);
-end;
-
 // Compute key depending on object number where the encrypted data is stored
 function TFPDFExt._objectkey(vn: Integer): AnsiString;
+  function packVXxx(vn: Integer): AnsiString;
+  begin
+    // https://gist.github.com/pifantastic/290042/548987bc88501ad48cf3efdc71ef65e77b9d85eb
+    Result := chr(vn and $000000FF);
+    Result := Result + chr((vn shr 8) and $000000ff);
+    Result := Result + chr((vn shr 16) and $000000ff);
+    Result := Result + chr(0) + chr(0);
+  end;
 begin
   Result := Copy(_md5_16( Self.encryption_key + packVXxx(vn)), 1, 10);
 end;
@@ -1290,6 +1342,81 @@ begin
   end;
 end;
 {$EndIf}
+
+function TFPDFExt.FindNextTagPos(const AHtml: String; out ATag: String;
+  OffSet: Integer): Integer;
+var
+  p1, p2: Integer;
+begin
+  ATag := '';
+  p1 := PosEx('<', AHtml, OffSet);
+  if (p1 > 0) then
+  begin
+     p2 := Pos('>', AHtml, p1);
+     if (p2 > 0) then
+       ATag := copy(AHtml, p1+1, p2-p1-1) ;
+  end;
+
+  Result := p1;
+end;
+
+procedure TFPDFExt.OpenTag(const ATag: String);
+var
+  s: String;
+  p1, p2: Integer;
+begin
+  // Opening tag
+  s := UpperCase(ATag);
+  if ((s = 'B') or (s = 'I') or (s = 'U')) then
+    SetStyle(s, true)
+  else if (s = 'BR') then
+    Ln(5)
+  else if (s[1] = 'A') then
+  begin
+    p1 := Pos('href="', ATag);
+    if (p1 > 0) then
+    begin
+      Inc(p1, 6);
+      p2 := Pos('"', ATag+'"', p1+1);
+      Self.fHREF := copy(ATag, p1, p2-p1);
+    end;
+  end;
+end;
+
+procedure TFPDFExt.CloseTag(const ATag: String);
+var
+  s: String;
+begin
+  // Closing tag
+  s := UpperCase(ATag);
+  if ((s = 'B') or (s = 'I') or (s = 'U')) then
+    SetStyle(s, False)
+  else if (s = 'A') then
+    Self.fHREF := '';
+end;
+
+procedure TFPDFExt.SetStyle(const ATag: String; Enable: Boolean);
+var
+  p: Integer;
+begin
+  p := pos(ATag, Self.fFontStyle);
+  if Enable and (p = 0) then
+    Self.fFontStyle := Self.fFontStyle + ATag
+  else if (not Enable) and (p > 0) then
+    Delete(Self.fFontStyle, P, Length(ATag));
+
+  SetFont('',Self.fFontStyle);
+end;
+
+procedure TFPDFExt.PutLink(const AURL, AText: String);
+begin
+  // Put a hyperlink
+  SetTextColor(0, 0, 255);
+  SetStyle('U', true);
+  Write(5, AText, AURL);
+  SetStyle('U', false);
+  SetTextColor(0);
+end;
 
 {$IfDef HAS_HTTP}
 procedure TFPDFExt.Image(const vFileOrURL: string; vX: double; vY: double;

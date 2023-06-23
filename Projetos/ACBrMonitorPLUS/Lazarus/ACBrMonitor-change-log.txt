@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2023
+-- ACBrMonitorPLUS.iss --
+[*] Adiciona o arquivo de INI e os Schemas para a NFSe --
+  Por: Diego F
+
 15/06/2023
 --- DoETQUnit, ACBrMonitorConsts, ACBrMonitor (Manual) ---
 [+] Novo método ETQ.ImprimirQRCode

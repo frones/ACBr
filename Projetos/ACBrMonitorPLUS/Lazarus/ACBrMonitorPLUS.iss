@@ -100,6 +100,7 @@ Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBreSocial\ACBreSocialServicos.ini; DestDir: 
 Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBrReinf\ACBrReinfServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBrBPe\ACBrBPeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
+Source: {#ACBrDIR}\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Logotipos de Bancos
 Source: {#ACBrDIR}\Fontes\ACBrBoleto\Logos\Colorido\png\*.*; DestDir: {app}\Logos; Flags: ; Components: programa
 ;Licença de uso
@@ -115,6 +116,9 @@ Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\Reinf\*.*; DestDir: {app}\Schemas\Re
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\BPe\*.*; DestDir: {app}\Schemas\BPe; Components: programa;
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\GNRe\*.*; DestDir: {app}\Schemas\GNRe; Components: programa;
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\GTIN\*.*; DestDir: {app}\Schemas\GTIN; Components: programa;
+Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\NFSe\*; DestDir: {app}\Schemas\NFSe; Components: programa; Flags: recursesubdirs 
+
+
 
 ;Arquivos de Change-log.TXT
 ;Source: {#ACBrMonitorPLUSDir}\Notas_Lancamento.pdf; DestDir: {app}; Flags: ignoreversion; Components: help

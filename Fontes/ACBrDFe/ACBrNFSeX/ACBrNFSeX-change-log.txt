@@ -44,6 +44,16 @@ Símbolo : Significado
 
 23/06/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de Juazeiro/BA trocou de provedor, agora é Sudoeste
+  Por: Joemil
+[*] A cidade de Porto Belo/SC trocou de provedor, agora é IPM
+  Por: Felipe Nadaletti
+[+] Incluída a cidade de Pato Bragado/PR - Provedor: IPM
+  Por: Alex Heinen
+[*] A cidade de Redencao/PA trocou de provedor, agora é Desenvolve
+  Por: Joemil
+[*] Incluída o parâmetro Não dividir por 100 para a cidade de Barcarena/PA
+  Por: Fabio Luiz Binhara
 [+] Incluída a cidade de Jequie/BA - Provedor: EL
   Por: PrimeSoftware
 [+] Incluída a cidade de Lins/MG - Provedor: AssessorPublico

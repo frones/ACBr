@@ -11,6 +11,5 @@ namespace ACBrLib.CTe
 
         public decimal vRec { get; set; }
 
-        public ComponentesValorPrestacaoCTe Comp { get; set; }
     }
 }

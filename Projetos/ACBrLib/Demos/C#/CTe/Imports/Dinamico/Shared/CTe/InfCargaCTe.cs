@@ -14,7 +14,7 @@ namespace ACBrLib.Core.CTe
 
         public string xOutCat { get; set; }
 
-        public InfQCTe infQ { get; set; }
+        public InfQCTe infQ { get; set; } = new InfQCTe();
 
         public decimal vCargaAverb { get; set; }
     }

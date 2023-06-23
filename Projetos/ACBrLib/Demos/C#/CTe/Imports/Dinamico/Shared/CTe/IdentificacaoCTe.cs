@@ -6,15 +6,15 @@ using ACBrLib.Core.CTe;
 namespace ACBrLib.CTe
 {
     public class IdentificacaoCTe
-    { 
+    {
         public string cUF { get; set; }
-        
+
         public int cCT { get; set; }
 
         public int CFOP { get; set; }
 
         public string NatOp { get; set; }
-    
+
         public ModeloCTe mod { get; set; }
 
         public int serie { get; set; }
@@ -43,7 +43,7 @@ namespace ACBrLib.CTe
 
         public string xMunEnv { get; set; }
 
-        public string UFEnv { get;  set; }
+        public string UFEnv { get; set; }
 
         public ModalCTe modal { get; set; }
 
@@ -56,7 +56,7 @@ namespace ACBrLib.CTe
         public string UFIni { get; set; }
 
         public int cMunFim { get; set; }
-    
+
         public string xMunFim { get; set; }
 
         public string UFFim { get; set; }
@@ -67,11 +67,9 @@ namespace ACBrLib.CTe
 
         public IndicadorTomadorCTe indIEToma { get; set; }
 
-        public TomadorCTe toma3 { get; set; } 
+        public TomadorCTe toma3 { get; set; }
 
-        public TomadorCTe toma4 { get; set; }
-
-        public InfPercursoCTe infPercurso { get; set; }
+        public InfPercursoCTe infPercurso { get; set; } = new InfPercursoCTe();
 
         public DateTime dhCont { get; set; }
 

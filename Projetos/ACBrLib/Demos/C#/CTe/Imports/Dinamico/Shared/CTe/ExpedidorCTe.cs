@@ -7,7 +7,7 @@ namespace ACBrLib.CTe
 {
     public class ExpedidorCTe
     {
-        public int CNPJCPF { get; set; }
+        public string CNPJCPF { get; set; }
 
         public string IE { get; set; }
 
@@ -15,8 +15,26 @@ namespace ACBrLib.CTe
 
         public int fone { get; set; }
 
-        public List<EnderExpedCTe> enderExped { get; } = new List<EnderExpedCTe>();
-
         public string email { get; set; }
+
+        public string xLgr { get; set; }
+
+        public string nro { get; set; }
+
+        public string xCpl { get; set; }
+
+        public string xBairro { get; set; }
+
+        public int cMun { get; set; }
+
+        public string xMun { get; set; }
+
+        public int CEP { get; set; }
+
+        public string UF { get; set; }
+
+        public int cPais { get; set; }
+
+        public string xPais { get; set; }
     }
 }

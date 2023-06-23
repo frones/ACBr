@@ -993,6 +993,7 @@ namespace ACBrLib.CTe.Demo
             var cte = AlimentarDados();
 
             ACBrCTe.LimparLista();
+            rtbRespostas.AppendText(cte);
             ACBrCTe.CarregarINI(cte);
 
             try
@@ -1017,13 +1018,12 @@ namespace ACBrLib.CTe.Demo
             cte.InfCTe.Versao = "3.0";
 
             //Identificação
-            cte.Identificacao.cUF = cmbUfDestino.Text;
+            cte.Identificacao.cUF = "15";
             cte.Identificacao.CFOP = 5353;
             cte.Identificacao.NatOp = "PRESTACAO SERVICO";
             cte.Identificacao.mod = cmbModeloDocumento.GetSelectedValue<ModeloCTe>();
             cte.Identificacao.serie = 1;
             cte.Identificacao.nCT = 000001402;
-            cte.Identificacao.cCT = 3151;
             cte.Identificacao.dhEmi = DateTime.Now;
             cte.Identificacao.tpImp = rdbRetrato.Checked ? TipoDACTE.tiRetrato : TipoDACTE.tiPaisagem;
             cte.Identificacao.tpEmis = TipoEmissao.teNormal;
@@ -1031,10 +1031,10 @@ namespace ACBrLib.CTe.Demo
             cte.Identificacao.tpCte = TipoCTe.tpCTeNormal;
             cte.Identificacao.ProcEmi = ProcessoEmissao.peAplicativoContribuinte;
             cte.Identificacao.verProc = "3.0";
-            cte.Identificacao.cMunEnv = 4112009;
-            cte.Identificacao.xMunEnv = "XXXXXXX";
-            cte.Identificacao.UFEnv = "XX";
-            cte.Identificacao.modal = ModalCTe.moFerroviario;
+            cte.Identificacao.cMunEnv = 1501402;
+            cte.Identificacao.xMunEnv = "BELEM";
+            cte.Identificacao.UFEnv = "PA";
+            cte.Identificacao.modal = ModalCTe.moRodoviario;
             cte.Identificacao.tpServ = TipoServicoCTe.tsNormal;
             cte.Identificacao.indIEToma = IndicadorTomadorCTe.contribuinteICMS;
             cte.Identificacao.cMunIni = 3119401;
@@ -1046,110 +1046,159 @@ namespace ACBrLib.CTe.Demo
             cte.Identificacao.retira = 0;
             cte.Identificacao.xDetRetira = "";
             cte.Identificacao.indGlobalizado = 0;
-            cte.Identificacao.toma3.Equals(TomadorCTe.toma.remetende);
-            cte.Identificacao.toma4.Equals(TomadorCTe.toma.outros);
-            cte.Identificacao.toma4.CNPJCPF = 10242141000174;
-            cte.Identificacao.toma4.IE = "0010834420031";
-            cte.Identificacao.toma4.xNome = "ACOUGUE E SUPERMERCADO SOUZA LTDA";
-            cte.Identificacao.toma4.xFant = "";
-            cte.Identificacao.toma4.fone = 40401234;
-            cte.Identificacao.toma4.enderToma.xLgr = "RUA BELO HORIZONTE";
-            cte.Identificacao.toma4.enderToma.nro = "614";
-            cte.Identificacao.toma4.enderToma.xCpl = "N D";
-            cte.Identificacao.toma4.enderToma.xBairro = "CALADINA";
-            cte.Identificacao.toma4.enderToma.cMun = 3119401;
-            cte.Identificacao.toma4.enderToma.xMun = "CORONEL FABRICIANO";
-            cte.Identificacao.toma4.enderToma.CEP = 35171167;
-            cte.Identificacao.toma4.enderToma.UF = "MG";
-            cte.Identificacao.toma4.enderToma.cPais = 1058;
-            cte.Identificacao.toma4.enderToma.xPais = "BRASIL";
-            cte.Identificacao.toma4.email = "email@teste.com.br";
+            cte.Identificacao.toma3 = TomadorCTe.Remetente;
+            //cte.Identificacao.toma3 = TomadorCTe.Outros;
+            cte.Tomador4.CNPJCPF = "10242141000174";
+            cte.Tomador4.IE = "0010834420031";
+            cte.Tomador4.xNome = "ACOUGUE E SUPERMERCADO SOUZA LTDA";
+            cte.Tomador4.xLgr = "RUA BELO HORIZONTE";
+            cte.Tomador4.nro = "614";
+            cte.Tomador4.xCpl = "N D";
+            cte.Tomador4.xBairro = "CALADINA";
+            cte.Tomador4.cMun = 3119401;
+            cte.Tomador4.xMun = "CORONEL FABRICIANO";
+            cte.Tomador4.CEP = 35171167;
+            cte.Tomador4.UF = "MG";
+            cte.Tomador4.cPais = 1058;
+            cte.Tomador4.xPais = "BRASIL";
+            cte.Tomador4.fone = 33445566;
 
             //Complemento
-            cte.Complemento.xCaracAd = "Caracteristicas Adicionais do Transporte";
-            cte.Complemento.xCaracSer = "Caracteristicas Adicionais do Serviço";
+            cte.Complemento.xCaracAd = "Carac Adic";
+            cte.Complemento.xCaracSer = "Carac Adicionais do Serviço";
             cte.Complemento.xEmi = "Nome do Emitente";
-            cte.Complemento.Fluxo.xOrig = "";
             cte.Complemento.semData = TipoPeriodoCTe.semDataDefinida;
             cte.Complemento.semHora = TipoHorarioCTe.semHoraDefinida;
-            cte.Complemento.noInter.Equals(TipoHorarioCTe.semHoraDefinida);
-            cte.Complemento.noInter.hIni = DateTime.Now;
-            cte.Complemento.noInter.hFim = DateTime.Now;
-            cte.Complemento.ObsCont.xCampo = "Nome do Campo";
-            cte.Complemento.ObsCont.xTexto = "Valor do Campo";
-            cte.Complemento.ObsFisco.xCampo = "Nome do Campo";
-            cte.Complemento.ObsFisco.xTexto = "Valor do Campo";
+            cte.Complemento.origCalc = "Sao Paulo";
+            cte.Complemento.destCalc = "Campinas";
+            cte.Complemento.xObs = "Observação livre";
+            /*
+            var dProg = "23/06/2023";
+            cte.Entrega.dProg = DateTime.Parse(dProg);
+
+            var dIni = "20/06/2023";
+            cte.Entrega.dIni = DateTime.Parse(dIni);
+
+            var dFim = "25/06/2023";
+            cte.Entrega.dFim = DateTime.Parse(dFim);
+
+            DateTime date = DateTime.Now;
+            var horaFomatada = date.ToString("HH:mm:ss");
+            cte.Entrega.hProg = horaFomatada;
+            cte.Entrega.hIni = horaFomatada;
+            cte.Entrega.hFim = horaFomatada;
+
+            cte.ObsCont.xCampo = "Nome do Campo";
+            cte.ObsCont.xTexto = "Valor do Campo";
+            cte.ObsFisco.xCampo = "Nome do Campo";
+            cte.ObsFisco.xTexto = "Valor do Campo";
+            */
 
             //Emitente
-            cte.Emitente.CNPJ = 1234567890123;
-            cte.Emitente.IE = 1234566;
-            cte.Emitente.xNome = "XXXXXXXXXXXXXX";
-            cte.Emitente.xFant = "XXXXXXXXXXXXXXXXX";
-            cte.Emitente.enderEmit.xLgr = "XXXX";
-            cte.Emitente.enderEmit.nro = "115";
-            cte.Emitente.enderEmit.xCpl = "";
-            cte.Emitente.enderEmit.xBairro = "XXXXXX";
-            cte.Emitente.enderEmit.cMun = 123456;
-            cte.Emitente.enderEmit.xMun = "XXXXX";
-            cte.Emitente.enderEmit.CEP = 12345678;
-            cte.Emitente.enderEmit.UF = "XX";
-            cte.Emitente.enderEmit.fone = 12345646;
+            cte.Emitente.CNPJ = "18760540000139";
+            cte.Emitente.IE = 111111;
+            cte.Emitente.xNome = "RAZAO SOCIAL DE TESTE";
+            cte.Emitente.xFant = "FANTASIA DE TESTE";
+            cte.Emitente.xLgr = "Logradouro";
+            cte.Emitente.nro = "1";
+            cte.Emitente.xCpl = "Complemento";
+            cte.Emitente.xBairro = "Bairro";
+            cte.Emitente.cMun = 1501402;
+            cte.Emitente.xMun = "BELEM";
+            cte.Emitente.CEP = 17250000;
+            cte.Emitente.UF = "PA";
+            cte.Emitente.fone = 33445566;
 
             //Remetente
-            cte.Remetente.CNPJCPF = 1234567890123;
-            cte.Remetente.IE = "1234566";
+            cte.Remetente.CNPJCPF = "05481336000137";
+            cte.Remetente.IE = "12345678";
             cte.Remetente.xNome = "Nome do Remetente";
             cte.Remetente.xFant = "Nome Fantasia";
             cte.Remetente.fone = 33445566;
-            cte.Remetente.enderReme.xLgr = "Rua 1";
-            cte.Remetente.enderReme.nro = "200";
-            cte.Remetente.enderReme.xCpl = "";
-            cte.Remetente.enderReme.xBairro = "Centro";
-            cte.Remetente.enderReme.cMun = 3512345;
-            cte.Remetente.enderReme.xMun = "Nome do Municipio";
-            cte.Remetente.enderReme.CEP = 14123456;
-            cte.Remetente.enderReme.UF = "SP";
-            cte.Remetente.enderReme.cPais = 1058;
-            cte.Remetente.enderReme.xPais = "BRASIL";
-
+            cte.Remetente.xLgr = "Rua 1";
+            cte.Remetente.nro = "200";
+            cte.Remetente.xBairro = "Centro";
+            cte.Remetente.cMun = 3554003;
+            cte.Remetente.xMun = "Nome do Municipio";
+            cte.Remetente.CEP = 14123456;
+            cte.Remetente.UF = "SP";
+            cte.Remetente.cPais = 1058;
+            cte.Remetente.xPais = "BRASIL";
+            
             //Destinatário
-            cte.Destinatario.CNPJCPF = 12345678000123;
+            cte.Destinatario.CNPJCPF = "05481336000137";
             cte.Destinatario.IE = "12345678";
             cte.Destinatario.xNome = "Nome do Destinatário";
             cte.Destinatario.fone = 33445566;
-            cte.Destinatario.enderDest.xLgr = "Rua 1";
-            cte.Destinatario.enderDest.nro = "200";
-            cte.Destinatario.enderDest.xCpl = "";
-            cte.Destinatario.enderDest.xBairro = "Centro";
-            cte.Destinatario.enderDest.cMun = 3512345;
-            cte.Destinatario.enderDest.xMun = "Nome do Municipio";
-            cte.Destinatario.enderDest.CEP = 14123456;
-            cte.Destinatario.enderDest.UF = "SP";
-            cte.Destinatario.enderDest.cPais = 1058;
-            cte.Destinatario.enderDest.xPais = "BRASIL";
+            cte.Destinatario.xLgr = "Rua 1";
+            cte.Destinatario.nro = "200";
+            cte.Destinatario.xBairro = "Centro";
+            cte.Destinatario.cMun = 3554003;
+            cte.Destinatario.xMun = "Nome do Municipio";
+            cte.Destinatario.CEP = 14123456;
+            cte.Destinatario.UF = "SP";
+            cte.Destinatario.cPais = 1058;
+            cte.Destinatario.xPais = "BRASIL";
+            cte.Destinatario.ISUF = 14123456;
+
+            //Expedidor
+            cte.Expedidor.CNPJCPF = "05481336000137";
+            cte.Expedidor.IE = "12345678";
+            cte.Expedidor.xNome = "Nome do Expedidor";
+            cte.Expedidor.fone = 33445566;
+            cte.Expedidor.xLgr = "Rua 1";
+            cte.Expedidor.nro = "200";
+            cte.Expedidor.xBairro = "Centro";
+            cte.Expedidor.cMun = 3554003;
+            cte.Expedidor.xMun = "Nome do Municipio";
+            cte.Expedidor.CEP = 14123456;
+            cte.Expedidor.UF = "SP";
+            cte.Expedidor.cPais = 1058;
+            cte.Expedidor.xPais = "BRASIL";
+
+            //Recebedor
+            cte.Recebedor.CNPJCPF = "05481336000137";
+            cte.Recebedor.IE = "12345678";
+            cte.Recebedor.xNome = "Nome do Recebedor";
+            cte.Recebedor.fone = 33445566;
+            cte.Recebedor.xLgr = "Rua 1";
+            cte.Recebedor.nro = "200";
+            cte.Recebedor.xBairro = "Centro";
+            cte.Recebedor.cMun = 3554003;
+            cte.Recebedor.xMun = "Nome do Municipio";
+            cte.Recebedor.CEP = 14123456;
+            cte.Recebedor.UF = "SP";
+            cte.Recebedor.cPais = 1058;
+            cte.Recebedor.xPais = "BRASIL";
 
             cte.ValoresPrestacaoServico.vTPrest = 100;
             cte.ValoresPrestacaoServico.vRec = 100;
-            cte.ValoresPrestacaoServico.Comp.xNome = "DFRNER KRTJ";
-            cte.ValoresPrestacaoServico.Comp.vComp = 100;
 
-            cte.InformacoesRelativasImpostos.ICMS90.Equals(ICMSCTe.CST.ICMSOutros);
-            cte.InformacoesRelativasImpostos.ICMS90.pRedBC = 10;
-            cte.InformacoesRelativasImpostos.ICMS90.vBC = 100;
-            cte.InformacoesRelativasImpostos.ICMS90.pICMS = 7;
-            cte.InformacoesRelativasImpostos.ICMS90.vICMS = 6;
-            cte.InformacoesRelativasImpostos.ICMS90.vCred = 0;
-            cte.InformacoesRelativasImpostos.infAdFisco = "Lei da Transparencia: O valor aproximado de tributos incidentes sobre o preço deste servico é de R$ 17,00 (17,00%) Fonte: IBPT";
             cte.InformacoesRelativasImpostos.vTotTrib = 17;
+            cte.InformacoesRelativasImpostos.infAdFisco = "Lei da Transparencia: O valor aproximado de tributos incidentes sobre o preço deste servico é de R$ 17,00 (17,00%) Fonte: IBPT";
+
+            cte.ComponentesValorPrestacao.xNome = "DFRNER KRTJ";
+            cte.ComponentesValorPrestacao.vComp = 100;
+
+            cte.InformacoesRelativasImpostos.CST = CSTCTe.tributacaoNormal;
+            cte.ICMS.pRedBC = 10;
+            cte.ICMS.vBC = 100;
+            cte.ICMS.pICMS = 7;
+            cte.ICMS.vICMS = 6;
+            cte.ICMS.vCred = 0;
+
+            cte.Rodoviario.RNTRC = "12345678";
 
             cte.GrupoInformacoesNormalSubstituto.infCarga.vCarga = 5000;
             cte.GrupoInformacoesNormalSubstituto.infCarga.proPred = "Produto Predominante";
-            cte.GrupoInformacoesNormalSubstituto.infCarga.xOutCat = "Outras Caractereisticas da Carga";
+            cte.GrupoInformacoesNormalSubstituto.infCarga.xOutCat = "Pacotes";
             cte.GrupoInformacoesNormalSubstituto.infCarga.vCargaAverb = 5000;
-            cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.cUnid = CodUniMedidaCTe.KG;
+
+            cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.cUnid = CodUniMedidaCTe.UNIDADE;
             cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.tpMed = "Kg";
             cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.qCarga = 10;
-            cte.GrupoInformacoesNormalSubstituto.infDoc.infNFe.chave = 0;
+
+            cte.GrupoInformacoesNormalSubstituto.infDoc.infNFe.chave = "42210117089484000190550110000091001371413248";
 
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.nFat = "123";
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.vOrig = 100;

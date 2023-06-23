@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ACBrLib.Core;
+using ACBrLib.Core.CTe;
 using ACBrLib.Core.DFe;
 
 namespace ACBrLib.CTe
@@ -17,18 +18,27 @@ namespace ACBrLib.CTe
         {
             InfCTe = new InfCTe();
             Identificacao = new IdentificacaoCTe();
+            Tomador4 = new Tomador4CTe();
             Complemento = new ComplementoCTe();
+            Fluxo = new FluxoCTe();
+            Entrega = new EntregaCTe();
+            ObsCont = new ObsContCTe();
+            ObsFisco = new ObsFiscoCTe();
             Emitente = new EmitenteCTe();
             Remetente = new RemetenteCTe();
             Expedidor = new ExpedidorCTe();
             Recebedor = new RecebedorCTe();
             Destinatario = new DestinatarioCTe();
             ValoresPrestacaoServico = new ValoresPrestacaoServicoCTe();
+            ComponentesValorPrestacao = new ComponentesValorPrestacaoCTe();
             InformacoesRelativasImpostos = new InformacoesRelativasImpostosCTe();
+            ICMS = new ICMSCTe();
+            ICMSUFFim = new ICMSUFFimCTe();
             GrupoInformacoesNormalSubstituto = new GrupoInformacoesNormalSubstitutoCTe();
             DetalhamentoComplementado = new DetalhamentoComplementadoCTe();
             DetalhamentoAnulacao = new DetalhamentoAnulacaoCTe();
             InformacoesSuplementares = new InformacoesSuplementaresCTe();
+            Rodoviario = new RodoviarioCTe();
         }
 
         internal CTe(ACBrIniFile ini) : this()
@@ -44,7 +54,17 @@ namespace ACBrLib.CTe
 
         public IdentificacaoCTe Identificacao { get; }
 
+        public Tomador4CTe Tomador4 { get;  }
+
         public ComplementoCTe Complemento { get; }
+
+        public FluxoCTe Fluxo { get; }
+
+        public EntregaCTe Entrega { get;  }
+
+        public ObsContCTe ObsCont { get; }
+
+        public ObsFiscoCTe ObsFisco { get; }
 
         public EmitenteCTe Emitente { get; }
 
@@ -58,7 +78,13 @@ namespace ACBrLib.CTe
 
         public ValoresPrestacaoServicoCTe ValoresPrestacaoServico { get; }
 
+        public ComponentesValorPrestacaoCTe ComponentesValorPrestacao { get; }
+
         public InformacoesRelativasImpostosCTe InformacoesRelativasImpostos { get; }
+
+        public ICMSCTe ICMS { get; }
+
+        public ICMSUFFimCTe ICMSUFFim { get; }
 
         public GrupoInformacoesNormalSubstitutoCTe GrupoInformacoesNormalSubstituto { get; }
 
@@ -67,6 +93,8 @@ namespace ACBrLib.CTe
         public DetalhamentoAnulacaoCTe DetalhamentoAnulacao { get; }
 
         public InformacoesSuplementaresCTe InformacoesSuplementares { get; }
+
+        public RodoviarioCTe Rodoviario { get; }
 
         #endregion Properties
 
@@ -82,19 +110,37 @@ namespace ACBrLib.CTe
             var iniData = new ACBrIniFile();
 
             iniData.WriteToIni(InfCTe, "InfCTe");
-            iniData.WriteToIni(Identificacao, "Identificacao");
-            iniData.WriteToIni(Complemento, "Complemento");
-            iniData.WriteToIni(Emitente, "Emitente");
-            iniData.WriteToIni(Remetente, "Remetente");
-            iniData.WriteToIni(Expedidor, "Expedidor");
-            iniData.WriteToIni(Recebedor, "Recebedor");
-            iniData.WriteToIni(Destinatario, "Destinatario");
-            iniData.WriteToIni(ValoresPrestacaoServico, "ValoresPrestacaoServico");
-            iniData.WriteToIni(InformacoesRelativasImpostos, "InformacoesRelativasImpostos");
-            iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "GrupoInformacoesNormalSubstituto");
-            iniData.WriteToIni(DetalhamentoComplementado, "DetalhamentoComplementado");
-            iniData.WriteToIni(DetalhamentoAnulacao, "DetalhamentoAnulacao");
-            iniData.WriteToIni(InformacoesSuplementares, "InformacoesSuplementares");
+            iniData.WriteToIni(Identificacao, "Ide");
+            iniData.WriteToIni(Tomador4, "toma4");
+            iniData.WriteToIni(Complemento, "Compl");
+            iniData.WriteToIni(Fluxo, "fluxo");
+            iniData.WriteToIni(Entrega, "Entrega");
+            iniData.WriteToIni(ObsCont, "ObsCont");
+            iniData.WriteToIni(ObsFisco, "ObsFisco");
+            iniData.WriteToIni(Emitente, "Emit");
+            iniData.WriteToIni(Remetente, "Rem");
+            iniData.WriteToIni(Expedidor, "Exped");
+            iniData.WriteToIni(Recebedor, "Receb");
+            iniData.WriteToIni(Destinatario, "Dest");
+            iniData.WriteToIni(ValoresPrestacaoServico, "vPrest");
+            iniData.WriteToIni(ComponentesValorPrestacao, "Comp");
+            iniData.WriteToIni(InformacoesRelativasImpostos, "Imp");
+            iniData.WriteToIni(ICMS, "ICMS");
+            iniData.WriteToIni(ICMSUFFim, "ICMSUFFim");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infDoc, "infDoc");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.docAnt, "docAnt");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.veicNovos, "veicNovos");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.cobr, "cobr");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCTeSub, "infCTeSub");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infGlobalizado, "infGlobalizado");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infServVinc, "infServVinc");
+            iniData.WriteToIni(DetalhamentoComplementado, "infCteComp");
+            iniData.WriteToIni(DetalhamentoAnulacao, "InfCteAnu");
+            iniData.WriteToIni(InformacoesSuplementares, "infCTeSupl");
+            iniData.WriteToIni(Rodoviario, "rodo");
 
             return iniData;
         }
@@ -102,19 +148,37 @@ namespace ACBrLib.CTe
         private void ReadFromIni(ACBrIniFile iniData)
         {
             iniData.ReadFromIni(InfCTe, "InfCTe");
-            iniData.ReadFromIni(Identificacao, "Identificacao");
-            iniData.ReadFromIni(Complemento, "Complemento");
-            iniData.ReadFromIni(Emitente, "Emitente");
-            iniData.ReadFromIni(Remetente, "Remetente");
-            iniData.ReadFromIni(Expedidor, "Expedidor");
-            iniData.ReadFromIni(Recebedor, "Recebedor");
-            iniData.ReadFromIni(Destinatario, "Destinatario");
-            iniData.ReadFromIni(ValoresPrestacaoServico, "ValoresPrestacaoServico");
-            iniData.ReadFromIni(InformacoesRelativasImpostos, "InformacoesRelativasImpostos");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "GrupoInformacoesNormalSubstituto");
-            iniData.ReadFromIni(DetalhamentoComplementado, "DetalhamentoComplementado");
-            iniData.ReadFromIni(DetalhamentoAnulacao, "DetalhamentoAnulacao");
-            iniData.ReadFromIni(InformacoesSuplementares, "InformacoesSuplementares");
+            iniData.ReadFromIni(Identificacao, "Ide");
+            iniData.ReadFromIni(Tomador4, "toma4");
+            iniData.ReadFromIni(Complemento, "Compl");
+            iniData.ReadFromIni(Fluxo, "fluxo");
+            iniData.ReadFromIni(Entrega, "Entrega");
+            iniData.ReadFromIni(ObsCont, "ObsCont");
+            iniData.ReadFromIni(ObsFisco, "ObsFisco");
+            iniData.ReadFromIni(Emitente, "Emit");
+            iniData.ReadFromIni(Remetente, "Rem");
+            iniData.ReadFromIni(Expedidor, "Exped");
+            iniData.ReadFromIni(Recebedor, "Receb");
+            iniData.ReadFromIni(Destinatario, "Dest");
+            iniData.ReadFromIni(ValoresPrestacaoServico, "vPrest");
+            iniData.ReadFromIni(ComponentesValorPrestacao, "Comp");
+            iniData.ReadFromIni(InformacoesRelativasImpostos, "Imp");
+            iniData.ReadFromIni(ICMS, "ICMS");
+            iniData.ReadFromIni(ICMSUFFim, "ICMSUFFim");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infDoc, "infDoc");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.docAnt, "docAnt");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.veicNovos, "veicNovos");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.cobr, "cobr");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCTeSub, "infCTeSub");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infGlobalizado, "infGlobalizado");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infServVinc, "infServVinc");
+            iniData.ReadFromIni(DetalhamentoComplementado, "infCteComp");
+            iniData.ReadFromIni(DetalhamentoAnulacao, "InfCteAnu");
+            iniData.ReadFromIni(InformacoesSuplementares, "infCTeSupl");
+            iniData.ReadFromIni(Rodoviario, "rodo");
         }
 
         public static CTe Load(string conteudo) => ACBrIniFile.Parse(conteudo);

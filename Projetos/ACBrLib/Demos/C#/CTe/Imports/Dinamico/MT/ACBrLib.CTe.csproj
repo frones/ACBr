@@ -64,6 +64,8 @@
 	  <Compile Include="..\Shared\CTe\DetalhamentoComplementadoCTe.cs" Link="CTe\DetalhamentoComplementadoCTe.cs" />
 	  <Compile Include="..\Shared\CTe\DetalhamentoAnulacaoCTe.cs" Link="CTe\DetalhamentoAnulacaoCTe.cs" />
 	  <Compile Include="..\Shared\CTe\InformacoesSuplementaresCTe.cs" Link="CTe\InformacoesSuplementaresCTe.cs" />
+	  <Compile Include="..\Shared\CTe\RodoviarioCTe.cs" Link="CTe\RodoviarioCTe.cs" />
+	  
 
 
 	  <Compile Include="..\Shared\CTe\TipoCTe.cs" Link="CTe\TipoCTe.cs" />
@@ -73,16 +75,10 @@
 	  <Compile Include="..\Shared\CTe\FluxoCTe.cs" Link="CTe\FluxoCTe.cs" />
 	  <Compile Include="..\Shared\CTe\PassCTe.cs" Link="CTe\PassCTe.cs" />
 	  <Compile Include="..\Shared\CTe\IndicadorTomadorCTe.cs" Link="CTe\IndicadorTomadorCTe.cs" />
-	  <Compile Include="..\Shared\CTe\TomadorCTe.cs" Link="CTe\TomadorCTe.cs" />
-	  <Compile Include="..\Shared\CTe\EnderecoTomadorCTe.cs" Link="CTe\EnderecoTomadorCTe.cs" />
+	  <Compile Include="..\Shared\CTe\Tomador4CTe.cs" Link="CTe\Tomador4CTe.cs" />
 	  <Compile Include="..\Shared\CTe\EntregaCTe.cs" Link="CTe\EntregaCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ObsContCTe.cs" Link="CTe\ObsContCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ObsFiscoCTe.cs" Link="CTe\ObsFiscoCTe.cs" />
-	  <Compile Include="..\Shared\CTe\EnderEmitCTe.cs" Link="CTe\EnderEmitCTe.cs" />
-	  <Compile Include="..\Shared\CTe\EnderRemeCTe.cs" Link="CTe\EnderRemeCTe.cs" />
-	  <Compile Include="..\Shared\CTe\EnderExpedCTe.cs" Link="CTe\EnderExpedCTe.cs" />
-	  <Compile Include="..\Shared\CTe\EnderRecebCTe.cs" Link="CTe\EnderRecebCTe.cs" />
-	  <Compile Include="..\Shared\CTe\EnderDestCTe.cs" Link="CTe\EnderDestCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ComponentesValorPrestacaoCTe.cs" Link="CTe\ComponentesValorPrestacaoCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ICMSCTe.cs" Link="CTe\ICMSCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ICMSUFFimCTe.cs" Link="CTe\ICMSUFFimCTe.cs" />

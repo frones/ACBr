@@ -13,7 +13,7 @@ namespace ACBrLib.Core.CTe
 
         public long refCteAnu { get; set; }
 
-        public TomaICMSCTe tomaICMS { get; set; }
+        public TomaICMSCTe tomaICMS { get; set; } = new TomaICMSCTe();
 
         public int indAlteraToma { get; set; }
     }

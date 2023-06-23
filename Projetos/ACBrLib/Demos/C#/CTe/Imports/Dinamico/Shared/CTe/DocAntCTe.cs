@@ -8,6 +8,6 @@ namespace ACBrLib.Core.CTe
 {
     public class DocAntCTe
     {
-        public EmiDocAntCTe emiDocAnt { get; set; }
+        public List<EmiDocAntCTe> emiDocAnt { get; set; } = new List<EmiDocAntCTe>();
     }
 }

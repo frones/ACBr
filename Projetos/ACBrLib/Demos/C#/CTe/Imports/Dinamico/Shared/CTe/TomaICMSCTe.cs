@@ -11,7 +11,7 @@ namespace ACBrLib.Core.CTe
     {   
         public long refNFe { get; set; }
 
-        public RefNFCTe refNF { get; set; }
+        public RefNFCTe refNF { get; set; } = new RefNFCTe();
 
         public long refCTe { get; set; }
     }

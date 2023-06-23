@@ -8,8 +8,8 @@ namespace ACBrLib.Core.CTe
 {
     public class CobrCTe
     {
-        public FatCTe fat { get; set; }
+        public FatCTe fat { get; set; } = new FatCTe();
 
-        public DupCTe dup { get; set; }
+        public DupCTe dup { get; set; } = new DupCTe();
     }
 }

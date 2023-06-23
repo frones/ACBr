@@ -7,7 +7,7 @@ namespace ACBrLib.CTe
 {
     public class EmitenteCTe
     {
-        public long CNPJ { get; set; }
+        public string CNPJ { get; set; }
 
         public int IE { get; set; }
 
@@ -17,6 +17,22 @@ namespace ACBrLib.CTe
 
         public string xFant { get; set; }
 
-        public EnderEmitCTe enderEmit { get; set; }
+        public string xLgr { get; set; }
+
+        public string nro { get; set; }
+
+        public string xCpl { get; set; }
+
+        public string xBairro { get; set; }
+
+        public int cMun { get; set; }
+
+        public string xMun { get; set; }
+
+        public int CEP { get; set; }
+
+        public string UF { get; set; }
+
+        public int fone { get; set; }
     }
 }

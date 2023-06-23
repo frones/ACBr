@@ -15,10 +15,10 @@ namespace ACBrLib.Core.CTe
 
         public DateTime dFim { get; set; }
 
-        public DateTime hProg { get; set; }
+        public String hProg { get; set; }
 
-        public DateTime hIni { get; set; }
+        public String hIni { get; set; }
 
-        public DateTime hFim { get; set; }
+        public String hFim { get; set; }
     }
 }

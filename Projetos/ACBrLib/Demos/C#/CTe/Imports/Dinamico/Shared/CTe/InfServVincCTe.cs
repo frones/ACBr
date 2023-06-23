@@ -8,6 +8,6 @@ namespace ACBrLib.Core.CTe
 {
     public class InfServVincCTe
     {
-        public InfCTeMultimodalCTe infCTeMultimodal { get; set; }
+        public InfCTeMultimodalCTe infCTeMultimodal { get; set; } = new InfCTeMultimodalCTe();
     }
 }

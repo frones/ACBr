@@ -453,7 +453,7 @@ begin
                                   Evento.Items[0].InfEvento.detEvento.dhTentativaEntrega), DSC_DEMI);
        Gerador.wCampo(tcInt, 'EP04', 'nTentativa ', 3, 3, 0, Evento.Items[0].InfEvento.detEvento.nTentativa);
        Gerador.wCampo(tcStr, 'EP06', 'tpMotivo   ', 1, 1, 1, tpMotivoToStr(Evento.Items[0].InfEvento.detEvento.tpMotivo));
-       Gerador.wCampo(tcStr, 'EP07', 'xJustMotivo', 25, 250, 1, Evento.Items[0].InfEvento.detEvento.xJustMotivo);
+       Gerador.wCampo(tcStr, 'EP07', 'xJustMotivo', 25, 250, 0, Evento.Items[0].InfEvento.detEvento.xJustMotivo);
        Gerador.wCampo(tcDe6, 'EP08', 'latitude     ', 01, 10, 0, Evento.Items[0].InfEvento.detEvento.latitude);
        Gerador.wCampo(tcDe6, 'EP09', 'longitude    ', 01, 11, 0, Evento.Items[0].InfEvento.detEvento.longitude);
 

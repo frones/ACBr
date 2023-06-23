@@ -280,7 +280,7 @@ begin
 
         with Response do
         begin
-          if ModoEnvio <> meLoteAssincrono then
+          if ModoEnvio = meLoteAssincrono then
           begin
             NumeroNota := aNumeroNota;
             CodigoVerificacao := aCodigoVerificacao;

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/06/2023
+-- Giap.Provider --
+[*] Correção na condição para checar se o modo de envio é assincrono.
+  Por: Italo Giurizzato Junior
 -- ISSNet.Provider --
 [*] Alteração visando o correto envio do código do município ao cancelar uma nota.
   Por: Fabio Luiz Binhara/Italo Giurizzato Junior

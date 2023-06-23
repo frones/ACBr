@@ -393,7 +393,8 @@ var
   Emitente: TEmitenteConfNFSe;
   Nota: TNotaFiscal;
   IdAttr, NameSpace, ListaRps, xRps,
-  TagEnvio, xCabecalho, xDataI, xDataF, xTotServicos, xTotDeducoes: string;
+  TagEnvio, xCabecalho, xDataI, xDataF, xTotServicos, xTotDeducoes,
+  xCNPJCPF, xDoc: string;
   I: Integer;
   DataInicial, DataFinal: TDateTime;
   vTotServicos, vTotDeducoes: Double;
@@ -484,6 +485,13 @@ begin
 
   ListaRps := ChangeLineBreak(ListaRps, '');
 
+  xDoc := OnlyNumber(Emitente.CNPJ);
+
+  if Length(xDoc) = 14 then
+    xCNPJCPF := '<CNPJ>' + xDoc + '</CNPJ>'
+  else
+    xCNPJCPF := '<CPF>' + xDoc + '</CPF>';
+
   case Response.ModoEnvio of
     meUnitario:
       begin
@@ -491,7 +499,7 @@ begin
 
         xCabecalho := '<Cabecalho xmlns="" Versao="1">' +
                         '<CPFCNPJRemetente>' +
-                          '<CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</CNPJ>' +
+                          xCNPJCPF +
                         '</CPFCNPJRemetente>' +
                       '</Cabecalho>';
 
@@ -531,7 +539,7 @@ begin
 
       xCabecalho := '<Cabecalho xmlns="" Versao="1">' +
                       '<CPFCNPJRemetente>' +
-                        '<CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</CNPJ>' +
+                        xCNPJCPF +
                       '</CPFCNPJRemetente>' +
                       '<transacao>' +
                         LowerCase(BoolToStr(TACBrNFSeX(FAOwner).NotasFiscais.Transacao, True)) +
@@ -673,7 +681,7 @@ procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaSituacao(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace: string;
+  NameSpace, xCNPJCPF, xDoc: string;
 begin
   if EstaVazio(Response.NumeroLote) then
   begin
@@ -690,10 +698,17 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarSituacao.xmlns + '"';
 
+  xDoc := OnlyNumber(Emitente.CNPJ);
+
+  if Length(xDoc) = 14 then
+    xCNPJCPF := '<CNPJ>' + xDoc + '</CNPJ>'
+  else
+    xCNPJCPF := '<CPF>' + xDoc + '</CPF>';
+
   Response.ArquivoEnvio := '<PedidoInformacoesLote' + NameSpace + '>' +
                              '<Cabecalho xmlns="" Versao="1">' +
                                '<CPFCNPJRemetente>' +
-                                 '<CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</CNPJ>' +
+                                 xCNPJCPF +
                                '</CPFCNPJRemetente>' +
                                '<NumeroLote>' + Response.NumeroLote + '</NumeroLote>' +
                                '<InscricaoPrestador>' +
@@ -787,7 +802,7 @@ procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaLoteRps(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace: string;
+  NameSpace, xCNPJCPF, xDoc: string;
 begin
   if EstaVazio(Response.NumeroLote) then
   begin
@@ -804,10 +819,17 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarLote.xmlns + '"';
 
+  xDoc := OnlyNumber(Emitente.CNPJ);
+
+  if Length(xDoc) = 14 then
+    xCNPJCPF := '<CNPJ>' + xDoc + '</CNPJ>'
+  else
+    xCNPJCPF := '<CPF>' + xDoc + '</CPF>';
+
   Response.ArquivoEnvio := '<PedidoConsultaLote' + NameSpace + '>' +
                              '<Cabecalho xmlns="" Versao="1">' +
                                '<CPFCNPJRemetente>' +
-                                 '<CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</CNPJ>' +
+                                 xCNPJCPF +
                                '</CPFCNPJRemetente>' +
                                '<NumeroLote>' + Response.NumeroLote + '</NumeroLote>' +
                              '</Cabecalho>' +
@@ -899,7 +921,7 @@ procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaNFSeporRps(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace: string;
+  NameSpace, xCNPJCPF, xDoc: string;
 begin
   if EstaVazio(Response.NumeroRps) then
   begin
@@ -924,10 +946,17 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSeRps.xmlns + '"';
 
+  xDoc := OnlyNumber(Emitente.CNPJ);
+
+  if Length(xDoc) = 14 then
+    xCNPJCPF := '<CNPJ>' + xDoc + '</CNPJ>'
+  else
+    xCNPJCPF := '<CPF>' + xDoc + '</CPF>';
+
   Response.ArquivoEnvio := '<PedidoConsultaNFe' + NameSpace + '>' +
                              '<Cabecalho xmlns="" Versao="1">' +
                                '<CPFCNPJRemetente>' +
-                                 '<CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</CNPJ>' +
+                                 xCNPJCPF +
                                '</CPFCNPJRemetente>' +
                              '</Cabecalho>' +
                              '<Detalhe xmlns="">' +
@@ -947,7 +976,7 @@ procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaNFSeServicoTomado(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace: string;
+  NameSpace, xCNPJCPF, xDoc, xCNPJCPFTomador, xDocTomador: string;
 begin
   if EstaVazio(Response.InfConsultaNFSe.CNPJTomador) then
   begin
@@ -982,15 +1011,27 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSe.xmlns + '"';
 
-  Response.ArquivoEnvio := '<PedidoConsultaNFePeriodo' + NameSpace + '>' +
+  xDoc := OnlyNumber(Emitente.CNPJ);
+
+  if Length(xDoc) = 14 then
+    xCNPJCPF := '<CNPJ>' + xDoc + '</CNPJ>'
+  else
+    xCNPJCPF := '<CPF>' + xDoc + '</CPF>';
+
+  xDocTomador := OnlyNumber(Response.InfConsultaNFSe.CNPJTomador);
+
+  if Length(xDocTomador) = 14 then
+    xCNPJCPFTomador := '<CNPJ>' + xDocTomador + '</CNPJ>'
+  else
+    xCNPJCPFTomador := '<CPF>' + xDocTomador + '</CPF>';
+
+ Response.ArquivoEnvio := '<PedidoConsultaNFePeriodo' + NameSpace + '>' +
                               '<Cabecalho xmlns="" Versao="1">' +
                                 '<CPFCNPJRemetente>' +
-                                  '<CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</CNPJ>' +
+                                  xCNPJCPF +
                                 '</CPFCNPJRemetente>' +
                                 '<CPFCNPJ>' +
-                                  '<CNPJ>' +
-                                    Response.InfConsultaNFSe.CNPJTomador +
-                                  '</CNPJ>' +
+                                  xCNPJCPFTomador +
                                 '</CPFCNPJ>' +
                                 '<dtInicio>' +
                                   FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataInicial) +
@@ -1092,7 +1133,7 @@ procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace: string;
+  NameSpace, xCNPJCPF, xDoc: string;
 begin
 
   case Response.InfConsultaNFSe.tpConsulta of
@@ -1120,10 +1161,17 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSe.xmlns + '"';
 
+  xDoc := OnlyNumber(Emitente.CNPJ);
+
+  if Length(xDoc) = 14 then
+    xCNPJCPF := '<CNPJ>' + xDoc + '</CNPJ>'
+  else
+    xCNPJCPF := '<CPF>' + xDoc + '</CPF>';
+
   Response.ArquivoEnvio := '<PedidoConsultaNFe' + NameSpace + '>' +
                              '<Cabecalho xmlns="" Versao="1">' +
                                '<CPFCNPJRemetente>' +
-                                 '<CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</CNPJ>' +
+                                 xCNPJCPF +
                                '</CPFCNPJRemetente>' +
                              '</Cabecalho>' +
                              '<Detalhe xmlns="">' +
@@ -1224,7 +1272,7 @@ procedure TACBrNFSeProviderISSSaoPaulo.PrepararCancelaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace, sAssinatura, InscMun, NumeroNFSe: string;
+  NameSpace, sAssinatura, InscMun, NumeroNFSe, xCNPJCPF, xDoc: string;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -1261,10 +1309,17 @@ begin
   sAssinatura := string(TACBrNFSeX(FAOwner).SSL.CalcHash(AnsiString(sAssinatura),
                                                     dgstSHA1, outBase64, True));
 
+  xDoc := OnlyNumber(Emitente.CNPJ);
+
+  if Length(xDoc) = 14 then
+    xCNPJCPF := '<CNPJ>' + xDoc + '</CNPJ>'
+  else
+    xCNPJCPF := '<CPF>' + xDoc + '</CPF>';
+
   Response.ArquivoEnvio := '<PedidoCancelamentoNFe' + NameSpace + '>' +
                              '<Cabecalho xmlns="" Versao="1">' +
                                '<CPFCNPJRemetente>' +
-                                 '<CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</CNPJ>' +
+                                 xCNPJCPF +
                                '</CPFCNPJRemetente>' +
                                '<transacao>false</transacao>' +
                              '</Cabecalho>' +

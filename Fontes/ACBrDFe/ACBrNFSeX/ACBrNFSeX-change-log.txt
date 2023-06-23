@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/06/2023
+-- ISSSaoPaulo.Provider --
+[*] Em diversos métodos é possível informar o CPF ou CNPJ do Remetente, só estava
+    previsto o envio do CNPJ, alteração realizada para contemplar ambos documentos.
+  Por: Italo Giurizzato Junior
 -- NFSeBrasil.Provider --
 [*] Possível solução para a leitura correta do XML retornado pelo webservice.
   Por: Italo Giurizzato Junior

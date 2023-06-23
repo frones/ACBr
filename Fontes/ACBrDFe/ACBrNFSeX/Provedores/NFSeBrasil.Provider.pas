@@ -215,6 +215,7 @@ begin
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+  Result := StringReplace(Result, ']]', '', [rfReplaceAll]);
   Result := NativeStringToUTF8(Result);
 end;
 

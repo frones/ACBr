@@ -1,6 +1,7 @@
 package ACBr_Boleto;
 
 {$R *.res}
+{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -112,5 +113,8 @@ contains
   ACBrBoletoW_Bancoob in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Bancoob.pas',
   ACBrBancoPefisa in '..\..\..\Fontes\ACBrBoleto\ACBrBancoPefisa.pas',
   ACBrBancoFibra in '..\..\..\Fontes\ACBrBoleto\ACBrBancoFibra.pas',
-  ACBrBancoSofisaItau in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSofisaItau.pas';
+  ACBrBancoSofisaItau in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSofisaItau.pas',
+  ACBrBoletoRet_Santander_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Santander_API.pas',
+  ACBrBoletoW_Santander_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Santander_API.pas';
+
 end.

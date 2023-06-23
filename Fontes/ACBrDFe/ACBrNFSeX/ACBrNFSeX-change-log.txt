@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/06/2023
+-- IPM.LerXml --
+[*] Correção na leitura do XML, não estava lendo a tag do Valor ISS Retido.
+  Por: Magno Costa
 -- ACBrNFSeXDANFSeRL --
 [*] Remoção de units não necessárias.
   Por: Italo Giurizzato Junior

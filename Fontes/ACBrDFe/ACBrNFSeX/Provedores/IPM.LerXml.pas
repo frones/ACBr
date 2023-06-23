@@ -127,6 +127,7 @@ begin
       Valores.ValorIssRetido := 0;
       Valores.BaseCalculo := 0;
       Valores.ValorIss := 0;
+      Valores.ValorInss := 0;
 
       ANodes := AuxNode.Childrens.FindAllAnyNs('lista');
 
@@ -165,8 +166,12 @@ begin
 
           Valores.ValorIssRetido := Valores.ValorIssRetido +
               ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_issrf'), tcDe2);
+
           Valores.BaseCalculo := Valores.BaseCalculo + BaseCalculo;
           Valores.ValorIss := Valores.ValorIss + ValorISS;
+
+          Valores.ValorInss := Valores.ValorInss +
+              ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_inss'), tcDe2);
         end;
       end;
     end;
@@ -396,10 +401,10 @@ begin
     AuxNode := ANode;
 
   LerRps(AuxNode);
+  LerItens(AuxNode);
   LerNota(AuxNode);
   LerPrestador(AuxNode);
   LerTomador(AuxNode);
-  LerItens(AuxNode);
   LerFormaPagamento(AuxNode);
 end;
 

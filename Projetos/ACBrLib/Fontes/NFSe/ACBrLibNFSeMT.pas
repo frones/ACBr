@@ -436,7 +436,7 @@ function NFSE_SubstituirNFSe(const libHandle: PLibHandle; const aNumeroNFSe, aSe
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibNFSe(libHandle^.Lib).SubstituirNFSe(aNumeroLote, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoCancelamento, sResposta, esTamanho);
+    Result := TACBrLibNFSe(libHandle^.Lib).SubstituirNFSe(aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;
@@ -556,7 +556,7 @@ function NFSE_ConsultarNFSeporPeriodo(const libHandle: PLibHandle; aDataInicial,
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSePorPeriodo(aDataFinal, aDataFinal, aPagina, aNumeroLote, aTipoPeriodo, sResposta, esTamanho);
+    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSePorPeriodo(aDataInicial, aDataFinal, aPagina, aNumeroLote, aTipoPeriodo, sResposta, esTamanho);
   except
       on E: EACBrLibException do
        Result := E.Erro;
@@ -571,7 +571,7 @@ function NFSE_ConsultarNFSePorFaixa(const libHandle: PLibHandle; const aNumeroIn
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSePorFaixa(aNumeroFinal, aNumeroFinal, aPagina, sResposta, esTamanho);
+    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSePorFaixa(aNumeroInicial, aNumeroFinal, aPagina, sResposta, esTamanho);
   except
       on E: EACBrLibException do
        Result := E.Erro;
@@ -706,7 +706,7 @@ function NFSE_ConsultarNFSeServicoTomadoPorNumero(const libHandle: PLibHandle; c
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSeServicoTomadoPorNumero(aNumero, aPagina, aDataFinal, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSeServicoTomadoPorNumero(aNumero, aPagina, aDataInicial, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
   except
       on E: EACBrLibException do
        Result := E.Erro;
@@ -721,7 +721,7 @@ function NFSE_ConsultarNFSeServicoTomadoPorPrestador(const libHandle: PLibHandle
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSeServicoTomadoPorPrestador(aCNPJ, aInscMun, aPagina, aDataFinal, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSeServicoTomadoPorPrestador(aCNPJ, aInscMun, aPagina, aDataInicial, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
   except
       on E: EACBrLibException do
        Result := E.Erro;
@@ -766,7 +766,7 @@ function NFSE_ConsultarNFSeServicoTomadoPorIntermediario(const libHandle: PLibHa
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSeServicoTomadoPorIntermediario(aCNPJ, aInscMun, aPagina, aDataFinal, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
+    Result := TACBrLibNFSe(libHandle^.Lib).ConsultarNFSeServicoTomadoPorIntermediario(aCNPJ, aInscMun, aPagina, aDataInicial, aDataFinal, aTipoPeriodo, sResposta, esTamanho);
   except
       on E: EACBrLibException do
        Result := E.Erro;

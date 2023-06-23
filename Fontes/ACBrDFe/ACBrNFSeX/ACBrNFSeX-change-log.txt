@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/06/2023
+-- ACBrNFSeXDANFSeRL --
+[*] Remoção de units não necessárias.
+  Por: Italo Giurizzato Junior
 -- Giap.Provider --
 [*] Correção na condição para checar se o modo de envio é assincrono.
   Por: Italo Giurizzato Junior

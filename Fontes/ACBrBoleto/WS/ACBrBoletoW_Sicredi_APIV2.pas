@@ -311,10 +311,12 @@ begin
         Consulta.Delimiter := '&';
         Consulta.Add(Format('codigoBeneficiario=%s',[Boleto.Cedente.CodigoCedente]));
         Consulta.Add(Format('dia=%s', [FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'DD/MM/YYYY')]));
+        {
         if Documento <> '' then
           Consulta.Add(Format('cpfCnpjBeneficiarioFinal=%s',[Documento]));
         if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
           Consulta.Add(Format('pagina=%s',[FloatToStr(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)]));
+        }
       finally
         Result := Consulta.DelimitedText;
         Consulta.Free;

@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+23/06/2023
+[+]TK-3830 ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API - Implementação inicial do SANTANDER API
+   https://www.projetoacbr.com.br/forum/topic/71682-boleto-api-santander/#comment-471085
+   por : Jéter Rabelo Ferreira, Warquia 
 22/06/2023
 [-]TK-4040 ACBrBoletoW_Itau "percentual_multa" deve ser alimentado com 7 dígitos inteiros e 5 casas decimais, ou seja, para representar 2% deve ser: 000000200000.
    por : ARConsultoria, Validado: Daniel Morais

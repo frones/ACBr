@@ -46,9 +46,13 @@ Símbolo : Significado
 
 
 23/06/2023
+-- ACBrCTeWebServices --
+[*] Ajustes para funcionar com a SEFAZ-MG, pois ela esta usando NameSpace e
+    SoapAction diferente das demais.
+  Por: Jeanny Paiva Lopes
 -- pcteEnvEventoCTe --
 [*] A tag xJustMotivo estava como obrigatória, sendo que é opcional.
-  Por: Jeanny Paiva
+  Por: Jeanny Paiva Lopes
 
 21/06/2023
 -- ACBrCTe/pcteCTeW --

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/06/2023
+-- Infisc.Provider/Agili.Provider --
+[*] Trocado a chamada ConsultarNFSe por ConsultarNFSeporFaixa.
+  Por: Italo Giurizzato Junior
 -- ISSSaoPaulo.Provider --
 [*] Em diversos métodos é possível informar o CPF ou CNPJ do Remetente, só estava
     previsto o envio do CNPJ, alteração realizada para contemplar ambos documentos.

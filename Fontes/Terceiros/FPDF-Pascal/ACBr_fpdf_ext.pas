@@ -1352,7 +1352,7 @@ begin
   p1 := PosEx('<', AHtml, OffSet);
   if (p1 > 0) then
   begin
-     p2 := Pos('>', AHtml, p1);
+     p2 := PosEx('>', AHtml, p1);
      if (p2 > 0) then
        ATag := copy(AHtml, p1+1, p2-p1-1) ;
   end;
@@ -1377,7 +1377,7 @@ begin
     if (p1 > 0) then
     begin
       Inc(p1, 6);
-      p2 := Pos('"', ATag+'"', p1+1);
+      p2 := PosEx('"', ATag+'"', p1+1);
       Self.fHREF := copy(ATag, p1, p2-p1);
     end;
   end;

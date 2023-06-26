@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/06/2023
+-- ACBrCTeServicos --
+[+] Incluídas as URLs de Produção (versão 4.00) UF: SVSP
+    Observação: SVSP atende as UF: AP, PE, RR e SP
+  Por: BigWings
+
 23/06/2023
 -- ACBrCTeWebServices --
 [*] Ajustes para funcionar com a SEFAZ-MG, pois ela esta usando NameSpace e

@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2023
+-- pcesS5002 --
+[*] Corrige leitura do registro S5002 do layout do eSocial a partir do XML.
+  Por: Hudson G Leite / Rev.: Alexandre de Paula e Elton Barbosa
+
 15/06/2023
 -- pcesS5012 --
 [*] Corrige leitura da versão do layout do eSocial a partir do XML.

@@ -780,7 +780,7 @@ begin
           end;
 
           j := 0;
-          while Leitor.rExtrai(3, 'totApurMen', '', j + 1) <> '' do
+          while Leitor.rExtrai(2, 'totApurMen', '', j + 1) <> '' do
           begin
             IdeTrabalhador.DmDev.Items[i].totApurMen.New;
             IdeTrabalhador.DmDev.Items[i].totApurMen.Items[j].FCRMen        := leitor.rCampo(tcStr, 'CRMen');
@@ -791,7 +791,7 @@ begin
           end;
 
           j := 0;
-          while Leitor.rExtrai(3, 'totApurDia', '', j + 1) <> '' do
+          while Leitor.rExtrai(2, 'totApurDia', '', j + 1) <> '' do
           begin
             IdeTrabalhador.DmDev.Items[i].totApurDia.New;
             IdeTrabalhador.DmDev.Items[i].totApurDia.Items[j].FperApurDia   := leitor.rCampo(tcInt, 'perApurDia');

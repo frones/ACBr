@@ -203,6 +203,8 @@ type
     lblSubTituloFPDF: TLabel;
     lblFPDF_BoletoDPK: TLabel;
     ACBr_BoletoFPDF_dpk: TCheckBox;
+    ACBr_DebitoAutomatico_dpk: TCheckBox;
+    Label30: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

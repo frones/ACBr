@@ -215,7 +215,7 @@ type
     Label65: TLabel;
     edtPathRetorno: TEdit;
     Label66: TLabel;
-    flpndlgRetorno: TOpenDialog;
+    dlgFile: TOpenDialog;
     btnRetorno: TButton;
     edtClientID: TEdit;
     Label67: TLabel;
@@ -312,7 +312,7 @@ type
     procedure CarregarTipoDocumento;
     procedure CarregarSSLLib;
     procedure GravarIniComponente;
-    procedure LerIniComponente;
+    procedure LerIniComponente(const ADialog : Boolean = False);
     procedure AplicarConfiguracoesAoComponente;
     procedure AplicarConfiguracoesComponenteATela;
     procedure AplicarConfiguracoesEmailNaTela(IniConfig: TMemIniFile);
@@ -325,6 +325,8 @@ var
   frmDemoBoleto: TfrmDemoBoleto;
 
   CONST MOTOR_NAO_SELECIONADO = 'MOTOR DE RELATÓRIO NÃO FOI SELECIONADO, VERIFIQUE!!!';
+  CONST FILTER_RETORNO        = '*.txt|*.txt|*.ret|*.ret|*.*|*.*';
+  CONST FILTER_INI            = '*.ini|*.ini|*.*|*.*';
 
 implementation
 
@@ -367,11 +369,20 @@ begin
   OpenURL('https://www.projetoacbr.com.br/forum/topic/56101-configura%C3%A7%C3%B5es-do-acbrmail-para-os-principais-servi%C3%A7os-de-emails-do-mercado/');
 end;
 
-procedure TfrmDemoBoleto.LerIniComponente;
+procedure TfrmDemoBoleto.LerIniComponente(const ADialog : Boolean);
 var xArquivo : String;
   IniFile: TMemIniFile;
 begin
-  xArquivo := ExtractFilePath(ParamStr(0)) + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
+  if ADialog then
+  begin
+    dlgFile.Filter := FILTER_INI;
+    if dlgFile.Execute then
+      xArquivo := dlgFile.FileName
+    else
+      raise Exception.Create('É NECESSÁRIO SELECIONAR O ARQUIVO DE CONFIGURAÇÕES');
+  end else
+    xArquivo := ExtractFilePath(ParamStr(0)) + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
+
   if (FileExists(xArquivo)) then
     FACBrBoleto.LerConfiguracao(xArquivo);
 
@@ -475,7 +486,8 @@ begin
 
   AplicarConfiguracoesComponenteEmail;
 
-  FACBrBoleto.ACBrBoletoFC.DirLogo := edtPathLogoMarca.Text;
+  if Assigned(FACBrBoleto.ACBrBoletoFC) then
+    FACBrBoleto.ACBrBoletoFC.DirLogo := edtPathLogoMarca.Text;
 
   {$IFDEF GERADOR_FAST_REPORT}
     FACBrBoletoFCFR.FastReportFile := edtPathFR3.Text;
@@ -806,7 +818,7 @@ begin
   CarregarTipoCarteira;
   CarregarTipoDocumento;
   CarregarSSLLib;
-  btnConfigLer.Click;
+  LerIniComponente;
   AplicarConfiguracoesComponenteATela;
   edtPathRemessa.Text := ExtractFilePath(ParamStr(0))+'Remessa';
   edtPathRetorno.Text := ExtractFilePath(ParamStr(0))+'Retorno';
@@ -1101,7 +1113,7 @@ end;
 
 procedure TfrmDemoBoleto.btnConfigLerClick(Sender: TObject);
 begin
-  LerIniComponente;
+  LerIniComponente(True);
   AplicarConfiguracoesComponenteATela;
 end;
 
@@ -1171,8 +1183,8 @@ end;
 
 procedure TfrmDemoBoleto.btnRetornoClick(Sender: TObject);
 begin
-  if flpndlgRetorno.Execute then
-    edtPathRetorno.Text := flpndlgRetorno.FileName;
+  if dlgFile.Execute then
+    edtPathRetorno.Text := dlgFile.FileName;
 end;
 
 procedure TfrmDemoBoleto.cbxMotorRelatorioChange(Sender: TObject);

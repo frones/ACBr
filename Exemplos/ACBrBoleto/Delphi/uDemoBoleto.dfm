@@ -796,7 +796,6 @@ object frmDemoBoleto: TfrmDemoBoleto
             Width = 135
             Height = 21
             TabOrder = 3
-            Text = 'ABC123'
           end
         end
         object TabSheet7: TTabSheet
@@ -1697,7 +1696,7 @@ object frmDemoBoleto: TfrmDemoBoleto
       OnClick = btnConfigGravarClick
     end
   end
-  object flpndlgRetorno: TOpenDialog
+  object dlgFile: TOpenDialog
     Filter = '*.txt|*.txt|*.ret|*.ret|*.*|*.*'
     Options = []
     Left = 711

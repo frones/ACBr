@@ -544,7 +544,7 @@ begin
     FPDF.Cell(LReducaoCanhoto + (LReducaoCanhoto / 2), LAlturaPadraoBaixo, '', '', 0, 'L');
 
 
-  FPDF.CodeI25(FCodigoBarras, FPDF.GetX, FPDF.GetY, 15, StrToFloat(IfThen(ACanhoto,'0,8','1')));
+  FPDF.CodeI25(FCodigoBarras, FPDF.GetX, FPDF.GetY, 15, StrToFloat(IfThen(ACanhoto,IfThen(ABobina,'1,1','0,8'),'1')));
 
   if (Trim(SoftwareHouse) <> '') then
     ModeloEstruturaSoftwareHouse;

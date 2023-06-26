@@ -2,13 +2,13 @@ object dmACbrBoletoFCLazReport: TdmACbrBoletoFCLazReport
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
-  left = 373
-  top = 183
-  Height = 217
-  HorizontalOffset = 517
-  VerticalOffset = 298
-  Width = 264
-  PPI = 96
+  Left = 373
+  Top = 183
+  Height = 271
+  HorizontalOffset = 646
+  VerticalOffset = 373
+  Width = 330
+  PPI = 120
   object frReport1: TfrReport
     Dataset = frUserDataset1
     InitialZoom = pzDefault
@@ -19,35 +19,35 @@ object dmACbrBoletoFCLazReport: TdmACbrBoletoFCLazReport
     Title = 'Boleto'
     OnGetValue = frReport1GetValue
     OnEnterRect = frReport1EnterRect
-    left = 32
-    top = 32
+    Left = 40
+    Top = 40
   end
   object frUserDataset1: TfrUserDataset
     OnCheckEOF = frUserDataset1CheckEOF
     OnFirst = frUserDataset1First
     OnNext = frUserDataset1Next
-    left = 104
-    top = 32
+    Left = 130
+    Top = 40
   end
   object frBarCodeObject1: TfrBarCodeObject
-    left = 32
-    top = 96
+    Left = 40
+    Top = 120
   end
   object frShapeObject1: TfrShapeObject
-    left = 104
-    top = 96
+    Left = 130
+    Top = 120
   end
   object PrintDialog1: TPrintDialog
     OnShow = frUserDataset1First
-    left = 184
-    top = 32
+    Left = 230
+    Top = 40
   end
   object frTNPDFExport1: TfrTNPDFExport
-    left = 64
-    top = 160
+    Left = 80
+    Top = 200
   end
   object frHTMExport1: TfrHTMExport
-    left = 152
-    top = 160
+    Left = 190
+    Top = 200
   end
 end

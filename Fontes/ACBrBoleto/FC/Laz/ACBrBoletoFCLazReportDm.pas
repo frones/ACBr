@@ -53,42 +53,43 @@ type
 
   TACBrBoletoFCLazReport = class(TACBrBoletoFCClass)
   private
-    { Private declarations }
-  public
-    { Public declarations }
-    constructor Create(AOwner: TComponent); override;
+    FLazReportFile: String;
 
+  public
+    constructor Create(AOwner: TComponent); override;
     procedure Imprimir; override;
+
   published
+    property LazReportFile: String read FLazReportFile write FLazReportFile;
   end;
 
   TdmACbrBoletoFCLazReport = class(TDataModule)
     frBarCodeObject1: TfrBarCodeObject;
-    frHTMExport1 : TfrHTMExport ;
-    frReport1: TfrReport;
-    frShapeObject1: TfrShapeObject;
-    frTNPDFExport1: TfrTNPDFExport;
-    frUserDataset1: TfrUserDataset;
-    PrintDialog1: TPrintDialog;
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
-    procedure frReport1GetValue(const ParName: string;
-      var ParValue: variant);
-    procedure frReport1EnterRect(Memo: TStringList; View: TfrView);{%h-}
+    frHTMExport1    : TfrHTMExport ;
+    frReport1       : TfrReport;
+    frShapeObject1  : TfrShapeObject;
+    frTNPDFExport1  : TfrTNPDFExport;
+    frUserDataset1  : TfrUserDataset;
+    PrintDialog1    : TPrintDialog;
+
+    procedure DataModuleCreate      (Sender: TObject);
+    procedure DataModuleDestroy     (Sender: TObject);
+    procedure frReport1GetValue     (const ParName: string; var ParValue: variant);
+    procedure frReport1EnterRect    (Memo  : TStringList; View: TfrView);{%h-}
     procedure frUserDataset1CheckEOF(Sender: TObject; var EOF: boolean);
-    procedure frUserDataset1First(Sender: TObject);
-    procedure frUserDataset1Next(Sender: TObject);
+    procedure frUserDataset1First   (Sender: TObject);
+    procedure frUserDataset1Next    (Sender: TObject);
+
   private
     MensagemPadrao: TStringList;
-    fBoletoFC: TACBrBoletoFCLazReport;
-    fIndice: Integer;
+    fBoletoFC     : TACBrBoletoFCLazReport;
+    fIndice       : Integer;
+
     function GetACBrTitulo: TACBrTitulo;
-    { private declarations }
   public
-    { public declarations }
-    property Indice   : Integer read fIndice;
-    property BoletoFC : TACBrBoletoFCLazReport read fBoletoFC;
-    property Titulo   : TACBrTitulo read GetACBrTitulo;
+    property Indice       : Integer                read fIndice;
+    property BoletoFC     : TACBrBoletoFCLazReport read fBoletoFC;
+    property Titulo       : TACBrTitulo            read GetACBrTitulo;
   end;
 
 procedure Register;
@@ -109,6 +110,7 @@ end;
 constructor TACBrBoletoFCLazReport.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  FLazReportFile := '';
 end;
 
 procedure TACBrBoletoFCLazReport.Imprimir;
@@ -132,16 +134,22 @@ begin
            RelBoleto := 'FCLazReport_Padrao';
         end;
 
+        if FLazReportFile = '' then
+          Dir := ExtractFilePath(Application.ExeName) + RelBoleto + '.lrf'
+        else
+          Dir := FLazReportFile;
+
         // Verificando se o Relatório existe no disco //
-        Dir := ExtractFilePath(Application.ExeName) ;
-        if FileExists( Dir + RelBoleto + '.lrf' ) then
-           frReport1.LoadFromFile( Dir + RelBoleto + '.lrf' )
+        if FileExists(Dir) then
+        begin
+           frReport1.LoadFromFile(Dir )
+        end
         else
          begin
            // Lendo Relatório de Resource Interno //
            Res := LazarusResources.Find(RelBoleto,'LRF');  // Le de ACBrBoletoFCLazReport.lrs
            if Res = nil then
-              raise Exception.Create('Resource: '+RelBoleto+' não encontrado');
+              raise Exception.Create(Format('Resource: %s não encontrado',[RelBoleto]));
 
            MS := TMemoryStream.Create ;
            try

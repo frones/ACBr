@@ -3,7 +3,7 @@ object frmPrincipal: TfrmPrincipal
   Top = 74
   BorderStyle = bsDialog
   Caption = 'Emulador de balan'#231'a (Filizola / Toledo)'
-  ClientHeight = 266
+  ClientHeight = 305
   ClientWidth = 459
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -48,7 +48,6 @@ object frmPrincipal: TfrmPrincipal
       Width = 135
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
       TabOrder = 0
       Items.Strings = (
         'COM1'
@@ -67,20 +66,27 @@ object frmPrincipal: TfrmPrincipal
     Left = 0
     Top = 78
     Width = 459
-    Height = 74
+    Height = 115
     Align = alTop
     Caption = ' Controle de peso atual '
     TabOrder = 1
     object Label2: TLabel
       Left = 12
-      Top = 23
+      Top = 63
       Width = 65
       Height = 13
       Caption = 'Peso a enviar'
     end
+    object Label3: TLabel
+      Left = 13
+      Top = 20
+      Width = 215
+      Height = 13
+      Caption = 'Intervalo para envio de Peso (Milissegundos)'
+    end
     object btnPesoGerar: TButton
       Left = 159
-      Top = 37
+      Top = 77
       Width = 138
       Height = 25
       Caption = 'Gerar peso'
@@ -89,7 +95,7 @@ object frmPrincipal: TfrmPrincipal
     end
     object btnPesoEnviar: TButton
       Left = 303
-      Top = 37
+      Top = 77
       Width = 138
       Height = 25
       Caption = 'Enviar peso'
@@ -98,19 +104,37 @@ object frmPrincipal: TfrmPrincipal
     end
     object edtPesoAtual: TEdit
       Left = 12
-      Top = 39
+      Top = 79
       Width = 141
       Height = 21
       Enabled = False
       TabOrder = 2
       Text = '1,000'
     end
+    object btnGerarPeso: TButton
+      Left = 160
+      Top = 34
+      Width = 137
+      Height = 25
+      Caption = 'Ligar Gerador de Peso'
+      TabOrder = 3
+      OnClick = btnGerarPesoClick
+    end
+    object edtIntervaloEnvioPeso: TEdit
+      Left = 13
+      Top = 36
+      Width = 141
+      Height = 21
+      TabOrder = 4
+      Text = '4000'
+      OnKeyPress = edtIntervaloEnvioPesoKeyPress
+    end
   end
   object gbxSimulacoes: TGroupBox
     Left = 0
-    Top = 152
+    Top = 193
     Width = 459
-    Height = 114
+    Height = 112
     Align = alClient
     Caption = ' Simula'#231#245'es '
     TabOrder = 2
@@ -156,5 +180,12 @@ object frmPrincipal: TfrmPrincipal
       TabOrder = 2
       OnClick = btnSimularPesoNegativoClick
     end
+  end
+  object TimerEnviarPesoAutomaticamente: TTimer
+    Enabled = False
+    Interval = 3000
+    OnTimer = TimerEnviarPesoAutomaticamenteTimer
+    Left = 320
+    Top = 62
   end
 end

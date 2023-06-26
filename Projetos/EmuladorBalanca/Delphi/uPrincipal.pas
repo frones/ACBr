@@ -55,6 +55,10 @@ type
     edtPesoAtual: TEdit;
     LblCmdFormatado: TLabel;
     edtCmdFormatado: TEdit;
+    TimerEnviarPesoAutomaticamente: TTimer;
+    btnGerarPeso: TButton;
+    edtIntervaloEnvioPeso: TEdit;
+    Label3: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ckbMonitorarPortaClick(Sender: TObject);
@@ -64,6 +68,9 @@ type
     procedure btnSimularPesoInstavelClick(Sender: TObject);
     procedure btnSimularPesoNegativoClick(Sender: TObject);
     procedure edtCmdFormatadoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnGerarPesoClick(Sender: TObject);
+    procedure TimerEnviarPesoAutomaticamenteTimer(Sender: TObject);
+    procedure edtIntervaloEnvioPesoKeyPress(Sender: TObject; var Key: Char);
   private
     FTimer: TTimer;
     FDevice: TBlockSerial;
@@ -75,6 +82,7 @@ type
     procedure GravarIni(AChave, AValor: String);
     function LerIni(AChave: string): String;
     function ArquivoIni: TFileName;
+    function SoNumeros(Key: Char; texto: string; EhDecimal: Boolean = false): Char;
   public
 
   end;
@@ -109,6 +117,26 @@ uses
 //  Métodos para trabalhar com arquivos de configuração .INI
 //
 //##############################################################################
+
+function TfrmPrincipal.SoNumeros(Key: Char; texto: string; EhDecimal: Boolean = false): Char;
+begin
+  if not EhDecimal then
+  begin
+    { Chr(8) = Back Space }
+    if not(Key in ['0' .. '9', Chr(8)]) then
+      Key := #0;
+  end
+  else
+  begin
+    if Key = #46 then
+      Key := DecimalSeparator;
+    if not(Key in ['0' .. '9', Chr(8), DecimalSeparator]) then
+      Key := #0
+    else if (Key = DecimalSeparator) and (Pos(Key, texto) > 0) then
+      Key := #0;
+  end;
+  Result := Key;
+end;
 
 function TfrmPrincipal.ArquivoIni: TFileName;
 var
@@ -236,6 +264,11 @@ begin
       MessageDlg('Ocorreu o seguinte erro: '+sLineBreak+ E.Message, mtError, [mbOK], 0);
     end;
   end;
+end;
+
+procedure TfrmPrincipal.TimerEnviarPesoAutomaticamenteTimer(Sender: TObject);
+begin
+  btnPesoGerarClick(sender);
 end;
 
 //##############################################################################
@@ -464,6 +497,21 @@ begin
   edtPesoAtual.Text := PESO_SOBRECARGA;
 end;
 
+procedure TfrmPrincipal.btnGerarPesoClick(Sender: TObject);
+begin
+  if TimerEnviarPesoAutomaticamente.Enabled = true then
+  begin
+    TimerEnviarPesoAutomaticamente.Enabled := false;
+    btnGerarPeso.Caption:='Ligar Gerador de Peso';
+  end
+  else
+  begin
+    TimerEnviarPesoAutomaticamente.Interval:=StrToInt(edtIntervaloEnvioPeso.Text);
+    TimerEnviarPesoAutomaticamente.Enabled := true;
+    btnGerarPeso.Caption:='Desligar Gerador de Peso';
+  end;
+end;
+
 procedure TfrmPrincipal.edtCmdFormatadoKeyDown(Sender: TObject;var Key: Word; Shift: TShiftState);
 begin
   if Key = VK_F1 then
@@ -486,6 +534,11 @@ begin
                 'Negativo.: EB,kg,B:- #PESO6 ,T:000000,L:- #PESO6' + #13 +
                 'Sobrepeso: EB,kg,B: 999999,T:000000,L: 999999' + #13
                 );
+end;
+
+procedure TfrmPrincipal.edtIntervaloEnvioPesoKeyPress(Sender: TObject; var Key: Char);
+begin
+  Key := SoNumeros(Key, edtIntervaloEnvioPeso.Text);
 end;
 
 end.

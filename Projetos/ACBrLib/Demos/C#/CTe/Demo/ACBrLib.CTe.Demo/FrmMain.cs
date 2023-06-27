@@ -1186,6 +1186,7 @@ namespace ACBrLib.CTe.Demo
             cte.ICMS.pICMS = 7;
             cte.ICMS.vICMS = 6;
             cte.ICMS.vCred = 0;
+            cte.ICMS.indSN = 1;
 
             cte.Rodoviario.RNTRC = "12345678";
 
@@ -1198,7 +1199,12 @@ namespace ACBrLib.CTe.Demo
             cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.tpMed = "Kg";
             cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.qCarga = 10;
 
-            cte.GrupoInformacoesNormalSubstituto.infDoc.infNFe.chave = "42210117089484000190550110000091001371413248";
+            cte.GrupoInformacoesNormalSubstituto.infModal.versaoModal = 1;
+
+            var chaveNFe = new InfNFeCTe();
+            chaveNFe.chave = "42210117089484000190550110000091001371413248";
+
+            cte.GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(chaveNFe);
 
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.nFat = "123";
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.vOrig = 100;

@@ -137,6 +137,13 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCTeSub, "infCTeSub");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infGlobalizado, "infGlobalizado");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infServVinc, "infServVinc");
+            
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.infDoc.infNFe.Count; i++)
+            {
+                var chaveNFe = GrupoInformacoesNormalSubstituto.infDoc.infNFe[i];
+                iniData.WriteToIni(chaveNFe, $"chave{i + 1:000}");
+            }
+
             iniData.WriteToIni(DetalhamentoComplementado, "infCteComp");
             iniData.WriteToIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.WriteToIni(InformacoesSuplementares, "infCTeSupl");
@@ -175,6 +182,19 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCTeSub, "infCTeSub");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infGlobalizado, "infGlobalizado");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infServVinc, "infServVinc");
+
+            var i = 0;
+            InfNFeCTe infNFe;
+            do
+            {
+                i++;
+                infNFe = iniData.ReadFromIni<InfNFeCTe>($"chave{i:000}");
+                if (infNFe != null) continue;
+
+                GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(infNFe);
+
+            } while (infNFe != null);
+
             iniData.ReadFromIni(DetalhamentoComplementado, "infCteComp");
             iniData.ReadFromIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.ReadFromIni(InformacoesSuplementares, "infCTeSupl");

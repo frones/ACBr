@@ -24886,12 +24886,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1121
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsEmailDFe
             Align = alClient
             Font.Height = -13
             Images = ImageList1
             ParentFont = False
-            TabIndex = 3
+            TabIndex = 2
             TabOrder = 0
             OnChange = pgDFeChange
             object tsCertificadoDFe: TTabSheet
@@ -27625,11 +27625,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 348
                 Top = 0
                 Width = 1113
-                ActivePage = tsEmailNFe
+                ActivePage = tsEmailNFSe
                 Align = alClient
                 Font.Height = -13
                 ParentFont = False
-                TabIndex = 0
+                TabIndex = 3
                 TabOrder = 0
                 object tsEmailNFe: TTabSheet
                   Caption = 'NF-e'

@@ -36,7 +36,8 @@ unit DoACBrNFSeUnit;
 interface
 
 uses
-  Classes, SysUtils, CmdUnit, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  Classes, SysUtils, CmdUnit,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math,
   ACBrMonitorConsts, ACBrMonitorConfig, DoACBrDFeUnit, ACBrNFSeX,
   ACBrNFSeXConversao, ACBrLibResposta, ACBrLibNFSeRespostas;
 
@@ -282,7 +283,7 @@ end;
 implementation
 
 uses
-  Forms, DoACBrUnit,
+  Forms, DoACBrUnit, strutils,
   ACBrNFSeXWebserviceBase;
 
 { TMetodoImprimirPDFNFSe }
@@ -304,9 +305,9 @@ begin
       ACBrNFSeX.NotasFiscais.ImprimirPDF;
 
       if ACBrNFSeX.NotasFiscais.Items[0].NomeArqRps <> '' then
-        fpCmd.Resposta := ACBrNFSeX.NotasFiscais.Items[0].NomeArqRps
+        fpCmd.Resposta := fpCmd.Resposta + ACBrNFSeX.NotasFiscais.Items[0].NomeArqRps
       else
-        fpCmd.Resposta :=  ACBrNFSeX.NotasFiscais.Items[0].NomeArq;
+        fpCmd.Resposta :=  fpCmd.Resposta + ACBrNFSeX.NotasFiscais.Items[0].NomeArq;
     finally
       CargaDFe.Free;
     end;
@@ -362,18 +363,14 @@ end;
           2 - Boolean 1 : Envia PDF
           3 - Assunto: String com Assunto do e-mail
           4 - Copia: String com e-mails copia (Separados ;)
-          5 - Anexo: String com Path de Anexos (Separados ;) }
+          5 - Anexo: String com Path de Anexos (Separados ;)
+          6 - Replay: String ReplayTo (Separados ;)
+}
 procedure TMetodoEnviarEmailNFSe.Executar;
 var
-
-  ADestinatario: String;
-  APathXML: String;
-  AEmailCopias: String;
-  AAnexos: String;
+  sAssunto, ADestinatario, APathXML, AEmailCopias, AAnexos, AAssunto, AReplay: string;
   AEnviaPDF: Boolean;
-  AAssunto: String;
-
-  slMensagemEmail, slCC, slAnexos: TStringList;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
   CargaDFe: TACBrCarregarNFSe;
 begin
   ADestinatario := fpCmd.Params(0);
@@ -382,28 +379,50 @@ begin
   AAssunto := fpCmd.Params(3);
   AEmailCopias := fpCmd.Params(4);
   AAnexos := fpCmd.Params(5);
+  AReplay := fpCmd.Params(6);
 
   with TACBrObjetoNFSe(fpObjetoDono) do
   begin
     ACBrNFSeX.NotasFiscais.Clear;
 
+    slMensagemEmail := TStringList.Create;
     slCC := TStringList.Create;
     slAnexos := TStringList.Create;
-    slMensagemEmail := TStringList.Create;
+    slReplay := TStringList.Create;
     try
       CargaDFe := TACBrCarregarNFSe.Create(ACBrNFSeX, APathXML);
       try
+        DoConfiguraDANFSe(True, '');
+
+        with MonitorConfig.DFE.Email do
+        begin
+          slMensagemEmail.Text := DoSubstituirVariaveis( StringToBinaryString(MensagemNFSe) );
+
+          sAssunto := AssuntoNFSe;
+        end;
 
         QuebrarLinha(AEmailCopias, slCC);
         QuebrarLinha(AAnexos, slAnexos);
+        QuebrarLinha(AReplay, slReplay);
 
         try
           ACBrNFSeX.NotasFiscais.Items[0].EnviarEmail(ADestinatario,
-            AAssunto,
+            DoSubstituirVariaveis( IfThen( NaoEstaVazio(AAssunto), AAssunto, sAssunto) ),
             slMensagemEmail,
             AEnviaPDF,
+            // Enviar PDF junto
             slCC,
-            slAnexos);
+            // Lista com emails que serão enviado cópias - TStrings
+            slAnexos,
+            // Lista de slAnexos - TStrings
+            slReplay);
+            // Lista de ReplayTo - TStrings
+
+          if not (MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
         except
           on E: Exception do
             raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
@@ -415,6 +434,7 @@ begin
       slCC.Free;
       slAnexos.Free;
       slMensagemEmail.Free;
+      slReplay.Free;
     end;
   end;
 end;
@@ -453,7 +473,7 @@ begin
     RespSubstituir := TSubstituirNFSeResposta.Create(TpResp, codUTF8);
       try
         RespSubstituir.Processar(ACBrNFSeX.WebService.SubstituiNFSe);
-        fpCmd.Resposta := sLineBreak + RespSubstituir.Gerar;
+        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespSubstituir.Gerar;
       finally
         RespSubstituir.Free;
       end;
@@ -489,7 +509,7 @@ begin
     RespLink := TLinkNFSeResposta.Create(TpResp, codUTF8);
     try
       RespLink.Processar(SLink);
-      fpCmd.Resposta := sLineBreak + RespLink.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespLink.Gerar;
     finally
       RespLink.Free;
     end;
@@ -519,7 +539,7 @@ begin
       RespCancelar := TCancelarNFSeResposta.Create(TpResp, codUTF8);
       try
         RespCancelar.Processar(ACBrNFSeX.WebService.CancelaNFSe);
-        fpCmd.Resposta := sLineBreak + RespCancelar.Gerar;
+        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespCancelar.Gerar;
       finally
         RespCancelar.Free;
       end;
@@ -554,7 +574,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -585,7 +605,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -616,7 +636,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -647,7 +667,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -675,7 +695,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -706,7 +726,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -737,7 +757,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -768,7 +788,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -796,7 +816,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
       RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-      fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
       RespConsulta.Free;
     end;
@@ -824,7 +844,7 @@ begin
       RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
       try
          RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-         fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+         fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
       finally
          RespConsulta.Free;
       end;
@@ -859,7 +879,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
        RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-       fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+       fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
        RespConsulta.Free;
     end;
@@ -893,7 +913,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
        RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-       fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+       fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
        RespConsulta.Free;
     end;
@@ -917,7 +937,7 @@ begin
     RespConsulta := TConsultaNFSeResposta.Create(TpResp, codUTF8);
     try
        RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSe);
-       fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+       fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
        RespConsulta.Free;
     end;
@@ -950,7 +970,7 @@ begin
     RespConsulta := TConsultaNFSeporRPSResposta.Create(TpResp, codUTF8);
     try
        RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaNFSeporRps);
-       fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+       fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
        RespConsulta.Free;
     end;
@@ -977,7 +997,7 @@ begin
     RespConsulta := TConsultaLoteRpsResposta.Create(TpResp, codUTF8);
     try
        RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaLoteRps);
-       fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+       fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
        RespConsulta.Free;
     end;
@@ -1004,7 +1024,7 @@ begin
     RespConsulta := TConsultaSituacaoResposta.Create(TpResp, codUTF8);
     try
        RespConsulta.Processar(ACBrNFSeX.WebService.ConsultaSituacao);
-       fpCmd.Resposta := sLineBreak + RespConsulta.Gerar;
+       fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsulta.Gerar;
     finally
        RespConsulta.Free;
     end;
@@ -1020,7 +1040,7 @@ procedure TMetodoGerarLoteRPS.Executar;
 var
   AIni: String;
   ALote: String;
-  RespEnvio: TEmiteResposta;
+  RespGerar: TGerarLoteResposta;
 begin
   AIni := fpCmd.Params(0);
   ALote := fpCmd.Params(1);
@@ -1035,12 +1055,12 @@ begin
     try
       ACBrNFSeX.GerarLote(ALote);
 
-      RespEnvio := TEmiteResposta.Create(TpResp, codUTF8);
+      RespGerar := TGerarLoteResposta.Create(TpResp, codUTF8);
       try
-        RespEnvio.Processar(ACBrNFSeX.WebService.Gerar);
-        fpCmd.Resposta := sLineBreak + RespEnvio.Gerar;
+        RespGerar.Processar(ACBrNFSeX.WebService.Gerar);
+        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespGerar.Gerar;
       finally
-        RespEnvio.Free;
+        RespGerar.Free;
       end;
     finally
       ACBrNFSeX.NotasFiscais.Clear;

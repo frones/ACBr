@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2023
+--- DoACBrNFSeUnit ---
+[*] Alterações visando uma possível correção para os problemas de retorno
+    do path no comando GerarLoteRps e uso do assunto e mensagem padrão no
+    envio de email.
+    Por: Italo Giurizzato Junior
+
 23/06/2023
 -- ACBrMonitorPLUS.iss --
 [*] Adiciona o arquivo de INI e os Schemas para a NFSe --

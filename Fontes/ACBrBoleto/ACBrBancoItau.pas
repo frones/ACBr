@@ -463,6 +463,7 @@ begin
     with ACBrTitulo do
     begin
        {SEGMENTO P}
+       inc(fpQtdRegsCobranca);
        inc(fpQtdRegsLote);
        {Tipo de Ocorrencia}
        TipoOcorrenciaRemessa := TipoOcorrenciaToCodRemessa(ACBrTitulo.OcorrenciaOriginal.Tipo);
@@ -623,9 +624,10 @@ end;
 
 function TACBrBancoItau.GerarRegistroTrailler240(ARemessa: TStringList): String;
 begin
-  fpQtdRegsCobranca:= fpQtdRegsLote;
+
   Result:= inherited GerarRegistroTrailler240(ARemessa);
   fpQtdRegsLote := 0;
+  fpQtdRegsCobranca := 0;
 end;
 
 procedure TACBrBancoItau.GerarRegistroHeader400(

@@ -170,8 +170,9 @@ begin
       IntToStrZero(AACBrTitulo.ACBrBoleto.Banco.Digito, 1));
 
     FACBrTitulo := AACBrTitulo;
-    FMensagem.Text := NativeStringToAnsi(FACBrTitulo.Mensagem.Text);
+    FMensagem.Text := FACBrTitulo.Mensagem.Text;
     ACBrBoleto.AdicionarMensagensPadroes(FACBrTitulo,FMensagem);
+    FMensagem.Text := NativeStringToAnsi(FMensagem.Text);
     ModeloImpressao;
   finally
     FMensagem.Free;

@@ -1082,6 +1082,17 @@ begin
       if ValorIss = 0 then
         ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
 
+      if AliquotaCpp = 0 then
+      AliquotaCpp := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCpp'), tcDe2);
+
+      RetidoCpp := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoCsll'), tcStr));
+
+      if ValorCpp = 0 then
+        ValorCpp := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+
+      if ValorIss = 0 then
+        ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
+
       OutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
       ValorTotalTributos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorTotTributos'), tcDe2);
 
@@ -1143,12 +1154,14 @@ begin
       AliquotaPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaPis'), tcDe2);
       AliquotaCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCofins'), tcDe2);
       AliquotaCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCsll'), tcDe2);
+      AliquotaCpp := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCpp'), tcDe2);
 
       ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
       ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
       ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
       ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
       ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+      ValorCpp := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCpp'), tcDe2);
 
       BaseCalculo := NFSe.ValoresNfse.BaseCalculo;
       Aliquota := NFSe.ValoresNfse.Aliquota;

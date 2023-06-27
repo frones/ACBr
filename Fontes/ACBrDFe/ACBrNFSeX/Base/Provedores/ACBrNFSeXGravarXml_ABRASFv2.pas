@@ -115,6 +115,7 @@ type
     FNrOcorrID: Integer;
     FNrOcorrToken: Integer;
     FNrOcorrValorCsll: Integer;
+    FNrOcorrValorCpp: Integer;
     FNrOcorrValorPis: Integer;
     FNrOcorrValorCofins: Integer;
     FNrOcorrValorInss: Integer;
@@ -136,7 +137,9 @@ type
     FNrOcorrAliquotaIr: Integer;
     FNrOcorrRetidoIr: Integer;
     FNrOcorrAliquotaCsll: Integer;
+    FNrOcorrAliquotaCpp: Integer;
     FNrOcorrRetidoCsll: Integer;
+    FNrOcorrRetidoCpp: Integer;
     FNrOcorrValorTTS: Integer;
     FNrOcorrQuantDiarias: Integer;
     FNrOcorrCodigoNBS: Integer;
@@ -185,6 +188,7 @@ type
     property NrOcorrValorInss: Integer    read FNrOcorrValorInss    write FNrOcorrValorInss;
     property NrOcorrValorIr: Integer      read FNrOcorrValorIr      write FNrOcorrValorIr;
     property NrOcorrValorCsll: Integer    read FNrOcorrValorCsll    write FNrOcorrValorCsll;
+    property NrOcorrValorCpp: Integer     read FNrOcorrValorCpp     write FNrOcorrValorCpp;
     property NrOcorrValorIss: Integer     read FNrOcorrValorIss     write FNrOcorrValorIss;
     property NrOcorrOutrasRet: Integer    read FNrOcorrOutrasRet    write FNrOcorrOutrasRet;
     property NrOcorrAliquota: Integer     read FNrOcorrAliquota     write FNrOcorrAliquota;
@@ -265,7 +269,9 @@ type
     property NrOcorrAliquotaIr: Integer read FNrOcorrAliquotaIr write FNrOcorrAliquotaIr;
     property NrOcorrRetidoIr: Integer read FNrOcorrRetidoIr write FNrOcorrRetidoIr;
     property NrOcorrAliquotaCsll: Integer read FNrOcorrAliquotaCsll write FNrOcorrAliquotaCsll;
+    property NrOcorrAliquotaCpp: Integer read FNrOcorrAliquotaCpp write FNrOcorrAliquotaCpp;
     property NrOcorrRetidoCsll: Integer read FNrOcorrRetidoCsll write FNrOcorrRetidoCsll;
+    property NrOcorrRetidoCpp: Integer read FNrOcorrRetidoCpp write FNrOcorrRetidoCpp;
     property NrOcorrValorTTS: Integer read FNrOcorrValorTTS write FNrOcorrValorTTS;
     property NrOcorrQuantDiarias: Integer read FNrOcorrQuantDiarias write FNrOcorrQuantDiarias;
     property NrOcorrCodigoNBS: Integer read FNrOcorrCodigoNBS write FNrOcorrCodigoNBS;
@@ -392,6 +398,9 @@ begin
   FNrOcorrQuantDiarias := -1;
   FNrOcorrCodigoNBS := -1;
   FNrOcorrDataPagamento := -1;
+  FNrOcorrValorCpp := -1;
+  FNrOcorrAliquotaCpp := -1;
+  FNrOcorrRetidoCpp := -1;
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
@@ -734,6 +743,15 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll', 1, 15, NrOcorrValorCsll,
                                     NFSe.Servico.Valores.ValorCsll, DSC_VCSLL));
+
+  Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaCpp', 1, 15, NrOcorrAliquotaCpp,
+                                 NFSe.Servico.Valores.AliquotaCpp, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcStr, '#15', 'RetidoCpp', 1, 1, NrOcorrRetidoCpp,
+              FpAOwner.SimNaoToStr(NFSe.Servico.Valores.RetidoCpp), DSC_VPIS));
+
+  Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCpp', 1, 15, NrOcorrValorCpp,
+                                    NFSe.Servico.Valores.ValorCpp, DSC_VCSLL));
 
   Result.AppendChild(AddNode(tcDe2, '#23', 'OutrasRetencoes', 1, 15, NrOcorrOutrasRet,
                     NFSe.Servico.Valores.OutrasRetencoes, DSC_OUTRASRETENCOES));

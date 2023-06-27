@@ -337,6 +337,7 @@ type
     FValorInss: Double;
     FValorIr: Double;
     FValorCsll: Double;
+    FValorCpp: Double; //Elotech
     FIssRetido: TnfseSituacaoTributaria;
     FValorIss: Double;
     FOutrasRetencoes: Double;
@@ -348,6 +349,7 @@ type
     FAliquotaInss: Double;
     FAliquotaIr: Double;
     FAliquotaCsll: Double;
+    FAliquotaCpp: Double; // Aliquota usada pelo Provedor Elotech
     FOutrosDescontos: Double;
     FValorLiquidoNfse: Double;
     FValorIssRetido: Double;
@@ -366,6 +368,7 @@ type
     FRetidoInss: TnfseSimNao;
     FRetidoIr: TnfseSimNao;
     FRetidoCsll: TnfseSimNao;
+    FRetidoCpp: TnfseSimNao; // Elotech
     FQtdeDiaria: Double;
     FValorTaxaTurismo: Double;
     FValorRecebido: Double;
@@ -388,6 +391,7 @@ type
     property ValorInss: Double read FValorInss write FValorInss;
     property ValorIr: Double read FValorIr write FValorIr;
     property ValorCsll: Double read FValorCsll write FValorCsll;
+    property ValorCpp: Double read FValorCpp write FValorCpp;
     property IssRetido: TnfseSituacaoTributaria read FIssRetido write FIssRetido;
     property ValorIss: Double read FValorIss write FValorIss;
     property OutrasRetencoes: Double read FOutrasRetencoes write FOutrasRetencoes;
@@ -401,6 +405,7 @@ type
     property AliquotaInss: Double read FAliquotaInss write FAliquotaInss;
     property AliquotaIr: Double read FAliquotaIr write FAliquotaIr;
     property AliquotaCsll: Double read FAliquotaCsll write FAliquotaCsll;
+    property AliquotaCpp: Double read FAliquotaCpp write FAliquotaCpp;
     // Usado pelo Provedor EL
     property OutrosDescontos: Double read FOutrosDescontos write FOutrosDescontos;
 
@@ -428,6 +433,7 @@ type
     property RetidoInss: TnfseSimNao read FRetidoInss write FRetidoInss;
     property RetidoIr: TnfseSimNao read FRetidoIr write FRetidoIr;
     property RetidoCsll: TnfseSimNao read FRetidoCsll write FRetidoCsll;
+    property RetidoCpp: TnfseSimNao read FRetidoCpp write FRetidoCpp;
     //Provedor SystemPro
     property QtdeDiaria: Double read FQtdeDiaria write FQtdeDiaria;
     property ValorTaxaTurismo: Double read FValorTaxaTurismo write FValorTaxaTurismo;

@@ -93,6 +93,9 @@ begin
   NrOcorrAliquotaCsll := 1;
   NrOcorrRetidoCsll := 1;
   NrOcorrInscEstTomador_2 := 0;
+  NrOcorrValorCpp := 0;
+  NrOcorrAliquotaCpp := 0;
+  NrOcorrRetidoCpp := 0;
 
   GerarIDDeclaracao := False;
 end;

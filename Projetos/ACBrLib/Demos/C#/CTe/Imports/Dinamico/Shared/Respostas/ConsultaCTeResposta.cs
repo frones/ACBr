@@ -22,11 +22,11 @@ namespace ACBrLib.Core.CTe
 
         public int CUF { get; set; }
 
-        public long ChCTe { get; set; }
+        public string ChCTe { get; set; }
 
         public DateTime DhRecbto { get; set; }
 
-        public long NProt { get; set; }
+        public string NProt { get; set; }
 
         public string DigVal { get; set; }
 

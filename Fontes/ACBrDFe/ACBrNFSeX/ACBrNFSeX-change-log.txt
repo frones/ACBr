@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/06/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Bento Goncalves/RS trocou de URL.
+  Por: Maiquel Parisotto
 -- ACBrNFSeXClass/ACBrNFSeXGravarXml_ABRASFv2/ACBrNFSeXLerXml_ABRASFv2/Elotech.GravarXml --
 [*] Implementando os campos: ValorCpp, AliquotaCpp e RetidoCpp. 
   Por: Arrobba

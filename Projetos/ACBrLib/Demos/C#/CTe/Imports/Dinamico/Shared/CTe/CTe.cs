@@ -141,7 +141,7 @@ namespace ACBrLib.CTe
             for (var i = 0; i < GrupoInformacoesNormalSubstituto.infDoc.infNFe.Count; i++)
             {
                 var chaveNFe = GrupoInformacoesNormalSubstituto.infDoc.infNFe[i];
-                iniData.WriteToIni(chaveNFe, $"chave{i + 1:000}");
+                iniData.WriteToIni(chaveNFe, $"infNFe{i + 1:000}");
             }
 
             iniData.WriteToIni(DetalhamentoComplementado, "infCteComp");

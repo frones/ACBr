@@ -1057,11 +1057,11 @@ namespace ACBrLib.CTe.Demo
             cte.Tomador4.xBairro = "CALADINA";
             cte.Tomador4.cMun = 3119401;
             cte.Tomador4.xMun = "CORONEL FABRICIANO";
-            cte.Tomador4.CEP = 35171167;
+            cte.Tomador4.CEP = "35171167";
             cte.Tomador4.UF = "MG";
             cte.Tomador4.cPais = 1058;
             cte.Tomador4.xPais = "BRASIL";
-            cte.Tomador4.fone = 33445566;
+            cte.Tomador4.fone = "33445566";
 
             //Complemento
             cte.Complemento.xCaracAd = "Carac Adic";
@@ -1096,7 +1096,7 @@ namespace ACBrLib.CTe.Demo
 
             //Emitente
             cte.Emitente.CNPJ = "18760540000139";
-            cte.Emitente.IE = 111111;
+            cte.Emitente.IE = "111111";
             cte.Emitente.xNome = "RAZAO SOCIAL DE TESTE";
             cte.Emitente.xFant = "FANTASIA DE TESTE";
             cte.Emitente.xLgr = "Logradouro";
@@ -1105,22 +1105,22 @@ namespace ACBrLib.CTe.Demo
             cte.Emitente.xBairro = "Bairro";
             cte.Emitente.cMun = 1501402;
             cte.Emitente.xMun = "BELEM";
-            cte.Emitente.CEP = 17250000;
+            cte.Emitente.CEP = "17250000";
             cte.Emitente.UF = "PA";
-            cte.Emitente.fone = 33445566;
+            cte.Emitente.fone = "33445566";
 
             //Remetente
             cte.Remetente.CNPJCPF = "05481336000137";
             cte.Remetente.IE = "12345678";
             cte.Remetente.xNome = "Nome do Remetente";
             cte.Remetente.xFant = "Nome Fantasia";
-            cte.Remetente.fone = 33445566;
+            cte.Remetente.fone = "33445566";
             cte.Remetente.xLgr = "Rua 1";
             cte.Remetente.nro = "200";
             cte.Remetente.xBairro = "Centro";
             cte.Remetente.cMun = 3554003;
             cte.Remetente.xMun = "Nome do Municipio";
-            cte.Remetente.CEP = 14123456;
+            cte.Remetente.CEP = "14123456";
             cte.Remetente.UF = "SP";
             cte.Remetente.cPais = 1058;
             cte.Remetente.xPais = "BRASIL";
@@ -1129,29 +1129,29 @@ namespace ACBrLib.CTe.Demo
             cte.Destinatario.CNPJCPF = "05481336000137";
             cte.Destinatario.IE = "12345678";
             cte.Destinatario.xNome = "Nome do Destinatário";
-            cte.Destinatario.fone = 33445566;
+            cte.Destinatario.fone = "33445566";
             cte.Destinatario.xLgr = "Rua 1";
             cte.Destinatario.nro = "200";
             cte.Destinatario.xBairro = "Centro";
             cte.Destinatario.cMun = 3554003;
             cte.Destinatario.xMun = "Nome do Municipio";
-            cte.Destinatario.CEP = 14123456;
+            cte.Destinatario.CEP = "14123456";
             cte.Destinatario.UF = "SP";
             cte.Destinatario.cPais = 1058;
             cte.Destinatario.xPais = "BRASIL";
-            cte.Destinatario.ISUF = 14123456;
+            cte.Destinatario.ISUF = "14123456";
 
             //Expedidor
             cte.Expedidor.CNPJCPF = "05481336000137";
             cte.Expedidor.IE = "12345678";
             cte.Expedidor.xNome = "Nome do Expedidor";
-            cte.Expedidor.fone = 33445566;
+            cte.Expedidor.fone = "33445566";
             cte.Expedidor.xLgr = "Rua 1";
             cte.Expedidor.nro = "200";
             cte.Expedidor.xBairro = "Centro";
             cte.Expedidor.cMun = 3554003;
             cte.Expedidor.xMun = "Nome do Municipio";
-            cte.Expedidor.CEP = 14123456;
+            cte.Expedidor.CEP = "14123456";
             cte.Expedidor.UF = "SP";
             cte.Expedidor.cPais = 1058;
             cte.Expedidor.xPais = "BRASIL";
@@ -1160,13 +1160,13 @@ namespace ACBrLib.CTe.Demo
             cte.Recebedor.CNPJCPF = "05481336000137";
             cte.Recebedor.IE = "12345678";
             cte.Recebedor.xNome = "Nome do Recebedor";
-            cte.Recebedor.fone = 33445566;
+            cte.Recebedor.fone = "33445566";
             cte.Recebedor.xLgr = "Rua 1";
             cte.Recebedor.nro = "200";
             cte.Recebedor.xBairro = "Centro";
             cte.Recebedor.cMun = 3554003;
             cte.Recebedor.xMun = "Nome do Municipio";
-            cte.Recebedor.CEP = 14123456;
+            cte.Recebedor.CEP = "14123456";
             cte.Recebedor.UF = "SP";
             cte.Recebedor.cPais = 1058;
             cte.Recebedor.xPais = "BRASIL";

@@ -13,9 +13,9 @@ namespace ACBrLib.CTe
 
         public string xNome { get; set; }
 
-        public int fone { get; set; }
+        public string fone { get; set; }
 
-        public int ISUF { get; set; }
+        public string ISUF { get; set; }
 
         public string email { get; set; }
 
@@ -31,7 +31,7 @@ namespace ACBrLib.CTe
 
         public string xMun { get; set; }
 
-        public int CEP { get; set; }
+        public string CEP { get; set; }
 
         public string UF { get; set; }
 

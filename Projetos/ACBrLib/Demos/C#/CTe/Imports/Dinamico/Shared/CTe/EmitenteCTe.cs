@@ -9,9 +9,9 @@ namespace ACBrLib.CTe
     {
         public string CNPJ { get; set; }
 
-        public int IE { get; set; }
+        public string IE { get; set; }
 
-        public int IEST { get; set; }
+        public string IEST { get; set; }
 
         public string xNome { get; set; }
 
@@ -29,10 +29,10 @@ namespace ACBrLib.CTe
 
         public string xMun { get; set; }
 
-        public int CEP { get; set; }
+        public string CEP { get; set; }
 
         public string UF { get; set; }
 
-        public int fone { get; set; }
+        public string fone { get; set; }
     }
 }

@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Sapiranga/RS trocou de provedor, agora é IPM.
+  Por: Nicolas Dorr
+-- IPM.GravarXml --
+[*] Alterado para gerar a tag nfse_teste também para versão 1.01.
+  Por: Nicolas Dorr
+
 23/06/2023
 -- IPM.LerXml --
 [*] Correção na leitura do XML, não estava lendo a tag do Valor ISS Retido.

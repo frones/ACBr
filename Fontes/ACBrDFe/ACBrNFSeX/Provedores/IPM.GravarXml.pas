@@ -124,7 +124,7 @@ begin
 
   FDocument.Root := NFSeNode;
 
-  if (VersaoNFSe = ve100) and (Ambiente = taHomologacao) then
+  if (VersaoNFSe in [ve100, ve101]) and (Ambiente = taHomologacao) then
     NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,

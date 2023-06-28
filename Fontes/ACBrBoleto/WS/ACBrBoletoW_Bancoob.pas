@@ -113,7 +113,7 @@ const
 
   C_CHARSET         = 'utf-8';
   C_ACCEPT_CHARSET  = 'utf-8';
-  C_SICOOB_CLIENT   = 'x-sicoob-clientid';
+  C_SICOOB_CLIENT   = 'client_id';
 
 implementation
 

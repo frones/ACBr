@@ -46,6 +46,10 @@ Símbolo : Significado
 
 
 28/06/2023
+-- ACBrCTeWebServices --
+[*] Ajustes para funcionar com a SEFAZ-MG, pois ela esta usando NameSpace e
+    SoapAction diferente das demais.
+  Por: Italo Giurizzato Junior
 -- ACBrCTeServicos --
 [*] Atualização com as novas URL de produção da versão 4.00 que estavam faltando.
   Por: Italo Giurizzato Junior

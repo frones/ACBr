@@ -46,7 +46,8 @@ Uses
   ACBr.Android.Sunmi.Leds,
   ACBr.Android.SecondDisplay,
   ACBr.Android.Sunmi.Printer,
-  ACBr.Android.VideoPlayer;
+  ACBr.Android.VideoPlayer,
+  ACBr.Android.Info;
 
 {$R ACBr.Android.dcr}
 
@@ -56,13 +57,14 @@ begin
   RegisterComponents('ACBrAndroid', [TACBrSecondDisplayLayout]);
   RegisterComponents('ACBrAndroid', [TACBrSunmiLeds]);
   RegisterComponents('ACBrAndroid', [TACBrSunmiPrinter]);
+  RegisterComponents('ACBrAndroid', [TACBrAndroidInfo]);
 end;
 
 Initialization
-
-RegisterFMXClasses([TACBrSunmiLeds]);
-RegisterFMXClasses([TACBrVideoPlayer]);
-RegisterFMXClasses([TACBrSunmiPrinter]);
-RegisterFMXClasses([TACBrCustomSecondDisplayLayout, TACBrSecondDisplayLayout]);
+  RegisterFMXClasses([TACBrSunmiLeds]);
+  RegisterFMXClasses([TACBrVideoPlayer]);
+  RegisterFMXClasses([TACBrSunmiPrinter]);
+  RegisterFMXClasses([TACBrAndroidInfo]);
+  RegisterFMXClasses([TACBrCustomSecondDisplayLayout, TACBrSecondDisplayLayout]);
 
 end.

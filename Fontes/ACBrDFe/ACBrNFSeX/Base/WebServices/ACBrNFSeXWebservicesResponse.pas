@@ -485,6 +485,24 @@ type
 
   end;
 
+  TNFSeConsultarSeqRpsResponse = class(TNFSeWebServiceResponse)
+  private
+    FCodCid: string;
+    FIMPrestador: string;
+    FCPFCNPJRemetente: string;
+    FNroUltimoRps: Integer;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear; override;
+
+    property CodCid: string read FCodCid write FCodCid;
+    property IMPrestador: string read FIMPrestador write FIMPrestador;
+    property CPFCNPJRemetente: string read FCPFCNPJRemetente write FCPFCNPJRemetente;
+    property NroUltimoRps: Integer read FNroUltimoRps write FNroUltimoRps;
+  end;
+
 implementation
 
 uses
@@ -1013,6 +1031,27 @@ destructor TNFSeConsultarParamResponse.Destroy;
 begin
   FParametros.Free;
 
+  inherited Destroy;
+end;
+
+{ TNFSeConsultarSeqRpsResponse }
+
+procedure TNFSeConsultarSeqRpsResponse.Clear;
+begin
+  inherited;
+  FCodCid := '';
+  FIMPrestador := '';
+  FCPFCNPJRemetente := '';
+  FNroUltimoRps := 0;
+end;
+
+constructor TNFSeConsultarSeqRpsResponse.Create;
+begin
+  inherited Create;
+end;
+
+destructor TNFSeConsultarSeqRpsResponse.Destroy;
+begin
   inherited Destroy;
 end;
 

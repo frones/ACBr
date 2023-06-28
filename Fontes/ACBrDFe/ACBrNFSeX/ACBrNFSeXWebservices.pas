@@ -58,6 +58,7 @@ type
     FConsultarEvento: TNFSeConsultarEventoResponse;
     FConsultarDFe: TNFSeConsultarDFeResponse;
     FConsultarParam: TNFSeConsultarParamResponse;
+    FConsultarSeqRps: TNFSeConsultarSeqRpsResponse;
 
   public
     constructor Create;
@@ -76,6 +77,7 @@ type
     property ConsultarEvento: TNFSeConsultarEventoResponse read FConsultarEvento;
     property ConsultarDFe: TNFSeConsultarDFeResponse read FConsultarDFe;
     property ConsultarParam: TNFSeConsultarParamResponse read FConsultarParam;
+    property ConsultarSeqRps: TNFSeConsultarSeqRpsResponse read FConsultarSeqRps;
 
   end;
 
@@ -97,6 +99,7 @@ begin
   FConsultarEvento := TNFSeConsultarEventoResponse.Create;
   FConsultarDFe := TNFSeConsultarDFeResponse.Create;
   FConsultarParam := TNFSeConsultarParamResponse.Create;
+  FConsultarSeqRps := TNFSeConsultarSeqRpsResponse.Create;
 end;
 
 destructor TWebServices.Destroy;
@@ -114,6 +117,7 @@ begin
   FConsultarEvento.Free;
   FConsultarDFe.Free;
   FConsultarParam.Free;
+  FConsultarSeqRps.Free;
 
   inherited Destroy;
 end;

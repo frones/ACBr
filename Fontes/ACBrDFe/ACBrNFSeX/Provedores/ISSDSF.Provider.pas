@@ -58,6 +58,7 @@ type
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
+    function ConsultarSeqRps(ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -88,6 +89,9 @@ type
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+
+    procedure PrepararConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
+    procedure TratarRetornoConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
 
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
@@ -254,6 +258,7 @@ begin
     CancelarNFSe := 'ReqCancelamentoNFSe.xsd';
     RecepcionarSincrono := 'ReqEnvioLoteRPS.xsd';
     Teste := 'ReqEnvioLoteRPS.xsd';
+    ConsultarSeqRps := 'ConsultaSeqRps.xsd';
   end;
 end;
 
@@ -964,6 +969,73 @@ begin
                            '</' + Prefixo + 'ReqConsultaNFSeRPS>';
 end;
 
+procedure TACBrNFSeProviderISSDSF.PrepararConsultarSeqRps(
+  Response: TNFSeConsultarSeqRpsResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Emitente: TEmitenteConfNFSe;
+  NameSpace, Prefixo, PrefixoTS: string;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  Prefixo := '';
+  PrefixoTS := '';
+
+  if EstaVazio(ConfigMsgDados.LoteRps.xmlns) then
+    NameSpace := ''
+  else
+  begin
+    if ConfigMsgDados.Prefixo = '' then
+      NameSpace := ' xmlns="' + ConfigMsgDados.LoteRps.xmlns + '"'
+    else
+    begin
+      NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' +
+                               ConfigMsgDados.LoteRps.xmlns + '"';
+      Prefixo := ConfigMsgDados.Prefixo + ':';
+    end;
+  end;
+
+  if ConfigMsgDados.XmlRps.xmlns <> '' then
+  begin
+    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.LoteRps.xmlns then
+    begin
+      if ConfigMsgDados.PrefixoTS = '' then
+        NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
+      else
+      begin
+        NameSpace := NameSpace + ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
+                                             ConfigMsgDados.XmlRps.xmlns + '"';
+        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
+      end;
+    end
+    else
+    begin
+      if ConfigMsgDados.PrefixoTS <> '' then
+        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
+    end;
+  end;
+
+  NameSpace := NameSpace +
+    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+    ' http://localhost:8080/WsNFe2/xsd/ConsultaSeqRps.xsd"';
+
+  Response.ArquivoEnvio := '<' + Prefixo + 'ConsultaSeqRps' + NameSpace + '>' +
+                             '<Cabecalho>' +
+                               '<CodCid>' +
+                                 CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                               '</CodCid>' +
+                               '<IMPrestador>'+
+                                 Emitente.InscMun+
+                               '</IMPrestador>'+
+                               '<CPFCNPJRemetente>' +
+                                 OnlyNumber(Emitente.CNPJ) +
+                               '</CPFCNPJRemetente>' +
+                               '<Versao>1</Versao>' +
+                             '</Cabecalho>' +
+                           '</' + Prefixo + 'ConsultaSeqRps>';
+
+end;
+
 procedure TACBrNFSeProviderISSDSF.TratarRetornoConsultaNFSeporRps(
   Response: TNFSeConsultaNFSeporRpsResponse);
 var
@@ -1034,6 +1106,69 @@ begin
           SalvarXmlNfse(ANota);
         end;
       end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderISSDSF.TratarRetornoConsultarSeqRps(
+  Response: TNFSeConsultarSeqRpsResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode, AuxNode: TACBrXmlNode;
+  i: Integer;
+  ANodeArray: TACBrXmlNodeArray;
+  ANota: TNotaFiscal;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaSeqRps');
+
+      if ANode <> nil then
+      begin
+        ProcessarMensagemErros(ANode, Response);
+
+        AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
+
+        if AuxNode <> nil then
+        begin
+          ProcessarMensagemErros(AuxNode, Response);
+
+          with Response do
+          begin
+            CodCid := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodCid'), tcStr);
+            CPFCNPJRemetente := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CPFCNPJRemetente'), tcStr);
+            IMPrestador := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('IMPrestador'), tcStr);
+            NroUltimoRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NroUltimoRps'), tcInt);
+          end;
+        end;
+
+        Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
+      end
+      else
+        Response.Sucesso := False;
+
     except
       on E:Exception do
       begin
@@ -1525,6 +1660,19 @@ begin
   Request := Request + '</lot:consultarNFSeRps>';
 
   Result := Executar('', Request, ['consultarNFSeRpsReturn'], [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceISSDSF.ConsultarSeqRps(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<lot:consultarSequencialRps>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
+  Request := Request + '</lot:consultarSequencialRps>';
+
+  Result := Executar('', Request, ['consultarSequencialRpsReturn'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.ConsultarNFSe(ACabecalho, AMSG: String): string;

@@ -173,6 +173,9 @@ type
     // Usado pelos provedores que geram token por WebService
     procedure GerarToken;
 
+    //Exclusido do provedor ISSDSF
+    procedure ConsultarSeqRps;
+
     // Usado pelo provedor PadraoNacional
     procedure ConsultarDPSPorChave(const aChave: string);
     procedure ConsultarNFSePorChave(const aChave: string);
@@ -928,6 +931,16 @@ begin
   FWebService.ConsultarParam.NumeroBeneficio := ANumeroBeneficio;
 
   FProvider.ConsultarParam;
+end;
+
+procedure TACBrNFSeX.ConsultarSeqRps;
+begin
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.ConsultarSeqRps.Clear;
+
+  FProvider.ConsultarSeqRps;
 end;
 
 procedure TACBrNFSeX.ConsultarSituacao(const AProtocolo, ANumLote: String);

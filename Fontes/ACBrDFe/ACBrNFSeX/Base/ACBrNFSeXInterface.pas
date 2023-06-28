@@ -58,6 +58,7 @@ type
     procedure ConsultarEvento;
     procedure ConsultarDFe;
     procedure ConsultarParam;
+    procedure ConsultarSeqRps;
 
     function GetConfigGeral: TConfigGeral;
     function GetConfigWebServices: TConfigWebServices;

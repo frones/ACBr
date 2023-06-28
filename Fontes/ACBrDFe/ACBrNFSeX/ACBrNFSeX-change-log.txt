@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/06/2023
+-- Diversos --
+[+] Implementação do método ConsultarSequencialRps do provedor ISSDSF
+  Por: Diego F
+
 27/06/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Bento Goncalves/RS trocou de URL.

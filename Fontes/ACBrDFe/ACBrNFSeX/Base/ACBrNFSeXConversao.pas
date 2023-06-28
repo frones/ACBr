@@ -51,7 +51,7 @@ type
                      stNFSeFecharSessao, stNFSeAguardaProcesso,
                      stNFSeEnvioWebService, stNFSeGerarToken,
                      stNFSeConsultarEvento, stNFSeConsultarDFe,
-                     stNFSeConsultarParam);
+                     stNFSeConsultarParam, stNFSeConsultarSeqRps);
 
   TVersaoNFSe = (ve100, ve101, ve102, ve103,
                  ve200, ve201, ve202, ve203, ve204);
@@ -189,7 +189,7 @@ type
              tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
              tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
              tmGerarToken, tmEnviarEvento, tmConsultarEvento, tmConsultarDFe,
-             tmConsultarParam);
+             tmConsultarParam, tmConsultarSeqRps);
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
                               filsComFormatacaoSemZeroEsquerda,
@@ -12686,7 +12686,7 @@ begin
                         'Gerar', 'GerarLote', 'RecepcionarSincrono', 'SubstituirNFSe',
                         'AbrirSessao', 'FecharSessao', 'Teste', 'Todos',
                         'GerarToken', 'EnviarEvento', 'ConsultarEvento',
-                        'ConsultarDFe', 'ConsultarParam'],
+                        'ConsultarDFe', 'ConsultarParam', 'ConsultarSeqRps'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
                         tmConsultarNFSePorRps, tmConsultarNFSe,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
@@ -12694,7 +12694,7 @@ begin
                         tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
                         tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
                         tmGerarToken, tmEnviarEvento, tmConsultarEvento,
-                        tmConsultarDFe, tmConsultarParam]);
+                        tmConsultarDFe, tmConsultarParam, tmConsultarSeqRps]);
 end;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;

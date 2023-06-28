@@ -8,6 +8,6 @@ namespace ACBrLib.Core.CTe
 {
     public class IdDocAntEleCTe
     {
-        public long chCTe { get; set; }
+        public string chCTe { get; set; }
     }
 }

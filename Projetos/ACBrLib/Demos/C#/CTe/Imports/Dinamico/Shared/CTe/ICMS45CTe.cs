@@ -5,8 +5,8 @@ using ACBrLib.Core.CTe;
 
 namespace ACBrLib.CTe
 {
-    public class DetalhamentoComplementadoCTe
+    public class ICMS45CTe
     {
-        public string chCTe { get; set; }
+        public CSTCTe CST { get; set; }
     }
 }

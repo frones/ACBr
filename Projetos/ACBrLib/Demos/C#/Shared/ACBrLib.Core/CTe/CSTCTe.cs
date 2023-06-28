@@ -8,6 +8,6 @@
         ICMSNaoTributada = 41,
         ICMSDiferido = 51,
         ICMSCobradoSubstituicaoTributaria = 60,
-        ICMSOutros = 90
+        ICMSOutros, ICMSOutraUF, ICMSSN = 90,
     }
 }

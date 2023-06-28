@@ -5,8 +5,10 @@ using ACBrLib.Core.CTe;
 
 namespace ACBrLib.CTe
 {
-    public class DetalhamentoComplementadoCTe
+    public class ICMSSNCTe
     {
-        public string chCTe { get; set; }
+        public CSTCTe CST { get; set; }
+
+        public int indSN { get; set; }
     }
 }

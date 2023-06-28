@@ -32,8 +32,6 @@ namespace ACBrLib.CTe
             ValoresPrestacaoServico = new ValoresPrestacaoServicoCTe();
             ComponentesValorPrestacao = new ComponentesValorPrestacaoCTe();
             InformacoesRelativasImpostos = new InformacoesRelativasImpostosCTe();
-            ICMS = new ICMSCTe();
-            ICMSUFFim = new ICMSUFFimCTe();
             GrupoInformacoesNormalSubstituto = new GrupoInformacoesNormalSubstitutoCTe();
             DetalhamentoComplementado = new DetalhamentoComplementadoCTe();
             DetalhamentoAnulacao = new DetalhamentoAnulacaoCTe();
@@ -82,10 +80,6 @@ namespace ACBrLib.CTe
 
         public InformacoesRelativasImpostosCTe InformacoesRelativasImpostos { get; }
 
-        public ICMSCTe ICMS { get; }
-
-        public ICMSUFFimCTe ICMSUFFim { get; }
-
         public GrupoInformacoesNormalSubstitutoCTe GrupoInformacoesNormalSubstituto { get; }
 
         public DetalhamentoComplementadoCTe DetalhamentoComplementado { get; }
@@ -125,8 +119,7 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(ValoresPrestacaoServico, "vPrest");
             iniData.WriteToIni(ComponentesValorPrestacao, "Comp");
             iniData.WriteToIni(InformacoesRelativasImpostos, "Imp");
-            iniData.WriteToIni(ICMS, "ICMS");
-            iniData.WriteToIni(ICMSUFFim, "ICMSUFFim");
+            iniData.WriteToIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infDoc, "infDoc");
@@ -170,8 +163,7 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(ValoresPrestacaoServico, "vPrest");
             iniData.ReadFromIni(ComponentesValorPrestacao, "Comp");
             iniData.ReadFromIni(InformacoesRelativasImpostos, "Imp");
-            iniData.ReadFromIni(ICMS, "ICMS");
-            iniData.ReadFromIni(ICMSUFFim, "ICMSUFFim");
+            iniData.ReadFromIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infDoc, "infDoc");

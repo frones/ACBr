@@ -1180,13 +1180,11 @@ namespace ACBrLib.CTe.Demo
             cte.ComponentesValorPrestacao.xNome = "DFRNER KRTJ";
             cte.ComponentesValorPrestacao.vComp = 100;
 
-            cte.InformacoesRelativasImpostos.CST = CSTCTe.tributacaoNormal;
-            cte.ICMS.pRedBC = 10;
-            cte.ICMS.vBC = 100;
-            cte.ICMS.pICMS = 7;
-            cte.ICMS.vICMS = 6;
-            cte.ICMS.vCred = 0;
-            cte.ICMS.indSN = 1;
+            cte.InformacoesRelativasImpostos.ICMSSN.CST = CSTCTe.ICMSSN;
+            cte.InformacoesRelativasImpostos.ICMSSN.indSN = 1;
+
+            cte.InformacoesRelativasImpostos.vTotTrib = 10;
+            cte.InformacoesRelativasImpostos.infAdFisco = "teste";
 
             cte.Rodoviario.RNTRC = "12345678";
 

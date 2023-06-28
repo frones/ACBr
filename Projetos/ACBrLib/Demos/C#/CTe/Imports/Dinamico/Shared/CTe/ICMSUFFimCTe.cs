@@ -7,6 +7,8 @@ namespace ACBrLib.CTe
 {
     public class ICMSUFFimCTe
     {
+        public CSTCTe CST { get; set; }
+
         public decimal vBCUFFim { get; set; }
         
         public decimal pFCPUFFim { get; set; }

@@ -80,7 +80,13 @@
 	  <Compile Include="..\Shared\CTe\ObsContCTe.cs" Link="CTe\ObsContCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ObsFiscoCTe.cs" Link="CTe\ObsFiscoCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ComponentesValorPrestacaoCTe.cs" Link="CTe\ComponentesValorPrestacaoCTe.cs" />
-	  <Compile Include="..\Shared\CTe\ICMSCTe.cs" Link="CTe\ICMSCTe.cs" />
+	  <Compile Include="..\Shared\CTe\ICMS00CTe.cs" Link="CTe\ICMS00CTe.cs" />
+	  <Compile Include="..\Shared\CTe\ICMS20CTe.cs" Link="CTe\ICMS20CTe.cs" />
+	  <Compile Include="..\Shared\CTe\ICMS45CTe.cs" Link="CTe\ICMS45CTe.cs" />
+	  <Compile Include="..\Shared\CTe\ICMS60CTe.cs" Link="CTe\ICMS60CTe.cs" />
+	  <Compile Include="..\Shared\CTe\ICMS90CTe.cs" Link="CTe\ICMS90CTe.cs" />
+	  <Compile Include="..\Shared\CTe\ICMSOutraUFCTe.cs" Link="CTe\ICMSOutraUFCTe.cs" />
+	  <Compile Include="..\Shared\CTe\ICMSSNCTe.cs" Link="CTe\ICMSSNCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ICMSUFFimCTe.cs" Link="CTe\ICMSUFFimCTe.cs" />
 	  <Compile Include="..\Shared\CTe\InfCargaCTe.cs" Link="CTe\InfCargaCTe.cs" />
 	  <Compile Include="..\Shared\CTe\TipoPeriodoCTe.cs" Link="CTe\TipoPeriodoCTe.cs" />

@@ -8,6 +8,6 @@ namespace ACBrLib.Core.CTe
 {
     public class InfCTeMultimodalCTe
     {
-        public long chCTeMultimodal { get; set; }
+        public string chCTeMultimodal { get; set; }
     }
 }

@@ -281,7 +281,7 @@ begin
   begin
     Gerador.wGrupo('infCTeSupl');
     Gerador.wCampo(tcStr, '#196', 'qrCodCTe', 50, 1000, 1,
-                               CTe.infCTeSupl.qrCodCTe, DSC_INFQRCODCTE, False);
+                               CTe.infCTeSupl.qrCodCTe, DSC_INFQRCODCTE);
 //    Gerador.wCampo(tcStr, '#196', 'qrCodCTe', 50, 1000, 1,
 //                     '<![CDATA[' + CTe.infCTeSupl.qrCodCTe + ']]>', DSC_INFQRCODCTE, False);
     Gerador.wGrupo('/infCTeSupl');

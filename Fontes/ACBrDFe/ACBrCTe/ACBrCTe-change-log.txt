@@ -49,6 +49,9 @@ Símbolo : Significado
 -- ACBrCTeServicos --
 [*] Atualização com as novas URL de produção da versão 4.00 que estavam faltando.
   Por: Italo Giurizzato Junior
+-- ACBrCTe, pcteCTeW --
+[*] Ajuste visando corrigir problema de Parse Entity ao recarregar um XML para enviar.
+  Por: JeannyPaiva
 
 26/06/2023
 -- ACBrCTeServicos --

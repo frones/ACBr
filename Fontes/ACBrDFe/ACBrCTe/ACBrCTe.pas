@@ -332,8 +332,7 @@ begin
   idCTe := OnlyNumber(AChaveCTe);
 
   // Passo 1
-//  sEntrada := 'chCTe=' + idCTe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
-  sEntrada := 'chCTe=' + idCTe + '&amp;tpAmb=' + TpAmbToStr(TipoAmbiente);
+  sEntrada := 'chCTe=' + idCTe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
 
   // Passo 2 calcular o SHA-1 da string idCTe se o Tipo de Emissão for EPEC ou FSDA
   if TipoEmissao in [teDPEC, teFSDA] then
@@ -341,8 +340,7 @@ begin
     // Tipo de Emissão em Contingência
     SSL.CarregarCertificadoSeNecessario;
     sign := SSL.CalcHash(idCTe, dgstSHA1, outBase64, True);
-//    Passo2 := '&sign=' + sign;
-    Passo2 := '&amp;sign=' + sign;
+    Passo2 := '&sign=' + sign;
 
     sEntrada := sEntrada + Passo2;
   end;

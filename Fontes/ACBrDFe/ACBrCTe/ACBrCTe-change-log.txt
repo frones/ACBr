@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/06/2023
+-- ACBrCTeServicos --
+[*] Atualização com as novas URL de produção da versão 4.00 que estavam faltando.
+  Por: Italo Giurizzato Junior
+
 26/06/2023
 -- ACBrCTeServicos --
 [+] Incluídas as URLs de Produção (versão 4.00) UF: SVSP
@@ -83,7 +88,7 @@ Símbolo : Significado
   Por: Diego F
 
 31/05/2023
--- ACBrCTeWebServices --
+-- ACBrCTeServicos --
 [+] A SEFAZ-MT informou as URL de homologação para a versão 4.00
   Por: Italo Giurizzato Junior
 

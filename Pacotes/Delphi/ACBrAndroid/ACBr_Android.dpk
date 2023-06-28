@@ -35,6 +35,7 @@ requires
 
 contains
   ACBr.Androidapi.JNI in '..\..\..\Fontes\ACBrAndroid\ACBr.Androidapi.JNI.pas',
+  ACBr.Android.Info in '..\..\..\Fontes\ACBrAndroid\ACBr.Android.Info.pas',
   ACBr.Android.SecondDisplay in '..\..\..\Fontes\ACBrAndroid\ACBr.Android.SecondDisplay.pas',
   ACBr.Android.VideoPlayer in '..\..\..\Fontes\ACBrAndroid\ACBr.Android.VideoPlayer.pas',
   ACBr.Android.Sunmi.Leds in '..\..\..\Fontes\ACBrAndroid\ACBr.Android.Sunmi.Leds.pas',

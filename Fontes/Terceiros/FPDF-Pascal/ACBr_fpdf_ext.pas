@@ -261,8 +261,7 @@ type
     last_key: AnsiString;
     last_state: array[0..255] of Byte;
 
-    procedure Header; override;
-    procedure Footer; override;
+
     procedure _endpage; override;
     procedure _putstream(const Adata: AnsiString); override;
     function _textstring(const AString: String): String; override;
@@ -277,6 +276,9 @@ type
 
     procedure _Arc(vX1, vY1, vX2, vY2, vX3, vY3: Double);
   public
+    procedure Header; override;
+    procedure Footer; override;
+
     procedure InternalCreate; override;
 
     procedure Rotate(NewAngle: Double = 0; vX: Double = -1; vY: Double = -1);
@@ -1154,7 +1156,7 @@ begin
   s := StringReplace(AHtml, #13+#10, ' ', [rfReplaceAll]);
   s := StringReplace(s, #10, ' ', [rfReplaceAll]);
   l := Length(s);
-  p1 := 1; p2 := 0;
+  p1 := 1;
   while p1 <= l do
   begin
     p2 := FindNextTagPos(AHtml, ATag, p1);

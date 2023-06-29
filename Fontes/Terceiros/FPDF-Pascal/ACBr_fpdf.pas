@@ -398,7 +398,7 @@ type
     function AcceptPageBreak: Boolean; virtual;
     procedure Cell(vWidth: Double; vHeight: Double = 0; const vText: String = '';
       const vBorder: String = '0'; vLineBreak: Integer = 0; const vAlign: String = '';
-      vFill: Boolean = False; vLink: String = '');
+      vFill: Boolean = False; vLink: String = ''); virtual;
     procedure MultiCell(vWidth, vHeight: Double; const vText: String;
       const vBorder: String = '0'; const vAlign: String = 'J'; vFill: Boolean = False);
     procedure Write(vHeight: Double; const vText: String; const vLink: String = '');

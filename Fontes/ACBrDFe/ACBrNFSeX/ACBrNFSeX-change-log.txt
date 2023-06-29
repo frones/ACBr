@@ -44,6 +44,8 @@ Símbolo : Significado
 
 29/06/2023
 -- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de São João Batista do Gloria/MG, provedor é o eReceita na versão 2.02
+  Por: jose geraldo
 [+] Incluída a cidade de Itaporanga/PB, provedor é o PublicSoft
   Por: billbarsch
 [+] Incluída a cidade de Santo Antonio do Leste/MT, provedor é o Coplan

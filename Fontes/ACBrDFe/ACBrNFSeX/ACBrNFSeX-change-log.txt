@@ -44,7 +44,9 @@ Símbolo : Significado
 
 29/06/2023
 -- ACBrNFSeXServicos.ini --
-[+] Incluida a cidade de Sao Jose do Xingu-MT, provedor é o Agili
+[+] Incluída a cidade de Santo Antonio do Leste/MT, provedor é o Coplan
+  Por: Diego Reckziegel
+[+] Incluída a cidade de Sao Jose do Xingu-MT, provedor é o Agili
   Por: Luiz Eduardo Bodo
 
 28/06/2023

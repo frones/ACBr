@@ -54,7 +54,8 @@ contains
   ACBr_fpdf in '..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf.pas',
   ACBr_fpdf_ext in '..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf_ext.pas',
   Jsons in '..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas',
-  ACBrJSON in '..\..\..\Fontes\ACBrComum\ACBrJSON.pas';
+  ACBrJSON in '..\..\..\Fontes\ACBrComum\ACBrJSON.pas',
+  ACBrUtil.FPDF in '..\..\..\Fontes\ACBrComum\ACBrUtil.FPDF.pas';
 
 //  {$IfNDef USE_ZLibExGZ}
 //   ACBrZLibExGZ,

@@ -44,6 +44,8 @@ Símbolo : Significado
 
 29/06/2023
 -- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Itaporanga/PB, provedor é o PublicSoft
+  Por: billbarsch
 [+] Incluída a cidade de Santo Antonio do Leste/MT, provedor é o Coplan
   Por: Diego Reckziegel
 [+] Incluída a cidade de Sao Jose do Xingu-MT, provedor é o Agili

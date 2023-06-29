@@ -122,7 +122,7 @@ begin
     LerSegmentoC(PagFor.Lote.Last.SegmentoA.Last.SegmentoC, I);
 //    LerSegmentoE(PagFor.Lote.Last.SegmentoA.Last.SegmentoE, I);
 //    LerSegmentoF(PagFor.Lote.Last.SegmentoA.Last.SegmentoF, I);
-//    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, I);
+    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, I);
 
     for x := 0 to PagFor.Lote.Last.SegmentoA.Last.SegmentoB.Count - 1 do
     begin
@@ -138,6 +138,15 @@ begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoC.Items[x] do
       begin
         GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'C',
+          PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
+      end;
+    end;
+
+    for x := 0 to PagFor.Lote.Last.SegmentoA.Last.SegmentoZ.Count - 1 do
+    begin
+      with PagFor.Lote.Last.SegmentoA.Last.SegmentoZ.Items[x] do
+      begin
+        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'Z',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;

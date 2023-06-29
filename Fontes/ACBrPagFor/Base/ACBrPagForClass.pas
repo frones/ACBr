@@ -752,10 +752,14 @@ type
     FAutenticacao : string; // Tamanho 64
     FSeuNumero: string;
     FNossoNumero: string;
+    FCodOcorrencia: string;
+    FDescOcorrencia: string;
   public
     property Autenticacao: string read FAutenticacao write FAutenticacao;
     property SeuNumero: string read FSeuNumero write FSeuNumero;
     property NossoNumero: string read FNossoNumero write FNossoNumero;
+    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TSegmentoZList = class(TObjectList)
@@ -800,14 +804,14 @@ type
     FSegmentoC: TSegmentoCList;
 //    FSegmentoE: TSegmentoEList;
 //    FSegmentoF: TSegmentoFList;
-//    FSegmentoZ: TSegmentoZList;
+    FSegmentoZ: TSegmentoZList;
     FDescOcorrencia: string;
 
     procedure SetSegmentoB(const Value: TSegmentoBList);
     procedure SetSegmentoC(const Value: TSegmentoCList);
 //    procedure SetSegmentoE(const Value: TSegmentoEList);
 //    procedure SetSegmentoF(const Value: TSegmentoFList);
-//    procedure SetSegmentoZ(const Value: TSegmentoZList);
+    procedure SetSegmentoZ(const Value: TSegmentoZList);
     function GetPagamentoLiberado: Boolean;
 
   public
@@ -832,7 +836,7 @@ type
     property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
 //    property SegmentoE: TSegmentoEList read FSegmentoE write SetSegmentoE;
 //    property SegmentoF: TSegmentoFList read FSegmentoF write SetSegmentoF;
-//    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
+    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
   end;
 
   TSegmentoAList = class(TObjectList)
@@ -1885,11 +1889,11 @@ begin
   FFavorecido := TFavorecido.Create;
   FCredito    := TCredito.Create;
 
-  FSegmentoB := TSegmentoBList.Create{(Self)};
-  FSegmentoC := TSegmentoCList.Create{(Self)};
+  FSegmentoB := TSegmentoBList.Create;
+  FSegmentoC := TSegmentoCList.Create;
 //  FSegmentoE := TSegmentoEList.Create{(Self)};
 //  FSegmentoF := TSegmentoFList.Create{(Self)};
-//  FSegmentoZ := TSegmentoZList.Create{(Self)};
+  FSegmentoZ := TSegmentoZList.Create;
 end;
 
 destructor TSegmentoA.Destroy;
@@ -1900,7 +1904,7 @@ begin
   FSegmentoC.Free;
 //  FSegmentoE.Free;
 //  FSegmentoF.Free;
-//  FSegmentoZ.Free;
+  FSegmentoZ.Free;
 
   inherited Destroy;
 end;
@@ -1949,12 +1953,12 @@ procedure TSegmentoA.SetSegmentoF(const Value: TSegmentoFList);
 begin
   FSegmentoF := Value;
 end;
-
+}
 procedure TSegmentoA.SetSegmentoZ(const Value: TSegmentoZList);
 begin
   FSegmentoZ := Value;
 end;
-}
+
 { TSegmentoAList }
 
 function TSegmentoAList.New: TSegmentoA;

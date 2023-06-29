@@ -1430,9 +1430,14 @@ begin
 
   mSegmentoZList.New;
 
-  mSegmentoZList.Last.Autenticacao := LerCampo(Linha, 15, 64, tcStr);
-  mSegmentoZList.Last.SeuNumero := LerCampo(Linha, 79, 20, tcStr);
-  mSegmentoZList.Last.NossoNumero := LerCampo(Linha, 104, 15, tcStr);
+  with mSegmentoZList.Last do
+  begin
+    Autenticacao := LerCampo(Linha, 15, 64, tcStr);
+    SeuNumero := LerCampo(Linha, 79, 20, tcStr);
+    NossoNumero := LerCampo(Linha, 104, 15, tcStr);
+    CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
+    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
+  end;
 end;
 
 procedure TArquivoR_CNAB240.LerLote;

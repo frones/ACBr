@@ -44,6 +44,8 @@ Símbolo : Significado
 
 29/06/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de São Sebastião do Oeste/MG, mudou a versão para 2.02, provedor ainda é o Betha.
+  Por: jose geraldo
 [+] Incluída a cidade de São João Batista do Gloria/MG, provedor é o eReceita na versão 2.02
   Por: jose geraldo
 [+] Incluída a cidade de Itaporanga/PB, provedor é o PublicSoft

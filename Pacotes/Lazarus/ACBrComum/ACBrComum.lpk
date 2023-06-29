@@ -128,6 +128,10 @@
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrJSON.pas"/>
         <UnitName Value="ACBrJSON"/>
       </Item23>
+	  <Item24>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.FPDF.pas"/>
+        <UnitName Value="ACBrUtil.FPDF"/>
+      </Item24>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

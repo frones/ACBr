@@ -1492,7 +1492,7 @@ begin
                 Gerador.wCampo(tcDe4, 'N15', 'qBCMono     ', 01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO);
                 Gerador.wCampo(tcDe4, 'N15', 'adRemICMS   ', 01, 5, 0, NFe.Det[i].Imposto.ICMS.adRemICMS, DSC_ADREMICMS);
                 Gerador.wCampo(tcDe2, 'N17', 'vICMSMonoOp ', 01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMonoOp, DSC_VICMSMONOOP);
-                Gerador.wCampo(tcDe4, 'N17', 'pDif        ', 01, 5, 0, NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF);
+                Gerador.wCampo(tcDe4, 'N17', 'pDif        ', 01, 15, 0, NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF);
                 Gerador.wCampo(tcDe2, 'N17', 'vICMSMonoDif', 01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMonoDif, DSC_VICMSMONODIF);
                 Gerador.wCampo(tcDe2, 'N17', 'vICMSMono   ', 01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSMono, DSC_VICMSMONO);
               end;

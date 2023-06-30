@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/06/2023
+-- ACBrPIXPSPAilos --
+[*] Correção em métodos que o PSP Ailos respondem diferente do especificado no Bacen
+[*] Alteração para limpar propriedade exclusiva do PSP Ailos ao criar o componente
+	Por: MaagraowaR e Alexandre de Paula
+
 26/06/2023
 -- ACBrPIXPSPSicoob --
 [*] Alteração para renomear a tag 'brcode' para 'pixCopiaECola' na resposta do endpoint /cob

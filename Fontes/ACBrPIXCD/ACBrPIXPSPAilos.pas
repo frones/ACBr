@@ -38,6 +38,8 @@
 
 *)
 
+{$I ACBr.inc}
+
 unit ACBrPIXPSPAilos;
 
 interface
@@ -47,9 +49,9 @@ uses
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
-  cAilosURLSandbox      = 'https://apiendpoint.ailos.coop.br';
-  cAilosURLProducao     = 'https://apiendpoint.ailos.coop.br';
-  cAilosPathAuthToken   = '/ailos/pix-cobranca/api/v1/client/connect/token';
+  cAilosURLSandbox      = 'https://apiendpoint.ailos.coop.br/ailos/pix-cobranca/api/v1';
+  cAilosURLProducao     = 'https://apiendpoint.ailos.coop.br/ailos/pix-cobranca/api/v1';
+  cAilosPathAuthToken   = '/client/connect/token';
   cAilosURLAuthTeste    = cAilosURLSandbox+cAilosPathAuthToken;
   cAilosURLAuthProducao = cAilosURLProducao+cAilosPathAuthToken;
 
@@ -58,9 +60,13 @@ type
   TACBrPSPAilos = class(TACBrPSPCertificate)
   private
     fRootCrt: String;
+    procedure QuandoReceberRespostaEndPoint(const AEndPoint, AURL, AMethod: String;
+      var AResultCode: Integer; var RespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
   public
+    constructor Create(AOwner: TComponent); override;
+    procedure Clear;
     procedure Autenticar; override;
 
   published
@@ -130,6 +136,19 @@ begin
 
 end;
 
+constructor TACBrPSPAilos.Create(AOwner: TComponent);
+begin
+  inherited;
+  fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
+  Clear;
+end;
+
+procedure TACBrPSPAilos.Clear;
+begin
+  inherited Clear;
+  fRootCrt := '';
+end;
+
 function TACBrPSPAilos.ObterURLAmbiente(
   const aAmbiente: TACBrPixCDAmbiente): String;
 begin
@@ -137,6 +156,17 @@ begin
     Result := cAilosURLProducao
   else
     Result := cAilosURLSandbox;
+end;
+
+procedure TACBrPSPAilos.QuandoReceberRespostaEndPoint(const AEndPoint, AURL,
+  AMethod: String; var AResultCode: Integer; var RespostaHttp: AnsiString);
+begin
+  // Ailos responde OK a esse EndPoint, de forma diferente da especificada
+  if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointPix) and (AResultCode = HTTP_OK) then
+    AResultCode := HTTP_CREATED;
+
+  if (UpperCase(AMethod) = ChttpMethodPOST) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_OK) then
+    AResultCode := HTTP_CREATED;
 end;
 
 end.

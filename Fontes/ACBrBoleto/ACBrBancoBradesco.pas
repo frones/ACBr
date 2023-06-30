@@ -63,7 +63,7 @@ type
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
@@ -782,12 +782,11 @@ begin
   end;
 end;
 
-function TACBrBancoBradesco.CodMotivoRejeicaoToDescricao(
-  const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
+function TACBrBancoBradesco.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
 begin
    case TipoOcorrencia of
       toRetornoRegistroConfirmado:
-      case CodMotivo  of
+      case StrToIntDef(CodMotivo,999) of
          00: Result := '00-Ocorrencia aceita';
          01: Result := '01-Codigo de banco inválido';
          04: Result := '04-Cod. movimentacao nao permitido p/ a carteira';
@@ -818,10 +817,27 @@ begin
          89: Result := '89-Email sacado nao enviado - Titulo com debito automatico';
          90: Result := '90-Email sacado nao enviado - Titulo com cobranca sem registro';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         if CodMotivo = 'P1' then
+            Result := 'P1-Registrado com QR CODE PIX'
+         else if CodMotivo = 'P2' then
+            Result := 'P2-Registrado sem QR CODE PIX'
+         else if CodMotivo = 'P3' then
+            Result := 'P3-Chave Pix Inválida'
+         else if CodMotivo = 'P4' then
+            Result := 'P4-Chave Pix sem Cadastro no DICT'
+         else if CodMotivo = 'P5' then
+            Result := 'P5-Chave Pix não Compatível CNPJ/CPF ou Agência/Conta Informada'
+         else if CodMotivo = 'P6' then
+            Result := 'P6-Identificador (TXID) em Duplicidade'
+         else if CodMotivo = 'P7' then
+            Result := 'P7-Identificador (TXID) Inválido ou Não Encontrado'
+         else if CodMotivo = 'P8' then
+            Result := 'P8-Alteração Não Permitida - QR CODE concluído, removido pelo PSP ou removido pelo usuário recebedor'
+         else
+            Result:= CodMotivo +' - Outros Motivos';
       end;
       toRetornoRegistroRecusado:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          02: Result:= '02-Codigo do registro detalhe invalido';
          03: Result:= '03-Codigo da Ocorrencia Invalida';
          04: Result:= '04-Codigo da Ocorrencia nao permitida para a carteira';
@@ -857,58 +873,58 @@ begin
          74: Result:= 'Debito nao agendado - Conforme seu pedido titulo nao registrado';
          75: Result:= 'Debito nao agendado - Tipo de numero de inscricao de debitado invalido';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
       toRetornoLiquidado:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          00: Result:= '00-Titulo pago com dinheiro';
          15: Result:= '15-Titulo pago com cheque';
          42: Result:= '42-Rateio nao efetuado';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
       toRetornoBaixadoViaArquivo:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          00: Result:= '00-Ocorrencia aceita';
          10: Result:= '10=Baixa comandada pelo cliente';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
       toRetornoBaixadoInstAgencia:
-         case CodMotivo of
+         case StrToIntDef(CodMotivo,999) of
             00: Result:= '00-Baixado conforme instrucoes na agencia';
             14: Result:= '14-Titulo protestado';
             15: Result:= '15-Titulo excluido';
             16: Result:= '16-Titulo baixado pelo banco por decurso de prazo';
             20: Result:= '20-Titulo baixado e transferido para desconto';
          else
-            Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+            Result:= CodMotivo +' - Outros Motivos';
          end;
       toRetornoLiquidadoAposBaixaouNaoRegistro:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          00: Result:= '00-Pago com dinheiro';
          15: Result:= '15-Pago com cheque';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
 
       toRetornoLiquidadoEmCartorio:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          00: Result:= '00-Pago com dinheiro';
          15: Result:= '15-Pago com cheque';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
 
       toRetornoEntradaRejeitaCEPIrregular:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          48: Result:= '48-CEP invalido';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
 
       toRetornoBaixaRejeitada:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          04: Result:= '04-Codigo de ocorrencia nao permitido para a carteira';
          07: Result:= '07-Agencia\Conta\Digito invalidos';
          08: Result:= '08-Nosso numero invalido';
@@ -920,11 +936,11 @@ begin
          77: Result:= '70-Transferencia para desconto nao permitido para a carteira';
          85: Result:= '85-Titulo com pagamento vinculado';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
 
       toRetornoDebitoTarifas:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          02: Result:= '02-Tarifa de permanência título cadastrado';
          03: Result:= '03-Tarifa de sustação';
          04: Result:= '04-Tarifa de protesto';
@@ -1029,19 +1045,19 @@ begin
          107: Result:='107-Extrato de protesto';
          110: Result:='110-Tarifa reg/pagto Bradesco Expresso';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
 
       toRetornoOcorrenciasdoSacado:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          78 : Result:= '78-Sacado alega que faturamento e indevido';
          116: Result:= '116-Sacado aceita/reconhece o faturamento';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
 
       toRetornoALteracaoOutrosDadosRejeitada:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          01: Result:= '01-Código do Banco inválido';
          04: Result:= '04-Código de ocorrência não permitido para a carteira';
          05: Result:= '05-Código da ocorrência não numérico';
@@ -1077,11 +1093,11 @@ begin
          88: Result:= '88-E-mail Sacado não lido no prazo 5 dias';
          91: Result:= '91-E-mail sacado não recebido';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
 
       toRetornoComandoRecusado:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          01 : Result:= '01-Código do Banco inválido';
          02 : Result:= '02-Código do registro detalhe inválido';
          04 : Result:= '04-Código de ocorrência não permitido para a carteira';
@@ -1121,20 +1137,20 @@ begin
          94 : Result:= '94-Título Penhorado – Instrução Não Liberada pela Agência';
 
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
 
       toRetornoDesagendamentoDebitoAutomatico:
-      case CodMotivo of
+      case StrToIntDef(CodMotivo,999) of
          81 : Result:= '81-Tentativas esgotadas, baixado';
          82 : Result:= '82-Tentativas esgotadas, pendente';
          83 : Result:= '83-Cancelado pelo Sacado e Mantido Pendente, conforme negociação';
          84 : Result:= '84-Cancelado pelo sacado e baixado, conforme negociação';
       else
-         Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= CodMotivo +' - Outros Motivos';
       end;
    else
-      Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+      Result:= CodMotivo +' - Outros Motivos';
    end;
 
    Result := ACBrSTr(Result);

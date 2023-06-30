@@ -43,7 +43,7 @@ uses Classes, Graphics, Contnrs, IniFiles,
      {$IfNDef MSWINDOWS}
        ACBrConsts,
      {$ENDIF}
-     SysUtils, typinfo,
+     SysUtils, typinfo, Variants,
      ACBrBase, ACBrMail, ACBrValidador,
      ACBrDFeSSL, pcnConversao, ACBrBoletoConversao, ACBrBoletoRetorno,
      ACBrPIXBase, ACBrPIXBRCode;
@@ -4888,7 +4888,8 @@ procedure TACBrBancoClass.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
   ContLinha, CodOcorrencia  :Integer;
-  CodMotivo, i, MotivoLinha :Integer;
+  CodMotivo : Variant;
+  i, MotivoLinha :Integer;
   CodMotivo_19, rAgencia    :String;
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
@@ -5000,7 +5001,7 @@ begin
            MotivoLinha := 319;
            for i := 0 to 4 do
            begin
-              CodMotivo := StrToInt(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
+              CodMotivo := IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2));
 
               {Se for o primeiro motivo}
               if (i = 0) then
@@ -5009,7 +5010,10 @@ begin
                  if(CodOcorrencia in [02, 06, 09, 10, 15, 17])then
                   begin
                     MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
-                    DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
+                    if VarIsNumeric(CodMotivo) then
+                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
+                    else
+                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
                   end
                  else
                   begin
@@ -5021,7 +5025,10 @@ begin
                     else
                      begin
                        MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
-                       DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
+                       if VarIsNumeric(CodMotivo) then
+                          DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
+                        else
+                          DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
                      end;
                   end;
                end
@@ -5031,7 +5038,10 @@ begin
                  if CodMotivo <> 0 then
                  begin
                     MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
-                    DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
+                    if VarIsNumeric(CodMotivo) then
+                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
+                    else
+                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
                  end;
                end;
 

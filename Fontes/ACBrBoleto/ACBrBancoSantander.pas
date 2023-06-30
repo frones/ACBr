@@ -1129,7 +1129,7 @@ begin
                                              Copy(Linha, 148, 2)+'/'+
                                              Copy(Linha, 150,4),0, 'DD/MM/YYYY' );
         end
-        else (if copy(Linha, 14, 1) = 'Y') and (if copy(Linha, 18, 2) = '03')  then
+        else if((copy(Linha, 14, 1) = 'Y') and (copy(Linha, 18, 2) = '03'))  then
           QrCode.PIXQRCodeDinamico(Trim(Copy(Linha, 82, 77)), Trim(Copy(Linha, 159, 35)), Titulo);
       end;
     finally

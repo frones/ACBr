@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/06/2023
+-- ACBrNFSeXServicos.ini --
+[*] Atualizado a URL de produção da cidade de Cuiaba/MT
+ Por: Diego Reckziegel
 -- NFSeBrasil.LerXml --
 [*] Possível solução para a leitura da descrição do serviço.
   Por: Italo Giurizzato Junior

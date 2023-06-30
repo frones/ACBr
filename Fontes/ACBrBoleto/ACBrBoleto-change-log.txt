@@ -52,6 +52,9 @@ Símbolo : Significado
 [-]TK-4037 ACBrBoletoW_Credisis - Ajuste para correção do Erro "DefinirServicoEAction"
 https://www.projetoacbr.com.br/forum/topic/72532-acbrboletows-integra%C3%A7%C3%A3o-ws-com-o-banco-credisis-ajuste-para-corre%C3%A7%C3%A3o-do-erro-definirservicoeaction/
 Por : ODEON TECNOLOGIA /Verificado: Daniel Morais
+[+]TK-4094 ACBrBancoSantander - Alteração para leitura segmento Y03 CNAB 240 QrCodePIX
+https://www.projetoacbr.com.br/forum/topic/72781-retorno-cnab-240-santander-n%C3%A3o-l%C3%AA-segmento-y/
+Por : Ronaldo Negreiros Danieli / Daniel Morais
 23/06/2023
 [+]TK-3830 ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API - Implementação inicial do SANTANDER API
    https://www.projetoacbr.com.br/forum/topic/71682-boleto-api-santander/#comment-471085

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/06/2023
+-- ACBrNFSeXServicos.ini --
+[*] A cidade de Colina/SP, trocou de provedor, agora é Pronim na versão 2.03
+ Por: Destak
+
 29/06/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de São Sebastião do Oeste/MG, mudou a versão para 2.02, provedor ainda é o Betha.

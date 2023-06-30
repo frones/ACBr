@@ -44,6 +44,8 @@ Símbolo : Significado
 
 30/06/2023
 -- ACBrNFSeXServicos.ini --
+[*] A cidade de Penha/SC trocou de provedor, agora é IPM
+ Por: BluData
 [*] Atualizado a URL de produção da cidade de Cuiaba/MT
  Por: Diego Reckziegel
 -- NFSeBrasil.LerXml --

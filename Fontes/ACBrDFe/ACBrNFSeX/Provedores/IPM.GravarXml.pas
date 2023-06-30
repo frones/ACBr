@@ -312,7 +312,7 @@ begin
     Result[i].AppendChild(AddNode(tcDe2, '#', 'unidade_quantidade', 1, 15, 0,
                                    NFSe.Servico.ItemServico[I].Quantidade, ''));
 
-    Result[i].AppendChild(AddNode(tcDe2, '#', 'unidade_valor_unitario', 1, 15, 0,
+    Result[i].AppendChild(AddNode(tcDe10, '#', 'unidade_valor_unitario', 1, 15, 0,
                                 NFSe.Servico.ItemServico[I].ValorUnitario, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_item_lista_servico', 1, 9, 1,
@@ -341,7 +341,11 @@ begin
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_deducao', 1, 15, 0,
                                 NFSe.Servico.ItemServico[I].ValorDeducoes, ''));
 
-    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 0,
+    if NFSe.Servico.ItemServico[I].SituacaoTributaria = 3 then
+      Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 1,
+                         NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS))
+    else
+      Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 0,
                          NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS));
   end;
 

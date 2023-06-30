@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/06/2023
+-- IPM.GravarXml --
+[*] Alterado para 10 casas decimais ao gerar a tag unidade_valor_unitario e
+    imposto uma condição ao gerar a tag valor_issrf.
+  Por: Léo
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Colina/SP, trocou de provedor, agora é Pronim na versão 2.03
  Por: Destak

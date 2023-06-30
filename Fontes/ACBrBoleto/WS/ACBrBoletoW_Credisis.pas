@@ -66,6 +66,10 @@ Type
     procedure DefinirEnvelopeSoap; override;
     procedure DefinirRootElement; override;
 
+
+	procedure DefinirServicoEAction; override;
+    function DefinirSOAPAtributtes: string; override;
+
     procedure GerarHeader; override;
     procedure GerarDados; override;
 
@@ -92,8 +96,8 @@ Type
   end;
 
 Const
-  C_CredSis_URL = 'https://credisiscobranca.com.br/v2/ws?wsdl';
-  C_CredSis_SOAP_ATTRIBUTTES = 'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+  C_URL = 'https://credisiscobranca.com.br/v2/ws?wsdl';
+  C_SOAP_ATTRIBUTTES = 'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
                        'xmlns:urn="urn:CredisisBoletoInterface" xmlns:urn1="urn:CredisisBoletoInterface-CredisisWebService"';
 
 implementation
@@ -106,8 +110,7 @@ uses
 
 constructor TBoletoW_Credisis.Create(ABoletoWS: TBoletoWS);
 begin
-    inherited Create(ABoletoWS);
-    FPSoapEnvelopeAtributtes := C_CredSis_SOAP_ATTRIBUTTES;
+  inherited Create(ABoletoWS);
 end;
 
 procedure TBoletoW_Credisis.DefinirEnvelopeSoap;
@@ -138,8 +141,6 @@ begin
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
 
   FPEnvelopeSoap := Texto;
-
-  FPSoapAction  := 'INCLUSAO';
   FPMimeType    := '';
 end;
 
@@ -149,6 +150,28 @@ begin
     FPCloseRootElement:= '';
 end;
 
+procedure TBoletoW_Credisis.DefinirServicoEAction;
+Var Servico: String;
+begin
+  FPURL := C_URL;
+
+  case Boleto.Configuracoes.WebService.Operacao of
+    tpInclui : Servico := 'INCLUSAO';
+  Else
+    raise EACBrBoletoWSException.Create(ClassName + Format( S_OPERACAO_NAO_IMPLEMENTADO,[
+                                                  TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao)]));
+
+  end;
+
+  FPSoapAction := Servico;
+
+end;
+
+function TBoletoW_Credisis.DefinirSOAPAtributtes: string;
+begin
+  Result := C_SOAP_ATTRIBUTTES;
+end;
+
 procedure TBoletoW_Credisis.GerarHeader;
 begin
 
@@ -156,7 +179,8 @@ end;
 
 procedure TBoletoW_Credisis.DefinirURL;
 begin
-    FPURL := C_CredSis_URL;
+  FPURL := '';
+  DefinirServicoEAction;
 end;
 
 function TBoletoW_Credisis.Enviar: Boolean;

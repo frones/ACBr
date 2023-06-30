@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+30/06/2023
+[-]TK-4037 ACBrBoletoW_Credisis - Ajuste para correção do Erro "DefinirServicoEAction"
+https://www.projetoacbr.com.br/forum/topic/72532-acbrboletows-integra%C3%A7%C3%A3o-ws-com-o-banco-credisis-ajuste-para-corre%C3%A7%C3%A3o-do-erro-definirservicoeaction/
+Por : ODEON TECNOLOGIA /Verificado: Daniel Morais
 23/06/2023
 [+]TK-3830 ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API - Implementação inicial do SANTANDER API
    https://www.projetoacbr.com.br/forum/topic/71682-boleto-api-santander/#comment-471085

@@ -55,6 +55,9 @@ Por : ODEON TECNOLOGIA /Verificado: Daniel Morais
 [+]TK-4094 ACBrBancoSantander - Alteração para leitura segmento Y03 CNAB 240 QrCodePIX
 https://www.projetoacbr.com.br/forum/topic/72781-retorno-cnab-240-santander-n%C3%A3o-l%C3%AA-segmento-y/
 Por : Ronaldo Negreiros Danieli / Daniel Morais
+[-]TK-4115 ACBrBancoInter - Alteração campo espécie de titulo  posição 148 a 149 para 01-DM Conf Nova versão manual 1.2/2023
+https://www.projetoacbr.com.br/forum/topic/72816-altera%C3%A7%C3%B5es-em-acbrbancointerpas-referente-esp%C3%A9cie-do-t%C3%ADtulo/
+Por : Jacinto Junior /Conferido: Daniel Morais
 23/06/2023
 [+]TK-3830 ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API - Implementação inicial do SANTANDER API
    https://www.projetoacbr.com.br/forum/topic/71682-boleto-api-santander/#comment-471085

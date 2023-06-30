@@ -716,7 +716,14 @@ begin
 
 
     {CTe de Complemento de valor}
+      {infCTe.versao = 3.0}
       //InfCTeComp.chave := '';
+
+      {infCTe.versao = 4.0}
+      //with infCteComp10.New do
+      //begin
+      //  chCTe  := 'chave';
+      //end;
 
     {CTe de Anulacao de valores}
       //infCteAnu.chCTe := '';
@@ -1209,7 +1216,15 @@ begin
     end;
 
     {CTe de Complemento de valor}
+      {infCTe.versao = 3.0}
       //InfCTeComp.chave := '';
+
+      {infCTe.versao = 4.0}
+      //with infCteComp10.New do
+      //begin
+      //  chCTe  := 'chave';
+      //end;
+
 
     {CTe de Anulacao de valores}
       //infCteAnu.chCTe := '';

@@ -1369,7 +1369,7 @@ object frmACBrCTe: TfrmACBrCTe
       Top = 1
       Width = 567
       Height = 197
-      ActivePage = tsEventos
+      ActivePage = tsEnvios
       Align = alTop
       TabOrder = 0
       object tsEnvios: TTabSheet

@@ -213,6 +213,10 @@ begin
     begin
       ItemListaServico          := NormatizarItemListaServico(CodigoItemServico);
       xItemListaServico         := ItemListaServicoDescricao(ItemListaServico);
+
+      if xItemListaServico = '' then
+        xItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescricaoItemListaServico'), tcStr);
+
       CodigoCnae                := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoCnae'), tcStr);
       CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoTributacaoMunicipio'), tcStr);
       Discriminacao             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);

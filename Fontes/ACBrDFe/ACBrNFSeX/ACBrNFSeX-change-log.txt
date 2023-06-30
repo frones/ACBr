@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/06/2023
+-- NFSeBrasil.LerXml --
+[*] Possível solução para a leitura da descrição do serviço.
+  Por: Italo Giurizzato Junior
 -- IPM.GravarXml --
 [*] Alterado para 10 casas decimais ao gerar a tag unidade_valor_unitario e
     imposto uma condição ao gerar a tag valor_issrf.

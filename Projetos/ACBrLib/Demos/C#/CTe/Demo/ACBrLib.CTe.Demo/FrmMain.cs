@@ -45,7 +45,7 @@ namespace ACBrLib.CTe.Demo
             cmbSSlType.EnumDataSource(SSLType.LT_all);
 
             // Altera as config de log
-            ACBrCTe.Config.Principal.LogNivel = NivelLog.logCompleto;
+            ACBrCTe.Config.Principal.LogNivel = NivelLog.logParanoico;
 
             var logPath = Path.Combine(Application.StartupPath, "Logs");
             if (!Directory.Exists(logPath))
@@ -1021,7 +1021,7 @@ namespace ACBrLib.CTe.Demo
             cte.Identificacao.cUF = "15";
             cte.Identificacao.CFOP = 5353;
             cte.Identificacao.NatOp = "PRESTACAO SERVICO";
-            cte.Identificacao.mod = cmbModeloDocumento.GetSelectedValue<ModeloCTe>();
+            cte.Identificacao.mod = 57;
             cte.Identificacao.serie = 1;
             cte.Identificacao.nCT = 000001402;
             cte.Identificacao.dhEmi = DateTime.Now;
@@ -1046,8 +1046,10 @@ namespace ACBrLib.CTe.Demo
             cte.Identificacao.retira = 0;
             cte.Identificacao.xDetRetira = "";
             cte.Identificacao.indGlobalizado = 0;
-            cte.Identificacao.toma3 = TomadorCTe.Remetente;
-            //cte.Identificacao.toma3 = TomadorCTe.Outros;
+            //cte.Identificacao.toma3 = 3;
+            cte.Identificacao.dhCont = DateTime.Now;
+
+            //Tomador
             cte.Tomador4.CNPJCPF = "10242141000174";
             cte.Tomador4.IE = "0010834420031";
             cte.Tomador4.xNome = "ACOUGUE E SUPERMERCADO SOUZA LTDA";
@@ -1072,7 +1074,7 @@ namespace ACBrLib.CTe.Demo
             cte.Complemento.origCalc = "Sao Paulo";
             cte.Complemento.destCalc = "Campinas";
             cte.Complemento.xObs = "Observação livre";
-            /*
+           
             var dProg = "23/06/2023";
             cte.Entrega.dProg = DateTime.Parse(dProg);
 
@@ -1092,8 +1094,7 @@ namespace ACBrLib.CTe.Demo
             cte.ObsCont.xTexto = "Valor do Campo";
             cte.ObsFisco.xCampo = "Nome do Campo";
             cte.ObsFisco.xTexto = "Valor do Campo";
-            */
-
+            
             //Emitente
             cte.Emitente.CNPJ = "18760540000139";
             cte.Emitente.IE = "111111";
@@ -1186,23 +1187,25 @@ namespace ACBrLib.CTe.Demo
             cte.InformacoesRelativasImpostos.vTotTrib = 10;
             cte.InformacoesRelativasImpostos.infAdFisco = "teste";
 
-            cte.Rodoviario.RNTRC = "12345678";
-
             cte.GrupoInformacoesNormalSubstituto.infCarga.vCarga = 5000;
             cte.GrupoInformacoesNormalSubstituto.infCarga.proPred = "Produto Predominante";
             cte.GrupoInformacoesNormalSubstituto.infCarga.xOutCat = "Pacotes";
             cte.GrupoInformacoesNormalSubstituto.infCarga.vCargaAverb = 5000;
 
-            cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.cUnid = CodUniMedidaCTe.UNIDADE;
-            cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.tpMed = "Kg";
-            cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.qCarga = 10;
+            var infQ = new InfQCTe();
+            infQ.cUnid = CodUniMedidaCTe.UNIDADE;
+            infQ.tpMed = "KG";
+            infQ.qCarga = 10;
 
-            cte.GrupoInformacoesNormalSubstituto.infModal.versaoModal = 1;
+            cte.GrupoInformacoesNormalSubstituto.infCarga.infQ.Add(infQ);
 
-            var chaveNFe = new InfNFeCTe();
-            chaveNFe.chave = "42210117089484000190550110000091001371413248";
-
-            cte.GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(chaveNFe);
+            var NFe = new InfNFeCTe();
+            NFe.chave = "42210117089484000190550110000091001371413248";
+            NFe.dPrev = DateTime.Parse("30/06/2023");
+            
+            cte.GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(NFe);
+           
+            cte.Rodoviario.RNTRC = "12345678";
 
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.nFat = "123";
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.vOrig = 100;

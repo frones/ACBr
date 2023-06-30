@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ACBrLib.Core.CTe
 {
-    public class InfNFeCTe
+    public class InfNFCTe
     {
         public string nRoma { get; set; }
 
@@ -35,8 +35,6 @@ namespace ACBrLib.Core.CTe
         public int nCFOP { get; set; }
 
         public decimal nPeso { get; set; }
-
-        public string PIN { get; set; }
 
         public string chave { get; set; }
 

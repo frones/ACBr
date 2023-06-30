@@ -122,14 +122,16 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
-            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infDoc, "infDoc");
-            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.docAnt, "docAnt");
+
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.infCarga.infQ.Count; i++)
+            {
+                var infQ = GrupoInformacoesNormalSubstituto.infCarga.infQ[i];
+                iniData.WriteToIni(infQ, $"infQ{i + 1:000}");
+
+            }
+
+            iniData.WriteToIni(Rodoviario, "rodo");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
-            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.veicNovos, "veicNovos");
-            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.cobr, "cobr");
-            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCTeSub, "infCTeSub");
-            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infGlobalizado, "infGlobalizado");
-            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infServVinc, "infServVinc");
             
             for (var i = 0; i < GrupoInformacoesNormalSubstituto.infDoc.infNFe.Count; i++)
             {
@@ -140,8 +142,7 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(DetalhamentoComplementado, "infCteComp");
             iniData.WriteToIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.WriteToIni(InformacoesSuplementares, "infCTeSupl");
-            iniData.WriteToIni(Rodoviario, "rodo");
-
+            
             return iniData;
         }
 
@@ -166,21 +167,28 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infDoc, "infDoc");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.docAnt, "docAnt");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.veicNovos, "veicNovos");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.cobr, "cobr");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCTeSub, "infCTeSub");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infGlobalizado, "infGlobalizado");
-            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infServVinc, "infServVinc");
 
             var i = 0;
-            InfNFeCTe infNFe;
+            InfQCTe infQ;
             do
             {
                 i++;
-                infNFe = iniData.ReadFromIni<InfNFeCTe>($"chave{i:000}");
+                infQ = iniData.ReadFromIni<InfQCTe>($"infQ{i:000}");
+                if (infQ != null) continue;
+
+                GrupoInformacoesNormalSubstituto.infCarga.infQ.Add(infQ);
+
+            } while (infQ != null);
+            
+            iniData.ReadFromIni(Rodoviario, "rodo");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
+
+            var j = 0;
+            InfNFeCTe infNFe;
+            do
+            {
+                j++;
+                infNFe = iniData.ReadFromIni<InfNFeCTe>($"chave{j:000}");
                 if (infNFe != null) continue;
 
                 GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(infNFe);
@@ -190,7 +198,6 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(DetalhamentoComplementado, "infCteComp");
             iniData.ReadFromIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.ReadFromIni(InformacoesSuplementares, "infCTeSupl");
-            iniData.ReadFromIni(Rodoviario, "rodo");
         }
 
         public static CTe Load(string conteudo) => ACBrIniFile.Parse(conteudo);

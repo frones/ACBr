@@ -92,6 +92,7 @@
 	  <Compile Include="..\Shared\CTe\InfQCTe.cs" Link="CTe\InfQCTe.cs" />
 	  <Compile Include="..\Shared\CTe\CodUniMedidaCTe.cs" Link="CTe\CodUniMedidaCTe.cs" />
 	  <Compile Include="..\Shared\CTe\InfDocCTe.cs" Link="CTe\InfDocCTe.cs" />
+	  <Compile Include="..\Shared\CTe\InfNFCTe.cs" Link="CTe\InfNFCTe.cs" />
 	  <Compile Include="..\Shared\CTe\InfNFeCTe.cs" Link="CTe\InfNFeCTe.cs" />
 	  <Compile Include="..\Shared\CTe\InfUnidCargaCTe.cs" Link="CTe\InfUnidCargaCTe.cs" />
 	  <Compile Include="..\Shared\CTe\TipoUnidCargaCTe.cs" Link="CTe\TipoUnidCargaCTe.cs" />

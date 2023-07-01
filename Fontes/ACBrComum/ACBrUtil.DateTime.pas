@@ -613,6 +613,9 @@ begin
         Ano := StrToInt(Copy(xData, i+1, Length(xData)));
       end;
 
+      if Ano <= 99 then
+        Ano := 2000 + Ano;
+
       Result := FormatFloat('00', Dia) + '/' +
                 FormatFloat('00', Mes) + '/' +
                 FormatFloat('0000', Ano);
@@ -624,8 +627,37 @@ function ParseDataHora(const DataStr: string): string;
 var
   xDataHora, xData, xHora, xTZD: string;
   p: Integer;
+
+  function ConverteNomeMes(str: string): string;
+  var
+    iMes: Integer;
+    mesNum: string;
+  const
+    meses: array[1..12] of string = ('JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ');
+    months: array[1..12] of string = ('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
+  begin
+    Result := str;
+
+    if OnlyNumber(Result) = OnlyAlphaNum(Result) then
+      exit;
+
+    for iMes:=1 to 12 do
+    begin
+      mesNum := Format('%2.2d',[iMes]);
+
+      Result := StringReplace(Result, meses[iMes], mesNum, [rfReplaceAll]);
+
+      case iMes of
+        2,4,5,8,9,10,12: Result := StringReplace(Result, months[iMes], mesNum, [rfReplaceAll]);
+      end;
+    end;
+  end;
+
 begin
-  xDataHora := Trim(UpperCase(StringReplace(DataStr, 'Z', '', [rfReplaceAll])));
+  xDataHora := Trim(UpperCase(DataStr));
+
+  xDataHora := ConverteNomeMes(xDataHora);
+  xDataHora := StringReplace(xDataHora, 'Z', '', [rfReplaceAll]);
 
   p := Pos('T', xDataHora);
 

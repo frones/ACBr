@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2023
+-- ACBrUtil.DateTime --
+[*] Ajuste na ParseDataHora para interpretar datas com iniciais do mês ao invés de numeral
+[*] Ajuste na AjustarData para corrigir zeros à esquerda preenchidos em anos com 2 dígitos
+   Por: Renato Rubinho
+
 22/06/2023
 -- ACBrUtil.DateTime --
 [-] Realizado um reverte pois gerou um efeito colateral.

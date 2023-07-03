@@ -387,7 +387,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsInscricaoMunicipal">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="15" />
+			<xsd:maxLength value="18" />
 			<xsd:minLength value="1" />
 			<xsd:whiteSpace value="collapse" />
 		</xsd:restriction>

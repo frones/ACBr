@@ -474,8 +474,11 @@ end;
 
 procedure TfrlDANFeRLSimplificado.InicializarDados;
 begin
-     AdicionarFaturaReal;
-     AdicionarFatura;
+  rlmProdutoCodigo.Width    := fpDANFe.LarguraCodProd;
+  rlmProdutoDescricao.Left  := rlmProdutoCodigo.Left + rlmProdutoCodigo.Width + 2;
+  RLLabel4.Left             := rlmProdutoDescricao.Left;
+  AdicionarFaturaReal;
+  AdicionarFatura;
 end;
 
 function TfrlDANFeRLSimplificado.ManterDuplicatas: Integer;

@@ -53,6 +53,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/06/2023
+-- ACBreSocialConfiguracoes --
+[*] Ajustado para versão default na criação do componente ser a veS01_01_00;
+  Por: Alexandre de Paula / Rev.: Elton Barbosa
+
+26/06/2023
 -- pcesS5002 --
 [*] Corrige leitura do registro S5002 do layout do eSocial a partir do XML.
   Por: Hudson G Leite / Rev.: Alexandre de Paula e Elton Barbosa

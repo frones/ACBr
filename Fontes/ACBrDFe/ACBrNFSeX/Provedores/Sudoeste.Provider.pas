@@ -58,6 +58,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderSudoeste202 = class (TACBrNFSeProviderABRASFv2)
@@ -77,7 +78,7 @@ type
 implementation
 
 uses
-  ACBrDFeException, ACBrUtil.Strings,
+  ACBrDFeException, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   Sudoeste.GravarXml, Sudoeste.LerXml;
 
 { TACBrNFSeProviderSudoeste202 }
@@ -345,6 +346,17 @@ begin
   Result := Executar('', Request,
                      ['SubstituirNfseReturn', 'SubstituirNfseResposta'],
                      ['xmlns:def="http://DefaultNamespace"']);
+end;
+
+function TACBrNFSeXWebserviceSudoeste202.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

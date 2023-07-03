@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/07/2023
+-- Sudoeste.Provider --
+[+] Incluído a função para tratar o XML retornado.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv1/Thema.GravarXml/Thema.LerXml/Thema.Provider --
 [*] Alteração visando a leitura e escrita do grupo Construção Civil, pois o provedor
     possui um erro de grafia no nome do grupo.

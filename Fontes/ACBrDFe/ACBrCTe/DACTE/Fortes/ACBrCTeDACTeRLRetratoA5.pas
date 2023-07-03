@@ -1220,6 +1220,8 @@ end;
 
 procedure TfrmDACTerlRetratoA5.rlb_05_ComplementoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
+var
+  i: Integer;
 begin
   inherited;
   PrintIt := rlCTe.PageNumber = 1;
@@ -1231,8 +1233,23 @@ begin
   rlmComplChave2.Lines.Clear;
   rlmComplValor2.Lines.Clear;
   rlb_05_Complemento.Enabled := (fpCTe.Ide.tpCTe = tcComplemento);
-  rlmComplChave1.Lines.Add(fpCTe.InfCTeComp.Chave);
-  rlmComplValor1.Lines.Add(FormatFloatBr(msk10x2, fpCTe.vPrest.vTPrest));
+
+  if fpCTe.infCTe.versao <= 3 then
+  begin
+    rlmComplChave1.Lines.Add(fpCTe.InfCTeComp.Chave);
+
+    rlmComplValor1.Lines.Add(FormatFloatBr(msk10x2, fpCTe.vPrest.vTPrest));
+  end
+  else
+  begin
+    for i := 0 to fpCTe.infCteComp10.Count -1 do
+    begin
+      if (i mod 2) = 0 then
+        rlmComplChave1.Lines.Add(fpCTe.infCteComp10[i].chCTe)
+      else
+        rlmComplChave2.Lines.Add(fpCTe.infCteComp10[i].chCTe);
+    end;
+  end;
 end;
 
 procedure TfrmDACTerlRetratoA5.rlb_06_ValorPrestacaoBeforePrint(Sender: TObject;

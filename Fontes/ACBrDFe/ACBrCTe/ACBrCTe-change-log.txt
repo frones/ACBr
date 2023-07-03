@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/07/2023
+-- ACBrCTeDACTeRLRetrato/ACBrCTeDACTeRLRetratoA5 --
+[*] Ajustes para imprimir corretamente as chaves dos CT-e complementados na 
+    versão 4.00
+  Por: Italo Giurizzato Junior
+
 28/06/2023
 -- ACBrCTeWebServices --
 [*] Ajustes para funcionar com a SEFAZ-MG, pois ela esta usando NameSpace e

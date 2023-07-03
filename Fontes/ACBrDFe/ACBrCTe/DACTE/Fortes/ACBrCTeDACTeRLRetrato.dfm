@@ -7,7 +7,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTe: TRLReport
     Left = 8

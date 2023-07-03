@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/07/2023
+-- ACBrNFSeXServicos.ini --
+[+] Incluída a cidade de Bom Jesus/PI, provedor é: Fisco
+  Por: Edmilson Vieira Gomes
 -- Sudoeste.Provider --
 [+] Incluído a função para tratar o XML retornado.
   Por: Italo Giurizzato Junior

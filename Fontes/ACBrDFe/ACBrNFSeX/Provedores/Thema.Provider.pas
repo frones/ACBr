@@ -259,8 +259,8 @@ function TACBrNFSeProviderThema.NaturezaOperacaoDescricao(
   const t: TnfseNaturezaOperacao): string;
 begin
   case t of
-    no63 : Result := '6.3 - Tributação fora do municipio sem retenção de ISS';
-    no64 : Result := '6.4 - Tributacao fora do municipio com retenção de ISS';
+    no63 : Result := '6.3 - Tributação fora do municipio com retenção de ISS';
+    no64 : Result := '6.4 - Tributacao fora do municipio sem retenção de ISS';
   else
     Result := inherited NaturezaOperacaoDescricao(t);
   end;

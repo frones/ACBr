@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
@@ -46,6 +47,7 @@ type
   TNFSeR_Thema = class(TNFSeR_ABRASFv1)
   protected
 
+    procedure LerConstrucaoCivil(const ANode: TACBrXmlNode); override;
   public
 
   end;
@@ -56,5 +58,25 @@ implementation
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Thema
 //==============================================================================
+
+{ TNFSeR_Thema }
+
+procedure TNFSeR_Thema.LerConstrucaoCivil(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('ContrucaoCivil');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.ConstrucaoCivil do
+    begin
+      CodigoObra := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoObra'), tcStr);
+      Art        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Art'), tcStr);
+    end;
+  end;
+end;
 
 end.

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/07/2023
+-- ACBrNFSeXLerXml_ABRASFv1/Thema.GravarXml/Thema.LerXml/Thema.Provider --
+[*] Alteração visando a leitura e escrita do grupo Construção Civil, pois o provedor
+    possui um erro de grafia no nome do grupo.
+  Por: Tiago
 -- Infisc.LerXml --
 [*] Alteração visando a leitura do grupo dadosDaObra e da tag empreitadaGlobal.
   Por: Tiago Tecchio

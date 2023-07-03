@@ -38,7 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao, ACBrXmlBase;
+  ACBrXmlBase, ACBrXmlDocument,
+  ACBrNFSeXConsts, ACBrNFSeXParametros, ACBrNFSeXConversao,
+  ACBrNFSeXGravarXml_ABRASFv1;
 
 type
   { TNFSeW_Thema }
@@ -46,6 +48,8 @@ type
   TNFSeW_Thema = class(TNFSeW_ABRASFv1)
   protected
     procedure Configuracao; override;
+
+    function GerarConstrucaoCivil: TACBrXmlNode; override;
 
   end;
 
@@ -70,6 +74,22 @@ begin
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
   DivAliq100 := True;
+end;
+
+function TNFSeW_Thema.GerarConstrucaoCivil: TACBrXmlNode;
+begin
+  Result := nil;
+
+  if (NFSe.ConstrucaoCivil.CodigoObra <> '') then
+  begin
+    Result := CreateElement('ContrucaoCivil');
+
+    Result.AppendChild(AddNode(tcStr, '#51', 'CodigoObra', 1, 15, 1,
+                                   NFSe.ConstrucaoCivil.CodigoObra, DSC_COBRA));
+
+    Result.AppendChild(AddNode(tcStr, '#52', 'Art', 1, 15, 1,
+                                            NFSe.ConstrucaoCivil.Art, DSC_ART));
+  end;
 end;
 
 end.

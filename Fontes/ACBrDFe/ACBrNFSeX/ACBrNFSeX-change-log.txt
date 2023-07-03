@@ -44,6 +44,8 @@ Símbolo : Significado
 
 03/07/2023
 -- ACBrNFSeXServicos.ini --
+[*] Incluído o Parâmetro para não dividir a aliquota por 100 para a cidade Pedro Leopoldo.
+  Por: Italo Giurizzato Junior
 [+] Incluída a cidade de Bom Jesus/PI, provedor é: Fisco
   Por: Edmilson Vieira Gomes
 -- Sudoeste.Provider --

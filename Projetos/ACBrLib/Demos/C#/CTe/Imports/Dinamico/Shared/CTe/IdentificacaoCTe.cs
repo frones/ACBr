@@ -15,7 +15,7 @@ namespace ACBrLib.CTe
 
         public string NatOp { get; set; }
 
-        public ModeloCTe mod { get; set; }
+        public int mod { get; set; }
 
         public int serie { get; set; }
 
@@ -67,7 +67,7 @@ namespace ACBrLib.CTe
 
         public IndicadorTomadorCTe indIEToma { get; set; }
 
-        public TomadorCTe toma3 { get; set; }
+        public int toma { get; set; }
 
         public InfPercursoCTe infPercurso { get; set; } = new InfPercursoCTe();
 

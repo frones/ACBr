@@ -1002,6 +1002,7 @@ namespace ACBrLib.CTe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.Enviar(aLote);
+                rtbRespostas.AppendText(ret);
 
             }
             catch (Exception ex)
@@ -1046,10 +1047,11 @@ namespace ACBrLib.CTe.Demo
             cte.Identificacao.retira = 0;
             cte.Identificacao.xDetRetira = "";
             cte.Identificacao.indGlobalizado = 0;
-            //cte.Identificacao.toma3 = 3;
+            //cte.Identificacao.toma = 3;
             cte.Identificacao.dhCont = DateTime.Now;
 
             //Tomador
+            cte.Tomador4.toma = 4;
             cte.Tomador4.CNPJCPF = "10242141000174";
             cte.Tomador4.IE = "0010834420031";
             cte.Tomador4.xNome = "ACOUGUE E SUPERMERCADO SOUZA LTDA";

@@ -8,6 +8,8 @@ namespace ACBrLib.Core.CTe
 {
     public class Tomador4CTe
     {
+        public int toma { get; set; }
+
         public string CNPJCPF { get; set; }
 
         public string IE { get; set; }

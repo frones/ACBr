@@ -62,8 +62,10 @@ procedure TNFSeW_GovDigital200.Configuracao;
 begin
   inherited Configuracao;
 
-  // Comentado a linha abaixo para atender a cidade Ouro Preto
-//  DivAliq100  := True;
+  DivAliq100 := True;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then
+    DivAliq100 := False;
 end;
 
 end.

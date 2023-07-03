@@ -2221,6 +2221,7 @@ begin
   FDoNFSe.OnAntesDeImprimir := @AntesDeImprimir;
   FDoNFSe.OnDepoisDeImprimir := @DepoisDeImprimir;
   FDoNFSe.OnConfiguraDANFSe   := @ConfiguraDANFSe;
+  FDoNFSe.OnSubstituirVariaveis  := @SubstituirVariaveis;
 
 // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);

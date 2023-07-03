@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2023
+-- ACBrMonitor1 --
+[*] Ajuste visando corrigir problema de uninitialized function result ao usar 
+    o comando e enviar email para NFSe
+    Por: Diego F
+
 27/06/2023
 --- DoACBrNFSeUnit ---
 [*] Alterações visando uma possível correção para os problemas de retorno

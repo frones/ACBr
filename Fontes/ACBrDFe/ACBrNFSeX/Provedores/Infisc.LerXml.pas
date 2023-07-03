@@ -57,6 +57,7 @@ type
     procedure LerEnderecoEmitente(const ANode: TACBrXmlNode);
     procedure LerTomador(const ANode: TACBrXmlNode);
     procedure LerEnderecoTomador(const ANode: TACBrXmlNode);
+    procedure LerDadosObra(const ANode: TACBrXmlNode);
     procedure LerServicos(const ANode: TACBrXmlNode);
     procedure LerTotal(const ANode: TACBrXmlNode);
     procedure LerFatura(const ANode: TACBrXmlNode);
@@ -185,6 +186,30 @@ begin
       Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
       xSite    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xSite'), tcStr);
     end;
+  end;
+end;
+
+procedure TNFSeR_Infisc.LerDadosObra(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('dadosDaObra');
+  if AuxNode <> nil then
+  begin
+    NFSe.ConstrucaoCivil.Endereco.Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLogObra'), tcStr);
+    NFSe.ConstrucaoCivil.Endereco.Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xComplObra'), tcStr);
+    NFSe.ConstrucaoCivil.Endereco.Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('vNumeroObra'), tcStr);
+    NFSe.ConstrucaoCivil.Endereco.Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairroObra'), tcStr);
+    NFSe.ConstrucaoCivil.Endereco.CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCepObra'), tcStr);
+    NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cCidadeObra'), tcStr);
+    NFSe.ConstrucaoCivil.Endereco.xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCidadeObra'), tcStr);
+    NFSe.ConstrucaoCivil.Endereco.UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('xUfObra'), tcStr);
+    NFSe.ConstrucaoCivil.Endereco.CodigoPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisObra'), tcInt);
+    NFSe.ConstrucaoCivil.Endereco.xPais           := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPaisObra'), tcStr);
+    NFSe.ConstrucaoCivil.Art                      := ObterConteudo(AuxNode.Childrens.FindAnyNs('numeroArt'), tcStr);
+    NFSe.ConstrucaoCivil.nCei                     := ObterConteudo(AuxNode.Childrens.FindAnyNs('numeroCei'), tcStr);
+    NFSe.ConstrucaoCivil.nProj                    := ObterConteudo(AuxNode.Childrens.FindAnyNs('numeroProj'), tcStr);
+    NFSe.ConstrucaoCivil.nMatri                   := ObterConteudo(AuxNode.Childrens.FindAnyNs('numeroMatri'), tcStr);
   end;
 end;
 
@@ -365,6 +390,13 @@ begin
         Producao := snSim
       else
         Producao := snNao;
+
+      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('empreitadaGlobal'), tcStr);
+
+      if aValor = '1' then
+         EmpreitadaGlobal := EgConstrucaoCivil
+      else
+         EmpreitadaGlobal := EgOutros;
     end;
   end;
 end;
@@ -680,6 +712,7 @@ begin
   LerId(AuxNode);
   LerEmitente(AuxNode);
   LerTomador(AuxNode);
+  LerDadosObra(AuxNode);
   LerServicos(AuxNode);
   LerTotal(AuxNode);
   LerCobranca(AuxNode);

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2023
+-- Infisc.LerXml --
+[*] Alteração visando a leitura do grupo dadosDaObra e da tag empreitadaGlobal.
+  Por: Tiago Tecchio
+
 30/06/2023
 -- ACBrNFSeXServicos.ini --
 [*] A cidade de Penha/SC trocou de provedor, agora é IPM

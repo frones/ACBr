@@ -43,8 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/07/2023
+-- IPM.Provider --
+[*] Melhorias no TratarRetornoCancelaNFSe, pois dependendo da cidade o XML de
+    retorno é diferente.
+  Por: Italo Giurizzato Junior
 -- GovDigital.GravarXml --
-[*] Incluída a condição para verficar se existe o parâmetro: NaoDividir100
+[*] Incluída a condição para verificar se existe o parâmetro: NaoDividir100
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] Incluído o Parâmetro para não dividir a aliquota por 100 para a cidade Pedro Leopoldo.

@@ -49,8 +49,6 @@ type
     procedure LerTomador(const ANode: TACBrXmlNode);
     procedure LerTItens(const ANode: TACBrXmlNode);
     procedure LerItens(const ANode: TACBrXmlNode);
-
-    procedure SetxItemListaServico(Codigo: string);
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -84,6 +82,8 @@ begin
     with NFSe.Servico.ItemServico[i] do
     begin
       ItemListaServico := ObterConteudo(ANodes[i].Childrens.FindAnyNs('iServico'), tcStr);
+      ItemListaServico := NormatizarItemListaServico(ItemListaServico);
+      xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
       ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nValorServico'), tcDe2);
       Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('sDescricao'), tcStr);
       Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nAliquota'), tcDe2);
@@ -213,7 +213,8 @@ begin
 
   for i := 1 to 10 do
     aValor := aValor +
-      ObterConteudo(ANode.Childrens.FindAnyNs('sObservacao' + IntToStr(i)), tcStr);
+      ObterConteudo(ANode.Childrens.FindAnyNs('sObservacao' + IntToStr(i)), tcStr){ +
+      ';'};
 
   NFSe.OutrasInformacoes := aValor;
 
@@ -329,28 +330,6 @@ begin
     end;
   end;
   *)
-end;
-
-procedure TNFSeR_Simple.SetxItemListaServico(Codigo: string);
-var
-  Item: Integer;
-  ItemServico: string;
-begin
-  NFSe.Servico.ItemListaServico := Codigo;
-
-  Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-  if Item < 100 then
-    Item := Item * 100 + 1;
-
-  ItemServico := FormatFloat('0000', Item);
-
-  NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
-                                     Copy(ItemServico, 3, 2);
-
-  if FpAOwner.ConfigGeral.TabServicosExt then
-    NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)
-  else
-    NFSe.Servico.xItemListaServico := CodItemServToDesc(ItemServico);
 end;
 
 end.

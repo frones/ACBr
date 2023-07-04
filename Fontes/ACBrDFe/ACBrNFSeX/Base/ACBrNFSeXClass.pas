@@ -470,6 +470,7 @@ type
     FCodServ: string;
     FCodLCServ: string;
     FItemListaServico: string;
+    FxItemListaServico: string;
     FDescricao: string;
     FUnidade: string;
     FTipoUnidade: TUnidade;
@@ -532,6 +533,7 @@ type
     property CodServ: string read FCodServ write FCodServ;
     property CodLCServ: string read FCodLCServ write FCodLCServ;
     property ItemListaServico: string read FItemListaServico write FItemListaServico;
+    property xItemListaServico: string read FxItemListaServico write FxItemListaServico;
     property Descricao: string read FDescricao write FDescricao;
     property Unidade: string read FUnidade write FUnidade;
     property TipoUnidade: TUnidade read FTipoUnidade write FTipoUnidade;

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/07/2023
+-- Simple.Provider/Simple.LerXml/ACBrNFSeXDANFSeRLRetrato --
+[*] Possível solução para a impressão do ItemListaServico e sua descrição.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementação do provedor Intertec que atende a cidade de São João da Boa Vista/SP
   Por: Elisângela Borato/Italo Giurizzato Junior

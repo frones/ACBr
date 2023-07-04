@@ -415,6 +415,7 @@ procedure TfrlXDANFSeRLRetrato.rlbISSQNBeforePrint(Sender: TObject; var PrintIt:
 var
   MostrarObra, MostrarNaturezaOperacao: Boolean;
   FProvider: IACBrNFSeXProvider;
+  i: Integer;
 begin
   inherited;
 
@@ -447,6 +448,17 @@ begin
     begin
       rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ ' + FormatFloat(',0.00', ValorServicos);
       rlmCodServico.Lines.Clear;
+
+      if (Servico.xItemListaServico = '') and (Servico.ItemServico.Count > 0) then
+      begin
+        RLLabel16.Visible := True;
+
+        for i := 0 to Servico.ItemServico.Count -1 do
+        begin
+          rlmCodServico.Lines.Append(Servico.ItemServico.Items[i].ItemListaServico +
+            ' - ' + Servico.ItemServico.Items[i].xItemListaServico);
+        end;
+      end;
 
       if Servico.xItemListaServico <> '' then
       begin

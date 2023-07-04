@@ -462,7 +462,8 @@ type
     cobBancoVotorantim,
     cobBancoPefisa,
     cobBancoFibra,
-    cobBancoSofisaItau
+    cobBancoSofisaItau,
+    cobBancoIndustrialBrasil
     );
 
   TACBrTitulo = class;
@@ -1966,17 +1967,56 @@ implementation
 Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math,ACBrUtil.XMLHTML,
      ACBrUtil.FilesIO,
-     ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoAmazonia, ACBrBancoBanestes,
-     ACBrBancoItau, ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
-     ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB, ACBrBancoHSBC,
-     ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
-     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
-     ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
-     ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
-     ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
-     ACBrBancoBradescoMoneyPlus, ACBrBancoC6, ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
-     ACBrBancoBS2, ACBrBancoPenseBank, ACBrBancoBTGPactual, ACBrBancoOriginal, ACBrBancoVotorantim,
-     ACBrBancoPefisa, ACBrBancoFibra, ACBrBancoSofisaItau;
+     ACBrBancoBradesco,
+     ACBrBancoBrasil,
+     ACBrBancoAmazonia,
+     ACBrBancoBanestes,
+     ACBrBancoItau,
+     ACBrBancoSicredi,
+     ACBrBancoMercantil,
+     ACBrBancoCaixa,
+     ACBrBancoBanrisul,
+     ACBrBancoSantander,
+     ACBrBancoBancoob,
+     ACBrBancoCaixaSICOB,
+     ACBrBancoHSBC,
+     ACBrBancoNordeste ,
+     ACBrBancoBRB,
+     ACBrBancoBic,
+     ACBrBancoBradescoSICOOB,
+     ACBrBancoSafra,
+     ACBrBancoSafraBradesco,
+     ACBrBancoCecred,
+     ACBrBancoBrasilSicoob,
+     ACBrUniprime,
+     ACBrBancoUnicredRS,
+     ACBrBancoBanese,
+     ACBrBancoCredisis,
+     ACBrBancoUnicredES,
+     ACBrBancoCresolSCRS,
+     ACBrBancoCitiBank,
+     ACBrBancoABCBrasil,
+     ACBrBancoDaycoval,
+     ACBrUniprimeNortePR,
+     ACBrBancoPine,
+     ACBrBancoPineBradesco,
+     ACBrBancoUnicredSC,
+     ACBrBancoAlfa,
+     ACBrBancoCresol,
+     ACBrBancoBradescoMoneyPlus,
+     ACBrBancoC6,
+     ACBrBancoRendimento,
+     ACBrBancoInter,
+     ACBrBancoSofisaSantander,
+     ACBrBancoBS2,
+     ACBrBancoPenseBank,
+     ACBrBancoBTGPactual,
+     ACBrBancoOriginal,
+     ACBrBancoVotorantim,
+     ACBrBancoPefisa,
+     ACBrBancoFibra,
+     ACBrBancoSofisaItau,
+     ACBrBancoIndustrialBrasil;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3647,6 +3687,7 @@ begin
     389: Result := cobBancoMercantil;
     399: Result := cobHSBC;
     422: Result := cobBancoSafra;
+    604: Result := cobBancoIndustrialBrasil;
     633: Result := cobBancoRendimento;
     637: begin
            if StrToInt(Carteira) = 109 then
@@ -4483,6 +4524,7 @@ begin
      cobBancoPefisa          : fBancoClass := TACBrBancoPefisa.create(Self);         {174}
      cobBancoFibra           : fBancoClass := TACBrBancoFibra.create(Self);          {224}
      cobBancoSofisaItau      : fBancoClass := TACBrBancoSofisaItau.Create(Self);      {637}
+     cobBancoIndustrialBrasil: fBancoClass := TACBrBancoIndustrialBrasil.Create(Self); {604}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

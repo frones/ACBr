@@ -269,6 +269,7 @@ type
     lblLayout: TLabel;
     cbLayoutNFSe: TComboBox;
     Label49: TLabel;
+    btnLerINI: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -357,6 +358,7 @@ type
     procedure btnImprimirPNClick(Sender: TObject);
     procedure btnEnviaremailPNClick(Sender: TObject);
     procedure btnConsultarNFSePelaChavePNClick(Sender: TObject);
+    procedure btnLerINIClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -380,10 +382,16 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
+  strutils, math, TypInfo, DateUtils,
+//  synacode,
+  blcksock,
+  FileCtrl,
+  Grids,
   IniFiles, Printers,
   pcnAuxiliar, pcnConversao,
-  ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
+  ACBrDFeConfiguracoes, ACBrDFeSSL,
+//  ACBrDFeOpenSSL,
+  ACBrDFeUtil,
   ACBrNFSeXWebserviceBase,
   Frm_Status, Frm_SelecionarCertificado;
 
@@ -528,6 +536,7 @@ begin
       Numero := NumDFe;
       // Provedor Infisc - Layout Proprio
       cNFSe := GerarCodigoDFe(StrToIntDef(Numero, 0));
+      ModeloNFSe := '90';
 
       // no Caso dos provedores abaixo o campo SeriePrestacao devemos informar:
       {
@@ -581,6 +590,8 @@ begin
       DataEmissaoRPS := Now;
       // Provedor RLZ
       Vencimento := Now + 1;
+      // Provedor fintelISS
+      DataPagamento := Now;
 
       (*
         TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
@@ -846,6 +857,7 @@ begin
       DeducaoMateriais := snSim;
       with Servico.Deducao.New do
       begin
+        DeducaoPor := dpValor;
         TipoDeducao := tdMateriais;
         ValorDeduzir := 10.00;
       end;
@@ -1749,7 +1761,7 @@ begin
 
   ACBrNFSeX1.ConsultarNFSePorChave(xChaveNFSe);
 
-  ChecarResposta(tmConsultarNFSePorRps);
+  ChecarResposta(tmConsultarNFSe);
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSePeriodoClick(Sender: TObject);
@@ -1831,7 +1843,8 @@ begin
     end;
   end;
 
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proGiap, proGoverna, proPrescon] then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proGiap, proGoverna,
+     proPrescon, proIntertec] then
   begin
     CodVerificacao := '123';
     if not (InputQuery('Consultar NFSe por RPS', 'Codigo Verificação:', CodVerificacao)) then
@@ -2808,6 +2821,32 @@ begin
     //  ShowMessage('ERRO: '+Erro)
 
     pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmACBrNFSe.btnLerINIClick(Sender: TObject);
+var
+  vNumLote: string;
+begin
+  OpenDialog1.Title := 'Selecione o Arquivo INI';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFSeX1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFSeX1.NotasFiscais.Clear;
+
+    // LoadFromIni - Usado para carregar o arquivo INI para gerar posteriormente
+    // o XML do Rps
+    ACBrNFSeX1.NotasFiscais.LoadFromIni(OpenDialog1.FileName);
+
+    vNumLote := '1';
+    if not(InputQuery('Gerar Lote de Envio', 'Numero do Lote', vNumLote)) then
+      exit;
+
+    ACBrNFSeX1.GerarLote(vNumLote);
   end;
 end;
 
@@ -4596,6 +4635,7 @@ begin
     ACBrNFSeX1.DANFSe.MargemEsquerda := 5;
     ACBrNFSeX1.DANFSe.MargemSuperior := 5;
     ACBrNFSeX1.DANFSe.MargemInferior := 5;
+    ACBrNFSeX1.DANFSE.ImprimeCanhoto := True;
   end;
 
   with ACBrNFSeX1.MAIL do

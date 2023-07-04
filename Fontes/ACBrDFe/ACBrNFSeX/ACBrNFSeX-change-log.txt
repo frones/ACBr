@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/07/2023
+-- Diversos --
+[+] Implementação do provedor Intertec que atende a cidade de São João da Boa Vista/SP
+  Por: Elisângela Borato/Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A URL da cidade de Araxa/MG mudou, provedor ainda é o Governa.
   Por: neto233

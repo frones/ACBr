@@ -177,6 +177,7 @@ uses
   GeisWeb.Provider,
   Giap.Provider,
   Governa.Provider,
+  Intertec.Provider,
   ISSBarueri.Provider,
   ISSCambe.Provider,
   ISSDSF.Provider,
@@ -360,6 +361,8 @@ begin
             Result := nil;
           end;
         end;
+
+      proIntertec: Result := TACBrNFSeProviderIntertec.Create(ACBrNFSe);
 
       proIPM:
         begin

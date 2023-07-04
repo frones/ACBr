@@ -64,6 +64,7 @@ infisc               1.00
 infisc               1.01
 infisc               2.01
 infisc               2.03
+Intertec             1.00
 IPM                  1.00
 IPM                  1.01  24/08/2022
 IPM                  2.04

@@ -503,6 +503,7 @@ begin
         DoLog('Erro Envio: ' + ACBrStr( IntToStr(FBoletoWSClass.RetornoBanco.CodRetorno)
                              + sLineBreak + FBoletoWSClass.RetornoBanco.Msg
                              + sLineBreak + E.Message ));
+      raise;
     end;
   end;
 end;

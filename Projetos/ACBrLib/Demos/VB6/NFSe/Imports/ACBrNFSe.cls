@@ -112,7 +112,7 @@ Private Declare Function NFSE_SubstituirNFSe _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                                       
-Private Declare Function NFSE_LinkNFSE _
+Private Declare Function NFSE_LinkNFSe _
                 Lib "ACBrNFSe32.dll" (ByVal aNumeroNFSe As String, _
                                       ByVal aCodigoVerificacao As String, _
                                       ByVal aChaveAcesso As String, _
@@ -572,7 +572,7 @@ Public Function LinkNFSE(ByVal aNumeroNFSe As String, ByVal aCodigoVerificacao A
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = NFSE_LinkNFSE(aNumeroNFSe, aCodigoVerificacao, aChaveAcesso, aValorServico, buffer, bufferLen)
+    retorno = NFSE_LinkNFSe(aNumeroNFSe, aCodigoVerificacao, aChaveAcesso, aValorServico, buffer, bufferLen)
     CheckResult retorno
     
     LinkNFSE = processResult(buffer, bufferLen)

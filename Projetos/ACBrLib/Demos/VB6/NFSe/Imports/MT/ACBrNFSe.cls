@@ -134,7 +134,7 @@ Private Declare Function NFSE_SubstituirNFSe _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                                       
-Private Declare Function NFSE_LinkNFSE _
+Private Declare Function NFSE_LinkNFSe _
                 Lib "ACBrNFSe32.dll" (ByVal libHandler As Long, _
                                       ByVal aNumeroNFSe As String, _
                                       ByVal aCodigoVerificacao As String, _

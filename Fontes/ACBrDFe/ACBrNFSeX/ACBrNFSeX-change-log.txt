@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2023
+-- ACBrNFSeXGravarXml_ABRASFv2/ACBrNFSeXNotasFiscais --
+[*] Possível solução para gerar a tag CodigoPais quando o serviço só for 
+    executado fora do Brasil.
+  Por: Italo Giurizzato Junior
+
 04/07/2023
 -- Simple.Provider/Simple.LerXml/ACBrNFSeXDANFSeRLRetrato --
 [*] Possível solução para a impressão do ItemListaServico e sua descrição.

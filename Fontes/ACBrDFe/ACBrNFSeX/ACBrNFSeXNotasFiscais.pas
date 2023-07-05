@@ -440,7 +440,7 @@ begin
           CodigoTributacaoMunicipio := INIRec.ReadString(sSecao, 'CodigoTributacaoMunicipio', '');
           Discriminacao := INIRec.ReadString(sSecao, 'Discriminacao', '');
           CodigoMunicipio := INIRec.ReadString(sSecao, 'CodigoMunicipio', '');
-          CodigoPais := INIRec.ReadInteger(sSecao, 'CodigoPais', 1058);
+          CodigoPais := INIRec.ReadInteger(sSecao, 'CodigoPais', 0);
           ExigibilidadeISS := FProvider.StrToExigibilidadeISS(Ok, INIRec.ReadString(sSecao, 'ExigibilidadeISS', '1'));
           MunicipioIncidencia := INIRec.ReadInteger(sSecao, 'MunicipioIncidencia', 0);
           UFPrestacao := INIRec.ReadString(sSecao, 'UFPrestacao', '');

@@ -103,7 +103,7 @@ begin
           begin
             CodRetorno := AJson.Values['codigo'].AsString;
             OriRetorno := AJson.Values['mensagem'].AsString;
-            AJSonResp := AJson.Values['campos'].AsArray;
+            AJSonResp := AJson.Values['detalhes'].AsArray;
             For I := 0 to AJSonResp.Count-1 do
             begin
               AJSonRejeicao := AJSonResp[I].AsObject;

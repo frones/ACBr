@@ -52,6 +52,10 @@ Símbolo : Significado
 [*] Correção em métodos que o PSP Ailos respondem diferente do especificado no Bacen
 [*] Alteração para limpar propriedade exclusiva do PSP Ailos ao criar o componente
 	Por: MaagraowaR e Alexandre de Paula
+	
+05/07/2023
+[*] Ajuste na URL em ambiente de produção API versão 2
+    Por: Elias César
 
 26/06/2023
 -- ACBrPIXPSPSicoob --

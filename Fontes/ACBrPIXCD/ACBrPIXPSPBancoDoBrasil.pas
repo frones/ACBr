@@ -51,7 +51,8 @@ const
   cBBParamDevAppKey = 'gw-dev-app-key';
   cBBParamAppKey = 'gw-app-key';
   cBBURLSandbox = 'https://api.hm.bb.com.br';
-  cBBURLProducao = 'https://api.bb.com.br';
+  cBBURLProducao = 'https://api.bb.com.br';  
+  cBBURLProducaoV2 = 'https://api-pix.bb.com.br';
   cBBPathAPIPix = '/pix/v1';
   cBBPathAPIPixV2 = '/pix/v2';
   cBBURLAuthTeste = 'https://oauth.hm.bb.com.br/oauth/token';
@@ -260,7 +261,12 @@ end;
 function TACBrPSPBancoDoBrasil.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
   if (Ambiente = ambProducao) then
-    Result := cBBURLProducao
+  begin
+    if (BBAPIVersao = apiVersao1) then
+      Result := cBBURLProducao
+    else
+      Result := cBBURLProducaoV2;
+  end
   else
     Result := cBBURLSandbox;
 

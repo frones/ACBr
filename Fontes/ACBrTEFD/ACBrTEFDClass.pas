@@ -374,7 +374,7 @@ type
      procedure ConfirmarESolicitarImpressaoTransacoesPendentes ; virtual ;
 
      Procedure VerificarTransacaoPagamento(Valor : Double); virtual;
-     Function TransacaoEPagamento( AHeader: String ): Boolean;
+     Function TransacaoEPagamento( AHeader: String ): Boolean; virtual;
 
    protected
      property EsperaSTS : Integer read fEsperaSTS write fEsperaSTS
@@ -1133,7 +1133,7 @@ function TACBrTEFDClass.CRT(Valor: Double; IndiceFPG_ECF: String;
 begin
   VerificarTransacaoPagamento( Valor );
 
-  IniciarRequisicao('CRT');
+  IniciarRequisicao(IndiceFPG_ECF);
   Req.DocumentoVinculado  := DocumentoVinculado;
   Req.ValorTotal          := Valor;
   Req.Moeda               := Moeda;
@@ -2214,7 +2214,7 @@ end;
 
 function TACBrTEFDClass.TransacaoEPagamento(AHeader: String): Boolean;
 begin
-   Result := (pos(AHeader,'CRT|CHQ') > 0);
+   Result := (pos(AHeader,'CRT|CHQ|CARTDIGI') > 0);
 end;
 
 procedure TACBrTEFDClass.SetArqReq(const AValue : String);

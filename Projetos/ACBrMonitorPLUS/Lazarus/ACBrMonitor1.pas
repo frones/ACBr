@@ -11864,8 +11864,9 @@ begin
     begin
       NomeLongoNFSe := True;
       EmissaoPathNFSe := cbxEmissaoPathNFe.Checked;
-      PathGer := edtPathLogs.Text;
-      PathSalvar := GetPathGer(0);
+      PathNFSe := edtPathNFe.Text;
+      PathGer := edtPathNFe.Text;
+      PathSalvar := edtPathLogs.Text;
 
       PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'NFSe';
       if DirectoryExists(PathSchemaDFe) then

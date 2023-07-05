@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2023
+-- ACBrMonitor1 --
+[*] Ajuste visando sanar obrigatoriedade de configurar o certificado para que salvasse as configurações.
+   Por: Diego F
+
 03/07/2023
 -- ACBrMonitor1 --
 [*] Ajuste visando corrigir problema de uninitialized function result ao usar 

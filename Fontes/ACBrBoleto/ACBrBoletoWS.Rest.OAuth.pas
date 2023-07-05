@@ -160,6 +160,7 @@ end;
 procedure TOAuth.ProcessarRespostaOAuth(const ARetorno: AnsiString);
 var
   LJson: TACBrJSONObject;
+  LErrorMessage : String;
 begin
   FToken           := '';
   FExpire          := 0;
@@ -180,9 +181,14 @@ begin
       begin
         FErroComunicacao := 'HTTP_Code='+ IntToStr(FHTTPSend.ResultCode);
         if Assigned(LJson) then
+        begin
+          LErrorMessage := LJson.AsString['error_description'];
+          if LErrorMessage = '' then
+            LErrorMessage := LJson.AsString['error_title'];
           FErroComunicacao := FErroComunicacao
                               + ' Erro='
-                              + LJson.AsString['error_description'];
+                              + LErrorMessage;
+        end;
       end;
     finally
       LJson.Free;

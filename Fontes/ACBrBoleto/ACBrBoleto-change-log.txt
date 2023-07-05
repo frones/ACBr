@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+05/07/2023
+[*]TK-4135 ACBrBancoBancoob - Incluido tipo "2" no Código para Protesto/Negativação. 
+https://www.projetoacbr.com.br/forum/topic/72878-sicoob-incluido-tipo-2-no-c%C3%B3digo-para-protestonegativa%C3%A7%C3%A3o/
+Por : Mario Inacio /Verificado Daniel Morais
 30/06/2023
 [-]TK-4037 ACBrBoletoW_Credisis - Ajuste para correção do Erro "DefinirServicoEAction"
 https://www.projetoacbr.com.br/forum/topic/72532-acbrboletows-integra%C3%A7%C3%A3o-ws-com-o-banco-credisis-ajuste-para-corre%C3%A7%C3%A3o-do-erro-definirservicoeaction/

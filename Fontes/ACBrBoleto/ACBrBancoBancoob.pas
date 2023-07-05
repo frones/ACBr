@@ -921,7 +921,7 @@ begin
      {Código para Protesto / Negativação}
       case CodigoNegativacao of
         cnProtestarCorrido :  ACodProtesto := '1';
-        cnProtestarUteis   :  ACodProtesto := '1'; // Não há no manual opção para dias uteis
+        cnProtestarUteis   :  ACodProtesto := '2'; 
         cnNegativar        :  ACodProtesto := '8';
       else
         case TipoDiasProtesto of

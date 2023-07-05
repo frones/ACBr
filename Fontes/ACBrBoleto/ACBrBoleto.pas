@@ -463,7 +463,8 @@ type
     cobBancoPefisa,
     cobBancoFibra,
     cobBancoSofisaItau,
-    cobBancoIndustrialBrasil
+    cobBancoIndustrialBrasil,
+    cobBancoAthenaBradesco
     );
 
   TACBrTitulo = class;
@@ -2016,7 +2017,8 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoPefisa,
      ACBrBancoFibra,
      ACBrBancoSofisaItau,
-     ACBrBancoIndustrialBrasil;
+     ACBrBancoIndustrialBrasil, 
+     ACBrBancoAthenaBradesco;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -4525,6 +4527,7 @@ begin
      cobBancoFibra           : fBancoClass := TACBrBancoFibra.create(Self);          {224}
      cobBancoSofisaItau      : fBancoClass := TACBrBancoSofisaItau.Create(Self);      {637}
      cobBancoIndustrialBrasil: fBancoClass := TACBrBancoIndustrialBrasil.Create(Self); {604}
+     cobBancoAthenaBradesco  : fBancoClass := TACBrBancoAthenaBradesco.Create(Self);  {237}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

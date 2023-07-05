@@ -53,6 +53,7 @@ type
     procedure ValidaNossoNumeroResponsavel(out ANossoNumero: String; out ADigVerificador: String;
               const ACBrTitulo: TACBrTitulo); override;
     function MontaInstrucoesCNAB400(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String; override;
+    function GerarLinhaRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList): String;
   public
     Constructor create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
@@ -425,7 +426,7 @@ begin
   end;
 end;
 
-procedure TACBrBancoBradesco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
+function TACBrBancoBradesco.GerarLinhaRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList): String;
 var
   sOcorrencia, sEspecie, aAgencia: String;
   sProtesto, sTipoSacado, MensagemCedente, aConta, aDigitoConta: String;
@@ -433,6 +434,7 @@ var
   aPercMulta: Double;
 
 begin
+   Result := '';
    with ACBrTitulo do
    begin
      ValidaNossoNumeroResponsavel(sNossoNumero, sDigitoNossoNumero, ACBrTitulo);
@@ -499,15 +501,23 @@ begin
        PadRight( MensagemCedente, 60 )                         +  // 335 a 394 - 2ª Mensagem
        IntToStrZero(aRemessa.Count + 1, 6)                     ;  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
 
-       aRemessa.Add(UpperCase(wLinha));
-       wLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count );
-
-       if not(wLinha = EmptyStr) then
-         aRemessa.Add(UpperCase(wLinha));
+       Result := UpperCase(wLinha);
 
       end;
    end;
 
+end;
+
+procedure TACBrBancoBradesco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
+var
+  wLinha : String;
+
+begin
+   aRemessa.Add(UpperCase(GerarLinhaRegistroTransacao400(ACBrTitulo, aRemessa)));
+   wLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count );
+
+   if not(wLinha = EmptyStr) then
+     aRemessa.Add(UpperCase(wLinha));
 end;
 
 function TACBrBancoBradesco.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;

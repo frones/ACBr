@@ -79,7 +79,7 @@ constructor TACBrUniprimeNortePR.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
    fpDigito                 := 1;
-   fpNome                   := 'Uniprime';
+   fpNome                   := 'SISPRIME';
    fpNumero                 := 084;
    fpTamanhoMaximoNossoNum  := 11;
    fpTamanhoAgencia         := 4;

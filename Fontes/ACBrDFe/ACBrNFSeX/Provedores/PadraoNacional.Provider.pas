@@ -216,15 +216,17 @@ var
   JsonErro, JSon: TACBrJSONObject;
   Codigo: string;
   AErro: TNFSeEventoCollectionItem;
-  LerErro: Boolean;
+  LerErro, LerErroUnico: Boolean;
 begin
   LerErro := True;
+  LerErroUnico := False;
   JSonErros := LJson.AsJSONArray[AListTag];
 
   if JSonErros.Count > 0 then
   begin
     JSonErros := LJson.AsJSONArray['erro'];
     LerErro := False;
+    LerErroUnico :=  (JSonErros.Count = 0);
   end;
 
   for i := 0 to JSonErros.Count-1 do
@@ -269,6 +271,32 @@ begin
         AErro.Descricao := ACBrStr(JSonErro.AsString['descricao']);
         AErro.Correcao := ACBrStr(JSonErro.AsString['complemento']);
       end;
+    end;
+  end;
+
+  if LerErroUnico then
+  begin
+    JSonErros := LJson.AsJSONArray[AListTag];
+    JSon := JSonErros.ItemAsJSONObject[0];
+    Codigo := JSon.AsString['codigo'];
+
+    if Codigo = '' then
+      Codigo := JSon.AsString['Codigo'];
+
+
+    if Codigo <> '' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Codigo;
+      AErro.Descricao := ACBrStr(JSon.AsString['descricao']);
+
+      if AErro.Descricao = '' then
+        AErro.Descricao := ACBrStr(JSon.AsString['Descricao']);
+
+      AErro.Correcao := ACBrStr(JSon.AsString['complemento']);
+
+      if AErro.Correcao = '' then
+        AErro.Correcao := ACBrStr(JSon.AsString['Complemento']);
     end;
   end;
 end;

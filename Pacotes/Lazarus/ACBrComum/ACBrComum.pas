@@ -12,7 +12,7 @@ uses
   ACBrCompress, ACBrImage, StrUtilsEx, ACBr_fpdf, ACBr_fpdf_ext, 
   ACBrDelphiZXingQRCode, ACBrUtil.FilesIO, ACBrUtil.Math, ACBrUtil.Strings, 
   ACBrUtil.XMLHTML, ACBrUtil.DateTime, ACBrUtil.Compatibilidade, 
-  ACBrUtil.Base, Jsons, ACBrJSON, LazarusPackageIntf;
+  ACBrUtil.Base, Jsons, ACBrJSON, ACBrUtil.FPDF, LazarusPackageIntf;
 
 implementation
 

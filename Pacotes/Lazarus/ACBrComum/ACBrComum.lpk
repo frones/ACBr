@@ -33,7 +33,7 @@
     <License Value="LGPL
 "/>
     <Version Major="1"/>
-    <Files Count="23">
+    <Files Count="24">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
         <Type Value="Include"/>

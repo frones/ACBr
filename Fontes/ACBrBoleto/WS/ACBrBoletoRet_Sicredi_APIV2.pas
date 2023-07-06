@@ -77,17 +77,8 @@ begin
 end;
 
 function TRetornoEnvio_Sicredi_APIV2.DateSicreditoDateTime(const AValue: String): TDateTime;
-var
-  data,
-  ano,
-  mes,
-  dia : String;
 begin
-  ano := Copy( aValue, 0,4 );
-  mes := Copy( aValue, 6,2 );
-  dia := Copy( aValue, 9,2 );
-  data := Format( '%s-%s-%s' , [dia,mes,ano]);
-  Result := StrToDateDef( data ,0 );
+  Result := ACBrUtil.DateTime.StringToDateTimeDef(AValue, 0,'yyyy-mm-dd');
 end;
 
 destructor TRetornoEnvio_Sicredi_APIV2.Destroy;

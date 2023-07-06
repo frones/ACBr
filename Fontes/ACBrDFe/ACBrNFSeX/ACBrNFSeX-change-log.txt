@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/07/2023
+-- Sudoeste.Provider --
+[*] Alterado a function TratarXmlRetornado para remoção de lixo no XML.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --
 [*] A URL da cidade de Campo Mourao/PR mudou, provedor ainda é o IPM.
   Por: Patrick Knopf

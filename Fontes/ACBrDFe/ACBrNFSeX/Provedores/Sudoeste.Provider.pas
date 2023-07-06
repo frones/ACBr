@@ -353,6 +353,9 @@ function TACBrNFSeXWebserviceSudoeste202.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  // Remoção de lixo
+  Result := Trim(StringReplace(Result, '@@RETORNO', '', [rfReplaceAll]));
+
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);

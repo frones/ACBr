@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2023
+-- ACBrNFSeXServicos.ini --
+[*] A URL da cidade de Campo Mourao/PR mudou, provedor ainda é o IPM.
+  Por: Patrick Knopf
+
 05/07/2023
 -- ACBrNFSeXGravarXml_ABRASFv2/ACBrNFSeXNotasFiscais --
 [*] Possível solução para gerar a tag CodigoPais quando o serviço só for 

@@ -88,7 +88,6 @@ type
     txtCNPJCedentePix: TRLLabel;
     txtValorPix: TRLLabel;
     RLBandPix: TRLBand;
-    RLDraw1: TRLDraw;
     RLDraw10: TRLDraw;
     RLDraw11: TRLDraw;
     RLDraw119: TRLDraw;
@@ -253,7 +252,6 @@ type
     txtNomeSacadoCarne: TRLMemo;
     txtNumeroDocumentoCarne: TRLLabel;
     txtOrientacoesBanco: TRLMemo;
-    RLMemo2: TRLMemo;
     txtDesconto5: TRLLabel;
     txtMoraMulta4: TRLLabel;
     txtNumeroBanco: TRLLabel;

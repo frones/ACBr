@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/07/2023
+-- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Possível solução para gerar a tag CodigoPais quando o tomador só for 
+    de fora do Brasil.
+  Por: Italo Giurizzato Junior
 -- Sudoeste.Provider --
 [*] Alterado a function TratarXmlRetornado para remoção de lixo no XML.
   Por: Italo Giurizzato Junior

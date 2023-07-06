@@ -455,7 +455,8 @@ begin
   Result[1] := AddNode(tcStr, '#44', 'Uf', 2, 2, 0,
                                               NFSe.Tomador.Endereco.UF, DSC_UF);
 
-  Result[2] := AddNode(tcStr, '#45', 'CodigoPais', 4, 4, NrOcorrCodPaisTomador,
+  if OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999' then
+    Result[2] := AddNode(tcStr, '#45', 'CodigoPais', 4, 4, NrOcorrCodPaisTomador,
                                    NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 end;
 

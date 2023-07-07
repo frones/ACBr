@@ -595,8 +595,7 @@ begin
   FWebService.ConsultaLinkNFSe.Clear;
 
   InfConsulta := FWebService.ConsultaLinkNFSe.InfConsultaLinkNFSe;
-  InfConsulta.CompetenciaMes := AInfConsultaLinkNFSe.CompetenciaMes;
-  InfConsulta.CompetenciaAno := AInfConsultaLinkNFSe.CompetenciaAno;
+  InfConsulta.Competencia := AInfConsultaLinkNFSe.Competencia;
   InfConsulta.NumeroNFSe := AInfConsultaLinkNFSe.NumeroNFSe;
   InfConsulta.SerieNFSe := AInfConsultaLinkNFSe.SerieNFSe;
   InfConsulta.NumeroRps := AInfConsultaLinkNFSe.NumeroRps;

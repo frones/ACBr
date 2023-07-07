@@ -298,8 +298,7 @@ type
 
   TInfConsultaLinkNFSe = class
   private
-    FCompetenciaMes: integer;
-    FCompetenciaAno: integer;
+    FCompetencia: TDateTime;
     FNumeroNFSe: string;
     FSerieNFSe: string;
     FNumeroRps: Integer;
@@ -307,8 +306,7 @@ type
   public
     constructor Create;
     function LerFromIni(const AIniStr: string): Boolean;
-    property CompetenciaMes: integer read FCompetenciaMes write FCompetenciaMes;
-    property CompetenciaAno: integer read FCompetenciaAno write FCompetenciaAno;
+    property Competencia: TDateTime read FCompetencia write FCompetencia;
     property NumeroNFSe: string read FNumeroNFSe write FNumeroNFSe;
     property SerieNFSe: string read FSerieNFSe write FSerieNFSe;
     property NumeroRps: Integer read FNumeroRps write FNumeroRps;
@@ -1686,8 +1684,7 @@ begin
 
     sSecao := 'ConsultarLinkNFSe';
 
-    CompetenciaMes := INIRec.ReadInteger(sSecao, 'CompetenciaMes', 0);
-    CompetenciaAno := INIRec.ReadInteger(sSecao, 'CompetenciaAno', 0);
+    Competencia := INIRec.ReadDateTime(sSecao, 'Competencia', 0);
     NumeroRps := INIRec.ReadInteger(sSecao, 'NumeroRps', 0);
     NumeroNFSe := INIRec.ReadString(sSecao, 'NumeroNFSe', '');
     SerieNFSe := INIRec.ReadString(sSecao, 'SerieNFSe', '');

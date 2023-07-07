@@ -96,6 +96,7 @@ type
 implementation
 
 uses
+  DateUtils,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
@@ -818,19 +819,11 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if Response.InfConsultaLinkNFSe.CompetenciaMes = 0 then
+  if Response.InfConsultaLinkNFSe.Competencia = 0 then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod131;
     AErro.Descricao := ACBrStr(Desc131);
-    Exit;
-  end;
-
-  if Response.InfConsultaLinkNFSe.CompetenciaAno = 0 then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod132;
-    AErro.Descricao := ACBrStr(Desc132);
     Exit;
   end;
 
@@ -897,10 +890,10 @@ begin
       '</Login>' +
       '<Nota>' +
         '<Competencia_Mes>' +
-          IntToStr(Response.InfConsultaLinkNFSe.CompetenciaMes) +
+          IntToStr(MonthOf(Response.InfConsultaLinkNFSe.Competencia)) +
         '</Competencia_Mes>' +
         '<Competencia_Ano>' +
-          IntToStr(Response.InfConsultaLinkNFSe.CompetenciaAno) +
+          IntToStr(YearOf(Response.InfConsultaLinkNFSe.Competencia)) +
         '</Competencia_Ano>' +
         '<RPS_Serie>' +
           Response.InfConsultaLinkNFSe.SerieRps +

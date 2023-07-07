@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/07/2023
+-- Diversos --
+[*] No método ConsultarLinkNFSe foi substituidos os campos: CompetenciaMes e 
+    CompetenciaAno pelo campo Competencia que é do tipo TDateTime.
+  Por: Italo Giurizzato Junior
 -- NFSeBrasil.Provider --
 [*] Ajuste para tratamento do caracter & no XML de envio.
   Por: Verissimo

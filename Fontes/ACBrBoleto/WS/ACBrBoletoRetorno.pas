@@ -329,6 +329,7 @@ type
     property ValorAtual: Extended read FValorAtual write FValorAtual;
     property Contrato: String read FContrato write FContrato;
     property CodigoEstadoTituloCobranca: String read FCodigoEstadoTituloCobranca write FCodigoEstadoTituloCobranca;
+    property CodigoCanalTituloCobranca: String read FCodigoCanalTituloCobranca write FCodigoCanalTituloCobranca;
     property EstadoTituloCobranca: String read FEstadoTituloCobranca write FEstadoTituloCobranca;
     property CodigoOcorrenciaCartorio: String read FCodigoOcorrenciaCartorio write FCodigoOcorrenciaCartorio;
     property DataMovimento: TDateTime read FDataMovimento write FDataMovimento;

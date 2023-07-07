@@ -1,0 +1,18 @@
+<!--  Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-b05-.  -->
+<xs:schema xmlns:tns="http://webservices.sil.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservices.sil.com/">
+	<xs:element name="urlNfd" type="tns:urlNfd"/>
+	<xs:element name="urlNfdResponse" type="tns:urlNfdResponse"/>
+	<xs:complexType name="urlNfd">
+		<xs:sequence>
+			<xs:element name="codigoMunicipio" type="xs:int"/>
+			<xs:element name="numeroNfd" type="xs:int"/>
+			<xs:element name="serieNfd" type="xs:int"/>
+			<xs:element name="inscricaoMunicipal" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="urlNfdResponse">
+		<xs:sequence>
+			<xs:element name="return" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

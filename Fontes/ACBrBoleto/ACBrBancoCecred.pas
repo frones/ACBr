@@ -244,9 +244,12 @@ end;
 function TACBrBancoCecred.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
-   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'-'+
-             ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito+'/'+
-             IntToStrZero(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0),8)+'-'+
+   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia
+             +'-'+
+             ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito
+             +'/'+
+             IntToStr(StrToInt64Def(ACBrTitulo.ACBrBoleto.Cedente.Conta,0))
+             +'-'+
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 

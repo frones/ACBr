@@ -52,6 +52,9 @@ Símbolo : Significado
 [*]TK-4143 ACBrBoletoW_Santander_API, ACBrBoletoWS.SOAP - Remoção de Warnigs e Hints
 https://www.projetoacbr.com.br/forum/topic/72920-remo%C3%A7%C3%A3o-de-warnigs-e-hints-units-acbrboleto/
 Por : Waldir Paim / Verificado: Daniel Morais, Victor Hugo Gonzales Pandaaaa
+[*]TK-4166 ACBrBancoCecred - Remoção zeros na impressao beneficiario
+https://www.projetoacbr.com.br/forum/topic/72940-zero-a-esquerda-c%C3%B3digo-benefici%C3%A1rio-impress%C3%A3o/
+Por : Victor Hugo Gonzales Pandaaa / Daniel Morais
 05/07/2023
 [*]TK-4135 ACBrBancoBancoob - Incluido tipo "2" no Código para Protesto/Negativação. 
 https://www.projetoacbr.com.br/forum/topic/72878-sicoob-incluido-tipo-2-no-c%C3%B3digo-para-protestonegativa%C3%A7%C3%A3o/

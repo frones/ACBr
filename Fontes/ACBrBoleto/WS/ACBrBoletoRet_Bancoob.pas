@@ -71,9 +71,10 @@ uses
 
 resourcestring
   C_CANCELADO = 'CANCELADO';
+  C_BAIXADO = 'BAIXADO';
   C_EXPIRADO = 'EXPIRADO';
   C_VENCIDO = 'VENCIDO';
-  C_EMABERTO = 'EMABERTO';
+  C_EMABERTO = 'EM ABERTO';
   C_PAGO = 'Liquidado';
 
 
@@ -234,6 +235,18 @@ begin
             ARetornoWS.DadosRet.TituloRet.Vencimento      := DateBancoobToDateTime( AJSonObject.Values['dataVencimento'].asString );
 
             ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca  := AJSonObject.Values['situacaoBoleto'].asString;
+
+            if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_EMABERTO then
+               ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
+
+            if (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_BAIXADO) or
+               (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_CANCELADO) then
+               ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
+
+            if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = UpperCase(C_PAGO) then
+               ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
+
+
             ARetornoWS.DadosRet.TituloRet.UrlPix                := AJSonObject.Values['qrCode'].AsString;
 
             //ARetornoWS.DadosRet.TituloRet.ValorAtual      := AJSonObject.Values['valor'].AsNumber;

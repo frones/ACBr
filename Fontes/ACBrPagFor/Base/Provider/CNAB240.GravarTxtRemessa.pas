@@ -216,8 +216,17 @@ begin
   GravarCampo(FmLancamentoToStr(PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento), 2, tcStr);
 
   case PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento of
+    {flCartaoSalario, flCreditoContaPoupanca, flCreditoContaCorrenteMesmaTitularidade,
+     flDocMesmaTitularidade, flPagamentoConcessionarias, flLiquidacaoTitulosProprioBanco,
+     flLiberacaoTitulosNotaFiscalEletronica, flLiquidacaoParcelasNaoRegistrada,
+     flFGTSGFIP, flExtratoContaCorrente, flTEDOutraTitularidade,
+     flTEDMesmaTitularidade, flTEDTransferencia, flDebitoContaCorrente,
+     flExtratoGestaoCaixa, flDepositoJudicialContaCorrente, flCartaoSalarioItau,
+     flDepositoJudicialPoupanca, flExtratoContaInvestimento, flPIXTransferencia,
+     flPIXQRCode, flNenhum}
+
     flCreditoContaCorrente, flChequePagamento, flDocTed, flOPDisposicao,
-    flPagamentoAutenticacao:
+    flPagamentoAutenticacao, flPagamentoContas:
       Versao := '046';
 
     flLiquidacaoTitulosOutrosBancos:

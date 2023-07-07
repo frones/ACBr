@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2023
+-- PagFor.Sicoob.GravarTxtRemessa/CNAB240.GravarTxtRemessa --
+[*] Ajustes para gerar com a versão correta para Pagamento de Contas.
+   Por: Augusto Leão / Italo Giurizzato Junior
+
 29/06/2023
 -- ACBrPagForClass/PagFor.Bradesco.LerTxtRetorno --
 [*] Ajustes na leitura do Segmento A para ler o Segmento Z.

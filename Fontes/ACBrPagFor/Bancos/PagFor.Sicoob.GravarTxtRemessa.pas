@@ -119,7 +119,7 @@ begin
 
   case PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento of
     flCreditoContaCorrente, flChequePagamento, flDocTed, flOPDisposicao,
-    flPagamentoAutenticacao:
+    flPagamentoAutenticacao, flPagamentoContas:
       Versao := '045';
 
     flLiquidacaoTitulosOutrosBancos:

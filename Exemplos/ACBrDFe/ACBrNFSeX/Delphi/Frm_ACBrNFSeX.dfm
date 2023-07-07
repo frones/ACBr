@@ -1973,6 +1973,15 @@ object frmACBrNFSe: TfrmACBrNFSe
               TabOrder = 6
               OnClick = btnConsultarNFSeGenericoClick
             end
+            object btnConsultarLinkNFSe: TButton
+              Left = 186
+              Top = 72
+              Width = 177
+              Height = 25
+              Caption = 'Consultar Link NFSe'
+              TabOrder = 7
+              OnClick = btnConsultarLinkNFSeClick
+            end
           end
           object tsConsServPrest: TTabSheet
             Caption = 'Cons. Serv. Prestados'

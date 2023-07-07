@@ -37,7 +37,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+07/07/2023
+[*]TK-3919 ACBrCHQBematech- Removido verificação em linha devido a incompatibilicade com a impressora "DP20 – Plus Document Printer"
+https://www.projetoacbr.com.br/forum/topic/72010-teste-acbrchq/
+Por : Sistema Auditor Verificado: Daniel Morais
 27/02/2023
 -- ACBrBALSelfCheckout --
 [+] Incluída nova classe para modelos de balança utilizarem caso também possuam os novos comandos

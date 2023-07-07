@@ -128,9 +128,7 @@ end;
 procedure TACBrCHQBematech.ImprimirCheque;
 Var ValStr, DataStr : String ;
 begin
-  if not fpDevice.EmLinha( 3 ) then  { Impressora está em-linha ? }
-    raise Exception.Create(ACBrStr('A impressora de Cheques '+fpModeloStr+
-                           ' não está pronta.')) ;
+
   FImprimeVerso := False;
 
   ProgramarImpressao;

@@ -122,6 +122,9 @@ var
 begin
   FPMsgOrig := AMSG;
 
+  // Tratamento de nomes com &
+  AMSG := StringReplace(AMSG, '&amp;', '&amp;amp;', [rfReplaceAll]);
+
   Request := '<urn:tm_lote_rps_service.importarLoteRPS' + encodingStyle +'>';
   Request := Request + '<xml xsi:type="xsd:string">' + XmlToStr(AMSG) + '</xml>';
   Request := Request + DadosUsuario;

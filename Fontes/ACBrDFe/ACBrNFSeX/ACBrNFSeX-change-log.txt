@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2023
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Melhorias no TratarRetornoConsultaLoteRps e TratarRetornoConsultaNFSeporRps
+  Por: Italo Giurizzato Junior
+
 06/07/2023
 -- PadraoNacional.Provider --
 [*] Ajustes na procedure ProcessarMensagemDeErros, não estava lendo as 

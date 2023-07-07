@@ -766,59 +766,42 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      Response.Situacao := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('SituacaoLoteRps'), tcStr);
-
-      ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
-
-      if not Assigned(ANode) then
+      if Response.Sucesso then
       begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod202;
-        AErro.Descricao := ACBrStr(Desc202);
-        Exit;
-      end;
+        Response.Situacao := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('SituacaoLoteRps'), tcStr);
 
-      ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
-      if ANodeArray = nil then
-        ANodeArray := ANode.Childrens.FindAllAnyNs('ComplNfse');
+        ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
 
-      if not Assigned(ANodeArray) then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod203;
-        AErro.Descricao := ACBrStr(Desc203);
-        Exit;
-      end;
-
-      for I := Low(ANodeArray) to High(ANodeArray) do
-      begin
-        ANode := ANodeArray[I];
-        AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
-
-        if AuxNode = nil then
+        if not Assigned(ANode) then
         begin
-          AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod202;
+          AErro.Descricao := ACBrStr(Desc202);
+          Exit;
+        end;
 
-          if PreencherNotaRespostaConsultaLoteRps(AuxNode, ANode, Response) then
-            Response.Situacao := '4' // Processado com sucesso pois retornou a nota
-          else
-          begin
-            AErro := Response.Erros.New;
-            AErro.Codigo := Cod203;
-            AErro.Descricao := ACBrStr(Desc203);
-            Exit;
-          end;
-        end
-        else
+        ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
+        if ANodeArray = nil then
+          ANodeArray := ANode.Childrens.FindAllAnyNs('ComplNfse');
+
+        if not Assigned(ANodeArray) then
         begin
-          AuxNodeArray := ANode.Childrens.FindAllAnyNs('tcCompNfse');
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit;
+        end;
 
-          for J := Low(AuxNodeArray) to High(AuxNodeArray) do
+        for I := Low(ANodeArray) to High(ANodeArray) do
+        begin
+          ANode := ANodeArray[I];
+          AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
+
+          if AuxNode = nil then
           begin
-            ANode2 := AuxNodeArray[J];
-            AuxNode := ANode2.Childrens.FindAnyNs('Nfse');
+            AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
-            if PreencherNotaRespostaConsultaLoteRps(AuxNode, ANode2, Response) then
+            if PreencherNotaRespostaConsultaLoteRps(AuxNode, ANode, Response) then
               Response.Situacao := '4' // Processado com sucesso pois retornou a nota
             else
             begin
@@ -826,6 +809,26 @@ begin
               AErro.Codigo := Cod203;
               AErro.Descricao := ACBrStr(Desc203);
               Exit;
+            end;
+          end
+          else
+          begin
+            AuxNodeArray := ANode.Childrens.FindAllAnyNs('tcCompNfse');
+
+            for J := Low(AuxNodeArray) to High(AuxNodeArray) do
+            begin
+              ANode2 := AuxNodeArray[J];
+              AuxNode := ANode2.Childrens.FindAnyNs('Nfse');
+
+              if PreencherNotaRespostaConsultaLoteRps(AuxNode, ANode2, Response) then
+                Response.Situacao := '4' // Processado com sucesso pois retornou a nota
+              else
+              begin
+                AErro := Response.Erros.New;
+                AErro.Codigo := Cod203;
+                AErro.Descricao := ACBrStr(Desc203);
+                Exit;
+              end;
             end;
           end;
         end;
@@ -973,53 +976,56 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := Document.Root.Childrens.FindAnyNs('CompNfse');
-      if ANode = nil then
-        ANode := Document.Root.Childrens.FindAnyNs('ComplNfse');
-
-      if not Assigned(ANode) then
+      if Response.Sucesso then
       begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod203;
-        AErro.Descricao := ACBrStr(Desc203);
-        Exit;
-      end;
+        ANode := Document.Root.Childrens.FindAnyNs('CompNfse');
+        if ANode = nil then
+          ANode := Document.Root.Childrens.FindAnyNs('ComplNfse');
 
-      AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
-
-      if AuxNode = nil then
-      begin
-        LerCancelamento(ANode, Response);
-
-        AuxNode := ANode.Childrens.FindAnyNs('Nfse')
-      end
-      else
-      begin
-        LerCancelamento(AuxNode, Response);
-
-        AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
-      end;
-
-      if AuxNode <> nil then
-      begin
-        AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
-
-        InfNfseID := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
-        NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-
-        with Response do
+        if not Assigned(ANode) then
         begin
-          NumeroNota := NumNFSe;
-          idNota := InfNfseID;
-          CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit;
         end;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+        AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
 
-        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
-        SalvarXmlNfse(ANota);
+        if AuxNode = nil then
+        begin
+          LerCancelamento(ANode, Response);
+
+          AuxNode := ANode.Childrens.FindAnyNs('Nfse')
+        end
+        else
+        begin
+          LerCancelamento(AuxNode, Response);
+
+          AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
+        end;
+
+        if AuxNode <> nil then
+        begin
+          AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+          InfNfseID := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
+          NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+          with Response do
+          begin
+            NumeroNota := NumNFSe;
+            idNota := InfNfseID;
+            CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+            Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
+          end;
+
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+          ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+          SalvarXmlNfse(ANota);
+        end;
       end;
     except
       on E:Exception do

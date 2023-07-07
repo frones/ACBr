@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -45,6 +46,11 @@ type
 
   TNFSeR_Fisco203 = class(TNFSeR_ABRASFv2)
   protected
+    function LerDataHoraCancelamento(const ANode: TACBrXmlNode): TDateTime; override;
+    function LerDataHora(const ANode: TACBrXmlNode): TDateTime; override;
+    function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; override;
+    function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; override;
+    function LerCompetencia(const ANode: TACBrXmlNode): TDateTime; override;
 
   public
 
@@ -56,5 +62,34 @@ implementation
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Fisco
 //==============================================================================
+
+{ TNFSeR_Fisco203 }
+
+function TNFSeR_Fisco203.LerCompetencia(const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcDatVcto);
+end;
+
+function TNFSeR_Fisco203.LerDataEmissao(const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatVcto);
+end;
+
+function TNFSeR_Fisco203.LerDataEmissaoRps(
+  const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatVcto);
+end;
+
+function TNFSeR_Fisco203.LerDataHora(const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataHora'), tcDatVcto);
+end;
+
+function TNFSeR_Fisco203.LerDataHoraCancelamento(
+  const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataHora'), tcDatVcto);
+end;
 
 end.

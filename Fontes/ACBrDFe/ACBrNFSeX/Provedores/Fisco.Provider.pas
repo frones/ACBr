@@ -90,6 +90,10 @@ procedure TACBrNFSeProviderFisco203.Configuracao;
 begin
   inherited Configuracao;
 
+  FpFormatoDataRecebimento := tcDatVcto;
+  FpFormatoDataEmissao := tcDatVcto;
+  FpFormatoDataHora := tcDatVcto;
+
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
 
   with ConfigWebServices do

@@ -1578,10 +1578,10 @@ begin
         Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
       if Response.DataCanc = 0 then
-        Response.DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcDatHor);
+        Response.DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), FpFormatoDataHora);
 
       if Response.DataCanc = 0 then
-        Response.DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+        Response.DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
     end;
 
     Response.DescSituacao := '';

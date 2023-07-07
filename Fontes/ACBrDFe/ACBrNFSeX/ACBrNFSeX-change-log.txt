@@ -43,7 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/07/2023
--- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2/Fisco.LerXml/Fisco.Provider.pas
+-- Giap.Provider --
+[*] Correção na leitura do retorno do envio do Rps (TratarRetornoEmitir).
+  Por: Paulo V. Ferreira
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2/Fisco.LerXml/Fisco.Provider --
 [*] Possível solução para leitura de datas no formato DD/MM/AAAA do provedor Fisco.
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos.ini --

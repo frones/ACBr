@@ -285,14 +285,11 @@ begin
 
           with Response do
           begin
-            if ModoEnvio = meLoteAssincrono then
-            begin
-              NumeroNota := aNumeroNota;
-              CodigoVerificacao := aCodigoVerificacao;
-              Situacao := aSituacao;
-              Link := aLink;
-              NumeroRps := aNumeroRps;
-            end;
+            NumeroNota := aNumeroNota;
+            CodigoVerificacao := aCodigoVerificacao;
+            Situacao := aSituacao;
+            Link := aLink;
+            NumeroRps := aNumeroRps;
           end;
 
           AResumo := Response.Resumos.New;
@@ -549,6 +546,7 @@ begin
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
+    Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
   end
   else
   begin

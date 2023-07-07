@@ -89,6 +89,11 @@ type
       Params: TNFSeParamsResponse); virtual;
     procedure TratarRetornoConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); virtual;
 
+    procedure PrepararConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
+    procedure GerarMsgDadosConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
+
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
@@ -497,6 +502,14 @@ begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;
 
+procedure TACBrNFSeProviderProprio.PrepararConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
 procedure TACBrNFSeProviderProprio.PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
@@ -504,8 +517,20 @@ begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
+procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse; Params: TNFSeParamsResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
 procedure TACBrNFSeProviderProprio.GerarMsgDadosCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
+procedure TACBrNFSeProviderProprio.TratarRetornoConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;

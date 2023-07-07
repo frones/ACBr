@@ -65,6 +65,7 @@ type
     function GetConsultaLoteRpsResponse: TNFSeConsultaLoteRpsResponse;
     function GetConsultaNFSeporRpsResponse: TNFSeConsultaNFSeporRpsResponse;
     function GetConsultaNFSeResponse: TNFSeConsultaNFSeResponse;
+    function GetConsultaLinkNFSeResponse: TNFSeConsultaLinkNFSeResponse;
     function GetCancelaNFSeResponse: TNFSeCancelaNFSeResponse;
     function GetSubstituiNFSeResponse: TNFSeSubstituiNFSeResponse;
     function GetGerarTokenResponse: TNFSeGerarTokenResponse;
@@ -140,6 +141,13 @@ type
     procedure AssinarConsultaNFSe(Response: TNFSeConsultaNFSeResponse); virtual;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); virtual; abstract;
 
+    //metodos para geração e tratamento dos dados do metodo ConsultaLinkNFSe
+    procedure PrepararConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); virtual; abstract;
+    procedure GerarMsgDadosConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse;
+      Params: TNFSeParamsResponse); virtual; abstract;
+    procedure AssinarConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); virtual;
+    procedure TratarRetornoConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); virtual; abstract;
+
     //metodos para geração e tratamento dos dados do metodo CancelaNFSe
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); virtual; abstract;
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
@@ -211,6 +219,7 @@ type
     procedure ConsultaLoteRps; virtual;
     procedure ConsultaNFSeporRps; virtual;
     procedure ConsultaNFSe; virtual;
+    procedure ConsultaLinkNFSe; virtual;
     procedure CancelaNFSe; virtual;
     procedure SubstituiNFSe; virtual;
     procedure GerarToken; virtual;
@@ -232,6 +241,7 @@ type
     property ConsultaLoteRpsResponse: TNFSeConsultaLoteRpsResponse read GetConsultaLoteRpsResponse;
     property ConsultaNFSeporRpsResponse: TNFSeConsultaNFSeporRpsResponse read GetConsultaNFSeporRpsResponse;
     property ConsultaNFSeResponse: TNFSeConsultaNFSeResponse read GetConsultaNFSeResponse;
+    property ConsultaLinkNFSeResponse: TNFSeConsultaLinkNFSeResponse read GetConsultaLinkNFSeResponse;
     property CancelaNFSeResponse: TNFSeCancelaNFSeResponse read GetCancelaNFSeResponse;
     property SubstituiNFSeResponse: TNFSeSubstituiNFSeResponse read GetSubstituiNFSeResponse;
     property GerarTokenResponse: TNFSeGerarTokenResponse read GetGerarTokenResponse;
@@ -392,6 +402,11 @@ begin
   Result := TACBrNFSeX(FAOwner).Webservice.ConsultarDFe;
 end;
 
+function TACBrNFSeXProvider.GetConsultaLinkNFSeResponse: TNFSeConsultaLinkNFSeResponse;
+begin
+  Result := TACBrNFSeX(FAOwner).Webservice.ConsultaLinkNFSe;
+end;
+
 function TACBrNFSeXProvider.GetCancelaNFSeResponse: TNFSeCancelaNFSeResponse;
 begin
   Result := TACBrNFSeX(FAOwner).Webservice.CancelaNFSe;
@@ -485,6 +500,7 @@ begin
         tmConsultarDFe: Result := ConsultarDFe;
         tmConsultarParam: Result := ConsultarParam;
         tmConsultarSeqRps: Result := ConsultarSeqRps;
+        tmConsultarLinkNFSe: Result := ConsultarLinkNFSe;
       else
         Result := '';
       end;
@@ -521,12 +537,12 @@ begin
         tmConsultarDFe: Result := ConsultarDFe;
         tmConsultarParam: Result := ConsultarParam;
         tmConsultarSeqRps: Result := ConsultarSeqRps;
+        tmConsultarLinkNFSe: Result := ConsultarLinkNFSe;
       else
         Result := '';
       end;
     end;
   end;
-
 end;
 
 function TACBrNFSeXProvider.GetConfigMsgDados: TConfigMsgDados;
@@ -773,6 +789,13 @@ begin
       InfElemento := '';
       DocElemento := '';
     end;
+
+    with ConsultarLinkNFSe do
+    begin
+      xmlns := '';
+      InfElemento := '';
+      DocElemento := '';
+    end;
   end;
 
   // Inicializa os parâmetros de configuração: Assinar
@@ -800,6 +823,7 @@ begin
     ConsultarDFe := False;
     ConsultarParam := False;
     ConsultarSeqRps := False;
+    ConsultarLinkNFSe := False;
 
     IncluirURI := True;
 
@@ -1021,8 +1045,11 @@ begin
     tmEnviarEvento: xNameSpaceURI := ConfigMsgDados.EnviarEvento.xmlns;
     tmConsultarEvento: xNameSpaceURI := ConfigMsgDados.ConsultarEvento.xmlns;
     tmConsultarDFe: xNameSpaceURI := ConfigMsgDados.ConsultarDFe.xmlns;
-    tmConsultarParam: xNameSpaceURI := ConfigMsgDAdos.ConsultarParam.xmlns;
-    else xNameSpaceURI := FDefaultNameSpaceURI;
+    tmConsultarParam: xNameSpaceURI := ConfigMsgDados.ConsultarParam.xmlns;
+    tmConsultarSeqRps: xNameSpaceURI := ConfigMsgDados.ConsultarSeqRps.xmlns;
+    tmConsultarLinkNFSe: xNameSpaceURI := ConfigMsgDados.ConsultarLinkNFSe.xmlns;
+  else
+    xNameSpaceURI := FDefaultNameSpaceURI;
   end;
   TACBrNFSeX(FAOwner).SSL.NameSpaceURI := xNameSpaceURI
 end;
@@ -1051,6 +1078,8 @@ begin
     ConsultarEvento := aNome;
     ConsultarDFe := aNome;
     ConsultarParam := aNome;
+    ConsultarSeqRps := aNome;
+    ConsultarLinkNFSe := aNome;
 
     Validar := True;
   end;
@@ -1080,6 +1109,8 @@ begin
     ConsultarEvento.xmlns := aNameSpace;
     ConsultarDFe.xmlns := aNameSpace;
     ConsultarParam.xmlns := aNameSpace;
+    ConsultarSeqRps.xmlns := aNameSpace;
+    ConsultarLinkNFSe.xmlns := aNameSpace;
   end;
 
   FDefaultNameSpaceURI := aNameSpace;
@@ -1552,6 +1583,7 @@ begin
     tmConsultarDFe: Schema := ConfigSchemas.ConsultarDFe;
     tmConsultarParam: Schema := ConfigSchemas.ConsultarParam;
     tmConsultarSeqRps: Schema := ConfigSchemas.ConsultarSeqRps;
+    tmConsultarLinkNFSe: Schema := ConfigSchemas.ConsultarLinkNFSe;
   else
     // tmTeste
     Schema := ConfigSchemas.Teste;
@@ -2276,6 +2308,76 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
 end;
 
+procedure TACBrNFSeXProvider.ConsultaLinkNFSe;
+var
+  AService: TACBrNFSeXWebservice;
+  AErro: TNFSeEventoCollectionItem;
+begin
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeConsulta);
+
+  PrepararConsultaLinkNFSe(ConsultaLinkNFSeResponse);
+  if (ConsultaLinkNFSeResponse.Erros.Count > 0) then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Exit;
+  end;
+
+  AssinarConsultaLinkNFSe(ConsultaLinkNFSeResponse);
+  if (ConsultaNFSeResponse.Erros.Count > 0) then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Exit;
+  end;
+
+  ValidarSchema(ConsultaLinkNFSeResponse, ConsultaLinkNFSeResponse.Metodo);
+  if (ConsultaNFSeResponse.Erros.Count > 0) then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Exit;
+  end;
+
+  AService := nil;
+
+  try
+    try
+      TACBrNFSeX(FAOwner).SetStatus(stNFSeConsulta);
+      AService := CriarServiceClient(ConsultaLinkNFSeResponse.Metodo);
+      AService.Prefixo := ConsultaLinkNFSeResponse.Protocolo;
+
+      ConsultaLinkNFSeResponse.ArquivoRetorno := AService.ConsultarLinkNFSe(ConfigMsgDados.DadosCabecalho, ConsultaLinkNFSeResponse.ArquivoEnvio);
+
+      ConsultaLinkNFSeResponse.Sucesso := True;
+      ConsultaLinkNFSeResponse.EnvelopeEnvio := AService.Envio;
+      ConsultaLinkNFSeResponse.EnvelopeRetorno := AService.Retorno;
+    except
+      on E:Exception do
+      begin
+        if AService <> nil then
+        begin
+          ConsultaLinkNFSeResponse.EnvelopeEnvio := AService.Envio;
+          ConsultaLinkNFSeResponse.EnvelopeRetorno := AService.Retorno;
+        end;
+
+        AErro := ConsultaLinkNFSeResponse.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(AService);
+  end;
+
+  if not ConsultaLinkNFSeResponse.Sucesso then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Exit;
+  end;
+
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
+  TratarRetornoConsultaLinkNFSe(ConsultaLinkNFSeResponse);
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+end;
+
 procedure TACBrNFSeXProvider.CancelaNFSe;
 var
   AService: TACBrNFSeXWebservice;
@@ -2676,6 +2778,38 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultarSeqRps(ConsultarSeqRpsResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+end;
+
+procedure TACBrNFSeXProvider.AssinarConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse);
+var
+  IdAttr, Prefixo: string;
+  AErro: TNFSeEventoCollectionItem;
+begin
+  if not ConfigAssinar.ConsultarLinkNFSe then Exit;
+
+  if ConfigAssinar.IncluirURI then
+    IdAttr := ConfigGeral.Identificador
+  else
+    IdAttr := 'ID';
+
+  if ConfigMsgDados.Prefixo = '' then
+    Prefixo := ''
+  else
+    Prefixo := ConfigMsgDados.Prefixo + ':';
+
+  try
+    Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
+      Prefixo + ConfigMsgDados.ConsultarLinkNFSe.DocElemento,
+      ConfigMsgDados.ConsultarLinkNFSe.InfElemento, '', '', '', IdAttr);
+  except
+    on E:Exception do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := ACBrStr(Desc801 + E.Message);
+    end;
+  end;
 end;
 
 procedure TACBrNFSeXProvider.AssinarCancelaNFSe(

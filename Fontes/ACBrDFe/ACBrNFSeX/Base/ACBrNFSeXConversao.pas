@@ -51,7 +51,8 @@ type
                      stNFSeFecharSessao, stNFSeAguardaProcesso,
                      stNFSeEnvioWebService, stNFSeGerarToken,
                      stNFSeConsultarEvento, stNFSeConsultarDFe,
-                     stNFSeConsultarParam, stNFSeConsultarSeqRps);
+                     stNFSeConsultarParam, stNFSeConsultarSeqRps,
+                     stNFSeConsultarLinkNFSe);
 
   TVersaoNFSe = (ve100, ve101, ve102, ve103,
                  ve200, ve201, ve202, ve203, ve204);
@@ -189,7 +190,7 @@ type
              tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
              tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
              tmGerarToken, tmEnviarEvento, tmConsultarEvento, tmConsultarDFe,
-             tmConsultarParam, tmConsultarSeqRps);
+             tmConsultarParam, tmConsultarSeqRps, tmConsultarLinkNFSe);
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
                               filsComFormatacaoSemZeroEsquerda,
@@ -12686,7 +12687,8 @@ begin
                         'Gerar', 'GerarLote', 'RecepcionarSincrono', 'SubstituirNFSe',
                         'AbrirSessao', 'FecharSessao', 'Teste', 'Todos',
                         'GerarToken', 'EnviarEvento', 'ConsultarEvento',
-                        'ConsultarDFe', 'ConsultarParam', 'ConsultarSeqRps'],
+                        'ConsultarDFe', 'ConsultarParam', 'ConsultarSeqRps',
+                        'ConsultarLinkNFSe'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
                         tmConsultarNFSePorRps, tmConsultarNFSe,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
@@ -12694,7 +12696,8 @@ begin
                         tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
                         tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
                         tmGerarToken, tmEnviarEvento, tmConsultarEvento,
-                        tmConsultarDFe, tmConsultarParam, tmConsultarSeqRps]);
+                        tmConsultarDFe, tmConsultarParam, tmConsultarSeqRps,
+                        tmConsultarLinkNFSe]);
 end;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;

@@ -136,6 +136,7 @@ type
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: string): string; virtual;
     function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: string): string; virtual;
     function ConsultarNFSeServicoTomado(ACabecalho, AMSG: string): string; virtual;
+    function ConsultarLinkNFSe(ACabecalho, AMSG: string): string; virtual;
     function Cancelar(ACabecalho, AMSG: string): string; virtual;
     function GerarNFSe(ACabecalho, AMSG: string): string; virtual;
     function RecepcionarSincrono(ACabecalho, AMSG: string): string; virtual;
@@ -294,6 +295,25 @@ type
    property CodVerificacao: string  read FCodVerificacao write FCodVerificacao;
    property tpRetorno: TtpRetorno   read FtpRetorno     write FtpRetorno;
  end;
+
+  TInfConsultaLinkNFSe = class
+  private
+    FCompetenciaMes: integer;
+    FCompetenciaAno: integer;
+    FNumeroNFSe: string;
+    FSerieNFSe: string;
+    FNumeroRps: Integer;
+    FSerieRps: string;
+  public
+    constructor Create;
+    function LerFromIni(const AIniStr: string): Boolean;
+    property CompetenciaMes: integer read FCompetenciaMes write FCompetenciaMes;
+    property CompetenciaAno: integer read FCompetenciaAno write FCompetenciaAno;
+    property NumeroNFSe: string read FNumeroNFSe write FNumeroNFSe;
+    property SerieNFSe: string read FSerieNFSe write FSerieNFSe;
+    property NumeroRps: Integer read FNumeroRps write FNumeroRps;
+    property SerieRps: string read FSerieRps write FSerieRps;
+  end;
 
   TInfCancelamento = class
   private
@@ -539,6 +559,12 @@ begin
       begin
         FPArqEnv := 'con-seqrps';
         FPArqResp := 'seqrps';
+      end;
+
+    tmConsultarLinkNFSe:
+      begin
+        FPArqEnv := 'con-link';
+        FPArqResp := 'link';
       end;
   end;
 
@@ -1107,6 +1133,13 @@ begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
+function TACBrNFSeXWebservice.ConsultarLinkNFSe(ACabecalho,
+  AMSG: string): string;
+begin
+  Result := '';
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
 function TACBrNFSeXWebservice.Cancelar(ACabecalho, AMSG: string): string;
 begin
   Result := '';
@@ -1626,6 +1659,45 @@ begin
   FcMotivo := 0;
   FxMotivo := '';
   FchSubstituta := '';
+end;
+
+{ TInfConsultaLinkNFSe }
+
+constructor TInfConsultaLinkNFSe.Create;
+begin
+  FNumeroNFSe := '';
+  FSerieNFSe := '';
+  FNumeroRps := 0;
+  FSerieRps := '';
+end;
+
+function TInfConsultaLinkNFSe.LerFromIni(const AIniStr: string): Boolean;
+var
+  sSecao: string;
+  INIRec: TMemIniFile;
+begin
+{$IFNDEF COMPILER23_UP}
+  Result := False;
+{$ENDIF}
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniStr, INIRec);
+
+    sSecao := 'ConsultarLinkNFSe';
+
+    CompetenciaMes := INIRec.ReadInteger(sSecao, 'CompetenciaMes', 0);
+    CompetenciaAno := INIRec.ReadInteger(sSecao, 'CompetenciaAno', 0);
+    NumeroRps := INIRec.ReadInteger(sSecao, 'NumeroRps', 0);
+    NumeroNFSe := INIRec.ReadString(sSecao, 'NumeroNFSe', '');
+    SerieNFSe := INIRec.ReadString(sSecao, 'SerieNFSe', '');
+    NumeroRps := INIRec.ReadInteger(sSecao, 'NumeroRps', 0);
+    SerieRps := INIRec.ReadString(sSecao, 'SerieRps', '');
+
+    Result := True;
+  finally
+    INIRec.Free;
+  end;
 end;
 
 end.

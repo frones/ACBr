@@ -176,6 +176,8 @@ type
     FConsultarNFSeServicoPrestado: string;
     // URL de homologação ou produção para o serviço ConsultarNFSeServicoTomado
     FConsultarNFSeServicoTomado: string;
+    // URL de homologação ou produção para o serviço ConsultarLinkNFSe
+    FConsultarLinkNFSe: string;
     // URL de homologação ou produção para o serviço CancelarNFSe
     FCancelarNFSe: string;
     // URL de homologação ou produção para o serviço GerarNFSe
@@ -217,6 +219,7 @@ type
     property ConsultarNFSePorFaixa: string read FConsultarNFSePorFaixa;
     property ConsultarNFSeServicoPrestado: string read FConsultarNFSeServicoPrestado;
     property ConsultarNFSeServicoTomado: string read FConsultarNFSeServicoTomado;
+    property ConsultarLinkNFSe: string read FConsultarLinkNFSe;
     property CancelarNFSe: string read FCancelarNFSe;
     property GerarNFSe: string read FGerarNFSe;
     property RecepcionarSincrono: string read FRecepcionarSincrono;
@@ -317,6 +320,8 @@ type
     FConsultarNFSeServicoPrestado: TDocElement;
     // Contem a definição dos campos TDocElement para o XML da Consulta a NFS-e Serviço Tomado
     FConsultarNFSeServicoTomado: TDocElement;
+    // Contem a definição dos campos TDocElement para o XML da Consulta do Link da NFS-e
+    FConsultarLinkNFSe: TDocElement;
     // Contem a definição dos campos TDocElement para o XML do Cancelamento da NFS-e
     FCancelarNFSe: TDocElement;
     // Contem a definição dos campos TDocElement para o XML do Gerar NFS-e
@@ -365,6 +370,7 @@ type
     property ConsultarNFSePorFaixa: TDocElement read FConsultarNFSePorFaixa;
     property ConsultarNFSeServicoPrestado: TDocElement read FConsultarNFSeServicoPrestado;
     property ConsultarNFSeServicoTomado: TDocElement read FConsultarNFSeServicoTomado;
+    property ConsultarLinkNFSe: TDocElement read FConsultarLinkNFSe;
     property CancelarNFSe: TDocElement read FCancelarNFSe;
     property GerarNFSe: TDocElement read FGerarNFSe;
     property SubstituirNFSe: TDocElement read FSubstituirNFSe;
@@ -403,6 +409,8 @@ type
     FConsultarNFSeServicoPrestado: boolean;
     // Se True assina a Consulta a NFS-e Serviço Tomado
     FConsultarNFSeServicoTomado: boolean;
+    // Se True assina a Consulta de Link da NFS-e
+    FConsultarLinkNFSe: boolean;
     // Se True assina o Cancelamento da NFS-e
     FCancelarNFSe: boolean;
     // Se True assina o Rps do Gerar NFS-e
@@ -446,6 +454,7 @@ type
     property ConsultarNFSePorFaixa: boolean read FConsultarNFSePorFaixa write FConsultarNFSePorFaixa;
     property ConsultarNFSeServicoPrestado: boolean read FConsultarNFSeServicoPrestado write FConsultarNFSeServicoPrestado;
     property ConsultarNFSeServicoTomado: boolean read FConsultarNFSeServicoTomado write FConsultarNFSeServicoTomado;
+    property ConsultarLinkNFSe: boolean read FConsultarLinkNFSe write FConsultarLinkNFSe;
     property CancelarNFSe: boolean read FCancelarNFSe write FCancelarNFSe;
     property RpsGerarNFSe: boolean read FRpsGerarNFSe write FRpsGerarNFSe;
     property LoteGerarNFSe: boolean read FLoteGerarNFSe write FLoteGerarNFSe;
@@ -510,6 +519,8 @@ type
     FConsultarParam: string;
     // Nome do arquivo XSD para validar o Consultar Sequencial Rps
     FConsultarSeqRps: string;
+    // Nome do arquivo XSD para validar o Consultar Sequencial Rps
+    FConsultarLinkNFSe: string;
 
     // Se True realiza a validação do XML com os Schemas
     FValidar: boolean;
@@ -535,6 +546,7 @@ type
     property ConsultarDFe: string read FConsultarDFe write FConsultarDFe;
     property ConsultarParam: string read FConsultarParam write FConsultarParam;
     property ConsultarSeqRps: string read FConsultarSeqRps write FConsultarSeqRps;
+    property ConsultarLinkNFSe: string read FConsultarLinkNFSe write FConsultarLinkNFSe;
 
     property Validar: boolean read FValidar write FValidar;
   end;
@@ -663,6 +675,7 @@ begin
     FConsultarLote       := AINI.ReadString(ASession, 'HomConsultarLote'      , FRecepcionar);
     FConsultarNFSeRPS    := AINI.ReadString(ASession, 'HomConsultarNFSeRps'   , FRecepcionar);
     FConsultarNFSe       := AINI.ReadString(ASession, 'HomConsultarNFSe'      , FRecepcionar);
+    FConsultarLinkNFSe   := AINI.ReadString(ASession, 'HomConsultarLinkNFSe'  , FRecepcionar);
     FCancelarNFSe        := AINI.ReadString(ASession, 'HomCancelarNFSe'       , FRecepcionar);
     FGerarNFSe           := AINI.ReadString(ASession, 'HomGerarNFSe'          , FRecepcionar);
     FRecepcionarSincrono := AINI.ReadString(ASession, 'HomRecepcionarSincrono', FRecepcionar);
@@ -693,6 +706,7 @@ begin
     FConsultarLote       := AINI.ReadString(ASession, 'ProConsultarLote'      , FRecepcionar);
     FConsultarNFSeRPS    := AINI.ReadString(ASession, 'ProConsultarNFSeRps'   , FRecepcionar);
     FConsultarNFSe       := AINI.ReadString(ASession, 'ProConsultarNFSe'      , FRecepcionar);
+    FConsultarLinkNFSe   := AINI.ReadString(ASession, 'ProConsultarLinkNFSe'  , FRecepcionar);
     FCancelarNFSe        := AINI.ReadString(ASession, 'ProCancelarNFSe'       , FRecepcionar);
     FGerarNFSe           := AINI.ReadString(ASession, 'ProGerarNFSe'          , FRecepcionar);
     FRecepcionarSincrono := AINI.ReadString(ASession, 'ProRecepcionarSincrono', FRecepcionar);
@@ -728,6 +742,7 @@ begin
   FConsultarNFSePorFaixa := TDocElement.Create;
   FConsultarNFSeServicoPrestado := TDocElement.Create;
   FConsultarNFSeServicoTomado := TDocElement.Create;
+  FConsultarLinkNFSe := TDocElement.Create;
   FCancelarNFSe := TDocElement.Create;
   FGerarNFSe := TDocElement.Create;
   FSubstituirNFSe := TDocElement.Create;
@@ -753,6 +768,7 @@ begin
   FConsultarNFSePorFaixa.Free;
   FConsultarNFSeServicoPrestado.Free;
   FConsultarNFSeServicoTomado.Free;
+  FConsultarLinkNFSe.Free;
   FCancelarNFSe.Free;
   FGerarNFSe.Free;
   FSubstituirNFSe.Free;

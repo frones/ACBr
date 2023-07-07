@@ -51,6 +51,7 @@ type
     FConsultaLoteRps: TNFSeConsultaLoteRpsResponse;
     FConsultaNFSeporRps: TNFSeConsultaNFSeporRpsResponse;
     FConsultaNFSe: TNFSeConsultaNFSeResponse;
+    FConsultaLinkNFSe: TNFSeConsultaLinkNFSeResponse;
     FCancelaNFSe: TNFSeCancelaNFSeResponse;
     FSubstituiNFSe: TNFSeSubstituiNFSeResponse;
     FGerarToken: TNFSeGerarTokenResponse;
@@ -70,6 +71,7 @@ type
     property ConsultaLoteRps: TNFSeConsultaLoteRpsResponse read FConsultaLoteRps;
     property ConsultaNFSeporRps: TNFSeConsultaNFSeporRpsResponse read FConsultaNFSeporRps;
     property ConsultaNFSe: TNFSeConsultaNFSeResponse read FConsultaNFSe;
+    property ConsultaLinkNFSe: TNFSeConsultaLinkNFSeResponse read FConsultaLinkNFSe;
     property CancelaNFSe: TNFSeCancelaNFSeResponse read FCancelaNFSe;
     property SubstituiNFSe: TNFSeSubstituiNFSeResponse read FSubstituiNFSe;
     property GerarToken: TNFSeGerarTokenResponse read FGerarToken;
@@ -92,6 +94,7 @@ begin
   FConsultaLoteRps := TNFSeConsultaLoteRpsResponse.Create;
   FConsultaNFSeporRps := TNFSeConsultaNFSeporRpsResponse.Create;
   FConsultaNFSe := TNFSeConsultaNFSeResponse.Create;
+  FConsultaLinkNFSe := TNFSeConsultaLinkNFSeResponse.Create;
   FCancelaNFSe := TNFSeCancelaNFSeResponse.Create;
   FSubstituiNFSe := TNFSeSubstituiNFSeResponse.Create;
   FGerarToken := TNFSeGerarTokenResponse.Create;
@@ -110,6 +113,7 @@ begin
   FConsultaLoteRps.Free;
   FConsultaNFSeporRps.Free;
   FConsultaNFSe.Free;
+  FConsultaLinkNFSe.Free;
   FCancelaNFSe.Free;
   FSubstituiNFSe.Free;
   FGerarToken.Free;

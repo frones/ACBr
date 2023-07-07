@@ -352,6 +352,18 @@ type
     property InfConsultaNFSe: TInfConsultaNFSe read FInfConsultaNFSe write FInfConsultaNFSe;
   end;
 
+  TNFSeConsultaLinkNFSeResponse = class(TNFSeWebserviceResponse)
+  private
+    FMetodo: TMetodo;
+    FInfConsultaLinkNFSe: TInfConsultaLinkNFSe;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Clear; override;
+    property Metodo: TMetodo read FMetodo write FMetodo;
+    property InfConsultaLinkNFSe: TInfConsultaLinkNFSe read FInfConsultaLinkNFSe;
+  end;
+
   TNFSeCancelaNFSeResponse = class(TNFSeWebserviceResponse)
   private
     FCodigoVerificacao: string;
@@ -1053,6 +1065,34 @@ end;
 destructor TNFSeConsultarSeqRpsResponse.Destroy;
 begin
   inherited Destroy;
+end;
+
+{ TNFSeConsultaLinkNFSeResponse }
+
+procedure TNFSeConsultaLinkNFSeResponse.Clear;
+begin
+  inherited Clear;
+  FMetodo := tmConsultarLinkNFSe;
+
+  if Assigned(FInfConsultaLinkNFSe) then
+    FreeAndNil(FInfConsultaLinkNFSe);
+
+  FInfConsultaLinkNFSe := TInfConsultaLinkNFSe.Create;
+end;
+
+constructor TNFSeConsultaLinkNFSeResponse.Create;
+begin
+  inherited Create;
+
+  Clear;
+end;
+
+destructor TNFSeConsultaLinkNFSeResponse.Destroy;
+begin
+  if Assigned(FInfConsultaLinkNFSe) then
+    FreeAndNil(FInfConsultaLinkNFSe);
+
+  inherited;
 end;
 
 end.

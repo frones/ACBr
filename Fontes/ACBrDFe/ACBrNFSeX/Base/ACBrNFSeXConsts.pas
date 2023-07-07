@@ -151,6 +151,10 @@ resourcestring
   Desc129	= 'Emitente.InscMun não informada.';
   Cod130 = 'X130';
   Desc130	= 'Emitente.CNPJ não informado.';
+  Cod131 = 'X131';
+  Desc131	= 'Mês não informado.';
+  Cod132 = 'X132';
+  Desc132	= 'Ano não informado.';
 
   Cod201 = 'X201';
   Desc201 = 'WebService retornou um XML vazio.';

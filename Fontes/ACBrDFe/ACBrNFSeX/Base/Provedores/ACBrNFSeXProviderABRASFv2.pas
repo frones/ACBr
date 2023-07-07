@@ -101,6 +101,11 @@ type
     procedure AssinarConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); virtual;
     procedure TratarRetornoConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); virtual;
 
+    procedure PrepararConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
+    procedure GerarMsgDadosConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
+
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
@@ -2701,6 +2706,26 @@ begin
 end;
 
 procedure TACBrNFSeProviderABRASFv2.TratarRetornoConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
+procedure TACBrNFSeProviderABRASFv2.PrepararConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderABRASFv2.GerarMsgDadosConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse; Params: TNFSeParamsResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
+procedure TACBrNFSeProviderABRASFv2.TratarRetornoConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;

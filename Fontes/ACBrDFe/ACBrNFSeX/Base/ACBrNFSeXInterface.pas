@@ -51,6 +51,7 @@ type
     procedure ConsultaLoteRps;
     procedure ConsultaNFSeporRps;
     procedure ConsultaNFSe;
+    procedure ConsultaLinkNFSe;
     procedure CancelaNFSe;
     procedure SubstituiNFSe;
     procedure GerarToken;

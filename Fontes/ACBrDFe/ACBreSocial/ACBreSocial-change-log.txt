@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2023
+-- pcesS1280 --
+[*] Criar TAG infoPercTransf11096 somente se houver valor informado (.INI e Componente);
+  Por: IMATECH / Rev.: Alexandre de Paula e Elton Barbosa
+  
 26/06/2023
 -- ACBreSocialConfiguracoes --
 [*] Ajustado para versão default na criação do componente ser a veS01_01_00;

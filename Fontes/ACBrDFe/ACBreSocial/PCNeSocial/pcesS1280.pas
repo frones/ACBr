@@ -255,13 +255,14 @@ end;
 procedure TEvtInfoComplPer.GerarinfoPercTransf11096;
 begin
   if VersaoDF > ve02_05_00 then
-  begin
-     Gerador.wGrupo('infoPercTransf11096');
+    if infoPercTransf11096.percTransf > 0 then
+    begin
+      Gerador.wGrupo('infoPercTransf11096');
 
-     Gerador.wCampo(tcStr, '', 'percTransf', 1, 1, 1, infoPercTransf11096.percTransf);
+      Gerador.wCampo(tcStr, '', 'percTransf', 1, 1, 1, infoPercTransf11096.percTransf);
 
-     Gerador.wGrupo('/infoPercTransf11096');
-  end;
+      Gerador.wGrupo('/infoPercTransf11096');
+    end;
 
 end;
 
@@ -467,8 +468,8 @@ begin
       InfoAtivConcom.fator13  := StringToFloatDef(INIRec.ReadString(sSecao, 'fator13', ''), 0);
 
       sSecao := 'infoPercTransf11096';
-      infoPercTransf11096.percTransf  := StrToIntDef(INIRec.ReadString(sSecao, 'percTrans', ''), 0);
-
+      if INIRec.ReadString(sSecao, 'percTrans', '') <> '' then
+        infoPercTransf11096.percTransf  := StrToIntDef(INIRec.ReadString(sSecao, 'percTrans', ''), 0);
     end;
 
     GerarXML;

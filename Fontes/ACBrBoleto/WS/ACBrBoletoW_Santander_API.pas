@@ -185,7 +185,7 @@ end;
 function TBoletoW_Santander_API.DefinirParametros: String;
 var
   Consulta: TStringList;
-  Documento, ANossoNumero: String;
+  ANossoNumero: String;
 begin
   if Assigned(Boleto.Configuracoes.WebService.Filtro) then
   begin
@@ -269,10 +269,8 @@ end;
 
 procedure TBoletoW_Santander_API.RequisicaoAltera;
 var
-  Data, AEspecieDoc: string;
+  Data: string;
   Json: TJSONObject;
-  JsonArray: TJsonArray;
-  I: Integer;
 begin
  if Assigned(ATitulo) then
   begin
@@ -358,10 +356,8 @@ end;
 
 procedure TBoletoW_Santander_API.RequisicaoBaixa;
 var
-  Data, AEspecieDoc: string;
+  Data: string;
   Json: TJSONObject;
-  JsonArray: TJsonArray;
-  I: Integer;
 begin
   if Assigned(ATitulo) then
   begin
@@ -398,8 +394,6 @@ procedure TBoletoW_Santander_API.RequisicaoJson;
 var
   Data, AEspecieDoc: string;
   Json: TJSONObject;
-  JsonArray: TJsonArray;
-  I: Integer;
 begin
   if Assigned(ATitulo) then
   begin
@@ -458,10 +452,8 @@ end;
 
 procedure TBoletoW_Santander_API.RequisicaoProtestar;
 var
-  Data, AEspecieDoc: string;
+  Data: string;
   Json: TJSONObject;
-  JsonArray: TJsonArray;
-  I: Integer;
 begin
   if Assigned(ATitulo) then
   begin
@@ -732,9 +724,7 @@ end;
 procedure TBoletoW_Santander_API.RequisicaoAlterarDesconto(AJson: TJsonObject);
 var
   JsonDesconto : TJsonObject;
-  JsonPairGrupoDesconto: TJsonPair;
   JsonPairDesconto: TJsonPair;
-  STipoDesconto: string;
   SValorDesconto1, SValorDesconto2, SValorDesconto3, STipo1, STipo2, STipo3 : string;
 begin
   if Assigned(ATitulo) then

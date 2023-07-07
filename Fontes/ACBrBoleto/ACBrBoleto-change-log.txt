@@ -48,12 +48,16 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+07/07/2023
+[*]TK-4143 ACBrBoletoW_Santander_API, ACBrBoletoWS.SOAP - Remoção de Warnigs e Hints
+https://www.projetoacbr.com.br/forum/topic/72920-remo%C3%A7%C3%A3o-de-warnigs-e-hints-units-acbrboleto/
+Por : Waldir Paim / Verificado: Daniel Morais, Victor Hugo Gonzales Pandaaaa
 05/07/2023
 [*]TK-4135 ACBrBancoBancoob - Incluido tipo "2" no Código para Protesto/Negativação. 
 https://www.projetoacbr.com.br/forum/topic/72878-sicoob-incluido-tipo-2-no-c%C3%B3digo-para-protestonegativa%C3%A7%C3%A3o/
 Por : Mario Inacio /Verificado Daniel Morais
 [*]TK-4090 ACBrBoletoRet_Itau. ACBrBoletoW_Itau - Ajustes no envio e Retorno
-hhttps://www.projetoacbr.com.br/forum/topic/72739-corre%C3%A7%C3%B5es-acbrboletoitauw-v1/
+https://www.projetoacbr.com.br/forum/topic/72739-corre%C3%A7%C3%B5es-acbrboletoitauw-v1/
 Por : Jéter Rabelo Ferreira /Verificado: Daniel Morais
 [+]TK-4042 ACBrBoleto,ACBrBancoBradesco,ACBrBancoAthenaBradesco - Inlusão Banco Athena que usa o "formato" CNAB 444 e é baseado no layout do Bradesco. 
 https://www.projetoacbr.com.br/forum/topic/72547-contribui%C3%A7%C3%A3o-banco-athena-cnab-444-baseado-no-layout-bradesco/

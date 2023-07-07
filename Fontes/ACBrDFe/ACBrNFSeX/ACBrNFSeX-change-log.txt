@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/07/2023
+-- ACBrNFSeXServicos.ini --
+[+] Inclusão das URL para consultar o Link da NFS-e para cidade de Serra/ES
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementação do método ConsultarLinkNFSe
   Por: Arimateia Jr/Italo Giurizzato Junior

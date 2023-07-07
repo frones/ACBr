@@ -254,6 +254,7 @@ type
     FurlPix: String;
     FtxId: String;
     FCodigoOcorrenciaCartorio: String;
+    FCodigoCanalTituloCobranca: String;
   public
     constructor Create;
     destructor Destroy; override;

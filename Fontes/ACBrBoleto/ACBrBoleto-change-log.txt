@@ -61,6 +61,9 @@ Por : julio_cld / Verificado: Daniel Morais
 [*]TK-4148-3 ACBrBoletoRet_Bancoob - Ajustes no tratamento do retorno. 
 https://www.projetoacbr.com.br/forum/topic/72934-units-alteradas-tratamento-retorno/#comment-472931
 Por : julio_cld / Verificado: Daniel Morais
+[*]TK-4148-2 ACBrBoletoRet_Sicredi_APIV2, ACBrBoletoW_Sicredi_APIV2 - Ajustes no tratamento do retorno. 
+https://www.projetoacbr.com.br/forum/topic/72934-units-alteradas-tratamento-retorno/#comment-472931
+Por : julio_cld / Verificado: Daniel Morais
 05/07/2023
 [*]TK-4135 ACBrBancoBancoob - Incluido tipo "2" no Código para Protesto/Negativação. 
 https://www.projetoacbr.com.br/forum/topic/72878-sicoob-incluido-tipo-2-no-c%C3%B3digo-para-protestonegativa%C3%A7%C3%A3o/

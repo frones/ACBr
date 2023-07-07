@@ -63,6 +63,7 @@ type
     function DefinirParametros: String;
     function DefinirParametrosDetalhe: String;
     function ValidaAmbiente: Integer;
+    function DefinirNossoNumero:string;
     procedure DefinirURL; override;
     procedure DefinirContentType; override;
     procedure GerarHeader; override;
@@ -123,7 +124,7 @@ begin
   FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
 
   if ATitulo <> nil then 
-		ID      := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
+		ID      := DefinirNossoNumero;
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui                : FPURL := FPURL+'/boletos' ;
@@ -291,6 +292,14 @@ begin
   FPKeyUser := Format('x-api-key: %s', [Boleto.Cedente.CedenteWS.KeyUser]);
 end;
 
+function TBoletoW_Sicredi_APIV2.DefinirNossoNumero: string;
+begin
+  if ATitulo.NossoNumero <> EmptyStr then
+    result := OnlyNumber(ATitulo.NossoNumero)
+  else
+    result := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
+end;
+
 function TBoletoW_Sicredi_APIV2.DefinirParametros: String;
 var
   Consulta : TStringList;
@@ -340,7 +349,7 @@ begin
       try
         Consulta.Delimiter := '&';
         Consulta.Add(Format('codigoBeneficiario=%s',[Boleto.Cedente.CodigoCedente]));        
-        Consulta.Add(Format('nossoNumero=%s',[OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo))]));
+        Consulta.Add(Format('nossoNumero=%s',[DefinirNossoNumero]));
         Result := Consulta.DelimitedText;
       finally
         Consulta.Free;
@@ -384,7 +393,7 @@ begin
       Json.Add('tipoCobranca').Value.AsString                           := IfThen(Boleto.Cedente.CedenteWS.IndicadorPix,'HIBRIDO','NORMAL');
       Json.Add('codigoBeneficiario').Value.AsString                     := Boleto.Cedente.CodigoCedente;
       Json.Add('especieDocumento').Value.AsString                       := self.codigoTipoTitulo(ATitulo.EspecieDoc);
-      Json.Add('nossoNumero').Value.AsString                            := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo) );
+      Json.Add('nossoNumero').Value.AsString                            := DefinirNossoNumero;
       Json.Add('seuNumero').Value.AsString                              := ATitulo.SeuNumero;
       Json.Add('dataVencimento').Value.AsString                         := FormatDateBr(ATitulo.Vencimento, 'YYYY-MM-DD');
       if (ATitulo.DataProtesto > 0) then

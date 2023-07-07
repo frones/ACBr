@@ -147,7 +147,7 @@ begin
                 ARetornoWS.DadosRet.TituloRet.SeuNumero      := aJson.Values['seuNumero'].asString;
                 ARetornoWS.DadosRet.TituloRet.NossoNumero    := aJson.Values['nossoNumero'].AsString;
                 //Pagador
-                //ARetornoWS.DadosRet.TituloRet.Sacado.codigo         := aJson.Values['pagador'].asObject.Values['codigo'].asString;;
+                //ARetornoWS.DadosRet.TituloRet.Sacado.codigo         := aJson.Values['pagador'].asObject.Values['codigo'].asString;
                 ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado      := aJson.Values['pagador'].asObject.Values['nome'].asString;
                 ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF         := aJson.Values['pagador'].asObject.Values['documento'].asString;
                 //Datas
@@ -156,9 +156,8 @@ begin
                 ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(aJson.Values['dataPagamento'].AsString);
                 //Valores
                 ARetornoWS.DadosRet.TituloRet.ValorDocumento         := aJson.Values['valorNominal'].AsNumber;
-                ARetornoWS.DadosRet.TituloRet.ValorPago              := aJson.Values['valorNominal'].AsNumber;
                 //Situação/Código da situação.
-                ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca    := aJson.Values['situacao'].asString;
+                ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca    := UpperCase(aJson.Values['situacao'].asString);
                 if (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = 'EM CARTEIRA') or
                    (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = 'VENCIDO') then
                   ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
@@ -173,6 +172,15 @@ begin
                 ARetornoWS.DadosRet.TituloRet.DiasDeProtesto         := aJson.Values['diasProtesto'].AsInteger;
                 ARetornoWS.DadosRet.TituloRet.TxId                   := aJson.Values['txId'].AsString;
                 ARetornoWS.DadosRet.TituloRet.EMV                    := aJson.Values['EMV'].AsString;
+                ARetornoWS.DadosRet.TituloRet.PercentualMulta        := aJson.Values['valorMulta'].AsNumber;
+                if ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca = '6' then
+                begin
+                   ARetornoWS.DadosRet.TituloRet.ValorPago              := AJson.Values['dadosLiquidacao'].AsObject.Values['valor'].AsNumber;
+                   ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         := AJson.Values['dadosLiquidacao'].AsObject.Values['juros'].AsNumber;
+                   ARetornoWS.DadosRet.TituloRet.ValorAbatimento        := AJson.Values['dadosLiquidacao'].AsObject.Values['abatimento'].AsNumber;
+                   ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(AJson.Values['dadosLiquidacao'].AsObject.Values['data'].AsString);
+                   ARetornoWS.DadosRet.TituloRet.ValorDesconto          := AJson.Values['dadosLiquidacao'].AsObject.Values['desconto'].AsNumber;
+                end;
                 Descontos := AJson.Values['descontos'].AsArray;
                 if Assigned(Descontos) then
                 begin

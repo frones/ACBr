@@ -366,7 +366,7 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Enviar(int aLote, bool imprimir = false, bool sincrono = false)
+        public EnvioRetornoResposta Enviar(int aLote, bool imprimir = false, bool sincrono = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -376,7 +376,7 @@ namespace ACBrLib.CTe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EnvioRetornoResposta.LerResposta(ProcessResult(buffer, bufferLen), "CTe");
         }
 
         public string ConsultarRecibo(string aRecibo)

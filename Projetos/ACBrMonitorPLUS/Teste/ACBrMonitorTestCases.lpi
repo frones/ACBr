@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="ACBrMonitorTestCases"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <BuildModes Count="2">
+      <Item1 Name="Debug" Default="True"/>
+      <Item2 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\..;..\Lazarus;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\NFSe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\BPe;..\..\ACBrLib\Fontes\Boleto;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\GNRe;..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\GTIN;..\..\ACBrLib\Fontes\NCMs;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\ConsultaCNPJ;..\..\ACBrLib\Fontes\ConsultaCPF"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
+    </RunParams>
+    <RequiredPackages Count="29">
+      <Item1>
+        <PackageName Value="ACBr_GTIN"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBr_BPeDabpeESCPOS"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="ACBr_Reinf"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="ACBre_Social"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="ACBr_MDFe"/>
+      </Item6>
+      <Item7>
+        <PackageName Value="ACBr_BlocoX"/>
+      </Item7>
+      <Item8>
+        <PackageName Value="ACBr_GNREGuiaRL"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="ACBr_GNRE"/>
+      </Item9>
+      <Item10>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+      </Item10>
+      <Item11>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+      </Item11>
+      <Item12>
+        <PackageName Value="ACBr_SAT"/>
+      </Item12>
+      <Item13>
+        <PackageName Value="ACBr_BPe"/>
+      </Item13>
+      <Item14>
+        <PackageName Value="ACBr_NFSeXDanfseRL"/>
+      </Item14>
+      <Item15>
+        <PackageName Value="ACBr_NFSeX"/>
+      </Item15>
+      <Item16>
+        <PackageName Value="ACBr_CTe_DACTeRL"/>
+      </Item16>
+      <Item17>
+        <PackageName Value="ACBr_CTe"/>
+      </Item17>
+      <Item18>
+        <PackageName Value="TurboPowerIPro"/>
+      </Item18>
+      <Item19>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+      </Item19>
+      <Item20>
+        <PackageName Value="ACBr_Boleto"/>
+      </Item20>
+      <Item21>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
+      </Item21>
+      <Item22>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+      </Item22>
+      <Item23>
+        <PackageName Value="ACBr_NFe"/>
+      </Item23>
+      <Item24>
+        <PackageName Value="ACBrSerial"/>
+      </Item24>
+      <Item25>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item25>
+      <Item26>
+        <PackageName Value="ACBrComum"/>
+      </Item26>
+      <Item27>
+        <PackageName Value="FPCUnitTestRunner"/>
+      </Item27>
+      <Item28>
+        <PackageName Value="LCL"/>
+      </Item28>
+      <Item29>
+        <PackageName Value="FCL"/>
+      </Item29>
+    </RequiredPackages>
+    <Units Count="26">
+      <Unit0>
+        <Filename Value="ACBrMonitorTestCases.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\..\..\Testes\FPCUnit\ACBrComum\acbrutiltest.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ACBrUtilTest"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\..\Testes\ACBrTests.Util.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Lazarus\CmdUnit.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\ACBrLib\Fontes\Comum\ACBrLibResposta.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="DoACBrNFSeTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Lazarus\ACBrMonitorConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\Lazarus\DoACBrNFSeUnit.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\ACBrLib\Fontes\NFe\ACBrLibNFeRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\ACBrLib\Fontes\NFSe\ACBrLibNFSeRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\ACBrLib\Fontes\CTe\ACBrLibCTeRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\ACBrLib\Fontes\BPe\ACBrLibBPeRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\ACBrLib\Fontes\Boleto\ACBrLibBoletoRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\..\ACBrLib\Fontes\eSocial\ACBrLibeSocialRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\..\ACBrLib\Fontes\GNRe\ACBrLibGNReRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\..\ACBrLib\Fontes\MDFe\ACBrLibMDFeRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\..\ACBrLib\Fontes\Reinf\ACBrLibReinfConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\..\ACBrLib\Fontes\CEP\ACBrLibCEPRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\..\ACBrLib\Fontes\IBGE\ACBrLibIBGERespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\..\ACBrLib\Fontes\GTIN\ACBrLibGTINRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\..\ACBrLib\Fontes\NCMs\ACBrLibNCMsRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\..\ACBrLib\Fontes\Sedex\ACBrLibSedexRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\..\ACBrLib\Fontes\SAT\ACBrLibSATRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="..\..\ACBrLib\Fontes\ConsultaCNPJ\ACBrLibConsultaCNPJRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="..\..\ACBrLib\Fontes\ConsultaCPF\ACBrLibConsultaCPFRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="ACBrMonitorTestConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit25>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\..\..\Testes;..\Lazarus;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\NFSe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\BPe;..\..\ACBrLib\Fontes\Boleto;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\GNRe;..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\GTIN;..\..\ACBrLib\Fontes\NCMs;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\ConsultaCNPJ;..\..\ACBrLib\Fontes\ConsultaCPF"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <IncludeAssertionCode Value="True"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <Checks>
+        <IOChecks Value="True"/>
+        <RangeChecks Value="True"/>
+        <OverflowChecks Value="True"/>
+        <StackChecks Value="True"/>
+      </Checks>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+        <UseHeaptrc Value="True"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="5">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+      <Item4>
+        <Name Value="EAssertionFailedError"/>
+      </Item4>
+      <Item5>
+        <Name Value="EConvertError"/>
+      </Item5>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

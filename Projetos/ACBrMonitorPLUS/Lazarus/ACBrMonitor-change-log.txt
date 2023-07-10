@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/07/2023
+-- ACBrMonitor1 --
+[*] Ajuste visando sanar erro de interpretação ao enviar o conteúdo do INI ao invés do caminho nos comandos
+    da NFSe que aceitam INI como parâmetro.
+   Por: Diego F
+
 05/07/2023
 -- ACBrMonitor1 --
 [*] Ajuste visando sanar obrigatoriedade de configurar o certificado para que salvasse as configurações.

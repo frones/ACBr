@@ -7816,6 +7816,7 @@ begin
        (UpperCase(Copy(Objeto, 1, 3)) = 'BPE') or
        (UpperCase(Copy(Objeto, 1, 3)) = 'CTE') or
        (UpperCase(Copy(Objeto, 1, 4)) = 'CNPJ') or
+       (UpperCase(Copy(Objeto, 1, 4)) = 'NFSE') or
        (UpperCase(Copy(Objeto, 1, 3)) = 'CPF') then
     begin
       Linha := Trim(fsProcessar.Text);

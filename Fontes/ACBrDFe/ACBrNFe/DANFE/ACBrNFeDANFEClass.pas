@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrBase, ACBrDFeDANFeReport,
-  pcnNFe, pcnConversao, pcnConversaoNFe, StrUtilsEx;
+  pcnNFe, pcnConversao, pcnConversaoNFe, StrUtilsEx, TypInfo;
 
 type
   TDetVeiculo = (dv_tpOp, dv_chassi, dv_cCor, dv_xCor, dv_pot, dv_cilin,
@@ -672,7 +672,7 @@ begin
   Result := '';
 
   try
-    if Ord(aPagto.tBand) >= 0 then
+    if (aPagto.tBand >= Low(TpcnBandeiraCartao)) and (aPagto.tBand <= High(TpcnBandeiraCartao)) then
       LDescBandeira:= BandeiraCartaoToDescStr(aPagto.tBand);
 
     if aPagto.cAut <>'' then

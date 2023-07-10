@@ -47,6 +47,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+10/07/2023
+[+]TK-4085 ACBrOFX - A tag TRNTYPE do arquivo OFX com valores IN e OUT
+  por : Jhoni Conzatti
 
 15/05/2023
 [*] TK-3881 Alterado a forma como é definido se o tipo do lançamento é Débido ou Crédito.

@@ -226,12 +226,14 @@ begin
               if (InfLine(sLine) = '0')
                 or (InfLine(sLine) = 'CREDIT')
                 or (InfLine(sLine) = 'DEP')
+                or (InfLine(sLine) = 'IN')
                 then
                   oItem.MovType := 'C'
               else
                 if (InfLine(sLine) = '1')
                   or (InfLine(sLine) = 'DEBIT')
-                  or (InfLine(sLine) = 'XFER') then
+                  or (InfLine(sLine) = 'XFER')
+                  or (InfLine(sLine) = 'OUT') then
                 oItem.MovType := 'D'
               else
                 oItem.MovType := 'OTHER';

@@ -52,6 +52,8 @@ type
 
     function GerarCondicaoPagamento: TACBrXmlNode; override;
     function GerarParcelas: TACBrXmlNodeArray; override;
+  public
+    function GerarXml: Boolean; override;
   end;
 
   { TNFSeW_Betha202 }
@@ -142,6 +144,14 @@ begin
 
   if NFSe.CondicaoPagamento.Parcelas.Count > 10 then
     wAlerta('#54', 'Parcelas', '', ERR_MSG_MAIOR_MAXIMO + '10');
+end;
+
+function TNFSeW_Betha.GerarXml: Boolean;
+begin
+  if NFSe.OptanteSimplesNacional = snSim then
+    NrOcorrAliquota := 1;
+
+  Result := inherited GerarXml;
 end;
 
 { TNFSeW_Betha202 }

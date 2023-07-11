@@ -88,7 +88,7 @@ begin
       Continue;
     end;
 
-    Result[i].AppendChild(AddNode(tcDe2, '#1', 'aliquota', 4, 4, 1,
+    Result[i].AppendChild(AddNode(tcDe4, '#1', 'aliquota', 1, 6, 1,
                                  NFSe.Servico.ItemServico[i].Aliquota/100, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#1', 'baseCalculo', 1, 15, 1,
@@ -145,7 +145,6 @@ begin
     Result := GerarXmlEnvio
   else
     Result := GerarXmlSubstituicao;
-
 end;
 
 function TNFSeW_SoftPlan.GerarXmlEnvio: Boolean;

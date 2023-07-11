@@ -85,6 +85,7 @@ type
     FNSU: Integer;
     FChaveDFe: string;
     FTipoDoc: string;
+    FidNota: string;
   public
     property NumeroNota: string read FNumeroNota write FNumeroNota;
     property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
@@ -99,6 +100,7 @@ type
     property NSU: Integer read FNSU write FNSU;
     property ChaveDFe: string read FChaveDFe write FChaveDFe;
     property TipoDoc: string read FTipoDoc write FTipoDoc;
+    property idNota: string read FidNota write FidNota;
   end;
 
   TNFSeResumoCollection = class(TACBrObjectList)

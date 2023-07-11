@@ -533,8 +533,8 @@ begin
 
   TagTomador := 'TomadorServico';
 
-  GerarIDDeclaracao := False;
-  GerarIDRps := True;
+//  GerarIDDeclaracao := False;
+//  GerarIDRps := True;
 end;
 
 end.

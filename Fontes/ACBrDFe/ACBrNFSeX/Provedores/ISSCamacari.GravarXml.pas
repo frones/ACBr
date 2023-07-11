@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrNFSeXConversao,
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
@@ -62,6 +63,7 @@ procedure TNFSeW_ISSCamacari201.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsNaoSeAplica;
 end;
 
 end.

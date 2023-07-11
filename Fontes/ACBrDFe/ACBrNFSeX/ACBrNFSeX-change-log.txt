@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/07/2023
+-- ISSCamacari.GravarXml --
+[*] Ajustes para não formatar o conteúdo da tag ItemListaServico.
+  Por: Italo Giurizzato Junior
 -- SoftPlan.GravarXml --
 [*] Ajustes para gerar a tag Aliquota com 4 casas decimais.
   Por: Ricardo ADM

@@ -71,6 +71,7 @@ type
 implementation
 
 uses
+  ACBrConsts,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
@@ -206,7 +207,12 @@ procedure TACBrNFSeProviderISSRecife.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.QuebradeLinha := '&#xD;&#xA;';
+{
+  Comentado a linha abaixo pois o webservice do provedor recusa o XML alegando
+  que a assinatura esta invalida.
+  Desta forma por padrão o caracter de quebra de linha é ";" (ponto e virgula).
+}
+//  ConfigGeral.QuebradeLinha := '&#xD;&#xA;';
 
   with ConfigAssinar do
   begin

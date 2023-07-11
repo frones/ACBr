@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2023
+-- ISSRecife.Provider --
+[*] Comentado a linha que definia uma sequencia escape para quebra de linha.
+    O provedor estava recusando alegando que a assinatura estava invalida. 
+  Por: Italo Giurizzato Junior
+
 10/07/2023
 -- ACBrNFSeXNotasFiscais --
 [*] Ajuste para que não gere a tag ResponsavelRetencao quando não informar a mesma no Ini para Lib e Monitor.

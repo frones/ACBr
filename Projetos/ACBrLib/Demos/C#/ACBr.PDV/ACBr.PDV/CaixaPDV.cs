@@ -46,7 +46,7 @@ namespace ACBr.PDV
 
             // Altera as config de log, como todos os componentes
             // vão usar o mesmo ini então configuro so uma vez
-            NFe.Config.Principal.LogNivel = NivelLog.logCompleto;
+            NFe.Config.Principal.LogNivel = NivelLog.logParanoico;
 
             var logPath = Path.Combine(Application.StartupPath, "Logs");
             if (!Directory.Exists(logPath))

@@ -376,7 +376,7 @@ namespace ACBr.PDV
 
             Caixa.PosPrinter.ConfigLer();
 
-            //
+            //PosPrinter
             txtSoftwareHouse.Text = Caixa.PosPrinter.Config.Sistema.Nome;
             txtWebsite.Text = Caixa.PosPrinter.Config.Emissor.WebSite;
 

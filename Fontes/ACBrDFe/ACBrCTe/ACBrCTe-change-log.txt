@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/04/2023
+-- ACBrCTeWebServices --
+[*] A SEFAZ-MG resolveu usar os mesmos NameSpace e SoapAction usado pelas demais
+    SEFAZ.
+  Por: Wagner Oliveira
+
 03/07/2023
 -- ACBrCTeDACTeRLRetrato/ACBrCTeDACTeRLRetratoA5 --
 [*] Ajustes para imprimir corretamente as chaves dos CT-e complementados na 

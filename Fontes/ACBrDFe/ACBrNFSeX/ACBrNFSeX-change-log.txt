@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/07/2023
+-- SigISS.Provider --
+[*] Possível solução para considerar algumas mensagens retornadas no grupo de erros
+    como sendo alertas.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebservicesResponse/EL.GravarXml/EL.Provider --
 [*] Possível solução para gerar o XML da NFS-e com base no XML do RPS e do retorno
     do provedor, uma vez que este não retorna o XML completo da NFS-e.

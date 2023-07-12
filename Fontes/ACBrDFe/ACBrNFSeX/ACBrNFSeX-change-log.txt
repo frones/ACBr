@@ -44,6 +44,8 @@ Símbolo : Significado
 
 12/07/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Igarape/MG trocou de provedor, agora é ISSDigital
+  Por: JovitoMG
 [+] Incluída a cidade de Rio Bananal/ES, provedor é: EL
   Por: Neski Soluções
 -- PadraoNacional.Provider --

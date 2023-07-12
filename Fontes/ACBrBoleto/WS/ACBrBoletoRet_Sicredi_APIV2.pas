@@ -171,7 +171,7 @@ begin
                 ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         := aJson.Values['juros'].AsNumber;
                 ARetornoWS.DadosRet.TituloRet.DiasDeProtesto         := aJson.Values['diasProtesto'].AsInteger;
                 ARetornoWS.DadosRet.TituloRet.TxId                   := aJson.Values['txId'].AsString;
-                ARetornoWS.DadosRet.TituloRet.EMV                    := aJson.Values['EMV'].AsString;
+                ARetornoWS.DadosRet.TituloRet.EMV                    := aJson.Values['codigoQrCode'].AsString;
                 ARetornoWS.DadosRet.TituloRet.PercentualMulta        := aJson.Values['valorMulta'].AsNumber;
                 if ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca = '6' then
                 begin
@@ -240,7 +240,7 @@ begin
             ARetornoWS.DadosRet.IDBoleto.NossoNum       := AJson.Values['nossoNumero'].AsString;
             ARetornoWS.DadosRet.TituloRet.UrlPix        := '';//AJson.Values['url'].AsString;
             ARetornoWS.DadosRet.TituloRet.TxId          := AJson.Values['txid'].AsString;
-            ARetornoWS.DadosRet.TituloRet.EMV           := AJson.Values['qrCode'].AsString;
+            ARetornoWS.DadosRet.TituloRet.EMV           := AJson.Values['codigoQrCode'].AsString;
 
             ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;

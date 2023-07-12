@@ -117,7 +117,7 @@ end;
 function TACBrBancoBS2.EspecieDocumentoToIndex(const AValue: String): String;
 begin
   case AnsiIndexStr(UpperCase(AValue),['DM' ,'DS']) of
-    0  : Result := '9'; //Duplicata mercantil
+    0  : Result := '0'; //Duplicata mercantil
     1  : Result := '6'; //Duplicata serviço
   else
     Result := '9';      { Outros}

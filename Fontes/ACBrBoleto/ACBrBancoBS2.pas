@@ -249,7 +249,7 @@ begin
             PadLeft('', 10, '0')                                                                   + // 002 a 011 Zeros
             Space(5)                                                                               + // 012 a 016 Branco
             ATipoSacadoAvalista                                                                    + // 017 a 017 Tipo de inscrição Sacador/Avalista
-            PadLeft(OnlyNumber(ACBrTitulo.Sacado.CNPJCPF), 14, '0')                                + // 018 a 031 Identificação da empresa CNPJ
+            PadLeft(OnlyNumber(ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF), 14, '0')                 + // 018 a 031 documento do sacado avalista
             Space(3)                                                                               + // 032 a 034 Branco
             PadLeft(ACBrTitulo.SeuNumero, 25, '0')                                                 + // 035 a 059 Número de controle para uso da empresa.
             MontarCampoNossoNumero(ACBrTitulo)                                                     + // 060 a 070 Nosso numero

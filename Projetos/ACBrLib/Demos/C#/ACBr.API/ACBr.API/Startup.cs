@@ -1,3 +1,4 @@
+using ACBrLib.Boleto;
 using ACBrLib.NFe;
 using ACBrLib.Web.Boleto;
 using ACBrLib.Web.NFe;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace ACBr.API
 {
@@ -17,10 +19,17 @@ namespace ACBr.API
         //Instancia criada devido a problemas com a impressão, não use essa instancia, use a registrada no IOC.
         //Checar nos controles como usar de forma correta.
         private static ACBrNFe nfe;
+        private static ACBrBoleto boleto;
 
         static Startup()
         {
-            nfe = new ACBrNFe("[Memory]");
+            //Uso ACBrLib em Memória.. 
+            //nfe = new ACBrNFe("[Memory]");
+            //boleto = new ACBrBoleto("[Memory]");
+
+            nfe = new ACBrNFe();
+            boleto = new ACBrBoleto();
+
         }
 
         #endregion Internal
@@ -35,8 +44,8 @@ namespace ACBr.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddACBrNFe(o => o.UseMemory = true);
-            services.AddACBrBoleto(o => o.UseMemory = true);
+            services.AddACBrNFe(o => o.UseMemory = false);
+            services.AddACBrBoleto(o => o.UseMemory = false);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

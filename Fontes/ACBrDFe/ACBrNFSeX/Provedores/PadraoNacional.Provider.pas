@@ -258,18 +258,22 @@ begin
 
   if LerErro then
   begin
-    JSonErro := LJson.AsJSONObject['erro'];
+    JSonErros := LJson.AsJSONArray['erro'];
 
-    if JsonErro <> nil then
+    if JsonErros <> nil then
     begin
-      Codigo := JSonErro.AsString['codigo'];
-
-      if Codigo <> '' then
+      for i:= 0 to JSONErros.Count - 1 do
       begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Codigo;
-        AErro.Descricao := ACBrStr(JSonErro.AsString['descricao']);
-        AErro.Correcao := ACBrStr(JSonErro.AsString['complemento']);
+        JSon := JSonErros.ItemAsJSONObject[i];
+        Codigo := JSon.AsString['codigo'];
+
+        if Codigo <> '' then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Codigo;
+          AErro.Descricao := ACBrStr(JSon.AsString['descricao']);
+          AErro.Correcao := ACBrStr(JSon.AsString['complemento']);
+        end;
       end;
     end;
   end;

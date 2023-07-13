@@ -44,6 +44,8 @@ Símbolo : Significado
 
 13/07/2023
 -- ACBrNFSeXServicos --
+[*] Atualizado a URL da cidade de Camboriu/SC.
+  Por: Rose - SPI Informatica
 [+] Incluída a cidade de Governador Lindenberg/ES, provedor é: EL
   Por: Neski Soluções/Italo Giurizzato Junior
 [*] Incluído a URL de homologação para a cidade de Igarape/MG.

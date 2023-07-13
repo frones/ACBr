@@ -213,7 +213,7 @@ procedure TACBrNFSeProviderPadraoNacional.ProcessarMensagemDeErros(
 var
   i: Integer;
   JSonErros: TACBrJSONArray;
-  JsonErro, JSon: TACBrJSONObject;
+  JSon: TACBrJSONObject;
   Codigo: string;
   AErro: TNFSeEventoCollectionItem;
   LerErro, LerErroUnico: Boolean;

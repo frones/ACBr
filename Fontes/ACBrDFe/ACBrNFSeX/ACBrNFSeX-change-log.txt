@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/07/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Governador Lindenberg/ES, provedor é: EL
+  Por: Neski Soluções/Italo Giurizzato Junior
+[*] Incluído a URL de homologação para a cidade de Igarape/MG.
+    Observação: O provedor ISSDigital possui a tag <Producao> que indica se o 
+                Rps esta sendo enviado em modo produção ou homologação.
+  Por: Italo Giurizzato Junior
 -- ISSDSF.Provider --
 [*] Incluído a checagem no PrepararConsultarSeqRps se o CNPJ e a Insc. Est. do
     Emitente foram informados.

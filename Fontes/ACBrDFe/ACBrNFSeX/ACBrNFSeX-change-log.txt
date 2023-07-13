@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/07/2023
+-- ISSDSF.Provider --
+[*] Incluído a checagem no PrepararConsultarSeqRps se o CNPJ e a Insc. Est. do
+    Emitente foram informados.
+  Por: Italo Giurizzato Junior
 -- Ginfes.Provider --
 [*] Possível solução para realizar o cancelamento com a mudança promovida pelo
     provedor.

@@ -977,6 +977,23 @@ var
   NameSpace, Prefixo, PrefixoTS: string;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  if EstaVazio(Emitente.InscMun) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod129;
+    AErro.Descricao := ACBrStr(Desc129);
+    Exit;
+  end;
+
+  if EstaVazio(Emitente.CNPJ) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod130;
+    AErro.Descricao := ACBrStr(Desc130);
+    Exit;
+  end;
+
   Prefixo := '';
   PrefixoTS := '';
 
@@ -1024,9 +1041,9 @@ begin
                                '<CodCid>' +
                                  CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                                '</CodCid>' +
-                               '<IMPrestador>'+
-                                 Emitente.InscMun+
-                               '</IMPrestador>'+
+                               '<IMPrestador>' +
+                                 Emitente.InscMun +
+                               '</IMPrestador>' +
                                '<CPFCNPJRemetente>' +
                                  OnlyNumber(Emitente.CNPJ) +
                                '</CPFCNPJRemetente>' +
@@ -1125,9 +1142,6 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
-  i: Integer;
-  ANodeArray: TACBrXmlNodeArray;
-  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 

@@ -398,6 +398,7 @@ type
     FReservadoBanco: string; // Tamanho 20
     FReservadoEmpresa: string; // Tamanho 20
     FAviso: TAvisoList;
+    FRemessaTeste: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -408,6 +409,7 @@ type
     property ReservadoBanco: string read FReservadoBanco write FReservadoBanco;
     property ReservadoEmpresa: string read FReservadoEmpresa write FReservadoEmpresa;
     property Aviso: TAvisoList read FAviso write FAviso;
+    property RemessaTeste: Boolean read FRemessaTeste write FRemessaTeste;
   end;
 
   // Estrutura do Registro 9 utilizado em todos os Arquivos

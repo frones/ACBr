@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/07/2023
+-- PagFor.BancodoBrasil.GravarTxtRemessa/ACBrPagForClass --
+[*] Adicionada a propriedade RemessaTeste para gerar na posição 51-52 o texto:
+    "TS" se a propriedade for True ou brancos se for False.
+   Por: Alex Klehm
+
 07/07/2023
 -- PagFor.Sicoob.GravarTxtRemessa/CNAB240.GravarTxtRemessa --
 [*] Ajustes para gerar com a versão correta para Pagamento de Contas.

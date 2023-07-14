@@ -104,7 +104,7 @@ begin
   GravarCampo(126, 4, tcInt);
   GravarCampo(' ', 5, tcStr);
 
-  if PagFor.Registro0.ReservadoEmpresa = 'T' then
+  if PagFor.Registro0.RemessaTeste then
     GravarCampo('TS', 2, tcStr)
   else
     GravarCampo(' ', 2, tcStr);
@@ -161,7 +161,7 @@ begin
   GravarCampo(126, 4, tcInt);
   GravarCampo(' ', 5, tcStr);
 
-  if PagFor.Registro0.ReservadoEmpresa = 'T' then
+  if PagFor.Registro0.RemessaTeste then
     GravarCampo('TS', 2, tcStr)
   else
     GravarCampo(' ', 2, tcStr);

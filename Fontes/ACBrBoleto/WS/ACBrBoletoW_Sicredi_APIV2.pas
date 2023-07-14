@@ -294,10 +294,7 @@ end;
 
 function TBoletoW_Sicredi_APIV2.DefinirNossoNumero: string;
 begin
-  if ATitulo.NossoNumero <> EmptyStr then
-    result := OnlyNumber(ATitulo.NossoNumero)
-  else
-    result := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
+  result := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
 end;
 
 function TBoletoW_Sicredi_APIV2.DefinirParametros: String;

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 14/07/2023
 -- ACBrNFSeXServicos --
+[+] Incluído a cidade: Conceicao do Castelo/ES o provedor é EL
+  Por: Marcos Giordani
+[+] Incluído a cidade: Liberdade/MG o provedor é Futurize
+  Por: Bill Barsch
 [+] Incluído as cidades: Itaporanga/SP e Candido Mota/SP ambas o provedor é Fiorilli.
   Por: Willians wsac
 [*] A URL de homologação da cidade de Novo Hamburgo/RS foi atualizada, provedor 

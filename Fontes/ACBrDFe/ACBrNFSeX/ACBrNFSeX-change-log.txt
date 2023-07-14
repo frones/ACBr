@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/07/2023
+-- ACBrNFSeXServicos --
+[*] A URL de homologação da cidade de Novo Hamburgo/RS foi atualizada, provedor 
+    ainda é o IPM na versão 2.04
+  Por: Arimateia Jr.
 13/07/2023
 -- ACBrNFSeXServicos --
 [*] Atualizado a URL da cidade de Camboriu/SC.

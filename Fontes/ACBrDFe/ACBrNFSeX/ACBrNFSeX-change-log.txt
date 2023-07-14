@@ -44,9 +44,12 @@ Símbolo : Significado
 
 14/07/2023
 -- ACBrNFSeXServicos --
+[+] Incluído as cidades: Itaporanga/SP e Candido Mota/SP ambas o provedor é Fiorilli.
+  Por: Willians wsac
 [*] A URL de homologação da cidade de Novo Hamburgo/RS foi atualizada, provedor 
     ainda é o IPM na versão 2.04
   Por: Arimateia Jr.
+
 13/07/2023
 -- ACBrNFSeXServicos --
 [*] Atualizado a URL da cidade de Camboriu/SC.

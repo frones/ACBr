@@ -45,6 +45,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/07/2023
+-- ACBrCTeDACTeRLRetrato --
+[*] Ajustes para imprimir corretamente CT-e com dezenas de NF-e vinculadas.
+    Observação: O ajuste foi feito só funciona se a posíção do canhoto for
+                cabeçalho, rodapé ainda esta com problemas.
+  Por: Rosemir
+
 11/04/2023
 -- ACBrCTeWebServices --
 [*] A SEFAZ-MG resolveu usar os mesmos NameSpace e SoapAction usado pelas demais

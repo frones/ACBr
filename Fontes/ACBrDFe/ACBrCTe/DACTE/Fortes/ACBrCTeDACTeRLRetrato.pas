@@ -1689,7 +1689,7 @@ end;
 
 procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensAfterPrint(Sender: TObject);
 begin
-  if (Linhas > 70) and (not cdsDocumentos.EOF) then
+  if (Linhas > 58) and (not cdsDocumentos.EOF) then
   begin
     Linhas := 0;
     rlDocOrig_tpDoc1.Height := 50;
@@ -1750,12 +1750,12 @@ begin
 
       if (RLCTe.PageNumber > 1) then
         Inc(Linhas);
-      if ((cdsDocumentos.recno > 10) and (RLCTe.PageNumber = 1) or (Linhas > 70)) then
+      if ((cdsDocumentos.recno > 10) and (RLCTe.PageNumber = 1) or (Linhas > 58)) then
         break;
     end;
 
-    rlDocOrig_tpDoc1.Height := Round(rlDocOrig_tpDoc1.Lines.Count * 12);
-    rlDocOrig_tpDoc2.Height := Round(rlDocOrig_tpDoc2.Lines.Count * 12);
+    rlDocOrig_tpDoc1.Height := Round(rlDocOrig_tpDoc1.Lines.Count * 12) + 10;
+    rlDocOrig_tpDoc2.Height := Round(rlDocOrig_tpDoc2.Lines.Count * 12) + 10;
     rld_07_headerItens.Height := rlb_07_HeaderItens.Height - 12;
   end
   else

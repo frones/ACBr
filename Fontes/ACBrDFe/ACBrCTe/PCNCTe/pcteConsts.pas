@@ -42,7 +42,8 @@ uses
 const
   NAME_SPACE_CTE = 'xmlns="http://www.portalfiscal.inf.br/cte"';
 
-  xRazao = 'CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
+  xRazao3 = 'CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
+  xRazao4 = 'CTE EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 
   DSC_TPCTe    = 'Tipo do Conhecimento';
   DSC_CMUNEMI  = 'Código do Município onde o CT-e está sendo emitido';

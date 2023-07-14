@@ -46,6 +46,10 @@ Símbolo : Significado
 
 
 14/07/2023
+-- pcteConsts/pcteCTeW --
+[*] Possível solução para o texto informano em xNome quando enviado para o 
+    ambiente de homologação.
+  Por: Italo Giurizzato Junior
 -- ACBrCTeDACTeRLRetrato --
 [*] Ajustes para imprimir corretamente CT-e com dezenas de NF-e vinculadas.
     Observação: O ajuste foi feito só funciona se a posíção do canhoto for

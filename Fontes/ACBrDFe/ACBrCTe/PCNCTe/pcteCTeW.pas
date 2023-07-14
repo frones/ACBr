@@ -964,6 +964,8 @@ begin
 end;
 
 procedure TCTeW.GerarRem;
+var
+  xNome: string;
 
 procedure GeraIE;
 begin
@@ -980,6 +982,11 @@ end;
 begin
   if (trim(CTe.Rem.CNPJCPF) <> '') or (trim(CTe.Rem.xNome) <> '') then
   begin
+    if VersaoDF <= ve300 then
+      xNome := xRazao3
+    else
+      xNome := xRazao4;
+
     Gerador.wGrupo('rem', '#112');
 
     if CTe.Rem.enderReme.cPais = 0 then
@@ -993,7 +1000,7 @@ begin
     GeraIE;
 
     if CTe.Ide.tpAmb = taHomologacao then
-      Gerador.wCampo(tcStr, '#116', 'xNome', 02, 60, 1, xRazao, DSC_XNOME)
+      Gerador.wCampo(tcStr, '#116', 'xNome', 02, 60, 1, xNome, DSC_XNOME)
     else
       Gerador.wCampo(tcStr, '#116', 'xNome', 02, 60, 1, CTe.Rem.xNome, DSC_XNOME);
 
@@ -1041,6 +1048,8 @@ begin
 end;
 
 procedure TCTeW.GerarExped;
+var
+  xNome: string;
 
 procedure GeraIE;
 begin
@@ -1057,6 +1066,11 @@ end;
 begin
   if (trim(CTe.Exped.CNPJCPF) <> '') or (trim(CTe.Exped.xNome) <> '') then
   begin
+    if VersaoDF <= ve300 then
+      xNome := xRazao3
+    else
+      xNome := xRazao4;
+
     Gerador.wGrupo('exped', '#142');
 
     if CTe.Exped.EnderExped.cPais = 0 then
@@ -1070,7 +1084,7 @@ begin
     GeraIE;
 
     if CTe.Ide.tpAmb = taHomologacao then
-      Gerador.wCampo(tcStr, '#146', 'xNome', 02, 60, 1, xRazao, DSC_XNOME)
+      Gerador.wCampo(tcStr, '#146', 'xNome', 02, 60, 1, xNome, DSC_XNOME)
     else
       Gerador.wCampo(tcStr, '#146', 'xNome', 02, 60, 1, CTe.Exped.xNome, DSC_XNOME);
 
@@ -1116,6 +1130,8 @@ begin
 end;
 
 procedure TCTeW.GerarReceb;
+var
+  xNome: string;
 
 procedure GeraIE;
 begin
@@ -1132,6 +1148,11 @@ end;
 begin
   if (trim(CTe.Receb.CNPJCPF) <> '') or (trim(CTe.Receb.xNome) <> '') then
   begin
+    if VersaoDF <= ve300 then
+      xNome := xRazao3
+    else
+      xNome := xRazao4;
+
     Gerador.wGrupo('receb', '#160');
 
     if CTe.Receb.EnderReceb.cPais = 0 then
@@ -1145,7 +1166,7 @@ begin
     GeraIE;
 
     if CTe.Ide.tpAmb = taHomologacao then
-      Gerador.wCampo(tcStr, '#164', 'xNome', 02, 60, 1, xRazao, DSC_XNOME)
+      Gerador.wCampo(tcStr, '#164', 'xNome', 02, 60, 1, xNome, DSC_XNOME)
     else
       Gerador.wCampo(tcStr, '#164', 'xNome', 02, 60, 1, CTe.Receb.xNome, DSC_XNOME);
 
@@ -1191,6 +1212,8 @@ begin
 end;
 
 procedure TCTeW.GerarDest;
+var
+  xNome: string;
 
 procedure GeraIE;
 begin
@@ -1207,6 +1230,11 @@ end;
 begin
   if (trim(CTe.Dest.CNPJCPF) <> '') or (trim(CTe.Dest.xNome) <> '') then
   begin
+    if VersaoDF <= ve300 then
+      xNome := xRazao3
+    else
+      xNome := xRazao4;
+
     Gerador.wGrupo('dest', '#178');
 
     if CTe.Dest.EnderDest.cPais = 0 then
@@ -1220,7 +1248,7 @@ begin
     GeraIE;
 
     if CTe.Ide.tpAmb = taHomologacao then
-      Gerador.wCampo(tcStr, '#182', 'xNome', 02, 60, 1, xRazao, DSC_XNOME)
+      Gerador.wCampo(tcStr, '#182', 'xNome', 02, 60, 1, xNome, DSC_XNOME)
     else
       Gerador.wCampo(tcStr, '#182', 'xNome', 02, 60, 1, CTe.Dest.xNome, DSC_XNOME);
 

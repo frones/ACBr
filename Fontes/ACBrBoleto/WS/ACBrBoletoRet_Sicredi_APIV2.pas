@@ -240,7 +240,7 @@ begin
             ARetornoWS.DadosRet.IDBoleto.NossoNum       := AJson.Values['nossoNumero'].AsString;
             ARetornoWS.DadosRet.TituloRet.UrlPix        := '';//AJson.Values['url'].AsString;
             ARetornoWS.DadosRet.TituloRet.TxId          := AJson.Values['txid'].AsString;
-            ARetornoWS.DadosRet.TituloRet.EMV           := AJson.Values['codigoQrCode'].AsString;
+            ARetornoWS.DadosRet.TituloRet.EMV           := AJson.Values['QrCode'].AsString;
 
             ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;

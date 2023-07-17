@@ -980,6 +980,7 @@ begin
     INI.WriteInteger('TEF', 'QRCode', cbxQRCode.ItemIndex);
     INI.WriteString('TEF', 'Log', edLog.Text);
     INI.WriteInteger('TEF', 'ImpressaoViaCliente', cbxImpressaoViaCliente.ItemIndex);
+    INI.WriteInteger('TEF', 'TransacaoPendente', cbxTransacaoPendente.ItemIndex);
     INI.WriteInteger('TEF', 'TransacaoPendenteInicializacao', cbxTransacaoPendenteInicializacao.ItemIndex);
     INI.WriteBool('TEF', 'AutoAtendimento', cbAutoAtendimento.Checked);
     INI.WriteBool('TEF', 'ImprimirViaReduzida', cbImprimirViaReduzida.Checked);
@@ -1658,7 +1659,7 @@ begin
     seTotalAcrescimo.Value := Venda.TotalAcrescimo;
     edTotalVenda.Text := FormatFloatBr(Venda.TotalVenda);
     edTotalPago.Text := FormatFloatBr(Venda.TotalPago);
-    edTroco.Text := FormatFloatBr(max(Venda.Troco,0));
+    edTroco.Text := FormatFloatBr(max(Double(Venda.Troco),0));
   finally
     seTotalDesconto.OnChange := @seTotalDescontoChange;
     seTotalAcrescimo.OnChange := @seTotalAcrescimoChange;

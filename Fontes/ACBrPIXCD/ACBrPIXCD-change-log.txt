@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/07/2023
+-- ACBrPIXPSPBancoDoBrasil --
+[-] Correção para não exibir mensagem de erro incorretamente ao utilizar PSP BB com certificado PFX
+    Por: Elias César
+
 30/06/2023
 -- ACBrPIXPSPAilos --
 [*] Correção em métodos que o PSP Ailos respondem diferente do especificado no Bacen

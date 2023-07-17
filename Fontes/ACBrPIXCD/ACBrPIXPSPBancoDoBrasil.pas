@@ -224,14 +224,19 @@ end;
 
 procedure TACBrPSPBancoDoBrasil.QuandoAcessarEndPoint(
   const AEndPoint: String; var AURL: String; var AMethod: String);
+var
+  wCertEmpty, wChaveEmpty, wPFXEmpty: Boolean;
 begin
   // BB v1 não tem: POST /cob - Mudando para /PUT com "txid" vazio
   if (BBAPIVersao = apiVersao1) and (UpperCase(AMethod) = ChttpMethodPOST) then
     AMethod := ChttpMethodPUT;
 
   // Certificado é obrigatório em Produção na API BB versão 2
+  wPFXEmpty := EstaVazio(ArquivoPFX) and EstaVazio(PFX);
+  wCertEmpty := EstaVazio(ArquivoCertificado) and EstaVazio(Certificado);
+  wChaveEmpty := EstaVazio(ArquivoChavePrivada) and EstaVazio(ChavePrivada);
   if (BBAPIVersao = apiVersao2) and (ACBrPixCD.Ambiente = ambProducao) and
-     (EstaVazio(ArquivoCertificado) or EstaVazio(ArquivoChavePrivada)) then
+     (wCertEmpty or wChaveEmpty) and wPFXEmpty then
     raise EACBrPixHttpException.Create(ACBrStr(sErroCertificadoNaoInformado));
 end;
 

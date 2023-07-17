@@ -52,6 +52,7 @@ type
     fNumeroRemessa  : Integer;
     function EspecieDocumentoToIndex(const AValue : String) : String;
     function EspecieDocumentoToStr(const AValue : String) : String;
+
   protected
     function GetLocalPagamento: String; override;
   public
@@ -191,7 +192,7 @@ end;
 procedure TACBrBancoBS2.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; ARemessa: TStringList);
 var
   ATipoSacado, ATipoSacadoAvalista, ADataMoraJuros, ADataDesconto, wLinha,
-  wCarteira, codigoServico,LTipoMulta, LValorMultaFixo,LValorMultaPercentual : string;
+  wCarteira, codigoServico,LTipoMulta, LValorMultaFixo,LValorMultaPercentual,LChaveNFe : string;
 begin
 
   { Data Mora }
@@ -293,11 +294,25 @@ begin
 
   ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
 
+  if wCarteira = '41' then
+  begin       //(OBRIGATÓRIO, CASO A CARTEIRA SEJA VINCULADA 41)
+    {Chave da NFe}
+    if ACBrTitulo.ListaDadosNFe.Count > 0 then
+      LChaveNFe := ACBrTitulo.ListaDadosNFe[0].ChaveNFe
+    else
+      LChaveNFe := '';
+    wLinha := '2'                                                                                  + // 001 a 001 Código do Registro
+              PadRight(ACBrTitulo.Sacado.Email,120,' ')                                            + // 002 a 121 Email do Sacado
+              Space(229)                                                                           + // 112 a 350 Brancos
+              PadLeft(LChaveNFe, 44, '0')                                                          + // 351 a 394 Chave da NF-e - Em caso de NF de Servico (normalmente 9 posicoes) completar com zeros a esquerda
+              IntToStrZero(ARemessa.Count + 1, 6);
+    ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
+  end;
 end;
 
 function TACBrBancoBS2.GetLocalPagamento: String;
 begin
-  Result := ACBrStr(CInstrucaoPagamentoRegistro);
+  Result := ACBrStr('Pagável em qualquer banco, mesmo após vencimento');
 end;
 
 procedure TACBrBancoBS2.GerarRegistroTrailler400(ARemessa: TStringList);

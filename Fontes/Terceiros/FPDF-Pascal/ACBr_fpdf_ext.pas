@@ -1169,7 +1169,7 @@ begin
       if (Self.fHREF <> '') then
         PutLink(Self.fHREF, AText)
       else
-        Write(5, AText);
+        Write(Self.FontSize + 0.5, AText);
     end;
 
     if (ATag <> '') then

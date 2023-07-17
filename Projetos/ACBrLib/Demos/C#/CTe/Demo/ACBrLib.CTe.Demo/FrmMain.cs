@@ -375,7 +375,7 @@ namespace ACBrLib.CTe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.Enviar(aLote, sincrono: true);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -399,7 +399,7 @@ namespace ACBrLib.CTe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.Enviar(aLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -1002,7 +1002,7 @@ namespace ACBrLib.CTe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.Enviar(aLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
 
             }
             catch (Exception ex)
@@ -1092,11 +1092,16 @@ namespace ACBrLib.CTe.Demo
             cte.Entrega.hIni = horaFomatada;
             cte.Entrega.hFim = horaFomatada;
 
-            cte.ObsCont.xCampo = "Nome do Campo";
-            cte.ObsCont.xTexto = "Valor do Campo";
-            cte.ObsFisco.xCampo = "Nome do Campo";
-            cte.ObsFisco.xTexto = "Valor do Campo";
-            
+            var obsCont = new ObsContCTe();
+            obsCont.xCampo = "Nome do Campo";
+            obsCont.xTexto = "Valor do Campo";
+            cte.ObsCont.Add(obsCont);
+
+            var obsFisco = new ObsFiscoCTe();
+            obsFisco.xCampo = "Nome do Campo";
+            obsFisco.xTexto = "Valor do Campo";
+            cte.ObsFisco.Add(obsFisco);
+
             //Emitente
             cte.Emitente.CNPJ = "18760540000139";
             cte.Emitente.IE = "111111";

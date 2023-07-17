@@ -21,9 +21,7 @@ namespace ACBrLib.CTe
             Tomador4 = new Tomador4CTe();
             Complemento = new ComplementoCTe();
             Fluxo = new FluxoCTe();
-            Entrega = new EntregaCTe();
-            ObsCont = new ObsContCTe();
-            ObsFisco = new ObsFiscoCTe();
+            Entrega = new EntregaCTe();            
             Emitente = new EmitenteCTe();
             Remetente = new RemetenteCTe();
             Expedidor = new ExpedidorCTe();
@@ -60,9 +58,9 @@ namespace ACBrLib.CTe
 
         public EntregaCTe Entrega { get;  }
 
-        public ObsContCTe ObsCont { get; }
+        public List<ObsContCTe> ObsCont { get; } = new List<ObsContCTe>();
 
-        public ObsFiscoCTe ObsFisco { get; }
+        public List<ObsFiscoCTe> ObsFisco { get; } = new List<ObsFiscoCTe>();
 
         public EmitenteCTe Emitente { get; }
 
@@ -109,8 +107,19 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(Complemento, "Compl");
             iniData.WriteToIni(Fluxo, "fluxo");
             iniData.WriteToIni(Entrega, "Entrega");
-            iniData.WriteToIni(ObsCont, "ObsCont");
-            iniData.WriteToIni(ObsFisco, "ObsFisco");
+            
+            for (var i = 0; i < ObsCont.Count; i++)
+            {
+                var obsCont = ObsCont[i];
+                iniData.WriteToIni(obsCont, $"ObsCont{i + 1:000}");
+            }
+            
+            for (var i = 0; i < ObsFisco.Count; i++)
+            {
+                var obsFisco = ObsFisco[i];
+                iniData.WriteToIni(obsFisco, $"ObsFisco{i + 1:000}");
+            }
+
             iniData.WriteToIni(Emitente, "Emit");
             iniData.WriteToIni(Remetente, "Rem");
             iniData.WriteToIni(Expedidor, "Exped");
@@ -154,7 +163,29 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(Complemento, "Compl");
             iniData.ReadFromIni(Fluxo, "fluxo");
             iniData.ReadFromIni(Entrega, "Entrega");
-            iniData.ReadFromIni(ObsCont, "ObsCont");
+
+            var i = 0;
+            ObsContCTe obsCont;
+            do
+            {
+                i++;
+                obsCont = iniData.ReadFromIni<ObsContCTe>($"ObsCont{i:000}");
+
+                if (obsCont != null) ObsCont.Add(obsCont);
+
+            } while (obsCont != null);
+
+            i = 0;
+            ObsFiscoCTe obsFisco;
+            do
+            {
+                i++;
+                obsFisco = iniData.ReadFromIni<ObsFiscoCTe>($"ObsFisco{i:000}");
+
+                if(obsFisco != null) ObsFisco.Add(obsFisco);
+
+            } while (obsFisco != null);
+            
             iniData.ReadFromIni(ObsFisco, "ObsFisco");
             iniData.ReadFromIni(Emitente, "Emit");
             iniData.ReadFromIni(Remetente, "Rem");
@@ -168,15 +199,14 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
 
-            var i = 0;
+            i = 0;
             InfQCTe infQ;
             do
             {
                 i++;
                 infQ = iniData.ReadFromIni<InfQCTe>($"infQ{i:000}");
-                if (infQ != null) continue;
-
-                GrupoInformacoesNormalSubstituto.infCarga.infQ.Add(infQ);
+                
+                if (infQ != null) GrupoInformacoesNormalSubstituto.infCarga.infQ.Add(infQ);
 
             } while (infQ != null);
             
@@ -188,10 +218,9 @@ namespace ACBrLib.CTe
             do
             {
                 j++;
-                infNFe = iniData.ReadFromIni<InfNFeCTe>($"chave{j:000}");
-                if (infNFe != null) continue;
+                infNFe = iniData.ReadFromIni<InfNFeCTe>($"infNFe{j:000}");                
 
-                GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(infNFe);
+                if (infNFe != null) GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(infNFe);
 
             } while (infNFe != null);
 

@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/07/2023
+-- ACBrCTeConhecimentos --
+[+] Adiciona na rotina de geração do INI do CTe as seções ObsCont e ObsFisco
+  Por: Diego F
 -- pcteCTeR --
 [*] Possível solução para o problema de não gerar as tags qtdRat ao ler um XML e gerar novamente.
   Por: Diego F

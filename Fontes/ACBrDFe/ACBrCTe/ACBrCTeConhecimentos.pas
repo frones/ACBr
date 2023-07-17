@@ -730,6 +730,18 @@ begin
       INIRec.WriteString('compl', 'destCalc', compl.destCalc);
       INIRec.WriteString('compl', 'xObs', compl.xObs);
 
+      for I := 0 to compl.ObsCont.Count - 1 do
+      begin
+        INIRec.WriteString('ObsCont'+IntToStrZero(I+1,3), 'xCampo', compl.ObsCont[I].xCampo);
+        INIRec.WriteString('ObsCont'+IntToStrZero(I+1,3), 'xTexto', compl.ObsCont[I].xTexto);
+      end;
+
+      for I := 0 to compl.ObsFisco.Count - 1 do
+      begin
+        INIRec.WriteString('ObsFisco'+IntToStrZero(I+1,3), 'xCampo', compl.ObsFisco[I].xCampo);
+        INIRec.WriteString('ObsFisco'+IntToStrZero(I+1,3), 'xTexto', compl.ObsFisco[I].xTexto);
+      end;
+
       INIRec.WriteString('emit', 'CNPJ', Emit.CNPJ);
       INIRec.WriteString('emit', 'IE', Emit.IE);
       INIRec.WriteString('emit', 'xNome', Emit.xNome);

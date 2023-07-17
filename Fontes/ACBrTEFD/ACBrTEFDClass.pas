@@ -1133,7 +1133,7 @@ function TACBrTEFDClass.CRT(Valor: Double; IndiceFPG_ECF: String;
 begin
   VerificarTransacaoPagamento( Valor );
 
-  IniciarRequisicao(IndiceFPG_ECF);
+  IniciarRequisicao('CRT');
   Req.DocumentoVinculado  := DocumentoVinculado;
   Req.ValorTotal          := Valor;
   Req.Moeda               := Moeda;
@@ -2214,7 +2214,7 @@ end;
 
 function TACBrTEFDClass.TransacaoEPagamento(AHeader: String): Boolean;
 begin
-   Result := (pos(AHeader,'CRT|CHQ|CARTDIGI') > 0);
+   Result := (pos(AHeader,'CRT|CHQ') > 0);
 end;
 
 procedure TACBrTEFDClass.SetArqReq(const AValue : String);

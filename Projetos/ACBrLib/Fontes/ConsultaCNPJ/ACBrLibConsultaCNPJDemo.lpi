@@ -17,7 +17,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="21"/>
+      <BuildNr Value="22"/>
       <Language Value="0416"/>
       <StringTable Comments="Projeto ACBr" CompanyName="ACBrConsultaCNPJ - Biblioteca para consulta CNPJ" FileDescription="ACBrLibConsultaCNPJ" InternalName="ACBrLibConsultaCNPJ" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ConsultaCNPJ" ProductVersion="0.0.0.0"/>
     </VersionInfo>

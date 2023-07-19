@@ -462,6 +462,7 @@ begin
             ItemListaServico := INIRec.ReadString(sSecao, 'ItemListaServico', '');
             CodServ := INIRec.ReadString(sSecao, 'CodServico', '');
             codLCServ := INIRec.ReadString(sSecao, 'codLCServico', '');
+            CodigoCnae := INIRec.ReadString(sSecao, 'CodigoCnae', '');
 
             TipoUnidade := StrToUnidade(Ok, INIRec.ReadString(sSecao, 'TipoUnidade', '2'));
             Unidade := INIRec.ReadString(sSecao, 'Unidade', '');
@@ -669,6 +670,7 @@ begin
       INIRec.WriteString(sSecao, 'Complemento', Tomador.Endereco.Complemento);
       INIRec.WriteString(sSecao, 'Bairro', Tomador.Endereco.Bairro);
       INIRec.WriteString(sSecao, 'CodigoMunicipio', Tomador.Endereco.CodigoMunicipio);
+      INIRec.WriteString(sSecao, 'xMunicipio', Tomador.Endereco.xMunicipio);
       INIRec.WriteString(sSecao, 'UF', Tomador.Endereco.UF);
       INIRec.WriteInteger(sSecao, 'CodigoPais', Tomador.Endereco.CodigoPais);
       INIRec.WriteString(sSecao, 'CEP', Tomador.Endereco.CEP);
@@ -715,6 +717,7 @@ begin
           INIRec.WriteString(sSecao, 'Descricao', Descricao);
           INIRec.WriteString(sSecao, 'CodServico', CodServ);
           INIRec.WriteString(sSecao, 'codLCServico', CodLCServ);
+          INIRec.WriteString(sSecao, 'CodigoCnae', CodigoCnae);
           INIRec.WriteString(sSecao, 'ItemListaServico', ItemListaServico);
           INIRec.WriteFloat(sSecao, 'Quantidade', Quantidade);
           INIRec.WriteFloat(sSecao, 'ValorUnitario', ValorUnitario);

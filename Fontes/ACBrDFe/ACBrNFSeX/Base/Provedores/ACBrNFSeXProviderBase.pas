@@ -1152,8 +1152,8 @@ function TACBrNFSeXProvider.SituacaoTributariaDescricao(
 begin
   case t of
     stRetencao     : Result := '1 - Sim' ;
-    stNormal       : Result := '2 - Não' ;
-    stSubstituicao : Result := '3 - Substituição' ;
+    stNormal       : Result := '2 - Nao' ;
+    stSubstituicao : Result := '3 - Substituicao' ;
     stNenhum       : Result := '' ;
   else
     Result := '';

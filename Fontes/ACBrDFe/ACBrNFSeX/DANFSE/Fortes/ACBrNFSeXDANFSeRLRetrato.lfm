@@ -1,20 +1,22 @@
 inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
-  Left = 264
-  Top = 116
+  Left = 709
+  Top = 76
   Caption = 'frlXDANFSeRLRetrato'
   inherited RLNFSe: TRLReport
     Left = 32
+    Height = 1403
     Top = 0
+    Width = 992
     Margins.LeftMargin = 6
     Margins.TopMargin = 8
     Margins.RightMargin = 5.1
     Margins.BottomMargin = 8
     BeforePrint = RLNFSeBeforePrint
     object rlbCabecalho: TRLBand[0]
-      Left = 23
+      Left = 28
       Height = 178
-      Top = 30
-      Width = 752
+      Top = 38
+      Width = 940
       BandType = btHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -103,14 +105,14 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
       end
       object RLLabel8: TRLLabel
-        Left = 427
+        Left = 429
         Height = 15
         Top = 139
-        Width = 122
+        Width = 118
         Alignment = taCenter
         Caption = 'Código de Verificação'
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
@@ -144,7 +146,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel7: TRLLabel
-        Left = 10
+        Left = 5
         Height = 15
         Top = 139
         Width = 77
@@ -157,19 +159,19 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCompetencia: TRLLabel
-        Left = 13
+        Left = 3
         Height = 15
         Top = 157
-        Width = 88
+        Width = 86
         Alignment = taCenter
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object RLDraw9: TRLDraw
-        Left = 106
+        Left = 93
         Height = 40
         Top = 138
         Width = 1
@@ -178,7 +180,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel18: TRLLabel
-        Left = 113
+        Left = 98
         Height = 15
         Top = 139
         Width = 94
@@ -191,20 +193,20 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllNumeroRps: TRLLabel
-        Left = 113
+        Left = 96
         Height = 15
         Top = 157
-        Width = 94
+        Width = 118
         Alignment = taCenter
         AutoSize = False
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object RLDraw10: TRLDraw
-        Left = 214
+        Left = 218
         Height = 39
         Top = 139
         Width = 1
@@ -324,36 +326,36 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel64: TRLLabel
-        Left = 219
+        Left = 221
         Height = 15
         Top = 139
-        Width = 193
+        Width = 186
         Caption = 'Município de Prestação do Serviço:'
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object rllMunicipioPrestacaoServico: TRLLabel
-        Left = 219
+        Left = 221
         Height = 15
         Top = 157
         Width = 196
         AutoSize = False
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
       end
     end
     object rlbPrestador: TRLBand[1]
-      Left = 23
+      Left = 28
       Height = 104
-      Top = 208
-      Width = 752
+      Top = 216
+      Width = 940
       BandType = btTitle
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -496,10 +498,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbTomador: TRLBand[2]
-      Left = 23
+      Left = 28
       Height = 102
-      Top = 312
-      Width = 752
+      Top = 320
+      Width = 940
       BandType = btTitle
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -763,10 +765,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbHeaderItens: TRLBand[3]
-      Left = 23
+      Left = 28
       Height = 23
-      Top = 414
-      Width = 752
+      Top = 422
+      Width = 940
       BandType = btColumnHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -789,10 +791,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbItens: TRLBand[4]
-      Left = 23
+      Left = 28
       Height = 21
-      Top = 457
-      Width = 752
+      Top = 465
+      Width = 940
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
@@ -813,10 +815,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbISSQN: TRLBand[5]
-      Left = 23
+      Left = 28
       Height = 318
-      Top = 496
-      Width = 752
+      Top = 504
+      Width = 940
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1732,10 +1734,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rbOutrasInformacoes: TRLBand[6]
-      Left = 23
+      Left = 28
       Height = 40
-      Top = 814
-      Width = 752
+      Top = 822
+      Width = 940
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1773,10 +1775,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbCanhoto: TRLBand[7]
-      Left = 23
+      Left = 28
       Height = 73
-      Top = 872
-      Width = 752
+      Top = 880
+      Width = 940
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1920,10 +1922,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbHeaderItensDetalhado: TRLBand[8]
-      Left = 23
+      Left = 28
       Height = 20
-      Top = 437
-      Width = 752
+      Top = 445
+      Width = 940
       BandType = btColumnHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -2004,10 +2006,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object subItens: TRLSubDetail[9]
-      Left = 23
+      Left = 28
       Height = 18
-      Top = 478
-      Width = 752
+      Top = 486
+      Width = 940
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
@@ -2018,7 +2020,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Left = 1
         Height = 16
         Top = 0
-        Width = 750
+        Width = 938
         BeforePrint = rlbItensServicoBeforePrint
         object txtServicoQtde: TRLLabel
           Left = 459
@@ -2100,10 +2102,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object RLBand1: TRLBand[10]
-      Left = 23
+      Left = 28
       Height = 18
-      Top = 854
-      Width = 752
+      Top = 862
+      Width = 940
       BandType = btSummary
       object rllDataHoraImpressao: TRLLabel
         Left = 2
@@ -2132,7 +2134,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 192
-    Top = 136
+    Left = 216
+    Top = 104
   end
 end

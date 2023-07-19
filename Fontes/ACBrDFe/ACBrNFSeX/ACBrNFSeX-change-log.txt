@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/07/2023
+-- ACBrNFSeXProviderBase, ACBrNFSeXDANFSeRLRetrato.lfm --
+[*] Alterações visando corrigir impressão cortando informação na compilação Lazarus.
+ Por: Diego F
 -- ACBrNFSeXNotasFiscais --
 [*] Adiciona na rotina de leitura e geração do INI os campos CodigoCnae e xMunicipio
     para INIs com mais de um serviço

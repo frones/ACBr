@@ -317,8 +317,10 @@ type
       BarHeight: double = 0; BarWidth: double = 0);
 
     {$IfDef DelphiZXingQRCode}
-    procedure QRCode(vX: double; vY: double; const QRCodeData: String;
-      DotSize: Double = 0; AEncoding: TQRCodeEncoding = qrAuto);
+    function QRCode(vX: double; vY: double; const QRCodeData: String;
+      DotSize: Double = 0; AEncoding: TQRCodeEncoding = qrAuto): double; overload;
+    procedure QRCode(vX: double; vY: double; vQRCodeSize: double;
+      const QRCodeData: String; AEncoding: TQRCodeEncoding = qrAuto); overload;
     {$EndIf}
     procedure Draw2DMatrix(AMatrix: TFPDF2DMatrix; vX: double; vY: double;
       DotSize: Double = 0);
@@ -1528,8 +1530,27 @@ begin
 end;
 
 {$IfDef DelphiZXingQRCode}
-procedure TFPDFExt.QRCode(vX: double; vY: double; const QRCodeData: String;
-  DotSize: Double; AEncoding: TQRCodeEncoding);
+procedure TFPDFExt.QRCode(vX, vY, vQRCodeSize: double; const QRCodeData: String;
+  AEncoding: TQRCodeEncoding);
+var
+  qr: TDelphiZXingQRCode;
+  DotSize: double;
+begin
+  qr := TDelphiZXingQRCode.Create;
+  try
+    qr.Encoding  := AEncoding;
+    qr.QuietZone := 1;
+    qr.Data := widestring(QRCodeData);
+    DotSize := vQRCodeSize / qr.Rows;
+  finally
+    qr.Free;
+  end;
+
+  QRCode(vX, vY, QRCodeData, DotSize, AEncoding);
+end;
+
+function TFPDFExt.QRCode(vX: double; vY: double; const QRCodeData: String;
+  DotSize: Double; AEncoding: TQRCodeEncoding): double;
 var
   qr: TDelphiZXingQRCode;
   PDF2DMatrix: TFPDF2DMatrix;
@@ -1553,6 +1574,8 @@ begin
           PDF2DMatrix[r][c] := 0;
       end;
     end;
+
+    Result := qr.Rows * DotSize;
   finally
     qr.Free;
   end;

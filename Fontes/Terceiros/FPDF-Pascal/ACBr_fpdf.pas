@@ -436,7 +436,7 @@ const
    (000, 000, 128), (000, 000, 255), (000, 128, 128), (000, 255, 255),
    (220, 220, 220) );
 
-function SwapBytes(Value: LongWord): LongWord; overload;
+function SwapBytes(Value: Cardinal): Cardinal; overload;
 function SwapBytes(Value: Word): Word; overload;
 function Split(const AString: string; const ADelimiter: Char = ' '): TStringArray;
 function CountStr(const AString, SubStr : String ) : Integer ;
@@ -3559,7 +3559,7 @@ begin
   end;
 end;
 
-function SwapBytes(Value: LongWord): LongWord;
+function SwapBytes(Value: Cardinal): Cardinal;
 type
   Bytes = packed array[0..3] of Byte;
 begin

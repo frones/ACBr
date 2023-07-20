@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/07/2023
+-- ACBrNFSeXServicos --
+[*] Incluído a URL do link da cidade: Parauapegas/PA.
+  Por: Duarte
+[*] Troca de versão e URLs da cidade: Itauna/MG o provedor continua o mesmo ISSNet.
+  Por: João Antônio
+
 19/07/2023
 -- ACBrNFSeXProviderBase, ACBrNFSeXDANFSeRLRetrato.lfm --
 [*] Alterações visando corrigir impressão cortando informação na compilação Lazarus.

@@ -246,6 +246,9 @@ begin
 
       Consulta.Add( 'itensPorPagina=1000' );
 
+      if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
+        Consulta.Add('paginaAtual='+ FloatToStr(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade));
+
       case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
         isbBaixado:
           begin
@@ -621,11 +624,13 @@ begin
               begin
                 JsonDesconto.Add('codigoDesconto').Value.asString := 'VALORFIXODATAINFORMADA';
                 JsonDesconto.Add('valor').Value.asNumber := aTitulo.ValorDesconto;
+                 JsonDesconto.Add('taxa').Value.asNumber := 0;
               end;
             2:
               begin
                 JsonDesconto.Add('codigoDesconto').Value.asString := 'PERCENTUALDATAINFORMADA';
                 JsonDesconto.Add('taxa').Value.asNumber := aTitulo.ValorDesconto;
+                JsonDesconto.Add('valor').Value.asNumber := 0;
               end;
           else
             begin
@@ -660,11 +665,13 @@ begin
               begin
                 JsonDesconto.Add('codigoDesconto').Value.asString := 'VALORFIXODATAINFORMADA';
                 JsonDesconto.Add('valor').Value.asNumber := aTitulo.ValorDesconto2;
+                JsonDesconto.Add('taxa').Value.asNumber := 0;
               end;
             2:
               begin
                 JsonDesconto.Add('codigoDesconto').Value.asString := 'PERCENTUALDATAINFORMADA';
                 JsonDesconto.Add('taxa').Value.asNumber := aTitulo.ValorDesconto2;
+                JsonDesconto.Add('valor').Value.asNumber := 0;
               end;
           else
             begin

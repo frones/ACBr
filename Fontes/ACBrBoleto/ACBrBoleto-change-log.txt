@@ -60,6 +60,10 @@ Por: Victor H Gonzales - Pandaaa
 https://www.projetoacbr.com.br/forum/topic/73029-boleto-bancoob-api-unit-acbrboletow_bancoobpas-rotina-requisicaojson-passando-valores-fixos/
 Por : Por vinizioWOW / Verificado: Daniel Morais
 
+[*]TK-4196 ACBrBoletoRet_Inter_API,ACBrBoletoW_Inter_API - sjustes indicador continuidade e informar taxa obrig. conf manual 
+https://www.projetoacbr.com.br/forum/topic/73020-contribui%C3%A7%C3%A3o-compatibliza%C3%A7%C3%A3o-com-pagina%C3%A7%C3%A3o-endpoint-de-consulta-banco-inter/
+Por: Por Brunocogoo / Verificado: Daniel Morais
+
 07/07/2023
 [*]TK-4143 ACBrBoletoW_Santander_API, ACBrBoletoWS.SOAP - Remoção de Warnigs e Hints
 https://www.projetoacbr.com.br/forum/topic/72920-remo%C3%A7%C3%A3o-de-warnigs-e-hints-units-acbrboleto/

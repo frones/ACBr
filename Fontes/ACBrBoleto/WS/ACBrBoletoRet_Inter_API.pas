@@ -257,6 +257,7 @@ var
   AJsonBoletos: TJsonArray;
   I: Integer;
   aJsonString:String;
+  vIndice:Integer;
 begin
   Result := True;
   ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
@@ -288,6 +289,19 @@ begin
         if (ListaRetorno.ListaRejeicao.Count = 0) then
         begin
           aJsonString := aJson.Stringify;
+
+          if not(AJson.Values['last'].AsBoolean) then
+          begin
+            ListaRetorno.indicadorContinuidade := True;
+		    vIndice := Trunc(ACBrBoleto.Configuracoes.WebService.Filtro.indiceContinuidade);
+            ListaRetorno.proximoIndice := (vIndice+1)
+          end
+          else
+          begin
+            ListaRetorno.indicadorContinuidade := False;
+            ListaRetorno.proximoIndice := 0;
+          end;
+
           aJsonString := AJson.Values['content'].Stringify;
           AJsonBoletos := AJson.Values['content'].AsArray;
           for I := 0 to Pred(AJsonBoletos.Count) do

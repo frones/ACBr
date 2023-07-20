@@ -1166,7 +1166,12 @@ begin
                Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
             end;
           end;
-
+        toRetornoIntensaoPagamento: //07
+          case AnsiIndexStr(CodMotivo,['H5']) of
+              0: Result:= 'H5-Recebimento de liquidação fora da rede Sicredi - VLB Inferior - Via compensação';
+            else
+                Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
+            end;
         toRetornoBaixadoViaArquivo: //09
           case StrToIntDef(CodMotivo,-1) of
             00: Result:= '00-Ocorrência aceita, baixado automaticamente via arquivo';
@@ -1412,6 +1417,15 @@ begin
               Result:= PadLeft(CodMotivo,2,'0') +' - Motivos não identificados';
             end;
           end;
+
+        toRetornoAlteracaoDadosNovaEntrada: //33
+          case AnsiIndexStr(CodMotivo,['H4']) of
+            0 : Result:= 'H4-Alteração de Carteira';
+          else
+            Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
+          end;
+
+
         toRetornoEntradaNegativacaoRejeitada,
         toRetornoExclusaoNegativacaoRejeitada: //81 e 83
            if CodMotivo = 'S1' then

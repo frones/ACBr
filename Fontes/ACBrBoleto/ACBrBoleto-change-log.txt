@@ -52,6 +52,10 @@ Símbolo : Significado
 [*]TK-4199 ACBrBancoABCBrasil - ajustes conf manual 100-179 Seg R deixado em Branco, incluso Segmento S
 https://www.projetoacbr.com.br/forum/topic/73157-contribui%C3%A7%C3%A3o-ajuste-mensagens-banco-abc-brasil/
 Por: eric100 / Verificado: Daniel Morais
+
+[*] ACBrSicredi - Motivos de Retorno
+Por: Victor H Gonzales - Pandaaa
+
 07/07/2023
 [*]TK-4143 ACBrBoletoW_Santander_API, ACBrBoletoWS.SOAP - Remoção de Warnigs e Hints
 https://www.projetoacbr.com.br/forum/topic/72920-remo%C3%A7%C3%A3o-de-warnigs-e-hints-units-acbrboleto/

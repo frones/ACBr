@@ -96,6 +96,9 @@ type
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'a';
                                      const AMessageTag: string = 'mensagem'); override;
+  public
+    function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string; override;
+    function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS; override;
   end;
 
 implementation
@@ -604,6 +607,29 @@ begin
   finally
     FreeAndNil(Document);
   end;
+end;
+
+function TACBrNFSeProviderCTA200.StrToTipoTributacaoRPS(out ok: boolean;
+  const s: string): TTipoTributacaoRPS;
+begin
+  Result := StrToEnumerado(Ok, s,
+                      ['0', '1', '2', '2', '2', '2', '3', '3', '4', '5'],
+                      [ttTribnoMun, ttTribforaMun, ttTribnoMunIsento,
+                        ttTribforaMunIsento, ttTribnoMunImune, ttTribforaMunImune,
+                        ttTribnoMunSuspensa, ttTribforaMunSuspensa,
+                        ttSimplesNacional, ttRetidonoMun]);
+end;
+
+function TACBrNFSeProviderCTA200.TipoTributacaoRPSToStr(
+  const t: TTipoTributacaoRPS): string;
+begin
+  Result := EnumeradoToStr(t,
+                      ['0', '1', '2', '2', '2', '2', '3', '3', '4', '5'],
+                      [ttTribnoMun, ttTribforaMun, ttTribnoMunIsento,
+                        ttTribforaMunIsento, ttTribnoMunImune, ttTribforaMunImune,
+                        ttTribnoMunSuspensa, ttTribforaMunSuspensa,
+                        ttSimplesNacional, ttRetidonoMun]);
+
 end;
 
 { TACBrNFSeXWebserviceCTA200 }

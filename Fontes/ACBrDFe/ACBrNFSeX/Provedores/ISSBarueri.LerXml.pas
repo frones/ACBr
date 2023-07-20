@@ -48,7 +48,6 @@ type
 
   TNFSeR_ISSBarueri = class(TNFSeRClass)
   private
-    function StrToTipoTributacaoRPS(const ATributacaoRPS: String): TTipoTributacaoRPS;
     function StrToSituacaoTributaria(const AIssRetido: String): TnfseSituacaoTributaria;
     function StrToStatusNFSe(const ASituacao: String): TStatusNFSe;
 
@@ -95,20 +94,6 @@ uses
 //==============================================================================
 
 { TNFSeR_ISSBarueri }
-
-function TNFSeR_ISSBarueri.StrToTipoTributacaoRPS(const ATributacaoRPS: String): TTipoTributacaoRPS;
-var
-  OK: Boolean;
-begin
-  Result := StrToEnumerado(OK, ATributacaoRPS,
-    ['1', '2', '3', '4'],
-    [ttTribnoMun,
-     ttTribforaMun,
-     ttTribnoMunIsento,
-     ttTribnoMunSuspensa
-    ]
-  );
-end;
 
 function TNFSeR_ISSBarueri.StrToSituacaoTributaria(const AIssRetido: String): TnfseSituacaoTributaria;
 begin
@@ -377,6 +362,8 @@ begin
 end;
 
 procedure TNFSeR_ISSBarueri.LerRegistroTipo2(const ALinha: String);
+var
+  Ok: Boolean;
 begin
   NFSe.Numero := Trim(Copy(ALinha, 7, 6));
 
@@ -391,7 +378,7 @@ begin
   NFSe.CodigoVerificacao := Trim(Copy(ALinha, 27, 24));
   NFSe.IdentificacaoRps.Serie := Trim(Copy(ALinha, 51, 4));
   NFSe.IdentificacaoRps.Numero := Trim(Copy(ALinha, 55, 10));
-  NFSe.TipoTributacaoRPS := Self.StrToTipoTributacaoRPS(Trim(Copy(ALinha, 65, 1)));
+  NFSe.TipoTributacaoRPS := FpAOwner.StrToTipoTributacaoRPS(Ok, Trim(Copy(ALinha, 65, 1)));
   NFSe.Servico.Valores.IssRetido := Self.StrToSituacaoTributaria(Trim(Copy(ALinha, 66, 1)));
   NFSe.SituacaoNfse := Self.StrToStatusNFSe(Trim(Copy(ALinha, 67, 1)));
 

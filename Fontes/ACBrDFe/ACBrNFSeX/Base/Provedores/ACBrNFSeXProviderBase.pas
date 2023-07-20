@@ -288,6 +288,9 @@ type
 
     function TipoDeducaoToStr(const t: TTipoDeducao): string; virtual;
     function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao; virtual;
+
+    function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string; virtual;
+    function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS; virtual;
   end;
 
 implementation
@@ -1531,6 +1534,29 @@ begin
                            ['1', '2', '3', '4', '5', '6', '7'],
                  [tdNenhum, tdMateriais, tdPercentual, tdValor, tdPercMateriais,
                   tdVeiculacao, tdIntermediacao]);
+end;
+
+function TACBrNFSeXProvider.TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['T', 'F', 'A', 'B', 'M', 'N', 'X', 'V', 'P'],
+                           [ttTribnoMun, ttTribforaMun,
+                            ttTribnoMunIsento, ttTribforaMunIsento,
+                            ttTribnoMunImune, ttTribforaMunImune,
+                            ttTribnoMunSuspensa, ttTribforaMunSuspensa,
+                            ttExpServicos]);
+end;
+
+function TACBrNFSeXProvider.StrToTipoTributacaoRPS(out ok: Boolean;
+  const s: string): TTipoTributacaoRPS;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['T', 'F', 'A', 'B', 'M', 'N', 'X', 'V', 'P'],
+                           [ttTribnoMun, ttTribforaMun,
+                            ttTribnoMunIsento, ttTribforaMunIsento,
+                            ttTribnoMunImune, ttTribforaMunImune,
+                            ttTribnoMunSuspensa, ttTribforaMunSuspensa,
+                            ttExpServicos]);
 end;
 
 function TACBrNFSeXProvider.PrepararRpsParaLote(const aXml: string): string;

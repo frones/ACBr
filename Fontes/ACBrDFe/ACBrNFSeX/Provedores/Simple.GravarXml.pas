@@ -200,9 +200,7 @@ begin
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'sSt', 1, 1, 1, 'N', ''));
 
-  Situacao := EnumeradoToStr(NFSe.TipoTributacaoRPS, ['N', 'S', 'I', 'R', 'P', 'T'],
-    [ttTribnoMun, ttSimplesNacional, ttTribnoMunIsento, ttRetidonoMun,
-     ttTribforaMun, ttExpServicos]);
+  Situacao := FpAOwner.TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS);
 
   // N - Normal, S - Simples Nacional, I - Isento, R - Iss Retido
   // P - Pago em Outro Município, T - Substituição Tributaria

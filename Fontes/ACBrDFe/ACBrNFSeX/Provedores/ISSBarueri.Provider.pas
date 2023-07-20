@@ -108,6 +108,10 @@ type
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
                                      const AMessageTag: string = 'MensagemRetorno'); override;
+  public
+    function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string; override;
+    function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS; override;
+
   end;
 
 implementation
@@ -1027,6 +1031,32 @@ function TACBrNFSeProviderISSBarueri.AplicarLineBreak(AXMLRps: String;
   const ABreak: String): String;
 begin
   Result := AXMLRps;
+end;
+
+function TACBrNFSeProviderISSBarueri.TipoTributacaoRPSToStr(
+  const t: TTipoTributacaoRPS): string;
+begin
+  Result := EnumeradoToStr(t,
+    ['1', '2', '3', '4'],
+    [ttTribnoMun,
+     ttTribforaMun,
+     ttTribnoMunIsento,
+     ttTribnoMunSuspensa
+    ]
+  );
+end;
+
+function TACBrNFSeProviderISSBarueri.StrToTipoTributacaoRPS(out ok: boolean;
+  const s: string): TTipoTributacaoRPS;
+begin
+  Result := StrToEnumerado(OK, s,
+    ['1', '2', '3', '4'],
+    [ttTribnoMun,
+     ttTribforaMun,
+     ttTribnoMunIsento,
+     ttTribnoMunSuspensa
+    ]
+  );
 end;
 
 { TACBrNFSeXWebserviceISSBarueri }

@@ -79,12 +79,7 @@ function TNFSeW_CTA200.GerarIdentificacaoRps: TACBrXmlNode;
 var
   TipoTrib: string;
 begin
-  TipoTrib := EnumeradoToStr(NFSe.TipoTributacaoRPS,
-                      ['0', '1', '2', '2', '2', '2', '3', '3', '4', '5'],
-                      [ttTribnoMun, ttTribforaMun, ttTribnoMunIsento,
-                        ttTribforaMunIsento, ttTribnoMunImune, ttTribforaMunImune,
-                        ttTribnoMunSuspensa, ttTribforaMunSuspensa,
-                        ttSimplesNacional, ttRetidonoMun]);
+  TipoTrib := FpAOwner.TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS);
 
   Result := CreateElement('IdentificacaoRps');
 

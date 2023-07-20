@@ -111,6 +111,9 @@ type
 
     function TipoDeducaoToStr(const t: TTipoDeducao): string;
     function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao;
+
+    function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string;
+    function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS;
   end;
 
 implementation

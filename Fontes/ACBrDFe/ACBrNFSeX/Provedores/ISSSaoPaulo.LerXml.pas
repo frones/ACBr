@@ -261,7 +261,7 @@ begin
     NFSe.NfseCancelamento.DataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataCancelamento'), tcDat);
   end;
 
-  NFSe.TipoTributacaoRPS := StrToTipoTributacaoRPS(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('TributacaoNFe'), tcStr));
+  NFSe.TipoTributacaoRPS := FpAOwner.StrToTipoTributacaoRPS(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('TributacaoNFe'), tcStr));
 
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('OpcaoSimples'), tcStr);
 
@@ -364,7 +364,7 @@ begin
     else
       StatusRps := srCancelado;
 
-    TipoTributacaoRPS := StrToTipoTributacaoRPS(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('TributacaoNFe'), tcStr));
+    TipoTributacaoRPS := FPAOwner.StrToTipoTributacaoRPS(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('TributacaoNFe'), tcStr));
 
     LerChaveRPS(ANode);
 

@@ -355,9 +355,6 @@ function VersaoNFSeToStr(const t: TVersaoNFSe): string;
 function TipoFreteToStr(const t: TnfseFrete): string;
 function StrToTipoFrete(out ok: boolean; const s: string): TnfseFrete;
 
-function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string;
-function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS;
-
 function CanhotoToStr(const t: TnfseCanhoto): string;
 function StrToCanhoto(out ok: boolean; const s: string): TnfseCanhoto;
 
@@ -12483,28 +12480,6 @@ begin
   Result := StrToEnumerado(ok, s,
                           ['0', '1'],
                           [tfPrestador, tfTomador]);
-end;
-
-function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['T', 'F', 'A', 'B', 'M', 'N', 'X', 'V', 'P'],
-                           [ttTribnoMun, ttTribforaMun,
-                            ttTribnoMunIsento, ttTribforaMunIsento,
-                            ttTribnoMunImune, ttTribforaMunImune,
-                            ttTribnoMunSuspensa, ttTribforaMunSuspensa,
-                            ttExpServicos]);
-end;
-
-function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['T', 'F', 'A', 'B', 'M', 'N', 'X', 'V', 'P'],
-                           [ttTribnoMun, ttTribforaMun,
-                            ttTribnoMunIsento, ttTribforaMunIsento,
-                            ttTribnoMunImune, ttTribforaMunImune,
-                            ttTribnoMunSuspensa, ttTribforaMunSuspensa,
-                            ttExpServicos]);
 end;
 
 function CanhotoToStr(const t: TnfseCanhoto): string;

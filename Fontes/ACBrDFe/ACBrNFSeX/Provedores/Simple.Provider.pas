@@ -92,7 +92,9 @@ type
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = '';
                                      const AMessageTag: string = ''); override;
-
+  public
+    function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string; override;
+    function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS; override;
   end;
 
 implementation
@@ -660,6 +662,22 @@ begin
   finally
     FreeAndNil(Document);
   end;
+end;
+
+function TACBrNFSeProviderSimple.TipoTributacaoRPSToStr(
+  const t: TTipoTributacaoRPS): string;
+begin
+  Result := EnumeradoToStr(t, ['N', 'S', 'I', 'R', 'P', 'T'],
+            [ttTribnoMun, ttSimplesNacional, ttTribnoMunIsento, ttRetidonoMun,
+            ttTribforaMun, ttExpServicos]);
+end;
+
+function TACBrNFSeProviderSimple.StrToTipoTributacaoRPS(out ok: boolean;
+  const s: string): TTipoTributacaoRPS;
+begin
+  Result := StrToEnumerado(Ok, s, ['N', 'S', 'I', 'R', 'P', 'T'],
+            [ttTribnoMun, ttSimplesNacional, ttTribnoMunIsento, ttRetidonoMun,
+            ttTribforaMun, ttExpServicos]);
 end;
 
 { TACBrNFSeXWebserviceSimple }

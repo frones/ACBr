@@ -177,7 +177,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'StatusRPS', 1, 1, 1, Situacao, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'TributacaoRPS', 1, 1, 1,
-                           TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS), ''));
+                           FPAOwner.TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS), ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorServicos', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));

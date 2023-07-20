@@ -49,7 +49,8 @@ uses
   httpsend,
   ACBrBoletoConversao,
   ACBrBoletoWS,
-  ACBrBoletoWS.Rest;
+  ACBrBoletoWS.Rest,
+  Math;
 
 type
 
@@ -151,7 +152,7 @@ begin
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaCobrarJurosMora then
            FPURL := FPURL + '/boletos/encargos/juros-mora'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarMulta then
-          FPURL := FPURL + '/boletos/encargos/multas'
+          FPURL := FPURL + '/boletos/encargos/multa'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarDesconto then
            FPURL := FPURL +  '/boletos/descontos'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarValorAbatimento then
@@ -343,7 +344,7 @@ begin
 
       Json.Add('valor').Value.asNumber                            := aTitulo.ValorDocumento;
       Json.Add('dataVencimento').Value.asString                   := DateTimeToDateBancoob(aTitulo.Vencimento);
-      Json.Add('numeroParcela').Value.AsInteger                   := 1;
+      Json.Add('numeroParcela').Value.AsInteger                   := max(1,ATitulo.Parcela);
       Json.Add('aceite').Value.AsBoolean                          := ATitulo.Aceite = atSim;
 
       GerarDesconto(Json);

@@ -56,6 +56,10 @@ Por: eric100 / Verificado: Daniel Morais
 [*] ACBrSicredi - Motivos de Retorno
 Por: Victor H Gonzales - Pandaaa
 
+[*]TK-4180 ACBrBoletoW_Bancoob - Ajustes nas parcelas, endpoint de multa
+https://www.projetoacbr.com.br/forum/topic/73029-boleto-bancoob-api-unit-acbrboletow_bancoobpas-rotina-requisicaojson-passando-valores-fixos/
+Por : Por vinizioWOW / Verificado: Daniel Morais
+
 07/07/2023
 [*]TK-4143 ACBrBoletoW_Santander_API, ACBrBoletoWS.SOAP - Remoção de Warnigs e Hints
 https://www.projetoacbr.com.br/forum/topic/72920-remo%C3%A7%C3%A3o-de-warnigs-e-hints-units-acbrboleto/

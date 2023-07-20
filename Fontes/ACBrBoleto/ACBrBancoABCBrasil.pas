@@ -279,7 +279,7 @@ var
     begin
       if Mensagem.Count = 0 then
       begin
-        Result := PadRight('', 80, ' '); // 2 registros
+        Result := PadRight('', 140, ' '); // 2 registros
         Exit;
       end;
 
@@ -287,20 +287,20 @@ var
       if Mensagem.Count >= 1 then
       begin
         Result := Result +
-          Copy(PadRight(Mensagem[0], 40, ' '), 1, 40);
+          Copy(PadRight(Mensagem[0], 70, ' '), 1, 70);
       end;
 
       if Mensagem.Count >= 2 then
       begin
         Result := Result +
-          Copy(PadRight(Mensagem[1], 40, ' '), 1, 40)
+          Copy(PadRight(Mensagem[1], 70, ' '), 1, 70)
       end
       else
       begin
         if (Result <> EmptyStr) then
-          Result := Result + PadRight('', 40, ' ') // 1 registro
+          Result := Result + PadRight('', 70, ' ') // 1 registro
         else
-          Result := Result + PadRight('', 80, ' '); // 2 registros
+          Result := Result + PadRight('', 140, ' '); // 2 registros
         Exit;
       end;
     end;
@@ -681,9 +681,27 @@ begin
     IfThen(PercentualMulta > 0, IntToStrZero(round(PercentualMulta * 10000), 15), IntToStrZero(0, 15)) + // 075 - 089 / Valor/Percentual a ser aplicado
     // IntToStrZero(round(MultaValorFixo * 100), 15))
     Space(10) + // 090 - 099 / Reservado (uso Banco)
-    MontarInstrucoes1 + // 100 - 139 / Mensagem 3
-    // 140 - 179 / Mensagem 4
+    Space(40) + // 100 - 139 / Branco
+    Space(40) + // 140 - 179 / branco
     Space(61); // 180 - 240 / Reservado (uso Banco)
+
+    if MontarInstrucoes1 <> '' then begin
+      Inc(ISequencia);
+      {SEGMENTO S}
+      Result := Result + #13#10 +
+        '246' + 						          //001 - 003 Código do Banco na compensação
+        '0001' + 						          //004 - 007 Numero do lote remessa
+        '3' + 							          //008 - 008 Tipo de registro
+        IntToStrZero(ISequencia, 5) + //009 - 013 Número seqüencial do registro no lote
+        'S' + 							          //014 - 014 Cód. Segmento do registro detalhe
+        ' ' + 							          //015 - 015 Reservado (uso Banco)
+        sCodMovimento + 				      //016 - 017 Código de movimento remessa
+        '1'  +  						          //018 - 018 Tipo de Impressão Identificação da Impressão  //
+        '01' + 							          //019 - 020 Número da Linha a ser Impressa
+        MontarInstrucoes1 + 			    //021 - 160 Mensagem a ser Impressa
+        '01' +							          //161 - 162 Tipo do Caracter a ser Impresso
+        Space (78); 					        //163 -  240 Uso Exclusivo FEBRABAN/CNAB
+    end;
 
     if ACBrTitulo.ListaDadosNFe.Count > 0 then // Se tem informacoes de NFe associadas ao titulo
     begin

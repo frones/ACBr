@@ -291,6 +291,10 @@ begin
       begin
         SituacaoTrib := FProvider.StrToSituacaoTrib(Ok, INIRec.ReadString(sSecao, 'SituacaoTrib', 'tp'));
 
+        //Provedores CTA, ISSBarueri, ISSSDSF, ISSSaoPaulo, Simple e SmarAPD.
+        if INIRec.ReadString(sSecao, 'TipoTributacaoRPS', 'FIM') <> 'FIM' then
+          TipoTributacaoRPS := FProvider.StrToTipoTributacaoRPS(Ok, INIRec.ReadString(sSecao, 'TipoTributacaoRPS', ''));
+
         // Provedor AssessorPublico
         Situacao := INIRec.ReadInteger(sSecao, 'Situacao', 0);
 
@@ -610,6 +614,9 @@ begin
       INIRec.WriteString(sSecao, 'Producao', FProvider.SimNaoToStr(Producao));
       INIRec.WriteString(sSecao, 'Status', StatusRPSToStr(StatusRps));
       INIRec.WriteString(sSecao, 'OutrasInformacoes', OutrasInformacoes);
+
+      //Provedores CTA, ISSBarueri, ISSSDSF, ISSSaoPaulo, Simple e SmarAPD.
+      INIRec.WriteString(sSecao, 'TipoTributacaoRps', FProvider.TipoTributacaoRPSToStr(TipoTributacaoRPS));
 
       // Provedores ISSDSF e Siat
       INIRec.WriteString(sSecao, 'SeriePrestacao', SeriePrestacao);

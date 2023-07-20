@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/07/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Adiciona nas rotinas de leitura e geração do arquivo INI a propriedade TipoTributacaoRPS
+  Por: Diego F #TK-4219
 -- Diversos --
 [*] Move as funções TipoTributacaoRPSToStr/StrToTipoTributacaoRPS de ACBrNFSeXConversao para a Interface e ajustes necessários para adequar para os provedores que as usam.
   Por: Diego F #TK-4219

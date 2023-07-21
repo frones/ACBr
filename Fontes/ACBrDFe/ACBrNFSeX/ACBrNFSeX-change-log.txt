@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/07/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Buerarema/BA - provedor: Saatri.
+  Por: Welington Junior
+[*] Alterado as URLs da cidade: Marituba/PA
+  Por: Adriano Wolff/Italo Giurizzato Junior
 -- SigISSWeb.Provider --
 [*] Alteração visando sanar problema no cancelamento com o provedor SigISSWeb.
   Por: Italo Giurizzato Junior 

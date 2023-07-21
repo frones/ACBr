@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/07/2023
+-- PagFor.Sicoob.GravarTxtRemessa --
+[*] Implementado a sobrecarga da procedure GeraSegmentoJ52 e realizado mais alguns
+    ajustes.
+   Por: jjribas
+
 14/07/2023
 -- PagFor.BancodoBrasil.GravarTxtRemessa/ACBrPagForClass --
 [*] Adicionada a propriedade RemessaTeste para gerar na posição 51-52 o texto:

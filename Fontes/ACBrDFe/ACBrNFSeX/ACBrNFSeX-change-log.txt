@@ -44,6 +44,8 @@ Símbolo : Significado
 
 21/07/2023
 -- ACBrNFSeXServicos --
+[+] Incluída a cidade: Vianopolis/Go - provedor: Megasoft.
+  Por: PrimeSoftware
 [+] Incluída a cidade: Buerarema/BA - provedor: Saatri.
   Por: Welington Junior
 [*] Alterado as URLs da cidade: Marituba/PA

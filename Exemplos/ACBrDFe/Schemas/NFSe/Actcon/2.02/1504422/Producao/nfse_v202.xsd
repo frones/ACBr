@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://nfse-pa-marituba.portalfacil.com.br/nfseserv/schema/nfse_v202.xsd" 
-            xmlns="http://nfse-pa-marituba.portalfacil.com.br/nfseserv/schema/nfse_v202.xsd"
+  targetNamespace="http://ws.taxtecnologia.com.br/marituba-pa/nfseserv/schema/nfse_v202.xsd" 
+            xmlns="http://ws.taxtecnologia.com.br/marituba-pa/nfseserv/schema/nfse_v202.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
 	elementFormDefault="qualified">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"

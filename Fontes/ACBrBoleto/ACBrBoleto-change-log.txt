@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+21/07/2023
+[*]TK-4158 ACBrBancoDaycoval - VersaoLayoutLote 3, Ajustes novos códigos rejeicao, mensagens boleto.
+https://www.projetoacbr.com.br/forum/topic/72970-ajustes-no-layout-daycoval/
+Por: Luiz Alberto da Silva Lope / Verificado: Daniel Morais
+
 20/07/2023
 [*]TK-4199 ACBrBancoABCBrasil - ajustes conf manual 100-179 Seg R deixado em Branco, incluso Segmento S
 https://www.projetoacbr.com.br/forum/topic/73157-contribui%C3%A7%C3%A3o-ajuste-mensagens-banco-abc-brasil/

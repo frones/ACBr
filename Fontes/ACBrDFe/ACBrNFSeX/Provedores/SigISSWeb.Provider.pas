@@ -287,8 +287,8 @@ procedure TACBrNFSeProviderSigISSWeb.PrepararCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
-  CodMun: Integer;
+//  Emitente: TEmitenteConfNFSe;
+//  CodMun: Integer;
 begin
   if Response.InfCancelamento.NumeroNFSe = '' then
   begin
@@ -298,25 +298,35 @@ begin
     Exit;
   end;
 
-  if Response.InfCancelamento.ChaveNFSe = '' then
+  if Response.InfCancelamento.SerieNFSe = '' then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := Cod118;
-    AErro.Descricao := ACBrStr(Desc118);
+    AErro.Codigo := Cod112;
+    AErro.Descricao := ACBrStr(Desc112);
     Exit;
   end;
 
-  if Response.InfCancelamento.DataEmissaoNFSe = 0 then
+  if Response.InfCancelamento.MotCancelamento = '' then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := Cod122;
-    AErro.Descricao := ACBrStr(Desc122);
+    AErro.Codigo := Cod120;
+    AErro.Descricao := ACBrStr(Desc110);
     Exit;
   end;
 
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-  CodMun := TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio;
+//  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+//  CodMun := TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio;
 
+
+  FpPath := 'rest/nfes/cancela/' +
+            Response.InfCancelamento.NumeroNFSe +
+            '/serie/' +
+            Response.InfCancelamento.SerieNFSe +
+            '/motivo/' +
+            Response.InfCancelamento.MotCancelamento;
+  FpMethod := 'GET';
+  FpMimeType := 'application/json';
+  {
   Response.ArquivoEnvio := '<cancelamentoNfseLote xmlns="http://www.SigISSWeb.com/nfse">' +
                              '<codigoMunicipio>' +
                                 CodIBGEToCodTOM(CodMun) +
@@ -338,6 +348,7 @@ begin
                                 Response.InfCancelamento.ChaveNFSe +
                              '</chaveSeguranca>' +
                            '</cancelamentoNfseLote>';
+  }
 end;
 
 procedure TACBrNFSeProviderSigISSWeb.PrepararEmitir(
@@ -569,11 +580,15 @@ end;
 
 function TACBrNFSeXWebserviceSigISSWeb.Cancelar(ACabecalho, AMSG: String): string;
 var
-  Request, xCabecalho: string;
+  Request{, xCabecalho}: string;
 begin
   AjustaSetHeader := True;
   FPMsgOrig := AMSG;
 
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+  {
   xCabecalho := StringReplace(ACabecalho, 'cabecalhoNfseLote',
                      'cabecalhoCancelamentoNfseLote', [rfReplaceAll]);
 
@@ -584,6 +599,7 @@ begin
 
   Result := Executar('', Request, ['return', 'retornoCancelamentoNfseLote'],
                      ['xmlns:wsn="http://wsnfselote.SigISSWeb.com.br/"']);
+  }
 end;
 
 function TACBrNFSeXWebserviceSigISSWeb.TratarXmlRetornado(

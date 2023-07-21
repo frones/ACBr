@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/07/2023
+-- Tecnos.GravarXml --
+[*] Implementado a sobrecarga da function: GerarEnderecoTomador.
+    O provedor existe a presença da tag CodigoPais para o tomador.
+  Por: Italo Giurizzato Junior 
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade: Vianopolis/Go - provedor: Megasoft.
   Por: PrimeSoftware

@@ -53,6 +53,10 @@ Símbolo : Significado
 https://www.projetoacbr.com.br/forum/topic/72970-ajustes-no-layout-daycoval/
 Por: Luiz Alberto da Silva Lope / Verificado: Daniel Morais
 
+[*]TK-4175 ACBrBoletoFCFortesFr (pas, df e lfm), - Inclusão do qrcode pix em todos layouts para impressão qdo existir emv
+https://www.projetoacbr.com.br/forum/topic/73041-qrcode-no-boleto-padr%C3%A3o-entrega/
+Por: Victor H Gonzales - Pandaaa e Daniel Morais
+
 20/07/2023
 [*]TK-4199 ACBrBancoABCBrasil - ajustes conf manual 100-179 Seg R deixado em Branco, incluso Segmento S
 https://www.projetoacbr.com.br/forum/topic/73157-contribui%C3%A7%C3%A3o-ajuste-mensagens-banco-abc-brasil/

@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/07/2023
+-- Diversos --
+[*] Ajustes da NT 02/2023, validação dos schemas e implementações da versão 2.1.2 em homologação
+  Por: Renato Rubinho
+-- pcnReinfRetEventos --
+[*]  Adicionando o campo nrRecArqBase na TInfoRecEv para carregamento correto na leitura do grupo infoRecEv
+  Por: Hudson G Leite / Renato Rubinho
+
 01/06/2023
 -- Diversos --
 [*] Implementação da versão 2.1.2

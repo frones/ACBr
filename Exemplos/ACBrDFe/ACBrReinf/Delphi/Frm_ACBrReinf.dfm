@@ -10,8 +10,10 @@ object frmACBrReinf: TfrmACBrReinf
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
+  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -100,6 +102,10 @@ object frmACBrReinf: TfrmACBrReinf
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -392,6 +398,10 @@ object frmACBrReinf: TfrmACBrReinf
           object TabSheet4: TTabSheet
             Caption = 'Geral'
             ImageIndex = 1
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object GroupBox3: TGroupBox
               Left = 3
               Top = 12
@@ -547,6 +557,10 @@ object frmACBrReinf: TfrmACBrReinf
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object GroupBox4: TGroupBox
               Left = 5
               Top = 4
@@ -836,6 +850,10 @@ object frmACBrReinf: TfrmACBrReinf
               TabOrder = 0
               object TabSheet2: TTabSheet
                 Caption = 'Contato'
+                ExplicitLeft = 0
+                ExplicitTop = 0
+                ExplicitWidth = 0
+                ExplicitHeight = 0
                 object Label5: TLabel
                   Left = 3
                   Top = 0
@@ -993,6 +1011,10 @@ object frmACBrReinf: TfrmACBrReinf
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object sbPathReinf: TSpeedButton
               Left = 247
               Top = 131
@@ -1132,7 +1154,7 @@ object frmACBrReinf: TfrmACBrReinf
         ImageIndex = 4
         object chk1000: TCheckBox
           Left = 8
-          Top = 7
+          Top = 0
           Width = 237
           Height = 17
           Caption = 'R-1000 - Informa'#231#245'es do Contribuinte'
@@ -1149,7 +1171,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk1000Limpar: TCheckBox
           Left = 250
-          Top = 7
+          Top = 0
           Width = 295
           Height = 17
           Caption = 'Limpar base de dados para o contribuinte - Restrita Reais'
@@ -1167,7 +1189,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk1070: TCheckBox
           Left = 8
-          Top = 36
+          Top = 30
           Width = 201
           Height = 17
           Caption = 'R-1070 - Tabela de Processos'
@@ -1184,7 +1206,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2010: TCheckBox
           Left = 8
-          Top = 51
+          Top = 45
           Width = 409
           Height = 17
           Caption = 'R-2010 - Reten'#231#227'o Contribui'#231#227'o Previdenci'#225'ria  Servi'#231'os Tomados '
@@ -1201,7 +1223,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2020: TCheckBox
           Left = 8
-          Top = 65
+          Top = 60
           Width = 409
           Height = 17
           Caption = 
@@ -1220,7 +1242,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2030: TCheckBox
           Left = 8
-          Top = 80
+          Top = 75
           Width = 353
           Height = 17
           Caption = 'R-2030 - Recursos Recebidos por Associa'#231#227'o Desportiva'
@@ -1237,7 +1259,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2040: TCheckBox
           Left = 8
-          Top = 94
+          Top = 90
           Width = 369
           Height = 17
           Caption = 'R-2040 - Recursos Repassados para Associa'#231#227'o Desportiva'
@@ -1254,7 +1276,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2050: TCheckBox
           Left = 8
-          Top = 109
+          Top = 105
           Width = 457
           Height = 17
           Caption = 
@@ -1273,7 +1295,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2060: TCheckBox
           Left = 8
-          Top = 138
+          Top = 135
           Width = 413
           Height = 17
           Caption = 
@@ -1292,7 +1314,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2070: TCheckBox
           Left = 8
-          Top = 153
+          Top = 150
           Width = 377
           Height = 17
           Caption = 'R-2070 - Reten'#231#245'es na Fonte - IR, CSLL, Cofins, PIS/PASEP'
@@ -1309,7 +1331,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2098: TCheckBox
           Left = 8
-          Top = 167
+          Top = 165
           Width = 289
           Height = 17
           Caption = 'R-2098 - Reabertura dos Eventos Peri'#243'dicos'
@@ -1326,7 +1348,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2099: TCheckBox
           Left = 8
-          Top = 182
+          Top = 180
           Width = 289
           Height = 17
           Caption = 'R-2099 - Fechamento dos Eventos Peri'#243'dicos'
@@ -1343,7 +1365,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk3010: TCheckBox
           Left = 8
-          Top = 197
+          Top = 195
           Width = 265
           Height = 17
           Caption = 'R-3010 - Receita de Espet'#225'culo Desportivo'
@@ -1360,7 +1382,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk9000: TCheckBox
           Left = 250
-          Top = 21
+          Top = 15
           Width = 193
           Height = 17
           Caption = 'R-9000 - Exclus'#227'o de Eventos'
@@ -1377,7 +1399,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2055: TCheckBox
           Left = 8
-          Top = 124
+          Top = 120
           Width = 242
           Height = 17
           Caption = 'R-2055 - Aquisi'#231#227'o de Produ'#231#227'o Rural'
@@ -1394,7 +1416,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4010: TCheckBox
           Left = 8
-          Top = 212
+          Top = 210
           Width = 357
           Height = 17
           Caption = 'R-4010 - Pagamentos/cr'#233'ditos a benefici'#225'rio pessoa f'#237'sica'
@@ -1411,7 +1433,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk1050: TCheckBox
           Left = 8
-          Top = 21
+          Top = 15
           Width = 201
           Height = 17
           Caption = 'R-1050 - Tabela de Entidades'
@@ -1428,7 +1450,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4020: TCheckBox
           Left = 8
-          Top = 226
+          Top = 225
           Width = 387
           Height = 17
           Caption = 'R-4020 - Pagamentos/cr'#233'ditos a benefici'#225'rio pessoa jur'#237'dica'
@@ -1462,7 +1484,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4080: TCheckBox
           Left = 8
-          Top = 254
+          Top = 255
           Width = 229
           Height = 17
           Caption = 'R-4080 - Reten'#231#227'o no recebimento'
@@ -1479,7 +1501,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4099: TCheckBox
           Left = 8
-          Top = 268
+          Top = 270
           Width = 377
           Height = 17
           Caption = 'R-4099 - Fechamento/reabertura dos eventos da s'#233'rie R-4000'
@@ -1567,6 +1589,7 @@ object frmACBrReinf: TfrmACBrReinf
               'R-2030'
               'R-2040'
               'R-2050'
+              'R-2055'
               'R-2060'
               'R-2070'
               'R-3010'
@@ -1611,6 +1634,10 @@ object frmACBrReinf: TfrmACBrReinf
       object tsComandos: TTabSheet
         Caption = 'Comandos'
         ImageIndex = 6
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object btnGerar: TButton
           Left = 8
           Top = 10
@@ -1686,6 +1713,10 @@ object frmACBrReinf: TfrmACBrReinf
       end
       object TabSheet5: TTabSheet
         Caption = 'Dados de Retorno Eventos'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object mmoDados: TMemo
           Left = 0
           Top = 0
@@ -1700,6 +1731,10 @@ object frmACBrReinf: TfrmACBrReinf
       object TabSheet6: TTabSheet
         Caption = 'XML de Envio'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object mmoXMLEnv: TMemo
           Left = 0
           Top = 0
@@ -1715,6 +1750,10 @@ object frmACBrReinf: TfrmACBrReinf
       object TabSheet9: TTabSheet
         Caption = 'XML de Retorno'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object mmoXMLRet: TMemo
           Left = 0
           Top = 0
@@ -1730,6 +1769,10 @@ object frmACBrReinf: TfrmACBrReinf
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0

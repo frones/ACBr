@@ -65,14 +65,18 @@ type
 
   TInfoRecEv = class(TObject)
   private
+    FnrRecArqBase: String;
     FnrProtEntr: String;
     FdhProcess: TDateTime;
+    FdhRecepcao: TDateTime;
     FtpEv: String;
     FidEv: String;
     Fhash: String;
   public
+    property nrRecArqBase: String read FnrRecArqBase;
     property nrProtEntr: String read FnrProtEntr;
     property dhProcess: TDateTime read FdhProcess;
+    property dhRecepcao: TDateTime read FdhRecepcao;
     property tpEv: String read FtpEv;
     property idEv: String read FidEv;
     property hash: String read Fhash;
@@ -756,8 +760,10 @@ begin
 
             if leitor.rExtrai(5, 'infoRecEv') <> '' then
             begin
+              infoRecEv.FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
               infoRecEv.FnrProtEntr := leitor.rCampo(tcStr, 'nrProtEntr');
               infoRecEv.FdhProcess  := leitor.rCampo(tcDatHor, 'dhProcess');
+              infoRecEv.FdhRecepcao := leitor.rCampo(tcDatHor, 'dhRecepcao');
               infoRecEv.FtpEv       := leitor.rCampo(tcStr, 'tpEv');
               infoRecEv.FidEv       := leitor.rCampo(tcStr, 'idEv');
               infoRecEv.Fhash       := leitor.rCampo(tcStr, 'hash');
@@ -1046,8 +1052,10 @@ begin
         end;
 
         sSecao := 'infoRecEv';
+        AIni.WriteString(sSecao, 'nrRecArqBase', infoRecEv.nrRecArqBase);
         AIni.WriteString(sSecao, 'nrProtEntr', infoRecEv.nrProtEntr);
         AIni.WriteString(sSecao, 'dhProcess',  DateToStr(infoRecEv.dhProcess));
+        AIni.WriteString(sSecao, 'dhRecepcao', DateToStr(infoRecEv.dhRecepcao));
         AIni.WriteString(sSecao, 'tpEv',       infoRecEv.tpEv);
         AIni.WriteString(sSecao, 'idEv',       infoRecEv.idEv);
         AIni.WriteString(sSecao, 'hash',       infoRecEv.hash);

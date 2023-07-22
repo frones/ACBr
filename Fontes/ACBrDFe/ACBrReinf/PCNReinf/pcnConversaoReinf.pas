@@ -194,6 +194,8 @@ type
                             tiComplAposentadoria,     //  7 - Complementação de aposentadoria, correspondente às contribuições efetuadas no período de 01/01/1989 a 31/12/1995
                             tiAjudaCusto,             //  8 - Ajuda de custo
                             tiRendimentosSemRetencao, //  9 - Rendimentos pagos sem retenção do IR na fonte - Lei 10.833/2003
+                            tiJurosMoraRecebidos,     // 10 – Juros de mora recebidos, devidos pelo atraso no pagamento de remuneração por exercício de emprego, cargo ou função
+                            tiResgatePrevidencia,     // 11 – Resgate de previdência complementar por portador de moléstia grave
                             tiOutros                  // 99 - Outros (especificar)
                             );
 
@@ -930,13 +932,13 @@ end;
 function tpIsencaoToStr(const t: TtpIsencao): string;
 begin
   result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
-                                '99']);
+                                '10', '11', '99']);
 end;
 
 function StrTotpIsencao(var ok: boolean; const s: string): TtpIsencao;
 begin
   result := TtpIsencao(StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5', '6',
-                                                 '7', '8', '9', '99']));
+                                                 '7', '8', '9', '10', '11', '99']));
 end;
 
 function indPerReferenciaToStr(const t: TindPerReferencia): string;

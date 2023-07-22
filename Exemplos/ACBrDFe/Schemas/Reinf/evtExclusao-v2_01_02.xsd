@@ -65,7 +65,7 @@
                       </xs:annotation>
                       <xs:simpleType>
                         <xs:restriction base="xs:unsignedByte">
-                          <xs:pattern value="[1|2]"/>
+                          <xs:pattern value="1|2"/>
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
@@ -104,9 +104,7 @@
                       </xs:annotation>
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
-                          <xs:minLength value="16"/>
-                          <xs:maxLength value="52"/>
-                          <xs:pattern value="[0-9]{1,18}[-][0-9]{2}[-][0-9]{4}[-][0-9]{4}[-][0-9]{1,18}"/>
+                          <xs:pattern value="[0-9]{1,18}[-][0-9]{2}[-][0-9]{4}[-]([0-9]{4}|[0-9]{6})[-][0-9]{1,18}"/>
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>

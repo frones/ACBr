@@ -27,6 +27,11 @@ published
   procedure AdicionarRPSConteudoIni;
   procedure LerIniNFSeCaminhoIni;
   procedure LerIniNFSeConteudoIni;
+  procedure AdicionarRPSCom5RPS;
+  procedure AdicionarRPSCom50RPS;
+  procedure AdicionarRPSCom51RPS;
+  procedure LimparLoteRPSCom50RPS;
+  procedure TotalRPSLoteCom25RPS;
 end;
 
 implementation
@@ -61,7 +66,6 @@ begin
   try
     if not IniConfig.SectionExists('NFSE') then
        raise Exception.Create('Arquivo MonitorConfig.ini em branco, preencha o arquivo!');
-
     FACBrNFSeX.Configuracoes.Geral.Emitente.WSUser := IniConfig.ReadString('NFSe', 'Usuario', '');
     FACBrNFSeX.Configuracoes.Geral.Emitente.WSSenha := IniConfig.ReadString('NFSe', 'Senha', '');
     FACBrNFSeX.Configuracoes.Geral.Emitente.WSChaveAcesso := IniConfig.ReadString('NFSe', 'ChaveAutenticacao', '');
@@ -173,6 +177,132 @@ begin
     CheckTrue(FACBrNFSeX.NotasFiscais.Count = 1, 'LerIniNFSe não carregou NFSe');
   finally
     FreeAndNil(IniNFSe);
+  end;
+end;
+
+procedure TDoACBrNFSeTest.AdicionarRPSCom5RPS;
+var
+  Parametros: TStringList;
+  i: Integer;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add(NFSEINI);
+    Parametros.Add('1');
+
+    for i:=1 to 5 do
+    begin
+      FCmd.Comando := 'NFSe.AdicionarRPS("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'")';
+      FObjetoDono.Executar(FCmd);
+    end;
+    CheckEquals(5, FObjetoDono.ACBrNFSeX.NotasFiscais.Count, 'Quantidade de RPS diferente|Esperado:5|Obtibo:'
+                                                             +IntToStr(FObjetoDono.ACBrNFSeX.NotasFiscais.Count));
+    CheckEquals('Total RPS Adicionados= 5', FCmd.Resposta,
+                'Esperado: Total RPS Adicionados= 5' + sLineBreak +
+                'Recebido: ' + FCmd.Resposta);
+  finally
+    FreeAndNil(Parametros);
+  end;
+end;
+
+procedure TDoACBrNFSeTest.AdicionarRPSCom50RPS;
+var
+  Parametros: TStringList;
+  i: Integer;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add(NFSEINI);
+    Parametros.Add('1');
+
+    for i:=1 to 50 do
+    begin
+      FCmd.Comando := 'NFSe.AdicionarRPS("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'")';
+      FObjetoDono.Executar(FCmd);
+    end;
+    CheckEquals(50, FObjetoDono.ACBrNFSeX.NotasFiscais.Count, 'Quantidade de RPS diferente|Esperado:50|Obtibo:'
+                                                             +IntToStr(FObjetoDono.ACBrNFSeX.NotasFiscais.Count));
+    CheckEquals('Total RPS Adicionados= 50', FCmd.Resposta,
+                'Esperado: Total RPS Adicionados= 50' + sLineBreak +
+                'Recebido: ' + FCmd.Resposta);
+  finally
+    FreeAndNil(Parametros);
+  end;
+end;
+
+procedure TDoACBrNFSeTest.AdicionarRPSCom51RPS;
+var
+  Parametros: TStringList;
+  i: Integer;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add(NFSEINI);
+    Parametros.Add('1');
+
+    for i:=1 to 51 do
+    begin
+      FCmd.Comando := 'NFSe.AdicionarRPS("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'")';
+      FObjetoDono.Executar(FCmd);
+    end;
+    CheckEquals('Limite de RPS por Lote(50) atingido, envie o lote ou limpe a lista', FCmd.Resposta,
+                'Esperado: Limite de RPS por Lote(50) atingido, envie o lote ou limpe a lista' + sLineBreak +
+                'Recebido: ' + FCmd.Resposta);
+    Check(FObjetoDono.ACBrNFSeX.NotasFiscais.Count = 50, 'Total de RPS carregados:'+IntToStr(FObjetoDono.ACBrNFSeX.NotasFiscais.Count)+'|Esperado:50');
+  finally
+    FreeAndNil(Parametros);
+  end;
+end;
+
+procedure TDoACBrNFSeTest.LimparLoteRPSCom50RPS;
+var
+  Parametros: TStringList;
+  i: Integer;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add(NFSEINI);
+    Parametros.Add('1');
+
+    for i:=1 to 51 do
+    begin
+      FCmd.Comando := 'NFSe.AdicionarRPS("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'")';
+      FObjetoDono.Executar(FCmd);
+    end;
+
+    FCmd.Comando := 'NFSe.LimparLoteRPS';
+    FObjetoDono.Executar(FCmd);
+
+    Check(FObjetoDono.ACBrNFSeX.NotasFiscais.Count = 0, 'Total RPS esperado:0|Recebido:'+IntToStr(FObjetoDono.ACBrNFSeX.NotasFiscais.Count));
+
+  finally
+    FreeAndNil(Parametros);
+  end;
+end;
+
+procedure TDoACBrNFSeTest.TotalRPSLoteCom25RPS;
+var
+  Parametros: TStringList;
+  i: Integer;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add(NFSEINI);
+    Parametros.Add('1');
+
+    for i:=1 to 25 do
+    begin
+      FCmd.Comando := 'NFSe.AdicionarRPS("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'")';
+      FObjetoDono.Executar(FCmd);
+    end;
+
+    FCmd.Comando := 'NFSe.TotalRPSLote';
+    FObjetoDono.Executar(FCmd);
+
+    CheckEquals('25', FCmd.Resposta);
+
+  finally
+    FreeAndNil(Parametros);
   end;
 end;
 

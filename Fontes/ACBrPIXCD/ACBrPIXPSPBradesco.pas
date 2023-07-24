@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -40,7 +40,8 @@ uses
   Classes, SysUtils, ACBrPIXCD, ACBrBase;
 
 const
-  cBradescoURLSandbox = ' https://qrpix-h.bradesco.com.br';
+
+  cBradescoURLSandbox = 'https://qrpix-h.bradesco.com.br';
   cBradescoURLProducao = 'https://qrpix.bradesco.com.br';
   cBradescoPathAuthToken = '/oauth/token';
   cBradescoPathAPIPix = '/v2';
@@ -55,7 +56,11 @@ type
   TACBrPSPBradesco = class(TACBrPSPCertificate)
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
+  private
+    procedure QuandoReceberRespostaEndPoint(const aEndPoint, AURL, aMethod: String;
+      var aResultCode: Integer; var aRespostaHttp: AnsiString);
   public
+    constructor Create(aOwner: TComponent); override;
     procedure Autenticar; override;
   published
     property ClientID;
@@ -73,7 +78,21 @@ begin
   if (aAmbiente = ambProducao) then
     Result := cBradescoURLProducao + cBradescoPathAPIPix
   else
-    Result := cBradescoURLSandbox + cBradescoPathAPIPix
+    Result := cBradescoURLSandbox + cBradescoPathAPIPix;
+end;
+
+procedure TACBrPSPBradesco.QuandoReceberRespostaEndPoint(const aEndPoint, AURL,
+  aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
+begin
+  // Bradesco responde OK ao EndPoint /cobv, de forma diferente da especificada
+  if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointCobV) and (AResultCode = HTTP_OK) then
+    AResultCode := HTTP_CREATED;
+end;
+
+constructor TACBrPSPBradesco.Create(aOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
 end;
 
 procedure TACBrPSPBradesco.Autenticar;

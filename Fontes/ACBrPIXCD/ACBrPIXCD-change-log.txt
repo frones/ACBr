@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2023
+-- ACBrPIXPSPBradesco --
+[-] Alteração do ResultCode de 200 pra 201 ao criar uma cobrança com vencimento
+    Por: Elias César
+
 17/07/2023
 -- ACBrPIXPSPBancoDoBrasil --
 [-] Correção para não exibir mensagem de erro incorretamente ao utilizar PSP BB com certificado PFX

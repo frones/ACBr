@@ -49,7 +49,7 @@ uses
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
-  cAilosURLSandbox      = 'https://apiendpoint.ailos.coop.br/ailos/pix-cobranca/api/v1';
+  cAilosURLSandbox      = 'https://apiendpointhml.ailos.coop.br/qa/ailos/pix-cobranca/api/v1';
   cAilosURLProducao     = 'https://apiendpoint.ailos.coop.br/ailos/pix-cobranca/api/v1';
   cAilosPathAuthToken   = '/client/connect/token';
   cAilosURLAuthTeste    = cAilosURLSandbox+cAilosPathAuthToken;

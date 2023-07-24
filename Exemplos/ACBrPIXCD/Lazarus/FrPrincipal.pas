@@ -3989,6 +3989,7 @@ begin
     8: ACBrPixCD1.PSP := ACBrPSPBradesco1;
     9: ACBrPixCD1.PSP := ACBrPSPPixPDV1;
     10: ACBrPixCD1.PSP := ACBrPSPInter1;
+    11: ACBrPixCD1.PSP := ACBrPSPAilos1;
   else
     raise Exception.Create('PSP configurado é inválido');
   end;

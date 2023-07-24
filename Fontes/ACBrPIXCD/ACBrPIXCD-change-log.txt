@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/07/2023
+-- ACBrPIXPSPAilos --
+[-] Correção da URL de homologação no PSP Ailos
+    Por: Genesio Becker
+
+24/07/2023
 -- ACBrPIXPSPBradesco --
 [-] Alteração do ResultCode de 200 pra 201 ao criar uma cobrança com vencimento
     Por: Elias César

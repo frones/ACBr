@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2023
+-- DoACBrNFSeUnit, ACBrMonitorConsts --
+[+] Adicionar os métodos LimparLoteRPS e TotalRPSLote visando auxiliar no uso de múltiplos RPS por Lote
+  Por: Diego Folieni #TK-4228
+
 10/07/2023
 -- ACBrMonitor1 --
 [*] Ajuste visando sanar erro de interpretação ao enviar o conteúdo do INI ao invés do caminho nos comandos

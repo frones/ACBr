@@ -471,6 +471,8 @@ const
 
   CMetodoCriarEnviarRPS =              'CriarEnviarRPS';
   CMetodoAdicionarRPS =                'AdicionarRPS';
+  CMetodoLimparLoteRPS =               'LimparLoteRPS';
+  CMetodoTotalRPSLote =                'TotalRPSLote';
   CMetodoEnviarLoteRPS =               'EnviarLoteRPS';
   CMetodoGerarLoteRPS =                'GerarLoteRPS';
   CMetodoConsultarSituacaoLote =       'ConsultarSituacaoLote';

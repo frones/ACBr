@@ -80,6 +80,20 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoLimparLoteRPS }
+
+TMetodoLimparLoteRPS = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTotalRPSLote }
+
+TMetodoTotalRPSLote = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 {TMetodoEnviarLoteRPS}
 TMetodoEnviarLoteRPS = class(TACBrMetodo)
 public
@@ -285,6 +299,21 @@ implementation
 uses
   Forms, DoACBrUnit, strutils,
   ACBrNFSeXWebserviceBase;
+
+{ TMetodoTotalRPSLote }
+
+procedure TMetodoTotalRPSLote.Executar;
+begin
+  fpCmd.Resposta := IntToStr(TACBrObjetoNFSe(fpObjetoDono).ACBrNFSeX.NotasFiscais.Count);
+end;
+
+{ TMetodoLimparLoteRPS }
+
+procedure TMetodoLimparLoteRPS.Executar;
+begin
+  TACBrObjetoNFSe(fpObjetoDono).ACBrNFSeX.NotasFiscais.Clear;
+  fpCmd.Resposta := 'Lote de RPS limpo!';
+end;
 
 { TMetodoImprimirPDFNFSe }
 
@@ -1125,16 +1154,22 @@ begin
     {ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) +
       'LotesNFSe' + PathDelim + 'Lote' + trim(ALote)); }
 
-    LerIniNFSe(AIni);
-    ACBrNFSeX.NotasFiscais.NumeroLote:= ALote;
-    ACBrNFSeX.NotasFiscais.Transacao:= True;
+    if ACBrNFSeX.NotasFiscais.Count < 50 then
+    begin
+      LerIniNFSe(AIni);
+      ACBrNFSeX.NotasFiscais.NumeroLote:= ALote;
+      ACBrNFSeX.NotasFiscais.Transacao:= True;
 
-    {ArqNFe := PathWithDelim(PathWithDelim(ExtractFilePath(Application.ExeName)) +
-      'LotesNFSe' + PathDelim + 'Lote' + trim(ALote)) + OnlyNumber(
-      ACBrNFSeX.NotasFiscais.Items[0].) + '-nfe.xml';
-    ACBrNFe.NotasFiscais.GravarXML(ExtractFilePath(ArqNFe));}
+      {ArqNFe := PathWithDelim(PathWithDelim(ExtractFilePath(Application.ExeName)) +
+        'LotesNFSe' + PathDelim + 'Lote' + trim(ALote)) + OnlyNumber(
+        ACBrNFSeX.NotasFiscais.Items[0].) + '-nfe.xml';
+      ACBrNFe.NotasFiscais.GravarXML(ExtractFilePath(ArqNFe));}
 
-    fpCmd.Resposta := 'Total RPS Adicionados= ' + IntToStr(ACBrNFSeX.NotasFiscais.Count) ;
+      fpCmd.Resposta := 'Total RPS Adicionados= ' + IntToStr(ACBrNFSeX.NotasFiscais.Count);
+    end else
+    begin
+      fpCmd.Resposta := 'Limite de RPS por Lote(50) atingido, envie o lote ou limpe a lista';
+    end;
   end;
 end;
 
@@ -1551,6 +1586,9 @@ begin
   ListaDeMetodos.Add(CMetodoConsultarDFeNFSePorChave);
   ListaDeMetodos.Add(CMetodoConsultarParametrosNFSe);
 
+  ListaDeMetodos.Add(CMetodoLimparLoteRPS);
+  ListaDeMetodos.Add(CMetodoTotalRPSLote);
+
   // DoACBrUnit
   ListaDeMetodos.Add(CMetodoSavetofile);
   ListaDeMetodos.Add(CMetodoLoadfromfile);
@@ -1618,6 +1656,8 @@ begin
     32  : AMetodoClass := TMetodoConsultarDFeNFSePorNSU;
     33  : AMetodoClass := TMetodoConsultarDFeNFSePorChave;
     34  : AMetodoClass := TMetodoConsultarParametrosNFSe;
+    35  : AMetodoClass := TMetodoLimparLoteRPS;
+    36  : AMetodoClass := TMetodoTotalRPSLote;
 
     else
     begin
@@ -1645,7 +1685,6 @@ procedure TACBrObjetoNFSe.LerIniNFSe(ArqINI: String);
 begin
   with fACBrNFSeX do
   begin
-    NotasFiscais.Clear;
     NotasFiscais.LoadFromIni ( ArqINI );
   end;
 end;

@@ -364,7 +364,7 @@ begin
       
       if (ATitulo.DiasDeNegativacao > 0) then
       begin
-        Json.Add('numDiasNegativacao').Value.AsInteger                  := ATitulo.DiasDeNegativacao;
+        Json.Add('numDiasNegativacaoAuto').Value.AsInteger              := ATitulo.DiasDeNegativacao;
       end;
 
       Json.Values['seuNumero' ].asString                                := aSeuNumero;

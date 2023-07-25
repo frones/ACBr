@@ -52,7 +52,9 @@ Símbolo : Significado
 [*]TK-4196 ACBrBoletoW_Bancoob - Permitir registro boleto API sem nosso numero conf API
 https://www.projetoacbr.com.br/forum/topic/73100-sicoob-boletos-via-api
 Por: Daniel Morais
-
+[-]TK-4213 ACBrBoletoW_Sicredi_APIECOMM - Correção nome do campo numDiasNegativacaoAuto
+https://www.projetoacbr.com.br/forum/topic/73159-api-sicredi-erro-ao-informar-o-campo-numdiasnegativacaoauto/
+Por: C4Dev / Verificado: Daniel Morais
 21/07/2023
 [*]TK-4158 ACBrBancoDaycoval - VersaoLayoutLote 3, Ajustes novos códigos rejeicao, mensagens boleto.
 https://www.projetoacbr.com.br/forum/topic/72970-ajustes-no-layout-daycoval/

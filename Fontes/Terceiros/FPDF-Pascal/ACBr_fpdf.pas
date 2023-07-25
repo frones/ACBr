@@ -1404,7 +1404,7 @@ procedure TFPDF.MultiCell(vWidth, vHeight: Double; const vText: String;
 { http://www.fpdf.org/en/script/script39.php }
 var
   cw: TFPDFFontInfo;
-  w, wFirst, wOther, wMax, wMaxFirst, wMaxOther, SaveX: Double;
+  wFirst, wOther, wMax, wMaxFirst, wMaxOther, SaveX: Double;
   s, b, vb, b2: String;
   nb, sep, i, j, l, ns, nl, ls: Integer;
   c: Char;
@@ -1499,12 +1499,12 @@ begin
       if First then
       begin
         wMax := wMaxFirst;
-        w := wFirst;
+        vWidth := wFirst;
       end
       else
       begin
         wMax := wMaxOther;
-        w := wOther;
+        vWidth := wOther;
       end;
 
       if (l> wMax) then

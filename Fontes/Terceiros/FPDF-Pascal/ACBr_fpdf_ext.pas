@@ -1165,7 +1165,7 @@ function TFPDFExt.WordWrap(var AText: string; AMaxWidth,
 var
   Space, Width, WordWidth: Double;
   Lines, Words: TStringArray;
-  Line, Word: string;
+  ALine, Word: string;
   i, j, L: integer;
 begin
   AText := Trim(AText);
@@ -1180,8 +1180,8 @@ begin
   Result := 0;
   for i := 0 to Length(Lines) - 1 do
   begin
-    Line := Lines[i];
-    Words := Split(Line, ' ');
+    ALine := Lines[i];
+    Words := Split(ALine, ' ');
     Width := 0;
     for j := 0 to Length(Words) - 1 do
     begin

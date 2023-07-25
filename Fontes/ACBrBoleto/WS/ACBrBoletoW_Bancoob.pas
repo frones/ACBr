@@ -326,7 +326,14 @@ begin
       Json.Add('numeroContaCorrente').Value.AsInteger             := strtoInt(aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito);
       Json.Add('especieDocumento').Value.AsString                 := aTitulo.EspecieDoc;
       Json.Add('dataEmissao').Value.AsString                      := DateTimeToDateBancoob(aTitulo.DataDocumento);
-      Json.Add('nossoNumero').Value.AsString                      := OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo));
+      {
+        Número que identifica o boleto de cobrança no Sisbr.
+        Caso deseje, o beneficiário poderá informar o nossoNumero,
+        Caso contrário, o sistema gerará automáticamente.
+      }
+      if StrToInt(ATitulo.NossoNumero) > 0 then
+         Json.Add('nossoNumero').Value.AsString                   := OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo));
+
       Json.Add('seuNumero').Value.asString                        := IfThen(ATitulo.NumeroDocumento <> '',
                                                                        ATitulo.NumeroDocumento,
                                                                        IfThen(ATitulo.SeuNumero <> '',

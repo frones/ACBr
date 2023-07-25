@@ -957,8 +957,12 @@ begin
       CodigoPais          := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       ExigibilidadeISS    := FpAOwner.StrToExigibilidadeISS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ExigibilidadeISS'), tcStr));
       IdentifNaoExigibilidade := ObterConteudo(AuxNode.Childrens.FindAnyNs('IdentifNaoExigibilidade'), tcStr);
+
       MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioIncidencia'), tcInt);
-      NumeroProcesso      := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroProcesso'), tcStr);
+      xMunicipioIncidencia := ObterNomeMunicipio(MunicipioIncidencia, xUF, '', False);
+      xMunicipioIncidencia := xMunicipioIncidencia + '/' + xUF;
+
+      NumeroProcesso := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroProcesso'), tcStr);
 
       with Valores do
       begin

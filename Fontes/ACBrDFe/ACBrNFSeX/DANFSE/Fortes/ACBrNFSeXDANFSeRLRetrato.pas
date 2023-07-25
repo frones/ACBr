@@ -294,6 +294,11 @@ begin
   rlmDadosAdicionais.Lines.BeginUpdate;
   rlmDadosAdicionais.Lines.Clear;
 
+  if fpNFSe.Servico.MunicipioIncidencia <> 0 then
+    rlmDadosAdicionais.Lines.Add('Cod/Municipio da incidencia do ISSQN: ' +
+      IntToStr(fpNFSe.Servico.MunicipioIncidencia) + ' / ' +
+      fpNFSe.Servico.xMunicipioIncidencia);
+
   if fpDANFSe.OutrasInformacaoesImp <> '' then
     rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]))
   else

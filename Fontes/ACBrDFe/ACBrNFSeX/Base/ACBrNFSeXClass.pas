@@ -784,6 +784,7 @@ type
     FinfoCompl: TinfoCompl;
     FImposto: TImpostoCollection;
     FIdentifNaoExigibilidade: string;
+    FxMunicipioIncidencia: string;
 
     procedure SetItemServico(Value: TItemServicoCollection);
     procedure SetDeducao(const Value: TDeducaoCollection);
@@ -809,6 +810,7 @@ type
     property ItemServico: TItemServicoCollection read FItemServico write SetItemServico;
     property ResponsavelRetencao: TnfseResponsavelRetencao read FResponsavelRetencao write FResponsavelRetencao;
     property Descricao: string read FDescricao write FDescricao;
+    property xMunicipioIncidencia: string read FxMunicipioIncidencia write FxMunicipioIncidencia;
     // Provedor IssDsf
     property Deducao: TDeducaoCollection read FDeducao write SetDeducao;
     property Operacao: TOperacao read FOperacao write FOperacao;

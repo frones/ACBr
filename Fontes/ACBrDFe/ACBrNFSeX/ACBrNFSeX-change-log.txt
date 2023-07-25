@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/05/2023
+-- ACBrNFSeXClass/ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
+[*] Acrescentado o campo xMunicipioIncidencia bem como a obtenção da descrição do municipio com
+    base em seu código, alteração realizada no DANFSE em Fortes Report para a impessão da 
+    respectiva informação.
+  Por: Italo Giurizzato Junior 
 -- ACBrNFSeXNotasFiscais --
 [+] Adiciona nas rotinas de leitura e de geração do INI o campo AliquotaSN para o provedor Conam.
    Por: Diego Folieni

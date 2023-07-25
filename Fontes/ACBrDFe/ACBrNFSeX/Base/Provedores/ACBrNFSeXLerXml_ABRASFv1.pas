@@ -705,6 +705,8 @@ begin
       MunicipioPrestacaoServico := MunicipioPrestacaoServico + '/' + xUF;
 
       MunicipioIncidencia := StrToIntDef(CodigoMunicipio, 0);
+      xMunicipioIncidencia := ObterNomeMunicipio(MunicipioIncidencia, xUF, '', False);
+      xMunicipioIncidencia := xMunicipioIncidencia + '/' + xUF;
     end;
 
     LerItensServico(AuxNode);

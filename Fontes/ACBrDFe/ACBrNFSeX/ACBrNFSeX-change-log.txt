@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/05/2023
+-- ACBrNFSeXServicos --
+[*] As URLS para a cidade de Capão Bonito/SP mudaram, provedor ainda é o Sistemas4R
+  Por: Diego Folieni
 -- ACBrNFSeXClass/ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
 [*] Acrescentado o campo xMunicipioIncidencia bem como a obtenção da descrição do municipio com
     base em seu código, alteração realizada no DANFSE em Fortes Report para a impessão da 

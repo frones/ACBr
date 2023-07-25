@@ -400,7 +400,8 @@ type
       const vBorder: String = '0'; vLineBreak: Integer = 0; const vAlign: String = '';
       vFill: Boolean = False; vLink: String = ''); virtual;
     procedure MultiCell(vWidth, vHeight: Double; const vText: String;
-      const vBorder: String = '0'; const vAlign: String = 'J'; vFill: Boolean = False);
+      const vBorder: String = '0'; const vAlign: String = 'J'; vFill: Boolean = False;
+      AIndent: double = 0);
     procedure Write(vHeight: Double; const vText: String; const vLink: String = '');
     procedure Ln(vHeight: Double = 0);
 
@@ -438,7 +439,7 @@ const
 
 function SwapBytes(Value: Cardinal): Cardinal; overload;
 function SwapBytes(Value: Word): Word; overload;
-function Split(const AString: string; const ADelimiter: Char = ' '): TStringArray;
+function Split(const AString: string; const ADelimiter: string = ' '): TStringArray;
 function CountStr(const AString, SubStr : String ) : Integer ;
 
 var
@@ -1399,14 +1400,15 @@ end;
 
 
 procedure TFPDF.MultiCell(vWidth, vHeight: Double; const vText: String;
-  const vBorder: String; const vAlign: String; vFill: Boolean);
+  const vBorder: String; const vAlign: String; vFill: Boolean; AIndent: double);
+{ http://www.fpdf.org/en/script/script39.php }
 var
   cw: TFPDFFontInfo;
-  wmax: Double;
+  w, wFirst, wOther, wMax, wMaxFirst, wMaxOther, SaveX: Double;
   s, b, vb, b2: String;
   nb, sep, i, j, l, ns, nl, ls: Integer;
   c: Char;
-  vUTF8: Boolean;
+  vUTF8, First: Boolean;
 begin
   // Output text with automatic or explicit line breaks
   if not Assigned(Self.CurrentFont) then
@@ -1418,7 +1420,12 @@ begin
     if (vWidth=0) then
       vWidth := Self.w-Self.rMargin-Self.x;
 
-    wmax := (vWidth-2*Self.cMargin)*1000/Self.FontSize;
+    wFirst := vWidth - AIndent;
+    wOther := vWidth;
+
+    wMaxFirst := (wFirst-2*Self.cMargin)*1000/Self.FontSize;
+    wMaxOther := (wOther-2*Self.cMargin)*1000/Self.FontSize;
+
     s := StringReplace(ConvertTextToAnsi(vText), CR, '', [rfReplaceAll]);
     Self.UseUTF8 := False;
     nb := Length(s);
@@ -1454,6 +1461,7 @@ begin
     ns := 0;
     ls := 0;
     nl := 1;
+    First := True;
     while (i <= nb) do
     begin
       // Get next character
@@ -1464,7 +1472,7 @@ begin
         if (Self.ws > 0) then
         begin
           Self.ws := 0;
-  	  _out('0 Tw');
+  	      _out('0 Tw');
         end;
 
         Cell(vWidth, vHeight, copy(s, j, i-j), b, 2, vAlign, vFill);
@@ -1487,20 +1495,38 @@ begin
       end;
 
       l := l + cw[ord(c)];
-      if (l> wmax) then
+
+      if First then
+      begin
+        wMax := wMaxFirst;
+        w := wFirst;
+      end
+      else
+      begin
+        wMax := wMaxOther;
+        w := wOther;
+      end;
+
+      if (l> wMax) then
       begin
         // Automatic line break
         if (sep=-1) then
         begin
           if (i=j) then
-  	    Inc(i);
-  	  if(Self.ws > 0) then
+  	        Inc(i);
+  	      if(Self.ws > 0) then
           begin
-  	    Self.ws := 0;
+  	        Self.ws := 0;
             _out('0 Tw');
           end;
-
+          SaveX := Self.x;
+          if First and (AIndent >0 ) then
+          begin
+            Self.SetX(Self.x + AIndent);
+            First := False;
+          end;
           Cell(vWidth, vHeight, copy(s, j, i-j), b, 2, vAlign, vFill);
+          Self.SetX(SaveX);
         end
         else
         begin
@@ -1511,11 +1537,17 @@ begin
             else
               Self.ws := 0;
 
-  	    _out(Format('%.3f Tw', [Self.ws*Self.k], FPDFFormatSetings));
-  	  end;
-
-  	  Cell( vWidth, vHeight, Copy(s, j, sep-j), b, 2, vAlign, vFill);
-  	  i := sep+1;
+            _out(Format('%.3f Tw', [Self.ws*Self.k], FPDFFormatSetings));
+          end;
+          SaveX := Self.x;
+          if First and (AIndent >0 ) then
+          begin
+            Self.SetX(Self.x + AIndent);
+            First := False;
+          end;
+          Cell( vWidth, vHeight, Copy(s, j, sep-j), b, 2, vAlign, vFill);
+          Self.SetX(SaveX);
+          i := sep+1;
         end;
 
         sep := -1;
@@ -1591,8 +1623,8 @@ begin
         if (nl = 1) then
         begin
           Self.x := Self.lMargin;
-  	  vw := Self.w-Self.rMargin-Self.x;
-  	  wmax := (vw-2*Self.cMargin)*1000/Self.FontSize;
+          vw := Self.w-Self.rMargin-Self.x;
+          wmax := (vw-2*Self.cMargin)*1000/Self.FontSize;
         end;
 
         Inc(nl);
@@ -1610,25 +1642,25 @@ begin
         begin
           if(Self.x > Self.lMargin) then
           begin
-  	    // Move to next line
-  	    Self.x := Self.lMargin;
-  	    Self.y := Self.y + vHeight;
-  	    vw := Self.w-Self.rMargin-Self.x;
-  	    wmax := (vw-2*Self.cMargin)*1000/Self.FontSize;
-  	    Inc(i);
-  	    Inc(nl);
-  	    continue;
-  	  end;
+            // Move to next line
+            Self.x := Self.lMargin;
+            Self.y := Self.y + vHeight;
+            vw := Self.w-Self.rMargin-Self.x;
+            wmax := (vw-2*Self.cMargin)*1000/Self.FontSize;
+            Inc(i);
+            Inc(nl);
+            continue;
+          end;
 
           if (i = j) then
             inc(i);
 
-  	  Cell(vw, vHeight, Copy(s, j, i-j), '0', 2, '', False, vLink);
+  	      Cell(vw, vHeight, Copy(s, j, i-j), '0', 2, '', False, vLink);
         end
         else
         begin
           Cell(vw, vHeight, copy(s, j, sep-j), '0', 2, '', False, vLink);
-  	  i := sep+1;
+  	      i := sep+1;
         end;
 
         sep := -1;
@@ -1637,8 +1669,8 @@ begin
         if (nl=1) then
         begin
           Self.x := Self.lMargin;
-  	  vw := Self.w-Self.rMargin-Self.x;
-  	  wmax := (vw-2*Self.cMargin)*1000/Self.FontSize;
+          vw := Self.w-Self.rMargin-Self.x;
+          wmax := (vw-2*Self.cMargin)*1000/Self.FontSize;
         end;
 
         Inc(nl);
@@ -2990,10 +3022,10 @@ begin
     begin
       if (Self.encodings.Values[CFontEncodeStr[Font.enc]] = '') then
       begin
-	_newobj();
-	_put('<</Type /Encoding /BaseEncoding /WinAnsiEncoding /Differences ['+Font.diff+']>>');
-	_put('endobj');
-	Self.encodings.Values[CFontEncodeStr[Font.enc]] := IntToStr(Self.n);
+        _newobj();
+        _put('<</Type /Encoding /BaseEncoding /WinAnsiEncoding /Differences ['+Font.diff+']>>');
+        _put('endobj');
+        Self.encodings.Values[CFontEncodeStr[Font.enc]] := IntToStr(Self.n);
       end;
     end;
 
@@ -3009,8 +3041,8 @@ begin
 
       if (cmaps.Values[cmapkey] = '') then
       begin
-	_putstreamobject(cmap);
-	cmaps.Values[cmapkey] := IntToStr(Self.n);
+        _putstreamobject(cmap);
+        cmaps.Values[cmapkey] := IntToStr(Self.n);
       end;
     end;
 
@@ -3577,7 +3609,7 @@ begin
   Bytes(Result)[1]:= Bytes(Value)[0];
 end;
 
-function Split(const AString: string; const ADelimiter: Char = ' '): TStringArray;
+function Split(const AString: string; const ADelimiter: string = ' '): TStringArray;
 var
   p1, p2, i: Integer;
 begin
@@ -3585,6 +3617,8 @@ begin
   i := 0;
   p1 := 1;
   p2 := pos(ADelimiter, AString);
+  if (p2 = 0) and (AString <> '') then
+    p2 := Length(AString) + 1;
   while (p2 > 0) do
   begin
     Inc(i);

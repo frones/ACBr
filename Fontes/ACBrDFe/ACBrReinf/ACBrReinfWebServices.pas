@@ -709,18 +709,16 @@ begin
   if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
     TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPRetWS, erRetornoConsulta);
 
-  // Remover mensagem quando o leiaute 2_01_02 for implementado na Produção Retrita
-  // Controle para exibir mensagem clara ao usuário caso tente utilizar o leiaute ainda não implementado pela Receita
-  if FPConfiguracoesReinf.Geral.VersaoDF = v2_01_02 then
+  // Controle para exibir mensagem clara ao usuário caso tente utilizar o leiaute ainda não implementado ou descontinuado pela Receita
+  if (Pos('<codResp>MS0030</codResp>',FPRetornoWS) > 0) and
+     (Pos('em desconformidade com o esquema XSD. O namespace',FPRetornoWS) > 0) and
+     (Pos('informado no documento XML',FPRetornoWS) > 0) and
+     (Pos('um namespace reconhecido',FPRetornoWS) > 0) then
   begin
-    if (Pos('<codResp>MS0030</codResp>',FPRetornoWS) > 0) and
-       (Pos('v2_01_02 informado no documento XML',FPRetornoWS) > 0) then
-    begin
-      if TACBrReinf(FPDFeOwner).Configuracoes.Geral.ExibirErroSchema then
-        FazerLog('Atenção: Os schemas da versão 2_01_02 ainda não estão diponíveis no ambiente utilizado',True)
-      else
-        GerarException('Atenção: Os schemas da versão 2_01_02 ainda não estão diponíveis no ambiente utilizado');
-    end;
+    if TACBrReinf(FPDFeOwner).Configuracoes.Geral.ExibirErroSchema then
+      FazerLog('Atenção: Os schemas da versão ' + VersaoReinfToStr(FPConfiguracoesReinf.Geral.VersaoDF) + ' ainda não estão diponíveis ou foram descontinuados do ambiente utilizado',True)
+    else
+      GerarException('Atenção: Os schemas da versão ' + VersaoReinfToStr(FPConfiguracoesReinf.Geral.VersaoDF) + ' ainda não estão diponíveis ou foram descontinuados do ambiente utilizado');
   end;
 
   Result := True;

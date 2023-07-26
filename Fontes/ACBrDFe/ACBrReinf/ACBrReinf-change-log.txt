@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2023
+-- ACBrReinfWebServices --
+[*] Controle para exibir alerta claro quando a versão do leiaute utilizada não estiver disponível
+  Por: Renato Rubinho
+
 21/07/2023
 -- Diversos --
 [*] Ajustes da NT 02/2023, validação dos schemas e implementações da versão 2.1.2 em homologação

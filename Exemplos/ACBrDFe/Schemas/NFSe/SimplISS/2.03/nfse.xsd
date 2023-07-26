@@ -368,8 +368,8 @@
         </xsd:simpleType>
 	<xsd:simpleType name="tsAliquota">
 		<xsd:restriction base="xsd:decimal">
-			<xsd:totalDigits value="6" />
-			<xsd:fractionDigits value="4" />
+			<xsd:totalDigits value="4" />
+			<xsd:fractionDigits value="2" />
 			<xsd:minInclusive value="0" />
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -802,9 +802,10 @@
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="MunicipioIncidencia" type="tsCodigoMunicipioIbge"
 				minOccurs="0" maxOccurs="1" />
+            <xsd:element name="OutrasInformacoes" type="tsOutrasInformacoes"
+				minOccurs="0" maxOccurs="1" />
 			<xsd:element name="NumeroProcesso" type="tsNumeroProcesso"
 				minOccurs="0" maxOccurs="1" />
-
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -868,8 +869,6 @@
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="IncentivoFiscal" type="tsSimNao"
 				minOccurs="1" maxOccurs="1" />
-            <xsd:element name="OutrasInformacoes" type="tsOutrasInformacoes"
-				minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
 		<xsd:attribute name="Id" type="tsIdTag" />
 	</xsd:complexType>
@@ -1462,4 +1461,3 @@
 	</xsd:element>
 
 </xsd:schema>
-

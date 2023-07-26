@@ -132,7 +132,6 @@ begin
   NrOcorrDescCond := 1;
   NrOcorrCodigoPaisServico := 1;
   NrOcorrNIFTomador := 1;
-  NrOcorrOutrasInformacoes := 0;
 
   GerarIDRps := True;
 end;
@@ -143,8 +142,8 @@ begin
 
   if GerarTagServicos then
   begin
-       Result.AppendChild(AddNode(tcStr, '#22', 'OutrasInformacoes', 0, 255, NrOcorrOutrasInformacoes,
-                                  NFSe.OutrasInformacoes, DSC_OUTRASINF));
+    Result.AppendChild(AddNode(tcStr, '#22', 'OutrasInformacoes', 0, 255, 0,
+                                        NFSe.OutrasInformacoes, DSC_OUTRASINF));
   end;
 end;
 

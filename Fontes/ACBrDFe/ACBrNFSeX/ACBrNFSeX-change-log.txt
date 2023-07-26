@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/07/2023
+-- Diversos --
+[*] Feito alguns ajustes nas units abaixo para não gerar um efeito colateral com os demais
+    provedores.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [+] método LerServico passa a ser virtual
 -- ACBrNFSeXLerXml_ABRASFv2 --

@@ -67,7 +67,6 @@ implementation
 //==============================================================================
 
 
-
 { TNFSeR_SimplISS203 }
 
 procedure TNFSeR_SimplISS203.LerServico(const ANode: TACBrXmlNode);

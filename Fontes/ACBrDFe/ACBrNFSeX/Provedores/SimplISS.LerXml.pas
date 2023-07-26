@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2;
+  ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2, ACBrXmlDocument, ACBrXmlBase;
 
 type
   { TNFSeR_SimplISS }
@@ -54,7 +54,7 @@ type
 
   TNFSeR_SimplISS203 = class(TNFSeR_ABRASFv2)
   protected
-
+    procedure LerServico(const ANode: TACBrXmlNode); override;
   public
 
   end;
@@ -65,5 +65,28 @@ implementation
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     SimplISS
 //==============================================================================
+
+
+
+{ TNFSeR_SimplISS203 }
+
+procedure TNFSeR_SimplISS203.LerServico(const ANode: TACBrXmlNode);
+var
+   AuxNode: TACBrXmlNode;
+begin
+  inherited LerServico(ANode);
+
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('Servico');
+  if AuxNode <> nil then
+  begin
+    if NFSe.OutrasInformacoes = '' then
+    begin
+      NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
+      NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, '&lt;br&gt;', ';', [rfReplaceAll]);
+    end;
+  end;
+end;
 
 end.

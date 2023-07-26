@@ -58,7 +58,7 @@ type
   TNFSeW_SimplISS203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
-
+    function GerarServico: TACBrXmlNode; override;
   end;
 
 implementation
@@ -135,6 +135,17 @@ begin
   NrOcorrOutrasInformacoes := 0;
 
   GerarIDRps := True;
+end;
+
+function TNFSeW_SimplISS203.GerarServico: TACBrXmlNode;
+begin
+  Result := inherited GerarServico;
+
+  if GerarTagServicos then
+  begin
+       Result.AppendChild(AddNode(tcStr, '#22', 'OutrasInformacoes', 0, 255, NrOcorrOutrasInformacoes,
+                                  NFSe.OutrasInformacoes, DSC_OUTRASINF));
+  end;
 end;
 
 end.

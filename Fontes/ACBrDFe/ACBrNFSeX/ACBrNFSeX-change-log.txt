@@ -42,6 +42,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2023
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[+] método LerServico passa a ser virtual
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[-] Remoção da geração da tag OutrasInformacoes, porque é especifica do provedor SimpIISS
+-- SimplISS.GravarXml --
+[-] Geração da tag OutrasInformacoes no local correto
+-- SimplISS.LerXml --
+[+] Leitura da tag OutrasInformacoes corretamente
+
 25/05/2023
 -- ACBrNFSeXServicos --
 [*] As URLS para a cidade de Capão Bonito/SP mudaram, provedor ainda é o Sistemas4R

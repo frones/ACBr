@@ -531,11 +531,26 @@ begin
 end;
 
 function TACBrUSBWinDevice.GetDeviceName: String;
+var
+  p: Integer;
+  vid, pid: String;
 begin
   Result := DeviceACBrName;
   if (FrendlyName <> '') then
-    if StrIsHexa(Copy(Result,1,4)) and (Copy(Result,5,1) = ',') and StrIsHexa(Copy(Result,7,4)) then
-      Result := FrendlyName
+  begin
+    p := pos(',', Result);
+    if (p > 0) then
+    begin
+      vid := Trim(copy(Result, 1, p-1));
+      pid := Trim(copy(Result, p+1, Length(Result)));
+
+      if (p = 5) and StrIsHexa(vid) and StrIsHexa(pid) then // retornará hexa: PID, VID ?
+        Result := FrendlyName;
+
+      if (vid = copy(FrendlyName, 1, Length(vid))) then  // Tem o mesmo fabricante ?
+       Result := FrendlyName;
+    end;
+  end;
 end;
 
 function TACBrUSBWinDevice.GetDeviceACBrName: String;

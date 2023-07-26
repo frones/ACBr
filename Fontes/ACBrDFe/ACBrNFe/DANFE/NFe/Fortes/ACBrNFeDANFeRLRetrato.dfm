@@ -6838,7 +6838,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         end
         object txtNCM: TRLLabel
           Tag = 705
-          Left = 244
+          Left = 242
           Top = 1
           Width = 38
           Height = 10

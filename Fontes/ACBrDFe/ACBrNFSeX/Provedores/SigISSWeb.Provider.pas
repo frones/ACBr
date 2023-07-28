@@ -323,7 +323,7 @@ begin
             '/serie/' +
             Response.InfCancelamento.SerieNFSe +
             '/motivo/' +
-            Response.InfCancelamento.MotCancelamento;
+            StringReplace(Response.InfCancelamento.MotCancelamento,' ','%20',[rfReplaceAll]);
   FpMethod := 'GET';
   FpMimeType := 'application/json';
   {

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/07/2023
+-- ACBrNFSeXServicos --
+[*] Correção na URL do link da NFS-e da cidade Guaira/SP
+  Por: Renato Ricci
 -- TcheInfo.GravarXml --
 [*] Alteração visando deixar a tag OutrasInformacoes como opcional.
     Por: Italo Giurizzato Junior

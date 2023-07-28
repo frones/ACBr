@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/07/2023
+-- ACBrNFSeXServicos --
+[*] Mudança na versão e URLs da cidade de Palmitinho, o provedor continua o mesmo.
+  Por: Fabio Girardello
 -- PadraoNacional.Provider --
 [*] Melhorias na procedure ProcessarMensagemDeErros para ler corretamente os 
     retornos com Alertas, Erros ou erros e erro no formato objeto ou array.

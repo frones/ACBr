@@ -95,7 +95,7 @@ type
 
     procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
                                      Response: TNFSeWebserviceResponse;
-                                     const AListTag: string = 'erros');
+                                     const AListTag: string = 'Erros');
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   public
@@ -211,36 +211,22 @@ procedure TACBrNFSeProviderPadraoNacional.ProcessarMensagemDeErros(
   LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse;
   const AListTag: string);
 var
-  i: Integer;
-  JSonErros: TACBrJSONArray;
+  JSonLista: TACBrJSONArray;
   JSon: TACBrJSONObject;
-  Codigo: string;
-  AErro: TNFSeEventoCollectionItem;
-  LerErro, LerErroUnico: Boolean;
-begin
-  LerErro := True;
-  LerErroUnico := False;
-  JSonErros := LJson.AsJSONArray[AListTag];
 
-  if JSonErros.Count > 0 then
+  procedure AdicionaCollectionItem(JSonItem: TACBrJSONObject; Collection: TNFSeEventoCollection);
+  var
+    AItem: TNFSeEventoCollectionItem;
+    Codigo: string;
   begin
-    JSonErros := LJson.AsJSONArray['erro'];
-    LerErro := False;
-    LerErroUnico :=  (JSonErros.Count = 0);
-  end;
-
-  for i := 0 to JSonErros.Count-1 do
-  begin
-    JSon := JSonErros.ItemAsJSONObject[i];
-
-    Codigo := JSon.AsString['Codigo'];
+    Codigo := JSonItem.AsString['Codigo'];
 
     if Codigo <> '' then
     begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Codigo;
-      AErro.Descricao := ACBrStr(JSon.AsString['Descricao']);
-      AErro.Correcao := ACBrStr(JSon.AsString['Complemento']);
+      AItem := Collection.New;
+      AItem.Codigo := Codigo;
+      AItem.Descricao := ACBrStr(JSonItem.AsString['Descricao']);
+      AItem.Correcao := ACBrStr(JSonItem.AsString['Complemento']);
     end
     else
     begin
@@ -248,60 +234,54 @@ begin
 
       if Codigo <> '' then
       begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Codigo;
-        AErro.Descricao := ACBrStr(JSon.AsString['descricao']);
-        AErro.Correcao := ACBrStr(JSon.AsString['complemento']);
+        AItem := Collection.New;
+        AItem.Codigo := Codigo;
+        AItem.Descricao := ACBrStr(JSonItem.AsString['descricao']);
+        AItem.Correcao := ACBrStr(JSonItem.AsString['complemento']);
       end;
     end;
   end;
 
-  if LerErro then
+  procedure LerListaErrosAlertas(jsLista: TACBrJSONArray; Collection: TNFSeEventoCollection);
+  var
+    i: Integer;
   begin
-    JSonErros := LJson.AsJSONArray['erro'];
-
-    if JsonErros <> nil then
+    for i := 0 to jsLista.Count-1 do
     begin
-      for i:= 0 to JSONErros.Count - 1 do
-      begin
-        JSon := JSonErros.ItemAsJSONObject[i];
-        Codigo := JSon.AsString['codigo'];
+      JSon := jsLista.ItemAsJSONObject[i];
 
-        if Codigo <> '' then
-        begin
-          AErro := Response.Erros.New;
-          AErro.Codigo := Codigo;
-          AErro.Descricao := ACBrStr(JSon.AsString['descricao']);
-          AErro.Correcao := ACBrStr(JSon.AsString['complemento']);
-        end;
-      end;
+      AdicionaCollectionItem(JSon, Collection);
     end;
   end;
+begin
+  // Verifica se no retorno contem a lista de Erros
+  JSonLista := LJson.AsJSONArray[AListTag];
 
-  if LerErroUnico then
+  // Verifica se no retorno contem a lista de erros
+  if JSonLista.Count = 0 then
+    JSonLista := LJson.AsJSONArray['erros'];
+
+  if JSonLista.Count > 0 then
+    LerListaErrosAlertas(JSonLista, Response.Erros);
+
+  // Verifica se no retorno contem a lista de Alertas
+  JSonLista := LJson.AsJSONArray['Alertas'];
+
+  if JSonLista.Count > 0 then
+    LerListaErrosAlertas(JSonLista, Response.Alertas);
+
+  // Verifica se no retorno contem o elemento erro  (erro unico no retorno)
+  if LJson.IsJSONArray('erro') then
   begin
-    JSonErros := LJson.AsJSONArray[AListTag];
-    JSon := JSonErros.ItemAsJSONObject[0];
-    Codigo := JSon.AsString['codigo'];
+    JSonLista := LJson.AsJSONArray['erro'];
+    LerListaErrosAlertas(JSonLista, Response.Erros);
+  end
+  else
+  begin
+    JSon := LJson.AsJSONObject['erro'];
 
-    if Codigo = '' then
-      Codigo := JSon.AsString['Codigo'];
-
-
-    if Codigo <> '' then
-    begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Codigo;
-      AErro.Descricao := ACBrStr(JSon.AsString['descricao']);
-
-      if AErro.Descricao = '' then
-        AErro.Descricao := ACBrStr(JSon.AsString['Descricao']);
-
-      AErro.Correcao := ACBrStr(JSon.AsString['complemento']);
-
-      if AErro.Correcao = '' then
-        AErro.Correcao := ACBrStr(JSon.AsString['Complemento']);
-    end;
+    if JSon <> nil then
+      AdicionaCollectionItem(JSon, Response.Erros);
   end;
 end;
 

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2023
+-- PadraoNacional.Provider --
+[*] Melhorias na procedure ProcessarMensagemDeErros para ler corretamente os 
+    retornos com Alertas, Erros ou erros e erro no formato objeto ou array.
+    Por: Italo Giurizzato Junior/Victor H Gonzales/Diego Antonio Folieni/Renato Rubinho
+
 27/07/2023
 -- SigISSWeb.Provider --
 [*] Correção no cancelamento de NFSe com espaços no motivo utilizados na URI

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2023
+-- ACBrCTeConhecimentos --
+[+] Adicionado na rotina de geração do INI do CTe as seções infPercurso e veicNovos.
+  Por: Italo Giurizzato Junior
+
 17/07/2023
 -- ACBrCTeConhecimentos --
 [+] Adiciona na rotina de geração do INI do CTe as seções ObsCont e ObsFisco
@@ -54,7 +59,7 @@ Símbolo : Significado
 
 14/07/2023
 -- pcteConsts/pcteCTeW --
-[*] Possível solução para o texto informano em xNome quando enviado para o 
+[*] Possível solução para o texto informado em xNome quando enviado para o 
     ambiente de homologação.
   Por: Italo Giurizzato Junior
 -- ACBrCTeDACTeRLRetrato --

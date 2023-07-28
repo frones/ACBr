@@ -664,6 +664,15 @@ begin
       INIRec.WriteInteger('ide', 'cUF', ide.cUF);
 
       //CT-e OS
+      if TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.ModeloDF = moCTeOS then
+      begin
+        for I := 0 to Ide.infPercurso.Count - 1 do
+        begin
+          INIRec.WriteString('infPercurso'+IntToStrZero(I+1,3), 'UFPer', Ide.infPercurso[I].UFPer);
+        end;
+      end;
+
+      //CT-e OS GTV-e
       if TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.ModeloDF = moGTVe then
       begin
         INIRec.WriteString('ide', 'dhSaidaOrig', DateToStr(Ide.dhSaidaOrig));
@@ -1068,6 +1077,21 @@ begin
           INIRec.WriteString('Rodo', 'RNTRC', infCTeNorm.Rodo.RNTRC);
           INIRec.WriteString('Rodo', 'dPrev', DateToStr(infCTeNorm.Rodo.dPrev));
           INIRec.WriteString('Rodo', 'lota', TpLotacaoToStr(infCTeNorm.Rodo.Lota));
+        end;
+
+        for i:= 0 to infCTeNorm.veicNovos.Count - 1 do
+        begin
+          sSecao := 'veicNovos' + IntToStrZero(I+1, 3);
+
+          with infCTeNorm.veicNovos.Items[i] do
+          begin
+            INIRec.WriteString(sSecao, 'chassi', chassi);
+            INIRec.WriteString(sSecao, 'cCor', cCor);
+            INIRec.WriteString(sSecao, 'xCor', xCor);
+            INIRec.WriteString(sSecao, 'cMod', cMod);
+            INIRec.WriteString(sSecao, 'vUnit', CurrToStr(vUnit));
+            INIRec.WriteString(sSecao, 'vFrete', CurrToStr(vFrete));
+          end;
         end;
 
         with infCTeNorm do

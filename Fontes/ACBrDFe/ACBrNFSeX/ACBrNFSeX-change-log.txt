@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/07/2023
+-- TcheInfo.GravarXml --
+[*] Alteração visando deixar a tag OutrasInformacoes como opcional.
+    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Mudança na versão e URLs da cidade de Palmitinho, o provedor continua o mesmo.
   Por: Fabio Girardello

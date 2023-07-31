@@ -42,7 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
 31/07/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Peruibe/SP - Provedor Sistemas4R
+  Por: Evolution-ST
+[+] Incluída a cidade: Cafelândia/PR - Provedor Equiplano
+  Por: commerce
 -- Fiorilli.Provider --
 [*] Possível solução para o problema de Input type is not valid para aqueles que utilizam a Lib
   Por: Diego Folieni #TK-4177

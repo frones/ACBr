@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2023
+-- Fiorilli.Provider --
+[*] Possível solução para o problema de Input type is not valid para aqueles que utilizam a Lib
+  Por: Diego Folieni #TK-4177
+
 28/07/2023
 -- ACBrNFSeXServicos --
 [*] Correção na URL do link da NFS-e da cidade Guaira/SP

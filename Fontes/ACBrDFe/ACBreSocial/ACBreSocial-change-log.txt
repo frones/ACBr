@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/07/2023
+-- pcesS5003 --
+[*] Validação de campo tpLocacao no grupo ideLotacao para leitura dos demais dados do grupo
+  Por: Hudson G Leite / Rev.: Alexandre de Paula e Elton Barbosa
+
 06/07/2023
 -- pcesS1280 --
 [*] Criar TAG infoPercTransf11096 somente se houver valor informado (.INI e Componente);

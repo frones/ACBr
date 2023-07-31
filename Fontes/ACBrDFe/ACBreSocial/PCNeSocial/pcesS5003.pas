@@ -728,10 +728,14 @@ begin
               infoFGTS.IdeEstab.Items[i].IdeLotacao.New;
               infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].codLotacao := leitor.rCampo(tcStr, 'codLotacao');
               infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao  := leitor.rCampo(tcStr, 'tpLotacao');
-              if (StrToInt(InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao) in [2, 3, 4, 5, 6, 7, 8, 9]) then
+
+              if (leitor.rCampo(tcStr, 'tpLotacao') <> EmptyStr) then
               begin
-                infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpInsc   := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
-                infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].nrInsc   := leitor.rCampo(tcStr, 'nrInsc');
+                 if (StrToInt(InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao) in [2, 3, 4, 5, 6, 7, 8, 9]) then
+                 begin
+                   infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpInsc   := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+                   infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].nrInsc   := leitor.rCampo(tcStr, 'nrInsc');
+                 end;
               end;
 
               k := 0;

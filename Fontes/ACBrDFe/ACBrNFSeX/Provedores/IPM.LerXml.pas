@@ -145,6 +145,8 @@ begin
           aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigo_item_lista_servico'), tcStr);
           ItemListaServico := PadLeft(aValor, 4, '0');
 
+          xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
+
           aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('unidade_codigo'), tcStr);
           TipoUnidade := StrToUnidade(Ok, aValor);
 

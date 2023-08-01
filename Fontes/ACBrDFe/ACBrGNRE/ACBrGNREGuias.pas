@@ -362,6 +362,14 @@ begin
         referencia.periodo := IniGuia.ReadInteger(sSecao,'referenciaPeriodo',0);
         c10_valorTotal     := StringToFloatDef(IniGuia.ReadString(sSecao,'ValorTotal',''),0);
         c06_valorPrincipal := StringToFloatDef(IniGuia.ReadString(sSecao,'ValorPrincipal',''),0);
+        ValorFECP          := StringToFloatDef(IniGuia.ReadString(sSecao,'ValorFECP', ''), 0);
+        TotalFECP          := StringToFloatDef(IniGuia.ReadString(sSecao,'TotalFECP', ''), 0);
+        MultaFECP          := StringToFloatDef(IniGuia.ReadString(sSecao,'MultaFECP', ''), 0);
+        JurosFECP          := StringToFloatDef(IniGuia.ReadString(sSecao,'JurosFECP', ''), 0);
+        AtualMonetFECP     := StringToFloatDef(IniGuia.ReadString(sSecao,'AtualMonetFECP', ''), 0);
+        MultaICMS          := StringToFloatDef(IniGuia.ReadString(sSecao,'MultaICMS', ''), 0);
+        JurosICMS          := StringToFloatDef(IniGuia.ReadString(sSecao,'JurosICMS', ''), 0);
+        AtualMonetICMS     := StringToFloatDef(IniGuia.ReadString(sSecao,'AtualMonetICMS', ''), 0);
       end;
 
       //Destinatario

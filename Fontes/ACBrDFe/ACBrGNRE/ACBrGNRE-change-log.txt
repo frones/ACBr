@@ -44,6 +44,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+01/08/2023
+-- ACBrGNReGuias --
+[*] Adiciona na leitura do INI os campos ValorFECP, TotalFECP, MultaFECP, JurosFECP
+    AutalMonetFECP, MultaICMS, JurosICMS e AtualMonetICMS.
+  Por: Diego Folieni #TK-4200
+
 12/05/2023
 [*]TK-3925 [Atualização FR3 Obrigatória] GNRE FR Valores FCP
   Por : Victor H Gonzales - Pandaaa

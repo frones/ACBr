@@ -305,6 +305,7 @@ begin
             aIdentificacaoOcorrencia := '00';
       end;
 
+      if (iInstrucao1 in [1,2,7]) then
       if (StrToIntDef(aIdentificacaoOcorrencia,0) < 5) or (StrToIntDef(aIdentificacaoOcorrencia,0) > 55) then
          raise Exception.Create(ACBrStr('O número de dias a protestar / negativar '+
                                        'deve ser mínimo 05 a máximo 55 dias'));

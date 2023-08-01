@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/08/2023
+-- ACBrNFSeXServicos --
+[*] A cidade: Braganca Paulista/SP trocou de Provedor, agora é Conam
+  Por: Victor Gomes - DSV Bremen
+[*] A cidade: São João do Sul/SC trocou de Provedor, agora é IPM versão 2.04
+  Por: Mario Inacio
 -- IPM.LerXml --
 [*] Adiciona preenchimento da propriedade xItemListaServico.
   Por: Diego Folieni #TK-4263

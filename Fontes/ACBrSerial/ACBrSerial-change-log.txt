@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2023
+-- ACBrBALToledo --
+[*] Correção de AV em retorno vazio no ProtocoloP03
+https://www.projetoacbr.com.br/forum/topic/72812-access-violation-acbrmter-balan%C3%A7a-prix-fit-3/
+  Por: William F. L. / Renato Rubinho
+
 25/07/2023
 -- ACBrWinUSBDevice --
 [*] Melhoria para usar FrendlyName, quando Fabricante for igual, ao usado na Tabela

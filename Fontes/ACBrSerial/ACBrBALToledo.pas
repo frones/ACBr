@@ -103,6 +103,12 @@ function TACBrBALToledo.ProtocoloP03Detectado(const  wPosIni:Integer; const aRes
 var
   l_posini, l_posfim: Integer;
 begin
+  if (aResposta = EmptyStr) then
+  begin
+    Result := False;
+    Exit;
+  end;
+
   // detecta o padrão p03 na string.
   //                   1     2      3    4    567890   123456    7    8 (8 é opcional)
   // Protocolo P03 = [STX] [SWA] [SWB] [SWC] [IIIIII] [TTTTTT] [CR] [CS]
@@ -354,6 +360,9 @@ var
   wResposta: AnsiString;
 begin
   Result  := 0;
+
+  if (aResposta = EmptyStr) then Exit;
+
   wPosIni := PosLast(STX, aResposta);
 
   if ProtocoloEthDetectado(wPosIni, aResposta) then
@@ -371,7 +380,7 @@ begin
   { Convertendo novos formatos de retorno para balanças com pesagem maior que 30 kg}
   wResposta := CorrigirRespostaPeso(wResposta);
 
-  if  (aResposta = EmptyStr) then Exit;
+  if  (wResposta = EmptyStr) then Exit;
 
   { Ajustando o separador de Decimal corretamente }
   wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);

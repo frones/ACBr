@@ -335,6 +335,11 @@ type
     function GetStringHeight(const AText: string; AWidth: double;
       ALineSpacing: double = 0; AIndent: double = 0): double;
 
+    function TextBox(vX, vY, vWidht, vHeight: double; const AText: string;
+      const vAlign: char = 'T'; const hAlign: char = 'L';
+      ABorder: boolean = True; AWordWrap: boolean = True;
+      AScale: boolean = False; ALineSpacing: double = 0): double;
+
     property OnHeader: TFPDFEvent read fOnHeader write fOnHeader;
     property OnFooter: TFPDFEvent read fOnFooter write fOnFooter;
 
@@ -1507,6 +1512,106 @@ begin
   SetFont('',Self.fFontStyle);
 end;
 
+function TFPDFExt.TextBox(vX, vY, vWidht, vHeight: double;
+  const AText: string; const vAlign,  hAlign: char;
+  ABorder, AWordWrap, AScale: boolean; ALineSpacing: double): double;
+var
+  wText, wLine: string;
+  IncY, OldFontSize, AltText, x1, y1, Comp, MaxHeight, wIndent: double;
+  wN, i: integer;
+  wLines: TStringArray;
+begin
+  MaxHeight := vHeight;
+  wText := AText;
+  OldFontSize := Self.FontSizePt;
+  Result := vY;
+  wIndent := 0;
+  if vWidht < 0 then
+    Exit;
+  wText := Trim(AText);
+  if ABorder then
+    Self.RoundedRect(vX, vY, vWidht, vHeight, 0.8, '', 'D');
+  IncY := Self.FontSize;
+  if AWordWrap and (wText <> '') then
+  begin
+    while AScale and (GetStringHeight(wText, vWidht, ALineSpacing, wIndent) > MaxHeight) do
+    begin
+      if Self.FontSizePt > 8 then
+        Self.SetFont(Self.FontFamily, Self.FontStyle, Self.FontSizePt - 0.5)
+      else
+        Self.SetFont(Self.FontFamily, Self.FontStyle, Self.FontSizePt - 0.1);
+      IncY := Self.FontSize;
+    end;
+    wN := Self.WordWrap(wText, vWidht, wIndent);
+  end
+  else
+    wN := Length(Split(wText, sLineBreak));
+
+  AltText := (IncY * wN) + ((wN - 1) * ALineSpacing);
+
+  wLines := Split(wText, sLineBreak);
+
+  case vAlign of
+    'C': y1 := vY + IncY + ((vHeight - AltText) / 2) - 1;
+    'B': y1 := (vY + vHeight + IncY) - AltText - 1;
+  else
+    // Default: 'T' (top)
+    y1 := vY + IncY;
+  end;
+
+  for i := 0 to Length(wLines) - 1 do
+  begin
+    wLine := wLines[i];
+    wText := Trim(wLine);
+    Comp  := Self.GetStringWidth(wText);
+    if Comp > vWidht then
+    begin
+      if AScale then
+      begin
+        while Comp > vWidht do
+        begin
+          if Self.FontSizePt > 8 then
+            Self.SetFont(Self.FontFamily, Self.FontStyle, Self.FontSizePt - 0.5)
+          else
+            Self.SetFont(Self.FontFamily, Self.FontStyle, Self.FontSizePt - 0.1);
+          Comp := Self.GetStringWidth(wText);
+        end;
+      end
+      else
+        repeat
+          wText := Copy(wText, 1, Length(wText) - 1);
+          Comp := Self.GetStringWidth(wText);
+        until Comp <= vWidht;
+    end;
+
+    case hAlign of
+      'C': x1 := vX + ((vWidht - Comp) / 2);
+      'R': x1 := vX + vWidht - (Comp + 0.5);
+    else
+      // Default: 'L' (left)
+      x1 := vX + 0.5;
+    end;
+
+    x1 := x1 + wIndent;
+    Self.Text(x1, y1, wText);
+
+    if not AWordWrap and (Self.FontSizePt <> OldFontSize) then
+      Self.SetFont(Self.FontFamily, Self.FontStyle, OldFontSize);
+
+//    if Indent > 0 then
+//    begin
+//      x1 := x1 - Indent;
+//      Indent := 0;
+//    end;
+
+    y1 := y1 + IncY + ALineSpacing;
+    if ((MaxHeight > 0) and (y1 > (vY + (MaxHeight)))) then
+      break;
+  end;
+  Self.SetFont(Self.FontFamily, Self.FontStyle, OldFontSize);
+  Result := (y1 - vY) - IncY - ALineSpacing;
+end;
+
 procedure TFPDFExt.PutLink(const AURL, AText: String);
 begin
   // Put a hyperlink
@@ -1758,7 +1863,7 @@ var
   NumLines: integer;
 begin
   NumLines := GetNumLines(AText, AWidth, AIndent);
-  Result := RoundTo((NumLines * FontSize) + IfThen(NumLines > 1, NumLines * ALineSpacing), -2);
+  Result := RoundTo((NumLines * FontSize) + IfThen(NumLines > 1, (NumLines - 1) * ALineSpacing), -2);
   Result := Result + 0.5;
 end;
 

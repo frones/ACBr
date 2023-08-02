@@ -439,7 +439,7 @@ const
 
 function SwapBytes(Value: Cardinal): Cardinal; overload;
 function SwapBytes(Value: Word): Word; overload;
-function Split(const AString: string; const ADelimiter: string = ' '): TStringArray;
+function Split(const AString: string; const ADelimiter: string = ' '; ATrimLeft: boolean = True): TStringArray;
 function CountStr(const AString, SubStr : String ) : Integer ;
 
 var
@@ -835,7 +835,7 @@ begin
   if UpperCase(ATimeZone) <> 'Z' then
   begin
     Err := (Length(ATimeZone) <> 6) or
-           ((ATimeZone[1] = '-') or (ATimeZone[1] = '+')) or
+           (not ((ATimeZone[1] = '-') or (ATimeZone[1] = '+'))) or
            (not (ATimeZone[4] = ':'));
 
     if not Err then
@@ -1072,7 +1072,8 @@ end;
 function TFPDF.GetStringWidth(const vText: String): Double;
 var
   cw: TFPDFFontInfo;
-  vw, l, i: Integer;
+  lines: TStringArray;
+  vw, vw1, l, i, j: Integer;
 begin
   // Get width of a string in the current font
   Result := 0;
@@ -1081,9 +1082,16 @@ begin
 
   cw := Self.CurrentFont.cw;
   vw := 0;
-  l := Length(vText);
-  for i := 1 to l do
-    vw := vw + cw[ord(vText[i])];
+  lines := Split(vText, sLineBreak, False);
+  for i := 0 to Length(lines) - 1 do
+  begin
+    l := Length(lines[i]);
+    vw1 := 0;
+    for j := 1 to l do
+      vw1 := vw1 + cw[ord(lines[i][j])];
+    if vw1 > vw then
+      vw := vw1;
+  end;
 
   Result := vw*Self.FontSize/1000;
 end;
@@ -3609,7 +3617,7 @@ begin
   Bytes(Result)[1]:= Bytes(Value)[0];
 end;
 
-function Split(const AString: string; const ADelimiter: string = ' '): TStringArray;
+function Split(const AString: string; const ADelimiter: string; ATrimLeft: boolean): TStringArray;
 var
   p1, p2, i: Integer;
 begin
@@ -3623,8 +3631,10 @@ begin
   begin
     Inc(i);
     SetLength(Result, i);
-    Result[i-1] := TrimLeft(copy(AString, p1, (p2-p1)));
-    p1 := p2+1;
+    Result[i-1] := copy(AString, p1, (p2-p1));
+    if ATrimLeft then
+      Result[i-1] := TrimLeft(Result[i-1]);
+    p1 := p2 + Length(ADelimiter);
     p2 := PosEx(ADelimiter, AString + ADelimiter, p1);
   end;
 end;

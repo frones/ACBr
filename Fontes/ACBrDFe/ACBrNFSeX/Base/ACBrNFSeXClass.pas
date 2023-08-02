@@ -1485,6 +1485,9 @@ const
 
 implementation
 
+uses
+  ACBrValidador;
+
 { TDadosServicoRPS }
 
 constructor TDadosServico.Create;
@@ -1801,6 +1804,7 @@ begin
   // %ChaveAcesso%       : Representa a Chave de Acesso
   // %ValorServico%      : Representa o Valor do Serviço
   // %Cnpj%              : Representa o CNPJ do Emitente - Configuração
+  // %CnpjComMascara%    : Representa o CNPJ do Emitente - Configuração com mascara
   // %InscMunic%         : Representa a Inscrição Municipal do Emitente - Configuração
   // %xMunicipio%        : Representa o Nome do Município - Configuração
   // %DataEmissao:X..X%: : Representa a Data de Emissão da NFSe com o formato preenchido após os ":" - Dados da NFSe
@@ -1812,6 +1816,7 @@ begin
   Texto := StringReplace(Texto, '%ChaveAcesso%', LinkNFSeParam.ChaveAcesso, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%ValorServico%', LinkNFSeParam.ValorServico, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%Cnpj%', LinkNFSeParam.CNPJ, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%CnpjComMascara%', FormatarCNPJouCPF(LinkNFSeParam.CNPJ), [rfReplaceAll]);
   Texto := StringReplace(Texto, '%InscMunic%', LinkNFSeParam.InscMun, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%xMunicipio%', LowerCase(OnlyAlphaNum(LinkNFSeParam.xMunicipio)), [rfReplaceAll]);
   PreencherData('DataEmissao',DataEmissao);

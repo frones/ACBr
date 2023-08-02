@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2023
+-- ACBrEFDBloco_E_Class --
+[*] E112 - Ajuste para envio do IND_PROC em branco quando for opNenhum
+    https://www.projetoacbr.com.br/forum/topic/73205-registro-e112-campo-ind_proc-estou-passando-opnenhum-por%C3%A9m-no-arquivo-esta-gerando-9-outros-onde-deveria-ficar-em-branco/#comment-474231/
+  Por: Júlio Moraes - Trade One TI / Renato Rubinho
+
 09/05/2023
 -- ACBrEFDBloco_1_Importar, ACBrEFDBloco_C_Importar --
 [*] Adiciona a geração dos blocos 1200, 1210, 1250, 1255 e C177.

@@ -659,7 +659,7 @@ end;
 procedure TBloco_E.WriteRegistroE112(RegE111: TRegistroE111) ;
 var
   intFor: integer;
-  intIND_PROC: integer;
+  strIND_PROC: String;
 begin
   if Assigned( RegE111.RegistroE112 ) then
   begin
@@ -668,18 +668,18 @@ begin
         with RegE111.RegistroE112.Items[intFor] do
         begin
           case IND_PROC of
-           opSefaz:           intIND_PROC := 0;
-           opJusticaFederal:  intIND_PROC := 1;
-           opJusticaEstadual: intIND_PROC := 2;
-           opSecexRFB:        intIND_PROC := 3;
-           opOutros:          intIND_PROC := 9;
-           else               intIND_PROC := 9;
+           opSefaz:           strIND_PROC := '0';
+           opJusticaFederal:  strIND_PROC := '1';
+           opJusticaEstadual: strIND_PROC := '2';
+           opSecexRFB:        strIND_PROC := '3';
+           opOutros:          strIND_PROC := '9';
+           opNenhum:          strIND_PROC := '';
           end;
 
           Add( LFill('E112') +
                LFill( NUM_DA ) +
                LFill( NUM_PROC ) +
-               LFill( intIND_PROC, 0 ) +
+               LFill( strIND_PROC ) +
                LFill( PROC ) +
                LFill( TXT_COMPL ) ) ;
         end;

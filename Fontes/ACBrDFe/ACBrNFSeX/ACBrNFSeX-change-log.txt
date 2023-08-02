@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/08/2023
+-- ACBrNFSeXServicos --
+[*] ProLinkURL e HomLinkURL para a cidade de Linhares/ES foram alterados a variável Cnpj para 
+    CnpjComMascara.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXClass --
 [+] Incluído a variável: %CnpjComMascara% no LinkNFSe para atender a cidade de
     Linhares/ES.

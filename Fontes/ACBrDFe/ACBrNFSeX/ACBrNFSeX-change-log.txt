@@ -44,6 +44,8 @@ Símbolo : Significado
 
 02/08/2023
 -- ACBrNFSeXServicos --
+[*] Remoção do campo HomRecepcionar, quando este estiva vazio ou comentado.
+   Por: Italo Giurizzato Junior
 [*] ProLinkURL e HomLinkURL para a cidade de Linhares/ES foram alterados a variável Cnpj para 
     CnpjComMascara.
    Por: Italo Giurizzato Junior

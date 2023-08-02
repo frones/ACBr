@@ -48,7 +48,8 @@ uses
    Contnrs,
   {$IfEnd}
   SSL_OpenSSL, SMTPSend, MimePart, MimeMess, SynaChar, SynaUtil,
-  ACBrBase;
+  ACBrBase,
+  blcksock;
 
 type
 
@@ -171,6 +172,7 @@ type
     function GetUsername: string;
     function GetPassword: string;
     function GetFullSSL: Boolean;
+    function GetSSLType: TSSLType;
     function GetAutoTLS: Boolean;
     function GetPriority: TMessPriority;
 
@@ -179,6 +181,7 @@ type
     procedure SetUsername(const aValue: string);
     procedure SetPassword(const aValue: string);
     procedure SetFullSSL(aValue: Boolean);
+    procedure SetSSLType(aValue: TSSLType);
     procedure SetAutoTLS(aValue: Boolean);
     procedure SetPriority(aValue: TMessPriority);
     procedure SetAttempts(AValue: Byte);
@@ -234,6 +237,7 @@ type
     property Username: string read GetUsername write SetUsername;
     property Password: string read GetPassword write SetPassword;
     property SetSSL: boolean read GetFullSSL write SetFullSSL;
+    property SSLType : TSSLType read GetSSLType write SetSSLType default LT_all;
     property SetTLS: boolean read GetAutoTLS write SetAutoTLS;
     property Priority: TMessPriority read GetPriority write SetPriority default MP_normal;
     property ReadingConfirmation: boolean read fReadingConfirmation write fReadingConfirmation default False;
@@ -366,6 +370,11 @@ begin
   Result := fSMTP.FullSSL;
 end;
 
+function TACBrMail.GetSSLType: TSSLType;
+begin
+  Result := fSMTP.Sock.SSL.SSLType;
+end;
+
 function TACBrMail.GetAutoTLS: Boolean;
 begin
   Result := fSMTP.AutoTLS;
@@ -394,6 +403,11 @@ end;
 procedure TACBrMail.SetFullSSL(aValue: Boolean);
 begin
   fSMTP.FullSSL := aValue;
+end;
+
+procedure TACBrMail.SetSSLType(aValue: TSSLType);
+begin
+  fSMTP.Sock.SSL.SSLType := aValue;
 end;
 
 procedure TACBrMail.SetAutoTLS(aValue: Boolean);
@@ -530,6 +544,10 @@ begin
   fBCC.StrictDelimiter := True;
   {$EndIf}
   fBCC.Delimiter := ';';
+
+  //definir como conexão padrão TLS1.2;
+  //mantido LT_ALL por compatibilidade com os diversos provedores que por hora não suportam
+  fSMTP.Sock.SSL.SSLType := LT_all;
 
   // NOTAR ISSO: fSMTP.Sock.OnStatus := ;
 

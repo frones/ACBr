@@ -239,6 +239,7 @@ type
     edSicoobArqChavePrivada: TEdit;
     edSicoobChavePIX: TEdit;
     edSicoobClientID: TEdit;
+    edSicoobTokenSandbox: TEdit;
     edSicoobExtrairCertificado: TEdit;
     edSicoobExtrairChaveCertificadoArqPFX: TEdit;
     edSicoobExtrairChaveCertificadoSenhaPFX: TEdit;
@@ -464,6 +465,7 @@ type
     lbSicoobArquivoChavePrivada: TLabel;
     lbSicoobChavePix: TLabel;
     lbSicoobClientID: TLabel;
+    lbSicoobTokenSandbox: TLabel;
     lbSicoobErroCertificado: TLabel;
     lbSicoobErroChavePrivada: TLabel;
     lbSicoobExtrairCertificado: TLabel;
@@ -2536,9 +2538,15 @@ begin
 end;
 
 procedure TForm1.cbxAmbienteChange(Sender: TObject);
+var
+  wProducao: Boolean;
 begin
-  tsItauCertificado.Enabled := (cbxAmbiente.ItemIndex > 0);
+  wProducao := (cbxAmbiente.ItemIndex = 1);
+
+  tsItauCertificado.Enabled := wProducao;
   lItauAvisoChaveCertificadoDesabilitado.Visible := not tsItauCertificado.Enabled;
+
+  edSicoobTokenSandbox.Enabled := (not wProducao);
 end;
 
 procedure TForm1.cbxPSPAtualChange(Sender: TObject);
@@ -3569,6 +3577,7 @@ begin
 
     edSicoobChavePIX.Text := Ini.ReadString('Sicoob', 'ChavePIX', '');
     edSicoobClientID.Text := Ini.ReadString('Sicoob', 'ClientID', '');
+    edSicoobTokenSandbox.Text := Ini.ReadString('Sicoob', 'TokenSandbox', '');
     edSicoobArqChavePrivada.Text := Ini.ReadString('Sicoob', 'ArqChavePrivada', edSicoobArqChavePrivada.Text);
     edSicoobArqCertificado.Text := Ini.ReadString('Sicoob', 'ArqCertificado', edSicoobArqCertificado.Text);
 
@@ -3683,6 +3692,7 @@ begin
 
     Ini.WriteString('Sicoob', 'ChavePIX', edSicoobChavePIX.Text);
     Ini.WriteString('Sicoob', 'ClientID', edSicoobClientID.Text);
+    Ini.WriteString('Sicoob', 'TokenSandbox', edSicoobTokenSandbox.Text);
     Ini.WriteString('Sicoob', 'ArqChavePrivada', edSicoobArqChavePrivada.Text);
     Ini.WriteString('Sicoob', 'ArqCertificado', edSicoobArqCertificado.Text);
 
@@ -4049,6 +4059,7 @@ begin
 
   ACBrPSPSicoob1.ChavePIX := edSicoobChavePIX.Text;
   ACBrPSPSicoob1.ClientID := edSicoobClientID.Text;
+  ACBrPSPSicoob1.TokenSandbox := edSicoobTokenSandbox.Text;
   ACBrPSPSicoob1.ArquivoChavePrivada := edSicoobArqChavePrivada.Text;
   ACBrPSPSicoob1.ArquivoCertificado := edSicoobArqCertificado.Text;
 

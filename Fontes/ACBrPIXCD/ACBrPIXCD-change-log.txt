@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2023
+-- ACBrPIXPSPSicoob --
+[-] Correções para ambiente Sandbox funcionar corretamente no componente ACBrPIXCD.
+    Por: Lucas VG
+
 24/07/2023
 -- ACBrPIXPSPAilos --
 [-] Correção da URL de homologação no PSP Ailos

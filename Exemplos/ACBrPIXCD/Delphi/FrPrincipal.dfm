@@ -5031,6 +5031,15 @@ object Form1: TForm1
                         ShowHint = True
                         OnClick = sbSicoobAcharArqCertificadoClick
                       end
+                      object lbSicoobTokenSandbox: TLabel
+                        Left = 24
+                        Top = 280
+                        Width = 176
+                        Height = 13
+                        Caption = 'Access Token (APENAS SANDBOX)'
+                        Color = clBtnFace
+                        ParentColor = False
+                      end
                       object edSicoobChavePIX: TEdit
                         Left = 24
                         Top = 40
@@ -5082,6 +5091,14 @@ object Form1: TForm1
                         Text = 'SicoobCertificado.pem'
                         OnChange = edSicoobArqsChange
                         OnExit = edSicoobArqCertificadoExit
+                      end
+                      object edSicoobTokenSandbox: TEdit
+                        Left = 24
+                        Top = 296
+                        Width = 808
+                        Height = 23
+                        Anchors = [akLeft, akTop, akRight]
+                        TabOrder = 5
                       end
                     end
                   end

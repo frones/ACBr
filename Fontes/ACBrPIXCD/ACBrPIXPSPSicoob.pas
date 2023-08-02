@@ -43,18 +43,18 @@ unit ACBrPIXPSPSicoob;
 interface
 
 uses
-  Classes, SysUtils,
-	ACBrBase,
-  ACBrPIXCD, ACBrOpenSSLUtils;
+  Classes, SysUtils, ACBrBase, ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
-  cSicoobURLSandbox      = 'https://api.sicoob.com.br';
+  cSicoobURLSandbox      = 'https://sandbox.sicoob.com.br/sicoob/sandbox';
   cSicoobURLProducao     = 'https://api.sicoob.com.br';
   cSicoobURLAuth         = 'https://auth.sicoob.com.br';
   cSicoobPathAuthToken   = '/auth/realms/cooperado/protocol/openid-connect/token';
   cSicoobPathAPIPix      = '/pix/api/v2';
-  cSicoobURLAuthTeste    = cSicoobURLAuth+cSicoobPathAuthToken;
   cSicoobURLAuthProducao = cSicoobURLAuth+cSicoobPathAuthToken;
+
+resourcestring
+  sErroTokenSandboxNaoInformado = 'Access Token para o ambiente Sandbox não foi informado!';
 
 type
 
@@ -63,6 +63,7 @@ type
   TACBrPSPSicoob = class(TACBrPSPCertificate)
   private
     fSandboxStatusCode: String;
+    fTokenSandbox : String;
     fxCorrelationID: String;
     fArquivoCertificado: String;
     fArquivoChavePrivada: String;
@@ -84,8 +85,10 @@ type
     property ClientID;
     property ClientSecret;
 
-    property SandboxStatusCode: String read fSandboxStatusCode write fSandboxStatusCode;
+    //Token fornecido pelo Sicoob na área de SandBox
+    property TokenSandbox: String read fTokenSandbox write fTokenSandbox;
 
+    property SandboxStatusCode: String read fSandboxStatusCode write fSandboxStatusCode;
     property QuandoNecessitarCredenciais: TACBrQuandoNecessitarCredencial
       read fQuandoNecessitarCredenciais write fQuandoNecessitarCredenciais;
   end;
@@ -127,12 +130,19 @@ var
 begin
   LimparHTTP;
 
-  if (ACBrPixCD.Ambiente = ambProducao) then
-    AURL := cSicoobURLAuthProducao
-  else
-    AURL := cSicoobURLAuthTeste;
+  // Sicoob já disponibiliza o Token para ambiente Sandbox no portal
+  if (ACBrPixCD.Ambiente <> ambProducao) then
+  begin
+    if EstaVazio(Trim(fTokenSandbox)) then
+      DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroTokenSandboxNaoInformado)));
 
+    fpToken := fTokenSandbox;
+    fpValidadeToken := IncSecond(Now, 86400);
+    fpAutenticado := True;
+    Exit;
+  end;
 
+  AURL := cSicoobURLAuthProducao;
   qp := TACBrQueryParams.Create;
   try
     qp.Values['grant_type'] := 'client_credentials';

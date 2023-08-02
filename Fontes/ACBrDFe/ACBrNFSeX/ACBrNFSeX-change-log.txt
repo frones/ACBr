@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2023
+-- ACBrNFSeXServicos --
+[*] ProLinkURL e HomLinkURL para a cidade de Linhares/ES foram alterados, provedor ainda é o EL.
+  Por: Neski Soluções
+
 01/08/2023
 -- ACBrNFSeXServicos --
 [*] A cidade: Braganca Paulista/SP trocou de Provedor, agora é Conam

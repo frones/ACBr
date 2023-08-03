@@ -56,6 +56,7 @@ namespace ACBrLib.CTe
 
         public FluxoCTe Fluxo { get; }
 
+        [Obsolete("Descontinuado: Para o correto preenchimento, use Complemento")]
         public EntregaCTe Entrega { get;  }
 
         public List<ObsContCTe> ObsCont { get; } = new List<ObsContCTe>();

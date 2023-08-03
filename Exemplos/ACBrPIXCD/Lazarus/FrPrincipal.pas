@@ -3922,9 +3922,9 @@ begin
   cbAilosTipoChave.Items.Assign(cbxBBTipoChave.Items);
 
   cbxSolicitarDevolucaoPix_Natureza.Items.Clear;
-  for l := 1 to Integer(High(TACBrPIXNaturezaDevolucao)) do
+  for l := 0 to Integer(High(TACBrPIXNaturezaDevolucao)) do
      cbxSolicitarDevolucaoPix_Natureza.Items.Add( GetEnumName(TypeInfo(TACBrPIXNaturezaDevolucao), l ));
-  cbxSolicitarDevolucaoPix_Natureza.ItemIndex := 0;
+  cbxSolicitarDevolucaoPix_Natureza.ItemIndex := 1;
 
   cbxConsultarCobrancas_Status.Items.Clear;
   for m := Low(TACBrPIXStatusCobranca) to High(TACBrPIXStatusCobranca) do

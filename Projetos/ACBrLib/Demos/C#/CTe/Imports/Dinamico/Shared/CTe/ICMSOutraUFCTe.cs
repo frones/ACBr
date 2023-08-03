@@ -7,7 +7,7 @@ namespace ACBrLib.CTe
 {
     public class ICMSOutraUFCTe
     {
-        public CSTCTe CST { get; set; }
+        public CSTCTe? CST { get; set; }
 
         public decimal pRedBCOutraUF { get; set; }
 

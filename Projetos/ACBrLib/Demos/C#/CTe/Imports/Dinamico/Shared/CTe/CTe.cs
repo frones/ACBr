@@ -133,7 +133,34 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(ValoresPrestacaoServico, "vPrest");
             iniData.WriteToIni(ComponentesValorPrestacao, "Comp");
             iniData.WriteToIni(InformacoesRelativasImpostos, "Imp");
-            iniData.WriteToIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
+            if (InformacoesRelativasImpostos.ICMSSN.CST.HasValue)
+            {
+                iniData.WriteToIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
+            }
+            if (InformacoesRelativasImpostos.ICMS00.CST.HasValue)
+            {
+                iniData.WriteToIni(InformacoesRelativasImpostos.ICMS00, "ICMS00");
+            }
+            if (InformacoesRelativasImpostos.ICMS20.CST.HasValue)
+            {
+                iniData.WriteToIni(InformacoesRelativasImpostos.ICMS20, "ICMS20");
+            }
+            if (InformacoesRelativasImpostos.ICMS45.CST.HasValue)
+            {
+                iniData.WriteToIni(InformacoesRelativasImpostos.ICMS45, "ICMS45");
+            }
+            if (InformacoesRelativasImpostos.ICMS60.CST.HasValue)
+            {
+                iniData.WriteToIni(InformacoesRelativasImpostos.ICMS60, "ICMS60");
+            }
+            if (InformacoesRelativasImpostos.ICMS90.CST.HasValue)
+            {
+                iniData.WriteToIni(InformacoesRelativasImpostos.ICMS90, "ICMS90");
+            }
+            if (InformacoesRelativasImpostos.ICMSOutraUF.CST.HasValue)
+            {
+                iniData.WriteToIni(InformacoesRelativasImpostos.ICMSOutraUF, "ICMSOutraUF");
+            }
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
 
@@ -202,6 +229,12 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(ComponentesValorPrestacao, "Comp");
             iniData.ReadFromIni(InformacoesRelativasImpostos, "Imp");
             iniData.ReadFromIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
+            iniData.ReadFromIni(InformacoesRelativasImpostos.ICMSOutraUF, "ICMSOutrasUF");
+            iniData.ReadFromIni(InformacoesRelativasImpostos.ICMS00, "ICMS00");
+            iniData.ReadFromIni(InformacoesRelativasImpostos.ICMS20, "ICMS20");
+            iniData.ReadFromIni(InformacoesRelativasImpostos.ICMS45, "ICMS45");
+            iniData.ReadFromIni(InformacoesRelativasImpostos.ICMS60, "ICMS60");
+            iniData.ReadFromIni(InformacoesRelativasImpostos.ICMS90, "ICMS90");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
 

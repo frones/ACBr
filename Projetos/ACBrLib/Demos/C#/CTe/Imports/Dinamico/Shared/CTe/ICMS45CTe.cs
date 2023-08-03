@@ -7,6 +7,6 @@ namespace ACBrLib.CTe
 {
     public class ICMS45CTe
     {
-        public CSTCTe CST { get; set; }
+        public CSTCTe? CST { get; set; }
     }
 }

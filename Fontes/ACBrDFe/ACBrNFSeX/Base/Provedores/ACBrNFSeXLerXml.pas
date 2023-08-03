@@ -54,6 +54,7 @@ type
 
   protected
     FpAOwner: IACBrNFSeXProvider;
+    FpQuebradeLinha: string;
 
     function NormatizarItemListaServico(const Codigo: string): string;
     function ItemListaServicoDescricao(const Codigo: string): string;

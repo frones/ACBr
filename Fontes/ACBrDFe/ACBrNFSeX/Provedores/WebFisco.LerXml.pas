@@ -69,6 +69,8 @@ function TNFSeR_WebFisco.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
 begin
+  FpQuebradeLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 
@@ -243,7 +245,11 @@ begin
             ValorUnitario := ObterConteudo(ANode.Childrens.FindAnyNs('nfevalserv' + IntToStr(i)), tcDe2);
 
             if i = 1 then
+            begin
               Descricao := ObterConteudo(ANode.Childrens.FindAnyNs('nfedescricaoservicos'), tcStr);
+              Descricao := StringReplace(Descricao, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+            end;
 
             Quantidade := 1;
             ValorTotal := ValorUnitario;
@@ -344,7 +350,11 @@ begin
               ValorUnitario := ObterConteudo(ANode.Childrens.FindAnyNs('val' + IntToStr(i)), tcDe2);
 
               if i = 1 then
+              begin
                 Descricao := ObterConteudo(ANode.Childrens.FindAnyNs('txt'), tcStr);
+                Descricao := StringReplace(Descricao, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+              end;
             end;
           end;
         until aValor = '';

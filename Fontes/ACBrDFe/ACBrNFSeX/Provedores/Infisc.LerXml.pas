@@ -415,6 +415,9 @@ begin
     NFSe.OutrasInformacoes := NFSe.OutrasInformacoes + ANodes[i].Content;
 //                  ObterConteudo(ANodes[i].Childrens.FindAnyNs('infAdic'), tcStr);
   end;
+
+  NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 end;
 
 procedure TNFSeR_Infisc.LerISS(const ANode: TACBrXmlNode);
@@ -665,6 +668,8 @@ function TNFSeR_Infisc.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
 begin
+  FpQuebradeLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 

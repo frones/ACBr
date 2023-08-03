@@ -42,8 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2023
+-- Diversos --
+[*] Retirado da impressão da NFS-e a substituição do caractere de quebra de
+    linha usado pelo provedor por LineBreak e colocado nas units que fazem
+    a leitura do XML.
+   Por: Italo Giurizzato Junior
+
 02/08/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Eunapolis/BA trocou de provedor, agora é Sudoeste.
+   Por: PrimeSoftware
 [*] Remoção do campo HomRecepcionar, quando este estiva vazio ou comentado.
    Por: Italo Giurizzato Junior
 [*] ProLinkURL e HomLinkURL para a cidade de Linhares/ES foram alterados a variável Cnpj para 

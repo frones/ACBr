@@ -213,7 +213,11 @@ begin
 
   NFSe.Servico.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoServico'), tcStr);
   NFSe.Servico.Descricao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescricaoServico'), tcStr);
+  NFSe.Servico.Descricao := StringReplace(NFSe.Servico.Descricao, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
   NFSe.Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
+  NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
   NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('ObservacaoLocalTributado'), tcStr);
 
   NFSe.Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(OK, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcInt));
@@ -409,6 +413,8 @@ begin
   Item := NFSe.Servico.ItemServico.New;
   Item.Quantidade := StrToFloatDef(Trim(Copy(ALinha, 2, 6)), 1.00);
   Item.Descricao := Trim(Copy(ALinha, 8, 60));
+  Item.Descricao := StringReplace(Item.Descricao, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
   Item.CodServ := Trim(Copy(ALinha, 68, 9));
   Item.ValorUnitario := StrToFloatDef(Trim(Copy(ALinha, 77, 15)), 0.00) / 100;
   //Item.ValorISS := StrToFloatDef(Trim(Copy(ALinha, 77, 15)), 0.00) / 100;
@@ -474,6 +480,8 @@ var
   DadosTxt: TStringList;
   I: Integer;
 begin
+  FpQuebradeLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo XML não carregado.');
 

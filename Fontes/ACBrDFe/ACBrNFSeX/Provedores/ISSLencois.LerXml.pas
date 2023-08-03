@@ -168,6 +168,8 @@ function TNFSeR_ISSLencois.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
 begin
+  FpQuebradeLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 
@@ -216,6 +218,8 @@ begin
     AMensagemInformacao := AMensagemInformacao + sLineBreak + ANodeArray[I].Content;
 
   NFSe.InformacoesComplementares := Trim(AMensagemInformacao);
+  NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 end;
 
 function TNFSeR_ISSLencois.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
@@ -301,7 +305,9 @@ begin
     end;
   end;
 
-  NFSe.Servico.Discriminacao    := ObterConteudo(ANode.Childrens.FindAnyNs('Descricao'), tcStr);
+  NFSe.Servico.Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('Descricao'), tcStr);
+  NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
   AuxNode := ANode.Childrens.FindAnyNs('Tomador');
   if AuxNode <> nil then

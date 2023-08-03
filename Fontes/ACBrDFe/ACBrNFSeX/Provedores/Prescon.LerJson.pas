@@ -76,6 +76,8 @@ function TNFSeR_Prescon.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
 begin
+  FpQuebradeLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
   // O provedor recebe as informações em json e devolve xml
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
@@ -226,6 +228,9 @@ begin
     Servico := NFSe.Servico;
     Servico.ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('codigo'), tcStr);
     Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('descricao'), tcStr);
+    Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
     Servico.Valores.ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('valorServico'), tcDe2);
 
     Servico.Valores.Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('aliquota'), tcDe2);
@@ -247,6 +252,8 @@ begin
       NFSe.Servico.Valores.IssRetido := stRetencao;
 
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('obs'), tcStr);
+    NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
   end;
 end;
 

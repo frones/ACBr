@@ -35,6 +35,7 @@ namespace ACBrLib.CTe
             DetalhamentoAnulacao = new DetalhamentoAnulacaoCTe();
             InformacoesSuplementares = new InformacoesSuplementaresCTe();
             Rodoviario = new RodoviarioCTe();
+            Tomador3 = new Tomador3CTe();
         }
 
         internal CTe(ACBrIniFile ini) : this()
@@ -89,6 +90,8 @@ namespace ACBrLib.CTe
 
         public RodoviarioCTe Rodoviario { get; }
 
+        public Tomador3CTe Tomador3 { get; } 
+
         #endregion Properties
 
         #region Methods
@@ -104,6 +107,7 @@ namespace ACBrLib.CTe
 
             iniData.WriteToIni(InfCTe, "InfCTe");
             iniData.WriteToIni(Identificacao, "Ide");
+            iniData.WriteToIni(Tomador3, "toma3");
             iniData.WriteToIni(Tomador4, "toma4");
             iniData.WriteToIni(Complemento, "Compl");
             iniData.WriteToIni(Fluxo, "fluxo");
@@ -160,6 +164,7 @@ namespace ACBrLib.CTe
         {
             iniData.ReadFromIni(InfCTe, "InfCTe");
             iniData.ReadFromIni(Identificacao, "Ide");
+            iniData.ReadFromIni(Tomador3, "toma3");
             iniData.ReadFromIni(Tomador4, "toma4");
             iniData.ReadFromIni(Complemento, "Compl");
             iniData.ReadFromIni(Fluxo, "fluxo");

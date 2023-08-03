@@ -74,6 +74,7 @@
 	  <Compile Include="..\Shared\CTe\PassCTe.cs" Link="CTe\PassCTe.cs" />
 	  <Compile Include="..\Shared\CTe\IndicadorTomadorCTe.cs" Link="CTe\IndicadorTomadorCTe.cs" />
 	  <Compile Include="..\Shared\CTe\Tomador4CTe.cs" Link="CTe\Tomador4CTe.cs" />
+	  <Compile Include="..\Shared\CTe\Tomador3CTe.cs" Link="CTe\Tomador3CTe.cs" />	  
 	  <Compile Include="..\Shared\CTe\EntregaCTe.cs" Link="CTe\EntregaCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ObsContCTe.cs" Link="CTe\ObsContCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ObsFiscoCTe.cs" Link="CTe\ObsFiscoCTe.cs" />

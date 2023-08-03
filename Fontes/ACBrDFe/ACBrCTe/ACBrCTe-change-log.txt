@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2023
+-- ACBrCTeConhecimentos --
+[+] Adicionado na rotina de geração do INI do CTe as informações que faltavam em no grupo Entrega.
+  Por: Diego Folieni
+
 28/07/2023
 -- ACBrCTeConhecimentos --
 [+] Adicionado na rotina de geração do INI do CTe as seções infPercurso e veicNovos.

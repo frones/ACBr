@@ -730,11 +730,44 @@ begin
       INIRec.WriteString('compl', 'xCaracSer', compl.xCaracSer);
       INIRec.WriteString('compl', 'xEmi', compl.xEmi);
 
-      INIRec.WriteString('compl', 'tpPer', TpDataPeriodoToStr(compl.Entrega.TipoData));
-      INIRec.WriteString('compl', 'tpHor', TpHorarioIntervaloToStr(compl.Entrega.TipoHora));
-      {ainda tem mais dados aqui}
+      INIRec.WriteString('compl', 'TipoData', TpDataPeriodoToStr(compl.Entrega.TipoData));
+      case compl.Entrega.TipoData of
+        tdSemData:
+          begin
+            INIRec.WriteString('compl', 'tpPer', TpDataPeriodoToStr(compl.Entrega.semData.tpPer));
+          end;
+        tdNaData, tdAteData, tdApartirData:
+          begin
+            INIRec.WriteString('compl', 'tpPer', TpDataPeriodoToStr(compl.Entrega.comData.tpPer));
+            INIRec.WriteDate('compl', 'dProg', compl.Entrega.comData.dProg);
+          end;
+        tdNoPeriodo:
+          begin
+            INIRec.WriteString('compl', 'tpPer', TpDataPeriodoToStr(compl.Entrega.noPeriodo.tpPer));
+            INIRec.WriteDateTime('compl', 'dIni', compl.Entrega.noPeriodo.dIni);
+            INIRec.WriteDateTime('compl', 'dFim', compl.Entrega.noPeriodo.dFim);
+          end;
+      end;
 
-      {...}
+      INIRec.WriteString('compl', 'TipoHora', TpHorarioIntervaloToStr(compl.Entrega.TipoHora));
+      case compl.Entrega.TipoHora of
+        thSemHorario:
+          begin
+            INIRec.WriteString('compl', 'tpHor', TpHorarioIntervaloToStr(compl.Entrega.semHora.tpHor));
+          end;
+        thNoHorario, thAteHorario, thApartirHorario:
+          begin
+            INIRec.WriteString('compl', 'tpHor', TpHorarioIntervaloToStr(compl.Entrega.comHora.tpHor));
+            INIRec.WriteTime('compl', 'hProg', compl.Entrega.comHora.hProg);
+          end;
+        thNoIntervalo:
+          begin
+            INIRec.WriteString('compl', 'tpHor', TpHorarioIntervaloToStr(compl.Entrega.noInter.tpHor));
+            INIRec.WriteTime('compl', 'hIni', compl.Entrega.noInter.hIni);
+            INIRec.WriteTime('compl', 'hFim', compl.Entrega.noInter.hFim);
+          end;
+      end;
+
       INIRec.WriteString('compl', 'origCalc', compl.origCalc);
       INIRec.WriteString('compl', 'destCalc', compl.destCalc);
       INIRec.WriteString('compl', 'xObs', compl.xObs);

@@ -744,6 +744,7 @@ var
   i: Integer;
   NumRps: String;
   ANota: TNotaFiscal;
+  AResumo: TNFSeResumoCollectionItem;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -795,6 +796,14 @@ begin
               ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
               ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+
+              AResumo := Response.Resumos.New;
+              AResumo.NumeroNota := ANota.NFSe.Numero;
+              AResumo.Data := ANota.NFSe.DataEmissao;
+              AResumo.Link := ANota.NFSe.Link;
+              AResumo.CodigoVerificacao := ANota.NFSe.CodigoVerificacao;
+              AResumo.Situacao := IntToStr(ANota.NFSe.Situacao);
+
               SalvarXmlNfse(ANota);
             end;
           end;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2023
+-- Conam.Provider --
+[*] Implementado a geração da lista de Resumos para o método ConsultarPorRps.
+   Por: Paulo V. Ferreira
+
 03/08/2023
 -- Diversos --
 [*] Retirado da impressão da NFS-e a substituição do caractere de quebra de

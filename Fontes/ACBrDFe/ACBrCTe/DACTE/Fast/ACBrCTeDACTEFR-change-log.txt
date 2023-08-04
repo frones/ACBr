@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2023
+-- ACBrCTeDACTEFR --
+[+] Implementado a impressão dos eventos: Inclusão de Condutor e Cancelamento de Insucesso na Entrega
+  Por: Vanderlei Soares
+[+] Implementado a impressão do evento: Insucesso na Entrega
+  Por: Italo Giurizzato Junior
+  
 11/12/2019
 -- ACBrCTeDACTEFR --
 [*] Correção na impressão do DACTE quando CTe de complemento ou anulação,

@@ -84,6 +84,12 @@ contains
   Febraban150.GravarTxtRemessa in '..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.GravarTxtRemessa.pas',
   Febraban150.LerTxtRetorno in '..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.LerTxtRetorno.pas',
   Febraban150.Provider in '..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.Provider.pas',
+  DebitoAutomatico.BancodoBrasil.GravarTxtRemessa in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.BancodoBrasil.GravarTxtRemessa.pas',
+  DebitoAutomatico.BancodoBrasil.LerTxtRetorno in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.BancodoBrasil.LerTxtRetorno.pas',
+  DebitoAutomatico.BancodoBrasil.Provider in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.BancodoBrasil.Provider.pas',
+  DebitoAutomatico.Banrisul.GravarTxtRemessa in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Banrisul.GravarTxtRemessa.pas',
+  DebitoAutomatico.Banrisul.LerTxtRetorno in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Banrisul.LerTxtRetorno.pas',
+  DebitoAutomatico.Banrisul.Provider in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Banrisul.Provider.pas',
   DebitoAutomatico.Santander.GravarTxtRemessa in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.GravarTxtRemessa.pas',
   DebitoAutomatico.Santander.LerTxtRetorno in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.LerTxtRetorno.pas',
   DebitoAutomatico.Santander.Provider in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.Provider.pas';

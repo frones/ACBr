@@ -22,7 +22,7 @@
     <Description Value="ACBr - Debito Automático - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="1"/>
-    <Files Count="19">
+    <Files Count="25">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\ACBrDebitoAutomatico.pas"/>
         <UnitName Value="ACBrDebitoAutomatico"/>
@@ -45,61 +45,85 @@
         <UnitName Value="ACBrDebitoAutomaticoReg"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.GravarTxtRemessa.pas"/>
-        <UnitName Value="DebitoAutomatico.Santander.GravarTxtRemessa"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.BancodoBrasil.GravarTxtRemessa.pas"/>
+        <UnitName Value="DebitoAutomatico.BancodoBrasil.GravarTxtRemessa"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.LerTxtRetorno.pas"/>
-        <UnitName Value="DebitoAutomatico.Santander.LerTxtRetorno"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.BancodoBrasil.LerTxtRetorno.pas"/>
+        <UnitName Value="DebitoAutomatico.BancodoBrasil.LerTxtRetorno"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.Provider.pas"/>
-        <UnitName Value="DebitoAutomatico.Santander.Provider"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.BancodoBrasil.Provider.pas"/>
+        <UnitName Value="DebitoAutomatico.BancodoBrasil.Provider"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoClass.pas"/>
-        <UnitName Value="ACBrDebitoAutomaticoClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Banrisul.GravarTxtRemessa.pas"/>
+        <UnitName Value="DebitoAutomatico.Banrisul.GravarTxtRemessa"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoConversao.pas"/>
-        <UnitName Value="ACBrDebitoAutomaticoConversao"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Banrisul.LerTxtRetorno.pas"/>
+        <UnitName Value="DebitoAutomatico.Banrisul.LerTxtRetorno"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoParametros.pas"/>
-        <UnitName Value="ACBrDebitoAutomaticoParametros"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Banrisul.Provider.pas"/>
+        <UnitName Value="DebitoAutomatico.Banrisul.Provider"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoGravarTxt.pas"/>
-        <UnitName Value="ACBrDebitoAutomaticoGravarTxt"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.GravarTxtRemessa.pas"/>
+        <UnitName Value="DebitoAutomatico.Santander.GravarTxtRemessa"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoInterface.pas"/>
-        <UnitName Value="ACBrDebitoAutomaticoInterface"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.LerTxtRetorno.pas"/>
+        <UnitName Value="DebitoAutomatico.Santander.LerTxtRetorno"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoLerTxt.pas"/>
-        <UnitName Value="ACBrDebitoAutomaticoLerTxt"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.Provider.pas"/>
+        <UnitName Value="DebitoAutomatico.Santander.Provider"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoProviderBase.pas"/>
-        <UnitName Value="ACBrDebitoAutomaticoProviderBase"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoClass.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoClass"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoProviderManager.pas"/>
-        <UnitName Value="ACBrDebitoAutomaticoProviderManager"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoConversao.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoConversao"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.GravarTxtRemessa.pas"/>
-        <UnitName Value="Febraban150.GravarTxtRemessa"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\ACBrDebitoAutomaticoParametros.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoParametros"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.LerTxtRetorno.pas"/>
-        <UnitName Value="Febraban150.LerTxtRetorno"/>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoGravarTxt.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoGravarTxt"/>
       </Item18>
       <Item19>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoInterface.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoInterface"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoLerTxt.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoLerTxt"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoProviderBase.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoProviderBase"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\ACBrDebitoAutomaticoProviderManager.pas"/>
+        <UnitName Value="ACBrDebitoAutomaticoProviderManager"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.GravarTxtRemessa.pas"/>
+        <UnitName Value="Febraban150.GravarTxtRemessa"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.LerTxtRetorno.pas"/>
+        <UnitName Value="Febraban150.LerTxtRetorno"/>
+      </Item24>
+      <Item25>
         <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.Provider.pas"/>
         <UnitName Value="Febraban150.Provider"/>
-      </Item19>
+      </Item25>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

@@ -9,25 +9,31 @@ interface
 
 uses
   ACBrDebitoAutomatico, 
-	ACBrDebitoAutomaticoArquivo, 
+  ACBrDebitoAutomaticoArquivo, 
   ACBrDebitoAutomaticoArquivoClass, 
-	ACBrDebitoAutomaticoConfiguracoes, 
+  ACBrDebitoAutomaticoConfiguracoes, 
   ACBrDebitoAutomaticoReg, 
-	DebitoAutomatico.Santander.GravarTxtRemessa, 
+  DebitoAutomatico.BancodoBrasil.GravarTxtRemessa, 
+  DebitoAutomatico.BancodoBrasil.LerTxtRetorno, 
+  DebitoAutomatico.BancodoBrasil.Provider, 
+  DebitoAutomatico.Banrisul.GravarTxtRemessa, 
+  DebitoAutomatico.Banrisul.LerTxtRetorno, 
+  DebitoAutomatico.Banrisul.Provider, 
+  DebitoAutomatico.Santander.GravarTxtRemessa, 
   DebitoAutomatico.Santander.LerTxtRetorno, 
   DebitoAutomatico.Santander.Provider, 
-	ACBrDebitoAutomaticoClass, 
+  ACBrDebitoAutomaticoClass, 
   ACBrDebitoAutomaticoConversao, 
-	ACBrDebitoAutomaticoParametros, 
+  ACBrDebitoAutomaticoParametros, 
   ACBrDebitoAutomaticoGravarTxt, 
-	ACBrDebitoAutomaticoInterface, 
+  ACBrDebitoAutomaticoInterface, 
   ACBrDebitoAutomaticoLerTxt, 
-	ACBrDebitoAutomaticoProviderBase, 
+  ACBrDebitoAutomaticoProviderBase, 
   ACBrDebitoAutomaticoProviderManager, 
-	Febraban150.GravarTxtRemessa, 
+  Febraban150.GravarTxtRemessa, 
   Febraban150.LerTxtRetorno, 
-	Febraban150.Provider, 
-	LazarusPackageIntf;
+  Febraban150.Provider, 
+  LazarusPackageIntf;
 
 implementation
 

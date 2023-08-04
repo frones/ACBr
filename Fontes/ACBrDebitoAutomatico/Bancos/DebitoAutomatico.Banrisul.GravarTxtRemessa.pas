@@ -32,49 +32,22 @@
 
 {$I ACBr.inc}
 
-unit ACBrDebitoAutomaticoProviderManager;
+unit DebitoAutomatico.Banrisul.GravarTxtRemessa;
 
 interface
 
 uses
   SysUtils, Classes,
-  ACBrDebitoAutomaticoInterface;
+  Febraban150.GravarTxtRemessa;
 
 type
+ { TArquivoW_Banrisul }
 
-  TACBrDebitoAutomaticoProviderManager = class
-  public
-    class function GetProvider(ACBrDebitoAutomatico: TComponent): IACBrDebitoAutomaticoProvider;
+  TArquivoW_Banrisul = class(TArquivoW_Febraban150)
+  protected
+
   end;
 
 implementation
-
-uses
-  ACBrDebitoAutomatico, ACBrDebitoAutomaticoConversao,
-
-  DebitoAutomatico.BancodoBrasil.Provider,
-  DebitoAutomatico.Banrisul.Provider,
-  DebitoAutomatico.Santander.Provider;
-
-  { TACBrDebitoAutomaticoProviderManager }
-
-class function TACBrDebitoAutomaticoProviderManager.GetProvider(ACBrDebitoAutomatico: TComponent): IACBrDebitoAutomaticoProvider;
-begin
-  with TACBrDebitoAutomatico(ACBrDebitoAutomatico).Configuracoes.Geral do
-  begin
-    case Banco of
-      debBancodoBrasil:
-        Result := TACBrDebitoAutomaticoProviderBancodoBrasil.Create(ACBrDebitoAutomatico);
-
-      debBanrisul:
-        Result := TACBrDebitoAutomaticoProviderBanrisul.Create(ACBrDebitoAutomatico);
-
-      debSantander:
-        Result := TACBrDebitoAutomaticoProviderSantander.Create(ACBrDebitoAutomatico);
-    else
-      Result := nil;
-    end;
-  end;
-end;
 
 end.

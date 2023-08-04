@@ -97,7 +97,7 @@ type
      debRBCapitalInvestimentos, debJohnDeere, debAdvanced, debC6, debDigimais);
 
 
-  TDebitoLayoutVersao = (lv4, lv5, lv8);
+  TDebitoLayoutVersao = (lv4, lv5, lv6, lv8);
 
   TDebitoTipoArquivo = (taRemessa, taRetorno);
 

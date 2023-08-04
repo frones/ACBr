@@ -32,49 +32,44 @@
 
 {$I ACBr.inc}
 
-unit ACBrDebitoAutomaticoProviderManager;
+unit DebitoAutomatico.Modelo.Provider;
 
 interface
 
 uses
   SysUtils, Classes,
-  ACBrDebitoAutomaticoInterface;
+  ACBrDebitoAutomaticoClass,
+  ACBrDebitoAutomaticoGravarTxt, ACBrDebitoAutomaticoLerTxt,
+  Febraban150.Provider;
 
 type
 
-  TACBrDebitoAutomaticoProviderManager = class
-  public
-    class function GetProvider(ACBrDebitoAutomatico: TComponent): IACBrDebitoAutomaticoProvider;
+  TACBrDebitoAutomaticoProviderModelo = class (TFebraban150Provider)
+  protected
+    function CriarGeradorTxt(const aDebitoAutomatico: TDebitoAutomatico): TArquivoWClass; override;
+    function CriarLeitorTxt(const aDebitoAutomatico: TDebitoAutomatico): TArquivoRClass; override;
   end;
 
 implementation
 
 uses
-  ACBrDebitoAutomatico, ACBrDebitoAutomaticoConversao,
+  DebitoAutomatico.Modelo.GravarTxtRemessa,
+  DebitoAutomatico.Modelo.LerTxtRetorno;
 
-  DebitoAutomatico.BancodoBrasil.Provider,
-  DebitoAutomatico.Banrisul.Provider,
-  DebitoAutomatico.Santander.Provider;
+{ TACBrDebitoAutomaticoProviderModelo }
 
-  { TACBrDebitoAutomaticoProviderManager }
-
-class function TACBrDebitoAutomaticoProviderManager.GetProvider(ACBrDebitoAutomatico: TComponent): IACBrDebitoAutomaticoProvider;
+function TACBrDebitoAutomaticoProviderModelo.CriarGeradorTxt(
+  const aDebitoAutomatico: TDebitoAutomatico): TArquivoWClass;
 begin
-  with TACBrDebitoAutomatico(ACBrDebitoAutomatico).Configuracoes.Geral do
-  begin
-    case Banco of
-      debBancodoBrasil:
-        Result := TACBrDebitoAutomaticoProviderBancodoBrasil.Create(ACBrDebitoAutomatico);
+  Result := TArquivoW_Modelo.Create(Self);
+  Result.DebitoAutomatico := aDebitoAutomatico;
+end;
 
-      debBanrisul:
-        Result := TACBrDebitoAutomaticoProviderBanrisul.Create(ACBrDebitoAutomatico);
-
-      debSantander:
-        Result := TACBrDebitoAutomaticoProviderSantander.Create(ACBrDebitoAutomatico);
-    else
-      Result := nil;
-    end;
-  end;
+function TACBrDebitoAutomaticoProviderModelo.CriarLeitorTxt(
+  const aDebitoAutomatico: TDebitoAutomatico): TArquivoRClass;
+begin
+  Result := TArquivoR_Modelo.Create(Self);
+  Result.DebitoAutomatico := aDebitoAutomatico;
 end;
 
 end.

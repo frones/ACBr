@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2023
+-- Diversos --
+[+] Implementação dos Bancos: Banco do Brasil e Banrisul.
+    Por: Italo Giurizzato Junior
+
 15/06/2023
 ---------------
 [*] Componente refatorado para utilizar Interface aos moldes do ACBrPagFor e

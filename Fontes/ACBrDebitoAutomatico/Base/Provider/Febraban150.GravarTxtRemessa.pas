@@ -235,7 +235,8 @@ begin
           GravarCampo(' ', 1, tcStr);
         end;
 
-      lv5:
+      lv5,
+      lv6:
         begin
           GravarCampo(DebitoAutomatico.RegistroE[i].UsoEmpresa, 59, tcStr);
           GravarCampo(UsoEmpresaXYToStr(DebitoAutomatico.RegistroE[i].UsoEmpresaXY), 1, tcStr);
@@ -360,7 +361,7 @@ begin
     GravarCampo(DebitoAutomatico.RegistroL[i].VencimentoFatura, 8, tcDatISO);
     GravarCampo(DebitoAutomatico.RegistroL[i].RemessaArquivoBanco, 8, tcDatISO);
     GravarCampo(DebitoAutomatico.RegistroL[i].RemessaContasFisicas, 8, tcDatISO);
-    GravarCampo(' ', 117, tcStr);
+    GravarCampo(' ', 117, tcStr); // nos manuais consta 104
 
     ValidarLinha('L');
     IncluirLinha;
@@ -387,7 +388,7 @@ begin
     Total := RegistroC.Count + RegistroD.Count + RegistroE.Count +
              RegistroI.Count + RegistroJ.Count + RegistroL.Count + 2;
 
-    if FLayoutVersao = lv5 then
+    if FLayoutVersao in [lv5, lv6] then
       Total := Total + RegistroK.Count;
 
     for i := 0 to RegistroE.Count - 1 do
@@ -426,7 +427,7 @@ begin
 
     GerarRegistrosJ;
 
-    if FLayoutVersao = lv5 then
+    if FLayoutVersao in [lv5, lv6] then
       GerarRegistrosK;
 
     if FLayoutVersao <> lv8 then

@@ -411,9 +411,6 @@ begin
         Vencimento := LerCampo(FLinha, 51, 8, tcDatISO);
         Valor := LerCampo(FLinha, 59, 15, tcDe2);
         CodigoRetorno := StrToRetorno(Ok, LerCampo(FLinha, 74, 2, tcStr));
-        UsoEmpresa := LerCampo(FLinha, 76, 54, tcStr);
-        TipoIdentificacao := StrToCPFCNPJ(Ok, LerCampo(FLinha, 130, 1, tcStr));
-        CPFCNPJ := LerCampo(FLinha, 131, 15, tcStr);
       end
       else
       begin
@@ -421,17 +418,24 @@ begin
         Vencimento := LerCampo(FLinha, 45, 8, tcDatISO);
         Valor := LerCampo(FLinha, 53, 15, tcDe2);
         CodigoRetorno := StrToRetorno(Ok, LerCampo(FLinha, 68, 2, tcStr));
+      end;
 
-        if FLayoutVersao = lv5 then
-        begin
-          UsoEmpresa := LerCampo(FLinha, 70, 60, tcStr);
-          TipoIdentificacao := StrToCPFCNPJ(Ok, LerCampo(FLinha, 130, 1, tcStr));
-          CPFCNPJ := LerCampo(FLinha, 131, 15, tcStr);
-        end
-        else
-        begin
-          UsoEmpresa := LerCampo(FLinha, 70, 70, tcStr);
-        end;
+      case FLayoutVersao of
+        lv5,
+        lv6:
+          begin
+            UsoEmpresa := LerCampo(FLinha, 70, 60, tcStr);
+            TipoIdentificacao := StrToCPFCNPJ(Ok, LerCampo(FLinha, 130, 1, tcStr));
+            CPFCNPJ := LerCampo(FLinha, 131, 15, tcStr);
+          end;
+        lv8:
+          begin
+            UsoEmpresa := LerCampo(FLinha, 76, 54, tcStr);
+            TipoIdentificacao := StrToCPFCNPJ(Ok, LerCampo(FLinha, 130, 1, tcStr));
+            CPFCNPJ := LerCampo(FLinha, 131, 15, tcStr);
+          end
+      else
+        UsoEmpresa := LerCampo(FLinha, 70, 70, tcStr);
       end;
 
       CodigoMovimento := StrToMovimentoDebito(Ok, LerCampo(FLinha, 150, 1, tcStr));
@@ -471,6 +475,15 @@ begin
         OcorrenciaDataVigencia := StrToRetorno(Ok, LerCampo(FLinha, 130, 2, tcStr));
         OcorrenciaAlteracaoOpcaoUsoChequeEspecial := StrToRetorno(Ok, LerCampo(FLinha, 132, 2, tcStr));
         OcorrenciaAlteracaoOpcaoDebPosVenc := StrToRetorno(Ok, LerCampo(FLinha, 142, 2, tcStr));
+
+        DescRetornoCanc := DescricaoRetorno(RetornoToStr(OcorrenciaCancelamento));
+        GerarAvisos(OcorrenciaCancelamento, DescRetornoCanc, 'H', IdentificacaoClienteBanco);
+        DescRetornoDatVig := DescricaoRetorno(RetornoToStr(OcorrenciaDataVigencia));
+        GerarAvisos(OcorrenciaDataVigencia, DescRetornoDatVig, 'H', IdentificacaoClienteBanco);
+        DescRetornoChequeEsp := DescricaoRetorno(RetornoToStr(OcorrenciaAlteracaoOpcaoUsoChequeEspecial));
+        GerarAvisos(OcorrenciaAlteracaoOpcaoUsoChequeEspecial, DescRetornoChequeEsp, 'H', IdentificacaoClienteBanco);
+        DescRetornoPosVenc := DescricaoRetorno(RetornoToStr(OcorrenciaAlteracaoOpcaoDebPosVenc));
+        GerarAvisos(OcorrenciaAlteracaoOpcaoDebPosVenc, DescRetornoPosVenc, 'H', IdentificacaoClienteBanco);
       end
       else
       begin
@@ -480,15 +493,6 @@ begin
       end;
 
       CodigoMovimento := StrToMovimentoAlteracao(Ok, LerCampo(FLinha, 150, 1, tcStr));
-
-      DescRetornoCanc := DescricaoRetorno(RetornoToStr(OcorrenciaCancelamento));
-      GerarAvisos(OcorrenciaCancelamento, DescRetornoCanc, 'H', IdentificacaoClienteBanco);
-      DescRetornoDatVig := DescricaoRetorno(RetornoToStr(OcorrenciaDataVigencia));
-      GerarAvisos(OcorrenciaDataVigencia, DescRetornoDatVig, 'H', IdentificacaoClienteBanco);
-      DescRetornoChequeEsp := DescricaoRetorno(RetornoToStr(OcorrenciaAlteracaoOpcaoUsoChequeEspecial));
-      GerarAvisos(OcorrenciaAlteracaoOpcaoUsoChequeEspecial, DescRetornoChequeEsp, 'H', IdentificacaoClienteBanco);
-      DescRetornoPosVenc := DescricaoRetorno(RetornoToStr(OcorrenciaAlteracaoOpcaoDebPosVenc));
-      GerarAvisos(OcorrenciaAlteracaoOpcaoDebPosVenc, DescRetornoPosVenc, 'H', IdentificacaoClienteBanco);
     end;
 
     Inc(FnLinha);

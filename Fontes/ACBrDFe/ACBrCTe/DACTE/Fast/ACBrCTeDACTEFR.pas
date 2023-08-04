@@ -1759,18 +1759,35 @@ begin
 end;
 
 procedure TACBrCTeDACTEFR.CarregaCTeAnuladoComplementado;
+var i : cardinal;
 begin
   with cdsAnuladoComple do
   begin
-
-    Append;
     if CTE.ide.tpCTe = tcComplemento then
-      FieldByName('Chave').AsString := CTE.infCteComp.chave
-    else if CTE.ide.tpCTe = tcAnulacao then
+    begin
+      if CTE.infCTe.versao <= 3 then
+      begin
+        Append;
+        FieldByName('Chave').AsString := CTE.InfCTeComp.Chave;
+        Post;
+      end
+      else
+      begin
+        for i := 0 to Pred(CTE.infCteComp10.Count) do
+        begin
+          Append;
+          FieldByName('Chave').AsString := CTE.infCteComp10[i].chCTe;
+          Post;
+        end;
+      end;
+    end else
+    if CTE.ide.tpCTe = tcAnulacao then
+    begin
+      Append;
       FieldByName('Chave').AsString := CTE.infCteAnu.chCTe;
-    Post;
+      Post;
+    end;
   end;
-
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDados;

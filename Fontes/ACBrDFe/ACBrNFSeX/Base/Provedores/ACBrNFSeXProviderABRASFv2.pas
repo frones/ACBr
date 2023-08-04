@@ -591,11 +591,13 @@ end;
 
 procedure TACBrNFSeProviderABRASFv2.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
 var
+  NumNFSe, CodVerif, NumRps, SerieRps: string;
+  DataAut: TDateTime;
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
+  AResumo: TNFSeResumoCollectionItem;
   ANode, AuxNode, AuxNode2: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  NumRps: String;
   ANota: TNotaFiscal;
   I: Integer;
 begin
@@ -657,11 +659,15 @@ begin
 
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
 
+          NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+          CodVerif := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          DataAut := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+
           with Response do
           begin
-            NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-            CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-            Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
+            NumeroNota := NumNFSe;
+            CodigoVerificacao := CodVerif;
+            Data := DataAut;
           end;
 
           AuxNode2 := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
@@ -683,12 +689,19 @@ begin
             if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
 
             NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+            SerieRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);
           end;
 
           if NumRps <> '' then
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
           else
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
+
+          AResumo := Response.Resumos.New;
+          AResumo.NumeroNota := NumNFSe;
+          AResumo.CodigoVerificacao := CodVerif;
+          AResumo.NumeroRps := NumRps;
+          AResumo.SerieRps := SerieRps;
 
           ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
           SalvarXmlNfse(ANota);

@@ -833,12 +833,18 @@ procedure TACBrNFSeProviderISSNet204.GerarMsgDadosCancelaNFSe(
 var
   Emitente: TEmitenteConfNFSe;
   InfoCanc: TInfCancelamento;
-//  xCodMun: string;
+  xCodMun: string;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
   InfoCanc := Response.InfCancelamento;
 
-//  xCodMun := IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio);
+  with TACBrNFSeX(FAOwner) do
+  begin
+    if Configuracoes.WebServices.AmbienteCodigo = 1 then
+      xCodMun := IntToStr(Configuracoes.Geral.CodigoMunicipio)
+    else
+      xCodMun := '5002704';
+  end;
 
   with Params do
   begin
@@ -855,8 +861,7 @@ begin
                                      '</CpfCnpj>' +
                                      GetInscMunic(Emitente.InscMun) +
                                      '<CodigoMunicipio>' +
-                                       ConfigGeral.CodIBGE +
-//                                       xCodMun +
+                                       xCodMun +
                                      '</CodigoMunicipio>' +
                                      CodigoVerificacao +
                                    '</IdentificacaoNfse>' +

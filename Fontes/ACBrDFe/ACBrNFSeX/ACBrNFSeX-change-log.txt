@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/08/2023
+-- ISSNet.Provider --
+[*] Ao solicitar o cancelamento em ambiente de homologação deve ser informado o
+    código IBGE da cidade de Campo Grande/MS.
+   Por: Farol TI
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Implementado a geração da lista de Resumos para o método TratarRetornoEmitir.
    Por: Italo Giurizzato Junior

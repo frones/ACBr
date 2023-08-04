@@ -248,18 +248,17 @@ begin
      (Pos('inicio', LowerCase(AURL)) > 0) then
     raise EACBrPixException.Create(ACBrStr(sErroEndpointNaoImplementado));
 
-  // Banco do Brasil, responde OK a esse EndPoint, de forma diferente da especificada
-  if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_OK) then
-  begin
+  if (AResultCode <> HTTP_OK) and (AResultCode <> HTTP_CREATED) then
+    Exit;
+
+  if (UpperCase(AMethod) = ChttpMethodPUT) and
+     ((AEndPoint = cEndPointCob) or (AEndPoint = cEndPointPix) or (AEndPoint = cEndPointCobV)) then
     AResultCode := HTTP_CREATED;
 
-    // Ajuste no Json de Resposta em Testes alterando textoImagemQRcode p/ pixCopiaECola - Icozeira
-    if (ACBrPixCD.Ambiente = ambTeste) then
-      RespostaHttp := StringReplace(RespostaHttp, 'textoImagemQRcode', 'pixCopiaECola', [rfReplaceAll]);
-  end;
+  if (ACBrPixCD.Ambiente = ambTeste) and (AEndPoint = cEndPointCob) then
+    RespostaHttp := StringReplace(RespostaHttp, 'textoImagemQRcode', 'pixCopiaECola', [rfReplaceAll]);
 
-  // Ajuste para o Método Patch do BB - Icozeira - 14/04/2022
-  if (UpperCase(AMethod) = ChttpMethodPATCH) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_CREATED) then
+  if (UpperCase(AMethod) = ChttpMethodPATCH) and (AEndPoint = cEndPointCob) then
     AResultCode := HTTP_OK;
 end;
 

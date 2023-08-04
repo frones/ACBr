@@ -226,7 +226,7 @@ begin
     FPosPrinter.Buffer.Add('</zera><mp>' +
                           FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda));
 
-    FPosPrinter.Buffer.Add(IfThen(ValidaLogoBmp(logo),'<bmp>'+Logo+'</bmp>','</logo>'));
+    FPosPrinter.Buffer.Add(IfThen(ValidaLogoBmp(logo),'<bmp>'+Logo+'</bmp>','</lf></logo>'));
 
     FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
                           TextoLateral +
@@ -234,8 +234,7 @@ begin
   end
   else
   begin
-
-    FPosPrinter.Buffer.Add('</zera></ce>'+ IfThen(FileExists(Logo),'<bmp>'+Logo+'</bmp>','</logo>') );
+    FPosPrinter.Buffer.Add('</zera></ce>'+ IfThen(ValidaLogoBmp(logo),'<bmp>'+Logo+'</bmp>','</lf></logo>'));
 
     if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
        FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+'<n>' +  FpNFe.Emit.xFant + '</n>');

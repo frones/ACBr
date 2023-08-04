@@ -7,7 +7,7 @@ namespace ACBrLib.CTe
 {
     public class ICMS60CTe
     {
-        public CSTCTe? CST { get; set; }
+        public CSTCTe CST { get; set; }
 
         public decimal vBCSTRet { get; set; }
 

@@ -7,7 +7,7 @@ namespace ACBrLib.CTe
 {
     public class ICMSSNCTe
     {
-        public CSTCTe? CST { get; set; }
+        public CSTCTe CST { get; set; }
 
         public int indSN { get; set; }
     }

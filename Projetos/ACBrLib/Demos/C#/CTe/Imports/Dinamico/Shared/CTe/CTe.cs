@@ -133,31 +133,31 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(ValoresPrestacaoServico, "vPrest");
             iniData.WriteToIni(ComponentesValorPrestacao, "Comp");
             iniData.WriteToIni(InformacoesRelativasImpostos, "Imp");
-            if (InformacoesRelativasImpostos.ICMSSN.CST.HasValue)
+            if (InformacoesRelativasImpostos.ICMSSN.CST == CSTCTe.ICMSSN)
             {
                 iniData.WriteToIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
             }
-            if (InformacoesRelativasImpostos.ICMS00.CST.HasValue)
+            if (InformacoesRelativasImpostos.ICMS00.CST == CSTCTe.tributacaoNormal)
             {
                 iniData.WriteToIni(InformacoesRelativasImpostos.ICMS00, "ICMS00");
             }
-            if (InformacoesRelativasImpostos.ICMS20.CST.HasValue)
+            if (InformacoesRelativasImpostos.ICMS20.CST == CSTCTe.tributacaoBCreduzidaICMS)
             {
                 iniData.WriteToIni(InformacoesRelativasImpostos.ICMS20, "ICMS20");
             }
-            if (InformacoesRelativasImpostos.ICMS45.CST.HasValue)
+            if ((InformacoesRelativasImpostos.ICMS45.CST & (CSTCTe.isencaoICMS | CSTCTe.ICMSNaoTributada | CSTCTe.ICMSDiferido)) != 0)
             {
                 iniData.WriteToIni(InformacoesRelativasImpostos.ICMS45, "ICMS45");
             }
-            if (InformacoesRelativasImpostos.ICMS60.CST.HasValue)
+            if (InformacoesRelativasImpostos.ICMS60.CST == CSTCTe.ICMSCobradoSubstituicaoTributaria)
             {
                 iniData.WriteToIni(InformacoesRelativasImpostos.ICMS60, "ICMS60");
             }
-            if (InformacoesRelativasImpostos.ICMS90.CST.HasValue)
+            if (InformacoesRelativasImpostos.ICMS90.CST == CSTCTe.ICMSOutros)
             {
                 iniData.WriteToIni(InformacoesRelativasImpostos.ICMS90, "ICMS90");
             }
-            if (InformacoesRelativasImpostos.ICMSOutraUF.CST.HasValue)
+            if (InformacoesRelativasImpostos.ICMSOutraUF.CST == CSTCTe.ICMSOutraUF)
             {
                 iniData.WriteToIni(InformacoesRelativasImpostos.ICMSOutraUF, "ICMSOutraUF");
             }

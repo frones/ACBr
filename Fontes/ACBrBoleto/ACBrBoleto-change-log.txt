@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+07/08/2023
+[*]TK-4260 ACBrBoletoRet_Sicredi_APIV2 - Ajustes para verificao EstadoTituloCobranca no retorno 
+https://www.projetoacbr.com.br/forum/topic/73412-corre%C3%A7%C3%A3o-da-implementa%C3%A7%C3%A3o-da-opera%C3%A7%C3%A3o-tpconsultadetalhe-api-v2-do-sicredi/
+Por: I3 SISTEMAS / Daniel Morais
 25/07/2023
 [*]TK-4196 ACBrBoletoW_Bancoob - Permitir registro boleto API sem nosso numero conf API
 https://www.projetoacbr.com.br/forum/topic/73100-sicoob-boletos-via-api

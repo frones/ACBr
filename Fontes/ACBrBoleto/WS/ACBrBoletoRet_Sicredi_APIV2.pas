@@ -158,12 +158,15 @@ begin
                 ARetornoWS.DadosRet.TituloRet.ValorDocumento         := aJson.Values['valorNominal'].AsNumber;
                 //Situação/Código da situação.
                 ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca    := UpperCase(aJson.Values['situacao'].asString);
-                if (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = 'EM CARTEIRA') or
-                   (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = 'VENCIDO') then
+                if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'EM CARTEIRA') > 0) or
+                   (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'VENCIDO') > 0) then
                   ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
-                if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) ='BAIXADO POR SOLICITACAO' then
-                  ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
-                if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = ('LIQUIDADO') then
+                if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'BAIXADO POR SOLICITACAO') > 0) then
+                  begin
+                    ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
+                    ARetornoWS.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(aJson.Values['dataBaixa'].AsString);
+                  end;
+                if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'LIQUIDADO') > 0) then then
                   ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
                 //Multa/Juros
                 ARetornoWS.DadosRet.TituloRet.PercentualMulta        := aJson.Values['valorMulta'].AsNumber;

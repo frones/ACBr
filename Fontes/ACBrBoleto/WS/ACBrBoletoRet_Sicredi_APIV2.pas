@@ -166,7 +166,7 @@ begin
                     ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
                     ARetornoWS.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(aJson.Values['dataBaixa'].AsString);
                   end;
-                if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'LIQUIDADO') > 0) then then
+                if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'LIQUIDADO') > 0) then
                   ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
                 //Multa/Juros
                 ARetornoWS.DadosRet.TituloRet.PercentualMulta        := aJson.Values['valorMulta'].AsNumber;

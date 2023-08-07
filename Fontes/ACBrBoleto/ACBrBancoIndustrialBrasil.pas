@@ -197,8 +197,8 @@ begin
 
   {Valor ou Taxa de Multa 091-103}
   case StrToInt(LCodigoMulta) of
-    1 : LValorMulta := Round(ACBrTitulo.PercentualMulta * 100);
-    2 : LValorMulta := Round(ACBrTitulo.ValorDocumento * ACBrTitulo.PercentualMulta);
+    1 : LValorMulta := Round(ACBrTitulo.ValorDocumento * ACBrTitulo.PercentualMulta);
+    2 : LValorMulta := Round(ACBrTitulo.PercentualMulta * 10000);
   end;
 
   case StrToIntDef(ACBrTitulo.Carteira,0) of
@@ -299,7 +299,9 @@ begin
   finally
     ARemessa.Add(UpperCase(LLinha));
     MontarRegistroBeneficiarioFinal400(ACBrTitulo, aRemessa);
-    MontarRegistroMensagem400(ACBrTitulo, aRemessa);
+    //MontarRegistroMensagem400(ACBrTitulo, aRemessa); // existe no manual mas a validação bancária
+                                                       // pediu para remover pois há erro,
+                                                       // que eles não usam esse bloco no sistema deles
     if ACBrTitulo.ListaDadosNFe.Count > 0 then
       GerarRegistrosNFe(ACBrTitulo, aRemessa);
   end;

@@ -172,6 +172,7 @@ begin
             ARetornoWS.DadosRet.TituloRet.LinhaDig       := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero    := ARetornoWS.DadosRet.IDBoleto.NossoNum;
             ARetornoWS.DadosRet.TituloRet.EMV            := AJSonObject.Values['qrcode'].AsString;
+            ARetornoWS.DadosRet.TituloRet.UrlPix         := AJSonObject.Values['qrCode'].AsString;
             ARetornoWS.DadosRet.TituloRet.Vencimento     := DateBancoobToDateTime(AJSonObject.Values['dataVencimento'].AsString);
             ARetornoWS.DadosRet.TituloRet.NossoNumero    := AJSonObject.Values['nossoNumero'].AsString;
             ARetornoWS.DadosRet.TituloRet.SeuNumero      := AJSonObject.Values['seuNumero'].AsString;
@@ -247,7 +248,8 @@ begin
                ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
 
 
-            ARetornoWS.DadosRet.TituloRet.UrlPix                := AJSonObject.Values['qrCode'].AsString;
+            ARetornoWS.DadosRet.TituloRet.UrlPix  := AJSonObject.Values['qrCode'].AsString;
+            ARetornoWS.DadosRet.TituloRet.EMV     := AJSonObject.Values['qrcode'].AsString;
 
             //ARetornoWS.DadosRet.TituloRet.ValorAtual      := AJSonObject.Values['valor'].AsNumber;
             //ARetornoWS.DadosRet.TituloRet.ValorPago       := AJSonObject.Values['valorTotalRecebimento'].AsNumber;

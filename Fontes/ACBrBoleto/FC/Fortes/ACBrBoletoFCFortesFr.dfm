@@ -11249,6 +11249,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 125
         Height = 39
         Center = True
+        Scaled = True
       end
     end
     object RLBand1: TRLBand

@@ -2259,7 +2259,7 @@ begin
       with infoAquisProd.ideEstabAdquir do
       begin
         tpInscAdq := tiCNPJ;
-        nrInscAdq := '12345678000123'; // Diferente do nrInscProd
+        nrInscAdq := edtEmitCNPJ.Text; // Diferente do nrInscProd
 
         tpInscProd := tiCNPJ;
         nrInscProd := '12345678000234'; // Diferente do nrInscAdq

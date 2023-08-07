@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2023
+-- Diversos --
+[*] Atualizados schemas disponibilizados para a versão 2.1.2
+  Por: Renato Rubinho
+https://www.projetoacbr.com.br/forum/topic/71721-reinf-publicada-vers%C3%A3o-212-dos-layouts-com-exig%C3%AAncia-para-a-compet%C3%AAncia-de-setembro2023/?do=findComment&comment=475688&_rid=62658
+
 26/07/2023
 -- ACBrReinfWebServices --
 [*] Controle para exibir alerta claro quando a versão do leiaute utilizada não estiver disponível

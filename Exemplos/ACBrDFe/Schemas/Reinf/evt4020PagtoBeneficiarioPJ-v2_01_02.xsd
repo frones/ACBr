@@ -872,7 +872,7 @@
                                                     </xs:annotation>
                                                     <xs:simpleType>
                                                       <xs:restriction base="xs:string">
-                                                        <xs:pattern value="\d{4,12}"/>
+                                                        <xs:maxLength value="12"/>
                                                         <xs:whiteSpace value="preserve"/>
                                                       </xs:restriction>
                                                     </xs:simpleType>

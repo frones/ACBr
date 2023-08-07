@@ -329,8 +329,9 @@
                                             </xs:element>
                                             <xs:element name="vlrBaseRet" minOccurs="1" maxOccurs="1">
                                               <xs:annotation>
-                                                <xs:documentation>Valor da base de calculo da retencao da contribuicao previdenciaria.
-</xs:documentation>
+                                                <xs:documentation>
+                                                  Valor da base de calculo da retencao da contribuicao previdenciaria.                                                     
+                                                </xs:documentation>
                                               </xs:annotation>
                                               <xs:simpleType>
                                                 <xs:restriction base="xs:string">

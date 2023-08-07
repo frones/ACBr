@@ -90,7 +90,7 @@ end;
 function TACBrBALUranoPOP.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
-  wPos, wQtd: Integer;
+  wPos, wQtd, wsPosTara: Integer;
 begin
   Result    := 0;
   wResposta := aResposta;
@@ -110,11 +110,19 @@ begin
   end
   else
   begin
-    wPos := Pos('kg', wResposta);  // Protocolo USE-P2
-    if (wPos > 0) then
-      wResposta := copy(wResposta, wPos-7, 6)
+    wsPosTara := Pos('TARA:', wResposta);
+    if (wsPosTara > 0) then
+    begin
+       wResposta := '';
+    end
     else
-      wResposta := '';
+    begin
+         wPos := Pos('kg', wResposta);  // Protocolo USE-P2
+         if (wPos > 0) then
+            wResposta := copy(wResposta, wPos-7, 6)
+         else
+             wResposta := '';
+    end;
   end;
 
   if (wResposta = EmptyStr) then

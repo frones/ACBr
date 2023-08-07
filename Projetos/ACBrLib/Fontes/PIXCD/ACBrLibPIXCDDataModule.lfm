@@ -1,0 +1,74 @@
+object LibPIXCDDM: TLibPIXCDDM
+  OldCreateOrder = False
+  Height = 315
+  HorizontalOffset = 3027
+  VerticalOffset = 283
+  Width = 455
+  object ACBrPixCD1: TACBrPixCD
+    Recebedor.CodCategoriaComerciante = 0
+    Left = 57
+    Top = 40
+  end
+  object ACBrPSPBradesco1: TACBrPSPBradesco
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 144
+    Top = 40
+  end
+  object ACBrPSPItau1: TACBrPSPItau
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 240
+    Top = 40
+  end
+  object ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 352
+    Top = 40
+  end
+  object ACBrPSPSantander1: TACBrPSPSantander
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 56
+    Top = 96
+  end
+  object ACBrPSPShipay1: TACBrPSPShipay
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    URLSandBox = 'https://api-staging.shipay.com.br'
+    URLProducao = 'https://api.shipay.com.br'
+    Left = 160
+    Top = 96
+  end
+  object ACBrPSPSicredi1: TACBrPSPSicredi
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 256
+    Top = 96
+  end
+  object ACBrPSPSicoob1: TACBrPSPSicoob
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 352
+    Top = 96
+  end
+  object ACBrPSPPagSeguro1: TACBrPSPPagSeguro
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 57
+    Top = 160
+  end
+  object ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 176
+    Top = 160
+  end
+  object ACBrPSPPixPDV1: TACBrPSPPixPDV
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 288
+    Top = 160
+  end
+  object ACBrPSPInter1: TACBrPSPInter
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 384
+    Top = 160
+  end
+  object ACBrPSPAilos1: TACBrPSPAilos
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 54
+    Top = 224
+  end
+end

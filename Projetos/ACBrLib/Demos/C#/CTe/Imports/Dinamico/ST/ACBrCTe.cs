@@ -129,6 +129,9 @@ namespace ACBrLib.CTe
 
         #endregion Ini
 
+        public void CarregarCTe(CTe cte) => CarregarINI(cte.ToString());
+
+        public CTe ObterCTe(int aIndex) => CTe.Load(ObterIni(aIndex));
         public void CarregarXML(string eArquivoOuXml)
         {
             var method = GetMethod<CTE_CarregarXML>();

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Sarandi/PR trocou de provedor, agora é EloTech.
+   Por: SG Sistemas
+
 04/08/2023
 -- ISSNet.Provider --
 [*] Ao solicitar o cancelamento em ambiente de homologação deve ser informado o

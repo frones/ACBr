@@ -901,8 +901,39 @@ begin
         else
           ValorIssRetido := 0;
 
-        ValorLiq := ValorServicos - ValorPis - ValorCofins - ValorInss -
-                    ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
+        if RetidoPis = snSim then
+          ValorPisRetido := ValorPis
+        else
+          ValorPisRetido := 0;
+
+        if RetidoCofins = snSim then
+          ValorCofinsRetido := ValorCofins
+        else
+          ValorCofinsRetido := 0;
+
+        if RetidoInss = snSim then
+          ValorInssRetido := ValorInss
+        else
+          ValorInssRetido := 0;
+
+        if RetidoIr = snSim then
+          ValorIrRetido := ValorIr
+        else
+          ValorIrRetido := 0;
+
+        if RetidoCsll = snSim then
+          ValorCsllRetido := ValorCsll
+        else
+          ValorCsllRetido := 0;
+
+        if RetidoCpp = snSim then
+          ValorCppRetido := ValorCpp
+        else
+          ValorCppRetido := 0;
+
+        ValorLiq := ValorServicos - ValorPisRetido - ValorCofinsRetido -
+                    ValorInssRetido - ValorIrRetido - ValorCsllRetido -
+                    ValorCppRetido - OutrasRetencoes - ValorIssRetido -
                     DescontoIncondicionado - DescontoCondicionado;
 
         if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
@@ -986,8 +1017,39 @@ begin
         else
           ValorIssRetido := 0;
 
-        ValorLiq := ValorServicos - ValorPis - ValorCofins - ValorInss -
-                    ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
+        if RetidoPis = snSim then
+          ValorPisRetido := ValorPis
+        else
+          ValorPisRetido := 0;
+
+        if RetidoCofins = snSim then
+          ValorCofinsRetido := ValorCofins
+        else
+          ValorCofinsRetido := 0;
+
+        if RetidoInss = snSim then
+          ValorInssRetido := ValorInss
+        else
+          ValorInssRetido := 0;
+
+        if RetidoIr = snSim then
+          ValorIrRetido := ValorIr
+        else
+          ValorIrRetido := 0;
+
+        if RetidoCsll = snSim then
+          ValorCsllRetido := ValorCsll
+        else
+          ValorCsllRetido := 0;
+
+        if RetidoCpp = snSim then
+          ValorCppRetido := ValorCpp
+        else
+          ValorCppRetido := 0;
+
+        ValorLiq := ValorServicos - ValorPisRetido - ValorCofinsRetido -
+                    ValorInssRetido - ValorIrRetido - ValorCsllRetido -
+                    ValorCppRetido - OutrasRetencoes - ValorIssRetido -
                     DescontoIncondicionado - DescontoCondicionado;
 
         if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
@@ -1101,10 +1163,10 @@ begin
       if AliquotaCpp = 0 then
       AliquotaCpp := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCpp'), tcDe2);
 
-      RetidoCpp := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoCsll'), tcStr));
+      RetidoCpp := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoCpp'), tcStr));
 
       if ValorCpp = 0 then
-        ValorCpp := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+        ValorCpp := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCpp'), tcDe2);
 
       if ValorIss = 0 then
         ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);

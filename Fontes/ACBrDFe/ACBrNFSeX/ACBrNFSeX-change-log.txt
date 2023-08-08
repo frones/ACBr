@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/08/2023
+-- ACBrNFSeXClass/ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
+[*] Inclusão dos campos para a leitura correta dos impostos não retidos.
+   Por: SG Sistemas
 -- ACBrNFSeXServicos --
 [*] A cidade de Sarandi/PR trocou de provedor, agora é EloTech.
    Por: SG Sistemas

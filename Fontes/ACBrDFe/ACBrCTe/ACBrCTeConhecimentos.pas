@@ -2946,6 +2946,22 @@ begin
           fone     := INIRec.ReadString(sSecao, 'fone', '');
         end;
       end;
+
+      sSecao := 'procCTe';
+      if INIRec.SectionExists(sSecao) then
+      begin
+        with procCTe do
+        begin
+          tpAmb := StrToTpAmb(ok, INIRec.ReadString(sSecao, 'tpAmb', ''));
+          verAplic := INIRec.ReadString(sSecao, 'verAplic', '');
+          chCTe := INIRec.ReadString(sSecao, 'chCTe', '');
+          dhRecbto := INIRec.ReadDateTime(sSecao, 'dhRecbto', 0);
+          nProt := INIRec.ReadString(sSecao, 'nProt', '');
+          digVal := INIRec.ReadString(sSecao, 'digVal', '');
+          cStat := INIRec.ReadInteger(sSecao, 'cStat', 0);
+          xMotivo := INIRec.ReadString(sSecao, 'xMotivo', '');
+        end;
+      end;
     end;
 
     GerarXML;

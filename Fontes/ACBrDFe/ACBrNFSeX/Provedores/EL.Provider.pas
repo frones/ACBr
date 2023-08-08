@@ -1012,32 +1012,29 @@ begin
 
         if j > 0 then
         begin
-        {
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[j-1];
-
-          if ANota.NFSe.IdentificacaoRps.Numero = Response.NumeroRps  then
-          begin
-            if ANota.XmlRps = '' then
-              aXmlNota := GerarXmlNota(ANota.XmlNfse, Response.ArquivoRetorno)
-            else
-              aXmlNota := GerarXmlNota(ANota.XmlRps, Response.ArquivoRetorno);
-
-            ANota.XmlNfse := aXmlNota;
-
-            SalvarXmlNfse(ANota);
-          end;
-          }
-//        end;
-
           if AuxNode <> nil then
           begin
             ANodeArray := AuxNode.Childrens.FindAllAnyNs('nfeRpsNotaFiscal');
 
             if not Assigned(ANodeArray) then
             begin
+              // O retorno muitas vezes é apresentado sem o a tag <nfeRpsNotaFiscal>
+
+              if Response.NumeroNota <> '' then
+              begin
+                AResumo := Response.Resumos.New;
+                AResumo.idNota := Response.idNota;
+                AResumo.NumeroNota := Response.NumeroNota;
+                AResumo.Data := Response.Data;
+                AResumo.Situacao :=  Response.Situacao;
+                AResumo.NumeroRps := Response.NumeroRps;
+              end
+              else
+              begin
               AErro := Response.Erros.New;
               AErro.Codigo := Cod203;
               AErro.Descricao := ACBrStr(Desc203);
+              end;
               Exit;
             end;
 

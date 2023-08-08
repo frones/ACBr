@@ -46,6 +46,8 @@ Símbolo : Significado
 
 08/08/2023
 -- ACBrCTeConhecimentos --
+[+] Adiciona na rotina de geração do INI o campo tpAmb no grupo Ide.
+  Por: Diego Folieni 
 [+] Adiciona na rotina de leitura do INI do CTe leitura do grupo protCTe
   Por: Diego Folieni
 

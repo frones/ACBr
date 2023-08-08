@@ -640,6 +640,7 @@ begin
       INIRec.WriteString('ide', 'dhEmi', DateToStr(Ide.dhEmi));
       INIRec.WriteString('ide', 'tpImp', TpImpToStr(Ide.tpImp));
       INIRec.WriteString('ide', 'tpemis', TpEmisToStr(Ide.tpEmis));
+      INIRec.WriteString('ide', 'tpAmb', TpAmbToStr(ide.tpAmb));
       INIRec.WriteString('ide', 'procEmi', procEmiToStr(Ide.procEmi));
       INIRec.WriteString('ide', 'verProc', Ide.verProc);
       INIRec.WriteString('ide', 'dhCont', DateToStr(Ide.dhCont));

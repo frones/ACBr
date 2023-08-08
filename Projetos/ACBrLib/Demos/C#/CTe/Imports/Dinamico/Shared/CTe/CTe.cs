@@ -36,6 +36,7 @@ namespace ACBrLib.CTe
             InformacoesSuplementares = new InformacoesSuplementaresCTe();
             Rodoviario = new RodoviarioCTe();
             Tomador3 = new Tomador3CTe();
+            ProtCTe = new ProtCTe();
         }
 
         internal CTe(ACBrIniFile ini) : this()
@@ -91,6 +92,8 @@ namespace ACBrLib.CTe
         public RodoviarioCTe Rodoviario { get; }
 
         public Tomador3CTe Tomador3 { get; } 
+
+        public ProtCTe ProtCTe { get; }
 
         #endregion Properties
 
@@ -183,6 +186,7 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(DetalhamentoComplementado, "infCteComp");
             iniData.WriteToIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.WriteToIni(InformacoesSuplementares, "infCTeSupl");
+            iniData.WriteToIni(ProtCTe, "procCTe");
             
             return iniData;
         }
@@ -266,6 +270,7 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(DetalhamentoComplementado, "infCteComp");
             iniData.ReadFromIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.ReadFromIni(InformacoesSuplementares, "infCTeSupl");
+            iniData.ReadFromIni(ProtCTe, "procCTe");
         }
 
         public static CTe Load(string conteudo) => ACBrIniFile.Parse(conteudo);

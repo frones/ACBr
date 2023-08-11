@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/08/2023
+-- NFSeBrasil.Provider --
+[*] Possível solução para o erro de conexão.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Correção no Código Cidade de Cafelandia/PR.
    Por: Italo Giurizzato Junior

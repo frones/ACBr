@@ -695,7 +695,7 @@ begin
             NumeroNota := NumNFSe;
             idNota := InfNfseID;
             CodigoVerificacao := ObterConteudoTag(AuxNodeNota.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-            Data := ObterConteudoTag(AuxNodeNota.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
+            Data := ObterConteudoTag(AuxNodeNota.Childrens.FindAnyNs('DataEmissao'), tcDatVcto);
           end;
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);

@@ -10,6 +10,6 @@ namespace ACBrLib.Core.CTe
     {
         public FatCTe fat { get; set; } = new FatCTe();
 
-        public DupCTe dup { get; set; } = new DupCTe();
+        public List<DupCTe> dup { get; set; } = new List<DupCTe>();
     }
 }

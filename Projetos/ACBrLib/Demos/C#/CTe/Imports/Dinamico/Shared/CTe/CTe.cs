@@ -192,6 +192,18 @@ namespace ACBrLib.CTe
                 }
             }
 
+            var fat = GrupoInformacoesNormalSubstituto.cobr.fat;
+            if (fat.vDesc != 0 || fat.vOrig != 0 || fat.vLiq != 0 || fat.nFat != "")
+            {
+                iniData.WriteToIni(fat, "cobr");
+            }
+
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.cobr.dup.Count; i++)
+            {
+                var dup = GrupoInformacoesNormalSubstituto.cobr.dup[i];
+                iniData.WriteToIni(dup, $"dup{i + 1:000}");
+            }
+
             iniData.WriteToIni(Rodoviario, "rodo");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
             
@@ -320,6 +332,17 @@ namespace ACBrLib.CTe
                 if (infNFe != null) GrupoInformacoesNormalSubstituto.infDoc.infNFe.Add(infNFe);
 
             } while (infNFe != null);
+
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.cobr.fat, "cobr");
+            a = 0;
+            DupCTe dup;
+            do
+            {
+                a++;
+                dup = iniData.ReadFromIni<DupCTe>($"dup{a:000}");
+
+                if (dup != null) GrupoInformacoesNormalSubstituto.cobr.dup.Add(dup);
+            } while(dup != null);
 
             iniData.ReadFromIni(DetalhamentoComplementado, "infCteComp");
             iniData.ReadFromIni(DetalhamentoAnulacao, "InfCteAnu");

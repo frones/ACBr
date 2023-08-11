@@ -174,6 +174,24 @@ namespace ACBrLib.CTe
 
             }
 
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.docAnt.emiDocAnt.Count; i++)
+            {
+                var emiDocAnt = GrupoInformacoesNormalSubstituto.docAnt.emiDocAnt[i];
+                iniData.WriteToIni(emiDocAnt, $"emiDocAnt{i + 1:000}");
+
+                for (var j = 0; j < emiDocAnt.idDocAntPap.Count; j++)
+                {
+                    var idDocAntPap = emiDocAnt.idDocAntPap[j];
+                    iniData.WriteToIni(idDocAntPap, $"idDocAntPap{i + 1:000}{j + 1:000}");
+                }
+
+                for (var j = 0; j < emiDocAnt.idDocAntEle.Count; j++)
+                {
+                    var idDocAntEle = emiDocAnt.idDocAntEle[j];
+                    iniData.WriteToIni(idDocAntEle, $"idDocAntEle{i + 1:000}{j + 1:000}");
+                }
+            }
+
             iniData.WriteToIni(Rodoviario, "rodo");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
             
@@ -241,6 +259,42 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(InformacoesRelativasImpostos.ICMS90, "ICMS90");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
+
+            var a = 0;
+            EmiDocAntCTe emiDocAnt;
+            do
+            {
+                a++;
+                emiDocAnt = iniData.ReadFromIni<EmiDocAntCTe>($"emiDocAnt{a:000}");
+
+                if (emiDocAnt != null)
+                {
+                    var b = 0;
+                    IdDocAntPapCTe idDocAntPap;
+                    do
+                    {
+                        b++;
+                        idDocAntPap = iniData.ReadFromIni<IdDocAntPapCTe>($"idDocAntPap{a:000}{b:000}");
+
+                        if (idDocAntPap != null) emiDocAnt.idDocAntPap.Add(idDocAntPap);
+
+                    } while (idDocAntPap!= null);
+
+                    b = 0;
+                    IdDocAntEleCTe idDocAntEle;
+                    do
+                    {
+                        b++;
+                        idDocAntEle = iniData.ReadFromIni<IdDocAntEleCTe>($"idDocAntEle{a:000}{b:000}");
+
+                        if (idDocAntEle != null) emiDocAnt.idDocAntEle.Add(idDocAntEle);
+
+                    } while (idDocAntEle != null);
+
+                    GrupoInformacoesNormalSubstituto.docAnt.emiDocAnt.Add(emiDocAnt);
+                }
+
+            } while (emiDocAnt != null);
 
             i = 0;
             InfQCTe infQ;

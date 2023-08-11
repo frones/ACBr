@@ -16,8 +16,8 @@ namespace ACBrLib.Core.CTe
 
         public string xNome { get; set; }
 
-        public IdDocAntPapCTe idDocAntPap { get; set; } = new IdDocAntPapCTe();
+        public List<IdDocAntPapCTe> idDocAntPap { get; set; } = new List<IdDocAntPapCTe>();
 
-        public IdDocAntEleCTe idDocAntEle { get; set; } = new IdDocAntEleCTe();
+        public List<IdDocAntEleCTe> idDocAntEle { get; set; } = new List<IdDocAntEleCTe>();     
     }
 }

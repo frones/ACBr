@@ -181,7 +181,7 @@ var
 begin
   Result := CreateElement('listaServicos');
 
-  if NFSe.Servico.ItemServico.Count > 1 then
+  if NFSe.Servico.ItemServico.Count > 0 then
   begin
     for i := 0 to NFSe.Servico.ItemServico.Count -1 do
     begin

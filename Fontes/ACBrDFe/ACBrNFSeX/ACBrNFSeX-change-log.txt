@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/08/2023
+-- ACBrNFSeXServicos --
+[*] Correção no Código Cidade de Cafelandia/PR.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Implementado a função ObterNomeMunicipioUF para substituir a ObterNomeMunicipio,
     a nova função se utiliza do arquivo ACBrNFSeXServicos para obter tanto o nome 

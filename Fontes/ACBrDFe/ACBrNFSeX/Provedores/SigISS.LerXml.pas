@@ -68,7 +68,7 @@ implementation
 
 uses
   synautil,
-  ACBrUtil.Base, ACBrDFeUtil;
+  ACBrUtil.Base;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -183,7 +183,7 @@ begin
           Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomador_bairro'), tcStr);
           CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomador_CEP'), tcStr);
           CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomador_cod_cidade'), tcStr);
-          xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+          xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
           if UF = '' then
             UF := xUF;
@@ -435,7 +435,7 @@ begin
         CodigoMunicipio := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('PrestadorCodigoMunicipio'), tcStr);
         UF              := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('PrestadorUf'), tcStr);
         CEP             := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('PrestadorCep'), tcStr);
-        xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+        xMunicipio      := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
         if UF = '' then
           UF := xUF;
@@ -501,7 +501,7 @@ begin
         CEP             := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('TomadorCep'), tcStr);
         CodigoMunicipio := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('TomadorCodigoMunicipio'), tcStr);
         UF              := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('TomadorUf'), tcStr);
-        xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+        xMunicipio      := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
         if UF = '' then
           UF := xUF;

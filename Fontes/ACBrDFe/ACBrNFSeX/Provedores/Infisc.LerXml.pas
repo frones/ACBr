@@ -99,8 +99,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrDFeUtil;
+  ACBrUtil.Base, ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -235,7 +234,7 @@ begin
 
       if xMunicipio = '' then
       begin
-        xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+        xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
         if UF = '' then
           UF := xUF;
@@ -276,7 +275,7 @@ begin
 
       if xMunicipio = '' then
       begin
-        xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+        xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
         if UF = '' then
           UF := xUF;

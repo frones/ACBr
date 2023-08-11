@@ -108,7 +108,7 @@ implementation
 
 uses
   ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrConsts, ACBrDFeUtil,
+  ACBrConsts,
   ACBrNFSeXConversao;
 
 //==============================================================================
@@ -282,7 +282,7 @@ begin
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CodigoPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-      xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;
@@ -314,7 +314,7 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-      xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;
@@ -994,7 +994,7 @@ begin
       if CodigoMunicipio = '' then
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcStr);
 
-      MunicipioPrestacaoServico := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      MunicipioPrestacaoServico := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
       MunicipioPrestacaoServico := MunicipioPrestacaoServico + '/' + xUF;
 
       CodigoPais          := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
@@ -1002,7 +1002,8 @@ begin
       IdentifNaoExigibilidade := ObterConteudo(AuxNode.Childrens.FindAnyNs('IdentifNaoExigibilidade'), tcStr);
 
       MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioIncidencia'), tcInt);
-      xMunicipioIncidencia := ObterNomeMunicipio(MunicipioIncidencia, xUF, '', False);
+      xMunicipioIncidencia := ObterNomeMunicipioUF(MunicipioIncidencia, xUF);
+
       xMunicipioIncidencia := xMunicipioIncidencia + '/' + xUF;
 
       NumeroProcesso := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroProcesso'), tcStr);

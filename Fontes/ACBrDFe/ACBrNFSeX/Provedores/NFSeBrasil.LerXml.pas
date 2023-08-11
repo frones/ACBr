@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrNFSeXLerXml_ABRASFv1,
-  ACBrXmlDocument, ACBrDFeUtil;
+  ACBrXmlDocument;
 
 type
   { TNFSeR_NFSeBrasil }
@@ -227,8 +227,9 @@ begin
       CodigoMunicipio           := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
 
       CodMunicipioPrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcInt);
+
       if CodMunicipioPrestacao > 0 then
-        MunicipioPrestacaoServico := ObterNomeMunicipio(CodMunicipioPrestacao, UFMunicipioPrestacao, '', False);
+        MunicipioPrestacaoServico := ObterNomeMunicipioUF(CodMunicipioPrestacao, UFMunicipioPrestacao);
     end;
   end;
 end;

@@ -1252,6 +1252,7 @@ begin
         AReader.Ambiente := taHomologacao;
 
       AReader.Provedor := Configuracoes.Geral.Provedor;
+      AReader.IniParams := Configuracoes.Geral.PIniParams;
     end;
 
     Result := AReader.LerXml;

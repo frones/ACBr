@@ -140,6 +140,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
     procedure LerParamsMunicipio;
+
   published
     property CodigoMunicipio: Integer read FCodigoMunicipio write SetCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
@@ -158,6 +159,7 @@ type
     property Layout: TLayout read FLayout;
     property LayoutNFSe: TLayoutNFSe read FLayoutNFSe write FLayoutNFSe default lnfsProvedor;
     property Assinaturas: TAssinaturas read FAssinaturas write FAssinaturas default taConfigProvedor;
+    property PIniParams: TMemIniFile read FPIniParams;
   end;
 
   { TArquivosConfNFSe }
@@ -452,7 +454,7 @@ begin
   CodIBGE := IntToStr(FCodigoMunicipio);
 
   FxMunicipio := FPIniParams.ReadString(CodIBGE, 'Nome', '');
-  FxUF := FPIniParams.ReadString(CodIBGE, 'UF'  , '');
+  FxUF := FPIniParams.ReadString(CodIBGE, 'UF', '');
   FxProvedor := FPIniParams.ReadString(CodIBGE, 'Provedor', '');
   FVersao := StrToVersaoNFSe(Ok, FPIniParams.ReadString(CodIBGE, 'Versao', '1.00'));
 

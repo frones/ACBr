@@ -116,7 +116,7 @@ implementation
 
 uses
   ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrConsts, ACBrDFeUtil,
+  ACBrConsts,
   ACBrNFSeXConversao;
 
 //==============================================================================
@@ -231,7 +231,7 @@ begin
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CodigoPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-      xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio      := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;
@@ -259,7 +259,7 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-      xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio      := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;

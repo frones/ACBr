@@ -37,7 +37,7 @@ unit ACBrNFSeXLerXml;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, IniFiles,
   ACBrXmlBase, ACBrXmlReader,
   ACBrXmlDocument,
   ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao;
@@ -51,6 +51,7 @@ type
     FProvedor: TnfseProvedor;
     FtpXML: TtpXML;
     FAmbiente: TACBrTipoAmbiente;
+    FIniParams: TMemIniFile;
 
   protected
     FpAOwner: IACBrNFSeXProvider;
@@ -62,6 +63,7 @@ type
     function NormatizarXml(const aXml: string): string; virtual;
     function NormatizarAliquota(const Aliquota: Double): Double;
     function LerLinkURL: string;
+    function ObterNomeMunicipioUF(ACodigoMunicipio: Integer; AUF: string): string;
 
     procedure VerificarSeConteudoEhLista(const aDiscriminacao: string);
     procedure LerListaJson(const aDiscriminacao: string);
@@ -76,6 +78,7 @@ type
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
     property tpXML: TtpXML           read FtpXML    write FtpXML;
     property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente default taHomologacao;
+    property IniParams: TMemIniFile read FIniParams write FIniParams;
   end;
 
 implementation
@@ -143,6 +146,17 @@ begin
   Result := ParseText(aXml, True, False);
   Result := FastStringReplace(Result, '&', '&amp;', [rfReplaceAll]);
 {$EndIf}
+end;
+
+function TNFSeRClass.ObterNomeMunicipioUF(ACodigoMunicipio: Integer;
+  AUF: string): string;
+var
+  CodIBGE: string;
+begin
+  CodIBGE := IntToStr(ACodigoMunicipio);
+
+  AUF := IniParams.ReadString(CodIBGE, 'UF', '');
+  Result := IniParams.ReadString(CodIBGE, 'Nome', '');
 end;
 
 function TNFSeRClass.TipodeXMLLeitura(const aArquivo: string): TtpXML;

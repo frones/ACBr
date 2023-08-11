@@ -283,7 +283,6 @@ implementation
 uses
   StrUtils, DateUtils,
   ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrDFeUtil,
   ACBrNFSeX, ACBrNFSeXClass, ACBrNFSeXInterface,
   ACBrValidador, ACBrDFeReportFortes;
 
@@ -385,9 +384,6 @@ begin
 end;
 
 procedure TfrlXDANFSeRLSimplISS.rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
-var
-  CodigoIBGE: Integer;
-  xUF: string;
 begin
   inherited;
 
@@ -407,12 +403,7 @@ begin
     rllNumeroRPS.Caption := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
-	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
-	// do tomador em vez do que foi informado em Serviço.
-    CodigoIBGE := StrToIntDef(Servico.CodigoMunicipio, 0);
-    xUF := '';
-
-    rllMunicipioPrestacaoServico.Caption := ObterNomeMunicipio(CodigoIBGE, xUF, '', False);
+    rllMunicipioPrestacaoServico.Caption := Servico.MunicipioPrestacaoServico;
 
     rllNFSeSerie.Caption := 'E';//SeriePrestacao; //estava pegando serie rps
   end;

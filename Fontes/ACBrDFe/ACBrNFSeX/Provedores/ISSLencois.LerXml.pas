@@ -62,7 +62,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrDFeUtil;
+  ACBrUtil.Base;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -87,7 +87,7 @@ begin
       Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
       Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('Municipio'), tcStr);
-      xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;

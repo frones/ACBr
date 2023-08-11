@@ -66,9 +66,6 @@ type
 
 implementation
 
-uses
-  ACBrDFeUtil;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o Json do provedor:
 //     Bauhaus
@@ -363,7 +360,7 @@ begin
         CodigoMunicipio := Copy(CodigoMunicipio, 1, 2) +
             FormatFloat('00000', StrToIntDef(Copy(CodigoMunicipio, 3, 5), 0));
 
-      xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;

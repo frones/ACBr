@@ -61,7 +61,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrDFeUtil;
+  ACBrUtil.Base, ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva de ler o XML do provedor:
@@ -181,7 +181,7 @@ begin
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
 
       if xMunicipio = '' then
-        xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+        xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;
@@ -454,7 +454,8 @@ begin
           UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
           xPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
           CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
-          xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+          xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
+
           if UF = '' then
             UF := xUF;
         end;

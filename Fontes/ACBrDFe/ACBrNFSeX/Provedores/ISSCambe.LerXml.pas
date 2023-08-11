@@ -69,8 +69,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
-  ACBrDFeUtil;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -234,7 +233,7 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorMunicipio'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorUF'), tcStr);
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorPais'), tcInt);
-      xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;
@@ -273,7 +272,7 @@ begin
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorCEP'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorMunicipio'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorUF'), tcStr);
-      xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;

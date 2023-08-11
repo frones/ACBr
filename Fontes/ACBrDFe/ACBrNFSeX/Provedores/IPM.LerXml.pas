@@ -80,7 +80,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrDFeUtil;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -263,7 +263,7 @@ begin
       with Prestador.Endereco do
       begin
         CodigoMunicipio := CodTOMToCodIBGE(ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr));
-        xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+        xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
         if UF = '' then
           UF := xUF;
@@ -318,7 +318,7 @@ begin
         Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
         CodigoMunicipio := CodTOMToCodIBGE(ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr));
         CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
-        xMunicipio      := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+        xMunicipio      := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
         if UF = '' then
           UF := xUF;

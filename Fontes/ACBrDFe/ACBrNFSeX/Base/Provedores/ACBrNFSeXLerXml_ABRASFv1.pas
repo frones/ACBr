@@ -96,7 +96,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrConsts, ACBrDFeUtil,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrConsts,
   ACBrNFSeXConversao;
 
 //==============================================================================
@@ -254,7 +254,7 @@ begin
       if UF = '' then
         UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
 
-      xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;
@@ -296,7 +296,7 @@ begin
       if UF = '' then
         UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
 
-      xMunicipio := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
 
       if UF = '' then
         UF := xUF;
@@ -705,11 +705,11 @@ begin
       if CodigoMunicipio = '' then
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcStr);
 
-      MunicipioPrestacaoServico := ObterNomeMunicipio(StrToIntDef(CodigoMunicipio, 0), xUF, '', False);
+      MunicipioPrestacaoServico := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
       MunicipioPrestacaoServico := MunicipioPrestacaoServico + '/' + xUF;
 
       MunicipioIncidencia := StrToIntDef(CodigoMunicipio, 0);
-      xMunicipioIncidencia := ObterNomeMunicipio(MunicipioIncidencia, xUF, '', False);
+      xMunicipioIncidencia := ObterNomeMunicipioUF(MunicipioIncidencia, xUF);
       xMunicipioIncidencia := xMunicipioIncidencia + '/' + xUF;
     end;
 

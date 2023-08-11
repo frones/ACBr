@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/2023
+-- Diversos --
+[*] Implementado a função ObterNomeMunicipioUF para substituir a ObterNomeMunicipio,
+    a nova função se utiliza do arquivo ACBrNFSeXServicos para obter tanto o nome 
+    quanto a UF de um municipio em vez de acessar o webservice do IBGE para o mesmo 
+    fim, evitando assim erros quando o IBGE estiver em manutenção.
+   Por: Italo Giurizzato Junior
+
 10/08/2023
 -- ACBrNFSeXServicos --
 [*] A cidade de Santo Antonio de Padua/RJ trocou a URL, o provedor continua o mesmo: Pronim.

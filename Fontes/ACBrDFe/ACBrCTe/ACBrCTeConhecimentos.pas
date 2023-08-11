@@ -616,7 +616,7 @@ end;
 
 function Conhecimento.GerarCTeIni: String;
 var
-  I, J: integer;
+  I, J, K: integer;
   sSecao: string;
   INIRec: TMemIniFile;
   IniCTe: TStringList;
@@ -969,6 +969,37 @@ begin
           end;
         end;
 
+        for i := 0 to infCTeNorm.docAnt.emiDocAnt.Count - 1 do
+        begin
+          sSecao := 'emiDocAnt'+ IntToStrZero(I+1, 3);
+
+          INIRec.WriteString(sSecao, 'CNPJCPF', infCTeNorm.docAnt.emiDocAnt[i].CNPJCPF);
+          INIRec.WriteString(sSecao, 'IE', infCTeNorm.docAnt.emiDocAnt[i].IE);
+          INIRec.WriteString(sSecao, 'UF', infCTeNorm.docAnt.emiDocAnt[i].UF);
+          INIRec.WriteString(sSecao, 'xNome', infCTeNorm.docAnt.emiDocAnt[i].xNome);
+
+          for j := 0 to infCTeNorm.docAnt.emiDocAnt[i].idDocAnt.Count - 1 do
+          begin
+            for k := 0 to infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap.Count - 1 do
+            begin
+              sSecao := 'idDocAntPa'+ IntToStrZero(I+1, 3) + IntToStrZero(K+1, 3);
+
+              INIRec.WriteString(sSecao, 'tpDoc', TpDocumentoAnteriorToStr(infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].tpDoc));
+              INIRec.WriteString(sSecao, 'serie', infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].serie);
+              INIRec.WriteString(sSecao, 'subser', infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].subser);
+              INIRec.WriteString(sSecao, 'nDoc', infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].nDoc);
+              INIRec.WriteDate(sSecao, 'dEmi', infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].dEmi);
+            end;
+
+            for k := 0 to infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntEle.Count - 1 do
+            begin
+              sSecao := 'idDocAntEle' + IntToStrZero(I+1,3) + IntToStrZero(K+1, 3);
+
+              INIRec.WriteString(sSecao, 'chCTe', infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntEle[k].chCTe);
+            end;
+          end;
+        end;
+
         //CT-e OS
         if TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.ModeloDF = moCTeOS then
         begin
@@ -1089,6 +1120,7 @@ begin
           begin
             INIRec.WriteString(sSecao, 'chave', chave);
             INIRec.WriteString(sSecao, 'PIN', PIN);
+            INIRec.WriteDate(sSecao, 'dPrev', dPrev);
           end;
         end;
 

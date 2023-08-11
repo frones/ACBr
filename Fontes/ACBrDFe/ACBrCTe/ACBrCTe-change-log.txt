@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/2023
+-- ACBrCTeConhecimentos --
+[*] Adiciona na rotina de geração de INI as seções emiDocAnt, idDocAntPap e idDocAntEle.
+  Por: Diego Folieni
+
 08/08/2023
 -- ACBrCTeConhecimentos --
 [+] Adiciona na rotina de geração do INI o campo tpAmb no grupo Ide.

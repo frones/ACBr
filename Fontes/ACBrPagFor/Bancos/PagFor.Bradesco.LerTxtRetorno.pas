@@ -45,6 +45,8 @@ type
 
   TArquivoR_Bradesco = class(TArquivoR_CNAB240)
   protected
+    procedure LerRegistro1(I: Integer); override;
+
     procedure LerSegmentoA(I: Integer); override;
 
     procedure LerSegmentoJ(I: Integer; var LeuRegistroJ: boolean); override;
@@ -56,6 +58,74 @@ uses
   ACBrPagForConversao;
 
 { TArquivoR_Bradesco }
+
+procedure TArquivoR_Bradesco.LerRegistro1(I: Integer);
+var
+  mOk: Boolean;
+begin
+  Linha := ArquivoTXT.Strings[I];
+
+  PagFor.Lote.New;
+
+  with PagFor.Lote.Last.Registro1.Servico do
+  begin
+    Operacao := StrToTpOperacao(mOk, LerCampo(Linha, 9, 1, tcStr));
+    TipoServico := StrToTpServico(mOk, LerCampo(Linha, 10, 2, tcStr));
+    FormaLancamento := StrToFmLancamento(mOk, LerCampo(Linha, 12, 2, tcStr));
+  end;
+
+  with PagFor.Lote.Last.Registro1.Empresa do
+  begin
+    Inscricao.Tipo := StrToTpInscricao(mOk, LerCampo(Linha, 18, 1, tcStr));
+    Inscricao.Numero := LerCampo(Linha, 19, 14, tcStr);
+    Convenio := LerCampo(Linha, 33, 20, tcStr);
+
+    ContaCorrente.Agencia.Codigo := LerCampo(Linha, 53, 5, tcInt);
+    ContaCorrente.Agencia.DV := LerCampo(Linha, 58, 1, tcStr);
+    ContaCorrente.Conta.Numero := LerCampo(Linha, 59, 12, tcInt64);
+    ContaCorrente.Conta.DV := LerCampo(Linha, 71, 1, tcStr);
+    ContaCorrente.DV := LerCampo(Linha, 72, 1, tcStr);
+
+    Nome := LerCampo(Linha, 73, 30, tcStr);
+  end;
+
+  PagFor.Lote.Last.Registro1.Informacao1 := LerCampo(Linha, 103, 40, tcStr);
+
+  case PagFor.Lote.Last.Registro1.Servico.TipoServico of
+    tsConciliacaoBancaria:
+      begin
+        with PagFor.Lote.Last.Registro1 do
+        begin
+          Data := LerCampo(Linha, 143, 8, tcDat);
+          Valor := LerCampo(Linha, 151, 18, tcDe2);
+          Situacao := LerCampo(Linha, 169, 1, tcStr);
+          Status := LerCampo(Linha, 170, 1, tcStr);
+          TipoMoeda := LerCampo(Linha, 171, 3, tcStr);
+          Sequencia := LerCampo(Linha, 174, 5, tcInt);
+        end;
+      end;
+  else
+    begin
+      with PagFor.Lote.Last.Registro1.Endereco do
+      begin
+        Logradouro := LerCampo(Linha, 143, 30, tcStr);
+        Numero := LerCampo(Linha, 173, 5, tcInt);
+        Complemento := LerCampo(Linha, 178, 15, tcStr);
+        Cidade := LerCampo(Linha, 193, 20, tcStr);
+        CEP := LerCampo(Linha, 213, 8, tcInt);
+        Estado := LerCampo(Linha, 221, 2, tcStr);
+      end;
+    end;
+  end;
+
+  with PagFor.Lote.Last.Registro1 do
+  begin
+    CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
+    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
+
+    GerarAvisos(CodOcorrencia, DescOcorrencia, '1', '', '');
+  end;
+end;
 
 procedure TArquivoR_Bradesco.LerSegmentoA(I: Integer);
 var

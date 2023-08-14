@@ -447,6 +447,8 @@ type
     FSequencia: Integer;
     FTipoCompromisso: Integer;
     FCodigoCompromisso: Integer;
+    FCodOcorrencia: string;
+    FDescOcorrencia: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -469,6 +471,9 @@ type
     // Usado pela Caixa
     property TipoCompromisso: Integer read FTipoCompromisso write FTipoCompromisso;
     property CodigoCompromisso: Integer read FCodigoCompromisso write FCodigoCompromisso;
+    // Usado pelo Bradesco
+    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   // Estrutura do Registro 5 utilizado para os Serviços

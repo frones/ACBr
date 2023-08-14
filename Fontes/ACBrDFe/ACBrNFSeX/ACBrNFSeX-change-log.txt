@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Limeira do Oeste/MG, provedor GovDigital
+   Por: Gleiko Carmelo
+
 11/08/2023
 -- NFSeBrasil.Provider --
 [*] Possível solução para o erro de conexão.

@@ -894,10 +894,13 @@ begin
       if (SL.Count > 0) then
       begin
         Restricoes := StringReplace(Trim(SL.Text), sLineBreak, ';', [rfReplaceAll]);
+        if Restricoes <> '' then
+          Restricoes := '['+Restricoes+']';
         if fParamAdicConfig.Count > 0 then
            Restricoes := Restricoes + ';'+ Trim(fParamAdicConfig.Text);
+
         if (Restricoes <> '') then
-          fParamAdicFuncao.Add( '['+Restricoes+']' );
+          fParamAdicFuncao.Add( Restricoes );
       end;
     finally
       SL.Free;

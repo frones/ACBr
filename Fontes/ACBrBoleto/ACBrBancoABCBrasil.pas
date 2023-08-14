@@ -77,7 +77,7 @@ type
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): string; override;
   end;
 
@@ -1222,7 +1222,7 @@ var
   CodOcorrencia: Integer;
 begin
   Result := '';
-  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia), 0);
+  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia), 0);
 
   case CodOcorrencia of
     01: Result := '01-Título Não Existe';
@@ -1334,7 +1334,7 @@ begin
   end;
 end;
 
-function TACBrBancoABCBrasil.TipoOCorrenciaToCod(
+function TACBrBancoABCBrasil.TipoOcorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): string;
 begin
   Result := '';
@@ -1399,7 +1399,7 @@ function TACBrBancoABCBrasil.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: 
 var
   vlCodOcorrencia: string;
 begin
-  vlCodOcorrencia := TipoOCorrenciaToCod(TipoOcorrencia);
+  vlCodOcorrencia := TipoOcorrenciaToCod(TipoOcorrencia);
 
   if (vlCodOcorrencia = '02') or    //Entrada Confirmada
     (vlCodOcorrencia = '03') or     //Entrada Rejeitada

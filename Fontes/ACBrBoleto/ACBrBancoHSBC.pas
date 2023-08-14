@@ -64,7 +64,7 @@ type
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
@@ -630,7 +630,7 @@ Var
   CodOcorrencia: Integer;
 Begin
 
-  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia), 0);
+  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia), 0);
 
   Case CodOcorrencia Of
     02: Result := '02-Entrada Confirmada';
@@ -727,7 +727,7 @@ begin
   end;
 end;
 
-Function TACBrBancoHSBC.TipoOCorrenciaToCod(
+Function TACBrBancoHSBC.TipoOcorrenciaToCod(
   Const TipoOcorrencia: TACBrTipoOcorrencia): String;
 Begin
   Case TipoOcorrencia Of

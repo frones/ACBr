@@ -1002,7 +1002,7 @@ type
     function TipoDescontoToString(const AValue: TACBrTipoDesconto):string; virtual;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String; overload; virtual;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String; overload; virtual;
 
@@ -1093,7 +1093,7 @@ type
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String;
 
     function CompOcorrenciaOutrosDadosToDescricao(const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String; virtual;
@@ -4545,9 +4545,9 @@ begin
    Result:= BancoClass.CodOcorrenciaToTipo(CodOcorrencia);
 end;
 
-function TACBrBanco.TipoOCorrenciaToCod (const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
+function TACBrBanco.TipoOcorrenciaToCod (const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
 begin
-   Result:= BancoClass.TipoOCorrenciaToCod(TipoOcorrencia);
+   Result:= BancoClass.TipoOcorrenciaToCod(TipoOcorrencia);
 end;
 
 function TACBrBanco.CompOcorrenciaOutrosDadosToDescricao(
@@ -5302,7 +5302,7 @@ begin
   Result := toRemessaRegistrar;
 end ;
 
-function TACBrBancoClass.TipoOCorrenciaToCod(const TipoOcorrencia : TACBrTipoOcorrencia) : String;
+function TACBrBancoClass.TipoOcorrenciaToCod(const TipoOcorrencia : TACBrTipoOcorrencia) : String;
 begin
   Result := '';
 end ;
@@ -6470,7 +6470,7 @@ end;
 { TACBrOcorrencia }
 function TACBrOcorrencia.GetCodigoBanco: String;
 begin
-   Result:= fpAowner.AcbrBoleto.Banco.TipoOCorrenciaToCod(Tipo);
+   Result:= fpAowner.AcbrBoleto.Banco.TipoOcorrenciaToCod(Tipo);
 end;
 
 function TACBrOcorrencia.GetDescricao: String;

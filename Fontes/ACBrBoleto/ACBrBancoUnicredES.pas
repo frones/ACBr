@@ -65,7 +65,7 @@ type
     Procedure LerRetorno240(ARetorno:TStringList); override;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia; override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; Override;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; Override;
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia : TACBrTipoOcorrencia ; CodMotivo : Integer) : String ; override;
     function CodComplementoMovimento(const ACodMotivo: String): String;
@@ -824,7 +824,7 @@ var
   CodOcorrencia: Integer;
 begin
   Result        := EmptyStr;
-  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia),0);
 
   case CodOcorrencia of
     01: Result := '01-Título Protestado Pago em Cartório';
@@ -867,7 +867,7 @@ begin
   end;
 end;
 
-function TACBrBancoUnicredES.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+function TACBrBancoUnicredES.TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
   Result := '';
 

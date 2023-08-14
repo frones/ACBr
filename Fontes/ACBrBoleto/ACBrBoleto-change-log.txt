@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+14/08/2023
+[*] TK-4143-1 Remoção de Warnigs e Hints
+por : Victor H Gonzales - Pandaaa
+
 07/08/2023
 [*]TK-4260 ACBrBoletoRet_Sicredi_APIV2 - Ajustes para verificao EstadoTituloCobranca no retorno 
 https://www.projetoacbr.com.br/forum/topic/73412-corre%C3%A7%C3%A3o-da-implementa%C3%A7%C3%A3o-da-opera%C3%A7%C3%A3o-tpconsultadetalhe-api-v2-do-sicredi/

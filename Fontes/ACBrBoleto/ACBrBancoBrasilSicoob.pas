@@ -65,7 +65,7 @@ type
     function TipoOcorrenciaToDescricao(
       const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     procedure LerRetorno240(ARetorno: TStringList); override;
     function CodMotivoRejeicaoToDescricao(
       const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
@@ -161,7 +161,7 @@ begin
    Result:= ANossoNumero;
 end;
 
-function TACBrBancoBrasilSICOOB.TipoOCorrenciaToCod (
+function TACBrBancoBrasilSICOOB.TipoOcorrenciaToCod (
    const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
 begin
   case TipoOcorrencia of
@@ -204,7 +204,7 @@ var
  CodOcorrencia: Integer;
 begin
 
-  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia),0);
 
   Case CodOcorrencia of
    {Segundo manual técnico CNAB400 Abril/2012 BB pag.20 os comandos são os seguintes:}

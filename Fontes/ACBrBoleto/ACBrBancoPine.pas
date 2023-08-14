@@ -71,7 +71,7 @@ type
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
   end;
 
@@ -627,7 +627,7 @@ var
   CodOcorrencia: Integer;
 begin
    Result := '';
-   CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+   CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia),0);
 
    // Ver oque seria 01 - confirma entrada CIP  /05 Campo Livre Alterado
    // Tarifa Sobre Baixas – Mês Anterior /98 Tarifa Sobre Entradas – Mês Anterior
@@ -696,7 +696,7 @@ begin
 
 end;
 
-function TACBrBancoPine.TipoOCorrenciaToCod(
+function TACBrBancoPine.TipoOcorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
    Result := '';

@@ -68,7 +68,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String; override;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
   end;
@@ -1428,7 +1428,7 @@ function TACBrBanrisul.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipo
 var
  CodOcorrencia: Integer;
 begin
-    CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+    CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia),0);
 
     if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
     begin
@@ -1506,7 +1506,7 @@ begin
 end;
  
 
-function TACBrBanrisul.TipoOCorrenciaToCod(
+function TACBrBanrisul.TipoOcorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
   Result := '';

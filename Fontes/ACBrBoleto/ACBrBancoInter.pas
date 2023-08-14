@@ -63,7 +63,7 @@ type
     Procedure LerRetorno240(ARetorno:TStringList); override;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): string; override;
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
   end;
@@ -408,7 +408,7 @@ var
   CodOcorrencia: Integer;
 begin
   Result := '';
-  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia), 0);
+  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia), 0);
 
   if (Result <> '') then
     Exit;
@@ -433,7 +433,7 @@ begin
   end;
 end;
 
-function TACBrBancoInter.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string;
+function TACBrBancoInter.TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string;
 begin
   Result := '';
   case TipoOcorrencia of

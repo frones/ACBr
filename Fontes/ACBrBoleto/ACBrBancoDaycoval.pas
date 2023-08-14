@@ -62,7 +62,7 @@ type
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function CalcularNomeArquivoRemessa : String; override;
@@ -747,7 +747,7 @@ function TACBrBancoDaycoval.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACB
 var
   CodOcorrencia: Integer;
 begin
-  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia), 0);
+  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia), 0);
 
   case CodOcorrencia of
     01: Result := '01 Entrada Confirmada na CIP';
@@ -846,7 +846,7 @@ begin
   end;
 end;
 
-function TACBrBancoDaycoval.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+function TACBrBancoDaycoval.TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
   case TipoOcorrencia of
     toRetornoEntradaConfirmadaNaCIP             : Result := '01';

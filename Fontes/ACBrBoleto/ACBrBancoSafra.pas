@@ -76,7 +76,7 @@ type
       const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: integer): TACBrTipoOcorrencia;
       override;
-    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string;
+    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string;
       override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;
       CodMotivo: integer): string; override;
@@ -1269,7 +1269,7 @@ begin
 
 end;
 
-function TACBrBancoSafra.TipoOCorrenciaToCod(
+function TACBrBancoSafra.TipoOcorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): string;
 begin
   case TipoOcorrencia of

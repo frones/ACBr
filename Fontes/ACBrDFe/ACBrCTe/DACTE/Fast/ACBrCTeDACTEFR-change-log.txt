@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/2023
+-- ACBrCTeDACTEFR --
+[*] Ajustes para a impressão correta das chaves dos CT-e complementados que
+    na versão 4.00 é uma lista.
+  Por: Vanderlei Soares/Italo Giurizzato Junior
+
 04/08/2023
 -- ACBrCTeDACTEFR --
 [+] Implementado a impressão dos eventos: Inclusão de Condutor e Cancelamento de Insucesso na Entrega

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/08/2023
+-- ACBrNFSeXLerXml --
+[*] Altera a ObterNomeMunicipioUF para que altere também a UF.
+   Por: Diego Folieni
 -- Giap.GravarXml/Giap.LerXml --
 [*] Ajustes para gravar e ler o XML com o caracter correto de quebra de linha
     usado pelo provedor.

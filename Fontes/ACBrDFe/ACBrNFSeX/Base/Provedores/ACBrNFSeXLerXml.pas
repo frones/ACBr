@@ -63,7 +63,7 @@ type
     function NormatizarXml(const aXml: string): string; virtual;
     function NormatizarAliquota(const Aliquota: Double): Double;
     function LerLinkURL: string;
-    function ObterNomeMunicipioUF(ACodigoMunicipio: Integer; AUF: string): string;
+    function ObterNomeMunicipioUF(ACodigoMunicipio: Integer; var xUF: string): string;
 
     procedure VerificarSeConteudoEhLista(const aDiscriminacao: string);
     procedure LerListaJson(const aDiscriminacao: string);
@@ -148,14 +148,13 @@ begin
 {$EndIf}
 end;
 
-function TNFSeRClass.ObterNomeMunicipioUF(ACodigoMunicipio: Integer;
-  AUF: string): string;
+function TNFSeRClass.ObterNomeMunicipioUF(ACodigoMunicipio: Integer; var xUF: string): string;
 var
   CodIBGE: string;
 begin
   CodIBGE := IntToStr(ACodigoMunicipio);
 
-  AUF := IniParams.ReadString(CodIBGE, 'UF', '');
+  xUF := IniParams.ReadString(CodIBGE, 'UF', '');
   Result := IniParams.ReadString(CodIBGE, 'Nome', '');
 end;
 

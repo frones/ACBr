@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/08/2023
+-- Giap.GravarXml/Giap.LerXml --
+[*] Ajustes para gravar e ler o XML com o caracter correto de quebra de linha
+    usado pelo provedor.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Limeira do Oeste/MG, provedor GovDigital
    Por: Gleiko Carmelo

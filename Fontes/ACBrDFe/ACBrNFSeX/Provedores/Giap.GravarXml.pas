@@ -231,7 +231,8 @@ begin
   Result.AppendChild(xmlNode);
 
   Result.AppendChild(AddNode(tcStr, '#1', 'obs', 1, 4000, 1,
-                                                   NFSe.OutrasInformacoes, ''));
+    StringReplace(NFSe.OutrasInformacoes, ';', FpAOwner.ConfigGeral.QuebradeLinha,
+                                                          [rfReplaceAll]), ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pisPasep', 1, 15, 1,
                                             NFSe.Servico.Valores.ValorPis, ''));

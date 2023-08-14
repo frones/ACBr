@@ -213,7 +213,7 @@ begin
 
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('obs'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     LerItem(AuxNode);
 
@@ -289,25 +289,19 @@ begin
 end;
 
 function TNFSeR_Giap.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
-var
-  AuxNode: TACBrXmlNode;
 begin
   Result := True;
   NFSe.SituacaoNfse := snNormal;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('notaFiscal');
-
-  if AuxNode = nil then Exit;
-
-  LerDadosPrestador(AuxNode);
+  LerDadosPrestador(ANode);
 
   NFSe.InfID.ID := OnlyNumber(NFSe.Numero);
 
-  LerDadosServico(AuxNode);
-  LerDadosTomador(AuxNode);
-  LerDetalheServico(AuxNode);
+  LerDadosServico(ANode);
+  LerDadosTomador(ANode);
+  LerDetalheServico(ANode);
 end;
 
 function TNFSeR_Giap.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

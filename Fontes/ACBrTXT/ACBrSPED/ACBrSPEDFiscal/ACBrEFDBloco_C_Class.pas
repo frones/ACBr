@@ -3251,8 +3251,11 @@ var
 begin
   if Assigned( RegC001.RegistroC495 ) then
   begin
-     if (DT_INI >= EncodeDate(2014,01,01)) and
-     ( FBloco_0.Registro0000.UF = 'BA') then
+     if
+      (RegC001.RegistroC495.Count > 0) and
+      (DT_INI >= EncodeDate(2014,01,01)) and
+      (FBloco_0.Registro0000.UF = 'BA')
+     then
        Check(False, 'A partir de 01/01/2014, os contribuintes situados na Bahia obrigados a este registro devem apresentar o registro C425.');
                         ;
      for intFor := 0 to RegC001.RegistroC495.Count - 1 do

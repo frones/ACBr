@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/2023
+-- ACBrPIXCD --
+[*] Remoção da fução "Trim()" no momento de setar o conteúdo do PFX, pra não ocorrer 
+    perca de caracteres de controle.
+
 04/08/2023
 -- ACBrPIXPSPBancoDoBrasil --
 [*] Alteração do ResultCode recebido ao solicitar uma devolução de Pix (Método PUT ao endpoint /pix)

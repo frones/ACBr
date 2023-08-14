@@ -889,7 +889,7 @@ end;
 
 procedure TACBrPSPCertificate.SetPFX(aValue: AnsiString);
 begin
-  fPFX := Trim(aValue);
+  fPFX := aValue;
   fArquivoPFX := EmptyStr;
 end;
 

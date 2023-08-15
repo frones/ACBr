@@ -30,8 +30,7 @@ namespace ACBrLib.CTe
             ValoresPrestacaoServico = new ValoresPrestacaoServicoCTe();
             ComponentesValorPrestacao = new ComponentesValorPrestacaoCTe();
             InformacoesRelativasImpostos = new InformacoesRelativasImpostosCTe();
-            GrupoInformacoesNormalSubstituto = new GrupoInformacoesNormalSubstitutoCTe();
-            DetalhamentoComplementado = new DetalhamentoComplementadoCTe();
+            GrupoInformacoesNormalSubstituto = new GrupoInformacoesNormalSubstitutoCTe();           
             DetalhamentoAnulacao = new DetalhamentoAnulacaoCTe();
             InformacoesSuplementares = new InformacoesSuplementaresCTe();
             Rodoviario = new RodoviarioCTe();
@@ -84,7 +83,7 @@ namespace ACBrLib.CTe
 
         public GrupoInformacoesNormalSubstitutoCTe GrupoInformacoesNormalSubstituto { get; }
 
-        public DetalhamentoComplementadoCTe DetalhamentoComplementado { get; }
+        public List<DetalhamentoComplementadoCTe> DetalhamentoComplementado { get; } = new List<DetalhamentoComplementadoCTe>();
 
         public DetalhamentoAnulacaoCTe DetalhamentoAnulacao { get; }
 
@@ -216,7 +215,11 @@ namespace ACBrLib.CTe
                 iniData.WriteToIni(chaveNFe, $"infNFe{i + 1:000}");
             }
 
-            iniData.WriteToIni(DetalhamentoComplementado, "infCteComp");
+            for (var i = 0; i < DetalhamentoComplementado.Count; i++)
+            {
+                iniData.WriteToIni(DetalhamentoComplementado[i], $"infCteComp{i + 1:00}");
+            }           
+            
             iniData.WriteToIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.WriteToIni(InformacoesSuplementares, "infCTeSupl");
             
@@ -351,7 +354,16 @@ namespace ACBrLib.CTe
                 if (dup != null) GrupoInformacoesNormalSubstituto.cobr.dup.Add(dup);
             } while(dup != null);
 
-            iniData.ReadFromIni(DetalhamentoComplementado, "infCteComp");
+            a = 0;
+            DetalhamentoComplementadoCTe detalhamentoComplementado;
+            do
+            {
+                a++;
+                detalhamentoComplementado = iniData.ReadFromIni<DetalhamentoComplementadoCTe>($"infCteComp{a:00}");
+
+                if (detalhamentoComplementado != null) DetalhamentoComplementado.Add(detalhamentoComplementado);
+            } while(detalhamentoComplementado!= null);
+                        
             iniData.ReadFromIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.ReadFromIni(InformacoesSuplementares, "infCTeSupl");
             iniData.ReadFromIni(ProtCTe, "procCTe");

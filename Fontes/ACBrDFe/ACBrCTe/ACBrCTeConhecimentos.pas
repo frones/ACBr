@@ -1251,6 +1251,13 @@ begin
         end;
       end;
 
+      for i := 0 to infCteComp10.Count - 1 do
+      begin
+        sSecao := 'InfCteComp' + IntToStrZero(i, 2);
+
+        INIRec.WriteString(sSecao, 'chCTe', infCteComp10[i].chCTe);
+      end;
+
       for i := 0 to autXML.Count - 1 do
       begin
         sSecao := 'autXML' + IntToStrZero(I+1, 2);
@@ -1266,14 +1273,17 @@ begin
       INIRec.WriteString('infRespTec', 'email', infRespTec.email);
       INIRec.WriteString('infRespTec', 'fone', infRespTec.fone);
 
-      INIRec.WriteString('procCTe', 'tpAmb', TpAmbToStr(procCTe.tpAmb));
-      INIRec.WriteString('procCTe', 'verAplic', procCTe.verAplic);
-      INIRec.WriteString('procCTe', 'chCTe', procCTe.chCTe);
-      INIRec.WriteString('procCTe', 'dhRecbto', DateTimeToStr(procCTe.dhRecbto));
-      INIRec.WriteString('procCTe', 'nProt', procCTe.nProt);
-      INIRec.WriteString('procCTe', 'digVal', procCTe.digVal);
-      INIRec.WriteString('procCTe', 'cStat', IntToStr(procCTe.cStat));
-      INIRec.WriteString('procCTe', 'xMotivo', procCTe.xMotivo);
+      if (procCTe.cStat <> 0) then
+      begin
+        INIRec.WriteString('procCTe', 'tpAmb', TpAmbToStr(procCTe.tpAmb));
+        INIRec.WriteString('procCTe', 'verAplic', procCTe.verAplic);
+        INIRec.WriteString('procCTe', 'chCTe', procCTe.chCTe);
+        INIRec.WriteString('procCTe', 'dhRecbto', DateTimeToStr(procCTe.dhRecbto));
+        INIRec.WriteString('procCTe', 'nProt', procCTe.nProt);
+        INIRec.WriteString('procCTe', 'digVal', procCTe.digVal);
+        INIRec.WriteString('procCTe', 'cStat', IntToStr(procCTe.cStat));
+        INIRec.WriteString('procCTe', 'xMotivo', procCTe.xMotivo);
+      end;
     end;
 
   finally

@@ -123,6 +123,9 @@
 	  <Compile Include="..\Shared\CTe\InfServVincCTe.cs" Link="CTe\InfServVincCTe.cs" />
 	  <Compile Include="..\Shared\CTe\InfCTeMultimodalCTe.cs" Link="CTe\InfCTeMultimodalCTe.cs" />
 	  <Compile Include="..\Shared\CTe\ProtCTe.cs" Link="CTe\ProtCTe.cs" />
+	  <Compile Include="..\Shared\CTe\ComponentesValGTVe.cs" Link="CTe\ComponentesValGTVe.cs" />
+	  <Compile Include="..\Shared\CTe\InfGTVe.cs" Link="CTe\InfGTVe.cs" />
+	  <Compile Include="..\Shared\CTe\TipoComponenteGTVe.cs" Link="CTe\TipoComponenteGTVe.cs" />	  
 
 	  <Compile Include="..\Shared\Respostas\ConsultaCTeResposta.cs" Link="Respostas\ConsultaCTeResposta.cs" />
 

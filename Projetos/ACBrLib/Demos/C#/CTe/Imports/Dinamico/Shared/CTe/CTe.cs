@@ -227,6 +227,18 @@ namespace ACBrLib.CTe
 
             //CTe-OS
             if (Tomador.CNPJCPF != "") iniData.WriteToIni(Tomador, "toma");
+
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.infGTVe.Count; i++)
+            {
+                var infGTVe = GrupoInformacoesNormalSubstituto.infGTVe[i];
+                iniData.WriteToIni(infGTVe, $"infGTVe{i + 1:000}");
+
+                for (var j = 0; j < infGTVe.Comp.Count; j++)
+                {
+                    var Comp = infGTVe.Comp[j];
+                    iniData.WriteToIni(Comp, $"infGTVeComp{i + 1:000}{j + 1:000}");
+                }
+            }
             
             return iniData;
         }
@@ -370,6 +382,31 @@ namespace ACBrLib.CTe
 
             //CTe-OS
             iniData.ReadFromIni(Tomador, "toma");
+
+            a = 0;
+            InfGTVe infGTVe;
+            do
+            {
+                a ++;
+                infGTVe = iniData.ReadFromIni<InfGTVe>($"infGTVe{a:000}");
+
+                if (infGTVe != null)
+                {
+                    var b = 0;
+                    ComponentesValGTVe compValGTVe;
+                    do
+                    {
+                        b++;
+                        compValGTVe = iniData.ReadFromIni<ComponentesValGTVe>($"infGTVeComp{a: 000}{b: 000}");
+
+                        if (compValGTVe != null) infGTVe.Comp.Add(compValGTVe);
+
+                    } while (compValGTVe != null);
+
+                    GrupoInformacoesNormalSubstituto.infGTVe.Add(infGTVe);
+                }
+
+            } while(infGTVe != null);
         }
 
         public static CTe Load(string conteudo) => ACBrIniFile.Parse(conteudo);

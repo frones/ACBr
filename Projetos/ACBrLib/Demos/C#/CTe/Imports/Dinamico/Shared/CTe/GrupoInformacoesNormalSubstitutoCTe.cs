@@ -24,5 +24,7 @@ namespace ACBrLib.CTe
         public InfGlobalizadoCTe infGlobalizado { get; set; } = new InfGlobalizadoCTe();
 
         public InfServVincCTe infServVinc { get; set; } = new InfServVincCTe();
+
+        public List<InfGTVe> infGTVe { get; } = new List<InfGTVe>();
     }
 }

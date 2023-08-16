@@ -120,6 +120,7 @@ begin
   NFSe.Link       := StringReplace(NFSe.Link, '&amp;', '&', [rfReplaceAll]);
   NFSe.NumeroLote := ObterConteudo(AuxNode.Childrens.FindAnyNs('LOTE'), tcStr);
   NFSe.Numero     := ObterConteudo(AuxNode.Childrens.FindAnyNs('COD'), tcStr);
+  NFSe.Situacao   := ObterConteudo(AuxNode.Childrens.FindAnyNs('SITCOD'), tcInt);
 
   NFSe.InfID.ID := NFSe.Numero;
 

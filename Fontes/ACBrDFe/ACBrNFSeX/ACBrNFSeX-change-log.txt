@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/08/2023
+-- AssessorPublico.LerXml --
+[*] Incluída a leitura da tag SITCOD - Situação da nota.
+   Por: Verissimo
 -- ACBrNFSeXServicos --
 [*] A cidade de Caicara/RS, trocou de provedor, agora é IPM.
    Por: Farol TI

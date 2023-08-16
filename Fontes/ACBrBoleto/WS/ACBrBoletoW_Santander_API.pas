@@ -91,8 +91,8 @@ type
   end;
 const
   C_URL = 'https://trust-open.api.santander.com.br/collection_bill_management/v2';
-  C_URL_HOM = 'https://trust-open-h.api.santander.com.br/collection_bill_management/v2';
-  C_URL_OAUTH_HOM = 'https://trust-open-h.api.santander.com.br/auth/oauth/v2/token';
+  C_URL_HOM = 'https://trust-sandbox.api.santander.com.br/collection_bill_management/v2';
+  C_URL_OAUTH_HOM = 'https://trust-sandbox.api.santander.com.br/auth/oauth/v2/token';
   C_URL_OAUTH_PROD = 'https://trust-open.api.santander.com.br/auth/oauth/v2/token';
 
 implementation

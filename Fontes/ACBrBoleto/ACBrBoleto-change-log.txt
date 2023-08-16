@@ -56,7 +56,9 @@ Por : MatheusHenrique9
 [+]TK-4079 ACBrBancoBradescoMoneyPlus - Compatibilidade Arq Remessa com layout Grafeno - Se LayoutVersaoArquivo = 2
 https://www.projetoacbr.com.br/forum/topic/72719-ajuste-banco-moneyplys-cnb400/
 Por: hugo_fabricio / Daniel Morais
-
+[+]TK-4079 ACBrBancoBradescoMoneyPlus - Compatibilidade Arq Remessa com layout Grafeno - Se LayoutVersaoArquivo = 2
+https://www.projetoacbr.com.br/forum/topic/72719-ajuste-banco-moneyplys-cnb400/
+Por: hugo_fabricio / Daniel Morais
 14/08/2023
 [*] TK-4143-1 Remoção de Warnigs e Hints
 por : Victor H Gonzales - Pandaaa

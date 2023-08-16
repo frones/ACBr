@@ -330,6 +330,8 @@ var
   sProtesto, sTipoSacado, MensagemCedente, aConta, aDigitoConta: String;
   aCarteira, wLinha, sNossoNumero, sDigitoNossoNumero, sTipoBoleto: String;
   aPercMulta: Double;
+  LBanco, LTipoEmissaoBoleto, LAvisoDebitoAuto, LQtdePagamento, LInstrucoesProtesto,
+  LMensagemCedente : String;
 
 begin
    with ACBrTitulo do
@@ -359,43 +361,74 @@ begin
      { Converte valor em moeda para percentual, pois o arquivo só permite % }
      aPercMulta := ConverterMultaPercentual(ACBrTitulo);
 
+      if LayoutVersaoArquivo = 002 then // Grafeno
+      begin
+        LBanco              := '274';
+        LQtdePagamento      := '01';
+      end
+      else
+      begin
+        LTipoEmissaoBoleto  := sTipoBoleto;
+        LAvisoDebitoAuto    := '2';
+        LInstrucoesProtesto := sProtesto;
+        LMensagemCedente    := PadRight( MensagemCedente, 60 );
+      end;
+
+
      with ACBrBoleto do
      begin
        if Mensagem.Text <> '' then
           MensagemCedente:= Mensagem[0];
 
        wLinha:= '1'                                            +  // 001 a 001 - ID Registro
-       StringOfChar( '0', 19)                                  +  // 002 a 020 - Dados p/ Débito Automático
-       '0'+ aCarteira                                          +
-       aAgencia                                                +
-       aConta                                                  +
-       aDigitoConta                                            +
-       PadRight( SeuNumero,25,' ')+'000'                       +  // 038 a 062 - Numero de Controle do Participante                                                   +  // 063 a 065 - Código do Banco
+       StringOfChar( '0', 05)                                  +  // 002 a 006 - Dados p/ Débito Automático
+       StringOfChar( '0', 01)                                  +  // 007 a 007 - Dados p/ Débito Automático
+       StringOfChar( '0', 05)                                  +  // 008 a 012 - Dados p/ Débito Automático
+       StringOfChar( '0', 07)                                  +  // 013 a 019 - Dados p/ Débito Automático
+       StringOfChar( '0', 01)                                  +  // 020 a 020 - Dados p/ Débito Automático
+       '0'                                                     +  // 021 a 021 - Zero
+       aCarteira                                               +  // 022 a 024 - Codigos da carteira
+       aAgencia                                                +  // 025 a 029 - Agencia beneficiario sem o digito
+       aConta                                                  +  // 030 a 036 - conta corrente
+       aDigitoConta                                            +  // 037 a 037 - Digito da conta
+       PadRight( SeuNumero,15,' ')                             +  // 038 a 052 - Numero de Controle do Participante
+       StringOfChar(' ', 10)                                   +  // 053 a 062 - Numero de Controle do Participante
+       PadRight(LBanco,3, '0')                                 +  // 063 a 065 - Código do Banco
        IfThen( PercentualMulta > 0, '2', '0')                  +  // 066 a 066 - Indica se exite Multa ou não
        IntToStrZero( round( aPercMulta * 100 ) , 4)            +  // 067 a 070 - Percentual de Multa formatado com 2 casas decimais
-       sNossoNumero + sDigitoNossoNumero                       +  // 071 a 082 - Identificação do Titulo + Digito de auto conferencia de número bancário
+       sNossoNumero                                            +  // 071 a 081 - Identificação do Titulo
+       sDigitoNossoNumero                                      +  // 082 a 082 - Digito Identificação do Titulo
        IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +  // 083 a 092 - Desconto Bonificação por dia
-       sTipoBoleto + ' ' + Space(10)                           +  // 093 a 104 - Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático +  Identificação Operação do Banco
-       ' ' + '2' + '  ' + sOcorrencia                          +  // 105 a 110 - Ind. Rateio de Credito + Aviso de Debito Aut.: 2=Não emite aviso + BRANCO + Ocorrência
+       PadRight(LTipoEmissaoBoleto,1)                          +  // 093 a 093 - Condicao para emissao da papeleta cobranca  Tipo Boleto(Quem emite)
+       ' '                                                     +  // 094 a 094 - Identificação se emite boleto para débito automático
+       Space(10)                                               +  // 095 a 104 - Identificação Operação do Banco
+       ' '                                                     +  // 105 a 105 - Ind. Rateio de Credito
+       PadRight(LAvisoDebitoAuto,1)                            +  // 106 a 106 - Aviso de Debito Aut.: 2=Não emite aviso
+       PadRight(LQtdePagamento,2)                              +  // 107 a 108 - BRANCO
+       sOcorrencia                                             +  // 109 a 110 - Ocorrência
        PadRight( NumeroDocumento,  10)                         +  // 111 a 120 - Numero Documento
        FormatDateTime( 'ddmmyy', Vencimento)                   +  // 121 a 126 - Data Vencimento
        IntToStrZero( Round( ValorDocumento * 100 ), 13)        +  // 127 a 139 - Valo Titulo
-       StringOfChar('0',8) + PadRight(sEspecie,2) + 'N'        +  // 140 a 150 - Zeros + Especie do documento + Idntificação(valor fixo N)
+       StringOfChar('0',3)                                     +  // 140 a 142 - Zeros
+       StringOfChar('0',5)                                     +  // 143 a 147 - zeros
+       PadRight(sEspecie,2)                                    +  // 148 a 149 - Especie do documento
+       'N'                                                     +  // 140 a 150 - Identificação(valor fixo N)
        FormatDateTime( 'ddmmyy', DataDocumento )               +  // 151 a 156 - Data de Emissão
-       sProtesto                                               +  // 157 a 160 - Intruções de Protesto
+       PadRight(LInstrucoesProtesto,4)                         +  // 157 a 160 - Intruções de Protesto (1 e 2 instrucoes)
        IntToStrZero( round(ValorMoraJuros * 100 ), 13)         +  // 161 a 173 - Valor a ser cobrado por dia de atraso
        IfThen(DataDesconto < EncodeDate(2000,01,01),'000000',
               FormatDateTime( 'ddmmyy', DataDesconto))         +  // 174 a 179 - Data limite para concessão desconto
        IntToStrZero( round( ValorDesconto * 100 ), 13)         +  // 180 a 192 - Valor Desconto
        IntToStrZero( round( ValorIOF * 100 ), 13)              +  // 193 a 205 - Valor IOF
        IntToStrZero( round( ValorAbatimento * 100 ), 13)       +  // 206 a 218 - Valor Abatimento
-       sTipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0') +  // 219 a 234 - Tipo de Inscrição + Número de Inscrição do Pagador
+       sTipoSacado                                             +  // 219 a 220 - Tipo de Inscrição 01 cpf 02 cnpj
+       PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')              +  // 221 a 234 - Tipo de Inscrição + Número de Inscrição do Pagador
        PadRight( Sacado.NomeSacado, 40, ' ')                   +  // 235 a 274 - Nome do Pagador
        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '  +
          Sacado.Complemento, 40)                               +  // 275 a 314
        PadRight( Sacado.Mensagem, 12, ' ')                     +  // 315 a 326 - 1ª Mensagem
-       PadRight( Sacado.CEP, 8 )                               +  // 327 a 334 - CEP
-       PadRight( MensagemCedente, 60 )                         +  // 335 a 394 - 2ª Mensagem
+       PadRight( Sacado.CEP, 8 )                               +  // 327 a 334 - CEP + Sufixo CEP
+       PadRight(LMensagemCedente,60)                           +  // 335 a 394 - 2ª Mensagem
        IntToStrZero(aRemessa.Count + 1, 6)                     ;  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
 
        aRemessa.Add(UpperCase(wLinha));
@@ -404,7 +437,24 @@ begin
        if not(wLinha = EmptyStr) then
          aRemessa.Add(UpperCase(wLinha));
 
-      end;
+       if (Sacado.SacadoAvalista.NomeAvalista <> '') and (LayoutVersaoArquivo = 002) then
+        begin
+          wLinha := '7'                                                     + // 001 a 001 - Identificação do registro detalhe (7)
+          PadRight(Sacado.SacadoAvalista.Logradouro, 45, ' ')               + // 002 a 046 - Endereço Sacador/Avalista
+          PadRight( Sacado.CEP, 8 )                                         + // 047 a 054 - CEP + Sufixo do CEP
+          PadRight(Sacado.SacadoAvalista.Cidade, 45, ' ')                   + // 055 a 074 - Cidade
+          PadRight(Sacado.SacadoAvalista.UF, 5, ' ')                        + // 075 a 076 - UF
+          PadRight('', 290, ' ')                                            + // 077 a 366 - Reserva
+          PadLeft(ACBrTitulo.Carteira, 3, '0')                              + // 367 a 369 - Carteira
+          PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Agencia), 5, '0')+ // 370 a 374 - Agência mantenedora da conta
+          PadLeft(ACBrBoleto.Cedente.conta, 7, '0')                         + // 375 a 381 - Número da Conta Corrente
+          Padleft(ACBrBoleto.Cedente.ContaDigito, 1 , '0')                  + // 382 a 382 - Dígito Verificador da Conta Alfa
+          PadLeft(NossoNumero, 11, '0')                                     + // 383 a 393 - Nosso Número
+          PadLeft(sDigitoNossoNumero ,1,'0')                                + // 394 a 394 - Digito Nosso Número
+          IntToStrZero( ARemessa.Count + 1, 6);                               // 395 a 400 - Número sequencial do registro
+          ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+        end;
+     end;
    end;
 
 end;

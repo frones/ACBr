@@ -101,6 +101,7 @@ begin
    fpNumero                 := 033;
    fpTamanhoMaximoNossoNum  := 12;
    fpTamanhoCarteira        := 3;
+   fpCodigosMoraAceitos    := '123456';
    fpTamanhoConta           := 11;
    fpLayoutVersaoArquivo    := 40;
    fpLayoutVersaoLote       := 30;

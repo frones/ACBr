@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/08/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Caicara/RS, trocou de provedor, agora é IPM.
+   Por: Farol TI
+
 14/08/2023
 -- ACBrNFSeXLerXml --
 [*] Altera a ObterNomeMunicipioUF para que altere também a UF.

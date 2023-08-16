@@ -2841,7 +2841,7 @@ begin
             sFim   := INIRec.ReadString(sSecao, 'vComp', 'FIM');
             if sFim = 'FIM' then
               break;
-            with InfCTeNorm.infGTVe[I].Comp.New do
+            with InfCTeNorm.infGTVe[I - 1].Comp.New do
             begin
               tpComp := StrTotpComp(Ok, INIRec.ReadString(sSecao, 'tpComp', '0'));
               vComp := StringToFloatDef(sFim , 0);

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/08/2023
+-- ACBrCTeConhecimentos --
+[*] Corrige o indice do grupo InfGTVeComp na rotina de leitura do INI.
+  Por: Diego Folieni 
+
 14/08/2023
 -- ACBrCTeConhecimentos --
 [*] Adiciona na rotina de geração de INI a seção InfCteComp;

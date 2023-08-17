@@ -902,7 +902,10 @@ end;
 procedure TACBrNFSeXDANFSeFR.CarregaCondicaoPagamento(ANFSe: TNFSe);
 var
   LCDS: TACBrFRDataSet;
+  FProvider    : IACBrNFSeXProvider;
 begin
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
+  
   LCDS := cdsCondicaoPagamento;
   LCDS.EmptyDataSet;
   LCDS.Append;
@@ -915,7 +918,10 @@ procedure TACBrNFSeXDANFSeFR.CarregaCondicaoPagamentoParcelas(ANFSe: TNFSe);
 var
   I   : Integer;
   LCDS: TACBrFRDataSet;
+  FProvider    : IACBrNFSeXProvider;
 begin
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
+
   LCDS := cdsCondicaoPagamentoParcelas;
   LCDS.EmptyDataSet;
 

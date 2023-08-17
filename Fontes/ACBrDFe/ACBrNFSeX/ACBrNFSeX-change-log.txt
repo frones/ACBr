@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/08/2023
+-- ACBrNFSeXDANFSeFR --
+[*] Possível solução para o erro de instalação.
+   Por: Italo Giurizzato Junior
 -- Agili.GravarXml --
 [*] Possível solução para o erro de validação.
    Por: Italo Giurizzato Junior

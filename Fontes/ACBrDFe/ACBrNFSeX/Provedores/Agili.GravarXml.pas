@@ -101,6 +101,9 @@ begin
 
   FpAtividadeEconomica := Trim(FpAOwner.ConfigGeral.Params.ValorParametro('NomeTagAtividadeEconomica'));
 
+  if FpAtividadeEconomica = '' then
+    FpAtividadeEconomica := 'CodigoCnaeAtividadeEconomica';
+
   FpNrOcorrCodigoCnae := 1;
   FpNrOcorrItemLei116 := 1;
 

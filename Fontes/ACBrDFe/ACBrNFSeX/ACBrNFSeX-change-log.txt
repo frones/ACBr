@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/08/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Novo Progresso/PA, trocou de provedor, agora é Agili.
+   Por: Marcos Giordani
 -- SigISSWeb.GravarXml --
 [*] Alterado de opcional para obrigatório a geração da tag email_destinatario.
    Por: Bruno Lucas Batista

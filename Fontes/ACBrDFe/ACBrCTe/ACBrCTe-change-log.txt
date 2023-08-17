@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2023
+-- ACBrCTeConhecimentos --
+[*] Adiciona na rotina de geração do INI os subgrupos de infNF e infNFe visando compatibilidade com o MOC.
+  Por: Diego Folieni
+
 16/08/2023
 -- ACBrCTeConhecimentos --
 [*] Corrige o indice do grupo InfGTVeComp na rotina de leitura do INI.

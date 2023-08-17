@@ -616,7 +616,7 @@ end;
 
 function Conhecimento.GerarCTeIni: String;
 var
-  I, J, K: integer;
+  I, J, K, L: integer;
   sSecao: string;
   INIRec: TMemIniFile;
   IniCTe: TStringList;
@@ -1109,6 +1109,64 @@ begin
             INIRec.WriteInteger(sSecao, 'nCFOP', nCFOP);
             INIRec.WriteString(sSecao, 'nPeso', CurrToStr(nPeso));
             INIRec.WriteString(sSecao, 'PIN', PIN);
+
+            for j := 0 to infUnidCarga.Count - 1 do
+            begin
+              sSecao := 'infUnidCarga'+ IntToStrZero(I+1, 3) + IntToStrZero(J+1,3);
+
+              if INIRec.SectionExists(sSecao) then
+                continue;
+
+              with infUnidCarga.Items[j] do
+              begin
+                INIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+                INIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+                INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+
+                for k:= 0 to lacUnidCarga.Count - 1 do
+                  INIRec.WriteString('lacUnidCarga'+IntToStrZero(I+1, 3)+IntToStrZero(J+1, 3)+IntToStrZero(K+1, 3)
+                                     , 'nLacre'
+                                     , lacUnidCarga[k].nLacre);
+
+              end;
+            end;
+
+            for j := 0 to infUnidTransp.Count - 1 do
+            begin
+              sSecao := 'infUnidTransp' + IntToStrZero(I+1,3) + IntToStrZero(J+1,3);
+
+              if INIRec.SectionExists(sSecao) then
+                continue;
+
+              with infUnidTransp.Items[j] do
+              begin
+                INIRec.WriteString(sSecao, 'tpUnidTransp', UnidTranspToStr(tpUnidTransp));
+                INIRec.WriteString(sSecao, 'idUnidTransp', idUnidTransp);
+                INIRec.WriteFloat(sSecao, 'qtdRat'       , qtdRat);
+
+                for k := 0 to lacUnidTransp.Count - 1 do
+                  INIRec.WriteString('lacUnidTransp'+IntToStrZero(I+1, 3) + IntToStrZero(J+1, 3) + IntToStrZero(K+1, 3)
+                                     , 'nLacre'
+                                     , lacUnidTransp[k].nLacre);
+
+                for k := 0 to infUnidCarga.Count - 1 do
+                begin
+                  sSecao := 'infUnidCarga'+ IntToStrZero(I+1, 3) + IntToStrZero(J+1, 3) + IntToStrZero(K+1, 3);
+
+                  with infUnidCarga.Items[k] do
+                  begin
+                    INIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+                    INIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+                    INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+
+                    for l := 0 to lacUnidCarga.Count - 1 do
+                      INIRec.WriteString('lacUnidCarga'+IntToStrZero(I+1, 3) + IntToStrZero(J+1, 3) + IntToStrZero(K+1, 3) + IntToStrZero(L+1, 3)
+                                         , 'nLacre'
+                                         , lacUnidCarga[l].nLacre);
+                  end;
+                end;
+              end;
+            end;
           end;
         end;
 
@@ -1121,6 +1179,63 @@ begin
             INIRec.WriteString(sSecao, 'chave', chave);
             INIRec.WriteString(sSecao, 'PIN', PIN);
             INIRec.WriteDate(sSecao, 'dPrev', dPrev);
+
+            for j := 0 to infUnidCarga.Count - 1 do
+            begin
+              sSecao := 'infUnidCarga'+ IntToStrZero(I+1, 3) + IntToStrZero(J+1, 3);
+
+              if INIRec.SectionExists(sSecao) then
+                continue;
+
+              with infUnidCarga.Items[j] do
+              begin
+                INIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+                INIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+                INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+
+                for k := 0 to lacUnidCarga.Count - 1 do
+                  INIRec.WriteString('lacUnidCarga'+IntToStrZero(I+1, 3) + IntToStrZero(J+1, 3) + IntToStrZero(K+1, 3)
+                                     , 'nLacre'
+                                     , lacUnidCarga[k].nLacre);
+              end;
+            end;
+
+            for j := 0 to infUnidTransp.Count - 1 do
+            begin
+              sSecao := 'infUnidTransp' + IntToStrZero(I+1,3) + IntToStrZero(J+1,3);
+
+              if INIRec.SectionExists(sSecao) then
+                continue;
+
+              with infUnidTransp.Items[j] do
+              begin
+                INIRec.WriteString(sSecao, 'tpUnidTransp', UnidTranspToStr(tpUnidTransp));
+                INIRec.WriteString(sSecao, 'idUnidTransp', idUnidTransp);
+                INIRec.WriteFloat(sSecao, 'qtdRat'       , qtdRat);
+
+                for k := 0 to lacUnidTransp.Count - 1 do
+                  INIRec.WriteString('lacUnidTransp'+IntToStrZero(I+1, 3) + IntToStrZero(J+1, 3) + IntToStrZero(K+1, 3)
+                                     , 'nLacre'
+                                     , lacUnidTransp[k].nLacre);
+
+                for k := 0 to infUnidCarga.Count - 1 do
+                begin
+                  sSecao := 'infUnidCarga'+ IntToStrZero(I+1, 3) + IntToStrZero(J+1, 3) + IntToStrZero(K+1, 3);
+
+                  with infUnidCarga.Items[k] do
+                  begin
+                    INIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+                    INIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+                    INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+
+                    for l := 0 to lacUnidCarga.Count - 1 do
+                      INIRec.WriteString('lacUnidCarga'+IntToStrZero(I+1, 3) + IntToStrZero(J+1, 3) + IntToStrZero(K+1, 3) + IntToStrZero(L+1, 3)
+                                         , 'nLacre'
+                                         , lacUnidCarga[l].nLacre);
+                  end;
+                end;
+              end;
+            end;
           end;
         end;
 

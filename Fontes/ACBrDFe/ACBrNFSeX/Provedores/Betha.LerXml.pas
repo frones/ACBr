@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -45,9 +46,10 @@ type
 
   TNFSeR_Betha = class(TNFSeR_ABRASFv1)
   protected
+    procedure LerCondicaoPagamento(const ANode: TACBrXmlNode);
 
   public
-//    function LerXml: Boolean; override;
+    function LerXmlRps(const ANode: TACBrXmlNode): Boolean; override;
 
   end;
 
@@ -68,61 +70,51 @@ implementation
 //==============================================================================
 
 { TNFSeR_Betha }
-{
-function TNFSeR_Betha.LerXml: Boolean;
+
+procedure TNFSeR_Betha.LerCondicaoPagamento(const ANode: TACBrXmlNode);
 var
-  xDiscriminacao, xDescricao, xItemServico: string;
-  fQuantidade, fValorUnitario, fValorServico, fValorBC, fAliquota: Double;
-  i, j: Integer;
-
-  function ExtraiValorCampo(aCampo: string; aCampoNumerico: Boolean): string;
-  begin
-    i := PosEx(aCampo, xDiscriminacao, j) + Length(aCampo) + 1;
-
-    if i = Length(aCampo) + 1 then
-      Result := ''
-    else
-    begin
-      j := PosEx(']', xDiscriminacao, i);
-      Result := Copy(xDiscriminacao, i, j-i);
-
-      if aCampoNumerico then
-        Result := StringReplace(Result, '.', ',', [rfReplaceAll])
-    end;
-  end;
+  AuxNode: TACBrXmlNode;
+  ANodes: TACBrXmlNodeArray;
+  i: Integer;
+  Ok: Boolean;
 begin
-  Result := inherited LerXml;
+  AuxNode := ANode.Childrens.FindAnyNs('CondicaoPagamento');
 
-  // Tratar a Discriminacao do serviço
-  xDiscriminacao := NFSe.Servico.Discriminacao;
-  J := 1;
-
-  while true do
+  if AuxNode <> nil then
   begin
-    xDescricao := ExtraiValorCampo('Descricao', False);
-
-    if xDescricao = '' then
-      Break;
-
-    xItemServico := ExtraiValorCampo('ItemServico', False);
-    fQuantidade := StrToFloatDef(ExtraiValorCampo('Quantidade', True), 0);
-    fValorUnitario := StrToFloatDef(ExtraiValorCampo('ValorUnitario', True), 0);
-    fValorServico := StrToFloatDef(ExtraiValorCampo('ValorServico', True), 0);
-    fValorBC := StrToFloatDef(ExtraiValorCampo('ValorBaseCalculo', True), 0);
-    fAliquota := StrToFloatDef(ExtraiValorCampo('Aliquota', True), 0);
-
-    with NFSe.Servico.ItemServico.New do
+    with NFSe.CondicaoPagamento do
     begin
-      Descricao := xDescricao;
-      ItemListaServico := xItemServico;
-      Quantidade := fQuantidade;
-      ValorUnitario := fValorUnitario;
-      ValorTotal := fValorServico;
-      ValorBCINSS := fValorBC;
-      BaseCalculo := fValorBC;
-      Aliquota := fAliquota;
+      Condicao := FpAOwner.StrToCondicaoPag(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Condicao'), tcStr));
+      QtdParcela := ObterConteudo(AuxNode.Childrens.FindAnyNs('QtdParcela'), tcInt);
+
+      ANodes := AuxNode.Childrens.FindAllAnyNs('Parcelas');
+
+      for i := 0 to Length(ANodes) - 1 do
+      begin
+        Parcelas.New;
+        with Parcelas[i] do
+        begin
+          Parcela := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Parcela'), tcStr);
+          DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DataVencimento'), tcDat);
+          Valor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Valor'), tcDe2);
+        end;
+      end;
     end;
   end;
 end;
-}
+
+function TNFSeR_Betha.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
+var
+  AuxNode: TACBrXmlNode;
+begin
+  Result := inherited LerXmlRps(Anode);
+
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('InfRps');
+
+  if AuxNode <> nil then
+    LerCondicaoPagamento(AuxNode);
+end;
+
 end.

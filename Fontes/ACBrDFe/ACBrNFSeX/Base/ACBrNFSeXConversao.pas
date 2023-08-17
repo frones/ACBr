@@ -101,7 +101,7 @@ type
   TnfseSimNao = (snSim, snNao);
 
   TnfseCondicaoPagamento = (cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoCredito,
-                            cpCartaoDebito);
+                            cpCartaoDebito, cpDeposito, cpCheque, cpPIX);
 
   TTipoRPS = (trRPS, trNFConjugada, trCupom, trNone);
 
@@ -331,12 +331,6 @@ function TipoEmissaoDescricao(const t: TTipoEmissao): string;
 
 function EmpreitadaGlobalToStr(const t: TEmpreitadaGlobal): string;
 function StrToEmpreitadaGlobal(out ok: boolean; const s: string): TEmpreitadaGlobal;
-
-function CondicaoToStr(const t: TnfseCondicaoPagamento): string;
-function StrToCondicao(out ok: boolean; const s: string): TnfseCondicaoPagamento;
-
-function CondicaoToStrPublica(const t: TnfseCondicaoPagamento): string;
-function StrPublicaToCondicao(out ok: boolean; const s: string): TnfseCondicaoPagamento;
 
 function ObterDescricaoServico(const cCodigo: string): string;
 
@@ -680,40 +674,6 @@ begin
     Result := proNenhum
   else
     Result := TnfseProvedor(CodProvedor);
-end;
-
-function CondicaoToStr(const t: TnfseCondicaoPagamento): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['A_VISTA', 'NA_APRESENTACAO', 'A_PRAZO', 'CARTAO_DEBITO',
-                            'CARTAO_CREDITO'],
-                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,
-                            cpCartaoCredito]);
-end;
-
-function StrToCondicao(out ok: boolean; const s: string): TnfseCondicaoPagamento;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['A_VISTA', 'NA_APRESENTACAO', 'A_PRAZO', 'CARTAO_DEBITO',
-                            'CARTAO_CREDITO'],
-                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,
-                            cpCartaoCredito])
-end;
-
-function CondicaoToStrPublica(const t: TnfseCondicaoPagamento): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5'],
-                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,
-                            cpCartaoCredito]);
-end;
-
-function StrPublicaToCondicao(out ok: boolean; const s: string): TnfseCondicaoPagamento;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5'],
-                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,
-                            cpCartaoCredito])
 end;
 
 function CodItemServToDesc(const s: string): string;

@@ -562,7 +562,7 @@ begin
         if INIRec.SectionExists(sSecao) then
         begin
           QtdParcela := INIRec.ReadInteger(sSecao, 'QtdParcela', 0);
-          Condicao := StrToCondicao(Ok, INIRec.ReadString(sSecao, 'Condicao', 'A_VISTA'));
+          Condicao := FProvider.StrToCondicaoPag(Ok, INIRec.ReadString(sSecao, 'Condicao', 'A_VISTA'));
         end;
         i := 1;
         while true do
@@ -765,7 +765,7 @@ begin
       begin
         sSecao:= 'CondicaoPagamento';
         INIRec.WriteInteger(sSecao, 'QtdParcela', CondicaoPagamento.QtdParcela);
-        INIRec.WriteString(sSecao, 'Condicao', CondicaoToStr(CondicaoPagamento.Condicao));
+        INIRec.WriteString(sSecao, 'Condicao', FProvider.CondicaoPagToStr(CondicaoPagamento.Condicao));
 
         //Lista de parcelas, xx pode variar de 01-99 (provedor Betha versão 1 do Layout da ABRASF)
         for I := 0 to CondicaoPagamento.Parcelas.Count - 1 do

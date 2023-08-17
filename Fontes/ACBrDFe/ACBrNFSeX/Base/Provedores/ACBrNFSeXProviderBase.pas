@@ -291,6 +291,9 @@ type
 
     function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string; virtual;
     function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS; virtual;
+
+    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string;
+    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento;
   end;
 
 implementation
@@ -1558,6 +1561,24 @@ begin
                             ttTribnoMunImune, ttTribforaMunImune,
                             ttTribnoMunSuspensa, ttTribforaMunSuspensa,
                             ttExpServicos]);
+end;
+
+function TACBrNFSeXProvider.CondicaoPagToStr(
+  const t: TnfseCondicaoPagamento): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5'],
+                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,
+                            cpCartaoCredito]);
+end;
+
+function TACBrNFSeXProvider.StrToCondicaoPag(out ok: boolean;
+  const s: string): TnfseCondicaoPagamento;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5'],
+                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,
+                            cpCartaoCredito]);
 end;
 
 function TACBrNFSeXProvider.PrepararRpsParaLote(const aXml: string): string;

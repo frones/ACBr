@@ -54,7 +54,7 @@ type
     function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerCompetencia(const ANode: TACBrXmlNode): TDateTime; virtual;
 
-    procedure LerInfNfse(const ANode: TACBrXmlNode);
+    procedure LerInfNfse(const ANode: TACBrXmlNode); virtual;
     procedure LerIdentificacaoRps(const ANode: TACBrXmlNode);
     procedure LerServico(const ANode: TACBrXmlNode);
     procedure LerItensServico(const ANode: TACBrXmlNode);
@@ -89,7 +89,7 @@ type
     procedure LerPrestador(const ANode: TACBrXmlNode);
   public
     function LerXml: Boolean; override;
-    function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
+    function LerXmlRps(const ANode: TACBrXmlNode): Boolean; virtual;
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
   end;
 

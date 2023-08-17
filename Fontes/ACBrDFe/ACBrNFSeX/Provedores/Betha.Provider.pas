@@ -72,6 +72,9 @@ type
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure AssinarCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+  public
+    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string;
+    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento;
   end;
 
   TACBrNFSeXWebserviceBetha202 = class(TACBrNFSeXWebserviceSoap11)
@@ -330,6 +333,26 @@ begin
   Response.ArquivoEnvio := '<ns3:CancelarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          Response.ArquivoEnvio +
                        '</ns3:CancelarNfseEnvio>';
+end;
+
+function TACBrNFSeProviderBetha.CondicaoPagToStr(
+  const t: TnfseCondicaoPagamento): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['A_VISTA', 'NA_APRESENTACAO', 'A_PRAZO', 'CARTAO_DEBITO',
+                            'CARTAO_CREDITO'],
+                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,
+                            cpCartaoCredito]);
+end;
+
+function TACBrNFSeProviderBetha.StrToCondicaoPag(out ok: boolean;
+  const s: string): TnfseCondicaoPagamento;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['A_VISTA', 'NA_APRESENTACAO', 'A_PRAZO', 'CARTAO_DEBITO',
+                            'CARTAO_CREDITO'],
+                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,
+                            cpCartaoCredito])
 end;
 
 { TACBrNFSeProviderBetha202 }

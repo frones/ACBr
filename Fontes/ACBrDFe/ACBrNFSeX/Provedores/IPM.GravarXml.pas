@@ -171,16 +171,12 @@ end;
 
 function TNFSeW_IPM.GerarFormaPagamento: TACBrXmlNode;
 var
-  codFp: String;
   xmlNode: TACBrXmlNode;
 begin
   Result := CreateElement('forma_pagamento');
 
-  codFp := EnumeradoToStr(NFSe.CondicaoPagamento.Condicao,
-        ['1', '2', '3', '4', '5'],
-        [cpAVista, cpAPrazo, cpNaApresentacao, cpCartaoDebito, cpCartaoCredito]);
-
-  Result.AppendChild(AddNode(tcStr, '#1', 'tipo_pagamento', 1, 1, 1, codFp, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'tipo_pagamento', 1, 1, 1,
+               FpAOwner.CondicaoPagToStr(NFSe.CondicaoPagamento.Condicao), ''));
 
   if (NFSe.CondicaoPagamento.QtdParcela > 0) then
   begin

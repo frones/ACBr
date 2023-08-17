@@ -106,8 +106,8 @@ begin
   begin
     Result[i] := CreateElement('Parcelas');
 
-    Result[i].AppendChild(AddNode(tcStr, '#53', 'Condicao  ', 1, 15, 1,
-      CondicaoToStrPublica(NFSe.CondicaoPagamento.Parcelas.Items[i].Condicao), DSC_TPAG));
+    Result[i].AppendChild(AddNode(tcStr, '#53', 'Condicao', 1, 15, 1,
+      FpAOwner.CondicaoPagToStr(NFSe.CondicaoPagamento.Parcelas.Items[i].Condicao), DSC_TPAG));
 
     Result[i].AppendChild(AddNode(tcStr, '#54', 'Parcela', 1, 03, 1,
                   NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, DSC_NPARC));

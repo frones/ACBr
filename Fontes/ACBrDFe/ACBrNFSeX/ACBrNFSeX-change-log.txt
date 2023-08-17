@@ -44,6 +44,16 @@ Símbolo : Significado
 
 
 17/08/2023
+-- ACBrNFSeXConversao --
+[*] Removido as funções: CondicaoToStr, StrToCondicao, CondicaoToStrPublica e StrPublicaToCondicao.
+-- ACBrNFSeXInterface --
+[*] Incluído as funções: CondicaoPagToStr e StrToCondicaoPag.
+-- ACBrNFSeXProviderBase --
+[*] Implementado as funções: CondicaoPagToStr e StrToCondicaoPag com os seus valores padrões.
+-- Betha.Provider/Betha.GravarXml/Betha.LerXml/IPM.Provider/IPM.GravarXml/IPM.LerXML --
+-- Publica.GravarXml/Publica.LerXml/ACBrNFSeXNotasFiscais/ACBrNFSeXDANFSeFR --
+[*] Alterações visando o uso das novas funções: CondicaoPagToStr e StrToCondicaoPag.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Novo Progresso/PA, trocou de provedor, agora é Agili.
    Por: Marcos Giordani

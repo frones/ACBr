@@ -92,22 +92,12 @@ uses
 procedure TNFSeR_IPM.LerFormaPagamento(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  aValor: string;
   Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('forma_pagamento');
 
   if AuxNode <> nil then
-  begin
-    with NFSe.CondicaoPagamento do
-    begin
-      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('tipo_pagamento'), tcStr);
-
-      Condicao := StrToEnumerado(Ok, aValor,
-            ['1', '2', '3', '4', '5'],
-            [cpAVista, cpAPrazo, cpNaApresentacao, cpCartaoDebito, cpCartaoCredito]);
-    end;
-  end;
+    NFSe.CondicaoPagamento.Condicao := FpAOwner.StrToCondicaoPag(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tipo_pagamento'), tcStr));
 end;
 
 procedure TNFSeR_IPM.LerItens(const ANode: TACBrXmlNode);

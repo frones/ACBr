@@ -94,6 +94,9 @@ type
   public
     function SimNaoToStr(const t: TnfseSimNao): string; override;
     function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; override;
+
+    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string;
+    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento;
   end;
 
   TACBrNFSeXWebserviceIPM101 = class(TACBrNFSeXWebserviceMulti2)
@@ -292,6 +295,24 @@ begin
   Result := StrToEnumerado(ok, s,
                            ['0', '1', 'N', 'S'],
                            [snNao, snSim, snNao, snSim]);
+end;
+
+function TACBrNFSeProviderIPM.CondicaoPagToStr(
+  const t: TnfseCondicaoPagamento): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5', '6', '7', '8'],
+                           [cpAVista, cpAPrazo, cpDeposito, cpNaApresentacao,
+                            cpCartaoDebito, cpCartaoCredito, cpCheque, cpPIX]);
+end;
+
+function TACBrNFSeProviderIPM.StrToCondicaoPag(out ok: boolean;
+  const s: string): TnfseCondicaoPagamento;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5', '6', '7', '8'],
+                           [cpAVista, cpAPrazo, cpDeposito, cpNaApresentacao,
+                            cpCartaoDebito, cpCartaoCredito, cpCheque, cpPIX]);
 end;
 
 function TACBrNFSeProviderIPM.PrepararRpsParaLote(const aXml: string): string;

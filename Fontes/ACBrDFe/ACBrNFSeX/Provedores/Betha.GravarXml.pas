@@ -102,7 +102,7 @@ begin
      (NFSe.CondicaoPagamento.Condicao = cpAPrazo) then
   begin
     Result.AppendChild(AddNode(tcStr, '#53', 'Condicao', 1, 15, 1,
-                     CondicaoToStr(NFSe.CondicaoPagamento.Condicao), DSC_TPAG));
+         FpAOwner.CondicaoPagToStr(NFSe.CondicaoPagamento.Condicao), DSC_TPAG));
 
     Result.AppendChild(AddNode(tcInt, '#54', 'QtdParcela', 1, 03, 1,
                                  NFSe.CondicaoPagamento.QtdParcela, DSC_QPARC));

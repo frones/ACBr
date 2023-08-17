@@ -906,7 +906,7 @@ begin
   LCDS := cdsCondicaoPagamento;
   LCDS.EmptyDataSet;
   LCDS.Append;
-  LCDS.FieldByName('Condicao').AsString := CondicaoToStr(ANFSe.CondicaoPagamento.Condicao);
+  LCDS.FieldByName('Condicao').AsString := FProvider.CondicaoPagToStr(ANFSe.CondicaoPagamento.Condicao);
   LCDS.FieldByName('Parcela').AsString  := IntToStr(ANFSe.CondicaoPagamento.QtdParcela);
   LCDS.Post;
 end;
@@ -922,7 +922,7 @@ begin
   for I := 0 to Pred(ANFSe.CondicaoPagamento.Parcelas.Count) do
   begin
     LCDS.Append;
-    LCDS.FieldByName('Condicao').AsString       := CondicaoToStr(ANFSe.CondicaoPagamento.Parcelas[ I ].Condicao);
+    LCDS.FieldByName('Condicao').AsString       := FProvider.CondicaoPagToStr(ANFSe.CondicaoPagamento.Parcelas[ I ].Condicao);
     LCDS.FieldByName('Parcela').AsString        := ANFSe.CondicaoPagamento.Parcelas[ I ].Parcela;
     LCDS.FieldByName('DataVencimento').AsString := FormatDateBr(ANFSe.CondicaoPagamento.Parcelas[ I ].DataVencimento);
     LCDS.FieldByName('Valor').AsFloat           := ANFSe.CondicaoPagamento.Parcelas[ I ].Valor;

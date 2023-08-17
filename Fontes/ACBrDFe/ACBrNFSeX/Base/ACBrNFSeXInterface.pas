@@ -114,6 +114,9 @@ type
 
     function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string;
     function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS;
+
+    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string;
+    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento;
   end;
 
 implementation

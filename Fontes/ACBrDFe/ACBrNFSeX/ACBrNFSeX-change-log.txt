@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+17/08/2023
+-- SigISSWeb.GravarXml --
+[*] Alterado de opcional para obrigatório a geração da tag email_destinatario.
+   Por: Bruno Lucas Batista
+
 16/08/2023
 -- AssessorPublico.LerXml --
 [*] Incluída a leitura da tag SITCOD - Situação da nota.

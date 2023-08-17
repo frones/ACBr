@@ -144,7 +144,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'fone_destinatario', 1, 10, 0,
                                           NFSe.Tomador.Contato.Telefone, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'email_destinatario', 1, 100, 0,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'email_destinatario', 1, 100, 1,
                                              NFSe.Tomador.Contato.Email, ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'valor_nf', 1, 15, 1,

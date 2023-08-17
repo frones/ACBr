@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/08/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Embu das Artes/SP, trocou de provedor, agora é Giap.
+   Por: Diego Ranzan
 -- ACBrNFSeXConversao --
 [*] Removido as funções: CondicaoToStr, StrToCondicao, CondicaoToStrPublica e StrPublicaToCondicao.
 -- ACBrNFSeXInterface --

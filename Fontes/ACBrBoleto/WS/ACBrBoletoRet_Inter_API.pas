@@ -193,8 +193,67 @@ begin
             ARetornoWS.DadosRet.TituloRet.ValorDocumento  := AJSonObject.Values['valorNominal'].AsNumber;
             ARetornoWS.DadosRet.TituloRet.ValorAtual      := AJSonObject.Values['valorNominal'].AsNumber;
             ARetornoWS.DadosRet.TituloRet.ValorPago       := AJSonObject.Values['valorTotalRecebimento'].AsNumber;
-            ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['mora'].asObject.Values['valor'].asNumber;
-            ARetornoWS.DadosRet.TituloRet.PercentualMulta := AJSonObject.Values['multa'].asObject.Values['taxa'].asNumber;
+            
+
+
+            if AJSonObject.Values['mora'].asObject.Values['codigo'].AsString = 'TAXAMENSAL' then
+            begin
+              ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros :=  cjTaxaMensal;
+              ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['mora'].asObject.Values['taxa'].asNumber;
+              ARetornoWS.DadosRet.TituloRet.DataMoraJuros   := DateInterToDateTime(AJSonObject.Values['mora'].asObject.Values['data'].AsString);
+            end
+            else if AJSonObject.Values['mora'].asObject.Values['codigo'].AsString = 'VALORDIA'then
+            begin
+              ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros :=  cjValorDia;
+              ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['mora'].asObject.Values['valor'].asNumber;
+              ARetornoWS.DadosRet.TituloRet.DataMoraJuros   := DateInterToDateTime(AJSonObject.Values['mora'].asObject.Values['data'].AsString);
+            end
+            else
+            begin
+              ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros :=  cjIsento;
+              ARetornoWS.DadosRet.TituloRet.ValorMoraJuros   := 0;
+            end;
+
+            if AJSonObject.Values['multa'].asObject.Values['codigo'].AsString = 'PERCENTUAL' then
+            begin
+              ARetornoWS.DadosRet.TituloRet.PercentualMulta       :=  AJSonObject.Values['multa'].asObject.Values['taxa'].asNumber;
+              ARetornoWS.DadosRet.TituloRet.MultaValorFixo        := False;
+              ARetornoWS.DadosRet.TituloRet.DataMulta             := DateInterToDateTime(AJSonObject.Values['multa'].asObject.Values['data'].AsString);
+            end
+            else if AJSonObject.Values['multa'].asObject.Values['codigo'].AsString = 'VALORFIXO' then
+            begin
+              ARetornoWS.DadosRet.TituloRet.PercentualMulta       := AJSonObject.Values['multa'].asObject.Values['valor'].asNumber;
+              ARetornoWS.DadosRet.TituloRet.MultaValorFixo        := True;
+              ARetornoWS.DadosRet.TituloRet.ValorMulta := ARetornoWS.DadosRet.TituloRet.PercentualMulta;
+              ARetornoWS.DadosRet.TituloRet.DataMulta             := DateInterToDateTime(AJSonObject.Values['multa'].asObject.Values['data'].AsString);
+            end
+            else
+            begin
+              ARetornoWS.DadosRet.TituloRet.PercentualMulta       := 0;
+              ARetornoWS.DadosRet.TituloRet.ValorMulta := 0;
+              ARetornoWS.DadosRet.TituloRet.MultaValorFixo        := False;
+            end;
+
+
+            if AJSonObject.Values['desconto1'].asObject.Values['codigo'].AsString = 'VALORFIXODATAINFORMADA' then
+            begin
+              ARetornoWS.DadosRet.TituloRet.ValorDesconto  := AJSonObject.Values['desconto1'].asObject.Values['valor'].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.CodigoDesconto := cdValorFixo;
+              ARetornoWS.DadosRet.TituloRet.DataDesconto   := DateInterToDateTime(AJSonObject.Values['desconto1'].asObject.Values['data'].AsString);
+            end
+            else if AJSonObject.Values['desconto1'].asObject.Values['codigo'].AsString = 'PERCENTUALDATAINFORMADA' then
+            begin
+              ARetornoWS.DadosRet.TituloRet.ValorDesconto := AJSonObject.Values['desconto1'].asObject.Values['taxa'].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.CodigoDesconto := cdPercentual;
+              ARetornoWS.DadosRet.TituloRet.DataDesconto   := DateInterToDateTime(AJSonObject.Values['desconto1'].asObject.Values['data'].AsString);
+            end
+            else
+            begin
+              ARetornoWS.DadosRet.TituloRet.ValorDesconto := 0;
+              ARetornoWS.DadosRet.TituloRet.CodigoDesconto := cdSemDesconto;
+            end;
+
+
             ARetornoWS.DadosRet.TituloRet.CodBarras       := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig        := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
 
@@ -327,6 +386,64 @@ begin
             ListaRetorno.DadosRet.TituloRet.ValorMoraJuros       := AJSonObject.Values['mora'].asObject.Values['valor'].asNumber;
             ListaRetorno.DadosRet.TituloRet.PercentualMulta      := AJSonObject.Values['multa'].asObject.Values['taxa'].asNumber;
 
+            if AJSonObject.Values['mora'].asObject.Values['codigo'].AsString = 'TAXAMENSAL' then
+            begin
+              ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros :=  cjTaxaMensal;
+              ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['mora'].asObject.Values['taxa'].asNumber;
+              ListaRetorno.DadosRet.TituloRet.DataMoraJuros   := DateInterToDateTime(AJSonObject.Values['mora'].asObject.Values['data'].AsString);
+            end
+            else if AJSonObject.Values['mora'].asObject.Values['codigo'].AsString = 'VALORDIA'then
+            begin
+              ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros :=  cjValorDia;
+              ListaRetorno.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['mora'].asObject.Values['valor'].asNumber;
+              ListaRetorno.DadosRet.TituloRet.DataMoraJuros   := DateInterToDateTime(AJSonObject.Values['mora'].asObject.Values['data'].AsString);
+            end
+            else
+            begin
+              ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros :=  cjIsento;
+              ListaRetorno.DadosRet.TituloRet.ValorMoraJuros   := 0;
+            end;
+
+            if AJSonObject.Values['multa'].asObject.Values['codigo'].AsString = 'PERCENTUAL' then
+            begin
+              ListaRetorno.DadosRet.TituloRet.PercentualMulta       :=  AJSonObject.Values['multa'].asObject.Values['taxa'].asNumber;
+              ListaRetorno.DadosRet.TituloRet.MultaValorFixo        := False;
+              ListaRetorno.DadosRet.TituloRet.DataMulta             := DateInterToDateTime(AJSonObject.Values['multa'].asObject.Values['data'].AsString);
+            end
+            else if AJSonObject.Values['multa'].asObject.Values['codigo'].AsString = 'VALORFIXO' then
+            begin
+              ListaRetorno.DadosRet.TituloRet.PercentualMulta       := AJSonObject.Values['multa'].asObject.Values['valor'].asNumber;
+              ListaRetorno.DadosRet.TituloRet.MultaValorFixo        := True;
+              ListaRetorno.DadosRet.TituloRet.ValorMulta            := ListaRetorno.DadosRet.TituloRet.PercentualMulta;
+              ListaRetorno.DadosRet.TituloRet.DataMulta             := DateInterToDateTime(AJSonObject.Values['multa'].asObject.Values['data'].AsString);
+            end
+            else
+            begin
+              ListaRetorno.DadosRet.TituloRet.PercentualMulta       := 0;
+              ListaRetorno.DadosRet.TituloRet.ValorMulta            := 0;
+              ListaRetorno.DadosRet.TituloRet.MultaValorFixo        := False;
+            end;
+
+
+            if AJSonObject.Values['desconto1'].asObject.Values['codigo'].AsString = 'VALORFIXODATAINFORMADA' then
+            begin
+              ListaRetorno.DadosRet.TituloRet.ValorDesconto  := AJSonObject.Values['desconto1'].asObject.Values['valor'].AsNumber;
+              ListaRetorno.DadosRet.TituloRet.CodigoDesconto := cdValorFixo;
+              ListaRetorno.DadosRet.TituloRet.DataDesconto   := DateInterToDateTime(AJSonObject.Values['desconto1'].asObject.Values['data'].AsString);
+            end
+            else if AJSonObject.Values['desconto1'].asObject.Values['codigo'].AsString = 'PERCENTUALDATAINFORMADA' then
+            begin
+              ListaRetorno.DadosRet.TituloRet.ValorDesconto := AJSonObject.Values['desconto1'].asObject.Values['taxa'].AsNumber;
+              ListaRetorno.DadosRet.TituloRet.CodigoDesconto := cdPercentual;
+              ListaRetorno.DadosRet.TituloRet.DataDesconto   := DateInterToDateTime(AJSonObject.Values['desconto1'].asObject.Values['data'].AsString);
+            end
+            else
+            begin
+              ListaRetorno.DadosRet.TituloRet.ValorDesconto := 0;
+              ListaRetorno.DadosRet.TituloRet.CodigoDesconto := cdSemDesconto;
+            end;
+
+            
             ListaRetorno.DadosRet.TituloRet.SeuNumero            := AJSonObject.Values['seuNumero'].asString;
             ListaRetorno.DadosRet.TituloRet.DataRegistro         := DateIntertoDateTime( AJSonObject.Values['dataEmissao'].asString );
             ListaRetorno.DadosRet.TituloRet.Vencimento           := DateIntertoDateTime( AJSonObject.Values['dataVencimento'].asString );

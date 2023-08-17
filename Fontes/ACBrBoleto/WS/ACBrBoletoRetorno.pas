@@ -223,6 +223,7 @@ type
     FValorDesconto: Currency;
     FValorDesconto2: Currency;
     FValorMoraJuros: Currency;
+    FValorMulta: Currency;
     FValorIOF: Currency;
     FValorOutrasDespesas: Currency;
     FValorOutrosCreditos: Currency;
@@ -304,6 +305,7 @@ type
     property ValorDesconto: Currency read FValorDesconto write FValorDesconto ;
     property ValorDesconto2: Currency read FValorDesconto2 write FValorDesconto2 ;
     property ValorMoraJuros: Currency read FValorMoraJuros write FValorMoraJuros ;
+    property ValorMulta: Currency read FValorMulta write FValorMulta ;
     property ValorIOF: Currency read FValorIOF write FValorIOF ;
     property ValorOutrasDespesas: Currency read FValorOutrasDespesas write FValorOutrasDespesas ;
     property ValorOutrosCreditos: Currency read FValorOutrosCreditos write FValorOutrosCreditos ;
@@ -620,6 +622,7 @@ begin
   ValorDesconto:= DeACBrBoletoTituloRet.ValorDesconto;
   ValorDesconto2:= DeACBrBoletoTituloRet.ValorDesconto2;
   ValorMoraJuros:= DeACBrBoletoTituloRet.ValorMoraJuros;
+  ValorMulta := DeACBrBoletoTituloRet.ValorMulta;
   ValorIOF:= DeACBrBoletoTituloRet.ValorIOF;
   ValorOutrasDespesas:= DeACBrBoletoTituloRet.ValorOutrasDespesas;
   ValorOutrosCreditos:= DeACBrBoletoTituloRet.ValorOutrosCreditos;

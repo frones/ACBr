@@ -48,10 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+17/08/2023
+[*]TK-4240 ACBrBoletoConversao,ACBrBoletoRetorno, ACBrBoletoRet_Inter_API  Ajustes no tratamento do retorno para descontos, multas e juros 
+https://www.projetoacbr.com.br/forum/topic/73297-inclusao-de-importa%C3%A7%C3%A3o-de-desconto-e-campos-auxiliares-de-multa-e-juros-no-boleto-inter-api/
+Por: Brunocogoo / Verificado: Daniel Morais
 16/08/2023
 [*]TK-4313 ACBrBoleto - Banco Santander - Novos códigos mora aceitos
 Por : MatheusHenrique9
-
 15/08/2023
 [+]TK-4079 ACBrBancoBradescoMoneyPlus - Compatibilidade Arq Remessa com layout Grafeno - Se LayoutVersaoArquivo = 2
 https://www.projetoacbr.com.br/forum/topic/72719-ajuste-banco-moneyplys-cnb400/

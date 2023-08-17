@@ -66,7 +66,7 @@ type
   TACBrCarteiraEnvio = (tceCedente, tceBanco, tceBancoEmail);
 
   {Definir codigo Desconto }
-  TACBrCodigoDesconto    = (cdSemDesconto, cdValorFixo);
+  TACBrCodigoDesconto    = (cdSemDesconto, cdValorFixo, cdPercentual);
 
   {Definir codigo Juros }
   TACBrCodigoJuros       = (cjValorDia, cjTaxaMensal, cjIsento, cjValorMensal, cjTaxaDiaria);

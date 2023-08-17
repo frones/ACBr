@@ -354,6 +354,17 @@ begin
       Json.Add('numeroParcela').Value.AsInteger                   := max(1,ATitulo.Parcela);
       Json.Add('aceite').Value.AsBoolean                          := ATitulo.Aceite = atSim;
 
+      if (ATitulo.DataProtesto > 0) then
+      begin
+        Json.Add('codigoProtesto').Value.AsInteger                  := IfThen(ATitulo.TipoDiasProtesto = diCorridos, 1, 2);
+        Json.Add('numeroDiasProtesto').Value.AsInteger              := Trunc(ATitulo.DataProtesto - ATitulo.Vencimento);
+      end;
+      if (ATitulo.DiasDeNegativacao > 0) then
+      begin
+        Json.Add('codigoNegativacao').Value.AsInteger               := 2;
+        Json.Add('numeroDiasNegativacao').Value.AsInteger           := ATitulo.DiasDeNegativacao;
+      end;
+
       GerarDesconto(Json);
       GerarJuros(Json);
       GerarMulta(Json);

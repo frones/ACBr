@@ -13,7 +13,7 @@ namespace ACBrLib.Core.CTe
 
         public string idUnidCarga { get; set; }
 
-        public LacreUnidadeCargaCTe lacUnidCarga { get; set; }
+        public List<LacreUnidadeCargaCTe> lacUnidCarga { get; } = new List<LacreUnidadeCargaCTe>();
 
         public decimal qtdRat { get; set; }
     }

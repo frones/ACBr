@@ -13,9 +13,9 @@ namespace ACBrLib.Core.CTe
 
         public string idUnidTransp { get; set; }
 
-        public LacreUnidadeTranspCTe lacUnidTransp { get; set; }
+        public List<LacreUnidadeTranspCTe> lacUnidTransp { get; } = new List<LacreUnidadeTranspCTe>();
 
-        public InfUnidCargaCTe InfUnidCargaCTe { get; set; }
+        public List<InfUnidCargaCTe> InfUnidCargaCTe { get; } = new List<InfUnidCargaCTe>();
 
         public decimal qtdRat { get; set; }
     }

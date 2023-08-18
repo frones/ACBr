@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/08/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Incluído na função LerArqIni a leitura dos campos: AliquotaInss,
+    AliquotaIr e AliquotaCsll.
+   Por: Italo Giurizzato Junior
+
 17/08/2023
 -- ACBrNFSeXDANFSeFR --
 [*] Possível solução para o erro de instalação.

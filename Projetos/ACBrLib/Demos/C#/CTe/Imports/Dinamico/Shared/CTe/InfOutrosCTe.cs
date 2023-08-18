@@ -20,8 +20,8 @@ namespace ACBrLib.Core.CTe
 
         public DateTime dPrev { get; set; }
 
-        public InfUnidCargaCTe InfUnidCarga { get; set; }
+        public List<InfUnidCargaCTe> InfUnidCarga { get; set; } = new List<InfUnidCargaCTe>();
 
-        public InfUnidTranspCTe InfUnidTransp { get; set; }
+        public List<InfUnidTranspCTe> InfUnidTransp { get; set; } = new List<InfUnidTranspCTe>();
     }
 }

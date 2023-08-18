@@ -12,6 +12,6 @@ namespace ACBrLib.Core.CTe
 
         public List<InfNFeCTe> infNFe { get; set; } = new List<InfNFeCTe>();
 
-        public InfOutrosCTe infOutros { get; set; } = new InfOutrosCTe();
+        public List<InfOutrosCTe> infOutros { get; set; } = new List<InfOutrosCTe>();
     }
 }

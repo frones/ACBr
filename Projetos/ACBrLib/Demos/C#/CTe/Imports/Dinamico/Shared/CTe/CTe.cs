@@ -311,6 +311,58 @@ namespace ACBrLib.CTe
                 }
             }
 
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.infDoc.infOutros.Count; i++)
+            {
+                InfOutrosCTe infOutros = GrupoInformacoesNormalSubstituto.infDoc.infOutros[i];
+
+                iniData.WriteToIni(infOutros, $"infOutros{i + 1:000}");
+
+                for (var j = 0; j < infOutros.InfUnidCarga.Count; j++)
+                {
+                    InfUnidCargaCTe infUnidCarga = infOutros.InfUnidCarga[j];
+
+                    if (iniData.Contains($"infUnidCarga{i + 1:000}{j + 1:000}")) continue;
+
+                    iniData.WriteToIni(infUnidCarga, $"infUnidCarga{i + 1:000}{j +  1:000}");
+
+                    for (var k = 0; k < infUnidCarga.lacUnidCarga.Count; k++)
+                    {
+                        LacreUnidadeCargaCTe lacUnidCarga = infUnidCarga.lacUnidCarga[k];
+                        iniData.WriteToIni(lacUnidCarga, $"lacUnidCarga{i + 1:000}{j + 1:000}{k + 1:000}");
+                    }
+                }
+
+                for(var j = 0;  j < infOutros.InfUnidTransp.Count; j++)
+                {
+                    InfUnidTranspCTe infUnidTransp = infOutros.InfUnidTransp[j];
+
+                    if (iniData.Contains($"infUnidTransp{i +1:000}{j + 1:000}")) continue;
+
+                    iniData.WriteToIni(infUnidTransp, $"infUnidTransp{i + 1:000}{j + 1:000}");
+
+                    for (var k = 0; k < infUnidTransp.lacUnidTransp.Count; k++)
+                    {
+                        LacreUnidadeTranspCTe lacUnidTransp = infUnidTransp.lacUnidTransp[k];
+                        iniData.WriteToIni(lacUnidTransp, $"lacUnidTransp{i + 1:000}{j + 1:000}{k + 1:000}");
+                    }
+
+                    for (var k = 0; k < infUnidTransp.InfUnidCargaCTe.Count; k++)
+                    {
+                        InfUnidCargaCTe infUnidCarga = infUnidTransp.InfUnidCargaCTe[k];
+                        iniData.WriteToIni(infUnidCarga, $"infUnidCarga{i + 1:000}{j + 1:000}{k + 1:000}");
+
+                        for (var l = 0; l < infUnidCarga.lacUnidCarga.Count; l++)
+                        {
+                            LacreUnidadeCargaCTe lacUnidCarga = infUnidCarga.lacUnidCarga[l];
+                            iniData.WriteToIni(lacUnidCarga, $"lacUnidCarga{i + 1:000}{j + 1:000}{k + 1:000}{l + 1:000}");
+
+                        }
+
+                    }
+                }
+              
+            }
+
             for (var i = 0; i < DetalhamentoComplementado.Count; i++)
             {
                 iniData.WriteToIni(DetalhamentoComplementado[i], $"infCteComp{i + 1:00}");
@@ -594,17 +646,20 @@ namespace ACBrLib.CTe
                                 l++;
                                 infCargaCTe = iniData.ReadFromIni<InfUnidCargaCTe>($"infUnidCarga{j:000}{k:000}{l:000}");
 
-                                int m = 0;
-                                LacreUnidadeCargaCTe lacCargaCTe;
-                                do
+                                if (infCargaCTe != null)
                                 {
-                                    m++;
-                                    lacCargaCTe = iniData.ReadFromIni<LacreUnidadeCargaCTe>($"lacUnidCarga{j:000}{k:000}{l:000}{m:000}");
+                                    int m = 0;
+                                    LacreUnidadeCargaCTe lacCargaCTe;
+                                    do
+                                    {
+                                        m++;
+                                        lacCargaCTe = iniData.ReadFromIni<LacreUnidadeCargaCTe>($"lacUnidCarga{j:000}{k:000}{l:000}{m:000}");
 
-                                    if (lacCargaCTe != null) infCargaCTe.lacUnidCarga.Add(lacCargaCTe);
-                                } while (lacCargaCTe != null);
+                                        if (lacCargaCTe != null) infCargaCTe.lacUnidCarga.Add(lacCargaCTe);
+                                    } while (lacCargaCTe != null);
 
-                                if (infCargaCTe != null) infUnidTransp.InfUnidCargaCTe.Add(infCargaCTe);
+                                    infUnidTransp.InfUnidCargaCTe.Add(infCargaCTe);
+                                }
 
                             } while (infCargaCTe != null);
 
@@ -618,6 +673,91 @@ namespace ACBrLib.CTe
                 }
 
             } while (infNF != null);
+
+            j = 0;
+            InfOutrosCTe infOutros;
+            do
+            {
+                j++;
+                infOutros = iniData.ReadFromIni<InfOutrosCTe>($"infOutros{j:000}");
+                if ( infOutros != null)
+                {
+                    int k = 0;
+                    InfUnidCargaCTe infUnidCarga;
+                    do
+                    {
+                        k++;
+                        infUnidCarga = iniData.ReadFromIni<InfUnidCargaCTe>($"infUnidCarga{j:000}{k:000}");
+                        
+                        if (infUnidCarga != null)
+                        {
+
+                            int l = 0;
+                            LacreUnidadeCargaCTe lacUnidCarga;
+                            do
+                            {
+                                l++;
+                                lacUnidCarga = iniData.ReadFromIni<LacreUnidadeCargaCTe>($"lacUnidCarga{j:000}{k:000}{l:000}");
+
+                                if (lacUnidCarga != null) infUnidCarga.lacUnidCarga.Add(lacUnidCarga);
+
+                            } while (lacUnidCarga != null);
+
+                            infOutros.InfUnidCarga.Add(infUnidCarga);
+                        }
+                    } while (infUnidCarga != null);
+
+                    k = 0;
+                    InfUnidTranspCTe infUnidTransp;
+                    do
+                    {
+                        k++;
+                        infUnidTransp = iniData.ReadFromIni<InfUnidTranspCTe>($"infUnidTransp{j:000}{k:000}");
+
+                        if(infUnidTransp != null)
+                        {
+                            int l = 0;
+                            LacreUnidadeTranspCTe lacUnidTransp;
+                            do
+                            {
+                                l++;
+                                lacUnidTransp = iniData.ReadFromIni<LacreUnidadeTranspCTe>($"lacUnidTransp{j:000}{k:000}{l:000}");
+
+                                if (lacUnidTransp != null) infUnidTransp.lacUnidTransp.Add(lacUnidTransp);
+                            }while(lacUnidTransp != null);
+
+                            l = 0;
+                            InfUnidCargaCTe infCargaCTe;
+                            do
+                            {
+                                l++;
+                                infCargaCTe = iniData.ReadFromIni<InfUnidCargaCTe>($"infUnidCarga{j:000}{k:000}{l:000}");
+                                if (infCargaCTe != null)
+                                {
+                                    int m = 0;
+                                    LacreUnidadeCargaCTe lacUnidCarga;
+                                    do
+                                    {
+                                        m++;
+                                        lacUnidCarga = iniData.ReadFromIni<LacreUnidadeCargaCTe>($"lacUnidCarga{j:000}{k:000}{l:000}{m:000}");
+
+                                        if (lacUnidCarga != null) infCargaCTe.lacUnidCarga.Add(lacUnidCarga);
+                                    }while( lacUnidCarga != null );
+                                }
+
+                            }while( infCargaCTe != null);
+
+
+                            infOutros.InfUnidTransp.Add(infUnidTransp);
+                        }
+
+                    } while (infUnidTransp != null);
+
+
+                    GrupoInformacoesNormalSubstituto.infDoc.infOutros.Add(infOutros);
+                }
+
+            } while( infOutros != null );
 
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.cobr.fat, "cobr");
             a = 0;

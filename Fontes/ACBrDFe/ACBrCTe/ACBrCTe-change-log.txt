@@ -46,6 +46,8 @@ Símbolo : Significado
 
 18/06/2023
 -- ACBrCTeConhecimentos --
+[*] Adiciona na rotina de geração do INI o grupo InfOutros e seus subgrupos.
+  Por: Diego Folieni
 [*] Adiciona na rotina de geração e leitura do INI o grupo InfCTeMultimodal.
   Por: Diego Folieni
 

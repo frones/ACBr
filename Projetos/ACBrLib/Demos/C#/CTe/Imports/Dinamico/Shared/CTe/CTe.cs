@@ -206,6 +206,12 @@ namespace ACBrLib.CTe
                 iniData.WriteToIni(dup, $"dup{i + 1:000}");
             }
 
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.infServVinc.infCTeMultimodal.Count; i++)
+            {
+                var infCTeMultimodal = GrupoInformacoesNormalSubstituto.infServVinc.infCTeMultimodal[i];
+                iniData.WriteToIni(infCTeMultimodal, $"infCTeMultimodal{i + 1:000}");
+            }
+
             iniData.WriteToIni(Rodoviario, "rodo");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
             
@@ -623,6 +629,16 @@ namespace ACBrLib.CTe
 
                 if (dup != null) GrupoInformacoesNormalSubstituto.cobr.dup.Add(dup);
             } while(dup != null);
+
+            a = 0;
+            InfCTeMultimodalCTe infCTeMultimodal;
+            do
+            {
+                a++;
+                infCTeMultimodal = iniData.ReadFromIni<InfCTeMultimodalCTe>($"infCTeMultimodal{a:000}");
+
+                if (infCTeMultimodal != null) GrupoInformacoesNormalSubstituto.infServVinc.infCTeMultimodal.Add(infCTeMultimodal);
+            } while (infCTeMultimodal != null);
 
             a = 0;
             DetalhamentoComplementadoCTe detalhamentoComplementado;

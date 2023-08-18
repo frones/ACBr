@@ -34,11 +34,11 @@ namespace ACBrLib.Core.CTe
 
         public int nCFOP { get; set; }
 
-        public decimal nPeso { get; set; }
+        public decimal? nPeso { get; set; }
 
         public string chave { get; set; }
 
-        public DateTime dPrev { get; set; }
+        public DateTime? dPrev { get; set; }
 
         public List<InfUnidCargaCTe> infUnidCarga { get; } = new List<InfUnidCargaCTe>();
 

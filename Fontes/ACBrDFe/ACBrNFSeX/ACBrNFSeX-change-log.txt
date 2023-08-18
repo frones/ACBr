@@ -45,6 +45,8 @@ Símbolo : Significado
 
 18/08/2023
 -- ACBrNFSeXNotasFiscais --
+[*] Incluído na função LerArqIni e na função GerarNFSeINI os campos: Operacao e Tributacao.
+   Por: Diego Folieni
 [*] Incluído na função LerArqIni a leitura dos campos: AliquotaInss,
     AliquotaIr e AliquotaCsll.
    Por: Italo Giurizzato Junior

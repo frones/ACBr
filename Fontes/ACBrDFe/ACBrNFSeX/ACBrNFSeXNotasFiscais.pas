@@ -450,6 +450,10 @@ begin
           UFPrestacao := INIRec.ReadString(sSecao, 'UFPrestacao', '');
           ResponsavelRetencao := FProvider.StrToResponsavelRetencao(Ok, INIRec.ReadString(sSecao, 'ResponsavelRetencao', ''));
           TipoLancamento := StrToTipoLancamento(Ok, INIRec.ReadString(sSecao, 'TipoLancamento', 'P'));
+
+          // Provedor ISSDSF
+          Operacao := StrToOperacao(Ok, INIRec.ReadString(sSecao, 'Operacao', ''));
+          Tributacao := FProvider.StrToTributacao(Ok, INIRec.ReadString(sSecao, 'Tributacao', ''));
         end;
         i := 1;
         while true do
@@ -720,6 +724,10 @@ begin
       INIRec.WriteInteger(sSecao, 'MunicipioIncidencia', Servico.MunicipioIncidencia);
       INIRec.WriteString(sSecao, 'UFPrestacao', Servico.UFPrestacao);
       INIRec.WriteString(sSecao, 'ResponsavelRetencao', FProvider.ResponsavelRetencaoToStr(Servico.ResponsavelRetencao));
+      //Provedor ISSDSF
+      INIRec.WriteString(sSecao, 'Operacao', OperacaoToStr(Servico.Operacao));
+      INIRec.WriteString(sSecao, 'Tributacao', FProvider.TributacaoToStr(Servico.Tributacao));
+
 
       //Lista de Itens, xxx pode variar de 001-999
       for I := 0 to Servico.ItemServico.Count - 1 do

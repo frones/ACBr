@@ -1283,6 +1283,9 @@ begin
           INIRec.WriteString('cobr', 'vLiq', CurrToStr(cobr.fat.vLiq));
         end;
 
+        for i := 0 to infCTeNorm.infServVinc.infCTeMultimodal.Count - 1 do
+          INIRec.WriteString('infCTeMultimodal' + IntToStrZero(i+1 , 3), 'chCTeMultimodal', infCTeNorm.infServVinc.infCTeMultimodal[i].chCTeMultimodal);
+
         //CT-e OS infGTVe
         for i := 0 to infCTeNorm.infGTVe.Count -1 do
         begin
@@ -2935,6 +2938,21 @@ begin
         cobr.Fat.vOrig := StringToFloatDef( INIRec.ReadString('cobr','vOrig','') ,0);
         cobr.Fat.vDesc := StringToFloatDef( INIRec.ReadString('cobr','vDesc','') ,0);
         cobr.Fat.vLiq  := StringToFloatDef( INIRec.ReadString('cobr','vLiq' ,'') ,0);
+      end;
+
+      I := 1;
+      while true do
+      begin
+        sSecao := 'infCTeMultimodal'+ IntToStrZero(I, 3);
+        sFIM := INIRec.ReadString(sSecao, 'chCTeMultimodal', 'FIM');
+
+        if (Length(sFIM) <= 0) or (sFIM = 'FIM')then
+          break;
+
+        with infCTeNorm.infServVinc.infCTeMultimodal.New do
+          chCTeMultimodal := sFIM;
+
+        Inc(I);
       end;
 
       //CT-e OS

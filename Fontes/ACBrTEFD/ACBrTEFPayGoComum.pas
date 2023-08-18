@@ -358,6 +358,8 @@ procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
 
       ImprimirViaCliente := (ViasDeComprovante = '1') or (ViasDeComprovante = '3');
       ImprimirViaEstabelecimento := (ViasDeComprovante = '2') or (ViasDeComprovante = '3');
+      if (not ImprimirViaEstabelecimento) then
+        ImprimirViaEstabelecimento := (Trim(LeInformacao(PWINFO_RCPTMERCH, 0).AsBinary) <> '') ;
 
       ViaCompleta := LeInformacao(PWINFO_RCPTFULL, 0).AsBinary;
 

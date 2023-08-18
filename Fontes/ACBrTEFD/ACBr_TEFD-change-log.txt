@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/08/2023
+-- ACBrTEFPayGoComum --
+[-] Aplicado WorkAround para quanto PWINFO_RCPTPRN=1 e PWINFO_RCPTMERCH está presente
+    ocasionado a não impressão da Segunda Via diferenciada do Estabelecimento
+    (por: DSA)
+
 31/05/2023
 -- ACBrTEFAndroidPayGo, ACBrTEFAPIPayGoWeb, ACBrTEFAndroidElginIDH, ACBrTEFAndroidMSitef --
 [-] Correção no método "EfetuarPagamento", que estava compondo a Data de forma errada

@@ -70,7 +70,7 @@ namespace ACBrLib.CTe
         [Obsolete("Descontinuado: Para o correto preenchimento, use Tomador3")]
         public int toma { get; set; }
 
-        public InfPercursoCTe infPercurso { get; set; } = new InfPercursoCTe();
+        public List<InfPercursoCTe> infPercurso { get; set; } = new List<InfPercursoCTe>();
 
         public DateTime dhCont { get; set; }
 

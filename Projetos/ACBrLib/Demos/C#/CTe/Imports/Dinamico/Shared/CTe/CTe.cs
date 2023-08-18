@@ -112,6 +112,13 @@ namespace ACBrLib.CTe
 
             iniData.WriteToIni(InfCTe, "InfCTe");
             iniData.WriteToIni(Identificacao, "Ide");
+
+            for (var i = 0; i < Identificacao.infPercurso.Count; i++)
+            {
+                InfPercursoCTe infPercuso = Identificacao.infPercurso[i];
+                iniData.WriteToIni(infPercuso, $"infPercurso{i + 1:000}");
+            }
+
             iniData.WriteToIni(Tomador3, "toma3");
             iniData.WriteToIni(Tomador4, "toma4");
             iniData.WriteToIni(Complemento, "Compl");
@@ -395,13 +402,26 @@ namespace ACBrLib.CTe
         {
             iniData.ReadFromIni(InfCTe, "InfCTe");
             iniData.ReadFromIni(Identificacao, "Ide");
+
+            var i = 0;
+            if (Identificacao != null)
+            {                
+                InfPercursoCTe infPercurso;
+                do
+                {
+                    i++;
+                    infPercurso = iniData.ReadFromIni<InfPercursoCTe>($"infPercurso{i:000}");
+                    if (infPercurso != null) Identificacao.infPercurso.Add(infPercurso);
+                } while (infPercurso != null);
+            };
+
             iniData.ReadFromIni(Tomador3, "toma3");
             iniData.ReadFromIni(Tomador4, "toma4");
             iniData.ReadFromIni(Complemento, "Compl");
             iniData.ReadFromIni(Fluxo, "fluxo");
             iniData.ReadFromIni(Entrega, "Entrega");
 
-            var i = 0;
+            i = 0;
             ObsContCTe obsCont;
             do
             {

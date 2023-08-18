@@ -732,13 +732,9 @@ var
   CTeRetorno: TRetConsStatServ;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteStatusServicoCTResult');
+  FPRetWS := StringReplace(FPRetWS, 'retConsStatServCte', 'retConsStatServCTe', [rfReplaceAll]);
 
-  if (FPConfiguracoesCTe.Geral.VersaoDF <= ve300) or
-     ((FPConfiguracoesCTe.WebServices.UFCodigo = 31) and
-      (FPConfiguracoesCTe.Geral.FormaEmissao = teNormal)) then
-    CTeRetorno := TRetConsStatServ.Create('Cte')
-  else
-    CTeRetorno := TRetConsStatServ.Create('CTe');
+  CTeRetorno := TRetConsStatServ.Create('CTe');
 
   try
     CTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);

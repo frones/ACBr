@@ -44,7 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-18/06/2023
+18/08/2023
+-- ACBrCTeWebServices --
+[*] Possível solução para a leitura correta do retorno do status de serviço.
+  Por: Sebastião Elivaldo
 -- ACBrCTeConhecimentos --
 [*] Adiciona na rotina de geração do INI o grupo InfOutros e seus subgrupos.
   Por: Diego Folieni

@@ -34,5 +34,8 @@ namespace ACBrLib.CTe
         public string UF { get; set; }
 
         public string fone { get; set; }
+
+        public CRT CRT { get; set; }
+        
     }
 }

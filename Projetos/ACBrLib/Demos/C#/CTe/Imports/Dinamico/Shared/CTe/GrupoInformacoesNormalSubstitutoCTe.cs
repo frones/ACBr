@@ -28,5 +28,7 @@ namespace ACBrLib.CTe
         public List<InfGTVe> infGTVe { get; } = new List<InfGTVe>();
 
         public InfServico infServico { get; set; } = new InfServico();
+
+        public List<Seguro> seg { get; set; } = new List<Seguro>();
     }
 }

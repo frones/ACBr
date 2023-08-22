@@ -127,13 +127,13 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(Complemento, "Compl");
             iniData.WriteToIni(Fluxo, "fluxo");
             iniData.WriteToIni(Entrega, "Entrega");
-            
+
             for (var i = 0; i < ObsCont.Count; i++)
             {
                 var obsCont = ObsCont[i];
                 iniData.WriteToIni(obsCont, $"ObsCont{i + 1:000}");
             }
-            
+
             for (var i = 0; i < ObsFisco.Count; i++)
             {
                 var obsFisco = ObsFisco[i];
@@ -179,6 +179,13 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
+
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.seg.Count; i++)
+            {
+                Seguro seg = GrupoInformacoesNormalSubstituto.seg[i];
+                iniData.WriteToIni(seg, $"seg{i + 1:000}");
+            }
+
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
 
             for (var i = 0; i < GrupoInformacoesNormalSubstituto.infCarga.infQ.Count; i++)
@@ -468,6 +475,17 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
+
+            i = 0;
+            Seguro seg;
+            do
+            {
+                i++;
+                seg = iniData.ReadFromIni<Seguro>($"seg{i:000}");
+
+                if (seg != null) GrupoInformacoesNormalSubstituto.seg.Add(seg);
+            } while (seg != null);
+
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
 
             var a = 0;

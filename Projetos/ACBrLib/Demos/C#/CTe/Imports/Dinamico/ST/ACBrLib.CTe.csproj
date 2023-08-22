@@ -126,7 +126,9 @@
 	  <Compile Include="..\Shared\CTe\TipoComponenteGTVe.cs" Link="CTe\TipoComponenteGTVe.cs" />
 	  <Compile Include="..\Shared\CTe\InfRespTec.cs" Link="CTe\InfRespTec.cs" />
 	  <Compile Include="..\Shared\CTe\InfTributacaoFederal.cs" Link="CTe\InfTributacaoFederal.cs" />
-	  <Compile Include="..\Shared\CTe\InfServico.cs" Link="CTe\InfServico.cs" />	  
+	  <Compile Include="..\Shared\CTe\InfServico.cs" Link="CTe\InfServico.cs" />
+	  <Compile Include="..\Shared\CTe\ResponsavelSeguro.cs" Link="CTe\ResponsavelSeguro.cs" />
+	  <Compile Include="..\Shared\CTe\Seguro.cs" Link="CTe\Seguro.cs" />	  
 	  
 
 	  <Compile Include="..\Shared\Respostas\ConsultaCTeResposta.cs" Link="Respostas\ConsultaCTeResposta.cs" />  

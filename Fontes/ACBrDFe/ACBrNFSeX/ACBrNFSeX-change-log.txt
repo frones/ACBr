@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/08/2023
+-- ACBrNFSeXDANFSeFR --
+[*] Possível solução para o erro de compilação.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Possível solução para a impressão em Fortes Report da somatória dos tributos
     federais.

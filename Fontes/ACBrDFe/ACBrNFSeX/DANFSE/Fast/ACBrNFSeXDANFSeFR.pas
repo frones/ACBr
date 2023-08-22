@@ -1229,21 +1229,13 @@ begin
   if LServico.ItemServico.Count > 0 then
   begin
     LCDS.FieldByName('ItemListaServico').AsString := LServico.ItemServico.Items[0].ItemListaServico;
-    LCDS.FieldByName('xItemListaServico').AsString := CodItemServToDesc(StringReplace(LCDS.FieldByName('ItemListaServico').AsString, '.', '',
-                                                      [ rfReplaceAll, rfIgnoreCase ]));
+    LCDS.FieldByName('xItemListaServico').AsString := LServico.ItemServico.Items[0].xItemListaServico;
   end;
 
   if LCDS.FieldByName('xItemListaServico').AsString = '' then
   begin
-    if Provedor = proEL then
-    begin
-      LCDS.FieldByName('ItemListaServico').AsString  := LServico.ItemListaServico;
-      LCDS.FieldByName('xItemListaServico').AsString := CodItemServToDesc(StringReplace(LServico.ItemListaServico, '.', '', [ rfReplaceAll, rfIgnoreCase ]));
-    end else
-    begin
-      LCDS.FieldByName('ItemListaServico').AsString  := LServico.ItemListaServico;
-      LCDS.FieldByName('xItemListaServico').AsString := LServico.xItemListaServico;
-    end;
+    LCDS.FieldByName('ItemListaServico').AsString  := LServico.ItemListaServico;
+    LCDS.FieldByName('xItemListaServico').AsString := LServico.xItemListaServico;
   end;
 
   LCDS.FieldByName('CodigoCnae').AsString                := LServico.CodigoCnae;

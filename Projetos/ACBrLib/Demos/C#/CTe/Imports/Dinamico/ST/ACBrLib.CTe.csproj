@@ -124,6 +124,7 @@
 	  <Compile Include="..\Shared\CTe\ComponentesValGTVe.cs" Link="CTe\ComponentesValGTVe.cs" />
 	  <Compile Include="..\Shared\CTe\InfGTVe.cs" Link="CTe\InfGTVe.cs" />
 	  <Compile Include="..\Shared\CTe\TipoComponenteGTVe.cs" Link="CTe\TipoComponenteGTVe.cs" />
+	  <Compile Include="..\Shared\CTe\InfRespTec.cs" Link="CTe\InfRespTec.cs" />
 	  
 
 	  <Compile Include="..\Shared\Respostas\ConsultaCTeResposta.cs" Link="Respostas\ConsultaCTeResposta.cs" />  

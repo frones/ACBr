@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 22/08/2023
+-- ACBrNFSeXServicos --
+[*] As cidades: Paimeira/PR e Guaratuba/PR, mudaram as URLs, o provedor continua Elotech
+   Por: Jaisson
+[*] A cidade de Conselheiro Lafayete/MG, mudou para a versão 2.02 o provedor continua Betha
+   Por: Jaisson
+[*] A cidade de Serafina Correa/RS, mudou a URL de produção o provedor continua Fiorilli
+   Por: Rafael Vivan
 -- Diversos --
 [*] Removido a função CodItemServToDesc  da unit ACBrNFSeXConversao e realizada 
     diversas alterações em diversas units para usar a descrição dos serviços que 

@@ -27,5 +27,7 @@ namespace ACBrLib.CTe
 
         public string infAdFisco { get; set; }
 
+        public InfTributacaoFederal infTribFed { get; set; } = new InfTributacaoFederal();
+
     }
 }

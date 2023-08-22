@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 22/08/2023
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Possível solução para a impressão em Fortes Report da somatória dos tributos
+    federais.
+   Por: Italo Giurizzato Junior
+
 -- ACBrNFSeXServicos --
 [*] As cidades: Paimeira/PR e Guaratuba/PR, mudaram as URLs, o provedor continua Elotech
    Por: Jaisson

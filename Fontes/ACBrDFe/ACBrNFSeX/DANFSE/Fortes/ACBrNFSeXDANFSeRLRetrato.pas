@@ -421,6 +421,7 @@ var
   MostrarObra, MostrarNaturezaOperacao: Boolean;
   FProvider: IACBrNFSeXProvider;
   i: Integer;
+  RetencoesFederais: Double;
 begin
   inherited;
 
@@ -501,12 +502,15 @@ begin
       rllValorServicos1.Caption := FormatFloat(',0.00', ValorServicos);
       rllDescIncondicionado1.Caption := FormatFloat(',0.00', DescontoIncondicionado);
       rllDescCondicionado.Caption := FormatFloat(',0.00', DescontoCondicionado);
-      rllRetencoesFederais.Caption := FormatFloat(',0.00', ValorPisRetido +
-        ValorCofinsRetido +
-        ValorInssRetido +
-        ValorIrRetido +
-        ValorCsllRetido +
-        ValorCppRetido);
+
+      RetencoesFederais := ValorPisRetido + ValorCofinsRetido + ValorInssRetido +
+                           ValorIrRetido + ValorCsllRetido + ValorCppRetido;
+
+      if RetencoesFederais = 0 then
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss +
+                             ValorIr + ValorCsll + ValorCppRetido;
+
+      rllRetencoesFederais.Caption := FormatFloat(',0.00', RetencoesFederais);
       rllOutrasRetencoes.Caption := FormatFloat(',0.00', OutrasRetencoes);
       rllValorIssRetido.Caption := FormatFloat(',0.00', ValorIssRetido);
       rllValorLiquido.Caption := FormatFloat(',0.00', ValorLiquidoNfse);

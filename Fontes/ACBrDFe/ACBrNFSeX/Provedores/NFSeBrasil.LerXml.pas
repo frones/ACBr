@@ -308,6 +308,8 @@ begin
   // Alguns provedores não retornam o XML em UTF-8
   Arquivo := ConverteXMLtoUTF8(Arquivo);
 
+  LerParamsTabIni(True);
+
   Arquivo := NormatizarXml(Arquivo);
 
   tpXML := TipodeXMLLeitura(Arquivo);

@@ -47,8 +47,6 @@ type
   TNFSeR_Siappa = class(TNFSeRClass)
   protected
     procedure LerTomador(const ANode: TACBrXmlNode);
-
-    procedure SetxItemListaServico(Codigo: string);
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -104,6 +102,8 @@ begin
 
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
+
+  LerParamsTabIni(True);
 
   Arquivo := NormatizarXml(Arquivo);
 
@@ -192,28 +192,6 @@ end;
 function TNFSeR_Siappa.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := False;
-end;
-
-procedure TNFSeR_Siappa.SetxItemListaServico(Codigo: string);
-var
-  Item: Integer;
-  ItemServico: string;
-begin
-  NFSe.Servico.ItemListaServico := Codigo;
-
-  Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-  if Item < 100 then
-    Item := Item * 100 + 1;
-
-  ItemServico := FormatFloat('0000', Item);
-
-  NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
-                                     Copy(ItemServico, 3, 2);
-
-  if FpAOwner.ConfigGeral.TabServicosExt then
-    NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)
-  else
-    NFSe.Servico.xItemListaServico := CodItemServToDesc(ItemServico);
 end;
 
 end.

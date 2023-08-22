@@ -617,6 +617,7 @@ begin
         Ambiente := taHomologacao;
 
       CodIBGE := IntToStr(Configuracoes.Geral.CodigoMunicipio);
+      IniTabServicos := Configuracoes.Arquivos.IniTabServicos;
     end;
   end;
 

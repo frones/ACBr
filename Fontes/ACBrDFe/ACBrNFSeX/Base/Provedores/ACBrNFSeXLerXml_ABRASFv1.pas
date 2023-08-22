@@ -827,6 +827,8 @@ begin
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 
+  LerParamsTabIni(True);
+
   Arquivo := NormatizarXml(Arquivo);
 
   tpXML := TipodeXMLLeitura(Arquivo);

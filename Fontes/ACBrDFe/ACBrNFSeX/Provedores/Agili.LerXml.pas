@@ -416,10 +416,7 @@ begin
     CodigoCnae := FpCodCNAE;
     ItemListaServico := FpCodLCServ;
 
-    if FpAOwner.ConfigGeral.TabServicosExt then
-      xItemListaServico := ObterDescricaoServico(OnlyNumber(ItemListaServico))
-    else
-      xItemListaServico := CodItemServToDesc(OnlyNumber(ItemListaServico));
+    xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
 
     NumeroProcesso := ObterConteudo(ANode.Childrens.FindAnyNs('BeneficioProcesso'), tcStr);
 
@@ -629,6 +626,8 @@ begin
 
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
+
+  LerParamsTabIni(True);
 
   Arquivo := NormatizarXml(Arquivo);
 

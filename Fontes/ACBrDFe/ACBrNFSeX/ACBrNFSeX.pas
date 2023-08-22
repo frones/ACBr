@@ -224,8 +224,10 @@ uses
 
 {$IFDEF FPC}
  {$R ACBrNFSeXServicos.rc}
+ {$R TabServicos.rc}
 {$ELSE}
  {$R ACBrNFSeXServicos.res}
+ {$R TabServicos.res}
 {$ENDIF}
 
 { TACBrNFSeX }

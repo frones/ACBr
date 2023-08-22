@@ -49,8 +49,6 @@ type
 
     function LerCompetencia(const ANode: TACBrXmlNode): TDateTime;
 
-    procedure SetxItemListaServico(Codigo: string);
-
     procedure LerDemaisDados(const ANode: TACBrXmlNode);
     procedure LerDadosTomador(const ANode: TACBrXmlNode);
     procedure LerDadosPrestador(const ANode: TACBrXmlNode);
@@ -92,28 +90,6 @@ begin
     Result := 0;
 end;
 
-procedure TNFSeR_ISSCambe.SetxItemListaServico(Codigo: string);
-var
-  Item: Integer;
-  ItemServico: string;
-begin
-  NFSe.Servico.ItemListaServico := Codigo;
-
-  Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-  if Item < 100 then
-    Item := Item * 100 + 1;
-
-  ItemServico := FormatFloat('0000', Item);
-
-  NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
-                                     Copy(ItemServico, 3, 2);
-
-  if FpAOwner.ConfigGeral.TabServicosExt then
-    NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)
-  else
-    NFSe.Servico.xItemListaServico := CodItemServToDesc(ItemServico);
-end;
-
 procedure TNFSeR_ISSCambe.LerDemaisDados(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
@@ -145,7 +121,8 @@ begin
 
   aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('servicoISS'), tcStr);
 
-  SetxItemListaServico(aValor);
+  NFSe.Servico.ItemListaServico := NormatizarItemListaServico(aValor);
+  NFSe.Servico.xItemListaServico := ItemListaServicoDescricao(NFSe.Servico.ItemListaServico);
 
   NFSe.Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('servicoDiscriminacao'), tcStr);
   NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
@@ -393,6 +370,8 @@ begin
 
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
+
+  LerParamsTabIni(True);
 
   Arquivo := NormatizarXml(Arquivo);
 

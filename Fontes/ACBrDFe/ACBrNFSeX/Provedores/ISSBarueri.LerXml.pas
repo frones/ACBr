@@ -485,6 +485,8 @@ begin
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo XML não carregado.');
 
+  LerParamsTabIni(True);
+
   Arquivo := NormatizarXml(Arquivo);
 
   if (FDocument = Nil) then

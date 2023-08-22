@@ -173,8 +173,10 @@ type
     FPathCan: String;
     FNomeLongoNFSe: Boolean;
     FTabServicosExt: Boolean;
+    FIniTabServicos: String;
 
     procedure SetTabServicosExt(const Value: Boolean);
+    function GetIniTabServicos: String;
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeArquivosConfNFSe: TArquivosConfNFSe); reintroduce;
@@ -207,6 +209,7 @@ type
       write FNomeLongoNFSe default False;
     property TabServicosExt: Boolean read FTabServicosExt
       write SetTabServicosExt default False;
+    property IniTabServicos: String read GetIniTabServicos write FIniTabServicos;
   end;
 
   { TConfiguracoesNFSe }
@@ -628,6 +631,16 @@ begin
 
     Result := Dir;
   end;
+end;
+
+function TArquivosConfNFSe.GetIniTabServicos: String;
+begin
+  if FIniTabServicos = '' then
+    if Assigned(fpConfiguracoes.Owner) then
+      if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
+        FIniTabServicos := ApplicationPath + 'TabServicos.ini';
+
+  Result := FIniTabServicos;
 end;
 
 function TArquivosConfNFSe.GetPathCan(Data: TDateTime = 0;

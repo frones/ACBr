@@ -37,7 +37,7 @@ unit ACBrNFSeXLerXml;
 interface
 
 uses
-  SysUtils, Classes, IniFiles,
+  SysUtils, Classes, IniFiles, types,
   ACBrXmlBase, ACBrXmlReader,
   ACBrXmlDocument,
   ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao;
@@ -52,10 +52,14 @@ type
     FtpXML: TtpXML;
     FAmbiente: TACBrTipoAmbiente;
     FIniParams: TMemIniFile;
+    FParamsTab: TStrings;
+    FIniParamsTab: TMemIniFile;
 
+    procedure SetParamsTab(const Value: TStrings);
   protected
     FpAOwner: IACBrNFSeXProvider;
     FpQuebradeLinha: string;
+    FpIniParamsTabCarregado: Boolean;
 
     function NormatizarItemListaServico(const Codigo: string): string;
     function ItemListaServicoDescricao(const Codigo: string): string;
@@ -64,12 +68,19 @@ type
     function NormatizarAliquota(const Aliquota: Double): Double;
     function LerLinkURL: string;
     function ObterNomeMunicipioUF(ACodigoMunicipio: Integer; var xUF: string): string;
+    function LerParamsTabIniServicos: AnsiString;
+    function LerParamsTabInterno: AnsiString;
+    function LerDescricaoServico(const ACodigo: string): string;
 
     procedure VerificarSeConteudoEhLista(const aDiscriminacao: string);
     procedure LerListaJson(const aDiscriminacao: string);
     procedure LerListaTabulada(const aDiscriminacao: string);
+
+    procedure LerParamsTabIni(ApenasSeNaoLido: Boolean);
+    procedure LerParamsTab;
   public
     constructor Create(AOwner: IACBrNFSeXProvider);
+    destructor Destroy; override;
 
     function LerXml: Boolean; Override;
     procedure LerCampoLink;
@@ -79,14 +90,16 @@ type
     property tpXML: TtpXML           read FtpXML    write FtpXML;
     property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente default taHomologacao;
     property IniParams: TMemIniFile read FIniParams write FIniParams;
+    property ParamsTab: TStrings read FParamsTab write SetParamsTab;
   end;
 
 implementation
 
 uses
+  synautil,
   StrUtils, StrUtilsEx,
   ACBrJSON,
-  ACBrUtil.Strings, ACBrUtil.XMLHTML,
+  ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrDFeException;
 
 { TNFSeRClass }
@@ -94,6 +107,17 @@ uses
 constructor TNFSeRClass.Create(AOwner: IACBrNFSeXProvider);
 begin
   FpAOwner := AOwner;
+  FParamsTab := TStringList.Create;
+
+  FIniParamsTab := TMemIniFile.Create('');
+  FpIniParamsTabCarregado := False;
+end;
+
+destructor TNFSeRClass.Destroy;
+begin
+  FParamsTab.Free;
+
+  inherited;
 end;
 
 function TNFSeRClass.ItemListaServicoDescricao(const Codigo: string): string;
@@ -105,7 +129,7 @@ begin
   if FpAOwner.ConfigGeral.TabServicosExt then
     Result := ObterDescricaoServico(xCodigo)
   else
-    Result := CodItemServToDesc(xCodigo);
+    Result := LerDescricaoServico(xCodigo);
 end;
 
 function TNFSeRClass.LerXml: Boolean;
@@ -156,6 +180,11 @@ begin
 
   xUF := IniParams.ReadString(CodIBGE, 'UF', '');
   Result := IniParams.ReadString(CodIBGE, 'Nome', '');
+end;
+
+procedure TNFSeRClass.SetParamsTab(const Value: TStrings);
+begin
+  FParamsTab.Assign(Value);
 end;
 
 function TNFSeRClass.TipodeXMLLeitura(const aArquivo: string): TtpXML;
@@ -280,6 +309,72 @@ begin
       Aliquota := fAliquota;
     end;
   end;
+end;
+
+procedure TNFSeRClass.LerParamsTab;
+var
+  ConteudoParams: AnsiString;
+begin
+  ConteudoParams := LerParamsTabIniServicos;
+
+  if ConteudoParams = '' then
+    ConteudoParams := LerParamsTabInterno;
+
+  FParamsTab.Text := ConteudoParams;
+end;
+
+procedure TNFSeRClass.LerParamsTabIni(ApenasSeNaoLido: Boolean);
+begin
+  if ApenasSeNaoLido and FpIniParamsTabCarregado then
+    exit;
+
+  if ParamsTab.Count = 0 then
+    LerParamsTab;
+
+  FIniParamsTab.SetStrings(ParamsTab);
+  FpIniParamsTabCarregado := True;
+end;
+
+function TNFSeRClass.LerParamsTabIniServicos: AnsiString;
+var
+  ArqIni: String;
+  FS: TFileStream;
+begin
+  Result := '';
+  ArqIni := Trim(FpAOwner.ConfigGeral.IniTabServicos);
+
+  if (ArqIni <> '') and FileExists(ArqIni) then
+  begin
+    FS := TFileStream.Create(ArqIni, fmOpenRead or fmShareDenyNone);  // Thread Safe
+    try
+      FS.Position := 0;
+      Result := ReadStrFromStream(FS, FS.Size);
+    finally
+      FS.Free;
+    end;
+  end;
+end;
+
+function TNFSeRClass.LerParamsTabInterno: AnsiString;
+var
+  RS: TResourceStream;
+begin
+  Result := '';
+
+  RS := TResourceStream.Create(HInstance, 'TabServicos', RT_RCDATA);
+  try
+    RS.Position := 0;
+    Result := ReadStrFromStream(RS, RS.Size);
+  finally
+    RS.Free;
+  end;
+end;
+
+function TNFSeRClass.LerDescricaoServico(const ACodigo: string): string;
+begin
+  FIniParamsTab.SetStrings(ParamsTab);
+
+  Result := FIniParamsTab.ReadString(OnlyNumber(ACodigo), 'Descricao', '');
 end;
 
 procedure TNFSeRClass.LerCampoLink;

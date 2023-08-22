@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/08/2023
+-- Diversos --
+[*] Removido a função CodItemServToDesc  da unit ACBrNFSeXConversao e realizada 
+    diversas alterações em diversas units para usar a descrição dos serviços que 
+    agora estão em um arquivo INI que é compilado e temos como resultado um 
+    arquivo RES que é incorporado ao EXE quando a aplicação é compilada.
+   Por: Italo Giurizzato Junior
+
 18/08/2023
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Jacupiranga/SP, provedor Fiorilli

@@ -129,6 +129,8 @@ begin
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 
+  LerParamsTabIni(True);
+
   Arquivo := NormatizarXml(Arquivo);
 
   if FDocument = nil then
@@ -257,10 +259,7 @@ begin
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
       ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodSrv'), tcStr);
 
-      if FpAOwner.ConfigGeral.TabServicosExt then
-        xItemListaServico := ObterDescricaoServico(OnlyNumber(ItemListaServico))
-      else
-        xItemListaServico := CodItemServToDesc(OnlyNumber(ItemListaServico));
+      xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
     end;
 
     ValorIssRet := ObterConteudo(AuxNode.Childrens.FindAnyNs('VlIssRet'), tcDe2);

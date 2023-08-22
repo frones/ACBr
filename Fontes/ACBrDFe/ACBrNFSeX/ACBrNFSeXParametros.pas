@@ -115,6 +115,7 @@ type
     FDetalharServico: Boolean;
     // Layout setando ao ler o provedor
     FLayout: TLayout;
+    FIniTabServicos: string;
 
   public
     constructor Create;
@@ -149,6 +150,7 @@ type
     property CodIBGE: string read FCodIBGE write FCodIBGE;
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico;
     property Layout: TLayout read FLayout write FLayout;
+    property IniTabServicos: string read FIniTabServicos write FIniTabServicos;
   end;
 
   { TWebserviceInfo }

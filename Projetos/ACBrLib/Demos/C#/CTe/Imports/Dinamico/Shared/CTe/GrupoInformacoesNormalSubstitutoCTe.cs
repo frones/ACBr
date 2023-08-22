@@ -30,5 +30,7 @@ namespace ACBrLib.CTe
         public InfServico infServico { get; set; } = new InfServico();
 
         public List<Seguro> seg { get; set; } = new List<Seguro>();
+
+        public List<InfDocRef> infDocRef { get; set; } = new List<InfDocRef>();
     }
 }

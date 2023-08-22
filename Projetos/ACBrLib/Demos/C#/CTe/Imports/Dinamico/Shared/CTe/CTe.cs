@@ -100,6 +100,8 @@ namespace ACBrLib.CTe
 
         public InfRespTec InfRespTec { get; }
 
+        public List<AutXML> autXML { get; } = new List<AutXML>();
+
         #endregion Properties
 
         #region Methods
@@ -179,6 +181,12 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
+
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.infDocRef.Count; i++)
+            {
+                InfDocRef infDocRef = GrupoInformacoesNormalSubstituto.infDocRef[i];
+                iniData.WriteToIni(infDocRef, $"infDocRef{i + 1:000}");
+            }
 
             for (var i = 0; i < GrupoInformacoesNormalSubstituto.seg.Count; i++)
             {
@@ -389,6 +397,12 @@ namespace ACBrLib.CTe
             
             iniData.WriteToIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.WriteToIni(InformacoesSuplementares, "infCTeSupl");
+
+            for (var i = 0; i < autXML.Count; i++)
+            {
+                iniData.WriteToIni(autXML[i], $"autXML{i + 1:00}");
+            }
+
             iniData.WriteToIni(InfRespTec, "infRespTec");
             
             if (ProtCTe.cStat != 0) iniData.WriteToIni(ProtCTe, "procCTe");
@@ -475,6 +489,16 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
+
+            i = 0;
+            InfDocRef infDocRef;
+            do
+            {
+                i++;
+                infDocRef = iniData.ReadFromIni<InfDocRef>($"infDocRef{i:000}");
+
+                if (infDocRef != null) GrupoInformacoesNormalSubstituto.infDocRef.Add( infDocRef );
+            } while (infDocRef != null);
 
             i = 0;
             Seguro seg;
@@ -838,6 +862,18 @@ namespace ACBrLib.CTe
                         
             iniData.ReadFromIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.ReadFromIni(InformacoesSuplementares, "infCTeSupl");
+
+            a = 0;
+            AutXML autXMLDistDFe;
+            do
+            {
+                a++;
+                autXMLDistDFe = iniData.ReadFromIni<AutXML>($"autXML{a:00}");
+
+
+                if (autXMLDistDFe != null) autXML.Add(autXMLDistDFe);
+            }while(autXMLDistDFe != null);
+
             iniData.ReadFromIni(InfRespTec, "InfRespTec");
             iniData.ReadFromIni(ProtCTe, "procCTe");
 

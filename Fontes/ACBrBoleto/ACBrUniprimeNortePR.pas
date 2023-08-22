@@ -150,7 +150,8 @@ begin
                PadRight( 'COBRANCA', 15 )                      + // Descrição do tipo de serviço
                PadLeft( CodigoCedente, 20, '0')                + // Codigo da Empresa no Banco
                PadRight( Nome, 30)                             + // Nome da Empresa
-               FormatFloat( '000', Numero) + PadRight('UNIPRIME', 15)    + // Código e Nome do Banco(084 - Uniprime)
+               FormatFloat( '000', Numero)                     + // Código do Banco
+               PadRight(fpNome, 15)                            + // Nome do Banco
                FormatDateTime('ddmmyy',Now)  + Space(08)+'MX'  + // Data de geração do arquivo + brancos
                IntToStrZero(NumeroRemessa,7) + Space(277)      + // Nr. Sequencial de Remessa + brancos
                IntToStrZero(1,6);                                // Nr. Sequencial de Remessa + brancos + Contador

@@ -178,6 +178,7 @@ namespace ACBrLib.CTe
             }
             iniData.WriteToIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
 
             for (var i = 0; i < GrupoInformacoesNormalSubstituto.infCarga.infQ.Count; i++)
@@ -466,6 +467,7 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(InformacoesRelativasImpostos.ICMS90, "ICMS90");
             iniData.ReadFromIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCarga, "infCarga");
 
             var a = 0;

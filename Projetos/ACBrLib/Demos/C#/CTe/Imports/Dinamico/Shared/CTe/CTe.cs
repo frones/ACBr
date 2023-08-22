@@ -37,7 +37,7 @@ namespace ACBrLib.CTe
             Tomador3 = new Tomador3CTe();
             ProtCTe = new ProtCTe();
             Tomador = new TomadorCTeOS();
-            ResponsavelTecnico = new InfRespTec();
+            InfRespTec = new InfRespTec();
         }
 
         internal CTe(ACBrIniFile ini) : this()
@@ -98,7 +98,7 @@ namespace ACBrLib.CTe
 
         public TomadorCTeOS Tomador { get; }
 
-        public InfRespTec ResponsavelTecnico { get; }
+        public InfRespTec InfRespTec { get; }
 
         #endregion Properties
 
@@ -380,7 +380,7 @@ namespace ACBrLib.CTe
             
             iniData.WriteToIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.WriteToIni(InformacoesSuplementares, "infCTeSupl");
-            iniData.WriteToIni(ResponsavelTecnico, "infRespTec");
+            iniData.WriteToIni(InfRespTec, "infRespTec");
             
             if (ProtCTe.cStat != 0) iniData.WriteToIni(ProtCTe, "procCTe");
 
@@ -816,7 +816,7 @@ namespace ACBrLib.CTe
                         
             iniData.ReadFromIni(DetalhamentoAnulacao, "InfCteAnu");
             iniData.ReadFromIni(InformacoesSuplementares, "infCTeSupl");
-            iniData.ReadFromIni(ResponsavelTecnico, "InfRespTec");
+            iniData.ReadFromIni(InfRespTec, "InfRespTec");
             iniData.ReadFromIni(ProtCTe, "procCTe");
 
             //CTe-OS

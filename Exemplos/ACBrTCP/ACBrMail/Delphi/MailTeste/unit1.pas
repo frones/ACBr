@@ -33,7 +33,19 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ACBrMail, types, ACBrBase, ExtCtrls;
+  Classes, 
+  SysUtils, 
+  Forms, 
+  Controls, 
+  Graphics, 
+  Dialogs, 
+  StdCtrls, 
+  ComCtrls, 
+  ACBrMail, 
+  types, 
+  ACBrBase, 
+  ExtCtrls,
+  blcksock;
 
 type
 
@@ -93,6 +105,8 @@ type
     cbbIdeCharSet: TComboBox;
     lbl1: TLabel;
     btLerConfig: TButton;
+    Label7: TLabel;
+    cbxSSLTYPE: TComboBox;
     procedure ACBrMail1AfterMailProcess(Sender: TObject);
     procedure ACBrMail1BeforeMailProcess(Sender: TObject);
     procedure ACBrMail1MailException(const AMail: TACBrMail; const E: Exception; var ThrowIt: Boolean);
@@ -140,6 +154,7 @@ begin
     Ini.WriteString('Email', 'Pass', edtPassword.text);
     Ini.WriteBool('Email', 'TLS', chkTLS.Checked);
     Ini.WriteBool('Email', 'SSL', chkSSL.Checked);
+    Ini.WriteInteger('Email', 'SSLType', cbxSSLTYPE.ItemIndex);
     Ini.WriteInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
     Ini.WriteInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
   finally
@@ -151,6 +166,7 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 var
   m: TMailCharset;
+  LTLS : TSSLType;
 begin
   cbbDefaultCharset.Items.Clear;
   for m := Low(TMailCharset) to High(TMailCharset) do
@@ -158,6 +174,10 @@ begin
   cbbDefaultCharset.ItemIndex := 0;
   cbbIdeCharSet.Items.Assign(cbbDefaultCharset.Items);
   cbbIdeCharSet.ItemIndex := 0;
+
+  for LTLS := Low(TSSLType) to High(TSSLType) do
+    cbxSSLTYPE.Items.Add(GetEnumName(TypeInfo(TSSLType), integer(LTLS)));
+
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
@@ -181,6 +201,7 @@ begin
     edtPassword.text := Ini.readString('Email', 'Pass', 'Sua_Senha_123');
     chkTLS.Checked := Ini.ReadBool('Email', 'TLS', False);
     chkSSL.Checked := Ini.ReadBool('Email', 'SSL', False);
+    cbxSSLTYPE.ItemIndex := Ini.ReadInteger('Email', 'SSLType', 0);
     cbbDefaultCharset.ItemIndex := Ini.ReadInteger('Email', 'DefaultCharset', 27);
     cbbIdeCharSet.ItemIndex := Ini.ReadInteger('Email', 'IdeCharset', 15);
   finally
@@ -244,7 +265,13 @@ begin
     end;
   end;
 
-  ACBrMail1.Send(cbUsarThread.Checked);
+
+  try
+    ACBrMail1.Send(cbUsarThread.Checked);
+
+  except on E: Exception do
+    ShowMessage(E.Message);
+  end;
 end;
 
 procedure TForm1.ACBrMail1BeforeMailProcess(Sender: TObject);
@@ -345,6 +372,7 @@ begin
   ACBrMail1.DefaultCharset := TMailCharset(cbbDefaultCharset.ItemIndex);
   ACBrMail1.IDECharset := TMailCharset(cbbIdeCharSet.ItemIndex);
   ACBrMail1.AddAddress(edtAddressEmail.text, edtAddressName.text);
+  ACBrMail1.SSLType := TSSLType(cbxSSLTYPE.ItemIndex);
   //ACBrMail1.AddCC('outro_email@gmail.com'); // opcional
   //ACBrMail1.AddReplyTo('um_email'); // opcional
   //ACBrMail1.AddBCC('um_email'); // opcional

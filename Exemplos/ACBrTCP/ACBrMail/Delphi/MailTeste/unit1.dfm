@@ -12,10 +12,8 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = True
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlTopo: TPanel
     Left = 0
@@ -290,7 +288,7 @@ object Form1: TForm1
     Top = 41
     Width = 749
     Height = 407
-    ActivePage = tsMensagem
+    ActivePage = tsConfigConta
     Align = alClient
     TabOrder = 1
     object tsMensagem: TTabSheet
@@ -619,6 +617,15 @@ object Form1: TForm1
         Color = clBtnFace
         ParentColor = False
       end
+      object Label7: TLabel
+        Left = 466
+        Top = 49
+        Width = 48
+        Height = 13
+        Caption = 'SSL Type:'
+        Color = clBtnFace
+        ParentColor = False
+      end
       object edtHost: TEdit
         Left = 3
         Top = 66
@@ -710,7 +717,6 @@ object Form1: TForm1
         Width = 283
         Height = 21
         Style = csDropDownList
-        ItemHeight = 0
         TabOrder = 8
       end
       object cbbIdeCharSet: TComboBox
@@ -719,7 +725,6 @@ object Form1: TForm1
         Width = 283
         Height = 21
         Style = csDropDownList
-        ItemHeight = 0
         TabOrder = 9
       end
       object btLerConfig: TButton
@@ -730,6 +735,14 @@ object Form1: TForm1
         Caption = 'Ler Configura'#231#227'o'
         TabOrder = 12
         OnClick = btLerConfigClick
+      end
+      object cbxSSLTYPE: TComboBox
+        Left = 466
+        Top = 68
+        Width = 109
+        Height = 21
+        Style = csDropDownList
+        TabOrder = 13
       end
     end
   end

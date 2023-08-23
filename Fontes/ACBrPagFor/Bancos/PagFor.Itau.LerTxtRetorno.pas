@@ -45,29 +45,29 @@ type
 
   TArquivoR_Itau = class(TArquivoR_CNAB240)
   protected
-    procedure LerRegistro5(I: Integer); override;
+    procedure LerRegistro5(nLinha: Integer); override;
 
-    procedure LerSegmentoA(I: Integer); override;
+    procedure LerSegmentoA(nLinha: Integer); override;
 
-    procedure LerSegmentoB(mSegmentoBList: TSegmentoBList; I: Integer); override;
+    procedure LerSegmentoB(mSegmentoBList: TSegmentoBList; nLinha: Integer); override;
 
-    procedure LerSegmentoC(mSegmentoCList: TSegmentoCList; I: Integer); override;
+    procedure LerSegmentoC(mSegmentoCList: TSegmentoCList; nLinha: Integer); override;
 
-    procedure LerSegmentoN1(I: Integer); override;
+    procedure LerSegmentoN1(nLinha: Integer); override;
 
-    procedure LerSegmentoN2(I: Integer); override;
+    procedure LerSegmentoN2(nLinha: Integer); override;
 
-    procedure LerSegmentoN3(I: Integer); override;
+    procedure LerSegmentoN3(nLinha: Integer); override;
 
-    procedure LerSegmentoN4(I: Integer); override;
+    procedure LerSegmentoN4(nLinha: Integer); override;
 
-    procedure LerSegmentoN567(I: Integer); override;
+    procedure LerSegmentoN567(nLinha: Integer); override;
 
-    procedure LerSegmentoN8(I: Integer); override;
+    procedure LerSegmentoN8(nLinha: Integer); override;
 
-    procedure LerSegmentoN9(I: Integer); override;
+    procedure LerSegmentoN9(nLinha: Integer); override;
 
-    procedure LerSegmentoO(I: Integer); override;
+    procedure LerSegmentoO(nLinha: Integer); override;
   end;
 
 implementation
@@ -78,11 +78,11 @@ uses
 
 { TArquivoR_Itau }
 
-procedure TArquivoR_Itau.LerRegistro5(I: Integer);
+procedure TArquivoR_Itau.LerRegistro5(nLinha: Integer);
 var
   xAviso: string;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
 
   case PagFor.Lote.Last.Registro1.Servico.TipoServico of
     tsConciliacaoBancaria:
@@ -144,13 +144,13 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoA(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoA(nLinha: Integer);
 var
   mOk: Boolean;
   RegSeg: string;
   x: Integer;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3A' then
@@ -202,15 +202,15 @@ begin
     GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', '', Credito.SeuNumero);
   end;
 
-  Linha := ArquivoTXT.Strings[I+1];
+  Linha := ArquivoTXT.Strings[nLinha+1];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   while Pos(RegSeg, '3B/3C/3D/3E/3F/3Z/') > 0 do
   begin
-    Inc(I); //próxima linha do txt a ser lida
+    Inc(nLinha); //próxima linha do txt a ser lida
     {opcionais do segmento A}
-    LerSegmentoB(PagFor.Lote.Last.SegmentoA.Last.SegmentoB, I);
-    LerSegmentoC(PagFor.Lote.Last.SegmentoA.Last.SegmentoC, I);
+    LerSegmentoB(PagFor.Lote.Last.SegmentoA.Last.SegmentoB, nLinha);
+    LerSegmentoC(PagFor.Lote.Last.SegmentoA.Last.SegmentoC, nLinha);
 //    LerSegmentoE(PagFor.Lote.Last.SegmentoA.Last.SegmentoE, I);
 //    LerSegmentoF(PagFor.Lote.Last.SegmentoA.Last.SegmentoF, I);
 //    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, I);
@@ -233,18 +233,18 @@ begin
       end;
     end;
 
-    Linha := ArquivoTXT.Strings[I+1];
+    Linha := ArquivoTXT.Strings[nLinha+1];
     RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
   end;
 end;
 
 procedure TArquivoR_Itau.LerSegmentoB(mSegmentoBList: TSegmentoBList;
-  I: Integer);
+  nLinha: Integer);
 var
   mOk: Boolean;
   RegSeg: string;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if (RegSeg <> '3B') then
@@ -278,11 +278,11 @@ begin
 end;
 
 procedure TArquivoR_Itau.LerSegmentoC(mSegmentoCList: TSegmentoCList;
-  I: Integer);
+  nLinha: Integer);
 var
   RegSeg: string;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if (RegSeg <> '3C') then
@@ -310,13 +310,13 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoN1(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoN1(nLinha: Integer);
 var
   RegSeg: string;
   x: Integer;
   mOk: Boolean;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3N' then
@@ -354,9 +354,9 @@ begin
   {Adicionais segmento N}
   with PagFor.Lote.Last.SegmentoN1.Last.SegmentoN do
   begin
-    LerSegmentoB(SegmentoB, I);
-    LerSegmentoW(SegmentoW, I);
-    LerSegmentoZ(SegmentoZ, I);
+    LerSegmentoB(SegmentoB, nLinha);
+    LerSegmentoW(SegmentoW, nLinha);
+    LerSegmentoZ(SegmentoZ, nLinha);
 
     for x := 0 to SegmentoB.Count - 1 do
     begin
@@ -368,13 +368,13 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoN2(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoN2(nLinha: Integer);
 var
   RegSeg: string;
   x: Integer;
   mOk: Boolean;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3N' then
@@ -415,9 +415,9 @@ begin
   {Adicionais segmento N}
   with PagFor.Lote.Last.SegmentoN2.Last.SegmentoN do
   begin
-    LerSegmentoB(SegmentoB, i);
-    LerSegmentoW(SegmentoW, i);
-    LerSegmentoZ(SegmentoZ, i);
+    LerSegmentoB(SegmentoB, nLinha);
+    LerSegmentoW(SegmentoW, nLinha);
+    LerSegmentoZ(SegmentoZ, nLinha);
 
     for x := 0 to SegmentoB.Count - 1 do
     begin
@@ -429,13 +429,13 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoN3(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoN3(nLinha: Integer);
 var
   RegSeg: string;
   x: Integer;
   mOk: Boolean;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3N' then
@@ -480,9 +480,9 @@ begin
 
   with PagFor.Lote.Last.SegmentoN3.Last.SegmentoN do
   begin
-    LerSegmentoB(SegmentoB, I);
-    LerSegmentoW(SegmentoW, I);
-    LerSegmentoZ(SegmentoZ, I);
+    LerSegmentoB(SegmentoB, nLinha);
+    LerSegmentoW(SegmentoW, nLinha);
+    LerSegmentoZ(SegmentoZ, nLinha);
 
     for x := 0 to SegmentoB.Count - 1 do
     begin
@@ -494,13 +494,13 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoN4(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoN4(nLinha: Integer);
 var
   RegSeg: string;
   x: Integer;
   mOk: Boolean;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3N' then
@@ -547,9 +547,9 @@ begin
 
   with PagFor.Lote.Last.SegmentoN4.Last.SegmentoN do
   begin
-    LerSegmentoB(SegmentoB, I);
-    LerSegmentoW(SegmentoW, I);
-    LerSegmentoZ(SegmentoZ, I);
+    LerSegmentoB(SegmentoB, nLinha);
+    LerSegmentoW(SegmentoW, nLinha);
+    LerSegmentoZ(SegmentoZ, nLinha);
 
     for x := 0 to SegmentoB.Count - 1 do
     begin
@@ -561,13 +561,13 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoN567(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoN567(nLinha: Integer);
 var
   RegSeg: string;
   x: Integer;
   mOk: Boolean;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3N' then
@@ -614,9 +614,9 @@ begin
 
   with PagFor.Lote.Last.SegmentoN567.Last.SegmentoN do
   begin
-    LerSegmentoB(SegmentoB, I);
-    LerSegmentoW(SegmentoW, I);
-    LerSegmentoZ(SegmentoZ, I);
+    LerSegmentoB(SegmentoB, nLinha);
+    LerSegmentoW(SegmentoW, nLinha);
+    LerSegmentoZ(SegmentoZ, nLinha);
 
     for x := 0 to SegmentoB.Count - 1 do
     begin
@@ -628,13 +628,13 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoN8(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoN8(nLinha: Integer);
 var
   RegSeg: string;
   x: Integer;
   mOk: Boolean;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3N' then
@@ -677,9 +677,9 @@ begin
 
   with PagFor.Lote.Last.SegmentoN8.Last.SegmentoN do
   begin
-    LerSegmentoB(SegmentoB, I);
-    LerSegmentoW(SegmentoW, I);
-    LerSegmentoZ(SegmentoZ, I);
+    LerSegmentoB(SegmentoB, nLinha);
+    LerSegmentoW(SegmentoW, nLinha);
+    LerSegmentoZ(SegmentoZ, nLinha);
 
     for x := 0 to SegmentoB.Count - 1 do
     begin
@@ -691,13 +691,13 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoN9(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoN9(nLinha: Integer);
 var
   RegSeg: string;
   x: Integer;
   mOk: Boolean;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3N' then
@@ -744,9 +744,9 @@ begin
   {Adicionais segmento N}
   with PagFor.Lote.Last.SegmentoN9.Last.SegmentoN do
   begin
-    LerSegmentoB(SegmentoB, I);
-    LerSegmentoW(SegmentoW, I);
-    LerSegmentoZ(SegmentoZ, I);
+    LerSegmentoB(SegmentoB, nLinha);
+    LerSegmentoW(SegmentoW, nLinha);
+    LerSegmentoZ(SegmentoZ, nLinha);
 
     for x := 0 to SegmentoB.Count - 1 do
     begin
@@ -758,12 +758,12 @@ begin
   end;
 end;
 
-procedure TArquivoR_Itau.LerSegmentoO(I: Integer);
+procedure TArquivoR_Itau.LerSegmentoO(nLinha: Integer);
 var
   mOk: Boolean;
   RegSeg: string;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3O' then
@@ -788,19 +788,19 @@ begin
     DescOcorrencia := DescricaoRetorno(CodOcorrencia);
   end;
 
-  Linha := ArquivoTXT.Strings[I+1];
+  Linha := ArquivoTXT.Strings[nLinha+1];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   while Pos(RegSeg, '3Z') > 0 do
   begin
-    Inc(i); //próxima linha do txt a ser lida
+    Inc(nLinha); //próxima linha do txt a ser lida
 
     {opcionais segmento O}
-    LerSegmentoW(PagFor.Lote.Last.SegmentoO.Last.SegmentoW, i);
-    LerSegmentoB(PagFor.Lote.Last.SegmentoO.Last.SegmentoB, i);
-    LerSegmentoZ(PagFor.Lote.Last.SegmentoO.Last.SegmentoZ, i);
+    LerSegmentoW(PagFor.Lote.Last.SegmentoO.Last.SegmentoW, nLinha);
+    LerSegmentoB(PagFor.Lote.Last.SegmentoO.Last.SegmentoB, nLinha);
+    LerSegmentoZ(PagFor.Lote.Last.SegmentoO.Last.SegmentoZ, nLinha);
 
-    Linha := ArquivoTXT.Strings[I+1];
+    Linha := ArquivoTXT.Strings[nLinha+1];
     RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
   end;
 end;

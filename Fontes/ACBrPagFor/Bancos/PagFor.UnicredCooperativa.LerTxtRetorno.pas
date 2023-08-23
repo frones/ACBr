@@ -45,13 +45,13 @@ type
 
   TArquivoR_UnicredCooperativa = class(TArquivoR_CNAB240)
   protected
-    procedure LerSegmentoA(I: Integer); override;
+    procedure LerSegmentoA(nLinha: Integer); override;
 
-    procedure LerSegmentoB(mSegmentoBList: TSegmentoBList; I: Integer); override;
+    procedure LerSegmentoB(mSegmentoBList: TSegmentoBList; nLinha: Integer); override;
 
-    procedure LerSegmentoG(I: Integer); override;
+    procedure LerSegmentoG(nLinha: Integer); override;
 
-    procedure LerSegmentoH(mSegmentoHList: TSegmentoHList; I: Integer); override;
+    procedure LerSegmentoH(mSegmentoHList: TSegmentoHList; nLinha: Integer); override;
 
   end;
 
@@ -62,13 +62,13 @@ uses
 
 { TArquivoR_UnicredCooperativa }
 
-procedure TArquivoR_UnicredCooperativa.LerSegmentoA(I: Integer);
+procedure TArquivoR_UnicredCooperativa.LerSegmentoA(nLinha: Integer);
 var
   mOk: Boolean;
   RegSeg: string;
   x: Integer;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if RegSeg <> '3A' then
@@ -116,15 +116,15 @@ begin
     GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', '', Credito.SeuNumero);
   end;
 
-  Linha := ArquivoTXT.Strings[I+1];
+  Linha := ArquivoTXT.Strings[nLinha+1];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   while Pos(RegSeg, '3B/3C/3D/3E/3F/3Z/') > 0 do
   begin
-    Inc(I); //próxima linha do txt a ser lida
+    Inc(nLinha); //próxima linha do txt a ser lida
     {opcionais do segmento A}
-    LerSegmentoB(PagFor.Lote.Last.SegmentoA.Last.SegmentoB, I);
-    LerSegmentoC(PagFor.Lote.Last.SegmentoA.Last.SegmentoC, I);
+    LerSegmentoB(PagFor.Lote.Last.SegmentoA.Last.SegmentoB, nLinha);
+    LerSegmentoC(PagFor.Lote.Last.SegmentoA.Last.SegmentoC, nLinha);
 //    LerSegmentoE(PagFor.Lote.Last.SegmentoA.Last.SegmentoE, I);
 //    LerSegmentoF(PagFor.Lote.Last.SegmentoA.Last.SegmentoF, I);
 //    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, I);
@@ -147,18 +147,18 @@ begin
       end;
     end;
 
-    Linha := ArquivoTXT.Strings[I+1];
+    Linha := ArquivoTXT.Strings[nLinha+1];
     RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
   end;
 end;
 
 procedure TArquivoR_UnicredCooperativa.LerSegmentoB(mSegmentoBList: TSegmentoBList;
-  I: Integer);
+  nLinha: Integer);
 var
   mOk: Boolean;
   RegSeg: string;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if (RegSeg <> '3B') then
@@ -203,12 +203,12 @@ begin
   end;
 end;
 
-procedure TArquivoR_UnicredCooperativa.LerSegmentoG(I: Integer);
+procedure TArquivoR_UnicredCooperativa.LerSegmentoG(nLinha: Integer);
 var
   mOk: Boolean;
   RegSeg: string;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if (RegSeg <> '3G') then
@@ -255,16 +255,16 @@ begin
     DataLimite := LerCampo(Linha, 232, 8, tcDatISO);
   end;
 
-  LerSegmentoH(PagFor.Lote.Last.SegmentoG.Last.SegmentoH, I);
+  LerSegmentoH(PagFor.Lote.Last.SegmentoG.Last.SegmentoH, nLinha + 1);
 end;
 
 procedure TArquivoR_UnicredCooperativa.LerSegmentoH(mSegmentoHList: TSegmentoHList;
-  I: Integer);
+  nLinha: Integer);
 var
   mOk: Boolean;
   RegSeg: string;
 begin
-  Linha := ArquivoTXT.Strings[I];
+  Linha := ArquivoTXT.Strings[nLinha];
   RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
 
   if (RegSeg <> '3H') then

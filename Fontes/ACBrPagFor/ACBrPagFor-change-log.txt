@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/08/2023
+-- CNAB240.LerTxtRetorno --
+[*] Ajuste para a leitura correta do segmento opcional (Segmento H) ao ler o 
+    Segmento G.
+   Por: Innovae Brasil Engenharia
+
 14/08/2023
 -- PagFor.Bradesco.LerTxtRetorno/ACBrPagForClass --
 [*] Acrescentado no Registro 1 a leitura de ocorrências.

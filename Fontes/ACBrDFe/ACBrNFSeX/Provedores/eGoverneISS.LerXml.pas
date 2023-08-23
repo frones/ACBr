@@ -239,6 +239,8 @@ begin
         OutrasRetencoes := ObterConteudo(ANode.Childrens.FindAnyNs('ValorOutrosImpostos'), tcDe2);
 
         ValorPis := ObterConteudo(ANode.Childrens.FindAnyNs('ValorPisPasep'), tcDe2);
+
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
       end;
     end;
 

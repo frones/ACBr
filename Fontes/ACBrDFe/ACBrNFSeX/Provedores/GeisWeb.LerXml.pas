@@ -235,6 +235,8 @@ begin
       ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('Csll'), tcDe2);
       ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('Irrf'), tcDe2);
       ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('Inss'), tcDe2);
+
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
     end;
   end;
 end;

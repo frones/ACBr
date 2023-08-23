@@ -347,6 +347,8 @@ begin
 
         aValor := ObterConteudo(ANode.Childrens.FindAnyNs('TipoRecolhimento'), tcStr);
         IssRetido := StrToEnumerado(Ok, aValor, ['A','R'], [stNormal, stRetencao]);
+
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
       end;
     end;
 
@@ -419,8 +421,7 @@ begin
     end;
 
     ValorLiquidoNfse := ValorServicos -
-                        (ValorPis + ValorCofins + ValorInss + ValorIr +
-                         ValorCsll + ValorDeducoes + DescontoCondicionado+
+                        (RetencoesFederais + ValorDeducoes + DescontoCondicionado+
                          DescontoIncondicionado + ValorIssRetido);
 
     BaseCalculo := ValorServicos - (ValorDeducoes + DescontoIncondicionado);

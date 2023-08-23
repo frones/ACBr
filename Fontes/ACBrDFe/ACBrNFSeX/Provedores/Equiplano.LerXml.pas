@@ -132,6 +132,8 @@ begin
       ValorIr       := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaIrpj'), tcDe2);
       ValorCsll     := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlCsll'), tcDe2);
       ValorInss     := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlInss'), tcDe2);
+
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
     end;
 
     AuxNode := AuxNode.Childrens.FindAnyNs('cancelamento');
@@ -287,9 +289,9 @@ begin
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
     with NFSe.Servico.Valores do
-      ValorLiquidoNfse := ValorServicos - ValorPis - ValorCofins - ValorInss -
-                          ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
-                          DescontoIncondicionado - DescontoCondicionado;
+      ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
+                          ValorIssRetido - DescontoIncondicionado -
+                          DescontoCondicionado;
   end;
 end;
 

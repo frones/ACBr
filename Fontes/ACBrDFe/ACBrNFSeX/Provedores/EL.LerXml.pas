@@ -378,6 +378,8 @@ begin
       ValorIssRetido   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIssRetido'), tcDe2);
       OutrosDescontos  := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrosDescontos'), tcDe2);
       BaseCalculo      := ValorServicos - ValorDeducoes;
+
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
     end;
   end;
 end;

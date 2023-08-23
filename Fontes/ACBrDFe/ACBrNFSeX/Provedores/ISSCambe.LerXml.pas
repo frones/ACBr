@@ -159,6 +159,8 @@ begin
     else
       IssRetido := stRetencao;
 
+    RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
     ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('valorLiquidoNFSe'), tcDe2);
   end;
 

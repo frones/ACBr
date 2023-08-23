@@ -227,9 +227,11 @@ begin
           ValorTotalTributos := jsAux.AsFloat['ValorTotalTributos'];
           ValorCredito := jsAux.AsFloat['ValorCredito'];
 
+          RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
           ValorLiquidoNfse := ValorServicos -
-                              (ValorPis + ValorCofins + ValorInss + ValorIr +
-                               ValorCsll + ValorDeducoes + DescontoCondicionado +
+                              (RetencoesFederais + ValorDeducoes +
+                               DescontoCondicionado +
                                DescontoIncondicionado + ValorIssRetido);
         end;
       end;

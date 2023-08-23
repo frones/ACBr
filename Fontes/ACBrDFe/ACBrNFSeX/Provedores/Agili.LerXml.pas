@@ -434,6 +434,8 @@ begin
       Aliquota := ObterConteudo(ANode.Childrens.FindAnyNs('AliquotaISSQN'), tcDe3);
       ValorIss := ObterConteudo(ANode.Childrens.FindAnyNs('ValorISSQNCalculado'), tcDe2);
 
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
       aValor := ObterConteudo(ANode.Childrens.FindAnyNs('ISSQNRetido'), tcStr);
 
       case FpAOwner.StrToSimNao(Ok, aValor) of

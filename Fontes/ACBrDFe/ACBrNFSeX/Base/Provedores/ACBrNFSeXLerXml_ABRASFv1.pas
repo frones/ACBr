@@ -808,9 +808,10 @@ begin
       DescontoCondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoCondicionado'), tcDe2);
       DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoIncondicionado'), tcDe2);
 
-      ValorLiq := ValorServicos - ValorPis - ValorCofins - ValorInss -
-                  ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
-                  DescontoIncondicionado - DescontoCondicionado;
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
+      ValorLiq := ValorServicos - RetencoesFederais - OutrasRetencoes -
+                  ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
 
       if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
         ValorLiquidoNfse := ValorLiq;

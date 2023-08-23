@@ -366,9 +366,10 @@ begin
     RetidoPis        := ObterConteudo(ANode.Childrens.FindAnyNs('RetencaoPIS'), tcDe2);
     RetidoCofins     := ObterConteudo(ANode.Childrens.FindAnyNs('RetencaoCOFINS'), tcDe2);
     RetidoCsll       := ObterConteudo(ANode.Childrens.FindAnyNs('RetencaoCSLL'), tcDe2);
-    ValorLiquidoNfse := ValorServicos -
-                        ValorPis - ValorCofins - ValorInss -
-                        ValorIr - ValorCsll - OutrasRetencoes -
+
+    RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
+    ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
                         ValorIssRetido - DescontoIncondicionado -
                         DescontoCondicionado;
   end;

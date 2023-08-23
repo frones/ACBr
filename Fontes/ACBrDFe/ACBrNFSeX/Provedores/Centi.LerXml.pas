@@ -602,8 +602,8 @@ begin
         else
           ValorIssRetido := 0;
 
-        ValorLiq := ValorServicos - ValorPis - ValorCofins - ValorInss -
-                    ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
+        ValorLiq := ValorServicos - RetencoesFederais - OutrasRetencoes -
+                    ValorIssRetido -
                     DescontoIncondicionado - DescontoCondicionado;
 
         if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
@@ -698,6 +698,8 @@ begin
 
       if ValorIss = 0 then
         ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
+
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
 
       OutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
 

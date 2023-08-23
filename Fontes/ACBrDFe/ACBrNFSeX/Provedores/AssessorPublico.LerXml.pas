@@ -180,6 +180,8 @@ begin
     ValorCsll     := ObterConteudo(AuxNode.Childrens.FindAnyNs('CSLL'), tcDe2);
     ValorIssRetido  := ObterConteudo(AuxNode.Childrens.FindAnyNs('RETENCAO'), tcDe2);
 
+    RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
     OutrasRetencoes := OutrasRetencoes +
            ObterConteudo(AuxNode.Childrens.FindAnyNs('ICMS'), tcDe2) +
            ObterConteudo(AuxNode.Childrens.FindAnyNs('IOF'), tcDe2) +

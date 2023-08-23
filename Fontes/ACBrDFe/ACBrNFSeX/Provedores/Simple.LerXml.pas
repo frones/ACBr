@@ -211,6 +211,8 @@ begin
     ValorCofins := ObterConteudo(ANode.Childrens.FindAnyNs('nCofins'), tcDe2);
     ValorInss := ObterConteudo(ANode.Childrens.FindAnyNs('nInss'), tcDe2);
     ValorCsll := ObterConteudo(ANode.Childrens.FindAnyNs('nCsll'), tcDe2);
+
+    RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
   end;
 
   LerTItens(ANode);

@@ -533,11 +533,7 @@ begin
       rllValorServicos1.Caption       := FormatFloat(',0.00', ValorServicos);
       rllDescIncondicionado.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
       rllDescCondicionado.Caption     := FormatFloat(',0.00', DescontoCondicionado);
-//      rllRetencoesFederais.Caption    := FormatFloat(',0.00', ValorPis +
-//                                                              ValorCofins +
-//                                                              ValorInss +
-//                                                              ValorIr +
-//                                                              ValorCsll);
+//      rllRetencoesFederais.Caption    := FormatFloat(',0.00', RetencoesFederais);
       rllOutrasRetencoes.Caption      := FormatFloat(',0.00', OutrasRetencoes);
 //      rllValorIssRetido.Caption       := FormatFloat(',0.00', ValorIssRetido);
       rllValorLiquido.Caption         := FormatFloat(',0.00', ValorLiquidoNfse);

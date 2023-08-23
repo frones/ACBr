@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/08/2023
+-- Diversos --
+[*] Remoção do componente de impressão do DANFSE o calculo do total de Retenções Federais.
+    Passando para as Units responsáveis pela a leitura do XML da NFS-e.
+   Por: Italo Giurizzato Junior
+
 22/08/2023
 -- ACBrNFSeXDANFSeFR --
 [*] Possível solução para o erro de compilação.

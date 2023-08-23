@@ -248,7 +248,13 @@ begin
     Servico.Valores.ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('cofins'), tcDe2);
     Servico.Valores.ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('pispasep'), tcDe2);
 
-    if ObterConteudo(AuxNode.Childrens.FindAnyNs('issretido'), tcStr) = '0' then
+    Servico.Valores.RetencoesFederais := Servico.Valores.ValorPis +
+                                         Servico.Valores.ValorCofins +
+                                         Servico.Valores.ValorInss +
+                                         Servico.Valores.ValorIr +
+                                         Servico.Valores.ValorCsll;
+
+          if ObterConteudo(AuxNode.Childrens.FindAnyNs('issretido'), tcStr) = '0' then
       NFSe.Servico.Valores.IssRetido := stNormal
     else
       NFSe.Servico.Valores.IssRetido := stRetencao;

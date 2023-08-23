@@ -229,6 +229,8 @@ begin
         ValorIr := ObterConteudo(ANode.Childrens.FindAnyNs('nfevalirrf'), tcDe2);
 
 //      <xsd:element name="nfevaltributavel" type="xsd:string"/>
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
       end;
 
       i := 0;

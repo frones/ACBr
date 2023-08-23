@@ -301,10 +301,11 @@ begin
     else
       IssRetido := stRetencao;
 
+    RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
     ValorLiquidoNfse := ValorServicos -
-                        (ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll +
-                         ValorDeducoes + DescontoCondicionado +
-                         DescontoIncondicionado + ValorIssRetido);
+                        (RetencoesFederais + ValorDeducoes + ValorIssRetido +
+                         DescontoCondicionado + DescontoIncondicionado);
   end;
 
   with NFSe.ValoresNfse do

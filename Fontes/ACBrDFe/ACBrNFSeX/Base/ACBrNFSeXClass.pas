@@ -378,12 +378,13 @@ type
     FtribFed: TtribFed;
     FtotTrib: TtotTrib;
     FTipoDeducao: TTipoDeducao;
-	FValorPisRetido: Double;
-	FValorCofinsRetido: Double;
-	FValorInssRetido: Double;
-	FValorIrRetido: Double;
-	FValorCsllRetido: Double;
-	FValorCppRetido: Double;
+    FValorPisRetido: Double;
+    FValorCofinsRetido: Double;
+    FValorInssRetido: Double;
+    FValorIrRetido: Double;
+    FValorCsllRetido: Double;
+    FValorCppRetido: Double;
+    FRetencoesFederais: Double;
 
     procedure SetDocDeducao(const Value: TDocDeducaoCollection);
   public
@@ -458,6 +459,7 @@ type
     property totTrib: TtotTrib read FtotTrib write FtotTrib;
     //provedor CTAConsult
     property TipoDeducao: TTipoDeducao read FTipoDeducao write FTipoDeducao;
+    property RetencoesFederais: Double read FRetencoesFederais write FRetencoesFederais;
   end;
 
   TDadosDeducao = class(TObject)
@@ -1545,6 +1547,7 @@ begin
     FDescontoIncondicionado := 0;
     FDescontoCondicionado := 0;
     FValorDespesasNaoTributaveis := 0;
+    FRetencoesFederais := 0;
   end;
 
   FItemServico := TItemServicoCollection.Create;

@@ -115,6 +115,8 @@ begin
           AliquotaInss := ObterConteudo(ANodes[i].Childrens.FindAnyNs('TributoAliquota'), tcDe2);
           ValorInss    := ObterConteudo(ANodes[i].Childrens.FindAnyNs('TributoValor'), tcDe2);
         end;
+
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
       end;
     end;
   end;

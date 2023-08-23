@@ -414,11 +414,13 @@ begin
     with Servico.Valores do
     begin
       ValorIss         := (ValorServicos * Aliquota) /100;
+
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
       ValorLiquidoNfse := ValorServicos -
                                       (ValorDeducoes + DescontoCondicionado +
                                        DescontoIncondicionado + ValorIssRetido +
-                                       ValorPis + ValorCofins + ValorInss +
-                                       ValorIr + ValorCsll);
+                                       RetencoesFederais);
       BaseCalculo      := ValorLiquidoNfse;
     end;
   end;

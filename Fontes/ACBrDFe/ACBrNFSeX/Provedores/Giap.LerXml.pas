@@ -209,6 +209,8 @@ begin
       AliquotaINSS   := 0;
       AliquotaIR     := 0;
       AliquotaCSLL   := 0;
+
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
     end;
 
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('obs'), tcStr);

@@ -288,6 +288,8 @@ begin
 
       DescontoCondicionado   := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('ValorDescontoCondicionado').Content, '.', '', [rfReplaceAll]), 0);
       DescontoIncondicionado := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('ValorDescontoIncondicionado').Content, '.', '', [rfReplaceAll]), 0);
+
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
     end;
   end;
 end;

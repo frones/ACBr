@@ -224,9 +224,10 @@ begin
 
         DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor_desconto'), tcDe2);
 
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
         ValorLiquidoNfse := ValorServicos -
-                            (ValorPis + ValorCofins + ValorInss + ValorIr +
-                             ValorCsll + ValorDeducoes + DescontoCondicionado +
+                            (RetencoesFederais + ValorDeducoes + DescontoCondicionado +
                              DescontoIncondicionado + ValorIssRetido);
       end;
     end;

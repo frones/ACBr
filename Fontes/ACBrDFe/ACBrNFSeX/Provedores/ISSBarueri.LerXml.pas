@@ -247,6 +247,12 @@ begin
 
   NFSe.Servico.Valores.ValorTotalTributos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValTotTributos'), tcDe2);
 
+   NFSe.Servico.Valores.RetencoesFederais := NFSe.Servico.Valores.ValorPis +
+                                             NFSe.Servico.Valores.ValorCofins +
+                                             NFSe.Servico.Valores.ValorInss +
+                                             NFSe.Servico.Valores.ValorIr +
+                                              NFSe.Servico.Valores.ValorCsll;
+
   //Item := NFSe.Servico.ItemServico.Add;
 
   //Item.Quantidade := ObterConteudo(AuxNode.Childrens.FindAnyNs('QuantidadeServico'), tcDe2);

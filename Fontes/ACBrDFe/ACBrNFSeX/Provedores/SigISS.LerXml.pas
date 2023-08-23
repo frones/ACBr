@@ -325,10 +325,11 @@ begin
           ValorIssRetido := StrToFloatDef(ObterConteudo(AuxNode.Childrens.FindAnyNs('ISSRetido'), tcStr), 0);
         end;
 
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
         ValorLiquidoNfse := ValorServicos -
-                            (ValorPis + ValorCofins + ValorInss + ValorIr +
-                             ValorCsll + ValorDeducoes + DescontoCondicionado +
-                             DescontoIncondicionado + ValorIssRetido);
+                            (RetencoesFederais + ValorDeducoes + ValorIssRetido +
+                             DescontoCondicionado + DescontoIncondicionado);
       end;
     end;
 

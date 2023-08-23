@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/08/2023
+-- pcnGeradorReinf --
+[*] Configurada Produção Restrita para gerar os eventos síncronos, da versão 1.5.1, na versão 2.1.2
+  Por: Renato Rubinho
+
 07/08/2023
 -- Diversos --
 [*] Atualizados schemas disponibilizados para a versão 2.1.2

@@ -57,6 +57,7 @@ type
 
     FGerador: TGerador;
     FSchema: TReinfSchema;
+    function VersaoReinfToStrHibrido(const t: TVersaoReinf): String;
     procedure SetXML(const Value: AnsiString);
   protected
     {Geradores de Uso Comum}
@@ -213,6 +214,20 @@ begin
   end;
 end;
 
+function TReinfEvento.VersaoReinfToStrHibrido(const t: TVersaoReinf): String;
+begin
+  with TACBrReinf(FACBrReinf) do
+  begin
+    Result := VersaoReinfToStr(Configuracoes.Geral.VersaoDF);
+
+    // Producao Restrita da versao 1_05_01 migrada para versao 2_01_02
+    // Mantidas urls, mudança apenas na URN
+    if ( Configuracoes.WebServices.Ambiente = taHomologacao ) and
+       ( Configuracoes.Geral.VersaoDF = v1_05_01 ) then
+      Result := '2_01_02';
+  end;
+end;
+
 procedure TReinfEvento.SetXML(const Value: AnsiString);
 var
   NomeEvento: String;
@@ -246,7 +261,7 @@ var
 begin
   AXML := FXMLAssinado;
   Evento := SchemaReinfToStr(Schema) + PrefixVersao +
-          VersaoReinfToStr(TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF);
+          VersaoReinfToStrHibrido(TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF);
 
   if EstaVazio(AXML) then
   begin
@@ -290,7 +305,7 @@ begin
   with TACBrReinf(FACBrReinf) do
   begin
     SSL.NameSpaceURI := ACBRReinf_NAMESPACE_URI + Namespace + '/v' +
-                        VersaoReinfToStr(Configuracoes.Geral.VersaoDF);
+                        VersaoReinfToStrHibrido(Configuracoes.Geral.VersaoDF);
 
     Gerador.wGrupo(ENCODING_UTF8, '', False);
     Gerador.wGrupo('Reinf xmlns="' + SSL.NameSpaceURI+'"');

@@ -224,9 +224,7 @@ type
 
   TFPDF = class
   private
-    procedure DefineDefaultPageSizes;
     function FindUsedFontIndex(const AFontName: String): Integer;
-
   protected
     page: Integer;                        // current page number
     n: Integer;                           // current object number
@@ -238,7 +236,6 @@ type
     k: Double;                            // scale factor (number of points in user unit)
     DefOrientation: TFPDFOrientation;     // default orientation
     CurOrientation: TFPDFOrientation;     // current orientation
-    StdPageSizes: array[TFPDFPageFormat] of TFPDFPageSize; // standard page sizes
     DefPageSize: TFPDFPageSize;           // default page size
     CurPageSize: TFPDFPageSize;           // current page size
     CurRotation: TFPDFRotation;           // current page rotation
@@ -367,6 +364,7 @@ type
 
     procedure AddPage; overload;
     procedure AddPage(vOrientation: TFPDFOrientation); overload;
+    procedure AddPage(AOrientation: TFPDFOrientation; APageFormat: TFPDFPageFormat); overload;
     procedure AddPage(AOrientation: TFPDFOrientation; ASize: TFPDFPageSize; ARotation: TFPDFRotation); overload;
     procedure Header; virtual;
     procedure Footer; virtual;
@@ -436,6 +434,14 @@ const
    (000, 128, 000), (000, 255, 000), (128, 128, 000), (255, 255, 000),
    (000, 000, 128), (000, 000, 255), (000, 128, 128), (000, 255, 255),
    (220, 220, 220) );
+  // standard page sizes
+  cPDFPageSizes: array[TFPDFPageFormat] of TFPDFPageSize = (
+    (w: 841.89; h: 1190.55), // pfA3
+    (w: 595.28; h: 841.89), // pfA4
+    (w: 420.94; h: 595.28), // pfA5
+    (w: 612; h: 792), // pfLetter
+    (w: 612; h: 1008) // pfLegal
+  );
 
 function SwapBytes(Value: Cardinal): Cardinal; overload;
 function SwapBytes(Value: Word): Word; overload;
@@ -604,9 +610,6 @@ var
 begin
   //Scale factor
   Self.k := cUNIT[APageUnit];
-  // Page sizes
-  DefineDefaultPageSizes;
-
   APageSize := _getpagesize(APageFormat);
   Create(AOrientation, APageUnit, APageSize);
 end;
@@ -666,8 +669,6 @@ begin
 
   //Scale factor
   Self.k := cUNIT[APageUnit];
-  // Page sizes
-  DefineDefaultPageSizes;
 
   Self.DefPageSize.w := APageSize.w;
   Self.DefPageSize.h := APageSize.h;
@@ -993,6 +994,16 @@ begin
   Self.TextColor := vtc;
   Self.ColorFlag := vcf;
   Self.underline := vunder;
+end;
+
+procedure TFPDF.AddPage(AOrientation: TFPDFOrientation;
+  APageFormat: TFPDFPageFormat);
+var
+  APageSize: TFPDFPageSize;
+begin
+  APageSize := _getpagesize(APageFormat);
+
+  AddPage(AOrientation, APageSize, Self.CurRotation);
 end;
 
 procedure TFPDF.Header;
@@ -2301,8 +2312,8 @@ end;
 
 function TFPDF._getpagesize(APageFormat: TFPDFPageFormat): TFPDFPageSize;
 begin
-  Result.w := StdPageSizes[APageFormat].w/Self.k;
-  Result.h := StdPageSizes[APageFormat].h/Self.k;
+  Result.w := cPDFPageSizes[APageFormat].w/Self.k;
+  Result.h := cPDFPageSizes[APageFormat].h/Self.k;
 end;
 
 procedure TFPDF._beginpage(AOrientation: TFPDFOrientation; APageSize: TFPDFPageSize; ARotation: TFPDFRotation);
@@ -3481,20 +3492,6 @@ begin
   _out(Format('q %.2f 0 0 %.2f %.2f %.2f cm /I%d Do Q', [vWidth*Self.k, vHeight*Self.k, vX*Self.k, (Self.h-(vY+vHeight))*Self.k, img.i], FPDFFormatSetings));
   if (vLink <> '') then
     Link(vX, vY, vWidth, vHeight, vLink);
-end;
-
-procedure TFPDF.DefineDefaultPageSizes;
-begin
-  Self.StdPageSizes[pfA3].w := 841.89;
-  Self.StdPageSizes[pfA3].h := 1190.55;
-  Self.StdPageSizes[pfA4].w := 595.28;
-  Self.StdPageSizes[pfA4].h := 841.89;
-  Self.StdPageSizes[pfA5].w := 420.94;
-  Self.StdPageSizes[pfA5].h := 595.28;
-  Self.StdPageSizes[pfLetter].w := 612;
-  Self.StdPageSizes[pfLetter].h := 792;
-  Self.StdPageSizes[pfLegal].w := 612;
-  Self.StdPageSizes[pfLegal].h := 1008;
 end;
 
 function TFPDF.FindUsedFontIndex(const AFontName: String): Integer;

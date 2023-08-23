@@ -202,6 +202,19 @@ type
       BarHeight: double = 0; BarWidth: double = 0);
   end;
 
+  { TFPDFScriptTransform }
+  { http://www.fpdf.org/en/script/script79.php - Moritz Wagner & Andreas Würmser }
+  TTransformationMatrix = array[0..5] of double;
+
+  TFPDFScriptTransform = class(TFPDFScripts)
+  private
+  public
+    procedure StartTransform;
+    procedure StopTransform;
+    procedure Translate(t_x, t_y: double);
+    procedure Transform(tm: TTransformationMatrix);
+  end;
+
   TFPDFLayer =  record
     Name: String;
     Visible: Boolean;
@@ -335,7 +348,7 @@ type
     function GetStringHeight(const AText: string; AWidth: double;
       ALineSpacing: double = 0; AIndent: double = 0): double;
 
-    function TextBox(vX, vY, vWidht, vHeight: double; const AText: string;
+    function TextBox(vX, vY, vWidth, vHeight: double; const AText: string;
       const vAlign: char = 'T'; const hAlign: char = 'L';
       ABorder: boolean = True; AWordWrap: boolean = True;
       AScale: boolean = False; ALineSpacing: double = 0): double;
@@ -1512,29 +1525,29 @@ begin
   SetFont('',Self.fFontStyle);
 end;
 
-function TFPDFExt.TextBox(vX, vY, vWidht, vHeight: double;
-  const AText: string; const vAlign,  hAlign: char;
-  ABorder, AWordWrap, AScale: boolean; ALineSpacing: double): double;
+function TFPDFExt.TextBox(vX, vY, vWidth, vHeight: double; const AText: string; const vAlign,
+  hAlign: char; ABorder, AWordWrap, AScale: boolean; ALineSpacing: double): double;
 var
   wText, wLine: string;
-  IncY, OldFontSize, AltText, x1, y1, Comp, MaxHeight, wIndent: double;
-  wN, i: integer;
-  wLines: TStringArray;
+  IncY, OldFontSize, AltText: double;
+  x1, y1, Comp, MaxHeight, Indent: double;
+  wN, I: integer;
+  Lines: TStringArray;
 begin
   MaxHeight := vHeight;
   wText := AText;
   OldFontSize := Self.FontSizePt;
   Result := vY;
-  wIndent := 0;
-  if vWidht < 0 then
+  Indent := 0;
+  if vWidth < 0 then
     Exit;
   wText := Trim(AText);
   if ABorder then
-    Self.RoundedRect(vX, vY, vWidht, vHeight, 0.8, '', 'D');
+    Self.RoundedRect(vX, vY, vWidth, vHeight, 0.8, '', 'D');
   IncY := Self.FontSize;
   if AWordWrap and (wText <> '') then
   begin
-    while AScale and (GetStringHeight(wText, vWidht, ALineSpacing, wIndent) > MaxHeight) do
+    while AScale and (GetStringHeight(wText, vWidth, ALineSpacing, Indent) > MaxHeight) do
     begin
       if Self.FontSizePt > 8 then
         Self.SetFont(Self.FontFamily, Self.FontStyle, Self.FontSizePt - 0.5)
@@ -1542,14 +1555,14 @@ begin
         Self.SetFont(Self.FontFamily, Self.FontStyle, Self.FontSizePt - 0.1);
       IncY := Self.FontSize;
     end;
-    wN := Self.WordWrap(wText, vWidht, wIndent);
+    wN := Self.WordWrap(wText, vWidth, Indent);
   end
   else
     wN := Length(Split(wText, sLineBreak));
 
   AltText := (IncY * wN) + ((wN - 1) * ALineSpacing);
 
-  wLines := Split(wText, sLineBreak);
+  Lines := Split(wText, sLineBreak);
 
   case vAlign of
     'C': y1 := vY + IncY + ((vHeight - AltText) / 2) - 1;
@@ -1559,16 +1572,16 @@ begin
     y1 := vY + IncY;
   end;
 
-  for i := 0 to Length(wLines) - 1 do
+  for I := 0 to Length(Lines) - 1 do
   begin
-    wLine := wLines[i];
+    wLine := Lines[I];
     wText := Trim(wLine);
     Comp  := Self.GetStringWidth(wText);
-    if Comp > vWidht then
+    if Comp > vWidth then
     begin
       if AScale then
       begin
-        while Comp > vWidht do
+        while Comp > vWidth do
         begin
           if Self.FontSizePt > 8 then
             Self.SetFont(Self.FontFamily, Self.FontStyle, Self.FontSizePt - 0.5)
@@ -1581,18 +1594,18 @@ begin
         repeat
           wText := Copy(wText, 1, Length(wText) - 1);
           Comp := Self.GetStringWidth(wText);
-        until Comp <= vWidht;
+        until Comp <= vWidth;
     end;
 
     case hAlign of
-      'C': x1 := vX + ((vWidht - Comp) / 2);
-      'R': x1 := vX + vWidht - (Comp + 0.5);
+      'C': x1 := vX + ((vWidth - Comp) / 2);
+      'R': x1 := vX + vWidth - (Comp + 0.5);
     else
       // Default: 'L' (left)
       x1 := vX + 0.5;
     end;
 
-    x1 := x1 + wIndent;
+    x1 := x1 + Indent;
     Self.Text(x1, y1, wText);
 
     if not AWordWrap and (Self.FontSizePt <> OldFontSize) then
@@ -2070,6 +2083,40 @@ begin
     Self.PDFVersion := 1.5;
 
   inherited _enddoc;
+end;
+
+{ TFPDFScriptTransform }
+
+procedure TFPDFScriptTransform.StartTransform;
+begin
+  // save the current graphic state
+  fpFPDF._out('q');
+end;
+
+procedure TFPDFScriptTransform.StopTransform;
+begin
+  // restore previous graphic state
+  fpFPDF._out('Q');
+end;
+
+procedure TFPDFScriptTransform.Transform(tm: TTransformationMatrix);
+begin
+  fpFPDF._out(Format('%.3f %.3f %.3f %.3f %.3f %.3f cm',[tm[0],tm[1],tm[2],tm[3],tm[4],tm[5]]));
+end;
+
+procedure TFPDFScriptTransform.Translate(t_x, t_y: double);
+var
+  tm: TTransformationMatrix;
+begin
+  //calculate elements of transformation matrix
+  tm[0]:=1;
+  tm[1]:=0;
+  tm[2]:=0;
+  tm[3]:=1;
+  tm[4]:=t_x*fpFPDF.k;
+  tm[5]:=-t_y*fpFPDF.k;
+  //translate the coordinate system
+  Transform(tm);
 end;
 
 end.

@@ -938,7 +938,7 @@ begin
         ValorLiq := ValorServicos - RetencoesFederais - OutrasRetencoes -
                     ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
 
-        if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
+        if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse > ValorLiq) then
           ValorLiquidoNfse := ValorLiq;
       end;
     end;
@@ -1050,12 +1050,14 @@ begin
         else
           ValorCppRetido := 0;
 
-        ValorLiq := ValorServicos - ValorPisRetido - ValorCofinsRetido -
-                    ValorInssRetido - ValorIrRetido - ValorCsllRetido -
-                    ValorCppRetido - OutrasRetencoes - ValorIssRetido -
-                    DescontoIncondicionado - DescontoCondicionado;
+        RetencoesFederais := ValorPisRetido + ValorCofinsRetido +
+                             ValorInssRetido + ValorIrRetido +
+                             ValorCsllRetido + ValorCppRetido;
 
-        if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
+        ValorLiq := ValorServicos - RetencoesFederais - OutrasRetencoes -
+                    ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
+
+        if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse > ValorLiq) then
           ValorLiquidoNfse := ValorLiq;
       end;
     end;

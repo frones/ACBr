@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/08/2023
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajustes para o calculo correto do valor liquido da nota.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX/ACBrNFSeXConversao/PadraoNacional.Provider --
 [*] Ao gerar o nome do XML da NFS-e agora é checado se o provedor é PadraoNacional,
     caso afirmativo é utilizado a chave da nota.

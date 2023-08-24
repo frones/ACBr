@@ -28,7 +28,6 @@ namespace ACBrLib.CTe
             Recebedor = new RecebedorCTe();
             Destinatario = new DestinatarioCTe();
             ValoresPrestacaoServico = new ValoresPrestacaoServicoCTe();
-            ComponentesValorPrestacao = new ComponentesValorPrestacaoCTe();
             InformacoesRelativasImpostos = new InformacoesRelativasImpostosCTe();
             GrupoInformacoesNormalSubstituto = new GrupoInformacoesNormalSubstitutoCTe();           
             DetalhamentoAnulacao = new DetalhamentoAnulacaoCTe();
@@ -78,7 +77,7 @@ namespace ACBrLib.CTe
 
         public ValoresPrestacaoServicoCTe ValoresPrestacaoServico { get; }
 
-        public ComponentesValorPrestacaoCTe ComponentesValorPrestacao { get; }
+        public List<ComponentesValorPrestacaoCTe> ComponentesValorPrestacao { get; } = new List<ComponentesValorPrestacaoCTe> ();
 
         public InformacoesRelativasImpostosCTe InformacoesRelativasImpostos { get; }
 
@@ -148,7 +147,14 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(Recebedor, "Receb");
             iniData.WriteToIni(Destinatario, "Dest");
             iniData.WriteToIni(ValoresPrestacaoServico, "vPrest");
-            iniData.WriteToIni(ComponentesValorPrestacao, "Comp");
+            
+            for (var i = 0; i < ComponentesValorPrestacao.Count; i++)
+            {
+                ComponentesValorPrestacaoCTe comp = ComponentesValorPrestacao[i];
+                iniData.WriteToIni(comp, $"Comp{i + 1:000}");
+
+            }
+            
             iniData.WriteToIni(InformacoesRelativasImpostos, "Imp");
             if (InformacoesRelativasImpostos.ICMSSN.CST == CSTCTe.ICMSSN)
             {
@@ -180,6 +186,8 @@ namespace ACBrLib.CTe
             }
             iniData.WriteToIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCTeSub, "infCTeSub");
+            iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infCTeSub.tomaICMS, "tomaICMS");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
 
             switch (Identificacao.mod)
@@ -498,15 +506,24 @@ namespace ACBrLib.CTe
                 if(obsFisco != null) ObsFisco.Add(obsFisco);
 
             } while (obsFisco != null);
-            
-            iniData.ReadFromIni(ObsFisco, "ObsFisco");
+                       
             iniData.ReadFromIni(Emitente, "Emit");
             iniData.ReadFromIni(Remetente, "Rem");
             iniData.ReadFromIni(Expedidor, "Exped");
             iniData.ReadFromIni(Recebedor, "Receb");
             iniData.ReadFromIni(Destinatario, "Dest");
             iniData.ReadFromIni(ValoresPrestacaoServico, "vPrest");
-            iniData.ReadFromIni(ComponentesValorPrestacao, "Comp");
+
+            i = 0;
+            ComponentesValorPrestacaoCTe comp;
+            do
+            {
+                i++;
+                comp = iniData.ReadFromIni<ComponentesValorPrestacaoCTe>($"Comp{i:000}");
+
+                if (comp != null) ComponentesValorPrestacao.Add(comp);
+            } while(comp != null);            
+            
             iniData.ReadFromIni(InformacoesRelativasImpostos, "Imp");
             iniData.ReadFromIni(InformacoesRelativasImpostos.ICMSSN, "ICMSSN");
             iniData.ReadFromIni(InformacoesRelativasImpostos.ICMSOutraUF, "ICMSOutrasUF");
@@ -517,6 +534,8 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(InformacoesRelativasImpostos.ICMS90, "ICMS90");
             iniData.ReadFromIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCTeSub, "infCTeSub");
+            iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infCTeSub.tomaICMS, "tomaICMS");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
 
             switch (Identificacao.mod)

@@ -46,6 +46,8 @@ Símbolo : Significado
 
 24/08/2023
 -- ACBrCTeConhecimentos --
+[*] Ajuste na rotina de geração e leitura do ini no grupo infCTeSub, visando melhor compatibilidade com MOC.
+  Por: Diego Folieni
 [*] Ajuste na rotina de leitura e geração do ini no grupo prop, visando melhor compatibilidade com MOC.
   Por: Diego Folieni
 

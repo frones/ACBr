@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 24/08/2023
+-- BHISS.LerXml --
+[*] Alteração visando não imprimir o Municipio de Prestação do Servico quando o 
+    mesmo for igual ao do Prestador.
+   Por: Italo Giurizzato Junior
 -- SigISSWeb.GravarXml/SigISSWeb.LerXml --
 [*] A geração e leitura das tags valor_nf e valor_servico estavam pegando valores
     de campos errados.

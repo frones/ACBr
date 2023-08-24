@@ -70,9 +70,9 @@ type
     FNossoNumero       : String;
     FCarteira          : String;
     FMensagem          : TStringList;
+    FBoletoIndex       : Boolean;
       { Private declarations }
     procedure GeraDados(const AACBrTitulo: TACBrTitulo);
-
     procedure ImpressaoUnificada;
     Procedure ImpressaoIndividual;
     procedure InicializarArquivo(const AOrientation: TFPDFOrientation = poPortrait; APageUnit: TFPDFUnit = puMM; APageFormat: TFPDFPageFormat = pfA4; APageWidthCustom : Double = 0; APageHeightCustom : Double = 0);
@@ -104,7 +104,7 @@ type
     destructor Destroy; override;
     procedure Imprimir; override;
     procedure Imprimir(AStream: TStream); override;
-
+    procedure GerarPDF(AIndex: Integer); override;
   published
       { Published declarations }
   end;
@@ -179,6 +179,12 @@ begin
   end;
 end;
 
+procedure TACBrBoletoFPDF.GerarPDF(AIndex: Integer);
+begin
+  FBoletoIndex := True;
+  inherited GerarPDF(AIndex);
+end;
+
 procedure TACBrBoletoFPDF.Imprimir;
 
 begin
@@ -192,17 +198,26 @@ end;
 
 procedure TACBrBoletoFPDF.ImpressaoIndividual;
 var
-  I: Integer;
+  I, LIndex: Integer;
 begin
+
   for I := 0 to Pred(ACBrBoleto.ListadeBoletos.Count) do
   begin
     ModeloImpressao(True);
     try
-      GeraDados(ACBrBoleto.ListadeBoletos[ I ]);
+      if Self.IndiceImprimirIndividual > 0 then
+        LIndex := Self.IndiceImprimirIndividual
+      else
+        LIndex := I;
+
+      GeraDados(ACBrBoleto.ListadeBoletos[ LIndex ]);
       if EstaVazio(FNomeArquivo) or (ExtractFileName(Self.NomeArquivo) = 'boleto') then
         FNomeArquivo := OnlyAlphaNum(FNossoNumero);
+      if FBoletoIndex then
+        Break;
     finally
       FinalizarArquivo;
+      FNomeArquivo := '';
     end;
   end;
 end;
@@ -213,10 +228,14 @@ var
 begin
   ModeloImpressao(true);
   try
+    if Self.IndiceImprimirIndividual > 0 then
+      GeraDados(ACBrBoleto.ListadeBoletos[ Self.IndiceImprimirIndividual ])
+    else
     for I := 0 to Pred(ACBrBoleto.ListadeBoletos.Count) do
       GeraDados(ACBrBoleto.ListadeBoletos[ I ]);
   finally
     FinalizarArquivo;
+    FNomeArquivo := '';
   end;
 end;
 

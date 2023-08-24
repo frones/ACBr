@@ -357,13 +357,20 @@ begin
 
   xCNPJ := ANFSe.Prestador.IdentificacaoPrestador.CpfCnpj;
 
-  if Configuracoes.Arquivos.NomeLongoNFSe then
-    Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
-                            ANFSe.DataEmissao,
-                            OnlyNumber(xCNPJ),
-                            StrToInt64Def(xNumDoc, 0))
+  if Configuracoes.Geral.Provedor = proPadraoNacional then
+  begin
+    Result := OnlyNumber(ANFSe.infNFSe.ID);
+  end
   else
-    Result := xNumDoc + xSerie;
+  begin
+    if Configuracoes.Arquivos.NomeLongoNFSe then
+      Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
+                              ANFSe.DataEmissao,
+                              OnlyNumber(xCNPJ),
+                              StrToInt64Def(xNumDoc, 0))
+    else
+      Result := xNumDoc + xSerie;
+  end;
 end;
 
 function TACBrNFSeX.GetConfiguracoes: TConfiguracoesNFSe;

@@ -268,8 +268,8 @@ type
 
   TtribISSQN = (tiOperacaoTributavel, tiExportacao, tiNaoIncidencia, tiImunidade);
 
-  TtpImunidade = (timImunidade, timPatrimonio, timTemplos, timPatrimonioPartidos,
-                  timLivros, timFonogramas);
+  TtpImunidade = (timNenhum, timImunidade, timPatrimonio, timTemplos,
+                  timPatrimonioPartidos, timLivros, timFonogramas);
 
   TtpRetISSQN = (trNaoRetido, trRetidoPeloTomador, trRetidoPeloIntermediario);
 
@@ -12668,17 +12668,17 @@ end;
 function tpImunidadeToStr(const t: TtpImunidade): string;
 begin
   result := EnumeradoToStr(t,
-                           ['0', '1', '2', '3', '4', '5'],
-                [timImunidade, timPatrimonio, timTemplos, timPatrimonioPartidos,
-                 timLivros, timFonogramas]);
+                           ['', '0', '1', '2', '3', '4', '5'],
+                [timNenhum, timImunidade, timPatrimonio, timTemplos,
+                 timPatrimonioPartidos, timLivros, timFonogramas]);
 end;
 
 function StrTotpImunidade(out ok: Boolean; const s: string): TtpImunidade;
 begin
   result := StrToEnumerado(ok, s,
-                           ['0', '1', '2', '3', '4', '5'],
-                [timImunidade, timPatrimonio, timTemplos, timPatrimonioPartidos,
-                 timLivros, timFonogramas]);
+                           ['', '0', '1', '2', '3', '4', '5'],
+                [timNenhum, timImunidade, timPatrimonio, timTemplos,
+                 timPatrimonioPartidos, timLivros, timFonogramas]);
 end;
 
 function tpRetISSQNToStr(const t: TtpRetISSQN): string;

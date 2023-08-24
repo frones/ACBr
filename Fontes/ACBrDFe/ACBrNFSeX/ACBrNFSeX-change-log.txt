@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/08/2023
+-- ACBrNFSeX/ACBrNFSeXConversao/PadraoNacional.Provider --
+[*] Ao gerar o nome do XML da NFS-e agora é checado se o provedor é PadraoNacional,
+    caso afirmativo é utilizado a chave da nota.
+    Acrescentado o valor timNenhum ao tipo de Imunidade.
+    Ajustado a gravação dos XMLs de eventos retornados pelo Consultar DF-e
+    Ao executar o TratarXmlRetornado, agora checa se o conteudo é um PDF.
+   Por: Italo Giurizzato Junior
+
 23/08/2023
 -- Diversos --
 [*] Remoção do componente de impressão do DANFSE o calculo do total de Retenções Federais.

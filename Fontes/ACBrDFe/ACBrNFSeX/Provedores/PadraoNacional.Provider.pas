@@ -593,7 +593,7 @@ begin
   end
   else
   begin
-//    Response.ArquivoRetorno := RemoverDeclaracaoXML(Response.ArquivoRetorno);
+    Response.ArquivoRetorno := RemoverDeclaracaoXML(Response.ArquivoRetorno);
     SalvarPDFNfse(Response.InfConsultaNFSe.NumeroIniNFSe, Response.ArquivoRetorno);
   end;
 end;
@@ -927,10 +927,11 @@ var
   Document, JSon: TACBrJSONObject;
   JSonLoteDFe: TACBrJSONArray;
   i: Integer;
-  TipoDoc, ArquivoXml, NumNFSe, NumRps: string;
+  TipoDoc, ArquivoXml, NumNFSe, NumRps, IDEvento: string;
   DocumentXml: TACBrXmlDocument;
   ANode: TACBrXmlNode;
   ANota: TNotaFiscal;
+  Ok: Boolean;
 begin
   if Response.ArquivoRetorno = '' then
   begin
@@ -1009,12 +1010,11 @@ begin
           end
           else
           begin
-          {
             DocumentXml := TACBrXmlDocument.Create;
 
             try
               try
-                DocumentXml.LoadFromXml(EventoXml);
+                DocumentXml.LoadFromXml(ArquivoXml);
 
                 ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
 
@@ -1030,7 +1030,7 @@ begin
 
                 Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
 
-                SalvarXmlEvento(IDEvento + '-procEveNFSe', EventoXml);
+                SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml);
               except
                 on E:Exception do
                 begin
@@ -1042,7 +1042,6 @@ begin
             finally
               FreeAndNil(DocumentXml);
             end;
-          }
           end;
         end;
       end;
@@ -1407,7 +1406,8 @@ function TACBrNFSeXWebservicePadraoNacional.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := UTF8Decode(Result);
+  if Pos('%PDF-1.4', Result) = 0 then
+    Result := UTF8Decode(Result);
 end;
 
 end.

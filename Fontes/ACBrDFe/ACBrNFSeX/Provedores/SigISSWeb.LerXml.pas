@@ -186,11 +186,6 @@ begin
     Numero := ObterConteudo(ANode.Childrens.FindAnyNs('numero_nf'), tcStr);
     SeriePrestacao := ObterConteudo(ANode.Childrens.FindAnyNs('serie'), tcStr);
 
-    with ValoresNfse do
-    begin
-      ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('valor_nf'), tcDe2);
-    end;
-
     DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('data_emissao'), tcDatVcto);
 //    <forma_de_pagamento></forma_de_pagamento>
 
@@ -203,8 +198,9 @@ begin
 
       with Valores do
       begin
+        ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('valor_nf'), tcDe2);
         ValorDeducoes := ObterConteudo(ANode.Childrens.FindAnyNs('deducao'), tcDe2);
-        ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('valor_servico'), tcDe2);
+        ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('valor_servico'), tcDe2);
         aValor := ObterConteudo(ANode.Childrens.FindAnyNs('iss_retido'), tcStr);
 
         if aValor = 'S' then
@@ -237,6 +233,11 @@ begin
 
         RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
       end;
+    end;
+
+    with ValoresNfse do
+    begin
+      ValorLiquidoNfse := Servico.Valores.ValorServicos;
     end;
 
 //    <regime>V</regime>
@@ -326,9 +327,9 @@ begin
 
       with Valores do
       begin
-        ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('valor_nf'), tcDe2);
+        ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('valor_nf'), tcDe2);
         ValorDeducoes := ObterConteudo(ANode.Childrens.FindAnyNs('deducao'), tcDe2);
-        ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('valor_servico'), tcDe2);
+        ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('valor_servico'), tcDe2);
         aValor := ObterConteudo(ANode.Childrens.FindAnyNs('iss_retido'), tcStr);
 
         if aValor = 'S' then

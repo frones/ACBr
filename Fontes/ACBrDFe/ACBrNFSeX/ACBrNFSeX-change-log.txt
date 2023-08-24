@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 24/08/2023
+-- SigISSWeb.GravarXml/SigISSWeb.LerXml --
+[*] A geração e leitura das tags valor_nf e valor_servico estavam pegando valores
+    de campos errados.
+   Por: Bruno Lucas Batista/Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Ajustes para o calculo correto do valor liquido da nota.
    Por: Italo Giurizzato Junior

@@ -411,7 +411,7 @@ begin
     LBoleto.Cedente.CodigoCedente := Trim(Copy(ARetorno[1], 18, 20));
   end;
 
-  if LBoleto.Cedente.CodigoCedente <> Copy(ARetorno[1], 18, 20) then
+  if Trim(LBoleto.Cedente.CodigoCedente) <> Trim(Copy(ARetorno[1], 18, 20)) then
     raise Exception.create(ACBrStr(format('O Código de cedente do arquivo %s não é o mesmo do componente %s.',[Copy(ARetorno[1], 18, 20),LBoleto.Cedente.CodigoCedente])));
 
   case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of

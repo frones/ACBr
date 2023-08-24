@@ -264,6 +264,12 @@ namespace ACBrLib.CTe
             }
             
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
+
+            for (var i = 0; i < GrupoInformacoesNormalSubstituto.veicNovos.Count; i++)
+            {
+                var veicNovos = GrupoInformacoesNormalSubstituto.veicNovos[i];
+                iniData.WriteToIni(veicNovos, $"veicNovos{i + 1:000}");
+            }
             
             for (var i = 0; i < GrupoInformacoesNormalSubstituto.infDoc.infNFe.Count; i++)
             {
@@ -613,6 +619,17 @@ namespace ACBrLib.CTe
             
             iniData.ReadFromIni(Rodoviario, "rodo");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
+
+            i = 0;
+            VeicNovosCTe veicNovos;
+            do
+            {
+                i++;
+                veicNovos = iniData.ReadFromIni<VeicNovosCTe>($"veicNovos{i:000}");
+
+                if(veicNovos != null) GrupoInformacoesNormalSubstituto.veicNovos.Add(veicNovos);
+
+            }while( veicNovos != null);
 
             var j = 0;
             InfNFeCTe infNFe;

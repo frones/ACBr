@@ -8,8 +8,8 @@ using ACBrLib.CTe;
 namespace ACBrLib.Core.CTe
 {
     public class RefNFCTe
-    {   
-        public long CNPJCPF { get; set; }
+    {
+        public string CNPJCPF { get; set; }
 
         public string mod { get; set; }
 

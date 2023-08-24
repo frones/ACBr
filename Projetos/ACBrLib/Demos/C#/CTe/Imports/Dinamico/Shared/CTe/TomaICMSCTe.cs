@@ -8,11 +8,11 @@ using ACBrLib.CTe;
 namespace ACBrLib.Core.CTe
 {
     public class TomaICMSCTe
-    {   
-        public long refNFe { get; set; }
+    {
+        public string refNFe { get; set; }
 
         public RefNFCTe refNF { get; set; } = new RefNFCTe();
 
-        public long refCTe { get; set; }
+        public string refCTe { get; set; }
     }
 }

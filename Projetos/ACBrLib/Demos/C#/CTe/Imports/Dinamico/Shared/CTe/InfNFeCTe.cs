@@ -38,6 +38,8 @@ namespace ACBrLib.Core.CTe
 
         public string chave { get; set; }
 
+        public string PIN { get; set; }
+
         public DateTime? dPrev { get; set; }
 
         public List<InfUnidCargaCTe> infUnidCarga { get; } = new List<InfUnidCargaCTe>();

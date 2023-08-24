@@ -13,5 +13,9 @@ namespace ACBrLib.Core.CTe
         tsRedespacho = 2,
         tsRedespachoIntermediario = 3,
         tsServicoVinculadoMultimodal = 4,
+        tsTransportePessoas = 6,
+        tsTransporteValores = 7,
+        tsExcessoBagagem = 8,
+        tsGTV = 9
     }
 }

@@ -15,7 +15,7 @@ namespace ACBrLib.CTe
 
         public InfModalCTe infModal { get; set; } = new InfModalCTe();
 
-        public VeicNovosCTe veicNovos { get; set; } = new  VeicNovosCTe();
+        public List<VeicNovosCTe> veicNovos { get; set; } = new List<VeicNovosCTe>();
 
         public CobrCTe cobr { get; set; } = new CobrCTe();
 
@@ -32,5 +32,7 @@ namespace ACBrLib.CTe
         public List<Seguro> seg { get; set; } = new List<Seguro>();
 
         public List<InfDocRef> infDocRef { get; set; } = new List<InfDocRef>();
+
+        public string refCTeCanc { get; set; }
     }
 }

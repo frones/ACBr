@@ -942,6 +942,8 @@ begin
         INIRec.WriteFloat('ICMSUFFim', 'vICMSUFFim', Imp.ICMSUFFim.vICMSUFFim);
         INIRec.WriteFloat('ICMSUFFim', 'vICMSUFIni', Imp.ICMSUFFim.vICMSUFIni);
 
+        INIRec.WriteString('infCTeNorm', 'refCTeCanc', infCTeNorm.refCTeCanc);
+
         INIRec.WriteString('infCarga', 'vCarga', CurrToStr(infCTeNorm.infCarga.vCarga));
         INIRec.WriteString('infCarga', 'proPred', infCTeNorm.infCarga.proPred);
         INIRec.WriteString('infCarga', 'xOutCat', infCTeNorm.infCarga.xOutCat);
@@ -1050,6 +1052,8 @@ begin
                 INIRec.WriteString(sSecao, 'placa', placa);
                 INIRec.WriteString(sSecao, 'RENAVAM', RENAVAM);
                 INIRec.WriteString(sSecao, 'UF', UF);
+
+                sSecao := 'prop'+IntToStrZero(1,3);
 
                 INIRec.WriteString(sSecao, 'CNPJCPF', prop.CNPJCPF);
                 INIRec.WriteString(sSecao, 'TAF', prop.TAF);
@@ -1944,6 +1948,8 @@ begin
         toma.endertoma.xPais   := INIRec.ReadString('toma','xPais','');
       end;
 
+      infCTeNorm.refCTeCanc := INIRec.ReadString('infCTeNorm', 'refCTeCanc', '');
+
       I := 1;
       while true do
       begin
@@ -2758,6 +2764,9 @@ begin
             placa   := sFim;
             RENAVAM := INIRec.ReadString(sSecao,'RENAVAM','');
             UF      := INIRec.ReadString(sSecao,'UF','');
+
+            if INIRec.SectionExists('prop' + IntToStrZero(I,3))then
+              sSecao := 'prop' + IntToStrZero(I, 3);
 
             prop.CNPJCPF        := INIRec.ReadString(sSecao,'CNPJCPF','');
             prop.TAF            := INIRec.ReadString(sSecao,'TAF','');

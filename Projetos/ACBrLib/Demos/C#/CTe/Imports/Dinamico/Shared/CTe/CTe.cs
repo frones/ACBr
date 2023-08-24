@@ -182,6 +182,30 @@ namespace ACBrLib.CTe
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
 
+            switch (Identificacao.mod)
+            {
+                case 57:
+                    { 
+                        iniData.WriteToIni(Rodoviario, "rodo"); 
+
+                        for(var i=0; i < Rodoviario.occ.Count; i++)
+                        {
+                            OrdensColetaCTe occ = Rodoviario.occ[i];
+                            iniData.WriteToIni(occ, $"occ{i + 1:000}");
+                        }
+                        
+                        break; 
+                    }
+                case 67:
+                    {
+                        iniData.WriteToIni(Rodoviario, "rodoOS");
+                        iniData.WriteToIni(Rodoviario.veic, "veic001");
+                        iniData.WriteToIni(Rodoviario.veic.prop, "prop001");
+                        iniData.WriteToIni(Rodoviario.infFretamento, "infFretamento");
+                        break;                        
+                    }
+            }
+
             for (var i = 0; i < GrupoInformacoesNormalSubstituto.infDocRef.Count; i++)
             {
                 InfDocRef infDocRef = GrupoInformacoesNormalSubstituto.infDocRef[i];
@@ -238,8 +262,7 @@ namespace ACBrLib.CTe
                 var infCTeMultimodal = GrupoInformacoesNormalSubstituto.infServVinc.infCTeMultimodal[i];
                 iniData.WriteToIni(infCTeMultimodal, $"infCTeMultimodal{i + 1:000}");
             }
-
-            iniData.WriteToIni(Rodoviario, "rodo");
+            
             iniData.WriteToIni(GrupoInformacoesNormalSubstituto.infModal, "infModal");
             
             for (var i = 0; i < GrupoInformacoesNormalSubstituto.infDoc.infNFe.Count; i++)
@@ -489,6 +512,35 @@ namespace ACBrLib.CTe
             iniData.ReadFromIni(InformacoesRelativasImpostos.infTribFed, "InfTribFed");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto, "infCTeNorm");
             iniData.ReadFromIni(GrupoInformacoesNormalSubstituto.infServico, "infServico");
+
+            switch (Identificacao.mod)
+            {
+                case 57:
+                    {
+                        iniData.ReadFromIni(Rodoviario, "rodo");
+
+                        i = 0;
+                        OrdensColetaCTe occ;
+                        do
+                        {
+                            i++;
+                            occ = iniData.ReadFromIni<OrdensColetaCTe>($"occ{i:000}");
+
+                            if (occ != null) Rodoviario.occ.Add(occ);
+
+                        }while(occ != null);
+
+                        break;
+                    }
+                case 67:
+                    {
+                        iniData.ReadFromIni(Rodoviario, "rodoOS");
+                        iniData.ReadFromIni(Rodoviario.veic, "veic001");
+                        iniData.ReadFromIni(Rodoviario.veic.prop, "prop001");
+                        iniData.ReadFromIni(Rodoviario.infFretamento, "infFretamento");
+                        break;
+                    }
+            }
 
             i = 0;
             InfDocRef infDocRef;

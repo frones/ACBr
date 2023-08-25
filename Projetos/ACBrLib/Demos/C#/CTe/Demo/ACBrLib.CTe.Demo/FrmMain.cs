@@ -571,7 +571,7 @@ namespace ACBrLib.CTe.Demo
                 ACBrCTe.LimparLista();
 
                 var ret = ACBrCTe.Consultar(chaveOuNFe);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -595,7 +595,7 @@ namespace ACBrLib.CTe.Demo
 
                 ACBrCTe.LimparLista();
                 var ret = ACBrCTe.Consultar(chaveOuNFe);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -671,7 +671,7 @@ namespace ACBrLib.CTe.Demo
                 if (InputBox.Show("WebServices Eventos: Cancelamento", "Justificativa do Cancelamento", ref aJustificativa) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.Cancelar(eChave, aJustificativa, eCNPJ, idLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -819,7 +819,7 @@ namespace ACBrLib.CTe.Demo
                 if (InputBox.Show("WebServices: Inutilização", "Justificativa", ref aJustificativa) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.Inutilizar(eCNPJ, aJustificativa, ano, modelo, serie, numeroInicial, numeroFinal);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -1071,26 +1071,26 @@ namespace ACBrLib.CTe.Demo
             cte.Complemento.xCaracAd = "Carac Adic";
             cte.Complemento.xCaracSer = "Carac Adicionais do Serviço";
             cte.Complemento.xEmi = "Nome do Emitente";
-            cte.Complemento.semData = TipoPeriodoCTe.semDataDefinida;
-            cte.Complemento.semHora = TipoHorarioCTe.semHoraDefinida;
+            cte.Complemento.TipoData = TipoPeriodoCTe.noPeriodo;
+            cte.Complemento.TipoHora = TipoHorarioCTe.noIntervaloTempo;
             cte.Complemento.origCalc = "Sao Paulo";
             cte.Complemento.destCalc = "Campinas";
-            cte.Complemento.xObs = "Observação livre";
+            cte.Complemento.xObs = "Observação livre";           
            
             var dProg = "23/06/2023";
-            cte.Entrega.dProg = DateTime.Parse(dProg);
+            cte.Complemento.dProg = DateTime.Parse(dProg);
 
             var dIni = "20/06/2023";
-            cte.Entrega.dIni = DateTime.Parse(dIni);
+            cte.Complemento.dIni = DateTime.Parse(dIni);
 
             var dFim = "25/06/2023";
-            cte.Entrega.dFim = DateTime.Parse(dFim);
+            cte.Complemento.dFim = DateTime.Parse(dFim);
 
             DateTime date = DateTime.Now;
             var horaFomatada = date.ToString("HH:mm:ss");
-            cte.Entrega.hProg = horaFomatada;
-            cte.Entrega.hIni = horaFomatada;
-            cte.Entrega.hFim = horaFomatada;
+            cte.Complemento.hProg = horaFomatada;
+            cte.Complemento.hIni = horaFomatada;
+            cte.Complemento.hFim = horaFomatada;
 
             var obsCont = new ObsContCTe();
             obsCont.xCampo = "Nome do Campo";
@@ -1185,8 +1185,12 @@ namespace ACBrLib.CTe.Demo
             cte.InformacoesRelativasImpostos.vTotTrib = 17;
             cte.InformacoesRelativasImpostos.infAdFisco = "Lei da Transparencia: O valor aproximado de tributos incidentes sobre o preço deste servico é de R$ 17,00 (17,00%) Fonte: IBPT";
 
-            cte.ComponentesValorPrestacao.xNome = "DFRNER KRTJ";
-            cte.ComponentesValorPrestacao.vComp = 100;
+            var comp = new ComponentesValorPrestacaoCTe()
+            {
+                xNome = "DFRNER KRTJ",
+                vComp = 100
+            };
+            cte.ComponentesValorPrestacao.Add(comp);
 
             cte.InformacoesRelativasImpostos.ICMSSN.CST = CSTCTe.ICMSSN;
             cte.InformacoesRelativasImpostos.ICMSSN.indSN = 1;
@@ -1219,9 +1223,14 @@ namespace ACBrLib.CTe.Demo
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.vDesc = 0;
             cte.GrupoInformacoesNormalSubstituto.cobr.fat.vLiq = 100;
 
-            cte.GrupoInformacoesNormalSubstituto.cobr.dup.nDup = "123";
-            cte.GrupoInformacoesNormalSubstituto.cobr.dup.dVenc = DateTime.Now;
-            cte.GrupoInformacoesNormalSubstituto.cobr.dup.vDup = 100;
+
+            var dup = new DupCTe()
+            {
+                nDup = "123",
+                dVenc = DateTime.Now,
+                vDup = 100
+            };
+            cte.GrupoInformacoesNormalSubstituto.cobr.dup.Add(dup);
 
             return cte.ToString();
         }

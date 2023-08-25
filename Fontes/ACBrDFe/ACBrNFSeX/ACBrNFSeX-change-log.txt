@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/08/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Santa Cruz do Sul/RS passou a usar Https.
+   Por: Fabio Spies
 
 24/08/2023
 -- BHISS.LerXml --

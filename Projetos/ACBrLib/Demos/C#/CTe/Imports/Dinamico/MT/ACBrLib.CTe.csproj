@@ -140,6 +140,8 @@
 	  <Compile Include="..\Shared\CTe\OrdensColetaCTe.cs" Link="CTe\OrdensColetaCTe.cs" />
 
 	  <Compile Include="..\Shared\Respostas\ConsultaCTeResposta.cs" Link="Respostas\ConsultaCTeResposta.cs" />
+	  <Compile Include="..\Shared\Respostas\CancelamentoCTeResposta.cs" Link="Respostas\CancelamentoCTeResposta.cs" />
+	  <Compile Include="..\Shared\Respostas\InutilizacaoCTeResposta.cs" Link="Respostas\InutilizacaoCTeResposta.cs" />
 
   </ItemGroup>
 

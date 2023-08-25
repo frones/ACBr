@@ -329,7 +329,7 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Consultar(string eChaveOuCTe, bool AExtrairEventos = false)
+        public ConsultaCTeResposta Consultar(string eChaveOuCTe, bool AExtrairEventos = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -339,7 +339,8 @@ namespace ACBrLib.CTe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultaCTeResposta.LerResposta(ProcessResult(buffer, bufferLen));
+
         }
 
         public string ConsultaCadastro(string cUF, string nDocumento, bool nIE)
@@ -355,7 +356,7 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Inutilizar(string acnpj, string aJustificativa, int ano, int modelo,
+        public InutilizacaoCTeResposta Inutilizar(string acnpj, string aJustificativa, int ano, int modelo,
             int serie, int numeroInicial, int numeroFinal)
         {
             var bufferLen = BUFFER_LEN;
@@ -366,7 +367,7 @@ namespace ACBrLib.CTe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return InutilizacaoCTeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public EnvioRetornoResposta Enviar(int aLote, bool imprimir = false, bool sincrono = false)
@@ -395,7 +396,7 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Cancelar(string eChave, string eJustificativa, string eCNPJ, int aLote)
+        public CancelamentoCTeResposta Cancelar(string eChave, string eJustificativa, string eCNPJ, int aLote)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -405,7 +406,7 @@ namespace ACBrLib.CTe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return CancelamentoCTeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public string EnviarEvento(int aLote)

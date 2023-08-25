@@ -653,6 +653,7 @@ begin
   emv:= DeACBrBoletoTituloRet.EMV;
   urlPix:= DeACBrBoletoTituloRet.UrlPix;
   txId:= DeACBrBoletoTituloRet.TxId;
+  CodigoCanalTituloCobranca := DeACBrBoletoTituloRet.CodigoCanalTituloCobranca;
   Sacado.Assign(DeACBrBoletoTituloRet.Sacado);
   SacadoAvalista.Assign(DeACBrBoletoTituloRet.SacadoAvalista);
 

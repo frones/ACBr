@@ -340,6 +340,22 @@ end;
 function TACBrNFSeX.GetNumID(ANFSe: TNFSe): String;
 var
   xNumDoc, xSerie, xCNPJ: String;
+
+  function NomeXmlProvedor: string;
+  begin
+    if Configuracoes.Arquivos.NomeLongoNFSe then
+      Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
+                              ANFSe.DataEmissao,
+                              OnlyNumber(xCNPJ),
+                              StrToInt64Def(xNumDoc, 0))
+    else
+      Result := xNumDoc + xSerie;
+  end;
+
+  function NomeXmlPadraoNacional: string;
+  begin
+    Result := OnlyNumber(ANFSe.infNFSe.ID);
+  end;
 begin
   if ANFSe = nil then
     raise EACBrNFSeException.Create('Não foi informado o objeto TNFSe para gerar a chave!');
@@ -359,17 +375,14 @@ begin
 
   if Configuracoes.Geral.Provedor = proPadraoNacional then
   begin
-    Result := OnlyNumber(ANFSe.infNFSe.ID);
+    Result := NomeXmlPadraoNacional;
+
+    if Result = '' then
+      Result := NomeXmlProvedor;
   end
   else
   begin
-    if Configuracoes.Arquivos.NomeLongoNFSe then
-      Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
-                              ANFSe.DataEmissao,
-                              OnlyNumber(xCNPJ),
-                              StrToInt64Def(xNumDoc, 0))
-    else
-      Result := xNumDoc + xSerie;
+    Result := NomeXmlProvedor;
   end;
 end;
 

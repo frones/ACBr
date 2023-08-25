@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/08/2023
+-- ACBrNFSeX --
+[*] Correção na função GetNumID, estava retornando uma string vazia.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Santa Cruz do Sul/RS passou a usar Https.
    Por: Fabio Spies

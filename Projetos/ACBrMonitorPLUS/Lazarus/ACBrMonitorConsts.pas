@@ -595,6 +595,9 @@ const
   CMetodoEnviarBoleto =              'enviarboleto';
   CMetodoSetOperacaoWS =             'setoperacaows';
   CMetodoConsultarTitulosPorPeriodo= 'consultartitulosporperiodo';
+  CMetodoGerarPDFComSenha=           'gerarpdfcomsenha';
+  CMetodoGerarPDFBoletoComSenha =    'gerarpdfboletocomsenha';
+  CMetodoSetMotorBoletoRelatorio =   'setmotorboletorelatorio';
 
   CMetodoAtivar =               'ativar';
   CMetodoDesativar =            'desativar';
@@ -1012,6 +1015,8 @@ const
   CKeyEmailSegundoPlano =            'SegundoPlano';
   CKeyEmailCodificacao =             'Codificacao';
   CKeyEmailHTML =                    'HTML';
+  CKeyEmailSSLType =                 'SSLType';
+
   CKeyAttemptsMail =                 'AttemptsMail';
   CKeyTimeoutMail =                  'TimeOutMail';
   CKeyMensagemNFe =                  'MensagemNFe';
@@ -1344,6 +1349,7 @@ const
   CKeyBOLETOEmailFormatoHTML =              'EmailFormatoHTML';
   CKeyBOLETOImpressora =                    'Impressora';
   CKeyBOLETONomeArquivoBoleto =             'NomeArquivoBoleto';
+  CKeyBOLETOTipoMotorRelatorio =            'TipoMotorRelatorio';
   //Manter Compatibilidade
   CKeyBOLETOCedenteNome =                   'Cedente.Nome';
   CKeyBOLETOCedenteCNPJCPF =                'Cedente.CNPJCPF';

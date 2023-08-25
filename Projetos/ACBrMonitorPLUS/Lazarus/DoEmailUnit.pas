@@ -36,7 +36,7 @@ interface
 
 uses
   Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings,
-  ACBrMail, ACBrMonitorConsts, ACBrMonitorConfig;
+  ACBrMail, ACBrMonitorConsts, ACBrMonitorConfig, blcksock;
 
 type
 
@@ -161,6 +161,7 @@ var
   EmailSenha, EmailPorta : String;
   EmailCodificacao : TMimeChar;
   EmailSSL, EmailTLS, FlagEmailNovo : Boolean;
+  EmailSSLType : integer;
 
 { TACBrObjetoEMail }
 
@@ -242,6 +243,7 @@ begin
     EmailSSL         := SetSSL;
     EmailTLS         := SetTLS;
     EmailCodificacao := DefaultCharset;
+    EmailSSLType     := Integer(SSLType);
 
     { Limpa todos os dados do componente ACBrMail }
     Clear;
@@ -268,10 +270,9 @@ begin
         SetSSL   := IniDados.ReadBool(  'EMAIL', 'ExigeSSL', EmailSSL);
         SetTLS   := IniDados.ReadBool(  'EMAIL', 'ExigeTLS', EmailTLS);
         sCharset := IniDados.ReadString('EMAIL', 'Codificacao', '');
-
+        SSLType  := TSSLType( IniDados.ReadInteger ('EMAIL','SSLType',EmailSSLType));
         if ( sCharset <> '' ) then
-          DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
-             sCharset))
+          DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),sCharset))
       end;
     end;
   finally
@@ -299,6 +300,7 @@ begin
     SetSSL         := EmailSSL;
     SetTLS         := EmailTLS;
     DefaultCharset := EmailCodificacao;
+    SSLType        := TSSLType( EmailSSLType);
   end;
 end;
 

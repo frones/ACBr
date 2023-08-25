@@ -40,7 +40,7 @@ interface
 
 uses
   Classes, TypInfo, SysUtils, strutils, CmdUnit, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math,
-  ACBrBoleto, ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao, ACBrPIXBase;
+  ACBrBoleto, ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao, ACBrPIXBase, ACBrBoletoFCFortesFr, ACBrBoletoFPDF;
 
 type
 
@@ -224,6 +224,14 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoGerarPDFBoletoComSenha  }
+
+TMetodoGerarPDFBoletoComSenha  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+
 { TMetodoEnviarEmailBoleto  }
 
 TMetodoEnviarEmailBoleto  = class(TACBrMetodo)
@@ -245,11 +253,27 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetMotorBoletoRelatorio  }
+
+TMetodoSetMotorBoletoRelatorio = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+
 { TMetodoConsultarTitulosPorPeriodo }
 TMetodoConsultarTitulosPorPeriodo  = class(TACBrMetodo)
 public
   procedure Executar; override;
 end;
+
+{ TMetodoGerarPDFComSenha }
+
+TMetodoGerarPDFComSenha = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 
 implementation
 
@@ -292,6 +316,9 @@ begin
   ListaDeMetodos.Add(CMetodoEnviarBoleto);
   ListaDeMetodos.Add(CMetodoSetOperacaoWS);
   ListaDeMetodos.Add(CMetodoConsultarTitulosPorPeriodo);
+  ListaDeMetodos.Add(CMetodoGerarPDFComSenha);
+  ListaDeMetodos.Add(CMetodoGerarPDFBoletoComSenha);
+  ListaDeMetodos.Add(CMetodoSetMotorBoletoRelatorio);
 
 end;
 
@@ -335,7 +362,9 @@ begin
     24 : AMetodoClass := TMetodoEnviarBoleto;
     25 : AMetodoClass := TMetodoSetOperacaoWS;
     26 : AMetodoClass := TMetodoConsultarTitulosPorPeriodo;
-
+    27 : AMetodoClass := TMetodoGerarPDFComSenha;
+    28 : AMetodoClass := TMetodoGerarPDFBoletoComSenha;
+    29 : AMetodoClass := TMetodoSetMotorBoletoRelatorio;
     else
       begin
         AACBrUnit := TACBrObjetoACBr.Create(Nil); //Instancia DoACBrUnit para validar métodos padrão para todos os objetos
@@ -440,6 +469,42 @@ begin
 
 end;
 
+{ TMetodoSetMotorBoletoRelatorio }
+
+{ Params: 0 - CodMotor Integer - (0- Fortes, 1- fPDF)
+}
+procedure TMetodoSetMotorBoletoRelatorio.Executar;
+var
+   ACodMotor: Integer;
+   FACBrBoletoFCRL   : TACBrBoletoFCFortes;
+   FACBrBoletoFPDF   : TACBrBoletoFPDF;
+begin
+  ACodMotor := StrToIntDef(fpCmd.Params(0), 1);
+
+  try
+    with TACBrObjetoBoleto(fpObjetoDono) do
+    begin
+
+      FACBrBoletoFCRL   := TACBrBoletoFCFortes.Create(ACBrBoleto);
+      FACBrBoletoFPDF   := TACBrBoletoFPDF.Create(ACBrBoleto);
+      case ACodMotor of
+        0: ACBrBoleto.ACBrBoletoFC := FACBrBoletoFCRL;
+        1: ACBrBoleto.ACBrBoletoFC := FACBrBoletoFPDF;
+      else
+          raise Exception.Create('Motor relatório inválido !');
+      end;
+      with MonitorConfig.BOLETO.Layout do
+      TipoMotorRelatorio := ACodMotor;
+      MonitorConfig.SalvarArquivo;
+    end;
+
+  except
+    raise Exception.Create('Código ou Operação Inválido.');
+  end;
+
+end;
+
+
 { TMetodoConfigurarDados }
 
 { Params: 0 - Ini - Uma String com um Path completo arquivo .ini
@@ -509,6 +574,7 @@ begin
 
     try
       DoAntesDeImprimir(ACBrBoleto.ACBrBoletoFC.MostrarPreview);
+      ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := False;
       ACBrBoleto.Imprimir;
     finally
       DoDepoisDeImprimir;
@@ -529,6 +595,45 @@ begin
   end;
 
 end;
+
+{ TMetodoGerarPDFComSenha }
+
+{ Params: 0 - ASenha = Senha
+          1 - ANomeArquivoPDF = Nome do Arquivo
+}
+procedure TMetodoGerarPDFComSenha.Executar;
+var
+  ASenha, ANomeArquivoPDF: String;
+  FACBrBoletoFPDF   : TACBrBoletoFPDF;
+begin
+  ASenha          := fpCmd.Params(0);
+  ANomeArquivoPDF := fpCmd.Params(1);
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    FACBrBoletoFPDF   := TACBrBoletoFPDF.Create(ACBrBoleto);
+    if ACBrBoleto.ACBrBoletoFC.ClassName <> FACBrBoletoFPDF.ClassName then
+       raise Exception.Create('A Função GerarPDFComSenha() não funciona com o motor selecionado !');
+
+    if ASenha <> '' then
+       ACBrBoleto.ACBrBoletoFC.PdfSenha := ASenha
+    else
+       raise Exception.Create('Não foi informado o parametro Senha !');
+
+    if not Assigned(ACBrBoleto.ACBrBoletoFC) then
+       raise Exception.Create('MOTOR DE RELATÓRIO NÃO FOI SELECIONADO');
+
+
+    if ANomeArquivoPDF <> '' then
+       begin
+          ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual:=False;
+          ACBrBoleto.ACBrBoletoFC.NomeArquivo:=ANomeArquivoPDF;
+       end;
+    ACBrBoleto.GerarPDF;
+    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual:=true;
+  end;
+
+end;
+
 
 { TMetodoGerarHTML }
 
@@ -564,7 +669,7 @@ begin
       ACBrBoleto.DirArqRemessa := ADir;
     if NaoEstaVazio( ANomeArq ) then
       ACBrBoleto.NomeArqRemessa:= ANomeArq;
-    ACBrBoleto.GerarRemessa( ANumArq );
+    fpCmd.Resposta := sLineBreak + 'Arquivo Gerado =' + ACBrBoleto.GerarRemessa( ANumArq );
 
   end;
 
@@ -969,6 +1074,46 @@ begin
   end;
 
 end;
+
+{ TMetodoGerarPDFBoletoComSenha }
+
+{ Params: 0 - Indice do Título a ser gerado
+  Params: 1 - Senha
+}
+procedure TMetodoGerarPDFBoletoComSenha.Executar;
+var
+  AIndice: Integer;
+  ASenha : string;
+  FACBrBoletoFPDF   : TACBrBoletoFPDF;
+begin
+  AIndice := StrToIntDef(fpCmd.Params(0),0);
+  ASenha  := fpCmd.Params(1);
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    FACBrBoletoFPDF     := TACBrBoletoFPDF.Create(ACBrBoleto);
+
+    if ACBrBoleto.ACBrBoletoFC.ClassName <> FACBrBoletoFPDF.ClassName then
+       raise Exception.Create('A Função GerarPDFBoletoComSenha() não funciona com o motor selecionado !');
+
+    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := True;
+    if ASenha <> '' then
+       ACBrBoleto.ACBrBoletoFC.PdfSenha := ASenha
+    else
+       raise Exception.Create('Não foi informado o parametro Senha !');
+
+    if not Assigned(ACBrBoleto.ACBrBoletoFC) then
+       raise Exception.Create('MOTOR DE RELATÓRIO NÃO FOI SELECIONADO');
+
+    try
+      ACBrBoleto.ListadeBoletos[AIndice].GerarPDF();
+    Except
+      raise Exception.Create('Título de Indice '+IntToStr(AIndice)+' não identificado na Lista!');
+    end;
+
+  end;
+
+end;
+
 
 { TMetodoEnviarEmailBoleto }
 

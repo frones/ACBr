@@ -195,6 +195,8 @@ type
     HTML              : Boolean;
     AttemptsMail      : Integer;
     TimeOutMail       : Integer;
+    SSLType           : Integer;
+
   end;
 
   TCertificado = record
@@ -642,6 +644,7 @@ type
     DirArquivoBoleto           : String ;
     Impressora                 : String ;
     NomeArquivoBoleto          : String;
+    TipoMotorRelatorio         : integer;
   end;
 
   TBoletoRemessaRetorno = record
@@ -1022,6 +1025,7 @@ begin
       Ini.WriteBool( CSecEmail, CKeyEmailHTML, HTML );
       Ini.WriteInteger( CSecEmail, CKeyAttemptsMail, AttemptsMail );
       Ini.WriteInteger( CSecEmail, CKeyTimeoutMail, TimeOutMail );
+      ini.WriteInteger( CSecEmail, CKeyEmailSSLType, SSLType);
     end;
 
     with DFe do
@@ -1493,6 +1497,8 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETODirArquivoBoleto,  DirArquivoBoleto       );
       Ini.WriteString( CSecBOLETO, CKeyBOLETOImpressora,                Impressora             );
       Ini.WriteString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto);
+      ini.WriteInteger(CSecBOLETO, CKeyBOLETOTipoMotorRelatorio,TipoMotorRelatorio);
+
     end;
 
     with BOLETO.RemessaRetorno do
@@ -1797,6 +1803,7 @@ begin
       HTML                      := Ini.ReadBool( CSecEmail, CKeyEmailHTML, HTML );
       AttemptsMail              := Ini.ReadInteger( CSecEmail, CKeyAttemptsMail, AttemptsMail );
       TimeOutMail               := Ini.ReadInteger( CSecEmail, CKeyTimeoutMail, TimeOutMail );
+      SSLType                   := Ini.ReadInteger( CSecEmail, CKeyEmailSSLType, SSLType );
     end;
 
     with DFe do
@@ -2274,7 +2281,8 @@ begin
       Filtro                 :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOFiltro,           Filtro                 );
       DirArquivoBoleto       :=  ini.ReadString( CSecBOLETO, CKeyBOLETODirArquivoBoleto, DirArquivoBoleto       );
       Impressora             :=  Ini.ReadString( CSecBOLETO, CKeyBOLETOImpressora,       Impressora             );
-      NomeArquivoBoleto      :=  Ini.ReadString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto);
+      NomeArquivoBoleto      :=  Ini.ReadString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto     );
+      TipoMotorRelatorio     :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOTipoMotorRelatorio,TipoMotorRelatorio    );
     end;
 
     with BOLETO.RemessaRetorno do
@@ -2554,6 +2562,7 @@ begin
     HTML                      := False;
     AttemptsMail              := 3;
     TimeOutMail               := 0;
+    SSLType                   := 0;
   end;
 
   with DFe do
@@ -3020,6 +3029,7 @@ begin
     DirArquivoBoleto       :=  '';
     NomeArquivoBoleto      :=  '';
     Impressora             :=  '';
+    TipoMotorRelatorio     :=  0;
   end;
 
   with BOLETO.RemessaRetorno do

@@ -91,6 +91,7 @@ class function TACBrObjectSerializer.Gerar<T>(const Items: TArray<T>; Tipo: TACB
 Var
   I: Integer;
   Item: TACBrLibRespostaBase;
+  LJson : String;
 begin
   Result := '';
   For I := 0 to High(Items) do
@@ -98,7 +99,11 @@ begin
     Item := Items[I] as TACBrLibRespostaBase;
     case Tipo of
       resXML: Result := Result + TACBrObjectSerializer.GerarXml(Item);
-      resJSON: Result := Result + ',' + TACBrObjectSerializer.GerarJson(Item);
+      resJSON: 
+        begin
+          LJson := ifThen<String>(Result = '', '', Result + ',' );
+          Result := LJson + TACBrObjectSerializer.GerarJson(Item);
+        end;
     else
       Result := Result + TACBrObjectSerializer.GerarIni(Item);
     end;
@@ -106,7 +111,7 @@ begin
 
   case Tipo of
     resXML: Result := '<Items>' + Result + '</Items>';
-    resJSON: Result := '{' + Result + '}';
+    resJSON: Result := '[' + Result + ']';
   end;
 
   if Formato = codANSI then

@@ -107,6 +107,7 @@ begin
     TimeOut := Lib.Config.Email.TimeOut;
     Username := Lib.Config.Email.Usuario;
     UseThread := Lib.Config.Email.SegundoPlano;
+    SSLType := Lib.Config.Email.SSLType;
   end;
 end;
 

@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   synachar, mimemess,
-  ACBrLibResposta, ACBrDeviceConfig;
+  ACBrLibResposta, ACBrDeviceConfig, blcksock;
 
 type
   //               0           1          2           3             4
@@ -130,6 +130,7 @@ type
     FTLS: Boolean;
     FUsuario: String;
     FChaveCrypt: AnsiString;
+    FSSLType: TSSLType;
 
     function GetSenha: String;
   public
@@ -155,6 +156,7 @@ type
     property Tentativas: Integer read FTentativas;
     property IsHTML: Boolean read FIsHTML;
     property Priority: TMessPriority read FPriority;
+    property SSLType: TSSLType read FSSLType;
   end;
 
   { TPosPrinterConfig }
@@ -447,6 +449,7 @@ begin
   FTentativas := 1;
   FIsHTML := False;
   FPriority := MP_low;
+  FSSLType := TSSLType(5);
 end;
 
 function TEmailConfig.GetSenha: String;
@@ -465,6 +468,7 @@ begin
   FPorta := AIni.ReadInteger(CSessaoEmail, CChavePorta, FPorta);
   FSSL := AIni.ReadBool(CSessaoEmail, CChaveEmailSSL, FSSL);
   FTLS := AIni.ReadBool(CSessaoEmail, CChaveEmailTLS, FTLS);
+  FSSLType:= TSSLType( AIni.ReadInteger(CSessaoEmail, CChaveEmailSSLType, Integer(FSSLType)));
   FTimeOut := AIni.ReadInteger(CSessaoEmail, CChaveTimeOut, FTimeOut);
   FConfirmacao := AIni.ReadBool(CSessaoEmail, CChaveEmailConfirmacao, FConfirmacao);
   FConfirmacaoEntrega := AIni.ReadBool(CSessaoEmail, CChaveEmailConfirmacaoEntrega, FConfirmacaoEntrega);
@@ -485,6 +489,8 @@ begin
   AIni.WriteInteger(CSessaoEmail, CChavePorta, FPorta);
   AIni.WriteBool(CSessaoEmail, CChaveEmailSSL, FSSL);
   AIni.WriteBool(CSessaoEmail, CChaveEmailTLS, FTLS);
+  AIni.WriteInteger(CSessaoEmail, CChaveEmailSSLType, Integer(FSSLType));
+
   AIni.WriteInteger(CSessaoEmail, CChaveTimeOut, FTimeOut);
   AIni.WriteBool(CSessaoEmail, CChaveEmailConfirmacao, FConfirmacao);
   AIni.WriteBool(CSessaoEmail, CChaveEmailConfirmacaoEntrega, FConfirmacaoEntrega);

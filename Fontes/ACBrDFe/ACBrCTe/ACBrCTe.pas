@@ -729,9 +729,6 @@ begin
   if Conhecimentos.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum CT-e adicionado ao Lote'));
 
-  if Configuracoes.Geral.VersaoDF >= ve400 then
-    ASincrono := True;
-
   if ASincrono then
   begin
     if Conhecimentos.Count > 1 then

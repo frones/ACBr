@@ -1005,6 +1005,9 @@ begin
   case FPConfiguracoesCTe.Geral.ModeloDF of
     moCTe:
       begin
+        if FPConfiguracoesCTe.Geral.VersaoDF >= ve400 then
+          Sincrono := True;
+
         if Sincrono then
         begin
           // No envio só podemos ter apena UM CT-e, pois o seu processamento é síncrono

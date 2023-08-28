@@ -1321,7 +1321,11 @@ type
     FBoletoWSConsulta: TACBrBoletoWSFiltroConsulta;
     FArquivoCRT: string;
     FArquivoKEY: string;
+    FChavePrivada: AnsiString;
+    FCertificado: AnsiString;
     procedure SetWSBoletoConsulta(const Value: TACBrBoletoWSFiltroConsulta);
+    procedure SetCertificado(const Value: AnsiString);
+    procedure SetChavePrivada(const Value: AnsiString);
   public
     constructor Create(AOwner: TComponent); reintroduce; virtual;
     destructor Destroy; override;
@@ -1333,6 +1337,8 @@ type
     property VersaoDF: string read fVersaoDF write fVersaoDF;
     property ArquivoCRT: string read FArquivoCRT write FArquivoCRT;
     property ArquivoKEY: string read FArquivoKEY write FArquivoKEY;
+    property Certificado: AnsiString  read FCertificado write SetCertificado;
+    property ChavePrivada: AnsiString  read FChavePrivada write SetChavePrivada;
   end;
 
   { TACBrArquivos }
@@ -2293,6 +2299,18 @@ function TACBrWebService.Enviar: Boolean;
 begin
   Raise Exception.Create(ACBrStr('Método Enviar não ' +
             'implementado no ACBrBoleto!'));
+end;
+
+procedure TACBrWebService.SetCertificado(const Value: AnsiString);
+begin
+  FCertificado := Value;
+  FArquivoCRT := EmptyStr;
+end;
+
+procedure TACBrWebService.SetChavePrivada(const Value: AnsiString);
+begin
+  FChavePrivada := Value;
+  FArquivoKEY := EmptyStr;
 end;
 
 procedure TACBrWebService.SetWSBoletoConsulta(const Value: TACBrBoletoWSFiltroConsulta);

@@ -4,6 +4,7 @@ interface
 
 uses
   pcnConversao,
+  ACBrOpenSSLUtils,
   httpsend,
   ACBrBoletoConversao,
   ACBrBoleto;
@@ -279,12 +280,28 @@ begin
 
   FACBrBoleto      := AACBrBoleto;
 
-  // Adicionando o Certificado
-  if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoCRT) then
+  // adiciona a chave privada
+  if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ChavePrivada) then
+  begin
+    if StringIsPEM(AACBrBoleto.Configuracoes.WebService.ChavePrivada) then
+      FHTTPSend.Sock.SSL.PrivateKey := ConvertPEMToASN1(AACBrBoleto.Configuracoes.WebService.ChavePrivada)
+    else
+      FHTTPSend.Sock.SSL.PrivateKey := AACBrBoleto.Configuracoes.WebService.ChavePrivada;
+  end
+  else if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoKEY) then
+    FHTTPSend.Sock.SSL.PrivateKeyFile := AACBrBoleto.Configuracoes.WebService.ArquivoKEY;
+
+  // adiciona o certificado
+  if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.Certificado) then
+  begin
+    if StringIsPEM(AACBrBoleto.Configuracoes.WebService.Certificado) then
+      FHTTPSend.Sock.SSL.Certificate := ConvertPEMToASN1(AACBrBoleto.Configuracoes.WebService.Certificado)
+    else
+      FHTTPSend.Sock.SSL.Certificate := AACBrBoleto.Configuracoes.WebService.Certificado;
+  end
+  else if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoCRT) then
     FHTTPSend.Sock.SSL.CertificateFile := AACBrBoleto.Configuracoes.WebService.ArquivoCRT;
 
-  if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoKEY) then
-    FHTTPSend.Sock.SSL.PrivateKeyFile := AACBrBoleto.Configuracoes.WebService.ArquivoKEY;
 
   FAmbiente        := AACBrBoleto.Configuracoes.WebService.Ambiente;
   FClientID        := AACBrBoleto.Cedente.CedenteWS.ClientID;

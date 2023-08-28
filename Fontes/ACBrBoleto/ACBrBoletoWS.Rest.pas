@@ -36,6 +36,7 @@ unit ACBrBoletoWS.Rest;
 interface
 
 uses
+  ACBrOpenSSLUtils,
   httpsend,
   ACBrJSON,
   SysUtils,
@@ -140,12 +141,26 @@ begin
   BoletoWS.ArquivoCRT := Boleto.Configuracoes.WebService.ArquivoCRT;
   BoletoWS.ArquivoKEY := Boleto.Configuracoes.WebService.ArquivoKEY;
 
-  // Adicionando o Certificado
-  if NaoEstaVazio(BoletoWS.ArquivoCRT) then
-    HTTPSend.Sock.SSL.CertificateFile := BoletoWS.ArquivoCRT;
+  // Adicionando o chave privada
+  if NaoEstaVazio(BoletoWS.ChavePrivada) then
+  begin
+    if StringIsPEM(BoletoWS.ChavePrivada) then
+      HTTPSend.Sock.SSL.PrivateKey := ConvertPEMToASN1(BoletoWS.ChavePrivada)
+    else
+      HTTPSend.Sock.SSL.PrivateKey := BoletoWS.ChavePrivada;
+  end
+  else if NaoEstaVazio(BoletoWS.ArquivoKEY) then
+    HttpSend.Sock.SSL.PrivateKeyFile := BoletoWS.ArquivoKEY;
 
-  if NaoEstaVazio(BoletoWS.ArquivoKEY) then
-    HTTPSend.Sock.SSL.PrivateKeyFile := BoletoWS.ArquivoKEY;
+  if NaoEstaVazio(BoletoWS.Certificado) then
+  begin
+    if StringIsPEM(BoletoWS.Certificado) then
+      HTTPSend.Sock.SSL.Certificate := ConvertPEMToASN1(BoletoWS.Certificado)
+    else
+      HTTPSend.Sock.SSL.Certificate := BoletoWS.Certificado;
+  end
+  else if NaoEstaVazio(BoletoWS.ArquivoCRT) then
+    HTTPSend.Sock.SSL.CertificateFile := BoletoWS.ArquivoCRT;
 end;
 
 procedure TBoletoWSREST.DefinirContentType;

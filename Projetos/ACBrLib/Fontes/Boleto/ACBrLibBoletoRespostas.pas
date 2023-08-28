@@ -338,6 +338,7 @@ type
     Femv: String;
     Furl_Pix: String;
     FTx_ID: String;
+    FCodigoCanalTituloCobranca: String;
 
   public
     constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
@@ -409,6 +410,8 @@ type
     property emv: String read Femv write Femv;
     property url_Pix: String read Furl_Pix write Furl_Pix;
     property Tx_ID: String read FTx_ID write FTx_ID;
+    property CodigoCanalTituloCobranca: String read FCodigoCanalTituloCobranca write FCodigoCanalTituloCobranca;
+
 
   end;
 
@@ -446,7 +449,11 @@ type
     FCodRetorno: String;
     FOriRetorno: String;
     FMsgRetorno: String;
-    FExcecao: String;
+    FExcecao   : String;
+
+    FHTTPResultCode:Integer;
+    FJSON: String;
+
     FIndicadorContinuidade: Boolean;
     FProximoIndice: Integer;
 
@@ -487,6 +494,9 @@ type
     property CodRetorno: String                  read FCodRetorno                  write FCodRetorno;
     property OriRetorno: String                  read FOriRetorno                  write FOriRetorno;
     property MsgRetorno: String                  read FMsgRetorno                  write FMsgRetorno;
+    property HTTPResultCode: Integer             read FHTTPResultCode              write FHTTPResultCode;
+    property JSON: String                        read FJSON                        write FJSON;
+
     property Excecao: String                     read FExcecao                     write FExcecao;
     property IndicadorContinuidade: Boolean      read FIndicadorContinuidade       write FIndicadorContinuidade;
     property ProximoIndice: Integer              read FProximoIndice               write FProximoIndice;
@@ -680,6 +690,7 @@ begin
     ValorMaxPagamento:= DadosRet.TituloRet.ValorMaxPagamento;
     PercentualMinPagamento:= DadosRet.TituloRet.PercentualMinPagamento;
     PercentualMaxPagamento:= DadosRet.TituloRet.PercentualMaxPagamento;
+    CodigoCanalTituloCobranca:=DadosRet.TituloRet.CodigoCanalTituloCobranca;
 
     if ( DadosRet.TituloRet.EMV  <> EmptyStr) then
     begin
@@ -722,6 +733,9 @@ begin
   CodRetorno:= RetEnvio.CodRetorno;
   OriRetorno:= RetEnvio.OriRetorno;
   MsgRetorno:= RetEnvio.MsgRetorno;
+  HTTPResultCode := RetEnvio.HTTPResultCode;
+  JSON := RetEnvio.JSON;
+
   Excecao:= RetEnvio.DadosRet.Excecao;
   IndicadorContinuidade:= RetEnvio.indicadorContinuidade;
 

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2023
+-- PagFor.Itau.GravarTxtRemessa --
+[*] Ajuste para gerar o campo do numero de inscrição do favorecido com 14 digitos.
+   Por: Fabricio Furtado
+
 23/08/2023
 -- CNAB240.LerTxtRetorno --
 [*] Ajuste para a leitura correta do segmento opcional (Segmento H) ao ler o 

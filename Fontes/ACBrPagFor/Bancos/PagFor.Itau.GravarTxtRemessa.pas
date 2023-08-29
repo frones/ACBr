@@ -335,7 +335,7 @@ begin
       GravarCampo(Credito.ValorReal, 15, tcDe2);
       GravarCampo(Informacao2, 20, tcStr);
       GravarCampo(NumeroDocumento, 6, tcInt);
-      GravarCampo(Favorecido.Inscricao.Numero, 14, tcStr);
+      GravarCampo(Favorecido.Inscricao.Numero, 14, tcStrZero);
       GravarCampo(CodigoDOC, 2, tcStr);
       GravarCampo(CodigoTED, 5, tcStr);
       GravarCampo(' ', 5, tcStr);

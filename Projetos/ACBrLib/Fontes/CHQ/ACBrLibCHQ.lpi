@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="2"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="240"/>
+      <BuildNr Value="241"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCHQ - Biblioteca para impressão de Cheque" InternalName="ACBrLibCHQ" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CHQ" ProductVersion="0.2.1.1"/>

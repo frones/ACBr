@@ -424,7 +424,7 @@ type
     procedure SetFillColor(ValR: Integer = 0; ValG: Integer = -1; ValB: Integer = -1); overload;
     procedure SetTextColor(color: TFPDFColor); overload;
     procedure SetTextColor(ValR: Integer = 0; ValG: Integer = -1; ValB: Integer = -1); overload;
-    procedure SetTextColor(const Value: string); overload;
+    procedure SetTextColorAsString(const Value: string);
     procedure SetUnderline(fUnderline: Boolean = False);
     procedure SetDash(ABlack, AWhite: double); overload;
     procedure SetDash(AWidth: double); overload;
@@ -478,7 +478,7 @@ type
     property CurrentFontSize: double read GetCurrentFontSize;
     property CurrentFontSizePt: double read GetCurrentFontSizePt;
     property CurrentFontFamily: string read GetCurrentFontFamily;
-    property TextColor: string read GetTextColor write SetTextColor; //TODO:
+    property TextColor: string read GetTextColor write SetTextColorAsString;
   end;
 
   EFPDFReportException = class(Exception)
@@ -584,7 +584,7 @@ type
     procedure SetFillColor(ValR: Integer = 0; ValG: Integer = -1; ValB: Integer = -1); overload;
     procedure SetTextColor(color: TFPDFColor); overload;
     procedure SetTextColor(ValR: Integer = 0; ValG: Integer = -1; ValB: Integer = -1); overload;
-    procedure SetTextColor(const Value: string); overload;
+    procedure SetTextColorAsString(const Value: string);
     procedure SetUnderline(fUnderline: Boolean = False);
     procedure SetDash(ABlack, AWhite: double); overload;
     procedure SetDash(AWidth: double); overload;
@@ -1715,7 +1715,7 @@ begin
   FPDF.SetLineWidth(vWidth);
 end;
 
-procedure TFPDFWrapper.SetTextColor(const Value: string);
+procedure TFPDFWrapper.SetTextColorAsString(const Value: string);
 begin
   FPDF.TextColor := Value;
 end;

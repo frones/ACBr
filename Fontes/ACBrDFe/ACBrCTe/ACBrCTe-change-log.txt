@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2023
+-- ACBrCTeConhecimentos --
+[*] Alteração na leitura do valor da UF do grupo prop para que leia UF caso não ache propUF.
+  Por: Diego Folieni
+
 28/08/2023
 -- ACBrCTe/ACBrCTeWebServices --
 [*] Movido a checagem da versão para definir se é síncrono ou não para o CTe da

@@ -2728,6 +2728,9 @@ begin
             tpCar   := StrToTpCarroceria(OK,INIRec.ReadString(sSecao,'tpCar',''));
             UF      := INIRec.ReadString(sSecao,'UF','');
 
+            if INIRec.SectionExists('prop' + IntToStrZero(I,3))then
+              sSecao := 'prop' + IntToStrZero(I, 3);
+
             Prop.CNPJCPF := INIRec.ReadString(sSecao,'CNPJ','');
             Prop.RNTRC   := INIRec.ReadString(sSecao,'RNTRC','');
             Prop.xNome   := INIRec.ReadString(sSecao,'xNome','');
@@ -2799,7 +2802,7 @@ begin
             prop.NroRegEstadual := INIRec.ReadString(sSecao,'NroRegEstadual','');
             prop.xNome          := INIRec.ReadString(sSecao,'xNome','');
             prop.IE             := INIRec.ReadString(sSecao,'IE','');
-            prop.UF             := INIRec.ReadString(sSecao,'propUF','');
+            prop.UF             := INIRec.ReadString(sSecao,'propUF', INIRec.ReadString(sSecao, 'UF', ''));
             prop.tpProp         := StrToTpProp(OK,INIRec.ReadString(sSecao,'ProptpProp',INIRec.ReadString(sSecao,'tpProp','')));
           end;
           Inc(I);

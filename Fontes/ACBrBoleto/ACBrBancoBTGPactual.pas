@@ -50,6 +50,7 @@ type
     procedure EhObrigatorioContaDV; override;
     procedure EhObrigatorioAgenciaDV; override;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
+    function DefinePosicaoNossoNumeroRetorno: Integer; override;                     //Define posição para leitura de Retorno campo: NossoNumero
     function MontaInstrucoesCNAB240(ATitulo : TACBrTitulo; AIndex : Integer) : string;
     function ConverterDigitoModuloFinal(): String; override;
     function DefineDataOcorrencia(const ALinha: String): String; override;
@@ -358,6 +359,11 @@ begin
   Result := copy(ALinha, 158, 2)+'/'+copy(ALinha, 160, 2)+'/'+copy(ALinha, 162, 4);
 end;
 
+function TACBrBancoBTGPactual.DefinePosicaoNossoNumeroRetorno: Integer;
+begin
+  Result := 47
+end;
+
 procedure TACBrBancoBTGPactual.EhObrigatorioAgenciaDV;
 begin
   //sem validação
@@ -488,7 +494,7 @@ end;
 
 function TACBrBancoBTGPactual.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result := ACBrTitulo.Carteira+'/' +
+  Result := PadLeft(IntToStr(StrToInt(ACBrTitulo.Carteira)), 3,'0')+'/' +
             ACBrTitulo.NossoNumero + '-' +
             CalcularDigitoVerificador(ACBrTitulo);
 end;

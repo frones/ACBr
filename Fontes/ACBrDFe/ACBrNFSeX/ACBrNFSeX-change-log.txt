@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Timon/MA, trocou de provedor, agora é Fiorilli.
+   Por: PrimeSoftware
+
 25/08/2023
 -- ACBrNFSeX --
 [*] Correção na função GetNumID, estava retornando uma string vazia.

@@ -266,6 +266,9 @@ type
     Label84: TLabel;
     edtSenhaPDF: TEdit;
     btnImprimirTeste: TButton;
+    cbbWSConsulta: TComboBox;
+    Label85: TLabel;
+    cxbEMV: TCheckBox;
     procedure btnImpressaoHTMLClick(Sender: TObject);
     procedure btnImpressaoPDFClick(Sender: TObject);
     procedure btnBoletoIndividualClick(Sender: TObject);
@@ -357,6 +360,8 @@ begin
 
     IniFile.WriteString('PATH', 'BOLETOFR3', edtPathFR3.Text);
     IniFile.WriteString('PATH', 'LOGOMARCA', edtPathLogoMarca.Text);
+    IniFile.WriteString('BANCO', 'CARTEIRA', edtCarteira.Text);
+
     IniFile.UpdateFile;
 
   finally
@@ -390,7 +395,7 @@ begin
   try
     edtPathFR3.Text := IniFile.ReadString('PATH', 'BOLETOFR3', ExtractFilePath(ParamStr(0))+'Report\Boleto.fr3');
     edtPathLogoMarca.Text := IniFile.ReadString('PATH', 'LOGOMARCA', '..\..\..\Fontes\ACBrBoleto\Logos\Colorido\png\');
-
+    edtCarteira.Text := IniFile.ReadString('BANCO', 'CARTEIRA', '00');
     AplicarConfiguracoesEmailNaTela(IniFile);
   finally
     IniFile.Free;
@@ -689,7 +694,8 @@ begin
   Titulo.PercentualMaxPagamento := 0;
   Titulo.ValorMinPagamento      := 0;
   Titulo.ValorMaxPagamento      := 0;
-  //QrCode.emv := '00020101021226870014br.gov.bcb.pix2565qrcodepix-h.bb.com.br/pix/v2/22657e83-ecac-4631-a767-65e16fc56bff5204000053039865802BR5925EMPRORT AMBIENTAL        6008BRASILIA62070503***6304BD3D';
+  if cxbEMV.Checked then
+    Titulo.QrCode.emv := '00020101021226870014br.gov.bcb.pix2565qrcodepix-h.bb.com.br/pix/v2/22657e83-ecac-4631-a767-65e16fc56bff5204000053039865802BR5925EMPRORT AMBIENTAL        6008BRASILIA62070503***6304BD3D';
 
  // FACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
 
@@ -947,6 +953,7 @@ var
   Boleto : TACBrBoleto;
   SLRetorno : TStringList;
   Retorno : TListaACBrBoletoRetornoWS;
+  RetornoDetalhe : TACBrBoletoRetornoWS;
   I: Integer;
 begin
   //Exemplo utilizando como Banco do Brasil API
@@ -959,45 +966,97 @@ begin
   FiltrosAPI.dataMovimento.DataFinal  := Date;
   //FiltrosAPI.indiceContinuidade       := 300;
 
-  Boleto.Configuracoes.WebService.Operacao := tpConsulta;
+  case cbbWSConsulta.ItemIndex of
+    0 : Boleto.Configuracoes.WebService.Operacao := tpConsulta;
+    1 : Boleto.Configuracoes.WebService.Operacao := tpConsultaDetalhe;
+  end;
 
   Boleto.Enviar;
-  Retorno := Boleto.ListaConsultaRetornoWeb;
-  if Retorno.Count > 0 then
-  begin
-    SLRetorno := TStringList.Create;
-    try
-      SLRetorno.Add('Cod_Retorno='+ Retorno[i].CodRetorno + sLineBreak +
-                         'Msg_Retorno='+ Retorno[i].MsgRetorno + sLineBreak +
-                         'Ori_Retorno='+ Retorno[i].OriRetorno + sLineBreak +
-                         'HTTP_Result='+ IntToStr(Retorno[i].HTTPResultCode) + sLineBreak +
-                         'JSON='+ Retorno[i].JSON);
-      SLRetorno.Add('indicadorContinuidade=' + BoolToStr(Retorno[0].indicadorContinuidade));
-      SLRetorno.Add('proximoIndice=' + IntToStr(Retorno[0].proximoIndice));
-      SLRetorno.Add(' ');
-      SLRetorno.Add(' ');
-      for I := 0 to Pred(Retorno.Count) do
+
+  case Boleto.Configuracoes.WebService.Operacao of
+    tpConsulta:
       begin
-        SLRetorno.Add('[Boletos Index = '             + FormatFloat('000',I)+']');
-        SLRetorno.Add('numeroBoletoBB = '             + Retorno[I].DadosRet.TituloRet.NossoNumero);
-        SLRetorno.Add('dataRegistro = '               + DateToStr(Retorno[I].DadosRet.TituloRet.DataRegistro));
-        SLRetorno.Add('dataVencimento = '             + DateToStr(Retorno[I].DadosRet.TituloRet.Vencimento));
-        SLRetorno.Add('valorOriginal = '              + DateToStr(Retorno[I].DadosRet.TituloRet.ValorDocumento));
-        SLRetorno.Add('carteiraConvenio = '           + Retorno[I].DadosRet.TituloRet.Carteira);
-        SLRetorno.Add('variacaoCarteiraConvenio = '   + intToStr(Retorno[I].DadosRet.TituloRet.Modalidade));
-        SLRetorno.Add('codigoEstadoTituloCobranca = ' + Retorno[I].DadosRet.TituloRet.codigoEstadoTituloCobranca);
-        SLRetorno.Add('estadoTituloCobranca = '       + Retorno[I].DadosRet.TituloRet.estadoTituloCobranca);
-        SLRetorno.Add('contrato = '                   + Retorno[I].DadosRet.TituloRet.Contrato);
-        SLRetorno.Add('dataMovimento = '              + DateToStr(Retorno[I].DadosRet.TituloRet.dataMovimento));
-        SLRetorno.Add('dataCredito = '                + DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito));
-        SLRetorno.Add('valorAtual = '                 + CurrToStr(Retorno[I].DadosRet.TituloRet.valorAtual));
-        SLRetorno.Add('valorPago = '                  + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorPago));
-        SLRetorno.Add('  ---  ');
+        Retorno := Boleto.ListaConsultaRetornoWeb;
+        if Retorno.Count > 0 then
+        begin
+          SLRetorno := TStringList.Create;
+          try
+            SLRetorno.Add('Cod_Retorno='+ Retorno[i].CodRetorno + sLineBreak +
+                               'Msg_Retorno='+ Retorno[i].MsgRetorno + sLineBreak +
+                               'Ori_Retorno='+ Retorno[i].OriRetorno + sLineBreak +
+                               'HTTP_Result='+ IntToStr(Retorno[i].HTTPResultCode) + sLineBreak +
+                               'JSON='+ Retorno[i].JSON);
+            SLRetorno.Add('indicadorContinuidade=' + BoolToStr(Retorno[0].indicadorContinuidade));
+            SLRetorno.Add('proximoIndice=' + IntToStr(Retorno[0].proximoIndice));
+            SLRetorno.Add(' ');
+            SLRetorno.Add(' ');
+            for I := 0 to Pred(Retorno.Count) do
+            begin
+              SLRetorno.Add('[Boletos Index = '             + FormatFloat('000',I)+']');
+              SLRetorno.Add('numeroBoleto = '               + Retorno[I].DadosRet.TituloRet.NossoNumero);
+              SLRetorno.Add('SeuNumero = '                  + Retorno[I].DadosRet.TituloRet.SeuNumero);
+              SLRetorno.Add('dataRegistro = '               + DateToStr(Retorno[I].DadosRet.TituloRet.DataRegistro));
+              SLRetorno.Add('dataVencimento = '             + DateToStr(Retorno[I].DadosRet.TituloRet.Vencimento));
+              SLRetorno.Add('valorOriginal = '              + DateToStr(Retorno[I].DadosRet.TituloRet.ValorDocumento));
+              SLRetorno.Add('carteiraConvenio = '           + Retorno[I].DadosRet.TituloRet.Carteira);
+              SLRetorno.Add('variacaoCarteiraConvenio = '   + intToStr(Retorno[I].DadosRet.TituloRet.Modalidade));
+              SLRetorno.Add('codigoEstadoTituloCobranca = ' + Retorno[I].DadosRet.TituloRet.codigoEstadoTituloCobranca);
+              SLRetorno.Add('estadoTituloCobranca = '       + Retorno[I].DadosRet.TituloRet.estadoTituloCobranca);
+              SLRetorno.Add('contrato = '                   + Retorno[I].DadosRet.TituloRet.Contrato);
+              SLRetorno.Add('dataMovimento = '              + DateToStr(Retorno[I].DadosRet.TituloRet.dataMovimento));
+              SLRetorno.Add('dataCredito = '                + DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito));
+              SLRetorno.Add('valorAtual = '                 + CurrToStr(Retorno[I].DadosRet.TituloRet.valorAtual));
+              SLRetorno.Add('valorPago = '                  + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorPago));
+              SLRetorno.Add('  ---  ');
+            end;
+            SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt' );
+          finally
+            SLRetorno.Free;
+          end;
+        end;
+
       end;
-      SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt' );
-    finally
-      SLRetorno.Free;
-    end;
+    tpConsultaDetalhe:
+      begin
+        if Boleto.TotalListaRetornoWeb > 0 then
+        begin
+          RetornoDetalhe := Boleto.ListaRetornoWeb[i];
+          SLRetorno := TStringList.Create;
+          try
+            SLRetorno.Add('Cod_Retorno='+ RetornoDetalhe.CodRetorno + sLineBreak +
+                               'Msg_Retorno='+ RetornoDetalhe.MsgRetorno + sLineBreak +
+                               'Ori_Retorno='+ RetornoDetalhe.OriRetorno + sLineBreak +
+                               'HTTP_Result='+ IntToStr(RetornoDetalhe.HTTPResultCode) + sLineBreak +
+                               'JSON='+ RetornoDetalhe.JSON);
+            SLRetorno.Add('indicadorContinuidade=' + BoolToStr(RetornoDetalhe.indicadorContinuidade));
+            SLRetorno.Add('proximoIndice=' + IntToStr(RetornoDetalhe.proximoIndice));
+            SLRetorno.Add(' ');
+            SLRetorno.Add(' ');
+            for I := 0 to Pred(Boleto.ListadeBoletos.Count) do
+            begin
+              RetornoDetalhe := Boleto.ListaRetornoWeb[i];
+              SLRetorno.Add('[Boletos Index = '             + FormatFloat('000',I)+']');
+              SLRetorno.Add('numeroBoletoBB = '             + RetornoDetalhe.DadosRet.TituloRet.NossoNumero);
+              SLRetorno.Add('dataRegistro = '               + DateToStr(RetornoDetalhe.DadosRet.TituloRet.DataRegistro));
+              SLRetorno.Add('dataVencimento = '             + DateToStr(RetornoDetalhe.DadosRet.TituloRet.Vencimento));
+              SLRetorno.Add('valorOriginal = '              + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.ValorDocumento));
+              SLRetorno.Add('carteiraConvenio = '           + RetornoDetalhe.DadosRet.TituloRet.Carteira);
+              SLRetorno.Add('variacaoCarteiraConvenio = '   + intToStr(RetornoDetalhe.DadosRet.TituloRet.Modalidade));
+              SLRetorno.Add('codigoEstadoTituloCobranca = ' + RetornoDetalhe.DadosRet.TituloRet.codigoEstadoTituloCobranca);
+              SLRetorno.Add('estadoTituloCobranca = '       + RetornoDetalhe.DadosRet.TituloRet.estadoTituloCobranca);
+              SLRetorno.Add('contrato = '                   + RetornoDetalhe.DadosRet.TituloRet.Contrato);
+              SLRetorno.Add('dataMovimento = '              + DateToStr(RetornoDetalhe.DadosRet.TituloRet.dataMovimento));
+              SLRetorno.Add('dataCredito = '                + DateToStr(RetornoDetalhe.DadosRet.TituloRet.dataCredito));
+              SLRetorno.Add('valorAtual = '                 + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.valorAtual));
+              SLRetorno.Add('valorPago = '                  + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.ValorPago));
+              SLRetorno.Add('  ---  ');
+            end;
+            SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsultaDetalhe.txt' );
+          finally
+            SLRetorno.Free;
+          end;
+        end;
+      end;
   end;
   showMessage('Fim');
 end;
@@ -1167,6 +1226,8 @@ begin
 
   FACBrBoleto.ListadeBoletos.Clear;
   LNrTitulos := 10;
+  memMensagem.Lines.Add('Escrevo hoje para falar sobre um grupo especial de criaturas que roubaram nossos corações e nos fizeram sorrir com suas travessuras hilárias - os pinguins de Madagascar.');
+  memMensagem.Lines.Add('Essas adoráveis aves têm conquistado o mundo com sua personalidade cativante e aventuras malucas, e há algo de mágico em sua presença.');
   for I := 1 to Pred(LNrTitulos) do
   begin
     LValor := StrToFloatDef(edtValorDoc.Text,1);
@@ -1174,6 +1235,7 @@ begin
     edtValorDoc.Text  := CurrToStr(LValor);
     edtNossoNro.Text  := IntToStr(StrToIntDef(edtNossoNro.Text,0)+1);
     edtNumeroDoc.Text := IntToStr(StrToIntDef(edtNumeroDoc.Text,0)+1);
+
     btnBoletoIndividual.Click;
   end;
 

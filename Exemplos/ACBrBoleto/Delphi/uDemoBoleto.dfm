@@ -849,6 +849,13 @@ object frmDemoBoleto: TfrmDemoBoleto
         Height = 13
         Caption = 'Path de Retorno + Arquivo'
       end
+      object Label85: TLabel
+        Left = 791
+        Top = 452
+        Width = 137
+        Height = 13
+        Caption = 'Tipo de Servi'#231'o WebService'
+      end
       object GroupBox1: TGroupBox
         Left = 0
         Top = 3
@@ -1426,6 +1433,27 @@ object frmDemoBoleto: TfrmDemoBoleto
         Caption = '...'
         TabOrder = 12
         OnClick = btnRetornoClick
+      end
+      object cbbWSConsulta: TComboBox
+        Left = 791
+        Top = 471
+        Width = 166
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 0
+        TabOrder = 13
+        Text = 'Consulta Lista'
+        Items.Strings = (
+          'Consulta Lista'
+          'Consulta Detalhada')
+      end
+      object cxbEMV: TCheckBox
+        Left = 791
+        Top = 429
+        Width = 224
+        Height = 17
+        Caption = 'Exibir EMV de testes f'#237'cticio'
+        TabOrder = 14
       end
     end
     object TabSheet3: TTabSheet

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2023
+-- ACBrCTeWebServices --
+[*] Adiciona checagem para que o parâmetro de envio seja definido como sincrôno quando versão for 4.00
+  Por: Diego Folieni
+
 29/08/2023
 -- ACBrCTeConhecimentos --
 [*] Alteração na leitura do valor da UF do grupo prop para que leia UF caso não ache propUF.

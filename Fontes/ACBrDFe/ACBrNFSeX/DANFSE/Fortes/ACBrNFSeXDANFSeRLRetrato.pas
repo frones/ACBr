@@ -391,6 +391,8 @@ begin
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
     rllMunicipioPrestacaoServico.Caption := Servico.MunicipioPrestacaoServico;
+
+    RLLabel64.Visible := (rllMunicipioPrestacaoServico.Caption <> '');
   end;
 end;
 

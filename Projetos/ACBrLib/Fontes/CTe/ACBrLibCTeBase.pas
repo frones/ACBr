@@ -937,6 +937,9 @@ begin
           RespEnvio.Free;
         end;
 
+        if CTeDM.ACBrCTe1.Configuracoes.Geral.VersaoDF >= ve400 then
+           ASincrono := True;
+
         if not ASincrono or ((NaoEstaVazio(WebServices.Enviar.Recibo)) and (WebServices.Enviar.cStat = 103)) then
         begin
           WebServices.Retorno.Recibo := WebServices.Enviar.Recibo;

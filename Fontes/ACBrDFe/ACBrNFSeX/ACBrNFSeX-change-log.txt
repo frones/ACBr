@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/08/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Alteração na leitura do arquivo INI visando o provedor IPM.
+    Incluído os campos na sessão Itens: TribMunPrestador, 
+    CodMunPrestacao, SituacaoTributaria e ValorISSRetido 
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Alteração visando ocultar o titulo do campo caso o Municipio de Prestação de 
     Serviço for vazio.

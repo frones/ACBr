@@ -455,6 +455,7 @@ begin
           Operacao := StrToOperacao(Ok, INIRec.ReadString(sSecao, 'Operacao', ''));
           Tributacao := FProvider.StrToTributacao(Ok, INIRec.ReadString(sSecao, 'Tributacao', ''));
         end;
+
         i := 1;
         while true do
         begin
@@ -518,6 +519,12 @@ begin
             ValorTotal := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorTotal', ''), 0);
 
             Tributavel := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Tributavel', '1'));
+
+            // IPM
+            TribMunPrestador := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'TribMunPrestador', '1'));
+            CodMunPrestacao := INIRec.ReadString(sSecao, 'CodMunPrestacao', '');
+            SituacaoTributaria := INIRec.ReadInteger(sSecao, 'SituacaoTributaria', 0);
+            ValorISSRetido := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorISSRetido', ''), 0);
           end;
 
           Inc(i);

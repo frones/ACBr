@@ -69,6 +69,7 @@ contains
   ACBrPIXPSPBradesco in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBradesco.pas',
   ACBrPIXPSPPixPDV in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPixPDV.pas',
   ACBrPIXPSPInter in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPInter.pas',
-  ACBrPIXPSPAilos in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAilos.pas';
+  ACBrPIXPSPAilos in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAilos.pas',
+  ACBrPIXPSPMatera in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPMatera.pas';
 
 end.

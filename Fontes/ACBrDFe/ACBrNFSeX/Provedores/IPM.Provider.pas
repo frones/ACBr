@@ -95,8 +95,8 @@ type
     function SimNaoToStr(const t: TnfseSimNao): string; override;
     function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; override;
 
-    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string;
-    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento;
+    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string; override;
+    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento; override;
   end;
 
   TACBrNFSeXWebserviceIPM101 = class(TACBrNFSeXWebserviceMulti2)

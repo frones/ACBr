@@ -292,8 +292,8 @@ type
     function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string; virtual;
     function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS; virtual;
 
-    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string;
-    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento;
+    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string; virtual;
+    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento; virtual;
   end;
 
 implementation

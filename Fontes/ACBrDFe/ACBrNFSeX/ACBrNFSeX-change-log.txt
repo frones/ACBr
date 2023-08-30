@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2023
+-- ACBrNFSeXProviderBase/IPM.Provider --
+[*] Estava faltando o virtual e o override para que o provedor usar as funções
+    corretas.
+   Por: Jaidomini
+
 29/08/2023
 -- ACBrNFSeXServicos --
 [*] A cidade de Timon/MA, trocou de provedor, agora é Fiorilli.

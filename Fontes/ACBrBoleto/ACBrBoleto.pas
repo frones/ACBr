@@ -1027,6 +1027,9 @@ type
     Procedure LerRetorno400(ARetorno:TStringList); Virtual;
     Procedure LerRetorno240(ARetorno:TStringList); Virtual;
 
+    Procedure LerRetorno400Transacao4(ACBrTitulo :TACBrTitulo; ALinha:String); Virtual;
+
+
     function CalcularNomeArquivoRemessa : String; Virtual;
     function ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';
        const AValidaCodCedente: Boolean= False ): Boolean; Virtual;
@@ -5143,9 +5146,18 @@ begin
            DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
                                               Copy(Linha,298,2)+'/'+
                                               Copy(Linha,300,2),0, 'DD/MM/YY' );
+        if Linha[1] = '4' then
+           LerRetorno400Transacao4(Titulo, Linha); // Utilizado no Bradesco Pix
      end;
   end;
 
+end;
+
+procedure TACBrBancoClass.LerRetorno400Transacao4(ACBrTitulo: TACBrTitulo;
+  ALinha: String);
+begin
+  { Método implementado apenas para evitar Warnings de compilação (poderia ser abstrato)
+    Você de fazer "override" desse método em todas as classes filhas de TACBrBancoClass }
 end;
 
 procedure TACBrBancoClass.LerRetorno240(ARetorno: TStringList);

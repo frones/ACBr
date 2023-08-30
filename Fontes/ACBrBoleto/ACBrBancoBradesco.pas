@@ -69,6 +69,9 @@ type
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
 
+    Procedure LerRetorno400Transacao4(ACBrTitulo :TACBrTitulo; ALinha:String); override;
+
+
   end;
 
 implementation
@@ -518,6 +521,14 @@ begin
 
    if not(wLinha = EmptyStr) then
      aRemessa.Add(UpperCase(wLinha));
+end;
+
+procedure TACBrBancoBradesco.LerRetorno400Transacao4(ACBrTitulo :TACBrTitulo; ALinha: String);
+begin
+  inherited;
+  ACBrTitulo.QrCode.url  := Copy(ALinha,77,77);
+  ACBrTitulo.QrCode.txId := Copy(ALinha,106,35);
+  ACBrTitulo.QrCode.PIXQRCodeDinamico(ACBrTitulo.QrCode.url, Trim(ACBrTitulo.QrCode.txId), ACBrTitulo);
 end;
 
 function TACBrBancoBradesco.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;

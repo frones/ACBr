@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/08/2023
+-- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXGravarXml_ABRASFv2/DeISS.GravarXml --
+[*] Alteração visando gerar a tag CodigoPais mesmo o tomador não sendo estrangeiro.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml --
 [*] Correção para eliminar memory leak.
    Por: Bochnia

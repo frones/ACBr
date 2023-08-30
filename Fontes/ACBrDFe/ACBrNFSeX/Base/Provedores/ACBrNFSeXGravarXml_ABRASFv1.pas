@@ -70,7 +70,6 @@ type
     FNrOcorrValorDeducoes: Integer;
     FNrOcorrRazaoSocialInterm: Integer;
     FNrOcorrRespRetencao: Integer;
-    FNrOcorrCodigoPais: Integer;
     FNrOcorrMunIncid: Integer;
     FNrOcorrIdCidade: Integer;
     FNrOcorrCodPaisTomador: Integer;
@@ -128,7 +127,6 @@ type
     property NrOcorrCodigoCnae: Integer   read FNrOcorrCodigoCnae   write FNrOcorrCodigoCnae;
     property NrOcorrCodTribMun: Integer   read FNrOcorrCodTribMun   write FNrOcorrCodTribMun;
     property NrOcorrRespRetencao: Integer read FNrOcorrRespRetencao write FNrOcorrRespRetencao;
-    property NrOcorrCodigoPais: Integer   read FNrOcorrCodigoPais   write FNrOcorrCodigoPais;
     property NrOcorrMunIncid: Integer     read FNrOcorrMunIncid     write FNrOcorrMunIncid;
     property NrOcorrIdCidade: Integer     read FNrOcorrIdCidade     write FNrOcorrIdCidade;
     property NrOcorrStatus: Integer       read FNrOcorrStatus       write FNrOcorrStatus;
@@ -192,9 +190,7 @@ begin
   FNrOcorrValLiq := 0;
   FNrOcorrCodigoCnae := 0;
   FNrOcorrCodTribMun := 0;
-  FNrOcorrCodigoPais := 0;
   FNrOcorrMunIncid := 0;
-  FNrOcorrCodPaisTomador := 0;
   FNrOcorrInscMunTomador := 0;
 
   FNrOcorrRazaoSocialInterm := 0;
@@ -455,7 +451,8 @@ begin
   Result[1] := AddNode(tcStr, '#44', 'Uf', 2, 2, 0,
                                               NFSe.Tomador.Endereco.UF, DSC_UF);
 
-  if OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999' then
+  if (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999') or
+     (NrOcorrCodPaisTomador = 1) then
     Result[2] := AddNode(tcStr, '#45', 'CodigoPais', 4, 4, NrOcorrCodPaisTomador,
                                    NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 end;

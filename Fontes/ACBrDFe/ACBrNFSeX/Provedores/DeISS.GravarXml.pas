@@ -75,6 +75,7 @@ begin
   NrOcorrValorCsll := 1;
   NrOcorrValorInss := 1;
   NrOcorrOutrasRet := 1;
+  NrOcorrCodigoPaisTomador := 1;
 
   NrOcorrValorIss := 1;
 

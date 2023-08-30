@@ -652,7 +652,8 @@ begin
     Result.AppendChild(AddNode(tcStr, '#34', 'CodigoMunicipio', 1, 7, NrOcorrCodigoMunic_2,
                            OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));
 
-    if OnlyNumber(NFSe.Servico.CodigoMunicipio) = '9999999' then
+    if (OnlyNumber(NFSe.Servico.CodigoMunicipio) = '9999999') or
+       (NrOcorrCodigoPaisServico = 1)  then
       Result.AppendChild(AddNode(tcInt, '#35', 'CodigoPais', 4, 4, NrOcorrCodigoPaisServico,
                                            NFSe.Servico.CodigoPais, DSC_CPAIS));
 
@@ -932,7 +933,8 @@ begin
     Result.AppendChild(AddNode(tcStr, '#44', 'Uf', 2, 2, NrOcorrUFTomador,
                                              NFSe.Tomador.Endereco.UF, DSC_UF));
 
-    if OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999' then
+    if (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999') or
+       (NrOcorrCodigoPaisTomador = 1) then
       Result.AppendChild(AddNode(tcInt, '#44', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
                                   NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS));
 

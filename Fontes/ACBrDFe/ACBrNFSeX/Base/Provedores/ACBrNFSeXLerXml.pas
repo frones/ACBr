@@ -116,7 +116,7 @@ end;
 destructor TNFSeRClass.Destroy;
 begin
   FParamsTab.Free;
-
+  FIniParamsTab.Free;
   inherited;
 end;
 

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/08/2023
+-- ACBrNFSeXLerXml --
+[*] Correção para eliminar memory leak.
+   Por: Bochnia
 -- ACBrNFSeXServicos --
 [*] A cidade de São Francisco de Paula/RS, Mudou as URLs, o provedor continua o mesmo.
    Por: Antonio Leonardo C. Xavier

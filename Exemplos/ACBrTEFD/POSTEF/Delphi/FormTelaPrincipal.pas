@@ -2138,7 +2138,7 @@ begin
     else if (pos('cabal', Rede) = 1) then
       CNPJ := '03.766.873/0001-06'
     else if (pos('credpar', Rede) = 1) then
-      CNPJ := '07.599.577/0004-53'
+      CNPJ := '07.599.577/0001-00'
     else if (pos('ecx', Rede) = 1) then
       CNPJ := '71.225.700/0001-22'
     else if (pos('elavon', Rede) = 1) then
@@ -2146,7 +2146,7 @@ begin
     else if (pos('ecofrotas', Rede) = 1) then
       CNPJ := '03.506.307/0001-57'
     else if (pos('jetpar', Rede) = 1) then
-      CNPJ := '12.886.711/0002-75'
+      CNPJ := '12.886.711/0001-94'
     else if (pos('usacard', Rede) = 1) then
       CNPJ := '08.011.683/0001-94'
     else if pos('rede', Rede) > 0 then
@@ -3095,7 +3095,7 @@ procedure TfrPOSTEFServer.EfetuarPagamento(const TerminalId: String;
 var
   OP: SmallInt;
 begin
-  OP := ACBrPOS1.ExecutarMenu(TerminalId, 'CARTAO|DINHEIRO|CANCELAR', 'EFETUAR O PAGAMENTO');
+  OP := ACBrPOS1.ExecutarMenu(TerminalId, 'CARTAO OU PIX|DINHEIRO|CANCELAR', 'EFETUAR O PAGAMENTO');
 
   case OP of
     0: EfetuarPagamentoCartao(TerminalId, IndicePedido, fPedidos[IndicePedido].ValorTotal);
@@ -3117,6 +3117,9 @@ var
 begin
   try
     ACBrPOS1.ParametrosAdicionais[TerminalId].Clear;
+    //ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_AUTHSYST] := 'REDE';
+    //ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_INSTALLMENTS] := '3';
+    //ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_CARDTYPE] := '1';
     ACBrPOS1.ParametrosAdicionais[TerminalId].ValueInfo[PWINFO_FINTYPE] := '01'; //01: à vista
     ACBrPOS1.ExecutarTransacaoPagamento(TerminalId, Valor);
     if ACBrPOS1.TEFResp[TerminalId].Debito then

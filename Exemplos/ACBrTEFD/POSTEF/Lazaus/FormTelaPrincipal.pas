@@ -854,7 +854,9 @@ procedure TfrPOSTEFServer.edtEmitCNPJChange(Sender: TObject);
 begin
   if (Length(edtEmitCNPJ.Text) > 2) then
   begin
-    edtEmitCNPJ.Text := ACBrValidador.FormatarMascaraDinamica( OnlyNumber(edtEmitCNPJ.Text), '**.***.***/****-**');
+    edtEmitCNPJ.Text := ACBrValidador.FormatarMascaraDinamica(
+       OnlyNumber(edtEmitCNPJ.Text),
+       '**.***.***/****-**');
     edtEmitCNPJ.SelStart := Length(edtEmitCNPJ.Text);
   end;
 
@@ -926,7 +928,7 @@ end;
 
 procedure TfrPOSTEFServer.edtOnlyNumberKeyPress(Sender: TObject; var Key: char);
 begin
-  if not CharInSet( Key, [#8,'0'..'9'] ) then
+  if not CharInSet( Key, [#8,#13,'0'..'9'] ) then
     Key := #0;
 end;
 
@@ -2100,7 +2102,7 @@ begin
     else if (pos('cabal', Rede) = 1) then
       CNPJ := '03.766.873/0001-06'
     else if (pos('credpar', Rede) = 1) then
-      CNPJ := '07.599.577/0004-53'
+      CNPJ := '07.599.577/0001-00'
     else if (pos('ecx', Rede) = 1) then
       CNPJ := '71.225.700/0001-22'
     else if (pos('elavon', Rede) = 1) then
@@ -2108,7 +2110,7 @@ begin
     else if (pos('ecofrotas', Rede) = 1) then
       CNPJ := '03.506.307/0001-57'
     else if (pos('jetpar', Rede) = 1) then
-      CNPJ := '12.886.711/0002-75'
+      CNPJ := '12.886.711/0001-94'
     else if (pos('usacard', Rede) = 1) then
       CNPJ := '08.011.683/0001-94'
     else if pos('rede', Rede) > 0 then

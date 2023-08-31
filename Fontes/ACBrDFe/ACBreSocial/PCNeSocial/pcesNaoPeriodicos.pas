@@ -1208,7 +1208,14 @@ begin
 
   case StringXMLToTipoEvento(Ok, AXMLString, typVersaoDF) of
     teS2190: Self.S2190.New.EvtAdmPrelim.XML := AXMLString;
-    teS2200: Self.S2200.New.EvtAdmissao.XML := AXMLString;
+    teS2200:
+    begin
+      with Self.S2200.New do
+      begin
+        EvtAdmissao.XML := AXMLString;
+        EvtAdmissao.LerXML;
+      end;
+    end;
     teS2205: Self.S2205.New.EvtAltCadastral.XML := AXMLString;
     teS2206: Self.S2206.New.EvtAltContratual.XML := AXMLString;
     teS2210:

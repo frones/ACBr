@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/08/2023
+-- pcesNaoPeriodicos, pcesS2200 --
+[+] Implementada leitura do xml para o evento S-2200
+  Por: Rodrigo - Digibyte / Renato Rubinho
+
 17/07/2023
 -- pcesS5003 --
 [*] Validação de campo tpLocacao no grupo ideLotacao para leitura dos demais dados do grupo

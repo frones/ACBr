@@ -45,7 +45,9 @@ Símbolo : Significado
 
 31/08/2023
 -- ACBrNFSeXServicos --
-[*] A cidade de Passo Fundo/RS, Mudou de HTTP para HTTPs nas URLs, o provedor continua o mesmo.
+[*] O provedor NFSeBrasil mudou de HTTP para HTTPs das URLs.
+   Por: Jéter Rabelo Ferreira
+[*] A cidade de Passo Fundo/RS, Mudou de HTTP para HTTPs das URLs, o provedor continua o mesmo.
    Por: Pablo Cerbaro
 
 30/08/2023

@@ -231,7 +231,7 @@ begin
   ConfigGeral.UseCertificateHTTP := False;
   ConfigMsgDados.Prefixo := 'xs';
 
-  SetXmlNameSpace('http://www.nfsebrasil.net.br/nfse/rps/xsd/rps.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance');
+  SetXmlNameSpace('https://www.nfsebrasil.net.br/nfse/rps/xsd/rps.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance');
 
   ConfigMsgDados.ConsultarNFSe.DocElemento := 'ConsultarNfsePorRpsEnvio';
 

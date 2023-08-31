@@ -2723,7 +2723,7 @@ end;
 
 function TMateraBillingDueDate.IsEmpty: Boolean;
 begin
-  Result := (fdueDate <> 0);
+  Result := (fdueDate = 0);
 end;
 
 procedure TMateraBillingDueDate.Assign(aSource: TMateraBillingDueDate);

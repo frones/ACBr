@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2023
+-- ACBrPIXPSPMatera --
+[+] Inclusão do novo PSP Matera (--EM DESENVOLVIMENTO--)
+    Por: Elias César e Alexandre de Paula
+
 14/08/2023
 -- ACBrPIXCD --
 [*] Remoção da fução "Trim()" no momento de setar o conteúdo do PFX, pra não ocorrer 

@@ -218,6 +218,8 @@ var
   Linha, rCedente, rCNPJCPF :String;
   rCodEmpresa               :String;
   codInstrucao              :String;
+  LCodigoOrigem             : Integer;
+  LTipoOcorrencia           : TACBrTipoOcorrencia;
 begin
 
   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
@@ -292,8 +294,16 @@ begin
        begin
           SeuNumero                   := copy(Linha,280,26);
           NumeroDocumento             := copy(Linha,117,10);
-          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
-                                         copy(Linha,109,2),0));
+          LCodigoOrigem               := StrToIntDef(copy(Linha,327,2),0);
+          if LCodigoOrigem = 1 then
+          begin
+            LCodigoOrigem := StrToIntDef(copy(Linha,109,2),0);
+            LTipoOcorrencia := CodOcorrenciaToTipo(LCodigoOrigem);
+          end else
+            LTipoOcorrencia := CodOcorrenciaToTipoRemessa(LCodigoOrigem);
+          
+          OcorrenciaOriginal.Tipo     := LTipoOcorrencia;
+          
           MotivoLinha := 319;
           for i := 0 to 4 do
           begin
@@ -824,23 +834,39 @@ var
   CodOcorrencia: Integer;
 begin
   Result        := EmptyStr;
-  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia),0);
-
+  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCodRemessa(TipoOcorrencia),0);
   case CodOcorrencia of
-    01: Result := '01-Título Protestado Pago em Cartório';
-    02: Result := '02-Instrução Confirmada';
-    03: Result := '03-Instrução Rejeitada';
-    04: Result := '04-Título protestado sustado judicialmente';
-    06: Result := '06-Liquidação Normal';
-    07: Result := '07-Título Liquidado em Cartório Com Cheque do Próprio Devedor';
-    08: Result := '08-Título Protestado Sustado Judicialmente em Definitivo';
-    09: Result := '09-Liquidação de Título Descontado';
-    10: Result := '10-Protesto Solicitado';
-    11: Result := '11-Protesto em Cartório';
-    12: Result := '12-Sustação Solicitada';
-    13: Result := '13-Título Utilizado Como Garantia em Operação de Desconto';
-    14: Result := '14-Título Com Desistência de Garantia em Operação de Desconto';
+    02 : Result:= '02-Pedido de Baixa';
+    04 : Result:= '04-Concessão de Abatimento';
+    05 : Result:= '05-Cancelamento de Abatimento concedido';
+    06 : Result:= '06-Alteração de vencimento';
+    09 : Result:= '09-Pedido de protesto';
+    11 : Result:= '11-Sustar protesto e manter em carteira';
+    22 : Result:= '22-Alteração do seu número';
+    23 : Result:= '23-Alteração de dados do pagador';
+    25 : Result:= '25-Sustar protesto e baixar título';
+    26 : Result:= '26-Protesto automático';
+    40 : Result:= '40-Alteração de status desconto';
+  else
+    CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia),0);
+    case CodOcorrencia of
+      01: Result := '01-Título Protestado Pago em Cartório';
+      02: Result := '02-Instrução Confirmada';
+      03: Result := '03-Instrução Rejeitada';
+      04: Result := '04-Título protestado sustado judicialmente';
+      06: Result := '06-Liquidação Normal';
+      07: Result := '07-Título Liquidado em Cartório Com Cheque do Próprio Devedor';
+      08: Result := '08-Título Protestado Sustado Judicialmente em Definitivo';
+      09: Result := '09-Liquidação de Título Descontado';
+      10: Result := '10-Protesto Solicitado';
+      11: Result := '11-Protesto em Cartório';
+      12: Result := '12-Sustação Solicitada';
+      13: Result := '13-Título Utilizado Como Garantia em Operação de Desconto';
+      14: Result := '14-Título Com Desistência de Garantia em Operação de Desconto';
+    end;
   end;
+
+
 
   Result := ACBrSTr(Result);
 end;

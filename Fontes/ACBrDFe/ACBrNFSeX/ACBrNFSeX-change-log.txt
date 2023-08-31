@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+31/08/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Passo Fundo/RS, Mudou de HTTP para HTTPs nas URLs, o provedor continua o mesmo.
+   Por: Pablo Cerbaro
+
 30/08/2023
 -- ACBrNFSeXNotasFiscais --
 [*] Alteração na leitura do arquivo INI visando o provedor IPM.

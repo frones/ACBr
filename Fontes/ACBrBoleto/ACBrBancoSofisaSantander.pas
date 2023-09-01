@@ -254,9 +254,10 @@ begin
     with ACBrBoleto do
     begin
       sChaveNFe := '';
+
       if (ACBrTitulo.ListaDadosNFe.Count > 0) then
         sChaveNFe := ACBrTitulo.ListaDadosNFe[0].ChaveNFe;
-      sChaveNFe := PadLeft(sChaveNFe,44,'0');
+      //sChaveNFe := PadLeft(sChaveNFe,44,'0');
 
       wLinha:= '1'                                                  +  // 1- ID Registro
         IfThen(Cedente.TipoInscricao = pJuridica,'02','01')         +  // 2 a 3
@@ -298,7 +299,8 @@ begin
         Space(4)                                                    +  // 382 a 385
         Space(6)                                                    +  // 386 a 391
         Protesto + '0'                                              +  // 392 a 394
-        IntToStrZero( aRemessa.Count + 1, 6 );                         // 395 a 400
+        IntToStrZero( aRemessa.Count + 1, 6 )                       +  // 395 a 400
+        sChaveNFe;                                                     // 401 a 444
 
 
       wLinha:= UpperCase(wLinha);

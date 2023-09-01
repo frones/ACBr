@@ -773,14 +773,19 @@
           <xs:documentation>Código que representa a matrícula da obra no sistema de cadastro de obras.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="NumeroEncapsulamento" type="tipos:tpNumero" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Código do encapsulamento de notas dedutoras.</xs:documentation>
-        </xs:annotation>
-      </xs:element>	  	  
       <xs:element name="MunicipioPrestacao" type="tipos:tpCidade" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation>Código da cidade do município da prestação do serviço.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumeroEncapsulamento" type="tipos:tpNumero" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Código que representa o número do encapsulamento.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValorTotalRecebido" type="tipos:tpValor" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Informe o valor total recebido.</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>
@@ -950,14 +955,19 @@
           <xs:documentation>Código que representa a matrícula da obra no sistema de cadastro de obras.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="NumeroEncapsulamento" type="tipos:tpNumero" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Código do encapsulamento de notas dedutoras.</xs:documentation>
-        </xs:annotation>
-      </xs:element>	  	  
       <xs:element name="MunicipioPrestacao" type="tipos:tpCidade" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:documentation>Código da cidade do município da prestação do serviço.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumeroEncapsulamento" type="tipos:tpNumero" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Código que representa o número do encapsulamento da obra.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValorTotalRecebido" type="tipos:tpValor" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Informe o valor total recebido.</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>

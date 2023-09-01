@@ -1155,6 +1155,8 @@ procedure TNFSeW_Infisc201.Configuracao;
 begin
   inherited Configuracao;
 
+  NrOcorrCodigoPaisTomador := 1;
+
   GerarNSRps := False;
 end;
 

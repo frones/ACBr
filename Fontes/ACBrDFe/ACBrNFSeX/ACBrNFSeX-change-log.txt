@@ -44,11 +44,14 @@ Símbolo : Significado
 
 
 01/09/2023
+-- Infisc.GravarXml --
+[*] Alteração visando gerar a tag Código do Pais mesmo este não sendo estrangeiro.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Ouro Branco/MG, Mudou a versão para 2.02, o provedor continua o mesmo.
    Por: Jaidomini
 [+] Incluída a cidade de Marcelino Ramos/RS, o provedor é SystemPro
-   Por: João Paulo Alcântara
+   Por: Felipe Nadaletti
 [+] Incluída a cidade de Itaperucu/PR, o provedor é Equiplano
    Por: João Paulo Alcântara
 [*] A cidade de São José do Rio Preto/SP, Mudou as URLs do Link, o provedor continua o mesmo.

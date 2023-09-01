@@ -2185,7 +2185,7 @@ procedure TMateraFixedDateDiscount.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
   .Value('valuePerc', fvaluePerc)
-  .Value('date', fdate);
+  .ValueISODate('date', fdate);
 end;
 
 constructor TMateraFixedDateDiscount.Create(const aObjectName: String);

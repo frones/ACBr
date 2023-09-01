@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/09/2023
+-- PadraoNacionao.Provider --
+[*] Alteração na leitura do retorno do método ConsultarEvento.
+   Por: Italo Giurizzato Junior
 -- Infisc.GravarXml --
 [*] Alteração visando gerar a tag Código do Pais mesmo este não sendo estrangeiro.
    Por: Italo Giurizzato Junior

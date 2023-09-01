@@ -823,9 +823,12 @@ end;
 procedure TACBrNFSeProviderPadraoNacional.TratarRetornoConsultarEvento(
   Response: TNFSeConsultarEventoResponse);
 var
-  Document: TACBrJSONObject;
+  Document, JSon: TACBrJSONObject;
+  JSonLoteEventos: TACBrJSONArray;
+  i: Integer;
   AErro: TNFSeEventoCollectionItem;
-  EventoXml, IDEvento: string;
+  AResumo: TNFSeResumoCollectionItem;
+  IDEvento, TipoEvento, ArquivoXml: string;
   DocumentXml: TACBrXmlDocument;
   ANode: TACBrXmlNode;
   Ok: Boolean;
@@ -847,25 +850,34 @@ begin
 
       Response.Data := Document.AsISODateTime['dataHoraProcessamento'];
 
-      EventoXml := Document.AsString['eventoXmlGZipB64'];
+      JSonLoteEventos := Document.AsJSONArray['eventos'];
 
-      if EventoXml <> '' then
+      for i := 0 to JSonLoteEventos.Count-1 do
       begin
-        EventoXml := DeCompress(DecodeBase64(EventoXml));
+        JSon := JSonLoteEventos.ItemAsJSONObject[i];
+
+        AResumo := Response.Resumos.New;
+        AResumo.ChaveDFe := JSon.AsString['chaveAcesso'];
+        TipoEvento := 'e' + JSon.AsString['tipoEvento'];
+        AResumo.TipoDoc := 'Evento de ' +
+                           tpEventoToDesc(StrTotpEvento(Ok, TipoEvento));
+
+        ArquivoXml := JSon.AsString['arquivoXml'];
+        ArquivoXml := DeCompress(DecodeBase64(ArquivoXml));
+
+        if ArquivoXml = '' then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit
+        end;
 
         DocumentXml := TACBrXmlDocument.Create;
 
         try
           try
-            if EventoXml = '' then
-            begin
-              AErro := Response.Erros.New;
-              AErro.Codigo := Cod211;
-              AErro.Descricao := ACBrStr(Desc211);
-              Exit
-            end;
-
-            DocumentXml.LoadFromXml(EventoXml);
+            DocumentXml.LoadFromXml(ArquivoXml);
 
             ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
 
@@ -881,13 +893,13 @@ begin
 
             Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
 
-            SalvarXmlEvento(IDEvento + '-procEveNFSe', EventoXml);
+            SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml);
           except
             on E:Exception do
             begin
               AErro := Response.Erros.New;
               AErro.Codigo := Cod999;
-              AErro.Descricao := ACBrStr(Desc999 + E.Message);
+              AErro.Descricao := Desc999 + E.Message;
             end;
           end;
         finally

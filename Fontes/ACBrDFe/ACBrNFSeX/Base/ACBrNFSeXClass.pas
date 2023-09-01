@@ -797,6 +797,7 @@ type
     FValorCargaTributaria: Double;
     FPercentualCargaTributaria: Double;
     FFonteCargaTributaria: string;
+    FValorTotalRecebido: Double;
     // Provedor ISSBarueri
     FPrestadoEmViasPublicas: Boolean;
     // Provedor GeisWeb
@@ -847,6 +848,8 @@ type
     property ValorCargaTributaria: Double read FValorCargaTributaria write FValorCargaTributaria;
     property PercentualCargaTributaria: Double read FPercentualCargaTributaria write FPercentualCargaTributaria;
     property FonteCargaTributaria: string read FFonteCargaTributaria write FFonteCargaTributaria;
+    property ValorTotalRecebido: Double read FValorTotalRecebido write FValorTotalRecebido;
+
     // Provedor ISSBarueri
     property PrestadoEmViasPublicas: Boolean read FPrestadoEmViasPublicas write FPrestadoEmViasPublicas;
     // Provedor GeisWeb

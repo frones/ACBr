@@ -454,6 +454,8 @@ begin
           // Provedor ISSDSF
           Operacao := StrToOperacao(Ok, INIRec.ReadString(sSecao, 'Operacao', ''));
           Tributacao := FProvider.StrToTributacao(Ok, INIRec.ReadString(sSecao, 'Tributacao', ''));
+          // Provedor ISSSaoPaulo
+          ValorTotalRecebido := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorTotalRecebido', ''), 0);
         end;
 
         i := 1;

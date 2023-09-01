@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 01/09/2023
+-- Diversos --
+[*] Incluído o campo ValorTotalRecebido dentro da classe Servico para atender
+    a alteração nos schemas do provedor ISSSaoPaulo.
+   Por: Italo Giurizzato Junior
 -- PadraoNacionao.Provider --
 [*] Alteração na leitura do retorno do método ConsultarEvento.
    Por: Italo Giurizzato Junior

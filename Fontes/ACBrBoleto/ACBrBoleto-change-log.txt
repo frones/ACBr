@@ -48,6 +48,18 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+01/09/2023
+--- ACBrBoletoRet_Sicredi_APIV2, ACBrBoletoRetorno---
+[+] Adicionado a letura do Valor desconto 3 e Data Desconto 3 
+https://www.projetoacbr.com.br/forum/topic/73729-altera%C3%A7%C3%A3o-leitura-retorno-boleto-h%C3%ADbrido-sicredi/
+    Por Raphael. F. B. Soares / Verificado Daniel Morais #TK-4336
+
+30/08/2023
+--- ACBrBancoBradesco, ACBrBoleto---
+[+] Adicionado a função para ler TxID e URL Pix 
+https://www.projetoacbr.com.br/forum/topic/73246-qrcode-pix-no-boleto-do-bradesco
+    Por Daniel Morais #TK-4216
+
 17/08/2023
 [*]TK-4240 ACBrBoletoConversao,ACBrBoletoRetorno, ACBrBoletoRet_Inter_API  Ajustes no tratamento do retorno para descontos, multas e juros 
 https://www.projetoacbr.com.br/forum/topic/73297-inclusao-de-importa%C3%A7%C3%A3o-de-desconto-e-campos-auxiliares-de-multa-e-juros-no-boleto-inter-api/

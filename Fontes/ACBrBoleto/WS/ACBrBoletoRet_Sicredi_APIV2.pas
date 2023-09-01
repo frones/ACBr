@@ -199,6 +199,11 @@ begin
                       ARetornoWS.DadosRet.TituloRet.ValorDesconto2:= Desconto.Values['valorDesconto'].AsNumber;
                       ARetornoWS.DadosRet.TituloRet.DataDesconto2 := DateSicreditoDateTime(Desconto.Values['dataLimite'].AsString);
                     end;
+                    if I = 2 then
+                    begin
+                      ARetornoWS.DadosRet.TituloRet.ValorDesconto3:= Desconto.Values['valorDesconto'].AsNumber;
+                      ARetornoWS.DadosRet.TituloRet.DataDesconto3 := DateSicreditoDateTime(Desconto.Values['dataLimite'].AsString);
+                    end;
 
                   end;
 

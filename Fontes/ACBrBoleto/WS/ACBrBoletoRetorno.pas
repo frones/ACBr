@@ -211,6 +211,7 @@ type
     FDataAbatimento: TDateTime;
     FDataDesconto: TDateTime;
     FDataDesconto2: TDateTime;
+    FDataDesconto3: TDateTime;
     FDataMoraJuros: TDateTime;
     FDataMulta: TDateTime;
     FDataProtesto: TDateTime;
@@ -222,6 +223,7 @@ type
     FValorAbatimento: Currency;
     FValorDesconto: Currency;
     FValorDesconto2: Currency;
+    FValorDesconto3: Currency;
     FValorMoraJuros: Currency;
     FValorMulta: Currency;
     FValorIOF: Currency;
@@ -293,6 +295,7 @@ type
     property DataAbatimento: TDateTime read FDataAbatimento write FDataAbatimento ;
     property DataDesconto: TDateTime read FDataDesconto write FDataDesconto ;
     property DataDesconto2: TDateTime read FDataDesconto2 write FDataDesconto2 ;
+    property DataDesconto3: TDateTime read FDataDesconto3 write FDataDesconto3 ;
     property DataMoraJuros: TDateTime read FDataMoraJuros write FDataMoraJuros ;
     property DataMulta: TDateTime read FDataMulta write FDataMulta ;
     property DataProtesto: TDateTime read FDataProtesto write FDataProtesto ;
@@ -304,6 +307,7 @@ type
     property ValorAbatimento: Currency read FValorAbatimento write FValorAbatimento ;
     property ValorDesconto: Currency read FValorDesconto write FValorDesconto ;
     property ValorDesconto2: Currency read FValorDesconto2 write FValorDesconto2 ;
+    property ValorDesconto3: Currency read FValorDesconto3 write FValorDesconto3 ;
     property ValorMoraJuros: Currency read FValorMoraJuros write FValorMoraJuros ;
     property ValorMulta: Currency read FValorMulta write FValorMulta ;
     property ValorIOF: Currency read FValorIOF write FValorIOF ;
@@ -610,6 +614,7 @@ begin
   DataAbatimento:= DeACBrBoletoTituloRet.DataAbatimento;
   DataDesconto:= DeACBrBoletoTituloRet.DataDesconto;
   DataDesconto2:= DeACBrBoletoTituloRet.DataDesconto2;
+  DataDesconto3:= DeACBrBoletoTituloRet.DataDesconto3;
   DataMoraJuros:= DeACBrBoletoTituloRet.DataMoraJuros;
   DataMulta:= DeACBrBoletoTituloRet.DataMulta;
   DataProtesto:= DeACBrBoletoTituloRet.DataProtesto;
@@ -621,6 +626,7 @@ begin
   ValorAbatimento:= DeACBrBoletoTituloRet.ValorAbatimento;
   ValorDesconto:= DeACBrBoletoTituloRet.ValorDesconto;
   ValorDesconto2:= DeACBrBoletoTituloRet.ValorDesconto2;
+  ValorDesconto3:= DeACBrBoletoTituloRet.ValorDesconto3;
   ValorMoraJuros:= DeACBrBoletoTituloRet.ValorMoraJuros;
   ValorMulta := DeACBrBoletoTituloRet.ValorMulta;
   ValorIOF:= DeACBrBoletoTituloRet.ValorIOF;

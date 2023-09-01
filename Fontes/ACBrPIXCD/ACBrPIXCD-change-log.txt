@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/09/2023
+-- ACBrSchemasMatera --
+[-] Correções na implementação dos objetos para o PSP Matera
+    Por: Elias César
+
 30/08/2023
 -- ACBrPIXPSPMatera --
 [+] Inclusão do novo PSP Matera (--EM DESENVOLVIMENTO--)

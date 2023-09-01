@@ -51,6 +51,7 @@ uses
 type  
 
   TMateraDocumentType = (
+    mdtNone,
     mdtIdentityFront,
     mdtIdentityBack,
     mdtPicture,
@@ -64,12 +65,14 @@ type
   );
 
   TMateraClientType = (
+    mctNone,
     mctPerson,
     mctCorporate,
     mctForeigner
   );
 
   TMateraAccountType = (
+    matNone,
     matOrdinary,
     matOverdraftProtected,
     matCommon,
@@ -77,20 +80,23 @@ type
   );
 
   TMateraAccountStatus = (
-    masRegular,
-    masLocked,
-    masClosed,
-    masReserved,
-    masCreating,
-    masError
+    mcsNone,
+    mcsRegular,
+    mcsLocked,
+    mcsClosed,
+    mcsReserved,
+    mcsCreating,
+    mcsError
   );
 
   TMateraActiveStatus = (
+    macNone,
     macActive,
     macInactive
   );
 
   TMateraAliasType = (
+    malNone,
     //malTaxId,
     //malEmail,
     //malPhone,
@@ -98,6 +104,7 @@ type
   );
 
   TMateraAliasStatus = (
+    mastNone,
     mastIdentityValidationPending,
     mastClearingRegistrationPending,
     mastActive,
@@ -136,6 +143,7 @@ type
   );
 
   TMateraTransactionType = (
+    mttNone,
     //mttCreditCard,
     //mttDirectDebit,
     //mttBoleto,
@@ -147,11 +155,13 @@ type
   );
 
   TMateraDynamicQRCodeType = (
+    mqtNone,
     mqtImmediate,
     mqtBillingDueDate
   );
 
   TMateraMaritalStatus = (
+    mmsNone,
     mmsSeparated,
     mmsSeparation_Claimed,
     mmsMarried,
@@ -163,6 +173,7 @@ type
   );
 
   TMateraTransactionStatus = (
+    mtsNone,
     mtsCreated,
     mtsApproved,
     mtsRejected,
@@ -567,12 +578,12 @@ type
   TMateraAccountTransactionRequestBasic = class(TACBrPIXSchema)
   private
     faccountInternalTypeId: Integer;
-    faccountType: TMateraAccountType;
     fexternalIdentifier: String;
     fibkPwdHash: String;
     fsharedAccount: String;
-
+    faccountType: TMateraAccountType;
     fclientType: TMateraClientType;
+
     fdocuments: TMateraDocumentArray;
     fadditionalDetailsCorporate: TMateraAdditionalDetailsCorporate;
     fadditionalDetailsForeigner: TMateraAdditionalDetailsBasic;
@@ -789,17 +800,17 @@ type
 
   TMateraAccountHolderResponse = class(TACBrPIXSchema)
   private
-    faccountHolderId: String;
-    fbillingAddress: TMateraEndereco;
+    fname: String;
     femail: String;
+    fsocialName: String;
+    faccountHolderId: String;
+    frepresentativeId: String;
+    fstatus: TMateraActiveStatus;
+    fbillingAddress: TMateraEndereco;
     fmailAddress: TMateraEndereco;
     fmobilePhone: TMateraMobilePhone;
     fmobilePhones: TMateraMobilePhoneArray;
-    fname: String;
-    frepresentativeId: String;
     frepresentatives: TMateraClientRepresentativeArray;
-    fsocialName: String;
-    fstatus: TMateraActiveStatus;
     ftaxIdentifier: TMateraTaxIdentifier;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
@@ -921,9 +932,9 @@ type
 
   TMateraRegisterAliasResponse = class(TACBrPIXSchema)
   private
-    falias: TMateraAlias;
     fneedsIdentifyConfirmation: Boolean;
-    fprotocolId: String;
+    fprotocolId: String; 
+    falias: TMateraAlias;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -943,11 +954,11 @@ type
 
   TMateraRecipient = class(TACBrPIXSchema)
   private
-    Faccount: TMateraAccount;
-    Famount: currency;
-    Fcurrency: string;
-    Fmediatorfee: currency;
-    FrecipientComment: string;
+    famount: Currency;
+    fcurrency: String;
+    fmediatorfee: Currency;
+    frecipientComment: String;
+    faccount: TMateraAccount;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -957,13 +968,13 @@ type
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TMateraAlias);
+    procedure Assign(aSource: TMateraRecipient);
 
     property account: TMateraAccount read Faccount write Faccount;
-    property amount: currency read Famount write Famount;
-    property currency: string read Fcurrency write Fcurrency;
+    property amount: Currency read Famount write Famount;
+    property currency: String read Fcurrency write Fcurrency;
     property mediatorfee: currency read Fmediatorfee write Fmediatorfee;
-    property recipientComment: string read FrecipientComment write FrecipientComment;
+    property recipientComment: String read FrecipientComment write FrecipientComment;
   end;
 
   { TMateraRecipientsArray }
@@ -1009,12 +1020,9 @@ type
 
   TMateraAdditionalInformation = class(TACBrPIXSchema)
   private
-    Fcontent: String;
-    Fname: String;
-    FshowToPlayer: Boolean;
-    procedure Setcontent(AValue: String);
-    procedure Setname(AValue: String);
-    procedure SetshowToPlayer(AValue: Boolean);
+    fcontent: String;
+    fname: String;
+    fshowToPlayer: Boolean;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1025,9 +1033,9 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraAdditionalInformation);
 
-    property name: String read Fname write Setname;
-    property content: String read Fcontent write Setcontent;
-    property showToPlayer: Boolean read FshowToPlayer write SetshowToPlayer;
+    property name: String read Fname write fname;
+    property content: String read Fcontent write fcontent;
+    property showToPlayer: Boolean read FshowToPlayer write fshowToPlayer;
   end;
 
   { TMateraAdditionalInformationArray }
@@ -1085,7 +1093,7 @@ type
   TMateraFixedDateDiscountList = class(TACBrPIXSchema)
   private
     ffixedDateDiscounts: TMateraFixedDateDiscountArray;
-    fmodality: integer;
+    fmodality: Integer;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1097,7 +1105,7 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraFixedDateDiscountList);
 
-    property modality: integer read fmodality write fmodality;
+    property modality: Integer read fmodality write fmodality;
     property fixedDateDiscounts: TMateraFixedDateDiscountArray read ffixedDateDiscounts write ffixedDateDiscounts;
 
   end;
@@ -1106,7 +1114,7 @@ type
 
   TMateraUniqueDiscount = class(TACBrPIXSchema)
   private
-    fmodality: integer;
+    fmodality: Integer;
     funiqueValuePercDiscount: Currency;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
@@ -1119,7 +1127,7 @@ type
     procedure Assign(aSource: TMateraUniqueDiscount);
 
     property uniqueValuePercDiscount: Currency read funiqueValuePercDiscount write funiqueValuePercDiscount;
-    property modality: integer read fmodality write fmodality;
+    property modality: Integer read fmodality write fmodality;
   end;
 
   { TMateraDiscountsCalculation }
@@ -1192,12 +1200,12 @@ type
     property addressing: TMateraPayerInformationAddressing read faddressing write faddressing;
   end;
 
-  { TMateraInterestCalculation }
+  { TMateraValueCalculation }
 
-  TMateraInterestCalculation = class(TACBrPIXSchema)
+  TMateraValueCalculation = class(TACBrPIXSchema)
   private
-    fmodality: integer;
-    fvaluePerc: currency;
+    fmodality: Integer;
+    fvaluePerc: Currency;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1206,80 +1214,23 @@ type
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TMateraInterestCalculation);
+    procedure Assign(aSource: TMateraValueCalculation);
 
-    property valuePerc: currency read fvaluePerc write fvaluePerc;
-    property modality: integer read fmodality write fmodality;
+    property valuePerc: Currency read fvaluePerc write fvaluePerc;
+    property modality: Integer read fmodality write fmodality;
   end;
-
-  {TMateraFinesCalculation}
-
-  TMateraFinesCalculation = class(TACBrPIXSchema)
-  private
-    fmodality: integer;
-    fvaluePerc: currency;
-  protected
-    procedure AssignSchema(aSource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
-    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
-  public
-    constructor Create(const aObjectName: String); override;
-    procedure Clear; override;
-    function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TMateraFinesCalculation);
-
-    property valuePerc: currency read fvaluePerc write fvaluePerc;
-    property modality: integer read fmodality write fmodality;
-  end;
-
-  { TMateraReductionCalculation }
-
-  TMateraReductionCalculation = class(TACBrPIXSchema)
-  private
-    fmodality: integer;
-    fvaluePerc: currency;
-  protected
-    procedure AssignSchema(aSource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
-    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
-  public
-    constructor Create(const aObjectName: String); override;
-    procedure Clear; override;
-    function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TMateraReductionCalculation);
-
-    property valuePerc: currency read fvaluePerc write fvaluePerc;
-    property modality: integer read fmodality write fmodality;
-  end;
-
-  { TMatera }
-
-  {TMatera = class(TACBrPIXSchema)
-  private
-  protected
-    procedure AssignSchema(aSource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
-    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
-  public
-    constructor Create(const aObjectName: String); override;
-    procedure Clear; override;
-    function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TMatera);
-
-    property c: String read fc write fc;
-  end;}
 
   { TMateraBillingDueDate }
 
   TMateraBillingDueDate = class(TACBrPIXSchema)
-  private
-    fdaysAfterDueDate: Integer;
-    fdiscounts: TMateraDiscountsCalculation;
+  private                                   
     fdueDate: TDateTime;
-    ffines: TMateraFinesCalculation;
-    finterests: TMateraInterestCalculation;
+    fdaysAfterDueDate: Integer;
+    ffines: TMateraValueCalculation;
+    finterests: TMateraValueCalculation;
+    freduction: TMateraValueCalculation;
+    fdiscounts: TMateraDiscountsCalculation;
     fpayerInformation: TMateraQRCodeDynamicPayerInformationComplete;
-    freduction: TMateraReductionCalculation;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1292,10 +1243,10 @@ type
     procedure Assign(aSource: TMateraBillingDueDate);
 
     property payerInformation: TMateraQRCodeDynamicPayerInformationComplete read fpayerInformation write fpayerInformation;
-    property interests: TMateraInterestCalculation read finterests write finterests;
-    property fines: TMateraFinesCalculation read ffines write ffines;
+    property interests: TMateraValueCalculation read finterests write finterests;
+    property fines: TMateraValueCalculation read ffines write ffines;
     property discounts: TMateraDiscountsCalculation read fdiscounts write fdiscounts;
-    property reduction: TMateraReductionCalculation read freduction write freduction;
+    property reduction: TMateraValueCalculation read freduction write freduction;
     property dueDate: TDateTime read fdueDate write fdueDate;
     property daysAfterDueDate: Integer read fdaysAfterDueDate write fdaysAfterDueDate;
   end;
@@ -1304,11 +1255,11 @@ type
 
   TMateraInstantPayment = class(TACBrPIXSchema)
   private
-    fadditionalInformation: TMateraAdditionalInformationArray;
+    fexpiration: Integer;
     falias_: TMateraAlias;
     fbillingDueDate: TMateraBillingDueDate;
     fdynamicQRCodeType: TMateraDynamicQRCodeType;
-    fexpiration: integer;
+    fadditionalInformation: TMateraAdditionalInformationArray;
     fqrCodeImageGenerationSpecification: TMateraQRCodeSpecification;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
@@ -1320,22 +1271,23 @@ type
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraInstantPayment);
-
+    
+    property expiration: Integer read Fexpiration write Fexpiration;
     property alias_: TMateraAlias read Falias_ write Falias_;
-    property qrCodeImageGenerationSpecification: TMateraQRCodeSpecification read FqrCodeImageGenerationSpecification write FqrCodeImageGenerationSpecification;
-    property expiration: integer read Fexpiration write Fexpiration;
-    property additionalInformation: TMateraAdditionalInformationArray read FadditionalInformation write FadditionalInformation;
     property dynamicQRCodeType: TMateraDynamicQRCodeType read fdynamicQRCodeType write fdynamicQRCodeType;
     property billingDueDate: TMateraBillingDueDate read fbillingDueDate write fbillingDueDate;
-
+    property qrCodeImageGenerationSpecification: TMateraQRCodeSpecification
+      read FqrCodeImageGenerationSpecification write FqrCodeImageGenerationSpecification;
+    property additionalInformation: TMateraAdditionalInformationArray
+      read FadditionalInformation write FadditionalInformation;
   end;
 
   { TMateraPaymentInfo }
 
   TMateraPaymentInfo = class(TACBrPIXSchema)
   private
-    FinstantPayment: TMateraInstantPayment;
-    FtransactionType: String;
+    finstantPayment: TMateraInstantPayment;
+    ftransactionType: String;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1379,8 +1331,8 @@ type
 
   TMateraTransactionResponse = class(TACBrPIXSchema)
   private
-    faccountHolderId: String;
     faccountId: String;
+    faccountHolderId: String;
     ftotalAmount: Currency;
     ftransactionDate: String;
     ftransactionId: String;
@@ -1445,17 +1397,13 @@ type
 
   TMateraQRCodeRequest = class(TACBrPIXSchema)
   private
-    falias: TMateraAliasBasic;
-    FcallbackAddress: string;
-    fcurrency: string;
-    fexternalIdentifier: String;
-    FpaymentInfo: TMateraPaymentInfo;
-    Frecipients: TMateraRecipientsArray;
+    fcurrency: String;
     ftotalAmount: Currency;
-    procedure SetcallbackAddress(AValue: string);
-    procedure Setcurrency(AValue: string);
-    procedure Setrecipients(AValue: TMateraRecipientsArray);
-    procedure SettotalAmount(AValue: Currency);
+    fcallbackAddress: String;
+    fexternalIdentifier: String;
+    falias: TMateraAliasBasic;
+    fpaymentInfo: TMateraPaymentInfo;
+    frecipients: TMateraRecipientsArray;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1465,14 +1413,14 @@ type
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TMateraAliasRequest);
+    procedure Assign(aSource: TMateraQRCodeRequest);
 
-    property totalAmount: Currency read FtotalAmount write SettotalAmount;
-    property currency: string read Fcurrency write Setcurrency;
-    property paymentInfo: TMateraPaymentInfo read FpaymentInfo write FpaymentInfo;
-    property recipients: TMateraRecipientsArray read Frecipients write Setrecipients;
+    property currency: String read Fcurrency write fcurrency;
+    property totalAmount: Currency read FtotalAmount write ftotalAmount;
     property externalIdentifier: String read fexternalIdentifier write fexternalIdentifier;
-    property callbackAddress: string read FcallbackAddress write SetcallbackAddress;
+    property callbackAddress: String read FcallbackAddress write fcallbackAddress;
+    property paymentInfo: TMateraPaymentInfo read FpaymentInfo write FpaymentInfo;
+    property recipients: TMateraRecipientsArray read Frecipients write frecipients;
   end;
 
   { TMateraAuthorizationDetails }
@@ -1540,11 +1488,11 @@ type
 
   TMateraInstantPaymentQRCodeResponse = class(TACBrPIXSchema)
   private
-    fdynamicQrCodeType: string;
+    fqrcodeURL: String;
+    freference: String;
+    ftextContent: String;
+    fdynamicQrCodeType: String;
     fGeneratedImage: TMateraGeneratedImage;
-    fqrcodeURL: string;
-    freference: string;
-    ftextContent: string;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1556,11 +1504,11 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraInstantPaymentQRCodeResponse);
 
-    property textContent: string read ftextContent write ftextContent;
-    property reference: string read freference write freference;
-    property qrcodeURL: string read fqrcodeURL write fqrcodeURL;
+    property reference: String read freference write freference;
+    property qrcodeURL: String read fqrcodeURL write fqrcodeURL;
+    property textContent: String read ftextContent write ftextContent;
+    property dynamicQrCodeType: String read fdynamicQrCodeType write fdynamicQrCodeType;
     property generateImage: TMateraGeneratedImage read fGeneratedImage write fGeneratedImage;
-    property dynamicQrCodeType: string read fdynamicQrCodeType write fdynamicQrCodeType;
   end;
 
   { TMateracouponDetails }
@@ -1589,23 +1537,23 @@ type
 
   TMateraQRCodeResponse = class(TACBrPIXSchema)
   private
-    fboletoUrl: string;
-    fcreditCardToken: string;
-    fdiscountAmount: Currency;
+    fboletoUrl: String;
     fdueDate: TDateTime;
+    fcreditCardToken: String;
+    fdiscountAmount: Currency;
     fexpirationDate: TDateTime;
     fexternalIdentifier: String;
-    ffinancialStatement: TMateraFinancialStatement;
-    finstantPayment: TMateraInstantPaymentQRCodeResponse;
-    fpaidAmount: currency;
-    frecipientDescription: string;
-    fsenderAccountId: string;
-    ftotalAmount: currency;
+    fpaidAmount: Currency;
+    frecipientDescription: String;
+    fsenderAccountId: String;
+    ftotalAmount: Currency;
     ftransactionDate: TDateTime;
     ftransactionId: String;
-    ftransactionType: string;
-    ftypeableLine: string;
+    ftransactionType: String;
+    ftypeableLine: String;
     fcouponDetails: TMateracouponDetails;
+    ffinancialStatement: TMateraFinancialStatement;
+    finstantPayment: TMateraInstantPaymentQRCodeResponse;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1617,25 +1565,23 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraQRCodeResponse);
 
-    property senderAccountId: string read fsenderAccountId write fsenderAccountId;
-    property creditCardToken: string read fcreditCardToken write fcreditCardToken;
-    property boletoUrl: string read fboletoUrl write fboletoUrl;
-    property typeableLine: string read ftypeableLine write ftypeableLine;
+    property senderAccountId: String read fsenderAccountId write fsenderAccountId;
+    property creditCardToken: String read fcreditCardToken write fcreditCardToken;
+    property boletoUrl: String read fboletoUrl write fboletoUrl;
+    property typeableLine: String read ftypeableLine write ftypeableLine;
     property dueDate: TDateTime read fdueDate write fdueDate;
     property discountAmount: Currency read fdiscountAmount write fdiscountAmount;
-    property recipientDescription: string read frecipientDescription write frecipientDescription;
+    property recipientDescription: String read frecipientDescription write frecipientDescription;
     property expirationDate: TDateTime read fexpirationDate write fexpirationDate;
-    property couponDetails: TMateracouponDetails read fcouponDetails write fcouponDetails;
-
     property transactionId: String read ftransactionId write ftransactionId;
     property externalIdentifier: String read fexternalIdentifier write fexternalIdentifier;
-    property financialStatement: TMateraFinancialStatement read ffinancialStatement write ffinancialStatement;
     property transactionDate: TDateTime read ftransactionDate write ftransactionDate;
-    property transactionType: string read ftransactionType write ftransactionType;
-    property totalAmount: currency read ftotalAmount write ftotalAmount;
-    property paidAmount: currency read fpaidAmount write fpaidAmount;
+    property transactionType: String read ftransactionType write ftransactionType;
+    property totalAmount: Currency read ftotalAmount write ftotalAmount;
+    property paidAmount: Currency read fpaidAmount write fpaidAmount;
+    property couponDetails: TMateracouponDetails read fcouponDetails write fcouponDetails;
     property instantPayment: TMateraInstantPaymentQRCodeResponse read finstantPayment write finstantPayment;
-
+    property financialStatement: TMateraFinancialStatement read ffinancialStatement write ffinancialStatement;
   end;
 
   { TMatera }
@@ -1703,8 +1649,9 @@ begin
     mdtTaxID: Result := 'TAX_ID';
     mdtLifeProof: Result := 'LIFE_PROOF';
     mdtBiometry: Result := 'BIOMETRY';
+    mdtUnknown: Result := 'UNKNOWN';
   else
-    Result := 'UNKNOWN';
+    Result := EmptyStr;
   end;
 end;
 
@@ -1731,8 +1678,10 @@ begin
     Result := mdtLifeProof
   else if (s = 'BIOMETRY') then
     Result := mdtBiometry
+  else if (s = 'UNKNOW') then
+    Result := mdtUnknown
   else
-    Result := mdtUnknown;
+    Result := mdtNone;
 end;
 
 function MateraClientTypeToString(aType: TMateraClientType): String;
@@ -1752,12 +1701,14 @@ var
 begin
   s := UpperCase(Trim(aString));
 
-  if (s = 'CORPORATE') then
+  if (s = 'PERSON') then
+    Result := mctPerson
+  else if (s = 'CORPORATE') then
     Result := mctCorporate
   else if (s = 'FOREIGNER') then
     Result := mctForeigner
   else
-    Result := mctPerson;
+    Result := mctNone;
 end;
 
 function MateraAccountTypeToString(aType: TMateraAccountType): String;
@@ -1778,25 +1729,27 @@ var
 begin
   s := UpperCase(Trim(aString));
 
-  if (s = 'OVERDRAFT_PROTECTED') then
+  if (s = 'ORDINARY') then
+    Result := matOrdinary
+  else if (s = 'OVERDRAFT_PROTECTED') then
     Result := matOverdraftProtected
   else if (s = 'COMMON') then
     Result := matCommon
   else if (s = 'UNLIMITED_ORDINARY') then
     Result := matUnlimitedOrdinary
   else
-    Result := matOrdinary;
+    Result := matNone;
 end;
 
 function MateraAccountStatusToString(aType: TMateraAccountStatus): String;
 begin 
   case aType of
-    masRegular: Result := 'REGULAR';
-    masLocked: Result := 'LOCKED';
-    masClosed: Result := 'CLOSED';
-    masReserved: Result := 'RESERVED';
-    masCreating: Result := 'CREATING';
-    masError: Result := 'ERROR';
+    mcsRegular: Result := 'REGULAR';
+    mcsLocked: Result := 'LOCKED';
+    mcsClosed: Result := 'CLOSED';
+    mcsReserved: Result := 'RESERVED';
+    mcsCreating: Result := 'CREATING';
+    mcsError: Result := 'ERROR';
   else
     Result := EmptyStr;
   end;
@@ -1809,17 +1762,19 @@ begin
   s := UpperCase(Trim(aString));
 
   if (s = 'REGULAR') then
-    Result := masRegular
+    Result := mcsRegular
   else if (s = 'LOCKED') then
-    Result := masLocked
+    Result := mcsLocked
   else if (s = 'CLOSED') then
-    Result := masClosed
+    Result := mcsClosed
   else if (s = 'RESERVED') then
-    Result := masReserved
+    Result := mcsReserved
   else if (s = 'CREATING') then
-    Result := masCreating
+    Result := mcsCreating
+  else if (s = 'ERROR') then
+    Result := mcsError
   else
-    Result := masError;
+    Result := mcsNone;
 end;
 
 function MateraActiveStatusToString(aType: TMateraActiveStatus): String;
@@ -1840,38 +1795,41 @@ begin
 
   if (s = 'ACTIVE') then
     Result := macActive
+  else if (s = 'ACTIVE') then
+    Result := macInactive
   else
-    Result := macInactive;
+    Result := macNone;;
 end;
 
 function MateraAliasTypeToString(aType: TMateraAliasType): String;
 begin
   Result := 'EVP';
   
-  {case aType of
-    malTaxId: Result := 'TAX_ID';
-    malEmail:  Result := 'EMAIL';
-    malPhone:  Result := 'PHONE';
+  case aType of
+    malEVP: Result := 'EVP';
+    //malTaxId: Result := 'TAX_ID';
+    //malEmail:  Result := 'EMAIL';
+    //malPhone:  Result := 'PHONE';
   else
-    Result := 'EVP';
-  end;}
+    Result := EmptyStr;
+  end;
 end;
 
 function StringToMateraAliasType(const aString: String): TMateraAliasType;
-//var
-//  s: String;
+var
+  s: String;
 begin
-  Result := malEVP;
-
-  {s := UpperCase(Trim(aString));
+  s := UpperCase(Trim(aString));
   if (s = 'TAX_ID') then
-    Result := malTaxId
-  else if (s = 'EMAIL') then
-    Result := malEmail
-  else if (s = 'PHONE') then
-    Result := malPhone
+    Result := malEVP
+  //else if (s = 'TAX_ID') then
+  //  Result := malTaxId
+  //else if (s = 'EMAIL') then
+  //  Result := malEmail
+  //else if (s = 'PHONE') then
+  //  Result := malPhone
   else
-    Result := malEVP;}
+    Result := malNone;
 end;
 
 function MateraAliasStatusToString(aType: TMateraAliasStatus): String;
@@ -1994,34 +1952,33 @@ begin
   else if (s = 'CANCEL_DONOR_CLAIM_REQUEST ') then
     Result := mastCancelDonorClaimRequest
   else
-    Result := mastAwaitingReturnPSPDonor;
+    Result := mastNone;
 end;
 
 function MateraTransactionTypeToString(aType: TMateraTransactionType): String;
 begin
-  Result := 'InstantPayment';
-
-  {case aType of
-    mttCreditCard: Result := 'CreditCard';
-    mttDirectDebit: Result := 'DirectDebit';
-    mttBoleto: Result := 'Boleto';
-    mttBoletoCobranca: Result := 'BoletoCobranca';
-    mttInternalTransfer: Result := 'InternalTransfer';
-    mttMobilePhone: Result := 'MobilePhone';
-    mttExternal: Result := 'External';
+  case aType of
+    mttInstantPayment: Result := 'InstantPayment';
+    //mttCreditCard: Result := 'CreditCard';
+    //mttDirectDebit: Result := 'DirectDebit';
+    //mttBoleto: Result := 'Boleto';
+    //mttBoletoCobranca: Result := 'BoletoCobranca';
+    //mttInternalTransfer: Result := 'InternalTransfer';
+    //mttMobilePhone: Result := 'MobilePhone';
+    //mttExternal: Result := 'External';
   else
-    Result := 'InstantPayment';
-  end;}
+    Result := EmptyStr;
+  end;
 end;
 
 function StringToMateraTransactionType(const aString: String): TMateraTransactionType;
-//var
-//  s: String;
+var
+  s: String;
 begin
-  Result := mttInstantPayment;
-
-  {s := UpperCase(Trim(aString));
-  if (s = 'CreditCard') then
+  s := Trim(aString);
+  if (s = 'InstantPayment') then
+    Result := mttInstantPayment
+  {else if (s = 'CreditCard') then
     Result := mttCreditCard
   else if (s = 'DirectDebit') then
     Result := mttDirectDebit
@@ -2034,17 +1991,18 @@ begin
   else if (s = 'MobilePhone') then
     Result := mttMobilePhone
   else if (s = 'External') then
-    Result := mttExternal
+    Result := mttExternal}
   else
-    Result := mttInstantPayment;}
+    Result := mttNone;
 end;
 
 function MateraDynamicQRCodeTypeToString(aType: TMateraDynamicQRCodeType): String;
 begin
   case aType of
+    mqtImmediate: Result := 'IMMEDIATE';
     mqtBillingDueDate: Result := 'BILLING_DUE_DATE';
   else
-    Result := 'IMMEDIATE';
+    Result := EmptyStr;
   end;
 end;
 
@@ -2053,146 +2011,57 @@ var
   s: String;
 begin
   s := UpperCase(Trim(aString));
-
-  if (s = 'BILLING_DUE_DATE ') then
+  if (s = 'IMMEDIATE') then
+    Result := mqtImmediate;
+  if (s = 'BILLING_DUE_DATE') then
     Result := mqtBillingDueDate
   else
-    Result := mqtImmediate;
+    Result := mqtNone;
 end;
 
-{ TMateraReductionCalculation }
+{ TMateraValueCalculation }
 
-procedure TMateraReductionCalculation.AssignSchema(aSource: TACBrPIXSchema);
+procedure TMateraValueCalculation.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraValueCalculation) then
+    Assign(TMateraValueCalculation(aSource));
 end;
 
-procedure TMateraReductionCalculation.DoWriteToJSon(aJSon: TACBrJSONObject);
+procedure TMateraValueCalculation.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
     .AddPair('valuePerc', fvaluePerc)
     .AddPair('modality', fmodality);
-
 end;
 
-procedure TMateraReductionCalculation.DoReadFromJSon(aJSon: TACBrJSONObject);
+procedure TMateraValueCalculation.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
     .Value('valuePerc', fvaluePerc)
     .Value('modality', fmodality);
-
 end;
 
-constructor TMateraReductionCalculation.Create(const aObjectName: String);
+constructor TMateraValueCalculation.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  Clear;
 end;
 
-procedure TMateraReductionCalculation.Clear;
+procedure TMateraValueCalculation.Clear;
 begin
   fmodality := 0;
   fvaluePerc := 0;
 end;
 
-function TMateraReductionCalculation.IsEmpty: Boolean;
+function TMateraValueCalculation.IsEmpty: Boolean;
 begin
-  Result := inherited IsEmpty;
+  Result := EstaZerado(fmodality) and EstaZerado(fvaluePerc);
 end;
 
-procedure TMateraReductionCalculation.Assign(
-  aSource: TMateraReductionCalculation);
+procedure TMateraValueCalculation.Assign(aSource: TMateraValueCalculation);
 begin
-
-end;
-
-{ TMateraFinesCalculation }
-
-procedure TMateraFinesCalculation.AssignSchema(aSource: TACBrPIXSchema);
-begin
-  inherited AssignSchema(aSource);
-end;
-
-procedure TMateraFinesCalculation.DoWriteToJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .AddPair('valuePerc', fvaluePerc)
-    .AddPair('modality', fmodality);
-
-end;
-
-procedure TMateraFinesCalculation.DoReadFromJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .Value('valuePerc', fvaluePerc)
-    .Value('modality', fmodality);
-
-end;
-
-constructor TMateraFinesCalculation.Create(const aObjectName: String);
-begin
-  inherited Create(aObjectName);
-end;
-
-procedure TMateraFinesCalculation.Clear;
-begin
-  fmodality := 0;
-  fvaluePerc := 0;
-end;
-
-function TMateraFinesCalculation.IsEmpty: Boolean;
-begin
-  Result := inherited IsEmpty;
-end;
-
-procedure TMateraFinesCalculation.Assign(aSource: TMateraFinesCalculation);
-begin
-
-end;
-
-{ TMateraInterestCalculation }
-
-procedure TMateraInterestCalculation.AssignSchema(aSource: TACBrPIXSchema);
-begin
-  inherited AssignSchema(aSource);
-end;
-
-procedure TMateraInterestCalculation.DoWriteToJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .AddPair('valuePerc', fvaluePerc)
-    .AddPair('modality', fmodality);
-
-end;
-
-procedure TMateraInterestCalculation.DoReadFromJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .Value('valuePerc', fvaluePerc)
-    .Value('modality', fmodality);
-
-end;
-
-constructor TMateraInterestCalculation.Create(const aObjectName: String);
-begin
-  inherited Create(aObjectName);
-end;
-
-procedure TMateraInterestCalculation.Clear;
-begin
-  fmodality := 0;
-  fvaluePerc := 0;
-
-end;
-
-function TMateraInterestCalculation.IsEmpty: Boolean;
-begin
-  Result := inherited IsEmpty;
-end;
-
-procedure TMateraInterestCalculation.Assign(aSource: TMateraInterestCalculation
-  );
-begin
-
+  fmodality := aSource.modality;
+  fvaluePerc := aSource.valuePerc;
 end;
 
 { TMateraQRCodeDynamicPayerInformationComplete }
@@ -2200,7 +2069,8 @@ end;
 procedure TMateraQRCodeDynamicPayerInformationComplete.AssignSchema(
   aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraQRCodeDynamicPayerInformationComplete) then
+    Assign(TMateraQRCodeDynamicPayerInformationComplete(aSource));
 end;
 
 procedure TMateraQRCodeDynamicPayerInformationComplete.DoWriteToJSon(
@@ -2211,7 +2081,6 @@ begin
     .AddPair('name', fname)
     .AddPair('email', femail, False);
   faddressing.WriteToJSon(aJson);
-
 end;
 
 procedure TMateraQRCodeDynamicPayerInformationComplete.DoReadFromJSon(
@@ -2221,21 +2090,20 @@ begin
     .Value('cpfCnpj', fcpfCnpj)
     .Value('name', fname)
     .Value('email', femail);
-  faddressing.DoReadFromJSon(aJson);
-
+  faddressing.ReadFromJSon(aJson);
 end;
 
-constructor TMateraQRCodeDynamicPayerInformationComplete.Create(
-  const aObjectName: String);
+constructor TMateraQRCodeDynamicPayerInformationComplete.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
   faddressing := TMateraPayerInformationAddressing.Create('addressing');
-
+  Clear;
 end;
 
 destructor TMateraQRCodeDynamicPayerInformationComplete.Destroy;
 begin
   faddressing.Free;
+  inherited Destroy;
 end;
 
 procedure TMateraQRCodeDynamicPayerInformationComplete.Clear;
@@ -2244,24 +2112,28 @@ begin
   fcpfCnpj := EmptyStr;
   femail := EmptyStr;
   fname := EmptyStr;
-
 end;
 
 function TMateraQRCodeDynamicPayerInformationComplete.IsEmpty: Boolean;
 begin
-  Result := inherited IsEmpty;
+  Result := (faddressing.IsEmpty) and
+    EstaVazio(fcpfCnpj) and
+    EstaVazio(femail) and
+    EstaVazio(fname);
 end;
 
 procedure TMateraQRCodeDynamicPayerInformationComplete.Assign(
   aSource: TMateraQRCodeDynamicPayerInformationComplete);
 begin
-
+  fname := aSource.name;
+  femail := aSource.email;
+  fcpfCnpj := aSource.cpfCnpj;
+  faddressing.Assign(aSource.addressing);
 end;
 
 { TMateraFixedDateDiscountArray }
 
-function TMateraFixedDateDiscountArray.GetItem(aIndex: Integer
-  ): TMateraFixedDateDiscount;
+function TMateraFixedDateDiscountArray.GetItem(aIndex: Integer): TMateraFixedDateDiscount;
 begin
   Result := TMateraFixedDateDiscount(inherited Items[aIndex]);
 end;
@@ -2277,14 +2149,12 @@ begin
   Result:=inherited NewSchema;
 end;
 
-function TMateraFixedDateDiscountArray.Add(aItem: TMateraFixedDateDiscount
-  ): Integer;
+function TMateraFixedDateDiscountArray.Add(aItem: TMateraFixedDateDiscount): Integer;
 begin
   Result := inherited Add(aItem);
 end;
 
-procedure TMateraFixedDateDiscountArray.Insert(aIndex: Integer;
-  aItem: TMateraFixedDateDiscount);
+procedure TMateraFixedDateDiscountArray.Insert(aIndex: Integer; aItem: TMateraFixedDateDiscount);
 begin
   inherited Insert(aIndex, aItem);
 end;
@@ -2299,7 +2169,8 @@ end;
 
 procedure TMateraFixedDateDiscount.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraFixedDateDiscount) then
+    Assign(TMateraFixedDateDiscount(aSource));
 end;
 
 procedure TMateraFixedDateDiscount.DoWriteToJSon(aJSon: TACBrJSONObject);
@@ -2308,94 +2179,94 @@ begin
 
   if (fdate <> 0) then
     aJSon.AddPair('date', FormatDateTime('yyyy-mm-dd', fdate));
-
 end;
 
 procedure TMateraFixedDateDiscount.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
-    .Value('valuePerc', fvaluePerc)
-    .ValueISODate('date', fdate);
+  .Value('valuePerc', fvaluePerc)
+  .Value('date', fdate);
 end;
 
 constructor TMateraFixedDateDiscount.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  Clear;
 end;
 
 procedure TMateraFixedDateDiscount.Clear;
 begin
   fvaluePerc := 0;
   fdate := 0;
-
 end;
 
 function TMateraFixedDateDiscount.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result:= EstaZerado(fdate) and EstaZerado(fvaluePerc);
 end;
 
 procedure TMateraFixedDateDiscount.Assign(aSource: TMateraFixedDateDiscount);
 begin
-
+  fvaluePerc := aSource.valuePerc;
+  fdate := aSource.date;
 end;
 
 { TMateraFixedDateDiscountList }
 
 procedure TMateraFixedDateDiscountList.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraFixedDateDiscountList) then
+    Assign(TMateraFixedDateDiscountList(aSource));
 end;
 
 procedure TMateraFixedDateDiscountList.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon.AddPair('modality', fmodality);
   ffixedDateDiscounts.WriteToJSon(aJSon);
-
 end;
 
 procedure TMateraFixedDateDiscountList.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon.Value('modality', fmodality);
   ffixedDateDiscounts.ReadFromJSon(aJSon);
-
 end;
 
 constructor TMateraFixedDateDiscountList.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
   ffixedDateDiscounts := TMateraFixedDateDiscountArray.Create('fixedDateDiscounts');
-
+  Clear;
 end;
 
 destructor TMateraFixedDateDiscountList.Destroy;
 begin
   ffixedDateDiscounts.Free;
+  inherited Destroy;
 end;
 
 procedure TMateraFixedDateDiscountList.Clear;
 begin
   fmodality := 0;
   ffixedDateDiscounts.Clear;
-
 end;
 
 function TMateraFixedDateDiscountList.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result := ffixedDateDiscounts.IsEmpty and EstaZerado(fmodality);
 end;
 
-procedure TMateraFixedDateDiscountList.Assign(
-  aSource: TMateraFixedDateDiscountList);
+procedure TMateraFixedDateDiscountList.Assign(aSource: TMateraFixedDateDiscountList);
 begin
-
+  fmodality := aSource.modality;
+  ffixedDateDiscounts.Assign(aSource.fixedDateDiscounts);
 end;
 
 { TMateraUniqueDiscount }
 
 procedure TMateraUniqueDiscount.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraUniqueDiscount) then
+    Assign(TMateraUniqueDiscount(aSource));
 end;
 
 procedure TMateraUniqueDiscount.DoWriteToJSon(aJSon: TACBrJSONObject);
@@ -2403,37 +2274,36 @@ begin
   aJSon
     .AddPair('uniqueValuePercDiscount', funiqueValuePercDiscount, False)
     .AddPair('modality', fmodality, False);
-
 end;
 
 procedure TMateraUniqueDiscount.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
-  .Value('uniqueValuePercDiscount', funiqueValuePercDiscount)
-  .Value('modality', fmodality);
-
+    .Value('uniqueValuePercDiscount', funiqueValuePercDiscount)
+    .Value('modality', fmodality);
 end;
 
 constructor TMateraUniqueDiscount.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  Clear;
 end;
 
 procedure TMateraUniqueDiscount.Clear;
 begin
   funiqueValuePercDiscount := 0;
-  fmodality := 1;
+  fmodality := 0;
 end;
 
 function TMateraUniqueDiscount.IsEmpty: Boolean;
 begin
-  Result:= (funiqueValuePercDiscount = 0) and
-           (fmodality = 0);
+  Result:= (funiqueValuePercDiscount = 0) and (fmodality = 0);
 end;
 
 procedure TMateraUniqueDiscount.Assign(aSource: TMateraUniqueDiscount);
 begin
-
+  uniqueValuePercDiscount := aSource.uniqueValuePercDiscount;
+  modality := aSource.modality;
 end;
 
 function MateraTransactionStatusToString(aType: TMateraTransactionStatus): String;
@@ -2582,8 +2452,8 @@ begin
   ftotalAmount := 0;
   ftransactionDate := EmptyStr;
   ftransactionId := EmptyStr;
-  ftransactionStatus := mtsError;
-  ftransactionType := mttInstantPayment;
+  ftransactionStatus := mtsNone;
+  ftransactionType := mttNone;
 end;
 
 function TMateraTransactionResponse.IsEmpty: Boolean;
@@ -2594,8 +2464,8 @@ begin
     (ftotalAmount = 0) and
     EstaVazio(ftransactionDate) and
     EstaVazio(ftransactionId) and
-    (ftransactionStatus = mtsError) and
-    (ftransactionType = mttInstantPayment);
+    (ftransactionStatus = mtsNone) and
+    (ftransactionType = mttNone);
 end;
 
 procedure TMateraTransactionResponse.Assign(aSource: TMateraTransactionResponse);
@@ -2608,25 +2478,25 @@ begin
   ftransactionStatus := aSource.transactionStatus;
   ftransactionType := aSource.transactionType;
 end;
+
 { TMateraDiscountsCalculation }
 
 procedure TMateraDiscountsCalculation.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraDiscountsCalculation) then
+    Assign(TMateraDiscountsCalculation(aSource));
 end;
 
 procedure TMateraDiscountsCalculation.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   ffixedDateDiscountList.WriteToJSon(aJSon);
   funiqueDiscount.WriteToJSon(aJSon);
-
 end;
 
 procedure TMateraDiscountsCalculation.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   ffixedDateDiscountList.ReadFromJSon(aJSon);
   funiqueDiscount.ReadFromJSon(aJSon);
-
 end;
 
 constructor TMateraDiscountsCalculation.Create(const aObjectName: String);
@@ -2634,14 +2504,14 @@ begin
   inherited Create(aObjectName);
   ffixedDateDiscountList := TMateraFixedDateDiscountList.Create('fixedDateDiscountList');
   funiqueDiscount := TMateraUniqueDiscount.Create('uniqueDiscount');
-
+  Clear;
 end;
 
 destructor TMateraDiscountsCalculation.Destroy;
 begin
   ffixedDateDiscountList.Free;
   funiqueDiscount.Free;
-
+  inherited Destroy;
 end;
 
 procedure TMateraDiscountsCalculation.Clear;
@@ -2652,91 +2522,110 @@ end;
 
 function TMateraDiscountsCalculation.IsEmpty: Boolean;
 begin
-  Result := inherited IsEmpty;
+  Result := ffixedDateDiscountList.IsEmpty and funiqueDiscount.IsEmpty;
 end;
 
-procedure TMateraDiscountsCalculation.Assign(
-  aSource: TMateraDiscountsCalculation);
+procedure TMateraDiscountsCalculation.Assign(aSource: TMateraDiscountsCalculation);
 begin
-
+  fixedDateDiscountList.Assign(aSource.fixedDateDiscountList);
+  uniqueDiscount.Assign(aSource.uniqueDiscount);
 end;
 
 { TMateraBillingDueDate }
 
 procedure TMateraBillingDueDate.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraBillingDueDate) then
+    Assign(TMateraBillingDueDate(aSource));
 end;
 
 procedure TMateraBillingDueDate.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   if (fdueDate <> 0) then
     aJSon.AddPair('dueDate', FormatDateTime('yyyy-mm-dd', fdueDate));
+  aJSon.AddPair('daysAfterDueDate', fdaysAfterDueDate);
 
-  fpayerInformation.WriteToJSon(aJSon);
-  finterests.WriteToJSon(aJSon);
   ffines.WriteToJSon(aJSon);
   freduction.WriteToJSon(aJSon);
   fdiscounts.WriteToJSon(aJSon);
-
-  aJSon.AddPair('daysAfterDueDate', fdaysAfterDueDate);
-
+  finterests.WriteToJSon(aJSon);
+  fpayerInformation.WriteToJSon(aJSon);
 end;
 
 procedure TMateraBillingDueDate.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
-  inherited DoReadFromJSon(aJSon);
+  aJSon
+    .ValueISODate('dueDate', fdueDate)
+    .Value('daysAfterDueDate', fdaysAfterDueDate);
+
+  ffines.ReadFromJSon(aJSon);
+  freduction.ReadFromJSon(aJSon);
+  fdiscounts.ReadFromJSon(aJSon);
+  finterests.ReadFromJSon(aJSon);
+  fpayerInformation.ReadFromJSon(aJSon);
 end;
 
 constructor TMateraBillingDueDate.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  ffines := TMateraValueCalculation.Create('fines');
+  finterests := TMateraValueCalculation.Create('interests');
+  freduction := TMateraValueCalculation.Create('reduction');
   fdiscounts := TMateraDiscountsCalculation.Create('discounts');
-  ffines := TMateraFinesCalculation.Create('fines');
-  finterests := TMateraInterestCalculation.Create('interests');
   fpayerInformation := TMateraQRCodeDynamicPayerInformationComplete.Create('payerInformation');
-  freduction := TMateraReductionCalculation.Create('reduction');
-
+  Clear;
 end;
 
 destructor TMateraBillingDueDate.Destroy;
-begin
-  fdiscounts.Free;
+begin             
   ffines.Free;
+  fdiscounts.Free;
   finterests.Free;
-  fpayerInformation.Free;
   freduction.Free;
-
+  fpayerInformation.Free;
+  inherited Destroy;
 end;
 
 procedure TMateraBillingDueDate.Clear;
 begin
-  fdaysAfterDueDate := 0;
-  fdiscounts.Clear;
   fdueDate := 0;
+  fdaysAfterDueDate := 0;
   ffines.Clear;
   finterests.Clear;
-  fpayerInformation.Clear;
+  fdiscounts.Clear;
   freduction.Clear;
-
+  fpayerInformation.Clear;
 end;
 
 function TMateraBillingDueDate.IsEmpty: Boolean;
 begin
-  Result := (fdueDate = 0);
+  Result:=
+    (fdaysAfterDueDate = 0) and
+    (fdueDate = 0) and
+    (ffines.IsEmpty) and
+    (freduction.IsEmpty) and
+    (finterests.IsEmpty) and   
+    (fdiscounts.IsEmpty) and
+    (fpayerInformation.IsEmpty);
 end;
 
 procedure TMateraBillingDueDate.Assign(aSource: TMateraBillingDueDate);
 begin
-  if (aSource is TMateraBillingDueDate) then
-    Assign(TMateraBillingDueDate(aSource));
+  fdaysAfterDueDate := aSource.daysAfterDueDate;
+  fdueDate := aSource.dueDate;
+  ffines.Assign(aSource.fines);
+  finterests.Assign(aSource.interests);
+  fdiscounts.Assign(aSource.discounts);
+  freduction.Assign(aSource.reduction);
+  fpayerInformation.Assign(aSource.payerInformation);
 end;
 
 { TMateracouponDetails }
 
 procedure TMateracouponDetails.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateracouponDetails) then
+    Assign(TMateracouponDetails(aSource));
 end;
 
 procedure TMateracouponDetails.DoWriteToJSon(aJSon: TACBrJSONObject);
@@ -2745,7 +2634,6 @@ begin
     .AddPair('couponId', fcouponId)
     .AddPair('seller', fseller)
     .AddPair('description', fdescription)
-
 end;
 
 procedure TMateracouponDetails.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -2759,24 +2647,29 @@ end;
 constructor TMateracouponDetails.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  Clear;
 end;
 
 procedure TMateracouponDetails.Clear;
 begin
-  fcouponId:= EmptyStr;
-  fdescription:= EmptyStr;
-  fseller:= EmptyStr;
-
+  fcouponId := EmptyStr;
+  fdescription := EmptyStr;
+  fseller := EmptyStr;
 end;
 
 function TMateracouponDetails.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result :=
+    EstaVazio(fcouponId) and
+    EstaVazio(fdescription) and
+    EstaVazio(fseller);
 end;
 
 procedure TMateracouponDetails.Assign(aSource: TMateracouponDetails);
 begin
-
+  fcouponId := aSource.couponId;
+  fdescription := aSource.description;
+  fseller := aSource.seller;
 end;
 
 { TMateraAdditionalInformationArray }
@@ -2818,7 +2711,8 @@ end;
 
 procedure TMateraGeneratedImage.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraGeneratedImage) then
+    Assign(TMateraGeneratedImage(aSource));
 end;
 
 procedure TMateraGeneratedImage.DoWriteToJSon(aJSon: TACBrJSONObject);
@@ -2827,7 +2721,6 @@ begin
     .AddPair('imageContent', fimageContent)
     .AddPair('mimeType', fmimeType)
     .AddPair('actualImageWidth', factualImageWidth);
-
 end;
 
 procedure TMateraGeneratedImage.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -2836,12 +2729,12 @@ begin
     .Value('actualImageWidth', factualImageWidth)
     .Value('imageContent', fimageContent)
     .Value('mimeType', fmimeType);
-
 end;
 
 constructor TMateraGeneratedImage.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  Clear;
 end;
 
 procedure TMateraGeneratedImage.Clear;
@@ -2849,25 +2742,29 @@ begin
   factualImageWidth := 0;
   fimageContent := EmptyStr;
   fmimeType := EmptyStr;
-
 end;
 
 function TMateraGeneratedImage.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result :=
+    EstaZerado(factualImageWidth) and
+    EstaVazio(fimageContent) and
+    EstaVazio(fmimeType);
 end;
 
 procedure TMateraGeneratedImage.Assign(aSource: TMateraGeneratedImage);
 begin
-
+  factualImageWidth := aSource.actualImageWidth;
+  fimageContent := aSource.imageContent;
+  fmimeType := aSource.mimeType;
 end;
 
 { TMateraInstantPaymentQRCodeResponse }
 
-procedure TMateraInstantPaymentQRCodeResponse.AssignSchema(
-  aSource: TACBrPIXSchema);
+procedure TMateraInstantPaymentQRCodeResponse.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraInstantPaymentQRCodeResponse) then
+    Assign(TMateraInstantPaymentQRCodeResponse(aSource));
 end;
 
 procedure TMateraInstantPaymentQRCodeResponse.DoWriteToJSon(
@@ -2876,11 +2773,9 @@ begin
   aJSon
     .AddPair('textContent', ftextContent)
     .AddPair('reference', freference)
-    .AddPair('qrcodeURL', fqrcodeURL);
+    .AddPair('qrcodeURL', fqrcodeURL)
+    .AddPair('dynamicQrCodeType', fdynamicQrCodeType);
   fGeneratedImage.WriteToJSon(aJSon);
-
-  //  fdynamicQrCodeType: string;
-
 end;
 
 procedure TMateraInstantPaymentQRCodeResponse.DoReadFromJSon(
@@ -2889,15 +2784,12 @@ begin
   aJSon
     .Value('textContent', ftextContent)
     .Value('reference', freference)
-    .Value('qrcodeURL', fqrcodeURL);
-  fGeneratedImage.DoReadFromJSon(aJSon);
-
-  //  fdynamicQrCodeType: string;
-
+    .Value('qrcodeURL', fqrcodeURL)
+    .Value('dynamicQrCodeType', fdynamicQrCodeType);
+  fGeneratedImage.ReadFromJSon(aJSon);
 end;
 
-constructor TMateraInstantPaymentQRCodeResponse.Create(const aObjectName: String
-  );
+constructor TMateraInstantPaymentQRCodeResponse.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
   fGeneratedImage := TMateraGeneratedImage.Create('GeneratedImage');
@@ -2906,42 +2798,50 @@ end;
 
 destructor TMateraInstantPaymentQRCodeResponse.Destroy;
 begin
+  fGeneratedImage.Free;
   inherited Destroy;
-  fGeneratedImage.free;
 end;
 
 procedure TMateraInstantPaymentQRCodeResponse.Clear;
 begin
-  fdynamicQrCodeType := EmptyStr;
-  fGeneratedImage.Clear;
   fqrcodeURL := EmptyStr;
   freference := EmptyStr;
   ftextContent := EmptyStr;
-
+  fdynamicQrCodeType := EmptyStr;
+  fGeneratedImage.Clear;
 end;
 
 function TMateraInstantPaymentQRCodeResponse.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result :=
+    EstaVazio(fdynamicQrCodeType) and
+    EstaVazio(fqrcodeURL) and
+    EstaVazio(freference) and
+    EstaVazio(ftextContent) and
+    (fGeneratedImage.IsEmpty);
 end;
 
 procedure TMateraInstantPaymentQRCodeResponse.Assign(
   aSource: TMateraInstantPaymentQRCodeResponse);
 begin
-
+  fqrcodeURL := aSource.qrcodeURL;
+  freference := aSource.reference;
+  ftextContent := aSource.textContent;
+  fdynamicQrCodeType := aSource.dynamicQrCodeType;
+  fGeneratedImage.Assign(aSource.generateImage);
 end;
 
 { TMateraAuthorizationDetails }
 
 procedure TMateraAuthorizationDetails.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraAuthorizationDetails) then
+    Assign(TMateraAuthorizationDetails(aSource));
 end;
 
 procedure TMateraAuthorizationDetails.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon.AddPair('number', fnumber);
-
 end;
 
 procedure TMateraAuthorizationDetails.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -2952,6 +2852,7 @@ end;
 constructor TMateraAuthorizationDetails.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  Clear;
 end;
 
 procedure TMateraAuthorizationDetails.Clear;
@@ -2961,11 +2862,10 @@ end;
 
 function TMateraAuthorizationDetails.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result := EstaVazio(fnumber);
 end;
 
-procedure TMateraAuthorizationDetails.Assign(
-  aSource: TMateraAuthorizationDetails);
+procedure TMateraAuthorizationDetails.Assign(aSource: TMateraAuthorizationDetails);
 begin
   fnumber := aSource.number;
 end;
@@ -2974,21 +2874,20 @@ end;
 
 procedure TMaterafinancialStatement.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMaterafinancialStatement) then
+    Assign(TMaterafinancialStatement(aSource));
 end;
 
 procedure TMaterafinancialStatement.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon.AddPair('status', fstatus);
   fAuthorizationDetails.WriteToJSon(aJSon);
-
 end;
 
 procedure TMaterafinancialStatement.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
-  fAuthorizationDetails.DoReadFromJSon(aJSon);
-  aJSon
-    .Value('status', fstatus);
+  fAuthorizationDetails.ReadFromJSon(aJSon);
+  aJSon.Value('status', fstatus);
 end;
 
 constructor TMaterafinancialStatement.Create(const aObjectName: String);
@@ -3000,24 +2899,24 @@ end;
 
 destructor TMaterafinancialStatement.Destroy;
 begin
-  fAuthorizationDetails.free;
+  fAuthorizationDetails.Free;
   inherited Destroy;
 end;
 
 procedure TMaterafinancialStatement.Clear;
 begin
   fAuthorizationDetails.Clear;
-  fstatus:= EmptyStr;
+  fstatus := EmptyStr;
 end;
 
 function TMaterafinancialStatement.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result := (fAuthorizationDetails.IsEmpty) and EstaVazio(fstatus);
 end;
 
 procedure TMaterafinancialStatement.Assign(aSource: TMaterafinancialStatement);
 begin
-  fstatus:=aSource.fstatus;
+  fstatus := aSource.fstatus;
   fAuthorizationDetails.Assign(aSource.AuthorizationDetails);
 end;
 
@@ -3025,31 +2924,35 @@ end;
 
 procedure TMateraQRCodeResponse.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraQRCodeResponse) then
+    Assign(TMateraQRCodeResponse(aSource));
 end;
 
 procedure TMateraQRCodeResponse.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
-    .AddPair('transactionId',ftransactionId)
+    .AddPair('transactionId', ftransactionId)
     .AddPair('externalIdentifier', fexternalIdentifier)
     .AddPair('senderAccountId', fsenderAccountId)
-    .AddPair('creditCardToken', fcreditCardToken);
-  ffinancialStatement.WriteToJSon(aJSon);
-  aJSon
+    .AddPair('creditCardToken', fcreditCardToken)
     .AddPair('boletoUrl', fboletoUrl)
     .AddPair('typeableLine', ftypeableLine)
-    .AddPair('dueDate', fdueDate)
-    .AddPair('transactionDate', ftransactionDate)
     .AddPair('transactionType', ftransactionType)
     .AddPair('totalAmount', ftotalAmount)
     .AddPair('paidAmount', fpaidAmount)
     .AddPair('discountAmount', fdiscountAmount)
     .AddPair('recipientDescription', frecipientDescription);
-  fcouponDetails.WriteToJSon(aJSon);
-  aJSon.AddPair('expirationDate', fexpirationDate);
-  finstantPayment.WriteToJSon(aJSon);
+       
+  if (fdueDate <> 0) then
+    aJSon.AddPair('dueDate', FormatDateTime('yyyy-mm-dd', fdueDate));
+  if (fexpirationDate <> 0) then
+    aJSon.AddPair('expirationDate', FormatDateTime('yyyy-mm-dd', fexpirationDate));
+  if (ftransactionDate <> 0) then
+    aJSon.AddPair('transactionDate', FormatDateTime('yyyy-mm-dd', ftransactionDate));
 
+  ffinancialStatement.WriteToJSon(aJSon);
+  fcouponDetails.WriteToJSon(aJSon);
+  finstantPayment.WriteToJSon(aJSon);
 end;
 
 procedure TMateraQRCodeResponse.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -3058,32 +2961,21 @@ begin
     .Value('transactionId', ftransactionId)
     .Value('externalIdentifier', fexternalIdentifier)
     .Value('senderAccountId', fsenderAccountId)
-    .Value('creditCardToken', fcreditCardToken);
-  ffinancialStatement.ReadFromJSon(aJSon);
-  aJSon
+    .Value('creditCardToken', fcreditCardToken)
     .Value('boletoUrl', fboletoUrl)
-    .Value('typeableLine', ftypeableLine);
-
-  if (fdueDate <> 0) then
-    aJSon.AddPair('dueDate', FormatDateTime('yyyy-mm-dd', fdueDate));
-
-  if (ftransactionDate <> 0) then
-    aJSon.AddPair('transactionDate', FormatDateTime('yyyy-mm-dd', ftransactionDate));
-
-  aJSon
+    .Value('typeableLine', ftypeableLine)
     .Value('transactionType', ftransactionType)
     .Value('totalAmount', ftotalAmount)
     .Value('paidAmount', fpaidAmount)
     .Value('discountAmount', fdiscountAmount)
-    .Value('recipientDescription', frecipientDescription);
+    .Value('recipientDescription', frecipientDescription)
+    .ValueISODate('dueDate', fdueDate)
+    .ValueISODate('transactionDate', ftransactionDate)
+    .ValueISODate('expirationDate', fexpirationDate);
 
   fcouponDetails.ReadFromJSon(aJSon);
-
-  if (fexpirationDate <> 0) then
-    aJSon.AddPair('expirationDate', FormatDateTime('yyyy-mm-dd', fexpirationDate));
-
   finstantPayment.ReadFromJSon(aJSon);
-
+  ffinancialStatement.ReadFromJSon(aJSon);
 end;
 
 constructor TMateraQRCodeResponse.Create(const aObjectName: String);
@@ -3097,57 +2989,82 @@ end;
 
 destructor TMateraQRCodeResponse.Destroy;
 begin
-  ffinancialStatement.free;
+  ffinancialStatement.Free;
   fcouponDetails.Free;
-  finstantPayment.free;
+  finstantPayment.Free;
   inherited Destroy;
 end;
 
 procedure TMateraQRCodeResponse.Clear;
 begin
-  fexternalIdentifier:=EmptyStr;
-  ffinancialStatement.Clear;
-  finstantPayment.Clear;
-  fpaidAmount:=0;
-  ftotalAmount:=0;
-  ftransactionDate:= 0;
+  fdueDate := 0;
+  fpaidAmount := 0;
+  ftotalAmount := 0;
+  fdiscountAmount := 0;
+  fexpirationDate := 0;
+  ftransactionDate := 0;
+  fboletoUrl := EmptyStr;
+  ftypeableLine := EmptyStr;
   ftransactionId := EmptyStr;
-  ftransactionType:= EmptyStr;
+  ftransactionType := EmptyStr;
+  fcreditCardToken := EmptyStr;
+  fsenderAccountId := EmptyStr;
+  fexternalIdentifier := EmptyStr;
+  frecipientDescription := EmptyStr;
+  fcouponDetails.Clear;
+  finstantPayment.Clear;
+  ffinancialStatement.Clear;
 end;
 
 function TMateraQRCodeResponse.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result :=
+    EstaZerado(fdueDate) and
+    EstaZerado(fpaidAmount) and
+    EstaZerado(ftotalAmount) and
+    EstaZerado(fdiscountAmount) and
+    EstaZerado(fexpirationDate) and
+    EstaZerado(ftransactionDate) and
+    EstaVazio(fboletoUrl) and
+    EstaVazio(ftypeableLine) and
+    EstaVazio(ftransactionId) and
+    EstaVazio(ftransactionType) and
+    EstaVazio(fcreditCardToken) and
+    EstaVazio(fsenderAccountId) and
+    EstaVazio(fexternalIdentifier) and
+    EstaVazio(frecipientDescription) and
+    fcouponDetails.IsEmpty and
+    finstantPayment.IsEmpty and
+    ffinancialStatement.IsEmpty;
 end;
 
 procedure TMateraQRCodeResponse.Assign(aSource: TMateraQRCodeResponse);
 begin
-
+  fdueDate := aSource.dueDate;
+  fpaidAmount := aSource.paidAmount;
+  ftotalAmount := aSource.totalAmount;
+  fdiscountAmount := aSource.discountAmount;
+  fexpirationDate := aSource.expirationDate;
+  ftransactionDate := aSource.transactionDate;
+  fboletoUrl := aSource.boletoUrl;
+  ftypeableLine := aSource.typeableLine;
+  ftransactionId := aSource.transactionId;
+  ftransactionType := aSource.transactionType;
+  fcreditCardToken := aSource.creditCardToken;
+  fsenderAccountId := aSource.senderAccountId;
+  fexternalIdentifier := aSource.externalIdentifier;
+  frecipientDescription := aSource.recipientDescription;
+  fcouponDetails.Assign(aSource.couponDetails);
+  finstantPayment.Assign(aSource.instantPayment);
+  ffinancialStatement.Assign(aSource.financialStatement);
 end;
 
 { TMateraAdditionalInformation }
 
-procedure TMateraAdditionalInformation.Setcontent(AValue: String);
-begin
-  if Fcontent=AValue then Exit;
-  Fcontent:=AValue;
-end;
-
-procedure TMateraAdditionalInformation.Setname(AValue: String);
-begin
-  if Fname=AValue then Exit;
-  Fname:=AValue;
-end;
-
-procedure TMateraAdditionalInformation.SetshowToPlayer(AValue: Boolean);
-begin
-  if FshowToPlayer=AValue then Exit;
-  FshowToPlayer:=AValue;
-end;
-
 procedure TMateraAdditionalInformation.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraAdditionalInformation) then
+    Assign(TMateraAdditionalInformation(aSource));
 end;
 
 procedure TMateraAdditionalInformation.DoWriteToJSon(aJSon: TACBrJSONObject);
@@ -3160,29 +3077,35 @@ end;
 
 procedure TMateraAdditionalInformation.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
-  inherited DoReadFromJSon(aJSon);
+  aJSon
+    .Value('name',Fname)
+    .Value('content',Fcontent)
+    .Value('showToPayer',FshowToPlayer);
 end;
 
 constructor TMateraAdditionalInformation.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  Clear;
 end;
 
 procedure TMateraAdditionalInformation.Clear;
 begin
-  Fcontent:= EmptyStr;
-  Fname:= EmptyStr;
-  FshowToPlayer:= False;
+  fname := EmptyStr;
+  fcontent := EmptyStr;
+  fshowToPlayer := False;
 end;
 
 function TMateraAdditionalInformation.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result := EstaVazio(fcontent) and EstaVazio(fname);
 end;
 
 procedure TMateraAdditionalInformation.Assign(aSource: TMateraAdditionalInformation);
 begin
-
+  fname := aSource.name;
+  fcontent := aSource.content;
+  fshowToPlayer := aSource.showToPlayer;
 end;
 
 { TMateraRecipientsArray }
@@ -3208,8 +3131,7 @@ begin
   Result := inherited Add(aItem);
 end;
 
-procedure TMateraRecipientsArray.Insert(aIndex: Integer; aItem: TMateraRecipient
-  );
+procedure TMateraRecipientsArray.Insert(aIndex: Integer; aItem: TMateraRecipient);
 begin
   inherited Insert(aIndex, aItem);
 end;
@@ -3224,122 +3146,146 @@ end;
 
 procedure TMateraPaymentInfo.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraPaymentInfo) then
+    Assign(TMateraPaymentInfo(aSource));
 end;
 
 procedure TMateraPaymentInfo.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
-  aJSon
-    .AddPair('transactionType', FtransactionType);
-  FinstantPayment.WriteToJSon(aJSon);
-
+  aJSon.AddPair('transactionType', ftransactionType);
+  finstantPayment.WriteToJSon(aJSon);
 end;
 
 procedure TMateraPaymentInfo.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
-  inherited DoReadFromJSon(aJSon);
+  aJSon.Value('transactionType', ftransactionType);
+  finstantPayment.ReadFromJSon(aJSon);
 end;
 
 constructor TMateraPaymentInfo.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
-  FinstantPayment := TMateraInstantPayment.Create('instantPayment');
+  finstantPayment := TMateraInstantPayment.Create('instantPayment');
+  Clear;
 end;
 
 destructor TMateraPaymentInfo.Destroy;
 begin
-  FinstantPayment.Free;
+  finstantPayment.Free;
   inherited Destroy;
 end;
 
 procedure TMateraPaymentInfo.Clear;
 begin
-  FinstantPayment.clear;
-  FtransactionType:= EmptyStr;
+  finstantPayment.Clear;
+  ftransactionType := EmptyStr;
 end;
 
 function TMateraPaymentInfo.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result := (finstantPayment.IsEmpty) and EstaVazio(ftransactionType);
 end;
 
 procedure TMateraPaymentInfo.Assign(aSource: TMateraPaymentInfo);
 begin
-
+  finstantPayment.Assign(aSource.instantPayment);
+  ftransactionType := aSource.transactionType;
 end;
 
 { TMateraInstantPayment }
 
 procedure TMateraInstantPayment.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraInstantPayment) then
+    Assign(TMateraInstantPayment(aSource));
 end;
 
 procedure TMateraInstantPayment.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
-  aJSon.AddPair('alias',Falias_.name);
-
-  if fexpiration <> 0 then
-    aJSon.AddPair('expiration',Fexpiration);
-
-  FqrCodeImageGenerationSpecification.WriteToJSon(aJSon);
-
   aJSon.AddPair('dynamicQRCodeType', MateraDynamicQRCodeTypeToString(fdynamicQRCodeType));
 
-  if (not fbillingDueDate.IsEmpty) then
-    fbillingDueDate.WriteToJSon(aJSon);
+  if NaoEstaZerado(fexpiration) then
+    aJSon.AddPair('expiration',fexpiration);
 
+  falias_.WriteToJSon(aJSon);
+  fbillingDueDate.WriteToJSon(aJSon);
   FadditionalInformation.WriteToJSon(aJSon);
+  FqrCodeImageGenerationSpecification.WriteToJSon(aJSon);
 end;
 
 procedure TMateraInstantPayment.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  s: String;
 begin
-  inherited DoReadFromJSon(aJSon);
+  {$IFDEF FPC}s := EmptyStr;{$ENDIF}
+  aJSon
+    .Value('expiration',Fexpiration)
+    .Value('dynamicQRCodeType', s);
+
+  fdynamicQRCodeType := StringToMateraDynamicQRCodeType(s);
+  falias_.ReadFromJSon(aJSon);
+  fbillingDueDate.ReadFromJSon(aJSon);
+  FadditionalInformation.ReadFromJSon(aJSon);
+  FqrCodeImageGenerationSpecification.ReadFromJSon(aJSon);
 end;
 
 constructor TMateraInstantPayment.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
-  FadditionalInformation := TMateraAdditionalInformationArray.Create('additionalInformation');
   Falias_ := TMateraAlias.Create('alias');
-  FqrCodeImageGenerationSpecification := TMateraQRCodeSpecification.Create('qrCodeImageGenerationSpecification');
   fbillingDueDate := TMateraBillingDueDate.Create('billingDueDate');
-
+  FadditionalInformation := TMateraAdditionalInformationArray.Create('additionalInformation');
+  FqrCodeImageGenerationSpecification := TMateraQRCodeSpecification.Create('qrCodeImageGenerationSpecification');
+  Clear;
 end;
 
 destructor TMateraInstantPayment.Destroy;
 begin
-  FadditionalInformation.Free;
   Falias_.Free;
-  FqrCodeImageGenerationSpecification.Free;
   fbillingDueDate.free;
+  FadditionalInformation.Free;
+  FqrCodeImageGenerationSpecification.Free;
   inherited Destroy;
 end;
 
 procedure TMateraInstantPayment.Clear;
 begin
-  FadditionalInformation.Clear;
-  Falias_.Clear;
-  Fexpiration:= 0;
-  FqrCodeImageGenerationSpecification.Clear;
+  fexpiration := 0;
+  fdynamicQRCodeType := mqtNone;
+
+  falias_.Clear;
   fbillingDueDate.Clear;
+  fadditionalInformation.Clear;
+  fqrCodeImageGenerationSpecification.Clear;
 end;
 
 function TMateraInstantPayment.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
-end;
+  Result :=
+    EstaZerado(fexpiration) and
+    (fdynamicQRCodeType = mqtNone) and
+    (falias_.IsEmpty) and
+    (fbillingDueDate.IsEmpty) and
+    (fadditionalInformation.IsEmpty) and
+    (fqrCodeImageGenerationSpecification.IsEmpty);end;
 
 procedure TMateraInstantPayment.Assign(aSource: TMateraInstantPayment);
-begin
+begin 
+  fexpiration := aSource.expiration;
+  fdynamicQRCodeType := aSource.dynamicQRCodeType;
 
+  falias_.Assign(aSource.alias_);
+  fbillingDueDate.Assign(aSource.billingDueDate);
+  fadditionalInformation.Assign(aSource.additionalInformation);
+  fqrCodeImageGenerationSpecification.Assign(aSource.qrCodeImageGenerationSpecification);
 end;
 
 { TMateraRecipient }
 
 procedure TMateraRecipient.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraRecipient) then
+    Assign(TMateraRecipient(aSource));
 end;
 
 procedure TMateraRecipient.DoWriteToJSon(aJSon: TACBrJSONObject);
@@ -3354,13 +3300,19 @@ end;
 
 procedure TMateraRecipient.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
-  inherited DoReadFromJSon(aJSon);
+  Faccount.ReadFromJSon(aJSon);
+  aJSon
+    .Value('amount', Famount)
+    .Value('currency',Fcurrency)
+    .Value('mediatorFee', Fmediatorfee)
+    .Value('recipientComment', FrecipientComment);
 end;
 
 constructor TMateraRecipient.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
   Faccount := TMateraAccount.Create('account');
+  Clear;
 end;
 
 destructor TMateraRecipient.Destroy;
@@ -3380,72 +3332,69 @@ end;
 
 function TMateraRecipient.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result:= 
+    (Faccount.IsEmpty) and
+    EstaZerado(Famount) and
+    EstaZerado(Fmediatorfee) and
+    EstaVazio(Fcurrency) and
+    EstaVazio(FrecipientComment);
 end;
 
-procedure TMateraRecipient.Assign(aSource: TMateraAlias);
+procedure TMateraRecipient.Assign(aSource: TMateraRecipient);
 begin
-
+  Famount := aSource.amount;
+  Fcurrency := aSource.currency;
+  Fmediatorfee := aSource.mediatorfee;
+  FrecipientComment := aSource.recipientComment;
+  Faccount.Assign(aSource.account);
 end;
 
 { TMateraQRCodeRequest }
 
-procedure TMateraQRCodeRequest.SettotalAmount(AValue: Currency);
-begin
-  if FtotalAmount=AValue then Exit;
-  FtotalAmount:=AValue;
-end;
-
-procedure TMateraQRCodeRequest.Setcurrency(AValue: string);
-begin
-  if Fcurrency=AValue then Exit;
-  Fcurrency:=AValue;
-end;
-
-procedure TMateraQRCodeRequest.Setrecipients(AValue: TMateraRecipientsArray);
-begin
-  if Frecipients=AValue then Exit;
-  Frecipients:=AValue;
-end;
-
-procedure TMateraQRCodeRequest.SetcallbackAddress(AValue: string);
-begin
-  if FcallbackAddress=AValue then Exit;
-  FcallbackAddress:=AValue;
-end;
-
 procedure TMateraQRCodeRequest.AssignSchema(aSource: TACBrPIXSchema);
 begin
-  inherited AssignSchema(aSource);
+  if (aSource is TMateraQRCodeRequest) then
+    Assign(TMateraQRCodeRequest(aSource));
 end;
 
 procedure TMateraQRCodeRequest.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
-    .AddPair('externalIdentifier', fexternalIdentifier)
+    .AddPair('currency',fcurrency)
     .AddPair('totalAmount',ftotalAmount)
-    .AddPair('currency',fcurrency);
-  FpaymentInfo.WriteToJSon(aJSon);
-  Frecipients.WriteToJSon(aJSon);
-  aJSon
-    .AddPair('callbackAddress',FcallbackAddress);
+    .AddPair('callbackAddress',FcallbackAddress)
+    .AddPair('externalIdentifier', fexternalIdentifier);
+
+  falias.WriteToJSon(aJSon);
+  fpaymentInfo.WriteToJSon(aJSon);
+  frecipients.WriteToJSon(aJSon);
 end;
 
 procedure TMateraQRCodeRequest.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
-  inherited DoReadFromJSon(aJSon);
+  aJSon
+    .Value('currency',fcurrency)
+    .Value('totalAmount',ftotalAmount)
+    .Value('callbackAddress',FcallbackAddress)
+    .Value('externalIdentifier', fexternalIdentifier);
+
+  falias.ReadFromJSon(aJSon);
+  fpaymentInfo.ReadFromJSon(aJSon);
+  frecipients.ReadFromJSon(aJSon);
 end;
 
 constructor TMateraQRCodeRequest.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
+  falias := TMateraAliasBasic.Create('alias');
   FpaymentInfo := TMateraPaymentInfo.Create('paymentInfo');
   Frecipients := TMateraRecipientsArray.Create('recipients');
-
+  Clear;
 end;
 
 destructor TMateraQRCodeRequest.Destroy;
 begin
+  falias.Free;
   FpaymentInfo.Free;
   Frecipients.Free;
   inherited Destroy;
@@ -3453,26 +3402,38 @@ end;
 
 procedure TMateraQRCodeRequest.Clear;
 begin
-  if Assigned(falias) then
-    falias.clear;
-  FcallbackAddress:= EmptyStr;
-  fcurrency:= EmptyStr;
-  fexternalIdentifier:= EmptyStr;
-  if Assigned(FpaymentInfo) then
-    FpaymentInfo.Clear;
-  if Assigned(Frecipients) then
-    Frecipients.Clear;
   ftotalAmount:= 0;
+  fcurrency:= EmptyStr;
+  FcallbackAddress:= EmptyStr;
+  fexternalIdentifier:= EmptyStr;
+
+  falias.Clear;
+  FpaymentInfo.Clear;
+  Frecipients.Clear;
 end;
 
 function TMateraQRCodeRequest.IsEmpty: Boolean;
 begin
-  Result:=inherited IsEmpty;
+  Result :=
+    EstaVazio(fcurrency) and
+    EstaZerado(ftotalAmount) and
+    EstaVazio(fcallbackAddress) and
+    EstaVazio(fexternalIdentifier) and
+    (falias.IsEmpty) and
+    (fpaymentInfo.IsEmpty) and
+    (frecipients.IsEmpty);
 end;
 
-procedure TMateraQRCodeRequest.Assign(aSource: TMateraAliasRequest);
+procedure TMateraQRCodeRequest.Assign(aSource: TMateraQRCodeRequest);
 begin
+  fcurrency:= aSource.currency;
+  ftotalAmount:= aSource.totalAmount;
+  FcallbackAddress:= aSource.callbackAddress;
+  fexternalIdentifier:= aSource.externalIdentifier;
 
+  falias.Clear;
+  Frecipients.Clear;
+  FpaymentInfo.Clear;
 end;
 
 { TMateraAlias }
@@ -3493,9 +3454,7 @@ procedure TMateraAlias.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
   s: String;
 begin
-  {$IFDEF FPC}
-  s := EmptyStr;
-  {$ENDIF}
+  {$IFDEF FPC}s := EmptyStr;{$ENDIF}
 
   inherited DoReadFromJSon(aJSon);
   aJSon.Value('status', s);
@@ -3505,12 +3464,12 @@ end;
 procedure TMateraAlias.Clear;
 begin
   inherited Clear;
-  fstatus := mastIdentityValidationPending;
+  fstatus := mastNone;
 end;
 
 function TMateraAlias.IsEmpty: Boolean;
 begin
-  Result := (inherited IsEmpty) and (fstatus = mastIdentityValidationPending);
+  Result := (inherited IsEmpty) and (fstatus = mastNone);
 end;
 
 procedure TMateraAlias.Assign(aSource: TMateraAlias);
@@ -3708,7 +3667,7 @@ function TMateraQRCodeSpecification.IsEmpty: Boolean;
 begin
   Result :=
     EstaVazio(ferrorCorrectionLevel) and
-    (fimageWidth = 0) and
+    EstaZerado(fimageWidth) and
     (not fgenerateImageRendering);
 end;
 
@@ -3791,9 +3750,7 @@ procedure TMateraAliasBasic.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
   s: String;
 begin
-  {$IfDef FPC}
-  s := EmptyStr;
-  {$EndIf}
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
 
   aJSon
     .Value('name', fname)
@@ -3811,12 +3768,12 @@ end;
 procedure TMateraAliasBasic.Clear;
 begin
   fname := EmptyStr;
-  ftype := malEVP;
+  ftype := malNone;
 end;
 
 function TMateraAliasBasic.IsEmpty: Boolean;
 begin
-  Result := False;
+  Result := EstaVazio(fname) and (ftype = malNone);
 end;
 
 procedure TMateraAliasBasic.Assign(aSource: TMateraAliasBasic);
@@ -3960,8 +3917,7 @@ begin
   fclient.ReadFromJSon(aJSon);
 end;
 
-constructor TMateraCreateAccountTransactionRequest.Create(
-  const aObjectName: String);
+constructor TMateraCreateAccountTransactionRequest.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
   fclient := TMateraBasicClient.Create('client');
@@ -3978,11 +3934,8 @@ begin
   inherited Clear;
   fcheckingAccountBranch := 0;
   fcheckingAccountNumber := 0;
-  faccountType := matOrdinary;
   fcustomData := EmptyStr;
-
-  if Assigned(fclient) then
-    fclient.Clear;
+  fclient.Clear;
 end;
 
 function TMateraCreateAccountTransactionRequest.IsEmpty: Boolean;
@@ -4039,13 +3992,10 @@ end;
 
 function TMateraAccountQueryResponse.IsEmpty: Boolean;
 begin
-  Result :=
-    faccounts.IsEmpty and
-    faccountHolder.IsEmpty;
+  Result := faccounts.IsEmpty and faccountHolder.IsEmpty;
 end;
 
-procedure TMateraAccountQueryResponse.Assign(
-  aSource: TMateraAccountQueryResponse);
+procedure TMateraAccountQueryResponse.Assign(aSource: TMateraAccountQueryResponse);
 begin
   faccounts.Assign(aSource.accounts);
   faccountHolder.Assign(aSource.accountHolder);
@@ -4080,7 +4030,9 @@ end;
 procedure TMateraAccountHolderResponse.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
   s: String;
-begin
+begin 
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+
   aJSon
     .Value('accountHolderId', faccountHolderId)
     .Value('email', femail)
@@ -4117,7 +4069,7 @@ begin
   fsocialName := EmptyStr;
   faccountHolderId := EmptyStr;
   frepresentativeId := EmptyStr;
-  fstatus := macInactive;
+  fstatus := macNone;
 
   fmailAddress.Clear;
   fmobilePhone.Clear;
@@ -4135,7 +4087,7 @@ begin
     EstaVazio(fsocialName) and
     EstaVazio(faccountHolderId) and
     EstaVazio(frepresentativeId) and
-    (fstatus = macInactive) and
+    (fstatus = macNone) and
     fbillingAddress.IsEmpty and
     fmailAddress.IsEmpty and
     fmobilePhone.IsEmpty and
@@ -4245,6 +4197,10 @@ procedure TMateraAccountIdentifier.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
   s: String;
 begin
+  {$IFDEF FPC}
+  s := EmptyStr;
+  {$ENDIF}
+
   inherited DoReadFromJSon(aJSon);
   aJSon.Value('accountType', s);
   faccountType := StringToMateraAccountType(s);
@@ -4253,12 +4209,12 @@ end;
 procedure TMateraAccountIdentifier.Clear;
 begin
   inherited Clear;
-  faccountType := matOrdinary;
+  faccountType := matNone;
 end;
 
 function TMateraAccountIdentifier.IsEmpty: Boolean;
 begin
-  Result := inherited IsEmpty and (faccountType = matOrdinary);
+  Result := inherited IsEmpty and (faccountType = matNone);
 end;
 
 procedure TMateraAccountIdentifier.Assign(aSource: TMateraAccountIdentifier);
@@ -4345,7 +4301,7 @@ end;
 
 procedure TMateraAccountResponse.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
-  s1, s2, w: String;
+  s1, s2: String;
 begin
   {$IfDef FPC}
   s1 := EmptyStr;
@@ -4359,8 +4315,6 @@ begin
     .Value('clientType', s1)
     .Value('accountStatus', s2)
     .ValueISODate('dueDate', fdueDate);
-
-  w := aJSon.ToJSON;
 
   fclientType := StringToMateraClientType(s1);
   faccountStatus := StringToMateraAccountStatus(s2);
@@ -4411,6 +4365,8 @@ begin
   faccountInternalTypeId := 0;
   fmediatorId := EmptyStr;
   faccountHolderId := EmptyStr;
+  fclientType := mctNone;
+  faccountStatus := mcsNone;
 
   frates.Clear;
   fclient.Clear;
@@ -4430,6 +4386,8 @@ begin
     EstaVazio(faccountHolderId) and
     (dueDate = 0) and
     (accountInternalTypeId = 0) and
+    (faccountStatus = mcsNone) and
+    (fclientType = mctNone) and
     frates.IsEmpty and
     fclient.IsEmpty and
     faccount.IsEmpty and
@@ -4447,6 +4405,8 @@ begin
   faccountInternalTypeId := aSource.accountInternalTypeId;
   fmediatorId := aSource.mediatorId;
   faccountHolderId := aSource.accountHolderId;
+  faccountStatus := aSource.accountStatus;
+  fclientType := aSource.clientType;
 
   frates.Assign(aSource.rates);
   fclient.Assign(aSource.client);
@@ -4684,16 +4644,23 @@ end;
 
 procedure TMateraAccountTransactionRequestBasic.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
-  s: String;
+  s1, s2: String;
 begin
+  {$IFDEF FPC}
+  s1 := EmptyStr;
+  s2 := EmptyStr;
+  {$ENDIF}
+
   aJSon
     .Value('accountInternalTypeId', faccountInternalTypeId)
-    .Value('accountType', s)
+    .Value('accountType', s1)
+    .Value('clientType', s2)
     .Value('externalIdentifier', fexternalIdentifier)
     .Value('ibkPwdHash', fibkPwdHash)
     .Value('sharedAccount', fsharedAccount);
 
-  faccountType := StringToMateraAccountType(s);
+  faccountType := StringToMateraAccountType(s1);
+  fclientType := StringToMateraClientType(s2);
   fdocuments.ReadFromJSon(aJSon);
   fmobilePhone.ReadFromJSon(aJSon);
   fbillingAddress.ReadFromJSon(aJSon);
@@ -4731,6 +4698,8 @@ begin
   fibkPwdHash := EmptyStr;
   fsharedAccount := EmptyStr;     
   fexternalIdentifier := EmptyStr;
+  faccountType := matNone;
+  fclientType := mctNone;
 
   fdocuments.Clear;
   fmobilePhone.Clear;
@@ -4745,9 +4714,10 @@ begin
   Result :=
     EstaVazio(fibkPwdHash) and
     EstaVazio(fsharedAccount) and
-    EstaVazio(fexternalIdentifier) and
-    (faccountType = matOrdinary) and
     (faccountInternalTypeId = 0) and
+    EstaVazio(fexternalIdentifier) and
+    (faccountType = matNone) and
+    (fclientType = mctNone) and
     fdocuments.IsEmpty and
     fmobilePhone.IsEmpty and
     fbillingAddress.IsEmpty and
@@ -4759,11 +4729,12 @@ end;
 procedure TMateraAccountTransactionRequestBasic.Assign(
   aSource: TMateraAccountTransactionRequestBasic);
 begin
-  faccountType := aSource.accountType;
   fibkPwdHash := aSource.ibkPwdHash;
   fsharedAccount := aSource.sharedAccount;
   fexternalIdentifier := aSource.externalIdentifier;
   faccountInternalTypeId := aSource.accountInternalTypeId;
+  fclientType := aSource.clientType;
+  faccountType := aSource.accountType;
 
   fdocuments.Assign(aSource.documents);
   fmobilePhone.Assign(aSource.mobilePhone);
@@ -4817,13 +4788,16 @@ end;
 procedure TMateraAdditionalDetailsCorporate.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
-    .AddPair('establishmentDate', FormatDateTime('yyyy-mm-dd', festablishmentDate))
     .AddPair('companyName', fcompanyName)
     .AddPair('businessLine', fbusinessLine)
     .AddPair('establishmentForm', festablishmentForm)
     .AddPair('financialStatistic', ffinancialStatistic, False)
     .AddPair('monthlyIncome', fmonthlyIncome, False)
     .AddPair('stateRegistration', fstateRegistration, False);
+
+  if (establishmentDate > 0) then
+    aJSon.AddPair('establishmentDate', FormatDateTime('yyyy-mm-dd', festablishmentDate));
+
   frepresentatives.WriteToJSon(aJSon);
 end;
 
@@ -4927,8 +4901,7 @@ begin
   Result := (inherited IsEmpty) and EstaVazio(faccountHolderId);
 end;
 
-procedure TMateraClientRepresentative.Assign(
-  aSource: TMateraClientRepresentative);
+procedure TMateraClientRepresentative.Assign(aSource: TMateraClientRepresentative);
 begin
   inherited Assign(aSource);
   faccountHolderId := aSource.accountHolderId;
@@ -4981,12 +4954,8 @@ procedure TMateraAdditionalDetailsPerson.Clear;
 begin
   inherited Clear;
   fmonthlyIncome := 0;
-
-  if Assigned(frg) then
-    frg.Clear;
-
-  if Assigned(flegalResponsible) then
-    flegalResponsible.Clear;
+  frg.Clear;
+  flegalResponsible.Clear;
 end;
 
 function TMateraAdditionalDetailsPerson.IsEmpty: Boolean;
@@ -5020,7 +4989,6 @@ begin
   aJSon
     .AddPair('birthCity', fbirthCity)
     .AddPair('birthCountry', fbirthCountry)
-    .AddPair('birthDate', FormatDateTime('yyyy-mm-dd', fbirthDate))
     .AddPair('birthState', fbirthState)
     .AddPair('businessLine', fbusinessLine)
     .AddPair('documentType', fdocumentType)
@@ -5031,6 +4999,10 @@ begin
     .AddPair('mother', fmother)
     .AddPair('occupation', foccupation)
     .AddPair('partner', fpartner);
+
+  if (birthDate > 0) then
+    aJSon.AddPair('birthDate', FormatDateTime('yyyy-mm-dd', fbirthDate));
+
   fotherDocument.WriteToJSon(aJSon);
 end;
 
@@ -5186,10 +5158,12 @@ end;
 procedure TMateraOtherDoc.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
-    .AddPair('issueDate', FormatDateTime('yyyy-mm-dd', fissueDate))
     .AddPair('issuer', fissuer)
     .AddPair('number', fnumber)
     .AddPair('type', ftype);
+
+  if (issueDate > 0) then
+    aJSon.AddPair('issueDate', FormatDateTime('yyyy-mm-dd', fissueDate));
 end;
 
 procedure TMateraOtherDoc.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -5243,10 +5217,12 @@ end;
 procedure TMateraRG.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
-    .AddPair('issueDate', FormatDateTime('yyyy-mm-dd', fissueDate))
     .AddPair('issuer', fissuer)
     .AddPair('number', fnumber)
     .AddPair('state', fstate);
+
+  if (issueDate > 0) then
+    aJSon.AddPair('issueDate', FormatDateTime('yyyy-mm-dd', fissueDate));
 end;
 
 procedure TMateraRG.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -5359,12 +5335,12 @@ end;
 procedure TMateraDocument.Clear;
 begin
   fcontent := EmptyStr;
-  ftype := mdtUnknown;
+  ftype := mdtNone;
 end;
 
 function TMateraDocument.IsEmpty: Boolean;
 begin
-  Result := EstaVazio(fcontent) and (ftype = mdtUnknown);
+  Result := EstaVazio(fcontent) and (ftype = mdtNone);
 end;
 
 procedure TMateraDocument.Assign(aSource: TMateraDocument);
@@ -5561,13 +5537,11 @@ begin
     .AddPair('name', fname)
     .AddPair('socialName', fsocialName, False)
     .AddPair('email', femail, False);
-    
+
+  fdocuments.WriteToJSon(aJSon);
   ftaxIdentifier.WriteToJSon(aJSon);
   fmobilePhone.WriteToJSon(aJSon);
   fmailAddress.WriteToJSon(aJSon);
-
-  if (fdocuments.Count > 0) then
-    fdocuments.WriteToJSon(aJSon);
 end;
 
 procedure TMateraBasicClient.DoReadFromJSon(aJSon: TACBrJSONObject);

@@ -43,12 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/09/2023
+-- PadraoNacional.Provider --
+[-] Correção na leitura do retorno do método ConsultarParametros.
+   Por: Italo Giurizzato Junior
+
 01/09/2023
 -- Diversos --
 [*] Incluído o campo ValorTotalRecebido dentro da classe Servico para atender
     a alteração nos schemas do provedor ISSSaoPaulo.
    Por: Italo Giurizzato Junior
--- PadraoNacionao.Provider --
+-- PadraoNacional.Provider --
 [*] Alteração na leitura do retorno do método ConsultarEvento.
    Por: Italo Giurizzato Junior
 -- Infisc.GravarXml --

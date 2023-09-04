@@ -1108,9 +1108,9 @@ procedure TACBrNFSeProviderPadraoNacional.TratarRetornoConsultarParam(
   Response: TNFSeConsultarParamResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Document, JSon, JsonI: TACBrJSONObject;
-  JSonItem: TACBrJSONArray;
-  i: Integer;
+  Document, JSon, JsonE, JsonI: TACBrJSONObject;
+  JSonItem, JSonRetMun: TACBrJSONArray;
+  i, j: Integer;
   xCodServ: string;
 
   procedure LerHistorico(Json: TACBrJSONObject);
@@ -1202,36 +1202,41 @@ begin
 
       if Json <> nil then
       begin
-        JSon := JSon.AsJSONObject['art6'];
+        JsonE := JSon.AsJSONObject['art6'];
 
         Response.Parametros.Add('Habilitado: ' +
-          JSon.AsString['habilitado']);
+          JsonE.AsString['habilitado']);
 
-        LerHistorico(Json);
+        LerHistorico(JsonE);
 
-        JSon := JSon.AsJSONObject['retMun'];
+        JSonRetMun := JSon.AsJSONArray['retMun'];
 
-        Response.Parametros.Add(ACBrStr('Descrição: ' +
-          JSon.AsString['desc']));
-
-        Response.Parametros.Add('Data Inicial: ' +
-          DateTimeToStr(JSon.AsISODate['dtIni']));
-
-        Response.Parametros.Add('Data Final: ' +
-          DateTimeToStr(JSon.AsISODate['dtFim']));
-
-        // Falta ler o tpRet
-
-        JSonItem := Json.AsJSONArray['serv'];
-
-        for i := 0 to JSonItem.Count-1 do
+        for i := 0 to JSonRetMun.Count-1 do
         begin
-          JsonI := JSonItem.ItemAsJSONObject[i];
+          JsonI := JSonRetMun.ItemAsJSONObject[i];
 
-          Response.Parametros.Add(ACBrStr('Código: ' +
-            JsonI.AsString['codigo']));
+          Response.Parametros.Add(ACBrStr('Descrição: ' +
+            JsonI.AsString['desc']));
 
-          LerHistorico(JsonI);
+          Response.Parametros.Add('Data Inicial: ' +
+            DateTimeToStr(JsonI.AsISODate['dtIni']));
+
+          Response.Parametros.Add('Data Final: ' +
+            DateTimeToStr(JsonI.AsISODate['dtFim']));
+
+          // Falta ler o tpRet
+
+          JSonItem := JsonI.AsJSONArray['serv'];
+
+          for j := 0 to JSonItem.Count-1 do
+          begin
+            JsonI := JSonItem.ItemAsJSONObject[j];
+
+            Response.Parametros.Add(ACBrStr('Código: ' +
+              JsonI.AsString['codigo']));
+
+            LerHistorico(JsonI);
+          end;
         end;
 
         JSonItem := Json.AsJSONArray['respTrib'];
@@ -1249,7 +1254,6 @@ begin
           LerHistorico(JsonI);
         end;
       end;
-
     except
       on E:Exception do
       begin

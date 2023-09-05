@@ -72,6 +72,7 @@ type
     procedure CarregaPrestador(ANFSe: TNFSe);
     procedure CarregaServicos(ANFSe: TNFSe);
     procedure CarregaTomador(ANFSe: TNFSe);
+    procedure CarregaItermediario(ANFSe: TNFSe);
     procedure CarregaTransportadora(ANFSe: TNFSe);
     procedure CarregaCondicaoPagamento(ANFSe: TNFSe);
     procedure CarregaCondicaoPagamentoParcelas(ANFSe: TNFSe);
@@ -95,6 +96,7 @@ type
     cdsServicos                 : TACBrFRDataSet;
     cdsParametros               : TACBrFRDataSet;
     cdsTomador                  : TACBrFRDataSet;
+    cdsIntermediario            : TACBrFRDataSet;
     cdsTransportadora           : TACBrFRDataSet;
     cdsItensServico             : TACBrFRDataSet;
     cdsCondicaoPagamento        : TACBrFRDataSet;
@@ -104,6 +106,7 @@ type
     frxIdentificacao            : TfrxDBDataset;
     frxPrestador                : TfrxDBDataset;
     frxTomador                  : TfrxDBDataset;
+    frxIntermediario            : TfrxDBDataset;
     frxTransportadora           : TfrxDBDataset;
     frxServicos                 : TfrxDBDataset;
     frxParametros               : TfrxDBDataset;
@@ -162,6 +165,7 @@ begin
   frxIdentificacao.Free;
   frxPrestador.Free;
   frxTomador.Free;
+  frxIntermediario.Free;
   frxTransportadora.Free;
   frxServicos.Free;
   frxParametros.Free;
@@ -174,6 +178,7 @@ begin
   cdsServicos.Free;
   cdsParametros.Free;
   cdsTomador.Free;
+  cdsIntermediario.Free;
   cdsTransportadora.Free;
   cdsItensServico.Free;
   cdsCondicaoPagamento.Free;
@@ -311,6 +316,7 @@ begin
   frxReport.EnabledDataSets.Add(frxIdentificacao);
   frxReport.EnabledDataSets.Add(frxPrestador);
   frxReport.EnabledDataSets.Add(frxTomador);
+  frxReport.EnabledDataSets.Add(frxIntermediario);
   frxReport.EnabledDataSets.Add(frxTransportadora);
   frxReport.EnabledDataSets.Add(frxServicos);
   frxReport.EnabledDataSets.Add(frxParametros);
@@ -479,6 +485,7 @@ begin
   cdsServicos.FieldDefs.Clear;
   cdsServicos.FieldDefs.Add('ItemListaServico', ftString, 6);
   cdsServicos.FieldDefs.Add('CodigoCnae', ftString, 15);
+  cdsServicos.FieldDefs.Add('CodigoNbs', ftString, 9);
   cdsServicos.FieldDefs.Add('CodigoTributacaoMunicipio', ftString, 20);
   cdsServicos.FieldDefs.Add('Discriminacao', ftString, 2000);
   cdsServicos.FieldDefs.Add('CodigoPais', ftString, 4);
@@ -586,6 +593,19 @@ begin
   cdsTomador.LogChanges := false;
 {$ELSE}
   cdsTomador.Open;
+{$ENDIF}
+  cdsIntermediario := TACBrFRDataSet.Create(nil);
+
+  cdsIntermediario.Close;
+
+  cdsIntermediario.FieldDefs.Clear;
+  cdsIntermediario.FieldDefs.Add('RazaoSocial', ftString, 150);
+
+  cdsIntermediario.CreateDataSet;
+{$IFNDEF FPC}
+  cdsIntermediario.LogChanges := false;
+{$ELSE}
+  cdsIntermediario.Open;
 {$ENDIF}
   cdsTransportadora := TACBrFRDataSet.Create(nil);
 
@@ -767,6 +787,19 @@ begin
   frxTomador.DataSet       := cdsTomador;
   frxTomador.BCDToCurrency := false;
 
+  frxIntermediario := TfrxDBDataset.Create(Self);
+
+  frxIntermediario.UserName := 'Intermediario';
+  frxIntermediario.Enabled         := false;
+  frxIntermediario.CloseDataSource := false;
+  frxIntermediario.OpenDataSource  := false;
+
+  frxIntermediario.FieldAliases.Clear;
+  frxIntermediario.FieldAliases.Add('RazaoSocial=RazaoSocial');
+
+  frxIntermediario.DataSet       := cdsIntermediario;
+  frxIntermediario.BCDToCurrency := false;
+
   frxTransportadora := TfrxDBDataset.Create(Self);
 
   frxTransportadora.UserName        := 'Transportadora';
@@ -799,6 +832,7 @@ begin
   frxServicos.FieldAliases.Clear;
   frxServicos.FieldAliases.Add('ItemListaServico=ItemListaServico');
   frxServicos.FieldAliases.Add('CodigoCnae=CodigoCnae');
+  frxServicos.FieldAliases.Add('CodigoNbs=CodigoNbs');
   frxServicos.FieldAliases.Add('CodigoTributacaoMunicipio=CodigoTributacaoMunicipio');
   frxServicos.FieldAliases.Add('Discriminacao=Discriminacao');
   frxServicos.FieldAliases.Add('CodigoMunicipio=CodigoMunicipio');
@@ -942,6 +976,7 @@ begin
   CarregaIdentificacao(ANFSe);
   CarregaPrestador(ANFSe);
   CarregaTomador(ANFSe);
+  CarregaItermediario(ANFSe);
   CarregaServicos(ANFSe);
   CarregaItensServico(ANFSe);
   CarregaParametros(ANFSe);
@@ -968,7 +1003,10 @@ begin
 
   LCDS.FieldByName('Serie').AsString := ANFSe.IdentificacaoRps.Serie;
 
-  LCDS.FieldByName('Competencia').AsString := FormatDateTime('mm/yyyy', ANFSe.Competencia);
+  if Provedor = proISSNet then
+    LCDS.FieldByName('Competencia').AsString := FormatDateTime('dd/mm/yyyy', ANFSe.Competencia)
+  else
+    LCDS.FieldByName('Competencia').AsString := FormatDateTime('mm/yyyy', ANFSe.Competencia);
 
   if (FormatarNumeroDocumentoNFSe) then
     LCDS.FieldByName('NFSeSubstituida').AsString := FormatarNumeroDocumentoFiscalNFSe(ANFSe.NfseSubstituida)
@@ -980,7 +1018,7 @@ begin
   else
     LCDS.FieldByName('NumeroNFSe').AsString := ANFSe.Numero;
 
-  if (Provedor in [ proGINFES, proBetha, proDSF ]) then
+  if (Provedor in [ proGINFES, proBetha, proDSF, proISSNet ]) then
     LCDS.FieldByName('DataEmissao').AsString := FormatDateTimeBr(ANFSe.DataEmissao)
   else
   begin
@@ -1030,7 +1068,22 @@ begin
     LCDS.FieldByName('DescontoIncondicionado').AsString := FormatFloatBr(LItemsServico.Items[ I ].DescontoIncondicionado, '0.00');
     LCDS.Post;
   end;
+end;
 
+procedure TACBrNFSeXDANFSeFR.CarregaItermediario(ANFSe: TNFSe);
+var
+  LCDS     : TACBrFRDataSet;
+  LIntermediario : TDadosIntermediario;
+begin
+  LIntermediario  := ANFSe.Intermediario;
+
+  LCDS := cdsIntermediario;
+  LCDS.EmptyDataSet;
+  LCDS.Append;
+
+  LCDS.FieldByName('RazaoSocial').AsString := LIntermediario.RazaoSocial;
+
+  LCDS.Post;
 end;
 
 procedure TACBrNFSeXDANFSeFR.CarregaParametros(ANFSe: TNFSe);
@@ -1239,6 +1292,7 @@ begin
   end;
 
   LCDS.FieldByName('CodigoCnae').AsString                := LServico.CodigoCnae;
+  LCDS.FieldByName('CodigoNbs').AsString                 := LServico.CodigoNBS;
   LCDS.FieldByName('CodigoTributacaoMunicipio').AsString := LServico.CodigoTributacaoMunicipio;
   LCDS.FieldByName('Discriminacao').AsString             := StringReplace(LServico.Discriminacao, TACBrNFSeX(DANFSeXClassOwner.ACBrNFSe).Provider.ConfigGeral.QuebradeLinha, #13,
     [ rfReplaceAll, rfIgnoreCase ]);

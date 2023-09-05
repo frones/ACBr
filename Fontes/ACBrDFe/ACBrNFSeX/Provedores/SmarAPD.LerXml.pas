@@ -216,6 +216,8 @@ begin
         NFSe.Servico.Valores.IssRetido := stRetencao
       else
         NFSe.Servico.Valores.IssRetido := stNormal;
+
+      ValorTotal := Quantidade * ValorUnitario;
     end;
   end;
 end;

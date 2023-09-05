@@ -426,6 +426,8 @@ begin
   //Item.ValorISS := StrToFloatDef(Trim(Copy(ALinha, 77, 15)), 0.00) / 100;
   Item.Aliquota := StrToFloatDef(Trim(Copy(ALinha, 92, 4)), 0.00) / 100;
 
+  Item.ValorTotal := Item.Quantidade * Item.ValorUnitario;
+
   NFSe.Servico.Descricao := Trim(Copy(ALinha, 8, 60));
   NFSe.Servico.CodigoMunicipio := Trim(Copy(ALinha, 68, 9));
   NFSe.Servico.Valores.Aliquota := StrToFloatDef(Trim(Copy(ALinha, 92, 4)), 0.00) / 100;

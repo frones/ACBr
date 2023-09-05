@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 05/09/2023
+-- Diversos --
+[*] Alguns provedores que permitem uma lista de serviços não estava calculando
+    o valor total do serviço.
+   Por: Italo Giurizzato Junior
 -- IPM.LerXml --
 [*] Ajuste para a leitura da tag que indica que a nota esta cancelada.
    Por: Delcio

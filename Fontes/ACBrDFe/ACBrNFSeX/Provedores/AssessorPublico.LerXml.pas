@@ -397,6 +397,8 @@ begin
 
           Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('QUANTIDADE'), tcDe4);
 
+          ValorTotal := Quantidade * ValorUnitario;
+
           DescontoIncondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DESCONTO'), tcDe2);
         end;
       end;

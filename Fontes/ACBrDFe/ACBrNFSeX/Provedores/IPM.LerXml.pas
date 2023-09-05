@@ -206,8 +206,13 @@ begin
         DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY');
       end;
 
-      SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr));
-      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
+      //XML cancelado não tem a tag "situacao_codigo_nfse" se baixado do site da prefeitura
+      //somente a tag "situacao" = "C"
+      aValor:=  ObterConteudo(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
+      if aValor = 'C' then
+        SituacaoNfse := snCancelado
+      else
+        SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr));
 
       OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('observacao'), tcStr);
       OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,

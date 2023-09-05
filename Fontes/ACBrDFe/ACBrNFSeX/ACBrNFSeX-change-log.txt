@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 05/09/2023
+-- IPM.LerXml --
+[*] Ajuste para a leitura da tag que indica que a nota esta cancelada.
+   Por: Delcio
 -- ACBrNFSeXServicos --
 [*] A cidade de Montenegro/RS, Mudou de provedor, agora é Thema.
    Por: Marcos Giordani

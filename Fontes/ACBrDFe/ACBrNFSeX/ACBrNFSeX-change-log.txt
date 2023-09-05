@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/09/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Montenegro/RS, Mudou de provedor, agora é Thema.
+   Por: Marcos Giordani
+
 04/09/2023
 -- PadraoNacional.Provider --
 [-] Correção na leitura do retorno do método ConsultarParametros.

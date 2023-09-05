@@ -574,45 +574,49 @@ begin
        {Segmento R}
        if(MatchText(TipoOcorrenciaRemessa,['01','49','31']))then
        begin
-         inc(fpQtdRegsLote);
-         ListTransacao.Add(IntToStrZero(ACBrBanco.Numero,3)                         + // 001 a 003 - Codigo do Banco
-                '0001'                                                              + // 004 a 007 - Lote de Serviço
-                '3'                                                                 + // 008 a 008 - Registro Detalhe
-                IntToStrZero(fpQtdRegsLote ,5)                                      + // 009 a 013 - Seq. Registro do Lote
-                'R'                                                                 + // 014 a 014 - Codigo do Segmento registro detalhe
-                ' '                                                                 + // 015 a 015 - Complemento de Registro
-                TipoOcorrenciaRemessa                                               + // 016 a 017 - Identificação da Ocorrencia
-                '0'                                                                 + // 018 a 018 - Complemento de Registro
+         if (ValorDesconto2  > 0) or
+            (ValorDesconto3  > 0) or
+            (PercentualMulta > 0) then
+         begin
+           inc(fpQtdRegsLote);
+           ListTransacao.Add(IntToStrZero(ACBrBanco.Numero,3)                         + // 001 a 003 - Codigo do Banco
+                  '0001'                                                              + // 004 a 007 - Lote de Serviço
+                  '3'                                                                 + // 008 a 008 - Registro Detalhe
+                  IntToStrZero(fpQtdRegsLote ,5)                                      + // 009 a 013 - Seq. Registro do Lote
+                  'R'                                                                 + // 014 a 014 - Codigo do Segmento registro detalhe
+                  ' '                                                                 + // 015 a 015 - Complemento de Registro
+                  TipoOcorrenciaRemessa                                               + // 016 a 017 - Identificação da Ocorrencia
+                  '0'                                                                 + // 018 a 018 - Complemento de Registro
 
-                IfThen(ValorDesconto2>0,FormatDateTime( 'ddmmyyyy', DataDesconto2),
-                StringOfChar('0',8))                                                + // 019 a 026 - Data Segundo Desconto
+                  IfThen(ValorDesconto2>0,FormatDateTime( 'ddmmyyyy', DataDesconto2),
+                  StringOfChar('0',8))                                                + // 019 a 026 - Data Segundo Desconto
 
-                IntToStrZero(round(ValorDesconto2 * 100),15)                        + // 027 a 041 - Valor Segundo Desconto
-                '0'                                                                 + // 042 a 042 - Complemento de Registro
+                  IntToStrZero(round(ValorDesconto2 * 100),15)                        + // 027 a 041 - Valor Segundo Desconto
+                  '0'                                                                 + // 042 a 042 - Complemento de Registro
 
-                IfThen(ValorDesconto3>0,FormatDateTime( 'ddmmyyyy', DataDesconto3),
-                StringOfChar('0',8))                                                + // 043 a 050 - Data Terceiro Desconto
+                  IfThen(ValorDesconto3>0,FormatDateTime( 'ddmmyyyy', DataDesconto3),
+                  StringOfChar('0',8))                                                + // 043 a 050 - Data Terceiro Desconto
 
-                IntToStrZero(round(ValorDesconto3 * 100),15)                        + // 051 a 065 - Valor Terceiro Desconto
+                  IntToStrZero(round(ValorDesconto3 * 100),15)                        + // 051 a 065 - Valor Terceiro Desconto
 
-                IfThen((PercentualMulta > 0),
-                      IfThen(MultaValorFixo,'1','2'), '0')                          + // 066 a 066 1- Cobrar Multa Valor Fixo / 2- Percentual / 0-Não cobrar multa
-                IfThen((PercentualMulta > 0),
-                       FormatDateTime('ddmmyyyy', DataMulta), '00000000')           + // 067 a 074 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
-                IfThen( (PercentualMulta > 0), IntToStrZero(round(PercentualMulta * 100), 15),
-                         PadRight('', 15, '0'))                                     + // 075 a 089 Valor / Percentual de multa.
+                  IfThen((PercentualMulta > 0),
+                        IfThen(MultaValorFixo,'1','2'), '0')                          + // 066 a 066 1- Cobrar Multa Valor Fixo / 2- Percentual / 0-Não cobrar multa
+                  IfThen((PercentualMulta > 0),
+                         FormatDateTime('ddmmyyyy', DataMulta), '00000000')           + // 067 a 074 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+                  IfThen( (PercentualMulta > 0), IntToStrZero(round(PercentualMulta * 100), 15),
+                           PadRight('', 15, '0'))                                     + // 075 a 089 Valor / Percentual de multa.
 
-                StringOfChar(' ',10)                                                + // 090 a 099 Complemento de Registro
-                StringOfChar(' ',40)                                                + // 100 a 139 Informação ao Pagador
-                StringOfChar(' ',60)                                                + // 140 a 199 Complemento de Registro
-                '00000000'                                                          + // 200 a 207 Codigo de Ocorrencia do Pagador
-                '00000000'                                                          + // 208 a 215 Complemento de Registro
-                ' '                                                                 + // 216 a 216 Complemento de Registro
-                StringOfChar('0',12)                                                + // 217 a 228 Complemento de Registro
-                '  '                                                                + // 229 a 230 Complemento de Registro
-                '0'                                                                 + // 231 a 231 Complemento de Registro
-                StringOfChar(' ',9));                                                  // 232 a 240 Complemento de Registro
-
+                  StringOfChar(' ',10)                                                + // 090 a 099 Complemento de Registro
+                  StringOfChar(' ',40)                                                + // 100 a 139 Informação ao Pagador
+                  StringOfChar(' ',60)                                                + // 140 a 199 Complemento de Registro
+                  '00000000'                                                          + // 200 a 207 Codigo de Ocorrencia do Pagador
+                  '00000000'                                                          + // 208 a 215 Complemento de Registro
+                  ' '                                                                 + // 216 a 216 Complemento de Registro
+                  StringOfChar('0',12)                                                + // 217 a 228 Complemento de Registro
+                  '  '                                                                + // 229 a 230 Complemento de Registro
+                  '0'                                                                 + // 231 a 231 Complemento de Registro
+                  StringOfChar(' ',9));                                                 // 232 a 240 Complemento de Registro
+         end;
        end;
 
     end;

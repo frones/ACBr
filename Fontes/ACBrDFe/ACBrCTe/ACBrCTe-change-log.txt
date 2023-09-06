@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/09/2023
+-- ACBrCTeConhecimentos --
+[*] Altera a condição para ler a seção infOutros no arquivo INI.
+  Por: Diego Folieni
 -- pcteCTeW --
 [*] Altera a validação que verifica se vai gerar a tag TAF do grupo prop para CTe-OS.
   Por: Diego Folieni

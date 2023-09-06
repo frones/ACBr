@@ -2222,7 +2222,7 @@ begin
       while true do
       begin
         sSecao := 'infOutros'+IntToStrZero(I,3);
-        sFim   := INIRec.ReadString(sSecao,'nDoc','FIM');
+        sFim   := INIRec.ReadString(sSecao,'tpDoc','FIM');
         if sFim = 'FIM' then
           break;
 

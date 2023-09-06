@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2023
+-- pcteCTeW --
+[*] Altera a validação que verifica se vai gerar a tag TAF do grupo prop para CTe-OS.
+  Por: Diego Folieni
+
 30/08/2023
 -- ACBrCTeWebServices --
 [*] Adiciona checagem para que o parâmetro de envio seja definido como sincrôno quando versão for 4.00

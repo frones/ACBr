@@ -2221,7 +2221,7 @@ begin
       Gerador.wGrupo('prop', '#07');
       Gerador.wCampoCNPJCPF('#08', '#09', CTe.infCTeNorm.rodoOS.veic.prop.CNPJCPF);
 
-      if CTe.infCTeNorm.rodoOS.TAF <> '' then
+      if CTe.infCTeNorm.rodoOS.veic.prop.TAF <> '' then
         Gerador.wCampo(tcStr, '#10', 'TAF           ', 12, 12, 1, CTe.infCTeNorm.rodoOS.veic.prop.TAF, DSC_TAF)
       else
         Gerador.wCampo(tcStr, '#11', 'NroRegEstadual', 25, 25, 1, CTe.infCTeNorm.rodoOS.veic.prop.NroRegEstadual, DSC_NROREGESTADUAL);

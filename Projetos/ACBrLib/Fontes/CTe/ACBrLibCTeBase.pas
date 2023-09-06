@@ -466,7 +466,7 @@ end;
 function TACBrLibCTe.LimparListaEventos: longint;  
 begin
   try
-    GravarLog('NFE_LimparListaEventos', logNormal);
+    GravarLog('CTE_LimparListaEventos', logNormal);
 
     CTeDM.Travar;
     try

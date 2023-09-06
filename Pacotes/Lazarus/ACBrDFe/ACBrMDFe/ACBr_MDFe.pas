@@ -4,6 +4,7 @@
 
 unit ACBr_MDFe;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -12,7 +13,7 @@ uses
   pmdfeConversaoMDFe, pmdfeEnvEventoMDFe, pmdfeEventoMDFe, pmdfeMDFe, 
   pmdfeMDFeR, pmdfeMDFeW, pmdfeProcMDFe, pmdfeRetConsMDFeNaoEnc, 
   pmdfeRetConsSitMDFe, pmdfeRetEnvEventoMDFe, pmdfeRetEnvMDFe, 
-  ACBrMDFeDAMDFeClass, pmdfeConsts, LazarusPackageIntf;
+  ACBrMDFeDAMDFeClass, pmdfeConsts, pmdfeProcInfraSA, LazarusPackageIntf;
 
 implementation
 

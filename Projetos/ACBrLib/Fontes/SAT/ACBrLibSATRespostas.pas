@@ -174,6 +174,7 @@ type
     FNumeroSessao: Integer;
     FCodigoDeRetorno: Integer;
     FRetornoStr: String;
+    FnCFe: Integer;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
@@ -184,7 +185,7 @@ type
     property NumeroSessao: Integer read FnumeroSessao write FnumeroSessao;
     property CodigoDeRetorno: Integer read FCodigoDeRetorno write FCodigoDeRetorno;
     property RetornoStr: String read FRetornoStr write FRetornoStr;
-
+    property nCFe : integer read FnCFe write FnCFe;
   end;
 
   { TRetornoStatusSAT }
@@ -278,10 +279,11 @@ end;
 
 procedure TRetornoEnvio.Processar(const SAT: TACBrSAT);
 begin
-  Self.NumeroSessao := SAT.Resposta.numeroSessao;
+  Self.NumeroSessao     := SAT.Resposta.numeroSessao;
   Self.CodigoDeRetorno  := SAT.Resposta.codigoDeRetorno;
-  Self.RetornoStr  := SAT.Resposta.RetornoStr;
-  Self.XML:= SAT.CFe.AsXMLString;
+  Self.RetornoStr       := SAT.Resposta.RetornoStr;
+  Self.XML              := SAT.CFe.AsXMLString;
+  Self.nCFe             := SAT.CFe.ide.nCFe;
 
   if (SAT.CFe.NomeArquivo <> '') and FileExists(SAT.CFe.NomeArquivo) then
     Self.Arquivo:= SAT.CFe.NomeArquivo;

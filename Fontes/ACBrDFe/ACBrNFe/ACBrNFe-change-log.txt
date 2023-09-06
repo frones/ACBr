@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2023
+[*] Altera a validação para geração do grupo IPI no arquivo INI.
+  Por: Diego Folieni
+
 30/06/2023
 [*] TK-4041 Aumenta o tamanho maximo do campo pDif visando evitar problemas com valores longos.
   Por: Altamogiana / Rev: Alexandre de Paula

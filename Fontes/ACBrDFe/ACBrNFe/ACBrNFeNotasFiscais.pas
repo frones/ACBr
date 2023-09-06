@@ -3248,8 +3248,7 @@ begin
               INIRec.WriteFloat(sSecao, 'pFCPUFDest', pFCPUFDest);
               INIRec.WriteFloat(sSecao, 'vFCPUFDest', vFCPUFDest);
             end;
-            if (IPI.vBC > 0) or (IPI.qUnid > 0) or
-              (IPI.vIPI > 0) or (IPI.cEnq = '999') then
+            if (IPI.cEnq <> '') then
             begin
               sSecao := 'IPI' + IntToStrZero(I + 1, 3);
               with IPI do

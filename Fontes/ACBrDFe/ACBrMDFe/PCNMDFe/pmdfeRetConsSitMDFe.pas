@@ -45,7 +45,7 @@ uses
   {$IFEND}
   ACBrBase,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pmdfeProcMDFe, pmdfeRetEnvEventoMDFe;
+  pmdfeProcMDFe, pmdfeRetEnvEventoMDFe, pmdfeProcInfraSA;
 
 type
 
@@ -81,6 +81,7 @@ type
     FprotMDFe: TProcMDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
     FXMLprotMDFe: String;
+    FprocInfraSA: TProcInfraSA;
   public
     constructor Create;
     destructor Destroy; override;
@@ -96,6 +97,7 @@ type
     property protMDFe: TProcMDFe                      read FprotMDFe       write FprotMDFe;
     property procEventoMDFe: TRetEventoMDFeCollection read FprocEventoMDFe write FprocEventoMDFe;
     property XMLprotMDFe: String                      read FXMLprotMDFe    write FXMLprotMDFe;
+    property procInfraSA: TProcInfraSA                read FprocInfraSA    write FprocInfraSA;
   end;
 
 implementation
@@ -107,6 +109,7 @@ begin
   inherited Create;
   FLeitor   := TLeitor.Create;
   FprotMDFe := TProcMDFe.create;
+  FprocInfraSA := TProcInfraSA.Create;
 end;
 
 destructor TRetConsSitMDFe.Destroy;
@@ -115,6 +118,7 @@ begin
   FprotMDFe.Free;
   if Assigned(procEventoMDFe) then
     procEventoMDFe.Free;
+  FprocInfraSA.Free;
   inherited;
 end;
 
@@ -164,6 +168,12 @@ begin
             protMDFe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
             FchMDFe           := protMDFe.chMDFe;
           end;
+        end;
+
+        if (Leitor.rExtrai(1, 'procInfraSA') <> '')then
+        begin
+          FprocInfraSA.nProtDTe := Leitor.rCampo(tcStr, 'nProtDTe');
+          FprocInfraSA.dhProt := Leitor.rCampo(tcDatHor, 'dhProt');
         end;
       end;
 

@@ -226,6 +226,32 @@ namespace ACBrLib.NFe
 
         public decimal? vICMSSubstituto { get; set; }
 
+        public decimal? adRemICMS { get; set; }
+
+        public decimal? vICMSMono { get; set; }
+
+        public decimal adRemICMSReten { get; set; }
+
+        public decimal? vICMSMonoReten { get; set; }
+
+        public decimal? vICMSMonoDif { get; set; }
+
+        public decimal adRemICMSRet { get; set; }
+
+        public decimal? vICMSMonoRet { get; set; }
+
+        public decimal? qBCMono { get; set; }
+
+        public decimal? qBCMonoReten { get; set; }
+
+        public decimal? pRedAdRem { get; set; }
+
+        public MotRedAdRem motRedAdRem { get; set; }
+
+        public decimal? qBCMonoRet { get; set; }
+
+        public decimal? vICMSMonoOp { get; set; }
+
         #endregion Properties
     }
 }

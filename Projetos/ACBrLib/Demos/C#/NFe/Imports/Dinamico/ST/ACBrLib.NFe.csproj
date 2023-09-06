@@ -143,6 +143,7 @@
     <Compile Include="..\Shared\NotaFiscal\TransportadorNFe.cs" Link="NotaFiscal\TransportadorNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\VeiculoNFe.cs" Link="NotaFiscal\VeiculoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\VolumeNFe.cs" Link="NotaFiscal\VolumeNFe.cs" />
+    <Compile Include="..\Shared\NotaFiscal\MotRedAdRem.cs" Link="NotaFiscal\MotRedAdRem.cs" />	  
     <Compile Include="..\Shared\Respostas\CancelamentoResposta.cs" Link="Respostas\CancelamentoResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultaNFeDetEventoResposta.cs" Link="Respostas\ConsultaNFeDetEventoResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultaNFeInfCanResposta.cs" Link="Respostas\ConsultaNFeInfCanResposta.cs" />

@@ -101,6 +101,18 @@
 
         public decimal? vICMSUFRemet { get; set; }
 
+        public decimal? qBCMono { get; set; }
+
+        public decimal? vICMSMono { get; set; }
+
+        public decimal? qBCMonoReten { get; set; }
+
+        public decimal? vICMSMonoReten { get; set; }
+
+        public decimal? qBCMonoRet { get; set; }
+
+        public decimal? vICMSMonoRet { get; set; }
+
         #endregion Properties
     }
 }

@@ -42,6 +42,14 @@
 
         [EnumValue("41rep")] cstRep41,
 
-        [EnumValue("60rep")] cstRep60
+        [EnumValue("60rep")] cstRep60,
+
+        [EnumValue("02")] cst02,
+
+        [EnumValue("15")] cst15,
+
+        [EnumValue("53")] cst53,
+
+        [EnumValue("61")] cst61
     }
 }

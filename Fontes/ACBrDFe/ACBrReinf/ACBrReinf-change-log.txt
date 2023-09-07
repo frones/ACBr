@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2023
+-- pcnConversaoReinf, evt4010PagtoBeneficiarioPF-v2_01_02.xsd --
+[*] Ajustes da NT 03/2023
+  Por: Renato Rubinho
+
 22/08/2023
 -- pcnGeradorReinf --
 [*] Configurada Produção Restrita para gerar os eventos síncronos, da versão 1.5.1, na versão 2.1.2

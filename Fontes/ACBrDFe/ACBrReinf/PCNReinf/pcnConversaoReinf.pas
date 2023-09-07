@@ -181,7 +181,8 @@ type
                             itdFapi,       // 3 - Fapi
                             itdFunpresp,   // 4 - Funpresp
                             itdPensao,     // 5 - Pensão Alimentícia
-                            itdDependentes // 7 - Dependentes
+                            itdDependentes,// 7 - Dependentes
+                            itdDescontoSimplMensal// 8 - Desconto simplificado mensal
                             );
 
   TtpIsencao              = (
@@ -920,13 +921,13 @@ end;
 
 function indTpDeducaoToStr(const t: TindTpDeducao): string;
 begin
-  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '7']);
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '7', '8']);
 end;
 
 function StrToindTpDeducao(var ok: boolean; const s: string): TindTpDeducao;
 begin
   result := TindTpDeducao(StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5',
-                                                    '7']));
+                                                    '7', '8']));
 end;
 
 function tpIsencaoToStr(const t: TtpIsencao): string;

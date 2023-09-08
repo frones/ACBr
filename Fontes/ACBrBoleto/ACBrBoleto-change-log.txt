@@ -52,7 +52,10 @@ Símbolo : Significado
 [+]TK-4089 ACBrBoletoW_Itau_API, ACBrBoletoRet_Itau_API - Nova API Itau v2 (ultima semana SandBox esta instável, mas liberado para testes dos usuários)
 https://www.projetoacbr.com.br/forum/topic/65868-emiss%C3%A3o-de-boleto-com-registro-online-ita%C3%BA-na-api-v2/?do=findComment&comment=471043&_rid=1706
 Por: Julianops / Daniel Morais
-
+--- ACBrBancoItau---
+[+]TK-4349 Correção dos codigos de protesto 81, 82 conforme manual;
+https://www.projetoacbr.com.br/forum/topic/73778-ita%C3%BA-novos-c%C3%B3digos-para-protesto81-82-cnab400/
+    Por IBS Sistemas / Verificado Daniel Morais
 01/09/2023
 --- ACBrBoletoRet_Sicredi_APIV2, ACBrBoletoRetorno---
 [+] Adicionado a letura do Valor desconto 3 e Data Desconto 3 

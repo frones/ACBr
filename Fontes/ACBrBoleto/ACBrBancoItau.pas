@@ -311,8 +311,8 @@ begin
     if ((DataProtesto > 0) and (DataProtesto > Vencimento)) then
     begin
       case TipoDiasProtesto of
-        diCorridos : Result := '34';
-        diUteis    : Result := '35';
+        diCorridos : Result := '81';
+        diUteis    : Result := '82';
       else
         Result := '';
       end;

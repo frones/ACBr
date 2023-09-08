@@ -12909,7 +12909,7 @@ function SiglaISO2ToCodIBGEPais(const t: string): Integer;
 var
   i: Integer;
 begin
-  Result := -1;
+  Result := 0;
 
   for i := Low(SiglaISO2Pais) to High(SiglaISO2Pais) do
   begin

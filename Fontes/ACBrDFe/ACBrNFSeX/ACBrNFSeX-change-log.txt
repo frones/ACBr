@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/09/2023
+-- ACBrNFSeXConversao/PadraoNacional.GravarXml/PadraoNacional.LerXml --
+[*] Melhorias diversas na geração e leitura do XML.
+   Por: Italo Giurizzato Junior
 -- eReceita.Provider --
 [-] URL do SoapAction de homologação diferente do que consta no WSDL.
     Realizado a correção.

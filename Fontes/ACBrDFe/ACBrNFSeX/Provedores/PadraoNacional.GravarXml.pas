@@ -246,7 +246,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'xNome', 1, 300, 0,
                                                NFSe.Prestador.RazaoSocial, ''));
 
-  Result.AppendChild(GerarEnderecoPrestador);
+  if NFSe.tpEmit <> tePrestador then
+    Result.AppendChild(GerarEnderecoPrestador);
 
   Result.AppendChild(AddNode(tcStr, '#1', 'fone', 6, 20, 0,
                                           NFSe.Prestador.Contato.Telefone, ''));

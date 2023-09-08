@@ -774,7 +774,7 @@ begin
 
   if AuxNode <> nil then
   begin
-    NFSe.infID.ID := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
+    NFSe.infID.ID := OnlyNumber(ObterConteudoTag(AuxNode.Attributes.Items['Id']));
     NFSe.DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
     NFSe.verAplic := ObterConteudo(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
     NFSe.IdentificacaoRps.Serie := ObterConteudo(AuxNode.Childrens.FindAnyNs('serie'), tcStr);
@@ -805,7 +805,7 @@ begin
   begin
     with NFSe.infNFSe do
     begin
-      ID := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
+      ID := OnlyNumber(ObterConteudoTag(AuxNode.Attributes.Items['Id']));
       xLocEmi := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLocEmi'), tcStr);
       xLocPrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLocPrestacao'), tcStr);
       nNFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('nNFSe'), tcStr);

@@ -14,11 +14,11 @@ namespace ACBrLib.Core.CTe
 
         public string nDoc { get; set; }
 
-        public DateTime dEmi { get; set; }
+        public DateTime? dEmi { get; set; }
 
         public decimal vDocFisc { get; set; }
 
-        public DateTime dPrev { get; set; }
+        public DateTime? dPrev { get; set; }
 
         public List<InfUnidCargaCTe> InfUnidCarga { get; set; } = new List<InfUnidCargaCTe>();
 

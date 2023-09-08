@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 08/09/2023
+-- eReceita.Provider --
+[-] URL do SoapAction de homologação diferente do que consta no WSDL.
+    Realizado a correção.
+   Por: Italo Giurizzato Junior
 -- Giap.GravarXml --
 [-] Ao gerar o conteudo da tag documento estava considerando como Int64 em vez de String.
     Com isso os zeros a esquerda não constavam na tag.

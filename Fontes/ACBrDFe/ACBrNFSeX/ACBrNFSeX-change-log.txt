@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/09/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Nova Santa Rosa/PR, o provedor é IPM.
+   Por: Marcos
+[*] A cidade de São Gortado/MG, Mudou de provedor, agora é eReceita.
+   Por: Elison M. Carvalho
+[*] A cidade de Nerópolis/GO, Mudou de provedor, agora é Sigep.
+   Por: Danio
+
 05/09/2023
 -- Diversos --
 [*] Alguns provedores que permitem uma lista de serviços não estava calculando

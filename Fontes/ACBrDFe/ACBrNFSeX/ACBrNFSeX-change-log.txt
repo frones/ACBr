@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 08/09/2023
+-- Giap.GravarXml --
+[-] Ao gerar o conteudo da tag documento estava considerando como Int64 em vez de String.
+    Com isso os zeros a esquerda não constavam na tag.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Nova Santa Rosa/PR, o provedor é IPM.
    Por: Marcos

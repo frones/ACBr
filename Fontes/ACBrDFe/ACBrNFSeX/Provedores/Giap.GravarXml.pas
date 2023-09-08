@@ -170,7 +170,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 30, 0,
                                         NFSe.Tomador.Endereco.Complemento, ''));
 
-  Result.AppendChild(AddNode(tcInt64, '#1', 'documento', 1, 14, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'documento', 1, 14, 1,
                     OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'email', 1, 14, 1,

@@ -234,7 +234,10 @@ uses
   ACBrBoletoW_Inter_API,
   ACBrBoletoRet_Inter_API,
   ACBrBoletoW_Bancoob,
-  ACBrBoletoRet_Bancoob;
+  ACBrBoletoRet_Bancoob,
+  ACBrBoletoW_Itau_API,
+  ACBrBoletoRet_Itau_API
+  ;
 
 { TRetornoEnvioClass }
 
@@ -356,8 +359,16 @@ begin
       end;
     cobItau:
       begin
-        FBoletoWSClass := TBoletoW_Itau.Create(Self);
-        FRetornoBanco  := TRetornoEnvio_Itau.Create(FBoleto);
+        if UpperCase(FBoleto.Configuracoes.WebService.VersaoDF) = 'V2' then
+        begin //API V2 (NOVA 2023)
+          FBoletoWSClass := TBoletoW_Itau_API.Create(Self);
+          FRetornoBanco  := TRetornoEnvio_Itau_API.Create(FBoleto);
+        end else
+        begin
+          FBoletoWSClass := TBoletoW_Itau.Create(Self);
+          FRetornoBanco  := TRetornoEnvio_Itau.Create(FBoleto);
+        end;
+
       end;
     cobCrediSIS:
       begin

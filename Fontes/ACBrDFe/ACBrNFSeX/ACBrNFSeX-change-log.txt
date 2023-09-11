@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/09/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Concordia/SC, Mudou a URL o provedor continua o mesmo.
+   Por: Diogo Weitz
+
 08/09/2023
 -- ACBrNFSeXNotasFiscais --
 [*] Alterado o método que lê o arquivo INI, estava faltando a leitura do campo

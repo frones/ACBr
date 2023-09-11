@@ -51,9 +51,11 @@ uses SysUtils,
      ACBrDFeReport;
 
 const
-  cMsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", '+
-                  'disponível na AppStore (Apple) e PlayStore (Android)';
+  cMsgAppQRCodeSP = 'Consulte o QR Code pelo aplicativo  "De olho na nota", '+
+                    'disponível na AppStore (Apple) e PlayStore (Android)';
 
+  cMsgAppQRCodeCE = 'Consulte o QR Code pelo aplicativo  "Sua Nota Tem Valor", '+
+                    'disponível na AppStore (Apple) e PlayStore (Android)';
 type
    TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
@@ -137,7 +139,8 @@ type
 
 implementation
 
-uses ACBrSAT, ACBrSATClass, ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.FilesIO;
+uses ACBrSAT, ACBrSATClass, ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.FilesIO,
+  StrUtils;
 
 { TACBrSATExtratoClass }
 constructor TACBrSATExtratoClass.Create(AOwner: TComponent);
@@ -155,14 +158,14 @@ begin
   {$ENDIF}
   FImprimeQRCode  := True;
   FFiltro         := fiNenhum;
-  FMsgAppQRCode   := ACBrStr(cMsgAppQRCode);
+
   FImprimeMsgOlhoNoImposto := True;
-  FImprimeCPFNaoInformado := True;
-  FImprimeEmUmaLinha := True;
-  FImprimeDescAcrescItem := True;
-  FImprimeCodigoEan := False;
-  FImprimeQRCodeLateral := True;
-  FImprimeLogoLateral := True;
+  FImprimeCPFNaoInformado  := True;
+  FImprimeEmUmaLinha       := True;
+  FImprimeDescAcrescItem   := True;
+  FImprimeCodigoEan        := False;
+  FImprimeQRCodeLateral    := True;
+  FImprimeLogoLateral      := True;
 
   FormularioContinuo := True;
 end;
@@ -292,6 +295,9 @@ begin
   end
   else
     FCFe := ACFe;
+
+  if TACBrSAT(ACBrSAT).Extrato.MsgAppQRCode = '' then
+    FMsgAppQRCode := ACBrStr(ifThen(FCFe.ide.cUF = 35,cMsgAppQRCodeSP,cMsgAppQRCodeCE));
 end;
 
 procedure TACBrSATExtratoClass.SetInternalCFeCanc(ACFeCanc: TCFeCanc);

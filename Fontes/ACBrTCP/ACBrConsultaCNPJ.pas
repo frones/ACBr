@@ -165,6 +165,8 @@ begin
 end;*)
 
 procedure TACBrConsultaCNPJ.Captcha(Stream: TStream);
+var
+  LErro : String;
 begin
   try
     HTTPGet(LerSessaoChaveIni('ENDERECOS','CAPTCH'));  // GetCaptchaURL
@@ -176,7 +178,15 @@ begin
     end;
   except
     on E: Exception do
-      raise EACBrConsultaCNPJException.Create('Erro na hora de fazer o download da imagem do captcha.'+sLineBreak+E.Message);
+    begin
+      LErro := 'Erro na hora de fazer o download da imagem do captcha.';
+      if HttpSend.ResultCode = 404 then
+        LErro := LErro + sLineBreak + 'Serviço depreciado pela RFB! não disponivel para consulta.'
+      else
+        LErro := LErro + sLineBreak + E.Message;
+
+      raise EACBrConsultaCNPJException.Create(LErro);
+    end;
   end;
 end;
 

@@ -221,6 +221,9 @@ begin
 end;
 
 procedure TACBrSATExtratoFR.CarregaParametros;
+var
+  LStream            : TMemoryStream;
+  LStringStream      : TStringStream;
 begin
   with cdsParametros do
   begin
@@ -229,12 +232,33 @@ begin
     Append;
 
     FieldByName('QtdeItens').AsInteger := FCFe.Det.Count;
-    FieldByName('Imagem').AsString := Ifthen(Self.Logo <> '', Self.Logo,'');
     FieldByName('Sistema').AsString := Ifthen(Self.Sistema <> '',Self.Sistema,'Projeto ACBr - https://www.projetoacbr.com.br');
     FieldByName('Usuario').AsString := Ifthen(Self.Usuario <> '', Self.Usuario,'');
     FieldByName('MsgAppQRCode').AsString := Ifthen(Self.MsgAppQRCode <> '', Self.MsgAppQRCode,'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)');
+
+    // Carregamento da imagem
     if Self.Logo <> '' then
-      TBlobField(FieldByName('LogoCarregado')).LoadFromFile(Self.Logo);
+    begin
+      FieldByName('Imagem').AsString := Self.Logo;
+      LStream                        := TMemoryStream.Create;
+      try
+        if FileExists(Self.Logo) then
+          LStream.LoadFromFile(Self.Logo)
+        else
+        begin
+          LStringStream := TStringStream.Create(Self.Logo);
+          try
+            LStream.LoadFromStream(LStringStream);
+          finally
+            LStringStream.Free;
+          end;
+        end;
+        LStream.Position := 0;
+        TBlobField(cdsParametros.FieldByName('LogoCarregado')).LoadFromStream(LStream);
+      finally
+        LStream.Free;
+      end;
+    end;
     Post;
   end;
 end;

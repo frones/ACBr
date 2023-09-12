@@ -273,7 +273,7 @@ begin
   FImprimeMsgOlhoNoImposto := True;
   FImprimeCPFNaoInformado := True;
   FFiltro := fiNenhum;
-  FMsgAppQRCode := ACBrStr(cMsgAppQRCode);
+//  FMsgAppQRCode := ACBrStr(cMsgAppQRCode);
   FImprimeEmUmaLinha := True;
   FImprimeDescAcrescItem := True;
   FUsaCodigoEanImpressao := False;

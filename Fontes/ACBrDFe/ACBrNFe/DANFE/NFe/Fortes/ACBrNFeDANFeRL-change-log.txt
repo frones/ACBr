@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2023
+-- ACBrNFeDANFeRLPaisangem --
+[*] TK-4407 - Alteração visando a descrição do produto não sobrepor a coluna do NCM.
+  por : Rodrigo Pachesen - ApoioInf
+
 04/05/2023
 -- ACBrNFeDANFeRLRetrato --
 [*] TK-2275 - add msg NFe não protocolada na sefaz na area central rllHomologacao, qdo nao enviada a sefaz

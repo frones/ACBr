@@ -234,6 +234,9 @@ begin
         ValorLiquidoNfse := ValorServicos -
                             (RetencoesFederais + ValorDeducoes + DescontoCondicionado +
                              DescontoIncondicionado + ValorIssRetido);
+
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
       end;
     end;
   end;

@@ -232,6 +232,9 @@ begin
         ValorInss := ObterConteudo(ANode.Childrens.FindAnyNs('valor_inss'), tcDe2);
 
         RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
       end;
     end;
 
@@ -359,6 +362,9 @@ begin
         BaseCalculo := ObterConteudo(ANode.Childrens.FindAnyNs('bc_inss'), tcDe2);
         AliquotaInss := ObterConteudo(ANode.Childrens.FindAnyNs('aliq_inss'), tcDe2);
         ValorInss := ObterConteudo(ANode.Childrens.FindAnyNs('valor_inss'), tcDe2);
+
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
       end;
     end;
 

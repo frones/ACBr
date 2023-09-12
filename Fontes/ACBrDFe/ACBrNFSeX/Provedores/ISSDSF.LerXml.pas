@@ -425,6 +425,9 @@ begin
                          DescontoIncondicionado + ValorIssRetido);
 
     BaseCalculo := ValorServicos - (ValorDeducoes + DescontoIncondicionado);
+
+    ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                            DescontoIncondicionado;
   end;
 end;
 

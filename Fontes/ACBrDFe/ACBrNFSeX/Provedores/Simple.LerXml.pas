@@ -199,6 +199,10 @@ begin
     Servico.Valores.BaseCalculo := ObterConteudo(ANode.Childrens.FindAnyNs('nValorBaseCalculo'), tcDe2);
 
     Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos;
+
+    Servico.Valores.ValorTotalNotaFiscal := Servico.Valores.ValorServicos -
+                                            Servico.Valores.DescontoCondicionado -
+                                            Servico.Valores.DescontoIncondicionado;
   end;
 
   LerTomador(ANode);

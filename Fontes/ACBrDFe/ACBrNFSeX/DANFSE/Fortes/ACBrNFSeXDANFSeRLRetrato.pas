@@ -453,7 +453,8 @@ begin
 
     with Servico.Valores do
     begin
-      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ ' + FormatFloat(',0.00', ValorServicos);
+      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ ' +
+                               FormatFloat(',0.00', ValorTotalNotaFiscal);
       rlmCodServico.Lines.Clear;
 
       if (Servico.xItemListaServico = '') and (Servico.ItemServico.Count > 0) then

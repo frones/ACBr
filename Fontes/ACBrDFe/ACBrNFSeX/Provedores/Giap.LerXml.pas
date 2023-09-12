@@ -226,6 +226,9 @@ begin
         (ValorDeducoes + DescontoCondicionado + DescontoIncondicionado +
                                                                 ValorIssRetido);
       BaseCalculo      := ValorLiquidoNfse;
+
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
     end;
   end;
 end;

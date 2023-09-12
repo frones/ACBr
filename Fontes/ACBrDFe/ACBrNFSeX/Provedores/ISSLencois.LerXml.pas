@@ -372,6 +372,9 @@ begin
     ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
                         ValorIssRetido - DescontoIncondicionado -
                         DescontoCondicionado;
+
+    ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                            DescontoIncondicionado;
   end;
 
   AuxNode := ANode.Childrens.FindAnyNs('Cancelamento');

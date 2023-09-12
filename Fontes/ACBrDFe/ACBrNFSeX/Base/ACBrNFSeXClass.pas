@@ -378,13 +378,8 @@ type
     FtribFed: TtribFed;
     FtotTrib: TtotTrib;
     FTipoDeducao: TTipoDeducao;
-    FValorPisRetido: Double;
-    FValorCofinsRetido: Double;
-    FValorInssRetido: Double;
-    FValorIrRetido: Double;
-    FValorCsllRetido: Double;
-    FValorCppRetido: Double;
     FRetencoesFederais: Double;
+    FValorTotalNotaFiscal: Double;
 
     procedure SetDocDeducao(const Value: TDocDeducaoCollection);
   public
@@ -441,12 +436,6 @@ type
     property RetidoIr: TnfseSimNao read FRetidoIr write FRetidoIr;
     property RetidoCsll: TnfseSimNao read FRetidoCsll write FRetidoCsll;
     property RetidoCpp: TnfseSimNao read FRetidoCpp write FRetidoCpp;
-    property ValorPisRetido: Double read FValorPisRetido write FValorPisRetido;
-    property ValorCofinsRetido: Double read FValorCofinsRetido write FValorCofinsRetido;
-    property ValorInssRetido: Double read FValorInssRetido write FValorInssRetido;
-    property ValorIrRetido: Double read FValorIrRetido write FValorIrRetido;
-    property ValorCsllRetido: Double read FValorCsllRetido write FValorCsllRetido;
-    property ValorCppRetido: Double read FValorCppRetido write FValorCppRetido;
     //Provedor SystemPro
     property QtdeDiaria: Double read FQtdeDiaria write FQtdeDiaria;
     property ValorTaxaTurismo: Double read FValorTaxaTurismo write FValorTaxaTurismo;
@@ -459,7 +448,9 @@ type
     property totTrib: TtotTrib read FtotTrib write FtotTrib;
     //provedor CTAConsult
     property TipoDeducao: TTipoDeducao read FTipoDeducao write FTipoDeducao;
+
     property RetencoesFederais: Double read FRetencoesFederais write FRetencoesFederais;
+    property ValorTotalNotaFiscal: Double read FValorTotalNotaFiscal write FValorTotalNotaFiscal;
   end;
 
   TDadosDeducao = class(TObject)
@@ -1537,12 +1528,6 @@ begin
     FIssRetido := stNormal;
     FValorIss := 0;
     FValorIssRetido := 0;
-    FValorPisRetido := 0;
-    FValorCofinsRetido := 0;
-    FValorInssRetido := 0;
-    FValorIrRetido := 0;
-    FValorCsllRetido := 0;
-    FValorCppRetido := 0;
     FOutrasRetencoes := 0;
     FBaseCalculo := 0;
     FAliquota := 0;
@@ -1551,6 +1536,7 @@ begin
     FDescontoCondicionado := 0;
     FValorDespesasNaoTributaveis := 0;
     FRetencoesFederais := 0;
+    FValorTotalNotaFiscal := 0;
   end;
 
   FItemServico := TItemServicoCollection.Create;

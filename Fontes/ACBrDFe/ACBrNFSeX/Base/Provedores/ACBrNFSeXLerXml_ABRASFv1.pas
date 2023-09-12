@@ -815,6 +815,9 @@ begin
 
       if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
         ValorLiquidoNfse := ValorLiq;
+
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
     end;
   end;
 end;

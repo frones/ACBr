@@ -162,6 +162,9 @@ begin
     RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
 
     ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('valorLiquidoNFSe'), tcDe2);
+
+    ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                            DescontoIncondicionado;
   end;
 
   NFSe.Servico.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('municipioPrestacao'), tcStr);

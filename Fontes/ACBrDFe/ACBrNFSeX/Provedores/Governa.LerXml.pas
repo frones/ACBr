@@ -236,6 +236,9 @@ begin
 
         RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
 
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
+
         ValorLiquidoNfse := 0;
 
         ANodes := AuxNode.Childrens.FindAllAnyNs('ItemNfse');

@@ -306,6 +306,9 @@ begin
     ValorLiquidoNfse := ValorServicos -
                         (RetencoesFederais + ValorDeducoes + ValorIssRetido +
                          DescontoCondicionado + DescontoIncondicionado);
+
+    ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                            DescontoIncondicionado;
   end;
 
   with NFSe.ValoresNfse do

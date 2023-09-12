@@ -901,45 +901,17 @@ begin
         else
           ValorIssRetido := 0;
 
-        if RetidoPis = snSim then
-          ValorPisRetido := ValorPis
-        else
-          ValorPisRetido := 0;
-
-        if RetidoCofins = snSim then
-          ValorCofinsRetido := ValorCofins
-        else
-          ValorCofinsRetido := 0;
-
-        if RetidoInss = snSim then
-          ValorInssRetido := ValorInss
-        else
-          ValorInssRetido := 0;
-
-        if RetidoIr = snSim then
-          ValorIrRetido := ValorIr
-        else
-          ValorIrRetido := 0;
-
-        if RetidoCsll = snSim then
-          ValorCsllRetido := ValorCsll
-        else
-          ValorCsllRetido := 0;
-
-        if RetidoCpp = snSim then
-          ValorCppRetido := ValorCpp
-        else
-          ValorCppRetido := 0;
-
-        RetencoesFederais := ValorPisRetido + ValorCofinsRetido +
-                             ValorInssRetido + ValorIrRetido +
-                             ValorCsllRetido + ValorCppRetido;
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr +
+                             ValorCsll + ValorCpp;
 
         ValorLiq := ValorServicos - RetencoesFederais - OutrasRetencoes -
                     ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
 
         if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse > ValorLiq) then
           ValorLiquidoNfse := ValorLiq;
+
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
       end;
     end;
   end;
@@ -1020,45 +992,17 @@ begin
         else
           ValorIssRetido := 0;
 
-        if RetidoPis = snSim then
-          ValorPisRetido := ValorPis
-        else
-          ValorPisRetido := 0;
-
-        if RetidoCofins = snSim then
-          ValorCofinsRetido := ValorCofins
-        else
-          ValorCofinsRetido := 0;
-
-        if RetidoInss = snSim then
-          ValorInssRetido := ValorInss
-        else
-          ValorInssRetido := 0;
-
-        if RetidoIr = snSim then
-          ValorIrRetido := ValorIr
-        else
-          ValorIrRetido := 0;
-
-        if RetidoCsll = snSim then
-          ValorCsllRetido := ValorCsll
-        else
-          ValorCsllRetido := 0;
-
-        if RetidoCpp = snSim then
-          ValorCppRetido := ValorCpp
-        else
-          ValorCppRetido := 0;
-
-        RetencoesFederais := ValorPisRetido + ValorCofinsRetido +
-                             ValorInssRetido + ValorIrRetido +
-                             ValorCsllRetido + ValorCppRetido;
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr +
+                             ValorCsll + ValorCpp;
 
         ValorLiq := ValorServicos - RetencoesFederais - OutrasRetencoes -
                     ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
 
         if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse > ValorLiq) then
           ValorLiquidoNfse := ValorLiq;
+
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
       end;
     end;
   end;

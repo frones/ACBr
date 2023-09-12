@@ -290,6 +290,9 @@ begin
       DescontoIncondicionado := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('ValorDescontoIncondicionado').Content, '.', '', [rfReplaceAll]), 0);
 
       RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
     end;
   end;
 end;

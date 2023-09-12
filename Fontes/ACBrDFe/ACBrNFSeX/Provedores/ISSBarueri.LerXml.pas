@@ -121,6 +121,10 @@ begin
   NFSe.Servico.Valores.Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe2);
   NFSe.Servico.Valores.ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
   NFSe.Servico.Valores.ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorLiquidoNfe'), tcDe2);
+
+  NFSe.Servico.Valores.ValorTotalNotaFiscal := NFSe.Servico.Valores.ValorServicos -
+                                               NFSe.Servico.Valores.DescontoCondicionado -
+                                               NFSe.Servico.Valores.DescontoIncondicionado;
 end;
 
 procedure TNFSeR_ISSBarueri.LerPrestadorServico(const ANode: TACBrXmlNode);

@@ -289,9 +289,14 @@ begin
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
     with NFSe.Servico.Valores do
+    begin
       ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
                           ValorIssRetido - DescontoIncondicionado -
                           DescontoCondicionado;
+
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
+    end;
   end;
 end;
 

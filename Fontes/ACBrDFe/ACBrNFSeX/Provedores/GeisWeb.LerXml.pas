@@ -327,6 +327,9 @@ begin
       ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('IssDevido'), tcDe2);
       ValorIssRetido := ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcDe2);
       ValorLiquidoNfse := ValorServicos - ValorInss - ValorIssRetido;
+
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
     end;
   end;
 end;

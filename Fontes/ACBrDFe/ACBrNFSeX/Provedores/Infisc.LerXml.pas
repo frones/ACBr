@@ -629,6 +629,9 @@ begin
       DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('vDesc'), tcDe2);
       ValorLiquidoNfse       := ObterConteudo(AuxNode.Childrens.FindAnyNs('vtLiq'), tcDe2);
 
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
+
       // versão 1.1
       ValorDespesasNaoTributaveis := ObterConteudo(AuxNode.Childrens.FindAnyNs('vtDespesas'), tcDe2);
     end;

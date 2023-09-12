@@ -330,6 +330,9 @@ begin
         ValorLiquidoNfse := ValorServicos -
                             (RetencoesFederais + ValorDeducoes + ValorIssRetido +
                              DescontoCondicionado + DescontoIncondicionado);
+
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
       end;
     end;
 
@@ -480,6 +483,9 @@ begin
           IssRetido := stRetencao;
 
         ValorLiquidoNfse := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('ValorLiquidoNfse'), tcDe2);
+
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
       end;
     end;
 

@@ -253,36 +253,36 @@ var
       AdicionaCollectionItem(JSon, Collection);
     end;
   end;
+
+  procedure VerificaSeObjetoOuArray(aNome: string; Collection: TNFSeEventoCollection);
+  begin
+    // Verifica se no retorno contem um objeto ou array
+    if LJson.IsJSONArray(aNome) then
+    begin
+      JSonLista := LJson.AsJSONArray[aNome];
+
+      if JSonLista.Count > 0 then
+        LerListaErrosAlertas(JSonLista, Collection);
+    end
+    else
+    begin
+      JSon := LJson.AsJSONObject[aNome];
+
+      if JSon <> nil then
+        AdicionaCollectionItem(JSon, Collection);
+    end;
+  end;
 begin
   // Verifica se no retorno contem a lista de Erros
-  JSonLista := LJson.AsJSONArray[AListTag];
-
+  VerificaSeObjetoOuArray(AListTag, Response.Erros);
   // Verifica se no retorno contem a lista de erros
-  if JSonLista.Count = 0 then
-    JSonLista := LJson.AsJSONArray['erros'];
-
-  if JSonLista.Count > 0 then
-    LerListaErrosAlertas(JSonLista, Response.Erros);
-
+  VerificaSeObjetoOuArray('erros', Response.Erros);
+  // Verifica se no retorno contem a lista de erro
+  VerificaSeObjetoOuArray('erro', Response.Erros);
   // Verifica se no retorno contem a lista de Alertas
-  JSonLista := LJson.AsJSONArray['Alertas'];
-
-  if JSonLista.Count > 0 then
-    LerListaErrosAlertas(JSonLista, Response.Alertas);
-
-  // Verifica se no retorno contem o elemento erro  (erro unico no retorno)
-  if LJson.IsJSONArray('erro') then
-  begin
-    JSonLista := LJson.AsJSONArray['erro'];
-    LerListaErrosAlertas(JSonLista, Response.Erros);
-  end
-  else
-  begin
-    JSon := LJson.AsJSONObject['erro'];
-
-    if JSon <> nil then
-      AdicionaCollectionItem(JSon, Response.Erros);
-  end;
+  VerificaSeObjetoOuArray('Alertas', Response.Alertas);
+  // Verifica se no retorno contem a lista de Alertas
+  VerificaSeObjetoOuArray('alertas', Response.Alertas);
 end;
 
 procedure TACBrNFSeProviderPadraoNacional.PrepararEmitir(
@@ -374,8 +374,11 @@ begin
 
       Response.Data := Document.AsISODateTime['dataHoraProcessamento'];
       Response.idNota := Document.AsString['idDPS'];
+
+      if Response.idNota = '' then
+        Response.idNota := Document.AsString['idDps'];
+
       Response.Link := Document.AsString['chaveAcesso'];
-      Response.Link := StringReplace(Response.Link, '&amp;', '&', [rfReplaceAll]);
       NFSeXml := Document.AsString['nfseXmlGZipB64'];
 
       if NFSeXml <> '' then

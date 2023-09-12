@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 12/09/2023
+-- PadraoNacional.Provider --
+[*] Ajustes para ler o objeto "alertas" ao processar as mensagens de erros e alertas.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Acrescentado o campo ValorTotalNotaFiscal que calcula o valor total 
     com base no valor do serviço e nos descontos condicionais e incondicionais.

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/09/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Rondonopolis/MT, Mudou de provedor, agora é Agili.
+   Por: Guilherme Vaz
+
 11/09/2023
 -- ACBrNFSeXServicos --
 [*] A cidade de Concordia/SC, Mudou a URL o provedor continua o mesmo.

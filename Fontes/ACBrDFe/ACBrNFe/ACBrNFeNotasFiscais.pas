@@ -431,11 +431,12 @@ const
   SEM_GTIN = 'SEM GTIN';
 var
   Erros: String;
-  I, J: Integer;
+  I, J, CodigoUF: Integer;
   Inicio, Agora, UltVencto: TDateTime;
-  fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
-  fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag, fsvPISST, fsvCOFINSST : Currency;
-  fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol, fsvDup, fsvPISServico, fsvCOFINSServico : Currency;
+  fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete,
+  fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF,
+  fsvTotPag, fsvPISST, fsvCOFINSST, fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol,
+  fsvDup, fsvPISServico, fsvCOFINSServico : Currency;
   FaturamentoDireto, NFImportacao, UFCons, bServico : Boolean;
 
   procedure GravaLog(AString: String);
@@ -587,11 +588,16 @@ begin
       AdicionaErro('276-Rejeição: Código Município do Local de Retirada: dígito inválido');
 
     GravaLog('Validar: 277-Cod Município Retirada diferente UF');
-    if NaoEstaVazio(NFe.Retirada.UF) and
-     (NFe.Retirada.cMun > 0)then
-    if (UFparaCodigo(NFe.Retirada.UF) <> StrToIntDef(
-      copy(IntToStr(NFe.Retirada.cMun), 1, 2), 0)) then
-      AdicionaErro('277-Rejeição: Código Município do Local de Retirada: difere da UF do Local de Retirada');
+    if NaoEstaVazio(NFe.Retirada.UF) and (NFe.Retirada.cMun > 0) then
+    begin
+      if NFe.Retirada.UF = 'EX' then
+        CodigoUF := 99
+      else
+        CodigoUF := UFparaCodigo(NFe.Retirada.UF);
+
+      if (CodigoUF <> StrToIntDef(Copy(IntToStr(NFe.Retirada.cMun), 1, 2), 0)) then
+        AdicionaErro('277-Rejeição: Código Município do Local de Retirada: difere da UF do Local de Retirada');
+    end;
 
     GravaLog('Validar: 515-Cod Município Entrega EX');
     if (NFe.Entrega.UF = 'EX') and
@@ -605,11 +611,16 @@ begin
       AdicionaErro('278-Rejeição: Código Município do Local de Entrega: dígito inválido');
 
     GravaLog('Validar: 279-Cod Município Entrega diferente UF');
-    if NaoEstaVazio(NFe.Entrega.UF)and
-      (NFe.Entrega.cMun > 0) then
-    if (UFparaCodigo(NFe.Entrega.UF) <> StrToIntDef(
-      copy(IntToStr(NFe.Entrega.cMun), 1, 2), 0)) then
-      AdicionaErro('279-Rejeição: Código Município do Local de Entrega: difere da UF do Local de Entrega');
+    if NaoEstaVazio(NFe.Entrega.UF) and (NFe.Entrega.cMun > 0) then
+    begin
+      if NFe.Entrega.UF = 'EX' then
+        CodigoUF := 99
+      else
+        CodigoUF := UFparaCodigo(NFe.Entrega.UF);
+
+      if (CodigoUF <> StrToIntDef(Copy(IntToStr(NFe.Entrega.cMun), 1, 2), 0)) then
+        AdicionaErro('279-Rejeição: Código Município do Local de Entrega: difere da UF do Local de Entrega');
+    end;
 
     GravaLog('Validar: 542-CNPJ Transportador');
     if NaoEstaVazio(Trim(NFe.Transp.Transporta.CNPJCPF)) and

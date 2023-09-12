@@ -44,6 +44,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2023
+-- ACBrNFeNotasFiscais --
+[*] Melhorias na função ValidarRegrasdeNegocios, pois estava gerando indevidamente um
+    alerta de erro ao comparar a UF da Retirada ou Entrega com o código do municipio,
+    quando a UF era 'EX'.
+    por: Italo Giurizzato Junior
+-- ACBrNFeWebServices --
+[*] Alterações visando atender a versão 1.00 da NT 2023/002 que elimina o envio
+    em lote de NFC-e a partir de 04/09/2023 em produção.
+    por: Italo Giurizzato Junior
+
 06/09/2023
 [*] Altera a validação para geração do grupo IPI no arquivo INI.
   Por: Diego Folieni

@@ -983,6 +983,23 @@ procedure TNFeRecepcao.InicializarServico;
 var
   ok: Boolean;
 begin
+  // Alteração visando atender a NT 2023/002 que elimina o envio em Lote de NFC-e
+  // a partir de 04/09/2023 - Produção
+  if FPConfiguracoesNFe.Geral.ModeloDF = moNFCe then
+  begin
+    Sincrono := True;
+
+    if FNotasFiscais.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de NFC-e transmitidas (máximo de 1 NFC-e)' +
+        ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+  end
+  else
+  begin
+    if FNotasFiscais.Count > 50 then
+      GerarException(ACBrStr('ERRO: Conjunto de NF-e transmitidas (máximo de 50 NF-e)' +
+        ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+  end;
+
   if FNotasFiscais.Count > 0 then    // Tem NFe ? Se SIM, use as informações do XML
     FVersaoDF := DblToVersaoDF(ok, FNotasFiscais.Items[0].NFe.infNFe.Versao)
   else

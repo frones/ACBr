@@ -114,13 +114,20 @@ end;
 procedure TACBrBancoSofisaItau.LerRetorno400(ARetorno: TStringList);
 var LCodBanco : Integer;
 begin
-  LCodBanco := StrToIntDef(copy(ARetorno.Strings[0],77,3),-1);
-   if (LCodBanco <> Numero) and (LCodBanco <> fpNumeroCorrespondente) then
+  try
+    LCodBanco := fpNumero;
+    fpNumero  := fpNumeroCorrespondente;
+    LCodBanco := StrToIntDef(copy(ARetorno.Strings[0],77,3),-1);
+    if (LCodBanco <> Numero) and (LCodBanco <> fpNumeroCorrespondente) then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
-                             'não é um arquivo de retorno do '+ Nome));
+                                     'não é um arquivo de retorno do '+ Nome));
 
-  ACBrBanco.ACBrBoleto.Cedente.CodigoCedente := Trim(Copy(ARetorno[1],18,20));
-  inherited;
+    ACBrBanco.ACBrBoleto.Cedente.CodigoCedente := Trim(Copy(ARetorno[1],18,20));
+    inherited;
+  finally
+    fpNumero := LCodBanco;
+  end;
+
 end;
 function TACBrBancoSofisaItau.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 var

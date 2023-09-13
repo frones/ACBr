@@ -147,7 +147,7 @@
                               <Component id="btnListarBancos" alignment="1" max="32767" attributes="0"/>
                               <Component id="btnLinhaDigitavel" alignment="0" max="32767" attributes="0"/>
                               <Component id="btnCodigoBarras" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnGerarHTML" alignment="0" pref="139" max="32767" attributes="0"/>
+                              <Component id="btnGerarHTML" alignment="0" max="32767" attributes="0"/>
                               <Component id="btnListarOcorrencias" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -168,7 +168,8 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="btnEnviarBoletoWebService" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnConsultarTitulosPorPeriodo" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -236,7 +237,10 @@
                       <Component id="btnMontarNossoNumero1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnEnviarBoletoWebService" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnEnviarBoletoWebService" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnConsultarTitulosPorPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -445,6 +449,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnviarBoletoWebServiceActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnConsultarTitulosPorPeriodo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Consultar Titulos Por Periodo"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarTitulosPorPeriodoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -946,7 +958,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="53" max="32767" attributes="0"/>
+                      <EmptySpace pref="107" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1176,7 +1188,7 @@
                           <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="txtModalidade" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="97" max="32767" attributes="0"/>
+                      <EmptySpace pref="151" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbRespEmissao" alignment="0" max="32767" attributes="0"/>
@@ -1501,7 +1513,7 @@
                               <Component id="txtNomeRetorno" min="-2" pref="167" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="255" max="32767" attributes="0"/>
+                      <EmptySpace pref="307" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1752,7 +1764,7 @@
                           <Component id="ckbSSL" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="ckbTLS" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="364" max="32767" attributes="0"/>
+                      <EmptySpace pref="416" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1991,7 +2003,7 @@
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="cmbOperacao" pref="99" max="32767" attributes="0"/>
+                                  <Component id="cmbOperacao" pref="124" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel56" min="-2" max="-2" attributes="0"/>

@@ -84,6 +84,7 @@ public class FrmMain extends javax.swing.JFrame {
         btnTamNossoNumero = new javax.swing.JButton();
         btnMontarNossoNumero1 = new javax.swing.JButton();
         btnEnviarBoletoWebService = new javax.swing.JButton();
+        btnConsultarTitulosPorPeriodo = new javax.swing.JButton();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
@@ -424,6 +425,13 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        btnConsultarTitulosPorPeriodo.setText("Consultar Titulos Por Periodo");
+        btnConsultarTitulosPorPeriodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarTitulosPorPeriodoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -452,7 +460,7 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(btnListarBancos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnLinhaDigitavel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCodigoBarras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGerarHTML, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                            .addComponent(btnGerarHTML, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnListarOcorrencias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnListarCaracTitulos, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -468,7 +476,8 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnMontarNossoNumero1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnEnviarBoletoWebService)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnConsultarTitulosPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -521,7 +530,9 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnSetDiretorioArquivos)
                     .addComponent(btnMontarNossoNumero1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEnviarBoletoWebService)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEnviarBoletoWebService)
+                    .addComponent(btnConsultarTitulosPorPeriodo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -823,7 +834,7 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(txtDirLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -973,7 +984,7 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(txtDigConta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel25)
                     .addComponent(txtModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel13)
                     .addComponent(cmbRespEmissao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1148,7 +1159,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNomeRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(307, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1251,12 +1262,12 @@ public class FrmMain extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel24)
-                            .addComponent(nudPorta, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))))
+                            .addComponent(nudPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ckbSSL)
                     .addComponent(ckbTLS))
-                .addContainerGap(364, Short.MAX_VALUE))
+                .addContainerGap(416, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1485,7 +1496,7 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(chkGravarLog)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbOperacao, 0, 99, Short.MAX_VALUE)
+                            .addComponent(cmbOperacao, 0, 124, Short.MAX_VALUE)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel56)
@@ -2373,6 +2384,23 @@ public class FrmMain extends javax.swing.JFrame {
                 selecionarDiretorio("Selecione o diretorio do Log"));
     }//GEN-LAST:event_btnPathLogActionPerformed
 
+    private void btnConsultarTitulosPorPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarTitulosPorPeriodoActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showSaveDialog(rootPane);
+            if (returnVal != JFileChooser.APPROVE_OPTION) return;
+
+            String ret = acbrBoleto.ConsultarTitulosPorPeriodo(chooser.getSelectedFile().getAbsolutePath());
+            rtbRespostas.append(ret);
+
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarTitulosPorPeriodoActionPerformed
+
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArquivoCRT;
@@ -2380,6 +2408,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnCarregarConfiguracoes;
     private javax.swing.JButton btnCodigoBarras;
     private javax.swing.JButton btnCodigoMoraAceitos;
+    private javax.swing.JButton btnConsultarTitulosPorPeriodo;
     private javax.swing.JToggleButton btnDadosCedente;
     private javax.swing.JButton btnEnviarBoletoWebService;
     private javax.swing.JToggleButton btnEnviarEmail;

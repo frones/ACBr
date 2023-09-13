@@ -133,6 +133,7 @@
             this.btnValidarCFe = new System.Windows.Forms.Button();
             this.btnGerarPDF = new System.Windows.Forms.Button();
             this.btnConsultarUltimaSessaoFiscal = new System.Windows.Forms.Button();
+            this.btnGerarPDFCancelamento = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1291,11 +1292,22 @@
             this.btnConsultarUltimaSessaoFiscal.UseVisualStyleBackColor = true;
             this.btnConsultarUltimaSessaoFiscal.Click += new System.EventHandler(this.btnConsultarUltimaSessaoFiscal_Click);
             // 
+            // btnGerarPDFCancelamento
+            // 
+            this.btnGerarPDFCancelamento.Location = new System.Drawing.Point(12, 498);
+            this.btnGerarPDFCancelamento.Name = "btnGerarPDFCancelamento";
+            this.btnGerarPDFCancelamento.Size = new System.Drawing.Size(230, 23);
+            this.btnGerarPDFCancelamento.TabIndex = 48;
+            this.btnGerarPDFCancelamento.Text = "Gerar PDF CFe-SAT Cancelamento";
+            this.btnGerarPDFCancelamento.UseVisualStyleBackColor = true;
+            this.btnGerarPDFCancelamento.Click += new System.EventHandler(this.btnGerarPDFCancelamento_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 502);
+            this.ClientSize = new System.Drawing.Size(742, 539);
+            this.Controls.Add(this.btnGerarPDFCancelamento);
             this.Controls.Add(this.btnConsultarUltimaSessaoFiscal);
             this.Controls.Add(this.btnGerarPDF);
             this.Controls.Add(this.btnValidarCFe);
@@ -1454,6 +1466,7 @@
         private System.Windows.Forms.Button btnSelectSchema;
         private System.Windows.Forms.Button btnGerarPDF;
         private System.Windows.Forms.Button btnConsultarUltimaSessaoFiscal;
+        private System.Windows.Forms.Button btnGerarPDFCancelamento;
     }
 }
 

@@ -412,6 +412,19 @@ namespace ACBrLib.Sat
             return PDFExtratoVendaResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
+        public PDFExtratoVendaResposta GerarPDFCancelamento(string eArqXMLVenda, string eArqXMLCancelamento, string eNomeArquivo)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_GerarPDFCancelamento>();
+            var ret = ExecuteMethod(() => method(ToUTF8(eArqXMLVenda), ToUTF8(eArqXMLCancelamento), ToUTF8(eNomeArquivo), buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return PDFExtratoVendaResposta.LerResposta(ProcessResult(buffer, bufferLen));
+        }
+
         public string GerarImpressaoFiscalMFe(string eArquivoXml)
         {
             var bufferLen = BUFFER_LEN;

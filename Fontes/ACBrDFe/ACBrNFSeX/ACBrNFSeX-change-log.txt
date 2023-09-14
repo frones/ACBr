@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/09/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Melhoria nas funções de leitura e geração do arquivo INI para adequação ao Padrão Nacional.
+   Por: Diego Folieni
 
 12/09/2023
 -- PadraoNacional.Provider --

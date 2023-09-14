@@ -751,8 +751,8 @@ begin
                  IntToStrZero(FSequencia, 5)                                           + // 009-013 / Nº Sequencial do Registro de Lote
                  'P'                                                                   + // 014-014 / Cód. Segmento do Regsitro Detalhe
                  ' '                                                                   + // 015-015 / Campo sem Preenchimento
-                 '01'                                                                  + // 016-017 / Código de Movimento remessa
-                 PadRight(Agencia, 5, '0')                                              + // 018-022 / Agência Mantenedora da Conta
+                 sCodMovimento                                                         + // 016-017 / Código de Movimento remessa
+                 PadRight(Agencia, 5, '0')                                             + // 018-022 / Agência Mantenedora da Conta
                  PadLeft(AgenciaDigito, 1)                                             + // 023-023 / Dígito Verificador da Agência
                  PadLeft(Conta, 12, '0')                                               + // 024-035 / Número da Conta Corrente
                  PadLeft(ContaDigito, 1)                                               + // 036-036 / Dígito Verificador da Conta

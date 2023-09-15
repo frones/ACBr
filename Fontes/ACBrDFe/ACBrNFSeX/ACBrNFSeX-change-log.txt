@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/09/2023
+-- ACBrNFSeXServicos --
+[*] As cidades de Tatui/SP e Cerquilho/SP, Mudaram as URLs, os provedores continuam
+   os mesmos.
+   Por: Danio
+-- ISSJoinville.Provider --
+[*] Corrigido o soapaction para o ambiente de homologação
+   Por: Renato Rubinho
+
 14/09/2023
 -- ACBrNFSeXNotasFiscais --
 [*] Melhoria nas funções de leitura e geração do arquivo INI para adequação ao Padrão Nacional.

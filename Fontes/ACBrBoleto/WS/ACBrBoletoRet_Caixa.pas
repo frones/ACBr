@@ -85,6 +85,7 @@ var
   //RetornoCaixa: TACBrBoletoRetornoWS;
   i: Integer;
   lXML: String;
+  TipoOperacao : TOperacao;
 begin
   Result := True;
 
@@ -97,7 +98,10 @@ begin
     //with RetornoCaixa do
     with ARetornoWS do
     begin
-
+      TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
+      ARetornoWS.HTTPResultCode  := HTTPResultCode;
+      ARetornoWS.JSONEnvio       := EnvWs;
+      ARetornoWS.Header.Operacao := TipoOperacao;
       CodRetorno := Leitor.rCampo(tcStr, 'COD_RETORNO');
       OriRetorno := Leitor.rCampo(tcStr, 'ORIGEM_RETORNO');
       MsgRetorno := Leitor.rCampo(tcStr, 'MSG_RETORNO');

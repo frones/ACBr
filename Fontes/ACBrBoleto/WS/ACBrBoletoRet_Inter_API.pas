@@ -118,8 +118,9 @@ var
 begin
   Result := True;
   TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
-  ARetornoWs.JSONEnvio      := EnvWs;
-  ARetornoWS.HTTPResultCode := HTTPResultCode;
+  ARetornoWS.HTTPResultCode  := HTTPResultCode;
+  ARetornoWS.JSONEnvio       := EnvWs;
+  ARetornoWS.Header.Operacao := TipoOperacao;
 
   if RetWS <> '' then
   begin
@@ -383,9 +384,7 @@ begin
             ListaRetorno.DadosRet.TituloRet.ValorDocumento       := AJSonObject.Values['valorNominal'].AsNumber;
             ListaRetorno.DadosRet.TituloRet.ValorAtual           := AJSonObject.Values['valorNominal'].AsNumber;
             ListaRetorno.DadosRet.TituloRet.ValorPago            := AJSonObject.Values['valorTotalRecebimento'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorMoraJuros       := AJSonObject.Values['mora'].asObject.Values['valor'].asNumber;
-            ListaRetorno.DadosRet.TituloRet.PercentualMulta      := AJSonObject.Values['multa'].asObject.Values['taxa'].asNumber;
-
+           
             if AJSonObject.Values['mora'].asObject.Values['codigo'].AsString = 'TAXAMENSAL' then
             begin
               ListaRetorno.DadosRet.TituloRet.CodigoMoraJuros :=  cjTaxaMensal;

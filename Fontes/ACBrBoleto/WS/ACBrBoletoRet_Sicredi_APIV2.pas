@@ -101,8 +101,9 @@ begin
   Result := True;
   TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
 
-  ARetornoWs.JSONEnvio      := EnvWs;
-  ARetornoWS.HTTPResultCode := HTTPResultCode;
+  ARetornoWs.JSONEnvio       := EnvWs;
+  ARetornoWS.HTTPResultCode  := HTTPResultCode;
+  ARetornoWS.Header.Operacao := TipoOperacao;
 
   if RetWS <> '' then
   begin
@@ -257,7 +258,7 @@ begin
           if (TipoOperacao = tpBaixa) then
           begin
             ARetornoWS.DadosRet.TituloRet.NossoNumero      := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataBaixa     := DateSicreditoDateTime( AJson.Values['dataMovimento'].AsString);
+            ARetornoWS.DadosRet.TituloRet.DataBaixa     := StrToDate( AJson.Values['dataMovimento'].AsString);
 
           end else
           if (TipoOperacao in [tpAltera]) then//,tpAlteraSeuNumero

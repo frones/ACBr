@@ -107,6 +107,7 @@ begin
   TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
   ARetornoWS.HTTPResultCode := HTTPResultCode;
   ARetornoWS.JSONEnvio      := EnvWs;
+  ARetornoWS.Header.Operacao := TipoOperacao;
   if RetWS <> '' then
   begin
     //Retorno := ACBrBoleto.CriarRetornoWebNaLista;

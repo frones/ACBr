@@ -99,9 +99,9 @@ begin
   Result := True;
 
   TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
-
-  ARetornoWs.JSONEnvio      := EnvWs;
   ARetornoWS.HTTPResultCode := HTTPResultCode;
+  ARetornoWS.JSONEnvio      := EnvWs;
+  ARetornoWS.Header.Operacao := TipoOperacao;
 
   if RetWS <> '' then
   begin

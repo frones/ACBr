@@ -92,6 +92,7 @@ var
   ARejeicao: TACBrBoletoRejeicao;
   AJSonResp,  AJSonRespDadosIndivBlt: TJsonArray;
   I: Integer;
+  TipoOperacao : TOperacao;
 begin
   Result := True;
   if RetWS <> '' then
@@ -99,8 +100,10 @@ begin
     try
       with ARetornoWS do
       begin
-        JSONEnvio      := EnvWs;
-        HTTPResultCode := HTTPResultCode;
+        TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
+        ARetornoWS.HTTPResultCode := HTTPResultCode;
+        ARetornoWS.JSONEnvio      := EnvWs;
+        ARetornoWS.Header.Operacao := TipoOperacao;
         AJSon := TJson.Create;
         try
           AJSon.Parse(RetWS);

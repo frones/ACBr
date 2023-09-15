@@ -64,7 +64,8 @@ implementation
 
 uses
   ACBrUtil.Strings,
-  ACBrUtil.DateTime;
+  ACBrUtil.DateTime,
+  ACBrBoletoConversao;
 
 { TRetornoEnvio_Santander_API }
 
@@ -85,12 +86,13 @@ var
   ARejeicao: TACBrBoletoRejeicao;
   AJSonResp: TJsonArray;
   I: Integer;
+  TipoOperacao : TOperacao;
 begin
   Result := True;
-
+  TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
   ARetornoWs.JSONEnvio      := EnvWs;
   ARetornoWS.HTTPResultCode := HTTPResultCode;
-
+  ARetornoWS.Header.Operacao := TipoOperacao;
   if RetWS <> '' then
   begin
     try

@@ -66,7 +66,8 @@ const
 implementation
 
 uses
-  ACBrUtil.XMLHTML;
+  ACBrUtil.XMLHTML,
+  ACBrBoletoConversao;
 
   { TRetornoEnvio_Credisis }
 
@@ -83,7 +84,13 @@ end;
 function TRetornoEnvio_Credisis.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
   lXML: String;
+  TipoOperacao : TOperacao;
 begin
+  TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
+  ARetornoWS.HTTPResultCode  := HTTPResultCode;
+  ARetornoWS.JSONEnvio       := EnvWs;
+  ARetornoWS.Header.Operacao := TipoOperacao;
+
   Result := True;
 
   lXML           := StringReplace(Leitor.Arquivo, 'ns1:', '', [ rfReplaceAll ]);

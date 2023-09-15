@@ -86,6 +86,7 @@ function TRetornoEnvio_BancoBrasil.LerRetorno(const ARetornoWS: TACBrBoletoRetor
 var
     //RetornoBB: TACBrBoletoRetornoWS;
     lXML: String;
+    TipoOperacao : TOperacao;
 begin
     Result := True;
 
@@ -100,7 +101,10 @@ begin
       begin
         if leitor.rExtrai(1, 'resposta') <> '' then
         begin
-
+          TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
+          ARetornoWS.HTTPResultCode  := HTTPResultCode;
+          ARetornoWS.JSONEnvio       := EnvWs;
+          ARetornoWS.Header.Operacao := TipoOperacao;
           CodRetorno := Leitor.rCampo(tcStr, 'codigoRetornoPrograma');
           OriRetorno := Leitor.rCampo(tcStr, 'nomeProgramaErro');
           MsgRetorno := Leitor.rCampo(tcStr, 'textoMensagemErro');

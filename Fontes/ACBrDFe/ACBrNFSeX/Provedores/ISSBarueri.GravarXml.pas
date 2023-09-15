@@ -140,7 +140,7 @@ begin
     PadLeft(FloatToStr(NFSe.Servico.Valores.ValorServicos * 100), 15, '0')+ // Valor do Serviço S Numérico 15 464 478 Exemplo: R$10,25 = 000000000001025
     '     '+ //  Reservado N Texto 5 479 483
     PadLeft(FloatToStr(ValorTotalRetencoes * 100), 15, '0')+ // Valor Total das Retenções S Numérico 15 484 498
-    '2'+ // Tomador Estrangeiro S Numérico 1 499 499 1 Para Tomador Estrangeiro 2 para Tomador Brasileiro
+    IfThen(Length(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) >= 11, '2', '1')+ // Tomador Estrangeiro S Numérico 1 499 499 1 Para Tomador Estrangeiro 2 para Tomador Brasileiro
     PadRight('', 3, ' ')+ // Pais da Nacionalidade do Tomador Estrangeiro S* Numérico 3 500 502 Códido do pais de nacionalidade do tomador, conforme tabela de paises, quando o tomador for estrangeiro
     '2'+ // Serviço Prestado é exportação S* Numérico 1 503 503 1 Para Serviço exportado 2 para Serviço não exportado
     IfThen(Length(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) > 11, '2', '1')+ // Indicador do CPF/CNPJ do Tomador, pegar do Pessoas a constante S* Numérico 1 504 504 1 para CPF / 2 para CNPJ

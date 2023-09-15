@@ -141,6 +141,7 @@ type
     FJurosFECP: Currency;
     FAtualMonetICMS: Currency;
     FAtualMonetFECP: Currency;
+    FnumeroControle: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -183,6 +184,7 @@ type
     property JurosFECP: Currency read FJurosFECP write FJurosFECP;
     property AtualMonetICMS: Currency read FAtualMonetICMS write FAtualMonetICMS;
     property AtualMonetFECP: Currency read FAtualMonetFECP write FAtualMonetFECP;
+    property numeroControle: string read FnumeroControle write FnumeroControle;
   end;
 
 implementation

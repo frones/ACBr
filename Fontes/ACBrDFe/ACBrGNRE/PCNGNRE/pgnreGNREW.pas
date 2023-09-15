@@ -222,7 +222,7 @@ begin
   if GNRE.c38_municipioDestinatario <> '' then
     Gerador.wCampo(tcStr, '', 'c38_municipioDestinatario   ', 001, 005, 1, GNRE.c38_municipioDestinatario, DSC_CMUN + ' Destinatário');
 
-  Gerador.wCampo(tcDat, '', 'c33_dataPagamento   ', 010, 010, 1, GNRE.c33_dataPagamento, '');
+  Gerador.wCampo(tcDat, '', 'c33_dataPagamento   ', 010, 010, 0, GNRE.c33_dataPagamento, '');
 
   if (GNRE.referencia.periodo >= 0) or (GNRE.referencia.mes <> '') or (GNRE.referencia.ano > 0) or
     (GNRE.referencia.parcela > 0) then
@@ -456,6 +456,9 @@ begin
     Gerador.wGrupo('/camposExtras');
   end;
 
+  if GNRE.numeroControle <> '' then
+    Gerador.wCampo(tcStr, '', 'numeroControle', 0, 1, 0, GNRE.numeroControle, '');
+
   Gerador.wGrupo('/item');
 
   Gerador.wGrupo('/itensGNRE');
@@ -469,7 +472,7 @@ begin
   if LValorGNRE > 0 then
      Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, LValorGNRE, '');
 
-  Gerador.wCampo(tcDat, '', 'dataPagamento    ', 10, 10, 1, GNRE.c33_dataPagamento, '');
+  Gerador.wCampo(tcDat, '', 'dataPagamento    ', 10, 10, 0, GNRE.c33_dataPagamento, '');
   Gerador.wCampo(tcStr, '', 'identificadorGuia', 01, 10, 0, GNRE.c42_identificadorGuia, '');
 
   Gerador.wGrupo('/TDadosGNRE');

@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/09/2023
+-- pgnreGNRE, pgnreGNREW --
+[*] Adição da propriedade e tag numeroControle e alteração no nº de ocorrências de dataPagamento para que fique de acordo com schema
+ Por: Diego Folieni
+
 01/08/2023
 -- ACBrGNReGuias --
 [*] Adiciona na leitura do INI os campos ValorFECP, TotalFECP, MultaFECP, JurosFECP

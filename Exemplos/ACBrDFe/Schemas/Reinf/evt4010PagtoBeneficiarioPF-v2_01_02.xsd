@@ -664,7 +664,7 @@
                                                     </xs:annotation>
                                                     <xs:simpleType>
                                                       <xs:restriction base="xs:unsignedByte">
-                                                        <xs:pattern value="1|2|3|4|5|7"/>
+                                                        <xs:pattern value="1|2|3|4|5|7|8"/>
                                                       </xs:restriction>
                                                     </xs:simpleType>
                                                   </xs:element>

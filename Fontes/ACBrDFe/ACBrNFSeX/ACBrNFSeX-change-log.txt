@@ -43,8 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/09/2023
+-- PadraoNacional.Provider --
+[-] Ao ler dados da NFS-e estava lendo a tag Numero em vez de nNFSe que é o correto.
+   Por: Italo Giurizzato Junior
 -- ISSBarueri.GravarXml --
-[*] Alteração visando informar que o tomador é extrangeiro.
+[*] Alteração visando informar que o tomador é estrangeiro.
    Por: Diogo Rodrigues
 -- PadraoNacional.GravarXML --
 [*] Alteração nas rotinas GerarObra e GerarDeducoes para respeitar elemento choice do schema

@@ -400,7 +400,7 @@ begin
 
           ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
 
-          NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+          NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
           ANode := ANode.Childrens.FindAnyNs('DPS');
           ANode := ANode.Childrens.FindAnyNs('infDPS');
           NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
@@ -562,7 +562,7 @@ begin
 
             ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
 
-            NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+            NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
             ANode := ANode.Childrens.FindAnyNs('DPS');
             ANode := ANode.Childrens.FindAnyNs('infDPS');
             NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
@@ -867,6 +867,7 @@ begin
 
         ArquivoXml := JSon.AsString['arquivoXml'];
         ArquivoXml := DeCompress(DecodeBase64(ArquivoXml));
+//        ArquivoXml := DeCompress(DecodeBase64(DecodeBase64(ArquivoXml)));
 
         if ArquivoXml = '' then
         begin

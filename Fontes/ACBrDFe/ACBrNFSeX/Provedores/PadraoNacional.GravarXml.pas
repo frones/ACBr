@@ -636,15 +636,21 @@ begin
   if NFSe.ConstrucaoCivil.CodigoObra <> '' then
   begin
     Result := CreateElement('obra');
-
     Result.AppendChild(AddNode(tcStr, '#1', 'cObra', 1, 30, 1,
                                           NFSe.ConstrucaoCivil.CodigoObra, ''));
+    exit;
+  end;
 
+  if NFSe.ConstrucaoCivil.inscImobFisc <> '' then
+  begin
+    Result := CreateElement('obra');
     Result.AppendChild(AddNode(tcStr, '#1', 'inscImobFisc', 1, 30, 1,
                                         NFSe.ConstrucaoCivil.inscImobFisc, ''));
-
-    Result.AppendChild(GerarEnderecoObra);
+    exit;
   end;
+
+  Result := CreateElement('obra');
+  Result.AppendChild(GerarEnderecoObra);
 end;
 
 function TNFSeW_PadraoNacional.GerarEnderecoObra: TACBrXmlNode;
@@ -843,15 +849,21 @@ begin
   if (NFSe.Servico.Valores.AliquotaDeducoes > 0) then
   begin
     Result := CreateElement('vDedRed');
-
     Result.AppendChild(AddNode(tcDe2, '#1', 'pDR', 1, 5, 1,
-                                    NFSe.Servico.Valores.AliquotaDeducoes, ''));
+                                       NFSe.Servico.Valores.AliquotaDeducoes, ''));
+    exit;
+  end;
 
+  if (NFSe.Servico.Valores.AliquotaDeducoes > 0) then
+  begin
+    Result := CreateElement('vDedRed');
     Result.AppendChild(AddNode(tcDe2, '#1', 'vDR', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorDeducoes, ''));
-
-    Result.AppendChild(GerarDocDeducoes);
+    exit;
   end;
+
+  Result := CreateElement('vDedRed');
+  Result.AppendChild(GerarDocDeducoes);
 end;
 
 function TNFSeW_PadraoNacional.GerarDocDeducoes: TACBrXmlNode;

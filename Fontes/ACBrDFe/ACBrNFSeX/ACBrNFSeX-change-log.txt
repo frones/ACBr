@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/09/2023
+-- PadraoNacional.GravarXML --
+[*] Alteração nas rotinas GerarObra e GerarDeducoes para respeitar elemento choice do schema
+   Por: Diego Folieni
 -- ACBrNFSeXServicos --
 [*] As cidades de Tatui/SP e Cerquilho/SP, Mudaram as URLs, os provedores continuam
    os mesmos.

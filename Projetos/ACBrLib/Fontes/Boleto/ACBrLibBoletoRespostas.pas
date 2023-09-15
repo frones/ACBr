@@ -145,6 +145,7 @@ type
     FDataOcorrencia: TDateTime;
     FDataCredito: TDateTime;
     FDataBaixa: TDateTime;
+    FDataMovimento: TDateTime;
     FDataMoraJuros: TDateTime;
     FValorDespesaCobranca: Currency;
     FValorAbatimento: Currency;
@@ -176,6 +177,7 @@ type
     property DataOcorrencia: TDateTime read FDataOcorrencia write FDataOcorrencia;
     property DataCredito: TDateTime read FDataCredito write FDataCredito;
     property DataBaixa: TDateTime read FDataBaixa write FDataBaixa;
+    property DataMovimento: TDateTime read FDataMovimento write FDataMovimento;
     property DataMoraJuros: TDateTime read FDataMoraJuros write FDataMoraJuros;
     property ValorDocumento: Currency read FValorDocumento write FValorDocumento;
     property ValorDespesaCobranca: Currency read FValorDespesaCobranca write FValorDespesaCobranca;
@@ -310,6 +312,7 @@ type
     FDataProtesto: TDateTime;
     FDiasDeProtesto: Integer;
     FDataBaixa: TDateTime;
+    FDataMovimento : TDateTime;
     FDataLimitePagto: TDateTime;
     FValorDespesaCobranca: Currency;
     FValorAbatimento: Currency;
@@ -382,6 +385,7 @@ type
     property DataProtesto: TDateTime read FDataProtesto write FDataProtesto ;
     property DiasDeProtesto: Integer read FDiasDeProtesto write FDiasDeProtesto ;
     property DataBaixa: TDateTime read FDataBaixa write FDataBaixa ;
+    property DataMovimento: TDateTime read FDataMovimento write FDataMovimento ;
     property DataLimitePagto: TDateTime read FDataLimitePagto write FDataLimitePagto ;
     property ValorDespesaCobranca: Currency read FValorDespesaCobranca write FValorDespesaCobranca ;
     property ValorAbatimento: Currency read FValorAbatimento write FValorAbatimento ;
@@ -664,7 +668,8 @@ begin
     DataMulta:= DadosRet.TituloRet.DataMulta;
     DataProtesto:= DadosRet.TituloRet.DataProtesto;
     DiasDeProtesto:= DadosRet.TituloRet.DiasDeProtesto;
-    DataBaixa:= DadosRet.TituloRet.DataBaixa;
+    DataBaixa := DadosRet.TituloRet.DataBaixa;
+    DataMovimento:= DadosRet.TituloRet.DataMovimento;
     DataLimitePagto:= DadosRet.TituloRet.DataLimitePagto;
     ValorDespesaCobranca:= DadosRet.TituloRet.ValorDespesaCobranca;
     ValorAbatimento:= DadosRet.TituloRet.ValorAbatimento;

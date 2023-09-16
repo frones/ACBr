@@ -615,7 +615,7 @@ begin
 
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
         proPadraoNacional:
-          RegimeEspecialTributacao := retCooperativa;
+          RegimeEspecialTributacao := retNenhum;
       else
         RegimeEspecialTributacao := retMicroempresaMunicipal;
       end;
@@ -639,6 +639,7 @@ begin
       // TnfseSimNao = ( snSim, snNao );
       // snSim = Ambiente de Produção
       // snNao = Ambiente de Homologação
+      {=== Usado pelo provedor ISSDigital ===}
       if ACBrNFSeX1.Configuracoes.WebServices.Ambiente = taProducao then
         Producao := snSim
       else
@@ -647,9 +648,9 @@ begin
       // TnfseStatusRPS = ( srNormal, srCancelado );
       StatusRps := srNormal;
 
-      // Somente Os provedores Betha, FISSLex e SimplISS permitem incluir no RPS
-      // a TAG: OutrasInformacoes os demais essa TAG é gerada e preenchida pelo
-      // WebService do provedor.
+      // Somente Os provedores Betha, FISSLex, SimplISS e TcheInfo
+      // permitem incluir no RPS a TAG: OutrasInformacoes os demais essa TAG
+      // é gerada e preenchida pelo WebService do provedor.
       OutrasInformacoes := 'Pagamento a Vista';
 
       {=========================================================================
@@ -709,7 +710,7 @@ begin
           TipoUnidade := tuQtde;
           Unidade := 'UN';
           Quantidade := 10;
-          ValorUnitario := 0.01;
+          ValorUnitario := 5;
 
           QtdeDiaria := 0;
           ValorTaxaTurismo := 0;
@@ -718,7 +719,7 @@ begin
 
           BaseCalculo := ValorTotal - ValorDeducoes - DescontoIncondicionado;
 
-          Aliquota := 0.10;
+          Aliquota := 2;
 
           ValorISS := BaseCalculo * Aliquota / 100;
 
@@ -802,9 +803,13 @@ begin
         Servico.Valores.Aliquota := 2;
 
         // Provedor PadraoNacional
-        Servico.Valores.tribMun.tribISSQN := tiOperacaoTributavel;
         Servico.Valores.tribMun.cPaisResult := 0;
+        Servico.Valores.tribMun.tribISSQN := tiImunidade;
+        Servico.Valores.tribMun.tpImunidade := timNenhum;
+        Servico.Valores.tribMun.tpRetISSQN := trNaoRetido;
+        Servico.Valores.totTrib.indTotTrib := indNao;
 
+        {
         Servico.Valores.tribFed.CST := cst01;
         Servico.Valores.tribFed.vBCPisCofins := Servico.Valores.BaseCalculo;
         Servico.Valores.tribFed.pAliqPis := 1.65;
@@ -818,7 +823,7 @@ begin
         Servico.Valores.totTrib.vTotTribFed := Servico.Valores.tribFed.vPis;
         Servico.Valores.totTrib.vTotTribEst := 0;
         Servico.Valores.totTrib.vTotTribMun := Servico.Valores.tribFed.vCofins;
-
+        }
 
         vValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
 
@@ -870,7 +875,7 @@ begin
           Servico.ItemListaServico := '01.05.00';
 
         proPadraoNacional:
-          Servico.ItemListaServico := '010201';
+          Servico.ItemListaServico := '010601';
 
         proCTAConsult:
           Servico.ItemListaServico := '01050';
@@ -879,7 +884,7 @@ begin
         Servico.ItemListaServico := '09.01';
       end;
 
-      servico.CodigoNBS := '123456789';
+//      servico.CodigoNBS := '123456789';
       Servico.Discriminacao := 'discriminacao I; discriminacao II';
 
       // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum )
@@ -938,15 +943,19 @@ begin
       Prestador.IdentificacaoPrestador.CpfCnpj := edtEmitCNPJ.Text;
       Prestador.IdentificacaoPrestador.InscricaoMunicipal := edtEmitIM.Text;
 
-      Prestador.RazaoSocial  := edtEmitRazao.Text;
-      Prestador.NomeFantasia := edtEmitRazao.Text;
+      if ACBrNFSeX1.Configuracoes.Geral.Provedor <> proPadraoNacional then
+      begin
+        Prestador.RazaoSocial  := edtEmitRazao.Text;
+        Prestador.NomeFantasia := edtEmitRazao.Text;
+      end;
       // Para o provedor ISSDigital deve-se informar também:
       Prestador.cUF := UFtoCUF(edtEmitUF.Text);
 
+      Prestador.Endereco.CodigoMunicipio := edtCodCidade.Text;
+      {
       Prestador.Endereco.Endereco := edtEmitLogradouro.Text;
       Prestador.Endereco.Numero   := edtEmitNumero.Text;
       Prestador.Endereco.Bairro   := edtEmitBairro.Text;
-      Prestador.Endereco.CodigoMunicipio := edtCodCidade.Text;
 
       CodigoIBGE := StrToIntDef(edtCodCidade.Text, 0);
 
@@ -960,7 +969,7 @@ begin
       Prestador.Endereco.CEP := edtEmitCEP.Text;
 
       Prestador.Contato.DDD := '16';
-
+      }
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
         proSigep, proCTAConsult:
           Prestador.Contato.Telefone := '33224455';
@@ -984,8 +993,8 @@ begin
       // Para o provedor SigISS usar os valores acima de forma adquada
       Tomador.IdentificacaoTomador.Tipo := tpPF;
       Tomador.IdentificacaoTomador.CpfCnpj := '12345678901';
-      Tomador.IdentificacaoTomador.InscricaoMunicipal := '123';
-      Tomador.IdentificacaoTomador.InscricaoEstadual := '123';
+      Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
+      Tomador.IdentificacaoTomador.InscricaoEstadual := '';
 
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE E TESTE';
 
@@ -1012,7 +1021,12 @@ begin
       Tomador.Endereco.CEP := '14800000';
       Tomador.Endereco.xPais := 'BRASIL';
 
-      Tomador.Contato.DDD := '16';
+      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+        proSigep:
+          Tomador.Contato.DDD := '016';
+      else
+        Tomador.Contato.DDD := '16';
+      end;
 
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
         proSigep, proCTAConsult:
@@ -1154,7 +1168,7 @@ begin
       exit;
 
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasil, proWebFisco,
-      proSimple, proFGMaiss, proIPM, proPriMax] then
+      proSimple, proFGMaiss, proIPM, proPriMax, proSigISSWeb] then
     begin
       SerNFSe := '1';
       if not (InputQuery(Titulo, 'Série da NFSe', SerNFSe)) then
@@ -1221,7 +1235,7 @@ begin
       proConam, proEquiplano, proFGMaiss, proGoverna, proIPM, proISSBarueri,
       proISSDSF, proISSLencois, proModernizacaoPublica, proPrescon, proPriMax, proPublica,
       proSiat, proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
-      proWebFisco, proCenti, proCTA, proBauhaus] then
+      proWebFisco, proCenti, proCTA, proBauhaus, proSigISSWeb] then
     begin
       Motivo := 'Motivo do Cancelamento';
       if not (InputQuery(Titulo, 'Motivo do Cancelamento', Motivo)) then
@@ -2822,7 +2836,7 @@ begin
     {
       Se desejar gerar o PDF do DANFSE basta descomentar a linha abaixo
     }
-//    ACBrNFSeX1.NotasFiscais.ImprimirPDF;
+    ACBrNFSeX1.NotasFiscais.ImprimirPDF;
 
     if ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps <> '' then
       memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps)
@@ -4091,10 +4105,6 @@ begin
           end;
         end;
 
-//    if ACBrNFSeX1.WebService.ConsultaLinkNFSe.Sucesso then
-//      Memo1.Lines.Add(ACBrNFSeX1.WebService.ConsultaLinkNFSe.LinkNFSe);
-
-
       tmCancelarNFSe:
         begin
           with CancelaNFSe do
@@ -4443,6 +4453,18 @@ begin
                 memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
                 memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
                 memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+
+            if Resumos.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Resumo(s):');
+              for i := 0 to Resumos.Count -1 do
+              begin
+                memoLog.Lines.Add('Chave DFe: ' + Resumos[i].ChaveDFe);
+                memoLog.Lines.Add('Tipo Doc.: ' + Resumos[i].TipoDoc);
                 memoLog.Lines.Add('---------');
               end;
             end;

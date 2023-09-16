@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/09/2023
+-- ACBrReinfLoteEventos --
+[*] Criado destructor na TItemLoteEventos e liberado FLeitor da memória
+  Por: Alexandre Felippeto Henzen / Renato Rubinho
+
+15/09/2023
 -- evt4010PagtoBeneficiarioPF-v2_01_02.xsd --
 [*] Correção no schema referente à NT 03/2023
   Por: Renato Rubinho

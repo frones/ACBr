@@ -896,6 +896,7 @@ begin
 
           with SegmentoJ52.New do
           begin
+            TipoMovimento := tmInclusao;
             CodMovimento := imInclusaoRegistroDetalheLiberado;
 
             with Pagador do

@@ -314,6 +314,8 @@ var
   xOcorrencia: TOcorrencia;
   Ok: Boolean;
 begin
+  Result := '';
+
   // O código de ocorrencia pode ter até 5 códigos de 2 dígitos cada
   xDesc := ADesc;
 
@@ -322,16 +324,16 @@ begin
     xOcorr := Copy(xDesc, 1, 2);
     xOcorrencia := StrToTOcorrencia(Ok, xOcorr);
 
+    if Result <> '' then
+      Result := Result + '|';
+
     if Ok then
-      Result := Result + '/' + GetOcorrencia(xOcorrencia)
+      Result := Result + GetOcorrencia(xOcorrencia)
     else
-      Result := Result + '/ (' + xOcorr + ') Retorno Nao Identificado';
+      Result := Result + '(' + xOcorr + ') Retorno Nao Identificado';
 
     Delete(xDesc, 1, 2);
   end;
-
-  if Result <> '' then
-    Delete(Result, 1, 1);
 end;
 
 procedure TArquivoR_CNAB240.LerRegistro0;

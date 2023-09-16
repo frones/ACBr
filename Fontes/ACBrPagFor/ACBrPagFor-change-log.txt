@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2023
+-- PagFor.Itau.GravarTxtRemessa/ACBrPagForClass/CNAB240.GravarTxtRemessa.pas
+[*] Correção para gerar o campo TipoMovimento nos segmentos N e J52
+   Por: SuporteATInfo/Italo Giurizzato Junior
+-- CNAB240.LerTxtRetorno --
+[*] Alterado o caracter usando para separar as descrições ocorrências, antes era o "/"
+    agora é o "|", pois algumas descrições contem o caractere "/".
+   Por: Alex Klehn
+
 29/08/2023
 -- PagFor.Itau.GravarTxtRemessa --
 [*] Ajuste para gerar o campo do numero de inscrição do favorecido com 14 digitos.

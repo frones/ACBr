@@ -986,6 +986,7 @@ type
 
   TSegmentoJ52 = class(TObject)
   private
+    FTipoMovimento: TTipoMovimento;
     FCodMovimento: TInstrucaoMovimento;
     FPagador: TPagador;
     FBeneficiario: TBeneficiario;
@@ -996,6 +997,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    property TipoMovimento: TTipoMovimento read FTipoMovimento write FTipoMovimento;
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property Pagador: TPagador read FPagador write FPagador;
     property Beneficiario: TBeneficiario read FBeneficiario write FBeneficiario;
@@ -1181,12 +1183,13 @@ type
 
   TSegmentoN = class(TObject)
   private
-    FCodMovimento    : TInstrucaoMovimento; // Tamanho 2
-    FSeuNumero       : string; // Tamanho 20
-    FNossoNumero     : string; // Tamanho 20
+    FTipoMovimento: TTipoMovimento;
+    FCodMovimento: TInstrucaoMovimento; // Tamanho 2
+    FSeuNumero: string; // Tamanho 20
+    FNossoNumero: string; // Tamanho 20
     FNomeContribuinte: string; // Tamanho 30
-    FDataPagamento   : TDateTime; // DDMMAAAA
-    FValorPagamento  : Double;
+    FDataPagamento: TDateTime; // DDMMAAAA
+    FValorPagamento: Double;
     FSegmentoB: TSegmentoBList;
     FSegmentoW: TSegmentoWList;
     FSegmentoZ: TSegmentoZList;
@@ -1201,6 +1204,7 @@ type
     constructor Create;
     destructor Destroy; override;
   public
+    property TipoMovimento: TTipoMovimento read FTipoMovimento write FTipoMovimento;
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property SeuNumero: string read FSeuNumero write FSeuNumero;
     property NossoNumero: string read FNossoNumero write FNossoNumero;

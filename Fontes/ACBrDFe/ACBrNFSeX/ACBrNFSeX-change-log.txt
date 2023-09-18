@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2023
+-- PadraoNacional.GravarXML --
+[*] Melhoria nas rotinas GerarObra e GerarDeducoes para que não gere nenhuma informação relacionada caso não preenchida.
+  Por: Diego Folieni
+
 15/09/2023
 -- PadraoNacional.Provider --
 [-] Ao ler dados da NFS-e estava lendo a tag Numero em vez de nNFSe que é o correto.

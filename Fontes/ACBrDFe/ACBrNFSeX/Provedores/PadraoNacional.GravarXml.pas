@@ -649,8 +649,11 @@ begin
     exit;
   end;
 
-  Result := CreateElement('obra');
-  Result.AppendChild(GerarEnderecoObra);
+  if (NFSe.ConstrucaoCivil.Endereco.CEP <> '') or (NFSe.ConstrucaoCivil.Endereco.Endereco <> '') then
+  begin
+    Result := CreateElement('obra');
+    Result.AppendChild(GerarEnderecoObra);
+  end;
 end;
 
 function TNFSeW_PadraoNacional.GerarEnderecoObra: TACBrXmlNode;
@@ -862,8 +865,11 @@ begin
     exit;
   end;
 
-  Result := CreateElement('vDedRed');
-  Result.AppendChild(GerarDocDeducoes);
+  if (NFSe.Servico.Valores.DocDeducao.Count > 0) then
+  begin
+    Result := CreateElement('vDedRed');
+    Result.AppendChild(GerarDocDeducoes);
+  end;
 end;
 
 function TNFSeW_PadraoNacional.GerarDocDeducoes: TACBrXmlNode;

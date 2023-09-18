@@ -151,7 +151,7 @@ begin
                        // AG+22+01+123456
       CpLivre       := FormataNossoNumero(ACBrTitulo)    + //34
                        PadRight(Cedente.CodigoCedente,9,'0') + //43
-                       ifthen(ACBrTitulo.ValorDesconto > 0,'2','0') ;// ?? indicador Desconto 2-Sem 0-Com  // 44
+                       ifthen(ACBrTitulo.ValorDesconto > 0,'0','2') ;// ?? indicador Desconto 2-Sem 0-Com  // 44
 
       DigitoCodBarras := CalcularDigitoCodigoBarras(CpObrigatorio+CpLivre);
 

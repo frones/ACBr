@@ -128,14 +128,16 @@ uses
 
 function StrToTipoOperacao(out ok: Boolean; const s: String): TOperacao;
 begin
-  Result := StrToEnumerado(ok, s, ['INCLUI_BOLETO', 'ALTERA_BOLETO','BAIXA_BOLETO','CONSULTA_BOLETO','GERA_TICKET'],
-         [tpInclui, tpAltera, tpBaixa, tpConsulta, tpTicket]);
+  Result := StrToEnumerado(ok, s, ['INCLUI_BOLETO', 'ALTERA_BOLETO','BAIXA_BOLETO','CONSULTA_BOLETO','GERA_TICKET',
+                                   'CONSULTA_BOLETO_DETALHE','PIX_CRIAR', 'PIX_CANCELAR', 'PIX_CONSULTAR', 'CANCELAR_BOLETO'],
+         [tpInclui, tpAltera, tpBaixa, tpConsulta, tpTicket, tpConsultaDetalhe, tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar]);
 end;
 
 function TipoOperacaoToStr(const t: TOperacao): String;
 begin
-  Result := EnumeradoToStr(t, ['INCLUI_BOLETO', 'ALTERA_BOLETO', 'BAIXA_BOLETO', 'CONSULTA_BOLETO','GERA_TICKET'],
-         [tpInclui, tpAltera, tpBaixa, tpConsulta, tpTicket]);
+  Result := EnumeradoToStr(t, ['INCLUI_BOLETO', 'ALTERA_BOLETO', 'BAIXA_BOLETO', 'CONSULTA_BOLETO','GERA_TICKET',
+                               'CONSULTA_BOLETO_DETALHE','PIX_CRIAR', 'PIX_CANCELAR', 'PIX_CONSULTAR', 'CANCELAR_BOLETO'],
+         [tpInclui, tpAltera, tpBaixa, tpConsulta, tpTicket, tpConsultaDetalhe, tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar]);
 end;
 
 function StrToTipoJuros(out ok: Boolean; const s: String): TACBrCodigoJuros;

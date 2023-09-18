@@ -7,7 +7,6 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  PixelsPerInch = 96
   TextHeight = 10
   inherited RLNFe: TRLReport
     Tag = 1
@@ -758,21 +757,6 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
           ParentColor = False
           ParentFont = False
         end
-        object rlmProdutoDescricao: TRLLabel
-          Left = 96
-          Top = 2
-          Width = 167
-          Height = 16
-          AutoSize = False
-          Color = clWhite
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Times New Roman'
-          Font.Style = []
-          ParentColor = False
-          ParentFont = False
-        end
         object rlmProdutoUnidade: TRLLabel
           Left = 104
           Top = 18
@@ -880,6 +864,19 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
           Font.Name = 'Times New Roman'
           Font.Style = []
           ParentColor = False
+          ParentFont = False
+        end
+        object rlmProdutoDescricao: TRLMemo
+          Left = 95
+          Top = 2
+          Width = 166
+          Height = 14
+          Behavior = [beSiteExpander]
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Times New Roman'
+          Font.Style = []
           ParentFont = False
         end
       end

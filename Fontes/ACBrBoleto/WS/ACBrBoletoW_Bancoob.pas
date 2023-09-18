@@ -173,6 +173,7 @@ end;
 
 procedure TBoletoW_Bancoob.GerarHeader;
 begin
+  FPHeaders.Clear;
   DefinirContentType;
   DefinirKeyUser;
 

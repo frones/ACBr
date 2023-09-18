@@ -4579,8 +4579,9 @@ end;
 
 procedure TFrmACBrMonitor.cbxTimeZoneModeChange(Sender: TObject);
 begin
-  ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao :=
-    TTimeZoneModoDeteccao( cbxTimeZoneMode.ItemIndex );
+  if edTimeZoneStr.Caption <> '' then
+     ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr := edTimeZoneStr.Caption;
+  ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao :=  TTimeZoneModoDeteccao( cbxTimeZoneMode.ItemIndex );
   edTimeZoneStr.Caption := ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr;
   edTimeZoneStr.Enabled := (ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao = tzManual);
 

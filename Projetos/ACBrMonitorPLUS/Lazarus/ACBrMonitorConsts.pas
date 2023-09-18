@@ -423,6 +423,7 @@ const
   CMetodoEncodeBase64 =                'encodebase64';
   CMetodoDecodeBase64 =                'decodebase64';
   CMetodoRoundABNT =                   'roundabnt';
+  CMetodoSetTimeZone =                 'settimezone';
 
   CMetodoValidarnfe =                  'validarnfe';
   CMetodoAssinarnfe =                  'assinarnfe';

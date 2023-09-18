@@ -528,6 +528,8 @@ begin
   ListaDeMetodos.Add(CMetodoBye);
   ListaDeMetodos.Add(CMetodoFim);
   ListaDeMetodos.Add(CMetodoSair);
+  ListaDeMetodos.Add(CMetodoSetTimeZone);
+
 end;
 
 procedure TACBrObjetoNFe.Executar(ACmd: TACBrCmd);

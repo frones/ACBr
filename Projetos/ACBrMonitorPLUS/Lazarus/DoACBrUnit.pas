@@ -36,7 +36,7 @@ unit DoACBrUnit ;
 interface
 Uses
   Classes, TypInfo, SysUtils, CmdUnit, synautil, synacode, ACBrMonitorConsts, ACBrLibCertUtils,
-  ACBrMonitorConfig;
+  ACBrMonitorConfig, pcnAuxiliar;
 
 {$IFDEF MSWINDOWS}
   function BlockInput (fBlockInput: boolean): dword; stdcall; external 'user32.dll';
@@ -160,6 +160,14 @@ TMetodoSetcertificado = class(TACBrMetodo)
 public
   procedure Executar; override;
 end;
+
+{ TMetodoSetTimeZone }
+
+TMetodoSetTimeZone = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 
 { TMetodoSetWebservice }
 
@@ -559,6 +567,49 @@ begin
 
 end;
 
+{ TMetodoSetTimeZone }
+
+{ Params: 0 - Integer: Sistema (0,1,2)
+          1 - String: Timezone ex -03:00}
+procedure TMetodoSetTimeZone.Executar;
+var
+  ITipoTimeZone: Integer;
+  ATimeZone: String;
+begin
+  ITipoTimeZone  := StrToIntDef(fpCmd.Params(0),0);
+  ATimeZone      := fpCmd.Params(1);
+
+  with TACBrObjetoACBr(fpObjetoDono) do
+  begin
+    case ITipoTimeZone of
+      0,1 :
+        begin
+        FrmACBrMonitor.cbxTimeZoneMode.ItemIndex := ITipoTimeZone;
+        FrmACBrMonitor.ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr:='';
+        FrmACBrMonitor.edTimeZoneStr.Caption := '';
+        FrmACBrMonitor.cbxTimeZoneMode.OnChange(FrmACBrMonitor.cbxTimeZoneMode);
+        FrmACBrMonitor.SalvarIni;
+        end;
+      2:
+        begin
+          if ATimeZone <> '' then
+             begin
+               FrmACBrMonitor.cbxTimeZoneMode.ItemIndex := ITipoTimeZone;
+               FrmACBrMonitor.edTimeZoneStr.Caption := ATimeZone;
+               FrmACBrMonitor.ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr:=ATimeZone;
+               FrmACBrMonitor.cbxTimeZoneModeChange(FrmACBrMonitor.cbxTimeZoneMode);
+               FrmACBrMonitor.SalvarIni;
+             end
+          else
+             raise Exception.Create('Informe o parametro ATimeZone Exemplo: -03:00')
+        end;
+    else
+       raise Exception.Create('Parametro inválido !') ;
+    end;
+  end;
+
+end;
+
 { TMetodoDeleteFiles }
 
 { Params: 0 - String: Nome completo do Arquivo a ser Apagado, ou Mascara com Arquivos a serem apagados  }
@@ -931,6 +982,7 @@ begin
   ListaDeMetodos.Add(CMetodoBye);
   ListaDeMetodos.Add(CMetodoSair);
   ListaDeMetodos.Add(CMetodoFim);
+  ListaDeMetodos.Add(CMetodoSetTimeZone);
 
 end;
 
@@ -976,6 +1028,7 @@ begin
     27  : AMetodoClass := TMetodoBye;
     28  : AMetodoClass := TMetodoSair;
     29  : AMetodoClass := TMetodoFim;
+    30  : AMetodoClass := TMetodoSetTimeZone;
 
     else
       raise Exception.Create('Comando inválido ('+ copy(ACmd.Comando,6,length(ACmd.Comando))+')') ;

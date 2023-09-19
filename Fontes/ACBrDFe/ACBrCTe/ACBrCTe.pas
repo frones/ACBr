@@ -899,9 +899,6 @@ end;
 function TACBrCTe.Inutilizar(const ACNPJ, AJustificativa: String; AAno, ASerie,
   ANumInicial, ANumFinal: Integer): Boolean;
 begin
-  if Configuracoes.Geral.VersaoDF >= ve400 then
-    GerarException('A partir da versão 4.00 o serviço de Inutilizadação foi descontinuado.');
-
   Result := True;
   WebServices.Inutiliza(ACNPJ, AJustificativa, AAno,
                         Configuracoes.Geral.ModeloDFCodigo,

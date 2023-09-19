@@ -2576,6 +2576,9 @@ procedure TCTeInutilizacao.DefinirDadosMsg;
 var
   InutCTe: TinutCTe;
 begin
+  if FPConfiguracoesCTe.Geral.VersaoDF >= ve400 then
+    raise EACBrCTeException.Create('A partir da versão 4.00 o serviço de Inutilizadação foi descontinuado.');
+
   InutCTe := TinutCTe.Create;
   try
     InutCTe.tpAmb := FPConfiguracoesCTe.WebServices.Ambiente;

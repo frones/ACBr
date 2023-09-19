@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2023
+-- pcteCTeW --
+[*] Possível solução para a rejeição: Rejeição 646: 
+   CT-e emitido em ambiente de homologação com Razão Social do remetente diferente de 
+   CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL.
+  Por: Italo Giurizzato Junior
+
 06/09/2023
 -- ACBrCTeConhecimentos --
 [*] Altera a condição para ler a seção infOutros no arquivo INI.

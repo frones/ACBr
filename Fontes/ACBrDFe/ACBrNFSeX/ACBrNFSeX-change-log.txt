@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/09/2023
+-- Conam.Provider --
+[*] Alteração no TratarXmlRetornado, visando a leitura correta do caractere "&".
+   Por: Italo Carminati
 -- SigISS.Provider --
 [+] Implementado o TratarRetornoConsultaNFSe para a versão 1.03
    Por: Italo Giurizzato Junior

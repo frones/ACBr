@@ -1157,11 +1157,9 @@ begin
     LCDS.FieldByName('CodigoMunicipio').AsString := IntToStr(LDadosServico.MunicipioIncidencia); //ANFSe.CodigoMunicipio;
 
     try
-      LMunicipio := ObterNomeMunicipio(LDadosServico.MunicipioIncidencia, LUF);
+      LMunicipio := LDadosServico.xMunicipioIncidencia;
 
-      if LMunicipio <> '' then
-        LMunicipio := LMunicipio + ' / ' + LUF
-      else
+      if LMunicipio = '' then
         LMunicipio := 'SEM INCIDENCIA DE ISS';
 
       LCDS.FieldByName('MunicipioIncidencia').AsString := LMunicipio;
@@ -1174,7 +1172,7 @@ begin
     end;
 
   end;
-  LCDS.FieldByName('MunicipioPrestacao').AsString := ObterNomeMunicipio(StrToInt64Def(LDadosServico.CodigoMunicipio,0), LUF) + ' / ' + LUF;
+  LCDS.FieldByName('MunicipioPrestacao').AsString := LDadosServico.MunicipioPrestacaoServico;
   LCDS.FieldByName('CodigoObra').AsString         := ANFSe.ConstrucaoCivil.CodigoObra;
   LCDS.FieldByName('Art').AsString                := ANFSe.ConstrucaoCivil.Art;
 

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/09/2023
+-- SigISS.Provider --
+[+] Implementado o TratarRetornoConsultaNFSe para a versão 1.03
+   Por: Italo Giurizzato Junior
 -- PadraoNacional.Provider --
 [-] Possível solução para o erro de Violação de Acesso ao ler o retorno da API.
    Por: Italo Giurizzato Junior

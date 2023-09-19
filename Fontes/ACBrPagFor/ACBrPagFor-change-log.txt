@@ -42,8 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2023
+-- Diversos --
+[*] Alteração visando colocar cada ocorrência em um item da lista: Aviso.
+   Por: Italo Giurizzato Junior
+
 16/09/2023
--- PagFor.Itau.GravarTxtRemessa/ACBrPagForClass/CNAB240.GravarTxtRemessa.pas
+-- PagFor.Itau.GravarTxtRemessa/ACBrPagForClass/CNAB240.GravarTxtRemessa --
 [*] Correção para gerar o campo TipoMovimento nos segmentos N e J52
    Por: SuporteATInfo/Italo Giurizzato Junior
 -- CNAB240.LerTxtRetorno --

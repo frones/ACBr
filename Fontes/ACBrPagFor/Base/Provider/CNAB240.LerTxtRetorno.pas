@@ -101,14 +101,12 @@ type
     procedure LerSegmentoZ(mSegmentoZList: TSegmentoZList; nLinha: Integer); virtual;
 
     procedure LerLote;
-    procedure GerarAvisos(const aCodOcorrencia, aDescOcorrencia, aSegmento,
-      aSegmentoFilho, aSeuNumero: string);
+    procedure GerarAvisos(const aCodOcorrencia, aSegmento, aSegmentoFilho,
+                          aSeuNumero: string);
 
     function GetOcorrencia(aOcorrencia: TOcorrencia): string; virtual;
   public
     function LerTxt: Boolean; override;
-
-    function DescricaoRetorno(const ADesc: string): string; virtual;
 
     property ArquivoTXT: TStringList read FArquivoTXT write FArquivoTXT;
   end;
@@ -117,26 +115,41 @@ implementation
 
 { TArquivoR_CNAB240 }
 
-procedure TArquivoR_CNAB240.GerarAvisos(const aCodOcorrencia, aDescOcorrencia,
-  aSegmento, aSegmentoFilho, aSeuNumero: string);
+procedure TArquivoR_CNAB240.GerarAvisos(const aCodOcorrencia, aSegmento,
+  aSegmentoFilho, aSeuNumero: string);
+var
+  xCodigo, xOcorrencias, xDescricao: string;
+  xOcorrencia: TOcorrencia;
+  Ok: Boolean;
 begin
-  {
-    17/05/2023
-    removido a condição: and (POS(aCodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0)
-    para que na lista de avisos consta também os pagamentos efetuados
-  }
-  if Length(aCodOcorrencia) > 0 then
-  begin
-    PagFor.Registro0.Aviso.New;
+  // O código de ocorrencia pode ter até 5 códigos de 2 dígitos cada
+  xOcorrencias := aCodOcorrencia;
 
-    with PagFor.Registro0.Aviso.Last do
+  while length(xOcorrencias) > 0 do
+  begin
+    xCodigo := Copy(xOcorrencias, 1, 2);
+    xOcorrencia := StrToTOcorrencia(Ok, xCodigo);
+
+    if xCodigo <> '  ' then
     begin
-      CodigoRetorno := aCodOcorrencia;
-      MensagemRetorno := aDescOcorrencia;
-      Segmento := aSegmento;
-      SegmentoFilho := aSegmentoFilho;
-      SeuNumero := aSeuNumero;
+      PagFor.Registro0.Aviso.New;
+
+      if Ok then
+        xDescricao := GetOcorrencia(xOcorrencia)
+      else
+        xDescricao := '(' + xCodigo + ') Retorno Nao Identificado';
+
+      with PagFor.Registro0.Aviso.Last do
+      begin
+        CodigoRetorno := xCodigo;
+        MensagemRetorno := xDescricao;
+        Segmento := aSegmento;
+        SegmentoFilho := aSegmentoFilho;
+        SeuNumero := aSeuNumero;
+      end;
     end;
+
+    Delete(xOcorrencias, 1, 2);
   end;
 end;
 
@@ -308,34 +321,6 @@ begin
   end;
 end;
 
-function TArquivoR_CNAB240.DescricaoRetorno(const ADesc: string): string;
-var
-  xDesc, xOcorr: string;
-  xOcorrencia: TOcorrencia;
-  Ok: Boolean;
-begin
-  Result := '';
-
-  // O código de ocorrencia pode ter até 5 códigos de 2 dígitos cada
-  xDesc := ADesc;
-
-  while length(xDesc) > 0 do
-  begin
-    xOcorr := Copy(xDesc, 1, 2);
-    xOcorrencia := StrToTOcorrencia(Ok, xOcorr);
-
-    if Result <> '' then
-      Result := Result + '|';
-
-    if Ok then
-      Result := Result + GetOcorrencia(xOcorrencia)
-    else
-      Result := Result + '(' + xOcorr + ') Retorno Nao Identificado';
-
-    Delete(xDesc, 1, 2);
-  end;
-end;
-
 procedure TArquivoR_CNAB240.LerRegistro0;
 var
   mOk: Boolean;
@@ -471,9 +456,8 @@ begin
   with PagFor.Lote.Last.Registro5 do
   begin
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-    GerarAvisos(CodOcorrencia, DescOcorrencia, '5', '', '');
+    GerarAvisos(CodOcorrencia, '5', '', '');
   end;
 end;
 
@@ -535,9 +519,8 @@ begin
 
     Aviso := LerCampo(Linha, 230, 1, tcInt);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-    GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', '', Credito.SeuNumero);
+    GerarAvisos(CodOcorrencia, 'A', '', Credito.SeuNumero);
   end;
 
   Linha := ArquivoTXT.Strings[nLinha+1];
@@ -557,7 +540,7 @@ begin
     begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'B',
+        GerarAvisos(CodOcorrencia, 'A', 'B',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
@@ -566,7 +549,7 @@ begin
     begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoC.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'C',
+        GerarAvisos(CodOcorrencia, 'A', 'C',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
@@ -575,7 +558,7 @@ begin
     begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoE.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'E',
+        GerarAvisos(CodOcorrencia, 'A', 'E',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
@@ -584,7 +567,7 @@ begin
     begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoF.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'F',
+        GerarAvisos(CodOcorrencia, 'A', 'F',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
@@ -868,9 +851,8 @@ begin
       ReferenciaSacado := LerCampo(Linha, 183, 20, tcStr);
       NossoNumero := LerCampo(Linha, 203, 20, tcStr);
       CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-      DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-      GerarAvisos(CodOcorrencia, DescOcorrencia, 'J', '', ReferenciaSacado);
+      GerarAvisos(CodOcorrencia, 'J', '', ReferenciaSacado);
     end;
   end;
 
@@ -977,9 +959,8 @@ begin
     DataPagamento := LerCampo(Linha, 88, 8, tcDat);
     ValorPagamento := LerCampo(Linha, 96, 15, tcDe2);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-    GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', '', SeuNumero);
+    GerarAvisos(CodOcorrencia, 'N', '', SeuNumero);
   end;
 end;
 
@@ -1025,7 +1006,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -1075,7 +1056,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -1126,7 +1107,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -1180,7 +1161,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -1236,7 +1217,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -1287,7 +1268,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -1340,7 +1321,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -1370,9 +1351,8 @@ begin
     SeuNumero := LerCampo(Linha, 123, 20, tcStr);
     NossoNumero := LerCampo(Linha, 143, 15, tcStr);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-    GerarAvisos(CodOcorrencia, DescOcorrencia, 'O', '', SeuNumero);
+    GerarAvisos(CodOcorrencia, 'O', '', SeuNumero);
   end;
 
   Linha := ArquivoTXT.Strings[nLinha+1];
@@ -1413,9 +1393,8 @@ begin
     Informacoes2 := LerCampo(Linha, 97, 80, tcStr);
     Informacoes3 := LerCampo(Linha, 177, 50, tcStr);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-    GerarAvisos(CodOcorrencia, DescOcorrencia, 'W', '', '');
+    GerarAvisos(CodOcorrencia, 'W', '', '');
   end;
 end;
 
@@ -1438,7 +1417,8 @@ begin
     SeuNumero := LerCampo(Linha, 79, 20, tcStr);
     NossoNumero := LerCampo(Linha, 104, 15, tcStr);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
+
+    GerarAvisos(CodOcorrencia, 'Z', '', '');
   end;
 end;
 

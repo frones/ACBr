@@ -448,7 +448,6 @@ type
     FTipoCompromisso: Integer;
     FCodigoCompromisso: Integer;
     FCodOcorrencia: string;
-    FDescOcorrencia: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -473,7 +472,6 @@ type
     property CodigoCompromisso: Integer read FCodigoCompromisso write FCodigoCompromisso;
     // Usado pelo Bradesco
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   // Estrutura do Registro 5 utilizado para os Serviços
@@ -503,7 +501,6 @@ type
     FValorDebitos: Double;
     FValorCreditos: Double;
     FCodOcorrencia: string;
-    FDescOcorrencia: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -531,7 +528,6 @@ type
     property ValorDebitos: Double read FValorDebitos write FValorDebitos;
     property ValorCreditos: Double read FValorCreditos write FValorCreditos;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
    // Estrutura do Segmento B (Opcional)
@@ -558,7 +554,6 @@ type
     FHonorario: Double;
     FAcrescimo: Double;
     FCodOcorrencia: string;
-    FDescOcorrencia: string;
     FCodigoISPB: Integer;
     FPixTipoChave: TTipoChavePIX;
     FPixMensagem: string;
@@ -588,7 +583,6 @@ type
     property Honorario: Double read FHonorario write FHonorario;
     property Acrescimo: Double read FAcrescimo write FAcrescimo;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property CodigoISPB: Integer read FCodigoISPB write FCodigoISPB;
     property PixTipoChave: TTipoChavePix read FPixTipoChave write FPixTipoChave;
     property PixMensagem: string read FPixMensagem write FPixMensagem;
@@ -641,7 +635,6 @@ type
     FNumeroFaturaDocumento: string;
     FAbatimentos: Double;
     FCodOcorrencia: string;
-    FDescOcorrencia: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -666,7 +659,6 @@ type
     property NumeroFaturaDocumento: string read FNumeroFaturaDocumento write FNumeroFaturaDocumento;
     property Abatimentos: Double read FAbatimentos write FAbatimentos;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TSegmentoCList = class(TObjectList)
@@ -735,11 +727,9 @@ type
   private
     FInformacaoComplementar: string;
 //    FCodOcorrencia: string;
-//    FDescOcorrencia: string;
   public
     property InformacaoComplementar: string read FInformacaoComplementar write FInformacaoComplementar;
 //    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-//    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TSegmentoFList = class(TObjectList)
@@ -760,13 +750,11 @@ type
     FSeuNumero: string;
     FNossoNumero: string;
     FCodOcorrencia: string;
-    FDescOcorrencia: string;
   public
     property Autenticacao: string read FAutenticacao write FAutenticacao;
     property SeuNumero: string read FSeuNumero write FSeuNumero;
     property NossoNumero: string read FNossoNumero write FNossoNumero;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TSegmentoZList = class(TObjectList)
@@ -812,7 +800,6 @@ type
 //    FSegmentoE: TSegmentoEList;
 //    FSegmentoF: TSegmentoFList;
     FSegmentoZ: TSegmentoZList;
-    FDescOcorrencia: string;
 
     procedure SetSegmentoB(const Value: TSegmentoBList);
     procedure SetSegmentoC(const Value: TSegmentoCList);
@@ -835,7 +822,6 @@ type
     property CodigoComp: string read FCodigoComp write FCodigoComp;
     property Aviso: Integer read FAviso write FAviso;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
     property NumeroDocumento: Integer read FNumeroDocumento write FNumeroDocumento;
     property CodigoISPB: Integer read FCodigoISPB write FCodigoISPB;
@@ -1073,7 +1059,6 @@ type
 //    FSegmentoB: TSegmentoBList;
 //    FSegmentoC: TSegmentoCList;
     FSegmentoZ: TSegmentoZList;
-    FDescOcorrencia: string;
     FNossoNumero: string;
     FSeuNumero: string;
 
@@ -1101,7 +1086,6 @@ type
     property ReferenciaSacado: string read FReferenciaSacado write FReferenciaSacado;
     property CodigoMoeda: Integer read FCodigoMoeda write FCodigoMoeda;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property NossoNumero: string read FNossoNumero write FNossoNumero;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
     property SegmentoJ52: TSegmentoJ52List read FSegmentoJ52 write SetSegmentoJ52;
@@ -1143,7 +1127,6 @@ type
     FLacreConecSocial   : string; // Tamanho 9
     FLacreDV            : string; // Tamanho 2
     FCodOcorrencia: string;
-    FDescOcorrencia: string;
   public
     property ComplementoRegistro: Integer read FComplementoRegistro write FComplementoRegistro;
     property Informacoes1ou2: string read FInformacoes1ou2 write FInformacoes1ou2;
@@ -1159,7 +1142,6 @@ type
     property LacreConecSocial: string read FLacreConecSocial write FLacreConecSocial;
     property LacreDV: string read FLacreDV write FLacreDV;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TSegmentoWList = class(TObjectList)
@@ -1194,7 +1176,6 @@ type
     FSegmentoW: TSegmentoWList;
     FSegmentoZ: TSegmentoZList;
     FCodOcorrencia: string;
-    FDescOcorrencia: string;
 
     procedure SetSegmentoB(const Value: TSegmentoBList);
     procedure SetSegmentoW(const Value: TSegmentoWList);
@@ -1215,7 +1196,6 @@ type
     property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
   end;
 
@@ -1554,7 +1534,6 @@ type
     FQuantidadeMoeda: Double;
     FValorPago: Double;
     FNotaFiscal: Integer;
-    FDescOcorrencia: string;
 
     procedure SetSegmentoW(const Value: TSegmentoWList);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
@@ -1574,7 +1553,6 @@ type
     property SeuNumero: string read FSeuNumero write FSeuNumero;
     property NossoNumero: string read FNossoNumero write FNossoNumero;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
     property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;

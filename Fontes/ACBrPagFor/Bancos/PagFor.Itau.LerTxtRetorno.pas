@@ -138,9 +138,8 @@ begin
   with PagFor.Lote.Last.Registro5 do
   begin
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-    GerarAvisos(CodOcorrencia, DescOcorrencia, '5', '', '');
+    GerarAvisos(CodOcorrencia, '5', '', '');
   end;
 end;
 
@@ -197,9 +196,8 @@ begin
     CodigoTED := LerCampo(Linha, 220, 5, tcStr);
     Aviso := LerCampo(Linha, 230, 1, tcInt);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-    GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', '', Credito.SeuNumero);
+    GerarAvisos(CodOcorrencia, 'A', '', Credito.SeuNumero);
   end;
 
   Linha := ArquivoTXT.Strings[nLinha+1];
@@ -219,7 +217,7 @@ begin
     begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'B',
+        GerarAvisos(CodOcorrencia, 'A', 'B',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
@@ -228,7 +226,7 @@ begin
     begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoC.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'C',
+        GerarAvisos(CodOcorrencia, 'A', 'C',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
@@ -345,9 +343,8 @@ begin
       SeuNumero := LerCampo(Linha, 196, 20, tcStr);
       NossoNumero := LerCampo(Linha, 216, 20, tcStr);
       CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-      DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-      GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', '', SeuNumero);
+      GerarAvisos(CodOcorrencia, 'N', '', SeuNumero);
     end;
   end;
 
@@ -362,7 +359,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -406,9 +403,8 @@ begin
       NomeContribuinte := LerCampo(Linha, 166, 30, tcStr);
       SeuNumero := LerCampo(Linha, 196, 20, tcStr);
       CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-      DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-      GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', '', SeuNumero);
+      GerarAvisos(CodOcorrencia, 'N', '', SeuNumero);
     end;
   end;
 
@@ -423,7 +419,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -470,9 +466,8 @@ begin
       NomeContribuinte := LerCampo(Linha, 166, 30, tcStr);
       SeuNumero := LerCampo(Linha, 196, 20, tcStr);
       CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-      DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-      GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', '', SeuNumero);
+      GerarAvisos(CodOcorrencia, 'N', '', SeuNumero);
     end;
   end;
 
@@ -488,7 +483,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -537,9 +532,8 @@ begin
       SeuNumero := LerCampo(Linha, 196, 20, tcStr);
       NossoNumero := LerCampo(Linha, 216, 20, tcStr);
       CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-      DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-      GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', '', SeuNumero);
+      GerarAvisos(CodOcorrencia, 'N', '', SeuNumero);
     end;
   end;
 
@@ -555,7 +549,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -604,9 +598,8 @@ begin
       SeuNumero := LerCampo(Linha, 196, 20, tcStr);
       NossoNumero := LerCampo(Linha, 216, 20, tcStr);
       CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-      DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-      GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', '', SeuNumero);
+      GerarAvisos(CodOcorrencia, 'N', '', SeuNumero);
     end;
   end;
 
@@ -622,7 +615,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -667,9 +660,8 @@ begin
       SeuNumero := LerCampo(Linha, 196, 20, tcStr);
       NossoNumero := LerCampo(Linha, 216, 20, tcStr);
       CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-      DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-      GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', '', SeuNumero);
+      GerarAvisos(CodOcorrencia, 'N', '', SeuNumero);
     end;
   end;
 
@@ -685,7 +677,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -735,9 +727,8 @@ begin
       SeuNumero := LerCampo(Linha, 196, 20, tcStr);
       NossoNumero := LerCampo(Linha, 216, 20, tcStr);
       CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-      DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-      GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', '', SeuNumero);
+      GerarAvisos(CodOcorrencia, 'N', '', SeuNumero);
     end;
   end;
 
@@ -752,7 +743,7 @@ begin
     begin
       with SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'N', 'B', SeuNumero);
+        GerarAvisos(CodOcorrencia, 'N', 'B', SeuNumero);
       end;
     end;
   end;
@@ -785,7 +776,8 @@ begin
     SeuNumero := LerCampo(Linha, 175, 20, tcStr);
     NossoNumero := LerCampo(Linha, 216, 15, tcStr);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
+
+    GerarAvisos(CodOcorrencia, 'O', '', SeuNumero);
   end;
 
   Linha := ArquivoTXT.Strings[nLinha+1];

@@ -111,9 +111,8 @@ begin
     CodigoTED := LerCampo(Linha, 220, 5, tcStr);
     Aviso := LerCampo(Linha, 230, 1, tcInt);
     CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
-    DescOcorrencia := DescricaoRetorno(CodOcorrencia);
 
-    GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', '', Credito.SeuNumero);
+    GerarAvisos(CodOcorrencia, 'A', '', Credito.SeuNumero);
   end;
 
   Linha := ArquivoTXT.Strings[nLinha+1];
@@ -133,7 +132,7 @@ begin
     begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoB.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'B',
+        GerarAvisos(CodOcorrencia, 'A', 'B',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;
@@ -142,7 +141,7 @@ begin
     begin
       with PagFor.Lote.Last.SegmentoA.Last.SegmentoC.Items[x] do
       begin
-        GerarAvisos(CodOcorrencia, DescOcorrencia, 'A', 'C',
+        GerarAvisos(CodOcorrencia, 'A', 'C',
           PagFor.Lote.Last.SegmentoA.Last.Credito.SeuNumero);
       end;
     end;

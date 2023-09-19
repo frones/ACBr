@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/09/2023
+-- Diversos --
+[*] Ajuste para gerar corretamente o Tipo de Movimento no Segmento J.
+   Por: Italo Giurizzato Junior
 -- ACBrPagForClass/CNAB240.LerTxtRetorno --
 [*] Alteração visando a leitura do Segmento E muito utilizado para a 
     conciliação bancária.

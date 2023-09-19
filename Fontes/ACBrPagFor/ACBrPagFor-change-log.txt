@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/09/2023
+-- ACBrPagForClass/CNAB240.LerTxtRetorno --
+[*] Alteração visando a leitura do Segmento E muito utilizado para a 
+    conciliação bancária.
+   Por: Valter FC
 -- Diversos --
 [*] Alteração visando colocar cada ocorrência em um item da lista: Aviso.
    Por: Italo Giurizzato Junior

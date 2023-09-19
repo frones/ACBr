@@ -64,7 +64,7 @@ type
 
     procedure LerSegmentoC(mSegmentoCList: TSegmentoCList; nLinha: Integer); virtual;
 
-    procedure LerSegmentoE(mSegmentoEList: TSegmentoEList; nLinha: Integer); virtual;
+    procedure LerSegmentoE(nLinha: Integer); virtual;
 
     procedure LerSegmentoF(mSegmentoFList: TSegmentoFList; nLinha: Integer); virtual;
 
@@ -653,8 +653,7 @@ begin
   end;
 end;
 
-procedure TArquivoR_CNAB240.LerSegmentoE(mSegmentoEList: TSegmentoEList;
-  nLinha: Integer);
+procedure TArquivoR_CNAB240.LerSegmentoE(nLinha: Integer);
 var
   RegSeg: string;
   Ok: Boolean;
@@ -665,9 +664,9 @@ begin
   if (RegSeg <> '3E') then
     Exit;
 
-  mSegmentoEList.New;
+  PagFor.Lote.Last.SegmentoE.New;
 
-  with mSegmentoEList.Last do
+  with PagFor.Lote.Last.SegmentoE.Last do
   begin
     Convenio := LerCampo(Linha, 33, 20, tcStr);
 
@@ -1446,6 +1445,7 @@ begin
       if (xReg <> '1') and (xReg <> '5') and (xReg <> '9') then
       begin
         LerSegmentoA(I);
+        LerSegmentoE(I);
         LerSegmentoG(I);
         LerSegmentoJ(I, LeuRegistroJ);
         LerSegmentoN1(I);

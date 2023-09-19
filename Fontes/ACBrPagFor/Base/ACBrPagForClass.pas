@@ -693,6 +693,9 @@ type
     FHistorico: string;
     FNumeroDocumento: string;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     property Convenio: string read FConvenio write FConvenio;
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
     property Nome: string read FNome write FNome;
@@ -797,13 +800,13 @@ type
 
     FSegmentoB: TSegmentoBList;
     FSegmentoC: TSegmentoCList;
-//    FSegmentoE: TSegmentoEList;
+    FSegmentoE: TSegmentoEList;
 //    FSegmentoF: TSegmentoFList;
     FSegmentoZ: TSegmentoZList;
 
     procedure SetSegmentoB(const Value: TSegmentoBList);
     procedure SetSegmentoC(const Value: TSegmentoCList);
-//    procedure SetSegmentoE(const Value: TSegmentoEList);
+    procedure SetSegmentoE(const Value: TSegmentoEList);
 //    procedure SetSegmentoF(const Value: TSegmentoFList);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
     function GetPagamentoLiberado: Boolean;
@@ -827,7 +830,7 @@ type
     property CodigoISPB: Integer read FCodigoISPB write FCodigoISPB;
     property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
-//    property SegmentoE: TSegmentoEList read FSegmentoE write SetSegmentoE;
+    property SegmentoE: TSegmentoEList read FSegmentoE write SetSegmentoE;
 //    property SegmentoF: TSegmentoFList read FSegmentoF write SetSegmentoF;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
   end;
@@ -1580,6 +1583,7 @@ type
     FRegistro1: TRegistro1;
     FRegistro5: TRegistro5;
     FSegmentoA: TSegmentoAList;
+    FSegmentoE: TSegmentoEList;
     FSegmentoG: TSegmentoGList;
     FSegmentoJ: TSegmentoJList;
     FSegmentoN1: TSegmentoN1List;
@@ -1593,6 +1597,7 @@ type
     FSegmentoW: TSegmentoWList;
 
     procedure SetSegmentoA(const Value: TSegmentoAList);
+    procedure SetSegmentoE(const Value: TSegmentoEList);
     procedure SetSegmentoG(const Value: TSegmentoGList);
     procedure SetSegmentoJ(const Value: TSegmentoJList);
     procedure SetSegmentoN1(const Value: TSegmentoN1List);
@@ -1611,6 +1616,7 @@ type
     property Registro1: TRegistro1 read FRegistro1 write FRegistro1;
 
     property SegmentoA: TSegmentoAList read FSegmentoA write SetSegmentoA;
+    property SegmentoE: TSegmentoEList read FSegmentoE write SetSegmentoE;
     property SegmentoG: TSegmentoGList read FSegmentoG write SetSegmentoG;
     property SegmentoJ: TSegmentoJList read FSegmentoJ write SetSegmentoJ;
     property SegmentoN1: TSegmentoN1List read FSegmentoN1 write SetSegmentoN1;
@@ -1880,7 +1886,7 @@ begin
 
   FSegmentoB := TSegmentoBList.Create;
   FSegmentoC := TSegmentoCList.Create;
-//  FSegmentoE := TSegmentoEList.Create{(Self)};
+  FSegmentoE := TSegmentoEList.Create;
 //  FSegmentoF := TSegmentoFList.Create{(Self)};
   FSegmentoZ := TSegmentoZList.Create;
 end;
@@ -1891,13 +1897,12 @@ begin
   FCredito.Free;
   FSegmentoB.Free;
   FSegmentoC.Free;
-//  FSegmentoE.Free;
+  FSegmentoE.Free;
 //  FSegmentoF.Free;
   FSegmentoZ.Free;
 
   inherited Destroy;
 end;
-
 
 function TSegmentoA.GetPagamentoLiberado: Boolean;
 var
@@ -1932,12 +1937,12 @@ procedure TSegmentoA.SetSegmentoC(const Value: TSegmentoCList);
 begin
   FSegmentoC := Value;
 end;
-{
+
 procedure TSegmentoA.SetSegmentoE(const Value: TSegmentoEList);
 begin
   FSegmentoE := Value;
 end;
-
+{
 procedure TSegmentoA.SetSegmentoF(const Value: TSegmentoFList);
 begin
   FSegmentoF := Value;
@@ -2581,6 +2586,7 @@ begin
   FRegistro1 := TRegistro1.Create;
 
   FSegmentoA    := TSegmentoAList.Create;
+  FSegmentoE    := TSegmentoEList.Create;
   FSegmentoG    := TSegmentoGList.Create;
   FSegmentoJ    := TSegmentoJList.Create;
   FSegmentoN1   := TSegmentoN1List.Create;
@@ -2601,6 +2607,7 @@ begin
   FRegistro1.Free;
 
   FSegmentoA.Free;
+  FSegmentoE.Free;
   FSegmentoG.Free;
   FSegmentoJ.Free;
   FSegmentoN1.Free;
@@ -2621,6 +2628,11 @@ end;
 procedure TLote.SetSegmentoA(const Value: TSegmentoAList);
 begin
   FSegmentoA := Value;
+end;
+
+procedure TLote.SetSegmentoE(const Value: TSegmentoEList);
+begin
+  FSegmentoE := Value;
 end;
 
 procedure TLote.SetSegmentoG(const Value: TSegmentoGList);
@@ -3148,6 +3160,22 @@ begin
   FContaCorrente.Free;
 
   inherited Destroy;
+end;
+
+{ TSegmentoE }
+
+constructor TSegmentoE.Create;
+begin
+  inherited Create;
+
+  FContaCorrente := TContaCorrente.Create;
+end;
+
+destructor TSegmentoE.Destroy;
+begin
+  FContaCorrente.Free;
+
+  inherited;
 end;
 
 end.

@@ -68,7 +68,7 @@ type
     RLLabel12: TRLLabel;
     rliLogo: TRLImage;
     rllEmissao: TRLLabel;
-    RLLabel8: TRLLabel;
+    rllCodigoChave: TRLLabel;
     rllCodVerificacao: TRLLabel;
     RLLabel7: TRLLabel;
     rllCompetencia: TRLLabel;
@@ -231,6 +231,7 @@ type
     RLLabel9: TRLLabel;
     txtBaseCalculo: TRLLabel;
     txtISS: TRLLabel;
+    RLDraw12: TRLDraw;
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -379,6 +380,11 @@ begin
   begin
     rllNumNF0.Caption := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
     rllEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
+    rllCodigoChave.Caption := 'Código de Verificação:';
+
+    if fpDANFSe.Provedor = proPadraoNacional then
+      rllCodigoChave.Caption := 'Chave de Acesso:';
+
     rllCodVerificacao.Caption := CodigoVerificacao;
 
     rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('mm/yyyy', Competencia), '');

@@ -890,13 +890,15 @@ begin
         ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
       end;
 
-      if ConfigWebServices.Producao.LinkURL = '' then
+      if (ConfigWebServices.Producao.LinkURL = '') or
+         (Configuracoes.Geral.Provedor = proPadraoNacional) then
       begin
         Sessao := Configuracoes.Geral.xProvedor;
         ConfigWebServices.LoadlinkUrlProducao(IniParams, Sessao);
       end;
 
-      if ConfigWebServices.Homologacao.LinkURL = '' then
+      if (ConfigWebServices.Homologacao.LinkURL = '') or
+         (Configuracoes.Geral.Provedor = proPadraoNacional) then
       begin
         Sessao := Configuracoes.Geral.xProvedor;
         ConfigWebServices.LoadLinkUrlHomologacao(IniParams, Sessao);

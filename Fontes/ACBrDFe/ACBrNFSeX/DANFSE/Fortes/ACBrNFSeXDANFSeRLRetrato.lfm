@@ -1,22 +1,20 @@
 inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
-  Left = 709
-  Top = 76
+  Left = 290
+  Top = 115
   Caption = 'frlXDANFSeRLRetrato'
   inherited RLNFSe: TRLReport
     Left = 32
-    Height = 1403
     Top = 0
-    Width = 992
     Margins.LeftMargin = 6
     Margins.TopMargin = 8
     Margins.RightMargin = 5.1
     Margins.BottomMargin = 8
     BeforePrint = RLNFSeBeforePrint
     object rlbCabecalho: TRLBand[0]
-      Left = 28
-      Height = 178
-      Top = 38
-      Width = 940
+      Left = 23
+      Height = 219
+      Top = 30
+      Width = 752
       BandType = btHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -25,8 +23,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawBottom = True
       BeforePrint = rlbCabecalhoBeforePrint
       object RLDraw3: TRLDraw
-        Left = 598
-        Height = 138
+        Left = 595
+        Height = 180
         Top = 1
         Width = 1
         Angle = 90
@@ -104,10 +102,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object RLLabel8: TRLLabel
-        Left = 429
+      object rllCodigoChave: TRLLabel
+        Left = 428
         Height = 15
-        Top = 139
+        Top = 182
         Width = 118
         Alignment = taCenter
         Caption = 'Código de Verificação'
@@ -119,10 +117,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodVerificacao: TRLLabel
-        Left = 425
+        Left = 424
         Height = 18
-        Top = 156
-        Width = 249
+        Top = 199
+        Width = 324
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -12
@@ -140,15 +138,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw8: TRLDraw
         Left = 3
         Height = 1
-        Top = 138
+        Top = 180
         Width = 749
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object RLLabel7: TRLLabel
-        Left = 5
+        Left = 4
         Height = 15
-        Top = 139
+        Top = 182
         Width = 77
         Caption = 'Competência:'
         Font.Color = clBlack
@@ -159,9 +157,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCompetencia: TRLLabel
-        Left = 3
+        Left = 2
         Height = 15
-        Top = 157
+        Top = 200
         Width = 86
         Alignment = taCenter
         Font.Color = clBlack
@@ -173,16 +171,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw9: TRLDraw
         Left = 93
         Height = 40
-        Top = 138
+        Top = 180
         Width = 1
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object RLLabel18: TRLLabel
-        Left = 98
+        Left = 97
         Height = 15
-        Top = 139
+        Top = 182
         Width = 94
         Caption = 'Num. RPS/Ser.:'
         Font.Color = clBlack
@@ -193,9 +191,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllNumeroRps: TRLLabel
-        Left = 96
+        Left = 95
         Height = 15
-        Top = 157
+        Top = 200
         Width = 118
         Alignment = taCenter
         AutoSize = False
@@ -208,7 +206,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw10: TRLDraw
         Left = 218
         Height = 39
-        Top = 139
+        Top = 180
         Width = 1
         Angle = 90
         Brush.Style = bsClear
@@ -256,7 +254,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel60: TRLLabel
         Left = 194
         Height = 22
-        Top = 111
+        Top = 154
         Width = 347
         Caption = 'Nota Fiscal de Serviço Eletrônica - NFS-e'
         Font.Color = clBlack
@@ -267,9 +265,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLSystemInfo1: TRLSystemInfo
-        Left = 680
+        Left = 653
         Height = 15
-        Top = 156
+        Top = 159
         Width = 27
         Alignment = taRightJustify
         Font.CharSet = ANSI_CHARSET
@@ -280,9 +278,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
       end
       object RLSystemInfo2: TRLSystemInfo
-        Left = 719
+        Left = 692
         Height = 15
-        Top = 156
+        Top = 159
         Width = 27
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
@@ -292,9 +290,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
       end
       object RLLabel62: TRLLabel
-        Left = 709
+        Left = 682
         Height = 15
-        Top = 156
+        Top = 159
         Width = 7
         Caption = '/'
         Font.CharSet = ANSI_CHARSET
@@ -304,9 +302,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
       end
       object RLLabel63: TRLLabel
-        Left = 690
+        Left = 663
         Height = 15
-        Top = 140
+        Top = 143
         Width = 41
         Caption = 'Página'
         Font.CharSet = ANSI_CHARSET
@@ -319,16 +317,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw11: TRLDraw
         Left = 420
         Height = 39
-        Top = 139
+        Top = 180
         Width = 1
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object RLLabel64: TRLLabel
-        Left = 221
+        Left = 220
         Height = 15
-        Top = 139
+        Top = 182
         Width = 186
         Caption = 'Município de Prestação do Serviço:'
         Font.Color = clBlack
@@ -339,9 +337,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllMunicipioPrestacaoServico: TRLLabel
-        Left = 221
+        Left = 220
         Height = 15
-        Top = 157
+        Top = 200
         Width = 196
         AutoSize = False
         Font.Color = clBlack
@@ -350,12 +348,20 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object RLDraw12: TRLDraw
+        Left = 596
+        Height = 1
+        Top = 136
+        Width = 154
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
     end
     object rlbPrestador: TRLBand[1]
-      Left = 28
+      Left = 23
       Height = 104
-      Top = 216
-      Width = 940
+      Top = 249
+      Width = 752
       BandType = btTitle
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -498,10 +504,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbTomador: TRLBand[2]
-      Left = 28
+      Left = 23
       Height = 102
-      Top = 320
-      Width = 940
+      Top = 353
+      Width = 752
       BandType = btTitle
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -765,10 +771,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbHeaderItens: TRLBand[3]
-      Left = 28
+      Left = 23
       Height = 23
-      Top = 422
-      Width = 940
+      Top = 455
+      Width = 752
       BandType = btColumnHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -791,10 +797,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbItens: TRLBand[4]
-      Left = 28
+      Left = 23
       Height = 21
-      Top = 465
-      Width = 940
+      Top = 498
+      Width = 752
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
@@ -815,10 +821,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbISSQN: TRLBand[5]
-      Left = 28
+      Left = 23
       Height = 318
-      Top = 504
-      Width = 940
+      Top = 537
+      Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1734,10 +1740,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rbOutrasInformacoes: TRLBand[6]
-      Left = 28
+      Left = 23
       Height = 40
-      Top = 822
-      Width = 940
+      Top = 855
+      Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1775,10 +1781,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbCanhoto: TRLBand[7]
-      Left = 28
+      Left = 23
       Height = 73
-      Top = 880
-      Width = 940
+      Top = 913
+      Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1922,10 +1928,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object rlbHeaderItensDetalhado: TRLBand[8]
-      Left = 28
+      Left = 23
       Height = 20
-      Top = 445
-      Width = 940
+      Top = 478
+      Width = 752
       BandType = btColumnHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -2006,10 +2012,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object subItens: TRLSubDetail[9]
-      Left = 28
+      Left = 23
       Height = 18
-      Top = 486
-      Width = 940
+      Top = 519
+      Width = 752
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
@@ -2020,7 +2026,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Left = 1
         Height = 16
         Top = 0
-        Width = 938
+        Width = 750
         BeforePrint = rlbItensServicoBeforePrint
         object txtServicoQtde: TRLLabel
           Left = 459
@@ -2102,10 +2108,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
     end
     object RLBand1: TRLBand[10]
-      Left = 28
+      Left = 23
       Height = 18
-      Top = 862
-      Width = 940
+      Top = 895
+      Width = 752
       BandType = btSummary
       object rllDataHoraImpressao: TRLLabel
         Left = 2
@@ -2134,7 +2140,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 216
-    Top = 104
+    Left = 128
+    Top = 160
   end
 end

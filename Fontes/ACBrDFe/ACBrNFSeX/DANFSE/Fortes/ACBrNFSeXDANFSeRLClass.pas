@@ -86,7 +86,9 @@ var
   Notas: array of TNFSe;
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
-  case TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor of
+  Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
+
+  case Provedor of
     proSimplISS:
       fqrXDANFSeRLRetrato := TfrlXDANFSeRLSimplISS.Create(Self);
     proIssNet:
@@ -120,7 +122,9 @@ var
   i: integer;
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
-  case TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor of
+  Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
+
+  case Provedor of
     proSimplISS:
       fqrXDANFSeRLRetrato := TfrlXDANFSeRLSimplISS.Create(Self);
     proIssNet:
@@ -158,7 +162,9 @@ var
   i: integer;
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
-  case TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor of
+  Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
+
+  case Provedor of
     proSimplISS:
       fqrXDANFSeRLRetrato := TfrlXDANFSeRLSimplISS.Create(Self);
     proIssNet:

@@ -16,7 +16,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Left = 23
       Top = 30
       Width = 752
-      Height = 178
+      Height = 219
       BandType = btHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -25,10 +25,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawBottom = True
       BeforePrint = rlbCabecalhoBeforePrint
       object RLDraw3: TRLDraw
-        Left = 598
+        Left = 595
         Top = 1
         Width = 1
-        Height = 138
+        Height = 180
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -108,9 +108,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object RLLabel8: TRLLabel
-        Left = 429
-        Top = 139
+      object rllCodigoChave: TRLLabel
+        Left = 428
+        Top = 182
         Width = 118
         Height = 15
         Alignment = taCenter
@@ -124,9 +124,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodVerificacao: TRLLabel
-        Left = 425
-        Top = 156
-        Width = 249
+        Left = 424
+        Top = 199
+        Width = 324
         Height = 18
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -146,15 +146,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object RLDraw8: TRLDraw
         Left = 3
-        Top = 138
+        Top = 180
         Width = 749
         Height = 1
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object RLLabel7: TRLLabel
-        Left = 5
-        Top = 139
+        Left = 4
+        Top = 182
         Width = 77
         Height = 15
         Caption = 'Compet'#234'ncia:'
@@ -167,8 +167,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCompetencia: TRLLabel
-        Left = 3
-        Top = 157
+        Left = 2
+        Top = 200
         Width = 86
         Height = 15
         Alignment = taCenter
@@ -181,7 +181,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object RLDraw9: TRLDraw
         Left = 93
-        Top = 138
+        Top = 180
         Width = 1
         Height = 40
         Angle = 90.000000000000000000
@@ -189,8 +189,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel18: TRLLabel
-        Left = 98
-        Top = 139
+        Left = 97
+        Top = 182
         Width = 94
         Height = 15
         Caption = 'Num. RPS/Ser.:'
@@ -203,8 +203,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllNumeroRps: TRLLabel
-        Left = 96
-        Top = 157
+        Left = 95
+        Top = 200
         Width = 118
         Height = 15
         Alignment = taCenter
@@ -218,7 +218,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object RLDraw10: TRLDraw
         Left = 218
-        Top = 139
+        Top = 180
         Width = 1
         Height = 39
         Angle = 90.000000000000000000
@@ -269,7 +269,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object RLLabel60: TRLLabel
         Left = 194
-        Top = 111
+        Top = 154
         Width = 347
         Height = 22
         Caption = 'Nota Fiscal de Servi'#231'o Eletr'#244'nica - NFS-e'
@@ -282,8 +282,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLSystemInfo1: TRLSystemInfo
-        Left = 680
-        Top = 156
+        Left = 653
+        Top = 159
         Width = 27
         Height = 15
         Alignment = taRightJustify
@@ -297,8 +297,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Text = ''
       end
       object RLSystemInfo2: TRLSystemInfo
-        Left = 719
-        Top = 156
+        Left = 692
+        Top = 159
         Width = 27
         Height = 15
         Font.Charset = ANSI_CHARSET
@@ -311,8 +311,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Text = ''
       end
       object RLLabel62: TRLLabel
-        Left = 709
-        Top = 156
+        Left = 682
+        Top = 159
         Width = 7
         Height = 15
         Caption = '/'
@@ -324,8 +324,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
       end
       object RLLabel63: TRLLabel
-        Left = 690
-        Top = 140
+        Left = 663
+        Top = 143
         Width = 41
         Height = 15
         Caption = 'P'#225'gina'
@@ -338,7 +338,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object RLDraw11: TRLDraw
         Left = 420
-        Top = 139
+        Top = 180
         Width = 1
         Height = 39
         Angle = 90.000000000000000000
@@ -346,8 +346,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel64: TRLLabel
-        Left = 221
-        Top = 139
+        Left = 220
+        Top = 182
         Width = 186
         Height = 15
         Caption = 'Munic'#237'pio de Presta'#231#227'o do Servi'#231'o:'
@@ -360,8 +360,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllMunicipioPrestacaoServico: TRLLabel
-        Left = 221
-        Top = 157
+        Left = 220
+        Top = 200
         Width = 196
         Height = 15
         AutoSize = False
@@ -372,10 +372,18 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object RLDraw12: TRLDraw
+        Left = 596
+        Top = 136
+        Width = 154
+        Height = 1
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
     end
     object rlbPrestador: TRLBand
       Left = 23
-      Top = 208
+      Top = 249
       Width = 752
       Height = 104
       BandType = btTitle
@@ -535,7 +543,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbTomador: TRLBand
       Left = 23
-      Top = 312
+      Top = 353
       Width = 752
       Height = 102
       BandType = btTitle
@@ -833,7 +841,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbHeaderItens: TRLBand
       Left = 23
-      Top = 414
+      Top = 455
       Width = 752
       Height = 23
       BandType = btColumnHeader
@@ -860,7 +868,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbItens: TRLBand
       Left = 23
-      Top = 457
+      Top = 498
       Width = 752
       Height = 21
       Borders.Sides = sdCustom
@@ -886,7 +894,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbISSQN: TRLBand
       Left = 23
-      Top = 496
+      Top = 537
       Width = 752
       Height = 318
       BandType = btSummary
@@ -1912,7 +1920,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 814
+      Top = 855
       Width = 752
       Height = 40
       BandType = btSummary
@@ -1955,7 +1963,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 872
+      Top = 913
       Width = 752
       Height = 73
       BandType = btSummary
@@ -2118,7 +2126,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbHeaderItensDetalhado: TRLBand
       Left = 23
-      Top = 437
+      Top = 478
       Width = 752
       Height = 20
       BandType = btColumnHeader
@@ -2214,7 +2222,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object subItens: TRLSubDetail
       Left = 23
-      Top = 478
+      Top = 519
       Width = 752
       Height = 18
       Borders.Sides = sdCustom
@@ -2322,7 +2330,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object RLBand1: TRLBand
       Left = 23
-      Top = 854
+      Top = 895
       Width = 752
       Height = 18
       BandType = btSummary

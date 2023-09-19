@@ -67,6 +67,7 @@ type
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
     procedure SetXmlNfse(const Value: String);
+    function GetXmlNfse: String;
   public
     constructor Create(AOwner: TACBrDFe);
     destructor Destroy; override;
@@ -97,7 +98,7 @@ type
     property NFSe: TNFSe read FNFSe;
 
     property XmlRps: String read FXmlRps write FXmlRps;
-    property XmlNfse: String read FXmlNfse write SetXmlNfse;
+    property XmlNfse: String read GetXmlNfse write SetXmlNfse;
     property XmlEspelho: String read FXmlEspelho write FXmlEspelho;
 
     property Confirmada: Boolean read FConfirmada write FConfirmada;
@@ -168,7 +169,7 @@ implementation
 uses
   synautil, IniFiles, StrUtilsEx,
   pcnAuxiliar,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
   ACBrDFeUtil,
   ACBrNFSeX, ACBrNFSeXInterface;
 
@@ -1412,6 +1413,14 @@ begin
 
   FProvider.GerarXml(NFSe, FXmlRps, FAlertas);
   Result := FXmlRps;
+end;
+
+function TNotaFiscal.GetXmlNfse: String;
+begin
+  if XmlEhUTF8(FXmlNfse) then
+    Result := FXmlNfse
+  else
+    Result := '<?xml version="1.0" encoding="UTF-8"?>' + FXmlNfse;
 end;
 
 function TNotaFiscal.CalcularNomeArquivo: String;

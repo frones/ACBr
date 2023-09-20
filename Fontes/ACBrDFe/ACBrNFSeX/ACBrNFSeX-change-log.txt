@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+20/09/2023
+-- ACBrNFSeXServicos --
+[*] Removido a URL de homologação da cidade de Mirassol/SP, pois o provedor
+    não disponibiliou esse ambiente para a referida cidade.
+   Por: SG Sistemas/Italo Giurizzato Junior
+[*] A cidade de Campos de Julio/MT trocou de provedor, agora é Fiorilli.
+   Por: Diego Reckziegel
+
 19/09/2023
 -- TabServicos.ini --
 [+] Incluído todos os itens de serviço do Padrão Nacional.

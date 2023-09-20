@@ -697,7 +697,7 @@ type
     function PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData): TACBrTEFPGWebAPIDefinicaoCampo;
     procedure LogPWGetData(AGetData: TPW_GetData);
 
-    function ValidarDDMM(const AString: String): Boolean;
+    function ValidarMMAA(const AString: String): Boolean;
     function ValidarDDMMAA(const AString: String): Boolean;
     function ValidarModulo10(const AString: String): Boolean;
   public
@@ -1851,7 +1851,7 @@ begin
           pgvCPF_CNPJ:
             Valido := (ACBrValidador.ValidarCNPJouCPF(AResposta) = '');
           pgvMMAA:
-            Valido := ValidarDDMM(AResposta);
+            Valido := ValidarMMAA(AResposta);
           pgvDDMMAA:
             Valido := ValidarDDMMAA(AResposta);
         end;
@@ -2518,13 +2518,13 @@ begin
   end;
 end;
 
-function TACBrTEFPGWebAPI.ValidarDDMM(const AString: String): Boolean;
+function TACBrTEFPGWebAPI.ValidarMMAA(const AString: String): Boolean;
 begin
   Result := False;
   if Length(AString) <> 4 then
     Exit;
 
-  Result := ValidarDDMMAA(AString + '00');
+  Result := ValidarDDMMAA('01' + AString);
 end;
 
 function TACBrTEFPGWebAPI.ValidarDDMMAA(const AString: String): Boolean;

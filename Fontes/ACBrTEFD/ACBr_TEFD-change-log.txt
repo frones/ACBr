@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2023
+-- ACBrTEFPayGoWebComum --
+[-] Correção na validação de Campos com PWDAT_TYPED = "MMAA"
+    www.projetoacbr.com.br/forum/index.php?showtopic=74275
+    (por: DSA)
+
 18/09/2023
 -- ACBrTEFComum, ACBrTEFPayGoComum--
 [*] Inclusão tefstsErroEnergia em TACBrTEFStatusTransacao para realização do teste 51 (Queda de Energia) para homologação PayGo utilizando Componente ACBrTEFAPI.

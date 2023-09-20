@@ -524,7 +524,7 @@ begin
 
   with Self.ideEstab do
   begin
-    Gerador.wCampo(tcStr, '', 'cnpjBenef', 14, 14, 1, ideBenef.cnpjBenef);
+    Gerador.wCampo(tcStr, '', 'cnpjBenef', 14, 14, 0, ideBenef.cnpjBenef);
     Gerador.wCampo(tcStr, '', 'nmBenef',   1,  70, 0, ideBenef.nmBenef);
     Gerador.wCampo(tcStr, '', 'isenImun',  1,   1, 0, tpIsencaoImunidadeToStr(ideBenef.isenImun));
     if TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF >= v2_01_02 then

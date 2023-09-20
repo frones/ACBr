@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2023
+-- pcnReinfR4020 --
+[*] Corrigido número de ocorrências do cnpjBenef no R-4020
+  Por: Renato Rubinho
+
 15/09/2023
 -- ACBrReinfLoteEventos --
 [*] Criado destructor na TItemLoteEventos e liberado FLeitor da memória

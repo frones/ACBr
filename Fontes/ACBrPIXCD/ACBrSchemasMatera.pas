@@ -1970,7 +1970,7 @@ type
   TMateraPSP = class(TACBrPIXSchema)
   private
     fcountry: String;
-    fcurrencies: TStringArray;
+    fcurrencies: TStrings;
     fid: String;
     fname: String;
   protected
@@ -1986,7 +1986,7 @@ type
     property id: String read fid write fid;
     property name: String read fname write fname;
     property country: String read fcountry write fcountry;
-    property currencies: TStringArray read fcurrencies write fcurrencies;
+    property currencies: TStrings read fcurrencies write fcurrencies;
   end;
 
   { TMateraAliasResponse }
@@ -2053,23 +2053,23 @@ type
 
   TMateraUtilitiesTO = class(TMateraUtilitiesBasic)
   public
-    property documentNumber: String read fdocumentNumber write fdocumentNumber;
-    property barcode: String read fbarcode write fbarcode;
-    property beneficiaryTaxIdentifier: String read fbeneficiaryTaxIdentifier write fbeneficiaryTaxIdentifier;
-    property typeableLine: String read ftypeableLine write ftypeableLine;
-    property dueDate: TDateTime read fdueDate write fdueDate;
-    property paidAmount: currency read fpaidAmount write fpaidAmount;
-    property historyCode: String read fhistoryCode write fhistoryCode;
+    property documentNumber;
+    property barcode;
+    property beneficiaryTaxIdentifier;
+    property typeableLine;
+    property dueDate;
+    property paidAmount;
+    property historyCode;
   end;
 
   TMateraUtilitiesPayment = class(TMateraUtilitiesBasic)
   public
-    property documentNumber: String read fdocumentNumber write fdocumentNumber;
-    property barcode: String read fbarcode write fbarcode;
-    property beneficiaryTaxIdentifier: String read fbeneficiaryTaxIdentifier write fbeneficiaryTaxIdentifier;
-    property typeableLine: String read ftypeableLine write ftypeableLine;
-    property dueDate: TDateTime read fdueDate write fdueDate;
-    property paidAmount: currency read fpaidAmount write fpaidAmount;
+    property documentNumber;
+    property barcode;
+    property beneficiaryTaxIdentifier;
+    property typeableLine;
+    property dueDate;
+    property paidAmount;
   end;
 
   { TMateraBoletoBasic }
@@ -2720,14 +2720,16 @@ type
     fhashNextPage: String;
     function GetItem(aIndex: Integer): TMateraTransactionResponse;
     procedure SetItem(aIndex: Integer; aValue: TMateraTransactionResponse);
-    procedure WriteToJSon(AJSon: TACBrJSONObject); override;
-    procedure ReadFromJSon(AJSon: TACBrJSONObject); override;
   protected
     function NewSchema: TACBrPIXSchema; override;
   public
     function Add(aItem: TMateraTransactionResponse): Integer;
     procedure Insert(aIndex: Integer; aItem: TMateraTransactionResponse);
     function New: TMateraTransactionResponse;
+    
+    procedure WriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure ReadFromJSon(AJSon: TACBrJSONObject); override;
+
     property Items[aIndex: Integer]: TMateraTransactionResponse read GetItem write SetItem; default;
     property hashNextPage: String read fhashNextPage write fhashNextPage;
   end;
@@ -4526,39 +4528,6 @@ begin
       Assign(TMateraWithdrawInfo(ASource));
 end;
 
-procedure TMateraWithdrawInfo.DoWriteToJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .AddPair('withdrawType', MateraWithdrawTypeToString(fwithdrawType))
-    .AddPair('senderComment', fsenderComment)
-    .AddPair('futureDate', ffutureDate);
-
-  fbankTransfer.WriteToJSon(aJSon);
-  fboleto.WriteToJSon(aJSon);
-  futilities.WriteToJSon(aJSon);
-  fexternal_.WriteToJSon(aJSon);
-  finstantPayment.WriteToJSon(aJSon);
-end;
-
-procedure TMateraWithdrawInfo.DoReadFromJSon(aJSon: TACBrJSONObject);
-var
-  s: String;
-begin
-  {$IfDef FPC}s := EmptyStr;{$EndIf}
-
-  aJSon
-    .Value('withdrawType', s)
-    .Value('senderComment', fsenderComment)
-    .Value('futureDate', ffutureDate);
-
-  fwithdrawType := StringToMateraWithdrawType(s);
-  fbankTransfer.ReadFromJSon(aJSon);
-  fboleto.ReadFromJSon(aJSon);
-  futilities.ReadFromJSon(aJSon);
-  fexternal_.ReadFromJSon(aJSon);
-  finstantPayment.ReadFromJSon(aJSon);
-end;
-
 constructor TMateraWithdrawInfo.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -4604,6 +4573,39 @@ begin
   futilities.Assign(aSource.utilities);
   fexternal_.Assign(aSource.external_);
   finstantPayment.Assign(aSource.instantPayment);
+end;
+
+procedure TMateraWithdrawInfo.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  s: String;
+begin
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+
+  aJSon
+    .Value('withdrawType', s)
+    .Value('senderComment', fsenderComment)
+    .ValueISODateTime('futureDate', ffutureDate);
+
+  fwithdrawType := StringToMateraWithdrawType(s);
+  fbankTransfer.ReadFromJSon(aJSon);
+  fboleto.ReadFromJSon(aJSon);
+  futilities.ReadFromJSon(aJSon);
+  fexternal_.ReadFromJSon(aJSon);
+  finstantPayment.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraWithdrawInfo.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .AddPair('withdrawType', MateraWithdrawTypeToString(fwithdrawType))
+    .AddPair('senderComment', fsenderComment)
+    .AddPair('futureDate', ffutureDate);
+
+  fbankTransfer.WriteToJSon(aJSon);
+  fboleto.WriteToJSon(aJSon);
+  futilities.WriteToJSon(aJSon);
+  fexternal_.WriteToJSon(aJSon);
+  finstantPayment.WriteToJSon(aJSon);
 end;
 
 { TMateraRetiradaRequest }
@@ -4683,10 +4685,8 @@ begin
   aJSon
     .AddPair('id', fid)
     .AddPair('name', fname)
-    .AddPair('country', fcountry, False);
-
-  if NaoEstaVazio(fcurrencies[0]) then
-    aJSon.AddPair('currencies', fcurrencies);
+    .AddPair('country', fcountry, False)
+    {.AddPair('currencies', fcurrencies)};
 end;
 
 procedure TMateraPSP.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -4695,7 +4695,7 @@ begin
     .Value('id', fid)
     .Value('name', fname)
     .Value('country', fcountry)
-    .Value('currencies', fcurrencies);
+    {.Value('currencies', fcurrencies)};
 end;
 
 constructor TMateraPSP.Create(const aObjectName: String);
@@ -4846,7 +4846,7 @@ end;
 
 procedure TMateraAntiFraudClearingInfo.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
-  aJSon.Value('lastUpdated', flastUpdated);
+  aJSon.ValueISODateTime('lastUpdated', flastUpdated);
   counters.ReadFromJSon(aJSon);
 end;
 
@@ -5069,7 +5069,7 @@ begin
     .Value('couponMerchantId', fcouponMerchantId)
     .Value('description', fdescription)
     .Value('discount', fdiscount)
-    .Value('dueDate', fdueDate)
+    .ValueISODate('dueDate', fdueDate)
     .Value('maxUse', fmaxUse)
     .Value('minExpenseValue', fminExpenseValue)
     .Value('seller', fseller)

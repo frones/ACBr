@@ -365,21 +365,22 @@ begin
       begin
         // de 00 até 99
         sSecao := 'dependente' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'tpDep', 'FIM');
+        sFim   := INIRec.ReadString(sSecao, 'nmDep', 'FIM');
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
         with trabalhador.Dependente.New do
         begin
-          tpDep    := eSStrToTpDep(Ok, sFim);
-          nmDep    := INIRec.ReadString(sSecao, 'nmDep', '');
+          tpDep    := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', ''));
+          nmDep    := sFim;
           dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
           cpfDep   := INIRec.ReadString(sSecao, 'cpfDep', '');
           sexoDep  := INIRec.ReadString(sSecao, 'sexoDep', '');
           depIRRF  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depIRRF', 'S'));
           depSF    := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depSF', 'S'));
           incTrab  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incTrab', 'S'));
+          descrDep := INIRec.ReadString(sSecao, 'descrDep', '');
         end;
 
         Inc(I);
@@ -416,6 +417,7 @@ begin
         vinculo.InfoRegimeTrab.InfoCeletista.NatAtividade      := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
         vinculo.InfoRegimeTrab.InfoCeletista.dtBase            := INIRec.ReadInteger(sSecao, 'dtBase', 0);
         vinculo.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := INIRec.ReadString(sSecao, 'cnpjSindCategProf', '');
+        vinculo.InfoRegimeTrab.InfoCeletista.matAnotJud        := INIRec.ReadString(sSecao, 'matAnotJud', '');
 
         sSecao := 'FGTS';
         vinculo.InfoRegimeTrab.InfoCeletista.FGTS.OpcFGTS   := eSStrToOpcFGTS(Ok, INIRec.ReadString(sSecao, 'opcFGTS', '1'));
@@ -459,10 +461,25 @@ begin
       end;
 
       sSecao := 'aprend';
-      if INIRec.ReadString(sSecao, 'tpInsc', '') <> '' then
+
+      Ok := False;
+      if (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= veS01_02_00) then
       begin
+        if INIRec.ReadString(sSecao, 'indAprend', '') = '1' then
+          Ok := (INIRec.ReadString(sSecao, 'cnpjEntQual', '') <> EmptyStr)
+        else
+          Ok := (INIRec.ReadString(sSecao, 'tpInsc', '') <> EmptyStr);
+      end
+      else
+        Ok := (INIRec.ReadString(sSecao, 'tpInsc', '') <> EmptyStr);
+
+      if Ok then
+      begin
+        vinculo.InfoRegimeTrab.InfoCeletista.aprend.indAprend := eSStrTotpIndAprend(Ok, INIRec.ReadString(sSecao, 'indAprend', '1'));
+        vinculo.InfoRegimeTrab.InfoCeletista.aprend.cnpjEntQual := INIRec.ReadString(sSecao, 'cnpjEntQual', '');
         vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
         vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+        vinculo.InfoRegimeTrab.InfoCeletista.aprend.cnpjPrat := INIRec.ReadString(sSecao, 'cnpjPrat', '');
       end;
 
       sSecao := 'infoEstatutario';
@@ -830,6 +847,7 @@ begin
             vinculo.InfoRegimeTrab.InfoCeletista.NatAtividade      := eSStrToNatAtividade(bOk, Leitor.rCampo(tcStr, 'natAtividade'));
             vinculo.InfoRegimeTrab.InfoCeletista.dtBase            := Leitor.rCampo(tcStr, 'dtBase');
             vinculo.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := Leitor.rCampo(tcStr, 'cnpjSindCategProf');
+            vinculo.InfoRegimeTrab.InfoCeletista.matAnotJud        := Leitor.rCampo(tcStr, 'matAnotJud');
 
             if Leitor.rExtrai(5, 'FGTS') <> '' then
             begin
@@ -861,8 +879,11 @@ begin
 
             if Leitor.rExtrai(5, 'aprend') <> '' then
             begin
-              vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(bOk, Leitor.rCampo(tcStr, 'tpInsc', '1'));
-              vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+              vinculo.InfoRegimeTrab.InfoCeletista.aprend.indAprend := eSStrTotpIndAprend(bOk, Leitor.rCampo(tcStr, 'indAprend'));
+              vinculo.InfoRegimeTrab.InfoCeletista.aprend.cnpjEntQual := Leitor.rCampo(tcStr, 'cnpjEntQual', '');
+              vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(bOk, Leitor.rCampo(tcStr, 'tpInsc'));
+              vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := Leitor.rCampo(tcStr, 'nrInsc', '');
+              vinculo.InfoRegimeTrab.InfoCeletista.aprend.cnpjPrat := Leitor.rCampo(tcStr, 'cnpjPrat', '');
             end;
           end;
 

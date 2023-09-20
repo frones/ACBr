@@ -58,7 +58,7 @@ uses
   ACBrBase, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012, pcesS5003, 
-  pcesS5013, pcesS5501;
+  pcesS5013, pcesS5501, pcesS5503;
 
 type
   TtotCollectionItem = class;
@@ -528,6 +528,11 @@ begin
               RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
             end;
 
+            if RetEventos.Items[i].tot.Items[j].tipo = 'S5503' then
+            begin
+              RetEventos.Items[i].tot.Items[j].Evento := TS5503.Create;
+              RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
+            end;
             inc(j);
           end;
 

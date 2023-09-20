@@ -389,21 +389,22 @@ begin
       begin
         // de 00 até 99
         sSecao := 'dependente' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'tpDep', 'FIM');
+        sFim   := INIRec.ReadString(sSecao, 'nmDep', 'FIM');
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
         with trabalhador.Dependente.New do
         begin
-          tpDep    := eSStrToTpDep(Ok, sFim);
-          nmDep    := INIRec.ReadString(sSecao, 'nmDep', '');
+          tpDep    := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', ''));
+          nmDep    := sFim;
           dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
           cpfDep   := INIRec.ReadString(sSecao, 'cpfDep', '');
           sexoDep  := INIRec.ReadString(sSecao, 'sexoDep', '');
           depIRRF  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depIRRF', 'S'));
           depSF    := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depSF', 'S'));
           incTrab  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incTrab', 'S'));
+          descrDep := INIRec.ReadString(sSecao, 'descrDep', '');
         end;
 
         Inc(I);

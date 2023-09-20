@@ -561,7 +561,10 @@ begin
 
     if (Self.ModoLancamento <> mlExclusao) then
     begin
-      GerarInfoCadastro;
+      if ((VersaoDF <= veS01_01_00) or
+          (Self.infoEmpregador.infoCadastro.ClassTrib <> ct00) or
+          (Self.ideEvento.ProcEmi <> peAplicGovEvtJud)) then
+        GerarInfoCadastro;
       if ModoLancamento = mlAlteracao then
         if (InfoEmpregador.novaValidadeInst()) then
           GerarIdePeriodo(InfoEmpregador.novaValidade, 'novaValidade');

@@ -353,31 +353,8 @@
                     <xs:documentation>b) Se {tpProcRRA}(./tpProcRRA) = [2], deve possuir 20 (vinte) algarismos.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="descRRA">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Descrição dos Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:minLength value="1" />
-                        <xs:maxLength value="50" />
-                        <xs:pattern value=".*[^\s].*" />
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="qtdMesesRRA">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Número de meses relativo aos Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:decimal">
-                        <xs:totalDigits value="4" />
-                        <xs:fractionDigits value="1" />
-                        <xs:minExclusive value="0" />
-                        <xs:maxInclusive value="999.9" />
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="descRRA" type="TS_descRRA" />
+            <xs:element name="qtdMesesRRA" type="TS_qtdMesesRRA" />
             <xs:element name="despProcJud" minOccurs="0">
                 <xs:complexType>
                     <xs:annotation>
@@ -466,6 +443,62 @@
         </xs:sequence>
     </xs:complexType>
     
+    <!-- Grupos {detReembTit} e {detReembDep} -->
+
+    <xs:complexType name="T_detReemb">
+        <xs:sequence>
+            <xs:element name="tpInsc" type="TS_tpInsc_1_2">
+                <xs:annotation>
+                    <xs:documentation>Informar o código correspondente ao tipo de inscrição do prestador de serviços.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="nrInsc" type="TS_nrInsc_11_14">
+                <xs:annotation>
+                    <xs:documentation>Informar o número de inscrição do prestador de serviços de assistência médica, de acordo com o tipo de inscrição indicado em {tpInsc}(./tpInsc).</xs:documentation>
+                    <xs:documentation>Validação: Deve ser um CNPJ ou CPF válido, de acordo com o tipo de inscrição indicado em {tpInsc}(./tpInsc).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="vlrReemb" type="TS_valorMonetario_positivo" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Valor do reembolso relativo ao ano do período indicado em {perApur}(1210_ideEvento_perApur).</xs:documentation>
+                    <xs:documentation>Validação: Informação não obrigatória se {vlrReembAnt}(./vlrReembAnt) for maior que zero.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="vlrReembAnt" type="TS_valorMonetario_positivo" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Valor do reembolso relativo a anos anteriores.</xs:documentation>
+                    <xs:documentation>Validação: Informação não obrigatória se {vlrReemb}(./vlrReemb) for maior que zero.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="T_detReemb_Tot">
+        <xs:sequence>
+            <xs:element name="tpInsc" type="TS_tpInsc_1_2">
+                <xs:annotation>
+                    <xs:documentation>Informar o código correspondente ao tipo de inscrição do prestador de serviços.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="nrInsc" type="TS_nrInsc_11_14">
+                <xs:annotation>
+                    <xs:documentation>Informar o número de inscrição do prestador de serviços de assistência médica, de acordo com o tipo de inscrição indicado em {tpInsc}(./tpInsc).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="vlrReemb" type="TS_valorMonetario" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Valor do reembolso relativo ao ano do período indicado em {perApur}(1210_ideEvento_perApur).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="vlrReembAnt" type="TS_valorMonetario" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Valor do reembolso relativo a anos anteriores.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
     <!-- Grupo {nascimento} -->
 
     <xs:complexType name="T_nascimento">
@@ -582,13 +615,54 @@
 
     <xs:complexType name="T_aprend">
         <xs:sequence>
-            <xs:element name="tpInsc" type="TS_tpInsc_1_2" />
-            <xs:element name="nrInsc" type="TS_nrInsc_11_14">
+            <xs:element name="indAprend">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Indicativo de modalidade de contratação de aprendiz.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:byte">
+                        <xs:enumeration value="1">
+                            <xs:annotation>
+                                <xs:documentation>Contratação direta: contratação do aprendiz efetivada pelo estabelecimento cumpridor da cota de aprendizagem</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="2">
+                            <xs:annotation>
+                                <xs:documentation>Contratação indireta: contratação do aprendiz efetivada por entidades sem fins lucrativos ou por entidades de prática desportiva a serviço do estabelecimento cumpridor da cota</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="cnpjEntQual" type="TS_cnpj" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>Informar o número de inscrição do estabelecimento para o qual a contratação de aprendiz foi efetivada, de acordo com o tipo de inscrição indicado no campo {aprend/tpInsc}(./tpInsc).</xs:documentation>
-                    <xs:documentation>Validação: Deve ser um identificador válido e:</xs:documentation>
+                    <xs:documentation>Informar o número de inscrição no CNPJ da entidade qualificadora, no caso de contratação direta.</xs:documentation>
+                    <xs:documentation>Validação: Preenchimento obrigatório e exclusivo se {indAprend}(./indAprend) = [1].</xs:documentation>
+                    <xs:documentation>Deve ser um CNPJ válido, com 14 (catorze) algarismos.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="tpInsc" type="TS_tpInsc_1_2" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Preencher com o código correspondente ao tipo de inscrição do estabelecimento para o qual a contratação de aprendiz foi efetivada, no caso de contratação indireta, conforme Tabela 05.</xs:documentation>
+                    <xs:documentation>Validação: Preenchimento obrigatório e exclusivo se {indAprend}(./indAprend) = [2].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="nrInsc" type="TS_nrInsc_11_14" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Informar o número de inscrição do estabelecimento para o qual a contratação de aprendiz foi efetivada, no caso de contratação indireta, de acordo com o tipo de inscrição indicado no campo {aprend/tpInsc}(./tpInsc).</xs:documentation>
+                    <xs:documentation>Validação: Preenchimento obrigatório e exclusivo se {indAprend}(./indAprend) = [2].</xs:documentation>
+                    <xs:documentation>Deve ser um identificador válido e:</xs:documentation>
                     <xs:documentation>a) Se {aprend/tpInsc}(./tpInsc) = [1], deve ser informado com 14 (catorze) algarismos. Se o empregador for pessoa jurídica, a raiz do CNPJ informado deve ser diferente de {ideEmpregador/nrInsc}(/ideEmpregador_nrInsc).</xs:documentation>
                     <xs:documentation>b) Se {aprend/tpInsc}(./tpInsc) = [2], deve ser diferente do CPF do empregado. Se o empregador for pessoa física, também deve ser diferente do CPF do empregador.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="cnpjPrat" type="TS_cnpj" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Informar o número de inscrição no CNPJ do estabelecimento onde estão sendo realizadas as atividades práticas, quando ocorrer uma das seguintes situações:</xs:documentation>
+                    <xs:documentation>a) Modalidade alternativa de cumprimento de cota de aprendizagem (neste caso, informar o CNPJ da entidade concedente da parte prática);</xs:documentation>
+                    <xs:documentation>b) Realização das atividades práticas na empresa contratante do serviço terceirizado;</xs:documentation>
+                    <xs:documentation>c) Centralização das atividades práticas em estabelecimento da própria empresa, diverso do estabelecimento responsável pelo cumprimento da cota.</xs:documentation>
+                    <xs:documentation>Validação: Deve ser um CNPJ válido, com 14 (catorze) algarismos.</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
@@ -1396,6 +1470,24 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="TS_tpInsc_1_3">
+        <xs:annotation>
+            <xs:documentation>Preencher com o código correspondente ao tipo de inscrição, conforme Tabela 05.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>CNPJ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>CAEPF</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="TS_tpInsc_1_3_4">
         <xs:annotation>
             <xs:documentation>Preencher com o código correspondente ao tipo de inscrição, conforme Tabela 05.</xs:documentation>
@@ -1682,7 +1774,14 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <!-- Campos {nrProcJud} e {nrProcTrab} -->
+    <xs:simpleType name="TS_nrProcIR">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="2" />
+            <xs:maxLength value="21" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campos {nrProcJud}, {nrProcTrab} e {nrProcRet} -->
 
     <xs:simpleType name="TS_nrProcJud_1">
         <xs:annotation>
@@ -1715,7 +1814,15 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <!-- Campo {codSusp} -->
+    <xs:simpleType name="TS_nrProcRet">
+        <xs:annotation>
+            <xs:documentation>Informar o número do processo administrativo/judicial.</xs:documentation>
+            <xs:documentation>Validação: Deve ser um número de processo administrativo ou judicial válido e existente na Tabela de Processos (S-1070).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_nrProc_17_20_21" />
+    </xs:simpleType>
+
+    <!-- Campos {codSusp} -->
 
     <xs:simpleType name="TS_codSusp">
         <xs:annotation>
@@ -1725,6 +1832,15 @@
         <xs:restriction base="xs:integer">
             <xs:pattern value="\d{1,14}" />
         </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TS_codSuspIR">
+        <xs:annotation>
+            <xs:documentation>Código do indicativo da suspensão, atribuído pelo empregador em S-1070.</xs:documentation>
+            <xs:documentation>Validação: Preenchimento obrigatório se houver informação de {codSusp}(1070_infoProcesso_inclusao_dadosProc_infoSusp_codSusp) em S-1070.</xs:documentation>
+            <xs:documentation>Se informado, deve constar na Tabela de Processos (S-1070), campo {codSusp}(1070_infoProcesso_inclusao_dadosProc_infoSusp_codSusp), vinculado ao número do processo informado em {nrProcRet}(./nrProcRet).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_codSusp" />
     </xs:simpleType>
 
     <!-- Campo {indSubstPatrObra} -->
@@ -1924,6 +2040,30 @@
         <xs:restriction base="TS_cpf" />
     </xs:simpleType>
 
+    <xs:simpleType name="TS_cpfDepIR">
+        <xs:annotation>
+            <xs:documentation>Número de inscrição no CPF.</xs:documentation>
+            <xs:documentation>Validação: Deve ser um CPF válido e diferente do CPF do declarante pessoa física ({ideEmpregador/nrInsc}(/ideEmpregador_nrInsc)) e do beneficiário ({cpfBenef}(../../cpfBenef)).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_cpf" />
+    </xs:simpleType>
+
+    <xs:simpleType name="TS_cpfDepIR2">
+        <xs:annotation>
+            <xs:documentation>Número de inscrição no CPF.</xs:documentation>
+            <xs:documentation>Validação: Deve ser um CPF de dependente cadastrado no eSocial (S-2200/S-2205/S-2300/S-2400/S-2405 ou no grupo {infoDep}(1210_ideBenef_infoIRComplem_infoDep)).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_cpf" />
+    </xs:simpleType>
+
+    <xs:simpleType name="TS_cpfPenAlim">
+        <xs:annotation>
+            <xs:documentation>Número do CPF do dependente/beneficiário da pensão alimentícia.</xs:documentation>
+            <xs:documentation>Validação: Deve ser um CPF de dependente cadastrado no eSocial (S-2200/S-2205/S-2300/S-2400/S-2405 ou no grupo {infoDep}(../../infoDep)).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_cpf" />
+    </xs:simpleType>
+
     <xs:simpleType name="TS_cpfDep">
         <xs:annotation>
             <xs:documentation>Número de inscrição no CPF.</xs:documentation>
@@ -2023,6 +2163,7 @@
     <xs:simpleType name="TS_nmSoc">
         <xs:annotation>
             <xs:documentation>Nome social para travesti ou transexual.</xs:documentation>
+            <xs:documentation>Validação: Informação validada na base de dados do CPF.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="TS_nome" />
     </xs:simpleType>
@@ -2068,12 +2209,29 @@
             <xs:documentation>Indicativo de Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
             <xs:documentation>Somente preencher este campo se for um demonstrativo de RRA.</xs:documentation>
         </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="S">
-                <xs:annotation>
-                    <xs:documentation>Sim</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
+        <xs:restriction base="TS_sim" />
+    </xs:simpleType>
+
+    <!-- Campo {descRRA} -->
+
+    <xs:simpleType name="TS_descRRA">
+        <xs:annotation>
+            <xs:documentation>Descrição dos Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_texto_50" />
+    </xs:simpleType>
+
+    <!-- Campo {qtdMesesRRA} -->
+
+    <xs:simpleType name="TS_qtdMesesRRA">
+        <xs:annotation>
+            <xs:documentation>Número de meses relativo aos Rendimentos Recebidos Acumuladamente - RRA.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="4" />
+            <xs:fractionDigits value="1" />
+            <xs:minExclusive value="0" />
+            <xs:maxInclusive value="999.9" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -2348,7 +2506,7 @@
             </xs:enumeration>
             <xs:enumeration value="H">
                 <xs:annotation>
-                    <xs:documentation>Recolhimento mensal de FGTS anterior ao início de obrigatoriedade dos eventos periódicos</xs:documentation>
+                    <xs:documentation>Declaração de base de cálculo de FGTS anterior ao início do FGTS Digital</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="I">
@@ -2373,7 +2531,7 @@
             </xs:enumeration>
             <xs:enumeration value="H">
                 <xs:annotation>
-                    <xs:documentation>Recolhimento mensal de FGTS anterior ao início de obrigatoriedade dos eventos periódicos</xs:documentation>
+                    <xs:documentation>Declaração de base de cálculo de FGTS anterior ao início do FGTS Digital</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
@@ -2427,6 +2585,339 @@
             <xs:minLength value="1" />
             <xs:maxLength value="20" />
             <xs:pattern value=".*[^\s].*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {indNIF} -->
+
+    <xs:simpleType name="TS_indNIF">
+        <xs:annotation>
+            <xs:documentation>Indicativo do Número de Identificação Fiscal (NIF).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Beneficiário com NIF</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Beneficiário dispensado do NIF</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>País não exige NIF</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campos {tpRend} -->
+
+    <xs:simpleType name="TS_tpRendDep">
+        <xs:annotation>
+            <xs:documentation>Tipo de rendimento.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="11">
+                <xs:annotation>
+                    <xs:documentation>Remuneração mensal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+                <xs:annotation>
+                    <xs:documentation>13º salário</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+                <xs:annotation>
+                    <xs:documentation>Férias</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TS_tpRendPenAlim">
+        <xs:annotation>
+            <xs:documentation>Tipo de rendimento.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="11">
+                <xs:annotation>
+                    <xs:documentation>Remuneração mensal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+                <xs:annotation>
+                    <xs:documentation>13º salário</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+                <xs:annotation>
+                    <xs:documentation>Férias</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+                <xs:annotation>
+                    <xs:documentation>PLR</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+                <xs:annotation>
+                    <xs:documentation>RRA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="79">
+                <xs:annotation>
+                    <xs:documentation>Rendimento isento ou não tributável</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {vlrDedDep} -->
+
+    <xs:simpleType name="TS_vlrDedDep">
+        <xs:annotation>
+            <xs:documentation>Preencher com o valor da dedução da base de cálculo.</xs:documentation>
+            <xs:documentation>Validação: O valor informado neste campo deve ser menor ou igual ao valor unitário da dedução por dependente definido na legislação.</xs:documentation>
+            <xs:documentation>Deve ser maior que 0 (zero).</xs:documentation>
+            <xs:documentation>Em caso de inconsistência na validação, o arquivo será aceito, porém com alerta ao contribuinte.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_valorMonetario_positivo" />
+    </xs:simpleType>
+
+    <!-- Campo {vlrDedPenAlim} -->
+
+    <xs:simpleType name="TS_vlrDedPenAlim">
+        <xs:annotation>
+            <xs:documentation>Valor relativo à dedução do rendimento tributável correspondente a pagamento de pensão alimentícia.</xs:documentation>
+            <xs:documentation>Validação: Deve ser maior que 0 (zero).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_valorMonetario_positivo" />
+    </xs:simpleType>
+
+    <!-- Campo {tpPrev} (S-1210 e S-5002) -->
+
+    <xs:simpleType name="TS_tpPrevCompl">
+        <xs:annotation>
+            <xs:documentation>Tipo de previdência complementar.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Privada: {codIncIRRF}(1010_infoRubrica_inclusao_dadosRubrica_codIncIRRF) em S-1010 = [46, 47, 48]</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>FAPI: {codIncIRRF}(1010_infoRubrica_inclusao_dadosRubrica_codIncIRRF) em S-1010 = [61, 62, 66]</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Funpresp: {codIncIRRF}(1010_infoRubrica_inclusao_dadosRubrica_codIncIRRF) em S-1010 = [63, 64, 65]</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {CR} -->
+
+    <xs:simpleType name="TS_CR_IR">
+        <xs:annotation>
+            <xs:documentation>Código de Receita - CR relativo ao Imposto de Renda Retido na Fonte sobre rendimentos do trabalho.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="056107">
+                <xs:annotation>
+                    <xs:documentation>IRRF mensal, 13° salário e férias sobre trabalho assalariado no país ou ausente no exterior a serviço do país, exceto se contratado por empregador doméstico ou por segurado especial sujeito a recolhimento unificado</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056108">
+                <xs:annotation>
+                    <xs:documentation>IRRF mensal e férias - Empregado doméstico</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056109">
+                <xs:annotation>
+                    <xs:documentation>IRRF 13° salário na rescisão de contrato de trabalho - Empregado doméstico</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056110">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Empregado doméstico 13º salário</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056111">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Empregado/Trabalhador rural - Segurado especial</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056112">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Empregado/Trabalhador rural - Segurado especial 13° salário</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="056113">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Empregado/Trabalhador rural - Segurado especial 13° salário rescisório</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="058806">
+                <xs:annotation>
+                    <xs:documentation>IRRF sobre rendimento do trabalho sem vínculo empregatício</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="061001">
+                <xs:annotation>
+                    <xs:documentation>IRRF sobre rendimentos relativos a prestação de serviços de transporte rodoviário internacional de carga, pagos a transportador autônomo PF residente no Paraguai</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="353301">
+                <xs:annotation>
+                    <xs:documentation>Proventos de aposentadoria, reserva, reforma ou pensão pagos por previdência pública</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="356201">
+                <xs:annotation>
+                    <xs:documentation>IRRF sobre participação dos trabalhadores em lucros ou resultados - PLR</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>                                                    
+            <xs:enumeration value="188901">
+                <xs:annotation>
+                    <xs:documentation>Rendimentos Recebidos Acumuladamente - RRA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="047301">
+                <xs:annotation>
+                    <xs:documentation>IRRF - Residentes no exterior, para fins fiscais</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {vlrNRetido} -->
+
+    <xs:simpleType name="TS_vlrNRetido">
+        <xs:annotation>
+            <xs:documentation>Valor da retenção que deixou de ser efetuada em função de processo administrativo ou judicial.</xs:documentation>
+            <xs:documentation>Validação: Deve ser maior que 0 (zero).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_valorMonetario_positivo" />
+    </xs:simpleType>
+
+    <!-- Campo {vlrDepJud} -->
+
+    <xs:simpleType name="TS_vlrDepJud">
+        <xs:annotation>
+            <xs:documentation>Valor do depósito judicial em função de processo administrativo ou judicial.</xs:documentation>
+            <xs:documentation>Validação: Informação permitida apenas se {indDeposito}(1070_infoProcesso_inclusao_dadosProc_infoSusp_indDeposito) informado em S-1070 for igual a [S].</xs:documentation>
+            <xs:documentation>Se informado, deve ser maior que 0 (zero).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_valorMonetario_positivo" />
+    </xs:simpleType>
+
+    <!-- Campo {vlrCmpAnoCal} -->
+
+    <xs:simpleType name="TS_vlrCmpAnoCal">
+        <xs:annotation>
+            <xs:documentation>Valor da compensação relativa ao ano calendário em função de processo judicial.</xs:documentation>
+            <xs:documentation>Validação: Informação permitida apenas se {tpProcRet}(../tpProcRet) = [2].</xs:documentation>
+            <xs:documentation>Se informado, deve ser maior que 0 (zero).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_valorMonetario_positivo" />
+    </xs:simpleType>
+
+    <!-- Campo {vlrCmpAnoAnt} -->
+
+    <xs:simpleType name="TS_vlrCmpAnoAnt">
+        <xs:annotation>
+            <xs:documentation>Valor da compensação relativa a anos anteriores em função de processo judicial.</xs:documentation>
+            <xs:documentation>Validação: Informação permitida apenas se {tpProcRet}(../tpProcRet) = [2].</xs:documentation>
+            <xs:documentation>Se informado, deve ser maior que 0 (zero).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_valorMonetario_positivo" />
+    </xs:simpleType>
+
+    <!-- Campo {vlrRendSusp} -->
+
+    <xs:simpleType name="TS_vlrRendSusp">
+        <xs:annotation>
+            <xs:documentation>Valor do rendimento com exigibilidade suspensa.</xs:documentation>
+            <xs:documentation>Validação: Se informado, deve ser maior que 0 (zero).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_valorMonetario_positivo" />
+    </xs:simpleType>
+
+    <!-- Campo {indTpDeducao} -->
+
+    <xs:simpleType name="TS_indTpDeducao">
+        <xs:annotation>
+            <xs:documentation>Indicativo do tipo de dedução.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Previdência oficial</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Previdência privada</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Fundo de Aposentadoria Programada Individual - FAPI</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>Fundação de Previdência Complementar do Servidor Público - Funpresp</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+                <xs:annotation>
+                    <xs:documentation>Pensão alimentícia</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+                <xs:annotation>
+                    <xs:documentation>Dependentes</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {regANS} -->
+
+    <xs:simpleType name="TS_regANS">
+        <xs:annotation>
+            <xs:documentation>Registro na Agência Nacional de Saúde - ANS.</xs:documentation>
+            <xs:documentation>Validação: Deve ser um número de registro válido.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_cbo" />
+    </xs:simpleType>
+
+    <!-- Campo {indOrgReemb} -->
+
+    <xs:simpleType name="TS_indOrgReemb">
+        <xs:annotation>
+            <xs:documentation>Indicativo da origem do reembolso.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Reembolso efetuado pelo empregador no âmbito do plano de saúde (a operadora reembolsa o empregador)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Reembolso efetuado pelo empregador como benefício do próprio empregador</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
 
@@ -2619,14 +3110,16 @@
 
     <xs:simpleType name="TS_racaCorTrab">
         <xs:annotation>
-            <xs:documentation>Raça e cor do trabalhador.</xs:documentation>
+            <xs:documentation>Etnia e raça do trabalhador, conforme sua autoclassificação (art. 39, § 8º, da Lei 12.288/2010).</xs:documentation>
+            <xs:documentation>Validação: Retornar alerta caso seja informado o valor [6].</xs:documentation>
         </xs:annotation>
         <xs:restriction base="TS_racaCor" />
     </xs:simpleType>
 
     <xs:simpleType name="TS_racaCorBenef">
         <xs:annotation>
-            <xs:documentation>Raça e cor do beneficiário.</xs:documentation>
+            <xs:documentation>Etnia e raça do beneficiário, conforme sua autoclassificação (art. 39, § 8º, da Lei 12.288/2010).</xs:documentation>
+            <xs:documentation>Validação: Retornar alerta caso seja informado o valor [6].</xs:documentation>
         </xs:annotation>
         <xs:restriction base="TS_racaCor" />
     </xs:simpleType>
@@ -2979,7 +3472,8 @@
     <xs:simpleType name="TS_tpDep">
         <xs:annotation>
             <xs:documentation>Tipo de dependente.</xs:documentation>
-            <xs:documentation>Validação: Deve ser um código válido e existente na Tabela 07.</xs:documentation>
+            <xs:documentation>Validação: Preenchimento obrigatório se {depIRRF}(./depIRRF) = [S].</xs:documentation>
+            <xs:documentation>Deve ser um código válido e existente na Tabela 07.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:pattern value="\d{2}" />
@@ -2987,6 +3481,13 @@
     </xs:simpleType>
 
     <!-- Campo {depIRRF} -->
+
+    <xs:simpleType name="TS_depIRRF_IR">
+        <xs:annotation>
+            <xs:documentation>Somente informar este campo em caso de dependente do trabalhador para fins de dedução de seu rendimento tributável pelo Imposto de Renda.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_sim" />
+    </xs:simpleType>
 
     <xs:simpleType name="TS_depIRRF">
         <xs:annotation>
@@ -3018,6 +3519,16 @@
             <xs:documentation>Informar se o dependente tem incapacidade física ou mental para o trabalho.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="TS_sim_nao" />
+    </xs:simpleType>
+     
+    <!-- Campo {descrDep} -->
+
+    <xs:simpleType name="TS_descrDep">
+        <xs:annotation>
+            <xs:documentation>Informar a descrição da dependência.</xs:documentation>
+            <xs:documentation>Validação: Informação obrigatória e exclusiva se {tpDep}(./tpDep) = [99].</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="TS_texto_100" />
     </xs:simpleType>
 
     <!-- Campo {tpRegTrab} -->
@@ -3405,6 +3916,26 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- Campo {origem} -->
+
+    <xs:simpleType name="TS_origem">
+        <xs:annotation>
+            <xs:documentation>Informar a origem do processo/demanda.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Processo judicial</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Demanda submetida à CCP ou ao NINTER</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- Campo {ind13} -->
 
     <xs:simpleType name="TS_ind13">
@@ -3634,12 +4165,45 @@
         <xs:restriction base="TS_nrRecibo" />
     </xs:simpleType>
 
+    <!-- Campo {mtvDeslig} -->
+
+    <xs:simpleType name="TS_mtvDeslig">
+        <xs:annotation>
+            <xs:documentation>Código de motivo do desligamento.</xs:documentation>
+            <xs:documentation>Validação: Deve ser um código válido e existente na Tabela 19, bem como compatível com o código de categoria do trabalhador, conforme Tabela 19.</xs:documentation>
+            <xs:documentation>Não podem ser informados motivos que não implicam rescisão do contrato de trabalho (igual a [11, 12, 13, 25, 28, 29, 30, 34, 36, 43, 44]).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{2}" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo {dtProjFimAPI} -->
+
+    <xs:simpleType name="TS_dtProjFimAPI">
+        <xs:annotation>
+            <xs:documentation>Data projetada para o término do aviso prévio indenizado.</xs:documentation>
+            <xs:documentation>Validação: Se preenchida, deve ser uma data posterior a {dtDeslig}(./dtDeslig).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:date" />
+    </xs:simpleType>
+
     <!-- Campo de período mensal -->
     
     <xs:simpleType name="TS_periodo_mensal">
         <xs:restriction base="xs:string">
             <xs:length value="7" />
             <xs:pattern value="([2]\d{3}|19[8-9]\d)-(1[0-2]|0[1-9])" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo do tipo caractere com tamanho 1-50 -->
+
+    <xs:simpleType name="TS_texto_50">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="50" />
+            <xs:pattern value=".*[^\s].*" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -3685,6 +4249,18 @@
             <xs:enumeration value="N">
                 <xs:annotation>
                     <xs:documentation>Não</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Campo com valor Sim -->
+
+    <xs:simpleType name="TS_sim">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="S">
+                <xs:annotation>
+                    <xs:documentation>Sim</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>

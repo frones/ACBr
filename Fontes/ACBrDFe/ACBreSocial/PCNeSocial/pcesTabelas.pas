@@ -476,7 +476,14 @@ begin
   typVersaoDF := TACBreSocial(Self.Owner).Configuracoes.Geral.VersaoDF;
 
   case StringXMLToTipoEvento(Ok, AXMLString, typVersaoDF) of
-    teS1010: Self.S1010.New.EvtTabRubrica.XML := AXMLString;
+    teS1010:
+    begin
+      with Self.S1010.New do
+      begin
+        EvtTabRubrica.XML := AXMLString;
+        EvtTabRubrica.LerXML;
+      end;
+    end;
     teS1020: Self.S1020.New.EvtTabLotacao.XML := AXMLString;
     teS1030: Self.S1030.New.EvtTabCargo.XML := AXMLString;
     teS1035: Self.S1035.New.evtTabCarreira.XML := AXMLString;

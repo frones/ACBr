@@ -331,7 +331,14 @@ begin
 end;
 
 procedure TevtMonit.GerarMedico;
+var
+  NrOcorrNrCRM: Integer;
 begin
+  if (VersaoDF >= veS01_02_00) then
+    NrOcorrNrCRM := 0
+  else
+    NrOcorrNrCRM := 1;
+
   Gerador.wGrupo('medico');
 
   if VersaoDF <= ve02_05_00 then
@@ -344,8 +351,8 @@ begin
   end;
 
   Gerador.wCampo(tcStr, '', 'nmMed', 1, 70, 1, self.exMedOcup.Aso.Medico.NmMed);
-  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.Aso.Medico.nrCRM);
-  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.Aso.Medico.ufCRM);
+  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 10, NrOcorrNrCRM, self.exMedOcup.Aso.Medico.nrCRM);
+  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, NrOcorrNrCRM, self.exMedOcup.Aso.Medico.ufCRM);
 
   Gerador.wGrupo('/medico');
 end;
@@ -407,7 +414,7 @@ begin
     Gerador.wCampo(tcStr, '', 'cpfResp', 11, 11, 0, self.exMedOcup.RespMonit.cpfResp);
 
   Gerador.wCampo(tcStr, '', 'nmResp', 1, 70, 1, self.exMedOcup.RespMonit.nmResp);
-  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.RespMonit.nrCRM);
+  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 10, 1, self.exMedOcup.RespMonit.nrCRM);
   Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.RespMonit.ufCRM);
 
   Gerador.wGrupo('/respMonit');

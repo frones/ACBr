@@ -395,6 +395,7 @@ type
     FdepSF: tpSimNao;
     FsexoDep: string;
     FIncTrab: tpSimNao;
+    FDescrDep: string;
   public
     property tpDep: tpTpDep read FtpDep write FtpDep;
     property nmDep: string read FnmDep write FnmDep;
@@ -405,6 +406,7 @@ type
     property sexoDep: string read FsexoDep write FsexoDep;
     property incTrab: tpSimNao read FIncTrab write FIncTrab;
     property incFisMen: tpSimNao read FIncTrab write FIncTrab;
+    property descrDep: string read FDescrDep write FDescrDep;
   end;
 
   TDescAtividadeCollection = class(TACBrObjectList)
@@ -1079,6 +1081,13 @@ type
   end;
 
   TAprend = class(TInscricao)
+    FindAprend: tpIndAprend;
+    FcnpjEntQual: string;
+    FcnpjPrat: string;
+  public
+    property indAprend: tpIndAprend read FindAprend write FindAprend;
+    property cnpjEntQual: string read FcnpjEntQual write FcnpjEntQual;
+    property cnpjPrat: string read FcnpjPrat write FcnpjPrat;
   end;
 
   TInfoCeletista = class
@@ -1091,10 +1100,10 @@ type
     FNatAtividade: tpNatAtividade;
     FdtBase: Integer;
     FcnpjSindCategProf: string;
-
     FFGTS: TFGTS;
     FTrabTemporario: TTrabTemporario;
     FAprend: TAprend;
+    FmatAnotJud: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1107,10 +1116,10 @@ type
     property NatAtividade: tpNatAtividade read FNatAtividade write FNatAtividade;
     property dtBase: Integer read FdtBase write FdtBase;
     property cnpjSindCategProf: string read FcnpjSindCategProf write FcnpjSindCategProf;
-
     property FGTS: TFGTS read FFGTS write FFGTS;
     property TrabTemporario: TTrabTemporario read FTrabTemporario write FTrabTemporario;
     property aprend: TAprend read FAprend write FAprend;
+    property matAnotJud: string read FmatAnotJud write FmatAnotJud;
   end;
 
   TInfoDecJud = class

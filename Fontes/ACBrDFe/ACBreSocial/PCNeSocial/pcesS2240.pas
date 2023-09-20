@@ -240,6 +240,7 @@ type
     FlimTol: Double;
     FunMed: Integer;
     FtecMedicao: String;
+    FnrProcJud: String;
     FEpcEpi: TEpcEpi;
     function getEpcEpi: TEpcEpi;
   public
@@ -254,6 +255,7 @@ type
     property limTol: Double read FlimTol write FlimTol;
     property unMed: Integer read FunMed write FunMed;
     property tecMedicao: String read FtecMedicao write FtecMedicao;
+    property nrProcJud: String read FnrProcJud write FnrProcJud;
     property epcEpi: TEpcEpi read getEpcEpi write FEpcEpi;
   end;
 
@@ -503,6 +505,9 @@ begin
     Gerador.wCampo(tcInt, '', 'unMed',        1,   2, 0, objFatRisco.Items[i].unMed);
     Gerador.wCampo(tcStr, '', 'tecMedicao',   1,  40, 0, objFatRisco.Items[i].tecMedicao);
 
+    if (VersaoDF >= veS01_02_00) and (objFatRisco.Items[i].codAgNoc = '05.01.001') and (objFatRisco.Items[i].nrProcJud <> '') then
+      Gerador.wCampo(tcStr, '', 'nrProcJud', 20,  20, 1, objFatRisco.Items[i].nrProcJud);
+    
     if (objFatRisco.Items[i].epcEpiInst()) and (objFatRisco.Items[i].codAgNoc <> '09.01.001') then
       GerarEpcEpi(objFatRisco.Items[i].epcEpi);
 
@@ -946,6 +951,7 @@ begin
                 limTol     := StringToFloatDef(INIRec.ReadString(sSecao, 'limTol', EmptyStr), 0);
                 unMed      := INIRec.ReadInteger(sSecao, 'unMed', 0);
                 tecMedicao := INIRec.ReadString(sSecao, 'tecMedicao', EmptyStr);
+                nrProcJud  := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
 
                 epcEpi.utilizEPC := eSStrTotpUtilizEPC(Ok, INIRec.ReadString(sSecao, 'utilizEPC', '0'));
                 epcEpi.eficEpc   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpc', '0'));
@@ -1119,7 +1125,8 @@ begin
               limTol     := Leitor.rCampo(tcDe4, 'limTol');
               unMed      := Leitor.rCampo(tcInt, 'unMed');
               tecMedicao := Leitor.rCampo(tcStr, 'tecMedicao');
-              
+              nrProcJud  := Leitor.rCampo(tcStr, 'nrProcJud');
+
               if Leitor.rExtrai(4, 'epcEpi') <> '' then
                 with epcEpi do
                 begin

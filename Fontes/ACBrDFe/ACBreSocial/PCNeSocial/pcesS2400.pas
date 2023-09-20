@@ -338,19 +338,20 @@ begin
       begin
         //De 0 até 99;
         sSecao := 'dependente' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'tpDep', 'FIM');
+        sFim   := INIRec.ReadString(sSecao, 'nmDep', 'FIM');
 
         if(sFim = 'FIM') or (Length(sFIM) <= 0)then
           break;
 
         depend := Beneficiario.dependente.New;
-        depend.tpDep     := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', EmptyStr));
-        depend.nmDep     := INIRec.ReadString(sSecao, 'nmDep', EmptyStr);
+        depend.tpDep     := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', ''));
+        depend.nmDep     := sFim;
         depend.dtNascto  := INIRec.ReadDate(sSecao, 'dtNascto', 0);
         depend.cpfDep    := INIRec.ReadString(sSecao, 'cpfDep' , EmptyStr);
         depend.sexoDep   := INIRec.ReadString(sSecao, 'sexoDep', EmptyStr);
         depend.depIRRF   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depIRRF', EmptyStr));
         depend.incFisMen := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incFisMen', EmptyStr));
+        depend.descrDep  := INIRec.ReadString(sSecao, 'descrDep', '');
 
         Inc(I);
       end;

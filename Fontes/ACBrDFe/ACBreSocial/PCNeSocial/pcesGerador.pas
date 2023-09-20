@@ -573,6 +573,9 @@ begin
     else
       Gerador.wCampo(tcStr, '', 'incTrab',   1,  1, 1, eSSimNaoToStr(pDependente.Items[i].incTrab));
 
+    if VersaoDF >= veS01_02_00 then
+      Gerador.wCampo(tcStr, '', 'descrDep',  0, 100, 0, pDependente.Items[i].descrDep);
+    
     Gerador.wGrupo('/dependente');
   end;
 
@@ -1425,8 +1428,17 @@ begin
   begin
     Gerador.wGrupo('aprend');
 
+    if VersaoDF >= veS01_02_00 then
+    begin
+      Gerador.wCampo(tcStr, '', 'indAprend',   1,  1, 1, eStpIndAprendToStr(pAprend.indAprend));
+      Gerador.wCampo(tcStr, '', 'cnpjEntQual', 0, 15, 0, pAprend.cnpjEntQual);
+    end;
+    
     Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(pAprend.TpInsc));
     Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, pAprend.NrInsc);
+
+    if VersaoDF >= veS01_02_00 then
+      Gerador.wCampo(tcStr, '', 'cnpjPrat', 0, 15, 0, pAprend.cnpjPrat);
 
     Gerador.wGrupo('/aprend');
   end;
@@ -1451,6 +1463,9 @@ begin
 
     Gerador.wCampo(tcStr, '', 'cnpjSindCategProf', 14, 14, 1, pInfoCeletista.cnpjSindCategProf);
 
+    if (VersaoDF >= veS01_02_00) and (pInfoCeletista.matAnotJud <> '') then
+      Gerador.wCampo(tcStr, '', 'matAnotJud',  1, 30, 1, pInfoCeletista.matAnotJud);
+    
     if (pInfoCeletista.FGTS.DtOpcFGTS > 0) then
       GerarFGTS(pInfoCeletista.FGTS);
 

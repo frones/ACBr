@@ -1512,6 +1512,8 @@ begin
           DtPgto := StrToDate('10/06/2015');
           tpPgto := tpPgtoRemun1200;
           IndResBr := tpNao;
+          perRef := '2015-05';
+          ideDmDev := '1';
 
           // -OS GRUPOS ABAIXO SÃO OPCIONAIS
           // grupo detPgtoFl agora é um collection
@@ -1655,6 +1657,139 @@ begin
               NmCid := 'Liverpool';
               CodPostal := '9999999999';
             end;
+          end;
+        end;
+
+        if VersaoDFx >= veS01_02_00 then
+        begin
+          with InfoIRComplem do
+          begin
+            dtLaudo := StrToDate('10/06/2015');
+
+            InfoDep.Clear;
+            with InfoDep.New do
+            begin
+              cpfDep := '01234567890';
+              dtNascto := StrToDate('10/06/2015');
+              nome := 'Dependente';
+              depIRRF := snfSim;
+              tpDep := tdAgregadoOutros;
+              descrDep := 'Descrição Agregado Outros';
+            end;
+
+            InfoIRCR.Clear;
+            with InfoIRCR.New do
+            begin
+              tpCR := '056107';
+
+              DedDepen.Clear;
+              with DedDepen.New do
+              begin
+                tpRend := 1;
+                cpfDep := '01234567890';
+                vlrDedDep := 100;
+              end;
+
+              PenAlim.Clear;
+              with PenAlim.New do
+              begin
+                tpRend := 1;
+                cpfDep := '01234567890';
+                vlrDedPenAlim := 100;
+              end;
+
+              PrevidCompl.Clear;
+              with PrevidCompl.New do
+              begin
+                tpPrev := tprPrivada;
+                cnpjEntidPC := '12345678000112';
+                vlrDedPC := 100;
+                vlrPatrocFunp := 100;
+              end;
+
+              InfoProcRet.Clear;
+              with InfoProcRet.New do
+              begin
+                tpProcRet := tpprAdministrativo;
+                nrProcRet := '12345678901234567890';
+                codSusp := '12345678901234';
+
+                InfoValores.Clear;
+                with InfoValores.New do
+                begin
+                  indApuracao := iapuMensal;
+                  vlrNRetido := 100;
+                  vlrDepJud := 100;
+                  vlrCmpAnoCal := 100;
+                  vlrCmpAnoAnt := 100;
+                  vlrRendSusp := 100;
+
+                  DedSusp.Clear;
+                  with DedSusp.New do
+                  begin
+                    indTpDeducao := tpdPrevidenciaOficial;
+                    vlrDedSusp := 100;
+                    cnpjEntidPC := '12345678000112';
+                    vlrPatrocFunp := 100;
+
+                    BenefPen.Clear;
+                    with BenefPen.New do
+                    begin
+                      cpfDep := '12345678909';
+                      vlrDepenSusp := 100;
+                    end;
+                  end;
+                end;
+              end;
+            end;
+
+            PlanSaude.Clear;
+            with PlanSaude.New do
+            begin
+              cnpjOper := '12345678000112';
+              regANS := 123456;
+              vlrSaudeTit := 100;
+
+              InfoDepSau.Clear;
+              with InfoDepSau.New do
+              begin
+                cpfDep := '12345678901';
+                vlrSaudeDep := 100;
+              end;
+            end;
+
+            InfoReembMed.Clear;
+            with InfoReembMed.New do
+            begin
+              indOrgReemb := '1';
+              cnpjOper := '12345678000112';
+              regANS := 123456;
+
+              DetReembTit.Clear;
+              with DetReembTit.New do
+              begin
+                tpInsc := tiCNPJ;
+                nrInsc := '12345678000112';
+                vlrReemb := 100;
+                vlrReembAnt := 100;
+              end;
+
+              InfoReembDep.Clear;
+              with InfoReembDep.New do
+              begin
+                cpfBenef := '12345678909';
+
+                DetReembDep.Clear;
+                with DetReembDep.New do
+                begin
+                  tpInsc := tiCNPJ;
+                  nrInsc := '12345678000112';
+                  vlrReemb := 100;
+                  vlrReembAnt := 100;
+                end;
+              end;
+            end;
+
           end;
         end;
       end;
@@ -2525,6 +2660,7 @@ begin
           depIRRF := tpSim;
           depSF := tpNao;
           incTrab := tpNao;
+          descrDep := 'Descrição da dependência';
         end;
 
         with Dependente.New do
@@ -2536,6 +2672,7 @@ begin
           depIRRF := tpSim;
           depSF := tpNao;
           incTrab := tpNao;
+          descrDep := 'Descrição da dependência';
         end;
 
         Aposentadoria.TrabAposent := tpNao;
@@ -2567,6 +2704,7 @@ begin
             NatAtividade := tpNatAtividade(navUrbano);
             dtBase := 03;
             cnpjSindCategProf := '12345678901234';
+            matAnotJud := '1234567';
 
             FGTS.OpcFGTS := tpOpcFGTS(ofOptante);
             FGTS.DtOpcFGTS := date;
@@ -2585,14 +2723,20 @@ begin
                 ideEstabVinc.NrInsc := '12345678901234';
               end;
 
+              ideEstabVinc.TpInsc := tiCNPJ;
+              ideEstabVinc.NrInsc := '12345678901234';
+
               IdeTrabSubstituido.Clear;
 
               with IdeTrabSubstituido.New do
                 CpfTrabSubst := '12345678912';
             end;
 
+            aprend.indAprend := tiapContrDireta;
+            aprend.cnpjEntQual := '12345678901234';
             aprend.TpInsc := tpTpInsc(1);
             aprend.NrInsc := '98765432109';
+            aprend.cnpjPrat := '12345678901234';
           end;
 
           // enviar apenas um tipo de admissao
@@ -2626,7 +2770,7 @@ begin
           with LocalTrabalho do
           begin
             LocalTrabGeral.TpInsc := tiCNPJ;
-            LocalTrabGeral.NrInsc := '21354632';
+            LocalTrabGeral.NrInsc := '12345678000112';
             LocalTrabGeral.DescComp := 'Descricao local geral teste';
 
             with LocalTrabDom do
@@ -2710,7 +2854,8 @@ begin
       with IdeEvento do
       begin
         indRetif := tpIndRetificacao(1);
-        NrRecibo := '65.5454.987798798798';
+        //NrRecibo := '65.5454.987798798798';
+        NrRecibo := '1.2.1234567890123456789';
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2731,6 +2876,7 @@ begin
         EstCiv := 1;
         GrauInstr := '10';
         nmSoc := 'Nome social';
+        PaisNac := '123';
 
         with Nascimento do
         begin
@@ -2831,6 +2977,7 @@ begin
           depIRRF := tpSim;
           depSF := tpNao;
           incTrab := tpNao;
+          descrDep := 'Descrição da dependência';
         end;
 
         with Dependente.New do
@@ -2841,7 +2988,8 @@ begin
           cpfDep := '12345678901';
           depIRRF := tpSim;
           depSF := tpNao;
-          incTrab := tpNao
+          incTrab := tpNao;
+          descrDep := 'Descrição da dependência';
         end;
 
         Aposentadoria.TrabAposent := tpNao;
@@ -2900,6 +3048,12 @@ begin
             cnpjSindCategProf := '15975395135700';
 
             trabTemporario.justProrr := 'Prorrogado porque eu quis';
+
+            aprend.indAprend := tiapContrDireta;
+            aprend.cnpjEntQual := '12345678901234';
+            aprend.TpInsc := tpTpInsc(1);
+            aprend.NrInsc := '98765432109';
+            aprend.cnpjPrat := '12345678901234';
           end;
 
           // InfoEstatutario.tpPlanRP := tpPlanRP(0);
@@ -2912,6 +3066,7 @@ begin
           CodCateg := 111;
           codCarreira := '1';
           dtIngrCarr := Now;
+          nmFuncao := 'Função';
 
           Remuneracao.VrSalFx := 780.00;
           Remuneracao.UndSalFixo := sfPorMes;
@@ -2950,6 +3105,7 @@ begin
             TpJornada := tjDemaisTiposJornada;
             DscTpJorn := 'Descrição do tipo de jornada, obrigatório se tpJornada = tjDemaisTiposJornada';
             tmpParc := tpNaoeTempoParcial;
+            dscJorn := 'Descrição Jornada';
 
             horario.Clear;
 
@@ -2965,9 +3121,12 @@ begin
           with FiliacaoSindical.Add do
             CnpjSindTrab := '12345678901234';
 
-          AlvaraJudicial.nrProcJud := '543216';
+          AlvaraJudicial.nrProcJud := '12345678901234567890';
 
-          servPubl.mtvAlter := maPromocao;
+          // servPubl.mtvAlter := maPromocao;
+
+
+
         end;
       end;
     end;
@@ -3126,7 +3285,7 @@ begin
           with Exame.New do
           begin
             DtExm := date;
-            procRealizado := '123';
+            procRealizado := '1234';
             obsProc := 'observação do procedimento realizado';
             ordExame := tpOrdExame(0);
             indResult := tpIndResult(1);
@@ -3135,7 +3294,7 @@ begin
           with Exame.New do
           begin
             DtExm := date + 1;
-            procRealizado := '456';
+            procRealizado := '4567';
             obsProc := 'observação do procedimento realizado';
             ordExame := tpOrdExame(0);
             indResult := tpIndResult(1);
@@ -3364,11 +3523,17 @@ begin
         InfoAmb.Clear;
         with InfoAmb.New do
         begin
-          codAmb := '654';
+          localAmb := laEstabProprioEmpregador;
+          dscSetor := 'Descrição dscSetor';
+          tpInsc := tiCNPJ;
+          nrInsc := '12345678901234';
         end;
         with InfoAmb.New do
         begin
-          codAmb := '548';
+          localAmb := laEstabProprioEmpregador;
+          dscSetor := 'Descrição dscSetor';
+          tpInsc := tiCNPJ;
+          nrInsc := '12345678901234';
         end;
 
         infoAtiv.dscAtivDes := 'DESCRICAO ATIVIDADE';
@@ -3383,19 +3548,20 @@ begin
 //          codAtiv := '05.480';
 //        end;
 
-//        FatRisco.Clear;
-//        with FatRisco.New do
-//        begin
-//          codFatRis      := '123456789';
-//          tpAval         := tpaQualitativo;
-//          intConc        := 0.50;
-//          limTol         := 0.50;
-//          unMed          := 9;
-//          tecMedicao     := 'Tecnica de medicao';
+        agNoc.Clear;
+        with agNoc.New do
+        begin
+          codAgNoc       := '12.12.123';
+          tpAval         := tpaQualitativo;
+          intConc        := 0.50;
+          limTol         := 0.50;
+          unMed          := 9;
+          tecMedicao     := 'Tecnica de medicao';
 //          insalubridade  := tpNao;
 //          periculosidade := tpNao;
 //          aposentEsp     := tpNao;
-//
+          nrProcJud      := '12345678901234567';
+
 //          with epcEpi do
 //          begin
 //            utilizEPC := uEPCNaoAplica;
@@ -3416,7 +3582,7 @@ begin
 //              higienizacao  := tpSim;
 //            end;
 //          end;
-//        end;
+        end;
 
         respReg.Clear;
         with respReg.New do
@@ -3667,6 +3833,8 @@ begin
         // numero do processo que decidiu o desligamento mtvdeslig = 17
         nrProcTrab := '9632587410';
 
+        indPDV := snfSim;
+
         indCumprParc := cpaCumprimentoTotal;
 
         // Obsercação opcional - versão 2.04.01
@@ -3779,7 +3947,7 @@ begin
           with procJudTrab.New do
           begin
             tpTrib := tptIRRF;
-            nrProcJud := '0123654789';
+            nrProcJud := '01236547890123654789';
             codSusp := '1235';
           end;
 
@@ -3932,6 +4100,7 @@ begin
           cpfDep := '99999999909';
           depIRRF := tpSim;
           depSF := tpNao;
+          descrDep := 'Descrição da dependência';
         end;
 
         with Dependente.New do
@@ -3942,6 +4111,7 @@ begin
           cpfDep := '99999999909';
           depIRRF := tpSim;
           depSF := tpNao;
+          descrDep := 'Descrição da dependência';
         end;
 
         with Contato do
@@ -4028,6 +4198,10 @@ begin
             supervisorEstagio.cpfSupervisor := '88888888801';
             supervisorEstagio.nmSuperv := 'Pedro das Pedras';
           end;
+
+          LocalTrabGeral.TpInsc := tiCNPJ;
+          LocalTrabGeral.NrInsc := '12345678000112';
+          LocalTrabGeral.DescComp := 'Descricao local geral teste';
         end;
       end;
     end;
@@ -4102,6 +4276,10 @@ begin
             supervisorEstagio.cpfSupervisor := '12345678901';
             supervisorEstagio.nmSuperv := 'Pedro das Pedras';
           end;
+
+          LocalTrabGeral.TpInsc := tiCNPJ;
+          LocalTrabGeral.NrInsc := '12345678000112';
+          LocalTrabGeral.DescComp := 'Descricao local geral teste';
         end;
       end;
     end;
@@ -4293,6 +4471,7 @@ begin
           sexoDep := 'F';
           depSF := tpNao;
           incTrab := tpNao;
+          descrDep := 'Descrição da dependência';
         end;
 
         with Dependente.New do
@@ -4305,6 +4484,7 @@ begin
           sexoDep := 'M';
           depSF := tpNao;
           incTrab := tpNao;
+          descrDep := 'Descrição da dependência';
         end;
       end;
     end;
@@ -4387,6 +4567,7 @@ begin
               sexoDep := 'F';
               depSF := tpNao;
               incTrab := tpNao;
+              descrDep := 'Descrição da dependência';
             end;
 
             with Dependente.New do
@@ -4399,6 +4580,7 @@ begin
               sexoDep := 'M';
               depSF := tpNao;
               incTrab := tpNao;
+              descrDep := 'Descrição da dependência';
             end;
           end;
         end;
@@ -5271,6 +5453,11 @@ begin
 
   if OpenDialog1.Execute then
     ACBreSocial1.Eventos.LoadFromINI(OpenDialog1.FileName);
+
+//  ACBreSocial1.Eventos.Gerar;   // Somente Gera os XMLs dos Eventos
+  ACBreSocial1.Eventos.Assinar; // Somente Assina os XMLs
+  ACBreSocial1.Eventos.Validar; // Somente Valida os XMLs
+  ACBreSocial1.Eventos.SaveToFiles; // Salva os XMLs em Disco
 
   MemoResp.Clear;
   MemoResp.Lines.Clear;

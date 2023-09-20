@@ -511,10 +511,25 @@ begin
           altContratual.InfoRegimeTrab.InfoCeletista.trabTemporario.justProrr := INIRec.ReadString(sSecao, 'justProrr', '');
 
         sSecao := 'aprend';
-        if INIRec.ReadString(sSecao, 'tpInsc', '') <> '' then
+
+        Ok := False;
+        if (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= veS01_02_00) then
         begin
+          if INIRec.ReadString(sSecao, 'indAprend', '') = '1' then
+            Ok := (INIRec.ReadString(sSecao, 'cnpjEntQual', '') <> EmptyStr)
+          else
+            Ok := (INIRec.ReadString(sSecao, 'tpInsc', '') <> EmptyStr);
+        end
+        else
+          Ok := (INIRec.ReadString(sSecao, 'tpInsc', '') <> EmptyStr);
+
+        if Ok then
+        begin
+          altContratual.InfoRegimeTrab.InfoCeletista.aprend.indAprend := eSStrTotpIndAprend(Ok, INIRec.ReadString(sSecao, 'indAprend', '1'));
+          altContratual.InfoRegimeTrab.InfoCeletista.aprend.cnpjEntQual := INIRec.ReadString(sSecao, 'cnpjEntQual', '');
           altContratual.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
           altContratual.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+          altContratual.InfoRegimeTrab.InfoCeletista.aprend.cnpjPrat := INIRec.ReadString(sSecao, 'cnpjPrat', '');
         end;
       end;
 

@@ -57,7 +57,7 @@ uses
   {$IfEnd}
   ACBrBase,
   pcnConversao, pcnGerador, pcnConsts,
-  pcesCommon, pcesConversaoeSocial, pcesGerador;
+  pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type
   TS1010Collection = class;
@@ -120,6 +120,7 @@ type
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
+    function LerXML: Boolean;
     function LerArqIni(const AIniString: String): Boolean;
 
     property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
@@ -443,6 +444,121 @@ begin
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
+end;
+
+function TEvtTabRubrica.LerXML: Boolean;
+var
+  Leitor: TLeitor;
+  Ok: boolean;
+  I: Integer;
+  ModoLancamento: TModoLancamento;
+begin
+  Result := True;
+  Leitor := TLeitor.Create;
+  try
+    Leitor.Arquivo := XML;
+
+    if Leitor.rExtrai(1, 'evtTabRubrica') <> '' then
+    begin
+      Id := Leitor.rCampo(tcStr, 'Id');
+      Sequencial := 0;
+
+      if Leitor.rExtrai(2, 'ideEvento') <> '' then
+      begin
+        ideEvento.ProcEmi  := eSStrToprocEmi(Ok, Leitor.rCampo(tcStr, 'procEmi'));
+        ideEvento.VerProc  := Leitor.rCampo(tcStr, 'verProc');
+      end;
+
+      if Leitor.rExtrai(2, 'ideEmpregador') <> '' then
+      begin
+        ideEmpregador.TpInsc := eSStrToTpInscricao(Ok, Leitor.rCampo(tcStr, 'tpInsc'));
+        ideEmpregador.NrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+      end;
+
+      if Leitor.rExtrai(2, 'infoRubrica') <> '' then
+      begin
+        if Leitor.rExtrai(3, 'inclusao') <> '' then
+          ModoLancamento := mlInclusao
+        else if Leitor.rExtrai(3, 'alteracao') <> '' then
+          ModoLancamento := mlAlteracao
+        else if Leitor.rExtrai(3, 'exclusao') <> '' then
+          ModoLancamento := mlExclusao;
+
+        if Leitor.rExtrai(4, 'ideRubrica') <> '' then
+        begin
+          infoRubrica.ideRubrica.codRubr    := Leitor.rCampo(tcStr, 'codRubr');
+          infoRubrica.ideRubrica.ideTabRubr := Leitor.rCampo(tcStr, 'ideTabRubr');
+          infoRubrica.ideRubrica.iniValid   := Leitor.rCampo(tcStr, 'iniValid');
+          infoRubrica.ideRubrica.fimValid   := Leitor.rCampo(tcStr, 'fimValid');
+
+          if ModoLancamento <> mlExclusao then
+          begin
+            if Leitor.rExtrai(4, 'dadosRubrica') <> '' then
+            begin
+              infoRubrica.dadosRubrica.dscRubr    := Leitor.rCampo(tcStr, 'dscRubr');
+              infoRubrica.dadosRubrica.natRubr    := Leitor.rCampo(tcInt, 'natRubr');
+              infoRubrica.dadosRubrica.tpRubr     := eSStrToTpRubr(Ok, Leitor.rCampo(tcStr, 'tpRubr'));
+              infoRubrica.dadosRubrica.codIncCP   := eSStrToCodIncCP(Ok, Leitor.rCampo(tcStr, 'codIncCP'));
+              infoRubrica.dadosRubrica.codIncIRRF := eSStrToCodIncIRRF(Ok, Leitor.rCampo(tcStr, 'codIncIRRF'));
+              infoRubrica.dadosRubrica.codIncFGTS := eSStrToCodIncFGTS(Ok, Leitor.rCampo(tcStr, 'codIncFGTS'));
+              infoRubrica.dadosRubrica.codIncCPRP := eSStrToCodIncCPRP(Ok, Leitor.rCampo(tcStr, 'codIncCPRP'));
+              infoRubrica.dadosRubrica.tetoRemun  := eSStrToSimNaoFacultativo(Ok, Leitor.rCampo(tcStr, 'tetoRemun'));
+              infoRubrica.dadosRubrica.observacao := Leitor.rCampo(tcStr, 'observacao');
+{
+              i := 0;
+              while Leitor.rExtrai(5, 'ideProcessoCP', '', i + 1) <> '' do
+              begin
+                with infoRubrica.dadosRubrica.ideProcessoCP.New do
+                begin
+                  tpProc     := eSStrToTpProcesso(Ok, Leitor.rCampo(tcStr, 'tpProc'));
+                  nrProc     := Leitor.rCampo(tcStr, 'nrProc');
+                  extDecisao := eSStrToExtDecisao(Ok, Leitor.rCampo(tcStr, 'extDecisao'));
+                  codSusp    := Leitor.rCampo(tcStr, 'codSusp');
+                end;
+
+                Inc(i);
+              end;
+
+              i := 0;
+              while Leitor.rExtrai(5, 'ideProcessoIRRF ', '', i + 1) <> '' do
+              begin
+                with infoRubrica.dadosRubrica.ideProcessoIRRF.New do
+                begin
+                  nrProc  := Leitor.rCampo(tcStr, 'nrProc');
+                  codSusp := Leitor.rCampo(tcStr, 'codSusp');
+                end;
+
+                Inc(i);
+              end;
+
+              i := 0;
+              while Leitor.rExtrai(5, 'ideProcessoFGTS ', '', i + 1) <> '' do
+              begin
+                with infoRubrica.dadosRubrica.ideProcessoFGTS.New do
+                begin
+                  nrProc := Leitor.rCampo(tcStr, 'nrProc');
+                end;
+
+                Inc(i);
+              end;
+}
+            end;
+
+            if ModoLancamento = mlAlteracao then
+            begin
+              if Leitor.rExtrai(4, 'novaValidade') <> '' then
+              begin
+                infoRubrica.novaValidade.iniValid := Leitor.rCampo(tcStr, 'iniValid');
+                infoRubrica.novaValidade.fimValid := Leitor.rCampo(tcStr, 'fimValid');
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  finally
+    Leitor.Free;
+  end;
 end;
 
 function TEvtTabRubrica.LerArqIni(const AIniString: String): Boolean;

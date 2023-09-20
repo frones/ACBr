@@ -52,6 +52,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2023
+-- diversos --
+[+] Implementado novo leiaute 1.2
+  Por: Marcelo Pontes Melim / Renato Rubinho
+
+-- pcesS2500, pcesConversaoeSocial, schemas --
+[+] Implementações para o novo leiaute 1.2
+  Por: Andergoncalves / Renato Rubinho
+
 31/08/2023
 -- pcesNaoPeriodicos, pcesS2200 --
 [+] Implementada leitura do xml para o evento S-2200

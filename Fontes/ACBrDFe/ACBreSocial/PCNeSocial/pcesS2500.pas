@@ -84,9 +84,11 @@ type
   TUnicContrCollectionItem = class;
   TIdeEstab = class;
   TInfoVlr = class;
+  TAbonoCollection = class;
+  TAbonoCollectionItem = class;
   TIdePeriodoCollection = class;
   TIdePeriodoCollectionItem = class;
-  TBaseCalculo = class;
+  TbaseCalculo = class;
   TInfoFGTS = class;
   TBaseMudCateg = class;
 
@@ -137,6 +139,7 @@ type
     procedure GerarUnicContr(obj: TUnicContrCollection);
     procedure GerarIdeEstab(obj: TIdeEstab);
     procedure GerarInfoVlr(obj: TInfoVlr);
+    procedure GerarAbono(obj: TAbonoCollection);
     procedure GerarIdePeriodo(obj: TIdePeriodoCollection);
     procedure GerarBaseCalculo(obj: TbaseCalculo);
     procedure GerarInfoFGTS(obj: TinfoFGTS);
@@ -372,8 +375,14 @@ type
   TRemuneracaoCollectionItem = class(TRemuneracao)
   private
     FdtRemun: TDateTime;
+    FvrSalFx: Double;
+    FundSalFixo: tpUndSalFixo;
+    FdscSalVar: string;
   public
     property dtRemun: TDateTime read FDtRemun write FDtRemun;
+    property vrSalFx: Double read FvrSalFx write FvrSalFx;
+    property undSalFixo: tpUndSalFixo read FundSalFixo write FundSalFixo;
+    property dscSalVar: string read FdscSalVar write FdscSalVar;
   end;
 
   TInfoVinc = class(TObject)
@@ -415,10 +424,16 @@ type
     FdtDeslig: TDateTime;
     FmtvDeslig: string;
     FdtProjFimAPI: TDateTime;
+    FpensAlim: tpPensaoAlim;
+    FpercAliment: Double;
+    FvrAlim: Double;
   public
     property dtDeslig: TDateTime read FdtDeslig write FdtDeslig;
     property mtvDeslig: string read FmtvDeslig write FmtvDeslig;
     property dtProjFimAPI: TDateTime read FdtProjFimAPI write FdtProjFimAPI;
+    property pensAlim: tpPensaoAlim read FpensAlim write FpensAlim;
+    property percAliment: Double read FpercAliment write FpercAliment;
+    property vrAlim: Double read FvrAlim write FvrAlim;
   end;
 
   TInfoTerm = class(TObject)
@@ -495,13 +510,19 @@ type
     FvrInden: double;
     FvrBaseIndenFGTS: double;
     FpagDiretoResc: tpSimNaoFacultativo;
+    FindReperc: tpIndReperc;
+    FindenSD: tpSimNao;
+    FindenAbono: tpSimNao;
+    Fabono: TAbonoCollection;
     FidePeriodo: TIdePeriodoCollection;
 
+    function getAbono(): TAbonoCollection;
     function getIdePeriodo(): TIdePeriodoCollection;
   public
     constructor Create;
     destructor  Destroy; override;
 
+    function instAbono(): boolean;
     function instIdePeriodo(): boolean;
 
     property compIni: string read FcompIni write FcompIni;
@@ -513,7 +534,29 @@ type
     property vrInden: double read FvrInden write FvrInden;
     property vrBaseIndenFGTS: double read FvrBaseIndenFGTS write FvrBaseIndenFGTS;
     property pagDiretoResc: tpSimNaoFacultativo read FpagDiretoResc write FpagDiretoResc;
+    property indReperc: tpIndReperc read FindReperc write FindReperc;
+    property abono: TAbonoCollection read getAbono write Fabono;
+    property indenSD: tpSimNao read FindenSD write FindenSD;
+    property indenAbono: tpSimNao read FindenAbono write FindenAbono;
     property idePeriodo: TIdePeriodoCollection read getIdePeriodo write FIdePeriodo;
+  end;
+
+  TAbonoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TAbonoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TAbonoCollectionItem);
+  public
+    function New: TAbonoCollectionItem;
+    property Items[Index: Integer]: TAbonoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TAbonoCollectionItem = class(TObject)
+  private
+    FanoBase: string;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+    property anoBase: string read FanoBase write FanoBase;
   end;
 
   TIdePeriodoCollection = class(TACBrObjectList)
@@ -574,10 +617,16 @@ type
     FvrBcFgtsGuia: double;
     FvrBcFgts13Guia: double;
     FpagDireto: tpSimNao;
+    FvrBcFGTSProcTrab: Double;
+    FvrBcFGTSSefip: Double;
+    FvrBcFGTSDecAnt: Double;
   public
     property vrBcFgtsGuia: double read FvrBcFgtsGuia write FvrBcFgtsGuia;
     property vrBcFgts13Guia: double read FvrBcFgts13Guia write FvrBcFgts13Guia;
     property pagDireto: tpSimNao read FpagDireto write FpagDireto;
+    property vrBcFGTSProcTrab: double read FvrBcFGTSProcTrab write FvrBcFGTSProcTrab;
+    property vrBcFGTSSefip: double read FvrBcFGTSSefip write FvrBcFGTSSefip;
+    property vrBcFGTSDecAnt: double read FvrBcFGTSDecAnt write FvrBcFGTSDecAnt;
   end;
 
   TBaseMudCateg = class(TObject)
@@ -1067,6 +1116,24 @@ begin
   inherited;
 end;
 
+{ TAbonoCollection }
+
+function TAbonoCollection.GetItem(Index: Integer): TAbonoCollectionItem;
+begin
+  Result := TAbonoCollectionItem(inherited Items[Index]);
+end;
+
+procedure TAbonoCollection.SetItem(Index: Integer; Value: TAbonoCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TAbonoCollection.New: TAbonoCollectionItem;
+begin
+  Result := TAbonoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TIdePeriodoCollection }
 
 function TIdePeriodoCollection.GetItem(Index: Integer): TIdePeriodoCollectionItem;
@@ -1083,6 +1150,18 @@ function TIdePeriodoCollection.New: TIdePeriodoCollectionItem;
 begin
   Result := TIdePeriodoCollectionItem.Create;
   Self.Add(Result);
+end;
+
+{ TAbonoCollectionItem }
+
+constructor TAbonoCollectionItem.Create;
+begin
+  inherited Create;
+end;
+
+destructor TAbonoCollectionItem.Destroy;
+begin
+  inherited;
 end;
 
 { TIdePeriodoCollectionItem }
@@ -1138,20 +1217,36 @@ constructor TInfoVlr.Create;
 begin
   inherited Create;
 
+  FAbono := nil;
   FIdePeriodo := nil;
 end;
 
 destructor TInfoVlr.Destroy;
 begin
+  if instAbono() then
+    FreeAndNil(FAbono);
+
   if instIdePeriodo() then
     FreeAndNil(FIdePeriodo);
 
   inherited;
 end;
 
+function TInfoVlr.instAbono(): boolean;
+begin
+  Result := Assigned(FAbono);
+end;
+
 function TInfoVlr.instIdePeriodo(): boolean;
 begin
   Result := Assigned(FIdePeriodo);
+end;
+
+function TInfoVlr.getAbono(): TAbonoCollection;
+begin
+  if not Assigned(FAbono) then
+    FAbono := TAbonoCollection.Create;
+  Result := FAbono;
 end;
 
 function TInfoVlr.getIdePeriodo(): TIdePeriodoCollection;
@@ -1358,6 +1453,13 @@ begin
   if obj.dtProjFimAPI > 0 then
     Gerador.wCampo(tcDat, '', 'dtProjFimAPI', 10, 10, 0, obj.dtProjFimAPI);
 
+  if VersaoDF > veS01_01_00 then
+  begin
+    Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 0, eSTpPensaoAlimToStr(obj.pensAlim));
+    Gerador.wCampo(tcDe2, '', 'percAliment', 1,  5, 0, obj.percAliment);
+    Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
+  end;
+
   Gerador.wGrupo('/infoDeslig');
 end;
 
@@ -1481,7 +1583,7 @@ begin
     Gerador.wCampo(tcStr, '', 'indNatAtiv',    1,  1, 1, eSSimNaoToStr(obj.Items[i].indNatAtiv));
     Gerador.wCampo(tcStr, '', 'indMotDeslig',  1,  1, 1, eSSimNaoToStr(obj.Items[i].indMotDeslig));
 
-    if obj.Items[i].indUnic <> snfNada then
+    if (obj.Items[i].indUnic <> snfNada) and (VersaoDF <= veS01_01_00) then
       Gerador.wCampo(tcStr, '', 'indUnic',     1,  1, 1, eSSimNaoFacultativoToStr(obj.Items[i].indUnic));
 
     Gerador.wCampo(tcStr, '', 'matricula',     0, 30, 0, obj.Items[i].matricula);
@@ -1527,13 +1629,26 @@ begin
 
   Gerador.wCampo(tcStr, '', 'compIni',         7,  7, 1, obj.compIni);
   Gerador.wCampo(tcStr, '', 'compFim',         7,  7, 1, obj.compFim);
-  Gerador.wCampo(tcStr, '', 'repercProc',      1,  1, 1, eSTpTpRepercProcToStr(obj.repercProc));
-  Gerador.wCampo(tcDe2, '', 'vrRemun',         1, 14, 1, obj.vrRemun);
-  Gerador.wCampo(tcDe2, '', 'vrAPI',           1, 14, 1, obj.vrAPI);
-  Gerador.wCampo(tcDe2, '', 'vr13API',         1, 14, 1, obj.vr13API);
-  Gerador.wCampo(tcDe2, '', 'vrInden',         1, 14, 1, obj.vrInden);
-  Gerador.wCampo(tcDe2, '', 'vrBaseIndenFGTS', 0, 14, 0, obj.vrBaseIndenFGTS);
-  Gerador.wCampo(tcStr, '', 'pagDiretoResc',   0,  1, 0, eSSimNaoFacultativoToStr(obj.pagDiretoResc));
+
+  if VersaoDF > veS01_01_00 then
+  begin
+    Gerador.wCampo(tcStr, '', 'indReperc',       1,  1, 1, eSTpTpIndRepercToStr(obj.indReperc));
+    Gerador.wCampo(tcStr, '', 'indenSD',         1,  1, 0, eSSimNaoToStr(obj.indenSD));
+    Gerador.wCampo(tcStr, '', 'indenAbono',      1,  1, 0, eSSimNaoToStr(obj.indenAbono));
+  end
+  else
+  begin
+    Gerador.wCampo(tcStr, '', 'repercProc',      1,  1, 1, eSTpTpRepercProcToStr(obj.repercProc));
+    Gerador.wCampo(tcDe2, '', 'vrRemun',         1, 14, 1, obj.vrRemun);
+    Gerador.wCampo(tcDe2, '', 'vrAPI',           1, 14, 1, obj.vrAPI);
+    Gerador.wCampo(tcDe2, '', 'vr13API',         1, 14, 1, obj.vr13API);
+    Gerador.wCampo(tcDe2, '', 'vrInden',         1, 14, 1, obj.vrInden);
+    Gerador.wCampo(tcDe2, '', 'vrBaseIndenFGTS', 0, 14, 0, obj.vrBaseIndenFGTS);
+    Gerador.wCampo(tcStr, '', 'pagDiretoResc',   0,  1, 0, eSSimNaoFacultativoToStr(obj.pagDiretoResc));
+  end;
+
+  if ((obj.instAbono()) and (VersaoDF > veS01_01_00)) then
+    GerarAbono(obj.abono);
 
   if obj.instIdePeriodo() then
     GerarIdePeriodo(obj.idePeriodo);
@@ -1541,14 +1656,45 @@ begin
   Gerador.wGrupo('/infoVlr');
 end;
 
-procedure TEvtProcTrab.GerarBaseCalculo(obj: TbaseCalculo);
+procedure TEvtProcTrab.GerarAbono(Obj: TAbonoCollection);
+var
+  i: integer;
 begin
+  for i := 0 to obj.Count - 1 do
+  begin
+    Gerador.wGrupo('abono');
+
+    Gerador.wCampo(tcStr, '', 'anoBase', 4, 4, 1, obj.Items[i].anoBase);
+
+    Gerador.wGrupo('/abono');
+  end;
+
+  if obj.Count > 9 then
+    Gerador.wAlerta('', 'abono', 'Identificação do(s) ano(s)-base em que houve indenização substitutiva de abono salarial',
+                    ERR_MSG_MAIOR_MAXIMO + '9');
+end;
+
+procedure TEvtProcTrab.GerarBaseCalculo(obj: TbaseCalculo);
+var
+  NrOcorrBcCp: Integer;
+begin
+  if ( (VersaoDF >= veS01_02_00) and (obj.vrBcCpMensal = 0) ) then
+    exit;
+
+  if (VersaoDF >= veS01_02_00) then
+    NrOcorrBcCp := 0
+  else
+    NrOcorrBcCp := 1;
+
   Gerador.wGrupo('baseCalculo');
 
   Gerador.wCampo(tcDe2, '', 'vrBcCpMensal',    1, 14, 1, obj.vrBcCpMensal);
-  Gerador.wCampo(tcDe2, '', 'vrBcCp13',        1, 14, 1, obj.vrBcCp13);
-  Gerador.wCampo(tcDe2, '', 'vrBcFgts',        1, 14, 1, obj.vrBcFgts);
-  Gerador.wCampo(tcDe2, '', 'vrBcFgts13',      1, 14, 1, obj.vrBcFgts13);
+  Gerador.wCampo(tcDe2, '', 'vrBcCp13',        1, 14, NrOcorrBcCp, obj.vrBcCp13);
+  if VersaoDF <= veS01_01_00 then
+  begin
+    Gerador.wCampo(tcDe2, '', 'vrBcFgts',        1, 14, 1, obj.vrBcFgts);
+    Gerador.wCampo(tcDe2, '', 'vrBcFgts13',      1, 14, 1, obj.vrBcFgts13);
+  end;
 
   if obj.instInfoAgNocivo() then
     GerarInfoAgNocivo(obj.infoAgNocivo);
@@ -1560,9 +1706,18 @@ procedure TEvtProcTrab.GerarInfoFGTS(obj: TinfoFGTS);
 begin
   Gerador.wGrupo('infoFGTS');
 
-  Gerador.wCampo(tcDe2, '', 'vrBcFgtsGuia',    1, 14, 1, obj.vrBcFgtsGuia);
-  Gerador.wCampo(tcDe2, '', 'vrBcFgts13Guia',  1, 14, 1, obj.vrBcFgts13Guia);
-  Gerador.wCampo(tcStr, '', 'pagDireto',       1,  1, 1, eSSimNaoToStr(obj.pagDireto));
+  if VersaoDF > veS01_01_00 then
+  begin
+    Gerador.wCampo(tcDe2, '', 'vrBcFGTSProcTrab', 1, 14, 1, obj.vrBcFGTSProcTrab);
+    Gerador.wCampo(tcDe2, '', 'vrBcFGTSSefip',    1, 14, 0, obj.vrBcFGTSSefip);
+    Gerador.wCampo(tcDe2, '', 'vrBcFGTSDecAnt',   1, 14, 0, obj.vrBcFGTSDecAnt);
+  end
+  else
+  begin
+    Gerador.wCampo(tcDe2, '', 'vrBcFgtsGuia',     1, 14, 1, obj.vrBcFgtsGuia);
+    Gerador.wCampo(tcDe2, '', 'vrBcFgts13Guia',   1, 14, 1, obj.vrBcFgts13Guia);
+    Gerador.wCampo(tcStr, '', 'pagDireto',        1,  1, 1, eSSimNaoToStr(obj.pagDireto));
+  end;
 
   Gerador.wGrupo('/infoFGTS');
 end;
@@ -1598,8 +1753,9 @@ begin
     Gerador.wGrupo('/idePeriodo');
   end;
 
-  if obj.Count > 360 then
-    Gerador.wAlerta('', 'idePeriodo', 'Informações do contrato de trabalho', ERR_MSG_MAIOR_MAXIMO + '360');
+  if obj.Count > 999 then
+    Gerador.wAlerta('', 'idePeriodo', 'Identificação do período ao qual se referem as bases de cálculo',
+                    ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 procedure TEvtProcTrab.GerarIdeTrab(Obj: TideTrab);
@@ -1610,7 +1766,7 @@ begin
   Gerador.wCampo(tcStr, '', 'nmTrab' ,   0, 70, 1, obj.nmTrab);
   Gerador.wCampo(tcDat, '', 'dtNascto', 10, 10, 0, obj.dtNascto);
 
-  if obj.instDependenteS2500() then
+  if obj.instDependenteS2500() and (VersaoDF <= veS01_01_00) then
     GerarDependente(obj.dependente);
 
   if obj.instInfoContr () then
@@ -1817,6 +1973,13 @@ begin
           infoCompl.infoVinc.infoDeslig.mtvDeslig    := INIRec.ReadString(sSecao, 'mtvDeslig', EmptyStr);
           infoCompl.infoVinc.infoDeslig.dtProjFimAPI := StringToDateTime(INIRec.ReadString(sSecao, 'dtProjFimAPI', '0'));
 
+          if VersaoDF >= veS01_02_00 then
+          begin
+            infoCompl.infoVinc.infoDeslig.pensAlim     := eSStrToTpPensaoAlim(Ok, INIRec.ReadString(sSecao, 'pensAlim', EmptyStr));
+            infoCompl.infoVinc.infoDeslig.percAliment  := StringToFloatDef(INIRec.ReadString(sSecao, 'percAliment', ''), 0);
+            infoCompl.infoVinc.infoDeslig.vrAlim       := StringToFloatDef(INIRec.ReadString(sSecao, 'vrAlim', ''), 0);
+          end;
+
           sSecao := 'infoTerm' + IntToStrZero(I, 2);
           infoCompl.infoTerm.dtTerm       := StringToDateTime(INIRec.ReadString(sSecao, 'dtTerm', '0'));
           infoCompl.infoTerm.mtvDesligTSV := INIRec.ReadString(sSecao, 'mtvDesligTSV', EmptyStr);
@@ -1881,7 +2044,25 @@ begin
           J := 1;
           while true do
           begin
-            // de 00 até 360
+            // de 00 até 09
+            sSecao := 'abono' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'anoBase', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with ideEstab.infoVlr.abono.New do
+            begin
+              anoBase := sFIM;
+            end;
+
+            Inc(J);
+          end;
+
+          J := 1;
+          while true do
+          begin
+            // de 00 até 999
             sSecao := 'idePeriodo' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
             sFim   := INIRec.ReadString(sSecao, 'perRef', 'FIM');
 
@@ -1902,9 +2083,19 @@ begin
               baseCalculo.infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', EmptyStr));
 
               sSecao := 'infoFGTS' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
-              infoFGTS.vrBcFgtsGuia   := StringToFloat(INIRec.ReadString(sSecao, 'vrBcFgtsGuia', '0'));
-              infoFGTS.vrBcFgts13Guia := StringToFloat(INIRec.ReadString(sSecao, 'vrBcFgts13Guia', '0'));
-              infoFGTS.pagDireto      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'pagDireto', EmptyStr));
+
+              if VersaoDF >= veS01_02_00 then
+              begin
+                infoFGTS.vrBcFGTSProcTrab := StringToFloat(INIRec.ReadString(sSecao, 'vrBcFGTSProcTrab', '0'));
+                infoFGTS.vrBcFGTSSefip    := StringToFloat(INIRec.ReadString(sSecao, 'vrBcFGTSSefip', '0'));
+                infoFGTS.vrBcFGTSDecAnt   := StringToFloat(INIRec.ReadString(sSecao, 'vrBcFGTSDecAnt', '0'));
+              end
+              else
+              begin
+                infoFGTS.vrBcFgtsGuia     := StringToFloat(INIRec.ReadString(sSecao, 'vrBcFgtsGuia', '0'));
+                infoFGTS.vrBcFgts13Guia   := StringToFloat(INIRec.ReadString(sSecao, 'vrBcFgts13Guia', '0'));
+                infoFGTS.pagDireto        := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'pagDireto', EmptyStr));
+              end;
 
               sSecao := 'baseMudCateg' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
               baseMudCateg.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
@@ -1920,8 +2111,6 @@ begin
 
         Inc(I);
       end;
-
-
     end;
 
     GerarXML;

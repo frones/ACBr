@@ -322,7 +322,9 @@ begin
             InfoIRRF.InfoCRMen.New;
             InfoIRRF.InfoCRMen.Items[i].FCRMen       := leitor.rCampo(tcStr, 'CRMen');
             InfoIRRF.InfoCRMen.Items[i].FvrCRMen     := leitor.rCampo(tcDe2, 'vrCRMen');
-            InfoIRRF.InfoCRMen.Items[i].FvrCRMenSusp := leitor.rCampo(tcDe2, 'vrCRMenSusp');
+
+            if VersaoDF <= veS01_01_00 then
+              InfoIRRF.InfoCRMen.Items[i].FvrCRMenSusp := leitor.rCampo(tcDe2, 'vrCRMenSusp');
 
             inc(i);
           end;
@@ -334,7 +336,9 @@ begin
             InfoIRRF.InfoCRDia.Items[i].FperApurDia  := leitor.rCampo(tcInt, 'perApurDia');
             InfoIRRF.InfoCRDia.Items[i].FCRDia       := leitor.rCampo(tcStr, 'CRDia');
             InfoIRRF.InfoCRDia.Items[i].FvrCRDia     := leitor.rCampo(tcDe2, 'vrCRDia');
-            InfoIRRF.InfoCRDia.Items[i].FvrCRDiaSusp := leitor.rCampo(tcDe2, 'vrCRDiaSusp');
+
+            if VersaoDF <= veS01_01_00 then
+              InfoIRRF.InfoCRDia.Items[i].FvrCRDiaSusp := leitor.rCampo(tcDe2, 'vrCRDiaSusp');
 
             inc(i);
           end;

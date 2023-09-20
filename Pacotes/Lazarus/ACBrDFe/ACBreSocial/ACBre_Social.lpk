@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr e-Social
 (www.projetoacbr.com.br)"/>
-    <Files Count="70">
+    <Files Count="71">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocial.pas"/>
         <AddToUsesPkgSection Value="False"/>
@@ -304,6 +304,10 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5501.pas"/>
         <UnitName Value="pcesS5501"/>
       </Item70>
+      <Item71>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5503.pas"/>
+        <UnitName Value="pcesS5503"/>
+      </Item71>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

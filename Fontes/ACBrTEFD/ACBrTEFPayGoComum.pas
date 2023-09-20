@@ -1036,6 +1036,7 @@ begin
     tefstsSucessoManual: Result := PWCNF_CNF_MANU_AUT;
     tefstsErroImpressao: Result := PWCNF_REV_PRN_AUT;
     tefstsErroDispesador: Result := PWCNF_REV_DISP_AUT;
+    tefstsErroEnergia: Result := PWCNF_REV_PWR_AUT;
   else
     Result := PWCNF_REV_MANU_AUT;
   end;

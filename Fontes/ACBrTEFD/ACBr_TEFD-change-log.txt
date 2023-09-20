@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2023
+-- ACBrTEFComum, ACBrTEFPayGoComum--
+[*] Inclusão tefstsErroEnergia em TACBrTEFStatusTransacao para realização do teste 51 (Queda de Energia) para homologação PayGo utilizando Componente ACBrTEFAPI.
+    (Por: Antonio Carlos Junior)
+
 18/08/2023
 -- ACBrTEFPayGoComum --
 [-] Aplicado WorkAround para quanto PWINFO_RCPTPRN=1 e PWINFO_RCPTMERCH está presente

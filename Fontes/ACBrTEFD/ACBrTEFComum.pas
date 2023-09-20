@@ -75,6 +75,7 @@ type
                               tefstsSucessoManual,
                               tefstsErroImpressao,
                               tefstsErroDispesador,
+                              tefstsErroEnergia,
                               tefstsErroDiverso );
 
   TACBrTEFOperacao = ( tefopNenhuma,

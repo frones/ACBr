@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 21/09/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Carambei/PR trocou de provedor, agora é IPM
+   Por: Guilherme Vaz
 -- SigISS.Provider --
 [*] Melhorias no TratarRetornoConsultarNFSe.
    Por: Guilherme Vaz/Italo Giurizzato Junior

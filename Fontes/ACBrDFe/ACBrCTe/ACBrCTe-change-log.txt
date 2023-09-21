@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2023
+-- ACBrCTeWebServices --
+[-] Correção para não fazer a consulta do recibo após o envio, quando o envio foi no modo síncrono.
+  Por: BigWings
+
 19/09/2023
 -- pcteCTeW --
 [*] Possível solução para a rejeição: Rejeição 646: 

@@ -45,6 +45,8 @@ Símbolo : Significado
 
 21/09/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Dois Irmaos/P trocou para a versão 1.01 do provedor IPM.
+   Por: Nícolas Dörr
 [*] Ficou faltando as URLs da cidade de Carambei/PR.
    Por: Guilherme Vaz
 [*] A cidade de Carambei/PR trocou de provedor, agora é IPM

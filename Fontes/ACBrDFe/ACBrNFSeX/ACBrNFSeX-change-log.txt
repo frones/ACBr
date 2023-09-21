@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/09/2023
+-- PadraoNacional.Provider --
+[-] Correção para o erro de Violação de Acesso ao ler o retorno da API.
+   Por: Italo Giurizzato Junior
+
 20/09/2023
 -- ACBrNFSeXServicos --
 [*] Removido a URL de homologação da cidade de Mirassol/SP, pois o provedor

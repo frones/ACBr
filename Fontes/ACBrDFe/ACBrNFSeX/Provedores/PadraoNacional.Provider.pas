@@ -230,7 +230,7 @@ var
     end
     else
     begin
-      Codigo := JSon.AsString['codigo'];
+      Codigo := JSonItem.AsString['codigo'];
 
       if Codigo <> '' then
       begin
@@ -1427,10 +1427,7 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   if Pos('%PDF-1.4', Result) = 0 then
-  begin
     Result := UTF8Decode(Result);
-    Result := StringReplace(Result, 'null', '[]', [rfReplaceAll]);
-  end;
 end;
 
 end.

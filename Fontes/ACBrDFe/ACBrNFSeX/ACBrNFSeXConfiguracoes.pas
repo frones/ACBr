@@ -668,8 +668,8 @@ function TArquivosConfNFSe.GetPathEvento(Data: TDateTime; const CNPJ,
 var
   Dir: String;
 begin
-  if FPathCan <> '' then
-    Result := GetPath(FPathCan, 'Eventos', CNPJ, IE, Data)
+  if FPathNFSe <> '' then
+    Result := GetPath(FPathNFSe, 'Eventos', CNPJ, IE, Data)
   else
   begin
     Dir := GetPath(FPathGer, 'NFSe', CNPJ, IE, Data);

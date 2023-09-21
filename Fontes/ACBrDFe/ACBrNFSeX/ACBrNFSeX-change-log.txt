@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 21/09/2023
+-- SigISS.Provider --
+[*] Melhorias no TratarRetornoConsultarNFSe.
+   Por: Guilherme Vaz/Italo Giurizzato Junior
 -- PadraoNacional.Provider --
 [-] Correção para o erro de Violação de Acesso ao ler o retorno da API.
    Por: Italo Giurizzato Junior

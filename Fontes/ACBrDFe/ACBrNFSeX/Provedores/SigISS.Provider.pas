@@ -546,6 +546,8 @@ begin
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := string(NativeStringToUTF8(Result));
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
 end;
 
 { TACBrNFSeXWebserviceSigISS103 }
@@ -556,7 +558,7 @@ begin
   FPMsgOrig := AMSG;
 
   Result := Executar(SoapAction + '#ConsultarNfseServicoPrestado', AMSG,
-                     ['RetornoNota'],
+                     [],
                      ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
                       'xmlns:urn="' + SoapAction + '"']);
@@ -630,7 +632,7 @@ procedure TACBrNFSeProviderSigISS103.TratarRetornoConsultaNFSe(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode, AuxNode, ANodeNFSe: TACBrXmlNode;
   NumRps: String;
   ANota: TNotaFiscal;
 begin
@@ -656,32 +658,46 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+      AuxNode := ANode.Childrens.FindAnyNs('RetornoNota');
 
       if AuxNode <> nil then
       begin
-        AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
+        AuxNode := AuxNode.Childrens.FindAnyNs('EspelhoNfse');
 
         if AuxNode <> nil then
         begin
-          with Response do
+          ANodeNFSe := AuxNode.Childrens.FindAnyNs('Nfse');
+
+          if ANodeNFSe <> nil then
           begin
-            NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-            CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-            Protocolo := CodigoVerificacao;
-            Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
-            Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
-            Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('StatusNfse'), tcStr);
+            AuxNode := ANodeNFSe.Childrens.FindAnyNs('IdentificacaoNfse');
+
+            if AuxNode <> nil then
+            begin
+              with Response do
+              begin
+                NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+                CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+                Protocolo := CodigoVerificacao;
+                Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
+                Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
+                Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('StatusNfse'), tcStr);
+              end;
+            end;
+
+            AuxNode := ANodeNFSe.Childrens.FindAnyNs('DadosNfse');
+
+            if AuxNode <> nil then
+            begin
+              NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('RpsNumero'), tcStr);
+              Response.NumeroRps := NumRps;
+
+              ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+              ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+              SalvarXmlNfse(ANota);
+            end;
           end;
-
-          AuxNode := AuxNode.Childrens.FindAnyNs('DadosNfse');
-          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('RpsNumero'), tcStr);
-          Response.NumeroRps := NumRps;
-
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
-
-          ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
-          SalvarXmlNfse(ANota);
         end;
       end;
     except

@@ -94,6 +94,7 @@ type
     function ValidarRegrasdeNegocios: Boolean;
     function LerXML(AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
+    function GerarGNReIni: String;
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
     function GravarStream(AStream: TStream): Boolean;
@@ -151,6 +152,7 @@ type
     function LoadFromStream(AStream: TStringStream; AGerarGNRE: Boolean = True): Boolean;
     function LoadFromString(AXMLString: String; AGerarGNRE: Boolean = True): Boolean;
     function LoadFromIni(AIniString: String): Boolean;
+    function GerarIni: String;
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrGNRE: TComponent read FACBrGNRE;
@@ -480,6 +482,82 @@ begin
   end;
 end;
 
+function Guia.GerarGNReIni: String;
+var
+  INIRec: TMemIniFile;
+  IniGuia: TStringList;
+  sSecao: String;
+begin
+  INIRec := TMemIniFile.Create('');
+  try
+    with FGNRe do
+    begin
+      sSecao := 'Emitente';
+      INIRec.WriteInteger(sSecao, 'tipo', FGNRe.c27_tipoIdentificacaoEmitente);
+      INIRec.WriteString(sSecao, 'IE', FGNRe.c17_inscricaoEstadualEmitente);
+      INIRec.WriteString(sSecao, 'id', FGNRe.c03_idContribuinteEmitente);
+      INIRec.WriteString(sSecao, 'RazaoSocial', FGNRe.c16_razaoSocialEmitente);
+      INIRec.WriteString(sSecao, 'Endereco', FGNRe.c18_enderecoEmitente);
+      INIRec.WriteString(sSecao, 'Cidade', FGNRe.c19_municipioEmitente);
+      INIRec.WriteString(sSecao, 'UF', FGNRe.c20_ufEnderecoEmitente);
+      INIRec.WriteString(sSecao, 'Cep', FGNRe.c21_cepEmitente);
+      INIRec.WriteString(sSecao, 'Telefone', FGNRe.c22_telefoneEmitente);
+
+      sSecao := 'Complemento';
+      INIRec.WriteString(sSecao, 'IdentificadorGuia', FGNRe.c42_identificadorGuia);
+      INIRec.WriteInteger(sSecao, 'tipoDocOrigem', FGNRe.c28_tipoDocOrigem);
+      INIRec.WriteString(sSecao, 'DocOrigem', FGNRe.c04_docOrigem);
+      INIRec.WriteInteger(sSecao, 'detalhamentoReceita', FGNRe.c25_detalhamentoReceita);
+      INIRec.WriteInteger(sSecao, 'produto', FGNRe.c26_produto);
+
+      sSecao := 'Referencia';
+      INIRec.WriteString(sSecao, 'tipoGNRe', TipoGNREToStr(FGNRe.tipoGNRE));
+      INIRec.WriteString(sSecao, 'convenio', FGNRe.c15_convenio);
+      INIRec.WriteInteger(sSecao, 'receita', FGNRe.c02_receita);
+      INIRec.WriteString(sSecao, 'ufFavorecida', FGNRe.c01_UfFavorecida);
+      INIRec.WriteDateTime(sSecao, 'dataVencimento', FGNRe.c14_dataVencimento);
+      INIRec.WriteDateTime(sSecao, 'dataPagamento', FGNRe.c33_dataPagamento);
+      INIRec.WriteInteger(sSecao, 'referenciaAno', FGNRe.referencia.ano);
+      INIRec.WriteString(sSecao, 'referenciaMes', FGNRe.referencia.mes);
+      INIRec.WriteInteger(sSecao, 'referenciaPeriodo', FGNRe.referencia.periodo);
+      INIRec.WriteFloat(sSecao, 'ValorTotal', FGNRe.c10_valorTotal);
+      INIRec.WriteFloat(sSecao, 'ValorPrincipal', FGNRe.c06_valorPrincipal);
+      INIRec.WriteFloat(sSecao, 'ValorFECP', FGNRe.ValorFECP);
+      INIRec.WriteFloat(sSecao, 'TotalFECP', FGNRe.TotalFECP);
+      INIRec.WriteFloat(sSecao, 'JurosFECP', FGNRe.JurosFECP);
+      INIRec.WriteFloat(sSecao, 'AtualMonetFECP', FGNRe.AtualMonetFECP);
+      INIRec.WriteFloat(sSecao, 'MultaICMS', FGNRe.MultaICMS);
+      INIRec.WriteFloat(sSecao, 'JurosICMS', FGNRe.JurosICMS);
+      INIRec.WriteFloat(sSecao, 'AtualMonetICMS', FGNRe.AtualMonetICMS);
+
+      sSecao := 'Destinatario';
+      INIRec.WriteInteger(sSecao, 'tipo', FGNRe.c34_tipoIdentificacaoDestinatario);
+      INIRec.WriteString(sSecao, 'ie', FGNRe.c36_inscricaoEstadualDestinatario);
+      INIRec.WriteString(sSecao, 'id', FGNRe.c35_idContribuinteDestinatario);
+      INIRec.WriteString(sSecao, 'razaosocial', FGNRe.c37_razaoSocialDestinatario);
+      INIRec.WriteString(sSecao, 'cidade', FGNRe.c38_municipioDestinatario);
+
+      if (FGNRe.camposExtras.Count > 0)then
+      begin
+        sSecao := 'CampoExtra';
+        INIRec.WriteInteger(sSecao, 'codigo', FGNRe.camposExtras[0].CampoExtra.codigo);
+        INIRec.WriteString(sSecao, 'tipo', FGNRe.camposExtras[0].CampoExtra.tipo);
+        INIRec.WriteString(sSecao, 'valor', FGNRe.camposExtras[0].CampoExtra.valor);
+      end;
+    end;
+
+    IniGuia := TStringList.Create;
+    try
+      IniRec.GetStrings(IniGuia);
+      Result := StringReplace(IniGuia.Text, sLineBreak + sLineBreak, sLineBreak, [rfReplaceAll]);
+    finally
+      IniGuia.Free;
+    end;
+  finally
+    INIRec.Free;
+  end;
+end;
+
 function Guia.GerarXML: String;
 var
   IdAnterior : String;
@@ -660,6 +738,13 @@ var
 begin
   for i := 0 to Self.Count - 1 do
     Self.Items[i].GerarXML;
+end;
+
+function TGuias.GerarIni: String;
+begin
+  Result := '';
+  if (Self.Count > 0)then
+    Result := Self.Items[0].GerarGNReIni;
 end;
 
 function TGuias.GetItem(Index: integer): Guia;

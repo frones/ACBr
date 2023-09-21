@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/90/2023
+-- ACBrGNReGuias --
+[*] Adiciona uma rotina para gerar o INI do GNRe, visando compatibilidade com outros DFes e facilidade em testes.
+ Por: Diego Folieni
+
 15/09/2023
 -- pgnreGNRE, pgnreGNREW --
 [*] Adição da propriedade e tag numeroControle e alteração no nº de ocorrências de dataPagamento para que fique de acordo com schema

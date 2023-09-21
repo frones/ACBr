@@ -467,7 +467,8 @@ begin
                  ( AJSonObject.Values['situacao'].asString = C_PAGO ) or
                  ( AJSonObject.Values['situacao'].asString = C_EXPIRADO ) then
                  begin
-                    ListaRetorno.DadosRet.TituloRet.ValorPago                   := AJSonObject.Values['valorNominal'].AsNumber;
+                    if AJSonObject.Values['situacao'].asString <> C_PAGO then
+                      ListaRetorno.DadosRet.TituloRet.ValorPago                   := AJSonObject.Values['valorNominal'].AsNumber;
                     ListaRetorno.DadosRet.TituloRet.DataBaixa                   := DateIntertoDateTime( AJSonObject.Values['dataHoraSituacao'].asString )
                  end;
 

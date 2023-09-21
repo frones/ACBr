@@ -742,6 +742,7 @@ const
   CMetodoImprimirGNRe    = 'imprimirgnre';
   CMetodoImprimirGNRePDF = 'imprimirgnrepdf';
   CMetodoGerarGuia       = 'gerarguia';
+  CMetodoGerarXMLGNRe    = 'gerarxml';
 
   CMetodoImprimirCMD            = 'imprimircmd';
   CMetodoImprimirTAGs           = 'imprimirtags';

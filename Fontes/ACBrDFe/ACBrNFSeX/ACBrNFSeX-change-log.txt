@@ -45,6 +45,8 @@ Símbolo : Significado
 
 21/09/2023
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade de Reserva/PR, provedor é o Equiplano.
+   Por: Exi Sistemas 
 [*] A cidade de Dois Irmaos/P trocou para a versão 1.01 do provedor IPM.
    Por: Nícolas Dörr
 [*] Ficou faltando as URLs da cidade de Carambei/PR.

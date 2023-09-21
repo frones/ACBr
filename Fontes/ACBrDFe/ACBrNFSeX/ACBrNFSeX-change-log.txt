@@ -45,6 +45,8 @@ Símbolo : Significado
 
 21/09/2023
 -- ACBrNFSeXServicos --
+[*] Ficou faltando as URLs da cidade de Carambei/PR.
+   Por: Guilherme Vaz
 [*] A cidade de Carambei/PR trocou de provedor, agora é IPM
    Por: Guilherme Vaz
 -- SigISS.Provider --

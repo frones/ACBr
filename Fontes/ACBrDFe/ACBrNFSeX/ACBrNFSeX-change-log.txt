@@ -45,6 +45,8 @@ Símbolo : Significado
 
 21/09/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Soledade/RS, trocou de URL, provedor ainda é Pronim na versão 2.03
+   Por: Diego Folieni
 [+] Incluida a cidade de Reserva/PR, provedor é o Equiplano.
    Por: Exi Sistemas 
 [*] A cidade de Dois Irmaos/P trocou para a versão 1.01 do provedor IPM.

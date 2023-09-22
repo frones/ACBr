@@ -252,7 +252,7 @@ begin
             ATipoSacadoAvalista                                                                    + // 017 a 017 Tipo de inscrição Sacador/Avalista
             PadLeft(OnlyNumber(ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF), 14, '0')                 + // 018 a 031 documento do sacado avalista
             Space(3)                                                                               + // 032 a 034 Branco
-            PadLeft(ACBrTitulo.SeuNumero, 25, '0')                                                 + // 035 a 059 Número de controle para uso da empresa.
+            PadRight(ACBrTitulo.SeuNumero, 25, ' ')                                                + // 035 a 059 Número de controle para uso da empresa.
             MontarCampoNossoNumero(ACBrTitulo)                                                     + // 060 a 070 Nosso numero
             PadLeft(ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 10, '0')                           + // 071 a 080 Número de Contrato
             Space(10)                                                                              + // 081 a 090 Branco
@@ -261,7 +261,7 @@ begin
             LValorMultaPercentual                                                                  + // 104 a 107 Valor de Multa Percentual
             PadLeft(wCarteira,2,'0')                                                               + // 108 a 109 Código da carteira - ‘21’ cobrança Simples
             codigoServico                                                                          + // 110 a 111 Código do serviço 01 - Entrada / 09 - Baixa
-            PadLeft(ACBrTitulo.NumeroDocumento, 10, '0')                                           + // 112 a 121 Seu numero
+            PadRight(ACBrTitulo.NumeroDocumento, 10, ' ')                                          + // 112 a 121 Seu numero
             FormatDateTime('ddmmyyyy', ACBrTitulo.Vencimento)                                      + // 122 a 129 Data do vencimento do título
             IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 13)                               + // 130 a 142 Valor do título
             Space(5)                                                                               + // 143 a 147 Branco
@@ -365,8 +365,8 @@ begin
 
     Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
-    Titulo.SeuNumero               := copy(Linha, 120, 10);
-    Titulo.NumeroDocumento         := copy(Linha, 120, 10);
+    Titulo.SeuNumero               := trim(copy(Linha, 120, 10));
+    Titulo.NumeroDocumento         := trim(copy(Linha, 120, 10));
     Titulo.NossoNumero             := Copy(Linha, 60, 11);
 
     Titulo.Carteira                := copy(Linha, 108, 2);

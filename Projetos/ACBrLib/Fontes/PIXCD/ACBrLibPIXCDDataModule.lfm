@@ -1,74 +1,78 @@
-object LibPIXCDDM: TLibPIXCDDM
-  OldCreateOrder = False
+inherited LibPIXCDDM: TLibPIXCDDM
   Height = 315
-  HorizontalOffset = 3027
-  VerticalOffset = 283
+  HorizontalOffset = 1020
+  VerticalOffset = 262
   Width = 455
-  object ACBrPixCD1: TACBrPixCD
+  object ACBrPixCD1: TACBrPixCD[0]
     Recebedor.CodCategoriaComerciante = 0
     Left = 57
     Top = 40
   end
-  object ACBrPSPBradesco1: TACBrPSPBradesco
+  object ACBrPSPBradesco1: TACBrPSPBradesco[1]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 144
     Top = 40
   end
-  object ACBrPSPItau1: TACBrPSPItau
+  object ACBrPSPItau1: TACBrPSPItau[2]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 240
     Top = 40
   end
-  object ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil
+  object ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil[3]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 352
     Top = 40
   end
-  object ACBrPSPSantander1: TACBrPSPSantander
+  object ACBrPSPSantander1: TACBrPSPSantander[4]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 56
     Top = 96
   end
-  object ACBrPSPShipay1: TACBrPSPShipay
+  object ACBrPSPShipay1: TACBrPSPShipay[5]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     URLSandBox = 'https://api-staging.shipay.com.br'
     URLProducao = 'https://api.shipay.com.br'
     Left = 160
     Top = 96
   end
-  object ACBrPSPSicredi1: TACBrPSPSicredi
+  object ACBrPSPSicredi1: TACBrPSPSicredi[6]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 256
     Top = 96
   end
-  object ACBrPSPSicoob1: TACBrPSPSicoob
+  object ACBrPSPSicoob1: TACBrPSPSicoob[7]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 352
     Top = 96
   end
-  object ACBrPSPPagSeguro1: TACBrPSPPagSeguro
+  object ACBrPSPPagSeguro1: TACBrPSPPagSeguro[8]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 57
     Top = 160
   end
-  object ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet
+  object ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet[9]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 176
     Top = 160
   end
-  object ACBrPSPPixPDV1: TACBrPSPPixPDV
+  object ACBrPSPPixPDV1: TACBrPSPPixPDV[10]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 288
     Top = 160
   end
-  object ACBrPSPInter1: TACBrPSPInter
+  object ACBrPSPInter1: TACBrPSPInter[11]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 384
     Top = 160
   end
-  object ACBrPSPAilos1: TACBrPSPAilos
+  object ACBrPSPAilos1: TACBrPSPAilos[12]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 54
+    Top = 224
+  end
+  object ACBrPSPMatera1: TACBrPSPMatera[13]
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 144
     Top = 224
   end
 end

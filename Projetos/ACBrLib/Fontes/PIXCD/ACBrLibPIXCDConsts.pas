@@ -61,8 +61,88 @@ const
   CChaveTimeOut = 'TimeOut';
 
   CSessaoPixCDBradescoConfig = 'Bradesco';
-  CChaveClientID = 'ClientID';
-  CChaveClientSecret = 'ClientSecret';
+  CChavePIXBradesco = 'ChavePIX';
+  CChaveClientIDBradesco = 'ClientID';
+  CChaveClientSecretBradesco = 'ClientSecret';
+  CChaveArqPFXBradesco = 'ArqPFX';
+  CChaveSenhaPFXBradesco = 'SenhaPFX';
+
+  CSessaoPixCDSicrediConfig = 'Sicredi';
+  CChavePIXSicredi = 'ChavePIX';
+  CChaveClientIDSicredi = 'ClientID';
+  CChaveClientSecretSicredi = 'ClientSecret';
+  CChaveArqChavePrivadaSicredi = 'ArqChavePrivada';
+  CChaveArqCertificadoSicredi = 'ArqCertificado';
+
+  CSessaoPixCDSicoobConfig = 'Sicoob';
+  CChavePIXSicoob = 'ChavePIX';
+  CChaveClientIDSicoob = 'ClientID';
+  CChaveArqChavePrivadaSicoob = 'ArqChavePrivada';
+  CChaveArqCertificadoSicoob = 'ArqCertificado';
+
+  CSessaoPixCDShipayConfig = 'Shipay';
+  CChaveClientIDShipay = 'ClientID';
+  CChaveSecretKeyShipay = 'SecretKey';
+  CChaveAccessKey = 'AccessKey';
+
+  CSessaoPixCDSantanderConfig = 'Santander';
+  CChavePIXSantander = 'ChavePIX';
+  CChaveConsumerKey = 'ConsumerKey';
+  CChaveConsumerSecret = 'ConsumerSecret';
+  CChaveArqCertificadoPFX = 'ArqCertificadoPFX';
+  CChaveSenhaCertificadoPFX = 'SenhaCertificadoPFX';
+
+  CSessaoPixCDPixPDVConfig = 'PixPDV';
+  CChaveCNPJPixPDV = 'CNPJ';
+  CChaveToken = 'Token';
+  CChaveSecretKeyPixPDV = 'SecretKey';
+
+  CSessaoPixCDPagSeguroConfig = 'PagSeguro';
+  CChavePIXPagSeguro = 'ChavePIX';
+  CChaveClientIDPagSeguro = 'ClientID';
+  CChaveClientSecretPagSeguro = 'ClientSecret';
+  CChaveArqChavePrivadaPagSeguro = 'ArqChavePrivada';
+  CChaveArqCertificadoPagSeguro = 'ArqCertificado';
+
+  CSessaoPixCDItauConfig = 'Itau';
+  CChavePIXItau = 'ChavePIX';
+  CChaveClientIDItau = 'ClientID';
+  CChaveClientSecretItau = 'ClientSecret';
+  CChaveArqChavePrivadaItau = 'ArqChavePrivada';
+  CChaveArqCertificadoItau = 'ArqCertificado';
+
+  CSessaoPixCDInterConfig = 'Inter';
+  CChavePIXInter = 'ChavePIX';
+  CChaveClientIDInter = 'ClientID';
+  CChaveClientSecretInter = 'ClientSecret';
+  CChaveArqChavePrivadaInter = 'ArqChavePrivada';
+  CChaveArqCertificadoInter = 'ArqCertificado';
+
+  CSessaoPixCDGerenciaNetConfig = 'GerenciaNet';
+  CChavePIXGerenciaNet = 'ChavePIX';
+  CChaveClientIDGerenciaNet = 'ClientID';
+  CChaveClientSecretGerenciaNet = 'ClientSecret';
+  CChaveArqPFXGerenciaNet = 'ArqPFX';
+
+  CSessaoPixCDBancoBrasilConfig = 'BancoBrasil';
+  CChavePIXBancoBrasil = 'ChavePIX';
+  CChaveClientIDBancoBrasil = 'ClientID';
+  CChaveClientSecretBancoBrasil = 'ClientSecret';
+  CChaveDeveloperApplicationKeyBancoBrasil = 'DeveloperApplicationKey';
+  CChaveArqChavePrivadaBancoBrasil = 'ArqChavePrivada';
+  CChaveArqCertificadoBancoBrasil = 'ArqCertificado';
+  CChaveArqPFXBancoBrasil = 'ArqPFX';
+  CChaveSenhaPFXBancoBrasil = 'SenhaPFX';
+  CChaveVersaoAPIBancoBrasil = 'VersaoAPI';
+  CChaveTipoCertificadoBancoBrasil = 'TipoCertificado';
+
+  CSessaoPixCDAilosConfig = 'Ailos';
+  CChavePIXAilos = 'ChavePIX';
+  CChaveClientIDAilos = 'ClientID';
+  CChaveClientSecretAilos = 'ClientSecret';
+  CChaveArqChavePrivadaAilos = 'ArqChavePrivada';
+  CChaveArqCertificadoAilos = 'ArqCertificado';
+  CChaveArqCertificadoRootAilos = 'ArqCertificadoRoot';
 
 implementation
 

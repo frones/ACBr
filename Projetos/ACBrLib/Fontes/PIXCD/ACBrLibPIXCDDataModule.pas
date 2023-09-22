@@ -41,7 +41,8 @@ uses
   ACBrLibDataModule, ACBrPIXCD, ACBrPIXPSPBradesco, ACBrPIXPSPItau,
   ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, ACBrPIXPSPShipay,
   ACBrPIXPSPSicredi, ACBrPIXPSPSicoob, ACBrPIXPSPPagSeguro,
-  ACBrPIXPSPGerenciaNet, ACBrPIXPSPPixPDV, ACBrPIXPSPInter, ACBrPIXPSPAilos;
+  ACBrPIXPSPGerenciaNet, ACBrPIXPSPPixPDV, ACBrPIXPSPInter, ACBrPIXPSPAilos,
+  ACBrPIXPSPMatera;
 
 type
 
@@ -55,6 +56,7 @@ type
     ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet;
     ACBrPSPInter1: TACBrPSPInter;
     ACBrPSPItau1: TACBrPSPItau;
+    ACBrPSPMatera1: TACBrPSPMatera;
     ACBrPSPPagSeguro1: TACBrPSPPagSeguro;
     ACBrPSPPixPDV1: TACBrPSPPixPDV;
     ACBrPSPSantander1: TACBrPSPSantander;

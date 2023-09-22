@@ -159,9 +159,6 @@ type
     FCodTipoOcorrencia: String;
     FDescricaoTipoOcorrencia: String;
     FRejeicoes: TObjectList;
-    FHoraBaixa: String;
-    FEstadoTituloCobranca : String;
-
 
   public
     constructor Create(const AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
@@ -179,6 +176,7 @@ type
     property Carteira: String read FCarteira write FCarteira;
     property DataOcorrencia: TDateTime read FDataOcorrencia write FDataOcorrencia;
     property DataCredito: TDateTime read FDataCredito write FDataCredito;
+    property DataBaixa: TDateTime read FDataBaixa write FDataBaixa;
     property DataMovimento: TDateTime read FDataMovimento write FDataMovimento;
     property DataMoraJuros: TDateTime read FDataMoraJuros write FDataMoraJuros;
     property ValorDocumento: Currency read FValorDocumento write FValorDocumento;
@@ -194,11 +192,6 @@ type
     property CodTipoOcorrencia: String read FCodTipoOcorrencia write FCodTipoOcorrencia;
     property DescricaoTipoOcorrencia: String read FDescricaoTipoOcorrencia write FDescricaoTipoOcorrencia;
     property Rejeicoes: TObjectList read FRejeicoes write FRejeicoes;
-    property EstadoTituloCobranca: String read FEstadoTituloCobranca write FEstadoTituloCobranca;
-    property HoraBaixa: String read FHoraBaixa write FHoraBaixa;
-    property DataBaixa: TDateTime read FDataBaixa write FDataBaixa;
-
-
 
   end;
 
@@ -319,7 +312,6 @@ type
     FDataProtesto: TDateTime;
     FDiasDeProtesto: Integer;
     FDataBaixa: TDateTime;
-    FHoraBaixa: String;
     FDataMovimento : TDateTime;
     FDataLimitePagto: TDateTime;
     FValorDespesaCobranca: Currency;
@@ -350,7 +342,6 @@ type
     Furl_Pix: String;
     FTx_ID: String;
     FCodigoCanalTituloCobranca: String;
-    FEstadoTituloCobranca: String;
 
   public
     constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
@@ -394,7 +385,6 @@ type
     property DataProtesto: TDateTime read FDataProtesto write FDataProtesto ;
     property DiasDeProtesto: Integer read FDiasDeProtesto write FDiasDeProtesto ;
     property DataBaixa: TDateTime read FDataBaixa write FDataBaixa ;
-    property HoraBaixa: String read FHoraBaixa write FHoraBaixa;
     property DataMovimento: TDateTime read FDataMovimento write FDataMovimento ;
     property DataLimitePagto: TDateTime read FDataLimitePagto write FDataLimitePagto ;
     property ValorDespesaCobranca: Currency read FValorDespesaCobranca write FValorDespesaCobranca ;
@@ -425,8 +415,6 @@ type
     property url_Pix: String read Furl_Pix write Furl_Pix;
     property Tx_ID: String read FTx_ID write FTx_ID;
     property CodigoCanalTituloCobranca: String read FCodigoCanalTituloCobranca write FCodigoCanalTituloCobranca;
-    property EstadoTituloCobranca: String read FEstadoTituloCobranca write FEstadoTituloCobranca;
-
 
 
   end;
@@ -681,7 +669,6 @@ begin
     DataProtesto:= DadosRet.TituloRet.DataProtesto;
     DiasDeProtesto:= DadosRet.TituloRet.DiasDeProtesto;
     DataBaixa := DadosRet.TituloRet.DataBaixa;
-    HoraBaixa :=DadosRet.TituloRet.HoraBaixa;
     DataMovimento:= DadosRet.TituloRet.DataMovimento;
     DataLimitePagto:= DadosRet.TituloRet.DataLimitePagto;
     ValorDespesaCobranca:= DadosRet.TituloRet.ValorDespesaCobranca;
@@ -709,7 +696,6 @@ begin
     PercentualMinPagamento:= DadosRet.TituloRet.PercentualMinPagamento;
     PercentualMaxPagamento:= DadosRet.TituloRet.PercentualMaxPagamento;
     CodigoCanalTituloCobranca:=DadosRet.TituloRet.CodigoCanalTituloCobranca;
-    EstadoTituloCobranca:=DadosRet.TituloRet.EstadoTituloCobranca;;
 
     if ( DadosRet.TituloRet.EMV  <> EmptyStr) then
     begin
@@ -897,7 +883,6 @@ begin
     DataOcorrencia := ACBrBoleto.ListadeBoletos[FID].DataOcorrencia;
     DataCredito := ACBrBoleto.ListadeBoletos[FID].DataCredito;
     DataBaixa := ACBrBoleto.ListadeBoletos[FID].DataBaixa;
-    HoraBaixa := ACBrBoleto.ListadeBoletos[FID].HoraBaixa;
     DataMoraJuros := ACBrBoleto.ListadeBoletos[FID].DataMoraJuros;
     ValorDespesaCobranca := ACBrBoleto.ListadeBoletos[FID].ValorDespesaCobranca;
     ValorAbatimento := ACBrBoleto.ListadeBoletos[FID].ValorAbatimento;
@@ -911,7 +896,6 @@ begin
     CodTipoOcorrencia := GetEnumName( TypeInfo(TACBrTipoOcorrencia),
                                              Integer(ACBrBoleto.ListadeBoletos[FID].OcorrenciaOriginal.Tipo));
     DescricaoTipoOcorrencia := ACBrBoleto.ListadeBoletos[FID].OcorrenciaOriginal.Descricao;
-    EstadoTituloCobranca    := ACBrBoleto.ListadeBoletos[FID].EstadoTituloCobranca;
 
     for I:= 0 to  ACBrBoleto.ListadeBoletos[FID].DescricaoMotivoRejeicaoComando.Count-1 do
     begin

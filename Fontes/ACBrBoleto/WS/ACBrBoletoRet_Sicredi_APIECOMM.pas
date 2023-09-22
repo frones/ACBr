@@ -168,6 +168,7 @@ begin
                 ARetornoWS.DadosRet.TituloRet.Vencimento                 := DateSicrediToDateTime(AJSonObject.Values['dataVencimento'].AsString);
                 ARetornoWS.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
                 ARetornoWS.DadosRet.TituloRet.ValorAtual                 := AJSonObject.Values['valor'].AsNumber;
+                ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca       := AJSonObject.Values['situacao'].AsString;
 
                 if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
                    ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then

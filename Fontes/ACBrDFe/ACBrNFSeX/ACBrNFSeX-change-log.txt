@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 22/09/2023
+-- ACBrNFSeXServicos --
+[*] Correção nas URLs de homologação e produção da cidade de Montenegro/RS.
+   Por: Marcos Giordani
+[*] A cidade de Sao Francisco/MG, trocou de provedor, agora é ISSIntel.
+   Por: João Antonio
 -- Diversos --
 [*] Ajustes em diversas units para gerar as informações do endereço no exterior
     do tomador para a versão 2 do layout da ABRASF.

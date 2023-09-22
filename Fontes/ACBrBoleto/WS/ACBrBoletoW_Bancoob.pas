@@ -755,7 +755,7 @@ begin
   begin
     if Assigned(AJson) then
     begin
-        if (ATitulo.Vencimento > 0) then
+        if (ATitulo.ValorAbatimento > 0) then
         begin
           AJson.Add('valorAbatimento').Value.AsNumber := aTitulo.ValorAbatimento;
         end;
@@ -769,7 +769,7 @@ begin
   begin
     if Assigned(AJson) then
     begin
-        if (ATitulo.Vencimento > 0) then
+        if (ATitulo.EspecieDoc <> '') then
         begin
           AJson.Add('especieDocumento').Value.AsString := aTitulo.EspecieDoc;
         end;

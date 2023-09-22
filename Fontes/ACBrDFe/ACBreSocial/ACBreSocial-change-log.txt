@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2023
+-- pcesS2200 --
+[*] Correção quando não for informada a dtBase, no grupo infoCeletista, na leitura do XML e INI
+  Por: Ray Hildebrant / Renato Rubinho
+
 20/09/2023
 -- diversos --
 [+] Implementado novo leiaute 1.2

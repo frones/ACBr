@@ -415,7 +415,8 @@ begin
         vinculo.InfoRegimeTrab.InfoCeletista.nrProcTrab        := INIRec.ReadString(sSecao, 'nrProcTrab', '');
         vinculo.InfoRegimeTrab.InfoCeletista.TpRegJor          := eSStrToTpRegJor(Ok, INIRec.ReadString(sSecao, 'tpRegJor', '1'));
         vinculo.InfoRegimeTrab.InfoCeletista.NatAtividade      := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
-        vinculo.InfoRegimeTrab.InfoCeletista.dtBase            := INIRec.ReadInteger(sSecao, 'dtBase', 0);
+        if INIRec.ReadInteger(sSecao, 'dtBase', 0) <> 0 then
+          vinculo.InfoRegimeTrab.InfoCeletista.dtBase          := INIRec.ReadInteger(sSecao, 'dtBase', 0);
         vinculo.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := INIRec.ReadString(sSecao, 'cnpjSindCategProf', '');
         vinculo.InfoRegimeTrab.InfoCeletista.matAnotJud        := INIRec.ReadString(sSecao, 'matAnotJud', '');
 
@@ -845,7 +846,8 @@ begin
             vinculo.InfoRegimeTrab.InfoCeletista.nrProcTrab        := Leitor.rCampo(tcStr, 'nrProcTrab');
             vinculo.InfoRegimeTrab.InfoCeletista.TpRegJor          := eSStrToTpRegJor(bOk, Leitor.rCampo(tcStr, 'tpRegJor'));
             vinculo.InfoRegimeTrab.InfoCeletista.NatAtividade      := eSStrToNatAtividade(bOk, Leitor.rCampo(tcStr, 'natAtividade'));
-            vinculo.InfoRegimeTrab.InfoCeletista.dtBase            := Leitor.rCampo(tcStr, 'dtBase');
+            if Leitor.rCampo(tcStr, 'dtBase') <> '' then
+              vinculo.InfoRegimeTrab.InfoCeletista.dtBase          := Leitor.rCampo(tcStr, 'dtBase');
             vinculo.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := Leitor.rCampo(tcStr, 'cnpjSindCategProf');
             vinculo.InfoRegimeTrab.InfoCeletista.matAnotJud        := Leitor.rCampo(tcStr, 'matAnotJud');
 

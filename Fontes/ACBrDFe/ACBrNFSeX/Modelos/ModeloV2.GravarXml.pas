@@ -104,7 +104,7 @@ begin
   GerarNSRps := True;
 
   GerarIDDeclaracao := True;
-  GerarEnderecoExterior := False;
+  GerarEnderecoExterior := True;
 
   TagTomador := 'Tomador';
   TagIntermediario := 'Intermediario';
@@ -181,7 +181,6 @@ begin
   NrOcorrAtualizaTomador := -1;
   NrOcorrTomadorExterior := -1;
   NrOcorrCodigoMunic_2 := -1;
-  NrOcorrNIFTomador := -1;
   NrOcorrID := -1;
   NrOcorrToken := -1;
   NrOcorrSenha := -1;

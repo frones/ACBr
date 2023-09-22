@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/09/2023
+-- Diversos --
+[*] Ajustes em diversas units para gerar as informações do endereço no exterior
+    do tomador para a versão 2 do layout da ABRASF.
+   Por: Italo Giurizzato Junior
+
 21/09/2023
 -- ACBrNFSeXServicos --
 [*] A cidade de Soledade/RS, trocou de URL, provedor ainda é Pronim na versão 2.03

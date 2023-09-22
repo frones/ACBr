@@ -110,7 +110,6 @@ type
     FNrOcorrTomadorExterior: Integer;
     FNrOcorrCodigoMunic_1: Integer;
     FNrOcorrCodigoMunic_2: Integer;
-    FNrOcorrNIFTomador: Integer;
     FGerarEnderecoExterior: Boolean;
     FNrOcorrID: Integer;
     FNrOcorrToken: Integer;
@@ -252,7 +251,6 @@ type
     property NrOcorrCodTribMun_2: Integer read FNrOcorrCodTribMun_2 write FNrOcorrCodTribMun_2;
     property NrOcorrIssRetido: Integer    read FNrOcorrIssRetido    write FNrOcorrIssRetido;
     property NrOcorrProducao: Integer     read FNrOcorrProducao     write FNrOcorrProducao;
-    property NrOcorrNIFTomador: Integer   read FNrOcorrNIFTomador   write FNrOcorrNIFTomador;
     property NrOcorrID: Integer           read FNrOcorrID           write FNrOcorrID;
     property NrOcorrToken: Integer        read FNrOcorrToken        write FNrOcorrToken;
     property NrOcorrSenha: Integer        read FNrOcorrSenha        write FNrOcorrSenha;
@@ -379,7 +377,6 @@ begin
   FNrOcorrAtualizaTomador := -1;
   FNrOcorrTomadorExterior := -1;
   FNrOcorrCodigoMunic_2 := -1;
-  FNrOcorrNIFTomador := -1;
   FNrOcorrID := -1;
   FNrOcorrToken := -1;
   FNrOcorrSenha := -1;
@@ -404,7 +401,7 @@ begin
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
-  FGerarEnderecoExterior := False;
+  FGerarEnderecoExterior := True;
   FGerarTagRps := True;
 
   // Propriedades de Formatação de informações
@@ -844,7 +841,7 @@ begin
 
     if (NFSe.Tomador.Endereco.UF = 'EX') and
        (NFSe.Tomador.IdentificacaoTomador.Nif <> '') then
-      Result.AppendChild(AddNode(tcStr, '#38', 'NifTomador', 1, 40, NrOcorrNIFTomador,
+      Result.AppendChild(AddNode(tcStr, '#38', 'NifTomador', 1, 40, 1,
                                         NFSe.Tomador.IdentificacaoTomador.Nif));
 
     Result.AppendChild(AddNode(tcStr, '#38', 'RazaoSocial', 1, 115, 0,

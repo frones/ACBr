@@ -66,11 +66,8 @@ begin
   FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
   FormatoAliq := tcDe2;
 
-  NrOcorrNIFTomador := 0;
   NrOcorrCodigoPaisServico := -1;
   NrOcorrCodigoPaisTomador := -1;
-
-  GerarEnderecoExterior := True;
 
   TagTomador := 'TomadorServico';
 

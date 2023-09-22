@@ -71,12 +71,9 @@ procedure TNFSeW_iiBrasil204.Configuracao;
 begin
   inherited Configuracao;
 
-  GerarEnderecoExterior := True;
-
   FormatoAliq := tcDe2;
   TagTomador  := 'TomadorServico';
 
-  NrOcorrNIFTomador := 0;
   NrOcorrAtualizaTomador := 1;
   NrOcorrTomadorExterior := 1;
   NrOcorrCodigoPaisServico := -1;

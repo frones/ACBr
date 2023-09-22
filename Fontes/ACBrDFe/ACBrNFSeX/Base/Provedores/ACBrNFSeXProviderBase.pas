@@ -1010,8 +1010,7 @@ begin
 
   aNomeArq := PathWithDelim(aPath) + aNome + '-nfse.pdf';
 
-  if FAOwner.Configuracoes.Arquivos.Salvar then
-    WriteToTXT(aNomeArq, aPDF, False, False);
+  WriteToTXT(aNomeArq, aPDF, False, False);
 end;
 
 procedure TACBrNFSeXProvider.SalvarXmlEvento(const aNome: string;

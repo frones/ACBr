@@ -440,6 +440,10 @@ begin
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result);
+
+  if Pos('ns1:ConsultarNfsePorRpsV3Response', Result) > 0 then
+    Result := StringReplace(Result, 'ns3:ConsultarNfseResposta', 'ns3:ConsultarNfseRpsResposta', [rfReplaceAll]);
+
   Result := RemoverPrefixosDesnecessarios(Result);
 end;
 

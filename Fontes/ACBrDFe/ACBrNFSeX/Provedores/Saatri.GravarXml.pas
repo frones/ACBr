@@ -70,7 +70,6 @@ begin
 
   NrOcorrValorISS := 1;
   NrOcorrAliquota := 1;
-  NrOcorrNIFTomador := 0;
 
   GerarIDRps := True;
 end;

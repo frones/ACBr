@@ -65,13 +65,10 @@ procedure TNFSeW_Libre204.Configuracao;
 begin
   inherited Configuracao;
 
-  GerarEnderecoExterior := True;
-
   TagTomador := 'TomadorServico';
 
   FormatoAliq := tcDe2;
 
-  NrOcorrNIFTomador := 0;
   NrOcorrCodigoPaisTomador := -1;
 end;
 

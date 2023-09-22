@@ -131,7 +131,6 @@ begin
   NrOcorrDescIncond := 1;
   NrOcorrDescCond := 1;
   NrOcorrCodigoPaisServico := 1;
-  NrOcorrNIFTomador := 1;
 
   GerarIDRps := True;
 end;

@@ -74,7 +74,6 @@ begin
   FormatoAliq := tcDe2;
 
   NrOcorrInformacoesComplemetares := 0;
-  NrOcorrNIFTomador := 0;
   NrOcorrAliquota := 1;
   NrOcorrCodigoPaisServico := -1;
 end;

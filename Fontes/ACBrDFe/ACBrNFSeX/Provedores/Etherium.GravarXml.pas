@@ -86,14 +86,11 @@ begin
   FormatoAliq := tcDe2;
 
   NrOcorrInformacoesComplemetares := 0;
-  NrOcorrNIFTomador := 0;
   NrOcorrCepTomador := 1;
   NrOcorrAliquota := 1;
   NrOcorrCodigoPaisTomador := -1;
 
   TagTomador := 'TomadorServico';
-
-  GerarEnderecoExterior := True;
 end;
 
 end.

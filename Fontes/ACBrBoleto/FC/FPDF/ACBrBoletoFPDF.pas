@@ -205,7 +205,7 @@ begin
   begin
     ModeloImpressao(True);
     try
-      if Self.IndiceImprimirIndividual > 0 then
+      if Self.IndiceImprimirIndividual >= 0 then
         LIndex := Self.IndiceImprimirIndividual
       else
         LIndex := I;
@@ -228,7 +228,7 @@ var
 begin
   ModeloImpressao(true);
   try
-    if Self.IndiceImprimirIndividual > 0 then
+    if Self.IndiceImprimirIndividual >= 0 then
       GeraDados(ACBrBoleto.ListadeBoletos[ Self.IndiceImprimirIndividual ])
     else
     for I := 0 to Pred(ACBrBoleto.ListadeBoletos.Count) do

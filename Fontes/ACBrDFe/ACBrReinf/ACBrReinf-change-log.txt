@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/09/2023
+-- pcnGeradorReinf --
+[*] Configurada Produção para gerar os eventos síncronos, da versão 1.5.1, na versão 2.1.2
+  Por: JRM Martins / Renato Rubinho
+
 20/09/2023
 -- pcnReinfR4020 --
 [*] Corrigido número de ocorrências do cnpjBenef no R-4020

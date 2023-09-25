@@ -220,10 +220,9 @@ begin
   begin
     Result := VersaoReinfToStr(Configuracoes.Geral.VersaoDF);
 
-    // Producao Restrita da versao 1_05_01 migrada para versao 2_01_02
+    // Versao 1_05_01 migrada para versao 2_01_02
     // Mantidas urls, mudança apenas na URN
-    if ( Configuracoes.WebServices.Ambiente = taHomologacao ) and
-       ( Configuracoes.Geral.VersaoDF = v1_05_01 ) then
+    if ( Configuracoes.Geral.VersaoDF = v1_05_01 ) then
       Result := '2_01_02';
   end;
 end;

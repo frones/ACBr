@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/09/2023
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Roncador/PR, provedor é o Elotech na versão 2.03
+   Por: Diego Folieni
+
 25/09/2023
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade de Paverama/RS, provedor Tecnos na versão 2.01

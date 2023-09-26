@@ -65,6 +65,7 @@ type
     FpPath: string;
     FpMethod: string;
     FpChave: string;
+    FpTipoConsultaEvento: Integer;
   protected
     procedure Configuracao; override;
 
@@ -809,15 +810,24 @@ begin
   if Response.nSeqEvento = 0 then
   begin
     if Response.tpEvento = teNenhum then
-      FpPath := '/nfse/' + Response.ChaveNFSe + '/eventos'
+    begin
+      FpTipoConsultaEvento := 1;
+      FpPath := '/nfse/' + Response.ChaveNFSe + '/eventos';
+    end
     else
+    begin
+      FpTipoConsultaEvento := 2;
       FpPath := '/nfse/' + Response.ChaveNFSe + '/eventos/' +
                 OnlyNumber(tpEventoToStr(Response.tpEvento));
+    end;
   end
   else
+  begin
+    FpTipoConsultaEvento := 3;
     FpPath := '/nfse/' + Response.ChaveNFSe + '/eventos/' +
               OnlyNumber(tpEventoToStr(Response.tpEvento)) + '/' +
               FormatFloat('000', Response.nSeqEvento);
+  end;
 
   Response.ArquivoEnvio := FpPath;
   FpMethod := 'GET';
@@ -866,8 +876,11 @@ begin
                            tpEventoToDesc(StrTotpEvento(Ok, TipoEvento));
 
         ArquivoXml := JSon.AsString['arquivoXml'];
-        ArquivoXml := DeCompress(DecodeBase64(ArquivoXml));
-//        ArquivoXml := DeCompress(DecodeBase64(DecodeBase64(ArquivoXml)));
+
+        if FpTipoConsultaEvento = 3 then
+          ArquivoXml := DeCompress(DecodeBase64(DecodeBase64(ArquivoXml)))
+        else
+          ArquivoXml := DeCompress(DecodeBase64(ArquivoXml));
 
         if ArquivoXml = '' then
         begin

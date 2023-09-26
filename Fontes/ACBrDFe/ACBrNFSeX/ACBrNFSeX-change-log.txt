@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/09/2023
+-- PadraoNacional.Provider --
+[*] Criada uma variável privada para informar o tipo de consulta a eventos
+    solicitada.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [*] Limpeza das listas: Erros, Alertas e Resumos antes de executar um serviço.
    Por: Italo Giurizzato Junior

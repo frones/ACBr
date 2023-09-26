@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/09/2023
+-- ACBrNFSeXServicos --
+[*] Trocado para a versão 2.03 de todas as cidades que usam o provedor Saatri.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado a versão 2.03 do provedor Saatri.
    Por: Italo Giurizzato Junior

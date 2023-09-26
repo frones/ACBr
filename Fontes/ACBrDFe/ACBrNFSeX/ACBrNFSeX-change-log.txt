@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/09/2023
+-- ACBrNFSeXProviderBase --
+[*] Limpeza das listas: Erros, Alertas e Resumos antes de executar um serviço.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Atualizado a URL de produção do Padrão Nacional
    Por: Italo Giurizzato Junior

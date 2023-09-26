@@ -121,6 +121,12 @@
             this.txtHost = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnArquivoKEY = new System.Windows.Forms.Button();
+            this.btnArquivoCRT = new System.Windows.Forms.Button();
+            this.label48 = new System.Windows.Forms.Label();
+            this.txtArquivoKEY = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
+            this.txtArquivoCRT = new System.Windows.Forms.TextBox();
             this.label47 = new System.Windows.Forms.Label();
             this.nudTimeOut = new System.Windows.Forms.NumericUpDown();
             this.label46 = new System.Windows.Forms.Label();
@@ -177,12 +183,9 @@
             this.btnClasseTitulo = new System.Windows.Forms.Button();
             this.btnEnviarBoletoWebService = new System.Windows.Forms.Button();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
-            this.label48 = new System.Windows.Forms.Label();
-            this.txtArquivoKEY = new System.Windows.Forms.TextBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.txtArquivoCRT = new System.Windows.Forms.TextBox();
-            this.btnArquivoCRT = new System.Windows.Forms.Button();
-            this.btnArquivoKEY = new System.Windows.Forms.Button();
+            this.btnConsulaLista = new System.Windows.Forms.Button();
+            this.btnBaixaTitulo = new System.Windows.Forms.Button();
+            this.btnConsultaDetalhe = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -242,7 +245,7 @@
             this.tbpCedente.Location = new System.Drawing.Point(4, 22);
             this.tbpCedente.Name = "tbpCedente";
             this.tbpCedente.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpCedente.Size = new System.Drawing.Size(768, 180);
+            this.tbpCedente.Size = new System.Drawing.Size(768, 196);
             this.tbpCedente.TabIndex = 0;
             this.tbpCedente.Text = "Cedente";
             this.tbpCedente.UseVisualStyleBackColor = true;
@@ -523,7 +526,7 @@
             this.tbpLayout.Location = new System.Drawing.Point(4, 22);
             this.tbpLayout.Name = "tbpLayout";
             this.tbpLayout.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpLayout.Size = new System.Drawing.Size(768, 180);
+            this.tbpLayout.Size = new System.Drawing.Size(768, 196);
             this.tbpLayout.TabIndex = 1;
             this.tbpLayout.Text = "Layout";
             this.tbpLayout.UseVisualStyleBackColor = true;
@@ -701,7 +704,7 @@
             this.tbpContaBancaria.Location = new System.Drawing.Point(4, 22);
             this.tbpContaBancaria.Name = "tbpContaBancaria";
             this.tbpContaBancaria.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpContaBancaria.Size = new System.Drawing.Size(768, 180);
+            this.tbpContaBancaria.Size = new System.Drawing.Size(768, 196);
             this.tbpContaBancaria.TabIndex = 2;
             this.tbpContaBancaria.Text = "Conta Bancária";
             this.tbpContaBancaria.UseVisualStyleBackColor = true;
@@ -878,7 +881,7 @@
             this.tbpRemessaRetorno.Location = new System.Drawing.Point(4, 22);
             this.tbpRemessaRetorno.Name = "tbpRemessaRetorno";
             this.tbpRemessaRetorno.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpRemessaRetorno.Size = new System.Drawing.Size(768, 180);
+            this.tbpRemessaRetorno.Size = new System.Drawing.Size(768, 196);
             this.tbpRemessaRetorno.TabIndex = 3;
             this.tbpRemessaRetorno.Text = "Remessa/Retorno";
             this.tbpRemessaRetorno.UseVisualStyleBackColor = true;
@@ -1020,7 +1023,7 @@
             this.tbpEmail.Location = new System.Drawing.Point(4, 22);
             this.tbpEmail.Name = "tbpEmail";
             this.tbpEmail.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpEmail.Size = new System.Drawing.Size(768, 180);
+            this.tbpEmail.Size = new System.Drawing.Size(768, 196);
             this.tbpEmail.TabIndex = 4;
             this.tbpEmail.Text = "E-mail";
             this.tbpEmail.UseVisualStyleBackColor = true;
@@ -1194,6 +1197,60 @@
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "WebService";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnArquivoKEY
+            // 
+            this.btnArquivoKEY.Location = new System.Drawing.Point(289, 106);
+            this.btnArquivoKEY.Name = "btnArquivoKEY";
+            this.btnArquivoKEY.Size = new System.Drawing.Size(24, 23);
+            this.btnArquivoKEY.TabIndex = 58;
+            this.btnArquivoKEY.Text = "...";
+            this.btnArquivoKEY.UseVisualStyleBackColor = true;
+            this.btnArquivoKEY.Click += new System.EventHandler(this.btnArquivoKEY_Click);
+            // 
+            // btnArquivoCRT
+            // 
+            this.btnArquivoCRT.Location = new System.Drawing.Point(128, 106);
+            this.btnArquivoCRT.Name = "btnArquivoCRT";
+            this.btnArquivoCRT.Size = new System.Drawing.Size(24, 23);
+            this.btnArquivoCRT.TabIndex = 57;
+            this.btnArquivoCRT.Text = "...";
+            this.btnArquivoCRT.UseVisualStyleBackColor = true;
+            this.btnArquivoCRT.Click += new System.EventHandler(this.btnArquivoCRT_Click);
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label48.Location = new System.Drawing.Point(163, 92);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(78, 13);
+            this.label48.TabIndex = 56;
+            this.label48.Text = "Arquivo KEY";
+            // 
+            // txtArquivoKEY
+            // 
+            this.txtArquivoKEY.Location = new System.Drawing.Point(166, 108);
+            this.txtArquivoKEY.Name = "txtArquivoKEY";
+            this.txtArquivoKEY.Size = new System.Drawing.Size(117, 20);
+            this.txtArquivoKEY.TabIndex = 55;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.Location = new System.Drawing.Point(3, 92);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(79, 13);
+            this.label49.TabIndex = 54;
+            this.label49.Text = "Arquivo CRT";
+            // 
+            // txtArquivoCRT
+            // 
+            this.txtArquivoCRT.Location = new System.Drawing.Point(6, 108);
+            this.txtArquivoCRT.Name = "txtArquivoCRT";
+            this.txtArquivoCRT.Size = new System.Drawing.Size(117, 20);
+            this.txtArquivoCRT.TabIndex = 53;
             // 
             // label47
             // 
@@ -1483,7 +1540,7 @@
             this.groupBox1.Controls.Add(this.rtbRespostas);
             this.groupBox1.Location = new System.Drawing.Point(274, 270);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(509, 316);
+            this.groupBox1.Size = new System.Drawing.Size(509, 404);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Respostas";
@@ -1494,7 +1551,7 @@
             this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
             this.rtbRespostas.Name = "rtbRespostas";
             this.rtbRespostas.ReadOnly = true;
-            this.rtbRespostas.Size = new System.Drawing.Size(503, 297);
+            this.rtbRespostas.Size = new System.Drawing.Size(503, 385);
             this.rtbRespostas.TabIndex = 0;
             this.rtbRespostas.Text = "";
             // 
@@ -1760,9 +1817,9 @@
             // 
             // btnEnviarBoletoWebService
             // 
-            this.btnEnviarBoletoWebService.Location = new System.Drawing.Point(14, 621);
+            this.btnEnviarBoletoWebService.Location = new System.Drawing.Point(12, 621);
             this.btnEnviarBoletoWebService.Name = "btnEnviarBoletoWebService";
-            this.btnEnviarBoletoWebService.Size = new System.Drawing.Size(155, 23);
+            this.btnEnviarBoletoWebService.Size = new System.Drawing.Size(149, 23);
             this.btnEnviarBoletoWebService.TabIndex = 26;
             this.btnEnviarBoletoWebService.Text = "Enviar Boleto (WebService)";
             this.btnEnviarBoletoWebService.UseVisualStyleBackColor = true;
@@ -1778,65 +1835,44 @@
             this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
             this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.btnCarregarConfiguracoes_Click);
             // 
-            // label48
+            // btnConsulaLista
             // 
-            this.label48.AutoSize = true;
-            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label48.Location = new System.Drawing.Point(163, 92);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(78, 13);
-            this.label48.TabIndex = 56;
-            this.label48.Text = "Arquivo KEY";
+            this.btnConsulaLista.Location = new System.Drawing.Point(12, 650);
+            this.btnConsulaLista.Name = "btnConsulaLista";
+            this.btnConsulaLista.Size = new System.Drawing.Size(126, 25);
+            this.btnConsulaLista.TabIndex = 28;
+            this.btnConsulaLista.Text = "Consulta Lista Boletos";
+            this.btnConsulaLista.UseVisualStyleBackColor = true;
+            this.btnConsulaLista.Click += new System.EventHandler(this.btnConsulaLista_Click);
             // 
-            // txtArquivoKEY
+            // btnBaixaTitulo
             // 
-            this.txtArquivoKEY.Location = new System.Drawing.Point(166, 108);
-            this.txtArquivoKEY.Name = "txtArquivoKEY";
-            this.txtArquivoKEY.Size = new System.Drawing.Size(117, 20);
-            this.txtArquivoKEY.TabIndex = 55;
+            this.btnBaixaTitulo.Location = new System.Drawing.Point(144, 650);
+            this.btnBaixaTitulo.Name = "btnBaixaTitulo";
+            this.btnBaixaTitulo.Size = new System.Drawing.Size(126, 24);
+            this.btnBaixaTitulo.TabIndex = 29;
+            this.btnBaixaTitulo.Text = "Baixa Titulo";
+            this.btnBaixaTitulo.UseVisualStyleBackColor = true;
+            this.btnBaixaTitulo.Click += new System.EventHandler(this.btnBaixaTitulo_Click);
             // 
-            // label49
+            // btnConsultaDetalhe
             // 
-            this.label49.AutoSize = true;
-            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label49.Location = new System.Drawing.Point(3, 92);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(79, 13);
-            this.label49.TabIndex = 54;
-            this.label49.Text = "Arquivo CRT";
-            // 
-            // txtArquivoCRT
-            // 
-            this.txtArquivoCRT.Location = new System.Drawing.Point(6, 108);
-            this.txtArquivoCRT.Name = "txtArquivoCRT";
-            this.txtArquivoCRT.Size = new System.Drawing.Size(117, 20);
-            this.txtArquivoCRT.TabIndex = 53;
-            // 
-            // btnArquivoCRT
-            // 
-            this.btnArquivoCRT.Location = new System.Drawing.Point(128, 106);
-            this.btnArquivoCRT.Name = "btnArquivoCRT";
-            this.btnArquivoCRT.Size = new System.Drawing.Size(24, 23);
-            this.btnArquivoCRT.TabIndex = 57;
-            this.btnArquivoCRT.Text = "...";
-            this.btnArquivoCRT.UseVisualStyleBackColor = true;
-            this.btnArquivoCRT.Click += new System.EventHandler(this.btnArquivoCRT_Click);
-            // 
-            // btnArquivoKEY
-            // 
-            this.btnArquivoKEY.Location = new System.Drawing.Point(289, 106);
-            this.btnArquivoKEY.Name = "btnArquivoKEY";
-            this.btnArquivoKEY.Size = new System.Drawing.Size(24, 23);
-            this.btnArquivoKEY.TabIndex = 58;
-            this.btnArquivoKEY.Text = "...";
-            this.btnArquivoKEY.UseVisualStyleBackColor = true;
-            this.btnArquivoKEY.Click += new System.EventHandler(this.btnArquivoKEY_Click);
+            this.btnConsultaDetalhe.Location = new System.Drawing.Point(167, 621);
+            this.btnConsultaDetalhe.Name = "btnConsultaDetalhe";
+            this.btnConsultaDetalhe.Size = new System.Drawing.Size(103, 23);
+            this.btnConsultaDetalhe.TabIndex = 30;
+            this.btnConsultaDetalhe.Text = "Consulta Detalhe";
+            this.btnConsultaDetalhe.UseVisualStyleBackColor = true;
+            this.btnConsultaDetalhe.Click += new System.EventHandler(this.btnConsultaDetalhe_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 654);
+            this.ClientSize = new System.Drawing.Size(800, 686);
+            this.Controls.Add(this.btnConsultaDetalhe);
+            this.Controls.Add(this.btnBaixaTitulo);
+            this.Controls.Add(this.btnConsulaLista);
             this.Controls.Add(this.btnCarregarConfiguracoes);
             this.Controls.Add(this.btnEnviarBoletoWebService);
             this.Controls.Add(this.btnClasseTitulo);
@@ -2054,6 +2090,9 @@
         private System.Windows.Forms.TextBox txtArquivoCRT;
         private System.Windows.Forms.Button btnArquivoKEY;
         private System.Windows.Forms.Button btnArquivoCRT;
+        private System.Windows.Forms.Button btnConsulaLista;
+        private System.Windows.Forms.Button btnBaixaTitulo;
+        private System.Windows.Forms.Button btnConsultaDetalhe;
     }
 }
 

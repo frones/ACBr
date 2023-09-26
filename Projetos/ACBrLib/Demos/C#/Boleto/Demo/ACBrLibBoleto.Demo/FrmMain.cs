@@ -639,5 +639,43 @@ namespace ACBrLibBoleto.Demo
         {
             txtArquivoKEY.Text = Helpers.OpenFile("Arquivos KEY (*.key)|*.key|Todos os Arquivos (*.*)|*.*");
         }
+
+        private void btnConsulaLista_Click(object sender, EventArgs e)
+        {
+            var iniPath = Helpers.OpenFile("Consulta (*.ini)|*.ini|Todo os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(iniPath)) return;
+
+            var ret = boleto.ConsultarTitulosPorPeriodo(iniPath);
+
+            rtbRespostas.AppendLine(ret);
+        }
+
+        private void btnBaixaTitulo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var ret = boleto.EnviarBoleto(OperacaoBoleto.tpBaixa);
+                rtbRespostas.AppendLine(ret.Retorno);
+            }
+            catch (Exception ex)
+            {
+                rtbRespostas.AppendLine(ex.Message);
+            }
+
+        }
+
+        private void btnConsultaDetalhe_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var ret = boleto.EnviarBoleto(OperacaoBoleto.tpConsultaDetalhe);
+                rtbRespostas.AppendLine(ret.Retorno);
+            }
+            catch (Exception ex)
+            {
+                rtbRespostas.AppendLine(ex.Message);
+            }
+
+        }
     }
 }

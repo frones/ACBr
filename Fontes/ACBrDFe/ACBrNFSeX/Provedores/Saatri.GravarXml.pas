@@ -52,6 +52,13 @@ type
 
   end;
 
+  { TNFSeW_Saatri203 }
+
+  TNFSeW_Saatri203 = class(TNFSeW_Saatri201)
+  protected
+
+  end;
+
 implementation
 
 uses

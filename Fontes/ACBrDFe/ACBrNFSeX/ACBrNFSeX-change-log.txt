@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/09/2023
+-- Diversos --
+[+] Implementado a versão 2.03 do provedor Saatri.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Ajustes para gerar corretamente a tag NifTomador e o grupo EnderecoExterior.
    Por: Italo Giurizzato Junior

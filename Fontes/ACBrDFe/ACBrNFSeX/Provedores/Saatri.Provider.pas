@@ -70,7 +70,22 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+  end;
 
+  TACBrNFSeXWebserviceSaatri203 = class(TACBrNFSeXWebserviceSaatri201)
+  private
+
+  public
+
+  end;
+
+  TACBrNFSeProviderSaatri203 = class (TACBrNFSeProviderABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
   end;
 
 implementation
@@ -347,6 +362,67 @@ begin
 
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+end;
+
+{ TACBrNFSeProviderSaatri203 }
+
+procedure TACBrNFSeProviderSaatri203.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigGeral do
+  begin
+    UseCertificateHTTP := False;
+  end;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+    LoteRps := True;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
+    RpsSubstituirNFSe := True;
+  end;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.03';
+    VersaoAtrib := '2.03';
+  end;
+
+  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
+end;
+
+function TACBrNFSeProviderSaatri203.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_Saatri203.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderSaatri203.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_Saatri203.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderSaatri203.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceSaatri203.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 end.

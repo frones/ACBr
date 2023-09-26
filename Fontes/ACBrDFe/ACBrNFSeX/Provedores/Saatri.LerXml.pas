@@ -47,56 +47,23 @@ type
   protected
 
   public
-//    function LerXml: Boolean; override;
+
+  end;
+
+  { TNFSeR_Saatri203 }
+
+  TNFSeR_Saatri203 = class(TNFSeR_ABRASFv2)
+  protected
+
+  public
 
   end;
 
 implementation
-
-uses
-  ACBrJSON;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Saatri
 //==============================================================================
 
-{ TNFSeR_Saatri201 }
-(*
-function TNFSeR_Saatri201.LerXml: Boolean;
-var
-  xDiscriminacao: string;
-  json, jsonItem: TACBrJsonObject;
-  i: Integer;
-begin
-  Result := inherited LerXml;
-
-  // Tratar a Discriminacao do serviço
-
-  xDiscriminacao := NFSe.Servico.Discriminacao;
-  FpAOwner.ConfigGeral.DetalharServico := False;
-
-  if (Pos('[', xDiscriminacao) > 0) and (Pos(']', xDiscriminacao) > 0) and
-     (Pos('{', xDiscriminacao) > 0) and (Pos('}', xDiscriminacao) > 0) then
-  begin
-    FpAOwner.ConfigGeral.DetalharServico := True;
-
-    xDiscriminacao := '{"a": ' + xDiscriminacao + '}';
-    Json := TACBrJsonObject.Parse(xDiscriminacao);
-
-    for i := 0 to json.AsJSONArray['a'].Count -1 do
-    begin
-      jsonItem := json.AsJSONArray['a'].ItemAsJSONObject[i];
-
-      with NFSe.Servico.ItemServico.New do
-      begin
-        Descricao := jsonItem.AsString['Descricao'];
-        ValorUnitario := jsonItem.AsCurrency['ValorUnitario'];
-        Quantidade := jsonItem.AsCurrency['Quantidade'];
-        ValorTotal := jsonItem.AsCurrency['ValorTotal'];
-      end;
-    end;
-  end;
-end;
-*)
 end.

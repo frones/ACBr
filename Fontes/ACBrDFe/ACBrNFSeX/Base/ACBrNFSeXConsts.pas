@@ -90,6 +90,8 @@ resourcestring
   Desc003 = 'Conjunto de RPS transmitidos (máximo de xxx RPS) excedido. Quantidade atual: yyy';
   Cod004 = 'X004';
   Desc004 = 'Nenhum Evento adicionado ao componente';
+  Cod005 = 'X005';
+  Desc005 = 'Conjunto de RPS transmitidos (mínimo de xxx RPS). Quantidade atual: yyy';
 
   Cod101 = 'X101';
   Desc101 = 'Número do Protocolo não informado.';

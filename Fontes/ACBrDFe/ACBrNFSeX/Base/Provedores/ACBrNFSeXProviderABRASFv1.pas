@@ -319,6 +319,16 @@ begin
                        IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
   end;
 
+  if TACBrNFSeX(FAOwner).NotasFiscais.Count < Response.MinRps then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod005;
+    AErro.Descricao := ACBrStr('Conjunto de RPS transmitidos (mínimo de ' +
+                       IntToStr(Response.MinRps) + ' RPS)' +
+                       '. Quantidade atual: ' +
+                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
+  end;
+
   if Response.Erros.Count > 0 then Exit;
 
   if ConfigAssinar.IncluirURI then

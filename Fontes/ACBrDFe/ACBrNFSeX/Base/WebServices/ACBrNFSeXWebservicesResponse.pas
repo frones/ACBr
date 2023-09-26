@@ -268,6 +268,7 @@ type
   TNFSeEmiteResponse = class(TNFSeWebserviceResponse)
   private
     FMaxRps: Integer;
+    FMinRps: Integer;
     FModoEnvio: TmodoEnvio;
     FCodigoVerificacao: string;
     FNomeArq: string;
@@ -278,6 +279,7 @@ type
     procedure Clear; override;
 
     property MaxRps: Integer read FMaxRps write FMaxRps;
+    property MinRps: Integer read FMinRps write FMinRps;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
     property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property NomeArq: string read FNomeArq write FNomeArq;
@@ -775,6 +777,7 @@ begin
   inherited Clear;
 
   MaxRps := 0;
+  MinRps := 0;
   ModoEnvio := meLoteAssincrono;
   CodigoVerificacao := '';
   NomeArq := '';

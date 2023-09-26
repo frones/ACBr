@@ -593,6 +593,7 @@ begin
     UseAuthorizationHeader := False;
     NumMaxRpsGerar  := 1;
     NumMaxRpsEnviar := 50;
+    NumMinRpsEnviar := 1;
     ModoEnvio := meAutomatico;
     TabServicosExt := False;
     Identificador := 'Id';
@@ -1730,6 +1731,8 @@ begin
 
   if EmiteResponse.ModoEnvio = meAutomatico then
     EmiteResponse.ModoEnvio := ConfigGeral.ModoEnvio;
+
+  EmiteResponse.MinRps := ConfigGeral.NumMinRpsEnviar;
 
   if EmiteResponse.ModoEnvio <> meUnitario then
     EmiteResponse.MaxRps := ConfigGeral.NumMaxRpsEnviar

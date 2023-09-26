@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/09/2023
+-- Diversos --
+[*] Implementado o parâmetro NumMinRpsEnvio para definir a quantidade minima
+    de Rps por lote, por padrão é 1, mas o provedor Agili exige 2.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Trocado para a versão 2.03 de todas as cidades que usam o provedor Saatri.
    Por: Italo Giurizzato Junior

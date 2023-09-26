@@ -110,6 +110,7 @@ type
     FNrOcorrTomadorExterior: Integer;
     FNrOcorrCodigoMunic_1: Integer;
     FNrOcorrCodigoMunic_2: Integer;
+    FGerarTagNifTomador: Boolean;
     FGerarEnderecoExterior: Boolean;
     FNrOcorrID: Integer;
     FNrOcorrToken: Integer;
@@ -279,6 +280,7 @@ type
     property GerarIDDeclaracao: Boolean read FGerarIDDeclaracao write FGerarIDDeclaracao;
     property GerarTagRps: Boolean read FGerarTagRps write FGerarTagRps;
 
+    property GerarTagNifTomador: Boolean read FGerarTagNifTomador write FGerarTagNifTomador;
     property GerarEnderecoExterior: Boolean read FGerarEnderecoExterior write FGerarEnderecoExterior;
 
     property TagTomador: String read FTagTomador write FTagTomador;
@@ -401,7 +403,8 @@ begin
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
-  FGerarEnderecoExterior := True;
+  FGerarTagNifTomador := False;
+  FGerarEnderecoExterior := False;
   FGerarTagRps := True;
 
   // Propriedades de Formatação de informações
@@ -421,6 +424,20 @@ begin
   ListaDeAlertas.Clear;
 
   Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
+  case VersaoNFSe of
+    ve203: FGerarTagNifTomador := True;
+    ve204:
+      begin
+        FGerarTagNifTomador := True;
+        FGerarEnderecoExterior := True;
+      end;
+  else
+    begin
+      FGerarTagNifTomador := False;
+      FGerarEnderecoExterior := False;
+    end;
+  end;
 
   FDocument.Clear();
 
@@ -839,7 +856,7 @@ begin
        (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') then
       Result.AppendChild(GerarIdentificacaoTomador);
 
-    if (NFSe.Tomador.Endereco.UF = 'EX') and
+    if GerarTagNifTomador and (NFSe.Tomador.Endereco.UF = 'EX') and
        (NFSe.Tomador.IdentificacaoTomador.Nif <> '') then
       Result.AppendChild(AddNode(tcStr, '#38', 'NifTomador', 1, 40, 1,
                                         NFSe.Tomador.IdentificacaoTomador.Nif));

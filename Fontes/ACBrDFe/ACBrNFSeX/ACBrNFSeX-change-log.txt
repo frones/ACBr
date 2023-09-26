@@ -44,6 +44,12 @@ Símbolo : Significado
 
 26/09/2023
 -- ACBrNFSeXServicos --
+[*] Atualizado a URL de produção do Padrão Nacional
+   Por: Italo Giurizzato Junior
+[*] Atualizado as URLs de produção da cidade: Monte Alegre/RN
+   Por: Edulamy
+[*] Atualizado as URLs de produção e versão da cidade: Sertaozinho/SP
+   Por: Colmanetti
 [+] Incluida a cidade de Roncador/PR, provedor é o Elotech na versão 2.03
    Por: Diego Folieni
 

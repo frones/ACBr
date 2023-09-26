@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/09/2023
+-- Diversos --
+[+] Implementado a propriedade NomeArq na lista Resumos que contem o Path+NomeXml
+    da NFS-e retornada
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Atualizado a URL de produção da cidade de Santo Antonio da Patrulha/RS
    Por: Oteniel

@@ -226,6 +226,9 @@ begin
 
     ANota := CarregarXmlNfse(ANota, parentNode.OuterXml);
     SalvarXmlNfse(ANota);
+
+    AResumo.NomeArq := ANota.NomeArq;
+
     Result := True; // Processado com sucesso pois retornou a nota
   end;
 end;
@@ -282,6 +285,9 @@ begin
 
     ANota := CarregarXmlNfse(ANota, parentNode.OuterXml);
     SalvarXmlNfse(ANota);
+
+    AResumo.NomeArq := ANota.NomeArq;
+
     Result := True; // Processado com sucesso pois retornou a nota
   end;
 end;

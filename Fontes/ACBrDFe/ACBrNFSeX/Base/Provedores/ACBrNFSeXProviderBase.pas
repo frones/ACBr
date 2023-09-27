@@ -2416,14 +2416,14 @@ begin
   end;
 
   AssinarConsultaLinkNFSe(ConsultaLinkNFSeResponse);
-  if (ConsultaNFSeResponse.Erros.Count > 0) then
+  if (ConsultaLinkNFSeResponse.Erros.Count > 0) then
   begin
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
     Exit;
   end;
 
   ValidarSchema(ConsultaLinkNFSeResponse, ConsultaLinkNFSeResponse.Metodo);
-  if (ConsultaNFSeResponse.Erros.Count > 0) then
+  if (ConsultaLinkNFSeResponse.Erros.Count > 0) then
   begin
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
     Exit;

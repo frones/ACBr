@@ -618,10 +618,13 @@ begin
 
   InfConsulta := FWebService.ConsultaLinkNFSe.InfConsultaLinkNFSe;
   InfConsulta.Competencia := AInfConsultaLinkNFSe.Competencia;
+  InfConsulta.DtEmissao := AInfConsultaLinkNFSe.DtEmissao;
   InfConsulta.NumeroNFSe := AInfConsultaLinkNFSe.NumeroNFSe;
   InfConsulta.SerieNFSe := AInfConsultaLinkNFSe.SerieNFSe;
   InfConsulta.NumeroRps := AInfConsultaLinkNFSe.NumeroRps;
   InfConsulta.SerieRps := AInfConsultaLinkNFSe.SerieRps;
+  InfConsulta.TipoRps := AInfConsultaLinkNFSe.TipoRps;
+  InfConsulta.Pagina := AInfConsultaLinkNFSe.Pagina;
 
   FProvider.ConsultaLinkNFSe;
 end;

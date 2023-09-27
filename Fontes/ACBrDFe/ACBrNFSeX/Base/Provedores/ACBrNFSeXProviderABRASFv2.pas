@@ -55,8 +55,6 @@ type
     function PreencherNotaRespostaConsultaNFSe(Node, parentNode: TACBrXmlNode;
       Response: TNFSeConsultaNFSeResponse): Boolean;
 
-
-
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
       Params: TNFSeParamsResponse); override;

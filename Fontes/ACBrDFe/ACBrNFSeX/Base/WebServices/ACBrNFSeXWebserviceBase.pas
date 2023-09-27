@@ -299,18 +299,26 @@ type
   TInfConsultaLinkNFSe = class
   private
     FCompetencia: TDateTime;
+    FDtEmissao: TDateTime;
     FNumeroNFSe: string;
     FSerieNFSe: string;
     FNumeroRps: Integer;
     FSerieRps: string;
+    FTipoRps: string;
+    FPagina: Integer;
   public
     constructor Create;
+
     function LerFromIni(const AIniStr: string): Boolean;
+
     property Competencia: TDateTime read FCompetencia write FCompetencia;
+    property DtEmissao: TDateTime read FDtEmissao write FDtEmissao;
     property NumeroNFSe: string read FNumeroNFSe write FNumeroNFSe;
     property SerieNFSe: string read FSerieNFSe write FSerieNFSe;
     property NumeroRps: Integer read FNumeroRps write FNumeroRps;
     property SerieRps: string read FSerieRps write FSerieRps;
+    property TipoRps: string read FTipoRps write FTipoRps;
+    property Pagina: Integer read FPagina write FPagina;
   end;
 
   TInfCancelamento = class
@@ -1667,6 +1675,10 @@ begin
   FSerieNFSe := '';
   FNumeroRps := 0;
   FSerieRps := '';
+  FCompetencia := 0;
+  FDtEmissao := 0;
+  FTipoRps := '';
+  FPagina := 0;
 end;
 
 function TInfConsultaLinkNFSe.LerFromIni(const AIniStr: string): Boolean;
@@ -1685,11 +1697,14 @@ begin
     sSecao := 'ConsultarLinkNFSe';
 
     Competencia := INIRec.ReadDateTime(sSecao, 'Competencia', 0);
+    DtEmissao := INIRec.ReadDateTime(sSecao, 'DtEmissao', 0);
     NumeroRps := INIRec.ReadInteger(sSecao, 'NumeroRps', 0);
     NumeroNFSe := INIRec.ReadString(sSecao, 'NumeroNFSe', '');
     SerieNFSe := INIRec.ReadString(sSecao, 'SerieNFSe', '');
     NumeroRps := INIRec.ReadInteger(sSecao, 'NumeroRps', 0);
     SerieRps := INIRec.ReadString(sSecao, 'SerieRps', '');
+    TipoRps := INIRec.ReadString(sSecao, 'TipoRps', '');
+    Pagina := INIRec.ReadInteger(sSecao, 'Pagina', 0);
 
     Result := True;
   finally

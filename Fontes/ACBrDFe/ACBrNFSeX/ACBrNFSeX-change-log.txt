@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/09/2023
+-- Diversos --
+[+] Implementado o método ConsultarLinkNFSe para o provedor ISSNet versão 2.04 
+   Por: Renato Rubinho
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Itabirito/MG, o provedor é: ISSDigital.
    Por: cgsuporte

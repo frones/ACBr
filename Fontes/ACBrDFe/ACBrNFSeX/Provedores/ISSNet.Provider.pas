@@ -43,7 +43,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrConsts, ACBrXmlBase, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrXmlDocument,
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
@@ -87,6 +87,7 @@ type
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
+    function ConsultarLinkNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
@@ -120,15 +121,21 @@ type
 
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
+
+    procedure PrepararConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
+    procedure GerarMsgDadosConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
   end;
 
 implementation
 
 uses
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
-  ISSNet.GravarXml, ISSNet.LerXml;
+  ISSNet.GravarXml, ISSNet.LerXml, StrUtils, DateUtils;
 
 { TACBrNFSeProviderISSNet }
 
@@ -167,6 +174,8 @@ begin
     ConsultarNFSe.xmlns := 'http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_nfse_envio.xsd';
 
     CancelarNFSe.xmlns := 'http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd';
+
+    ConsultarLinkNFSe.xmlns := 'http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_url_visualizacao_nfse_serie_envio.xsd';
   end;
 
   with ConfigAssinar do
@@ -185,6 +194,7 @@ begin
     ConsultarNFSeRps := 'servico_consultar_nfse_rps_envio.xsd';
     ConsultarNFSe := 'servico_consultar_nfse_envio.xsd';
     CancelarNFSe := 'servico_cancelar_nfse_envio.xsd';
+    ConsultarLinkNFSe := 'servico_consultar_url_visualizacao_nfse_serie_envio.xsd';
   end;
 
   FpNameSpaceCanc := ' xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"' +
@@ -555,6 +565,22 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
+function TACBrNFSeXWebserviceISSNet204.ConsultarLinkNFSe(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarUrlNfse>';
+  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '</nfse:ConsultarUrlNfse>';
+
+  Result := Executar('http://nfse.abrasf.org.br/ConsultarUrlNfse', Request,
+                     ['ConsultarUrlNfseResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
 function TACBrNFSeXWebserviceISSNet204.Cancelar(ACabecalho,
   AMSG: String): string;
 var
@@ -621,6 +647,7 @@ begin
     ConsultarNFSePorFaixa := True;
     ConsultarNFSeServicoPrestado := True;
     ConsultarNFSeServicoTomado := True;
+    ConsultarLinkNFSe := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     SubstituirNFSe := True;
@@ -872,6 +899,243 @@ begin
                                  '</InfPedidoCancelamento>' +
                                '</Pedido>' +
                              '</CancelarNfseEnvio>';
+  end;
+end;
+
+procedure TACBrNFSeProviderISSNet204.PrepararConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Emitente: TEmitenteConfNFSe;
+  aParams: TNFSeParamsResponse;
+  NameSpace, TagEnvio, Prefixo: string;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  if EstaVazio(Emitente.CNPJ) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod130;
+    AErro.Descricao := ACBrStr(Desc130);
+    Exit;
+  end;
+
+  if EstaVazio(Emitente.InscMun) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod129;
+    AErro.Descricao := ACBrStr(Desc129);
+    Exit;
+  end;
+
+  if EstaVazio(Response.InfConsultaLinkNFSe.NumeroNFSe) then
+  begin
+    // Obrigatoriamente NumeroNFSe ou 1 dos grupos, somente 1, deve ser enviado
+    if ((Response.InfConsultaLinkNFSe.NumeroRps = 0) and
+        (Response.InfConsultaLinkNFSe.Competencia = 0) and
+        (Response.InfConsultaLinkNFSe.DtEmissao = 0)) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod108;
+      AErro.Descricao := ACBrStr(Desc108);
+      Exit;
+    end
+
+    else if Response.InfConsultaLinkNFSe.NumeroRps <> 0 then
+    begin
+      if EstaVazio(Response.InfConsultaLinkNFSe.SerieRps) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod103;
+        AErro.Descricao := ACBrStr(Desc103);
+        Exit;
+      end;
+
+      if EstaVazio(Response.InfConsultaLinkNFSe.TipoRps) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod104;
+        AErro.Descricao := ACBrStr(Desc104);
+        Exit;
+      end;
+    end;
+  end;
+
+  if Response.InfConsultaLinkNFSe.Pagina = 0 then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod132;
+    AErro.Descricao := ACBrStr(Desc132);
+    Exit;
+  end;
+
+  if EstaVazio(ConfigMsgDados.ConsultarLinkNFSe.xmlns) then
+    NameSpace := ''
+  else
+  begin
+    if ConfigMsgDados.Prefixo = '' then
+      NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarLinkNFSe.xmlns + '"'
+    else
+    begin
+      NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' + ConfigMsgDados.ConsultarLinkNFSe.xmlns + '"';
+      Prefixo := ConfigMsgDados.Prefixo + ':';
+    end;
+  end;
+
+  TagEnvio := ConfigMsgDados.ConsultarLinkNFSe.DocElemento;
+
+  aParams := TNFSeParamsResponse.Create;
+  try
+    aParams.Clear;
+    aParams.Xml := '';
+    aParams.TagEnvio := TagEnvio;
+    aParams.Prefixo := Prefixo;
+    aParams.Prefixo2 := '';
+    aParams.NameSpace := NameSpace;
+    aParams.NameSpace2 := '';
+    aParams.IdAttr := '';
+    aParams.Versao := '';
+
+    GerarMsgDadosConsultaLinkNFSe(Response, aParams);
+  finally
+    aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderISSNet204.GerarMsgDadosConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  DataFinal: TDateTime;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  DataFinal := EndOfTheMonth(Response.InfConsultaLinkNFSe.Competencia);
+  if DataFinal <> 0 then
+  begin
+    if DataFinal > Date then
+      DataFinal := Date;
+  end;
+
+  with Params do
+  begin
+    Response.ArquivoEnvio := '<ConsultarUrlNfseEnvio' + NameSpace + '>' +
+                               '<Pedido>' +
+                                 '<Prestador>' +
+                                   '<CpfCnpj>' +
+                                       IfThen(Length(OnlyNumber(Emitente.CNPJ)) >= 11,
+                                             '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>',
+                                             '<Cpf>' + OnlyNumber(Emitente.CNPJ) + '</Cpf>') +
+                                   '</CpfCnpj>' +
+                                   '<InscricaoMunicipal>' + OnlyNumber(Emitente.InscMun) + '</InscricaoMunicipal>' +
+                                 '</Prestador>' +
+                               IfThen(not EstaVazio(Response.InfConsultaLinkNFSe.NumeroNFSe),
+                                    '<NumeroNfse>' + Response.InfConsultaLinkNFSe.NumeroNFSe + '</NumeroNfse>',
+                               IfThen(Response.InfConsultaLinkNFSe.NumeroRps <> 0,
+                                 '<IdentificacaoRps>' +
+                                   '<Numero>' + IntToStr(Response.InfConsultaLinkNFSe.NumeroRps) + '</Numero>' +
+                                   '<Serie>' + Response.InfConsultaLinkNFSe.SerieRps + '</Serie>' +
+                                   '<Tipo>' + Response.InfConsultaLinkNFSe.TipoRps + '</Tipo>' +
+                                 '</IdentificacaoRps>',
+                               IfThen(Response.InfConsultaLinkNFSe.DtEmissao <> 0,
+                                 '<PeriodoEmissao>' +
+                                   '<DataInicial>' + FormatDateTime('yyyy-mm-dd', Response.InfConsultaLinkNFSe.DtEmissao) + '</DataInicial>' +
+                                   '<DataFinal>' + FormatDateTime('yyyy-mm-dd', Response.InfConsultaLinkNFSe.DtEmissao) + '</DataFinal>' +
+                                 '</PeriodoEmissao>',
+                                 IfThen(Response.InfConsultaLinkNFSe.Competencia <> 0,
+                                   '<PeriodoCompetencia>' +
+                                     '<DataInicial>' + FormatDateTime('yyyy-mm-dd', StartOfTheMonth(Response.InfConsultaLinkNFSe.Competencia)) + '</DataInicial>' +
+                                     '<DataFinal>' + FormatDateTime('yyyy-mm-dd', DataFinal) + '</DataFinal>' +
+                                   '</PeriodoCompetencia>', '')))) +
+                                 '<Pagina>' + IntToStr(Response.InfConsultaLinkNFSe.Pagina) + '</Pagina>' +
+                               '</Pedido>' +
+                             '</ConsultarUrlNfseEnvio>';
+  end;
+end;
+
+procedure TACBrNFSeProviderISSNet204.TratarRetornoConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode, AuxNode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  AResumo: TNFSeResumoCollectionItem;
+  I: Integer;
+begin
+  Document := TACBrXmlDocument.Create;
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+      if ANode <> nil then
+      begin
+        AuxNode := ANode.Childrens.FindAnyNs('ListaLinks');
+
+        Response.Sucesso := Assigned(AuxNode);
+      end
+      else
+        AuxNode := nil;
+
+      if not Response.Sucesso then
+        ProcessarMensagemErros(Document.Root, Response, 'ListaMensagemRetorno', 'MensagemRetorno')
+      else
+      begin
+        if not Assigned(AuxNode) then Exit;
+
+        ANodeArray := AuxNode.Childrens.FindAllAnyNs('Links');
+
+        if not Assigned(ANodeArray) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit;
+        end;
+
+        for I := Low(ANodeArray) to High(ANodeArray) do
+        begin
+          ANode := ANodeArray[I];
+          AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
+          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+          AResumo := Response.Resumos.New;
+          AResumo.NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+          AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoRps');
+
+          AResumo.NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+          AResumo.SerieRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);
+
+          AResumo.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('UrlVisualizacaoNfse'), tcStr);
+
+          // Grava o primeiro retorno no Response
+          if Response.Link = '' then
+          begin
+            Response.NumeroNota := AResumo.NumeroNota;
+            Response.NumeroRps := AResumo.NumeroRps;
+            Response.SerieRps := AResumo.SerieRps;
+            Response.Link := AResumo.Link;
+          end;
+        end;
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
   end;
 end;
 

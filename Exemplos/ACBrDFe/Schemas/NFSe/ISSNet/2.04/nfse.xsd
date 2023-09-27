@@ -557,8 +557,8 @@
 	</xsd:simpleType>
 	
 	<xsd:simpleType name="tsChaveAcessoNfe">
-		<xsd:restriction base="xsd:nonNegativeInteger">
-			<xsd:totalDigits value="44" />
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="44" />
 		</xsd:restriction>
 	</xsd:simpleType>
 	
@@ -1124,6 +1124,35 @@
 		<xsd:attribute name="versao" type="tsVersao" use="required" />
 	</xsd:complexType>
 
+	<xsd:simpleType name="tsUrlVisualizacaoNfse">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tsUrlVerificaAutenticidade">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="tcLinks">
+		<xsd:sequence>
+			<xsd:element name="IdentificacaoNfse" type="tcIdentificacaoNfse"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="IdentificacaoRps" type="tcIdentificacaoRps"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="UrlVisualizacaoNfse" type="tsUrlVisualizacaoNfse"
+				minOccurs="1" maxOccurs="1" />   
+			<xsd:element name="UrlVerificaAutenticidade" type="tsUrlVerificaAutenticidade"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
 	<xsd:element name="ListaMensagemRetornoLote">
 		<xsd:complexType>
 			<xsd:sequence>
@@ -1483,6 +1512,82 @@
 			</xsd:choice>
 		</xsd:complexType>
 	</xsd:element>
+
+	<!-- Consulta de NFS-e – URL - ConsultarUrlNfseEnvio -->
+	<xsd:element name="ConsultarUrlNfseEnvio">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Pedido" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Prestador" type="tcIdentificacaoPessoaEmpresa"
+										 minOccurs="1" maxOccurs="1" />
+							<xsd:choice>
+								<xsd:element name="IdentificacaoRps" type="tcIdentificacaoRps"
+										 minOccurs="1" maxOccurs="1" />
+								<xsd:element name="NumeroNfse" type="tsNumeroNfse"
+											 minOccurs="1" maxOccurs="1" />
+								<xsd:element name="PeriodoEmissao"
+											 minOccurs="1" maxOccurs="1">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="DataInicial" type="xsd:date"
+														 minOccurs="1" maxOccurs="1" />
+											<xsd:element name="DataFinal" type="xsd:date"
+														 minOccurs="1" maxOccurs="1" />
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+								<xsd:element name="PeriodoCompetencia"
+											 minOccurs="1" maxOccurs="1">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="DataInicial" type="xsd:date"
+														 minOccurs="1" maxOccurs="1" />
+											<xsd:element name="DataFinal" type="xsd:date"
+														 minOccurs="1" maxOccurs="1" />
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:choice>
+							<xsd:element name="Tomador" type="tcIdentificacaoPessoaEmpresa"
+										 minOccurs="0" maxOccurs="1" />
+							<xsd:element name="Intermediario" type="tcIdentificacaoPessoaEmpresa"
+										 minOccurs="0" maxOccurs="1" />
+							<xsd:element name="Pagina" type="tsPagina"
+										 minOccurs="1" maxOccurs="1"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="dsig:Signature"
+							 minOccurs="1" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="Links" type="tcLinks"/>
+
+	<xsd:element name="ConsultarUrlNfseResposta">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element name="ListaLinks"
+					minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="Links"
+								minOccurs="1" maxOccurs="50"/>
+							<xsd:element name="Pagina" type="tsPagina"
+								minOccurs="1" maxOccurs="1" />
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="ListaMensagemRetorno"
+					minOccurs="1" maxOccurs="1" />
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!--consulta url fim-->
 
 	<!-- Consulta de NFS-e – Serviços Tomados ou Intermediados - ConsultarNfseServicoTomado -->	
 	<xsd:element name="ConsultarNfseServicoTomadoEnvio">

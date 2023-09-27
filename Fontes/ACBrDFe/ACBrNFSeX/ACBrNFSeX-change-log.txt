@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/09/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Itabirito/MG, o provedor é: ISSDigital.
+   Por: cgsuporte
+[*] A cidade de Rolante/RS trocou de provedor, agora é IPM.
+   Por: Oteniel
+[+] Incluída a cidade de Santa Helena de Goias/GO, o provedor é: Prodata.
+   Por: Rafmattos
+
 26/09/2023
 -- Diversos --
 [+] Implementado a propriedade NomeArq na lista Resumos que contem o Path+NomeXml

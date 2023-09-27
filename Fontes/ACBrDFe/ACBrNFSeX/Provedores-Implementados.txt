@@ -112,6 +112,7 @@ PublicSoft           2.03
 RLZ                  1.00
 RLZ                  2.03
 Saatri               2.01
+Saatri               2.03
 SafeWeb              2.00
 SH3                  2.00
 Siam                 2.00

@@ -458,6 +458,7 @@
                                         CE - Ceara;
                                         DF - Distrito Federal;
                                         ES - Espirito Santo;
+                                        EX - Exterior; 
                                         GO - Goias;
                                         MA - Maranhao;
                                         MG - Minas Gerais;
@@ -490,6 +491,7 @@
 			<xsd:enumeration value="CE"/>
 			<xsd:enumeration value="DF"/>
 			<xsd:enumeration value="ES"/>
+			<xsd:enumeration value="EX"/>
 			<xsd:enumeration value="GO"/>
 			<xsd:enumeration value="MA"/>
 			<xsd:enumeration value="MG"/>

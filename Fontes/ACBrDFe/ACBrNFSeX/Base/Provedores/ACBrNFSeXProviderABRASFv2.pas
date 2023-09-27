@@ -394,7 +394,8 @@ begin
                        IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
   end;
 
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count < Response.MinRps then
+  if (TACBrNFSeX(FAOwner).NotasFiscais.Count < Response.MinRps) and
+     (Response.ModoEnvio <> meUnitario) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod005;

@@ -37,10 +37,10 @@ namespace ACBrLib.MDFe
                 iniData.WriteToIni(InfPag[i], $"infPag{i + 1:000}");
                 iniData.WriteToIni(InfPag[i].InfBanco, $"infBanc{i + 1:000}");
 
-                for (var j = 0; i < InfPag[i].Comp.Count; j++)
+                for (var j = 0; j < InfPag[i].Comp.Count; j++)
                     iniData.WriteToIni(InfPag[i].Comp[j], $"Comp{i + 1:000}{j + 1:000}");
 
-                for (var j = 0; i < InfPag[i].InfPrazo.Count; j++)
+                for (var j = 0; j < InfPag[i].InfPrazo.Count; j++)
                     iniData.WriteToIni(InfPag[i].InfPrazo[j], $"infPrazo{i + 1:000}{j + 1:000}");
             }
 

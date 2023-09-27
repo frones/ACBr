@@ -50,11 +50,20 @@ type
 
   end;
 
+  { TNFSeR_GovDigital201 }
+
+  TNFSeR_GovDigital201 = class(TNFSeR_ABRASFv2)
+  protected
+
+  public
+
+  end;
+
 implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     GovDigital200
+//     GovDigital
 //==============================================================================
 
 end.

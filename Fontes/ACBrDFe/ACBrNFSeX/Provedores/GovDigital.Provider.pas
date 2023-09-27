@@ -69,6 +69,21 @@ type
 
   end;
 
+  TACBrNFSeXWebserviceGovDigital201 = class(TACBrNFSeXWebserviceGovDigital200)
+  public
+
+  end;
+
+  TACBrNFSeProviderGovDigital201 = class (TACBrNFSeProviderABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+  end;
+
 implementation
 
 uses
@@ -305,6 +320,54 @@ begin
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
   Result := RemoverDeclaracaoXML(Result);
+end;
+
+{ TACBrNFSeProviderGovDigital201 }
+
+procedure TACBrNFSeProviderGovDigital201.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+    LoteRps := True;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
+    RpsSubstituirNFSe := True;
+  end;
+end;
+
+function TACBrNFSeProviderGovDigital201.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_GovDigital201.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderGovDigital201.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_GovDigital201.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderGovDigital201.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceGovDigital201.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 end.

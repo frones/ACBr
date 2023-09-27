@@ -44,6 +44,12 @@ Símbolo : Significado
 
 27/09/2023
 -- Diversos --
+[*] Implementado a versão 2.01 para o provedor GovDigital.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Alterado a versão de layout da cidade de Poços de Caldas/MG.
+   Por: Jéter Rabelo Ferreira
+-- Diversos --
 [+] Implementado o método ConsultarLinkNFSe para o provedor ISSNet versão 2.04 
    Por: Renato Rubinho
 -- ACBrNFSeXServicos --

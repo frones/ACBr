@@ -343,7 +343,17 @@ begin
       proGinfes:     Result := TACBrNFSeProviderGinfes.Create(ACBrNFSe);
       proGiss:       Result := TACBrNFSeProviderGiss204.Create(ACBrNFSe);
       proGovBr:      Result := TACBrNFSeProviderGovBr.Create(ACBrNFSe);
-      proGovDigital: Result := TACBrNFSeProviderGovDigital200.Create(ACBrNFSe);
+
+      proGovDigital:
+        begin
+          case Versao of
+            ve200: Result := TACBrNFSeProviderGovDigital200.Create(ACBrNFSe);
+            ve201: Result := TACBrNFSeProviderGovDigital201.Create(ACBrNFSe);
+          else
+            Result := nil;
+          end;
+        end;
+
       proGoverna:    Result := TACBrNFSeProviderGoverna.Create(ACBrNFSe);
       proHorus:      Result := TACBrNFSeProviderHorus.Create(ACBrNFSe);
       proiiBrasil:   Result := TACBrNFSeProvideriiBrasil204.Create(ACBrNFSe);

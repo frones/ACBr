@@ -57,6 +57,7 @@ Ginfes               1.00  19/09/2022
 Giss                 2.04
 GovBr                1.00
 GovDigital           2.00
+GovDigital           2.01
 Governa              1.00
 Horus                1.00
 iiBrasil             2.04

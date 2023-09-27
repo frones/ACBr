@@ -49,6 +49,13 @@ type
 
   end;
 
+  { TNFSeW_GovDigital201 }
+
+  TNFSeW_GovDigital201 = class(TNFSeW_GovDigital200)
+  protected
+
+  end;
+
 implementation
 
 //==============================================================================

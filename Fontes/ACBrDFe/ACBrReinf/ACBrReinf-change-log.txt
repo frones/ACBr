@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/09/2023
+-- pcnConversaoReinf --
+[*] Corrigida lista de retornos das funções de conversão do enum TtpDependente 
+  Por: marcelo.l / Revisão: Alexandre de Paula
+
 25/09/2023
 -- pcnGeradorReinf --
 [*] Configurada Produção para gerar os eventos síncronos, da versão 1.5.1, na versão 2.1.2

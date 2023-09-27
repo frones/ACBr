@@ -1045,13 +1045,13 @@ end;
 
 function tpDependenteToStr(const t: TtpDependente): string;
 begin
-  result := EnumeradoToStr2(t, ['1', '2', '3', '6', '8', '9',
+  result := EnumeradoToStr2(t, ['1', '2', '3', '6', '9',
                                 '10', '11', '12', '99']);
 end;
 
 function StrToTpDependente(var ok: boolean; const s: string): TtpDependente;
 begin
-  result := TtpDependente(StrToEnumerado2(ok , s, ['1', '2', '3', '6', '8', '9',
+  result := TtpDependente(StrToEnumerado2(ok , s, ['1', '2', '3', '6', '9',
                                                    '10', '11', '12', '99']));
 end;
 

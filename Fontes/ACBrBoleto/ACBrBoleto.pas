@@ -1576,6 +1576,7 @@ type
     fDataNegativacao      : TDateTime;
     fDiasDeNegativacao    : Integer;
     fDataBaixa            : TDateTime;
+    fHoraBaixa            : String;
     fDataLimitePagto      : TDateTime;
     fValorDespesaCobranca : Currency;
     fValorAbatimento      : Currency;
@@ -1706,6 +1707,7 @@ type
      property OrgaoNegativador               : String    read fOrgaoNegativador  write SetOrgaoNegativador;
      property DataBaixa                      : TDateTime read fDataBaixa         write fDataBaixa;
      property DataLimitePagto                : TDateTime read fDataLimitePagto   write fDataLimitePagto;
+     property HoraBaixa                      : string     read fHorabaixa         write fHoraBaixa;
 
      property ValorDespesaCobranca : Currency read fValorDespesaCobranca  write fValorDespesaCobranca;
      property ValorAbatimento      : Currency read fValorAbatimento       write fValorAbatimento;

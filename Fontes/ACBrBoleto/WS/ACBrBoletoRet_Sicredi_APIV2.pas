@@ -54,6 +54,7 @@ type
  TRetornoEnvio_Sicredi_APIV2 = class(TRetornoEnvioREST)
  private
    function DateSicreditoDateTime(Const AValue : String) : TDateTime;
+   function TimeSicreditoDateTime(Const AValue : String) : String;
  public
    constructor Create(ABoletoWS: TACBrBoleto); override;
    destructor  Destroy; Override;
@@ -161,6 +162,7 @@ begin
                 ARetornoWS.DadosRet.TituloRet.DataRegistro           := DateSicreditoDateTime( aJson.Values['dataEmissao'].asString );
                 ARetornoWS.DadosRet.TituloRet.Vencimento             := DateSicreditoDateTime( aJson.Values['dataVencimento'].asString );
                 ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(aJson.Values['dataPagamento'].AsString);
+                ARetornoWS.DadosRet.TituloRet.HoraBaixa              := timeSicreditoDateTime(AJson.Values['dataPagamento'].AsString);
                 //Valores
                 ARetornoWS.DadosRet.TituloRet.ValorDocumento         := aJson.Values['valorNominal'].AsNumber;
                 //Situação/Código da situação.
@@ -172,6 +174,8 @@ begin
                   begin
                     ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
                     ARetornoWS.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(aJson.Values['dataBaixa'].AsString);
+                    ARetornoWS.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(aJson.Values['dataBaixa'].AsString);
+
                   end;
                 if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'LIQUIDADO') > 0) then
                   ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
@@ -189,6 +193,8 @@ begin
                    ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         := AJson.Values['dadosLiquidacao'].AsObject.Values['juros'].AsNumber;
                    ARetornoWS.DadosRet.TituloRet.ValorAbatimento        := AJson.Values['dadosLiquidacao'].AsObject.Values['abatimento'].AsNumber;
                    ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(AJson.Values['dadosLiquidacao'].AsObject.Values['data'].AsString);
+                   ARetornoWS.DadosRet.TituloRet.HoraBaixa              := TimeSicreditoDateTime(aJson.Values['dadosLiquidacao'].AsString);
+
                    ARetornoWS.DadosRet.TituloRet.ValorDesconto          := AJson.Values['dadosLiquidacao'].AsObject.Values['desconto'].AsNumber;
                 end;
                 Descontos := AJson.Values['descontos'].AsArray;
@@ -264,8 +270,8 @@ begin
           if (TipoOperacao = tpBaixa) then
           begin
             ARetornoWS.DadosRet.TituloRet.NossoNumero      := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataBaixa     := DateSicreditoDateTime( AJson.Values['dataMovimento'].AsString);
-
+            ARetornoWS.DadosRet.TituloRet.DataBaixa     := DateSicreditoDateTime(AJson.Values['dataMovimento'].AsString);
+            ARetornoWS.DadosRet.TituloRet.HoraBaixa     := timeSicreditoDateTime(AJson.Values['dataMovimento'].AsString);
           end else
           if (TipoOperacao in [tpAltera]) then//,tpAlteraSeuNumero
           begin
@@ -397,6 +403,7 @@ begin
 
             ListaRetorno.DadosRet.TituloRet.NossoNumero                := ListaRetorno.DadosRet.IDBoleto.NossoNum;
             ListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(AJSonObject.Values['dataPagamento'].AsString);
+            ListaRetorno.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(AJSonObject.Values['dataPagamento'].AsString);
             ListaRetorno.DadosRet.TituloRet.SeuNumero                  := AJSonObject.Values['seuNumero'].AsString;
             ListaRetorno.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
             ListaRetorno.DadosRet.TituloRet.ValorRecebido              := AJSonObject.Values['valorLiquidado'].AsNumber;
@@ -450,6 +457,17 @@ begin
 
   Result:=inherited RetornoEnvio(AIndex);
 
+end;
+
+function TRetornoEnvio_Sicredi_APIV2.TimeSicreditoDateTime(
+  const AValue: String): String;
+var
+  hora, minuto, segundos : String;
+begin
+  hora     := Copy( aValue, 12,2 );
+  minuto   := Copy( aValue, 15,2 );
+  segundos := Copy( aValue, 18,2 );
+  Result   := Format( '%s:%s:%s' , [hora,minuto,segundos]);
 end;
 
 end.

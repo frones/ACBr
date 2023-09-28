@@ -46,6 +46,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[*]TK-4457 Ajustes em quebra de linha da mensagem adicional
+  por Celonir / Victor H Gonzales - Pandaaa
+
 24/04/2023
 [+]TK-3379-3 ACBrBoletoFPDF Boleto Console
   por : Victor H Gonzales - Pandaaa

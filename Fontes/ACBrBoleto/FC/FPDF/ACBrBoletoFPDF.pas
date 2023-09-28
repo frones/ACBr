@@ -478,7 +478,7 @@ begin
   FPDF.SetFont('arial', 'B', 7);
 
   if FMensagem.Count >= 1 then
-    LMensagem := MensagemInstrucaoPagamento(FMensagem[0])
+    LMensagem := MensagemInstrucaoPagamento(FMensagem[0], 103 - LReducaoEMV)
   else
     LMensagem := '';
 
@@ -493,7 +493,7 @@ begin
   FPDF.SetFont('arial', 'B', 7);
 
   if FMensagem.Count >= 2 then
-    LMensagem := MensagemInstrucaoPagamento(FMensagem[1])
+    LMensagem := MensagemInstrucaoPagamento(FMensagem[1], 103 - LReducaoEMV)
   else
     LMensagem := '';
 
@@ -512,7 +512,7 @@ begin
   FPDF.SetFont('arial', 'B', 7);
 
   if FMensagem.Count >= 3 then
-    LMensagem := MensagemInstrucaoPagamento(FMensagem[2])
+    LMensagem := MensagemInstrucaoPagamento(FMensagem[2], 103 - LReducaoEMV)
   else
     LMensagem := '';
 
@@ -528,7 +528,7 @@ begin
   FPDF.SetFont('arial', 'B', 7);
 
   if FMensagem.Count >= 4 then
-    LMensagem := MensagemInstrucaoPagamento(FMensagem[3])
+    LMensagem := MensagemInstrucaoPagamento(FMensagem[3], 103 - LReducaoEMV)
   else
     LMensagem := '';
 
@@ -546,7 +546,7 @@ begin
   FPDF.SetFont('arial', 'B', 7);
 
   if FMensagem.Count >= 5 then
-    LMensagem := MensagemInstrucaoPagamento(FMensagem[4])
+    LMensagem := MensagemInstrucaoPagamento(FMensagem[4], 103 - LReducaoEMV)
   else
     LMensagem := '';
 
@@ -563,7 +563,7 @@ begin
   FPDF.SetFont('arial', 'B', 7);
 
   if FMensagem.Count >= 6 then
-    LMensagem := MensagemInstrucaoPagamento(FMensagem[5])
+    LMensagem := MensagemInstrucaoPagamento(FMensagem[5], 103 - LReducaoEMV)
   else
     LMensagem := '';
 

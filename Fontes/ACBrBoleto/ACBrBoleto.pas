@@ -949,6 +949,7 @@ type
     function DefinerCnpjCPFRetorno240(const ALinha: String): String; virtual;       //Define retorno rCnpjCPF
     function DefineNumeroDocumentoRetorno(const ALinha: String): String; virtual;   //Define o Numero Documento do Retorno
     procedure DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo); virtual;   //Define o Motivo da Rejeição ou Complemento no Retorno
+    procedure DefineCanalLiquidacaoRetorno240(const ALinha: String; out ATitulo : TACBrTitulo); virtual;   //Define o Canal de Liquidacao Retorno CNAB 240
 
     function DefineTipoInscricao: String; virtual;                            //Utilizado para definir Tipo de Inscrição na Remessa
     function DefineResponsEmissao: String; virtual;                           //Utilizado para definir Responsável Emissão na Remessa
@@ -5277,6 +5278,7 @@ begin
            TempData := copy(Linha, 146, 2)+'/'+copy(Linha, 148, 2)+'/'+copy(Linha, 150, 4);
            if TempData <> '00/00/0000' then
                DataCredito     := StringToDateTimeDef(TempData, 0, 'DD/MM/YYYY');
+           DefineCanalLiquidacaoRetorno240(Linha, Titulo);    
         end;
      end;
 
@@ -5495,7 +5497,12 @@ end;
 
 function TACBrBancoClass.DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result := '';
+end;
+
+procedure TACBrBancoClass.DefineCanalLiquidacaoRetorno240(const ALinha: String;
+  out ATitulo: TACBrTitulo);
+begin
+  {sobreescrever nos filhos}
 end;
 
 procedure TACBrBancoClass.ValidaNossoNumeroResponsavel(out ANossoNumero: String; out ADigVerificador: String;

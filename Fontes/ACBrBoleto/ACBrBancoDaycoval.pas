@@ -44,10 +44,14 @@ type
   TACBrBancoDaycoval = class(TACBrBancoClass)
   protected
     function GetLocalPagamento: String; override;
+    function DefineTamanhoNossoNumeroRetorno: Integer; override;
+    function DefinePosicaoNossoNumeroRetorno: Integer; override;
+    function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; override;
+    procedure DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo); override;
   private
     procedure GerarRegistrosNFe(ACBrTitulo : TACBrTitulo; aRemessa: TStringList);
   public
-    Constructor create(AOwner: TACBrBanco);
+    Constructor Create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override ;
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; override;
     function MontarCampoNossoNumero ( const ACBrTitulo: TACBrTitulo) : String; override;
@@ -75,6 +79,58 @@ uses
   StrUtils, Variants, ACBrValidador, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TACBrBancoDaycoval }
+
+function TACBrBancoDaycoval.DefineTamanhoNossoNumeroRetorno: Integer;
+begin
+  if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+    Result := 9
+  else
+    Result := 8;
+end;
+
+function TACBrBancoDaycoval.DefinePosicaoNossoNumeroRetorno: Integer;
+begin
+  if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+    Result := 86
+  else
+    Result := 63;
+end;
+
+procedure TACBrBancoDaycoval.DefineRejeicaoComplementoRetorno(
+  const ALinha: String; out ATitulo: TACBrTitulo);
+var 
+  IdxMotivo: Integer;
+  CodMotivo: string;
+begin
+  IdxMotivo := 378;
+  repeat
+    CodMotivo := Trim(Copy(ALinha, IdxMotivo, 2));
+    if not MatchText(CodMotivo, [EmptyStr, '00']) then
+    begin
+      ATitulo.MotivoRejeicaoComando.Add(CodMotivo);
+      ATitulo.DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(ATitulo.OcorrenciaOriginal.Tipo, CodMotivo));
+    end;
+    Inc(IdxMotivo, 2);
+  until IdxMotivo >= 386;
+end;
+
+function TACBrBancoDaycoval.DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String;
+var
+  Docto: String;
+begin
+  with ACBrTitulo do
+  begin
+    if MatchText( Carteira , ['116','117','119','134','135','136','104',
+                              '147','105','212','166','113','126','131',
+                              '145','150','168']) then
+      Docto := Carteira + PadLeft(NossoNumero,TamanhoMaximoNossoNum,'0')
+    else
+      Docto := ACBrBoleto.Cedente.Agencia +
+               Carteira + PadLeft(NossoNumero,TamanhoMaximoNossoNum,'0')
+  end;
+
+  Result := Docto;
+end;
 
 function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
 begin
@@ -302,7 +358,7 @@ begin
   end;
 end;
 
-constructor TACBrBancoDaycoval.create(AOwner: TACBrBanco);
+constructor TACBrBancoDaycoval.Create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
    fpDigito                := 2;
@@ -312,6 +368,7 @@ begin
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 7;
    fpTamanhoCarteira       := 3;
+   fpTamanhoNumeroDocumento := 10;
 end;
 
 function TACBrBancoDaycoval.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -319,17 +376,7 @@ var
   Docto: String;
 begin
    Result := '0';
-   Docto := '';
-
-   with ACBrTitulo do
-   begin
-      if MatchText( Carteira , ['116','117','119','134','135','136','104',
-      '147','105','112','212','166','113','126','131','145','150','168']) then
-            Docto := Carteira + PadLeft(NossoNumero,TamanhoMaximoNossoNum,'0')
-         else
-            Docto := ACBrBoleto.Cedente.Agencia +
-                     Carteira + PadLeft(ACBrTitulo.NossoNumero,TamanhoMaximoNossoNum,'0')
-   end;
+   Docto := DefineNumeroDocumentoModulo(ACBrTitulo);
 
    Modulo.MultiplicadorInicial := 1;
    Modulo.MultiplicadorFinal   := 2;
@@ -409,7 +456,7 @@ begin
   if ACBrTitulo.Mensagem.Count > 3 then
     Result := Result + Copy(PadRight(ACBrTitulo.Mensagem[3], 69), 1, 69);     // 210 a 278 Mensagem Livre 69 posições
 
-  Result := PadRight(Result, 392) +
+  Result := PadRight(Result, 394) +
             IntToStrZero(nRegistro, 6);                                   // 395 a 400 - Sequência: Seguir a sequência normal de registros.
 end;
 
@@ -641,7 +688,6 @@ procedure TACBrBancoDaycoval.LerRetorno400(ARetorno: TStringList);
 var
   Titulo: TACBrTitulo;
   ContLinha: Integer;
-  CodMotivo: String;
   Linha, rCedente, rCNPJCPF: String;
   rCodEmpresa: String;
 begin
@@ -673,7 +719,7 @@ begin
 
   with ACBrBanco.ACBrBoleto do
   begin
-    if (not LeCedenteRetorno) and (rCodEmpresa <> PadLeft(Cedente.CodigoCedente, 20, '0')) then
+    if (not LeCedenteRetorno) and (PadLeft(rCodEmpresa, 20, '0') <> PadLeft(Cedente.CodigoCedente, 20, '0')) then
       raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido.'));
 
     case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of
@@ -705,16 +751,9 @@ begin
     with Titulo do
     begin
       SeuNumero               := Copy(Linha, 38, 25);
-      NumeroDocumento         := Copy(Linha, 117, 10);
+      NumeroDocumento         := Copy(Linha, 117, TamanhoNumeroDocumento);
       OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(Linha, 109, 2), 0));
-
-      CodMotivo := Trim(Copy(Linha, 378, 2));
-
-      if ( CodMotivo <> '' ) then
-      begin
-        MotivoRejeicaoComando.Add(CodMotivo);
-        DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodMotivo));
-      end;
+      DataOcorrencia := StringToDateTimeDef(Copy(Linha, 111, 2) + '/' + Copy(Linha, 113, 2) + '/' + Copy(Linha, 115, 2), 0, 'DD/MM/YY');
 
       DataOcorrencia :=
         StringToDateTimeDef(
@@ -735,10 +774,26 @@ begin
       ValorDesconto        := StrToFloatDef(Copy(Linha, 241, 13), 0) / 100;
       ValorMoraJuros       := StrToFloatDef(Copy(Linha, 267, 13), 0) / 100;
       ValorRecebido        := StrToFloatDef(Copy(Linha, 254, 13), 0) / 100;
-      NossoNumero          := Copy(Linha, 63, TamanhoMaximoNossoNum);
-      Carteira             := Copy(Linha, 108, 1);
+      NossoNumero          := DefineNossoNumeroRetorno(Linha);
+      Carteira             := Copy(Linha, 83, 3);
       ValorDespesaCobranca := StrToFloatDef(Copy(Linha, 176, 13), 0) / 100;
+      NossoNumeroCorrespondente := Copy(Linha, 95, 13);
 
+      case IndexText(Copy(Linha, 108, 1), ['1', '2', '3', '4', '5']) of
+        0: CaracTitulo := tcSimples;
+        1: CaracTitulo := tcVinculada;
+        2: CaracTitulo := tcCaucionada;
+        3: CaracTitulo := tcDescontada;
+        4: CaracTitulo := tcDiretaEspecial;
+      end;
+
+      // informações do local de pagamento
+      Liquidacao.Banco      := StrToIntDef(Copy(Linha, 166, 3), -1);
+      Liquidacao.Agencia    := Copy(Linha, 169, 4);
+      Liquidacao.Origem     := '';
+      Liquidacao.FormaPagto := '';
+
+      DefineRejeicaoComplementoRetorno(Linha, Titulo);
     end;
   end;
 end;

@@ -74,8 +74,16 @@ type
 
   end;
 
+  { TNFSeArquivoItem }
+
+  TNFSeArquivoItem = class(TACBrLibArquivosResposta)
+  private
+  public
+    procedure Processar(const Resumo: TNFSeResumoCollectionItem);
+  end;
+
   { TLibNFSeServiceResposta }
-  TLibNFSeServiceResposta = class abstract(TACBrLibRespostaBase)
+  TLibNFSeServiceResposta = class abstract(TACBrLibRespostaEnvio)
   private
     FXmlEnvio: string;
     FXmlRetorno: string;
@@ -390,7 +398,15 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnConversao, ACBrUtil, ACBrLibNFSeConsts;
+  pcnAuxiliar, pcnConversao, ACBrUtil, ACBrLibNFSeConsts, ACBrLibConsts;
+
+{ TNFSeArquivoItem }
+
+procedure TNFSeArquivoItem.Processar(const Resumo: TNFSeResumoCollectionItem);
+begin
+  Self.NomeArquivo := ExtractFileName(Resumo.NomeArq);
+  Self.CaminhoCompleto := Resumo.NomeArq;
+end;
 
 { TNFSeEventoItem }
 procedure TNFSeEventoItem.Processar(const Evento: TNFSeEventoCollectionItem);
@@ -427,6 +443,7 @@ procedure TLibNFSeServiceResposta.Processar(const Response: TNFSeWebserviceRespo
 var
   i: Integer;
   Item: TNFSeEventoItem;
+  Arq: TNFSeArquivoItem;
 begin
   XmlEnvio := Response.XmlEnvio;
   XmlRetorno := Response.XmlRetorno;
@@ -448,6 +465,16 @@ begin
       Item := TNFSeEventoItem.Create(CSessaoRespAlerta + IntToStr(i + 1), Tipo, Formato);
       Item.Processar(Response.Alertas.Items[i]);
       FAlertas.Add(Item);
+    end;
+  end;
+
+  if Response.Resumos.Count > 0 then
+  begin
+    for i := 0 to Response.Resumos.Count - 1 do
+    begin
+      Arq := TNFSeArquivoItem.Create(CSessaoRespArquivo + IntToStr(i + 1), Tipo, Formato);
+      Arq.Processar(Response.Resumos.Items[i]);
+      InformacoesArquivo.Add(Arq);
     end;
   end;
 end;

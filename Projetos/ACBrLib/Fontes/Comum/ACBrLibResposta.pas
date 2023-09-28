@@ -88,6 +88,18 @@ type
 
   end;
 
+  { TACBrLibRespostaEnvio }
+
+  TACBrLibRespostaEnvio = class(TACBrLibRespostaBase)
+  private
+    FInformacoesArquivo: TACBrObjectList;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+    destructor Destroy; override;
+  published
+    property InformacoesArquivo: TACBrObjectList read FInformacoesArquivo;
+  end;
+
   { TLibImpressaoResposta }
   TLibImpressaoResposta = class(TACBrLibRespostaBase)
   private
@@ -101,10 +113,36 @@ type
 
   end;
 
+  { TACBrLibArquivosResposta }
+
+  TACBrLibArquivosResposta = class(TACBrLibRespostaBase)
+  private
+    FNomeArquivo: String;
+    FCaminhoCompleto: String;
+  public
+  published
+    property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
+    property CaminhoCompleto: String read FCaminhoCompleto write FCaminhoCompleto;
+  end;
+
 implementation
 
 uses
   ACBrObjectSerializer;
+
+{ TACBrLibRespostaEnvio }
+
+constructor TACBrLibRespostaEnvio.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  FInformacoesArquivo := TACBrObjectList.Create(True);
+  inherited Create(ASessao, ATipo, AFormato);
+end;
+
+destructor TACBrLibRespostaEnvio.Destroy;
+begin
+  FInformacoesArquivo.Free;
+  inherited Destroy;
+end;
 
 { TACBrLibResposta }
 constructor TACBrLibRespostaBase.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);

@@ -787,6 +787,7 @@ var
   ATEFResp: TACBrTEFResp;
   AMsgErro: String;
   MR: TModalResult;
+  FormMenuTEF: TFormMenuTEF;
 begin
   // Aqui você pode Confirmar ou Desfazer as transações pendentes de acordo com
   // a sua regra de negócios
@@ -794,7 +795,6 @@ begin
   // ----------- Exemplo 0 - Deixe o ACBrTEFAndroid CONFIRMAR todas transações pendentes automaticamente
   // ACBrTEFAPI1.TratamentoTransacaoPendente := tefpenConfirmar;
   // Nesse caso... esse evento nem será disparado.
-
 
   // ----------- Exemplo 1 - Envio de confirmação automática -----------
   // AStatus := stsSucessoManual;
@@ -808,21 +808,39 @@ begin
   else
     AMsgErro := MsgErro;
 
-  MR := MessageDlg( 'Transação Pendente' + sLineBreak + 
-                    AMsgErro + sLineBreak+sLineBreak + 'Confirmar ?',
-                    mtConfirmation,
-                    [mbYes, mbNo], 0 );
+  FormMenuTEF := TFormMenuTEF.Create(self);
+  try
+    FormMenuTEF.Titulo := 'Transação Pendente';
+    FormMenuTEF.Opcoes.Add('1 - Confirmação Manual');
+    FormMenuTEF.Opcoes.Add('2 - Estorno Manual');
+    FormMenuTEF.Opcoes.Add('3 - Estorno, Falta de Energia');
+    FormMenuTEF.Opcoes.Add('4 - Estorno, Erro na Impressão');
+    FormMenuTEF.Opcoes.Add('5 - Estorno, Erro no Dispensador');
+    FormMenuTEF.UsaTeclasDeAtalho := True;
+    FormMenuTEF.ItemSelecionado := 0;
+    FormMenuTEF.btVoltar.Visible := False;
 
-  if (MR = mrYes) then
-    AStatus := tefstsSucessoManual
-  else
-    AStatus := tefstsErroDiverso;
+    MR := FormMenuTEF.ShowModal ;
+    if (MR = mrOK) then
+    begin
+      case FormMenuTEF.ItemSelecionado of
+        0: AStatus := tefstsSucessoManual;
+        1: AStatus := tefstsErroDiverso;
+        2: AStatus := tefstsErroEnergia;
+        3: AStatus := tefstsErroImpressao;
+        4: AStatus := tefstsErroDispesador;
+      else
+        AStatus := tefstsSucessoManual;
+      end;
 
-  ACBrTEFAPI1.ResolverTransacaoPendente(AStatus);
+      ACBrTEFAPI1.ResolverTransacaoPendente(AStatus);
+    end;
+  finally
+    FormMenuTEF.Free;
+  end;
   // ---------- Fim Exemplo 2 ------------
 
-
-  // Se confirmou, vamos re-imprimir a transação que ficou pendente
+  // Opcional... Se confirmou, vamos re-imprimir a transação que ficou pendente
   if (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]) then
   begin
     // Achando a transação original...
@@ -1419,9 +1437,22 @@ begin
       end;
       *)
 
+      // -- Exemplo, usando TypeCast, para inserir Propriedades direto na Classe de TEF -- //
+      (*
+      if ACBrTEFAPI1.TEF is TACBrTEFAPIClassCliSiTef then
+      begin
+        with TACBrTEFAPIClassCliSiTef(ACBrTEFAPI1.TEF) do
+        begin
+          ParamAdicConfig.Text := '[]';
+          ParamAdicFinalizacao.Text := '[]';
+          ParamAdicFuncao.Text := '[]';
+        end;
+      end;
+      *)
       Ok := ACBrTEFAPI1.EfetuarPagamento( IntToStr(Venda.NumOperacao),
                                           AValor, Modalidade, CartoesAceitos,
                                           tefmfAVista );
+
       Ok := Ok and
             ACBrTEFAPI1.UltimaRespostaTEF.Sucesso and
             ACBrTEFAPI1.UltimaRespostaTEF.TransacaoAprovada;

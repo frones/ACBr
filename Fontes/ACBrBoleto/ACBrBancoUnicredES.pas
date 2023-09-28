@@ -72,6 +72,9 @@ type
     function TipoOcorrenciaToCodRemessa(const ATipoOcorrencia: TACBrTipoOcorrencia): String; override;
     procedure DefineRejeicaoComplementoRetorno(const ALinha: String; out ATitulo : TACBrTitulo); override;
     function DefinerCnpjCPFRetorno240(const ALinha: String): String; override;         //Define retorno rCnpjCPF
+    procedure DefineCanalLiquidacaoRetorno240(const ALinha: String; out ATitulo : TACBrTitulo); override;
+    function CodigoLiquidacaoDescricao( CodLiquidacao : Integer) : String;
+
   end;
 
 implementation
@@ -295,7 +298,7 @@ begin
           SeuNumero                   := copy(Linha,280,26);
           NumeroDocumento             := copy(Linha,117,10);
           LCodigoOrigem               := StrToIntDef(copy(Linha,327,2),0);
-          if LCodigoOrigem = 1 then
+          if LCodigoOrigem in [0,1] then
           begin
             LCodigoOrigem := StrToIntDef(copy(Linha,109,2),0);
             LTipoOcorrencia := CodOcorrenciaToTipo(LCodigoOrigem);
@@ -573,6 +576,28 @@ begin
   end;
 end;
 
+function TACBrBancoUnicredES.CodigoLiquidacaoDescricao(
+  CodLiquidacao: Integer): String;
+begin
+  case CodLiquidacao of
+    000 : result := '000 Sem informação relevante';
+    161 : result := '161 Internet Banking';
+    162 : result := '162 ATM';
+    163 : result := '163 Caixa';
+    164 : result := '164 Retaguarda';
+    165 : result := '165 Monitor de TED';
+    166 : result := '166 Compe';
+    167 : result := '167 DDA';
+    168 : result := '168 Banco Correspondente';
+    190 : result := '190 Lotérica';
+    234 : result := '234 Agendamento';
+    268 : result := '268 Mobile';
+    308 : result := '308 Cartório';
+    333 : result := '333 Pix';
+  end;
+
+end;
+
 function TACBrBancoUnicredES.CodJurosToStr(const pCodigoJuros: TACBrCodigoJuros;
   ValorMoraJuros: Currency): String;
 begin
@@ -589,6 +614,14 @@ begin
       result := '5';
     end;
   end;
+end;
+
+procedure TACBrBancoUnicredES.DefineCanalLiquidacaoRetorno240(
+  const ALinha: String; out ATitulo: TACBrTitulo);
+begin
+  ATitulo.CodigoLiquidacao := copy(ALinha, 108,3);
+  Atitulo.CodigoLiquidacaoDescricao := CodigoLiquidacaoDescricao(StrToIntDef(ATitulo.CodigoLiquidacao,0));
+  ATitulo.ValorOutrasDespesas := 0;
 end;
 
 function TACBrBancoUnicredES.DefineNumeroDocumentoModulo(

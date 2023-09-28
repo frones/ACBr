@@ -779,7 +779,7 @@ begin
       ValorDespesaCobranca := StrToFloatDef(Copy(Linha, 176, 13), 0) / 100;
       NossoNumeroCorrespondente := Copy(Linha, 95, 13);
 
-      case IndexText(Copy(Linha, 108, 1), ['1', '2', '3', '4', '5']) of
+      case AnsiIndexText(Copy(Linha, 108, 1), ['1', '2', '3', '4', '5']) of
         0: CaracTitulo := tcSimples;
         1: CaracTitulo := tcVinculada;
         2: CaracTitulo := tcCaucionada;

@@ -47,6 +47,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/09/2023
+-- ACBrTEFAPIComum --
+[*] Melhorias quando estiver Trantando Transações Pendentes durante a inicializaçao
+    da aplicação, para usar Status mais apropriados.
+
 -- ACBrTEFAPICliSiTef --
 [*] Melhorias na rotina de inicialização
 [-] Correção de mensagens exibidas com o Encode incorreto

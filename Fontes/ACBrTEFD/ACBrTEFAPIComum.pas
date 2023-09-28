@@ -321,6 +321,7 @@ type
     procedure SetLimparRespostasQuandoNovoIdentificador(const AValue: Boolean);
   protected
     fpTEFAPIClass: TACBrTEFAPIComumClass;
+    fpInicializando: Boolean;
 
     procedure CriarTEFResp;
   public
@@ -330,6 +331,7 @@ type
     procedure Inicializar; virtual;
     procedure DesInicializar; virtual;
     property Inicializado: Boolean read GetInicializado write SetInicializado;
+    property Inicializando: Boolean read fpInicializando;
     procedure DoException(const AErrorMsg: String); virtual;
 
     function EfetuarAdministrativa(
@@ -997,6 +999,7 @@ begin
   fDadosTerminal := TACBrTEFAPIDadosTerminal.Create;
 
   fpTEFAPIClass := TACBrTEFAPIComumClass.Create( Self );
+  fpInicializando := False;
 
   fDiretorioTrabalho := '';
   fGravarRespostas := True;
@@ -1068,18 +1071,23 @@ begin
       fArqLOG := ApplicationPath + fArqLOG;
   end;
 
-  fpTEFAPIClass.Inicializar;
-  CriarListaTEFResp;
+  fpInicializando := True;
+  try
+    fpTEFAPIClass.Inicializar;
+    CriarListaTEFResp;
 
-  // Verificando se ficou alguma Transação Pendente, no Diretório de Trabalho
-  if (TratamentoTransacaoInicializacao = tefopiCancelarOuEstornar) then
-    CancelarOuEstornarTransacoesDiretorioTrabalho
-  else
-  begin
-    fRespostasTEF.CarregarRespostasDoDiretorioTrabalho;
+    // Verificando se ficou alguma Transação Pendente, no Diretório de Trabalho
+    if (TratamentoTransacaoInicializacao = tefopiCancelarOuEstornar) then
+      CancelarOuEstornarTransacoesDiretorioTrabalho
+    else
+    begin
+      fRespostasTEF.CarregarRespostasDoDiretorioTrabalho;
 
-    if (TratamentoTransacaoInicializacao = tefopiProcessarPendentes) then
-      VerificarTransacoesPendentes;
+      if (TratamentoTransacaoInicializacao = tefopiProcessarPendentes) then
+        VerificarTransacoesPendentes;
+    end;
+  finally
+    fpInicializando := False;
   end;
 end;
 
@@ -1327,9 +1335,19 @@ begin
   else
   begin
     if (TratamentoTransacaoPendente = tefpenEstornar) then
-      AStatus := tefstsErroDiverso
+    begin
+      if fpInicializando then
+        AStatus := tefstsErroEnergia
+      else
+        AStatus := tefstsErroDiverso;
+    end
     else
-      AStatus := tefstsSucessoAutomatico;
+    begin
+      if fpInicializando then
+        AStatus := tefstsSucessoManual
+      else
+        AStatus := tefstsSucessoAutomatico;
+    end;
 
     ResolverTransacaoPendente( AStatus );
   end;
@@ -1385,15 +1403,29 @@ begin
 end;
 
 procedure TACBrTEFAPIComum.ConfirmarTransacoesPendentes;
+var
+  AStatus: TACBrTEFStatusTransacao;
 begin
   GravarLog('ConfirmarTransacoesPendentes');
-  FinalizarTransacoesPendentes( tefstsSucessoAutomatico );
+  if fpInicializando then
+    AStatus := tefstsSucessoManual
+  else
+    AStatus := tefstsSucessoAutomatico;
+
+  FinalizarTransacoesPendentes( AStatus );
 end;
 
 procedure TACBrTEFAPIComum.EstornarTransacoesPendentes;
+var
+  AStatus: TACBrTEFStatusTransacao;
 begin
   GravarLog('EstornarTransacoesPendentes');
-  FinalizarTransacoesPendentes( tefstsErroDiverso );
+  if fpInicializando then
+    AStatus := tefstsErroEnergia
+  else
+    AStatus := tefstsErroDiverso;
+
+  FinalizarTransacoesPendentes( AStatus );
 end;
 
 procedure TACBrTEFAPIComum.CancelarOuEstornarTransacoesDiretorioTrabalho;
@@ -1444,7 +1476,12 @@ begin
           else if ATEFResp.Confirmar then    // Transação requer Confirmação ?
           begin
             if EhPagamento then
-              AStatus := tefstsErroDiverso
+            begin
+              if fpInicializando then
+                AStatus := tefstsErroEnergia
+              else
+                AStatus := tefstsErroDiverso;
+            end
             else
               AStatus := tefstsSucessoManual; // Queremos Confirmar os Cancelamentos...
 

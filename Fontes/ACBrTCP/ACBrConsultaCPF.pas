@@ -52,6 +52,7 @@ type
     FDataNascimento: String;
     FDataInscricao: String;
     FNome: String;
+    FNomeSocial : String;
     FSituacao: String;
     FCPF: String;
     FDigitoVerificador: String;
@@ -313,6 +314,11 @@ begin
 
         FCPF      := LerCampo(Resposta,'No do CPF:');
         FNome     := LerCampo(Resposta,'Nome:');
+        if FNome = '' then
+          FNome   := LerCampo(Resposta,'Nome Civil:');
+
+        FNomeSocial   := LerCampo(Resposta,'Nome Social:');
+
         FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
         FSituacao := LerCampo(Resposta,'Situação Cadastral:');
         FDataInscricao := LerCampo(Resposta,'Data da Inscrição:');

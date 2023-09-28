@@ -36,6 +36,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2023
+[+]TK-4511 - ACBrConsultaCPF - Adicionado a propriedade NomeSocial
+  por: Douglas Conceição / Victor H Gonzales - Pandaaa
+
 15/05/2023
 -- ACBrSedex --
 [*] Adiciona os códidos de serviço 03220 - Sedex Contrato e 03298 - PAC Contrato.

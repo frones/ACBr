@@ -77,8 +77,14 @@ begin
 end;
 
 function TRetornoEnvio_Sicredi_APIV2.DateSicreditoDateTime(const AValue: String): TDateTime;
+var
+  data, ano, mes, dia : String;
 begin
-  Result := ACBrUtil.DateTime.StringToDateTimeDef(AValue, 0,'yyyy-mm-dd');
+    ano := Copy( aValue, 0,4 );
+    mes := Copy( aValue, 6,2 );
+    dia := Copy( aValue, 9,2 );
+    data := Format( '%s/%s/%s' , [dia,mes,ano]);
+    Result := StrToDateDef( data ,0 );
 end;
 
 destructor TRetornoEnvio_Sicredi_APIV2.Destroy;
@@ -192,18 +198,18 @@ begin
                   begin
                     if I = 0 then
                     begin
-                      ARetornoWS.DadosRet.TituloRet.ValorDesconto:= Desconto.Values['valorDesconto'].AsNumber;
-                      ARetornoWS.DadosRet.TituloRet.DataDesconto := DateSicreditoDateTime(Desconto.Values['dataLimite'].AsString);
+                      ARetornoWS.DadosRet.TituloRet.ValorDesconto:= Descontos[i].AsObject.values['ValorDesconto'].asnumber;
+                      ARetornoWS.DadosRet.TituloRet.DataDesconto := DateSicreditoDateTime(Descontos[i].AsObject.Values['dataLimite'].AsString);
                     end;
                     if I = 1 then
                     begin
-                      ARetornoWS.DadosRet.TituloRet.ValorDesconto2:= Desconto.Values['valorDesconto'].AsNumber;
-                      ARetornoWS.DadosRet.TituloRet.DataDesconto2 := DateSicreditoDateTime(Desconto.Values['dataLimite'].AsString);
+                      ARetornoWS.DadosRet.TituloRet.ValorDesconto2:= Descontos[i].AsObject.Values['valorDesconto'].AsNumber;
+                      ARetornoWS.DadosRet.TituloRet.DataDesconto2 := DateSicreditoDateTime(Descontos[i].AsObject.Values['dataLimite'].AsString);
                     end;
                     if I = 2 then
                     begin
-                      ARetornoWS.DadosRet.TituloRet.ValorDesconto3:= Desconto.Values['valorDesconto'].AsNumber;
-                      ARetornoWS.DadosRet.TituloRet.DataDesconto3 := DateSicreditoDateTime(Desconto.Values['dataLimite'].AsString);
+                      ARetornoWS.DadosRet.TituloRet.ValorDesconto3:= Descontos[i].AsObject.Values['valorDesconto'].AsNumber;
+                      ARetornoWS.DadosRet.TituloRet.DataDesconto3 := DateSicreditoDateTime(Descontos[i].AsObject.Values['dataLimite'].AsString);
                     end;
 
                   end;
@@ -258,7 +264,7 @@ begin
           if (TipoOperacao = tpBaixa) then
           begin
             ARetornoWS.DadosRet.TituloRet.NossoNumero      := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataBaixa     := StrToDate( AJson.Values['dataMovimento'].AsString);
+            ARetornoWS.DadosRet.TituloRet.DataBaixa     := DateSicreditoDateTime( AJson.Values['dataMovimento'].AsString);
 
           end else
           if (TipoOperacao in [tpAltera]) then//,tpAlteraSeuNumero

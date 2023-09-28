@@ -331,7 +331,7 @@ begin
       pode ser informado 'CSP' nas posições 223 a 225.
       }
 
-      if VersaoArquivo = 030 then 
+      if VersaoArquivo = 030 then
       begin
         aCSP := 'CSP';
         str0 := '000';
@@ -344,24 +344,26 @@ begin
 
       { GERAR REGISTRO-HEADER DO ARQUIVO }
 
-      Result:= IntToStrZero(ACBrBanco.Numero, 3)               + // 1 a 3 - Código do banco
-               '0000'                                          + // 4 a 7 - Lote de serviço
-               '0'                                             + // 8 - Tipo de registro - Registro header de arquivo
-               StringOfChar(' ', 9)                            + // 9 a 17 Uso exclusivo FEBRABAN/CNAB
-               ATipoInscricao                                  + // 18 - Tipo de inscrição do cedente
-               PadLeft(OnlyNumber(CNPJCPF), 14, '0')           + // 19 a 32 -Número de inscrição do cedente
-               PadLeft(Convenio, 9, '0') + '0014'              + // 33 a 45 - Código do convênio no banco [ Alterado conforme instruções da CSO Brasília ] 27-07-09
-               ACBrBanco.ACBrBoleto.ListadeBoletos[0].Carteira + // 46 a 47 - Carteira
-               aModalidade + '  '                              + // 48 a 52 - Variacao Carteira
-               aAgencia                                        + // 53 a 57 - Código da agência do cedente
-               PadRight(AgenciaDigito, 1 , '0')                + // 58 - Dígito da agência do cedente
-               aConta                                          + // 59 a 70 - Número da conta do cedente
-               PadRight(ContaDigito, 1, '0')                   + // 71 - Dígito da conta do cedente
-               ' '                                             + // 72 - Dígito verificador da agência / conta
-               TiraAcentos(UpperCase(PadRight(Nome, 30, ' '))) + // 73 a 102 - Nome do cedente
+      Result:= IntToStrZero(ACBrBanco.Numero, 3)               + // 001 a 003 - Código do banco
+               '0000'                                          + // 004 a 007 - Lote de serviço
+               '0'                                             + // 008 a 008 - Tipo de registro - Registro header de arquivo
+               StringOfChar(' ', 9)                            + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
+               ATipoInscricao                                  + // 018 a 018 - Tipo de inscrição do cedente
+               PadLeft(OnlyNumber(CNPJCPF), 14, '0')           + // 019 a 032 - Número de inscrição do cedente
+               PadLeft(Convenio, 9, '0')                       + // 033 a 041 - Código do convênio no banco [ Alterado conforme instruções da CSO Brasília ] 27-07-09
+               '0014'                                          + // 042 a 045 - Informar 0014 Cedente
+               ACBrBanco.ACBrBoleto.ListadeBoletos[0].Carteira + // 046 a 047 - Carteira
+               aModalidade                                     + // 048 a 050 - Variacao Carteira
+               '  '                                            + // 051 a 052 - Informar Brancos
+               aAgencia                                        + // 053 a 057 - Código da agência do cedente
+               PadRight(AgenciaDigito, 1 , '0')                + // 058 a 058 - Dígito da agência do cedente
+               aConta                                          + // 059 a 070 - Número da conta do cedente
+               PadRight(ContaDigito, 1, '0')                   + // 071 a 071 - Dígito da conta do cedente
+               ' '                                             + // 072 a 072 - Dígito verificador da agência / conta
+               TiraAcentos(UpperCase(PadRight(Nome, 30, ' '))) + // 073 a 102 - Nome do cedente
                PadRight(UpperCase(fpNome), 30, ' ')            + // 103 a 132 - Nome do banco
                StringOfChar(' ', 10)                           + // 133 a 142 - Uso exclusivo FEBRABAN/CNAB
-               '1'                                             + // 143 - Código de Remessa (1) / Retorno (2)
+               '1'                                             + // 143 a 143 - Código de Remessa (1) / Retorno (2)
                FormatDateTime('ddmmyyyy', Now)                 + // 144 a 151 - Data do de geração do arquivo
                FormatDateTime('hhmmss', Now)                   + // 152 a 157 - Hora de geração do arquivo
                PadLeft(IntToStr(NumeroRemessa), 6, '0')        + // 158 a 163 - Número seqüencial do arquivo
@@ -371,7 +373,7 @@ begin
                StringOfChar('0', 20)                           + // 192 a 211 - Uso reservado da empresa
                StringOfChar(' ', 11)                           + // 212 a 222 - 11 brancos
                PadLeft(aCSP, 3, ' ')                           + // 223 a 225 - Informar 'CSP' se a versão for 030, caso contrario informar branco
-               PadLeft(str0, 3, ' ')                            + // 226 a 228 - Uso exclusivo de Vans
+               PadLeft(str0, 3, ' ')                           + // 226 a 228 - Uso exclusivo de Vans
                StringOfChar(' ', 2)                            + // 229 a 230 - Tipo de servico
                StringOfChar(' ', 10);                            // 231 a 240 - titulo em carteira de cobranca
 
@@ -401,31 +403,33 @@ begin
       end;
 
       Result:= Result + #13#10 +
-               IntToStrZero(ACBrBanco.Numero, 3)               + // 1 a 3 - Código do banco
-               '0001'                                          + // 4 a 7 - Lote de serviço
-               '1'                                             + // 8 - Tipo de registro - Registro header de arquivo
-               'R'                                             + // 9 - Tipo de operação: R (Remessa) ou T (Retorno)
-               '01'                                            + // 10 a 11 - Tipo de serviço: 01 (Cobrança)
-               '  '                                            + // 12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
-               PadLeft(IntToStr(VersaoLote), 3, '0')           + // 14 a 16 - Número da versão do layout do lote
-               ' '                                             + // 17 - Uso exclusivo FEBRABAN/CNAB
-               ATipoInscricao                                  + // 18 - Tipo de inscrição do cedente
-               PadLeft(OnlyNumber(CNPJCPF), 15, '0')           + // 19 a 32 -Número de inscrição do cedente
-               PadLeft(Convenio, 9, '0') + '0014'              + // 33 a 45 - Código do convênio no banco [ Alterado conforme instruções da CSO Brasília ] 27-07-09
-               ACBrBanco.ACBrBoleto.ListadeBoletos[0].Carteira + // 46 a 47 - Carteira
-               aModalidade + '  '                              + // 48 a 52 - Variacao Carteira
-               aAgencia                                        + // 53 a 57 - Código da agência do cedente
-               PadRight(AgenciaDigito, 1 , '0')                + // 58 - Dígito da agência do cedente
-               aConta                                          + // 59 a 70 - Número da conta do cedente
-               PadRight(ContaDigito, 1, '0')                   + // 71 - Dígito da conta do cedente
-               ' '                                             + // 72 - Dígito verificador da agência / conta
-               PadRight(Nome, 30, ' ')                         + // 73 a 102 - Nome do cedente
-               StringOfChar(' ', 40)                           + // 104 a 143 - Mensagem 1 para todos os boletos do lote
-               StringOfChar(' ', 40)                           + // 144 a 183 - Mensagem 2 para todos os boletos do lote
-               PadLeft(IntToStr(NumeroRemessa), 8, '0')        + // 184 a 191 - Número do arquivo
-               FormatDateTime('ddmmyyyy', Now)                 + // 192 a 199 - Data de geração do arquivo
-               StringOfChar('0', 8)                            + // 200 a 207 - Data do crédito - Só para arquivo retorno
-               StringOfChar(' ', 33);                            // 208 a 240 - Uso exclusivo FEBRABAN/CNAB
+               IntToStrZero(ACBrBanco.Numero, 3)                  + // 001 a 003 - Código do banco
+               '0001'                                             + // 004 a 007 - Lote de serviço
+               '1'                                                + // 008 a 008 Tipo de registro - Registro header de arquivo
+               'R'                                                + // 009 a 009 Tipo de operação: R (Remessa) ou T (Retorno)
+               '01'                                               + // 010 a 011 - Tipo de serviço: 01 (Cobrança)
+               '  '                                               + // 012 a 013 - Forma de lançamento: preencher com ZEROS no caso de cobrança
+               PadLeft(IntToStr(VersaoLote), 3, '0')              + // 014 a 016 - Número da versão do layout do lote
+               ' '                                                + // 017 a 017 Uso exclusivo FEBRABAN/CNAB
+               ATipoInscricao                                     + // 018 a 018 Tipo de inscrição do cedente
+               PadLeft(OnlyNumber(CNPJCPF), 15, '0')              + // 019 a 033 -Número de inscrição do cedente
+               PadLeft(Convenio, 9, '0')                          + // 034 a 042 Código do convênio no banco
+               '0014'                                             + // 043 a 046 Informar 0014 para cobranca cedente
+               ACBrBanco.ACBrBoleto.ListadeBoletos[0].Carteira    + // 047 a 048 Carteira cobranca
+               aModalidade                                        + // 049 a 051 Variacao carteira
+               IfThen(ACBrBanco.ACBrBoleto.Homologacao,'TS','  ') + // 052 a 053 Infrmar TS para Homologacao ou branco para producao
+               aAgencia                                           + // 054 a 058 - Código da agência do cedente
+               PadRight(AgenciaDigito, 1 , '0')                   + // 059 a 059 Dígito da agência do cedente
+               aConta                                             + // 060 a 071 - Número da conta do cedente
+               PadRight(ContaDigito, 1, '0')                      + // 072 a 072 Dígito da conta do cedente
+               ' '                                                + // 073 a 073 Dígito verificador da agência / conta
+               PadRight(Nome, 30, ' ')                            + // 074 a 103 - Nome do cedente
+               StringOfChar(' ', 40)                              + // 104 a 143 - Mensagem 1 para todos os boletos do lote
+               StringOfChar(' ', 40)                              + // 144 a 183 - Mensagem 2 para todos os boletos do lote
+               PadLeft(IntToStr(NumeroRemessa), 8, '0')           + // 184 a 191 - Número do arquivo
+               FormatDateTime('ddmmyyyy', Now)                    + // 192 a 199 - Data de geração do arquivo
+               StringOfChar('0', 8)                               + // 200 a 207 - Data do crédito - Só para arquivo retorno
+               StringOfChar(' ', 33);                               // 208 a 240 - Uso exclusivo FEBRABAN/CNAB
    end;
 end;
 

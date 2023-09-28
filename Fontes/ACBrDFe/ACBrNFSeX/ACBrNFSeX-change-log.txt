@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Monte Alto/SP trocou de provedor, agora é Fiorilli.
+   Por: Marcos Giordani
+
 27/09/2023
 -- ACBrNFSeXProviderABRASFv2/ACBrNFSeXProviderProprio --
 [-] Correção visando aceitar somente 1 RPS quando o envio for Unitário.

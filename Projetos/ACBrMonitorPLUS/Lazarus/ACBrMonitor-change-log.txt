@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2023
+-- ACBrLibReinfConsts, ACBrLibReinfRespostas, DoACBrReinfUnit --
+[+] Adicionar grupo dadosRecepcaoLote no retorno do envio de eventos da versão 2.1
+  Por: Renato Rubinho / Revisão: Diego Folieni
+
 24/07/2023
 -- DoACBrNFSeUnit, ACBrMonitorConsts --
 [+] Adicionar os métodos LimparLoteRPS e TotalRPSLote visando auxiliar no uso de múltiplos RPS por Lote

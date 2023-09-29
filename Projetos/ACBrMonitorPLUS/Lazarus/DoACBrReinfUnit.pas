@@ -57,6 +57,7 @@ public
   procedure RespostaEnvioRetorno;
   procedure RespostaEnvioideTransmissor;
   procedure RespostaEnviostatus;
+  procedure RespostaEnviodadosRecepcaoLote;
   procedure RespostaEnvioOcorrencias(ACont: Integer);
   procedure RespostaEnvioevento(ACont: Integer);
   procedure RespostaEnvioevtTotal(ACont: Integer);
@@ -605,6 +606,7 @@ begin
     RespostaEnvioRetorno;
     RespostaEnvioideTransmissor;
     RespostaEnviostatus;
+    RespostaEnviodadosRecepcaoLote;
 
     for i := 0 to Status.Ocorrencias.Count - 1 do
       RespostaEnvioOcorrencias(i);
@@ -688,6 +690,25 @@ begin
     begin
       Resp.cdStatus    := Status.cdStatus;
       Resp.descRetorno := Status.descRetorno;
+    end;
+
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoReinf.RespostaEnviodadosRecepcaoLote;
+var
+  Resp: TEnvioRespostadadosRecepcaoLote;
+begin
+  Resp := TEnvioRespostadadosRecepcaoLote.Create(TpResp, codUTF8);
+  try
+    with fACBrReinf.WebServices.EnvioLote.RetEnvioLote do
+    begin
+      Resp.dhRecepcao := dadosRecepcaoLote.dhRecepcao;
+      Resp.versaoAplicativoRecepcao := dadosRecepcaoLote.versaoAplicativoRecepcao;
+      Resp.protocoloEnvio := dadosRecepcaoLote.protocoloEnvio;
     end;
 
     fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;

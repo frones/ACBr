@@ -94,6 +94,22 @@ type
     property descRetorno: String read FdescRetorno write FdescRetorno;
   end;
 
+  { TEnvioRespostadadosRecepcaoLote }
+
+  TEnvioRespostadadosRecepcaoLote = class(TACBrLibRespostaBase) //TPadraoReinfResposta)
+  private
+    FdhRecepcao: TDateTime;
+    FversaoAplicativoRecepcao: String;
+    FprotocoloEnvio: String;
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+  published
+    property dhRecepcao: TDateTime read FdhRecepcao write FdhRecepcao;
+    property versaoAplicativoRecepcao: String read FversaoAplicativoRecepcao write FversaoAplicativoRecepcao;
+    property protocoloEnvio: String read FprotocoloEnvio write FprotocoloEnvio;
+  end;
+
   { TEnvioRespostaOcorrencias }
   TEnvioRespostaOcorrencias = class(TPadraoReinfResposta)
   private
@@ -473,6 +489,13 @@ end;
 constructor TEnvioRespostastatus.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEnviostatus, ATipo, AFormato);
+end;
+
+{ TEnvioRespostadadosRecepcaoLote }
+
+constructor TEnvioRespostadadosRecepcaoLote.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespEnviodadosRecepcaoLote, ATipo, AFormato);
 end;
 
 { TEnvioRespostaideTransmissor }

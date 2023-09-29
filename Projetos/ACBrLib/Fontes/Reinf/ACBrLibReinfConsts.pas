@@ -46,6 +46,7 @@ const
   CSessaoRespEnvio = 'retornoLoteEventos';
   CSessaoRespEnvioideTransmissor = 'ideTransmissor';
   CSessaoRespEnviostatus = 'status';
+  CSessaoRespEnviodadosRecepcaoLote = 'dadosRecepcaoLote';
   CSessaoRespEnvioocorrencias = 'ocorrencias';
 
   CSessaoRespEnvioevento = 'evento';

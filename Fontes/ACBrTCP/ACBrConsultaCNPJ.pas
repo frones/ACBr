@@ -41,6 +41,7 @@ uses
   ACBrBase, ACBrSocket, ACBrIBGE;
 
 type
+  TACBrOnSolicitaCaptchaHTTP = procedure( var AHtml : String ) of object ;
   EACBrConsultaCNPJException = class ( Exception );
 
   { TACBrConsultaCNPJ }
@@ -80,6 +81,7 @@ type
     FIniServicos: string;
     FResourceName: String;
     FParams: TStrings;
+    FOnSolicitarCaptcha: TACBrOnSolicitaCaptchaHTTP;
     //Function GetCaptchaURL: String;
     function GetIBGE_UF : String ;
     function VerificarErros(const Str: String): String;
@@ -97,6 +99,8 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   published
+    property OnSolicitarCaptcha: TACBrOnSolicitaCaptchaHTTP read FOnSolicitarCaptcha write FOnSolicitarCaptcha;
+
     property CNPJ: String Read FCNPJ Write FCNPJ;
     property EmpresaTipo: String Read FEmpresaTipo;
     property Abertura: TDateTime Read FAbertura;
@@ -181,7 +185,7 @@ begin
     begin
       LErro := 'Erro na hora de fazer o download da imagem do captcha.';
       if HttpSend.ResultCode = 404 then
-        LErro := LErro + sLineBreak + 'Serviço depreciado pela RFB! não disponivel para consulta.'
+        LErro := LErro + sLineBreak + 'Serviço depreciado/descontinuado pela Receita Federal do Brasil! não disponivel para consulta.'
       else
         LErro := LErro + sLineBreak + E.Message;
 
@@ -291,10 +295,11 @@ end;
 function TACBrConsultaCNPJ.Consulta(const ACNPJ, ACaptcha: String;
   ARemoverEspacosDuplos: Boolean): Boolean;
 var
-  Erro, StrAux, PostStr:String;
+  Html, Erro, StrAux, PostStr:String;
   Resposta : TStringList;
   CountCid, Tentativas:Integer;
   Retentar: Boolean;
+  ModoAntigo: Boolean;
 begin
   Erro := ValidarCNPJ( ACNPJ ) ;
   if Erro <> '' then
@@ -303,35 +308,48 @@ begin
   Clear;
   Retentar := True;
   Tentativas := 0;
+  ModoAntigo := True;
 
-  while Retentar do
+  if Assigned(FOnSolicitarCaptcha) then
   begin
-    HTTPSend.Clear;
-    PostStr := 'origem=comprovante&' +
-               'cnpj='+OnlyNumber(ACNPJ)+'&' +
-               'txtTexto_captcha_serpro_gov_br=' +Trim(ACaptcha) +'&' +
-               'search_type=cnpj';
+    FOnSolicitarCaptcha(Html);
 
-    WriteStrToStream( HTTPSend.Document, PostStr );
-    HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPSend.Cookies.Add('flag=1');
-    HTTPSend.Headers.Add('Referer: '+LerSessaoChaveIni('ENDERECOS','REFER'));
-    HTTPPost(LerSessaoChaveIni('ENDERECOS','POST'));
+    RespHTTP.Text:= Html;
 
-    //DEBUG:
-    //RespHTTP.SaveToFile('c:\temp\cnpj1.txt');
-
-    Retentar := (Tentativas < 2) and
-                (pos('Captcha Sonoro', RespHTTP.Text) > 0) and
-                (pos(ACBrStr('Digite o número de CNPJ da empresa e clique em'), RespHTTP.Text) > 0);
-    Inc( Tentativas );
+    ModoAntigo := False;
   end;
 
-  Erro := VerificarErros(RespHTTP.Text);
-
-  if Erro <> '' then
+  if ModoAntigo then
   begin
-    raise EACBrConsultaCNPJException.Create(Erro);
+    while Retentar do
+    begin
+      HTTPSend.Clear;
+      PostStr := 'origem=comprovante&' +
+                 'cnpj='+OnlyNumber(ACNPJ)+'&' +
+                 'txtTexto_captcha_serpro_gov_br=' +Trim(ACaptcha) +'&' +
+                 'search_type=cnpj';
+
+      WriteStrToStream( HTTPSend.Document, PostStr );
+      HTTPSend.MimeType := 'application/x-www-form-urlencoded';
+      HTTPSend.Cookies.Add('flag=1');
+      HTTPSend.Headers.Add('Referer: '+LerSessaoChaveIni('ENDERECOS','REFER'));
+      HTTPPost(LerSessaoChaveIni('ENDERECOS','POST'));
+
+      //DEBUG:
+      //RespHTTP.SaveToFile('c:\temp\cnpj1.txt');
+
+      Retentar := (Tentativas < 2) and
+                  (pos('Captcha Sonoro', RespHTTP.Text) > 0) and
+                  (pos(ACBrStr('Digite o número de CNPJ da empresa e clique em'), RespHTTP.Text) > 0);
+      Inc( Tentativas );
+    end;
+
+    Erro := VerificarErros(RespHTTP.Text);
+
+    if Erro <> '' then
+    begin
+      raise EACBrConsultaCNPJException.Create(Erro);
+    end;
   end;
 
   Result:= True;

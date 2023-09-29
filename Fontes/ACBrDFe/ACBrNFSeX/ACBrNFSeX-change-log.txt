@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/09/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Aracruz/ES trocou de URL, provedor ainda é o EL na versão 1.00
+   Por: Heronim Antonio Marçal
 -- ACBrNFSeXNotasFiscais --
 [*] Adiciona o campo opSimpNac na leitura e na geração do INI
    Por: Diego Folieni

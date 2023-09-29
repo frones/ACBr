@@ -301,7 +301,7 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
   ACBrXmlBase, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts;
 
@@ -967,15 +967,29 @@ begin
 end;
 
 procedure TACBrNFSeXProvider.SalvarXmlRps(aNota: TNotaFiscal);
+var
+  ConteudoEhXml: Boolean;
 begin
   if FAOwner.Configuracoes.Arquivos.Salvar then
   begin
+    aNota.XmlRps := RemoverDeclaracaoXML(aNota.XmlRps);
+    ConteudoEhXml := StringIsXML(aNota.XmlRps);
+
     if NaoEstaVazio(aNota.NomeArqRps) then
-      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps)
+    begin
+      if not ConteudoEhXml then
+        aNota.NomeArqRps := StringReplace(aNota.NomeArqRps, '.xml', '.json', [rfReplaceAll]);
+
+      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps, '', ConteudoEhXml);
+    end
     else
     begin
       aNota.NomeArqRps := aNota.CalcularNomeArquivoCompleto(aNota.NomeArqRps, '');
-      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps);
+
+      if not ConteudoEhXml then
+        aNota.NomeArqRps := StringReplace(aNota.NomeArqRps, '.xml', '.json', [rfReplaceAll]);
+
+      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps, '', ConteudoEhXml);
     end;
   end;
 end;

@@ -171,6 +171,7 @@ uses
   CTA.Provider,
   CTAConsult.Provider,
   eGoverneISS.Provider,
+  eISS.Provider,
   Equiplano.Provider,
   Facundo.Provider,
   FGMaiss.Provider,
@@ -289,6 +290,8 @@ begin
 
       proeGoverneISS:
         Result := TACBrNFSeProvidereGoverneISS.Create(ACBrNFSe);
+
+      proeISS: Result := TACBrNFSeProvidereISS.Create(ACBrNFSe);
 
       proEL:
         begin

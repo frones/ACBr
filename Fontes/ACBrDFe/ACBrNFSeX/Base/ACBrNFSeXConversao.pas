@@ -122,7 +122,7 @@ type
                    proBHISS, proCenti, proCIGA, proCitta, proConam, proContass,
                    proCoplan, proCTA, proCTAConsult, proDataSmart, proDBSeller,
                    proDeISS, proDesenvolve, proDigifred, proDSF, proeGoverneISS,
-                   proEL, proEloTech, proEquiplano, proeReceita, proEtherium,
+                   proeISS, proEL, proEloTech, proEquiplano, proeReceita, proEtherium,
                    proFacundo, proFGMaiss, profintelISS, proFiorilli, proFisco,
                    proFISSLex, proFuturize, proGeisWeb, progeNFe, proGestaoISS,
                    proGiap, proGinfes, proGiss, proGovBR, proGovDigital, proGoverna,

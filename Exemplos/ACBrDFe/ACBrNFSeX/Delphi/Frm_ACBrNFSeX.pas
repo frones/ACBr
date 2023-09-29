@@ -672,7 +672,7 @@ begin
       if (ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
            proCTA, proCTAConsult, proEloTech, proEquiplano, proFacundo, proFGMaiss,
            profintelISS, proGoverna, proInfisc, proIPM, proISSDSF, proPriMax,
-           proRLZ, proSimple, proSmarAPD, proWebFisco, proBauhaus,
+           proRLZ, proSimple, proSmarAPD, proWebFisco, proBauhaus, proeISS,
            proSoftPlan]) or
          ((ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEL, proSimplISS]) and
           (ACBrNFSeX1.Configuracoes.Geral.Versao = ve100)) then

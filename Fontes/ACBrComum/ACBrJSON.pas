@@ -546,8 +546,7 @@ begin
   Result := False;
 
   JsonVal := AsValue[AName];
-
-  if not JsonVal.IsNull then
+  if {$IfNDef USE_JSONDATAOBJECTS_UNIT}Assigned(JsonVal) and {$EndIf} (not JsonVal.IsNull) then
   begin
     {$IFDEF USE_JSONDATAOBJECTS_UNIT}
       if JsonVal.Typ = jdtArray then

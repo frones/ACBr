@@ -279,7 +279,7 @@
   {$DEFINE NOGUI}
 {$ENDIF}
 
-//  lazrus Android com LAMW, não suporta Dialogs, Forms,
+//  Lazarus Android com LAMW, não suporta Dialogs, Forms,
 {$IFDEF LAMW}
   {$DEFINE NOGUI}
 {$ENDIF}

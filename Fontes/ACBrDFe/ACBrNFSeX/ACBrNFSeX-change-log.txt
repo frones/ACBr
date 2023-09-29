@@ -44,6 +44,8 @@ Símbolo : Significado
 
 29/09/2023
 -- ACBrNFSeXServicos --
+[+] Incluída a cidade de Cosmopolis/SP, o provedor é: eISS
+   Por: Italo Giurizzato Junior
 [*] A cidade de Aracruz/ES trocou de URL, provedor ainda é o EL na versão 1.00
    Por: Heronim Antonio Marçal
 -- ACBrNFSeXNotasFiscais --

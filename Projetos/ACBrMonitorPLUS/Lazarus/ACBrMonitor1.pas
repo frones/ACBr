@@ -11965,7 +11965,7 @@ begin
   begin
     PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'GTIN';
     if DirectoryExists(PathSchemaDFe) then
-      TConfiguracoesReinf(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe;
+      TConfiguracoesGTIN(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe;
   end;
 
 end;

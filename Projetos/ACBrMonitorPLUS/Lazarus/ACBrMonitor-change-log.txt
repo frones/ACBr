@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/09/2023
+-- ACBrMonitor1 --
+[*] Correção do Path do GTIN
+  Por: IMATECH / Revisão: Alexandre de Paula
 -- ACBrLibReinfConsts, ACBrLibReinfRespostas, DoACBrReinfUnit --
 [+] Adicionar grupo dadosRecepcaoLote no retorno do envio de eventos da versão 2.1
   Por: Renato Rubinho / Revisão: Diego Folieni

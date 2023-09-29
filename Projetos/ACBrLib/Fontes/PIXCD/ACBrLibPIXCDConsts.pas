@@ -39,7 +39,7 @@ uses
 
 const
   CLibPIXCDNome = 'ACBrLibPIXCD';
-  CLibPIXCDVersao = '1.0.0.9';
+  CLibPIXCDVersao = '1.0.0.21';
 
   CSessaoPixCDConfig = 'PIXCD';
   CChaveAmbiente = 'Ambiente';
@@ -59,6 +59,8 @@ const
   CChaveNomeRecebedor = 'NomeRecebedor';
   CChaveUFRecebedor = 'UFRecebedor';
   CChaveTimeOut = 'TimeOut';
+  CChavePSP = 'PSP';
+  CChaveTipoChave = 'TipoChave';
 
   CSessaoPixCDBradescoConfig = 'Bradesco';
   CChavePIXBradesco = 'ChavePIX';

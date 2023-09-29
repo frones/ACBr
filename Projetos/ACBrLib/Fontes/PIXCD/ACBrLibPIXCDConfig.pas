@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, synachar,
-  ACBrBase, ACBrLibConfig, ACBrPIXCD, ACBrPIXPSPBancoDoBrasil;
+  ACBrBase, ACBrLibConfig, ACBrPIXCD, ACBrPIXPSPBancoDoBrasil, ACBrPIXBase, ACBrLibPIXCDDataModule;
 
 type
 
@@ -307,7 +307,8 @@ type
     FDadosAutomacao: TACBrPixDadosAutomacao;
     FNivelLog: Byte;
     FProxy: TACBrHttpProxy;
-    FPSP: TACBrPSP;
+    FTipoChave: TACBrPIXTipoChave;
+    FPSP: TACBrPIXPSP;
     FQuandoGravarLog: TACBrGravarLog;
     FRecebedor: TACBrPixRecebedor;
     FTimeOut: Integer;
@@ -324,7 +325,8 @@ type
     property DadosAutomacao: TACBrPixDadosAutomacao read FDadosAutomacao write FDadosAutomacao;
     property NivelLog: Byte read FNivelLog write FNivelLog;
     property Proxy: TACBrHttpProxy read FProxy write FProxy;
-    property PSP: TACBrPSP read FPSP write FPSP;
+    property TipoChave: TACBrPIXTipoChave read FTipoChave write FTipoChave;
+    property PSP: TACBrPIXPSP read FPSP write FPSP;
     property QuandoGravarLog: TACBrGravarLog read FQuandoGravarLog write FQuandoGravarLog;
     property Recebedor: TACBrPixRecebedor read FRecebedor write FRecebedor;
     property TimeOut: Integer read FTimeOut write FTimeOut;
@@ -349,6 +351,8 @@ type
       FPIXCDMateraConfig: TPIXCDMateraConfig;
 
     protected
+
+      function AtualizarArquivoConfiguracao: Boolean; override;
 
       procedure INIParaClasse; override;
       procedure ClasseParaINI; override;
@@ -386,6 +390,7 @@ Uses
 constructor TLibPIXCDConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
+
   FPIXCDConfig := TPIXCDConfig.Create;
   FPIXCDBradescoConfig := TPIXCDBradescoConfig.Create;
   FPIXCDSicrediConfig := TPIXCDSicrediConfig.Create;
@@ -418,12 +423,23 @@ begin
   FPIXCDBancoDoBrasilConfig.Free;
   FPIXCDAilosConfig.Free;
   //FPIXCDMateraConfig.Free;
+
   inherited Destroy;
+end;
+
+function TLibPIXCDConfig.AtualizarArquivoConfiguracao: Boolean;
+var
+  Versao: String;
+begin
+  Versao := Ini.ReadString(CSessaoVersao, CLibPIXCDNome, '0');
+  Result := (CompareVersions(CLibPIXCDVersao, Versao) > 0 ) or
+             (inherited AtualizarArquivoConfiguracao);
 end;
 
 procedure TLibPIXCDConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
+
   FPIXCDConfig.LerIni(Ini);
   FPIXCDBradescoConfig.LerIni(Ini);
   FPIXCDSicrediConfig.LerIni(Ini);
@@ -443,7 +459,9 @@ end;
 procedure TLibPIXCDConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
-  ini.WriteString(CSessaoVersao, CLibPIXCDNome, CLibPIXCDVersao);
+
+  Ini.WriteString(CSessaoVersao, CLibPIXCDNome, CLibPIXCDVersao);
+
   FPIXCDConfig.GravarIni(Ini);
   FPIXCDBradescoConfig.GravarIni(Ini);
   FPIXCDSicrediConfig.GravarIni(Ini);
@@ -469,18 +487,26 @@ end;
 procedure TLibPIXCDConfig.Travar;
 begin
   if Assigned(Owner) then
-    TACBrLibPIXCD(Owner).PIXCDDM.Travar;
+    begin
+      with TACBrLibPIXCD(Owner) do
+      PIXCDDM.Travar;
+    end;
 end;
 
 procedure TLibPIXCDConfig.Destravar;
 begin
   if Assigned(Owner) then
-    TACBrLibPIXCD(Owner).PIXCDDM.Destravar;
+  begin
+    with TACBrLibPIXCD(Owner) do
+    PIXCDDM.Destravar;
+  end;
 end;
 
 { TPIXCDConfig }
 constructor TPIXCDConfig.Create;
 begin
+  inherited;
+  FPSP := PSP;
   FAmbiente := ambTeste;
   FArqLOG := '';
   FDadosAutomacao := TACBrPixDadosAutomacao.Create;
@@ -523,6 +549,9 @@ begin
     User := AIni.ReadString(CSessaoPixCDConfig, CChaveProxyUser, User);
   end;
 
+  TipoChave:= TACBrPIXTipoChave(AIni.ReadInteger(CSessaoPixCDConfig, CChaveTipoChave, Integer(TipoChave)));
+  PSP := TACBrPIXPSP(AIni.ReadInteger(CSessaoPixCDConfig, CChavePSP, Integer(PSP)));
+
   with Recebedor do
   begin
     CEP := AIni.ReadString(CSessaoPixCDConfig, CChaveCEPRecebedor, CEP);
@@ -533,12 +562,10 @@ begin
   end;
 
   TimeOut:= AIni.ReadInteger(CSessaoPixCDConfig, CChaveTimeOut, TimeOut);
-
 end;
 
 procedure TPIXCDConfig.GravarIni(const AIni: TCustomIniFile);
 begin
-
   AIni.WriteInteger(CSessaoPixCDConfig, CChaveAmbiente, integer(Ambiente));
   AIni.WriteString(CSessaoPixCDConfig, CChaveArqLogPixCD, ArqLog);
 
@@ -560,6 +587,9 @@ begin
     AIni.WriteString(CSessaoPixCDConfig, CChaveProxyUser, User);
   end;
 
+  AIni.WriteInteger(CSessaoPixCDConfig, CChaveTipoChave, Integer(TipoChave));
+  AIni.WriteInteger(CSessaoPixCDConfig, CChavePSP, Integer(PSP));
+
   with Recebedor do
   begin
     AIni.WriteString(CSessaoPixCDConfig, CChaveCEPRecebedor, CEP);
@@ -570,7 +600,6 @@ begin
   end;
 
   AIni.WriteInteger(CSessaoPixCDConfig, CChaveTimeOut, TimeOut);
-
 end;
 
 { TPIXCDBradescoConfig }

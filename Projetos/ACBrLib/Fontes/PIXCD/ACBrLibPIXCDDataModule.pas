@@ -46,11 +46,25 @@ uses
 
 type
 
+  TACBrPIXPSP = (Bradesco,
+                 Itau,
+                 BancoDoBrasil,
+                 Santander,
+                 Shipay,
+                 Sicredi,
+                 Sicoob,
+                 PagSeguro,
+                 GerenciaNet,
+                 PixPDV,
+                 Inter,
+                 Ailos,
+                 Matera);
+
   { TLibPIXCDDM }
 
   TLibPIXCDDM = class(TLibDataModule)
-    ACBrPSPBradesco1: TACBrPSPBradesco;
     ACBrPixCD1: TACBrPixCD;
+    ACBrPSPBradesco1: TACBrPSPBradesco;
     ACBrPSPAilos1: TACBrPSPAilos;
     ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil;
     ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet;
@@ -65,7 +79,7 @@ type
     ACBrPSPSicredi1: TACBrPSPSicredi;
 
   public
-    procedure AplicarConfiguracoes;
+    procedure AplicarConfiguracoes; override;
   end;
 
 implementation
@@ -81,7 +95,23 @@ procedure TLibPIXCDDM.AplicarConfiguracoes;
 var
   pLibPIXCDConfig: TLibPIXCDConfig;
 begin
-  pLibPIXCDConfig := TLibPIXCDConfig(TACBrLibPIXCD(Lib).Config);
+    pLibPIXCDConfig := TLibPIXCDConfig(Lib.Config);
+
+    case TACBrPIXPSP(pLibPIXCDConfig.PIXCDConfig.PSP) of
+      Bradesco: ACBrPixCD1.PSP := ACBrPSPBradesco1;
+      Itau: ACBrPixCD1.PSP := ACBrPSPItau1;
+      BancoDoBrasil: ACBrPixCD1.PSP := ACBrPSPBancoDoBrasil1;
+      Santander: ACBrPixCD1.PSP := ACBrPSPSantander1;
+      Shipay: ACBrPixCD1.PSP := ACBrPSPShipay1;
+      Sicredi: ACBrPixCD1.PSP := ACBrPSPSicredi1;
+      Sicoob: ACBrPixCD1.PSP := ACBrPSPSicoob1;
+      PagSeguro: ACBrPixCD1.PSP := ACBrPSPPagSeguro1;
+      GerenciaNet: ACBrPixCD1.PSP := ACBrPSPGerenciaNet1;
+      PixPDV: ACBrPixCD1.PSP := ACBrPSPPixPDV1;
+      Inter: ACBrPixCD1.PSP := ACBrPSPInter1;
+      Ailos: ACBrPixCD1.PSP := ACBrPSPAilos1;
+      Matera: ACBrPixCD1.PSP := ACBrPSPMatera1;
+    end;
 end;
 
 end.

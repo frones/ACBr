@@ -784,10 +784,7 @@ begin
     NFSe.tpEmit := StrTotpEmit(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpEmit'), tcStr));
 
     LerSubstituicao(AuxNode);
-
-    if FpLerPrestador then
-      LerPrestador(AuxNode);
-
+    LerPrestador(AuxNode);
     LerTomador(AuxNode);
     LerIntermediario(AuxNode);
     LerServico(AuxNode);
@@ -890,8 +887,6 @@ begin
 
       Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
       Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
-
-      LerRegimeTributacaoPrestador(AuxNode);
     end;
   end;
 end;
@@ -1009,23 +1004,26 @@ begin
   begin
     with NFSe.Prestador do
     begin
-      with IdentificacaoPrestador do
+      if FpLerPrestador then
       begin
-        CpfCnpj := ObterCNPJCPF(AuxNode);
+        with IdentificacaoPrestador do
+        begin
+          CpfCnpj := ObterCNPJCPF(AuxNode);
 
-        if CpfCnpj = '' then
-          Nif := ObterConteudo(AuxNode.Childrens.FindAnyNs('NIF'), tcStr);
+          if CpfCnpj = '' then
+            Nif := ObterConteudo(AuxNode.Childrens.FindAnyNs('NIF'), tcStr);
 
-        CAEPF := ObterConteudo(AuxNode.Childrens.FindAnyNs('CAEPF'), tcStr);
-        InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
+          CAEPF := ObterConteudo(AuxNode.Childrens.FindAnyNs('CAEPF'), tcStr);
+          InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
+        end;
+
+        RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
+
+        LerEnderecoPrestador(AuxNode);
+
+        Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
+        Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
       end;
-
-      RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
-
-      LerEnderecoPrestador(AuxNode);
-
-      Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-      Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
 
       LerRegimeTributacaoPrestador(AuxNode);
     end;

@@ -1680,7 +1680,13 @@ begin
     StatusVenda := stsFinalizada;
     if not ACBrTEFAPI1.ConfirmarTransacaoAutomaticamente then
     begin
-      ACBrTEFAPI1.ConfirmarTransacoesPendentes;
+      MR := MessageDlg( 'Confirma a Transação ?', mtConfirmation,
+                        [mbYes, mbNo], 0);
+      if (MR = mrYes) then
+        ACBrTEFAPI1.FinalizarTransacoesPendentes( tefstsSucessoManual )
+      else
+        ACBrTEFAPI1.FinalizarTransacoesPendentes( tefstsErroDiverso );
+
       AtualizarPagamentosVendaNaInterface;
     end;
 

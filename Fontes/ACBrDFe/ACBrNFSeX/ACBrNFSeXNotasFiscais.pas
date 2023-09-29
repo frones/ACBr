@@ -134,6 +134,7 @@ type
     Procedure Insert(Index: Integer; ANota: TNotaFiscal); reintroduce;
     function FindByRps(ANumRPS: string): TNotaFiscal;
     function FindByNFSe(ANumNFSe: string): TNotaFiscal;
+    function FindByCnpjCpfSerieRps(CnpjCpf, Serie, ANumRPS: string): TNotaFiscal;
 
     property Items[Index: integer]: TNotaFiscal read GetItem write SetItem; default;
 
@@ -162,6 +163,8 @@ type
   function CompRpsPorNumero(const Item1,
     Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
   function CompNFSePorNumero(const Item1,
+    Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+  function CompRpsPorCnpjCpfSerieNumero(const Item1,
     Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 
 implementation
@@ -200,6 +203,28 @@ begin
   if NumNFSe1 < NumNFSe2 then
     Result := -1
   else if NumNFSe1 > NumNFSe2 then
+    Result := 1
+  else
+    Result := 0;
+end;
+
+function CompRpsPorCnpjCpfSerieNumero(const Item1,
+  Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+var
+  NumRps1, NumRps2: String;
+begin
+  NumRps1 :=
+    PadLeft(TNotaFiscal(Item1).NFSe.Prestador.IdentificacaoPrestador.CpfCnpj, 14, '0') +
+    PadLeft(TNotaFiscal(Item1).NFSe.IdentificacaoRps.Serie, 5, '0') +
+    PadLeft(TNotaFiscal(Item1).NFSe.IdentificacaoRps.Numero, 15, '0');
+  NumRps2 :=
+    PadLeft(TNotaFiscal(Item2).NFSe.Prestador.IdentificacaoPrestador.CpfCnpj, 14, '0') +
+    PadLeft(TNotaFiscal(Item2).NFSe.IdentificacaoRps.Serie, 5, '0') +
+    PadLeft(TNotaFiscal(Item2).NFSe.IdentificacaoRps.Numero, 15, '0');
+
+  if NumRps1 < NumRps2 then
+    Result := -1
+  else if NumRps1 > NumRps2 then
     Result := 1
   else
     Result := 0;
@@ -1534,12 +1559,48 @@ end;
 procedure TNotasFiscais.ImprimirPDF;
 begin
   VerificarDANFSE;
+
   TACBrNFSeX(FACBrNFSe).DANFSE.ImprimirDANFSEPDF;
 end;
 
 procedure TNotasFiscais.Insert(Index: Integer; ANota: TNotaFiscal);
 begin
   inherited Insert(Index, ANota);
+end;
+
+function TNotasFiscais.FindByRps(ANumRPS: string): TNotaFiscal;
+var
+  AItem: TNotaFiscal;
+  AItemIndex: Integer;
+begin
+  Result := nil;
+
+  if Self.Count = 0 then Exit;
+
+  if not Self.fIsSorted then
+  begin
+  {$IfDef HAS_SYSTEM_GENERICS}
+    Sort(TComparer<TObject>.Construct(CompRpsPorNumero));
+  {$Else}
+    Sort(@CompRpsPorNumero);
+  {$EndIf}
+  end;
+
+  AItem := TNotaFiscal.Create(FACBrNFSe);
+  try
+    AItem.NFSe.IdentificacaoRps.Numero := ANumRPS;
+    {$IfDef HAS_SYSTEM_GENERICS}
+     AItemIndex := FindObject(AItem, TComparer<TObject>.Construct(CompRpsPorNumero));
+    {$Else}
+     AItemIndex := FindObject(Pointer(AItem), @CompRpsPorNumero);
+    {$EndIf}
+  finally
+    AItem.Free;
+  end;
+
+  if AItemIndex = -1 then Exit;
+
+  Result := Self.Items[AItemIndex];
 end;
 
 function TNotasFiscais.FindByNFSe(ANumNFSe: string): TNotaFiscal;
@@ -1577,7 +1638,8 @@ begin
   Result := Self.Items[AItemIndex];
 end;
 
-function TNotasFiscais.FindByRps(ANumRPS: string): TNotaFiscal;
+function TNotasFiscais.FindByCnpjCpfSerieRps(CnpjCpf, Serie,
+  ANumRPS: string): TNotaFiscal;
 var
   AItem: TNotaFiscal;
   AItemIndex: Integer;
@@ -1589,19 +1651,22 @@ begin
   if not Self.fIsSorted then
   begin
   {$IfDef HAS_SYSTEM_GENERICS}
-    Sort(TComparer<TObject>.Construct(CompRpsPorNumero));
+    Sort(TComparer<TObject>.Construct(CompRpsPorCnpjCpfSerieNumero));
   {$Else}
-    Sort(@CompRpsPorNumero);
+    Sort(@CompRpsPorCnpjCpfSerieNumero);
   {$EndIf}
   end;
 
   AItem := TNotaFiscal.Create(FACBrNFSe);
   try
     AItem.NFSe.IdentificacaoRps.Numero := ANumRPS;
+    AItem.NFSe.IdentificacaoRps.Serie := Serie;
+    AItem.NFSe.Prestador.IdentificacaoPrestador.CpfCnpj := CnpjCpf;
+
     {$IfDef HAS_SYSTEM_GENERICS}
-     AItemIndex := FindObject(AItem, TComparer<TObject>.Construct(CompRpsPorNumero));
+     AItemIndex := FindObject(AItem, TComparer<TObject>.Construct(CompRpsPorCnpjCpfSerieNumero));
     {$Else}
-     AItemIndex := FindObject(Pointer(AItem), @CompRpsPorNumero);
+     AItemIndex := FindObject(Pointer(AItem), @CompRpsPorCnpjCpfSerieNumero);
     {$EndIf}
   finally
     AItem.Free;

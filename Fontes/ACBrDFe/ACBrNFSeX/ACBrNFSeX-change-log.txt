@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/09/2023
+-- ACBrNFSeXNotasFiscais/PadraoNacional.Provider --
+[*] Implementado a verificação na lista de notas por CNPJ/CPF do emitente, numero e
+    serie do DPS, para que o ConsultarDFe adicione todas as notas retornadas.
+   Por: Fabiano Arndt
 -- ACBrNFSeXServicos --
 [*] Alterado a URL da cidade de Rolandia/PR, o provedor continua o mesmo.
    Por: Marcos Giordani

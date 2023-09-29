@@ -291,7 +291,7 @@ procedure TACBrNFSeProviderPadraoNacional.PrepararEmitir(
 var
   AErro: TNFSeEventoCollectionItem;
   Nota: TNotaFiscal;
-  IdAttr, ListaRps: string;
+  IdAttr, ListaDps: string;
   I: Integer;
 begin
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
@@ -313,7 +313,7 @@ begin
 
   if Response.Erros.Count > 0 then Exit;
 
-  ListaRps := '';
+  ListaDps := '';
 
   if ConfigAssinar.IncluirURI then
     IdAttr := ConfigGeral.Identificador
@@ -341,10 +341,10 @@ begin
 
     SalvarXmlRps(Nota);
 
-    ListaRps := ListaRps + Nota.XmlRps;
+    ListaDps := ListaDps + Nota.XmlRps;
   end;
 
-  Response.ArquivoEnvio := ListaRps;
+  Response.ArquivoEnvio := ListaDps;
 end;
 
 procedure TACBrNFSeProviderPadraoNacional.TratarRetornoEmitir(
@@ -355,7 +355,7 @@ var
   NFSeXml: string;
   DocumentXml: TACBrXmlDocument;
   ANode: TACBrXmlNode;
-  NumNFSe, NumRps: string;
+  NumNFSe, NumDps: string;
   ANota: TNotaFiscal;
 begin
   if Response.ArquivoRetorno = '' then
@@ -404,9 +404,9 @@ begin
           NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
           ANode := ANode.Childrens.FindAnyNs('DPS');
           ANode := ANode.Childrens.FindAnyNs('infDPS');
-          NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
+          NumDps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumDps);
 
           ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
           SalvarXmlNfse(ANota);
@@ -520,7 +520,7 @@ var
   NFSeXml: string;
   DocumentXml: TACBrXmlDocument;
   ANode: TACBrXmlNode;
-  NumNFSe, NumRps: string;
+  NumNFSe, NumDps: string;
   ANota: TNotaFiscal;
 begin
   if Response.ArquivoRetorno = '' then
@@ -566,9 +566,9 @@ begin
             NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
             ANode := ANode.Childrens.FindAnyNs('DPS');
             ANode := ANode.Childrens.FindAnyNs('infDPS');
-            NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
+            NumDps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
 
-            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumDps);
 
             ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
             SalvarXmlNfse(ANota);
@@ -956,7 +956,7 @@ var
   Document, JSon: TACBrJSONObject;
   JSonLoteDFe: TACBrJSONArray;
   i: Integer;
-  TipoDoc, ArquivoXml, NumNFSe, NumRps, IDEvento: string;
+  CnpjCpfDps, SerieDps, TipoDoc, ArquivoXml, NumNFSe, NumDps, IDEvento: string;
   DocumentXml: TACBrXmlDocument;
   ANode: TACBrXmlNode;
   ANota: TNotaFiscal;
@@ -1019,9 +1019,17 @@ begin
                 NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
                 ANode := ANode.Childrens.FindAnyNs('DPS');
                 ANode := ANode.Childrens.FindAnyNs('infDPS');
-                NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
+                NumDps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
+                SerieDps := ObterConteudoTag(ANode.Childrens.FindAnyNs('serie'), tcStr);
 
-                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+                ANode := ANode.Childrens.FindAnyNs('prest');
+
+                CnpjCpfDps := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
+
+                if CnpjCpfDps = '' then
+                  CnpjCpfDps := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
+
+                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByCnpjCpfSerieRps(CnpjCpfDps, SerieDps, NumDps);
 
                 ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
                 SalvarXmlNfse(ANota);

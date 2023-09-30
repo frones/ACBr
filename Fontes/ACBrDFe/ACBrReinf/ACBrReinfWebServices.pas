@@ -113,6 +113,7 @@ type
     function GetRetConsulta_R5011: TRetConsulta_R5011;
     function GetRetConsulta_R9011: TRetConsulta_R9011;
     function GetRetConsulta_R9015: TRetConsulta_R9015;
+    function GetEvtTotalContribVersao: TEvtTotalContrib;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -134,6 +135,7 @@ type
     property RetConsulta_R5011: TRetConsulta_R5011 read GetRetConsulta_R5011;
     property RetConsulta_R9011: TRetConsulta_R9011 read GetRetConsulta_R9011;
     property RetConsulta_R9015: TRetConsulta_R9015 read GetRetConsulta_R9015;
+    property EvtTotalContribVersao: TEvtTotalContrib read GetEvtTotalContribVersao;
     // Versão 2.1.1
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
@@ -163,6 +165,7 @@ type
     function GetRetConsulta_R5011: TRetConsulta_R5011;
     function GetRetConsulta_R9011: TRetConsulta_R9011;
     function GetRetConsulta_R9015: TRetConsulta_R9015;
+    function GetEvtTotalContribVersao: TEvtTotalContrib;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -192,6 +195,7 @@ type
     property RetConsulta_R5011: TRetConsulta_R5011 read GetRetConsulta_R5011;
     property RetConsulta_R9011: TRetConsulta_R9011 read GetRetConsulta_R9011;
     property RetConsulta_R9015: TRetConsulta_R9015 read GetRetConsulta_R9015;
+    property EvtTotalContribVersao: TEvtTotalContrib read GetEvtTotalContribVersao;
     // Versão 2.1.1
     property Consulta: TReinfConsulta read FConsulta write FConsulta;
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
@@ -757,6 +761,14 @@ begin
   Result := FRetConsulta_R9015;
 end;
 
+function TConsultar.GetEvtTotalContribVersao: TEvtTotalContrib;
+begin
+  if FVersaoDF < v2_01_01 then
+    Result := FRetConsulta_R5011.evtTotalContrib
+  else
+    Result := FRetConsulta_R9011.evtTotalContrib;
+end;
+
 function TConsultar.GerarPrefixoArquivo: String;
 begin
   Result := FProtocolo;
@@ -950,6 +962,14 @@ begin
     GerarException('Propriedade RetConsulta_R9015 disponível a partir da versão 2_01_01, registro inexistente em versões anteriores');
 
   Result := FRetConsulta_R9015;
+end;
+
+function TConsultarReciboEvento.GetEvtTotalContribVersao: TEvtTotalContrib;
+begin
+  if FVersaoDF < v2_01_01 then
+    Result := FRetConsulta_R5011.evtTotalContrib
+  else
+    Result := FRetConsulta_R9011.evtTotalContrib;
 end;
 
 procedure TConsultarReciboEvento.InicializarServico;

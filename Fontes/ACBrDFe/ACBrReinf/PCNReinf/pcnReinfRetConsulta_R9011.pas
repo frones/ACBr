@@ -79,13 +79,13 @@ type
     FidEv: String;
     Fhash: String;
   public
-    property nrRecArqBase: String read FnrRecArqBase;
-    property nrProtEntr: String read FnrProtEntr;
-    property dhProcess: TDateTime read FdhProcess;
-    property dhRecepcao: TDateTime read FdhRecepcao;
-    property tpEv: String read FtpEv;
-    property idEv: String read FidEv;
-    property hash: String read Fhash;
+    property nrRecArqBase: String read FnrRecArqBase write FnrRecArqBase;
+    property nrProtEntr: String read FnrProtEntr write FnrProtEntr;
+    property dhProcess: TDateTime read FdhProcess write FdhProcess;
+    property dhRecepcao: TDateTime read FdhRecepcao write FdhRecepcao;
+    property tpEv: String read FtpEv write FtpEv;
+    property idEv: String read FidEv write FidEv;
+    property hash: String read Fhash write Fhash;
   end;
 
   TInfoTotalContrib = class(TObject)
@@ -105,15 +105,15 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property nrRecArqBase: String read FnrRecArqBase;
-    property indExistInfo: TindExistInfo read FindExistInfo;
-    property identEscritDCTF: String read FidentEscritDCTF;
-    property RTom: TRTomCollection read FRTom;
-    property RPrest: TRPrestCollection read FRPrest;
-    property RRecRepAD: TRRecRepADCollection read FRRecRepAD;
+    property nrRecArqBase: String read FnrRecArqBase write FnrRecArqBase;
+    property indExistInfo: TindExistInfo read FindExistInfo write FindExistInfo;
+    property identEscritDCTF: String read FidentEscritDCTF write FidentEscritDCTF;
+    property RTom: TRTomCollection read FRTom write FRTom;
+    property RPrest: TRPrestCollection read FRPrest write FRPrest;
+    property RRecRepAD: TRRecRepADCollection read FRRecRepAD write FRRecRepAD;
     property RComl: TRComlCollection read FRComl write SetRComl;
-    property RAquis: TRAquisCollection read FRAquis;
-    property RCPRB: TRCPRBCollection read FRCPRB;
+    property RAquis: TRAquisCollection read FRAquis write FRAquis;
+    property RCPRB: TRCPRBCollection read FRCPRB write FRCPRB;
   end;
 
   TinfoCRTomCollection = class(TACBrObjectList)
@@ -133,9 +133,9 @@ type
     FVlrCRTom: Double;
     FVlrCRTomSusp: Double;
   public
-    property CRTom: string read FCRTom;
-    property VlrCRTom: Double read FVlrCRTom;
-    property VlrCRTomSusp: Double read FVlrCRTomSusp;
+    property CRTom: string read FCRTom write FCRTom;
+    property VlrCRTom: Double read FVlrCRTom write FVlrCRTom;
+    property VlrCRTomSusp: Double read FVlrCRTomSusp write FVlrCRTomSusp;
   end;
 
   TRTomCollection = class(TACBrObjectList)
@@ -152,6 +152,7 @@ type
   TRTomCollectionItem = class(TObject)
   private
     FcnpjPrestador: String;
+    Fcno: String;
     FvlrTotalBaseRet: Double;
     FvlrTotalRetPrinc: Double;
     FvlrTotalRetAdic: Double;
@@ -164,12 +165,13 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property cnpjPrestador: String read FcnpjPrestador;
-    property vlrTotalBaseRet: Double read FvlrTotalBaseRet;
-    property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc;
-    property vlrTotalRetAdic: Double read FvlrTotalRetAdic;
-    property vlrTotalNRetPrinc: Double read FvlrTotalNRetPrinc;
-    property vlrTotalNRetAdic: Double read FvlrTotalNRetAdic;
+    property cnpjPrestador: String read FcnpjPrestador write FcnpjPrestador;
+    property cno: String read Fcno write Fcno;
+    property vlrTotalBaseRet: Double read FvlrTotalBaseRet write FvlrTotalBaseRet;
+    property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc write FvlrTotalRetPrinc;
+    property vlrTotalRetAdic: Double read FvlrTotalRetAdic write FvlrTotalRetAdic;
+    property vlrTotalNRetPrinc: Double read FvlrTotalNRetPrinc write FvlrTotalNRetPrinc;
+    property vlrTotalNRetAdic: Double read FvlrTotalNRetAdic write FvlrTotalNRetAdic;
     property infoCRTom: TinfoCRTomCollection read FinfoCRTom write SetinfoCRTom;
   end;
 
@@ -194,13 +196,13 @@ type
     FvlrTotalNRetPrinc: Double;
     FvlrTotalNRetAdic: Double;
   public
-    property tpInscTomador: TtpInsc read FtpInscTomador;
-    property nrInscTomador: String read FnrInscTomador;
-    property vlrTotalBaseRet: Double read FvlrTotalBaseRet;
-    property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc;
-    property vlrTotalRetAdic: Double read FvlrTotalRetAdic;
-    property vlrTotalNRetPrinc: Double read FvlrTotalNRetPrinc;
-    property vlrTotalNRetAdic: Double read FvlrTotalNRetAdic;
+    property tpInscTomador: TtpInsc read FtpInscTomador write FtpInscTomador;
+    property nrInscTomador: String read FnrInscTomador write FnrInscTomador;
+    property vlrTotalBaseRet: Double read FvlrTotalBaseRet write FvlrTotalBaseRet;
+    property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc write FvlrTotalRetPrinc;
+    property vlrTotalRetAdic: Double read FvlrTotalRetAdic write FvlrTotalRetAdic;
+    property vlrTotalNRetPrinc: Double read FvlrTotalNRetPrinc write FvlrTotalNRetPrinc;
+    property vlrTotalNRetAdic: Double read FvlrTotalNRetAdic write FvlrTotalNRetAdic;
   end;
 
   TRRecRepADCollection = class(TACBrObjectList)
@@ -224,13 +226,13 @@ type
     FvlrCRRecRepAD: Double;
     FvlrCRRecRepADSusp: Double;
   public
-    property cnpjAssocDesp: string read FcnpjAssocDesp;
-    property vlrTotalRep: Double read FvlrTotalRep;
-    property vlrTotalRet: Double read FvlrTotalRet;
-    property vlrTotalNRet: Double read FvlrTotalNRet;
-    property CRRecRepAD: String read FCRRecRepAD;
-    property vlrCRRecRepAD: Double read FvlrCRRecRepAD;
-    property vlrCRRecRepADSusp: Double read FvlrCRRecRepADSusp;
+    property cnpjAssocDesp: string read FcnpjAssocDesp write FcnpjAssocDesp;
+    property vlrTotalRep: Double read FvlrTotalRep write FvlrTotalRep;
+    property vlrTotalRet: Double read FvlrTotalRet write FvlrTotalRet;
+    property vlrTotalNRet: Double read FvlrTotalNRet write FvlrTotalNRet;
+    property CRRecRepAD: String read FCRRecRepAD write FCRRecRepAD;
+    property vlrCRRecRepAD: Double read FvlrCRRecRepAD write FvlrCRRecRepAD;
+    property vlrCRRecRepADSusp: Double read FvlrCRRecRepADSusp write FvlrCRRecRepADSusp;
   end;
 
   TRComlCollection = class(TACBrObjectList)
@@ -256,15 +258,15 @@ type
     FvlrCRComl: Double;
     FvlrCRComlSusp: Double;
   public
-    property vlrCPApur: Double read FvlrCPApur;
-    property vlrRatApur: Double read FvlrRatApur;
-    property vlrSenarApur: Double read FvlrSenarApur;
-    property vlrCPSusp: Double read FvlrCPSusp;
-    property vlrRatSusp: Double read FvlrRatSusp;
-    property vlrSenarSusp: Double read FvlrSenarSusp;
-    property CRComl: String read FCRComl;
-    property vlrCRComl: Double read FvlrCRComl;
-    property vlrCRComlSusp: Double read FvlrCRComlSusp;
+    property vlrCPApur: Double read FvlrCPApur write FvlrCPApur;
+    property vlrRatApur: Double read FvlrRatApur write FvlrRatApur;
+    property vlrSenarApur: Double read FvlrSenarApur write FvlrSenarApur;
+    property vlrCPSusp: Double read FvlrCPSusp write FvlrCPSusp;
+    property vlrRatSusp: Double read FvlrRatSusp write FvlrRatSusp;
+    property vlrSenarSusp: Double read FvlrSenarSusp write FvlrSenarSusp;
+    property CRComl: String read FCRComl write FCRComl;
+    property vlrCRComl: Double read FvlrCRComl write FvlrCRComl;
+    property vlrCRComlSusp: Double read FvlrCRComlSusp write FvlrCRComlSusp;
   end;
   
   TRAquisCollection = class(TACBrObjectList)
@@ -284,9 +286,9 @@ type
     FvlrCRAquis: Double;
     FvlrCRAquisSusp: Double;
   public
-    property CRAquis: String read FCRAquis;
-    property vlrCRAquis: Double read FvlrCRAquis;
-    property vlrCRAquisSusp: Double read FvlrCRAquisSusp;
+    property CRAquis: String read FCRAquis write FCRAquis;
+    property vlrCRAquis: Double read FvlrCRAquis write FvlrCRAquis;
+    property vlrCRAquisSusp: Double read FvlrCRAquisSusp write FvlrCRAquisSusp;
   end;  
 
   TRCPRBCollection = class(TACBrObjectList)
@@ -309,12 +311,12 @@ type
     FvlrCRCPRB: Double;
     FvlrCRCPRBSusp: Double;
   public
-    property codRec: Integer read FcodRec;
-    property vlrCPApurTotal: Double read FvlrCPApurTotal;
-    property vlrCPRBSusp: Double read FvlrCPRBSusp;
-    property CRCPRB: String read FCRCPRB;
-    property vlrCRCPRB: Double read FvlrCRCPRB;
-    property vlrCRCPRBSusp: Double read FvlrCRCPRBSusp;
+    property codRec: Integer read FcodRec write FcodRec;
+    property vlrCPApurTotal: Double read FvlrCPApurTotal write FvlrCPApurTotal;
+    property vlrCPRBSusp: Double read FvlrCPRBSusp write FvlrCPRBSusp;
+    property CRCPRB: String read FCRCPRB write FCRCPRB;
+    property vlrCRCPRB: Double read FvlrCRCPRB write FvlrCRCPRB;
+    property vlrCRCPRBSusp: Double read FvlrCRCPRBSusp write FvlrCRCPRBSusp;
   end;
 
   TRetornoEventosCollection = class(TACBrObjectList)

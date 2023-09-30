@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2023
+-- ACBrReinfWebServices, pcnReinfRetConsulta, pcnReinfRetConsulta_R9011 --
+[*] Unificadas classes TEvtTotalContrib do R5011 e R9011 e criada função para retornar os valores de acordo com a versão
+  Por: Renato Rubinho
+
 27/09/2023
 -- pcnConversaoReinf --
 [*] Corrigida lista de retornos das funções de conversão do enum TtpDependente 

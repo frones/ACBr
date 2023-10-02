@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/10/2023
+-- NFSeBrasil.Provider --
+[*] O provedor fez uma alteração em seu webservice e agora não deve ser gerado o 
+    XML com namespace, segundo informações de JSoftware.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [*] Possível solução para a rejeição ocorrida no provedor Padrão Nacional, acusando
     que o XML não esta no formato UTF-8.

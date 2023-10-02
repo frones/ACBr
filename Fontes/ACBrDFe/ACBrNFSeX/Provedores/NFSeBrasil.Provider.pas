@@ -45,7 +45,7 @@ uses
 type
   TACBrNFSeXWebserviceNFSeBrasil = class(TACBrNFSeXWebserviceSoap11)
   private
-    function GetDatosUsuario: string;
+    function GetDadosUsuario: string;
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
@@ -55,7 +55,7 @@ type
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
-    property DadosUsuario: string read GetDatosUsuario;
+    property DadosUsuario: string read GetDadosUsuario;
   end;
 
   TACBrNFSeProviderNFSeBrasil = class (TACBrNFSeProviderABRASFv1)
@@ -100,7 +100,7 @@ const
 
 { TACBrNFSeXWebserviceNFSeBrasil }
 
-function TACBrNFSeXWebserviceNFSeBrasil.GetDatosUsuario: string;
+function TACBrNFSeXWebserviceNFSeBrasil.GetDadosUsuario: string;
 begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
@@ -231,7 +231,8 @@ begin
   ConfigGeral.UseCertificateHTTP := False;
   ConfigMsgDados.Prefixo := 'xs';
 
-  SetXmlNameSpace('https://www.nfsebrasil.net.br/nfse/rps/xsd/rps.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance');
+//  SetXmlNameSpace('https://www.nfsebrasil.net.br/nfse/rps/xsd/rps.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance');
+  SetXmlNameSpace('');
 
   ConfigMsgDados.ConsultarNFSe.DocElemento := 'ConsultarNfsePorRpsEnvio';
 

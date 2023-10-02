@@ -300,7 +300,7 @@ implementation
 
 uses
   IniFiles,
-  pcnAuxiliar,
+  pcnAuxiliar, ACBrConsts,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
   ACBrXmlBase, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts;
@@ -974,6 +974,9 @@ begin
   begin
     aNota.XmlRps := RemoverDeclaracaoXML(aNota.XmlRps);
     ConteudoEhXml := StringIsXML(aNota.XmlRps);
+
+    if ConteudoEhXml then
+      aNota.XmlRps := CUTF8DeclaracaoXML + aNota.XmlRps;
 
     if NaoEstaVazio(aNota.NomeArqRps) then
     begin

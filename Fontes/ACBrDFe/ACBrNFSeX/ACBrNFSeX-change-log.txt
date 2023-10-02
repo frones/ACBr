@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2023
+-- ACBrNFSeXProviderBase --
+[*] Possível solução para a rejeição ocorrida no provedor Padrão Nacional, acusando
+    que o XML não esta no formato UTF-8.
+   Por: Italo Giurizzato Junior
+
 29/09/2023
 -- ACBrNFSeXNotasFiscais/PadraoNacional.Provider --
 [*] Implementado a verificação na lista de notas por CNPJ/CPF do emitente, numero e

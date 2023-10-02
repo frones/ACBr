@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2023
+-- ACBrBPeDABPeESCPOS --
+[*] Alteração visando não imprimir poltrona numero "0", quando esta não for 
+    informada.
+   Por: paulo Alves N. Junior
+
 10/08/2022
 -- ACBrBPeBilhetes --
 [*] Atualizado função ValidarRegrasdeNegocios, utilizando a função DataHoraTimeZoneModoDeteccao para validar a DataHora com TimeZone informado no XML

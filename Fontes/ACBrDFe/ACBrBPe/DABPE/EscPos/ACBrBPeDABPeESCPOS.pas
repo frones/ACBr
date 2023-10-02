@@ -308,7 +308,7 @@ begin
     FPosPrinter.Buffer.Add(' ');
     FPosPrinter.Buffer.Add('</fn>' +
                            PadSpace('Poltrona: <n>' +
-                           IntToStr(FpBPe.infViagem.Items[i].Poltrona) +
+                           ifthen(FpBPe.infViagem.Items[i].Poltrona > 0, IntToStr(FpBPe.infViagem.Items[i].Poltrona), ' ') +
                            '|Plataforma: <n>' +
                            FpBPe.infViagem.Items[i].Plataforma + '</n>',
                            FPosPrinter.ColunasFonteNormal, '|'));

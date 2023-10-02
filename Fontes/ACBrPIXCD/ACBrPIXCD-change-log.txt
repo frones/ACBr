@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2023
+-- ACBrSchemasMatera --
+[+] Incluídos novos schemas de mapeamento da API específica da Matera
+
+-- ACBrPIXPSPMatera --
+[+] Adicionados métodos para adaptação do PSP Matera com API Padrão Bacen.
+Por: Elias César
+
 01/09/2023
 -- ACBrSchemasMatera --
 [-] Correções na implementação dos objetos para o PSP Matera

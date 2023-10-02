@@ -37,15 +37,17 @@
   Documentação
   https://doc-api.matera.com/mp_server.html
 
-*)
+*) 
+
+{$I ACBr.inc}
 
 unit ACBrPIXPSPMatera;
 
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrPIXCD, ACBrPIXBase, ACBrOpenSSLUtils, ACBrSchemasMatera;
+  Classes, SysUtils, ACBrPIXCD, ACBrPIXBase, ACBrOpenSSLUtils,
+  ACBrSchemasMatera, ACBrPIXSchemasProblema;
 
 const
   cMateraURLSandbox       = 'https://mtls-mp.hml.flagship.maas.link';
@@ -68,6 +70,7 @@ const
   cMateraEndPointReturns = '/returns';
   cMateraEndPointCountry = 'BRA';
   cMateraMsgInstantPayment = 'InstantPayment';
+  cMateraMsgBillingDueDate = 'BillingDueDate';
 
 type
 
@@ -82,6 +85,7 @@ type
     fContaResposta: TMateraAccountResponse;
     fContaSolicitacao: TMateraCreateAccountTransactionRequest;
     fErroResposta: TMateraError;
+    fMediatorFee: Currency;
     fQRCodeSolicitacao: TMateraQRCodeRequest;
     fQRCodeResposta: TMateraQRCodeResponse;
     fRetiradaSolicitacao: TMateraRetiradaRequest;
@@ -107,22 +111,38 @@ type
     function GetRetiradaSolicitacao: TMateraRetiradaRequest;
     function GetReturnCodesQueryResponse: TMateraReturnCodesQueryResponse;
     function GetTransacoesResposta: TMateraTransactionResponseArray;
+    procedure SetMediatorFee(aValue: Currency);
+    function TratarTransactionID(aTransactionID: String): String;
     function RemoverResponseData(aJson: String): String;
 
+    function CobToQRCodeSolicitacao(const aJsonCobSolicitada: String): String;
     function CobSolicitadaToQRCodeSolicitacao(const aJsonCobSolicitada: String): String;
+    function CobVSolicitadaToQRCodeSolicitacao(const aJsonCobSolicitada: String): String;
     function QRCodeRespostaToCobGerada(const aJsonQRCodeResposta: String): String;
+    function TransactionResposeToCobCompleta(const aJsonTransactionResponse: String): String;
+    function TransactionsResponseToCobsConsultadas(const aJsonTransactionsResponse: String): String;
+    function DevolucaoSolicitadaToInstantPaymentReturns(const aJsonPixDevolucao: String): String;
+    function InstantPaymentReturnsToDevolucaoSolicitada(const aJsonReturns: String): String;
 
     function MateraStatusToCobStatus(aMateraStatus: TMateraTransactionStatus): TACBrPIXStatusCobranca;
-
+    function CobStatusToMateraStatus(aCobStatus: TACBrPIXStatusCobranca): TMateraTransactionStatus;
+    
+    procedure AdicionarTransactionHashPOSTReturns;
     procedure AdicionarTransactionHashPOSTPayments;
-    procedure AdicionarTransactionHashGETTransaction(aTransactionID: String);
+    procedure AdicionarTransactionHashGETTransaction(aTransactionID: String = '');
+
+    procedure DoQuandoAcessarEndPoint(const aEndPoint: String; var aURL: String; var aMethod: String);
+    procedure DoQuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
     function CalcularEndPointPath(const aMethod, aEndPoint: String): String; override;
 
     procedure ConfigurarHeaders(const aMethod, aURL: String); override;
+    procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
     procedure ConfigurarBody(const aMethod, aEndPoint: String; var aBody: String); override;
+    procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: AnsiString; Problema: TACBrPIXProblema); override;
   public
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     procedure Clear; override;
@@ -143,14 +163,15 @@ type
     property ChavePIXResposta: TMateraRegisterAliasResponse read GetChavePIXResposta;
     property ChavesPIXResposta: TMateraAliasArray read GetChavesPIXResposta;
 
-    property ErroResposta: TMateraError read GetErroResposta;
-
     property QRCodeSolicitacao: TMateraQRCodeRequest read GetQRCodeSolicitacao;
     property QRCodeResposta: TMateraQRCodeResponse read GetQRCodeResposta;
     function GerarQRCode: Boolean;
 
     property TransacoesResposta: TMateraTransactionResponseArray read GetTransacoesResposta;
     procedure ConsultarTransacao(aAccountId, aTransactionID: String);
+    procedure ConsultarTransacoes(aAccountId: String; aInicio: TDateTime = 0;
+      aFim: TDateTime = 0; aStatus: TMateraTransactionStatus = mtsNone;
+      aEndToEndId: String = ''; aHashNextPage: String = ''; aPageLimit: Integer = 0);
 
     property AliasRetiradaResposta: TMateraAliasResponse read GetAliasResposta;
     procedure ConsultarAliasRetirada(aAccountId, aAlias: String);
@@ -163,19 +184,23 @@ type
 
     property RetiradaSolicitacao: TMateraRetiradaRequest read GetRetiradaSolicitacao;
     property RetiradaResposta: TMateraRetiradaResponse read GetRetiradaResposta;
-    function Retirada(aAccountId: String): Boolean;
+    function RetiradaSolicitar(aAccountId: String): Boolean;
+
+    property ErroResposta: TMateraError read GetErroResposta;
   published
     property ClientID;
     property ClientSecret;
     property SecretKey: String read fSecretKey write fSecretKey;
     property AccountId: String read fAccountId write fAccountId;
+    property MediatorFee: Currency read fMediatorFee write SetMediatorFee;
   end;
 
 implementation
 
 uses
-  synautil, DateUtils, StrUtils, ACBrJSON, ACBrPIXSchemasCob, ACBrPIXUtil,
-  ACBrUtil.Strings, ACBrUtil.Base;
+  synautil, DateUtils, StrUtils, ACBrJSON, ACBrPIXUtil, ACBrPIXSchemasCobV,
+  ACBrPIXSchemasCob, ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasDevolucao,
+  ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.DateTime;
 
 
 { TACBrPSPMatera }
@@ -461,6 +486,9 @@ var
   wResultCode: Integer;
   wOk: Boolean;
 begin
+  if EstaVazio(aAccountId) then
+    aAccountId := fAccountId;
+
   if EstaVazio(aAccountId) or EstaVazio(aTransactionID) then
     DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['aAccountId/aTransactionID']));
 
@@ -477,8 +505,70 @@ begin
   else
   begin
     ErroResposta.AsJSON := String(wRespHttp);
-    wURL := CalcularURLEndPoint(ChttpMethodPOST, cMateraEndPointAccounts);
-    DispararExcecao(EACBrPixHttpException.CreateFmt(sErroHttp, [wResultCode, ChttpMethodPOST, wURL]));
+    wURL := CalcularURLEndPoint(ChttpMethodGET, cMateraEndPointTransactions);
+    DispararExcecao(EACBrPixHttpException.CreateFmt(sErroHttp, [wResultCode, ChttpMethodGET, wURL]));
+  end;
+end;
+
+procedure TACBrPSPMatera.ConsultarTransacoes(aAccountId: String;
+  aInicio: TDateTime; aFim: TDateTime; aStatus: TMateraTransactionStatus;
+  aEndToEndId: String; aHashNextPage: String; aPageLimit: Integer);
+var
+  wRespostaHttp: AnsiString;
+  wResultCode: Integer;
+  wOk: Boolean;
+  wURL: String;
+begin
+  if EstaVazio(aAccountId) then
+    aAccountId := fAccountId;
+
+  if EstaVazio(aAccountId) then
+    DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['aAccountId']));
+
+  if (NivelLog > 1) then
+  begin
+    RegistrarLog('ConsultarTransacoes( ' +
+      aAccountId +', '+
+      FormatDateTimeBr(aInicio) +', '+
+      FormatDateTimeBr(aFim)+', '+
+      MateraTransactionStatusToString(aStatus) +', '+
+      aEndToEndId +', '+
+      aHashNextPage +', '+
+      IntToStr(aPageLimit) +' )');
+  end;
+
+  Clear;
+  PrepararHTTP;
+
+  if (aInicio > 0) then
+    URLQueryParams.Values['begin'] := FormatDateBr(aInicio, 'YYYY-MM-DD');
+
+  if (aFim > 0) then
+    URLQueryParams.Values['end'] := FormatDateBr(aFim, 'YYYY-MM-DD');
+
+  if (aStatus <> mtsNone) then
+    URLQueryParams.Values['status'] := MateraTransactionStatusToString(aStatus);
+
+  if NaoEstaVazio(aEndToEndId) then
+    URLQueryParams.Values['endToEndId'] := aEndToEndId;
+
+  if NaoEstaVazio(aHashNextPage) then
+    URLQueryParams.Values['hashNextPage'] := aHashNextPage;
+
+  if NaoEstaZerado(aPageLimit) then
+    URLQueryParams.Values['pageLimit'] := IntToStr(aPageLimit);
+
+  wOk := AcessarEndPoint(ChttpMethodGET, cMateraEndPointAccountsv2 + '/' +
+              aAccountId + cMateraEndPointTransactions, wResultCode, wRespostaHttp);
+  wOk := wOk and (wResultCode = HTTP_OK);
+
+  if wOk then
+    TransacoesResposta.AsJSON := RemoverResponseData(String(wRespostaHttp))
+  else
+  begin
+    ErroResposta.AsJSON := String(wRespostaHttp);
+    wURL := CalcularURLEndPoint(ChttpMethodGET, cMateraEndPointTransactions);
+    DispararExcecao(EACBrPixHttpException.CreateFmt(sErroHttp, [wResultCode, ChttpMethodGET, wURL]));
   end;
 end;
 
@@ -548,7 +638,7 @@ begin
   wOk := wOk and (wResultCode in [HTTP_OK, HTTP_ACCEPTED]);
 
   if wOk then
-    DevolucaoResposta.AsJSON := RemoverResponseData(String(wRespHttp))
+    DevolucaoResposta.AsJSON := String(wRespHttp)
   else
   begin
     ErroResposta.AsJSON := String(wRespHttp);
@@ -557,7 +647,7 @@ begin
   end;
 end;
 
-function TACBrPSPMatera.Retirada(aAccountId: String): Boolean;
+function TACBrPSPMatera.RetiradaSolicitar(aAccountId: String): Boolean;
 var
   wOpenSSL: TACBrOpenSSLUtils;
   wBody, wURL, wHash: String;
@@ -771,6 +861,25 @@ begin
   Result := fTransacoesResposta;
 end;
 
+procedure TACBrPSPMatera.SetMediatorFee(aValue: Currency);
+begin
+  if fMediatorFee = aValue then Exit;
+  fMediatorFee := aValue;
+end;
+
+function TACBrPSPMatera.TratarTransactionID(aTransactionID: String): String;
+begin
+  Result := aTransactionID;
+
+  if (Pos('-', aTransactionID) <= 0) then
+    Result :=
+      Copy(aTransactionID, 1, 8) + '-' +
+      Copy(aTransactionID, 9, 4) + '-' +
+      Copy(aTransactionID, 13, 4) + '-' +
+      Copy(aTransactionID, 17, 4) + '-' +
+      Copy(aTransactionID, 21, Length(aTransactionID));
+end;
+
 function TACBrPSPMatera.RemoverResponseData(aJson: String): String;
 var
   wJO: TACBrJSONObject;
@@ -783,11 +892,23 @@ begin
   end;
 end;
 
+function TACBrPSPMatera.CobToQRCodeSolicitacao(const aJsonCobSolicitada: String): String;
+const
+  cDataVencto = 'dataDeVencimento';
+begin
+  QRCodeSolicitacao.Clear;
+  
+  URLPathParams.Clear;
+  if (Pos(cDataVencto, aJsonCobSolicitada) <= 0) then
+    Result := CobSolicitadaToQRCodeSolicitacao(aJsonCobSolicitada)
+  else
+    Result := CobVSolicitadaToQRCodeSolicitacao(aJsonCobSolicitada);
+end;
+
 function TACBrPSPMatera.CobSolicitadaToQRCodeSolicitacao(const aJsonCobSolicitada: String): String;
 var
   wCob: TACBrPIXCobSolicitada;
 begin
-  QRCodeSolicitacao.Clear;
   wCob := TACBrPIXCobSolicitada.Create('');
   try
     wCob.AsJSON := aJsonCobSolicitada;
@@ -797,7 +918,6 @@ begin
     QRCodeSolicitacao.externalIdentifier := CriarTxId;
 
     QRCodeSolicitacao.paymentInfo.transactionType := cMateraMsgInstantPayment;
-    //QRCodeSolicitacao.paymentInfo.instantPayment.alias_.type_ := malEVP;
     QRCodeSolicitacao.paymentInfo.instantPayment.alias_ := wCob.chave;
     QRCodeSolicitacao.paymentInfo.instantPayment.expiration := wCob.calendario.expiracao;
 
@@ -840,17 +960,99 @@ begin
   end;
 end;
 
+function TACBrPSPMatera.CobVSolicitadaToQRCodeSolicitacao(const aJsonCobSolicitada: String): String;
+var
+  wCobV: TACBrPIXCobVSolicitada;
+  I: Integer;
+begin
+  wCobV := TACBrPIXCobVSolicitada.Create;
+  try
+    wCobV.AsJSON := aJsonCobSolicitada;
+
+    QRCodeSolicitacao.totalAmount := wCobV.valor.original;
+    QRCodeSolicitacao.currency := 'BRL';
+    QRCodeSolicitacao.externalIdentifier := CriarTxId;
+    QRCodeSolicitacao.paymentInfo.transactionType := cMateraMsgInstantPayment;
+    QRCodeSolicitacao.paymentInfo.instantPayment.alias_ := wCobV.chave;
+    QRCodeSolicitacao.paymentInfo.instantPayment.expiration := 0;
+    QRCodeSolicitacao.paymentInfo.instantPayment.dynamicQRCodeType := mqtBillingDueDate;
+
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.dueDate := wCobV.calendario.dataDeVencimento;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.daysAfterDueDate := wCobV.calendario.validadeAposVencimento;
+
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.payerInformation.name := wCobV.devedor.nome;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.payerInformation.cpfCnpj := IfThen(EstaVazio(wCobV.devedor.cpf), wCobV.devedor.cnpj, wCobV.devedor.cpf);
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.payerInformation.email := wCobV.devedor.email;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.payerInformation.addressing.city := wCobV.devedor.cidade;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.payerInformation.addressing.uf := wCobV.devedor.uf;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.payerInformation.addressing.cep := wCobV.devedor.cep;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.payerInformation.addressing.street := wCobV.devedor.logradouro;
+
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.fines.valuePerc := wCobV.valor.multa.valorPerc;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.fines.modality := Ord(wCobV.valor.multa.modalidade);
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.reduction.valuePerc := wCobV.valor.abatimento.valorPerc;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.reduction.modality := Ord(wCobV.valor.abatimento.modalidade);
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.interests.valuePerc := wCobV.valor.juros.valorPerc;
+    QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.interests.modality := Ord(wCobV.valor.juros.modalidade);
+
+    if NaoEstaZerado(wCobV.valor.desconto.valorPerc) then
+    begin
+      QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.discounts.uniqueDiscount.uniqueValuePercDiscount := wCobV.valor.desconto.valorPerc;
+      QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.discounts.uniqueDiscount.modality := Ord(wCobV.valor.desconto.modalidade);
+    end
+    else if (wCobV.valor.desconto.descontosDataFixa.Count > 0) then
+    begin
+      QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.discounts.fixedDateDiscountList.modality := Ord(wCobV.valor.desconto.modalidade);
+      for I := 0 to wCobV.valor.desconto.descontosDataFixa.Count - 1 do
+        with QRCodeSolicitacao.paymentInfo.instantPayment.billingDueDate.discounts.fixedDateDiscountList.fixedDateDiscounts.New do
+        begin
+          date := wCobV.valor.desconto.descontosDataFixa[I].data;
+          valuePerc := wCobV.valor.desconto.descontosDataFixa[I].valorPerc;
+        end;
+    end;
+
+    with QRCodeSolicitacao.paymentInfo.instantPayment.qrCodeImageGenerationSpecification do
+    begin
+      errorCorrectionLevel := 'M';
+      imageWidth := 400;
+      generateImageRendering := False;
+    end;
+
+    QRCodeSolicitacao.recipients.Clear;
+    with QRCodeSolicitacao.recipients.New do
+    begin
+      account.accountID := fAccountId;
+      amount := wCobV.valor.original;
+      currency := 'BRL';
+      recipientComment := IfEmptyThen(wCobV.solicitacaoPagador, 'Solicitacao');
+      mediatorfee := fMediatorFee;
+    end;
+
+    for I := 0 to wCobV.infoAdicionais.Count - 1 do
+      with QRCodeSolicitacao.paymentInfo.instantPayment.additionalInformation.New do
+      begin
+        name := wCobV.infoAdicionais[I].nome;
+        content := wCobV.infoAdicionais[I].valor;
+        showToPlayer := True;
+      end;
+
+    Result := QRCodeSolicitacao.AsJSON;
+  finally
+    wCobV.Free;
+  end;
+end;
+
 function TACBrPSPMatera.QRCodeRespostaToCobGerada(const aJsonQRCodeResposta: String): String;
 var
   wCob: TACBrPIXCobGerada;
 begin
-  fQRCodeResposta.AsJSON := aJsonQRCodeResposta;
+  QRCodeResposta.AsJSON := aJsonQRCodeResposta;
   wCob := TACBrPIXCobGerada.Create('');
   try
-    wCob.calendario.criacao := fQRCodeResposta.transactionDate;
-    wCob.txId := fQRCodeResposta.transactionId;
-    wCob.status := MateraStatusToCobStatus(fQRCodeResposta.financialStatement.status);
-    wCob.pixCopiaECola := fQRCodeResposta.instantPayment.textContent;
+    wCob.calendario.criacao := QRCodeResposta.transactionDate;
+    wCob.txId := RemoveString('-', QRCodeResposta.transactionId);
+    wCob.status := MateraStatusToCobStatus(QRCodeResposta.financialStatement.status);
+    wCob.pixCopiaECola := QRCodeResposta.instantPayment.textContent;
 
     // Copiando informações que não constam na resposta, do Objeto de Requisição //
     wCob.chave := fQRCodeSolicitacao.paymentInfo.instantPayment.alias_;
@@ -872,6 +1074,150 @@ begin
   end;
 end;
 
+function TACBrPSPMatera.TransactionResposeToCobCompleta(const aJsonTransactionResponse: String): String;
+var
+  wCob: TACBrPIXCobCompleta;
+  I: Integer;
+  wTS: Int64;
+begin
+  TransacoesResposta.AsJSON := aJsonTransactionResponse;
+  if (TransacoesResposta.Count <= 0) then
+    Exit;
+
+  wCob := TACBrPIXCobCompleta.Create('');
+  try
+    wCob.calendario.criacao := TransacoesResposta[0].transactionDate;
+    wCob.calendario.expiracao := 3600;
+    wCob.valor.original := TransacoesResposta[0].totalAmount;
+    wCob.txId := StringReplace(TransacoesResposta[0].transactionId, '-', '', [rfReplaceAll]);
+    wCob.status := MateraStatusToCobStatus(TransacoesResposta[0].transactionStatus);
+    with wCob.infoAdicionais.New do
+    begin
+      nome := 'accountId';
+      valor := TransacoesResposta[0].accountId;
+    end;
+    with wCob.infoAdicionais.New do
+    begin
+      nome := 'accountHolderId';
+      valor := TransacoesResposta[0].accountHolderId;
+    end;
+    with wCob.infoAdicionais.New do
+    begin
+      nome := 'transactionType';
+      valor := TransacoesResposta[0].transactionType;
+    end;
+
+    for I := 0 to TransacoesResposta[0].instantPayment.paymentReceived.Count - 1 do
+    begin
+      with wCob.pix.New do
+      begin
+        valor := TransacoesResposta[0].instantPayment.paymentReceived[I].receivedAmount;
+        endToEndId := TransacoesResposta[0].instantPayment.paymentReceived[I].endToEndId;
+        infoPagador := TransacoesResposta[0].instantPayment.paymentReceived[I].sender.name;
+
+        wTS := StrToInt64Def(TransacoesResposta[0].instantPayment.paymentReceived[I].transactionTimestamp, 0);
+        wTS := (wTS div 1000);
+        horario := IncSecond(EncodeDate(1970,1,1), wTS);
+      end;
+    end;
+
+    Result := wCob.AsJSON;
+  finally
+    wCob.Free;
+  end;
+end;
+
+function TACBrPSPMatera.TransactionsResponseToCobsConsultadas(const aJsonTransactionsResponse: String): String;
+var
+  wCobs: TACBrPIXCobsConsultadas;
+  I, J: Integer;
+  wTS: Int64;
+begin
+  TransacoesResposta.AsJSON := aJsonTransactionsResponse;
+  if (TransacoesResposta.Count <= 0) then
+    Exit;
+
+  wCobs := TACBrPIXCobsConsultadas.Create('');
+  try
+    for I := 0 to TransacoesResposta.count - 1 do
+    with wCobs.cobs.New do
+    begin
+      calendario.criacao := TransacoesResposta[I].transactionDate;
+      calendario.expiracao := 3600;
+      valor.original := TransacoesResposta[I].totalAmount;
+      txId := StringReplace(TransacoesResposta[I].transactionId, '-', '', [rfReplaceAll]);
+      status := MateraStatusToCobStatus(TransacoesResposta[I].transactionStatus);
+      with infoAdicionais.New do
+      begin
+        nome := 'accountId';
+        valor := TransacoesResposta[I].accountId;
+      end;
+      with infoAdicionais.New do
+      begin
+        nome := 'accountHolderId';
+        valor := TransacoesResposta[I].accountHolderId;
+      end;
+      with infoAdicionais.New do
+      begin
+        nome := 'transactionType';
+        valor := TransacoesResposta[I].transactionType;
+      end;
+
+      for J := 0 to TransacoesResposta[I].instantPayment.paymentReceived.Count - 1 do
+      begin
+        with pix.New do
+        begin
+          valor := TransacoesResposta[I].instantPayment.paymentReceived[J].receivedAmount;
+          endToEndId := TransacoesResposta[I].instantPayment.paymentReceived[J].endToEndId;
+          infoPagador := TransacoesResposta[I].instantPayment.paymentReceived[J].sender.name;
+
+          wTS := StrToInt64Def(TransacoesResposta[I].instantPayment.paymentReceived[J].transactionTimestamp, 0);
+          wTS := (wTS div 1000);
+          horario := IncSecond(EncodeDate(1970,1,1), wTS);
+        end;
+      end;
+    end;
+
+    Result := wCobs.AsJSON;
+  finally
+    wCobs.Free;
+  end;
+end;
+
+function TACBrPSPMatera.DevolucaoSolicitadaToInstantPaymentReturns(
+  const aJsonPixDevolucao: String): String;
+var
+  wDev: TACBrPIXDevolucaoSolicitada;
+begin
+  wDev := TACBrPIXDevolucaoSolicitada.Create('');
+  try
+    wDev.AsJSON := aJsonPixDevolucao;
+
+    DevolucaoSolicitacao.amount := wDev.valor;
+    DevolucaoSolicitacao.returnReasonCode := 'MD06';
+    DevolucaoSolicitacao.mediatorFee := fMediatorFee;
+    DevolucaoSolicitacao.externalIdentifier := URLPathParams[2];
+
+    Result := DevolucaoSolicitacao.AsJSON;
+  finally
+    wDev.Free;
+  end;
+end;
+
+function TACBrPSPMatera.InstantPaymentReturnsToDevolucaoSolicitada(const aJsonReturns: String): String;
+var
+  wDev: TACBrPIXDevolucao;
+begin
+  DevolucaoResposta.AsJSON := aJsonReturns;
+  wDev := TACBrPIXDevolucao.Create('');
+  try
+    wDev.id := RemoveString('-', DevolucaoResposta.transactionId);
+    Result := wDev.AsJSON;
+  finally
+    wDev.Free;
+  end;
+end;
+
 function TACBrPSPMatera.MateraStatusToCobStatus(aMateraStatus: TMateraTransactionStatus): TACBrPIXStatusCobranca;
 begin
   case aMateraStatus of
@@ -884,18 +1230,56 @@ begin
   end;
 end;
 
+function TACBrPSPMatera.CobStatusToMateraStatus(aCobStatus: TACBrPIXStatusCobranca): TMateraTransactionStatus;
+begin
+  case aCobStatus of
+    stcATIVA: Result := mtsCreated;
+    stcCONCLUIDA: Result := mtsApproved;
+    stcREMOVIDA_PELO_PSP: Result := mtsExpired;
+    stcREMOVIDA_PELO_USUARIO_RECEBEDOR: Result := mtsCanceled;
+  else
+    Result := mtsNone;
+  end;
+end;
+
+procedure TACBrPSPMatera.AdicionarTransactionHashPOSTReturns;
+var
+  wHash, wTransactionID: String;
+  wOpenSSL: TACBrOpenSSLUtils;
+begin
+  if (Pos('Transaction-Hash', Http.Headers.Text) > 0) then
+    Exit;
+
+  wOpenSSL := TACBrOpenSSLUtils.Create(Nil);
+  try
+    wTransactionID := TratarTransactionID(URLPathParams[0]);
+    wHash := IntToStr(Trunc(DevolucaoSolicitacao.amount)) +
+      fAccountId +
+      wTransactionID +
+      DevolucaoSolicitacao.returnReasonCode;
+
+    wHash := wOpenSSL.HMACFromString(wHash, fSecretKey, algSHA256);
+    Http.Headers.Add('Transaction-Hash: ' + wHash);
+  finally
+    wOpenSSL.Free;
+  end;
+end;
+
 procedure TACBrPSPMatera.AdicionarTransactionHashPOSTPayments;
 var
   wHash: String;
   wOpenSSL: TACBrOpenSSLUtils;
 begin
+  if EstaZerado(QRCodeSolicitacao.recipients.Count) then
+      raise EACBrPixException.Create(Format(sErroObjetoNaoPrenchido, ['recipients']));
+
   wOpenSSL := TACBrOpenSSLUtils.Create(Nil);
   try
     wHash := wOpenSSL.HMACFromString(
                QRCodeSolicitacao.paymentInfo.instantPayment.alias_ +
-               CurrToStr(QRCodeSolicitacao.totalAmount) +
+               CurrToStr(Trunc(QRCodeSolicitacao.totalAmount)) +
                QRCodeSolicitacao.recipients[0].account.accountID +
-               CurrToStr(QRCodeSolicitacao.recipients[0].amount), fSecretKey, algSHA256);
+               CurrToStr(Trunc(QRCodeSolicitacao.recipients[0].amount)), fSecretKey, algSHA256);
     Http.Headers.Add('Transaction-Hash: ' + wHash);
   finally
     wOpenSSL.Free;
@@ -911,11 +1295,61 @@ begin
   wOpenSSL := TACBrOpenSSLUtils.Create(Nil);
   try
     wHash := 'get:' + cMateraEndPointAccountsv2 + '/' + fAccountId +
-      cMateraEndPointTransactions + '/' + aTransactionID;
+      cMateraEndPointTransactions;
+    if NaoEstaVazio(aTransactionID) then
+      wHash := wHash + '/' + aTransactionID;
     wHash := wOpenSSL.HMACFromString(wHash, fSecretKey, algSHA256);
     Http.Headers.Add('Transaction-Hash: ' + wHash);
   finally
     wOpenSSL.Free;
+  end;
+end;
+
+procedure TACBrPSPMatera.DoQuandoAcessarEndPoint(const aEndPoint: String;
+  var aURL: String; var aMethod: String);
+begin
+  if ((aEndPoint = cEndPointCob) or (aEndPoint = cEndPointCobV)) and (aMethod = ChttpMethodPUT) then
+    aMethod := ChttpMethodPOST;
+
+  if (aEndPoint = cEndPointPix) then
+  begin
+    if (aMethod = ChttpMethodPUT) then
+      aMethod := ChttpMethodPOST
+    else
+      raise EACBrPixException.Create(sErroEndpointNaoImplementado);
+  end;
+end;
+
+procedure TACBrPSPMatera.DoQuandoReceberRespostaEndPoint(const aEndPoint, aURL,
+  aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
+var
+  wResp: String;
+begin
+  if (AEndPoint = cEndPointCob) or (AEndPoint = cEndPointCobV) then
+  begin
+    if (aMethod = ChttpMethodGET) then
+    begin
+      if (aResultCode in [HTTP_OK, HTTP_ACCEPTED, HTTP_CREATED]) then
+        wResp := RemoverResponseData(aRespostaHttp);
+
+      if (URLQueryParams.Count > 0) then
+        aRespostaHttp := TransactionsResponseToCobsConsultadas(wResp)
+      else
+        aRespostaHttp := TransactionResposeToCobCompleta(wResp);
+    end;
+
+    if (aMethod = ChttpMethodPOST) and (aResultCode = HTTP_OK) then
+      aResultCode := HTTP_CREATED;
+
+    if (aMethod = ChttpMethodPOST) and (aResultCode = HTTP_CREATED) then
+      aRespostaHttp := QRCodeRespostaToCobGerada(aRespostaHttp);
+  end;
+
+  if (AEndPoint = cEndPointPix) and (aMethod = ChttpMethodPOST) and
+     (aResultCode = HTTP_ACCEPTED) then
+  begin
+    aResultCode := HTTP_CREATED;
+    aRespostaHttp := InstantPaymentReturnsToDevolucaoSolicitada(aRespostaHttp);
   end;
 end;
 
@@ -928,15 +1362,42 @@ begin
 end;
 
 function TACBrPSPMatera.CalcularEndPointPath(const aMethod, aEndPoint: String): String;
+var
+  wTransactionID: String;
 begin
   Result := Trim(aEndPoint);
 
-  if (aEndPoint = cEndPointCob) then
+  if ((aEndPoint = cEndPointCob) or (aEndPoint = cEndPointCobV)) then
   begin
+    if (aMethod = ChttpMethodPATCH) then
+      raise EACBrPixException.Create(sErroEndpointNaoImplementado);
+
     if (UpperCase(aMethod) = ChttpMethodGET) then
+    begin
+      if (URLPathParams.Count = 1) then
+      begin
+        wTransactionID := TratarTransactionID(URLPathParams[0]);
+        URLPathParams.Clear;
+        URLPathParams.Add(wTransactionID);
+      end;
+
       Result := cMateraEndPointAccountsv2 + '/' + fAccountId + cMateraEndPointTransactions
+    end
     else
       Result := cMateraEndPointPayments;
+  end;
+
+  if (aEndPoint = cEndPointPix) and (UpperCase(aMethod) = ChttpMethodPUT) then
+  begin
+    if (URLPathParams.Count > 1) then
+    begin
+      AdicionarTransactionHashPOSTReturns;
+      wTransactionID := TratarTransactionID(URLPathParams[0]);
+      Result := cMateraEndPointAccounts + '/' + fAccountId +
+        cMateraEndPointInstant_Payments + '/' + wTransactionID +
+        cMateraEndPointReturns;
+      URLPathParams.Clear;
+    end;
   end;
 end;
 
@@ -944,18 +1405,98 @@ procedure TACBrPSPMatera.ConfigurarHeaders(const aMethod, aURL: String);
 begin
   inherited ConfigurarHeaders(aMethod, aURL);
 
-  if (UpperCase(aMethod) = ChttpMethodPOST) and (Pos(cMateraEndPointPayments, aURL) > 0) then
+  if (aMethod = ChttpMethodPOST) and (Pos(cMateraEndPointPayments, aURL) > 0) then
     AdicionarTransactionHashPOSTPayments;
 
-  if (UpperCase(aMethod) = ChttpMethodGET) and (Pos(cMateraEndPointTransactions, aURL) > 0) and
-     (URLPathParams.Count = 1) then
-    AdicionarTransactionHashGETTransaction(URLPathParams[0]);
+  if (aMethod = ChttpMethodGET) and (Pos(cMateraEndPointTransactions, aURL) > 0) then
+    if (URLPathParams.Count = 1) then
+      AdicionarTransactionHashGETTransaction(URLPathParams[0])
+    else
+      AdicionarTransactionHashGETTransaction;
+end;
+
+procedure TACBrPSPMatera.ConfigurarQueryParameters(const Method, EndPoint: String);
+const
+  SDateFormat: string = 'yyyy''-''mm''-''dd';
+var
+  I: Integer;
+  wSL: TStringList;
+  wName, wValue: String;
+begin
+  if (URLQueryParams.Count <= 0) then
+    Exit;
+
+  wSL := TStringList.Create;
+  try
+    for I := 0 to URLQueryParams.Count - 1 do
+    begin
+      wName := LowerCase(URLQueryParams.Names[I]);
+      wValue:= URLQueryParams.Values[wName];
+
+      // Ignora parâmetros não utilizados pela Shipay
+      if (Pos(wName, 'cpf,cnpj,locationPresente,paginacao.paginaatual') > 0) then
+        Continue;
+
+      if (wName = 'inicio') then
+        wSL.Values['begin'] := FormatDateTime(SDateFormat, Iso8601ToDateTime(wValue))
+      else if (wName = 'fim') then
+        wSL.Values['end'] := FormatDateTime(SDateFormat, Iso8601ToDateTime(wValue))  
+      else if (wName = 'status') then
+        wSL.Values['status'] := MateraTransactionStatusToString(CobStatusToMateraStatus(StringToPIXStatusCobranca(wValue)))
+      else if (wName = 'paginacao.itensporpagina') then
+        wSL.Values['pageLimit'] := wValue
+      else
+        Continue;
+
+      RegistrarLog('Parametro(Query) alterado: ' + URLQueryParams[I] + ' => ' + wSL[wSL.Count-1]);
+    end;
+
+    if (wSL.Count > 0) then
+      URLQueryParams.Text := wSL.Text;
+  finally
+    wSL.Free;
+  end;
 end;
 
 procedure TACBrPSPMatera.ConfigurarBody(const aMethod, aEndPoint: String; var aBody: String);
 begin
-  if (aEndPoint = cEndPointCob) and (aMethod = ChttpMethodPOST) then
-    aBody := CobSolicitadaToQRCodeSolicitacao(aBody);
+  if ((aEndPoint = cEndPointCob) or (aEndPoint = cEndPointCobV)) and
+     ((aMethod = ChttpMethodPOST) or (aMethod = ChttpMethodPUT)) then
+    aBody := CobToQRCodeSolicitacao(aBody);
+
+  if (aEndPoint = cEndPointPix) and (aMethod = ChttpMethodPUT) then
+    aBody := DevolucaoSolicitadaToInstantPaymentReturns(aBody);
+end;
+
+procedure TACBrPSPMatera.TratarRetornoComErro(ResultCode: Integer;
+  const RespostaHttp: AnsiString; Problema: TACBrPIXProblema);
+var
+  js: TACBrJSONObject;
+begin
+  // Verifica se erro está no formato próprio da Matera
+  if (pos('"error"', RespostaHttp) > 0) then
+  begin
+    js := TACBrJSONObject.Parse(RespostaHttp);
+    try
+      Problema.title := 'Error: ' + js.AsJSONObject['error'].AsString['code'];
+      Problema.detail := js.AsJSONObject['error'].AsString['description'];
+    finally
+      js.Free;
+    end;
+  end
+  else
+    inherited TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
+end;
+
+constructor TACBrPSPMatera.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  fpQuandoAcessarEndPoint := DoQuandoAcessarEndPoint;
+  fpQuandoReceberRespostaEndPoint := DoQuandoReceberRespostaEndPoint;
+  fSecretKey := EmptyStr;
+  fAccountId := EmptyStr;
+  fMediatorFee := 0;
+  Clear;
 end;
 
 destructor TACBrPSPMatera.Destroy;
@@ -969,11 +1510,41 @@ begin
   if Assigned(fContaResposta) then
     fContaResposta.Free;
 
-  If Assigned(fQRCodeSolicitacao) then
+  if Assigned(fChavePIXSolicitacao) then
+    fChavePIXSolicitacao.Free;
+
+  if Assigned(fChavePIXResposta) then
+    fChavePIXResposta.Free;
+
+  if Assigned(fChavesPIXResposta) then
+    fChavesPIXResposta.Free;
+
+  if Assigned(fQRCodeSolicitacao) then
     fQRCodeSolicitacao.Free;
 
-  If Assigned(fQRCodeResposta) then
+  if Assigned(fQRCodeResposta) then
     fQRCodeResposta.Free;
+
+  if Assigned(fTransacoesResposta) then
+    fTransacoesResposta.Free;
+
+  if Assigned(fAliasResposta) then
+    fAliasResposta.Free;
+
+  if Assigned(fMotivosDevolucoes) then
+    fMotivosDevolucoes.Free;
+
+  if Assigned(fDevolucaoSolicitacao) then
+    fDevolucaoSolicitacao.Free;
+
+  if Assigned(fDevolucaoResposta) then
+    fDevolucaoResposta.Free;
+
+  if Assigned(fRetiradaSolicitacao) then
+    fRetiradaSolicitacao.Free;
+
+  if Assigned(fRetiradaResposta) then
+    fRetiradaResposta.Free;
 
   inherited Destroy;
 end;
@@ -991,11 +1562,41 @@ begin
   if Assigned(fErroResposta) then
     fErroResposta.Clear;
 
-  If Assigned(fQRCodeSolicitacao) then
+  if Assigned(fChavePIXSolicitacao) then
+    fChavePIXSolicitacao.Clear;
+
+  if Assigned(fChavePIXResposta) then
+    fChavePIXResposta.Clear;
+
+  if Assigned(fChavesPIXResposta) then
+    fChavesPIXResposta.Clear;
+
+  if Assigned(fQRCodeSolicitacao) then
     fQRCodeSolicitacao.Clear;
 
-  If Assigned(fQRCodeResposta) then
+  if Assigned(fQRCodeResposta) then
     fQRCodeResposta.Clear;
+
+  if Assigned(fTransacoesResposta) then
+    fTransacoesResposta.Clear;
+
+  if Assigned(fAliasResposta) then
+    fAliasResposta.Clear;
+
+  if Assigned(fMotivosDevolucoes) then
+    fMotivosDevolucoes.Clear;
+
+  if Assigned(fDevolucaoSolicitacao) then
+    fDevolucaoSolicitacao.Clear;
+
+  if Assigned(fDevolucaoResposta) then
+    fDevolucaoResposta.Clear;
+
+  if Assigned(fRetiradaSolicitacao) then
+    fRetiradaSolicitacao.Clear;
+
+  if Assigned(fRetiradaResposta) then
+    fRetiradaResposta.Clear;
 end;
 
 end.

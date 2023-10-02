@@ -166,6 +166,8 @@ begin
 
           Valores.ValorInss := Valores.ValorInss +
               ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_inss'), tcDe2);
+
+          CodCNO := ObterConteudo(ANodes[i].Childrens.FindAnyNs('cno'), tcStr);
         end;
       end;
     end;

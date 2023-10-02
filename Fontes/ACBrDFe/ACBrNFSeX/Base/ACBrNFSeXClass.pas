@@ -532,11 +532,12 @@ type
 
     FTributavel: TnfseSimNao;
     FCodigoCnae: string;
+    FDadosDeducao: TDadosDeducao;
 
     FTribMunPrestador: TnfseSimNao;
     FCodMunPrestacao: string;
     FSituacaoTributaria: Integer;
-    FDadosDeducao: TDadosDeducao;
+    FCodCNO: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -608,6 +609,7 @@ type
     property TribMunPrestador: TnfseSimNao read FTribMunPrestador write FTribMunPrestador;
     property CodMunPrestacao: string read FCodMunPrestacao write FCodMunPrestacao;
     property SituacaoTributaria: Integer read FSituacaoTributaria write FSituacaoTributaria;
+    property CodCNO: string read FCodCNO write FCodCNO;
   end;
 
   TItemServicoCollection = class(TACBrObjectList)

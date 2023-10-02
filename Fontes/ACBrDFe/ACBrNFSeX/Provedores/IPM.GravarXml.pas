@@ -343,6 +343,9 @@ begin
     else
       Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 0,
                          NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS));
+
+    Result[i].AppendChild(AddNode(tcStr, '#', 'cno', 1, 15, 0,
+                                   NFSe.Servico.ItemServico[I].CodCNO, ''));
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/10/2023
+-- ACBrNFSeXClass/IPM.GravarXml/IPM.LerXml --
+[*] Acrescentado o campo cno (Cadastro Nacional de Obras).
+    https://www.projetoacbr.com.br/forum/topic/74475-ipm-obriga-informar-tag-cno/
+   Por: Willian Delan
 -- ACBrNFSeXServicos --
 [*] Acrescentado a URL do link da cidade de Rondonópolis/MT.
    Por: Diego Reckziegel

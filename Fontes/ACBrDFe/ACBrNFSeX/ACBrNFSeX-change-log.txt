@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/10/2023
+-- ACBrNFSeXConversao --
+[*] Acrescentado o valor tsNenhum ao tipo TtpSusp, desta forma o valor padrão agora passa
+    a ser tsNenhum.
+   Por: Italo Giurizzato Junior
 -- NFSeBrasil.Provider --
 [*] O provedor fez uma alteração em seu webservice e agora não deve ser gerado o 
     XML com namespace, segundo informações de JSoftware.

@@ -275,7 +275,7 @@ type
 
   TtpBM = (tbAliquota, tbReducaoBC, tbIsencao);
 
-  TtpSusp = (tsDecisaoJudicial, tsProcessoAdm);
+  TtpSusp = (tsNenhum, tsDecisaoJudicial, tsProcessoAdm);
 
   TCST = (cst00, cst01, cst02, cst03, cst04, cst05, cst06, cst07, cst08, cst09);
 
@@ -12712,15 +12712,15 @@ end;
 function tpSuspToStr(const t: TtpSusp): string;
 begin
   result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [tsDecisaoJudicial, tsProcessoAdm]);
+                           ['', '1', '2'],
+                           [tsNenhum, tsDecisaoJudicial, tsProcessoAdm]);
 end;
 
 function StrTotpSusp(out ok: Boolean; const s: string): TtpSusp;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [tsDecisaoJudicial, tsProcessoAdm]);
+                           ['', '1', '2'],
+                           [tsNenhum, tsDecisaoJudicial, tsProcessoAdm]);
 end;
 
 function CSTToStr(const t: TCST): string;

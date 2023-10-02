@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/10/2023
+-- ACBrNFSeXServicos --
+[*] Acrescentado a URL do link da cidade de Rondonópolis/MT.
+   Por: Diego Reckziegel
 -- ACBrNFSeXConversao --
 [*] Acrescentado o valor tsNenhum ao tipo TtpSusp, desta forma o valor padrão agora passa
     a ser tsNenhum.

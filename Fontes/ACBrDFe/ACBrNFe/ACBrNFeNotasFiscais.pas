@@ -1653,7 +1653,7 @@ begin
 
         with Ide.NFref.New do
         begin
-          if sType = 'NFE' then
+          if (sType = 'NFE') or (sType = 'SAT') then
           begin
             refNFe :=  INIRec.ReadString(sSecao,'refNFe','');
             refNFeSig :=  INIRec.ReadString(sSecao,'refNFeSig','');

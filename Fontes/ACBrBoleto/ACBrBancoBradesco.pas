@@ -435,7 +435,7 @@ var
   sProtesto, sTipoSacado, MensagemCedente, aConta, aDigitoConta: String;
   aCarteira, wLinha, sNossoNumero, sDigitoNossoNumero, sTipoBoleto: String;
   aPercMulta: Double;
-
+  LChaveNFE : String;
 begin
    Result := '';
    with ACBrTitulo do
@@ -464,6 +464,12 @@ begin
 
      { Converte valor em moeda para percentual, pois o arquivo só permite % }
      aPercMulta := ConverterMultaPercentual(ACBrTitulo);
+
+     {Chave da NFe}
+     if ACBrTitulo.ListaDadosNFe.Count>0 then
+       LChaveNFe := ACBrTitulo.ListaDadosNFe[0].ChaveNFe
+     else
+       LChaveNFe := '';
 
      with ACBrBoleto do
      begin
@@ -502,7 +508,8 @@ begin
        PadRight( Sacado.Mensagem, 12, ' ')                     +  // 315 a 326 - 1ª Mensagem
        PadRight( Sacado.CEP, 8 )                               +  // 327 a 334 - CEP
        PadRight( MensagemCedente, 60 )                         +  // 335 a 394 - 2ª Mensagem
-       IntToStrZero(aRemessa.Count + 1, 6)                     ;  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
+       IntToStrZero(aRemessa.Count + 1, 6)                     +  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
+       LChaveNFe;                                                 // 401 a 444 Chave NFe
 
        Result := UpperCase(wLinha);
 

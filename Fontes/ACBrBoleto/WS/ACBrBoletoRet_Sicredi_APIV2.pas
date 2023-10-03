@@ -269,8 +269,8 @@ begin
           end else
           if (TipoOperacao = tpBaixa) then
           begin
-            ARetornoWS.DadosRet.TituloRet.NossoNumero      := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataBaixa     := DateSicreditoDateTime(AJson.Values['dataMovimento'].AsString);
+            ARetornoWS.DadosRet.TituloRet.NossoNumero   := AJson.Values['nossoNumero'].AsString;
+            ARetornoWS.DadosRet.TituloRet.DataBaixa     := StrToDateDef(AJson.Values['dataMovimento'].AsString,0);
             ARetornoWS.DadosRet.TituloRet.HoraBaixa     := timeSicreditoDateTime(AJson.Values['dataMovimento'].AsString);
           end else
           if (TipoOperacao in [tpAltera]) then//,tpAlteraSeuNumero

@@ -384,15 +384,9 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils,
-//  synacode,
-  blcksock,
-  FileCtrl,
-  Grids,
-  IniFiles, Printers,
-  pcnAuxiliar, pcnConversao,
+  strutils, math, TypInfo, DateUtils, blcksock, FileCtrl, Grids, IniFiles, Printers,
+  pcnConversao,
   ACBrDFeConfiguracoes, ACBrDFeSSL,
-//  ACBrDFeOpenSSL,
   ACBrDFeUtil,
   ACBrNFSeXWebserviceBase,
   Frm_Status, Frm_SelecionarCertificado;
@@ -3702,6 +3696,7 @@ begin
                 memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Parâmetros de Retorno');
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
+                memoLog.Lines.Add('Descrição Sit : ' + DescSituacao);
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
                 LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml', 1000);

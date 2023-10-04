@@ -52,6 +52,7 @@ type
     Constructor Create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String; Override;
     function GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String; Override;
+    function GerarRegistroHeader240(NumeroRemessa : Integer): String; Override;
     procedure LerRetorno240(ARetorno: TStringList); Override;
     function DefinePosicaoNossoNumeroRetorno: Integer; Override;
   end;
@@ -80,7 +81,6 @@ end;
 function TACBrBancoCresol.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo) : String;
 begin
   Result := ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo)
-
 end;
 
 procedure TACBrBancoCresol.LerRetorno240(ARetorno: TStringList);
@@ -230,6 +230,18 @@ begin
   else
     Result := 71;
 
+end;
+
+function TACBrBancoCresol.GerarRegistroHeader240(NumeroRemessa: Integer): String;
+var LNome : String;
+begin
+  LNome := fpNome;
+  try
+    fpNome := 'CRESOL CONFEDERAÇÃO';
+    Result := inherited;
+  finally
+    fpNome := LNome;
+  end;
 end;
 
 function TACBrBancoCresol.GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): String;

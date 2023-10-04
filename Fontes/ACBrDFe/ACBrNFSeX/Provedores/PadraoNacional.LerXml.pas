@@ -104,7 +104,7 @@ type
     procedure LerTributacaoMunicipal(const ANode: TACBrXmlNode);
     procedure LerBeneficioMunicipal(const ANode: TACBrXmlNode);
     procedure LerExigibilidadeSuspensa(const ANode: TACBrXmlNode);
-    procedure LerTributacaoNacional(const ANode: TACBrXmlNode);
+    procedure LerTributacaoFederal(const ANode: TACBrXmlNode);
     procedure LerTributacaoOutrosPisCofins(const ANode: TACBrXmlNode);
     procedure LerTotalTributos(const ANode: TACBrXmlNode);
     procedure LerValorTotalTributos(const ANode: TACBrXmlNode);
@@ -1156,7 +1156,7 @@ begin
   if AuxNode <> nil then
   begin
     LerTributacaoMunicipal(AuxNode);
-    LerTributacaoNacional(AuxNode);
+    LerTributacaoFederal(AuxNode);
     LerTotalTributos(AuxNode);
   end;
 end;
@@ -1186,12 +1186,12 @@ begin
   end;
 end;
 
-procedure TNFSeR_PadraoNacional.LerTributacaoNacional(
+procedure TNFSeR_PadraoNacional.LerTributacaoFederal(
   const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
-  AuxNode := ANode.Childrens.FindAnyNs('tribNac');
+  AuxNode := ANode.Childrens.FindAnyNs('tribFed');
 
   if AuxNode <> nil then
   begin

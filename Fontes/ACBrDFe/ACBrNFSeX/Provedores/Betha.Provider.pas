@@ -73,8 +73,8 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure AssinarCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   public
-    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string;
-    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento;
+    function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string; override;
+    function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento; override;
   end;
 
   TACBrNFSeXWebserviceBetha202 = class(TACBrNFSeXWebserviceSoap11)

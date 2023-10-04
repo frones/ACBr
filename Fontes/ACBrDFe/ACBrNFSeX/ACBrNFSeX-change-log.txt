@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2023
+-- Betha.Provider --
+[*] Faz o override na função CondicaoPagToStr/StrToCondicaoPag para que use a função da unit correta.
+   Por: Diego Folieni
+
 02/10/2023
 -- ACBrNFSeXClass/IPM.GravarXml/IPM.LerXml --
 [*] Acrescentado o campo cno (Cadastro Nacional de Obras).

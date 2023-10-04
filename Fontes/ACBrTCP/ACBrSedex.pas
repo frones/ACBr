@@ -149,7 +149,7 @@ type
     destructor Destroy; override;
 
     function Consultar: Boolean;
-    procedure Rastrear(const CodRastreio: String);
+    procedure Rastrear(const ACodRastreio: String);
 
     function LerArqIni(const AIniSedex: String): Boolean;
 
@@ -483,22 +483,21 @@ end;
 //011 CEP inicial e final pertencentes a Área de Risco
 //7 Serviço indisponível, tente mais tarde
 //99 Outros erros diversos do .Net
-procedure TACBrSedex.Rastrear(const CodRastreio: String);
+procedure TACBrSedex.Rastrear(const ACodRastreio: String);
 var
-  SL: TStringList;
-  I: integer;
-  vObs, Erro, vData, vHora, vLocal, infoLinha: String;
-  vCriar: Boolean;
+  LLista: TStringList;
+  Index: integer;
+  LObservacoes, LErro, LData, LHora, LLocal, LLinha: String;
+  LDeveCriar: Boolean;
+  LRastreio : TACBrRastreio;
 begin
   retRastreio.Clear;
 
-  if Length(CodRastreio) <> 13 then
+  if Length(ACodRastreio) <> 13 then
     raise EACBrSedexException.CreateACBrStr('Código de rastreamento deve conter 13 caracteres');
 
   try
-    Self.HTTPGet(
-      'http://www.websro.com.br//detalhes.php?P_COD_UNI='
-      + CodRastreio);
+    Self.HTTPGet('http://www.websro.com.br/detalhes.php?P_COD_UNI='+ ACodRastreio);
   except
     on E: Exception do
     begin
@@ -506,60 +505,59 @@ begin
     end;
   end;
 
-  //DEBUG
-  //Self.RespHTTP.SaveToFile('C:\TEMP\RASTREIO.HTML');
-
   if Pos(ACBrStr('tente novamente mais tarde'), Self.RespHTTP.Text) > 0 then
   begin
-    Erro := Trim(StripHTML(Self.RespHTTP.Text));
-    Erro := Trim(StringReplace(Erro,'SRO - Internet','',[rfReplaceAll]));
-    Erro := Trim(StringReplace(Erro,'Resultado da Pesquisa','',[rfReplaceAll]));
+    LErro := Trim(StripHTML(Self.RespHTTP.Text));
+    LErro := Trim(StringReplace(LErro,'SRO - Internet','',[rfReplaceAll]));
+    LErro := Trim(StringReplace(LErro,'Resultado da Pesquisa','',[rfReplaceAll]));
 
-    //Self.RespHTTP.Text := Erro ;
-    //Self.RespHTTP.SaveToFile('C:\TEMP\RASTREIO.txt');
-
-    raise EACBrSedexException.Create(Erro);
+    raise EACBrSedexException.Create(LErro);
   end;
 
-  SL := TStringList.Create;
+  LLista := TStringList.Create;
   try
-    SL.Text := Self.RespHTTP.Text;
-    vCriar := False;
-    for I := 0 to Pred(SL.Count) do
+    LLista.Text := Self.RespHTTP.Text;
+    LDeveCriar := False;
+    for Index := 0 to Pred(LLista.Count) do
     begin
-      infoLinha := Trim(SL.Strings[I]);
-      if Pos('>Data', infoLinha) > 0 then
+      LLinha := Trim(LLista.Strings[Index]);
+      if Pos('>Data', LLinha) > 0 then
       begin
-        vData :=(RetornarConteudoEntre(infoLinha, '>Data: </span>', ' às '));
-        vHora :=(RetornarConteudoEntre(infoLinha, ' às ', '<br/>'));
-        vData := VData + ' ' + vHora;
+        LData :=(RetornarConteudoEntre(LLinha, '>Data  : ', ' |'));
+        LHora :=(RetornarConteudoEntre(LLinha, 'Hora: ', '</li>'));
+        LData := LData + ' ' + LHora;
       end;
 
-      if Pos('>Local', infoLinha) > 0 then
-        vLocal :=(RetornarConteudoEntre(infoLinha, '</span>', '<a class="btn-floating track-fab waves-effect waves-light white">')) + ' -> ' + vObs;
+      if Pos('>Local', LLinha) > 0 then
+        LLocal := (RetornarConteudoEntre(LLinha, '<li>', '</li>'));
 
-      if Pos('eventoStatus', infoLinha) > 0 then
-        vObs := RetornarConteudoEntre(infoLinha, 'eventoStatus">', '</span>');
+      if Pos('<li>Origem', LLinha) > 0 then
+        LLocal := (RetornarConteudoEntre(LLinha, '<li>', '</li>'));
 
-      vCriar := Trim(vLocal) <> '';
-      if vCriar then
+      if Pos('<li>Destino', LLinha) > 0 then
+        LLocal := LLocal + #13#10 + (RetornarConteudoEntre(LLinha, '<li>', '</li>'));
+
+      if Pos('>Status', LLinha) > 0 then
+        LObservacoes := RetornarConteudoEntre(LLinha, '<b>', '</b>');
+
+      LDeveCriar := Trim(LLocal) <> '';
+      if LDeveCriar then
       begin
-        with retRastreio.New do
-        begin
-          DataHora   := StrToDateTime(vData);
-          Local      := vLocal;
-          Situacao   := vObs;
-          Observacao := vObs;
-        end;
-        vData := EmptyStr;
-        vLocal := EmptyStr;
-        vObs := EmptyStr;
-        vCriar := False;
+        LRastreio := retRastreio.New;
+        LRastreio.DataHora   := StrToDateTime(LData);
+        LRastreio.Local      := LLocal;
+        LRastreio.Situacao   := LObservacoes;
+        LRastreio.Observacao := LObservacoes;
+
+        LData        := EmptyStr;
+        LLocal       := EmptyStr;
+        LObservacoes := EmptyStr;
+        LDeveCriar   := False;
       end;
 
     end;
   finally
-    SL.Free;
+    LLista.Free;
   end;
 end;
 

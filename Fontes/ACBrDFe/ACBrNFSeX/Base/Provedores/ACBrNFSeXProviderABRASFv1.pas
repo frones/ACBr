@@ -629,6 +629,8 @@ procedure TACBrNFSeProviderABRASFv1.TratarRetornoConsultaSituacao(Response: TNFS
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
+  Ok: Boolean;
+  Situacao: TSituacaoLoteRps;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -654,6 +656,8 @@ begin
       if not Response.Sucesso then
         Response.Situacao := '3';
 
+      Situacao := TACBrNFSeX(FAOwner).Provider.StrToSituacaoLoteRps(Ok, Response.Situacao);
+      Response.DescSituacao := TACBrNFSeX(FAOwner).Provider.SituacaoLoteRpsToDescr(Situacao);
     except
       on E:Exception do
       begin

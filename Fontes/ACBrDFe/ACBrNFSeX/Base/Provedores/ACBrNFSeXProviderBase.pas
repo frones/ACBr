@@ -251,6 +251,10 @@ type
     property ConsultarParamResponse: TNFSeConsultarParamResponse read GetConsultarParamResponse;
     property ConsultarSeqRpsResponse: TNFSeConsultarSeqRpsResponse read GetConsultarSeqRpsResponse;
 
+    function SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string; virtual;
+    function StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps; virtual;
+    function SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string; virtual;
+
     function SimNaoToStr(const t: TnfseSimNao): string; virtual;
     function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; virtual;
     function SimNaoDescricao(const t: TnfseSimNao): string; virtual;
@@ -1140,6 +1144,31 @@ begin
   end;
 
   FDefaultNameSpaceURI := aNameSpace;
+end;
+
+function TACBrNFSeXProvider.SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4'],
+                           [sLoteNaoRecibo, sLoteNaoProcessado,
+                            sLoteProcessadoErro, sLoteProcessadoSucesso]);
+end;
+
+function TACBrNFSeXProvider.StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4'],
+                           [sLoteNaoRecibo, sLoteNaoProcessado,
+                            sLoteProcessadoErro, sLoteProcessadoSucesso]);
+end;
+
+function TACBrNFSeXProvider.SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['Lote Não Recebido', 'Lote Não Processado',
+                            'Lote Processado com Erro', 'Lote Processado com Sucesso'],
+                           [sLoteNaoRecibo, sLoteNaoProcessado,
+                            sLoteProcessadoErro, sLoteProcessadoSucesso]);
 end;
 
 function TACBrNFSeXProvider.SimNaoToStr(const t: TnfseSimNao): string;

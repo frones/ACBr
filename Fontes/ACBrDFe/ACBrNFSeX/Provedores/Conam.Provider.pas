@@ -90,7 +90,10 @@ type
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = '';
                                      const AMessageTag: string = 'Erro'); override;
-
+  public
+    function SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string; override;
+    function StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps; override;
+    function SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string; override;
   end;
 
 implementation
@@ -203,6 +206,36 @@ begin
       AAlerta.Correcao := '';
     end;
   end;
+end;
+
+function TACBrNFSeProviderConam.SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5'],
+                           [sLoteNaoProcessado, sLoteEmProcessamento,
+                            sLoteProcessadoErro, sLoteProcessadoAviso,
+                            sLoteProcessadoSucesso]);
+end;
+
+function TACBrNFSeProviderConam.StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5'],
+                           [sLoteNaoProcessado, sLoteEmProcessamento,
+                            sLoteProcessadoErro, sLoteProcessadoAviso,
+                            sLoteProcessadoSucesso]);
+end;
+
+function TACBrNFSeProviderConam.SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['Aguardando Processamento', 'Em Processamento',
+                            'Lote Processado com Erro',
+                            'Lote Processado com Aviso',
+                            'Lote Processado com Sucesso'],
+                           [sLoteNaoProcessado, sLoteEmProcessamento,
+                            sLoteProcessadoErro, sLoteProcessadoAviso,
+                            sLoteProcessadoSucesso]);
 end;
 
 procedure TACBrNFSeProviderConam.PrepararEmitir(Response: TNFSeEmiteResponse);
@@ -632,6 +665,8 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
+  Ok: Boolean;
+  Situacao: TSituacaoLoteRps;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -658,7 +693,11 @@ begin
         with Response do
         begin
           Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
+          Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('PrtXSts'), tcStr);
         end;
+
+        Situacao := TACBrNFSeX(FAOwner).Provider.StrToSituacaoLoteRps(Ok, Response.Situacao);
+        Response.DescSituacao := TACBrNFSeX(FAOwner).Provider.SituacaoLoteRpsToDescr(Situacao);
       end;
     except
       on E:Exception do

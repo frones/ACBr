@@ -74,6 +74,10 @@ type
     property ConfigAssinar: TConfigAssinar read GetConfigAssinar;
     property ConfigSchemas: TConfigSchemas read GetConfigSchemas;
 
+    function SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string;
+    function StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps;
+    function SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string;
+
     function SimNaoToStr(const t: TnfseSimNao): string;
     function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
     function SimNaoDescricao(const t: TnfseSimNao): string;

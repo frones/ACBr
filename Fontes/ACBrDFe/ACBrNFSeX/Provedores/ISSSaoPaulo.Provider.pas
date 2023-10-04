@@ -99,6 +99,10 @@ type
 
     function LerChaveNFe(ANode: TACBrXmlNode): string;
     function LerChaveRPS(ANode: TACBrXmlNode): string;
+  public
+    function SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string; override;
+    function StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps; override;
+    function SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string; override;
   end;
 
 implementation
@@ -385,6 +389,27 @@ begin
       end;
     end;
   end
+end;
+
+function TACBrNFSeProviderISSSaoPaulo.SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['true', 'false'],
+                           [sLoteProcessadoSucesso, sLoteProcessadoErro]);
+end;
+
+function TACBrNFSeProviderISSSaoPaulo.StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['true', 'false'],
+                           [sLoteProcessadoSucesso, sLoteProcessadoErro]);
+end;
+
+function TACBrNFSeProviderISSSaoPaulo.SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['Lote Processado com Sucesso', 'Lote Processado com Erro'],
+                           [sLoteProcessadoSucesso, sLoteProcessadoErro]);
 end;
 
 procedure TACBrNFSeProviderISSSaoPaulo.PrepararEmitir(Response: TNFSeEmiteResponse);
@@ -724,6 +749,8 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
+  Ok: Boolean;
+  aSituacao: TSituacaoLoteRps;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -752,6 +779,9 @@ begin
         with Response do
         begin
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+
+          aSituacao := TACBrNFSeX(FAOwner).Provider.StrToSituacaoLoteRps(Ok, Situacao);
+          DescSituacao := TACBrNFSeX(FAOwner).Provider.SituacaoLoteRpsToDescr(aSituacao);
 
           AuxNode := AuxNode.Childrens.FindAnyNs('InformacoesLote');
 

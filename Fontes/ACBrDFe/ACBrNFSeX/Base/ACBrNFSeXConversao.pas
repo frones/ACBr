@@ -107,8 +107,9 @@ type
 
   TIndicacaoCpfCnpj = (iccCPF, iccCNPJ, iccNaoInformado);
 
-  TSituacaoLoteRPS = (sLoteNaoRecibo, sLoteNaoProcessado, sLoteProcessadoErro,
-                      sLoteProcessadoSucesso, sLoteProcessadoAviso);
+  TSituacaoLoteRps = (sLoteNaoRecibo, sLoteNaoProcessado, sLoteProcessadoErro,
+                      sLoteProcessadoSucesso, sLoteProcessadoAviso,
+                      sLoteEmProcessamento, sLoteValidado, sLoteImportado);
 
   TDeducaoPor = (dpNenhum, dpPercentual, dpValor);
 
@@ -314,10 +315,6 @@ function StrToNaturezaOperacao(out ok: boolean; const s: string): TnfseNaturezaO
 
 function IndicacaoCpfCnpjToStr(const t: TIndicacaoCpfCnpj): string;
 function StrToIndicacaoCpfCnpj(out ok: boolean; const s: string): TIndicacaoCpfCnpj;
-
-function SituacaoLoteRPSToStr(const t: TSituacaoLoteRPS): string;
-function StrToSituacaoLoteRPS(out ok: boolean; const s: string): TSituacaoLoteRPS;
-function SituacaoLoteRPSToDescr(const t: TSituacaoLoteRPS): string;
 
 function StrToProvedor(const s: string): TnfseProvedor;
 
@@ -628,36 +625,6 @@ begin
   Result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
                            [iccCPF, iccCNPJ, iccNaoInformado]);
-end;
-
-function SituacaoLoteRPSToStr(const t: TSituacaoLoteRPS): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5'],
-                           [sLoteNaoRecibo, sLoteNaoProcessado,
-                            sLoteProcessadoErro, sLoteProcessadoSucesso,
-                            sLoteProcessadoAviso]);
-end;
-
-function StrToSituacaoLoteRPS(out ok: boolean; const s: string): TSituacaoLoteRPS;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5'],
-                           [sLoteNaoRecibo, sLoteNaoProcessado,
-                            sLoteProcessadoErro, sLoteProcessadoSucesso,
-                            sLoteProcessadoAviso]);
-end;
-
-function SituacaoLoteRPSToDescr(const t: TSituacaoLoteRPS): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['Lote Não Recebido', 'Lote Não Processado',
-                            'Lote Processado com Erro',
-                            'Lote Processado com Sucesso',
-                            'Lote Processado com Aviso'],
-                           [sLoteNaoRecibo, sLoteNaoProcessado,
-                            sLoteProcessadoErro, sLoteProcessadoSucesso,
-                            sLoteProcessadoAviso]);
 end;
 
 function StrToProvedor(const s: string): TnfseProvedor;

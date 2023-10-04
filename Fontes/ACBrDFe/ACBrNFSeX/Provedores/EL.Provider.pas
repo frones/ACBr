@@ -110,6 +110,10 @@ type
   public
     procedure Emite; override;
 
+    function SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string; override;
+    function StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps; override;
+    function SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string; override;
+
     function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
     function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
 
@@ -584,6 +588,31 @@ begin
   end;
 end;
 
+function TACBrNFSeProviderEL.SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4'],
+                           [sLoteNaoProcessado, sLoteProcessadoErro,
+                            sLoteProcessadoAviso, sLoteProcessadoSucesso]);
+end;
+
+function TACBrNFSeProviderEL.StrToSituacaoLoteRps(out ok: boolean; const s: string): TSituacaoLoteRps;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4'],
+                           [sLoteNaoProcessado, sLoteProcessadoErro,
+                            sLoteProcessadoAviso, sLoteProcessadoSucesso]);
+end;
+
+function TACBrNFSeProviderEL.SituacaoLoteRpsToDescr(const t: TSituacaoLoteRps): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['Lote Não Processado', 'Lote Processado com Erro',
+                            'Lote Processado com Aviso', 'Lote Processado com Sucesso'],
+                           [sLoteNaoProcessado, sLoteProcessadoErro,
+                            sLoteProcessadoAviso, sLoteProcessadoSucesso]);
+end;
+
 function TACBrNFSeProviderEL.RegimeEspecialTributacaoToStr(
   const t: TnfseRegimeEspecialTributacao): string;
 begin
@@ -888,6 +917,8 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   AuxNode: TACBrXmlNode;
+  Ok: Boolean;
+  Situacao: TSituacaoLoteRps;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -918,6 +949,9 @@ begin
           NumeroLote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacaoLoteRps'), tcStr);
         end;
+
+        Situacao := TACBrNFSeX(FAOwner).Provider.StrToSituacaoLoteRps(Ok, Response.Situacao);
+        Response.DescSituacao := TACBrNFSeX(FAOwner).Provider.SituacaoLoteRpsToDescr(Situacao);
       end;
     except
       on E:Exception do

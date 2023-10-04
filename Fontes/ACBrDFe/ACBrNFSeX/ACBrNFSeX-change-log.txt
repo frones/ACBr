@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/10/2023
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Igrejinha/RS, provedor é o IPM
+   Por: Destak
 -- Betha.Provider --
 [*] Faz o override na função CondicaoPagToStr/StrToCondicaoPag para que use a função da unit correta.
    Por: Diego Folieni

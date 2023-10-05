@@ -113,7 +113,7 @@ public final class ACBrMDFe extends ACBrLibBase {
 
         int MDFE_ConsultarMDFeNaoEnc(String aCNPJ, ByteBuffer buffer, IntByReference bufferSize);
 
-        int MDFE_Enviar(int ALote, boolean Imprimir, boolean sincrono, boolean zipado, ByteBuffer buffer, IntByReference bufferSize);
+        int MDFE_Enviar(int ALote, boolean Imprimir, boolean sincrono, ByteBuffer buffer, IntByReference bufferSize);
 
         int MDFE_ConsultarRecibo(String aRecibo, ByteBuffer buffer, IntByReference bufferSize);
 
@@ -426,10 +426,11 @@ public final class ACBrMDFe extends ACBrLibBase {
     }
 
     public String enviar(int aLote, boolean imprimir, boolean sincrono, boolean zipado) throws Exception {
+        
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-        int ret = ACBrMDFeLib.INSTANCE.MDFE_Enviar(aLote, imprimir, sincrono, zipado, buffer, bufferLen);
+        int ret = ACBrMDFeLib.INSTANCE.MDFE_Enviar(aLote, imprimir, sincrono, buffer, bufferLen);
         checkResult(ret);
 
         return processResult(buffer, bufferLen);

@@ -61,6 +61,8 @@ type
   end;
 
   TACBrNFSeProviderIPM = class (TACBrNFSeProviderProprio)
+  private
+    FpParametro: string;
   protected
     procedure Configuracao; override;
 
@@ -231,7 +233,7 @@ function TACBrNFSeProviderIPM.CriarServiceClient(
 var
   URL: string;
 begin
-  URL := GetWebServiceURL(AMetodo);
+  URL := GetWebServiceURL(AMetodo) + FpParametro;
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, URL)
@@ -324,6 +326,7 @@ procedure TACBrNFSeProviderIPM.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
   Params: TNFSeParamsResponse);
 begin
   Response.ArquivoEnvio := Params.Xml;
+  FpParametro := '?eletron=1';
 end;
 
 procedure TACBrNFSeProviderIPM.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -459,6 +462,8 @@ procedure TACBrNFSeProviderIPM.PrepararConsultaLoteRps(
 var
   AErro: TNFSeEventoCollectionItem;
 begin
+  FpParametro := '?formato_saida=2';
+
   if EstaVazio(Response.Protocolo) then
   begin
     AErro := Response.Erros.New;
@@ -596,6 +601,8 @@ procedure TACBrNFSeProviderIPM.PrepararConsultaNFSeporRps(
 var
   AErro: TNFSeEventoCollectionItem;
 begin
+  FpParametro := '?formato_saida=2';
+
   if EstaVazio(Response.NumeroRps) then
   begin
     AErro := Response.Erros.New;
@@ -762,6 +769,8 @@ var
   AErro: TNFSeEventoCollectionItem;
   TagSerie: string;
 begin
+  FpParametro := '?formato_saida=2';
+
   if ConfigGeral.Versao = ve101 then
     TagSerie := 'serie_nfse'
   else
@@ -950,6 +959,8 @@ var
   Emitente: TEmitenteConfNFSe;
   xSerie, IdAttr, xSubstituta: string;
 begin
+  FpParametro := '?eletron=1';
+
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
     AErro := Response.Erros.New;
@@ -1415,7 +1426,7 @@ function TACBrNFSeProviderIPM101.CriarServiceClient(
 var
   URL: string;
 begin
-  URL := GetWebServiceURL(AMetodo);
+  URL := GetWebServiceURL(AMetodo) + FpParametro;
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceIPM101.Create(FAOwner, AMetodo, URL)

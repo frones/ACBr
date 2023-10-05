@@ -43,9 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/10/2023
+-- IPM.Provider --
+[*] Alteração visando usar o parâmetro "?eletron=1" ou "?formato_saida=2" dependendo
+    do serviço a ser consumido.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Removido das URLs das cidades atendidas pelo provedor IPM (versão 1.00 e 1.01)
-    o parâmetro ?eletron=1
+    o parâmetro "?eletron=1"
    Por: Italo Giurizzato Junior
 -- eISS.Provider --
 [*] Implementado o método GerarToken do provedor eISS.

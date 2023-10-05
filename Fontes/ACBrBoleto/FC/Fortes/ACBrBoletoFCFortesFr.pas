@@ -270,12 +270,10 @@ type
     txtVencCanhoto: TRLLabel;
     txtAceite: TRLLabel;
     txtCarteira: TRLLabel;
-    txtCidadeSacado: TRLLabel;
     txtCodCedenteCarne: TRLLabel;
     txtCPF: TRLLabel;
     txtDataDocto: TRLLabel;
     txtDataProces: TRLLabel;
-    txtEndSacado: TRLLabel;
     txtEspecieDoc: TRLLabel;
     txtLinhaDigitavelCarne: TRLLabel;
     RLDBText17: TRLDBText;
@@ -433,7 +431,6 @@ type
     txtEndCedenteCarne: TRLLabel;
     memoEndCedenteCarne: TRLMemo;
     txtOrientacoesBancoCarne: TRLMemo;
-    txtNomeSacadorAval4: TRLLabel;
     BoletoReciboTopo: TRLReport;
     RLBand5: TRLBand;
     RLDraw79: TRLDraw;
@@ -1260,6 +1257,8 @@ type
     imgQrCodePixLayoutBoleto: TRLImage;
     imgQrCodePixCarneA5: TRLImage;
     imgQrCodePixServicos: TRLImage;
+    mmNomeSacadorAval4: TRLMemo;
+    mmEndSacadoCarne: TRLMemo;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -1917,12 +1916,13 @@ begin
       txtParcela.Caption              := IntToStrZero(Titulo.Parcela,3)+' /';
       txtTotPar.Caption               := IntToStrZero(Titulo.TotalParcelas,3);
 
-      txtEndSacado.Caption            := Titulo.Sacado.Logradouro + ' '+
-                                         Titulo.Sacado.Numero + ' ' + Titulo.Sacado.Complemento +
-                                         ' ' + Titulo.Sacado.Bairro;
-      txtCidadeSacado.Caption         := Titulo.Sacado.Cidade +
-                                         ' '+Titulo.Sacado.UF +
-                                         ' '+Titulo.Sacado.CEP;
+      mmEndSacadoCarne.Lines.Text     := Titulo.Sacado.Logradouro +
+                                         ',' + Titulo.Sacado.Numero +
+                                         ', ' + Titulo.Sacado.Complemento +
+                                         ', ' + Titulo.Sacado.Bairro +
+                                         ', ' + Titulo.Sacado.Cidade +
+                                         '- ' + Titulo.Sacado.UF +
+                                         '- ' + Titulo.Sacado.CEP;
       txtCPF.Caption                  := 'CPF/CNPJ: '+ FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
       txtCPFCarne2.Caption            := FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
       mIntrucoes.Lines.Text           := MensagemPadrao.Text;
@@ -1946,13 +1946,13 @@ begin
 
         if (NomeAvalista <> '') then
         begin
-          txtNomeSacadorAval4.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + FormatarCNPJouCPF(CNPJCPF)+ ' ' +
+          mmNomeSacadorAval4.Lines.Text := NomeAvalista + ' - ' + TipoDoc + ' ' + FormatarCNPJouCPF(CNPJCPF)+ ' ' +
             Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
             Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
         end
         else
         begin
-          txtNomeSacadorAval4.Caption   := '';
+          mmNomeSacadorAval4.Lines.Clear;
         end;
       end;
    end;

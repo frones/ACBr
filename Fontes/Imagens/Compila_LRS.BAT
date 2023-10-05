@@ -52,7 +52,7 @@ echo "****************************************"
 echo.
 
 :PIXCD
-%1\tools\lazres.exe ACBrPIXCD.lrs TACBrPixCD.png TACBrPSPItau.png TACBrPSPBancoDoBrasil.png TACBrPSPSantander.png TACBrPSPShipay.png TACBrPSPSicredi.png TACBrPSPSicoob.png TACBrPSPPagSeguro.png TACBrPSPGerenciaNet.png TACBrPSPBradesco.png TACBrPSPPixPDV.png TACBrPSPInter.png TACBrPSPAilos.png TACBrPSPMatera.png
+%1\tools\lazres.exe ACBrPIXCD.lrs TACBrPixCD.png TACBrPSPItau.png TACBrPSPBancoDoBrasil.png TACBrPSPSantander.png TACBrPSPShipay.png TACBrPSPSicredi.png TACBrPSPSicoob.png TACBrPSPPagSeguro.png TACBrPSPGerenciaNet.png TACBrPSPBradesco.png TACBrPSPPixPDV.png TACBrPSPInter.png TACBrPSPAilos.png TACBrPSPMatera.png TACBrPSPCielo.png
 move ACBrPIXCD.lrs ..\ACBrPIXCD
 echo.
 echo "****************************************"

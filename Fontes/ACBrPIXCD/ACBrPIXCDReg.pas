@@ -41,7 +41,7 @@ uses
   ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander,
   ACBrPIXPSPShipay, ACBrPIXPSPSicredi, ACBrPIXPSPSicoob, ACBrPIXPSPPagSeguro,
   ACBrPIXPSPGerenciaNet, ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV, ACBrPIXPSPInter,
-  ACBrPIXPSPAilos, ACBrPIXPSPMatera
+  ACBrPIXPSPAilos, ACBrPIXPSPMatera, ACBrPIXPSPCielo
   {$IFDEF FPC}, LResources {$ENDIF};
 
 procedure Register;
@@ -58,7 +58,7 @@ begin
     TACBrPSPItau, TACBrPSPBancoDoBrasil, TACBrPSPSantander, TACBrPSPShipay,
     TACBrPSPSicredi, TACBrPSPSicoob, TACBrPSPPagSeguro, TACBrPSPGerenciaNet,
     TACBrPSPBradesco, TACBrPSPPixPDV, TACBrPSPInter, TACBrPSPAilos,
-    TACBrPSPMatera]);
+    TACBrPSPMatera, TACBrPSPCielo]);
 end;
 
 {$IFDEF FPC}

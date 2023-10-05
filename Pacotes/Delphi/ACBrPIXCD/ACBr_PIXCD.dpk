@@ -70,6 +70,8 @@ contains
   ACBrPIXPSPPixPDV in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPPixPDV.pas',
   ACBrPIXPSPInter in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPInter.pas',
   ACBrPIXPSPAilos in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAilos.pas',
-  ACBrPIXPSPMatera in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPMatera.pas';
+  ACBrPIXPSPMatera in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPMatera.pas',
+  ACBrSchemasMatera in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasMatera.pas',
+  ACBrPIXPSPCielo in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPCielo.pas';
 
 end.

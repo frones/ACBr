@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/10/2023
+-- ACBrPIXPSPCielo --
+[+] Adicionado novo PSP Cielo
+
 02/10/2023
 -- ACBrSchemasMatera --
 [+] Incluídos novos schemas de mapeamento da API específica da Matera

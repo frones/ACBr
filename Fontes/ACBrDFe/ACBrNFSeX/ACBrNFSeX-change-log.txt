@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/10/2023
+-- ACBrNFSeXServicos --
+[*] Removido das URLs das cidades atendidas pelo provedor IPM (versão 1.00 e 1.01)
+    o parâmetro ?eletron=1
+   Por: Italo Giurizzato Junior
 -- eISS.Provider --
 [*] Implementado o método GerarToken do provedor eISS.
     Implementado também o método Recepcionar, mas retornar um erro acusando

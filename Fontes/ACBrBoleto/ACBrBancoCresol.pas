@@ -238,7 +238,7 @@ begin
   LNome := fpNome;
   try
     fpNome := 'CRESOL CONFEDERAÇÃO';
-    Result := inherited;
+    Result := inherited GerarRegistroHeader240(NumeroRemessa);
   finally
     fpNome := LNome;
   end;

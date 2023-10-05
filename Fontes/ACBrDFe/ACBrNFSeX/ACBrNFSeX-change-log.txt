@@ -49,6 +49,8 @@ Símbolo : Significado
     que a entrada contem um caractere que não esta na base 64.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade de Jaguare/ES, provedor é o EL na versão 2.04.
+   Por: Neski Soluções 
 [+] Incluida a cidade de São josé do Alegre/MG, provedor é o Futurize.
    Por: Quality Automação
 [*] Alterada as URLs da cidade de Guaramirim/SC, o provedor continua o mesmo.

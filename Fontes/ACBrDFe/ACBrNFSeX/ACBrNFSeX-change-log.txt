@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/10/2023
+-- eISS.Provider --
+[*] Implementado o método GerarToken do provedor eISS.
+    Implementado também o método Recepcionar, mas retornar um erro acusando
+    que a entrada contem um caractere que não esta na base 64.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade de São josé do Alegre/MG, provedor é o Futurize.
    Por: Quality Automação

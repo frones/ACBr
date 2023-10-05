@@ -49,15 +49,14 @@ uses
 type
 
   TACBrNFSeXWebserviceeISS = class(TACBrNFSeXWebserviceRest)
+  private
+    FpMetodo: TMetodo;
   protected
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
 
   public
+    function GerarToken(ACabecalho, AMSG: String): string; override;
     function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -66,6 +65,7 @@ type
   private
     FpPath: string;
     FpMethod: string;
+    FpMimeType: string;
   protected
     procedure Configuracao; override;
 
@@ -73,23 +73,14 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
+    procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
+
     function PrepararRpsParaLote(const aXml: string): string; override;
 
     procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
-
-    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
-    procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
-
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-
-    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-
-    procedure PrepararSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
-    procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
 
     procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
                                      Response: TNFSeWebserviceResponse;
@@ -101,7 +92,7 @@ implementation
 uses
   synacode,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
-  ACBrDFeException,
+  ACBrDFeException, ACBrCompress,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   eISS.GravarJson, eISS.LerJson;
 
@@ -147,7 +138,8 @@ begin
   if URL <> '' then
   begin
     URL := URL + FpPath;
-    Result := TACBrNFSeXWebserviceeISS.Create(FAOwner, AMetodo, URL, FpMethod);
+    Result := TACBrNFSeXWebserviceeISS.Create(FAOwner, AMetodo, URL,
+      FpMethod, FpMimeType);
   end
   else
   begin
@@ -183,10 +175,80 @@ begin
                                xDetailError));
 end;
 
+procedure TACBrNFSeProvidereISS.PrepararGerarToken(
+  Response: TNFSeGerarTokenResponse);
+begin
+  with TACBrNFSeX(FAOwner).Configuracoes.Geral do
+  begin
+    Response.ArquivoEnvio := '{' +
+                              '"AccessKey":"' + Emitente.WSChaveAcesso + '",' +
+                              '"Documento":"' + Emitente.CNPJ + '",' +
+                              '"CodigoCidade":"' + IntToStr(CodigoMunicipio) + '"' +
+                             '}';
+  end;
+
+  FpPath := '/Api/Integracao/Token';
+  FpMimeType := 'application/json';
+  FpMethod := 'POST';
+end;
+
+procedure TACBrNFSeProvidereISS.TratarRetornoGerarToken(
+  Response: TNFSeGerarTokenResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  json: TACBrJsonObject;
+begin
+  try
+    if (Copy(Response.ArquivoRetorno, 1, 1) = '{') then
+    begin
+      json := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+      try
+      {
+        if (json.AsString['message'] <> '') then
+        begin
+          Response.Token := json.AsString['access_token'];
+        end;
+        }
+        if (json.AsString['message'] <> '') then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := ACBrStr(json.AsString['message']);
+          AErro.Correcao := '';
+        end;
+      finally
+        json.Free;
+      end;
+    end
+    else
+    begin
+      Response.Token := Response.ArquivoRetorno;
+      {
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod212;
+      AErro.Descricao := ACBrStr(Desc212);
+      AErro.Correcao := ACBrStr(Response.ArquivoRetorno);
+      }
+    end;
+  except
+    on E:Exception do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod999;
+      AErro.Descricao := ACBrStr(Desc999 + E.Message);
+    end;
+  end;
+
+  Response.Sucesso := (Response.Erros.Count = 0);
+end;
+
 function TACBrNFSeProvidereISS.PrepararRpsParaLote(const aXml: string): string;
 begin
+{
   Result := Copy(aXml, 5, Length(aXml));
   Result := Copy(Result, 1, Length(Result) - 1) + ',';
+  }
+  Result := aXml + ',';
 end;
 
 procedure TACBrNFSeProvidereISS.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
@@ -194,12 +256,19 @@ procedure TACBrNFSeProvidereISS.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse
 var
   Json: string;
 begin
-  Json := Copy(Params.Xml, 1, Length(Params.Xml) -1);
-  Json := '{"Notas":[' + Json + ']}';
+  Json := '[' + Copy(Params.Xml, 1, Length(Params.Xml) -1) + ']';
+  Json := '{"Notas":' + Json + '}';
+  Json := AplicarLineBreak(Json, '');
+
+  Json := EncodeBase64(Json);
+//  Json := EncodeBase64(GZipCompress(Json));
 
   Response.ArquivoEnvio := Json;
+
+//  FpPath := '/Api/NotaFiscal/Prestador';
+  FpPath := '/Api/Importacao/NotaFiscal/Prestador';
+  FpMimeType := 'application/json';
   FpMethod := 'POST';
-  FpPath := '';
 end;
 
 procedure TACBrNFSeProvidereISS.TratarRetornoEmitir
@@ -207,6 +276,7 @@ procedure TACBrNFSeProvidereISS.TratarRetornoEmitir
 var
   jDocument, jNfse: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
+  json: TACBrJsonObject;
 //  ANota: TNotaFiscal;
 begin
   if Response.ArquivoRetorno = '' then
@@ -217,6 +287,49 @@ begin
     Exit
   end;
 
+  try
+    if (Copy(Response.ArquivoRetorno, 1, 1) = '{') then
+    begin
+      json := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+      try
+      {
+        if (json.AsString['message'] <> '') then
+        begin
+          Response.Token := json.AsString['access_token'];
+        end;
+        }
+        if (json.AsString['message'] <> '') then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := ACBrStr(json.AsString['message']);
+          AErro.Correcao := '';
+        end;
+      finally
+        json.Free;
+      end;
+    end
+    else
+    begin
+      {
+      Response.Token := Response.ArquivoRetorno;
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod212;
+      AErro.Descricao := ACBrStr(Desc212);
+      AErro.Correcao := ACBrStr(Response.ArquivoRetorno);
+      }
+    end;
+  except
+    on E:Exception do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod999;
+      AErro.Descricao := ACBrStr(Desc999 + E.Message);
+    end;
+  end;
+
+  Response.Sucesso := (Response.Erros.Count = 0);
+(*
   jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
 
   try
@@ -260,352 +373,36 @@ begin
   finally
     FreeAndNil(jDocument);
   end;
-end;
-
-procedure TACBrNFSeProvidereISS.PrepararConsultaNFSeporRps(
-  Response: TNFSeConsultaNFSeporRpsResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-begin
-  if EstaVazio(Response.NumeroRps) then
-    begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Cod102;
-      AErro.Descricao := ACBrStr(Desc102);
-      Exit;
-    end;
-
-  Response.ArquivoEnvio := '?NumeroRps=' +
-    Response.NumeroRps;
-
-  FpPath := Response.ArquivoEnvio;
-  FpMethod := 'GET';
-end;
-
-procedure TACBrNFSeProvidereISS.TratarRetornoConsultaNFSeporRps(
-  Response: TNFSeConsultaNFSeporRpsResponse);
-var
-  jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
-  AErro: TNFSeEventoCollectionItem;
-  NumRps: string;
-  ANota: TNotaFiscal;
-begin
-  if Response.ArquivoRetorno = '' then
-    begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Cod201;
-      AErro.Descricao := ACBrStr(Desc201);
-      Exit
-    end;
-
-  jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
-
-  try
-    try
-      ProcessarMensagemDeErros(jDocument, Response);
-      Response.Sucesso := (Response.Erros.Count = 0);
-
-      if Response.Sucesso then
-        begin
-          jNfse := jDocument.AsJSONObject['DadosNfse'];
-          jRps := jNfse.AsJSONObject['Rps'];
-          NumRps := jRps.AsString['Numero'];
-
-          if Assigned(jNfse) then
-            begin
-              with Response do
-                begin
-                  NumeroNota := jNfse.AsString['NumeroNfse'];
-                  SerieNota := jRps.AsString['Serie'];
-                  Data := jNfse.AsISODateTime['DataEmissao'];
-                  Link := jNfse.AsString['LinkNfse'];
-                  Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
-                  Protocolo := jNfse.AsString['CodigoValidacao'];
-                  Situacao := jNfse.AsString['SituacaoNfse'];
-                  NumeroLote := NumRps;
-
-                  if Situacao = '2' then
-                    begin
-                      DescSituacao := 'Cancelada';
-                      jCancel := jNfse.AsJSONObject['Cancelamento'];
-                      DataCanc := jCancel.AsISODate['Data'];
-                    end
-                  else
-                    DescSituacao := 'Normal';
-                end;
-
-              if NumRps <> '' then
-                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
-              else
-                ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
-
-              ANota := CarregarXmlNfse(ANota, Response.ArquivoRetorno);
-              SalvarXmlNfse(ANota);
-            end;
-        end;
-    except
-      on E: Exception do
-        begin
-          Response.Sucesso := False;
-          AErro := Response.Erros.New;
-          AErro.Codigo := Cod999;
-          AErro.Descricao := ACBrStr(Desc999 + E.Message);
-        end;
-    end;
-  finally
-    FreeAndNil(jDocument);
-  end;
-end;
-
-procedure TACBrNFSeProvidereISS.PrepararConsultaNFSe(
-  Response: TNFSeConsultaNFSeResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-begin
-  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := ACBrStr(Desc108);
-    Exit;
-  end;
-
-  Response.ArquivoEnvio := '?NumeroNfse=' +
-    Response.InfConsultaNFSe.NumeroIniNFSe;
-
-  FpPath := Response.ArquivoEnvio;
-  FpMethod := 'GET';
-end;
-
-procedure TACBrNFSeProvidereISS.TratarRetornoConsultaNFSe
-  (Response: TNFSeConsultaNFSeResponse);
-var
-  jDocument, jRps, jNfse, jCancel: TACBrJSONObject;
-  AErro: TNFSeEventoCollectionItem;
-  NumRps: string;
-  ANota: TNotaFiscal;
-begin
-  if Response.ArquivoRetorno = '' then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod201;
-    AErro.Descricao := ACBrStr(Desc201);
-    Exit
-  end;
-
-  if Response.InfConsultaNFSe.tpRetorno = trXml then
-  begin
-    jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
-
-    try
-      try
-        ProcessarMensagemDeErros(jDocument, Response);
-        Response.Sucesso := (Response.Erros.Count = 0);
-
-        if Response.Sucesso then
-        begin
-          jNfse := jDocument.AsJSONObject['DadosNfse'];
-          jRps := jNfse.AsJSONObject['Rps'];
-          NumRps := jRps.AsString['Numero'];
-
-          if Assigned(jNfse) then
-          begin
-            with Response do
-            begin
-              NumeroNota := jNfse.AsString['NumeroNfse'];
-              SerieNota := jRps.AsString['Serie'];
-              Data := jNfse.AsISODateTime['DataEmissao'];
-              Link := jNfse.AsString['LinkNfse'];
-              Link := StringReplace(Link, '&amp;', '&', [rfReplaceAll]);
-              Protocolo := jNfse.AsString['CodigoValidacao'];
-              Situacao := jNfse.AsString['SituacaoNfse'];
-              NumeroLote := NumRps;
-
-              if Situacao = '2' then
-              begin
-                DescSituacao := 'Cancelada';
-                jCancel := jNfse.AsJSONObject['Cancelamento'];
-                DataCanc := jCancel.AsISODate['Data'];
-              end
-              else
-                DescSituacao := 'Normal';
-            end;
-
-            if NumRps <> '' then
-              ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
-            else
-              ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
-
-            ANota := CarregarXmlNfse(ANota, Response.ArquivoRetorno);
-            SalvarXmlNfse(ANota);
-          end;
-        end;
-      except
-        on E: Exception do
-        begin
-          Response.Sucesso := False;
-          AErro := Response.Erros.New;
-          AErro.Codigo := Cod999;
-          AErro.Descricao := ACBrStr(Desc999 + E.Message);
-        end;
-      end;
-    finally
-      FreeAndNil(jDocument);
-    end;
-  end;
-end;
-
-procedure TACBrNFSeProvidereISS.PrepararCancelaNFSe(
-  Response: TNFSeCancelaNFSeResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
-  jo: TACBrJSONObject;
-begin
-  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := ACBrStr(Desc108);
-    Exit;
-  end;
-
-  if EstaVazio(Response.InfCancelamento.MotCancelamento) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod110;
-    AErro.Descricao := ACBrStr(Desc110);
-    Exit;
-  end;
-
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-
-  jo := TACBrJSONObject.Create;
-  try
-    with Response.InfCancelamento do
-      jo
-        .AddPairJSONObject('DadosNota', EmptyStr)
-        .AsJSONObject['DadosNota']
-          .AddPair('Numero', StrToIntDef(NumeroNFSe, 0))
-          .AddPair('Cancelamento', TACBrJSONObject.Create
-                                     .AddPair('Motivo', MotCancelamento))
-          .AddPair('Prestador', TACBrJSONObject.Create
-                                  .AddPair('InscricaoMunicipal', StrToIntDef(OnlyNumber(Emitente.InscMun), 0)));
-    Response.ArquivoEnvio := jo.ToJSON;
-  finally
-    jo.Free;
-  end;
-
-  FpMethod := 'POST';
-  FpPath := '';
-end;
-
-procedure TACBrNFSeProvidereISS.TratarRetornoCancelaNFSe
-  (Response: TNFSeCancelaNFSeResponse);
-var
-  jDocument, jNfse: TACBrJSONObject;
-  AErro: TNFSeEventoCollectionItem;
-//  ANota: TNotaFiscal;
-begin
-  if Response.ArquivoRetorno = '' then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod201;
-    AErro.Descricao := ACBrStr(Desc201);
-    Exit
-  end;
-
-  jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
-
-  try
-    try
-      ProcessarMensagemDeErros(jDocument, Response);
-      Response.Sucesso := (Response.Erros.Count = 0);
-
-      if Response.Sucesso then
-      begin
-        jNfse := jDocument.AsJSONObject['DadosNfse'];
-
-        if Assigned(jNfse) then
-        begin
-          with Response do
-          begin
-            NumeroNota := jNfse.AsString['Numero'];
-            DataCanc := jNfse.AsISODate['DataCancelamento'];
-          end;
-        end;
-      end;
-    except
-      on E: Exception do
-      begin
-        Response.Sucesso := False;
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod999;
-        AErro.Descricao := ACBrStr(Desc999 + E.Message);
-      end;
-    end;
-  finally
-    FreeAndNil(jDocument);
-  end;
-end;
-
-procedure TACBrNFSeProvidereISS.PrepararSubstituiNFSe(
-  Response: TNFSeSubstituiNFSeResponse);
-begin
-  inherited;
-
-end;
-
-procedure TACBrNFSeProvidereISS.TratarRetornoSubstituiNFSe(
-  Response: TNFSeSubstituiNFSeResponse);
-begin
-  inherited;
-
+*)
 end;
 
 { TACBrNFSeXWebserviceeISS }
 
 procedure TACBrNFSeXWebserviceeISS.SetHeaders(aHeaderReq: THTTPHeader);
+var
+  Auth: string;
 begin
-//  aHeaderReq.AddHeader('Authorization',
-//             TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAutoriz);
-  aHeaderReq.AddHeader('token',
-             TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAutoriz);
+  if (FpMetodo <> tmGerarToken) then
+  begin
+    Auth := 'Bearer ' + TACBrNFSeX(FPDFeOwner).WebService.GerarToken.Token;
+
+    aHeaderReq.AddHeader('Authorization', Auth);
+    aHeaderReq.AddHeader('Connection', 'keep-alive');
+    aHeaderReq.AddHeader('Accept', '*/*');
+  end;
+end;
+
+function TACBrNFSeXWebserviceeISS.GerarToken(ACabecalho, AMSG: String): string;
+begin
+  FpMetodo := tmGerarToken;
+  FPMsgOrig := AMSG;
+
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceeISS.Recepcionar(ACabecalho, AMSG: String): string;
 begin
-  FPMsgOrig := AMSG;
-
-  Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceeISS.ConsultarNFSePorRps(ACabecalho,
-  AMSG: String): string;
-begin
-  FPMsgOrig := AMSG;
-
-  Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceeISS.ConsultarNFSe(ACabecalho,
-  AMSG: String): string;
-begin
-  FPMsgOrig := AMSG;
-
-  Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceeISS.Cancelar(ACabecalho, AMSG: String): string;
-begin
-  FPMsgOrig := AMSG;
-
-  Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceeISS.SubstituirNFSe(ACabecalho,
-  AMSG: String): string;
-begin
+  FpMetodo := tmRecepcionar;
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [], []);
@@ -616,7 +413,9 @@ function TACBrNFSeXWebserviceeISS.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := UTF8Decode(Result);
   Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
   Result := StringReplace(Result, '"}"}', '"}}', [rfReplaceAll]);
 end;
 

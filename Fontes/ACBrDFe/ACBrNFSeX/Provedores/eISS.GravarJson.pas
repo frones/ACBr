@@ -118,8 +118,8 @@ begin
   AJSon := TACBrJsonObject.Create;
   try
     AJSon
-      .AddPairJSONObject('', EmptyStr)
-      .AsJSONObject['']
+      .AddPairJSONObject('NotaFiscal', EmptyStr)
+      .AsJSONObject['NotaFiscal']
         .AddPair('MesPrestacao', MonthOf(NFSe.DataEmissao))
         .AddPair('AnoPrestacao', YearOf(NFSe.DataEmissao))
         .AddPair('CodigoServico', NFSe.Servico.ItemListaServico)
@@ -149,6 +149,7 @@ begin
         .AddPair('Itens', GerarItens);
 
     Result := AJSon.ToJSON;
+    Result := TiraAcentos(Result);
   finally
     AJSon.Free;
   end;

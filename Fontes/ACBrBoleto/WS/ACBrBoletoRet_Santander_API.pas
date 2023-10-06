@@ -152,6 +152,7 @@ begin
           DadosRet.TituloRet.ValorDocumento:= StrToFloatDef( AJson.Values['nominalValue'].AsString, 0);
           DadosRet.TituloRet.EMV := AJson.Values['qrCodePix'].AsString;
           DadosRet.TituloRet.UrlPix := AJson.Values['qrCodeUrl'].AsString;
+		  DadosRet.TituloRet.TxId := AJson.Values['txId'].AsString;
         finally
           AJson.free;
         end;

@@ -45,12 +45,11 @@ uses
   {$IFEND}
   ACBrBase,
   ACBrUtil.Strings, pcnAuxiliar, pcnConversao, pcnLeitor,
-  pcnCommonReinf, pcnConversaoReinf;
+  pcnCommonReinf, pcnConversaoReinf, pcnReinfR9005;
 
 type
   TRetConsulta_R9015 = class;
   TevtRetCons = class;
-  TInfoRecEv = class;
   TRetornoEventosCollection = class;
   TRetornoEventosCollectionItem = class;
   TinfoCR_CNR = class;
@@ -108,28 +107,6 @@ type
     property infoCR_CNR: TinfoCR_CNR read FinfoCR_CNR write FinfoCR_CNR;
     property infoTotalCR: TinfoTotalCR read FinfoTotalCR write FinfoTotalCR;
     property RetornoEventos: TRetornoEventosCollection read FRetornoEventos write FRetornoEventos;
-  end;
-
-  { TInfoRecEv }
-  TInfoRecEv = class(TObject)
-  private
-    FnrRecArqBase: String;
-    FnrProtLote: String;
-    FdhProcess: TDateTime;
-    FdhRecepcao: TDateTime;
-    FtpEv: String;
-    FidEv: String;
-    Fhash: String;
-    FfechRet: TtpFechRet;
-  public
-    property nrRecArqBase: String read FnrRecArqBase;
-    property nrProtLote: String read FnrProtLote;
-    property dhProcess: TDateTime read FdhProcess;
-    property dhRecepcao: TDateTime read FdhRecepcao;
-    property tpEv: String read FtpEv;
-    property idEv: String read FidEv;
-    property hash: String read Fhash;
-    property fechRet: TtpFechRet read FfechRet;
   end;
 
   { TRetornoEventosCollection }
@@ -461,14 +438,14 @@ begin
 
         if leitor.rExtrai(2, 'infoRecEv') <> '' then
         begin
-          infoRecEv.FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
-          infoRecEv.FnrProtLote := leitor.rCampo(tcStr, 'nrProtLote');
-          infoRecEv.FdhProcess  := leitor.rCampo(tcDatHor, 'dhProcess');
-          infoRecEv.FdhRecepcao := leitor.rCampo(tcDatHor, 'dhRecepcao');
-          infoRecEv.FtpEv       := leitor.rCampo(tcStr, 'tpEv');
-          infoRecEv.FidEv       := leitor.rCampo(tcStr, 'idEv');
-          infoRecEv.Fhash       := leitor.rCampo(tcStr, 'hash');
-          infoRecEv.FfechRet    := StrTotpFechRet(Ok, leitor.rCampo(tcStr, 'fechRet'));
+          infoRecEv.nrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
+          infoRecEv.nrProtLote := leitor.rCampo(tcStr, 'nrProtLote');
+          infoRecEv.dhProcess  := leitor.rCampo(tcDatHor, 'dhProcess');
+          infoRecEv.dhRecepcao := leitor.rCampo(tcDatHor, 'dhRecepcao');
+          infoRecEv.tpEv       := leitor.rCampo(tcStr, 'tpEv');
+          infoRecEv.idEv       := leitor.rCampo(tcStr, 'idEv');
+          infoRecEv.hash       := leitor.rCampo(tcStr, 'hash');
+          infoRecEv.fechRet    := StrTotpFechRet(Ok, leitor.rCampo(tcStr, 'fechRet'));
         end;
 
         if leitor.rExtrai(2, 'infoCR_CNR') <> '' then

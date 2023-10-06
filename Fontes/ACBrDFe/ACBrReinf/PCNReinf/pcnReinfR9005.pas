@@ -120,20 +120,24 @@ type
   TInfoRecEv = class(TObject)
   private
     FnrRecArqBase: String;
+    FnrProtEntr: String;
     FnrProtLote: String;
     FdhProcess: TDateTime;
     FdhRecepcao: TDateTime;
     FtpEv: String;
     FidEv: String;
     Fhash: String;
+    FfechRet: TtpFechRet;
   public
-    property nrRecArqBase: String read FnrRecArqBase;
-    property nrProtLote: String read FnrProtLote;
-    property dhProcess: TDateTime read FdhProcess;
-    property dhRecepcao: TDateTime read FdhRecepcao;
-    property tpEv: String read FtpEv;
-    property idEv: String read FidEv;
-    property hash: String read Fhash;
+    property nrRecArqBase: String read FnrRecArqBase write FnrRecArqBase;
+    property nrProtEntr: String read FnrProtEntr write FnrProtEntr;
+    property nrProtLote: String read FnrProtLote write FnrProtLote;
+    property dhProcess: TDateTime read FdhProcess write FdhProcess;
+    property dhRecepcao: TDateTime read FdhRecepcao write FdhRecepcao;
+    property tpEv: String read FtpEv write FtpEv;
+    property idEv: String read FidEv write FidEv;
+    property hash: String read Fhash write Fhash;
+    property fechRet: TtpFechRet read FfechRet write FfechRet;
   end;
 
   TInfoTotal = class(TObject)

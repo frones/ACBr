@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/10/2023
+-- pcnReinfR9005, pcnReinfRetConsulta_R9011, pcnReinfRetConsulta_R9015, pcnReinfRetEventos --
+[*] Unificadas e Centralizadas classes do componente
+  Por: Renato Rubinho
+-- ACBrLibReinfConsts, ACBrLibReinfRespostas, DoACBrReinfUnit --
+[+] Implementados retornos na consulta da versão 2.1.2: R9001, R9005, R9011, R9015
+  Por: Renato Rubinho
+
 04/10/2023
 -- DoACBrGNReUnit --
 [*] Melhoria no método GNRe.GerarXML

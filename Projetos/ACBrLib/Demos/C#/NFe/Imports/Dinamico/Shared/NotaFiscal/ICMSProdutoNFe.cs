@@ -226,32 +226,83 @@ namespace ACBrLib.NFe
 
         public decimal? vICMSSubstituto { get; set; }
 
+        /// <summary>
+        /// Alíquota ad rem do imposto
+        /// </summary>
         public decimal? adRemICMS { get; set; }
 
+        /// <summary>
+        /// Valor do ICMS próprio
+        /// </summary>
         public decimal? vICMSMono { get; set; }
 
-        public decimal adRemICMSReten { get; set; }
+        /// <summary>
+        /// Alíquota ad rem do imposto com retenção
+        /// </summary>
+        public decimal? adRemICMSReten { get; set; }
 
+        /// <summary>
+        /// Valor do ICMS com retenção
+        /// </summary>
         public decimal? vICMSMonoReten { get; set; }
 
+        /// <summary>
+        /// Valor do ICMS diferido
+        /// </summary>
         public decimal? vICMSMonoDif { get; set; }
 
-        public decimal adRemICMSRet { get; set; }
+        /// <summary>
+        /// Alíquota ad rem do imposto retido anteriormente
+        /// </summary>
+        public decimal? adRemICMSRet { get; set; }
 
         public decimal? vICMSMonoRet { get; set; }
 
+        /// <summary>
+        /// Valor total da quantidade tributada do ICMS monofásico próprio
+        /// </summary>
         public decimal? qBCMono { get; set; }
 
+        /// <summary>
+        /// Valor total da quantidade tributada do ICMS monofásico sujeito a retenção
+        /// </summary>
         public decimal? qBCMonoReten { get; set; }
 
+        /// <summary>
+        /// Percentual de redução do valor da alíquota adRem
+        /// </summary>
         public decimal? pRedAdRem { get; set; }
 
+        /// <summary>
+        /// Motivo da redução do adRem
+        /// </summary>
         public MotRedAdRem motRedAdRem { get; set; }
 
+        /// <summary>
+        /// Valor total da quantidade tributada do ICMS monofásico retido anteriormente
+        /// </summary>
         public decimal? qBCMonoRet { get; set; }
 
+        /// <summary>
+        /// Valor do ICMS da operação 
+        /// </summary>
         public decimal? vICMSMonoOp { get; set; }
+        
+        /// <summary>
+        /// Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza(FCP)
+        /// </summary>
+        public decimal? pFCPDif { get; set; }
 
+        /// <summary>
+        /// Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido
+        /// </summary>
+        public decimal? vFCPDif { get; set; }
+
+        /// <summary>
+        /// Valor efetivo do ICMS relativo ao Fundo de Combate à Pobreza(FCP)
+        /// </summary>
+        ///
+        public decimal? vFCPEfet { get; set; }
         #endregion Properties
     }
 }

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/10/2023
+-- ACBrReinfLoteEventos --
+[*] Correção no envio de eventos por pessoa física ou órgão público
+  Por: Edson Costa / Renato Rubinho
+
 29/09/2023
 -- ACBrReinfWebServices, pcnReinfRetConsulta, pcnReinfRetConsulta_R9011 --
 [*] Unificadas classes TEvtTotalContrib do R5011 e R9011 e criada função para retornar os valores de acordo com a versão

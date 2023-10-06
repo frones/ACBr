@@ -264,10 +264,11 @@ begin
   else
   begin
     nrInsc := TACBrReinf(FACBrReinf).Configuracoes.Geral.IdContribuinte;
+    tpInsc := '1';
 
-    if Length(nrInsc) = 14 then
-      tpInsc := '1'
-    else
+    if TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte = tcPessoaJuridica then
+      nrInsc := Copy(nrInsc, 1, 8)
+    else if TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte = tcPessoaFisica then
       tpInsc := '2';
 
     FXML :=
@@ -275,7 +276,7 @@ begin
         '<envioLoteEventos>' +
           '<ideContribuinte>' +
             '<tpInsc>' + tpInsc + '</tpInsc>' +
-            '<nrInsc>' + Copy(nrInsc, 1, 8) + '</nrInsc>' +
+            '<nrInsc>' + nrInsc + '</nrInsc>' +
           '</ideContribuinte>' +
           '<eventos>';
 

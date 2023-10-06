@@ -270,16 +270,25 @@ begin
 end;
 
 function TACBrBancoItau.DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String;
+var LTamanhoPagadorFinal : Byte;
 begin
-  with ACBrTitulo do
+  LTamanhoPagadorFinal := Length(OnlyNumber(ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF));
+  if (ACBrTitulo.ACBrBoleto.LayoutRemessa = c400) AND (LTamanhoPagadorFinal > 0) then
   begin
-    case Sacado.Pessoa of
-        pFisica   : Result := '1';
-        pJuridica : Result := '2';
-     else
-        Result := '9';
-     end;
-
+    case LTamanhoPagadorFinal of
+      11 : Result := '3'; //CPF DO PAGADOR FINAL
+      14 : Result := '4'; //CNPJ DO PAGADOR FINAL
+    else
+      Result := '9';
+    end;
+  end else
+  begin
+    case ACBrTitulo.Sacado.Pessoa of
+      pFisica   : Result := '1'; //N DO CPF DO BENEFICIÁRIO
+      pJuridica : Result := '2'; //N DO CNPJ DO BENEFICIÁRIO
+    else
+      Result := '9';
+    end;
   end;
 end;
 
@@ -630,7 +639,7 @@ function TACBrBancoItau.GerarRegistroTrailler240(ARemessa: TStringList): String;
 begin
 
   Result:= inherited GerarRegistroTrailler240(ARemessa);
-  fpQtdRegsLote := 0;
+  fpQtdRegsLote     := 0;
   fpQtdRegsCobranca := 0;
 end;
 

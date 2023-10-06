@@ -101,16 +101,34 @@
 
         public decimal? vICMSUFRemet { get; set; }
 
+        /// <summary>
+        /// Valor total da quantidade tributada do ICMS monofásico próprio
+        /// </summary>
         public decimal? qBCMono { get; set; }
 
+        /// <summary>
+        /// Valor total do ICMS monofásico próprio
+        /// </summary>
         public decimal? vICMSMono { get; set; }
 
+        /// <summary>
+        /// Valor total da quantidade tributada do ICMS monofásico sujeito a retenção
+        /// </summary>
         public decimal? qBCMonoReten { get; set; }
 
+        /// <summary>
+        /// Valor total do ICMS monofásico sujeito a retenção
+        /// </summary>
         public decimal? vICMSMonoReten { get; set; }
 
+        /// <summary>
+        /// Valor total da quantidade tributada do ICMS monofásico retido anteriormente
+        /// </summary>
         public decimal? qBCMonoRet { get; set; }
 
+        /// <summary>
+        /// Valor total do ICMS monofásico retido anteriormente
+        /// </summary>
         public decimal? vICMSMonoRet { get; set; }
 
         #endregion Properties

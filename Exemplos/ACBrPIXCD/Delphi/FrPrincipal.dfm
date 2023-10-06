@@ -189,8 +189,8 @@ object Form1: TForm1
                 Caption = 'CPF/CNPJ'
               end
               object edFluxoClienteNome: TEdit
-                Left = 312
-                Top = 15
+                Left = 360
+                Top = 64
                 Width = 600
                 Height = 31
                 Font.Charset = DEFAULT_CHARSET
@@ -633,7 +633,7 @@ object Form1: TForm1
             ActivePage = tsEndPointPix
             Align = alClient
             TabOrder = 0
-            TabWidth = 100
+            TabWidth = 120
             object tsEndPointPix: TTabSheet
               Caption = '/pix'
               object pgTestesPix: TPageControl
@@ -1193,7 +1193,7 @@ object Form1: TForm1
                       Left = 16
                       Top = 25
                       Width = 266
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 0
                       OnChange = edtCriarCobrancaImediata_NomeDevedorChange
@@ -1202,7 +1202,7 @@ object Form1: TForm1
                       Left = 298
                       Top = 25
                       Width = 145
-                      Height = 21
+                      Height = 23
                       Anchors = [akTop, akRight]
                       Enabled = False
                       TabOrder = 1
@@ -1221,21 +1221,21 @@ object Form1: TForm1
                       Left = 16
                       Top = 73
                       Width = 266
-                      Height = 21
+                      Height = 23
                       TabOrder = 2
                     end
                     object edtCriarCobrancaImediata_TxId: TEdit
                       Left = 16
                       Top = 123
                       Width = 266
-                      Height = 21
+                      Height = 23
                       TabOrder = 4
                     end
                     object feCriarCobrancaImediatax_Valor: TEdit
                       Left = 298
                       Top = 73
                       Width = 145
-                      Height = 21
+                      Height = 23
                       TabOrder = 6
                       Text = '1,00'
                     end
@@ -1454,7 +1454,7 @@ object Form1: TForm1
                       Left = 178
                       Top = 24
                       Width = 160
-                      Height = 21
+                      Height = 23
                       Anchors = [akTop, akRight]
                       TabOrder = 2
                       OnChange = edtConsultarPixRecebidosCPFCNPJChange
@@ -1464,7 +1464,7 @@ object Form1: TForm1
                       Left = 523
                       Top = 75
                       Width = 66
-                      Height = 22
+                      Height = 23
                       Anchors = [akTop, akRight]
                       MaxValue = 9999
                       MinValue = 0
@@ -1475,7 +1475,7 @@ object Form1: TForm1
                       Left = 523
                       Top = 27
                       Width = 66
-                      Height = 22
+                      Height = 23
                       Anchors = [akTop, akRight]
                       MaxValue = 100
                       MinValue = 0
@@ -2248,10 +2248,10 @@ object Form1: TForm1
                 Top = 0
                 Width = 616
                 Height = 529
-                ActivePage = tsPagSeguroSimularPagamento
+                ActivePage = tsBBSimularPagamento
                 Align = alClient
                 TabOrder = 0
-                TabWidth = 117
+                TabWidth = 116
                 object tsBBSimularPagamento: TTabSheet
                   Caption = 'Banco do Brasil'
                   object Panel12: TPanel
@@ -2409,42 +2409,14 @@ object Form1: TForm1
                 end
                 object tsPIXPDVSimularPagamento: TTabSheet
                   Caption = 'PIXPDV'
-                  ImageIndex = 2
-                  object pnPixPDVSimularPagtoLimpar: TPanel
-                    Left = 0
-                    Top = 464
-                    Width = 608
-                    Height = 37
-                    Align = alBottom
-                    BevelOuter = bvNone
-                    TabOrder = 0
-                    object btPixPDVSimularPagtoLimpar: TBitBtn
-                      Left = 503
-                      Top = 7
-                      Width = 90
-                      Height = 26
-                      Caption = 'Limpar'
-                      TabOrder = 0
-                      OnClick = btPixPDVSimularPagtoLimparClick
-                    end
-                  end
-                  object mmPixPDVSimularPagto: TMemo
-                    Left = 0
-                    Top = 88
-                    Width = 608
-                    Height = 376
-                    Align = alClient
-                    ScrollBars = ssBoth
-                    TabOrder = 1
-                  end
-                  object pnPIXPDVSimularPagto: TPanel
+                  object pnPixPDVSimularPagto: TPanel
                     Left = 0
                     Top = 0
                     Width = 608
                     Height = 88
                     Align = alTop
                     BevelOuter = bvNone
-                    TabOrder = 2
+                    TabOrder = 0
                     DesignSize = (
                       608
                       88)
@@ -2460,19 +2432,79 @@ object Form1: TForm1
                     object edPixPDVSimularPagtoQRCodeID: TEdit
                       Left = 16
                       Top = 36
-                      Width = 473
-                      Height = 21
+                      Width = 472
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 0
                     end
-                    object btPIXPDVSimularPagto: TBitBtn
-                      Left = 503
-                      Top = 31
-                      Width = 90
+                    object btPixPDVSimularPagto: TBitBtn
+                      Left = 504
+                      Top = 33
+                      Width = 88
                       Height = 26
+                      Anchors = [akTop, akRight]
                       Caption = 'Pagar'
                       TabOrder = 1
-                      OnClick = btPIXPDVSimularPagtoClick
+                      OnClick = btPixPDVSimularPagtoClick
+                    end
+                  end
+                  object mmPixPDVSimularPagto: TMemo
+                    Left = 0
+                    Top = 88
+                    Width = 608
+                    Height = 384
+                    Align = alClient
+                    ScrollBars = ssBoth
+                    TabOrder = 1
+                  end
+                  object pnPixPDVSimularPagtoLimpar: TPanel
+                    Left = 0
+                    Top = 472
+                    Width = 608
+                    Height = 29
+                    Align = alBottom
+                    TabOrder = 2
+                    DesignSize = (
+                      608
+                      29)
+                    object btPixPDVSimularPagtoLimpar: TBitBtn
+                      Left = 508
+                      Top = 1
+                      Width = 84
+                      Height = 26
+                      Anchors = [akTop]
+                      Caption = 'Limpar'
+                      TabOrder = 0
+                      OnClick = btPixPDVSimularPagtoLimparClick
+                    end
+                  end
+                end
+                object tsMateraSimularPagamento: TTabSheet
+                  Caption = 'Matera'
+                  object pnMateraSimularPagamento: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 608
+                    Height = 494
+                    Align = alClient
+                    TabOrder = 0
+                    object lbMateraSimularPagamento: TLabel
+                      Left = 104
+                      Top = 24
+                      Width = 413
+                      Height = 20
+                      Caption = 'Clique aqui para efetuar o pagamento da cobran'#231'a!'
+                      Color = clBtnFace
+                      Font.Charset = DEFAULT_CHARSET
+                      Font.Color = clHighlight
+                      Font.Height = -16
+                      Font.Name = 'MS Sans Serif'
+                      Font.Style = [fsBold]
+                      ParentColor = False
+                      ParentFont = False
+                      OnClick = lbMateraSimularPagamentoClick
+                      OnMouseEnter = lbMateraSimularPagamentoMouseEnter
+                      OnMouseLeave = lbMateraSimularPagamentoMouseLeave
                     end
                   end
                 end
@@ -2530,7 +2562,7 @@ object Form1: TForm1
                   Left = 185
                   Top = 32
                   Width = 415
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                   OnChange = QuandoMudarDadosQRCode
@@ -2539,7 +2571,7 @@ object Form1: TForm1
                   Left = 16
                   Top = 92
                   Width = 584
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 1
                   OnChange = QuandoMudarDadosQRCode
@@ -2548,7 +2580,7 @@ object Form1: TForm1
                   Left = 16
                   Top = 32
                   Width = 145
-                  Height = 21
+                  Height = 23
                   TabOrder = 2
                   Text = '0,00'
                 end
@@ -2592,7 +2624,7 @@ object Form1: TForm1
                     Left = 0
                     Top = 0
                     Width = 316
-                    Height = 295
+                    Height = 288
                     Align = alClient
                     Alignment = taCenter
                     ScrollBars = ssBoth
@@ -2665,7 +2697,7 @@ object Form1: TForm1
                   Left = 16
                   Top = 44
                   Width = 584
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                   OnChange = QuandoMudarDadosQRCode
@@ -2683,8 +2715,8 @@ object Form1: TForm1
                 object edQRDTxID: TEdit
                   Left = 16
                   Top = 100
-                  Width = 409
-                  Height = 21
+                  Width = 400
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                   OnChange = QuandoMudarDadosQRCode
@@ -2719,7 +2751,7 @@ object Form1: TForm1
                     Left = 0
                     Top = 0
                     Width = 316
-                    Height = 343
+                    Height = 336
                     Align = alClient
                     Alignment = taCenter
                     ScrollBars = ssBoth
@@ -2906,7 +2938,7 @@ object Form1: TForm1
                   Visible = False
                 end
                 object Label42: TLabel
-                  Left = 343
+                  Left = 416
                   Top = 48
                   Width = 14
                   Height = 13
@@ -2916,7 +2948,7 @@ object Form1: TForm1
                   Left = 8
                   Top = 16
                   Width = 384
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                   OnChange = edtRecebedorNomeChange
@@ -2924,8 +2956,8 @@ object Form1: TForm1
                 object edtRecebedorCidade: TEdit
                   Left = 8
                   Top = 64
-                  Width = 328
-                  Height = 21
+                  Width = 384
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                 end
@@ -2933,7 +2965,7 @@ object Form1: TForm1
                   Left = 416
                   Top = 16
                   Width = 113
-                  Height = 21
+                  Height = 23
                   Anchors = [akTop, akRight]
                   TabOrder = 1
                   OnChange = edtRecebedorCEPChange
@@ -2946,7 +2978,7 @@ object Form1: TForm1
                   Width = 113
                   Height = 21
                   Style = csDropDownList
-                  ItemHeight = 0
+                  ItemHeight = 13
                   TabOrder = 3
                   OnChange = cbxPSPAtualChange
                 end
@@ -3015,7 +3047,7 @@ object Form1: TForm1
                   Left = 8
                   Top = 16
                   Width = 146
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                 end
@@ -3023,7 +3055,7 @@ object Form1: TForm1
                   Left = 8
                   Top = 58
                   Width = 146
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 1
                 end
@@ -3031,7 +3063,7 @@ object Form1: TForm1
                   Left = 168
                   Top = 58
                   Width = 74
-                  Height = 21
+                  Height = 23
                   Anchors = [akTop, akRight]
                   PasswordChar = '*'
                   TabOrder = 2
@@ -3040,7 +3072,7 @@ object Form1: TForm1
                   Left = 168
                   Top = 16
                   Width = 74
-                  Height = 22
+                  Height = 23
                   Anchors = [akTop, akRight]
                   MaxValue = 999999
                   MinValue = 0
@@ -3100,15 +3132,15 @@ object Form1: TForm1
                 object edtArqLog: TEdit
                   Left = 8
                   Top = 16
-                  Width = 210
-                  Height = 21
+                  Width = 217
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                 end
                 object cbxNivelLog: TComboBox
                   Left = 8
                   Top = 61
-                  Width = 210
+                  Width = 217
                   Height = 21
                   Style = csDropDownList
                   ItemHeight = 13
@@ -3144,14 +3176,14 @@ object Form1: TForm1
                   55)
                 object Label13: TLabel
                   Left = 8
-                  Top = 0
+                  Top = 3
                   Width = 48
                   Height = 13
                   Caption = 'PSP Atual'
                 end
                 object Label15: TLabel
                   Left = 224
-                  Top = 0
+                  Top = 3
                   Width = 44
                   Height = 13
                   Caption = 'Ambiente'
@@ -3177,7 +3209,7 @@ object Form1: TForm1
                   Width = 182
                   Height = 21
                   Style = csDropDownList
-                  ItemHeight = 0
+                  ItemHeight = 13
                   TabOrder = 0
                   OnChange = cbxPSPAtualChange
                 end
@@ -3187,7 +3219,7 @@ object Form1: TForm1
                   Width = 170
                   Height = 21
                   Style = csDropDownList
-                  ItemHeight = 0
+                  ItemHeight = 13
                   TabOrder = 1
                   OnChange = cbxAmbienteChange
                 end
@@ -3195,7 +3227,7 @@ object Form1: TForm1
                   Left = 416
                   Top = 19
                   Width = 113
-                  Height = 22
+                  Height = 23
                   Increment = 10
                   MaxValue = 999999
                   MinValue = 0
@@ -3212,16 +3244,16 @@ object Form1: TForm1
               Caption = 'Cobran'#231'a'
               TabOrder = 4
               object pnCobranca: TPanel
-                Left = 2
-                Top = 15
+                Left = 0
+                Top = 0
                 Width = 276
-                Height = 55
+                Height = 52
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
                 object Label47: TLabel
                   Left = 8
-                  Top = 0
+                  Top = 3
                   Width = 47
                   Height = 13
                   Caption = 'Expira'#231#227'o'
@@ -3229,8 +3261,8 @@ object Form1: TForm1
                 object seCobrancaExpiracao: TSpinEdit
                   Left = 8
                   Top = 19
-                  Width = 106
-                  Height = 22
+                  Width = 234
+                  Height = 23
                   Increment = 10
                   MaxValue = 999999
                   MinValue = 0
@@ -3246,18 +3278,18 @@ object Form1: TForm1
               Height = 72
               TabOrder = 5
               object pnAutenticacaoManual: TPanel
-                Left = 2
-                Top = 15
+                Left = 0
+                Top = 0
                 Width = 252
-                Height = 55
+                Height = 52
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
                 object cbAutenticacaoManual: TCheckBox
                   Left = 16
                   Top = 16
-                  Width = 193
-                  Height = 17
+                  Width = 186
+                  Height = 19
                   Caption = 'Controlar Autentica'#231#227'o Manual'
                   TabOrder = 0
                 end
@@ -3318,7 +3350,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 59
                   Width = 880
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                 end
@@ -3326,7 +3358,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 115
                   Width = 880
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 1
                 end
@@ -3334,7 +3366,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 171
                   Width = 880
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                 end
@@ -3346,8 +3378,8 @@ object Form1: TForm1
                 984
                 492)
               object pConfPSPBB: TPanel
-                Left = 22
-                Top = 40
+                Left = 26
+                Top = 65
                 Width = 932
                 Height = 400
                 Anchors = [akLeft, akRight]
@@ -3409,7 +3441,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 40
                   Width = 708
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                   OnChange = edtBBChavePIXChange
@@ -3428,7 +3460,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 91
                   Width = 708
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 3
                 end
@@ -3436,7 +3468,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 147
                   Width = 708
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 4
                 end
@@ -3444,7 +3476,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 203
                   Width = 708
-                  Height = 21
+                  Height = 23
                   TabOrder = 5
                 end
                 object cbBBVersaoAPI: TComboBox
@@ -3578,10 +3610,11 @@ object Form1: TForm1
                           Left = 733
                           Top = 32
                           Width = 161
-                          Height = 21
+                          Height = 23
                           Anchors = [akLeft, akTop, akRight]
                           PasswordChar = '*'
                           TabOrder = 1
+                          OnExit = edBBSenhaPFXExit
                         end
                       end
                     end
@@ -3795,7 +3828,7 @@ object Form1: TForm1
                       Left = 48
                       Top = 40
                       Width = 691
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 1
                       OnChange = edtItauChavePIXChange
@@ -3807,7 +3840,7 @@ object Form1: TForm1
                       Height = 21
                       Style = csDropDownList
                       Anchors = [akTop, akRight]
-                      ItemHeight = 0
+                      ItemHeight = 13
                       TabOrder = 0
                       TabStop = False
                     end
@@ -3815,7 +3848,7 @@ object Form1: TForm1
                       Left = 48
                       Top = 91
                       Width = 856
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 2
                       OnChange = edtItauClientIDChange
@@ -3824,7 +3857,7 @@ object Form1: TForm1
                       Left = 48
                       Top = 147
                       Width = 856
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 3
                       OnChange = edtItauClientSecretChange
@@ -3840,7 +3873,7 @@ object Form1: TForm1
                     Left = 19
                     Top = 24
                     Width = 900
-                    Height = 365
+                    Height = 381
                     ActivePage = tsItauChaveCertificadoArquivos
                     Anchors = [akLeft, akTop, akRight, akBottom]
                     TabOrder = 0
@@ -3849,7 +3882,7 @@ object Form1: TForm1
                       Caption = 'Arquivos'
                       DesignSize = (
                         892
-                        337)
+                        353)
                       object lItauAvisoChaveCertificadoDesabilitado: TLabel
                         Left = 35
                         Top = 16
@@ -3990,12 +4023,12 @@ object Form1: TForm1
                       Caption = 'Gerar Chave e Certificado'
                       DesignSize = (
                         892
-                        337)
+                        353)
                       object pgPSPItauGerarChaveCertificado: TPageControl
                         Left = 16
                         Top = 16
                         Width = 842
-                        Height = 317
+                        Height = 333
                         ActivePage = tsItauCertPasso1
                         Anchors = [akLeft, akTop, akRight, akBottom]
                         TabOrder = 0
@@ -4003,7 +4036,7 @@ object Form1: TForm1
                           Caption = 'Passo 1 - Definir Chave Privada'
                           DesignSize = (
                             834
-                            289)
+                            305)
                           object Label39: TLabel
                             Left = 16
                             Top = 24
@@ -4036,7 +4069,7 @@ object Form1: TForm1
                             Left = 16
                             Top = 72
                             Width = 794
-                            Height = 200
+                            Height = 216
                             Anchors = [akLeft, akTop, akRight, akBottom]
                             Font.Charset = DEFAULT_CHARSET
                             Font.Color = clWindowText
@@ -4113,9 +4146,9 @@ object Form1: TForm1
                             end
                             object mItauTokenTemporario: TMemo
                               Left = 0
-                              Top = 13
+                              Top = 15
                               Width = 834
-                              Height = 67
+                              Height = 65
                               Align = alClient
                               Font.Charset = DEFAULT_CHARSET
                               Font.Color = clWindowText
@@ -4131,7 +4164,7 @@ object Form1: TForm1
                             Left = 0
                             Top = 136
                             Width = 834
-                            Height = 153
+                            Height = 169
                             Align = alClient
                             BevelOuter = bvNone
                             TabOrder = 2
@@ -4145,9 +4178,9 @@ object Form1: TForm1
                             end
                             object mItauCertificadoPEM: TMemo
                               Left = 0
-                              Top = 13
+                              Top = 15
                               Width = 834
-                              Height = 156
+                              Height = 155
                               Align = alClient
                               Font.Charset = DEFAULT_CHARSET
                               Font.Color = clWindowText
@@ -4370,7 +4403,7 @@ object Form1: TForm1
                       Left = 24
                       Top = 40
                       Width = 640
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 1
                       OnChange = edSantanderChavePIXChange
@@ -4382,7 +4415,7 @@ object Form1: TForm1
                       Height = 21
                       Style = csDropDownList
                       Anchors = [akTop, akRight]
-                      ItemHeight = 0
+                      ItemHeight = 13
                       TabOrder = 0
                       TabStop = False
                     end
@@ -4390,7 +4423,7 @@ object Form1: TForm1
                       Left = 24
                       Top = 91
                       Width = 828
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 2
                     end
@@ -4398,7 +4431,7 @@ object Form1: TForm1
                       Left = 24
                       Top = 147
                       Width = 828
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 3
                     end
@@ -4416,7 +4449,7 @@ object Form1: TForm1
                       Left = 688
                       Top = 197
                       Width = 164
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       PasswordChar = '*'
                       TabOrder = 5
@@ -4494,7 +4527,9 @@ object Form1: TForm1
                       Top = 104
                       Width = 30
                       Height = 30
+                      AllowAllUp = True
                       Anchors = [akTop, akRight]
+                      GroupIndex = 1
                       Flat = True
                       OnClick = sbSantanderExtrairCertificadoInfoClick
                     end
@@ -4678,7 +4713,7 @@ object Form1: TForm1
                       Left = 24
                       Top = 147
                       Width = 808
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 3
                     end
@@ -4686,7 +4721,7 @@ object Form1: TForm1
                       Left = 24
                       Top = 91
                       Width = 808
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 2
                     end
@@ -4694,7 +4729,7 @@ object Form1: TForm1
                       Left = 24
                       Top = 40
                       Width = 630
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       TabOrder = 0
                       OnChange = edSicrediChavePIXChange
@@ -4730,7 +4765,7 @@ object Form1: TForm1
                       Height = 21
                       Style = csDropDownList
                       Anchors = [akTop, akRight]
-                      ItemHeight = 0
+                      ItemHeight = 13
                       TabOrder = 1
                       TabStop = False
                     end
@@ -4931,7 +4966,7 @@ object Form1: TForm1
                         Caption = 'Chave PIX'
                       end
                       object lbSicoobTipoChave: TLabel
-                        Left = 675
+                        Left = 671
                         Top = 24
                         Width = 55
                         Height = 13
@@ -5044,7 +5079,7 @@ object Form1: TForm1
                         Left = 24
                         Top = 40
                         Width = 630
-                        Height = 21
+                        Height = 23
                         Anchors = [akLeft, akTop, akRight]
                         TabOrder = 0
                         OnChange = edSicoobChavePIXChange
@@ -5056,7 +5091,7 @@ object Form1: TForm1
                         Height = 21
                         Style = csDropDownList
                         Anchors = [akTop, akRight]
-                        ItemHeight = 0
+                        ItemHeight = 13
                         TabOrder = 1
                         TabStop = False
                       end
@@ -5064,7 +5099,7 @@ object Form1: TForm1
                         Left = 24
                         Top = 99
                         Width = 808
-                        Height = 21
+                        Height = 23
                         Anchors = [akLeft, akTop, akRight]
                         TabOrder = 2
                       end
@@ -5203,7 +5238,7 @@ object Form1: TForm1
                       Left = 640
                       Top = 56
                       Width = 164
-                      Height = 21
+                      Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       PasswordChar = '*'
                       TabOrder = 1
@@ -5371,7 +5406,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 147
                   Width = 816
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 3
                 end
@@ -5379,7 +5414,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 91
                   Width = 816
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                 end
@@ -5387,7 +5422,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 40
                   Width = 638
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                   OnChange = edPagSeguroChavePIXChange
@@ -5423,7 +5458,7 @@ object Form1: TForm1
                   Height = 21
                   Style = csDropDownList
                   Anchors = [akTop, akRight]
-                  ItemHeight = 0
+                  ItemHeight = 13
                   TabOrder = 1
                   TabStop = False
                 end
@@ -5465,7 +5500,7 @@ object Form1: TForm1
                 end
                 object lbGerenciaNetTipoChave: TLabel
                   Left = 687
-                  Top = 16
+                  Top = 19
                   Width = 55
                   Height = 13
                   Anchors = [akTop, akRight]
@@ -5484,7 +5519,7 @@ object Form1: TForm1
                 end
                 object lbGerenciaNetClientSecret: TLabel
                   Left = 32
-                  Top = 124
+                  Top = 127
                   Width = 60
                   Height = 13
                   Caption = 'Client Secret'
@@ -5493,7 +5528,7 @@ object Form1: TForm1
                 end
                 object lbGerenciaNetClientID: TLabel
                   Left = 32
-                  Top = 67
+                  Top = 68
                   Width = 40
                   Height = 13
                   Caption = 'Client ID'
@@ -5502,7 +5537,7 @@ object Form1: TForm1
                 end
                 object lbGerenciaNetChave: TLabel
                   Left = 32
-                  Top = 16
+                  Top = 19
                   Width = 51
                   Height = 13
                   Caption = 'Chave PIX'
@@ -5511,7 +5546,7 @@ object Form1: TForm1
                 end
                 object lbGerenciaNetPFX: TLabel
                   Left = 32
-                  Top = 173
+                  Top = 176
                   Width = 148
                   Height = 13
                   Caption = 'Arquivo Certificado (P12 / PFX)'
@@ -5537,7 +5572,7 @@ object Form1: TForm1
                   Left = 32
                   Top = 143
                   Width = 816
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                 end
@@ -5545,7 +5580,7 @@ object Form1: TForm1
                   Left = 32
                   Top = 83
                   Width = 816
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 1
                 end
@@ -5553,7 +5588,7 @@ object Form1: TForm1
                   Left = 32
                   Top = 35
                   Width = 638
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                   OnChange = edGerenciaNetChavePIXChange
@@ -5577,7 +5612,7 @@ object Form1: TForm1
                   Height = 21
                   Style = csDropDownList
                   Anchors = [akTop, akRight]
-                  ItemHeight = 0
+                  ItemHeight = 13
                   TabOrder = 4
                   TabStop = False
                 end
@@ -5750,7 +5785,7 @@ object Form1: TForm1
                   Height = 21
                   Style = csDropDownList
                   Anchors = [akTop, akRight]
-                  ItemHeight = 0
+                  ItemHeight = 13
                   TabOrder = 4
                   TabStop = False
                 end
@@ -5766,65 +5801,64 @@ object Form1: TForm1
                 end
               end
             end
-            object tsPixPDV: TTabSheet
-              Caption = 'PixPDV'
-              ImageIndex = 9
+            object tsPIXPDV: TTabSheet
+              Caption = 'PIXPDV'
               DesignSize = (
                 984
                 492)
               object pnPixPDV: TPanel
-                Left = 32
-                Top = 116
-                Width = 858
-                Height = 223
+                Left = 34
+                Top = 125
+                Width = 932
+                Height = 240
                 Anchors = [akLeft, akRight]
                 BevelOuter = bvNone
                 TabOrder = 0
                 DesignSize = (
-                  858
-                  223)
+                  932
+                  240)
                 object lbPixPDVCNPJ: TLabel
-                  Left = 22
-                  Top = 46
+                  Left = 24
+                  Top = 50
                   Width = 27
                   Height = 13
                   Caption = 'CNPJ'
                 end
                 object lbPixPDVToken: TLabel
-                  Left = 22
-                  Top = 94
+                  Left = 24
+                  Top = 101
                   Width = 31
                   Height = 13
                   Caption = 'Token'
                 end
                 object lbPixPDVSecretKey: TLabel
-                  Left = 22
-                  Top = 146
+                  Left = 24
+                  Top = 157
                   Width = 52
                   Height = 13
                   Caption = 'Secret Key'
                 end
                 object edPixPDVCNPJ: TEdit
-                  Left = 22
-                  Top = 60
-                  Width = 814
-                  Height = 21
+                  Left = 24
+                  Top = 65
+                  Width = 884
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                 end
                 object edPixPDVToken: TEdit
-                  Left = 22
-                  Top = 107
-                  Width = 814
-                  Height = 21
+                  Left = 24
+                  Top = 115
+                  Width = 884
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 1
                 end
                 object edPixPDVSecretKey: TEdit
-                  Left = 22
-                  Top = 159
-                  Width = 814
-                  Height = 21
+                  Left = 24
+                  Top = 171
+                  Width = 884
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                 end
@@ -5832,18 +5866,78 @@ object Form1: TForm1
             end
             object tsInter: TTabSheet
               Caption = 'Inter'
-              ImageIndex = 10
+              DesignSize = (
+                984
+                492)
               object pnInter: TPanel
                 Left = 48
                 Top = 72
-                Width = 888
-                Height = 340
-                Align = alCustom
+                Width = 880
+                Height = 322
+                Anchors = [akLeft, akRight]
                 BevelOuter = bvNone
                 TabOrder = 0
                 DesignSize = (
-                  888
-                  340)
+                  880
+                  322)
+                object lbInterTipoChave: TLabel
+                  Left = 681
+                  Top = 24
+                  Width = 55
+                  Height = 13
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                end
+                object lbInterClientSecret: TLabel
+                  Left = 24
+                  Top = 132
+                  Width = 60
+                  Height = 13
+                  Caption = 'Client Secret'
+                end
+                object lbInterClientID: TLabel
+                  Left = 24
+                  Top = 75
+                  Width = 40
+                  Height = 13
+                  Caption = 'Client ID'
+                end
+                object lbInterChave: TLabel
+                  Left = 24
+                  Top = 24
+                  Width = 51
+                  Height = 13
+                  Caption = 'Chave PIX'
+                end
+                object imInterErroChavePix: TImage
+                  Left = 844
+                  Top = 43
+                  Width = 16
+                  Height = 17
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object lbInterChavePrivada: TLabel
+                  Left = 24
+                  Top = 181
+                  Width = 109
+                  Height = 13
+                  Caption = 'Arquivo Chave Privada'
+                end
+                object lbInterErroChavePrivada: TLabel
+                  Left = 24
+                  Top = 222
+                  Width = 115
+                  Height = 13
+                  Caption = 'lbInterErroChavePrivada'
+                end
+                object imInterErroChavePrivada: TImage
+                  Left = 3
+                  Top = 200
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
                 object btInterAcharChavePrivada: TSpeedButton
                   Left = 844
                   Top = 197
@@ -5878,20 +5972,12 @@ object Form1: TForm1
                   ShowHint = True
                   OnClick = btInterAcharCertificadoClick
                 end
-                object lbInterTipoChave: TLabel
-                  Left = 683
-                  Top = 24
-                  Width = 55
-                  Height = 13
-                  Anchors = [akTop, akRight]
-                  Caption = 'Tipo Chave'
-                end
-                object lbInterErroChavePrivada: TLabel
-                  Left = 24
-                  Top = 222
-                  Width = 115
-                  Height = 13
-                  Caption = 'lbInterErroChavePrivada'
+                object imInterErroCertificado: TImage
+                  Left = 3
+                  Top = 271
+                  Width = 16
+                  Height = 16
+                  Visible = False
                 end
                 object lbInterErroCertificado: TLabel
                   Left = 24
@@ -5900,34 +5986,6 @@ object Form1: TForm1
                   Height = 13
                   Caption = 'lbInterErroCertificado'
                 end
-                object lbInterClientSecret: TLabel
-                  Left = 24
-                  Top = 132
-                  Width = 60
-                  Height = 13
-                  Caption = 'Client Secret'
-                end
-                object lbInterClientID: TLabel
-                  Left = 24
-                  Top = 75
-                  Width = 40
-                  Height = 13
-                  Caption = 'Client ID'
-                end
-                object lbInterChave: TLabel
-                  Left = 24
-                  Top = 24
-                  Width = 51
-                  Height = 13
-                  Caption = 'Chave PIX'
-                end
-                object lbInterChavePrivada: TLabel
-                  Left = 24
-                  Top = 181
-                  Width = 109
-                  Height = 13
-                  Caption = 'Arquivo Chave Privada'
-                end
                 object lbInterCertificado: TLabel
                   Left = 24
                   Top = 251
@@ -5935,52 +5993,41 @@ object Form1: TForm1
                   Height = 13
                   Caption = 'Arquivo Certificado PEM'
                 end
-                object imInterErroChavePix: TImage
-                  Left = 844
-                  Top = 44
-                  Width = 16
-                  Height = 16
-                  Anchors = [akTop, akRight]
-                  Visible = False
-                end
-                object imInterErroCertificado: TImage
-                  Left = 3
-                  Top = 271
-                  Width = 16
-                  Height = 16
-                  Visible = False
-                end
-                object imInterErroChavePrivada: TImage
-                  Left = 3
-                  Top = 200
-                  Width = 16
-                  Height = 16
-                  Visible = False
-                end
                 object edInterClientSecret: TEdit
                   Left = 24
-                  Top = 147
+                  Top = 148
                   Width = 816
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 3
                 end
                 object edInterClientID: TEdit
                   Left = 24
-                  Top = 91
+                  Top = 90
                   Width = 816
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                 end
-                object edInterChavePix: TEdit
+                object edInterChavePIX: TEdit
                   Left = 24
                   Top = 40
                   Width = 638
-                  Height = 21
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
-                  OnChange = edInterChavePixChange
+                  OnChange = edInterChavePIXChange
+                end
+                object cbInterTipoChave: TComboBox
+                  Left = 681
+                  Top = 40
+                  Width = 157
+                  Height = 21
+                  Style = csDropDownList
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 13
+                  TabOrder = 1
+                  TabStop = False
                 end
                 object edInterChavePrivada: TEdit
                   Left = 24
@@ -6006,88 +6053,76 @@ object Form1: TForm1
                   OnChange = edInterArqsChange
                   OnExit = edInterCertificadoExit
                 end
-                object cbInterTipoChave: TComboBox
-                  Left = 683
-                  Top = 40
-                  Width = 157
-                  Height = 21
-                  Style = csDropDownList
-                  Anchors = [akTop, akRight]
-                  ItemHeight = 0
-                  TabOrder = 1
-                  TabStop = False
-                end
               end
             end
             object tsAilos: TTabSheet
               Caption = 'Ailos'
-              ImageIndex = 11
               object pnAilos: TPanel
-                Left = 50
-                Top = 54
+                Left = 48
+                Top = 56
                 Width = 888
-                Height = 385
+                Height = 625
                 Align = alCustom
                 BevelOuter = bvNone
                 TabOrder = 0
                 DesignSize = (
                   888
-                  385)
+                  625)
                 object lbAilosTipoChave: TLabel
                   Left = 683
                   Top = 24
-                  Width = 54
-                  Height = 14
+                  Width = 55
+                  Height = 13
                   Anchors = [akTop, akRight]
                   Caption = 'Tipo Chave'
                 end
                 object lbAilosErroChavePrivada: TLabel
                   Left = 24
                   Top = 222
-                  Width = 119
-                  Height = 14
+                  Width = 116
+                  Height = 13
                   Caption = 'lbAilosErroChavePrivada'
                 end
                 object lbAilosErroCertificadoRoot: TLabel
                   Left = 24
                   Top = 371
-                  Width = 126
-                  Height = 14
+                  Width = 122
+                  Height = 13
                   Caption = 'lbAilosErroCertificadoRoot'
                 end
                 object lbAilosClientSecret: TLabel
                   Left = 24
                   Top = 132
-                  Width = 61
-                  Height = 14
+                  Width = 60
+                  Height = 13
                   Caption = 'Client Secret'
                 end
                 object lbAilosClienteID: TLabel
                   Left = 24
                   Top = 75
-                  Width = 38
-                  Height = 14
+                  Width = 40
+                  Height = 13
                   Caption = 'Client ID'
                 end
                 object lbAilosChave: TLabel
                   Left = 24
                   Top = 24
-                  Width = 49
-                  Height = 14
+                  Width = 51
+                  Height = 13
                   Caption = 'Chave PIX'
                 end
                 object lbAilosChavePrivada: TLabel
                   Left = 24
                   Top = 181
-                  Width = 111
-                  Height = 14
+                  Width = 109
+                  Height = 13
                   Caption = 'Arquivo Chave Privada'
                 end
                 object lbAilosCertificadoRoot: TLabel
                   Left = 24
                   Top = 328
-                  Width = 118
-                  Height = 14
+                  Width = 115
+                  Height = 13
                   Caption = 'Arquivo Certificado Root'
                 end
                 object imAilosErroChavePIX: TImage
@@ -6122,15 +6157,15 @@ object Form1: TForm1
                 object lbAilosCertificado: TLabel
                   Left = 24
                   Top = 254
-                  Width = 109
-                  Height = 14
+                  Width = 104
+                  Height = 13
                   Caption = 'Arquivo Certificado crt'
                 end
                 object lbAilosErroCertificado: TLabel
                   Left = 24
                   Top = 297
-                  Width = 104
-                  Height = 14
+                  Width = 99
+                  Height = 13
                   Caption = 'lbAilosErroCertificado'
                 end
                 object btAilosAcharCertificado: TSpeedButton
@@ -6188,7 +6223,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 147
                   Width = 816
-                  Height = 22
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 3
                 end
@@ -6196,7 +6231,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 91
                   Width = 816
-                  Height = 22
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 2
                 end
@@ -6204,7 +6239,7 @@ object Form1: TForm1
                   Left = 24
                   Top = 40
                   Width = 638
-                  Height = 22
+                  Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
                   OnChange = edAilosChavePIXChange
@@ -6237,9 +6272,10 @@ object Form1: TForm1
                   Left = 683
                   Top = 40
                   Width = 157
-                  Height = 22
+                  Height = 21
                   Style = csDropDownList
                   Anchors = [akTop, akRight]
+                  ItemHeight = 13
                   TabOrder = 1
                   TabStop = False
                 end
@@ -6254,6 +6290,317 @@ object Form1: TForm1
                   Text = 'AilosCertificado.crt'
                   OnChange = edAilosArqsChange
                   OnExit = edAilosCertificadoExit
+                end
+              end
+            end
+            object tsMatera: TTabSheet
+              Caption = 'Matera'
+              object pnMatera: TPanel
+                Left = 0
+                Top = 0
+                Width = 984
+                Height = 485
+                Align = alClient
+                BevelOuter = bvNone
+                TabOrder = 0
+                object lbMateraClientID: TLabel
+                  Left = 496
+                  Top = 88
+                  Width = 40
+                  Height = 13
+                  Caption = 'Client ID'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMateraErroCertificado: TLabel
+                  Left = 87
+                  Top = 365
+                  Width = 110
+                  Height = 13
+                  Caption = 'lbMateraErroCertificado'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMateraArqCertificado: TLabel
+                  Left = 87
+                  Top = 325
+                  Width = 89
+                  Height = 13
+                  Caption = 'Arquivo Certificado'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object imMateraErroCertificado: TImage
+                  Left = 64
+                  Top = 343
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object btMateraAcharArqCertificado: TSpeedButton
+                  Left = 848
+                  Top = 341
+                  Width = 24
+                  Height = 23
+                  Flat = True
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = btMateraAcharArqCertificadoClick
+                end
+                object btMateraAcharChavePrivada: TSpeedButton
+                  Left = 848
+                  Top = 269
+                  Width = 24
+                  Height = 23
+                  Flat = True
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = btMateraAcharChavePrivadaClick
+                end
+                object lbMateraArqChavePrivada: TLabel
+                  Left = 87
+                  Top = 253
+                  Width = 109
+                  Height = 13
+                  Caption = 'Arquivo Chave Privada'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMateraErroChavePrivada: TLabel
+                  Left = 87
+                  Top = 293
+                  Width = 127
+                  Height = 13
+                  Caption = 'lbMateraErroChavePrivada'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object imMateraErroChavePrivada: TImage
+                  Left = 64
+                  Top = 272
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object lbMateraSecretKey: TLabel
+                  Left = 496
+                  Top = 144
+                  Width = 52
+                  Height = 13
+                  Caption = 'Secret Key'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMateraAccountId: TLabel
+                  Left = 87
+                  Top = 197
+                  Width = 52
+                  Height = 13
+                  Caption = 'Account Id'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMateraChavePIX: TLabel
+                  Left = 87
+                  Top = 88
+                  Width = 51
+                  Height = 13
+                  Caption = 'Chave PIX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMateraClientSecret: TLabel
+                  Left = 87
+                  Top = 144
+                  Width = 60
+                  Height = 13
+                  Caption = 'Client Secret'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMateraMediatorFee: TLabel
+                  Left = 727
+                  Top = 197
+                  Width = 62
+                  Height = 13
+                  Caption = 'Mediator Fee'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object edMateraClientID: TEdit
+                  Left = 496
+                  Top = 103
+                  Width = 376
+                  Height = 23
+                  PasswordChar = '*'
+                  TabOrder = 0
+                end
+                object edMateraArqCertificado: TEdit
+                  Left = 87
+                  Top = 341
+                  Width = 761
+                  Height = 23
+                  AutoSize = False
+                  TabOrder = 1
+                  OnExit = edMateraArqCertificadoExit
+                end
+                object edMateraArqChavePrivada: TEdit
+                  Left = 87
+                  Top = 269
+                  Width = 761
+                  Height = 23
+                  AutoSize = False
+                  TabOrder = 2
+                  OnExit = edMateraArqChavePrivadaExit
+                end
+                object edMateraSecretKey: TEdit
+                  Left = 496
+                  Top = 159
+                  Width = 376
+                  Height = 23
+                  PasswordChar = '*'
+                  TabOrder = 3
+                end
+                object edMateraAccountId: TEdit
+                  Left = 87
+                  Top = 212
+                  Width = 617
+                  Height = 23
+                  TabOrder = 4
+                end
+                object edMateraChavePIX: TEdit
+                  Left = 87
+                  Top = 103
+                  Width = 385
+                  Height = 23
+                  TabOrder = 5
+                end
+                object edMateraClientSecret: TEdit
+                  Left = 87
+                  Top = 159
+                  Width = 385
+                  Height = 23
+                  PasswordChar = '*'
+                  TabOrder = 6
+                end
+                object edMateraMediatorFee: TEdit
+                  Left = 727
+                  Top = 212
+                  Width = 145
+                  Height = 23
+                  TabOrder = 7
+                  Text = '0,10'
+                end
+              end
+            end
+            object tsCielo: TTabSheet
+              Caption = 'Cielo'
+              DesignSize = (
+                984
+                492)
+              object pnCielo: TPanel
+                Left = 48
+                Top = 72
+                Width = 880
+                Height = 322
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                TabOrder = 0
+                DesignSize = (
+                  880
+                  322)
+                object lbCieloTipoChave: TLabel
+                  Left = 681
+                  Top = 24
+                  Width = 55
+                  Height = 13
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbCieloClientSecret: TLabel
+                  Left = 24
+                  Top = 132
+                  Width = 60
+                  Height = 13
+                  Caption = 'Client Secret'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbCieloClientID: TLabel
+                  Left = 24
+                  Top = 75
+                  Width = 40
+                  Height = 13
+                  Caption = 'Client ID'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbCieloChave: TLabel
+                  Left = 24
+                  Top = 24
+                  Width = 51
+                  Height = 13
+                  Caption = 'Chave PIX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object imCieloErroChavePix: TImage
+                  Left = 844
+                  Top = 43
+                  Width = 16
+                  Height = 17
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object edCieloClientSecret: TEdit
+                  Left = 24
+                  Top = 148
+                  Width = 816
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 3
+                end
+                object edCieloClientID: TEdit
+                  Left = 24
+                  Top = 90
+                  Width = 816
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 2
+                end
+                object edCieloChavePIX: TEdit
+                  Left = 24
+                  Top = 40
+                  Width = 638
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 0
+                  OnChange = edCieloChavePIXChange
+                end
+                object cbCieloTipoChave: TComboBox
+                  Left = 681
+                  Top = 40
+                  Width = 157
+                  Height = 21
+                  Style = csDropDownList
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 13
+                  TabOrder = 1
+                  TabStop = False
                 end
               end
             end
@@ -7640,6 +7987,7 @@ object Form1: TForm1
   object ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil
     ACBrPixCD = ACBrPixCD1
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    BBAPIVersao = apiVersao2
     Left = 168
     Top = 416
   end
@@ -7652,16 +8000,16 @@ object Form1: TForm1
     ProxyPort = '8080'
     WebService = wsCorreios
     PesquisarIBGE = True
-    Left = 144
-    Top = 480
+    Left = 160
+    Top = 560
   end
   object OpenDialog1: TOpenDialog
-    Left = 176
-    Top = 480
+    Left = 192
+    Top = 560
   end
   object ACBrOpenSSLUtils1: TACBrOpenSSLUtils
-    Left = 208
-    Top = 480
+    Left = 224
+    Top = 560
   end
   object ACBrPSPShipay1: TACBrPSPShipay
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
@@ -7701,27 +8049,37 @@ object Form1: TForm1
   end
   object ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
-    Left = 346
+    Left = 349
     Top = 416
   end
   object ACBrPSPBradesco1: TACBrPSPBradesco
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
-    Left = 374
+    Left = 379
     Top = 416
   end
   object ACBrPSPPixPDV1: TACBrPSPPixPDV
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
-    Left = 402
+    Left = 411
     Top = 416
   end
   object ACBrPSPInter1: TACBrPSPInter
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
-    Left = 431
+    Left = 443
     Top = 416
   end
   object ACBrPSPAilos1: TACBrPSPAilos
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
-    Left = 458
+    Left = 474
+    Top = 416
+  end
+  object ACBrPSPMatera1: TACBrPSPMatera
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 506
+    Top = 416
+  end
+  object ACBrPSPCielo1: TACBrPSPCielo
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 536
     Top = 416
   end
 end

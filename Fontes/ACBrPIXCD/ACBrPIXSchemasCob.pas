@@ -786,10 +786,10 @@ begin
   fvalor.WriteToJSon(AJSon);
 
   AJSon
-    .AddPair('txid', ftxId)
-    .AddPair('revisao', frevisao)
-    .AddPair('location', flocation)
-    .AddPair('status', PIXStatusCobrancaToString(fstatus));
+    .AddPair('txid', ftxId, False)
+    .AddPair('revisao', frevisao, False)
+    .AddPair('location', flocation, False)
+    .AddPair('status', PIXStatusCobrancaToString(fstatus), False);
 end;
 
 procedure TACBrPIXCobGerada.DoReadFromJSon(AJSon: TACBrJSONObject);

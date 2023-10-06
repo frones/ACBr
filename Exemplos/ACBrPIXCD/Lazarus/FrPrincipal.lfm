@@ -162,9 +162,9 @@ object Form1: TForm1
                 ParentColor = False
               end
               object edFluxoClienteNome: TEdit
-                Left = 312
+                Left = 360
                 Height = 31
-                Top = 15
+                Top = 64
                 Width = 600
                 Font.Height = -20
                 Font.Name = 'Arial'
@@ -2744,6 +2744,36 @@ object Form1: TForm1
                     end
                   end
                 end
+                object tsMateraSimularPagamento: TTabSheet
+                  Caption = 'Matera'
+                  ClientHeight = 494
+                  ClientWidth = 608
+                  object pnMateraSimularPagamento: TPanel
+                    Left = 0
+                    Height = 494
+                    Top = 0
+                    Width = 608
+                    Align = alClient
+                    ClientHeight = 494
+                    ClientWidth = 608
+                    TabOrder = 0
+                    object lbMateraSimularPagamento: TLabel
+                      Left = 104
+                      Height = 21
+                      Top = 24
+                      Width = 392
+                      Caption = 'Clique aqui para efetuar o pagamento da cobrança!'
+                      Font.Color = clHighlight
+                      Font.Height = -16
+                      Font.Style = [fsBold]
+                      ParentColor = False
+                      ParentFont = False
+                      OnClick = lbMateraSimularPagamentoClick
+                      OnMouseEnter = lbMateraSimularPagamentoMouseEnter
+                      OnMouseLeave = lbMateraSimularPagamentoMouseLeave
+                    end
+                  end
+                end
               end
             end
           end
@@ -3484,7 +3514,7 @@ object Form1: TForm1
                 object Label13: TLabel
                   Left = 8
                   Height = 15
-                  Top = 0
+                  Top = 3
                   Width = 51
                   Caption = 'PSP Atual'
                   ParentColor = False
@@ -3502,7 +3532,7 @@ object Form1: TForm1
                 object Label15: TLabel
                   Left = 224
                   Height = 15
-                  Top = 0
+                  Top = 3
                   Width = 52
                   Caption = 'Ambiente'
                   ParentColor = False
@@ -3566,7 +3596,7 @@ object Form1: TForm1
                 object Label47: TLabel
                   Left = 8
                   Height = 15
-                  Top = 0
+                  Top = 3
                   Width = 51
                   Caption = 'Expiração'
                   ParentColor = False
@@ -6694,6 +6724,331 @@ object Form1: TForm1
                 end
               end
             end
+            object tsMatera: TTabSheet
+              Caption = 'Matera'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnMatera: TPanel
+                Left = 0
+                Height = 485
+                Top = 0
+                Width = 984
+                Align = alClient
+                BevelOuter = bvNone
+                ClientHeight = 485
+                ClientWidth = 984
+                TabOrder = 0
+                object edMateraClientID: TEdit
+                  Left = 496
+                  Height = 23
+                  Top = 103
+                  Width = 376
+                  EchoMode = emPassword
+                  PasswordChar = '*'
+                  TabOrder = 0
+                end
+                object lbMateraClientID: TLabel
+                  Left = 496
+                  Height = 15
+                  Top = 88
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object lbMateraErroCertificado: TLabel
+                  Left = 87
+                  Height = 15
+                  Top = 365
+                  Width = 126
+                  Caption = 'lbMateraErroCertificado'
+                  ParentColor = False
+                end
+                object lbMateraArqCertificado: TLabel
+                  Left = 87
+                  Height = 15
+                  Top = 325
+                  Width = 103
+                  Caption = 'Arquivo Certificado'
+                  ParentColor = False
+                end
+                object edMateraArqCertificado: TEdit
+                  Left = 87
+                  Height = 23
+                  Top = 341
+                  Width = 761
+                  AutoSize = False
+                  OnExit = edMateraArqCertificadoExit
+                  TabOrder = 1
+                end
+                object imMateraErroCertificado: TImage
+                  Left = 64
+                  Height = 16
+                  Top = 343
+                  Width = 16
+                  Picture.Data = {
+                    1754506F727461626C654E6574776F726B47726170686963F300000089504E47
+                    0D0A1A0A0000000D49484452000000100000001008060000001FF3FF61000000
+                    BA49444154789C6360A0315003623972353303F15A205E08C48CE418E003C43F
+                    80F82B103B92AA591088CF01F17F283E0AC4BCC46A0639B71488FF2119F01788
+                    3389354011889F4335DE826210FB01104B1363C01C249BFBA018C6EF27A4D90A
+                    CDE9E806FC01623D5C9A3981F8309262105E0EC5C8623B81980D9B01A940FC1B
+                    4D3136FC0B8823D1354B02F11D2C8A674131BAF865201681696642F327B1B889
+                    019A428D80F8131906BC05624D900112406C412616C51698240100F8655D0234
+                    5DAC230000000049454E44AE426082
+                  }
+                  Visible = False
+                end
+                object btMateraAcharArqCertificado: TSpeedButton
+                  Left = 848
+                  Height = 23
+                  Top = 341
+                  Width = 24
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btMateraAcharArqCertificadoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btMateraAcharChavePrivada: TSpeedButton
+                  Left = 848
+                  Height = 23
+                  Top = 269
+                  Width = 24
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btMateraAcharChavePrivadaClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edMateraArqChavePrivada: TEdit
+                  Left = 87
+                  Height = 23
+                  Top = 269
+                  Width = 761
+                  AutoSize = False
+                  OnExit = edMateraArqChavePrivadaExit
+                  TabOrder = 2
+                end
+                object lbMateraArqChavePrivada: TLabel
+                  Left = 87
+                  Height = 15
+                  Top = 253
+                  Width = 120
+                  Caption = 'Arquivo Chave Privada'
+                  ParentColor = False
+                end
+                object lbMateraErroChavePrivada: TLabel
+                  Left = 87
+                  Height = 15
+                  Top = 293
+                  Width = 140
+                  Caption = 'lbMateraErroChavePrivada'
+                  ParentColor = False
+                end
+                object imMateraErroChavePrivada: TImage
+                  Left = 64
+                  Height = 16
+                  Top = 272
+                  Width = 16
+                  Picture.Data = {
+                    1754506F727461626C654E6574776F726B47726170686963F300000089504E47
+                    0D0A1A0A0000000D49484452000000100000001008060000001FF3FF61000000
+                    BA49444154789C6360A0315003623972353303F15A205E08C48CE418E003C43F
+                    80F82B103B92AA591088CF01F17F283E0AC4BCC46A0639B71488FF2119F01788
+                    3389354011889F4335DE826210FB01104B1363C01C249BFBA018C6EF27A4D90A
+                    CDE9E806FC01623D5C9A3981F8309262105E0EC5C8623B81980D9B01A940FC1B
+                    4D3136FC0B8823D1354B02F11D2C8A674131BAF865201681696642F327B1B889
+                    019A428D80F8131906BC05624D900112406C412616C51698240100F8655D0234
+                    5DAC230000000049454E44AE426082
+                  }
+                  Visible = False
+                end
+                object edMateraSecretKey: TEdit
+                  Left = 496
+                  Height = 23
+                  Top = 159
+                  Width = 376
+                  EchoMode = emPassword
+                  PasswordChar = '*'
+                  TabOrder = 3
+                end
+                object lbMateraSecretKey: TLabel
+                  Left = 496
+                  Height = 15
+                  Top = 144
+                  Width = 54
+                  Caption = 'Secret Key'
+                  ParentColor = False
+                end
+                object edMateraAccountId: TEdit
+                  Left = 87
+                  Height = 23
+                  Top = 212
+                  Width = 617
+                  TabOrder = 4
+                end
+                object lbMateraAccountId: TLabel
+                  Left = 87
+                  Height = 15
+                  Top = 197
+                  Width = 58
+                  Caption = 'Account Id'
+                  ParentColor = False
+                end
+                object lbMateraChavePIX: TLabel
+                  Left = 87
+                  Height = 15
+                  Top = 88
+                  Width = 53
+                  Caption = 'Chave PIX'
+                  ParentColor = False
+                end
+                object edMateraChavePIX: TEdit
+                  Left = 87
+                  Height = 23
+                  Top = 103
+                  Width = 385
+                  TabOrder = 5
+                end
+                object lbMateraClientSecret: TLabel
+                  Left = 87
+                  Height = 15
+                  Top = 144
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object edMateraClientSecret: TEdit
+                  Left = 87
+                  Height = 23
+                  Top = 159
+                  Width = 385
+                  EchoMode = emPassword
+                  PasswordChar = '*'
+                  TabOrder = 6
+                end
+                object lbMateraMediatorFee: TLabel
+                  Left = 727
+                  Height = 15
+                  Top = 197
+                  Width = 69
+                  Caption = 'Mediator Fee'
+                  ParentColor = False
+                end
+                object edMateraMediatorFee: TEdit
+                  Left = 727
+                  Height = 23
+                  Top = 212
+                  Width = 145
+                  Alignment = taRightJustify
+                  TabOrder = 7
+                  Text = '0,10'
+                end
+              end
+            end
+            object tsCielo: TTabSheet
+              Caption = 'Cielo'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnCielo: TPanel
+                Left = 48
+                Height = 322
+                Top = 72
+                Width = 880
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                ClientHeight = 322
+                ClientWidth = 880
+                TabOrder = 0
+                object lbCieloTipoChave: TLabel
+                  Left = 681
+                  Height = 15
+                  Top = 24
+                  Width = 59
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  ParentColor = False
+                end
+                object lbCieloClientSecret: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 132
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object lbCieloClientID: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object lbCieloChave: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 53
+                  Caption = 'Chave PIX'
+                  ParentColor = False
+                end
+                object imCieloErroChavePix: TImage
+                  Left = 844
+                  Height = 17
+                  Top = 43
+                  Width = 16
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object edCieloClientSecret: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 148
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 3
+                end
+                object edCieloClientID: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 90
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+                object edCieloChavePIX: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 638
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = edCieloChavePIXChange
+                  TabOrder = 0
+                end
+                object cbCieloTipoChave: TComboBox
+                  Left = 681
+                  Height = 23
+                  Top = 40
+                  Width = 157
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 15
+                  Style = csDropDownList
+                  TabOrder = 1
+                  TabStop = False
+                end
+              end
+            end
           end
         end
       end
@@ -6932,6 +7287,7 @@ object Form1: TForm1
     ACBrPixCD = ACBrPixCD1
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     QuandoReceberRespostaHttp = ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp
+    BBAPIVersao = apiVersao2
     Left = 168
     Top = 416
   end
@@ -7014,6 +7370,17 @@ object Form1: TForm1
   object ACBrPSPAilos1: TACBrPSPAilos
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 474
+    Top = 416
+  end
+  object ACBrPSPMatera1: TACBrPSPMatera
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    MediatorFee = 0
+    Left = 506
+    Top = 416
+  end
+  object ACBrPSPCielo1: TACBrPSPCielo
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 536
     Top = 416
   end
 end

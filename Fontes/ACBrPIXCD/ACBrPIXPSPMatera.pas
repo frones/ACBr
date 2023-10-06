@@ -1053,6 +1053,7 @@ begin
     wCob.txId := RemoveString('-', QRCodeResposta.transactionId);
     wCob.status := MateraStatusToCobStatus(QRCodeResposta.financialStatement.status);
     wCob.pixCopiaECola := QRCodeResposta.instantPayment.textContent;
+    wCob.valor.original := QRCodeResposta.totalAmount;
 
     // Copiando informações que não constam na resposta, do Objeto de Requisição //
     wCob.chave := fQRCodeSolicitacao.paymentInfo.instantPayment.alias_;

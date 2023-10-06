@@ -5018,7 +5018,7 @@ end;
 
 procedure TMateraInstantPaymentRecipient.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
-  aJSon.AddPair('pspID', fpspid);
+  aJSon.AddPair('pspId', fpspid);
   fTaxIdentifierRequest.WriteToJSon(aJSon);
   aJSon
     .AddPair('alias', falias_, False)
@@ -5851,8 +5851,8 @@ procedure TMateraWithdrawInfo.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
     .AddPair('withdrawType', MateraWithdrawTypeToString(fwithdrawType))
-    .AddPair('senderComment', fsenderComment)
-    .AddPair('futureDate', ffutureDate);
+    .AddPair('senderComment', fsenderComment, False)
+    .AddPairISODate('futureDate', ffutureDate, False);
 
   fbankTransfer.WriteToJSon(aJSon);
   fboleto.WriteToJSon(aJSon);
@@ -7261,12 +7261,12 @@ end;
 function MateraWithdrawTypeToString(aType: TMateraWithdrawType): String;
 begin
   case aType of
-    mwtBankTransfer: Result := 'BANKTRANSFER';
-    mwtExternal: Result := 'EXTERNAL';
-    mwtBoleto: Result := 'BOLETO';
-    mwtReloadPrepaid: Result := 'RELOADPREPAID';
-    mwtUtilities: Result := 'UTILITIES';
-    mwtInstantPayment: Result := 'INSTANTPAYMENT';
+    mwtBankTransfer: Result := 'BankTransfer';
+    mwtExternal: Result := 'External';
+    mwtBoleto: Result := 'Boleto';
+    mwtReloadPrepaid: Result := 'ReloadPrepaid';
+    mwtUtilities: Result := 'Utilities';
+    mwtInstantPayment: Result := 'InstantPayment';
   else
     Result := EmptyStr;
   end;
@@ -7279,17 +7279,17 @@ Var
 begin
   s := UpperCase(Trim(aString));
 
-  if (s = 'BANKTRANSFER') then
+  if (s = 'BankTransfer') then
     Result := mwtBankTransfer
-  else if (s = 'EXTERNAL') then
+  else if (s = 'External') then
     Result := mwtExternal
-  else if (s = 'BOLETO') then
+  else if (s = 'Boleto') then
     Result := mwtBoleto
-  else if (s = 'RELOADPREPAID') then
+  else if (s = 'ReloadPrepaid') then
     Result := mwtReloadPrepaid
-  else if (s = 'UTILITIES') then
+  else if (s = 'Utilities') then
     Result := mwtUtilities
-  else if (s = 'INSTANTPAYMENT') then
+  else if (s = 'InstantPayment') then
     Result := mwtInstantPayment
   else
     Result := mwtNone;
@@ -7524,8 +7524,7 @@ begin
     Result := mcvNone;
 end;
 
-function MaterastatementDeletionModeToString(aType: TMaterastatementDeletionMode
-  ): String;
+function MaterastatementDeletionModeToString(aType: TMaterastatementDeletionMode): String;
 begin
   case aType of
     msdRefund: Result := 'REFUND';
@@ -7537,8 +7536,7 @@ begin
 
 end;
 
-function StringToMaterastatementDeletionMode(const aString: String
-  ): TMaterastatementDeletionMode;
+function StringToMaterastatementDeletionMode(const aString: String): TMaterastatementDeletionMode;
 var
   s: String;
 begin

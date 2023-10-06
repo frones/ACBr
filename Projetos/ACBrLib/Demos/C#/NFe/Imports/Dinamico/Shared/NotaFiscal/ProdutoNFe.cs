@@ -73,6 +73,16 @@ namespace ACBrLib.NFe
         public string cEANTrib { get; set; }
 
         /// <summary>
+        /// Código de barras diferente do padrão GTIN
+        /// </summary>
+        public string cBarra { get; set; }
+
+        /// <summary>
+        /// Código de Barras da unidade tributável que seja diferente do padrão GTIN
+        /// </summary>
+        public string cBarraTrib { get; set; }
+
+        /// <summary>
         /// Descrição do produto ou serviço
         /// </summary>
         public string xProd { get; set; }

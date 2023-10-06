@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/10/2023
+-- ACBrNFeNotasFiscais --
+[*] Ajuste no ValidarRegrasdeNegocios, pois estava gerando indevidadmente um alerta
+    ao checar o valor da nota (vNT).
+    por: Italo Giurizzato Junior
+
 03/10/2023
 -- ACBrNFeNotasFiscais --
 [*] Ajuste para entender o Tipo SAT no grupo NFRef no arquivo INI para poder referenciar SAT.

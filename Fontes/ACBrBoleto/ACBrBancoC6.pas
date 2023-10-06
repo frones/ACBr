@@ -189,7 +189,7 @@ var
   LBeneficiario: TACBrCedente;
 begin
   LBeneficiario := ACBrBanco.ACBrBoleto.Cedente;
-  LConta := PadLeft(LBeneficiario.Conta, 12, '0') ;
+  LConta := PadLeft(LBeneficiario.Conta + LBeneficiario.ContaDigito, 12, '0') ;
 
   If LBeneficiario.Modalidade = '2' then // Modalidade 1 = Conta Cobrança Direta Modalidade 2 = Cobrança Registrada
      LConta :=  PadLeft('0', 12, '0') ;
@@ -202,7 +202,7 @@ begin
            Space(7)                                           +  // 020 a 026 - Uso do Banco
            PadLeft(LBeneficiario.CodigoCedente, 12, '0')      +  // 027 a 038 - Código do Cedente
            Space(8)                                           +  // 039 a 046 - Uso do Banco
-           PadRight(Nome, 30)                                 +  // 047 a 076 - Nome da Empresa
+           PadRight(LBeneficiario.Nome, 30)                   +  // 047 a 076 - Nome da Empresa
            IntToStrZero(fpNumero, 3)                          +  // 077 a 079 - Código do Banco
            Space(15)                                          +  // 080 a 094 - Uso do Banco
            FormatDateTime('ddmmyy',Now)                       +  // 095 a 100 - Data de Gravação
@@ -249,10 +249,7 @@ begin
   LPercMulta := ConverterMultaPercentual(LTitulo);
 
   {Código da Empresa}
-  LConta   := PadRight(LBeneficiario.Conta, 12) ;
-
-  if LBeneficiario.Modalidade = '2' then
-    LConta   :=   PadLeft(LBeneficiario.CodigoCedente, 12, '0') ;
+  LConta   :=   PadLeft(LBeneficiario.CodigoCedente, 12, '0') ;
 
   LMensagemCedente:= '';
   LMensagemTodos  := '';
@@ -272,7 +269,7 @@ begin
 
     // voltar com 4 blocos de 80 caracteres, vai como id 2, se nao tem mais nada, coloca vazio
     LTitulo.Mensagem.Text := LMensagemTodos;
-
+  end;
 
   LLinha:= '1'                                                                                                           +  // 001 a 001 - ID Registro
            '0' + DefineTipoInscricao                                                                                     +  // 002 a 003 - Tipo Inscrição Empresa
@@ -385,8 +382,6 @@ begin
 
     if not(LLinha = EmptyStr) then
       aRemessa.Add(UpperCase(LLinha));
-  end;
-
 end;
 
 function TACBrBancoC6.MontaInstrucoesCNAB400(const ACBrTitulo: TACBrTitulo;

@@ -247,7 +247,7 @@ begin
       PesoLido: Boolean;
     begin
       if (not swTentar.IsChecked) then
-        ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOut )
+        ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOutMilissegundos )
       else
       begin
         try
@@ -255,11 +255,13 @@ begin
           MudarInterfaceParaCancelarLeitura;
           while LendoPeso and (not PesoLido) do
           begin
-            ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOut );
+            ACBrBAL1.LePeso( ACBrBAL1.Device.TimeOutMilissegundos );
 
             PesoLido := (ACBrBAL1.UltimoPesoLido > 0) and
                         (ACBrBAL1.UltimoPesoLido = fUltPeso);    // lê o mesmo peso, 2x, para evitar leitura instável
-            fUltPeso := ACBrBAL1.UltimoPesoLido;
+
+            if (ACBrBAL1.UltimoPesoLido > 0) then
+              fUltPeso := ACBrBAL1.UltimoPesoLido;
           end;
         finally
           TThread.Synchronize( nil,

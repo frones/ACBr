@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2023
+-- ACBrNFSeXServicos, EL.GravarXML --
+[*] Incluida a cidade de Itapemirim/ES, provedor é o EL na versão 1.00
+   Por: João Antonio
+
 05/10/2023
 -- IPM.Provider --
 [*] Alteração visando usar o parâmetro "?eletron=1" ou "?formato_saida=2" dependendo

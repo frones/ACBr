@@ -175,6 +175,11 @@ procedure TNFSeW_EL.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsNaoSeAplica;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoFormatarItemServico') then
+    FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
+
   DivAliq100 := True;
 end;
 
@@ -410,6 +415,7 @@ function TNFSeW_EL.GerarServico: TACBrXmlNodeArray;
 var
   i: integer;
   xAliquota: Double;
+  itemServico: String;
 begin
   Result := nil;
   SetLength(Result, NFSe.Servico.ItemServico.Count);
@@ -421,8 +427,10 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#', 'CodigoCnae', 1, 07, 0,
                                    NFSe.Servico.ItemServico[i].CodigoCnae, ''));
 
+    itemServico := FormatarItemServico(NFSe.Servico.ItemServico[i].CodLCServ, FormatoItemListaServico);
+
     Result[i].AppendChild(AddNode(tcStr, '#', 'CodigoServico116', 1, 5, 1,
-                                    NFSe.Servico.ItemServico[i].CodLCServ, ''));
+                                    itemServico, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'CodigoServicoMunicipal', 1, 20, 1,
                                       NFSe.Servico.ItemServico[i].CodServ, ''));

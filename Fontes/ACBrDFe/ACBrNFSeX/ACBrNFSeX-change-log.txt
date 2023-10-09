@@ -44,6 +44,8 @@ Símbolo : Significado
 
 09/10/2023
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade de Iguatu/CE, provedor é o SpeedGov.
+   Por: João Antonio
 [+] Incluida a cidade de Valenca/BA, provedor é o EL na versão 2.04
    Por: Glauber Bernardo
 -- ACBrNFSeXServicos, EL.GravarXML --

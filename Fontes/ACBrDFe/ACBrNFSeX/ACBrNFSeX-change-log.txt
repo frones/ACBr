@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/10/2023
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Valenca/BA, provedor é o EL na versão 2.04
+   Por: Glauber Bernardo
 -- ACBrNFSeXServicos, EL.GravarXML --
 [*] Incluida a cidade de Itapemirim/ES, provedor é o EL na versão 1.00
    Por: João Antonio

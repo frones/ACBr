@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2023
+-- ACBre_Social.dpk --
+[+] Adicionada nova unit pcesS5503, do leiaute 1.2, no pacote do Delphi
+  Por: Renato Rubinho
+
 22/09/2023
 -- pcesS2200 --
 [*] Correção quando não for informada a dtBase, no grupo infoCeletista, na leitura do XML e INI

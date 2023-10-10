@@ -147,6 +147,7 @@ contains
   pcesS5012 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5012.pas',
   pcesS5013 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5013.pas',
   pcesS5501 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5501.pas',
+  pcesS5503 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5503.pas',
   pcesTabelas in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesTabelas.pas';
 
 end.

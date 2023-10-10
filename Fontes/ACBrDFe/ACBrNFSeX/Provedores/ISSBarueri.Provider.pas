@@ -359,6 +359,7 @@ begin
     UseCertificateHTTP := True;
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
+    FormatoArqRecibo := tfaTxt;
   end;
 
   with ConfigMsgDados do

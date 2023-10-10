@@ -221,6 +221,8 @@ type
 
   TtpRetorno = (trXml, trPDF);
 
+  TFormatoArq = (tfaXml, tfaJson, tfaTxt);
+
   // Usado pelo PadraoNacional
   TtpEmit = (tePrestador, teTomador, teIntermediario);
 
@@ -12291,7 +12293,8 @@ begin
   Result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5', '6'],
                            [tcPorNumero, tcPorFaixa, tcPorPeriodo,
-                            tcServicoPrestado, tcServicoTomado, tcPorCodigoVerificacao]);
+                            tcServicoPrestado, tcServicoTomado,
+                            tcPorCodigoVerificacao]);
 end;
 
 function StrTotpConsulta(out ok: boolean; const s: string): TtpConsulta;
@@ -12299,7 +12302,8 @@ begin
   Result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5', '6'],
                            [tcPorNumero, tcPorFaixa, tcPorPeriodo,
-                            tcServicoPrestado, tcServicoTomado, tcPorCodigoVerificacao]);
+                            tcServicoPrestado, tcServicoTomado,
+                            tcPorCodigoVerificacao]);
 end;
 
 function tpPeriodoToStr(const t: TtpPeriodo): string;

@@ -125,6 +125,8 @@ begin
   begin
     ModoEnvio := meUnitario;
     ConsultaLote := False;
+    FormatoArqEnvio := tfaJson;
+    FormatoArqRetorno := tfaJson;
   end;
 
   with ConfigWebServices do

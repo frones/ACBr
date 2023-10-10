@@ -116,6 +116,10 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+    FormatoArqEnvio := tfaJson;
+    FormatoArqRetorno := tfaJson;
+    FormatoArqRecibo := tfaJson;
+    FormatoArqNota := tfaJson;
   end;
 
   SetXmlNameSpace('');

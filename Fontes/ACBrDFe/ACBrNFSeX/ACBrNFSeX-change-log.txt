@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/10/2023
+-- Diversos --
+[+] Implementado as propriedade de parâmetros: FormatoArqEnvio, FormatoArqRetorno, 
+    FormatoArqRecibo, FormatoArqNota e FormatoArqEvento que são do tipo: 
+    TFormatoArq = (tfaXml, tfaJson, tfaTxt).
+    Essas propriedades serão utilizadas de forma interna para definir o formato de
+    gravação dos arquivos gerados pelo componente, uma vez que nem todos os provedores
+    trabalham com o formato XML.
+   Por: Italo Giurizzato Junior
 -- SigISS.Provider --
 [*] Alteração visando a identificação correta mensagens de erros.
    Por: Italo Giurizzato Junior

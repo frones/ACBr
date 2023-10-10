@@ -107,6 +107,10 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
+    FormatoArqEnvio := tfaJson;
+    FormatoArqRetorno := tfaJson;
+    FormatoArqRecibo := tfaJson;
+    FormatoArqNota := tfaJson;
   end;
 
   SetXmlNameSpace('');
@@ -274,7 +278,7 @@ end;
 procedure TACBrNFSeProvidereISS.TratarRetornoEmitir
   (Response: TNFSeEmiteResponse);
 var
-  jDocument, jNfse: TACBrJSONObject;
+//  jDocument, jNfse: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
   json: TACBrJsonObject;
 //  ANota: TNotaFiscal;

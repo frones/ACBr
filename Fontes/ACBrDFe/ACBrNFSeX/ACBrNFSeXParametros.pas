@@ -118,6 +118,16 @@ type
     // Layout setando ao ler o provedor
     FLayout: TLayout;
     FIniTabServicos: string;
+    // Formato do Arquivo de Envio utilizado pelo provedor
+    FFormatoArqEnvio: TFormatoArq;
+    // Formato do Arquivo de Retorno utilizado pelo provedor
+    FFormatoArqRetorno: TFormatoArq;
+    // Formato do Arquivo do Recibo utilizado pelo provedor
+    FFormatoArqRecibo: TFormatoArq;
+    // Formato do Arquivo da Nota utilizado pelo provedor
+    FFormatoArqNota: TFormatoArq;
+    // Formato do Arquivo do Evento utilizado pelo provedor
+    FFormatoArqEvento: TFormatoArq;
 
   public
     constructor Create;
@@ -154,6 +164,11 @@ type
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico;
     property Layout: TLayout read FLayout write FLayout;
     property IniTabServicos: string read FIniTabServicos write FIniTabServicos;
+    property FormatoArqEnvio: TFormatoArq read FFormatoArqEnvio write FFormatoArqEnvio;
+    property FormatoArqRetorno: TFormatoArq read FFormatoArqRetorno write FFormatoArqRetorno;
+    property FormatoArqRecibo: TFormatoArq read FFormatoArqRecibo write FFormatoArqRecibo;
+    property FormatoArqNota: TFormatoArq read FFormatoArqNota write FFormatoArqNota;
+    property FormatoArqEvento: TFormatoArq read FFormatoArqEvento write FFormatoArqEvento;
   end;
 
   { TWebserviceInfo }

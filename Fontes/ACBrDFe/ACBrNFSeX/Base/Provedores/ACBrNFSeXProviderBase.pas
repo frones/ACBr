@@ -609,6 +609,11 @@ begin
     CancPreencherSerieNfse := False;
     CancPreencherCodVerificacao := False;
     DetalharServico := False;
+    FormatoArqEnvio := tfaXml;
+    FormatoArqRetorno := tfaXml;
+    FormatoArqRecibo := tfaXml;
+    FormatoArqNota := tfaXml;
+    FormatoArqEvento := tfaXml;
 
     with TACBrNFSeX(FAOwner) do
     begin
@@ -972,39 +977,43 @@ end;
 
 procedure TACBrNFSeXProvider.SalvarXmlRps(aNota: TNotaFiscal);
 var
+  Extensao: string;
   ConteudoEhXml: Boolean;
 begin
   if FAOwner.Configuracoes.Arquivos.Salvar then
   begin
-    aNota.XmlRps := RemoverDeclaracaoXML(aNota.XmlRps);
-    ConteudoEhXml := StringIsXML(aNota.XmlRps);
+    case ConfigGeral.FormatoArqRecibo of
+      tfaJson:
+        Extensao := '.json';
+      tfaTxt:
+        Extensao := '.txt';
+    else
+      Extensao := '.xml';
+    end;
 
-    if ConteudoEhXml then
-      aNota.XmlRps := CUTF8DeclaracaoXML + aNota.XmlRps;
-
-    if NaoEstaVazio(aNota.NomeArqRps) then
+    if ConfigGeral.FormatoArqRecibo <> tfaXml then
     begin
-      if not ConteudoEhXml then
-        aNota.NomeArqRps := StringReplace(aNota.NomeArqRps, '.xml', '.json', [rfReplaceAll]);
-
-      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps, '', ConteudoEhXml);
+      aNota.XmlRps := RemoverDeclaracaoXML(aNota.XmlRps);
+      ConteudoEhXml := False;
     end
     else
-    begin
+      ConteudoEhXml := True;
+
+    if EstaVazio(aNota.NomeArqRps) then
       aNota.NomeArqRps := aNota.CalcularNomeArquivoCompleto(aNota.NomeArqRps, '');
 
-      if not ConteudoEhXml then
-        aNota.NomeArqRps := StringReplace(aNota.NomeArqRps, '.xml', '.json', [rfReplaceAll]);
+    if not ConteudoEhXml then
+      aNota.NomeArqRps := StringReplace(aNota.NomeArqRps, '.xml', Extensao, [rfReplaceAll]);
 
-      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps, '', ConteudoEhXml);
-    end;
+    TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps, '', ConteudoEhXml);
   end;
 end;
 
 procedure TACBrNFSeXProvider.SalvarXmlNfse(aNota: TNotaFiscal);
 var
-  aPath, aNomeArq: string;
+  aPath, aNomeArq, Extensao: string;
   aConfig: TConfiguracoesNFSe;
+  ConteudoEhXml: Boolean;
 begin
   aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
 
@@ -1016,7 +1025,29 @@ begin
   aNota.Confirmada := True;
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
+  begin
+    case ConfigGeral.FormatoArqNota of
+      tfaJson:
+        Extensao := '.json';
+      tfaTxt:
+        Extensao := '.txt';
+    else
+      Extensao := '.xml';
+    end;
+
+    if ConfigGeral.FormatoArqNota <> tfaXml then
+    begin
+      aNota.XmlNfse := RemoverDeclaracaoXML(aNota.XmlNfse);
+      ConteudoEhXml := False;
+    end
+    else
+      ConteudoEhXml := True;
+
+    if not ConteudoEhXml then
+      aNota.NomeArq := StringReplace(aNota.NomeArq, '.xml', Extensao, [rfReplaceAll]);
+
     TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aNota.XmlNfse);
+  end;
 end;
 
 procedure TACBrNFSeXProvider.SalvarPDFNfse(const aNome: string;
@@ -1038,8 +1069,10 @@ end;
 procedure TACBrNFSeXProvider.SalvarXmlEvento(const aNome: string;
   const  aEvento: AnsiString);
 var
-  aPath, aNomeArq: string;
+  aPath, aNomeArq, Extensao: string;
   aConfig: TConfiguracoesNFSe;
+  ConteudoEhXml: Boolean;
+  ArqEvento: AnsiString;
 begin
   aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
 
@@ -1049,7 +1082,29 @@ begin
   aNomeArq := PathWithDelim(aPath) + aNome + '.xml';
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
-    WriteToTXT(aNomeArq, aEvento, False, False);
+  begin
+    case ConfigGeral.FormatoArqEvento of
+      tfaJson:
+        Extensao := '.json';
+      tfaTxt:
+        Extensao := '.txt';
+    else
+      Extensao := '.xml';
+    end;
+
+    if ConfigGeral.FormatoArqEvento <> tfaXml then
+    begin
+      ArqEvento := RemoverDeclaracaoXML(aEvento);
+      ConteudoEhXml := False;
+    end
+    else
+      ConteudoEhXml := True;
+
+    if not ConteudoEhXml then
+      aNomeArq := StringReplace(aNomeArq, '.xml', Extensao, [rfReplaceAll]);
+
+    WriteToTXT(aNomeArq, ArqEvento, False, False);
+  end;
 end;
 
 procedure TACBrNFSeXProvider.SetNameSpaceURI(const aMetodo: TMetodo);

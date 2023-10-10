@@ -665,7 +665,7 @@ end;
 
 procedure TACBrNFSeXWebservice.SalvarEnvio(ADadosSoap, ADadosMsg: string);
 var
-  Prefixo, ArqEnv: string;
+  Prefixo, ArqEnv, Extensao: string;
   ConteudoEhXml: Boolean;
 begin
   { Sobrescrever apenas se necessário }
@@ -678,7 +678,22 @@ begin
     Para contornar isso a variável ConteudoEhXml recebe o valor false quando é
     um JSON e o método Gravar não inclui o encoding.
   }
-  ConteudoEhXml := StringIsXML(ADadosMsg);
+  case TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio of
+    tfaJson:
+      Extensao := '.json';
+    tfaTxt:
+      Extensao := '.txt';
+  else
+    Extensao := '.xml';
+  end;
+
+  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio <> tfaXml then
+  begin
+    ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
+    ConteudoEhXml := False;
+  end
+  else
+    ConteudoEhXml := True;
 
   Prefixo := GerarPrefixoArquivo;
 
@@ -691,10 +706,10 @@ begin
       if not XmlEhUTF8(ADadosMsg) then
         ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
 
-      FPDFeOwner.Gravar(ArqEnv + '.xml', ADadosMsg, Path);
+      FPDFeOwner.Gravar(ArqEnv + Extensao, ADadosMsg, Path);
     end
     else
-      GravarJSON(ArqEnv + '.json', ADadosMsg, Path);
+      GravarJSON(ArqEnv + Extensao, ADadosMsg, Path);
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
@@ -706,16 +721,16 @@ begin
       if not XmlEhUTF8(ADadosSoap) then
         ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
 
-      FPDFeOwner.Gravar(ArqEnv + '-soap.xml', ADadosSoap, Path);
+      FPDFeOwner.Gravar(ArqEnv + '-soap' + Extensao, ADadosSoap, Path);
     end
     else
-      GravarJSON(ArqEnv + '-soap.json', ADadosSoap, Path);
+      GravarJSON(ArqEnv + '-soap' + Extensao, ADadosSoap, Path);
   end;
 end;
 
 procedure TACBrNFSeXWebservice.SalvarRetornoDadosMsg(ADadosMsg: string);
 var
-  Prefixo, ArqEnv: string;
+  Prefixo, ArqEnv, Extensao: string;
   ConteudoEhXml: Boolean;
 begin
   { Sobrescrever apenas se necessário }
@@ -728,7 +743,22 @@ begin
     Para contornar isso a variável ConteudoEhXml recebe o valor false quando é
     um JSON e o método Gravar não inclui o encoding.
   }
-  ConteudoEhXml := StringIsXML(ADadosMsg);
+  case TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio of
+    tfaJson:
+      Extensao := '.json';
+    tfaTxt:
+      Extensao := '.txt';
+  else
+    Extensao := '.xml';
+  end;
+
+  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio <> tfaXml then
+  begin
+    ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
+    ConteudoEhXml := False;
+  end
+  else
+    ConteudoEhXml := True;
 
   Prefixo := GerarPrefixoArquivo;
 
@@ -741,16 +771,16 @@ begin
       if not XmlEhUTF8(ADadosMsg) then
         ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
 
-      FPDFeOwner.Gravar(ArqEnv + '.xml', ADadosMsg, Path);
+      FPDFeOwner.Gravar(ArqEnv + Extensao, ADadosMsg, Path);
     end
     else
-      GravarJSON(ArqEnv + '.json', ADadosMsg, Path);
+      GravarJSON(ArqEnv + Extensao, ADadosMsg, Path);
   end;
 end;
 
 procedure TACBrNFSeXWebservice.SalvarRetornoWebService(ADadosSoap: string);
 var
-  Prefixo, ArqEnv: string;
+  Prefixo, ArqEnv, Extensao: string;
   ConteudoEhXml: Boolean;
 begin
   { Sobrescrever apenas se necessário }
@@ -763,7 +793,22 @@ begin
     Para contornar isso a variável ConteudoEhXml recebe o valor false quando é
     um JSON e o método Gravar não inclui o encoding.
   }
-  ConteudoEhXml := StringIsXML(ADadosSoap);
+  case TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio of
+    tfaJson:
+      Extensao := '.json';
+    tfaTxt:
+      Extensao := '.txt';
+  else
+    Extensao := '.xml';
+  end;
+
+  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio <> tfaXml then
+  begin
+    ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
+    ConteudoEhXml := False;
+  end
+  else
+    ConteudoEhXml := True;
 
   Prefixo := GerarPrefixoArquivo;
 
@@ -776,10 +821,10 @@ begin
       if not XmlEhUTF8(ADadosSoap) then
         ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
 
-      FPDFeOwner.Gravar(ArqEnv + '-soap.xml', ADadosSoap, Path);
+      FPDFeOwner.Gravar(ArqEnv + '-soap' + Extensao, ADadosSoap, Path);
     end
     else
-      GravarJSON(ArqEnv + '-soap.json', ADadosSoap, Path);
+      GravarJSON(ArqEnv + '-soap' + Extensao, ADadosSoap, Path);
   end;
 end;
 
@@ -1527,7 +1572,8 @@ begin
     CadEconomico  := INIRec.ReadString(sSecao, 'CadEconomico', '');
     SerieNFSe     := INIRec.ReadString(sSecao, 'SerieNFSe', '');
     CodServ       := INIRec.ReadString(sSecao, 'CodServ', '');
-    CodVerificacao:= INIRec.ReadString(sSecao, 'CodVerificacao', '');
+
+    CodVerificacao := INIRec.ReadString(sSecao, 'CodVerificacao', '');
 
     Pagina        := INIRec.ReadInteger(sSecao, 'Pagina', 1);
 

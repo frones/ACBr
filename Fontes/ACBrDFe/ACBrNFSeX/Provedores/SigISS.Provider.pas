@@ -193,7 +193,7 @@ begin
     aCorrecao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr));
     aMensagem := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr));
 
-    if (aID = '0') or (aCorrecao = '') or (aCorrecao = 'Sem erros') then
+    if (aCorrecao = '') or (aCorrecao = 'Sem erros') then
     begin
       if aMensagem <> '' then
       begin

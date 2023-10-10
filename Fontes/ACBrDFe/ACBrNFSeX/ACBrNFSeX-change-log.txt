@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/10/2023
+-- SigISS.Provider --
+[*] Alteração visando a identificação correta mensagens de erros.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alteração nas URLs da cidade de Guarapari/ES, o provedor continua o mesmo.
    Por: Quality Automação

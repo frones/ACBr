@@ -269,7 +269,6 @@ type
   private
     { Private declarations }
     FNumItem: Integer;
-    function ManterAliquota(dAliquota: Double): String;
   public
     { Public declarations }
     class procedure QuebradeLinha(const sQuebradeLinha: String); override;
@@ -541,7 +540,7 @@ begin
       rllValorDeducoes.Caption        := FormatFloat(',0.00', ValorDeducoes);
 //      rllDescIncondicionado2.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
       rllBaseCalc.Caption             := FormatFloat(',0.00', BaseCalculo);
-      rllAliquota.Caption             := ManterAliquota (Aliquota);
+      rllAliquota.Caption             := fpDANFSe.FormatarAliquota(Aliquota);
 //      rllISSReter.Caption             := FProvider.SituacaoTributariaDescricao(IssRetido);
       rllValorISS.Caption             := FormatFloat(',0.00',ValorIss);
 
@@ -737,12 +736,6 @@ begin
   FNumItem := RecNo - 1;
   Eof := (RecNo > fpNFSe.Servico.ItemServico.Count);
   RecordAction := raUseIt;
-end;
-
-function TfrlXDANFSeRLSimplISS.ManterAliquota(dAliquota: Double): String;
-begin
-  // Agora a multiplicação por 100 é feita pela rotina que lê o XML.
-  Result := FormatFloat(',0.00', dAliquota);
 end;
 
 end.

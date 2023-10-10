@@ -62,9 +62,12 @@ type
     FvUnCom: Integer;
     FMaskqCom: String;
     FMaskvUnCom: String;
+    FAliquota: Integer;
+    FMaskAliquota: String;
 
     procedure SetqCom(AValue: Integer);
     procedure SetvUnCom(AValue: Integer);
+    procedure SetAliquota(AValue: Integer);
   public
     constructor Create(AOwner: TComponent); override;
   published
@@ -83,6 +86,12 @@ type
     {@prop _Mask_vUnCom - Mascara de Decimais do Valor Unitário. Usado apenas se Formato = tdetMascara
      @links TCasasDecimais.Mask_vUnCom :/}
     property MaskvUnCom: String read FMaskvUnCom write FMaskvUnCom;
+    {@prop _Aliquota - Número de Casas Decimais da Aliquota. Usado apenas se Formato = tdetInteger
+     @links TCasasDecimais.Aliquota :/}
+    property Aliquota: Integer read FAliquota write SetAliquota;
+    {@prop _Mask_Aliquota - Mascara de Decimais da Aliquota. Usado apenas se Formato = tdetMascara
+     @links TCasasDecimais.Mask_Aliquota :/}
+    property MaskAliquota: String read FMaskAliquota write FMaskAliquota;
   end;
 
   { TExpandeLogoMarcaConfig }
@@ -175,6 +184,7 @@ type
 
     function FormatarQuantidade(dValor: Double; dForcarDecimais: Boolean = True): String; virtual;
     function FormatarValorUnitario(dValor: Double): String; virtual;
+    function FormatarAliquota(dValor: Double): String; virtual;
 
   protected
     {@prop FormularioContinuo - Se True, não quebra a página durante a impressão, útil para Impressão em Bobinas
@@ -268,8 +278,15 @@ begin
 
   FMaskqCom := ',0.00';
   FMaskvUnCom := ',0.00';
+  FMaskAliquota := ',0.00';
   FQCom := 2;
   FvUnCom := 2;
+  FAliquota := 2;
+end;
+
+procedure TCasasDecimais.SetAliquota(AValue: Integer);
+begin
+  FAliquota := max(min(AValue, 4), 0);
 end;
 
 procedure TCasasDecimais.SetqCom(AValue: Integer);
@@ -447,6 +464,16 @@ begin
     Exit;
 
   FNumCopias := AValue;
+end;
+
+function TACBrDFeReport.FormatarAliquota(dValor: Double): String;
+begin
+  // formatar conforme configurado
+  case CasasDecimais.Formato of
+    tdetMascara: Result := FormatFloatBr(dValor, CasasDecimais.MaskAliquota);
+  else
+    Result := FormatFloatBr(dValor, FloatMask(CasasDecimais.Aliquota));
+  end;
 end;
 
 function TACBrDFeReport.FormatarQuantidade(dValor: Double; dForcarDecimais: Boolean): String;

@@ -518,7 +518,10 @@ begin
       rllValorDeducoes.Caption := FormatFloat(',0.00', ValorDeducoes);
       rllDescIncondicionado2.Caption := FormatFloat(',0.00', DescontoIncondicionado);
       rllBaseCalc.Caption := FormatFloat(',0.00', BaseCalculo);
-      rllAliquota.Caption := FormatFloat(',0.00', Aliquota);
+
+      rllAliquota.Caption := fpDANFSe.FormatarAliquota(Aliquota);
+
+//      rllAliquota.Caption := FormatFloat(',0.00', Aliquota);
       rllISSReter.Caption := FProvider.SituacaoTributariaDescricao(IssRetido);
       rllValorISS.Caption := FormatFloat(',0.00', ValorIss);
     end;

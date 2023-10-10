@@ -55,6 +55,8 @@ Símbolo : Significado
 [*] Alteração visando a identificação correta mensagens de erros.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[*] A cidade de Promissao/SP trocou as URLs, provedor e versão continam o mesmo.
+   Por: marcellocainelli
 [*] Alteração nas URLs da cidade de Guarapari/ES, o provedor continua o mesmo.
    Por: Quality Automação
 

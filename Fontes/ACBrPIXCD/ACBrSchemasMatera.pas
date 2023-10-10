@@ -9343,7 +9343,8 @@ begin
   fcheckingAccountBranch := 0;
   fcheckingAccountNumber := 0;
   fcustomData := EmptyStr;
-  fclient.Clear;
+  if Assigned(fclient) then
+    fclient.Clear;
 end;
 
 function TMateraCreateAccountTransactionRequest.IsEmpty: Boolean;

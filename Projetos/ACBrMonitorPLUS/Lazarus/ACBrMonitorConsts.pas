@@ -81,6 +81,7 @@ ResourceString
   SErroReinfConsulta = 'Erro ao Consultar Evento - Parâmetro não Preenchido.';
   SErroSSLDesabilitado = 'Será utilizado a configuração padrão SSL: %s !';
 
+  SErroVersaoInvalida = 'Versão Inválida.';
 
 const
   CMonitorIni = 'ACBrMonitor.ini';

@@ -119,6 +119,13 @@ public
   property ACBrReinf: TACBrReinf read fACBrReinf;
 end;
 
+{ TMetodoSetVersaoDF}
+
+TMetodoSetVersaoDF = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TACBrCarregarReinf }
 
 TACBrCarregarReinf = class(TACBrCarregarDFe)
@@ -198,6 +205,29 @@ implementation
 
 uses
   DoACBrUnit, Forms;
+
+{ TMetodoSetVersaoDF }
+
+procedure TMetodoSetVersaoDF.Executar;
+var
+  OK: boolean;
+  VersaoDF: TVersaoReinf;
+  AVersao: String;
+begin
+  AVersao := fpCmd.Params(0);
+  VersaoDF := StrToVersaoReinf(ok, AVersao);
+
+  if not OK then
+    raise Exception.Create(SErroVersaoInvalida);
+
+  with TACBrObjetoReinf(fpObjetoDono) do
+  begin
+    with MonitorConfig.DFE.WebService do
+      VersaoReinf := VersaoReinfToStr(VersaoDF);
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
 
 { TACBrCarregarReinf }
 
@@ -724,6 +754,7 @@ begin
   ListaDeMetodos.Add(CMetodoSetIDContribuinteReinf);
   ListaDeMetodos.Add(CMetodoSetIDTransmissorReinf);
   ListaDeMetodos.Add(CMetodoConsultarReciboReinf);
+  ListaDeMetodos.Add(CMetodoSetVersaoDF);
 end;
 
 procedure TACBrObjetoReinf.Executar(ACmd: TACBrCmd);
@@ -754,6 +785,7 @@ begin
     6  : AMetodoClass := TMetodoSetIDContribuinte;
     7  : AMetodoClass := TMetodoSetIDTransmissor;
     8  : AMetodoClass := TMetodoConsultarReciboReinf;
+    9  : AMetodoClass := TMetodoSetVersaoDF;
     else
       begin
         AACBrUnit := TACBrObjetoACBr.Create(Nil); //Instancia DoACBrUnit para validar métodos padrão para todos os objetos

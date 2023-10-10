@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2023
+-- ACBrMonitorConsts, DoACBrReinfUnit --
+[+] Implementado método setVersaoDF, para alterar a versão do leiaute
+  Por: Renato Rubinho
+
 06/10/2023
 -- pcnReinfR9005, pcnReinfRetConsulta_R9011, pcnReinfRetConsulta_R9015, pcnReinfRetEventos --
 [*] Unificadas e Centralizadas classes do componente

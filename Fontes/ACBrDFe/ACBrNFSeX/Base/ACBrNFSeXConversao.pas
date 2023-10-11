@@ -191,7 +191,8 @@ type
              tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
              tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
              tmGerarToken, tmEnviarEvento, tmConsultarEvento, tmConsultarDFe,
-             tmConsultarParam, tmConsultarSeqRps, tmConsultarLinkNFSe);
+             tmConsultarParam, tmConsultarSeqRps, tmConsultarLinkNFSe,
+             tmConsultarNFSePorChave);
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
                               filsComFormatacaoSemZeroEsquerda,
@@ -205,7 +206,7 @@ type
                  tpPJforaPais);
 
   TtpConsulta = (tcPorNumero, tcPorFaixa, tcPorPeriodo, tcServicoPrestado,
-                 tcServicoTomado, tcPorCodigoVerificacao);
+                 tcServicoTomado, tcPorCodigoVerificacao, tcPorChave);
 
   TtpPeriodo = (tpEmissao, tpCompetencia);
 
@@ -269,7 +270,7 @@ type
                drRepasseConsorciado, drRepassePlanoSaude, drServicos,
                drSubEmpreitada, drOutrasDeducoes);
 
-  TtribISSQN = (tiOperacaoTributavel, tiExportacao, tiNaoIncidencia, tiImunidade);
+  TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia);
 
   TtpImunidade = (timNenhum, timImunidade, timPatrimonio, timTemplos,
                   timPatrimonioPartidos, timLivros, timFonogramas);
@@ -12291,19 +12292,19 @@ end;
 function tpConsultaToStr(const t: TtpConsulta): string;
 begin
   Result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5', '6'],
+                           ['1', '2', '3', '4', '5', '6', '7'],
                            [tcPorNumero, tcPorFaixa, tcPorPeriodo,
                             tcServicoPrestado, tcServicoTomado,
-                            tcPorCodigoVerificacao]);
+                            tcPorCodigoVerificacao, tcPorChave]);
 end;
 
 function StrTotpConsulta(out ok: boolean; const s: string): TtpConsulta;
 begin
   Result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5', '6'],
+                           ['1', '2', '3', '4', '5', '6', '7'],
                            [tcPorNumero, tcPorFaixa, tcPorPeriodo,
                             tcServicoPrestado, tcServicoTomado,
-                            tcPorCodigoVerificacao]);
+                            tcPorCodigoVerificacao, tcPorChave]);
 end;
 
 function tpPeriodoToStr(const t: TtpPeriodo): string;
@@ -12345,7 +12346,7 @@ begin
                         'AbrirSessao', 'FecharSessao', 'Teste', 'Todos',
                         'GerarToken', 'EnviarEvento', 'ConsultarEvento',
                         'ConsultarDFe', 'ConsultarParam', 'ConsultarSeqRps',
-                        'ConsultarLinkNFSe'],
+                        'ConsultarLinkNFSe', 'ConsultarNFSePorChave'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
                         tmConsultarNFSePorRps, tmConsultarNFSe,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
@@ -12354,7 +12355,7 @@ begin
                         tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
                         tmGerarToken, tmEnviarEvento, tmConsultarEvento,
                         tmConsultarDFe, tmConsultarParam, tmConsultarSeqRps,
-                        tmConsultarLinkNFSe]);
+                        tmConsultarLinkNFSe, tmConsultarNFSePorChave]);
 end;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;
@@ -12626,14 +12627,14 @@ function tribISSQNToStr(const t: TtribISSQN): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4'],
-            [tiOperacaoTributavel, tiExportacao, tiNaoIncidencia, tiImunidade]);
+            [tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia]);
 end;
 
 function StrTotribISSQN(out ok: Boolean; const s: string): TtribISSQN;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4'],
-            [tiOperacaoTributavel, tiExportacao, tiNaoIncidencia, tiImunidade]);
+            [tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia]);
 end;
 
 function tpImunidadeToStr(const t: TtpImunidade): string;

@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2023
+-- ACBrNFSeXConversao --
+[*] Invertido a ordem os enumerados do tipo TtribISSQN para que fique em conformidade
+    com manual.
+    Antes: TtribISSQN = (tiOperacaoTributavel, tiExportacao, tiNaoIncidencia, tiImunidade);
+    Agora: TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia);
+    Que resultam nos valores     1                  2             3              4
+   Por: Italo Giurizzato Junior
+
 10/10/2023
 -- Diversos --
 [+] Implementado as propriedade de parâmetros: FormatoArqEnvio, FormatoArqRetorno, 

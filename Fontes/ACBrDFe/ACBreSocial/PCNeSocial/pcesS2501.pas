@@ -1130,20 +1130,19 @@ var
 begin
   for i := 0 to obj.Count - 1 do
   begin
-    Gerador.wGrupo('calcTrib');
+//    Gerador.wGrupo('calcTrib');
 
-    Gerador.wCampo(tcStr, '', 'perRef', 7,  7, 1, obj.Items[i].perRef);
-    Gerador.wCampo(tcDe2, '', 'vrBcCpMensal', 1, 14, 1, obj.Items[i].vrBcCpMensal);
-    Gerador.wCampo(tcDe2, '', 'vrBcCp13', 1, 14, 1, obj.Items[i].vrBcCp13);
+    Gerador.wGrupo('calcTrib perRef="'+obj.Items[i].perRef+'"' +
+                           ' vrBcCpMensal="'+ FloatToString(obj.Items[i].VrBcCpMensal, '.', FloatMask(2, False))+'"' +
+                           ' vrBcCp13="'+FloatToString(obj.Items[i].VrBcCp13, '.', FloatMask(2, False))+'"' +
+                           ifThen(VersaoDF < veS01_02_00,
+                                  ' vrRendIRRF="'+ FloatToString(obj.Items[i].vrRendIRRF, '.', FloatMask(2, False))+'"' +
+                                  ' vrRendIRRF13="' + FloatToString(obj.Items[i].vrRendIRRF13, '.', FloatMask(2, False))+'"',
+                                  ''));
 
-    if (VersaoDF < veS01_02_00) then
-    begin
-      Gerador.wCampo(tcDe2, '', 'vrRendIRRF', 1, 14, 1, obj.Items[i].vrRendIRRF);
-      Gerador.wCampo(tcDe2, '', 'vrRendIRRF13', 1, 14, 1, obj.Items[i].vrRendIRRF13);
-    end;
-
-    if obj.Items[i].instInfoCRContrib() then
-      GerarInfoCRContrib(obj.Items[i].infoCrContrib);
+    if VersaoDF >= veS01_02_00 then
+      if obj.Items[i].instInfoCRContrib() then
+        GerarInfoCRContrib(obj.Items[i].infoCrContrib);
 
     Gerador.wGrupo('/calcTrib');
   end;
@@ -1163,20 +1162,23 @@ begin
                              ' vrCR="' + FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False))+'"'
                   );
 
-    if obj[i].infoIRInst() then
-      GerarInfoIR(obj[i].infoIR);
+    if VersaoDF >= veS01_02_00 then
+    begin
+      if obj[i].infoIRInst() then
+        GerarInfoIR(obj[i].infoIR);
 
-    if obj[i].infoRRAInst() then
-      GerarInfoRRA(obj[i].infoRRA);
+      if obj[i].infoRRAInst() then
+        GerarInfoRRA(obj[i].infoRRA);
 
-    if obj[i].dedDepenInst() then
-      GerarDedDepen(obj[i].dedDepen);
+      if obj[i].dedDepenInst() then
+        GerarDedDepen(obj[i].dedDepen);
 
-    if obj[i].penAlimInst() then
-      GerarPenAlim(obj[i].penAlim);
+      if obj[i].penAlimInst() then
+        GerarPenAlim(obj[i].penAlim);
 
-    if obj[i].infoProcRetInst() then
-      GerarInfoProcRet(obj[i].infoProcRet);
+      if obj[i].infoProcRetInst() then
+        GerarInfoProcRet(obj[i].infoProcRet);
+    end;
 
     Gerador.wGrupo('/infoCRIRRF');
   end;
@@ -1319,7 +1321,6 @@ begin
       ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
       sSecao := 'ideEmpregador';
-      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
       ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
       ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
@@ -1402,7 +1403,7 @@ begin
               while true do
               begin
                 // de 0 até 1
-                sSecao := 'infoIR' + IntToStrZero(I, 4) + IntToStrZero(J, 3) + IntToStrZero(K, 1);
+                sSecao := 'infoIR' + IntToStrZero(I, 4) + IntToStrZero(J, 2) + IntToStrZero(K, 1);
 
                 if ( (StringToFloat(INIRec.ReadString(sSecao, 'vrRendTrib', '0')) = 0 ) and
                      (StringToFloat(INIRec.ReadString(sSecao, 'vrRendTrib13', '0')) = 0 ) and
@@ -1429,7 +1430,7 @@ begin
                 Inc(K);
               end;
 
-              sSecao := 'infoRRA' + IntToStrZero(I, 3);
+              sSecao := 'infoRRA' + IntToStrZero(I, 4) + IntToStrZero(J, 2);
               with infoRRA do
               begin
                 tpProcRRA := eSStrToTpProcRRA(Ok, sFim);
@@ -1443,7 +1444,7 @@ begin
                 while True do
                 begin
                   // de 01 até 99
-                  sSecao := 'infoIR' + IntToStrZero(I, 4) + IntToStrZero(J, 3) + IntToStrZero(K, 2);
+                  sSecao := 'infoIR' + IntToStrZero(I, 4) + IntToStrZero(J, 2) + IntToStrZero(K, 2);
                   sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
 
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -1464,7 +1465,7 @@ begin
               while true do
               begin
                 // de 001 até 999
-                sSecao := 'dedDepen' + IntToStrZero(I, 4) + IntToStrZero(J, 3) +
+                sSecao := 'dedDepen' + IntToStrZero(I, 4) + IntToStrZero(J, 2) +
                                        IntToStrZero(K, 3);
                 sFim   := INIRec.ReadString(sSecao, 'tpRend', 'FIM');
 
@@ -1485,7 +1486,7 @@ begin
               while true do
               begin
                 // de 01 até 99
-                sSecao := 'penAlim' + IntToStrZero(I, 4) + IntToStrZero(J, 3) +
+                sSecao := 'penAlim' + IntToStrZero(I, 4) + IntToStrZero(J, 2) +
                                       IntToStrZero(K, 2);
                 sFim   := INIRec.ReadString(sSecao, 'tpRend', 'FIM');
 
@@ -1506,7 +1507,7 @@ begin
               while true do
               begin
                 // de 01 até 50
-                sSecao := 'infoProcRet' + IntToStrZero(I, 4) + IntToStrZero(J, 3) +
+                sSecao := 'infoProcRet' + IntToStrZero(I, 4) + IntToStrZero(J, 2) +
                                           IntToStrZero(K, 2);
                 sFim   := INIRec.ReadString(sSecao, 'tpProcRet', 'FIM');
 
@@ -1522,9 +1523,9 @@ begin
                   L := 1;
                   while true do
                   begin
-                    // de 01 até 02
-                    sSecao := 'infoValores' + IntToStrZero(I, 4) + IntToStrZero(J, 3) +
-                                              IntToStrZero(K, 2) + IntToStrZero(L, 2);
+                    // de 0 até 2
+                    sSecao := 'infoValores' + IntToStrZero(I, 4) + IntToStrZero(J, 2) +
+                                              IntToStrZero(K, 2) + IntToStrZero(L, 1);
                     sFim   := INIRec.ReadString(sSecao, 'indApuracao', 'FIM');
 
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -1543,8 +1544,8 @@ begin
                       while true do
                       begin
                         // de 01 até 25
-                        sSecao := 'dedSusp' + IntToStrZero(I, 4) + IntToStrZero(J, 3) +
-                                              IntToStrZero(K, 2) + IntToStrZero(L, 2) +
+                        sSecao := 'dedSusp' + IntToStrZero(I, 4) + IntToStrZero(J, 2) +
+                                              IntToStrZero(K, 2) + IntToStrZero(L, 1) +
                                               IntToStrZero(M, 2);
 
                         sFim   := INIRec.ReadString(sSecao, 'indTpDeducao', 'FIM');
@@ -1561,8 +1562,8 @@ begin
                           while true do
                           begin
                             // de 01 até 99
-                            sSecao := 'benefPen' + IntToStrZero(I, 4) + IntToStrZero(J, 3) +
-                                                   IntToStrZero(K, 2) + IntToStrZero(L, 2) +
+                            sSecao := 'benefPen' + IntToStrZero(I, 4) + IntToStrZero(J, 2) +
+                                                   IntToStrZero(K, 2) + IntToStrZero(L, 1) +
                                                    IntToStrZero(M, 2) + IntToStrZero(N, 2);
 
                             sFim   := INIRec.ReadString(sSecao, 'cpfDep', 'FIM');
@@ -1595,31 +1596,24 @@ begin
             Inc(J);
           end;
 
+          // infoIRComplem.dtLaudo não é obrigatória, verificar se exite o primeiro reg da infoDep.cpfDep
+          sSecao := 'infoDep' + IntToStrZero(I, 4) + '001';
+          sFim   := INIRec.ReadString(sSecao, 'cpfDep', 'FIM');
 
-          J := 1;
-          while true do
+          if (sFim <> 'FIM') and (Length(sFim) > 0) then
           begin
-            // infoIRComplem.dtLaudo não é obrigatória, verificar se exite o primeiro reg da infoDep.cpfDep
-            sSecao := 'infoDep' + IntToStrZero(I, 4) + IntToStrZero(J, 3) +
-                                  '001';
-            sFim   := INIRec.ReadString(sSecao, 'cpfDep', 'FIM');
-
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-              break;
-
             // de 0 até 1
-            sSecao := 'infoIRComplem' + IntToStrZero(I, 2);
+            sSecao := 'infoIRComplem' + IntToStrZero(I, 4);
 
             with InfoIRComplem do
             begin
               dtLaudo := StringToDateTime(INIRec.ReadString(sSecao, 'dtLaudo', '0'));
 
-              K := 1;
+              J := 1;
               while true do
               begin
                 // de 001 até 999
-                sSecao := 'infoDep' + IntToStrZero(I, 4) + IntToStrZero(J, 3) +
-                                      IntToStrZero(k, 3);
+                sSecao := 'infoDep' + IntToStrZero(I, 4) + IntToStrZero(J, 3);
                 sFim   := INIRec.ReadString(sSecao, 'cpfDep', 'FIM');
 
                 if (sFim = 'FIM') then
@@ -1635,13 +1629,10 @@ begin
                   descrDep := INIRec.ReadString(sSecao, 'descrDep', '');
                 end;
 
-                Inc(K);
+                Inc(J);
               end;
             end;
-
-            Inc(J);
           end;
-
         end;
 
         Inc(I);
@@ -1780,7 +1771,8 @@ end;
 
 procedure TEvtContProc.GerarInfoIRComplem(obj: TinfoIRComplem);
 begin
-  if (not obj.infoDepInst()) and (obj.dtLaudo = 0) then
+  if ((VersaoDF < veS01_02_00) or
+      ((not obj.infoDepInst()) and (obj.dtLaudo = 0))) then
     exit;
 
   Gerador.wGrupo('infoIRComplem' 

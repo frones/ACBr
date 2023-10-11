@@ -155,6 +155,9 @@ implementation
 
 uses
   IniFiles,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrUtil.Base,
   ACBreSocial;
 
 { TS2405Collection }
@@ -320,12 +323,108 @@ begin
 end;
 
 function TEvtCdBenefAlt.LerArqIni(const AIniString: String): Boolean;
-//var
-//  INIRec: TMemIniFile;
-//  Ok: Boolean;
-//  sSecao: String;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+  Brasil: TBrasil;
+  Exterior: TExterior;
 begin
   Result := True;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      sSecao := 'evtCdBenefAlt';
+      Id := INIRec.ReadString(sSecao, 'Id', '');
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.ProcEmi  := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc  := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideBenef';
+      IdeBenef.CpfBenef := INIRec.ReadString(sSecao, 'cpfBenef', EmptyStr);
+
+      sSecao := 'alteracao';
+      Alteracao.DtAlteracao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAlteracao', '0'));
+
+      sSecao := 'dadosBenef';
+      Alteracao.DadosBenef.nmBenefic := INIRec.ReadString(sSecao, 'nmBenefic', EmptyStr);
+      Alteracao.DadosBenef.sexo := INIRec.ReadString(sSecao, 'sexo', EmptyStr);
+      Alteracao.DadosBenef.racaCor := INIRec.ReadInteger(sSecao, 'racaCor', 1);
+      Alteracao.DadosBenef.estCiv := INIRec.ReadInteger(sSecao, 'estCiv', 0);
+      Alteracao.DadosBenef.incFisMen := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incFisMen', '1'));
+
+      sSecao := 'brasil';
+      if INIRec.ReadString(sSecao, 'dscLograd', '') <> '' then
+      begin
+        Brasil := Alteracao.DadosBenef.endereco.Brasil;
+        Brasil.TpLograd := INIRec.ReadString(sSecao, 'tpLograd', EmptyStr);
+        Brasil.DscLograd := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
+        Brasil.NrLograd := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
+        Brasil.Complemento := INIRec.ReadString(sSecao, 'complemento', EmptyStr);
+        Brasil.Bairro := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
+        Brasil.Cep := INIRec.ReadString(sSecao, 'cep', EmptyStr);
+        Brasil.CodMunic := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+        Brasil.UF := INIRec.ReadString(sSecao, 'uf', EmptyStr);
+      end;
+
+      sSecao := 'exterior';
+      if INIRec.ReadString(sSecao, 'paisResid', '') <> '' then
+      begin
+        Exterior := Alteracao.DadosBenef.endereco.Exterior;
+        Exterior.PaisResid := INIRec.ReadString(sSecao, 'paisResid', EmptyStr);
+        Exterior.DscLograd := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
+        Exterior.NrLograd := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
+        Exterior.Complemento := INIRec.ReadString(sSecao, 'complemento', EmptyStr);
+        Exterior.Bairro := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
+        Exterior.NmCid := INIRec.ReadString(sSecao, 'nmCid', EmptyStr);
+        Exterior.CodPostal := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
+      end;
+
+      I := 1;
+      while true do
+      begin
+        // de 00 até 99
+        sSecao := 'dependente' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'nmDep', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with Alteracao.DadosBenef.dependente.New do
+        begin
+          tpDep    := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', ''));
+          nmDep    := sFim;
+          dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
+          cpfDep   := INIRec.ReadString(sSecao, 'cpfDep', '');
+          sexoDep  := INIRec.ReadString(sSecao, 'sexoDep', '');
+          depIRRF  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depIRRF', 'S'));
+          incFisMen  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incTrab', 'S'));
+          descrDep := INIRec.ReadString(sSecao, 'descrDep', '');
+        end;
+
+        Inc(I);
+      end;
+
+    end;
+
+    GerarXML;
+    XML := FXML;
+  finally
+    INIRec.Free;
+  end;
 end;
 
 end.

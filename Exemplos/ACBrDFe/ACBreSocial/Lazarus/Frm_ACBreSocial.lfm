@@ -1296,7 +1296,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2200: TCheckBox
           Left = 12
           Height = 19
-          Top = 34
+          Top = 28
           Width = 139
           Caption = 'S-2200 Evento Admissão'
           TabOrder = 1
@@ -1304,7 +1304,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2205: TCheckBox
           Left = 12
           Height = 19
-          Top = 56
+          Top = 44
           Width = 281
           Caption = 'S-2205 Alteração de Dados Cadastrais do Trabalhador'
           TabOrder = 2
@@ -1312,7 +1312,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2206: TCheckBox
           Left = 12
           Height = 19
-          Top = 78
+          Top = 60
           Width = 224
           Caption = 'S-2206 Alteração do Contrato de Trabalho'
           TabOrder = 3
@@ -1320,7 +1320,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2210: TCheckBox
           Left = 12
           Height = 19
-          Top = 100
+          Top = 76
           Width = 240
           Caption = 'S-2210 Comunicação de Acidente de Trabalho'
           TabOrder = 4
@@ -1328,7 +1328,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2220: TCheckBox
           Left = 12
           Height = 19
-          Top = 122
+          Top = 92
           Width = 253
           Caption = 'S-2220 Monitoramento da Saúde do Trabalhador'
           TabOrder = 5
@@ -1336,7 +1336,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2221: TCheckBox
           Left = 12
           Height = 19
-          Top = 144
+          Top = 108
           Width = 273
           Caption = 'S-2221 Exame Toxicológico do Motorista Profissional '
           TabOrder = 6
@@ -1344,7 +1344,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2230: TCheckBox
           Left = 12
           Height = 19
-          Top = 166
+          Top = 124
           Width = 176
           Caption = 'S-2230 Afastamento Temporário'
           TabOrder = 7
@@ -1352,7 +1352,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2240: TCheckBox
           Left = 12
           Height = 19
-          Top = 210
+          Top = 156
           Width = 311
           Caption = 'S-2240 Condições Ambientais do Trabalho - Fatores de Risco'
           TabOrder = 8
@@ -1360,7 +1360,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2245: TCheckBox
           Left = 12
           Height = 19
-          Top = 232
+          Top = 172
           Width = 396
           Caption = 'S-2245 Treinamentos, Capacitações, Exercícios Simulados '#13#10'e Outras Anotações'
           TabOrder = 9
@@ -1368,7 +1368,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2250: TCheckBox
           Left = 12
           Height = 19
-          Top = 254
+          Top = 188
           Width = 116
           Caption = 'S-2250 Aviso Prévio'
           TabOrder = 10
@@ -1376,7 +1376,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbAviso: TComboBox
           Left = 138
           Height = 21
-          Top = 254
+          Top = 188
           Width = 145
           ItemHeight = 13
           ItemIndex = 0
@@ -1399,7 +1399,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2298: TCheckBox
           Left = 420
           Height = 19
-          Top = 34
+          Top = 28
           Width = 121
           Caption = 'S-2298 Reintegração'
           TabOrder = 13
@@ -1407,7 +1407,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2299: TCheckBox
           Left = 420
           Height = 19
-          Top = 56
+          Top = 44
           Width = 121
           Caption = 'S-2299 Desligamento'
           TabOrder = 14
@@ -1415,7 +1415,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2300: TCheckBox
           Left = 420
           Height = 19
-          Top = 78
+          Top = 60
           Width = 209
           Caption = 'S-2300 Trabalhador Sem Vínculo - Início'
           TabOrder = 15
@@ -1423,7 +1423,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2306: TCheckBox
           Left = 420
           Height = 19
-          Top = 122
+          Top = 92
           Width = 284
           Caption = 'S-2306 Trabalhador Sem Vínculo - Alteração Contratual'
           TabOrder = 16
@@ -1431,7 +1431,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2399: TCheckBox
           Left = 420
           Height = 19
-          Top = 144
+          Top = 108
           Width = 222
           Caption = 'S-2399 Trabalhador Sem Vínculo - Término'
           TabOrder = 17
@@ -1439,7 +1439,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2400: TCheckBox
           Left = 420
           Height = 19
-          Top = 166
+          Top = 124
           Width = 277
           Caption = 'S-2400 Cadastro de Benefícios Previdênciários - RPPS'
           TabOrder = 18
@@ -1447,7 +1447,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS3000: TCheckBox
           Left = 420
           Height = 19
-          Top = 100
+          Top = 76
           Width = 156
           Caption = 'S-3000 Exclusão de Eventos'
           TabOrder = 19
@@ -1455,7 +1455,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2231: TCheckBox
           Left = 12
           Height = 19
-          Top = 188
+          Top = 140
           Width = 219
           Caption = 'S-2231 Cessão/Exercício em Outro Órgão'
           TabOrder = 20
@@ -1463,7 +1463,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2416: TCheckBox
           Left = 420
           Height = 19
-          Top = 232
+          Top = 172
           Width = 296
           Caption = 'S-2416 Cadastro de Benefício - Entes Públicos - Alteração'
           TabOrder = 21
@@ -1471,7 +1471,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2418: TCheckBox
           Left = 420
           Height = 19
-          Top = 254
+          Top = 188
           Width = 250
           Caption = 'S-2418 Reativação de Benefício - Entes Públicos'
           TabOrder = 22
@@ -1479,7 +1479,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2405: TCheckBox
           Left = 420
           Height = 19
-          Top = 188
+          Top = 140
           Width = 308
           Caption = 'S-2405 Cadastro de Beneficiário - Entes Públicos - Alteração'
           TabOrder = 23
@@ -1487,7 +1487,7 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2410: TCheckBox
           Left = 420
           Height = 19
-          Top = 210
+          Top = 156
           Width = 275
           Caption = 'S-2410 Cadastro de Benefício - Entes Públicos - Início'
           TabOrder = 24
@@ -1495,10 +1495,26 @@ object frmACBreSocial: TfrmACBreSocial
         object cbS2420: TCheckBox
           Left = 420
           Height = 19
-          Top = 277
+          Top = 205
           Width = 288
           Caption = 'S-2420 Cadastro de Benefício - Entes Públicos - Término'
           TabOrder = 25
+        end
+        object cbS2500: TCheckBox
+          Left = 420
+          Height = 19
+          Top = 221
+          Width = 156
+          Caption = 'S-2500 Processo Trabalhista'
+          TabOrder = 26
+        end
+        object cbS2501: TCheckBox
+          Left = 420
+          Height = 19
+          Top = 237
+          Width = 297
+          Caption = 'S-2501 Informações de Tributos Decorrentes de Processo'
+          TabOrder = 27
         end
       end
     end

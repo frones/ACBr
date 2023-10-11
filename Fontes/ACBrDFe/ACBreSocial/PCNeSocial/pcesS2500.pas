@@ -1853,9 +1853,14 @@ begin
       infoProcesso.dadosCompl.infoProcJud.idVara   := INIRec.ReadInteger(sSecao, 'idVara', 0);
 
       sSecao := 'infoCCP';
-      infoProcesso.dadosCompl.infoCCP.dtCCP   := StringToDateTime(INIRec.ReadString(sSecao, 'dtCCP', '0'));
-      infoProcesso.dadosCompl.infoCCP.tpCCP   := eSStrToTpTpCCP(Ok, INIRec.ReadString(sSecao, 'tpCCP', EmptyStr));
-      infoProcesso.dadosCompl.infoCCP.cnpjCCP := INIRec.ReadString(sSecao, 'cnpjCCP', EmptyStr);
+      sFim := INIRec.ReadString(sSecao, 'dtCCP', '');
+
+      if sFim <> '' then
+      begin
+        infoProcesso.dadosCompl.infoCCP.dtCCP   := StringToDateTime(sFim);
+        infoProcesso.dadosCompl.infoCCP.tpCCP   := eSStrToTpTpCCP(Ok, INIRec.ReadString(sSecao, 'tpCCP', EmptyStr));
+        infoProcesso.dadosCompl.infoCCP.cnpjCCP := INIRec.ReadString(sSecao, 'cnpjCCP', EmptyStr);
+      end;
 
       sSecao := 'ideTrab';
       ideTrab.cpfTrab  := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);

@@ -52,6 +52,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2023
+-- pcesS2405, pcesS2500, pcesS2501, S2405.ini, S2500.ini, S2501.ini --
+[+] Criada leitura dos inis e arquivos de exemplo para o Evento S-2405, S-2500 e S-2501
+  Por: Renato Rubinho
+-- Frm_ACBreSocial.lfm, Frm_ACBreSocial.pas, pcesGerador --
+[+] Criados métodos no programa de exemplo em Lazarus nos Eventos S-2500 e S-2501
+  Por: Renato Rubinho
+-- pcesS5002 --
+[*] Implementadas novas classes no método SalvarINI
+  Por: Renato Rubinho
+
 09/10/2023
 -- ACBre_Social.dpk --
 [+] Adicionada nova unit pcesS5503, do leiaute 1.2, no pacote do Delphi

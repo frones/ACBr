@@ -220,6 +220,8 @@ type
     cbS2416: TCheckBox;
     cbS2418: TCheckBox;
     cbS2420: TCheckBox;
+    cbS2500: TCheckBox;
+    cbS2501: TCheckBox;
     cbS3000: TCheckBox;
     tsComandos: TTabSheet;
     btnGerar: TButton;
@@ -332,6 +334,8 @@ type
     procedure GerareSocial2416;
     procedure GerareSocial2418;
     procedure GerareSocial2420;
+    procedure GerareSocial2500;
+    procedure GerareSocial2501;
     procedure GerareSocial3000;
 
     procedure LimparDocsPasta;
@@ -4563,7 +4567,7 @@ begin
               nmDep := 'Dependente 1';
               dtNascto := date;
               cpfDep := '12345678901';
-              depIRRF := tpSim;
+              //depIRRF := tpSim;
               sexoDep := 'F';
               depSF := tpNao;
               incTrab := tpNao;
@@ -4576,7 +4580,7 @@ begin
               nmDep := 'Dependente 2';
               DtNascto := date;
               cpfDep := '12345678901';
-              depIRRF := tpSim;
+              //depIRRF := tpSim;
               sexoDep := 'M';
               depSF := tpNao;
               incTrab := tpNao;
@@ -4798,6 +4802,333 @@ begin
         mtvTermino := tmcbReversao;
         cnpjOrgaoSuc := '12345678901234';
         novoCPF := '12345678901';
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmACBreSocial.GerareSocial2500;
+begin
+  if VersaoDFx < veS01_01_00 then
+    exit;
+
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2500.New do
+  begin
+    with evtProcTrab do
+    begin
+      sequencial := 0;
+
+      with ideEvento do
+      begin
+        indRetif := ireOriginal;
+        // nrRecibo := '1.2.0000000000000000000';
+        procEmi := peAplicEmpregador;
+        verProc := '1.0';
+      end;
+
+      with ideEmpregador do
+      begin
+        tpInsc := tiCNPJ;
+        nrInsc := edtIdEmpregador.Text;
+
+        with ideResp do
+        begin
+          tpInsc := tiCPF;
+          nrInsc := '01234567890';
+        end;
+      end;
+
+      with infoProcesso do
+      begin
+        origem := oprProcessoJudicial;
+        nrProcTrab := '01234567890123456789';
+        obsProcTrab := 'Alguma observação';
+
+        with dadosCompl do
+        begin
+          with infoProcJud do
+          begin
+            dtSent := Now;
+            ufVara := 'RJ';
+            codMunic := 3304557;
+            idVara := 365;
+          end;
+{
+          with infoCCP do
+          begin
+            dtCCP := Now;
+            tpCCP := CCPAmbitoSindicato;
+            cnpjCCP := '01234567890123';
+          end;
+}
+        end;
+      end;
+
+      with ideTrab do
+      begin
+        cpfTrab := '01234567890';
+        nmTrab := 'Trabalhador Um';
+        dtNascto := Now - 9501;
+
+        with dependente.New do
+        begin
+          cpfDep := '01234567891';
+          tpDep := tdConjuge;
+          descDep := 'Descrever o dep set tpDep = 99';
+        end;
+
+        with infoContr.New do
+        begin
+          tpContr := TrabalhadorComVinculoFormalizadoSemAlteracaoNasDatasDeAdmissaoEDeDesligamento;
+          indContr := tpSim;
+          dtAdmOrig := Now;
+          indReint := snfNao;
+          indCateg := tpNao;
+          indNatAtiv := tpSim;
+          indMotDeslig := tpNao;
+          indUnic := snfSim;
+          matricula := '3515209';
+          codCateg := 101;
+          dtInicio := Now;
+
+          with infoCompl do
+          begin
+            codCBO := '012345';
+            natAtividade := navUrbano;
+
+            with remuneracao.New do
+            begin
+              dtRemun := Now - 3250;
+              vrSalFx := 3280.25;
+              undSalFixo := sfPorMes;
+              dscSalVar := 'Descrição do salário se for por tarefa ou não aplicável';
+            end;
+
+            with infoVinc do
+            begin
+              tpRegTrab := trCLT;
+              tpRegPrev := rpRGPS;
+              dtAdm := Now - 4000;
+              tmpParc := tpNaoeTempoParcial;
+
+              with duracao do
+              begin
+                tpContr := PrazoDeterminado;
+                dtTerm := Now + 365;
+                clauAssec := tpNao;
+                objDet := 'Descrever o objeto determinante para o prazo determinado';
+              end;
+
+              with observacoes.New do
+                observacao := 'Observação 1';
+
+              with observacoes.New do
+                observacao := 'Observação 2';
+
+              with sucessaoVinc do
+              begin
+                tpInsc := tiCNPJ;
+                nrInsc := '01234567890123';
+                matricAnt := '338560-22';
+                dtTransf := Now - 3200;
+              end;
+
+              with infoDeslig do
+              begin
+                dtDeslig := Now + 365;
+                mtvDeslig := '99';
+                dtProjFimAPI := Now + 395;
+              end;
+            end;
+
+            with infoTerm do
+            begin
+              dtTerm := Now + 365;
+              mtvDesligTSV := '01';
+            end;
+          end;
+
+          with mudCategAtiv.New do
+          begin
+            codCateg := 101;
+            natAtividade := navUrbano;
+            dtMudCategAtiv := Now + 165;
+          end;
+
+          with unicContr.New do
+          begin
+            matUnic := '3657829-001';
+            codCateg := 101;
+            dtInicio := Now;
+          end;
+
+          with ideEstab do
+          begin
+            tpInsc := tiCNPJ;
+            nrInsc := '01234567890123';
+
+            with infoVlr do
+            begin
+              compIni := '2012-07';
+              compFim := '2022-05';
+              repercProc := repDecisaoComPagamentoDeVerbasDeNaturezaRemuneratoria;
+              vrRemun := 6785.22;
+              vrAPI := 6785.22;
+              vr13API := 2252.32;
+              vrInden := 3250.55;
+              vrBaseIndenFGTS := 6785.22;
+              pagDiretoResc := snfNao;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmACBreSocial.GerareSocial2501;
+begin
+  if VersaoDFx < veS01_01_00 then
+    exit;
+
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2501.New do
+  begin
+    with evtContProc do
+    begin
+      sequencial := 0;
+
+      with ideEvento do
+      begin
+        indRetif := ireOriginal;
+        // nrRecibo := '1.2.0000000000000000000';
+        procEmi := peAplicEmpregador;
+        verProc := '1.0';
+      end;
+
+      with ideEmpregador do
+      begin
+        tpInsc := tiCNPJ;
+        nrInsc := edtIdEmpregador.Text;
+      end;
+
+      with ideProc do
+      begin
+        nrProcTrab := '012345678901234';
+        perApurPgto := '2022-09';
+        obs := 'Qualquer observação necessária';
+      end;
+
+      with ideTrab.New do
+      begin
+        cpfTrab := '01234567890';
+
+        with calcTrib.New do
+        begin
+          perRef := '2022-08';
+          vrBcCpMensal := 1212;
+          vrBcCp13 := 1212;
+
+          with infoCRContrib.New do
+          begin
+            tpCR := '113851';
+            vrCR := 242.40;
+          end;
+        end;
+
+        with infoCRIRRF.New do
+        begin
+          tpCR := '593656';
+          vrCR := 76;
+
+          with infoIR.New do
+          begin
+            vrRendTrib := 3875.22;
+            vrRendTrib13 := 976.40;
+            vrRendMoleGrave := 2856.32;
+            vrRendIsen65 := 1525.32;
+            vrJurosMora := 32.00;
+            vrRendIsenNTrib := 3284.33;
+            descIsenNTrib := 'Descrição de isento ou não tributável';
+            vrPrevOficial := 685.22;
+          end;
+
+          with infoRRA do
+          begin
+            descRRA := 'Descrição dos rendimentos acumulados';
+            qtdMesesRRA := 15.5;
+
+            with despProcJud do
+            begin
+              vlrDespCustas := 1500.85;
+              vlrDespAdvogados := 685.95;
+            end;
+
+            with ideAdv.New do
+            begin
+              tpInsc := tiCPF;
+              nrInsc := '12345678901';
+              vlrAdv := 685.95;
+            end;
+          end;
+
+          with dedDepen.New do
+          begin
+            tpRend := 11;
+            cpfDep := '12345678901';
+            vlrDeducao := 294;
+          end;
+
+          with penAlim.New do
+          begin
+            tpRend := 11;
+            cpfDep := '12345678901';
+            vlrPensao := 1865.45;
+          end;
+
+          with infoProcRet.New do
+          begin
+            tpProcRet := tpprAdministrativo;
+            nrProcRet := '12345678901234567';
+            codSusp := '1234567890';
+
+            with infoValores.New do
+            begin
+              indApuracao := iapuMensal;
+              vlrNRetido := 4987.22;
+              vlrDepJud := 908.32;
+              vlrCmpAnoCal := 325.99;
+              vlrCmpAnoAnt := 295.00;
+              vlrRendSusp := 988.24;
+
+              with dedSusp.New do
+              begin
+                indTpDeducao := tpdtPrevidenciaOficial;
+                vlrDedSusp := 654.99;
+
+                with benefPen.New do
+                begin
+                  cpfDep := '12345678901';
+                  vlrDepenSusp := 185.65;
+                end;
+              end;
+            end;
+          end;
+        end;
+
+        with infoIRComplem do
+        begin
+          dtLaudo := Date;
+
+          with infoDep.New do
+          begin
+            cpfDep := '12345678901';
+            dtNascto := Date;
+            nome := 'Maria Antonieta da Silva e Souza';
+            depIRRF := snfSim;
+            tpDep := tdConjuge;
+            descrDep := 'Alguma descrição do dependente';
+          end;
+        end;
       end;
     end;
   end;
@@ -6039,6 +6370,10 @@ begin
     GerareSocial2418;
   if (cbS2420.Checked) then
     GerareSocial2420;
+  if (cbS2500.Checked) then
+    GerareSocial2500;
+  if (cbS2501.Checked) then
+    GerareSocial2501;
   if (cbS3000.Checked) then
     GerareSocial3000;
 end;

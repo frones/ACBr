@@ -5321,6 +5321,23 @@ object Form1: TForm1
                       Caption = 'E-mail'
                       ParentColor = False
                     end
+                    object sbSicrediAcharChavePrivada2: TSpeedButton
+                      Left = 673
+                      Height = 23
+                      Top = 37
+                      Width = 24
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Images = ImageList1
+                      ImageIndex = 9
+                      OnClick = sbSicrediAcharChavePrivadaClick
+                      ShowHint = True
+                      ParentFont = False
+                      ParentShowHint = False
+                    end
                   end
                 end
               end

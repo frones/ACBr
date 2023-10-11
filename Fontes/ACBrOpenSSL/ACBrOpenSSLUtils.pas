@@ -133,6 +133,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure Clear;
 
     function CalcHashFromStream(AStream: TStream; Algorithm: TACBrOpenSSLAlgorithm;
       OutputType: TACBrOpenSSLStrType = sttHexa; Sign: Boolean = False): AnsiString;
@@ -709,9 +710,14 @@ end;
 
 destructor TACBrOpenSSLUtils.Destroy;
 begin
+  Clear;
+  inherited Destroy;
+end;
+
+procedure TACBrOpenSSLUtils.Clear;
+begin
   FreeCert;
   FreeKeys;
-  inherited Destroy;
 end;
 
 function TACBrOpenSSLUtils.CalcHashFromStream(AStream: TStream; Algorithm: TACBrOpenSSLAlgorithm;

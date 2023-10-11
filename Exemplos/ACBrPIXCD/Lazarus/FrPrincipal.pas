@@ -727,6 +727,7 @@ type
     sbPagSeguroAcharArqCertificado: TSpeedButton;
     sbSicrediAcharChavePrivada: TSpeedButton;
     sbPagSeguroAcharChavePrivada: TSpeedButton;
+    sbSicrediAcharChavePrivada2: TSpeedButton;
     sbVerSenhaProxy: TSpeedButton;
     seCobrancaExpiracao: TSpinEdit;
     seConsultarCobrancaImediata_Revisao: TSpinEdit;
@@ -1333,7 +1334,11 @@ procedure TForm1.sbSicrediAcharChavePrivadaClick(Sender: TObject);
 begin
   OpenDialog1.FileName := edSicrediArqChavePrivada.Text;
   if OpenDialog1.Execute then
+  begin
     edSicrediArqChavePrivada.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+    edSicrediGerarChavePrivada.Text := edSicrediArqChavePrivada.Text;
+    mmSicrediGerarChavePrivada.Lines.LoadFromFile(OpenDialog1.FileName);
+  end;
   ValidarChavePSPSicredi;
 end;
 
@@ -2564,6 +2569,7 @@ begin
     Exit;
   end;
 
+  ACBrOpenSSLUtils1.Clear;
   ACBrOpenSSLUtils1.LoadPrivateKeyFromString(mmSicrediGerarChavePrivada.Text);
   wCertificado := ACBrOpenSSLUtils1.CreateCertificateSignRequest(
                     'api-pix-' + OnlyAlphaNum(TiraAcentos(edtRecebedorNome.Text)),

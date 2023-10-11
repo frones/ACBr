@@ -1050,9 +1050,9 @@
       <xs:documentation>
         Tributação do ISSQN sobre o serviço prestado:
         1 - Operação tributável;
-        2 - Exportação de serviço;
-        3 - Não Incidência;
-        4 - Imunidade;
+        2 - Imunidade;
+        3 - Exportação de serviço;
+        4 - Não Incidência;
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">

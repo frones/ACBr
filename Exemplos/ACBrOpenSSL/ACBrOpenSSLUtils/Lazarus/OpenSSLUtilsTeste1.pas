@@ -36,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Buttons, Menus, ComCtrls, ACBrOpenSSLUtils;
+  Buttons, Menus, ComCtrls, ACBrOpenSSLUtils, OpenSSLExt;
 
 type
 
@@ -60,6 +60,7 @@ type
      btLerPrivKey : TBitBtn ;
      btGravarPrivKey : TBitBtn ;
      btVersao : TButton ;
+     btCryptDecrypt: TButton;
      cbxDgst : TComboBox ;
      cbxOut: TComboBox;
      edArqPrivKey : TEdit ;
@@ -101,6 +102,7 @@ type
      procedure btCalcModExpClick(Sender : TObject) ;
      procedure btProcurarArqEntradaClick(Sender : TObject) ;
      procedure btVersaoClick(Sender : TObject) ;
+     procedure btCryptDecryptClick(Sender: TObject);
      procedure FormCreate(Sender : TObject) ;
      procedure FormShow(Sender: TObject);
   private
@@ -116,7 +118,7 @@ implementation
 
 Uses
   dateutils, TypInfo,
-  ACBrUtil;
+  ACBrUtil, synautil, synacode;
 
 {$R *.lfm}
 
@@ -230,6 +232,25 @@ begin
    mResp.Lines.Add('------------------------------');
 end;
 
+procedure TForm1.btCryptDecryptClick(Sender: TObject);
+var
+  s: AnsiString;
+begin
+  s := '=== PROJETO ACBR, TESTE 123 ===';
+  mResp.Lines.Add('String de teste');
+  mResp.Lines.Add(s);
+
+  mResp.Lines.Add('');
+  mResp.Lines.Add('Criptografando a String com Chave Publica (SHA256, PKCS1_OAEP_PADDING, resultado em Hexa)');
+  s := ACBrOpenSSLUtils1.PublicEncryptFromString(s, algSHA256);
+  mResp.Lines.Add(ConvertToStrType(s, sttHexa));
+
+  mResp.Lines.Add('');
+  mResp.Lines.Add('Descriptografando a String acima, com a Chave Privada');
+  s := ACBrOpenSSLUtils1.PrivateDecryptFromString(s, algSHA256);
+  mResp.Lines.Add(s);
+end;
+
 procedure TForm1.ACBrOpenSSLUtils1NeedCredentials(
   const CredentialNeeded: TACBrOpenSSLCredential);
 begin
@@ -329,7 +350,7 @@ begin
 
   ACBrOpenSSLUtils1.LoadPublicKeyFromModulusAndExponent(Modu, Expo);
 
-  Chave := ChangeLineBreak( ACBrOpenSSLUtils1.PublicKeyAsStr, sLineBreak);
+  Chave := ChangeLineBreak( ACBrOpenSSLUtils1.PublicKeyAsString, sLineBreak);
   mResp.Lines.Add('Chave Pública Calculada:');
   mResp.Lines.Add( Chave );
   mResp.Lines.Add('------------------------------');
@@ -352,8 +373,8 @@ begin
          exit ;
 
      ACBrOpenSSLUtils1.LoadPFXFromFile(OpenDialog1.FileName, Senha);
-     mPrivKey.Lines.Text := ACBrOpenSSLUtils1.PrivateKeyAsStr;
-     mPubKey.Lines.Text  := ACBrOpenSSLUtils1.PublicKeyAsStr;
+     mPrivKey.Lines.Text := ACBrOpenSSLUtils1.PrivateKeyAsString;
+     mPubKey.Lines.Text  := ACBrOpenSSLUtils1.PublicKeyAsString;
    end ;
 end;
 

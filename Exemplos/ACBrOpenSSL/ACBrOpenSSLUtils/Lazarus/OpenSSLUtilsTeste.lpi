@@ -71,7 +71,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="57">
+    <Units Count="39">
       <Unit0>
         <Filename Value="OpenSSLUtilsTeste.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -86,8 +86,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="258"/>
-        <CursorPos X="3" Y="262"/>
+        <TopLine Value="234"/>
+        <CursorPos X="90" Y="244"/>
         <UsageCount Value="230"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -96,15 +96,9 @@
         <Filename Value="..\..\Fontes\ACBrComum\ACBrEAD.pas"/>
         <TopLine Value="40"/>
         <CursorPos Y="49"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="7"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\..\Fontes\ACBrDiversos\ACBrValidador.pas"/>
-        <TopLine Value="234"/>
-        <CursorPos X="3" Y="236"/>
-        <UsageCount Value="2"/>
-      </Unit3>
-      <Unit4>
         <Filename Value="..\..\..\..\..\Lazarus\TESTE\libeay32\unit1.pas"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -112,38 +106,19 @@
         <UnitName Value="Unit1"/>
         <TopLine Value="159"/>
         <CursorPos X="15" Y="177"/>
-        <UsageCount Value="26"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="C:\lazarus\fpc\2.5.1\source\packages\openssl\src\openssl.pas"/>
-        <UnitName Value="OpenSSL"/>
-        <TopLine Value="521"/>
-        <CursorPos X="37" Y="534"/>
-        <UsageCount Value="2"/>
-      </Unit5>
-      <Unit6>
+        <UsageCount Value="7"/>
+      </Unit3>
+      <Unit4>
         <Filename Value="..\..\Fontes\ACBrComum\libeay32.pas"/>
         <TopLine Value="792"/>
         <CursorPos X="10" Y="804"/>
-        <UsageCount Value="24"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <TopLine Value="1601"/>
-        <CursorPos X="3" Y="1607"/>
-        <UsageCount Value="3"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="..\..\Fontes\ACBrComum\OpenSSLUtils.pas"/>
-        <TopLine Value="690"/>
-        <CursorPos X="22" Y="673"/>
-        <UsageCount Value="0"/>
-      </Unit8>
-      <Unit9>
+        <UsageCount Value="5"/>
+      </Unit4>
+      <Unit5>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrEAD.pas"/>
         <TopLine Value="830"/>
         <CursorPos X="47" Y="834"/>
-        <UsageCount Value="90"/>
+        <UsageCount Value="71"/>
         <Bookmarks Count="5">
           <Item0 Y="905" ID="4"/>
           <Item1 X="34" Y="986" ID="6"/>
@@ -151,456 +126,370 @@
           <Item3 X="27" Y="1089" ID="1"/>
           <Item4 X="12" Y="858" ID="2"/>
         </Bookmarks>
-      </Unit9>
-      <Unit10>
+      </Unit5>
+      <Unit6>
         <Filename Value="..\..\..\Fontes\ACBrComum\libeay32.pas"/>
         <TopLine Value="949"/>
         <CursorPos X="17" Y="971"/>
-        <UsageCount Value="89"/>
-      </Unit10>
-      <Unit11>
+        <UsageCount Value="70"/>
+      </Unit6>
+      <Unit7>
         <Filename Value="..\..\..\Fontes\ACBrComum\OpenSSL.pas"/>
         <TopLine Value="2175"/>
         <CursorPos Y="2186"/>
-        <UsageCount Value="89"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <TopLine Value="1019"/>
-        <CursorPos X="9" Y="1042"/>
-        <UsageCount Value="5"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrComum-change-log.txt"/>
-        <TopLine Value="60"/>
-        <CursorPos X="44" Y="74"/>
-        <UsageCount Value="11"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="..\..\..\Fontes\synalist\ssl_openssl.pas"/>
-        <TopLine Value="124"/>
-        <CursorPos X="66" Y="135"/>
-        <UsageCount Value="8"/>
-      </Unit14>
-      <Unit15>
-        <Filename Value="..\..\..\Fontes\synalist\ssl_openssl_lib.pas"/>
-        <TopLine Value="852"/>
-        <CursorPos X="13" Y="874"/>
-        <UsageCount Value="8"/>
-      </Unit15>
-      <Unit16>
-        <Filename Value="..\..\..\Fontes\ACBrComum\OpenSSLExt.pas"/>
-        <TopLine Value="403"/>
-        <CursorPos X="36" Y="419"/>
-        <UsageCount Value="8"/>
-      </Unit16>
-      <Unit17>
-        <Filename Value="..\..\..\Fontes\synalist\synacode.pas"/>
-        <TopLine Value="643"/>
-        <CursorPos X="62" Y="653"/>
-        <UsageCount Value="8"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="C:\lazarus\fpc\2.6.4\source\rtl\inc\systemh.inc"/>
-        <TopLine Value="395"/>
-        <CursorPos X="3" Y="411"/>
-        <UsageCount Value="8"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="C:\lazarus\fpc\2.6.4\source\rtl\objpas\classes\classesh.inc"/>
-        <TopLine Value="854"/>
-        <CursorPos X="15" Y="870"/>
-        <UsageCount Value="5"/>
-      </Unit19>
-      <Unit20>
-        <Filename Value="C:\lazarus\fpc\2.6.4\source\rtl\objpas\classes\streams.inc"/>
-        <TopLine Value="444"/>
-        <CursorPos X="30" Y="455"/>
-        <UsageCount Value="5"/>
-      </Unit20>
-      <Unit21>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECF.pas"/>
-        <TopLine Value="6763"/>
-        <CursorPos X="21" Y="6789"/>
-        <UsageCount Value="1"/>
-      </Unit21>
-      <Unit22>
+        <UsageCount Value="70"/>
+      </Unit7>
+      <Unit8>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrEAD.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="710"/>
-        <CursorPos X="29" Y="718"/>
-        <UsageCount Value="61"/>
+        <TopLine Value="465"/>
+        <CursorPos X="77" Y="488"/>
+        <UsageCount Value="42"/>
         <Bookmarks Count="2">
           <Item0 X="3" Y="1385" ID="3"/>
           <Item1 Y="863" ID="7"/>
         </Bookmarks>
-      </Unit22>
-      <Unit23>
+      </Unit8>
+      <Unit9>
         <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\ssl_openssl.pas"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="252"/>
-        <CursorPos Y="275"/>
-        <UsageCount Value="95"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="149"/>
+        <UsageCount Value="109"/>
         <Loaded Value="True"/>
-      </Unit23>
-      <Unit24>
+      </Unit9>
+      <Unit10>
         <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\synautil.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="1783"/>
-        <CursorPos Y="1790"/>
-        <UsageCount Value="51"/>
-      </Unit24>
-      <Unit25>
+        <TopLine Value="1805"/>
+        <CursorPos X="65" Y="1812"/>
+        <UsageCount Value="38"/>
+      </Unit10>
+      <Unit11>
         <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\ssl_openssl_lib.pas"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="811"/>
-        <CursorPos X="12" Y="832"/>
-        <UsageCount Value="92"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="1842"/>
+        <CursorPos X="76" Y="1855"/>
+        <UsageCount Value="106"/>
         <Loaded Value="True"/>
-      </Unit25>
-      <Unit26>
+      </Unit11>
+      <Unit12>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSL-change-log.txt"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="28"/>
-        <CursorPos X="123" Y="60"/>
-        <UsageCount Value="51"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="32"/>
+        <CursorPos X="3" Y="67"/>
+        <UsageCount Value="32"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
-      </Unit26>
-      <Unit27>
+      </Unit12>
+      <Unit13>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\libeay32.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1250"/>
         <CursorPos X="22" Y="1273"/>
-        <UsageCount Value="42"/>
-      </Unit27>
-      <Unit28>
+        <UsageCount Value="23"/>
+      </Unit13>
+      <Unit14>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="5390"/>
-        <CursorPos Y="5410"/>
-        <UsageCount Value="94"/>
-        <Bookmarks Count="2">
-          <Item0 Y="262" ID="1"/>
-          <Item1 X="8" Y="286" ID="2"/>
+        <TopLine Value="1439"/>
+        <CursorPos X="60" Y="1452"/>
+        <UsageCount Value="108"/>
+        <Bookmarks Count="1">
+          <Item0 X="12" Y="1451" ID="7"/>
         </Bookmarks>
         <Loaded Value="True"/>
-      </Unit28>
-      <Unit29>
-        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\openssl\src\openssl.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="857"/>
-        <CursorPos X="30" Y="875"/>
-        <UsageCount Value="7"/>
-      </Unit29>
-      <Unit30>
-        <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\objpas.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="23"/>
-        <CursorPos X="8" Y="35"/>
-        <UsageCount Value="7"/>
-      </Unit30>
-      <Unit31>
+      </Unit14>
+      <Unit15>
         <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="419"/>
         <CursorPos Y="451"/>
-        <UsageCount Value="39"/>
-      </Unit31>
-      <Unit32>
+        <UsageCount Value="20"/>
+      </Unit15>
+      <Unit16>
         <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\synacode.pas"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="33"/>
-      </Unit32>
-      <Unit33>
+        <UsageCount Value="14"/>
+      </Unit16>
+      <Unit17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="27"/>
-        <CursorPos X="35" Y="60"/>
-        <UsageCount Value="72"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="365"/>
+        <CursorPos X="59" Y="380"/>
+        <UsageCount Value="116"/>
         <Loaded Value="True"/>
-      </Unit33>
-      <Unit34>
+      </Unit17>
+      <Unit18>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrEscBematech.pas"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="20"/>
-      </Unit34>
-      <Unit35>
-        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32memostrings.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="39"/>
-        <CursorPos Y="58"/>
-        <UsageCount Value="18"/>
-      </Unit35>
-      <Unit36>
-        <Filename Value="C:\lazarus\fpc\3.0.2\source\packages\rtl-objpas\src\inc\strutils.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="185"/>
-        <CursorPos X="10" Y="203"/>
         <UsageCount Value="1"/>
-      </Unit36>
-      <Unit37>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeWinCrypt.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="296"/>
-        <CursorPos Y="328"/>
-        <UsageCount Value="13"/>
-      </Unit37>
-      <Unit38>
-        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\sysutils\sysstrh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="93"/>
-        <CursorPos X="10" Y="111"/>
-        <UsageCount Value="3"/>
-      </Unit38>
-      <Unit39>
-        <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrComum-change-log.txt"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="22"/>
-        <CursorPos Y="42"/>
-        <UsageCount Value="6"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit39>
-      <Unit40>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrDISSmakTecladoLib.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="47"/>
-        <CursorPos X="91" Y="74"/>
-        <UsageCount Value="3"/>
-      </Unit40>
-      <Unit41>
+      </Unit18>
+      <Unit19>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="915"/>
-        <CursorPos X="44" Y="934"/>
-        <UsageCount Value="56"/>
+        <TopLine Value="147"/>
+        <CursorPos X="59" Y="167"/>
+        <UsageCount Value="115"/>
+        <Bookmarks Count="2">
+          <Item0 Y="1106" ID="2"/>
+          <Item1 X="3" Y="1056" ID="1"/>
+        </Bookmarks>
         <Loaded Value="True"/>
-      </Unit41>
-      <Unit42>
-        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\objpas.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="142"/>
-        <CursorPos X="13" Y="159"/>
-        <UsageCount Value="2"/>
-      </Unit42>
-      <Unit43>
+      </Unit19>
+      <Unit20>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\inc\systemh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="91"/>
-        <CursorPos X="3" Y="109"/>
-        <UsageCount Value="3"/>
-      </Unit43>
-      <Unit44>
-        <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\blcksock.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1361"/>
-        <CursorPos X="82" Y="1379"/>
-        <UsageCount Value="13"/>
-      </Unit44>
-      <Unit45>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="79"/>
-        <CursorPos X="14" Y="94"/>
-        <UsageCount Value="4"/>
-      </Unit45>
-      <Unit46>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeHttpOpenSSL.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="169"/>
-        <CursorPos X="3" Y="144"/>
-        <UsageCount Value="4"/>
-      </Unit46>
-      <Unit47>
-        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysstrh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="103"/>
-        <CursorPos X="10" Y="120"/>
-        <UsageCount Value="5"/>
-      </Unit47>
-      <Unit48>
-        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\inc\ctypes.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="62"/>
-        <CursorPos X="3" Y="81"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="329"/>
+        <CursorPos X="3" Y="344"/>
         <UsageCount Value="12"/>
-      </Unit48>
-      <Unit49>
-        <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\synafpc.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="150"/>
-        <CursorPos X="3" Y="152"/>
-        <UsageCount Value="10"/>
-      </Unit49>
-      <Unit50>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFe.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="4"/>
-      </Unit50>
-      <Unit51>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="868"/>
-        <CursorPos Y="897"/>
-        <UsageCount Value="4"/>
-      </Unit51>
-      <Unit52>
-        <Filename Value="..\..\..\ACBrSAT\Lazarus\unit1.pas"/>
-        <UnitName Value="Unit1"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="388"/>
-        <CursorPos Y="403"/>
-        <UsageCount Value="4"/>
-      </Unit52>
-      <Unit53>
+        <Loaded Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="72"/>
+        <CursorPos X="15" Y="88"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\inc\ctypes.pp"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="77"/>
+        <CursorPos X="3" Y="92"/>
+        <UsageCount Value="35"/>
+        <Loaded Value="True"/>
+      </Unit22>
+      <Unit23>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLReg.pas"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="24"/>
         <CursorPos X="71" Y="47"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="114"/>
         <Loaded Value="True"/>
-      </Unit53>
-      <Unit54>
-        <Filename Value="OpenSSLUtilsTeste1.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="785"/>
-        <CursorPos Y="822"/>
-        <UsageCount Value="4"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit54>
-      <Unit55>
+      </Unit23>
+      <Unit24>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\syswideh.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="10" Y="35"/>
-        <UsageCount Value="8"/>
-      </Unit55>
-      <Unit56>
-        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\syswide.inc"/>
+        <UsageCount Value="10"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\openssl\src\openssl.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="166"/>
-        <CursorPos X="3" Y="172"/>
-        <UsageCount Value="11"/>
-      </Unit56>
+        <TopLine Value="149"/>
+        <CursorPos X="37" Y="89"/>
+        <UsageCount Value="85"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\win\wininc\base.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="191"/>
+        <CursorPos X="6" Y="210"/>
+        <UsageCount Value="10"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\classes\classesh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="928"/>
+        <CursorPos X="14" Y="950"/>
+        <UsageCount Value="10"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\classes\streams.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="22"/>
+        <CursorPos X="3" Y="35"/>
+        <UsageCount Value="10"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysutilh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="92"/>
+        <CursorPos X="19" Y="113"/>
+        <UsageCount Value="10"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeWinCrypt.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1321"/>
+        <CursorPos X="35" Y="1342"/>
+        <UsageCount Value="10"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="..\..\..\..\Fontes\Terceiros\CodeGear\ACBr_WinCrypt.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="325"/>
+        <UsageCount Value="5"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrUtil.Strings.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1572"/>
+        <CursorPos Y="1598"/>
+        <UsageCount Value="36"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrUtil.Math.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="480"/>
+        <CursorPos Y="496"/>
+        <UsageCount Value="5"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\ssl_openssl11.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="127"/>
+        <UsageCount Value="10"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\ssl_openssl11_lib.pas"/>
+        <EditorIndex Value="11"/>
+        <TopLine Value="102"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\Nova pasta\ssl_openssl_lib.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="145"/>
+        <CursorPos X="109" Y="172"/>
+        <UsageCount Value="10"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\inc\dynlibs.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="27"/>
+        <CursorPos X="10" Y="43"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\objpas.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="19"/>
+        <CursorPos X="8" Y="35"/>
+        <UsageCount Value="10"/>
+      </Unit38>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="30" HistoryIndex="28">
       <Position1>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5399" Column="26" TopLine="5367"/>
+        <Caret Line="5303" TopLine="5282"/>
       </Position1>
       <Position2>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5905" Column="26" TopLine="5873"/>
+        <Caret Line="5305" TopLine="5282"/>
       </Position2>
       <Position3>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
-        <Caret Line="942" Column="20" TopLine="925"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
+        <Caret Line="5541" Column="87" TopLine="5532"/>
       </Position3>
       <Position4>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="1246" Column="39" TopLine="1223"/>
       </Position4>
       <Position5>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="1218" Column="39" TopLine="1202"/>
+        <Caret Line="1964" Column="21" TopLine="1932"/>
       </Position5>
       <Position6>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="2783" TopLine="2772"/>
       </Position6>
       <Position7>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="1246" Column="13" TopLine="1219"/>
+        <Caret Line="1457" Column="32" TopLine="1426"/>
       </Position7>
       <Position8>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="3254" Column="19" TopLine="3233"/>
+        <Caret Line="4114" TopLine="4109"/>
       </Position8>
       <Position9>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="2026" Column="14" TopLine="2005"/>
+        <Caret Line="1457" Column="12" TopLine="1437"/>
       </Position9>
       <Position10>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="3247" Column="49" TopLine="3215"/>
+        <Caret Line="4101" TopLine="4090"/>
       </Position10>
       <Position11>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
+        <Caret Line="1451" Column="12" TopLine="1431"/>
       </Position11>
       <Position12>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="2026" Column="16" TopLine="1994"/>
+        <Caret Line="4101" Column="3" TopLine="4090"/>
       </Position12>
       <Position13>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="3247" Column="49" TopLine="3215"/>
+        <Caret Line="1452" Column="12" TopLine="1431"/>
       </Position13>
       <Position14>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="3248" Column="28" TopLine="3216"/>
+        <Caret Line="4111" Column="3" TopLine="4105"/>
       </Position14>
       <Position15>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5259" Column="3" TopLine="5227"/>
+        <Caret Line="1453" Column="12" TopLine="1433"/>
       </Position15>
       <Position16>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5746" Column="24" TopLine="5713"/>
+        <Caret Line="4120" Column="3" TopLine="4111"/>
       </Position16>
       <Position17>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
-        <Caret Line="975" Column="18" TopLine="946"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
+        <Caret Line="1456" Column="12" TopLine="1434"/>
       </Position17>
       <Position18>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5235" TopLine="5215"/>
+        <Caret Line="4131" Column="3" TopLine="4129"/>
       </Position18>
       <Position19>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5236" TopLine="5215"/>
+        <Caret Line="1455" Column="12" TopLine="1436"/>
       </Position19>
       <Position20>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5237" TopLine="5218"/>
+        <Caret Line="4137" Column="3" TopLine="4123"/>
       </Position20>
       <Position21>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5259" TopLine="5240"/>
+        <Caret Line="1458" Column="12" TopLine="1437"/>
       </Position21>
       <Position22>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5260" TopLine="5240"/>
+        <Caret Line="4154" Column="3" TopLine="4143"/>
       </Position22>
       <Position23>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5261" TopLine="5240"/>
+        <Filename Value="OpenSSLUtilsTeste1.pas"/>
+        <Caret Line="267" Column="18" TopLine="413"/>
       </Position23>
       <Position24>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5262" TopLine="5240"/>
+        <Filename Value="OpenSSLUtilsTeste1.pas"/>
+        <Caret Line="266" Column="8" TopLine="239"/>
       </Position24>
       <Position25>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5409" TopLine="5390"/>
+        <Filename Value="OpenSSLUtilsTeste1.pas"/>
+        <Caret Line="255" Column="49" TopLine="235"/>
       </Position25>
       <Position26>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
-        <Caret Line="5410" TopLine="5390"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
+        <Caret Line="1039" Column="89" TopLine="1028"/>
       </Position26>
       <Position27>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
-        <Caret Line="969" TopLine="946"/>
+        <Filename Value="OpenSSLUtilsTeste1.pas"/>
+        <Caret Line="52" Column="46" TopLine="40"/>
       </Position27>
       <Position28>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
-        <Caret Line="970" TopLine="946"/>
+        <Filename Value="OpenSSLUtilsTeste1.pas"/>
+        <Caret Line="250" Column="55" TopLine="237"/>
       </Position28>
       <Position29>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
-        <Caret Line="961" Column="10" TopLine="940"/>
+        <Filename Value="OpenSSLUtilsTeste1.pas"/>
+        <Caret Line="244" Column="71" TopLine="234"/>
       </Position29>
       <Position30>
-        <Filename Value="OpenSSLUtilsTeste1.pas"/>
-        <Caret Line="275" Column="19" TopLine="258"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
+        <Caret Line="167" Column="59" TopLine="147"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -616,6 +505,7 @@
     </SearchPaths>
     <Linking>
       <Debugging>
+        <DebugInfoType Value="dsDwarf2"/>
         <UseHeaptrc Value="True"/>
       </Debugging>
       <Options>
@@ -626,7 +516,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="2">
+    <BreakPoints Count="4">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
@@ -641,6 +531,20 @@
         <Source Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas"/>
         <Line Value="553"/>
       </Item2>
+      <Item3>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
+        <Line Value="1681"/>
+      </Item3>
+      <Item4>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
+        <Line Value="630"/>
+      </Item4>
     </BreakPoints>
     <Exceptions Count="5">
       <Item1>

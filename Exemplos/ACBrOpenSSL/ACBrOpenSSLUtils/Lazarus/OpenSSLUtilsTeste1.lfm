@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 484
+  Left = 601
   Height = 537
-  Top = 186
+  Top = 232
   Width = 912
   ActiveControl = mPrivKey
   Caption = 'OpenSSLUtils Teste'
@@ -10,7 +10,7 @@ object Form1: TForm1
   Font.Height = -11
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '2.2.4.0'
   object gbPrivKey: TGroupBox
     Left = 0
     Height = 154
@@ -141,6 +141,7 @@ object Form1: TForm1
       Top = 12
       Width = 43
       Caption = 'Arquivo:'
+      ParentColor = False
     end
     object btGravarPrivKey: TBitBtn
       Left = 634
@@ -332,6 +333,7 @@ object Form1: TForm1
       Top = 12
       Width = 32
       Caption = 'Senha'
+      ParentColor = False
     end
     object edSenha: TEdit
       Left = 48
@@ -474,6 +476,7 @@ object Form1: TForm1
       Top = 8
       Width = 43
       Caption = 'Arquivo:'
+      ParentColor = False
     end
     object btGravarPubKey: TBitBtn
       Left = 663
@@ -684,12 +687,13 @@ object Form1: TForm1
       Top = 8
       Width = 43
       Caption = 'Arquivo:'
+      ParentColor = False
     end
     object btCalcMD5: TBitBtn
       AnchorSideRight.Side = asrBottom
       Left = 368
       Height = 26
-      Top = 38
+      Top = 37
       Width = 144
       Caption = 'Calcular Hash'
       Glyph.Data = {
@@ -751,9 +755,9 @@ object Form1: TForm1
       TabOrder = 3
     end
     object btAssinar: TBitBtn
-      Left = 528
+      Left = 520
       Height = 26
-      Top = 38
+      Top = 37
       Width = 144
       AutoSize = True
       Caption = 'Calcular Assinatura'
@@ -811,6 +815,7 @@ object Form1: TForm1
       Top = 27
       Width = 54
       Caption = 'Algoritimo'
+      ParentColor = False
     end
     object Label3: TLabel
       Left = 248
@@ -818,11 +823,12 @@ object Form1: TForm1
       Top = 27
       Width = 28
       Caption = 'Saída'
+      ParentColor = False
     end
     object btGerarCSR: TBitBtn
-      Left = 696
+      Left = 680
       Height = 26
-      Top = 38
+      Top = 37
       Width = 97
       AutoSize = True
       Caption = 'Gerar CSR'
@@ -864,6 +870,15 @@ object Form1: TForm1
       }
       OnClick = btGerarCSRClick
       TabOrder = 7
+    end
+    object btCryptDecrypt: TButton
+      Left = 784
+      Height = 25
+      Top = 37
+      Width = 111
+      Caption = 'Encrypt / Decrypt'
+      OnClick = btCryptDecryptClick
+      TabOrder = 8
     end
   end
   object GroupBox1: TGroupBox

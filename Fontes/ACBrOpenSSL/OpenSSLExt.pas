@@ -182,6 +182,38 @@ const
   SHA_DIGEST_LENGTH     = 20;
   EVP_PKEY_HMAC         = 855;  // Tz HMAC
 
+  EVP_PKEY_RSA = 6;
+  EVP_PKEY_ALG_CTRL = 4096;
+  EVP_PKEY_CTRL_RSA_PADDING  = (EVP_PKEY_ALG_CTRL + 1);
+  EVP_PKEY_CTRL_RSA_PSS_SALTLEN = (EVP_PKEY_ALG_CTRL + 2);
+  EVP_PKEY_CTRL_RSA_KEYGEN_BITS = (EVP_PKEY_ALG_CTRL + 3);
+  EVP_PKEY_CTRL_RSA_KEYGEN_PUBEXP = (EVP_PKEY_ALG_CTRL + 4);
+  EVP_PKEY_CTRL_RSA_MGF1_MD = (EVP_PKEY_ALG_CTRL + 5);
+  EVP_PKEY_CTRL_GET_RSA_PADDING = (EVP_PKEY_ALG_CTRL + 6);
+  EVP_PKEY_CTRL_GET_RSA_PSS_SALTLEN = (EVP_PKEY_ALG_CTRL + 7);
+  EVP_PKEY_CTRL_GET_RSA_MGF1_MD = (EVP_PKEY_ALG_CTRL + 8);
+  EVP_PKEY_CTRL_RSA_OAEP_MD = (EVP_PKEY_ALG_CTRL + 9);
+  EVP_PKEY_CTRL_RSA_OAEP_LABEL = (EVP_PKEY_ALG_CTRL + 10);
+  EVP_PKEY_CTRL_GET_RSA_OAEP_MD = (EVP_PKEY_ALG_CTRL + 11);
+  EVP_PKEY_CTRL_GET_RSA_OAEP_LABEL = (EVP_PKEY_ALG_CTRL + 12);
+  EVP_PKEY_CTRL_RSA_KEYGEN_PRIMES = (EVP_PKEY_ALG_CTRL + 13);
+
+  EVP_PKEY_OP_UNDEFINED = 0;
+  EVP_PKEY_OP_PARAMGEN = 2;       // (1<<1)
+  EVP_PKEY_OP_KEYGEN = 4;         // (1<<2)
+  EVP_PKEY_OP_SIGN = 8;           // (1<<3)
+  EVP_PKEY_OP_VERIFY = 16;        // (1<<4)
+  EVP_PKEY_OP_VERIFYRECOVER = 32; // (1<<5)
+  EVP_PKEY_OP_SIGNCTX = 64;       // (1<<6)
+  EVP_PKEY_OP_VERIFYCTX = 128;    // (1<<7)
+  EVP_PKEY_OP_ENCRYPT = 256;      // (1<<8)
+  EVP_PKEY_OP_DECRYPT = 512;      // (1<<9)
+  EVP_PKEY_OP_DERIVE = 1024;      // (1<<10)
+
+  EVP_PKEY_OP_TYPE_CRYPT = (EVP_PKEY_OP_ENCRYPT or EVP_PKEY_OP_DECRYPT);
+  EVP_PKEY_OP_TYPE_SIG = (EVP_PKEY_OP_SIGN or EVP_PKEY_OP_VERIFY or
+    EVP_PKEY_OP_VERIFYRECOVER or EVP_PKEY_OP_SIGNCTX or EVP_PKEY_OP_VERIFYCTX);
+
 type
   SslPtr = Pointer;
   PSslPtr = ^SslPtr;
@@ -943,13 +975,17 @@ const
 
   SSL_FILETYPE_ASN1 = 2;
   SSL_FILETYPE_PEM = 1;
-  EVP_PKEY_RSA = 6;
 
   // RSA
   RSA_PKCS1_PADDING      = 1;
   RSA_SSLV23_PADDING     = 2;
   RSA_NO_PADDING         = 3;
   RSA_PKCS1_OAEP_PADDING = 4;
+  RSA_X931_PADDING       = 5;
+  RSA_PKCS1_PSS_PADDING  = 6;
+  RSA_PKCS1_WITH_TLS_PADDING = 7;
+  RSA_PKCS1_NO_IMPLICIT_REJECT_PADDING = 8;
+  RSA_PKCS1_PADDING_SIZE = 11;
 
   // RSA key exponent
   RSA_3: longint = $3;
@@ -1332,6 +1368,7 @@ var
   function RSA_get0_n(const d :PRSA): PBIGNUM;
   function RSA_get0_e(const d :PRSA): PBIGNUM;
   function RSA_get_version(r :PRSA): cint;
+  function RSA_pkey_ctx_ctrl(ctx: PEVP_PKEY_CTX; optype: cint; cmd: cint; p1: cint; p2: Pointer): cint;
   //
   // RSA_memory_lock
 
@@ -1410,6 +1447,18 @@ var
   function EVP_MD_CTX_create: PEVP_MD_CTX;
   procedure EVP_MD_CTX_destroy(ctx: PEVP_MD_CTX);
   procedure EVP_MD_CTX_free(ctx: PEVP_MD_CTX);
+
+  function EVP_PKEY_CTX_new(pkey: PEVP_PKEY; e: PENGINE): PEVP_PKEY_CTX;
+  procedure EVP_PKEY_CTX_free(ctx: PEVP_PKEY_CTX);
+  function EVP_PKEY_CTX_ctrl(ctx: PEVP_PKEY_CTX; keytype: cint; optype: cint; cmd: cint; p1: cint; p2: Pointer): cint;
+  function EVP_PKEY_CTX_set_rsa_padding(ctx: PEVP_PKEY_CTX; pad: cint): cint;
+  function EVP_PKEY_CTX_set_rsa_oaep_md(ctx: PEVP_PKEY_CTX; const md: PEVP_MD): cint;
+  function EVP_PKEY_CTX_set_rsa_mgf1_md(ctx: PEVP_PKEY_CTX; const md: PEVP_MD): cint;
+  function EVP_PKEY_encrypt_init(ctx: PEVP_PKEY_CTX): cint;
+  function EVP_PKEY_encrypt(ctx: PEVP_PKEY_CTX; out_data: PByte; outlen: pcint; const in_data: PByte; inlen: csize_t): cint;
+  function EVP_PKEY_decrypt_init(ctx: PEVP_PKEY_CTX): cint;
+  function EVP_PKEY_decrypt(ctx: PEVP_PKEY_CTX; out_data: PByte; outlen: pcint; const in_data: PByte; inlen: csize_t): cint;
+
   function EVP_DigestSignInit(ctx: PEVP_MD_CTX; pctx: PPEVP_PKEY_CTX; const evptype: PEVP_MD; e: PENGINE; pkey: PEVP_PKEY): cint;
   function EVP_DigestSignUpdate(ctx: PEVP_MD_CTX; const data: Pointer; cnt: csize_t): cint;
   function EVP_DigestSignFinal(ctx: PEVP_MD_CTX; sigret: PByte; siglen: pcsize_t): cint;
@@ -1611,7 +1660,7 @@ uses
 
 Var
   SSLloaded: boolean = false;
-  LoadVerbose : Boolean;
+  LoadVerbose : Boolean = true;
   SSLCS: TCriticalSection;
   Locks: Array of TCriticalSection;
 
@@ -1847,11 +1896,9 @@ type
   TRSA_get0_n = function (const d :PRSA) :PBIGNUM; cdecl;
   TRSA_get0_e = function (const d :PRSA) :PBIGNUM; cdecl;
   TRSA_get_version = function (r :PRSA) :cint; cdecl;
-
-
+  TRSA_pkey_ctx_ctrl = function(ctx: PEVP_PKEY_CTX; optype: cint; cmd: cint; p1: cint; p2: Pointer): cint; cdecl;
 
   // X509 Functions
-
   Td2i_RSAPublicKey = function (arsa: PPRSA; pp: PPByte; len: cint): PRSA; cdecl;
   Ti2d_RSAPublicKey = function (arsa: PRSA; pp: PPByte): cint; cdecl;
   Td2i_RSAPrivateKey = function (arsa: PPRSA; pp: PPByte; len: cint): PRSA; cdecl;
@@ -1891,8 +1938,8 @@ type
   //
   TEVP_CIPHER_CTX_init = procedure(a: PEVP_CIPHER_CTX); cdecl;
   TEVP_CIPHER_CTX_cleanup = function(a: PEVP_CIPHER_CTX): cint; cdecl;
-  TEVP_CIPHER_CTX_new = function :PEVP_CIPHER_CTX;             // Tz Cipher
-  TEVP_CIPHER_CTX_free = procedure(ctx :PEVP_CIPHER_CTX);      // Tz Cipher
+  TEVP_CIPHER_CTX_new = function :PEVP_CIPHER_CTX; cdecl;            // Tz Cipher
+  TEVP_CIPHER_CTX_free = procedure(ctx :PEVP_CIPHER_CTX); cdecl ;      // Tz Cipher
   TEVP_CIPHER_CTX_set_key_length = function(x: PEVP_CIPHER_CTX; keylen: cint): cint; cdecl;
   TEVP_CIPHER_CTX_ctrl = function(ctx: PEVP_CIPHER_CTX; type_, arg: cint; ptr: Pointer): cint; cdecl;
   //
@@ -1910,6 +1957,15 @@ type
   //
   TEVP_MD_CTX_new = function(): PEVP_MD_CTX; cdecl;
   TEVP_MD_CTX_free = procedure(ctx: PEVP_MD_CTX); cdecl;
+
+  TEVP_PKEY_CTX_new = function(pkey: PEVP_PKEY; e: PENGINE): PEVP_PKEY_CTX; cdecl;
+  TEVP_PKEY_CTX_free = procedure(ctx: PEVP_PKEY_CTX); cdecl;
+  TEVP_PKEY_CTX_ctrl = function(ctx: PEVP_PKEY_CTX; keytype: cint; optype: cint; cmd: cint; p1: cint; p2: Pointer): cint; cdecl;
+  TEVP_PKEY_encrypt_init = function(ctx: PEVP_PKEY_CTX): cint; cdecl;
+  TEVP_PKEY_encrypt = function(ctx: PEVP_PKEY_CTX; out_data: PByte; outlen: pcint; const in_data: PByte; inlen: csize_t): cint; cdecl;
+  TEVP_PKEY_decrypt_init = function(ctx: PEVP_PKEY_CTX): cint; cdecl;
+  TEVP_PKEY_decrypt = function(ctx: PEVP_PKEY_CTX; out_data: PByte; outlen: pcint; const in_data: PByte; inlen: csize_t): cint; cdecl;
+
   TEVP_DigestSignVerifyInit = function(ctx: PEVP_MD_CTX; pctx: PPEVP_PKEY_CTX; const evptype: PEVP_MD; e: PENGINE; pkey: PEVP_PKEY): cint;
   TEVP_DigestSignFinal = function(ctx: PEVP_MD_CTX; sigret: PByte; siglen: pcsize_t): cint;
   TEVP_DigestVerifyFinal = function(ctx: PEVP_MD_CTX; sig: PByte; siglen: csize_t): cint;
@@ -2129,9 +2185,9 @@ var
   _RSA_get0_n: TRSA_get0_n = nil;
   _RSA_get0_e: TRSA_get0_e = nil;
   _RSA_get_version: TRSA_get_version = nil;
+  _RSA_pkey_ctx_ctrl: TRSA_pkey_ctx_ctrl = nil;
 
   // X509 Functions
-
   _d2i_RSAPublicKey: Td2i_RSAPublicKey = nil;
   _i2d_RSAPublicKey: Ti2d_RSAPublicKey = nil;
   _d2i_RSAPrivateKey: Td2i_RSAPrivateKey = nil;
@@ -2183,6 +2239,15 @@ var
   //
   _EVP_MD_CTX_new : TEVP_MD_CTX_new = nil;
   _EVP_MD_CTX_free : TEVP_MD_CTX_free = nil;
+
+  _EVP_PKEY_CTX_new: TEVP_PKEY_CTX_new = nil;
+  _EVP_PKEY_CTX_free: TEVP_PKEY_CTX_free = nil;
+  _EVP_PKEY_CTX_ctrl: TEVP_PKEY_CTX_ctrl = nil;
+  _EVP_PKEY_encrypt_init: TEVP_PKEY_encrypt_init = nil;
+  _EVP_PKEY_encrypt: TEVP_PKEY_encrypt = nil;
+  _EVP_PKEY_decrypt_init: TEVP_PKEY_decrypt_init = nil;
+  _EVP_PKEY_decrypt: TEVP_PKEY_decrypt = nil;
+
   _EVP_DigestSignInit: TEVP_DigestSignVerifyInit = nil;
   _EVP_DigestSignFinal: TEVP_DigestSignFinal = nil;
   _EVP_DigestVerifyInit: TEVP_DigestSignVerifyInit = nil;
@@ -3592,7 +3657,14 @@ begin
     Result := -1; // or 0 = RSA_ASN1_VERSION_DEFAULT
 end;
 
-
+function RSA_pkey_ctx_ctrl(ctx: PEVP_PKEY_CTX; optype: cint; cmd: cint;
+  p1: cint; p2: Pointer): cint;
+begin
+  if InitSSLInterface and Assigned(_RSA_pkey_ctx_ctrl) then
+    Result := _RSA_pkey_ctx_ctrl(ctx, optype, cmd, p1, p2)
+  else
+    Result := -1;
+end;
 
 function d2i_RSAPublicKey(arsa: PPRSA; pp: PPByte; len: cint): PRSA;
 begin
@@ -4020,6 +4092,78 @@ procedure EVP_MD_CTX_free(ctx: PEVP_MD_CTX);
 begin
   if InitSSLInterface and Assigned(_EVP_MD_CTX_free) then
     _EVP_MD_CTX_free(ctx)
+end;
+
+function EVP_PKEY_CTX_new(pkey: PEVP_PKEY; e: PENGINE): PEVP_PKEY_CTX;
+begin
+  if InitSSLInterface and Assigned(_EVP_PKEY_CTX_new) then
+    Result := _EVP_PKEY_CTX_new(pkey, e)
+  else
+    Result := Nil;
+end;
+
+procedure EVP_PKEY_CTX_free(ctx: PEVP_PKEY_CTX);
+begin
+  if InitSSLInterface and Assigned(_EVP_PKEY_CTX_free) then
+    _EVP_PKEY_CTX_free(ctx);
+end;
+
+function EVP_PKEY_CTX_ctrl(ctx: PEVP_PKEY_CTX; keytype: cint; optype: cint;
+  cmd: cint; p1: cint; p2: Pointer): cint;
+begin
+  if InitSSLInterface and Assigned(_EVP_PKEY_CTX_ctrl) then
+    Result := _EVP_PKEY_CTX_ctrl(ctx, keytype, optype, cmd, p1, p2)
+  else
+    Result := -1;
+end;
+
+function EVP_PKEY_CTX_set_rsa_padding(ctx: PEVP_PKEY_CTX; pad: cint): cint;
+begin
+  Result := RSA_pkey_ctx_ctrl(ctx, -1, EVP_PKEY_CTRL_RSA_PADDING, pad, nil);
+end;
+
+function EVP_PKEY_CTX_set_rsa_oaep_md(ctx: PEVP_PKEY_CTX; const md: PEVP_MD): cint;
+begin
+  Result := EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, EVP_PKEY_OP_TYPE_CRYPT, EVP_PKEY_CTRL_RSA_OAEP_MD, 0, md );
+end;
+
+function EVP_PKEY_CTX_set_rsa_mgf1_md(ctx: PEVP_PKEY_CTX; const md: PEVP_MD): cint;
+begin
+  Result := RSA_pkey_ctx_ctrl(ctx, EVP_PKEY_OP_TYPE_SIG or EVP_PKEY_OP_TYPE_CRYPT, EVP_PKEY_CTRL_RSA_MGF1_MD,  0,  md);
+end;
+
+function EVP_PKEY_encrypt_init(ctx: PEVP_PKEY_CTX): cint;
+begin
+  if InitSSLInterface and Assigned(_EVP_PKEY_encrypt_init) then
+    Result := _EVP_PKEY_encrypt_init(ctx)
+  else
+    Result := -1;
+end;
+
+function EVP_PKEY_encrypt(ctx: PEVP_PKEY_CTX; out_data: PByte; outlen: pcint;
+  const in_data: PByte; inlen: csize_t): cint;
+begin
+  if InitSSLInterface and Assigned(_EVP_PKEY_encrypt) then
+    Result := _EVP_PKEY_encrypt(ctx, out_data, outlen, in_data, inlen)
+  else
+    Result := -1;
+end;
+
+function EVP_PKEY_decrypt_init(ctx: PEVP_PKEY_CTX): cint;
+begin
+  if InitSSLInterface and Assigned(_EVP_PKEY_decrypt_init) then
+    Result := _EVP_PKEY_decrypt_init(ctx)
+  else
+    Result := -1;
+end;
+
+function EVP_PKEY_decrypt(ctx: PEVP_PKEY_CTX; out_data: PByte; outlen: pcint;
+  const in_data: PByte; inlen: csize_t): cint;
+begin
+  if InitSSLInterface and Assigned(_EVP_PKEY_decrypt) then
+    Result := _EVP_PKEY_decrypt(ctx, out_data, outlen, in_data, inlen)
+  else
+    Result := -1;
 end;
 
 function EVP_DigestSignInit(ctx: PEVP_MD_CTX; pctx: PPEVP_PKEY_CTX; const evptype: PEVP_MD; e: PENGINE; pkey: PEVP_PKEY): cint;
@@ -5315,6 +5459,15 @@ begin
 
   _EVP_MD_CTX_new := GetProcAddr(SSLUtilHandle, 'EVP_MD_CTX_new');
   _EVP_MD_CTX_free := GetProcAddr(SSLUtilHandle, 'EVP_MD_CTX_free');
+
+  _EVP_PKEY_CTX_new := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_CTX_new');
+  _EVP_PKEY_CTX_free := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_CTX_free');
+  _EVP_PKEY_CTX_ctrl := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_CTX_ctrl');
+  _EVP_PKEY_encrypt_init := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_encrypt_init');
+  _EVP_PKEY_encrypt := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_encrypt');
+  _EVP_PKEY_decrypt_init := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_decrypt_init');
+  _EVP_PKEY_decrypt := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_decrypt');
+
   _EVP_DigestSignInit := GetProcAddr(SSLUtilHandle, 'EVP_DigestSignInit');
   _EVP_DigestSignFinal := GetProcAddr(SSLUtilHandle, 'EVP_DigestSignFinal');
   _EVP_DigestVerifyInit := GetProcAddr(SSLUtilHandle, 'EVP_DigestVerifyInit');
@@ -5365,7 +5518,8 @@ begin
   _RSA_get0_n := GetProcAddr(SSLUtilHandle, 'RSA_get0_n');
   _RSA_get0_e := GetProcAddr(SSLUtilHandle, 'RSA_get0_e');
   _RSA_get_version := GetProcAddr(SSLUtilHandle, 'RSA_get_version');
-  
+  _RSA_pkey_ctx_ctrl := GetProcAddr(SSLUtilHandle, 'RSA_pkey_ctx_ctrl');
+
    // X509 Functions
   _d2i_RSAPublicKey := GetProcAddr(SSLUtilHandle, 'd2i_RSAPublicKey');
   _i2d_RSAPublicKey := GetProcAddr(SSLUtilHandle, 'i2d_RSAPublicKey');
@@ -5853,6 +6007,7 @@ begin
   _RSA_get0_n := nil;
   _RSA_get0_e := nil;
   _RSA_get_version := nil;
+  _RSA_pkey_ctx_ctrl := nil;
   // X509 Functions
 
   _d2i_RSAPublicKey := nil;
@@ -5903,6 +6058,15 @@ begin
 
   _EVP_MD_CTX_new := nil;
   _EVP_MD_CTX_free := nil;
+
+  _EVP_PKEY_CTX_new := nil;
+  _EVP_PKEY_CTX_free := nil;
+  _EVP_PKEY_CTX_ctrl := nil;
+  _EVP_PKEY_encrypt_init := nil;
+  _EVP_PKEY_encrypt := nil;
+  _EVP_PKEY_decrypt_init := nil;
+  _EVP_PKEY_decrypt := nil;
+
   _EVP_DigestSignInit := nil;
   _EVP_DigestSignFinal := nil;
   _EVP_DigestVerifyInit := nil;

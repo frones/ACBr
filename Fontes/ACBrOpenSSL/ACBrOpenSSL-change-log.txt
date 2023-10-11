@@ -38,12 +38,38 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2023
+-- ACBrOpenSSLUtils, OpenSSLExt --
+[+] Adicionados os métodos:
+    procedure PublicEncryptFromStream(inStream, outStream: TStream;
+      Algorithm: TACBrOpenSSLAlgorithm = algSHA1;
+      Padding: TACBrOpenSSLPadding = rsaPKCS1_OAEP_PADDING);
+    function PublicEncryptFromString(const AStr: AnsiString;
+      Algorithm: TACBrOpenSSLAlgorithm = algSHA1;
+      Padding: TACBrOpenSSLPadding = rsaPKCS1_OAEP_PADDING;
+      OutputType: TACBrOpenSSLStrType = sttBinary): AnsiString;
+
+    procedure PrivateDecryptFromStream(inStream, outStream: TStream;
+      Algorithm: TACBrOpenSSLAlgorithm = algSHA1;
+      Padding: TACBrOpenSSLPadding = rsaPKCS1_OAEP_PADDING);
+    function PrivateDecryptFromString(const AStr: AnsiString;
+      Algorithm: TACBrOpenSSLAlgorithm = algSHA1;
+      Padding: TACBrOpenSSLPadding = rsaPKCS1_OAEP_PADDING ;
+      OutputType: TACBrOpenSSLStrType = sttBinary): AnsiString;
+
+  TACBrOpenSSLAlgorithm = ( algMD2, algMD4, algMD5, algRMD160, algSHA, algSHA1,
+                            algSHA256, algSHA512);
+  TACBrOpenSSLPadding = ( rsaPKCS1_PADDING, rsaSSLV23_PADDING, rsaNO_PADDING,
+                          rsaPKCS1_OAEP_PADDING, rsaX931_PADDING, rsaPKCS1_PSS_PADDING,
+                          rsaPKCS1_WITH_TLS_PADDING, rsaPKCS1_NO_IMPLICIT_REJECT_PADDING,
+                          rsaPKCS1_PADDING_SIZE);
+  (por: DSA)
+
 06/03/2023
 -- ACBrOpenSSLUtils --
 [*] Correção na função "ConvertPEMToASN1()" de problema ao ler uma chave privada que possui a 
     string "END" dentro do conteúdo.
     por: Elias César
-
 
 22/11/2022
 -- ACBrOpenSSLUtils --

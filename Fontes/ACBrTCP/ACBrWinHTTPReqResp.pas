@@ -207,6 +207,8 @@ begin
         Flags := WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_1;
       LT_TLSv1_2:
         Flags := WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_2;
+      LT_TLSv1_3:
+        Flags := WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_3;
     else
       Flags := WINHTTP_FLAG_SECURE_PROTOCOL_ALL;
     end;

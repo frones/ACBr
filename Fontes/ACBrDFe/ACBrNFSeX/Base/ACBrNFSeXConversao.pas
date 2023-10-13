@@ -12338,15 +12338,18 @@ end;
 function MetodoToStr(const t: TMetodo): string;
 begin
   Result := EnumeradoToStr(t,
-                       ['Recepcionar', 'ConsultarSituacao', 'ConsultarLote',
-                        'ConsultarNFSePorRps', 'ConsultarNFSe',
-                        'ConsultarNFSePorFaixa', 'ConsultarNFSeServicoPrestado',
-                        'ConsultarNFSeServicoTomado', 'CancelarNFSe',
-                        'Gerar', 'GerarLote', 'RecepcionarSincrono', 'SubstituirNFSe',
-                        'AbrirSessao', 'FecharSessao', 'Teste', 'Todos',
-                        'GerarToken', 'EnviarEvento', 'ConsultarEvento',
-                        'ConsultarDFe', 'ConsultarParam', 'ConsultarSeqRps',
-                        'ConsultarLinkNFSe', 'ConsultarNFSePorChave'],
+                       ['Recepcionar Lote Assíncrono', 'Consultar a Situacao',
+                        'Consultar o Lote de Rps', 'Consultar NFSe Por Rps',
+                        'Consultar NFSe', 'Consultar NFSe Por Faixa',
+                        'Consultar NFSe Serviço Prestado',
+                        'Consultar NFSe Serviço Tomado',
+                        'Cancelar NFSe', 'Gerar NFSe', 'Gerar Lote de RPS',
+                        'Recepcionar Lote Síncrono', 'Substituir NFSe',
+                        'Abrir Sessão', 'Fechar Sessão', 'Teste', 'Todos',
+                        'Gerar Token', 'Enviar Evento', 'Consultar Evento',
+                        'Consultar DFe', 'Consultar Parâmetros',
+                        'Consultar Sequencia de Rps', 'Consultar Link da NFSe',
+                        'Consultar NFSe Por Chave'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
                         tmConsultarNFSePorRps, tmConsultarNFSe,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
@@ -12361,8 +12364,9 @@ end;
 function ModoEnvioToStr(const t: TmodoEnvio): string;
 begin
   Result := EnumeradoToStr(t,
-                       ['Automatico', 'Enviar Lote', 'Enviar Lote Síncrono',
-                        'Gerar NFSe', 'Teste de Envio de Lote'],
+                       ['Automatico', 'Enviar Lote Assíncrono',
+                        'Enviar Lote Síncrono', 'Gerar NFSe',
+                        'Teste de Envio de Lote'],
                        [meAutomatico, meLoteAssincrono, meLoteSincrono,
                         meUnitario, meTeste]);
 end;

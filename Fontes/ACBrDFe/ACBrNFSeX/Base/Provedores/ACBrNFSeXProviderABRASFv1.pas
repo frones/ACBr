@@ -1071,7 +1071,17 @@ var
   aParams: TNFSeParamsResponse;
   XmlConsulta, RazaoInter, NameSpace, Prefixo, PrefixoTS, TagEnvio: string;
 begin
-  if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado] then
+  case Response.InfConsultaNFSe.tpConsulta of
+    tcPorFaixa: Response.Metodo := tmConsultarNFSePorFaixa;
+    tcServicoTomado: Response.Metodo := tmConsultarNFSeServicoTomado;
+    tcServicoPrestado: Response.Metodo := tmConsultarNFSeServicoPrestado;
+    tcPorChave: Response.Metodo := tmConsultarNFSePorChave;
+  else
+    Response.Metodo := tmConsultarNFSe;
+  end;
+
+  if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado,
+     tcServicoPrestado, tcPorChave, tcPorCodigoVerificacao] then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod001;
@@ -1081,8 +1091,6 @@ begin
 
   Prefixo := '';
   PrefixoTS := '';
-
-  Response.Metodo := tmConsultarNFSe;
 
   if EstaVazio(ConfigMsgDados.ConsultarNFSe.xmlns) then
     NameSpace := ''

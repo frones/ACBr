@@ -51,7 +51,7 @@ type
   public
     function GerarNFSe(ACabecalho, AMSG: string): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: string): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: string): string; override;
+    function ConsultarNFSePorChave(ACabecalho, AMSG: string): string; override;
     function EnviarEvento(ACabecalho, AMSG: string): string; override;
     function ConsultarEvento(ACabecalho, AMSG: string): string; override;
     function ConsultarDFe(ACabecalho, AMSG: string): string; override;
@@ -79,8 +79,8 @@ type
     procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeporChave(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporChave(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararEnviarEvento(Response: TNFSeEnviarEventoResponse); override;
     procedure TratarRetornoEnviarEvento(Response: TNFSeEnviarEventoResponse); override;
@@ -490,12 +490,12 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderPadraoNacional.PrepararConsultaNFSe(
+procedure TACBrNFSeProviderPadraoNacional.PrepararConsultaNFSeporChave(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
 begin
-  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
+  if EstaVazio(Response.InfConsultaNFSe.ChaveNFSe) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod118;
@@ -503,18 +503,18 @@ begin
     Exit;
   end;
 
-  Response.Metodo := tmConsultarNFSe;
+  Response.Metodo := tmConsultarNFSePorChave;
 
   if Response.InfConsultaNFSe.tpRetorno = trXml then
-    FpPath := '/nfse/' + Response.InfConsultaNFSe.NumeroIniNFSe
+    FpPath := '/nfse/' + Response.InfConsultaNFSe.ChaveNFSe
   else
-    FpPath := '/danfse/' + Response.InfConsultaNFSe.NumeroIniNFSe;
+    FpPath := '/danfse/' + Response.InfConsultaNFSe.ChaveNFSe;
 
   Response.ArquivoEnvio := FpPath;
   FpMethod := 'GET';
 end;
 
-procedure TACBrNFSeProviderPadraoNacional.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderPadraoNacional.TratarRetornoConsultaNFSeporChave(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrJSONObject;
@@ -600,7 +600,7 @@ begin
   else
   begin
     Response.ArquivoRetorno := RemoverDeclaracaoXML(Response.ArquivoRetorno);
-    SalvarPDFNfse(Response.InfConsultaNFSe.NumeroIniNFSe, Response.ArquivoRetorno);
+    SalvarPDFNfse(Response.InfConsultaNFSe.ChaveNFSe, Response.ArquivoRetorno);
   end;
 end;
 
@@ -1372,7 +1372,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSePorChave(ACabecalho,
   AMSG: string): string;
 var
   Request: string;

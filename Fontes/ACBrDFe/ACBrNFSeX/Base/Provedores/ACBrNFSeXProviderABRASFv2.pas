@@ -1199,6 +1199,16 @@ var
 begin
   case Response.InfConsultaNFSe.tpConsulta of
     tcPorPeriodo,
+    tcPorFaixa: Response.Metodo := tmConsultarNFSePorFaixa;
+    tcServicoTomado: Response.Metodo := tmConsultarNFSeServicoTomado;
+    tcServicoPrestado: Response.Metodo := tmConsultarNFSeServicoPrestado;
+    tcPorChave: Response.Metodo := tmConsultarNFSePorChave;
+  else
+    Response.Metodo := tmConsultarNFSe;
+  end;
+
+  case Response.InfConsultaNFSe.tpConsulta of
+    tcPorPeriodo,
     tcPorFaixa: PrepararConsultaNFSeporFaixa(Response);
     tcServicoPrestado: PrepararConsultaNFSeServicoPrestado(Response);
     tcServicoTomado: PrepararConsultaNFSeServicoTomado(Response);

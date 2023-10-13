@@ -50,6 +50,7 @@ type
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorChave(ACabecalho, AMSG: string): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
@@ -74,6 +75,9 @@ type
 
     procedure PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
+
+    procedure PrepararConsultaNFSeporChave(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporChave(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -531,6 +535,114 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderInfisc.PrepararConsultaNFSeporChave(
+  Response: TNFSeConsultaNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Emitente: TEmitenteConfNFSe;
+  Versao: string;
+begin
+  if EstaVazio(Response.InfConsultaNFSe.ChaveNFSe) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod118;
+    AErro.Descricao := ACBrStr(Desc118);
+    Exit;
+  end;
+
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  Response.Metodo := tmConsultarNFSePorChave;
+
+  Versao := ' ' + ConfigWebServices.AtribVerLote + '="' +
+            ConfigWebServices.VersaoAtrib + '"';
+
+  Response.ArquivoEnvio := '<pedidoNFSe' + Versao + '>' +
+                             '<CNPJ>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</CNPJ>' +
+                             '<chvAcessoNFS-e>' +
+                                Response.InfConsultaNFSe.ChaveNFSe +
+                             '</chvAcessoNFS-e>' +
+                           '</pedidoNFSe>';
+end;
+
+procedure TACBrNFSeProviderInfisc.TratarRetornoConsultaNFSeporChave(
+  Response: TNFSeConsultaNFSeResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  i: Integer;
+  AuxNode: TACBrXmlNode;
+  NumNota: String;
+  ANota: TNotaFiscal;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANodeArray := ANode.Childrens.FindAllAnyNs('NFS-e');
+
+      if ANodeArray = nil then
+        ANodeArray := ANode.Childrens.FindAllAnyNs('NFSe');
+
+      if not Assigned(ANodeArray) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
+
+      for i := Low(ANodeArray) to High(ANodeArray) do
+      begin
+        ANode := ANodeArray[i];
+        AuxNode := ANode.Childrens.FindAnyNs('infNFSe');
+
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+        AuxNode := AuxNode.Childrens.FindAnyNs('Id');
+
+        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+
+        NumNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nNFS-e'), tcStr);
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNota);
+
+        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+        SalvarXmlNfse(ANota);
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
 procedure TACBrNFSeProviderInfisc.PrepararCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
 var
@@ -678,7 +790,8 @@ begin
   begin
     LoteRps := True;
     ConsultarLote := True;
-    ConsultarNFSe := True;
+    ConsultarNFSePorFaixa := True;
+    ConsultarNFSePorChave := True;
     CancelarNFSe := True;
 
     IncluirURI := False;
@@ -705,10 +818,16 @@ begin
       DocElemento := 'pedidoStatusLote';
     end;
 
-    with ConsultarNFSe do
+    with ConsultarNFSePorFaixa do
     begin
       InfElemento := 'pedidoLoteNFSe';
       DocElemento := 'pedidoLoteNFSe';
+    end;
+
+    with ConsultarNFSePorChave do
+    begin
+      InfElemento := 'pedidoNFSe';
+      DocElemento := 'pedidoNFSe';
     end;
 
     with CancelarNFSe do
@@ -843,6 +962,21 @@ begin
   Request := Request + '</obterLoteNotaFiscalRequest>';
 
   Result := Executar('', Request, ['resPedidoLoteNFSe'],
+                     ['xmlns="http://ws.pc.gif.com.br/"']);
+end;
+
+function TACBrNFSeXWebserviceInfisc.ConsultarNFSePorChave(ACabecalho,
+  AMSG: string): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<obterNotaFiscalRequest>';
+  Request := Request + AMSG;
+  Request := Request + '</obterNotaFiscalRequest>';
+
+  Result := Executar('', Request, ['resPedidoNFSe'],
                      ['xmlns="http://ws.pc.gif.com.br/"']);
 end;
 

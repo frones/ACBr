@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/10/2023
+-- Diversos --
+[+] Implementado as rotinas especificas para o método ConsultarNFSePorChave.
+    O método ConsultarNFSePorChave é utilizado pelo provedor PadraoNacional e agora
+    pelo Infisc. 
+   Por: Italo Giurizzato Junior
+
 11/10/2023
 -- ACBrNFSeXConversao --
 [*] Invertido a ordem os enumerados do tipo TtribISSQN para que fique em conformidade

@@ -686,11 +686,10 @@ begin
 
   with FWebService.ConsultaNFSe.InfConsultaNFSe do
   begin
-    tpConsulta := tcPorNumero;
+    tpConsulta := tcPorChave;
     tpRetorno := trXml;
 
-    NumeroIniNFSe := aChave;
-    NumeroFinNFSe := aChave;
+    ChaveNFSe := aChave;
   end;
 
   ConsultarNFSe;
@@ -1105,10 +1104,10 @@ begin
 
   with FWebService.ConsultaNFSe.InfConsultaNFSe do
   begin
-    tpConsulta := tcPorNumero;
+    tpConsulta := tcPorChave;
     tpRetorno := trPDF;
 
-    NumeroIniNFSe := aChave;
+    ChaveNFSe := aChave;
   end;
 
   ConsultarNFSe;

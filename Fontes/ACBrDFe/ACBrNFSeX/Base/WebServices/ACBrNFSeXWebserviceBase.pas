@@ -133,6 +133,7 @@ type
     function ConsultarSituacao(ACabecalho, AMSG: string): string; virtual;
     function ConsultarNFSePorRps(ACabecalho, AMSG: string): string; virtual;
     function ConsultarNFSe(ACabecalho, AMSG: string): string; virtual;
+    function ConsultarNFSePorChave(ACabecalho, AMSG: string): string; virtual;
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: string): string; virtual;
     function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: string): string; virtual;
     function ConsultarNFSeServicoTomado(ACabecalho, AMSG: string): string; virtual;
@@ -267,6 +268,7 @@ type
    FCodServ: string;
    FCodVerificacao: string;
    FtpRetorno: TtpRetorno;
+    FChaveNFSe: string;
 
  public
    constructor Create;
@@ -294,6 +296,7 @@ type
    property CodServ: string         read FCodServ       write FCodServ;
    property CodVerificacao: string  read FCodVerificacao write FCodVerificacao;
    property tpRetorno: TtpRetorno   read FtpRetorno     write FtpRetorno;
+   property ChaveNFSe: string       read FChaveNFSe     write FChaveNFSe;
  end;
 
   TInfConsultaLinkNFSe = class
@@ -475,6 +478,12 @@ begin
       begin
         FPArqEnv := 'con-nfse';
         FPArqResp := 'lista-nfse-con';
+      end;
+
+    tmConsultarNFSePorChave:
+      begin
+        FPArqEnv := 'con-nfse-chv';
+        FPArqResp := 'lista-nfse-chv';
       end;
 
     tmConsultarNFSePorFaixa:
@@ -1160,6 +1169,13 @@ begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
+function TACBrNFSeXWebservice.ConsultarNFSePorChave(ACabecalho,
+  AMSG: string): string;
+begin
+  Result := '';
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
 function TACBrNFSeXWebservice.ConsultarNFSePorFaixa(ACabecalho, AMSG: string): string;
 begin
   Result := '';
@@ -1533,6 +1549,7 @@ begin
   Pagina        := 1;
   tpDocumento   := tdNFSe;
   tpRetorno     := trXml;
+  ChaveNFSe     := '';
 end;
 
 function TInfConsultaNFSe.LerFromIni(const AIniStr: string): Boolean;
@@ -1572,6 +1589,7 @@ begin
     CadEconomico  := INIRec.ReadString(sSecao, 'CadEconomico', '');
     SerieNFSe     := INIRec.ReadString(sSecao, 'SerieNFSe', '');
     CodServ       := INIRec.ReadString(sSecao, 'CodServ', '');
+    ChaveNFSe     := INIRec.ReadString(sSecao, 'ChaveNFSe', '');
 
     CodVerificacao := INIRec.ReadString(sSecao, 'CodVerificacao', '');
 

@@ -511,6 +511,7 @@ begin
         tmConsultarParam: Result := ConsultarParam;
         tmConsultarSeqRps: Result := ConsultarSeqRps;
         tmConsultarLinkNFSe: Result := ConsultarLinkNFSe;
+        tmConsultarNFSePorChave: Result := ConsultarNFSePorChave;
       else
         Result := '';
       end;
@@ -548,6 +549,7 @@ begin
         tmConsultarParam: Result := ConsultarParam;
         tmConsultarSeqRps: Result := ConsultarSeqRps;
         tmConsultarLinkNFSe: Result := ConsultarLinkNFSe;
+        tmConsultarNFSePorChave: Result := ConsultarNFSePorChave;
       else
         Result := '';
       end;
@@ -696,6 +698,14 @@ begin
       DocElemento := 'ConsultarNfseEnvio';
     end;
 
+    // Usado para geração da Consulta da NFSe Por Chave
+    with ConsultarNFSePorChave do
+    begin
+      xmlns := '';
+      InfElemento := '';
+      DocElemento := '';
+    end;
+
     // Usado para geração da Consulta da NFSe Por Faixa
     with ConsultarNFSePorFaixa do
     begin
@@ -824,6 +834,7 @@ begin
     ConsultarLote := False;
     ConsultarNFSeRps := False;
     ConsultarNFSe := False;
+    ConsultarNFSePorChave := False;
     ConsultarNFSePorFaixa := False;
     ConsultarNFSeServicoPrestado := False;
     ConsultarNFSeServicoTomado := False;
@@ -1118,6 +1129,7 @@ begin
     tmConsultarLote: xNameSpaceURI := ConfigMsgDados.ConsultarLote.xmlns;
     tmConsultarNFSePorRps: xNameSpaceURI := ConfigMsgDados.ConsultarNFSeRps.xmlns;
     tmConsultarNFSe: xNameSpaceURI := ConfigMsgDados.ConsultarNFSe.xmlns;
+    tmConsultarNFSePorChave: xNameSpaceURI := ConfigMsgDados.ConsultarNFSePorChave.xmlns;
     tmConsultarNFSePorFaixa: xNameSpaceURI := ConfigMsgDados.ConsultarNFSePorFaixa.xmlns;
     tmConsultarNFSeServicoPrestado: xNameSpaceURI := ConfigMsgDados.ConsultarNFSeServicoPrestado.xmlns;
     tmConsultarNFSeServicoTomado: xNameSpaceURI := ConfigMsgDados.ConsultarNFSeServicoTomado.xmlns;
@@ -1148,6 +1160,7 @@ begin
     ConsultarLote := aNome;
     ConsultarNFSeRps := aNome;
     ConsultarNFSe := aNome;
+    ConsultarNFSePorChave := aNome;
     ConsultarNFSePorFaixa := aNome;
     ConsultarNFSeServicoPrestado := aNome;
     ConsultarNFSeServicoTomado := aNome;
@@ -1181,6 +1194,7 @@ begin
     ConsultarLote.xmlns := aNameSpace;
     ConsultarNFSeRps.xmlns := aNameSpace;
     ConsultarNFSe.xmlns := aNameSpace;
+    ConsultarNFSePorChave.xmlns := aNameSpace;
     ConsultarNFSePorFaixa.xmlns := aNameSpace;
     ConsultarNFSeServicoPrestado.xmlns := aNameSpace;
     ConsultarNFSeServicoTomado.xmlns := aNameSpace;
@@ -1719,6 +1733,7 @@ begin
     tmConsultarNFSePorRps: Schema := ConfigSchemas.ConsultarNFSeRps;
 
     tmConsultarNFSe: Schema := ConfigSchemas.ConsultarNFSe;
+    tmConsultarNFSePorChave: Schema := ConfigSchemas.ConsultarNFSePorChave;
     tmConsultarNFSePorFaixa: Schema := ConfigSchemas.ConsultarNFSePorFaixa;
     tmConsultarNFSeServicoPrestado: Schema := ConfigSchemas.ConsultarNFSeServicoPrestado;
     tmConsultarNFSeServicoTomado: Schema := ConfigSchemas.ConsultarNFSeServicoTomado;
@@ -2457,6 +2472,12 @@ begin
             ConsultaNFSeResponse.InfConsultaNFSe.tpConsulta := tcServicoTomado;
             ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSeServicoTomado(ConfigMsgDados.DadosCabecalho,
                                                                                    ConsultaNFSeResponse.ArquivoEnvio);
+          end;
+        tmConsultarNFSePorChave:
+          begin
+            ConsultaNFSeResponse.InfConsultaNFSe.tpConsulta := tcPorChave;
+            ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSePorChave(ConfigMsgDados.DadosCabecalho,
+                                                                                  ConsultaNFSeResponse.ArquivoEnvio);
           end;
       else
         begin

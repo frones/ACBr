@@ -6,7 +6,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
   Caption = 'frmACBrBoletoRelatorioRet'
   ClientHeight = 513
   ClientWidth = 1130
-  LCLVersion = '1.6.2.0'
   object ResumoRetornoRemessa: TRLReport
     Left = 0
     Height = 794
@@ -16,10 +15,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
     Font.Height = -12
     Font.Name = 'Arial'
     PageSetup.Orientation = poLandscape
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
     OnDataRecord = ResumoRetornoRemessaDataRecord
     object rlbCabecalho: TRLBand
       Left = 38
@@ -28,22 +23,13 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
       Width = 1047
       AutoSize = True
       BandType = btHeader
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlbCabecalhoBeforePrint
       object RLDraw13: TRLDraw
         Left = 0
         Height = 17
         Top = 139
         Width = 1047
-        Angle = 0
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rliBanco: TRLImage
         Left = 8
@@ -587,10 +573,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
           0ED5F513D4F521D1F525D1F523D1F520D2F51CD3F51AD3F51CD3F51CD3F51ED2
           F500
         }
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Scaled = True
       end
       object RLDraw11: TRLDraw
@@ -598,12 +580,7 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Height = 17
         Top = 56
         Width = 718
-        Angle = 0
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel3: TRLLabel
         Left = 184
@@ -617,10 +594,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel1: TRLLabel
         Left = 192
@@ -628,10 +601,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Top = 42
         Width = 88
         Caption = 'Arquivo retorno:'
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllArquivoRetorno: TRLLabel
         Left = 284
@@ -644,10 +613,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw14: TRLDraw
         Left = 176
@@ -656,10 +621,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Width = 17
         Angle = 90
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel2: TRLLabel
         Left = 0
@@ -671,10 +632,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Height = -11
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNomeCedente: TRLLabel
         Left = 0
@@ -688,22 +645,13 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw12: TRLDraw
         Left = 0
         Height = 17
         Top = 0
         Width = 1049
-        Angle = 0
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCNPJ: TRLLabel
         Left = 528
@@ -717,22 +665,13 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw15: TRLDraw
         Left = 0
         Height = 17
         Top = 100
         Width = 718
-        Angle = 0
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel4: TRLLabel
         Left = 528
@@ -744,10 +683,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Height = -11
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw16: TRLDraw
         Left = 512
@@ -756,10 +691,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Width = 17
         Angle = 90
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel5: TRLLabel
         Left = 264
@@ -771,10 +702,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Height = -11
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel6: TRLLabel
         Left = 384
@@ -786,10 +713,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Height = -11
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel7: TRLLabel
         Left = 528
@@ -801,10 +724,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Height = -11
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel8: TRLLabel
         Left = 0
@@ -816,10 +735,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Height = -11
         Font.Name = 'Arial'
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllBanco: TRLLabel
         Left = 0
@@ -833,10 +748,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw17: TRLDraw
         Left = 252
@@ -846,10 +757,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllAgencia: TRLLabel
         Left = 264
@@ -863,10 +770,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCodigoCedende: TRLLabel
         Left = 384
@@ -880,10 +783,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllConta: TRLLabel
         Left = 528
@@ -897,10 +796,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw18: TRLDraw
         Left = 368
@@ -909,10 +804,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Width = 17
         Angle = 90
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw22: TRLDraw
         Left = 712
@@ -921,10 +812,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Width = 17
         Angle = 90
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rliLogo: TRLImage
         Left = 728
@@ -932,10 +819,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Top = 16
         Width = 319
         Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Scaled = True
       end
     end
@@ -945,21 +828,12 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
       Top = 246
       Width = 1047
       BandType = btFooter
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLDraw19: TRLDraw
         Left = 0
         Height = 17
         Top = 8
         Width = 1047
-        Angle = 0
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel9: TRLLabel
         Left = 939
@@ -973,10 +847,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsItalic]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLLabel9BeforePrint
       end
       object RLLabel10: TRLLabel
@@ -985,10 +855,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Top = 24
         Width = 48
         Caption = 'Página: '
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNumeroPagina: TRLLabel
         Left = 57
@@ -1002,10 +868,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = rllNumeroPaginaBeforePrint
       end
     end
@@ -1015,10 +877,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
       Top = 194
       Width = 1047
       BandType = btColumnHeader
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLLabel11: TRLLabel
         Left = 30
         Height = 15
@@ -1030,10 +888,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel12: TRLLabel
         Left = 112
@@ -1046,10 +900,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel13: TRLLabel
         Left = 0
@@ -1062,10 +912,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel15: TRLLabel
         Left = 440
@@ -1078,10 +924,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel16: TRLLabel
         Left = 746
@@ -1094,22 +936,13 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw20: TRLDraw
         Left = 0
         Height = 17
         Top = 13
         Width = 1047
-        Angle = 0
         DrawKind = dkLine
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel17: TRLLabel
         Left = 280
@@ -1122,10 +955,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel14: TRLLabel
         Left = 208
@@ -1138,10 +967,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel18: TRLLabel
         Left = 360
@@ -1154,10 +979,6 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object RLSubDetail1: TRLSubDetail
@@ -1165,20 +986,12 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
       Height = 24
       Top = 222
       Width = 1047
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       OnDataRecord = RLSubDetail1DataRecord
       object RLBand1: TRLBand
         Left = 0
-        Height = 24
+        Height = 21
         Top = 0
         Width = 1047
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         object rllTituloCarteira: TRLLabel
           Left = 0
           Height = 15
@@ -1189,133 +1002,118 @@ object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
           Font.Height = -12
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = rllTituloCarteiraBeforePrint
         end
         object rllTituloDocumento: TRLLabel
           Left = 30
-          Height = 15
-          Top = 0
-          Width = 67
+          Height = 12
+          Top = 3
+          Width = 66
           Caption = 'Documento'
+          Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = rllTituloDocumentoBeforePrint
         end
         object rllTituloNossoNumero: TRLLabel
-          Left = 112
-          Height = 15
-          Top = 0
-          Width = 88
+          Left = 110
+          Height = 12
+          Top = 2
+          Width = 90
+          Alignment = taRightJustify
           Caption = 'Nosso Numero'
+          Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = rllTituloNossoNumeroBeforePrint
         end
         object rllTituloValor: TRLLabel
           Left = 208
-          Height = 15
-          Top = 0
-          Width = 71
+          Height = 12
+          Top = 2
+          Width = 64
           Caption = 'Valor'
+          Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = rllTituloValorBeforePrint
         end
         object rllTituloOcorrencia: TRLLabel
           Left = 440
-          Height = 15
+          Height = 12
           Top = 0
-          Width = 103
+          Width = 77
+          Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = rllTituloOcorrenciaBeforePrint
         end
         object rlmTituloRejeicao: TRLMemo
           Left = 746
-          Height = 15
+          Height = 12
           Top = 0
           Width = 300
           Behavior = [beSiteExpander]
+          Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = rlmTituloRejeicaoBeforePrint
         end
         object RLDraw21: TRLDraw
           Left = 0
           Height = 8
-          Top = 16
+          Top = 13
           Width = 1047
           Align = faBottomOnly
-          Angle = 0
           DrawKind = dkLine
           HoldStyle = hsRelatively
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object rllTituloDataPago: TRLLabel
           Left = 280
-          Height = 15
-          Top = 0
-          Width = 98
+          Height = 12
+          Top = 2
+          Width = 73
+          Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = rllTituloDataPagoBeforePrint
         end
         object rllTituloValorPago: TRLLabel
           Left = 360
-          Height = 15
+          Height = 12
           Top = 0
-          Width = 100
+          Width = 74
+          Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
           BeforePrint = rllTituloValorPagoBeforePrint
         end
       end

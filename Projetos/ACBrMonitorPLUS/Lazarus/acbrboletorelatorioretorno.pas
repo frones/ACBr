@@ -222,7 +222,8 @@ end;
 procedure TfrmACBrBoletoRelatorioRet.rllTituloOcorrenciaBeforePrint(
   Sender: TObject; var aText: string; var PrintIt: Boolean);
 begin
-  aText := ACBrStr(self.ACBrBoleto.ListadeBoletos[self.FNumItem].OcorrenciaOriginal.Descricao);
+  aText := self.ACBrBoleto.ListadeBoletos[self.FNumItem].OcorrenciaOriginal.Descricao;
+ // aText := ACBrStr(self.ACBrBoleto.ListadeBoletos[self.FNumItem].OcorrenciaOriginal.Descricao);
 end;
 
 procedure TfrmACBrBoletoRelatorioRet.rllTituloValorBeforePrint(Sender: TObject;
@@ -244,7 +245,8 @@ var
 begin
   aText := '';
   for J:= 0 to self.ACBrBoleto.ListadeBoletos[self.FNumItem].DescricaoMotivoRejeicaoComando.Count-1 do
-    aText := aText + ACBrStr(self.ACBrBoleto.ListadeBoletos[self.FNumItem].DescricaoMotivoRejeicaoComando[J])+sLineBreak;
+  aText := aText + (self.ACBrBoleto.ListadeBoletos[self.FNumItem].DescricaoMotivoRejeicaoComando[J])+sLineBreak;
+//  aText := aText + ACBrStr(self.ACBrBoleto.ListadeBoletos[self.FNumItem].DescricaoMotivoRejeicaoComando[J])+sLineBreak;
 end;
 
 procedure TfrmACBrBoletoRelatorioRet.RLSubDetail1DataRecord(Sender: TObject;

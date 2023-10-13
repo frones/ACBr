@@ -279,7 +279,7 @@ begin
            PadRight(LTitulo.NumeroDocumento, 25)                                                                         +  // 038 a 062 - Uso da Empresa
            '0' + LTitulo.NossoNumero + LDigitoNossoNumero                                                                +  // 063 a 074 - Nosso Número Completo
            Space(8)                                                                                                      +  // 075 a 082 - Uso do Banco
-           IntToStrZero(fpNumero, 3)                                                                                     +  // 083 a 085 - Código do Banco
+           IfThen(LTitulo.Carteira='20', IntToStrZero(fpNumero, 3), '000')                                               +  // 083 a 085 - Código do Banco
            Space(21)                                                                                                     +  // 086 a 106 - Uso do Banco
            PadLeft(LTitulo.Carteira, 2, '0')                                                                             +  // 107 a 108 - Código da Carteira
            LOcorrencia                                                                                                   +  // 109 a 110 - Código Ocorrência Remessa

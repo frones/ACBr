@@ -148,7 +148,8 @@ begin
     LFile := LFile+'_';
 
   if Self.CalcularNomeArquivoPDFIndividual then
-    FPDF.SaveToFile( ChangeFileExt(LPath + LFile+FNomeArquivo, '.pdf'))
+    //FPDF.SaveToFile( ChangeFileExt(LPath + LFile+FNomeArquivo, '.pdf'))
+    FPDF.SaveToFile( Self.NomeArquivo )
   else
     FPDF.SaveToFile(ChangeFileExt(Self.NomeArquivo, '.pdf'));
   FPDF.Free;
@@ -187,7 +188,6 @@ begin
 end;
 
 procedure TACBrBoletoFPDF.Imprimir;
-
 begin
   ACBrBoleto.ChecarDadosObrigatorios;
   Inherited;

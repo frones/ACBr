@@ -1965,7 +1965,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               OnClick = btnConsultarNFSeFaixaClick
             end
             object btnConsultarNFSeGenerico: TButton
-              Left = 3
+              Left = 186
               Top = 72
               Width = 177
               Height = 25
@@ -1974,13 +1974,22 @@ object frmACBrNFSe: TfrmACBrNFSe
               OnClick = btnConsultarNFSeGenericoClick
             end
             object btnConsultarLinkNFSe: TButton
-              Left = 186
+              Left = 369
               Top = 72
               Width = 177
               Height = 25
               Caption = 'Consultar Link NFSe'
               TabOrder = 7
               OnClick = btnConsultarLinkNFSeClick
+            end
+            object btnConsultarNFSePelaChave: TButton
+              Left = 3
+              Top = 72
+              Width = 177
+              Height = 25
+              Caption = 'Consultar NFSe por Chave'
+              TabOrder = 8
+              OnClick = btnConsultarNFSePelaChaveClick
             end
           end
           object tsConsServPrest: TTabSheet
@@ -2440,6 +2449,8 @@ object frmACBrNFSe: TfrmACBrNFSe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrNFSe = ACBrNFSeX1
     Cancelada = False
     Provedor = proNenhum

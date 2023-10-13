@@ -271,6 +271,7 @@ type
     Label49: TLabel;
     btnLerINI: TButton;
     btnConsultarLinkNFSe: TButton;
+    btnConsultarNFSePelaChave: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -361,6 +362,7 @@ type
     procedure btnConsultarNFSePelaChavePNClick(Sender: TObject);
     procedure btnLerINIClick(Sender: TObject);
     procedure btnConsultarLinkNFSeClick(Sender: TObject);
+    procedure btnConsultarNFSePelaChaveClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -798,7 +800,8 @@ begin
 
         // Provedor PadraoNacional
         Servico.Valores.tribMun.cPaisResult := 0;
-        Servico.Valores.tribMun.tribISSQN := tiImunidade;
+        // TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia);
+        Servico.Valores.tribMun.tribISSQN := tiNaoIncidencia;
         Servico.Valores.tribMun.tpImunidade := timNenhum;
         Servico.Valores.tribMun.tpRetISSQN := trNaoRetido;
         Servico.Valores.totTrib.indTotTrib := indNao;
@@ -1806,6 +1809,21 @@ begin
   ChecarResposta(tmConsultarNFSe);
 end;
 
+procedure TfrmACBrNFSe.btnConsultarNFSePelaChaveClick(Sender: TObject);
+var
+  xTitulo, xChaveNFSe: String;
+begin
+  xTitulo := 'Consultar NFSe pela Chave de Acesso da NFSe';
+
+  xChaveNFSe := '';
+  if not (InputQuery(xTitulo, 'Chave de Acesso:', xChaveNFSe)) then
+    exit;
+
+  ACBrNFSeX1.ConsultarNFSePorChave(xChaveNFSe);
+
+  ChecarResposta(tmConsultarNFSePorChave);
+end;
+
 procedure TfrmACBrNFSe.btnConsultarNFSePelaChavePNClick(Sender: TObject);
 var
   xTitulo, xChaveNFSe: String;
@@ -1818,7 +1836,7 @@ begin
 
   ACBrNFSeX1.ConsultarNFSePorChave(xChaveNFSe);
 
-  ChecarResposta(tmConsultarNFSe);
+  ChecarResposta(tmConsultarNFSePorChave);
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSePeriodoClick(Sender: TObject);
@@ -2942,7 +2960,7 @@ begin
 
   ACBrNFSeX1.ObterDANFSE(xChaveNFSe);
 
-  ChecarResposta(tmConsultarNFSe);
+  ChecarResposta(tmConsultarNFSePorChave);
 end;
 
 procedure TfrmACBrNFSe.btnSalvarConfigClick(Sender: TObject);
@@ -4049,6 +4067,53 @@ begin
           end;
         end;
 
+
+      tmConsultarNFSePorChave:
+        begin
+          with ConsultaNFSe do
+          begin
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(Metodo));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+            memoLog.Lines.Add('Chave da NFSe: ' + InfConsultaNFSe.ChaveNFSe);
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+
+            if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proPrescon] then
+              memoLog.Lines.Add('Número NFSe   : ' + NumeroNota);
+
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
+
+            if Erros.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Erro(s):');
+              for i := 0 to Erros.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+
+            if Alertas.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Alerta(s):');
+              for i := 0 to Alertas.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+          end;
+        end;
+
       tmConsultarLinkNFSe:
         begin
           with ConsultaLinkNFSe do
@@ -4742,21 +4807,25 @@ begin
     PathSalvar       := PathMensal;
   end;
 
-  if ACBrNFSeX1.DANFSe <> nil then
+  if ACBrNFSeX1.DANFSE <> nil then
   begin
     // TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
-    ACBrNFSeX1.DANFSe.TipoDANFSE := tpPadrao;
-    ACBrNFSeX1.DANFSe.Logo       := edtLogoMarca.Text;
-    ACBrNFSeX1.DANFSe.Prefeitura := edtPrefeitura.Text;
-    ACBrNFSeX1.DANFSe.PathPDF    := edtPathPDF.Text;
+    ACBrNFSeX1.DANFSE.TipoDANFSE := tpPadrao;
+    ACBrNFSeX1.DANFSE.Logo       := edtLogoMarca.Text;
+    ACBrNFSeX1.DANFSE.Prefeitura := edtPrefeitura.Text;
+    ACBrNFSeX1.DANFSE.PathPDF    := edtPathPDF.Text;
 
-    ACBrNFSeX1.DANFSe.Prestador.Logo := edtPrestLogo.Text;
+    ACBrNFSeX1.DANFSE.Prestador.Logo := edtPrestLogo.Text;
 
-    ACBrNFSeX1.DANFSe.MargemDireita  := 5;
-    ACBrNFSeX1.DANFSe.MargemEsquerda := 5;
-    ACBrNFSeX1.DANFSe.MargemSuperior := 5;
-    ACBrNFSeX1.DANFSe.MargemInferior := 5;
+    ACBrNFSeX1.DANFSE.MargemDireita  := 5;
+    ACBrNFSeX1.DANFSE.MargemEsquerda := 5;
+    ACBrNFSeX1.DANFSE.MargemSuperior := 5;
+    ACBrNFSeX1.DANFSE.MargemInferior := 5;
+
     ACBrNFSeX1.DANFSE.ImprimeCanhoto := True;
+
+    // Defini a quantidade de casas decimais para o campo aliquota
+    ACBrNFSeX1.DANFSE.CasasDecimais.Aliquota := 2;
   end;
 
   with ACBrNFSeX1.MAIL do

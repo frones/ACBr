@@ -1082,33 +1082,34 @@ var
   sNome, sCod, sUF: String;
 begin
   IniCidades := TMemIniFile.Create('');
-  Cidades    := TStringList.Create;
-
-  IniCidades.SetStrings(ACBrNFSeX1.Configuracoes.WebServices.Params);
-
   try
-    IniCidades.ReadSections(Cidades);
-    cbCidades.Items.Clear;
+    Cidades := TStringList.Create;
+    try
+      IniCidades.SetStrings(ACBrNFSeX1.Configuracoes.WebServices.Params);
+      IniCidades.ReadSections(Cidades);
+      cbCidades.Items.Clear;
 
-    for I := 0 to Pred(Cidades.Count) do
-    begin
-      if (StrToIntdef(Cidades[I], 0) > 0) then
+      for I := 0 to Pred(Cidades.Count) do
       begin
-        //Exemplo: Alfenas/3101607/MG
-        sCod  := Cidades[I];
-        sNome := IniCidades.ReadString(sCod, 'Nome', '');
-        sUF   := IniCidades.ReadString(sCod, 'UF', '');
+        if (StrToIntdef(Cidades[I], 0) > 0) then
+        begin
+          //Exemplo: Alfenas/3101607/MG
+          sCod  := Cidades[I];
+          sNome := IniCidades.ReadString(sCod, 'Nome', '');
+          sUF   := IniCidades.ReadString(sCod, 'UF', '');
 
-        cbCidades.Items.Add(Format('%s/%s/%s', [sNome, sCod, sUF]));
+          cbCidades.Items.Add(Format('%s/%s/%s', [sNome, sCod, sUF]));
+        end;
       end;
-    end;
 
-    //Sort
-    cbCidades.Sorted := false;
-    cbCidades.Sorted := true;
-    edtTotalCidades.Text := IntToStr(cbCidades.Items.Count);
+      //Sort
+      cbCidades.Sorted := false;
+      cbCidades.Sorted := true;
+      edtTotalCidades.Text := IntToStr(cbCidades.Items.Count);
+    finally
+      FreeAndNil(Cidades);
+    end;
   finally
-    FreeAndNil(Cidades);
     IniCidades.Free;
   end;
 end;
@@ -3633,6 +3634,79 @@ end;
 procedure TfrmACBrNFSe.ChecarResposta(aMetodo: TMetodo);
 var
   i: Integer;
+
+  procedure ListaDeErros(aErros: TNFSeEventoCollection);
+  var
+    i: Integer;
+  begin
+    if aErros.Count > 0 then
+    begin
+      memoLog.Lines.Add(' ');
+      memoLog.Lines.Add('Erro(s):');
+      for i := 0 to aErros.Count -1 do
+      begin
+        memoLog.Lines.Add('Código  : ' + aErros[i].Codigo);
+        memoLog.Lines.Add('Mensagem: ' + aErros[i].Descricao);
+        memoLog.Lines.Add('Correção: ' + aErros[i].Correcao);
+        memoLog.Lines.Add('---------');
+      end;
+    end;
+  end;
+
+  procedure ListaDeAlertas(aAlertas: TNFSeEventoCollection);
+  var
+    i: Integer;
+  begin
+    if aAlertas.Count > 0 then
+    begin
+      memoLog.Lines.Add(' ');
+      memoLog.Lines.Add('Alerta(s):');
+      for i := 0 to aAlertas.Count -1 do
+      begin
+        memoLog.Lines.Add('Código  : ' + aAlertas[i].Codigo);
+        memoLog.Lines.Add('Mensagem: ' + aAlertas[i].Descricao);
+        memoLog.Lines.Add('Correção: ' + aAlertas[i].Correcao);
+        memoLog.Lines.Add('---------');
+      end;
+    end;
+  end;
+
+  procedure ListaDeResumos(aResumos: TNFSeResumoCollection; aMetodo: TMetodo);
+  var
+    i: Integer;
+  begin
+    if aResumos.Count > 0 then
+    begin
+      memoLog.Lines.Add(' ');
+      memoLog.Lines.Add('Resumo(s):');
+      for i := 0 to aResumos.Count -1 do
+      begin
+        case aMetodo of
+          tmConsultarEvento:
+            begin
+              memoLog.Lines.Add('Chave DFe: ' + aResumos[i].ChaveDFe);
+              memoLog.Lines.Add('Tipo Doc.: ' + aResumos[i].TipoDoc);
+            end;
+
+          tmConsultarDFe:
+            begin
+              memoLog.Lines.Add('NSU      : ' + IntToStr(aResumos[i].NSU));
+              memoLog.Lines.Add('Chave DFe: ' + aResumos[i].ChaveDFe);
+              memoLog.Lines.Add('Tipo Doc.: ' + aResumos[i].TipoDoc);
+            end;
+        else
+          begin
+            memoLog.Lines.Add('Numero da Nota    : ' + aResumos[i].NumeroNota);
+            memoLog.Lines.Add('Código Verificação: ' + aResumos[i].CodigoVerificacao);
+            memoLog.Lines.Add('Numero do Rps     : ' + aResumos[i].NumeroRps);
+            memoLog.Lines.Add('Série do Rps      : ' + aResumos[i].SerieRps);
+          end;
+        end;
+
+        memoLog.Lines.Add('---------');
+      end;
+    end;
+  end;
 begin
   memoLog.Clear;
   memoLog.Lines.Clear;
@@ -3670,31 +3744,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
 
           if ACBrNFSeX1.Configuracoes.Geral.ConsultaLoteAposEnvio and
@@ -3720,31 +3771,8 @@ begin
                 LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml', 1000);
                 LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml', 1000);
 
-                if Erros.Count > 0 then
-                begin
-                  memoLog.Lines.Add(' ');
-                  memoLog.Lines.Add('Erro(s):');
-                  for i := 0 to Erros.Count -1 do
-                  begin
-                    memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                    memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                    memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                    memoLog.Lines.Add('---------');
-                  end;
-                end;
-
-                if Alertas.Count > 0 then
-                begin
-                  memoLog.Lines.Add(' ');
-                  memoLog.Lines.Add('Alerta(s):');
-                  for i := 0 to Alertas.Count -1 do
-                  begin
-                    memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                    memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                    memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                    memoLog.Lines.Add('---------');
-                  end;
-                end;
+                ListaDeErros(Erros);
+                ListaDeAlertas(Alertas);
               end;
             end;
 
@@ -3764,48 +3792,13 @@ begin
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
-                if Resumos.Count > 0 then
-                begin
-                  memoLog.Lines.Add(' ');
-                  memoLog.Lines.Add('Resumo(s):');
-                  for i := 0 to Resumos.Count -1 do
-                  begin
-                    memoLog.Lines.Add('Numero Nota       : ' + Resumos[i].NumeroNota);
-                    memoLog.Lines.Add('Código Verificação: ' + Resumos[i].CodigoVerificacao);
-                    memoLog.Lines.Add('Numero Rps        : ' + Resumos[i].NumeroRps);
-                    memoLog.Lines.Add('Série Rps         : ' + Resumos[i].SerieRps);
-                    memoLog.Lines.Add('---------');
-                  end;
-                end;
+                ListaDeResumos(Resumos, tmConsultarLote);
 
                 LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml', 1000);
                 LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml', 1000);
 
-                if Erros.Count > 0 then
-                begin
-                  memoLog.Lines.Add(' ');
-                  memoLog.Lines.Add('Erro(s):');
-                  for i := 0 to Erros.Count -1 do
-                  begin
-                    memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                    memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                    memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                    memoLog.Lines.Add('---------');
-                  end;
-                end;
-
-                if Alertas.Count > 0 then
-                begin
-                  memoLog.Lines.Add(' ');
-                  memoLog.Lines.Add('Alerta(s):');
-                  for i := 0 to Alertas.Count -1 do
-                  begin
-                    memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                    memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                    memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                    memoLog.Lines.Add('---------');
-                  end;
-                end;
+                ListaDeErros(Erros);
+                ListaDeAlertas(Alertas);
               end;
             end;
           end;
@@ -3832,31 +3825,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -3872,36 +3842,14 @@ begin
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
+            memoLog.Lines.Add('Descrição Sit : ' + DescSituacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -3919,48 +3867,13 @@ begin
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
-            if Resumos.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Resumo(s):');
-              for i := 0 to Resumos.Count -1 do
-              begin
-                memoLog.Lines.Add('Numero Nota       : ' + Resumos[i].NumeroNota);
-                memoLog.Lines.Add('Código Verificação: ' + Resumos[i].CodigoVerificacao);
-                memoLog.Lines.Add('Numero Rps        : ' + Resumos[i].NumeroRps);
-                memoLog.Lines.Add('Série Rps         : ' + Resumos[i].SerieRps);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeResumos(Resumos, tmConsultarLote);
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -3987,31 +3900,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4039,34 +3929,10 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
-
 
       tmConsultarNFSePorChave:
         begin
@@ -4086,31 +3952,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4137,31 +3980,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4190,31 +4010,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
 
           if ACBrNFSeX1.Configuracoes.Geral.ConsultaAposCancelar and
@@ -4235,31 +4032,8 @@ begin
               LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml', 1000);
               LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml', 1000);
 
-              if Erros.Count > 0 then
-              begin
-                memoLog.Lines.Add(' ');
-                memoLog.Lines.Add('Erro(s):');
-                for i := 0 to Erros.Count -1 do
-                begin
-                  memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                  memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                  memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                  memoLog.Lines.Add('---------');
-                end;
-              end;
-
-              if Alertas.Count > 0 then
-              begin
-                memoLog.Lines.Add(' ');
-                memoLog.Lines.Add('Alerta(s):');
-                for i := 0 to Alertas.Count -1 do
-                begin
-                  memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                  memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                  memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                  memoLog.Lines.Add('---------');
-                end;
-              end;
+              ListaDeErros(Erros);
+              ListaDeAlertas(Alertas);
             end;
           end;
         end;
@@ -4291,31 +4065,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4334,31 +4085,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4381,31 +4109,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4441,31 +4146,8 @@ begin
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4488,46 +4170,13 @@ begin
             memoLog.Lines.Add('ID do Evento    : ' + idEvento);
             memoLog.Lines.Add('Sucesso         : ' + BoolToStr(Sucesso, True));
 
+            ListaDeResumos(Resumos, tmConsultarEvento);
+
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Resumos.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Resumo(s):');
-              for i := 0 to Resumos.Count -1 do
-              begin
-                memoLog.Lines.Add('Chave DFe: ' + Resumos[i].ChaveDFe);
-                memoLog.Lines.Add('Tipo Doc.: ' + Resumos[i].TipoDoc);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4545,47 +4194,13 @@ begin
             memoLog.Lines.Add('Data   : ' + DateToStr(Data));
             memoLog.Lines.Add('Sucesso: ' + BoolToStr(Sucesso, True));
 
-            if Resumos.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Resumo(s):');
-              for i := 0 to Resumos.Count -1 do
-              begin
-                memoLog.Lines.Add('NSU      : ' + IntToStr(Resumos[i].NSU));
-                memoLog.Lines.Add('Chave DFe: ' + Resumos[i].ChaveDFe);
-                memoLog.Lines.Add('Tipo Doc.: ' + Resumos[i].TipoDoc);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeResumos(Resumos, tmConsultarDFe);
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
 
@@ -4616,47 +4231,11 @@ begin
               end;
             end;
 
-            if Resumos.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Resumo(s):');
-              for i := 0 to Resumos.Count -1 do
-              begin
-                memoLog.Lines.Add('NSU      : ' + IntToStr(Resumos[i].NSU));
-                memoLog.Lines.Add('Chave DFe: ' + Resumos[i].ChaveDFe);
-                memoLog.Lines.Add('Tipo Doc.: ' + Resumos[i].TipoDoc);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
-            if Erros.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Erro(s):');
-              for i := 0 to Erros.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
-
-            if Alertas.Count > 0 then
-            begin
-              memoLog.Lines.Add(' ');
-              memoLog.Lines.Add('Alerta(s):');
-              for i := 0 to Alertas.Count -1 do
-              begin
-                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
-                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
-                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
-                memoLog.Lines.Add('---------');
-              end;
-            end;
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
           end;
         end;
     end;
@@ -4734,21 +4313,6 @@ begin
     Emitente.WSFraseSecr    := edtFraseSecWeb.Text;
     Emitente.WSChaveAcesso  := edtChaveAcessoWeb.Text;
     Emitente.WSChaveAutoriz := edtChaveAutorizWeb.Text;
-
-    // Exemplos de valores para WSChaveAcesso para alguns provedores.
-    {
-    if Provedor in [proAgili, proElotech] then
-      Emitente.WSChaveAcesso := '0aA1bB2cC3dD4eE5fF6aA7bB8cC9dDEF';
-
-    if Provedor = proISSNet then
-      Emitente.WSChaveAcesso := 'A001.B0001.C0001-1';
-
-    if Provedor = proSigep then
-      Emitente.WSChaveAcesso := 'A001.B0001.C0001';
-
-    if Provedor = proiiBrasil then
-      Emitente.WSChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
-    }
 
     {
       Para o provedor ADM, utilizar as seguintes propriedades de configurações:
@@ -4976,7 +4540,6 @@ end;
 procedure TfrmACBrNFSe.sbtnNumSerieClick(Sender: TObject);
 var
   I: Integer;
-  ASerie: String;
   AddRow: Boolean;
 begin
   ACBrNFSeX1.SSL.LerCertificadosStore;
@@ -5001,8 +4564,6 @@ begin
   begin
     with ACBrNFSeX1.SSL.ListaCertificados[I] do
     begin
-      ASerie := NumeroSerie;
-
       if (CNPJ <> '') then
       begin
         with frmSelecionarCertificado.StringGrid1 do

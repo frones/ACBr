@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="77" Y="16"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="24"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
@@ -19,9 +19,10 @@
         <ComponentName Value="frmACBrNFSe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="384"/>
-        <CursorPos X="3" Y="413"/>
-        <UsageCount Value="23"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="4254"/>
+        <CursorPos Y="4275"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -34,7 +35,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="25"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="24"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
@@ -46,7 +47,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="33"/>
         <CursorPos Y="40"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="24"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
@@ -64,9 +65,8 @@
         <ComponentName Value="frlXDANFSeRL"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRLISSNet.pas"/>
@@ -89,132 +89,130 @@
         <ComponentName Value="frlXDANFSeRLSimplISS"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit8>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1975" Column="3" TopLine="1971"/>
+        <Caret Line="1612" Column="73" TopLine="1603"/>
       </Position1>
       <Position2>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1445" Column="3" TopLine="1438"/>
+        <Caret Line="1663" Column="5" TopLine="1562"/>
       </Position2>
       <Position3>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3541" Column="59" TopLine="3528"/>
+        <Caret Line="24" Column="3" TopLine="10"/>
       </Position3>
       <Position4>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3702" Column="59" TopLine="3689"/>
+        <Caret Line="413" Column="3" TopLine="384"/>
       </Position4>
       <Position5>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3848" Column="52" TopLine="3835"/>
+        <Caret Line="415" Column="3" TopLine="397"/>
       </Position5>
       <Position6>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="4360" Column="80" TopLine="4347"/>
+        <Caret Line="3236" TopLine="3218"/>
       </Position6>
       <Position7>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="952" Column="7" TopLine="934"/>
+        <Caret Line="3238" TopLine="3220"/>
       </Position7>
       <Position8>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1627" Column="7" TopLine="1611"/>
+        <Caret Line="3285" TopLine="3234"/>
       </Position8>
       <Position9>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1629" Column="68" TopLine="1616"/>
+        <Caret Line="3287" TopLine="3270"/>
       </Position9>
       <Position10>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="2077" Column="16" TopLine="2065"/>
+        <Caret Line="3405" TopLine="3388"/>
       </Position10>
       <Position11>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="2703" Column="19" TopLine="2686"/>
+        <Caret Line="3245" Column="3" TopLine="3239"/>
       </Position11>
       <Position12>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="2704" Column="79" TopLine="2691"/>
+        <Caret Line="1894" TopLine="1881"/>
       </Position12>
       <Position13>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3203" Column="16" TopLine="3191"/>
+        <Caret Line="1885" Column="3" TopLine="1881"/>
       </Position13>
       <Position14>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3542" Column="58" TopLine="3529"/>
+        <Caret Line="3256" TopLine="3243"/>
       </Position14>
       <Position15>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3583" Column="51" TopLine="3570"/>
+        <Caret Line="1409" Column="3" TopLine="1409"/>
       </Position15>
       <Position16>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3595" Column="62" TopLine="3582"/>
+        <Caret Line="2774" TopLine="2759"/>
       </Position16>
       <Position17>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3642" Column="62" TopLine="3629"/>
+        <Caret Line="2969" Column="3" TopLine="2965"/>
       </Position17>
       <Position18>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3703" Column="58" TopLine="3690"/>
+        <Caret Line="3016" Column="3" TopLine="3012"/>
       </Position18>
       <Position19>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3752" Column="58" TopLine="3739"/>
+        <Caret Line="3007" Column="3" TopLine="3005"/>
       </Position19>
       <Position20>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3797" Column="58" TopLine="3784"/>
+        <Caret Line="3032" Column="3" TopLine="3027"/>
       </Position20>
       <Position21>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3859" Column="58" TopLine="3846"/>
+        <Caret Line="3052" Column="3" TopLine="3048"/>
       </Position21>
       <Position22>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="4112" Column="50" TopLine="4096"/>
+        <Caret Line="2993" Column="38" TopLine="2928"/>
       </Position22>
       <Position23>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
+        <Caret Line="393" Column="20" TopLine="385"/>
       </Position23>
       <Position24>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="679" Column="68" TopLine="672"/>
+        <Caret Line="347" Column="24" TopLine="336"/>
       </Position24>
       <Position25>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1158" Column="36" TopLine="1149"/>
+        <Caret Line="1878" Column="29" TopLine="1870"/>
       </Position25>
       <Position26>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1224" Column="15" TopLine="1216"/>
+        <Caret Line="400" Column="20" TopLine="390"/>
       </Position26>
       <Position27>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1295" Column="71" TopLine="1289"/>
+        <Caret Line="1368" Column="17" TopLine="1349"/>
       </Position27>
       <Position28>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1612" Column="73" TopLine="1603"/>
+        <Caret Line="4204" TopLine="4185"/>
       </Position28>
       <Position29>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="1663" Column="5" TopLine="1562"/>
+        <Caret Line="4864" Column="5" TopLine="4843"/>
       </Position29>
       <Position30>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="24" Column="3" TopLine="10"/>
+        <Caret Line="4729" Column="11" TopLine="4720"/>
       </Position30>
     </JumpHistory>
     <RunParams>

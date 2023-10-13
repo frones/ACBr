@@ -111,7 +111,7 @@ begin
      tpInclui         : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
      tpAltera         : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
      tpConsulta       : FPURL := FPURL + '/bills?' +  DefinirParametros;
-     tpConsultaDetalhe: FPURL := FPURL + '/bills?' +  DefinirParametros;
+     tpConsultaDetalhe: FPURL := FPURL + '/bills/' +  DefinirParametros;
      tpBaixa          : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
   end;
 end;
@@ -198,8 +198,7 @@ begin
     5. registry: Pesquisa de informações de cartório do boleto
     }
     if Assigned(ATitulo) then
-       with ATitulo do
-       ANossoNumero := NossoNumero;
+      ANossoNumero := ATitulo.NossoNumero;
 
     Consulta := TStringList.Create;
     try
@@ -226,13 +225,13 @@ begin
             isbBaixado:
               begin
                 //settlement: Pesquisa para informações de baixas/liquidações do boleto
-                Consulta.Add('{'+ Boleto.Cedente.Convenio+'.'+ ANossoNumero+'}');
+                Consulta.Add(Boleto.Cedente.Convenio + '.' + ANossoNumero);
                 Consulta.Add('tipoConsulta=settlement');
               end;
             isbAberto:
               begin
                 // bankslip: Pesquisa para dados completos do boleto
-                Consulta.Add('{'+ Boleto.Cedente.Convenio+'.'+ ANossoNumero+'}');
+                Consulta.Add(Boleto.Cedente.Convenio + '.' + ANossoNumero);
                 Consulta.Add('tipoConsulta=bankslip');
               end;
           end;
@@ -618,8 +617,7 @@ begin
       begin
         JsonSacadorAvalista := TJSONObject.Create;
         try
-          JsonSacadorAvalista.Add('name').Value.AsString :=
-            Sacado.SacadoAvalista.NomeAvalista;
+          JsonSacadorAvalista.Add('name').Value.AsString := Sacado.SacadoAvalista.NomeAvalista;
           if Length(SCnpjCpf) <= 11 then
             JsonSacadorAvalista.Add('documentType').Value.AsString := 'CPF'
           else

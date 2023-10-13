@@ -464,6 +464,9 @@ var
 begin
   FpParametro := '?formato_saida=2';
 
+  if ConfigGeral.Params.ParamTemValor('TipoRetorno', 'eletron=1') then
+    FpParametro := '?eletron=1';
+
   if EstaVazio(Response.Protocolo) then
   begin
     AErro := Response.Erros.New;
@@ -602,6 +605,9 @@ var
   AErro: TNFSeEventoCollectionItem;
 begin
   FpParametro := '?formato_saida=2';
+
+  if ConfigGeral.Params.ParamTemValor('TipoRetorno', 'eletron=1') then
+    FpParametro := '?eletron=1';
 
   if EstaVazio(Response.NumeroRps) then
   begin
@@ -771,6 +777,9 @@ var
 begin
   FpParametro := '?formato_saida=2';
 
+  if ConfigGeral.Params.ParamTemValor('TipoRetorno', 'eletron=1') then
+    FpParametro := '?eletron=1';
+
   if ConfigGeral.Versao = ve101 then
     TagSerie := 'serie_nfse'
   else
@@ -818,10 +827,7 @@ begin
                                  '</nfse>';
 
       end;
-    tcPorFaixa: ;
-    tcPorPeriodo: ;
-    tcServicoPrestado: ;
-    tcServicoTomado: ;
+
     tcPorCodigoVerificacao:
       begin
         if EstaVazio(Response.InfConsultaNFSe.CodVerificacao) then

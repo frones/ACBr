@@ -44,6 +44,13 @@ Símbolo : Significado
 
 13/10/2023
 -- ACBrNFSeXServicos --
+[*] Criado o parâmetro TipoRetorno para a cidade Igrejinha/RS, visando 
+    gerar o retorno em um formato diferente do que esta estabelecido no manual.
+-- IPM.Provider --
+[*] Alterado as procedures que preparam as consultas para identificar a presença
+    do parâmetro TipoRetorno.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
 [*] Incluída a cidade de Xangri-lá/RS, o provedor é Fiorilli.
    Por: Wesley Robert
 -- Diversos --

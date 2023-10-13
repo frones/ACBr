@@ -645,6 +645,10 @@ type
     Impressora                 : String ;
     NomeArquivoBoleto          : String;
     TipoMotorRelatorio         : integer;
+    MargemInferior             : double;
+    MargemSuperior             : double;
+    MargemEsquerda             : double;
+    MargemDireita              : double;
   end;
 
   TBoletoRemessaRetorno = record
@@ -1498,6 +1502,10 @@ begin
       Ini.WriteString( CSecBOLETO, CKeyBOLETOImpressora,                Impressora             );
       Ini.WriteString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto);
       ini.WriteInteger(CSecBOLETO, CKeyBOLETOTipoMotorRelatorio,TipoMotorRelatorio);
+      ini.WriteFloat(CSecBOLETO,   CKeyBOLETOMargemInferior,MargemInferior);
+      ini.WriteFloat(CSecBOLETO,   CKeyBOLETOMargemSuperior,MargemSuperior);
+      ini.WriteFloat(CSecBOLETO,   CKeyBOLETOMargemEsquerda,MargemEsquerda);
+      ini.WriteFloat(CSecBOLETO,   CKeyBOLETOMargemDireita ,MargemDireita);
 
     end;
 
@@ -2283,6 +2291,10 @@ begin
       Impressora             :=  Ini.ReadString( CSecBOLETO, CKeyBOLETOImpressora,       Impressora             );
       NomeArquivoBoleto      :=  Ini.ReadString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto     );
       TipoMotorRelatorio     :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOTipoMotorRelatorio,TipoMotorRelatorio    );
+      MargemInferior         :=  ini.ReadFloat(CSecBOLETO,   CKeyBOLETOMargemInferior,    MargemInferior        );
+      MargemSuperior         :=  ini.ReadFloat(CSecBOLETO,   CKeyBOLETOMargemSuperior,    MargemSuperior        );
+      MargemEsquerda         :=  ini.ReadFloat(CSecBOLETO,   CKeyBOLETOMargemEsquerda,    MargemEsquerda        );
+      MargemDireita          :=  ini.ReadFloat(CSecBOLETO,   CKeyBOLETOMargemDireita,     MargemDireita        );
     end;
 
     with BOLETO.RemessaRetorno do
@@ -3030,6 +3042,10 @@ begin
     NomeArquivoBoleto      :=  '';
     Impressora             :=  '';
     TipoMotorRelatorio     :=  0;
+    MargemInferior         :=  5;
+    MargemSuperior         :=  5;
+    MargemEsquerda         :=  4;
+    MargemDireita          :=  3;
   end;
 
   with BOLETO.RemessaRetorno do

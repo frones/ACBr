@@ -212,6 +212,10 @@ begin
   with BoletoFortes do
   begin
      DirLogo := LibConfig.BoletoFCFortesConfig.DirLogo;
+     MargemInferior := LibConfig.BoletoFCFortesConfig.MargemInferior;
+     MargemSuperior := LibConfig.BoletoFCFortesConfig.MargemSuperior;
+     MargemEsquerda := LibConfig.BoletoFCFortesConfig.MargemEsquerda;
+     MargemDireita  := LibConfig.BoletoFCFortesConfig.MargemDireita;
      Filtro := LibConfig.BoletoFCFortesConfig.Filtro;
      if (FLayoutImpressao <> -1) then
        Layout := TACBrBolLayOut(FLayoutImpressao)

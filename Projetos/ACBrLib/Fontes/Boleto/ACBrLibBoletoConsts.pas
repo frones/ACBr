@@ -112,6 +112,10 @@ const
   CChaveSoftwareHouse= 'SoftwareHouse';
   CChaveAlterarEscalaPadrao= 'AlterarEscalaPadrao';
   CChaveNovaEscala= 'NovaEscala';
+  CChaveMargemInferior='MargemInferior';
+  CChaveMargemSuperior='MargemSuperior';
+  CChaveMargemEsquerda='MargemEsquerda';
+  CChaveMargemDireita ='MargemDireita';
 
   CSessaoBoletoCedenteWS = 'BoletoCedenteWS';
   CChaveClientID= 'ClientID';

@@ -14195,9 +14195,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Transparent = False
       end
       object lblValorPix: TRLLabel
-        Left = 600
+        Left = 592
         Top = 112
-        Width = 129
+        Width = 137
         Height = 16
         Alignment = taRightJustify
         Anchors = [fkRight, fkBottom]

@@ -1319,6 +1319,8 @@ type
      fIndice: Integer;
      function GetACBrTitulo: TACBrTitulo;
      procedure printEMVPix(const AEMV : String; out ASender : TRLImage);
+     procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrBoletoFCClass);
+
     { Private declarations }
   public
     { Public declarations }
@@ -1532,6 +1534,7 @@ begin
 
    fIndice := 0;
    txtSwHouse.Caption := BoletoFC.SoftwareHouse ;
+   AjustarMargem(BoletoCarne,BoletoFC);
 
 end;
 
@@ -1569,6 +1572,7 @@ procedure TACBrBoletoFCFortesFr.LayoutBoletoBeforePrint(Sender: TObject;
 begin
    fIndice := 0 ;
    txtSwHouse.Caption := BoletoFC.SoftwareHouse ;
+   AjustarMargem(LayoutBoleto,BoletoFC);
 end;
 
 procedure TACBrBoletoFCFortesFr.LayoutBoletoDataCount(Sender: TObject;
@@ -1596,6 +1600,7 @@ procedure TACBrBoletoFCFortesFr.LayoutCarneA5BeforePrint(Sender: TObject;
 begin
   fIndice := 0 ;
   txtCA5Sw.Caption := BoletoFC.SoftwareHouse ;
+  AjustarMargem(layOutCarneA5,BoletoFC);
 
 end;
 
@@ -1623,6 +1628,7 @@ begin
   fIndice := 0 ;
   txtSwHouseCentDet.Caption := BoletoFC.SoftwareHouse ;
   txtSwHouseDet.Caption := BoletoFC.SoftwareHouse ;
+  AjustarMargem(LayoutFaturaDetal,BoletoFC);
 end;
 
 procedure TACBrBoletoFCFortesFr.LayoutFaturaDetalDataCount(Sender: TObject;
@@ -1649,6 +1655,7 @@ procedure TACBrBoletoFCFortesFr.LayoutServicosBeforePrint(Sender: TObject;
 begin
    fIndice := 0;
    txtSwHouseServicos.Caption := BoletoFC.SoftwareHouse ;
+   AjustarMargem(LayoutServicos,BoletoFC);
 end;
 
 procedure TACBrBoletoFCFortesFr.LayoutServicosDataCount(Sender: TObject;
@@ -1675,6 +1682,7 @@ procedure TACBrBoletoFCFortesFr.LayoutTermicaBeforePrint(Sender: TObject;
 begin
    fIndice := 0 ;
    txtSwHouse80mm.Caption := BoletoFC.SoftwareHouse;
+   AjustarMargem(LayoutTermica,BoletoFC);
 end;
 
 procedure TACBrBoletoFCFortesFr.LayoutTermicaDataCount(Sender: TObject;
@@ -2106,6 +2114,7 @@ procedure TACBrBoletoFCFortesFr.RLBandPixBeforePrint(Sender: TObject;
 var
    EnderecoCed: String;
 begin
+
   with fBoletoFC.ACBrBoleto do
   begin
     EnderecoCed := Cedente.Logradouro+' '+Cedente.NumeroRes+' '+Cedente.Complemento+'  '+
@@ -2115,7 +2124,8 @@ begin
     txtCNPJCedentePix.Caption     := Cedente.CNPJCPF;
     txtEnderecoPIX.Caption        := EnderecoCed;
     txtValorPix.Caption           := FormatFloatBr(Titulo.ValorDocumento,',R$ 0.00');
-
+    lblCopiaeCola.Visible := (Titulo.QrCode.emv <> '');
+    lblCopiaeCola.Caption := Titulo.QrCode.emv;
     printEMVPix(Titulo.QrCode.emv, imgQRCodePix);
 
   end;
@@ -2357,6 +2367,7 @@ procedure TACBrBoletoFCFortesFr.RLBandCarneA5TopoBeforePrint(Sender: TObject;
 Var
    NossoNum,CodCedente,TipoDoc, Carteira, CodBarras, LinhaDigitavel: String;
 begin
+
    with fBoletoFC.ACBrBoleto do
    begin
       NossoNum    := Banco.MontarCampoNossoNumero( Titulo );
@@ -2803,6 +2814,18 @@ begin
   end
   else
     ASender.Visible := False;
+end;
+
+procedure TACBrBoletoFCFortesFr.AjustarMargem(FReport: TRLReport; AConfig: TACBrBoletoFCClass);
+begin
+  // AJuste das Margens
+  with FReport.Margins do
+  begin
+    TopMargin    := AConfig.MargemSuperior;
+    BottomMargin := AConfig.MargemInferior;
+    LeftMargin   := AConfig.MargemEsquerda;
+    RightMargin  := AConfig.MargemDireita;
+  end;
 end;
 
 {$ifdef FPC}

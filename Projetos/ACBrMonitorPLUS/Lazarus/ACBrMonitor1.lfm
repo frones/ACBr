@@ -22276,9 +22276,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object ckgBOLMostrar: TCheckGroup
                 Left = 6
-                Height = 99
+                Height = 128
                 Top = 200
-                Width = 503
+                Width = 343
                 Anchors = [akTop, akLeft, akRight]
                 AutoFill = True
                 Caption = 'Mostrar'
@@ -22291,8 +22291,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ChildSizing.ShrinkVertical = crsScaleChilds
                 ChildSizing.Layout = cclTopToBottomThenLeftToRight
                 ChildSizing.ControlsPerLine = 3
-                ClientHeight = 77
-                ClientWidth = 499
+                ClientHeight = 106
+                ClientWidth = 339
                 Font.Height = -13
                 Items.Strings = (
                   'Previsualização'
@@ -22461,6 +22461,80 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnChange = cbxBolMotorRelatorioChange
                 Style = csDropDownList
                 TabOrder = 8
+              end
+              object grbMargem: TGroupBox
+                Left = 360
+                Height = 128
+                Top = 200
+                Width = 232
+                Caption = 'Margem'
+                ClientHeight = 106
+                ClientWidth = 228
+                TabOrder = 9
+                object Label283: TLabel
+                  Left = 29
+                  Height = 17
+                  Top = 1
+                  Width = 42
+                  Caption = 'Inferior'
+                  ParentColor = False
+                end
+                object edtBolMargemInferior: TEdit
+                  Left = 29
+                  Height = 25
+                  Top = 18
+                  Width = 80
+                  TabOrder = 0
+                  Text = '5'
+                end
+                object Label284: TLabel
+                  Left = 117
+                  Height = 17
+                  Top = 1
+                  Width = 50
+                  Caption = 'Superior'
+                  ParentColor = False
+                end
+                object edtBolMargemSuperior: TEdit
+                  Left = 117
+                  Height = 25
+                  Top = 18
+                  Width = 80
+                  TabOrder = 1
+                  Text = '5'
+                end
+                object Label285: TLabel
+                  Left = 29
+                  Height = 17
+                  Top = 49
+                  Width = 55
+                  Caption = 'Esquerda'
+                  ParentColor = False
+                end
+                object Label286: TLabel
+                  Left = 117
+                  Height = 17
+                  Top = 49
+                  Width = 38
+                  Caption = 'Direita'
+                  ParentColor = False
+                end
+                object edtBolMargemEsquerda: TEdit
+                  Left = 29
+                  Height = 25
+                  Top = 66
+                  Width = 80
+                  TabOrder = 2
+                  Text = '4'
+                end
+                object edtBolMargemDireita: TEdit
+                  Left = 117
+                  Height = 25
+                  Top = 66
+                  Width = 80
+                  TabOrder = 3
+                  Text = '3'
+                end
               end
             end
             object tsRemessaRetorno: TTabSheet
@@ -23205,44 +23279,54 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 4
                 end
                 object edtBolArquivoKey: TEdit
-                  Left = 571
+                  AnchorSideLeft.Control = Label261
+                  AnchorSideLeft.Side = asrBottom
+                  Left = 483
                   Height = 24
-                  Top = 68
-                  Width = 457
-                  Anchors = [akTop, akRight]
+                  Top = 67
+                  Width = 536
+                  Anchors = [akTop, akLeft, akRight]
+                  BorderSpacing.Left = 20
                   Font.Height = -13
                   Font.Name = 'Arial'
                   ParentFont = False
                   TabOrder = 5
                 end
                 object Label261: TLabel
-                  Left = 495
+                  AnchorSideLeft.Control = edtKeyUser
+                  AnchorSideLeft.Side = asrBottom
+                  Left = 396
                   Height = 17
                   Top = 71
                   Width = 67
-                  Anchors = [akTop, akRight]
+                  BorderSpacing.Left = 20
                   Caption = 'ArquivoKEY'
                   Font.Height = -13
                   ParentColor = False
                   ParentFont = False
                 end
                 object edtBolArquivoCRT: TEdit
-                  Left = 571
+                  AnchorSideLeft.Control = Label262
+                  AnchorSideLeft.Side = asrBottom
+                  Left = 483
                   Height = 24
                   Top = 100
-                  Width = 457
-                  Anchors = [akTop, akRight]
+                  Width = 537
+                  Anchors = [akTop, akLeft, akRight]
+                  BorderSpacing.Left = 20
                   Font.Height = -13
                   Font.Name = 'Arial'
                   ParentFont = False
                   TabOrder = 6
                 end
                 object Label262: TLabel
-                  Left = 495
+                  AnchorSideLeft.Control = edtScope
+                  AnchorSideLeft.Side = asrBottom
+                  Left = 396
                   Height = 17
                   Top = 103
                   Width = 67
-                  Anchors = [akTop, akRight]
+                  BorderSpacing.Left = 20
                   Caption = 'ArquivoCRT'
                   Font.Height = -13
                   ParentColor = False

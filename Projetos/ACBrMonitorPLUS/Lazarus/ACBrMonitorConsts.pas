@@ -600,6 +600,7 @@ const
   CMetodoGerarPDFComSenha=           'gerarpdfcomsenha';
   CMetodoGerarPDFBoletoComSenha =    'gerarpdfboletocomsenha';
   CMetodoSetMotorBoletoRelatorio =   'setmotorboletorelatorio';
+  CMetodoSetMargem  =                'setmargem';
 
   CMetodoAtivar =               'ativar';
   CMetodoDesativar =            'desativar';
@@ -1353,6 +1354,11 @@ const
   CKeyBOLETOImpressora =                    'Impressora';
   CKeyBOLETONomeArquivoBoleto =             'NomeArquivoBoleto';
   CKeyBOLETOTipoMotorRelatorio =            'TipoMotorRelatorio';
+  CKeyBOLETOMargemInferior =                'MargemInferior';
+  CKeyBOLETOMargemSuperior =                'MargemSuperior';
+  CKeyBOLETOMargemEsquerda =                'MargemEsquerda';
+  CKeyBOLETOMargemDireita =                 'MargemDireita';
+
   //Manter Compatibilidade
   CKeyBOLETOCedenteNome =                   'Cedente.Nome';
   CKeyBOLETOCedenteCNPJCPF =                'Cedente.CNPJCPF';

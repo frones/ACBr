@@ -512,10 +512,14 @@ type
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
     edConsultarGTIN: TEdit;
+    edtBolMargemInferior: TEdit;
     edtArquivoWebServicesNFSe: TEdit;
     edtBOLChavePix: TEdit;
     edtBolArquivoKey: TEdit;
     edtBolArquivoCRT: TEdit;
+    edtBolMargemEsquerda: TEdit;
+    edtBolMargemSuperior: TEdit;
+    edtBolMargemDireita: TEdit;
     edtCodigoCidade: TEdit;
     edtCNPJPrefeitura: TEdit;
     edtNomeCidade: TEdit;
@@ -748,6 +752,7 @@ type
     GrbVersaoDFe: TGroupBox;
     GrbDadosBeneficiarioBoletoWeb: TGroupBox;
     grbWsConfig: TGroupBox;
+    grbMargem: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -846,6 +851,10 @@ type
     Label280: TLabel;
     Label281: TLabel;
     Label282: TLabel;
+    Label283: TLabel;
+    Label284: TLabel;
+    Label285: TLabel;
+    Label286: TLabel;
     lbConsultarGTIN: TLabel;
     Label254: TLabel;
     lblBOLChavePix: TLabel;
@@ -5722,6 +5731,10 @@ begin
       cbxBOLImpressora.ItemIndex       := cbxBOLImpressora.Items.IndexOf(Impressora);
       cbxBolMotorRelatorio.ItemIndex   := TipoMotorRelatorio;
       cbxBolMotorRelatorio.OnChange(cbxBolMotorRelatorio);
+      edtBolMargemInferior.text        := FloatToStr(MargemInferior);
+      edtBolMargemSuperior.text        := FloatToStr(MargemSuperior);
+      edtBolMargemEsquerda.text        := FloatToStr(MargemEsquerda);
+      edtBolMargemDireita.text         := FloatToStr(MargemDireita);
     end;
 
     with PIX do
@@ -6710,6 +6723,11 @@ begin
 
     wNomeArquivo:= edNomeArquivo.Text;
 
+    MargemInferior := StrToFloatDef(edtBolMargemInferior.text,0.5);
+    MargemSuperior := StrToFloatDef(edtBolMargemSuperior.text,0.5);
+    MargemEsquerda := StrToFloatDef(edtBolMargemEsquerda.text,0.5);
+    MargemDireita  := StrToFloatDef(edtBolMargemDireita.text,0.5);
+
     if wNomeArquivo <> '' then
       wPathArquivo:= wDirArquivo + wNomeArquivo
     else
@@ -7628,6 +7646,10 @@ begin
        NomeArquivoBoleto        := trim(edNomeArquivo.Text);
        Impressora               := cbxBOLImpressora.Text;
        TipoMotorRelatorio       := cbxBolMotorRelatorio.ItemIndex;
+       MargemInferior           := StrToFloatDef(edtBolMargemInferior.Text,0);
+       MargemSuperior           := StrToFloatDef(edtBolMargemSuperior.Text,0);
+       MargemEsquerda           := StrToFloatDef(edtBolMargemEsquerda.Text,0);
+       MargemDireita            := StrToFloatDef(edtBolMargemDireita.Text,0);
      end;
 
      with RemessaRetorno do

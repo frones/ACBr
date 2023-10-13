@@ -48,6 +48,7 @@ type
 TACBrObjetoBoleto = class(TACBrObjetoDFe)
 private
   fACBrBoleto: TACBrBoleto;
+  fBoletoPersonalizandoArquivo : Boolean;
 public
   constructor Create(AConfig: TMonitorConfig; ACBrBoleto: TACBrBoleto); reintroduce;
   procedure Executar(ACmd: TACBrCmd); override;
@@ -260,6 +261,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetMargem  }
+TMetodoSetMargem = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+
 
 { TMetodoConsultarTitulosPorPeriodo }
 TMetodoConsultarTitulosPorPeriodo  = class(TACBrMetodo)
@@ -319,6 +327,7 @@ begin
   ListaDeMetodos.Add(CMetodoGerarPDFComSenha);
   ListaDeMetodos.Add(CMetodoGerarPDFBoletoComSenha);
   ListaDeMetodos.Add(CMetodoSetMotorBoletoRelatorio);
+  ListaDeMetodos.Add(CMetodoSetMargem);
 
 end;
 
@@ -365,6 +374,7 @@ begin
     27 : AMetodoClass := TMetodoGerarPDFComSenha;
     28 : AMetodoClass := TMetodoGerarPDFBoletoComSenha;
     29 : AMetodoClass := TMetodoSetMotorBoletoRelatorio;
+    30 : AMetodoClass := TMetodoSetMargem;
     else
       begin
         AACBrUnit := TACBrObjetoACBr.Create(Nil); //Instancia DoACBrUnit para validar métodos padrão para todos os objetos
@@ -504,6 +514,38 @@ begin
 
 end;
 
+{ TMetodoSetMargem }
+
+{ Params: 0 - MargemInferior,
+          1 - MargemSuperior,
+          2 - MargemEsquerda,
+          3 - MargemDireita,
+}
+procedure TMetodoSetMargem.Executar;
+var
+   AMargemInferior, AMargemSuperior, AMargemEsquerda, AMargemDireita : double;
+begin
+  AMargemInferior := StrToFloatDef(fpCmd.Params(0), 5);
+  AMargemSuperior := StrToFloatDef(fpCmd.Params(1), 5);
+  AMargemEsquerda := StrToFloatDef(fpCmd.Params(2), 4);
+  AMargemDireita  := StrToFloatDef(fpCmd.Params(3), 3);
+  try
+    with TACBrObjetoBoleto(fpObjetoDono) do
+    begin
+      ACBrBoleto.ACBrBoletoFC.MargemInferior:=AMargemInferior;
+      ACBrBoleto.ACBrBoletoFC.MargemSuperior:=AMargemSuperior;
+      ACBrBoleto.ACBrBoletoFC.MargemEsquerda:=AMargemEsquerda;
+      ACBrBoleto.ACBrBoletoFC.MargemDireita :=AMargemDireita;
+
+    end;
+
+  except
+    raise Exception.Create('Código ou Operação Inválido.');
+  end;
+
+end;
+
+
 
 { TMetodoConfigurarDados }
 
@@ -605,6 +647,7 @@ procedure TMetodoGerarPDFComSenha.Executar;
 var
   ASenha, ANomeArquivoPDF: String;
   FACBrBoletoFPDF   : TACBrBoletoFPDF;
+  LState : boolean;
 begin
   ASenha          := fpCmd.Params(0);
   ANomeArquivoPDF := fpCmd.Params(1);
@@ -622,14 +665,15 @@ begin
     if not Assigned(ACBrBoleto.ACBrBoletoFC) then
        raise Exception.Create('MOTOR DE RELATÓRIO NÃO FOI SELECIONADO');
 
-
+    LState:= ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual;
     if ANomeArquivoPDF <> '' then
        begin
           ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual:=False;
           ACBrBoleto.ACBrBoletoFC.NomeArquivo:=ANomeArquivoPDF;
        end;
     ACBrBoleto.GerarPDF;
-    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual:=true;
+    fpCmd.Resposta := sLineBreak + 'Arquivo Gerado = ' + ACBrBoleto.ACBrBoletoFC.NomeArquivo;
+    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := LState;
   end;
 
 end;
@@ -851,6 +895,8 @@ begin
            ACBrBoleto.ACBrBoletoFC.NomeArquivo := PathWithDelim( ADir) +
              IfThen(NaoEstaVazio(AArq), AArq , 'boleto.pdf' );
 
+        fBoletoPersonalizandoArquivo := (AArq = '');
+
         fpCmd.Resposta := ACBrBoleto.ACBrBoletoFC.NomeArquivo;
 
       end;
@@ -1060,16 +1106,20 @@ end;
 procedure TMetodoGerarPDFBoleto.Executar;
 var
   AIndice: Integer;
+  LState : Boolean;
 begin
   AIndice := StrToIntDef(fpCmd.Params(0),0);
 
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
+    LState:=ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual;
     try
+      ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := fBoletoPersonalizandoArquivo;
       ACBrBoleto.ListadeBoletos[AIndice].GerarPDF();
     Except
       raise Exception.Create('Título de Indice '+IntToStr(AIndice)+' não identificado na Lista!');
     end;
+    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := LState;
 
   end;
 
@@ -1085,17 +1135,20 @@ var
   AIndice: Integer;
   ASenha : string;
   FACBrBoletoFPDF   : TACBrBoletoFPDF;
+  LState : Boolean;
 begin
   AIndice := StrToIntDef(fpCmd.Params(0),0);
   ASenha  := fpCmd.Params(1);
+
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
     FACBrBoletoFPDF     := TACBrBoletoFPDF.Create(ACBrBoleto);
+    LState := ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual;
 
     if ACBrBoleto.ACBrBoletoFC.ClassName <> FACBrBoletoFPDF.ClassName then
        raise Exception.Create('A Função GerarPDFBoletoComSenha() não funciona com o motor selecionado !');
 
-    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := True;
+    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := false;
     if ASenha <> '' then
        ACBrBoleto.ACBrBoletoFC.PdfSenha := ASenha
     else
@@ -1109,6 +1162,8 @@ begin
     Except
       raise Exception.Create('Título de Indice '+IntToStr(AIndice)+' não identificado na Lista!');
     end;
+
+    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := LState;
 
   end;
 

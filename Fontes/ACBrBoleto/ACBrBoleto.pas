@@ -1919,6 +1919,10 @@ type
     FNovaEscala: Integer;
     FIndiceImprimirIndividual: Integer;
     FCalcularNomeArquivoPDFIndividual: Boolean;
+    FMargemEsquerda: double;
+    FMargemDireita: double;
+    FMargemSuperior: double;
+    FMargemInferior: double;
     function ComponentStateDesigning: Boolean;
     function GetArquivoLogo: String;
     function GetDirLogo: String;
@@ -1931,6 +1935,10 @@ type
     procedure SetPdfSenha(const Value: string);
     procedure SetTituloPreview(const Value: string);
     procedure SetIndiceImprimirIndividual(const Value: Integer);
+    procedure SetMargemDireita(const AValue: double);
+    procedure SetMargemEsquerda(const AValue: double);
+    procedure SetMargemInferior(const AValue: double);
+    procedure SetMargemSuperior(const AValue: double);
 
   protected
     fACBrBoleto : TACBrBoleto;
@@ -1973,6 +1981,10 @@ type
     property AlterarEscalaPadrao: Boolean      read FAlterarEscalaPadrao write FAlterarEscalaPadrao default False;
     property NovaEscala      : Integer         read FNovaEscala       write FNovaEscala        default 96;
     property TituloPreview   : string          read FTituloPreview    write SetTituloPreview;
+    property MargemInferior  : double          read FMargemInferior   write SetMargemInferior;
+    property MargemSuperior  : double          read FMargemSuperior   write SetMargemSuperior;
+    property MargemEsquerda  : double          read FMargemEsquerda   write SetMargemEsquerda;
+    property MargemDireita   : double          read FMargemDireita    write SetMargemDireita;
   end;
 
 implementation
@@ -6320,6 +6332,34 @@ procedure TACBrBoletoFCClass.SetIndiceImprimirIndividual(const Value: Integer);
 begin
   if Value <> FIndiceImprimirIndividual then
     FIndiceImprimirIndividual:= Value;
+end;
+
+procedure TACBrBoletoFCClass.SetMargemDireita(const AValue: double);
+begin
+  if (AValue = 0) and (csDesigning in ComponentState) then
+    Exit;
+  FMargemDireita := AValue;
+end;
+
+procedure TACBrBoletoFCClass.SetMargemEsquerda(const AValue: double);
+begin
+  if (AValue = 0) and (csDesigning in ComponentState) then
+    Exit;
+  FMargemEsquerda := AValue;
+end;
+
+procedure TACBrBoletoFCClass.SetMargemInferior(const AValue: double);
+begin
+  if (AValue = 0) and (csDesigning in ComponentState) then
+    Exit;
+  FMargemInferior := AValue;
+end;
+
+procedure TACBrBoletoFCClass.SetMargemSuperior(const AValue: double);
+begin
+  if (AValue = 0) and (csDesigning in ComponentState) then
+    Exit;
+  FMargemSuperior := AValue;
 end;
 
 procedure TACBrBoletoFCClass.Imprimir;

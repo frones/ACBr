@@ -3,7 +3,7 @@ object frmACBrNFSe: TfrmACBrNFSe
   Height = 601
   Top = 83
   Width = 866
-  Caption = 'ACBrNFSeX - Programa Exemplo - Versão Delphi'
+  Caption = 'ACBrNFSeX - Programa Exemplo - Versão Lazarus'
   ClientHeight = 601
   ClientWidth = 866
   Color = clBtnFace

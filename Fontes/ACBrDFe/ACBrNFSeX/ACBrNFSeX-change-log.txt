@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/10/2023
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade de Xangri-lá/RS, o provedor é Fiorilli.
+   Por: Wesley Robert
 -- Diversos --
 [+] Implementado as rotinas especificas para o método ConsultarNFSePorChave.
     O método ConsultarNFSePorChave é utilizado pelo provedor PadraoNacional e agora

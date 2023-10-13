@@ -12864,7 +12864,6 @@ begin
                             pmRegimesEspeciais, pmRetencoes, pmBeneficios]);
 end;
 
-
 function CodIBGEPaisToSiglaISO2(t: Integer): string;
 var
   i: Integer;

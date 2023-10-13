@@ -1148,7 +1148,7 @@ begin
     if ACBrBoleto.ACBrBoletoFC.ClassName <> FACBrBoletoFPDF.ClassName then
        raise Exception.Create('A Função GerarPDFBoletoComSenha() não funciona com o motor selecionado !');
 
-    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := false;
+    ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := fBoletoPersonalizandoArquivo;
     if ASenha <> '' then
        ACBrBoleto.ACBrBoletoFC.PdfSenha := ASenha
     else

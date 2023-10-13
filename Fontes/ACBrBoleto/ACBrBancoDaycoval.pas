@@ -754,8 +754,7 @@ begin
       SeuNumero               := Copy(Linha, 38, 25);
       NumeroDocumento         := Copy(Linha, 117, TamanhoNumeroDocumento);
       OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(Linha, 109, 2), 0));
-      DataOcorrencia := StringToDateTimeDef(Copy(Linha, 111, 2) + '/' + Copy(Linha, 113, 2) + '/' + Copy(Linha, 115, 2), 0, 'DD/MM/YY');
-
+      
       DataOcorrencia :=
         StringToDateTimeDef(
           Copy(Linha, 111, 2) + '/' +

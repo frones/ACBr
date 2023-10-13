@@ -255,6 +255,7 @@ begin
       CNPJ := GetCNPJFromExtensions;
 
     DataVenc   := FCertificado.ValidToDate;
+    DataInicioValidade   := FCertificado.ValidFromDate;
     IssuerName := String(FCertificado.IssuerName);
     if FCertificado.PrivateKey.IsHardwareDevice then
       Tipo := tpcA3

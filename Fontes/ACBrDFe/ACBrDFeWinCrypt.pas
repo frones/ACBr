@@ -95,6 +95,7 @@ function GetSerialNumber(ACertContext: PCCERT_CONTEXT): String;
 function GetThumbPrint(ACertContext: PCCERT_CONTEXT): String;
 function GetSubjectName(ACertContext: PCCERT_CONTEXT): String;
 function GetIssuerName(ACertContext: PCCERT_CONTEXT): String;
+function GetNotBefore(ACertContext: PCCERT_CONTEXT): TDateTime;
 function GetNotAfter(ACertContext: PCCERT_CONTEXT): TDateTime;
 function GetCertIsHardware(ACertContext: PCCERT_CONTEXT): Boolean;
 
@@ -253,6 +254,20 @@ begin
       raise EACBrDFeException.Create( 'Falha ao executar "CertNameToStr" em "GetIssuerName". Erro:'+GetLastErrorAsHexaStr);
 
     Result := String( CertName );
+  end;
+end;
+
+function GetNotBefore(ACertContext: PCCERT_CONTEXT): TDateTime;
+var
+  LocalFileTime: TFileTime;
+  SystemTime: TSystemTime;
+begin
+  Result := 0;
+  if Assigned(ACertContext) then
+  begin
+    FileTimeToLocalFileTime(TFILETIME(ACertContext^.pCertInfo^.NotBefore), LocalFileTime);
+    FileTimeToSystemTime(LocalFileTime, SystemTime);
+    Result := SystemTimeToDateTime(SystemTime);
   end;
 end;
 
@@ -986,6 +1001,7 @@ begin
       CNPJ := GetTaxIDFromExtensions(ACertContext);
 
     DataVenc   := GetNotAfter(ACertContext);
+    DataInicioValidade := GetNotBefore(ACertContext);
     IssuerName := GetIssuerName(ACertContext);
     DERBase64  := CertToDERBase64(ACertContext);
   end;

@@ -101,6 +101,7 @@ function CertToDERBase64(cert: pX509): AnsiString;
 function GetCertExt(cert: pX509; const FlagExt: AnsiString): AnsiString;
 function GetIssuerName(cert: pX509): String;
 function GetNotAfter(cert: pX509): TDateTime;
+function GetNotBefore(cert: pX509): TDateTime;
 function GetSerialNumber(cert: pX509): String;
 function GetThumbPrint( cert: pX509 ): String;
 function GetSubjectName(cert: pX509): String;
@@ -156,7 +157,29 @@ begin
 
   Result := StoD(Validade);
   Result := IncMinute(Result, TimeZoneBias);
-  
+
+end;
+
+function GetNotBefore( cert: pX509 ): TDateTime;
+var
+  Validade: String;
+  notBefore: PASN1_TIME;
+begin
+  notBefore := X509GetNotBefore(cert);
+  if not Assigned(notBefore) then
+  begin
+    Result := 0;
+    Exit;
+  end;
+
+  Validade := String(PAnsiChar(notBefore^.data));
+  SetLength(Validade, notBefore^.length);
+  Validade := OnlyNumber(Validade);
+  if notBefore^.asn1_type = V_ASN1_UTCTIME then  // anos com 2 dígitos
+    Validade :=  LeftStr(IntToStrZero(YearOf(Now),4),2) + Validade;
+
+  Result := StoD(Validade);
+  Result := IncMinute(Result, TimeZoneBias);
 end;
 
 function GetSerialNumber( cert: pX509 ): String;
@@ -383,6 +406,7 @@ begin
       CNPJ := GetTaxIDFromExtensions( cert );
 
     DataVenc := GetNotAfter( cert );
+    DataInicioValidade := GetNotBefore( cert );
     IssuerName := GetIssuerName( cert );
     DERBase64 := CertToDERBase64( cert );
     Tipo := tpcA1;  // OpenSSL somente suporta A1

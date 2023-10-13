@@ -85,6 +85,7 @@ type
     FSubjectName: String;
     FTipo: TSSLTipoCertificado;
     FDER64base: String;
+    FDataInicioValidade: TDateTime;
     procedure SetIssuerName(const AValue: String);
     procedure SetSubjectName(const AValue: String);
   public
@@ -99,6 +100,7 @@ type
     property IssuerName: String read FIssuerName write SetIssuerName;
     property Certificadora: String read FCertificadora write FCertificadora;
     property DataVenc: TDateTime read FDataVenc write FDataVenc;
+    property DataInicioValidade : TDateTime read FDataInicioValidade write FDataInicioValidade;
     property SubjectName: String read FSubjectName write SetSubjectName;
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property CNPJ: String read FCNPJ write FCNPJ;

@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2023
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] Alterado para informar o label de cnpj/cpf conforme o documento informado 
+    para o emitente, em casos de emitentes produtor rural poderia ser cpf e
+    era impressora cnpj.
+    por: regy.silveira
+
 08/08/2022
 -- ACBrMDFeDAMDFeRLClass --
 [*] Alterado o método ImprimirDANFSePDF para utilizar a função DefinirNomeArquivo, que

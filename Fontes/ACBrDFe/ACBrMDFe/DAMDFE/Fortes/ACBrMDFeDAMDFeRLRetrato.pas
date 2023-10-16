@@ -277,7 +277,7 @@ begin
         rlmDadosEmitente.Lines.Add(XMun + ' - ' + UF + '   CEP: ' + FormatarCEP(CEP));
       end;
 
-      rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) + ACBrStr('   IE: ') + IE);
+      rlmDadosEmitente.Lines.Add(IfThen(Length(OnlyNumber(CNPJCPF)) > 11, 'CNPJ: ', 'CPF: ') + FormatarCNPJouCPF(CNPJCPF) + ACBrStr('   IE: ') + IE);
       rlmDadosEmitente.Lines.Add('TEL.: ' + FormatarFone(EnderEmit.Fone));
       rlmDadosEmitente.Lines.Add(ifthen(fpDAMDFe.Site <> '', fpDAMDFe.Site, '')
                                  + '  ' + ifthen(fpDAMDFe.Email <> '', fpDAMDFe.Email, ''));

@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+16/10/2023
+-- ACBrBoletoW_Bancoob, ACBrBoletoRet_Bancoob --
+[*] Implementação do endpoint de alteração do "seu número", e ajustes na leitura da espécie, multa, juros e desconto no retorno da consulta detalhe.
+  Por: BigWings
+
 08/09/2023
 [+]TK-4089 ACBrBoletoW_Itau_API, ACBrBoletoRet_Itau_API - Nova API Itau v2 (ultima semana SandBox esta instável, mas liberado para testes dos usuários)
 https://www.projetoacbr.com.br/forum/topic/65868-emiss%C3%A3o-de-boleto-com-registro-online-ita%C3%BA-na-api-v2/?do=findComment&comment=471043&_rid=1706

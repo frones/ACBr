@@ -353,8 +353,18 @@ begin
 end;
 
 procedure TACBrPIXComponentesValor.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  c: Currency;
 begin
-  foriginal.ReadFromJSon(AJSon);
+  {$IFDEF FPC}c := 0;{$ENDIF}
+  if AJSon.IsJSONObject('original') then
+    foriginal.ReadFromJSon(AJSon)
+  else
+  begin
+    AJSon.Value('original', c);
+    foriginal.valor := c;
+  end;
+
   fsaque.ReadFromJSon(AJSon);
   ftroco.ReadFromJSon(AJSon);
   fjuros.ReadFromJSon(AJSon);

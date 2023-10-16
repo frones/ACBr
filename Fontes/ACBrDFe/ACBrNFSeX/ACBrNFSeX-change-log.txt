@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/10/2023
+-- ACBrNFSeXServicos --
+[*] Alterado a URL de produção da cidade de Fraiburgo/SC, o provedor continua o mesmo.
+   Por: C4Dev
 -- Diversos --
 [*] Implementado a função ObterNomeMunicipioUF na classe TNFSeWClass, para ser utilizada nas unit
     que geram o XML do RPS.

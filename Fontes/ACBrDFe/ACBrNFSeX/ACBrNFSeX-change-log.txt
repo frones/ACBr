@@ -45,6 +45,8 @@ Símbolo : Significado
 
 16/10/2023
 -- ACBrNFSeXServicos --
+[+] Incluída as cidades de Sooretama/ES e João Neiva/ES, o provedor das duas é EL.
+   Por: Data Lider
 [*] Alterado a URL de produção da cidade de Fraiburgo/SC, o provedor continua o mesmo.
    Por: C4Dev
 -- Diversos --

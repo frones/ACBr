@@ -42,6 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+16/10/2023
+-- ACBrNFSeXServicos --
+[*] Alterado de http para https as URLs da cidade de Esteio/RS.
+   Por: Thi4182
+[*] Alterado a URL de produção da cidade de Monte Azul Paulista/SP, o provedor continua o mesmo.
+   Por: Fabio Tellini
+[+] Incluída a cidade de Barra Bonita/SP, o provedor é WebFisco.
+   Por: Roger Mello
+[*] Alterado a URL de produção da cidade de Xangri-lá/RS, o provedor continua o mesmo.
+   Por: Wesley Robert
+
 13/10/2023
 -- ACBrNFSeXServicos --
 [*] Criado o parâmetro TipoRetorno para a cidade Igrejinha/RS, visando 

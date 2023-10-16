@@ -1334,6 +1334,7 @@ begin
       AWriter.FraseSecreta := Configuracoes.Geral.Emitente.WSFraseSecr;
       AWriter.Provedor     := Configuracoes.Geral.Provedor;
       AWriter.VersaoNFSe   := Configuracoes.Geral.Versao;
+      AWriter.IniParams    := Configuracoes.Geral.PIniParams;
 
       pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 

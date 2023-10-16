@@ -1047,7 +1047,7 @@ begin
   if (FPVersao = ve100) and (NFSe.Servico.MunicipioIncidencia <> 0) then
   begin
     xUF := '';
-    xCidade := ObterNomeMunicipio(NFSe.Servico.MunicipioIncidencia, xUF, '', False);
+    xCidade := ObterNomeMunicipioUF(NFSe.Servico.MunicipioIncidencia, xUF);
 
     Result.AppendChild(AddNode(tcStr, '#1', 'Praca', 1, 60, 1,
                                                       xCidade + '-' + xUF, ''));

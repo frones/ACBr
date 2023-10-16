@@ -37,7 +37,7 @@ unit ACBrNFSeXGravarXml;
 interface
 
 uses
-  SysUtils, Classes, StrUtils,
+  SysUtils, Classes, StrUtils, IniFiles,
   ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
   ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao;
 
@@ -92,6 +92,7 @@ type
     FGerarIDRps: Boolean;
     // Gera ou não o NameSpace no grupo <Rps> da versão 2 do layout da ABRASF.
     FGerarNSRps: Boolean;
+    FIniParams: TMemIniFile;
 
     function GetOpcoes: TACBrXmlWriterOptions;
     procedure SetOpcoes(AValue: TACBrXmlWriterOptions);
@@ -114,6 +115,7 @@ type
     function NormatizarItemServico(const Codigo: string): string;
     function FormatarItemServico(const Codigo: string; Formato: TFormatoItemListaServico): string;
     function NormatizarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;
+    function ObterNomeMunicipioUF(ACodigoMunicipio: Integer; var xUF: string): string;
 
  public
     constructor Create(AOwner: IACBrNFSeXProvider); virtual;
@@ -151,6 +153,7 @@ type
 
     property GerarIDRps: Boolean read FGerarIDRps write FGerarIDRps;
     property GerarNSRps: Boolean read FGerarNSRps write FGerarNSRps;
+    property IniParams: TMemIniFile read FIniParams write FIniParams;
   end;
 
 implementation
@@ -349,6 +352,17 @@ end;
 function TNFSeWClass.ObterNomeArquivo: String;
 begin
   Result := OnlyNumber(NFSe.infID.ID) + '.xml';
+end;
+
+function TNFSeWClass.ObterNomeMunicipioUF(ACodigoMunicipio: Integer;
+  var xUF: string): string;
+var
+  CodIBGE: string;
+begin
+  CodIBGE := IntToStr(ACodigoMunicipio);
+
+  xUF := IniParams.ReadString(CodIBGE, 'UF', '');
+  Result := IniParams.ReadString(CodIBGE, 'Nome', '');
 end;
 
 function TNFSeWClass.NormatizarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;

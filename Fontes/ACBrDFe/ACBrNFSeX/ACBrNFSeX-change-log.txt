@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 16/10/2023
+-- Diversos --
+[*] Implementado a função ObterNomeMunicipioUF na classe TNFSeWClass, para ser utilizada nas unit
+    que geram o XML do RPS.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alterado de http para https as URLs da cidade de Esteio/RS.
    Por: Thi4182

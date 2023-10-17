@@ -56,7 +56,7 @@ type
     function DefineCampoDigitoAgenciaConta: String; override;
     function DefinePosicaoUsoExclusivo: String; override;
     function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String; override;
-    function DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String; override;
+    function DefineTipoBeneficiario(const ACBrTitulo: TACBrTitulo): String;
     function DefinePosicaoNossoNumeroRetorno: Integer; override;
     function DefinePosicaoCarteiraRetorno:Integer; override;
     function InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String;override;
@@ -269,7 +269,7 @@ begin
   end;
 end;
 
-function TACBrBancoItau.DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String;
+function TACBrBancoItau.DefineTipoBeneficiario(const ACBrTitulo: TACBrTitulo): String;
 var LTamanhoPagadorFinal : Byte;
 begin
   LTamanhoPagadorFinal := Length(OnlyNumber(ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF));
@@ -677,7 +677,7 @@ var
    ATipoCedente, ATipoSacado, ATipoSacadoAvalista, ATipoOcorrencia    :String;
    ADataMoraJuros, ADataDesconto, ATipoAceite    :String;
    ATipoEspecieDoc, ANossoNumero,wLinha,wCarteira :String;
-   wLinhaMulta :String;
+   wLinhaMulta,LCPFCNPJBeneciciario :String;
    iSequencia : integer;
 
 begin
@@ -699,7 +699,12 @@ begin
      ADataDesconto := DefineDataDesconto(ACBrTitulo, 'ddmmyy');
 
      {Pegando Tipo de Cedente}
-     ATipoCedente := DefineTipoInscricao;
+     ATipoCedente := DefineTipoBeneficiario(ACBrTitulo);
+
+     if (StrToIntDef(ATipoCedente,0) in [3..4]) then
+       LCPFCNPJBeneciciario := OnlyNumber(ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF)
+     else
+       LCPFCNPJBeneciciario := ACBrBoleto.Cedente.CNPJCPF;
 
      {Pegando Tipo de Sacado}
      ATipoSacado:= DefineTipoSacado(ACBrTitulo);
@@ -771,7 +776,7 @@ begin
         begin
           wLinha:= '1'                                                                            + // 1 a 1 - IDENTIFICAÇÃO DO REGISTRO TRANSAÇÃO
                    PadLeft(ATipoCedente,2,'0')                                                    + // TIPO DE INSCRIÇÃO DA EMPRESA
-                   PadLeft(OnlyNumber(Cedente.CNPJCPF),14,'0')                                    + // Nº DE INSCRIÇÃO DA EMPRESA (CPF/CGC)
+                   PadLeft(OnlyNumber(LCPFCNPJBeneciciario),14,'0')                               + // Nº DE INSCRIÇÃO DA EMPRESA (CPF/CGC)
                    PadLeft(OnlyNumber(Cedente.Agencia), 4, '0')                                   + // AGÊNCIA MANTENEDORA DA CONTA
                    '00'                                                                           + // COMPLEMENTO DE REGISTRO
                    PadLeft(OnlyNumber(Cedente.Conta), 5, '0')                                     + // NÚMERO DA CONTA CORRENTE DA EMPRESA

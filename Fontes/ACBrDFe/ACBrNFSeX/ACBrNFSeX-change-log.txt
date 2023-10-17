@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/10/2023
+-- IPM.Provider --
+[*] Alteração visando usar o valor do parâmetro ParametroExtra da forma correta.
+-- ACBrNFSeXServicos --
+[*] Criado o Params chamado: ParametroExtra que visa atender as cidades atendidas
+    pelo provedor IPM, pois para algumas cidades existe a necessida do parâmetro
+    extra "&eletron=1"
+   Por: Italo Giurizzato Junior
+
 16/10/2023
 -- ACBrNFSeXServicos --
 [+] Incluída as cidades de Sooretama/ES e João Neiva/ES, o provedor das duas é EL.

@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 17/10/2023
+-- ACBrNFSeXServicos --
+[+] Incluída diversas cidades de Tocantis, o provedor de todas elas é MegaSoft.
+   Por: Jhonlenon Ribeiro
+[+] Incluída a cidade de Costa Rica/MS, o provedor é Pronim.
+   Por: Paulo V. Ferreira
 -- IPM.Provider --
 [*] Alteração visando usar o valor do parâmetro ParametroExtra da forma correta.
 -- ACBrNFSeXServicos --

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2023
+-- ACBrECDBloco_C --
+[*] Correção da geração do registro de encerramento C990.
+  Por: Douglas Trento Antonio / Rev: Alexandre de Paula
+
 01/08/2023
 -- ACBrEFDBloco_E_Class --
 [*] E112 - Ajuste para envio do IND_PROC em branco quando for opNenhum

@@ -368,7 +368,7 @@ begin
      begin
        QTD_LIN_C := QTD_LIN_C + 1;
        ///
-       strLinha := LFill('K990') +
+       strLinha := LFill('C990') +
             LFill(QTD_LIN_C, 0);
        Add(strLinha);
      end;

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/10/2023
+-- ACBrNFSeXWebserviceBase --
+[*] Realizado uma correção pois não estava pegando o parâmetro correto de 
+    formatação de tipo de arquivo no momento de salvar o retorno.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída diversas cidades de Tocantis, o provedor de todas elas é MegaSoft.
    Por: Jhonlenon Ribeiro

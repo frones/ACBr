@@ -752,7 +752,7 @@ begin
     Para contornar isso a variável ConteudoEhXml recebe o valor false quando é
     um JSON e o método Gravar não inclui o encoding.
   }
-  case TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio of
+  case TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqRetorno of
     tfaJson:
       Extensao := '.json';
     tfaTxt:
@@ -761,7 +761,7 @@ begin
     Extensao := '.xml';
   end;
 
-  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio <> tfaXml then
+  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqRetorno <> tfaXml then
   begin
     ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
     ConteudoEhXml := False;
@@ -802,7 +802,7 @@ begin
     Para contornar isso a variável ConteudoEhXml recebe o valor false quando é
     um JSON e o método Gravar não inclui o encoding.
   }
-  case TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio of
+  case TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqRetorno of
     tfaJson:
       Extensao := '.json';
     tfaTxt:
@@ -811,7 +811,7 @@ begin
     Extensao := '.xml';
   end;
 
-  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqEnvio <> tfaXml then
+  if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqRetorno <> tfaXml then
   begin
     ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
     ConteudoEhXml := False;

@@ -193,7 +193,7 @@ begin
                    ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         := AJson.Values['dadosLiquidacao'].AsObject.Values['juros'].AsNumber;
                    ARetornoWS.DadosRet.TituloRet.ValorAbatimento        := AJson.Values['dadosLiquidacao'].AsObject.Values['abatimento'].AsNumber;
                    ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(AJson.Values['dadosLiquidacao'].AsObject.Values['data'].AsString);
-                   ARetornoWS.DadosRet.TituloRet.HoraBaixa              := TimeSicreditoDateTime(aJson.Values['dadosLiquidacao'].AsString);
+                   ARetornoWS.DadosRet.TituloRet.HoraBaixa              := TimeSicreditoDateTime(AJson.Values['dadosLiquidacao'].AsObject.Values['data'].AsString);
                    ARetornoWS.DadosRet.TituloRet.ValorDesconto          := AJson.Values['dadosLiquidacao'].AsObject.Values['desconto'].AsNumber;
                 end;
                 Descontos := AJson.Values['descontos'].AsArray;

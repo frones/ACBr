@@ -167,17 +167,17 @@ begin
                 ARetornoWS.DadosRet.TituloRet.ValorDocumento         := aJson.Values['valorNominal'].AsNumber;
                 //Situação/Código da situação.
                 ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca    := UpperCase(aJson.Values['situacao'].asString);
-                if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'EM CARTEIRA') > 0) or
-                   (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'VENCIDO') > 0) then
+                if (Pos('EM CARTEIRA',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) or
+                   (Pos('VENCIDO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
                   ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
-                if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'BAIXADO POR SOLICITACAO') > 0) then
+                if (Pos('BAIXADO POR SOLICITACAO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
                   begin
                     ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
                     ARetornoWS.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(aJson.Values['dataBaixa'].AsString);
                     ARetornoWS.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(aJson.Values['dataBaixa'].AsString);
 
                   end;
-                if (Pos(UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca),'LIQUIDADO') > 0) then
+                if (Pos('LIQUIDADO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
                   ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
                 //Multa/Juros
                 ARetornoWS.DadosRet.TituloRet.PercentualMulta        := aJson.Values['valorMulta'].AsNumber;
@@ -194,7 +194,6 @@ begin
                    ARetornoWS.DadosRet.TituloRet.ValorAbatimento        := AJson.Values['dadosLiquidacao'].AsObject.Values['abatimento'].AsNumber;
                    ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(AJson.Values['dadosLiquidacao'].AsObject.Values['data'].AsString);
                    ARetornoWS.DadosRet.TituloRet.HoraBaixa              := TimeSicreditoDateTime(aJson.Values['dadosLiquidacao'].AsString);
-
                    ARetornoWS.DadosRet.TituloRet.ValorDesconto          := AJson.Values['dadosLiquidacao'].AsObject.Values['desconto'].AsNumber;
                 end;
                 Descontos := AJson.Values['descontos'].AsArray;

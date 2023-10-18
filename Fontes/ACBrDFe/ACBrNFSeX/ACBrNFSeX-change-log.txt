@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 18/10/2023
+-- DBSeller.Provider --
+[*] Correção na lista responseTag, visando a leitura correta do retorno do 
+    EnviarLoteRps - versão 1.00
+-- ACBrNFSeXServicos --
+[*] A cidade de Valenca/RJ, trocou de provedor, agora é DBSeller versão 1.00
+   Por: Arimateia Jr
 -- ACBrNFSeXDANFSeRLISSNet --
 [*] Alteração visando a impressão do Responsável pela Retenção.
    Por: Italo Giurizzato Junior

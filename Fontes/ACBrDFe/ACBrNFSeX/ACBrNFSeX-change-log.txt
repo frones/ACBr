@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/10/2023
+-- ACBrNFSeXDANFSeRLISSNet --
+[*] Alteração visando a impressão do Responsável pela Retenção.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alteração na URL de homologação da cidade de Cianorte/PR, o provedor continua o mesmo.
    Por: Alexandre Felippeto Henzen

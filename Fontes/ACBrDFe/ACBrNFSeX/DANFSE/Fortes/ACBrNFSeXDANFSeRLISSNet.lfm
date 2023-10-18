@@ -1,6 +1,6 @@
 inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
-  Left = 282
-  Top = 118
+  Left = 231
+  Top = 121
   Caption = 'frlXDANFSeRLISSNet'
   inherited RLNFSe: TRLReport
     Left = 32
@@ -465,6 +465,19 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
+      end
+      object rllRespRetencao: TRLLabel
+        Left = 490
+        Height = 16
+        Top = 135
+        Width = 122
+        Alignment = taCenter
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
     end
     object rlbTomador: TRLBand[2]
@@ -1800,20 +1813,21 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Arial'
+        ParentFont = False
+        Transparent = False
       end
       object rllTomadorNomeEnt: TRLLabel
         Left = 6
         Height = 15
         Top = 32
-        Width = 591
+        Width = 587
         AutoSize = False
         Caption = '<Nome do Tomador>'
-        Font.Color = clWindowText
+        Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
-        Transparent = False
       end
       object rllNumNF0Ent: TRLLabel
         Left = 609
@@ -1822,7 +1836,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Width = 128
         Alignment = taCenter
         AutoSize = False
-        Font.Color = clWindowText
+        Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
@@ -2346,6 +2360,6 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 280
-    Top = 48
+    Top = 40
   end
 end

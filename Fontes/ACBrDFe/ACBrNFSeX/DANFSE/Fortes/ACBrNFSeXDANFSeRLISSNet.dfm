@@ -504,6 +504,20 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         ParentFont = False
         Transparent = False
       end
+      object rllRespRetencao: TRLLabel
+        Left = 490
+        Top = 135
+        Width = 122
+        Height = 16
+        Alignment = taCenter
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
     end
     object rlbTomador: TRLBand
       Left = 23

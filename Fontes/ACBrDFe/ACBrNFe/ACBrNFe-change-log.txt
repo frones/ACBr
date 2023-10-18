@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2023
+-- ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrao --
+[*] Altera a forma como é formatado o Nº da NFe visando padronização com o Fast e o MOC.
+    Por: Diego Folieni
+
 06/10/2023
 -- ACBrNFeNotasFiscais --
 [*] Ajuste no ValidarRegrasdeNegocios, pois estava gerando indevidadmente um alerta

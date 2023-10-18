@@ -1029,7 +1029,7 @@ begin
 
     rlbCodigoBarras.Visible := True;
     rlbCodigoBarras.Caption := OnlyNumber(fpNFe.InfNFe.Id);
-    rllNumNF0.Caption := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
+    rllNumNF0.Caption := ACBrStr('Nº ') + FormatarNumeroDocumentoFiscal(IntToStr(nNF));
     rllNumNF1.Caption := rllNumNF0.Caption;
     rllSERIE0.Caption := ACBrStr('SÉRIE ') + IntToStr(Serie);
     rllSERIE1.Caption := rllSERIE0.Caption;

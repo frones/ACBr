@@ -985,7 +985,7 @@ begin
       TipoDocumento := 1;
 
     dpCNPJ, dpRedCNPJ:
-      TipoDocumento := 1;
+      TipoDocumento := 2;
   else
     fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
       [GetEnumName(TypeInfo(TACBrTEFAPIDadoPinPad), integer(TipoDado) ), ClassName] ));

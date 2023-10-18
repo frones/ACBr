@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/10/2023
+-- ACBrNFSeXServicos --
+[*] Alteração na URL de homologação da cidade de Cianorte/PR, o provedor continua o mesmo.
+   Por: Alexandre Felippeto Henzen
+[*] A cidade de Porto Velho/RO, trocou de provedor, agora é EL versão 2.04
+   Por: Italo Giurizzato Junior
+
 17/10/2023
 -- ACBrNFSeXServicos --
 [*] Alteração nas URLs da cidade de Concordia/SC, o provedor continua o mesmo.

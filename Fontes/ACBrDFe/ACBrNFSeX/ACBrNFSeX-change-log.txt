@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/10/2023
+-- ACBrNFSeXServicos --
+[*] Realizado limpeza e melhorias de informações no inicio do arquivo.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado o método Configuracao na classe base da leitura do XML,
     possibilitando dessa forma criar configurações gerais e especificas para 

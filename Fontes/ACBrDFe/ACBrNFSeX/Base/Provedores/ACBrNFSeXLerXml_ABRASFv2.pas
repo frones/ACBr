@@ -48,6 +48,8 @@ type
   private
 
   protected
+    procedure Configuracao; override;
+
     function LerDataHoraCancelamento(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerDataHora(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; virtual;
@@ -117,6 +119,13 @@ uses
 //==============================================================================
 
 { TNFSeR_ABRASFv2 }
+
+procedure TNFSeR_ABRASFv2.Configuracao;
+begin
+  // Executa a Configuração Padrão
+  inherited Configuracao;
+
+end;
 
 function TNFSeR_ABRASFv2.LerCompetencia(const ANode: TACBrXmlNode): TDateTime;
 begin

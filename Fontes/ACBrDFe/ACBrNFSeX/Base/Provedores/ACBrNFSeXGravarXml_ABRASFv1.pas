@@ -223,7 +223,6 @@ var
   NFSeNode, xmlNode: TACBrXmlNode;
 begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
-  // Configuracao;
 
   ListaDeAlertas.Clear;
 

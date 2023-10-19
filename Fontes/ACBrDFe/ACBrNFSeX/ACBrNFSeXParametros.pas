@@ -128,6 +128,8 @@ type
     FFormatoArqNota: TFormatoArq;
     // Formato do Arquivo do Evento utilizado pelo provedor
     FFormatoArqEvento: TFormatoArq;
+    // define se deve imprimir o Local da Prestação de Serviço ou não
+    FImprimirLocalPrestServ: Boolean;
 
   public
     constructor Create;
@@ -169,6 +171,7 @@ type
     property FormatoArqRecibo: TFormatoArq read FFormatoArqRecibo write FFormatoArqRecibo;
     property FormatoArqNota: TFormatoArq read FFormatoArqNota write FFormatoArqNota;
     property FormatoArqEvento: TFormatoArq read FFormatoArqEvento write FFormatoArqEvento;
+    property ImprimirLocalPrestServ: Boolean read FImprimirLocalPrestServ write FImprimirLocalPrestServ;
   end;
 
   { TWebserviceInfo }

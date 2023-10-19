@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/10/2023
+-- Diversos --
+[+] Implementado o método Configuracao na classe base da leitura do XML,
+    possibilitando dessa forma criar configurações gerais e especificas para 
+    cada provedor ao ler o XML da NFS-e ou Rps.
+   Por: Italo Giurizzato Junior
+
 18/10/2023
 -- DBSeller.Provider --
 [*] Correção na lista responseTag, visando a leitura correta do retorno do 

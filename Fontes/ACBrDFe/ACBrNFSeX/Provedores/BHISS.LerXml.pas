@@ -46,8 +46,6 @@ type
 
   TNFSeR_BHISS = class(TNFSeR_ABRASFv1)
   protected
-    procedure LerInfNfse(const ANode: TACBrXmlNode); override;
-
     function NormatizarXml(const aXml: string): string; override;
   public
 
@@ -61,14 +59,6 @@ implementation
 //==============================================================================
 
 { TNFSeR_BHISS }
-
-procedure TNFSeR_BHISS.LerInfNfse(const ANode: TACBrXmlNode);
-begin
-  inherited LerInfNfse(ANode);
-
-  if NFSe.Servico.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
-    NFSe.Servico.MunicipioPrestacaoServico := '';
-end;
 
 function TNFSeR_BHISS.NormatizarXml(const aXml: string): string;
 begin

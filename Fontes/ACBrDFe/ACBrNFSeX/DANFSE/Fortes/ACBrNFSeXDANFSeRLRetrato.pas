@@ -398,7 +398,8 @@ begin
 
     rllMunicipioPrestacaoServico.Caption := Servico.MunicipioPrestacaoServico;
 
-    RLLabel64.Visible := (rllMunicipioPrestacaoServico.Caption <> '');
+    RLLabel64.Visible := ACBrNFSe.Provider.ConfigGeral.ImprimirLocalPrestServ;
+    rllMunicipioPrestacaoServico.Visible := ACBrNFSe.Provider.ConfigGeral.ImprimirLocalPrestServ;
   end;
 end;
 

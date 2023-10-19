@@ -226,6 +226,7 @@ var
   LTitulo     : TACBrTitulo;
   LPagador     : TACBrSacado;
   Index			  : Integer;
+  LAceitarParcelasParcial : Boolean;
 begin
   LTitulo      := ACBrTitulo;
   LBeneficiario := LTitulo.ACBrBoleto.Cedente;
@@ -271,6 +272,8 @@ begin
     LTitulo.Mensagem.Text := LMensagemTodos;
   end;
 
+  LAceitarParcelasParcial := ((LTitulo.QtdePagamentoParcial=0) or (LTitulo.TipoPagamento = tpNao_Aceita_Valor_Divergente));
+
   LLinha:= '1'                                                                                                           +  // 001 a 001 - ID Registro
            '0' + DefineTipoInscricao                                                                                     +  // 002 a 003 - Tipo Inscrição Empresa
            PadLeft(OnlyNumber(LBeneficiario.CNPJCPF), 14, '0')                                                           +  // 004 a 017 - CNPJ Empresa
@@ -279,7 +282,7 @@ begin
            PadRight(LTitulo.NumeroDocumento, 25)                                                                         +  // 038 a 062 - Uso da Empresa
            '0' + LTitulo.NossoNumero + LDigitoNossoNumero                                                                +  // 063 a 074 - Nosso Número Completo
            Space(8)                                                                                                      +  // 075 a 082 - Uso do Banco
-           IfThen(LTitulo.Carteira='20', IntToStrZero(fpNumero, 3), '000')                                               +  // 083 a 085 - Código do Banco
+           IfThen(StrToIntDef(LTitulo.Carteira ,0)= 20, IntToStrZero(fpNumero, 3), '000')                                +  // 083 a 085 - Código do Banco
            Space(21)                                                                                                     +  // 086 a 106 - Uso do Banco
            PadLeft(LTitulo.Carteira, 2, '0')                                                                             +  // 107 a 108 - Código da Carteira
            LOcorrencia                                                                                                   +  // 109 a 110 - Código Ocorrência Remessa
@@ -372,10 +375,10 @@ begin
                          )
                   )                                                                                                    + // 695 a 707 - Valor ou Percentual Maximo para aceitação do pagamento
            Space(1)                                                                                                    + // 708 a 708 - Uso do Banco Brancos
-           ifThen(LTitulo.QtdePagamentoParcial=0,
+           ifThen(LAceitarParcelasParcial,
            PadLeft(' ',2),
-           IntToStrZero(LTitulo.QtdePagamentoParcial, 2)
-           );                                                                                                            // 709 a 710 - Quantidade de pagamentos parciais
+           IntToStrZero(LTitulo.QtdePagamentoParcial, 2)                                                                 // 709 a 710 - Quantidade de pagamentos parciais
+           );
 
     aRemessa.Add(UpperCase(LLinha));
     LLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count);

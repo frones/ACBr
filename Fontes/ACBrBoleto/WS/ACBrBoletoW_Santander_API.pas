@@ -141,8 +141,16 @@ begin
     begin
       case Boleto.Configuracoes.WebService.Operacao of
         tpInclui: RequisicaoJson;
-        tpAltera: RequisicaoAltera;
-        tpBaixa : RequisicaoBaixa;
+        tpAltera:
+        begin
+          FMetodoHTTP := htPATCH; // Define Método PATCH conforme manual do banco
+          RequisicaoAltera;
+        end;
+        tpBaixa :
+        begin
+          FMetodoHTTP := htPATCH; // Define Método PATCH conforme manual do banco
+          RequisicaoBaixa;
+        end;
         tpConsulta:
         begin
           FMetodoHTTP := htGET; // Define Método GET Consulta
@@ -367,7 +375,7 @@ begin
         Json.Add('covenantCode').Value.AsString := Boleto.Cedente.Convenio;
         Json.Add('bankNumber').Value.AsString   := NossoNumero;
         Json.Add('operation').Value.AsString    := 'BAIXAR';
-        GerarMensagens(Json);
+
         Data := Json.Stringify;
         FPDadosMsg := Data;
       finally

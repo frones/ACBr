@@ -96,8 +96,8 @@ type
     procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -1211,7 +1211,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEL.PrepararConsultaNFSe(
+procedure TACBrNFSeProviderEL.PrepararConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -1239,7 +1239,7 @@ begin
                            '</el:ConsultarNfseEnvio>';
 end;
 
-procedure TACBrNFSeProviderEL.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderEL.TratarRetornoConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrXmlDocument;

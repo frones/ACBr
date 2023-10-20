@@ -74,8 +74,8 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -99,8 +99,9 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
 
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
+
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 //    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
@@ -300,7 +301,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSigISS.PrepararConsultaNFSe(
+procedure TACBrNFSeProviderSigISS.PrepararConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -330,7 +331,7 @@ begin
                            '</ConsultarNotaPrestador>';
 end;
 
-procedure TACBrNFSeProviderSigISS.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderSigISS.TratarRetornoConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrXmlDocument;
@@ -580,7 +581,7 @@ begin
   Result.NFSe := ANFSe;
 end;
 
-procedure TACBrNFSeProviderSigISS103.PrepararConsultaNFSe(
+procedure TACBrNFSeProviderSigISS103.PrepararConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -627,7 +628,7 @@ begin
                        '</ConsultarNfseServicoPrestado>';
 end;
 
-procedure TACBrNFSeProviderSigISS103.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderSigISS103.TratarRetornoConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrXmlDocument;

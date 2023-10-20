@@ -262,7 +262,6 @@ type
    FPagina: Integer;
    FtpConsulta: TtpConsulta;
    FtpPeriodo: TtpPeriodo;
-   FtpDocumento: TtpDocumento;
    FCadEconomico: string;
    FSerieNFSe: string;
    FCodServ: string;
@@ -290,7 +289,6 @@ type
    property Pagina: Integer         read FPagina        write FPagina;
    property tpConsulta: TtpConsulta read FtpConsulta    write FtpConsulta;
    property tpPeriodo: TtpPeriodo   read FtpPeriodo     write FtpPeriodo;
-   property tpDocumento: TtpDocumento read FtpDocumento write FtpDocumento;
    property CadEconomico: string    read FCadEconomico  write FCadEconomico;
    property SerieNFSe: string       read FSerieNFSe     write FSerieNFSe;
    property CodServ: string         read FCodServ       write FCodServ;
@@ -341,7 +339,6 @@ type
     FNumeroNFSeSubst: string;
     FSerieNFSeSubst: string;
     FCodServ: string;
-    FtpDocumento: TtpDocumento;
 
   public
     constructor Create;
@@ -363,8 +360,6 @@ type
     property NumeroNFSeSubst: string read FNumeroNFSeSubst write FNumeroNFSeSubst;
     property SerieNFSeSubst: string  read FSerieNFSeSubst  write FSerieNFSeSubst;
     property CodServ: string         read FCodServ         write FCodServ;
-    property tpDocumento: TtpDocumento read FtpDocumento   write FtpDocumento;
-
   end;
 
    TpedRegEvento = class
@@ -1547,7 +1542,6 @@ begin
   CodServ       := '';
   CodVerificacao:= '';
   Pagina        := 1;
-  tpDocumento   := tdNFSe;
   tpRetorno     := trXml;
   ChaveNFSe     := '';
 end;
@@ -1585,7 +1579,6 @@ begin
     CNPJInter     := INIRec.ReadString(sSecao, 'CNPJInter', '');
     IMInter       := INIRec.ReadString(sSecao, 'IMInter', '');
     RazaoInter    := INIRec.ReadString(sSecao, 'RazaoInter', '');
-    tpDocumento   := StrTotpDocumento(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
     CadEconomico  := INIRec.ReadString(sSecao, 'CadEconomico', '');
     SerieNFSe     := INIRec.ReadString(sSecao, 'SerieNFSe', '');
     CodServ       := INIRec.ReadString(sSecao, 'CodServ', '');
@@ -1620,14 +1613,12 @@ begin
   FNumeroNFSeSubst := '';
   FSerieNFSeSubst := '';
   FCodServ := '';
-  FtpDocumento := tdNFSe;
 end;
 
 function TInfCancelamento.LerFromIni(const AIniStr: string): Boolean;
 var
   sSecao: string;
   INIRec: TMemIniFile;
-  Ok: Boolean;
 begin
 {$IFNDEF COMPILER23_UP}
   Result := False;
@@ -1654,7 +1645,6 @@ begin
     NumeroNFSeSubst := INIRec.ReadString(sSecao, 'NumeroNFSeSubst', '');
     SerieNFSeSubst  := INIRec.ReadString(sSecao, 'SerieNFSeSubst', '');
     CodServ         := INIRec.ReadString(sSecao, 'CodServ', '');
-    tpDocumento     := StrTotpDocumento(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
 
     Result := True;
   finally

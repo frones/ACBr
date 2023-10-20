@@ -157,6 +157,8 @@ resourcestring
   Desc131 =	'Data de Competencia não informada.';
   Cod132 = 'X132';
   Desc132 =	'Página de retorno da consulta não informada.';
+  Cod133 = 'X133';
+  Desc133	= 'Geral.CNPJPrefeitura não informado.';
 
   Cod201 = 'X201';
   Desc201 = 'WebService retornou um XML vazio.';

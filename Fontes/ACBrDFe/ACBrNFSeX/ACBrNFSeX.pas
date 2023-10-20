@@ -673,7 +673,6 @@ begin
     CadEconomico := aInfConsultaNFSe.CadEconomico;
     CodServ := aInfConsultaNFSe.CodServ;
     CodVerificacao := aInfConsultaNFSe.CodVerificacao;
-    tpDocumento := aInfConsultaNFSe.tpDocumento;
     tpRetorno := aInfConsultaNFSe.tpRetorno;
   end;
 
@@ -1025,7 +1024,6 @@ begin
     NumeroNFSeSubst := aInfCancelamento.NumeroNFSeSubst;
     SerieNFSeSubst := aInfCancelamento.SerieNFSeSubst;
     CodServ := aInfCancelamento.CodServ;
-    tpDocumento:= aInfCancelamento.tpDocumento;
 
     if (ChaveNFSe <> '') and (NumeroNFSe = '') then
       NumeroNFSe := Copy(ChaveNFSe, 22, 9);

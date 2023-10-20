@@ -218,8 +218,6 @@ type
   TTipoLancamento = (tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
                      tlSimplesNacional, tlIsentoImune, tlCancelado);
 
-  TtpDocumento = (tdNFSe, tdRPS);
-
   TtpRetorno = (trXml, trPDF);
 
   TFormatoArq = (tfaXml, tfaJson, tfaTxt);
@@ -383,9 +381,6 @@ function ModoEnvioToStr(const t: TmodoEnvio): string;
 
 function TipoLancamentoToStr(const t: TTipoLancamento): string;
 function StrToTipoLancamento(out ok: boolean; const s: string): TTipoLancamento;
-
-function tpDocumentoToStr(const t: TtpDocumento): string;
-function StrTotpDocumento(out ok: boolean; const s: string): TtpDocumento;
 
 function tpEmitToStr(const t: TtpEmit): string;
 function StrTotpEmit(out ok: Boolean; const s: string): TtpEmit;
@@ -12383,16 +12378,6 @@ begin
   Result := StrToEnumerado(ok, s, ['N', 'T', 'P', 'R', 'C'],
                          [tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
                           tlSimplesNacional, tlIsentoImune, tlCancelado]);
-end;
-
-function tpDocumentoToStr(const t: TtpDocumento): string;
-begin
-  Result := EnumeradoToStr(t, ['1', '2'], [tdNFSe, tdRPS]);
-end;
-
-function StrTotpDocumento(out ok: boolean; const s: string): TtpDocumento;
-begin
-  Result := StrToEnumerado(ok, s, ['1', '2'], [tdNFSe, tdRPS]);
 end;
 
 function tpEmitToStr(const t: TtpEmit): string;

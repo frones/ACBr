@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 20/10/2023
+-- Diversos --
+[*] Alterações necessárias visando a implementação do ConsultarNFSeporRps para o
+    provedor WebFisco e foi necessário fazer alguns ajustes, pois diversos provedores
+    de layout próprio que tem o ConsultarNFSe acusava que o serviço não tinha sido
+    implementado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Ribas do Rio Pardo/MS trocou de provedor, agora é Fiorilli.
    Por: C4Dev

@@ -87,8 +87,8 @@ type
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
 
     *)
 

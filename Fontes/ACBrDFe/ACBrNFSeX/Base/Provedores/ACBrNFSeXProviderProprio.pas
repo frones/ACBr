@@ -81,6 +81,11 @@ type
     procedure AssinarConsultaNFSeporChave(Response: TNFSeConsultaNFSeResponse); virtual;
     procedure TratarRetornoConsultaNFSeporChave(Response: TNFSeConsultaNFSeResponse); virtual;
 
+    procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); virtual;
+    procedure GerarMsgDadosConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse;
+      Params: TNFSeParamsResponse); virtual;
+    procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); virtual;
+
     procedure PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); virtual;
     procedure GerarMsgDadosConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); virtual;
@@ -431,25 +436,18 @@ begin
     Response.Metodo := tmConsultarNFSe;
   end;
 
-  if Response.InfConsultaNFSe.tpConsulta = tcPorNumero then
-  begin
-    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
-  end
+  case Response.InfConsultaNFSe.tpConsulta of
+    tcPorNumero: PrepararConsultaNFSeporNumero(Response);
+    tcPorPeriodo,
+    tcPorFaixa: PrepararConsultaNFSeporFaixa(Response);
+    tcServicoPrestado: PrepararConsultaNFSeServicoPrestado(Response);
+    tcServicoTomado: PrepararConsultaNFSeServicoTomado(Response);
+    tcPorChave: PrepararConsultaNFSeporChave(Response);
   else
-  begin
-    case Response.InfConsultaNFSe.tpConsulta of
-      tcPorPeriodo,
-      tcPorFaixa: PrepararConsultaNFSeporFaixa(Response);
-      tcServicoPrestado: PrepararConsultaNFSeServicoPrestado(Response);
-      tcServicoTomado: PrepararConsultaNFSeServicoTomado(Response);
-      tcPorChave: PrepararConsultaNFSeporChave(Response);
-    else
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod001;
-        AErro.Descricao := ACBrStr(Desc001);
-      end;
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod001;
+      AErro.Descricao := ACBrStr(Desc001);
     end;
   end;
 end;
@@ -466,6 +464,7 @@ var
   AErro: TNFSeEventoCollectionItem;
 begin
   case Response.InfConsultaNFSe.tpConsulta of
+    tcPorNumero,
     tcPorPeriodo,
     tcPorFaixa,
     tcServicoPrestado,
@@ -483,6 +482,8 @@ end;
 procedure TACBrNFSeProviderProprio.TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
 begin
   case Response.InfConsultaNFSe.tpConsulta of
+    tcPorNumero:
+      TratarRetornoConsultaNFSeporNumero(Response);
     tcPorPeriodo,
     tcPorFaixa:
       TratarRetornoConsultaNFSeporFaixa(Response);
@@ -542,6 +543,26 @@ begin
 end;
 
 procedure TACBrNFSeProviderProprio.TratarRetornoConsultaNFSeporChave(
+  Response: TNFSeConsultaNFSeResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
+procedure TACBrNFSeProviderProprio.PrepararConsultaNFSeporNumero(
+  Response: TNFSeConsultaNFSeResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaNFSeporNumero(
+  Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
+procedure TACBrNFSeProviderProprio.TratarRetornoConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout

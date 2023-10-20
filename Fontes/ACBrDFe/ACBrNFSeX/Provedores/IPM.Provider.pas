@@ -234,7 +234,10 @@ function TACBrNFSeProviderIPM.CriarServiceClient(
 var
   URL: string;
 begin
-  URL := GetWebServiceURL(AMetodo) + FpParametro;
+  URL := GetWebServiceURL(AMetodo);
+
+  if Pos('?pg=rest', URL) = 0 then
+    URL := URL + FpParametro;
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceIPM.Create(FAOwner, AMetodo, URL)
@@ -1446,7 +1449,10 @@ function TACBrNFSeProviderIPM101.CriarServiceClient(
 var
   URL: string;
 begin
-  URL := GetWebServiceURL(AMetodo) + FpParametro;
+  URL := GetWebServiceURL(AMetodo);
+
+  if Pos('?pg=rest', URL) = 0 then
+    URL := URL + FpParametro;
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceIPM101.Create(FAOwner, AMetodo, URL)

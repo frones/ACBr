@@ -71,7 +71,7 @@ type
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
     procedure PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
@@ -365,7 +365,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderISSCambe.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderISSCambe.TratarRetornoConsultaNFSeporFaixa(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrXmlDocument;

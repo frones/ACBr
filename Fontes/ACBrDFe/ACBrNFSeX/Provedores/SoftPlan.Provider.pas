@@ -91,8 +91,8 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
     procedure TratarRetornoConsultarDFe(Response: TNFSeConsultarDFeResponse); override;
@@ -624,7 +624,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSoftPlan.PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
+procedure TACBrNFSeProviderSoftPlan.PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
 begin
@@ -669,7 +669,7 @@ begin
   FpMethod := 'GET';
 end;
 
-procedure TACBrNFSeProviderSoftPlan.TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
+procedure TACBrNFSeProviderSoftPlan.TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
   json: TACBrJsonObject;

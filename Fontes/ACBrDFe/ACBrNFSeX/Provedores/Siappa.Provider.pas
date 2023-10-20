@@ -73,8 +73,8 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
-    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -264,7 +264,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSiappa.PrepararConsultaNFSe(
+procedure TACBrNFSeProviderSiappa.PrepararConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -363,7 +363,7 @@ begin
                            '</Sdt_ws_003_in_cons_nfse_token>';
 end;
 
-procedure TACBrNFSeProviderSiappa.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderSiappa.TratarRetornoConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrXmlDocument;

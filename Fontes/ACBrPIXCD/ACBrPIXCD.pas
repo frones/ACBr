@@ -2020,7 +2020,7 @@ begin
   else
   begin
     try
-      Problema.AsJSON := String(RespostaHttp);
+      Problema.AsJSON := UTF8ToNativeString(RespostaHttp);
     except
     end;
 

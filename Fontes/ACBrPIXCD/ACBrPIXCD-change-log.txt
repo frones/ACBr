@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/2023
+-- ACBrPSP --
+[*] Ajuste para tratar a RespostaHTTP de UTF8 para String nativa da IDE.
+
 16/10/2023
 -- ACBrPIXSchemasPix --
 [*] Ajuste para prevenir erro quando o PSP envia uma resposta fora do padrão (PSP Inter)

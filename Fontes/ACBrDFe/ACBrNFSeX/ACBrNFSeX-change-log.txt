@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 20/10/2023
+-- Diversos --
+[*] Implementado uma propriedade de parametrização interna para definir o formato
+    dos arquivos de Envio e Retorno "soap".
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProvider --
 [-] Corrigido o erro de access violation no método SubstituirNFSe.
    Por: Italo Giurizzato Junior

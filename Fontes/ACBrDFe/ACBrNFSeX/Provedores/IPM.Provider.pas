@@ -186,7 +186,7 @@ begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
     DetalharServico := True;
-    FormatoArqEnvio := tfaTxt;
+    FormatoArqEnvioSoap := tfaTxt;
   end;
 
   with ConfigAssinar do

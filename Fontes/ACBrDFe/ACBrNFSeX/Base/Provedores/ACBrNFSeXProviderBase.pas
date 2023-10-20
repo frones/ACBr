@@ -613,6 +613,8 @@ begin
     DetalharServico := False;
     FormatoArqEnvio := tfaXml;
     FormatoArqRetorno := tfaXml;
+    FormatoArqEnvioSoap := tfaXml;
+    FormatoArqRetornoSoap := tfaXml;
     FormatoArqRecibo := tfaXml;
     FormatoArqNota := tfaXml;
     FormatoArqEvento := tfaXml;

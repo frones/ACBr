@@ -115,6 +115,8 @@ begin
     CancPreencherMotivo := True;
     FormatoArqEnvio := tfaJson;
     FormatoArqRetorno := tfaJson;
+    FormatoArqEnvioSoap := tfaJson;
+    FormatoArqRetornoSoap := tfaJson;
     FormatoArqRecibo := tfaJson;
     FormatoArqNota := tfaJson;
   end;

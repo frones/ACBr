@@ -127,6 +127,8 @@ begin
     ConsultaLote := False;
     FormatoArqEnvio := tfaJson;
     FormatoArqRetorno := tfaJson;
+    FormatoArqEnvioSoap := tfaJson;
+    FormatoArqRetornoSoap := tfaJson;
   end;
 
   with ConfigWebServices do

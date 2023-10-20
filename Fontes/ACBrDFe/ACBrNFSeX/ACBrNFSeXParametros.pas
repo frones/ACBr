@@ -122,6 +122,10 @@ type
     FFormatoArqEnvio: TFormatoArq;
     // Formato do Arquivo de Retorno utilizado pelo provedor
     FFormatoArqRetorno: TFormatoArq;
+    // Formato do Arquivo de Envio Soap utilizado pelo provedor
+    FFormatoArqEnvioSoap: TFormatoArq;
+    // Formato do Arquivo de Retorno Soap utilizado pelo provedor
+    FFormatoArqRetornoSoap: TFormatoArq;
     // Formato do Arquivo do Recibo utilizado pelo provedor
     FFormatoArqRecibo: TFormatoArq;
     // Formato do Arquivo da Nota utilizado pelo provedor
@@ -168,6 +172,8 @@ type
     property IniTabServicos: string read FIniTabServicos write FIniTabServicos;
     property FormatoArqEnvio: TFormatoArq read FFormatoArqEnvio write FFormatoArqEnvio;
     property FormatoArqRetorno: TFormatoArq read FFormatoArqRetorno write FFormatoArqRetorno;
+    property FormatoArqEnvioSoap: TFormatoArq read FFormatoArqEnvioSoap write FFormatoArqEnvioSoap;
+    property FormatoArqRetornoSoap: TFormatoArq read FFormatoArqRetornoSoap write FFormatoArqRetornoSoap;
     property FormatoArqRecibo: TFormatoArq read FFormatoArqRecibo write FFormatoArqRecibo;
     property FormatoArqNota: TFormatoArq read FFormatoArqNota write FFormatoArqNota;
     property FormatoArqEvento: TFormatoArq read FFormatoArqEvento write FFormatoArqEvento;

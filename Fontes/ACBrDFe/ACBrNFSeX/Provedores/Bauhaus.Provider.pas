@@ -118,6 +118,8 @@ begin
     ConsultaNFSe := False;
     FormatoArqEnvio := tfaJson;
     FormatoArqRetorno := tfaJson;
+    FormatoArqEnvioSoap := tfaJson;
+    FormatoArqRetornoSoap := tfaJson;
     FormatoArqRecibo := tfaJson;
     FormatoArqNota := tfaJson;
   end;

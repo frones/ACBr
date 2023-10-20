@@ -71,6 +71,7 @@ type
     FCarteira          : String;
     FMensagem          : TStringList;
     FBoletoIndex       : Boolean;
+    FStream            : TStream;
       { Private declarations }
     procedure GeraDados(const AACBrTitulo: TACBrTitulo);
     procedure ImpressaoUnificada;
@@ -147,11 +148,14 @@ begin
   if LFile <> '' then
     LFile := LFile+'_';
 
+  if Assigned(FStream) then
+    FPDF.SaveToStream(FStream)
+  else
   if Self.CalcularNomeArquivoPDFIndividual then
-    //FPDF.SaveToFile( ChangeFileExt(LPath + LFile+FNomeArquivo, '.pdf'))
     FPDF.SaveToFile( Self.NomeArquivo )
   else
     FPDF.SaveToFile(ChangeFileExt(Self.NomeArquivo, '.pdf'));
+
   FPDF.Free;
 end;
 
@@ -242,7 +246,8 @@ end;
 
 procedure TACBrBoletoFPDF.Imprimir(AStream: TStream);
 begin
-
+  FStream := AStream;
+  Imprimir;
 end;
 
 procedure TACBrBoletoFPDF.ModeloEstruturaFatura(const AEspacoAntes: Double;

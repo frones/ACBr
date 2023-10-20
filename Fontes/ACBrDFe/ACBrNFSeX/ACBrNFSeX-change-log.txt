@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/10/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Ribas do Rio Pardo/MS trocou de provedor, agora é Fiorilli.
+   Por: C4Dev
+[*] A cidade de Catalão/GO trocou a URL de produção, o provedor continua o mesmo.
+   Por: João Antonio
+
 19/10/2023
 -- ACBrNFSeXServicos --
 [*] Realizado limpeza e melhorias de informações no inicio do arquivo.

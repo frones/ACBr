@@ -2685,10 +2685,6 @@ var
   AErro: TNFSeEventoCollectionItem;
   Cancelamento: TNFSeCancelaNFSeResponse;
 begin
-  Cancelamento.Erros.Clear;
-  Cancelamento.Alertas.Clear;
-  Cancelamento.Resumos.Clear;
-
   SubstituiNFSeResponse.Erros.Clear;
   SubstituiNFSeResponse.Alertas.Clear;
   SubstituiNFSeResponse.Resumos.Clear;
@@ -2696,7 +2692,12 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeSubstituicao);
 
   Cancelamento := TNFSeCancelaNFSeResponse.Create;
+
   try
+    Cancelamento.Erros.Clear;
+    Cancelamento.Alertas.Clear;
+    Cancelamento.Resumos.Clear;
+
     with Cancelamento.InfCancelamento do
     begin
       NumeroNFSe := SubstituiNFSeResponse.InfCancelamento.NumeroNFSe;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/10/2023
+-- ACBrNFSeXProvider --
+[-] Corrigido o erro de access violation no método SubstituirNFSe.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Alterações necessárias visando a implementação do ConsultarNFSeporRps para o
     provedor WebFisco e foi necessário fazer alguns ajustes, pois diversos provedores

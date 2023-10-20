@@ -914,6 +914,8 @@ type
     function GetLocalPagamento: String; virtual;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
+    function CalcularPadraoJuros(ATitulo: TACBrTitulo): Double; virtual;
+    function CalcularPadraoMulta(ATitulo: TACBrTitulo): Double; virtual;
     function FormatarMoraJurosRemessa(const APosicoes: Integer
        ;const ACBrTitulo: TACBrTitulo):String; Virtual;
 
@@ -1810,6 +1812,7 @@ type
     function GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDateTime = 0): String;
     function GerarMensagemPadraoMulta(ATitulo: TACBrTitulo):String;
     function GerarMensagemPadraoJuros(ATitulo: TACBrTitulo):String;
+
     function GerarMensagemPadraoNegativacao(ATitulo: TACBrTitulo):String;
     function GerarMensagemPadraoProtesto(ATitulo: TACBrTitulo):String;
     function GerarMensagemPadraoAbatimento(ATitulo: TACBrTitulo):String;
@@ -3584,7 +3587,7 @@ end;
 
 function TACBrBoleto.CalcularPercentualValor(AValorPercentual, AValorDocumento: Double): Double;
 begin
-  Result := (AValorPercentual / 100) * AValorDocumento;
+  Result := TruncTo((AValorPercentual / 100) * AValorDocumento,2);
 end;
 
 function TACBrBoleto.CalcularValorDesconto(AValorDocumento, AValorDesconto : Double; ATipoDesconto : TACBrTipoDesconto): Double;
@@ -5441,6 +5444,23 @@ begin
       else
          Result := DirArqRemessa + PathDelim + NomeArqRemessa ;
    end;
+end;
+
+function TACBrBancoClass.CalcularPadraoJuros(ATitulo: TACBrTitulo): Double;
+begin
+  if (ATitulo.CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (ATitulo.CodigoMora = '2') or (ATitulo.CodigoMora = 'B') then
+    Result := ATitulo.fACBrBoleto.CalcularPercentualValor(ATitulo.ValorMoraJuros, ATitulo.ValorDocumento) * 100
+  else
+    Result := ATitulo.ValorMoraJuros;
+end;
+
+function TACBrBancoClass.CalcularPadraoMulta(ATitulo: TACBrTitulo): Double;
+begin
+  if (ATitulo.MultaValorFixo) then
+    Result := ATitulo.PercentualMulta
+  else
+    Result := ATitulo.fACBrBoleto.CalcularPercentualValor(ATitulo.PercentualMulta, ATitulo.ValorDocumento) * 100;
+
 end;
 
 function TACBrBancoClass.ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';

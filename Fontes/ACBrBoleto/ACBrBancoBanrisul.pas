@@ -843,8 +843,7 @@ begin
                    DupeString('0', 15) +                                                                                                              //  51-65  VALOR DESCONTO 3
                    ifthen(MultaValorFixo, '1', '2') +                                                                                                 //  66-66  CODIGO DA MULTA
                    FormatDateTime('ddmmyyyy', DataMulta) +                                                                                                   //  67-74  DATA DA MULTA
-                     PadLeft(StringReplace(ifthen(MultaValorFixo, FormatFloat('#####0.00', TruncTo(((PercentualMulta * ValorDocumento) / 100), 2)),
-                     FormatFloat('#####0.00', PercentualMulta)), ',', '', []), 15, '0') +                                                                      //  75-89  VALOR/PERCENTUAL MULTA
+                     PadLeft(OnlyNumber(FloatToStr(CalcularPadraoMulta(ACBrTitulo))), 15, '0') +                                                                  //  75-89  VALOR/PERCENTUAL MULTA
                    DupeString(' ', 10) +                                                                                                              //  90-99  INFORMAÇÃO DO BANCO PAGADOR
                    DupeString(' ', 40) +                                                                                                              // 100-139 MENSAGEM 3
                    DupeString(' ', 40);                                                                                                               // 140-179 MENSAGEM 4

@@ -188,7 +188,7 @@ begin
       ANossoNumero := PadLeft(AConvenio, 7, '0') + RightStr(ANossoNumero, 10);
 
     if (ACBrTitulo.ACBrBoleto.Banco.TipoCobranca = cobBancoDoBrasilAPI) then
-      ANossoNumero := '000'+ ANossoNumero;
+      ANossoNumero := PadLeft(AConvenio+IntToStr(StrToInt64Def(NossoNumero,0)) , 20, '0');
 
   end;
   Result := ANossoNumero;
@@ -295,7 +295,7 @@ begin
    wTamNossoNum := CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira,
                                                 OnlyNumber(ACBrTitulo.NossoNumero));
 
-   if (wTamConvenio = 7) or ((wTamConvenio = 6) and (wTamNossoNum = 17)) then
+   if ((wTamConvenio = 6) and (wTamNossoNum = 17)) or (wTamConvenio = 7) or (ACBrTitulo.ACBrBoleto.Banco.TipoCobranca = cobBancoDoBrasilAPI)  then
       Result:= ANossoNumero
    else
       Result := ANossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);

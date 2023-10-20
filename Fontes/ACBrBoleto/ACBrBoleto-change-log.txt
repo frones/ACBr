@@ -49,6 +49,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/2023
+-- ACBrBoletoW_Bancoob --
+[*] Ajustes para envio no ambiente de homologação/sandbox
+    https://www.projetoacbr.com.br/forum/topic/74655-api-sicoob-homologa%C3%A7%C3%A3o/
+[*] Correção no endpoint de alteração de multa
+[*] Incluído o tipo de ocorrência "toRemessaAlterarJurosMora" nas alterações
+  Por: Lucas Abreu Santos / BigWings
+
 16/10/2023
 -- ACBrBoletoW_Bancoob, ACBrBoletoRet_Bancoob --
 [*] Implementação do endpoint de alteração do "seu número", e ajustes na leitura da espécie, multa, juros e desconto no retorno da consulta detalhe.

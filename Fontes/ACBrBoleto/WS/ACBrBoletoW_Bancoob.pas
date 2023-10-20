@@ -99,7 +99,7 @@ type
 
 const
   C_URL             = 'https://api.sicoob.com.br/cobranca-bancaria/v2';
-  C_URL_HOM         = 'https://api.sicoob.com.br/cobranca-bancaria/v2';
+  C_URL_HOM         = 'https://sandbox.sicoob.com.br/sicoob/sandbox/cobranca-bancaria/v2';
 
   C_URL_OAUTH_PROD  = 'https://auth.sicoob.com.br/auth/realms/cooperado/protocol/openid-connect/token';
   C_URL_OAUTH_HOM   = 'https://auth.sicoob.com.br/auth/realms/cooperado/protocol/openid-connect/token';
@@ -113,6 +113,8 @@ const
   C_CHARSET         = 'utf-8';
   C_ACCEPT_CHARSET  = 'utf-8';
   C_SICOOB_CLIENT   = 'client_id';
+
+  C_ACCESS_TOKEN_HOM = '1301865f-c6bc-38f3-9f49-666dbcfc59c3';
 
 implementation
 
@@ -147,10 +149,10 @@ begin
          FPURL := FPURL + '/boletos/protestos'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaSustarProtesto then
          FPURL := FPURL + '/boletos/protestos'
-       else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaCobrarJurosMora then
+       else if ATitulo.OcorrenciaOriginal.Tipo in [ACBrBoleto.toRemessaCobrarJurosMora, ACBrBoleto.toRemessaAlterarJurosMora] then
          FPURL := FPURL + '/boletos/encargos/juros-mora'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarMulta then
-         FPURL := FPURL + '/boletos/encargos/multa'
+         FPURL := FPURL + '/boletos/encargos/multas'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarDesconto then
          FPURL := FPURL +  '/boletos/descontos'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarValorAbatimento then
@@ -178,8 +180,8 @@ begin
   DefinirKeyUser;
 
   if NaoEstaVazio(Boleto.Cedente.CedenteWS.ClientID) then
-    HTTPSend.Headers.Add(C_SICOOB_CLIENT+': ' + Boleto.Cedente.CedenteWS.ClientID);
-  HTTPSend.Headers.Add('Accept-Encoding: ' + C_ACCEPT_ENCODING);
+    FPHeaders.Add(C_SICOOB_CLIENT + ': ' + Boleto.Cedente.CedenteWS.ClientID);
+//  HTTPSend.Headers.Add('Accept-Encoding: ' + C_ACCEPT_ENCODING);
 end;
 
 procedure TBoletoW_Bancoob.GerarDados;
@@ -215,12 +217,14 @@ begin
       (ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO,
       [TipoOperacaoToStr(Boleto.Configuracoes.WebService.Operacao)]));
   end;
-
 end;
 
 procedure TBoletoW_Bancoob.DefinirAuthorization;
 begin
-  FPAuthorization := C_AUTHORIZATION + ': Bearer ' + GerarTokenAutenticacao;
+  if Boleto.Configuracoes.WebService.Ambiente = taProducao then
+    FPAuthorization := C_AUTHORIZATION + ': Bearer ' + GerarTokenAutenticacao
+  else
+    FPAuthorization := C_AUTHORIZATION + ': Bearer ' + C_ACCESS_TOKEN_HOM;
 end;
 
 function TBoletoW_Bancoob.GerarTokenAutenticacao: string;
@@ -231,8 +235,7 @@ end;
 
 procedure TBoletoW_Bancoob.DefinirKeyUser;
 begin
-  if Assigned(aTitulo) then
-    FPKeyUser := '';
+  FPKeyUser := '';
 end;
 
 function TBoletoW_Bancoob.DefinirParametros: String;
@@ -294,8 +297,8 @@ begin
   Json := TJsonObject.Create;
   try
     Json.Add('numeroContrato').Value.AsInteger := StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0);
-    Json.Add('modalidade').Value.AsInteger     := strtoIntdef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1);
-    Json.Add('nossoNumero').Value.AsInteger    := StrtoIntdef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0);
+    Json.Add('modalidade').Value.AsInteger     := StrToIntDef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1);
+    Json.Add('nossoNumero').Value.AsInteger    := StrToIntDef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0);
     Json.Add('seuNumero').Value.asString       := IfThen(ATitulo.SeuNumero <> '',
                                                     ATitulo.SeuNumero,
                                                     IfThen(ATitulo.NumeroDocumento <> '',
@@ -332,7 +335,7 @@ begin
       Caso contrário, o sistema gerará automáticamente.
     }
     if StrToInt(ATitulo.NossoNumero) > 0 then
-       Json.Add('nossoNumero').Value.AsString                   := OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo));
+      Json.Add('nossoNumero').Value.AsInteger                   := StrToIntDef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0);
 
     Json.Add('seuNumero').Value.asString                        := IfThen(ATitulo.NumeroDocumento <> '',
                                                                      ATitulo.NumeroDocumento,
@@ -419,7 +422,7 @@ begin
         FMetodoHTTP :=  htDELETE;
         AlterarProtesto(Json);
       end;
-      toRemessaCobrarJurosMora:
+      toRemessaAlterarJurosMora, toRemessaCobrarJurosMora:
         AtribuirJuros(Json);
       toRemessaAlterarMulta:
         AtribuirMulta(Json);
@@ -441,7 +444,7 @@ end;
 
 procedure TBoletoW_Bancoob.RequisicaoConsultaDetalhe;
 begin
-  FPHeaders.Add(C_SICOOB_CLIENT+': '+Boleto.Cedente.CedenteWS.ClientID);
+  FPDadosMsg := '';
 end;
 
 procedure TBoletoW_Bancoob.GerarPagador(AJson: TJsonObject);
@@ -765,8 +768,6 @@ end;
 
 function TBoletoW_Bancoob.GerarRemessa: string;
 begin
-  if Boleto.Configuracoes.WebService.Ambiente = taHomologacao then
-    raise Exception.Create('Sicoob API v2 tem somente ambiente de produção.');
   DefinirCertificado;
   result := inherited GerarRemessa;
 end;

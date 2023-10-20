@@ -388,6 +388,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, blcksock, FileCtrl, Grids, IniFiles, Printers,
   pcnConversao,
+  ACBrOpenSSLUtils, OpenSSLExt,
   ACBrDFeConfiguracoes, ACBrDFeSSL,
   ACBrDFeUtil,
   ACBrNFSeXWebserviceBase,
@@ -495,8 +496,7 @@ end;
 procedure TfrmACBrNFSe.AlimentarNFSe(NumDFe, NumLote: String);
 var
   vValorISS: Double;
-  i, CodigoIBGE: Integer;
-  xMunicipio, xUF: string;
+  i: Integer;
 begin
   with ACBrNFSeX1 do
   begin
@@ -618,9 +618,6 @@ begin
 
       // TnfseSimNao = ( snSim, snNao );
       OptanteSimplesNacional := snSim;
-
-      // Provedor PadraoNacional (osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP)
-      OptanteSN := osnOptanteMEI;
 
       // TnfseSimNao = ( snSim, snNao );
       IncentivadorCultural := snNao;
@@ -799,6 +796,9 @@ begin
         Servico.Valores.Aliquota := 2;
 
         // Provedor PadraoNacional
+        // TOptanteSN = (osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP)
+        OptanteSN := osnOptanteMEI;
+
         Servico.Valores.tribMun.cPaisResult := 0;
         // TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia);
         Servico.Valores.tribMun.tribISSQN := tiNaoIncidencia;
@@ -806,20 +806,27 @@ begin
         Servico.Valores.tribMun.tpRetISSQN := trNaoRetido;
         Servico.Valores.totTrib.indTotTrib := indNao;
 
+        if OptanteSN = osnOptanteMEEPP then
+        begin
+          Servico.Valores.totTrib.indTotTrib := indSim;
+          Servico.Valores.totTrib.pTotTribSN := 2.01;
+        end;
+
         {
         Servico.Valores.tribFed.CST := cst01;
         Servico.Valores.tribFed.vBCPisCofins := Servico.Valores.BaseCalculo;
         Servico.Valores.tribFed.pAliqPis := 1.65;
         Servico.Valores.tribFed.pAliqCofins := 7.60;
         Servico.Valores.tribFed.vPis := Servico.Valores.tribFed.vBCPisCofins *
-                                         Servico.Valores.tribFed.pAliqPis / 100;
+                                        Servico.Valores.tribFed.pAliqPis / 100;
         Servico.Valores.tribFed.vCofins := Servico.Valores.tribFed.vBCPisCofins *
                                       Servico.Valores.tribFed.pAliqCofins / 100;
         Servico.Valores.tribFed.tpRetPisCofins := trpcNaoRetido;
 
-        Servico.Valores.totTrib.vTotTribFed := Servico.Valores.tribFed.vPis;
+        Servico.Valores.totTrib.vTotTribFed := Servico.Valores.tribFed.vPis +
+                                               Servico.Valores.tribFed.vCofins;
         Servico.Valores.totTrib.vTotTribEst := 0;
-        Servico.Valores.totTrib.vTotTribMun := Servico.Valores.tribFed.vCofins;
+        Servico.Valores.totTrib.vTotTribMun := 0;
         }
 
         vValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
@@ -1006,13 +1013,7 @@ begin
       Tomador.Endereco.TipoBairro := 'BAIRRO';
       Tomador.Endereco.Bairro := 'CENTRO';
       Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
-
-      CodigoIBGE := StrToIntDef(edtCodCidade.Text, 0);
-
-      if CodigoIBGE > 0 then
-        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
-
-      Tomador.Endereco.xMunicipio := xMunicipio;
+      Tomador.Endereco.xMunicipio := 'Cidade do Tomador';
       Tomador.Endereco.UF := edtEmitUF.Text;
       Tomador.Endereco.CodigoPais := 1058; // Brasil
       Tomador.Endereco.CEP := '14800000';
@@ -1128,11 +1129,10 @@ procedure TfrmACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
   Titulo, NumNFSe, Codigo, Motivo, NumLote, CodVerif, SerNFSe, NumRps,
   SerRps, ValNFSe, ChNFSe, eMailTomador, vNumRPS, xCodServ,
-  xDataEmissao, xTipo: String;
+  xDataEmissao: String;
   DataEmissao: TDateTime;
   CodCanc: Integer;
   InfCancelamento: TInfCancelamento;
-  Ok: Boolean;
 begin
   Titulo := 'Cancelar NFSe';
   DataEmissao := 0;
@@ -1302,13 +1302,6 @@ begin
     AlimentarNFSe(vNumRPS, '1');
   end;
 
-  xTipo := '';
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proPriMax, proWebFisco] then
-  begin
-    if not(InputQuery(Titulo, 'Tipo (1 = NFSe, 2 = Rps):', xTipo)) then
-      exit;
-  end;
-
   InfCancelamento := TInfCancelamento.Create;
 
   try
@@ -1327,7 +1320,6 @@ begin
       email           := eMailTomador;
       DataEmissaoNFSe := DataEmissao;
       CodServ         := xCodServ;
-      tpDocumento     := StrTotpDocumento(Ok, xTipo);
     end;
 
     ACBrNFSeX1.CancelarNFSe(InfCancelamento);
@@ -1624,9 +1616,8 @@ end;
 procedure TfrmACBrNFSe.btnConsultarNFSePeloNumeroClick(Sender: TObject);
 var
   xTitulo, NumeroNFSe, SerNFSe, NumPagina, NumLote, xDataIni, xDataFin,
-  xTipo, xCodServ, xCodVerif: String;
+  xCodServ, xCodVerif: String;
   InfConsultaNFSe: TInfConsultaNFSe;
-  Ok: Boolean;
 begin
   xTitulo := 'Consultar NFSe Por Numero';
 
@@ -1673,13 +1664,6 @@ begin
         exit;
     end;
 
-    xTipo := '';
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proPriMax, proWebFisco] then
-    begin
-      if not(InputQuery(xTitulo, 'Tipo (1 = NFSe, 2 = Rps):', xTipo)) then
-        exit;
-    end;
-
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proSiappa] then
     begin
       xDataIni := FormatDateTime('MM/YYYY',Date);
@@ -1721,7 +1705,7 @@ begin
           InfConsultaNFSe.Free;
         end;
       end;
-
+{
     proFGMaiss,
     proPriMax,
     proWebFisco:
@@ -1734,7 +1718,6 @@ begin
             tpConsulta := tcPorNumero;
 
             NumeroIniNFSe := NumeroNFSe;
-            tpDocumento := StrTotpDocumento(Ok, xTipo);
           end;
 
           ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
@@ -1742,7 +1725,7 @@ begin
           InfConsultaNFSe.Free;
         end;
       end;
-
+}
     proAssessorPublico:
       begin
         InfConsultaNFSe := TInfConsultaNFSe.Create;
@@ -3711,6 +3694,14 @@ begin
   memoLog.Clear;
   memoLog.Lines.Clear;
   memoLog.Update;
+
+  memoLog.Lines.Add('------------------------------');
+  memoLog.Lines.Add('Versão OpenSSL');
+  memoLog.Lines.Add( OpenSSLExt.OpenSSLVersion(0) );
+  memoLog.Lines.Add( ACBrOpenSSLUtils.OpenSSLFullVersion );
+  memoLog.Lines.Add( OpenSSLExt.SSLUtilFile );
+  memoLog.Lines.Add( OpenSSLExt.SSLLibFile );
+  memoLog.Lines.Add('------------------------------');
 
   memoLog.Lines.Add('Requisição');
   memoLog.Lines.Add('Ambiente: ' + TpAmbToStr(ACBrNFSeX1.Configuracoes.WebServices.Ambiente));

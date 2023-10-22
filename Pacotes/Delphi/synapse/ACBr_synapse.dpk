@@ -62,9 +62,6 @@ contains
   synsock in '..\..\..\Fontes\Terceiros\synalist\synsock.pas',
   tlntsend in '..\..\..\Fontes\Terceiros\synalist\tlntsend.pas',
   ssl_openssl in '..\..\..\Fontes\Terceiros\synalist\ssl_openssl.pas',
-  ssl_openssl_lib in '..\..\..\Fontes\Terceiros\synalist\ssl_openssl_lib.pas',
-  ssl_openssl_capi in '..\..\..\Fontes\Terceiros\synalist\ssl_openssl_capi.pas',
-  ssl_openssl11 in '..\..\..\Fontes\Terceiros\synalist\ssl_openssl11.pas',
-  ssl_openssl11_lib in '..\..\..\Fontes\Terceiros\synalist\ssl_openssl11_lib.pas';
+  ssl_openssl_lib in '..\..\..\Fontes\Terceiros\synalist\ssl_openssl_lib.pas';
 
 end.

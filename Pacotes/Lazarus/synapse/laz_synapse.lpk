@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="laz_synapse"/>
     <Author Value="Lukas Gebauer"/>
@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Synapse TCP/IP / Serial library - (http://www.synapse.ararat.cz)"/>
     <Version Major="40" Minor="1"/>
-    <Files Count="37">
+    <Files Count="35">
       <Item1>
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\asn1util.pas"/>
         <UnitName Value="asn1util"/>
@@ -158,15 +158,8 @@
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl_lib.pas"/>
         <UnitName Value="ssl_openssl_lib"/>
       </Item35>
-      <Item36>
-        <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl11.pas"/>
-        <UnitName Value="ssl_openssl11"/>
-      </Item36>
-      <Item37>
-        <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl11_lib.pas"/>
-        <UnitName Value="ssl_openssl11_lib"/>
-      </Item37>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="FCL"/>

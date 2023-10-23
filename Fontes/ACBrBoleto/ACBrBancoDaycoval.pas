@@ -29,6 +29,15 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+
+{
+
+
+ ATENÇÃO AS MUDANÇAS DESTA UNIT, POSSUI 3 MANUAIS ATUALMENTE 19/10/2023
+ LAYOUT 3, 4, 6 COM ALGUMAS REGRAS DIFERENTES : (PANDAAA)
+
+
+}
 {$I ACBr.inc}
 
 unit ACBrBancoDaycoval;
@@ -71,7 +80,7 @@ type
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function CalcularNomeArquivoRemessa : String; override;
-   end;
+end;
 
 implementation
 
@@ -83,17 +92,24 @@ uses
 
 function TACBrBancoDaycoval.DefineTamanhoNossoNumeroRetorno: Integer;
 begin
+  case fpLayoutVersaoArquivo of
+    3,4 : Result := 8;
+    6 : Result := 10;
+  end;
   if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
-    Result := 9
-  else
-    Result := 8;
+    Inc(Result);
 end;
 
 function TACBrBancoDaycoval.DefinePosicaoNossoNumeroRetorno: Integer;
 begin
+
   if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
-    Result := 86
-  else
+  begin
+    case fpLayoutVersaoArquivo of
+      3 : Result := 86;
+      4 : Result := 84;
+    end;
+  end else
     Result := 63;
 end;
 

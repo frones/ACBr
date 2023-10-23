@@ -1,9 +1,9 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 007.007.000 |
+| Project : Ararat Synapse                                       | 007.007.001 |
 |==============================================================================|
 | Content: Serial port support                                                 |
 |==============================================================================|
-| Copyright (c)2001-2022, Lukas Gebauer                                        |
+| Copyright (c)2001-2023, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -33,7 +33,7 @@
 | DAMAGE.                                                                      |
 |==============================================================================|
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
-| Portions created by Lukas Gebauer are Copyright (c)2001-2021.                |
+| Portions created by Lukas Gebauer are Copyright (c)2001-2023.                |
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
@@ -1011,15 +1011,23 @@ begin
       end;
   {$ENDIF}
 
-  {$IFNDEF FPC}
-    {$IFDEF POSIX}
-      FHandle := open(MarshaledAString(AnsiString(FDevice)), O_RDWR or O_SYNC);
+  try
+    {$IFNDEF FPC}
+      {$IFDEF POSIX}
+        FHandle := open(MarshaledAString(AnsiString(FDevice)), O_RDWR or O_SYNC);
+      {$ELSE}
+        FHandle := THandle(Libc.open(pchar(FDevice), O_RDWR or O_SYNC));
+      {$ENDIF}
     {$ELSE}
-      FHandle := THandle(Libc.open(pchar(FDevice), O_RDWR or O_SYNC));
+      FHandle := THandle(fpOpen(FDevice, O_RDWR or O_SYNC));
     {$ENDIF}
-  {$ELSE}
-    FHandle := THandle(fpOpen(FDevice, O_RDWR or O_SYNC));
-  {$ENDIF}
+  except
+    On ERangeError do
+      Fhandle := INVALID_HANDLE_VALUE;
+    On Exception do
+      raise;
+  end;
+
   if FHandle = INVALID_HANDLE_VALUE then  //because THandle is not integer on all platforms!
     SerialCheck(-1)
   else

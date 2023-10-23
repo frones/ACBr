@@ -1,5 +1,5 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 001.004.000 |
+| Project : Ararat Synapse                                       | 001.000.000 |
 |==============================================================================|
 | Content: SSL support by OpenSSL                                              |
 |==============================================================================|
@@ -35,7 +35,6 @@
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
 | Portions created by Lukas Gebauer are Copyright (c)2005-2022.                |
 | Portions created by Petr Fejfar are Copyright (c)2011-2012.                  |
-| Portions created by Pepak are Copyright (c)2018.                             |
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
@@ -49,17 +48,13 @@
 {:@abstract(SSL plugin for OpenSSL)
 
 Compatibility with OpenSSL versions:
-1.0.0
-1.1.x
-3.x.x 
+3.0.0+
 
 OpenSSL libraries are loaded dynamicly - you not need OpenSSL librares even you
 compile your application with this unit. SSL just not working when you not have
 OpenSSL libraries.
 
-This plugin have limited support for .NET too! Because is not possible to use
-callbacks with CDECL calling convention under .NET, is not supported
-key/certificate passwords and multithread locking. :-(
+This plugin does not have support for .NET!
 
 For handling keys and certificates you can use this properties:
 
@@ -86,32 +81,21 @@ accepting of new connections!
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
 
-{$IFDEF NEXTGEN}
-  {$ZEROBASEDSTRINGS OFF}
-{$ENDIF}
-
-unit ssl_openssl;
+unit ssl_openssl3;
 
 interface
 
 uses
-  SysUtils, Classes, StrUtils,
-  blcksock, synsock, synautil, synafpc,
-{$IfDef CIL}
-  System.Text,
-{$EndIf}
-  ssl_openssl_lib;
+  SysUtils, Classes,
+  {$IFDEF DELPHI23_UP} AnsiStrings, {$ENDIF}
+  blcksock, synsock, synautil,
+  ssl_openssl3_lib;
 
 type
   {:@abstract(class implementing OpenSSL SSL plugin.)
    Instance of this class will be created for each @link(TTCPBlockSocket).
    You not need to create instance of this class, all is done by Synapse itself!}
-
-  { TSSLOpenSSL }
-
-  TSSLOpenSSL = class(TCustomSSL)
-  private
-    FAllowUnsafeLegacyRenegotiation: Boolean;
+  TSSLOpenSSL3 = class(TCustomSSL)
   protected
     FSsl: PSSL;
     Fctx: PSSL_CTX;
@@ -126,7 +110,6 @@ type
     {:See @inherited}
     constructor Create(const Value: TTCPBlockSocket); override;
     destructor Destroy; override;
-
     {:See @inherited}
     function LibVersion: String; override;
     {:See @inherited}
@@ -169,16 +152,12 @@ type
     function GetCipherAlgBits: integer; override;
     {:See @inherited}
     function GetVerifyCert: integer; override;
-
-    property AllowUnsafeLegacyRenegotiation: Boolean read FAllowUnsafeLegacyRenegotiation
-      write FAllowUnsafeLegacyRenegotiation default True;
   end;
 
 implementation
 
 {==============================================================================}
 
-{$IFNDEF CIL}
 function PasswordCallback(buf:PAnsiChar; size:Integer; rwflag:Integer; userdata: Pointer):Integer; cdecl;
 var
   Password: AnsiString;
@@ -189,42 +168,37 @@ begin
   if Length(Password) > (Size - 1) then
     SetLength(Password, Size - 1);
   Result := Length(Password);
-  synafpc.StrLCopy(buf, PAnsiChar(Password + #0), Result + 1);
+  {$IFDEF DELPHI23_UP}AnsiStrings.{$ENDIF}StrLCopy(buf, PAnsiChar(Password + #0), Result + 1);
 end;
-{$ENDIF}
 
 {==============================================================================}
 
-constructor TSSLOpenSSL.Create(const Value: TTCPBlockSocket);
+constructor TSSLOpenSSL3.Create(const Value: TTCPBlockSocket);
 begin
   inherited Create(Value);
-  FAllowUnsafeLegacyRenegotiation := True;
   FCiphers := 'DEFAULT';
   FSsl := nil;
   Fctx := nil;
 end;
 
-destructor TSSLOpenSSL.Destroy;
+destructor TSSLOpenSSL3.Destroy;
 begin
   DeInit;
   inherited Destroy;
 end;
 
-function TSSLOpenSSL.LibVersion: String;
+function TSSLOpenSSL3.LibVersion: String;
 begin
   Result := OpenSSLversion(0);
 end;
 
-function TSSLOpenSSL.LibName: String;
+function TSSLOpenSSL3.LibName: String;
 begin
-  Result := 'ssl_openssl';
+  Result := 'ssl_openssl3';
 end;
 
-function TSSLOpenSSL.SSLCheck: Boolean;
+function TSSLOpenSSL3.SSLCheck: Boolean;
 var
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
   s : AnsiString;
 begin
   Result := true;
@@ -234,19 +208,13 @@ begin
   if FLastError <> 0 then
   begin
     Result := False;
-{$IFDEF CIL}
-    sb := StringBuilder.Create(256);
-    ErrErrorString(FLastError, sb, 256);
-    FLastErrorDesc := Trim(sb.ToString);
-{$ELSE}
     s := StringOfChar(#0, 256);
     ErrErrorString(FLastError, s, Length(s));
     FLastErrorDesc := s;
-{$ENDIF}
   end;
 end;
 
-function TSSLOpenSSL.CreateSelfSignedCert(Host: string): Boolean;
+function TSSLOpenSSL3.CreateSelfSignedCert(Host: string): Boolean;
 var
   pk: EVP_PKEY;
   x: PX509;
@@ -256,9 +224,6 @@ var
   b: PBIO;
   xn, y: integer;
   s: AnsiString;
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
 begin
   Result := True;
   pk := EvpPkeynew;
@@ -267,7 +232,7 @@ begin
     rsa := RsaGenerateKey(2048, $10001, nil, nil);
     EvpPkeyAssign(pk, EVP_PKEY_RSA, rsa);
     X509SetVersion(x, 2); //it is version 3!
-//  Asn1IntegerSet(X509getSerialNumber(x), 0);
+//    Asn1IntegerSet(X509getSerialNumber(x), 0);
     Asn1IntegerSet(X509getSerialNumber(x), GetTick);
     t := Asn1UtctimeNew;
     try
@@ -283,26 +248,15 @@ begin
     X509NameAddEntryByTxt(Name, 'C', $1001, 'CZ', -1, -1, 0);
     X509NameAddEntryByTxt(Name, 'CN', $1001, host, -1, -1, 0);
     x509SetIssuerName(x, Name);
-    s := IfThen(LibVersionIsGreaterThan1_0_0, 'SHA256', 'SHA1');
-    x509Sign(x, pk, EvpGetDigestByName(s));
+    x509Sign(x, pk, EvpGetDigestByName('SHA256'));
     b := BioNew(BioSMem);
     try
       i2dX509Bio(b, x);
       xn := bioctrlpending(b);
-{$IFDEF CIL}
-      sb := StringBuilder.Create(xn);
-      y := bioread(b, sb, xn);
-      if y > 0 then
-      begin
-        sb.Length := y;
-        s := sb.ToString;
-      end;
-{$ELSE}
       setlength(s, xn);
       y := bioread(b, s, xn);
       if y > 0 then
         setlength(s, y);
-{$ENDIF}
     finally
       BioFreeAll(b);
     end;
@@ -311,20 +265,10 @@ begin
     try
       i2dPrivatekeyBio(b, pk);
       xn := bioctrlpending(b);
-{$IFDEF CIL}
-      sb := StringBuilder.Create(xn);
-      y := bioread(b, sb, xn);
-      if y > 0 then
-      begin
-        sb.Length := y;
-        s := sb.ToString;
-      end;
-{$ELSE}
       setlength(s, xn);
       y := bioread(b, s, xn);
       if y > 0 then
         setlength(s, y);
-{$ENDIF}
     finally
       BioFreeAll(b);
     end;
@@ -335,7 +279,7 @@ begin
   end;
 end;
 
-function TSSLOpenSSL.LoadPFX(pfxdata: ansistring): Boolean;
+function TSSLOpenSSL3.LoadPFX(pfxdata: Ansistring): Boolean;
 var
   cert, pkey, ca: SslPtr;
   certx: PAnsiChar;
@@ -361,12 +305,10 @@ begin
           if SSLCTXusecertificate(Fctx, cert) > 0 then
             if SSLCTXusePrivateKey(Fctx, pkey) > 0 then
               Result := True;
+      {pf}
 
-        //  Set Certificate Verification chain
-        if Result and (ca <> nil) then
-        begin
-          if LibVersionIsGreaterThan1_0_0 then
-          begin
+         if Result and (ca <> nil) then
+         begin
             iTotal := OPENSSL_sk_num(ca);
             if iTotal > 0 then
             begin
@@ -384,11 +326,7 @@ begin
                 end;
               end;
             end;
-          end
-          else
-            SslCtxCtrl(Fctx, SSL_CTRL_CHAIN, 0, ca);
-        end;
-      {pf}
+         end;
       finally
         EvpPkeyFree(pkey);
         X509free(cert);
@@ -403,15 +341,16 @@ begin
   end;
 end;
 
-function TSSLOpenSSL.SetSslKeys: boolean;
+function TSSLOpenSSL3.SetSslKeys: boolean;
 var
   st: TFileStream;
-  s: AnsiString;
+  s: ansistring;
 begin
   Result := False;
   if not assigned(FCtx) then
     Exit;
   try
+
     if FCertificateFile <> '' then
       if SslCtxUseCertificateChainFile(FCtx, FCertificateFile) <> 1 then
         if SslCtxUseCertificateFile(FCtx, FCertificateFile, SSL_FILETYPE_PEM) <> 1 then
@@ -458,54 +397,20 @@ begin
   end;
 end;
 
-function TSSLOpenSSL.Init(server: Boolean): Boolean;
+function TSSLOpenSSL3.Init(server:Boolean): Boolean;
 var
   s: AnsiString;
 begin
   Result := False;
-  if not InitSSLInterface then
-  begin
-    FLastError := -1;
-    FLastErrorDesc := 'Error loading OpenSSL lib';
-    Exit;
-  end;
-
   FLastErrorDesc := '';
   FLastError := 0;
-  if LibVersionIsGreaterThan1_0_0 then
-    Fctx := SslCtxNew(SslMethodTLS) // best common protocol
-  else
-  begin
-    Fctx := nil;
-    case FSSLType of
-      LT_SSLv2:
-        Fctx := SslCtxNew(SslMethodV2);
-      LT_SSLv3:
-        Fctx := SslCtxNew(SslMethodV3);
-      LT_TLSv1:
-        Fctx := SslCtxNew(SslMethodTLSV1);
-      LT_TLSv1_1:
-        Fctx := SslCtxNew(SslMethodTLSV11);
-      LT_TLSv1_2:
-        Fctx := SslCtxNew(SslMethodTLSV12);
-      LT_all:
-        begin
-          //try new call for OpenSSL 1.1.0 first
-          Fctx := SslCtxNew(SslMethodTLS);
-          if Fctx=nil then
-            //callback to previous versions
-            Fctx := SslCtxNew(SslMethodV23);
-        end;
-    end;
-  end;
-
+  Fctx := SslCtxNew(SslMethodTLS); // best common protocol
   if Fctx = nil then
   begin
     SSLCheck;
     Exit;
-  end;
-
-  if LibVersionIsGreaterThan1_0_0 then
+  end
+  else
   begin
     //limit support to specific protocol only
     case FSSLType of
@@ -530,43 +435,39 @@ begin
           SslCtxCtrl(Fctx, SSL_CTRL_SET_MAX_PROTO_VERSION, TLS1_3_VERSION, nil);
         end;
     end;
+    
+    s := FCiphers;
+    SslCtxSetCipherList(Fctx, s);
+    if FVerifyCert then
+      SslCtxSetVerify(FCtx, SSL_VERIFY_PEER, nil)
+    else
+      SslCtxSetVerify(FCtx, SSL_VERIFY_NONE, nil);
+    SslCtxSetDefaultPasswdCb(FCtx, @PasswordCallback);
+    SslCtxSetDefaultPasswdCbUserdata(FCtx, self);
 
-    if AllowUnsafeLegacyRenegotiation then
-      SSLCtxSetOptions(Fctx, SSL_OP_LEGACY_SERVER_CONNECT);
+    if server and (FCertificateFile = '') and (FCertificate = '')
+      and (FPFXfile = '') and (FPFX = '') then
+    begin
+      CreateSelfSignedcert(FSocket.ResolveIPToName(FSocket.GetRemoteSinIP));
+    end;
+
+    if not SetSSLKeys then
+      Exit
+    else
+    begin
+      Fssl := nil;
+      Fssl := SslNew(Fctx);
+      if Fssl = nil then
+      begin
+        SSLCheck;
+        exit;
+      end;
+    end;
   end;
-
-  s := FCiphers;
-  SslCtxSetCipherList(Fctx, s);
-  if FVerifyCert then
-    SslCtxSetVerify(FCtx, SSL_VERIFY_PEER, nil)
-  else
-    SslCtxSetVerify(FCtx, SSL_VERIFY_NONE, nil);
-{$IFNDEF CIL}
-  SslCtxSetDefaultPasswdCb(FCtx, @PasswordCallback);
-  SslCtxSetDefaultPasswdCbUserdata(FCtx, self);
-{$ENDIF}
-
-  if server and (FCertificateFile = '') and (FCertificate = '')
-    and (FPFXfile = '') and (FPFX = '') then
-  begin
-    CreateSelfSignedcert(FSocket.ResolveIPToName(FSocket.GetRemoteSinIP));
-  end;
-
-  if not SetSSLKeys then
-    Exit;
-
-  Fssl := nil;
-  Fssl := SslNew(Fctx);
-  if Fssl = nil then
-  begin
-    SSLCheck;
-    exit;
-  end;
-
   Result := true;
 end;
 
-function TSSLOpenSSL.DeInit: Boolean;
+function TSSLOpenSSL3.DeInit: Boolean;
 begin
   Result := True;
   if assigned (Fssl) then
@@ -576,12 +477,11 @@ begin
   begin
     SslCtxFree(Fctx);
     Fctx := nil;
-    ErrRemoveState(0);
   end;
   FSSLEnabled := False;
 end;
 
-function TSSLOpenSSL.Prepare(server: Boolean): Boolean;
+function TSSLOpenSSL3.Prepare(server:Boolean): Boolean;
 begin
   Result := false;
   DeInit;
@@ -591,7 +491,7 @@ begin
     DeInit;
 end;
 
-function TSSLOpenSSL.Connect: boolean;
+function TSSLOpenSSL3.Connect: boolean;
 var
   x: integer;
   b: boolean;
@@ -602,11 +502,7 @@ begin
     Exit;
   if Prepare(False) then
   begin
-{$IFDEF CIL}
-    if sslsetfd(FSsl, FSocket.Socket.Handle.ToInt32) < 1 then
-{$ELSE}
     if sslsetfd(FSsl, FSocket.Socket) < 1 then
-{$ENDIF}
     begin
       SSLCheck;
       Exit;
@@ -651,7 +547,7 @@ begin
   end;
 end;
 
-function TSSLOpenSSL.Accept: boolean;
+function TSSLOpenSSL3.Accept: boolean;
 var
   x: integer;
 begin
@@ -660,11 +556,7 @@ begin
     Exit;
   if Prepare(True) then
   begin
-{$IFDEF CIL}
-    if sslsetfd(FSsl, FSocket.Socket.Handle.ToInt32) < 1 then
-{$ELSE}
     if sslsetfd(FSsl, FSocket.Socket) < 1 then
-{$ENDIF}
     begin
       SSLCheck;
       Exit;
@@ -680,7 +572,7 @@ begin
   end;
 end;
 
-function TSSLOpenSSL.Shutdown: boolean;
+function TSSLOpenSSL3.Shutdown: boolean;
 begin
   if assigned(FSsl) then
     sslshutdown(FSsl);
@@ -688,7 +580,7 @@ begin
   Result := True;
 end;
 
-function TSSLOpenSSL.BiShutdown: boolean;
+function TSSLOpenSSL3.BiShutdown: boolean;
 var
   x: integer;
 begin
@@ -705,22 +597,14 @@ begin
   Result := True;
 end;
 
-function TSSLOpenSSL.SendBuffer(Buffer: TMemory; Len: Integer): Integer;
+function TSSLOpenSSL3.SendBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
   err: integer;
-{$IFDEF CIL}
-  s: ansistring;
-{$ENDIF}
 begin
   FLastError := 0;
   FLastErrorDesc := '';
   repeat
-{$IFDEF CIL}
-    s := StringOf(Buffer);
-    Result := SslWrite(FSsl, s, Len);
-{$ELSE}
     Result := SslWrite(FSsl, Buffer , Len);
-{$ENDIF}
     err := SslGetError(FSsl, Result);
   until (err <> SSL_ERROR_WANT_READ) and (err <> SSL_ERROR_WANT_WRITE);
   if err = SSL_ERROR_ZERO_RETURN then
@@ -730,29 +614,14 @@ begin
       FLastError := err;
 end;
 
-function TSSLOpenSSL.RecvBuffer(Buffer: TMemory; Len: Integer): Integer;
+function TSSLOpenSSL3.RecvBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
   err: integer;
-{$IFDEF CIL}
-  sb: stringbuilder;
-  s: ansistring;
-{$ENDIF}
 begin
   FLastError := 0;
   FLastErrorDesc := '';
   repeat
-{$IFDEF CIL}
-    sb := StringBuilder.Create(Len);
-    Result := SslRead(FSsl, sb, Len);
-    if Result > 0 then
-    begin
-      sb.Length := Result;
-      s := sb.ToString;
-      System.Array.Copy(BytesOf(s), Buffer, length(s));
-    end;
-{$ELSE}
     Result := SslRead(FSsl, Buffer , Len);
-{$ENDIF}
     err := SslGetError(FSsl, Result);
   until (err <> SSL_ERROR_WANT_READ) and (err <> SSL_ERROR_WANT_WRITE);
   if err = SSL_ERROR_ZERO_RETURN then
@@ -764,12 +633,12 @@ begin
     FLastError := err;
 end;
 
-function TSSLOpenSSL.WaitingData: Integer;
+function TSSLOpenSSL3.WaitingData: Integer;
 begin
   Result := sslpending(Fssl);
 end;
 
-function TSSLOpenSSL.GetSSLVersion: string;
+function TSSLOpenSSL3.GetSSLVersion: string;
 begin
   if not assigned(FSsl) then
     Result := ''
@@ -777,13 +646,10 @@ begin
     Result := SSlGetVersion(FSsl);
 end;
 
-function TSSLOpenSSL.GetPeerSubject: string;
+function TSSLOpenSSL3.GetPeerSubject: string;
 var
   cert: PX509;
   s: ansistring;
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
 begin
   if not assigned(FSsl) then
   begin
@@ -796,18 +662,13 @@ begin
     Result := '';
     Exit;
   end;
-{$IFDEF CIL}
-  sb := StringBuilder.Create(4096);
-  Result := X509NameOneline(X509GetSubjectName(cert), sb, 4096);
-{$ELSE}
   setlength(s, 4096);
-  Result := String(X509NameOneline(X509GetSubjectName(cert), s, Length(s)));
-{$ENDIF}
+  Result := X509NameOneline(X509GetSubjectName(cert), s, Length(s));
   X509Free(cert);
 end;
 
 
-function TSSLOpenSSL.GetPeerSerialNo: integer; {pf}
+function TSSLOpenSSL3.GetPeerSerialNo: integer; {pf}
 var
   cert: PX509;
   SN:   PASN1_INTEGER;
@@ -831,7 +692,7 @@ begin
   end;
 end;
 
-function TSSLOpenSSL.GetPeerName: string;
+function TSSLOpenSSL3.GetPeerName: string;
 var
   s: ansistring;
 begin
@@ -840,7 +701,7 @@ begin
   Result := Trim(SeparateLeft(s, '/'));
 end;
 
-function TSSLOpenSSL.GetPeerNameHash: cardinal; {pf}
+function TSSLOpenSSL3.GetPeerNameHash: cardinal; {pf}
 var
   cert: PX509;
 begin
@@ -862,13 +723,10 @@ begin
   end;
 end;
 
-function TSSLOpenSSL.GetPeerIssuer: string;
+function TSSLOpenSSL3.GetPeerIssuer: string;
 var
   cert: PX509;
   s: ansistring;
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
 begin
   if not assigned(FSsl) then
   begin
@@ -881,24 +739,15 @@ begin
     Result := '';
     Exit;
   end;
-{$IFDEF CIL}
-  sb := StringBuilder.Create(4096);
-  Result := X509NameOneline(X509GetIssuerName(cert), sb, 4096);
-{$ELSE}
   setlength(s, 4096);
-  Result := String(X509NameOneline(X509GetIssuerName(cert), s, Length(s)));
-{$ENDIF}
+  Result := X509NameOneline(X509GetIssuerName(cert), s, Length(s));
   X509Free(cert);
 end;
 
-function TSSLOpenSSL.GetPeerFingerprint: AnsiString;
+function TSSLOpenSSL3.GetPeerFingerprint: AnsiString;
 var
   cert: PX509;
   x: integer;
-  s: String;
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
 begin
   if not assigned(FSsl) then
   begin
@@ -911,31 +760,18 @@ begin
     Result := '';
     Exit;
   end;
-
-  s := IfThen(LibVersionIsGreaterThan1_0_0, 'SHA1', 'MD5');
-{$IFDEF CIL}
-  sb := StringBuilder.Create(EVP_MAX_MD_SIZE);
-  X509Digest(cert, EvpGetDigestByName(s), sb, x);
-  sb.Length := x;
-  Result := sb.ToString;
-{$ELSE}
   setlength(Result, EVP_MAX_MD_SIZE);
-  x := 0;
-  X509Digest(cert, EvpGetDigestByName(s), Result, x);
+  X509Digest(cert, EvpGetDigestByName('SHA1'), Result, x); //was MD5 before
   SetLength(Result, x);
-{$ENDIF}
   X509Free(cert);
 end;
 
-function TSSLOpenSSL.GetCertInfo: string;
+function TSSLOpenSSL3.GetCertInfo: string;
 var
   cert: PX509;
   x, y: integer;
   b: PBIO;
   s: AnsiString;
-{$IFDEF CIL}
-  sb: stringbuilder;
-{$ENDIF}
 begin
   if not assigned(FSsl) then
   begin
@@ -953,20 +789,10 @@ begin
     try
       X509Print(b, cert);
       x := bioctrlpending(b);
-  {$IFDEF CIL}
-      sb := StringBuilder.Create(x);
-      y := bioread(b, sb, x);
-      if y > 0 then
-      begin
-        sb.Length := y;
-        s := sb.ToString;
-      end;
-  {$ELSE}
       setlength(s,x);
       y := bioread(b,s,x);
       if y > 0 then
         setlength(s, y);
-  {$ENDIF}
       Result := ReplaceString(s, LF, CRLF);
     finally
       BioFreeAll(b);
@@ -978,7 +804,7 @@ begin
   {/pf}
 end;
 
-function TSSLOpenSSL.GetCipherName: string;
+function TSSLOpenSSL3.GetCipherName: string;
 begin
   if not assigned(FSsl) then
     Result := ''
@@ -986,18 +812,17 @@ begin
     Result := SslCipherGetName(SslGetCurrentCipher(FSsl));
 end;
 
-function TSSLOpenSSL.GetCipherBits: integer;
+function TSSLOpenSSL3.GetCipherBits: integer;
 var
   x: integer;
 begin
-  x := 0;
   if not assigned(FSsl) then
     Result := 0
   else
     Result := SSLCipherGetBits(SslGetCurrentCipher(FSsl), x);
 end;
 
-function TSSLOpenSSL.GetCipherAlgBits: integer;
+function TSSLOpenSSL3.GetCipherAlgBits: integer;
 begin
   if not assigned(FSsl) then
     Result := 0
@@ -1005,7 +830,7 @@ begin
     SSLCipherGetBits(SslGetCurrentCipher(FSsl), Result);
 end;
 
-function TSSLOpenSSL.GetVerifyCert: integer;
+function TSSLOpenSSL3.GetVerifyCert: integer;
 begin
   if not assigned(FSsl) then
     Result := 1
@@ -1016,7 +841,7 @@ end;
 {==============================================================================}
 
 initialization
-  //if InitSSLInterface then  // Commented.. It will uses Dynamic loading, and allow inform "SSLLibPath"
-    SSLImplementation := TSSLOpenSSL;
+  if InitSSLInterface then
+    SSLImplementation := TSSLOpenSSL3;
 
 end.

@@ -766,7 +766,7 @@ begin
 
               NFSeMun.cMunNFSeMun := INIRec.ReadString(sSecao, 'cMunNFSeMun', '');
               NFSeMun.nNFSeMun := INIRec.ReadString(sSecao, 'nNFSeMun', '');
-              NFSeMun.cMunNFSeMun := INIRec.ReadString(sSecao, 'cVerifNFSeMun', '');
+              NFSeMun.cVerifNFSeMun := INIRec.ReadString(sSecao, 'cVerifNFSeMun', '');
 
               NFNFS.nNFS := INIRec.ReadString(sSecao, 'nNFS', '');
               NFNFS.modNFS := INIRec.ReadString(sSecao, 'modNFS', '');

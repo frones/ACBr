@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Corrige o campo cVerifNFSeMun na leitura do arquivo INI.
+   Por: Diego Folieni
 
 20/10/2023
 -- Diversos --

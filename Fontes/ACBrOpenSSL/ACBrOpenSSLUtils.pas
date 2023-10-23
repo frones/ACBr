@@ -342,6 +342,8 @@ function ExtractModulusAndExponentFromKey(AKey: PEVP_PKEY; out Modulus: String;
 Var
   bio: pBIO;
   RsaKey: pRSA;
+  bnMod, bnExp: PBIGNUM;
+  UseFunctions: Boolean;
 begin
   InitOpenSSL;
   Modulus := '';
@@ -351,11 +353,25 @@ begin
   try
     if (RsaKey = Nil) then
       raise EACBrOpenSSLException.Create(sErrLoadingRSAKey + sLineBreak + GetLastOpenSSLError);
-    BN_print(bio, RsaKey^.e);
+
+    UseFunctions := (pos('RSA_get0_n', OpenSSLExt.OpenSSL_unavailable_functions) = 0);
+    if UseFunctions then
+    begin
+      bnMod := RSA_get0_n(RsaKey);
+      bnExp := RSA_get0_e(RsaKey);
+    end
+    else
+    begin
+      bnMod := RsaKey^.e;
+      bnExp := RsaKey^.d;
+    end;
+
+    BN_print(bio, bnMod);
     Modulus := String(BioToStr(bio));
     BIOReset(bio);
-    BN_print(bio, RsaKey^.d);
+    BN_print(bio, bnExp);
     Exponent := String(BioToStr(bio));
+
     Result := True;
   finally
     if (RsaKey <> Nil) then
@@ -371,6 +387,7 @@ var
   bnMod, bnExp: PBIGNUM;
   rsa: pRSA ;
   err: longint ;
+  UseFunctions: Boolean;
 begin
   InitOpenSSL;
   m := Trim(Modulus);
@@ -403,8 +420,16 @@ begin
     rsa := RSA_new;
   if (rsa = nil) then
     raise EACBrOpenSSLException.Create(sErrGeneratingRSAKey + sLineBreak + GetLastOpenSSLError);
-  rsa^.e := bnMod;
-  rsa^.d := bnExp;
+
+  UseFunctions := (pos('RSA_set0_key', OpenSSLExt.OpenSSL_unavailable_functions) = 0);
+  if UseFunctions then
+    RSA_set0_key(rsa, bnMod, bnExp, Nil)
+  else
+  begin
+    rsa^.e := bnMod;
+    rsa^.d := bnExp;
+  end;
+
   err := EvpPkeyAssign(AKey, EVP_PKEY_RSA, rsa);
   if (err < 1) then
     raise EACBrOpenSSLException.Create(sErrSettingRSAKey + sLineBreak + GetLastOpenSSLError);
@@ -421,8 +446,9 @@ end;
 function ConvertPEMToASN1(aPEM: String): AnsiString;
 var
   sl: TStringList;
+  l, ul: String;
   b64: Boolean;
-  I: Integer;
+  i: Integer;
 begin
   Result := EmptyStr;
   if (not StringIsPEM(aPEM)) then
@@ -433,20 +459,22 @@ begin
     sl.Text := aPEM;
     b64 := False;
 
-    for I := 0 to sl.Count - 1 do
+    for i := 0 to sl.Count - 1 do
     begin
-      if (Pos(CBeginCertificate, UpperCase(sl[I])) > 0) or
-         (Pos(CBeginRSA, UpperCase(sl[I])) > 0) then
-      begin
-        b64 := True;
-        Continue;
-      end
-      else if b64 and
-        ((Pos(CEndCertificate, UpperCase(sl[I])) > 0) or (Pos(CEndRSA, UpperCase(sl[I])) > 0)) then
-        Break;
-
+      l := sl[i];
+      ul := UpperCase(l);
       if b64 then
-        Result := Result + sl[I];
+      begin
+        if ((Pos(CEndCertificate, ul) > 0) or (Pos(CEndRSA, ul) > 0)) then
+          Break;
+
+        if (Trim(l) = '') then    // 3.x insere informações da Chave no inicio, após o -- BEGIN --
+          Result := ''
+        else
+          Result := Result + l;
+      end
+      else
+        b64 := (Pos(CBeginCertificate, ul) > 0) or (Pos(CBeginRSA, ul) > 0);
     end;
 
     Result := DecodeBase64(Result);

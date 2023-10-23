@@ -110,13 +110,15 @@ var
       DLLUtilNames: array[1..2] of string = ('emcrpt10.dll','crypto.dll');
      {$ENDIF OS2GCC}
     {$ELSE OS2}
-     DLLSSLNames: array[1..16] of string = ('libssl.so',  // this file only exist in dev-packages that are not installed by default on most distributions
+     DLLSSLNames: array[1..17] of string = ('libssl.so',  // this file only exist in dev-packages that are not installed by default on most distributions
+                                            'libssl.so.3',
                                             'libssl.so.1.1', 'libssl.so.10', 'libssl.so.1.1.1', 'libssl.so.1.1.0',
                                             'libssl.so.1.0.2', 'libssl.so.1.0.1', 'libssl.so.1.0.0',
                                             'libssl.so.0.9.8', 'libssl.so.0.9.7', 'libssl.so.0.9.6', 'libssl.so.0.9.5',
                                             'libssl.so.0.9.4', 'libssl.so.0.9.3', 'libssl.so.0.9.2', 'libssl.so.0.9.1'
                                            );
-     DLLUtilNames: array[1..16] of string = ('libcrypto.so', // this file only exist in dev-packages that are not installed by default on most distributions
+     DLLUtilNames: array[1..17] of string = ('libcrypto.so', // this file only exist in dev-packages that are not installed by default on most distributions
+                                             'libcrypto.so.3',
                                              'libcrypto.so.1.1', 'libcrypto.so.10', 'libcrypto.so.1.1.1', 'libcrypto.so.1.1.0',
                                              'libcrypto.so.1.0.2', 'libcrypto.so.1.0.1', 'libcrypto.so.1.0.0',
                                              'libcrypto.so.0.9.8', 'libcrypto.so.0.9.7', 'libcrypto.so.0.9.6', 'libcrypto.so.0.9.5',
@@ -125,9 +127,17 @@ var
     {$ENDIF OS2}
    {$ENDIF}
   {$ELSE}
-   DLLSSLNames: array[1..4] of string = ({$IfDef WIN64}'libssl-1_1-x64.dll'{$Else}'libssl-1_1.dll'{$EndIf},
+   DLLSSLNames: array[1..5] of string = ({$IfDef WIN64}
+                                          'libssl-3-x64.dll','libssl-1_1-x64.dll'
+                                         {$Else}
+                                          'libssl-3.dll','libssl-1_1.dll'
+                                         {$EndIf},
                                          'ssleay32.dll', 'libssl32.dll', 'libssl.dll');
-   DLLUtilNames: array[1..4] of string = ({$IfDef WIN64}'libcrypto-1_1-x64.dll'{$Else}'libcrypto-1_1.dll'{$EndIf},
+   DLLUtilNames: array[1..5] of string = ({$IfDef WIN64}
+                                           'libcrypto-3-x64.dll','libcrypto-1_1-x64.dll'
+                                          {$Else}
+                                           'libcrypto-3.dll','libcrypto-1_1.dll'
+                                          {$EndIf},
                                           'libeay32.dll', 'libcrypto.dll', 'libeay.dll');
   {$ENDIF}
 
@@ -219,6 +229,7 @@ type
   PSslPtr = ^SslPtr;
   PSSL_CTX = SslPtr;
   PSSL = SslPtr;
+  PSTACK = SslPtr;
   PSSL_METHOD = SslPtr;
   PEVP_MD = SslPtr;
   PBIO_METHOD = SslPtr;
@@ -371,6 +382,7 @@ type
   PPasswdCb = SslPtr;
   PCallbackCb = SslPtr;
 
+  PX509_STORE = SslPtr;
   PX509_STORE_CTX = SslPtr;
   TSSLCTXVerifyCallback = function (ok : cInt; ctx : PX509_STORE_CTX) : Cint; cdecl;
 
@@ -582,11 +594,9 @@ type
   end;
 
   // PEM
-
   Ppem_password_cb = Pointer;
 
   // PKCS7
-
   PPKCS7  = ^PKCS7;
   PPKCS7_DIGEST  = ^PKCS7_DIGEST;
   PPKCS7_ENC_CONTENT  = ^PKCS7_ENC_CONTENT;
@@ -602,116 +612,116 @@ type
   Pstack_st_X509_ATTRIBUTE  = Pointer;
   ppkcs7_st = ^pkcs7_st;
 
-    pkcs7_issuer_and_serial_st = record
-        issuer : ^X509_NAME;
-        serial : PASN1_INTEGER;
-      end;
-    PKCS7_ISSUER_AND_SERIAL = pkcs7_issuer_and_serial_st;
+  pkcs7_issuer_and_serial_st = record
+    issuer : ^X509_NAME;
+    serial : PASN1_INTEGER;
+  end;
+  PKCS7_ISSUER_AND_SERIAL = pkcs7_issuer_and_serial_st;
 
-    pkcs7_signer_info_st = record
-        version : PASN1_INTEGER;
-        issuer_and_serial : PPKCS7_ISSUER_AND_SERIAL;
-        digest_alg : pointer;
-        auth_attr : pointer;
-        digest_enc_alg : pointer;
-        enc_digest : pointer;
-        unauth_attr : pointer;
-        pkey : ^EVP_PKEY;
-      end;
-    PKCS7_SIGNER_INFO = pkcs7_signer_info_st;
+  pkcs7_signer_info_st = record
+    version : PASN1_INTEGER;
+    issuer_and_serial : PPKCS7_ISSUER_AND_SERIAL;
+    digest_alg : pointer;
+    auth_attr : pointer;
+    digest_enc_alg : pointer;
+    enc_digest : pointer;
+    unauth_attr : pointer;
+    pkey : ^EVP_PKEY;
+  end;
+  PKCS7_SIGNER_INFO = pkcs7_signer_info_st;
 
-    stack_st_PKCS7_SIGNER_INFO = record
-      stack : Pointer;
-    end;
+  stack_st_PKCS7_SIGNER_INFO = record
+    stack : Pointer;
+  end;
 
+  pkcs7_recip_info_st = record
+    version : PASN1_INTEGER;
+    issuer_and_serial : PPKCS7_ISSUER_AND_SERIAL;
+    key_enc_algor : Pointer;
+    enc_key : Pointer;
+    cert : PX509;
+  end;
+  PKCS7_RECIP_INFO = pkcs7_recip_info_st;
 
-    pkcs7_recip_info_st = record
-        version : PASN1_INTEGER;
-        issuer_and_serial : PPKCS7_ISSUER_AND_SERIAL;
-        key_enc_algor : Pointer;
-        enc_key : Pointer;
-        cert : PX509;
-      end;
-    PKCS7_RECIP_INFO = pkcs7_recip_info_st;
-    stack_st_PKCS7_RECIP_INFO = record
-        stack : Pointer;
-      end;
+  stack_st_PKCS7_RECIP_INFO = record
+    stack : Pointer;
+  end;
 
+  pkcs7_signed_st = record
+    version : PASN1_INTEGER;
+    md_algs : Pointer;
+    cert : pointer;
+    crl : pointer;
+    signer_info : pointer;
+    contents : Pointer;
+  end;
+  PKCS7_SIGNED = pkcs7_signed_st;
+  (* Const before type ignored *)
 
-    pkcs7_signed_st = record
-        version : PASN1_INTEGER;
-        md_algs : Pointer;
-        cert : pointer;
-        crl : pointer;
-        signer_info : pointer;
-        contents : Pointer;
-      end;
-    PKCS7_SIGNED = pkcs7_signed_st;
-(* Const before type ignored *)
+  pkcs7_enc_content_st = record
+    content_type : Pointer;
+    algorithm : Pointer;
+    enc_data : Pointer;
+    cipher : PEVP_CIPHER;
+  end;
+  PKCS7_ENC_CONTENT = pkcs7_enc_content_st;
 
-    pkcs7_enc_content_st = record
-        content_type : Pointer;
-        algorithm : Pointer;
-        enc_data : Pointer;
-        cipher : PEVP_CIPHER;
-      end;
-    PKCS7_ENC_CONTENT = pkcs7_enc_content_st;
+  pkcs7_enveloped_st = record
+    version : PASN1_INTEGER;
+    recipientinfo : ^stack_st_PKCS7_RECIP_INFO;
+    enc_data : ^PKCS7_ENC_CONTENT;
+  end;
+  PKCS7_ENVELOPE = pkcs7_enveloped_st;
 
-    pkcs7_enveloped_st = record
-        version : PASN1_INTEGER;
-        recipientinfo : ^stack_st_PKCS7_RECIP_INFO;
-        enc_data : ^PKCS7_ENC_CONTENT;
-      end;
-    PKCS7_ENVELOPE = pkcs7_enveloped_st;
+  pkcs7_signedandenveloped_st = record
+    version : PASN1_INTEGER;
+    md_algs : Pstack_st_X509_ALGOR;
+    cert : Pstack_st_X509;
+    crl : Pointer;
+    signer_info : pointer;
+    enc_data : PPKCS7_ENC_CONTENT;
+    recipientinfo : ^stack_st_PKCS7_RECIP_INFO;
+  end;
+  PKCS7_SIGN_ENVELOPE = pkcs7_signedandenveloped_st;
 
-    pkcs7_signedandenveloped_st = record
-        version : PASN1_INTEGER;
-        md_algs : Pstack_st_X509_ALGOR;
-        cert : Pstack_st_X509;
-        crl : Pointer;
-        signer_info : pointer;
-        enc_data : PPKCS7_ENC_CONTENT;
-        recipientinfo : ^stack_st_PKCS7_RECIP_INFO;
-      end;
-    PKCS7_SIGN_ENVELOPE = pkcs7_signedandenveloped_st;
+  pkcs7_digest_st = record
+    version : PASN1_INTEGER;
+    md : POinter;
+    contents : ppkcs7_st;
+    digest : Pointer;
+  end;
+  PKCS7_DIGEST = pkcs7_digest_st;
 
-    pkcs7_digest_st = record
-        version : PASN1_INTEGER;
-        md : POinter;
-        contents : ppkcs7_st;
-        digest : Pointer;
-      end;
-    PKCS7_DIGEST = pkcs7_digest_st;
+  pkcs7_encrypted_st = record
+    version : PASN1_INTEGER;
+    enc_data : ^PKCS7_ENC_CONTENT;
+  end;
+  TPKCS7_ENCRYPT = pkcs7_encrypted_st;
 
-    pkcs7_encrypted_st = record
-      version : PASN1_INTEGER;
-      enc_data : ^PKCS7_ENC_CONTENT;
+  pkcs7_st = record
+    asn1 : ^byte;
+    length : longint;
+    state : longint;
+    detached : longint;
+    _type : Pointer;
+    d : record
+      case longint of
+        0 : ( ptr : PAnsiChar );
+        1 : ( data : Pointer);
+        2 : ( sign : PPKCS7_SIGNED );
+        3 : ( enveloped : ^PKCS7_ENVELOPE );
+        4 : ( signed_and_enveloped : ^PKCS7_SIGN_ENVELOPE );
+        5 : ( digest : ^PKCS7_DIGEST );
+        6 : ( encrypted : ^TPKCS7_ENCRYPT );
+        7 : ( other : PASN1_TYPE );
       end;
-    TPKCS7_ENCRYPT = pkcs7_encrypted_st;
+  end;
+  pkcs7 = pkcs7_st;
 
-    pkcs7_st = record
-        asn1 : ^byte;
-        length : longint;
-        state : longint;
-        detached : longint;
-        _type : Pointer;
-        d : record
-            case longint of
-              0 : ( ptr : PAnsiChar );
-              1 : ( data : Pointer);
-              2 : ( sign : PPKCS7_SIGNED );
-              3 : ( enveloped : ^PKCS7_ENVELOPE );
-              4 : ( signed_and_enveloped : ^PKCS7_SIGN_ENVELOPE );
-              5 : ( digest : ^PKCS7_DIGEST );
-              6 : ( encrypted : ^TPKCS7_ENCRYPT );
-              7 : ( other : PASN1_TYPE );
-            end;
-      end;
-    pkcs7 = pkcs7_st;
-    stack_st_PKCS7 = record
-      stack : Pointer;
-      end;
-    PPPKCS7_ISSUER_AND_SERIAL = ^PPKCS7_ISSUER_AND_SERIAL;
+  stack_st_PKCS7 = record
+    stack : Pointer;
+  end;
+  PPPKCS7_ISSUER_AND_SERIAL = ^PPKCS7_ISSUER_AND_SERIAL;
 
 const
   SSL_ERROR_NONE = 0;
@@ -828,7 +838,8 @@ const
   SSL_CTRL_CHANNEL_ID                         = 117;
   SSL_CTRL_GET_CHANNEL_ID                     = 118;
   SSL_CTRL_SET_CHANNEL_ID                     = 119;
-
+  SSL_CTRL_SET_MIN_PROTO_VERSION              = 123;
+  SSL_CTRL_SET_MAX_PROTO_VERSION              = 124;
 
   DTLS_CTRL_GET_TIMEOUT            = 73;
   DTLS_CTRL_HANDLE_TIMEOUT         = 74;
@@ -875,6 +886,11 @@ const
   TLSEXT_hash_sha384 = 5;
   TLSEXT_hash_sha512 = 6;
   TLSEXT_MAXLEN_host_name = 255;
+
+  TLS1_VERSION = $0301;
+  TLS1_1_VERSION = $0302;
+  TLS1_2_VERSION = $0303;
+  TLS1_3_VERSION = $0304;
 
   SSL_TLSEXT_ERR_OK = 0;
   SSL_TLSEXT_ERR_ALERT_WARNING = 1;
@@ -1202,7 +1218,8 @@ var
 
   function SslCtrl(ssl: PSSL; cmd: cInt; larg: clong; parg: Pointer): cLong;
   function SslCTXCtrl(ctx: PSSL_CTX; cmd: cInt; larg: clong; parg: Pointer): cLong;
-
+  function SslCtxSetMinProtoVersion(ctx: PSSL_CTX; version: integer): integer;
+  function SslCtxSetMaxProtoVersion(ctx: PSSL_CTX; version: integer): integer;
   function SSLCTXSetMode(ctx: PSSL_CTX; mode: cLong): cLong;
   function SSLSetMode(s: PSSL; mode: cLong): cLong;
   function SSLCTXGetMode(ctx: PSSL_CTX): cLong;
@@ -1213,7 +1230,6 @@ var
   function SslMethodTLSV1:PSSL_METHOD;
   function SslMethodTLSV1_1:PSSL_METHOD;
   function SslMethodTLSV1_2:PSSL_METHOD;
-  function SslMethodTLSV1_3:PSSL_METHOD;
   function SslMethodV23:PSSL_METHOD;
   function SslTLSMethod:PSSL_METHOD;
   function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr):cInt;
@@ -1311,6 +1327,10 @@ var
   function i2dX509bio(b: PBIO; x: PX509): cInt;
   function d2iX509bio(b: pBIO; x: PX509): PX509;
   function i2dPrivateKeyBio(b: PBIO; pkey: PEVP_PKEY): cInt;
+  function OPENSSL_sk_num(Stack: PSTACK): Integer;
+  function OPENSSL_sk_value(Stack: PSTACK; Item: Integer): PAnsiChar;
+  function X509_STORE_add_cert(Store: PX509_STORE; Cert: PX509): Integer;
+  function SSL_CTX_get_cert_store(const Ctx: PSSL_CTX): PX509_STORE;
 
   // 3DES functions
   procedure DESsetoddparity(Key: des_cblock);
@@ -1319,7 +1339,6 @@ var
   procedure DESecbencrypt(Input: des_cblock; output: des_cblock; ks: des_key_schedule; enc: cInt);
 
   // RAND functions
-
   function RAND_set_rand_method(const meth: PRAND_METHOD): cint;
   function RAND_get_rand_method: PRAND_METHOD;
   function RAND_SSLeay: PRAND_METHOD;
@@ -1339,7 +1358,6 @@ var
   function RAND_poll: cint;
 
   // RSA Functions
-
   function RSA_new(): PRSA;
   function RSA_new_method(method: PENGINE): PRSA;
   function RSA_size(arsa: PRSA): cint;
@@ -1367,13 +1385,17 @@ var
   //
   function RSA_get0_n(const d :PRSA): PBIGNUM;
   function RSA_get0_e(const d :PRSA): PBIGNUM;
+  function RSA_get0_d(const d :PRSA): PBIGNUM;
+  function RSA_get0_p(const d :PRSA): PBIGNUM;
+  function RSA_get0_q(const d :PRSA): PBIGNUM;
+  function RSA_set0_key(r: pRSA; n: PBIGNUM; e: PBIGNUM; d: PBIGNUM): cint;
+
   function RSA_get_version(r :PRSA): cint;
   function RSA_pkey_ctx_ctrl(ctx: PEVP_PKEY_CTX; optype: cint; cmd: cint; p1: cint; p2: Pointer): cint;
   //
   // RSA_memory_lock
 
   // X509 Functions
-
   function d2i_RSAPublicKey(arsa: PPRSA; pp: PPByte; len: cint): PRSA;
   function i2d_RSAPublicKey(arsa: PRSA; pp: PPByte): cint;
   function d2i_RSAPrivateKey(arsa: PPRSA; pp: PPByte; len: cint): PRSA;
@@ -1383,7 +1405,6 @@ var
   function d2i_AutoPrivateKey(a: PPEVP_PKEY; pp: PPByte; len: clong): PEVP_PKEY;
 
   // ERR Functions
-
   function Err_Error_String(e: cInt; buf: PAnsiChar): PAnsiChar;
 
   // EVP Functions - evp.h
@@ -1742,12 +1763,13 @@ type
   TSslSetFd = function(s: PSSL; fd: cInt):cInt; cdecl;
   TSslCtrl = function(ssl: PSSL; cmd: cInt; larg: clong; parg: Pointer): cLong; cdecl;
   TSslCTXCtrl = function(ctx: PSSL_CTX; cmd: cInt; larg: clong; parg: Pointer): cLong; cdecl;
+  TSslCtxSetMinProtoVersion = function(ctx: PSSL_CTX; version: integer): integer; cdecl;
+  TSslCtxSetMaxProtoVersion = function(ctx: PSSL_CTX; version: integer): integer; cdecl;
   TSslMethodV2 = function:PSSL_METHOD; cdecl;
   TSslMethodV3 = function:PSSL_METHOD; cdecl;
   TSslMethodTLSV1 = function:PSSL_METHOD; cdecl;
   TSslMethodTLSV1_1 = function:PSSL_METHOD; cdecl;
   TSslMethodTLSV1_2 = function:PSSL_METHOD; cdecl;
-  TSslMethodTLSV1_3 = function:PSSL_METHOD; cdecl;
   TSslMethodV23 = function:PSSL_METHOD; cdecl;
   TSslTLSMethod = function:PSSL_METHOD; cdecl;
   TSslCtxUsePrivateKey = function(ctx: PSSL_CTX; pkey: sslptr):cInt; cdecl;
@@ -1847,6 +1869,14 @@ type
   Ti2dX509bio = function(b: PBIO; x: PX509): cInt; cdecl;
   Td2iX509bio = function(b: pBIO; x: PX509): PX509; cdecl;
   Ti2dPrivateKeyBio= function(b: PBIO; pkey: PEVP_PKEY): cInt; cdecl;
+  TOPENSSL_sk_new_null =  function: PSTACK; cdecl;
+  TOPENSSL_sk_num = function(Stack: PSTACK): Integer; cdecl;
+  TOPENSSL_sk_value = function(Stack: PSTACK; Item: Integer): PAnsiChar; cdecl;
+  TOPENSSL_sk_free = procedure(Stack: PSTACK); cdecl;
+  TOPENSSL_sk_insert = function(Stack: PSTACK; Data: PAnsiChar; Index: Integer): Integer; cdecl;
+  TX509_dup = function(X: PX509): PX509; cdecl;
+  TSSL_CTX_get_cert_store =  function(const Ctx: PSSL_CTX): PX509_STORE;cdecl;
+  TX509_STORE_add_cert = function(Store: PX509_STORE; Cert: PX509): Integer; cdecl;
 
   // 3DES functions
   TDESsetoddparity = procedure(Key: des_cblock); cdecl;
@@ -1895,6 +1925,11 @@ type
   TRSA_set_method = function (arsa: PRSA; method: PRSA_METHOD): PRSA_METHOD; cdecl;
   TRSA_get0_n = function (const d :PRSA) :PBIGNUM; cdecl;
   TRSA_get0_e = function (const d :PRSA) :PBIGNUM; cdecl;
+  TRSA_get0_d = function (const d :PRSA) :PBIGNUM; cdecl;
+  TRSA_get0_p = function (const d :PRSA) :PBIGNUM; cdecl;
+  TRSA_get0_q = function (const d :PRSA) :PBIGNUM; cdecl;
+  TRSA_set0_key = function (r: pRSA; n: PBIGNUM; e: PBIGNUM; d: PBIGNUM): cint; cdecl;
+
   TRSA_get_version = function (r :PRSA) :cint; cdecl;
   TRSA_pkey_ctx_ctrl = function(ctx: PEVP_PKEY_CTX; optype: cint; cmd: cint; p1: cint; p2: Pointer): cint; cdecl;
 
@@ -1906,16 +1941,13 @@ type
   Td2i_Key = function (a: PPEVP_PKEY; pp: PPByte; len: clong): PEVP_PKEY; cdecl;
 
   // ERR Functions
-
   TErr_Error_String = function (e: cInt; buf: PAnsiChar): PAnsiChar; cdecl;
 
   // Crypto Functions
-
   TCRYPTOcleanupAllExData = procedure; cdecl;
   TOPENSSLaddallalgorithms = procedure; cdecl;
 
   // EVP Functions
-
   TOpenSSL_add_all_algorithms = procedure(); cdecl;
   TOpenSSL_add_all_ciphers = procedure(); cdecl;
   TOpenSSL_add_all_digests = procedure(); cdecl;
@@ -2015,12 +2047,13 @@ var
   _SslSetFd: TSslSetFd = nil;
   _SslCtrl: TSslCtrl = nil;
   _SslCTXCtrl: TSslCTXCtrl = nil;
+  _SslCtxSetMinProtoVersion: TSslCtxSetMinProtoVersion = nil;
+  _SslCtxSetMaxProtoVersion: TSslCtxSetMaxProtoVersion = nil;
   _SslMethodV2: TSslMethodV2 = nil;
   _SslMethodV3: TSslMethodV3 = nil;
   _SslMethodTLSV1: TSslMethodTLSV1 = nil;
   _SslMethodTLSV1_1: TSslMethodTLSV1_1 = nil;
   _SslMethodTLSV1_2: TSslMethodTLSV1_2 = nil;
-  _SslMethodTLSV1_3: TSslMethodTLSV1_3 = nil;
   _SslMethodV23: TSslMethodV23 = nil;
   _SslTLSMethod: TSslTLSMethod = nil;
   _SslCtxUsePrivateKey: TSslCtxUsePrivateKey = nil;
@@ -2118,6 +2151,14 @@ var
   _i2dX509bio: Ti2dX509bio = nil;
   _d2iX509bio: Td2iX509bio = nil;
   _i2dPrivateKeyBio: Ti2dPrivateKeyBio = nil;
+  _OPENSSL_sk_new_null: TOPENSSL_sk_new_null  = nil;
+  _OPENSSL_sk_num: TOPENSSL_sk_num  = nil;
+  _OPENSSL_sk_value: TOPENSSL_sk_value  = nil;
+  _OPENSSL_sk_free: TOPENSSL_sk_free   = nil;
+  _OPENSSL_sk_insert: TOPENSSL_sk_insert = nil;
+  _SSL_CTX_get_cert_store : TSSL_CTX_get_cert_store = nil;
+  _X509_STORE_add_cert : TX509_STORE_add_cert = nil;
+
   _EVP_enc_null : TEVP_CIPHERFunction = nil;
   _EVP_rc2_cbc : TEVP_CIPHERFunction = nil;
   _EVP_rc2_40_cbc : TEVP_CIPHERFunction = nil;
@@ -2184,6 +2225,11 @@ var
   _RSA_set_method: TRSA_set_method = nil;
   _RSA_get0_n: TRSA_get0_n = nil;
   _RSA_get0_e: TRSA_get0_e = nil;
+  _RSA_get0_d: TRSA_get0_d = nil;
+  _RSA_get0_p: TRSA_get0_p = nil;
+  _RSA_get0_q: TRSA_get0_q = nil;
+  _RSA_set0_key: TRSA_set0_key = nil;
+
   _RSA_get_version: TRSA_get_version = nil;
   _RSA_pkey_ctx_ctrl: TRSA_pkey_ctx_ctrl = nil;
 
@@ -2195,16 +2241,13 @@ var
   _d2i_PubKey: Td2i_Key = nil;
   _d2i_AutoPrivateKey: Td2i_Key = nil;
   // ERR Functions
-
   _Err_Error_String: TErr_Error_String = nil;
 
   // Crypto Functions
-
   _CRYPTOcleanupAllExData: TCRYPTOcleanupAllExData = nil;
   _OPENSSLaddallalgorithms: TOPENSSLaddallalgorithms = nil;
 
   // EVP Functions
-
   _OpenSSL_add_all_algorithms: TOpenSSL_add_all_algorithms = nil;
   _OpenSSL_add_all_ciphers: TOpenSSL_add_all_ciphers = nil;
   _OpenSSL_add_all_digests: TOpenSSL_add_all_digests = nil;
@@ -2254,7 +2297,6 @@ var
   _EVP_DigestVerifyFinal: TEVP_DigestVerifyFinal = nil;
   // PEM
   _PEM_read_bio_PrivateKey: TPEM_read_bio_PrivateKey = nil;
-
   _PEM_read_bio_PUBKEY: TPEM_read_bio_PUBKEY = nil;
   _PEM_write_bio_PrivateKey: TPEM_write_bio_PrivateKey = nil;
   _PEM_write_bio_PUBKEY: TPEM_write_bio_PUBKEY = nil;
@@ -2471,6 +2513,22 @@ begin
     Result := 0;
 end;
 
+function SslCtxSetMinProtoVersion(ctx: PSSL_CTX; version: integer): integer;
+begin
+  if InitSSLInterface and Assigned(_SslCtxSetMinProtoVersion) then
+    Result := _SslCtxSetMinProtoVersion(ctx, version)
+  else
+    Result := 0;
+end;
+
+function SslCtxSetMaxProtoVersion(ctx: PSSL_CTX; version: integer): integer;
+begin
+  if InitSSLInterface and Assigned(_SslCtxSetMaxProtoVersion) then
+    Result := _SslCtxSetMaxProtoVersion(ctx, version)
+  else
+    Result := 0;
+end;
+
 function SSLCTXSetMode(ctx: PSSL_CTX; mode: cLong): cLong;
 begin
   Result := SslCTXCtrl(ctx, SSL_CTRL_MODE, mode, nil);
@@ -2527,14 +2585,6 @@ function SslMethodTLSV1_2:PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodTLSV1_2) then
     Result := _SslMethodTLSV1_2
-  else
-    Result := nil;
-end;
-
-function SslMethodTLSV1_3:PSSL_METHOD;
-begin
-  if InitSSLInterface and Assigned(_SslMethodTLSV1_3) then
-    Result := _SslMethodTLSV1_3
   else
     Result := nil;
 end;
@@ -3273,6 +3323,38 @@ begin
     Result := 0;
 end;
 
+function OPENSSL_sk_num(Stack: PSTACK): Integer;
+begin
+  if InitSSLInterface and Assigned(_OPENSSL_sk_num) then
+    Result := _OPENSSL_sk_num(Stack)
+  else
+    Result := -1;
+end;
+
+function SSL_CTX_get_cert_store(const Ctx: PSSL_CTX): PX509_STORE;
+begin
+  if InitSSLInterface and Assigned(_SSL_CTX_get_cert_store) then
+    Result := _SSL_CTX_get_cert_store(Ctx)
+  else
+    Result := Nil;
+end;
+
+function OPENSSL_sk_value(Stack: PSTACK; Item: Integer): PAnsiChar;
+begin
+  if InitSSLInterface and Assigned(_OPENSSL_sk_value) then
+    Result := _OPENSSL_sk_value(Stack, Item)
+  else
+    Result := Nil;
+end;
+
+function X509_STORE_add_cert(Store: PX509_STORE; Cert: PX509): Integer;
+begin
+  if InitSSLInterface and Assigned(_X509_STORE_add_cert) then
+    Result := _X509_STORE_add_cert(Store, Cert)
+  else
+    Result := -1;
+end;
+
 function EvpGetDigestByName(Name: AnsiString): PEVP_MD;
 begin
   if InitSSLInterface and Assigned(_EvpGetDigestByName) then
@@ -3637,6 +3719,8 @@ function RSA_get0_n(const d :PRSA) :PBIGNUM;
 begin
   if InitSSLInterface and Assigned(_RSA_get0_n) then
     Result := _RSA_get0_n(d)
+  else if Assigned(d) and Assigned(d^.n) then
+    Result := d^.n
   else
     Result := nil;
 end;
@@ -3645,8 +3729,48 @@ function RSA_get0_e(const d :PRSA) :PBIGNUM;
 begin
   if InitSSLInterface and Assigned(_RSA_get0_e) then
     Result := _RSA_get0_e(d)
+  else if Assigned(d) and Assigned(d^.e) then
+    Result := d^.e
   else
     Result := nil;
+end;
+
+function RSA_get0_d(const d: PRSA): PBIGNUM;
+begin
+  if InitSSLInterface and Assigned(_RSA_get0_d) then
+    Result := _RSA_get0_d(d)
+  else if Assigned(d) and Assigned(d^.d) then
+    Result := d^.d
+  else
+    Result := nil;
+end;
+
+function RSA_get0_p(const d: PRSA): PBIGNUM;
+begin
+  if InitSSLInterface and Assigned(_RSA_get0_p) then
+    Result := _RSA_get0_p(d)
+  else if Assigned(d) and Assigned(d^.p) then
+    Result := d^.p
+  else
+    Result := nil;
+end;
+
+function RSA_get0_q(const d: PRSA): PBIGNUM;
+begin
+  if InitSSLInterface and Assigned(_RSA_get0_q) then
+    Result := _RSA_get0_q(d)
+  else if Assigned(d) and Assigned(d^.q) then
+    Result := d^.q
+  else
+    Result := nil;
+end;
+
+function RSA_set0_key(r: pRSA; n: PBIGNUM; e: PBIGNUM; d: PBIGNUM): cint;
+begin
+  if InitSSLInterface and Assigned(_RSA_set0_key) then
+    Result := _RSA_set0_key(r, n, e, d)
+  else
+    Result := -1;
 end;
 
 function RSA_get_version(r :PRSA) :cint;
@@ -5324,12 +5448,13 @@ begin
   _SslSetFd := GetProcAddr(SSLLibHandle, 'SSL_set_fd');
   _SslCtrl := GetProcAddr(SSLLibHandle, 'SSL_ctrl');
   _SslCTXCtrl := GetProcAddr(SSLLibHandle, 'SSL_CTX_ctrl');
+  _SslCtxSetMinProtoVersion := GetProcAddr(SSLLibHandle, 'SSL_CTX_set_min_proto_version');
+  _SslCtxSetMaxProtoVersion := GetProcAddr(SSLLibHandle, 'SSL_CTX_set_max_proto_version');
   _SslMethodV2 := GetProcAddr(SSLLibHandle, 'SSLv2_method');
   _SslMethodV3 := GetProcAddr(SSLLibHandle, 'SSLv3_method');
   _SslMethodTLSV1 := GetProcAddr(SSLLibHandle, 'TLSv1_method');
   _SslMethodTLSV1_1 := GetProcAddr(SSLLibHandle, 'TLSv1_1_method');
   _SslMethodTLSV1_2 := GetProcAddr(SSLLibHandle, 'TLSv1_2_method');
-  _SslMethodTLSV1_3 := GetProcAddr(SSLLibHandle, 'TLSv1_3_method');
   _SslMethodV23 := GetProcAddr(SSLLibHandle, 'SSLv23_method');
   _SslTLSMethod := GetProcAddr(SSLLibHandle, 'TLS_method');
   _SslCtxUsePrivateKey := GetProcAddr(SSLLibHandle, 'SSL_CTX_use_PrivateKey');
@@ -5354,7 +5479,9 @@ begin
   _SslPeek := GetProcAddr(SSLLibHandle, 'SSL_peek');
   _SslWrite := GetProcAddr(SSLLibHandle, 'SSL_write');
   _SslPending := GetProcAddr(SSLLibHandle, 'SSL_pending');
-  _SslGetPeerCertificate := GetProcAddr(SSLLibHandle, 'SSL_get_peer_certificate');
+  _SslGetPeerCertificate := GetProcAddr(SSLLibHandle, 'SSL_get1_peer_certificate');
+  if not Assigned(_SslGetPeerCertificate) then
+    _SslGetPeerCertificate := GetProcAddr(SSLLibHandle, 'SSL_get_peer_certificate');
   _SslGetVersion := GetProcAddr(SSLLibHandle, 'SSL_get_version');
   _SslCtxSetVerify := GetProcAddr(SSLLibHandle, 'SSL_CTX_set_verify');
   _SslGetCurrentCipher := GetProcAddr(SSLLibHandle, 'SSL_get_current_cipher');
@@ -5438,6 +5565,14 @@ begin
   _i2dX509bio := GetProcAddr(SSLUtilHandle, 'i2d_X509_bio');
   _d2iX509bio := GetProcAddr(SSLUtilHandle, 'd2i_X509_bio');
   _i2dPrivateKeyBio := GetProcAddr(SSLUtilHandle, 'i2d_PrivateKey_bio');
+  _OPENSSL_sk_new_null:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_new_null');
+  _OPENSSL_sk_num:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_num');
+  _OPENSSL_sk_value:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_value');
+  _OPENSSL_sk_free:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_free');
+  _OPENSSL_sk_insert:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_insert');
+  _SSL_CTX_get_cert_store:= GetProcAddr(SSLLibHandle, 'SSL_CTX_get_cert_store');
+  _X509_STORE_add_cert := GetProcAddr(SSLUtilHandle, 'X509_STORE_add_cert');
+
   _EVP_enc_null := GetProcAddr(SSLUtilHandle, 'EVP_enc_null');
   _EVP_rc2_cbc := GetProcAddr(SSLUtilHandle, 'EVP_rc2_cbc');
   _EVP_rc2_40_cbc := GetProcAddr(SSLUtilHandle, 'EVP_rc2_40_cbc');
@@ -5517,6 +5652,10 @@ begin
   _RSA_set_method := GetProcAddr(SSLUtilHandle, 'RSA_set_method');
   _RSA_get0_n := GetProcAddr(SSLUtilHandle, 'RSA_get0_n');
   _RSA_get0_e := GetProcAddr(SSLUtilHandle, 'RSA_get0_e');
+  _RSA_get0_d := GetProcAddr(SSLUtilHandle, 'RSA_get0_d');
+  _RSA_get0_p := GetProcAddr(SSLUtilHandle, 'RSA_get0_p');
+  _RSA_get0_q := GetProcAddr(SSLUtilHandle, 'RSA_get0_q');
+  _RSA_set0_key := GetProcAddr(SSLUtilHandle, 'RSA_set0_key');
   _RSA_get_version := GetProcAddr(SSLUtilHandle, 'RSA_get_version');
   _RSA_pkey_ctx_ctrl := GetProcAddr(SSLUtilHandle, 'RSA_pkey_ctx_ctrl');
 
@@ -5722,12 +5861,13 @@ begin
   _SslSetFd := nil;
   _SslCtrl := nil;
   _SslCTXCtrl := nil;
+  _SslCtxSetMinProtoVersion := nil;
+  _SslCtxSetMaxProtoVersion := nil;
   _SslMethodV2 := nil;
   _SslMethodV3 := nil;
   _SslMethodTLSV1 := nil;
   _SslMethodTLSV1_1 := nil;
   _SslMethodTLSV1_2 := nil;
-  _SslMethodTLSV1_3 := nil;
   _SslMethodV23 := nil;
   _SslTLSMethod := nil;
   _SslCtxUsePrivateKey := nil;
@@ -5959,7 +6099,13 @@ begin
   _i2dX509bio := nil;
   _d2iX509bio := nil;
   _i2dPrivateKeyBio := nil;
-
+  _OPENSSL_sk_new_null := nil;
+  _OPENSSL_sk_num := nil;
+  _OPENSSL_sk_value := nil;
+  _OPENSSL_sk_free := nil;
+  _OPENSSL_sk_insert := nil;
+  _SSL_CTX_get_cert_store := nil;
+  _X509_STORE_add_cert := nil;
   // 3DES functions
   _DESsetoddparity := nil;
   _DESsetkeychecked := nil;
@@ -5967,7 +6113,6 @@ begin
   //
   _CRYPTOnumlocks := nil;
   _CRYPTOsetlockingcallback := nil;
-
   // RAND functions
   _RAND_set_rand_method := nil;
   _RAND_get_rand_method := nil;
@@ -5986,7 +6131,6 @@ begin
   _RAND_egd_bytes := nil;
   _ERR_load_RAND_strings := nil;
   _RAND_poll := nil;
-
   // RSA Functions
   _RSA_new := nil;
   _RSA_new_method := nil;
@@ -6006,17 +6150,19 @@ begin
   _RSA_set_method := nil;
   _RSA_get0_n := nil;
   _RSA_get0_e := nil;
+  _RSA_get0_d := nil;
+  _RSA_get0_p := nil;
+  _RSA_get0_q := nil;
+  _RSA_set0_key := nil;
   _RSA_get_version := nil;
   _RSA_pkey_ctx_ctrl := nil;
   // X509 Functions
-
   _d2i_RSAPublicKey := nil;
   _i2d_RSAPublicKey := nil;
   _d2i_RSAPrivateKey := nil;
   _i2d_RSAPrivateKey := nil;
   _d2i_PubKey := nil;
   _d2i_AutoPrivateKey := nil;
-
   // ERR Functions
   _ERR_error_string := nil;
 
@@ -6221,7 +6367,6 @@ begin
 
     LoadSSLEntryPoints;
     LoadUtilEntryPoints;
-
 
     //init library
     if assigned(_SslLibraryInit) then

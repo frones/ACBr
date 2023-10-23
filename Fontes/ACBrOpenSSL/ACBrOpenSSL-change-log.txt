@@ -38,6 +38,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2023
+-- OpenSSLExt --
+[*] Ajustes para suportar OpenSSL 3.x, dando prioridade a essa versão, se
+    encontrar
+
+-- ACBrOpenSSLUtils --
+[*] 'ExtractModulusAndExponentFromKey' e 'SetModulusAndExponentToKey'
+    compatibilização com OpenSSL 3.x
+[*] 'ConvertPEMToASN1', melhoria para conseguir processar chaves PEM com
+    Cabeçalho. Otimização de performace.
+    (por: DSA)
+
 11/10/2023
 -- ACBrOpenSSLUtils --
 [+] Adicionada procedure publica Clear para limpar as chaves pública, 

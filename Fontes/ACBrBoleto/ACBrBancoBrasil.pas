@@ -188,7 +188,7 @@ begin
       ANossoNumero := PadLeft(AConvenio, 7, '0') + RightStr(ANossoNumero, 10);
 
     if (ACBrTitulo.ACBrBoleto.Banco.TipoCobranca = cobBancoDoBrasilAPI) then
-      ANossoNumero := '000' + PadLeft(AConvenio, 7, '0') + RightStr(ANossoNumero, 10);
+      ANossoNumero := '000' + PadLeft(AConvenio, 7, '0') + PadLeft(NossoNumero, 10);
 
   end;
   Result := ANossoNumero;

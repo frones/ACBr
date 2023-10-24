@@ -601,7 +601,6 @@ begin
   end
   else
   begin
-    Response.ArquivoRetorno := RemoverDeclaracaoXML(Response.ArquivoRetorno);
     SalvarPDFNfse(Response.InfConsultaNFSe.ChaveNFSe, Response.ArquivoRetorno);
   end;
 end;

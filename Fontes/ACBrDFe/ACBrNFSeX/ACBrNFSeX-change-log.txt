@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/10/2023
+-- ACBrNFSeXWebserviceBase/PadraoNacional.Provider --
+[*] Realizado ajustes para não remover parte do arquivo PDF quando é encontrado
+    sequencia de caracteres que coincide com inicio e fim da declaração de encoding.
+   Por: Antonio Gomes
 -- ACBrNFSeXServicos --
 [*] A cidade de Campos de Julio/MT mudou a URL de produção, o provedor é o mesmo.
    Por: Diego Reckziegel

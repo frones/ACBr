@@ -766,7 +766,9 @@ begin
 
   if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqRetorno <> tfaXml then
   begin
-    ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
+    if Pos('%PDF-1.4', ADadosMsg) = 0 then
+      ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
+
     ConteudoEhXml := False;
   end
   else
@@ -816,7 +818,9 @@ begin
 
   if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqRetornoSoap <> tfaXml then
   begin
-    ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
+    if TACBrNFSeX(FPDFeOwner).WebService.ConsultaNFSe.InfConsultaNFSe.tpRetorno <> trPDF then
+      ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
+
     ConteudoEhXml := False;
   end
   else

@@ -4803,7 +4803,7 @@ begin
            'REMESSA'                                          +  { Literal de Remessa }
            '01'                                               +  { Código do Tipo de Serviço }
            PadRight('COBRANCA', 15)                           +  { Descrição do tipo de serviço }
-           PadLeft(CodigoCedente, 20, '0')                    +  { Codigo da Empresa no Banco }
+           PadLeft(ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 20, '0') + { Codigo da Empresa no Banco }
            PadRight(Nome, 30)                                 +  { Nome da Empresa }
            IntToStrZero(fpNumero, 3)                          +  { Código do Banco 091 }
            PadRight(fpNome, 15)                               +  { Nome do Banco }

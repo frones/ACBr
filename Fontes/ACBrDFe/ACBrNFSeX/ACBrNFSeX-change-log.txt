@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/10/2023
+-- ACBrNFSeXProviderBase --
+[*] Possível solução para salvar o arquivo da nota no formato correto.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
 [*] Possível solução para o calculo correto do ValorLiquidoNFSe.
    Por: Italo Giurizzato Junior

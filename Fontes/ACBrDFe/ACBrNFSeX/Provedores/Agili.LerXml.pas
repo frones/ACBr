@@ -494,12 +494,15 @@ begin
         FpCodCNAE := ObterConteudo(ANodes[i].Childrens.FindAnyNs('CodigoCnae'), tcStr);
         FpCodLCServ := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ItemLei116'), tcStr);
 
-        Item := StrToIntDef(OnlyNumber(FpCodLCServ), 0);
-        if Item < 100 then
-          Item := Item * 100 + 1;
+        if NaoEstaVazio(FpCodLCServ) then
+        begin
+          Item := StrToIntDef(OnlyNumber(FpCodLCServ), 0);
+          if Item < 100 then
+            Item := Item * 100 + 1;
 
-        FpCodLCServ := FormatFloat('0000', Item);
-        FpCodLCServ := Copy(FpCodLCServ, 1, 2) + '.' + Copy(FpCodLCServ, 3, 2);
+          FpCodLCServ := FormatFloat('0000', Item);
+          FpCodLCServ := Copy(FpCodLCServ, 1, 2) + '.' + Copy(FpCodLCServ, 3, 2);
+        end;
       end;
     end;
   end;

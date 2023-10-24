@@ -367,7 +367,7 @@ begin
         IfThen(Sacado.Pessoa = pJuridica,'2','1')           + //Tipo Tipo de Inscrição 18 18 1 - Num *G005
         PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0')        + //Número Número de Inscrição 19 33 15 - Num *G006
         PadRight(Sacado.NomeSacado, 40, ' ')                + //Nome 34 73 40 - Alfa G013
-        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero +' ' + Sacado.Complemento , 40, ' ') + //Endereço 74 113 40 - Alfa G032
+        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' ' + Sacado.Complemento + ' ' + Sacado.Bairro, 40, ' ') + //Endereço 74 113 40 - Alfa G032
         PadRight(Sacado.Bairro, 15, ' ')                    + //Bairro 114 128 15 - Alfa G032
         PadLeft(copy(OnlyNumber(ACBrTitulo.Sacado.CEP),0,5), 5, '0')                     + //CEP 129 133 5 - Num G034
         PadRight(copy(OnlyNumber(ACBrTitulo.Sacado.CEP),length(OnlyNumber(ACBrTitulo.Sacado.CEP))-2,3), 3, ' ')       + //Sufixo do CEP 134 136 3 - Num G035
@@ -473,8 +473,14 @@ begin
 
      with ACBrBoleto do
      begin
-       if Mensagem.Text <> '' then
-          MensagemCedente:= Mensagem[0];
+       if Sacado.SacadoAvalista.CNPJCPF <> '' then
+       begin
+         MensagemCedente := PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0') +  // 335 a 349 - CNPJ do beneficiário final
+         '  ' +                                                                            // 350 a 351 - Brancos
+         PadRight(Sacado.SacadoAvalista.NomeAvalista, 43);                                 // 352 a 394 - Nome do beneficiário final
+       end
+       else if Mensagem.Text <> '' then
+         MensagemCedente:= Mensagem[0];
 
        wLinha:= '1'                                            +  // 001 a 001 - ID Registro
        StringOfChar( '0', 19)                                  +  // 002 a 020 - Dados p/ Débito Automático
@@ -504,10 +510,10 @@ begin
        sTipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0') +  // 219 a 234 - Tipo de Inscrição + Número de Inscrição do Pagador
        PadRight( Sacado.NomeSacado, 40, ' ')                   +  // 235 a 274 - Nome do Pagador
        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '  +
-         Sacado.Complemento, 40)                               +  // 275 a 314
+         Sacado.Complemento + ' ' + Sacado.Bairro, 40)         +  // 275 a 314 - Endereço completo do pagador
        PadRight( Sacado.Mensagem, 12, ' ')                     +  // 315 a 326 - 1ª Mensagem
        PadRight( Sacado.CEP, 8 )                               +  // 327 a 334 - CEP
-       PadRight( MensagemCedente, 60 )                         +  // 335 a 394 - 2ª Mensagem
+       PadRight( MensagemCedente, 60 )                         +  // 335 a 394 - Beneficiário final ou 2ª Mensagem
        IntToStrZero(aRemessa.Count + 1, 6)                     +  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
        LChaveNFe;                                                 // 401 a 444 Chave NFe
 
@@ -531,11 +537,13 @@ begin
 end;
 
 procedure TACBrBancoBradesco.LerRetorno400Transacao4(ACBrTitulo :TACBrTitulo; ALinha: String);
+var
+  LURL, LtxId: string;
 begin
   inherited;
-  ACBrTitulo.QrCode.url  := Copy(ALinha,77,77);
-  ACBrTitulo.QrCode.txId := Copy(ALinha,106,35);
-  ACBrTitulo.QrCode.PIXQRCodeDinamico(ACBrTitulo.QrCode.url, Trim(ACBrTitulo.QrCode.txId), ACBrTitulo);
+  LURL := Trim(Copy(ALinha, 29,77));
+  LtxId := Trim(Copy(ALinha,106,35));
+  ACBrTitulo.QrCode.PIXQRCodeDinamico(Lurl, LtxId, ACBrTitulo);
 end;
 
 function TACBrBancoBradesco.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;

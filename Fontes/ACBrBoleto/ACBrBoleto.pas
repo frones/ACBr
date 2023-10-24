@@ -58,356 +58,6 @@ const
   CConta      = 'CONTA';
   CTitulo     = 'TITULO';
   CWebService = 'WEBSERVICE';
-  cACBrTipoOcorrenciaDecricao: array[0..344] of String = (
-    {Ocorrências para arquivo remessa}
-    'Remessa Registrar',
-    'Remessa Baixar',
-    'Remessa Debitar Em Conta',
-    'Remessa Conceder Abatimento',
-    'Remessa Cancelar Abatimento',
-    'Remessa Conceder Desconto',
-    'Remessa Cancelar Desconto',
-    'Remessa Alterar Vencimento',
-    'Remessa Alterar Vencimento Sustar Protesto',
-    'Remessa Protestar',
-    'Remessa Sustar Protesto',
-    'Remessa Cancelar Instrucao Protesto Baixa',
-    'Remessa Cancelar Instrucao Protesto',
-    'Remessa Dispensar Juros',
-    'Remessa Alterar Nome Endereco Sacado',
-    'Remessa Alterar Numero Controle',
-    'Remessa Outras Ocorrencias',
-    'Remessa Alterar Controle Participante',
-    'Remessa Alterar SeuNumero',
-    'Remessa Transf Cessao Credito ID Prod10',
-    'Remessa Transferencia Carteira',
-    'Remessa Dev Transferencia Carteira',
-    'Remessa Desagendar Debito Automatico',
-    'Remessa Acertar Rateio Credito',
-    'Remessa Cancelar Rateio Credito',
-    'Remessa Alterar Uso Empresa',
-    'Remessa Nao Protestar',
-    'Remessa Protesto Fins Falimentares',
-    'Remessa Baixa Por Pagto Direto Cedente',
-    'Remessa Cancelar Instrucao',
-    'Remessa Alterar Venc Sustar Protesto',
-    'Remessa Cedente Discorda Sacado',
-    'Remessa Cedente Solicita Dispensa Juros',
-    'Remessa Outras Alteracoes',
-    'Remessa Alterar Modalidade',
-    'Remessa Alterar Exclusivo Cliente',
-    'Remessa Nao Cobrar Juros Mora',
-    'Remessa Cobrar Juros Mora',
-    'Remessa Alterar Valor Titulo',
-    'Remessa Excluir Sacador Avalista',
-    'Remessa Alterar Numero Dias Protesto',
-    'Remessa Alterar Prazo Protesto',
-    'Remessa Alterar Prazo Devolucao',
-    'Remessa Alterar Outros Dados',
-    'Remessa Alterar Dados Emissao Bloqueto',
-    'Remessa Alterar Protesto Devolucao',
-    'Remessa Alterar Devolucao Protesto',
-    'Remessa Negativacao Serasa',
-    'Remessa Excluir Negativacao Serasa',
-    'Remessa Alterar Juros e Mora',
-    'Remessa Alterar Valor/Percentual Multa',
-    'Remessa Dispensar Cobrança de Multa',
-    'Remessa Alterar Valor/Data de Desconto',
-    'Remessa Não Conceder Desconto',
-    'Remessa Alterar Valor de Abatimento',
-    'Remessa Alterar Prazo Limite de Recebimento',
-    'Remessa Dispensar Prazo Limite de Recebimento',
-    'Remessa Alterar número do título do Beneficiário',
-    'Remessa Alterar Dados Pagador',
-    'Remessa Alterar dados Sacador/Avalista',
-    'Remessa Recusa Alegação do Pagador',
-    'Remessa Alterar Dados Rateio de Crédito',
-    'Remessa Pedido de Cancelamento Dados do Rateio de Crédito',
-    'Remessa Pedido de Desagendamento do Débito Automático',
-    'Remessa Alterar Espécie de Título',
-    'Remessa Contrato de Cobrança',
-    'Remessa Negativação Sem Protesto',
-    'Remessa Baixa Título Negativado Sem Protesto',
-    'Remessa Alterar Valor Mínimo',
-    'Remessa Alterar Valor Máximo',
-    'Remessa Excluir Negativacao Serasa e Baixar',
-    'Remessa Pedido de negativação',
-    'Remessa Excluir negativação e baixar',
-    'Remessa Excluir negativação e manter em carteira',
-    'Remessa Sustar Protesto e baixar',
-    'Remessa Sustar Protesto e manter em carteira',
-    'Remessa Resusa Alegação do Sacado',
-    'Remessa Protestar Automaticamente',
-    'Remessa Alteração de Status Desconto',
-    'Remessa Protestar Urgente',
-    'Remessa Registrar Direta',
-    'Remessa Alterar Numero Dias Baixa',
-    'Remessa Alterar Valor Mínimo/Máximo',
-    'Remessa Alteração Quantidade Parcelas',
-    'Remessa Alteração Valor Nominal',
-    'Remessa Não Baixar Automaticamente',
-    'Remessa Alteração Percentual Para Mínimo',
-    'Remessa Alteração Percentual Para Máximo',
-    'Remessa Alteração Percentual Para Mínimo/Máximo',
-    'Remessa Prorrogar Vencimento',
-    'Remessa Boleto Hibrido',
-
-    {Ocorrências para arquivo retorno}
-    'Retorno Abatimento Cancelado',
-    'Retorno Abatimento Concedido',
-    'Retorno Acerto Controle Participante',
-    'Retorno Acerto Dados Rateio Credito',
-    'Retorno Acerto Depositaria',
-    'Retorno Aguardando Autorizacao Protesto Edital',
-    'Retorno Alegacao DoSacado',
-    'Retorno Alteracao Dados Baixa',
-    'Retorno Alteracao Dados Nova Entrada',
-    'Retorno Alteracao Dados Rejeitados',
-    'Retorno Alteracao Data Emissao',
-    'Retorno Alteracao Especie',
-    'Retorno Alteracao Instrucao',
-    'Retorno Alteracao Opcao Devolucao Para Protesto Confirmada',
-    'Retorno Alteracao Opcao Protesto Para Devolucao Confirmada',
-    'Retorno Alteracao Outros Dados Rejeitada',
-    'Retorno Alteracao Reemissao Bloqueto Confirmada',
-    'Retorno Alteracao Seu Numero',
-    'Retorno Alteracao Uso Cedente',
-    'Retorno Alterar Data Desconto',
-    'Retorno Alterar Prazo Limite Recebimento',
-    'Retorno Alterar Sacador Avalista',
-    'Retorno Baixa Automatica',
-    'Retorno Baixa Credito CC Atraves Sispag',
-    'Retorno Baixa Credito CC Atraves Sispag Sem Titulo Corresp',
-    'Retorno Baixado',
-    'Retorno Baixado FrancoPagamento',
-    'Retorno Baixado InstAgencia',
-    'Retorno Baixado Por Devolucao',
-    'Retorno Baixado Via Arquivo',
-    'Retorno Baixa Liquidado Edital',
-    'Retorno Baixa Manual Confirmada',
-    'Retorno Baixa Ou Liquidacao Estornada',
-    'Retorno Baixa Por Protesto',
-    'Retorno Baixa Por Ter Sido Liquidado',
-    'Retorno Baixa Rejeitada',
-    'Retorno Baixa Simples',
-    'Retorno Baixa Solicitada',
-    'Retorno Baixa Titulo Negativado Sem Protesto',
-    'Retorno Baixa Transferencia Para Desconto',
-    'Retorno Cancelamento Dados Rateio',
-    'Retorno Cheque Compensado',
-    'Retorno Cheque Devolvido',
-    'Retorno Cheque Pendente Compensacao',
-    'Retorno Cobranca Contratual',
-    'Retorno Cobranca Creditar',
-    'Retorno Comando Recusado',
-    'Retorno Conf Cancelamento Negativacao Expressa Tarifa',
-    'Retorno Conf Entrada Negativacao Expressa Tarifa',
-    'Retorno Conf Exclusao Entrada Negativacao Expressa Por Liquidacao Tarifa',
-    'Retorno Conf Instrucao Transferencia Carteira Modalidade Cobranca',
-    'Retorno Confirmacao Alteracao Banco Sacado',
-    'Retorno Confirmacao Alteracao Juros Mora',
-    'Retorno Confirmacao Email SMS',
-    'Retorno Confirmacao Entrada Cobranca Simples',
-    'Retorno Confirmacao Exclusao Banco Sacado',
-    'Retorno Confirmacao Inclusao Banco Sacado',
-    'Retorno Confirmacao Pedido Excl Negativacao',
-    'Retorno Confirmacao Receb Pedido Negativacao',
-    'Retorno Confirma Recebimento Instrucao NaoNegativar',
-    'Retorno Conf Recebimento Inst Cancelamento Negativacao Expressa',
-    'Retorno Conf Recebimento Inst Entrada Negativacao Expressa',
-    'Retorno Conf Recebimento Inst Exclusao Entrada Negativacao Expressa',
-    'Retorno Custas Cartorio',
-    'Retorno Custas Cartorio Distribuidor',
-    'Retorno Custas Edital',
-    'Retorno Custas Irregularidade',
-    'Retorno Custas Protesto',
-    'Retorno Custas Sustacao',
-    'Retorno Custas Sustacao Judicial',
-    'Retorno Dados Alterados',
-    'Retorno Debito Custas Antecipadas',
-    'Retorno Debito Direto Autorizado',
-    'Retorno Debito Direto NaoAutorizado',
-    'Retorno Debito Em Conta',
-    'Retorno Debito Mensal Tarifa Aviso Movimentacao Titulos',
-    'Retorno Debito Mensal Tarifas Extrado Posicao',
-    'Retorno Debito Mensal Tarifas Manutencao Titulos Vencidos',
-    'Retorno Debito Mensal Tarifas Outras Instrucoes',
-    'Retorno Debito Mensal Tarifas Outras Ocorrencias',
-    'Retorno Debito Mensal Tarifas Protestos',
-    'Retorno Debito Mensal Tarifas SustacaoProtestos',
-    'Retorno Debito Tarifas',
-    'Retorno Desagendamento Debito Automatico',
-    'Retorno Desconto Cancelado',
-    'Retorno Desconto Concedido',
-    'Retorno Desconto Retificado',
-    'Retorno Despesa Cartorio',
-    'Retorno Despesas Protesto',
-    'Retorno Despesas Sustacao Protesto',
-    'Retorno Devolvido Pelo Cartorio',
-    'Retorno Dispensar Indexador',
-    'Retorno Dispensar Prazo Limite Recebimento',
-    'Retorno Email SMS Rejeitado',
-    'Retorno Emissao Bloqueto Banco Sacado',
-    'Retorno Encaminhado A Cartorio',
-    'Retorno Endereco Sacado Alterado',
-    'Retorno Entrada Bordero Manual',
-    'Retorno Entrada Confirmada Rateio Credito',
-    'Retorno Entrada Em Cartorio',
-    'Retorno Entrada Registrada Aguardando Avaliacao',
-    'Retorno Entrada Rejeita CEP Irregular',
-    'Retorno Entrada Rejeitada Carne',
-    'Retorno Entrada Titulo Banco Sacado Rejeitada',
-    'Retorno Equalizacao Vendor',
-    'Retorno Estorno Baixa Liquidacao',
-    'Retorno Estorno Pagamento',
-    'Retorno Estorno Protesto',
-    'Retorno Instrucao Cancelada',
-    'Retorno Instrucao Negativacao Expressa Rejeitada',
-    'Retorno Instrucao Protesto Rejeitada Sustada Ou Pendente',
-    'Retorno Instrucao Rejeitada',
-    'Retorno IOF Invalido',
-    'Retorno Juros Dispensados',
-    'Retorno Liquidado',
-    'Retorno Liquidado Apos Baixa Ou Nao Registro',
-    'Retorno Liquidado Em Cartorio',
-    'Retorno Liquidado Parcialmente',
-    'Retorno Liquidado PorConta',
-    'Retorno Liquidado Saldo Restante',
-    'Retorno Liquidado Sem Registro',
-    'Retorno Manutencao Banco Sacado Rejeitada',
-    'Retorno Manutencao Sacado Rejeitada',
-    'Retorno Manutencao Titulo Vencido',
-    'Retorno Negativacao Expressa Informacional',
-    'Retorno Nome Sacado Alterado',
-    'Retorno Ocorrencias Do Sacado',
-    'Retorno Outras Ocorrencias',
-    'Retorno Outras Tarifas Alteracao',
-    'Retorno Pagador DDA',
-    'Retorno Prazo Devolucao Alterado',
-    'Retorno Prazo Protesto Alterado',
-    'Retorno Protestado',
-    'Retorno Protesto Imediato Falencia',
-    'Retorno Protesto Ou Sustacao Estornado',
-    'Retorno Protesto Sustado',
-    'Retorno Recebimento Instrucao Alterar Dados',
-    'Retorno Recebimento Instrucao Alterar EnderecoSacado',
-    'Retorno Recebimento Instrucao Alterar Juros',
-    'Retorno Recebimento Instrucao Alterar NomeSacado',
-    'Retorno Recebimento Instrucao Alterar Tipo Cobranca',
-    'Retorno Recebimento Instrucao Alterar Valor Titulo',
-    'Retorno Recebimento Instrucao Alterar Vencimento',
-    'Retorno Recebimento Instrucao Baixar',
-    'Retorno Recebimento Instrucao Cancelar Abatimento',
-    'Retorno Recebimento Instrucao Cancelar Desconto',
-    'Retorno Recebimento Instrucao Conceder Abatimento',
-    'Retorno Recebimento Instrucao Conceder Desconto',
-    'Retorno Recebimento Instrucao Dispensar Juros',
-    'Retorno Recebimento Instrucao Nao Protestar',
-    'Retorno Recebimento Instrucao Protestar',
-    'Retorno Recebimento Instrucao Sustar Protesto',
-    'Retorno Reembolso Devolucao Desconto Vendor',
-    'Retorno Reembolso Nao Efetuado',
-    'Retorno Reembolso Transferencia Desconto Vendor',
-    'Retorno Registro Confirmado',
-    'Retorno Registro Recusado',
-    'Retorno Relacao De Titulos',
-    'Retorno Remessa Rejeitada',
-    'Retorno Reservado',
-    'Retorno Retirado De Cartorio',
-    'Retorno Segunda Via Instrumento Protesto',
-    'Retorno Segunda Via Instrumento Protesto Cartorio',
-    'Retorno Solicitacao Impressao Titulo Confirmada',
-    'Retorno Sustacao Envio Cartorio',
-    'Retorno Sustado Judicial',
-    'Retorno Tarifa Aviso Cobranca',
-    'Retorno Tarifa De Manutencao De Titulos Vencidos',
-    'Retorno Tarifa De Relacao Das Liquidacoes',
-    'Retorno Tarifa Email Cobranca Ativa Eletronica',
-    'Retorno Tarifa Emissao Aviso Movimentacao Titulos',
-    'Retorno Tarifa Emissao Boleto Envio Duplicata',
-    'Retorno Tarifa Extrato Posicao',
-    'Retorno Tarifa Instrucao',
-    'Retorno Tarifa Mensal Baixas Bancos Corresp Carteira',
-    'Retorno Tarifa Mensal Baixas Carteira',
-    'Retorno Tarifa Mensal Cancelamento Negativacao Expressa',
-    'Retorno Tarifa Mensal Email Cobranca AtivaEletronica',
-    'Retorno Tarifa Mensal Emissao Boleto Envio Duplicata',
-    'Retorno Tarifa Mensal Exclusao Entrada Negativacao Expressa',
-    'Retorno Tarifa Mensal Exclusao Negativacao Expressa Por Liquidacao',
-    'Retorno Tarifa Mensal Liquidacoes Bancos Corresp Carteira',
-    'Retorno Tarifa Mensal Liquidacoes Carteira',
-    'Retorno Tarifa Mensal Por Boleto Ate 03 Envio Cobranca Ativa Eletronica',
-    'Retorno Tarifa Mensal Ref Entradas Bancos Corresp Carteira',
-    'Retorno Tarifa Mensal SMS Cobranca Ativa Eletronica',
-    'Retorno Tarifa Ocorrencias',
-    'Retorno Tarifa Por Boleto Ate 03 Envio Cobranca Ativa Eletronica',
-    'Retorno Tarifa SMS Cobranca Ativa Eletronica',
-    'Retorno Tipo Cobranca Alterado',
-    'Retorno Titulo DDA Nao Reconhecido Pagador',
-    'Retorno Titulo DDA Reconhecido Pagador',
-    'Retorno Titulo DDA Recusado CIP',
-    'Retorno Titulo Em Ser',
-    'Retorno Titulo Ja Baixado',
-    'Retorno Titulo Nao Existe',
-    'Retorno Titulo Pagamento Cancelado',
-    'Retorno Titulo Pago Em Cheque',
-    'Retorno Titulo Sustado Judicialmente',
-    'Retorno Transferencia Carteira',
-    'Retorno Transferencia Carteira Baixa',
-    'Retorno Transferencia Carteira Entrada',
-    'Retorno Transferencia Cedente',
-    'Retorno Transito Pago Cartorio',
-    'Retorno Vencimento Alterado',
-    'Retorno Rejeicao Sacado',
-    'Retorno Aceite Sacado',
-    'Retorno Liquidado On Line',
-    'Retorno Estorno Liquidacao OnLine',
-    'Retorno Confirmacao Alteracao Valor Nominal',
-    'Retorno Confirmacao Alteracao Valor Percentual Minimo Maximo',
-    'Tipo Ocorrencia Nenhum',
-    'Retorno Confirmação de Recebimento de Pedido de Negativação',
-    'Retorno Confirmação de Recebimento de Pedido de Exclusão de Negativação',
-    'Retorno Confirmação de Entrada de Negativação',
-    'Retorno Entrada de Negativação Rejeitada',
-    'Retorno Confirmação de Exclusão de Negativação',
-    'Retorno Exlusão de Negativação Rejeitada',
-    'Retorno Exclusão e Negativação por Outros Motivos',
-    'Retorno Ocorrência Informacional por Outros Motivos',
-    'Retorno Inclusão de Negativação',
-    'Retorno Exclusão de Negativação',
-    'Retorno Em Transito',
-    'Retorno Liquidação em Condicional em Cartório Com Cheque do Próprio Devedor',
-    'Retorno Título Protestado Sustado Judicialmente em definitivo',
-    'Retorno Liquidação de Título Descontado',
-    'Retorno Protesto Em Cartório',
-    'Retorno Sustação Solicitada',
-    'Retorno Título Utilizado Como Garantia em Operação de Desconto',
-    'Retorno Título Descontável Com Desistência de Garantia em Operação de Desconto',
-    'Retorno Intenção de Pagamento',
-    'Retorno Entrada Confirmada na CIP',
-    'Retorno Confirmação de alteração do valor mínimo/percentual',
-    'Retorno Confirmação de alteração do valor máximo/percentual',
-    'Retorno Confirmação de Pedido de Dispensa de Multa',
-    'Retorno Confirmação do Pedido de Cobrança de Multa',
-    'Retorno Confirmação do Pedido de Alteração do Beneficiário do Título',
-    'Retorno Excluir Protesto Carta Anuencia',
-    'Retorno Confirmação Cancelamento Baixa Automatica',
-    'Retorno Confirmação Alteracao Dias Baixa Automatica',
-    'Retorno Confirmação Instrucao Protesto',
-    'Retorno Confirmação Instrucao Sustacao Protesto',
-    'Retorno Confirmação Instrucao Nao Protestar',
-    'Retorno Confirmação Instrucao Nao Baixar Automaticamente',
-    'Retorno Alteracao Percentual Minimo',
-    'Retorno Alteracao Percentual Maximo',
-    'Retorno Alteracao Percentual Minimo Maximo',
-    'Retorno Recebimento Instrucao Nao Baixar',
-    'Retorno Confirmacao Protesto',
-    'Retorno Confirmacao Sustacao',
-    'Retorno Protesto Sustado Judicialmente',
-    'Retorno Confirmação Instrucao Sustar Protesto',
-    'Retorno Confirmação Instrucao Alteracao Dias Baixa Automatica',
-    'Retorno Alteracao Quantidade Parcela'
-);
 
 type
   TACBrTipoCobranca =
@@ -1770,7 +1420,7 @@ type
     Descricao: String;
   end;
 
-  TACBrOcorrenciasRemessa =  Array of TACBrOcorrenciaRemessa;
+  TACBrOcorrenciasRemessa =  array of TACBrOcorrenciaRemessa;
 
   { TACBrBoleto }
   {$IFDEF RTL230_UP}
@@ -1990,6 +1640,361 @@ type
     property MargemDireita   : double          read FMargemDireita    write SetMargemDireita;
   end;
 
+const
+  cACBrTipoOcorrenciaDecricao: array[TACBrTipoOcorrencia] of String = (
+    {Ocorrências para arquivo remessa}
+    'Remessa Registrar',
+    'Remessa Baixar',
+    'Remessa Debitar Em Conta',
+    'Remessa Conceder Abatimento',
+    'Remessa Cancelar Abatimento',
+    'Remessa Conceder Desconto',
+    'Remessa Cancelar Desconto',
+    'Remessa Alterar Vencimento',
+    'Remessa Alterar Vencimento Sustar Protesto',
+    'Remessa Protestar',
+    'Remessa Sustar Protesto',
+    'Remessa Cancelar Instrucao Protesto Baixa',
+    'Remessa Cancelar Instrucao Protesto',
+    'Remessa Dispensar Juros',
+    'Remessa Alterar Nome Endereco Sacado',
+    'Remessa Alterar Numero Controle',
+    'Remessa Outras Ocorrencias',
+    'Remessa Alterar Controle Participante',
+    'Remessa Alterar SeuNumero',
+    'Remessa Transf Cessao Credito ID Prod10',
+    'Remessa Transferencia Carteira',
+    'Remessa Dev Transferencia Carteira',
+    'Remessa Desagendar Debito Automatico',
+    'Remessa Acertar Rateio Credito',
+    'Remessa Cancelar Rateio Credito',
+    'Remessa Alterar Uso Empresa',
+    'Remessa Nao Protestar',
+    'Remessa Protesto Fins Falimentares',
+    'Remessa Baixa Por Pagto Direto Cedente',
+    'Remessa Cancelar Instrucao',
+    'Remessa Alterar Venc Sustar Protesto',
+    'Remessa Cedente Discorda Sacado',
+    'Remessa Cedente Solicita Dispensa Juros',
+    'Remessa Outras Alteracoes',
+    'Remessa Alterar Modalidade',
+    'Remessa Alterar Exclusivo Cliente',
+    'Remessa Nao Cobrar Juros Mora',
+    'Remessa Cobrar Juros Mora',
+    'Remessa Alterar Valor Titulo',
+    'Remessa Excluir Sacador Avalista',
+    'Remessa Alterar Numero Dias Protesto',
+    'Remessa Alterar Prazo Protesto',
+    'Remessa Alterar Prazo Devolucao',
+    'Remessa Alterar Outros Dados',
+    'Remessa Alterar Dados Emissao Bloqueto',
+    'Remessa Alterar Protesto Devolucao',
+    'Remessa Alterar Devolucao Protesto',
+    'Remessa Negativacao Serasa',
+    'Remessa Excluir Negativacao Serasa',
+    'Remessa Alterar Juros e Mora',
+    'Remessa Alterar Valor/Percentual Multa',
+    'Remessa Dispensar Cobrança de Multa',
+    'Remessa Alterar Valor/Data de Desconto',
+    'Remessa Não Conceder Desconto',
+    'Remessa Alterar Valor de Abatimento',
+    'Remessa Alterar Prazo Limite de Recebimento',
+    'Remessa Dispensar Prazo Limite de Recebimento',
+    'Remessa Alterar número do título do Beneficiário',
+    'Remessa Alterar Dados Pagador',
+    'Remessa Alterar dados Sacador/Avalista',
+    'Remessa Recusa Alegação do Pagador',
+    'Remessa Alterar Dados Rateio de Crédito',
+    'Remessa Pedido de Cancelamento Dados do Rateio de Crédito',
+    'Remessa Pedido de Desagendamento do Débito Automático',
+    'Remessa Alterar Espécie de Título',
+    'Remessa Contrato de Cobrança',
+    'Remessa Negativação Sem Protesto',
+    'Remessa Baixa Título Negativado Sem Protesto',
+    'Remessa Alterar Valor Mínimo',
+    'Remessa Alterar Valor Máximo',
+    'Remessa Excluir Negativacao Serasa e Baixar',
+    'Remessa Pedido de negativação',
+    'Remessa Excluir negativação e baixar',
+    'Remessa Excluir negativação e manter em carteira',
+    'Remessa Sustar Protesto e baixar',
+    'Remessa Sustar Protesto e manter em carteira',
+    'Remessa Resusa Alegação do Sacado',
+    'Remessa Protestar Automaticamente',
+    'Remessa Alteração de Status Desconto',
+    'Remessa Protestar Urgente',
+    'Remessa Registrar Direta',
+    'Remessa Alterar Numero Dias Baixa',
+    'Remessa Alterar Valor Mínimo/Máximo',
+    'Remessa Alteração Quantidade Parcelas',
+    'Remessa Alteração Valor Nominal',
+    'Remessa Não Baixar Automaticamente',
+    'Remessa Alteração Percentual Para Mínimo',
+    'Remessa Alteração Percentual Para Máximo',
+    'Remessa Alteração Percentual Para Mínimo/Máximo',
+    'Remessa Prorrogar Vencimento',
+    'Remessa Boleto Hibrido',
+
+    {Ocorrências para arquivo retorno}
+    'Retorno Abatimento Cancelado',
+    'Retorno Abatimento Concedido',
+    'Retorno Acerto Controle Participante',
+    'Retorno Acerto Dados Rateio Credito',
+    'Retorno Acerto Depositaria',
+    'Retorno Aguardando Autorizacao Protesto Edital',
+    'Retorno Alegacao DoSacado',
+    'Retorno Alteracao Dados Baixa',
+    'Retorno Alteracao Dados Nova Entrada',
+    'Retorno Alteracao Dados Rejeitados',
+    'Retorno Alteracao Data Emissao',
+    'Retorno Alteracao Especie',
+    'Retorno Alteracao Instrucao',
+    'Retorno Alteracao Opcao Devolucao Para Protesto Confirmada',
+    'Retorno Alteracao Opcao Protesto Para Devolucao Confirmada',
+    'Retorno Alteracao Outros Dados Rejeitada',
+    'Retorno Alteracao Reemissao Bloqueto Confirmada',
+    'Retorno Alteracao Seu Numero',
+    'Retorno Alteracao Uso Cedente',
+    'Retorno Alterar Data Desconto',
+    'Retorno Alterar Prazo Limite Recebimento',
+    'Retorno Alterar Sacador Avalista',
+    'Retorno Baixa Automatica',
+    'Retorno Baixa Credito CC Atraves Sispag',
+    'Retorno Baixa Credito CC Atraves Sispag Sem Titulo Corresp',
+    'Retorno Baixado',
+    'Retorno Baixado FrancoPagamento',
+    'Retorno Baixado InstAgencia',
+    'Retorno Baixado Por Devolucao',
+    'Retorno Baixado Via Arquivo',
+    'Retorno Baixa Liquidado Edital',
+    'Retorno Baixa Manual Confirmada',
+    'Retorno Baixa Ou Liquidacao Estornada',
+    'Retorno Baixa Por Protesto',
+    'Retorno Baixa Por Ter Sido Liquidado',
+    'Retorno Baixa Rejeitada',
+    'Retorno Baixa Simples',
+    'Retorno Baixa Solicitada',
+    'Retorno Baixa Titulo Negativado Sem Protesto',
+    'Retorno Baixa Transferencia Para Desconto',
+    'Retorno Cancelamento Dados Rateio',
+    'Retorno Cheque Compensado',
+    'Retorno Cheque Devolvido',
+    'Retorno Cheque Pendente Compensacao',
+    'Retorno Cobranca Contratual',
+    'Retorno Cobranca Creditar',
+    'Retorno Comando Recusado',
+    'Retorno Conf Cancelamento Negativacao Expressa Tarifa',
+    'Retorno Conf Entrada Negativacao Expressa Tarifa',
+    'Retorno Conf Exclusao Entrada Negativacao Expressa Por Liquidacao Tarifa',
+    'Retorno Conf Instrucao Transferencia Carteira Modalidade Cobranca',
+    'Retorno Confirmacao Alteracao Banco Sacado',
+    'Retorno Confirmacao Alteracao Juros Mora',
+    'Retorno Confirmacao Email SMS',
+    'Retorno Confirmacao Entrada Cobranca Simples',
+    'Retorno Confirmacao Exclusao Banco Sacado',
+    'Retorno Confirmacao Inclusao Banco Sacado',
+    'Retorno Confirmacao Pedido Excl Negativacao',
+    'Retorno Confirmacao Receb Pedido Negativacao',
+    'Retorno Confirma Recebimento Instrucao NaoNegativar',
+    'Retorno Conf Recebimento Inst Cancelamento Negativacao Expressa',
+    'Retorno Conf Recebimento Inst Entrada Negativacao Expressa',
+    'Retorno Conf Recebimento Inst Exclusao Entrada Negativacao Expressa',
+    'Retorno Custas Cartorio',
+    'Retorno Custas Cartorio Distribuidor',
+    'Retorno Custas Edital',
+    'Retorno Custas Irregularidade',
+    'Retorno Custas Protesto',
+    'Retorno Custas Sustacao',
+    'Retorno Custas Sustacao Judicial',
+    'Retorno Dados Alterados',
+    'Retorno Debito Custas Antecipadas',
+    'Retorno Debito Direto Autorizado',
+    'Retorno Debito Direto NaoAutorizado',
+    'Retorno Debito Em Conta',
+    'Retorno Debito Mensal Tarifa Aviso Movimentacao Titulos',
+    'Retorno Debito Mensal Tarifas Extrado Posicao',
+    'Retorno Debito Mensal Tarifas Manutencao Titulos Vencidos',
+    'Retorno Debito Mensal Tarifas Outras Instrucoes',
+    'Retorno Debito Mensal Tarifas Outras Ocorrencias',
+    'Retorno Debito Mensal Tarifas Protestos',
+    'Retorno Debito Mensal Tarifas SustacaoProtestos',
+    'Retorno Debito Tarifas',
+    'Retorno Desagendamento Debito Automatico',
+    'Retorno Desconto Cancelado',
+    'Retorno Desconto Concedido',
+    'Retorno Desconto Retificado',
+    'Retorno Despesa Cartorio',
+    'Retorno Despesas Protesto',
+    'Retorno Despesas Sustacao Protesto',
+    'Retorno Devolvido Pelo Cartorio',
+    'Retorno Dispensar Indexador',
+    'Retorno Dispensar Prazo Limite Recebimento',
+    'Retorno Email SMS Rejeitado',
+    'Retorno Emissao Bloqueto Banco Sacado',
+    'Retorno Encaminhado A Cartorio',
+    'Retorno Endereco Sacado Alterado',
+    'Retorno Entrada Bordero Manual',
+    'Retorno Entrada Confirmada Rateio Credito',
+    'Retorno Entrada Em Cartorio',
+    'Retorno Entrada Registrada Aguardando Avaliacao',
+    'Retorno Entrada Rejeita CEP Irregular',
+    'Retorno Entrada Rejeitada Carne',
+    'Retorno Entrada Titulo Banco Sacado Rejeitada',
+    'Retorno Equalizacao Vendor',
+    'Retorno Estorno Baixa Liquidacao',
+    'Retorno Estorno Pagamento',
+    'Retorno Estorno Protesto',
+    'Retorno Instrucao Cancelada',
+    'Retorno Instrucao Negativacao Expressa Rejeitada',
+    'Retorno Instrucao Protesto Rejeitada Sustada Ou Pendente',
+    'Retorno Instrucao Rejeitada',
+    'Retorno IOF Invalido',
+    'Retorno Juros Dispensados',
+    'Retorno Liquidado',
+    'Retorno Liquidado Apos Baixa Ou Nao Registro',
+    'Retorno Liquidado Em Cartorio',
+    'Retorno Liquidado Parcialmente',
+    'Retorno Liquidado PorConta',
+    'Retorno Liquidado Saldo Restante',
+    'Retorno Liquidado Sem Registro',
+    'Retorno Manutencao Banco Sacado Rejeitada',
+    'Retorno Manutencao Sacado Rejeitada',
+    'Retorno Manutencao Titulo Vencido',
+    'Retorno Negativacao Expressa Informacional',
+    'Retorno Nome Sacado Alterado',
+    'Retorno Ocorrencias Do Sacado',
+    'Retorno Outras Ocorrencias',
+    'Retorno Outras Tarifas Alteracao',
+    'Retorno Pagador DDA',
+    'Retorno Prazo Devolucao Alterado',
+    'Retorno Prazo Protesto Alterado',
+    'Retorno Protestado',
+    'Retorno Protesto Imediato Falencia',
+    'Retorno Protesto Ou Sustacao Estornado',
+    'Retorno Protesto Sustado',
+    'Retorno Recebimento Instrucao Alterar Dados',
+    'Retorno Recebimento Instrucao Alterar EnderecoSacado',
+    'Retorno Recebimento Instrucao Alterar Juros',
+    'Retorno Recebimento Instrucao Alterar NomeSacado',
+    'Retorno Recebimento Instrucao Alterar Tipo Cobranca',
+    'Retorno Recebimento Instrucao Alterar Valor Titulo',
+    'Retorno Recebimento Instrucao Alterar Vencimento',
+    'Retorno Recebimento Instrucao Baixar',
+    'Retorno Recebimento Instrucao Cancelar Abatimento',
+    'Retorno Recebimento Instrucao Cancelar Desconto',
+    'Retorno Recebimento Instrucao Conceder Abatimento',
+    'Retorno Recebimento Instrucao Conceder Desconto',
+    'Retorno Recebimento Instrucao Dispensar Juros',
+    'Retorno Recebimento Instrucao Nao Protestar',
+    'Retorno Recebimento Instrucao Protestar',
+    'Retorno Recebimento Instrucao Sustar Protesto',
+    'Retorno Reembolso Devolucao Desconto Vendor',
+    'Retorno Reembolso Nao Efetuado',
+    'Retorno Reembolso Transferencia Desconto Vendor',
+    'Retorno Registro Confirmado',
+    'Retorno Registro Recusado',
+    'Retorno Relacao De Titulos',
+    'Retorno Remessa Rejeitada',
+    'Retorno Reservado',
+    'Retorno Retirado De Cartorio',
+    'Retorno Segunda Via Instrumento Protesto',
+    'Retorno Segunda Via Instrumento Protesto Cartorio',
+    'Retorno Solicitacao Impressao Titulo Confirmada',
+    'Retorno Sustacao Envio Cartorio',
+    'Retorno Sustado Judicial',
+    'Retorno Tarifa Aviso Cobranca',
+    'Retorno Tarifa De Manutencao De Titulos Vencidos',
+    'Retorno Tarifa De Relacao Das Liquidacoes',
+    'Retorno Tarifa Email Cobranca Ativa Eletronica',
+    'Retorno Tarifa Emissao Aviso Movimentacao Titulos',
+    'Retorno Tarifa Emissao Boleto Envio Duplicata',
+    'Retorno Tarifa Extrato Posicao',
+    'Retorno Tarifa Instrucao',
+    'Retorno Tarifa Mensal Baixas Bancos Corresp Carteira',
+    'Retorno Tarifa Mensal Baixas Carteira',
+    'Retorno Tarifa Mensal Cancelamento Negativacao Expressa',
+    'Retorno Tarifa Mensal Email Cobranca AtivaEletronica',
+    'Retorno Tarifa Mensal Emissao Boleto Envio Duplicata',
+    'Retorno Tarifa Mensal Exclusao Entrada Negativacao Expressa',
+    'Retorno Tarifa Mensal Exclusao Negativacao Expressa Por Liquidacao',
+    'Retorno Tarifa Mensal Liquidacoes Bancos Corresp Carteira',
+    'Retorno Tarifa Mensal Liquidacoes Carteira',
+    'Retorno Tarifa Mensal Por Boleto Ate 03 Envio Cobranca Ativa Eletronica',
+    'Retorno Tarifa Mensal Ref Entradas Bancos Corresp Carteira',
+    'Retorno Tarifa Mensal SMS Cobranca Ativa Eletronica',
+    'Retorno Tarifa Ocorrencias',
+    'Retorno Tarifa Por Boleto Ate 03 Envio Cobranca Ativa Eletronica',
+    'Retorno Tarifa SMS Cobranca Ativa Eletronica',
+    'Retorno Tipo Cobranca Alterado',
+    'Retorno Titulo DDA Nao Reconhecido Pagador',
+    'Retorno Titulo DDA Reconhecido Pagador',
+    'Retorno Titulo DDA Recusado CIP',
+    'Retorno Titulo Em Ser',
+    'Retorno Titulo Ja Baixado',
+    'Retorno Titulo Nao Existe',
+    'Retorno Titulo Pagamento Cancelado',
+    'Retorno Titulo Pago Em Cheque',
+    'Retorno Titulo Sustado Judicialmente',
+    'Retorno Transferencia Carteira',
+    'Retorno Transferencia Carteira Baixa',
+    'Retorno Transferencia Carteira Entrada',
+    'Retorno Transferencia Cedente',
+    'Retorno Transito Pago Cartorio',
+    'Retorno Vencimento Alterado',
+    'Retorno Rejeicao Sacado',
+    'Retorno Aceite Sacado',
+    'Retorno Liquidado On Line',
+    'Retorno Estorno Liquidacao OnLine',
+    'Retorno Confirmacao Alteracao Valor Nominal',
+    'Retorno Confirmacao Alteracao Valor Percentual Minimo Maximo',
+
+    'Tipo Ocorrencia Nenhum',
+
+    'Retorno Confirmação de Recebimento de Pedido de Negativação',
+    'Retorno Confirmação de Recebimento de Pedido de Exclusão de Negativação',
+    'Retorno Confirmação de Entrada de Negativação',
+    'Retorno Entrada de Negativação Rejeitada',
+    'Retorno Confirmação de Exclusão de Negativação',
+    'Retorno Exlusão de Negativação Rejeitada',
+    'Retorno Exclusão e Negativação por Outros Motivos',
+    'Retorno Ocorrência Informacional por Outros Motivos',
+    'Retorno Inclusão de Negativação',
+    'Retorno Exclusão de Negativação',
+    'Retorno Em Transito',
+    'Retorno Liquidação em Condicional em Cartório Com Cheque do Próprio Devedor',
+    'Retorno Título Protestado Sustado Judicialmente em definitivo',
+    'Retorno Liquidação de Título Descontado',
+    'Retorno Protesto Em Cartório',
+    'Retorno Sustação Solicitada',
+    'Retorno Título Utilizado Como Garantia em Operação de Desconto',
+    'Retorno Título Descontável Com Desistência de Garantia em Operação de Desconto',
+    'Retorno Intenção de Pagamento',
+    'Retorno Entrada Confirmada na CIP',
+    'Retorno Confirmação de alteração do valor mínimo/percentual',
+    'Retorno Confirmação de alteração do valor máximo/percentual',
+    'Retorno Confirmação de Pedido de Dispensa de Multa',
+    'Retorno Confirmação do Pedido de Cobrança de Multa',
+    'Retorno Confirmação do Pedido de Alteração do Beneficiário do Título',
+    'Retorno Excluir Protesto Carta Anuencia',
+    'Retorno Confirmação Cancelamento Baixa Automatica',
+    'Retorno Confirmação Alteracao Dias Baixa Automatica',
+    'Retorno Confirmação Instrucao Protesto',
+    'Retorno Confirmação Instrucao Sustacao Protesto',
+    'Retorno Confirmação Instrucao Nao Protestar',
+    'Retorno Confirmação Instrucao Nao Baixar Automaticamente',
+    'Retorno Alteracao Percentual Minimo',
+    'Retorno Alteracao Percentual Maximo',
+    'Retorno Alteracao Percentual Minimo Maximo',
+    'Retorno Recebimento Instrucao Nao Baixar',
+    'Retorno Confirmacao Protesto',
+    'Retorno Confirmacao Sustacao',
+    'Retorno Protesto Sustado Judicialmente',
+    'Retorno Confirmação Instrucao Sustar Protesto',
+    'Retorno Confirmação Instrucao Alteracao Dias Baixa Automatica',
+    'Retorno Alteracao Quantidade Parcela'
+);
+
+
 implementation
 
 Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
@@ -2044,7 +2049,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoPefisa,
      ACBrBancoFibra,
      ACBrBancoSofisaItau,
-     ACBrBancoIndustrialBrasil, 
+     ACBrBancoIndustrialBrasil,
      ACBrBancoAthenaBradesco;
 
 {$IFNDEF FPC}
@@ -3687,10 +3692,10 @@ var I: Integer;
 begin
   SetLength(Result, 77);
 
-  for I:= 1 to 48 do
+  for I := 1 to 48 do
   begin
     Result[I-1].Tipo := TACBrTipoOcorrencia(I-1);
-    Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I-1];
+    Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[TACBrTipoOcorrencia(I-1)];
   end;
 end;
 
@@ -4786,30 +4791,30 @@ end;
 procedure TACBrBancoClass.GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList);
 var
   wLinha: String;
+  LDataArquivo: TDateTime;
 begin
   //ErroAbstract('GerarRemessa400');
+  LDataArquivo := ACBrBanco.ACBrBoleto.DataArquivo;
+  if LDataArquivo = 0 then
+    LDataArquivo := Now;
 
-  with ACBrBanco.ACBrBoleto.Cedente do
-  begin
-    wLinha:= '0'                                                +  { ID do Registro }
-             '1'                                                +  { ID do Arquivo( 1 - Remessa) }
-             'REMESSA'                                          +  { Literal de Remessa }
-             '01'                                               +  { Código do Tipo de Serviço }
-             PadRight('COBRANCA', 15)                           +  { Descrição do tipo de serviço }
-             PadLeft(CodigoCedente, 20, '0')                    +  { Codigo da Empresa no Banco }
-             PadRight(Nome, 30)                                 +  { Nome da Empresa }
-             IntToStrZero(fpNumero, 3)                          +  { Código do Banco 091 }
-             PadRight(fpNome, 15)                               +  { Nome do Banco }
-             FormatDateTime('ddmmyy',Now)                       +  { Data de geração do arquivo }
-             Space(07)                                          +  { brancos }
-             PadLeft(fpCodParametroMovimento, 3 )               +  { Cód. Parâm. Movto }
-             IntToStrZero(NumeroRemessa, 7)                     +  { Nr. Sequencial de Remessa  }
-             Space(277)                                         +  { brancos }
-             IntToStrZero(1, 6);                                   { Nr. Sequencial de Remessa + brancos + Contador }
+  wLinha:= '0'                                                +  { ID do Registro }
+           '1'                                                +  { ID do Arquivo( 1 - Remessa) }
+           'REMESSA'                                          +  { Literal de Remessa }
+           '01'                                               +  { Código do Tipo de Serviço }
+           PadRight('COBRANCA', 15)                           +  { Descrição do tipo de serviço }
+           PadLeft(CodigoCedente, 20, '0')                    +  { Codigo da Empresa no Banco }
+           PadRight(Nome, 30)                                 +  { Nome da Empresa }
+           IntToStrZero(fpNumero, 3)                          +  { Código do Banco 091 }
+           PadRight(fpNome, 15)                               +  { Nome do Banco }
+           FormatDateTime('ddmmyy', LDataArquivo)             +  { Data de geração do arquivo }
+           Space(07)                                          +  { brancos }
+           PadLeft(fpCodParametroMovimento, 3 )               +  { Cód. Parâm. Movto }
+           IntToStrZero(NumeroRemessa, 7)                     +  { Nr. Sequencial de Remessa  }
+           Space(277)                                         +  { brancos }
+           IntToStrZero(1, 6);                                   { Nr. Sequencial de Remessa + brancos + Contador }
 
-    ARemessa.Add(UpperCase(wLinha));
-  end;
-
+  ARemessa.Add(UpperCase(wLinha));
 end;
 
 function TACBrBancoClass.GerarRegistroHeader240(NumeroRemessa: Integer) : String;
@@ -5050,122 +5055,125 @@ begin
   begin
      Linha := ARetorno[ContLinha] ;
 
-     if Copy(Linha,1,1)<> '1' then
-        Continue;
-
-     Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
-
-     with Titulo do
+     if Linha[1] = '4' then
+       LerRetorno400Transacao4(Titulo, Linha) // Utilizado no Bradesco Pix
+     else
      begin
-        SeuNumero                   := copy(Linha,38,25);
-        NumeroDocumento             := copy(Linha,117,10);
-        OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
-                                       copy(Linha,109,2),0));
+       if Copy(Linha, 1, 1) <> '1' then
+         Continue;
 
-        CodOcorrencia := StrToIntDef(IfThen(copy(Linha,109,2) = '  ','00',copy(Linha,109,2)),0);
+       Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
-        //-|Se a ocorrencia for igual a 19 - Confirmação de Receb. de Protesto
-        //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
-        if(CodOcorrencia = 19)then
-         begin
-           CodMotivo_19:= copy(Linha,295,1);
-           if(CodMotivo_19 = 'A')then
-            begin
-              MotivoRejeicaoComando.Add(copy(Linha,295,1));
-              DescricaoMotivoRejeicaoComando.Add('A - Aceito');
-            end
-           else
-            begin
-              MotivoRejeicaoComando.Add(copy(Linha,295,1));
-              DescricaoMotivoRejeicaoComando.Add('D - Desprezado');
-            end;
-         end
-        else
-         begin
-           MotivoLinha := 319;
-           for i := 0 to 4 do
+       with Titulo do
+       begin
+          SeuNumero                   := copy(Linha,38,25);
+          NumeroDocumento             := copy(Linha,117,10);
+          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
+                                         copy(Linha,109,2),0));
+
+          CodOcorrencia := StrToIntDef(IfThen(copy(Linha,109,2) = '  ','00',copy(Linha,109,2)),0);
+
+          //-|Se a ocorrencia for igual a 19 - Confirmação de Receb. de Protesto
+          //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
+          if(CodOcorrencia = 19)then
            begin
-              CodMotivo := IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2));
+             CodMotivo_19:= copy(Linha,295,1);
+             if(CodMotivo_19 = 'A')then
+              begin
+                MotivoRejeicaoComando.Add(copy(Linha,295,1));
+                DescricaoMotivoRejeicaoComando.Add('A - Aceito');
+              end
+             else
+              begin
+                MotivoRejeicaoComando.Add(copy(Linha,295,1));
+                DescricaoMotivoRejeicaoComando.Add('D - Desprezado');
+              end;
+           end
+          else
+           begin
+             MotivoLinha := 319;
+             for i := 0 to 4 do
+             begin
+                CodMotivo := IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2));
 
-              {Se for o primeiro motivo}
-              if (i = 0) then
-               begin
-                 {Somente estas ocorrencias possuem motivos 00}
-                 if(CodOcorrencia in [02, 06, 09, 10, 15, 17])then
-                  begin
-                    MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
-                    if VarIsNumeric(CodMotivo) then
-                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
-                    else
-                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
-                  end
-                 else
-                  begin
-                    if(CodMotivo = 0)then
-                     begin
-                       MotivoRejeicaoComando.Add('00');
-                       DescricaoMotivoRejeicaoComando.Add('Sem Motivo');
-                     end
-                    else
-                     begin
-                       MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
-                       if VarIsNumeric(CodMotivo) then
-                          DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
-                        else
-                          DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
-                     end;
-                  end;
-               end
-              else
-               begin
-                 //Apos o 1º motivo os 00 significam que não existe mais motivo
-                 if CodMotivo <> 0 then
+                {Se for o primeiro motivo}
+                if (i = 0) then
                  begin
-                    MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
-                    if VarIsNumeric(CodMotivo) then
-                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
-                    else
-                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
+                   {Somente estas ocorrencias possuem motivos 00}
+                   if(CodOcorrencia in [02, 06, 09, 10, 15, 17])then
+                    begin
+                      MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
+                      if VarIsNumeric(CodMotivo) then
+                        DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
+                      else
+                        DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
+                    end
+                   else
+                    begin
+                      if(CodMotivo = 0)then
+                       begin
+                         MotivoRejeicaoComando.Add('00');
+                         DescricaoMotivoRejeicaoComando.Add('Sem Motivo');
+                       end
+                      else
+                       begin
+                         MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
+                         if VarIsNumeric(CodMotivo) then
+                            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
+                          else
+                            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
+                       end;
+                    end;
+                 end
+                else
+                 begin
+                   //Apos o 1º motivo os 00 significam que não existe mais motivo
+                   if CodMotivo <> 0 then
+                   begin
+                      MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
+                      if VarIsNumeric(CodMotivo) then
+                        DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,Integer(CodMotivo)))
+                      else
+                        DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,VarToStr(CodMotivo)));
+                   end;
                  end;
-               end;
 
-              MotivoLinha := MotivoLinha + 2; //Incrementa a coluna dos motivos
+                MotivoLinha := MotivoLinha + 2; //Incrementa a coluna dos motivos
+             end;
            end;
-         end;
 
-        if (StrToIntDef(Copy(Linha,111,6),0) > 0) then
-          DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                               Copy(Linha,113,2)+'/'+
-                                               Copy(Linha,115,2),0, 'DD/MM/YY' );
-        if (StrToIntDef(Copy(Linha,147,6),0) > 0) then
-           Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
-                                              Copy(Linha,149,2)+'/'+
-                                              Copy(Linha,151,2),0, 'DD/MM/YY' );
+          if (StrToIntDef(Copy(Linha,111,6),0) > 0) then
+            DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                                 Copy(Linha,113,2)+'/'+
+                                                 Copy(Linha,115,2),0, 'DD/MM/YY' );
+          if (StrToIntDef(Copy(Linha,147,6),0) > 0) then
+             Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+                                                Copy(Linha,149,2)+'/'+
+                                                Copy(Linha,151,2),0, 'DD/MM/YY' );
 
-        ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
-        ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
-        ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
-        ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-        ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-        ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
-        ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-        ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
-        NossoNumero          := DefineNossoNumeroRetorno(Linha);
-        Carteira             := Copy(Linha,DefinePosicaoCarteiraRetorno,3);
-        ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
-        ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
+          ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+          ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
+          ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+          ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
+          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+          ValorPago            := StrToFloatDef(Copy(Linha,254,13),0)/100;
+          NossoNumero          := DefineNossoNumeroRetorno(Linha);
+          Carteira             := Copy(Linha,DefinePosicaoCarteiraRetorno,3);
+          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+          ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
 
-        // informações do local de pagamento
-        Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
-        Liquidacao.Agencia    := Copy(Linha,169,4);
-        Liquidacao.Origem     := '';
+          // informações do local de pagamento
+          Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
+          Liquidacao.Agencia    := Copy(Linha,169,4);
+          Liquidacao.Origem     := '';
 
-        if (StrToIntDef(Copy(Linha,296,6),0) > 0) then
-           DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
-                                              Copy(Linha,298,2)+'/'+
-                                              Copy(Linha,300,2),0, 'DD/MM/YY' );
-        if Linha[1] = '4' then
-           LerRetorno400Transacao4(Titulo, Linha); // Utilizado no Bradesco Pix
+          if (StrToIntDef(Copy(Linha,296,6),0) > 0) then
+             DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
+                                                Copy(Linha,298,2)+'/'+
+                                                Copy(Linha,300,2),0, 'DD/MM/YY' );
+       end;
      end;
   end;
 

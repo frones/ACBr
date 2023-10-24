@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2023
+-- ACBrBoleto, ACBrBancoBradesco --
+[*] Ajuste para usar, por padrão, a propriedade "DataArquivo" no header do CNAB400.
+[*] Adicionado o bairro no endereço do pagador e dados do beneficiário final na remessa Bradesco CNAB400.
+[-] Correção na leitura do QrCode PIX na leitura do registro 4 do retorno CNAB400.
+  Por: BigWings
+
 20/10/2023
 -- ACBrBoletoW_Bancoob --
 [*] Ajustes para envio no ambiente de homologação/sandbox

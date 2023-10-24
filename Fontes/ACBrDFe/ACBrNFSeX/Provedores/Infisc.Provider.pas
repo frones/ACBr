@@ -57,6 +57,8 @@ type
   end;
 
   TACBrNFSeProviderInfisc = class (TACBrNFSeProviderProprio)
+  private
+    FpSituacao: string;
   protected
     procedure Configuracao; override;
 
@@ -363,6 +365,7 @@ begin
 
         Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chvAcessoNFSe'), tcStr);
         Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
+        FpSituacao := Response.Situacao;
 
         AResumo := Response.Resumos.New;
         AResumo.ChaveDFe := Response.idNota;
@@ -741,6 +744,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  AAlerta: TNFSeEventoCollectionItem;
   Descricao: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
@@ -759,12 +763,20 @@ begin
     if Descricao = '' then
       Descricao := ANodeArray[I].AsString;
 
-    if Descricao <> '' then
+    if (Descricao <> '') and (FpSituacao <> '100') then
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := '';
       AErro.Descricao := ACBrStr(Descricao);
       AErro.Correcao := '';
+    end;
+
+    if (Descricao <> '') and (FpSituacao = '100') then
+    begin
+      AAlerta := Response.Alertas.New;
+      AAlerta.Codigo := '';
+      AAlerta.Descricao := ACBrStr(Descricao);
+      AAlerta.Correcao := '';
     end;
   end;
 end;

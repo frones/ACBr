@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/10/2023
+-- Infisc.Provider --
+[*] Alteração visando identificar um alerta em vez de erro.
+   Por: Italo Giurizzato Junior
 -- Agilli.LerXml --
 [*] Ajustes para não formatar a tag pCodLCServ quando esta estiver vazia.
    Por: Diego Reckziegel

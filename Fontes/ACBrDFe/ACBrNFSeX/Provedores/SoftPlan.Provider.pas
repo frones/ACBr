@@ -261,8 +261,8 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod003;
-    AErro.Descricao := ACBrStr('Conjunto de DPS transmitidos (máximo de ' +
-                       IntToStr(Response.MaxRps) + ' DPS)' +
+    AErro.Descricao := ACBrStr('Conjunto de RPS transmitidos (máximo de ' +
+                       IntToStr(Response.MaxRps) + ' RPS)' +
                        ' excedido. Quantidade atual: ' +
                        IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
   end;
@@ -799,7 +799,6 @@ begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod203;
       AErro.Descricao := ACBrStr(Desc203);
-//      raise Exception.Create(Response.ArquivoRetorno);
     end;
 
   except
@@ -834,7 +833,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Cod003;
-      AErro.Descricao := ACBrStr('Conjunto de DPS transmitidos (máximo de 1 DPS)' +
+      AErro.Descricao := ACBrStr('Conjunto de RPS transmitidos (máximo de 1 RPS)' +
                          ' excedido. Quantidade atual: ' +
                          IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
     end;

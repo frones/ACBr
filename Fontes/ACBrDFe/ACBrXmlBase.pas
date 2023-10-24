@@ -154,8 +154,10 @@ begin
       XMLe := XMLs;
 
     XMLs := FaststringReplace(XMLe, ' <', '<', [rfReplaceAll]);
+    XMLs := FaststringReplace(XMLs, #10 + '<', '<', [rfReplaceAll]);
     XMLs := FaststringReplace(XMLs, #13 + '<', '<', [rfReplaceAll]);
     XMLs := FaststringReplace(XMLs, '> ', '>', [rfReplaceAll]);
+    XMLs := FaststringReplace(XMLs, '>' + #10, '>', [rfReplaceAll]);
     XMLs := FaststringReplace(XMLs, '>' + #13, '>', [rfReplaceAll]);
     XMLs := FaststringReplace(XMLs, #$D, '', [rfReplaceAll]);
   end;
@@ -205,7 +207,7 @@ end;
 function RemoverPrefixosDesnecessarios(const aXML: string): string;
 begin
   Result := RemoverPrefixos(aXML, ['ns1:', 'ns2:', 'ns3:', 'ns4:', 'ns5:', 'tc:',
-              'ii:', 'p1:', 'nfse:']);
+              'ii:', 'p1:', 'nfse:', 'm:']);
 end;
 
 function RemoverCaracteresDesnecessarios(const aXML: string): string;

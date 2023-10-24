@@ -40,6 +40,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/10/2023
+-- ACBrXmlBase --
+[*] Alterada a function RemoverIdentacao para remover o caracter #10, 
+    alguns XML contem o caracter #10 em vez de #13.
+  Por: Italo Giurizzato Junior
+
 01/03/2023
 -- ACBrDFeSSL/ACBrDFeWebService --
 [+] Acrescentado a propriedade ValidateReturnCode para não gerar uma Exception

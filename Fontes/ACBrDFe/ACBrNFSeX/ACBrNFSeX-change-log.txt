@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/10/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Campos de Julio/MT mudou a URL de produção, o provedor é o mesmo.
+   Por: Diego Reckziegel
 -- ACBrNFSeXProviderBase --
 [*] Possível solução para salvar o arquivo da nota no formato correto.
    Por: Italo Giurizzato Junior

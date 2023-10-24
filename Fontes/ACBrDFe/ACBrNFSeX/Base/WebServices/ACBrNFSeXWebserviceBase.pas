@@ -245,8 +245,12 @@ type
 
   TInfConsultaNFSe = class
  private
+   FtpConsulta: TtpConsulta;
+   FtpPeriodo: TtpPeriodo;
+   FtpRetorno: TtpRetorno;
    FNumeroIniNFSe: string;
    FNumeroFinNFSe: string;
+   FSerieNFSe: string;
    FNumeroLote: string;
    FDataInicial: TDateTime;
    FDataFinal: TDateTime;
@@ -258,24 +262,23 @@ type
    FCNPJInter: string;
    FIMInter: string;
    FRazaoInter: string;
-
-   FPagina: Integer;
-   FtpConsulta: TtpConsulta;
-   FtpPeriodo: TtpPeriodo;
    FCadEconomico: string;
-   FSerieNFSe: string;
    FCodServ: string;
    FCodVerificacao: string;
-   FtpRetorno: TtpRetorno;
-    FChaveNFSe: string;
+   FChaveNFSe: string;
+   FPagina: Integer;
 
  public
    constructor Create;
 
    function LerFromIni(const AIniStr: string): Boolean;
 
+   property tpConsulta: TtpConsulta read FtpConsulta    write FtpConsulta;
+   property tpPeriodo: TtpPeriodo   read FtpPeriodo     write FtpPeriodo;
+   property tpRetorno: TtpRetorno   read FtpRetorno     write FtpRetorno;
    property NumeroIniNFSe: string   read FNumeroIniNFSe write FNumeroIniNFSe;
    property NumeroFinNFSe: string   read FNumeroFinNFSe write FNumeroFinNFSe;
+   property SerieNFSe: string       read FSerieNFSe     write FSerieNFSe;
    property NumeroLote: string      read FNumeroLote    write FNumeroLote;
    property DataInicial: TDateTime  read FDataInicial   write FDataInicial;
    property DataFinal: TDateTime    read FDataFinal     write FDataFinal;
@@ -286,15 +289,11 @@ type
    property CNPJInter: string       read FCNPJInter     write FCNPJInter;
    property IMInter: string         read FIMInter       write FIMInter;
    property RazaoInter: string      read FRazaoInter    write FRazaoInter;
-   property Pagina: Integer         read FPagina        write FPagina;
-   property tpConsulta: TtpConsulta read FtpConsulta    write FtpConsulta;
-   property tpPeriodo: TtpPeriodo   read FtpPeriodo     write FtpPeriodo;
    property CadEconomico: string    read FCadEconomico  write FCadEconomico;
-   property SerieNFSe: string       read FSerieNFSe     write FSerieNFSe;
    property CodServ: string         read FCodServ       write FCodServ;
    property CodVerificacao: string  read FCodVerificacao write FCodVerificacao;
-   property tpRetorno: TtpRetorno   read FtpRetorno     write FtpRetorno;
    property ChaveNFSe: string       read FChaveNFSe     write FChaveNFSe;
+   property Pagina: Integer         read FPagina        write FPagina;
  end;
 
   TInfConsultaLinkNFSe = class
@@ -1534,8 +1533,10 @@ constructor TInfConsultaNFSe.Create;
 begin
   tpConsulta    := tcPorNumero;
   tpPeriodo     := tpEmissao;
+  tpRetorno     := trXml;
   NumeroIniNFSe := '';
   NumeroFinNFSe := '';
+  SerieNFSe     := '';
   NumeroLote    := '';
   DataInicial   := 0;
   DataFinal     := 0;
@@ -1547,12 +1548,10 @@ begin
   IMInter       := '';
   RazaoInter    := '';
   CadEconomico  := '';
-  SerieNFSe     := '';
   CodServ       := '';
   CodVerificacao:= '';
-  Pagina        := 1;
-  tpRetorno     := trXml;
   ChaveNFSe     := '';
+  Pagina        := 1;
 end;
 
 function TInfConsultaNFSe.LerFromIni(const AIniStr: string): Boolean;
@@ -1577,6 +1576,7 @@ begin
 
     NumeroIniNFSe := INIRec.ReadString(sSecao, 'NumeroIniNFSe', '');
     NumeroFinNFSe := INIRec.ReadString(sSecao, 'NumeroFinNFSe', '');
+    SerieNFSe     := INIRec.ReadString(sSecao, 'SerieNFSe', '');
     NumeroLote    := INIRec.ReadString(sSecao, 'NumeroLote', '');
     DataInicial   := StringToDateTime(INIRec.ReadString(sSecao, 'DataInicial', '0'));
     DataFinal     := StringToDateTime(INIRec.ReadString(sSecao, 'DataFinal', '0'));
@@ -1589,12 +1589,9 @@ begin
     IMInter       := INIRec.ReadString(sSecao, 'IMInter', '');
     RazaoInter    := INIRec.ReadString(sSecao, 'RazaoInter', '');
     CadEconomico  := INIRec.ReadString(sSecao, 'CadEconomico', '');
-    SerieNFSe     := INIRec.ReadString(sSecao, 'SerieNFSe', '');
     CodServ       := INIRec.ReadString(sSecao, 'CodServ', '');
-    ChaveNFSe     := INIRec.ReadString(sSecao, 'ChaveNFSe', '');
-
     CodVerificacao := INIRec.ReadString(sSecao, 'CodVerificacao', '');
-
+    ChaveNFSe     := INIRec.ReadString(sSecao, 'ChaveNFSe', '');
     Pagina        := INIRec.ReadInteger(sSecao, 'Pagina', 1);
 
     Result := True;

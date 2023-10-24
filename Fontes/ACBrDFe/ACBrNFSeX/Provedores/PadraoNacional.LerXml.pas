@@ -803,6 +803,23 @@ begin
   begin
     with NFSe.infNFSe do
     begin
+      {
+      A formação do identificador de 53 posições da NFS é:
+
+      "NFS" +
+      Cód.Mun. (7) +
+      Amb.Ger. (1) +
+      Tipo de Inscrição Federal (1) +
+      Inscrição Federal (14 - CPF completar com 000 à esquerda) +
+      nNFSe (13) +
+      AnoMes Emis. da DPS (4) +
+      Cód.Num. (9) +
+      DV (1)
+
+      Código numérico de 9 Posições numérico, aleatório,
+      gerado automaticamente pelo sistema gerador da NFS-e.
+      }
+
       ID := OnlyNumber(ObterConteudoTag(AuxNode.Attributes.Items['Id']));
       xLocEmi := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLocEmi'), tcStr);
       xLocPrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLocPrestacao'), tcStr);
@@ -1090,9 +1107,26 @@ begin
 
   if AuxNode <> nil then
   begin
+      {
+      A formação da chSubstda de 50 posições da NFS é:
+
+      Cód.Mun. (7) +
+      Amb.Ger. (1) +
+      Tipo de Inscrição Federal (1) +
+      Inscrição Federal (14 - CPF completar com 000 à esquerda) +
+      nNFSe (13) +
+      AnoMes Emis. da DPS (4) +
+      Cód.Num. (9) +
+      DV (1)
+
+      Código numérico de 9 Posições numérico, aleatório,
+      gerado automaticamente pelo sistema gerador da NFS-e.
+      }
     NFSe.subst.chSubstda := ObterConteudo(AuxNode.Childrens.FindAnyNs('chSubstda'), tcStr);
     NFSe.subst.cMotivo := StrTocMotivo(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('cMotivo'), tcStr));
     NFSe.subst.xMotivo := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);
+
+    NFSe.RpsSubstituido.Numero := Copy(NFSe.subst.chSubstda, 24, 13);
   end;
 end;
 

@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2023
+-- ACBrNFSeX/ACBrNFSeXWebserviceBase --
+[*] Ajustes para o Método ConsultaGenerica (estava faltando o campo: ChaveNFSe)
+   Por: Italo Giurizzato Junior
+-- PadraoNacional.LerXml --
+[*] Obter o numero da nota da chave da nota que foi substituida.
+   Por: Italo Giurizzato Junior
+
 23/10/2023
 -- ACBrNFSeXNotasFiscais --
 [*] Corrige o campo cVerifNFSeMun na leitura do arquivo INI.

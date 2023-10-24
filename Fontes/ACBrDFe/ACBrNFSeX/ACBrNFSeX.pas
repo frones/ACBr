@@ -656,10 +656,11 @@ begin
   with FWebService.ConsultaNFSe.InfConsultaNFSe do
   begin
     tpConsulta := aInfConsultaNFSe.tpConsulta;
+    tpPeriodo := aInfConsultaNFSe.tpPeriodo;
     NumeroIniNFSe := aInfConsultaNFSe.NumeroIniNFSe;
     NumeroFinNFSe := aInfConsultaNFSe.NumeroFinNFSe;
     SerieNFSe := aInfConsultaNFSe.SerieNFSe;
-    tpPeriodo := aInfConsultaNFSe.tpPeriodo;
+    NumeroLote := aInfConsultaNFSe.NumeroLote;
     DataInicial := aInfConsultaNFSe.DataInicial;
     DataFinal := aInfConsultaNFSe.DataFinal;
     CNPJPrestador := aInfConsultaNFSe.CNPJPrestador;
@@ -668,12 +669,13 @@ begin
     IMTomador := aInfConsultaNFSe.IMTomador;
     CNPJInter := aInfConsultaNFSe.CNPJInter;
     IMInter := aInfConsultaNFSe.IMInter;
-    NumeroLote := aInfConsultaNFSe.NumeroLote;
-    Pagina := aInfConsultaNFSe.Pagina;
+    RazaoInter := aInfConsultaNFSe.RazaoInter;
     CadEconomico := aInfConsultaNFSe.CadEconomico;
     CodServ := aInfConsultaNFSe.CodServ;
     CodVerificacao := aInfConsultaNFSe.CodVerificacao;
     tpRetorno := aInfConsultaNFSe.tpRetorno;
+    ChaveNFSe := aInfConsultaNFSe.ChaveNFSe;
+    Pagina := aInfConsultaNFSe.Pagina;
   end;
 
   ConsultarNFSe;

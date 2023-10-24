@@ -226,13 +226,12 @@ begin
       SSLMethod := ssl_openssl_lib.SslMethodTLSV11;
     LT_TLSv1_2:
       SSLMethod := ssl_openssl_lib.SslMethodTLSV12;
-    LT_TLSv1_3:
-      SSLMethod := ssl_openssl_lib.SslMethodTLSV13;
   else
     begin
       SSLMethod := ssl_openssl_lib.SslMethodTLS;
       if not Assigned(SSLMethod) then
-        SSLMethod := ssl_openssl_lib.SslMethodV23;
+        if not LibVersionIsGreaterThan1_0_0 then
+          SSLMethod := ssl_openssl_lib.SslMethodV23;
     end;
   end;
 

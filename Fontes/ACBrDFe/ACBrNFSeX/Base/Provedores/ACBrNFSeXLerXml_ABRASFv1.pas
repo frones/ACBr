@@ -819,6 +819,14 @@ begin
 
       RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
 
+      if ValorIssRetido = 0 then
+      begin
+        if IssRetido = stRetencao then
+          ValorIssRetido := ValorIss
+        else
+          ValorIssRetido := 0;
+      end;
+
       ValorLiq := ValorServicos - RetencoesFederais - OutrasRetencoes -
                   ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
 

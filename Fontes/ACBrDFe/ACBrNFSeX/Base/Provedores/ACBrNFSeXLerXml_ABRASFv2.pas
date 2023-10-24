@@ -1126,9 +1126,6 @@ begin
       if ValorCpp = 0 then
         ValorCpp := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCpp'), tcDe2);
 
-      if ValorIss = 0 then
-        ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
-
       OutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
       ValorTotalTributos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorTotTributos'), tcDe2);
 
@@ -1139,10 +1136,7 @@ begin
       end;
 
       if NFSe.ValoresNfse.ValorIss = 0 then
-      begin
-        ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
         NFSe.ValoresNfse.ValorIss := ValorIss;
-      end;
 
       if Aliquota = 0 then
         Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/10/2023
+-- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível solução para o calculo correto do ValorLiquidoNFSe.
+   Por: Italo Giurizzato Junior
 -- Infisc.Provider --
 [*] Alteração visando identificar um alerta em vez de erro.
    Por: Italo Giurizzato Junior

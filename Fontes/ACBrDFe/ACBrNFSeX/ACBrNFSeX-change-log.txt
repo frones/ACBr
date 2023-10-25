@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2023
+-- ACBrNFSeXServicos --
+[*] Atualizadas as URL das cidades de Ariquemes/RO e Buritis/RO.
+  Por: Diego Reckziegel / BigWings
+
 24/10/2023
 -- ACBrNFSeXWebserviceBase/PadraoNacional.Provider --
 [*] Realizado ajustes para não remover parte do arquivo PDF quando é encontrado

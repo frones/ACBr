@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/10/2023
+-- ACBrNFSeXProviderBase --
+[*] Possível solução para retornar o conteudo da propriedade HtmlRetorno
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Atualizadas as URL das cidades de Ariquemes/RO e Buritis/RO.
   Por: Diego Reckziegel / BigWings

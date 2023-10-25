@@ -2468,7 +2468,6 @@ begin
             ConsultaNFSeResponse.InfConsultaNFSe.tpConsulta := tcServicoPrestado;
             ConsultaNFSeResponse.ArquivoRetorno := AService.ConsultarNFSeServicoPrestado(ConfigMsgDados.DadosCabecalho,
                                                                                      ConsultaNFSeResponse.ArquivoEnvio);
-
           end;
         tmConsultarNFSeServicoTomado:
           begin
@@ -2493,6 +2492,7 @@ begin
       ConsultaNFSeResponse.Sucesso := True;
       ConsultaNFSeResponse.EnvelopeEnvio := AService.Envio;
       ConsultaNFSeResponse.EnvelopeRetorno := AService.Retorno;
+      ConsultaNFSeResponse.HtmlRetorno := AService.HtmlRetorno;
     except
       on E:Exception do
       begin

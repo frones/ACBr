@@ -359,7 +359,8 @@ var
   NFSeXml: string;
   DocumentXml: TACBrXmlDocument;
   ANode: TACBrXmlNode;
-  NumNFSe, NumDps: string;
+  NumNFSe, NumDps, CodVerif: string;
+  DataAut: TDateTime;
   ANota: TNotaFiscal;
 begin
   if Response.ArquivoRetorno = '' then
@@ -405,10 +406,19 @@ begin
 
           ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
 
+          CodVerif := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
           NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
+          DataAut := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
+
           ANode := ANode.Childrens.FindAnyNs('DPS');
           ANode := ANode.Childrens.FindAnyNs('infDPS');
           NumDps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
+
+          with Response do
+          begin
+            NumeroNota := NumNFSe;
+            Data := DataAut;
+          end;
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumDps);
 

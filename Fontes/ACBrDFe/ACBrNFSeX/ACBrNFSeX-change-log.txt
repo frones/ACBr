@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/10/2023
+-- PadraoNacional.Provider --
+[*] Ateração visando retornar o numero da nota e a data de processamento da mesma.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [*] Possível solução para retornar o conteudo da propriedade HtmlRetorno
    Por: Italo Giurizzato Junior

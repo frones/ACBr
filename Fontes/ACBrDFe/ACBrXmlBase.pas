@@ -145,7 +145,8 @@ function RemoverIdentacao(const AXML: string): string;
 var
   XMLe, XMLs: string;
 begin
-  XMLe := AXML;
+  XMLe := ChangeLineBreak(AXML, '');
+
   XMLs := '';
 
   while XMLe <> XMLs do
@@ -154,12 +155,7 @@ begin
       XMLe := XMLs;
 
     XMLs := FaststringReplace(XMLe, ' <', '<', [rfReplaceAll]);
-    XMLs := FaststringReplace(XMLs, #10 + '<', '<', [rfReplaceAll]);
-    XMLs := FaststringReplace(XMLs, #13 + '<', '<', [rfReplaceAll]);
     XMLs := FaststringReplace(XMLs, '> ', '>', [rfReplaceAll]);
-    XMLs := FaststringReplace(XMLs, '>' + #10, '>', [rfReplaceAll]);
-    XMLs := FaststringReplace(XMLs, '>' + #13, '>', [rfReplaceAll]);
-    XMLs := FaststringReplace(XMLs, #$D, '', [rfReplaceAll]);
   end;
 
   Result := XMLs;

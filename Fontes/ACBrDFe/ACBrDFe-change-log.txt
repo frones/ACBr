@@ -40,6 +40,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/10/2023
+-- ACBrXmlBase --
+[*] Simplificação na function RemoverIdentacao.
+  Por: Italo Giurizzato Junior
+
 24/10/2023
 -- ACBrXmlBase --
 [*] Alterada a function RemoverIdentacao para remover o caracter #10, 

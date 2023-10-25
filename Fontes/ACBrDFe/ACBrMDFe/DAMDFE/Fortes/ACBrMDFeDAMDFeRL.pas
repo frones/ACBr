@@ -62,7 +62,8 @@ type
     RLMDFe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
   private
-    { Private declarations }
+    procedure AdicionaInformacaoPDF;
+    procedure AjustarEscala;
   protected
     fpACBrMDFe: TACBrMDFe;
     fpMDFe: TMDFe;
@@ -70,25 +71,48 @@ type
     fpAfterPreview: boolean;
     fpChangedPos: boolean;
     fpSemValorFiscal: boolean;
+    fpAuxDiferencaPDF: Integer;
 
     procedure rllSemValorFiscalPrint(Sender: TObject; var Value: string);
   public
     { Public declarations }
     class procedure Imprimir(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFes: array of TMDFe);
-    class procedure SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe; AFile: String);
+    class procedure SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe; AFile: String); overload;
+    class procedure SalvarPDF(ADANFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe; AStream: TStream); overload;
 
   end;
 
 implementation
 
 uses
-  ACBrUtil.Strings;
+  ACBrUtil.Strings, ACBrUtil.DateTime;
 
 {$ifdef FPC}
  {$R *.lfm}
 {$else}
  {$R *.dfm}
 {$endif}
+
+procedure TfrlDAMDFeRL.AdicionaInformacaoPDF;
+begin
+  with RLPDFFilter1.DocumentInfo do
+  begin
+    Title := ACBrStr('DAMDFe - MDFe nº ') +
+        FormatFloat('000,000,000', fpMDFe.Ide.nMDF);
+    KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', fpMDFe.Ide.nMDF) +
+        ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', fpMDFe.Ide.dhEmi) +
+        '; CNPJ: ' + fpMDFe.emit.CNPJCPF;
+  end;
+end;
+
+procedure TfrlDAMDFeRL.AjustarEscala;
+begin
+  if fpDAMDFe.AlterarEscalaPadrao then
+  begin
+    Scaled := False;
+    ScaleBy(fpDAMDFe.NovaEscala, Screen.PixelsPerInch);
+  end;
+end;
 
 class procedure TfrlDAMDFeRL.Imprimir(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFes: array of TMDFe);
 var
@@ -109,13 +133,10 @@ begin
       DAMDFeReport := Create(nil);
       DAMDFeReport.fpMDFe := AMDFes[i];
       DAMDFeReport.fpDAMDFe := ADAMDFe;
-      if ADAMDFe.AlterarEscalaPadrao then
-      begin
-        DAMDFeReport.Scaled := False;
-        DAMDFeReport.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
-      end;
+      DAMDFeReport.AjustarEscala;
 
       DAMDFeReport.RLMDFe.CompositeOptions.ResetPageNumber := True;
+      DAMDFeReport.fpAuxDiferencaPDF := 0;
       ReportArray[i] := DAMDFeReport;
     end;
 
@@ -173,26 +194,41 @@ begin
   try
     DAMDFeReport.fpMDFe := AMDFe;
     DAMDFeReport.fpDAMDFe := ADAMDFe;
-    if ADAMDFe.AlterarEscalaPadrao then
-    begin
-      DAMDFeReport.Scaled := False;
-      DAMDFeReport.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
-    end;
+
+    DAMDFeReport.AjustarEscala;
 
     TDFeReportFortes.AjustarReport(DAMDFeReport.RLMDFe, DAMDFeReport.fpDAMDFe);
     TDFeReportFortes.AjustarFiltroPDF(DAMDFeReport.RLPDFFilter1, DAMDFeReport.fpDAMDFe, AFile);
 
-    with DAMDFeReport.RLPDFFilter1.DocumentInfo do
-    begin
-      Title := ACBrStr('DAMDFe - MDFe nº ') +
-          FormatFloat('000,000,000', DAMDFeReport.fpMDFe.Ide.nMDF);
-      KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', DAMDFeReport.fpMDFe.Ide.nMDF) +
-          ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', DAMDFeReport.fpMDFe.Ide.dhEmi) +
-          '; CNPJ: ' + DAMDFeReport.fpMDFe.emit.CNPJCPF;
-    end;
+    DAMDFeReport.AdicionaInformacaoPDF;
 
+    DAMDFeReport.fpAuxDiferencaPDF := 10;
     DAMDFeReport.RLMDFe.Prepare;
     DAMDFeReport.RLPDFFilter1.FilterPages(DAMDFeReport.RLMDFe.Pages);
+  finally
+    FreeAndNil(DAMDFeReport);
+  end;
+end;
+
+class procedure TfrlDAMDFeRL.SalvarPDF(ADANFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe;
+  AStream: TStream);
+var
+  DAMDFeReport: TfrlDAMDFeRL;
+begin
+  DAMDFeReport := Create(nil);
+  try
+    DAMDFeReport.fpMDFe := AMDFe;
+    DAMDFeReport.fpDAMDFe := ADANFe;
+    DAMDFeReport.AjustarEscala;
+
+    TDFeReportFortes.AjustarReport(DAMDFeReport.RLMDFe, DAMDFeReport.fpDAMDFe);
+    DAMDFeReport.RLPDFFilter1.ShowProgress := DAMDFeReport.fpDAMDFe.MostraStatus;
+
+    DAMDFeReport.AdicionaInformacaoPDF;
+
+    DAMDFeReport.fpAuxDiferencaPDF := 10;
+    DAMDFeReport.RLMDFe.Prepare;
+    DAMDFeReport.RLPDFFilter1.FilterPages(DAMDFeReport.RLMDFe.Pages, AStream);
   finally
     FreeAndNil(DAMDFeReport);
   end;

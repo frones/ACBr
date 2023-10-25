@@ -71,7 +71,10 @@ type
     destructor Destroy; override;
 
     procedure ImprimirDAMDFe(AMDFe: TMDFe = nil); virtual;
-    procedure ImprimirDAMDFePDF(AMDFe: TMDFe = nil); virtual;
+
+    procedure ImprimirDAMDFePDF(AMDFe: TMDFe = nil); overload; virtual;
+    procedure ImprimirDAMDFePDF(AStream: TStream; AMDFe: TMDFe = nil); overload; virtual;
+
     procedure ImprimirEVENTO(AMDFe: TMDFe = nil); virtual;
     procedure ImprimirEVENTOPDF(AMDFe: TMDFe = nil); virtual;
   published
@@ -161,6 +164,12 @@ begin
 end;
 
 procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFePDF(AMDFe: TMDFe = nil);
+begin
+  ErroAbstract('ImprimirDAMDFePDF');
+end;
+
+procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFePDF(AStream: TStream;
+  AMDFe: TMDFe);
 begin
   ErroAbstract('ImprimirDAMDFePDF');
 end;

@@ -51,8 +51,12 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
     procedure ImprimirDAMDFe(AMDFe: TMDFe = nil); override;
+
     procedure ImprimirDAMDFePDF(AMDFe: TMDFe = nil); override;
+    procedure ImprimirDAMDFePDF(AStream: TStream; AMDFe: TMDFe = nil); override;
+
     procedure ImprimirEVENTO(AMDFe: TMDFe = nil); override;
     procedure ImprimirEVENTOPDF(AMDFe: TMDFe = nil); override;
   published
@@ -133,6 +137,29 @@ begin
   end
   else
     FPArquivoPDF := ImprimirDAMDFEPDFTipo(AMDFe);
+end;
+
+procedure TACBrMDFeDAMDFeRL.ImprimirDAMDFePDF(AStream: TStream; AMDFe: TMDFe);
+var
+  i: Integer;
+
+  procedure StreamDAMDFEPDFTipo(AMDFe: TMDFe; const AStream: TStream);
+  begin
+    AStream.Size := 0;
+    TfrlDAMDFeRLRetrato.SalvarPDF(Self, AMDFe, AStream);
+  end;
+
+begin
+  if not Assigned(AStream) then
+    raise EACBrMDFeException.Create('AStream precisa estar definido');
+
+  if (AMDFe = nil) then
+  begin
+    for i := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
+      StreamDAMDFEPDFTipo(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe, AStream);
+  end
+  else
+    StreamDAMDFEPDFTipo(AMDFe, AStream);
 end;
 
 procedure TACBrMDFeDAMDFeRL.ImprimirEVENTO(AMDFe: TMDFe);

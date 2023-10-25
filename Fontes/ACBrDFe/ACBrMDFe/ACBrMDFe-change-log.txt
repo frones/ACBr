@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2023
+-- Diversos --
+[+] Implementado o método ImprimirPDF por Stream.
+   Por: Luis Claudio Jr
+
 06/09/2023
 -- Diversos --
 [+] Adiciona no retorno da consulta os novos campos nProtDTA e dhProt adicionados na NT2023/002

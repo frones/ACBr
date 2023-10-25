@@ -139,6 +139,7 @@ type
     destructor Destroy; override;
     procedure ImprimirDAMDFe(AMDFe: TMDFe = nil); override;
     procedure ImprimirDAMDFePDF(AMDFe: TMDFe = nil); override;
+    procedure ImprimirDAMDFePDF(AStream: TStream; AMDFe: TMDFe = nil); override;
     procedure ImprimirEVENTO(AMDFe: TMDFe = nil); override;
     procedure ImprimirEVENTOPDF(AMDFe: TMDFe = nil); override;
 
@@ -850,6 +851,39 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TACBrMDFeDAMDFEFR.ImprimirDAMDFePDF(AStream: TStream;AMDFe: TMDFe);
+const
+  TITULO_PDF = 'Manifesto de Documento Eletrônico';
+var
+  I:          Integer;
+  OldShowDialog : Boolean;
+  NomeArq:string;
+begin
+  if PrepareReport(AMDFe) then
+  begin
+    for I := 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count - 1 do
+    begin
+      frxPDFExport.Author     := Sistema;
+      frxPDFExport.Creator    := Sistema;
+      frxPDFExport.Producer   := Sistema;
+      frxPDFExport.Title      := TITULO_PDF;
+      frxPDFExport.Subject    := TITULO_PDF;
+      frxPDFExport.Keywords   := TITULO_PDF;
+
+      frxPDFExport.Stream        := AStream;
+      OldShowDialog := frxPDFExport.ShowDialog;
+      try
+        frxPDFExport.ShowDialog := False;
+        frxReport.Export(frxPDFExport);
+      finally
+        frxPDFExport.ShowDialog := OldShowDialog;
+      end;
+    end;
+  end
+  else
+    frxPDFExport.FileName := '';
 end;
 
 procedure TACBrMDFeDAMDFEFR.ImprimirEVENTO(AMDFe: TMDFe);

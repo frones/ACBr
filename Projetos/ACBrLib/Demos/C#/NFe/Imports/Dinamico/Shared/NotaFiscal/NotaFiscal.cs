@@ -358,7 +358,7 @@ namespace ACBrLib.NFe
                 do
                 {
                     k++;
-                    rastroItem = iniData.ReadFromIni<RastroNFe>($"rastro{i:000}{k:000}");
+                    rastroItem = iniData.ReadFromIni<RastroNFe>($"Rastro{i:000}{k:000}");
                     if (rastroItem == null) continue;
 
                     produto.Rastro.Add(rastroItem);

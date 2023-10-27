@@ -36,9 +36,11 @@
 library ACBrLibReinf;
 
 uses
-  Interfaces, sysutils, Classes,
-  ACBrLibConfig, ACBrLibComum,
-  ACBrLibReinfClass, ACBrLibReinfConfig, ACBrLibReinfDataModule;
+  Interfaces, Forms,
+  sysutils, Classes, ACBrLibReinfDataModule,
+  {$IFDEF MT} ACBrLibReinfMT {$ELSE} ACBrLibReinfST{$ENDIF},
+  ACBrLibConfig, ACBrLibResposta, ACBrLibComum, ACBrLibConsts,
+  ACBrLibDataModule, ACBrLibReinfConfig, ACBrLibReinfBase;
 
 {$R *.res}
 
@@ -54,15 +56,27 @@ exports
   Reinf_Nome,
   Reinf_Versao,
   Reinf_UltimoRetorno,
+  Reinf_ConfigImportar,
+  Reinf_ConfigExportar,
   Reinf_ConfigLer,
   Reinf_ConfigGravar,
   Reinf_ConfigLerValor,
   Reinf_ConfigGravarValor,
 
   // Reinf
-  Reinf_LerArqIni,
-  Reinf_Enviar,
-  Reinf_Consultar;
+  Reinf_CriarEventoReinf,
+  Reinf_EnviarReinf,
+  Reinf_ConsultarReinf,
+  Reinf_ConsultarReciboReinf,
+  Reinf_CriarEnviarReinf,
+  Reinf_LimparReinf,
+  Reinf_CarregarXMLEventoReinf,
+  Reinf_SetIdContribuinte,
+  Reinf_SetIDTransmissor,
+  Reinf_SetTipoContribuinte,
+  Reinf_SetVersaoDF,
+  Reinf_ObterCertificados,
+  Reinf_Validar;
 
 begin
   {$IFDEF DEBUG}
@@ -71,7 +85,7 @@ begin
    SetHeapTraceOutput( HeapTraceFile );
   {$ENDIF}
 
-  pLibClass := TACBrLibReinf; // Ajusta a classe a ser criada
   MainThreadID := GetCurrentThreadId();
+  Application.Initialize;
 end.
 

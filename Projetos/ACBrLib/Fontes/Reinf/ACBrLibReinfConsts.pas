@@ -93,6 +93,15 @@ const
 
   CSessaoReinf = 'Reinf';
 
+  ErrValidacaoReinf = -11;
+
+Resourcestring
+  SErroReinfAbrir = 'Erro ao abrir o arquivo do Reinf: %s';
+  SMsgReinfEventoAdicionado = 'Evento Adicionado: %s';
+  SErroReinfConsulta = 'Erro ao Consultar Evento - Parâmetro não Preenchido';
+  SInfEventosCarregados = '%d Evento(s) Carregado(s)';
+  SInfReinfCarregadas = '%d Reinf(s) Carregada(s)';
+
 implementation
 
 end.

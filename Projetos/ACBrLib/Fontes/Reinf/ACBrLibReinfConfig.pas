@@ -83,7 +83,8 @@ type
 implementation
 
 uses
-  ACBrLibReinfClass, ACBrLibReinfConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibReinfBase, ACBrLibReinfConsts, ACBrLibConsts, ACBrLibComum,
+  ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TReinfConfig }
 {

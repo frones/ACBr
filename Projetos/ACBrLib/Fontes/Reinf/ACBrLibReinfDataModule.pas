@@ -37,73 +37,38 @@ unit ACBrLibReinfDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrReinf, ACBrLibConfig, syncobjs;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibDataModule, ACBrLibConfig, syncobjs, ACBrReinf;
 
 type
 
   { TLibReinfDM }
 
-  TLibReinfDM = class(TDataModule)
+  TLibReinfDM = class(TLibDataModule)
     ACBrReinf1: TACBrReinf;
-
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   private
-    FLock: TCriticalSection;
-
+    fpLib: TACBrLib;
   public
-    procedure AplicarConfiguracoes;
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-    procedure Travar;
-    procedure Destravar;
+    procedure AplicarConfiguracoes; override;
+
   end;
 
 implementation
 
 uses
-  ACBrUtil,
-  ACBrLibReinfConfig, ACBrLibComum, ACBrLibReinfClass;
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrLibReinfConfig;
 
 {$R *.lfm}
 
 { TLibReinfDM }
-
-procedure TLibReinfDM.DataModuleCreate(Sender: TObject);
-begin
-  FLock := TCriticalSection.Create;
-end;
-
-procedure TLibReinfDM.DataModuleDestroy(Sender: TObject);
-begin
-  FLock.Destroy;
-end;
 
 procedure TLibReinfDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibReinfConfig;
 begin
   ACBrReinf1.SSL.DescarregarCertificado;
-  pLibConfig := TLibReinfConfig(TACBrLibReinf(pLib).Config);
+  pLibConfig := TLibReinfConfig(Lib.Config);
   ACBrReinf1.Configuracoes.Assign(pLibConfig.ReinfConfig);
-end;
-
-procedure TLibReinfDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
-  Traduzir: Boolean);
-begin
-  if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
-end;
-
-procedure TLibReinfDM.Travar;
-begin
-  GravarLog('Travar', logParanoico);
-  FLock.Acquire;
-end;
-
-procedure TLibReinfDM.Destravar;
-begin
-  GravarLog('Destravar', logParanoico);
-  FLock.Release;
 end;
 
 end.

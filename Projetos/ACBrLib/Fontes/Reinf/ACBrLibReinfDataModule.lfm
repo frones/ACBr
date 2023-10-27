@@ -1,13 +1,9 @@
-object LibReinfDM: TLibReinfDM
-  OnCreate = DataModuleCreate
-  OnDestroy = DataModuleDestroy
-  OldCreateOrder = False
+inherited LibReinfDM: TLibReinfDM
   Height = 150
   HorizontalOffset = 257
   VerticalOffset = 127
   Width = 150
-  PPI = 96
-  object ACBrReinf1: TACBrReinf
+  object ACBrReinf1: TACBrReinf[0]
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
@@ -17,7 +13,7 @@ object LibReinfDM: TLibReinfDM
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 64
-    top = 40
+    Left = 64
+    Top = 40
   end
 end

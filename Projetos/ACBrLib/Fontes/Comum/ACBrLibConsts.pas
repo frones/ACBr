@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -127,6 +127,8 @@ const
   CChaveCasasDecimaisMaskvUnCom = 'CasasDecimais.MaskvUnCom';
   CChaveCasasDecimaisqCom = 'CasasDecimais.qCom';
   CChaveCasasDecimaisvUnCom = 'CasasDecimais.vUnCom';
+  CChaveCasasDecimaisMaskAliquota = 'CasasDecimais.MaskAliquota';
+  CChaveCasasDecimaisAliquota = 'CasasDecimais.Aliquota';
 
   CSessaoIntegrador = 'Integrador';
   CChaveArqLog = 'ArqLog';

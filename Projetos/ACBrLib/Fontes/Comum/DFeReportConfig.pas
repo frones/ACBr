@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -188,6 +188,8 @@ begin
     MaskvUnCom := AIni.ReadString(Sessao, CChaveCasasDecimaisMaskvUnCom, MaskvUnCom);
     qCom := AIni.ReadInteger(Sessao, CChaveCasasDecimaisqCom, qCom);
     vUnCom := AIni.ReadInteger(Sessao, CChaveCasasDecimaisvUnCom, vUnCom);
+    MaskAliquota := AIni.ReadString(Sessao, CChaveCasasDecimaisMaskAliquota, MaskAliquota);
+    Aliquota := AIni.ReadInteger(Sessao, CChaveCasasDecimaisAliquota, Aliquota);
   end;
 
   LerIniChild(AIni);
@@ -229,12 +231,17 @@ begin
     AIni.WriteString(Sessao, CChaveCasasDecimaisMaskvUnCom, MaskvUnCom);
     AIni.WriteInteger(Sessao, CChaveCasasDecimaisqCom, qCom);
     AIni.WriteInteger(Sessao, CChaveCasasDecimaisvUnCom, vUnCom);
+    AIni.WriteString(Sessao, CChaveCasasDecimaisMaskAliquota, MaskAliquota);
+    AIni.WriteInteger(Sessao, CChaveCasasDecimaisAliquota, Aliquota);
   end;
 
   GravarIniChild(AIni);
 end;
 
 procedure TDFeReportConfig<T>.Apply(const DFeReport: T; const Lib: TACBrLib);
+var
+  IntAliquota: Integer;
+  StrMaskAliquota: string;
 begin
   if not Assigned(DFeReport) then Exit;
 
@@ -262,7 +269,11 @@ begin
     MaskvUnCom := FCasasDecimais.MaskvUnCom;
     qCom := FCasasDecimais.qCom;
     vUnCom := FCasasDecimais.vUnCom;
+    MaskAliquota := FCasasDecimais.MaskAliquota;
+    Aliquota := FCasasDecimais.Aliquota;
   end;
+  StrMaskAliquota := DFeReport.CasasDecimais.MaskAliquota;
+  IntAliquota := DFeReport.CasasDecimais.Aliquota;
 
 {$IFDEF Demo}
   DFeReport.Sistema := Lib.Nome + ' v' + Lib.Versao;

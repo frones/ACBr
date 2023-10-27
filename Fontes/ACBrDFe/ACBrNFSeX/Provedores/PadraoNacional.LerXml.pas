@@ -1126,7 +1126,9 @@ begin
     NFSe.subst.cMotivo := StrTocMotivo(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('cMotivo'), tcStr));
     NFSe.subst.xMotivo := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);
 
-    NFSe.RpsSubstituido.Numero := Copy(NFSe.subst.chSubstda, 24, 13);
+    NFSe.NfseSubstituida := Copy(NFSe.subst.chSubstda, 24, 13);
+    NFSe.OutrasInformacoes := NFSe.OutrasInformacoes + sLineBreak +
+      'Chave da NFSe Substituida: ' + NFSe.subst.chSubstda;
   end;
 end;
 

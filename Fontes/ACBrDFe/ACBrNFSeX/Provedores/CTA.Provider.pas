@@ -304,10 +304,10 @@ var
   AErro: TNFSeEventoCollectionItem;
   AResumo: TNFSeResumoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
-  ANodeArray: TACBrXmlNodeArray;
-  NumRps: String;
-  ANota: TNotaFiscal;
-  I: Integer;
+//  ANodeArray: TACBrXmlNodeArray;
+//  NumRps: String;
+//  ANota: TNotaFiscal;
+//  I: Integer;
 //  NotaCompleta: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
@@ -331,7 +331,7 @@ begin
       ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
+      (*
       if False then
       begin
         ANodeArray := ANode.Childrens.FindAllAnyNs('nfse');
@@ -387,6 +387,7 @@ begin
       end
       else
       begin
+      *)
         with Response do
         begin
           AuxNode := ANode.Childrens.FindAnyNs('Rps');
@@ -398,7 +399,7 @@ begin
         AResumo := Response.Resumos.New;
         AResumo.NumeroRps := Response.NumeroRps;
         AResumo.DescSituacao := Response.DescSituacao;
-      end;
+//      end;
     except
       on E:Exception do
       begin

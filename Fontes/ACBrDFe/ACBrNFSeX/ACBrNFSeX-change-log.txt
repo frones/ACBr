@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2023
+-- PadraoNacional.LerXml --
+[*] Atribuido ao campo NfseSubstituida o numero da nota que foi substituida e ao
+    campo OutrasInformacoes a chave completa da nota que foi substituida.
+   Por: Italo Giurizzato Junior
+
 25/10/2023
 -- PadraoNacional.Provider --
 [*] Ateração visando retornar o numero da nota e a data de processamento da mesma.

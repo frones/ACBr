@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2023
+-- ACBrNFSeXConfiguracoes --
+[*] Ajuste na rotina Assign para que não sobrescreva a configuração do Provedor.
+  Por: Diego Folieni
+ 
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Paranapanema/SP, provedor Pronim versão 1.
   Por: SHARMAQ / Italo Giurizzato Junior

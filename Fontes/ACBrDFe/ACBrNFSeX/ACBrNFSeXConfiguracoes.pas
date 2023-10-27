@@ -497,8 +497,6 @@ begin
   FxMunicipio := DeGeralConfNFSe.xMunicipio;
   FxUF        := DeGeralConfNFSe.xUF;
 
-  CodigoMunicipio := DeGeralConfNFSe.CodigoMunicipio;
-
   FCNPJPrefeitura        := DeGeralConfNFSe.CNPJPrefeitura;
   FConsultaLoteAposEnvio := DeGeralConfNFSe.ConsultaLoteAposEnvio;
   FConsultaAposCancelar  := DeGeralConfNFSe.ConsultaAposCancelar;
@@ -506,9 +504,12 @@ begin
   FLayout                := DeGeralConfNFSe.Layout;
   FLayoutNFSe            := DeGeralConfNFSe.LayoutNFSe;
   FAssinaturas           := DeGeralConfNFSe.Assinaturas;
-  FProvedor              := DeGeralConfNFSe.Provedor;
 
   FEmitente.Assign(DeGeralConfNFSe.Emitente);
+
+  //Deve ser a última configuração para que não sobrescreva configurações importantes.
+  //Daniel Morais, Panda, Antonio Carlos Junior, Italo Giurizzato Junior, Diego Folieni
+  CodigoMunicipio := DeGeralConfNFSe.CodigoMunicipio;
 end;
 
 procedure TGeralConfNFSe.SetCodigoMunicipio(const Value: Integer);

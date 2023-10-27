@@ -332,6 +332,7 @@ type
     procedure SetChavePIX(AValue: String);
     procedure SetACBrPixCD(AValue: TACBrPixCD);
   protected
+    fpIsBacen: Boolean;
     fpAutenticado: Boolean;
     fpAutenticouManual:Boolean;
     fpToken: String;
@@ -407,6 +408,7 @@ type
     property epCobV: TACBrPixEndPointCobV read fepCobV;
 
     property Http: THTTPSend read fHttpSend;
+    property IsBacen: Boolean read fpIsBacen;
   published
     property ACBrPixCD: TACBrPixCD read fPixCD write SetACBrPixCD;
 
@@ -1141,14 +1143,13 @@ begin
   if (Trim(e2eid) = '') then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['e2eid']);
 
-  if (Trim(idDevolucao) = '') then
+  if (Trim(idDevolucao) = '') and fPSP.IsBacen then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['idDevolucao']);
 
   Body := Trim(fDevolucaoSolicitada.AsJSON);
   if (Body = '') then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['DevolucaoSolicitada']);
 
-  Clear;
   fPSP.PrepararHTTP;
   fPSP.URLPathParams.Add(e2eid);
   fPSP.URLPathParams.Add('devolucao');
@@ -1156,6 +1157,8 @@ begin
   fPSP.ConfigurarBody(ChttpMethodPUT, EndPoint, Body);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
+
+  Clear;
   fPSP.AcessarEndPoint(ChttpMethodPUT, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_CREATED);
 
@@ -1208,6 +1211,12 @@ begin
   fCobGerada := TACBrPIXCobGerada.Create('');
   fCobRevisada := TACBrPIXCobRevisada.Create('');
   fCobCompleta := TACBrPIXCobCompleta.Create('');
+
+  fCobsConsultadas.IsBacen := fPSP.IsBacen;
+  fCobSolicitada.IsBacen := fPSP.IsBacen;
+  fCobGerada.IsBacen := fPSP.IsBacen;
+  fCobRevisada.IsBacen := fPSP.IsBacen;
+  fCobCompleta.IsBacen := fPSP.IsBacen;
 end;
 
 destructor TACBrPixEndPointCob.Destroy;
@@ -1243,7 +1252,6 @@ begin
   if (Body = '') then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobSolicitada']);
 
-  Clear;
   fPSP.PrepararHTTP;
   if (TxId <> '') then
   begin
@@ -1256,6 +1264,8 @@ begin
   fPSP.ConfigurarBody(ep, EndPoint, Body);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
+
+  Clear;
   fPSP.AcessarEndPoint(ep, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_CREATED);
 
@@ -1430,6 +1440,7 @@ begin
   fpValidadeToken := 0;
   fpToken := '';
   fpRefreshToken := '';
+  fpIsBacen := True;
 
   fHttpRespStream := TMemoryStream.Create;
   fHttpSend := THTTPSend.Create;

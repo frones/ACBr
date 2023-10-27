@@ -43,7 +43,7 @@ unit ACBrPIXPSPSicoob;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrPIXCD, ACBrOpenSSLUtils;
+  Classes, SysUtils, ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
   cSicoobURLSandbox      = 'https://sandbox.sicoob.com.br/sicoob/sandbox';
@@ -96,10 +96,8 @@ type
 implementation
 
 uses
-  synautil, synacode, ACBrJSON,
-  ACBrUtil.Strings,
-  ACBrUtil.Base,
-  DateUtils;
+  synautil, DateUtils,
+  ACBrJSON, ACBrUtil.Strings, ACBrUtil.Base;
 
 { TACBrPSPSicoob }
 

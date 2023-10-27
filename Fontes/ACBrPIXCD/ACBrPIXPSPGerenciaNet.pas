@@ -38,8 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrOpenSSLUtils,
-  ACBrPIXSchemasProblema, ACBrBase;
+  ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
   cGerenciaNetURLSandbox      = 'https://api-pix-h.gerencianet.com.br';
@@ -70,8 +69,8 @@ type
 implementation
 
 uses
-  synacode, synautil, DateUtils, ACBrJSON,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrPIXUtil;
+  synautil, DateUtils,
+  ACBrJSON, ACBrUtil.Strings;
 
 { TACBrPSPGerenciaNet }
 

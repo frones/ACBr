@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrBase, ACBrOpenSSLUtils;
+  ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
   cItauURLSandbox = 'https://devportal.itau.com.br/sandboxapi';

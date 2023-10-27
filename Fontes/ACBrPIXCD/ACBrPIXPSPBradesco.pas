@@ -37,7 +37,7 @@ unit ACBrPIXPSPBradesco;
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXCD, ACBrBase;
+  Classes, SysUtils, ACBrPIXCD;
 
 const
 

@@ -44,8 +44,7 @@ unit ACBrPIXPSPPagSeguro;
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXCD,
-	ACBrBase;
+  Classes, SysUtils, ACBrPIXCD;
 
 const
   cPagSeguroURLProducao = 'https://secure.api.pagseguro.com';
@@ -85,8 +84,8 @@ type
 implementation
 
 uses
-  synacode, synautil, DateUtils, ACBrJSON,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrPIXUtil;
+  synautil, DateUtils,
+  ACBrJSON, ACBrUtil.Base, ACBrUtil.Strings, ACBrPIXUtil;
 
 { TACBrPSPPagSeguro }
 

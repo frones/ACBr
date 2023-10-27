@@ -521,7 +521,7 @@ implementation
 
 uses
   synautil,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrValidador;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TPixPDVError }
 
@@ -699,6 +699,7 @@ procedure TPixPDVPagador.ReadFromJSon(aJSon: TACBrJSONObject);
 var
   s: String;
 begin
+  {$IFDEF FPC}s := EmptyStr;{$ENDIF}
   aJSon
     .Value('bairro', fBairro)
     .Value('telefone', fTelefone)
@@ -1121,6 +1122,7 @@ procedure TPixPDVQrStatus.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
   s: string;
 begin
+  {$IFDEF FPC}s := EmptyStr;{$ENDIF}
   aJSon
     .Value('status', s)
     .Value('endToEndId', fEndToEndId)
@@ -1273,6 +1275,7 @@ procedure TPixPDVQrResumoItem.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
   s: string;
 begin
+  {$IFDEF FPC}s := EmptyStr;{$ENDIF}
   aJSon.Value('status', s);
 
   fStatus := StringToPixPDVQrStatus(s);

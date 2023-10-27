@@ -499,6 +499,7 @@ procedure TACBrPIXCobValor.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
   wAux: Integer;
 begin
+  {$IFDEF FPC}wAux := 0;{$ENDIF}
   AJSon
     .Value('original', foriginal)
     .Value('modalidadeAlteracao', wAux);
@@ -821,7 +822,7 @@ begin
     Exit;
 
   s := Trim(AValue);
-  if (s <> '') then
+  if (s <> '') and IsBacen then
   begin
     e := ValidarTxId(s, 35, 26);
     if (e <> '') then

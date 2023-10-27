@@ -75,8 +75,8 @@ type
 implementation
 
 uses
-  synacode, synautil, DateUtils, ACBrJSON,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrPIXUtil;
+  synautil, DateUtils,
+  ACBrJSON, ACBrUtil.Strings;
 
 { TACBrPSPCielo }
 

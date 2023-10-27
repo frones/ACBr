@@ -355,16 +355,20 @@ end;
 
 procedure TACBrPIXDevolucao.Setid(AValue: String);
 var
-  e: String;
+  e, s: String;
 begin
   if fid = AValue then
     Exit;
 
-  e := ValidarTxId(AValue, 35, 1);
-  if (e <> '') then
-    raise EACBrPixException.Create(ACBrStr(e));
+  s := Trim(AValue);
+  if (s <> '') and fIsBacen then
+  begin
+    e := ValidarTxId(s, 35, 1);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
 
-  fId := AValue;
+  fId := s;
 end;
 
 procedure TACBrPIXDevolucao.Setmotivo(AValue: String);

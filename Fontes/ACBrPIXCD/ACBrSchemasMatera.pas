@@ -46,8 +46,8 @@ unit ACBrSchemasMatera;
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXBase, ACBrPIXSchemasCobV, ACBrJSON,
-  ACBrUtil.FilesIO, ACBrUtil.Strings;
+  Classes, SysUtils,
+  ACBrPIXBase, ACBrJSON, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 type  
 
@@ -3202,7 +3202,7 @@ implementation
 
 uses
   synautil,
-  ACBrUtil.Base, ACBrUtil.DateTime, ACBrValidador;
+  ACBrUtil.Base, ACBrUtil.DateTime;
 
 function MateraDocumentTypeToString(aType: TMateraDocumentType): String;
 begin
@@ -3542,8 +3542,8 @@ var
 begin
   s := UpperCase(Trim(aString));
   if (s = 'IMMEDIATE') then
-    Result := mqtImmediate;
-  if (s = 'BILLING_DUE_DATE') then
+    Result := mqtImmediate
+  else if (s = 'BILLING_DUE_DATE') then
     Result := mqtBillingDueDate
   else
     Result := mqtNone;
@@ -5572,6 +5572,7 @@ procedure TMateraCashValue.DoReadFromJSon(aJSon: TACBrJSONObject);
 var
   s: String;
 begin
+  {$IFDEF FPC}s := EmptyStr;{$ENDIF}
   aJSon
     .AddPair('cashValueType', s)
     .AddPair('value', fvalue)

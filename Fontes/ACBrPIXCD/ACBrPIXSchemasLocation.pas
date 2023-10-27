@@ -199,7 +199,7 @@ begin
     Exit;
 
   s := Trim(AValue);
-  if (s <> '') then
+  if (s <> '') and fIsBacen then
   begin
     e := ValidarTxId(s, 35, 26);
     if (e <> '') then

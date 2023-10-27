@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrShipaySchemas, ACBrBase, ACBrPIXBase, ACBrPIXSchemasProblema;
+  ACBrPIXCD, ACBrShipaySchemas, ACBrPIXBase, ACBrPIXSchemasProblema;
 
 const
   cShipayURLStaging = 'https://api-staging.shipay.com.br';

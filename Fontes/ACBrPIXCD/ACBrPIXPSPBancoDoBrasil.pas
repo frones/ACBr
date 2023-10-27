@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrBase, ACBrPIXSchemasProblema;
+  ACBrPIXCD, ACBrPIXSchemasProblema;
 
 const
   cBBParamDevAppKey = 'gw-dev-app-key';

@@ -517,7 +517,7 @@ end;
 
 procedure TACBrPIX.SetTxid(const AValue: String);
 var
-  e: String;
+  e, s: String;
 begin
   if ftxid = AValue then
     Exit;
@@ -528,11 +528,15 @@ begin
     Exit;
   end;
 
-  e := ValidarTxId(AValue, 35, 26);
-  if (e <> '') then
-    raise EACBrPixException.Create(ACBrStr(e));
+  s := Trim(AValue);
+  if (s <> '') and fIsBacen then
+  begin
+    e := ValidarTxId(s, 35, 26);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
 
-  fTxId := AValue;
+  fTxId := s;
 end;
 
 { TACBrPIXArray }

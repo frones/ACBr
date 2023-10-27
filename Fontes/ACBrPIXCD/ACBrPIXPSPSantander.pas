@@ -44,8 +44,7 @@ unit ACBrPIXPSPSantander;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrPIXCD, ACBrBase;
+  Classes, SysUtils, ACBrPIXCD;
 
 const
   cSantanderPathApiPIX = '/api/v1';

@@ -45,8 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrPIXSchemasPixPDV,
-  ACBrPIXBase, ACBrPIXSchemasProblema;
+  ACBrPIXCD, ACBrPIXSchemasPixPDV, ACBrPIXBase;
 
 const
 
@@ -129,9 +128,8 @@ type
 implementation
 
 uses
-  StrUtils, synautil, ACBrUtil.DateTime, ACBrUtil.Strings, ACBrUtil.Base,
-  ACBrUtil.FilesIO, ACBrPIXUtil, ACBrPIXSchemasCob, ACBrPIXBRCode,
-  ACBrPIXSchemasCobsConsultadas, ACBrOpenSSLUtils, ACBrJSON, DateUtils;
+  synautil, DateUtils, ACBrJSON, ACBrUtil.Strings, ACBrUtil.Base,
+  ACBrUtil.FilesIO, ACBrOpenSSLUtils;
 
 { TACBrPSPPixPDV }
 

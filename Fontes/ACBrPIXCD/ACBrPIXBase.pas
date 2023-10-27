@@ -105,6 +105,7 @@ type
 
     function GetJSONContext(AJSon: TACBrJSONObject): TACBrJSONObject;
   protected
+    fIsBacen: Boolean;
     fpObjectName: String;
 
     procedure AssignSchema(ASource: TACBrPIXSchema); virtual;
@@ -119,6 +120,7 @@ type
     procedure ReadFromJSon(AJSon: TACBrJSONObject);
 
     property AsJSON: String read GetAsJSON write SetAsJSON;
+    property IsBacen: Boolean read fIsBacen write fIsBacen default True;
   end;
 
   { TACBrPIXSchemaArray }

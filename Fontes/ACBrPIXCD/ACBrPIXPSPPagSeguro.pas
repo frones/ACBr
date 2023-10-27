@@ -44,7 +44,9 @@ unit ACBrPIXPSPPagSeguro;
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXCD;
+  Classes, SysUtils,
+  {$IFDEF RTL230_UP}ACBrBase,{$ENDIF RTL230_UP}
+  ACBrPIXCD;
 
 const
   cPagSeguroURLProducao = 'https://secure.api.pagseguro.com';
@@ -61,6 +63,9 @@ type
 
   { TACBrPSPPagSeguro }
 
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPPagSeguro = class(TACBrPSPCertificate)
   private
     fTokenPay: String;

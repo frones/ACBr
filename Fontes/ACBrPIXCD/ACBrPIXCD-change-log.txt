@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2023
+-- ACBrPIXCDPSPs --
+[-] Correção para que os PSPs possam ser utilizados em todas as plataformas.
+
+27/10/2023
 -- ACBrPSPMercadoPago --
 [+] Inclusão do PSP Mercado Pago
 

@@ -38,6 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IFDEF RTL230_UP}ACBrBase,{$ENDIF RTL230_UP}
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const

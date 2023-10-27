@@ -5,7 +5,9 @@ unit ACBrPIXPSPMercadoPago;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, ACBrPIXCD, ACBrPIXBase, ACBrPIXSchemasMercadoPago,
+  Classes, SysUtils, Dialogs,
+  {$IFDEF RTL230_UP}ACBrBase,{$ENDIF RTL230_UP}
+  ACBrPIXCD, ACBrPIXBase, ACBrPIXSchemasMercadoPago,
   ACBrPIXSchemasProblema, ACBrPIXSchemasCob, ACBrPIXSchemasDevolucao;
 
 const
@@ -19,6 +21,9 @@ type
 
   { TACBrPSPMercadoPago }
 
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPMercadoPago = class(TACBrPSP)
   private
     FPagamentoGerado: TMercadoPagoPayment;

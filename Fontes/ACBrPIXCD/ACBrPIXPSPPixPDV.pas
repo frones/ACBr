@@ -45,6 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IFDEF RTL230_UP}ACBrBase,{$ENDIF RTL230_UP}
   ACBrPIXCD, ACBrPIXSchemasPixPDV, ACBrPIXBase;
 
 const
@@ -70,6 +71,9 @@ type
 
   { TACBrPSPPixPDV }
 
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPPixPDV = class(TACBrPSP)
   private
     fCNPJ: String;

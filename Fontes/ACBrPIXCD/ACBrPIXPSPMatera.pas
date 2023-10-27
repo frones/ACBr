@@ -46,8 +46,9 @@ unit ACBrPIXPSPMatera;
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXCD, ACBrPIXBase, ACBrOpenSSLUtils,
-  ACBrSchemasMatera, ACBrPIXSchemasProblema;
+  Classes, SysUtils,
+  {$IFDEF RTL230_UP}ACBrBase,{$ENDIF RTL230_UP}
+  ACBrPIXCD, ACBrPIXBase, ACBrOpenSSLUtils, ACBrSchemasMatera, ACBrPIXSchemasProblema;
 
 const
   cMateraURLSandbox       = 'https://mtls-mp.hml.flagship.maas.link';
@@ -78,6 +79,9 @@ type
 
   { TACBrPSPMatera }
 
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPMatera = class(TACBrPSPCertificate)
   private
     fAccountId: String;

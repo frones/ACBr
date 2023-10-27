@@ -44,7 +44,8 @@ unit ACBrPIXPSPShipay;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, 
+  {$IFDEF RTL230_UP}ACBrBase,{$ENDIF RTL230_UP}
   ACBrPIXCD, ACBrShipaySchemas, ACBrPIXBase, ACBrPIXSchemasProblema;
 
 const

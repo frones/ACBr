@@ -38,12 +38,15 @@
 *)
 
 {$I ACBr.inc}
+
 unit ACBrPIXPSPSicoob;
 
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXCD, ACBrOpenSSLUtils;
+  Classes, SysUtils,
+  {$IFDEF RTL230_UP}ACBrBase,{$ENDIF RTL230_UP}
+  ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
   cSicoobURLSandbox      = 'https://sandbox.sicoob.com.br/sicoob/sandbox';
@@ -60,6 +63,9 @@ type
 
   { TACBrPSPSicoob }
 
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPSicoob = class(TACBrPSPCertificate)
   private
     fSandboxStatusCode: String;

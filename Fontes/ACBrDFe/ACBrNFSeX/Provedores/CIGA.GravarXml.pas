@@ -62,7 +62,7 @@ procedure TNFSeW_CIGA.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrCodPaisTomador := -1;
+  NrOcorrCodigoPaisTomador := -1;
 end;
 
 end.

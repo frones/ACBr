@@ -62,7 +62,7 @@ procedure TNFSeW_BHISS.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrCodPaisTomador := -1;
+  NrOcorrCodigoPaisTomador := -1;
 
   FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
 

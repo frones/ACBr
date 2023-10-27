@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2023
+-- Diversos --
+[*] Removido as condições para gerar a tag CodigoPais no layout da ABRASF 
+    (versão 1 e 2) e deixado a tag como opcional.
+   Por: Italo Giurizzato Junior
 -- PadraoNacional.LerXml --
 [*] Atribuido ao campo NfseSubstituida o numero da nota que foi substituida e ao
     campo OutrasInformacoes a chave completa da nota que foi substituida.

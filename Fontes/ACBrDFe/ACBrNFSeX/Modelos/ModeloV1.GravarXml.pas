@@ -119,9 +119,8 @@ begin
   NrOcorrValLiq := 0;
   NrOcorrCodigoCnae := 0;
   NrOcorrCodTribMun := 0;
-  NrOcorrCodigoPais := 0;
   NrOcorrMunIncid := 0;
-  NrOcorrCodPaisTomador := 0;
+  NrOcorrCodigoPaisTomador := 0;
   NrOcorrRazaoSocialInterm := 0;
   NrOcorrValorDeducoes := 0;
   NrOcorrValorISSRetido_1 := 0;

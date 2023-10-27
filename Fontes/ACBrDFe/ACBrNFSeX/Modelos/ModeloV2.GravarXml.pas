@@ -154,7 +154,8 @@ begin
   NrOcorrNaturezaOperacao := -1;
   NrOcorrIdCidade := -1;
   NrOcorrValorTotalRecebido := -1;
-  NrOcorrInscEstTomador := -1;
+  NrOcorrInscEstTomador_1 := -1;
+  NrOcorrInscEstTomador_2 := -1;
   NrOcorrOutrasInformacoes := -1;
   NrOcorrTipoNota := -1;
   NrOcorrSiglaUF := -1;

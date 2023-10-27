@@ -77,7 +77,7 @@ begin
 
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
   DivAliq100 := True;
-  NrOcorrCodPaisTomador := -1;
+  NrOcorrCodigoPaisTomador := -1;
 end;
 
 procedure TNFSeW_Abaco.DefinirIDRps;

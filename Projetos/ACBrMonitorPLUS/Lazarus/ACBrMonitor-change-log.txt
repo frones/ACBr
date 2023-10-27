@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2023
+--- DoACBrReinfUnit ---
+[*] Centralizadas classes e métodos de respostas com a ACBrLibReinf
+   Por: Renato Rubinho
+
 09/10/2023
 -- ACBrMonitorConsts, DoACBrReinfUnit --
 [+] Implementado método setVersaoDF, para alterar a versão do leiaute

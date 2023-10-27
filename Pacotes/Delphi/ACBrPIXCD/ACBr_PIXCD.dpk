@@ -72,6 +72,8 @@ contains
   ACBrPIXPSPAilos in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPAilos.pas',
   ACBrPIXPSPMatera in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPMatera.pas',
   ACBrSchemasMatera in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasMatera.pas',
-  ACBrPIXPSPCielo in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPCielo.pas';
+  ACBrPIXPSPCielo in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPCielo.pas',
+  ACBrPIXPSPMercadoPago in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPMercadoPago.pas',
+  ACBrPIXSchemasMercadoPago in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasMercadoPago.pas';
 
 end.

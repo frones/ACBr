@@ -44,7 +44,7 @@ uses
   ACBrOpenSSLUtils, ACBrPIXPSPSicredi, ACBrPIXBRCode, ACBrSocket, ACBrBase,
   ImgList, ACBrPIXPSPSicoob, ACBrPIXPSPPagSeguro, ACBrPIXPSPGerenciaNet,
   ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV, ACBrPIXPSPInter, ACBrPIXPSPAilos,
-  ACBrPIXPSPMatera, ACBrPIXPSPCielo
+  ACBrPIXPSPMatera, ACBrPIXPSPCielo, ACBrPIXPSPMercadoPago
   {$IfDef FPC}
   , DateTimePicker
   {$EndIf};
@@ -81,6 +81,7 @@ type
     ACBrPSPInter1: TACBrPSPInter;
     ACBrPSPItau1: TACBrPSPItau;
     ACBrPSPMatera1: TACBrPSPMatera;
+    ACBrPSPMercadoPago1: TACBrPSPMercadoPago;
     ACBrPSPPagSeguro1: TACBrPSPPagSeguro;
     ACBrPSPPixPDV1: TACBrPSPPixPDV;
     ACBrPSPSantander1: TACBrPSPSantander;
@@ -154,6 +155,7 @@ type
     btSalvarParametros: TBitBtn;
     btCriarCobrancaImediata: TBitBtn;
     cbAilosTipoChave: TComboBox;
+    cbMercadoPagoTipoChave: TComboBox;
     cbCobVConsultarLocation: TCheckBox;
     cbCobVConsultarStatus: TComboBox;
     cbCobVDescModalidade: TComboBox;
@@ -185,7 +187,9 @@ type
     dtConsultarPixRecebidosFim: TDateTimePicker;
     dtConsultarCobrancas_Inicio: TDateTimePicker;
     edCieloChavePIX: TEdit;
+    edMercadoPago: TEdit;
     edCieloClientID: TEdit;
+    edMercadoPagoAccessToken: TEdit;
     edCieloClientSecret: TEdit;
     edMateraAccountId: TEdit;
     edAilosCertificado: TEdit;
@@ -336,6 +340,7 @@ type
     imBBErroCertificado: TImage;
     imBBErroChavePrivada: TImage;
     imBBErroPFX: TImage;
+    imMercadoPagoErroChavePix: TImage;
     imCobVQRCode: TImage;
     imCieloErroChavePix: TImage;
     imMateraErroCertificado: TImage;
@@ -381,9 +386,12 @@ type
     Label17: TLabel;
     Label18: TLabel;
     lbCieloChave: TLabel;
+    lbMercadoPagoChavePIX: TLabel;
     lbCieloClientID: TLabel;
+    lbMercadoPagoAccessToken: TLabel;
     lbCieloClientSecret: TLabel;
     lbCieloTipoChave: TLabel;
+    lbMercadoPagoTipoChave: TLabel;
     lbMateraMediatorFee: TLabel;
     lbMateraSimularPagamento: TLabel;
     lbMateraArqCertificado: TLabel;
@@ -592,6 +600,7 @@ type
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
     pnCielo: TPanel;
+    pnMercadoPago: TPanel;
     pnMateraSimularPagamento: TPanel;
     pcBBCertificados: TPageControl;
     pnBBCertificados: TPanel;
@@ -756,6 +765,7 @@ type
     btSicoobExtrairChaveCertificadoInfo: TSpeedButton;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
+    tsMercadoPago: TTabSheet;
     tsCielo: TTabSheet;
     tsMateraSimularPagamento: TTabSheet;
     tsMatera: TTabSheet;
@@ -3782,6 +3792,8 @@ begin
     edCieloChavePIX.Text := Ini.ReadString('Cielo', 'ChavePIX', '');
     edCieloClientID.Text := Ini.ReadString('Cielo', 'ClientID', '');
     edCieloClientSecret.Text := Ini.ReadString('Cielo', 'ClientSecret', '');
+
+    edMercadoPagoAccessToken.Text := Ini.ReadString('MercadoPago', 'AccessToken', '');
   finally
     Ini.Free;
   end;
@@ -3910,6 +3922,8 @@ begin
     Ini.WriteString('Cielo', 'ChavePIX', edCieloChavePIX.Text);
     Ini.WriteString('Cielo', 'ClientID', edCieloClientID.Text);
     Ini.WriteString('Cielo', 'ClientSecret', edCieloClientSecret.Text);
+
+    Ini.WriteString('MercadoPago', 'AccessToken', edMercadoPagoAccessToken.Text);
   finally
      Ini.Free;
   end;
@@ -4184,6 +4198,7 @@ begin
     11: ACBrPixCD1.PSP := ACBrPSPAilos1;
     12: ACBrPixCD1.PSP := ACBrPSPMatera1;
     13: ACBrPixCD1.PSP := ACBrPSPCielo1;
+    14: ACBrPixCD1.PSP := ACBrPSPMercadoPago1;
   else
     raise Exception.Create('PSP configurado é inválido');
   end;
@@ -4293,6 +4308,8 @@ begin
   ACBrPSPCielo1.ChavePIX := edCieloChavePIX.Text;
   ACBrPSPCielo1.ClientID := edCieloClientID.Text;
   ACBrPSPCielo1.ClientSecret := edCieloClientSecret.Text;
+
+  ACBrPSPMercadoPago1.AccessToken := edMercadoPagoAccessToken.Text;
 end;
 
 procedure TForm1.LimparQRCodeEstatico;

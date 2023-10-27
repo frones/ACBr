@@ -7066,6 +7066,83 @@ object Form1: TForm1
                 end
               end
             end
+            object tsMercadoPago: TTabSheet
+              Caption = 'Mercado Pago'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnMercadoPago: TPanel
+                Left = 48
+                Height = 322
+                Top = 72
+                Width = 880
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                ClientHeight = 322
+                ClientWidth = 880
+                TabOrder = 0
+                object lbMercadoPagoTipoChave: TLabel
+                  Left = 681
+                  Height = 15
+                  Top = 24
+                  Width = 59
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  ParentColor = False
+                end
+                object lbMercadoPagoAccessToken: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 70
+                  Caption = 'Access Token'
+                  ParentColor = False
+                end
+                object lbMercadoPagoChavePIX: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 53
+                  Caption = 'Chave PIX'
+                  ParentColor = False
+                end
+                object imMercadoPagoErroChavePix: TImage
+                  Left = 844
+                  Height = 17
+                  Top = 43
+                  Width = 16
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object edMercadoPagoAccessToken: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 90
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+                object edMercadoPago: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 638
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = edCieloChavePIXChange
+                  TabOrder = 0
+                end
+                object cbMercadoPagoTipoChave: TComboBox
+                  Left = 681
+                  Height = 23
+                  Top = 40
+                  Width = 157
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 15
+                  Style = csDropDownList
+                  TabOrder = 1
+                  TabStop = False
+                end
+              end
+            end
           end
         end
       end
@@ -7398,6 +7475,11 @@ object Form1: TForm1
   object ACBrPSPCielo1: TACBrPSPCielo
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 536
+    Top = 416
+  end
+  object ACBrPSPMercadoPago1: TACBrPSPMercadoPago
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 568
     Top = 416
   end
 end

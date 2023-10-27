@@ -4843,10 +4843,27 @@ object Form1: TForm1
                       Color = clBtnFace
                       ParentColor = False
                     end
+                    object sbSicrediAcharChavePrivada2: TSpeedButton
+                      Left = 673
+                      Top = 37
+                      Width = 24
+                      Height = 23
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Charset = DEFAULT_CHARSET
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Font.Style = []
+                      ParentFont = False
+                      ParentShowHint = False
+                      ShowHint = True
+                      OnClick = sbSicrediAcharChavePrivadaClick
+                    end
                     object edSicrediGerarChavePrivada: TEdit
                       Left = 24
                       Top = 37
-                      Width = 673
+                      Width = 649
                       Height = 23
                       Anchors = [akLeft, akTop, akRight]
                       AutoSize = False
@@ -6604,6 +6621,89 @@ object Form1: TForm1
                 end
               end
             end
+            object tsMercadoPago: TTabSheet
+              Caption = 'Mercado Pago'
+              ImageIndex = 14
+              DesignSize = (
+                984
+                492)
+              object pnMercadoPago: TPanel
+                Left = 48
+                Top = 72
+                Width = 880
+                Height = 322
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                TabOrder = 0
+                DesignSize = (
+                  880
+                  322)
+                object lbMercadoPagoTipoChave: TLabel
+                  Left = 681
+                  Top = 24
+                  Width = 55
+                  Height = 13
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMercadoPagoAccessToken: TLabel
+                  Left = 24
+                  Top = 75
+                  Width = 69
+                  Height = 13
+                  Caption = 'Access Token'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbMercadoPagoChavePIX: TLabel
+                  Left = 24
+                  Top = 24
+                  Width = 51
+                  Height = 13
+                  Caption = 'Chave PIX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object imMercadoPagoErroChavePix: TImage
+                  Left = 842
+                  Top = 43
+                  Width = 16
+                  Height = 17
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object edMercadoPagoAccessToken: TEdit
+                  Left = 24
+                  Top = 90
+                  Width = 816
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 2
+                end
+                object edMercadoPago: TEdit
+                  Left = 24
+                  Top = 40
+                  Width = 638
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 0
+                  OnChange = edCieloChavePIXChange
+                end
+                object cbMercadoPagoTipoChave: TComboBox
+                  Left = 683
+                  Top = 40
+                  Width = 156
+                  Height = 21
+                  Style = csDropDownList
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 13
+                  TabOrder = 1
+                  TabStop = False
+                end
+              end
+            end
           end
         end
       end
@@ -8080,6 +8180,11 @@ object Form1: TForm1
   object ACBrPSPCielo1: TACBrPSPCielo
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 536
+    Top = 416
+  end
+  object ACBrPSPMercadoPago1: TACBrPSPMercadoPago
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 564
     Top = 416
   end
 end

@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2023
+-- ACBrPSPMercadoPago --
+[+] Inclusão do PSP Mercado Pago
+
+27/10/2023
 -- ACBrPIXCD --
 [*] Remoção de Warnings
 [+] Inclusão de propriedade IsBacen, para validar alguns campos apenas quando o PSP seguir esse padrão.

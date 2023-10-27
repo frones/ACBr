@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Paranapanema/SP, provedor Pronim versão 1.
+  Por: SHARMAQ / Italo Giurizzato Junior
 -- Diversos --
 [*] Removido as condições para gerar a tag CodigoPais no layout da ABRASF 
     (versão 1 e 2) e deixado a tag como opcional.

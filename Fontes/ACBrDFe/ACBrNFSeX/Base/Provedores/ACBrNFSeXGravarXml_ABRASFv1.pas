@@ -192,6 +192,7 @@ begin
   FNrOcorrCodTribMun := 0;
   FNrOcorrMunIncid := 0;
   FNrOcorrInscMunTomador := 0;
+  FNrOcorrCodigoPaisTomador := 0;
 
   FNrOcorrRazaoSocialInterm := 0;
   FNrOcorrValorDeducoes := 0;
@@ -213,7 +214,6 @@ begin
   FNrOcorrValorTotalRecebido := -1;
   FNrOcorrInscEstTomador := -1;
   FNrOcorrOutrasInformacoes := -1;
-  FNrOcorrCodigoPaisTomador := 0;
 
   FNrOcorrInformacoesComplemetares := -1;
 end;
@@ -450,7 +450,7 @@ begin
   Result[1] := AddNode(tcStr, '#44', 'Uf', 2, 2, 0,
                                               NFSe.Tomador.Endereco.UF, DSC_UF);
 
-  Result[2] := AddNode(tcStr, '#45', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
+  Result[2] := AddNode(tcInt, '#45', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
                                    NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 end;
 

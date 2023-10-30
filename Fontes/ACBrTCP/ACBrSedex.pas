@@ -58,6 +58,7 @@ uses
   ACBrUtil.DateTime,
   ACBrXmlDocument,
   ACBrXmlReader,
+  ACBrJSON,
   IniFiles;
 
 const
@@ -285,11 +286,12 @@ function TACBrSedex.Consultar: Boolean;
 
 var
   Index: integer;
-  LErro : String;
+  LErro, LResposta : String;
   LRastreio : TACBrRastreio;
   LXMLDocument: TACBrXmlDocument;
   LStream: TStringStream;
   LNodeList: TACBrXMLNodeList;
+  LJson : TACBrJSONObject;
 begin
   case fnCdServico of
      Tps04510PAC :
@@ -350,14 +352,27 @@ begin
                parametros(FloatToString(fnVlPeso))  +
                parametros(FloatToString(fnVlAltura))  +
                parametros(FloatToString(fnVlLargura))  +
-               parametros(FloatToString(fnVlComprimento))
+               parametros(FloatToString(fnVlComprimento)) +
+               '/'+Self.CodContrato
               );
   except on E: Exception do
     raise EACBrSedexException.Create('Erro ao consultar Sedex' + sLineBreak + E.Message);
   end;
+  LResposta := Self.RespHTTP.Text;
+
+  if (Pos('{', LResposta) > 0) and (Pos('"msg":', LResposta) > 0) then
+  begin
+    LJson := TACBrJSONObject.Parse(NativeStringToUTF8(LResposta));
+    try
+      raise EACBrSedexException.Create(LJson.AsString['msg']);
+    finally
+      LJson.Free;
+    end;
+  end;
 
 
-  LStream := TStringStream.Create(NativeStringToUTF8(Self.RespHTTP.Text));
+
+  LStream := TStringStream.Create(NativeStringToUTF8(LResposta));
 
   LXMLDocument := TACBrXmlDocument.Create;
   try
@@ -367,7 +382,8 @@ begin
     if LXMLDocument.Root.Content <> '' then
     begin
       LNodeList := LXMLDocument.Root.Childrens;
-
+      if LNodeList.Find('ErroHash') <> nil then
+        raise EACBrSedexException.Create(LNodeList.Find('ErroHash').AsString);
       case fnCdServico of
         Tps04510PAC :
           begin
@@ -393,11 +409,12 @@ end;
 procedure TACBrSedex.Rastrear(const ACodRastreio: String);
 var
   Index: integer;
-  LErro : String;
+  LErro, LResposta : String;
   LRastreio : TACBrRastreio;
   LXMLDocument: TACBrXmlDocument;
   LStream: TStringStream;
   LNodeList: TACBrXMLNodeList;
+  LJson : TACBrJSONObject;
 begin
   retRastreio.Clear;
 
@@ -405,7 +422,7 @@ begin
     raise EACBrSedexException.CreateACBrStr('Código de rastreamento deve conter 13 caracteres');
 
   try
-    Self.HTTPGet(URL_RASTREIO + ACodRastreio);
+    Self.HTTPGet(URL_RASTREIO + ACodRastreio + '/' + Self.CodContrato);
   except
     on E: Exception do
     begin
@@ -413,17 +430,28 @@ begin
     end;
   end;
 
-  if Pos(ACBrStr('tente novamente mais tarde'), Self.RespHTTP.Text) > 0 then
+  LResposta := Self.RespHTTP.Text;
+
+  if Pos(ACBrStr('tente novamente mais tarde'), LResposta) > 0 then
   begin
-    LErro := Trim(StripHTML(Self.RespHTTP.Text));
+    LErro := Trim(StripHTML(LResposta));
     LErro := Trim(StringReplace(LErro,'SRO - Internet','',[rfReplaceAll]));
     LErro := Trim(StringReplace(LErro,'Resultado da Pesquisa','',[rfReplaceAll]));
 
     raise EACBrSedexException.Create(LErro);
   end;
 
-  //LStream := TStringStream.Create(Self.RespHTTP.Text, TEncoding.UTF8);
-  LStream := TStringStream.Create(NativeStringToUTF8(Self.RespHTTP.Text));
+  if (Pos('{', LResposta) > 0) and (Pos('"msg":', LResposta) > 0) then
+  begin
+    LJson := TACBrJSONObject.Parse(NativeStringToUTF8(LResposta));
+    try
+      raise EACBrSedexException.Create(LJson.AsString['msg']);
+    finally
+      LJson.Free;
+    end;
+  end;
+
+  LStream := TStringStream.Create(NativeStringToUTF8(LResposta));
 
   LXMLDocument := TACBrXmlDocument.Create;
   try
@@ -431,6 +459,13 @@ begin
     for Index := 0 to Pred(LXMLDocument.Root.Childrens.Count) do
     begin
       LNodeList := LXMLDocument.Root.Childrens[Index].Childrens;
+      if LXMLDocument.Root.Childrens[Index].Name = 'ErroHash' then
+        raise EACBrSedexException.Create(LXMLDocument.Root.Childrens[Index].Content);
+
+      if LXMLDocument.Root.Childrens[Index].Name = 'row' then
+        if LNodeList.Find('Erro') <> nil then
+          raise EACBrSedexException.Create(Trim(LXMLDocument.Root.Childrens[Index].Content));
+
       LRastreio := retRastreio.New;
       LRastreio.DataHora   := StringToDateTime(Trim(LNodeList.Find('data').AsString), 'yyyy-mm-dd');
       LRastreio.Local      := Trim(LNodeList.Find('unidade').AsString)

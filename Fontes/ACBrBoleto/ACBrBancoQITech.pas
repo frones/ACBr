@@ -70,9 +70,10 @@ begin
 end;
 
 function TACBrBancoQITechSCD.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
+var LMotivo : String;
 begin
-  Result := inherited CodMotivoRejeicaoToDescricao(TipoOcorrencia, CodMotivo);
-  StringReplace( Result, 'Bradesco Expresso', 'QI Tech', [rfReplaceAll,rfIgnoreCase]);
-  StringReplace( Result, 'Bradesco', 'QI Tech', [rfReplaceAll,rfIgnoreCase]);
+  LMotivo := inherited CodMotivoRejeicaoToDescricao(TipoOcorrencia, CodMotivo);
+  LMotivo := StringReplace( LMotivo, 'Bradesco Expresso', 'QI Tech', [rfReplaceAll,rfIgnoreCase]);
+  Result  := StringReplace( LMotivo, 'Bradesco', 'QI Tech', [rfReplaceAll,rfIgnoreCase]);
 end;
 end.

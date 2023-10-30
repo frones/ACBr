@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/10/2023
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Alteração visando não imprimir no DANFSE os campos: Natureza da Operação e Insentivo Cultural
+    quando for Padrão Nacional, uma vez que essas informações não existem nesse layout.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Incluido novamente as condições para gerar a tag CodigoPais no layout da ABRASF 
     (versão 1 e 2).

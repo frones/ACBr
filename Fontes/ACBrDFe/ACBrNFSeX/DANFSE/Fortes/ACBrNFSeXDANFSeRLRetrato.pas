@@ -441,15 +441,22 @@ begin
 
   With fpNFSe do
   begin
+    rllRegimeEspecial.Caption := ACBrStr(FProvider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao));
     rllNatOperacao.Lines.Text := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
     MostrarNaturezaOperacao := rllNatOperacao.Caption <> '';
     RLLabel137.Visible := MostrarNaturezaOperacao;
-    rllRegimeEspecial.Caption := ACBrStr(FProvider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao));
     rllOpcaoSimples.Caption := ACBrStr(FProvider.SimNaoDescricao(OptanteSimplesNacional));
     rllIncentivador.Caption := ACBrStr(FProvider.SimNaoDescricao(IncentivadorCultural));
+
+    if fpDANFSe.Provedor = proPadraoNacional then
+    begin
+      rllNatOperacao.Visible := False;
+      RLLabel137.Visible := False;
+      rllIncentivador.Visible := False;
+    end;
+
     rllCodObra.Caption := ConstrucaoCivil.CodigoObra;
     rllCodART.Caption := ConstrucaoCivil.Art;
-
     MostrarObra := (rllCodObra.Caption <> '') or (rllCodART.Caption <> '');
     rlsLinhaH1.Visible := MostrarObra;
     rllTituloConstCivil.Visible := MostrarObra;

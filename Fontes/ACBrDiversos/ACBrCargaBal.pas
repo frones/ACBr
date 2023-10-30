@@ -129,6 +129,11 @@ type
     FGordurasSaturadas429: Double;
     FUndPorcao429: TACBRCargaBalNutriUndPorcao429;
     FPartDecMedidaCaseira429: TACBrCargaBalNutriPartdecimal429;
+    FImprimeLactoseGalactose: Integer;
+    FProteinasEstendido429: Double;
+    FGordurasTotaisEstendido429: Double;
+    FAcucaresAdicionadosEstendido429: Double;
+    FAcucaresTotaisEstendido429: Double;
     procedure SetQtdeAutomaticaPorcao(const Value: Boolean);
     procedure SetQtdePorcEmb(const Value: Integer);
     procedure SetPartIntMedidaCaseira(const Value: Integer);
@@ -151,6 +156,11 @@ type
     procedure SetValorEnergetico429(const Value: Integer);
     procedure SetUndPorcao429(const Value: TACBRCargaBalNutriUndPorcao429);
     procedure SetPartDecMedidaCaseira429(const Value: TACBrCargaBalNutriPartdecimal429);
+    procedure SetImprimeLactoseGalactose(const Value: Integer);
+    procedure SetAcucaresAdicionadosEstendido429(const Value: Double);
+    procedure SetAcucaresTotaisEstendido429(const Value: Double);
+    procedure SetGordurasTotaisEstendido429(const Value: Double);
+    procedure SetProteinasEstendido429(const Value: Double);
   public
     constructor Create;
     procedure Limpar;
@@ -191,6 +201,11 @@ type
     property AltoSodio429:Integer read FAltoSodio429 write SetAltoSodio429;
     property Lactose429:Double read FLactose429 write SetLactose429;
     property Galactose429:Double read FGalactose429 write SetGalactose429;
+    property ImprimeLactoseGalactose:Integer read FImprimeLactoseGalactose write SetImprimeLactoseGalactose;
+    property AcucaresAdicionadosEstendido429:Double read FAcucaresAdicionadosEstendido429 write SetAcucaresAdicionadosEstendido429;
+    property AcucaresTotaisEstendido429:Double read FAcucaresTotaisEstendido429 write SetAcucaresTotaisEstendido429;
+    property GordurasTotaisEstendido429:Double read FGordurasTotaisEstendido429 write SetGordurasTotaisEstendido429;
+    property ProteinasEstendido429:Double read FProteinasEstendido429 write SetProteinasEstendido429;
   end;
 
   TACBrCargaBalInformacaoExtra = class
@@ -521,10 +536,22 @@ begin
   FAcucaresAdicionados429 := Value;
 end;
 
+procedure TACBrCargaBalNutricional.SetAcucaresAdicionadosEstendido429(
+  const Value: Double);
+begin
+  FAcucaresAdicionadosEstendido429 := Value;
+end;
+
 procedure TACBrCargaBalNutricional.SetAcucaresTotais429(
   const Value: Double);
 begin
   FAcucaresTotais429 := Value;
+end;
+
+procedure TACBrCargaBalNutricional.SetAcucaresTotaisEstendido429(
+  const Value: Double);
+begin
+  FAcucaresTotaisEstendido429 := Value;
 end;
 
 procedure TACBrCargaBalNutricional.SetAltoAcucar429(const Value: Integer);
@@ -571,10 +598,22 @@ begin
   FGordurasTotais429 := Value;
 end;
 
+procedure TACBrCargaBalNutricional.SetGordurasTotaisEstendido429(
+  const Value: Double);
+begin
+  FGordurasTotaisEstendido429 := Value;
+end;
+
 procedure TACBrCargaBalNutricional.SetGordurasTrans429(
   const Value: Double);
 begin
   FGordurasTrans429 := Value;
+end;
+
+procedure TACBrCargaBalNutricional.SetImprimeLactoseGalactose(
+  const Value: Integer);
+begin
+  FImprimeLactoseGalactose := Value;
 end;
 
 procedure TACBrCargaBalNutricional.SetLactose429(const Value: Double);
@@ -603,6 +642,12 @@ end;
 procedure TACBrCargaBalNutricional.SetProteinas429(const Value: Double);
 begin
   FProteinas429 := Value;
+end;
+
+procedure TACBrCargaBalNutricional.SetProteinasEstendido429(
+  const Value: Double);
+begin
+  FProteinasEstendido429 := Value;
 end;
 
 procedure TACBrCargaBalNutricional.SetQtdeAutomaticaPorcao(
@@ -1767,7 +1812,12 @@ begin
                   LFIll(Produtos[i].Nutricional.AltoGordura429,1)+
                   LFIll(Produtos[i].Nutricional.AltoSodio429,1)+
                   LFIll(Produtos[i].Nutricional.Lactose429,5,1)+
-                  LFIll(Produtos[i].Nutricional.Galactose429,5,1);
+                  LFIll(Produtos[i].Nutricional.Galactose429,5,1)+
+                  LFIll(Produtos[i].Nutricional.ImprimeLactoseGalactose,1)+
+                  LFIll(Produtos[i].Nutricional.AcucaresAdicionadosEstendido429,5)+
+                  LFIll(Produtos[i].Nutricional.AcucaresTotaisEstendido429,5)+
+                  LFIll(Produtos[i].Nutricional.GordurasTotaisEstendido429,5)+
+                  LFIll(Produtos[i].Nutricional.ProteinasEstendido429,5);
          if (stlNutricional.IndexOf(ANutri) < 0) then
           stlNutricional.Add(ANutri);
         end;

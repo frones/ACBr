@@ -3281,8 +3281,8 @@ begin
       AJurosQuando := 'após o vencimento'
     else
       AJurosQuando := 'a partir de '+FormatDateTime('dd/mm/yyyy',ATitulo.DataMoraJuros);
-  end else
-    AJurosQuando := ' por dia de atraso';
+  end;(* else
+    AJurosQuando := ' por dia de atraso';*) //TK-4612
 
   Result := ACBrStr(Format('Cobrar juros de %s de atraso para pagamento %s.',[ATipoJuros,AJurosQuando]));
 end;

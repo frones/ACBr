@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils,
-  Classes;
+  Classes, 
+  StrUtils;
 
 type
   TOFXItem = class
@@ -160,6 +161,7 @@ var
   sLine: string;
   Amount: string;
   LMemo : string;
+  LDescricaoMemo  : string;
 begin
   Clear;
   DateStart := '';
@@ -181,6 +183,7 @@ begin
         bOFX := true;
       if bOFX then
       begin
+        LDescricaoMemo := '';
         // Bank
         if FindString('<BANKID>', sLine) then
           BankID := InfLine(sLine);
@@ -246,7 +249,11 @@ begin
             if FindString('<CHKNUM>', sLine) or FindString('<CHECKNUM>', sLine) then
               oItem.Document := InfLine(sLine);
             if FindString('<MEMO>', sLine) then
-              oItem.Description := InfLine(sLine);
+            begin
+              LDescricaoMemo := LDescricaoMemo + ifthen(LDescricaoMemo='','',', ')+trim(InfLine(sLine));
+              if bOFX then                
+                oItem.Description := Trim(LDescricaoMemo);
+            end;
             if FindString('<TRNAMT>', sLine) then
             begin
               Amount := InfLine(sLine);

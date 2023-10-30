@@ -1,40 +1,59 @@
-{******************************************************************************}
-{ Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
-{ mentos de Automação Comercial utilizados no Brasil                           }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
-{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
-{                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
-{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
-{******************************************************************************}
+  {******************************************************************************}
+  { Projeto: Componentes ACBr                                                    }
+  {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+  { mentos de Automação Comercial utilizados no Brasil                           }
+  {                                                                              }
+  { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+  {																			   }
+  {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+  { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+  {                                                                              }
+  {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+  { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+  { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+  { qualquer versão posterior.                                                   }
+  {                                                                              }
+  {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+  { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+  { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+  { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+  {                                                                              }
+  {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+  { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+  { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+  { Você também pode obter uma copia da licença em:                              }
+  { http://www.opensource.org/licenses/lgpl-license.php                          }
+  {                                                                              }
+  { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+  {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+  {******************************************************************************}
 unit frmCalculoSedex;
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, Mask, ACBrBase, ACBrSocket, ACBrSedex,
-  TypInfo, ExtCtrls, DB, DBClient, Grids, DBGrids, ComCtrls, TabNotBk,
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls,
+  Mask,
+  ACBrBase,
+  ACBrSocket,
+  ACBrSedex,
+  TypInfo,
+  ExtCtrls,
+  DB,
+  DBClient,
+  Grids,
+  DBGrids,
+  ComCtrls,
+  TabNotBk,
   DBCtrls;
 
 type
@@ -55,8 +74,6 @@ type
     Label14: TLabel;
     Image1: TImage;
     Label19: TLabel;
-    Label20: TLabel;
-    Label21: TLabel;
     EditCEPOrigem: TEdit;
     EditCEPDestino: TEdit;
     EditPeso: TEdit;
@@ -70,8 +87,6 @@ type
     btnConsultar: TButton;
     cbServico: TComboBox;
     EditValorDeclarado: TEdit;
-    EdtContrato: TEdit;
-    EdtSenha: TEdit;
     Panel2: TPanel;
     Label9: TLabel;
     Label10: TLabel;
@@ -105,6 +120,11 @@ type
     Label23: TLabel;
     Label24: TLabel;
     retDataMaxEntrega: TEdit;
+    Panel4: TPanel;
+    Label20: TLabel;
+    EdtContrato: TEdit;
+    Label21: TLabel;
+    EdtSenha: TEdit;
     procedure btnConsultarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -121,66 +141,65 @@ implementation
 
 procedure TForm1.btnConsultarClick(Sender: TObject);
 begin
-  ACBrSedex1.CodContrato := EdtContrato.Text;
-  ACBrSedex1.Senha := EdtSenha.Text;
-  ACBrSedex1.CepOrigem := EditCEPOrigem.Text;
-  ACBrSedex1.CepDestino := EditCEPDestino.Text;
-  ACBrSedex1.Peso := StrToFloatDef(EditPeso.Text,0);
-  ACBrSedex1.Formato := TACBrTpFormato(cbFormato.ItemIndex);
-  ACBrSedex1.MaoPropria := (cbMaoPropria.ItemIndex = 0);
+  ACBrSedex1.CodContrato      := EdtContrato.Text;
+  ACBrSedex1.Senha            := EdtSenha.Text;
+  ACBrSedex1.CepOrigem        := EditCEPOrigem.Text;
+  ACBrSedex1.CepDestino       := EditCEPDestino.Text;
+  ACBrSedex1.Peso             := StrToFloatDef(EditPeso.Text, 0);
+  ACBrSedex1.Formato          := TACBrTpFormato(cbFormato.ItemIndex);
+  ACBrSedex1.MaoPropria       := (cbMaoPropria.ItemIndex = 0);
   ACBrSedex1.AvisoRecebimento := (cbAvisoReceb.ItemIndex = 0);
-  ACBrSedex1.Comprimento := StrToFloatDef(EditComprimento.Text,0);
-  ACBrSedex1.Largura := StrToFloatDef(EditLargura.Text,0);
-  ACBrSedex1.Altura := StrToFloatDef(EditAltura.Text,0);
-  ACBrSedex1.Servico := TACBrTpServico(cbServico.ItemIndex);
-  ACBrSedex1.Diametro := StrToFloatDef(EditDiametro.Text,0);
-  ACBrSedex1.ValorDeclarado := StrToFloatDef(EditValorDeclarado.Text,0);
+  ACBrSedex1.Comprimento      := StrToFloatDef(EditComprimento.Text, 0);
+  ACBrSedex1.Largura          := StrToFloatDef(EditLargura.Text, 0);
+  ACBrSedex1.Altura           := StrToFloatDef(EditAltura.Text, 0);
+  ACBrSedex1.Servico          := TACBrTpServico(cbServico.ItemIndex);
+  ACBrSedex1.Diametro         := StrToFloatDef(EditDiametro.Text, 0);
+  ACBrSedex1.ValorDeclarado   := StrToFloatDef(EditValorDeclarado.Text, 0);
 
-  if Not ACBrSedex1.Consultar  then
-    MessageDlg('Não Foi Possivel Fazer a Consulta:'+sLineBreak+
-    IntToStr(ACBrSedex1.retErro)+' - '+ACBrSedex1.retMsgErro, mtError, [mbOK], 0)
+  if Not ACBrSedex1.Consultar then
+    MessageDlg('Não Foi Possivel Fazer a Consulta:' + sLineBreak + IntToStr(ACBrSedex1.retErro) + ' - ' + ACBrSedex1.retMsgErro, mtError, [ mbOK ], 0)
   Else
   Begin
-    retCodigoServico.Text := ACBrSedex1.retCodigoServico;
-    retValorFrete.Text := FloatToStr(ACBrSedex1.retValor);
-    retValorMaoPropria.Text := FloatToStr(ACBrSedex1.retValorMaoPropria);
-    retValorAvisoReceb.Text := FloatToStr(ACBrSedex1.retValorAvisoRecebimento);
-    retValorDeclarado.Text := FloatToStr(ACBrSedex1.retValorValorDeclarado);
+    retCodigoServico.Text     := ACBrSedex1.retCodigoServico;
+    retValorFrete.Text        := FloatToStr(ACBrSedex1.retValor);
+    retValorMaoPropria.Text   := FloatToStr(ACBrSedex1.retValorMaoPropria);
+    retValorAvisoReceb.Text   := FloatToStr(ACBrSedex1.retValorAvisoRecebimento);
+    retValorDeclarado.Text    := FloatToStr(ACBrSedex1.retValorValorDeclarado);
     retEntregaDomiciliar.Text := ACBrSedex1.retEntregaDomiciliar;
-    retEntregaSabado.Text := ACBrSedex1.retEntregaSabado;
-    retPrzEntrega.Text := IntToStr(ACBrSedex1.retPrazoEntrega);
-    retDataMaxEntrega.Text :=  ACBrSedex1.retDataMaxEntrega;
+    retEntregaSabado.Text     := ACBrSedex1.retEntregaSabado;
+    retPrzEntrega.Text        := IntToStr(ACBrSedex1.retPrazoEntrega);
+    retDataMaxEntrega.Text    := ACBrSedex1.retDataMaxEntrega;
   End;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 Var
- I:Integer;
+  I: Integer;
 begin
-ACBrSedex1.Rastrear(EdtRastreio.Text);
+  ACBrSedex1.Senha := EdtSenha.Text;
+  ACBrSedex1.Rastrear(EdtRastreio.Text);
 
-Try
-ClientDataSet1.CreateDataSet;
-except
-End;
+  Try
+    ClientDataSet1.CreateDataSet;
+  except
+  End;
 
+  For I := 0 to ACBrSedex1.retRastreio.Count - 1 Do
+  Begin
+    ClientDataSet1.Append;
 
-For i := 0 to ACBrSedex1.retRastreio.Count -1 Do
-Begin
-  ClientDataSet1.Append;
+    ClientDataSet1Data.Value       := ACBrSedex1.retRastreio[ I ].DataHora;
+    ClientDataSet1Local.Value      := ACBrSedex1.retRastreio[ I ].Local;
+    ClientDataSet1Situacao.Value   := ACBrSedex1.retRastreio[ I ].Situacao;
+    ClientDataSet1Observacao.Value := ACBrSedex1.retRastreio[ I ].Observacao;
 
-  ClientDataSet1Data.Value := ACBrSedex1.retRastreio[i].DataHora;
-  ClientDataSet1Local.Value := ACBrSedex1.retRastreio[i].Local;
-  ClientDataSet1Situacao.Value := ACBrSedex1.retRastreio[i].Situacao ;
-  ClientDataSet1Observacao.Value := ACBrSedex1.retRastreio[i].Observacao;
-
-  ClientDataSet1.Post;
+    ClientDataSet1.Post;
   End;
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
-TabbedNotebook1.PageIndex := 0;
+  TabbedNotebook1.PageIndex := 0;
 end;
 
 end.

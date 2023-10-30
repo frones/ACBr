@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 478
   Top = 119
   Caption = 'Correios - C'#225'lculo de Pre'#231'os e Prazos de Encomendas'
-  ClientHeight = 497
+  ClientHeight = 587
   ClientWidth = 549
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -10,15 +10,13 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object TabbedNotebook1: TTabbedNotebook
     Left = 0
-    Top = 0
+    Top = 65
     Width = 549
-    Height = 497
+    Height = 522
     Align = alClient
     TabFont.Charset = DEFAULT_CHARSET
     TabFont.Color = clBtnText
@@ -659,47 +657,33 @@ object Form1: TForm1
           Height = 13
           Caption = 'Servi'#231'o'
         end
-        object Label20: TLabel
-          Left = 24
-          Top = 38
-          Width = 128
-          Height = 13
-          Caption = 'Nr. Contrato '#209' Obrigatorio'
-        end
-        object Label21: TLabel
-          Left = 176
-          Top = 38
-          Width = 97
-          Height = 13
-          Caption = 'Senha '#209' Obrigatorio'
-        end
         object EditCEPOrigem: TEdit
           Left = 24
           Top = 96
           Width = 121
           Height = 21
-          TabOrder = 3
+          TabOrder = 1
         end
         object EditCEPDestino: TEdit
           Left = 176
           Top = 96
           Width = 121
           Height = 21
-          TabOrder = 4
+          TabOrder = 2
         end
         object EditPeso: TEdit
           Left = 328
           Top = 96
           Width = 121
           Height = 21
-          TabOrder = 5
+          TabOrder = 3
         end
         object EditComprimento: TEdit
           Left = 24
           Top = 192
           Width = 121
           Height = 21
-          TabOrder = 9
+          TabOrder = 7
           Text = '20'
         end
         object EditLargura: TEdit
@@ -707,7 +691,7 @@ object Form1: TForm1
           Top = 192
           Width = 121
           Height = 21
-          TabOrder = 10
+          TabOrder = 8
           Text = '10'
         end
         object EditAltura: TEdit
@@ -715,7 +699,7 @@ object Form1: TForm1
           Top = 192
           Width = 121
           Height = 21
-          TabOrder = 11
+          TabOrder = 9
           Text = '10'
         end
         object EditDiametro: TEdit
@@ -723,7 +707,7 @@ object Form1: TForm1
           Top = 240
           Width = 121
           Height = 21
-          TabOrder = 12
+          TabOrder = 10
           Text = '0'
         end
         object cbFormato: TComboBox
@@ -733,7 +717,7 @@ object Form1: TForm1
           Height = 21
           Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 6
+          TabOrder = 4
           Text = '1 - Caixa/Pacote'
           Items.Strings = (
             '1 - Caixa/Pacote'
@@ -747,7 +731,7 @@ object Form1: TForm1
           Height = 21
           Style = csDropDownList
           ItemIndex = 1
-          TabOrder = 7
+          TabOrder = 5
           Text = 'N'#227'o'
           Items.Strings = (
             'Sim'
@@ -760,7 +744,7 @@ object Form1: TForm1
           Height = 21
           Style = csDropDownList
           ItemIndex = 1
-          TabOrder = 8
+          TabOrder = 6
           Text = 'N'#227'o'
           Items.Strings = (
             'Sim'
@@ -772,7 +756,7 @@ object Form1: TForm1
           Width = 123
           Height = 25
           Caption = 'Consultar'
-          TabOrder = 14
+          TabOrder = 12
           OnClick = btnConsultarClick
         end
         object cbServico: TComboBox
@@ -782,7 +766,7 @@ object Form1: TForm1
           Height = 21
           Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 2
+          TabOrder = 0
           Text = '04510 PAC'
           Items.Strings = (
             '04510 PAC'
@@ -813,22 +797,8 @@ object Form1: TForm1
           Top = 240
           Width = 121
           Height = 21
-          TabOrder = 13
+          TabOrder = 11
           Text = '0'
-        end
-        object EdtContrato: TEdit
-          Left = 24
-          Top = 53
-          Width = 121
-          Height = 21
-          TabOrder = 0
-        end
-        object EdtSenha: TEdit
-          Left = 176
-          Top = 53
-          Width = 121
-          Height = 21
-          TabOrder = 1
         end
       end
       object Panel2: TPanel
@@ -984,7 +954,7 @@ object Form1: TForm1
       Caption = 'Rastreio'
       object DBGrid1: TDBGrid
         Left = 0
-        Top = 47
+        Top = 72
         Width = 541
         Height = 264
         Align = alBottom
@@ -1028,7 +998,7 @@ object Form1: TForm1
       end
       object Panel3: TPanel
         Left = 0
-        Top = 311
+        Top = 336
         Width = 541
         Height = 158
         Align = alBottom
@@ -1085,6 +1055,48 @@ object Form1: TForm1
           TabOrder = 1
         end
       end
+    end
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 0
+    Width = 549
+    Height = 65
+    Align = alTop
+    Caption = 'Panel4'
+    ShowCaption = False
+    TabOrder = 1
+    DesignSize = (
+      549
+      65)
+    object Label20: TLabel
+      Left = 3
+      Top = 16
+      Width = 128
+      Height = 13
+      Caption = 'Nr. Contrato '#209' Obrigatorio'
+    end
+    object Label21: TLabel
+      Left = 155
+      Top = 16
+      Width = 30
+      Height = 13
+      Caption = 'Senha'
+    end
+    object EdtContrato: TEdit
+      Left = 3
+      Top = 31
+      Width = 121
+      Height = 21
+      TabOrder = 0
+    end
+    object EdtSenha: TEdit
+      Left = 155
+      Top = 31
+      Width = 370
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 1
     end
   end
   object ACBrSedex1: TACBrSedex

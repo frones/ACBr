@@ -313,30 +313,40 @@ begin
   for iFor := 0 to FUmaListaPlataformasAlvos.Count - 1 do
   begin
     achk := TCheckBox.Create(scrlbxDelphiVersion);
-    achk.Parent  := scrlbxDelphiVersion;
-    achk.Name    := 'chk'+IntToStr(iFor);
-    achk.Caption := FUmaListaPlataformasAlvos[iFor].GetNomeAlvo;
-    achk.Tag     := iFor;
-    achk.Left    := 4;
-    ValorTop     := 4;
-    if (iFor > 0) then
-    begin
-      ValorTop   := FListaCheckBoxPlataformas[iFor-1].Top + FListaCheckBoxPlataformas[iFor-1].Height;
-      if FUmaListaPlataformasAlvos[iFor].InstalacaoAtual.Name <> FUmaListaPlataformasAlvos[iFor-1].InstalacaoAtual.Name then
+    try
+      achk.Parent  := scrlbxDelphiVersion;
+      achk.Name    := 'chk'+IntToStr(iFor);
+      achk.Tag     := iFor;
+      achk.Left    := 4;
+      ValorTop     := 4;
+      if (iFor > 0) then
       begin
-        ValorTop   := ValorTop + 8;
+        ValorTop   := FListaCheckBoxPlataformas[iFor-1].Top + FListaCheckBoxPlataformas[iFor-1].Height;
+        if FUmaListaPlataformasAlvos[iFor].InstalacaoAtual.Name <> FUmaListaPlataformasAlvos[iFor-1].InstalacaoAtual.Name then
+        begin
+          ValorTop   := ValorTop + 8;
+        end;
       end;
+      achk.Width   := scrlbxDelphiVersion.Width - 16;
+      achk.Top     := ValorTop;
+      achk.Caption := FUmaListaPlataformasAlvos[iFor].GetNomeAlvo;
+  //    if FUmaListaPlataformasAlvos[iFor].EhSuportadaPeloACBrBeta then
+  //    begin
+  //      achk.StyleName := Estilo.Suportado.Apenas.Delphi10.4;
+  //      //achk.Font.Color :=
+  //      //achk.Font.Style := [fsItalic];
+  //    end;
+      achk.Enabled := FUmaListaPlataformasAlvos[iFor].EhSuportadaPeloACBr;
+      achk.OnClick := clbDelphiVersionClick;
+    except
+      on E: EConvertError do
+      begin
+        achk.Enabled := False;
+        achk.Caption := 'Erro ao detectar versão.';
+//        achk.Visible := False;
+      end;
+
     end;
-    achk.Width   := scrlbxDelphiVersion.Width - 16;
-    achk.Top     := ValorTop;
-//    if FUmaListaPlataformasAlvos[iFor].EhSuportadaPeloACBrBeta then
-//    begin
-//      achk.StyleName := Estilo.Suportado.Apenas.Delphi10.4;
-//      //achk.Font.Color :=
-//      //achk.Font.Style := [fsItalic];
-//    end;
-    achk.Enabled := FUmaListaPlataformasAlvos[iFor].EhSuportadaPeloACBr;
-    achk.OnClick := clbDelphiVersionClick;
     FListaCheckBoxPlataformas.Add(achk);
   end;
 end;
@@ -377,7 +387,7 @@ begin
   Caption                   := Caption + ' ' + sVersaoInstalador;
   FUmaListaPlataformasAlvos := GeraListaPlataformasAlvos;
   FUltimoArquivoLog         := '';
-  FListaCheckBoxPlataformas            := TList<TCheckBox>.Create;
+  FListaCheckBoxPlataformas := TList<TCheckBox>.Create;
 
   MontaListaIDEsSuportadas;
 

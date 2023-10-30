@@ -1241,7 +1241,7 @@ begin
 
       NFSe.Servico.Valores.ValorIr := vRetIRRF;
       NFSe.Servico.Valores.ValorCsll := vRetCSLL;
-      NFSe.Servico.Valores.ValorCPP := vRetCP;
+      NFSe.Servico.Valores.ValorInss := vRetCP;
     end;
   end;
 end;

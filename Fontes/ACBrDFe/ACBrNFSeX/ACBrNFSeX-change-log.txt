@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/10/2023
+-- Diversos --
+[*] Alteração visando a impressão correta dos tributos federais quando for Padrão Nacional.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Alteração visando não imprimir no DANFSE os campos: Natureza da Operação e Insentivo Cultural
     quando for Padrão Nacional, uma vez que essas informações não existem nesse layout.

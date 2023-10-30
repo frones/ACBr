@@ -388,6 +388,7 @@ function StrTotpEmit(out ok: Boolean; const s: string): TtpEmit;
 
 function OptanteSNToStr(const t: TOptanteSN): string;
 function StrToOptanteSN(out ok: Boolean; const s: string): TOptanteSN;
+function OptanteSNToDesc(const t: TOptanteSN): string;
 
 function RegimeApuracaoSNToStr(const t: TRegimeApuracaoSN): string;
 function StrToRegimeApuracaoSN(out ok: Boolean; const s: string): TRegimeApuracaoSN;
@@ -12402,6 +12403,12 @@ end;
 function StrToOptanteSN(out ok: Boolean; const s: string): TOptanteSN;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3'],
+                           [osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP]);
+end;
+
+function OptanteSNToDesc(const t: TOptanteSN): string;
+begin
+  Result := EnumeradoToStr(t, ['Não', 'MEI', 'ME/EPP'],
                            [osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP]);
 end;
 

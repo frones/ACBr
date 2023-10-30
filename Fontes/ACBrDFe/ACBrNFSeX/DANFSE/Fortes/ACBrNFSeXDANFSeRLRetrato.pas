@@ -450,9 +450,12 @@ begin
 
     if fpDANFSe.Provedor = proPadraoNacional then
     begin
+      rllOpcaoSimples.Caption := ACBrStr(OptanteSNToDesc(OptanteSN));
+
       rllNatOperacao.Visible := False;
       RLLabel137.Visible := False;
       rllIncentivador.Visible := False;
+      RLLabel56.Visible := False;
     end;
 
     rllCodObra.Caption := ConstrucaoCivil.CodigoObra;

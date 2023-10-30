@@ -114,7 +114,8 @@ type
     cobBancoFibra,
     cobBancoSofisaItau,
     cobBancoIndustrialBrasil,
-    cobBancoAthenaBradesco
+    cobBancoAthenaBradesco,
+    cobBancoQITechSCD
     );
 
   TACBrTitulo = class;
@@ -564,8 +565,7 @@ type
     function GetLocalPagamento: String; virtual;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
-    function CalcularPadraoJuros(ATitulo: TACBrTitulo): Double; virtual;
-    function CalcularPadraoMulta(ATitulo: TACBrTitulo): Double; virtual;
+
     function FormatarMoraJurosRemessa(const APosicoes: Integer
        ;const ACBrTitulo: TACBrTitulo):String; Virtual;
 
@@ -682,7 +682,8 @@ type
 
     Procedure LerRetorno400Transacao4(ACBrTitulo :TACBrTitulo; ALinha:String); Virtual;
 
-
+    function CalcularPadraoJuros(ATitulo: TACBrTitulo): Double; virtual;
+    function CalcularPadraoMulta(ATitulo: TACBrTitulo): Double; virtual;
     function CalcularNomeArquivoRemessa : String; Virtual;
     function ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';
        const AValidaCodCedente: Boolean= False ): Boolean; Virtual;
@@ -2050,7 +2051,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoFibra,
      ACBrBancoSofisaItau,
      ACBrBancoIndustrialBrasil,
-     ACBrBancoAthenaBradesco;
+     ACBrBancoAthenaBradesco, ACBrBancoQITech;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3294,7 +3295,7 @@ begin
   if ATitulo.MultaValorFixo then
     AValorMulta := ATitulo.PercentualMulta
   else
-    AValorMulta := CalcularPercentualValor(ATitulo.PercentualMulta,ATitulo.ValorDocumento);
+    AValorMulta := CalcularPercentualValor(ATitulo.PercentualMulta,ATitulo.ValorDocumento) / 100;
 
   if (ATitulo.DataMulta <> 0) and (ATitulo.DataMulta > ATitulo.Vencimento) then
     ATipoMulta := 'a partir de ' + FormatDateTime('dd/mm/yyyy',ATitulo.DataMulta)
@@ -3592,7 +3593,7 @@ end;
 
 function TACBrBoleto.CalcularPercentualValor(AValorPercentual, AValorDocumento: Double): Double;
 begin
-  Result := TruncTo((AValorPercentual / 100) * AValorDocumento,2);
+  Result := (AValorPercentual / AValorDocumento) * 100 ;
 end;
 
 function TACBrBoleto.CalcularValorDesconto(AValorDocumento, AValorDesconto : Double; ATipoDesconto : TACBrTipoDesconto): Double;
@@ -3728,6 +3729,7 @@ begin
     237: Result := cobBradesco;
     246: Result := cobBancoABCBrasil;
     274: Result := cobMoneyPlus;
+    329: Result := cobBancoQITechSCD;
     336: Result := cobBancoC6;
     341: Result := cobItau;
     389: Result := cobBancoMercantil;
@@ -4572,6 +4574,7 @@ begin
      cobBancoSofisaItau      : fBancoClass := TACBrBancoSofisaItau.Create(Self);      {637}
      cobBancoIndustrialBrasil: fBancoClass := TACBrBancoIndustrialBrasil.Create(Self); {604}
      cobBancoAthenaBradesco  : fBancoClass := TACBrBancoAthenaBradesco.Create(Self);  {237}
+     cobBancoQITechSCD       : fBancoClass := TACBrBancoQITechSCD.Create(Self);  {329}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
@@ -5457,18 +5460,21 @@ end;
 function TACBrBancoClass.CalcularPadraoJuros(ATitulo: TACBrTitulo): Double;
 begin
   if (ATitulo.CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (ATitulo.CodigoMora = '2') or (ATitulo.CodigoMora = 'B') then
-    Result := ATitulo.fACBrBoleto.CalcularPercentualValor(ATitulo.ValorMoraJuros, ATitulo.ValorDocumento) * 100
+    Result := ATitulo.ValorMoraJuros
   else
-    Result := ATitulo.ValorMoraJuros;
+    Result := ATitulo.fACBrBoleto.CalcularPercentualValor(ATitulo.ValorMoraJuros, ATitulo.ValorDocumento) * 100;
 end;
 
 function TACBrBancoClass.CalcularPadraoMulta(ATitulo: TACBrTitulo): Double;
 begin
   if (ATitulo.MultaValorFixo) then
-    Result := ATitulo.PercentualMulta
-  else
-    Result := ATitulo.fACBrBoleto.CalcularPercentualValor(ATitulo.PercentualMulta, ATitulo.ValorDocumento) * 100;
-
+  begin
+    if (ATitulo.ValorDocumento > 0) then
+      Result := Self.ACBrBanco.ACBrBoleto.CalcularPercentualValor(ATitulo.PercentualMulta, ATitulo.ValorDocumento)
+    else
+      Result := 0;
+  end else
+      Result := ATitulo.PercentualMulta;
 end;
 
 function TACBrBancoClass.ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';

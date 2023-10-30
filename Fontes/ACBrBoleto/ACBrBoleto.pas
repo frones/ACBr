@@ -3990,6 +3990,7 @@ begin
             TipoImpressao := TACBrTipoImpressao(IniBoletos.ReadInteger(Sessao,'TipoImpressao',1));
             TipoDesconto := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto',0));
             TipoDesconto2 := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto2',0));
+            TipoDesconto3 := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto3',0));
             CarteiraEnvio:= TACBrCarteiraEnvio(IniBoletos.ReadInteger(Sessao,'CarteiraEnvio', 0));
             MultaValorFixo := IniBoletos.ReadBool(Sessao,'MultaValorFixo',False);
 
@@ -4002,6 +4003,8 @@ begin
             DataProcessamento   := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataProcessamento','')),now);
             DataAbatimento      := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataAbatimento','')),0);
             DataDesconto        := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataDesconto','')),0);
+            DataDesconto2       := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataDesconto2','')),0);
+            DataDesconto3       := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataDesconto3','')),0);
             DataMoraJuros       := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataMoraJuros','')),0);
   	        DataMulta           := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataMulta','')),0);
             DiasDeProtesto      := IniBoletos.ReadInteger(Sessao,'DiasDeProtesto',0);
@@ -4039,6 +4042,8 @@ begin
             Parcela             := IniBoletos.ReadInteger(Sessao,'Parcela',Parcela);
             ValorAbatimento     := IniBoletos.ReadFloat(Sessao,'ValorAbatimento',ValorAbatimento);
             ValorDesconto       := IniBoletos.ReadFloat(Sessao,'ValorDesconto',ValorDesconto);
+            ValorDesconto2      := IniBoletos.ReadFloat(Sessao,'ValorDesconto2',ValorDesconto2);
+            ValorDesconto3      := IniBoletos.ReadFloat(Sessao,'ValorDesconto3',ValorDesconto3);
             ValorMoraJuros      := IniBoletos.ReadFloat(Sessao,'ValorMoraJuros',ValorMoraJuros);
             ValorIOF            := IniBoletos.ReadFloat(Sessao,'ValorIOF',ValorIOF);
             ValorOutrasDespesas := IniBoletos.ReadFloat(Sessao,'ValorOutrasDespesas',ValorOutrasDespesas);

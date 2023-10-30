@@ -1303,6 +1303,43 @@ begin
 
       orig := oeNacional;
 
+      //Grupo de Tributação do ICMS Monofásico sobre combustíveis.
+      (*
+      CST       := cst02;
+      qBCMono   := 100;
+      adRemICMS := 10;
+      vICMSMono := 10;
+      *)
+      //Grupo de Tributação do ICMS Monofásico sobre combustíveis.
+      (*
+      CST          := cst15;
+      qBCMono      := 100;
+      adRemICMS    := 10;
+      vICMSMono    := 10;
+      qBCMonoReten := 100;
+      adRemICMSReten := 10;
+      vICMSMonoReten := 10;
+      pRedAdRem      := 10;
+      motRedAdRem    := TmotRedAdRem.motTranspColetivo;
+      *)
+      //Grupo de Tributação do ICMS Monofásico sobre combustíveis.
+      (*
+      CST           := cst53;
+      qBCMono       := 100;
+      adRemICMS     := 10;
+      vICMSMonoOp   := 10;
+      pDif          := 10;
+      vICMSMonoDif  := 1;
+      vICMSMono     := 10;
+      *)
+      //Grupo de Tributação do ICMS Monofásico sobre combustíveis.
+      (*
+      CST           := cst61;
+      qBCMonoRet    := 100;
+      adRemICMSRet  := 10;
+      vICMSMonoRet  := 10;
+      *)
+
       if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
       begin
         CST     := cst00;

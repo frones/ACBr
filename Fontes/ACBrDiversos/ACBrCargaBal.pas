@@ -226,12 +226,16 @@ type
     fCodigo: Integer;
     FDescricao : String;
     FValor : Currency;
+    fTipoTara: Integer;
+    fValorMaximoTara: Currency;
 
   public
     constructor Create;
     property Codigo: Integer read FCodigo write FCodigo;
     property Descricao: String read FDescricao write FDescricao;
     property Valor: Currency read FValor write FValor;
+    property TipoTara: Integer read fTipoTara write fTipoTara;
+    property ValorMaximoTara: Currency read fValorMaximoTara write fValorMaximoTara;
   end;
 
   TACBrCargaBalFornecedor = class
@@ -1645,8 +1649,21 @@ begin
 
        if (Produtos[i].Tara.Codigo > 0) then
        begin
-        ATara := LFIll(Produtos[i].Tara.Codigo, 4) + LFIll(Produtos[i].Tara.Valor, 6, 3)+
-                 RFIll(Produtos[i].Tara.Descricao, 20);
+        // Alterado para receber os novos campos do layout mgv6
+//        ATara := LFIll(Produtos[i].Tara.Codigo, 4) + LFIll(Produtos[i].Tara.Valor, 6, 3)+
+//                 RFIll(Produtos[i].Tara.Descricao, 20);
+          ATara := '';
+          ATara := ATara + 'N'; // Caracter indicativo de novo arquivo padrão de Tara
+          ATara := ATara + LFIll(Produtos[i].Tara.Codigo,4); // Codigo da Tara
+          ATara := ATara + LFIll(Produtos[i].Tara.TipoTara,1); // Seleção do Tipo de Tara Predeterminada (0 - Tara Fixa / 1 - Tara Variavel)
+          ATara := ATara + LFIll(Produtos[i].Tara.Valor,6,3); // Valor da Tara
+          case Produtos[i].Tara.TipoTara of
+            1 : ATara := ATara + LFIll(Produtos[i].Tara.ValorMaximoTara,6,3); // Intervalo Superior de Tara quando Tara Predeterminada for 1
+          else
+            ATara := ATara + '000000'; // Caso contrario deve ser preenchido com Zeros
+          end;
+          ATara := ATara + RFill(Produtos[i].Tara.Descricao,20);
+
 
         if (stlTara.IndexOf(ATara) < 0) THEN
            stlTara.Add(ATara);
@@ -1834,9 +1851,22 @@ begin
           stlNutricional.Add(ANutri);
         end;
         if (Produtos[i].Tara.Codigo > 0) then begin
-          ATara := LFIll(Produtos[i].Tara.Codigo, 4) +
-                   LFIll(Produtos[i].Tara.Valor, 6, 3)+
-                   RFIll(Produtos[i].Tara.Descricao, 20);
+//          ATara := LFIll(Produtos[i].Tara.Codigo, 4) +
+//                   LFIll(Produtos[i].Tara.Valor, 6, 3)+
+//                   RFIll(Produtos[i].Tara.Descricao, 20);
+
+          ATara := '';
+          ATara := ATara + 'N'; // Caracter indicativo de novo arquivo padrão de Tara
+          ATara := ATara + LFIll(Produtos[i].Tara.Codigo,4); // Codigo da Tara
+          ATara := ATara + LFIll(Produtos[i].Tara.TipoTara,1); // Seleção do Tipo de Tara Predeterminada (0 - Tara Fixa / 1 - Tara Variavel)
+          ATara := ATara + LFIll(Produtos[i].Tara.Valor,6,3); // Valor da Tara
+          case Produtos[i].Tara.TipoTara of
+            1 : ATara := ATara + LFIll(Produtos[i].Tara.ValorMaximoTara,6,3); // Intervalo Superior de Tara quando Tara Predeterminada for 1
+          else
+            ATara := ATara + '000000'; // Caso contrario deve ser preenchido com Zeros
+          end;
+          ATara := ATara + RFill(Produtos[i].Tara.Descricao,20);
+
           if (stlTara.IndexOf(ATara) < 0) then
            stlTara.Add(ATara);
         end;

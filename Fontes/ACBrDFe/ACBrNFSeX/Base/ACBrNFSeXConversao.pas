@@ -146,7 +146,8 @@ type
                    proTinus, proTiplan, proTributus, proVersaTecnologia,
                    proVirtual, proWebFisco, proWebISS);
 
-  TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao, stNenhum);
+  TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao, stNenhum,
+                             stRetidoForaMunicipio, stDevidoForaMunicipioNaoRetido);
 
   TnfseResponsavelRetencao = (rtTomador, rtPrestador, rtIntermediario, rtNenhum);
 

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/10/2023
+-- ACBrNFSeXConversao/SigISSWeb.GravarXml/SigISSWeb.LerXml --
+[*] Alteração visando atender todos os tipos de ISS Retido do provedor SigISSWeb.
+   Por: Bruno Lucas Batista
 -- IPM.GravarXml/IPM.Provider --
 [*] Possível solução para tratar corretamente as mensagens de erro.
    Por: Italo Giurizzato Junior

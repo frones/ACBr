@@ -206,6 +206,12 @@ begin
         if aValor = 'S' then
           NFSe.Servico.Valores.IssRetido := stRetencao
         else
+        if aValor = 'F' then
+          NFSe.Servico.Valores.IssRetido := stRetidoForaMunicipio
+        else
+        if aValor = 'D' then
+          NFSe.Servico.Valores.IssRetido := stDevidoForaMunicipioNaoRetido
+        else
           NFSe.Servico.Valores.IssRetido := stNormal;
 
         Aliquota := ObterConteudo(ANode.Childrens.FindAnyNs('aliq_iss'), tcDe2);

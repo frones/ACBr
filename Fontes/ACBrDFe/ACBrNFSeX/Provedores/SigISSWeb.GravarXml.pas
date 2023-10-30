@@ -172,6 +172,10 @@ begin
 
   if NFSe.Servico.Valores.IssRetido = stRetencao then
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'iss_retido', 1, 1, 1, 'S', ''))
+  else if NFSe.Servico.Valores.IssRetido = stRetidoForaMunicipio then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'iss_retido', 1, 1, 1, 'F', ''))
+  else if NFSe.Servico.Valores.IssRetido = stDevidoForaMunicipioNaoRetido then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'iss_retido', 1, 1, 1, 'D', ''))
   else
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'iss_retido', 1, 1, 1, 'N', ''));
 

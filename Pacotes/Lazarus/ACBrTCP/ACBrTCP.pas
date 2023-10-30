@@ -8,12 +8,10 @@ unit ACBrTCP;
 interface
 
 uses
-  ACBrSocket, ACBrCEP, ACBrTCPReg, ACBrIBGE, ACBrCNIEE, ACBrSuframa, 
-  ACBrDownload, ACBrDownloadClass, ACBrNFPws, ACBrConsultaCNPJ, ACBrIBPTax, 
-  ACBrNCMs, ACBrCotacao, ACBrMail, ACBrConsultaCPF, ACBrSpedTabelas, 
-  ACBrSedex, ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, 
-  ACBrFeriado, ACBrFeriadoWSCalendario, ACBrFeriadoWSClass, ACBrFeriadoWSJSON, 
-  LazarusPackageIntf;
+  ACBrSocket, ACBrCEP, ACBrTCPReg, ACBrIBGE, ACBrCNIEE, ACBrSuframa, ACBrDownload, ACBrDownloadClass, 
+  ACBrNFPws, ACBrConsultaCNPJ, ACBrIBPTax, ACBrNCMs, ACBrCotacao, ACBrMail, ACBrConsultaCPF, 
+  ACBrSpedTabelas, ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, ACBrFeriado, 
+  ACBrFeriadoWSCalendario, ACBrFeriadoWSClass, ACBrFeriadoWSJSON, LazarusPackageIntf;
 
 implementation
 

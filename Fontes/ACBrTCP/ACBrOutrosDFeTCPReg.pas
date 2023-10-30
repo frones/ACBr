@@ -30,7 +30,7 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit ACBrTCPReg;
+unit ACBrOutrosDFeTCPReg;
 
 interface
 
@@ -40,9 +40,7 @@ procedure Register;
 
 implementation
 
-Uses ACBrSocket, ACBrCEP, ACBrIBGE, ACBrNFPws, ACBrCNIEE, ACBrSuframa, ACBrDownload,
-   SysUtils, ACBrIBPTax, ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrCotacao, ACBrMail,
-   ACBrSpedTabelas, ACBrNCMs, ACBrFeriado, ACBrFrenet;
+Uses ACBrSedex;
 
 {$IFNDEF FPC}
    {$R ACBrTCP.dcr}
@@ -51,9 +49,7 @@ Uses ACBrSocket, ACBrCEP, ACBrIBGE, ACBrNFPws, ACBrCNIEE, ACBrSuframa, ACBrDownl
 procedure Register;
 begin
   RegisterComponents('ACBrTCP',
-    [ TACBrTCPServer, TACBrCEP, TACBrIBGE, TACBrNFPws, TACBrCNIEE, TACBrSuframa,
-      TACBrDownload, TACBrIBPTax, TACBrConsultaCNPJ, TACBrConsultaCPF, TACBrCotacao,
-      TACBrMail, TACBrSpedTabelas, TACBrNCMs, TACBrFeriado, TACBrFrenet ]
+    [ TACBrSedex ]
   );
 end;
 

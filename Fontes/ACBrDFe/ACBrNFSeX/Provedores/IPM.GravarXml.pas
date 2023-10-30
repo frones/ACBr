@@ -51,11 +51,11 @@ type
     FpGerarID: Boolean;
     FpNrOcorrTagsTomador: Integer;
     FpNrOcorrCodigoAtividade: Integer;
+    FpNaoGerarGrupoRps: Boolean;
 
   protected
     procedure Configuracao; override;
 
-    function GerarGrupoRPS: Boolean;
     function GerarIdentificacaoRPS: TACBrXmlNode;
     function GerarValoresServico: TACBrXmlNode;
     function GerarPrestador: TACBrXmlNode;
@@ -112,6 +112,11 @@ begin
 
   Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
   Opcoes.DecimalChar := ',';
+  {
+    Se no arquivo ACBrNFSeXServicos.ini existe o campo: NaoGerarGrupoRps na
+    definição da cidade o valor de NaoGerar é True
+  }
+  FpNaoGerarGrupoRps := FpAOwner.ConfigGeral.Params.TemParametro('NaoGerarGrupoRps');
 
   FDocument.Clear();
 
@@ -127,8 +132,9 @@ begin
   if (VersaoNFSe in [ve100, ve101]) and (Ambiente = taHomologacao) then
     NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
-    'nfse_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
+  if not FpNaoGerarGrupoRps then
+    NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
+      'nfse_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
 
   xmlNode := GerarIdentificacaoRPS;
   NFSeNode.AppendChild(xmlNode);
@@ -208,25 +214,12 @@ begin
   end;
 end;
 
-function TNFSeW_IPM.GerarGrupoRPS: Boolean;
-var
-  NaoGerar: Boolean;
-begin
-  {
-    Se no arquivo ACBrNFSeXServicos.ini existe o campo: NaoGerarGrupoRps na
-    definição da cidade o valor de NaoGerar é True
-  }
-  NaoGerar := FpAOwner.ConfigGeral.Params.TemParametro('NaoGerarGrupoRps');
-
-  // Na condição abaixo se faz necessário o "not".
-  Result := (StrToIntDef(NFSe.IdentificacaoRps.Numero, 0) > 0) and (not NaoGerar);
-end;
-
 function TNFSeW_IPM.GerarIdentificacaoRPS: TACBrXmlNode;
 begin
   Result :=  nil;
 
-  if GerarGrupoRPS then
+  if (StrToIntDef(NFSe.IdentificacaoRps.Numero, 0) > 0) and
+     (not FpNaoGerarGrupoRps) then
   begin
     Result := CreateElement('rps');
 
@@ -555,7 +548,7 @@ begin
   FormatoAliq := tcDe2;
 
   NrOcorrInformacoesComplemetares := 0;
-  NrOcorrCodigoPaisTomador := -1;
+  NrOcorrCodigoPaisTomador := 1;
 
   TagTomador := 'TomadorServico';
 end;

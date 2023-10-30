@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2023
+-- IPM.GravarXml/IPM.Provider --
+[*] Possível solução para tratar corretamente as mensagens de erro.
+   Por: Italo Giurizzato Junior
+
 27/10/2023
 -- ACBrNFSeXConfiguracoes --
 [*] Ajuste na rotina Assign para que não sobrescreva a configuração do Provedor.

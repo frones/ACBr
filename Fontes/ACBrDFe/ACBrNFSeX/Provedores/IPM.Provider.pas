@@ -258,6 +258,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  AAlerta: TNFSeEventoCollectionItem;
   aMsg, Codigo: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
@@ -272,18 +273,29 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
-    aMsg := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr));
-    {
-     Codigo = 00001 significa que o processamento ocorreu com sucesso, logo não
-     tem erros.
-    }
-    if Codigo <> '00001' then
-    begin
-      AErro := Response.Erros.New;
 
-      AErro.Codigo := Codigo;
-      AErro.Descricao := aMsg;
-      AErro.Correcao := '';
+    if Codigo = '00001 - Sucesso' then
+    begin
+      AAlerta := Response.Alertas.New;
+      AAlerta.Codigo := '00001';
+      AAlerta.Descricao := 'Sucesso';
+      AAlerta.Correcao := '';
+    end
+    else
+    begin
+      aMsg := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr));
+      {
+       Codigo = 00001 significa que o processamento ocorreu com sucesso, logo não
+       tem erros.
+      }
+      if Codigo <> '00001' then
+      begin
+        AErro := Response.Erros.New;
+
+        AErro.Codigo := Codigo;
+        AErro.Descricao := aMsg;
+        AErro.Correcao := '';
+      end;
     end;
   end;
 end;

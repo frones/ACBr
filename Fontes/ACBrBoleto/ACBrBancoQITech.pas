@@ -29,36 +29,25 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-//incluido XX/XX/2023
-
+//incluido 30/10/2023
 {$I ACBr.inc}
-
 unit ACBrBancoQITech;
-
 interface
-
 uses
   Classes, SysUtils, ACBrBancoBradesco, ACBrBoleto;
-
 type
-
   { TACBrBancoQITechSCD }
-
   TACBrBancoQITechSCD = class(TACBrBancoBradesco)
   private
   public
-
     Constructor create(AOwner: TACBrBanco);
     function GetLocalPagamento: String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String; override;
   end;
-
 implementation
-
 uses ACBrUtil.Base,
      ACBrUtil.FilesIO,
      ACBrUtil.Strings;
-
 constructor TACBrBancoQITechSCD.create(AOwner: TACBrBanco);
 begin
   inherited create(AOwner);
@@ -86,5 +75,4 @@ begin
   StringReplace( Result, 'Bradesco Expresso', 'QI Tech', [rfReplaceAll,rfIgnoreCase]);
   StringReplace( Result, 'Bradesco', 'QI Tech', [rfReplaceAll,rfIgnoreCase]);
 end;
-
 end.

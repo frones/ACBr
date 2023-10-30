@@ -165,6 +165,7 @@ contains
   ACBrEscPosHookEpsonDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookEpsonDLL.pas',
   ACBrEscPosHookElginDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas',
   ACBrWinUSBDevice in '..\..\..\Fontes\ACBrSerial\ACBrWinUSBDevice.pas',
-  ACBrBALSelfCheckout in '..\..\..\Fontes\ACBrSerial\ACBrBALSelfCheckout.pas';
+  ACBrBALSelfCheckout in '..\..\..\Fontes\ACBrSerial\ACBrBALSelfCheckout.pas',
+  ACBrBALSiciliano in '..\..\..\Fontes\ACBrSerial\ACBrBALSiciliano.pas';
 
 end.

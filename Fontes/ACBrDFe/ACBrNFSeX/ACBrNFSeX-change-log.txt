@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/10/2023
+-- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Incluido novamente as condições para gerar a tag CodigoPais no layout da ABRASF 
+    (versão 1 e 2).
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao/SigISSWeb.GravarXml/SigISSWeb.LerXml --
 [*] Alteração visando atender todos os tipos de ISS Retido do provedor SigISSWeb.
    Por: Bruno Lucas Batista
@@ -54,7 +58,6 @@ Símbolo : Significado
 -- ACBrNFSeXConfiguracoes --
 [*] Ajuste na rotina Assign para que não sobrescreva a configuração do Provedor.
   Por: Diego Folieni
- 
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Paranapanema/SP, provedor Pronim versão 1.
   Por: SHARMAQ / Italo Giurizzato Junior

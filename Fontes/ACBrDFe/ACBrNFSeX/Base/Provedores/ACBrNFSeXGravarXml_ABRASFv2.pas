@@ -947,7 +947,9 @@ begin
     Result.AppendChild(AddNode(tcStr, '#44', 'Uf', 2, 2, NrOcorrUFTomador,
                                              NFSe.Tomador.Endereco.UF, DSC_UF));
 
-    Result.AppendChild(AddNode(tcInt, '#44', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
+    if (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999') or
+       (NrOcorrCodigoPaisTomador = 1) then
+      Result.AppendChild(AddNode(tcInt, '#44', 'CodigoPais', 4, 4, NrOcorrCodigoPaisTomador,
                                   NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS));
 
     Result.AppendChild(AddNode(tcStr, '#45', 'Cep', 8, 8, NrOcorrCepTomador,

@@ -35,7 +35,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="92">
+    <Files Count="93">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -102,309 +102,313 @@
         <UnitName Value="ACBrBALUrano"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas"/>
-        <UnitName Value="ACBrCHQ"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALSiciliano.pas"/>
+        <UnitName Value="ACBrBALSiciliano"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQBematech.pas"/>
-        <UnitName Value="ACBrCHQBematech"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas"/>
+        <UnitName Value="ACBrCHQ"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQChronos.pas"/>
-        <UnitName Value="ACBrCHQChronos"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQBematech.pas"/>
+        <UnitName Value="ACBrCHQBematech"/>
       </Item19>
       <Item20>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQClass.pas"/>
-        <UnitName Value="ACBrCHQClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQChronos.pas"/>
+        <UnitName Value="ACBrCHQChronos"/>
       </Item20>
       <Item21>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQImpressoraComum.pas"/>
-        <UnitName Value="ACBrCHQImpressoraComum"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQClass.pas"/>
+        <UnitName Value="ACBrCHQClass"/>
       </Item21>
       <Item22>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQImpressoraECF.pas"/>
-        <UnitName Value="ACBrCHQImpressoraECF"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQImpressoraComum.pas"/>
+        <UnitName Value="ACBrCHQImpressoraComum"/>
       </Item22>
       <Item23>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQPerto.pas"/>
-        <UnitName Value="ACBrCHQPerto"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQImpressoraECF.pas"/>
+        <UnitName Value="ACBrCHQImpressoraECF"/>
       </Item23>
       <Item24>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQSchalter.pas"/>
-        <UnitName Value="ACBrCHQSchalter"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQPerto.pas"/>
+        <UnitName Value="ACBrCHQPerto"/>
       </Item24>
       <Item25>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQSotomaq.pas"/>
-        <UnitName Value="ACBrCHQSotomaq"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQSchalter.pas"/>
+        <UnitName Value="ACBrCHQSchalter"/>
       </Item25>
       <Item26>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQUrano.pas"/>
-        <UnitName Value="ACBrCHQUrano"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQSotomaq.pas"/>
+        <UnitName Value="ACBrCHQSotomaq"/>
       </Item26>
       <Item27>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDIS.pas"/>
-        <UnitName Value="ACBrDIS"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQUrano.pas"/>
+        <UnitName Value="ACBrCHQUrano"/>
       </Item27>
       <Item28>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISClass.pas"/>
-        <UnitName Value="ACBrDISClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDIS.pas"/>
+        <UnitName Value="ACBrDIS"/>
       </Item28>
       <Item29>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISGertecSerial.pas"/>
-        <UnitName Value="ACBrDISGertecSerial"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISClass.pas"/>
+        <UnitName Value="ACBrDISClass"/>
       </Item29>
       <Item30>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISGertecTeclado.pas"/>
-        <UnitName Value="ACBrDISGertecTeclado"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISGertecSerial.pas"/>
+        <UnitName Value="ACBrDISGertecSerial"/>
       </Item30>
       <Item31>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISGertecTEC65lib.pas"/>
-        <UnitName Value="ACBrDISGertecTEC65lib"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISGertecTeclado.pas"/>
+        <UnitName Value="ACBrDISGertecTeclado"/>
       </Item31>
       <Item32>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISKeytecTeclado.pas"/>
-        <UnitName Value="ACBrDISKeytecTeclado"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISGertecTEC65lib.pas"/>
+        <UnitName Value="ACBrDISGertecTEC65lib"/>
       </Item32>
       <Item33>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISSmakTecladoLib.pas"/>
-        <UnitName Value="ACBrDISSmakTecladoLib"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISKeytecTeclado.pas"/>
+        <UnitName Value="ACBrDISKeytecTeclado"/>
       </Item33>
       <Item34>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISSmakTeclado.pas"/>
-        <UnitName Value="ACBrDISSmakTeclado"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISSmakTecladoLib.pas"/>
+        <UnitName Value="ACBrDISSmakTecladoLib"/>
       </Item34>
       <Item35>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISSmakSerial.pas"/>
-        <UnitName Value="ACBrDISSmakSerial"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISSmakTeclado.pas"/>
+        <UnitName Value="ACBrDISSmakTeclado"/>
       </Item35>
       <Item36>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECF.pas"/>
-        <UnitName Value="ACBrECF"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISSmakSerial.pas"/>
+        <UnitName Value="ACBrDISSmakSerial"/>
       </Item36>
       <Item37>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFClass.pas"/>
-        <UnitName Value="ACBrECFClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECF.pas"/>
+        <UnitName Value="ACBrECF"/>
       </Item37>
       <Item38>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFBematech.pas"/>
-        <UnitName Value="ACBrECFBematech"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFClass.pas"/>
+        <UnitName Value="ACBrECFClass"/>
       </Item38>
       <Item39>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
-        <UnitName Value="ACBrECFDaruma"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFBematech.pas"/>
+        <UnitName Value="ACBrECFBematech"/>
       </Item39>
       <Item40>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFDataRegis.pas"/>
-        <UnitName Value="ACBrECFDataRegis"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
+        <UnitName Value="ACBrECFDaruma"/>
       </Item40>
       <Item41>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFEpson.pas"/>
-        <UnitName Value="ACBrECFEpson"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFDataRegis.pas"/>
+        <UnitName Value="ACBrECFDataRegis"/>
       </Item41>
       <Item42>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
-        <UnitName Value="ACBrECFEscECF"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFEpson.pas"/>
+        <UnitName Value="ACBrECFEpson"/>
       </Item42>
       <Item43>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFFiscNET.pas"/>
-        <UnitName Value="ACBrECFFiscNET"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
+        <UnitName Value="ACBrECFEscECF"/>
       </Item43>
       <Item44>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFICash.pas"/>
-        <UnitName Value="ACBrECFICash"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFFiscNET.pas"/>
+        <UnitName Value="ACBrECFFiscNET"/>
       </Item44>
       <Item45>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFMecaf.pas"/>
-        <UnitName Value="ACBrECFMecaf"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFICash.pas"/>
+        <UnitName Value="ACBrECFICash"/>
       </Item45>
       <Item46>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFNaoFiscal.pas"/>
-        <UnitName Value="ACBrECFNaoFiscal"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFMecaf.pas"/>
+        <UnitName Value="ACBrECFMecaf"/>
       </Item46>
       <Item47>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFNCR.pas"/>
-        <UnitName Value="ACBrECFNCR"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFNaoFiscal.pas"/>
+        <UnitName Value="ACBrECFNaoFiscal"/>
       </Item47>
       <Item48>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFQuattro.pas"/>
-        <UnitName Value="ACBrECFQuattro"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFNCR.pas"/>
+        <UnitName Value="ACBrECFNCR"/>
       </Item48>
       <Item49>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFSchalter.pas"/>
-        <UnitName Value="ACBrECFSchalter"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFQuattro.pas"/>
+        <UnitName Value="ACBrECFQuattro"/>
       </Item49>
       <Item50>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFSweda.pas"/>
-        <UnitName Value="ACBrECFSweda"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFSchalter.pas"/>
+        <UnitName Value="ACBrECFSchalter"/>
       </Item50>
       <Item51>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFSwedaSTX.pas"/>
-        <UnitName Value="ACBrECFSwedaSTX"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFSweda.pas"/>
+        <UnitName Value="ACBrECFSweda"/>
       </Item51>
       <Item52>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFUrano.pas"/>
-        <UnitName Value="ACBrECFUrano"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFSwedaSTX.pas"/>
+        <UnitName Value="ACBrECFSwedaSTX"/>
       </Item52>
       <Item53>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtual.pas"/>
-        <UnitName Value="ACBrECFVirtual"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFUrano.pas"/>
+        <UnitName Value="ACBrECFUrano"/>
       </Item53>
       <Item54>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualBuffer.pas"/>
-        <UnitName Value="ACBrECFVirtualBuffer"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtual.pas"/>
+        <UnitName Value="ACBrECFVirtual"/>
       </Item54>
       <Item55>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualNaoFiscal.pas"/>
-        <UnitName Value="ACBrECFVirtualNaoFiscal"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualBuffer.pas"/>
+        <UnitName Value="ACBrECFVirtualBuffer"/>
       </Item55>
       <Item56>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualPrinter.pas"/>
-        <UnitName Value="ACBrECFVirtualPrinter"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualNaoFiscal.pas"/>
+        <UnitName Value="ACBrECFVirtualNaoFiscal"/>
       </Item56>
       <Item57>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFYanco.pas"/>
-        <UnitName Value="ACBrECFYanco"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualPrinter.pas"/>
+        <UnitName Value="ACBrECFVirtualPrinter"/>
       </Item57>
       <Item58>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscBematech.pas"/>
-        <UnitName Value="ACBrEscBematech"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFYanco.pas"/>
+        <UnitName Value="ACBrECFYanco"/>
       </Item58>
       <Item59>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscCustomPos.pas"/>
-        <UnitName Value="ACBrEscCustomPos"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscBematech.pas"/>
+        <UnitName Value="ACBrEscBematech"/>
       </Item59>
       <Item60>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscDaruma.pas"/>
-        <UnitName Value="ACBrEscDaruma"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscCustomPos.pas"/>
+        <UnitName Value="ACBrEscCustomPos"/>
       </Item60>
       <Item61>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscDatecs.pas"/>
-        <UnitName Value="ACBrEscDatecs"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscDaruma.pas"/>
+        <UnitName Value="ACBrEscDaruma"/>
       </Item61>
       <Item62>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscDiebold.pas"/>
-        <UnitName Value="ACBrEscDiebold"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscDatecs.pas"/>
+        <UnitName Value="ACBrEscDatecs"/>
       </Item62>
       <Item63>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscElgin.pas"/>
-        <UnitName Value="ACBrEscElgin"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscDiebold.pas"/>
+        <UnitName Value="ACBrEscDiebold"/>
       </Item63>
       <Item64>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscEpsonP2.pas"/>
-        <UnitName Value="ACBrEscEpsonP2"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscElgin.pas"/>
+        <UnitName Value="ACBrEscElgin"/>
       </Item64>
       <Item65>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscGPrinter.pas"/>
-        <UnitName Value="ACBrEscGPrinter"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscEpsonP2.pas"/>
+        <UnitName Value="ACBrEscEpsonP2"/>
       </Item65>
       <Item66>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosEpson.pas"/>
-        <UnitName Value="ACBrEscPosEpson"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscGPrinter.pas"/>
+        <UnitName Value="ACBrEscGPrinter"/>
       </Item66>
       <Item67>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosStar.pas"/>
-        <UnitName Value="ACBrEscPosStar"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosEpson.pas"/>
+        <UnitName Value="ACBrEscPosEpson"/>
       </Item67>
       <Item68>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscSunmi.pas"/>
-        <UnitName Value="ACBrEscSunmi"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosStar.pas"/>
+        <UnitName Value="ACBrEscPosStar"/>
       </Item68>
       <Item69>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscZJiang.pas"/>
-        <UnitName Value="ACBrEscZJiang"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscSunmi.pas"/>
+        <UnitName Value="ACBrEscSunmi"/>
       </Item69>
       <Item70>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <UnitName Value="ACBrETQ"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscZJiang.pas"/>
+        <UnitName Value="ACBrEscZJiang"/>
       </Item70>
       <Item71>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQClass.pas"/>
-        <UnitName Value="ACBrETQClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
+        <UnitName Value="ACBrETQ"/>
       </Item71>
       <Item72>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQEpl2.pas"/>
-        <UnitName Value="ACBrETQEpl2"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQClass.pas"/>
+        <UnitName Value="ACBrETQClass"/>
       </Item72>
       <Item73>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQEscLabel.pas"/>
-        <UnitName Value="ACBrETQEscLabel"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQEpl2.pas"/>
+        <UnitName Value="ACBrETQEpl2"/>
       </Item73>
       <Item74>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQPpla.pas"/>
-        <UnitName Value="ACBrETQPpla"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQEscLabel.pas"/>
+        <UnitName Value="ACBrETQEscLabel"/>
       </Item74>
       <Item75>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
-        <UnitName Value="ACBrETQZplII"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQPpla.pas"/>
+        <UnitName Value="ACBrETQPpla"/>
       </Item75>
       <Item76>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAV.pas"/>
-        <UnitName Value="ACBrGAV"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
+        <UnitName Value="ACBrETQZplII"/>
       </Item76>
       <Item77>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVClass.pas"/>
-        <UnitName Value="ACBrGAVClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAV.pas"/>
+        <UnitName Value="ACBrGAV"/>
       </Item77>
       <Item78>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVImpressoraComum.pas"/>
-        <UnitName Value="ACBrGAVImpressoraComum"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVClass.pas"/>
+        <UnitName Value="ACBrGAVClass"/>
       </Item78>
       <Item79>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVImpressoraECF.pas"/>
-        <UnitName Value="ACBrGAVImpressoraECF"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVImpressoraComum.pas"/>
+        <UnitName Value="ACBrGAVImpressoraComum"/>
       </Item79>
       <Item80>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVSerialGerbo.pas"/>
-        <UnitName Value="ACBrGAVSerialGerbo"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVImpressoraECF.pas"/>
+        <UnitName Value="ACBrGAVImpressoraECF"/>
       </Item80>
       <Item81>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVSerialMenno.pas"/>
-        <UnitName Value="ACBrGAVSerialMenno"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVSerialGerbo.pas"/>
+        <UnitName Value="ACBrGAVSerialGerbo"/>
       </Item81>
       <Item82>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrLCB.pas"/>
-        <UnitName Value="ACBrLCB"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVSerialMenno.pas"/>
+        <UnitName Value="ACBrGAVSerialMenno"/>
       </Item82>
       <Item83>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrPosPrinter.pas"/>
-        <UnitName Value="ACBrPosPrinter"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrLCB.pas"/>
+        <UnitName Value="ACBrLCB"/>
       </Item83>
       <Item84>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrRFD.pas"/>
-        <UnitName Value="ACBrRFD"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrPosPrinter.pas"/>
+        <UnitName Value="ACBrPosPrinter"/>
       </Item84>
       <Item85>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
-        <UnitName Value="ACBrSMS"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrRFD.pas"/>
+        <UnitName Value="ACBrRFD"/>
       </Item85>
       <Item86>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
-        <UnitName Value="ACBrSMSClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
+        <UnitName Value="ACBrSMS"/>
       </Item86>
       <Item87>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
-        <UnitName Value="ACBrSMSDaruma"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
+        <UnitName Value="ACBrSMSClass"/>
       </Item87>
       <Item88>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
-        <UnitName Value="ACBrSMSZTE"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
+        <UnitName Value="ACBrSMSDaruma"/>
       </Item88>
       <Item89>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrTER.pas"/>
-        <UnitName Value="ACBrTER"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
+        <UnitName Value="ACBrSMSZTE"/>
       </Item89>
       <Item90>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrTERClass.pas"/>
-        <UnitName Value="ACBrTERClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrTER.pas"/>
+        <UnitName Value="ACBrTER"/>
       </Item90>
       <Item91>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrTERWilbor.pas"/>
-        <UnitName Value="ACBrTERWilbor"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrTERClass.pas"/>
+        <UnitName Value="ACBrTERClass"/>
       </Item91>
       <Item92>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrTERWilbor.pas"/>
+        <UnitName Value="ACBrTERWilbor"/>
+      </Item92>
+      <Item93>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSIN.pas"/>
         <UnitName Value="ACBrSIN"/>
-      </Item92>
+      </Item93>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="3">

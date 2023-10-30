@@ -353,7 +353,7 @@ begin
                parametros(FloatToString(fnVlAltura))  +
                parametros(FloatToString(fnVlLargura))  +
                parametros(FloatToString(fnVlComprimento)) +
-               '/'+Self.CodContrato
+               '/'+Self.Senha
               );
   except on E: Exception do
     raise EACBrSedexException.Create('Erro ao consultar Sedex' + sLineBreak + E.Message);
@@ -422,7 +422,7 @@ begin
     raise EACBrSedexException.CreateACBrStr('Código de rastreamento deve conter 13 caracteres');
 
   try
-    Self.HTTPGet(URL_RASTREIO + ACodRastreio + '/' + Self.CodContrato);
+    Self.HTTPGet(URL_RASTREIO + ACodRastreio + '/' + Self.Senha);
   except
     on E: Exception do
     begin

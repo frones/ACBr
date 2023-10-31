@@ -205,10 +205,6 @@ type
     ACBr_BoletoFPDF_dpk: TCheckBox;
     ACBr_DebitoAutomatico_dpk: TCheckBox;
     Label30: TLabel;
-    ACBr_NFeDanfeFPDF_dpk: TCheckBox;
-    Label31: TLabel;
-    ACBr_OutrosDFeTCP_dpk: TCheckBox;
-    Label32: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -353,7 +349,6 @@ end;
 procedure TframePacotes.btnPacotesMarcarTodosClick(Sender: TObject);
 var
   I: Integer;
-  vCheckbox: TCheckBox;
 begin
   FUtilizarBotoesMarcar := True;
   try
@@ -361,9 +356,8 @@ begin
     begin
       if Self.Components[I] is TCheckBox then
       begin
-        vCheckbox := TCheckBox(Self.Components[I]);
-        if vCheckbox.Enabled and vCheckbox.Visible  then
-          vCheckbox.Checked := True;
+        if TCheckBox(Self.Components[I]).Enabled then
+          TCheckBox(Self.Components[I]).Checked := True;
       end;
     end;
   finally
@@ -376,7 +370,6 @@ end;
 procedure TframePacotes.btnPacotesDesmarcarTodosClick(Sender: TObject);
 var
   I: Integer;
-  vCheckbox: TCheckBox;
 begin
   FUtilizarBotoesMarcar := True;
   try
@@ -384,9 +377,8 @@ begin
     begin
       if Self.Components[I] is TCheckBox then
       begin
-        vCheckbox := TCheckBox(Self.Components[I]);
-        if vCheckbox.Enabled and vCheckbox.Visible  then
-          vCheckbox.Checked := False;
+        if TCheckBox(Self.Components[I]).Enabled then
+          TCheckBox(Self.Components[I]).Checked := False;
       end;
     end;
   finally

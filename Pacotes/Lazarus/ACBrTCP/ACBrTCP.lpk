@@ -36,7 +36,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="23">
+    <Files Count="24">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -103,33 +103,37 @@
         <UnitName Value="ACBrSpedTabelas"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas"/>
-        <UnitName Value="ACBrWinReqRespClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSedex.pas"/>
+        <UnitName Value="ACBrSedex"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas"/>
-        <UnitName Value="ACBrWinHTTPReqResp"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas"/>
+        <UnitName Value="ACBrWinReqRespClass"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
-        <UnitName Value="ACBrWinINetReqResp"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas"/>
+        <UnitName Value="ACBrWinHTTPReqResp"/>
       </Item19>
       <Item20>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas"/>
-        <UnitName Value="ACBrFeriado"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
+        <UnitName Value="ACBrWinINetReqResp"/>
       </Item20>
       <Item21>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas"/>
-        <UnitName Value="ACBrFeriadoWSCalendario"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas"/>
+        <UnitName Value="ACBrFeriado"/>
       </Item21>
       <Item22>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas"/>
-        <UnitName Value="ACBrFeriadoWSClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas"/>
+        <UnitName Value="ACBrFeriadoWSCalendario"/>
       </Item22>
       <Item23>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas"/>
+        <UnitName Value="ACBrFeriadoWSClass"/>
+      </Item23>
+      <Item24>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas"/>
         <UnitName Value="ACBrFeriadoWSJSON"/>
-      </Item23>
+      </Item24>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

@@ -51,6 +51,7 @@ contains
   ACBrMail in '..\..\..\Fontes\ACBrTCP\ACBrMail.pas',
   ACBrNFPws in '..\..\..\Fontes\ACBrTCP\ACBrNFPws.pas',
   ACBrSpedTabelas in '..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas',
+  ACBrSedex in '..\..\..\Fontes\ACBrTCP\ACBrSedex.pas',
   ACBrNCMs in '..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas',
   ACBrWinReqRespClass in '..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas',
   ACBrWinINetReqResp in '..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas',

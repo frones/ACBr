@@ -42,6 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Sao Joao do Manhuacu/MG, provedor NFSeBrasil.
+  Por: Marctoller
+[*] Atualizadas as URL da cidade Belo Horizonte/MG
+  Por: Natanael Costa Ferreira
+[*] A cidade de Canoas/RS trocou de provedor, agora é Infisc.
+  Por: Patrick Knopf
+[*] A cidade de Anastacio/MG trocou de provedor, agora é Fiorilli.
+  Por: Rodrigo - Digibyte
+[*] A cidade de Juazeiro/BA trocou de provedor, agora é WebISS
+  Por: Joemil
+
 30/10/2023
 -- Diversos --
 [*] Alteração visando a impressão correta dos tributos federais quando for Padrão Nacional.

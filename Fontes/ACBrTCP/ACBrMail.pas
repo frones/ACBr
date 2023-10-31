@@ -495,8 +495,6 @@ begin
   
   if AFileName <> '' then
     fArqMIMe.SaveToFile(AFileName);
-
-  Clear;
 end;
 
 procedure TACBrMail.MailProcess(const aStatus: TMailStatus);
@@ -795,7 +793,7 @@ begin
   end;
 
   // DEBUG //
-  // SaveToFile('c:\app\Mail.eml'); {Para debug, comentar o Clear; da linha 367}
+  // SaveToFile('c:\app\Mail.eml');
 
   // Login in SMTP //
   MailProcess(pmsLoginSMTP);

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2023
+-- ACBrNFeNotasFiscais --
+[*] Ajuste no ValidarRegrasdeNegocios, para as rejeições 383 e 766 para o modelo 65.
+    por: Alan Lucas
+
 18/10/2023
 -- ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrao --
 [*] Altera a forma como é formatado o Nº da NFe visando padronização com o Fast e o MOC.

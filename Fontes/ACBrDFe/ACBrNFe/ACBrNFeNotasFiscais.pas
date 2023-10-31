@@ -1050,6 +1050,14 @@ begin
 
         if (NFe.Ide.modelo = 65) then
         begin
+          GravaLog('Validar: 383-NFCe Item com CSOSN indevido [nItem: '+IntToStr(Prod.nItem)+']');
+          if Imposto.ICMS.CSOSN in [csosn101, csosn201, csosn202, csosn203]  then
+            AdicionaErro('383-Rejeição: NFC-e Item com CSOSN indevido [nItem: '+IntToStr(Prod.nItem)+']');
+
+          GravaLog('Validar: 766-NFCe Item com CST indevido [nItem: '+IntToStr(Prod.nItem)+']');
+          if Imposto.ICMS.CST in [cst10, cst30, cst50, cst51, cst70]  then
+            AdicionaErro('766-Rejeição: NFC-e Item com CST indevido [nItem: '+IntToStr(Prod.nItem)+']');
+
           GravaLog('Validar: 725-NFCe CFOP invalido [nItem: '+IntToStr(Prod.nItem)+']');
           if (pos(OnlyNumber(Prod.CFOP), 'XXXX,5101,5102,5103,5104,5115,5405,5656,5667,5933') <= 0)  then
             AdicionaErro('725-Rejeição: NFC-e com CFOP inválido [nItem: '+IntToStr(Prod.nItem)+']');
@@ -1073,10 +1081,6 @@ begin
           GravaLog('Validar: 348-NFCe grupo RECOPI [nItem: '+IntToStr(Prod.nItem)+']');
           if (NaoEstaVazio(Prod.nRECOPI)) then
             AdicionaErro('348-Rejeição: NFC-e com grupo RECOPI [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 766-NFCe CST 50 [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Imposto.ICMS.CST = cst50) then
-            AdicionaErro('766-Rejeição: NFC-e com CST 50-Suspensão [nItem: '+IntToStr(Prod.nItem)+']');
 
           GravaLog('Validar: 740-NFCe CST 51 [nItem: '+IntToStr(Prod.nItem)+']');
           if (Imposto.ICMS.CST = cst51) then

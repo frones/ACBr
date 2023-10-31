@@ -176,7 +176,6 @@ procedure TForm1.Button1Click(Sender: TObject);
 Var
   I: Integer;
 begin
-  ACBrSedex1.Senha := EdtSenha.Text;
   ACBrSedex1.Rastrear(EdtRastreio.Text);
 
   Try

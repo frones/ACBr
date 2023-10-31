@@ -1053,10 +1053,13 @@ var
 begin
   if (NivelLog > 1) then
     RegistrarLog('ConsultarPix( '+e2eid+' )');
-  if (Trim(e2eid) = '') then
+  if EstaVazio(Trim(e2eid)) then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['e2eid']);
-  e := ValidarEndToEndId(e2eid);
-  if (e <> '') then
+
+  e := EmptyStr;
+  if fPSP.IsBacen then
+    e := ValidarEndToEndId(e2eid);
+  if NaoEstaVazio(e) then
     raise EACBrPixException.Create(ACBrStr(e));
 
   Clear;
@@ -1290,12 +1293,13 @@ begin
   if (Body = '') then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobRevisada']);
 
-  Clear;
   fPSP.PrepararHTTP;
   fPSP.URLPathParams.Add(TxId);
   fPSP.ConfigurarBody(ChttpMethodPATCH, EndPoint, Body);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
+
+  Clear;
   fPSP.AcessarEndPoint(ChttpMethodPATCH, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_OK);
 

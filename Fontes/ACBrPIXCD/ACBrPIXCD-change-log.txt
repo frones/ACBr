@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2023
+-- ACBrPSP --
+[*] Alteração para não validar E2E em casos de PSP que não são padrão Bacen.
+
+-- ACBrPSPMercadoPago --
+[+] Inclusão da possibilidade de efetuar um cancelamento de cobrança.
+    Por: Elias César
+
 27/10/2023
 -- ACBrPIXCDPSPs --
 [-] Correção para que os PSPs possam ser utilizados em todas as plataformas.

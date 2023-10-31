@@ -26,6 +26,7 @@ type
   {$ENDIF RTL230_UP}
   TACBrPSPMercadoPago = class(TACBrPSP)
   private
+    FPagamentoAtualizado: TMercadoPagoPaymentUpdate;
     FPagamentoGerado: TMercadoPagoPayment;
     FPagamentosConsultados: TMercadoPagoConsultedPayments;
     FPagamentoSolicitado: TMercadoPagoPaymentRequest;
@@ -36,13 +37,17 @@ type
     procedure QuandoReceberRespostaEndPoint(const AEndPoint, AURL, AMethod: string; var AResultCode: integer; var RespostaHttp: ansistring);
     procedure QuandoAcessarEndPoint(const aEndPoint: string; var aURL: string; var aMethod: string);
 
+    function CobRevisadaParaPaymentUpdate: string;
     function CobSolicitadaParaPaymentRequest: string;
     function DevolucaoSolicitadaParaRefundRequest: string;
     function PaymentResponseParaCobGerada(const aPaymentResponseJSON: string): string;
     function PaymentResponseParaCobCompleta(const aPaymentResponseJSON: string): string;
+    function PaymentResponseParaCobRevisada(const aPaymentResponseJSON: string): string;
+    function PaymentResponseParaPixConsultado(const aPaymentResponseJSON: string): string;
     function ConsultedPaymentsParaCobsConsultadas(const aConsultedPaymentsJSON: string): string;
     function RefundResponseParaPixDevolvido(const aRefundResponseJSON: string): string;
 
+    function CobStatusToPaymentStatus(aStatus: TACBrPIXStatusCobranca): TMercadoPagoPaymentStatus;
     function PaymentStatusToCobStatus(aStatus: TMercadoPagoPaymentStatus): TACBrPIXStatusCobranca;
     function RefundStatusToDevolucaoStatus(aStatus: TMercadoPagoRefundStatus): TACBrPIXStatusDevolucao;
   protected
@@ -60,6 +65,7 @@ type
     property PagamentoSolicitado: TMercadoPagoPaymentRequest read FPagamentoSolicitado write FPagamentoSolicitado;
     property PagamentoGerado: TMercadoPagoPayment read FPagamentoGerado write FPagamentoGerado;
     property PagamentosConsultados: TMercadoPagoConsultedPayments read FPagamentosConsultados write FPagamentosConsultados;
+    property PagamentoAtualizado: TMercadoPagoPaymentUpdate read FPagamentoAtualizado write FPagamentoAtualizado;
 
     property ReembolsoSolicitado: TMercadoPagoRefundRequest read FReembolsoSolicitado write FReembolsoSolicitado;
     property ReembolsoGerado: TMercadoPagoRefund read FReembolsoGerado write FReembolsoGerado;
@@ -74,7 +80,7 @@ implementation
 uses
   StrUtils, synautil, DateUtils,
   ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrPIXBRCode,
-  ACBrOpenSSLUtils, ACBrPIXSchemasCobsConsultadas;
+  ACBrPIXSchemasPix, ACBrOpenSSLUtils, ACBrPIXSchemasCobsConsultadas;
 
 { TACBrPSPMercadoPago }
 
@@ -87,6 +93,7 @@ begin
   FPagamentoGerado := TMercadoPagoPayment.Create;
   FPagamentoSolicitado := TMercadoPagoPaymentRequest.Create;
   FPagamentosConsultados := TMercadoPagoConsultedPayments.Create;
+  FPagamentoAtualizado := TMercadoPagoPaymentUpdate.Create;
 
   FReembolsoGerado := TMercadoPagoRefund.Create;
   FReembolsoSolicitado := TMercadoPagoRefundRequest.Create;
@@ -101,6 +108,7 @@ begin
   FPagamentoGerado.Free;
   FPagamentoSolicitado.Free;
   FPagamentosConsultados.Free;
+  FPagamentoAtualizado.Free;
   FReembolsoGerado.Free;
   FReembolsoSolicitado.Free;
   inherited Destroy;
@@ -113,6 +121,7 @@ begin
   FPagamentoGerado.Clear;
   FPagamentoSolicitado.Clear;
   FPagamentosConsultados.Clear;
+  FPagamentoAtualizado.Clear;
   FReembolsoGerado.Clear;
   FReembolsoSolicitado.Clear;
 end;
@@ -134,36 +143,58 @@ begin
 
   if (AEndPoint = cEndPointPix) then
   begin
-    if (Pos(cMercadoPagoEndPointRefund, AURL) > 0) then
+    if (wMethod = ChttpMethodGET) then
+      RespostaHttp := PaymentResponseParaPixConsultado(RespostaHttp)
+    else if (Pos(cMercadoPagoEndPointRefund, AURL) > 0) then
       RespostaHttp := RefundResponseParaPixDevolvido(RespostaHttp);
-  end;
-
-  if (wMethod = ChttpMethodPOST) then
-  begin
-    RespostaHttp := PaymentResponseParaCobGerada(RespostaHttp);
-    AResultCode := HTTP_CREATED;
   end
-  else if (AEndPoint = cEndPointCob) and (wMethod = ChttpMethodGET) then
-  begin
-    if (URLQueryParams.Count > 1) then
-      RespostaHttp := ConsultedPaymentsParaCobsConsultadas(RespostaHttp)
-    else
-      RespostaHttp := PaymentResponseParaCobCompleta(RespostaHttp);
+  else if (AEndPoint = cEndPointCob) then
+  begin 
+    if (wMethod = ChttpMethodPUT) then
+      RespostaHttp := PaymentResponseParaCobRevisada(RespostaHttp)
+    else if (wMethod = ChttpMethodPOST) then
+    begin
+      RespostaHttp := PaymentResponseParaCobGerada(RespostaHttp);
+      AResultCode := HTTP_CREATED;
+    end
+    else if (wMethod = ChttpMethodGET) then
+    begin
+      if (URLQueryParams.Count > 1) then
+        RespostaHttp := ConsultedPaymentsParaCobsConsultadas(RespostaHttp)
+      else
+        RespostaHttp := PaymentResponseParaCobCompleta(RespostaHttp);
+    end;
   end;
 end;
 
 procedure TACBrPSPMercadoPago.QuandoAcessarEndPoint(const aEndPoint: string;
   var aURL: string; var aMethod: string);
 begin
-  if ((aEndPoint = cEndPointPix) or (aEndPoint = cEndPointCob)) and
-    (aMethod = ChttpMethodPUT) then
-    aMethod := ChttpMethodPOST;
+  if ((aEndPoint = cEndPointPix) or (aEndPoint = cEndPointCob)) then
+  begin
+    if (aMethod = ChttpMethodPUT) then
+      aMethod := ChttpMethodPOST
+    else if (aMethod = ChttpMethodPATCH) then
+      aMethod := ChttpMethodPUT
+  end;
+end;
+
+function TACBrPSPMercadoPago.CobRevisadaParaPaymentUpdate: string;
+begin
+  FPagamentoGerado.Clear;
+  FPagamentoSolicitado.Clear;
+  FPagamentoAtualizado.Clear;
+  FPagamentosConsultados.Clear;
+  FPagamentoAtualizado.status := CobStatusToPaymentStatus(epCob.CobRevisada.status);
+  FPagamentoAtualizado.transactionAmount := epCob.CobRevisada.valor.original;
+  Result := FPagamentoAtualizado.AsJSON;
 end;
 
 function TACBrPSPMercadoPago.CobSolicitadaParaPaymentRequest: string;
 begin
   FPagamentoGerado.Clear;
   FPagamentoSolicitado.Clear;
+  FPagamentoAtualizado.Clear;
   FPagamentosConsultados.Clear;
 
   FPagamentoSolicitado.transactionAmount := epCob.CobSolicitada.valor.original;
@@ -272,6 +303,49 @@ begin
   end;
 end;
 
+function TACBrPSPMercadoPago.PaymentResponseParaCobRevisada(const aPaymentResponseJSON: string): string;
+var
+  wCob: TACBrPIXCobRevisada;
+begin
+  FPagamentoGerado.AsJSON := aPaymentResponseJSON;
+  wCob := TACBrPIXCobRevisada.Create('');
+  try
+    wCob.status := PaymentStatusToCobStatus(FPagamentoGerado.status);
+    wCob.valor.original := FPagamentoGerado.transactionAmount;
+    Result := wCob.AsJSON;
+  finally
+    wCob.Free;
+  end;
+end;
+
+function TACBrPSPMercadoPago.PaymentResponseParaPixConsultado(const aPaymentResponseJSON: string): string;
+var
+  wPix: TACBrPIX;
+  I: Integer;
+begin
+  FPagamentoGerado.AsJSON := aPaymentResponseJSON;
+  wPix := TACBrPIX.Create('');
+  try
+    if (FPagamentoGerado.status in [mpsApproved, mpsRefunded]) then
+    begin
+      wPix.txid := FPagamentoGerado.id;
+      wPix.valor := FPagamentoGerado.transactionAmount;
+
+      for I := 0 to FPagamentoGerado.refunds.Count-1 do
+      with wPix.devolucoes.New do
+      begin
+        id := IntToStr(FPagamentoGerado.refunds[I].id);
+        valor := FPagamentoGerado.refunds[I].amount;
+        status := RefundStatusToDevolucaoStatus(FPagamentoGerado.refunds[I].status);
+      end;
+    end;
+
+    Result := wPix.AsJSON;
+  finally
+    wPix.Free;
+  end;
+end;
+
 function TACBrPSPMercadoPago.ConsultedPaymentsParaCobsConsultadas(const aConsultedPaymentsJSON: string): string;
 var
   wCobs: TACBrPIXCobsConsultadas;
@@ -340,14 +414,25 @@ begin
   end;
 end;
 
+function TACBrPSPMercadoPago.CobStatusToPaymentStatus(aStatus: TACBrPIXStatusCobranca): TMercadoPagoPaymentStatus;
+begin
+  case aStatus of
+    stcREMOVIDA_PELO_PSP, stcREMOVIDA_PELO_USUARIO_RECEBEDOR: Result := mpsCancelled;
+    stcATIVA: Result := mpsPending;
+    stcCONCLUIDA: Result := mpsApproved;
+    else
+      Result := mpsNone;
+  end;
+end;
+
 function TACBrPSPMercadoPago.PaymentStatusToCobStatus(aStatus:
   TMercadoPagoPaymentStatus): TACBrPIXStatusCobranca;
 begin
   case aStatus of
     mpsPending, mpsInProcess, mpsInMediation, mpsAuthorized: Result := stcATIVA;
     mpsApproved: Result := stcCONCLUIDA;
-    mpsCancelled, mpsRejected: Result := stcREMOVIDA_PELO_PSP;
-    mpsRefunded: Result := stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
+    mpsRejected: Result := stcREMOVIDA_PELO_PSP;
+    mpsCancelled, mpsRefunded: Result := stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
     else
       Result := stcNENHUM;
   end;
@@ -360,8 +445,8 @@ begin
     mrsApproved: Result := stdDEVOLVIDO;
     mrsInProcess: Result := stdEM_PROCESSAMENTO;
     mrsCancelled, mrsRejected: Result := stdNAO_REALIZADO;
-    else
-      Result := stdNENHUM;
+  else
+    Result := stdNENHUM;
   end;
 end;
 
@@ -383,11 +468,11 @@ end;
 procedure TACBrPSPMercadoPago.ConfigurarBody(const aMethod, aEndPoint: string; var aBody: string);
 begin
   if (aEndPoint = cEndPointPix) and (aMethod = ChttpMethodPUT) then
-    aBody := DevolucaoSolicitadaParaRefundRequest;
-
-  if (aEndPoint = cEndPointCob) and ((aMethod = ChttpMethodPUT) or
-    (aMethod = ChttpMethodPOST)) then
-    aBody := CobSolicitadaParaPaymentRequest;
+    aBody := DevolucaoSolicitadaParaRefundRequest
+  else if (aEndPoint = cEndPointCob) and ((aMethod = ChttpMethodPUT) or (aMethod = ChttpMethodPOST)) then
+    aBody := CobSolicitadaParaPaymentRequest
+  else if (aEndPoint = cEndPointCob) and (aMethod = ChttpMethodPATCH) then
+    aBody := CobRevisadaParaPaymentUpdate;
 end;
 
 procedure TACBrPSPMercadoPago.ConfigurarPathParameters(const aMethod, aEndPoint: string);

@@ -477,22 +477,26 @@ type
     property Items[aIndex: Integer]: TMercadoPagoRefund read GetItem write SetItem; default;
   end;
 
+  { TMercadoPagoPaymentUpdate }
 
-  { TMercadoPago }
+  TMercadoPagoPaymentUpdate = class(TACBrPIXSchema)
+  private
+    FdateExpiration: TDateTime;
+    Fstatus: TMercadoPagoPaymentStatus;
+    FtransactionAmount: Currency;
+  protected
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String = ''); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMercadoPagoPaymentUpdate);
 
-  //TMercadoPago = class(TACBrPIXSchema)
-  //private
-  //protected
-  //  procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
-  //  procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
-  //public
-  //  constructor Create(const aObjectName: String); override;
-  //  procedure Clear; override;
-  //  function IsEmpty: Boolean; override;
-  //  procedure Assign(aSource: TMercadoPago);
-  //
-  //  property a: string read Fa write Fa;
-  //end;
+    property dateExpiration: TDateTime read FdateExpiration write FdateExpiration;
+    property status: TMercadoPagoPaymentStatus read Fstatus write Fstatus;
+    property transactionAmount: Currency read FtransactionAmount write FtransactionAmount;
+  end;
 
   function PaymentStatusToString(aStatus: TMercadoPagoPaymentStatus): String;
   function StringToPaymentStatus(const aString: String): TMercadoPagoPaymentStatus;
@@ -516,6 +520,54 @@ implementation
 
 uses
   synautil, ACBrUtil.Base, ACBrUtil.Strings;
+
+{ TMercadoPagoPaymentUpdate }
+
+procedure TMercadoPagoPaymentUpdate.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .AddPair('date_of_expiration', FdateExpiration, False)
+    .AddPair('status', PaymentStatusToString(Fstatus), False)
+    .AddPair('transaction_amount', FtransactionAmount, False);
+end;
+
+procedure TMercadoPagoPaymentUpdate.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  s: String;
+begin
+  {$IFDEF FPC}s := EmptyStr;{$ENDIF}
+  aJSon
+    .Value('date_of_expiration', FdateExpiration)
+    .Value('status', s)
+    .Value('transaction_amount', FtransactionAmount);
+  Fstatus := StringToPaymentStatus(s);
+end;
+
+constructor TMercadoPagoPaymentUpdate.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  Clear;
+end;
+
+procedure TMercadoPagoPaymentUpdate.Clear;
+begin
+  FdateExpiration := 0;
+  Fstatus := mpsNone;
+  FtransactionAmount := 0;
+end;
+
+function TMercadoPagoPaymentUpdate.IsEmpty: Boolean;
+begin
+  Result := EstaZerado(FdateExpiration) and EstaZerado(ftransactionAmount) and
+    (Fstatus = mpsNone);
+end;
+
+procedure TMercadoPagoPaymentUpdate.Assign(aSource: TMercadoPagoPaymentUpdate);
+begin
+  FdateExpiration := aSource.dateExpiration;
+  Fstatus := aSource.status;
+  FtransactionAmount := aSource.transactionAmount;
+end;
 
 { TMercadoPagoRefundArray }
 

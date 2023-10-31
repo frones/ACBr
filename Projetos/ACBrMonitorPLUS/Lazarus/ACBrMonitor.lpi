@@ -231,131 +231,128 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="41">
+    <RequiredPackages Count="40">
       <Item1>
-        <PackageName Value="ACBr_OutrosDFeTCP"/>
+        <PackageName Value="ACBr_BoletoFC_FPDF"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_BoletoFC_FPDF"/>
+        <PackageName Value="ACBr_NFSeXDanfseRL"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFSeXDanfseRL"/>
+        <PackageName Value="ACBr_NFSeX"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_NFSeX"/>
+        <PackageName Value="ACBr_GTIN"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBr_GTIN"/>
+        <PackageName Value="LazControls"/>
       </Item5>
       <Item6>
-        <PackageName Value="LazControls"/>
+        <PackageName Value="ACBr_BPeDabpeESCPOS"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_BPeDabpeESCPOS"/>
+        <PackageName Value="ACBr_BPe"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_BPe"/>
+        <PackageName Value="lazreportpdfexport"/>
       </Item8>
       <Item9>
-        <PackageName Value="lazreportpdfexport"/>
+        <PackageName Value="ACBr_Reinf"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_Reinf"/>
+        <PackageName Value="ACBr_Integrador"/>
       </Item10>
       <Item11>
-        <PackageName Value="ACBr_Integrador"/>
+        <PackageName Value="ACBre_Social"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBre_Social"/>
+        <PackageName Value="lhelpcontrolpkg"/>
       </Item12>
       <Item13>
-        <PackageName Value="lhelpcontrolpkg"/>
+        <PackageName Value="TurboPowerIPro"/>
       </Item13>
       <Item14>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="frce"/>
       </Item14>
       <Item15>
-        <PackageName Value="frce"/>
+        <PackageName Value="ACBr_GNREGuiaRL"/>
       </Item15>
       <Item16>
-        <PackageName Value="ACBr_GNREGuiaRL"/>
+        <PackageName Value="ACBr_GNRE"/>
       </Item16>
       <Item17>
-        <PackageName Value="ACBr_GNRE"/>
+        <PackageName Value="ACBr_BlocoX"/>
       </Item17>
       <Item18>
-        <PackageName Value="ACBr_BlocoX"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item18>
       <Item19>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
       </Item19>
       <Item20>
-        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
+        <PackageName Value="ACBr_MDFe"/>
       </Item20>
       <Item21>
-        <PackageName Value="ACBr_MDFe"/>
+        <PackageName Value="ACBr_CTe_DACTeRL"/>
       </Item21>
       <Item22>
-        <PackageName Value="ACBr_CTe_DACTeRL"/>
+        <PackageName Value="ACBr_CTe"/>
       </Item22>
       <Item23>
-        <PackageName Value="ACBr_CTe"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item23>
       <Item24>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item24>
       <Item25>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item25>
       <Item26>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="SynEdit"/>
       </Item26>
       <Item27>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="FCL"/>
       </Item27>
       <Item28>
-        <PackageName Value="FCL"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item28>
       <Item29>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item29>
       <Item30>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item30>
       <Item31>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item31>
       <Item32>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item32>
       <Item33>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="ACBrSerial"/>
       </Item33>
       <Item34>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrTCP"/>
       </Item34>
       <Item35>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item35>
       <Item36>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item36>
       <Item37>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item37>
       <Item38>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrComum"/>
       </Item38>
       <Item39>
-        <PackageName Value="ACBrComum"/>
-      </Item39>
-      <Item40>
         <PackageName Value="LCLBase"/>
         <MinVersion Major="1" Release="1" Valid="True"/>
-      </Item40>
-      <Item41>
+      </Item39>
+      <Item40>
         <PackageName Value="LCL"/>
-      </Item41>
+      </Item40>
     </RequiredPackages>
     <Units Count="75">
       <Unit0>

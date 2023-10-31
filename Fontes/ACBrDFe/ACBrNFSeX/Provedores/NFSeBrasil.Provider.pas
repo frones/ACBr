@@ -48,6 +48,7 @@ type
     function GetDadosUsuario: string;
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
+    function TesteEnvio(ACabecalho, AMSG: string): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
@@ -201,6 +202,26 @@ begin
                      ['xmlns:urn="urn:loterpswsdl"', xsi]);
 end;
 
+function TACBrNFSeXWebserviceNFSeBrasil.TesteEnvio(ACabecalho,
+  AMSG: string): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  // Tratamento de nomes com &
+  AMSG := StringReplace(AMSG, '&amp;', '&amp;amp;', [rfReplaceAll]);
+
+  Request := '<urn:tm_lote_rps_service.testarLoteRPSRequest' + encodingStyle +'>';
+  Request := Request + '<xml xsi:type="xsd:string">' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + DadosUsuario;
+  Request := Request + '</urn:tm_lote_rps_service.testarLoteRPSRequest>';
+
+  Result := Executar('urn:loterpswsdl#tm_lote_rps_service.testarLoteRPS', Request,
+                     ['return', 'RespostaLoteRps'],
+                     ['xmlns:urn="urn:loterpswsdl"', xsi]);
+end;
+
 function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
   const aXML: string): string;
 begin
@@ -231,8 +252,10 @@ begin
   ConfigGeral.UseCertificateHTTP := False;
   ConfigMsgDados.Prefixo := 'xs';
 
-//  SetXmlNameSpace('https://www.nfsebrasil.net.br/nfse/rps/xsd/rps.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance');
-  SetXmlNameSpace('');
+  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then
+    SetXmlNameSpace(ConfigWebServices.Producao.XMLNameSpace)
+  else
+    SetXmlNameSpace(ConfigWebServices.Homologacao.XMLNameSpace);
 
   ConfigMsgDados.ConsultarNFSe.DocElemento := 'ConsultarNfsePorRpsEnvio';
 
@@ -281,7 +304,7 @@ var
   TagEnvio, Prefixo, PrefixoTS: string;
   I: Integer;
 begin
-  if Response.ModoEnvio in [meLoteSincrono, meUnitario, meTeste] then
+  if Response.ModoEnvio in [meLoteSincrono, meUnitario] then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod001;

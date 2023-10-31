@@ -526,7 +526,7 @@ uses
 procedure TMercadoPagoPaymentUpdate.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
-    .AddPair('date_of_expiration', FdateExpiration, False)
+    .AddPairISODateTime('date_of_expiration', FdateExpiration, False)
     .AddPair('status', PaymentStatusToString(Fstatus), False)
     .AddPair('transaction_amount', FtransactionAmount, False);
 end;
@@ -537,7 +537,7 @@ var
 begin
   {$IFDEF FPC}s := EmptyStr;{$ENDIF}
   aJSon
-    .Value('date_of_expiration', FdateExpiration)
+    .ValueISODateTime('date_of_expiration', FdateExpiration)
     .Value('status', s)
     .Value('transaction_amount', FtransactionAmount);
   Fstatus := StringToPaymentStatus(s);

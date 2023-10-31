@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 31/10/2023
+-- PadraoNacional.LerXml --
+[*] Ajustes para a impressão correta da Aliquota, valor do ISS Retido,
+    valor do ISS e se tem ou não tem retenção.
+   Por: Italo Giurizzato Junior
 -- NFSeBrasil.Provider --
 [*] Possível solução para tratar corretamente os namespace do XML e implementado
     o método de envio em modo de teste.

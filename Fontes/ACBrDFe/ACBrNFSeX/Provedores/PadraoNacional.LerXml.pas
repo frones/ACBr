@@ -1218,6 +1218,17 @@ begin
       tpImunidade := StrTotpImunidade(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpImunidade'), tcStr));
       pAliq := ObterConteudo(AuxNode.Childrens.FindAnyNs('pAliq'), tcDe2);
       tpRetISSQN := StrTotpRetISSQN(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpRetISSQN'), tcStr));
+
+      if tpRetISSQN = trNaoRetido then
+      begin
+        NFSe.Servico.Valores.IssRetido := stNormal;
+        NFSe.Servico.Valores.ValorIssRetido := 0;
+      end
+      else
+      begin
+        NFSe.Servico.Valores.IssRetido := stRetencao;
+        NFSe.Servico.Valores.ValorIssRetido := NFSe.infNFSe.valores.ValorIss;
+      end;
     end;
   end;
 end;
@@ -1310,6 +1321,8 @@ begin
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('xOutInf'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+    NFSe.Servico.Valores.Aliquota := NFSe.infNFSe.valores.Aliquota;
+    NFSe.Servico.Valores.ValorIss := NFSe.infNFSe.valores.ValorIss;
   end;
 end;
 

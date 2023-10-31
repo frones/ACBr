@@ -56,14 +56,12 @@ uses
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
-  ACBrXmlDocument,
-  ACBrXmlReader,
   ACBrJSON,
   IniFiles;
 
 const
-  URL_SEDEX    = 'https://www.cepcerto.com/ws/xml-frete';
-  URL_RASTREIO = 'https://www.cepcerto.com/ws/encomenda/';
+  URL_SEDEX    = 'https://www.cepcerto.com/ws/json-frete';
+  URL_RASTREIO = 'http://www.websro.com.br/detalhes.php?P_COD_UNI=';
 type
   TACBrTpServico = (Tps04510PAC, Tps04014SEDEX, Tps40215SEDEX10,
     Tps40290SEDEXHOJE, Tps81019eSEDEX, Tps44105MALOTE,
@@ -288,9 +286,6 @@ var
   Index: integer;
   LErro, LResposta : String;
   LRastreio : TACBrRastreio;
-  LXMLDocument: TACBrXmlDocument;
-  LStream: TStringStream;
-  LNodeList: TACBrXMLNodeList;
   LJson : TACBrJSONObject;
 begin
   case fnCdServico of
@@ -358,63 +353,45 @@ begin
   except on E: Exception do
     raise EACBrSedexException.Create('Erro ao consultar Sedex' + sLineBreak + E.Message);
   end;
+
   LResposta := Self.RespHTTP.Text;
 
-  if (Pos('{', LResposta) > 0) and (Pos('"msg":', LResposta) > 0) then
-  begin
-    LJson := TACBrJSONObject.Parse(NativeStringToUTF8(LResposta));
-    try
-      raise EACBrSedexException.Create(LJson.AsString['msg']);
-    finally
-      LJson.Free;
-    end;
-  end;
-
-
-
-  LStream := TStringStream.Create(NativeStringToUTF8(LResposta));
-
-  LXMLDocument := TACBrXmlDocument.Create;
+  LJson := TACBrJSONObject.Parse(NativeStringToUTF8(LResposta));
   try
-    retCodigoServico := TpServico;
-    LXMLDocument.LoadFromStream(LStream);
+    if LJson.AsString['msg'] <> '' then
+      raise EACBrSedexException.Create(LJson.AsString['msg']);
 
-    if LXMLDocument.Root.Content <> '' then
-    begin
-      LNodeList := LXMLDocument.Root.Childrens;
-      if LNodeList.Find('ErroHash') <> nil then
-        raise EACBrSedexException.Create(LNodeList.Find('ErroHash').AsString);
-      case fnCdServico of
-        Tps04510PAC :
-          begin
-            retvalor                 := StrToFloat(Trim(LNodeList.Find('valorpac').AsString));
-            retDataMaxEntrega        := Trim(LNodeList.Find('prazopac').AsString);
-          end;
-        Tps04014SEDEX :
-          begin
-            retvalor                 := StrToFloat(Trim(LNodeList.Find('valorsedex').AsString));
-            retDataMaxEntrega        := Trim(LNodeList.Find('prazosedex').AsString);
-          end;
-      end;
-      Result := True;
-    end else
-      raise EACBrSedexException.Create('Consulta retornou vazia.');
+    if LJson.AsString['ErroHash'] <> '' then
+      raise EACBrSedexException.Create(LJson.AsString['ErroHash']);
+
+    if LJson.AsString['Erro'] <> '' then
+      raise EACBrSedexException.Create(LJson.AsString['Erro']);
+
+    case fnCdServico of
+      Tps04510PAC :
+        begin
+          retvalor                 := StrToFloat(Trim(LJson.AsString['valorpac']));
+          retDataMaxEntrega        := Trim(LJson.AsString['prazopac']);
+        end;
+      Tps04014SEDEX :
+        begin
+          retvalor                 := StrToFloat(Trim(LJson.AsString['valorsedex']));
+          retDataMaxEntrega        := Trim(LJson.AsString['prazosedex']);
+        end;
+    end;
+    Result := True;
   finally
-    LStream.Free;
-    LXMLDocument.Free;
+    LJson.Free;
   end;
-
 end;
 
 procedure TACBrSedex.Rastrear(const ACodRastreio: String);
 var
+  LLista: TStringList;
   Index: integer;
-  LErro, LResposta : String;
+  LObservacoes, LErro, LData, LHora, LLocal, LLinha: String;
+  LDeveCriar: Boolean;
   LRastreio : TACBrRastreio;
-  LXMLDocument: TACBrXmlDocument;
-  LStream: TStringStream;
-  LNodeList: TACBrXMLNodeList;
-  LJson : TACBrJSONObject;
 begin
   retRastreio.Clear;
 
@@ -422,7 +399,7 @@ begin
     raise EACBrSedexException.CreateACBrStr('Código de rastreamento deve conter 13 caracteres');
 
   try
-    Self.HTTPGet(URL_RASTREIO + ACodRastreio + '/' + Self.Senha);
+    Self.HTTPGet(URL_RASTREIO + ACodRastreio);
   except
     on E: Exception do
     begin
@@ -430,55 +407,63 @@ begin
     end;
   end;
 
-  LResposta := Self.RespHTTP.Text;
-
-  if Pos(ACBrStr('tente novamente mais tarde'), LResposta) > 0 then
+  if Pos(ACBrStr('tente novamente mais tarde'), Self.RespHTTP.Text) > 0 then
   begin
-    LErro := Trim(StripHTML(LResposta));
+    LErro := Trim(StripHTML(Self.RespHTTP.Text));
     LErro := Trim(StringReplace(LErro,'SRO - Internet','',[rfReplaceAll]));
     LErro := Trim(StringReplace(LErro,'Resultado da Pesquisa','',[rfReplaceAll]));
 
     raise EACBrSedexException.Create(LErro);
   end;
 
-  if (Pos('{', LResposta) > 0) and (Pos('"msg":', LResposta) > 0) then
-  begin
-    LJson := TACBrJSONObject.Parse(NativeStringToUTF8(LResposta));
-    try
-      raise EACBrSedexException.Create(LJson.AsString['msg']);
-    finally
-      LJson.Free;
-    end;
-  end;
+  if Pos(ACBrStr('O rastreamento não está disponível no momento:'), Self.RespHTTP.Text) > 0 then
+     raise EACBrSedexException.Create('O rastreamento não está disponível no momento: '  + sLineBreak +
+                                      ' - Verifique se o código do objeto está correto ' + sLineBreak +
+                                      ' - O objeto pode demorar até 24 horas (após postagem) para ser rastreado no sistema do Correios.');
 
-  LStream := TStringStream.Create(NativeStringToUTF8(LResposta));
-
-  LXMLDocument := TACBrXmlDocument.Create;
+  LLista := TStringList.Create;
   try
-    LXMLDocument.LoadFromStream(LStream);
-    for Index := 0 to Pred(LXMLDocument.Root.Childrens.Count) do
+    LLista.Text := Self.RespHTTP.Text;
+    LDeveCriar := False;
+    for Index := 0 to Pred(LLista.Count) do
     begin
-      LNodeList := LXMLDocument.Root.Childrens[Index].Childrens;
-      if LXMLDocument.Root.Childrens[Index].Name = 'ErroHash' then
-        raise EACBrSedexException.Create(LXMLDocument.Root.Childrens[Index].Content);
+      LLinha := Trim(LLista.Strings[Index]);
+      if Pos('>Data', LLinha) > 0 then
+      begin
+        LData :=(RetornarConteudoEntre(LLinha, '>Data  : ', ' |'));
+        LHora :=(RetornarConteudoEntre(LLinha, 'Hora: ', '</li>'));
+        LData := LData + ' ' + LHora;
+      end;
 
-      if LXMLDocument.Root.Childrens[Index].Name = 'row' then
-        if LNodeList.Find('Erro') <> nil then
-          raise EACBrSedexException.Create(Trim(LXMLDocument.Root.Childrens[Index].Content));
+      if Pos('>Local', LLinha) > 0 then
+        LLocal := (RetornarConteudoEntre(LLinha, '<li>', '</li>'));
 
-      LRastreio := retRastreio.New;
-      LRastreio.DataHora   := StringToDateTime(Trim(LNodeList.Find('data').AsString), 'yyyy-mm-dd');
-      LRastreio.Local      := Trim(LNodeList.Find('unidade').AsString)
-                              + ' ' +
-                              Trim(LNodeList.Find('cidade').AsString)
-                              + ' ' +
-                              Trim(LNodeList.Find('uf').AsString);
-      LRastreio.Situacao   := Trim(LNodeList.Find('descricao').AsString);
-      LRastreio.Observacao := Trim(LNodeList.Find('unidade').AsString);
+      if Pos('<li>Origem', LLinha) > 0 then
+        LLocal := LLocal +(RetornarConteudoEntre(LLinha, '<li>', '</li>'));
+
+      if Pos('<li>Destino', LLinha) > 0 then
+        LLocal := LLocal + #13#10 + (RetornarConteudoEntre(LLinha, '<li>', '</li>'));
+
+      if Pos('>Status', LLinha) > 0 then
+        LObservacoes := RetornarConteudoEntre(LLinha, '<b>', '</b>');
+
+      LDeveCriar := Trim(LLocal) <> '';
+      if LDeveCriar then
+      begin
+        LRastreio := retRastreio.New;
+        LRastreio.DataHora   := StrToDateTimeDef(LData,0);
+        LRastreio.Local      := LLocal;
+        LRastreio.Situacao   := LObservacoes;
+        LRastreio.Observacao := LObservacoes;
+
+        //LData        := EmptyStr;
+        LLocal       := EmptyStr;
+        LObservacoes := EmptyStr;
+        LDeveCriar   := False;
+      end;
     end;
   finally
-    LStream.Free;
-    LXMLDocument.Free;
+    LLista.Free;
   end;
 end;
 

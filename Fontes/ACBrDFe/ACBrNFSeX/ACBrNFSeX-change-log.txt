@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/11/2023
+-- iiBrasil.Provider --
+[*] Possível solução para o retorno só com mensagem.
+   Por: Italo Giurizzato Junior
 -- EL.LerXml --
 [*] Ajustes para a leitura correta do XML da NFS-e, quando retornado em lote.
    Por: Italo Giurizzato Junior

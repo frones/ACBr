@@ -78,7 +78,7 @@ implementation
 
 uses
   synacode,
-  ACBrUtil.XMLHTML, ACBrUtil.Strings,
+  ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.FilesIO,
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, iiBrasil.GravarXml, iiBrasil.LerXml;
 
@@ -483,13 +483,31 @@ end;
 function TACBrNFSeXWebserviceiiBrasil204.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  if not StringIsXML(aXML) then
+  begin
+    Result := '<a>' +
+                '<ListaMensagemRetorno>' +
+                  '<MensagemRetorno>' +
+                    '<Codigo>' + '</Codigo>' +
+                    '<Mensagem>' + aXML + '</Mensagem>' +
+                    '<Correcao>' + '</Correcao>' +
+                  '</MensagemRetorno>' +
+                '</ListaMensagemRetorno>' +
+              '</a>';
 
-  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
-  Result := RemoverCDATA(Result);
-  Result := RemoverDeclaracaoXML(Result);
-  Result := RemoverCaracteresDesnecessarios(Result);
-  Result := RemoverIdentacao(Result);
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := String(NativeStringToUTF8(Result));
+  end
+  else
+  begin
+    Result := inherited TratarXmlRetornado(aXML);
+
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := RemoverCDATA(Result);
+    Result := RemoverDeclaracaoXML(Result);
+    Result := RemoverCaracteresDesnecessarios(Result);
+    Result := RemoverIdentacao(Result);
+  end;
 end;
 
 end.

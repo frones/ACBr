@@ -622,14 +622,25 @@ begin
 end;
 
 procedure TBoletoCedenteConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LTipoInscricao: integer;
 begin
+
+  CNPJCPF:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveCNPJCPF, CNPJCPF );
+
+  LTipoInscricao:= AIni.ReadInteger(CSessaoBoletoCedenteConfig, CChaveTipoInscricao, 1);
+
+  if (TACBrPessoaCedente(LTipoInscricao) >= Low(TACBrPessoaCedente)) and (TACBrPessoaCedente(LTipoInscricao) <= High(TACBrPessoaCedente)) then
+     TipoInscricao := TACBrPessoaCedente( LTipoInscricao )
+  else
+    TipoInscricao := pJuridica;
+
   Agencia:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveAgencia, Agencia);
   AgenciaDigito:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveAgenciaDigito, AgenciaDigito );
   Bairro:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveBairro, Bairro );
   CaracTitulo:= TACBrCaracTitulo( AIni.ReadInteger(CSessaoBoletoCedenteConfig, CChaveCaracTitulo, integer(CaracTitulo) ));
   CEP:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveCEP, CEP );
   Cidade:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveCidade, Cidade );
-  CNPJCPF:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveCNPJCPF, CNPJCPF );
   CodigoCedente:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveCodigoCedente, CodigoCedente );
   CodigoTransmissao:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveCodigoTransmissao, CodigoTransmissao );
   Complemento:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveComplemento, Complemento );
@@ -644,7 +655,6 @@ begin
   Telefone:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveTelefone, Telefone);
   TipoCarteira:= TACBrTipoCarteira( AIni.ReadInteger(CSessaoBoletoCedenteConfig, CChaveTipoCarteira, integer(TipoCarteira) ));
   TipoDocumento:= TACBrTipoDocumento( AIni.ReadInteger(CSessaoBoletoCedenteConfig, CChaveTipoDocumento, integer(TipoDocumento) ));
-  TipoInscricao:= TACBrPessoaCedente( AIni.ReadInteger(CSessaoBoletoCedenteConfig, CChaveTipoInscricao, integer(TipoInscricao) ));
   UF:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveUF, UF );
   DigitoVerificadorAgenciaConta:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveDigitoVerificadorAgenciaConta, DigitoVerificadorAgenciaConta);
   IdentDistribuicao:= TACBrIdentDistribuicao(AIni.ReadInteger(CSessaoBoletoCedenteConfig, CChaveIdentDistribuicao, integer(FIdentDistribuicao)));

@@ -84,6 +84,7 @@ var
   LibConfig: TLibBoletoConfig;
   wVersaoLote, wVersaoArquivo, wNumeroCorrespondente: Integer;
 begin
+
   LibConfig := TLibBoletoConfig(Lib.Config);
 
   with ACBrBoleto1 do
@@ -136,16 +137,18 @@ begin
 
   with ACBrBoleto1.Cedente do
   begin
+    //Não inverter a ordem para não ocorrer quebra dos campos. #TK-4358-1
+    CNPJCPF := LibConfig.BoletoCedenteConfig.CNPJCPF;
+    TipoInscricao := LibConfig.BoletoCedenteConfig.TipoInscricao;
+    //
     TipoCarteira := LibConfig.BoletoCedenteConfig.TipoCarteira;
     TipoDocumento := LibConfig.BoletoCedenteConfig.TipoDocumento;
-    TipoInscricao := LibConfig.BoletoCedenteConfig.TipoInscricao;
     Agencia := LibConfig.BoletoCedenteConfig.Agencia;
     AgenciaDigito := LibConfig.BoletoCedenteConfig.AgenciaDigito;
     Bairro := LibConfig.BoletoCedenteConfig.Bairro;
     CaracTitulo := LibConfig.BoletoCedenteConfig.CaracTitulo;
     CEP := LibConfig.BoletoCedenteConfig.CEP;
     Cidade := LibConfig.BoletoCedenteConfig.Cidade;
-    CNPJCPF := LibConfig.BoletoCedenteConfig.CNPJCPF;
     CodigoCedente := LibConfig.BoletoCedenteConfig.CodigoCedente;
     CodigoTransmissao := LibConfig.BoletoCedenteConfig.CodigoTransmissao;
     Complemento := LibConfig.BoletoCedenteConfig.Complemento;

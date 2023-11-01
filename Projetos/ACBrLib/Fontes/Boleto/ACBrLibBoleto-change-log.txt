@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2023
+--- ACBrLibBoletoConfig, ACBrLibBoletoDataModule ---
+[-] Correção na leitura de CPF / CNPJ
+    Por: Antonio Carlos Junior e Victor H Gonzales - Pandaaa
+
 25/04/2023
 --- ACBrLibBoletoConfig, ACBrLibBoletoConsts, ACBrLibBoletoDataModule ---
 [+] Criação do campo LerNossoNumeroCompleto - #TK-3857

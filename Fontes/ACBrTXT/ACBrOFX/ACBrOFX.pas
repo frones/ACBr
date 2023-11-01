@@ -160,8 +160,36 @@ var
   oItem: TOFXItem;
   sLine: string;
   Amount: string;
-  LMemo : string;
   LDescricaoMemo  : string;
+  function GetDataFuso(ATexto:string): string;
+    var
+      LAno, LMes, LDia: Word;
+      LFuso : Extended;
+      LLine : String;
+    function IsUTC(const LLine: string; var LFuso: Extended): Boolean;
+    var
+      LInicio, LFim: Integer;
+    begin
+      Result := Pos('GMT',LLine) > 0;
+      if Result then
+      begin
+        LInicio := Pos('[',LLine);
+        LFim    := Pos(':',LLine);
+        LFuso   := StrToFloat(Copy(LLine, LInicio + 1, LFim - LInicio - 1));
+      end else
+       LFuso := 0;
+    end;
+  begin
+    LLine := InfLine(ATexto);
+    LAno := StrToInt(Copy(LLine, 1, 4));
+    LMes := StrToInt(Copy(LLine, 5, 2));
+
+    if IsUTC(LLine, LFuso) then
+      LDia := Trunc((StrToInt(Copy(LLine, 7, 6)) div 3600) div 24 + LFuso)
+    else
+      LDia := StrToInt(Copy(LLine, 7, 2));
+    Result := DateToStr(EncodeDate(LAno, LMes, LDia));
+  end;
 begin
   Clear;
   DateStart := '';
@@ -203,15 +231,13 @@ begin
         if FindString('<DTSTART>', sLine) then
         begin
           if Trim(sLine) <> '' then
-            DateStart := DateToStr(EncodeDate(StrToIntDef(Copy(InfLine(sLine), 1, 4), 0), StrToIntDef(Copy(InfLine(sLine), 5, 2), 0),
-              StrToIntDef(Copy(InfLine(sLine), 7, 2), 0)));
+            DateStart := GetDataFuso(sLine);
         end;
         // Date End
         if FindString('<DTEND>', sLine) then
         begin
           if Trim(sLine) <> '' then
-            DateEnd := DateToStr(EncodeDate(StrToIntDef(Copy(InfLine(sLine), 1, 4), 0), StrToIntDef(Copy(InfLine(sLine), 5, 2), 0),
-              StrToIntDef(Copy(InfLine(sLine), 7, 2), 0)));
+            DateEnd := GetDataFuso(sLine);
         end;
         // Final
         if FindString('<LEDGER>', sLine) or FindString('<BALAMT>', sLine) then

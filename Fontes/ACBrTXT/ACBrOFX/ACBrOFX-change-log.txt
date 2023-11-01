@@ -47,6 +47,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+01/11/2023
+[*]TK-4638 ACBrOFX - O arquivo OFX do Santander está apresentando problema na leitura da Data.
+  por Software Amigo / Victor H Gonzales - Pandaaa
+
 10/07/2023
 [+]TK-4085 ACBrOFX - A tag TRNTYPE do arquivo OFX com valores IN e OUT
   por : Jhoni Conzatti

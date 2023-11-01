@@ -1111,7 +1111,10 @@ begin
       ConteudoEhXml := False;
     end
     else
+    begin
+      ArqEvento := aEvento;
       ConteudoEhXml := True;
+    end;
 
     if not ConteudoEhXml then
       aNomeArq := StringReplace(aNomeArq, '.xml', Extensao, [rfReplaceAll]);

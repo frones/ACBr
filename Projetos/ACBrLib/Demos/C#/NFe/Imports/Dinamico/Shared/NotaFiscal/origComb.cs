@@ -7,7 +7,7 @@
 
         public IndImport indImport { get; set; }
 
-        public decimal cUFOrig { get; set; }
+        public int cUFOrig { get; set; }
 
         public decimal pOrig { get; set; }
 

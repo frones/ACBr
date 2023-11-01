@@ -401,7 +401,7 @@ namespace ACBrLib.NFe
                 do
                 {
                     k++;
-                    OrigComb = iniData.ReadFromIni<OrigCombNFe>($"OrigComb{i:000}{k:00}");
+                    OrigComb = iniData.ReadFromIni<OrigCombNFe>($"origComb{i:000}{k:00}");
                     if (OrigComb == null) continue;
 
                     produto.Combustivel.OrigComb.Add(OrigComb);

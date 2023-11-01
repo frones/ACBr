@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2023
+-- ACBrUtil.FilesIO --
+[+] Implementado a função StringIsPDF que tem como objetivo identificar se a
+    string passada é um PDF ou não.
+   Por: Italo Giurizzato Junior
+
 16/10/2023
 -- ACBrJSON --
 [+] Inclusão de novas funções para facilitar o tratamento do JSON em objetos

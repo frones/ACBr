@@ -2440,7 +2440,7 @@ begin
    try
      with ACBrVal do
      begin
-       if TipoInscricao = pFisica then
+       if (TipoInscricao = pFisica) or (Length(ADocto) = 11)  then
        begin
          TipoDocto := docCPF;
          Documento := RightStr(ADocto,11);
@@ -3765,7 +3765,7 @@ var
   IniBoletos : TMemIniFile ;
   Titulo : TACBrTitulo;
   NFe : TACBrDadosNFe;
-  wTipoInscricao, wRespEmissao, wLayoutBoleto: Integer;
+  LTipoInscricao, wRespEmissao, wLayoutBoleto: Integer;
   wNumeroBanco, wIndiceACBr, wCNAB, wNumeroCorrespondente,
   wVersaoLote, wVersaoArquivo: Integer;
   wLocalPagto, MemFormatada, MemInformativo, MemDetalhamento: String;
@@ -3784,12 +3784,12 @@ begin
       //Cedente
       if IniBoletos.SectionExists('Cedente') then
       begin
-        wTipoInscricao := IniBoletos.ReadInteger(CCedente,'TipoInscricao', IniBoletos.ReadInteger(CCedente,'TipoPessoa', 1 ) );
-        try
-           Cedente.TipoInscricao := TACBrPessoa( wTipoInscricao ) ;
-        except
-           Cedente.TipoInscricao := pJuridica ;
-        end ;
+        LTipoInscricao := IniBoletos.ReadInteger(CCedente,'TipoInscricao', IniBoletos.ReadInteger(CCedente,'TipoPessoa', 1 ) );
+
+        if (TACBrPessoaCedente(LTipoInscricao) >= Low(TACBrPessoaCedente)) and (TACBrPessoaCedente(LTipoInscricao) <= High(TACBrPessoaCedente)) then
+          Cedente.TipoInscricao := TACBrPessoaCedente( LTipoInscricao )
+        else
+           Cedente.TipoInscricao := pJuridica;
 
         Nome          := IniBoletos.ReadString(CCedente,'Nome',Nome);
         FantasiaCedente:= IniBoletos.ReadString(CCedente,'FantasiaCedente',FantasiaCedente);
@@ -3812,8 +3812,6 @@ begin
         DigitoVerificadorAgenciaConta := IniBoletos.ReadString(CCedente,'DigitoVerificadorAgenciaConta', DigitoVerificadorAgenciaConta);
         IdentDistribuicao := TACBrIdentDistribuicao(IniBoletos.ReadInteger(CCedente,'IdentDistribuicao', Integer(IdentDistribuicao)));
         Operacao          := IniBoletos.ReadString(CCedente,'Operacao', Operacao);
-
-        TipoInscricao :=  TACBrPessoaCedente(IniBoletos.ReadInteger(CCedente,'TipoInscricao',Integer(TipoInscricao) ));
 
         PIX.Chave        :=  IniBoletos.ReadString(CCedente,'PIX.Chave','');
         PIX.TipoChavePIX :=  TACBrPIXTipoChave(IniBoletos.ReadInteger(CCedente,'PIX.TipoChavePIX', 0 ));

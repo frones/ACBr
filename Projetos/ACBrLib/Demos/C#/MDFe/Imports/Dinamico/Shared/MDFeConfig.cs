@@ -61,6 +61,17 @@ namespace ACBrLib.MDFe
             set => SetProperty(value);
         }
 
+        public string IdCSRT
+        {
+            get => GetProperty<string>();
+            set => SetProperty<string>(value);
+        }
+
+        public string CSRT
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
         #endregion Properties
     }
 }

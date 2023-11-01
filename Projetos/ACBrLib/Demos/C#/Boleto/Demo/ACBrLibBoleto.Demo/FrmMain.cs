@@ -151,6 +151,11 @@ namespace ACBrLibBoleto.Demo
 
         private void SaveConfig()
         {
+            //Salvar primeiro Tipo de Inscrição depois CNPJ ou CPF.
+            boleto.Config.Cedente.TipoInscricao = cmbTipoInscricao.GetSelectedValue<ACBrPessoa>();
+            boleto.Config.Cedente.CNPJCPF = txtCNPJCPF.Text;
+            //
+
             boleto.Config.Impressao.MostrarPreview = chkPreview.Checked;
             boleto.Config.Impressao.MostrarProgresso = chkProgresso.Checked;
             boleto.Config.Impressao.MostrarSetup = chkSetup.Checked;
@@ -161,7 +166,6 @@ namespace ACBrLibBoleto.Demo
             boleto.Config.Banco.TipoCobranca = cmbBanco.GetSelectedValue<ACBrTipoCobranca>();
             boleto.Config.Cedente.TipoCarteira = cmbTipoCarteira.GetSelectedValue<ACBrTipoCarteira>();
             boleto.Config.Cedente.TipoDocumento = cmbTipoDocumento.GetSelectedValue<ACBrTipoDocumento>();
-            boleto.Config.Cedente.TipoInscricao = cmbTipoInscricao.GetSelectedValue<ACBrPessoa>();
             boleto.Config.Cedente.Agencia = txtAgencia.Text;
             boleto.Config.Cedente.AgenciaDigito = txtDigAgencia.Text;
             boleto.Config.Cedente.Conta = txtConta.Text;
@@ -174,7 +178,6 @@ namespace ACBrLibBoleto.Demo
             boleto.Config.Cedente.Bairro = txtBairro.Text;
             boleto.Config.Cedente.CEP = txtCEP.Text;
             boleto.Config.Cedente.Cidade = txtCidade.Text;
-            boleto.Config.Cedente.CNPJCPF = txtCNPJCPF.Text;
             boleto.Config.Cedente.Complemento = txtComplemento.Text;
             boleto.Config.Cedente.Logradouro = txtLogradouro.Text;
             boleto.Config.Cedente.Nome = txtNomeRes.Text;

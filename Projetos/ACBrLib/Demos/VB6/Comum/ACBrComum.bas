@@ -433,6 +433,7 @@ End Enum
 Public Enum VersaoCTe
     ve200 = 0
     ve300 = 1
+    ve400 = 2
 End Enum
 
 Public Enum VersaoMDFe

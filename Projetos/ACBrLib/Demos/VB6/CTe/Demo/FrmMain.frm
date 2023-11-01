@@ -1040,7 +1040,7 @@ Begin VB.Form FrmMain
             Height          =   315
             ItemData        =   "FrmMain.frx":02ED
             Left            =   240
-            List            =   "FrmMain.frx":02F7
+            List            =   "FrmMain.frx":02FA
             Style           =   2  'Dropdown List
             TabIndex        =   7
             Top             =   720
@@ -1364,7 +1364,7 @@ Begin VB.Form FrmMain
       TabsPerRow      =   5
       TabHeight       =   520
       TabCaption(0)   =   "Envio"
-      TabPicture(0)   =   "FrmMain.frx":0309
+      TabPicture(0)   =   "FrmMain.frx":0313
       Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "btnGerarXml"
       Tab(0).Control(0).Enabled=   0   'False
@@ -1392,7 +1392,7 @@ Begin VB.Form FrmMain
       Tab(0).Control(11).Enabled=   0   'False
       Tab(0).ControlCount=   12
       TabCaption(1)   =   "Consultas"
-      TabPicture(1)   =   "FrmMain.frx":0325
+      TabPicture(1)   =   "FrmMain.frx":032F
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "btnConsultaChave"
       Tab(1).Control(0).Enabled=   0   'False
@@ -1406,7 +1406,7 @@ Begin VB.Form FrmMain
       Tab(1).Control(4).Enabled=   0   'False
       Tab(1).ControlCount=   5
       TabCaption(2)   =   "Eventos"
-      TabPicture(2)   =   "FrmMain.frx":0341
+      TabPicture(2)   =   "FrmMain.frx":034B
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "btnImprimirEventoPDF"
       Tab(2).Control(0).Enabled=   0   'False
@@ -1424,7 +1424,7 @@ Begin VB.Form FrmMain
       Tab(2).Control(6).Enabled=   0   'False
       Tab(2).ControlCount=   7
       TabCaption(3)   =   "Inutilização"
-      TabPicture(3)   =   "FrmMain.frx":035D
+      TabPicture(3)   =   "FrmMain.frx":0367
       Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "btnImprimirInutilizacaoPDF"
       Tab(3).Control(0).Enabled=   0   'False
@@ -1434,7 +1434,7 @@ Begin VB.Form FrmMain
       Tab(3).Control(2).Enabled=   0   'False
       Tab(3).ControlCount=   3
       TabCaption(4)   =   "Distribuição DFe"
-      TabPicture(4)   =   "FrmMain.frx":0379
+      TabPicture(4)   =   "FrmMain.frx":0383
       Tab(4).ControlEnabled=   0   'False
       Tab(4).Control(0)=   "btnDFePorUltNSU"
       Tab(4).Control(0).Enabled=   0   'False

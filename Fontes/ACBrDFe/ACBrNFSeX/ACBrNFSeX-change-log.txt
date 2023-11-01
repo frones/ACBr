@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Minduri/MG, provedor Futuruze.
+  Por: Arimateia Jr
+[*] A cidade de Amparo/SP trocou de provedor, agora é GovDigital.
+  Por: Dercide Alvarez
+[*] A cidade de São José dos Campos/SP trocou de versão, o provedor continua o mesmo.
+  Por: Bruno Lucas Batista
+
 31/10/2023
 -- PadraoNacional.LerXml --
 [*] Ajustes para a impressão correta da Aliquota, valor do ISS Retido,

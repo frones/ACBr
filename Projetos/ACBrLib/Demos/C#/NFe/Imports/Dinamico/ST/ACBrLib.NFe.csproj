@@ -118,6 +118,8 @@
     <Compile Include="..\Shared\NotaFiscal\NFRef.cs" Link="NotaFiscal\NFRef.cs" />
     <Compile Include="..\Shared\NotaFiscal\NotaFiscal.cs" Link="NotaFiscal\NotaFiscal.cs" />
     <Compile Include="..\Shared\NotaFiscal\NVENFe.cs" Link="NotaFiscal\NVENFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\origComb.cs" Link="NotaFiscal\origComb.cs" />  
+	<Compile Include="..\Shared\NotaFiscal\IndImport.cs" Link="NotaFiscal\IndImport.cs" />
     <Compile Include="..\Shared\NotaFiscal\PagamentoNFe.cs" Link="NotaFiscal\PagamentoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PISProdutoNFe.cs" Link="NotaFiscal\PISProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PISSTProdutoNFe.cs" Link="NotaFiscal\PISSTProdutoNFe.cs" />

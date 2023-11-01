@@ -14,6 +14,8 @@
 
         public decimal vEncFin { get; set; }
 
+        public decimal pBio { get; set; }
+
         #endregion Properties
     }
 }

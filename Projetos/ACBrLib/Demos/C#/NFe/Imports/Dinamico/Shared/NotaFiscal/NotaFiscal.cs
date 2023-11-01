@@ -178,6 +178,10 @@ namespace ACBrLib.NFe
 
                     if (produto.Combustivel.Encerrante.nBico > 0)
                         iniData.WriteToIni(produto.Combustivel.Encerrante, $"encerrante{i + 1:000}");
+
+                    if (produto.Combustivel.OrigComb.Count > 0)
+                        for (var k = 0; k < produto.Combustivel.OrigComb.Count; k++)
+                             iniData.WriteToIni(produto.Combustivel.OrigComb[k], $"origComb{i + 1:000}{k + 1:00}");
                 }
 
                 iniData.WriteToIni(produto.ICMS, $"ICMS{i + 1:000}");
@@ -391,6 +395,18 @@ namespace ACBrLib.NFe
                 iniData.ReadFromIni(produto.Combustivel, $"Combustivel{i:000}");
                 iniData.ReadFromIni(produto.Combustivel.CIDE, $"CIDE{i:000}");
                 iniData.ReadFromIni(produto.Combustivel.Encerrante, $"encerrante{i:000}");
+
+                k = 0;
+                OrigCombNFe OrigComb;
+                do
+                {
+                    k++;
+                    OrigComb = iniData.ReadFromIni<OrigCombNFe>($"OrigComb{i:000}{k:00}");
+                    if (OrigComb == null) continue;
+
+                    produto.Combustivel.OrigComb.Add(OrigComb);
+                } while (OrigComb != null);
+
                 iniData.ReadFromIni(produto.ICMS, $"ICMS{i:000}");
                 iniData.ReadFromIni(produto.IPI, $"IPI{i:000}");
                 iniData.ReadFromIni(produto.II, $"II{i:000}");

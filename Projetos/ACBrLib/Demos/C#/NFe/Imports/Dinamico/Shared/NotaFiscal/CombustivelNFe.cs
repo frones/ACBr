@@ -1,4 +1,6 @@
-﻿namespace ACBrLib.NFe
+﻿using System.Collections.Generic;
+
+namespace ACBrLib.NFe
 {
     public class CombustivelNFe
     {
@@ -7,7 +9,7 @@
         public CombustivelNFe()
         {
             CIDE = new CIDENFe();
-            Encerrante = new EncerranteNFe();
+            Encerrante = new EncerranteNFe();            
         }
 
         #endregion Constructors
@@ -37,6 +39,8 @@
         public CIDENFe CIDE { get; }
 
         public EncerranteNFe Encerrante { get; }
+
+        public List<OrigCombNFe> OrigComb { get; } = new List<OrigCombNFe>();
 
         #endregion Properties
     }

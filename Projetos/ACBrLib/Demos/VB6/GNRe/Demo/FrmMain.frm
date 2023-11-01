@@ -4,7 +4,7 @@ Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   3  'Fixed Dialog
-   Caption         =   "ACBrLibGNReMT Demo"
+   Caption         =   "ACBrLibGNRe Demo"
    ClientHeight    =   7800
    ClientLeft      =   45
    ClientTop       =   390

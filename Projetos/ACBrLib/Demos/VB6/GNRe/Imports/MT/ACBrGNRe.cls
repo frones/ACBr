@@ -136,7 +136,7 @@ Private Declare Function GNRE_EnviarEmail _
 Private Declare Function GNRE_Imprimir _
                 Lib "ACBrGNRe32.dll" (ByVal libHandler As Long, _
                                       ByVal eNomeImpressora As String, _
-                                      ByRef eMostrarPreview As String) As Long
+                                      ByVal eMostrarPreview As String) As Long
                                       
 Private Declare Function GNRE_ImprimirPDF Lib "ACBrGNRe32.dll" (ByVal libHandler As Long) As Long
 

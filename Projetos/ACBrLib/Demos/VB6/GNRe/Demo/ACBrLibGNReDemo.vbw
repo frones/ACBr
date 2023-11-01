@@ -1,5 +1,5 @@
-FrmMain = 52, 52, 1295, 619, , 26, 26, 1273, 619, C
+FrmMain = 52, 52, 1295, 619, Z, 26, 26, 1273, 619, C
 ACBrComum = 104, 104, 1290, 671, 
 FolderBrowser = 78, 78, 662, 720, 
-ACBrGNReUtils = 0, 0, 1309, 593, Z
+ACBrGNReUtils = 0, 0, 1309, 593, 
 ACBrGNRe = 52, 52, 1238, 619, 

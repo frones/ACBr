@@ -766,7 +766,7 @@ begin
 
   if TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.FormatoArqRetorno <> tfaXml then
   begin
-    if Pos('%PDF-1.4', ADadosMsg) = 0 then
+    if not StringIsPDF(ADadosMsg) then
       ADadosMsg := RemoverDeclaracaoXML(ADadosMsg);
 
     ConteudoEhXml := False;

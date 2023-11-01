@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/11/2023
+-- ACBrNFSeXWebserviceBase/PadraoNacional.Provider --
+[*] Alteração visando o uso da função StringIsPDF para detectar se a string é um
+    PDF ou não.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Minduri/MG, provedor Futuruze.
   Por: Arimateia Jr

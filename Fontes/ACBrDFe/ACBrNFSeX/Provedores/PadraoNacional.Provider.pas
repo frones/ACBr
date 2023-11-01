@@ -111,7 +111,7 @@ uses
   synacode,
   pcnAuxiliar,
   ACBrDFeException, ACBrCompress,
-  ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.FilesIO,
   ACBrNFSeX, ACBrNFSeXConsts, ACBrNFSeXConfiguracoes,
   PadraoNacional.GravarXml, PadraoNacional.LerXml;
 
@@ -1460,7 +1460,7 @@ function TACBrNFSeXWebservicePadraoNacional.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  if Pos('%PDF-1.4', Result) = 0 then
+  if not StringIsPDF(Result) then
     Result := UTF8Decode(Result);
 end;
 

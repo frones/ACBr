@@ -961,6 +961,14 @@ begin
     'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrReinf1.Configuracoes.Arquivos.PathSalvar;
 
+  if ACBrReinf1.Eventos.Count > 0 then
+  begin
+    if ( MessageDlg( PChar( 'Já existem eventos carregados: ' + IntToStr(ACBrReinf1.Eventos.Count) + #13#13 +
+                     'Deseja limpar a lista de eventos já adicionados ?' ),
+                     mtConfirmation, [ mbYes, mbNo ], 0 ) = mrYes ) then
+      ACBrReinf1.Eventos.Clear;
+  end;
+
   if OpenDialog1.Execute then
     ACBrReinf1.Eventos.LoadFromINI(OpenDialog1.FileName);
 
@@ -985,6 +993,8 @@ begin
   OpenDialog1.Filter :=
     'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrReinf1.Configuracoes.Arquivos.PathSalvar;
+
+  ACBrReinf1.Eventos.Clear;
 
   if OpenDialog1.Execute then
     ACBrReinf1.Eventos.LoadFromFile(OpenDialog1.FileName);
@@ -1450,7 +1460,7 @@ begin
   if not (InputQuery(Titulo, 'Período de Apuração (AAAA-MM):', PerApur)) then
     Exit;
 
-  TipoEvento := '';
+  TipoEvento := 'R-';
   if not (InputQuery(Titulo, 'Tipo do Evento (R-xxxx):', TipoEvento)) then
     Exit;
 
@@ -1799,8 +1809,8 @@ begin
         end;
       end;
 
-      infoContribuinte.NovaValidade.IniValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
-      infoContribuinte.NovaValidade.FimValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
+      //infoContribuinte.NovaValidade.IniValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
+      //infoContribuinte.NovaValidade.FimValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
     end;
   end;
 end;
@@ -1824,9 +1834,9 @@ begin
       with infoLig do
       begin
         if rdgOperacao.ItemIndex <> 3 then
-          ideEntLig.tpEntLig := telFundoInvestimento;
+          ideEntLig.tpEntLig := telSociedadeParticipacao;
 
-        ideEntLig.cnpjLig  := '12345678000123';
+        ideEntLig.cnpjLig  := edSoftCNPJ.Text;
         ideEntLig.IniValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
         ideEntLig.FimValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
 
@@ -1870,7 +1880,7 @@ begin
           with infoSusp.New do
           begin
             codSusp     := '12345678';
-            indSusp     := siLiminarMandadoSeguranca;
+            indSusp     := siDepositoAdministrativoMontanteIntegral;
             dtDecisao   := IncMonth(Date,-1);
             indDeposito := tpSim;
           end;
@@ -1915,7 +1925,7 @@ begin
 
           with idePrestServ do
           begin
-            cnpjPrestador     := '123456780001123';
+            cnpjPrestador     := edSoftCNPJ.Text;
             vlrTotalBruto     := 1000.00;
             vlrTotalBaseRet   := 1000.00;
             vlrTotalRetPrinc  := 110.00;
@@ -2004,7 +2014,7 @@ begin
           with ideTomador do
           begin
             tpInscTomador     := tiCNPJ;
-            nrInscTomador     := '12345678000123';
+            nrInscTomador     := edSoftCNPJ.Text;
             indObra           := ioNaoeObraDeConstrucaoCivil;
             vlrTotalBruto     := 1000.00;
             vlrTotalBaseRet   := 1000.00;
@@ -2091,7 +2101,7 @@ begin
         recursosRec.Clear;
         with recursosRec.New do
         begin
-          cnpjOrigRecurso := '12345678000123';
+          cnpjOrigRecurso := edSoftCNPJ.Text;
 
           if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
           begin
@@ -2154,7 +2164,7 @@ begin
         recursosRep.Clear;
         with recursosRep.New do
         begin
-          cnpjAssocDesp := '12345678000123';
+          cnpjAssocDesp := edSoftCNPJ.Text;
           vlrTotalRep   := 100.00;
           vlrTotalRet   := 0;
           vlrTotalNRet  := 0;
@@ -2205,7 +2215,7 @@ begin
       with infoComProd.ideEstab do
       begin
         tpInscEstab       := tiCNPJ;
-        nrInscEstab       := '12345678000123';
+        nrInscEstab       := edSoftCNPJ.Text;
         vlrRecBrutaTotal  := 1000.00;
         vlrCPApur         := 0.00;
         vlrRatApur        := 0.00;
@@ -2262,7 +2272,7 @@ begin
         nrInscAdq := edtEmitCNPJ.Text; // Diferente do nrInscProd
 
         tpInscProd := tiCNPJ;
-        nrInscProd := '12345678000234'; // Diferente do nrInscAdq
+        nrInscProd := edSoftCNPJ.Text; // Diferente do nrInscAdq
         indOpcCP   := 'S';
 
         detAquis.Clear;
@@ -2379,7 +2389,7 @@ begin
       begin
         codPgto      := '123';
         tpInscBenef  := tiCNPJ;
-        nrInscBenef  := '12345678000123';
+        nrInscBenef  := edSoftCNPJ.Text;
         nmRazaoBenef := 'Nome do Beneficiario';
 
         with infoResidExt do
@@ -2412,7 +2422,7 @@ begin
         with ideEstab.New do
         begin
           tpInsc := tiCNPJ;
-          nrInsc := '12345678000112';
+          nrInsc := edSoftCNPJ.Text;
 
           pgtoPF.Clear;
           with pgtoPF.New do
@@ -2469,7 +2479,7 @@ begin
                 with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
-                  nrInscAdvogado := '12345678000123';
+                  nrInscAdvogado := edSoftCNPJ.Text;
                   vlrAdvogado    := 0.0;
                 end;
               end;
@@ -2491,14 +2501,14 @@ begin
                 with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
-                  nrInscAdvogado := '12345678000123';
+                  nrInscAdvogado := edSoftCNPJ.Text;
                   vlrAdvogado    := 0.0;
                 end;
               end;
 
               with origemRecursos do
               begin
-                cnpjOrigemRecursos := '12345678000123';
+                cnpjOrigemRecursos := edSoftCNPJ.Text;
               end;
             end;
 
@@ -2531,14 +2541,14 @@ begin
                 with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
-                  nrInscAdvogado := '12345678000123';
+                  nrInscAdvogado := edSoftCNPJ.Text;
                   vlrAdvogado    := 0.0;
                 end;
               end;
 
               with origemRecursos do
               begin
-                cnpjOrigemRecursos := '12345678000123';
+                cnpjOrigemRecursos := edSoftCNPJ.Text;
               end;
             end;
           end;
@@ -2655,7 +2665,7 @@ begin
           modDesportiva   := 'TESTE';
           nomeCompeticao  := 'TESTE';
           cnpjMandante    := edtEmitCNPJ.Text;
-          cnpjVisitante   := '12345678000123';
+          cnpjVisitante   := edSoftCNPJ.Text;
           nomeVisitante   := 'TESTE';
           pracaDesportiva := 'TESTE';
           codMunic        := 3550308;
@@ -2777,7 +2787,7 @@ begin
               {
               indRRA       := 'S';
               indFciScp    := '1';
-              nrInscFciScp := '12345678000123';
+              nrInscFciScp := edSoftCNPJ.Text;
               percSCP      := 12.3;
               indJud       := 'N';
               paisResidExt := '063';
@@ -2793,7 +2803,7 @@ begin
                 indTpDeducao   := itdOficial;
                 vlrDeducao     := 10;
                 infoEntid      := 'S';
-                nrInscPrevComp := '12345678000123';
+                nrInscPrevComp := edSoftCNPJ.Text;
                 vlrPatrocFunp  := 11;
 
                 with benefPen.New do
@@ -2844,7 +2854,7 @@ begin
                 indOrigRec      := iorProprios;
                 descRRA         := 'Descrição';
                 qtdMesesRRA     := 1.0;
-                cnpjOrigRecurso := '12345678000123';
+                cnpjOrigRecurso := edSoftCNPJ.Text;
 
                 with despProcJud do
                 begin
@@ -2864,7 +2874,7 @@ begin
               begin
                 nrProc          := '123456789012345678901';
                 indOrigRec      := iorProprios;
-                cnpjOrigRecurso := '12345678000123';
+                cnpjOrigRecurso := edSoftCNPJ.Text;
                 desc            := 'Descrição';
 
                 with despProcJud do
@@ -2905,14 +2915,14 @@ begin
           {
           with ideBenef.ideOpSaude.New do
           begin
-            nrInsc   := '12345678000123';
+            nrInsc   := edSoftCNPJ.Text;
             regANS   := '123456';
             vlrSaude := 10;
 
             with infoReemb.New do
             begin
               tpInsc      := tiCNPJ;
-              nrInsc      := '12345678000123';
+              nrInsc      := edSoftCNPJ.Text;
               vlrReemb    := 10;
               vlrReembAnt := 15;
             end;
@@ -2925,7 +2935,7 @@ begin
               with infoReembDep.New do
               begin
                 tpInsc      := tiCNPJ;
-                nrInsc      := '12345678000123';
+                nrInsc      := edSoftCNPJ.Text;
                 vlrReemb    := 10;
                 vlrReembAnt := 15;
               end;
@@ -2974,7 +2984,7 @@ begin
 
         with ideBenef do
         begin
-          cnpjBenef := '12345678000123';
+          cnpjBenef := edSoftCNPJ.Text;
           //nmBenef   := 'Beneficiario';
           isenImun  := tiiNenhum;
           //if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
@@ -2993,7 +3003,7 @@ begin
               vlrBruto     := 100;
               {
               indFciScp    := '1';
-              nrInscFciScp := '12345678000123';
+              nrInscFciScp := edSoftCNPJ.Text;
               percSCP      := 12.3;
               indJud       := 'N';
               paisResidExt := '063';
@@ -3041,7 +3051,7 @@ begin
               begin
                 nrProc          := '123456789012345678901';
                 indOrigRec      := iorProprios;
-                cnpjOrigRecurso := '12345678000123';
+                cnpjOrigRecurso := edSoftCNPJ.Text;
                 desc            := 'Descrição';
 
                 with despProcJud do
@@ -3188,7 +3198,7 @@ begin
 
         with ideFont do
         begin
-          cnpjFont := '12345678000123';
+          cnpjFont := edSoftCNPJ.Text;
 
           ideRend.Clear;
           with ideRend.New do
@@ -3225,6 +3235,9 @@ begin
 end;
 
 procedure TfrmACBrReinf.GerarReinf4099;
+var
+  Ok: Boolean;
+  TpFechStr: String;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R4099.Clear;
   with ACBrReinf1.Eventos.ReinfEventos.R4099.New do
@@ -3248,8 +3261,15 @@ begin
         email    := edContEmail.Text;
       end;
 
-      with infoFech do
-        fechRet := tfrFechamento;
+      if ( MessageDlg( PChar( 'Selecione a opção:' + #13 +
+                              '"Yes" para 0-Fechamento' + #13 +
+                              '"No" para 1-Reabertura' ),
+                       mtConfirmation, [ mbYes, mbNo ], 0 ) = mrYes ) then
+        TpFechStr := '0'
+      else
+        TpFechStr := '1';
+
+      infoFech.fechRet := StrTotpFechRet(Ok, TpFechStr);
     end;
   end;
 end;

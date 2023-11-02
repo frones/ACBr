@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2023
+-- pcnGeradorReinf --
+[*] Correção para leitura do id do evento ao importar xml assinado
+-- Frm_ACBrReinf --
+[*] Melhorias no programa de exemplo para geração de todos os eventos sem precisar alterar no fonte
+-- Arquivos ini --
+[*] Ajustados todos os arquivos ini de exemplo, validada leitura e envio na versão 2.1.2
+  Por: Renato Rubinho
+
 06/10/2023
 -- ACBrReinfLoteEventos --
 [*] Correção no envio de eventos por pessoa física ou órgão público

@@ -3295,7 +3295,7 @@ begin
   if ATitulo.MultaValorFixo then
     AValorMulta := ATitulo.PercentualMulta
   else
-    AValorMulta := CalcularPercentualValor(ATitulo.PercentualMulta,ATitulo.ValorDocumento) / 100;
+    AValorMulta := RoundABNT((ATitulo.PercentualMulta / 100) * ATitulo.ValorDocumento,2);
 
   if (ATitulo.DataMulta <> 0) and (ATitulo.DataMulta > ATitulo.Vencimento) then
     ATipoMulta := 'a partir de ' + FormatDateTime('dd/mm/yyyy',ATitulo.DataMulta)
@@ -5465,19 +5465,16 @@ begin
   if (ATitulo.CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (ATitulo.CodigoMora = '2') or (ATitulo.CodigoMora = 'B') then
     Result := ATitulo.ValorMoraJuros
   else
-    Result := ATitulo.fACBrBoleto.CalcularPercentualValor(ATitulo.ValorMoraJuros, ATitulo.ValorDocumento) * 100;
+    Result := RoundABNT((ATitulo.ValorMoraJuros / 100 ) * ATitulo.ValorDocumento, 2);
 end;
 
 function TACBrBancoClass.CalcularPadraoMulta(ATitulo: TACBrTitulo): Double;
 begin
   if (ATitulo.MultaValorFixo) then
   begin
-    if (ATitulo.ValorDocumento > 0) then
-      Result := Self.ACBrBanco.ACBrBoleto.CalcularPercentualValor(ATitulo.PercentualMulta, ATitulo.ValorDocumento)
-    else
-      Result := 0;
+    Result := (ATitulo.PercentualMulta * 100);
   end else
-      Result := ATitulo.PercentualMulta;
+    Result := ATitulo.PercentualMulta;
 end;
 
 function TACBrBancoClass.ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';

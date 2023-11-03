@@ -765,8 +765,8 @@ begin
   begin
     rllTituloCNPJ1.Caption := 'CNPJ/CPF EMITENTE';
     rllTituloCNPJ2.Caption := 'CNPJ/CPF EMITENTE';
-    rllTituloSerie1.Caption := 'SÉRIE/NRO. DOCUMENTO';
-    rllTituloSerie2.Caption := 'SÉRIE/NRO. DOCUMENTO';
+    rllTituloSerie1.Caption := ACBrStr('SÉRIE/NRO. DOCUMENTO');
+    rllTituloSerie2.Caption := ACBrStr('SÉRIE/NRO. DOCUMENTO');
   end;
 
   if (fpCTe.infCTeNorm.infDoc.infNFe.Count > 0) or

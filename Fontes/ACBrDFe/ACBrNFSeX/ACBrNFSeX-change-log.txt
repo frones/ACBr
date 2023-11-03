@@ -42,6 +42,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+03/11/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Araquari/SC mudou as URLs o provedor continua o mesmo.
+  Por: Alisson
+[*] A cidade de Vitoria da Conquista/BA mudou a URL de produção o provedor continua o mesmo.
+  Por: Gilmar GMPaiva
+[*] Incluído o campo Params para as cidades de Santa Rosa/RS e Horizontina/RS.
+  Por: Maico Smaniotto
+
 01/11/2023
 -- iiBrasil.Provider --
 [*] Possível solução para o retorno só com mensagem.

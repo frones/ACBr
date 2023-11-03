@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 03/11/2023
+-- IPM.Provider --
+[*] Possível solução para a leitura correta do retorno que esta no formato ANSI.
+   Por: Fabiano Oliveira de Castro
 -- ACBrNFSeXServicos --
 [*] A cidade de Araquari/SC mudou as URLs o provedor continua o mesmo.
   Por: Alisson

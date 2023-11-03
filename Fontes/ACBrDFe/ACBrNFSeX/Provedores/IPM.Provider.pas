@@ -1274,7 +1274,7 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
-    Result := String(NativeStringToUTF8(Result));
+    Result := ACBrStr(Result);
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
@@ -1692,6 +1692,7 @@ begin
 
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
+    Result := Trim(StringReplace(Result, '&#13;', sLineBreak, [rfReplaceAll]));
   end;
 end;
 

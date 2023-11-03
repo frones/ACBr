@@ -73,6 +73,7 @@ type
   protected
 
   public
+    function NormatizarXml(const aXml: string): string; override;
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean; override;
 
   end;
@@ -448,6 +449,13 @@ begin
 
   LerNfseCancelamento(ANode);
   LerNfseSubstituicao(ANode);
+end;
+
+function TNFSeR_IPM204.NormatizarXml(const aXml: string): string;
+begin
+  Result := inherited NormatizarXML(aXml);
+
+  Result := Trim(StringReplace(Result, '&amp;#13;', sLineBreak, [rfReplaceAll]));
 end;
 
 end.

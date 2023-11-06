@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 06/11/2023
+-- Diversos --
+[+] Implementado o provedor ISSLegal que atende a cidade Urucuia/MG.
+    Esse provedor segue a versão 2.03 do layout da ABRASF.
+    Se faz necessário através do site da prefeitura solicitar o Token.
+    Obtido o Token devemos informa-lo em: Emitente.WSChaveAutoriz
+  Por: Italo Giurizzato Junior
 -- PadraoNacional.GravarXml --
 [*] Alteração para deixar a tag tpRetPisCofins opcional, para que ela não seja 
     gerada se faz necessário atribuir o valor trpcNenhum ao campo: tpRetPisCofins.

@@ -81,6 +81,7 @@ ISSFortaleza         1.00
 ISSGoiania           2.00  02/08/2022
 ISSIntel             1.00
 ISSJoinville         2.04  10/08/2022
+ISSLegal             2.03
 ISSLencois           1.00
 ISSNatal             1.00
 ISSNet               1.00  04/08/2022

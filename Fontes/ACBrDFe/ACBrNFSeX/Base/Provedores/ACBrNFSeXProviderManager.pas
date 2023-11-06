@@ -112,6 +112,7 @@ uses
   ISSe.Provider,
   ISSGoiania.Provider,
   ISSJoinville.Provider,
+  ISSLegal.Provider,
   ISSPortoVelho.Provider,
   ISSVitoria.Provider,
   Libre.Provider,
@@ -412,6 +413,8 @@ begin
 
       proISSJoinville:
         Result := TACBrNFSeProviderISSJoinville204.Create(ACBrNFSe);
+
+      proISSLegal: Result := TACBrNFSeProviderISSLegal203.Create(ACBrNFSe);
 
       proISSLencois:
         Result := TACBrNFSeProviderISSLencois.Create(ACBrNFSe);

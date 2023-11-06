@@ -45,6 +45,8 @@ const
   cUFsValidas = ',AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,'+
                 'RJ,RN,RS,RO,RR,SC,SP,SE,TO,EX,';
 
+  cMaskCNPJ = '**.***.***/****-**';
+
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque, docPIS,
                         docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, 
@@ -2252,4 +2254,5 @@ end;
 {$EndIf}
 *)
 end.
+
 

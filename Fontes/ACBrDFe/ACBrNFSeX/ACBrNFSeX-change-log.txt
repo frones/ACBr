@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/11/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Inhapim/MG, provedor VersaTecnologia.
+  Por: Patrick Knopf
+[+] Incluída a cidade de Pedro Afonso/TO, provedor Megasoft.
+  Por: maxdatasistema
+
 03/11/2023
 -- IPM.Provider --
 [*] Possível solução para a leitura correta do retorno que esta no formato ANSI.

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 06/11/2023
+-- PadraoNacional.GravarXml --
+[*] Alteração para deixar a tag tpRetPisCofins opcional, para que ela não seja 
+    gerada se faz necessário atribuir o valor trpcNenhum ao campo: tpRetPisCofins.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao --
 [*] Incluído novos valores no tipo TUnidade utilizado pelo provedor IPM.
   Por: Italo Giurizzato Junior/SuporteATInfo

@@ -1212,7 +1212,7 @@ begin
     Result.AppendChild(AddNode(tcDe2, '#1', 'vCofins', 1, 15, 0,
                                      NFSe.Servico.Valores.tribFed.vCofins, ''));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'tpRetPisCofins', 1, 1, 1,
+    Result.AppendChild(AddNode(tcStr, '#1', 'tpRetPisCofins', 1, 1, 0,
          tpRetPisCofinsToStr(NFSe.Servico.Valores.tribFed.tpRetPisCofins), ''));
   end;
 end;

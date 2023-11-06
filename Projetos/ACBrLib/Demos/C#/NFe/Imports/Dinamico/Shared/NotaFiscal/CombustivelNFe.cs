@@ -36,6 +36,8 @@ namespace ACBrLib.NFe
 
         public decimal vPart { get; set; }
 
+        public decimal pBio { get; set; }
+
         public CIDENFe CIDE { get; }
 
         public EncerranteNFe Encerrante { get; }

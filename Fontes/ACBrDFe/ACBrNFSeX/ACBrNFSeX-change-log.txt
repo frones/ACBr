@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/11/2023
+-- ACBrNFSeXConversao --
+[*] Incluído novos valores no tipo TUnidade utilizado pelo provedor IPM.
+  Por: Italo Giurizzato Junior/SuporteATInfo
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Inhapim/MG, provedor VersaTecnologia.
   Por: Patrick Knopf

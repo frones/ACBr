@@ -183,7 +183,8 @@ type
                  ttNaoTributavel, ttTributavel, ttTributavelFixo, ttTributavelSN,
                  ttMEI);
 
-  TUnidade = (tuHora, tuQtde);
+  TUnidade = (tuHora, tuQtde, tuMetroQuadrado, tuMetro, tuUnidadeMigrada5,
+              tuMetroCubico, tuQuilo);
 
   TMetodo = (tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
              tmConsultarNFSePorRps, tmConsultarNFSe,
@@ -282,7 +283,7 @@ type
 
   TCST = (cst00, cst01, cst02, cst03, cst04, cst05, cst06, cst07, cst08, cst09);
 
-  TtpRetPisCofins = (trpcRetido, trpcNaoRetido);
+  TtpRetPisCofins = (trpcRetido, trpcNaoRetido, trpcNenhum);
 
   TindTotTrib = (indNao, indSim);
 
@@ -12229,15 +12230,17 @@ end;
 function UnidadeToStr(const t: TUnidade): string;
 begin
   Result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [tuHora, tuQtde]);
+                           ['1', '2', '3', '4', '5', '6', '7'],
+                           [tuHora, tuQtde, tuMetroQuadrado, tuMetro,
+                            tuUnidadeMigrada5, tuMetroCubico, tuQuilo]);
 end;
 
 function StrToUnidade(out ok: boolean; const s: string): TUnidade;
 begin
   Result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [tuHora, tuQtde]);
+                           ['1', '2', '3', '4', '5', '6', '7'],
+                           [tuHora, tuQtde, tuMetroQuadrado, tuMetro,
+                            tuUnidadeMigrada5, tuMetroCubico, tuQuilo]);
 end;
 
 function SepararDados(const AString: string; const Chave: string; const MantemChave: Boolean = False;
@@ -12709,15 +12712,15 @@ end;
 function tpRetPisCofinsToStr(const t: TtpRetPisCofins): string;
 begin
   result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [trpcRetido, trpcNaoRetido]);
+                           ['1', '2', ''],
+                           [trpcRetido, trpcNaoRetido, trpcNenhum]);
 end;
 
 function StrTotpRetPisCofins(out ok: Boolean; const s: string): TtpRetPisCofins;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [trpcRetido, trpcNaoRetido]);
+                           ['1', '2', ''],
+                           [trpcRetido, trpcNaoRetido, trpcNenhum]);
 end;
 
 function indTotTribToStr(const t: TindTotTrib): string;

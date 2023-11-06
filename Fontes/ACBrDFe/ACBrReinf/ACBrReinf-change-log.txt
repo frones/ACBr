@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/11/2023
+-- Frm_ACBrReinf --
+[*] Melhorias no programa de exemplo para geração das retificadoras dos eventos sem mexer no fonte e removido o Registro R2070
+  Por: Renato Rubinho
+
 01/11/2023
 -- pcnGeradorReinf --
 [*] Correção para leitura do id do evento ao importar xml assinado

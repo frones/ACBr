@@ -10,10 +10,8 @@ object frmACBrReinf: TfrmACBrReinf
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -1313,11 +1311,13 @@ object frmACBrReinf: TfrmACBrReinf
           OnClick = chk1000Click
         end
         object chk2070: TCheckBox
-          Left = 8
-          Top = 150
-          Width = 377
+          Left = 400
+          Top = 270
+          Width = 185
           Height = 17
-          Caption = 'R-2070 - Reten'#231#245'es na Fonte - IR, CSLL, Cofins, PIS/PASEP'
+          Caption = 
+            'R-2070 - EVENTO NAO DISPONIBILIZADO PELA RFB - Reten'#231#245'es na Font' +
+            'e - IR, CSLL, Cofins, PIS/PASEP'
           Ctl3D = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -1327,11 +1327,12 @@ object frmACBrReinf: TfrmACBrReinf
           ParentCtl3D = False
           ParentFont = False
           TabOrder = 11
+          Visible = False
           OnClick = chk1000Click
         end
         object chk2098: TCheckBox
           Left = 8
-          Top = 165
+          Top = 150
           Width = 289
           Height = 17
           Caption = 'R-2098 - Reabertura dos Eventos Peri'#243'dicos'
@@ -1348,7 +1349,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk2099: TCheckBox
           Left = 8
-          Top = 180
+          Top = 165
           Width = 289
           Height = 17
           Caption = 'R-2099 - Fechamento dos Eventos Peri'#243'dicos'
@@ -1365,7 +1366,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk3010: TCheckBox
           Left = 8
-          Top = 195
+          Top = 180
           Width = 265
           Height = 17
           Caption = 'R-3010 - Receita de Espet'#225'culo Desportivo'
@@ -1416,7 +1417,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4010: TCheckBox
           Left = 8
-          Top = 210
+          Top = 195
           Width = 357
           Height = 17
           Caption = 'R-4010 - Pagamentos/cr'#233'ditos a benefici'#225'rio pessoa f'#237'sica'
@@ -1450,7 +1451,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4020: TCheckBox
           Left = 8
-          Top = 225
+          Top = 210
           Width = 387
           Height = 17
           Caption = 'R-4020 - Pagamentos/cr'#233'ditos a benefici'#225'rio pessoa jur'#237'dica'
@@ -1467,7 +1468,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4040: TCheckBox
           Left = 8
-          Top = 240
+          Top = 225
           Width = 387
           Height = 17
           Caption = 'R-4040 - Pagamentos/cr'#233'ditos a benefici'#225'rios n'#227'o identificados'
@@ -1484,7 +1485,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4080: TCheckBox
           Left = 8
-          Top = 255
+          Top = 240
           Width = 229
           Height = 17
           Caption = 'R-4080 - Reten'#231#227'o no recebimento'
@@ -1501,7 +1502,7 @@ object frmACBrReinf: TfrmACBrReinf
         end
         object chk4099: TCheckBox
           Left = 8
-          Top = 270
+          Top = 255
           Width = 377
           Height = 17
           Caption = 'R-4099 - Fechamento/reabertura dos eventos da s'#233'rie R-4000'

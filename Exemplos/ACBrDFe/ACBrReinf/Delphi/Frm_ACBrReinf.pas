@@ -1906,8 +1906,14 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-      ideEvento.NrRecibo := '123';
+      if ChkRetificadora.Checked then
+      begin
+        ideEvento.indRetif := trRetificacao;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
+
       ideEvento.perApur  := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
@@ -1995,8 +2001,14 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-      ideEvento.NrRecibo := '123';
+      if ChkRetificadora.Checked then
+      begin
+        ideEvento.indRetif := trRetificacao;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
+
       ideEvento.perApur  := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
@@ -2084,8 +2096,14 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-      ideEvento.NrRecibo := '123';
+      if ChkRetificadora.Checked then
+      begin
+        ideEvento.indRetif := trRetificacao;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
+
       ideEvento.perApur  := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
@@ -2147,8 +2165,14 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-      ideEvento.NrRecibo := '123';
+      if ChkRetificadora.Checked then
+      begin
+        ideEvento.indRetif := trRetificacao;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
+
       ideEvento.perApur  := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
@@ -2203,8 +2227,14 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-      ideEvento.NrRecibo := '123';
+      if ChkRetificadora.Checked then
+      begin
+        ideEvento.indRetif := trRetificacao;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
+
       ideEvento.perApur  := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
@@ -2257,8 +2287,14 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-      ideEvento.NrRecibo := '123';
+      if ChkRetificadora.Checked then
+      begin
+        ideEvento.indRetif := trRetificacao;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
+
       ideEvento.perApur  := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
@@ -2310,8 +2346,14 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-      ideEvento.NrRecibo := '123';
+      if ChkRetificadora.Checked then
+      begin
+        ideEvento.indRetif := trRetificacao;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
+
       ideEvento.perApur  := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
@@ -2368,7 +2410,7 @@ begin
   // EVENTO NÃO DISPONIBILIZADO ATÉ A VERSÃO 1_02
 
 //  EXIT;
-
+{
   ACBrReinf1.Eventos.ReinfEventos.R2070.Clear;
   with ACBrReinf1.Eventos.ReinfEventos.R2070.New do
   begin
@@ -2565,6 +2607,7 @@ begin
       end;
     end;
   end;
+  }
 end;
 
 procedure TfrmACBrReinf.GerarReinf2098;
@@ -2635,13 +2678,13 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-
       if ChkRetificadora.Checked then
+      begin
         ideEvento.indRetif := trRetificacao;
-
-      if ideEvento.indRetif = trRetificacao then
-        ideEvento.nrRecibo := edRecibo.Text;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
 
       ideEvento.dtApuracao := StartOfTheMonth(IncMonth(Date,-1));
       IdeEvento.ProcEmi    := peAplicEmpregador;
@@ -2727,13 +2770,13 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-
       if ChkRetificadora.Checked then
+      begin
         ideEvento.indRetif := trRetificacao;
-
-      if ideEvento.indRetif = trRetificacao then
-        ideEvento.nrRecibo := edRecibo.Text;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
 
       ideEvento.perApur    := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi    := peAplicEmpregador;
@@ -2957,13 +3000,13 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-
       if ChkRetificadora.Checked then
+      begin
         ideEvento.indRetif := trRetificacao;
-
-      if ideEvento.indRetif = trRetificacao then
-        ideEvento.nrRecibo := edRecibo.Text;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
 
       ideEvento.perApur    := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi    := peAplicEmpregador;
@@ -3105,13 +3148,13 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-
       if ChkRetificadora.Checked then
+      begin
         ideEvento.indRetif := trRetificacao;
-
-      if ideEvento.indRetif = trRetificacao then
-        ideEvento.nrRecibo := edRecibo.Text;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
 
       ideEvento.perApur    := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi    := peAplicEmpregador;
@@ -3171,13 +3214,13 @@ begin
     begin
       Sequencial := 0;
 
-      ideEvento.indRetif := trOriginal;
-
       if ChkRetificadora.Checked then
+      begin
         ideEvento.indRetif := trRetificacao;
-
-      if ideEvento.indRetif = trRetificacao then
-        ideEvento.nrRecibo := edRecibo.Text;
+        ideEvento.NrRecibo := edRecibo.Text;
+      end
+      else
+        ideEvento.indRetif := trOriginal;
 
       ideEvento.perApur    := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
       IdeEvento.ProcEmi    := peAplicEmpregador;

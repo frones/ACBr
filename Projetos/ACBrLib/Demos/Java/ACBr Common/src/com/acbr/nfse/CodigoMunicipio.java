@@ -1,6 +1,5 @@
 package com.acbr.nfse;
 
-import com.sun.org.glassfish.gmbal.Description;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -112,6 +112,9 @@ begin
       Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
+      VerificarSeConteudoEhLista(Discriminacao);
+
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCidadeIbgeServico'), tcStr);
     end;
 
@@ -287,6 +290,8 @@ begin
 
     NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
+    VerificarSeConteudoEhLista(NFSe.Servico.Discriminacao);
 
     with NFSe.Servico.Valores do
     begin

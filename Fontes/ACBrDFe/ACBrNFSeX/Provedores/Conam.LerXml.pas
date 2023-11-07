@@ -262,6 +262,9 @@ begin
       Discriminacao    := ObterConteudo(AuxNode.Childrens.FindAnyNs('DiscrSrv'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
+      VerificarSeConteudoEhLista(Discriminacao);
+
       ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodSrv'), tcStr);
 
       xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
@@ -375,6 +378,8 @@ begin
       Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DiscrSrv'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
+      VerificarSeConteudoEhLista(Discriminacao);
 
       with Valores do
       begin

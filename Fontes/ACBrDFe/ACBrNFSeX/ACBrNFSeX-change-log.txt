@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 07/11/2023
+-- Diversos --
+[*] Alguns desenvolvedores informam na tag Discriminação uma lista de serviços 
+    dentro de um Json. Ao ler o XML a procedure VerificarSeConteudoEhLista 
+    consegue montar a lista de itens de serviço com base no Json que se encontra 
+    na referida tag.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Correção nas URLs da cidade de Araquari/SC.
   Por: Alisson

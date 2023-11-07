@@ -233,6 +233,8 @@ begin
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
+    VerificarSeConteudoEhLista(Servico.Discriminacao);
+
     Servico.Valores.ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('valorServico'), tcDe2);
 
     Servico.Valores.Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('aliquota'), tcDe2);

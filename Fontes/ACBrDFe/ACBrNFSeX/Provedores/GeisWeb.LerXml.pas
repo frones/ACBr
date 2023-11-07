@@ -279,6 +279,9 @@ begin
       Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
+      VerificarSeConteudoEhLista(Discriminacao);
+
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcStr);
       CodigoTributacaoMunicipio := ItemListaServico;
       xCodigoTributacaoMunicipio := xItemListaServico;

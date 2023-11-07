@@ -194,6 +194,9 @@ begin
       Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('descricao'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
+      VerificarSeConteudoEhLista(Discriminacao);
+
       ItemListaServico := ObterConteudo(ANode.Childrens.FindAnyNs('id_codigo_servico'), tcStr);
 
       with Valores do

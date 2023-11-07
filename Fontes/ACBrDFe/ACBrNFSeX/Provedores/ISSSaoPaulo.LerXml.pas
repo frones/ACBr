@@ -281,6 +281,8 @@ begin
   NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
+  VerificarSeConteudoEhLista(NFSe.Servico.Discriminacao);
+
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('ISSRetido'), tcStr);
 
   with NFSe.Servico.Valores do
@@ -386,6 +388,9 @@ begin
       Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('Discriminacao'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
+      VerificarSeConteudoEhLista(Discriminacao);
+
       ValorCargaTributaria := ObterConteudo(ANode.Childrens.FindAnyNs('ValorCargaTributaria'), tcDe2);
       PercentualCargaTributaria := ObterConteudo(ANode.Childrens.FindAnyNs('PercentualCargaTributaria'), tcDe4);
       FonteCargaTributaria := ObterConteudo(ANode.Childrens.FindAnyNs('FonteCargaTributaria'), tcStr);

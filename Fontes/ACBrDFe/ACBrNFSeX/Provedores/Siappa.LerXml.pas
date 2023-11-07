@@ -175,6 +175,8 @@ begin
     Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
+    VerificarSeConteudoEhLista(Discriminacao);
+
     Valores.ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('NFS_E_VLR_BRUTO'), tcDe2);
     Valores.ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('NFS_E_VLR_ISSQN'), tcDe2);
     Valores.BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('NFS_E_VLR_BASE_CALC'), tcDe2);

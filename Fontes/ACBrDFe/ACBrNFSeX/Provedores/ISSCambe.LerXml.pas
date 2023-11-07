@@ -128,6 +128,8 @@ begin
   NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
+  VerificarSeConteudoEhLista(NFSe.Servico.Discriminacao);
+
   with NFSe.ValoresNfse do
   begin
     ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('servicoValor'), tcDe2);

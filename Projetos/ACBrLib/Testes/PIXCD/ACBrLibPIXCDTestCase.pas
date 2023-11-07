@@ -57,6 +57,13 @@ type
     procedure Test_PIXCD_Versao;
     procedure Test_PIXCD_ConfigLerValor;
     procedure Test_PIXCD_ConfigGravarValor;
+    procedure Test_PIXCD_TestePSP;
+    procedure Test_PIXCD_GerarQRCodeEstatico;
+    procedure Test_PIXCD_ConsultarPIX;
+    procedure Test_PIXCD_ConsultarPixRecebidos;
+    procedure Test_PIXCD_ConsultarDevolucaoPix;
+    procedure Test_PIXCD_ConsultarCobrancaImediata;
+    procedure Test_PIXCD_ConsultarCobranca;
 
   end;
 
@@ -228,6 +235,227 @@ begin
   AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_TestePSP;
+var
+  AStr: String;
+  Handle: THandle;
+  Bufflen: Integer;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '0'));  //Bradesco
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '1'));  //Itaú
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '2')); //Banco do Brasil
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '3')); //Santander
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '4')); //Shipay
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '5')); //Sicredi
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '6')); //Sicoob
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '7')); //PagSeguro
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '8')); //GerenciaNet
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '9')); //PixPDV
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '10')); //Inter
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '11')); //Ailos
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '13')); //Cielo
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '14')); //MercadoPago
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AStr := copy(AStr,1,Bufflen);
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_GerarQRCodeEstatico;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '3')); //Santander
+
+  AssertEquals('Erro ao Informar Tipo de Chave', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'TipoChave', '1'));
+
+  AssertEquals('Erro ao Informar Chave', ErrOk, PIXCD_ConfigGravarValor(Handle, 'Santander', 'ChavePIX', 'teste.email@email.com'));
+
+  AssertEquals('Erro ao Informar Nome do Recebedor', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'NomeRecebedor', 'Nome'));
+
+  AssertEquals('Erro ao Informar Cidade do Recebedor', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'CidadeRecebedor', 'Cidade'));
+
+  AssertEquals('Erro ao Informar UF do Recebedor', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'UFRecebedor', 'UF'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_GerarQRCodeEstatico(Handle, 1, '', '', PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConsultarPIX;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals(ErrOK, PIXCD_ConsultarPix(Handle, 'teste', PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConsultarPixRecebidos;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+  DataInicio, DataFim: TDateTime;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  DataInicio:= EncodeDate(2023, 10, 18);
+  DataFim:= EncodeDate(2023, 10, 19);
+
+  AssertEquals(ErrOK, PIXCD_ConsultarPixRecebidos(Handle, DataInicio, DataFim, 'teste', 'teste', 1, 10, PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConsultarDevolucaoPix;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals(ErrOK, PIXCD_ConsultarDevolucaoPix(Handle, 'teste', 'teste', PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConsultarCobrancaImediata;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals(ErrOK, PIXCD_ConsultarCobrancaImediata(Handle, 'teste', 1, PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConsultarCobranca;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals(ErrOK, PIXCD_ConsultarCobranca(Handle, 'teste', 1, PChar(AStr), Bufflen));
+
   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
 end;
 

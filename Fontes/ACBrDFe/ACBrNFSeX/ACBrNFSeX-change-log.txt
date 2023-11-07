@@ -43,6 +43,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/11/2023
+-- ACBrNFSeXServicos --
+[*] Correção nas URLs da cidade de Araquari/SC.
+  Por: Alisson
+[*] Alterado de http para https as URLs da cidade de Tatuí/SP.
+   Por: Italo Giurizzato Junior
+[*] Alterado de http para https as URLs da cidade de Itapetininga/SP.
+   Por: Adilson Pazzini
+[+] Incluída a cidade de Trombas/GO, provedor MegaSoft.
+  Por: João Vitor de Sousa
+[*] A cidade de Itaberaí/GO, mudou de provedor, agora é Centi.
+  Por: João Vitor de Sousa
+[*] Alterada as URLs da cidade de Estação/RS, o provedor continua o mesmo.
+  Por: Arimateia Jr
+
 06/11/2023
 -- Diversos --
 [+] Implementado o provedor ISSLegal que atende a cidade Urucuia/MG.

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2023
+-- ACBrBoleto --
+[-] Correção para o nome do beneficiário no header de arquivo do CNAB400.
+  Por: BigWings
+
 24/10/2023
 -- ACBrBoleto, ACBrBancoBradesco --
 [*] Ajuste para usar, por padrão, a propriedade "DataArquivo" no header do CNAB400.

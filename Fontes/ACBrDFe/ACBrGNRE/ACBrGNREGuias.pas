@@ -412,6 +412,22 @@ begin
         Inc(i);
       end;
 
+      if camposExtras.Count = 0 then
+      begin
+        sSecao := 'CampoExtra';
+
+        if IniGuia.SectionExists(sSecao) then
+        begin
+          with camposExtras.New do
+          begin
+            CampoExtra.codigo := IniGuia.ReadInteger(sSecao, 'codigo', 0);
+            CampoExtra.tipo   := IniGuia.ReadString(sSecao,'tipo','');
+            CampoExtra.valor  := IniGuia.ReadString(sSecao,'valor','');
+          end;
+        end;
+
+      end;
+
     end;
 
     GerarXML;

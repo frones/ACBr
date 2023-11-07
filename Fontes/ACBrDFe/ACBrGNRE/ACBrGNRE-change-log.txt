@@ -47,6 +47,8 @@ Símbolo : Significado
 
 07/11/2023
 -- ACBrGNReGuias --
+[*] Ajuste para que não quebre para quem usa CampoExtra sem identificação.
+ Por: Diego Folieni
 [*] Melhoria nas rotinas de leitura e geração do ini para atender número de ocorrências do elemento CampoExtra
  Por: Diego Folieni
 

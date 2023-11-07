@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2023
+-- ACBrGNReGuias --
+[*] Melhoria nas rotinas de leitura e geração do ini para atender número de ocorrências do elemento CampoExtra
+ Por: Diego Folieni
+
 21/90/2023
 -- ACBrGNReGuias --
 [*] Adiciona uma rotina para gerar o INI do GNRe, visando compatibilidade com outros DFes e facilidade em testes.

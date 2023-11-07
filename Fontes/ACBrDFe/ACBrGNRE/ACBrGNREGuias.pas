@@ -306,8 +306,9 @@ end;
 function Guia.LerArqIni(const AIniString: String): Boolean;
 var
   IniGuia: TMemIniFile;
-  sSecao: String;
+  sSecao, sFIM: String;
   ok: Boolean;
+  i: integer;
 begin
   IniGuia := TMemIniFile.Create('');
   try
@@ -388,19 +389,27 @@ begin
         c38_municipioDestinatario         := IniGuia.ReadString(sSecao,'cidade','');
       end;
 
-      //Outras Informacoes
-      sSecao := 'CampoExtra';
 
-      if IniGuia.SectionExists(sSecao) then
+      camposExtras.Clear;
+      i := 1;
+      while true do
       begin
-        camposExtras.Clear;
+        //Outras Informacoes
+        sSecao := 'CampoExtra' + IntToStrZero(I, 1);
+
+        sFIM := IniGuia.ReadString(sSecao, 'codigo', 'FIM');
+
+        if (Length(sFIM) <= 0) or (sFIM = 'FIM') then
+          break;
 
         with camposExtras.New do
         begin
-          CampoExtra.codigo := IniGuia.ReadInteger(sSecao,'codigo',0);
+          CampoExtra.codigo := StrToIntDef(sFIM, 0);
           CampoExtra.tipo   := IniGuia.ReadString(sSecao,'tipo','');
           CampoExtra.valor  := IniGuia.ReadString(sSecao,'valor','');
         end;
+
+        Inc(i);
       end;
 
     end;
@@ -487,6 +496,7 @@ var
   INIRec: TMemIniFile;
   IniGuia: TStringList;
   sSecao: String;
+  i: Integer;
 begin
   INIRec := TMemIniFile.Create('');
   try
@@ -537,12 +547,12 @@ begin
       INIRec.WriteString(sSecao, 'razaosocial', FGNRe.c37_razaoSocialDestinatario);
       INIRec.WriteString(sSecao, 'cidade', FGNRe.c38_municipioDestinatario);
 
-      if (FGNRe.camposExtras.Count > 0)then
+      for i := 0 to FGNRe.camposExtras.Count - 1 do
       begin
-        sSecao := 'CampoExtra';
-        INIRec.WriteInteger(sSecao, 'codigo', FGNRe.camposExtras[0].CampoExtra.codigo);
-        INIRec.WriteString(sSecao, 'tipo', FGNRe.camposExtras[0].CampoExtra.tipo);
-        INIRec.WriteString(sSecao, 'valor', FGNRe.camposExtras[0].CampoExtra.valor);
+        sSecao := 'CampoExtra' + IntToStrZero(i+1, 1);
+        INIRec.WriteInteger(sSecao, 'codigo', FGNRe.camposExtras[i].CampoExtra.codigo);
+        INIRec.WriteString(sSecao, 'tipo', FGNRe.camposExtras[i].CampoExtra.tipo);
+        INIRec.WriteString(sSecao, 'valor', FGNRe.camposExtras[i].CampoExtra.valor);
       end;
     end;
 

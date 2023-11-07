@@ -74,6 +74,24 @@ function PIXCD_ConfigLerValor (const libHandle : PLibHandle; const eSessao, eCha
 function PIXCD_ConfigGravarValor (const libHandle : PLibHandle; const eSessao, eChave, eValor: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function PIXCD_GerarQRCodeEstatico (const libHandle: PLibHandle; AValor: Currency; const AinfoAdicional: PChar; const ATxID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function PIXCD_ConsultarPix (const libHandle: PLibHandle; const Ae2eid: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function PIXCD_ConsultarPixRecebidos(const libHandle: PLibHandle; ADataInicio: TDateTime; ADataFim: TDateTime; const ATxId: PChar; const ACpfCnpj: PChar; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function PIXCD_ConsultarDevolucaoPix(const libHandle: PLibHandle; const Ae2eid, AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint):longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function PIXCD_ConsultarCobrancaImediata(const libHandle: PLibHandle; const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function PIXCD_ConsultarCobranca(const libHandle: PLibHandle; const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 implementation
 
 Uses
@@ -144,6 +162,96 @@ function PIXCD_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eCh
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
+end;
+
+function PIXCD_GerarQRCodeEstatico(const libHandle: PLibHandle; AValor: Currency; const AinfoAdicional: PChar; const ATxID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibPIXCD(libHandle^.Lib).GerarQRCodeEstatico(AValor, AinfoAdicional, ATxId, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function PIXCD_ConsultarPix(const libHandle: PLibHandle; const Ae2eid: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibPIXCD(libHandle^.Lib).ConsultarPix(Ae2eid, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function PIXCD_ConsultarPixRecebidos(const libHandle: PLibHandle; ADataInicio: TDateTime; ADataFim: TDateTime; const ATxId: PChar; const ACpfCnpj: PChar; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibPIXCD(libHandle^.Lib).ConsultarPixRecebidos(ADataInicio, ADataFim, ATxId, ACpfCnpj, PagAtual, ItensPorPagina, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function PIXCD_ConsultarDevolucaoPix(const libHandle: PLibHandle; const Ae2eid, AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result:= TACBrLibPIXCD(libHandle^.Lib).ConsultarDevolucaoPix(Ae2eid, AidDevolucao, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function PIXCD_ConsultarCobrancaImediata(const libHandle: PLibHandle; const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result:= TACBrLibPIXCD(libHandle^.Lib).ConsultarCobrancaImediata(ATxId, Revisao, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function PIXCD_ConsultarCobranca(const libHandle: PLibHandle; const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result:= TACBrLibPIXCD(libHandle^.Lib).ConsultarCobranca(ATxId, Revisao, sResposta, esTamanho);
+  except
+        on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
 end;
 
 end.

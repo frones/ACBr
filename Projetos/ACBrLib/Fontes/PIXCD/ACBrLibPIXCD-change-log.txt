@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2023
+--- ACBrLibPIXCDBase, ACBrLibPIXCDConfig, ACBrLibPIXCDConsts, ACBrLibPIXCDDataModule --- 
+[+] Inclusão novos PSPs.
+[+] Inclusão das propriedades dos novos PSPs.
+[+] Implementado métodos de Consulta ACBrLibPIXCD.
+
+
 29/09/2023
 --- ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts, ACBrLibPIXCDConfig ---
 [*] Ajustes ACBrLibPIXCDDataModule para carregar PSP corretamente.

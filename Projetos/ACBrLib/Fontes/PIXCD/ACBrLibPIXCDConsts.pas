@@ -39,7 +39,7 @@ uses
 
 const
   CLibPIXCDNome = 'ACBrLibPIXCD';
-  CLibPIXCDVersao = '1.0.0.21';
+  CLibPIXCDVersao = '1.0.0.25';
 
   CSessaoPixCDConfig = 'PIXCD';
   CChaveAmbiente = 'Ambiente';
@@ -85,14 +85,14 @@ const
   CSessaoPixCDShipayConfig = 'Shipay';
   CChaveClientIDShipay = 'ClientID';
   CChaveSecretKeyShipay = 'SecretKey';
-  CChaveAccessKey = 'AccessKey';
+  CChaveAccessKeyShipay = 'AccessKey';
 
   CSessaoPixCDSantanderConfig = 'Santander';
   CChavePIXSantander = 'ChavePIX';
-  CChaveConsumerKey = 'ConsumerKey';
-  CChaveConsumerSecret = 'ConsumerSecret';
-  CChaveArqCertificadoPFX = 'ArqCertificadoPFX';
-  CChaveSenhaCertificadoPFX = 'SenhaCertificadoPFX';
+  CChaveConsumerKeySantander = 'ConsumerKey';
+  CChaveConsumerSecretSantander = 'ConsumerSecret';
+  CChaveArqCertificadoPFXSantander = 'ArqCertificadoPFX';
+  CChaveSenhaCertificadoPFXSantander = 'SenhaCertificadoPFX';
 
   CSessaoPixCDPixPDVConfig = 'PixPDV';
   CChaveCNPJPixPDV = 'CNPJ';
@@ -145,6 +145,24 @@ const
   CChaveArqChavePrivadaAilos = 'ArqChavePrivada';
   CChaveArqCertificadoAilos = 'ArqCertificado';
   CChaveArqCertificadoRootAilos = 'ArqCertificadoRoot';
+
+  CSessaoPixCDMateraConfig = 'Matera';
+  CChaveClientIDMatera = 'ClientID';
+  CChaveSecretKeyMatera = 'SecretKey';
+  CChaveClientSecretMatera = 'ClientSecret';
+  CChaveArqCertificadoMatera = 'ArqCertificado';
+  CChaveArqChavePrivadaMatera = 'ArqChavePrivada';
+  CChaveAccountIDMatera = 'AccountID';
+  CChavePIXMatera = 'ChavePIX';
+  CChaveMediatorFeeMatera = 'MediatorFee';
+
+  CSessaoPixCDCieloConfig = 'Cielo';
+  CChavePIXCielo = 'ChavePIX';
+  CChaveClientIDCielo = 'ClientID';
+  CChaveClientSecretCielo = 'ClientSecret';
+
+  CSessaoPixCDMercadoPagoConfig = 'MercadoPago';
+  CChaveAccesTokenMercadoPago = 'AccesToken';
 
 implementation
 

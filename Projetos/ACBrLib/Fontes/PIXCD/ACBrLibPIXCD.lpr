@@ -38,7 +38,7 @@ uses
   Interfaces, Forms, sysutils, Classes,
   {$IFDEF MT} ACBrLibPIXCDMT{$ELSE}ACBrLibPIXCDST{$ENDIF},
   ACBrLibPIXCDDataModule, ACBrLibPIXCDConfig, ACBrLibPIXCDBase, ACBrLibConfig,
-  ACBrLibResposta, ACBrLibComum, ACBrLibConsts, ACBrLibDataModule, ACBrPIXPSPBradesco;
+  ACBrLibResposta, ACBrLibComum, ACBrLibConsts, ACBrLibDataModule;
 
 {$R *.res}
 
@@ -59,28 +59,26 @@ exports
   PIXCD_ConfigLer,
   PIXCD_ConfigGravar,
   PIXCD_ConfigLerValor,
-  PIXCD_ConfigGravarValor;
+  PIXCD_ConfigGravarValor,
 
-  //EndPoint /Pix
-  //PIXCD_ConsultarPIX,
-  //PIXCD_ConsultarPixRecebidos,
+  //EndPoint /pix
+  PIXCD_ConsultarPix,
+  PIXCD_ConsultarPixRecebidos,
   //PIXCD_SolicitarDevolucaoPix,
-  //PIXCD_ConsultarDevolucaoPix,
+  PIXCD_ConsultarDevolucaoPix,
 
   //EndPoint /cob
   //PIXCD_CriarCobrancaImediata,
-  //PIXCD_ConsultarCobrancaImediata,
+  PIXCD_ConsultarCobrancaImediata,
   //PIXCD_RevisarCobrancaImediata,
 
   //EndPoint /cobv
   //PIXCD_CriarCobranca,
   //PIXCD_RevisarCobranca,
-  //PIXCD_ConsultarCobranca,
+  PIXCD_ConsultarCobranca,
 
   //PIXCD
-  //PIXCD_ConsultarCobrancas,
-  //PIXCD_GerarQRCodeEstatico,
-  //PIXCD_GerarQRCodeDinamico;
+  PIXCD_GerarQRCodeEstatico;
 
 begin
   {$IFDEF DEBUG}

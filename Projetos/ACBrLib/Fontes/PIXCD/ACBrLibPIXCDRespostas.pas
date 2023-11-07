@@ -37,7 +37,27 @@ interface
 uses
   Classes, SysUtils, ACBrLibResposta, ACBrPIXCD, ACBrLibPIXCDConsts;
 
+type
+  { TLibPIXCDResposta }
+  TLibPIXCDResposta = class (TACBrLibRespostaBase)
+    private
+      FMsg: String;
+
+    public
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+
+    published
+      property Msg: String read FMsg write FMsg;
+  end;
+
 implementation
+
+{ TLibPIXCDResposta }
+constructor TLibPIXCDResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(ASessao, ATipo, AFormato);
+end;
 
 end.
 

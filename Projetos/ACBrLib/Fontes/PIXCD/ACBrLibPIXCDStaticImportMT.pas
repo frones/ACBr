@@ -94,6 +94,28 @@ const
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
  {%endregion}
 
+ {%region PIXCD}
+
+ function PIXCD_GerarQRCodeEstatico(const libHandle: TLibHandle; AValor: Currency; const AinfoAdicional: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
+
+ function PIXCD_ConsultarPix (const libHandle: TLibHandle; const Ae2eid: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
+
+ function PIXCD_ConsultarPixRecebidos (const libHandle: TLibHandle; ADataInicio: TDateTime; ADataFim: TDateTime; const ATxId: PChar; const ACpfCnpj: PChar; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
+
+ function PIXCD_ConsultarDevolucaoPix(const libHandle: TLibHandle; const Ae2eid, AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint):longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
+
+ function PIXCD_ConsultarCobrancaImediata(const libHandle: TLibHandle; const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
+
+ function PIXCD_ConsultarCobranca(const libHandle: TLibHandle; const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
+
+ {%endregion}
+
 implementation
 
 end.

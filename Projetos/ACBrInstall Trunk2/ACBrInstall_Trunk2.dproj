@@ -88,12 +88,11 @@
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileVersion=2.11.2.10;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=2.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=2.12.0.11;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=2.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <DCC_DebugInformation>0</DCC_DebugInformation>
         <VerInfo_MajorVer>2</VerInfo_MajorVer>
-        <VerInfo_MinorVer>11</VerInfo_MinorVer>
-        <VerInfo_Build>10</VerInfo_Build>
-        <VerInfo_Release>2</VerInfo_Release>
+        <VerInfo_MinorVer>12</VerInfo_MinorVer>
+        <VerInfo_Build>11</VerInfo_Build>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>

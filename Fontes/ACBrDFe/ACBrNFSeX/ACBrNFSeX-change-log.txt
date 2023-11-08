@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/11/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de São Carlos/SC, mudou de provedor, agora é IPM.
+  Por: Vexcom
+[*] Correção no Params da cidade de Nonoai/RS.
+  Por: Vexcom
+
 07/11/2023
 -- Diversos --
 [*] Alguns desenvolvedores informam na tag Discriminação uma lista de serviços 

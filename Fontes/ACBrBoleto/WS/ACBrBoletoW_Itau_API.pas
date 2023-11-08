@@ -1000,7 +1000,7 @@ begin
           else if (CodigoMora = '91') or (CodigoMora = '90') or
             (CodigoMora = '92') then
             JsonJuros.Add('percentual_juros').Value.AsString :=
-              IntToStrZero(round(ATitulo.ValorMoraJuros * 10000), 12);
+              IntToStrZero(round(ATitulo.ValorMoraJuros * 100000), 12);
 
           JsonPairJuros := TJsonPair.Create(AJson, 'juros');
           try
@@ -1047,7 +1047,7 @@ begin
               IntToStrZero(round(ATitulo.PercentualMulta * 100), 17)
           else if ACodMulta = '02' then
             JsonMulta.Add('percentual_multa').Value.AsString :=
-              IntToStrZero(round(ATitulo.PercentualMulta * 10000), 12);
+              IntToStrZero(round(ATitulo.PercentualMulta * 100000), 12);
           JsonMulta.Add('quantidade_dias_multa').Value.AsInteger :=
             trunc(ATitulo.DataMulta - ATitulo.Vencimento);
         end;

@@ -120,7 +120,7 @@ begin
   ARetornoWS.JSONEnvio       := EnvWs;
   ARetornoWS.Header.Operacao := TipoOperacao;
 
-  if RetWS <> '' then
+  if Trim(RetWS) <> '' then
   begin
     try
       AJSon := TJson.Create;

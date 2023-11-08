@@ -58,6 +58,7 @@ type
     function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineTipoBeneficiario(const ACBrTitulo: TACBrTitulo): String;
     function DefinePosicaoNossoNumeroRetorno: Integer; override;
+    function DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String; override;
     function DefinePosicaoCarteiraRetorno:Integer; override;
     function InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String;override;
     function MontaInstrucoesCNAB400(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String; override;
@@ -289,6 +290,20 @@ begin
     else
       Result := '9';
     end;
+  end;
+end;
+
+function TACBrBancoItau.DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String;
+begin
+  with ACBrTitulo do
+  begin
+    case Sacado.Pessoa of
+        pFisica   : Result := '1';
+        pJuridica : Result := '2';
+     else
+        Result := '9';
+     end;
+
   end;
 end;
 

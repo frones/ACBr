@@ -840,6 +840,9 @@ begin
       dhProc := ObterConteudo(AuxNode.Childrens.FindAnyNs('dhProc'), tcDatHor);
       nDFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('nDFSe'), tcStr);
 
+      NFSe.Servico.MunicipioIncidencia := cLocIncid;
+      NFSe.Servico.xMunicipioIncidencia := xLocIncid;
+
       LerEmitente(AuxNode);
       LerValoresNFSe(AuxNode);
       LerDPS(AuxNode);

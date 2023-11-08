@@ -44,6 +44,14 @@ Símbolo : Significado
 
 
 08/11/2023
+-- IPM.GravarXml --
+[*] Alterado o numero de ocorrências do Código do Pais do Tomador para -1,
+    pois não existe a tag no schema do provedor.
+   Por: Italo Giurizzato Junior
+-- PadraoNacional.LerXml --
+[*] Alteração visando alimentar os campos MunicipioIncidencia e xMunicipioIncidencia
+    com o conteudo das tas: cLocIncid e xLocIncid respectivamente.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de São Carlos/SC, mudou de provedor, agora é IPM.
   Por: Vexcom

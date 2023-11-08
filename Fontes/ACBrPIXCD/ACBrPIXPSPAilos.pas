@@ -51,7 +51,7 @@ uses
 
 const
   cAilosURLSandbox      = 'https://apiendpointhml.ailos.coop.br/qa/ailos/pix-cobranca/api/v1';
-  cAilosURLProducao     = 'https://apiendpoint.ailos.coop.br/ailos/pix-cobranca/api/v1';
+  cAilosURLProducao     = 'https://pixcobranca.ailos.coop.br/ailos/pix-cobranca/api/v1';
   cAilosPathAuthToken   = '/client/connect/token';
   cAilosURLAuthTeste    = cAilosURLSandbox+cAilosPathAuthToken;
   cAilosURLAuthProducao = cAilosURLProducao+cAilosPathAuthToken;

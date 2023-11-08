@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/11/2023
+-- ACBrPSPAilos --
+[*] Correção da URL de Produção.
+    Por: Alexandre Bugmann
+
 31/10/2023
 -- ACBrPSP --
 [*] Alteração para não validar E2E em casos de PSP que não são padrão Bacen.

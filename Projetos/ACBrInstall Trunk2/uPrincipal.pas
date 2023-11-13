@@ -343,6 +343,9 @@ begin
       begin
         achk.Enabled := False;
         achk.Caption := 'Erro ao detectar versão.';
+      {$IFDEF DEBUG}
+        ShowMessage('Erro ao detectar versão. Erro: '+ E.Message);
+      {$ENDIF}
 //        achk.Visible := False;
       end;
 

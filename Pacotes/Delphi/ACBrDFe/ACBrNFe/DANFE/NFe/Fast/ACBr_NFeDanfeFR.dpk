@@ -97,6 +97,7 @@ requires
 {$IFDEF VER330} fs26, frx26, frxe26, frxDB26, dsnap, {$ENDIF} // Rio
 {$IFDEF VER340} fs27, frx27, frxe27, frxDB27, dsnap, {$ENDIF} // Sydney
 {$IFDEF VER350} fs28, frx28, frxe28, frxDB28, dsnap, {$ENDIF} // Alexandria
+{$IFDEF VER360} fs29, frx29, frxe29, frxDB29, dsnap, {$ENDIF} // Athens
   ACBr_NFe;
 
 contains

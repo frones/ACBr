@@ -51,7 +51,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -16
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -60,28 +60,28 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Left = 630
         Top = 4
         Width = 90
-        Height = 15
+        Height = 14
         Alignment = taCenter
         Caption = 'N'#250'mero da Nota'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object RLLabel12: TRLLabel
-        Left = 610
+        Left = 609
         Top = 50
-        Width = 130
-        Height = 15
+        Width = 132
+        Height = 14
         Alignment = taCenter
         Caption = 'Data e Hora de Emiss'#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -104,35 +104,36 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object rllCodigoChave: TRLLabel
-        Left = 428
+        Left = 426
         Top = 182
-        Width = 118
-        Height = 15
+        Width = 320
+        Height = 14
         Alignment = taCenter
         Caption = 'C'#243'digo de Verifica'#231#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object rllCodVerificacao: TRLLabel
-        Left = 424
+        Left = 426
         Top = 199
-        Width = 324
-        Height = 18
+        Width = 320
+        Height = 17
+        Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
       end
@@ -153,30 +154,31 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel7: TRLLabel
-        Left = 4
+        Left = 2
         Top = 182
-        Width = 77
-        Height = 15
+        Width = 88
+        Height = 14
+        Alignment = taCenter
         Caption = 'Compet'#234'ncia:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object rllCompetencia: TRLLabel
-        Left = 2
+        Left = 9
         Top = 200
-        Width = 86
-        Height = 15
+        Width = 74
+        Height = 14
         Alignment = taCenter
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
         ParentFont = False
       end
       object RLDraw9: TRLDraw
@@ -189,15 +191,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel18: TRLLabel
-        Left = 97
+        Left = 95
         Top = 182
-        Width = 94
-        Height = 15
+        Width = 118
+        Height = 14
+        Alignment = taCenter
         Caption = 'Num. RPS/Ser.:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -211,9 +214,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
         ParentFont = False
       end
       object RLDraw10: TRLDraw
@@ -228,13 +231,13 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel20: TRLLabel
         Left = 601
         Top = 96
-        Width = 147
-        Height = 15
+        Width = 145
+        Height = 14
         Caption = 'N'#250'mero NFSe substitu'#237'da:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -247,7 +250,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -262,7 +265,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -16
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -276,21 +279,21 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -19
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object RLSystemInfo1: TRLSystemInfo
-        Left = 653
+        Left = 608
         Top = 159
-        Width = 27
-        Height = 15
+        Width = 72
+        Height = 14
         Alignment = taRightJustify
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = []
         Info = itPageNumber
         ParentFont = False
@@ -299,12 +302,12 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLSystemInfo2: TRLSystemInfo
         Left = 692
         Top = 159
-        Width = 27
-        Height = 15
+        Width = 50
+        Height = 14
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = []
         Info = itLastPageNumber
         ParentFont = False
@@ -319,20 +322,20 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
       end
       object RLLabel63: TRLLabel
         Left = 663
-        Top = 143
-        Width = 41
-        Height = 15
+        Top = 139
+        Width = 39
+        Height = 14
         Caption = 'P'#225'gina'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -348,13 +351,14 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel64: TRLLabel
         Left = 220
         Top = 182
-        Width = 186
-        Height = 15
+        Width = 195
+        Height = 14
+        Alignment = taCenter
         Caption = 'Munic'#237'pio de Presta'#231#227'o do Servi'#231'o:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -364,12 +368,13 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Top = 200
         Width = 196
         Height = 15
+        Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
         ParentFont = False
       end
       object RLDraw12: TRLDraw
@@ -402,7 +407,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -416,7 +421,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -429,7 +434,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -444,7 +449,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -458,7 +463,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -472,16 +477,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Scaled = True
       end
       object RLLabel2: TRLLabel
-        Left = 293
+        Left = 306
         Top = 2
-        Width = 166
-        Height = 15
+        Width = 140
+        Height = 14
         Alignment = taCenter
         Caption = 'PRESTADOR DE SERVI'#199'OS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -495,7 +500,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -508,7 +513,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -522,7 +527,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -535,7 +540,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -554,16 +559,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawBottom = True
       BeforePrint = rlbTomadorBeforePrint
       object RLLabel4: TRLLabel
-        Left = 299
+        Left = 252
         Top = 3
-        Width = 156
+        Width = 203
         Height = 15
         Alignment = taCenter
         Caption = 'TOMADOR DE SERVI'#199'OS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -573,13 +578,12 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Top = 35
         Width = 55
         Height = 14
-        Alignment = taRightJustify
         AutoSize = False
         Caption = 'CPFCNPJ:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -592,7 +596,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -606,7 +610,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -619,7 +623,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -633,7 +637,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -646,7 +650,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -660,7 +664,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -673,7 +677,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -687,7 +691,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -700,7 +704,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -713,7 +717,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -726,7 +730,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -740,7 +744,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -753,7 +757,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -767,7 +771,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -780,7 +784,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -793,7 +797,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -806,7 +810,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -820,7 +824,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -833,7 +837,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -851,16 +855,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawRight = True
       Borders.DrawBottom = True
       object RLLabel14: TRLLabel
-        Left = 274
+        Left = 264
         Top = 4
-        Width = 204
+        Width = 214
         Height = 15
         Alignment = taCenter
         Caption = 'DISCRIMINA'#199#195'O DOS SERVI'#199'OS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -886,7 +890,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -894,9 +898,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbISSQN: TRLBand
       Left = 23
-      Top = 537
+      Top = 538
       Width = 752
-      Height = 318
+      Height = 366
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -946,7 +950,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -961,7 +965,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -976,7 +980,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -991,7 +995,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1006,7 +1010,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1028,7 +1032,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1042,7 +1046,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1057,7 +1061,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1072,7 +1076,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1087,7 +1091,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1118,7 +1122,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1131,7 +1135,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1146,7 +1150,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1160,7 +1164,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1173,7 +1177,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1189,7 +1193,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1204,7 +1208,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1220,7 +1224,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1235,7 +1239,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1251,7 +1255,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1266,7 +1270,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1282,7 +1286,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1297,7 +1301,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1313,7 +1317,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1328,22 +1332,22 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
       end
       object RLLabel44: TRLLabel
-        Left = 311
+        Left = 316
         Top = 79
-        Width = 130
+        Width = 120
         Height = 15
         Alignment = taCenter
         Caption = 'TRIBUTOS FEDERAIS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -12
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1365,16 +1369,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel35: TRLLabel
-        Left = 6
+        Left = 2
         Top = 139
-        Width = 274
-        Height = 15
+        Width = 282
+        Height = 14
         Alignment = taCenter
         Caption = 'Detalhamento de Valores - Prestador dos Servi'#231'os'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1389,8 +1393,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Caption = 'C'#225'lculo do ISSQN devido no Munic'#237'pio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1405,8 +1409,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Caption = 'Outras Informa'#231#245'es'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1421,7 +1425,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1436,7 +1440,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1451,7 +1455,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1466,7 +1470,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1481,7 +1485,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1496,7 +1500,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1511,7 +1515,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1526,7 +1530,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1541,7 +1545,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1556,7 +1560,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1571,7 +1575,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1587,7 +1591,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1602,7 +1606,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1617,7 +1621,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1650,7 +1654,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1665,7 +1669,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1680,7 +1684,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1695,7 +1699,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1710,7 +1714,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1725,7 +1729,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1740,7 +1744,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1755,7 +1759,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1770,7 +1774,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -16
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1793,7 +1797,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1809,7 +1813,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1824,7 +1828,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1839,7 +1843,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1854,7 +1858,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1869,7 +1873,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1884,7 +1888,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -27
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -1897,7 +1901,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -1912,7 +1916,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1920,7 +1924,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 855
+      Top = 904
       Width = 752
       Height = 40
       BandType = btSummary
@@ -1939,7 +1943,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         Lines.Strings = (
           'Dados Adicionais....')
@@ -1955,7 +1959,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -1963,7 +1967,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 913
+      Top = 962
       Width = 752
       Height = 73
       BandType = btSummary
@@ -1988,7 +1992,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
       end
@@ -2002,7 +2006,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -2017,7 +2021,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
       end
@@ -2039,7 +2043,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -2054,7 +2058,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
@@ -2068,7 +2072,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -8
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2090,7 +2094,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -8
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2104,7 +2108,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2119,7 +2123,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -2144,7 +2148,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2158,7 +2162,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2172,7 +2176,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2186,21 +2190,21 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
       end
       object RLLabel5: TRLLabel
-        Left = 505
+        Left = 504
         Top = 1
-        Width = 79
+        Width = 85
         Height = 14
         Caption = 'Valor do Servi'#231'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2214,7 +2218,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2224,7 +2228,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Left = 23
       Top = 519
       Width = 752
-      Height = 18
+      Height = 19
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
@@ -2247,7 +2251,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Times New Roman'
+          Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = False
@@ -2261,7 +2265,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Times New Roman'
+          Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = False
@@ -2276,22 +2280,22 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Times New Roman'
+          Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = False
         end
         object txtServicoTotal: TRLLabel
-          Left = 506
+          Left = 504
           Top = 1
-          Width = 76
+          Width = 82
           Height = 14
           Alignment = taRightJustify
           AutoSize = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Times New Roman'
+          Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = False
@@ -2306,7 +2310,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Times New Roman'
+          Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = False
@@ -2321,7 +2325,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Times New Roman'
+          Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = False
@@ -2330,7 +2334,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object RLBand1: TRLBand
       Left = 23
-      Top = 895
+      Top = 944
       Width = 752
       Height = 18
       BandType = btSummary
@@ -2342,7 +2346,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -2357,7 +2361,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = False

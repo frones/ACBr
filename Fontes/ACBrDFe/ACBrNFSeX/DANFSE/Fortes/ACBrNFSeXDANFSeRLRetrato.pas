@@ -235,6 +235,7 @@ type
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbPrestadorAfterPrint(Sender: TObject);
     procedure rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -380,12 +381,12 @@ begin
   begin
     rllNumNF0.Caption := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
     rllEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
-    rllCodigoChave.Caption := 'Código de Verificação:';
+    rllCodigoChave.Caption := ACBrStr('Código de Verificação:');
 
     if fpDANFSe.Provedor = proPadraoNacional then
-      rllCodigoChave.Caption := 'Chave de Acesso:';
+      rllCodigoChave.Caption := ACBrStr('Chave de Acesso:');
 
-    rllCodVerificacao.Caption := CodigoVerificacao;
+    rllCodVerificacao.Caption := ACBrStr(CodigoVerificacao);
 
     rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('mm/yyyy', Competencia), '');
 
@@ -396,7 +397,7 @@ begin
 
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
-    rllMunicipioPrestacaoServico.Caption := Servico.MunicipioPrestacaoServico;
+    rllMunicipioPrestacaoServico.Caption := ACBrStr(Servico.MunicipioPrestacaoServico);
 
     RLLabel64.Visible := ACBrNFSe.Provider.ConfigGeral.ImprimirLocalPrestServ;
     rllMunicipioPrestacaoServico.Visible := ACBrNFSe.Provider.ConfigGeral.ImprimirLocalPrestServ;
@@ -423,6 +424,11 @@ begin
 
     txtISS.Caption := FormatFloatBr(ValorISS);
   end;
+end;
+
+procedure TfrlXDANFSeRLRetrato.rlbPrestadorAfterPrint(Sender: TObject);
+begin
+
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbISSQNBeforePrint(Sender: TObject; var PrintIt: Boolean);

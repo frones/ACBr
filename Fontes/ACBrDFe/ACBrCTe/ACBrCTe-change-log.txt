@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2023
+-- pcteRetEnvEventoCTe --
+[*] Ajuste para resolver problema na leitura do retorno da carta de correção
+  Por: Diego Folieni
+
 03/11/2023
 -- ACBrCTeDACTeRLRetrato --
 [*] Ajuste para corrigir acentuação na seção Documentos Originarios

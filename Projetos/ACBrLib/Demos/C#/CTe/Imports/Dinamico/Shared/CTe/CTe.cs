@@ -115,7 +115,7 @@ namespace ACBrLib.CTe
             var iniData = new ACBrIniFile();
 
             iniData.WriteToIni(InfCTe, "InfCTe");
-            iniData.WriteToIni(Identificacao, "Ide");
+            iniData.WriteToIni(Identificacao, "ide");
 
             for (var i = 0; i < Identificacao.infPercurso.Count; i++)
             {
@@ -141,7 +141,7 @@ namespace ACBrLib.CTe
                 iniData.WriteToIni(obsFisco, $"ObsFisco{i + 1:000}");
             }
 
-            iniData.WriteToIni(Emitente, "Emit");
+            iniData.WriteToIni(Emitente, "emit");
             iniData.WriteToIni(Remetente, "Rem");
             iniData.WriteToIni(Expedidor, "Exped");
             iniData.WriteToIni(Recebedor, "Receb");
@@ -465,7 +465,7 @@ namespace ACBrLib.CTe
         private void ReadFromIni(ACBrIniFile iniData)
         {
             iniData.ReadFromIni(InfCTe, "InfCTe");
-            iniData.ReadFromIni(Identificacao, "Ide");
+            iniData.ReadFromIni(Identificacao, "ide");
 
             var i = 0;
             if (Identificacao != null)
@@ -507,7 +507,7 @@ namespace ACBrLib.CTe
 
             } while (obsFisco != null);
                        
-            iniData.ReadFromIni(Emitente, "Emit");
+            iniData.ReadFromIni(Emitente, "emit");
             iniData.ReadFromIni(Remetente, "Rem");
             iniData.ReadFromIni(Expedidor, "Exped");
             iniData.ReadFromIni(Recebedor, "Receb");

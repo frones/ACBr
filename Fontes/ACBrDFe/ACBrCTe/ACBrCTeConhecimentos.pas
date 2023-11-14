@@ -81,7 +81,9 @@ type
     destructor Destroy; override;
 
     procedure Imprimir;
-    procedure ImprimirPDF;
+    procedure ImprimirPDF; overload;
+    procedure ImprimirPDF(AStream: TStream); overload;
+
     procedure Assinar;
     procedure Validar;
     function VerificarAssinatura: Boolean;
@@ -238,6 +240,20 @@ begin
       raise EACBrCTeException.Create('Componente DACTE não associado.')
     else
       DACTE.ImprimirDACTEPDF(CTe);
+  end;
+end;
+
+procedure Conhecimento.ImprimirPDF(AStream: TStream);
+begin
+  with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
+  begin
+    if not Assigned(DACTE) then
+      raise EACBrCTeException.Create('Componente DACTE não associado.')
+    else
+    begin
+      AStream.Size := 0;
+      DACTE.ImprimirDACTEPDF(AStream, CTe);
+    end;
   end;
 end;
 

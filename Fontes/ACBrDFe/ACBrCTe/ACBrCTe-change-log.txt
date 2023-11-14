@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/11/2023
+-- ACBrCTeConhecimentos --
+[+] Implementado o método ImprimirPDF usando o Stream na classe Conhecimento.
+  Por: Italo Giurizzato Junior
 -- pcteRetEnvEventoCTe --
 [*] Reversão das alterações do commit anterior
   Por: Diego Folieni

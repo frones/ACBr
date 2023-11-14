@@ -1118,9 +1118,9 @@
   <!--TIPO COMPLEXO PARA INFORMAÇÕES DE ATIVIDADE DE EVENTO-->
   <xs:complexType name="TCAtvEvento">
     <xs:sequence>
-      <xs:element name="desc" type="TSDesc255">
+      <xs:element name="xNome" type="TSDesc255">
         <xs:annotation>
-          <xs:documentation>Descrição do evento Artístico, Cultural, Esportivo, etc</xs:documentation>
+          <xs:documentation>Nome do evento Artístico, Cultural, Esportivo, etc</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="dtIni" type="xs:date">

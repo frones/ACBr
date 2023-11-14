@@ -692,7 +692,7 @@ type
 
   TEvento = class(TObject)
   private
-    Fdesc: string;
+    FxNome: string;
     FdtIni: TDateTime;
     FdtFim: TDateTime;
     Fid: string;
@@ -701,7 +701,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property desc: string read Fdesc write Fdesc;
+    property xNome: string read FxNome write FxNome;
     property dtIni: TDateTime read FdtIni write FdtIni;
     property dtFim: TDateTime read FdtFim write FdtFim;
     property id: string read Fid write Fid;

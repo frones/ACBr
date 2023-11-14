@@ -700,12 +700,12 @@ function TNFSeW_PadraoNacional.GerarAtividadeEvento: TACBrXmlNode;
 begin
   Result := nil;
 
-  if NFSe.Servico.Evento.desc <> '' then
+  if NFSe.Servico.Evento.xNome <> '' then
   begin
     Result := CreateElement('atvEvento');
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'desc', 1, 255, 1,
-                                                 NFSe.Servico.Evento.desc, ''));
+    Result.AppendChild(AddNode(tcStr, '#1', 'xNome', 1, 255, 1,
+                                                NFSe.Servico.Evento.xNome, ''));
 
     Result.AppendChild(AddNode(tcDat, '#1', 'dtIni', 10, 10, 1,
                                                 NFSe.Servico.Evento.dtIni, ''));

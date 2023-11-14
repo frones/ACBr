@@ -137,7 +137,7 @@ begin
   begin
     with NFSe.Servico.Evento do
     begin
-      desc := ObterConteudo(AuxNode.Childrens.FindAnyNs('desc'), tcStr);
+      xNome := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
       dtIni := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtIni'), tcDat);
       dtFim := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtFim'), tcDat);
       id := ObterConteudo(AuxNode.Childrens.FindAnyNs('id'), tcStr);

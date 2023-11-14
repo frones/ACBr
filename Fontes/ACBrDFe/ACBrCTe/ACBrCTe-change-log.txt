@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2023
+-- pcteRetEnvEventoCTe --
+[*] Reversão das alterações do commit anterior
+  Por: Diego Folieni
+
 13/11/2023
 -- pcteRetEnvEventoCTe --
 [*] Ajuste para resolver problema na leitura do retorno da carta de correção

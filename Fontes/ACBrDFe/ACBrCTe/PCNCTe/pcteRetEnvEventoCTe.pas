@@ -312,7 +312,6 @@ begin
 
     if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or
        (Leitor.rExtrai(1, 'retEventoCTe') <> '') or
-       (Leitor.rExtrai(1, 'retCceCTe') <> '') or //MG retornou desta forma
        (Leitor.rExtrai(1, 'retEvento') <> '') then
     begin
       i := 0;

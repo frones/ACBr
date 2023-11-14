@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 14/11/2023
+-- ACBrNFSeXProviderBase --
+[*] Possível solução para o problema na consulta por faixa do provedor Infisc
+    que o XML não estava sendo assinado.
+   Por: Italo Giurizzato Junior
+
 -- ACBrNFSeXServicos --
 [*] A cidade de Pinhais/PR, mudou as URLs, o provedor continua o mesmo.
   Por: Dercide Alvarez

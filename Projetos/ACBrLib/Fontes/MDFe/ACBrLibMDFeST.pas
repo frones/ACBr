@@ -150,9 +150,13 @@ function MDFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cPro
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_SalvarPDF(const sResposta: PChar; var esTamanho: longint):longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ImprimirEvento(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ImprimirEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_SalvarEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -747,6 +751,21 @@ begin
   end;
 end;
 
+function MDFE_SalvarPDF(const sResposta: PChar; var esTamanho: longint):longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibMDFe(pLib^.Lib).SalvarPDF(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
 function MDFE_ImprimirEvento(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -768,6 +787,21 @@ begin
   try
     VerificarLibInicializada(pLib);
     Result := TACBrLibMDFe(pLib^.Lib).ImprimirEventoPDF(eArquivoXmlMDFe, eArquivoXmlEvento);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function MDFE_SalvarEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibMDFe(pLib^.Lib).SalvarEventoPDF(eArquivoXmlMDFe, eArquivoXmlEvento, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

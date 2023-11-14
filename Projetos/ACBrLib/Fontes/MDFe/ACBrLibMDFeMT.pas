@@ -150,9 +150,13 @@ function MDFE_Imprimir(const libHandle: PLibHandle; const cImpressora: PChar; nN
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ImprimirPDF(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint):longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ImprimirEvento(const libHandle: PLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ImprimirEventoPDF(const libHandle: PLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_SalvarEventoPDF(const libHandle: PLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -747,6 +751,21 @@ begin
   end;
 end;
 
+function MDFE_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint):longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibMDFe(libHandle^.Lib).SalvarPDF(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
 function MDFE_ImprimirEvento(const libHandle: PLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -768,6 +787,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibMDFe(libHandle^.Lib).ImprimirEventoPDF(eArquivoXmlMDFe, eArquivoXmlEvento);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function MDFE_SalvarEventoPDF(const libHandle: PLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibMDFe(libHandle^.Lib).SalvarEventoPDF(eArquivoXmlMDFe, eArquivoXmlEvento, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

@@ -153,10 +153,14 @@ function MDFE_Imprimir(const libHandle: TLibHandle; const cImpressora: PChar; nN
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 function MDFE_ImprimirPDF(const libHandle: TLibHandle): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
+function MDFE_SalvarPDF(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint):longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 function MDFE_ImprimirEvento(const libHandle: TLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 function MDFE_ImprimirEventoPDF(const libHandle: TLibHandle;
   const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
+function MDFE_SalvarEventoPDF(const libHandle: TLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 {%endregion}
 

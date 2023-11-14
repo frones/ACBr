@@ -101,8 +101,10 @@ type
                                const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
     function Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo, bMostrarPreview: PChar): longint;
     function ImprimirPDF: longint;
+    function SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
     function ImprimirEvento(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
     function ImprimirEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
+    function SalvarEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
 
   end;
 
@@ -1789,6 +1791,41 @@ begin
   end;
 end;
 
+function TACBrLibMDFe.SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+var
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+     GravarLog('MDFe_SalvarPDF', logNormal);
+
+     MDFeDM.Travar;
+
+     AStream := TMemoryStream.Create;
+
+     try
+       MDFeDM.ConfigurarImpressao('', True);
+
+       MDFeDM.ACBrMDFe1.Manifestos.ImprimirPDF(AStream);
+       Resposta := StreamToBase64(AStream);
+
+       MoverStringParaPChar(Resposta, sResposta, esTamanho);
+       Result := SetRetorno(ErrOK, Resposta);
+     finally
+       MDFeDM.FinalizarImpressao;
+       AStream.Free;
+       MDFeDM.Destravar;
+     end;
+
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
 function TACBrLibMDFe.ImprimirEvento(const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
 var
   EhArquivo: boolean;
@@ -1902,6 +1939,70 @@ begin
 
       on E: Exception do
         Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibMDFe.SalvarEventoPDF(const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
+var
+  EhArquivo: boolean;
+  AArquivoXmlMDFe: string;
+  AArquivoXmlEvento: string;
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+    AArquivoXmlMDFe := ConverterAnsiParaUTF8(eArquivoXmlMDFe);
+    AArquivoXmlEvento := ConverterAnsiParaUTF8(eArquivoXmlEvento);
+
+    if Config.Log.Nivel > logNormal then
+       GravarLog('MDFe_SalvarEventoPDF(' + AArquivoXmlMDFe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
+    else
+        GravarLog('MDFe_SalvarEventoPDF', logNormal);
+
+    MDFeDM.Travar;
+    AStream := TMemoryStream.Create;
+
+    try
+      EhArquivo := StringEhArquivo(AArquivoXmlMDFe);
+
+      if EhArquivo then
+      VerificarArquivoExiste(AArquivoXmlMDFe);
+
+      if EhArquivo then
+      MDFeDM.ACBrMDFe1.Manifestos.LoadFromFile(AArquivoXmlMDFe)
+      else
+      MDFeDM.ACBrMDFe1.Manifestos.LoadFromString(AArquivoXmlMDFe);
+
+      EhArquivo := StringEhArquivo(AArquivoXmlEvento);
+
+      if EhArquivo then
+        VerificarArquivoExiste(AArquivoXmlEvento);
+
+      if EhArquivo then
+        MDFeDM.ACBrMDFe1.EventoMDFe.LerXML(AArquivoXmlEvento)
+      else
+        MDFeDM.ACBrMDFe1.EventoMDFe.LerXMLFromString(AArquivoXmlEvento);
+
+      MDFeDM.ConfigurarImpressao('', True);
+      MDFeDM.ACBrMDFe1.DAMDFE.ImprimirDAMDFePDF(AStream);
+
+      Resposta := StreamToBase64(AStream);
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+
+    finally
+      MDFeDM.FinalizarImpressao;
+      AStream.Free;
+      MDFeDM.Destravar;
+    end;
+
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
   end;
 end;
 

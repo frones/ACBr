@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2023
+--- ACBrLibMDFeBase, ACBrLibMDFeST, ACBrLibMDFeMT, ACBrLibMDFeStaticImport, ACBrLibMDFeStaticImportMT ---
+[+] Inclusão novos métodos: MDFE_SalvarPDF e MDFE_SalvarEventoPDF
+    Por: Antonio Carlos Junior	
+
 10/01/2023
 --- ACBrLibMDFeBase ---
 [-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado

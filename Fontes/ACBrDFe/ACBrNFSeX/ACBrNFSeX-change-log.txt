@@ -62,6 +62,8 @@ Símbolo : Significado
     que o XML não estava sendo assinado.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[*] Incluida a cidade de Cruzeiro do Sul/RS, provedor é o Tecnos na versão 2.01
+  Por: Farol TI
 [*] A cidade de Pinhais/PR, mudou as URLs, o provedor continua o mesmo.
   Por: Dercide Alvarez
 [*] A cidade de Janauba/MG, mudou de provedor, agora é Sintese.

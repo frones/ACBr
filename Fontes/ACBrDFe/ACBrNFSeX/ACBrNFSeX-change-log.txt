@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/11/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Pinhais/PR, mudou as URLs, o provedor continua o mesmo.
+  Por: Dercide Alvarez
+[*] A cidade de Janauba/MG, mudou de provedor, agora é Sintese.
+  Por: João Antônio
+[*] A cidade de Guaira/PR, mudou as URLs, o provedor continua o mesmo.
+  Por: Juliomar Marchetti
+
 08/11/2023
 -- IPM.GravarXml --
 [*] Alterado o numero de ocorrências do Código do Pais do Tomador para -1,

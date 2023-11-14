@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/11/2023
+-- IMP.Provider --
+[*] Ajuste no TratarXmlRetornado para sanar problemas com as cidades de 
+    Agrolândia/SC e Rio das Antas/SC
+   Por: Alisson
 -- ACBrNFSeXNotasFiscais --
 [+] Implementado o ImprimirPDF por Stream.
    Por: Italo Giurizzato Junior

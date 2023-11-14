@@ -1274,7 +1274,8 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
-    Result := ACBrStr(Result);
+    // Revertido para sanar o problema com as cidades de Agrolândia/SC e Rio das Antas/SC
+    Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);

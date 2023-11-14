@@ -73,7 +73,8 @@ type
     destructor Destroy; override;
 
     procedure Imprimir;
-    procedure ImprimirPDF;
+    procedure ImprimirPDF; overload;
+    procedure ImprimirPDF(AStream: TStream); overload;
 
     function LerXML(const AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
@@ -127,7 +128,8 @@ type
 
     procedure GerarNFSe;
     procedure Imprimir;
-    procedure ImprimirPDF;
+    procedure ImprimirPDF; overload;
+    procedure ImprimirPDF(AStream: TStream); overload;
 
     function New: TNotaFiscal; reintroduce;
     function Add(ANota: TNotaFiscal): Integer; reintroduce;
@@ -281,6 +283,22 @@ begin
       raise EACBrNFSeException.Create('Componente DANFSE não associado.')
     else
       DANFSE.ImprimirDANFSEPDF(NFSe);
+  end;
+end;
+
+procedure TNotaFiscal.ImprimirPDF(AStream: TStream);
+begin
+  with TACBrNFSeX(FACBrNFSe) do
+  begin
+    DANFSE.Provedor := Configuracoes.Geral.Provedor;
+
+    if not Assigned(DANFSE) then
+      raise EACBrNFSeException.Create('Componente DANFSE não associado.')
+    else
+    begin
+      AStream.Size := 0;
+      DANFSE.ImprimirDANFSEPDF(AStream, NFSe);
+    end;
   end;
 end;
 
@@ -655,7 +673,7 @@ begin
         begin
           with Evento do
           begin
-            desc := INIRec.ReadString(sSecao, 'desc', '');
+            xNome := INIRec.ReadString(sSecao, 'xNome', '');
             dtIni := INIRec.ReadDate(sSecao, 'dtIni', Now);
             dtFim := INIRec.ReadDate(sSecao, 'dtFim', Now);
             id := INIRec.ReadString(sSecao, 'id', '');
@@ -1129,10 +1147,10 @@ begin
       end;
 
       //Padrão Nacional
-      if (Servico.Evento.desc <> '') or (Servico.Evento.dtIni > 0) or (Servico.Evento.dtFim > 0)then
+      if (Servico.Evento.xNome <> '') or (Servico.Evento.dtIni > 0) or (Servico.Evento.dtFim > 0)then
       begin
         sSecao := 'Evento';
-        INIRec.WriteString(sSecao, 'Evento', Servico.Evento.desc);
+        INIRec.WriteString(sSecao, 'xNome', Servico.Evento.xNome);
         INIRec.WriteDate(sSecao, 'dtIni', Servico.Evento.dtIni);
         INIRec.WriteDate(sSecao, 'dtFim', Servico.Evento.dtFim);
         INIRec.WriteString(sSecao, 'id', Servico.Evento.id);
@@ -1563,6 +1581,13 @@ begin
   TACBrNFSeX(FACBrNFSe).DANFSE.ImprimirDANFSEPDF;
 end;
 
+procedure TNotasFiscais.ImprimirPDF(AStream: TStream);
+begin
+  VerificarDANFSE;
+
+  TACBrNFSeX(FACBrNFSe).DANFSE.ImprimirDANFSEPDF(AStream);
+end;
+
 procedure TNotasFiscais.Insert(Index: Integer; ANota: TNotaFiscal);
 begin
   inherited Insert(Index, ANota);
@@ -1731,7 +1756,7 @@ var
   MS: TMemoryStream;
   P, N, TamTag, j: Integer;
   aXml, aXmlLote: string;
-  TagF: Array[1..14] of String;
+  TagF: Array[1..15] of String;
   SL: TStringStream;
   IsFile: Boolean;
 
@@ -1751,6 +1776,7 @@ var
     TagF[12] := '<notaFiscal>';       // Provedor GIAP
     TagF[13] := '<NOTA>';             // Provedor AssessorPublico
     TagF[14] := '<NOTA_FISCAL>';      // Provedor ISSDSF
+    TagF[15] := '<tcCompNfse>';       // Provedor ISSCuritiba
 
     j := 0;
 
@@ -1777,6 +1803,7 @@ var
     TagF[12] := '</notaFiscal>';       // Provedor GIAP
     TagF[13] := '</NOTA>';             // Provedor AssessorPublico
     TagF[14] := '</NOTA_FISCAL>';      // Provedor ISSDSF
+    TagF[15] := '</tcCompNfse>';       // Provedor ISSCuritiba
 
     j := 0;
 

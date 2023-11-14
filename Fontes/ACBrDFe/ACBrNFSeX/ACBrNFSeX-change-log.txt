@@ -44,9 +44,14 @@ Símbolo : Significado
 
 
 14/11/2023
+-- ACBrNFSeXNotasFiscais --
+[+] Implementado o ImprimirPDF por Stream.
+   Por: Italo Giurizzato Junior
+[*] Alteração visando a leitura correto de um lote de notas do provedor ISSCuritiba.
+   Por: Ray Hildebrant
 -- ACBrNFSeXClass/PadraoNacional.GravarXml/PadraoNacional.LerXml --
 [*] Ajustes por conta da alteração na grafia da tag, estava desc sendo que o 
-    correto é xNome
+    correto é xNome.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [*] Possível solução para o problema na consulta por faixa do provedor Infisc

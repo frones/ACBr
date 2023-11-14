@@ -88,6 +88,7 @@ exports
   NFSE_EnviarEmail,
   NFSE_Imprimir,
   NFSE_ImprimirPDF,
+  NFSE_SalvarPDF,
 
   // Servico Prestado
   NFSE_ConsultarNFSeServicoPrestadoPorNumero,

@@ -84,6 +84,7 @@ type
     function EnviarEmail(const ePara, eXmlNFSe: PChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar):longint;
     function Imprimir(const cImpressora: PChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PChar): longint;
     function ImprimirPDF: longint;
+    function SalvarPDF (const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarNFSeServicoPrestadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
@@ -961,10 +962,10 @@ begin
     AMensagem := ConverterAnsiParaUTF8(eMensagem);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFe_EnviarEmail(' + APara + ',' + AXmlNFSe + ',' + BoolToStr(AEnviaPDF, 'PDF', '') + ',' + AAssunto
+      GravarLog('NFSE_EnviarEmail(' + APara + ',' + AXmlNFSe + ',' + BoolToStr(AEnviaPDF, 'PDF', '') + ',' + AAssunto
                  + ',' + ACC + ',' + AAnexos + ',' + AMensagem + ' )', logCompleto, True)
     else
-      GravarLog('NFe_EnviarEmail', logNormal);
+      GravarLog('NFSE_EnviarEmail', logNormal);
 
     NFSeDM.Travar;
     try
@@ -1043,9 +1044,9 @@ begin
     Cancelada := ConverterAnsiParaUTF8(cCancelada);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFSe_Imprimir(' + Impressora + ',' + IntToStr(nNumCopias)+ ',' + GerarPDF + ',' + MostrarPreview + ',' + Cancelada + ' )', logCompleto, True)
+      GravarLog('NFSE_Imprimir(' + Impressora + ',' + IntToStr(nNumCopias)+ ',' + GerarPDF + ',' + MostrarPreview + ',' + Cancelada + ' )', logCompleto, True)
     else
-      GravarLog('NFSe_Imprimir', logNormal);
+      GravarLog('NFSE_Imprimir', logNormal);
 
     NFSeDM.Travar;
     Resposta := TLibImpressaoResposta.Create(NFSeDM.ACBrNFSeX1.NotasFiscais.Count, Config.TipoResposta, Config.CodResposta);
@@ -1096,6 +1097,40 @@ begin
       end;
     finally
     NFSeDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibNFSe.SalvarPDF(const sResposta: PChar; var esTamanho: longint):longint;
+var
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+    GravarLog('NFSE_SalvarPDF', logNormal);
+
+    NFSeDM.Travar;
+
+    AStream := TMemoryStream.Create;
+
+    try
+      NFSeDM.ConfigurarImpressao('', True);
+
+      NFSeDM.ACBrNFSeX1.NotasFiscais.ImprimirPDF(AStream);
+      Resposta := StreamToBase64(AStream);
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      NFSeDM.FinalizarImpressao;
+      AStream.Free;
+      NFSeDM.Destravar;
     end;
   except
     on E: EACBrLibException do

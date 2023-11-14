@@ -150,6 +150,9 @@ function NFSE_Imprimir(const libHandle: PLibHandle; const cImpressora: PChar; nN
 function NFSE_ImprimirPDF(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function NFSE_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function NFSE_ConsultarNFSeServicoPrestadoPorNumero(const libHandle: PLibHandle; const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -632,6 +635,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibNFSe(libHandle^.Lib).ImprimirPDF;
+  except
+      on E: EACBrLibException do
+       Result := E.Erro;
+
+      on E: Exception do
+        Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNFSe(libHandle^.Lib).SalvarPDF(sResposta, esTamanho);
   except
       on E: EACBrLibException do
        Result := E.Erro;

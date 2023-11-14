@@ -65,6 +65,12 @@ namespace ACBrLib.MDFe
             set => SetProperty(value);
         }
 
+        public bool ExibirMunicipioDescarregamento
+        {
+            get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2023
+-- ACBrMonitorConsts, DoACBrReinfUnit, pcnConversaoReinf --
+[+] Implementado método SetTipoContribuinte para setar o valor no monitor e criadas funções de conversão para o enumerado
+   Por: Renato Rubinho
+
 27/10/2023
 --- DoACBrReinfUnit ---
 [*] Centralizadas classes e métodos de respostas com a ACBrLibReinf

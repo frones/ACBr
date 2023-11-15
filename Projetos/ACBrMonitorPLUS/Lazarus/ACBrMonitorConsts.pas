@@ -82,6 +82,7 @@ ResourceString
   SErroSSLDesabilitado = 'Será utilizado a configuração padrão SSL: %s !';
 
   SErroVersaoInvalida = 'Versão Inválida.';
+  SErroTipoContribuinteInvalido = 'Tipo de Contribuinte Inválido.';
 
 const
   CMonitorIni = 'ACBrMonitor.ini';
@@ -387,6 +388,7 @@ const
   CMetodoSetformaemissao =             'setformaemissao';
   CMetodoSetTipoImpressao =            'settipoimpressao';
   CMetodoSetversaodf =                 'setversaodf';
+  CMetodoSetTipoContribuinte =         'settipocontribuinte';
   CMetodoLermdfe =                     'lermdfe';
   CMetodoMdfetotxt =                   'mdfetotxt';
   CMetodoFileexist =                   'fileexists';

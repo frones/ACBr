@@ -139,10 +139,40 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetTipoContribuinte}
+
+TMetodoSetTipoContribuinte = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses
   DoACBrUnit, Forms;
+
+{ TMetodoSetTipoContribuinte }
+
+procedure TMetodoSetTipoContribuinte.Executar;
+var
+  OK: boolean;
+  Contribuinte: TContribuinte;
+  AContribuinte: String;
+begin
+  AContribuinte := fpCmd.Params(0);
+  Contribuinte := StrToContribuinte(ok, AContribuinte);
+
+  if not OK then
+    raise Exception.Create(SErroTipoContribuinteInvalido);
+
+  with TACBrObjetoReinf(fpObjetoDono) do
+  begin
+    with MonitorConfig.DFE.Reinf do
+      TipoContribuinte := ContribuinteEnumToStr(Contribuinte);
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
 
 { TMetodoSetVersaoDF }
 
@@ -519,6 +549,7 @@ begin
   ListaDeMetodos.Add(CMetodoSetIDTransmissorReinf);
   ListaDeMetodos.Add(CMetodoConsultarReciboReinf);
   ListaDeMetodos.Add(CMetodoSetVersaoDF);
+  ListaDeMetodos.Add(CMetodoSetTipoContribuinte);
 end;
 
 procedure TACBrObjetoReinf.Executar(ACmd: TACBrCmd);
@@ -550,6 +581,7 @@ begin
     7  : AMetodoClass := TMetodoSetIDTransmissor;
     8  : AMetodoClass := TMetodoConsultarReciboReinf;
     9  : AMetodoClass := TMetodoSetVersaoDF;
+    10 : AMetodoClass := TMetodoSetTipoContribuinte;
     else
     begin
       AACBrUnit := TACBrObjetoACBr.Create(Nil); //Instancia DoACBrUnit para validar métodos padrão para todos os objetos

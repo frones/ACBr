@@ -436,6 +436,10 @@ function TipoEventoToStrEvento(const t: TTipoEvento): string;
 function TpInscricaoToStr(const t: TtpInsc): string;
 function StrToTpInscricao(out ok: boolean; const s: string): TtpInsc;
 
+function ContribuinteToStr(const t: TContribuinte): string;
+function ContribuinteEnumToStr(const t: TContribuinte): string;
+function StrToContribuinte(var ok: boolean; const s: string): TContribuinte;
+
 function procEmiReinfToStr(const t: TprocEmi): string;
 function StrToprocEmiReinf(var ok: boolean; const s: string): TprocEmi;
 
@@ -721,6 +725,21 @@ end;
 function StrToTpInscricao(out ok: boolean; const s: string): TtpInsc;
 begin
   result := TtpInsc(StrToEnumerado2(ok , s, ['1', '2', '3', '4']));
+end;
+
+function ContribuinteToStr(const t: TContribuinte): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1', '2']);
+end;
+
+function ContribuinteEnumToStr(const t: TContribuinte): string;
+begin
+  result := GetEnumName(TypeInfo(TContribuinte), Integer(t));
+end;
+
+function StrToContribuinte(var ok: boolean; const s: string): TContribuinte;
+begin
+  result := TContribuinte(StrToEnumerado2(ok , s, ['0', '1', '2']));
 end;
 
 function ProcEmiReinfToStr(const t: TprocEmi): string;

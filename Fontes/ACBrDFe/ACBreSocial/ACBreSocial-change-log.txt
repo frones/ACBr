@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2023
+-- pcesConversaoeSocial --
+[*] Corrigida identificação do schema para o evento S-1207 em versões anteriores à S01_00_00
+  Por: MSS / Renato Rubinho
+
 10/10/2023
 -- pcesS2405, pcesS2500, pcesS2501, S2405.ini, S2500.ini, S2501.ini --
 [+] Criada leitura dos inis e arquivos de exemplo para o Evento S-2405, S-2500 e S-2501

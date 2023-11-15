@@ -1505,7 +1505,7 @@ begin
      begin
       Result := schevtBenPrRP; // veS01_00_00
 
-       if (AVersaoeSocial <> veS01_00_00) then
+       if (AVersaoeSocial < veS01_00_00) then
         Result := schevtCdBenPrRP;
      end;
   else

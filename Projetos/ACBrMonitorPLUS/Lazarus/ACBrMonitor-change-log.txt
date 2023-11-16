@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/11/2023
+-- ACBrMonitor.hnd --
+[*] Adicionado método SetTipoContribuinte na documentação
+   Por: Renato Rubinho
+
 14/11/2023
 -- ACBrMonitorConsts, DoACBrReinfUnit, pcnConversaoReinf --
 [+] Implementado método SetTipoContribuinte para setar o valor no monitor e criadas funções de conversão para o enumerado

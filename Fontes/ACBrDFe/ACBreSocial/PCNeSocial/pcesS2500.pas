@@ -511,8 +511,8 @@ type
     FvrBaseIndenFGTS: double;
     FpagDiretoResc: tpSimNaoFacultativo;
     FindReperc: tpIndReperc;
-    FindenSD: tpSimNao;
-    FindenAbono: tpSimNao;
+    FindenSD: tpSimFacultativo;
+    FindenAbono: tpSimFacultativo;
     Fabono: TAbonoCollection;
     FidePeriodo: TIdePeriodoCollection;
 
@@ -536,8 +536,8 @@ type
     property pagDiretoResc: tpSimNaoFacultativo read FpagDiretoResc write FpagDiretoResc;
     property indReperc: tpIndReperc read FindReperc write FindReperc;
     property abono: TAbonoCollection read getAbono write Fabono;
-    property indenSD: tpSimNao read FindenSD write FindenSD;
-    property indenAbono: tpSimNao read FindenAbono write FindenAbono;
+    property indenSD: tpSimFacultativo read FindenSD write FindenSD;
+    property indenAbono: tpSimFacultativo read FindenAbono write FindenAbono;
     property idePeriodo: TIdePeriodoCollection read getIdePeriodo write FIdePeriodo;
   end;
 
@@ -1633,8 +1633,8 @@ begin
   if VersaoDF > veS01_01_00 then
   begin
     Gerador.wCampo(tcStr, '', 'indReperc',       1,  1, 1, eSTpTpIndRepercToStr(obj.indReperc));
-    Gerador.wCampo(tcStr, '', 'indenSD',         1,  1, 0, eSSimNaoToStr(obj.indenSD));
-    Gerador.wCampo(tcStr, '', 'indenAbono',      1,  1, 0, eSSimNaoToStr(obj.indenAbono));
+    Gerador.wCampo(tcStr, '', 'indenSD',         0,  1, 0, eSSimFacultativoToStr(obj.indenSD));
+    Gerador.wCampo(tcStr, '', 'indenAbono',      0,  1, 0, eSSimFacultativoToStr(obj.indenAbono));
   end
   else
   begin

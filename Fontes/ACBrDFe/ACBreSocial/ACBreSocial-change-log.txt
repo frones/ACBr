@@ -52,6 +52,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/11/2023
+-- pcesConversaoeSocial --
+[+] Novo enumerado tpSimFacultativo e funcções de conversão, permitindo "S" ou em branco
+-- pcesS2500 --
+[*] Alterados TInfoVlr.indenSD e TInfoVlr.indenAbono para utilizar o tpSimFacultativo
+-- pcesS5503 --
+[*] Corrigida identificação do tipo do evento, na leitura do xml e incrementada lista infoTrabFGTS na leitura dos itens
+  Por: Sandro Felipe Adad
+
 14/11/2023
 -- pcesConversaoeSocial --
 [*] Corrigida identificação do schema para o evento S-1207 em versões anteriores à S01_00_00

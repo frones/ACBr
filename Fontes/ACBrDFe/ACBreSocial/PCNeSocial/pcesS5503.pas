@@ -366,7 +366,7 @@ begin
     FXML := Leitor.Arquivo;
 
     // Capturar a versão do evento
-    s := Copy(FXML, Pos('/evt/evtFGTSProcTrab/', FXML)+18, 16);
+    s := Copy(FXML, Pos('/evt/evtFGTSProcTrab/', FXML)+21, 16);
     s := Copy(s, 1, Pos('"', s)-1);
     Self.VersaoDF := StrToVersaoeSocialSchemas(s);
 
@@ -400,6 +400,7 @@ begin
       begin
         with infoTrabFGTS do
         begin
+          New;
           Items[i].Fmatricula := leitor.rCampo(tcStr, 'matricula');
           Items[i].FcodCateg  := leitor.rCampo(tcInt, 'codCateg');
           Items[i].FcategOrig := leitor.rCampo(tcInt, 'categOrig');

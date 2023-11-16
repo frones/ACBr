@@ -600,8 +600,11 @@ type
   tpConsulta              = (tcEmpregador, tcTabela, tcTrabalhador);
 
   tpSimNaoFacultativo     = (snfNada, snfSim, snfNao);
+  tpSimFacultativo        = (sfNada, sfSim);
+
   const
   TSimNaoFacultativoString  : array[0..2] of string = ('', 'S','N');
+  TSimFacultativoString     : array[0..1] of string = ('', 'S');
 
   type
 
@@ -1133,6 +1136,9 @@ function eSStrToSimNao(var ok: boolean; const s: string): tpSimNao;
 
 function eSSimNaoFacultativoToStr(const t: tpSimNaoFacultativo ): string;
 function eSStrToSimNaoFacultativo(var ok: boolean; const s: string): tpSimNaoFacultativo;
+
+function eSSimFacultativoToStr(const t: tpSimFacultativo ): string;
+function eSStrToSimFacultativo(var ok: boolean; const s: string): tpSimFacultativo;
 
 function eSIniciatCATToStr(const t: tpIniciatCAT ): string;
 function eSStrToIniciatCAT(var ok: boolean; const s: string): tpIniciatCAT;
@@ -1849,6 +1855,16 @@ end;
 function eSStrToSimNaoFacultativo(var ok: boolean; const s: string): tpSimNaoFacultativo;
 begin
   result := tpSimNaoFacultativo( StrToEnumerado2(ok , s, TSimNaoFacultativoString ) );
+end;
+
+function eSSimFacultativoToStr(const t: tpSimFacultativo ): string;
+begin
+  result := EnumeradoToStr2(t,TSimFacultativoString );
+end;
+
+function eSStrToSimFacultativo(var ok: boolean; const s: string): tpSimFacultativo;
+begin
+  result := tpSimFacultativo( StrToEnumerado2(ok , s, TSimFacultativoString ) );
 end;
 
 function eStpTpInscAmbTabToStr(const t: tpTpInscAmbTab ): string;

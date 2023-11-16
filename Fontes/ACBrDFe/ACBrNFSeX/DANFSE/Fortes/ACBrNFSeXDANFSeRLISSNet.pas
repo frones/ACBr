@@ -336,13 +336,13 @@ begin
   rlmDadosAdicionais.Lines.Clear;
 
   if fpDANFSe.OutrasInformacaoesImp <> '' then
-    rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]))
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, ';', #13#10, [rfReplaceAll]))
   else
     if fpNFSe.OutrasInformacoes <> '' then
-    rlmDadosAdicionais.Lines.Add(fpNFSe.OutrasInformacoes);
+      rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.OutrasInformacoes, FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   if fpNFSe.InformacoesComplementares <> '' then
-    rlmDadosAdicionais.Lines.Add(fpNFSe.InformacoesComplementares);
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   rlmDadosAdicionais.Lines.EndUpdate;
   rllDataHoraImpressao.Caption := Format(ACBrStr('DATA E HORA DA IMPRESSÃO: %s'), [FormatDateTime('dd/mm/yyyy hh:nn', Now)]);
@@ -381,7 +381,7 @@ begin
     rllNumNF0.Caption := Numero;
 
     // Somente as 3 primeiras linhas serão utilizadas
-    strPrefeitura := ACBrUtil.Strings.Split(FQuebradeLinha[1], fpDANFSe.Prefeitura);
+    strPrefeitura := ACBrUtil.Strings.Split(';', fpDANFSe.Prefeitura);
 
     if (Length(strPrefeitura) >= 1) then
       rlmPrefeitura1.Caption := strPrefeitura[0];

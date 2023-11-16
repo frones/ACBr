@@ -316,13 +316,13 @@ begin
   rlmDadosAdicionais.Lines.Clear;
 
   if fpNFSe.OutrasInformacoes <> '' then
-    rlmDadosAdicionais.Lines.Add(fpNFSe.OutrasInformacoes)
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.OutrasInformacoes, FQuebradeLinha, #13#10, [rfReplaceAll]))
   else
     if fpDANFSe.OutrasInformacaoesImp <> '' then
-      rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]));
+      rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, ';', #13#10, [rfReplaceAll]));
 
   if fpNFSe.InformacoesComplementares <> '' then
-    rlmDadosAdicionais.Lines.Add(fpNFSe.InformacoesComplementares);
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   if fpNFSe.Link <> '' then
   begin
@@ -389,7 +389,7 @@ begin
   TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
 
   rlmPrefeitura.Lines.Clear;
-  rlmPrefeitura.Lines.Add(StringReplace(fpDANFSe.Prefeitura, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]));
+  rlmPrefeitura.Lines.Add(StringReplace(fpDANFSe.Prefeitura, ';', #13#10, [rfReplaceAll,rfIgnoreCase]));
 
   With fpNFSe do
   begin

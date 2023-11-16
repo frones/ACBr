@@ -235,7 +235,6 @@ type
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlbPrestadorAfterPrint(Sender: TObject);
     procedure rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -302,13 +301,13 @@ begin
       fpNFSe.Servico.xMunicipioIncidencia);
 
   if fpDANFSe.OutrasInformacaoesImp <> '' then
-    rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]))
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, ';', #13#10, [rfReplaceAll]))
   else
     if fpNFSe.OutrasInformacoes <> '' then
-    rlmDadosAdicionais.Lines.Add(fpNFSe.OutrasInformacoes);
+      rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.OutrasInformacoes, FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   if fpNFSe.InformacoesComplementares <> '' then
-    rlmDadosAdicionais.Lines.Add(fpNFSe.InformacoesComplementares);
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   if fpNFSe.Link <> '' then
   begin
@@ -375,7 +374,7 @@ begin
   TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
 
   rlmPrefeitura.Lines.Clear;
-  rlmPrefeitura.Lines.Add(StringReplace(fpDANFSe.Prefeitura, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
+  rlmPrefeitura.Lines.Add(StringReplace(fpDANFSe.Prefeitura, ';', #13#10, [rfReplaceAll]));
 
   With fpNFSe do
   begin
@@ -424,11 +423,6 @@ begin
 
     txtISS.Caption := FormatFloatBr(ValorISS);
   end;
-end;
-
-procedure TfrlXDANFSeRLRetrato.rlbPrestadorAfterPrint(Sender: TObject);
-begin
-
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbISSQNBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -554,6 +548,9 @@ begin
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  xEndereco, xNumero, xComplemento, xBairro, xMunic, xUF, xCEP, xFone,
+  xEmail: string;
 begin
   inherited;
 
@@ -566,6 +563,8 @@ begin
     if rllPrestNome.Caption = '' then
       rllPrestNome.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.Prestador.NomeFantasia);
 
+    rllPrestNomeEnt.Caption := rllPrestNome.Caption;
+
     with IdentificacaoPrestador do
     begin
       rllPrestCNPJ.Caption := FormatarCNPJouCPF(IfThen(CpfCnpj <> '', CpfCnpj, fpDANFSe.Prestador.CNPJ));
@@ -575,26 +574,40 @@ begin
 
     with Endereco do
     begin
-      rllPrestEndereco.Lines.Text := IfThen(Endereco <> '', Trim(Endereco) + ', ' +
-        Trim(Trim(Numero) + ' ' + Trim(IfThen(Complemento <> '', Complemento, fpDANFSe.Prestador.Complemento))) + #13 +
-        Trim(Bairro) + ' - ' + Trim(IfThen(xMunicipio <> '', xMunicipio, fpDANFSe.Prestador.Municipio)) + ' - ' +
-        IfThen(UF <> '', UF, fpDANFSe.Prestador.UF) + ' CEP: ' + FormatarCEP(CEP) + #13 +
-        Trim(IfThen(Contato.Telefone <> '', FormatarFone(Contato.Telefone), FormatarFone(fpDANFSe.Prestador.Fone)) + '  ' +
-        IfThen(Contato.Email <> '', Contato.Email, fpDANFSe.Prestador.Email)),
+      xEndereco := IfThen(Endereco <> '', Trim(Endereco), Trim(fpDANFSe.Prestador.Endereco));
+      xNumero := IfThen(Numero <> '', Trim(Numero), '');
 
-        Trim(fpDANFSe.Prestador.Endereco));
+      if xNumero <> '' then
+        xEndereco := xEndereco + ', ' + xNumero;
 
+      xComplemento := IfThen(Complemento <> '', Trim(Complemento), Trim(fpDANFSe.Prestador.Complemento));
+      xBairro := IfThen(Bairro <> '', Trim(Bairro), '');
+      xMunic := IfThen(xMunicipio <> '', Trim(xMunicipio), Trim(fpDANFSe.Prestador.Municipio));
+      xUF := IfThen(UF <> '', Trim(UF), Trim(fpDANFSe.Prestador.UF));
+      xCEP := IfThen(CEP <> '', Trim(CEP), '');
+
+      if xCEP <> '' then
+        xCEP := ' CEP: ' + xCEP;
+
+      xFone := IfThen(Contato.Telefone <> '', Trim(Contato.Telefone), Trim(fpDANFSe.Prestador.Fone));
+
+      if xFone <> '' then
+        xFone := FormatarFone(xFone);
+
+      xEmail := IfThen(Contato.Email <> '', Trim(Contato.Email), Trim(fpDANFSe.Prestador.Email));
+
+
+      rllPrestEndereco.Lines.Text :=  xEndereco + ' ' + xComplemento + #13 +
+        xBairro + ' - ' + xMunic + ' - ' + xUF + xCEP + #13 +
+        xFone + ' ' + xEmail;
     end;
-
-    rllPrestNomeEnt.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
   end;
 
   rllNumNF0Ent.Caption := FormatFloat('00000000000', StrToFloatDef(fpNFSe.Numero, 0));
   rllTomadorNomeEnt.Caption := ACBrStr('Emissão:') +
     FormatDateTime('dd/mm/yy', fpNFSe.DataEmissao) +
     '-Tomador:' + fpNFSe.Tomador.RazaoSocial +
-    '-Total:' +
-    FormatFloat(',0.00', fpNFSe.Servico.Valores.ValorLiquidoNfse);
+    '-Total:' + FormatFloat(',0.00', fpNFSe.Servico.Valores.ValorLiquidoNfse);
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbTomadorBeforePrint(Sender: TObject;

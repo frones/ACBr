@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 16/11/2023
+-- Diversos --
+[*] Melhoria na identificação de quebra de linha na impressão do DANFSE.
+    A propriedade de configuração do DANFSE (Prefeitura) utilizar sempre o 
+    caracter ";".
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Incluida a versão 1.01 para a cidade de Araquari/SC.
    Por: Italo Giurizzato Junior

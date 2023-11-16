@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/11/2023
+-- Diversos --
+[+] Implementado o grupo <DadosProfissionalParceiro> para o provedor Agili.
+   Por: Italo Giurizzato Junior
+
 14/11/2023
 -- IMP.Provider --
 [*] Ajuste no TratarXmlRetornado para sanar problemas com as cidades de 

@@ -77,6 +77,9 @@ type
     function GerarListaServico: TACBrXmlNode;
     function GerarDadosServico: TACBrXmlNodeArray;
     function GerarIdentificacaoRps: TACBrXmlNode;
+    function GerarDadosProfissionalParceiro(Indice: Integer): TACBrXmlNode;
+    function GerarIdentificacaoProfissionalParceiro(Indice: Integer): TACBrXmlNode;
+
   public
     function GerarXml: Boolean; override;
 
@@ -172,10 +175,38 @@ begin
                                                NFSe.Tomador.Contato.Email, ''));
 end;
 
+function TNFSeW_Agili.GerarIdentificacaoProfissionalParceiro(
+  Indice: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('IdentificacaoProfissionalParceiro');
+
+  Result.AppendChild(GerarCPFCNPJ(NFSe.Servico.ItemServico[Indice].DadosProfissionalParceiro.IdentificacaoParceiro.CpfCnpj));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipal', 1, 100, 1,
+   NFSe.Servico.ItemServico[Indice].DadosProfissionalParceiro.IdentificacaoParceiro.InscricaoMunicipal, ''));
+end;
+
+function TNFSeW_Agili.GerarDadosProfissionalParceiro(Indice: Integer): TACBrXmlNode;
+var
+  xmlNode: TACBrXmlNode;
+begin
+  Result := CreateElement('DadosProfissionalParceiro');
+
+  xmlNode := GerarIdentificacaoProfissionalParceiro(Indice);
+  Result.AppendChild(xmlNode);
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'RazaoSocial', 1, 120, 1,
+   NFSe.Servico.ItemServico[Indice].DadosProfissionalParceiro.RazaoSocial, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'PercentualProfissionalParceiro', 1, 5, 1,
+   NFSe.Servico.ItemServico[Indice].DadosProfissionalParceiro.PercentualProfissionalParceiro, ''));
+end;
+
 function TNFSeW_Agili.GerarDadosServico: TACBrXmlNodeArray;
 var
   i: integer;
   CodServico: string;
+  xmlNode: TACBrXmlNode;
 begin
   Result := nil;
   SetLength(Result, NFSe.Servico.ItemServico.Count);
@@ -207,6 +238,9 @@ begin
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'ValorDesconto', 1, 15, 1,
                        NFSe.Servico.ItemServico[i].DescontoIncondicionado, ''));
+
+    xmlNode := GerarDadosProfissionalParceiro(i);
+    Result[i].AppendChild(xmlNode);
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then

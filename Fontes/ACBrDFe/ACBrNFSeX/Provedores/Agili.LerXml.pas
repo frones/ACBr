@@ -72,6 +72,7 @@ type
     procedure LerSituacaoNfse(const ANode: TACBrXmlNode);
     procedure LerDadosPrestador(const ANode: TACBrXmlNode);
     procedure LerIdentificacaoOrgaoGerador(const ANode: TACBrXmlNode);
+    procedure LerIdentificacaoParceiro(const ANode: TACBrXmlNode; Indice: Integer);
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -305,6 +306,42 @@ begin
   end;
 end;
 
+procedure TNFSeR_Agili.LerIdentificacaoParceiro(const ANode: TACBrXmlNode;
+  Indice: Integer);
+var
+  AuxNode, AuxNodeCpfCnpj: TACBrXmlNode;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoProfissionalParceiro');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.Servico.ItemServico[indice].DadosProfissionalParceiro.IdentificacaoParceiro do
+    begin
+      CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+
+      if CpfCnpj = '' then
+      begin
+        AuxNodeCpfCnpj := AuxNode.Childrens.FindAnyNs('CpfCnpj');
+
+        if AuxNodeCpfCnpj <> nil then
+        begin
+          CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cpf'), tcStr);
+
+          if CpfCnpj = '' then
+            CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cnpj'), tcStr);
+        end;
+      end;
+
+      if Length(CpfCnpj) > 11 then
+        CpfCnpj := Poem_Zeros(CpfCnpj, 14);
+
+      InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
+    end;
+  end;
+end;
+
 procedure TNFSeR_Agili.LerIdentificacaoPrestador(
   const ANode: TACBrXmlNode);
 var
@@ -483,13 +520,9 @@ begin
       with NFSe.Servico.ItemServico[i] do
       begin
         Descricao  := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Discriminacao'), tcStr);
+
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
-        Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Quantidade'), tcDe6);
-        ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorServico'), tcDe2);
-        ValorTotal := ValorUnitario * Quantidade;
-
-        DescontoIncondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorDesconto'), tcDe2);
 
         FpCodCNAE := ObterConteudo(ANodes[i].Childrens.FindAnyNs('CodigoCnae'), tcStr);
         FpCodLCServ := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ItemLei116'), tcStr);
@@ -502,6 +535,23 @@ begin
 
           FpCodLCServ := FormatFloat('0000', Item);
           FpCodLCServ := Copy(FpCodLCServ, 1, 2) + '.' + Copy(FpCodLCServ, 3, 2);
+        end;
+
+        Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Quantidade'), tcDe6);
+        ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorServico'), tcDe2);
+
+        ValorTotal := ValorUnitario * Quantidade;
+
+        DescontoIncondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorDesconto'), tcDe2);
+
+        AuxNode := ANodes[i].Childrens.FindAnyNs('DadosProfissionalParceiro');
+
+        if AuxNode <> nil then
+        begin
+          LerIdentificacaoParceiro(AuxNode, i);
+
+          DadosProfissionalParceiro.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('RazaoSocial'), tcStr);
+          DadosProfissionalParceiro.PercentualProfissionalParceiro := ObterConteudo(ANodes[i].Childrens.FindAnyNs('PercentualProfissionalParceiro'), tcDe2);
         end;
       end;
     end;

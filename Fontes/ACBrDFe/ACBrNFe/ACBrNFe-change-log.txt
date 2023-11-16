@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/11/2023
+-- Diversos --
+[*] Altera a lógica da aplicação da propriedade ExibeICMSDesoneradoComoDesconto e adiciona em outros impressos da NFC-e além do Fast.
+    Por: Victor H Gonzales - Pandaaa / Diego Folieni
+
 31/10/2023
 -- ACBrNFeNotasFiscais --
 [*] Ajuste no ValidarRegrasdeNegocios, para as rejeições 383 e 766 para o modelo 65.

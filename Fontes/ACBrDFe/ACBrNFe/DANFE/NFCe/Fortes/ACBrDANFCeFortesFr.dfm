@@ -10,10 +10,8 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   TextHeight = 13
   object rlVenda: TRLReport
     Left = 8
@@ -94,7 +92,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Width = 234
           Height = 12
           Align = faLeft
-          Alignment = taLeftJustify
           Behavior = [beSiteExpander]
           Lines.Strings = (
             '123456789012345678901234567890123456789012345678901234')

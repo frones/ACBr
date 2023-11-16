@@ -946,16 +946,18 @@ procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
   vAcrescimos: Double;
+  LValor : Double;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
+    LValor := ACBrNFeDANFCeFortes.CalcularValorDescontoItem(ACBrNFeDANFCeFortes.FpNFe, fNumItem);
     PrintIt := (not Resumido) and
                ACBrNFeDANFCeFortes.ImprimeDescAcrescItem and
-               (Prod.vDesc > 0);
+               (LValor > 0);
 
     if PrintIt then
     begin
-      lDesconto.Caption := FormatFloatBr(Prod.vDesc,'-,0.00');
+      lDesconto.Caption := FormatFloatBr(LValor,'-,0.00');
       vAcrescimos       := Prod.vFrete + Prod.vSeg + Prod.vOutro;
       if (vAcrescimos > 0) then      // Imprimirá Valor líquido, na próxima Banda
       begin
@@ -968,7 +970,7 @@ begin
         rlbDescItem.Height := 24;
         lTitDescValLiq.Visible := True;
         lDescValLiq.Visible := True;
-        lDescValLiq.Caption := FormatFloatBr(Prod.vProd-Prod.vDesc);
+        lDescValLiq.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.CalcularValorLiquidoItem(ACBrNFeDANFCeFortes.FpNFe, fNumItem,[TVLDesconto]));
       end;
     end;
   end;
@@ -1000,7 +1002,7 @@ begin
         rlbFreteItem.Height := 24;
         lTitFreteItemValLiq.Visible := True;
         lFreteItemValLiq.Visible := True;
-        lFreteItemValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vFrete-Prod.vDesc);
+        lFreteItemValLiq.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.CalcularValorLiquidoItem(ACBrNFeDANFCeFortes.FpNFe, fNumItem,[TVLDesconto,TVLFrete]));
       end;
     end;
   end;
@@ -1021,7 +1023,7 @@ begin
     if PrintIt then
     begin
       lOutro.Caption       := FormatFloatBr(vOutros,'+,0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+(vOutros+Prod.vFrete)-Prod.vDesc);
+      lOutroValLiq.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.CalcularValorLiquidoItem(ACBrNFeDANFCeFortes.FpNFe, fNumItem,[TVLDesconto,TVLFrete,TVLOutros]));
     end;
   end;
 end;
@@ -1184,11 +1186,14 @@ end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTotalDescontoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+  var LValorDesconto : Double;
 begin
-  PrintIt := (ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc > 0);
+  LValorDesconto := ACBrNFeDANFCeFortes.CalcularValorDescontoTotal(ACBrNFeDANFCeFortes.FpNFe);
+
+  PrintIt := (LValorDesconto > 0);
 
   if PrintIt then
-    lTotalDesconto.Caption := '-' + FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc);
+    lTotalDesconto.Caption := '-' + FormatFloatBr(LValorDesconto);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTotalFreteBeforePrint(Sender: TObject;

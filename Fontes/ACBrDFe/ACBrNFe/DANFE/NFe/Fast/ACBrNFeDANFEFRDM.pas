@@ -1089,6 +1089,10 @@ begin
         FieldByName('vISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vISSQN    ,',0.00');
         FieldByName('vBcISSQN').AsString        := FormatFloatBr( Imposto.ISSQN.vBC       ,',0.00');
 
+        FieldByName('ValorDescontos').AsString  := FormatFloatBr( FDANFEClassOwner.CalcularValorDescontoItem(FNFe, inItem), ',0.00');
+        FieldByName('ValorLiquido').AsString    := FormatFloatBr( FDANFEClassOwner.CalcularValorLiquidoItem(FNFe, inItem), ',0.00');
+
+        (*
         if FDANFEClassOwner.ExibeICMSDesoneradoComoDesconto then
         begin
           FieldByName('ValorDescontos').AsString  := FormatFloatBr( Prod.vDesc + Imposto.ICMS.vICMSDeson, ',0.00');
@@ -1098,7 +1102,9 @@ begin
         begin
           FieldByName('ValorDescontos').AsString  := FormatFloatBr( Prod.vDesc, ',0.00');
           FieldByName('ValorLiquido').AsString    := FormatFloatBr( Prod.vProd - Prod.vDesc + Prod.vOutro + Prod.vFrete + Prod.vSeg, ',0.00');
+
         end;
+        *)
         FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vOutro + Prod.vFrete + Prod.vSeg, ',0.00');
         FieldByName('xPed').AsString              := Prod.xPed;
         FieldByName('nItemPed').AsInteger         := Prod.nItem;

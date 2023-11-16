@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, {$IFDEF FPC} LResources, {$ENDIF}
   ACBrBase, ACBrNFeDANFEClass, ACBrPosPrinter,
-  pcnNFe, pcnEnvEventoNFe, pcnInutNFe;
+  pcnNFe, pcnEnvEventoNFe, pcnInutNFe, ACBrDFeDANFeReport;
 
 const
   CLarguraRegiaoEsquerda = 270;
@@ -118,7 +118,6 @@ uses
   ACBrUtil.DateTime,
   ACBrDFeUtil,
   ACBrConsts,
-  ACBrDFeDANFeReport,
   pcnConversao,
   pcnAuxiliar,
   ACBrImage;
@@ -128,8 +127,7 @@ uses
 constructor TACBrNFeDANFeESCPOS.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-
-  FPosPrinter := Nil;
+  FPosPrinter        := Nil;
   FSuportaCondensado := True;
 end;
 
@@ -278,7 +276,7 @@ procedure TACBrNFeDANFeESCPOS.GerarDetalhesProdutosServicos;
 var
   i: Integer;
   nTamDescricao: Integer;
-  VlrAcrescimo, VlrLiquido: Double;
+  VlrAcrescimo, VlrLiquido, LDesconto: Double;
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     LinhaCmd: String;
   sDescricaoAd: String;
@@ -352,13 +350,13 @@ begin
         if ImprimeDescAcrescItem then
         begin
           VlrAcrescimo := Prod.vSeg + Prod.vOutro;
-          VlrLiquido   := (Prod.qCom * Prod.vUnCom) + (VlrAcrescimo + Prod.vFrete) - Prod.vDesc;
-
+          VlrLiquido   := CalcularValorLiquidoItem(FpNFe, i);
+          LDesconto    := CalcularValorDescontoItem(FpNFe, i);
           // desconto
-          if Prod.vDesc > 0 then
+          if LDesconto > 0 then
           begin
             LinhaCmd := '</ae>'+TagLigaCondensado + padSpace(
-                'Desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-,0.00'), 15, ' ')
+                'Desconto ' + padLeft(FormatFloatBr(LDesconto, '-,0.00'), 15, ' ')
                 +IIf((VlrAcrescimo+Prod.vFrete > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
                 ColunasCondensado, '|');
             FPosPrinter.Buffer.Add('</ae>'+TagLigaCondensado + LinhaCmd);
@@ -402,6 +400,7 @@ var
   SufixoTitulo, TagLigaExpandido, TagDesligaExpandido: String;
   FatorExp: Integer;
   ImprimeTotalNoFinal: Boolean;
+  LValorDesconto : Double;
 begin
   if (ColunasCondensado >= 46) then
   begin
@@ -437,9 +436,11 @@ begin
        FormatFloatBr(FpNFe.Total.ICMSTot.vProd + FpNFe.Total.ISSQNtot.vServ),
        ColunasCondensado div FatorExp, '|') + TagDesligaExpandido);
 
-  if (FpNFe.Total.ICMSTot.vDesc > 0) then
+  LValorDesconto := CalcularValorDescontoTotal(FpNFe);
+
+  if (LValorDesconto > 0) then
     FPosPrinter.Buffer.Add(TagLigaCondensado + PadSpace('Desconto'+SufixoTitulo+'|' +
-       FormatFloatBr(FpNFe.Total.ICMSTot.vDesc, '-,0.00'),
+       FormatFloatBr(LValorDesconto, '-,0.00'),
        ColunasCondensado, '|'));
 
   if (FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vSeg) > 0 then

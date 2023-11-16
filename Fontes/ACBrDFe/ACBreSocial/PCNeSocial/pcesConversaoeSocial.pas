@@ -420,9 +420,9 @@ type
                              relSogro,
                              relAgregadoOutros);
 
-  tpTpRegTrab             = (trCLT, trEstatutario);
+  tpTpRegTrab             = (trNenhum, trCLT, trEstatutario);
 
-  tpTpRegPrev             = (rpRGPS, rpRPPS, rpRPPE);
+  tpTpRegPrev             = (rpNenhum, rpRGPS, rpRPPS, rpRPPE);
 
   tpTpRegPrevFacultativo  = (rpfNenhum, rpfRGPS, rpfRPPS, rpfRPPE2);
 
@@ -591,7 +591,8 @@ type
   tpTmpParc               = (tpNaoeTempoParcial,
                              tpLimitado25HorasSemanais,
                              tpLimitado30HorasSemanais,
-                             tpLimitado26HorasSemanais);
+                             tpLimitado26HorasSemanais,
+                             tpNenhum);
 
   // ct00 não consta no manual mas consta no manual do desenvolvedor pg 85, é usado para zerar a base de teste.
   tpClassTrib             = (ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
@@ -1566,22 +1567,22 @@ end;
 
 function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_2 );
+  result := EnumeradoToStr2(t,TGenericosString0_2 );
 end;
 
 function eSStrToTpRegTrab(var ok: boolean; const s: string): tpTpRegTrab;
 begin
-  result := tpTpRegTrab( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
+  result := tpTpRegTrab( StrToEnumerado2(ok , s, TGenericosString0_2 ) );
 end;
 
 function eSTpRegPrevToStr(const t: tpTpRegPrev ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_3 );
+  result := EnumeradoToStr2(t,TGenericosString0_3 );
 end;
 
 function eSStrTotpRegPrev(var ok: boolean; const s: string): tpTpRegPrev;
 begin
-  result := tpTpRegPrev( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
+  result := tpTpRegPrev( StrToEnumerado2(ok , s, TGenericosString0_3 ) );
 end;
 
 function eSTpRegPrevFacultativoToStr(const t: tpTpRegPrevFacultativo ): string;
@@ -2609,16 +2610,16 @@ end;
 
 function tpTmpParcToStr(const t: tpTmpParc ): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3'],
+  result := EnumeradoToStr(t, ['0', '1', '2', '3',''],
                            [tpNaoeTempoParcial, tpLimitado25HorasSemanais,
-                            tpLimitado30HorasSemanais, tpLimitado26HorasSemanais]);
+                            tpLimitado30HorasSemanais, tpLimitado26HorasSemanais, tpNenhum]);
 end;
 
 function StrTotpTmpParc(var ok: boolean; const s: string): tpTmpParc;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', ''],
                            [tpNaoeTempoParcial, tpLimitado25HorasSemanais,
-                            tpLimitado30HorasSemanais, tpLimitado26HorasSemanais]);
+                            tpLimitado30HorasSemanais, tpLimitado26HorasSemanais, tpNenhum]);
 end;
 
 function tpClassTribToStr(const t: TpClassTrib ): string;

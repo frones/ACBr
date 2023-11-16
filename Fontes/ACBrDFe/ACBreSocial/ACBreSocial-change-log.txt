@@ -54,6 +54,13 @@ Símbolo : Significado
 
 16/11/2023
 -- pcesConversaoeSocial --
+[*] Adicionado item "Nenhum" nos enumerados tpTpRegTrab, tpTpRegPrev e tpTmpParc para controle de propriedades não preenchidas
+-- pcesS2500 --
+[*] Configuradas condições para geração do infoVinc e infoCompl somente quando houver alguma propriedade preenchida
+  Por: Andergoncalves / Renato Rubinho
+
+16/11/2023
+-- pcesConversaoeSocial --
 [+] Novo enumerado tpSimFacultativo e funcções de conversão, permitindo "S" ou em branco
 -- pcesS2500 --
 [*] Alterados TInfoVlr.indenSD e TInfoVlr.indenAbono para utilizar o tpSimFacultativo

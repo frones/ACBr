@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 16/11/2023
+-- ACBrNFSeXServicos --
+[*] Incluida a versão 1.01 para a cidade de Araquari/SC.
+   Por: Italo Giurizzato Junior
+[*] Incluido os parâmetros para a cidade de Guaiba/RS.
+  Por: Marcelo Toller
 -- Diversos --
 [+] Implementado o grupo <DadosProfissionalParceiro> para o provedor Agili.
    Por: Italo Giurizzato Junior

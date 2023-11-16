@@ -41,6 +41,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+16/11/2023
+--ACBrLibBoletoBase.pas--
+[-]TK-4672 ACBr Boleto - DescricaoTipoOcorrencia CodificaoResposta
+   Por: Victor H Gonzales - Pandaaa
 
 01/11/2023
 --- ACBrLibBoletoConfig, ACBrLibBoletoDataModule ---

@@ -36,6 +36,11 @@
 library ACBrLibNFe;
 
 uses
+  {$IFDEF MT}
+   {$IFDEF UNIX}
+    cthreads,
+   {$ENDIF}
+  {$ENDIF}
   Interfaces, sysutils, Classes, Forms, ACBrLibConfig,
   ACBrLibComum, ACBrLibConsts, ACBrLibNFeConfig, ACBrLibResposta,
   {$IFDEF MT}ACBrLibNFeMT{$ELSE}ACBrLibNFeST{$ENDIF},

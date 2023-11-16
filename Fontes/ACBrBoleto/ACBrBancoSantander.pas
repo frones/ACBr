@@ -807,6 +807,7 @@ var
   DigitoNossoNumero, Ocorrencia,aEspecie :String;
   Protesto, aAgencia, TipoSacado, wLinha :String;
   aCarteira, I: Integer;
+  LMensagem1, LMensagem2, LMensagem3 : String;
 begin
 
    aCarteira := StrToIntDef( DefineCarteira(ACBrTitulo) , 0);
@@ -883,20 +884,35 @@ begin
                   IntToStrZero( aRemessa.Count + 1, 6 );                         // 395 a 400
 
          aRemessa.Add(UpperCase(wLinha));
+            LMensagem1 := '';
+            LMensagem2 := '';
+            LMensagem3 := '';
+            if Mensagem.Count >= 1 then
+              LMensagem1 := TiraAcentos(Mensagem[0]);
 
-         for I := 0 to Mensagem.count-1 do
-         begin
-            wLinha:= '2' + space(16)                             +
-                     PadLeft(Cedente.CodigoTransmissao,20,'0')   +
-                     Space(10) + '01'                            +
-                     PadRight(Mensagem[I],50)                    +
-                     Space(283) + 'I'                            +
-                     Copy( Cedente.Conta, length( Cedente.Conta ),1 )   +
-                     PadLeft( Cedente.ContaDigito, 1 )                  +
-                     Space(9)                                           +
-                     IntToStrZero( aRemessa.Count + 1 , 6 );
+            if Mensagem.Count >= 2 then
+              LMensagem1 := TiraAcentos(Mensagem[1]);
+
+            if Mensagem.Count >= 3 then
+              LMensagem1 := TiraAcentos(Mensagem[2]);
+
+            wLinha:= '2'                                                      + // 001-001 "2" - Recibo Pagador
+                     space(16)                                                + // 002-017 Reservado Banco
+                     PadLeft(Cedente.CodigoTransmissao,20,'0')                + // 018-037 Agencia / Conta Movimento / Conta Cobranca
+                     Space(10)                                                + // 038-047 Reservado Banco
+                     '01'                                                     + // 048-049 SubRegistro "01"
+                     PadRight(LMensagem1, 50)                                 + // 050-099 Mensagem Variavel
+                     '02'                                                     + // 100-101 SubSequencia "02"
+                     PadRight(LMensagem2, 50)                                 + // 102-151 Mensagem Variavel
+                     '02'                                                     + // 152-153 SubSequencia "02"
+                     PadRight(LMensagem3, 50)                                 + // 154-203 Mensagem Variavel
+                     Space(179)                                               + // 204-382 Reservado Banco
+                     'I'                                                      + // 383-383 Identificação do Complemento
+                     PadLeft(Copy( Cedente.Conta, length( Cedente.Conta ),1 ), 1, '0') +
+                     PadLeft( Cedente.ContaDigito, 1, '0' )                   + // 384-385 Complemento
+                     Space(9)                                                 + // 386-394 Reservado Banco
+                     IntToStrZero( aRemessa.Count + 1 , 6 );                    // 395-400 Sequencial de Registro
             aRemessa.Add(UpperCase(wLinha));
-         end;
 
       end;
    end;

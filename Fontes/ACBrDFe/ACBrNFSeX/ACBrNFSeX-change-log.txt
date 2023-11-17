@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/11/2023
+-- ACBrNFSeXServicos --
+[+] Incluído o Parâmetro "eletron=1" para as cidades: Garuva/SC e Tres Barras/SC
+   Por: Forbostec
 -- Prescon.Provider --
 [*] Possível solução para o erro 500 ao usar o método ObterToken.
    Por: Italo Giurizzato Junior

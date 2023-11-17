@@ -154,9 +154,13 @@ function CTE_Imprimir(const libHandle: PLibHandle; const cImpressora: PChar; nNu
   bMostrarPreview: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ImprimirPDF(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ImprimirEvento(const libHandle: PLibHandle; const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ImprimirEventoPDF(const libHandle: PLibHandle; const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_SalvarEventoPDF(const libHandle: PLibHandle; const eArquivoXmlCTe, eArquivoXmlEvento: PChar; sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ImprimirInutilizacao(const libHandle: PLibHandle; const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -771,6 +775,21 @@ begin
   end;
 end;
 
+function CTE_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibCTe(libHandle^.Lib).SalvarPDF(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
 function CTE_ImprimirEvento(const libHandle: PLibHandle; const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -792,6 +811,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibCTe(libHandle^.Lib).ImprimirEventoPDF(eArquivoXmlCTe, eArquivoXmlEvento);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function CTE_SalvarEventoPDF(const libHandle: PLibHandle; const eArquivoXmlCTe, eArquivoXmlEvento: PChar; sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibCTe(libHandle^.Lib).SalvarEventoPDF(eArquivoXmlCTe, eArquivoXmlEvento, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

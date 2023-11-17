@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/11/2023
+--- ACBrLibCTeBase, ACBrLibCTeST, ACBrLibCTeMT, ACBrLibCTeStaticImport, ACBrLibCTeStaticImportMT ---
+[+] Inclusão novos métodos: CTE_SalvarPDF e CTE_SalvarEventoPDF
+    Por: Antonio Carlos Junior	
+
 10/01/2023
 --- ACBrLibCTeBase ---
 [-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver

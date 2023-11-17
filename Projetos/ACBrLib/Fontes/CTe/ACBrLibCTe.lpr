@@ -79,11 +79,12 @@ exports
   CTE_EnviarEmailEvento,
   CTE_Imprimir,
   CTE_ImprimirPDF,
+  CTE_SalvarPDF,
   CTE_ImprimirEvento,
   CTE_ImprimirEventoPDF,
+  CTE_SalvarEventoPDF,
   CTE_ImprimirInutilizacao,
   CTE_ImprimirInutilizacaoPDF,
-
 
   // Arquivos
   CTE_CarregarXML,

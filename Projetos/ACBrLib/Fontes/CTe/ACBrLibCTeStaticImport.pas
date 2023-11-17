@@ -185,11 +185,17 @@ function CTE_Imprimir(const cImpressora: PChar; nNumCopias: integer;
 function CTE_ImprimirPDF: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
+function CTE_SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
+
 function CTE_ImprimirEvento(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_ImprimirEventoPDF(
   const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
+
+function CTE_SalvarEventoPDF(const eArquivoXmlCTe, eArquivoXmlEvento: PChar; sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;

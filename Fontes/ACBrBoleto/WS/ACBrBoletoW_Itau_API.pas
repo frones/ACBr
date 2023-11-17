@@ -274,7 +274,7 @@ end;
 
 function TBoletoW_Itau_API.DefinirParametros: String;
 var
-  LNossoNumero, LId_Beneficiario, LCarteira, Documento: String;
+  LNossoNumero, LId_Beneficiario, LCarteira, Documento, LDAC: String;
   Consulta: TStringList;
 
 begin
@@ -292,14 +292,18 @@ begin
       raise EACBrBoletoWSException.Create
         (ClassName + ' Obrigatório informar o contaBeneficiario. ');
 
-    if (Boleto.Cedente.DigitoVerificadorAgenciaConta = EmptyStr) then
+    LDAC := IfThen(Boleto.Cedente.DigitoVerificadorAgenciaConta <> '',
+                     Boleto.Cedente.DigitoVerificadorAgenciaConta,
+                     Boleto.Cedente.ContaDigito);
+
+    if (LDAC = EmptyStr) then
       raise EACBrBoletoWSException.Create
         (ClassName +
         ' Obrigatório informar o DigitoVerificadorAgenciaContaBeneficiario. ');
 
     LId_Beneficiario := PadLeft(Boleto.Cedente.Agencia, 4, '0') +
                         PadLeft(Boleto.Cedente.Conta, 7, '0') +
-                        PadLeft(Boleto.Cedente.DigitoVerificadorAgenciaConta, 1, '0');
+                        PadLeft(LDAC, 1, '0');
 
     Consulta := TStringList.Create;
     Consulta.Delimiter := '&';
@@ -364,17 +368,20 @@ procedure TBoletoW_Itau_API.GeraIdBeneficiario(AJson: TJsonObject);
 var
   JsonDados: TJsonObject;
   JsonPair: TJsonPair;
-  LId_Beneficiario: string;
+  LId_Beneficiario, LDAC: string;
 begin
   if Assigned(ATitulo) then
   begin
     if Assigned(AJson) then
     begin
       JsonDados := TJsonObject.Create;
+      LDAC := IfThen(Boleto.Cedente.DigitoVerificadorAgenciaConta <> '',
+                     Boleto.Cedente.DigitoVerificadorAgenciaConta,
+                     Boleto.Cedente.ContaDigito);
       try
         LId_Beneficiario := PadLeft(Boleto.Cedente.Agencia, 4, '0') +
           PadLeft(Boleto.Cedente.Conta, 7, '0') +
-          PadLeft(Boleto.Cedente.DigitoVerificadorAgenciaConta, 1, '0');
+          PadLeft(LDAC, 1, '0');
 
         JsonDados.Add('id_beneficiario').Value.AsString := LId_Beneficiario;
 

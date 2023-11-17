@@ -328,7 +328,7 @@ begin
   ListaDeMetodos.Add(CMetodoGerarPDFBoletoComSenha);
   ListaDeMetodos.Add(CMetodoSetMotorBoletoRelatorio);
   ListaDeMetodos.Add(CMetodoSetMargem);
-
+  fBoletoPersonalizandoArquivo := True;
 end;
 
 procedure TACBrObjetoBoleto.Executar(ACmd: TACBrCmd);
@@ -635,7 +635,6 @@ begin
   begin
     ACBrBoleto.GerarPDF;
   end;
-
 end;
 
 { TMetodoGerarPDFComSenha }
@@ -897,7 +896,7 @@ begin
 
         fBoletoPersonalizandoArquivo := (AArq = '');
 
-        fpCmd.Resposta := ACBrBoleto.ACBrBoletoFC.NomeArquivo;
+        //fpCmd.Resposta := ACBrBoleto.ACBrBoletoFC.NomeArquivo;
 
       end;
 
@@ -1115,7 +1114,7 @@ begin
     LState:=ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual;
     try
       ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual := fBoletoPersonalizandoArquivo;
-      ACBrBoleto.ListadeBoletos[AIndice].GerarPDF();
+      fpCmd.Resposta := sLineBreak + 'Arquivo Gerado = ' + ACBrBoleto.ListadeBoletos[AIndice].GerarPDF();
     Except
       raise Exception.Create('Título de Indice '+IntToStr(AIndice)+' não identificado na Lista!');
     end;
@@ -1159,6 +1158,7 @@ begin
 
     try
       ACBrBoleto.ListadeBoletos[AIndice].GerarPDF();
+      fpCmd.Resposta := sLineBreak + 'Arquivo Gerado = ' + ACBrBoleto.ACBrBoletoFC.NomeArquivo;
     Except
       raise Exception.Create('Título de Indice '+IntToStr(AIndice)+' não identificado na Lista!');
     end;

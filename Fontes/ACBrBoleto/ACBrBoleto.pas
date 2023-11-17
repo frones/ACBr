@@ -1297,7 +1297,7 @@ type
 
      procedure Imprimir; overload;
      procedure Imprimir(AStream: TStream); overload;
-     procedure GerarPDF; overload;
+     function GerarPDF : string; overload;
      procedure GerarPDF(AStream: TStream); overload;
      procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
       EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil);
@@ -1486,8 +1486,8 @@ type
     procedure Imprimir(AIndice: Integer); overload;
     procedure Imprimir(AStream: TStream); overload;
     procedure Imprimir(AIndice: Integer; AStream: TStream); overload;
-    procedure GerarPDF; overload;
-    procedure GerarPDF(AIndex: Integer); overload;
+    function GerarPDF : string; overload;
+    function GerarPDF(AIndex: Integer) : string; overload;
     procedure GerarPDF(AStream: TStream); overload;
     procedure GerarPDF(AIndex: Integer; AStream: TStream); overload;
     procedure GerarHTML;
@@ -1605,8 +1605,8 @@ type
 
     procedure Imprimir; overload; virtual;
     procedure Imprimir(AStream: TStream); overload; virtual;
-    procedure GerarPDF; overload; virtual;
-    procedure GerarPDF(AIndex: Integer); overload; virtual;
+    function GerarPDF : string; overload; virtual;
+    function GerarPDF(AIndex: Integer) : string; overload; virtual;
     procedure GerarPDF(AStream: TStream); overload; virtual;
     procedure GerarPDF(AIndex: Integer; AStream: TStream); overload; virtual;
     procedure GerarHTML; virtual;
@@ -2880,7 +2880,7 @@ begin
   ACBrBoleto.Imprimir(fACBrBoleto.ListadeBoletos.IndexOf(Self), AStream);
 end;
 
-procedure TACBrTitulo.GerarPDF;
+function TACBrTitulo.GerarPDF : string;
 begin
   if not Assigned(ACBrBoleto.ACBrBoletoFC) then
     raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) ) ;
@@ -2888,7 +2888,7 @@ begin
   if (fACBrBoleto.ListadeBoletos.Count <= 0)  then
     raise Exception.Create( ACBrStr('Nenhum Título encontrado na Lista de Boletos' ) ) ;
 
-  ACBrBoleto.GerarPDF(fACBrBoleto.ListadeBoletos.IndexOf(Self));
+  Result := ACBrBoleto.GerarPDF(fACBrBoleto.ListadeBoletos.IndexOf(Self));
 end;
 
 procedure TACBrTitulo.GerarPDF(AStream: TStream);
@@ -3124,24 +3124,24 @@ begin
    end;
 end;
 
-procedure TACBrBoleto.GerarPDF;
+function TACBrBoleto.GerarPDF : string;
 begin
    if not Assigned(ACBrBoletoFC) then
       raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) ) ;
 
    ChecarDadosObrigatorios;
 
-   ACBrBoletoFC.GerarPDF;
+   Result := ACBrBoletoFC.GerarPDF;
 end;
 
-procedure TACBrBoleto.GerarPDF(AIndex: Integer);
+function TACBrBoleto.GerarPDF(AIndex: Integer) : string;
 begin
   if not Assigned(ACBrBoletoFC) then
       raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) ) ;
 
    ChecarDadosObrigatorios;
 
-   ACBrBoletoFC.GerarPDF(AIndex);
+   Result := ACBrBoletoFC.GerarPDF(AIndex);
 end;
 
 procedure TACBrBoleto.GerarPDF(AStream: TStream);
@@ -6417,7 +6417,7 @@ begin
       raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 end;
 
-procedure TACBrBoletoFCClass.GerarPDF;
+function TACBrBoletoFCClass.GerarPDF : string;
 var
    FiltroAntigo         : TACBrBoletoFCFiltro;
    MostrarPreviewAntigo : Boolean;
@@ -6463,19 +6463,20 @@ begin
      MostrarPreview := MostrarPreviewAntigo;
      MostrarSetup   := MostrarSetupAntigo;
      PrinterName    := PrinterNameAntigo;
+     Result         := NomeArquivo;
      if CalcularIndividual then
        NomeArquivo := NomeArquivoAntigo;
    end;
 end;
 
-procedure TACBrBoletoFCClass.GerarPDF(AIndex: Integer);
+function TACBrBoletoFCClass.GerarPDF(AIndex: Integer) : string;
 var
    AOldIndex: Integer;
 begin
   AOldIndex := FIndiceImprimirIndividual;
   try
     FIndiceImprimirIndividual := AIndex;
-    GerarPDF;
+    Result := GerarPDF;
   finally
     FIndiceImprimirIndividual := AOldIndex;
   end;

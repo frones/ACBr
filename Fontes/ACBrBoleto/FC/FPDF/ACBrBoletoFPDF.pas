@@ -106,7 +106,7 @@ type
     destructor Destroy; override;
     procedure Imprimir; override;
     procedure Imprimir(AStream: TStream); override;
-    procedure GerarPDF(AIndex: Integer); override;
+    function GerarPDF(AIndex: Integer) : string; override;
   published
       { Published declarations }
   end;
@@ -185,10 +185,10 @@ begin
   end;
 end;
 
-procedure TACBrBoletoFPDF.GerarPDF(AIndex: Integer);
+function TACBrBoletoFPDF.GerarPDF(AIndex: Integer) : string;
 begin
   FBoletoIndex := True;
-  inherited GerarPDF(AIndex);
+  Result := inherited GerarPDF(AIndex);
 end;
 
 procedure TACBrBoletoFPDF.Imprimir;

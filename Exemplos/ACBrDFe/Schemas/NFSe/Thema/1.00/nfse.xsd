@@ -32,7 +32,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsNaturezaOperacao">
 		<xsd:restriction base="xsd:byte">
-			<xsd:pattern value="50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|78|79"/>
+			<xsd:pattern value="50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|78|79|81|91"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="tsRegimeEspecialTributacao">

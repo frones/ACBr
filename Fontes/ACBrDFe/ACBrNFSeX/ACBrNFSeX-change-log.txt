@@ -45,6 +45,8 @@ Símbolo : Significado
 
 17/11/2023
 -- ACBrNFSeXServicos --
+[+] Incluída a cidade de Abaete/MG, provedor ISSLegal.
+   Por: Loes
 [+] Incluído o Parâmetro "eletron=1" para as cidades: Garuva/SC e Tres Barras/SC
    Por: Forbostec
 -- Prescon.Provider --

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/11/2023
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade de Ilhota/SC, provedor Pronim.
+   Por: Alysson Rengel
+
 16/11/2023
 -- Diversos --
 [*] Melhoria na identificação de quebra de linha na impressão do DANFSE.

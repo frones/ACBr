@@ -113,10 +113,6 @@ begin
   begin
     ModoEnvio := meLoteSincrono;
     CancPreencherMotivo := True;
-    FormatoArqEnvio := tfaJson;
-    FormatoArqRetorno := tfaJson;
-    FormatoArqEnvioSoap := tfaJson;
-    FormatoArqRetornoSoap := tfaJson;
     FormatoArqRecibo := tfaJson;
     FormatoArqNota := tfaJson;
   end;
@@ -177,18 +173,18 @@ begin
     if vRetorno <> '' then
     begin
       // Retornos de emissão e cancelamento com sucesso
-      if (Copy(vRetorno,1,7) = 'Sucesso') or
+      if (Copy(vRetorno, 1, 7) = 'Sucesso') or
          (vRetorno = 'Notas canceladas com sucesso') then
         vRetorno := ''
 
       // Se o retorno for um json, não é erro
-      else if (Copy(vRetorno,1,2) = '[{') or (Copy(vRetorno,1,2) = '{"') then
+      else if (Copy(vRetorno, 1, 2) = '[{') or (Copy(vRetorno, 1, 2) = '{"') then
         vRetorno := ''
 
       // Para o método que retorna o token, verifica se retornou um valor válido, senão é um erro
       else if AListTag = 'getTokenResponse' then
       begin
-        if (Length(vRetorno) = 32) and (StringReplace(vRetorno,' ','',[rfReplaceAll]) = vRetorno) then
+        if (Length(vRetorno) = 32) and (StringReplace(vRetorno,' ', '', [rfReplaceAll]) = vRetorno) then
           vRetorno := '';
       end
 
@@ -227,6 +223,7 @@ begin
 
   // Se o número da NFSe não foi preenchido, alerta que para este provedor precisa consultar o número a ser utilizado, através do método ConsultarNFSePorFaixa.
   for i:=0 to TACBrNFSeX(FAOwner).NotasFiscais.Count - 1 do
+  begin
     if StrToIntDef(TACBrNFSeX(FAOwner).NotasFiscais.Items[i].NFSe.Numero,0) = 0 then
     begin
       AErro := Response.Erros.New;
@@ -234,6 +231,7 @@ begin
       AErro.Descricao := ACBrStr('Número da NFSe não informado. Utilize o ConsultarNFSePorFaixa para receber o próximo número do provedor.');
       Exit;
     end;
+  end;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
@@ -245,10 +243,14 @@ begin
     Exit;
   end;
 
-  Response.ArquivoEnvio := '<ws:setInvoice soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-                           '<strJsonInvoice xsi:type="xsd:string">' + Params.Xml + '</strJsonInvoice>' +
-                           '<strToken xsi:type="xsd:string">' + Emitente.WSChaveAutoriz + '</strToken>' +
-                           '</ws:setInvoice>';
+  Response.ArquivoEnvio := '<setInvoice soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                             '<strJsonInvoice xsi:type="xsd:string">' +
+                               Params.Xml +
+                             '</strJsonInvoice>' +
+                             '<strToken xsi:type="xsd:string">' +
+                               Emitente.WSChaveAutoriz +
+                             '</strToken>' +
+                           '</setInvoice>';
 end;
 
 procedure TACBrNFSeProviderPrescon.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -273,9 +275,7 @@ begin
         Exit;
       end;
 
-      Document.LoadFromXml('<grupo>' +
-                           Response.ArquivoRetorno +
-                           '</grupo>');
+      Document.LoadFromXml('<grupo>' + Response.ArquivoRetorno + '</grupo>');
 
       ANode := Document.Root;
 
@@ -366,9 +366,11 @@ begin
 
   Response.Metodo := tmConsultarNFSePorFaixa;
 
-  Response.ArquivoEnvio := '<ws:getNextInvoice soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-                           '<strToken xsi:type="xsd:string">' + Emitente.WSChaveAutoriz + '</strToken>' +
-                           '</ws:getNextInvoice>';
+  Response.ArquivoEnvio := '<getNextInvoice soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                             '<strToken xsi:type="xsd:string">' +
+                               Emitente.WSChaveAutoriz +
+                             '</strToken>' +
+                           '</getNextInvoice>';
 end;
 
 procedure TACBrNFSeProviderPrescon.TratarRetornoConsultaNFSeporFaixa(
@@ -391,9 +393,7 @@ begin
         Exit;
       end;
 
-      Document.LoadFromXml('<grupo>' +
-                           Response.ArquivoRetorno +
-                           '</grupo>');
+      Document.LoadFromXml('<grupo>' + Response.ArquivoRetorno + '</grupo>');
 
       ANode := Document.Root;
 
@@ -439,6 +439,7 @@ var
   Emitente: TEmitenteConfNFSe;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
   if EstaVazio(Emitente.WSChaveAutoriz) then
   begin
     AErro := Response.Erros.New;
@@ -570,10 +571,14 @@ begin
     LJSonArray.Free;
   end;
 
-  Response.ArquivoEnvio := '<ws:setCancelNfeOnly soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-                           '<strJsonCancelInvoice xsi:type="xsd:string">' + jsonText + '</strJsonCancelInvoice>' +
-                           '<strToken xsi:type="xsd:string">' + Emitente.WSChaveAutoriz + '</strToken>' +
-                           '</ws:setCancelNfeOnly>';
+  Response.ArquivoEnvio := '<setCancelNfeOnly soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                             '<strJsonCancelInvoice xsi:type="xsd:string">' +
+                               jsonText +
+                             '</strJsonCancelInvoice>' +
+                             '<strToken xsi:type="xsd:string">' +
+                               Emitente.WSChaveAutoriz +
+                             '</strToken>' +
+                           '</setCancelNfeOnly>';
 end;
 
 procedure TACBrNFSeProviderPrescon.TratarRetornoCancelaNFSe(
@@ -596,9 +601,7 @@ begin
         Exit;
       end;
 
-      Document.LoadFromXml('<grupo>' +
-                           Response.ArquivoRetorno +
-                           '</grupo>');
+      Document.LoadFromXml('<grupo>' + Response.ArquivoRetorno + '</grupo>');
 
       ANode := Document.Root;
 
@@ -662,10 +665,14 @@ begin
     Exit;
   end;
 
-  Response.ArquivoEnvio := '<ws:getToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-                           '<strInscricaoMunicipal xsi:type="xsd:string">' + Emitente.InscMun + '</strInscricaoMunicipal>' +
-                           '<strSenha xsi:type="xsd:string">' + Emitente.WSSenha + '</strSenha>' +
-                           '</ws:getToken>';
+  Response.ArquivoEnvio := '<getToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                             '<strInscricaoMunicipal xsi:type="xsd:string">' +
+                               Emitente.InscMun +
+                             '</strInscricaoMunicipal>' +
+                             '<strSenha xsi:type="xsd:string">' +
+                               Emitente.WSSenha +
+                             '</strSenha>' +
+                           '</getToken>';
 end;
 
 procedure TACBrNFSeProviderPrescon.TratarRetornoGerarToken(
@@ -688,9 +695,7 @@ begin
         Exit;
       end;
 
-      Document.LoadFromXml('<grupo>' +
-                           Response.ArquivoRetorno +
-                           '</grupo>');
+      Document.LoadFromXml('<grupo>' + Response.ArquivoRetorno + '</grupo>');
 
       ANode := Document.Root;
 
@@ -834,14 +839,16 @@ function TACBrNFSeXWebservicePrescon.Recepcionar(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [''],
+    ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"']);
 end;
 
 function TACBrNFSeXWebservicePrescon.ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [''],
+    ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"']);
 end;
 
 function TACBrNFSeXWebservicePrescon.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -861,14 +868,16 @@ function TACBrNFSeXWebservicePrescon.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [''],
+    ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"']);
 end;
 
 function TACBrNFSeXWebservicePrescon.GerarToken(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [''],
+    ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"']);
 end;
 
 function TACBrNFSeXWebservicePrescon.TratarXmlRetornado(

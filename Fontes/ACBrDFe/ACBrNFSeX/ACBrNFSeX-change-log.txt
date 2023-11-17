@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/11/2023
+-- Prescon.Provider --
+[*] Possível solução para o erro 500 ao usar o método ObterToken.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao --
 [+] Incluída as Naturezas da Operação: 81 e 91 que são utilizadas pelo provedor
     Thema.

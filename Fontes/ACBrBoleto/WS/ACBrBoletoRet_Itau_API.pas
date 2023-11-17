@@ -95,14 +95,14 @@ var
   TipoOperacao : TOperacao;
 begin
   Result := True;
-  if RetWS <> '' then
+  if Trim(RetWS) <> '' then
   begin
     try
       with ARetornoWS do
       begin
         TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
-        ARetornoWS.HTTPResultCode := HTTPResultCode;
-        ARetornoWS.JSONEnvio      := EnvWs;
+        ARetornoWS.HTTPResultCode  := HTTPResultCode;
+        ARetornoWS.JSONEnvio       := EnvWs;
         ARetornoWS.Header.Operacao := TipoOperacao;
         AJSon := TJson.Create;
         try
@@ -175,29 +175,26 @@ begin
 
               For I := 0 to AJSonRespDadosIndivBlt.Count-1 do
               begin
-                with AJSonRespDadosIndivBlt[I].AsObject do
-                begin
-                  DadosRet.IDBoleto.IDBoleto  := AJSonDadoBoleto.Values['id_boleto_individual'].AsString;
-                  DadosRet.IDBoleto.CodBarras := AJSonDadoBoleto.Values['codigo_barras'].AsString;
-                  DadosRet.IDBoleto.LinhaDig  := AJSonDadoBoleto.Values['numero_linha_digitavel'].AsString;
-                  DadosRet.IDBoleto.NossoNum  := AJSonDadoBoleto.Values['numero_nosso_numero'].AsString;
+                DadosRet.IDBoleto.IDBoleto  := AJSonRespDadosIndivBlt[I].AsObject.Values['id_boleto_individual'].AsString;
+                DadosRet.IDBoleto.CodBarras := AJSonRespDadosIndivBlt[I].AsObject.Values['codigo_barras'].AsString;
+                DadosRet.IDBoleto.LinhaDig  := AJSonRespDadosIndivBlt[I].AsObject.Values['numero_linha_digitavel'].AsString;
+                DadosRet.IDBoleto.NossoNum  := AJSonRespDadosIndivBlt[I].AsObject.Values['numero_nosso_numero'].AsString;
 
-                  DadosRet.TituloRet.Vencimento           := StringToDateTimeDef(Values['data_vencimento'].AsString, 0, 'yyyy-mm-dd');
-                  DadosRet.TituloRet.NossoNumero          := Values['numero_nosso_numero'].AsString;
-                  DadosRet.TituloRet.SeuNumero            := Values['numero_nosso_numero'].AsString;
-                  DadosRet.TituloRet.CodBarras            := Values['codigo_barras'].AsString;
-                  DadosRet.TituloRet.LinhaDig             := Values['numero_linha_digitavel'].AsString;
-                  DadosRet.TituloRet.DataProcessamento    := StringToDateTimeDef(Values['data_processamento'].AsString, 0, 'yyyy-mm-dd');
-                  DadosRet.TituloRet.UsoBanco             := Values['uso_banco'].AsString;
-                  DadosRet.TituloRet.ValorDesconto        := StrToFloatDef( Values['valor_desconto'].AsString, 0);
-                  DadosRet.TituloRet.ValorDespesaCobranca := StrToFloatDef( Values['valor_outra_deducao'].AsString, 0);
-                  DadosRet.TituloRet.ValorMoraJuros       := StrToFloatDef( Values['valor_juro_multa'].AsString, 0);
-                  DadosRet.TituloRet.ValorOutrosCreditos  := StrToFloatDef( Values['valor_outro_acrescimo'].AsString, 0);
-                  DadosRet.TituloRet.ValorPago            := StrToFloatDef(  Values['valor_total_cobrado'].AsString, 0);
+                DadosRet.TituloRet.Vencimento           := StringToDateTimeDef(AJSonRespDadosIndivBlt[I].AsObject.Values['data_vencimento'].AsString, 0, 'yyyy-mm-dd');
+                DadosRet.TituloRet.NossoNumero          := AJSonRespDadosIndivBlt[I].AsObject.Values['numero_nosso_numero'].AsString;
+                DadosRet.TituloRet.SeuNumero            := AJSonRespDadosIndivBlt[I].AsObject.Values['texto_seu_numero'].AsString;
+                DadosRet.TituloRet.CodBarras            := AJSonRespDadosIndivBlt[I].AsObject.Values['codigo_barras'].AsString;
+                DadosRet.TituloRet.LinhaDig             := AJSonRespDadosIndivBlt[I].AsObject.Values['numero_linha_digitavel'].AsString;
+                DadosRet.TituloRet.DataProcessamento    := StringToDateTimeDef(AJSonRespDadosIndivBlt[I].AsObject.Values['data_processamento'].AsString, 0, 'yyyy-mm-dd');
+                DadosRet.TituloRet.UsoBanco             := AJSonRespDadosIndivBlt[I].AsObject.Values['uso_banco'].AsString;
+                DadosRet.TituloRet.ValorDesconto        := StrToFloatDef( AJSonRespDadosIndivBlt[I].AsObject.Values['valor_desconto'].AsString, 0);
+                DadosRet.TituloRet.ValorDespesaCobranca := StrToFloatDef(AJSonRespDadosIndivBlt[I].AsObject.Values['valor_outra_deducao'].AsString, 0);
+                DadosRet.TituloRet.ValorMoraJuros       := StrToFloatDef( AJSonRespDadosIndivBlt[I].AsObject.Values['valor_juro_multa'].AsString, 0);
+                DadosRet.TituloRet.ValorOutrosCreditos  := StrToFloatDef( AJSonRespDadosIndivBlt[I].AsObject.Values['valor_outro_acrescimo'].AsString, 0);
+                DadosRet.TituloRet.ValorPago            := StrToFloatDef( AJSonRespDadosIndivBlt[I].AsObject.Values['valor_total_cobrado'].AsString, 0);
 
-                  DadosRet.TituloRet.Informativo.Add( Values['texto_informacao_cliente_beneficiario'].AsString );
-                  DadosRet.TituloRet.Mensagem.Add(Values['local_pagamento'].AsString);
-                end;
+                DadosRet.TituloRet.Informativo.Add( AJSonRespDadosIndivBlt[I].AsObject.Values['texto_informacao_cliente_beneficiario'].AsString );
+                DadosRet.TituloRet.Mensagem.Add(AJSonRespDadosIndivBlt[I].AsObject.Values['local_pagamento'].AsString);
               end;
             //end;
           end;

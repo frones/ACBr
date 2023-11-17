@@ -76,10 +76,13 @@ type
     destructor Destroy; override;
 
     procedure ImprimirDACTe(ACTE: TCTE = nil); virtual;
-    procedure ImprimirDACTePDF(ACTE: TCTE = nil);overload; virtual;
+    procedure ImprimirDACTePDF(ACTE: TCTE = nil); overload; virtual;
     procedure ImprimirDACTePDF(AStream: TStream; ACTe: TCTe = nil); overload; virtual;
+
     procedure ImprimirEVENTO(ACTE: TCTe = nil); virtual;
-    procedure ImprimirEVENTOPDF(ACTE: TCTe = nil); virtual;
+    procedure ImprimirEVENTOPDF(ACTE: TCTe = nil); overload; virtual;
+    procedure ImprimirEVENTOPDF(AStream: TStream; ACTe: TCTe = nil); overload; virtual;
+
     procedure ImprimirINUTILIZACAO(ACTE: TCTe = nil); virtual;
     procedure ImprimirINUTILIZACAOPDF(ACTE: TCTe = nil); virtual;
   published
@@ -186,6 +189,11 @@ begin
 end;
 
 procedure TACBrCTeDACTEClass.ImprimirEVENTOPDF(ACTE: TCTe);
+begin
+  ErroAbstract('ImprimirEVENTOPDF');
+end;
+
+procedure TACBrCTeDACTEClass.ImprimirEVENTOPDF(AStream: TStream; ACTe: TCTe);
 begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;

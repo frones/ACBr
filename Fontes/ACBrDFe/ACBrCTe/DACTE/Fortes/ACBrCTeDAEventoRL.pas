@@ -72,13 +72,17 @@ type
   public
     class procedure Imprimir(aDACTe: TACBrCTeDACTeRL; AEventoCTe: TInfEventoCollectionItem; ACTe: TCTe = nil);
     class procedure SalvarPDF(aDACTe: TACBrCTeDACTeRL; AEventoCTe: TInfEventoCollectionItem; AFile: string;
-      ACTe: TCTe = nil);
+                              ACTe: TCTe = nil); overload;
+    class procedure SalvarPDF(ADACTe: TACBrCTeDACTeRL; FEventoCTe: TInfEventoCollectionItem; AStream: TStream;
+                              ACTe: TCTe = nil); overload;
   end;
 
 implementation
 
 uses
-  MaskUtils, ACBrUtil.Strings, ACBrDFeReportFortes;
+  MaskUtils,
+  ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.DateTime,
+  ACBrDFeReportFortes;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -153,6 +157,48 @@ begin
     DACTeEvReport.RLPDFFilter1.FilterPages(DACTeEvReport.RLCTeEvento.Pages);
   finally
     DACTeEvReport.Free;
+  end;
+end;
+
+class procedure TfrmCTeDAEventoRL.SalvarPDF(ADACTe: TACBrCTeDACTeRL;
+  FEventoCTe: TInfEventoCollectionItem; AStream: TStream; ACTe: TCTe);
+var
+  DACTeReport: TfrmCTeDAEventoRL;
+begin
+  DACTeReport := Create(nil);
+  try;
+    DACTeReport.fpDACTe := ADACTe;
+    DACTeReport.fpEventoCTe := FEventoCTe;
+
+    if ADACTe.AlterarEscalaPadrao then
+    begin
+      DACTeReport.Scaled := False;
+      DACTeReport.ScaleBy(ADACTe.NovaEscala , Screen.PixelsPerInch);
+    end;
+
+    TDFeReportFortes.AjustarReport(DACTeReport.RLCTeEvento, DACTeReport.fpDACTe);
+    DACTeReport.RLPDFFilter1.ShowProgress := DACTeReport.fpDACTe.MostraStatus;
+
+    if (ACTe <> nil) then
+    begin
+      DACTeReport.fpCTe := ACTe;
+
+      with DACTeReport.RLPDFFilter1.DocumentInfo do
+      begin
+        Title := ACBrStr('Evento - Nota fiscal nº ') +
+          FormatFloat('000,000,000', DACTeReport.fpCTe.Ide.nCT);
+        KeyWords := ACBrStr(
+          'Número:' + FormatFloat('000,000,000', DACTeReport.fpCTe.Ide.nCT) +
+          '; Data de emissão: ' + FormatDateBr(DACTeReport.fpCTe.Ide.dhEmi) +
+          '; Destinatário: ' + DACTeReport.fpCTe.Dest.xNome +
+          '; CNPJ: ' + DACTeReport.fpCTe.Dest.CNPJCPF);
+      end;
+    end;
+
+    DACTeReport.RLCTeEvento.Prepare;
+    DACTeReport.RLPDFFilter1.FilterPages(DACTeReport.RLCTeEvento.Pages, AStream);
+  finally
+    DACTeReport.Free;
   end;
 end;
 

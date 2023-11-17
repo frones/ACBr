@@ -63,8 +63,11 @@ type
     procedure ImprimirDACTe(ACTe: TCTe = nil); override;
     procedure ImprimirDACTePDF(ACTe: TCTe = nil); override;
     procedure ImprimirDACTePDF(AStream: TStream; ACTe: TCTe = nil); override;
+
     procedure ImprimirEVENTO(ACTe: TCTe = nil); override;
     procedure ImprimirEVENTOPDF(ACTe: TCTe = nil); override;
+    procedure ImprimirEVENTOPDF(AStream: TStream; ACTe: TCTe = nil); override;
+
     procedure ImprimirINUTILIZACAO(ACTe: TCTe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(ACTe: TCTe = nil); override;
   published
@@ -277,6 +280,55 @@ begin
         if (i < (EventoCTe.Evento.Count - 1)) then
           FPArquivoPDF := FPArquivoPDF + sLinebreak;
       end;
+    end;
+  end;
+end;
+
+procedure TACBrCTeDACTeRL.ImprimirEVENTOPDF(AStream: TStream; ACTe: TCTe);
+var
+  Impresso: Boolean;
+  I, J: Integer;
+  NumID: String;
+begin
+  with TACBrCTe(ACBrCTe) do
+  begin
+    if (ACTe = nil) and (Conhecimentos.Count > 0) then
+    begin
+      for i := 0 to (EventoCTe.Evento.Count - 1) do
+      begin
+        Impresso := False;
+        for j := 0 to (Conhecimentos.Count - 1) do
+        begin
+          NumID := OnlyNumber(Conhecimentos.Items[j].CTe.infCTe.ID);
+          if (NumID = OnlyNumber(EventoCTe.Evento.Items[i].InfEvento.chCTe)) then
+          begin
+            TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, EventoCTe.Evento.Items[i], AStream, Conhecimentos.Items[j].CTe);
+            Impresso := True;
+            Break;
+          end;
+        end;
+
+        if not Impresso and (EventoCTe.Evento.Count > 0) then
+          TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, EventoCTe.Evento.Items[0], AStream, nil);
+      end;
+    end
+    else
+    begin
+      NumID := OnlyNumber(ACTe.infCTe.ID);
+      Impresso := False;
+
+      for i := 0 to (EventoCTe.Evento.Count - 1) do
+      begin
+        if (NumID = OnlyNumber(EventoCTe.Evento.Items[i].InfEvento.chCTe)) then
+        begin
+          TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, EventoCTe.Evento.Items[i], AStream, ACTe);
+          Impresso := True;
+          Break;
+        end;
+      end;
+
+      if not Impresso and (EventoCTe.Evento.Count > 0) then
+        TfrmCTeDAEventoRLRetrato.SalvarPDF(Self, EventoCTe.Evento.Items[0], AStream, nil);
     end;
   end;
 end;

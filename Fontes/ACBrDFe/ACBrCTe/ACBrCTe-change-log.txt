@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/11/2023
+-- Diversos --
+[+] Implementado o método ImprimirEventoPDF usando o Stream.
+  Por: Italo Giurizzato Junior
+
 14/11/2023
 -- ACBrCTeConhecimentos --
 [+] Implementado o método ImprimirPDF usando o Stream na classe Conhecimento.

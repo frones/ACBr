@@ -5,7 +5,9 @@
  (forked from https://github.com/Projeto-ACBr-Oficial/FPDF-Pascal)
 
  Copyright (c) 2023 Arimateia Jr - https://nuvemfiscal.com.br
- - Colaboradores : Victor H Gonzales - Pandaaa - Compatibilização D7 / Lazarus
+
+ Colaboradores nesse arquivo:
+ - Victor H Gonzales - Pandaaa - Compatibilização D7 / Lazarus
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of
  this software and associated documentation files (the "Software"), to deal in
@@ -65,7 +67,7 @@ type
 
   TFPDFBandType = (btLeftMargin, btTopMargin, btRightMargin, btBottomMargin,
     btData, btReportHeader, btPageHeader, btReportFooter, btPageFooter,
-    btOverlay);
+    btWatermark, btOverlay);
 
   TFPDFBandArray = array of TFPDFBand;
 
@@ -153,7 +155,7 @@ type
 
   TFPDFEngineOptions = class
   private
-    FDoublePass: boolean;
+    FDoublePass: Boolean;
   public
     property DoublePass: boolean read FDoublePass write FDoublePass;
   end;
@@ -800,7 +802,7 @@ begin
     else
       Band.Width := APage.PageWidth - APage.LeftMargin - APage.RightMargin;
 
-    if Band.BandType = btOverlay then
+    if Band.BandType in [btWatermark, btOverlay] then
       Band.Height := APage.PageHeight - APage.TopMargin - APage.BottomMargin;
   end;
 end;
@@ -946,7 +948,7 @@ begin
     btBottomMargin:
       FPDF.SetXY(APage.DefLeftMargin, APage.PageHeight - APage.BottomMargin);
 
-    btOverlay:
+    btWatermark, btOverlay:
       FPDF.SetXY(APage.LeftMargin, APage.TopMargin);
   else
     //
@@ -1156,31 +1158,34 @@ begin
 end;
 
 procedure TFPDFEngine.InitBands(APage: TFPDFPage);
-//var MergedBands : array of TFPDFBandType;
-//I, J : Integer;
+var
+  MergedBands: array of TFPDFBandType;
+  I, J: Integer;
 begin
   InitBands(APage, cMarginBands);
   CalculatePageMargins(APage);
 //  CalculateBandDimensions(APage, nil);
   FActiveMiddleBands.Clear;
-  {SetLength(MergedBands, Length(cFirstBands) + Length(cMiddleBands) + Length(cLastBands));
-  J :=0;
-  for i := Low(cFirstBands) to High(cFirstBands) do
+
+  SetLength(MergedBands, Length(cFirstBands) + Length(cMiddleBands) + Length(cLastBands));
+  J := 0;
+  for I := Low(cFirstBands) to High(cFirstBands) do
   begin
-    MergedBands[j] := cFirstBands[i];
+    MergedBands[J] := cFirstBands[I];
+    Inc(J);
   end;
-  for i := Low(cMiddleBands) to High(cMiddleBands) do
+  for I := Low(cMiddleBands) to High(cMiddleBands) do
   begin
-    MergedBands[j] := cMiddleBands[i];
+    MergedBands[J] := cMiddleBands[I];
+    Inc(J);
   end;
-  for i := Low(cLastBands) to High(cLastBands) do
+  for I := Low(cLastBands) to High(cLastBands) do
   begin
-    MergedBands[j] := cLastBands[i];
+    MergedBands[J] := cLastBands[I];
+    Inc(J);
   end;
 
-  InitBands(APage, MergedBands);}
-
-  InitBands(APage, [btReportHeader,btPageHeader,btData,btPageFooter]);
+  InitBands(APage, MergedBands);
   InitBands(APage, [btReportFooter]);
 
   if FReport.HasEndlessPage then
@@ -1267,7 +1272,7 @@ end;
 
 function TFPDFEngine.OffsetEnabled(ABand: TFPDFBand): boolean;
 begin
-  Result := not (ABand.BandType = btOverlay);
+  Result := not (ABand.BandType in [btWatermark, btOverlay]);
 end;
 
 procedure TFPDFEngine.SaveToFile(const AFileName: String);
@@ -1320,6 +1325,8 @@ begin
   end;
 
   FPDF.AddPage(APage.Orientation, LPageSize, ro0);
+
+  DrawBands(APage, btWatermark);
 
   FInMargins := True;
   try
@@ -1873,11 +1880,11 @@ function TImageUtils.GetImageType(AStream: TStream): TImgType;
 var
   wWidth, wHeight: word;
 begin
-  if GetPNGSize(AStream, wWidth, wHeight) then
-    Result := itPng;
-  if GetJPGSize(AStream, wWidth, wHeight) then
-    Result := itJpg;
   Result := itUnknown;
+  if GetPNGSize(AStream, wWidth, wHeight) then
+    Result := itPng
+  else if GetJPGSize(AStream, wWidth, wHeight) then
+    Result := itJpg;
 end;
 
 function TImageUtils.GetImageType(const sFile: string): TImgType;
@@ -1892,56 +1899,59 @@ begin
   end;
 end;
 
-function TImageUtils.GetJPGSize(AStream: TStream; var wWidth,
-  wHeight: Word): boolean;
+function TImageUtils.GetJPGSize(AStream: TStream; var wWidth, wHeight: Word): boolean;
 const
-  ValidSignature: array[0..1] of Byte = ($FF, $D8);
-  Parameterless = [$01, $D0, $D1, $D2, $D3, $D4, $D5, $D6, $D7];
+  SigJPG: array[0..1] of Byte = ($FF, $D8);
 var
-  Sig: array[0..1] of byte;
-  x: integer;
-  Seg: byte;
-  Dummy: array[0..15] of byte;
-  Len: word;
-  ReadLen: LongInt;
-begin
-  AStream.Position := 0;
+  Buf: array[0..1] of Byte;
+  Offset: Word;
 
-  ReadLen := AStream.read(Sig[0], SizeOf(Sig));
-
-  for x := Low(Sig) to High(Sig) do
-    if Sig[x] <> ValidSignature[x] then
-      ReadLen := 0;
-
-  if ReadLen > 0 then
+  function SameValue(Sig: array of Byte): Boolean;
   begin
-    ReadLen := AStream.read(Seg, 1);
-    while (Seg = $FF) and (ReadLen > 0) do
-    begin
-      ReadLen := AStream.read(Seg, 1);
-      if Seg <> $FF then
-      begin
-        if (Seg = $C0) or (Seg = $C1) then
+     Result := CompareMem(@Sig[0], @Buf[0], Length(Sig));
+  end;
+
+  function ReadTwoBytes: Boolean;
+  begin
+    Result := (AStream.Read(Buf, 2) = 2);
+  end;
+
+  function ReadNextSegment: Boolean;
+  begin
+    Result := False;
+    if not ReadTwoBytes then
+      Exit;
+    if AStream.Position > AStream.Size div 2 then
+      Exit;
+    Result := Buf[0] = $FF;
+  end;
+
+begin
+  Result := False;
+  AStream.Position := 0;
+  if not (ReadNextSegment and SameValue(SigJPG)) then
+    Exit;
+  while ReadNextSegment do
+  begin
+    case Buf[1] of
+      $01, $D0..$D9:
         begin
-          ReadLen := AStream.read(Dummy[0], 3); { don't need these bytes }
-          wHeight := ReadMWord(AStream);
-          wWidth  := ReadMWord(AStream);
-        end
-        else
-        begin
-          if not (Seg in Parameterless) then
-          begin
-            Len := ReadMWord(AStream);
-            AStream.Seek(Len - 2, 1);
-            AStream.read(Seg, 1);
-          end
-          else
-            Seg := $FF; { Fake it to keep looping. }
+          Continue;
         end;
-      end;
+
+      $C0, $C1, $C2:
+        begin
+          AStream.Position := AStream.Position + 3;
+          wHeight := ReadMWord(AStream);
+          wWidth := ReadMWord(AStream);
+          Result := True;
+          Break;
+        end;
+    else
+      Offset := ReadMWord(AStream);
+      AStream.Seek(Offset - 2, 1);
     end;
   end;
-  Result := (wWidth > 0) and (wHeight > 0);
 end;
 
 function TImageUtils.ReadMWord(AStream: TStream): Word;
@@ -1977,7 +1987,10 @@ begin
   AStream.read(Sig[0], SizeOf(ValidSignature));
   for x := Low(Sig) to High(Sig) do
     if Sig[x] <> ValidSignature[x] then
+    begin
       Result := False;
+      Exit;
+    end;
   AStream.Seek(18, 0);
   wWidth := ReadMWord(AStream);
   AStream.Seek(22, 0);
@@ -1992,6 +2005,7 @@ var
 begin
   Stream := TMemoryStream.Create;
   try
+    Stream.Write(ABytes, Length(ABytes));
     Result := GetImageSize(Stream, wWidth, wHeight);
   finally
     Stream.Free;
@@ -2004,6 +2018,7 @@ var
 begin
   Stream := TMemoryStream.Create;
   try
+    Stream.Write(ABytes, Length(ABytes));
     Result := GetImageType(Stream);
   finally
     Stream.Free;

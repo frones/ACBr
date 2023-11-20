@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/11/2023
+-- Frm_ACBrReinf --
+[*] Melhorias no programa de exemplo visualizando os xmls de envio e retorno
+  Por: Renato Rubinho
+
 06/11/2023
 -- Frm_ACBrReinf --
 [*] Melhorias no programa de exemplo para geração das retificadoras dos eventos sem mexer no fonte e removido o Registro R2070

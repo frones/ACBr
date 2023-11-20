@@ -37,6 +37,7 @@ uses
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrUtil.XMLHTML,
   ACBrBase, ACBrDFe, 
   ACBrReinf, pcnConversaoReinf;
 
@@ -207,8 +208,8 @@ type
     Label12: TLabel;
     edtEmitCNPJ: TEdit;
     mmoDados: TMemo;
-    mmoXMLEnv: TMemo;
-    mmoXMLRet: TMemo;
+    WBEnvio: TWebBrowser;
+    WBRetorno: TWebBrowser;
     memoLog: TMemo;
     chk2055: TCheckBox;
     chk1050: TCheckBox;
@@ -260,6 +261,7 @@ type
     procedure rdgOperacaoClick(Sender: TObject);
     procedure ACBrReinf1TransmissaoEventos(const AXML: String;
       ATipo: TEventosReinf);
+    procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
   private
     { Private declarations }
 
@@ -357,7 +359,7 @@ begin
   ACBrReinf1.SSL.UseCertificateHTTP := False;
 
   try
-    mmoXMLRet.Lines.Text := ACBrReinf1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
+    LoadXML(ACBrReinf1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', ''), WBEnvio);
   finally
     ACBrReinf1.SSL.UseCertificateHTTP := OldUseCert;
   end;
@@ -692,6 +694,27 @@ begin
   end;
 end;
 
+procedure TfrmACBrReinf.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+var
+  i: Integer;
+begin
+  // Faz 3 tentativas, aguardando 1 segundo para evitar erro de IO
+  for i:=1 to 3 do
+  begin
+    try
+      ACBrUtil.FilesIO.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'Temp.xml',
+                          ACBrUtil.XMLHTML.ConverteXMLtoUTF8(RetWS), False, False);
+
+      Sleep(200);
+
+      MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'Temp.xml');
+      break;
+    Except
+      Sleep(1000);
+    end;
+  end;
+end;
+
 procedure TfrmACBrReinf.ConfigurarComponente;
 var
   Ok: Boolean;
@@ -913,10 +936,16 @@ procedure TfrmACBrReinf.ACBrReinf1TransmissaoEventos(const AXML: String;
   ATipo: TEventosReinf);
 begin
   case ATipo of
-    erEnvioLote:       mmoXMLEnv.Lines.Text := AXML;
-    erRetornoLote:     mmoXMLEnv.Lines.Text := AXML;
-    erEnvioConsulta:   mmoXMLEnv.Lines.Text := AXML;
-    erRetornoConsulta: mmoXMLEnv.Lines.Text := AXML;
+    erEnvioLote,
+    erRetornoLote,
+    erEnvioConsulta,
+    erRetornoConsulta:
+      begin
+        LoadXML(AXML, WBRetorno);
+        WBRetorno.Visible := True;
+      end;
+  else
+    WBRetorno.Visible := False;
   end;
 end;
 
@@ -1019,6 +1048,8 @@ begin
   begin
     memoLog.Clear;
     memoLog.Lines.Text := ACBrReinf1.WebServices.EnvioLote.RetWS;
+
+    LoadXML(ACBrReinf1.WebServices.EnvioLote.DadosMsg, WBEnvio);
 
     with memoLog.Lines do
     begin
@@ -1171,6 +1202,8 @@ begin
   begin
     memoLog.Clear;
     memoLog.Lines.Text := ACBrReinf1.WebServices.Consultar.RetWS;
+
+    LoadXML(ACBrReinf1.WebServices.Consultar.DadosMsg, WBEnvio);
 
     with memoLog.Lines do
     begin
@@ -1497,7 +1530,9 @@ begin
                                      cpfCnpjBenef, cnpjFonte) then
   begin
     memoLog.Clear;
-    memoLog.Lines.Text := ACBrReinf1.WebServices.Consultar.RetWS;
+    memoLog.Lines.Text := ACBrReinf1.WebServices.ConsultarReciboEvento.RetWS;
+
+    LoadXML(ACBrReinf1.WebServices.ConsultarReciboEvento.DadosMsg, WBEnvio);
 
     with memoLog.Lines do
     begin
@@ -1662,8 +1697,7 @@ end;
 
 procedure TfrmACBrReinf.AntesDeEnviar(const Axml: string);
 begin
-  mmoXMLEnv.Clear;
-  mmoXMLEnv.Lines.Text := Axml;
+  LoadXML(Axml, WBEnvio);
 end;
 
 procedure TfrmACBrReinf.DepoisDeEnviar(const Axml: string);
@@ -1836,7 +1870,7 @@ begin
         if rdgOperacao.ItemIndex <> 3 then
           ideEntLig.tpEntLig := telSociedadeParticipacao;
 
-        ideEntLig.cnpjLig  := edSoftCNPJ.Text;
+        ideEntLig.cnpjLig  := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
         ideEntLig.IniValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
         ideEntLig.FimValid := FormatDateBr(IncMonth(Date,-1),'yyyy-mm');
 
@@ -1931,7 +1965,7 @@ begin
 
           with idePrestServ do
           begin
-            cnpjPrestador     := edSoftCNPJ.Text;
+            cnpjPrestador     := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
             vlrTotalBruto     := 1000.00;
             vlrTotalBaseRet   := 1000.00;
             vlrTotalRetPrinc  := 110.00;
@@ -2026,7 +2060,7 @@ begin
           with ideTomador do
           begin
             tpInscTomador     := tiCNPJ;
-            nrInscTomador     := edSoftCNPJ.Text;
+            nrInscTomador     := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
             indObra           := ioNaoeObraDeConstrucaoCivil;
             vlrTotalBruto     := 1000.00;
             vlrTotalBaseRet   := 1000.00;
@@ -2119,7 +2153,7 @@ begin
         recursosRec.Clear;
         with recursosRec.New do
         begin
-          cnpjOrigRecurso := edSoftCNPJ.Text;
+          cnpjOrigRecurso := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
 
           if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
           begin
@@ -2188,7 +2222,7 @@ begin
         recursosRep.Clear;
         with recursosRep.New do
         begin
-          cnpjAssocDesp := edSoftCNPJ.Text;
+          cnpjAssocDesp := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
           vlrTotalRep   := 100.00;
           vlrTotalRet   := 0;
           vlrTotalNRet  := 0;
@@ -2245,7 +2279,7 @@ begin
       with infoComProd.ideEstab do
       begin
         tpInscEstab       := tiCNPJ;
-        nrInscEstab       := edSoftCNPJ.Text;
+        nrInscEstab       := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
         vlrRecBrutaTotal  := 1000.00;
         vlrCPApur         := 0.00;
         vlrRatApur        := 0.00;
@@ -2308,7 +2342,7 @@ begin
         nrInscAdq := edtEmitCNPJ.Text; // Diferente do nrInscProd
 
         tpInscProd := tiCNPJ;
-        nrInscProd := edSoftCNPJ.Text; // Diferente do nrInscAdq
+        nrInscProd := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
         indOpcCP   := 'S';
 
         detAquis.Clear;
@@ -2431,7 +2465,7 @@ begin
       begin
         codPgto      := '123';
         tpInscBenef  := tiCNPJ;
-        nrInscBenef  := edSoftCNPJ.Text;
+        nrInscBenef  := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
         nmRazaoBenef := 'Nome do Beneficiario';
 
         with infoResidExt do
@@ -2464,7 +2498,7 @@ begin
         with ideEstab.New do
         begin
           tpInsc := tiCNPJ;
-          nrInsc := edSoftCNPJ.Text;
+          nrInsc := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
 
           pgtoPF.Clear;
           with pgtoPF.New do
@@ -2521,7 +2555,7 @@ begin
                 with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
-                  nrInscAdvogado := edSoftCNPJ.Text;
+                  nrInscAdvogado := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
                   vlrAdvogado    := 0.0;
                 end;
               end;
@@ -2543,14 +2577,14 @@ begin
                 with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
-                  nrInscAdvogado := edSoftCNPJ.Text;
+                  nrInscAdvogado := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
                   vlrAdvogado    := 0.0;
                 end;
               end;
 
               with origemRecursos do
               begin
-                cnpjOrigemRecursos := edSoftCNPJ.Text;
+                cnpjOrigemRecursos := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
               end;
             end;
 
@@ -2583,14 +2617,14 @@ begin
                 with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
-                  nrInscAdvogado := edSoftCNPJ.Text;
+                  nrInscAdvogado := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
                   vlrAdvogado    := 0.0;
                 end;
               end;
 
               with origemRecursos do
               begin
-                cnpjOrigemRecursos := edSoftCNPJ.Text;
+                cnpjOrigemRecursos := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
               end;
             end;
           end;
@@ -2708,7 +2742,7 @@ begin
           modDesportiva   := 'TESTE';
           nomeCompeticao  := 'TESTE';
           cnpjMandante    := edtEmitCNPJ.Text;
-          cnpjVisitante   := edSoftCNPJ.Text;
+          cnpjVisitante   := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
           nomeVisitante   := 'TESTE';
           pracaDesportiva := 'TESTE';
           codMunic        := 3550308;
@@ -2830,7 +2864,7 @@ begin
               {
               indRRA       := 'S';
               indFciScp    := '1';
-              nrInscFciScp := edSoftCNPJ.Text;
+              nrInscFciScp := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
               percSCP      := 12.3;
               indJud       := 'N';
               paisResidExt := '063';
@@ -2846,7 +2880,7 @@ begin
                 indTpDeducao   := itdOficial;
                 vlrDeducao     := 10;
                 infoEntid      := 'S';
-                nrInscPrevComp := edSoftCNPJ.Text;
+                nrInscPrevComp := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
                 vlrPatrocFunp  := 11;
 
                 with benefPen.New do
@@ -2897,7 +2931,7 @@ begin
                 indOrigRec      := iorProprios;
                 descRRA         := 'Descrição';
                 qtdMesesRRA     := 1.0;
-                cnpjOrigRecurso := edSoftCNPJ.Text;
+                cnpjOrigRecurso := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
 
                 with despProcJud do
                 begin
@@ -2917,7 +2951,7 @@ begin
               begin
                 nrProc          := '123456789012345678901';
                 indOrigRec      := iorProprios;
-                cnpjOrigRecurso := edSoftCNPJ.Text;
+                cnpjOrigRecurso := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
                 desc            := 'Descrição';
 
                 with despProcJud do
@@ -2958,14 +2992,14 @@ begin
           {
           with ideBenef.ideOpSaude.New do
           begin
-            nrInsc   := edSoftCNPJ.Text;
+            nrInsc   := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
             regANS   := '123456';
             vlrSaude := 10;
 
             with infoReemb.New do
             begin
               tpInsc      := tiCNPJ;
-              nrInsc      := edSoftCNPJ.Text;
+              nrInsc      := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
               vlrReemb    := 10;
               vlrReembAnt := 15;
             end;
@@ -2978,7 +3012,7 @@ begin
               with infoReembDep.New do
               begin
                 tpInsc      := tiCNPJ;
-                nrInsc      := edSoftCNPJ.Text;
+                nrInsc      := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
                 vlrReemb    := 10;
                 vlrReembAnt := 15;
               end;
@@ -3027,7 +3061,7 @@ begin
 
         with ideBenef do
         begin
-          cnpjBenef := edSoftCNPJ.Text;
+          cnpjBenef := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
           //nmBenef   := 'Beneficiario';
           isenImun  := tiiNenhum;
           //if ACBrReinf1.Configuracoes.Geral.VersaoDF >= v2_01_02 then
@@ -3046,7 +3080,7 @@ begin
               vlrBruto     := 100;
               {
               indFciScp    := '1';
-              nrInscFciScp := edSoftCNPJ.Text;
+              nrInscFciScp := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
               percSCP      := 12.3;
               indJud       := 'N';
               paisResidExt := '063';
@@ -3094,7 +3128,7 @@ begin
               begin
                 nrProc          := '123456789012345678901';
                 indOrigRec      := iorProprios;
-                cnpjOrigRecurso := edSoftCNPJ.Text;
+                cnpjOrigRecurso := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
                 desc            := 'Descrição';
 
                 with despProcJud do
@@ -3241,7 +3275,7 @@ begin
 
         with ideFont do
         begin
-          cnpjFont := edSoftCNPJ.Text;
+          cnpjFont := edSoftCNPJ.Text; // Apenas para teste, utilizado o CNPJ preenchido para a SH
 
           ideRend.Clear;
           with ideRend.New do

@@ -20,6 +20,7 @@ object frmACBrReinf: TfrmACBrReinf
     Height = 612
     Align = alLeft
     TabOrder = 0
+    ExplicitHeight = 611
     object lblColaborador: TLabel
       Left = 18
       Top = 540
@@ -100,10 +101,6 @@ object frmACBrReinf: TfrmACBrReinf
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -396,10 +393,6 @@ object frmACBrReinf: TfrmACBrReinf
           object TabSheet4: TTabSheet
             Caption = 'Geral'
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox3: TGroupBox
               Left = 3
               Top = 12
@@ -555,10 +548,6 @@ object frmACBrReinf: TfrmACBrReinf
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox4: TGroupBox
               Left = 5
               Top = 4
@@ -848,10 +837,6 @@ object frmACBrReinf: TfrmACBrReinf
               TabOrder = 0
               object TabSheet2: TTabSheet
                 Caption = 'Contato'
-                ExplicitLeft = 0
-                ExplicitTop = 0
-                ExplicitWidth = 0
-                ExplicitHeight = 0
                 object Label5: TLabel
                   Left = 3
                   Top = 0
@@ -1009,10 +994,6 @@ object frmACBrReinf: TfrmACBrReinf
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object sbPathReinf: TSpeedButton
               Left = 247
               Top = 131
@@ -1139,6 +1120,8 @@ object frmACBrReinf: TfrmACBrReinf
     Height = 612
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 581
+    ExplicitHeight = 611
     object pgcBotoes: TPageControl
       Left = 1
       Top = 1
@@ -1147,6 +1130,7 @@ object frmACBrReinf: TfrmACBrReinf
       ActivePage = tbsEventos
       Align = alTop
       TabOrder = 0
+      ExplicitWidth = 579
       object tbsEventos: TTabSheet
         Caption = 'Eventos'
         ImageIndex = 4
@@ -1527,6 +1511,8 @@ object frmACBrReinf: TfrmACBrReinf
       ActivePage = tsFormaEnvio
       Align = alClient
       TabOrder = 1
+      ExplicitWidth = 579
+      ExplicitHeight = 294
       object tsFormaEnvio: TTabSheet
         Caption = 'Forma de Envio'
         ImageIndex = 7
@@ -1635,10 +1621,6 @@ object frmACBrReinf: TfrmACBrReinf
       object tsComandos: TTabSheet
         Caption = 'Comandos'
         ImageIndex = 6
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object btnGerar: TButton
           Left = 8
           Top = 10
@@ -1714,10 +1696,6 @@ object frmACBrReinf: TfrmACBrReinf
       end
       object TabSheet5: TTabSheet
         Caption = 'Dados de Retorno Eventos'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object mmoDados: TMemo
           Left = 0
           Top = 0
@@ -1732,48 +1710,46 @@ object frmACBrReinf: TfrmACBrReinf
       object TabSheet6: TTabSheet
         Caption = 'XML de Envio'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
-        object mmoXMLEnv: TMemo
+        object WBEnvio: TWebBrowser
           Left = 0
           Top = 0
           Width = 575
           Height = 267
           Align = alClient
-          Lines.Strings = (
-            'Memo1')
-          ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitWidth = 571
+          ExplicitHeight = 266
+          ControlData = {
+            4C0000006E3B0000981B00000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126208000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
         end
       end
       object TabSheet9: TTabSheet
         Caption = 'XML de Retorno'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
-        object mmoXMLRet: TMemo
+        object WBRetorno: TWebBrowser
           Left = 0
           Top = 0
           Width = 575
           Height = 267
           Align = alClient
-          Lines.Strings = (
-            'Memo1')
-          ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitWidth = 571
+          ExplicitHeight = 266
+          ControlData = {
+            4C0000006E3B0000981B00000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126208000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
         end
       end
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1806,6 +1782,7 @@ object frmACBrReinf: TfrmACBrReinf
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    OnTransmissaoEventos = ACBrReinf1TransmissaoEventos
     Left = 744
     Top = 56
   end

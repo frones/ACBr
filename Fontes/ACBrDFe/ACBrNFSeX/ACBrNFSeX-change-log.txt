@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Juazeiro/BA mudou para a versão 2.02, provedor ainda é o WebISS.
+  Por: DeveloperATS
 
 17/11/2023
 -- ACBrNFSeXServicos --

@@ -186,6 +186,7 @@ begin
 
   with ConfigMsgDados do
   begin
+    Prefixo := '';
     ConsultarNFSeRps.DocElemento := 'ConsultarNfsePorRpsEnvio';
     XmlRps.xmlns := '';
   end;
@@ -245,6 +246,8 @@ begin
   Response.ArquivoEnvio := '<ns3:EnviarLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:EnviarLoteRpsEnvio>';
+
+  ConfigMsgDados.Prefixo := 'ns3';
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararConsultaSituacao(
@@ -261,6 +264,8 @@ begin
   Response.ArquivoEnvio := '<ns3:ConsultarSituacaoLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:ConsultarSituacaoLoteRpsEnvio>';
+
+  ConfigMsgDados.Prefixo := 'ns3';
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararConsultaLoteRps(
@@ -277,6 +282,8 @@ begin
   Response.ArquivoEnvio := '<ns3:ConsultarLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:ConsultarLoteRpsEnvio>';
+
+  ConfigMsgDados.Prefixo := 'ns3';
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararConsultaNFSeporRps(
@@ -293,6 +300,8 @@ begin
   Response.ArquivoEnvio := '<ns3:ConsultarNfsePorRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:ConsultarNfsePorRpsEnvio>';
+
+  ConfigMsgDados.Prefixo := 'ns3';
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararConsultaNFSe(
@@ -309,6 +318,8 @@ begin
   Response.ArquivoEnvio := '<ns3:ConsultarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:ConsultarNfseEnvio>';
+
+  ConfigMsgDados.Prefixo := 'ns3';
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararCancelaNFSe(
@@ -333,6 +344,8 @@ begin
   Response.ArquivoEnvio := '<ns3:CancelarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          Response.ArquivoEnvio +
                        '</ns3:CancelarNfseEnvio>';
+
+  ConfigMsgDados.Prefixo := 'ns3';
 end;
 
 function TACBrNFSeProviderBetha.CondicaoPagToStr(

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/11/2023
+-- Betha.Provider --
+[*] Ajustes para gerar na assinatura do lote o valor do URI para a versão 1 do 
+    layout da ABRASF.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Nova Santa Rita/RS mudou a URL, provedor continua o mesmo.
   Por: Rene Melo

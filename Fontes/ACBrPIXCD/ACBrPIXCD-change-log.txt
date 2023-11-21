@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2023
+-- ACBrPIXPSPMercadoPago --
+[*] Adicionando o header 'X-Idempotency-Key' na criação de cobranças.
+    Por: Elias César
+
 08/11/2023
 -- ACBrPSPAilos --
 [*] Correção da URL de Produção.

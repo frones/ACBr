@@ -16,6 +16,7 @@ const
   cMercadoPagoEndPointPayment = '/v1/payments';
   cMercadoPagoEndPointRefund = '/refunds';
   cMercadoPagoEndPointSearch = '/search';
+  cMercadoPagoXIdempotencyKey = 'X-Idempotency-Key: ';
 
 type
 
@@ -54,6 +55,7 @@ type
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): string; override;
     function CalcularEndPointPath(const {%H-}aMethod, aEndPoint: string): string; override;
     procedure ConfigurarBody(const aMethod, aEndPoint: string; var aBody: string); override;
+    procedure ConfigurarHeaders(const Method, AURL: String); override;
     procedure ConfigurarPathParameters(const aMethod, aEndPoint: string); override;
     procedure ConfigurarQueryParameters(const aMethod, aEndPoint: string); override;
     procedure TratarRetornoComErro(ResultCode: integer; const RespostaHttp: ansistring; Problema: TACBrPIXProblema); override;
@@ -78,9 +80,9 @@ type
 implementation
 
 uses
-  StrUtils, synautil, DateUtils,
-  ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrPIXBRCode,
-  ACBrPIXSchemasPix, ACBrOpenSSLUtils, ACBrPIXSchemasCobsConsultadas;
+  StrUtils, synautil, DateUtils, ACBrUtil.Strings, ACBrUtil.Base,
+  ACBrUtil.FilesIO, ACBrPIXBRCode, ACBrPIXSchemasPix, ACBrOpenSSLUtils,
+  ACBrPIXSchemasCobsConsultadas, ACBrPIXUtil;
 
 { TACBrPSPMercadoPago }
 
@@ -473,6 +475,14 @@ begin
     aBody := CobSolicitadaParaPaymentRequest
   else if (aEndPoint = cEndPointCob) and (aMethod = ChttpMethodPATCH) then
     aBody := CobRevisadaParaPaymentUpdate;
+end;
+
+procedure TACBrPSPMercadoPago.ConfigurarHeaders(const Method, AURL: String);
+begin
+  inherited ConfigurarHeaders(Method, AURL);
+
+  if (Method = ChttpMethodPOST) and (Pos(cMercadoPagoEndPointPayment, AURL) > 0) then
+    Http.Headers.Add(cMercadoPagoXIdempotencyKey + FormatarGUID(CriarTxId));
 end;
 
 procedure TACBrPSPMercadoPago.ConfigurarPathParameters(const aMethod, aEndPoint: string);

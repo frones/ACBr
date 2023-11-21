@@ -44,6 +44,8 @@ Símbolo : Significado
 
 21/11/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Chopinzinho/PR mudou a URL, provedor continua o mesmo.
+  Por: Junior GPuava
 [*] A cidade de Juazeiro/BA mudou para a versão 2.02, provedor ainda é o WebISS.
   Por: DeveloperATS
 

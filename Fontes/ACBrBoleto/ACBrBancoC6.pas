@@ -39,7 +39,7 @@ unit ACBrBancoC6;
 interface
 
 uses
-  Classes, Contnrs, SysUtils, ACBrBoleto, ACBrBoletoConversao;
+  Classes, Contnrs, SysUtils, ACBrBoleto, ACBrBoletoConversao,TypInfo;
 
 type
 
@@ -47,7 +47,6 @@ type
 
   TACBrBancoC6 = class(TACBrBancoClass)
   private
-    function ConverterMultaPercentual(const ACBrTitulo: TACBrTitulo): Double;
     function ConverterTipoPagamento(const ATipoPagamento: TTipo_Pagamento): String;
 
   protected
@@ -119,18 +118,6 @@ begin
             LEmissao;
 end;
 
-function TACBrBancoC6.ConverterMultaPercentual(
-  const ACBrTitulo: TACBrTitulo): Double;
-begin
-  if ACBrTitulo.MultaValorFixo then
-      if (ACBrTitulo.ValorDocumento > 0) then
-        Result := (ACBrTitulo.PercentualMulta / ACBrTitulo.ValorDocumento) * 100
-      else
-        Result := 0
-    else
-      Result := ACBrTitulo.PercentualMulta;
-end;
-
 function TACBrBancoC6.ConverterTipoPagamento(
   const ATipoPagamento: TTipo_Pagamento): String;
 begin
@@ -167,19 +154,21 @@ begin
    fpModuloMultiplicadorInicial := 2;
    fpModuloMultiplicadorFinal   := 7;
    fpCodParametroMovimento      := '';
+   fpCodigosMoraAceitos         := '0';
 end;
 
 function TACBrBancoC6.MontarCampoNossoNumero (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
-   Result:= '0' + ACBrTitulo.Carteira + ACBrTitulo.NossoNumero + CalcularDigitoVerificador(ACBrTitulo);
+   //Result:= '0' + ACBrTitulo.Carteira + ACBrTitulo.NossoNumero + CalcularDigitoVerificador(ACBrTitulo);
+   Result:= ACBrTitulo.NossoNumero;
 end;
 
 function TACBrBancoC6.MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): string;
 begin
   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia
-            + '/'
-            + ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+            + ' / '
+            + IntToStr(StrToInt64Def(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,0));
 end;
 
 procedure TACBrBancoC6.GerarRegistroHeader400(NumeroRemessa: Integer;
@@ -218,7 +207,7 @@ end;
 
 procedure TACBrBancoC6.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  LPercMulta: Double;
+  LPercMulta : Double;
   LOcorrencia, LEspecie,
   LMensagemTodos, LMensagemCedente, LProtesto, LTipoSacado, LConta,
   LLinha,LDigitoNossoNumero : String;
@@ -227,10 +216,15 @@ var
   LPagador     : TACBrSacado;
   Index			  : Integer;
   LAceitarParcelasParcial : Boolean;
+  LBancoClass : TACBrBancoClass;
 begin
   LTitulo      := ACBrTitulo;
   LBeneficiario := LTitulo.ACBrBoleto.Cedente;
   LPagador      := LTitulo.Sacado;
+  LBancoClass   :=  LTitulo.ACBrBoleto.Banco.BancoClass;
+
+  if (LTitulo.ValorMoraJuros > 0) and (LTitulo.CodigoMoraJuros <> cjValorDia) then
+    raise Exception.Create('Não é permitido CodigoMoraJuros diferente de cjValorDia para este banco, o valor informado é ao dia R$, informado o enumerador : ' + GetEnumName(TypeInfo(TACBrCodigoJuros), Ord(LTitulo.CodigoMoraJuros)));
 
   LDigitoNossoNumero := CalcularDigitoVerificador(LTitulo);
 
@@ -247,7 +241,7 @@ begin
   LTipoSacado := DefineTipoSacado(LTitulo);
 
   { Converte valor em moeda para percentual, pois o arquivo só permite % }
-  LPercMulta := ConverterMultaPercentual(LTitulo);
+  LPercMulta := LBancoClass.CalcularPadraoMulta(LTitulo);
 
   {Código da Empresa}
   LConta   :=   PadLeft(LBeneficiario.CodigoCedente, 12, '0') ;
@@ -279,14 +273,14 @@ begin
            PadLeft(OnlyNumber(LBeneficiario.CNPJCPF), 14, '0')                                                           +  // 004 a 017 - CNPJ Empresa
            LConta                                                                                                        +  // 018 a 029 - Código da Empresa
            Space(8)                                                                                                      +  // 030 a 037 - Uso do Banco
-           PadRight(LTitulo.NumeroDocumento, 25)                                                                         +  // 038 a 062 - Uso da Empresa
+           PadRight(IfThen(LTitulo.SeuNumero = '',LTitulo.NumeroDocumento,LTitulo.SeuNumero), 25)                        +  // 038 a 062 - Uso da Empresa
            '0' + LTitulo.NossoNumero + LDigitoNossoNumero                                                                +  // 063 a 074 - Nosso Número Completo
            Space(8)                                                                                                      +  // 075 a 082 - Uso do Banco
            IfThen(StrToIntDef(LTitulo.Carteira ,0)= 20, IntToStrZero(fpNumero, 3), '000')                                +  // 083 a 085 - Código do Banco
            Space(21)                                                                                                     +  // 086 a 106 - Uso do Banco
            PadLeft(LTitulo.Carteira, 2, '0')                                                                             +  // 107 a 108 - Código da Carteira
            LOcorrencia                                                                                                   +  // 109 a 110 - Código Ocorrência Remessa
-           PadRight(LTitulo.SeuNumero, 10)                                                                               +  // 111 a 120 - Seu Número
+           PadRight(IfThen(LTitulo.NumeroDocumento = '',LTitulo.SeuNumero,LTitulo.NumeroDocumento), 10)                  +  // 111 a 120 - Seu Número
            FormatDateTime('ddmmyy', LTitulo.Vencimento)                                                                  +  // 121 a 126 - Data Vencimento
            IntToStrZero(Round(LTitulo.ValorDocumento * 100 ), 13)                                                        +  // 127 a 139 - Valo Titulo
            Space(8)                                                                                                      +  // 140 a 147 - Uso do Banco
@@ -294,7 +288,7 @@ begin
            'N'                                                                                                           +  // 150 a 150 - Aceite
            FormatDateTime('ddmmyy', LTitulo.DataDocumento)                                                               +  // 151 a 156 - Data Emissão Título
            LProtesto                                                                                                     +  // 157 a 160 - Intrução 1 e 2
-           IntToStrZero(Round(LTitulo.ValorMoraJuros * 100 ), 13)                                                        +  // 161 a 173 - Juros ao Dia
+           IntToStrZero(Round(LTitulo.ValorMoraJuros * 100), 13)                                                                            +  // 161 a 173 - Juros ao Dia
            IfThen(LTitulo.DataDesconto < EncodeDate(2000,01,01),
                   '000000',
                   FormatDateTime('ddmmyy', LTitulo.DataDesconto))                                                        +  // 174 a 179 - Data Desconto
@@ -916,11 +910,12 @@ begin
   if (StrToIntDef(copy(ARetorno.Strings[0], 77, 3), -1) <> Numero) then
     raise Exception.create(ACBrStr(LBoleto.NomeArqRetorno + 'não é um arquivo de retorno do ' + Nome));
 
-  LBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0], 95, 2)
-    + '/'
-    + Copy(ARetorno[0], 97, 2)
-    + '/'
-    + Copy(ARetorno[0], 99, 2), 0, 'DD/MM/YY');
+  if (StrToIntDef( Copy(ARetorno[0], 125, 6 ), 0) > 0) then
+    LBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0], 125, 2)
+      + '/'
+      + Copy(ARetorno[0], 127, 2)
+      + '/'
+      + Copy(ARetorno[0], 129, 2), 0, 'DD/MM/YY');
 
   if LBoleto.LeCedenteRetorno then
   begin
@@ -929,7 +924,7 @@ begin
     LBoleto.Cedente.CodigoCedente := Trim(Copy(ARetorno[1], 18, 20));
   end;
 
-  if LBoleto.Cedente.CodigoCedente <> Copy(ARetorno[1], 18, 20) then
+  if Trim(LBoleto.Cedente.CodigoCedente) <> Trim(Copy(ARetorno[1], 18, 20)) then
     raise Exception.create(ACBrStr(format('O Código de cedente do arquivo %s não é o mesmo do componente %s.',[Copy(ARetorno[1], 18, 20),LBoleto.Cedente.CodigoCedente])));
 
   case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of
@@ -1007,13 +1002,15 @@ begin
     LTitulo.ValorDesconto        := StrToFloatDef(Copy(LLinha, 241, 13), 0) / 100;
     LTitulo.ValorRecebido        := StrToFloatDef(Copy(LLinha, 254, 13), 0) / 100;
     LTitulo.ValorMoraJuros       := StrToFloatDef(Copy(LLinha, 267, 13), 0) / 100;
+    LTitulo.ValorOutrosCreditos  := StrToFloatDef(Copy(LLinha, 280, 13), 0) / 100;
 
-    if (StrToIntDef(Copy(LLinha, 386, 6), 0) <> 0) then
-      LTitulo.DataCredito := StringToDateTimeDef(Copy(LLinha, 386, 2)
+
+    if (StrToIntDef(Copy(LLinha, 296, 6), 0) <> 0) then
+      LTitulo.DataCredito := StringToDateTimeDef(Copy(LLinha, 296, 2)
         + '/'
-        + Copy(LLinha, 388, 2)
+        + Copy(LLinha, 298, 2)
         + '/'
-        + Copy(LLinha, 390, 2), 0, 'DD/MM/YY');
+        + Copy(LLinha, 290, 2), 0, 'DD/MM/YY');
   end;
 end;
 

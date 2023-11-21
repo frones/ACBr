@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/11/2023
+-- ACBrNFSeXDANFSeFR/ACBrNFSeXDANFSeRLRetrato --
+[*] Ajustes para imprimir a data e hora de emissão ou somente a data dependendo
+    do retorno do provedor.
+   Por: Everson Clei/Italo Giurizzato Junior
 -- Betha.Provider --
 [*] Ajustes para gerar na assinatura do lote o valor do URI para a versão 1 do 
     layout da ABRASF.

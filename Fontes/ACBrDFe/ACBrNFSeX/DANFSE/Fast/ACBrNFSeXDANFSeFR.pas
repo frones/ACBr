@@ -135,6 +135,7 @@ implementation
 
 uses
   StrUtils,
+  DateUtils,
   Math,
   ACBrUtil.Strings,
   ACBrDFeUtil,
@@ -1018,26 +1019,23 @@ begin
   else
     LCDS.FieldByName('NumeroNFSe').AsString := ANFSe.Numero;
 
-  if (Provedor in [ proGINFES, proBetha, proDSF, proISSNet ]) then
+  if HourOf(ANFSe.DataEmissao) <> 0 then
     LCDS.FieldByName('DataEmissao').AsString := FormatDateTimeBr(ANFSe.DataEmissao)
   else
-  begin
-    if ANFSe.Numero <> '' then
-      LCDS.FieldByName('DataEmissao').AsString := FormatDateBr(ANFSe.DataEmissao)
-    else
-    begin
-      if frxReport.findcomponent('Memo12') <> nil then
-        TfrxMemoView(frxReport.findcomponent('Memo12')).Text := 'Data do RPS';
+    LCDS.FieldByName('DataEmissao').AsString := FormatDateBr(ANFSe.DataEmissao);
 
-      LCDS.FieldByName('DataEmissao').AsString := FormatDateBr(ANFSe.DataEmissaoRps);
-    end;
+  if ANFSe.Numero = '' then
+  begin
+    if frxReport.findcomponent('Memo12') <> nil then
+      TfrxMemoView(frxReport.findcomponent('Memo12')).Text := 'Data do RPS';
+
+    LCDS.FieldByName('DataEmissao').AsString := FormatDateBr(ANFSe.DataEmissaoRps);
   end;
 
   LCDS.FieldByName('CodigoVerificacao').AsString := ANFSe.CodigoVerificacao;
   LCDS.FieldByName('LinkNFSe').AsString          := ANFSe.Link;
 
   LCDS.Post;
-
 end;
 
 procedure TACBrNFSeXDANFSeFR.CarregaItensServico(ANFSe: TNFSe);

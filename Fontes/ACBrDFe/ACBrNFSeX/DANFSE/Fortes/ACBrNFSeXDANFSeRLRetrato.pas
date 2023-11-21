@@ -379,7 +379,12 @@ begin
   With fpNFSe do
   begin
     rllNumNF0.Caption := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
-    rllEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
+
+    if HourOf(DataEmissao) <> 0 then
+      rllEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn:ss', DataEmissao)
+    else
+      rllEmissao.Caption := FormatDateTime('dd/mm/yyyy', DataEmissao);
+
     rllCodigoChave.Caption := ACBrStr('Código de Verificação:');
 
     if fpDANFSe.Provedor = proPadraoNacional then

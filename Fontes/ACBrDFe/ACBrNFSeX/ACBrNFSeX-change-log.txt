@@ -45,6 +45,10 @@ Símbolo : Significado
 
 22/11/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Oriximina/PA trocou de versão e de URL, o provedor continua o mesmo.
+  Por: Dercide Alvarez
+[*] A cidade de Redencao/PA trocou de provedor, agora é MegaSoft
+  Por: Joemil
 [*] Incluido o parâmetro NaoDividir100 para a cidade de Amparo/SP
   Por: Dercide Alvarez
 [*] Alterado de https para http das URLs da cidade de Chopinzinho/PR

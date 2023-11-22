@@ -74,7 +74,6 @@ type
      BoletoCarne: TRLReport;
      imgBarrasCarne: TRLBarcode;
     ImgLoja: TRLImage;
-    lblPaguePix: TRLLabel;
     lblLocalPagto: TRLMemo;
     txtEnderecoPIX: TRLLabel;
     lblValorPix: TRLLabel;
@@ -245,7 +244,6 @@ type
     RLLabel91: TRLLabel;
     RLLabel92: TRLLabel;
     RLLabel96: TRLLabel;
-    RLLabel98: TRLLabel;
     txtLocal: TRLMemo;
     txtLocalPagamento3: TRLMemo;
     txtNomeSacado: TRLLabel;
@@ -388,12 +386,9 @@ type
     txtMoraMulta2: TRLLabel;
     txtValorCobrado2: TRLLabel;
     txtNomePagador2: TRLLabel;
-    txtEndPagador2: TRLLabel;
     txtCpfCnpjPagador2: TRLLabel;
-    txtCodigoBaixa2: TRLLabel;
     txtEndSacadorAval2: TRLLabel;
     txtReferencia2: TRLLabel;
-    txtSwHouse: TRLAngleLabel;
     RLBand2: TRLBand;
     imgBanco3: TRLImage;
     txtNumeroBanco3: TRLLabel;
@@ -418,7 +413,6 @@ type
     txtMoraMulta3: TRLLabel;
     txtValorCobrado3: TRLLabel;
     txtNomePagador3: TRLLabel;
-    txtEndPagador3: TRLLabel;
     txtNomeSacadorAval3: TRLLabel;
     txtCpfCnpjPagador3: TRLLabel;
     txtCodigoBaixa3: TRLLabel;
@@ -548,7 +542,6 @@ type
     RLLabel179: TRLLabel;
     RLLabel180: TRLLabel;
     txtReferenciaRecTop1: TRLLabel;
-    txtEndCedenteRecTop1: TRLLabel;
     txtSacadorAvalistaRecTop1: TRLLabel;
     mIntrucoesRecTop1: TRLMemo;
     imgBarrasRecTop1: TRLBarcode;
@@ -631,7 +624,6 @@ type
     rlmCedente5: TRLMemo;
     rlmPagador5: TRLMemo;
     LayoutFaturaDetal: TRLReport;
-    txtSwHouseDet: TRLAngleLabel;
     RLBandReciboPagDetal: TRLBand;
     txtNomeCedenteTopDet: TRLLabel;
     RLDraw128: TRLDraw;
@@ -744,7 +736,6 @@ type
     imgCodigoBarraDet: TRLBarcode;
     RLLabel243: TRLLabel;
     txtOutrosAcrescimosDet: TRLLabel;
-    txtSwHouseCentDet: TRLAngleLabel;
     RLBand6: TRLBand;
     RLDraw187: TRLDraw;
     RLDraw185: TRLDraw;
@@ -982,9 +973,7 @@ type
     txtNomeCedenteTopServicos: TRLLabel;
     RLDraw236: TRLDraw;
     imgLogoEmpresaServicos: TRLImage;
-    txtEnderecoSacadoTopServicos: TRLLabel;
     RLDraw237: TRLDraw;
-    txtEnderecoCedenteTopServicos: TRLLabel;
     RLDraw238: TRLDraw;
     txtNomeSacadoTopServicos: TRLLabel;
     RLLabel344: TRLLabel;
@@ -1121,8 +1110,6 @@ type
     imgCodigoBarraServicos: TRLBarcode;
     RLLabel403: TRLLabel;
     txtOutrosAcrescimosServicos: TRLLabel;
-    txtSwHouseTopServicos: TRLAngleLabel;
-    txtSwHouseServicos: TRLAngleLabel;
     LayoutCarneA5: TRLReport;
     RLBandCarneA5Topo: TRLBand;
     RLDraw276: TRLDraw;
@@ -1237,7 +1224,6 @@ type
     RLLabel356: TRLLabel;
     txtEnderecoPagador2CA5: TRLMemo;
     txtNossNum1CA5: TRLLabel;
-    txtCA5Sw: TRLAngleLabel;
     RLDraw279: TRLDraw;
     RLDraw295: TRLDraw;
     RLDraw297: TRLDraw;
@@ -1259,6 +1245,20 @@ type
     imgQrCodePixServicos: TRLImage;
     mmNomeSacadorAval4: TRLMemo;
     mmEndSacadoCarne: TRLMemo;
+    txtSwHouseReciboTopo: TRLLabel;
+    txtSwHouseCarne: TRLLabel;
+    txtSwHouseFaturaDetail: TRLLabel;
+    txtSwHousePadrao: TRLLabel;
+    txtEndPagador2: TRLMemo;
+    txtEndPagador3: TRLMemo;
+    txtEndCedenteRecTop1: TRLMemo;
+    lblPaguePix: TRLLabel;
+    txtSwHouseServicos: TRLAngleLabel;
+    txtEnderecoSacadoTopServicos: TRLMemo;
+    txtEnderecoCedenteTopServicos: TRLMemo;
+    txtCA5Sw: TRLAngleLabel;
+    txtCodigoBaixa2: TRLLabel;
+    RLLabel98: TRLLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -1308,6 +1308,7 @@ type
     procedure LayoutCarneA5BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure LayoutCarneA5DataCount(Sender: TObject; var DataCount: Integer);
     procedure LayoutCarneA5DataRecord(Sender: TObject; RecNo, CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
+     procedure memoEndCedenteCarneAfterPrint(Sender: TObject);
     procedure RLBandCarneA5TopoBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
 
@@ -1533,7 +1534,8 @@ procedure TACBrBoletoFCFortesFr.BoletoCarneBeforePrint(Sender: TObject;
 begin
 
    fIndice := 0;
-   txtSwHouse.Caption := BoletoFC.SoftwareHouse ;
+   txtSwHouseReciboTopo.Caption := ACBrStr(BoletoFC.SoftwareHouse) ;
+   txtSwHouseCarne.Caption := ACBrStr(BoletoFC.SoftwareHouse) ;
    AjustarMargem(BoletoCarne,BoletoFC);
 
 end;
@@ -1571,7 +1573,7 @@ procedure TACBrBoletoFCFortesFr.LayoutBoletoBeforePrint(Sender: TObject;
    var PrintIt: boolean);
 begin
    fIndice := 0 ;
-   txtSwHouse.Caption := BoletoFC.SoftwareHouse ;
+   txtSwHousePadrao.Caption := ACBrStr(BoletoFC.SoftwareHouse) ;
    AjustarMargem(LayoutBoleto,BoletoFC);
 end;
 
@@ -1626,8 +1628,8 @@ procedure TACBrBoletoFCFortesFr.LayoutFaturaDetalBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   fIndice := 0 ;
-  txtSwHouseCentDet.Caption := BoletoFC.SoftwareHouse ;
-  txtSwHouseDet.Caption := BoletoFC.SoftwareHouse ;
+  txtSwHouseFaturaDetail.Caption := ACBrStr(BoletoFC.SoftwareHouse) ;
+  //txtSwHouseDet.Caption := BoletoFC.SoftwareHouse ;
   AjustarMargem(LayoutFaturaDetal,BoletoFC);
 end;
 
@@ -1772,7 +1774,7 @@ begin
       with Titulo.Sacado do
       begin
         txtNomePagador2.Caption       := NomeSacado;
-        txtEndPagador2.Caption        := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
+        txtEndPagador2.Lines.Text     := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
                                          Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
         txtCpfCnpjPagador2.Caption    := FormatarCNPJouCPF(CNPJCPF);
       end;
@@ -1844,7 +1846,7 @@ begin
      txtEspecieDoc3.Caption          := txtEspecieDoc2.Caption;
      txtValorDocumento3.Caption      := txtValorDocumento2.Caption;
      txtNomePagador3.Caption         := txtNomePagador2.Caption;
-     txtEndPagador3.Caption          := txtEndPagador2.Caption;
+     txtEndPagador3.lines.Text       := txtEndPagador2.Lines.Text;
      txtCpfCnpjPagador3.Caption      := txtCpfCnpjPagador2.Caption;
      txtNomeSacadorAval3.Caption     := txtNomeSacadorAval2.Caption;
      txtEndSacadorAval3.Caption      := txtEndSacadorAval2.Caption;
@@ -2043,13 +2045,14 @@ begin
       begin
          EnderecoCed := Logradouro+' '+NumeroRes+' '+Complemento+' '+
                         Bairro+' '+Cidade+' '+ UF+' '+CEP;
-
+         {
          if(length(EnderecoCed) > 73) then
              txtEndCedenteRecTop1.Font.Size := 8
          else
              txtEndCedenteRecTop1.Font.Size := 9;
-
-         txtEndCedenteRecTop1.Caption := EnderecoCed;
+         }
+         txtEndCedenteRecTop1.Font.Size := 7;
+         txtEndCedenteRecTop1.Lines.Text   := EnderecoCed;
       end;
 
       txtCodigoCedenteRecTop.Caption  := CodCedente;
@@ -2259,9 +2262,10 @@ begin
 
         if NomeAvalista <> '' then
         begin
-          lTertxtNomeSacado.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + FormatarCNPJouCPF(CNPJCPF)+
-                                          Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
-                                          Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
+          lTertxtNomeSacado.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + FormatarCNPJouCPF(CNPJCPF);
+//                                         +
+//                                         Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
+//                                         Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
         end
         else
         begin
@@ -2608,12 +2612,12 @@ begin
        EnderecoCed := Logradouro+' '+NumeroRes+' '+Complemento+'  '+
                       'CEP: '+CEP+',  '+Bairro+', '+Cidade+' '+ UF;
 
-       if(length(EnderecoCed) > 73) then
-           txtEnderecoCedenteTopServicos.Font.Size := 8
-       else
-           txtEnderecoCedenteTopServicos.Font.Size := 9;
+//       if(length(EnderecoCed) > 73) then
+//           txtEnderecoCedenteTopServicos.Font.Size := 8
+//       else
+//           txtEnderecoCedenteTopServicos.Font.Size := 9;
 
-       txtEnderecoCedenteTopServicos.Caption  := EnderecoCed;
+       txtEnderecoCedenteTopServicos.lines.Text := EnderecoCed;
     end;
     txtCodigoCedenteTopServicos.Caption   := CodCedente;
     txtDataDocumentoTopServicos.Caption   := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
@@ -2630,8 +2634,8 @@ begin
     txtNomeSacadoTopServicos.Caption      := Titulo.Sacado.NomeSacado + '  ' +
                                           IfThen(Titulo.Sacado.Pessoa = pJuridica, 'CNPJ: ', 'CPF: ')+ FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
 
-    txtEnderecoSacadoTopServicos.Caption  := Titulo.Sacado.Logradouro + ' ' + Titulo.Sacado.Numero + Titulo.Sacado.Complemento +
-                                          '  CEP: '+Titulo.Sacado.CEP + ', ' + Titulo.Sacado.Bairro + ', ' + Titulo.Sacado.Cidade + ' ' + Titulo.Sacado.UF;
+    txtEnderecoSacadoTopServicos.lines.Text := Titulo.Sacado.Logradouro + ' ' + Titulo.Sacado.Numero + Titulo.Sacado.Complemento +
+                                               '  CEP: '+Titulo.Sacado.CEP + ', ' + Titulo.Sacado.Bairro + ', ' + Titulo.Sacado.Cidade + ' ' + Titulo.Sacado.UF;
 
     txtDataDocumentoTopServicos2.Caption    := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
     txtNumeroDocumentoTopServicos2.Caption  := Titulo.NumeroDocumento;
@@ -2826,6 +2830,11 @@ begin
     LeftMargin   := AConfig.MargemEsquerda;
     RightMargin  := AConfig.MargemDireita;
   end;
+end;
+
+procedure TACBrBoletoFCFortesFr.memoEndCedenteCarneAfterPrint(Sender: TObject);
+begin
+
 end;
 
 {$ifdef FPC}

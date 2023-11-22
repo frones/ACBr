@@ -63,7 +63,8 @@ uses
 { TArquivoW_Bradesco }
 
 procedure TArquivoW_Bradesco.GeraRegistro0;
-var LIdentificacaoRemessa : String;
+var
+  LIdentificacaoRemessa: string;
 begin
   FpLinha := '';
   FQtdeRegistros := 1;
@@ -92,7 +93,10 @@ begin
   GravarCampo('089', 3, tcStr);
   GravarCampo(PagFor.Registro0.Arquivo.Densidade, 5, tcInt);
 
-  if (PagFor.Lote.Count > 0) and (PagFor.Lote[0].Registro1.Servico.FormaLancamento in [flPIXTransferencia, flPIXQRCode]) then
+  LIdentificacaoRemessa := '';
+
+  if (PagFor.Lote.Count > 0) and
+     (PagFor.Lote[0].Registro1.Servico.FormaLancamento in [flPIXTransferencia, flPIXQRCode]) then
     LIdentificacaoRemessa := 'Pix';
 
   GravarCampo(LIdentificacaoRemessa, 3, tcStr);

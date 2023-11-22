@@ -37,7 +37,7 @@ unit PagFor.Itau.LerTxtRetorno;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrPagForConversao,
   CNAB240.LerTxtRetorno, ACBrPagForClass;
 
 type
@@ -52,6 +52,8 @@ type
     procedure LerSegmentoB(mSegmentoBList: TSegmentoBList; nLinha: Integer); override;
 
     procedure LerSegmentoC(mSegmentoCList: TSegmentoCList; nLinha: Integer); override;
+
+    procedure LerSegmentoJ(nLinha: Integer; var LeuRegistroJ: boolean); override;
 
     procedure LerSegmentoN1(nLinha: Integer); override;
 
@@ -68,13 +70,14 @@ type
     procedure LerSegmentoN9(nLinha: Integer); override;
 
     procedure LerSegmentoO(nLinha: Integer); override;
+
+    function GetOcorrencia(aOcorrencia: TOcorrencia): String; override;
   end;
 
 implementation
 
 uses
-  ACBrUtil.DateTime,
-  ACBrPagForConversao;
+  ACBrUtil.DateTime;
 
 { TArquivoR_Itau }
 
@@ -182,7 +185,7 @@ begin
   //    Moeda.Tipo := StrToTpMoeda(mOk, LerCampo(Linha, 102, 3, tcStr));
   //    Moeda.Qtde := LerCampo(Linha, 105, 15, tcDe5);
       ValorPagamento := LerCampo(Linha, 120, 15, tcDe2);
-      NossoNumero := LerCampo(Linha, 135, 20, tcStr);
+      NossoNumero := LerCampo(Linha, 135, 15, tcStr);
       DataReal := LerCampo(Linha, 155, 8, tcDat);
       ValorReal := LerCampo(Linha, 163, 15, tcDe2);
     end;
@@ -305,6 +308,79 @@ begin
     Acrescimos := LerCampo(Linha, 196, 15, tcDe2);
 
     NumeroFaturaDocumento := LerCampo(Linha, 211, 20, tcStr);
+  end;
+end;
+
+procedure TArquivoR_Itau.LerSegmentoJ(nLinha: Integer; var LeuRegistroJ: boolean);
+var
+  mOk: Boolean;
+  RegSeg, RegOpc: string;
+begin
+  Linha := ArquivoTXT.Strings[nLinha];
+  RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
+  RegOpc := LerCampo(Linha, 18, 2, tcStr);
+
+  if (RegSeg <> '3J') and (RegSeg <> '3B') and (RegSeg <> '3C') and (RegSeg <> '3Z') then
+    Exit;
+
+  if (RegSeg = '3J') then
+    LeuRegistroJ := True;
+
+  if (RegOpc <> '52') and (RegOpc <> '99') and
+     (RegSeg <> '3B') and (RegSeg <> '3C') and (RegSeg <> '3Z') then
+  begin
+    PagFor.Lote.Last.SegmentoJ.New;
+
+    with PagFor.Lote.Last.SegmentoJ.Last do
+    begin
+      CodMovimento := StrToInMovimento(mOk, LerCampo(Linha, 16, 2, tcStr));
+      CodigoBarras := LerCampo(Linha, 18, 44, tcStr);
+      NomeCedente := LerCampo(Linha, 62, 30, tcStr);
+      DataVencimento := LerCampo(Linha, 92, 8, tcDat);
+
+      ValorTitulo := LerCampo(Linha, 100, 15, tcDe2);
+      Desconto := LerCampo(Linha, 115, 15, tcDe2);
+      Acrescimo := LerCampo(Linha, 130, 15, tcDe2);
+      DataPagamento := LerCampo(Linha, 145, 8, tcDat);
+      ValorPagamento := LerCampo(Linha, 153, 15, tcDe2);
+      QtdeMoeda := LerCampo(Linha, 168, 15, tcDe5);
+      ReferenciaSacado := LerCampo(Linha, 183, 20, tcStr);
+      NossoNumero := LerCampo(Linha, 216, 15, tcStr);
+      CodOcorrencia := LerCampo(Linha, 231, 10, tcStr);
+
+      GerarAvisos(CodOcorrencia, 'J', '', ReferenciaSacado);
+    end;
+  end;
+
+  // Segmentos B, C, Z, etc. também existem para outros tipos de segmento que
+  // não sejam o J, portanto, só deve processar nessa rotina se o lote que está
+  // sendo processado é realmente de tipos J.
+  // O Itau, por exemplo, retorna arquivo com segmentos A contendo segmentos B
+  // quando é pagamento de PIX e nesse caso, não pode processar o segmento B
+  // nessa rotina pois não se refere a segmentos J.
+
+  if not LeuRegistroJ then
+    exit;
+
+  Linha := ArquivoTXT.Strings[nLinha+1];
+  RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
+  RegOpc := LerCampo(Linha, 18, 2, tcStr);
+
+  while (Pos(RegSeg, '3B/3C/3D/3E/3F/3Z/') > 0) or
+        (RegSeg = '3J') and (Pos(RegOpc, '52/99/') > 0) do
+  begin
+    Inc(nLinha); //próxima linha do txt a ser lida
+
+    {opcionais segmento J}
+    LerSegmentoJ52(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ52, nLinha);
+    LerSegmentoJ99(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ99, nLinha);
+//    LerSegmentoB(PagFor.Lote.Last.SegmentoJ.Last.SegmentoB, I);
+//    LerSegmentoC(PagFor.Lote.Last.SegmentoJ.Last.SegmentoC, I);
+    LerSegmentoZ(PagFor.Lote.Last.SegmentoJ.Last.SegmentoZ, nLinha);
+
+    Linha := ArquivoTXT.Strings[nLinha+1];
+    RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
+    RegOpc := LerCampo(Linha, 18, 2, tcStr);
   end;
 end;
 
@@ -794,6 +870,127 @@ begin
 
     Linha := ArquivoTXT.Strings[nLinha+1];
     RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);
+  end;
+end;
+
+function TArquivoR_Itau.GetOcorrencia(aOcorrencia: TOcorrencia): String;
+begin
+  case aOcorrencia of
+    to00: Result := 'PAGAMENTO EFETUADO';
+    toAE: Result := 'DATA DE PAGAMENTO ALTERADA';
+    toAG: Result := 'NÚMERO DO LOTE INVÁLIDO';
+    toAH: Result := 'NÚMERO SEQUENCIAL DO REGISTRO NO LOTE INVÁLIDO';
+    toAI: Result := 'PRODUTO DEMONSTRATIVO DE PAGAMENTO NÃO CONTRATADO';
+    toAJ: Result := 'TIPO DE MOVIMENTO INVÁLIDO';
+    toAL: Result := 'CÓDIGO DO BANCO FAVORECIDO INVÁLIDO';
+    toAM: Result := 'AGÊNCIA DO FAVORECIDO INVÁLIDA';
+    toAN: Result := 'CONTA CORRENTE DO FAVORECIDO INVÁLIDA';
+    toAO: Result := 'NOME DO FAVORECIDO INVÁLIDO';
+    toAP: Result := 'DATA DE PAGAMENTO / DATA DE VALIDADE / HORA DE LANÇAMENTO / ARRECADAÇÃO / APURAÇÃO INVÁLIDA';
+    toAQ: Result := 'QUANTIDADE DE REGISTROS MAIOR QUE 999999';
+    toAR: Result := 'VALOR ARRECADADO / LANÇAMENTO INVÁLIDO';
+    toBC: Result := 'NOSSO NÚMERO INVÁLIDO';
+    toBD: Result := 'PAGAMENTO AGENDADO';
+    toBE: Result := 'PAGAMENTO AGENDADO COM FORMA ALTERADA PARA OP';
+    toBI: Result := 'CNPJ / CPF DO FAVORECIDO NO SEGMENTO J-52 ou B INVÁLIDO / DOCUMENTO FAVORECIDO INVÁLIDO PIX';
+    toBL: Result := 'VALOR DA PARCELA INVÁLIDO';
+    toCD: Result := 'CNPJ / CPF INFORMADO DIVERGENTE DO CADASTRADO';
+    toCE: Result := 'PAGAMENTO CANCELADO';
+    toCF: Result := 'VALOR DO DOCUMENTO INVÁLIDO / VALOR DIVERGENTE DO QR CODE';
+    toCG: Result := 'VALOR DO ABATIMENTO INVÁLIDO';
+    toCH: Result := 'VALOR DO DESCONTO INVÁLIDO';
+    toCI: Result := 'CNPJ / CPF / IDENTIFICADOR / INSCRIÇÃO ESTADUAL / INSCRIÇÃO NO CAD / ICMS INVÁLIDO';
+    toCJ: Result := 'VALOR DA MULTA INVÁLIDO';
+    toCK: Result := 'TIPO DE INSCRIÇÃO INVÁLIDA';
+    toCL: Result := 'VALOR DO INSS INVÁLIDO';
+    toCM: Result := 'VALOR DO COFINS INVÁLIDO';
+    toCN: Result := 'CONTA NÃO CADASTRADA';
+    toCO: Result := 'VALOR DE OUTRAS ENTIDADES INVÁLIDO';
+    toCP: Result := 'CONFIRMAÇÃO DE OP CUMPRIDA';
+    toCQ: Result := 'SOMA DAS FATURAS DIFERE DO PAGAMENTO';
+    toCR: Result := 'VALOR DO CSLL INVÁLIDO';
+    toCS: Result := 'DATA DE VENCIMENTO DA FATURA INVÁLIDA';
+    toDA: Result := 'NÚMERO DE DEPEND. SALÁRIO FAMILIA INVALIDO';
+    toDB: Result := 'NÚMERO DE HORAS SEMANAIS INVÁLIDO';
+    toDC: Result := 'SALÁRIO DE CONTRIBUIÇÃO INSS INVÁLIDO';
+    toDD: Result := 'SALÁRIO DE CONTRIBUIÇÃO FGTS INVÁLIDO';
+    toDE: Result := 'VALOR TOTAL DOS PROVENTOS INVÁLIDO';
+    toDF: Result := 'VALOR TOTAL DOS DESCONTOS INVÁLIDO';
+    toDG: Result := 'VALOR LÍQUIDO NÃO NUMÉRICO';
+    toDH: Result := 'VALOR LIQ. INFORMADO DIFERE DO CALCULADO';
+    toDI: Result := 'VALOR DO SALÁRIO-BASE INVÁLIDO';
+    toDJ: Result := 'BASE DE CÁLCULO IRRF INVÁLIDA';
+    toDK: Result := 'BASE DE CÁLCULO FGTS INVÁLIDA';
+    toDL: Result := 'FORMA DE PAGAMENTO INCOMPATÍVEL COM HOLERITE';
+    toDM: Result := 'E-MAIL DO FAVORECIDO INVÁLIDO';
+    toDV: Result := 'DOC / TED DEVOLVIDO PELO BANCO FAVORECIDO';
+    toD0: Result := 'FINALIDADE DO HOLERITE INVÁLIDA';
+    toD1: Result := 'MÊS DE COMPETENCIA DO HOLERITE INVÁLIDA';
+    toD2: Result := 'DIA DA COMPETENCIA DO HOLETITE INVÁLIDA';
+    toD3: Result := 'CENTRO DE CUSTO INVÁLIDO';
+    toD4: Result := 'CAMPO NUMÉRICO DA FUNCIONAL INVÁLIDO';
+    toD5: Result := 'DATA INÍCIO DE FÉRIAS NÃO NUMÉRICA';
+    toD6: Result := 'DATA INÍCIO DE FÉRIAS INCONSISTENTE';
+    toD7: Result := 'DATA FIM DE FÉRIAS NÃO NUMÉRICO';
+    toD8: Result := 'DATA FIM DE FÉRIAS INCONSISTENTE';
+    toD9: Result := 'NÚMERO DE DEPENDENTES IR INVÁLIDO';
+    toEM: Result := 'CONFIRMAÇÃO DE OP EMITIDA';
+    toEX: Result := 'DEVOLUÇÃO DE OP NÃO SACADA PELO FAVORECIDO';
+    toE0: Result := 'TIPO DE MOVIMENTO HOLERITE INVÁLIDO';
+    toE1: Result := 'VALOR 01 DO HOLERITE / INFORME INVÁLIDO';
+    toE2: Result := 'VALOR 02 DO HOLERITE / INFORME INVÁLIDO';
+    toE3: Result := 'VALOR 03 DO HOLERITE / INFORME INVÁLIDO';
+    toE4: Result := 'VALOR 04 DO HOLERITE / INFORME INVÁLIDO';
+    toFC: Result := 'PAGAMENTO EFETUADO ATRAVÉS DE FINANCIAMENTO COMPROR';
+    toFD: Result := 'PAGAMENTO EFETUADO ATRAVÉS DE FINANCIAMENTO DESCOMPROR';
+    toHA: Result := 'ERRO NO LOTE';
+    toHM: Result := 'ERRO NO REGISTRO HEADER DE ARQUIVO';
+    toIB: Result := 'VALOR DO DOCUMENTO INVÁLIDO';
+    toIC: Result := 'VALOR DO ABATIMENTO INVÁLIDO';
+    toID: Result := 'VALOR DO DESCONTO INVÁLIDO';
+    toIE: Result := 'VALOR DA MORA INVÁLIDO';
+    toIF: Result := 'VALOR DA MULTA INVÁLIDO';
+    toIG: Result := 'VALOR DA DEDUÇÃO INVÁLIDO';
+    toIH: Result := 'VALOR DO ACRÉSCIMO INVÁLIDO';
+    toII: Result := 'DATA DE VENCIMENTO INVÁLIDA / QR CODE EXPIRADO';
+    toIJ: Result := 'COMPETÊNCIA / PERÍODO REFERÊNCIA / PARCELA INVÁLIDA';
+    toIK: Result := 'TRIBUTO NÃO LIQUIDÁVEL VIA SISPAG OU NÃO CONVENIADO COM ITAÚ';
+    toIL: Result := 'CÓDIGO DE PAGAMENTO / EMPRESA /RECEITA INVÁLIDO';
+    toIM: Result := 'TIPO X FORMA NÃO COMPATÍVEL';
+    toIN: Result := 'BANCO/AGÊNCIA NÃO CADASTRADOS';
+    toIO: Result := 'DAC / VALOR / COMPETÊNCIA / IDENTIFICADOR DO LACRE INVÁLIDO / IDENTIFICAÇÃO DO QR CODE INVÁLIDO';
+    toIP: Result := 'DAC DO CÓDIGO DE BARRAS INVÁLIDO / ERRO NA VALIDAÇÃO DO QR CODE';
+    toIQ: Result := 'DÍVIDA ATIVA OU NÚMERO DE ETIQUETA INVÁLIDO';
+    toIR: Result := 'PAGAMENTO ALTERADO';
+    toIS: Result := 'CONCESSIONÁRIA NÃO CONVENIADA COM ITAÚ';
+    toIT: Result := 'VALOR DO TRIBUTO INVÁLIDO';
+    toIU: Result := 'VALOR DA RECEITA BRUTA ACUMULADA INVÁLIDO';
+    toIV: Result := 'NÚMERO DO DOCUMENTO ORIGEM / REFERÊNCIA INVÁLIDO';
+    toIX: Result := 'CÓDIGO DO PRODUTO INVÁLIDO';
+    toLA: Result := 'DATA DE PAGAMENTO DE UM LOTE ALTERADA';
+    toLC: Result := 'LOTE DE PAGAMENTOS CANCELADO';
+    toNA: Result := 'PAGAMENTO CANCELADO POR FALTA DE AUTORIZAÇÃO';
+    toNB: Result := 'IDENTIFICAÇÃO DO TRIBUTO INVÁLIDA';
+    toNC: Result := 'EXERCÍCIO (ANO BASE) INVÁLIDO';
+    toND: Result := 'CÓDIGO RENAVAM NÃO ENCONTRADO/INVÁLIDO';
+    toNE: Result := 'UF INVÁLIDA';
+    toNF: Result := 'CÓDIGO DO MUNICÍPIO INVÁLIDO';
+    toNG: Result := 'PLACA INVÁLIDA';
+    toNH: Result := 'OPÇÃO/PARCELA DE PAGAMENTO INVÁLIDA';
+    toNI: Result := 'TRIBUTO JÁ FOI PAGO OU ESTÁ VENCIDO';
+    toNR: Result := 'OPERAÇÃO NÃO REALIZADA';
+    toPD: Result := 'AQUISIÇÃO CONFIRMADA (EQUIVALE A OCORRÊNCIA 02 NO LAYOUT DE RISCO SACADO)';
+    toRJ: Result := 'REGISTRO REJEITADO – CONTA EM PROCESSO DE ABERTURA OU BLOQUEADA';
+    toRS: Result := 'PAGAMENTO DISPONÍVEL PARA ANTECIPAÇÃO NO RISCO SACADO – MODALIDADE RISCO SACADO PÓS AUTORIZADO';
+    toSS: Result := 'PAGAMENTO CANCELADO POR INSUFICIÊNCIA DE SALDO / LIMITE DIÁRIO DE PAGTO EXCEDIDO';
+    toTA: Result := 'LOTE NÃO ACEITO - TOTAIS DO LOTE COM DIFERENÇA';
+    toTI: Result := 'TITULARIDADE INVÁLIDA';
+    toX1: Result := 'FORMA INCOMPATÍVEL COM LAYOUT 010';
+    toX2: Result := 'NÚMERO DA NOTA FISCAL INVÁLIDO';
+    toX3: Result := 'IDENTIFICADOR DE NF/CNPJ INVÁLIDO';
+    toX4: Result := 'FORMA 32 INVÁLIDA';
+  else
+    Result := '';
   end;
 end;
 

@@ -41,7 +41,16 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+
 22/11/2023
+--- PagFor.Itau.LerTxtRemessa/ACBrPagForConversao ---
+[*] TK-4751 Reescrito o GetOcorrencia por conter diferenças do padrão CNAB.
+    e incluido novos valores de ocorrencias no tipo: TOcorrencia.
+   Por: Alex Klehm
+--- PagFor.Itau.LerTxtRemessa ---
+[*] TK-4751 Reescrito o LerSegmentoJ por conter diferenças do padrão CNAB.
+   Por: Fabricio Furtado
 --- PagFor.Bradesco.GravarTxtRemessa ---
 [*]TK-4764 Ajuste na posição 172/174 Identificação Remessa Pix 
     Por: Victor Hugo Gonzales - Pandaaa

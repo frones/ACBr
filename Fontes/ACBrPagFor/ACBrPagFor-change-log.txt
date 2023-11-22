@@ -41,6 +41,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+22/11/2023
+--- PagFor.Bradesco.GravarTxtRemessa ---
+[*]TK-4764 Ajuste na posição 172/174 Identificação Remessa Pix 
+    Por: Victor Hugo Gonzales - Pandaaa
 
 19/09/2023
 -- Diversos --

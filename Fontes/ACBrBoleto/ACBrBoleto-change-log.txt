@@ -49,6 +49,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2023
+[-]TK-4730 CNAB240 Alteração sem juros não enviar ocorrencia 12, enviar 06.
+  por Victor H Gonzales - Pandaaa
+
+--- ACBrBoletoRet_Sicredi_APIECOMM ---
+[*]TK-4752 Ajuste no valorLiquidado no retorno do boleto liquidado.
+https://www.projetoacbr.com.br/forum/topic/75201-boleto-sicredi-apiecomm-valor-liquidado-incorreto-no-retorno/
+    Por: C4Dev/ Verificado: Daniel Morais
+
 07/11/2023
 -- ACBrBoleto --
 [-] Correção para o nome do beneficiário no header de arquivo do CNAB400.

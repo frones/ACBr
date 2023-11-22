@@ -173,7 +173,7 @@ begin
                 if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
                    ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then
                 begin
-                  ARetornoWS.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
+                  ARetornoWS.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valorLiquidado'].AsNumber;
                   ARetornoWS.DadosRet.TituloRet.DataCredito                := DateSicrediToDateTime(AJSonObject.Values['dataliquidacao'].AsString);
                 end;
 

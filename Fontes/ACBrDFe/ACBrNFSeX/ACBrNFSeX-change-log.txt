@@ -42,6 +42,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+22/11/2023
+-- ACBrNFSeXServicos --
+[*] Incluido o parâmetro NaoDividir100 para a cidade de Amparo/SP
+  Por: Dercide Alvarez
+[*] Alterado de https para http das URLs da cidade de Chopinzinho/PR
+  Por: Italo Giurizzato Junior
+[*] Alterado de https para http das URLs da cidade de Chopinzinho/PR
+  Por: Italo Giurizzato Junior
+[+] Incluida a cidade de Sobradinho/RS, provedor: IPM.
+  Por: Rodrigo Reis Mattos
+[*] Para a cidade de Nova Santa Rita/RS foi incluida o parâmetro Versao e a URL 
+    de Homologação
+  Por: Italo Giurizzato Junior
+
 21/11/2023
 -- ACBrNFSeXDANFSeFR/ACBrNFSeXDANFSeRLRetrato --
 [*] Ajustes para imprimir a data e hora de emissão ou somente a data dependendo

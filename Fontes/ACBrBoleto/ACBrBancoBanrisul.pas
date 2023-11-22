@@ -801,7 +801,7 @@ begin
                   '1';                                                                                                                  // 240-240 NÃO PERMITE RECEBIMENTO PARCIAL
       end;
 
-      if OcorrenciaOriginal.Tipo = toRemessaAlterarVencimento then
+      if (OcorrenciaOriginal.Tipo = toRemessaAlterarVencimento) and (PercentualMulta > 0) then
         Ocorrencia := '12'; //Registro P enviar comando 06 para Registro Q e R enviar 12 - Marcia Philipp / Analista - Gerencia de Negócios Banrisul
 
       {Segmento "Q" }

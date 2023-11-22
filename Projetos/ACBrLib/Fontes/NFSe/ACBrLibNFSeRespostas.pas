@@ -89,6 +89,7 @@ type
     FXmlRetorno: string;
     FErros: TACBrObjectList;
     FAlertas: TACBrObjectList;
+    FResumos: TACBrObjectList;
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
@@ -101,6 +102,7 @@ type
     property XmlRetorno: String read FXmlRetorno write FXmlRetorno;
     property Erros: TACBrObjectList read FErros write FErros;
     property Alertas: TACBrObjectList read FAlertas write FAlertas;
+    property Resumos: TACBrObjectList read FResumos write FResumos;
 
   end;
 
@@ -430,12 +432,14 @@ begin
 
   FErros := TACBrObjectList.Create(True);
   FAlertas := TACBrObjectList.Create(True);
+  FResumos := TACBrObjectList.Create(True);
 end;
 
 destructor TLibNFSeServiceResposta.Destroy;
 begin
   FErros.Destroy;
   FAlertas.Destroy;
+  FResumos.Destroy;
   inherited Destroy;
 end;
 

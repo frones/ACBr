@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2023
+--- ACBrLibNFSeRespostas ---
+[*] Adicionado Lista de Resumos - #TK-4758
+    Por: Antonio Carlos Junior
+
 14/11/2023
 --- ACBrLibNFSeBase, ACBrLibNFSeST, ACBrLibNFSeMT, ACBrLibNFSeStaticImport, ACBrLibNFSeStaticImportMT ---
 [+] Inclusão novo método: NFSE_SalvarPDF

@@ -5,6 +5,7 @@
             xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
             attributeFormDefault="unqualified"
             elementFormDefault="qualified">
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema20020212.xsd" />
 	<!-- definicao de tipos simples -->
 	<xsd:simpleType name="tsVersao">
 		<xsd:restriction base="xsd:string">

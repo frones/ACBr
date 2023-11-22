@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2023
+-- pcesS2501 --
+[*] Correção na geração do grupo infoIR do evento S-2501
+  Por: alemartinssilva@gmail.com
+
 20/11/2023
 -- pcesS1010, pcesS2200 --
 [*] Correção ao LerXML para identificar id como atributo

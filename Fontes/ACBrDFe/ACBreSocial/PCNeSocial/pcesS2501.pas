@@ -1196,12 +1196,12 @@ begin
     begin
       Gerador.wGrupo('infoIR' + IfThen(obj[i].vrRendTrib > 0,      ' vrRendTrib="'      + FloatToString(obj[i].vrRendTrib, '.',   FloatMask(2, False)) + '"', '')
                               + IfThen(obj[i].vrRendTrib13 > 0,    ' vrRendTrib13="'    + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrRendMoleGrave > 0, ' vrRendMoleGrave="' + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrRendIsen65 > 0,    ' vrRendIsen65="'    + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrJurosMora > 0,     ' vrJurosMora="'     + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrRendIsenNTrib > 0, ' vrRendIsenNTrib="' + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '')
+                              + IfThen(obj[i].vrRendMoleGrave > 0, ' vrRendMoleGrave="' + FloatToString(obj[i].vrRendMoleGrave, '.', FloatMask(2, False)) + '"', '')
+                              + IfThen(obj[i].vrRendIsen65 > 0,    ' vrRendIsen65="'    + FloatToString(obj[i].vrRendIsen65, '.', FloatMask(2, False)) + '"', '')
+                              + IfThen(obj[i].vrJurosMora > 0,     ' vrJurosMora="'     + FloatToString(obj[i].vrJurosMora, '.', FloatMask(2, False)) + '"', '')
+                              + IfThen(obj[i].vrRendIsenNTrib > 0, ' vrRendIsenNTrib="' + FloatToString(obj[i].vrRendIsenNTrib, '.', FloatMask(2, False)) + '"', '')
                               + IfThen(obj[i].descIsenNTrib <> '', ' descIsenNTrib="'   + TiraAcentos(obj[i].descIsenNTrib)                            + '"', '')
-                              + IfThen(obj[i].vrPrevOficial > 0,   ' vrPrevOficial="'   + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '') 
+                              + IfThen(obj[i].vrPrevOficial > 0,   ' vrPrevOficial="'   + FloatToString(obj[i].vrPrevOficial, '.', FloatMask(2, False)) + '"', '') 
                     );
 
       Gerador.wGrupo('/infoIR');

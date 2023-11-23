@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/11/2023
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Igaratá/SP, provedor: Sistemas4R.
+  Por: Gabriel Leal/Italo Giurizzato Junior
+[*] A cidade de Itaperuna/RJ trocou a URL, o provedor continua o mesmo.
+  Por: Robson
+
 22/11/2023
 -- ACBrNFSeXServicos --
 [*] A cidade de Oriximina/PA trocou de versão e de URL, o provedor continua o mesmo.

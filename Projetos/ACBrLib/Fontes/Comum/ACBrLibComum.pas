@@ -67,6 +67,7 @@ type
     FNome: String;
     FDescricao: String;
     FVersao: String;
+    FTraduzirUltimoRetorno: Boolean;
 
     function GetNome: String;
     function GetDescricao: String;
@@ -93,6 +94,7 @@ type
     property Nome: String read GetNome;
     property Versao: String read GetVersao;
     property Descricao: String read GetDescricao;
+    property TraduzirUltimoRetorno: Boolean read FTraduzirUltimoRetorno write FTraduzirUltimoRetorno;
 
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure MoverStringParaPChar(const AString: String; sDest: PChar; var esTamanho: longint);
@@ -208,6 +210,7 @@ begin
   FNome := '';
   FVersao := '';
   FDescricao := '';
+  FTraduzirUltimoRetorno := True;
 
   fpFileVerInfo := TFileVersionInfo.Create(Nil);
   fpFileVerInfo.ReadFileInfo;
@@ -429,7 +432,7 @@ begin
     MoverStringParaPChar(Retorno.Mensagem, sMensagem, esTamanho);
     Result := Retorno.Codigo;
     if (Config.Log.Nivel >= logCompleto) then
-      GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + string(sMensagem), logCompleto, True);
+      GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + string(sMensagem), logCompleto, TraduzirUltimoRetorno);
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);

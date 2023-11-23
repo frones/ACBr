@@ -132,7 +132,7 @@ uses
 constructor TACBrLibCTe.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-
+  TraduzirUltimoRetorno := False;
   FCTeDM := TLibCTeDM.Create(nil);
   FCTeDM.Lib := Self;
 end;

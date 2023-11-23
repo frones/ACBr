@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2023
+-- ACBrReinfWebServices --
+[*] Levantada exceção, no tratamento de retornos, quando for utilizada versão de leiaute descontinuada ou ainda não implementada
+  Por: Renato Rubinho
+
 20/11/2023
 -- Frm_ACBrReinf --
 [*] Melhorias no programa de exemplo visualizando os xmls de envio e retorno

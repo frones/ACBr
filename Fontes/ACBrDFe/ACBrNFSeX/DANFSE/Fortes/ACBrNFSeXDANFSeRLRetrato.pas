@@ -580,16 +580,16 @@ begin
     with Endereco do
     begin
       xEndereco := IfThen(Endereco <> '', Trim(Endereco), Trim(fpDANFSe.Prestador.Endereco));
-      xNumero := IfThen(Numero <> '', Trim(Numero), '');
+      xNumero := IfThen(Numero <> '', Trim(Numero), Trim(fpDANFSe.Prestador.Numero));
 
       if xNumero <> '' then
         xEndereco := xEndereco + ', ' + xNumero;
 
       xComplemento := IfThen(Complemento <> '', Trim(Complemento), Trim(fpDANFSe.Prestador.Complemento));
-      xBairro := IfThen(Bairro <> '', Trim(Bairro), '');
+      xBairro := IfThen(Bairro <> '', Trim(Bairro), Trim(fpDANFSe.Prestador.Bairro));
       xMunic := IfThen(xMunicipio <> '', Trim(xMunicipio), Trim(fpDANFSe.Prestador.Municipio));
       xUF := IfThen(UF <> '', Trim(UF), Trim(fpDANFSe.Prestador.UF));
-      xCEP := IfThen(CEP <> '', Trim(CEP), '');
+      xCEP := IfThen(CEP <> '', Trim(CEP), Trim(fpDANFSe.Prestador.CEP));
 
       if xCEP <> '' then
         xCEP := ' CEP: ' + xCEP;

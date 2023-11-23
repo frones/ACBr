@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 23/11/2023
+-- ACBrNFSeXDANFSeClass/ACBrNFSeXDANFSeRLClass/ACBrNFSeXDANFSeRLRetrato --
+[*] Alteração visando usar a configuração dos Dados do Emitente que se encontram
+    no componente ACBrNFSeX caso o componente ACBrNFSeXDANFSeRL não tenha sido 
+    configurado com essas informações, uma vez que existem provedores que não
+    retornam os dados do prestador no XML da nota.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade de Igaratá/SP, provedor: Sistemas4R.
   Por: Gabriel Leal/Italo Giurizzato Junior

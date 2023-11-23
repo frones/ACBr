@@ -86,6 +86,7 @@ var
   Notas: array of TNFSe;
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
+  SetDadosPrestador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of
@@ -122,6 +123,7 @@ var
   i: integer;
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
+  SetDadosPrestador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of
@@ -162,6 +164,7 @@ var
   i: integer;
   fqrXDANFSeRLRetrato: TfrlXDANFSeRL;
 begin
+  SetDadosPrestador;
   Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   case Provedor of

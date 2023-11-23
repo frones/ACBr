@@ -61,6 +61,10 @@ type
     FEMail: String;
     FFone: String;
     FLogo: String;
+    FNumero: String;
+    FCEP: String;
+    FBairro: String;
+    FCodigoMunicipio: String;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -78,6 +82,10 @@ type
     property Fone: String read FFone write FFone;
     property EMail: String read FEMail write FEMail;
     property Logo: String read FLogo write FLogo;
+    property Numero: String read FNumero write FNumero;
+    property CEP: String read FCEP write FCEP;
+    property Bairro: String read FBairro write FBairro;
+    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
   end;
 
   { TTomadorConfig }
@@ -133,6 +141,7 @@ type
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
+    procedure SetDadosPrestador;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -171,15 +180,21 @@ begin
   inherited Create(AOwner);
 
   RazaoSocial := '';
-  Endereco := '';
-  Complemento := '';
-  Fone := '';
-  Municipio := '';
+  NomeFantasia := '';
   InscricaoMunicipal := '';
   InscricaoEstadual := '';
+  CNPJ := '';
+  Endereco := '';
+  Complemento := '';
+  Municipio := '';
+  UF := '';
+  Fone := '';
   EMail := '';
   Logo := '';
-  UF := '';
+  Numero := '';
+  CEP := '';
+  Bairro := '';
+  CodigoMunicipio := '';
 end;
 
 { TTomadorConfig }
@@ -272,6 +287,55 @@ begin
       TACBrNFSeX(Value).DANFSe := self;
     end;
   end;
+end;
+
+procedure TACBrNFSeXDANFSeClass.SetDadosPrestador;
+begin
+  // Usar a configuração do ACBrNFSeX se a configuração do DANFSE não foi realizada
+  if FPrestador.CNPJ = '' then
+    FPrestador.CNPJ := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.CNPJ;
+
+  if FPrestador.InscricaoMunicipal = '' then
+    FPrestador.InscricaoMunicipal := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.InscMun;
+
+  if FPrestador.RazaoSocial = '' then
+    FPrestador.RazaoSocial := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.RazSocial;
+
+  if FPrestador.NomeFantasia = '' then
+    FPrestador.NomeFantasia := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.NomeFantasia;
+
+  if FPrestador.InscricaoEstadual = '' then
+    FPrestador.InscricaoEstadual := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.InscricaoEstadual;
+
+  if FPrestador.Endereco = '' then
+    FPrestador.Endereco := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Endereco;
+
+  if FPrestador.Numero = '' then
+    FPrestador.Numero := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Numero;
+
+  if FPrestador.Complemento = '' then
+    FPrestador.Complemento := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Complemento;
+
+  if FPrestador.Bairro = '' then
+    FPrestador.Bairro := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Bairro;
+
+  if FPrestador.CEP = '' then
+    FPrestador.CEP := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.CEP;
+
+  if FPrestador.UF = '' then
+    FPrestador.UF := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.UF;
+
+  if FPrestador.Municipio = '' then
+    FPrestador.Municipio := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Municipio;
+
+  if FPrestador.CodigoMunicipio = '' then
+    FPrestador.CodigoMunicipio := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.CodigoMunicipio;
+
+  if FPrestador.Fone = '' then
+    FPrestador.Fone := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Telefone;
+
+  if FPrestador.EMail = '' then
+    FPrestador.EMail := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Email;
 end;
 
 function TACBrNFSeXDANFSeClass.GetSeparadorPathPDF(const aInitialPath: String): String;

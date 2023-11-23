@@ -4318,20 +4318,18 @@ begin
     Emitente.WSChaveAcesso  := edtChaveAcessoWeb.Text;
     Emitente.WSChaveAutoriz := edtChaveAutorizWeb.Text;
 
-    // Exemplos de valores para WSChaveAcesso para alguns provedores.
-    {
-    if Provedor in [proAgili, proElotech] then
-      Emitente.WSChaveAcesso := '0aA1bB2cC3dD4eE5fF6aA7bB8cC9dDEF';
-
-    if Provedor = proISSNet then
-      Emitente.WSChaveAcesso := 'A001.B0001.C0001-1';
-
-    if Provedor = proSigep then
-      Emitente.WSChaveAcesso := 'A001.B0001.C0001';
-
-    if Provedor = proiiBrasil then
-      Emitente.WSChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
-    }
+    Emitente.DadosEmitente.NomeFantasia := edtEmitFantasia.Text;
+    Emitente.DadosEmitente.InscricaoEstadual := '';
+    Emitente.DadosEmitente.Endereco := edtEmitLogradouro.Text;
+    Emitente.DadosEmitente.Numero := edtEmitNumero.Text;
+    Emitente.DadosEmitente.CEP := edtEmitCEP.Text;
+    Emitente.DadosEmitente.Bairro := edtEmitBairro.Text;
+    Emitente.DadosEmitente.Complemento := edtEmitComp.Text;
+    Emitente.DadosEmitente.Municipio := edtEmitCidade.Text;
+    Emitente.DadosEmitente.UF := edtEmitUF.Text;
+    Emitente.DadosEmitente.CodigoMunicipio := edtCodCidade.Text;
+    Emitente.DadosEmitente.Telefone := edtEmitFone.Text;
+    Emitente.DadosEmitente.Email := edtEmailRemetente.Text;
 
     {
       Para o provedor ADM, utilizar as seguintes propriedades de configurações:

@@ -4830,6 +4830,19 @@ begin
     Emitente.WSChaveAcesso  := edtChaveAcessoWeb.Text;
     Emitente.WSChaveAutoriz := edtChaveAutorizWeb.Text;
 
+    Emitente.DadosEmitente.NomeFantasia := edtEmitFantasia.Text;
+    Emitente.DadosEmitente.InscricaoEstadual := '';
+    Emitente.DadosEmitente.Endereco := edtEmitLogradouro.Text;
+    Emitente.DadosEmitente.Numero := edtEmitNumero.Text;
+    Emitente.DadosEmitente.CEP := edtEmitCEP.Text;
+    Emitente.DadosEmitente.Bairro := edtEmitBairro.Text;
+    Emitente.DadosEmitente.Complemento := edtEmitComp.Text;
+    Emitente.DadosEmitente.Municipio := edtEmitCidade.Text;
+    Emitente.DadosEmitente.UF := edtEmitUF.Text;
+    Emitente.DadosEmitente.CodigoMunicipio := edtCodCidade.Text;
+    Emitente.DadosEmitente.Telefone := edtEmitFone.Text;
+    Emitente.DadosEmitente.Email := edtEmailRemetente.Text;
+
     {
       Para o provedor ADM, utilizar as seguintes propriedades de configurações:
       WSChaveAcesso  para o Key

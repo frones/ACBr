@@ -249,10 +249,13 @@ begin
     {$ENDIF}
   {$ENDIF}
 
+  if NFSe.IdentificacaoRemessa = '' then
+    NFSe.IdentificacaoRemessa := NFSe.IdentificacaoRps.Numero;
+
   if NFSe.StatusRps = srCancelado then
     GerarRegistroTipo1(FormatDateTime('yyyymmddzzz', Now))
   else
-    GerarRegistroTipo1(NFSe.IdentificacaoRps.Numero);
+    GerarRegistroTipo1(NFSe.IdentificacaoRemessa);
 
   GerarRegistroTipo2;
   GerarRegistroTipo3;

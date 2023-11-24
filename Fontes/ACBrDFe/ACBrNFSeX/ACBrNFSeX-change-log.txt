@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 24/11/2023
+-- ACBrNFSeXClass/ISSBarueri.GravarXml --
+[*] Incluido o campo IdentificacaoRemessa para que o desenvolvedor possa 
+    informar um valor diferente do numero do RPS como sendo a identificação
+    da remessa.
+  Por: Bruno
 -- ACBrNFSeXServicos --
 [*] A cidade de Guanambi/BA trocou de provedor, agora é WebISS
   Por: João Antônio

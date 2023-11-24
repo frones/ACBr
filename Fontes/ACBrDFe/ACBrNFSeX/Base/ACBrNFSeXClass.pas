@@ -1330,7 +1330,6 @@ type
     FDespesa: TDespesaCollection;
 
     FNumeroLote: string;
-//    FProtocolo: string;
     FdhRecebimento: TDateTime;
 
     FNfseCancelamento: TConfirmacaoCancelamento;
@@ -1339,6 +1338,7 @@ type
     FMotivoCancelamento: string;
     // Provedor ISSBarueri
     FCodigoCancelamento: string;
+    FIdentificacaoRemessa: string;
     // Provedor Infisc
     FcNFSe: Integer;
 
@@ -1442,7 +1442,6 @@ type
     property Link: string read FLink write FLink;
     property NumeroLote: string read FNumeroLote write FNumeroLote;
     property DescricaoCodigoTributacaoMunicipio: string read FDescricaoCodigoTributacaoMunicipio write FDescricaoCodigoTributacaoMunicipio;
-//    property Protocolo: string read FProtocolo write FProtocolo;
     property dhRecebimento: TDateTime read FdhRecebimento write FdhRecebimento;
     property NfseCancelamento: TConfirmacaoCancelamento read FNfseCancelamento write FNfseCancelamento;
     property NfseSubstituidora: string read FNfseSubstituidora write FNfseSubstituidora;
@@ -1450,6 +1449,7 @@ type
     property MotivoCancelamento: string read FMotivoCancelamento write FMotivoCancelamento;
     // Provedor ISSBarueri
     property CodigoCancelamento: string read FCodigoCancelamento write FCodigoCancelamento;
+    property IdentificacaoRemessa: string read FIdentificacaoRemessa write FIdentificacaoRemessa;
     // Provedor Infisc
     property cNFSe: Integer read FcNFSe write FcNFSe;
     property refNF: string read FrefNF write FrefNF;

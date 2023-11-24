@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/11/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Porto Feliz/SP trocou a URL, o provedor continua o mesmo.
+  Por: Carlos Junior
 -- IPM.Provider/IPM.LerXml --
 [*] Na unit Provider foi realizado pequeno ajuste no tratamento do XML retornado.
     Na unit LerXml acrescentado uma função para remover do XML a ser lido o grupo

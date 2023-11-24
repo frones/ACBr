@@ -71,7 +71,6 @@ type
     procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-    procedure AssinarCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   public
     function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string; override;
     function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento; override;
@@ -186,7 +185,6 @@ begin
 
   with ConfigMsgDados do
   begin
-    Prefixo := '';
     ConsultarNFSeRps.DocElemento := 'ConsultarNfsePorRpsEnvio';
     XmlRps.xmlns := '';
   end;
@@ -237,6 +235,8 @@ procedure TACBrNFSeProviderBetha.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   aXml: string;
 begin
+  ConfigMsgDados.Prefixo := '';
+
   inherited PrepararEmitir(Response);
 
   aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
@@ -255,6 +255,8 @@ procedure TACBrNFSeProviderBetha.PrepararConsultaSituacao(
 var
   aXml: string;
 begin
+  ConfigMsgDados.Prefixo := '';
+
   inherited PrepararConsultaSituacao(Response);
 
   aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
@@ -273,6 +275,8 @@ procedure TACBrNFSeProviderBetha.PrepararConsultaLoteRps(
 var
   aXml: string;
 begin
+  ConfigMsgDados.Prefixo := '';
+
   inherited PrepararConsultaLoteRps(Response);
 
   aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
@@ -291,6 +295,8 @@ procedure TACBrNFSeProviderBetha.PrepararConsultaNFSeporRps(
 var
   aXml: string;
 begin
+  ConfigMsgDados.Prefixo := '';
+
   inherited PrepararConsultaNFSeporRps(Response);
 
   aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
@@ -309,6 +315,8 @@ procedure TACBrNFSeProviderBetha.PrepararConsultaNFSe(
 var
   aXml: string;
 begin
+  ConfigMsgDados.Prefixo := '';
+
   inherited PrepararConsultaNFSe(Response);
 
   aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
@@ -333,19 +341,9 @@ begin
    '<CancelarNfseEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
    '</CancelarNfseEnvio>', False);
 
-  Response.ArquivoEnvio := aXml;
-end;
-
-procedure TACBrNFSeProviderBetha.AssinarCancelaNFSe(
-  Response: TNFSeCancelaNFSeResponse);
-begin
-  inherited AssinarCancelaNFSe(Response);
-
   Response.ArquivoEnvio := '<ns3:CancelarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
-                         Response.ArquivoEnvio +
+                         aXml +
                        '</ns3:CancelarNfseEnvio>';
-
-  ConfigMsgDados.Prefixo := 'ns3';
 end;
 
 function TACBrNFSeProviderBetha.CondicaoPagToStr(

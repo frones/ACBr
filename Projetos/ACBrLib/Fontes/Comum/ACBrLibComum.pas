@@ -162,8 +162,8 @@ procedure LiberarLib(libHandle: PLibHandle);
 // Le um arquivo em Disco e retorna o seu conteúdo //
 function LerArquivoParaString(AArquivo: String): AnsiString;
 
-function StringToB64Crypt(AString: String; AChave: AnsiString = ''): String;
-function B64CryptToString(ABase64Str: String; AChave: AnsiString = ''): String;
+function StringToB64Crypt(AString: AnsiString; AChave: AnsiString = ''): String;
+function B64CryptToString(ABase64Str: String; AChave: AnsiString = ''): AnsiString;
 
 function StreamToBase64(AStream: TStream):AnsiString;
 
@@ -828,7 +828,7 @@ begin
   end;
 end;
 
-function StringToB64Crypt(AString: String; AChave: AnsiString = ''): String;
+function StringToB64Crypt(AString: AnsiString; AChave: AnsiString): String;
 begin
   if (Length(AChave) = 0) then
     AChave := CLibChaveCrypt;
@@ -836,7 +836,7 @@ begin
   Result := EncodeBase64(StrCrypt(AString, AChave));
 end;
 
-function B64CryptToString(ABase64Str: String; AChave: AnsiString = ''): String;
+function B64CryptToString(ABase64Str: String; AChave: AnsiString): AnsiString;
 begin
   if (Length(AChave) = 0) then
     AChave := CLibChaveCrypt;

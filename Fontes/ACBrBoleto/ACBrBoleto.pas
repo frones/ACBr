@@ -58,6 +58,7 @@ const
   CConta      = 'CONTA';
   CTitulo     = 'TITULO';
   CWebService = 'WEBSERVICE';
+  CArquivos   = 'ARQUIVOS';
 
 type
   TACBrTipoCobranca =
@@ -3842,6 +3843,7 @@ begin
       end;
 
 
+
       //Banco
       if IniBoletos.SectionExists('Banco') then
       begin
@@ -3919,6 +3921,11 @@ begin
         Result := True;
       end;
 
+      if IniBoletos.SectionExists('ARQUIVOS') then
+      begin
+        Configuracoes.Arquivos.LogRegistro        := IniBoletos.ReadBool(CArquivos,'LogRegistro', Configuracoes.Arquivos.LogRegistro);
+        Configuracoes.Arquivos.PathGravarRegistro := IniBoletos.ReadString(CArquivos,'PathGravarRegistro', Configuracoes.Arquivos.PathGravarRegistro);
+      end;
       if IniBoletos.SectionExists('WEBSERVICE') then
       begin
         CedenteWS.ClientID                  := IniBoletos.ReadString(CWebService,'ClientID', CedenteWS.ClientID);
@@ -4115,6 +4122,9 @@ begin
       end;
     end;
 
+
+
+
     //Filtro para Consulta por API
     if (IniBoletos.SectionExists('ConsultaAPI')) then
     begin
@@ -4243,6 +4253,10 @@ begin
        IniRetorno.WriteBool(CBanco,'LeCedenteRetorno',LeCedenteRetorno);
        IniRetorno.WriteBool(CBanco,'LerNossoNumeroCompleto',LerNossoNumeroCompleto);
        IniRetorno.WriteBool(CBanco,'RemoveAcentosArqRemessa',RemoveAcentosArqRemessa);
+
+       { ARQUIVOS }
+       IniRetorno.WriteBool(CArquivos,'LogRegistro',Configuracoes.Arquivos.LogRegistro);
+       IniRetorno.WriteString(CArquivos,'PathGravarRegistro',Configuracoes.Arquivos.PathGravarRegistro);
 
        { WEBSERVICES }
        IniRetorno.WriteString(CWebService,'ClientID',Cedente.CedenteWS.ClientID);

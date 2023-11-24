@@ -759,9 +759,24 @@ object frmDemoBoleto: TfrmDemoBoleto
           object Label84: TLabel
             Left = 411
             Top = 3
-            Width = 55
+            Width = 66
             Height = 13
-            Caption = 'Senha PDF'
+            Caption = 'Senha PDF **'
+          end
+          object Label86: TLabel
+            Left = 411
+            Top = 49
+            Width = 142
+            Height = 13
+            Caption = '**Motores: FastReport / FPDF'
+            Color = clBtnFace
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clRed
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentColor = False
+            ParentFont = False
           end
           object cbxMotorRelatorio: TComboBox
             Left = 2
@@ -848,13 +863,6 @@ object frmDemoBoleto: TfrmDemoBoleto
         Width = 126
         Height = 13
         Caption = 'Path de Retorno + Arquivo'
-      end
-      object Label85: TLabel
-        Left = 791
-        Top = 452
-        Width = 137
-        Height = 13
-        Caption = 'Tipo de Servi'#231'o WebService'
       end
       object GroupBox1: TGroupBox
         Left = 0
@@ -989,6 +997,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Width = 241
           Height = 21
           Style = csDropDownList
+          Sorted = True
           TabOrder = 6
         end
         object cbxTipoDistribuicao: TComboBox
@@ -1284,53 +1293,13 @@ object frmDemoBoleto: TfrmDemoBoleto
           TabOrder = 8
         end
       end
-      object ckbEmHomologacao: TCheckBox
-        Left = 0
-        Top = 382
-        Width = 151
-        Height = 17
-        Caption = 'Boleto em Homologa'#231#227'o'
-        TabOrder = 4
-      end
-      object ckbImprimirMensagemPadrao: TCheckBox
-        Left = 0
-        Top = 405
-        Width = 224
-        Height = 17
-        Caption = 'Imprimir Msg. Padr'#227'o Componente/Banco'
-        TabOrder = 5
-      end
-      object ckbLerCedenteArquivoRetorno: TCheckBox
-        Left = 0
-        Top = 428
-        Width = 224
-        Height = 17
-        Caption = 'Ler Cedente do Arq. Retorno'
-        TabOrder = 6
-      end
-      object ckbLerNossoNumeroCompleto: TCheckBox
-        Left = 0
-        Top = 449
-        Width = 224
-        Height = 17
-        Caption = 'Ler Nosso N'#250'mero Completo'
-        TabOrder = 7
-      end
-      object ckbRemoverAcentuacaoRemessa: TCheckBox
-        Left = 0
-        Top = 472
-        Width = 224
-        Height = 17
-        Caption = 'Remover Acentua'#231#227'o Remessa'
-        TabOrder = 8
-      end
       object GroupBox14: TGroupBox
         Left = 255
         Top = 309
         Width = 530
         Height = 105
         Caption = 'WebServices '
-        TabOrder = 9
+        TabOrder = 4
         object Label67: TLabel
           Left = 11
           Top = 16
@@ -1387,14 +1356,6 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 21
           TabOrder = 2
         end
-        object chkIndicadorPix: TCheckBox
-          Left = 181
-          Top = 76
-          Width = 151
-          Height = 17
-          Caption = 'Indicador de Pix'
-          TabOrder = 5
-        end
         object cbxSSLLib: TComboBox
           Left = 351
           Top = 73
@@ -1416,14 +1377,14 @@ object frmDemoBoleto: TfrmDemoBoleto
         Top = 431
         Width = 369
         Height = 21
-        TabOrder = 10
+        TabOrder = 5
       end
       object edtPathRetorno: TEdit
         Left = 255
         Top = 466
         Width = 369
         Height = 21
-        TabOrder = 11
+        TabOrder = 6
       end
       object btnRetorno: TButton
         Left = 630
@@ -1431,29 +1392,129 @@ object frmDemoBoleto: TfrmDemoBoleto
         Width = 32
         Height = 25
         Caption = '...'
-        TabOrder = 12
+        TabOrder = 7
         OnClick = btnRetornoClick
       end
-      object cbbWSConsulta: TComboBox
-        Left = 791
-        Top = 471
-        Width = 166
-        Height = 21
-        Style = csDropDownList
-        ItemIndex = 0
-        TabOrder = 13
-        Text = 'Consulta Lista'
-        Items.Strings = (
-          'Consulta Lista'
-          'Consulta Detalhada')
-      end
-      object cxbEMV: TCheckBox
-        Left = 791
-        Top = 429
-        Width = 224
-        Height = 17
-        Caption = 'Exibir EMV de testes f'#237'cticio'
-        TabOrder = 14
+      object PageControlConfg: TPageControl
+        Left = 0
+        Top = 374
+        Width = 249
+        Height = 118
+        ActivePage = TabSheet10
+        TabOrder = 8
+        object TabSheet8: TTabSheet
+          Caption = 'Conf. A'
+          object ckbImprimirMensagemPadrao: TCheckBox
+            Left = 3
+            Top = -1
+            Width = 224
+            Height = 17
+            Caption = 'Imprimir Msg. Padr'#227'o Componente/Banco'
+            TabOrder = 0
+          end
+          object ckbLerCedenteArquivoRetorno: TCheckBox
+            Left = 3
+            Top = 37
+            Width = 224
+            Height = 17
+            Caption = 'Ler Cedente do Arq. Retorno'
+            TabOrder = 1
+          end
+          object ckbLerNossoNumeroCompleto: TCheckBox
+            Left = 3
+            Top = 56
+            Width = 224
+            Height = 17
+            Caption = 'Ler Nosso N'#250'mero Completo'
+            TabOrder = 2
+          end
+          object ckbRemoverAcentuacaoRemessa: TCheckBox
+            Left = 3
+            Top = 18
+            Width = 224
+            Height = 17
+            Caption = 'Remover Acentua'#231#227'o Remessa'
+            TabOrder = 3
+          end
+        end
+        object TabSheet9: TTabSheet
+          Caption = 'Conf. B'
+          ImageIndex = 1
+          object cxbEMV: TCheckBox
+            Left = 3
+            Top = 3
+            Width = 224
+            Height = 17
+            Caption = 'Exibir EMV de testes f'#237'cticio'
+            TabOrder = 0
+          end
+          object chkIndicadorPix: TCheckBox
+            Left = 3
+            Top = 22
+            Width = 151
+            Height = 17
+            Caption = 'Indicador de Pix'
+            TabOrder = 1
+          end
+          object ckbEmHomologacao: TCheckBox
+            Left = 3
+            Top = 41
+            Width = 151
+            Height = 17
+            Caption = 'Boleto em Homologa'#231#227'o'
+            Checked = True
+            State = cbChecked
+            TabOrder = 2
+          end
+        end
+        object TabSheet10: TTabSheet
+          Caption = 'Conf. C'
+          ImageIndex = 2
+          object Label85: TLabel
+            Left = 3
+            Top = 0
+            Width = 137
+            Height = 13
+            Caption = 'Tipo de Servi'#231'o WebService'
+          end
+          object cbbWSConsulta: TComboBox
+            Left = 3
+            Top = 15
+            Width = 166
+            Height = 21
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 0
+            Text = 'Consulta Lista'
+            Items.Strings = (
+              'Consulta Lista'
+              'Consulta Detalhada')
+          end
+          object chkLogComponente: TCheckBox
+            Left = 3
+            Top = 42
+            Width = 151
+            Height = 17
+            Caption = 'Ativar LOG do Webservices'
+            TabOrder = 1
+          end
+          object edtPathLog: TEdit
+            Left = 3
+            Top = 63
+            Width = 197
+            Height = 21
+            TabOrder = 2
+          end
+          object Button1: TButton
+            Left = 206
+            Top = 62
+            Width = 32
+            Height = 25
+            Caption = '...'
+            TabOrder = 3
+            OnClick = Button1Click
+          end
+        end
       end
     end
     object TabSheet3: TTabSheet
@@ -1729,5 +1790,9 @@ object frmDemoBoleto: TfrmDemoBoleto
     Options = []
     Left = 711
     Top = 371
+  end
+  object dlgSave: TSaveDialog
+    Left = 715
+    Top = 437
   end
 end

@@ -157,12 +157,6 @@ type
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSeServicoPrestado(Response: TNFSeConsultaNFSeResponse); override;
-    {
-    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
-                                     Response: TNFSeWebserviceResponse;
-                                     const AListTag: string = 'ListaMensagemRetorno';
-                                     const AMessageTag: string = 'item'); override;
-    }
   end;
 
 implementation
@@ -1274,13 +1268,14 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
+    Result := AjustarRetorno(Result);
     // Revertido para sanar o problema com as cidades de Agrolândia/SC e Rio das Antas/SC
     Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
-    Result := AjustarRetorno(Result);
+    Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
   end;
 end;
 
@@ -1325,8 +1320,6 @@ begin
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
     Result := Retorno;
-
-  Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
 end;
 
 function TACBrNFSeXWebserviceIPM.Cancelar(ACabecalho, AMSG: String): string;
@@ -1380,12 +1373,13 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
+    Result := AjustarRetorno(Result);
     Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
-    Result := AjustarRetorno(Result);
+    Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
   end;
 end;
 
@@ -1424,8 +1418,6 @@ begin
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
     Result := Retorno;
-
-  Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
 end;
 
 function TACBrNFSeXWebserviceIPM101.Cancelar(ACabecalho, AMSG: String): string;
@@ -1743,37 +1735,7 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
 end;
-{
-procedure TACBrNFSeProviderIPM204.ProcessarMensagemErros(RootNode: TACBrXmlNode;
-  Response: TNFSeWebserviceResponse; const AListTag, AMessageTag: string);
-var
-  I: Integer;
-  ANode: TACBrXmlNode;
-  ANodeArray: TACBrXmlNodeArray;
-  AErro: TNFSeEventoCollectionItem;
-begin
-  ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
-  if (ANode = nil) then
-    ANode := RootNode;
-
-  ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
-
-  if (ANodeArray = nil) then
-    ANodeArray := ANode.Childrens.FindAllAnyNs('item');
-
-  if not Assigned(ANodeArray) then Exit;
-
-  for I := Low(ANodeArray) to High(ANodeArray) do
-  begin
-    AErro := Response.Erros.New;
-
-    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
-    AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
-  end;
-end;
-}
 procedure TACBrNFSeProviderIPM204.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
 var
   Document: TACBrXmlDocument;

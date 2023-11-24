@@ -49,6 +49,8 @@ type
   private
 
   protected
+    function RemoverGrupo_conteudohtml(const aXML: string): string;
+
     procedure LerRps(const ANode: TACBrXmlNode);
     procedure LerNota(const ANode: TACBrXmlNode);
     procedure LerPrestador(const ANode: TACBrXmlNode);
@@ -89,6 +91,18 @@ uses
 //==============================================================================
 
 { TNFSeR_IPM }
+
+function TNFSeR_IPM.RemoverGrupo_conteudohtml(const aXML: string): string;
+var
+  i: Integer;
+begin
+  i := Pos('<codigo_html>', aXML);
+
+  if i > 0 then
+    Result := Copy(aXML, 1, i -1) + '</retorno>'
+  else
+    Result := aXML;
+end;
 
 procedure TNFSeR_IPM.LerFormaPagamento(const ANode: TACBrXmlNode);
 var
@@ -372,6 +386,8 @@ begin
     raise Exception.Create('Arquivo xml não carregado.');
 
   LerParamsTabIni(True);
+
+  Arquivo := RemoverGrupo_conteudohtml(Arquivo);
 
   Arquivo := NormatizarXml(Arquivo);
 

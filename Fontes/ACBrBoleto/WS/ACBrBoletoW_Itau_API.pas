@@ -234,7 +234,7 @@ procedure TBoletoW_Itau_API.DefinirAuthorization;
 begin
   FPAuthorization :=
     IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,
-    C_AUTHORIZATION, C_AUTHORIZATION_HOM) + ' : ' + GerarTokenAutenticacao;
+    C_AUTHORIZATION, C_AUTHORIZATION_HOM) + ' : Bearer ' + GerarTokenAutenticacao;
 end;
 
 function TBoletoW_Itau_API.GerarTokenAutenticacao: string;

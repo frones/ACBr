@@ -13,7 +13,6 @@
       <SessionStorage Value="InProjectDir"/>
       <Title Value="AcbrBoletoDemo"/>
       <UseAppBundle Value="False"/>
-      <ResourceType Value="res"/>
     </General>
     <BuildModes>
       <Item Name="Default" Default="True"/>
@@ -27,22 +26,19 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="ACBr_BoletoFC_FPDF"/>
-      </Item>
-      <Item>
         <PackageName Value="PCNComum"/>
       </Item>
       <Item>
         <PackageName Value="ACBrDFeComum"/>
       </Item>
       <Item>
+        <PackageName Value="ACBr_Boleto"/>
+      </Item>
+      <Item>
         <PackageName Value="ACBrTCP"/>
       </Item>
       <Item>
         <PackageName Value="ACBrComum"/>
-      </Item>
-      <Item>
-        <PackageName Value="ACBr_Boleto"/>
       </Item>
       <Item>
         <PackageName Value="ACBr_BoletoFC_Fortes"/>
@@ -59,7 +55,7 @@
       <Unit>
         <Filename Value="uDemoBoleto.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmDemo"/>
+        <ComponentName Value="frmDemoBoleto"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
@@ -75,8 +71,18 @@
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
+        <IncludeAssertionCode Value="True"/>
       </SyntaxOptions>
     </Parsing>
+    <CodeGeneration>
+      <Checks>
+        <IOChecks Value="True"/>
+        <RangeChecks Value="True"/>
+        <OverflowChecks Value="True"/>
+        <StackChecks Value="True"/>
+      </Checks>
+      <VerifyObjMethodCallValidity Value="True"/>
+    </CodeGeneration>
     <Linking>
       <Options>
         <Win32>
@@ -84,9 +90,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions>

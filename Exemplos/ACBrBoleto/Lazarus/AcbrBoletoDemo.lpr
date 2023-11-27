@@ -1,20 +1,12 @@
 program AcbrBoletoDemo;
 
-{$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
+{$MODE Delphi}
 
 uses
-{$IFnDEF FPC}
-{$ELSE}
-  Interfaces,
-{$ENDIF}
-  Forms,
+  Forms, Interfaces,
   uDemoBoleto in 'uDemoBoleto.pas' {frmDemoBoleto};
-
-{$R *.res}
 begin
   Application.Initialize;
-  Application.CreateForm(TfrmDemo, frmDemo);
+  Application.CreateForm(TfrmDemoBoleto, frmDemoBoleto);
   Application.Run;
 end.

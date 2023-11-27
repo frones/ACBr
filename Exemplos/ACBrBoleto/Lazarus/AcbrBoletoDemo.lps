@@ -8,90 +8,38 @@
       <Unit>
         <Filename Value="AcbrBoletoDemo.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="21" Y="20"/>
-        <UsageCount Value="20"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos Y="12"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="uDemoBoleto.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmDemo"/>
+        <ComponentName Value="frmDemoBoleto"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="25"/>
-        <CursorPos X="2" Y="42"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="175"/>
+        <CursorPos X="124" Y="37"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas"/>
-        <ComponentName Value="ACBRBoletoFCFortesFr"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\FC\FPDF\ACBrBoletoFPDF.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="12">
+    <JumpHistory HistoryIndex="2">
       <Position>
         <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="47" TopLine="25"/>
+      </Position>
+      <Position>
+        <Filename Value="AcbrBoletoDemo.lpr"/>
+        <Caret Line="14"/>
       </Position>
       <Position>
         <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="41" Column="69" TopLine="27"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="49" Column="19" TopLine="27"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="45" Column="28" TopLine="27"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="52" Column="5" TopLine="34"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="54" TopLine="29"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="56" Column="6" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="41" Column="3" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="56" Column="13" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="58" Column="4" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="54" Column="43" TopLine="37"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="1144" Column="50" TopLine="1138"/>
-      </Position>
-      <Position>
-        <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="42" Column="2" TopLine="25"/>
+        <Caret Line="37" Column="125" TopLine="175"/>
       </Position>
     </JumpHistory>
     <RunParams>

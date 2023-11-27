@@ -379,6 +379,7 @@ begin
   Continua := 0;
   Resposta := '';
   Buffer := '';
+  TituloMenu := '' ;
 
   TefAPI := TACBrTEFAPI(fpACBrTEFAPI);
   RespCliSiTef := TACBrTEFRespCliSiTef(fpACBrTEFAPI.UltimaRespostaTEF);
@@ -410,7 +411,6 @@ begin
                               ' Tam.Min = '+IntToStr(TamanhoMinimo) +
                               ' Tam.Max = '+IntToStr(TamanhoMaximo)) ;
 
-      TituloMenu := '' ;
       Resposta := '';
       Voltar := False;
       Digitado := True;

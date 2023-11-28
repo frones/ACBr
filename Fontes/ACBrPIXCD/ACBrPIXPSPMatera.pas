@@ -195,7 +195,7 @@ type
     property DevolucaoMotivos: TMateraReturnCodesQueryResponse read GetReturnCodesQueryResponse;
     property DevolucaoSolicitacao: TMateraDevolucaoRequest read GetDevolucaoSolicitacao;
     property DevolucaoResposta: TMateraDevolucaoResponse read GetDevolucaoResposta;
-    procedure DevolucaoSolicitar(aAccountId, aTransactionID: String);
+    function DevolucaoSolicitar(aAccountId, aTransactionID: String): Boolean;
     procedure DevolucaoConsultarMotivos;
 
     property RetiradaSolicitacao: TMateraRetiradaRequest read GetRetiradaSolicitacao;
@@ -508,6 +508,7 @@ begin
   if EstaVazio(aAccountId) or EstaVazio(aTransactionID) then
     DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['aAccountId/aTransactionID']));
 
+  fAccountId := aAccountId;
   TransacoesResposta.Clear;
   PrepararHTTP;
   URLPathParams.Add(aTransactionID);
@@ -702,13 +703,12 @@ begin
   end;
 end;
 
-procedure TACBrPSPMatera.DevolucaoSolicitar(aAccountId, aTransactionID: String);
+function TACBrPSPMatera.DevolucaoSolicitar(aAccountId, aTransactionID: String): Boolean;
 var
   wOpenSSL: TACBrOpenSSLUtils;
   wURL, wHash, wBody: String;
   wRespHttp: AnsiString;
   wResultCode: Integer;
-  wOk: Boolean;
 begin
   if EstaVazio(aAccountId) or EstaVazio(aTransactionID) then
     DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['aAccountId/aTransactionID']));
@@ -732,12 +732,12 @@ begin
     wOpenSSL.Free;
   end;
 
-  wOk := AcessarEndPoint(ChttpMethodPOST, cMateraEndPointAccounts + '/' +
+  Result := AcessarEndPoint(ChttpMethodPOST, cMateraEndPointAccounts + '/' +
            aAccountId + cMateraEndPointInstant_Payments + '/' + aTransactionID +
            cMateraEndPointReturns, wResultCode, wRespHttp);
-  wOk := wOk and (wResultCode in [HTTP_OK, HTTP_ACCEPTED]);
+  Result := Result and (wResultCode in [HTTP_OK, HTTP_ACCEPTED]);
 
-  if wOk then
+  if Result then
     DevolucaoResposta.AsJSON := String(wRespHttp)
   else
   begin

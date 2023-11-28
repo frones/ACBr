@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2023
+-- pcesS5501 --
+[*] Corrigida leitura do evento via xml, adicionando item na lista ao ler os InfoTributos
+  Por: Renato Rubinho
+
 22/11/2023
 -- pcesS2501 --
 [*] Correção na geração do grupo infoIR do evento S-2501

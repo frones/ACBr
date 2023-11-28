@@ -421,6 +421,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'infoTributos', '', i +1) <> '' do
         begin
+          IdeProc.InfoTributos.New;
           IdeProc.InfoTributos.Items[i].perRef := leitor.rCampo(tcStr, 'perRef');
 
           j := 0;

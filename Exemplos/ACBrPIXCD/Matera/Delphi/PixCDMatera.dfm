@@ -1,26 +1,24 @@
 object frPixCDMatera: TfrPixCDMatera
   Left = 431
   Top = 143
-  Width = 1042
-  Height = 776
   Caption = 'ACBrPIXCD Matera'
+  ClientHeight = 738
+  ClientWidth = 1030
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   Visible = True
   OnCreate = FormCreate
-  PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 15
   object lbUrlPIX: TLabel
     Left = 0
-    Top = 717
-    Width = 1026
-    Height = 20
+    Top = 719
+    Width = 1030
+    Height = 19
     Cursor = crHandPoint
     Align = alBottom
     Alignment = taCenter
@@ -35,26 +33,30 @@ object frPixCDMatera: TfrPixCDMatera
     ParentFont = False
     Transparent = False
     OnClick = lbUrlPIXClick
+    ExplicitTop = 717
+    ExplicitWidth = 224
   end
   object pgPrincipal: TPageControl
     Left = 0
     Top = 0
-    Width = 1026
-    Height = 717
-    ActivePage = tsFluxoPagto
+    Width = 1030
+    Height = 719
+    ActivePage = tsConfig
     Align = alClient
     Images = ImageList1
     TabHeight = 30
     TabOrder = 0
     TabWidth = 250
     OnChange = pgPrincipalChange
+    ExplicitWidth = 1026
+    ExplicitHeight = 718
     object tsFluxoPagto: TTabSheet
       Caption = 'Fluxo de Pagamento'
       object pnFluxoBackground: TPanel
         Left = 0
         Top = 0
-        Width = 1018
-        Height = 677
+        Width = 1022
+        Height = 679
         Align = alClient
         BevelOuter = bvNone
         Color = clWhite
@@ -65,6 +67,8 @@ object frPixCDMatera: TfrPixCDMatera
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitWidth = 1018
+        ExplicitHeight = 678
         object pnFluxoPagto: TPanel
           Left = 44
           Top = 17
@@ -107,8 +111,10 @@ object frPixCDMatera: TfrPixCDMatera
               Font.Height = -24
               Font.Name = 'Tahoma'
               Font.Style = [fsBold]
+              ParentBackground = False
               ParentFont = False
               TabOrder = 0
+              StyleElements = [seBorder]
             end
           end
           object pnFluxoRodape: TPanel
@@ -535,6 +541,8 @@ object frPixCDMatera: TfrPixCDMatera
               OnClick = lbSiteEfetuarPagtoClick
               OnMouseEnter = lbSiteEfetuarPagtoMouseEnter
               OnMouseLeave = lbSiteEfetuarPagtoMouseLeave
+              ExplicitWidth = 437
+              ExplicitHeight = 24
             end
           end
         end
@@ -544,17 +552,19 @@ object frPixCDMatera: TfrPixCDMatera
       Caption = 'Opera'#231#245'es'
       ImageIndex = 14
       object Splitter2: TSplitter
-        Left = 658
+        Left = 662
         Top = 0
         Width = 5
-        Height = 677
+        Height = 679
         Align = alRight
+        ExplicitLeft = 658
+        ExplicitHeight = 677
       end
       object pcTestes: TPageControl
         Left = 0
         Top = 0
-        Width = 658
-        Height = 677
+        Width = 662
+        Height = 679
         ActivePage = tsGerarQRCodes
         Align = alClient
         Images = ImageList1
@@ -568,7 +578,7 @@ object frPixCDMatera: TfrPixCDMatera
           object pnGerarQRCodeInfo: TPanel
             Left = 0
             Top = 0
-            Width = 650
+            Width = 654
             Height = 112
             Align = alTop
             BevelOuter = bvNone
@@ -576,8 +586,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbQRCodeExternalID: TLabel
               Left = 15
               Top = 15
-              Width = 52
-              Height = 13
+              Width = 59
+              Height = 15
               Caption = 'External ID'
               Color = clBtnFace
               ParentColor = False
@@ -585,8 +595,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbQRCodeValor: TLabel
               Left = 343
               Top = 15
-              Width = 24
-              Height = 13
+              Width = 27
+              Height = 15
               Caption = 'Valor'
               Color = clBtnFace
               ParentColor = False
@@ -602,8 +612,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbQRCodeTipoCobranca: TLabel
               Left = 487
               Top = 15
-              Width = 85
-              Height = 13
+              Width = 98
+              Height = 15
               Caption = 'Tipo de Cobran'#231'a'
               Color = clBtnFace
               ParentColor = False
@@ -611,8 +621,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbQRCodeMediatorFee: TLabel
               Left = 15
               Top = 59
-              Width = 79
-              Height = 13
+              Width = 90
+              Height = 15
               Caption = 'Mediator Fee R$'
               Color = clBtnFace
               ParentColor = False
@@ -620,8 +630,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbQRCodeTipoMediatorFee: TLabel
               Left = 155
               Top = 59
-              Width = 104
-              Height = 13
+              Width = 118
+              Height = 15
               Caption = 'Tipo de Mediator  Fee'
               Color = clBtnFace
               ParentColor = False
@@ -630,23 +640,22 @@ object frPixCDMatera: TfrPixCDMatera
               Left = 15
               Top = 30
               Width = 280
-              Height = 21
+              Height = 23
               TabOrder = 0
             end
             object edQRCodeValor: TEdit
               Left = 343
               Top = 30
               Width = 125
-              Height = 21
+              Height = 23
               TabOrder = 1
             end
             object cbQRCodeTipoCobranca: TComboBox
               Left = 487
               Top = 30
               Width = 143
-              Height = 21
+              Height = 23
               Style = csDropDownList
-              ItemHeight = 13
               ItemIndex = 0
               TabOrder = 2
               Text = 'Normal'
@@ -659,16 +668,15 @@ object frPixCDMatera: TfrPixCDMatera
               Left = 15
               Top = 75
               Width = 125
-              Height = 21
+              Height = 23
               TabOrder = 3
             end
             object cbQRCodeTipoMediatorFee: TComboBox
               Left = 155
               Top = 75
               Width = 143
-              Height = 21
+              Height = 23
               Style = csDropDownList
-              ItemHeight = 13
               ItemIndex = 0
               TabOrder = 4
               Text = 'Reais'
@@ -681,8 +689,8 @@ object frPixCDMatera: TfrPixCDMatera
           object pnQRCodeResult: TPanel
             Left = 0
             Top = 459
-            Width = 650
-            Height = 144
+            Width = 654
+            Height = 146
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
@@ -697,8 +705,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbCobCopiaECola: TLabel
               Left = 240
               Top = 10
-              Width = 60
-              Height = 13
+              Width = 72
+              Height = 15
               Caption = 'Copia e Cola'
               Color = clBtnFace
               ParentColor = False
@@ -706,7 +714,7 @@ object frPixCDMatera: TfrPixCDMatera
             object lbDisclaimerCallBack: TLabel
               Left = 240
               Top = 64
-              Width = 372
+              Width = 356
               Height = 96
               Alignment = taCenter
               Caption = 
@@ -729,14 +737,14 @@ object frPixCDMatera: TfrPixCDMatera
               Left = 240
               Top = 26
               Width = 363
-              Height = 21
+              Height = 23
               TabOrder = 0
             end
             object pnGerarQRCodeImg: TPanel
               Left = 0
               Top = 0
               Width = 232
-              Height = 144
+              Height = 146
               Align = alLeft
               BevelOuter = bvNone
               TabOrder = 1
@@ -753,7 +761,7 @@ object frPixCDMatera: TfrPixCDMatera
           object gbGerarQRCodeInfoAdicional: TGroupBox
             Left = 0
             Top = 112
-            Width = 650
+            Width = 654
             Height = 122
             Align = alTop
             Caption = 'Informa'#231#245'es Adicionais'
@@ -762,17 +770,17 @@ object frPixCDMatera: TfrPixCDMatera
             TabOrder = 2
             object pnQRCodeInfoAdicionais: TPanel
               Left = 2
-              Top = 15
-              Width = 646
-              Height = 105
+              Top = 17
+              Width = 650
+              Height = 103
               Align = alClient
               BevelOuter = bvNone
               TabOrder = 0
               object lbQRCodeADname: TLabel
                 Left = 14
                 Top = 3
-                Width = 28
-                Height = 13
+                Width = 34
+                Height = 15
                 Caption = 'Nome'
                 Color = clBtnFace
                 ParentColor = False
@@ -780,8 +788,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCodeADcontent: TLabel
                 Left = 256
                 Top = 3
-                Width = 46
-                Height = 13
+                Width = 54
+                Height = 15
                 Caption = 'Conte'#250'do'
                 Color = clBtnFace
                 ParentColor = False
@@ -789,8 +797,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCodeCallBack: TLabel
                 Left = 14
                 Top = 50
-                Width = 80
-                Height = 13
+                Width = 95
+                Height = 15
                 Hint = 
                   'A Flagship recomenda o uso do webhook para que a agencia tenha'#13#10 +
                   'os retornos das opera'#231#245'es em produ'#231#227'o, principalmente do '#13#10'detal' +
@@ -804,8 +812,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCoderecipientComment: TLabel
                 Left = 256
                 Top = 50
-                Width = 92
-                Height = 13
+                Width = 110
+                Height = 15
                 Caption = 'Recipient Comment'
                 Color = clBtnFace
                 ParentColor = False
@@ -814,14 +822,14 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 14
                 Top = 18
                 Width = 218
-                Height = 21
+                Height = 23
                 TabOrder = 0
               end
               object edQRCodeADcontent: TEdit
                 Left = 256
                 Top = 18
                 Width = 244
-                Height = 21
+                Height = 23
                 TabOrder = 1
               end
               object chkQRCodeADshowToPayer: TCheckBox
@@ -836,7 +844,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 14
                 Top = 65
                 Width = 218
-                Height = 21
+                Height = 23
                 Hint = 
                   'A Flagship recomenda o uso do webhook para que a agencia tenha'#13#10 +
                   'os retornos das opera'#231#245'es em produ'#231#227'o, principalmente do '#13#10'detal' +
@@ -849,7 +857,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 256
                 Top = 65
                 Width = 368
-                Height = 21
+                Height = 23
                 TabOrder = 4
               end
             end
@@ -857,7 +865,7 @@ object frPixCDMatera: TfrPixCDMatera
           object gbQRCodeDetalhesCobranca: TGroupBox
             Left = 0
             Top = 234
-            Width = 650
+            Width = 654
             Height = 225
             Align = alTop
             Caption = 'Detalhes da Cobran'#231'a'
@@ -865,17 +873,17 @@ object frPixCDMatera: TfrPixCDMatera
             Visible = False
             object pnQRCodeDetalhesCobranca: TPanel
               Left = 2
-              Top = 15
-              Width = 646
-              Height = 208
+              Top = 17
+              Width = 650
+              Height = 206
               Align = alClient
               BevelOuter = bvNone
               TabOrder = 0
               object lbQRCodedueDate: TLabel
                 Left = 185
                 Top = 103
-                Width = 41
-                Height = 13
+                Width = 47
+                Height = 15
                 Caption = 'dueDate'
                 Color = clBtnFace
                 ParentColor = False
@@ -883,8 +891,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCodePayercpfcnpj: TLabel
                 Left = 14
                 Top = 3
-                Width = 58
-                Height = 13
+                Width = 65
+                Height = 15
                 Caption = 'CPF / CNPJ'
                 Color = clBtnFace
                 ParentColor = False
@@ -892,8 +900,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCodePayerName: TLabel
                 Left = 185
                 Top = 3
-                Width = 28
-                Height = 13
+                Width = 34
+                Height = 15
                 Caption = 'Name'
                 Color = clBtnFace
                 ParentColor = False
@@ -901,8 +909,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCodepayerstreet: TLabel
                 Left = 14
                 Top = 53
-                Width = 54
-                Height = 13
+                Width = 64
+                Height = 15
                 Caption = 'Logradouro'
                 Color = clBtnFace
                 ParentColor = False
@@ -910,8 +918,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCodepayercity: TLabel
                 Left = 185
                 Top = 53
-                Width = 33
-                Height = 13
+                Width = 40
+                Height = 15
                 Caption = 'Cidade'
                 Color = clBtnFace
                 ParentColor = False
@@ -919,8 +927,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCodepayeruf: TLabel
                 Left = 330
                 Top = 53
-                Width = 14
-                Height = 13
+                Width = 16
+                Height = 15
                 Caption = 'UF'
                 Color = clBtnFace
                 ParentColor = False
@@ -928,8 +936,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbQRCodepayerCEP: TLabel
                 Left = 14
                 Top = 103
-                Width = 21
-                Height = 13
+                Width = 25
+                Height = 15
                 Caption = 'CEP'
                 Color = clBtnFace
                 ParentColor = False
@@ -939,33 +947,33 @@ object frPixCDMatera: TfrPixCDMatera
                 Top = 118
                 Width = 184
                 Height = 23
-                Date = 45114.706492662040000000
-                Time = 45114.706492662040000000
-                MaxDate = 2958465.000000000000000000
+                Date = 45114.000000000000000000
+                Time = 45114.000000000000000000
+                MaxDate = 2958465.999988426000000000
                 MinDate = -53780.000000000000000000
                 TabOrder = 0
               end
               object gbQRCodeDiscount: TGroupBox
-                Left = 367
+                Left = 371
                 Top = 0
                 Width = 120
-                Height = 208
+                Height = 206
                 Align = alRight
                 Caption = 'discounts*'
                 TabOrder = 1
                 object pnQRCodeDiscount: TPanel
                   Left = 2
-                  Top = 15
+                  Top = 17
                   Width = 116
-                  Height = 191
+                  Height = 187
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   object lbQRCodediscountsvaluePerc: TLabel
                     Left = 10
                     Top = 55
-                    Width = 48
-                    Height = 13
+                    Width = 54
+                    Height = 15
                     Caption = 'valuePerc'
                     Color = clBtnFace
                     ParentColor = False
@@ -973,8 +981,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbQRCodediscountsmodality: TLabel
                     Left = 10
                     Top = 3
-                    Width = 38
-                    Height = 13
+                    Width = 46
+                    Height = 15
                     Caption = 'modality'
                     Color = clBtnFace
                     ParentColor = False
@@ -982,8 +990,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbQRCodediscountsdate: TLabel
                     Left = 10
                     Top = 108
-                    Width = 21
-                    Height = 13
+                    Width = 24
+                    Height = 15
                     Caption = 'date'
                     Color = clBtnFace
                     ParentColor = False
@@ -991,8 +999,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbQRCodediscountsAviso: TLabel
                     Left = 11
                     Top = 149
-                    Width = 61
-                    Height = 26
+                    Width = 57
+                    Height = 45
                     Caption = '*somente em'#13#10'produ'#231#227'o'
                     Color = clBtnFace
                     Font.Charset = DEFAULT_CHARSET
@@ -1008,7 +1016,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 10
                     Top = 70
                     Width = 83
-                    Height = 21
+                    Height = 23
                     TabOrder = 0
                     Text = '5,00'
                   end
@@ -1016,7 +1024,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 10
                     Top = 18
                     Width = 83
-                    Height = 21
+                    Height = 23
                     TabOrder = 1
                     Text = '1'
                   end
@@ -1025,9 +1033,9 @@ object frPixCDMatera: TfrPixCDMatera
                     Top = 123
                     Width = 83
                     Height = 23
-                    Date = 45114.706492662040000000
-                    Time = 45114.706492662040000000
-                    MaxDate = 2958465.000000000000000000
+                    Date = 45114.000000000000000000
+                    Time = 45114.000000000000000000
+                    MaxDate = 2958465.999988426000000000
                     MinDate = -53780.000000000000000000
                     TabOrder = 2
                   end
@@ -1037,7 +1045,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 14
                 Top = 18
                 Width = 154
-                Height = 21
+                Height = 23
                 TabOrder = 2
                 OnKeyPress = edOnlyNumbersKeyPress
               end
@@ -1045,44 +1053,44 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 185
                 Top = 18
                 Width = 184
-                Height = 21
+                Height = 23
                 TabOrder = 3
               end
               object edQRCodepayerstreet: TEdit
                 Left = 14
                 Top = 68
                 Width = 154
-                Height = 21
+                Height = 23
                 TabOrder = 4
               end
               object edQRCodepayercity: TEdit
                 Left = 185
                 Top = 68
                 Width = 135
-                Height = 21
+                Height = 23
                 TabOrder = 5
               end
               object edQRCodepayeruf: TEdit
                 Left = 330
                 Top = 68
                 Width = 39
-                Height = 21
+                Height = 23
                 TabOrder = 6
               end
               object edQRCodepayerCEP: TEdit
                 Left = 14
                 Top = 118
                 Width = 154
-                Height = 21
+                Height = 23
                 TabOrder = 7
                 OnChange = edContaCriarCEPChange
                 OnKeyPress = edOnlyNumbersKeyPress
               end
               object pnQRCodeValues: TPanel
-                Left = 487
+                Left = 491
                 Top = 0
                 Width = 159
-                Height = 208
+                Height = 206
                 Align = alRight
                 BevelOuter = bvNone
                 TabOrder = 8
@@ -1096,17 +1104,17 @@ object frPixCDMatera: TfrPixCDMatera
                   TabOrder = 0
                   object pnQRCodeValuesFines: TPanel
                     Left = 2
-                    Top = 15
+                    Top = 17
                     Width = 155
-                    Height = 52
+                    Height = 50
                     Align = alClient
                     BevelOuter = bvNone
                     TabOrder = 0
                     object lbQRCodefinesvaluePerc: TLabel
                       Left = 10
                       Top = 3
-                      Width = 48
-                      Height = 13
+                      Width = 54
+                      Height = 15
                       Caption = 'valuePerc'
                       Color = clBtnFace
                       ParentColor = False
@@ -1114,8 +1122,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbQRCodefinesmodality: TLabel
                       Left = 85
                       Top = 3
-                      Width = 38
-                      Height = 13
+                      Width = 46
+                      Height = 15
                       Caption = 'modality'
                       Color = clBtnFace
                       ParentColor = False
@@ -1124,7 +1132,7 @@ object frPixCDMatera: TfrPixCDMatera
                       Left = 10
                       Top = 18
                       Width = 64
-                      Height = 21
+                      Height = 23
                       TabOrder = 0
                       Text = '5,00'
                     end
@@ -1132,7 +1140,7 @@ object frPixCDMatera: TfrPixCDMatera
                       Left = 85
                       Top = 18
                       Width = 61
-                      Height = 21
+                      Height = 23
                       TabOrder = 1
                       Text = '1'
                     end
@@ -1148,17 +1156,17 @@ object frPixCDMatera: TfrPixCDMatera
                   TabOrder = 1
                   object pnQRCodeValuesReduction: TPanel
                     Left = 2
-                    Top = 15
+                    Top = 17
                     Width = 155
-                    Height = 51
+                    Height = 49
                     Align = alClient
                     BevelOuter = bvNone
                     TabOrder = 0
                     object lbQRCodereductionvaluePerc: TLabel
                       Left = 10
                       Top = 3
-                      Width = 48
-                      Height = 13
+                      Width = 54
+                      Height = 15
                       Caption = 'valuePerc'
                       Color = clBtnFace
                       ParentColor = False
@@ -1166,8 +1174,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbQRCodereductionmodality: TLabel
                       Left = 85
                       Top = 3
-                      Width = 38
-                      Height = 13
+                      Width = 46
+                      Height = 15
                       Caption = 'modality'
                       Color = clBtnFace
                       ParentColor = False
@@ -1176,7 +1184,7 @@ object frPixCDMatera: TfrPixCDMatera
                       Left = 10
                       Top = 18
                       Width = 64
-                      Height = 21
+                      Height = 23
                       TabOrder = 0
                       Text = '5,00'
                     end
@@ -1184,7 +1192,7 @@ object frPixCDMatera: TfrPixCDMatera
                       Left = 85
                       Top = 18
                       Width = 61
-                      Height = 21
+                      Height = 23
                       TabOrder = 1
                       Text = '1'
                     end
@@ -1200,17 +1208,17 @@ object frPixCDMatera: TfrPixCDMatera
                   TabOrder = 2
                   object pnQRCodeValuesInterests: TPanel
                     Left = 2
-                    Top = 15
+                    Top = 17
                     Width = 155
-                    Height = 51
+                    Height = 49
                     Align = alClient
                     BevelOuter = bvNone
                     TabOrder = 0
                     object lbQRCodeinterestsvaluePerc: TLabel
                       Left = 10
                       Top = 3
-                      Width = 48
-                      Height = 13
+                      Width = 54
+                      Height = 15
                       Caption = 'valuePerc'
                       Color = clBtnFace
                       ParentColor = False
@@ -1218,8 +1226,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbQRCodeinterestsmodality: TLabel
                       Left = 85
                       Top = 3
-                      Width = 38
-                      Height = 13
+                      Width = 46
+                      Height = 15
                       Caption = 'modality'
                       Color = clBtnFace
                       ParentColor = False
@@ -1228,7 +1236,7 @@ object frPixCDMatera: TfrPixCDMatera
                       Left = 10
                       Top = 18
                       Width = 64
-                      Height = 21
+                      Height = 23
                       TabOrder = 0
                       Text = '5,00'
                     end
@@ -1236,7 +1244,7 @@ object frPixCDMatera: TfrPixCDMatera
                       Left = 85
                       Top = 18
                       Width = 61
-                      Height = 21
+                      Height = 23
                       TabOrder = 1
                       Text = '1'
                     end
@@ -1247,8 +1255,8 @@ object frPixCDMatera: TfrPixCDMatera
           end
           object pnQRCodeDetalhesCobrancaRodape: TPanel
             Left = 0
-            Top = 603
-            Width = 650
+            Top = 605
+            Width = 654
             Height = 34
             Align = alBottom
             BevelOuter = bvNone
@@ -1296,8 +1304,8 @@ object frPixCDMatera: TfrPixCDMatera
           object pgConsultas: TPageControl
             Left = 0
             Top = 0
-            Width = 650
-            Height = 637
+            Width = 654
+            Height = 639
             ActivePage = tsConsultaMediator
             Align = alClient
             TabOrder = 1
@@ -1306,27 +1314,27 @@ object frPixCDMatera: TfrPixCDMatera
               object gbConsultaTxID: TGroupBox
                 Left = 0
                 Top = 0
-                Width = 642
+                Width = 646
                 Height = 95
                 Align = alTop
                 Caption = 'Consulta de Transa'#231#245'es por transactionId'
                 TabOrder = 0
                 object pnConsultaTxID: TPanel
                   Left = 2
-                  Top = 15
-                  Width = 638
-                  Height = 78
+                  Top = 17
+                  Width = 642
+                  Height = 76
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   DesignSize = (
-                    638
-                    78)
+                    642
+                    76)
                   object lbConsultarCobTransactionID: TLabel
                     Left = 25
                     Top = 15
-                    Width = 70
-                    Height = 13
+                    Width = 80
+                    Height = 15
                     Caption = 'Transaction ID'
                     Color = clBtnFace
                     ParentColor = False
@@ -1339,7 +1347,7 @@ object frPixCDMatera: TfrPixCDMatera
                     TabOrder = 0
                   end
                   object btConsultarCob: TBitBtn
-                    Left = 487
+                    Left = 491
                     Top = 27
                     Width = 130
                     Height = 26
@@ -1356,7 +1364,7 @@ object frPixCDMatera: TfrPixCDMatera
               object pnConsultasExtratoEC: TPanel
                 Left = 0
                 Top = 0
-                Width = 642
+                Width = 646
                 Height = 216
                 Align = alTop
                 BevelOuter = bvNone
@@ -1364,27 +1372,27 @@ object frPixCDMatera: TfrPixCDMatera
                 object gbConsultaExtratoEC: TGroupBox
                   Left = 0
                   Top = 112
-                  Width = 642
+                  Width = 646
                   Height = 104
                   Align = alClient
                   Caption = 'Consulta de extrato - EC'
                   TabOrder = 0
                   object pnConsultaExtratoEC: TPanel
                     Left = 2
-                    Top = 15
-                    Width = 638
-                    Height = 87
+                    Top = 17
+                    Width = 642
+                    Height = 85
                     Align = alClient
                     BevelOuter = bvNone
                     TabOrder = 0
                     DesignSize = (
-                      638
-                      87)
+                      642
+                      85)
                     object lbConsultaStart1: TLabel
                       Left = 21
                       Top = 15
-                      Width = 22
-                      Height = 13
+                      Width = 25
+                      Height = 15
                       Caption = 'Start'
                       Color = clBtnFace
                       ParentColor = False
@@ -1392,8 +1400,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbconsultaEnding1: TLabel
                       Left = 165
                       Top = 15
-                      Width = 33
-                      Height = 13
+                      Width = 39
+                      Height = 15
                       Caption = 'Ending'
                       Color = clBtnFace
                       ParentColor = False
@@ -1403,9 +1411,9 @@ object frPixCDMatera: TfrPixCDMatera
                       Top = 32
                       Width = 130
                       Height = 23
-                      Date = 45209.651190625000000000
-                      Time = 45209.651190625000000000
-                      MaxDate = 2958465.000000000000000000
+                      Date = 45209.000000000000000000
+                      Time = 45209.000000000000000000
+                      MaxDate = 2958465.999988426000000000
                       MinDate = -53780.000000000000000000
                       TabOrder = 0
                     end
@@ -1414,14 +1422,14 @@ object frPixCDMatera: TfrPixCDMatera
                       Top = 32
                       Width = 130
                       Height = 23
-                      Date = 45209.651190625000000000
-                      Time = 45209.651190625000000000
-                      MaxDate = 2958465.000000000000000000
+                      Date = 45209.000000000000000000
+                      Time = 45209.000000000000000000
+                      MaxDate = 2958465.999988426000000000
                       MinDate = -53780.000000000000000000
                       TabOrder = 1
                     end
                     object btConsultarExtratoEC: TBitBtn
-                      Left = 503
+                      Left = 507
                       Top = 29
                       Width = 130
                       Height = 26
@@ -1435,27 +1443,27 @@ object frPixCDMatera: TfrPixCDMatera
                 object gbconsultaSaldoEC: TGroupBox
                   Left = 0
                   Top = 0
-                  Width = 642
+                  Width = 646
                   Height = 112
                   Align = alTop
                   Caption = 'Consulta de saldo - EC'
                   TabOrder = 1
                   object pnConsultaSaldoEC: TPanel
                     Left = 2
-                    Top = 15
-                    Width = 638
-                    Height = 95
+                    Top = 17
+                    Width = 642
+                    Height = 93
                     Align = alClient
                     BevelOuter = bvNone
                     TabOrder = 0
                     DesignSize = (
-                      638
-                      95)
+                      642
+                      93)
                     object lbAccavaliable: TLabel
-                      Left = 487
+                      Left = 493
                       Top = 23
-                      Width = 120
-                      Height = 37
+                      Width = 114
+                      Height = 38
                       Alignment = taRightJustify
                       Caption = 'R$ 0,00'
                       Color = clBtnFace
@@ -1471,8 +1479,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbConsultaSaldoECAvaliable: TLabel
                       Left = 344
                       Top = 37
-                      Width = 86
-                      Height = 25
+                      Width = 84
+                      Height = 23
                       Caption = 'Avaliable:'
                       Color = clBtnFace
                       Font.Charset = DEFAULT_CHARSET
@@ -1485,7 +1493,7 @@ object frPixCDMatera: TfrPixCDMatera
                       Visible = False
                     end
                     object btConsultarSaldoEC: TBitBtn
-                      Left = 5
+                      Left = 9
                       Top = 32
                       Width = 130
                       Height = 26
@@ -1500,7 +1508,7 @@ object frPixCDMatera: TfrPixCDMatera
               object pnAccExtrato: TPanel
                 Left = 0
                 Top = 216
-                Width = 642
+                Width = 646
                 Height = 393
                 Align = alClient
                 BevelOuter = bvNone
@@ -1508,8 +1516,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object sgAccExtrato: TStringGrid
                   Left = 0
                   Top = 0
-                  Width = 658
-                  Height = 431
+                  Width = 646
+                  Height = 393
                   Align = alClient
                   ColCount = 6
                   FixedCols = 0
@@ -1529,27 +1537,27 @@ object frPixCDMatera: TfrPixCDMatera
               object gbConsultaExtratoIntegrador: TGroupBox
                 Left = 0
                 Top = 144
-                Width = 642
+                Width = 646
                 Height = 140
                 Align = alTop
                 Caption = 'Consulta de extrato - Integrador (Mediator)'
                 TabOrder = 0
                 object pnConsultaExtratoIntegrador: TPanel
                   Left = 2
-                  Top = 15
-                  Width = 638
-                  Height = 123
+                  Top = 17
+                  Width = 642
+                  Height = 121
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   DesignSize = (
-                    638
-                    123)
+                    642
+                    121)
                   object lbConsultarEXIntegradorAccountID: TLabel
                     Left = 25
                     Top = 15
-                    Width = 96
-                    Height = 13
+                    Width = 105
+                    Height = 15
                     Caption = 'Mediator Account Id'
                     Color = clBtnFace
                     ParentColor = False
@@ -1557,8 +1565,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbConsultaStart: TLabel
                     Left = 25
                     Top = 64
-                    Width = 22
-                    Height = 13
+                    Width = 25
+                    Height = 15
                     Caption = 'Start'
                     Color = clBtnFace
                     ParentColor = False
@@ -1566,8 +1574,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbconsultaEnding: TLabel
                     Left = 169
                     Top = 64
-                    Width = 33
-                    Height = 13
+                    Width = 39
+                    Height = 15
                     Caption = 'Ending'
                     Color = clBtnFace
                     ParentColor = False
@@ -1584,9 +1592,9 @@ object frPixCDMatera: TfrPixCDMatera
                     Top = 79
                     Width = 130
                     Height = 23
-                    Date = 45209.651190625000000000
-                    Time = 45209.651190625000000000
-                    MaxDate = 2958465.000000000000000000
+                    Date = 45209.000000000000000000
+                    Time = 45209.000000000000000000
+                    MaxDate = 2958465.999988426000000000
                     MinDate = -53780.000000000000000000
                     TabOrder = 1
                   end
@@ -1595,14 +1603,14 @@ object frPixCDMatera: TfrPixCDMatera
                     Top = 79
                     Width = 130
                     Height = 23
-                    Date = 45209.651190625000000000
-                    Time = 45209.651190625000000000
-                    MaxDate = 2958465.000000000000000000
+                    Date = 45209.000000000000000000
+                    Time = 45209.000000000000000000
+                    MaxDate = 2958465.999988426000000000
                     MinDate = -53780.000000000000000000
                     TabOrder = 2
                   end
                   object btConsultarExtratoMediator: TBitBtn
-                    Left = 503
+                    Left = 507
                     Top = 27
                     Width = 130
                     Height = 26
@@ -1616,27 +1624,27 @@ object frPixCDMatera: TfrPixCDMatera
               object gbconsultaSaldoIntegrador: TGroupBox
                 Left = 0
                 Top = 0
-                Width = 642
+                Width = 646
                 Height = 144
                 Align = alTop
                 Caption = 'Consulta de saldo - Integrador (Mediator)'
                 TabOrder = 1
                 object pnConsultaSaldoIntegrador: TPanel
                   Left = 2
-                  Top = 15
-                  Width = 638
-                  Height = 127
+                  Top = 17
+                  Width = 642
+                  Height = 125
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   DesignSize = (
-                    638
-                    127)
+                    642
+                    125)
                   object lbConsultarSaldoIntegradorAccountID: TLabel
                     Left = 25
                     Top = 15
-                    Width = 96
-                    Height = 13
+                    Width = 105
+                    Height = 15
                     Caption = 'Mediator Account Id'
                     Color = clBtnFace
                     ParentColor = False
@@ -1644,8 +1652,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbMediatoravaliableStr: TLabel
                     Left = 25
                     Top = 80
-                    Width = 83
-                    Height = 25
+                    Width = 82
+                    Height = 23
                     Caption = 'avaliable:'
                     Color = clBtnFace
                     Font.Charset = DEFAULT_CHARSET
@@ -1658,10 +1666,10 @@ object frPixCDMatera: TfrPixCDMatera
                     Visible = False
                   end
                   object lbMediatoravaliable: TLabel
-                    Left = 179
+                    Left = 185
                     Top = 66
-                    Width = 120
-                    Height = 37
+                    Width = 114
+                    Height = 38
                     Alignment = taRightJustify
                     Caption = 'R$ 0,00'
                     Color = clBtnFace
@@ -1682,7 +1690,7 @@ object frPixCDMatera: TfrPixCDMatera
                     TabOrder = 0
                   end
                   object btConsultarSaldoMediator: TBitBtn
-                    Left = 487
+                    Left = 491
                     Top = 27
                     Width = 130
                     Height = 26
@@ -1696,7 +1704,7 @@ object frPixCDMatera: TfrPixCDMatera
               object pnMediatorExtrato: TPanel
                 Left = 0
                 Top = 284
-                Width = 642
+                Width = 646
                 Height = 325
                 Align = alClient
                 BevelOuter = bvNone
@@ -1704,8 +1712,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object sgMediatorExtrato: TStringGrid
                   Left = 0
                   Top = 0
-                  Width = 658
-                  Height = 363
+                  Width = 646
+                  Height = 325
                   Align = alClient
                   ColCount = 6
                   FixedCols = 0
@@ -1729,15 +1737,15 @@ object frPixCDMatera: TfrPixCDMatera
           object gbDevolucao: TGroupBox
             Left = 0
             Top = 64
-            Width = 650
-            Height = 573
+            Width = 654
+            Height = 575
             Align = alClient
             Caption = 'Efetuar Devolu'#231#227'o'
             TabOrder = 0
             object pnDevolucao: TPanel
               Left = 2
-              Top = 15
-              Width = 646
+              Top = 17
+              Width = 650
               Height = 556
               Align = alClient
               BevelOuter = bvNone
@@ -1745,8 +1753,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbDevolucaoCobTransactionID: TLabel
                 Left = 15
                 Top = 25
-                Width = 70
-                Height = 13
+                Width = 80
+                Height = 15
                 Caption = 'Transaction ID'
                 Color = clBtnFace
                 ParentColor = False
@@ -1754,8 +1762,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbDevolucaoValor: TLabel
                 Left = 176
                 Top = 73
-                Width = 24
-                Height = 13
+                Width = 27
+                Height = 15
                 Caption = 'Valor'
                 Color = clBtnFace
                 ParentColor = False
@@ -1763,8 +1771,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbDevolucaoReasonCode: TLabel
                 Left = 15
                 Top = 73
-                Width = 101
-                Height = 13
+                Width = 116
+                Height = 15
                 Caption = 'Codigo da devolu'#231#227'o'
                 Color = clBtnFace
                 ParentColor = False
@@ -1772,8 +1780,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbDevolucaoExternalID: TLabel
                 Left = 337
                 Top = 25
-                Width = 52
-                Height = 13
+                Width = 59
+                Height = 15
                 Caption = 'External ID'
                 Color = clBtnFace
                 ParentColor = False
@@ -1789,8 +1797,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbMediatorFeeDevolucao: TLabel
                 Left = 337
                 Top = 73
-                Width = 79
-                Height = 13
+                Width = 90
+                Height = 15
                 Caption = 'Mediator Fee R$'
                 Color = clBtnFace
                 ParentColor = False
@@ -1798,8 +1806,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbTipoMediatorFeeDevolucao: TLabel
                 Left = 498
                 Top = 73
-                Width = 104
-                Height = 13
+                Width = 118
+                Height = 15
                 Caption = 'Tipo de Mediator  Fee'
                 Color = clBtnFace
                 ParentColor = False
@@ -1828,7 +1836,7 @@ object frPixCDMatera: TfrPixCDMatera
               object pnDevolucaoBotoes: TPanel
                 Left = 0
                 Top = 508
-                Width = 646
+                Width = 650
                 Height = 48
                 Align = alBottom
                 BevelOuter = bvNone
@@ -1872,9 +1880,8 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 498
                 Top = 89
                 Width = 147
-                Height = 21
+                Height = 23
                 Style = csDropDownList
-                ItemHeight = 13
                 ItemIndex = 0
                 TabOrder = 5
                 Text = 'Reais'
@@ -1887,8 +1894,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 15
                 Top = 89
                 Width = 147
-                Height = 21
-                ItemHeight = 0
+                Height = 23
                 TabOrder = 6
                 OnDropDown = cbDevolucaoReasonCodeDropDown
               end
@@ -1897,7 +1903,7 @@ object frPixCDMatera: TfrPixCDMatera
           object pnMotivosDevolucao: TPanel
             Left = 0
             Top = 0
-            Width = 650
+            Width = 654
             Height = 64
             Align = alTop
             BevelOuter = bvNone
@@ -1932,18 +1938,18 @@ object frPixCDMatera: TfrPixCDMatera
               Caption = 'Consultar alias do destinat'#225'rio'
               TabOrder = 0
               object pnConsultaAliasRetirada: TPanel
-                Left = 0
-                Top = 0
+                Left = 2
+                Top = 17
                 Width = 630
-                Height = 113
+                Height = 114
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
                 object lbConsultarCobAccountID2: TLabel
                   Left = 15
                   Top = 10
-                  Width = 52
-                  Height = 13
+                  Width = 56
+                  Height = 15
                   Caption = 'Account Id'
                   Color = clBtnFace
                   ParentColor = False
@@ -1951,8 +1957,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbConsultarCobTransactionID3: TLabel
                   Left = 323
                   Top = 11
-                  Width = 81
-                  Height = 13
+                  Width = 97
+                  Height = 15
                   Caption = 'Alias Destinat'#225'rio'
                   Color = clBtnFace
                   ParentColor = False
@@ -2010,25 +2016,25 @@ object frPixCDMatera: TfrPixCDMatera
               TabOrder = 1
               object gbPIXRetirada: TGroupBox
                 Left = 2
-                Top = 129
+                Top = 131
                 Width = 630
                 Height = 145
                 Align = alTop
                 Caption = 'PIX'
                 TabOrder = 0
                 object pnPIXRetirada: TPanel
-                  Left = 0
-                  Top = 0
+                  Left = 2
+                  Top = 17
                   Width = 626
-                  Height = 125
+                  Height = 126
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   object lbRetiradaAliasDestinatario: TLabel
                     Left = 15
                     Top = 10
-                    Width = 81
-                    Height = 13
+                    Width = 97
+                    Height = 15
                     Caption = 'Alias Destinat'#225'rio'
                     Color = clBtnFace
                     ParentColor = False
@@ -2036,8 +2042,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaendToEndId: TLabel
                     Left = 323
                     Top = 10
-                    Width = 71
-                    Height = 13
+                    Width = 78
+                    Height = 15
                     Caption = 'End To End ID'
                     Color = clBtnFace
                     ParentColor = False
@@ -2045,8 +2051,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaPSPId: TLabel
                     Left = 15
                     Top = 65
-                    Width = 33
-                    Height = 13
+                    Width = 37
+                    Height = 15
                     Caption = 'PSP Id'
                     Color = clBtnFace
                     ParentColor = False
@@ -2054,8 +2060,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaAccountdestinationBranch: TLabel
                     Left = 153
                     Top = 65
-                    Width = 133
-                    Height = 13
+                    Width = 151
+                    Height = 15
                     Caption = 'Account Destination Branch'
                     Color = clBtnFace
                     ParentColor = False
@@ -2063,8 +2069,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaAccountDestinationAccount: TLabel
                     Left = 464
                     Top = 65
-                    Width = 139
-                    Height = 13
+                    Width = 154
+                    Height = 15
                     Caption = 'Account Destination Account'
                     Color = clBtnFace
                     ParentColor = False
@@ -2072,8 +2078,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaTaxID: TLabel
                     Left = 323
                     Top = 65
-                    Width = 27
-                    Height = 13
+                    Width = 28
+                    Height = 15
                     Caption = 'TaxId'
                     Color = clBtnFace
                     ParentColor = False
@@ -2124,7 +2130,7 @@ object frPixCDMatera: TfrPixCDMatera
               end
               object pnlRetirada: TPanel
                 Left = 2
-                Top = 15
+                Top = 17
                 Width = 630
                 Height = 114
                 Align = alTop
@@ -2133,8 +2139,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbRetiradaExternalID: TLabel
                   Left = 17
                   Top = 10
-                  Width = 52
-                  Height = 13
+                  Width = 59
+                  Height = 15
                   Caption = 'External ID'
                   Color = clBtnFace
                   ParentColor = False
@@ -2150,8 +2156,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbRetiradaTipoRetirada: TLabel
                   Left = 325
                   Top = 10
-                  Width = 79
-                  Height = 13
+                  Width = 91
+                  Height = 15
                   Caption = 'Tipo de Retirada'
                   Color = clBtnFace
                   ParentColor = False
@@ -2159,8 +2165,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbRetiradaMediatorFee: TLabel
                   Left = 155
                   Top = 65
-                  Width = 62
-                  Height = 13
+                  Width = 71
+                  Height = 15
                   Caption = 'Mediator Fee'
                   Color = clBtnFace
                   ParentColor = False
@@ -2168,8 +2174,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbRetiradaValor: TLabel
                   Left = 17
                   Top = 65
-                  Width = 24
-                  Height = 13
+                  Width = 27
+                  Height = 15
                   Caption = 'Valor'
                   Color = clBtnFace
                   ParentColor = False
@@ -2185,9 +2191,8 @@ object frPixCDMatera: TfrPixCDMatera
                   Left = 325
                   Top = 25
                   Width = 282
-                  Height = 21
+                  Height = 23
                   Style = csDropDownList
-                  ItemHeight = 13
                   ItemIndex = 0
                   TabOrder = 1
                   Text = 'PIX'
@@ -2213,7 +2218,7 @@ object frPixCDMatera: TfrPixCDMatera
               end
               object pnRetiradaBotoes: TPanel
                 Left = 2
-                Top = 419
+                Top = 421
                 Width = 630
                 Height = 61
                 Align = alTop
@@ -2249,7 +2254,7 @@ object frPixCDMatera: TfrPixCDMatera
               end
               object gbTEDRetirada: TGroupBox
                 Left = 2
-                Top = 274
+                Top = 276
                 Width = 630
                 Height = 145
                 Align = alTop
@@ -2258,17 +2263,17 @@ object frPixCDMatera: TfrPixCDMatera
                 Visible = False
                 object pnTEDRetirada: TPanel
                   Left = 2
-                  Top = 15
+                  Top = 17
                   Width = 626
-                  Height = 128
+                  Height = 126
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   object lbRetiradaTEDBankDestination: TLabel
                     Left = 15
                     Top = 10
-                    Width = 81
-                    Height = 13
+                    Width = 94
+                    Height = 15
                     Caption = 'Bank Destination'
                     Color = clBtnFace
                     ParentColor = False
@@ -2276,8 +2281,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaTEDName: TLabel
                     Left = 323
                     Top = 10
-                    Width = 28
-                    Height = 13
+                    Width = 34
+                    Height = 15
                     Caption = 'Name'
                     Color = clBtnFace
                     ParentColor = False
@@ -2285,8 +2290,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaPersonType: TLabel
                     Left = 15
                     Top = 65
-                    Width = 60
-                    Height = 13
+                    Width = 68
+                    Height = 15
                     Caption = 'Person Type'
                     Color = clBtnFace
                     ParentColor = False
@@ -2294,8 +2299,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaTEDTaxID: TLabel
                     Left = 301
                     Top = 65
-                    Width = 27
-                    Height = 13
+                    Width = 28
+                    Height = 15
                     Caption = 'TaxId'
                     Color = clBtnFace
                     ParentColor = False
@@ -2303,8 +2308,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaTEDBranchDestination: TLabel
                     Left = 383
                     Top = 65
-                    Width = 90
-                    Height = 13
+                    Width = 105
+                    Height = 15
                     Caption = 'Branch Destination'
                     Color = clBtnFace
                     ParentColor = False
@@ -2312,8 +2317,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaTEDAccountDestination: TLabel
                     Left = 497
                     Top = 65
-                    Width = 96
-                    Height = 13
+                    Width = 109
+                    Height = 15
                     Caption = 'Account Destination'
                     Color = clBtnFace
                     ParentColor = False
@@ -2321,8 +2326,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbRetiradaAccountTypeDestination: TLabel
                     Left = 153
                     Top = 65
-                    Width = 123
-                    Height = 13
+                    Width = 137
+                    Height = 15
                     Caption = 'Account Type Destination'
                     Color = clBtnFace
                     ParentColor = False
@@ -2366,8 +2371,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 15
                     Top = 80
                     Width = 125
-                    Height = 21
-                    ItemHeight = 13
+                    Height = 23
                     ItemIndex = 0
                     TabOrder = 5
                     Text = 'PERSON'
@@ -2379,8 +2383,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 153
                     Top = 80
                     Width = 135
-                    Height = 21
-                    ItemHeight = 13
+                    Height = 23
                     ItemIndex = 0
                     TabOrder = 6
                     Text = 'CC'
@@ -2396,25 +2399,26 @@ object frPixCDMatera: TfrPixCDMatera
         end
       end
       object pnLogs1: TPanel
-        Left = 663
+        Left = 667
         Top = 0
         Width = 355
-        Height = 677
+        Height = 679
         Align = alRight
         TabOrder = 1
         object lbLog1: TLabel
           Left = 1
           Top = 1
-          Width = 102
-          Height = 13
+          Width = 353
+          Height = 15
           Align = alTop
           Caption = 'Log das Requisi'#231#245'es:'
           Color = clBtnFace
           ParentColor = False
+          ExplicitWidth = 121
         end
         object mmLogOperacoes: TMemo
           Left = 1
-          Top = 14
+          Top = 16
           Width = 353
           Height = 630
           Align = alClient
@@ -2424,7 +2428,7 @@ object frPixCDMatera: TfrPixCDMatera
         end
         object pnLogsRodape1: TPanel
           Left = 1
-          Top = 644
+          Top = 646
           Width = 353
           Height = 32
           Align = alBottom
@@ -2449,17 +2453,19 @@ object frPixCDMatera: TfrPixCDMatera
       Caption = 'Contas/Chaves PIX'
       ImageIndex = 3
       object Splitter1: TSplitter
-        Left = 1013
+        Left = 1017
         Top = 0
         Width = 5
-        Height = 677
+        Height = 679
         Align = alRight
+        ExplicitLeft = 1013
+        ExplicitHeight = 677
       end
       object pgContasEChaves: TPageControl
         Left = 0
         Top = 0
-        Width = 658
-        Height = 677
+        Width = 662
+        Height = 679
         ActivePage = tsContaCriar
         Align = alClient
         Images = ImageList1
@@ -2472,16 +2478,16 @@ object frPixCDMatera: TfrPixCDMatera
           object pnContaCriar: TPanel
             Left = 0
             Top = 0
-            Width = 650
-            Height = 592
+            Width = 654
+            Height = 594
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
             object lbContaCriarExternalID: TLabel
               Left = 20
               Top = 25
-              Width = 81
-              Height = 13
+              Width = 94
+              Height = 15
               Caption = 'External Identifier'
               Color = clBtnFace
               ParentColor = False
@@ -2497,8 +2503,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbContaCriarTipoCliente: TLabel
               Left = 301
               Top = 25
-              Width = 56
-              Height = 13
+              Width = 66
+              Height = 15
               Caption = 'Tipo Cliente'
               Color = clBtnFace
               ParentColor = False
@@ -2506,8 +2512,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbContaCriarTipoConta: TLabel
               Left = 467
               Top = 25
-              Width = 67
-              Height = 13
+              Width = 77
+              Height = 15
               Caption = 'Tipo da Conta'
               Color = clBtnFace
               ParentColor = False
@@ -2515,8 +2521,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbContaCriarNomeCliente: TLabel
               Left = 20
               Top = 75
-              Width = 63
-              Height = 13
+              Width = 76
+              Height = 15
               Caption = 'Nome Cliente'
               Color = clBtnFace
               ParentColor = False
@@ -2524,8 +2530,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbContaCriarCelular: TLabel
               Left = 272
               Top = 75
-              Width = 32
-              Height = 13
+              Width = 40
+              Height = 15
               Caption = 'Celular'
               Color = clBtnFace
               ParentColor = False
@@ -2533,8 +2539,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbContaCriar: TLabel
               Left = 381
               Top = 75
-              Width = 28
-              Height = 13
+              Width = 36
+              Height = 15
               Caption = 'E-mail'
               Color = clBtnFace
               ParentColor = False
@@ -2542,8 +2548,8 @@ object frPixCDMatera: TfrPixCDMatera
             object lbCNPJ: TLabel
               Left = 537
               Top = 75
-              Width = 27
-              Height = 13
+              Width = 32
+              Height = 15
               Caption = 'CNPJ'
               Color = clBtnFace
               ParentColor = False
@@ -2551,7 +2557,7 @@ object frPixCDMatera: TfrPixCDMatera
             object lbAvisoAberturaConta: TLabel
               Left = 64
               Top = 536
-              Width = 590
+              Width = 543
               Height = 48
               Alignment = taCenter
               Caption = 
@@ -2578,9 +2584,9 @@ object frPixCDMatera: TfrPixCDMatera
               Visible = False
               object pnImagem: TPanel
                 Left = 2
-                Top = 15
+                Top = 17
                 Width = 618
-                Height = 241
+                Height = 239
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 1
@@ -2588,12 +2594,13 @@ object frPixCDMatera: TfrPixCDMatera
                   Left = 0
                   Top = 37
                   Width = 618
-                  Height = 204
+                  Height = 202
                   Align = alClient
                   AutoSize = True
                   Center = True
                   Proportional = True
                   Stretch = True
+                  ExplicitHeight = 204
                 end
                 object pnRodapeImagem: TPanel
                   Left = 0
@@ -2626,9 +2633,9 @@ object frPixCDMatera: TfrPixCDMatera
               end
               object pcContaCriarDadosAdicionais: TPageControl
                 Left = 2
-                Top = 15
+                Top = 17
                 Width = 618
-                Height = 241
+                Height = 239
                 ActivePage = tsContaCriarCorporate
                 Align = alClient
                 TabOrder = 0
@@ -2639,15 +2646,15 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 0
                     Top = 0
                     Width = 610
-                    Height = 213
+                    Height = 209
                     Align = alClient
                     BevelOuter = bvNone
                     TabOrder = 0
                     object lbContaCriarFundacao: TLabel
                       Left = 10
                       Top = 5
-                      Width = 74
-                      Height = 13
+                      Width = 84
+                      Height = 15
                       Caption = 'Data Funda'#231#227'o'
                       Color = clBtnFace
                       ParentColor = False
@@ -2655,8 +2662,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarNomeEmpresa: TLabel
                       Left = 103
                       Top = 5
-                      Width = 72
-                      Height = 13
+                      Width = 88
+                      Height = 15
                       Caption = 'Nome Empresa'
                       Color = clBtnFace
                       ParentColor = False
@@ -2664,8 +2671,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteCelular: TLabel
                       Left = 10
                       Top = 55
-                      Width = 32
-                      Height = 13
+                      Width = 40
+                      Height = 15
                       Caption = 'Celular'
                       Color = clBtnFace
                       ParentColor = False
@@ -2673,8 +2680,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentante: TLabel
                       Left = 103
                       Top = 55
-                      Width = 116
-                      Height = 13
+                      Width = 136
+                      Height = 15
                       Caption = 'Nome do Representante'
                       Color = clBtnFace
                       ParentColor = False
@@ -2682,8 +2689,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteMae: TLabel
                       Left = 242
                       Top = 55
-                      Width = 67
-                      Height = 13
+                      Width = 77
+                      Height = 15
                       Caption = 'Nome da M'#227'e'
                       Color = clBtnFace
                       ParentColor = False
@@ -2691,8 +2698,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteCPF: TLabel
                       Left = 365
                       Top = 5
-                      Width = 93
-                      Height = 13
+                      Width = 109
+                      Height = 15
                       Caption = 'CPF Representante'
                       Color = clBtnFace
                       ParentColor = False
@@ -2700,8 +2707,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteEmail: TLabel
                       Left = 365
                       Top = 55
-                      Width = 25
-                      Height = 13
+                      Width = 32
+                      Height = 15
                       Caption = 'Email'
                       Color = clBtnFace
                       ParentColor = False
@@ -2709,8 +2716,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarNascimento: TLabel
                       Left = 486
                       Top = 5
-                      Width = 83
-                      Height = 13
+                      Width = 96
+                      Height = 15
                       Caption = 'Nasc. Represent.'
                       Color = clBtnFace
                       ParentColor = False
@@ -2718,8 +2725,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteCEP: TLabel
                       Left = 10
                       Top = 105
-                      Width = 21
-                      Height = 13
+                      Width = 25
+                      Height = 15
                       Caption = 'CEP'
                       Color = clBtnFace
                       ParentColor = False
@@ -2727,8 +2734,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteLogradouro: TLabel
                       Left = 103
                       Top = 105
-                      Width = 54
-                      Height = 13
+                      Width = 64
+                      Height = 15
                       Caption = 'Logradouro'
                       Color = clBtnFace
                       ParentColor = False
@@ -2736,8 +2743,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteNumero: TLabel
                       Left = 242
                       Top = 105
-                      Width = 37
-                      Height = 13
+                      Width = 45
+                      Height = 15
                       Caption = 'N'#250'mero'
                       Color = clBtnFace
                       ParentColor = False
@@ -2745,8 +2752,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteBairro: TLabel
                       Left = 314
                       Top = 105
-                      Width = 27
-                      Height = 13
+                      Width = 33
+                      Height = 15
                       Caption = 'Bairro'
                       Color = clBtnFace
                       ParentColor = False
@@ -2754,8 +2761,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteCidade: TLabel
                       Left = 427
                       Top = 105
-                      Width = 33
-                      Height = 13
+                      Width = 40
+                      Height = 15
                       Caption = 'Cidade'
                       Color = clBtnFace
                       ParentColor = False
@@ -2763,8 +2770,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteUF: TLabel
                       Left = 544
                       Top = 105
-                      Width = 14
-                      Height = 13
+                      Width = 16
+                      Height = 15
                       Caption = 'UF'
                       Color = clBtnFace
                       ParentColor = False
@@ -2772,8 +2779,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteFoto: TLabel
                       Left = 10
                       Top = 155
-                      Width = 21
-                      Height = 13
+                      Width = 24
+                      Height = 15
                       Caption = 'Foto'
                       Color = clBtnFace
                       ParentColor = False
@@ -2797,8 +2804,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteRGFrente: TLabel
                       Left = 208
                       Top = 155
-                      Width = 79
-                      Height = 13
+                      Width = 91
+                      Height = 15
                       Caption = 'Foto RG (Frente)'
                       Color = clBtnFace
                       ParentColor = False
@@ -2822,8 +2829,8 @@ object frPixCDMatera: TfrPixCDMatera
                     object lbContaCriarRepresentanteRGVerso: TLabel
                       Left = 402
                       Top = 155
-                      Width = 76
-                      Height = 13
+                      Width = 87
+                      Height = 15
                       Caption = 'Foto RG (Verso)'
                       Color = clBtnFace
                       ParentColor = False
@@ -2939,9 +2946,9 @@ object frPixCDMatera: TfrPixCDMatera
                       Top = 20
                       Width = 83
                       Height = 23
-                      Date = 45114.706492662040000000
-                      Time = 45114.706492662040000000
-                      MaxDate = 2958465.000000000000000000
+                      Date = 45114.000000000000000000
+                      Time = 45114.000000000000000000
+                      MaxDate = 2958465.999988426000000000
                       MinDate = -53780.000000000000000000
                       TabOrder = 0
                     end
@@ -2950,9 +2957,9 @@ object frPixCDMatera: TfrPixCDMatera
                       Top = 20
                       Width = 111
                       Height = 23
-                      Date = 45114.706492662040000000
-                      Time = 45114.706492662040000000
-                      MaxDate = 2958465.000000000000000000
+                      Date = 45114.000000000000000000
+                      Time = 45114.000000000000000000
+                      MaxDate = 2958465.999988426000000000
                       MinDate = -53780.000000000000000000
                       TabOrder = 3
                     end
@@ -3036,18 +3043,18 @@ object frPixCDMatera: TfrPixCDMatera
               Caption = 'Endere'#231'o'
               TabOrder = 1
               object pnContaCriarEndereco: TPanel
-                Left = 0
-                Top = 0
+                Left = 2
+                Top = 17
                 Width = 618
-                Height = 100
+                Height = 101
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
                 object lbContaCriarCEP: TLabel
                   Left = 16
                   Top = 0
-                  Width = 21
-                  Height = 13
+                  Width = 25
+                  Height = 15
                   Caption = 'CEP'
                   Color = clBtnFace
                   ParentColor = False
@@ -3055,8 +3062,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbContaCriarLogradouro: TLabel
                   Left = 198
                   Top = 0
-                  Width = 54
-                  Height = 13
+                  Width = 64
+                  Height = 15
                   Caption = 'Logradouro'
                   Color = clBtnFace
                   ParentColor = False
@@ -3064,8 +3071,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbContaCriarNumero: TLabel
                   Left = 518
                   Top = 0
-                  Width = 37
-                  Height = 13
+                  Width = 45
+                  Height = 15
                   Caption = 'N'#250'mero'
                   Color = clBtnFace
                   ParentColor = False
@@ -3073,8 +3080,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbContaCriarBairro: TLabel
                   Left = 198
                   Top = 50
-                  Width = 27
-                  Height = 13
+                  Width = 33
+                  Height = 15
                   Caption = 'Bairro'
                   Color = clBtnFace
                   ParentColor = False
@@ -3082,8 +3089,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbContaCriarComplemento: TLabel
                   Left = 16
                   Top = 50
-                  Width = 64
-                  Height = 13
+                  Width = 79
+                  Height = 15
                   Caption = 'Complemento'
                   Color = clBtnFace
                   ParentColor = False
@@ -3091,8 +3098,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbContaCriarCidade: TLabel
                   Left = 358
                   Top = 50
-                  Width = 33
-                  Height = 13
+                  Width = 40
+                  Height = 15
                   Caption = 'Cidade'
                   Color = clBtnFace
                   ParentColor = False
@@ -3100,8 +3107,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbContaCriarUF: TLabel
                   Left = 518
                   Top = 50
-                  Width = 14
-                  Height = 13
+                  Width = 16
+                  Height = 15
                   Caption = 'UF'
                   Color = clBtnFace
                   ParentColor = False
@@ -3170,9 +3177,8 @@ object frPixCDMatera: TfrPixCDMatera
               Left = 300
               Top = 40
               Width = 152
-              Height = 21
+              Height = 23
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 3
               OnChange = cbContaCriarTipoClienteChange
             end
@@ -3180,9 +3186,8 @@ object frPixCDMatera: TfrPixCDMatera
               Left = 467
               Top = 40
               Width = 175
-              Height = 21
+              Height = 23
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 4
             end
             object edContaCriarNomeCliente: TEdit
@@ -3217,17 +3222,17 @@ object frPixCDMatera: TfrPixCDMatera
           end
           object pnContaCriarRodape: TPanel
             Left = 0
-            Top = 592
-            Width = 650
+            Top = 594
+            Width = 654
             Height = 45
             Align = alBottom
             BevelOuter = bvNone
             TabOrder = 1
             DesignSize = (
-              650
+              654
               45)
             object btContaCriar: TBitBtn
-              Left = 521
+              Left = 525
               Top = 13
               Width = 112
               Height = 26
@@ -3237,7 +3242,7 @@ object frPixCDMatera: TfrPixCDMatera
               OnClick = btContaCriarClick
             end
             object btContaCriarPreencherDados: TBitBtn
-              Left = 199
+              Left = 201
               Top = 13
               Width = 186
               Height = 26
@@ -3247,7 +3252,7 @@ object frPixCDMatera: TfrPixCDMatera
               OnClick = btContaCriarPreencherDadosClick
             end
             object btContaCriarLimparDados: TBitBtn
-              Left = 399
+              Left = 402
               Top = 13
               Width = 119
               Height = 26
@@ -3264,16 +3269,16 @@ object frPixCDMatera: TfrPixCDMatera
           object pnContaConsultar: TPanel
             Left = 0
             Top = 0
-            Width = 666
-            Height = 675
+            Width = 654
+            Height = 639
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
             object lbContaConsultarAccountId: TLabel
               Left = 15
               Top = 20
-              Width = 52
-              Height = 13
+              Width = 56
+              Height = 15
               Caption = 'Account Id'
               Color = clBtnFace
               ParentColor = False
@@ -3309,25 +3314,25 @@ object frPixCDMatera: TfrPixCDMatera
           object pnContaInativar: TPanel
             Left = 0
             Top = 0
-            Width = 650
-            Height = 637
+            Width = 654
+            Height = 639
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
             DesignSize = (
-              650
-              637)
+              654
+              639)
             object lbContaInativarAccountId: TLabel
               Left = 15
               Top = 25
-              Width = 52
-              Height = 13
+              Width = 56
+              Height = 15
               Caption = 'Account Id'
               Color = clBtnFace
               ParentColor = False
             end
             object btContaInativar: TBitBtn
-              Left = 525
+              Left = 529
               Top = 37
               Width = 112
               Height = 26
@@ -3351,8 +3356,8 @@ object frPixCDMatera: TfrPixCDMatera
           object pnChavePIX: TPanel
             Left = 0
             Top = 0
-            Width = 650
-            Height = 637
+            Width = 654
+            Height = 639
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
@@ -3365,20 +3370,20 @@ object frPixCDMatera: TfrPixCDMatera
               TabOrder = 0
               object pnChavePIXIncluir: TPanel
                 Left = 2
-                Top = 15
+                Top = 17
                 Width = 588
-                Height = 78
+                Height = 76
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
                 DesignSize = (
                   588
-                  78)
+                  76)
                 object lbChavePIXIncluirExternalId: TLabel
                   Left = 228
                   Top = 15
-                  Width = 52
-                  Height = 13
+                  Width = 59
+                  Height = 15
                   Caption = 'External ID'
                   Color = clBtnFace
                   ParentColor = False
@@ -3386,8 +3391,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbChavePIXIncluirAccountId: TLabel
                   Left = 15
                   Top = 15
-                  Width = 52
-                  Height = 13
+                  Width = 56
+                  Height = 15
                   Caption = 'Account Id'
                   Color = clBtnFace
                   ParentColor = False
@@ -3435,20 +3440,20 @@ object frPixCDMatera: TfrPixCDMatera
               TabOrder = 1
               object pnChavesPIXConsultar: TPanel
                 Left = 2
-                Top = 15
+                Top = 17
                 Width = 588
-                Height = 78
+                Height = 76
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
                 DesignSize = (
                   588
-                  78)
+                  76)
                 object lbChavePIXConsultar: TLabel
                   Left = 15
                   Top = 15
-                  Width = 52
-                  Height = 13
+                  Width = 56
+                  Height = 15
                   Caption = 'Account Id'
                   Color = clBtnFace
                   ParentColor = False
@@ -3481,20 +3486,20 @@ object frPixCDMatera: TfrPixCDMatera
               TabOrder = 2
               object pnChavePIXExcluir: TPanel
                 Left = 2
-                Top = 15
+                Top = 17
                 Width = 588
-                Height = 78
+                Height = 76
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
                 DesignSize = (
                   588
-                  78)
+                  76)
                 object lbChavePIXExcluirAccountId: TLabel
                   Left = 15
                   Top = 15
-                  Width = 52
-                  Height = 13
+                  Width = 56
+                  Height = 15
                   Caption = 'Account Id'
                   Color = clBtnFace
                   ParentColor = False
@@ -3502,8 +3507,8 @@ object frPixCDMatera: TfrPixCDMatera
                 object lbChavePIXExcluir: TLabel
                   Left = 228
                   Top = 15
-                  Width = 51
-                  Height = 13
+                  Width = 56
+                  Height = 15
                   Caption = 'Chave PIX'
                   Color = clBtnFace
                   ParentColor = False
@@ -3538,25 +3543,26 @@ object frPixCDMatera: TfrPixCDMatera
         end
       end
       object pnLogs: TPanel
-        Left = 658
+        Left = 662
         Top = 0
         Width = 355
-        Height = 677
+        Height = 679
         Align = alRight
         TabOrder = 1
         object lbLog: TLabel
           Left = 1
           Top = 1
-          Width = 102
-          Height = 13
+          Width = 353
+          Height = 15
           Align = alTop
           Caption = 'Log das Requisi'#231#245'es:'
           Color = clBtnFace
           ParentColor = False
+          ExplicitWidth = 121
         end
         object mmLogGerencial: TMemo
           Left = 1
-          Top = 14
+          Top = 16
           Width = 353
           Height = 630
           Align = alClient
@@ -3566,7 +3572,7 @@ object frPixCDMatera: TfrPixCDMatera
         end
         object pnLogsRodape: TPanel
           Left = 1
-          Top = 644
+          Top = 646
           Width = 353
           Height = 32
           Align = alBottom
@@ -3592,8 +3598,8 @@ object frPixCDMatera: TfrPixCDMatera
       ImageIndex = 2
       object pBotoesConfiguracao: TPanel
         Left = 0
-        Top = 640
-        Width = 1018
+        Top = 642
+        Width = 1022
         Height = 37
         Align = alBottom
         TabOrder = 0
@@ -3619,9 +3625,9 @@ object frPixCDMatera: TfrPixCDMatera
       object pgConfig: TPageControl
         Left = 0
         Top = 0
-        Width = 1018
-        Height = 640
-        ActivePage = tsPIX
+        Width = 1022
+        Height = 642
+        ActivePage = tsMatera
         Align = alClient
         Images = ImageList1
         TabHeight = 30
@@ -3632,8 +3638,8 @@ object frPixCDMatera: TfrPixCDMatera
           object pConfPIX: TPanel
             Left = 0
             Top = 0
-            Width = 1010
-            Height = 600
+            Width = 1014
+            Height = 602
             Align = alClient
             Anchors = []
             BevelOuter = bvSpace
@@ -3641,7 +3647,7 @@ object frPixCDMatera: TfrPixCDMatera
             object pnConfig2: TPanel
               Left = 1
               Top = 81
-              Width = 1008
+              Width = 1012
               Height = 133
               Align = alTop
               BevelOuter = bvNone
@@ -3656,20 +3662,20 @@ object frPixCDMatera: TfrPixCDMatera
                 TabOrder = 0
                 object pnProxy: TPanel
                   Left = 2
-                  Top = 15
+                  Top = 17
                   Width = 300
-                  Height = 116
+                  Height = 114
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   DesignSize = (
                     300
-                    116)
+                    114)
                   object lbProxyHost: TLabel
                     Left = 10
                     Top = 5
-                    Width = 22
-                    Height = 13
+                    Width = 26
+                    Height = 15
                     Caption = 'Host'
                     Color = clBtnFace
                     ParentColor = False
@@ -3677,8 +3683,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbProxyPorta: TLabel
                     Left = 192
                     Top = 5
-                    Width = 25
-                    Height = 13
+                    Width = 29
+                    Height = 15
                     Anchors = [akTop, akRight]
                     Caption = 'Porta'
                     Color = clBtnFace
@@ -3687,8 +3693,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbProxyUsuario: TLabel
                     Left = 10
                     Top = 50
-                    Width = 36
-                    Height = 13
+                    Width = 44
+                    Height = 15
                     Caption = 'Usu'#225'rio'
                     Color = clBtnFace
                     ParentColor = False
@@ -3696,8 +3702,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbProxySenha: TLabel
                     Left = 192
                     Top = 50
-                    Width = 31
-                    Height = 13
+                    Width = 36
+                    Height = 15
                     Anchors = [akTop, akRight]
                     Caption = 'Senha'
                     Color = clBtnFace
@@ -3718,7 +3724,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 10
                     Top = 20
                     Width = 168
-                    Height = 21
+                    Height = 23
                     Anchors = [akLeft, akTop, akRight]
                     TabOrder = 0
                   end
@@ -3726,7 +3732,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 10
                     Top = 65
                     Width = 168
-                    Height = 21
+                    Height = 23
                     Anchors = [akLeft, akTop, akRight]
                     TabOrder = 1
                   end
@@ -3734,7 +3740,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 192
                     Top = 65
                     Width = 74
-                    Height = 21
+                    Height = 23
                     Anchors = [akTop, akRight]
                     PasswordChar = '*'
                     TabOrder = 2
@@ -3743,7 +3749,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 192
                     Top = 20
                     Width = 99
-                    Height = 22
+                    Height = 24
                     Anchors = [akTop, akRight]
                     MaxValue = 999999
                     MinValue = 0
@@ -3762,17 +3768,17 @@ object frPixCDMatera: TfrPixCDMatera
                 TabOrder = 1
                 object pnLog: TPanel
                   Left = 2
-                  Top = 15
+                  Top = 17
                   Width = 300
-                  Height = 116
+                  Height = 114
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   object lbLogArquivo: TLabel
                     Left = 20
                     Top = 5
-                    Width = 36
-                    Height = 13
+                    Width = 40
+                    Height = 15
                     Caption = 'Arquivo'
                     Color = clBtnFace
                     ParentColor = False
@@ -3780,8 +3786,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbLogNivel: TLabel
                     Left = 20
                     Top = 50
-                    Width = 26
-                    Height = 13
+                    Width = 27
+                    Height = 15
                     Caption = 'N'#237'vel'
                     Color = clBtnFace
                     ParentColor = False
@@ -3805,16 +3811,15 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 20
                     Top = 20
                     Width = 208
-                    Height = 21
+                    Height = 23
                     TabOrder = 0
                   end
                   object cbLogNivel: TComboBox
                     Left = 20
                     Top = 65
                     Width = 232
-                    Height = 21
+                    Height = 23
                     Style = csDropDownList
-                    ItemHeight = 13
                     ItemIndex = 2
                     TabOrder = 1
                     Text = 'Normal'
@@ -3831,7 +3836,7 @@ object frPixCDMatera: TfrPixCDMatera
             object pnConfig1: TPanel
               Left = 1
               Top = 1
-              Width = 1008
+              Width = 1012
               Height = 80
               Align = alTop
               BevelOuter = bvNone
@@ -3846,17 +3851,17 @@ object frPixCDMatera: TfrPixCDMatera
                 TabOrder = 0
                 object pnPSP: TPanel
                   Left = 2
-                  Top = 15
+                  Top = 17
                   Width = 300
-                  Height = 63
+                  Height = 61
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   object lbAmbiente: TLabel
                     Left = 14
                     Top = 5
-                    Width = 44
-                    Height = 13
+                    Width = 52
+                    Height = 15
                     Caption = 'Ambiente'
                     Color = clBtnFace
                     ParentColor = False
@@ -3864,8 +3869,8 @@ object frPixCDMatera: TfrPixCDMatera
                   object lbTimeout: TLabel
                     Left = 192
                     Top = 5
-                    Width = 38
-                    Height = 13
+                    Width = 45
+                    Height = 15
                     Caption = 'Timeout'
                     Color = clBtnFace
                     ParentColor = False
@@ -3874,9 +3879,8 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 14
                     Top = 20
                     Width = 164
-                    Height = 21
+                    Height = 23
                     Style = csDropDownList
-                    ItemHeight = 0
                     TabOrder = 0
                     OnChange = cbAmbienteChange
                   end
@@ -3884,7 +3888,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 192
                     Top = 20
                     Width = 99
-                    Height = 22
+                    Height = 24
                     Increment = 10
                     MaxValue = 999999
                     MinValue = 0
@@ -3903,17 +3907,17 @@ object frPixCDMatera: TfrPixCDMatera
                 TabOrder = 1
                 object pnCobranca: TPanel
                   Left = 2
-                  Top = 15
+                  Top = 17
                   Width = 300
-                  Height = 63
+                  Height = 61
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
                   object lbExpiracao: TLabel
                     Left = 24
                     Top = 5
-                    Width = 47
-                    Height = 13
+                    Width = 54
+                    Height = 15
                     Caption = 'Expira'#231#227'o'
                     Color = clBtnFace
                     ParentColor = False
@@ -3922,7 +3926,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 24
                     Top = 20
                     Width = 232
-                    Height = 22
+                    Height = 24
                     Increment = 10
                     MaxValue = 999999
                     MinValue = 0
@@ -3940,15 +3944,15 @@ object frPixCDMatera: TfrPixCDMatera
           object pnPSPMatera: TPanel
             Left = 0
             Top = 0
-            Width = 1010
-            Height = 600
+            Width = 1014
+            Height = 602
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
             object gbMediator: TGroupBox
               Left = 0
               Top = 0
-              Width = 1010
+              Width = 1014
               Height = 304
               Align = alTop
               Caption = 'Configura'#231#245'es Mediator'
@@ -3956,8 +3960,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbPSPClientID: TLabel
                 Left = 21
                 Top = 27
-                Width = 40
-                Height = 13
+                Width = 47
+                Height = 15
                 Caption = 'Client ID'
                 Color = clBtnFace
                 ParentColor = False
@@ -3965,8 +3969,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbPSPClientSecret: TLabel
                 Left = 21
                 Top = 80
-                Width = 60
-                Height = 13
+                Width = 70
+                Height = 15
                 Caption = 'Client Secret'
                 Color = clBtnFace
                 ParentColor = False
@@ -3974,8 +3978,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbErroCertificado: TLabel
                 Left = 21
                 Top = 251
-                Width = 77
-                Height = 13
+                Width = 92
+                Height = 15
                 Caption = 'lbErroCertificado'
                 Color = clBtnFace
                 ParentColor = False
@@ -3983,8 +3987,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbArqCertificado: TLabel
                 Left = 21
                 Top = 210
-                Width = 89
-                Height = 13
+                Width = 102
+                Height = 15
                 Caption = 'Arquivo Certificado'
                 Color = clBtnFace
                 ParentColor = False
@@ -4031,8 +4035,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbArqChavePrivada: TLabel
                 Left = 21
                 Top = 135
-                Width = 109
-                Height = 13
+                Width = 122
+                Height = 15
                 Caption = 'Arquivo Chave Privada'
                 Color = clBtnFace
                 ParentColor = False
@@ -4040,8 +4044,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbErroChavePrivada: TLabel
                 Left = 21
                 Top = 175
-                Width = 94
-                Height = 13
+                Width = 109
+                Height = 15
                 Caption = 'lbErroChavePrivada'
                 Color = clBtnFace
                 ParentColor = False
@@ -4056,8 +4060,8 @@ object frPixCDMatera: TfrPixCDMatera
               object lbPSPSecretKey: TLabel
                 Left = 320
                 Top = 80
-                Width = 52
-                Height = 13
+                Width = 58
+                Height = 15
                 Caption = 'Secret Key'
                 Color = clBtnFace
                 ParentColor = False
@@ -4108,96 +4112,94 @@ object frPixCDMatera: TfrPixCDMatera
             object gbAccount: TGroupBox
               Left = 0
               Top = 304
-              Width = 1010
-              Height = 296
+              Width = 1014
+              Height = 298
               Align = alClient
               Caption = 'Configura'#231#245'es Contas'
               TabOrder = 1
+              ExplicitTop = 302
               object lbAccountId: TLabel
                 Left = 21
-                Top = 9
-                Width = 52
-                Height = 13
+                Top = 25
+                Width = 56
+                Height = 15
                 Caption = 'Account Id'
                 Color = clBtnFace
                 ParentColor = False
               end
               object lbChavePIX: TLabel
                 Left = 21
-                Top = 56
-                Width = 51
-                Height = 13
+                Top = 72
+                Width = 56
+                Height = 15
                 Caption = 'Chave PIX'
                 Color = clBtnFace
                 ParentColor = False
               end
               object lbMediatorFee: TLabel
                 Left = 21
-                Top = 109
-                Width = 123
-                Height = 13
+                Top = 125
+                Width = 141
+                Height = 15
                 Caption = 'Mediator Fee QRCode R$'
                 Color = clBtnFace
                 ParentColor = False
               end
               object lbTipoMediatorFee: TLabel
                 Left = 185
-                Top = 109
-                Width = 101
-                Height = 13
+                Top = 125
+                Width = 115
+                Height = 15
                 Caption = 'Tipo de Mediator Fee'
                 Color = clBtnFace
                 ParentColor = False
               end
               object lbMediatorFeeEstorno: TLabel
                 Left = 21
-                Top = 162
-                Width = 118
-                Height = 13
+                Top = 178
+                Width = 136
+                Height = 15
                 Caption = 'Mediator Fee Estorno R$'
                 Color = clBtnFace
                 ParentColor = False
               end
               object lbTipoMediatorFeeEstorno: TLabel
                 Left = 185
-                Top = 162
-                Width = 104
-                Height = 13
+                Top = 178
+                Width = 118
+                Height = 15
                 Caption = 'Tipo de Mediator  Fee'
                 Color = clBtnFace
                 ParentColor = False
               end
               object cbAccountId: TComboBox
                 Left = 21
-                Top = 25
+                Top = 41
                 Width = 601
-                Height = 21
-                ItemHeight = 0
+                Height = 23
                 TabOrder = 0
                 OnSelect = cbAccountIdSelect
               end
               object cbChavePIX: TComboBox
                 Left = 21
-                Top = 72
+                Top = 88
                 Width = 601
-                Height = 21
-                ItemHeight = 0
+                Height = 23
                 TabOrder = 1
               end
               object edMediatorFee: TEdit
                 Left = 21
-                Top = 125
+                Top = 141
                 Width = 145
                 Height = 23
                 TabOrder = 2
               end
               object cbTipoMediatorFee: TComboBox
                 Left = 185
-                Top = 125
+                Top = 141
                 Width = 145
-                Height = 21
+                Height = 23
                 Style = csDropDownList
-                ItemHeight = 13
                 ItemIndex = 0
                 TabOrder = 3
                 Text = 'Reais'
@@ -4208,18 +4210,17 @@ object frPixCDMatera: TfrPixCDMatera
               end
               object edMediatorFeeEstorno: TEdit
                 Left = 21
-                Top = 178
+                Top = 194
                 Width = 145
                 Height = 23
                 TabOrder = 4
               end
               object cbTipoMediatorFeeEstorno: TComboBox
                 Left = 185
-                Top = 178
+                Top = 194
                 Width = 145
-                Height = 21
+                Height = 23
                 Style = csDropDownList
-                ItemHeight = 13
                 ItemIndex = 0
                 TabOrder = 5
                 Text = 'Reais'

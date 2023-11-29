@@ -44,6 +44,12 @@ Símbolo : Significado
 
 29/11/2023
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade de Sao Jose do Cedro/SC, provedor: IPM.
+  Por: CG Suporte
+[+] Incluida a cidade de Sao Jose do Hortencio/RS, provedor: Tecnos.
+  Por: Roberto Krug
+[*] A cidade de Dourados/MS trocou de provedor, agora é Betha versão 2.02
+  Por: Carlos Matta
 [+] Incluida a cidade de Gaucha do Norte/MT, provedor é o Coplan versão 2.01
 Por: Ronaldo.Bispo
 

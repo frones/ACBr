@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2023
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Gaucha do Norte/MT, provedor é o Coplan versão 2.01
+Por: Ronaldo.Bispo
 
 28/11/2023
 -- ACBrNFSeXServicos --

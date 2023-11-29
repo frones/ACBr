@@ -677,6 +677,22 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  if EstaVazio(Emitente.CNPJ) then
+  begin
+    AErro := EmiteResponse.Erros.New;
+    AErro.Codigo := Cod130;
+    AErro.Descricao := ACBrStr(Desc130);
+    Exit;
+  end;
+
+  if EstaVazio(Emitente.WSSenha) then
+  begin
+    AErro := EmiteResponse.Erros.New;
+    AErro.Codigo := Cod120;
+    AErro.Descricao := ACBrStr(Desc120);
+    Exit;
+  end;
+
   Response.ArquivoEnvio := '<el:autenticarContribuinte>' +
                              '<identificacaoPrestador>' +
                                 OnlyNumber(Emitente.CNPJ) +

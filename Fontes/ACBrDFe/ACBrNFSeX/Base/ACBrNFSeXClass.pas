@@ -823,6 +823,7 @@ type
     FImposto: TImpostoCollection;
     FIdentifNaoExigibilidade: string;
     FxMunicipioIncidencia: string;
+    FCFPS: string;
 
     procedure SetItemServico(Value: TItemServicoCollection);
     procedure SetDeducao(const Value: TDeducaoCollection);
@@ -875,6 +876,8 @@ type
     property infoCompl: TinfoCompl read FinfoCompl write FinfoCompl;
     // Provedor CTAConsult
     property Imposto: TImpostoCollection read FImposto write SetImposto;
+    // Provedor SoftPlan
+    property CFPS: string read FCFPS write FCFPS;
   end;
 
   TDadosPessoa = class(TObject)

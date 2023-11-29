@@ -153,7 +153,7 @@ begin
  	  // <dataProcessamento>2017-01-15</dataProcessamento>
     NfseCancelamento.DataHora := ObterConteudo(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDat);
     MotivoCancelamento := ObterConteudo(ANode.Childrens.FindAnyNs('motivoCancelamento'), tcStr);
-    Servico.CodigoCnae := ObterConteudo(ANode.Childrens.FindAnyNs('cfps'), tcStr);
+    Servico.CFPS := ObterConteudo(ANode.Childrens.FindAnyNs('cfps'), tcStr);
     Situacao := ObterConteudo(ANode.Childrens.FindAnyNs('statusNFPSe'), tcInt);
     Servico.Valores.BaseCalculo := ObterConteudo(ANode.Childrens.FindAnyNs('baseCalculo'), tcDe2);
     Servico.Valores.ValorIss := ObterConteudo(ANode.Childrens.FindAnyNs('valorISSQN'), tcDe2);

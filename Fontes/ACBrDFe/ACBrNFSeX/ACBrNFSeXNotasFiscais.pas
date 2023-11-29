@@ -555,10 +555,12 @@ begin
           // Provedor ISSSaoPaulo
           ValorTotalRecebido := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorTotalRecebido', ''), 0);
 
-          //Padrão Nacional e IssNet
+          // Provedor IssNet e Padrão Nacional
           CodigoNBS := INIRec.ReadString(sSecao, 'CodigoNBS', '');
           CodigoInterContr := INIRec.ReadString(sSecao, 'CodigoInterContr', '');
 
+          // Provedor SoftPlan
+          CFPS := INIRec.ReadString(sSecao, 'CFPS', '');
         end;
 
         i := 1;

@@ -165,7 +165,7 @@ begin
                                                                         0, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cfps', 4, 4, 1,
-                                                  NFSe.Servico.CodigoCnae, ''));
+                                                  NFSe.Servico.CFPS, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigoMunicipioTomador', 7, 7, 1,
                                     NFSe.Tomador.Endereco.CodigoMunicipio, ''));

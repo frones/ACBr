@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/11/2023
+-- ACBrNFSeXClass/ACBrNFSeXNotasFiscais/SoftPlan.GravarXml/SoftPlan.LerXml --
+[*] Acrescentado na classe Servico o campo string: CFPS que contem o código 
+    fiscal de prestação de serviço usado pelo provedor SoftPlan.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade de Sao Jose do Cedro/SC, provedor: IPM.
   Por: CG Suporte

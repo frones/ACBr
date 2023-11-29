@@ -966,7 +966,10 @@ begin
       // tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador, tlSimplesNacional, tlIsentoImune
       Servico.TipoLancamento := tlSimplesNacional;
 
-      {=========================================================================
+       // Provedor SoftPlan
+      Servico.CFPS := '9201';
+
+     {=========================================================================
         Dados do Prestador de Serviço
       =========================================================================}
       Prestador.IdentificacaoPrestador.CpfCnpj := edtEmitCNPJ.Text;

@@ -43,6 +43,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/11/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Pompeu/MG trocou de provedor, agora é Fiorilli.
+  Por: Loes
+[*] A cidade de Marechal Candido Rondon/PR trocou a versão e as URLs, o 
+    provedor continua o mesmo.
+  Por: Ghilherme Bernardi
+[*] A cidade de Parnaíba/PI trocou a porta da URL de 8080 para 8084.
+  Por: Dario - Organiza Sistemas
+[*] A cidade de Igaratinga/MG trocou para versão 2.02 o provedor continua o mesmo.
+  Por: Pedro A. Araújo
+[*] A cidade de Porto Alegre do Norte/MT trocou de provedor, agora é Agili.
+  Por: Luiz Eduardo Bodo
 -- IPM.Provider --
 [*] Melhorias no TratarXmlRetornado e ProcessarMensagemErro, visando separar
     o Código da Mensagem de erro ou alerta.

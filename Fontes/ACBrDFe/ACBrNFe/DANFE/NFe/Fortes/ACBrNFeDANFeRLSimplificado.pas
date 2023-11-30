@@ -164,6 +164,7 @@ type
     C: TRLLabel;
     RLLabelLIQ: TRLLabel;
     rlmProdutoDescricao: TRLMemo;
+    rlb05b_Desc_Itens_Cont: TRLBand;
     procedure RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLb03_DadosGeraisBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLb04_DestinatarioBeforePrint(Sender: TObject; var PrintIt: Boolean);

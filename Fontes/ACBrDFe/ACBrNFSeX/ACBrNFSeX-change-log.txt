@@ -44,6 +44,8 @@ Símbolo : Significado
 
 30/11/2023
 -- ACBrNFSeXServicos --
+[*] Correção na URL de produção da cidade de Canoinhas/SC.
+  Por: Lucas ATZ
 [*] A cidade de Pompeu/MG trocou de provedor, agora é Fiorilli.
   Por: Loes
 [*] A cidade de Marechal Candido Rondon/PR trocou a versão e as URLs, o 

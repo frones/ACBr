@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/11/2023
+-- ModernizacaoPublica.GravarXml --
+[*] Alterado a procedure Configuracao visando definir como formato da Aliquota
+    um numero inteiro.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Correção na URL de produção da cidade de Canoinhas/SC.
   Por: Lucas ATZ

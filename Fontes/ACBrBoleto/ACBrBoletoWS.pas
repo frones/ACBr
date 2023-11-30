@@ -487,7 +487,7 @@ begin
       begin
         FBoletoWSClass.FTitulo := FBoleto.ListadeBoletos[indice];
         LJsonEnvio := FBoletoWSClass.GerarRemessa;
-        Result     :=  FBoletoWSClass.Enviar;
+        Result     := FBoletoWSClass.Enviar;
         FRetornoWS := FBoletoWSClass.FRetornoWS;
 
         RetornoBanco.RetWS := FRetornoWS;

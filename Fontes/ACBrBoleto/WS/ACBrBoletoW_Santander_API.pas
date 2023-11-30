@@ -129,12 +129,15 @@ end;
 
 procedure TBoletoW_Santander_API.GerarHeader;
 begin
+  Self.FPHeaders.Clear;
+  Self.FPHeaders.Add('Accept-Encoding: gzip, deflate, compress');
   DefinirContentType;
   DefinirIdentificador;
 end;
 
 procedure TBoletoW_Santander_API.GerarDados;
 begin
+
   if Assigned(ATitulo) then
   begin
     with ATitulo do
@@ -151,11 +154,7 @@ begin
           FMetodoHTTP := htPATCH; // Define Método PATCH conforme manual do banco
           RequisicaoBaixa;
         end;
-        tpConsulta:
-        begin
-          FMetodoHTTP := htGET; // Define Método GET Consulta
-          RequisicaoConsulta;
-        end;
+
         tpConsultaDetalhe:
         begin
           FMetodoHTTP := htGET; // Define Método GET Consulta
@@ -168,7 +167,9 @@ begin
             Boleto.Configuracoes.WebService.Operacao)]));
       end;
     end;
-  end;
+  end else
+  if Boleto.Configuracoes.WebService.Operacao = tpConsulta then
+    RequisicaoConsulta;
 end;
 
 procedure TBoletoW_Santander_API.DefinirAuthorization;
@@ -388,7 +389,7 @@ end;
 
 procedure TBoletoW_Santander_API.RequisicaoConsulta;
 begin
-  // Sem Payload - Define Método GET
+  raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_LER_LISTA_RETORNO] )));
 end;
 
 procedure TBoletoW_Santander_API.RequisicaoConsultaDetalhe;

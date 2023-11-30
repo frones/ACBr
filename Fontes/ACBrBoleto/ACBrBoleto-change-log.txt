@@ -48,6 +48,15 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+30/11/2023
+[-]TK-4813 ACBrBoletoWS - Santander - Retorno Compactado
+ por Victor H Gonzales - Pandaaa
+
+27/11/2023
+--- ACBrBoletoW_Itau_API ---
+[*]TK-4757 incluido prefixo na autenticação do header do Itau V2 conf. solicitação;
+https://www.projetoacbr.com.br/forum/topic/75211-ajuste-no-envio-do-token-no-campo-“authorization-na-autenticação-da-api-de-emissão-banco-itau-v2/
+    Por: Daniel Morais - #
 
 22/11/2023
 [-]TK-4730 CNAB240 Alteração sem juros não enviar ocorrencia 12, enviar 06.

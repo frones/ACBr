@@ -45,7 +45,7 @@ uses
   ACBrBoletoConversao,
   pcnConversao,
   ACBrBoletoWS,
-  ACBrBoleto;
+  ACBrBoleto, ACBrBase;
 
 type
 { TBoletoWSREST }   //Implementar Bancos que utilizam JSON
@@ -112,7 +112,9 @@ uses
   ACBrUtil.Base,
   synautil,
   synacode,
-  StrUtils;
+  StrUtils,
+  ACBrCompress,
+  ACBrUtil.FilesIO;
 
 { TRetornoEnvioREST }
 
@@ -245,6 +247,7 @@ procedure TBoletoWSREST.Executar;
 var
   LHeaders : TStringList;
   LStream : TStringStream;
+  LCT : TCompressType;
 begin
   LStream  := TStringStream.Create('');
   LHeaders := TStringList.Create;
@@ -284,12 +287,24 @@ begin
     HTTPSend.HTTPMethod(MetodoHTTPToStr(FMetodoHTTP), FPURL );
   finally
     HTTPSend.Document.Position:= 0;
-    FRetornoWS:= String(UTF8Decode(LStream.DataString));
+    
+
+    LCT := DetectCompressType(LStream);
+
+    if (LCT = ctUnknown) then  // Not compressed...
+    begin
+      LStream.Position := 0;
+      FRetornoWS := ReadStrFromStream(LStream, LStream.Size);
+    end
+    else
+      FRetornoWS := UnZip(LStream);
+
+    FRetornoWS:= String(UTF8Decode(FRetornoWS));
     BoletoWS.RetornoBanco.CodRetorno     := HTTPSend.Sock.LastError;
 
     try
 //      LStream.CopyFrom(HTTPSend.Document,0);
-      BoletoWS.RetornoBanco.Msg            := Trim('HTTP_Code='+ IntToStr(HTTPSend.ResultCode)+' '+ HTTPSend.ResultString+' '+LStream.DataString);
+      BoletoWS.RetornoBanco.Msg            := Trim('HTTP_Code='+ IntToStr(HTTPSend.ResultCode)+' '+ HTTPSend.ResultString +' '+ FRetornoWS);
       BoletoWS.RetornoBanco.HTTPResultCode := HTTPSend.ResultCode;
     finally
       LStream.Free;

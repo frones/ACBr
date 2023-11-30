@@ -162,7 +162,7 @@ type
 implementation
 
 uses
-  synacode,
+  synacode, 
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts, ACBrJSON,
@@ -266,30 +266,34 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
+    aMsg := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
     Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
 
-    if Codigo = '00001 - Sucesso' then
+    if aMsg = '' then
+    begin
+      aMsg := Codigo;
+
+      if Length(aMsg) > 5 then
+      begin
+        Codigo := Copy(aMsg, 1, 5);
+        aMsg := Copy(aMsg, 9, Length(aMsg));
+      end;
+    end;
+
+    if Codigo = '00001' then
     begin
       AAlerta := Response.Alertas.New;
-      AAlerta.Codigo := '00001';
-      AAlerta.Descricao := 'Sucesso';
+      AAlerta.Codigo := Codigo;
+      AAlerta.Descricao := aMsg;
       AAlerta.Correcao := '';
     end
     else
     begin
-      aMsg := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr));
-      {
-       Codigo = 00001 significa que o processamento ocorreu com sucesso, logo não
-       tem erros.
-      }
-      if Codigo <> '00001' then
-      begin
-        AErro := Response.Erros.New;
+      AErro := Response.Erros.New;
 
-        AErro.Codigo := Codigo;
-        AErro.Descricao := aMsg;
-        AErro.Correcao := '';
-      end;
+      AErro.Codigo := Codigo;
+      AErro.Descricao := aMsg;
+      AErro.Correcao := '';
     end;
   end;
 end;
@@ -1250,16 +1254,16 @@ begin
 
     if not Assigned(JSonErro) then Exit;
 
-    Codigo := '00' + JSonErro.AsString['code'];
+    Codigo := Poem_Zeros(JSonErro.AsString['code'], 5);
     Mensagem := ACBrStr(JSonErro.AsString['msg']);
 
-    Result := '<a>' +
+    Result := '<retorno>' +
                 '<mensagem>' +
                   '<codigo>' + Codigo + '</codigo>' +
                   '<Mensagem>' + Mensagem + '</Mensagem>' +
                   '<Correcao>' + '</Correcao>' +
                 '</mensagem>' +
-              '</a>';
+              '</retorno>';
 
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := String(NativeStringToUTF8(Result));
@@ -1269,6 +1273,7 @@ begin
     Result := inherited TratarXmlRetornado(aXML);
 
     Result := AjustarRetorno(Result);
+
     // Revertido para sanar o problema com as cidades de Agrolândia/SC e Rio das Antas/SC
     Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
@@ -1355,16 +1360,16 @@ begin
 
     if not Assigned(JSonErro) then Exit;
 
-    Codigo := JSonErro.AsString['code'];
+    Codigo := Poem_Zeros(JSonErro.AsString['code'], 5);
     Mensagem := ACBrStr(JSonErro.AsString['msg']);
 
-    Result := '<a>' +
+    Result := '<retorno>' +
                 '<mensagem>' +
                   '<codigo>' + Codigo + '</codigo>' +
                   '<Mensagem>' + Mensagem + '</Mensagem>' +
                   '<Correcao>' + '</Correcao>' +
                 '</mensagem>' +
-              '</a>';
+              '</retorno>';
 
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := String(NativeStringToUTF8(Result));

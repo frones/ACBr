@@ -549,7 +549,7 @@
 	</xsd:complexType>
 	<xsd:complexType name="tcDadosProfissionalParceiro">
 		<xsd:sequence>
-			<xsd:element name="IdentificacaoProfissionalParceiro" type=" tcIdentificacaoProfissionalParceiro " minOccurs="1" maxOccurs="1" />
+			<xsd:element name="IdentificacaoProfissionalParceiro" type="tcIdentificacaoProfissionalParceiro" minOccurs="1" maxOccurs="1" />
 			<xsd:element name="RazaoSocial" type="tsRazaoSocial" minOccurs="1" maxOccurs="1" />
 			<xsd:element name="PercentualProfissionalParceiro" type="tsPercProfissionalParceiro" minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>

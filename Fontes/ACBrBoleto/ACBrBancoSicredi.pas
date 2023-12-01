@@ -1483,7 +1483,7 @@ begin
          end;
 
          NomeFixo := DirArqRemessa + PathDelim +
-                     Copy(Cedente.CodigoCedente,1,5)+ codMesSicredi +
+                     PadLeft(Copy(Cedente.CodigoCedente, 1, 5), 5, '0')  + codMesSicredi +
                      FormatDateTime( 'dd', Now );
 
          NomeArq := NomeFixo + '.crm';
@@ -1865,6 +1865,8 @@ var
     Especie, EndSacado, Ocorrencia: String;
     TipoAvalista: Char;
     lDataDesconto: String;
+    LCodigoMoraJuros : String;
+    LTitulo: TACBrTitulo;
 begin
   with ACBrBanco.ACBrBoleto.Cedente, ACBrTitulo do
   begin
@@ -1967,6 +1969,9 @@ begin
        tbBancoNaoReemite : ATipoBoleto := '5' + '2';
      end;
 
+    {Codigo Mora Juros}
+    LCodigoMoraJuros := DefineCodigoMoraJuros(ACBrTitulo);
+
     {Tipo Documento}
     ATipoDoc:= DefineTipoDocumento;
 
@@ -2000,7 +2005,7 @@ begin
              PadLeft(Especie, 2, '0')                                         + // 107 a 108 - Espécie do título
              AceiteStr                                                        + // 109 a 109 - Identificação de título aceito/não aceito
              FormatDateTime('ddmmyyyy', DataDocumento)                        + // 110 a 117 - Data da emissão do título
-             IfThen( (ValorMoraJuros > 0) and (CodigoMora= ''), '1', PadRight(CodigoMora, 1, '3') )   + // 118 a 118 - Código do juro de mora
+             LCodigoMoraJuros                                                 + // 118 a 118 - Código do juro de mora
              IfThen((DataMoraJuros > 0),
                      FormatDateTime('ddmmyyyy', DataMoraJuros),
                                     '00000000')                               + // 119 a 126 - Data do juro de mora

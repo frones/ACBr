@@ -102,7 +102,7 @@ begin
    fDataProtestoNegativacao:=0;
    fDiasProtestoNegativacao:='';
    fpDigito                := 1;
-   fpNome                  := 'Banco Cecred';
+   fpNome                  := 'AILOS';
    fpNumero                := 085;
    fpTamanhoMaximoNossoNum := 17;
    fpTamanhoConta          := 8;
@@ -296,7 +296,7 @@ begin
              PadRight(ContaDigito, 1, '0')                   + // 71 - Dígito da conta do cedente
              PadRight(DigitoVerificadorAgenciaConta, 1, ' ') + // 72 - Dígito verificador da agência / conta
              TiraAcentos(UpperCase(PadRight(Nome, 30, ' '))) + // 73 a 102 - Nome do cedente
-             PadRight('CEDRED', 30, ' ')                     + // 103 a 132 - Nome da cooperativa
+             PadRight(fpNome, 30, ' ')                     + // 103 a 132 - Nome da cooperativa
              StringOfChar(' ', 10)                           + // 133 a 142 - Uso exclusivo FEBRABAN/CNAB
              '1'                                             + // 143 - Código de Remessa (1) / Retorno (2)
              FormatDateTime('ddmmyyyy', Now)                 + // 144 a 151 - Data do de geração do arquivo
@@ -363,7 +363,8 @@ begin
                PadRight( ContaDigito, 1, ' ')     + // DV-código do cedente
                '000000'                       + // Complemento
                PadRight( Nome, 30)                + // Nome da Empresa
-               PadRight( '085CECRED',18,' ')      + // Identificador do Banco
+               PadRight( IntToStrZero(fpNumero,3)
+                             +fpNome,18,' ')      + // Identificador do Banco
                FormatDateTime('ddmmyy',Now)   + // Data de geração do arquivo
                IntToStrZero(NumeroRemessa,7)  + // Numero Remessa
                Space(22)                      + // Brancos

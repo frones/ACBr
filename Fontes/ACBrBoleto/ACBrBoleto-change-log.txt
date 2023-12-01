@@ -62,6 +62,9 @@ Por: Andre Cristiano Ittner / Daniel Morais
 [+]TK-4788 237 - Bradesco - CNAB400 Registro Tipo7
   por Victor H Gonzales
 
+[*]TK-4787 085 - Alios - Alterações Header (Alteração do nome do banco CECRED PARA AILOS)
+  por Andre Cristiano Ittner / Victor H Gonzales
+
 30/11/2023
 [-]TK-4813 ACBrBoletoWS - Santander - Retorno Compactado
  por Victor H Gonzales - Pandaaa

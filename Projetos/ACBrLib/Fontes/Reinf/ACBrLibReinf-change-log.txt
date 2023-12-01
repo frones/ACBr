@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/12/2023
+--- ACBrLibReinfMT ---
+[*] Correção método CriarEnviarReinf..
+    Por: Antonio Carlos
+
+01/12/2023
 --- ACBrLibReinf ---
 [*] Ajustes para compilação versão MultiThread.
     Por: Antonio Carlos

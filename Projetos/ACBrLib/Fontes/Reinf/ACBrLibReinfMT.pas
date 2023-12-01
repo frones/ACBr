@@ -90,7 +90,8 @@ function Reinf_ConfigGravarValor (const libHandle: PLibHandle; const eSessao, eC
    var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function Reinf_CriarEnviarReinf (const libHandle: PLibHandle; const eArqIni: PChar): longint;
+ function Reinf_CriarEnviarReinf (const libHandle: PLibHandle; const eArqIni: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
  function Reinf_LimparReinf (const libHandle: PLibHandle): longint;
@@ -261,12 +262,13 @@ begin
   end;
 end;
 
-function Reinf_CriarEnviarReinf (const libHandle:PLibHandle; const eArqIni: PChar): longint;
+function Reinf_CriarEnviarReinf (const libHandle:PLibHandle; const eArqIni: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(libHandle);
-   Result := TACBrLibReinf(libHandle^.Lib).CriarEnviarReinf(eArqIni);
+   Result := TACBrLibReinf(libHandle^.Lib).CriarEnviarReinf(eArqIni, sResposta, esTamanho);
   except
    on E: EACBrLibException do
     Result := E.Erro;

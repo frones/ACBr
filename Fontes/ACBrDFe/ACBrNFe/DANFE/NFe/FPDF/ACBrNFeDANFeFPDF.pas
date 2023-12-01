@@ -2632,7 +2632,7 @@ begin
     LNFe := TACBrNFe(ACBrNFe).NotasFiscais[I].NFe;
     Report := TNFeDANFeFPDF.Create(LNFe);
 
-    TNFeDANFeFPDF(Report).PosCanhoto := TNFeDANFeFPDF(TACBrNFe(ACBrNFe).DANFE).PosCanhoto;
+    //TNFeDANFeFPDF(Report).PosCanhoto := TNFeDANFeFPDF(TACBrNFe(ACBrNFe).DANFE).PosCanhoto;
 
     TNFeDANFeFPDF(Report).MensagemRodape := Self.Sistema;
 
@@ -2641,7 +2641,8 @@ begin
       try
         Engine.Compressed := True;
 
-        LPath := IncludeTrailingPathDelimiter(ExtractFilePath(TACBrNFe(ACBrNFe).DANFE.NomeDocumento));
+        LPAth := IncludeTrailingPathDelimiter(TACBrNFe(ACBrNFe).DANFE.PathPDF) +
+          ExtractFilePath(TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
 
         Engine.SaveToFile(LPath + LNFe.infNFe.ID+'.pdf');
       finally

@@ -48,6 +48,20 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+01/12/2023
+--- ACBrBancoSicredi ---
+[*]TK-4760 Ajuste calcular arquivo remessa qdo cedente for menor que 5 caracteres.
+https://www.projetoacbr.com.br/forum/topic/75221-ajuste-no-calcularnomearquivoremessa-do-banco-sicredi/
+Por: Guilherme Bernardi / Verificado: Daniel Morais
+
+--- ACBrBancoSicredi ---
+[*]TK-4766 Ajuste no CNAB240 CodigoMoraJuros, posicao 118P
+https://www.projetoacbr.com.br/forum/topic/75175-boleto-sicredi-n%C3%A3o-est%C3%A1-respeitando-parametro-codigomorajuros-cnab-240/
+Por: Andre Cristiano Ittner / Daniel Morais
+
+[+]TK-4788 237 - Bradesco - CNAB400 Registro Tipo7
+  por Victor H Gonzales
+
 30/11/2023
 [-]TK-4813 ACBrBoletoWS - Santander - Retorno Compactado
  por Victor H Gonzales - Pandaaa

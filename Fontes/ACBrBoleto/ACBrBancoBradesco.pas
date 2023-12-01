@@ -473,48 +473,48 @@ begin
 
      with ACBrBoleto do
      begin
-       if Sacado.SacadoAvalista.CNPJCPF <> '' then
+       {if Sacado.SacadoAvalista.CNPJCPF <> '' then
        begin
          MensagemCedente := PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0') +  // 335 a 349 - CNPJ do beneficiário final
          '  ' +                                                                            // 350 a 351 - Brancos
          PadRight(Sacado.SacadoAvalista.NomeAvalista, 43);                                 // 352 a 394 - Nome do beneficiário final
        end
-       else if Mensagem.Text <> '' then
+       else if Mensagem.Text <> '' then} // Informado no Registro Tipo 7
          MensagemCedente:= Mensagem[0];
 
-       wLinha:= '1'                                            +  // 001 a 001 - ID Registro
-       StringOfChar( '0', 19)                                  +  // 002 a 020 - Dados p/ Débito Automático
-       '0'+ aCarteira                                          +
-       aAgencia                                                +
-       aConta                                                  +
-       aDigitoConta                                            +
-       PadRight( SeuNumero,25,' ')+'000'                       +  // 038 a 062 - Numero de Controle do Participante                                                   +  // 063 a 065 - Código do Banco
-       IfThen( PercentualMulta > 0, '2', '0')                  +  // 066 a 066 - Indica se exite Multa ou não
-       IntToStrZero( round( aPercMulta * 100 ) , 4)            +  // 067 a 070 - Percentual de Multa formatado com 2 casas decimais
-       sNossoNumero + sDigitoNossoNumero                       +  // 071 a 082 - Identificação do Titulo + Digito de auto conferencia de número bancário
-       IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +  // 083 a 092 - Desconto Bonificação por dia
-       sTipoBoleto + ' ' + Space(10)                           +  // 093 a 104 - Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático +  Identificação Operação do Banco
-       ' ' + '2' + '  ' + sOcorrencia                          +  // 105 a 110 - Ind. Rateio de Credito + Aviso de Debito Aut.: 2=Não emite aviso + BRANCO + Ocorrência
-       PadRight( NumeroDocumento,  10)                         +  // 111 a 120 - Numero Documento
-       FormatDateTime( 'ddmmyy', Vencimento)                   +  // 121 a 126 - Data Vencimento
-       IntToStrZero( Round( ValorDocumento * 100 ), 13)        +  // 127 a 139 - Valo Titulo
-       StringOfChar('0',8) + PadRight(sEspecie,2) + 'N'        +  // 140 a 150 - Zeros + Especie do documento + Idntificação(valor fixo N)
-       FormatDateTime( 'ddmmyy', DataDocumento )               +  // 151 a 156 - Data de Emissão
-       sProtesto                                               +  // 157 a 160 - Intruções de Protesto
-       IntToStrZero( round(ValorMoraJuros * 100 ), 13)         +  // 161 a 173 - Valor a ser cobrado por dia de atraso
+       wLinha:= '1'                                             +  // 001 a 001 - ID Registro
+       StringOfChar( '0', 19)                                   +  // 002 a 020 - Dados p/ Débito Automático
+       '0'+ aCarteira                                           +
+       aAgencia                                                 +
+       aConta                                                   +
+       aDigitoConta                                             +
+       PadRight( SeuNumero,25,' ')+'000'                        +  // 038 a 062 - Numero de Controle do Participante                                                   +  // 063 a 065 - Código do Banco
+       IfThen( PercentualMulta > 0, '2', '0')                   +  // 066 a 066 - Indica se exite Multa ou não
+       IntToStrZero( round( aPercMulta * 100 ) , 4)             +  // 067 a 070 - Percentual de Multa formatado com 2 casas decimais
+       sNossoNumero + sDigitoNossoNumero                        +  // 071 a 082 - Identificação do Titulo + Digito de auto conferencia de número bancário
+       IntToStrZero( round( ValorDescontoAntDia * 100), 10)     +  // 083 a 092 - Desconto Bonificação por dia
+       sTipoBoleto + ' ' + Space(10)                            +  // 093 a 104 - Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático +  Identificação Operação do Banco
+       ' ' + '2' + '  ' + sOcorrencia                           +  // 105 a 110 - Ind. Rateio de Credito + Aviso de Debito Aut.: 2=Não emite aviso + BRANCO + Ocorrência
+       PadRight( NumeroDocumento,  10)                          +  // 111 a 120 - Numero Documento
+       FormatDateTime( 'ddmmyy', Vencimento)                    +  // 121 a 126 - Data Vencimento
+       IntToStrZero( Round( ValorDocumento * 100 ), 13)         +  // 127 a 139 - Valo Titulo
+       StringOfChar('0',8) + PadRight(sEspecie,2) + 'N'         +  // 140 a 150 - Zeros + Especie do documento + Idntificação(valor fixo N)
+       FormatDateTime( 'ddmmyy', DataDocumento )                +  // 151 a 156 - Data de Emissão
+       sProtesto                                                +  // 157 a 160 - Intruções de Protesto
+       IntToStrZero( round(ValorMoraJuros * 100 ), 13)          +  // 161 a 173 - Valor a ser cobrado por dia de atraso
        IfThen(DataDesconto < EncodeDate(2000,01,01),'000000',
-              FormatDateTime( 'ddmmyy', DataDesconto))         +  // 174 a 179 - Data limite para concessão desconto
-       IntToStrZero( round( ValorDesconto * 100 ), 13)         +  // 180 a 192 - Valor Desconto
-       IntToStrZero( round( ValorIOF * 100 ), 13)              +  // 193 a 205 - Valor IOF
-       IntToStrZero( round( ValorAbatimento * 100 ), 13)       +  // 206 a 218 - Valor Abatimento
+              FormatDateTime( 'ddmmyy', DataDesconto))          +  // 174 a 179 - Data limite para concessão desconto
+       IntToStrZero( round( ValorDesconto * 100 ), 13)          +  // 180 a 192 - Valor Desconto
+       IntToStrZero( round( ValorIOF * 100 ), 13)               +  // 193 a 205 - Valor IOF
+       IntToStrZero( round( ValorAbatimento * 100 ), 13)        +  // 206 a 218 - Valor Abatimento
        sTipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0') +  // 219 a 234 - Tipo de Inscrição + Número de Inscrição do Pagador
-       PadRight( Sacado.NomeSacado, 40, ' ')                   +  // 235 a 274 - Nome do Pagador
-       PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '  +
-         Sacado.Complemento + ' ' + Sacado.Bairro, 40)         +  // 275 a 314 - Endereço completo do pagador
-       PadRight( Sacado.Mensagem, 12, ' ')                     +  // 315 a 326 - 1ª Mensagem
-       PadRight( Sacado.CEP, 8 )                               +  // 327 a 334 - CEP
-       PadRight( MensagemCedente, 60 )                         +  // 335 a 394 - Beneficiário final ou 2ª Mensagem
-       IntToStrZero(aRemessa.Count + 1, 6)                     +  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
+       PadRight( Sacado.NomeSacado, 40, ' ')                    +  // 235 a 274 - Nome do Pagador
+       PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '   +
+         Sacado.Complemento + ' ' + Sacado.Bairro, 40)          +  // 275 a 314 - Endereço completo do pagador
+       PadRight( Sacado.Mensagem, 12, ' ')                      +  // 315 a 326 - 1ª Mensagem
+       PadRight( Sacado.CEP, 8 )                                +  // 327 a 334 - CEP
+       PadRight( MensagemCedente, 60 )                          +  // 335 a 394 - Beneficiário final ou 2ª Mensagem
+       IntToStrZero(aRemessa.Count + 1, 6)                      +  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
        LChaveNFe;                                                 // 401 a 444 Chave NFe
 
        Result := UpperCase(wLinha);
@@ -526,14 +526,35 @@ end;
 
 procedure TACBrBancoBradesco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  wLinha : String;
-
+  LLinha, LNossoNumero, LDigitoNossoNumero : String;
 begin
-   aRemessa.Add(UpperCase(GerarLinhaRegistroTransacao400(ACBrTitulo, aRemessa)));
-   wLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count );
+  aRemessa.Add(UpperCase(GerarLinhaRegistroTransacao400(ACBrTitulo, aRemessa)));
+  LLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count );
 
-   if not(wLinha = EmptyStr) then
-     aRemessa.Add(UpperCase(wLinha));
+  if not(LLinha = EmptyStr) then
+    aRemessa.Add(UpperCase(LLinha));
+
+  if (ACBrTitulo.Sacado.SacadoAvalista.NomeAvalista <> '') then
+  begin
+    ValidaNossoNumeroResponsavel(LNossoNumero, LDigitoNossoNumero, ACBrTitulo);
+    LLinha := '7'                                                                + // 001 a 001 - Identificação do registro detalhe (7)
+    PadRight(Trim(ACBrTitulo.Sacado.SacadoAvalista.Logradouro + ' ' +
+                  ACBrTitulo.Sacado.SacadoAvalista.Numero     + ' ' +
+                  ACBrTitulo.Sacado.SacadoAvalista.Bairro)  , 45, ' ')           + // 002 a 046 - Endereço Beneficiario Final
+    PadRight(OnlyNumber(ACBrTitulo.Sacado.CEP), 8, '0' )                         + // 047 a 054 - CEP + Sufixo do CEP
+    PadRight(ACBrTitulo.Sacado.SacadoAvalista.Cidade, 20, ' ')                   + // 055 a 074 - Cidade
+    PadRight(ACBrTitulo.Sacado.SacadoAvalista.UF, 2, ' ')                        + // 075 a 076 - UF
+    PadRight('', 290, ' ')                                                       + // 077 a 366 - Reserva Filer
+    PadLeft(ACBrTitulo.Carteira, 3, '0')                                         + // 367 a 369 - Carteira
+    PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Agencia), 5, '0')           + // 370 a 374 - Agência mantenedora da conta
+    PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Conta, 7, '0')                         + // 375 a 381 - Número da Conta Corrente
+    Padleft(ACBrTitulo.ACBrBoleto.Cedente.ContaDigito, 1 , ' ')                  + // 382 a 382 - Dígito Verificador da Conta DAC
+    PadLeft(LNossoNumero, 11, '0')                                               + // 383 a 393 - Nosso Número
+    PadLeft(LDigitoNossoNumero ,1,' ')                                           + // 394 a 394 - Digito Nosso Número
+    IntToStrZero( ARemessa.Count + 1, 6);                                          // 395 a 400 - Número sequencial do registro
+
+    ARemessa.Add(UpperCase(LLinha));
+  end;
 end;
 
 procedure TACBrBancoBradesco.LerRetorno400Transacao4(ACBrTitulo :TACBrTitulo; ALinha: String);
@@ -574,7 +595,7 @@ begin
       40: Result := '40-Confirmação da Alteração do Número do Título Dado pelo Beneficiario';
       41: Result := '41-Confirmação da Alteração do Número Controle do Participante';
       42: Result := '42-Confirmação da Alteração dos Dados do Pagador';
-      43: Result := '43-Confirmação da Alteração dos Dados do Sacador/Avalista';
+      43: Result := '43-Confirmação da Alteração dos Dados do Beneficiário Final';
       44: Result := '44-Título Pago com Cheque Devolvido';
       45: Result := '45-Título Pago com Cheque Compensado';
       46: Result := '46-Instrução para Cancelar Protesto Confirmada';
@@ -833,25 +854,25 @@ begin
          38: Result := '38-Prazo para protesto inválido';
          39: Result := '39-Pedido para protesto não permitido para título';
          43: Result := '43-Prazo para baixa e devolução inválido';
-         45: Result := '45-Nome do Sacado inválido';
-         46: Result := '46-Tipo/num. de inscrição do Sacado inválidos';
-         47: Result := '47-Endereço do Sacado não informado';
+         45: Result := '45-Nome do Pagador inválido';
+         46: Result := '46-Tipo/num. de inscrição do Pagador inválidos';
+         47: Result := '47-Endereço do Pagador não informado';
          48: Result := '48-CEP invalido';
          50: Result := '50-CEP referente a Banco correspondente';
-         53: Result := '53-Nº de inscrição do Sacador/avalista inválidos (CPF/CNPJ)';
-         54: Result := '54-Sacador/avalista não informado';
+         53: Result := '53-Nº de inscrição do Beneficiário Final inválidos (CPF/CNPJ)';
+         54: Result := '54-Beneficiário Final não informado';
          67: Result := '67-Débito automático agendado';
          68: Result := '68-Débito não agendado - erro nos dados de remessa';
-         69: Result := '69-Débito não agendado - Sacado não consta no cadastro de autorizante';
-         70: Result := '70-Débito não agendado - Cedente não autorizado pelo Sacado';
+         69: Result := '69-Débito não agendado - Pagador não consta no cadastro de autorizante';
+         70: Result := '70-Débito não agendado - Cedente não autorizado pelo Pagador';
          71: Result := '71-Débito não agendado - Cedente não participa da modalidade de débito automático';
          72: Result := '72-Débito não agendado - Código de moeda diferente de R$';
          73: Result := '73-Débito não agendado - Data de vencimento inválida';
-         75: Result := '75-Débito não agendado - Tipo do número de inscrição do sacado debitado inválido';
+         75: Result := '75-Débito não agendado - Tipo do número de inscrição do pagador debitado inválido';
          76: Result := '76-Pagador Eletrônico DDA (NOVO)- Esse motivo somente será disponibilizado no arquivo retorno para as empresas cadastradas nessa condição';
          86: Result := '86-Seu número do documento inválido';
-         89: Result := '89-Email sacado nao enviado - Titulo com debito automatico';
-         90: Result := '90-Email sacado nao enviado - Titulo com cobranca sem registro';
+         89: Result := '89-Email pagador nao enviado - Titulo com debito automatico';
+         90: Result := '90-Email pagador nao enviado - Titulo com cobranca sem registro';
       else
          if CodMotivo = 'P1' then
             Result := 'P1-Registrado com QR CODE PIX'
@@ -893,16 +914,16 @@ begin
          38: Result:= 'Prazo para protesto invalido';
          44: Result:= 'Agencia cedente nao prevista';
          45: Result:= 'Nome cedente nao informado';
-         46: Result:= 'Tipo/numero inscricao sacado invalido';
-         47: Result:= 'Endereco sacado nao informado';
+         46: Result:= 'Tipo/numero inscricao pagador invalido';
+         47: Result:= 'Endereco pagador nao informado';
          48: Result:= 'CEP invalido';
          50: Result:= 'CEP irregular - Banco correspondente';
          63: Result:= 'Entrada para titulo ja cadastrado';
          65: Result:= 'Limite excedido';
          66: Result:= 'Numero autorizacao inexistente';
          68: Result:= 'Debito nao agendado - Erro nos dados da remessa';
-         69: Result:= 'Debito nao agendado - Sacado nao consta no cadastro de autorizante';
-         70: Result:= 'Debito nao agendado - Cedente nao autorizado pelo sacado';
+         69: Result:= 'Debito nao agendado - Pagador nao consta no cadastro de autorizante';
+         70: Result:= 'Debito nao agendado - Cedente nao autorizado pelo pagador';
          71: Result:= 'Debito nao agendado - Cedente nao participa de debito automatico';
          72: Result:= 'Debito nao agendado - Codigo de moeda diferente de R$';
          73: Result:= 'Debito nao agendado - Data de vencimento invalida';
@@ -965,7 +986,7 @@ begin
          07: Result:= '07-Agencia\Conta\Digito invalidos';
          08: Result:= '08-Nosso numero invalido';
          10: Result:= '10-Carteira invalida';
-         15: Result:= '15-Carteira\Agencia\Conta\NossoNumero invalidos';
+         15: Result:= '15-Carteira\Agencia\Conta\Nosso Numero invalidos';
          40: Result:= '40-Titulo com ordem de protesto emitido';
          42: Result:= '42-Codigo para baixa/devolucao via Telebradesco invalido';
          60: Result:= '60-Movimento para titulo nao cadastrado';
@@ -1086,8 +1107,8 @@ begin
 
       toRetornoOcorrenciasdoSacado:
       case StrToIntDef(CodMotivo,999) of
-         78 : Result:= '78-Sacado alega que faturamento e indevido';
-         116: Result:= '116-Sacado aceita/reconhece o faturamento';
+         78 : Result:= '78-Pagador alega que faturamento e indevido';
+         116: Result:= '116-Pagador aceita/reconhece o faturamento';
       else
          Result:= CodMotivo +' - Outros Motivos';
       end;
@@ -1116,18 +1137,18 @@ begin
          39: Result:= '39-Pedido de protesto não permitido para o Título';
          40: Result:= '40-Título com ordem de protesto emitido';
          42: Result:= '42-Código para baixa/devolução inválido';
-         46: Result:= '46-Tipo/número de inscrição do sacado inválidos';
+         46: Result:= '46-Tipo/número de inscrição do pagador inválidos';
          48: Result:= '48-Cep Inválido';
-         53: Result:= '53-Tipo/Número de inscrição do sacador/avalista inválidos';
-         54: Result:= '54-Sacador/avalista não informado';
+         53: Result:= '53-Tipo/Número de inscrição do beneficiário final inválidos';
+         54: Result:= '54-Beneficiário Final não informado';
          57: Result:= '57-Código da multa inválido';
          58: Result:= '58-Data da multa inválida';
          60: Result:= '60-Movimento para Título não cadastrado';
          79: Result:= '79-Data de Juros de mora Inválida';
          80: Result:= '80-Data do desconto inválida';
          85: Result:= '85-Título com Pagamento Vinculado.';
-         88: Result:= '88-E-mail Sacado não lido no prazo 5 dias';
-         91: Result:= '91-E-mail sacado não recebido';
+         88: Result:= '88-E-mail Pagador não lido no prazo 5 dias';
+         91: Result:= '91-E-mail Pagador não recebido';
       else
          Result:= CodMotivo +' - Outros Motivos';
       end;
@@ -1161,12 +1182,12 @@ begin
          40 : Result:= '40-Título com ordem de protesto emitido';
          41 : Result:= '41-Pedido cancelamento/sustação para Título sem instrução de protesto';
          42 : Result:= '42-Código para baixa/devolução inválido';
-         45 : Result:= '45-Nome do Sacado não informado';
-         46 : Result:= '46-Tipo/número de inscrição do Sacado inválidos';
-         47 : Result:= '47-Endereço do Sacado não informado';
+         45 : Result:= '45-Nome do Pagador não informado';
+         46 : Result:= '46-Tipo/número de inscrição do Pagador inválidos';
+         47 : Result:= '47-Endereço do Pagador não informado';
          48 : Result:= '48-CEP Inválido';
          50 : Result:= '50-CEP referente a um Banco correspondente';
-         53 : Result:= '53-Tipo de inscrição do sacador avalista inválidos';
+         53 : Result:= '53-Tipo de inscrição do Beneficiário Final inválidos';
          60 : Result:= '60-Movimento para Título não cadastrado';
          85 : Result:= '85-Título com pagamento vinculado';
          86 : Result:= '86-Seu número inválido';
@@ -1180,8 +1201,8 @@ begin
       case StrToIntDef(CodMotivo,999) of
          81 : Result:= '81-Tentativas esgotadas, baixado';
          82 : Result:= '82-Tentativas esgotadas, pendente';
-         83 : Result:= '83-Cancelado pelo Sacado e Mantido Pendente, conforme negociação';
-         84 : Result:= '84-Cancelado pelo sacado e baixado, conforme negociação';
+         83 : Result:= '83-Cancelado pelo Pagador e Mantido Pendente, conforme negociação';
+         84 : Result:= '84-Cancelado pelo Pagador e baixado, conforme negociação';
       else
          Result:= CodMotivo +' - Outros Motivos';
       end;

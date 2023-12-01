@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/12/2023
+--- ACBrLibReinf ---
+[*] Ajustes para compilação versão MultiThread.
+    Por: Antonio Carlos
+ 
 30/11/2023
 --- Diversos --- 
 [*] Remoção dos parâmetros "grupo", não utilizados no Reinf

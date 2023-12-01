@@ -108,6 +108,9 @@ function Reinf_ConfigGravarValor (const libHandle: PLibHandle; const eSessao, eC
  function Reinf_SetTipoEmpregador (const libHandle: PLibHandle; aTipoContribuinte: integer):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+ function Reinf_SetTipoContribuinte (const libHandle: PLibHandle; aTipoContribuinte: integer):longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
  function Reinf_SetVersaoDF (const libHandle: PLibHandle; const sVersao: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -334,6 +337,21 @@ begin
 end;
 
 function Reinf_SetTipoEmpregador (const libHandle:PLibHandle; aTipoContribuinte: integer):longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+   VerificarLibInicializada(libHandle);
+   Result := TACBrLibReinf(libHandle^.Lib).SetTipoContribuinte(aTipoContribuinte);
+  except
+   on E: EACBrLibException do
+   Result := E.Erro;
+
+   on E: Exception do
+   Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function Reinf_SetTipoContribuinte (const libHandle:PLibHandle; aTipoContribuinte: integer):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

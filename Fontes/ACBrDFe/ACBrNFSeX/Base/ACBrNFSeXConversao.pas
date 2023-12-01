@@ -12736,15 +12736,15 @@ end;
 function indTotTribToStr(const t: TindTotTrib): string;
 begin
   result := EnumeradoToStr(t,
-                           ['0'],
-                           [indNao]);
+                           ['0', '1'],
+                           [indNao, indSim]);
 end;
 
 function StrToindTotTrib(out ok: Boolean; const s: string): TindTotTrib;
 begin
   result := StrToEnumerado(ok, s,
-                           ['0'],
-                           [indNao]);
+                           ['0', '1'],
+                           [indNao, indSim]);
 end;
 
 function ambGerToStr(const t: TambGer): string;

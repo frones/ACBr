@@ -98,7 +98,7 @@ function Reinf_ConfigGravarValor(var libHandle: TLibHandle; const eSessao, eChav
 function Reinf_CriarEventoReinf(var libHandle: TLibHandle; const eArqIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_EnviarReinf(var libHandle: TLibHandle; const Agrupo: Integer; const sResposta: PChar;
+function Reinf_EnviarReinf(var libHandle: TLibHandle; const sResposta: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
@@ -111,7 +111,7 @@ function Reinf_ConsultarReciboReinf(var libHandle: TLibHandle;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_CriarEnviarReinf(var libHandle: TLibHandle; const eArqIni: PChar; aGrupo:integer):longint;
+function Reinf_CriarEnviarReinf(var libHandle: TLibHandle; const eArqIni: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_LimparReinf(var libHandle: TLibHandle): Longint;

@@ -74,22 +74,22 @@ async function getReinf() {
 
     // Reinf_CriarEventoReinf(eArqIni);
     Reinf_CriarEventoReinf: ['int', ['string']],
-    // Reinf_EnviarReinf(aGrupo, sResposta, esTamanho);
-    Reinf_EnviarReinf: ['int',['string','string','string']],
+    // Reinf_EnviarReinf(sResposta, esTamanho);
+    Reinf_EnviarReinf: ['int',['string','string']],
     // Reinf_ConsultarReinf(eProtocolo, sResposta, esTamanho);
     Reinf_ConsultarReinf: ['int',['string','string','string']],
     // Reinf_ConsultarReciboReinf(ePerApur, aTipoEvento, eNrInscEstab, eCnpjPrestador, 
     //   eNrInscTomador, eDtApur, eCpfCnpjBenef, eCnpjFonte, sResposta, esTamanho);
     Reinf_ConsultarReciboReinf: ['int',['string','int','string','string',
       'string','string','string','string','string','string']],
-    // Reinf_CriarEnviarReinf(eArqIni, aGrupo);
-    Reinf_CriarEnviarReinf: ['int',['string','string']],
+    // Reinf_CriarEnviarReinf(eArqIni, sResposta, esTamanho);
+    Reinf_CriarEnviarReinf: ['int',['string','string','string']],
     // Reinf_LimparReinf();
     Reinf_LimparReinf: ['int', []],
     // Reinf_CarregarXMLEventoReinf(eArquivoOuXML);
     Reinf_CarregarXMLEventoReinf: ['int',['string']],
-    // Reinf_SetIdContribuinte(aIdContribuinte);
-    Reinf_SetIdContribuinte: ['int',['string']],
+    // Reinf_SetIDContribuinte(aIDContribuinte);
+    Reinf_SetIDContribuinte: ['int',['string']],
     // Reinf_SetIDTransmissor(aIdTransmissor);
     Reinf_SetIDTransmissor: ['int',['string']],
     // Reinf_SetTipoContribuinte(aTipoContribuinte);
@@ -140,24 +140,32 @@ async function getReinf() {
     aloc_sResposta = Buffer.alloc(buflength);
     aloc_esTamanho = ref.alloc('int', buflength);
   
-    //* Exemplo de Criacao e Envio
+    //* Exemplo de Limpeza
     processo = 'Reinf_LimparReinf';
     inicio = libm.Reinf_LimparReinf();
     console.log(processo + ` >>>>>>> ${inicio}`);
     inicio = libm.Reinf_UltimoRetorno(aloc_sResposta, aloc_esTamanho);
     console.log(processo + ' - Ultimo Retorno: ', aloc_sResposta.toString());
   
+    /* Exemplo de Criacao e Envio em dois métodos
     processo = 'Reinf_CriarEventoReinf';
-    paramStr01 = path.join(__dirname, 'evento.ini'); // Ini do evento salvo na pasta do projeto
+    paramStr01 = path.join(__dirname, 'evento.ini'); // Ini do evento
     inicio = libm.Reinf_CriarEventoReinf(paramStr01);
     console.log(processo + ` evento >>>>>>> ${inicio}`);
     inicio = libm.Reinf_UltimoRetorno(aloc_sResposta, aloc_esTamanho);
     console.log(processo + ' - Ultimo Retorno: ', aloc_sResposta.toString());
   
     processo = 'Reinf_EnviarReinf';
-    paramStr01 = '';  // Grupo
-    inicio = libm.Reinf_EnviarReinf(paramStr01, aloc_sResposta, aloc_esTamanho);
+    inicio = libm.Reinf_EnviarReinf(aloc_sResposta, aloc_esTamanho);
     console.log(processo + ` >>>>>>>> ${inicio}`);
+    inicio = libm.Reinf_UltimoRetorno(aloc_sResposta, aloc_esTamanho);
+    console.log(processo + ' - Ultimo Retorno: ', aloc_sResposta.toString());
+    //*/
+    //* Exemplo de Criacao e Envio em método único
+    processo = 'Reinf_CriarEnviarReinf';
+    paramStr01 = path.join(__dirname, 'evento.ini'); // Ini do evento
+    inicio = libm.Reinf_CriarEnviarReinf(paramStr01, aloc_sResposta, aloc_esTamanho);
+    console.log(processo + ` evento >>>>>>> ${inicio}`);
     inicio = libm.Reinf_UltimoRetorno(aloc_sResposta, aloc_esTamanho);
     console.log(processo + ' - Ultimo Retorno: ', aloc_sResposta.toString());
     //*/

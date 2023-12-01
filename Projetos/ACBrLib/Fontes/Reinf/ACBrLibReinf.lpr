@@ -71,7 +71,7 @@ exports
   Reinf_CriarEnviarReinf,
   Reinf_LimparReinf,
   Reinf_CarregarXMLEventoReinf,
-  Reinf_SetIdContribuinte,
+  Reinf_SetIDContribuinte,
   Reinf_SetIDTransmissor,
   Reinf_SetTipoContribuinte,
   Reinf_SetVersaoDF,

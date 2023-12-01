@@ -77,7 +77,7 @@ function Reinf_ConfigGravarValor (const eSessao, eChave, eValor: PChar): longint
 function Reinf_CriarEventoReinf (const eArqIni: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_EnviarReinf (aGrupo: integer; const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_EnviarReinf (const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function Reinf_ConsultarReinf (eProtocolo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
@@ -89,7 +89,8 @@ function Reinf_ConsultarReciboReinf (ePerApur: PChar; aTipoEvento: Integer; eNrI
   var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_CriarEnviarReinf (const eArqIni: PChar; aGrupo:integer): longint;
+function Reinf_CriarEnviarReinf (const eArqIni: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function Reinf_LimparReinf: longint;
@@ -98,7 +99,7 @@ function Reinf_LimparReinf: longint;
 function Reinf_CarregarXMLEventoReinf (const eArquivoOuXML: PChar):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_SetIdContribuinte (const aIdContribuinte: PChar):longint;
+function Reinf_SetIDContribuinte (const aIdContribuinte: PChar):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function Reinf_SetIDTransmissor (const aIdTransmissor: PChar):longint;
@@ -205,13 +206,13 @@ begin
   end;
 end;
 
-function Reinf_EnviarReinf(aGrupo: integer; const sResposta: PChar; var esTamanho: longint
+function Reinf_EnviarReinf(const sResposta: PChar; var esTamanho: longint
   ): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(pLib);
-   Result := TACBrLibReinf(pLib^.Lib).EnviarReinf(aGrupo, sResposta, esTamanho);
+   Result := TACBrLibReinf(pLib^.Lib).EnviarReinf(sResposta, esTamanho);
   except
    on E: EACBrLibException do
     Result := E.Erro;
@@ -257,12 +258,13 @@ begin
   end;
 end;
 
-function Reinf_CriarEnviarReinf (const eArqIni: PChar; aGrupo:integer): longint;
+function Reinf_CriarEnviarReinf (const eArqIni: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-   VerificarLibInicializada(pLib);
-   Result := TACBrLibReinf(pLib^.Lib).CriarEnviarReinf(eArqIni, aGrupo);
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibReinf(pLib^.Lib).CriarEnviarReinf(eArqIni, sResposta, esTamanho);
   except
    on E: EACBrLibException do
     Result := E.Erro;
@@ -302,12 +304,12 @@ begin
   end;
 end;
 
-function Reinf_SetIdContribuinte (const aIdContribuinte: PChar):longint;
+function Reinf_SetIDContribuinte (const aIdContribuinte: PChar):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(pLib);
-   Result := TACBrLibReinf(pLib^.Lib).SetIdContribuinte(aIdContribuinte);
+   Result := TACBrLibReinf(pLib^.Lib).SetIDContribuinte(aIdContribuinte);
   except
    on E: EACBrLibException do
     Result := E.Erro;

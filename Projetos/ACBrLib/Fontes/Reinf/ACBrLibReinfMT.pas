@@ -77,7 +77,7 @@ function Reinf_ConfigGravarValor (const libHandle: PLibHandle; const eSessao, eC
  function Reinf_CriarEventoReinf (const libHandle: PLibHandle; const eArqIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function Reinf_EnviarReinf (const libHandle: PLibHandle; aGrupo: integer; const sResposta: PChar; var esTamanho: longint): longint;
+ function Reinf_EnviarReinf (const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
  function Reinf_ConsultarReinf (const libHandle: PLibHandle; eProtocolo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
@@ -90,7 +90,7 @@ function Reinf_ConfigGravarValor (const libHandle: PLibHandle; const eSessao, eC
    var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function Reinf_CriarEnviarReinf (const libHandle: PLibHandle; const eArqIni: PChar; aGrupo:integer): longint;
+ function Reinf_CriarEnviarReinf (const libHandle: PLibHandle; const eArqIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
  function Reinf_LimparReinf (const libHandle: PLibHandle): longint;
@@ -99,7 +99,7 @@ function Reinf_ConfigGravarValor (const libHandle: PLibHandle; const eSessao, eC
  function Reinf_CarregarXMLEventoReinf (const libHandle: PLibHandle; const eArquivoOuXML: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function Reinf_SetIdContribuinte (const libHandle: PLibHandle; const aIdEmpregador: PChar):longint;
+ function Reinf_SetIDContribuinte (const libHandle: PLibHandle; const aIdContribuinte: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
  function Reinf_SetIDTransmissor (const libHandle: PLibHandle; const aIdTransmissor: PChar):longint;
@@ -206,12 +206,12 @@ begin
   end;
 end;
 
-function Reinf_EnviarReinf(const libHandle: PLibHandle; aGrupo: integer; const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_EnviarReinf(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(libHandle);
-   Result := TACBrLibReinf(libHandle^.Lib).EnviarReinf(aGrupo, sResposta, esTamanho);
+   Result := TACBrLibReinf(libHandle^.Lib).EnviarReinf(sResposta, esTamanho);
   except
    on E: EACBrLibException do
     Result := E.Erro;
@@ -258,12 +258,12 @@ begin
   end;
 end;
 
-function Reinf_CriarEnviarReinf (const libHandle:PLibHandle; const eArqIni: PChar; aGrupo:integer): longint;
+function Reinf_CriarEnviarReinf (const libHandle:PLibHandle; const eArqIni: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(libHandle);
-   Result := TACBrLibReinf(libHandle^.Lib).CriarEnviarReinf(eArqIni, aGrupo);
+   Result := TACBrLibReinf(libHandle^.Lib).CriarEnviarReinf(eArqIni);
   except
    on E: EACBrLibException do
     Result := E.Erro;
@@ -303,12 +303,12 @@ begin
   end;
 end;
 
-function Reinf_SetIdContribuinte (const libHandle:PLibHandle; const aIdEmpregador: PChar):longint;
+function Reinf_SetIDContribuinte (const libHandle:PLibHandle; const aIdContribuinte: PChar):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(libHandle);
-   Result := TACBrLibReinf(libHandle^.Lib).SetIdContribuinte(aIdEmpregador);
+   Result := TACBrLibReinf(libHandle^.Lib).SetIDContribuinte(aIdContribuinte);
   except
    on E: EACBrLibException do
     Result := E.Erro;

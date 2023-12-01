@@ -60,15 +60,16 @@ type
     destructor Destroy; override;
 
     function CriarEventoReinf(eArqIni: PChar):longint;
-    function EnviarReinf(aGrupo: integer; const sResposta: PChar; var esTamanho: longint): longint;
+    function EnviarReinf(const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarReinf(eProtocolo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarReciboReinf(ePerApur: PChar; aTipoEvento: Integer; eNrInscEstab: PChar;
       eCnpjPrestador: PChar; eNrInscTomador: PChar; eDtApur: PChar; eCpfCnpjBenef: PChar;
       eCnpjFonte: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function CriarEnviarReinf(const eArqIni: PChar; aGrupo:integer): longint;
+    function CriarEnviarReinf(const eArqIni: PChar; const sResposta: PChar;
+      var esTamanho: longint): longint;
     function LimparReinf: Longint;
     function CarregarXMLEventoReinf(const eArquivoOuXML: PChar): longint;
-    function SetIdContribuinte(const aIdContribuinte: PChar): longint;
+    function SetIDContribuinte(const aIdContribuinte: PChar): longint;
     function SetIDTransmissor(const aIdTransmissor: PChar): longint;
     function SetTipoContribuinte(aTipoContribuinte: integer):longint;
     function SetVersaoDF(const sVersao: PChar):longint;
@@ -151,17 +152,14 @@ begin
   end;
 end;
 
-function TACBrLibReinf.EnviarReinf(aGrupo: integer; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibReinf.EnviarReinf(const sResposta: PChar; var esTamanho: longint): longint;
 var
   AResposta: string;
   Resp: TRespostas;
-  grupo: Integer;
 begin
-  grupo := aGrupo;
-
   try
     if Config.Log.Nivel > logNormal then
-      GravarLog('Reinf_EnviarReinf (' + IntToStr(Grupo) + ' ) ', logCompleto, True)
+      GravarLog('Reinf_EnviarReinf', logCompleto, True)
     else
       GravarLog('Reinf_EnviarReinf', logNormal);
 
@@ -307,20 +305,19 @@ begin
   end;
 end;
 
-function TACBrLibReinf.CriarEnviarReinf(const eArqIni: PChar; aGrupo:integer): longint;
+function TACBrLibReinf.CriarEnviarReinf(const eArqIni: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;
 var
   AIniFile, ArqReinf : String;
   ASalvar : Boolean;
   iEvento : Integer;
-  grupo : Integer;
   AResposta: String;
   Resp : TRespostas;
 begin
   AIniFile:= AnsiString(eArqIni);
-  Grupo:= aGrupo;
   try
     if Config.Log.Nivel > logNormal then
-      GravarLog('Reinf_CriarEnviarReinf(' + AIniFile + ', ' + IntToStr(Grupo) + ' )', logCompleto, True)
+      GravarLog('Reinf_CriarEnviarReinf(' + AIniFile + ')', logCompleto, True)
     else
       GravarLog('Reinf_CriarEnviarReinf', logNormal);
 
@@ -347,8 +344,6 @@ begin
 
       AResposta := ArqReinf + sLineBreak + ACBrStr(Format(SMsgReinfEventoAdicionado, [TipoEventoToStr(ReinfDM.ACBrReinf1.Eventos.Gerados.Items[iEvento].TipoEvento)]) ) + sLineBreak;
 
-      Result := SetRetorno(ErrOK, AResposta);
-
       if ReinfDM.ACBrReinf1.Enviar then
       begin
         Resp := TRespostas.Create(ReinfDM.ACBrReinf1, Config.TipoResposta, Config.CodResposta);
@@ -361,6 +356,9 @@ begin
       end;
 
       ReinfDM.ACBrReinf1.Eventos.Clear;
+
+      MoverStringParaPChar (AResposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, AResposta);
     finally
       ReinfDM.Destravar;
     end;
@@ -435,7 +433,7 @@ begin
   end;
 end;
 
-function TACBrLibReinf.SetIdContribuinte(const aIdContribuinte: PChar): longint;
+function TACBrLibReinf.SetIDContribuinte(const aIdContribuinte: PChar): longint;
 var
   IdContribuinte: AnsiString;
 begin
@@ -443,12 +441,12 @@ begin
     IdContribuinte:= ConverterAnsiParaUTF8(aIdContribuinte);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('Reinf_IdContribuinte (' + IdContribuinte + ')', logCompleto, True)
+      GravarLog('Reinf_SetIDContribuinte (' + IdContribuinte + ')', logCompleto, True)
     else
-      GravarLog('Reinf_SetIdContribuinte', logNormal);
+      GravarLog('Reinf_SetIDContribuinte', logNormal);
 
-    if DirectoryExists(IdContribuinte) then
-      raise EACBrLibException.Create(ErrDiretorioNaoExiste, 'Diretorio não existe');
+    if EstaVazio(IdContribuinte)then
+      raise EACBrLibException.Create(ErrParametroInvalido, 'Valor Nulo');
 
     ReinfDM.Travar;
     try

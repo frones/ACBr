@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2023
+-- pcesS1210 --
+[*] Utilizado eSTpInscricaoToStr para preenchimento do tpInsc em detReembTit/detReembDep, preenchidos cnpjOper e regANS somente quando indOrgReemb=1
+  Por: Hudson G Leite
+
 28/11/2023
 -- pcesS5501 --
 [*] Corrigida leitura do evento via xml, adicionando item na lista ao ler os InfoTributos

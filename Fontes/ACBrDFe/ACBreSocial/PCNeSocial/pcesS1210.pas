@@ -1759,8 +1759,11 @@ begin
     Gerador.wGrupo('infoReembMed');
 
     Gerador.wCampo(tcStr, '', 'indOrgReemb', 1,  1, 1, obj[i].indOrgReemb);
-    Gerador.wCampo(tcStr, '', 'cnpjOper',    0, 14, 0, obj[i].cnpjOper);
-    Gerador.wCampo(tcInt, '', 'regANS',      0,  6, 0, obj[i].regANS);
+    if obj[i].indOrgReemb = '1' then
+    begin
+      Gerador.wCampo(tcStr, '', 'cnpjOper',    0, 14, 0, obj[i].cnpjOper);
+      Gerador.wCampo(tcInt, '', 'regANS',      0,  6, 0, obj[i].regANS);
+    end;
 
     if obj[i].detReembTitInst() then
       GerarDetReembTit(obj[i].detReembTit);
@@ -1783,7 +1786,7 @@ begin
   begin
     Gerador.wGrupo('detReembTit');
 
-    Gerador.wCampo(tcStr, '', 'tpInsc',      1,  1, 1, obj[i].tpInsc);
+    Gerador.wCampo(tcStr, '', 'tpInsc',      1,  1, 1, eSTpInscricaoToStr(obj[i].tpInsc));
     Gerador.wCampo(tcStr, '', 'nrInsc',      1, 15, 1, obj[i].nrInsc);
     Gerador.wCampo(tcDe2, '', 'vlrReemb',    0, 14, 0, obj[i].vlrReemb);
     Gerador.wCampo(tcDe2, '', 'vlrReembAnt', 0, 14, 0, obj[i].vlrReembAnt);
@@ -1823,7 +1826,7 @@ begin
   begin
     Gerador.wGrupo('detReembDep');
 
-    Gerador.wCampo(tcStr, '', 'tpInsc',      1,  1, 1, obj[i].tpInsc);
+    Gerador.wCampo(tcStr, '', 'tpInsc',      1,  1, 1, eSTpInscricaoToStr(obj[i].tpInsc));
     Gerador.wCampo(tcStr, '', 'nrInsc',      1, 15, 1, obj[i].nrInsc);
     Gerador.wCampo(tcDe2, '', 'vlrReemb',    0, 14, 0, obj[i].vlrReemb);
     Gerador.wCampo(tcDe2, '', 'vlrReembAnt', 0, 14, 0, obj[i].vlrReembAnt);

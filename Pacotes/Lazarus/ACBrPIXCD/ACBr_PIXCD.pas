@@ -10,18 +10,19 @@ interface
 uses
   ACBrPIXCDReg, ACBrPIXBase, ACBrPIXUtil, ACBrPIXCD, ACBrPIXBRCode, 
   ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, 
-  ACBrPIXPSPShipay, ACBrPIXPSPSicredi, ACBrPIXPSPSicoob, 
-  ACBrPIXSchemasProblema, ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, 
-  ACBrPIXSchemasLocation, ACBrPIXSchemasPaginacao, ACBrPIXSchemasDevolucao, 
-  ACBrPIXSchemasPix, ACBrPIXSchemasParametrosConsultaPix, 
-  ACBrPIXSchemasPixConsultados, ACBrPIXSchemasCob, 
-  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobsConsultadas, 
-  ACBrPIXSchemasCobV, ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
+  ACBrPIXPSPShipay, ACBrPIXPSPSicredi, ACBrPIXPSPSicoob, ACBrPIXPSPInter, 
+  ACBrPIXPSPPagSeguro, ACBrPIXPSPGerenciaNet, ACBrPIXPSPBradesco, 
+  ACBrPIXPSPPixPDV, ACBrPIXPSPAilos, ACBrPIXPSPMercadoPago, ACBrPIXPSPMatera, 
+  ACBrPIXPSPCielo, ACBrPIXSchemasProblema, ACBrPIXSchemasCalendario, 
+  ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation, ACBrPIXSchemasPaginacao, 
+  ACBrPIXSchemasDevolucao, ACBrPIXSchemasPix, 
+  ACBrPIXSchemasParametrosConsultaPix, ACBrPIXSchemasPixConsultados, 
+  ACBrPIXSchemasCob, ACBrPIXSchemasParametrosConsultaCob, 
+  ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobV, 
+  ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
   ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLotesCobVConsultadas, 
-  ACBrShipaySchemas, ACBrPIXPSPInter, ACBrPIXPSPPagSeguro, 
-  ACBrPIXPSPGerenciaNet, ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV, 
-  ACBrPIXSchemasPixPDV, ACBrPIXPSPAilos, ACBrPIXPSPMatera, ACBrSchemasMatera, 
-  ACBrPIXPSPCielo, LazarusPackageIntf;
+  ACBrShipaySchemas, ACBrPIXSchemasPixPDV, ACBrSchemasMatera, 
+  LazarusPackageIntf;
 
 implementation
 

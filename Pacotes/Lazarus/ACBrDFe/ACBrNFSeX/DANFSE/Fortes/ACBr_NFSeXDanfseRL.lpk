@@ -13,12 +13,32 @@
         <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="1">
+    <Files Count="6">
       <Item1>
         <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRLReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrNFSeXDANFSeRLReg"/>
       </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRL.pas"/>
+        <UnitName Value="ACBrNFSeXDANFSeRL"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRLClass.pas"/>
+        <UnitName Value="ACBrNFSeXDANFSeRLClass"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRLISSNet.pas"/>
+        <UnitName Value="ACBrNFSeXDANFSeRLISSNet"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRLRetrato.pas"/>
+        <UnitName Value="ACBrNFSeXDANFSeRLRetrato"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRLSimplISS.pas"/>
+        <UnitName Value="ACBrNFSeXDANFSeRLSimplISS"/>
+      </Item6>
     </Files>
     <RequiredPkgs Count="4">
       <Item1>

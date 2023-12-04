@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="2">
+    <Files Count="411">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -23,6 +23,1642 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeX.pas"/>
         <UnitName Value="ACBrNFSeX"/>
       </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXConfiguracoes.pas"/>
+        <UnitName Value="ACBrNFSeXConfiguracoes"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXNotasFiscais.pas"/>
+        <UnitName Value="ACBrNFSeXNotasFiscais"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXParametros.pas"/>
+        <UnitName Value="ACBrNFSeXParametros"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXWebservices.pas"/>
+        <UnitName Value="ACBrNFSeXWebservices"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\ACBrNFSeXClass.pas"/>
+        <UnitName Value="ACBrNFSeXClass"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\ACBrNFSeXConsts.pas"/>
+        <UnitName Value="ACBrNFSeXConsts"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\ACBrNFSeXConversao.pas"/>
+        <UnitName Value="ACBrNFSeXConversao"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\ACBrNFSeXInterface.pas"/>
+        <UnitName Value="ACBrNFSeXInterface"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXGravarXml.pas"/>
+        <UnitName Value="ACBrNFSeXGravarXml"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXGravarXml_ABRASFv1.pas"/>
+        <UnitName Value="ACBrNFSeXGravarXml_ABRASFv1"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXGravarXml_ABRASFv2.pas"/>
+        <UnitName Value="ACBrNFSeXGravarXml_ABRASFv2"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXLerXml.pas"/>
+        <UnitName Value="ACBrNFSeXLerXml"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXLerXml_ABRASFv1.pas"/>
+        <UnitName Value="ACBrNFSeXLerXml_ABRASFv1"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXLerXml_ABRASFv2.pas"/>
+        <UnitName Value="ACBrNFSeXLerXml_ABRASFv2"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXProviderABRASFv1.pas"/>
+        <UnitName Value="ACBrNFSeXProviderABRASFv1"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXProviderABRASFv2.pas"/>
+        <UnitName Value="ACBrNFSeXProviderABRASFv2"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXProviderBase.pas"/>
+        <UnitName Value="ACBrNFSeXProviderBase"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXProviderManager.pas"/>
+        <UnitName Value="ACBrNFSeXProviderManager"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\Provedores\ACBrNFSeXProviderProprio.pas"/>
+        <UnitName Value="ACBrNFSeXProviderProprio"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\WebServices\ACBrNFSeXWebserviceBase.pas"/>
+        <UnitName Value="ACBrNFSeXWebserviceBase"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\WebServices\ACBrNFSeXWebservicesResponse.pas"/>
+        <UnitName Value="ACBrNFSeXWebservicesResponse"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\ACBrNFSeXDANFSeClass.pas"/>
+        <UnitName Value="ACBrNFSeXDANFSeClass"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Abaco.GravarXml.pas"/>
+        <UnitName Value="Abaco.GravarXml"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Abaco.LerXml.pas"/>
+        <UnitName Value="Abaco.LerXml"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Abaco.Provider.pas"/>
+        <UnitName Value="Abaco.Provider"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ABase.GravarXml.pas"/>
+        <UnitName Value="ABase.GravarXml"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ABase.LerXml.pas"/>
+        <UnitName Value="ABase.LerXml"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ABase.Provider.pas"/>
+        <UnitName Value="ABase.Provider"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Actcon.GravarXml.pas"/>
+        <UnitName Value="Actcon.GravarXml"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Actcon.LerXml.pas"/>
+        <UnitName Value="Actcon.LerXml"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Actcon.Provider.pas"/>
+        <UnitName Value="Actcon.Provider"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Adm.GravarXml.pas"/>
+        <UnitName Value="Adm.GravarXml"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Adm.LerXml.pas"/>
+        <UnitName Value="Adm.LerXml"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Adm.Provider.pas"/>
+        <UnitName Value="Adm.Provider"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ADPM.GravarXml.pas"/>
+        <UnitName Value="ADPM.GravarXml"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ADPM.LerXml.pas"/>
+        <UnitName Value="ADPM.LerXml"/>
+      </Item38>
+      <Item39>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ADPM.Provider.pas"/>
+        <UnitName Value="ADPM.Provider"/>
+      </Item39>
+      <Item40>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\AEG.GravarXml.pas"/>
+        <UnitName Value="AEG.GravarXml"/>
+      </Item40>
+      <Item41>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\AEG.LerXml.pas"/>
+        <UnitName Value="AEG.LerXml"/>
+      </Item41>
+      <Item42>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\AEG.Provider.pas"/>
+        <UnitName Value="AEG.Provider"/>
+      </Item42>
+      <Item43>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Agili.GravarXml.pas"/>
+        <UnitName Value="Agili.GravarXml"/>
+      </Item43>
+      <Item44>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Agili.LerXml.pas"/>
+        <UnitName Value="Agili.LerXml"/>
+      </Item44>
+      <Item45>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Agili.Provider.pas"/>
+        <UnitName Value="Agili.Provider"/>
+      </Item45>
+      <Item46>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\AssessorPublico.GravarXml.pas"/>
+        <UnitName Value="AssessorPublico.GravarXml"/>
+      </Item46>
+      <Item47>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\AssessorPublico.LerXml.pas"/>
+        <UnitName Value="AssessorPublico.LerXml"/>
+      </Item47>
+      <Item48>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\AssessorPublico.Provider.pas"/>
+        <UnitName Value="AssessorPublico.Provider"/>
+      </Item48>
+      <Item49>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Asten.GravarXml.pas"/>
+        <UnitName Value="Asten.GravarXml"/>
+      </Item49>
+      <Item50>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Asten.LerXml.pas"/>
+        <UnitName Value="Asten.LerXml"/>
+      </Item50>
+      <Item51>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Asten.Provider.pas"/>
+        <UnitName Value="Asten.Provider"/>
+      </Item51>
+      <Item52>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Bauhaus.GravarJson.pas"/>
+        <UnitName Value="Bauhaus.GravarJson"/>
+      </Item52>
+      <Item53>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Bauhaus.LerJson.pas"/>
+        <UnitName Value="Bauhaus.LerJson"/>
+      </Item53>
+      <Item54>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Bauhaus.Provider.pas"/>
+        <UnitName Value="Bauhaus.Provider"/>
+      </Item54>
+      <Item55>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Betha.GravarXml.pas"/>
+        <UnitName Value="Betha.GravarXml"/>
+      </Item55>
+      <Item56>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Betha.LerXml.pas"/>
+        <UnitName Value="Betha.LerXml"/>
+      </Item56>
+      <Item57>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Betha.Provider.pas"/>
+        <UnitName Value="Betha.Provider"/>
+      </Item57>
+      <Item58>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\BHISS.GravarXml.pas"/>
+        <UnitName Value="BHISS.GravarXml"/>
+      </Item58>
+      <Item59>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\BHISS.LerXml.pas"/>
+        <UnitName Value="BHISS.LerXml"/>
+      </Item59>
+      <Item60>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\BHISS.Provider.pas"/>
+        <UnitName Value="BHISS.Provider"/>
+      </Item60>
+      <Item61>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Centi.GravarXml.pas"/>
+        <UnitName Value="Centi.GravarXml"/>
+      </Item61>
+      <Item62>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Centi.LerXml.pas"/>
+        <UnitName Value="Centi.LerXml"/>
+      </Item62>
+      <Item63>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Centi.Provider.pas"/>
+        <UnitName Value="Centi.Provider"/>
+      </Item63>
+      <Item64>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CIGA.GravarXml.pas"/>
+        <UnitName Value="CIGA.GravarXml"/>
+      </Item64>
+      <Item65>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CIGA.LerXml.pas"/>
+        <UnitName Value="CIGA.LerXml"/>
+      </Item65>
+      <Item66>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CIGA.Provider.pas"/>
+        <UnitName Value="CIGA.Provider"/>
+      </Item66>
+      <Item67>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Citta.GravarXml.pas"/>
+        <UnitName Value="Citta.GravarXml"/>
+      </Item67>
+      <Item68>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Citta.LerXml.pas"/>
+        <UnitName Value="Citta.LerXml"/>
+      </Item68>
+      <Item69>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Citta.Provider.pas"/>
+        <UnitName Value="Citta.Provider"/>
+      </Item69>
+      <Item70>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Conam.GravarXml.pas"/>
+        <UnitName Value="Conam.GravarXml"/>
+      </Item70>
+      <Item71>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Conam.LerXml.pas"/>
+        <UnitName Value="Conam.LerXml"/>
+      </Item71>
+      <Item72>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Conam.Provider.pas"/>
+        <UnitName Value="Conam.Provider"/>
+      </Item72>
+      <Item73>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Contass.GravarXml.pas"/>
+        <UnitName Value="Contass.GravarXml"/>
+      </Item73>
+      <Item74>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Contass.LerXml.pas"/>
+        <UnitName Value="Contass.LerXml"/>
+      </Item74>
+      <Item75>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Contass.Provider.pas"/>
+        <UnitName Value="Contass.Provider"/>
+      </Item75>
+      <Item76>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Coplan.GravarXml.pas"/>
+        <UnitName Value="Coplan.GravarXml"/>
+      </Item76>
+      <Item77>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Coplan.LerXml.pas"/>
+        <UnitName Value="Coplan.LerXml"/>
+      </Item77>
+      <Item78>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Coplan.Provider.pas"/>
+        <UnitName Value="Coplan.Provider"/>
+      </Item78>
+      <Item79>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CTA.GravarXml.pas"/>
+        <UnitName Value="CTA.GravarXml"/>
+      </Item79>
+      <Item80>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CTA.LerXml.pas"/>
+        <UnitName Value="CTA.LerXml"/>
+      </Item80>
+      <Item81>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CTA.Provider.pas"/>
+        <UnitName Value="CTA.Provider"/>
+      </Item81>
+      <Item82>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CTAConsult.GravarXml.pas"/>
+        <UnitName Value="CTAConsult.GravarXml"/>
+      </Item82>
+      <Item83>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CTAConsult.LerXml.pas"/>
+        <UnitName Value="CTAConsult.LerXml"/>
+      </Item83>
+      <Item84>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\CTAConsult.Provider.pas"/>
+        <UnitName Value="CTAConsult.Provider"/>
+      </Item84>
+      <Item85>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DataSmart.GravarXml.pas"/>
+        <UnitName Value="DataSmart.GravarXml"/>
+      </Item85>
+      <Item86>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DataSmart.LerXml.pas"/>
+        <UnitName Value="DataSmart.LerXml"/>
+      </Item86>
+      <Item87>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DataSmart.Provider.pas"/>
+        <UnitName Value="DataSmart.Provider"/>
+      </Item87>
+      <Item88>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DBSeller.GravarXml.pas"/>
+        <UnitName Value="DBSeller.GravarXml"/>
+      </Item88>
+      <Item89>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DBSeller.LerXml.pas"/>
+        <UnitName Value="DBSeller.LerXml"/>
+      </Item89>
+      <Item90>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DBSeller.Provider.pas"/>
+        <UnitName Value="DBSeller.Provider"/>
+      </Item90>
+      <Item91>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DeISS.GravarXml.pas"/>
+        <UnitName Value="DeISS.GravarXml"/>
+      </Item91>
+      <Item92>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DeISS.LerXml.pas"/>
+        <UnitName Value="DeISS.LerXml"/>
+      </Item92>
+      <Item93>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DeISS.Provider.pas"/>
+        <UnitName Value="DeISS.Provider"/>
+      </Item93>
+      <Item94>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Desenvolve.GravarXml.pas"/>
+        <UnitName Value="Desenvolve.GravarXml"/>
+      </Item94>
+      <Item95>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Desenvolve.LerXml.pas"/>
+        <UnitName Value="Desenvolve.LerXml"/>
+      </Item95>
+      <Item96>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Desenvolve.Provider.pas"/>
+        <UnitName Value="Desenvolve.Provider"/>
+      </Item96>
+      <Item97>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Digifred.GravarXml.pas"/>
+        <UnitName Value="Digifred.GravarXml"/>
+      </Item97>
+      <Item98>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Digifred.LerXml.pas"/>
+        <UnitName Value="Digifred.LerXml"/>
+      </Item98>
+      <Item99>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Digifred.Provider.pas"/>
+        <UnitName Value="Digifred.Provider"/>
+      </Item99>
+      <Item100>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DSF.GravarXml.pas"/>
+        <UnitName Value="DSF.GravarXml"/>
+      </Item100>
+      <Item101>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DSF.LerXml.pas"/>
+        <UnitName Value="DSF.LerXml"/>
+      </Item101>
+      <Item102>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\DSF.Provider.pas"/>
+        <UnitName Value="DSF.Provider"/>
+      </Item102>
+      <Item103>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eGoverneISS.GravarXml.pas"/>
+        <UnitName Value="eGoverneISS.GravarXml"/>
+      </Item103>
+      <Item104>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eGoverneISS.LerXml.pas"/>
+        <UnitName Value="eGoverneISS.LerXml"/>
+      </Item104>
+      <Item105>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eGoverneISS.Provider.pas"/>
+        <UnitName Value="eGoverneISS.Provider"/>
+      </Item105>
+      <Item106>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eISS.GravarJson.pas"/>
+        <UnitName Value="eISS.GravarJson"/>
+      </Item106>
+      <Item107>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eISS.LerJson.pas"/>
+        <UnitName Value="eISS.LerJson"/>
+      </Item107>
+      <Item108>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eISS.Provider.pas"/>
+        <UnitName Value="eISS.Provider"/>
+      </Item108>
+      <Item109>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\EL.GravarXml.pas"/>
+        <UnitName Value="EL.GravarXml"/>
+      </Item109>
+      <Item110>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\EL.LerXml.pas"/>
+        <UnitName Value="EL.LerXml"/>
+      </Item110>
+      <Item111>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\EL.Provider.pas"/>
+        <UnitName Value="EL.Provider"/>
+      </Item111>
+      <Item112>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\EloTech.GravarXml.pas"/>
+        <UnitName Value="EloTech.GravarXml"/>
+      </Item112>
+      <Item113>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\EloTech.LerXml.pas"/>
+        <UnitName Value="EloTech.LerXml"/>
+      </Item113>
+      <Item114>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\EloTech.Provider.pas"/>
+        <UnitName Value="EloTech.Provider"/>
+      </Item114>
+      <Item115>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Equiplano.GravarXml.pas"/>
+        <UnitName Value="Equiplano.GravarXml"/>
+      </Item115>
+      <Item116>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Equiplano.LerXml.pas"/>
+        <UnitName Value="Equiplano.LerXml"/>
+      </Item116>
+      <Item117>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Equiplano.Provider.pas"/>
+        <UnitName Value="Equiplano.Provider"/>
+      </Item117>
+      <Item118>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eReceita.GravarXml.pas"/>
+        <UnitName Value="eReceita.GravarXml"/>
+      </Item118>
+      <Item119>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eReceita.LerXml.pas"/>
+        <UnitName Value="eReceita.LerXml"/>
+      </Item119>
+      <Item120>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\eReceita.Provider.pas"/>
+        <UnitName Value="eReceita.Provider"/>
+      </Item120>
+      <Item121>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Etherium.GravarXml.pas"/>
+        <UnitName Value="Etherium.GravarXml"/>
+      </Item121>
+      <Item122>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Etherium.LerXml.pas"/>
+        <UnitName Value="Etherium.LerXml"/>
+      </Item122>
+      <Item123>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Etherium.Provider.pas"/>
+        <UnitName Value="Etherium.Provider"/>
+      </Item123>
+      <Item124>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Facundo.GravarXml.pas"/>
+        <UnitName Value="Facundo.GravarXml"/>
+      </Item124>
+      <Item125>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Facundo.LerXml.pas"/>
+        <UnitName Value="Facundo.LerXml"/>
+      </Item125>
+      <Item126>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Facundo.Provider.pas"/>
+        <UnitName Value="Facundo.Provider"/>
+      </Item126>
+      <Item127>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\FGMaiss.GravarXml.pas"/>
+        <UnitName Value="FGMaiss.GravarXml"/>
+      </Item127>
+      <Item128>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\FGMaiss.LerXml.pas"/>
+        <UnitName Value="FGMaiss.LerXml"/>
+      </Item128>
+      <Item129>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\FGMaiss.Provider.pas"/>
+        <UnitName Value="FGMaiss.Provider"/>
+      </Item129>
+      <Item130>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\fintelISS.GravarXml.pas"/>
+        <UnitName Value="fintelISS.GravarXml"/>
+      </Item130>
+      <Item131>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\fintelISS.LerXml.pas"/>
+        <UnitName Value="fintelISS.LerXml"/>
+      </Item131>
+      <Item132>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\fintelISS.Provider.pas"/>
+        <UnitName Value="fintelISS.Provider"/>
+      </Item132>
+      <Item133>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Fiorilli.GravarXml.pas"/>
+        <UnitName Value="Fiorilli.GravarXml"/>
+      </Item133>
+      <Item134>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Fiorilli.LerXml.pas"/>
+        <UnitName Value="Fiorilli.LerXml"/>
+      </Item134>
+      <Item135>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Fiorilli.Provider.pas"/>
+        <UnitName Value="Fiorilli.Provider"/>
+      </Item135>
+      <Item136>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Fisco.GravarXml.pas"/>
+        <UnitName Value="Fisco.GravarXml"/>
+      </Item136>
+      <Item137>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Fisco.LerXml.pas"/>
+        <UnitName Value="Fisco.LerXml"/>
+      </Item137>
+      <Item138>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Fisco.Provider.pas"/>
+        <UnitName Value="Fisco.Provider"/>
+      </Item138>
+      <Item139>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\FISSLex.GravarXml.pas"/>
+        <UnitName Value="FISSLex.GravarXml"/>
+      </Item139>
+      <Item140>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\FISSLex.LerXml.pas"/>
+        <UnitName Value="FISSLex.LerXml"/>
+      </Item140>
+      <Item141>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\FISSLex.Provider.pas"/>
+        <UnitName Value="FISSLex.Provider"/>
+      </Item141>
+      <Item142>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Futurize.GravarXml.pas"/>
+        <UnitName Value="Futurize.GravarXml"/>
+      </Item142>
+      <Item143>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Futurize.LerXml.pas"/>
+        <UnitName Value="Futurize.LerXml"/>
+      </Item143>
+      <Item144>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Futurize.Provider.pas"/>
+        <UnitName Value="Futurize.Provider"/>
+      </Item144>
+      <Item145>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GeisWeb.GravarXml.pas"/>
+        <UnitName Value="GeisWeb.GravarXml"/>
+      </Item145>
+      <Item146>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GeisWeb.LerXml.pas"/>
+        <UnitName Value="GeisWeb.LerXml"/>
+      </Item146>
+      <Item147>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GeisWeb.Provider.pas"/>
+        <UnitName Value="GeisWeb.Provider"/>
+      </Item147>
+      <Item148>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\geNFe.GravarXml.pas"/>
+        <UnitName Value="geNFe.GravarXml"/>
+      </Item148>
+      <Item149>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\geNFe.LerXml.pas"/>
+        <UnitName Value="geNFe.LerXml"/>
+      </Item149>
+      <Item150>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\geNFe.Provider.pas"/>
+        <UnitName Value="geNFe.Provider"/>
+      </Item150>
+      <Item151>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GestaoISS.GravarXml.pas"/>
+        <UnitName Value="GestaoISS.GravarXml"/>
+      </Item151>
+      <Item152>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GestaoISS.LerXml.pas"/>
+        <UnitName Value="GestaoISS.LerXml"/>
+      </Item152>
+      <Item153>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GestaoISS.Provider.pas"/>
+        <UnitName Value="GestaoISS.Provider"/>
+      </Item153>
+      <Item154>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Giap.GravarXml.pas"/>
+        <UnitName Value="Giap.GravarXml"/>
+      </Item154>
+      <Item155>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Giap.LerXml.pas"/>
+        <UnitName Value="Giap.LerXml"/>
+      </Item155>
+      <Item156>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Giap.Provider.pas"/>
+        <UnitName Value="Giap.Provider"/>
+      </Item156>
+      <Item157>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Ginfes.GravarXml.pas"/>
+        <UnitName Value="Ginfes.GravarXml"/>
+      </Item157>
+      <Item158>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Ginfes.LerXml.pas"/>
+        <UnitName Value="Ginfes.LerXml"/>
+      </Item158>
+      <Item159>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Ginfes.Provider.pas"/>
+        <UnitName Value="Ginfes.Provider"/>
+      </Item159>
+      <Item160>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Giss.GravarXml.pas"/>
+        <UnitName Value="Giss.GravarXml"/>
+      </Item160>
+      <Item161>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Giss.LerXml.pas"/>
+        <UnitName Value="Giss.LerXml"/>
+      </Item161>
+      <Item162>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Giss.Provider.pas"/>
+        <UnitName Value="Giss.Provider"/>
+      </Item162>
+      <Item163>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GovBr.GravarXml.pas"/>
+        <UnitName Value="GovBr.GravarXml"/>
+      </Item163>
+      <Item164>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GovBr.LerXml.pas"/>
+        <UnitName Value="GovBr.LerXml"/>
+      </Item164>
+      <Item165>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GovBr.Provider.pas"/>
+        <UnitName Value="GovBr.Provider"/>
+      </Item165>
+      <Item166>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GovDigital.GravarXml.pas"/>
+        <UnitName Value="GovDigital.GravarXml"/>
+      </Item166>
+      <Item167>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GovDigital.LerXml.pas"/>
+        <UnitName Value="GovDigital.LerXml"/>
+      </Item167>
+      <Item168>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\GovDigital.Provider.pas"/>
+        <UnitName Value="GovDigital.Provider"/>
+      </Item168>
+      <Item169>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Governa.GravarXml.pas"/>
+        <UnitName Value="Governa.GravarXml"/>
+      </Item169>
+      <Item170>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Governa.LerXml.pas"/>
+        <UnitName Value="Governa.LerXml"/>
+      </Item170>
+      <Item171>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Governa.Provider.pas"/>
+        <UnitName Value="Governa.Provider"/>
+      </Item171>
+      <Item172>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Horus.GravarXml.pas"/>
+        <UnitName Value="Horus.GravarXml"/>
+      </Item172>
+      <Item173>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Horus.LerXml.pas"/>
+        <UnitName Value="Horus.LerXml"/>
+      </Item173>
+      <Item174>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Horus.Provider.pas"/>
+        <UnitName Value="Horus.Provider"/>
+      </Item174>
+      <Item175>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\iiBrasil.GravarXml.pas"/>
+        <UnitName Value="iiBrasil.GravarXml"/>
+      </Item175>
+      <Item176>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\iiBrasil.LerXml.pas"/>
+        <UnitName Value="iiBrasil.LerXml"/>
+      </Item176>
+      <Item177>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\iiBrasil.Provider.pas"/>
+        <UnitName Value="iiBrasil.Provider"/>
+      </Item177>
+      <Item178>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Infisc.GravarXml.pas"/>
+        <UnitName Value="Infisc.GravarXml"/>
+      </Item178>
+      <Item179>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Infisc.LerXml.pas"/>
+        <UnitName Value="Infisc.LerXml"/>
+      </Item179>
+      <Item180>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Infisc.Provider.pas"/>
+        <UnitName Value="Infisc.Provider"/>
+      </Item180>
+      <Item181>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Intertec.GravarXml.pas"/>
+        <UnitName Value="Intertec.GravarXml"/>
+      </Item181>
+      <Item182>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Intertec.LerXml.pas"/>
+        <UnitName Value="Intertec.LerXml"/>
+      </Item182>
+      <Item183>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Intertec.Provider.pas"/>
+        <UnitName Value="Intertec.Provider"/>
+      </Item183>
+      <Item184>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\IPM.GravarXml.pas"/>
+        <UnitName Value="IPM.GravarXml"/>
+      </Item184>
+      <Item185>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\IPM.LerXml.pas"/>
+        <UnitName Value="IPM.LerXml"/>
+      </Item185>
+      <Item186>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\IPM.Provider.pas"/>
+        <UnitName Value="IPM.Provider"/>
+      </Item186>
+      <Item187>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSBarueri.GravarXml.pas"/>
+        <UnitName Value="ISSBarueri.GravarXml"/>
+      </Item187>
+      <Item188>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSBarueri.LerXml.pas"/>
+        <UnitName Value="ISSBarueri.LerXml"/>
+      </Item188>
+      <Item189>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSBarueri.Provider.pas"/>
+        <UnitName Value="ISSBarueri.Provider"/>
+      </Item189>
+      <Item190>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCamacari.GravarXml.pas"/>
+        <UnitName Value="ISSCamacari.GravarXml"/>
+      </Item190>
+      <Item191>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCamacari.LerXml.pas"/>
+        <UnitName Value="ISSCamacari.LerXml"/>
+      </Item191>
+      <Item192>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCamacari.Provider.pas"/>
+        <UnitName Value="ISSCamacari.Provider"/>
+      </Item192>
+      <Item193>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCambe.GravarXml.pas"/>
+        <UnitName Value="ISSCambe.GravarXml"/>
+      </Item193>
+      <Item194>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCambe.LerXml.pas"/>
+        <UnitName Value="ISSCambe.LerXml"/>
+      </Item194>
+      <Item195>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCambe.Provider.pas"/>
+        <UnitName Value="ISSCambe.Provider"/>
+      </Item195>
+      <Item196>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCuritiba.GravarXml.pas"/>
+        <UnitName Value="ISSCuritiba.GravarXml"/>
+      </Item196>
+      <Item197>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCuritiba.LerXml.pas"/>
+        <UnitName Value="ISSCuritiba.LerXml"/>
+      </Item197>
+      <Item198>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCuritiba.Provider.pas"/>
+        <UnitName Value="ISSCuritiba.Provider"/>
+      </Item198>
+      <Item199>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSDigital.GravarXml.pas"/>
+        <UnitName Value="ISSDigital.GravarXml"/>
+      </Item199>
+      <Item200>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSDigital.LerXml.pas"/>
+        <UnitName Value="ISSDigital.LerXml"/>
+      </Item200>
+      <Item201>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSDigital.Provider.pas"/>
+        <UnitName Value="ISSDigital.Provider"/>
+      </Item201>
+      <Item202>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSDSF.GravarXml.pas"/>
+        <UnitName Value="ISSDSF.GravarXml"/>
+      </Item202>
+      <Item203>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSDSF.LerXml.pas"/>
+        <UnitName Value="ISSDSF.LerXml"/>
+      </Item203>
+      <Item204>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSDSF.Provider.pas"/>
+        <UnitName Value="ISSDSF.Provider"/>
+      </Item204>
+      <Item205>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSe.GravarXml.pas"/>
+        <UnitName Value="ISSe.GravarXml"/>
+      </Item205>
+      <Item206>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSe.LerXml.pas"/>
+        <UnitName Value="ISSe.LerXml"/>
+      </Item206>
+      <Item207>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSe.Provider.pas"/>
+        <UnitName Value="ISSe.Provider"/>
+      </Item207>
+      <Item208>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSFortaleza.GravarXml.pas"/>
+        <UnitName Value="ISSFortaleza.GravarXml"/>
+      </Item208>
+      <Item209>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSFortaleza.LerXml.pas"/>
+        <UnitName Value="ISSFortaleza.LerXml"/>
+      </Item209>
+      <Item210>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSFortaleza.Provider.pas"/>
+        <UnitName Value="ISSFortaleza.Provider"/>
+      </Item210>
+      <Item211>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSGoiania.GravarXml.pas"/>
+        <UnitName Value="ISSGoiania.GravarXml"/>
+      </Item211>
+      <Item212>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSGoiania.LerXml.pas"/>
+        <UnitName Value="ISSGoiania.LerXml"/>
+      </Item212>
+      <Item213>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSGoiania.Provider.pas"/>
+        <UnitName Value="ISSGoiania.Provider"/>
+      </Item213>
+      <Item214>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSIntel.GravarXml.pas"/>
+        <UnitName Value="ISSIntel.GravarXml"/>
+      </Item214>
+      <Item215>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSIntel.LerXml.pas"/>
+        <UnitName Value="ISSIntel.LerXml"/>
+      </Item215>
+      <Item216>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSIntel.Provider.pas"/>
+        <UnitName Value="ISSIntel.Provider"/>
+      </Item216>
+      <Item217>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSJoinville.GravarXml.pas"/>
+        <UnitName Value="ISSJoinville.GravarXml"/>
+      </Item217>
+      <Item218>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSJoinville.LerXml.pas"/>
+        <UnitName Value="ISSJoinville.LerXml"/>
+      </Item218>
+      <Item219>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSJoinville.Provider.pas"/>
+        <UnitName Value="ISSJoinville.Provider"/>
+      </Item219>
+      <Item220>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSLegal.GravarXml.pas"/>
+        <UnitName Value="ISSLegal.GravarXml"/>
+      </Item220>
+      <Item221>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSLegal.LerXml.pas"/>
+        <UnitName Value="ISSLegal.LerXml"/>
+      </Item221>
+      <Item222>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSLegal.Provider.pas"/>
+        <UnitName Value="ISSLegal.Provider"/>
+      </Item222>
+      <Item223>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSLencois.GravarXml.pas"/>
+        <UnitName Value="ISSLencois.GravarXml"/>
+      </Item223>
+      <Item224>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSLencois.LerXml.pas"/>
+        <UnitName Value="ISSLencois.LerXml"/>
+      </Item224>
+      <Item225>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSLencois.Provider.pas"/>
+        <UnitName Value="ISSLencois.Provider"/>
+      </Item225>
+      <Item226>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSNatal.GravarXml.pas"/>
+        <UnitName Value="ISSNatal.GravarXml"/>
+      </Item226>
+      <Item227>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSNatal.LerXml.pas"/>
+        <UnitName Value="ISSNatal.LerXml"/>
+      </Item227>
+      <Item228>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSNatal.Provider.pas"/>
+        <UnitName Value="ISSNatal.Provider"/>
+      </Item228>
+      <Item229>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSNet.GravarXml.pas"/>
+        <UnitName Value="ISSNet.GravarXml"/>
+      </Item229>
+      <Item230>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSNet.LerXml.pas"/>
+        <UnitName Value="ISSNet.LerXml"/>
+      </Item230>
+      <Item231>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSNet.Provider.pas"/>
+        <UnitName Value="ISSNet.Provider"/>
+      </Item231>
+      <Item232>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSPortoVelho.GravarXml.pas"/>
+        <UnitName Value="ISSPortoVelho.GravarXml"/>
+      </Item232>
+      <Item233>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSPortoVelho.LerXml.pas"/>
+        <UnitName Value="ISSPortoVelho.LerXml"/>
+      </Item233>
+      <Item234>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSPortoVelho.Provider.pas"/>
+        <UnitName Value="ISSPortoVelho.Provider"/>
+      </Item234>
+      <Item235>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSRecife.GravarXml.pas"/>
+        <UnitName Value="ISSRecife.GravarXml"/>
+      </Item235>
+      <Item236>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSRecife.LerXml.pas"/>
+        <UnitName Value="ISSRecife.LerXml"/>
+      </Item236>
+      <Item237>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSRecife.Provider.pas"/>
+        <UnitName Value="ISSRecife.Provider"/>
+      </Item237>
+      <Item238>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSRio.GravarXml.pas"/>
+        <UnitName Value="ISSRio.GravarXml"/>
+      </Item238>
+      <Item239>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSRio.LerXml.pas"/>
+        <UnitName Value="ISSRio.LerXml"/>
+      </Item239>
+      <Item240>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSRio.Provider.pas"/>
+        <UnitName Value="ISSRio.Provider"/>
+      </Item240>
+      <Item241>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSalvador.GravarXml.pas"/>
+        <UnitName Value="ISSSalvador.GravarXml"/>
+      </Item241>
+      <Item242>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSalvador.LerXml.pas"/>
+        <UnitName Value="ISSSalvador.LerXml"/>
+      </Item242>
+      <Item243>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSalvador.Provider.pas"/>
+        <UnitName Value="ISSSalvador.Provider"/>
+      </Item243>
+      <Item244>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSaoPaulo.GravarXml.pas"/>
+        <UnitName Value="ISSSaoPaulo.GravarXml"/>
+      </Item244>
+      <Item245>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSaoPaulo.LerXml.pas"/>
+        <UnitName Value="ISSSaoPaulo.LerXml"/>
+      </Item245>
+      <Item246>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSaoPaulo.Provider.pas"/>
+        <UnitName Value="ISSSaoPaulo.Provider"/>
+      </Item246>
+      <Item247>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSJP.GravarXml.pas"/>
+        <UnitName Value="ISSSJP.GravarXml"/>
+      </Item247>
+      <Item248>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSJP.LerXml.pas"/>
+        <UnitName Value="ISSSJP.LerXml"/>
+      </Item248>
+      <Item249>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSSJP.Provider.pas"/>
+        <UnitName Value="ISSSJP.Provider"/>
+      </Item249>
+      <Item250>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSVitoria.GravarXml.pas"/>
+        <UnitName Value="ISSVitoria.GravarXml"/>
+      </Item250>
+      <Item251>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSVitoria.LerXml.pas"/>
+        <UnitName Value="ISSVitoria.LerXml"/>
+      </Item251>
+      <Item252>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSVitoria.Provider.pas"/>
+        <UnitName Value="ISSVitoria.Provider"/>
+      </Item252>
+      <Item253>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Lexsom.GravarXml.pas"/>
+        <UnitName Value="Lexsom.GravarXml"/>
+      </Item253>
+      <Item254>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Lexsom.LerXml.pas"/>
+        <UnitName Value="Lexsom.LerXml"/>
+      </Item254>
+      <Item255>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Lexsom.Provider.pas"/>
+        <UnitName Value="Lexsom.Provider"/>
+      </Item255>
+      <Item256>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Libre.GravarXml.pas"/>
+        <UnitName Value="Libre.GravarXml"/>
+      </Item256>
+      <Item257>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Libre.LerXml.pas"/>
+        <UnitName Value="Libre.LerXml"/>
+      </Item257>
+      <Item258>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Libre.Provider.pas"/>
+        <UnitName Value="Libre.Provider"/>
+      </Item258>
+      <Item259>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Link3.GravarXml.pas"/>
+        <UnitName Value="Link3.GravarXml"/>
+      </Item259>
+      <Item260>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Link3.LerXml.pas"/>
+        <UnitName Value="Link3.LerXml"/>
+      </Item260>
+      <Item261>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Link3.Provider.pas"/>
+        <UnitName Value="Link3.Provider"/>
+      </Item261>
+      <Item262>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\MegaSoft.GravarXml.pas"/>
+        <UnitName Value="MegaSoft.GravarXml"/>
+      </Item262>
+      <Item263>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\MegaSoft.LerXml.pas"/>
+        <UnitName Value="MegaSoft.LerXml"/>
+      </Item263>
+      <Item264>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\MegaSoft.Provider.pas"/>
+        <UnitName Value="MegaSoft.Provider"/>
+      </Item264>
+      <Item265>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\MetropolisWeb.GravarXml.pas"/>
+        <UnitName Value="MetropolisWeb.GravarXml"/>
+      </Item265>
+      <Item266>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\MetropolisWeb.LerXml.pas"/>
+        <UnitName Value="MetropolisWeb.LerXml"/>
+      </Item266>
+      <Item267>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\MetropolisWeb.Provider.pas"/>
+        <UnitName Value="MetropolisWeb.Provider"/>
+      </Item267>
+      <Item268>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Mitra.GravarXml.pas"/>
+        <UnitName Value="Mitra.GravarXml"/>
+      </Item268>
+      <Item269>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Mitra.LerXml.pas"/>
+        <UnitName Value="Mitra.LerXml"/>
+      </Item269>
+      <Item270>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Mitra.Provider.pas"/>
+        <UnitName Value="Mitra.Provider"/>
+      </Item270>
+      <Item271>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ModernizacaoPublica.GravarXml.pas"/>
+        <UnitName Value="ModernizacaoPublica.GravarXml"/>
+      </Item271>
+      <Item272>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ModernizacaoPublica.LerXml.pas"/>
+        <UnitName Value="ModernizacaoPublica.LerXml"/>
+      </Item272>
+      <Item273>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ModernizacaoPublica.Provider.pas"/>
+        <UnitName Value="ModernizacaoPublica.Provider"/>
+      </Item273>
+      <Item274>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NEAInformatica.GravarXml.pas"/>
+        <UnitName Value="NEAInformatica.GravarXml"/>
+      </Item274>
+      <Item275>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NEAInformatica.LerXml.pas"/>
+        <UnitName Value="NEAInformatica.LerXml"/>
+      </Item275>
+      <Item276>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NEAInformatica.Provider.pas"/>
+        <UnitName Value="NEAInformatica.Provider"/>
+      </Item276>
+      <Item277>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFSeBrasil.GravarXml.pas"/>
+        <UnitName Value="NFSeBrasil.GravarXml"/>
+      </Item277>
+      <Item278>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFSeBrasil.LerXml.pas"/>
+        <UnitName Value="NFSeBrasil.LerXml"/>
+      </Item278>
+      <Item279>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFSeBrasil.Provider.pas"/>
+        <UnitName Value="NFSeBrasil.Provider"/>
+      </Item279>
+      <Item280>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NotaInteligente.GravarXml.pas"/>
+        <UnitName Value="NotaInteligente.GravarXml"/>
+      </Item280>
+      <Item281>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NotaInteligente.LerXml.pas"/>
+        <UnitName Value="NotaInteligente.LerXml"/>
+      </Item281>
+      <Item282>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NotaInteligente.Provider.pas"/>
+        <UnitName Value="NotaInteligente.Provider"/>
+      </Item282>
+      <Item283>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PadraoNacional.GravarXml.pas"/>
+        <UnitName Value="PadraoNacional.GravarXml"/>
+      </Item283>
+      <Item284>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PadraoNacional.LerXml.pas"/>
+        <UnitName Value="PadraoNacional.LerXml"/>
+      </Item284>
+      <Item285>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PadraoNacional.Provider.pas"/>
+        <UnitName Value="PadraoNacional.Provider"/>
+      </Item285>
+      <Item286>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Prescon.GravarJson.pas"/>
+        <UnitName Value="Prescon.GravarJson"/>
+      </Item286>
+      <Item287>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Prescon.LerJson.pas"/>
+        <UnitName Value="Prescon.LerJson"/>
+      </Item287>
+      <Item288>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Prescon.Provider.pas"/>
+        <UnitName Value="Prescon.Provider"/>
+      </Item288>
+      <Item289>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PriMax.GravarXml.pas"/>
+        <UnitName Value="PriMax.GravarXml"/>
+      </Item289>
+      <Item290>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PriMax.LerXml.pas"/>
+        <UnitName Value="PriMax.LerXml"/>
+      </Item290>
+      <Item291>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PriMax.Provider.pas"/>
+        <UnitName Value="PriMax.Provider"/>
+      </Item291>
+      <Item292>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Prodata.GravarXml.pas"/>
+        <UnitName Value="Prodata.GravarXml"/>
+      </Item292>
+      <Item293>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Prodata.LerXml.pas"/>
+        <UnitName Value="Prodata.LerXml"/>
+      </Item293>
+      <Item294>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Prodata.Provider.pas"/>
+        <UnitName Value="Prodata.Provider"/>
+      </Item294>
+      <Item295>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Pronim.GravarXml.pas"/>
+        <UnitName Value="Pronim.GravarXml"/>
+      </Item295>
+      <Item296>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Pronim.LerXml.pas"/>
+        <UnitName Value="Pronim.LerXml"/>
+      </Item296>
+      <Item297>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Pronim.Provider.pas"/>
+        <UnitName Value="Pronim.Provider"/>
+      </Item297>
+      <Item298>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Publica.GravarXml.pas"/>
+        <UnitName Value="Publica.GravarXml"/>
+      </Item298>
+      <Item299>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Publica.LerXml.pas"/>
+        <UnitName Value="Publica.LerXml"/>
+      </Item299>
+      <Item300>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Publica.Provider.pas"/>
+        <UnitName Value="Publica.Provider"/>
+      </Item300>
+      <Item301>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PublicSoft.GravarXml.pas"/>
+        <UnitName Value="PublicSoft.GravarXml"/>
+      </Item301>
+      <Item302>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PublicSoft.LerXml.pas"/>
+        <UnitName Value="PublicSoft.LerXml"/>
+      </Item302>
+      <Item303>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PublicSoft.Provider.pas"/>
+        <UnitName Value="PublicSoft.Provider"/>
+      </Item303>
+      <Item304>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\RLZ.GravarXml.pas"/>
+        <UnitName Value="RLZ.GravarXml"/>
+      </Item304>
+      <Item305>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\RLZ.LerXml.pas"/>
+        <UnitName Value="RLZ.LerXml"/>
+      </Item305>
+      <Item306>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\RLZ.Provider.pas"/>
+        <UnitName Value="RLZ.Provider"/>
+      </Item306>
+      <Item307>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Saatri.GravarXml.pas"/>
+        <UnitName Value="Saatri.GravarXml"/>
+      </Item307>
+      <Item308>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Saatri.LerXml.pas"/>
+        <UnitName Value="Saatri.LerXml"/>
+      </Item308>
+      <Item309>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Saatri.Provider.pas"/>
+        <UnitName Value="Saatri.Provider"/>
+      </Item309>
+      <Item310>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SafeWeb.GravarXml.pas"/>
+        <UnitName Value="SafeWeb.GravarXml"/>
+      </Item310>
+      <Item311>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SafeWeb.LerXml.pas"/>
+        <UnitName Value="SafeWeb.LerXml"/>
+      </Item311>
+      <Item312>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SafeWeb.Provider.pas"/>
+        <UnitName Value="SafeWeb.Provider"/>
+      </Item312>
+      <Item313>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SH3.GravarXml.pas"/>
+        <UnitName Value="SH3.GravarXml"/>
+      </Item313>
+      <Item314>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SH3.LerXml.pas"/>
+        <UnitName Value="SH3.LerXml"/>
+      </Item314>
+      <Item315>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SH3.Provider.pas"/>
+        <UnitName Value="SH3.Provider"/>
+      </Item315>
+      <Item316>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siam.GravarXml.pas"/>
+        <UnitName Value="Siam.GravarXml"/>
+      </Item316>
+      <Item317>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siam.LerXml.pas"/>
+        <UnitName Value="Siam.LerXml"/>
+      </Item317>
+      <Item318>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siam.Provider.pas"/>
+        <UnitName Value="Siam.Provider"/>
+      </Item318>
+      <Item319>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SiapNet.GravarXml.pas"/>
+        <UnitName Value="SiapNet.GravarXml"/>
+      </Item319>
+      <Item320>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SiapNet.LerXml.pas"/>
+        <UnitName Value="SiapNet.LerXml"/>
+      </Item320>
+      <Item321>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SiapNet.Provider.pas"/>
+        <UnitName Value="SiapNet.Provider"/>
+      </Item321>
+      <Item322>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siappa.GravarXml.pas"/>
+        <UnitName Value="Siappa.GravarXml"/>
+      </Item322>
+      <Item323>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siappa.LerXml.pas"/>
+        <UnitName Value="Siappa.LerXml"/>
+      </Item323>
+      <Item324>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siappa.Provider.pas"/>
+        <UnitName Value="Siappa.Provider"/>
+      </Item324>
+      <Item325>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SiapSistemas.GravarXml.pas"/>
+        <UnitName Value="SiapSistemas.GravarXml"/>
+      </Item325>
+      <Item326>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SiapSistemas.LerXml.pas"/>
+        <UnitName Value="SiapSistemas.LerXml"/>
+      </Item326>
+      <Item327>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SiapSistemas.Provider.pas"/>
+        <UnitName Value="SiapSistemas.Provider"/>
+      </Item327>
+      <Item328>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siat.GravarXml.pas"/>
+        <UnitName Value="Siat.GravarXml"/>
+      </Item328>
+      <Item329>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siat.LerXml.pas"/>
+        <UnitName Value="Siat.LerXml"/>
+      </Item329>
+      <Item330>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Siat.Provider.pas"/>
+        <UnitName Value="Siat.Provider"/>
+      </Item330>
+      <Item331>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigCorp.GravarXml.pas"/>
+        <UnitName Value="SigCorp.GravarXml"/>
+      </Item331>
+      <Item332>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigCorp.LerXml.pas"/>
+        <UnitName Value="SigCorp.LerXml"/>
+      </Item332>
+      <Item333>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigCorp.Provider.pas"/>
+        <UnitName Value="SigCorp.Provider"/>
+      </Item333>
+      <Item334>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sigep.GravarXml.pas"/>
+        <UnitName Value="Sigep.GravarXml"/>
+      </Item334>
+      <Item335>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sigep.LerXml.pas"/>
+        <UnitName Value="Sigep.LerXml"/>
+      </Item335>
+      <Item336>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sigep.Provider.pas"/>
+        <UnitName Value="Sigep.Provider"/>
+      </Item336>
+      <Item337>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigISS.GravarXml.pas"/>
+        <UnitName Value="SigISS.GravarXml"/>
+      </Item337>
+      <Item338>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigISS.LerXml.pas"/>
+        <UnitName Value="SigISS.LerXml"/>
+      </Item338>
+      <Item339>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigISS.Provider.pas"/>
+        <UnitName Value="SigISS.Provider"/>
+      </Item339>
+      <Item340>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigISSWeb.GravarXml.pas"/>
+        <UnitName Value="SigISSWeb.GravarXml"/>
+      </Item340>
+      <Item341>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigISSWeb.LerXml.pas"/>
+        <UnitName Value="SigISSWeb.LerXml"/>
+      </Item341>
+      <Item342>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SigISSWeb.Provider.pas"/>
+        <UnitName Value="SigISSWeb.Provider"/>
+      </Item342>
+      <Item343>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SilTecnologia.GravarXml.pas"/>
+        <UnitName Value="SilTecnologia.GravarXml"/>
+      </Item343>
+      <Item344>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SilTecnologia.LerXml.pas"/>
+        <UnitName Value="SilTecnologia.LerXml"/>
+      </Item344>
+      <Item345>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SilTecnologia.Provider.pas"/>
+        <UnitName Value="SilTecnologia.Provider"/>
+      </Item345>
+      <Item346>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Simple.GravarXml.pas"/>
+        <UnitName Value="Simple.GravarXml"/>
+      </Item346>
+      <Item347>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Simple.LerXml.pas"/>
+        <UnitName Value="Simple.LerXml"/>
+      </Item347>
+      <Item348>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Simple.Provider.pas"/>
+        <UnitName Value="Simple.Provider"/>
+      </Item348>
+      <Item349>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SimplISS.GravarXml.pas"/>
+        <UnitName Value="SimplISS.GravarXml"/>
+      </Item349>
+      <Item350>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SimplISS.LerXml.pas"/>
+        <UnitName Value="SimplISS.LerXml"/>
+      </Item350>
+      <Item351>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SimplISS.Provider.pas"/>
+        <UnitName Value="SimplISS.Provider"/>
+      </Item351>
+      <Item352>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sintese.GravarXml.pas"/>
+        <UnitName Value="Sintese.GravarXml"/>
+      </Item352>
+      <Item353>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sintese.LerXml.pas"/>
+        <UnitName Value="Sintese.LerXml"/>
+      </Item353>
+      <Item354>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sintese.Provider.pas"/>
+        <UnitName Value="Sintese.Provider"/>
+      </Item354>
+      <Item355>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SisPMJP.GravarXml.pas"/>
+        <UnitName Value="SisPMJP.GravarXml"/>
+      </Item355>
+      <Item356>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SisPMJP.LerXml.pas"/>
+        <UnitName Value="SisPMJP.LerXml"/>
+      </Item356>
+      <Item357>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SisPMJP.Provider.pas"/>
+        <UnitName Value="SisPMJP.Provider"/>
+      </Item357>
+      <Item358>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sistemas4R.GravarXml.pas"/>
+        <UnitName Value="Sistemas4R.GravarXml"/>
+      </Item358>
+      <Item359>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sistemas4R.LerXml.pas"/>
+        <UnitName Value="Sistemas4R.LerXml"/>
+      </Item359>
+      <Item360>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sistemas4R.Provider.pas"/>
+        <UnitName Value="Sistemas4R.Provider"/>
+      </Item360>
+      <Item361>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SmarAPD.GravarXml.pas"/>
+        <UnitName Value="SmarAPD.GravarXml"/>
+      </Item361>
+      <Item362>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SmarAPD.LerXml.pas"/>
+        <UnitName Value="SmarAPD.LerXml"/>
+      </Item362>
+      <Item363>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SmarAPD.Provider.pas"/>
+        <UnitName Value="SmarAPD.Provider"/>
+      </Item363>
+      <Item364>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SoftPlan.GravarXml.pas"/>
+        <UnitName Value="SoftPlan.GravarXml"/>
+      </Item364>
+      <Item365>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SoftPlan.LerXml.pas"/>
+        <UnitName Value="SoftPlan.LerXml"/>
+      </Item365>
+      <Item366>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SoftPlan.Provider.pas"/>
+        <UnitName Value="SoftPlan.Provider"/>
+      </Item366>
+      <Item367>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SpeedGov.GravarXml.pas"/>
+        <UnitName Value="SpeedGov.GravarXml"/>
+      </Item367>
+      <Item368>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SpeedGov.LerXml.pas"/>
+        <UnitName Value="SpeedGov.LerXml"/>
+      </Item368>
+      <Item369>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SpeedGov.Provider.pas"/>
+        <UnitName Value="SpeedGov.Provider"/>
+      </Item369>
+      <Item370>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SSInformatica.GravarXml.pas"/>
+        <UnitName Value="SSInformatica.GravarXml"/>
+      </Item370>
+      <Item371>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SSInformatica.LerXml.pas"/>
+        <UnitName Value="SSInformatica.LerXml"/>
+      </Item371>
+      <Item372>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SSInformatica.Provider.pas"/>
+        <UnitName Value="SSInformatica.Provider"/>
+      </Item372>
+      <Item373>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sudoeste.GravarXml.pas"/>
+        <UnitName Value="Sudoeste.GravarXml"/>
+      </Item373>
+      <Item374>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sudoeste.LerXml.pas"/>
+        <UnitName Value="Sudoeste.LerXml"/>
+      </Item374>
+      <Item375>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sudoeste.Provider.pas"/>
+        <UnitName Value="Sudoeste.Provider"/>
+      </Item375>
+      <Item376>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SysISS.GravarXml.pas"/>
+        <UnitName Value="SysISS.GravarXml"/>
+      </Item376>
+      <Item377>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SysISS.LerXml.pas"/>
+        <UnitName Value="SysISS.LerXml"/>
+      </Item377>
+      <Item378>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SysISS.Provider.pas"/>
+        <UnitName Value="SysISS.Provider"/>
+      </Item378>
+      <Item379>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SystemPro.GravarXml.pas"/>
+        <UnitName Value="SystemPro.GravarXml"/>
+      </Item379>
+      <Item380>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SystemPro.LerXml.pas"/>
+        <UnitName Value="SystemPro.LerXml"/>
+      </Item380>
+      <Item381>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\SystemPro.Provider.pas"/>
+        <UnitName Value="SystemPro.Provider"/>
+      </Item381>
+      <Item382>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\TcheInfo.GravarXml.pas"/>
+        <UnitName Value="TcheInfo.GravarXml"/>
+      </Item382>
+      <Item383>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\TcheInfo.LerXml.pas"/>
+        <UnitName Value="TcheInfo.LerXml"/>
+      </Item383>
+      <Item384>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\TcheInfo.Provider.pas"/>
+        <UnitName Value="TcheInfo.Provider"/>
+      </Item384>
+      <Item385>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tecnos.GravarXml.pas"/>
+        <UnitName Value="Tecnos.GravarXml"/>
+      </Item385>
+      <Item386>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tecnos.LerXml.pas"/>
+        <UnitName Value="Tecnos.LerXml"/>
+      </Item386>
+      <Item387>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tecnos.Provider.pas"/>
+        <UnitName Value="Tecnos.Provider"/>
+      </Item387>
+      <Item388>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Thema.GravarXml.pas"/>
+        <UnitName Value="Thema.GravarXml"/>
+      </Item388>
+      <Item389>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Thema.LerXml.pas"/>
+        <UnitName Value="Thema.LerXml"/>
+      </Item389>
+      <Item390>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Thema.Provider.pas"/>
+        <UnitName Value="Thema.Provider"/>
+      </Item390>
+      <Item391>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tinus.GravarXml.pas"/>
+        <UnitName Value="Tinus.GravarXml"/>
+      </Item391>
+      <Item392>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tinus.LerXml.pas"/>
+        <UnitName Value="Tinus.LerXml"/>
+      </Item392>
+      <Item393>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tinus.Provider.pas"/>
+        <UnitName Value="Tinus.Provider"/>
+      </Item393>
+      <Item394>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tiplan.GravarXml.pas"/>
+        <UnitName Value="Tiplan.GravarXml"/>
+      </Item394>
+      <Item395>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tiplan.LerXml.pas"/>
+        <UnitName Value="Tiplan.LerXml"/>
+      </Item395>
+      <Item396>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tiplan.Provider.pas"/>
+        <UnitName Value="Tiplan.Provider"/>
+      </Item396>
+      <Item397>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tributus.GravarXml.pas"/>
+        <UnitName Value="Tributus.GravarXml"/>
+      </Item397>
+      <Item398>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tributus.LerXml.pas"/>
+        <UnitName Value="Tributus.LerXml"/>
+      </Item398>
+      <Item399>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Tributus.Provider.pas"/>
+        <UnitName Value="Tributus.Provider"/>
+      </Item399>
+      <Item400>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\VersaTecnologia.GravarXml.pas"/>
+        <UnitName Value="VersaTecnologia.GravarXml"/>
+      </Item400>
+      <Item401>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\VersaTecnologia.LerXml.pas"/>
+        <UnitName Value="VersaTecnologia.LerXml"/>
+      </Item401>
+      <Item402>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\VersaTecnologia.Provider.pas"/>
+        <UnitName Value="VersaTecnologia.Provider"/>
+      </Item402>
+      <Item403>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Virtual.GravarXml.pas"/>
+        <UnitName Value="Virtual.GravarXml"/>
+      </Item403>
+      <Item404>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Virtual.LerXml.pas"/>
+        <UnitName Value="Virtual.LerXml"/>
+      </Item404>
+      <Item405>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Virtual.Provider.pas"/>
+        <UnitName Value="Virtual.Provider"/>
+      </Item405>
+      <Item406>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebFisco.GravarXml.pas"/>
+        <UnitName Value="WebFisco.GravarXml"/>
+      </Item406>
+      <Item407>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebFisco.LerXml.pas"/>
+        <UnitName Value="WebFisco.LerXml"/>
+      </Item407>
+      <Item408>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebFisco.Provider.pas"/>
+        <UnitName Value="WebFisco.Provider"/>
+      </Item408>
+      <Item409>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebISS.GravarXml.pas"/>
+        <UnitName Value="WebISS.GravarXml"/>
+      </Item409>
+      <Item410>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebISS.LerXml.pas"/>
+        <UnitName Value="WebISS.LerXml"/>
+      </Item410>
+      <Item411>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebISS.Provider.pas"/>
+        <UnitName Value="WebISS.Provider"/>
+      </Item411>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

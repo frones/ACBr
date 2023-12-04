@@ -623,7 +623,7 @@ begin
     if (Trim(fpToken) = '') then
       DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
 
-    fpValidadeToken := IncHour(Now, 24);
+    fpValidadeToken := IncHour(Now, 4);
     fpAutenticado := True;
   end
   else

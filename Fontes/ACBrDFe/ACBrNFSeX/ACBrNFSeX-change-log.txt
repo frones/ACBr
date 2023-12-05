@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 05/12/2023
+-- ACBrNFSeXGravarXml --
+[*] Incluído na procedure Configuracao a detecção da existencia dos Parâmetros: 
+    NaoFormatarItemServico, NaoFormatarItemServicoSemZeroEsquerda, 
+    FormatarItemServicoSemZeroEsquerda e FormatarItemServicoNaoSeAplica, caso
+    existe alterar o valor padrão da propriedade FFormItemLServico que é filsComFormatacao.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Incluído o Parâmetro: NaoFormatarItemServico para cidade de Novo Hamburgo/RS.
   Por: Italo Giurizzato Junior

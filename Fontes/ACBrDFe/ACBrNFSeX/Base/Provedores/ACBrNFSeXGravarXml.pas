@@ -189,6 +189,21 @@ begin
   FFormatoCompetencia := tcDatHor;
   FFormItemLServico := filsComFormatacao;
 
+  // Os 4 IF abaixo vão configurar o componente conforme a presença do
+  // parâmetro no arquivo ACBrNFSeXServicos.ini
+  // Ou seja, configuração a nível de cidade.
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoFormatarItemServico') then
+    FFormItemLServico := filsSemFormatacao;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoFormatarItemServicoSemZeroEsquerda') then
+    FFormItemLServico := filsSemFormatacaoSemZeroEsquerda;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('FormatarItemServicoSemZeroEsquerda') then
+    FFormItemLServico := filsComFormatacaoSemZeroEsquerda;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('FormatarItemServicoNaoSeAplica') then
+    FFormItemLServico := filsNaoSeAplica;
+
   FFormatoAliq := tcDe4;
   FDivAliq100  := False;
 

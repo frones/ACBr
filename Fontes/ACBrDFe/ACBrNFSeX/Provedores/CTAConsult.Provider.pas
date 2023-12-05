@@ -251,6 +251,9 @@ begin
 
       Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
       Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoStatus'), tcStr);
+      Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
+      Response.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('linkPdfNota'), tcStr);
+      Response.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('chaveSeguranca'), tcStr);
 
       ProcessarMensagemErros(ANode, Response);
 

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 05/12/2023
+-- ACBrNFSeXServicos --
+[*] Incluído o Parâmetro: NomeTagAtividadeEconomica para cidade de Porto Alegre do Norte/MT.
+  Por: Italo Giurizzato Junior
 -- CTAConsult.Provider --
 [*] Incluído a leitura das informações: NumeroNota, Link e CodigoVerificacao ao
     tratar o retorno do Emitir.

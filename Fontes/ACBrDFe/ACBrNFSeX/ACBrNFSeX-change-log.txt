@@ -44,6 +44,14 @@ Símbolo : Significado
 
 
 05/12/2023
+-- ACBrNFSeXServicos --
+[+] Inclusão das cidade de Barão/RS, Nova Padua/RS, São Marcos/RS, Tupandi/RS, 
+    Vale Real/RS - todas usam o provedor Tecnos.
+[+] Inclusão da cidade de Cancelaria/RS - provedor IPM.
+[*] A cidade de Estrela/RS mudou para a versão 1.02, o provedor continua o mesmo.
+  Por: Rogerio Rizzon
+[*] A cidade de Cuiaba/MT mudou para a versão 2.04, o provedor continua o mesmo.
+  Por: Robson PDS/Victor Gomes - DSV Bremen
 -- ACBrNFSeXGravarXml --
 [*] Incluído na procedure Configuracao a detecção da existencia dos Parâmetros: 
     NaoFormatarItemServico, NaoFormatarItemServicoSemZeroEsquerda, 

@@ -43,10 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/12/2023
+-- ACBrNFSeXServicos --
+[*] Incluído o Parâmetro: NaoFormatarItemServico para cidade de Novo Hamburgo/RS.
+  Por: Italo Giurizzato Junior
+
 04/12/2023
 -- ACBrNFSeXServicos --
 [*] A cidade de Divinopolis/MG trocou de provedor, agora é o Betha na versão 2.02
-Por: saviosousa31
+  Por: saviosousa31
 
 01/12/2023
 -- ACBrNFSeXConversao --

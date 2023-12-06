@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/12/2023
+-- ACBrNFSeXServicos --
+[*] Adiciona a informação do provedor que havia sido removida para a cidade de Cuiaba/MT.
+  Por: Diego Folieni
 
 05/12/2023
 -- Diversos --

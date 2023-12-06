@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/12/2023
+-- ACBrPIXPSPMercadoPago --
+[-] Remoção da URL a pedido do MercadoPago.
+
 28/11/2023
 -- ACBrPIXPSPMatera --
 [*] Alterado método DevolucaoSolicitar() para function

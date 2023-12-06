@@ -43,7 +43,7 @@ uses
   ACBrPIXSchemasProblema, ACBrPIXSchemasCob, ACBrPIXSchemasDevolucao;
 
 const
-  cMercadoPagoURLProducao = 'https://api.mercadopago.com';
+  cMercadoPagoURLProducao = ''; // URL removida a pedido do Mercado Pago
   cMercadoPagoEndPointPayment = '/v1/payments';
   cMercadoPagoEndPointRefund = '/refunds';
   cMercadoPagoEndPointSearch = '/search';

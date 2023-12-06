@@ -44,6 +44,8 @@ Símbolo : Significado
 
 06/12/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Panambi/RS mudou para versão 1.01, o provedor continua o mesmo.
+  Por: Italo Giurizzato Junior
 [*] Adiciona a informação do provedor que havia sido removida para a cidade de Cuiaba/MT.
   Por: Diego Folieni
 

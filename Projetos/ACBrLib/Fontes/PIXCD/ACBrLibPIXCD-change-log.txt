@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/12/2023
+--- ACBrLibPIXCDBase, ACBrLibPIXCDConsts, ACBrLibPIXCDRespostas ---
+[*] Ajustes na unit ACBrLibPIXCDResposta e nos métodos em ACBrLibPIXCDBase.
+[+] Implementado novos métodos.
+
 07/11/2023
 --- ACBrLibPIXCDBase, ACBrLibPIXCDConfig, ACBrLibPIXCDConsts, ACBrLibPIXCDDataModule --- 
 [+] Inclusão novos PSPs.

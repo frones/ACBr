@@ -64,17 +64,17 @@ exports
   //EndPoint /pix
   PIXCD_ConsultarPix,
   PIXCD_ConsultarPixRecebidos,
-  //PIXCD_SolicitarDevolucaoPix,
+  PIXCD_SolicitarDevolucaoPix,
   PIXCD_ConsultarDevolucaoPix,
 
   //EndPoint /cob
-  //PIXCD_CriarCobrancaImediata,
+  PIXCD_CriarCobrancaImediata,
   PIXCD_ConsultarCobrancaImediata,
-  //PIXCD_RevisarCobrancaImediata,
+  PIXCD_RevisarCobrancaImediata,
 
   //EndPoint /cobv
-  //PIXCD_CriarCobranca,
-  //PIXCD_RevisarCobranca,
+  PIXCD_CriarCobranca,
+  PIXCD_RevisarCobranca,
   PIXCD_ConsultarCobranca,
 
   //PIXCD

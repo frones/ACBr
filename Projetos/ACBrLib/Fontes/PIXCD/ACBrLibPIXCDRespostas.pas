@@ -35,28 +35,55 @@ unit ACBrLibPIXCDRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrLibResposta, ACBrPIXCD, ACBrLibPIXCDConsts;
+  Classes, SysUtils, ACBrLibPIXCDConsts, ACBrLibResposta, ACBrPIXCD, ACBrPIXSchemasProblema;
 
 type
   { TLibPIXCDResposta }
   TLibPIXCDResposta = class (TACBrLibRespostaBase)
     private
-      FMsg: String;
+      fStatus: Integer;
+      fTitle: String;
+      fDetail: String;
 
     public
-      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const PIXCD: TACBrPIXProblema);
 
     published
-      property Msg: String read FMsg write FMsg;
+      property Status: Integer read fStatus write fStatus;
+      property Title: String read fTitle write fTitle;
+      property Detail: String read fDetail write fDetail;
   end;
 
 implementation
 
 { TLibPIXCDResposta }
-constructor TLibPIXCDResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+constructor TLibPIXCDResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoRespPIXCD, ATipo, AFormato);
+  Clear;
+end;
+
+destructor TLibPIXCDResposta.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TLibPIXCDResposta.Clear;
+begin
+  fStatus := 0;
+  fTitle := EmptyStr;
+  fDetail := EmptyStr;
+end;
+
+procedure TLibPIXCDResposta.Processar(const PIXCD: TACBrPIXProblema);
+begin
+  fStatus:= PIXCD.status;
+  fTitle:= PIXCD.title;
+  fDetail:= PIXCD.detail;
 end;
 
 end.

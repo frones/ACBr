@@ -47,7 +47,7 @@ inherited LibPIXCDDM: TLibPIXCDDM
   end
   object ACBrPSPPagSeguro1: TACBrPSPPagSeguro[8]
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
-    Left = 57
+    Left = 56
     Top = 160
   end
   object ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet[9]

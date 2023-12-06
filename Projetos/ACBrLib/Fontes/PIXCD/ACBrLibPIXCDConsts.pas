@@ -39,7 +39,9 @@ uses
 
 const
   CLibPIXCDNome = 'ACBrLibPIXCD';
-  CLibPIXCDVersao = '1.0.0.25';
+  CLibPIXCDVersao = '1.0.0.57';
+
+  CSessaoRespPIXCD = 'Resposta';
 
   CSessaoPixCDConfig = 'PIXCD';
   CChaveAmbiente = 'Ambiente';

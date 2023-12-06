@@ -170,6 +170,7 @@ type
 implementation
 
 uses
+  StrUtils,
   ACBrUtil.Strings,
   ACBrNFSeX;
 
@@ -291,51 +292,70 @@ end;
 
 procedure TACBrNFSeXDANFSeClass.SetDadosPrestador;
 begin
-  // Usar a configuração do ACBrNFSeX se a configuração do DANFSE não foi realizada
-  if FPrestador.CNPJ = '' then
-    FPrestador.CNPJ := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.CNPJ;
+  // Usar a configuração do ACBrNFSeX se no XML não conter os dados do prestador
 
-  if FPrestador.InscricaoMunicipal = '' then
-    FPrestador.InscricaoMunicipal := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.InscMun;
+  with TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[0].NFSe do
+  begin
+    FPrestador.RazaoSocial := IfThen(Prestador.RazaoSocial <> '',
+                              Prestador.RazaoSocial,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.RazSocial);
 
-  if FPrestador.RazaoSocial = '' then
-    FPrestador.RazaoSocial := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.RazSocial;
+    FPrestador.CNPJ := IfThen(Prestador.IdentificacaoPrestador.CpfCnpj <> '',
+                              Prestador.IdentificacaoPrestador.CpfCnpj,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.CNPJ);
 
-  if FPrestador.NomeFantasia = '' then
-    FPrestador.NomeFantasia := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.NomeFantasia;
+    FPrestador.InscricaoMunicipal := IfThen(Prestador.IdentificacaoPrestador.InscricaoMunicipal <> '',
+                              Prestador.IdentificacaoPrestador.InscricaoMunicipal,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.InscMun);
 
-  if FPrestador.InscricaoEstadual = '' then
-    FPrestador.InscricaoEstadual := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.InscricaoEstadual;
+    FPrestador.InscricaoEstadual := IfThen(Prestador.IdentificacaoPrestador.InscricaoEstadual <> '',
+                              Prestador.IdentificacaoPrestador.InscricaoEstadual,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.InscricaoEstadual);
 
-  if FPrestador.Endereco = '' then
-    FPrestador.Endereco := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Endereco;
+    FPrestador.NomeFantasia := IfThen(Prestador.NomeFantasia <> '',
+                              Prestador.NomeFantasia,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.NomeFantasia);
 
-  if FPrestador.Numero = '' then
-    FPrestador.Numero := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Numero;
+    FPrestador.Endereco := IfThen(Prestador.Endereco.Endereco <> '',
+                              Prestador.Endereco.Endereco,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Endereco);
 
-  if FPrestador.Complemento = '' then
-    FPrestador.Complemento := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Complemento;
+    FPrestador.Numero := IfThen(Prestador.Endereco.Numero <> '',
+                              Prestador.Endereco.Numero,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Numero);
 
-  if FPrestador.Bairro = '' then
-    FPrestador.Bairro := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Bairro;
+    FPrestador.Complemento := IfThen(Prestador.Endereco.Complemento <> '',
+                              Prestador.Endereco.Complemento,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Complemento);
 
-  if FPrestador.CEP = '' then
-    FPrestador.CEP := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.CEP;
+    FPrestador.Bairro := IfThen(Prestador.Endereco.Bairro <> '',
+                              Prestador.Endereco.Bairro,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Bairro);
 
-  if FPrestador.UF = '' then
-    FPrestador.UF := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.UF;
+    FPrestador.CEP := IfThen(Prestador.Endereco.CEP <> '',
+                              Prestador.Endereco.CEP,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.CEP);
 
-  if FPrestador.Municipio = '' then
-    FPrestador.Municipio := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Municipio;
+    FPrestador.UF := IfThen(Prestador.Endereco.UF <> '',
+                              Prestador.Endereco.UF,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.UF);
 
-  if FPrestador.CodigoMunicipio = '' then
-    FPrestador.CodigoMunicipio := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.CodigoMunicipio;
+    FPrestador.Municipio := IfThen(Prestador.Endereco.xMunicipio <> '',
+                              Prestador.Endereco.xMunicipio,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Municipio);
 
-  if FPrestador.Fone = '' then
-    FPrestador.Fone := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Telefone;
+    FPrestador.CodigoMunicipio := IfThen(Prestador.Endereco.CodigoMunicipio <> '',
+                              Prestador.Endereco.CodigoMunicipio,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.CodigoMunicipio);
 
-  if FPrestador.EMail = '' then
-    FPrestador.EMail := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Email;
+    FPrestador.Fone := IfThen(Prestador.Contato.Telefone <> '',
+                              Prestador.Contato.Telefone,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.Telefone);
+
+    FPrestador.EMail := IfThen(Prestador.Contato.EMail <> '',
+                              Prestador.Contato.EMail,
+                              TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Emitente.DadosEmitente.EMail);
+  end;
 end;
 
 function TACBrNFSeXDANFSeClass.GetSeparadorPathPDF(const aInitialPath: String): String;

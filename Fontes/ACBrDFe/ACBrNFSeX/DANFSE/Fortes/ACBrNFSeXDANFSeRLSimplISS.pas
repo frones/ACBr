@@ -583,62 +583,53 @@ begin
 end;
 
 procedure TfrlXDANFSeRLSimplISS.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  xEndereco, xNumero, xComplemento, xBairro, xMunic, xUF, xCEP, xFone,
+  xEmail: string;
 begin
   inherited;
 
   TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.Prestador.Logo);
 
-  with fpNFSe.Prestador do
-  begin
-    rllPrestNome.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
+  rllPrestNome.Caption := fpDANFSe.Prestador.RazaoSocial;
+  rllPrestNomeFantasia.Caption := fpDANFSe.Prestador.NomeFantasia;
+  rllPrestNomeEnt.Caption := rllPrestNome.Caption;
 
-    rllPrestNomeFantasia.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.Prestador.NomeFantasia);
+  rllPrestCNPJ.Caption := FormatarCNPJouCPF(fpDANFSe.Prestador.CNPJ);
+  rllPrestInscMunicipal.Caption := fpDANFSe.Prestador.InscricaoMunicipal;
+  rllPrestInscEstadual.Caption := fpDANFSe.Prestador.InscricaoEstadual;
 
-//    if rllPrestNome.Caption = '' then
-//      rllPrestNome.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.Prestador.NomeFantasia);
+  xEndereco := Trim(fpDANFSe.Prestador.Endereco);
+  xNumero := Trim(fpDANFSe.Prestador.Numero);
 
-    with IdentificacaoPrestador do
-    begin
-      rllPrestCNPJ.Caption := FormatarCNPJouCPF(ifThen(CpfCnpj <> '', CpfCnpj, fpDANFSe.Prestador.CNPJ));
-      rllPrestInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.Prestador.InscricaoMunicipal);
-      rllPrestInscEstadual.Caption := IfThen(InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.Prestador.InscricaoEstadual);
-    end;
+  if xNumero <> '' then
+    xEndereco := xEndereco + ', ' + xNumero;
 
-    with Endereco do
-    begin
-      rllPrestEndereco.Caption := IfThen(Endereco <> '' , Trim(Endereco) + ', '+
-                                                          Trim(Numero) + ' - '+
-                                                          Trim(Bairro) +
-                                                          ' - CEP: ' +
-                                                          FormatarCEP(CEP),
-                                             Trim(fpDANFSe.Prestador.Endereco));
+  xComplemento := Trim(fpDANFSe.Prestador.Complemento);
+  xBairro := Trim(fpDANFSe.Prestador.Bairro);
+  xMunic := Trim(fpDANFSe.Prestador.Municipio);
+  xUF := Trim(fpDANFSe.Prestador.UF);
+  xCEP := Trim(fpDANFSe.Prestador.CEP);
 
-      rllPrestComplemento.Caption := IfThen(Complemento <> '', Complemento , fpDANFSe.Prestador.Complemento);
+  if xCEP <> '' then
+    xCEP := ' CEP: ' + FormatarCEP(xCEP);
 
-      if xMunicipio <> '' then
-        rllPrestMunicipio.Caption := xMunicipio
-      else
-        rllPrestMunicipio.Caption := fpDANFSe.Prestador.Municipio;
-		
-      rllPrestUF.Caption := IfThen(UF <> '', UF, fpDANFSe.Prestador.UF);
-    end;
+  xFone := Trim(fpDANFSe.Prestador.Fone);
 
-    with Contato do
-    begin
-      rllPrestTelefone.Caption := IfThen(Telefone <> '' , FormatarFone(Telefone) , FormatarFone(fpDANFSe.Prestador.Fone));
-      rllPrestEmail.Caption    := IfThen(Email <> '' , Email , fpDANFSe.Prestador.EMail);
-    end;
+  if xFone <> '' then
+    xFone := FormatarFone(xFone);
 
-    rllPrestNomeEnt.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
-  end;
+  xEmail := Trim(fpDANFSe.Prestador.Email);
+
+  rllPrestEndereco.Caption :=  xEndereco + ' ' + xBairro + ' - ' + xCEP + #13;
+  rllPrestComplemento.Caption := xComplemento;
+  rllPrestMunicipio.Caption := xMunic;
+  rllPrestUF.Caption := xUF;
+  rllPrestTelefone.Caption := xFone;
+  rllPrestEmail.Caption := xEmail;
 
   rllNumNF0Ent.Caption := FormatFloat('00000000000', StrToFloatDef(fpNFSe.Numero, 0));
   rllCodVerificacao2.Caption := fpNFSe.CodigoVerificacao;
-//  rllTomadorNomeEnt.Caption := ACBrStr('Emissão:') +
-//                               FormatDateTime('dd/mm/yy', fpNFSe.DataEmissao) +
-//                               '-Tomador:' + fpNFSe.Tomador.RazaoSocial +
-//                               '-Total:' +
-//                  FormatFloat(',0.00', fpNFSe.Servico.Valores.ValorLiquidoNfse);
 end;
 
 procedure TfrlXDANFSeRLSimplISS.rlbTomadorBeforePrint(Sender: TObject;

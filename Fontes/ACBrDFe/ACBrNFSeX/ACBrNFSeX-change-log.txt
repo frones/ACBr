@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 05/12/2023
+-- Diversos --
+[*] Alteração visando usar as informações do prestador (CNPJ, Razão Social, ...)
+    configuradas no componente ACBrNFSeX quando estas não se encontram no XML da NFS-e.
+  Por: Italo Giurizzato Junior
+
+05/12/2023
 -- ACBrNFSeXServicos --
 [*] Incluído o Parâmetro: NomeTagAtividadeEconomica para cidade de Porto Alegre do Norte/MT.
   Por: Italo Giurizzato Junior

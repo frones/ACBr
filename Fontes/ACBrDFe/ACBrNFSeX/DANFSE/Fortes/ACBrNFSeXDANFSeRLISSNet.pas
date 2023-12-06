@@ -479,6 +479,8 @@ var
   QrCodeBitmap: TBitmap;
   QRCodeData: String;
   Row, Column: Integer;
+  xEndereco, xNumero, xComplemento, xBairro, xMunic, xUF, xCEP, xFone,
+  xEmail: string;
 begin
   inherited;
 
@@ -491,34 +493,43 @@ begin
     rllCodVerificacao.Caption := CodigoVerificacao;
   end;
 
-  with fpNFSe.Prestador do
-  begin
-    rllPrestNome.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
-    rllPrestFantasia.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.Prestador.NomeFantasia);
+  rllPrestNome.Caption := fpDANFSe.Prestador.RazaoSocial;
+  rllPrestFantasia.Caption := fpDANFSe.Prestador.NomeFantasia;
 
-    with IdentificacaoPrestador do
-    begin
-      rllPrestCNPJ.Caption := FormatarCNPJouCPF(IfThen(CpfCnpj <> '', CpfCnpj, fpDANFSe.Prestador.CNPJ));
-      rllPrestInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.Prestador.InscricaoMunicipal);
-      rllPrestInscEstadual.Caption := IfThen(InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.Prestador.InscricaoEstadual);
-    end;
+  rllPrestNomeEnt.Caption := rllPrestNome.Caption;
 
-    with Endereco do
-    begin
-      rllPrestEndereco.Lines.Text := IfThen(Endereco <> '', Trim(Endereco) + ', ' +
-        Trim(Trim(Numero) + ' ' + Trim(IfThen(Complemento <> '', Complemento, fpDANFSe.Prestador.Complemento))) + #13 +
-        Trim(Bairro) + ' - ' + Trim(IfThen(xMunicipio <> '', xMunicipio, fpDANFSe.Prestador.Municipio)) + ' - ' +
-        IfThen(UF <> '', UF, fpDANFSe.Prestador.UF) + ' CEP: ' + FormatarCEP(CEP) + #13 +
-        Trim(IfThen(Contato.Telefone <> '', FormatarFone(Contato.Telefone), FormatarFone(fpDANFSe.Prestador.Fone)) + '  ' +
-        IfThen(Contato.Email <> '', Contato.Email, fpDANFSe.Prestador.Email)),
+  rllPrestCNPJ.Caption := FormatarCNPJouCPF(fpDANFSe.Prestador.CNPJ);
+  rllPrestInscMunicipal.Caption := fpDANFSe.Prestador.InscricaoMunicipal;
+  rllPrestInscEstadual.Caption := fpDANFSe.Prestador.InscricaoEstadual;
 
-        Trim(fpDANFSe.Prestador.Endereco));
+  xEndereco := Trim(fpDANFSe.Prestador.Endereco);
+  xNumero := Trim(fpDANFSe.Prestador.Numero);
 
-    end;
+  if xNumero <> '' then
+    xEndereco := xEndereco + ', ' + xNumero;
 
+  xComplemento := Trim(fpDANFSe.Prestador.Complemento);
+  xBairro := Trim(fpDANFSe.Prestador.Bairro);
+  xMunic := Trim(fpDANFSe.Prestador.Municipio);
+  xUF := Trim(fpDANFSe.Prestador.UF);
+  xCEP := Trim(fpDANFSe.Prestador.CEP);
 
-    rllPrestNomeEnt.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
-  end;
+  if xCEP <> '' then
+    xCEP := ' CEP: ' + FormatarCEP(xCEP);
+
+  xFone := Trim(fpDANFSe.Prestador.Fone);
+
+  if xFone <> '' then
+    xFone := 'Fone: ' + FormatarFone(xFone);
+
+  xEmail := Trim(fpDANFSe.Prestador.Email);
+
+  if xEmail <> '' then
+    xEmail := 'e-mail: ' + xEmail;
+
+  rllPrestEndereco.Lines.Text :=  xEndereco + ' ' + xComplemento + #13 +
+    xBairro + ' - ' + xMunic + ' - ' + xUF + xCEP + #13 +
+    xFone + ' ' + xEmail;
 
   if fpNFSe.Link <> '' then
   begin

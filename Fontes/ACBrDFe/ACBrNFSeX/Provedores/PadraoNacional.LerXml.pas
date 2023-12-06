@@ -1043,10 +1043,10 @@ begin
         RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
 
         LerEnderecoPrestador(AuxNode);
-
-        Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-        Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
       end;
+
+      Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
+      Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
 
       LerRegimeTributacaoPrestador(AuxNode);
     end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [+] Implementado o método ImprimirPDF por Stream.
    Por: Luis Claudio Jr
 
+06/12/2023
+-- ACBrMDFeWebServices --
+[*] Adiciona preenchimento da propriedade dhRecbto na classe de webservice.
+  Por: Diego Folieni
+
 06/09/2023
 -- Diversos --
 [+] Adiciona no retorno da consulta os novos campos nProtDTA e dhProt adicionados na NT2023/002

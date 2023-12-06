@@ -876,6 +876,7 @@ begin
 
     FcUF := FMDFeRetornoSincrono.cUF;
     chMDFe := FMDFeRetornoSincrono.ProtMDFe.chMDFe;
+    FdhRecbto := FMDFeRetornoSincrono.ProtMDFe.dhRecbto;
 
     if (FMDFeRetornoSincrono.protMDFe.cStat > 0) then
       FcStat := FMDFeRetornoSincrono.protMDFe.cStat

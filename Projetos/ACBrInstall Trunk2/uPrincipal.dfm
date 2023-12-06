@@ -1365,13 +1365,13 @@ object frmPrincipal: TfrmPrincipal
         Left = 0
         Top = 0
         Width = 554
-        Height = 489
+        Height = 499
         HorzScrollBar.Visible = False
         VertScrollBar.Visible = False
         Align = alClient
         TabOrder = 0
         inherited pnlBotoesMarcar: TPanel
-          Top = 448
+          Top = 458
           Width = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 504
@@ -1382,7 +1382,7 @@ object frmPrincipal: TfrmPrincipal
         end
         inherited ScrollBox1: TScrollBox
           Width = 548
-          Height = 442
+          Height = 452
         end
       end
     end
@@ -1670,7 +1670,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
+        FrameIndex = 3
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

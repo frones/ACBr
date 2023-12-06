@@ -58,6 +58,9 @@ type
     function EhSuportadaPeloACBr: Boolean;
     function EhSuportadaPeloACBrBeta: Boolean;
     procedure ConfiguraDCCPelaPlataformaAtual;
+
+    procedure AdicionaEnvironmentPath(const AProcurarRemover: string; const ExpandirPathSeNecessario: Boolean);
+
     constructor CreateNew(AInstalacao: TJclBorRADToolInstallation; UmaPlatform: TJclBDSPlatform;
           const UmasPlatform: string);
   end;
@@ -175,6 +178,51 @@ end;
 function TACBrPlataformaInstalacaoAlvo.GetNomeAlvo: string;
 begin
   Result := InstalacaoAtual.Name + ' ' + sPlatform;
+end;
+
+procedure TACBrPlataformaInstalacaoAlvo.AdicionaEnvironmentPath(const AProcurarRemover: string; const ExpandirPathSeNecessario: Boolean);
+var
+  PathsAtuais: string;
+  ListaPaths: TStringList;
+  I: Integer;
+const
+  cs: PChar = 'Environment Variables';
+begin
+
+  PathsAtuais := InstalacaoAtual.ConfigData.ReadString(cs, 'PATH', '$(PATH)');
+  if ExpandirPathSeNecessario then
+  begin
+    // tentar ler o path configurado na ide do delphi, se não existir ler
+    // a atual para complementar e fazer o override
+    if PathsAtuais = '$(PATH)' then
+      PathsAtuais := Trim(InstalacaoAtual.EnvironmentVariables.Values['PATH']);
+    if PathsAtuais = '' then
+      PathsAtuais := GetEnvironmentVariable('PATH');
+  end;
+
+  // manipular as strings
+  ListaPaths := TStringList.Create;
+  try
+    ListaPaths.Clear;
+    ListaPaths.Delimiter := ';';
+    ListaPaths.StrictDelimiter := True;
+    ListaPaths.DelimitedText := PathsAtuais;
+    // verificar se existe algo do ACBr e remover apenas se for Win32
+    if (Trim(AProcurarRemover) <> '') and (tPlatformAtual = bpWin32) then
+    begin
+      for I := ListaPaths.Count - 1 downto 0 do
+      begin
+        if Pos(AnsiUpperCase(AProcurarRemover), AnsiUpperCase(ListaPaths[I])) > 0 then
+          ListaPaths.Delete(I);
+      end;
+    end;
+    // adicionar ao path a pasta da biblioteca
+    ListaPaths.Insert(0, sDirLibrary);
+    InstalacaoAtual.ConfigData.WriteString(cs, 'PATH', ListaPaths.DelimitedText);
+
+  finally
+    ListaPaths.Free;
+  end;
 end;
 
 procedure TACBrPlataformaInstalacaoAlvo.ConfiguraDCCPelaPlataformaAtual;

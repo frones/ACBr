@@ -133,7 +133,7 @@ type
     procedure InstalarOutrosRequisitos;
     procedure FazInstalacaoDLLs(const APathBin: string);
     procedure ConfiguraMetodosCompiladores;
-    function FazBroadcastDeAlteracaoDeConfiguracao(cs: PWideChar) : Integer;
+//    function FazBroadcastDeAlteracaoDeConfiguracao(cs: PWideChar) : Integer;
 
   public
     OpcoesInstall: TACBrInstallOpcoes;
@@ -804,18 +804,18 @@ begin
   Result := (FCountErros = 0);
 end;
 
-function TACBrInstallComponentes.FazBroadcastDeAlteracaoDeConfiguracao(cs: PWideChar) : Integer;
-var
-  wParam: Integer;
-  lParam: Integer;
-  lpdwResult: PDWORD_PTR;
-begin
-  // enviar um broadcast de atualização para o windows
-  wParam := 0;
-  lParam := LongInt(cs);
-  lpdwResult := nil;
-  Result := SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, wParam, lParam, SMTO_NORMAL, 4000, lpdwResult);
-end;
+//function TACBrInstallComponentes.FazBroadcastDeAlteracaoDeConfiguracao(cs: PWideChar) : Integer;
+//var
+//  wParam: Integer;
+//  lParam: Integer;
+//  lpdwResult: PDWORD_PTR;
+//begin
+//  // enviar um broadcast de atualização para o windows
+//  wParam := 0;
+//  lParam := LongInt(cs);
+//  lpdwResult := nil;
+//  Result := SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, wParam, lParam, SMTO_NORMAL, 4000, lpdwResult);
+//end;
 
 procedure TACBrInstallComponentes.InstalarCapicom(ADestino : TDestino; const APathBin: string);
 begin
@@ -946,49 +946,18 @@ begin
 end;
 
 procedure TACBrInstallComponentes.AdicionaEnvironmentPathNaVersaoEspecificaDoDelphi(const AProcurarRemover: string);
-var
-  PathsAtuais: string;
-  ListaPaths: TStringList;
-  I: Integer;
-  Resultado: Integer;
-const
-  cs: PChar = 'Environment Variables';
+//var
+//  Resultado: Integer;
+//const
+//  cs: PChar = 'Environment Variables';
 begin
-  with FUmaPlataformaDestino do
-  begin
-    // tentar ler o path configurado na ide do delphi, se não existir ler
-    // a atual para complementar e fazer o override
-    PathsAtuais := Trim(InstalacaoAtual.EnvironmentVariables.Values['PATH']);
-    if PathsAtuais = '' then
-      PathsAtuais := GetEnvironmentVariable('PATH');
-    // manipular as strings
-    ListaPaths := TStringList.Create;
-    try
-      ListaPaths.Clear;
-      ListaPaths.Delimiter := ';';
-      ListaPaths.StrictDelimiter := True;
-      ListaPaths.DelimitedText := PathsAtuais;
-      // verificar se existe algo do ACBr e remover apenas se for Win32
-      if (Trim(AProcurarRemover) <> '') and (tPlatformAtual = bpWin32) then
-      begin
-        for I := ListaPaths.Count - 1 downto 0 do
-        begin
-          if Pos(AnsiUpperCase(AProcurarRemover), AnsiUpperCase(ListaPaths[I])) > 0 then
-            ListaPaths.Delete(I);
-        end;
-      end;
-      // adicionar ao path a pasta da biblioteca
-      ListaPaths.Add(sDirLibrary);
-      InstalacaoAtual.ConfigData.WriteString(cs, 'PATH', ListaPaths.DelimitedText);
+  FUmaPlataformaDestino.AdicionaEnvironmentPath(AProcurarRemover, False);
 
-      //Isso é realmente necessário??
-      Resultado := FazBroadcastDeAlteracaoDeConfiguracao(cs);
-      if Resultado = 0 then
-        raise Exception.create('Ocorreu um erro ao tentar configurar o path: ' + SysErrorMessage(GetLastError));
-    finally
-      ListaPaths.Free;
-    end;
-  end;//---endwith
+  //Isso é realmente necessário??
+  // Não é necessário fazer broadcast. A alteração afeta apenas a IDE e não a variável do sistema "PATH".
+//  Resultado := FazBroadcastDeAlteracaoDeConfiguracao(cs);
+//  if Resultado = 0 then
+//    raise Exception.create('Ocorreu um erro ao tentar configurar o path: ' + SysErrorMessage(GetLastError));
 end;
 
 procedure TACBrInstallComponentes.CompilaPacotePorNomeArquivo(const NomePacote: string);
@@ -1211,7 +1180,7 @@ begin
 
     if not (listaPacotes[iDpk].SuportaVersao(FUmaPlataformaDestino.InstalacaoAtual.IDEPackageVersionNumber)) then
     begin
-      FazLog(Format('Versão "%s" não suportada para o pacote "%s". Pulando pacote.',
+      FazLog(Format('Info: Versão "%s" não suportada para o pacote "%s". Pulando pacote.',
                     [IntToStr(FUmaPlataformaDestino.InstalacaoAtual.VersionNumber), NomePacote]) );
       InformaProgresso;
       Continue;
@@ -1219,6 +1188,14 @@ begin
 
     // Busca diretório do pacote
     sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
+    if (sDirPackage = '') and (not listaPacotes[iDpk].MarcadoParaInstalar) then
+    begin
+      FazLog(Format('Info: Pacote "%s" não localizado. Mas não marcado para instalar... Pulando pacote.',
+                    [NomePacote]) );
+      InformaProgresso;
+      Continue;
+    end;
+
     FPacoteAtual := sDirPackage + NomePacote;
     GetDPKFileInfo(FPacoteAtual, bRunOnly);
 

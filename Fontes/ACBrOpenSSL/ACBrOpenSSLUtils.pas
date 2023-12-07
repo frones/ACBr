@@ -224,7 +224,6 @@ procedure InitOpenSSL;
 procedure FreeOpenSSL;
 
 // Genreral auxiliary functions
-function OpenSSLFullVersion: String;
 function BioToStr(ABio: pBIO): AnsiString;
 
 // Key functions
@@ -291,35 +290,6 @@ begin
 end;
 
 // Genreral auxiliary functions
-
-function OpenSSLFullVersion: String;
-var
-  n: LongInt;
-  s: String;
-  ps, pe: Integer;
-begin
-  InitOpenSSL;
-  Result := '';
-  n := OpenSSLExt.OpenSSLVersionNum;
-  if (n > 0) then
-  begin
-    s := IntToHex(n, 9);
-    Result := copy(s, 1, 2) + '.' + copy(s, 3, 2) + '.' + copy(s, 5, 2) + '.' + copy(s, 7, 10);
-  end
-  else
-  begin
-    s := String(OpenSSLExt.OpenSSLVersion(0));
-    ps := pos(' ', s);
-    if (ps > 0) then
-    begin
-      pe := PosEx(' ', s, ps + 1);
-      if (pe = 0) then
-        pe := Length(s);
-      Result := Trim(copy(s, ps, pe - ps));
-    end;
-  end;
-end;
-
 function BioToStr(ABio: pBIO): AnsiString;
 Var
   n: Integer ;

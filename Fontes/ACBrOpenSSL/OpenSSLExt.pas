@@ -1207,6 +1207,9 @@ var
 // libssl.dll
   function OpenSSLVersion(t: cint): AnsiString;
   function OpenSSLVersionNum(): cLong;
+  function OpenSSLFullVersion: String;
+  function IsOpenSSL3: Boolean;
+
   function SSLeay_version(t: cInt): AnsiString;
   function SslGetError(s: PSSL; ret_code: cInt):cInt;
   function SslLibraryInit:cInt;
@@ -1648,6 +1651,17 @@ var
   function BN_get_word(a:PBIGNUM):BN_ULONG;
   function BN_cmp(a:PBIGNUM; b:PBIGNUM):cint;
   procedure BN_free(a:PBIGNUM);
+
+type
+  POSSL_PROVIDER = SslPtr;
+  POSSL_LIB_CTX = SslPtr;
+
+  function OSSL_LIB_CTX_get0_global_default: POSSL_LIB_CTX;
+  function OSSL_PROVIDER_available(libctx: POSSL_LIB_CTX; name: PAnsiChar): cint;
+  function OSSL_PROVIDER_load(libctx: POSSL_LIB_CTX; name: PAnsiChar): POSSL_PROVIDER;
+  function OSSL_PROVIDER_unload(prov: POSSL_PROVIDER): cint;
+  function OSSL_PROVIDER_set_default_search_path(libctx: POSSL_LIB_CTX; const path: PAnsiChar): cint;
+
 
 function IsSSLloaded: Boolean;
 function InitSSLInterface: Boolean; overload;
@@ -2442,6 +2456,12 @@ var
   _BN_cmp : function(a:PBIGNUM; b:PBIGNUM):cint; cdecl;
   _BN_free : procedure(a:PBIGNUM); cdecl;
 
+  _OSSL_LIB_CTX_get0_global_default: function(): POSSL_LIB_CTX; cdecl;
+  _OSSL_PROVIDER_available: function  (libctx: POSSL_LIB_CTX; name: PAnsiChar): cint; cdecl;
+  _OSSL_PROVIDER_load: function (libctx: POSSL_LIB_CTX; name: PAnsiChar): POSSL_PROVIDER; cdecl;
+  _OSSL_PROVIDER_unload: function (prov: POSSL_PROVIDER ): cint; cdecl;
+  _OSSL_PROVIDER_set_default_search_path: function (libctx: POSSL_LIB_CTX; const path: PAnsiChar): cint; cdecl;
+
 // libssl.dll
 
 function SslGetError(s: PSSL; ret_code: cInt):cInt;
@@ -2795,6 +2815,44 @@ begin
     Result := _OpenSSLVersionNum()
   else
     Result := 0;
+end;
+
+function OpenSSLFullVersion: String;
+var
+  n: clong;
+  s: String;
+  ps, pe: Integer;
+begin
+  Result := '';
+  n := OpenSSLVersionNum;
+  if (n > 0) then
+  begin
+    s := IntToHex(n, 9);
+    Result := copy(s, 1, 2) + '.' + copy(s, 3, 2) + '.' + copy(s, 5, 2) + '.' + copy(s, 7, 10);
+  end
+  else
+  begin
+    s := String(OpenSSLVersion(0));
+    ps := pos(' ', s);
+    if (ps > 0) then
+    begin
+      pe := PosEx(' ', s, ps + 1);
+      if (pe = 0) then
+        pe := Length(s);
+      Result := Trim(copy(s, ps, pe - ps));
+    end;
+  end;
+end;
+
+function IsOpenSSL3: Boolean;
+var
+  s: String;
+  p: Integer;
+begin
+  s := OpenSSLFullVersion;
+  p := pos('.', s);
+  s := copy(s, 1, p-1);
+  Result := (StrToIntDef(s, 0) >= 3);
 end;
 
 function SSLeay_version(t: cInt): AnsiString;
@@ -5405,6 +5463,49 @@ begin
     _OPENSSLaddallalgorithms;
 end;
 
+function OSSL_LIB_CTX_get0_global_default: POSSL_LIB_CTX;
+begin
+  if InitSSLInterface and Assigned(_OSSL_LIB_CTX_get0_global_default) then
+    Result := _OSSL_LIB_CTX_get0_global_default
+  else
+    Result := Nil;
+end;
+
+function OSSL_PROVIDER_available(libctx: POSSL_LIB_CTX; name: PAnsiChar): cint;
+begin
+  if InitSSLInterface and Assigned(_OSSL_PROVIDER_available) then
+    Result := _OSSL_PROVIDER_available(libctx, name)
+  else
+    Result := -1;
+end;
+
+function OSSL_PROVIDER_load(libctx: POSSL_LIB_CTX; name: PAnsiChar
+  ): POSSL_PROVIDER;
+begin
+  if InitSSLInterface and Assigned(_OSSL_PROVIDER_load) then
+    Result := _OSSL_PROVIDER_load(libctx, name)
+  else
+    Result := Nil;
+end;
+
+function OSSL_PROVIDER_unload(prov: POSSL_PROVIDER): cint;
+begin
+  if InitSSLInterface and Assigned(_OSSL_PROVIDER_unload) then
+    Result := _OSSL_PROVIDER_unload(prov)
+  else
+    Result := -1;
+end;
+
+function OSSL_PROVIDER_set_default_search_path(libctx: POSSL_LIB_CTX;
+  const path: PAnsiChar): cint;
+begin
+  if InitSSLInterface and Assigned(_OSSL_PROVIDER_set_default_search_path) then
+    Result := _OSSL_PROVIDER_set_default_search_path(libctx, path)
+  else
+    Result := -1;
+end;
+
+
 function LoadLib(const Value: String): HModule;
 begin
  if (SSLLibPath <> '') then
@@ -5824,6 +5925,11 @@ begin
   _BN_get_word:=GetProcAddr(SSLUtilHandle,'BN_get_word');
   _BN_cmp:=GetProcAddr(SSLUtilHandle,'BN_cmp');
   _BN_free:=GetProcAddr(SSLUtilHandle,'BN_free');
+  _OSSL_LIB_CTX_get0_global_default:=GetProcAddr(SSLUtilHandle,'OSSL_LIB_CTX_get0_global_default');
+  _OSSL_PROVIDER_available:=GetProcAddr(SSLUtilHandle,'OSSL_PROVIDER_available');
+  _OSSL_PROVIDER_load:=GetProcAddr(SSLUtilHandle,'OSSL_PROVIDER_load');
+  _OSSL_PROVIDER_unload:=GetProcAddr(SSLUtilHandle,'OSSL_PROVIDER_unload');
+  _OSSL_PROVIDER_set_default_search_path:=GetProcAddr(SSLUtilHandle,'OSSL_PROVIDER_set_default_search_path');
 end;
 
 Function LoadUtilLibrary : Boolean;
@@ -6011,6 +6117,11 @@ begin
   _BN_get_word:=nil;
   _BN_cmp:=nil;
   _BN_free:=nil;
+  _OSSL_LIB_CTX_get0_global_default:=nil;
+  _OSSL_PROVIDER_available:=nil;
+  _OSSL_PROVIDER_load:=nil;
+  _OSSL_PROVIDER_unload:=nil;
+  _OSSL_PROVIDER_set_default_search_path:=nil;
 end;
 
 Procedure UnloadSSLLib;
@@ -6380,6 +6491,15 @@ begin
     if assigned(_CRYPTOnumlocks) and assigned(_CRYPTOsetlockingcallback) then
       InitLocks;
     SSLloaded := True;
+
+    if IsOpenSSL3 then
+    begin
+      if ((SSLLibFile) <> '') then
+        OSSL_PROVIDER_set_default_search_path(nil, PAnsiChar(ExtractFilePath(SSLLibFile)));
+
+      OSSL_PROVIDER_load(Nil, 'legacy'); // Loading legacy.dll
+    end;
+
 {$IFDEF OS2}
     Result := InitEMXHandles;
 {$ELSE OS2}

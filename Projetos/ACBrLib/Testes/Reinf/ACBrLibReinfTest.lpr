@@ -3,7 +3,8 @@ program ACBrLibReinfTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrLibReinfTestCase, ACBrLibReinfStaticImport;
+  Interfaces, Forms, ACBrLibReinfStaticImportMT, ACBrLibConsts, GuiTestRunner,
+  ACBrLibReinfTestCase;
 
 {$R *.res}
 

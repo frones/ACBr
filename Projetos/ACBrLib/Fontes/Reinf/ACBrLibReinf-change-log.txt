@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/12/2023
+--- ACBrLibReinfConsts, ACBrLibReinfMT, ACBrLibReinfStaticImportMT ---
+[*] Ajuste e melhorias para realizar os testes unitários.
+    Por: Antonio Carlos Junior
+
 01/12/2023
 --- ACBrLibReinfMT ---
 [*] Correção método CriarEnviarReinf..

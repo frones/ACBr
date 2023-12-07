@@ -40,39 +40,38 @@ uses
   Classes, SysUtils, Forms,
   ACBrLibComum;
 
-function Reinf_Inicializar (var libHandle: PLibHandle; eArqConfig, eChaveCrypt: Pchar): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function Reinf_Finalizar (libHandle: PLibHandle): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function Reinf_Nome (const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function Reinf_Versao (const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+ function Reinf_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_UltimoRetorno (const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+ function Reinf_Finalizar(libHandle: PLibHandle): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigImportar (const libHandle: PLibHandle; const eArqConfig: PChar): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+ function Reinf_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigExportar (const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+ function Reinf_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigLer (const libHandle: PLibHandle; const eArqConfig: PChar): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+ function Reinf_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigGravar (const libHandle: PLibHandle; const eArqConfig: PChar): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+ function Reinf_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigLerValor (const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+ function Reinf_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigGravarValor (const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+ function Reinf_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+ function Reinf_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+ function Reinf_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+ function Reinf_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
  function Reinf_CriarEventoReinf (const libHandle: PLibHandle; const eArqIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -126,7 +125,7 @@ implementation
 Uses
   ACBrLibConsts, ACBrLibReinfBase;
 
-function Reinf_Inicializar(var libHandle: PLibHandle; eArqConfig, eChaveCrypt: Pchar): longint;
+function Reinf_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(libHandle, TACBrLibReinf, eArqConfig, eChaveCrypt);
@@ -136,7 +135,7 @@ function Reinf_Finalizar (libHandle: PLibHandle): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(libHandle);
-  libHandle := Nil;
+  libHandle := nil;
 end;
 
 function Reinf_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;

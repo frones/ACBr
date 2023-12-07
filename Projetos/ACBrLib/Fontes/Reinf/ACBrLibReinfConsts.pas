@@ -41,7 +41,7 @@ uses
 
 const
   CLibReinfNome = 'ACBrLibReinf';
-  CLibReinfVersao = '0.0.1';
+  CLibReinfVersao = '1.0.0.8';
 
   CSessaoRespEnvio = 'retornoLoteEventos';
   CSessaoRespEnvioideTransmissor = 'ideTransmissor';

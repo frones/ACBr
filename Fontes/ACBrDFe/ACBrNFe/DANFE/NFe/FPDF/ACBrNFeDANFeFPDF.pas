@@ -62,9 +62,10 @@ type
   TNFeDANFeFPDF = class(TFPDFReport)
   private
     FNFeUtils: TNFeUtilsFPDF;
+    FDANFEClassOwner : TACBrDFeDANFeReport;
     FCancelada: boolean;
     FCanhoto: TPosRecibo;
-    FLogoBytes: TBytes;
+    FLogo: TBytes;
     FLogoStretched: boolean;
     FLogoAlign: TLogoAlign;
     FMensagemRodape: string;
@@ -77,7 +78,7 @@ type
   public
     property Cancelada: boolean read FCancelada write FCancelada;
     property PosCanhoto: TPosRecibo read FCanhoto write FCanhoto;
-    property LogoBytes: TBytes read FLogoBytes write FLogoBytes;
+    property LogoBytes: TBytes read FLogo write FLogo;
     property LogoStretched: boolean read FLogoStretched write FLogoStretched;
     property LogoAlign: TLogoAlign read FLogoAlign write FLogoAlign;
     property MensagemRodape: string read FMensagemRodape write FMensagemRodape;
@@ -530,6 +531,7 @@ var
   cStat: string;
   HasLogo: boolean;
   Stream: TMemoryStream;
+  LLogoStringStream : TStringStream;
 begin
   PDF := Args.PDF;
   NFe := FNFeUtils.NFe;
@@ -561,7 +563,7 @@ begin
   y1 := y;
   tw := w;
   th := h;
-
+  
   //estabelecer o alinhamento
   //pode ser left L, center C, right R, full logo L
   //se for left separar 1/3 da largura para o tamanho da imagem
@@ -652,11 +654,15 @@ begin
       tw := w;
     end;
 
-    Stream := TMemoryStream.Create;
-    try
-      PDF.Image(xImg, yImg, nImgW, nImgH, Stream);
-    finally
-      Stream.Free;
+    if (Length(FLogo) > 0) then
+    begin
+      Stream := TMemoryStream.Create;
+      try
+        Stream.Write(FLogo[0], Length(FLogo));
+        PDF.Image(xImg, yImg, nImgW, nImgH, Stream);
+      finally
+        Stream.Free;
+      end;
     end;
   end;
 
@@ -2557,6 +2563,8 @@ end;
 procedure TNFeDANFeFPDF.OnStartReport(Args: TFPDFReportEventArgs);
 var
   LOrientation: TFPDFOrientation;
+  LStream : TMemoryStream;
+  LLogoStringStream : TStringStream;
 begin
   if not FInitialized then
   begin
@@ -2567,9 +2575,33 @@ begin
     else
       LOrientation := poPortrait;
 
+    if FDANFEClassOwner.Logo <> '' then
+    begin
+      LStream := TMemoryStream.Create;
+      try
+        if FileExists(FDANFEClassOwner.Logo) then
+          LStream.LoadFromFile(FDANFEClassOwner.Logo)
+        else
+        begin
+          LLogoStringStream:= TStringStream.Create(FDANFEClassOwner.Logo);
+          try
+            LStream.LoadFromStream(LLogoStringStream);
+            LStream.Position := 0;
+          finally
+            LLogoStringStream.Free;
+          end;
+        end;
+        SetLength(FLogo, LStream.Size);
+        LStream.Position := 0;
+        LStream.Read(FLogo[0], LStream.Size);
+      finally
+        LStream.Free;
+      end;
+    end;
+
     AddPage(LOrientation);
     AddBand(TBlocoCanhoto.Create(PosCanhoto, FNFeUtils));
-    AddBand(TBlocoDadosNFe.Create(FNFeUtils, FLogoBytes, FLogoStretched, FLogoAlign));
+    AddBand(TBlocoDadosNFe.Create(FNFeUtils, FLogo, FLogoStretched, FLogoAlign));
     AddBand(TBlocoDestinatarioRemetente.Create(FNFeUtils));
     AddBand(TBlocoLocalRetirada.Create(FNFeUtils));
     AddBand(TBlocoLocalEntrega.Create(FNFeUtils));
@@ -2631,7 +2663,7 @@ begin
   begin
     LNFe := TACBrNFe(ACBrNFe).NotasFiscais[I].NFe;
     Report := TNFeDANFeFPDF.Create(LNFe);
-
+    TNFeDANFeFPDF(Report).FDANFEClassOwner := TACBrNFe(ACBrNFe).DANFE;
     //TNFeDANFeFPDF(Report).PosCanhoto := TNFeDANFeFPDF(TACBrNFe(ACBrNFe).DANFE).PosCanhoto;
 
     TNFeDANFeFPDF(Report).MensagemRodape := Self.Sistema;

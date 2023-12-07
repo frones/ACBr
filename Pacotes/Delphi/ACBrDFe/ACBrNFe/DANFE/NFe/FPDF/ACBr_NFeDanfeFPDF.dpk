@@ -58,7 +58,7 @@ package ACBr_NFeDanfeFPDF;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - DANFe em FPDF Report - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - DANFe / DANFCe em FPDF Report - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -67,6 +67,6 @@ requires
   ACBr_NFe;
 
 contains
-  ACBrNFeDANFeFPDF in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF\ACBrNFeDANFeFPDF.pas';
-
+  ACBrNFeDANFeFPDF in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF\ACBrNFeDANFeFPDF.pas',
+  ACBrNFCeDANFeFPDF in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\FPDF\ACBrNFCeDANFeFPDF.pas';
 end.

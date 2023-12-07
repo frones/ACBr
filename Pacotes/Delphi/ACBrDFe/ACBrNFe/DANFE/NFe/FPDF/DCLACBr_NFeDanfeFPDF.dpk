@@ -35,6 +35,6 @@ requires
   ACBr_NFeDanfeFPDF;
 
 contains
-  ACBrNFeDANFeFPDFReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF\ACBrNFeDANFeFPDFReg.pas';
-
+  ACBrNFeDANFeFPDFReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF\ACBrNFeDANFeFPDFReg.pas',
+  ACBrNFCeDANFeFPDFReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\FPDF\ACBrNFCeDANFeFPDFReg.pas';
 end.

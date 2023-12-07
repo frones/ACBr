@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+-- ACBrDFeOpenSSL --
+[*] Melhoria nas mensagens de Erro de TDFeOpenSSL, exibindo o Código e mensagem
+    de erro do próprio OpenSSL
+    (por: DSA)
 
 25/10/2023
 -- ACBrXmlBase --

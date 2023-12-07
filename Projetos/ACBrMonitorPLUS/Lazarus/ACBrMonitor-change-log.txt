@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/12/2023
+-- ACBrMonitor1 --
+[*] Ajuste visando impedir que salve uma cidade sem provedor atribuído na configuração de NFSe
+  Por: Diego Folieni
+
 16/11/2023
 -- ACBrMonitor.hnd --
 [*] Adicionado método SetTipoContribuinte na documentação

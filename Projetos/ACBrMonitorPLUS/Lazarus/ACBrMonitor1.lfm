@@ -17318,12 +17318,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1129
-        ActivePage = tsEmail
+        ActivePage = tsDFe
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 13
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -25012,12 +25012,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1121
-            ActivePage = tsEmailDFe
+            ActivePage = tsWebServiceDFe
             Align = alClient
             Font.Height = -13
             Images = ImageList1
             ParentFont = False
-            TabIndex = 2
+            TabIndex = 1
             TabOrder = 0
             OnChange = pgDFeChange
             object tsCertificadoDFe: TTabSheet
@@ -27382,7 +27382,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 8
                       Height = 25
                       Top = 67
-                      Width = 376
+                      Width = 336
                       Font.Height = -13
                       ItemHeight = 17
                       Items.Strings = (
@@ -27643,6 +27643,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Height = -13
                       ParentFont = False
                       TabOrder = 4
+                    end
+                    object imgErrNFSe_Municipio: TImage
+                      Left = 352
+                      Height = 25
+                      Hint = 'Falha Configuração NFS-e. Verifique: Município'
+                      Top = 67
+                      Width = 25
+                      Visible = False
+                    end
+                    object imgErrNFSe: TImage
+                      Left = 442
+                      Height = 25
+                      Hint = 'Falha Configuração NFS-e. Verifique: Município'
+                      Top = 8
+                      Width = 25
+                      Visible = False
                     end
                   end
                   object gbxEmitenteNFSe: TGroupBox
@@ -35510,6 +35526,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrMDFe = ACBrMDFe1
     ImprimeHoraSaida = False
     TipoDAMDFe = tiSemGeracao
@@ -35628,6 +35646,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     FormularioContinuo = True
     Left = 680
     Top = 446
@@ -35665,6 +35685,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrBPe = ACBrBPe1
     TipoDABPE = tiSemGeracao
     Cancelada = False
@@ -35916,6 +35938,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrNFSe = ACBrNFSeX1
     Cancelada = False
     Provedor = proNenhum

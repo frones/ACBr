@@ -764,6 +764,8 @@ type
     HTMLBrowserHelpViewer1: THTMLBrowserHelpViewer;
     HTMLHelpDatabase1: THTMLHelpDatabase;
     Image2: TImage;
+    imgErrNFSe: TImage;
+    imgErrNFSe_Municipio: TImage;
     imgErrEmail_Mail: TImage;
     imgErrEmail_User: TImage;
     imgErrEmail_Smtp: TImage;
@@ -1973,6 +1975,7 @@ type
     procedure ValidarConfigWebService;
     procedure ValidarConfigSAT;
     procedure ValidarConfigMail;
+    procedure ValidarConfigNFSe(xProvedor: String);
     procedure LigarAlertasdeErrosDeConfiguracao;
 
     procedure VerificarErrosConfiguracaoComponentes(AfsCmd: TACBrCmd);
@@ -2777,6 +2780,8 @@ begin
   ImageList2.GetBitmap(16, imgErrEmail_Smtp.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrEmail_Senha.Picture.Bitmap);
   ImageList2.GetBitmap(16, imgErrEmail_Porta.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrNFSe.Picture.Bitmap);
+  ImageList2.GetBitmap(16, imgErrNFSe_Municipio.Picture.Bitmap);
 
 
 
@@ -10180,6 +10185,7 @@ begin
   ValidarConfigCertificado;
   ValidarConfigSAT;
   ValidarConfigMail;
+  ValidarConfigNFSe(ACBrNFSeX1.Configuracoes.Geral.xProvedor);
 
   FMenuTreeView.CarregarMenuTreeView;
 
@@ -10284,6 +10290,21 @@ begin
                                           , tsEmail.ImageIndex));
 
 
+end;
+
+procedure TFrmACBrMonitor.ValidarConfigNFSe(xProvedor: String);
+var
+  OK, Res: Boolean;
+  procedure LigarAlertaErros;
+  begin
+    imgErrNFSe_Municipio.Visible := (xProvedor = '');
+  end;
+begin
+  Res := imgErrNFSe.Visible;
+  LigarAlertaErros;
+  Ok := not(imgErrNFSe_Municipio.Visible);
+
+  imgErrNFSe.Visible := not OK;
 end;
 
 procedure TFrmACBrMonitor.VerificarErrosConfiguracaoComponentes(AfsCmd: TACBrCmd);
@@ -12302,12 +12323,32 @@ end;
 procedure TFrmACBrMonitor.cbMunicipioChange(Sender: TObject);
 var
   Tamanho: Integer;
+  function MunicipioTemProvedorAtribuido: boolean;
+  var
+    tmpNFSeX: TACBrNFSeX;
+  begin
+    tmpNFSeX := TACBrNFSeX.Create(nil);
+    try
+      try
+         tmpNFSeX.Configuracoes.Geral.CodigoMunicipio := StrToIntDef(Copy(cbMunicipio.Text, Tamanho - 9, 7),0);
+         Result := tmpNFSeX.Configuracoes.Geral.CodigoMunicipio > 0;
+      except
+        //Silenciada para não causar problema no processo;
+        Result := False;
+      end;
+    finally
+      ValidarConfigNFSe(tmpNFSeX.Configuracoes.Geral.xProvedor);
+      tmpNFSeX.Free;
+    end;
+  end;
 begin
   Tamanho := Length(Trim(cbMunicipio.Text));
-
-  edtNomeCidade.Text := Copy(cbMunicipio.Text, 1, Tamanho - 11);
-  edtUFCidade.Text := Copy(cbMunicipio.Text, Tamanho - 1, 2);
-  edtCodigoCidade.Text := Copy(cbMunicipio.Text, Tamanho - 9, 7);
+  if MunicipioTemProvedorAtribuido then
+  begin
+    edtNomeCidade.Text := Copy(cbMunicipio.Text, 1, Tamanho - 11);
+    edtUFCidade.Text := Copy(cbMunicipio.Text, Tamanho - 1, 2);
+    edtCodigoCidade.Text := Copy(cbMunicipio.Text, Tamanho - 9, 7);
+  end;
 end;
 
 procedure TFrmACBrMonitor.cbSATMarcaChange(Sender: TObject);

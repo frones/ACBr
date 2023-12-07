@@ -593,7 +593,7 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtIniCondicao',   10, 10, 1, objInfoExpRisco.dtIniCondicao);
 
-  if ((objInfoExpRisco.dtIniCondicao >= StringToDateTime('16/01/2022')) and (DateToStr(objInfoExpRisco.dtFimCondicao) <> dDataBrancoNula)) then
+  if ((objInfoExpRisco.dtIniCondicao >= StringToDateTime('16/01/2023')) and (objInfoExpRisco.dtFimCondicao > 0)) then
     Gerador.wCampo(tcDat, '', 'dtFimCondicao', 10, 10, 1, objInfoExpRisco.dtFimCondicao);
 
   GerarInfoAmb(objInfoExpRisco.InfoAmb);

@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/12/2023
+-- pcesS2240 --
+[*] Corrigidas condições do critério para envio da tag dtFimCondicao, no evento S-2240
+  Por: CarlosSolla
+
 30/11/2023
 -- pcesS1210 --
 [*] Utilizado eSTpInscricaoToStr para preenchimento do tpInsc em detReembTit/detReembDep, preenchidos cnpjOper e regANS somente quando indOrgReemb=1

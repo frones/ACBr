@@ -847,7 +847,7 @@ begin
                    FormatDateTime('ddmmyyyy', DataMulta) +                                                                                                   //  67-74  DATA DA MULTA
 
                    PadLeft(OnlyNumber(IfThen(MultaValorFixo,FloatToIntStr(PercentualMulta,2),
-                                                            FloatToIntStr(PercentualMulta,2) + '0') )
+                                                            FloatToIntStr(PercentualMulta,1) + '0') )
                                         , 15, '0') +                                                                  //  75-89  VALOR/PERCENTUAL MULTA
                    DupeString(' ', 10) +                                                                                                              //  90-99  INFORMAÇÃO DO BANCO PAGADOR
                    DupeString(' ', 40) +                                                                                                              // 100-139 MENSAGEM 3

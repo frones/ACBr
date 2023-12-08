@@ -527,6 +527,15 @@ object frmACBrNFSe: TfrmACBrNFSe
                 TabOrder = 11
               end
             end
+            object btnInformacoes: TButton
+              Left = 12
+              Top = 396
+              Width = 247
+              Height = 25
+              Caption = 'Informa'#231#245'es sobre o Provedor'
+              TabOrder = 1
+              OnClick = btnInformacoesClick
+            end
           end
           object TabSheet7: TTabSheet
             Caption = 'WebService'

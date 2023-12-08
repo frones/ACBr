@@ -40,6 +40,7 @@ type
   TfrmACBrNFSe = class(TForm)
     btnConsultarLinkNFSe: TButton;
     btnConsultarNFSePelaChave: TButton;
+    btnInformacoes: TButton;
     btnLerINI: TButton;
     cbLayoutNFSe: TComboBox;
     Label48: TLabel;
@@ -301,6 +302,7 @@ type
     procedure btnEmitirPNClick(Sender: TObject);
     procedure btnEnviaremailPNClick(Sender: TObject);
     procedure btnImprimirPNClick(Sender: TObject);
+    procedure btnInformacoesClick(Sender: TObject);
     procedure btnLerINIClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -3360,6 +3362,151 @@ begin
   end;
 end;
 
+procedure TfrmACBrNFSe.btnInformacoesClick(Sender: TObject);
+begin
+  with ACBrNFSeX1.Configuracoes.Geral do
+  begin
+    memoLog.Lines.Add('------------------------------------');
+    memoLog.Lines.Add('Informações sobre o provedor: ' + xProvedor +
+            ' - Versão: ' +VersaoNFSeToStr(ACBrNFSeX1.Configuracoes.Geral.Versao));
+    memoLog.Lines.Add('');
+    memoLog.Lines.Add('Autenticação');
+    memoLog.Lines.Add('');
+
+    if Autenticacao.RequerCertificado then
+      memoLog.Lines.Add(' Requer Certificado Digital')
+    else
+      memoLog.Lines.Add(' Não requer Certificado Digital');
+
+    if Autenticacao.RequerLogin then
+      memoLog.Lines.Add(' Requer Login/Senha')
+    else
+      memoLog.Lines.Add(' Não requer Login/Senha');
+
+    if Autenticacao.RequerChaveAcesso then
+      memoLog.Lines.Add(' Requer Chave de Acesso')
+    else
+      memoLog.Lines.Add(' Não requer Chave de Acesso');
+
+    if Autenticacao.RequerChaveAutorizacao then
+      memoLog.Lines.Add(' Requer Chave de Autorizacao')
+    else
+      memoLog.Lines.Add(' Não requer Chave de Autorizacao');
+
+    if Autenticacao.RequerFraseSecreta then
+      memoLog.Lines.Add(' Requer Frase Secreta')
+    else
+      memoLog.Lines.Add(' Não requer Frase Secreta');
+
+    memoLog.Lines.Add('');
+    memoLog.Lines.Add('Serviços Disponibilizados');
+    memoLog.Lines.Add('');
+
+    if ServicosDisponibilizados.EnviarLoteAssincrono then
+      memoLog.Lines.Add(' Permite o envio de Lote em Modo Assíncrono')
+    else
+      memoLog.Lines.Add(' Não permite o envio de Lote em Modo Assíncrono');
+
+    if ServicosDisponibilizados.EnviarLoteSincrono then
+      memoLog.Lines.Add(' Permite o envio de Lote em Modo Síncrono')
+    else
+      memoLog.Lines.Add(' Não permite o envio de Lote em Modo Síncrono');
+
+    if ServicosDisponibilizados.EnviarUnitario then
+      memoLog.Lines.Add(' Permite o envio Unitário em Modo Síncrono')
+    else
+      memoLog.Lines.Add(' Não permite o envio Unitário em Modo Síncrono');
+
+    if ServicosDisponibilizados.ConsultarSituacao then
+      memoLog.Lines.Add(' Permite Consultar a Situação do Lote')
+    else
+      memoLog.Lines.Add(' Não permite Consultar a Situação do Lote');
+
+    if ServicosDisponibilizados.ConsultarLote then
+      memoLog.Lines.Add(' Permite Consultar o Lote')
+    else
+      memoLog.Lines.Add(' Não permite Consultar o Lote');
+
+    if ServicosDisponibilizados.ConsultarRps then
+      memoLog.Lines.Add(' Permite Consultar o Rps')
+    else
+      memoLog.Lines.Add(' Não permite Consultar o Rps');
+
+    if ServicosDisponibilizados.ConsultarNfse then
+      memoLog.Lines.Add(' Permite Consultar a NFS-e')
+    else
+      memoLog.Lines.Add(' Não permite Consultar a NFS-e');
+
+    if ServicosDisponibilizados.ConsultarFaixaNfse then
+      memoLog.Lines.Add(' Permite Consultar uma Faixa de NFS-e')
+    else
+      memoLog.Lines.Add(' Não permite Consultar uma Faixa de NFS-e');
+
+    if ServicosDisponibilizados.ConsultarServicoPrestado then
+      memoLog.Lines.Add(' Permite Consultar Serviço Prestado')
+    else
+      memoLog.Lines.Add(' Não permite Consultar Serviço Prestado');
+
+    if ServicosDisponibilizados.ConsultarServicoTomado then
+      memoLog.Lines.Add(' Permite Consultar Serviço Tomado')
+    else
+      memoLog.Lines.Add(' Não permite Consultar Serviço Tomado');
+
+    if ServicosDisponibilizados.CancelarNfse then
+      memoLog.Lines.Add(' Permite Cancelar NFS-e')
+    else
+      memoLog.Lines.Add(' Não permite Cancelar NFS-e');
+
+    if ServicosDisponibilizados.SubstituirNfse then
+      memoLog.Lines.Add(' Permite Substituir NFS-e')
+    else
+      memoLog.Lines.Add(' Não permite Substituir NFS-e');
+
+    if ServicosDisponibilizados.GerarToken then
+      memoLog.Lines.Add(' Permite Gerar Token')
+    else
+      memoLog.Lines.Add(' Não permite Gerar Token');
+
+    if ServicosDisponibilizados.EnviarEvento then
+      memoLog.Lines.Add(' Permite Enviar Evento')
+    else
+      memoLog.Lines.Add(' Não permite Enviar Evento');
+
+    if ServicosDisponibilizados.ConsultarEvento then
+      memoLog.Lines.Add(' Permite Consultar Evento')
+    else
+      memoLog.Lines.Add(' Não permite Consultar Evento');
+
+    if ServicosDisponibilizados.ConsultarDFe then
+      memoLog.Lines.Add(' Permite Consultar DF-e')
+    else
+      memoLog.Lines.Add(' Não permite Consultar DF-e');
+
+    if ServicosDisponibilizados.ConsultarParam then
+      memoLog.Lines.Add(' Permite Consultar Parâmetros')
+    else
+      memoLog.Lines.Add(' Não permite Consultar Parâmetros');
+
+    if ServicosDisponibilizados.ConsultarSeqRps then
+      memoLog.Lines.Add(' Permite Consultar Sequencia de Rps')
+    else
+      memoLog.Lines.Add(' Não permite Consultar Sequencia de Rps');
+
+    if ServicosDisponibilizados.ConsultarLinkNfse then
+      memoLog.Lines.Add(' Permite Consultar Link da NFS-e')
+    else
+      memoLog.Lines.Add(' Não permite Consultar Link da NFS-e');
+
+    if ServicosDisponibilizados.ConsultarNfseChave then
+      memoLog.Lines.Add(' Permite Consultar NFS-e por Chave')
+    else
+      memoLog.Lines.Add(' Não permite Consultar NFS-e por Chave');
+
+    memoLog.Lines.Add('');
+    memoLog.Lines.Add('------------------------------------');
+  end;
+end;
+
 procedure TfrmACBrNFSe.btnLerINIClick(Sender: TObject);
 var
   vNumLote: string;
@@ -3710,7 +3857,7 @@ begin
   memoLog.Lines.Add('------------------------------');
   memoLog.Lines.Add('Versão OpenSSL');
   memoLog.Lines.Add( OpenSSLExt.OpenSSLVersion(0) );
-  memoLog.Lines.Add( ACBrOpenSSLUtils.OpenSSLFullVersion );
+//  memoLog.Lines.Add( ACBrOpenSSLUtils.OpenSSLFullVersion );
   memoLog.Lines.Add( OpenSSLExt.SSLUtilFile );
   memoLog.Lines.Add( OpenSSLExt.SSLLibFile );
   memoLog.Lines.Add('------------------------------');

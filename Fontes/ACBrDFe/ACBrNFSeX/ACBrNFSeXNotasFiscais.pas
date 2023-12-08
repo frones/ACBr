@@ -678,7 +678,7 @@ begin
             xNome := INIRec.ReadString(sSecao, 'xNome', '');
             dtIni := INIRec.ReadDate(sSecao, 'dtIni', Now);
             dtFim := INIRec.ReadDate(sSecao, 'dtFim', Now);
-            id := INIRec.ReadString(sSecao, 'id', '');
+            idAtvEvt := INIRec.ReadString(sSecao, 'idAtvEvt', '');
 
             with Endereco do
             begin
@@ -1155,7 +1155,7 @@ begin
         INIRec.WriteString(sSecao, 'xNome', Servico.Evento.xNome);
         INIRec.WriteDate(sSecao, 'dtIni', Servico.Evento.dtIni);
         INIRec.WriteDate(sSecao, 'dtFim', Servico.Evento.dtFim);
-        INIRec.WriteString(sSecao, 'id', Servico.Evento.id);
+        INIRec.WriteString(sSecao, 'idAtvEvt', Servico.Evento.idAtvEvt);
         INIRec.WriteString(sSecao, 'CEP', Servico.Evento.Endereco.CEP);
         INIRec.WriteString(sSecao, 'xMunicipio', Servico.Evento.Endereco.xMunicipio);
         INIRec.WriteString(sSecao, 'UF', Servico.Evento.Endereco.UF);

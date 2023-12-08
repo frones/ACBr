@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/12/2023
+-- Diversos --
+[-] A grafia correta da tag idAtvEvt e não id.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Redencao/PA trocou de provedor, agora é Desenvolve.
   Por: Joemil

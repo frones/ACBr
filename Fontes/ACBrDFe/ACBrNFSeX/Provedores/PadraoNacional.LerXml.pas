@@ -140,7 +140,7 @@ begin
       xNome := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
       dtIni := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtIni'), tcDat);
       dtFim := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtFim'), tcDat);
-      id := ObterConteudo(AuxNode.Childrens.FindAnyNs('id'), tcStr);
+      idAtvEvt := ObterConteudo(AuxNode.Childrens.FindAnyNs('idAtvEvt'), tcStr);
 
       LerEnderecoEvento(AuxNode);
     end;

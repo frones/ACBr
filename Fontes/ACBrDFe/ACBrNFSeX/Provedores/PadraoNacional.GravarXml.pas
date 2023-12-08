@@ -713,9 +713,9 @@ begin
     Result.AppendChild(AddNode(tcDat, '#1', 'dtFim', 10, 10, 1,
                                                 NFSe.Servico.Evento.dtFim, ''));
 
-    if NFSe.Servico.Evento.id <> '' then
-      Result.AppendChild(AddNode(tcStr, '#1', 'id', 1, 30, 1,
-                                                    NFSe.Servico.Evento.id, ''))
+    if NFSe.Servico.Evento.idAtvEvt <> '' then
+      Result.AppendChild(AddNode(tcStr, '#1', 'idAtvEvt', 1, 30, 1,
+                                              NFSe.Servico.Evento.idAtvEvt, ''))
     else
       Result.AppendChild(GerarEnderecoEvento);
   end;

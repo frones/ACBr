@@ -713,7 +713,7 @@ type
     FxNome: string;
     FdtIni: TDateTime;
     FdtFim: TDateTime;
-    Fid: string;
+    FidAtvEvt: string;
     FEndereco: TEndereco;
   public
     constructor Create;
@@ -722,7 +722,7 @@ type
     property xNome: string read FxNome write FxNome;
     property dtIni: TDateTime read FdtIni write FdtIni;
     property dtFim: TDateTime read FdtFim write FdtFim;
-    property id: string read Fid write Fid;
+    property idAtvEvt: string read FidAtvEvt write FidAtvEvt;
     property Endereco: TEndereco read FEndereco write FEndereco;
   end;
 

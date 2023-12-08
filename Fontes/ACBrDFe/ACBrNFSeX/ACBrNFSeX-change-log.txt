@@ -44,6 +44,8 @@ Símbolo : Significado
 
 08/12/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Redencao/PA trocou de provedor, agora é Desenvolve.
+  Por: Joemil
 [*] A cidade de Sapucaia do Sul/RS estava com a versão errada o correto é 1.01
 [*] Alteração nas URLs da cidade de Glorinha/RS, o provedor continua o mesmo.
 [+] Incluída a cidade de Capivari do Sul/RS, provedor é o DBSeller.

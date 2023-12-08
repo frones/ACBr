@@ -4370,7 +4370,7 @@ begin
   memoLog.Lines.Add('------------------------------');
   memoLog.Lines.Add('Versão OpenSSL');
   memoLog.Lines.Add( OpenSSLExt.OpenSSLVersion(0) );
-  memoLog.Lines.Add( ACBrOpenSSLUtils.OpenSSLFullVersion );
+  memoLog.Lines.Add( OpenSSLExt.OpenSSLFullVersion );
   memoLog.Lines.Add( OpenSSLExt.SSLUtilFile );
   memoLog.Lines.Add( OpenSSLExt.SSLLibFile );
   memoLog.Lines.Add('------------------------------');

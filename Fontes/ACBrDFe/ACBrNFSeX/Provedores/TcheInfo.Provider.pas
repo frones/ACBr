@@ -83,6 +83,19 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := False;
+      EnviarLoteSincrono := False;
+      ConsultarLote := False;
+      ConsultarFaixaNfse := False;
+      ConsultarServicoPrestado := False;
+      ConsultarServicoTomado := False;
+      SubstituirNfse := False;
+    end;
   end;
 
   with ConfigAssinar do

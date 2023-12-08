@@ -294,6 +294,12 @@ begin
   begin
     ModoEnvio := meLoteAssincrono;
     ConsultaPorFaixaPreencherNumNfseFinal := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteSincrono := False;
+      EnviarUnitario := False;
+    end;
   end;
 
   with ConfigAssinar do

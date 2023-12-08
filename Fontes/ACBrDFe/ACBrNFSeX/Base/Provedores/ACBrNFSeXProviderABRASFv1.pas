@@ -161,6 +161,16 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaSitLote := True;
     ConsultaPorFaixa := False;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarSituacao := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   SetXmlNameSpace(NameSpace);

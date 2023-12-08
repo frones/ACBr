@@ -167,6 +167,8 @@ begin
 
   ConfigGeral.Identificador := 'id';
 
+  ConfigGeral.ServicosDisponibilizados.CancelarNfse := False;
+
   with ConfigAssinar do
   begin
     Rps := True;

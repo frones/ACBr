@@ -619,6 +619,40 @@ begin
     FormatoArqNota := tfaXml;
     FormatoArqEvento := tfaXml;
 
+    with Autenticacao do
+    begin
+      RequerCertificado := True;
+      RequerLogin := False;
+      RequerChaveAcesso := False;
+      RequerChaveAutorizacao := False;
+      RequerFraseSecreta := False;
+    end;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := False;
+      EnviarLoteSincrono := False;
+      EnviarUnitario := False;
+      ConsultarSituacao := False;
+      ConsultarLote := False;
+      ConsultarRps := False;
+      ConsultarNfse := False;
+      ConsultarFaixaNfse := False;
+      ConsultarServicoPrestado := False;
+      ConsultarServicoTomado := False;
+      CancelarNfse := False;
+      SubstituirNfse := False;
+      GerarToken := False;
+      EnviarEvento := False;
+      ConsultarEvento := False;
+      ConsultarDFe := False;
+      ConsultarParam := False;
+      ConsultarSeqRps := False;
+      ConsultarLinkNfse := False;
+      ConsultarNfseChave := False;
+      TestarEnvio := False;
+    end;
+
     with TACBrNFSeX(FAOwner) do
     begin
       Provedor := Configuracoes.Geral.Provedor;

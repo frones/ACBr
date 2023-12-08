@@ -122,6 +122,18 @@ begin
     FormatoArqRetornoSoap := tfaJson;
     FormatoArqRecibo := tfaJson;
     FormatoArqNota := tfaJson;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerChaveAutorizacao := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarRps := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+      SubstituirNFSe := True;
+    end;
   end;
 
   SetXmlNameSpace('');

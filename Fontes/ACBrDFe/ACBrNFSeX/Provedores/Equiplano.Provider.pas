@@ -121,6 +121,16 @@ begin
     ModoEnvio := meLoteAssincrono;
     FpCodigoCidade := Params.ValorParametro('CodigoCidade');
     DetalharServico := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarSituacao := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   with ConfigAssinar do

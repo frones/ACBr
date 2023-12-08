@@ -505,7 +505,6 @@ begin
 
   with ConfigAssinar do
   begin
-    Rps := False;
     ConsultarLote := True;
     ConsultarNFSeRps := True;
     ConsultarNFSePorFaixa := True;

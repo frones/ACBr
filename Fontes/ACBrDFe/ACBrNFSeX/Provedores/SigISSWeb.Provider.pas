@@ -118,18 +118,21 @@ begin
     ModoEnvio := meUnitario;
     ConsultaLote := False;
     ConsultaNFSe := False;
-  end;
 
-//  ConfigMsgDados.UsarNumLoteConsLote := True;
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      GerarToken := True;
+      CancelarNfse := True;
+    end;
+  end;
 
   SetXmlNameSpace('');
 
-  with ConfigSchemas do
-  begin
-//    GerarNFSe := 'RecepcaoNFSe_v1.00.xsd';
-//    CancelarNFSe := 'CancelamentoNFSe_v1.00.xsd';
-    Validar := False;
-  end;
+  ConfigSchemas.Validar := False;
 end;
 
 function TACBrNFSeProviderSigISSWeb.CriarGeradorXml(

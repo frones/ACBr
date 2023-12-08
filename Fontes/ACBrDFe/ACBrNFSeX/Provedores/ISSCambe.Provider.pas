@@ -164,6 +164,15 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarFaixaNfse := True;
+    end;
   end;
 
   SetNomeXSD('nfse-cambe-schema-v1_0.xsd');

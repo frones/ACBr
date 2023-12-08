@@ -84,6 +84,15 @@ begin
   begin
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteSincrono := False;
+      ConsultarRps := False;
+      ConsultarFaixaNfse := False;
+      ConsultarServicoPrestado := False;
+      ConsultarServicoTomado := False;
+    end;
   end;
 
   with ConfigAssinar do

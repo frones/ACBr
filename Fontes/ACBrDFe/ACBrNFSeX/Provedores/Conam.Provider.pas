@@ -121,6 +121,19 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarSituacao := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarLinkNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   SetXmlNameSpace('');

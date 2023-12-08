@@ -61,7 +61,74 @@ type
     property AsString: String read fParamsStr write SetParamsStr;
   end;
 
+  { TACBrNFSeXAutenticacao }
+
+  TACBrNFSeXAutenticacao = Class
+  private
+    FRequerCertificado: Boolean;
+    FRequerLogin: Boolean;
+    FRequerChaveAcesso: Boolean;
+    FRequerChaveAutorizacao: Boolean;
+    FRequerFraseSecreta: Boolean;
+  public
+    property RequerCertificado: Boolean read FRequerCertificado write FRequerCertificado;
+    property RequerLogin: Boolean read FRequerLogin write FRequerLogin;
+    property RequerChaveAcesso: Boolean read FRequerChaveAcesso write FRequerChaveAcesso;
+    property RequerChaveAutorizacao: Boolean read FRequerChaveAutorizacao write FRequerChaveAutorizacao;
+    property RequerFraseSecreta: Boolean read FRequerFraseSecreta write FRequerFraseSecreta;
+  end;
+
+  { TACBrNFSeXServicosDispobilizados }
+
+  TACBrNFSeXServicosDispobilizados = Class
+  private
+    FEnviarLoteAssincrono: Boolean;
+    FEnviarLoteSincrono: Boolean;
+    FEnviarUnitario: Boolean;
+    FConsultarSituacao: Boolean;
+    FConsultarLote: Boolean;
+    FConsultarRps: Boolean;
+    FConsultarNfse: Boolean;
+    FConsultarFaixaNfse: Boolean;
+    FConsultarServicoPrestado: Boolean;
+    FConsultarServicoTomado: Boolean;
+    FCancelarNfse: Boolean;
+    FSubstituirNfse: Boolean;
+    FGerarToken: Boolean;
+    FEnviarEvento: Boolean;
+    FConsultarEvento: Boolean;
+    FConsultarDFe: Boolean;
+    FConsultarParam: Boolean;
+    FConsultarSeqRps: Boolean;
+    FConsultarLinkNfse: Boolean;
+    FConsultarNfseChave: Boolean;
+    FTestarEnvio: Boolean;
+  public
+    property EnviarLoteAssincrono: Boolean read FEnviarLoteAssincrono write FEnviarLoteAssincrono;
+    property EnviarLoteSincrono: Boolean read FEnviarLoteSincrono write FEnviarLoteSincrono;
+    property EnviarUnitario: Boolean read FEnviarUnitario write FEnviarUnitario;
+    property ConsultarSituacao: Boolean read FConsultarSituacao write FConsultarSituacao;
+    property ConsultarLote: Boolean read FConsultarLote write FConsultarLote;
+    property ConsultarRps: Boolean read FConsultarRps write FConsultarRps;
+    property ConsultarNfse: Boolean read FConsultarNfse write FConsultarNfse;
+    property ConsultarFaixaNfse: Boolean read FConsultarFaixaNfse write FConsultarFaixaNfse;
+    property ConsultarServicoPrestado: Boolean read FConsultarServicoPrestado write FConsultarServicoPrestado;
+    property ConsultarServicoTomado: Boolean read FConsultarServicoTomado write FConsultarServicoTomado;
+    property CancelarNfse: Boolean read FCancelarNfse write FCancelarNfse;
+    property SubstituirNfse: Boolean read FSubstituirNfse write FSubstituirNfse;
+    property GerarToken: Boolean read FGerarToken write FGerarToken;
+    property EnviarEvento: Boolean read FEnviarEvento write FEnviarEvento;
+    property ConsultarEvento: Boolean read FConsultarEvento write FConsultarEvento;
+    property ConsultarDFe: Boolean read FConsultarDFe write FConsultarDFe;
+    property ConsultarParam: Boolean read FConsultarParam write FConsultarParam;
+    property ConsultarSeqRps: Boolean read FConsultarSeqRps write FConsultarSeqRps;
+    property ConsultarLinkNfse: Boolean read FConsultarLinkNfse write FConsultarLinkNfse;
+    property ConsultarNfseChave: Boolean read FConsultarNfseChave write FConsultarNfseChave;
+    property TestarEnvio: Boolean read FTestarEnvio write FTestarEnvio;
+  end;
+
   { TConfigGeral }
+
   TConfigGeral = class
   private
     // define como é o atributo ID: "Id" ou "id", se for fazio o atributo não é gerado
@@ -134,6 +201,8 @@ type
     FFormatoArqEvento: TFormatoArq;
     // define se deve imprimir o Local da Prestação de Serviço ou não
     FImprimirLocalPrestServ: Boolean;
+    FAutenticacao: TACBrNFSeXAutenticacao;
+    FServicosDisponibilizados: TACBrNFSeXServicosDispobilizados;
 
   public
     constructor Create;
@@ -178,6 +247,8 @@ type
     property FormatoArqNota: TFormatoArq read FFormatoArqNota write FFormatoArqNota;
     property FormatoArqEvento: TFormatoArq read FFormatoArqEvento write FFormatoArqEvento;
     property ImprimirLocalPrestServ: Boolean read FImprimirLocalPrestServ write FImprimirLocalPrestServ;
+    property Autenticacao: TACBrNFSeXAutenticacao read FAutenticacao;
+    property ServicosDisponibilizados: TACBrNFSeXServicosDispobilizados read FServicosDisponibilizados;
   end;
 
   { TWebserviceInfo }
@@ -836,11 +907,15 @@ begin
   inherited Create;
 
   FParams := TACBrNFSeXConfigParams.Create;
+  FAutenticacao := TACBrNFSeXAutenticacao.Create;
+  FServicosDisponibilizados := TACBrNFSeXServicosDispobilizados.Create;
 end;
 
 destructor TConfigGeral.Destroy;
 begin
   FParams.Free;
+  FAutenticacao.Free;
+  FServicosDisponibilizados.Free;
 
   inherited Destroy;
 end;

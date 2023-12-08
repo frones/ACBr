@@ -82,6 +82,8 @@ begin
 
   ConfigGeral.Identificador := 'id';
 
+  ConfigGeral.Autenticacao.RequerChaveAutorizacao := True;
+
   with ConfigAssinar do
   begin
     Rps := True;

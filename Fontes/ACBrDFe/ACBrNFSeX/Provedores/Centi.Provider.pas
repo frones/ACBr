@@ -95,6 +95,13 @@ begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
     CancPreencherCodVerificacao := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarRps := True;
+      CancelarNfse := True;
+    end;
   end;
 
   with ConfigAssinar do

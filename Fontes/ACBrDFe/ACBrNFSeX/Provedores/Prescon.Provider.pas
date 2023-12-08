@@ -115,6 +115,18 @@ begin
     CancPreencherMotivo := True;
     FormatoArqRecibo := tfaJson;
     FormatoArqNota := tfaJson;
+
+    Autenticacao.RequerLogin := True;
+    Autenticacao.RequerChaveAutorizacao := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarRps := True;
+      ConsultarFaixaNfse := True;
+      CancelarNfse := True;
+      GerarToken := True;
+    end;
   end;
 
   ConfigSchemas.Validar := False;

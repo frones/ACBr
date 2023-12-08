@@ -1402,6 +1402,19 @@ begin
     ModoEnvio := meLoteAssincrono;
     NumMaxRpsEnviar := 5;
     DetalharServico := True;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarSituacao := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   SetXmlNameSpace('http://www.el.com.br/nfse/xsd/el-nfse.xsd');

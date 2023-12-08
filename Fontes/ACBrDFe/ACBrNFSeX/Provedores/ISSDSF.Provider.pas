@@ -183,6 +183,18 @@ begin
     ModoEnvio := meLoteSincrono;
     DetalharServico := True;
     CancPreencherMotivo := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      EnviarLoteSincrono := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarNfse := True;
+      ConsultarSeqRps := True;
+      CancelarNfse := True;
+      TestarEnvio := True;
+    end;
   end;
 
   with ConfigAssinar do

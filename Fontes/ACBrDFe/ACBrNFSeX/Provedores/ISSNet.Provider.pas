@@ -637,6 +637,8 @@ begin
   with ConfigGeral do
   begin
     ConsultaPorFaixaPreencherNumNfseFinal := True;
+
+    ServicosDisponibilizados.ConsultarLinkNfse := True;
   end;
 
   with ConfigAssinar do

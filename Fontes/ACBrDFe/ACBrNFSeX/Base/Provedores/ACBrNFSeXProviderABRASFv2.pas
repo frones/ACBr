@@ -181,6 +181,20 @@ begin
     ModoEnvio := meLoteSincrono;
     ConsultaPorFaixa := True;
     ConsultaPorFaixaPreencherNumNfseFinal := False;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      EnviarLoteSincrono := True;
+      EnviarUnitario := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarFaixaNfse := True;
+      ConsultarServicoPrestado := True;
+      ConsultarServicoTomado := True;
+      CancelarNfse := True;
+      SubstituirNfse := True;
+    end;
   end;
 
   SetXmlNameSpace(NameSpace);

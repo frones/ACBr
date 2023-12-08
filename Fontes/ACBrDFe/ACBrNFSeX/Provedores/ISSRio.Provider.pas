@@ -203,6 +203,8 @@ begin
 
   ConfigGeral.QuebradeLinha := '&#xA;';
 
+  ConfigGeral.ServicosDisponibilizados.EnviarUnitario := True;
+
   with ConfigAssinar do
   begin
     CancelarNFSe := True;

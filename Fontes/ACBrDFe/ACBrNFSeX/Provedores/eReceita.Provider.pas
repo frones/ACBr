@@ -96,6 +96,12 @@ begin
 
   ConfigGeral.UseCertificateHTTP := False;
 
+  with ConfigGeral.ServicosDisponibilizados do
+  begin
+    ConsultarServicoPrestado := False;
+    ConsultarServicoTomado := False;
+  end;
+
   with ConfigWebServices do
   begin
     VersaoDados := '2.02';

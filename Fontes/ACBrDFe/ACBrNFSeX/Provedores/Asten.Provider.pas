@@ -277,6 +277,8 @@ begin
 
   ConfigGeral.UseCertificateHTTP := False;
 
+  ConfigGeral.Autenticacao.RequerChaveAutorizacao := True;
+
   with ConfigAssinar do
   begin
     Rps := True;

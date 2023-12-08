@@ -120,6 +120,21 @@ begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
     Identificador := '';
+
+    Autenticacao.RequerLogin := True;
+    Autenticacao.RequerFraseSecreta := True;
+    Autenticacao.RequerChaveAutorizacao := True;
+    Autenticacao.RequerChaveAcesso := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarNfse := True;
+      ConsultarDFe := True;
+      CancelarNfse := True;
+      SubstituirNFSe := True;
+      GerarToken := True;
+    end;
   end;
 
   with ConfigAssinar do

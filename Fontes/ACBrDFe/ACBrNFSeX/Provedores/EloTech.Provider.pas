@@ -112,6 +112,10 @@ begin
     Identificador := '';
     CancPreencherCodVerificacao := True;
     DetalharServico := True;
+
+    Autenticacao.RequerLogin := True;
+
+    ServicosDisponibilizados.EnviarUnitario := False;
   end;
 
   with ConfigWebServices do

@@ -80,6 +80,15 @@ begin
 
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
 
+  with ConfigGeral.ServicosDisponibilizados do
+  begin
+    EnviarLoteAssincrono := False;
+    ConsultarLote := False;
+    ConsultarRps := False;
+    ConsultarServicoPrestado := False;
+    ConsultarServicoTomado := False;
+  end;
+
   with ConfigAssinar do
   begin
     LoteRps := True;

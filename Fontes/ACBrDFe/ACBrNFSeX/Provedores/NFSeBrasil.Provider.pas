@@ -250,6 +250,15 @@ begin
   inherited Configuracao;
 
   ConfigGeral.UseCertificateHTTP := False;
+  ConfigGeral.Autenticacao.RequerCertificado := False;
+  ConfigGeral.Autenticacao.RequerChaveAcesso := True;
+
+  with ConfigGeral.ServicosDisponibilizados do
+  begin
+    ConsultarSituacao := False;
+    TestarEnvio := True;
+  end;
+
   ConfigMsgDados.Prefixo := 'xs';
 
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then

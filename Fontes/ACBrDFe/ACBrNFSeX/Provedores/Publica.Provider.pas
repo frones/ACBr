@@ -214,6 +214,8 @@ begin
     Identificador := 'id';
     UseCertificateHTTP := False;
     CancPreencherMotivo := True;
+
+    ServicosDisponibilizados.EnviarUnitario := True;
   end;
 
   with ConfigAssinar do

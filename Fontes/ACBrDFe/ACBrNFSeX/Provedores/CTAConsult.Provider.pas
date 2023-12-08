@@ -104,6 +104,15 @@ begin
     DetalharServico := True;
     ConsultaLote := False;
     ConsultaNFSe := False;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerChaveAutorizacao := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      CancelarNfse := True;
+    end;
   end;
 
   ConfigMsgDados.UsarNumLoteConsLote := True;

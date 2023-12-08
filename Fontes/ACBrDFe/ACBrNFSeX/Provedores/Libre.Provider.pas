@@ -90,6 +90,12 @@ begin
     ConsultaPorFaixaPreencherNumNfseFinal := True;
     ModoEnvio := meLoteAssincrono;
     Identificador := '';
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteSincrono := False;
+      EnviarUnitario := False;
+    end;
   end;
 
   ConfigWebServices.AtribVerLote := '';

@@ -186,6 +186,19 @@ begin
     Identificador := '';
     QuebradeLinha := '|';
     ModoEnvio := meLoteAssincrono;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      EnviarUnitario := True;
+      TestarEnvio := True;
+      ConsultarSituacao := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarServicoTomado := True;
+      ConsultaNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   with ConfigAssinar do

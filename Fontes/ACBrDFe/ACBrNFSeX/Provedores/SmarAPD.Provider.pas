@@ -162,6 +162,16 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
     DetalharServico := True;
+
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarLote := True;
+      ConsultarLinkNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   with ConfigAssinar do

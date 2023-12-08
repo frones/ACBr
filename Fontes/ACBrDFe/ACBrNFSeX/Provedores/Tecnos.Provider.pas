@@ -47,7 +47,6 @@ type
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-//    function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
@@ -152,6 +151,12 @@ begin
   begin
     CancPreencherMotivo := True;
     ConsultaPorFaixaPreencherNumNfseFinal := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := False;
+      SubstituirNfse := False;
+    end;
   end;
 
   with ConfigAssinar do
@@ -494,22 +499,6 @@ begin
                      []);
 end;
 
-{
-function TACBrNFSeXWebserviceTecnos201.GerarNFSe(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<mGerarNfse xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
-  Request := Request + '</mGerarNfse>';
-
-  Result := Executar('http://tempuri.org/mGerarNfse', Request,
-                     ['mGerarNfseResult', 'GerarNfseResposta'],
-                     []);
-end;
-}
 function TACBrNFSeXWebserviceTecnos201.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var

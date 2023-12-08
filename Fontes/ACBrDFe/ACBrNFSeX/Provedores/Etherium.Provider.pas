@@ -120,14 +120,16 @@ begin
   FpFormatoDataEmissao := tcDatUSA;
   FpFormatoDataHora := tcDatUSA;
 
+  with ConfigGeral.ServicosDisponibilizados do
+  begin
+    ConsultarServicoPrestado := False;
+    ConsultarServicoTomado := False;
+  end;
+
   with ConfigAssinar do
   begin
     Rps               := True;
     LoteRps           := True;
-    ConsultarSituacao := False;
-    ConsultarLote     := False;
-    ConsultarNFSeRps  := False;
-    ConsultarNFSe     := False;
     CancelarNFSe      := True;
     RpsGerarNFSe      := True;
     RpsSubstituirNFSe := True;

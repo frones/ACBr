@@ -115,6 +115,16 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaLote := False;
     ConsultaNFSe := False;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerChaveAutorizacao := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarRps := True;
+      CancelarNfse := True;
+    end;
   end;
 
   SetXmlNameSpace('');

@@ -89,6 +89,14 @@ begin
   begin
     QuebradeLinha := '<br >';
     ModoEnvio := meLoteAssincrono;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarLote := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 end;
 

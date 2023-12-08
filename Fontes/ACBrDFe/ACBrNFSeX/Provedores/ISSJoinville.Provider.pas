@@ -92,6 +92,16 @@ begin
     QuebradeLinha := '\n';
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteSincrono := False;
+      EnviarUnitario := False;
+      ConsultarFaixaNfse := False;
+      ConsultarServicoPrestado := False;
+      ConsultarServicoTomado := False;
+      SubstituirNfse := False;
+    end;
   end;
 
   with ConfigAssinar do

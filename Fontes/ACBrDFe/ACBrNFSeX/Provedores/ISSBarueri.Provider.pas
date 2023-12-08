@@ -360,6 +360,15 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
     FormatoArqRecibo := tfaTxt;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarSituacao := True;
+      ConsultarLote := True;
+      ConsultarServicoTomado := True;
+      CancelarNfse := True;
+    end;
   end;
 
   with ConfigMsgDados do

@@ -212,6 +212,8 @@ begin
   with ConfigGeral do
   begin
     NumMaxRpsGerar := 3;
+
+    ServicosDisponibilizados.EnviarUnitario := True;
   end;
 
   with ConfigAssinar do

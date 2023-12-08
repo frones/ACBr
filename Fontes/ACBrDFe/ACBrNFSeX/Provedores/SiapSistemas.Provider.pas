@@ -84,6 +84,15 @@ begin
 
   ConfigGeral.ConsultaNFSe := False;
 
+  with ConfigGeral.ServicosDisponibilizados do
+  begin
+    ConsultarRps := False;
+    ConsultarFaixaNfse := False;
+    ConsultarServicoPrestado := False;
+    ConsultarServicoTomado := False;
+    SubstituirNfse := False;
+  end;
+
   ConfigAssinar.IncluirURI := False;
 
   ConfigWebServices.AtribVerLote := '';

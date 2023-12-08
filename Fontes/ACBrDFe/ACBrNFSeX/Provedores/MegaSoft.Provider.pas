@@ -80,6 +80,18 @@ begin
   begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := False;
+      EnviarLoteSincrono := False;
+      ConsultarLote := False;
+      ConsultarFaixaNfse := False;
+      ConsultarServicoPrestado := False;
+      ConsultarServicoTomado := False;
+      CancelarNfse := False;
+      SubstituirNfse := False;
+    end;
   end;
 
   ConfigAssinar.RpsGerarNFSe := True;

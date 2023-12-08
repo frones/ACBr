@@ -90,6 +90,8 @@ begin
   ConfigGeral.QuebradeLinha := '\s\n';
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := true;
 
+  ConfigGeral.Autenticacao.RequerLogin := True;
+
   if ConfigAssinar.Assinaturas = taConfigProvedor then
   begin
     with ConfigAssinar do

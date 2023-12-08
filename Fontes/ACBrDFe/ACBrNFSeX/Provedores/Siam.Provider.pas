@@ -75,6 +75,17 @@ begin
 
   ConfigGeral.UseCertificateHTTP := False;
 
+  with ConfigGeral.ServicosDisponibilizados do
+  begin
+    EnviarLoteAssincrono := False;
+    EnviarUnitario := False;
+    ConsultarRps := False;
+    ConsultarFaixaNfse := False;
+    ConsultarServicoPrestado := False;
+    ConsultarServicoTomado := False;
+    SubstituirNfse := False;
+  end;
+
   SetXmlNameSpace('https://ws.imap.org.br/siam/nfse.xsd');
 end;
 

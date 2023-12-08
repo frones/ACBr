@@ -133,6 +133,23 @@ begin
     ModoEnvio := meLoteAssincrono;
     DetalharServico := True;
     NumMinRpsEnviar := 2;
+
+    with Autenticacao do
+    begin
+      RequerCertificado := False;
+      RequerChaveAcesso := True;
+    end;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      EnviarUnitario := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarFaixaNfse := True;
+      CancelarNfse := True;
+      SubstituirNfse := True;
+    end;
   end;
 
   SetXmlNameSpace('http://www.agili.com.br/nfse_v_1.00.xsd');

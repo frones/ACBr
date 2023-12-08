@@ -68,7 +68,6 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-//    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     function DefinirIDCancelamento(const CNPJ: string; const InscMunic: string;
                                    const NumNfse: string): string; override;
 
@@ -117,14 +116,6 @@ begin
     ConsultarNFSe.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd';
 
     CancelarNFSe.xmlns := 'http://www.ginfes.com.br/servico_cancelar_nfse_envio_v03.xsd';
-    {
-    with CancelarNFSe do
-    begin
-      xmlns := 'http://www.ginfes.com.br/servico_cancelar_nfse_envio';
-      InfElemento := 'Prestador';
-      DocElemento := 'CancelarNfseEnvio';
-    end;
-    }
   end;
 
   with ConfigAssinar do
@@ -146,7 +137,6 @@ begin
     ConsultarLote := 'servico_consultar_lote_rps_envio_v03.xsd';
     ConsultarNFSeRps := 'servico_consultar_nfse_rps_envio_v03.xsd';
     ConsultarNFSe := 'servico_consultar_nfse_envio_v03.xsd';
-//    CancelarNFSe := 'servico_cancelar_nfse_envio_v02.xsd';
     CancelarNFSe := 'servico_cancelar_nfse_envio_v03.xsd';
 
     Validar := False;
@@ -246,80 +236,6 @@ begin
   end;
 end;
 
-(*
-procedure TACBrNFSeProviderGinfes.GerarMsgDadosCancelaNFSe(
-  Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
-var
-  Emitente: TEmitenteConfNFSe;
-  InfoCanc: TInfCancelamento;
-begin
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-  InfoCanc := Response.InfCancelamento;
-
-  with Params do
-  begin
-    NameSpace := StringReplace(NameSpace, '_v03.xsd', '', [rfReplaceAll]);
-
-    Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
-                           '<' + Prefixo + 'Prestador>' +
-                             '<' + Prefixo2 + 'Cnpj>' +
-                               OnlyNumber(Emitente.CNPJ) +
-                             '</' + Prefixo2 + 'Cnpj>' +
-                             GetInscMunic(Emitente.InscMun, Prefixo2) +
-                           '</' + Prefixo + 'Prestador>' +
-                           '<' + Prefixo + 'NumeroNfse>' +
-                             InfoCanc.NumeroNFSe +
-                           '</' + Prefixo + 'NumeroNfse>' +
-                         '</' + Prefixo + 'CancelarNfseEnvio>';
-  end;
-end;
-*)
-
-(*
-procedure TACBrNFSeProviderGinfes.TratarRetornoCancelaNFSe(
-  Response: TNFSeCancelaNFSeResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-  Document: TACBrXmlDocument;
-  ANode: TACBrXmlNode;
-  Ret: TRetCancelamento;
-begin
-  Document := TACBrXmlDocument.Create;
-
-  try
-    try
-      if Response.ArquivoRetorno = '' then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod201;
-        AErro.Descricao := ACBrStr(Desc201);
-        Exit
-      end;
-
-      Document.LoadFromXml(Response.ArquivoRetorno);
-
-      ProcessarMensagemErros(Document.Root, Response);
-
-      ANode := Document.Root;
-
-      Response.Sucesso := (Response.Erros.Count = 0);
-
-      Ret :=  Response.RetCancelamento;
-      Ret.Sucesso := ObterConteudoTag(ANode.Childrens.FindAnyNs('Sucesso'), tcBool);
-      Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
-    except
-      on E:Exception do
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod999;
-        AErro.Descricao := ACBrStr(Desc999 + E.Message);
-      end;
-    end;
-  finally
-    FreeAndNil(Document);
-  end;
-end;
-*)
 { TACBrNFSeXWebserviceGinfes }
 
 function TACBrNFSeXWebserviceGinfes.GetNameSpace: string;
@@ -417,11 +333,7 @@ var
   Request: string;
 begin
   FPMsgOrig := AMSG;
-{
-  Request := '<ns1:CancelarNfse' + NameSpace + '>';
-  Request := Request + '<arg0>' + XmlToStr(AMSG) + '</arg0>';
-  Request := Request + '</ns1:CancelarNfse>';
-}
+
   Request := '<ns1:CancelarNfseV3>';
   Request := Request + '<arg0>' + XmlToStr(ACabecalho) + '</arg0>';
   Request := Request + '<arg1>' + XmlToStr(AMSG) + '</arg1>';

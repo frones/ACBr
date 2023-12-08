@@ -96,6 +96,11 @@ procedure TACBrNFSeProviderPublicSoft203.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.Autenticacao.RequerLogin := True;
+  ConfigGeral.Autenticacao.RequerChaveAcesso := True;
+
+  ConfigGeral.ServicosDisponibilizados.GerarToken := True;
+
   with ConfigAssinar do
   begin
     Rps               := True;

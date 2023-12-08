@@ -110,6 +110,72 @@ type
    property DadosEmitente: TDadosEmitente read FDadosEmitente write FDadosEmitente;
  end;
 
+  { TAutenticacao }
+
+  TAutenticacao = Class
+  private
+    FRequerCertificado: Boolean;
+    FRequerLogin: Boolean;
+    FRequerChaveAcesso: Boolean;
+    FRequerChaveAutorizacao: Boolean;
+    FRequerFraseSecreta: Boolean;
+  public
+    property RequerCertificado: Boolean read FRequerCertificado write FRequerCertificado;
+    property RequerLogin: Boolean read FRequerLogin write FRequerLogin;
+    property RequerChaveAcesso: Boolean read FRequerChaveAcesso write FRequerChaveAcesso;
+    property RequerChaveAutorizacao: Boolean read FRequerChaveAutorizacao write FRequerChaveAutorizacao;
+    property RequerFraseSecreta: Boolean read FRequerFraseSecreta write FRequerFraseSecreta;
+  end;
+
+  { TServicosDispobilizados }
+
+  TServicosDispobilizados = Class
+  private
+    FEnviarLoteAssincrono: Boolean;
+    FEnviarLoteSincrono: Boolean;
+    FEnviarUnitario: Boolean;
+    FConsultarSituacao: Boolean;
+    FConsultarLote: Boolean;
+    FConsultarRps: Boolean;
+    FConsultarNfse: Boolean;
+    FConsultarFaixaNfse: Boolean;
+    FConsultarServicoPrestado: Boolean;
+    FConsultarServicoTomado: Boolean;
+    FCancelarNfse: Boolean;
+    FSubstituirNfse: Boolean;
+    FGerarToken: Boolean;
+    FEnviarEvento: Boolean;
+    FConsultarEvento: Boolean;
+    FConsultarDFe: Boolean;
+    FConsultarParam: Boolean;
+    FConsultarSeqRps: Boolean;
+    FConsultarLinkNfse: Boolean;
+    FConsultarNfseChave: Boolean;
+    FTestarEnvio: Boolean;
+  public
+    property EnviarLoteAssincrono: Boolean read FEnviarLoteAssincrono write FEnviarLoteAssincrono;
+    property EnviarLoteSincrono: Boolean read FEnviarLoteSincrono write FEnviarLoteSincrono;
+    property EnviarUnitario: Boolean read FEnviarUnitario write FEnviarUnitario;
+    property ConsultarSituacao: Boolean read FConsultarSituacao write FConsultarSituacao;
+    property ConsultarLote: Boolean read FConsultarLote write FConsultarLote;
+    property ConsultarRps: Boolean read FConsultarRps write FConsultarRps;
+    property ConsultarNfse: Boolean read FConsultarNfse write FConsultarNfse;
+    property ConsultarFaixaNfse: Boolean read FConsultarFaixaNfse write FConsultarFaixaNfse;
+    property ConsultarServicoPrestado: Boolean read FConsultarServicoPrestado write FConsultarServicoPrestado;
+    property ConsultarServicoTomado: Boolean read FConsultarServicoTomado write FConsultarServicoTomado;
+    property CancelarNfse: Boolean read FCancelarNfse write FCancelarNfse;
+    property SubstituirNfse: Boolean read FSubstituirNfse write FSubstituirNfse;
+    property GerarToken: Boolean read FGerarToken write FGerarToken;
+    property EnviarEvento: Boolean read FEnviarEvento write FEnviarEvento;
+    property ConsultarEvento: Boolean read FConsultarEvento write FConsultarEvento;
+    property ConsultarDFe: Boolean read FConsultarDFe write FConsultarDFe;
+    property ConsultarParam: Boolean read FConsultarParam write FConsultarParam;
+    property ConsultarSeqRps: Boolean read FConsultarSeqRps write FConsultarSeqRps;
+    property ConsultarLinkNfse: Boolean read FConsultarLinkNfse write FConsultarLinkNfse;
+    property ConsultarNfseChave: Boolean read FConsultarNfseChave write FConsultarNfseChave;
+    property TestarEnvio: Boolean read FTestarEnvio write FTestarEnvio;
+  end;
+
   { TGeralConfNFSe }
 
   TGeralConfNFSe = class(TGeralConf)
@@ -130,6 +196,8 @@ type
     FLayout: TLayout;
     FLayoutNFSe: TLayoutNFSe;
     FAssinaturas: TAssinaturas;
+    FAutenticacao: TAutenticacao;
+    FServicosDisponibilizados: TServicosDispobilizados;
 
     procedure SetCodigoMunicipio(const Value: Integer);
   public
@@ -160,6 +228,8 @@ type
     property LayoutNFSe: TLayoutNFSe read FLayoutNFSe write FLayoutNFSe default lnfsProvedor;
     property Assinaturas: TAssinaturas read FAssinaturas write FAssinaturas default taConfigProvedor;
     property PIniParams: TMemIniFile read FPIniParams;
+    property Autenticacao: TAutenticacao read FAutenticacao;
+    property ServicosDisponibilizados: TServicosDispobilizados read FServicosDisponibilizados;
   end;
 
   { TArquivosConfNFSe }
@@ -338,12 +408,17 @@ begin
   FMontarPathSchema := True;
   FLayoutNFSe := lnfsProvedor;
   FAssinaturas := taConfigProvedor;
+
+  FAutenticacao := TAutenticacao.Create;
+  FServicosDisponibilizados := TServicosDispobilizados.Create;
 end;
 
 destructor TGeralConfNFSe.Destroy;
 begin
   FEmitente.Free;
   FPIniParams.Free;
+  FAutenticacao.Free;
+  FServicosDisponibilizados.Free;
 
   inherited;
 end;

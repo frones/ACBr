@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/12/2023
+-- Diversos --
+[+] Implementado diversas propriedades (somente leitura) booleana que indica
+    se um determinado provedor possui ou não um determinado serviço e as formas
+    de autenticação
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Campo Largo/PR mudou para versão 1.01, provedor continua o IPM.
   Por: m5sistemas

@@ -193,6 +193,16 @@ begin
   begin
     QuebradeLinha := '&lt;br&gt;';
     ConsultaNFSe := False;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := False;
+      EnviarUnitario := False;
+      ConsultarFaixaNfse := False;
+      ConsultarServicoPrestado := False;
+      ConsultarServicoTomado := False;
+      SubstituirNfse := False;
+    end;
   end;
 
   with ConfigAssinar do

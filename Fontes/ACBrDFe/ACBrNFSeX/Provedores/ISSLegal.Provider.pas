@@ -86,6 +86,8 @@ uses
 procedure TACBrNFSeProviderISSLegal203.Configuracao;
 begin
   inherited Configuracao;
+
+  ConfigGeral.Autenticacao.RequerChaveAutorizacao := True;
   {
   with ConfigGeral do
   begin

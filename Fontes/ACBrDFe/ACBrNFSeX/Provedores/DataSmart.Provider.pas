@@ -91,6 +91,19 @@ begin
   begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := False;
+      EnviarLoteSincrono := False;
+      ConsultarLote := False;
+      ConsultarServicoPrestado := False;
+      ConsultarServicoTomado := False;
+      SubstituirNfse := False;
+    end;
   end;
 
   with ConfigWebServices do

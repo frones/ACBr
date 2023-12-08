@@ -125,6 +125,15 @@ begin
 
     ConsultaLote := False;
     ConsultaNFSe := False;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerChaveAcesso := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      CancelarNfse := True;
+    end;
   end;
 
   with ConfigWebServices do

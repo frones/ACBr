@@ -325,6 +325,34 @@ begin
   begin
     TabServicosExt := Configuracoes.Arquivos.TabServicosExt;
   end;
+
+  Configuracoes.Geral.Autenticacao.RequerCertificado := FProvider.ConfigGeral.Autenticacao.RequerCertificado;
+  Configuracoes.Geral.Autenticacao.RequerLogin := FProvider.ConfigGeral.Autenticacao.RequerLogin;
+  Configuracoes.Geral.Autenticacao.RequerChaveAcesso := FProvider.ConfigGeral.Autenticacao.RequerChaveAcesso;
+  Configuracoes.Geral.Autenticacao.RequerChaveAutorizacao := FProvider.ConfigGeral.Autenticacao.RequerChaveAutorizacao;
+  Configuracoes.Geral.Autenticacao.RequerFraseSecreta := FProvider.ConfigGeral.Autenticacao.RequerFraseSecreta;
+
+  Configuracoes.Geral.ServicosDisponibilizados.EnviarLoteAssincrono := FProvider.ConfigGeral.ServicosDisponibilizados.EnviarLoteAssincrono;
+  Configuracoes.Geral.ServicosDisponibilizados.EnviarLoteSincrono := FProvider.ConfigGeral.ServicosDisponibilizados.EnviarLoteSincrono;
+  Configuracoes.Geral.ServicosDisponibilizados.EnviarUnitario := FProvider.ConfigGeral.ServicosDisponibilizados.EnviarUnitario;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarSituacao := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarSituacao;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarLote := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarLote;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarRps := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarRps;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarNfse := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarNfse;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarFaixaNfse := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarFaixaNfse;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarServicoPrestado := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarServicoPrestado;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarServicoTomado := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarServicoTomado;
+  Configuracoes.Geral.ServicosDisponibilizados.CancelarNfse := FProvider.ConfigGeral.ServicosDisponibilizados.CancelarNfse;
+  Configuracoes.Geral.ServicosDisponibilizados.SubstituirNfse := FProvider.ConfigGeral.ServicosDisponibilizados.SubstituirNfse;
+  Configuracoes.Geral.ServicosDisponibilizados.GerarToken := FProvider.ConfigGeral.ServicosDisponibilizados.GerarToken;
+  Configuracoes.Geral.ServicosDisponibilizados.EnviarEvento := FProvider.ConfigGeral.ServicosDisponibilizados.EnviarEvento;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarEvento := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarEvento;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarDFe := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarDFe;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarParam := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarParam;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarSeqRps := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarSeqRps;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarLinkNfse := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarLinkNfse;
+  Configuracoes.Geral.ServicosDisponibilizados.ConsultarNfseChave := FProvider.ConfigGeral.ServicosDisponibilizados.ConsultarNfseChave;
+  Configuracoes.Geral.ServicosDisponibilizados.TestarEnvio := FProvider.ConfigGeral.ServicosDisponibilizados.TestarEnvio;
 end;
 
 function TACBrNFSeX.GetNomeModeloDFe: String;

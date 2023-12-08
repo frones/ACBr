@@ -127,6 +127,15 @@ begin
   begin
     ModoEnvio := meUnitario;
     NumMaxRpsEnviar := 1;
+
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   SetXmlNameSpace('urn:sigiss_ws');

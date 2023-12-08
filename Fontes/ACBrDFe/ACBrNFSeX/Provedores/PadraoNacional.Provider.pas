@@ -129,6 +129,17 @@ begin
     FormatoArqRetorno := tfaJson;
     FormatoArqEnvioSoap := tfaJson;
     FormatoArqRetornoSoap := tfaJson;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarNfseChave := True;
+      ConsultarRps := True;
+      EnviarEvento := True;
+      ConsultarEvento := True;
+      ConsultarDFe := True;
+      ConsultarParam := True;
+    end;
   end;
 
   with ConfigWebServices do

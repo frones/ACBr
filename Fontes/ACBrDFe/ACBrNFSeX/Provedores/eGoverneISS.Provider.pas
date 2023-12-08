@@ -106,6 +106,17 @@ begin
     Identificador := '';
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerChaveAcesso := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      EnviarUnitario := True;
+      ConsultarLote := True;
+      CancelarNfse := True;
+    end;
   end;
 
   SetXmlNameSpace('');

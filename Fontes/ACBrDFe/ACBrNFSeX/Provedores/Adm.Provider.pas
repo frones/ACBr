@@ -265,6 +265,10 @@ begin
 
   ConfigGeral.ModoEnvio := meLoteAssincrono;
 
+  ConfigGeral.Autenticacao.RequerLogin := True;
+  ConfigGeral.Autenticacao.RequerChaveAcesso := True;
+  ConfigGeral.Autenticacao.RequerChaveAutorizacao := True;
+
   with ConfigAssinar do
   begin
     Rps := True;

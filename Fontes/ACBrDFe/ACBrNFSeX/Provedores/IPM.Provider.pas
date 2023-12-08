@@ -176,11 +176,22 @@ begin
 
   with ConfigGeral do
   begin
-    UseCertificateHTTP := False;
+//    UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
     DetalharServico := True;
     FormatoArqEnvioSoap := tfaTxt;
+
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarLote := True;
+      ConsultarRps := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   with ConfigAssinar do
@@ -1438,6 +1449,13 @@ procedure TACBrNFSeProviderIPM101.Configuracao;
 begin
   inherited Configuracao;
 
+  with ConfigGeral.ServicosDisponibilizados do
+  begin
+    EnviarUnitario := True;
+    ConsultarLote := True;
+    ConsultarNfse := True;
+    CancelarNfse := True;
+  end;
 end;
 
 function TACBrNFSeProviderIPM101.CriarGeradorXml(
@@ -1703,6 +1721,10 @@ begin
   ConfigGeral.QuebradeLinha := sLineBreak;
   ConfigGeral.Identificador := '';
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
+
+  ConfigGeral.Autenticacao.RequerLogin := True;
+
+  ConfigGeral.ServicosDisponibilizados.ConsultarServicoTomado := False;
 
   ConfigWebServices.AtribVerLote := '';
 

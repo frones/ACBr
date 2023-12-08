@@ -113,6 +113,16 @@ begin
     ModoEnvio := meUnitario;
     UseCertificateHTTP := False;
     DetalharServico := True;
+
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarNfse := True;
+      ConsultarRps := True;
+      CancelarNfse := True;
+    end;
   end;
 
   SetXmlNameSpace('');

@@ -118,8 +118,19 @@ begin
   with ConfigGeral do
   begin
     ModoEnvio := meLoteSincrono;
+
+    Autenticacao.RequerLogin := True;
+    Autenticacao.RequerChaveAutorizacao := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+      GerarToken := True;
+    end;
   end;
-                               
+
   ConfigSchemas.Validar := False;
 end;
 

@@ -161,6 +161,15 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaPorFaixa := True;
     DetalharServico := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarLote := True;
+      ConsultarFaixaNfse := True;
+      ConsultarNfseChave := True;
+      CancelarNfse := True;
+    end;
   end;
 
   with ConfigWebServices do

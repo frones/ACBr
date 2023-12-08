@@ -240,6 +240,10 @@ begin
 
   ConfigGeral.UseCertificateHTTP := False;
 
+  ConfigGeral.Autenticacao.RequerCertificado := False;
+  ConfigGeral.Autenticacao.RequerChaveAcesso := True;
+  ConfigGeral.Autenticacao.RequerChaveAutorizacao := True;
+
   with ConfigWebServices do
   begin
     VersaoDados := '2.02';

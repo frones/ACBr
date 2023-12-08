@@ -85,6 +85,18 @@ begin
     ConsultaNFSe := False;
     CancPreencherMotivo := True;
     CancPreencherCodVerificacao := True;
+
+    Autenticacao.RequerLogin := True;
+    Autenticacao.RequerChaveAcesso := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := False;
+      ConsultarFaixaNfse := False;
+      ConsultarServicoPrestado := False;
+      ConsultarServicoTomado := False;
+      SubstituirNfse := False;
+    end;
   end;
 
   with ConfigAssinar do

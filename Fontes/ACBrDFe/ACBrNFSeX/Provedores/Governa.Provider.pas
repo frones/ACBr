@@ -107,6 +107,16 @@ begin
     ConsultaNFSe := False;
     DetalharServico := True;
 
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerChaveAcesso := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarRps := True;
+      CancelarNfse := True;
+    end;
+
     FpVersaoArquivo := Params.ValorParametro('VersaoArquivo');
   end;
 

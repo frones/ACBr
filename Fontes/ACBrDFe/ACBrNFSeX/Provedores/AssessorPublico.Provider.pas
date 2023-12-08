@@ -111,6 +111,17 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
     DetalharServico := True;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      ConsultarLote := True;
+      ConsultarNfse := True;
+      CancelarNfse := True;
+    end;
   end;
 
   ConfigMsgDados.UsarNumLoteConsLote := True;

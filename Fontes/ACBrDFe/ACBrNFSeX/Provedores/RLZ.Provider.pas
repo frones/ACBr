@@ -348,6 +348,14 @@ begin
     QuebradeLinha := '|';
     ModoEnvio := meUnitario;
     DetalharServico := True;
+
+    Autenticacao.RequerChaveAcesso := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      ConsultarNfse := True;
+    end;
   end;
 
   ConfigSchemas.Validar := False;

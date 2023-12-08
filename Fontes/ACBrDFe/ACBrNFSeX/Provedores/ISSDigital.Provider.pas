@@ -87,6 +87,9 @@ begin
   inherited Configuracao;
 
   ConfigGeral.UseCertificateHTTP := False;
+
+  ConfigGeral.Autenticacao.RequerLogin := True;
+  ConfigGeral.Autenticacao.RequerFraseSecreta := True;
 end;
 
 function TACBrNFSeProviderISSDigital200.CriarGeradorXml(

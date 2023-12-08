@@ -140,7 +140,7 @@ begin
   end;
 end;
 
-{ TACBrNFSeXWebserviceISSe200 }
+{ TACBrNFSeXWebserviceISSe201 }
 
 function TACBrNFSeXWebserviceISSe201.GetNamespace: string;
 begin

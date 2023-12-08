@@ -80,6 +80,16 @@ begin
 
   ConfigGeral.ModoEnvio := meLoteAssincrono;
 
+  ConfigGeral.Autenticacao.RequerLogin := True;
+
+  with ConfigGeral.ServicosDisponibilizados do
+  begin
+    EnviarLoteSincrono := False;
+    EnviarUnitario := False;
+    ConsultarServicoPrestado := False;
+    ConsultarServicoTomado := False;
+  end;
+
   with ConfigAssinar do
   begin
     Rps := True;

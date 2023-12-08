@@ -123,6 +123,8 @@ begin
     identificador := 'id';
     UseCertificateHTTP := False;
     DetalharServico := True;
+
+    Autenticacao.RequerLogin := True;
   end;
 
   SetXmlNameSpace('http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd');
@@ -388,6 +390,8 @@ begin
   inherited Configuracao;
 
   ConfigGeral.ModoEnvio := meLoteAssincrono;
+
+  ConfigGeral.ServicosDisponibilizados.EnviarLoteSincrono := False;
 
   with ConfigAssinar do
   begin

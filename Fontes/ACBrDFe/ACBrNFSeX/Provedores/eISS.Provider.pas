@@ -113,6 +113,15 @@ begin
     FormatoArqRetornoSoap := tfaJson;
     FormatoArqRecibo := tfaJson;
     FormatoArqNota := tfaJson;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerChaveAcesso := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarLoteAssincrono := True;
+      GerarToken := True;
+    end;
   end;
 
   SetXmlNameSpace('');

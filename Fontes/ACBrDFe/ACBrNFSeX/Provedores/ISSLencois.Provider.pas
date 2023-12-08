@@ -98,6 +98,15 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+
+    Autenticacao.RequerCertificado := False;
+    Autenticacao.RequerLogin := True;
+
+    with ServicosDisponibilizados do
+    begin
+      EnviarUnitario := True;
+      CancelarNfse := True;
+    end;
   end;
 
   SetXmlNameSpace('NotaFiscal-Geracao.xsd');

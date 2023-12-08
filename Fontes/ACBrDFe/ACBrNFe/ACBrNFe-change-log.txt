@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2023
+-- ACBrNFeNotasFiscais --
+[*] Ajuste no ValidarRegrasdeNegocios, para a rejeição 425, incluido o CFOP: 5949.
+    por: Suporte Anexo tecnologia
+
 30/11/2023
 -- ACBrNFeDANFeRLSimplificado --
 [*] Adiciona nova banda visando evitar que a descrição dos produtos sobreponham a linha de baixo.

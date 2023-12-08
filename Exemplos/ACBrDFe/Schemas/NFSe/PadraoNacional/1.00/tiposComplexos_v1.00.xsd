@@ -1134,7 +1134,7 @@
         </xs:annotation>
       </xs:element>
       <xs:choice>
-        <xs:element name="id" type="TSIdeEvento">
+        <xs:element name="idAtvEvt" type="TSIdeEvento">
           <xs:annotation>
             <xs:documentation>Identificação da Atividade de Evento (código identificador de evento determinado pela Administração Tributária Municipal)</xs:documentation>
           </xs:annotation>

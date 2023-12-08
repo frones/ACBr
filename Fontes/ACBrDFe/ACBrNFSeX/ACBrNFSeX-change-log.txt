@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/12/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Sapucaia do Sul/RS estava com a versão errada o correto é 1.01
+[*] Alteração nas URLs da cidade de Glorinha/RS, o provedor continua o mesmo.
+[+] Incluída a cidade de Capivari do Sul/RS, provedor é o DBSeller.
+[+] Incluída a cidade de Butiá/RS, provedor é o Pronim.
+  Por: Suporte Anexo Tecnologia
 -- Diversos --
 [+] Implementado diversas propriedades (somente leitura) booleana que indica
     se um determinado provedor possui ou não um determinado serviço e as formas

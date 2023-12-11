@@ -445,10 +445,10 @@ begin
       begin
          SeuNumero   := copy(Linha,38,25);
          NossoNumero := Copy(Linha,63,11);
+         NossoNumeroCorrespondente := Copy(Linha,95,12);
          Carteira    := Copy(Linha,108,1);
 
-         OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(
-                                                        copy(Linha,109,2),0));
+         OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
 
          DataOcorrencia:= StringToDateTimeDef(Copy(Linha,111,2)+'/'+
                                               Copy(Linha,113,2)+'/'+
@@ -468,8 +468,7 @@ begin
              if CodMotivo <> '00' then
              begin
                MotivoRejeicaoComando.Add(copy(Linha,LPosicao,2));
-               DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(
-                                                  OcorrenciaOriginal.Tipo,CodMotivo));
+               DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
                Inc(LPosicao, 2);
               end;
            end;

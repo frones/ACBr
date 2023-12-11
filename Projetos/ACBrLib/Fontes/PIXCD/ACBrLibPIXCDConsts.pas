@@ -45,24 +45,24 @@ const
 
   CSessaoPixCDConfig = 'PIXCD';
   CChaveAmbiente = 'Ambiente';
+  CChavePSP = 'PSP';
+  CChaveTipoChave = 'TipoChave';
+  CChaveTimeOut = 'TimeOut';
+  CChaveNivelLog = 'NivelLog';
   CChaveArqLogPixCD = 'ArqLog';
   CChaveCNPJSoftwareHouse = 'CNPJSoftwareHouse';
   CChaveNomeAplicacao = 'NomeAplicacao';
   CChaveNomeSoftwareHouse = 'NomeSoftwareHouse';
   CChaveVersaoAplicacao = 'VersaoAplicacao';
-  CChaveNivelLog = 'NivelLog';
   CChaveProxyHost = 'ProxyHost';
   CChaveProxyPass = 'ProxyPass';
   CChaveProxyPort = 'ProxyPort';
   CChaveProxyUser = 'ProxyUser';
+  CChaveCodCategoriaComerciante = 'ChaveCategoriaComerciante';
   CChaveCEPRecebedor = 'CEPRecebedor';
   CChaveCidadeRecebedor = 'CidadeRecebedor';
-  CChaveCodCategoriaComerciante = 'ChaveCategoriaComerciante';
   CChaveNomeRecebedor = 'NomeRecebedor';
   CChaveUFRecebedor = 'UFRecebedor';
-  CChaveTimeOut = 'TimeOut';
-  CChavePSP = 'PSP';
-  CChaveTipoChave = 'TipoChave';
 
   CSessaoPixCDBradescoConfig = 'Bradesco';
   CChavePIXBradesco = 'ChavePIX';
@@ -164,7 +164,7 @@ const
   CChaveClientSecretCielo = 'ClientSecret';
 
   CSessaoPixCDMercadoPagoConfig = 'MercadoPago';
-  CChaveAccesTokenMercadoPago = 'AccesToken';
+  CChaveAccesTokenMercadoPago = 'AccessToken';
 
 implementation
 

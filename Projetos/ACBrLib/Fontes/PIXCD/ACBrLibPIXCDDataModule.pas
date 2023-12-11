@@ -150,9 +150,9 @@ begin
 
     with ACBrPixCD1.Recebedor do
     begin
+      CodCategoriaComerciante := pLibPIXCDConfig.PIXCDConfig.Recebedor.CodCategoriaComerciante;
       CEP                     := pLibPIXCDConfig.PIXCDConfig.Recebedor.CEP;
       Cidade                  := pLibPIXCDConfig.PIXCDConfig.Recebedor.Cidade;
-      CodCategoriaComerciante := pLibPIXCDConfig.PIXCDConfig.Recebedor.CodCategoriaComerciante;
       Nome                    := pLibPIXCDConfig.PIXCDConfig.Recebedor.Nome;
       UF                      := pLibPIXCDConfig.PIXCDConfig.Recebedor.UF;
     end;

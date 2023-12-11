@@ -594,6 +594,10 @@ procedure TPIXCDConfig.LerIni(const AIni: TCustomIniFile);
 begin
   Ambiente := TACBrPixCDAmbiente(AIni.ReadInteger(CSessaoPixCDConfig, CChaveAmbiente, integer(Ambiente)));
   ArqLog   := AIni.ReadString(CSessaoPixCDConfig, CChaveArqLogPixCD, ArqLog);
+  NivelLog := AIni.ReadInteger(CSessaoPixCDConfig, CChaveNivelLog, NivelLog);
+  TipoChave:= TACBrPIXTipoChave(AIni.ReadInteger(CSessaoPixCDConfig, CChaveTipoChave, Integer(TipoChave)));
+  PSP := TACBrPIXPSP(AIni.ReadInteger(CSessaoPixCDConfig, CChavePSP, Integer(PSP)));
+  TimeOut:= AIni.ReadInteger(CSessaoPixCDConfig, CChaveTimeOut, TimeOut);
 
   with DadosAutomacao do
   begin
@@ -603,8 +607,6 @@ begin
     VersaoAplicacao := AIni.ReadString(CSessaoPixCDConfig, CChaveVersaoAplicacao, VersaoAplicacao);
   end;
 
-  NivelLog := AIni.ReadInteger(CSessaoPixCDConfig, CChaveNivelLog, NivelLog);
-
   with Proxy do
   begin
     Host := AIni.ReadString(CSessaoPixCDConfig, CChaveProxyHost, Host);
@@ -613,25 +615,24 @@ begin
     User := AIni.ReadString(CSessaoPixCDConfig, CChaveProxyUser, User);
   end;
 
-  TipoChave:= TACBrPIXTipoChave(AIni.ReadInteger(CSessaoPixCDConfig, CChaveTipoChave, Integer(TipoChave)));
-  PSP := TACBrPIXPSP(AIni.ReadInteger(CSessaoPixCDConfig, CChavePSP, Integer(PSP)));
-
   with Recebedor do
   begin
+    CodCategoriaComerciante := AIni.ReadInteger(CSessaoPixCDConfig, CChaveCodCategoriaComerciante, CodCategoriaComerciante);
     CEP := AIni.ReadString(CSessaoPixCDConfig, CChaveCEPRecebedor, CEP);
     Cidade := AIni.ReadString(CSessaoPixCDConfig, CChaveCidadeRecebedor, Cidade);
-    CodCategoriaComerciante := AIni.ReadInteger(CSessaoPixCDConfig, CChaveCodCategoriaComerciante, CodCategoriaComerciante);
     Nome := AIni.ReadString(CSessaoPixCDConfig, CChaveNomeRecebedor, Nome);
     UF := AIni.ReadString(CSessaoPixCDConfig, CChaveUFRecebedor, UF);
   end;
-
-  TimeOut:= AIni.ReadInteger(CSessaoPixCDConfig, CChaveTimeOut, TimeOut);
 end;
 
 procedure TPIXCDConfig.GravarIni(const AIni: TCustomIniFile);
 begin
   AIni.WriteInteger(CSessaoPixCDConfig, CChaveAmbiente, integer(Ambiente));
   AIni.WriteString(CSessaoPixCDConfig, CChaveArqLogPixCD, ArqLog);
+  AIni.WriteInteger(CSessaoPixCDConfig, CChaveNivelLog, NivelLog);
+  AIni.WriteInteger(CSessaoPixCDConfig, CChaveTipoChave, Integer(TipoChave));
+  AIni.WriteInteger(CSessaoPixCDConfig, CChavePSP, Integer(PSP));
+  AIni.WriteInteger(CSessaoPixCDConfig, CChaveTimeOut, TimeOut);
 
   with DadosAutomacao do
   begin
@@ -641,8 +642,6 @@ begin
     AIni.WriteString(CSessaoPixCDConfig, CChaveVersaoAplicacao, VersaoAplicacao);
   end;
 
-  AIni.WriteInteger(CSessaoPixCDConfig, CChaveNivelLog, NivelLog);
-
   with Proxy do
   begin
     AIni.WriteString(CSessaoPixCDConfig, CChaveProxyHost, Host);
@@ -651,19 +650,14 @@ begin
     AIni.WriteString(CSessaoPixCDConfig, CChaveProxyUser, User);
   end;
 
-  AIni.WriteInteger(CSessaoPixCDConfig, CChaveTipoChave, Integer(TipoChave));
-  AIni.WriteInteger(CSessaoPixCDConfig, CChavePSP, Integer(PSP));
-
   with Recebedor do
   begin
+    AIni.WriteInteger(CSessaoPixCDConfig, CChaveCodCategoriaComerciante, CodCategoriaComerciante);
     AIni.WriteString(CSessaoPixCDConfig, CChaveCEPRecebedor, CEP);
     AIni.WriteString(CSessaoPixCDConfig, CChaveCidadeRecebedor, Cidade);
-    AIni.WriteInteger(CSessaoPixCDConfig, CChaveCodCategoriaComerciante, CodCategoriaComerciante);
     AIni.WriteString(CSessaoPixCDConfig, CChaveNomeRecebedor, Nome);
     AIni.WriteString(CSessaoPixCDConfig, CChaveUFRecebedor, UF);
   end;
-
-  AIni.WriteInteger(CSessaoPixCDConfig, CChaveTimeOut, TimeOut);
 end;
 
 { TPIXCDBradescoConfig }

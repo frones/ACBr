@@ -323,7 +323,7 @@ begin
       begin
         NFe.infNFeSupl.qrCode := GetURLQRCode(NFe.Ide.cUF, NFe.Ide.tpAmb,
                                   onlyNumber(NFe.infNFe.ID),
-                                  trim(IfThen(NFe.Dest.idEstrangeiro <> '', NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF)),
+                                  trim(IfThen(NFe.Dest.idEstrangeiro <> '', NFe.Dest.idEstrangeiro, OnlyNumber(NFe.Dest.CNPJCPF))),
                                   NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
                                   NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue,
                                   NFe.infNFe.Versao);
@@ -1170,6 +1170,14 @@ begin
           end;
         end;
 
+        GravaLog('Validar: 629-Produto do valor unitário e quantidade comercializada [nItem: ' + IntToStr(Prod.nItem) + ']');
+        if (NFe.ide.finNFe = fnNormal) and (ComparaValor(Prod.vProd, Prod.vUnCom * Prod.qCom, 0.01) <> 0) then
+          AdicionaErro('629-Rejeição: Valor do Produto difere do produto Valor Unitário de Comercialização e Quantidade Comercial [nItem: ' + IntToStr(Prod.nItem) + ']');
+
+        GravaLog('Validar: 630-Produto do valor unitário e quantidade tributável [nItem: ' + IntToStr(Prod.nItem) + ']');
+        if (NFe.ide.finNFe = fnNormal) and (ComparaValor(Prod.vProd, Prod.vUnTrib * Prod.qTrib, 0.01) <> 0) then
+          AdicionaErro('630-Rejeição: Valor do Produto difere do produto Valor Unitário de Tributação e Quantidade Tributável [nItem: ' + IntToStr(Prod.nItem) + ']');
+
         GravaLog('Validar: 528-ICMS BC e Aliq [nItem: '+IntToStr(Prod.nItem)+']');
         if (Imposto.ICMS.CST in [cst00,cst10,cst20,cst70]) and
            (NFe.Ide.finNFe = fnNormal) and
@@ -1452,7 +1460,7 @@ begin
     if not NFImportacao and
        (NFe.Total.ICMSTot.vNF <> fsvNF) then
     begin
-      if (ComparaValor(NFe.Total.ICMSTot.vNF, fsvNF, 0.009) <> 0) then
+      if (ComparaValor(NFe.Total.ICMSTot.vNF, fsvNF, 0.009) <> 0) and (ComparaValor(NFe.Total.ICMSTot.vNF, fsvNF + fsvICMSDeson, 0.009) <> 0) then
         AdicionaErro('610-Rejeição: Total da NF difere do somatório dos Valores compõe o valor Total da NF.');
     end;
 

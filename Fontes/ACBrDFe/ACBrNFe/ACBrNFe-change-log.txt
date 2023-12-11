@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2023
+-- ACBrNFeNotasFiscais --
+[*] Ajustes no método "ValidarRegrasdeNegocios"
+  - Adicionadas validações para as rejeições 629 e 630 que trata da multiplicação do valor unitário pela quantidade de itens
+  - Correção para a validação da rejeição 610, para considerar como válido o valor total da nota abatendo ou não o ICMS desonerado
+  Por: BigWings
+
 08/12/2023
 -- ACBrNFeNotasFiscais --
 [*] Ajuste no ValidarRegrasdeNegocios, para a rejeição 425, incluido o CFOP: 5949.

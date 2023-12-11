@@ -43,11 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/12/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Veranopolis/RS trocou de provedor, agora é Fiorilli
+  Por: Rosemeri Nespolo
 -- ACBrNFSeXNotasFiscais --
 [*] Adiciona nas rotinas de leitura e geração do ini a propriedade RegRec.
   Por: Diego Folieni
 
 08/12/2023
+-- ACBrNFSeXServicos --
+[*] Correção nas URLs da cidade de Passo/GO o provedor continua o mesmo.
+  Por: Alfredo - Jave Informatica
 -- Diversos --
 [-] A grafia correta da tag idAtvEvt e não id.
   Por: Italo Giurizzato Junior

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2023
+-- ACBrNFSeXNotasFiscais --
+[*] Adiciona nas rotinas de leitura e geração do ini a propriedade RegRec.
+  Por: Diego Folieni
+
 08/12/2023
 -- Diversos --
 [-] A grafia correta da tag idAtvEvt e não id.

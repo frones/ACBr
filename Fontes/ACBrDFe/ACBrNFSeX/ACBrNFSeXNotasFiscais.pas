@@ -370,6 +370,9 @@ begin
         // Provedor PadraoNacional
         verAplic := INIRec.ReadString(sSecao, 'verAplic', 'ACBrNFSeX-1.00');
         tpEmit := StrTotpEmit(Ok, INIRec.ReadString(sSecao, 'tpEmit', '1'));
+
+        //Provedor Governa
+        RegRec := StrToRegRec(Ok, INIRec.ReadString(sSecao, 'RegRec', ''));
       end;
 
       sSecao := 'RpsSubstituido';
@@ -972,6 +975,9 @@ begin
       //Padrão Nacional
       INIRec.WriteString(sSecao, 'verAplic', verAplic);
       INIRec.WriteString(sSecao, 'tpEmit', tpEmitToStr(tpEmit));
+
+      //Provedor Governa
+      INIRec.WriteString(sSecao, 'RegRec', RegRecToStr(RegRec));
 
       if RpsSubstituido.Numero <> '' then
       begin

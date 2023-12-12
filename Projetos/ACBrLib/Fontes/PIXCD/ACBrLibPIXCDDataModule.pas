@@ -173,14 +173,17 @@ begin
       ClientSecret        := pLibPIXCDConfig.PIXCDSicredi.ClientSecret;
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDSicredi.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDSicredi.ArqCertificado;
+      APIVersion          := pLibPIXCDConfig.PIXCDSicredi.APIVersion;
     end;
 
     with ACBrPSPSicoob1 do
     begin
       ChavePIX            := pLibPIXCDConfig.PIXCDSiccob.ChavePIX;
       ClientID            := pLibPIXCDConfig.PIXCDSiccob.ClientID;
+      TokenSandbox        := pLibPIXCDConfig.PIXCDSiccob.TokenSandbox;
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDSiccob.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDSiccob.ArqCertificado;
+      APIVersion          := pLibPIXCDConfig.PIXCDSiccob.APIVersion;
     end;
 
     with ACBrPSPShipay1 do
@@ -197,6 +200,7 @@ begin
       ConsumerSecret     := pLibPIXCDConfig.PIXCDSantander.ConsumerSecret;
       ArquivoCertificado := pLibPIXCDConfig.PIXCDSantander.ArqCertificadoPFX;
       SenhaPFX           := pLibPIXCDConfig.PIXCDSantander.SenhaCertificadoPFX;
+      APIVersion         := pLibPIXCDConfig.PIXCDSantander.APIVersion;
     end;
 
     with ACBrPSPPixPDV1 do
@@ -221,6 +225,7 @@ begin
       ClientSecret        := pLibPIXCDConfig.PIXCDItau.ClientSecret;
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDItau.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDItau.ArqCertificado;
+      APIVersion          := pLibPIXCDConfig.PIXCDItau.APIVersion;
     end;
 
     with ACBrPSPInter1 do
@@ -250,7 +255,8 @@ begin
       ArquivoCertificado      := pLibPIXCDConfig.PIXCDBancoDoBrasil.ArqCertificado;
       ArquivoPFX              := pLibPIXCDConfig.PIXCDBancoDoBrasil.ArqPFX;
       SenhaPFX                := pLibPIXCDConfig.PIXCDBancoDoBrasil.SenhaPFX;
-      BBAPIVersao             := pLibPIXCDConfig.PIXCDBancoDoBrasil.VersaoAPI;
+      BBAPIVersao             := pLibPIXCDConfig.PIXCDBancoDoBrasil.BBAPIVersao;
+      APIVersion              := pLibPIXCDConfig.PIXCDBancoDoBrasil.APIVersion;
     end;
 
     with ACBrPSPAilos1 do

@@ -42,21 +42,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2023
+--- ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts, ACBrLibPIXCDConfig ---
+[+] Inclusão novas propriedades dos PSPs.
+    Por: Antonio Carlos Junior 
+
 11/12/2023
 --- ACBrLibPIXCDConfig, ACBrLibPIXCDConsts, ACBrLibPIXCDDataModule ---
 [*] Ajustes nas propriedades ACBrLibPIXCD.
+    Por: Antonio Carlos Junior
 
 06/12/2023
 --- ACBrLibPIXCDBase, ACBrLibPIXCDConsts, ACBrLibPIXCDRespostas ---
 [*] Ajustes na unit ACBrLibPIXCDResposta e nos métodos em ACBrLibPIXCDBase.
 [+] Implementado novos métodos.
+    Por: Antonio Carlos Junior
 
 07/11/2023
 --- ACBrLibPIXCDBase, ACBrLibPIXCDConfig, ACBrLibPIXCDConsts, ACBrLibPIXCDDataModule --- 
 [+] Inclusão novos PSPs.
 [+] Inclusão das propriedades dos novos PSPs.
 [+] Implementado métodos de Consulta ACBrLibPIXCD.
-
+    Por: Antonio Carlos Junior
 
 29/09/2023
 --- ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts, ACBrLibPIXCDConfig ---

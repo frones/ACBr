@@ -71,7 +71,7 @@ type
 implementation
 
 Uses
-  ACBrLibConsts, ACBrLibConfig, ACBrLibPIXCDConfig, ACBrPIXCD, ACBrPIXBase, ACBrLibPIXCDRespostas, ACBrLibHelpers, ACBrUtil.Strings, ACBrUtil.Base, ACBrPIXSchemasCobV, ACBrPIXSchemasProblema;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibPIXCDConfig, ACBrPIXCD, ACBrPIXBase, ACBrLibPIXCDRespostas, ACBrLibHelpers, ACBrUtil.Strings, ACBrUtil.Base, ACBrPIXSchemasCobV;
 
 { TACBrLibPIXCD }
 

@@ -29,6 +29,9 @@ package ACBr_Comum;
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
+
+{$I ACBr.inc}
+
 requires
   rtl,
   vcl,
@@ -46,6 +49,11 @@ contains
   ACBrUtil.Strings in '..\..\..\Fontes\ACBrComum\ACBrUtil.Strings.pas',
   ACBrUtil.XMLHTML in '..\..\..\Fontes\ACBrComum\ACBrUtil.XMLHTML.pas',
   ACBrAAC in '..\..\..\Fontes\ACBrComum\ACBrAAC.pas',
+  {$IfNDef USE_ZLibExGZ}
+  GZIPUtils in '..\..\..\Fontes\Terceiros\GZIPUtils\GZIPUtils.pas',
+  {$Else}
+  ACBrZLibExGZ in '..\..\..\Fontes\Terceiros\ZLibExGZ\ACBrZLibExGZ.pas',
+  {$EndIf}
   ACBrCompress in '..\..\..\Fontes\ACBrComum\ACBrCompress.pas',
   ACBrImage in '..\..\..\Fontes\ACBrComum\ACBrImage.pas',
   ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas',
@@ -53,15 +61,18 @@ contains
   ACBrDelphiZXingQRCode in '..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas',
   ACBr_fpdf in '..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf.pas',
   ACBr_fpdf_ext in '..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf_ext.pas',
+  ACBr_fpdf_report in '..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf_report.pas',
   Jsons in '..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas',
   ACBrJSON in '..\..\..\Fontes\ACBrComum\ACBrJSON.pas',
   ACBrUtil.FPDF in '..\..\..\Fontes\ACBrComum\ACBrUtil.FPDF.pas';
 
+// Código repetido aqui porque o Delphi costuma remover IFDEFs de Uses em pacotes (dpk).
 //  {$IfNDef USE_ZLibExGZ}
-//   ACBrZLibExGZ,
+//  GZIPUtils in '..\..\..\Fontes\Terceiros\GZIPUtils\GZIPUtils.pas',
 //  {$Else}
-//   GZIPUtils,
+//  ACBrZLibExGZ in '..\..\..\Fontes\Terceiros\ZLibExGZ\ACBrZLibExGZ.pas',
 //  {$EndIf}
+
 
 end.
 

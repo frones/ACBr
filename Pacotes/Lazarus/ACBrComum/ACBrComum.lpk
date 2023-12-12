@@ -33,105 +33,109 @@
     <License Value="LGPL
 "/>
     <Version Major="1"/>
-    <Files Count="24">
+    <Files Count="25">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
         <Type Value="Include"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrBase.pas"/>
-        <UnitName Value="ACBrBase"/>
-      </Item2>
-      <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrConsts.pas"/>
-        <UnitName Value="ACBrConsts"/>
-      </Item3>
-      <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <UnitName Value="ACBrUtil"/>
-      </Item4>
-      <Item5>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrBase.pas"/>
+        <UnitName Value="ACBrBase"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrConsts.pas"/>
+        <UnitName Value="ACBrConsts"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <UnitName Value="ACBrUtil"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrAAC.pas"/>
-        <UnitName Value="ACBrAAC"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Compatibilidade.pas"/>
+        <UnitName Value="ACBrUtil.Compatibilidade"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas"/>
-        <UnitName Value="ACBrPAFClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Base.pas"/>
+        <UnitName Value="ACBrUtil.Base"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrCompress.pas"/>
-        <UnitName Value="ACBrCompress"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.DateTime.pas"/>
+        <UnitName Value="ACBrUtil.DateTime"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrImage.pas"/>
-        <UnitName Value="ACBrImage"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.FilesIO.pas"/>
+        <UnitName Value="ACBrUtil.FilesIO"/>
       </Item9>
       <Item10>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Math.pas"/>
+        <UnitName Value="ACBrUtil.Math"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Strings.pas"/>
+        <UnitName Value="ACBrUtil.Strings"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.XMLHTML.pas"/>
+        <UnitName Value="ACBrUtil.XMLHTML"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrAAC.pas"/>
+        <UnitName Value="ACBrAAC"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrCompress.pas"/>
+        <UnitName Value="ACBrCompress"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrImage.pas"/>
+        <UnitName Value="ACBrImage"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas"/>
+        <UnitName Value="ACBrPAFClass"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas"/>
+        <UnitName Value="StrUtilsEx"/>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\Fontes\Terceiros\GZIPUtils\GZIPUtils.pas"/>
         <AddToUsesPkgSection Value="False"/>
         <UnitName Value="GZIPUtils"/>
-      </Item10>
-      <Item11>
-        <Filename Value="..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas"/>
-        <UnitName Value="StrUtilsEx"/>
-      </Item11>
-      <Item12>
-        <Filename Value="..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf.pas"/>
-        <UnitName Value="ACBr_fpdf"/>
-      </Item12>
-      <Item13>
-        <Filename Value="..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf_ext.pas"/>
-        <UnitName Value="ACBr_fpdf_ext"/>
-      </Item13>
-      <Item14>
-        <Filename Value="..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas"/>
-        <UnitName Value="ACBrDelphiZXingQRCode"/>
-      </Item14>
-      <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.FilesIO.pas"/>
-        <UnitName Value="ACBrUtil.FilesIO"/>
-      </Item15>
-      <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Math.pas"/>
-        <UnitName Value="ACBrUtil.Math"/>
-      </Item16>
-      <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Strings.pas"/>
-        <UnitName Value="ACBrUtil.Strings"/>
-      </Item17>
-      <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.XMLHTML.pas"/>
-        <UnitName Value="ACBrUtil.XMLHTML"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.DateTime.pas"/>
-        <UnitName Value="ACBrUtil.DateTime"/>
+        <Filename Value="..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas"/>
+        <UnitName Value="ACBrDelphiZXingQRCode"/>
       </Item19>
       <Item20>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Compatibilidade.pas"/>
-        <UnitName Value="ACBrUtil.Compatibilidade"/>
+        <Filename Value="..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf.pas"/>
+        <UnitName Value="ACBr_fpdf"/>
       </Item20>
       <Item21>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Base.pas"/>
-        <UnitName Value="ACBrUtil.Base"/>
+        <Filename Value="..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf_ext.pas"/>
+        <UnitName Value="ACBr_fpdf_ext"/>
       </Item21>
       <Item22>
-        <Filename Value="..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas"/>
-        <UnitName Value="Jsons"/>
+        <Filename Value="..\..\..\Fontes\Terceiros\FPDF-Pascal\ACBr_fpdf_report.pas"/>
+        <UnitName Value="ACBr_fpdf_report"/>
       </Item22>
       <Item23>
+        <Filename Value="..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas"/>
+        <UnitName Value="Jsons"/>
+      </Item23>
+      <Item24>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrJSON.pas"/>
         <UnitName Value="ACBrJSON"/>
-      </Item23>
-	  <Item24>
+      </Item24>
+      <Item25>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.FPDF.pas"/>
         <UnitName Value="ACBrUtil.FPDF"/>
-      </Item24>
+      </Item25>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

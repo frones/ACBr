@@ -415,6 +415,7 @@ begin
           Response.DescSituacao := 'Nota não Encontrada';
 
         Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
+        Response.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('wsLink'), tcStr);
       end;
     except
       on E:Exception do

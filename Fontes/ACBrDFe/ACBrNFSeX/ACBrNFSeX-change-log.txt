@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2023
+-- Asten.Provider --
+[*] Alteração visando gerar a tag <Token> para os métodos de consulta e
+    Substituição.
+  Por: Italo Giurizzato Junior
+
 11/12/2023
 -- ACBrNFSeXServicos --
 [*] A cidade de Veranopolis/RS trocou de provedor, agora é Fiorilli

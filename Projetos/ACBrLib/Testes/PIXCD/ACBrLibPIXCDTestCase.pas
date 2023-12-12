@@ -64,7 +64,11 @@ type
     procedure Test_PIXCD_ConsultarDevolucaoPix;
     procedure Test_PIXCD_ConsultarCobrancaImediata;
     procedure Test_PIXCD_ConsultarCobranca;
-
+    procedure Test_PIXCD_SolicitarDevolucaoPix;
+    procedure Test_PIXCD_RevisarCobrancaImediata;
+    procedure Test_PIXCD_RevisarCobranca;
+    procedure Test_PIXCD_CriarCobrancaImediata;
+    procedure Test_PIXCD_CriarCobranca;
   end;
 
 implementation
@@ -457,6 +461,88 @@ begin
   AssertEquals(ErrOK, PIXCD_ConsultarCobranca(Handle, 'teste', 1, PChar(AStr), Bufflen));
 
   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_SolicitarDevolucaoPix;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals(ErrOK, PIXCD_SolicitarDevolucaoPix(Handle, 'teste', 'teste', 1, 1, 'teste', PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_RevisarCobrancaImediata;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+   AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+   Bufflen := 255;
+   AStr := Space(Bufflen);
+
+   AssertEquals(ErrOK, PIXCD_RevisarCobrancaImediata(Handle, 1, 'teste', PChar(AStr), Bufflen));
+
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_RevisarCobranca;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+   AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+   Bufflen := 255;
+   AStr := Space(Bufflen);
+
+   AssertEquals(ErrOK, PIXCD_RevisarCobranca(Handle, 1, 'teste', PChar(AStr), Bufflen));
+
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_CriarCobrancaImediata;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+   AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+   Bufflen := 255;
+   AStr := Space(Bufflen);
+
+   AssertEquals(ErrOK, PIXCD_CriarCobrancaImediata(Handle, 'teste', 1, 'teste', 'teste', 'teste', 1, false, 'teste', PChar(AStr), Bufflen));
+
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_CriarCobranca;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+  DataVencimento: TDateTime;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  DataVencimento:= EncodeDate(2023, 11, 29);
+
+   AssertEquals(ErrOK, PIXCD_CriarCobranca(Handle, 'teste', DataVencimento, 1, 'teste', 'teste', 1, 1, 1, 1, 1, 1, 1, 'teste',  PChar(AStr), Bufflen));
+
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
 end;
 
 initialization

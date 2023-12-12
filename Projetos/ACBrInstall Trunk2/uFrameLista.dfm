@@ -614,10 +614,10 @@ object framePacotes: TframePacotes
     object Label31: TLabel
       Left = 276
       Top = 987
-      Width = 241
+      Width = 334
       Height = 13
       Margins.Left = 5
-      Caption = 'FPDF Pascal - DANFE (NOVO COMPONENTE BETA)'
+      Caption = 'FPDF Pascal - DANFE para NF-e e NFC-e (NOVO COMPONENTE BETA)'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
       Font.Height = -11
@@ -632,7 +632,6 @@ object framePacotes: TframePacotes
       Height = 13
       Margins.Left = 5
       Caption = 'FPDF Pascal - DANFSE (NOVO COMPONENTE BETA)'
-      Enabled = False
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
       Font.Height = -11
@@ -2139,7 +2138,6 @@ object framePacotes: TframePacotes
       Margins.Right = 0
       Margins.Bottom = 0
       Caption = 'ACBr_NFSeXDanfseFPDF.dpk'
-      Enabled = False
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

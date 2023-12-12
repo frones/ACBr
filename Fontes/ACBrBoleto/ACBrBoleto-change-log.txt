@@ -59,6 +59,10 @@ Por: frainer / Verificado: Daniel Morais - #
 https://www.projetoacbr.com.br/forum/topic/75457-cnab-altera%C3%A7%C3%A3o-no-acbrbancobradesco-exigindo-mensagem-preenchida/
 Por: Daniel Morais - #
 
+--- ACBrBancoBanrisul ---
+[*]TK-4730-1 Ajuste alteração vencimento sem juros, ocorrencias.
+https://www.projetoacbr.com.br/forum/topic/75134-altera%C3%A7%C3%A3o-de-vencimento-sem-juros-banrisul-cnab-240/
+Por: Desenv. AT Info Sistemas / Verificado: Daniel Morais - #
 
 07/12/2023
 --- ACBrBancoBanrisul ---

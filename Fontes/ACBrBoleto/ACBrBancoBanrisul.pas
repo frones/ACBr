@@ -685,6 +685,8 @@ begin
          toRemessaCancelarAbatimento: Ocorrencia := '05'; {Cancelamento de Abatimento concedido}
          toRemessaAlterarVencimento:  Ocorrencia := '06'; {Alteração de vencimento}
          toRemessaProtestar:          Ocorrencia := '09'; {Pedido de protesto}
+         toRemessaAlterarJurosMora:   Ocorrencia := '12'; {Alteração de Juros}
+         toRemessaAlterarMulta:       Ocorrencia := '14'; {Alteração de Multa}
          toRemessaCancelarInstrucaoProtestoBaixa: Ocorrencia := '18'; {Sustar protesto e baixar}
          toRemessaCancelarInstrucaoProtesto:     Ocorrencia := '19'; {Sustar protesto e manter na carteira}
          toRemessaOutrasOcorrencias:  Ocorrencia := '31'; {Alteração de Outros Dados}
@@ -801,8 +803,6 @@ begin
                   '1';                                                                                                                  // 240-240 NÃO PERMITE RECEBIMENTO PARCIAL
       end;
 
-      if (OcorrenciaOriginal.Tipo = toRemessaAlterarVencimento) and (PercentualMulta > 0) then
-        Ocorrencia := '12'; //Registro P enviar comando 06 para Registro Q e R enviar 12 - Marcia Philipp / Analista - Gerencia de Negócios Banrisul
 
       {Segmento "Q" }
       Result := Result + #13#10 +

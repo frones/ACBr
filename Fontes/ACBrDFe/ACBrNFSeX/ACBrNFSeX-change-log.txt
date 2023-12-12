@@ -44,6 +44,8 @@ Símbolo : Significado
 
 12/12/2023
 -- ACBrNFSeXServicos --
+[+] Incluída a cidade de Machado/MG, provedor é o eReceita.
+  Por: Italo Giurizzato Junior
 [*] Incluído o ParametroExta para a cidade de Colombo/PR.
   Por: Alexandre Felippeto Henzen
 [*] Removido o Parâmetro: NaoFormatarItemServico para cidade de Novo Hamburgo/RS.

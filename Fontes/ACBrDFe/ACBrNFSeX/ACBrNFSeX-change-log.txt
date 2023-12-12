@@ -44,6 +44,11 @@ Símbolo : Significado
 
 12/12/2023
 -- ACBrNFSeXServicos --
+[*] Incluído o ParametroExta para a cidade de Colombo/PR.
+  Por: Alexandre Felippeto Henzen
+[*] Removido o Parâmetro: NaoFormatarItemServico para cidade de Novo Hamburgo/RS.
+    O Provedor IPM é uma piada hora exigi de uma forma depois muda.
+  Por: Italo Giurizzato Junior
 [*] Incluído o ParametroExta para a cidade de Telemaco Borba/PR.
   Por: Alexandre Felippeto Henzen
 -- Asten.Provider --

@@ -48,6 +48,24 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+12/12/2023
+--- ACBrBancoSicredi ---
+[*]TK-4832 Ajustes na remessa conforme manual 2023 - Seg P 225, R 100, R 140, R 216
+https://www.projetoacbr.com.br/forum/topic/75422-corre%C3%A7%C3%A3o-no-arquivo-de-remessa-do-sicred/
+Por: frainer / Verificado: Daniel Morais - #
+
+--- ACBrBancoBradesco ---
+[*]TK-4788-1 Ajuste na Validação na propriedade Mensagem 
+https://www.projetoacbr.com.br/forum/topic/75457-cnab-altera%C3%A7%C3%A3o-no-acbrbancobradesco-exigindo-mensagem-preenchida/
+Por: Daniel Morais - #
+
+
+07/12/2023
+--- ACBrBancoBanrisul ---
+[-]TK-4834 Ajuste casas decimais da multa percentual
+https://www.projetoacbr.com.br/forum/topic/75379-multa-banrisul-cnab-240/#comment-487295
+Por: Desenv. AT Info Sistemas / Verificado: Daniel Morais - #
+
 01/12/2023
 --- ACBrBancoSicredi ---
 [*]TK-4760 Ajuste calcular arquivo remessa qdo cedente for menor que 5 caracteres.

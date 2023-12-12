@@ -2019,7 +2019,7 @@ begin
              CodProtestoNegativacao                                           + // 221 a 221 - Código para protesto
              DiasProtestoNegativacao                                          + // 222 a 223 - Número de dias para protesto
              '1'                                                              + // 224 a 224 - Código para baixa/devolução
-             '060'                                                            + // 225 a 227 - Nº de dias para baixa/devolução
+             '000'                                                            + // 225 a 227 - Nº de dias para baixa/devolução (O Sicredi não utiliza esse campo)
              '09'                                                             + // 228 a 229 - Código da moeda = "09"
              PadRight('', 10, '0')                                            + // 230 a 239 - Nº do contrato da operação de crédito
              Space(1);                                                          // 240 a 240 - Uso exclusivo FEBRABAN/CNAB
@@ -2076,26 +2076,14 @@ begin
                IfThen((PercentualMulta > 0),
                       IntToStrZero(round(PercentualMulta * 100), 15),
                       PadLeft('', 15, '0'))                                + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
-               space(10);                                                   // 90-99 Informações do sacado
-
-               if Mensagem.Count > 0 then
-               begin
-                 Result :=  Result + PadRight(Copy(Mensagem[0],1,40),40);    // 100-139 Menssagem livre
-
-                 if Mensagem.Count > 1 then
-                   Result := Result + PadRight(Copy(Mensagem[1],1,40),40)    // 140-179 Menssagem livre
-                 else
-                   Result := Result + Space(40);
-               end
-               else
-                 Result := Result + Space(80);
-
-               Result := Result +
+               space(10)                                                   + // 90-99 Informações do sacado
+  			   space(40)    											   + // 100-139 Menssagem livre
+               space(40)    											   + // 140-179 Menssagem livre
                space(20)                                                   + // 180-199 Uso da FEBRABAN "Brancos"
                PadLeft('0', 08, '0')                                       + // 200-207 Código oco. sacado "0000000"
                PadLeft('0', 3, '0')                                        + // 208-210 Código do banco na conta de débito "000"
                PadLeft('0', 5, '0')                                        + // 211-215 Código da ag. debito
-               ' '                                                         + // 216 Digito da agencia
+               '0'                                                         + // 216 Digito da agencia (O Sicredi não usa esse campo, preencher com zeros)
                PadLeft('0', 12, '0')                                       + // 217-228 Conta corrente para debito
                ' '                                                         + // 229 Digito conta de debito
                ' '                                                         + // 230 Dv agencia e conta

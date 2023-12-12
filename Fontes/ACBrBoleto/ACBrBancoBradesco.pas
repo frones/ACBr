@@ -480,7 +480,9 @@ begin
          PadRight(Sacado.SacadoAvalista.NomeAvalista, 43);                                 // 352 a 394 - Nome do beneficiário final
        end
        else if Mensagem.Text <> '' then} // Informado no Registro Tipo 7
-         MensagemCedente:= Mensagem[0];
+
+       if Mensagem.Text <> '' then
+          MensagemCedente := Mensagem[0];
 
        wLinha:= '1'                                             +  // 001 a 001 - ID Registro
        StringOfChar( '0', 19)                                   +  // 002 a 020 - Dados p/ Débito Automático

@@ -44,6 +44,8 @@ Símbolo : Significado
 
 12/12/2023
 -- ACBrNFSeXServicos --
+[+] Incluída a URL de Consulta a NFS-e Por RPS do Provedor FGMaiss.
+  Por: M L Gonçalves
 [+] Incluída a cidade de Machado/MG, provedor é o eReceita.
   Por: Italo Giurizzato Junior
 [*] Incluído o ParametroExta para a cidade de Colombo/PR.

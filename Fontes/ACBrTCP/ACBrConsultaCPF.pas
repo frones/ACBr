@@ -109,6 +109,8 @@ uses
 
 constructor TACBrConsultaCPF.Create(AOwner: TComponent);
 begin
+  {$MESSAGE WARN 'Informamos que o suporte ao Componente ACBrConsultaCPF foi descontinuado devido ao encerramento do suporte a URL da Receita Federal do Brasil. '}
+  {$MESSAGE WARN 'No momento, este componente não é funcional. Qualquer atualização ou novo suporte será notificado no fórum. Estamos à disposição para esclarecer eventuais dúvidas.'}
   inherited Create(AOwner);
   HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
   Self.IsUTF8 := False;
@@ -154,6 +156,11 @@ procedure TACBrConsultaCPF.Captcha(Stream: TStream);
 var
   LErro : String;
 begin
+  LErro := 'Informamos que o suporte ao Componente ACBrConsultaCPF foi descontinuado devido ao encerramento do suporte a URL da Receita Federal do Brasil. '+
+           'No momento, este componente não é funcional. Qualquer atualização ou novo suporte será notificado no fórum. Estamos à disposição para esclarecer eventuais dúvidas.';
+  raise EACBrConsultaCPFException.Create(LErro);
+
+
   try
     Stream.Size := 0; // Trunca o Stream
     WriteStrToStream(Stream, DecodeBase64(GetCaptchaURL));

@@ -67,6 +67,6 @@ requires
   ACBr_NFSeXDanfseFPDF;
 
 contains
-  ACBrNFSeXDANFSeFPDFReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF\ACBrNFSeXDANFSeFPDFReg.pas';
+  ACBrNFSeXDANFSeFPDFReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\FPDF\ACBrNFSeXDANFSeFPDFReg.pas';
 
 end.

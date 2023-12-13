@@ -1945,7 +1945,7 @@ begin
 
     PDF.SetFillColor(224, 224, 224);
     PDF.Rect(0, y, Args.Band.Width, BlocoMensagemFiscalH, 'F');
-    PDF.SetFillColor(TFPDFColor.cWhite);
+    PDF.SetFillColor(cWhite);
     PDF.Rect(0  + MargemBoxTexto, y + 1, TextoW, BlocoMensagemFiscalH - 2, 'F');
 
     y1 := y + 1;
@@ -1971,7 +1971,7 @@ begin
 
     PDF.SetFillColor(224, 224, 224);
     PDF.Rect(0, y, Args.Band.Width, BlocoMensagemFiscalH, 'F');
-    PDF.SetFillColor(TFPDFColor.cWhite);
+    PDF.SetFillColor(cWhite);
     PDF.Rect(0  + MargemBoxTexto, y + 1, TextoW, BlocoMensagemFiscalH - 2, 'F');
 
     y1 := y + 1;

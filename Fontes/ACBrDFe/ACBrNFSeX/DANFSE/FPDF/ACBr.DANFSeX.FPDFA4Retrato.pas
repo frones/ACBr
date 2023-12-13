@@ -209,7 +209,7 @@ begin
   PDF.TextBox(x1, y1, w1, h1, 'NÚMERO DA NOTA', 'T', 'L', False);
   PDF.SetFont(10, 'B');
   Texto := NFSe.Numero;
-  if Texto.Length < 8 then
+  if Length(Texto) < 8 then
     Texto := PadLeft(NFSe.Numero, 8, '0');
   PDF.TextBox(x1, y1, w1, h1, Texto, 'B', 'C', False, False, True);
 
@@ -746,9 +746,9 @@ begin
   y1 := y;
   w := MaxW;
   h := Args.Band.Height;
-//  PDF.SetDrawColor(TFPDFColor.cRed);
+//  PDF.SetDrawColor(cRed);
   PDF.TextBox(x, y, w, h);
-  PDF.SetDrawColor(TFPDFColor.cBlack);
+  PDF.SetDrawColor(cBlack);
 
   Servico := NFSe.Servico;
 

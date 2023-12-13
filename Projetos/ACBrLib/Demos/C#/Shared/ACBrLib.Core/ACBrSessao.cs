@@ -51,5 +51,6 @@
         NCM,
         NFSe,
         DANFSe,
+        Reinf,
     }
 }

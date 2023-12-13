@@ -43,6 +43,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/12/2023
+--- Diversos ---
+[+] Desenvolvido programa de exemplo em C#
 --- ACBrLibReinfConfig, ACBrLibReinfDataModule ---
 [*] Correção na inicialização da lib e carregamento das configurações
 --- ACBrLibReinfMT, ACBrLibReinfStaticImportMT, ACBrLibReinfStaticImportST ---

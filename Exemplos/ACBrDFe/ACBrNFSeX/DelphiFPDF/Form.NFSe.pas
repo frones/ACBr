@@ -48,11 +48,11 @@ uses
   ACBr_fpdf_ext,
   ACBr_fpdf_report,
 
+  ACBrNFSeXClass,
   ACBrNFSeXConversao,
   ACBrDFeUtil,
   pcnConversao,
 
-  NFSeDANFSeFPDF,
   ACBrNFSeXDANFSeFPDFClass;
 
 const
@@ -64,6 +64,7 @@ procedure TFNFSe.Button1Click(Sender: TObject);
 var
   NomeCidade: string;
   I, C: integer;
+  NFSe :TNFSe;
 
   danfse1: TACBrNFSeXDANFSeFPDF;
 begin
@@ -74,7 +75,7 @@ begin
   else
     NomeCidade := '';
 
-  var NFSe := ACBrNFSeX1.NotasFiscais[0].NFSe;
+  NFSe := ACBrNFSeX1.NotasFiscais[0].NFSe;
 
   if ckVariosItens.Checked then
     for I := 1 to 30 do
@@ -97,25 +98,28 @@ begin
       '- Documento emitido por ME ou EPP optante pelo Simples Nacional;' +
       '- Esta NFS-e substitui o RPS N° 4222 Série 1, emitido em 26/07/2023;';
 
+//  if construcao then
+//    NFSe.ConstrucaoCivil.CodigoObra := '1234';
+//    NFSe.ConstrucaoCivil.Art := 'ART987';
 
 
   danfse1:= TACBrNFSeXDANFSeFPDF.Create(ACBrNFSeX1);
   try
     ACBrNFSeX1.DANFSE := danfse1;
-//    ACBrNFSeX1.NotasFiscais[0].NFSe.ConstrucaoCivil.CodigoObra := '1234';
-//    ACBrNFSeX1.NotasFiscais[0].NFSe.ConstrucaoCivil.Art := 'ART987';
 
-    danfse1.Logo := 'D:\Componentes\ACBr\Fontes\Imagens\Logotipos\NFS-e_ACBr_peq.jpg';
+      //Report.QRCode      := ckQRCode.Checked;
+//    if Report.QRCode and (UmaNFSe.Link <> '') then
+//        UmaNFSe.Link := 'http://www.issdigitalthe.com.br/nfse/notaFiscal.php?id_nota_fiscal=MTA2ODk2MjQy&confirma=Tg==&temPrestador=Tg==';
 
     if ckLogomarcaPrefeitura.Checked then
-      ACBrNFSeX1.DANFSE.Logo := '..\..\logo_nfse.png'
+      danfse1.Logo := '..\..\logo_nfse.png'
     else
-      ACBrNFSeX1.DANFSE.Logo := '';
+      danfse1.Logo := '';
 
     if ckLogomarcaPrestador.Checked then
-      ACBrNFSeX1.DANFSE.Prestador.Logo := '..\..\logo_prest.png'
+      danfse1.Prestador.Logo := '..\..\logo_prest.png'
     else
-      ACBrNFSeX1.DANFSE.Prestador.Logo := '';
+      danfse1.Prestador.Logo := '';
 
     danfse1.Prefeitura := 'PREFEITURA DO MUNICIPIO DE ' + UpperCase(NomeCidade);
 

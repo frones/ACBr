@@ -67,8 +67,7 @@ requires
   ACBr_NFSeX;
 
 contains
-  NFSeDANFSeFPDF in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\FPDF\NFSeDANFSeFPDF.pas',
-  ACBrNFSeXDANFSeFPDFClass in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\FPDF\ACBrNFSeXDANFSeFPDFClass.pas',
-  ACBrNFSeXDANFSeFPDFReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\FPDF\ACBrNFSeXDANFSeFPDFReg.pas';
+  ACBr.DANFSeX.FPDFA4Retrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\FPDF\ACBr.DANFSeX.FPDFA4Retrato.pas',
+  ACBrNFSeXDANFSeFPDFClass in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\FPDF\ACBrNFSeXDANFSeFPDFClass.pas';
   
 end.

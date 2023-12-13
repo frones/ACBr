@@ -30,7 +30,7 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-unit NFSeDANFSeFPDF; //Mudar para ACBr.DANFSe.FPDF.A4Retrato??
+unit ACBr.DANFSeX.FPDFA4Retrato;
 
 interface
 
@@ -76,6 +76,7 @@ type
     function GetTextoDiscriminacaoServicos: string;
     function GetTextoOutrasInformacoes: string;
     property NFSe: TNFSe read FNFSe;
+    procedure InicializaValoresPadraoObjeto;
   private
     function CalculateBlocoValoresH: double;
     function CalculateBlocoOutrasInformacoesH: double;
@@ -92,10 +93,11 @@ type
   protected
     procedure OnStartReport(Args: TFPDFReportEventArgs); override;
   public
-    constructor Create(ANFSe: TNFSe); reintroduce;
+    constructor Create; reintroduce; overload;
+    constructor Create(ANFSe: TNFSe); reintroduce; overload;
 
-    procedure SalvarPDF(NFSe: TNFSe; DadosAuxDANFSe: TDadosNecessariosParaDANFSeX; UmACBrNFSeXDANFSe:TComponent;
-        const NomeArquivoDestinoPDF: String);
+    procedure SalvarPDF(DadosAuxDANFSe: TDadosNecessariosParaDANFSeX; const NomeArquivoDestinoPDF: String); overload;
+    procedure SalvarPDF(NFSe: TNFSe; DadosAuxDANFSe: TDadosNecessariosParaDANFSeX; const NomeArquivoDestinoPDF: String); overload;
 
     property Cancelada: boolean read FCancelada write FCancelada;
     property Homologacao: boolean read FHomologacao write FHomologacao;
@@ -311,17 +313,27 @@ begin
   end;
 end;
 
-constructor TACBrDANFSeFPDFA4Retrato.Create(ANFSe: TNFSe);
+procedure TACBrDANFSeFPDFA4Retrato.InicializaValoresPadraoObjeto;
 begin
-  inherited Create;
-  FNFSe := ANFSe;
-
   FFormatSettings := TFormatSettings.Create;
   FFormatSettings.DecimalSeparator := ',';
   FFormatSettings.ThousandSeparator := '.';
-
   SetFont('Times');
   SetMargins(8, 10, 8, 2);
+end;
+
+constructor TACBrDANFSeFPDFA4Retrato.Create;
+begin
+  inherited Create;
+  InicializaValoresPadraoObjeto;
+end;
+
+constructor TACBrDANFSeFPDFA4Retrato.Create(ANFSe: TNFSe);
+begin
+  inherited Create;
+  InicializaValoresPadraoObjeto;
+
+  FNFSe := ANFSe;
 end;
 
 function TACBrDANFSeFPDFA4Retrato.GetTextoDiscriminacaoServicos: string;
@@ -839,22 +851,28 @@ begin
   end;
 end;
 
+procedure TACBrDANFSeFPDFA4Retrato.SalvarPDF(DadosAuxDANFSe: TDadosNecessariosParaDANFSeX;
+  const NomeArquivoDestinoPDF: String);
+var
+  Engine: TFPDFEngine;
+begin
+  Engine := TFPDFEngine.Create(Self, False);
+  try
+    Engine.SaveToFile(NomeArquivoDestinoPDF);
+  finally
+    Engine.Free;
+  end;
+
+end;
+
 procedure TACBrDANFSeFPDFA4Retrato.SalvarPDF(NFSe: TNFSe; DadosAuxDANFSe: TDadosNecessariosParaDANFSeX;
-  UmACBrNFSeXDANFSe: TComponent; const NomeArquivoDestinoPDF: String);
+  const NomeArquivoDestinoPDF: String);
 var
   Engine: TFPDFEngine;
 begin
   Self.FNFSe := NFSe;
 
-  Engine := TFPDFEngine.Create(Self, False);
-  try
-    //    NomeArquivoDestinoPDF
-
-    Engine.SaveToFile(ExtractFilePath(ParamStr(0)) + PathDelim + 'danfse.pdf');
-  finally
-    Engine.Free;
-  end;
-
+  SalvarPDF(DadosAuxDANFSe, NomeArquivoDestinoPDF);
 end;
 
 

@@ -322,7 +322,9 @@ end;
 
 procedure TACBrDANFSeFPDFA4Retrato.InicializaValoresPadraoObjeto;
 begin
+{$IFDEF HAS_FORMATSETTINGS}
   FFormatSettings := TFormatSettings.Create;
+{$ENDIF}
   FFormatSettings.DecimalSeparator := ',';
   FFormatSettings.ThousandSeparator := '.';
   SetFont('Times');

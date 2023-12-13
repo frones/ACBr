@@ -69,7 +69,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, IOUtils,
+  ACBrUtil.FilesIO,
   ACBrNFSeX, ACBrNFSeXConversao, ACBr.DANFSeX.Classes, ACBrNFSeXInterface,
   ACBr.DANFSeX.FPDFA4Retrato;
 
@@ -145,10 +145,10 @@ begin
       Report.QRCode := (Trim(UmaNFSe.Link) <> '');
 
       if Report.LogoPrefeitura then
-        Report.LogoPrefeituraBytes := TFile.ReadAllBytes(Self.Logo);
+        ACBrUtil.FilesIO.FileToBytes(Self.Logo, Report.LogoPrefeituraBytes);
 
       if Report.LogoPrestador then
-        Report.LogoPrestadorBytes := TFile.ReadAllBytes(Self.Prestador.Logo);
+        ACBrUtil.FilesIO.FileToBytes(Self.Prestador.Logo, Report.LogoPrestadorBytes);
 
       Report.CabecalhoLinha1 := Self.Prefeitura;
       Report.QuebraDeLinha   := DadosAux.QuebradeLinha;

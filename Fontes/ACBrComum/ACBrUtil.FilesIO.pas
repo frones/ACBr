@@ -48,7 +48,7 @@ interface
 
 Uses
   SysUtils, Math, Classes,
-  ACBrBase, ACBrConsts, IniFiles,
+  ACBrBase, ACBrConsts, ACBrUtil.Compatibilidade, IniFiles,
   {$IfDef COMPILER6_UP} StrUtils, DateUtils {$Else} ACBrD5, FileCtrl {$EndIf}
   {$IfDef FPC}
     ,dynlibs, LazUTF8, LConvEncoding, LCLType
@@ -155,6 +155,8 @@ procedure ParseNomeArquivo(const ANome: string; out APath, AName, AExt: string);
 
 function DefinirNomeArquivo(const APath, ANomePadraoComponente: string;
   const ANomePersonalizado: string = ''; const AExtensao: string = 'pdf'): string;
+
+function FileToBytes(const AName: string; Bytes: TBytes): Boolean;
 
 {$IFDEF MSWINDOWS}
 var xInp32 : function (wAddr: word): byte; stdcall;
@@ -1526,6 +1528,26 @@ begin
   end;
 end;
 {$ENDIF}
+
+function FileToBytes(const AName: string; Bytes: TBytes): Boolean;
+var
+  Stream: TFileStream;
+begin
+{Origem https://stackoverflow.com/a/67312679/}
+  if not FileExists(AName) then
+  begin
+    Result := False;
+    Exit;
+  end;
+  Stream := TFileStream.Create(AName, fmOpenRead);
+  try
+    SetLength(Bytes, Stream.Size);
+    Stream.ReadBuffer(Pointer(Bytes)^, Stream.Size);
+  finally
+    Stream.Free;
+  end;
+  Result := True;
+end;
 
 initialization
 {$IfDef MSWINDOWS}

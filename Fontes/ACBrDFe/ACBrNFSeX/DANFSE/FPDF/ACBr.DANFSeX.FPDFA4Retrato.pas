@@ -322,8 +322,10 @@ end;
 
 procedure TACBrDANFSeFPDFA4Retrato.InicializaValoresPadraoObjeto;
 begin
+{$IFNDEF FPC}
 {$IFDEF HAS_FORMATSETTINGS}
   FFormatSettings := TFormatSettings.Create;
+{$ENDIF}
 {$ENDIF}
   FFormatSettings.DecimalSeparator := ',';
   FFormatSettings.ThousandSeparator := '.';

@@ -51,12 +51,12 @@ uses
   pcnConversao,
   pcnConversaoNFe,
   ACBrValidador,
+  ACBrUtil.Compatibilidade,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrDFeUtil,
-  ACBrUtil.Compatibilidade,
   ACBrNFeUtilsFPDF, ACBrNFeDANFEClass, ACBrNFe, ACBrBase, ACBrDFeDANFeReport;
-type TBytes = array of Byte;
+
 type
   TACBrNFCeItem = record
     Height: double;

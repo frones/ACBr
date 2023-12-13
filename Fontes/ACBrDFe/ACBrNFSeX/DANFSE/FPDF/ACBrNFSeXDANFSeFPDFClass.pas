@@ -30,9 +30,9 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{$I ACBr.inc}
-
 unit ACBrNFSeXDANFSeFPDFClass;
+
+{$I ACBr.inc}
 
 interface
 

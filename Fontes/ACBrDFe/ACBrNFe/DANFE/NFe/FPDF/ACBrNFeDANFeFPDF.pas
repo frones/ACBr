@@ -56,7 +56,6 @@ uses
   ACBrDFeUtil,
   ACBrUtil.Compatibilidade,
   ACBrNFeUtilsFPDF, ACBrNFeDANFEClass, ACBrNFe, ACBrBase, ACBrDFeDANFeReport;
-type TBytes = array of Byte;
 
 type
   TNFeDANFeFPDF = class(TFPDFReport)

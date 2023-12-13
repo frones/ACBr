@@ -32,6 +32,8 @@
 {******************************************************************************}
 unit ACBr.DANFSeX.FPDFA4Retrato;
 
+{$I ACBr.inc}
+
 interface
 
 uses
@@ -46,9 +48,10 @@ uses
   ACBr_fpdf_ext,
   ACBr_fpdf_report,
 
-  ACBrValidador,
+  ACBrUtil.Compatibilidade,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
+  ACBrValidador,
   ACBrDFeUtil,
 
   ACBrNFSeXClass,
@@ -56,7 +59,11 @@ uses
 
 type
   TACBrDANFSeFPDFA4Retrato = class(TFPDFReport)
-  strict private
+  {$IFDEF SUPPORTS_STRICT}
+    strict private
+  {$ELSE}
+    private
+  {$ENDIF}
     FNFSe: TNFSe;
     FCancelada: boolean;
     FLogoPrefeitura: boolean;
@@ -77,10 +84,10 @@ type
     function GetTextoOutrasInformacoes: string;
     property NFSe: TNFSe read FNFSe;
     procedure InicializaValoresPadraoObjeto;
-  private
+
     function CalculateBlocoValoresH: double;
     function CalculateBlocoOutrasInformacoesH: double;
-  private
+
     procedure BlocoCabecalho(Args: TFPDFBandDrawArgs);
     procedure BlocoPrestador(Args: TFPDFBandDrawArgs);
     procedure BlocoTomador(Args: TFPDFBandDrawArgs);

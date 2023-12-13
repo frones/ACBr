@@ -115,7 +115,11 @@ function CreateFormatSettings: TFormatSettings;
 {$ENDIF}
 
 {$IfNDef FPC}
-  {$IFNDEF DELPHI2007_UP}
+  {$IFNDEF DELPHI2009_UP}
+  const
+    TMSGrow = 4096; { Use 4k blocks. vindo do arquivo streams.inc}
+    SMemoryStreamError = 'Out of memory while expanding memory stream'; {rtlconst.inc}
+
   type
   //Baseado no código do FPC/Lazarus 2.2.6
   { TBytesStream }
@@ -123,7 +127,8 @@ function CreateFormatSettings: TFormatSettings;
     private
       FBytes: TBytes;
     protected
-      function Realloc(var NewCapacity: PtrInt): Pointer; override;
+      //  PtrInt = NativeInt = LongInt em Delphis anteriores...
+      function Realloc(var NewCapacity: LongInt): Pointer; override;
     public
       constructor Create(const ABytes: TBytes); virtual; overload;
       property Bytes: TBytes read FBytes;
@@ -262,20 +267,22 @@ end;
 {$ENDIF}
 
 {$IfNDef FPC}
-  {$IFNDEF DELPHI2007_UP}
+  {$IFNDEF DELPHI2009_UP}
   {****************************************************************************}
   {*                              TBytesStream                                *}
   {****************************************************************************}
+  //Baseado no código do FPC/Lazarus 2.2.6
 
   constructor TBytesStream.Create(const ABytes: TBytes);
   begin
     inherited Create;
     FBytes:=ABytes;
     SetPointer(Pointer(FBytes),Length(FBytes));
-    FCapacity:=Length(FBytes);
+//    FCapacity:=Length(FBytes);
+    Capacity:=Length(FBytes);
   end;
 
-  function TBytesStream.Realloc(var NewCapacity: PtrInt): Pointer;
+    function TBytesStream.Realloc(var NewCapacity: LongInt): Pointer;
   begin
     // adapt TMemoryStream code to use with dynamic array
     if NewCapacity<0 Then

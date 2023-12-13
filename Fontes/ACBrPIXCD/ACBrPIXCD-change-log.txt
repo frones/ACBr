@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2023
+-- ACBrPIXPSPSantander --
+[*] Alteração na URL ao Revisar Cobrança. Santander utiliza API v2 para essa rotina.
+    Por: SIDesenvolvimento
+
 06/12/2023
 -- ACBrPIXPSPMercadoPago --
 [-] Remoção da URL a pedido do MercadoPago.

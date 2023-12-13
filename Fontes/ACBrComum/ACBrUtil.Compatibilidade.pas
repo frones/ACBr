@@ -130,7 +130,7 @@ function CreateFormatSettings: TFormatSettings;
       //  PtrInt = NativeInt = LongInt em Delphis anteriores...
       function Realloc(var NewCapacity: LongInt): Pointer; override;
     public
-      constructor Create(const ABytes: TBytes); virtual; overload;
+      constructor Create(const ABytes: TBytes); overload; //virtual;
       property Bytes: TBytes read FBytes;
     end;
   {$ENDIF}

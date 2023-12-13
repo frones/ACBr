@@ -119,28 +119,16 @@ function Reinf_LimparReinf: Longint;
 function Reinf_CarregarXMLEventoReinf (const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_SetIDEmpregador (const aIdEmpregador: PChar): longint;
+function Reinf_SetIDContribuinte (const aIdContribuinte: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_SetIDTransmissor (const aIdTransmissor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_SetTipoEmpregador (aTipoEmpregador: integer):longint;
+function Reinf_SetTipoContribuinte (aTipoContribuinte: integer):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_SetVersaoDF (const sVersao: PChar):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
-
-function Reinf_ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; sResposta: PChar; var esTamanho: longint):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
-
-function Reinf_ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; sResposta: PChar; var esTamanho: longint):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
-
-function Reinf_ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; sResposta: PChar; var esTamanho: longint):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
-
-function Reinf_DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_ObterCertificados (const sResposta: PChar; var esTamanho: longint):longint;

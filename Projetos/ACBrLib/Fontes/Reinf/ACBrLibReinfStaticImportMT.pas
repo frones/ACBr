@@ -120,28 +120,16 @@ function Reinf_LimparReinf(const libHandle: TLibHandle): Longint;
 function Reinf_CarregarXMLEventoReinf (const libHandle: TLibHandle; const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_SetIDEmpregador (const libHandle: TLibHandle; const aIdEmpregador: PChar): longint;
+function Reinf_SetIDContribuinte (const libHandle: TLibHandle; const aIdContribuinte: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_SetIDTransmissor (const libHandle: TLibHandle; const aIdTransmissor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_SetTipoEmpregador (const libHandle: TLibHandle; aTipoEmpregador: integer):longint;
+function Reinf_SetTipoContribuinte (const libHandle: TLibHandle; aTipoContribuinte: integer):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_SetVersaoDF (const libHandle: TLibHandle; const sVersao: PChar):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
-
-function Reinf_ConsultaIdentificadoresEventosEmpregador (const libHandle: TLibHandle; const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
-
-function Reinf_ConsultaIdentificadoresEventosTabela (const libHandle: TLibHandle; const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
-
-function Reinf_ConsultaIdentificadoresEventosTrabalhador (const libHandle: TLibHandle; const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
-
-function Reinf_DownloadEventos (const libHandle: TLibHandle; const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_ObterCertificados (const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint):longint;

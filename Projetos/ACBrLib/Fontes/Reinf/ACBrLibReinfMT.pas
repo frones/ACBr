@@ -105,9 +105,6 @@ uses
  function Reinf_SetIDTransmissor (const libHandle: PLibHandle; const aIdTransmissor: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function Reinf_SetTipoEmpregador (const libHandle: PLibHandle; aTipoContribuinte: integer):longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
  function Reinf_SetTipoContribuinte (const libHandle: PLibHandle; aTipoContribuinte: integer):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 

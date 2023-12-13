@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2023
+--- ACBrLibReinfConfig, ACBrLibReinfDataModule ---
+[*] Correção na inicialização da lib e carregamento das configurações
+--- ACBrLibReinfMT, ACBrLibReinfStaticImportMT, ACBrLibReinfStaticImportST ---
+[*] Correção e funções de Empregrador para Contribuinte e remoção de funções indevidas
+    Por: Renato Rubinho
+
 07/12/2023
 --- ACBrLibReinfConsts, ACBrLibReinfMT, ACBrLibReinfStaticImportMT ---
 [*] Ajuste e melhorias para realizar os testes unitários.

@@ -43,21 +43,6 @@ uses
 
 type
 
-  { TReinfConfig }
-  {
-  TReinfConfig = class
-  private
-    FReinfConfig: TConfiguracoesReinf;
-
-  public
-    constructor Create;
-    destructor Destroy; override;
-//    procedure LerIni(const AIni: TCustomIniFile);
-//    procedure GravarIni(const AIni: TCustomIniFile);
-
-    property ReinfConfig: TConfiguracoesReinf read FReinfConfig;
-  end;
-  }
   { TLibReinfConfig }
   TLibReinfConfig = class(TLibConfig)
   private
@@ -86,33 +71,6 @@ uses
   ACBrLibReinfBase, ACBrLibReinfConsts, ACBrLibConsts, ACBrLibComum,
   ACBrUtil.FilesIO, ACBrUtil.Strings;
 
-{ TReinfConfig }
-{
-constructor TReinfConfig.Create;
-begin
-  FReinfConfig := TConfiguracoesReinf.Create(nil);
-end;
-
-destructor TReinfConfig.Destroy;
-begin
-  FReinfConfig.Destroy;
-
-  inherited Destroy;
-end;
-}
-{
-procedure TReinfConfig.LerIni(const AIni: TCustomIniFile);
-begin
-  FCodContrato := AIni.ReadString(CSessaoReinf, CChaveCodContrato, FCodContrato);
-  FSenha       := AIni.ReadString(CSessaoReinf, CChaveSenha, FSenha);
-end;
-
-procedure TReinfConfig.GravarIni(const AIni: TCustomIniFile);
-begin
-  AIni.WriteString(CSessaoReinf, CChaveCodContrato, FCodContrato);
-  AIni.WriteString(CSessaoReinf, CChaveSenha, FSenha);
-end;
-}
 { TLibReinfConfig }
 
 constructor TLibReinfConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
@@ -142,26 +100,22 @@ procedure TLibReinfConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
 
-  FReinfConfig.Arquivos.LerIni(Ini);
-  FReinfConfig.Certificados.LerIni(Ini);
-  FReinfConfig.Geral.LerIni(Ini);
-  FReinfConfig.WebServices.LerIni(Ini);
+  FReinfConfig.ChaveCryptINI := ChaveCrypt;
+  FReinfConfig.LerIni(Ini);
 end;
 
 procedure TLibReinfConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
-  Ini.WriteString(CSessaoVersao, CLibReinfNome, CLibReinfVersao);
-
-  FReinfConfig.Arquivos.GravarIni(Ini);
-  FReinfConfig.Certificados.GravarIni(Ini);
-  FReinfConfig.Geral.GravarIni(Ini);
-  FReinfConfig.WebServices.GravarIni(Ini);
+  FReinfConfig.ChaveCryptINI := ChaveCrypt;
+  FReinfConfig.GravarIni(Ini);
 end;
 
 procedure TLibReinfConfig.ClasseParaComponentes;
 begin
+  FReinfConfig.ChaveCryptINI := ChaveCrypt;
+
   if Assigned(Owner) then
     TACBrLibReinf(Owner).ReinfDM.AplicarConfiguracoes;
 end;

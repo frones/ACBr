@@ -69,6 +69,11 @@ begin
   ACBrReinf1.SSL.DescarregarCertificado;
   pLibConfig := TLibReinfConfig(Lib.Config);
   ACBrReinf1.Configuracoes.Assign(pLibConfig.ReinfConfig);
+  ACBrReinf1.Configuracoes.WebServices.LerParams;
+
+  {$IFDEF Demo}
+    ACBrReinf1.Configuracoes.WebServices.Ambiente := taHomologacao;
+  {$ENDIF}
 end;
 
 end.

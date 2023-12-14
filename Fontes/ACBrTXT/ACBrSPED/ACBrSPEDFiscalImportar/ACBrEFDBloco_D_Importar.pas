@@ -49,6 +49,8 @@ type
     procedure RegD001;
     procedure RegD100;
     procedure RegD190;
+    procedure RegD195;
+    procedure RegD197;
     procedure RegD300;
     procedure RegD350;
     procedure RegD500;
@@ -73,6 +75,10 @@ begin
     RegD100
   else if (vHead = 'D190') then
     RegD190
+  else if (vHead = 'D195') then
+    RegD195
+  else if (vHead = 'D197') then
+    RegD197
   else if (vHead = 'D300') then
     RegD300
   else if (vHead = 'D350') then
@@ -136,6 +142,29 @@ begin
     VL_ICMS := ValorF;
     VL_RED_BC := ValorF;
     COD_OBS := Valor;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_BlocoD.RegD195;
+begin
+  with ACBrSpedFiscal.Bloco_D.RegistroD195New do
+  begin
+    COD_OBS := Valor;
+    TXT_COMPL := Valor;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_BlocoD.RegD197;
+begin
+  with ACBrSpedFiscal.Bloco_D.RegistroD197New do
+  begin
+    COD_AJ := Valor;
+    DESCR_COMPL_AJ := Valor;
+    COD_ITEM   := Valor;
+    VL_BC_ICMS := ValorF;
+    ALIQ_ICMS  := ValorF;
+    VL_ICMS    := ValorF;
+    VL_OUTROS  := ValorF;
   end;
 end;
 

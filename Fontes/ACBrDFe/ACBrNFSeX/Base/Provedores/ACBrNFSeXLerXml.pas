@@ -401,7 +401,7 @@ begin
   Url := '';
   j := PosIni;
 
-  while (j < Length(Texto)) and (Texto[j] <> ' ') do
+  while (j <= Length(Texto)) and (Texto[j] <> ' ') do
   begin
     Url := Url + Texto[j];
     Inc(j);

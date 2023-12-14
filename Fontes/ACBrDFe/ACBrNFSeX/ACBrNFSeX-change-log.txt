@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/12/2023
+-- ACBrNFSeXLerXml --
+[*] Correção ao extrair url, cortando o último dígito
+  Por: Delcio
+
 12/12/2023
 -- ACBrNFSeXServicos --
 [+] Incluída a URL de Consulta a NFS-e Por RPS do Provedor FGMaiss.

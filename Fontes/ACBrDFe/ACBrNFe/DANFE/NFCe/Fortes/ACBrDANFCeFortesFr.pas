@@ -327,7 +327,7 @@ uses
   ACBrNFe, ACBrDFeDANFeReport, ACBrDFeReportFortes,
   ACBrValidador,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
-  ACBrImage, ACBrDelphiZXingQRCode;
+  ACBrImage, ACBrDelphiZXingQRCode, ACBrUtil.DateTime;
 
 {$ifdef FPC}
   {$R *.lfm}
@@ -395,7 +395,7 @@ begin
       lNumeroSerie1.Lines.Text := ACBrStr(
         'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' + sLineBreak +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' + sLineBreak +
-        DateTimeToStr(Ide.dEmi) + sLineBreak +
+        FormatDateBr(Ide.dEmi) + sLineBreak +
         Via
       );
     end
@@ -424,7 +424,7 @@ begin
       lNumeroSerie.Caption := ACBrStr(
         'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
-        DateTimeToStr(Ide.dEmi)+ Via );
+        FormatDateTimeBr(Ide.dEmi)+ Via );
     end;
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em');
@@ -568,7 +568,7 @@ begin
     );
 
     lEmissaoViaCanc.Caption := ACBrStr(
-      'Emissão ' + DateTimeToStr(Ide.dEmi) + ' - ' +
+      'Emissão ' + FormatDateTimeBr(Ide.dEmi) + ' - ' +
       'Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Estabelecimento')
     );
 
@@ -866,7 +866,7 @@ begin
         if (procNFe.dhRecbto<>0) then
         begin
           lDataAutorizacao1.Visible := True;
-          lDataAutorizacao1.Lines.Text := ACBrStr('Data de Autorização '+DateTimeToStr(procNFe.dhRecbto));
+          lDataAutorizacao1.Lines.Text := ACBrStr('Data de Autorização '+FormatDateTimeBr(procNFe.dhRecbto));
         end
         else
           lDataAutorizacao1.Visible := False;
@@ -926,7 +926,7 @@ begin
         if (procNFe.dhRecbto<>0) then
         begin
           lDataAutorizacao.Visible := True;
-          lDataAutorizacao.Caption := ACBrStr('Data de Autorização '+DateTimeToStr(procNFe.dhRecbto));
+          lDataAutorizacao.Caption := ACBrStr('Data de Autorização '+FormatDateTimeBr(procNFe.dhRecbto));
         end
         else
           lDataAutorizacao.Visible := False;
@@ -1271,7 +1271,7 @@ begin
     PintarQRCode(qrcode , imgQRCodeCanc.Picture.Bitmap, qrUTF8NoBOM);
 
     lProtocoloCanc.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
-                           ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));
+                           ' '+ifthen(procNFe.dhRecbto<>0,FormatDateTimeBr(procNFe.dhRecbto),''));
 
   end;
 end;

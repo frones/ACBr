@@ -549,7 +549,7 @@ begin
     PintarQRCode(qrcode, imgQRCode.Picture.Bitmap, qrUTF8NoBOM);
 
     lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
-                           ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));
+                           ' '+ifthen(procNFe.dhRecbto<>0,FormatDateTimeBr(procNFe.dhRecbto),''));
   end;
 end;
 

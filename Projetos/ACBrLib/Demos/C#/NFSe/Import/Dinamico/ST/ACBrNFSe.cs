@@ -602,6 +602,17 @@ namespace ACBrLib.NFSe
 
             return ProcessResult(buffer, bufferLen);
         }
+
+        public string ObterInformacoesProvedor()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<NFSE_ObterInformacoesProvedor>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            return ProcessResult(buffer, bufferLen);
+        }
         #endregion Diversos
 
         #region Private Methods

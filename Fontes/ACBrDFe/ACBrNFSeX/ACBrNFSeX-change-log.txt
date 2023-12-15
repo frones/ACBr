@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2023
+-- ACBrNFSeXServicos --
+[*] Comentada a linha de Params para a cidade de Praia Grande/SP visando resolver retorno "RecepcionarLoteRpsSincrono deve obedecer a um schema válido"
+ Por: Diego Folieni
+
 14/12/2023
 -- ACBrNFSeXLerXml --
 [*] Correção ao extrair url, cortando o último dígito

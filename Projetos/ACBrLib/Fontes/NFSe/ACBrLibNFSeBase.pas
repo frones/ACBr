@@ -101,6 +101,7 @@ type
     function ConsultarDFe(aNSU: longint; sResposta: PChar; var esTamanho: longint): longint;
     function ObterDANFSE(const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarParametros(aTipoParametroMunicipio: longint; const aCodigoServico: PChar; aCompetencia: TDateTime; aNumeroBeneficio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    function ObterInformacoesProvedor(const sResposta: PChar; var esTamanho: longint): longint;
 
   end;
 
@@ -1789,6 +1790,38 @@ begin
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibNFSe.ObterInformacoesProvedor(const sResposta: PChar; var esTamanho: longint): longint;
+var
+  Resp: TObterInformacoesProvedorResposta;
+  Resposta: AnsiString;
+begin
+  try
+    GravarLog('NFSE_ObterInformacoesProvedor', logNormal);
+
+    NFSeDM.Travar;
+    try
+      Resp := TObterInformacoesProvedorResposta.Create(Config.TipoResposta, Config.CodResposta);
+      try
+        Resp.Processar(NFSeDM.ACBrNFSeX1.Configuracoes.Geral);
+
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
+    finally
+      NFSeDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
   end;
 end;
 

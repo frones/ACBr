@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes, contnrs, ACBrLibResposta, ACBrNFSeXNotasFiscais,
   ACBrNFSeX, ACBrNFSeXWebservicesResponse, ACBrNFSeXWebserviceBase,
-  ACBrNFSeXConversao, ACBrBase;
+  ACBrNFSeXConversao, ACBrNFSeXConfiguracoes, ACBrBase;
 
 type
 
@@ -397,10 +397,129 @@ type
       property Parametros: TStrings read FParametros write FParametros;
   end;
 
+  { TObterInformacoesProvedorResposta }
+
+  TObterInformacoesProvedorResposta = class(TACBrLibRespostaBase)
+  private
+    FIdentificacaoProvedor: string;
+    FAutenticacoesRequeridas: string;
+    FServicosDisponibilizados: string;
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const Response: TGeralConfNFSe); reintroduce;
+
+  published
+    property IdentificacaoProvedor: String read FIdentificacaoProvedor;
+    property AutenticacoesRequeridas: String read FAutenticacoesRequeridas;
+    property ServicosDisponibilizados: String read FServicosDisponibilizados;
+  end;
+
 implementation
 
 uses
   pcnAuxiliar, pcnConversao, ACBrUtil, ACBrLibNFSeConsts, ACBrLibConsts;
+
+{ TObterInformacoesProvedorResposta }
+
+constructor TObterInformacoesProvedorResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  FIdentificacaoProvedor := '';
+  FAutenticacoesRequeridas := '';
+  FServicosDisponibilizados := '';
+
+  inherited Create(CSessaoObterInformacoesProvedor, ATipo, AFormato);
+end;
+
+destructor TObterInformacoesProvedorResposta.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TObterInformacoesProvedorResposta.Processar(const Response: TGeralConfNFSe);
+begin
+  FIdentificacaoProvedor := 'Nome:'+ Response.xProvedor + '|Versão:' + VersaoNFSeToStr(Response.Versao);
+
+  if Response.Autenticacao.RequerCertificado then
+    FAutenticacoesRequeridas := FAutenticacoesRequeridas + 'RequerCertificado|';
+
+  if Response.Autenticacao.RequerLogin then
+    FAutenticacoesRequeridas := FAutenticacoesRequeridas + 'RequerLogin|';
+
+  if Response.Autenticacao.RequerChaveAcesso then
+    FAutenticacoesRequeridas := FAutenticacoesRequeridas + 'RequerChaveAcesso|';
+
+  if Response.Autenticacao.RequerChaveAutorizacao then
+    FAutenticacoesRequeridas := FAutenticacoesRequeridas + 'RequerChaveAutorizacao|';
+
+  if Response.Autenticacao.RequerFraseSecreta then
+    FAutenticacoesRequeridas := FAutenticacoesRequeridas + 'RequerFraseSecreta|';
+
+  if Response.ServicosDisponibilizados.EnviarLoteAssincrono then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'EnviarLoteAssincrono|';
+
+  if Response.ServicosDisponibilizados.EnviarLoteSincrono then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'EnviarLoteSincrono|';
+
+  if Response.ServicosDisponibilizados.EnviarUnitario then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'EnviarUnitario|';
+
+  if Response.ServicosDisponibilizados.ConsultarSituacao then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarSituacao|';
+
+  if Response.ServicosDisponibilizados.ConsultarLote then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarLote|';
+
+  if Response.ServicosDisponibilizados.ConsultarRps then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarRps|';
+
+  if Response.ServicosDisponibilizados.ConsultarNfse then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarNfse|';
+
+  if Response.ServicosDisponibilizados.ConsultarFaixaNfse then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarFaixaNfse|';
+
+  if Response.ServicosDisponibilizados.ConsultarServicoPrestado then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarServicoPrestado|';
+
+  if Response.ServicosDisponibilizados.ConsultarServicoTomado then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarServicoTomado|';
+
+  if Response.ServicosDisponibilizados.CancelarNfse then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'CancelarNfse|';
+
+  if Response.ServicosDisponibilizados.SubstituirNfse then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'SubstituirNfse|';
+
+  if Response.ServicosDisponibilizados.GerarToken then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'GerarToken|';
+
+  if Response.ServicosDisponibilizados.EnviarEvento then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'EnviarEvento|';
+
+  if Response.ServicosDisponibilizados.ConsultarEvento then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarEvento|';
+
+  if Response.ServicosDisponibilizados.ConsultarDFe then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarDFe|';
+
+  if Response.ServicosDisponibilizados.ConsultarParam then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarParam|';
+
+  if Response.ServicosDisponibilizados.ConsultarSeqRps then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarSeqRps|';
+
+  if Response.ServicosDisponibilizados.ConsultarLinkNfse then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarLinkNfse|';
+
+  if Response.ServicosDisponibilizados.ConsultarNfseChave then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'ConsultarNfseChave|';
+
+  if Response.ServicosDisponibilizados.TestarEnvio then
+    FServicosDisponibilizados := FServicosDisponibilizados + 'TestarEnvio|';
+
+end;
 
 { TNFSeArquivoItem }
 

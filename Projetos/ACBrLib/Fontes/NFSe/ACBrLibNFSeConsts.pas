@@ -59,6 +59,7 @@ const
   CSessaoRespConsultarDFe = 'ConsultarDFe';
   CSessaoRespConsultarParametros = 'ConsultarParametros';
   CSessaoRespConsultaNFSePorNumero = 'ConsultaNFSePorNumero';
+  CSessaoObterInformacoesProvedor = 'ObterInformacoesProvedor';
 
   CSessaoRespErro = 'Erro';
   CSessaoRespAlerta = 'Alerta';

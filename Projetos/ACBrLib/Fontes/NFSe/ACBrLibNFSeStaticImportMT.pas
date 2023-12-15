@@ -218,6 +218,9 @@ function NFSE_ObterDANFSE(const libHandle: TLibHandle; const aChaveNFSe: PChar; 
 function NFSE_ConsultarParametros(const libHandle: TLibHandle; aTipoParametroMunicipio: longint; const aCodigoServico: PChar; aCompetencia: TDateTime; aNumeroBeneficio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
+function NFSE_ObterInformacoesProvedor(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLibName;
+
 {%endregion}
 
 implementation

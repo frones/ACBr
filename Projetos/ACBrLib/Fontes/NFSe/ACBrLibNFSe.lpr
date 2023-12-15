@@ -89,6 +89,7 @@ exports
   NFSE_Imprimir,
   NFSE_ImprimirPDF,
   NFSE_SalvarPDF,
+  NFSE_ObterInformacoesProvedor,
 
   // Servico Prestado
   NFSE_ConsultarNFSeServicoPrestadoPorNumero,

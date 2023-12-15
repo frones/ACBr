@@ -201,6 +201,9 @@ function NFSE_ObterDANFSE(const libHandle: PLibHandle; const aChaveNFSe: PChar; 
 function NFSE_ConsultarParametros(const libHandle: PLibHandle; aTipoParametroMunicipio: longint; const aCodigoServico: PChar; aCompetencia: TDateTime; aNumeroBeneficio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function NFSE_ObterInformacoesProvedor(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 {%endregion}
 
 {%endregion}
@@ -896,6 +899,21 @@ begin
 
       on E: Exception do
         Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_ObterInformacoesProvedor(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNFSe(libHandle^.Lib).ObterInformacoesProvedor(sResposta, esTamanho);
+  except
+      on E: EACBrLibException do
+         Result := E.Erro;
+
+      on E: Exception do
+         Result := ErrExecutandoMetodo;
   end;
 end;
 

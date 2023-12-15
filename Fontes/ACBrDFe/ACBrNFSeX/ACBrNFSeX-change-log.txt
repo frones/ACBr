@@ -44,6 +44,8 @@ Símbolo : Significado
 
 15/12/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Patos de Minas/MG mudou para a versão 1.01, provedor e URLs ainda são os mesmos.
+  Por: Maiquel
 [*] Incluida a cidade de Sao Vicente do Sul/RS, provedor é o Digifred.
   Por: Marcos Giordani
 [*] A cidade de Limeira/SP mudou as URLs, provedor e versão ainda são os mesmos

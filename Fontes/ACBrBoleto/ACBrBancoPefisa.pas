@@ -735,7 +735,7 @@ begin
       Result := Result + PadRight('', 80, ' ');                                 // CONTEÚDO DO RESTANTE DAS LINHAS
 
     Result := Result + Space(44) +                                              // 322 a 365 - Uso do Banco
-      PadRight(SeuNumero, 10) +                                                 // 366 a 375 - Seu Número
+      PadRight(IfThen(ACBrTitulo.NumeroDocumento = '',ACBrTitulo.SeuNumero,ACBrTitulo.NumeroDocumento), 10) +                                                 // 366 a 375 - Seu Número
       FormatDateTime('ddmmyy', Vencimento) +                                    // 376 a 381 - Data Vencimento
       IntToStrZero(Round(ValorDocumento * 100), 13) +                           // 382 a 394 - Valo Titulo
       IntToStrZero(nRegistro + 1, 6);                                           // 395 a 400 - Sequencial

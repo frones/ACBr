@@ -512,6 +512,7 @@ const
   CMetodoConsultarDFeNFSePorNSU =      'ConsultarDFeNFSePorNSU';
   CMetodoConsultarDFeNFSePorChave =    'ConsultarDFeNFSePorChave';
   CMetodoConsultarParametrosNFSe =     'ConsultarParametrosNFSe';
+  CMetodoObterInformacoesProvedor =    'ObterInformacoesProvedor';
 
   CMetodoValidarCTe =                  'validarcte';
   CMetodoAssinarCTe =                  'assinarcte';

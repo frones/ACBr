@@ -294,11 +294,36 @@ public
    procedure Executar; override;
 end;
 
+{ TMetodoObterInformacoesProvedor }
+
+TMetodoObterInformacoesProvedor = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses
   Forms, DoACBrUnit, strutils,
   ACBrNFSeXWebserviceBase;
+
+{ TMetodoObterInformacoesProvedor }
+
+procedure TMetodoObterInformacoesProvedor.Executar;
+var
+  RespObterInfo: TObterInformacoesProvedorResposta;
+begin
+  with TACBrObjetoNFSe(fpObjetoDono) do
+  begin
+    RespObterInfo := TObterInformacoesProvedorResposta.Create(TpResp, codUTF8);
+    try
+      RespObterInfo.Processar(ACBrNFSeX.Configuracoes.Geral);
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespObterInfo.Gerar;
+    finally
+      RespObterInfo.Free;
+    end;
+  end;
+end;
 
 { TMetodoTotalRPSLote }
 
@@ -1588,6 +1613,7 @@ begin
 
   ListaDeMetodos.Add(CMetodoLimparLoteRPS);
   ListaDeMetodos.Add(CMetodoTotalRPSLote);
+  ListaDeMetodos.Add(CMetodoObterInformacoesProvedor);
 
   // DoACBrUnit
   ListaDeMetodos.Add(CMetodoSavetofile);
@@ -1658,6 +1684,7 @@ begin
     34  : AMetodoClass := TMetodoConsultarParametrosNFSe;
     35  : AMetodoClass := TMetodoLimparLoteRPS;
     36  : AMetodoClass := TMetodoTotalRPSLote;
+    37  : AMetodoClass := TMetodoObterInformacoesProvedor;
 
     else
     begin

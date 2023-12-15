@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2023
+-- DoACBrNFSeUnit, ACBrMonitorConsts --
+[+] Adiciona o método NFSe.ObterInformacoesProvedor
+  Por: Diego Folieni
+
 07/12/2023
 -- ACBrMonitor1 --
 [*] Ajuste visando impedir que salve uma cidade sem provedor atribuído na configuração de NFSe

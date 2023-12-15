@@ -100,6 +100,7 @@ type
     procedure Test_NFSe_IniServicos_Informando_Path_Com_ACBrNFSeXServicos_Sem_Provedor;
     procedure Test_NFSe_IniServicos_Informando_Path_Com_ACBrNFSeXServicos_Com_Provedor;
     procedure Test_NFSe_LayoutImpressao;
+    procedure Test_NFSe_ObterInformacoesProvedor;
 
   end;
 
@@ -1175,6 +1176,35 @@ begin
 
   AssertEquals('Erro ao Imprimir NFSe', ErrOK,
   NFSE_Imprimir(Handle, '', 1, '', '', ''));
+
+  AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+end;
+
+procedure TTestACBrNFSeLib.Test_NFSe_ObterInformacoesProvedor;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: longint;
+begin
+
+  AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+  Resposta := '';
+  Tamanho := 0;
+
+  NFSE_ObterInformacoesProvedor(Handle, Resposta, Tamanho);
+
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+  AssertEquals('Erro ao configurar a cidade', ErrOK,
+  NFSE_ConfigGravarValor(Handle, 'NFSe', 'LayoutNFSe', '1'));
+
+  Resposta := '';
+  Tamanho := 0;
+  NFSE_ObterInformacoesProvedor(Handle, Resposta, Tamanho);
+
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
   AssertEquals(ErrOK, NFSE_Finalizar(Handle));
 end;

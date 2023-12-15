@@ -37,7 +37,7 @@ unit ACBrLibReinfTestCase;
 interface
 
 uses
-  Classes, SysUtils, fpcunit;
+  Classes, SysUtils, fpcunit, testregistry;
 
 type
 

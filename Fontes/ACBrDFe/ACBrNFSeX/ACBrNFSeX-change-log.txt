@@ -44,8 +44,10 @@ Símbolo : Significado
 
 15/12/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Limeira/SP mudou as URLs, provedor e versão ainda são os mesmos
+  Por: LTS Informatica
 [*] Comentada a linha de Params para a cidade de Praia Grande/SP visando resolver retorno "RecepcionarLoteRpsSincrono deve obedecer a um schema válido"
- Por: Diego Folieni
+  Por: Diego Folieni
 
 14/12/2023
 -- ACBrNFSeXLerXml --

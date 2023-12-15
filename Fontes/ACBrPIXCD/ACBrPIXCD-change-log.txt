@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2023
+[+] Incluída possibilidade de consultar pagametos por período;
+[*] Alteração para criar um objeto pix na cobrança consultada, caso exista um pagamento.
+    Por: norldir
+
 13/12/2023
 -- ACBrPIXPSPSantander --
 [*] Alteração na URL ao Revisar Cobrança. Santander utiliza API v2 para essa rotina.

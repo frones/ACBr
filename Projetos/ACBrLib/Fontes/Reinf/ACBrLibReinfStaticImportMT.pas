@@ -111,7 +111,8 @@ function Reinf_ConsultarReciboReinf(const libHandle: TLibHandle;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_CriarEnviarReinf(const libHandle: TLibHandle; const eArqIni: PChar):longint;
+function Reinf_CriarEnviarReinf(const libHandle: TLibHandle; const eArqIni: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_LimparReinf(const libHandle: TLibHandle): Longint;

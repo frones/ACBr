@@ -110,7 +110,8 @@ function Reinf_ConsultarReciboReinf(const ePerApur: PChar; const aTipoEvento: In
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_CriarEnviarReinf(const eArqIni: PChar):longint;
+function Reinf_CriarEnviarReinf(const eArqIni: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_LimparReinf: Longint;

@@ -37,13 +37,17 @@ unit ACBrLibReinfTestCase;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry;
+  Classes, SysUtils, fpcunit;
 
 type
 
   { TTestACBrReinfLib }
 
   TTestACBrReinfLib = class(TTestCase)
+  private
+    fCaminhoExec: string;
+  public
+    procedure SetUp; override;
   published
     procedure Test_Reinf_Inicializar_Com_DiretorioInvalido;
     procedure Test_Reinf_Inicializar;
@@ -76,7 +80,13 @@ type
 implementation
 
 uses
-  ACBrLibReinfStaticImportMT, ACBrLibReinfConsts, ACBrLibConsts, Dialogs;
+  ACBrLibReinfStaticImportMT, ACBrLibReinfConsts, ACBrLibConsts, Dialogs, ACBrUtil.DateTime;
+
+procedure TTestACBrReinfLib.SetUp;
+begin
+  inherited SetUp;
+  fCaminhoExec := ExtractFileDir(ParamStr(0));
+end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Inicializar_Com_DiretorioInvalido;
 var
@@ -86,43 +96,62 @@ begin
     //Reinf_Finalizar(Handle);
     AssertEquals(ErrDiretorioNaoExiste, Reinf_Inicializar(Handle,'C:\NAOEXISTE\ACBrLib.ini',''));
   except
-  on E: Exception do
-     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
-  end
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Inicializar;
 var
   Handle: THandle;
 begin
+  try
     AssertEquals(ErrOk, Reinf_Inicializar(Handle,'',''));
     AssertEquals(ErrOk, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Inicializar_Ja_Inicializado;
 var
   Handle: THandle;
 begin
+  try
     AssertEquals(ErrOk, Reinf_Inicializar(Handle,'',''));
     AssertEquals(ErrOk, Reinf_Inicializar(Handle,'',''));
     AssertEquals(ErrOk, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Finalizar;
 var
   Handle: THandle;
 begin
+  try
     AssertEquals(ErrOk, Reinf_Inicializar(Handle,'',''));
     AssertEquals(ErrOk, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Finalizar_Ja_Finalizado;
 var
   Handle: THandle;
 begin
+  try
     AssertEquals(ErrOk, Reinf_Inicializar(Handle,'',''));
     AssertEquals(ErrOk, Reinf_Finalizar(Handle));
-    //AssertEquals(ErrOk, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Nome_Obtendo_LenBuffer;
@@ -131,14 +160,19 @@ var
   Bufflen: Integer;
   AStr: String;
 begin
-  // Obtendo o Tamanho //
-  AssertEquals(ErrOk, Reinf_Inicializar(Handle,'',''));
+  try
+    // Obtendo o Tamanho //
+    AssertEquals(ErrOk, Reinf_Inicializar(Handle,'',''));
 
-  Bufflen := 0;
-  AssertEquals(ErrOk, Reinf_Nome(Handle,Nil, Bufflen));
-  AssertEquals(Length(CLibReinfNome), Bufflen);
+    Bufflen := 0;
+    AssertEquals(ErrOk, Reinf_Nome(Handle,Nil, Bufflen));
+    AssertEquals(Length(CLibReinfNome), Bufflen);
 
-  AssertEquals(ErrOk, Reinf_Finalizar(Handle));
+    AssertEquals(ErrOk, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Nome_Lendo_Buffer_Tamanho_Identico;
@@ -147,15 +181,20 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, Reinf_Inicializar(Handle, '',''));
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '',''));
 
-  Bufflen := Length(CLibReinfNome);
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, Reinf_Nome(Handle, PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibReinfNome), Bufflen);
-  AssertEquals(CLibReinfNome, AStr);
+    Bufflen := Length(CLibReinfNome);
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOk, Reinf_Nome(Handle, PChar(AStr), Bufflen));
+    AssertEquals(Length(CLibReinfNome), Bufflen);
+    AssertEquals(CLibReinfNome, AStr);
 
-  AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Nome_Lendo_Buffer_Tamanho_Maior;
@@ -164,16 +203,21 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
 
-  Bufflen := Length(CLibReinfNome)*2;
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, Reinf_Nome(Handle, PChar(AStr), Bufflen));
-  AStr := copy(AStr, 1, Bufflen);
-  AssertEquals(Length(CLibReinfNome), Bufflen);
-  AssertEquals(CLibReinfNome, AStr);
+    Bufflen := Length(CLibReinfNome)*2;
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOk, Reinf_Nome(Handle, PChar(AStr), Bufflen));
+    AStr := copy(AStr, 1, Bufflen);
+    AssertEquals(Length(CLibReinfNome), Bufflen);
+    AssertEquals(CLibReinfNome, AStr);
 
-  AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Nome_Lendo_Buffer_Tamanho_Menor;
@@ -182,15 +226,20 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, Reinf_Inicializar(Handle,  '', ''));
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle,  '', ''));
 
-  Bufflen := 12;
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, Reinf_Nome(Handle,  PChar(AStr), Bufflen));
-  AssertEquals(12, Bufflen);
-  AssertEquals(copy(CLibReinfNome,1,12), AStr);
+    Bufflen := 12;
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOk, Reinf_Nome(Handle,  PChar(AStr), Bufflen));
+    AssertEquals(12, Bufflen);
+    AssertEquals(copy(CLibReinfNome,1,12), AStr);
 
-  AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Versao;
@@ -199,20 +248,25 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
-  // Obtendo o Tamanho //
-  AssertEquals(ErrOK, Reinf_Inicializar(Handle,  '', ''));
+  try
+    // Obtendo o Tamanho //
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle,  '', ''));
 
-  Bufflen := 0;
-  AssertEquals(ErrOk, Reinf_Versao(Handle,  Nil, Bufflen));
-  AssertEquals(Length(CLibReinfVersao), Bufflen);
+    Bufflen := 0;
+    AssertEquals(ErrOk, Reinf_Versao(Handle, Nil, Bufflen));
+    AssertEquals(Length(CLibReinfVersao), Bufflen);
 
-  // Lendo a resposta //
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, Reinf_Versao(Handle, PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibReinfVersao), Bufflen);
-  AssertEquals(CLibReinfVersao, AStr);
+    // Lendo a resposta //
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOk, Reinf_Versao(Handle, PChar(AStr), Bufflen));
+    AssertEquals(Length(CLibReinfVersao), Bufflen);
+    AssertEquals(CLibReinfVersao, AStr);
 
-  AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_ConfigLerValor;
@@ -221,16 +275,21 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
-  // Obtendo o Tamanho //
-  AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+  try
+    // Obtendo o Tamanho //
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
 
-  Bufflen := 255;
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, Reinf_ConfigLerValor(Handle, CSessaoVersao, CLibReinfNome, PChar(AStr), Bufflen));
-  AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibReinfVersao, AStr);
+    Bufflen := 255;
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOk, Reinf_ConfigLerValor(Handle, CSessaoVersao, CLibReinfNome, PChar(AStr), Bufflen));
+    AStr := copy(AStr,1,Bufflen);
+    AssertEquals(CLibReinfVersao, AStr);
 
-  AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_ConfigGravarValor;
@@ -239,84 +298,263 @@ var
   Bufflen: Integer;
   Handle: THandle;
 begin
+  try
     // Gravando o valor
-  AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
 
-  AssertEquals('Erro ao Mudar configuração', ErrOk, Reinf_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+    AssertEquals('Erro ao Mudar configuração', ErrOk, Reinf_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
 
-  // Checando se o valor foi atualizado //
-  Bufflen := 255;
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, Reinf_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
-  AStr := copy(AStr,1,Bufflen);
-  AssertEquals('Erro ao Mudar configuração', '4', AStr);
+    // Checando se o valor foi atualizado //
+    Bufflen := 255;
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOk, Reinf_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
+    AStr := copy(AStr,1,Bufflen);
+    AssertEquals('Erro ao Mudar configuração', '4', AStr);
 
-  AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_CriarEventoReinf;
+var
+  Handle: THandle;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
 
+    AssertEquals('Erro ao Criar Evento do Reinf', ErrOK,
+      Reinf_CriarEventoReinf(Handle, PChar(fCaminhoExec+'\evento.ini')));
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_EnviarReinf;
+var
+  Resposta: PChar;
+  Tamanho: Longint;
+  Handle: THandle;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho := 0;
 
+    AssertEquals('Erro ao Enviar Evento Reinf', ErrOK,
+      Reinf_EnviarReinf(Handle, Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_ConsultarReinf;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    Resposta := '';
+    Tamanho := 0;
 
+    AssertEquals('Erro ao Consultar Protocolo', ErrOK,
+      Reinf_ConsultarReinf(Handle, '', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_ConsultarReciboReinf;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    Resposta := '';
+    Tamanho := 0;
 
+    AssertEquals('Erro ao Consultar Recibo', ErrOK,
+      Reinf_ConsultarReciboReinf(Handle, '', 0, '', '', '', '', '', '', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_CriarEnviarReinf;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    Resposta := '';
+    Tamanho := 0;
 
+    AssertEquals('Erro ao Criar e Enviar Evento Reinf', ErrOK,
+      Reinf_CriarEnviarReinf(Handle, PChar(fCaminhoExec+'\evento.ini'), Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_LimparReinf;
+var
+  Handle: THandle;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
 
+    AssertEquals('Erro ao Limpar Reinf', ErrOK,
+      Reinf_LimparReinf(Handle));
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_CarregarXMLEventoReinf;
+var
+  Handle: THandle;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
 
+    AssertEquals('Erro ao Carregar XML do Reinf', ErrOK,
+      Reinf_CarregarXMLEventoReinf(Handle, PChar(fCaminhoExec+'\evento.xml')));
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_SetIDContribuinte;
+var
+  Handle: THandle;
 begin
-
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    AssertEquals(ErrOk, Reinf_SetIDContribuinte(Handle, '1234'));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_SetIDTransmissor;
+var
+  Handle: THandle;
 begin
-
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    AssertEquals(ErrOk, Reinf_SetIDTransmissor(Handle, '1234'));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_SetTipoContribuinte;
+var
+  Handle: THandle;
 begin
-
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    AssertEquals(ErrOk, Reinf_SetTipoContribuinte(Handle, 1));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_SetVersaoDF;
+var
+  Handle: THandle;
 begin
-
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    AssertEquals(ErrOk, Reinf_SetVersaoDF(Handle, '2_01_02'));
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_ObterCertificados;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
+    AssertEquals('Erro ao Obter Certificados', ErrOK,
+      Reinf_ObterCertificados(Handle, Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrReinfLib.Test_Reinf_Validar;
+var
+  Handle: THandle;
 begin
+  try
+    AssertEquals(ErrOK, Reinf_Inicializar(Handle, '', ''));
 
+    AssertEquals('Erro ao Validar Reinf', ErrOK,
+      Reinf_Validar(Handle));
+
+    AssertEquals(ErrOK, Reinf_Finalizar(Handle));
+  except
+    on E: Exception do
+      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 initialization

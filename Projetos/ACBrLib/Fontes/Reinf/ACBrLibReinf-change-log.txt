@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2023
+--- ACBrLibReinfTestCase ---
+[+] Implementados testes unitários
+--- ACBrLibReinf.lpi ---
+[*] Atualizada versão com a mesma gravada nos fontes
+--- ACBrLibReinfStaticImportMT, ACBrLibReinfStaticImportST --- 
+[*] Corrigida declaração do método Reinf_CriarEnviarReinf()
+
 12/12/2023
 --- Diversos ---
 [+] Desenvolvido programa de exemplo em C#

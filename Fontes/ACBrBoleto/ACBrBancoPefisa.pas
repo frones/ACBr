@@ -397,7 +397,7 @@ begin
     PadLeft(OnlyNumber(Beneficiario.CNPJCPF), 14, '0') +                        // 004 a 017 - CNPJ Empresa
     PadRight(Beneficiario.CodigoTransmissao, 12) +                              // 018 a 029 - Código da Empresa
     Space(8) +                                                                  // 030 a 037 - Uso do Banco Brancos
-    PadRight(LTitulo.NumeroDocumento, 25) +                                     // 038 a 062 - Uso da Empresa
+    PadRight(IfThen(LTitulo.SeuNumero = '',LTitulo.NumeroDocumento,LTitulo.SeuNumero), 25) +                                           // 038 a 062 - Uso da Empresa
     PadRight( '0'+
               LTitulo.NossoNumero +
               CalcularDigitoVerificador(LTitulo), 12) +                         // 063 a 074 - Nosso Número
@@ -406,7 +406,7 @@ begin
     Space(21) +                                                                 // 086 a 106 - Uso do Banco Brancos
     PadLeft(LTitulo.Carteira, 2, '0') +                                         // 107 a 108 - Código da Carteira
     TipoOcorrenciaToCodRemessa(LTitulo.OcorrenciaOriginal.Tipo) +               // 109 a 110 - Código Ocorrência Remessa
-    PadRight(LTitulo.SeuNumero, 10) +                                           // 111 a 120 - Seu Número
+    PadRight(IfThen(LTitulo.NumeroDocumento = '',LTitulo.SeuNumero,LTitulo.NumeroDocumento), 10) +                                     // 111 a 120 - Seu Número
     FormatDateTime('ddmmyy', LTitulo.Vencimento) +                              // 121 a 126 - Data Vencimento
     IntToStrZero(Round(LTitulo.ValorDocumento * 100), 13) +                     // 127 a 139 - Valo Titulo
     Space(8) +                                                                  // 140 a 147 - Uso do Banco Brancos

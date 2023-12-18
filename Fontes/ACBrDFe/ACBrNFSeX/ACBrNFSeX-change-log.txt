@@ -44,6 +44,8 @@ Símbolo : Significado
 
 18/12/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Feliz/RS trocou as URLs, provedor ainda é o mesmo.
+  Por: Arimateia Jr
 [+] Incluida a cidade de Euclides da Cunha/BA, provedor é o Fisco na versão 2.03
   Por: Arimateia Jr
 [*] A cidade de Castro Alves/BA trocou de provedor, agora é Fisco na versão 2.03

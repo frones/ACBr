@@ -47,6 +47,8 @@ Símbolo : Significado
 [*] Adiciona leitura do Param Aliquota2Casas na rotina de configuração
   Por: Arimateia Jr
 -- ACBrNFSeXServicos --
+[+] Incluída a cidade de Camro do Paranaiba/MG, provedor é o Governa.
+  Por: Arimateia Jr
 [+] Incluida a cidade de Sao Jose do Sul/RS, provedor é o Tecnos na versão 2.01
   Por: Arimateia Jr
 [*] A cidade de Varginha/MG trocou as URLS, provedor ainda é o mesmo.

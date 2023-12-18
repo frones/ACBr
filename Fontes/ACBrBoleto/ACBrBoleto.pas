@@ -36,7 +36,7 @@
 unit ACBrBoleto;
 
 interface
-uses Classes, Graphics, Contnrs, IniFiles,
+uses Classes, {$IFNDEF NOGUI}Graphics,{$ENDIF} Contnrs, IniFiles,
      {$IFDEF FPC}
        LResources,
      {$ENDIF}
@@ -1294,7 +1294,9 @@ type
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
+     {$IFNDEF NOGUI}
      procedure CarregaLogoEmp( const PictureLogo : TPicture );
+     {$ENDIF}
 
      procedure Imprimir; overload;
      procedure Imprimir(AStream: TStream); overload;
@@ -1549,7 +1551,10 @@ type
   {TACBrBoletoFCClass}
   TACBrBoletoFCFiltro = (fiNenhum, fiPDF, fiHTML, fiJPG) ;
 
+  {$IFNDEF NOGUI}
   TACBrBoletoFCOnObterLogo = procedure( const PictureLogo : TPicture; const NumeroBanco: Integer ) of object ;
+  {$ENDIF}
+
 
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
@@ -1566,7 +1571,11 @@ type
     fPathNomeArquivo : String;
     fNumCopias       : Integer;
     fPrinterName     : String;
+
+    {$IFNDEF NOGUI}
     fOnObterLogo     : TACBrBoletoFCOnObterLogo ;
+    {$ENDIF}
+
     fSoftwareHouse   : String;
     FPdfSenha        : string;
     FTituloPreview   : string;
@@ -1613,13 +1622,19 @@ type
     procedure GerarHTML; virtual;
     procedure GerarJPG; virtual;
 
-    procedure CarregaLogo( const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
+   {$IFNDEF NOGUI}
+   procedure CarregaLogo( const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
+   {$ENDIF}
+
 
     property ArquivoLogo : String read GetArquivoLogo;
     property IndiceImprimirIndividual: Integer read GetIndiceImprimirIndividual  write SetIndiceImprimirIndividual   default -1;
 
   published
+
+    {$IFNDEF NOGUI}
     property OnObterLogo     : TACBrBoletoFCOnObterLogo read fOnObterLogo write fOnObterLogo ;
+    {$ENDIF}
     property ACBrBoleto      : TACBrBoleto     read fACBrBoleto       write SetACBrBoleto stored False;
     property LayOut          : TACBrBolLayOut  read fLayOut           write fLayOut           default lPadrao;
     property MostrarPreview  : Boolean         read fMostrarPreview   write fMostrarPreview   default True ;
@@ -2853,11 +2868,14 @@ begin
    fTotalParcelas := AValue;
 end;
 
+  {$IFNDEF NOGUI}
 procedure TACBrTitulo.CarregaLogoEmp(const PictureLogo: TPicture);
 begin
   if FileExists( ArquivoLogoEmp ) then
     PictureLogo.LoadFromFile( ArquivoLogoEmp );
 end;
+  {$ENDIF}
+
 
 procedure TACBrTitulo.Imprimir;
 begin
@@ -4184,8 +4202,7 @@ var
   J: Integer;
 begin
   Result:= '';
-  if Pos(PathDelim,DirIniRetorno) <> Length(DirIniRetorno) then
-     DirIniRetorno:= DirIniRetorno + PathDelim;
+  DirIniRetorno:= PathWithDelim(DirIniRetorno);
 
   IniRetorno:= TMemIniFile.Create(DirIniRetorno + IfThen( EstaVazio(NomeArquivo), 'Retorno.ini', NomeArquivo ) );
   try
@@ -4310,7 +4327,7 @@ begin
     SL:= TStringList.Create;
     try
       IniRetorno.GetStrings(SL);
-      Result:= SL.Text;
+      Result:= ACBrStr(SL.Text);
     finally
       SL.Free;
     end;
@@ -6241,6 +6258,7 @@ begin
             ' Conta:'+ACBrBoleto.Cedente.Conta+'-'+ACBrBoleto.Cedente.ContaDigito;
 end;
 
+  {$IFNDEF NOGUI}
 procedure TACBrBoletoFCClass.CarregaLogo(const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
 begin
   if Assigned( fOnObterLogo ) then
@@ -6251,6 +6269,8 @@ begin
         PictureLogo.LoadFromFile( ArquivoLogo );
    end ;
 end ;
+  {$ENDIF}
+
 
 procedure TACBrBoletoFCClass.SetACBrBoleto ( const Value: TACBrBoleto ) ;
   Var OldValue : TACBrBoleto ;

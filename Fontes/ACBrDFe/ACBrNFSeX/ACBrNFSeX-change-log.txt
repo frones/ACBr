@@ -47,6 +47,8 @@ Símbolo : Significado
 [*] Adiciona leitura do Param Aliquota2Casas na rotina de configuração
   Por: Arimateia Jr
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade de Sao Jose do Sul/RS, provedor é o Tecnos na versão 2.01
+  Por: Arimateia Jr
 [*] A cidade de Varginha/MG trocou as URLS, provedor ainda é o mesmo.
   Por: Arimateia Jr
 [*] A cidade de Feliz/RS trocou as URLs, provedor ainda é o mesmo.

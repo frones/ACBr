@@ -38,18 +38,19 @@ interface
 
 uses
   SysUtils, Classes, types, IniFiles,
-  ACBrBase, ACBrSocket, ACBrIBGE;
+  ACBrBase, ACBrSocket, ACBrIBGE, ACBrConsultaCNPJ.WS;
 
 type
   TACBrOnSolicitaCaptchaHTTP = procedure( var AHtml : String ) of object ;
   EACBrConsultaCNPJException = class ( Exception );
+  TACBrCNPJProvedorWS = (cwsNenhum = -1, cwsBrasilAPI = 1, cwsReceitaWS = 2);
 
   { TACBrConsultaCNPJ }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrConsultaCNPJ = class(TACBrHTTP)
-  private
+  protected
     FACBrIBGE: TACBrIBGE;
     FNaturezaJuridica : String ;
     //FViewState: String;
@@ -82,6 +83,9 @@ type
     FResourceName: String;
     FParams: TStrings;
     FOnSolicitarCaptcha: TACBrOnSolicitaCaptchaHTTP;
+    FProvedor : TACBrCNPJProvedorWS;
+    FUsuario: String;
+    FSenha: String;
     //Function GetCaptchaURL: String;
     function GetIBGE_UF : String ;
     function VerificarErros(const Str: String): String;
@@ -91,8 +95,9 @@ type
     function LerSessaoChaveIni(const Sessao, Chave : String):String;
     function LerParamsIniServicos: AnsiString;
     function LerParamsInterno: AnsiString;
+    procedure ParserWS(const AACBrConsultaCNPJWSResposta : TACBrConsultaCNPJWSResposta);
   public
-    procedure Captcha(Stream: TStream);
+    procedure Captcha(Stream: TStream); deprecated 'Metodo sem utilidade atualmente.';
     function Consulta(const ACNPJ, ACaptcha: String;
       ARemoverEspacosDuplos: Boolean = False): Boolean;
     procedure Clear;
@@ -129,6 +134,9 @@ type
     property IBGE_UF         : String read GetIBGE_UF ;
     property PesquisarIBGE: Boolean read FPesquisarIBGE write FPesquisarIBGE;
     property IniServicos : string read GetIniServicos write FIniServicos;
+    property Provedor : TACBrCNPJProvedorWS read FProvedor write FProvedor default cwsNenhum;
+    property Usuario: String read FUsuario write FUsuario;
+    property Senha: String read FSenha write FSenha;
   end;
 
 implementation
@@ -140,7 +148,9 @@ uses
   ACBrUtil.DateTime,
   ACBrUtil.XMLHTML,
   ACBrValidador,
-  ACBrUtil.FilesIO;
+  ACBrUtil.FilesIO,
+  ACBrConsultaCNPJ.WS.ReceitaWS,
+  ACBrConsultaCNPJ.WS.BrasilAPI;
 
 {$IFDEF FPC}
  {$R ACBrConsultaCNPJServicos.rc}
@@ -172,7 +182,9 @@ procedure TACBrConsultaCNPJ.Captcha(Stream: TStream);
 var
   LErro : String;
 begin
-  try
+  if Self.Provedor = cwsNenhum then
+   raise EACBrConsultaCNPJException.Create('Utilize comunicação via WebServices.');
+  {try
     HTTPGet(LerSessaoChaveIni('ENDERECOS','CAPTCH'));  // GetCaptchaURL
     if HttpSend.ResultCode = 200 then
     begin
@@ -191,7 +203,7 @@ begin
 
       raise EACBrConsultaCNPJException.Create(LErro);
     end;
-  end;
+  end;}
 end;
 
 function TACBrConsultaCNPJ.VerificarErros(const Str: String): String;
@@ -292,6 +304,35 @@ begin
   Result := FParams.Values[Chave];
 end;
 
+procedure TACBrConsultaCNPJ.ParserWS(const AACBrConsultaCNPJWSResposta : TACBrConsultaCNPJWSResposta);
+begin
+  FNaturezaJuridica     := AACBrConsultaCNPJWSResposta.NaturezaJuridica;
+  FEmpresaTipo          := AACBrConsultaCNPJWSResposta.EmpresaTipo;
+  FAbertura             := AACBrConsultaCNPJWSResposta.Abertura;
+  FRazaoSocial          := AACBrConsultaCNPJWSResposta.RazaoSocial;
+  FFantasia             := AACBrConsultaCNPJWSResposta.Fantasia;
+  FPorte                := AACBrConsultaCNPJWSResposta.Porte;
+  FCNAE1                := AACBrConsultaCNPJWSResposta.CNAE1;
+  FCNAE2.Text           := AACBrConsultaCNPJWSResposta.CNAE2.Text;
+  FEndereco             := AACBrConsultaCNPJWSResposta.Endereco;
+  FNumero               := AACBrConsultaCNPJWSResposta.Numero;
+  FComplemento          := AACBrConsultaCNPJWSResposta.Complemento;
+  FCEP                  := AACBrConsultaCNPJWSResposta.CEP;
+  FBairro               := AACBrConsultaCNPJWSResposta.Bairro;
+  FCidade               := AACBrConsultaCNPJWSResposta.Cidade;
+  FUF                   := AACBrConsultaCNPJWSResposta.UF;
+  FSituacao             := AACBrConsultaCNPJWSResposta.Situacao;
+  FSituacaoEspecial     := AACBrConsultaCNPJWSResposta.SituacaoEspecial;
+  FCNPJ                 := AACBrConsultaCNPJWSResposta.CNPJ;
+  FDataSituacao         := AACBrConsultaCNPJWSResposta.DataSituacao;
+  FDataSituacaoEspecial := AACBrConsultaCNPJWSResposta.DataSituacaoEspecial;
+  FEndEletronico        := AACBrConsultaCNPJWSResposta.EndEletronico;
+  FTelefone             := AACBrConsultaCNPJWSResposta.Telefone;
+  FEFR                  := AACBrConsultaCNPJWSResposta.EFR;
+  FMotivoSituacaoCad    := AACBrConsultaCNPJWSResposta.MotivoSituacaoCad;
+  FCodigoIBGE           := AACBrConsultaCNPJWSResposta.CodigoIBGE;
+end;
+
 function TACBrConsultaCNPJ.Consulta(const ACNPJ, ACaptcha: String;
   ARemoverEspacosDuplos: Boolean): Boolean;
 var
@@ -300,10 +341,28 @@ var
   CountCid, Tentativas:Integer;
   Retentar: Boolean;
   ModoAntigo: Boolean;
+
+  LACBrConsultaCNPJWS : TACBrConsultaCNPJWS;
 begin
   Erro := ValidarCNPJ( ACNPJ ) ;
   if Erro <> '' then
      raise EACBrConsultaCNPJException.Create(Erro);
+
+  try
+    if Self.Provedor <> cwsNenhum then
+    begin
+      case Self.Provedor of
+        cwsReceitaWS : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSReceitaWS.Create( ACNPJ, self.Usuario, Self.Senha );
+        cwsBrasilAPI : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSBrasilAPI.Create( ACNPJ, self.Usuario, Self.Senha );
+      end;
+
+      Result := LACBrConsultaCNPJWS.Executar;
+      ParserWS(LACBrConsultaCNPJWS.FResposta);
+      Exit;
+    end;
+  finally
+    LACBrConsultaCNPJWS.Free;
+  end;
 
   Clear;
   Retentar := True;
@@ -464,6 +523,7 @@ begin
   FResourceName := 'ACBrConsultaCNPJServicos';
   FParams := TStringList.Create;
   LerParams;
+  FProvedor := cwsNenhum;
 end;
 
 destructor TACBrConsultaCNPJ.Destroy;

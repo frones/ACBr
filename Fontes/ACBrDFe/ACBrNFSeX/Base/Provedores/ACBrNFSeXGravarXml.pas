@@ -205,6 +205,8 @@ begin
     FFormItemLServico := filsNaoSeAplica;
 
   FFormatoAliq := tcDe4;
+  if FpAOwner.ConfigGeral.Params.TemParametro('Aliquota2Casas') then
+    FormatoAliq := tcDe2;
   FDivAliq100  := False;
 
   FNrMinExigISS := 1;

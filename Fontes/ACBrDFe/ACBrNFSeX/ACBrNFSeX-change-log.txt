@@ -43,7 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/12/2023
+-- ACBrNFSeXGravarXml --
+[*] Adiciona leitura do Param Aliquota2Casas na rotina de configuração
+  Por: Arimateia Jr
 -- ACBrNFSeXServicos --
+[*] A cidade de Varginha/MG trocou as URLS, provedor ainda é o mesmo.
+  Por: Arimateia Jr
 [*] A cidade de Feliz/RS trocou as URLs, provedor ainda é o mesmo.
   Por: Arimateia Jr
 [+] Incluida a cidade de Euclides da Cunha/BA, provedor é o Fisco na versão 2.03

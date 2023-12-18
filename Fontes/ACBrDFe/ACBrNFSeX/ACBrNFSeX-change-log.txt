@@ -44,6 +44,8 @@ Símbolo : Significado
 
 18/12/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Castro Alves/BA trocou de provedor, agora é Fisco na versão 2.03
+  Por: Arimateia Jr
 [+] Incluida a cidade de Garanhus/PE, provedor é Tinus na versão 1.02
   Por: Arimateia Jr
 

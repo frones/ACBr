@@ -36,7 +36,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="24">
+    <Files Count="27">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -75,7 +75,7 @@
         <UnitName Value="ACBrNFPws"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.pas"/>
         <UnitName Value="ACBrConsultaCNPJ"/>
       </Item10>
       <Item11>
@@ -134,6 +134,18 @@
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas"/>
         <UnitName Value="ACBrFeriadoWSJSON"/>
       </Item24>
+      <Item25>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.ReceitaWS.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS.ReceitaWS"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.BrasilAPI.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS.BrasilAPI"/>
+      </Item27>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

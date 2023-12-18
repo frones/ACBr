@@ -239,8 +239,11 @@ begin
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'ValorDesconto', 1, 15, 1,
                        NFSe.Servico.ItemServico[i].DescontoIncondicionado, ''));
 
-    xmlNode := GerarDadosProfissionalParceiro(i);
-    Result[i].AppendChild(xmlNode);
+    if Trim(NFSe.Servico.ItemServico[i].DadosProfissionalParceiro.IdentificacaoParceiro.CpfCnpj) <> EmptyStr then
+    begin
+      xmlNode := GerarDadosProfissionalParceiro(i);
+      Result[i].AppendChild(xmlNode);
+    end;
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then

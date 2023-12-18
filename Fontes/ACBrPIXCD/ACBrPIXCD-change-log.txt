@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2023
+-- ACBrPIXPSPShipay --
+[*] Correção na leitura das datas na resposta do PSP Shipay.
+    Por: Elias César
+
 15/12/2023
 [+] Incluída possibilidade de consultar pagametos por período;
 [*] Alteração para criar um objeto pix na cobrança consultada, caso exista um pagamento.

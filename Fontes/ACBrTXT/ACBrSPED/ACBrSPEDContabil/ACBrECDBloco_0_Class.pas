@@ -77,7 +77,7 @@ type
     procedure WriteRegistro0001;
     procedure WriteRegistro0007;
     procedure WriteRegistro0020;
-	procedure WriteRegistro0035;
+    procedure WriteRegistro0035;
     procedure WriteRegistro0150;
     //procedure WriteRegistro0180;
     procedure WriteRegistro0990;

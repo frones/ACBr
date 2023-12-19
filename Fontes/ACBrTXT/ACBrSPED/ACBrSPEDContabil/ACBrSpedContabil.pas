@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Isaque Pinheiro								   }
+{ Colaboradores nesse arquivo: Isaque Pinheiro                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -109,6 +109,8 @@ type
     procedure InicializaBloco(Bloco: TACBrSPED);
     procedure SetArquivo(const Value: String);
     function GetConteudo: TStringList;
+
+    procedure SubstituiMascaraPorQTDLinhasEmArquivoFinal(const Mascara, Texto: string);
 
   protected
     procedure WriteRegistro0990;
@@ -1228,24 +1230,36 @@ end;
 
 procedure TACBrSPEDContabil.TotalizarTermos;
 var
+  sTotal: String;
+begin
+  sTotal := FACBrTXT.LFill(Bloco_9.Registro9999.QTD_LIN, 9, False);
+
+  SubstituiMascaraPorQTDLinhasEmArquivoFinal(sIndicadorQTDLinhasArquivo, sTotal);
+end;
+
+procedure TACBrSPEDContabil.SubstituiMascaraPorQTDLinhasEmArquivoFinal(const Mascara, Texto: string);
+var
   fs: TFileStream;
   sByte, sByteNew: Byte;
-  iInc, iEnd, iCont, iIni : Integer;
-  sTotal, sChar : String;
+  iInc, QtdSubstituicoes, iCont, iIni : Integer;
+  sChar : String;
+  TamanhoMascara: Integer;
 begin
-  sTotal := FACBrTXT.LFill(Bloco_9.Registro9999.QTD_LIN, 9, false);
   sChar := '';
-  iCont:=0;
+  iCont := 0;
+  TamanhoMascara := Length(Mascara);
+
   fs := TFileStream.Create(FACBrTXT.NomeArquivo, fmOpenReadWrite or fmShareExclusive );
 
 //******************************************************************************
-// iEnd : soma a quantidade de vezes que encontra o caracter '[' dentro do
-// arquivo, no momento que enontra 2 vezes encerra a alteração dos totalizadores
-// do arquivo e encerra o laço de repetição.
+// QtdSubstituicoes : soma a quantidade de vezes que foi substituido a mascara
+// dentro do arquivo. Para Sped Contabil isso é 2 vezes (Registros J e I).
+// Assim, encerra a alteração dos totalizadores de linhas do arquivo e encerra o laço
+// de repetiçãoapós duas vezes QtdSubstituicoes = 2
 //******************************************************************************
   try
-    iEnd := 0;
-    while iEnd <> 2 do
+    QtdSubstituicoes := 0;
+    while QtdSubstituicoes <> 2 do
     begin
       fs.Position := iCont;
       fs.Read(sByte, 1);
@@ -1255,7 +1269,7 @@ begin
         iIni := iCont;
         sChar := '';
 
-        for iInc := 1 to 9 do
+        for iInc := 1 to TamanhoMascara do
         begin
           fs.Position := iCont;
           fs.Read(sByte, 1);
@@ -1263,24 +1277,22 @@ begin
           Inc(iCont);
         end;
 
-        if (sChar = '[*******]') then
+        if (sChar = Mascara) then
         begin
-          for iInc := 1 to 9 do
+          for iInc := 1 to TamanhoMascara do
           begin
             fs.Position := iIni;
-            sByteNew := Ord(sTotal[iInc]);
+            sByteNew := Ord(Texto[iInc]);
             fs.Write(sByteNew,1);
             Inc(iIni);
           end;
-          Inc(iEnd);
+          Inc(QtdSubstituicoes);
         end;
       end;
       Inc(iCont);
     end;
-    finally
-    begin
-      FreeAndNil(fs);
-    end;
+  finally
+    FreeAndNil(fs);
   end;
 end;
 

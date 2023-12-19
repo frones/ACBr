@@ -31,6 +31,7 @@
 {******************************************************************************}
 
 unit ACBrEFDBlocos;
+{$I ACBr.inc}
 
 interface
 
@@ -79,8 +80,13 @@ type
                                   vlVersao113,  // Código 014 - Versão 113 Ato COTEPE 01/01/2020
                                   vlVersao114,  // Código 015 - Versão 114 Ato COTEPE 01/01/2021
                                   vlVersao115,  // Código 016 - Versão 115 Ato COTEPE 01/01/2022
-                                  vlVersao116   // Código 017 - Versão 116 Ato COTEPE 01/01/2023
+                                  vlVersao116,  // Código 017 - Versão 116 Ato COTEPE 01/01/2023
+                                  vlVersao117   // Código 018 - Versão 117 Ato COTEPE 01/01/2024
                                  );
+  const
+  TACBrVersaoLeiauteSPEDFiscalArrayofstrings: array[TACBrVersaoLeiauteSPEDFiscal] of string = ('001', '002', '003', '004', '005', '006', '007', '008', '009', '010', '011', '012', '013', '014', '015', '016', '017', '018');
+
+type
   TACBrVersaoLeiaute = TACBrVersaoLeiauteSPEDFiscal {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf}{$EndIf};
   TACBrCodVer = TACBrVersaoLeiauteSPEDFiscal {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf}{$EndIf};
 
@@ -153,10 +159,15 @@ type
                          opNenhum           // Preencher vazio
                          );
   /// Indicador do tipo de operação
-  TACBrIndOperST      = (toCombustiveisLubrificantes, // 0 - Combustíveis e Lubrificantes
-                         toLeasingVeiculos            // 1 - leasing de veículos ou faturamento direto
-                         );
-  TACBrTipoOperacaoST = TACBrIndOperST;
+  TACBrIndTipoOperacaoST = (toCombustiveisLubrificantes, // 0 - Combustíveis e Lubrificantes
+                            toLeasingVeiculos,           // 1 - leasing de veículos ou faturamento direto
+                            toRecusadeRecebimento        // 2 - Recusa de recebimento (de acordo com as condições descritas nas instruções do Registro
+                           );
+  const
+    TACBrIndTipoOperacaoSTArrayStrings: array[TACBrIndTipoOperacaoST] of string = ('0', '1', '2');
+type
+  TACBrTipoOperacaoST = TACBrIndTipoOperacaoST {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrIndTipoOperacaoST'{$EndIf}{$EndIf};
+  TACBrIndOperST      = TACBrIndTipoOperacaoST {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrIndTipoOperacaoST'{$EndIf}{$EndIf};
 
   TACBrDoctoArrecada = (daEstadualArrecadacao,  // 0 - Documento Estadual de Arrecadação
                         daGNRE                  // 1 - GNRE
@@ -720,6 +731,16 @@ type
    TACBrIndicadorFormaPagto = (fpgPrePago,    // 0 – Pré pago
                                fpgPosPago);   // 1 - Pós pago
 
+  TACBrTipoResiduo = (trBagacodeCana, // 01 - Bagaço de cana
+                      trDDG,          // 02 - DDG
+                      trWDG,          // 03 – WDG
+                      trDDGWDG        // 04 - DDG + WDG
+                      );
+  const
+  TACBrTipoResiduoArrayStrings: array[TACBrTipoResiduo] of string = ('01','02','03','04');
+
+type
+{ TOpenBlocos }
   TOpenBlocos = class
   private
     FIND_MOV: TACBrIndMov;    /// Indicador de movimento: 0- Bloco com dados informados, 1- Bloco sem dados informados.
@@ -846,107 +867,32 @@ type
   function StrToTipoFaturamentoDOCe(const aValue: String): TACBrTipoFaturamentoDocumentoEletronico;
   function IndTipoLeiauteToStr(aValue: TACBrIndTipoLeiaute): string;
   function StrToIndTipoLeiaute(const aValue: string): TACBrIndTipoLeiaute;
+  function TpResidoToStr(const aValue: TACBrTipoResiduo): String;
+  function StrToTpResido(const aValue: string): TACBrTipoResiduo;
+  function IndTipoOperacaoStToStr(const aValue: TACBrIndTipoOperacaoST): String;
+  function StrToIndTipoOperacaoSt(const aValue: string): TACBrIndTipoOperacaoST;
 
 implementation
 
-{ TOpenBlocos }
 
 function StrToCodVer(const AValue: string): TACBrVersaoLeiauteSPEDFiscal;
+var
+  idx: TACBrVersaoLeiauteSPEDFiscal;
 begin
-   if AValue = '001' then
-      Result := vlVersao100
-   else
-   if AValue = '002' then
-      Result := vlVersao101
-   else
-   if AValue = '003' then
-      Result := vlVersao102
-   else
-   if AValue = '004' then
-      Result := vlVersao103
-   else
-   if AValue = '005' then
-      Result := vlVersao104
-   else
-   if AValue = '006' then
-      Result := vlVersao105
-   else
-   if AValue = '007' then
-      Result := vlVersao106
-   else
-   if AValue = '008' then
-      Result := vlVersao107
-   else
-   if AValue = '009' then
-      Result := vlVersao108
-   else
-   if AValue = '010' then
-      Result := vlVersao109
-   else
-   if AValue = '011' then
-      Result := vlVersao110
-   else
-   if AValue = '012' then
-      Result := vlVersao111
-   else
-   if AValue = '013' then
-      Result := vlVersao112
-   else
-   if AValue = '014' then
-      Result := vlVersao113
-   else
-   if AValue = '015' then
-      Result := vlVersao114
-   else
-   if AValue = '016' then
-      Result := vlVersao115
-   else
-   if AValue = '017' then
-      Result := vlVersao116
-   else
-     raise EACBrSPEDFiscalException.CreateFmt('Versão desconhecida. Versao "%s" não é um valor válido.', [AValue]);
+  for idx := Low(TACBrVersaoLeiauteSPEDFiscalArrayofstrings) to High(TACBrVersaoLeiauteSPEDFiscalArrayofstrings)do
+  begin
+    if(TACBrVersaoLeiauteSPEDFiscalArrayofstrings[idx] = AValue)then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrSPEDFiscalException.CreateFmt('Valor string inválido para TACBrVersaoLeiauteSPEDFiscal: %s', [AValue]);
 end;
 
 function CodVerToStr(AValue: TACBrVersaoLeiauteSPEDFiscal): string;
 begin
-  case AValue of
-    vlVersao100:
-      Result := '001';
-    vlVersao101:
-      Result := '002';
-    vlVersao102:
-      Result := '003';
-    vlVersao103:
-      Result := '004';
-    vlVersao104:
-      Result := '005';
-    vlVersao105:
-      Result := '006';
-    vlVersao106:
-      Result := '007';
-    vlVersao107:
-      Result := '008';
-    vlVersao108:
-      Result := '009';
-    vlVersao109:
-      Result := '010';
-    vlVersao110:
-      Result := '011';
-    vlVersao111:
-      Result := '012';
-    vlVersao112:
-      Result := '013';
-    vlVersao113:
-      Result := '014';
-    vlVersao114:
-      Result := '015';
-    vlVersao115:
-      Result := '016';
-    vlVersao116:
-      Result := '017';
-  else
-    Result := EmptyStr;
-  end;
+  Result := TACBrVersaoLeiauteSPEDFiscalArrayofstrings[AValue];
 end;
 
 function IndOperToStr(AValue: TACBrIndOper): string;
@@ -2146,5 +2092,47 @@ begin
   else
     raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrIndTipoLeiaute.', [aValue]);
 end;
+
+function TpResidoToStr(const aValue: TACBrTipoResiduo): String;
+begin
+  Result := TAcBrTipoResiduoArrayStrings[aValue];
+end;
+
+function StrToTpResido(const aValue: string): TACBrTipoResiduo;
+var
+  idx: TACBrTipoResiduo;
+begin
+  for idx := Low(TACBrTipoResiduoArrayStrings) to High(TACBrTipoResiduoArrayStrings)do
+  begin
+    if(TACBrTipoResiduoArrayStrings[idx] = aValue)then
+    begin
+      Result := idx;
+      Exit;
+    end;
+  end;
+  raise EACBrSPEDFiscalException.CreateFmt('Valor string inválido para TACBrTipoResiduo: %s', [aValue]);
+end;
+
+function IndTipoOperacaoStToStr(const aValue: TACBrIndTipoOperacaoST): String;
+begin
+  Result := TACBrIndTipoOperacaoSTArrayStrings[aValue];
+end;
+
+function StrToIndTipoOperacaoSt(const aValue: string): TACBrIndTipoOperacaoST;
+var
+  idx: TACBrIndTipoOperacaoST;
+begin
+  for idx := Low(TACBrIndTipoOperacaoSTArrayStrings) to High(TACBrIndTipoOperacaoSTArrayStrings)do
+  begin
+    if(TACBrIndTipoOperacaoSTArrayStrings[idx] = aValue)then
+    begin
+      Result := idx;
+      Exit;
+    end;
+  end;
+  raise EACBrSPEDFiscalException.CreateFmt('Valor string inválido para TACBrIndTipoOperacaoST: %s', [aValue]);
+end;
+
+
 
 end.

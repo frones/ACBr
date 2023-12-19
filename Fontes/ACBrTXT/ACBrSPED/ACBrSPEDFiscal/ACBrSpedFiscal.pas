@@ -39,9 +39,8 @@
 |*  - Adicionado o REGISTRO 0500: PLANO DE CONTAS CONTÁBEIS
 *******************************************************************************}
 
-{$I ACBr.inc}
-
 unit ACBrSpedFiscal;
+{$I ACBr.inc}
 
 interface
 

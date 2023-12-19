@@ -693,7 +693,10 @@ type
     FTP_RESIDUO: Integer;       /// Tipo de resíduo produzido: 01 - Bagaço de cana
                                                             // 02 - DDG
                                                             // 03 - WDG
-    FQTD_RESIDUO: Extended;     /// Quantidade de resíduo produzido (toneladas)
+    FQTD_RESIDUO: Extended;      /// Quantidade de resíduo produzido (toneladas)
+    FQTD_RESIDUO_DDG:Extended;   /// Quantidade de resíduo produzido de DDG (toneladas)
+    FQTD_RESIDUO_WDG:Extended;   /// Quantidade de resíduo produzido de WDG (toneladas)
+    FQTD_RESIDUO_CANA: Extended; /// Quantidade de resíduo produzido de bagaço de cana (toneladas)
   public                        
     constructor Create(AOwner: TRegistro1390); virtual; /// Create
 
@@ -716,6 +719,9 @@ type
     property COD_ITEM: string read FCOD_ITEM write FCOD_ITEM;
     property TP_RESIDUO: Integer read FTP_RESIDUO write FTP_RESIDUO;
     property QTD_RESIDUO: Extended read FQTD_RESIDUO write FQTD_RESIDUO;
+    property QTD_RESIDUO_DDG: Extended read FQTD_RESIDUO_DDG write FQTD_RESIDUO_DDG;
+    property QTD_RESIDUO_WDG: Extended read FQTD_RESIDUO_WDG write FQTD_RESIDUO_WDG;
+    property QTD_RESIDUO_CANA: Extended read FQTD_RESIDUO_CANA write FQTD_RESIDUO_CANA;
   end;
 
   /// Registro 1391 - Lista
@@ -735,12 +741,14 @@ type
   TRegistro1400 = class
   private
     fCOD_ITEM: String;      /// Código do item (campo 02 do Registro 0200)
+    fCOD_ITEM_IPM : String;
     fMUN: String;           /// Código do Município de origem
     fVALOR: Currency;      /// Valor mensal correspondente ao município
   public
     constructor Create(AOwner: TRegistro1001); virtual; /// Create
 
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
+    property COD_ITEM_IPM: String read fCOD_ITEM_IPM write fCOD_ITEM_IPM;
     property MUN: String read FMUN write FMUN;
     property VALOR: Currency read FVALOR write FVALOR;
   end;

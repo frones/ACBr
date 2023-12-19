@@ -1038,7 +1038,10 @@ begin
                LFill( OBS          ) +
                LFill( COD_ITEM ) +
                LFill( TP_RESIDUO ) +
-               LFill( QTD_RESIDUO , 0, 2)
+               LFill( QTD_RESIDUO , 0, 2) +
+               LFill( QTD_RESIDUO_DDG , 0, 2) +
+               LFill( QTD_RESIDUO_WDG , 0, 2) +
+               LFill( QTD_RESIDUO_CANA , 0, 2)
              ) ;
         end
         else
@@ -1072,22 +1075,22 @@ end;
 procedure TBloco_1.WriteRegistro1400(Reg1001: TRegistro1001) ;
 var
   intFor: integer;
+  vReg1400: TRegistro1400;
 begin
   if Assigned( Reg1001.Registro1400 ) then
   begin
-     for intFor := 0 to Reg1001.Registro1400.Count - 1 do
-     begin
-        with Reg1001.Registro1400.Items[intFor] do
-        begin
-          Add( LFill('1400') +
-               LFill( COD_ITEM ) +
-               LFill( MUN ) +
-               LFill( VALOR,0,2 ) ) ;
-        end;
-        Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
-     end;
-     /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistro1400Count := FRegistro1400Count + Reg1001.Registro1400.Count;
+    for intFor := 0 to Reg1001.Registro1400.Count - 1 do
+    begin
+      vReg1400 := Reg1001.Registro1400.Items[intFor];
+      Add( LFill('1400') +
+            LFill( vReg1400.COD_ITEM ) +
+            LFill( vReg1400.COD_ITEM_IPM ) +
+            IfThen((Trim(vReg1400.MUN)= EmptyStr), EmptyStr, LFill( vReg1400.MUN ) ) +
+            LFill( vReg1400.VALOR,0,2 ) ) ;
+      Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
+    end;
+    /// Variavél para armazenar a quantidade de registro do tipo.
+    FRegistro1400Count := FRegistro1400Count + Reg1001.Registro1400.Count;
   end;
 end;
 

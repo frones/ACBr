@@ -47,7 +47,11 @@ Símbolo : Significado
 [*] Adiciona opção para ler o parâmetro GerarGrupoRps na rotina de configuração.
   Por: Diego Folieni
 
+19/12/2023
 -- ACBrNFSeXServicos --
+[*] Alteração das URLs de homologação para as cidades de Coromandel\MG e Monte Carmelo/MG, 
+provedor ainda é o mesmo.
+  Por: Túlio de Pádua
 [*] Adiciona o parametro GerarGruposRps na cidade de Canela/RS
   Por: Diego Folieni 
 [+] Incluida a cidade de Santa Terezinha de Itaipu/PR, provedor é o Pronim versão 1.00

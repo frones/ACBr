@@ -49,6 +49,8 @@ Símbolo : Significado
 
 19/12/2023
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade de Ituverava/SP, provedor é o PriMax.
+  Por: cleberhhp
 [*] Alteração das URLs de homologação para as cidades de Coromandel\MG e Monte Carmelo/MG, 
 provedor ainda é o mesmo.
   Por: Túlio de Pádua

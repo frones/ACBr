@@ -287,10 +287,10 @@ type
 implementation
 
 uses
-  DateUtils, Math, IniFiles, pcnAuxiliar,
+  DateUtils, Math, IniFiles,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
-  ACBrConsts, ACBrPIXUtil;
+  ACBrConsts, ACBrPIXUtil, ACBrUtil.Base;
 
 { TACBrPIXInfoAdicional }
 

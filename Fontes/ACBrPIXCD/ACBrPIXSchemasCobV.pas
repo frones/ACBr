@@ -363,7 +363,7 @@ type
 implementation
 
 uses
-  DateUtils, Math, IniFiles, pcnAuxiliar,
+  DateUtils, Math, IniFiles,
   ACBrPIXUtil,
   ACBrUtil.Base,
   ACBrUtil.Strings,

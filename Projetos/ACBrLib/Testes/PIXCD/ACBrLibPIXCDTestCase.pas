@@ -44,6 +44,10 @@ type
   { TTestACBrPIXCDLib }
 
   TTestACBrPIXCDLib= class(TTestCase)
+  private
+    fCaminhoExec: String;
+  public
+    procedure SetUp; override;
   published
     procedure Test_PIXCD_Inicializar_Com_DiretorioInvalido;
     procedure Test_PIXCD_Inicializar;
@@ -69,12 +73,20 @@ type
     procedure Test_PIXCD_RevisarCobranca;
     procedure Test_PIXCD_CriarCobrancaImediata;
     procedure Test_PIXCD_CriarCobranca;
+    procedure Test_PIXCD_CancelarCobrancaImediata;
+    procedure Test_PIXCD_CancelarCobranca;
   end;
 
 implementation
 
 uses
   ACBrLibPIXCDStaticImportMT, ACBrLibPIXCDConsts, ACBrLibConsts;
+
+procedure TTestACBrPIXCDLib.SetUp;
+begin
+  inherited SetUp;
+  fCaminhoExec := ExtractFileDir(ParamStr(0));
+end;
 
 procedure TTestACBrPIXCDLib.Test_PIXCD_Inicializar_Com_DiretorioInvalido;
 var
@@ -219,7 +231,7 @@ begin
   AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals(CACBrLibVersaoConfig, AStr);
-  PIXCD_ConfigGravarValor(Handle, 'DFe','DadosPFX', '');
+  PIXCD_ConfigGravarValor(Handle, 'Principal','LogNivel', '4');
   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
 end;
 
@@ -386,14 +398,16 @@ var
   AStr: String;
   Handle: THandle;
 begin
-  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
-
-  Bufflen := 255;
-  AStr := Space(Bufflen);
-
-  AssertEquals(ErrOK, PIXCD_ConsultarPix(Handle, 'teste', PChar(AStr), Bufflen));
-
-  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  try
+   AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+   Bufflen := 255;
+   AStr := Space(Bufflen);
+   AssertEquals(ErrOK, PIXCD_ConsultarPix(Handle, 'teste', PChar(AStr), Bufflen));
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrPIXCDLib.Test_PIXCD_ConsultarPixRecebidos;
@@ -465,84 +479,148 @@ end;
 
 procedure TTestACBrPIXCDLib.Test_PIXCD_SolicitarDevolucaoPix;
 var
-  Bufflen: Integer;
-  AStr: String;
   Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
-  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+   Resposta:= '';
+   Tamanho:= 0;
 
-  Bufflen := 255;
-  AStr := Space(Bufflen);
-
-  AssertEquals(ErrOK, PIXCD_SolicitarDevolucaoPix(Handle, 'teste', 'teste', 1, 1, 'teste', PChar(AStr), Bufflen));
-
-  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+   AssertEquals('Erro ao Solicitar Devolução', ErrOK,
+   PIXCD_SolicitarDevolucaoPix(Handle, PChar(fCaminhoExec +'\DevolucaoSolicitada.ini'), 'teste', '1', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 procedure TTestACBrPIXCDLib.Test_PIXCD_RevisarCobrancaImediata;
 var
-  Bufflen: Integer;
-  AStr: String;
   Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
-   AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+   try
+    AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-   Bufflen := 255;
-   AStr := Space(Bufflen);
+    AssertEquals('Erro ao Revisar Cobrança Imediata', ErrOK,
+    PIXCD_RevisarCobrancaImediata(Handle, PChar(fCaminhoExec +'\CobRevisada.ini'), 'teste', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-   AssertEquals(ErrOK, PIXCD_RevisarCobrancaImediata(Handle, 1, 'teste', PChar(AStr), Bufflen));
-
-   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+    AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+   except
+     on E: Exception do
+     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+   end;
 end;
 
 procedure TTestACBrPIXCDLib.Test_PIXCD_RevisarCobranca;
 var
-  Bufflen: Integer;
-  AStr: String;
   Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
-   AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+   try
+    AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-   Bufflen := 255;
-   AStr := Space(Bufflen);
+    AssertEquals('Erro ao Revisar Cobrança', ErrOK,
+    PIXCD_RevisarCobranca(Handle, PChar(fCaminhoExec +'\CobVRevisada.ini'), 'teste', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-   AssertEquals(ErrOK, PIXCD_RevisarCobranca(Handle, 1, 'teste', PChar(AStr), Bufflen));
-
-   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+    AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+   except
+     on E: Exception do
+     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+   end;
 end;
 
 procedure TTestACBrPIXCDLib.Test_PIXCD_CriarCobrancaImediata;
 var
-  Bufflen: Integer;
-  AStr: String;
   Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
-   AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+   try
+    AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
 
-   Bufflen := 255;
-   AStr := Space(Bufflen);
+    AssertEquals('Erro ao Criar Cobrança Imediata', ErrOK,
+    PIXCD_CriarCobrancaImediata(Handle, PChar(fCaminhoExec +'\CobSolicitada.ini'), 'teste', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 
-   AssertEquals(ErrOK, PIXCD_CriarCobrancaImediata(Handle, 'teste', 1, 'teste', 'teste', 'teste', 1, false, 'teste', PChar(AStr), Bufflen));
-
-   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+    AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+   except
+     on E: Exception do
+     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+   end;
 end;
 
 procedure TTestACBrPIXCDLib.Test_PIXCD_CriarCobranca;
 var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+   try
+    AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
+
+    AssertEquals('Erro ao Criar Cobrança', ErrOK,
+    PIXCD_CriarCobranca(Handle, PChar(fCaminhoExec +'\CobVSolicitada.ini'), 'teste', Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+    AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+   except
+     on E: Exception do
+     ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+   end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_CancelarCobrancaImediata;
+var
   Bufflen: Integer;
   AStr: String;
   Handle: THandle;
-  DataVencimento: TDateTime;
 begin
   AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
 
   Bufflen := 255;
   AStr := Space(Bufflen);
-  DataVencimento:= EncodeDate(2023, 11, 29);
 
-   AssertEquals(ErrOK, PIXCD_CriarCobranca(Handle, 'teste', DataVencimento, 1, 'teste', 'teste', 1, 1, 1, 1, 1, 1, 1, 'teste',  PChar(AStr), Bufflen));
+  AssertEquals(ErrOK, PIXCD_CancelarCobrancaImediata(Handle, 'teste', PChar(AStr), Bufflen));
 
-   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_CancelarCobranca;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals(ErrOK, PIXCD_CancelarCobranca(Handle, 'teste', PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
 end;
 
 initialization

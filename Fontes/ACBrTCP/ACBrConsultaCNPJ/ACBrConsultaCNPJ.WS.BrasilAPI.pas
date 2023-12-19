@@ -21,7 +21,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   blcksock,
-  System.Classes,
+  Classes,
   synautil, httpsend;
 
 { TACBrConsultaCNPJWS }

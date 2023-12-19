@@ -36,6 +36,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2023
+[*] Altera System.Classes para Classes nas novas units do ConsultaCNPJ para compatibilizar com Lazarus.
+  Por: Diego Folieni
+
 31/10/2023
 [*]TK-4666 - ACBrMail - Removido chamada do Clear na rotina que salva o e-mail.
   Por: Innovae Brasil Engenharia / Rev: Alexandre de Paula

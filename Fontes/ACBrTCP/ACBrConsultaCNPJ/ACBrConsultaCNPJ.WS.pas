@@ -3,7 +3,7 @@ unit ACBrConsultaCNPJ.WS;
 interface
 uses
   ACBrJSON, SysUtils, ACBrValidador, httpsend,
-  System.Classes;
+  Classes;
 type
   EACBrConsultaCNPJWSException = class ( Exception );
   TACBrConsultaCNPJWSResposta = class (TObject)

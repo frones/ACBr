@@ -149,6 +149,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
+    function LoadFromIni(aIni: String): Boolean; virtual;
     procedure Assign(Source: TACBrPIXCobBase);
 
     property chave: String read fchave write SetChave;
@@ -173,6 +174,7 @@ type
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXCobSolicitada);
+    function LoadFromIni(aIniStr: String): Boolean; override;
 
     property calendario: TACBrPIXCalendarioCobSolicitada read fcalendario;
     property devedor: TACBrPIXDevedor read fdevedor;
@@ -192,6 +194,7 @@ type
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXCobRevisada);
+    function LoadFromIni(aIniStr: String): Boolean; override;
 
     property status: TACBrPIXStatusCobranca read fstatus write fstatus;
   end;
@@ -284,8 +287,9 @@ type
 implementation
 
 uses
-  DateUtils, Math,
+  DateUtils, Math, IniFiles, pcnAuxiliar,
   ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   ACBrConsts, ACBrPIXUtil;
 
 { TACBrPIXInfoAdicional }
@@ -537,6 +541,12 @@ begin
             finfoAdicionais.IsEmpty;
 end;
 
+function TACBrPIXCobBase.LoadFromIni(aIni: String): Boolean;
+begin
+  // Imprementar nas classes filhas
+  Result := False;
+end;
+
 procedure TACBrPIXCobBase.Assign(Source: TACBrPIXCobBase);
 begin
   fchave := Source.chave;
@@ -630,6 +640,47 @@ begin
   fvalor.Assign(Source.valor);
 end;
 
+function TACBrPIXCobSolicitada.LoadFromIni(aIniStr: String): Boolean;
+var
+  wSecao: String;
+  wIni: TMemIniFile;
+  i: Integer;
+begin
+  Result := False;
+
+  wIni := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(aIniStr, wIni);
+
+    wSecao := 'CobSolicitada';
+    fchave := wIni.ReadString(wSecao, 'chave', EmptyStr);
+    fsolicitacaoPagador := wIni.ReadString(wSecao, 'solicitacaoPagador', EmptyStr);
+
+    fcalendario.expiracao := wIni.ReadInteger(wSecao, 'expiracao', 3600);
+    fvalor.original := wIni.ReadFloat(wSecao, 'valorOriginal', 0);
+    fvalor.modalidadeAlteracao := wIni.ReadBool(wSecao, 'modalidadeAlteracao', False);
+    fdevedor.cpf := wIni.ReadString(wSecao, 'devedorCPF', EmptyStr);
+    fdevedor.cnpj := wIni.ReadString(wSecao, 'devedorCNPJ', EmptyStr);
+    fdevedor.nome := wIni.ReadString(wSecao, 'devedorNome', EmptyStr);
+
+    i := 1;
+    wSecao := 'infoAdicionais' + IntToStrZero(i, 3);
+    while wIni.SectionExists(wSecao) do
+    begin
+      with finfoAdicionais.New do
+      begin
+        nome := wini.ReadString(wSecao, 'nome', EmptyStr);
+        valor := wini.ReadString(wSecao, 'valor', EmptyStr);
+      end;
+
+      Inc(i);
+      wSecao := 'infoAdicionais' + IntToStrZero(i, 3);
+    end;
+  finally
+    wIni.Free;
+  end;
+end;
+
 procedure TACBrPIXCobSolicitada.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   fcalendario.WriteToJSon(AJSon);
@@ -666,6 +717,49 @@ procedure TACBrPIXCobRevisada.Assign(Source: TACBrPIXCobRevisada);
 begin
   inherited Assign(Source);
   fstatus := Source.status;
+end;
+
+function TACBrPIXCobRevisada.LoadFromIni(aIniStr: String): Boolean;
+var
+  wSecao: String;
+  wIni: TMemIniFile;
+  i: Integer;
+begin
+  Result := False;
+
+  wIni := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(aIniStr, wIni);
+    
+    wSecao := 'CobRevisada';
+    fchave := wIni.ReadString(wSecao, 'chave', EmptyStr);
+    fsolicitacaoPagador := wIni.ReadString(wSecao, 'solicitacaoPagador', EmptyStr);
+
+    fcalendario.expiracao := wIni.ReadInteger(wSecao, 'expiracao', 3600);
+    fvalor.original:= wIni.ReadFloat(wSecao, 'valorOriginal', 0);
+    fvalor.modalidadeAlteracao := wIni.ReadBool(wSecao, 'modalidadeAlteracao', False);
+    fdevedor.cpf := wIni.ReadString(wSecao, 'devedorCPF', EmptyStr);
+    fdevedor.cnpj := wIni.ReadString(wSecao, 'devedorCNPJ', EmptyStr);
+    fdevedor.nome := wIni.ReadString(wSecao, 'devedorNome', EmptyStr);
+
+    fstatus := TACBrPIXStatusCobranca(wIni.ReadInteger(wSecao, 'status', 0));
+
+    i := 1;
+    wSecao := 'infoAdicionais' + IntToStrZero(i, 3);
+    while wIni.SectionExists(wSecao) do
+    begin
+      with finfoAdicionais.New do
+      begin
+        nome := wini.ReadString(wSecao, 'nome', EmptyStr);
+        valor := wini.ReadString(wSecao, 'valor', EmptyStr);
+      end;
+
+      Inc(i);
+      wSecao := 'infoAdicionais' + IntToStrZero(i, 3);
+    end;
+  finally
+    wIni.Free;
+  end;
 end;
 
 procedure TACBrPIXCobRevisada.DoWriteToJSon(AJSon: TACBrJSONObject);

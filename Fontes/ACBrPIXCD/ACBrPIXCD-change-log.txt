@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2023
+-- ACBrPIXSchemasCob, ACBrPIXSchemasCob, ACBrPIXSchemasDevolucao --
+[+] Incluída função "LoadFromIni" para ser utilizada na lib do componente ACBrPIXCD
+    Por: Antônio e Elias
+
 18/12/2023
 -- ACBrPIXPSPShipay --
 [*] Correção na leitura das datas na resposta do PSP Shipay.

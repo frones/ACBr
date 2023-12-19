@@ -263,6 +263,7 @@ type
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXCobVSolicitada);
+    function LoadFromIni(aIniStr: String): Boolean; override;
 
     property calendario: TACBrPIXCalendarioCobVSolicitada read fcalendario;
     property devedor: TACBrPIXDadosDevedor read fdevedor;
@@ -282,6 +283,7 @@ type
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXCobVRevisada);
+    function LoadFromIni(aIniStr: String): Boolean; override;
 
     property status: TACBrPIXStatusCobranca read fstatus write fstatus;
   end;
@@ -361,10 +363,11 @@ type
 implementation
 
 uses
-  DateUtils, Math,
+  DateUtils, Math, IniFiles, pcnAuxiliar,
   ACBrPIXUtil,
   ACBrUtil.Base,
   ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   ACBrUtil.DateTime;
 
 function ValoresModalidadeToString(aValue: TACBrPIXValoresModalidade): String;
@@ -838,6 +841,63 @@ begin
   fvalor.Assign(Source.valor);
 end;
 
+function TACBrPIXCobVSolicitada.LoadFromIni(aIniStr: String): Boolean;
+var
+  wSecao: String;
+  wIni: TMemIniFile;
+  i: Integer;
+begin
+  Result := False;
+
+  wIni := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(aIniStr, wIni);
+
+    wSecao := 'CobVSolicitada';
+    chave := wIni.ReadString(wSecao, 'chave', EmptyStr);
+    solicitacaoPagador := wIni.ReadString(wSecao, 'solicitacaoPagador', EmptyStr);
+
+    fcalendario.criacao := wIni.ReadDateTime(wSecao, 'criacao', 0);
+    fcalendario.criacao_Bias := wIni.ReadInteger(wSecao, 'criacaoBias', 0);
+    fcalendario.dataDeVencimento := wIni.ReadDateTime(wSecao, 'dataDeVencimento', 0);
+    fcalendario.validadeAposVencimento := wIni.ReadInteger(wSecao, 'validadeAposVencimento', 0);
+
+    fvalor.original := wIni.ReadFloat(wSecao, 'valorOriginal', 0);
+
+    fvalor.multa.modalidade := TACBrPIXValoresModalidade(wIni.ReadInteger(wSecao, 'multaModalidade', 0));
+    fvalor.multa.valorPerc := wIni.ReadFloat(wSecao, 'multaValorPercentual', 0);
+
+    fvalor.juros.modalidade := TACBrPIXJurosModalidade(wIni.ReadInteger(wSecao, 'jurosModalidade', 0));
+    fvalor.juros.valorPerc := wIni.ReadFloat(wSecao, 'jurosValorPercentual', 0);
+
+    fvalor.abatimento.modalidade := TACBrPIXValoresModalidade(wIni.ReadInteger(wSecao, 'abatimentoModalidade', 0));
+    fvalor.abatimento.valorPerc := wIni.ReadFloat(wSecao, 'abatimentoValorPercentual', 0);
+
+    fvalor.desconto.modalidade := TACBrPIXDescontoModalidade(wIni.ReadInteger(wSecao, 'descontoModalidade', 0));
+    fvalor.desconto.valorPerc := wIni.ReadFloat(wSecao, 'descontoValorPercentual', 0);
+
+    devedor.cpf := wIni.ReadString(wSecao, 'devedorCPF', EmptyStr);
+    devedor.cnpj := wIni.ReadString(wSecao, 'devedorCNPJ', EmptyStr);
+    devedor.nome := wIni.ReadString(wSecao, 'devedorNome', EmptyStr);
+
+    i := 1;
+    wSecao := 'infoAdicionais' + IntToStrZero(i, 3);
+    while wIni.SectionExists(wSecao) do
+    begin
+      with infoAdicionais.New do
+      begin
+        nome := wini.ReadString(wSecao, 'nome', EmptyStr);
+        valor := wini.ReadString(wSecao, 'valor', EmptyStr);
+      end;
+
+      Inc(i);
+      wSecao := 'infoAdicionais' + IntToStrZero(i, 3);
+    end;
+  finally
+    wIni.Free;
+  end;
+end;
+
 procedure TACBrPIXCobVSolicitada.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(AJSon);
@@ -874,6 +934,65 @@ procedure TACBrPIXCobVRevisada.Assign(Source: TACBrPIXCobVRevisada);
 begin
   inherited Assign(Source);
   fstatus := Source.status;
+end;
+
+function TACBrPIXCobVRevisada.LoadFromIni(aIniStr: String): Boolean;
+var
+  wSecao: String;
+  wIni: TMemIniFile;
+  i: Integer;
+begin
+  Result := False;
+
+  wIni := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(aIniStr, wIni);
+
+    wSecao := 'CobVRevisada';
+    chave := wIni.ReadString(wSecao, 'chave', EmptyStr);
+    solicitacaoPagador := wIni.ReadString(wSecao, 'solicitacaoPagador', EmptyStr);
+
+    fcalendario.criacao := wIni.ReadDateTime(wSecao, 'criacao', 0);
+    fcalendario.criacao_Bias := wIni.ReadInteger(wSecao, 'criacaoBias', 0);
+    fcalendario.dataDeVencimento := wIni.ReadDateTime(wSecao, 'dataDeVencimento', 0);
+    fcalendario.validadeAposVencimento := wIni.ReadInteger(wSecao, 'validadeAposVencimento', 0);
+
+    fvalor.original := wIni.ReadFloat(wSecao, 'valorOriginal', 0);
+
+    fvalor.multa.modalidade := TACBrPIXValoresModalidade(wIni.ReadInteger(wSecao, 'multaModalidade', 0));
+    fvalor.multa.valorPerc := wIni.ReadFloat(wSecao, 'multaValorPercentual', 0);
+
+    fvalor.juros.modalidade := TACBrPIXJurosModalidade(wIni.ReadInteger(wSecao, 'jurosModalidade', 0));
+    fvalor.juros.valorPerc := wIni.ReadFloat(wSecao, 'jurosValorPercentual', 0);
+
+    fvalor.abatimento.modalidade := TACBrPIXValoresModalidade(wIni.ReadInteger(wSecao, 'abatimentoModalidade', 0));
+    fvalor.abatimento.valorPerc := wIni.ReadFloat(wSecao, 'abatimentoValorPercentual', 0);
+
+    fvalor.desconto.modalidade := TACBrPIXDescontoModalidade(wIni.ReadInteger(wSecao, 'descontoModalidade', 0));
+    fvalor.desconto.valorPerc := wIni.ReadFloat(wSecao, 'descontoValorPercentual', 0);
+
+    devedor.cpf := wIni.ReadString(wSecao, 'devedorCPF', EmptyStr);
+    devedor.cnpj := wIni.ReadString(wSecao, 'devedorCNPJ', EmptyStr);
+    devedor.nome := wIni.ReadString(wSecao, 'devedorNome', EmptyStr);
+
+    fstatus := TACBrPIXStatusCobranca(wIni.ReadInteger(wSecao, 'status', 0));
+
+    i := 1;
+    wSecao := 'infoAdicionais' + IntToStrZero(i, 3);
+    while wIni.SectionExists(wSecao) do
+    begin
+      with infoAdicionais.New do
+      begin
+        nome := wini.ReadString(wSecao, 'nome', EmptyStr);
+        valor := wini.ReadString(wSecao, 'valor', EmptyStr);
+      end;
+
+      Inc(i);
+      wSecao := 'infoAdicionais' + IntToStrZero(i, 3);
+    end;
+  finally
+    wIni.Free;
+  end;
 end;
 
 procedure TACBrPIXCobVRevisada.DoWriteToJSon(AJSon: TACBrJSONObject);

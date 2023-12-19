@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\Terceiros\CodeGear"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\Terceiros\CodeGear;..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTCP\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -139,12 +139,12 @@
         <UnitName Value="ACBrConsultaCNPJ.WS"/>
       </Item25>
       <Item26>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.ReceitaWS.pas"/>
-        <UnitName Value="ACBrConsultaCNPJ.WS.ReceitaWS"/>
-      </Item26>
-      <Item27>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.BrasilAPI.pas"/>
         <UnitName Value="ACBrConsultaCNPJ.WS.BrasilAPI"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.ReceitaWS.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS.ReceitaWS"/>
       </Item27>
     </Files>
     <CompatibilityMode Value="True"/>

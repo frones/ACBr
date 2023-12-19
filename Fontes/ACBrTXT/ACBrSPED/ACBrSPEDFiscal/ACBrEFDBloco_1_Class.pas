@@ -1009,61 +1009,86 @@ end;
 procedure TBloco_1.WriteRegistro1391(Reg1390: TRegistro1390) ;
 var
   intFor: integer;
+  vReg1391: TRegistro1391;
 begin
   if Assigned( Reg1390.Registro1391 ) then
   begin
     for intFor := 0 to Reg1390.Registro1391.Count - 1 do
     begin
-      with Reg1390.Registro1391.Items[intFor] do
+      vReg1391 := Reg1390.Registro1391.Items[intFor];
+      if FBloco_0.Registro0000.COD_VER >= vlVersao117 then
       begin
-        if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
-        begin
-          // A partir de 01/01/2020
-          Add( LFill('1391') +
-               LFill( DT_REGISTRO       ) +
-               LFill( QTD_MOID     ,0,2 ) +
-               LFill( ESTQ_INI     ,0,2 ) +
-               LFill( QTD_PRODUZ   ,0,2 ) +
-               LFill( ENT_ANID_HID ,0,2 ) +
-               LFill( OUTR_ENTR    ,0,2 ) +
-               LFill( PERDA        ,0,2 ) +
-               LFill( CONS         ,0,2 ) +
-               LFill( SAI_ANI_HID  ,0,2 ) +
-               LFill( SAIDAS       ,0,2 ) +
-               LFill( ESTQ_FIN     ,0,2 ) +
-               LFill( ESTQ_INI_MEL ,0,2 ) +
-               LFill( PROD_DIA_MEL ,0,2 ) +
-               LFill( UTIL_MEL     ,0,2 ) +
-               LFill( PROD_ALC_MEL ,0,2 ) +
-               LFill( OBS          ) +
-               LFill( COD_ITEM ) +
-               LFill( TP_RESIDUO ) +
-               LFill( QTD_RESIDUO , 0, 2) +
-               LFill( QTD_RESIDUO_DDG , 0, 2) +
-               LFill( QTD_RESIDUO_WDG , 0, 2) +
-               LFill( QTD_RESIDUO_CANA , 0, 2)
-             ) ;
-        end
-        else
-        begin
-          Add( LFill('1391') +
-               LFill( DT_REGISTRO       ) +
-               LFill( QTD_MOID     ,0,2 ) +
-               LFill( ESTQ_INI     ,0,2 ) +
-               LFill( QTD_PRODUZ   ,0,2 ) +
-               LFill( ENT_ANID_HID ,0,2 ) +
-               LFill( OUTR_ENTR    ,0,2 ) +
-               LFill( PERDA        ,0,2 ) +
-               LFill( CONS         ,0,2 ) +
-               LFill( SAI_ANI_HID  ,0,2 ) +
-               LFill( SAIDAS       ,0,2 ) +
-               LFill( ESTQ_FIN     ,0,2 ) +
-               LFill( ESTQ_INI_MEL ,0,2 ) +
-               LFill( PROD_DIA_MEL ,0,2 ) +
-               LFill( UTIL_MEL     ,0,2 ) +
-               LFill( PROD_ALC_MEL ,0,2 ) +
-               LFill( OBS          )) ;
-        end;
+        // A partir de 01/01/2024
+        Add( LFill('1391') +
+             LFill( vReg1391.DT_REGISTRO       ) +
+             LFill( vReg1391.QTD_MOID     ,0,2 ) +
+             LFill( vReg1391.ESTQ_INI     ,0,2 ) +
+             LFill( vReg1391.QTD_PRODUZ   ,0,2 ) +
+             LFill( vReg1391.ENT_ANID_HID ,0,2 ) +
+             LFill( vReg1391.OUTR_ENTR    ,0,2 ) +
+             LFill( vReg1391.PERDA        ,0,2 ) +
+             LFill( vReg1391.CONS         ,0,2 ) +
+             LFill( vReg1391.SAI_ANI_HID  ,0,2 ) +
+             LFill( vReg1391.SAIDAS       ,0,2 ) +
+             LFill( vReg1391.ESTQ_FIN     ,0,2 ) +
+             LFill( vReg1391.ESTQ_INI_MEL ,0,2 ) +
+             LFill( vReg1391.PROD_DIA_MEL ,0,2 ) +
+             LFill( vReg1391.UTIL_MEL     ,0,2 ) +
+             LFill( vReg1391.PROD_ALC_MEL ,0,2 ) +
+             LFill( vReg1391.OBS          ) +
+             LFill( vReg1391.COD_ITEM ) +
+             LFill( vReg1391.TP_RESIDUO ) +
+             LFill( vReg1391.QTD_RESIDUO , 0, 2) +
+             LFill( vReg1391.QTD_RESIDUO_DDG , 0, 2) +
+             LFill( vReg1391.QTD_RESIDUO_WDG , 0, 2) +
+             LFill( vReg1391.QTD_RESIDUO_CANA , 0, 2)
+           ) ;
+      end
+      else
+      if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
+      begin
+        // A partir de 01/01/2020
+        Add( LFill('1391') +
+             LFill( vReg1391.DT_REGISTRO       ) +
+             LFill( vReg1391.QTD_MOID     ,0,2 ) +
+             LFill( vReg1391.ESTQ_INI     ,0,2 ) +
+             LFill( vReg1391.QTD_PRODUZ   ,0,2 ) +
+             LFill( vReg1391.ENT_ANID_HID ,0,2 ) +
+             LFill( vReg1391.OUTR_ENTR    ,0,2 ) +
+             LFill( vReg1391.PERDA        ,0,2 ) +
+             LFill( vReg1391.CONS         ,0,2 ) +
+             LFill( vReg1391.SAI_ANI_HID  ,0,2 ) +
+             LFill( vReg1391.SAIDAS       ,0,2 ) +
+             LFill( vReg1391.ESTQ_FIN     ,0,2 ) +
+             LFill( vReg1391.ESTQ_INI_MEL ,0,2 ) +
+             LFill( vReg1391.PROD_DIA_MEL ,0,2 ) +
+             LFill( vReg1391.UTIL_MEL     ,0,2 ) +
+             LFill( vReg1391.PROD_ALC_MEL ,0,2 ) +
+             LFill( vReg1391.OBS          ) +
+             LFill( vReg1391.COD_ITEM ) +
+             LFill( vReg1391.TP_RESIDUO ) +
+             LFill( vReg1391.QTD_RESIDUO , 0, 2)
+           ) ;
+      end
+      else
+      begin
+        Add( LFill('1391') +
+             LFill( vReg1391.DT_REGISTRO       ) +
+             LFill( vReg1391.QTD_MOID     ,0,2 ) +
+             LFill( vReg1391.ESTQ_INI     ,0,2 ) +
+             LFill( vReg1391.QTD_PRODUZ   ,0,2 ) +
+             LFill( vReg1391.ENT_ANID_HID ,0,2 ) +
+             LFill( vReg1391.OUTR_ENTR    ,0,2 ) +
+             LFill( vReg1391.PERDA        ,0,2 ) +
+             LFill( vReg1391.CONS         ,0,2 ) +
+             LFill( vReg1391.SAI_ANI_HID  ,0,2 ) +
+             LFill( vReg1391.SAIDAS       ,0,2 ) +
+             LFill( vReg1391.ESTQ_FIN     ,0,2 ) +
+             LFill( vReg1391.ESTQ_INI_MEL ,0,2 ) +
+             LFill( vReg1391.PROD_DIA_MEL ,0,2 ) +
+             LFill( vReg1391.UTIL_MEL     ,0,2 ) +
+             LFill( vReg1391.PROD_ALC_MEL ,0,2 ) +
+             LFill( vReg1391.OBS          )) ;
       end;
       Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
     end;

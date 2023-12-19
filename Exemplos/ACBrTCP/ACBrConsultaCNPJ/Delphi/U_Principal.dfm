@@ -1,20 +1,18 @@
 object F_Principal: TF_Principal
   Left = 336
   Top = 105
-  Width = 674
-  Height = 697
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Consulta de CNPJ'
+  ClientHeight = 658
+  ClientWidth = 658
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
-  OnShow = FormShow
-  PixelsPerInch = 96
+  OnCreate = FormCreate
   TextHeight = 13
   object Panel2: TPanel
     Left = 8
@@ -471,8 +469,8 @@ object F_Principal: TF_Principal
     BevelOuter = bvLowered
     TabOrder = 0
     object Label1: TLabel
-      Left = 361
-      Top = 12
+      Left = 25
+      Top = 100
       Width = 85
       Height = 16
       Caption = 'Digite o CNPJ:'
@@ -484,11 +482,11 @@ object F_Principal: TF_Principal
       ParentFont = False
     end
     object Label14: TLabel
-      Left = 361
-      Top = 78
-      Width = 96
+      Left = 25
+      Top = 26
+      Width = 50
       Height = 16
-      Caption = 'Digite o Captcha'
+      Caption = 'Provedor'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -497,19 +495,16 @@ object F_Principal: TF_Principal
       ParentFont = False
     end
     object ButBuscar: TBitBtn
-      Left = 504
-      Top = 80
-      Width = 121
-      Height = 58
+      Left = 328
+      Top = 91
+      Width = 187
+      Height = 86
       Caption = 'Consultar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Tahoma'
       Font.Style = []
-      ParentFont = False
-      TabOrder = 2
-      OnClick = ButBuscarClick
       Glyph.Data = {
         E6040000424DE604000000000000360000002800000014000000140000000100
         180000000000B0040000120B0000120B00000000000000000000FFFFFFFDFDFD
@@ -551,26 +546,14 @@ object F_Principal: TF_Principal
         E5E6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFAFAFAE6E6E6D9D8D8DADADAE4E3E4FCFCFCFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFF}
-    end
-    object EditCaptcha: TEdit
-      Left = 361
-      Top = 97
-      Width = 137
-      Height = 41
-      CharCase = ecUpperCase
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -27
-      Font.Name = 'Tahoma'
-      Font.Style = []
       ParentFont = False
       TabOrder = 1
-      OnKeyPress = EditCaptchaKeyPress
+      OnClick = ButBuscarClick
     end
     object EditCNPJ: TMaskEdit
-      Left = 361
-      Top = 31
-      Width = 261
+      Left = 25
+      Top = 119
+      Width = 288
       Height = 41
       EditMask = '00.000.000/0000-00;1;_'
       Font.Charset = DEFAULT_CHARSET
@@ -583,70 +566,22 @@ object F_Principal: TF_Principal
       TabOrder = 0
       Text = '  .   .   /    -  '
     end
-    object Panel3: TPanel
-      Left = 9
-      Top = 11
-      Width = 346
-      Height = 127
-      BevelOuter = bvLowered
-      Color = clWhite
-      ParentBackground = False
-      TabOrder = 3
-      object Image1: TImage
-        Left = 1
-        Top = 1
-        Width = 344
-        Height = 106
-        Align = alClient
-        Center = True
-        Proportional = True
-        Stretch = True
-      end
-      object LabAtualizarCaptcha: TLabel
-        Left = 1
-        Top = 107
-        Width = 344
-        Height = 19
-        Cursor = crHandPoint
-        Align = alBottom
-        Alignment = taCenter
-        AutoSize = False
-        Caption = 'Atualizar Captcha'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -16
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold, fsUnderline]
-        ParentFont = False
-        OnClick = LabAtualizarCaptchaClick
-      end
+    object cbbProvedor: TComboBox
+      Left = 25
+      Top = 48
+      Width = 288
+      Height = 21
+      TabOrder = 2
+      Text = 'cbbProvedor'
     end
-    object ckRemoverEspacosDuplos: TCheckBox
-      Left = 10
-      Top = 150
-      Width = 368
-      Height = 17
-      Caption = 'Remover espa'#231'os duplos dos dados retornados'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 4
-    end
-  end
-  object Timer1: TTimer
-    Enabled = False
-    Interval = 100
-    OnTimer = Timer1Timer
-    Left = 552
-    Top = 304
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
     ProxyPort = '8080'
     PesquisarIBGE = False
-    Left = 408
-    Top = 162
+    IniServicos = 
+      'C:\Program Files (x86)\Embarcadero\Studio\22.0\bin\ACBrConsultaC' +
+      'NPJServicos.ini'
+    Left = 568
+    Top = 138
   end
 end

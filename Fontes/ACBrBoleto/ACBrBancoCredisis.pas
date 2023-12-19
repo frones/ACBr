@@ -350,15 +350,35 @@ begin
      else
        ADataDesconto := PadRight('', 8, '0');
 
-     if (DataProtesto > 0) then
-     begin
-       case TipoDiasProtesto of
-         diCorridos : ProtestoBaixa := '1';
-         diUteis    : ProtestoBaixa := '2';
+     case CodigoNegativacao of
+       cnProtestarCorrido: ProtestoBaixa := '1';
+       cnProtestarUteis: ProtestoBaixa := '2';
+       cnNaoProtestar: ProtestoBaixa := '3';
+       cnNegativar: begin
+         case TipoDiasNegativacao of
+           diCorridos: ProtestoBaixa := '4';
+           diUteis: ProtestoBaixa := '5';
+         end;
        end;
-     end
+       cnNaoNegativar: ProtestoBaixa := '6';
      else
-       ProtestoBaixa:= '3';
+       if (DataNegativacao > 0) then
+       begin
+         case TipoDiasNegativacao of
+           diCorridos: ProtestoBaixa := '4';
+           diUteis: ProtestoBaixa := '5';
+         end;
+       end
+       else if (DataProtesto > 0) then
+       begin
+         case TipoDiasProtesto of
+           diCorridos : ProtestoBaixa := '1';
+           diUteis    : ProtestoBaixa := '2';
+         end;
+       end
+       else
+         ProtestoBaixa:= '3';
+     end;
 
      {SEGMENTO P}
      Result:= IntToStrZero(ACBrBanco.Numero, 3)                                         + // 1 a 3 - Código do banco

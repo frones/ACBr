@@ -43,7 +43,7 @@ uses
 type
   TACBrOnSolicitaCaptchaHTTP = procedure( var AHtml : String ) of object ;
   EACBrConsultaCNPJException = class ( Exception );
-  TACBrCNPJProvedorWS = (cwsNenhum = -1, cwsBrasilAPI = 1, cwsReceitaWS = 2);
+  TACBrCNPJProvedorWS = (cwsNenhum, cwsBrasilAPI, cwsReceitaWS);
 
   { TACBrConsultaCNPJ }
   {$IFDEF RTL230_UP}
@@ -98,8 +98,7 @@ type
     procedure ParserWS(const AACBrConsultaCNPJWSResposta : TACBrConsultaCNPJWSResposta);
   public
     procedure Captcha(Stream: TStream); deprecated 'Metodo sem utilidade atualmente.';
-    function Consulta(const ACNPJ, ACaptcha: String;
-      ARemoverEspacosDuplos: Boolean = False): Boolean;
+    function Consulta(const ACNPJ: String; ACaptcha: String = ''; ARemoverEspacosDuplos: Boolean = False): Boolean;
     procedure Clear;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -333,8 +332,7 @@ begin
   FCodigoIBGE           := AACBrConsultaCNPJWSResposta.CodigoIBGE;
 end;
 
-function TACBrConsultaCNPJ.Consulta(const ACNPJ, ACaptcha: String;
-  ARemoverEspacosDuplos: Boolean): Boolean;
+function TACBrConsultaCNPJ.Consulta(const ACNPJ: String; ACaptcha: String; ARemoverEspacosDuplos: Boolean): Boolean;
 var
   Html, Erro, StrAux, PostStr:String;
   Resposta : TStringList;

@@ -97,7 +97,7 @@ type
     function LerParamsInterno: AnsiString;
     procedure ParserWS(const AACBrConsultaCNPJWSResposta : TACBrConsultaCNPJWSResposta);
   public
-    procedure Captcha(Stream: TStream); deprecated 'Metodo sem utilidade atualmente.';
+    procedure Captcha(Stream: TStream); deprecated {$IFDEF SUPPORTS_DEPRECATED_DETAILS}'Metodo sem utilidade atualmente.'{$ENDIF};
     function Consulta(const ACNPJ: String; ACaptcha: String = ''; ARemoverEspacosDuplos: Boolean = False): Boolean;
     procedure Clear;
     constructor Create(AOwner: TComponent); override;

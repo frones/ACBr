@@ -44,6 +44,8 @@ Símbolo : Significado
 
 19/12/2023
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade de Mantenopolis/ES, provedor é o EL na versão 1.00
+  Por: Arimateia Jr
 [+] Incluida a cidade de Ecoporanga/ES, provedor é o EL na versão 1.00
   Por: Arimateia Jr
 [+] Incluida a cidade de Pitangui, provedor é o NFSeBrasil

@@ -43,7 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/12/2023
+-- SystemPRO.Provider --
+[*] Adiciona opção para ler o parâmetro GerarGrupoRps na rotina de configuração.
+  Por: Diego Folieni
+
 -- ACBrNFSeXServicos --
+[*] Adiciona o parametro GerarGruposRps na cidade de Canela/RS
+  Por: Diego Folieni 
 [+] Incluida a cidade de Santa Terezinha de Itaipu/PR, provedor é o Pronim versão 1.00
   Por: Arimateia Jr
 [+] Incluida a cidade de Mantenopolis/ES, provedor é o EL na versão 1.00

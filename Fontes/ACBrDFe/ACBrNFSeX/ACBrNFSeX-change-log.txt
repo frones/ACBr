@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2023
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Pitangui, provedor é o NFSeBrasil
+  Por: Arimateia Jr
+[*] Adicionado Params Dividir100 nas cidades de Pirai/RJ e Rio das Ostras/RJ
+  Por: Arimateia Jr
+
+
 18/12/2023
 -- Agili.GravarXml --
 [*] Configurado para gerar o grupo DadosProfissional somente quando ao menos o cnpj/cpf tenha sido preenchido, controlando quando não deve gerar o grupo

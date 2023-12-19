@@ -81,9 +81,9 @@ end;
 
 procedure TLibPIXCDResposta.Processar(const PIXCD: TACBrPIXProblema);
 begin
-  fStatus:= PIXCD.status;
-  fTitle:= PIXCD.title;
-  fDetail:= PIXCD.detail;
+  fStatus := PIXCD.status;
+  fTitle := PIXCD.title;
+  fDetail := PIXCD.detail;
 end;
 
 end.

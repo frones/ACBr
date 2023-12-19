@@ -40,70 +40,76 @@ uses
   Classes, SysUtils, Forms,
   ACBrLibComum;
 
-function PIXCD_Inicializar (const eArqConfig, eChaveCrypt: Pchar): longint;
+function PIXCD_Inicializar(const eArqConfig, eChaveCrypt: Pchar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function PIXCD_Finalizar: longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_Nome (const sNome: PChar; var esTamanho: longint): longint;
+function PIXCD_Nome(const sNome: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_Versao (const sVersao: PChar; var esTamanho: longint): longint;
+function PIXCD_Versao(const sVersao: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_UltimoRetorno (const sMensagem: PChar; var esTamanho: longint): longint;
+function PIXCD_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConfigImportar (const eArqConfig: PChar): longint;
+function PIXCD_ConfigImportar(const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConfigExportar (const sMensagem: PChar; var esTamanho: longint): longint;
+function PIXCD_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConfigLer (const eArqConfig: PChar): longint;
+function PIXCD_ConfigLer(const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConfigGravar (const eArqConfig: PChar): longint;
+function PIXCD_ConfigGravar(const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConfigLerValor (const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function PIXCD_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConfigGravarValor (const eSessao, eChave, eValor: PChar): longint;
+function PIXCD_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_GerarQRCodeEstatico (AValor: Currency; const AinfoAdicional: PChar; const ATxID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_GerarQRCodeEstatico(AValor: Currency; const AinfoAdicional: PChar; const ATxID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConsultarPix (const Ae2eid: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_ConsultarPix(const Ae2eid: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function PIXCD_ConsultarPixRecebidos(ADataInicio: TDateTime; ADataFim: TDateTime; const ATxId: PChar; const ACpfCnpj: PChar; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_SolicitarDevolucaoPix(const Ae2eid: PChar; AidDevolucao: PChar; AValor: Currency; ANaturezaDevolucao: longint; ADescricao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_SolicitarDevolucaoPix(AInfDevolucao: PChar; const Ae2eid: PChar; AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function PIXCD_ConsultarDevolucaoPix(const Ae2eid, AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_CriarCobrancaImediata(AChavePIX: PChar; ACobrancaExpiracao: longint; ASolicitacaoPagador: PChar; ANomeDevedor: PChar; ACPFCNPJDevedor: PChar; AValor: Currency; APermitirAlterarValor: Boolean; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_CriarCobrancaImediata(AInfCobSolicitada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConsultarCobrancaImediata(const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_ConsultarCobrancaImediata(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_RevisarCobrancaImediata(const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_RevisarCobrancaImediata(AInfCobRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_CriarCobranca(AChavePIX: PChar; ADataVencimento: TDateTime; AValidadeAposVencimento: longint; ANomeDevedor:PChar; ACPFCNPJDevedor: PChar; AValorOriginal: Currency; AMultaModalidade: longint; AMultaValorPercentual: Currency; AJurosModalidade: longint; AJurosValorPercentual: Currency; ADescontoModalidade: longint; ADescontoValorPercentual: Currency; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_CancelarCobrancaImediata(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_RevisarCobranca(AStatus: longint; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_CriarCobranca(AInfCobVSolicitada: PChar; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_ConsultarCobranca(const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_ConsultarCobranca(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function PIXCD_RevisarCobranca(AInfCobVRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function PIXCD_CancelarCobranca(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
@@ -223,12 +229,12 @@ begin
   end;
 end;
 
-function PIXCD_SolicitarDevolucaoPix(const Ae2eid: PChar; AidDevolucao: PChar; AValor: Currency; ANaturezaDevolucao: longint; ADescricao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_SolicitarDevolucaoPix(AInfDevolucao: PChar; const Ae2eid: PChar; AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibPIXCD(pLib^.Lib).SolicitarDevolucaoPix(Ae2eid, AidDevolucao, AValor, ANaturezaDevolucao, ADescricao, sResposta, esTamanho);
+    Result := TACBrLibPIXCD(pLib^.Lib).SolicitarDevolucaoPix(AInfDevolucao, Ae2eid, AidDevolucao, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;
@@ -253,12 +259,12 @@ begin
   end;
 end;
 
-function PIXCD_CriarCobrancaImediata(AChavePIX: PChar; ACobrancaExpiracao: longint; ASolicitacaoPagador: PChar; ANomeDevedor: PChar; ACPFCNPJDevedor: PChar; AValor: Currency; APermitirAlterarValor: Boolean; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint):longint;
+function PIXCD_CriarCobrancaImediata(AInfCobSolicitada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint):longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result:= TACBrLibPIXCD(pLib^.Lib).CriarCobrancaImediata(AChavePIX, ACobrancaExpiracao, ASolicitacaoPagador, ANomeDevedor, ACPFCNPJDevedor, AValor, APermitirAlterarValor, ATxId, sResposta, esTamanho);
+    Result:= TACBrLibPIXCD(pLib^.Lib).CriarCobrancaImediata(AInfCobSolicitada, ATxId, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;
@@ -268,12 +274,12 @@ begin
   end;
 end;
 
-function PIXCD_ConsultarCobrancaImediata(const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_ConsultarCobrancaImediata(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result:= TACBrLibPIXCD(pLib^.Lib).ConsultarCobrancaImediata(ATxId, Revisao, sResposta, esTamanho);
+    Result:= TACBrLibPIXCD(pLib^.Lib).ConsultarCobrancaImediata(ATxId, ARevisao, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;
@@ -283,12 +289,12 @@ begin
   end;
 end;
 
-function PIXCD_RevisarCobrancaImediata(const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_RevisarCobrancaImediata(AInfCobRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result:= TACBrLibPIXCD(pLib^.Lib).RevisarCobrancaImediata(ATxId, sResposta, esTamanho);
+    Result:= TACBrLibPIXCD(pLib^.Lib).RevisarCobrancaImediata(AInfCobRevisada, ATxId, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;
@@ -298,12 +304,12 @@ begin
   end;
 end;
 
-function PIXCD_CriarCobranca(AChavePIX: PChar; ADataVencimento: TDateTime; AValidadeAposVencimento: longint; ANomeDevedor:PChar; ACPFCNPJDevedor: PChar; AValorOriginal: Currency; AMultaModalidade: longint; AMultaValorPercentual: Currency; AJurosModalidade: longint; AJurosValorPercentual: Currency; ADescontoModalidade: longint; ADescontoValorPercentual: Currency; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function PIXCD_CancelarCobrancaImediata(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(libHandle);
-    Result:= TACBrLibPIXCD(libHandle^.Lib).CriarCobranca(AChavePIX, ADataVencimento, AValidadeAposVencimento, ANomeDevedor, ACPFCNPJDevedor, AValorOriginal, AMultaModalidade, AMultaValorPercentual, AJurosModalidade, AJurosValorPercentual, ADescontoModalidade, ADescontoValorPercentual, ATxId, sResposta, esTamanho);
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibPIXCD(pLib^.Lib).CancelarCobrancaImediata(ATxId, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;
@@ -313,12 +319,12 @@ begin
   end;
 end;
 
-function PIXCD_RevisarCobranca(AStatus: longint; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_CriarCobranca(AInfCobVSolicitada: PChar; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result:= TACBrLibPIXCD(pLib^.Lib).RevisarCobranca(AStatus, ATxId, sResposta, esTamanho);
+    Result:= TACBrLibPIXCD(pLib^.Lib).CriarCobranca(AInfCobVSolicitada, ATxId, sResposta, esTamanho);
   except
     on E: EACBrLibException do
      Result := E.Erro;
@@ -328,14 +334,44 @@ begin
   end;
 end;
 
-function PIXCD_ConsultarCobranca(const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_ConsultarCobranca(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result:= TACBrLibPIXCD(pLib^.Lib).ConsultarCobranca(ATxId, Revisao, sResposta, esTamanho);
+    Result:= TACBrLibPIXCD(pLib^.Lib).ConsultarCobranca(ATxId, ARevisao, sResposta, esTamanho);
   except
         on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function PIXCD_RevisarCobranca(AInfCobVRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result:= TACBrLibPIXCD(pLib^.Lib).RevisarCobranca(AInfCobVRevisada, ATxId, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function PIXCD_CancelarCobranca(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibPIXCD(pLib^.Lib).CancelarCobranca(ATxId, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
      Result := E.Erro;
 
     on E: Exception do

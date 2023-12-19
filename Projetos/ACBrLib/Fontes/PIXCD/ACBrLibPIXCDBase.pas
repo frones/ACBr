@@ -58,20 +58,23 @@ type
       function GerarQRCodeEstatico(AValor: Currency; const AinfoAdicional: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function ConsultarPix(const Ae2eid: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function ConsultarPixRecebidos(ADataInicio: TDateTime; ADataFim: TDateTime; const ATxId: PChar; const ACpfCnpj: PChar; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
-      function SolicitarDevolucaoPix(const Ae2eid: PChar; AidDevolucao: PChar; AValor: Currency; ANaturezaDevolucao: longint; ADescricao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+      function SolicitarDevolucaoPix(AInfDevolucao: PChar; const Ae2eid: PChar; AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function ConsultarDevolucaoPix(const Ae2eid, AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-      function CriarCobrancaImediata(AChavePIX: PChar; ACobrancaExpiracao: longint; ASolicitacaoPagador: PChar; ANomeDevedor: PChar; ACPFCNPJDevedor: PChar; AValor: Currency; APermitirAlterarValor: Boolean; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-      function ConsultarCobrancaImediata(const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
-      function RevisarCobrancaImediata(AStatus: longint; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-      function CriarCobranca(AChavePIX: PChar; ADataVencimento: TDateTime; AValidadeAposVencimento: longint; ANomeDevedor:PChar; ACPFCNPJDevedor: PChar; AValorOriginal: Currency; AMultaModalidade: longint; AMultaValorPercentual: Currency; AJurosModalidade: longint; AJurosValorPercentual: Currency; ADescontoModalidade: longint; ADescontoValorPercentual: Currency; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-      function RevisarCobranca(AStatus: longint; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-      function ConsultarCobranca(const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+      function CriarCobrancaImediata(AInfCobSolicitada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+      function ConsultarCobrancaImediata(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+      function RevisarCobrancaImediata(AInfCobRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+      function CancelarCobrancaImediata(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+      function CriarCobranca(AinfCobVSolicitada: PChar; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+      function ConsultarCobranca(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+      function RevisarCobranca(AInfCobVRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+      function CancelarCobranca(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   end;
 
 implementation
 
 Uses
-  ACBrLibConsts, ACBrLibConfig, ACBrLibPIXCDConfig, ACBrPIXCD, ACBrPIXBase, ACBrLibPIXCDRespostas, ACBrLibHelpers, ACBrUtil.Strings, ACBrUtil.Base, ACBrPIXSchemasCobV;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibPIXCDConfig, ACBrPIXCD, ACBrPIXBase, ACBrLibPIXCDRespostas, ACBrLibHelpers,
+  ACBrUtil.Strings, ACBrUtil.Base, ACBrPIXSchemasCob, ACBrPIXSchemasCobV;
 
 { TACBrLibPIXCD }
 
@@ -212,36 +215,27 @@ begin
   end;
 end;
 
-function TACBrLibPIXCD.SolicitarDevolucaoPix(const Ae2eid: PChar; AidDevolucao: PChar; AValor: Currency; ANaturezaDevolucao: longint; ADescricao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.SolicitarDevolucaoPix(AInfDevolucao: PChar; const Ae2eid: PChar; AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
-  e2eid, idDevolucao, descricao: String;
-  NaturezaDevolucao: TACBrPIXNaturezaDevolucao;
+  e2eid, idDevolucao: String;
   Resposta: AnsiString;
   Resp: TLibPIXCDResposta;
 begin
   try
     e2eid:= ConverterAnsiParaUTF8(Ae2eid);
     idDevolucao:= ConverterAnsiParaUTF8(AidDevolucao);
-    descricao:= ConverterAnsiParaUTF8(ADescricao);
-
-    if not (TEnum.TryParse<TACBrPIXNaturezaDevolucao>(ANaturezaDevolucao, NaturezaDevolucao)) then
-       NaturezaDevolucao:= TACBrPIXNaturezaDevolucao.ndNENHUMA;
 
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_SolicitarDevolucaoPix(' + e2eid + ',' + idDevolucao + ',' + CurrToStr(AValor) + ',' + PIXNaturezaDevolucaoToString(NaturezaDevolucao) + ',' + descricao + ' )', logCompleto, True)
+       GravarLog('PIXCD_SolicitarDevolucaoPix(' + AInfDevolucao + ',' + e2eid + ',' + idDevolucao + ' )', logCompleto, True)
     else
        GravarLog('PIXCD_SolicitarDevolucaoPix', logNormal);
 
+    if StringEhArquivo(AInfDevolucao) then
+    VerificarArquivoExiste(AInfDevolucao);
+
     PIXCDDM.Travar;
     try
-      with PIXCDDM.ACBrPixCD1 do
-      begin
-        PSP.epPix.DevolucaoSolicitada.Clear;
-
-        PSP.epPix.DevolucaoSolicitada.valor:= AValor;
-        PSP.epPix.DevolucaoSolicitada.natureza:= NaturezaDevolucao;
-        PSP.epPix.DevolucaoSolicitada.descricao:= descricao;
-      end;
+      PIXCDDM.ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.LoadFromIni(AInfDevolucao);
       PIXCDDM.ACBrPixCD1.PSP.epPix.SolicitarDevolucaoPix(e2eid, idDevolucao);
       Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
@@ -305,60 +299,34 @@ begin
   end;
 end;
 
-function TACBrLibPIXCD.CriarCobrancaImediata(AChavePIX: PChar; ACobrancaExpiracao: longint; ASolicitacaoPagador: PChar; ANomeDevedor: PChar; ACPFCNPJDevedor: PChar; AValor: Currency; APermitirAlterarValor: Boolean; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.CriarCobrancaImediata(AInfCobSolicitada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
-  s, ChavePIX, SolicitacaoPagador, NomeDevedor, CPFCNPJDevedor, TxId: String;
   Resposta: AnsiString;
   Resp: TLibPIXCDResposta;
+  TxId: String;
 begin
   try
-    ChavePIX:= ConverterAnsiParaUTF8(AChavePIX);
-    SolicitacaoPagador:= ConverterAnsiParaUTF8(ASolicitacaoPagador);
-    NomeDevedor:= ConverterAnsiParaUTF8(ANomeDevedor);
-    CPFCNPJDevedor:= ConverterAnsiParaUTF8(ACPFCNPJDevedor);
     TxId:= ConverterAnsiParaUTF8(ATxId);
 
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_CriarCobrancaImediata(' + ChavePIX + ',' + IntToStr(ACobrancaExpiracao) + ',' + SolicitacaoPagador + ',' + NomeDevedor + ',' + CPFCNPJDevedor + ',' + CurrToStr(AValor) + ',' + BoolToStr(APermitirAlterarValor) + ',' + TxId + ' )', logCompleto, True)
+       GravarLog('PIXCD_CriarCobrancaImediata(' + AInfCobSolicitada + ',' + TxId + ' )', logCompleto, True)
     else
        GravarLog('PIXCD_CriarCobrancaImediata', logNormal);
 
+    if StringEhArquivo(AInfCobSolicitada) then
+    VerificarArquivoExiste(AInfCobSolicitada);
+
     PIXCDDM.Travar;
     try
-      with PIXCDDM.ACBrPixCD1 do
-      begin
-        PSP.epCob.CobSolicitada.Clear;
-        s:= ChavePIX;
-        PSP.epCob.CobSolicitada.chave:= ChavePIX;
-        PSP.epCob.CobSolicitada.calendario.expiracao:= ACobrancaExpiracao;
-        PSP.epCob.CobSolicitada.solicitacaoPagador:= SolicitacaoPagador;
-
-        s:= Trim(NomeDevedor);
-        if (s <> '') then
-        begin
-          PSP.epCob.CobSolicitada.devedor.nome:= s;
-
-          s:= OnlyNumber(CPFCNPJDevedor);
-          if (s = '') then
-             raise Exception.Create('Caso o Nome do Devedor seja Informado, e necessário informar CPF ou CNPJ')
-          else if (Length(s) > 11) then
-          PSP.epCob.CobSolicitada.devedor.cnpj:= s
-          else
-          PSP.epCob.CobSolicitada.devedor.cpf:= s;
-        end;
-
-        PSP.epCob.CobSolicitada.valor.original:= AValor;
-        PSP.epCob.CobSolicitada.valor.modalidadeAlteracao:= APermitirAlterarValor;
-      end;
-
+      PIXCDDM.ACBrPixCD1.PSP.epCob.CobSolicitada.LoadFromIni(AInfCobSolicitada);
       PIXCDDM.ACBrPixCD1.PSP.epCob.CriarCobrancaImediata(TxId);
       Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
 
-        Resposta:= Resp.Gerar;
+        Resposta := Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         Resp.Free;
       end;
@@ -374,7 +342,7 @@ begin
   end;
 end;
 
-function TACBrLibPIXCD.ConsultarCobrancaImediata(const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.ConsultarCobrancaImediata(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
 var
   TxId: String;
   Resposta: AnsiString;
@@ -384,13 +352,13 @@ begin
     TxId:= ConverterAnsiParaUTF8(ATxId);
 
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_ConsultarCobrancaImediata(' + TxId + ',' + IntToStr(Revisao) + ' )', logCompleto, True)
+       GravarLog('PIXCD_ConsultarCobrancaImediata(' + TxId + ',' + IntToStr(ARevisao) + ' )', logCompleto, True)
     else
        GravarLog('PIXCD_ConsultarCobrancaImediata', logNormal);
 
     PIXCDDM.Travar;
     try
-      PIXCDDM.ACBrPixCD1.PSP.epCob.ConsultarCobrancaImediata(TxId, Revisao);
+      PIXCDDM.ACBrPixCD1.PSP.epCob.ConsultarCobrancaImediata(TxId, ARevisao);
       Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
@@ -413,9 +381,8 @@ begin
   end;
 end;
 
-function TACBrLibPIXCD.RevisarCobrancaImediata(AStatus: longint; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibPIXCD.RevisarCobrancaImediata(AInfCobRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint):longint;
 var
-  Status: TACBrPIXStatusCobranca;
   TxId: String;
   Resposta: AnsiString;
   Resp: TLibPIXCDResposta;
@@ -423,22 +390,17 @@ begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
 
-    if not (TEnum.TryParse<TACBrPIXStatusCobranca>(AStatus, Status)) then
-       Status:= TACBrPIXStatusCobranca.stcNENHUM;
-
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_RevisarCobrancaImediata(' + TxId + ',' + PIXStatusCobrancaToString(Status) + ' )', logCompleto, True)
+       GravarLog('PIXCD_RevisarCobrancaImediata(' + AInfCobRevisada + ',' + TxId + ' )', logCompleto, True)
     else
        GravarLog('PIXCD_RevisarCobrancaImediata', logNormal);
 
+    if StringEhArquivo(AInfCobRevisada) then
+    VerificarArquivoExiste(AInfCobRevisada);
+
     PIXCDDM.Travar;
     try
-      with PIXCDDM.ACBrPixCD1 do
-      begin
-        PSP.epCob.CobRevisada.Clear;
-        PSP.epCob.CobRevisada.status:= Status;
-      end;
-
+      PIXCDDM.ACBrPixCD1.PSP.epCob.CobRevisada.LoadFromIni(AInfCobRevisada);
       PIXCDDM.ACBrPixCD1.PSP.epCob.RevisarCobrancaImediata(TxId);
       Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
@@ -462,90 +424,36 @@ begin
   end;
 end;
 
-function TACBrLibPIXCD.CriarCobranca(AChavePIX: PChar; ADataVencimento: TDateTime; AValidadeAposVencimento: longint; ANomeDevedor:PChar; ACPFCNPJDevedor: PChar; AValorOriginal: Currency; AMultaModalidade: longint; AMultaValorPercentual: Currency; AJurosModalidade: longint; AJurosValorPercentual: Currency; ADescontoModalidade: longint; ADescontoValorPercentual: Currency; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.CancelarCobrancaImediata(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
-  s, ChavePIX, NomeDevedor, CPFCNPJDevedor, TxId: String;
-  MultaModalidade: TACBrPIXValoresModalidade;
-  JurosModalidade: TACBrPIXJurosModalidade;
-  DescontoModalidade: TACBrPIXDescontoModalidade;
+  TxId: String;
   Resposta: AnsiString;
   Resp: TLibPIXCDResposta;
 begin
   try
-    ChavePIX:= ConverterAnsiParaUTF8(AChavePIX);
-    NomeDevedor:= ConverterAnsiParaUTF8(ANomeDevedor);
-    CPFCNPJDevedor:= ConverterAnsiParaUTF8(ACPFCNPJDevedor);
-    TxId:= ConverterAnsiParaUTF8(ATxId);
-
-    if not (TEnum.TryParse<TACBrPIXValoresModalidade>(AMultaModalidade, MultaModalidade)) then
-       MultaModalidade:= TACBrPIXValoresModalidade.pvmNenhum;
-
-    if not (TEnum.TryParse<TACBrPIXJurosModalidade>(AJurosModalidade, JurosModalidade)) then
-       JurosModalidade:= TACBrPIXJurosModalidade.pjmNenhum;
-
-    if not (TEnum.TryParse<TACBrPIXDescontoModalidade>(ADescontoModalidade, DescontoModalidade)) then
-       DescontoModalidade:= TACBrPIXDescontoModalidade.pdmNenhum;
+    TxId := ConverterAnsiParaUTF8(ATxId);
 
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_CriarCobranca(' + ChavePIX + ',' + DateToStr(ADataVencimento) + ',' + IntToStr(AValidadeAposVencimento) + ',' + NomeDevedor + ',' + CPFCNPJDevedor + ',' + CurrToStr(AValorOriginal) + ',' + ValoresModalidadeToString(MultaModalidade) + ',' + CurrToStr(AMultaValorPercentual) + ',' + JurosModalidadeToString(JurosModalidade) + ',' + CurrToStr(AJurosValorPercentual) + ',' + DescontoModalidadeToString(DescontoModalidade) + ',' + CurrToStr(ADescontoValorPercentual) + ',' + TxId + ' )', logCompleto, True)
-    else
-       GravarLog('PIXCD_CriarCobranca', logNormal);
+       GravarLog('PIXCD_CancelarCobrancaImediata(' + TxId + ' )', logCompleto, True)
+       else
+       GravarLog('PIXCD_CancelarCobrancaImediata', logNormal);
 
     PIXCDDM.Travar;
     try
       with PIXCDDM.ACBrPixCD1 do
       begin
-        PSP.epCobV.CobVSolicitada.Clear;
-        PSP.epCobV.CobVSolicitada.chave:= ChavePIX;
-        PSP.epCobV.CobVSolicitada.calendario.dataDeVencimento:= ADataVencimento;
-        PSP.epCobV.CobVSolicitada.calendario.validadeAposVencimento:= AValidadeAposVencimento;
-
-        with PSP.epCobV.CobVSolicitada.devedor do
-        begin
-          s:= Trim(NomeDevedor);
-          if NaoEstaVazio(s) then
-          begin
-            nome:= s;
-            s:= OnlyNumber(CPFCNPJDevedor);
-            if EstaVazio(s) then
-            raise Exception.Create('Caso o Nome do Devedor seja Informado, é necessário informar CPF ou CNPJ')
-            else if (Length(s) > 11) then
-               cnpj := s
-            else
-               cpf := s;
-          end;
-        end;
-
-        PSP.epCobV.CobVSolicitada.valor.original:= AValorOriginal;
-
-        PSP.epCobV.CobVSolicitada.valor.multa.modalidade:= MultaModalidade;
-        PSP.epCobV.CobVSolicitada.valor.multa.valorPerc:= AMultaValorPercentual;
-
-        PSP.epCobV.CobVSolicitada.valor.juros.modalidade:= JurosModalidade;
-        PSP.epCobV.CobVSolicitada.valor.juros.valorPerc:= AJurosValorPercentual;
-
-        PSP.epCobV.CobVSolicitada.valor.desconto.modalidade:= DescontoModalidade;
-
-        if PSP.epCobV.CobVSolicitada.valor.desconto.modalidade in [pdmValorFixo, pdmPercentual] then
-        begin
-          with PSP.epCobV.CobVSolicitada.valor.desconto.descontosDataFixa.New do
-          begin
-            data:= ADataVencimento;
-            valorPerc:= ADescontoValorPercentual;
-          end;
-        end
-        else
-        PSP.epCobV.CobVSolicitada.valor.desconto.valorPerc:= ADescontoValorPercentual;
+        PSP.epCob.CobRevisada.Clear;
+        PSP.epCob.CobRevisada.status:= stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
       end;
 
-      PIXCDDM.ACBrPixCD1.PSP.epCobV.CriarCobranca(TxId);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
+      PIXCDDM.ACBrPixCD1.PSP.epCob.RevisarCobrancaImediata(TxId);
+      Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
 
-        Resposta:= Resp.Gerar;
+        Resposta := Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOk, Resposta);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         Resp.Free;
       end;
@@ -561,9 +469,8 @@ begin
   end;
 end;
 
-function TACBrLibPIXCD.RevisarCobranca(AStatus: longint; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.CriarCobranca(AinfCobVSolicitada: PChar; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
-  Status: TACBrPIXStatusCobranca;
   TxId: String;
   Resposta: AnsiString;
   Resp: TLibPIXCDResposta;
@@ -571,22 +478,99 @@ begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
 
-    if not (TEnum.TryParse<TACBrPIXStatusCobranca>(AStatus, Status)) then
-       Status:= TACBrPIXStatusCobranca.stcNENHUM;
-
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_RevisarCobranca(' + TxId + ',' + PIXStatusCobrancaToString(Status) + ' )', logCompleto, True)
+       GravarLog('PIXCD_CriarCobranca(' + AinfCobVSolicitada + ',' + TxId + ' )', logCompleto, True)
     else
-       GravarLog('PIXCD_RevisarCobranca', logNormal);
+       GravarLog('PIXCD_CriarCobranca', logNormal);
+
+    if StringEhArquivo(AinfCobVSolicitada) then
+    VerificarArquivoExiste(AinfCobVSolicitada);
 
     PIXCDDM.Travar;
     try
-      with PIXCDDM.ACBrPixCD1 do
-      begin
-        PSP.epCobV.CobVRevisada.Clear;
-        PSP.epCobV.CobVRevisada.status:= Status;
-      end;
+      PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVSolicitada.LoadFromIni(AInfCobVSolicitada);
+      PIXCDDM.ACBrPixCD1.PSP.epCobV.CriarCobranca(TxId);
+      Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
+      try
+        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
 
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
+    finally
+      PIXCDDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibPIXCD.ConsultarCobranca(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  TxId: String;
+  Resposta: AnsiString;
+  Resp: TLibPIXCDResposta;
+begin
+  try
+    TxId:= ConverterAnsiParaUTF8(ATxId);
+
+    if Config.Log.Nivel > logNormal then
+       GravarLog('PIXCD_ConsultarCobranca(' + TxId + ',' + IntToStr(ARevisao) + ' )', logCompleto, True)
+    else
+       GravarLog('PIXCD_ConsultarCobranca', logNormal);
+
+    PIXCDDM.Travar;
+    try
+      PIXCDDM.ACBrPixCD1.PSP.epCobV.ConsultarCobranca(TxId, ARevisao);
+      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
+      try
+        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+
+        Resposta:= Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result:= SetRetorno(ErrOK, Resposta);
+      finally
+        Resp.Free;
+      end;
+    finally
+      PIXCDDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibPIXCD.RevisarCobranca(AInfCobVRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  TxId: String;
+  Resposta: AnsiString;
+  Resp: TLibPIXCDResposta;
+begin
+  try
+    TxId:= ConverterAnsiParaUTF8(ATxId);
+
+    if Config.Log.Nivel > logNormal then
+       GravarLog('PIXCD_RevisarCobranca(' + AInfCobVRevisada + ',' + TxId + ' )', logCompleto, True)
+    else
+       GravarLog('PIXCD_RevisarCobranca', logNormal);
+
+    if StringEhArquivo(AInfCobVRevisada) then
+    VerificarArquivoExiste(AInfCobVRevisada);
+
+    PIXCDDM.Travar;
+    try
+      PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVRevisada.LoadFromIni(AInfCobVRevisada);
       PIXCDDM.ACBrPixCD1.PSP.epCobV.RevisarCobranca(TxId);
       Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
@@ -610,30 +594,36 @@ begin
   end;
 end;
 
-function TACBrLibPIXCD.ConsultarCobranca(const ATxId: PChar; Revisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.CancelarCobranca(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   TxId: String;
   Resposta: AnsiString;
   Resp: TLibPIXCDResposta;
 begin
   try
-    TxId:= ConverterAnsiParaUTF8(ATxId);
+    TxId := ConverterAnsiParaUTF8(ATxId);
 
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_ConsultarCobranca(' + TxId + ',' + IntToStr(Revisao) + ' )', logCompleto, True)
-    else
-       GravarLog('PIXCD_ConsultarCobranca', logNormal);
+       GravarLog('PIXCD_CancelarCobranca(' + TxId + ' )', logCompleto, True)
+       else
+       GravarLog('PIXCD_CancelarCobranca', logNormal);
 
     PIXCDDM.Travar;
     try
-      PIXCDDM.ACBrPixCD1.PSP.epCobV.ConsultarCobranca(TxId, Revisao);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
+      with PIXCDDM.ACBrPixCD1 do
+      begin
+        PSP.epCobV.CobVRevisada.Clear;
+        PSP.epCobV.CobVRevisada.status:= stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
+      end;
+
+      PIXCDDM.ACBrPixCD1.PSP.epCobV.RevisarCobranca(TxId);
+      Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
       try
         Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
 
-        Resposta:= Resp.Gerar;
+        Resposta := Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         Resp.Free;
       end;

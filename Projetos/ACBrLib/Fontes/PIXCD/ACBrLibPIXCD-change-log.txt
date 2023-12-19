@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2023
+--- ACBrLibPIXCDBase, ACBrLibPIXCDST, ACBrLibPIXCDMT, ACBrLibPIXCDStaticImportST, ACBrLibPIXCDStaticImportMT ---
+[*] Ajustes nos métodos CriarCobranca
+[+] Criação métodos CancelarCobranca
+    Por: Antonio Carlos Junior
+
 12/12/2023
 --- ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts, ACBrLibPIXCDConfig ---
 [+] Inclusão novas propriedades dos PSPs.

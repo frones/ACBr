@@ -61,6 +61,9 @@ exports
   PIXCD_ConfigLerValor,
   PIXCD_ConfigGravarValor,
 
+  //PIXCD
+  PIXCD_GerarQRCodeEstatico,
+
   //EndPoint /pix
   PIXCD_ConsultarPix,
   PIXCD_ConsultarPixRecebidos,
@@ -71,14 +74,13 @@ exports
   PIXCD_CriarCobrancaImediata,
   PIXCD_ConsultarCobrancaImediata,
   PIXCD_RevisarCobrancaImediata,
+  PIXCD_CancelarCobrancaImediata,
 
   //EndPoint /cobv
   PIXCD_CriarCobranca,
-  PIXCD_RevisarCobranca,
   PIXCD_ConsultarCobranca,
-
-  //PIXCD
-  PIXCD_GerarQRCodeEstatico;
+  PIXCD_RevisarCobranca,
+  PIXCD_CancelarCobranca;
 
 begin
   {$IFDEF DEBUG}

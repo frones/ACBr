@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2023
+-- ACBrNFSeXServicos --
+[*] Ajustes visando correta emissão para cidade de Inhapim/MG e inclusão dos schemas.
+  Por: Diego Folieni
+
 19/12/2023
 -- SystemPRO.Provider --
 [*] Adiciona opção para ler o parâmetro GerarGrupoRps na rotina de configuração.

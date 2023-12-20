@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+20/12/2023
+[*]TK-4622 ACBrBoletoC6 - Conversão Juros Dia quando receber percentual converter para monetário
+[*]TK-4623 ACBrBoletoPefisa - Conversão Juros Dia quando receber percentual converter para monetário
+  por Victor H Gonzales - Pandaaa
+
 12/12/2023
 --- ACBrBancoSicredi ---
 [*]TK-4832 Ajustes na remessa conforme manual 2023 - Seg P 225, R 100, R 140, R 216

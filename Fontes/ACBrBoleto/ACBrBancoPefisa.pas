@@ -386,12 +386,22 @@ var
   Beneficiario: TACBrCedente;
   Pagador     : TACBrSacado;
   LLinha      : String;
+  LValorMoraJuros : Double;
 begin
 
   LTitulo      := ACBrTitulo;
   Beneficiario := LTitulo.ACBrBoleto.Cedente;
   Pagador      := LTitulo.Sacado;
 
+  if (LTitulo.ValorMoraJuros > 0) then
+    case LTitulo.CodigoMoraJuros of
+      cjValorDia    : LValorMoraJuros := LTitulo.ValorMoraJuros;
+      cjTaxaDiaria  : LValorMoraJuros := RoundABNT((LTitulo.ValorDocumento / 100 ) * LTitulo.ValorMoraJuros, 2);
+      cjValorMensal : LValorMoraJuros := RoundABNT(LTitulo.ValorMoraJuros / 30, 2);
+      cjTaxaMensal  : LValorMoraJuros := RoundABNT((LTitulo.ValorDocumento / 100 ) * (LTitulo.ValorMoraJuros / 30), 2);
+      else
+        LValorMoraJuros := LTitulo.ValorMoraJuros;
+    end;
   LLinha := '1' +                                                               // 001 a 001 - Tipo de Registro
     PadLeft(DefineTipoInscricao, 2, '0') +                                      // 002 a 003 - Tipo de Inscrição Empresa
     PadLeft(OnlyNumber(Beneficiario.CNPJCPF), 14, '0') +                        // 004 a 017 - CNPJ Empresa
@@ -414,7 +424,7 @@ begin
     DefineAceite(LTitulo) +                                                     // 150 a 150 - Aceite
     FormatDateTime('ddmmyy', LTitulo.DataDocumento) +                           // 151 a 156 - Data Emissão Título
     InstrucoesProtesto(LTitulo) +                                               // 157 a 158 - Instrucao 1 159 a 160 - Instrucao 2
-    IntToStrZero(Round(LTitulo.ValorMoraJuros * 100), 13) +                     // 161 a 173 - Juros ao Dia
+    IntToStrZero(Round(LValorMoraJuros * 100), 13) +                            // 161 a 173 - Juros ao Dia
     IfThen(LTitulo.DataDesconto < EncodeDate(2000, 01, 01),
         '000000', 
         FormatDateTime('ddmmyy', LTitulo.DataDesconto)) +                       // 174 a 179 - Data Desconto

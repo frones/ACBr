@@ -80,7 +80,7 @@ type
 implementation
 
 uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime ;
+  StrUtils, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil ;
 
 { TACBrBancoC6 }
 function TACBrBancoC6.ConverterDigitoModuloFinal(): String;
@@ -217,14 +217,22 @@ var
   Index			  : Integer;
   LAceitarParcelasParcial : Boolean;
   LBancoClass : TACBrBancoClass;
+  LValorMoraJuros : Double;
 begin
   LTitulo      := ACBrTitulo;
   LBeneficiario := LTitulo.ACBrBoleto.Cedente;
   LPagador      := LTitulo.Sacado;
   LBancoClass   :=  LTitulo.ACBrBoleto.Banco.BancoClass;
 
-  if (LTitulo.ValorMoraJuros > 0) and (LTitulo.CodigoMoraJuros <> cjValorDia) then
-    raise Exception.Create('Não é permitido CodigoMoraJuros diferente de cjValorDia para este banco, o valor informado é ao dia R$, informado o enumerador : ' + GetEnumName(TypeInfo(TACBrCodigoJuros), Ord(LTitulo.CodigoMoraJuros)));
+  if (LTitulo.ValorMoraJuros > 0) then
+    case LTitulo.CodigoMoraJuros of
+      cjValorDia    : LValorMoraJuros := LTitulo.ValorMoraJuros;
+      cjTaxaDiaria  : LValorMoraJuros := RoundABNT((LTitulo.ValorDocumento / 100 ) * LTitulo.ValorMoraJuros, 2);
+      cjValorMensal : LValorMoraJuros := RoundABNT(LTitulo.ValorMoraJuros / 30, 2);
+      cjTaxaMensal  : LValorMoraJuros := RoundABNT((LTitulo.ValorDocumento / 100 ) * (LTitulo.ValorMoraJuros / 30), 2);
+      else
+        LValorMoraJuros := LTitulo.ValorMoraJuros;
+    end;
 
   LDigitoNossoNumero := CalcularDigitoVerificador(LTitulo);
 
@@ -288,7 +296,7 @@ begin
            'N'                                                                                                           +  // 150 a 150 - Aceite
            FormatDateTime('ddmmyy', LTitulo.DataDocumento)                                                               +  // 151 a 156 - Data Emissão Título
            LProtesto                                                                                                     +  // 157 a 160 - Intrução 1 e 2
-           IntToStrZero(Round(LTitulo.ValorMoraJuros * 100), 13)                                                                            +  // 161 a 173 - Juros ao Dia
+           IntToStrZero(Round(LValorMoraJuros * 100), 13)                                                                +  // 161 a 173 - Juros ao Dia
            IfThen(LTitulo.DataDesconto < EncodeDate(2000,01,01),
                   '000000',
                   FormatDateTime('ddmmyy', LTitulo.DataDesconto))                                                        +  // 174 a 179 - Data Desconto

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2023
+-- ACBrLib.hnd --
+[*] Implementada documentação do Reinf
+  Por: Renato Rubinho
+
 15/12/2023
 --- ACBrLibReinfTestCase ---
 [*] Declaração de testregistry para corrigir erro de compilação

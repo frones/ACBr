@@ -642,6 +642,7 @@ begin
     35: Result := '35-Desagendamento do débito automático';
     73: Result := '73-Confirmação Recebimento Pedido de Negativação';
   end;
+  Result := ACBrStr(Result);
 end;
 
 function TACBrBancoCresolSCRS.CodOcorrenciaToTipo(const CodOcorrencia:
@@ -1155,7 +1156,7 @@ begin
   else
     Result:= PadLeft(CodMotivo,2,'0') +' - Motivos não identificados';
   end;
-
+  Result := ACBrStr(Result);
 end;
 
 function TACBrBancoCresolSCRS.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;

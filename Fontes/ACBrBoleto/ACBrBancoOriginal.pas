@@ -653,6 +653,7 @@ begin
           end;
         end;
   end;
+  result := ACBrStr(result);
 
 
 end;
@@ -719,6 +720,7 @@ begin
   else
     Result := 'Outras ocorrências';
   end;
+  result := ACBrStr(Result);
 end;
 
 function TACBrBancoOriginal.GetLocalPagamento: String;

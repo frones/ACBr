@@ -61,6 +61,7 @@ const
   CArquivos   = 'ARQUIVOS';
 
 type
+  TACBrCodificacao = (codEncUTF8, codEncANSI);
   TACBrTipoCobranca =
    (cobNenhum,
     cobBancoDoBrasil,
@@ -1520,7 +1521,8 @@ type
     function GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;
     function LerArqIni(const AIniBoletos: String): Boolean;
     function LerConfiguracao(const AIniBoletos: String): Boolean;
-    function GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false): String;
+    function GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false; const AEncoding : TACBrCodificacao = codEncUTF8): String;
+
     function GravarConfiguracao(DirIniRetorno: string; const NomeArquivo: String): Boolean;
 
   published
@@ -3561,7 +3563,7 @@ begin
        AStream.Position := 0;
        SlRetorno.LoadFromStream(AStream);
      end;
-
+     SlRetorno.Text := ACBrStr(SlRetorno.Text);
      if SlRetorno.Count < 1 then
         raise exception.Create(ACBrStr('O Arquivo de Retorno:'+sLineBreak+
                                        NomeArq + sLineBreak+
@@ -4193,7 +4195,7 @@ begin
   Result := LerArqIni(AIniBoletos);
 end;
 
-function TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false): String;
+function TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false; const AEncoding:TACBrCodificacao = codEncUTF8): String;
 var
   IniRetorno: TMemIniFile;
   SL: TStringList;
@@ -4205,6 +4207,12 @@ begin
   DirIniRetorno:= PathWithDelim(DirIniRetorno);
 
   IniRetorno:= TMemIniFile.Create(DirIniRetorno + IfThen( EstaVazio(NomeArquivo), 'Retorno.ini', NomeArquivo ) );
+
+  if AEncoding = codEncAnsi then
+    IniRetorno.Encoding := TEncoding.ANSI
+  else
+    IniRetorno.Encoding := TEncoding.UTF8;
+
   try
     with Self do
     begin

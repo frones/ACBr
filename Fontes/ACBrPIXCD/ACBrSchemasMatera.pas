@@ -1931,7 +1931,7 @@ type
   TMateraAliasAccountHolder = class(TACBrPIXSchema)
   private
     fname: string;
-    ftaxIdentifier: TMateraTaxIdentifierBasic;
+    ftaxIdentifier: TMateraTaxIdentifier;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1943,7 +1943,7 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraAliasAccountHolder);
 
-    property taxIdentifier: TMateraTaxIdentifierBasic read ftaxIdentifier write ftaxIdentifier;
+    property taxIdentifier: TMateraTaxIdentifier read ftaxIdentifier write ftaxIdentifier;
     property name: string read fname write fname;
   end;
 
@@ -6235,7 +6235,7 @@ end;
 constructor TMateraAliasAccountHolder.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
-  ftaxIdentifier := TMateraTaxIdentifierBasic.Create('taxIdentifier');
+  ftaxIdentifier := TMateraTaxIdentifier.Create('taxIdentifier');
 end;
 
 destructor TMateraAliasAccountHolder.Destroy;

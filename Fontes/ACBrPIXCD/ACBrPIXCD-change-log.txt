@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2023
+-- ACBrSchemasMatera --
+[-] Correção do tipo da propriedade taxIdentifier
+    Por: Elias César
+
 19/12/2023
 -- ACBrPIXSchemasCob, ACBrPIXSchemasCob, ACBrPIXSchemasDevolucao --
 [+] Incluída função "LoadFromIni" para ser utilizada na lib do componente ACBrPIXCD

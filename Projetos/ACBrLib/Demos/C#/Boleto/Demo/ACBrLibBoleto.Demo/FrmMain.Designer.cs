@@ -186,6 +186,7 @@
             this.btnConsulaLista = new System.Windows.Forms.Button();
             this.btnBaixaTitulo = new System.Windows.Forms.Button();
             this.btnConsultaDetalhe = new System.Windows.Forms.Button();
+            this.btnArray = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1807,7 +1808,7 @@
             // 
             // btnClasseTitulo
             // 
-            this.btnClasseTitulo.Location = new System.Drawing.Point(275, 240);
+            this.btnClasseTitulo.Location = new System.Drawing.Point(186, 680);
             this.btnClasseTitulo.Name = "btnClasseTitulo";
             this.btnClasseTitulo.Size = new System.Drawing.Size(210, 23);
             this.btnClasseTitulo.TabIndex = 25;
@@ -1865,11 +1866,22 @@
             this.btnConsultaDetalhe.UseVisualStyleBackColor = true;
             this.btnConsultaDetalhe.Click += new System.EventHandler(this.btnConsultaDetalhe_Click);
             // 
+            // btnArray
+            // 
+            this.btnArray.Location = new System.Drawing.Point(12, 680);
+            this.btnArray.Name = "btnArray";
+            this.btnArray.Size = new System.Drawing.Size(168, 23);
+            this.btnArray.TabIndex = 31;
+            this.btnArray.Text = "Gerar usando classe Array";
+            this.btnArray.UseVisualStyleBackColor = true;
+            this.btnArray.Click += new System.EventHandler(this.btnArray_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 686);
+            this.ClientSize = new System.Drawing.Size(800, 716);
+            this.Controls.Add(this.btnArray);
             this.Controls.Add(this.btnConsultaDetalhe);
             this.Controls.Add(this.btnBaixaTitulo);
             this.Controls.Add(this.btnConsulaLista);
@@ -2093,6 +2105,7 @@
         private System.Windows.Forms.Button btnConsulaLista;
         private System.Windows.Forms.Button btnBaixaTitulo;
         private System.Windows.Forms.Button btnConsultaDetalhe;
+        private System.Windows.Forms.Button btnArray;
     }
 }
 

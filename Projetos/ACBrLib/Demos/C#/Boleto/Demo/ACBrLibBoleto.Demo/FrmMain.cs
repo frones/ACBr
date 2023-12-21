@@ -367,6 +367,58 @@ namespace ACBrLibBoleto.Demo
 
         }
 
+        private void GerarTituloArray()
+        {
+            Titulo[] titulos = CriarArrayTitulo(5);
+        }
+
+        public Titulo[] CriarArrayTitulo(int quantidade)
+        {
+            Titulo[] titulos = new Titulo[quantidade];
+
+            for (int i = 0; i <= (quantidade - 1); i++)
+            {
+                titulos[i] = new Titulo();
+
+
+                // Preencha as propriedades do objeto Titulo aqui
+                titulos[i].NumeroDocumento = "TIT00" + i;
+                titulos[i].NossoNumero = "1234" + i;
+                titulos[i].Carteira = "17";
+                titulos[i].ValorDocumento = 100.00M;
+                titulos[i].Vencimento = DateTime.Now.AddDays(30);
+                titulos[i].DataDocumento = DateTime.Now;
+                titulos[i].DataProcessamento = DateTime.Now;
+                titulos[i].DataDesconto = DateTime.Now.AddDays(20);
+                titulos[i].TipoDesconto = TipoDesconto.tdNaoConcederDesconto;
+                titulos[i].ValorDesconto = 0.5M;
+                titulos[i].CodigoMora = "1";
+                titulos[i].ValorMoraJuros = 0.2M;
+                titulos[i].DataMoraJuros = DateTime.Now.AddDays(30);
+                titulos[i].ValorIOF = 0;
+                titulos[i].ValorOutrasDespesas = 2.50M;
+                titulos[i].DataMulta = DateTime.Now.AddDays(30);
+                titulos[i].MultaValorFixo = true;
+                titulos[i].PercentualMulta = 5.00M;
+                titulos[i].DiasDeProtesto = 0;
+                titulos[i].DataProtesto = DateTime.Now.AddDays(60);
+                titulos[i].TipoDiasProtesto = TipoDiasIntrucao.diCorridos;
+                titulos[i].CodigoNegativacao = CodigoNegativacao.cnNenhum;
+                titulos[i].TipoDiasNegativacao = TipoDiasIntrucao.diCorridos;
+                titulos[i].Especie = "DM";
+                titulos[i].EspecieMod = "R$";
+                titulos[i].QrCode.emv = "00020101021226870014br.gov.bcb.pix2565qrcodepix-h.bb.com.br/pix/v2/22657e83-ecac-4631-a767-65e16fc56bff5204000053039865802BR5925EMPRORT AMBIENTAL        6008BRASILIA62070503***6304BD3D";
+
+                // ...
+                // Continue preenchendo as propriedades do objeto Titulo aqui
+                // ...
+            }
+            boleto.IncluirTitulos(titulos);
+
+            return titulos;
+        }
+
+
         #endregion Methods
 
         #region EventHandlers
@@ -401,8 +453,15 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnImprimir_Click(object sender, EventArgs e)
         {
-            boleto.Imprimir();
-            rtbRespostas.AppendLine("Boletos impressos.");
+            try
+            {
+                boleto.Imprimir();
+                rtbRespostas.AppendLine("Boletos impressos.");
+            }
+            catch (Exception ex)
+            {
+                rtbRespostas.AppendLine(ex.Message);
+            }  
         }
 
         private void BtnGerarRemessa_Click(object sender, EventArgs e)
@@ -500,8 +559,16 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnImprimirBoleto_Click(object sender, EventArgs e)
         {
-            boleto.Imprimir(0);
-            rtbRespostas.AppendLine("Boletos impressos.");
+            try
+            {
+                boleto.Imprimir(0);
+                rtbRespostas.AppendLine("Boletos impressos.");
+
+            }
+            catch (Exception ex)
+            {
+                rtbRespostas.AppendLine(ex.Message);
+            }
         }
 
         private void BtnSelecionaBanco_Click(object sender, EventArgs e)
@@ -602,12 +669,21 @@ namespace ACBrLibBoleto.Demo
             }
         }
 
+
+
         private void btnClasseTitulo_Click(object sender, EventArgs e)
         {
+            try
+            {
+                ConfigBoleto();
+                GerarTitulo();
+                rtbRespostas.AppendLine("Título(s) adicionado(s).");
 
-            ConfigBoleto();            
-            GerarTitulo();
-            rtbRespostas.AppendLine("Título(s) adicionado(s)." );
+            }
+            catch (Exception ex)
+            {
+                rtbRespostas.AppendLine(ex.Message);
+            }
         }
 
         private void btnEnviarBoletoWebService_Click(object sender, EventArgs e)
@@ -679,6 +755,21 @@ namespace ACBrLibBoleto.Demo
                 rtbRespostas.AppendLine(ex.Message);
             }
 
+        }
+
+        private void btnArray_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ConfigBoleto();
+                GerarTituloArray();
+                rtbRespostas.AppendLine("Título(s) adicionado(s).");
+
+            }
+            catch (Exception ex)
+            {
+                rtbRespostas.AppendLine(ex.Message);
+            }
         }
     }
 }

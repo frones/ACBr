@@ -35,6 +35,13 @@
 
 unit ACBrBoleto;
 
+{$IFNDEF FPC}
+  {$IFNDEF DELPHI2009_UP}
+    {$DEFINE NAO_SUPORTA_TENCODING}
+  {$ENDIF}
+{$ENDIF}
+
+
 interface
 uses Classes, {$IFNDEF NOGUI}Graphics,{$ENDIF} Contnrs, IniFiles,
      {$IFDEF FPC}
@@ -4206,12 +4213,16 @@ begin
   Result:= '';
   DirIniRetorno:= PathWithDelim(DirIniRetorno);
 
+  {$IFNDEF NAO_SUPORTA_TENCODING}
+    if AEncoding = codEncAnsi then
+      IniRetorno.Encoding := TEncoding.ANSI
+    else
+      IniRetorno.Encoding := TEncoding.UTF8;
+  {$ENDIF}
+
   IniRetorno:= TMemIniFile.Create(DirIniRetorno + IfThen( EstaVazio(NomeArquivo), 'Retorno.ini', NomeArquivo ) );
 
-  if AEncoding = codEncAnsi then
-    IniRetorno.Encoding := TEncoding.ANSI
-  else
-    IniRetorno.Encoding := TEncoding.UTF8;
+
 
   try
     with Self do

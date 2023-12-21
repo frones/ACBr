@@ -47,7 +47,7 @@ uses
 
 const
   cURL_ACBR = 'https://projetoacbr.com.br/pix/';
-  CURL_MateraPagto = 'https://flagship-payment-app.vercel.app/';
+  CURL_MateraPagto = 'https://flagship-payment-app-hml.vercel.app/';
   cMoeda = 'BRL';
   cPais = 'BRA';
   CMaxConsultas = 36;
@@ -1162,7 +1162,7 @@ begin
     mmLogOperacoes.Lines.Add('  - ACBrPSPMatera1.ConsultarExtratoEC(' +
       ACBrPSPMatera1.AccountId + ')' + sLineBreak);
 
-    ACBrPSPMatera1.ConsultarExtratoEC(ACBrPSPMatera1.AccountId);
+    ACBrPSPMatera1.ConsultarExtratoEC(ACBrPSPMatera1.AccountId, edConsultaStart1.DateTime, edconsultaEnding1.DateTime);
 
     mmLogOperacoes.Lines.Add(' Resposta: ' + sLineBreak + FormatarJson(ACBrPSPMatera1.ExtratoECResposta.AsJSON));
 
@@ -2443,10 +2443,18 @@ begin
       wConta := wIni.ReadString(wSection, 'AccountId', EmptyStr);
       if (wConta = aAccountId) then
       begin
-        wIni.WriteFloat(wSection, 'MediatorFeeQRCode', StrToFloat(edMediatorFee.Text));
-        wIni.WriteInteger(wSection, 'TipoMediatorFeeQRCode', cbTipoMediatorFee.ItemIndex);
-        wIni.WriteFloat(wSection, 'MediatorFeeDevolucao', StrToFloat(edMediatorFeeEstorno.Text));
-        wIni.WriteInteger(wSection, 'TipoMediatorFeedevolucao', cbTipoMediatorFeeEstorno.ItemIndex);
+        if NaoEstaVazio(edMediatorFee.Text) then
+        begin
+          wIni.WriteFloat(wSection, 'MediatorFeeQRCode', StrToFloat(edMediatorFee.Text));
+          wIni.WriteInteger(wSection, 'TipoMediatorFeeQRCode', cbTipoMediatorFee.ItemIndex);
+        end;
+
+        if NaoEstaVazio(edMediatorFeeEstorno.Text) then
+        begin
+          wIni.WriteFloat(wSection, 'MediatorFeeDevolucao', StrToFloat(edMediatorFeeEstorno.Text));
+          wIni.WriteInteger(wSection, 'TipoMediatorFeedevolucao', cbTipoMediatorFeeEstorno.ItemIndex);
+        end;
+
         Break;
       end;
 
@@ -2481,6 +2489,7 @@ begin
     wIni.WriteString('Matera', 'CNPJ', edCNPJ.Text);
     wIni.WriteString('Matera', 'ClientID', edPSPClientID.Text);
     wIni.WriteString('Matera', 'SecretKey', edPSPSecretKey.Text);
+    wIni.WriteString('Matera', 'ClientSecret', edPSPClientSecret.Text);
     wIni.WriteString('Matera', 'ArqCertificado', edArqCertificado.Text);
     wIni.WriteString('Matera', 'ArqChavePrivada', edArqChavePrivada.Text);
 
@@ -2489,7 +2498,9 @@ begin
 
     if (not ExisteConta(cbAccountId.Text)) then
       SalvarNovaConta(cbAccountId.Text);
-    SalvarMediatorFee(cbAccountId.Text);
+
+    if NaoEstaVazio(cbAccountId.Text) then
+      SalvarMediatorFee(cbAccountId.Text);
   finally
      wIni.Free;
   end;

@@ -288,16 +288,19 @@ begin
   finally
     HTTPSend.Document.Position:= 0;
     
-
-    LCT := DetectCompressType(LStream);
-
-    if (LCT = ctUnknown) then  // Not compressed...
-    begin
+   try
+      LCT := DetectCompressType(LStream);
+      if (LCT = ctUnknown) then  // Not compressed...
+      begin
+        LStream.Position := 0;
+        FRetornoWS := ReadStrFromStream(LStream, LStream.Size);
+      end
+      else
+        FRetornoWS := UnZip(LStream);
+   except
       LStream.Position := 0;
       FRetornoWS := ReadStrFromStream(LStream, LStream.Size);
-    end
-    else
-      FRetornoWS := UnZip(LStream);
+   end;
 
     FRetornoWS:= String(UTF8Decode(FRetornoWS));
     BoletoWS.RetornoBanco.CodRetorno     := HTTPSend.Sock.LastError;

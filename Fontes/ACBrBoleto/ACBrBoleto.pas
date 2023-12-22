@@ -68,7 +68,6 @@ const
   CArquivos   = 'ARQUIVOS';
 
 type
-  TACBrCodificacao = (codEncUTF8, codEncANSI);
   TACBrTipoCobranca =
    (cobNenhum,
     cobBancoDoBrasil,
@@ -1528,7 +1527,7 @@ type
     function GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;
     function LerArqIni(const AIniBoletos: String): Boolean;
     function LerConfiguracao(const AIniBoletos: String): Boolean;
-    function GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false; const AEncoding : TACBrCodificacao = codEncUTF8): String;
+    function GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false; const AIsUTF8 : Boolean = true): String;
 
     function GravarConfiguracao(DirIniRetorno: string; const NomeArquivo: String): Boolean;
 
@@ -4202,7 +4201,7 @@ begin
   Result := LerArqIni(AIniBoletos);
 end;
 
-function TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false; const AEncoding:TACBrCodificacao = codEncUTF8): String;
+function TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false; const AIsUTF8 : Boolean = True): String;
 var
   IniRetorno: TMemIniFile;
   SL: TStringList;
@@ -4213,15 +4212,15 @@ begin
   Result:= '';
   DirIniRetorno:= PathWithDelim(DirIniRetorno);
 
-  {$IFNDEF NAO_SUPORTA_TENCODING}
-    if AEncoding = codEncAnsi then
-      IniRetorno.Encoding := TEncoding.ANSI
-    else
-      IniRetorno.Encoding := TEncoding.UTF8;
-  {$ENDIF}
 
   IniRetorno:= TMemIniFile.Create(DirIniRetorno + IfThen( EstaVazio(NomeArquivo), 'Retorno.ini', NomeArquivo ) );
 
+  {$IFNDEF NAO_SUPORTA_TENCODING}
+    if AIsUTF8 then
+      IniRetorno.Encoding := TEncoding.UTF8
+    else
+      IniRetorno.Encoding := TEncoding.ANSI;
+  {$ENDIF}
 
 
   try

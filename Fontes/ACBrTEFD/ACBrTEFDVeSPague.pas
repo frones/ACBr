@@ -128,9 +128,10 @@ type
       fComputadorNome: string;
       fEstabelecimento: string;
       fLoja: string;
-      fTemPendencias   : Boolean;
+      fTemPendencias: Boolean;
       fCancelandoTransacao: Boolean;
-      fGPExeParams : String ;
+      fFinalizado: Boolean;
+      fGPExeParams: String ;
 
       fTerminador : AnsiString ;
       fEnderecoIP : AnsiString;
@@ -682,6 +683,7 @@ begin
   fTimeOut    := 1000 ;
   fTerminador := CACBrTEFD_VeSPague_Terminador ;
   fTemPendencias := False;
+  fFinalizado := True;
 
   fAplicacao       := '' ;
   fAplicacaoVersao := '' ;
@@ -1134,10 +1136,11 @@ end;
 procedure TACBrTEFDVeSPague.ServicoIniciar ;
 begin
   repeat
+     fFinalizado := false;
      ReqVS.Servico := 'iniciar';
      ReqVS.AddParamString('aplicacao', fAplicacao);
      ReqVS.AddParamString('versao', fAplicacaoVersao);
-     ReqVS.AddParamString('aplicacao_tela', '** Prioriza TEF **');
+     ReqVS.AddParamString('aplicacao_tela', fAplicacao);
      //ReqVS.AddParamString('computador_nome', fComputadorNome);
      //ReqVS.AddParamString('computador_endereco', fComputadorEndereco);
      //ReqVS.AddParamString('estabelecimento', fEstabelecimento);
@@ -1155,6 +1158,9 @@ end ;
 
 procedure TACBrTEFDVeSPague.ServicoFinalizar ;
 begin
+  if fFinalizado then
+    exit;
+  fFinalizado := true;
   ReqVS.Servico := 'finalizar' ;
 
   TransmiteCmd;

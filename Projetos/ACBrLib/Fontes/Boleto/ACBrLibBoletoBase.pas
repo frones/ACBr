@@ -553,7 +553,7 @@ begin
         BoletoDM.ACBrBoleto1.NomeArqRetorno:= NomeArq;
 
       BoletoDM.ACBrBoleto1.LerRetorno();
-      BoletoDM.ACBrBoleto1.GravarArqIni(Dir, '', false, TACBrCodificacao(Config.CodResposta));
+      BoletoDM.ACBrBoleto1.GravarArqIni(Dir, '', false, Config.CodResposta = codUTF8);
       Result := SetRetorno(ErrOK);
     finally
       BoletoDM.Destravar;
@@ -595,7 +595,6 @@ begin
 
       try
         RespRetorno.Processar(BoletoDM.ACBrBoleto1);
-        //Resposta := ACBrStr(RespRetorno.Gerar);
         Resposta := RespRetorno.Gerar;
         
       Finally

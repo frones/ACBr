@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2023
+-- ACBrNFSeXServicos --
+[*] Adiciona o parametro NaoDividir100 na cidade de Varzea Paulista/SP
+  Por: jaidomini
+
 21/12/2023
 -- Betha.Provider --
 [*] Ajustes visando correção no cancelamento do provedor Betha que ocorreu como efeito colateral da Rev-31349

@@ -778,9 +778,6 @@ var
   wRespHttp: AnsiString;
   wResultCode: Integer;
 begin
-//  if (not Assigned(fChavePIXSolicitacao)) or fChavePIXSolicitacao.IsEmpty then
-//    DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['ChavePIXSolicitacao']));
-
   if EstaVazio(aAccountID) then
     DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['accountId']));
 
@@ -1067,6 +1064,7 @@ begin
       amount := wCob.valor.original;
       currency := 'BRL';
       recipientComment := wCob.solicitacaoPagador;
+      mediatorfee := fMediatorFee;
     end;
 
     Result := QRCodeSolicitacao.AsJSON;

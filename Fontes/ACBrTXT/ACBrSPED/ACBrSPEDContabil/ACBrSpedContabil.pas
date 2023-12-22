@@ -42,6 +42,7 @@
 *******************************************************************************}
 
 unit ACBrSpedContabil;
+{$I ACBr.inc}
 
 interface
 
@@ -85,6 +86,7 @@ type
     FBloco_J: TBloco_J;
     FBloco_K: TBloco_K;
     FReplaceDelimitador: Boolean;
+    FDeveAtualizarTotalLinhasNosRegistros: Boolean;
 
     function GetDelimitador: String;
     function GetReplaceDelimitador: Boolean;
@@ -177,7 +179,7 @@ type
     procedure WriteBloco_9;
     procedure WriteRegistro9001;
     // TOTAIS
-    procedure TotalizarTermos;
+    procedure AtualizarTotalLinhasEmArquivoFinal;
 
     property Conteudo: TStringList read GetConteudo;
 
@@ -204,6 +206,7 @@ type
 
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer
       default 1000 ;
+    property DeveAtualizarTotalLinhasNosRegistros: Boolean read FDeveAtualizarTotalLinhasNosRegistros write FDeveAtualizarTotalLinhasNosRegistros default True;
   end;
 
 implementation
@@ -229,6 +232,7 @@ begin
   FACBrTXT.LinhasBuffer := 1000 ;
 
   FInicializado := False;
+  FDeveAtualizarTotalLinhasNosRegistros := True;
 
   FBloco_0 := TBloco_0.Create;
   FBloco_C := TBloco_C.Create;
@@ -416,7 +420,8 @@ begin
     WriteBloco_K;
     WriteBloco_9;
 
-    TotalizarTermos;
+    if DeveAtualizarTotalLinhasNosRegistros then
+      AtualizarTotalLinhasEmArquivoFinal;
   finally
     LimpaRegistros;
     FACBrTXT.Conteudo.Clear;
@@ -1228,7 +1233,7 @@ begin
   Result := FACBrTXT.Conteudo;
 end;
 
-procedure TACBrSPEDContabil.TotalizarTermos;
+procedure TACBrSPEDContabil.AtualizarTotalLinhasEmArquivoFinal;
 var
   sTotal: String;
 begin

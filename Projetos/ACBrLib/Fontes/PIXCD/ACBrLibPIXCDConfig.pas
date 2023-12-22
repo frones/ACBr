@@ -44,6 +44,7 @@ type
 
   { TPIXCDMercadoPagoConfig }
   TPIXCDMercadoPagoConfig = class
+    FChavePIX: String;
     FAccessToken: String;
 
     public
@@ -52,6 +53,7 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
+    property ChavePIX: String read FChavePIX write FChavePIX;
     property AccessToken: String read FAccessToken write FAccessToken;
   end;
 
@@ -74,13 +76,13 @@ type
 
   { TPIXCDMateraConfig }
   TPIXCDMateraConfig = class
+    FChavePIX: String;
     FClientID: String;
     FSecretKey: String;
     FClientSecret: String;
     FArqCertificado: String;
     FArqChavePrivada: String;
     FAccountID: String;
-    FChavePIX: String;
     FMediatorFee: Currency;
 
     public
@@ -89,13 +91,13 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
+    property ChavePIX: String read FChavePIX write FChavePIX;
     property ClientID: String read FClientID write FClientID;
     property SecretKey: String read FSecretKey write FSecretKey;
     property ClientSecret: String read FClientSecret write FClientSecret;
     property ArqCertificado: String read FArqCertificado write FArqCertificado;
     property ArqChavePrivada: String read FArqChavePrivada write FArqChavePrivada;
     property AccountID: String read FAccountID write FAccountID;
-    property ChavePIX: String read FChavePIX write FChavePIX;
     property MediatorFee: Currency read FMediatorFee write FMediatorFee;
   end;
 
@@ -1036,25 +1038,25 @@ end;
 
 procedure TPIXCDMateraConfig.LerIni(const AIni: TCustomIniFile);
 begin
+  ChavePIX := AIni.ReadString(CSessaoPIXCDMateraConfig, CChavePIXMatera, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveClientIDMatera, ClientID);
   SecretKey := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveSecretKeyMatera, SecretKey);
   ClientSecret := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveClientSecretMatera, ClientSecret);
   ArqCertificado := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveArqCertificadoMatera, ArqCertificado);
   ArqChavePrivada := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveArqChavePrivadaMatera, ArqChavePrivada);
   AccountID := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveAccountIDMatera, AccountID);
-  ChavePIX := AIni.ReadString(CSessaoPIXCDMateraConfig, CChavePIXMatera, ChavePIX);
   MediatorFee := AIni.ReadFloat(CSessaoPIXCDMateraConfig, CChaveMediatorFeeMatera, MediatorFee);
 end;
 
 procedure TPIXCDMateraConfig.GravarIni(const AIni: TCustomIniFile);
 begin
+  AIni.WriteString(CSessaoPIXCDMateraConfig, CChavePIXMatera, ChavePIX);
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveClientIDMatera, ClientID);
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveSecretKeyMatera, SecretKey);
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveClientSecretMatera, ClientSecret);
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveArqCertificadoMatera, ArqCertificado);
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveArqChavePrivadaMatera, ArqChavePrivada);
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveAccountIDMatera, AccountID);
-  AIni.WriteString(CSessaoPIXCDMateraConfig, CChavePIXMatera, ChavePIX);
   AIni.WriteFloat(CSessaoPIXCDMateraConfig, CChaveMediatorFeeMatera, MediatorFee);
 end;
 
@@ -1083,16 +1085,19 @@ end;
 { TPIXCDMercadoPagoConfig }
 constructor TPIXCDMercadoPagoConfig.Create;
 begin
+  FChavePIX:= '';
   FAccessToken:= '';
 end;
 
 procedure TPIXCDMercadoPagoConfig.LerIni(const AIni: TCustomIniFile);
 begin
+  ChavePIX := AIni.ReadString(CSessaoPIXCDMercadoPagoConfig, CChavePIXMercadoPago, ChavePIX);
   AccessToken := AIni.ReadString(CSessaoPIXCDMercadoPagoConfig, CChaveAccesTokenMercadoPago, AccessToken);
 end;
 
 procedure TPIXCDMercadoPagoConfig.GravarIni(const AIni: TCustomIniFile);
 begin
+  AIni.WriteString(CSessaoPIXCDMercadoPagoConfig, CChavePIXMercadoPago, ChavePIX);
   AIni.WriteString(CSessaoPIXCDMercadoPagoConfig, CChaveAccesTokenMercadoPago, AccessToken);
 end;
 

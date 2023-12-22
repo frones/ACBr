@@ -271,13 +271,13 @@ begin
 
     with ACBrPSPMatera1 do
     begin
+      ChavePIX            := pLibPIXCDConfig.PIXCDMatera.ChavePIX;
       ClientID            := pLibPIXCDConfig.PIXCDMatera.ClientID;
       SecretKey           := pLibPIXCDConfig.PIXCDMatera.SecretKey;
       ClientSecret        := pLibPIXCDConfig.PIXCDMatera.ClientSecret;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDMatera.ArqCertificado;
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDMatera.ArqChavePrivada;
       AccountId           := pLibPIXCDConfig.PIXCDMatera.AccountID;
-      ChavePIX            := pLibPIXCDConfig.PIXCDMatera.ChavePIX;
       MediatorFee         := pLibPIXCDConfig.PIXCDMatera.MediatorFee;
     end;
 
@@ -290,6 +290,7 @@ begin
 
     with ACBrPSPMercadoPago1 do
     begin
+      ChavePIX    := pLibPIXCDConfig.PIXCDMercadoPago.ChavePIX;
       AccessToken := pLibPIXCDConfig.PIXCDMercadoPago.AccessToken;
     end;
 end;

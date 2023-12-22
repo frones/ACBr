@@ -154,13 +154,13 @@ const
   CChaveArqCertificadoRootAilos = 'ArqCertificadoRoot';
 
   CSessaoPIXCDMateraConfig = 'Matera';
+  CChavePIXMatera = 'ChavePIX';
   CChaveClientIDMatera = 'ClientID';
   CChaveSecretKeyMatera = 'SecretKey';
   CChaveClientSecretMatera = 'ClientSecret';
   CChaveArqCertificadoMatera = 'ArqCertificado';
   CChaveArqChavePrivadaMatera = 'ArqChavePrivada';
   CChaveAccountIDMatera = 'AccountID';
-  CChavePIXMatera = 'ChavePIX';
   CChaveMediatorFeeMatera = 'MediatorFee';
 
   CSessaoPIXCDCieloConfig = 'Cielo';
@@ -169,6 +169,7 @@ const
   CChaveClientSecretCielo = 'ClientSecret';
 
   CSessaoPIXCDMercadoPagoConfig = 'MercadoPago';
+  CChavePIXMercadoPago = 'ChavePIX';
   CChaveAccesTokenMercadoPago = 'AccessToken';
 
 implementation

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2023
+-- Betha.Provider --
+[*] Ajustes visando correção no cancelamento do provedor Betha que ocorreu como efeito colateral da Rev-31349
+  Por: Delcio
+
 20/12/2023
 -- ACBrNFSeXServicos --
 [*] Ajustes visando correta emissão para cidade de Inhapim/MG e inclusão dos schemas.

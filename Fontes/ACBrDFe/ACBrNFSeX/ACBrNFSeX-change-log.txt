@@ -44,6 +44,20 @@ Símbolo : Significado
 
 26/12/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Carazinho/RS, trocou de provedor, agora é IPM.
+  Por: Jair Silveiro
+[*] A cidade de Caceres/MT, trocou de provedor, agora é RLZ.
+  Por: Rodsonpds
+[*] A cidade de Casca/RS, trocou de provedor, agora é Fiorilli.
+  Por: Marcos Giordani
+[*] A cidade de Barra Mansa/RJ, trocou de provedor, agora é Coplan.
+  Por: Johni
+[*] A cidade de Porto Real/RJ, trocou de provedor, agora é AssessorPublico.
+  Por: Johni
+[*] Alteração da URL de produção da cidade de Catanduva/SP e Monte Carmelo/MG, provedor ainda é o mesmo.
+  Por: Rene Costa Cabral
+[+] Incluida as cidades de Pauliceia/SP e Presidente Epitacio/SP, provedor é o Facundo.
+  Por: Adriano Teodorico
 [+] Incluida a cidade de Rolim de Moura/RO, provedor é o WebISS na versão 2.02
   Por: Kaikson / Italo Giurizzato Junior
 

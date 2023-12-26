@@ -120,7 +120,7 @@
   friendly name of the associated compiler. These directives are only defined if
   the compiler is Delphi (ie DELPHI is defined).
 
-  Directive           Description
+  Directive              Description
   ------------------------------------------------------------------------------
   DELPHI1                Defined when compiling with Delphi 1 (Codename WASABI/MANGO)
   DELPHI2                Defined when compiling with Delphi 2 (Codename POLARIS)
@@ -168,6 +168,8 @@
   DELPHIX_SYDNEY         Alias for DELPHI27
   DELPHI28               Defined when compiling with Delphi 11 for Win32 (Codename OLYMPUS)
   DELPHIX_ALEXANDRIA     Alias for DELPHI28
+  DELPHI29               Defined when compiling with Delphi 12 for Win32 (Codename YUKON)
+  DELPHI_ATHENS          Alias for DELPHI29
   DELPHI1_UP             Defined when compiling with Delphi 1 or higher
   DELPHI2_UP             Defined when compiling with Delphi 2 or higher
   DELPHI3_UP             Defined when compiling with Delphi 3 or higher
@@ -215,6 +217,7 @@
   DELPHI28_UP            Defined when compiling with Delphi 11 for Win32 or higher
   DELPHIX_ALEXANDRIA_UP  Alias for DELPHI28_UP
   DELPHI29_UP            Defined when compiling with Delphi 12 for Win32 or higher
+  DELPHI_ATHENS_UP       Alias for DELPHI29_UP
 
 
 - Kylix Versions
@@ -323,10 +326,10 @@
   BCB23        Defined when compiling with C++Builder Personality of RAD Studio 10 Seattle (also known as C++Builder 10 Seattle) (Codename AITANA)
   BCB24        Defined when compiling with C++Builder Personality of RAD Studio 10.1 Berlin (also known as C++Builder 10.1 Berlin) (Codename BIGBEN)
   BCB25        Defined when compiling with C++Builder Personality of RAD Studio 10.2 Tokyo (also known as C++Builder 10.2 Tokyo) (Codename GODZILLA)
-  BCB26        Defined when compiling with C++Builder Personality of RAD Studio 10.3 Rio (also known as C++Builder 10.3) (Codename CARNIVAL)
-  BCB27        Defined when compiling with C++Builder Personality of RAD Studio 10.4 Rio (also known as C++Builder 10.4) (Codename DENALI)
-  BCB28        Defined when compiling with C++Builder Personality of RAD Studio 11 (also known as C++Builder 11) (Codename OLYMPUS)
-  BCB29        Defined when compiling with C++Builder Personality of RAD Studio 12 (also known as C++Builder 12) (Codename ATHENS)
+  BCB26        Defined when compiling with C++Builder Personality of RAD Studio 10.3 Rio (also known as C++Builder 10.3 Rio) (Codename CARNIVAL)
+  BCB27        Defined when compiling with C++Builder Personality of RAD Studio 10.4 Sydney (also known as C++Builder 10.4 Sydney) (Codename DENALI)
+  BCB28        Defined when compiling with C++Builder Personality of RAD Studio 11 Alexandria (also known as C++Builder 11 Alexandria) (Codename OLYMPUS)
+  BCB29        Defined when compiling with C++Builder Personality of RAD Studio 12 Athens (also known as C++Builder 12 Athens) (Codename YUKON)
   BCB1_UP      Defined when compiling with C++Builder 1 or higher
   BCB3_UP      Defined when compiling with C++Builder 3 or higher
   BCB4_UP      Defined when compiling with C++Builder 4 or higher
@@ -705,7 +708,7 @@
     {$IFNDEF CPUX86}
       // CPUX86 is not defined, which means it most likely is a 64 bits compiler.
       // However, this is only the case if either of two other symbols are defined:
-      // http://docwiki.embarcadero.com/RADStudio/Alexandria/en/Conditional_compilation_%28Delphi%29
+      // http://docwiki.embarcadero.com/RADStudio/en/Conditional_compilation_%28Delphi%29
       {$DEFINE CPU64}
       {$DEFINE DELPHI64_TEMPORARY}
       {$IFNDEF CPUX64}
@@ -1089,7 +1092,7 @@
         {$DEFINE BCB25}
       {$ELSE}
         {$DEFINE DELPHI25}
-        {$DEFINE DELPHIX_TOKYO}  // synonym to DELPHI25
+        {$DEFINE DELPHIX_TOKYO} // synonym to DELPHI25
         {$DEFINE DELPHICOMPILER25}
       {$ENDIF BCB}
       {$DEFINE RTL320_UP}
@@ -1104,7 +1107,7 @@
         {$DEFINE BCB26}
       {$ELSE}
         {$DEFINE DELPHI26}
-        {$DEFINE DELPHIX_RIO}  // synonym to DELPHI26
+        {$DEFINE DELPHIX_RIO} // synonym to DELPHI26
         {$DEFINE DELPHICOMPILER26}
       {$ENDIF BCB}
       {$DEFINE RTL330_UP}
@@ -1119,7 +1122,7 @@
         {$DEFINE BCB27}
       {$ELSE}
         {$DEFINE DELPHI27}
-        {$DEFINE DELPHIX_SYDNEY}  // synonym to DELPHI27
+        {$DEFINE DELPHIX_SYDNEY} // synonym to DELPHI27
         {$DEFINE DELPHICOMPILER27}
       {$ENDIF BCB}
       {$DEFINE RTL340_UP}
@@ -1134,7 +1137,7 @@
         {$DEFINE BCB28}
       {$ELSE}
         {$DEFINE DELPHI28}
-        {$DEFINE DELPHIX_ALEXANDRIA}  // synonym to DELPHI28
+        {$DEFINE DELPHIX_ALEXANDRIA} // synonym to DELPHI28
         {$DEFINE DELPHICOMPILER28}
       {$ENDIF BCB}
       {$DEFINE RTL350_UP}
@@ -1149,6 +1152,7 @@
         {$DEFINE BCB29}
       {$ELSE}
         {$DEFINE DELPHI29}
+        {$DEFINE DELPHI_ATHENS} // synonym to DELPHI29
         {$DEFINE DELPHICOMPILER29}
       {$ENDIF BCB}
       {$DEFINE RTL360_UP}
@@ -1219,6 +1223,7 @@
 {------------------------------------------------------------------------------}
 
 {$IFDEF DELPHI29_UP}
+  {$DEFINE DELPHI_ATHENS_UP} // synonym to DELPHI29_UP
   {$DEFINE DELPHI28_UP}
 {$ENDIF}
 
@@ -1831,7 +1836,7 @@
   {$DEFINE SUPPORTS_SINGLE}
   {$DEFINE SUPPORTS_DOUBLE}
   {$DEFINE SUPPORTS_EXTENDED}
-  {$DEFINE SUPPORTS_PACKAGES} 
+  {$DEFINE SUPPORTS_PACKAGES}
 {$ENDIF COMPILER1_UP}
 
 {$IFDEF COMPILER2_UP}
@@ -2003,7 +2008,7 @@
 
 {$IFDEF RTL210_UP}
   {$DEFINE HAS_EARGUMENTEXCEPTION}
-{$ENDIF RTL210_UP} 
+{$ENDIF RTL210_UP}
 
 {$IFDEF RTL220_UP}
   {$DEFINE HAS_UNIT_REGULAREXPRESSIONSAPI}
@@ -2109,3 +2114,4 @@
 {.$UNDEF SUPPORTS_WEAKPACKAGEUNIT}
 
 {$ENDIF ~JEDI_INC}
+

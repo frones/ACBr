@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2023
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Rolim de Moura/RO, provedor é o WebISS na versão 2.02
+  Por: Kaikson / Italo Giurizzato Junior
+
 22/12/2023
 -- ACBrNFSeXServicos --
 [*] Adiciona o parametro NaoDividir100 na cidade de Varzea Paulista/SP

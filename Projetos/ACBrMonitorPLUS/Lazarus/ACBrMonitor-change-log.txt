@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2023
+-- DoACBrNFSeUnit, ACBrMonitorConsts --
+[+] Adiciona os métodos SetLayoutNFSe, SetCodigoMunicipio, SetEmitente e SetAutenticacaoNFSe
+  Por: Diego Folieni
+
 19/12/2023
 -- ACBrMonitor.hnd --
 [*] Ajustes na documentação do Reinf

@@ -513,6 +513,10 @@ const
   CMetodoConsultarDFeNFSePorChave =    'ConsultarDFeNFSePorChave';
   CMetodoConsultarParametrosNFSe =     'ConsultarParametrosNFSe';
   CMetodoObterInformacoesProvedor =    'ObterInformacoesProvedor';
+  CMetodoSetLayoutNFSe = 'SetLayoutNFSe';
+  CMetodoSetCodigoMunicipio = 'SetCodigoMunicipio';
+  CMetodoSetEmitente = 'SetEmitente';
+  CMetodoSetAutenticacaoNFSe = 'SetAutenticacaoNFSe';
 
   CMetodoValidarCTe =                  'validarcte';
   CMetodoAssinarCTe =                  'assinarcte';

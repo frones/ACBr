@@ -32,6 +32,15 @@ published
   procedure AdicionarRPSCom51RPS;
   procedure LimparLoteRPSCom50RPS;
   procedure TotalRPSLoteCom25RPS;
+  procedure SetCodigoMunicipioValorValido;
+  procedure SetCodigoMunicipioValorInvalido;
+  procedure SetCodigoMunicipioCidadeSemProvedor;
+  procedure SetLayoutNFSeValoresValidos;
+  procedure SetLayoutNFSeValoresInvalidos;
+  procedure SetEmitenteValoresPreenchidos;
+  procedure SetEmitenteValoresEmBranco;
+  procedure SetAutenticacaoNFSeValoresPreenchidos;
+  procedure SetAutenticacaoNFSeValoresEmBranco;
 end;
 
 implementation
@@ -303,6 +312,194 @@ begin
 
   finally
     FreeAndNil(Parametros);
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetLayoutNFSeValoresValidos;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('0');
+    Parametros.Add('1');
+    FCmd.Comando := 'NFSe.SetLayoutNFSe("'+Parametros.Strings[0]+'")';
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.LayoutNFSe = lnfsProvedor, 'Valor do Layout diferente do esperado');
+
+    FCmd.Comando := 'NFSe.SetLayoutNFSe("'+Parametros.Strings[1]+'")';
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.LayoutNFSe = lnfsPadraoNacionalv1, 'Valor do Layout diferente do esperado');
+  finally
+    Parametros.Free;
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetLayoutNFSeValoresInvalidos;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('-1');
+    Parametros.Add('3');
+    FCmd.Comando := 'NFSe.SetLayoutNFSe("'+Parametros.Strings[0]+'")';
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.LayoutNFSe in [lnfsProvedor, lnfsPadraoNacionalv1], 'Valor do Layout diferente do esperado');
+
+    FCmd.Comando := 'NFSe.SetLayoutNFSe("'+Parametros.Strings[1]+'")';
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.LayoutNFSe in [lnfsProvedor, lnfsPadraoNacionalv1], 'Valor do Layout diferente do esperado');
+  finally
+    Parametros.Free;
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetEmitenteValoresPreenchidos;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('99999999999999');
+    Parametros.Add('987654321');
+    Parametros.Add('Razao Emitente');
+
+    FCmd.Comando := 'NFSe.SetEmitente("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'","'+Parametros.Strings[2]+'")';
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.CNPJ = Parametros.Strings[0], 'CNPJ diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.InscMun = Parametros.Strings[1], 'Insc. Municipal diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.RazSocial = Parametros.Strings[2], 'Razão Social diferente do esperado');
+  finally
+    Parametros.Free;
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetEmitenteValoresEmBranco;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('');
+    Parametros.Add('');
+    Parametros.Add('');
+
+    FCmd.Comando := 'NFSe.SetEmitente("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'","'+Parametros.Strings[2]+'")';
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.CNPJ = '', 'CNPJ diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.InscMun = '', 'Insc. Municipal diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.RazSocial = '', 'Razão Social diferente do esperado');
+  finally
+    Parametros.Free;
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetAutenticacaoNFSeValoresPreenchidos;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('Admin');
+    Parametros.Add('1234');
+    Parametros.Add('ChaveDeAcesso');
+    Parametros.Add('ChaveAutenticacao');
+    Parametros.Add('FraseSecreta');
+
+    FCmd.Comando := 'NFSe.SetAutenticacaoNFSe("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'","'+Parametros.Strings[2]+'","'
+                                            +Parametros.Strings[3]+'","'+Parametros.Strings[4]+'")';
+
+
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSUser = Parametros.Strings[0], 'WSUser diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSSenha = Parametros.Strings[1], 'WSSenha diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSChaveAcesso = Parametros.Strings[2], 'WSChaveAcesso diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSChaveAutoriz = Parametros.Strings[3], 'WSChaveAutenticacao diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSFraseSecr = Parametros.Strings[4], 'WSFraseSecreta diferente do esperado');
+  finally
+    Parametros.Free;
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetAutenticacaoNFSeValoresEmBranco;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('');
+    Parametros.Add('');
+    Parametros.Add('');
+    Parametros.Add('');
+    Parametros.Add('');
+
+    FCmd.Comando := 'NFSe.SetAutenticacaoNFSe("'+Parametros.Strings[0]+'","'+Parametros.Strings[1]+'","'+Parametros.Strings[2]+'","'
+                                            +Parametros.Strings[3]+'","'+Parametros.Strings[4]+'")';
+
+
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSUser = Parametros.Strings[0], 'WSUser diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSSenha = Parametros.Strings[1], 'WSSenha diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSChaveAcesso = Parametros.Strings[2], 'WSChaveAcesso diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSChaveAutoriz = Parametros.Strings[3], 'WSChaveAutenticacao diferente do esperado');
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.Emitente.WSFraseSecr = Parametros.Strings[4], 'WSFraseSecreta diferente do esperado');
+  finally
+    Parametros.Free;
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetCodigoMunicipioValorValido;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('3554003');
+
+    FCmd.Comando := 'NFSe.SetCodigoMunicipio('+Parametros.Strings[0]+')';
+    FObjetoDono.Executar(FCmd);
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.CodigoMunicipio = StrToIntDef(Parametros.Strings[0], 0), 'Código do Municipio diferente do esperado');
+  finally
+    Parametros.Free;
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetCodigoMunicipioValorInvalido;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('3554003');
+    Parametros.Add('-1');
+
+    FCmd.Comando := 'NFSe.SetCodigoMunicipio('+Parametros.Strings[0]+')';
+    FObjetoDono.Executar(FCmd);
+
+    FCmd.Comando := 'NFSe.SetCodigoMunicipio('+Parametros.Strings[1]+')';
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.CodigoMunicipio = StrToIntDef(Parametros.Strings[0], 0), 'Código do Municipio diferente do esperado');
+  finally
+    Parametros.Free;
+  end;
+end;
+
+procedure TDoACBrNFSeTest.SetCodigoMunicipioCidadeSemProvedor;
+var
+  Parametros: TStringList;
+begin
+  Parametros := TStringList.Create;
+  try
+    Parametros.Add('3554003');
+    Parametros.Add('3553955');
+
+    FCmd.Comando := 'NFSe.SetCodigoMunicipio('+Parametros.Strings[0]+')';
+    FObjetoDono.Executar(FCmd);
+
+    FCmd.Comando := 'NFSe.SetCodigoMunicipio('+Parametros.Strings[1]+')';
+    Check(FObjetoDono.ACBrNFSeX.Configuracoes.Geral.CodigoMunicipio = StrToIntDef(Parametros.Strings[0], 0), 'Código do Municipio diferente do esperado');
+  finally
+    Parametros.Free;
   end;
 end;
 

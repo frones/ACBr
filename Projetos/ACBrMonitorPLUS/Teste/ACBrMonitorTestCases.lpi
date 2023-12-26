@@ -49,94 +49,97 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="29">
+    <RequiredPackages Count="30">
       <Item1>
-        <PackageName Value="ACBr_GTIN"/>
+        <PackageName Value="ACBr_BoletoFC_FPDF"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_BPeDabpeESCPOS"/>
+        <PackageName Value="ACBr_GTIN"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_Reinf"/>
+        <PackageName Value="ACBr_BPeDabpeESCPOS"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBre_Social"/>
+        <PackageName Value="ACBr_Reinf"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
+        <PackageName Value="ACBre_Social"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_MDFe"/>
+        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_BlocoX"/>
+        <PackageName Value="ACBr_MDFe"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_GNREGuiaRL"/>
+        <PackageName Value="ACBr_BlocoX"/>
       </Item8>
       <Item9>
-        <PackageName Value="ACBr_GNRE"/>
+        <PackageName Value="ACBr_GNREGuiaRL"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBr_GNRE"/>
       </Item10>
       <Item11>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item12>
       <Item13>
-        <PackageName Value="ACBr_BPe"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item13>
       <Item14>
-        <PackageName Value="ACBr_NFSeXDanfseRL"/>
+        <PackageName Value="ACBr_BPe"/>
       </Item14>
       <Item15>
-        <PackageName Value="ACBr_NFSeX"/>
+        <PackageName Value="ACBr_NFSeXDanfseRL"/>
       </Item15>
       <Item16>
-        <PackageName Value="ACBr_CTe_DACTeRL"/>
+        <PackageName Value="ACBr_NFSeX"/>
       </Item16>
       <Item17>
-        <PackageName Value="ACBr_CTe"/>
+        <PackageName Value="ACBr_CTe_DACTeRL"/>
       </Item17>
       <Item18>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="ACBr_CTe"/>
       </Item18>
       <Item19>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="TurboPowerIPro"/>
       </Item19>
       <Item20>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item20>
       <Item21>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item21>
       <Item22>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item22>
       <Item23>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item23>
       <Item24>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item24>
       <Item25>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrSerial"/>
       </Item25>
       <Item26>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item26>
       <Item27>
-        <PackageName Value="FPCUnitTestRunner"/>
+        <PackageName Value="ACBrComum"/>
       </Item27>
       <Item28>
-        <PackageName Value="LCL"/>
+        <PackageName Value="FPCUnitTestRunner"/>
       </Item28>
       <Item29>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item29>
+      <Item30>
+        <PackageName Value="FCL"/>
+      </Item30>
     </RequiredPackages>
     <Units Count="26">
       <Unit0>

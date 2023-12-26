@@ -472,6 +472,9 @@ function StrToParamMunic(out ok: Boolean; const s: string): TParamMunic;
 function CodIBGEPaisToSiglaISO2(t: Integer): string;
 function SiglaISO2ToCodIBGEPais(const t: string): Integer;
 
+function StrToLayoutNFSe(out ok: boolean; const s: string): TLayoutNFSe;
+function LayoutNFSeToStr(const t: TLayoutNFSe): string;
+
 const
 
   SiglaISO2Pais: array[0..247] of string = ('AF', 'AL', 'CW', 'DE', 'BF', 'AD',
@@ -12900,6 +12903,18 @@ begin
       exit;
     end;
   end;
+end;
+
+function StrToLayoutNFSe(out ok: boolean; const s: string): TLayoutNFSe;
+begin
+  Result := StrToEnumerado(OK, s,
+                           ['0', '1'],
+                           [lnfsProvedor, lnfsPadraoNacionalv1]);
+end;
+
+function LayoutNFSeToStr(const t: TLayoutNFSe): string;
+begin
+  Result := EnumeradoToStr(t, ['0', '1'], [lnfsProvedor, lnfsPadraoNacionalv1]);
 end;
 
 end.

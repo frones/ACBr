@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/12/2023
+-- ACBrNFSeXConversao --
+[+] Adiciona rotinas de conversão para o valor de TLayoutNFSe
+  Por: Diego Folieni
+
 -- ACBrNFSeXServicos --
 [*] A cidade de Carazinho/RS, trocou de provedor, agora é IPM.
   Por: Jair Silveiro

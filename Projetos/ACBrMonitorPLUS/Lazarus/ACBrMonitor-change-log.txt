@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/12/2023
+-- ACBrMonitor.hnd --
+[+] Documenta os novos métodos SetLayoutNFSe, SetCodigoMunicipio, SetEmitente e SetAutenticacaoNFSe.
+  Por: Diego Folieni
 -- DoACBrNFSeUnit, ACBrMonitorConsts --
 [+] Adiciona os métodos SetLayoutNFSe, SetCodigoMunicipio, SetEmitente e SetAutenticacaoNFSe
   Por: Diego Folieni

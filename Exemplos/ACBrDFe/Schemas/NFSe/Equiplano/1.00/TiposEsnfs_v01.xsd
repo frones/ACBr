@@ -1143,6 +1143,7 @@
 			<xsd:element name="vlTotalRps" type="tipos:tsValor" minOccurs="1" maxOccurs="1"/>
 			<xsd:element name="vlLiquidoRps" type="tipos:tsValor" minOccurs="1" maxOccurs="1"/>
 			<xsd:element name="retencoes" type="tipos:tcRetencoes" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="vlDesconto" type="tipos:tsValor" minOccurs="0" maxOccurs="1"/>
 			<xsd:element name="dsImpostos" type="tipos:tsDsImpostos" minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>

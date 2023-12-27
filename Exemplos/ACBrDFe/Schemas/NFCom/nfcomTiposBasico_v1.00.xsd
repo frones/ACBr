@@ -163,6 +163,20 @@ Apenas para notas dos tipos Normal e Substituição com tipo de faturamento norm
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
+									<xs:element name="indNotaEntrada" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Indicador de nota de entrada</xs:documentation>
+											<xs:documentation>1 – Informar quando for nota de ajuste e possuir itens com CFOP de entrada</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="1"/>
+												<xs:whiteSpace value="preserve"/>
+												<xs:enumeration value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
 									<xs:sequence minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informar apenas

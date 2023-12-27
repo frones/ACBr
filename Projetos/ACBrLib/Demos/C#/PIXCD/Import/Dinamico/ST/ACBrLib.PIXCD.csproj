@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>Projeto ACBr</Company>
+    <Product>ACBrLib.PIXCD</Product>
+    <Authors>Projeto ACBr</Authors>
+    <Copyright>Copyright © Projeto ACBr 2018 - 2021</Copyright>
+    <PackageProjectUrl>http://projetoacbr.com.br/</PackageProjectUrl>
+    <RepositoryType>svn</RepositoryType>
+    <RepositoryUrl>http://svn.code.sf.net/p/acbr/code/trunk2/</RepositoryUrl>
+    <NeutralLanguage>pt-BR</NeutralLanguage>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AssemblyVersion>1.0.0.65</AssemblyVersion>
+    <FileVersion>1.0.0.65</FileVersion>
+    <Version>1.0.0.65</Version>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452'">
+    <DefineConstants>NET45;NETFULL</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DocumentationFile>..\..\bin\Debug\net452\ACBrLib.PIXCD.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net452|AnyCPU'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>..\..\bin\Release\net452\ACBrLib.PIXCD.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DocumentationFile>..\..\bin\Debug\netstandard2.0\ACBrLib.PIXCD.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.PIXCD.xml</DocumentationFile>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\Shared\SicrediConfig.cs" Link="SicrediConfig.cs" />
+		<Compile Include="..\Shared\SicoobConfig.cs" Link="SicoobConfig.cs" />
+		<Compile Include="..\Shared\ShipayConfig.cs" Link="ShipayConfig.cs" />
+		<Compile Include="..\Shared\SantanderConfig.cs" Link="SantanderConfig.cs" />
+		<Compile Include="..\Shared\PixPDVConfig.cs" Link="PixPDVConfig.cs" />
+		<Compile Include="..\Shared\PagSeguroConfig.cs" Link="PagSeguroConfig.cs" />
+		<Compile Include="..\Shared\MercadoPagoConfig.cs" Link="MercadoPagoConfig.cs" />
+		<Compile Include="..\Shared\MateraConfig.cs" Link="MateraConfig.cs" />
+		<Compile Include="..\Shared\ItauConfig.cs" Link="ItauConfig.cs" />
+		<Compile Include="..\Shared\InterConfig.cs" Link="InterConfig.cs" />
+		<Compile Include="..\Shared\GerenciaNetConfig.cs" Link="GerenciaNetConfig.cs" />
+		<Compile Include="..\Shared\CieloConfig.cs" Link="CieloConfig.cs" />
+		<Compile Include="..\Shared\BradescoConfig.cs" Link="BradescoConfig.cs" />
+		<Compile Include="..\Shared\BancoBrasilConfig.cs" Link="BancoBrasilConfig.cs" />
+		<Compile Include="..\Shared\AilosConfig.cs" Link="AilosConfig.cs" />
+		<Compile Include="..\Shared\ACBrPIXCDConfig.cs" Link="ACBrPIXCDConfig.cs" />
+	</ItemGroup>
+	
+  <ItemGroup>
+	  <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
+  </ItemGroup>
+	
+  
+</Project>

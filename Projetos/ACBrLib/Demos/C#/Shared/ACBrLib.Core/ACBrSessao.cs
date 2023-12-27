@@ -52,5 +52,21 @@
         NFSe,
         DANFSe,
         Reinf,
+        PIXCD,
+        Bradesco,
+        Sicredi,
+        Sicoob,
+        Shipay,
+        Santander,
+        PixPDV,
+        PagSeguro,
+        Itau,
+        Inter,
+        GerenciaNet,
+        BancoBrasil,
+        Ailos,
+        Matera,
+        Cielo,
+        MercadoPago
     }
 }

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/12/2023
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Alteração visando gerar a tag CodigoMunicipio no grupo Intermediario para 
+    as versões 2.03 e 2.04 do layout da ABRASF.
+  Por: Arimateia Jr/Italo Giurizzato Junior
 -- Equiplano.GravarXml --
 [*] Alteração visando gerar a tag vlDesconto.
   Por: Marcos R Weimer

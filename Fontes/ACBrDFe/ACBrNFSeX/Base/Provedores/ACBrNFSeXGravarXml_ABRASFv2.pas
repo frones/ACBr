@@ -110,6 +110,7 @@ type
     FNrOcorrTomadorExterior: Integer;
     FNrOcorrCodigoMunic_1: Integer;
     FNrOcorrCodigoMunic_2: Integer;
+    FNrOcorrCodigoMunicInterm: Integer;
     FGerarTagNifTomador: Boolean;
     FGerarEnderecoExterior: Boolean;
     FNrOcorrID: Integer;
@@ -238,6 +239,7 @@ type
     property NrOcorrTomadorExterior: Integer    read FNrOcorrTomadorExterior    write FNrOcorrTomadorExterior;
     property NrOcorrCodigoMunic_1: Integer      read FNrOcorrCodigoMunic_1      write FNrOcorrCodigoMunic_1;
     property NrOcorrCodigoMunic_2: Integer      read FNrOcorrCodigoMunic_2      write FNrOcorrCodigoMunic_2;
+    property NrOcorrCodigoMunicInterm: Integer read FNrOcorrCodigoMunicInterm write FNrOcorrCodigoMunicInterm;
     property NrOcorrInscMunTomador: Integer     read FNrOcorrInscMunTomador      write FNrOcorrInscMunTomador;
 
     property NrOcorrInformacoesComplemetares: Integer read FNrOcorrInformacoesComplemetares write FNrOcorrInformacoesComplemetares;
@@ -291,6 +293,7 @@ implementation
 
 uses
   pcnConsts,
+  pcnAuxiliar,
   ACBrUtil.Strings,
   ACBrXmlBase,
   ACBrNFSeXConversao, ACBrNFSeXConsts;
@@ -379,6 +382,7 @@ begin
   FNrOcorrAtualizaTomador := -1;
   FNrOcorrTomadorExterior := -1;
   FNrOcorrCodigoMunic_2 := -1;
+  FNrOcorrCodigoMunicInterm := -1;
   FNrOcorrID := -1;
   FNrOcorrToken := -1;
   FNrOcorrSenha := -1;
@@ -426,16 +430,22 @@ begin
   Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   case VersaoNFSe of
-    ve203: FGerarTagNifTomador := True;
+    ve203:
+      begin
+        FGerarTagNifTomador := True;
+        NrOcorrCodigoMunicInterm := 1;
+      end;
     ve204:
       begin
         FGerarTagNifTomador := True;
         FGerarEnderecoExterior := True;
+        NrOcorrCodigoMunicInterm := 1;
       end;
   else
     begin
       FGerarTagNifTomador := False;
       FGerarEnderecoExterior := False;
+      NrOcorrCodigoMunicInterm := -1;
     end;
   end;
 
@@ -579,7 +589,7 @@ begin
     NFSe.DataEmissaoRps := NFSe.DataEmissao;
 
   Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissao', 19, 19, 1,
-                                                NFSe.DataEmissaoRps, DSC_DEMI));
+    AjustarDataHoraParaUf(NFse.DataEmissaoRps, CodMunEmit div 100000), DSC_DEMI));
 
   Result.AppendChild(GerarStatus);
   Result.AppendChild(GerarRPSSubstituido);
@@ -991,6 +1001,9 @@ begin
 
     Result.AppendChild(AddNode(tcStr, '#48', 'RazaoSocial', 1, 115, NrOcorrRazaoSocialInterm,
                                     NFSe.Intermediario.RazaoSocial, DSC_XNOME));
+
+    Result.AppendChild(AddNode(tcInt, '#49', 'CodigoMunicipio', 7, 7,
+       NrOcorrCodigoMunicInterm, NFSe.Intermediario.CodigoMunicipio, DSC_CMUN));
   end;
 end;
 

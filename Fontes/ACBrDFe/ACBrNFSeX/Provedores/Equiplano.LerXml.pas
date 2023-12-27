@@ -321,14 +321,6 @@ begin
       AliquotaPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaPis'), tcDe2);
 
       RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
-
-      if ValorLiquidoNfse = 0 then
-        ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
-                            ValorIssRetido - DescontoIncondicionado -
-                            DescontoCondicionado;
-
-      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
-                              DescontoIncondicionado;
     end;
   end;
 end;
@@ -490,6 +482,19 @@ begin
 
     LerListaServico(ANode);
     LerRetencoes(ANode);
+
+    with NFSe.Servico.Valores do
+    begin
+      DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlDesconto'), tcDe2);
+
+      if ValorLiquidoNfse = 0 then
+        ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
+                            ValorIssRetido - DescontoIncondicionado -
+                            DescontoCondicionado;
+
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
+    end;
   end;
 end;
 

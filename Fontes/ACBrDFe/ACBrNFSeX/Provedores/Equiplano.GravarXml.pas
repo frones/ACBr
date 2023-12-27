@@ -128,6 +128,9 @@ begin
   xmlNode := GerarRetencoes;
   NFSeNode.AppendChild(xmlNode);
 
+  if NFSe.Servico.Valores.DescontoIncondicionado > 0 then
+    NFseNode.AppendChild(AddNode(tcDe2, '#1', 'vlDesconto', 1, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, ''));
+
   Result := True;
 end;
 
@@ -181,7 +184,7 @@ var
 begin
   Result := CreateElement('listaServicos');
 
-  if NFSe.Servico.ItemServico.Count > 0 then
+  if NFSe.Servico.ItemServico.Count > 1 then
   begin
     for i := 0 to NFSe.Servico.ItemServico.Count -1 do
     begin

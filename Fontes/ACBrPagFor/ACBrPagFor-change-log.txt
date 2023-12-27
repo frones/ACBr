@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/12/2023
+--- Diversos ---
+[-] Correção, a posição correta do campo Desconto1 do Segmento G é 214 e não 114.
+   Por: Luciano Soares Atacado
+--- PagFor.Santander.GravarTxtRemessa ---
+[-] Alterado o tipo de conversão de tcInt para tcStr ao gerar o conteudo do campo
+    Agencia.DV no Registro1.
+   Por: Arthur ZSR
+
 22/11/2023
 --- PagFor.Itau.LerTxtRemessa/ACBrPagForConversao ---
 [*] TK-4751 Reescrito o GetOcorrencia por conter diferenças do padrão CNAB.

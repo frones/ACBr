@@ -247,7 +247,7 @@ begin
 
     Desconto1.Codigo := LerCampo(Linha, 205, 1, tcInt);
     Desconto1.Data := LerCampo(Linha, 206, 8, tcDatISO);
-    Desconto1.Valor := LerCampo(Linha, 114, 15, tcDe2);
+    Desconto1.Valor := LerCampo(Linha, 214, 15, tcDe2);
 
     CodigoProtesto := LerCampo(Linha, 229, 1, tcInt);
     PrazoProtesto := LerCampo(Linha, 230, 2, tcInt);

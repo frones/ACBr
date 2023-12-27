@@ -156,7 +156,7 @@ procedure ParseNomeArquivo(const ANome: string; out APath, AName, AExt: string);
 function DefinirNomeArquivo(const APath, ANomePadraoComponente: string;
   const ANomePersonalizado: string = ''; const AExtensao: string = 'pdf'): string;
 
-function FileToBytes(const AName: string; Bytes: TBytes): Boolean;
+function FileToBytes(const AName: string; out Bytes: TBytes): Boolean;
 
 {$IFDEF MSWINDOWS}
 var xInp32 : function (wAddr: word): byte; stdcall;
@@ -1529,7 +1529,7 @@ begin
 end;
 {$ENDIF}
 
-function FileToBytes(const AName: string; Bytes: TBytes): Boolean;
+function FileToBytes(const AName: string; out Bytes: TBytes): Boolean;
 var
   Stream: TFileStream;
 begin

@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2023
+-- ACBrUtil.FilesIO --
+[-] A função FileToBytes o esta faltando o Out no parâmetro Bytes para que seja
+    retornado corretamente o Logo em bytes.
+   Por: Jéter Rabelo Ferreira
+
 01/11/2023
 -- ACBrUtil.FilesIO --
 [+] Implementado a função StringIsPDF que tem como objetivo identificar se a

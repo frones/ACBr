@@ -553,7 +553,7 @@ begin
         BoletoDM.ACBrBoleto1.NomeArqRetorno:= NomeArq;
 
       BoletoDM.ACBrBoleto1.LerRetorno();
-      BoletoDM.ACBrBoleto1.GravarArqIni(Dir, '', false, Config.CodResposta = codUTF8);
+      BoletoDM.ACBrBoleto1.GravarArqIni(Dir,'');
       Result := SetRetorno(ErrOK);
     finally
       BoletoDM.Destravar;
@@ -592,17 +592,15 @@ begin
       BoletoDM.ACBrBoleto1.LerRetorno();
 
       RespRetorno := TRetornoBoleto.Create(Config.TipoResposta, Config.CodResposta);
-
       try
         RespRetorno.Processar(BoletoDM.ACBrBoleto1);
+        Resposta := ACBrStr(RespRetorno.Gerar);
         Resposta := RespRetorno.Gerar;
-        
       Finally
         RespRetorno.Free;
       end;
 
-      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta) , Resposta);
-
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta );
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
 

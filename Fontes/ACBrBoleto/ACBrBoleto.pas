@@ -35,13 +35,6 @@
 
 unit ACBrBoleto;
 
-{$IFNDEF FPC}
-  {$IFNDEF DELPHI2009_UP}
-    {$DEFINE NAO_SUPORTA_TENCODING}
-  {$ENDIF}
-{$ENDIF}
-
-
 interface
 uses Classes, {$IFNDEF NOGUI}Graphics,{$ENDIF} Contnrs, IniFiles,
      {$IFDEF FPC}
@@ -1527,8 +1520,7 @@ type
     function GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;
     function LerArqIni(const AIniBoletos: String): Boolean;
     function LerConfiguracao(const AIniBoletos: String): Boolean;
-    function GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false; const AIsUTF8 : Boolean = true): String;
-
+    function GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false): String;
     function GravarConfiguracao(DirIniRetorno: string; const NomeArquivo: String): Boolean;
 
   published
@@ -4201,7 +4193,7 @@ begin
   Result := LerArqIni(AIniBoletos);
 end;
 
-function TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false; const AIsUTF8 : Boolean = True): String;
+function TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String; const SomenteConfig:Boolean = false): String;
 var
   IniRetorno: TMemIniFile;
   SL: TStringList;
@@ -4212,17 +4204,7 @@ begin
   Result:= '';
   DirIniRetorno:= PathWithDelim(DirIniRetorno);
 
-
   IniRetorno:= TMemIniFile.Create(DirIniRetorno + IfThen( EstaVazio(NomeArquivo), 'Retorno.ini', NomeArquivo ) );
-
-  {$IFNDEF NAO_SUPORTA_TENCODING}
-    if AIsUTF8 then
-      IniRetorno.Encoding := TEncoding.UTF8
-    else
-      IniRetorno.Encoding := TEncoding.ANSI;
-  {$ENDIF}
-
-
   try
     with Self do
     begin

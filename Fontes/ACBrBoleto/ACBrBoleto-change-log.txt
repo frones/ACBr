@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+27/12/2023
+--- ACBrBoleto --
+[*]TK-4800 Revert 31691 para remover TEnconding
+Por: Daniel Morais InfoCotidiano
+
 20/12/2023
 [*]TK-4622 ACBrBoletoC6 - Conversão Juros Dia quando receber percentual converter para monetário
 [*]TK-4623 ACBrBoletoPefisa - Conversão Juros Dia quando receber percentual converter para monetário

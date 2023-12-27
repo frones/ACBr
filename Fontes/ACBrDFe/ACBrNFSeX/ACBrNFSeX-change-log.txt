@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/12/2023
+-- Tecnos.Provider --
+[*] Alterado o método de envio sincrono para que o provedor retorno o XML completo
+    da nota em vez de apenas um resumo.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeFPDFClass --
 [*] Ajustes para imprimir corretamente os Logos e o nome da SoftHouse.
    Por: Jéter Rabelo Ferreira

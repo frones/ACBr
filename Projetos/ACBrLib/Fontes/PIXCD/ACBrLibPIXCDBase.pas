@@ -55,7 +55,7 @@ type
 
       property PIXCDDM: TLibPIXCDDM read FPIXCDDM;
 
-      function GerarQRCodeEstatico(AValor: Currency; const AinfoAdicional: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+      function GerarQRCodeEstatico(AValor: Double; const AinfoAdicional: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function ConsultarPix(const Ae2eid: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function ConsultarPixRecebidos(ADataInicio: TDateTime; ADataFim: TDateTime; const ATxId: PChar; const ACpfCnpj: PChar; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
       function SolicitarDevolucaoPix(AInfDevolucao: PChar; const Ae2eid: PChar; AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
@@ -104,23 +104,23 @@ begin
   FPIXCDDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibPIXCD.GerarQRCodeEstatico(AValor: Currency; const AinfoAdicional: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.GerarQRCodeEstatico(AValor: Double; const AinfoAdicional: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
-  InfoAdicional, TxId: String;
   Resposta: AnsiString;
+  ValorCurrency: Currency;
 begin
   try
-    InfoAdicional:= ConverterAnsiParaUTF8(AinfoAdicional);
-    TxId:= ConverterAnsiParaUTF8(ATxId);
+    //Conversão realizada por conta de algumas linguagens não suportar Currency - C#.
+    ValorCurrency:= AValor;
 
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_GerarQRCodeEstatico(' + CurrToStr(AValor) + ',' + InfoAdicional + ',' + TxId + ' )', logCompleto, True)
+       GravarLog('PIXCD_GerarQRCodeEstatico(' + StrToCurr(ValorCurrency) + ',' + AinfoAdicional + ',' + ATxId + ' )', logCompleto, True)
     else
        GravarLog('PIXCD_GerarQRCodeEstatico', logNormal);
 
     PIXCDDM.Travar;
     try
-      Resposta:= PIXCDDM.ACBrPixCD1.GerarQRCodeEstatico(AValor, InfoAdicional, TxId);
+      Resposta:= PIXCDDM.ACBrPixCD1.GerarQRCodeEstatico(ValorCurrency, AinfoAdicional, ATxId);
 
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result:= SetRetorno(ErrOK, Resposta);

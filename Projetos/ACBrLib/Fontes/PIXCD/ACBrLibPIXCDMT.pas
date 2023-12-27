@@ -73,7 +73,7 @@ function PIXCD_ConfigLerValor(const libHandle : PLibHandle; const eSessao, eChav
 function PIXCD_ConfigGravarValor(const libHandle : PLibHandle; const eSessao, eChave, eValor: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function PIXCD_GerarQRCodeEstatico(const libHandle: PLibHandle; AValor: Currency; const AinfoAdicional: PChar; const ATxID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_GerarQRCodeEstatico(const libHandle: PLibHandle; AValor: Double; const AinfoAdicional: PChar; const ATxID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function PIXCD_ConsultarPix(const libHandle: PLibHandle; const Ae2eid: PChar; const sResposta: PChar; var esTamanho: longint): longint;
@@ -184,7 +184,7 @@ begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
 end;
 
-function PIXCD_GerarQRCodeEstatico(const libHandle: PLibHandle; AValor: Currency; const AinfoAdicional: PChar; const ATxID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function PIXCD_GerarQRCodeEstatico(const libHandle: PLibHandle; AValor: Double; const AinfoAdicional: PChar; const ATxID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

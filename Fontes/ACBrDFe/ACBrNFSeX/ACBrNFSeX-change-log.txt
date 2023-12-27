@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/12/2023
+-- ISSNet.Provider --
+[*] Correção, no método ConsultarLinkNFSe a inscrição municipal tem que estar
+    com a formatação e não somente os digitos.
+  Por: Adriano Teodorico
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Alteração visando gerar a tag CodigoMunicipio no grupo Intermediario para 
     as versões 2.03 e 2.04 do layout da ABRASF.

@@ -1024,11 +1024,9 @@ begin
                                '<Pedido>' +
                                  '<Prestador>' +
                                    '<CpfCnpj>' +
-                                       IfThen(Length(OnlyNumber(Emitente.CNPJ)) >= 11,
-                                             '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>',
-                                             '<Cpf>' + OnlyNumber(Emitente.CNPJ) + '</Cpf>') +
+                                     GetCpfCnpj(Emitente.CNPJ) +
                                    '</CpfCnpj>' +
-                                   '<InscricaoMunicipal>' + OnlyNumber(Emitente.InscMun) + '</InscricaoMunicipal>' +
+                                   GetInscMunic(Emitente.InscMun) +
                                  '</Prestador>' +
                                IfThen(not EstaVazio(Response.InfConsultaLinkNFSe.NumeroNFSe),
                                     '<NumeroNfse>' + Response.InfConsultaLinkNFSe.NumeroNFSe + '</NumeroNfse>',

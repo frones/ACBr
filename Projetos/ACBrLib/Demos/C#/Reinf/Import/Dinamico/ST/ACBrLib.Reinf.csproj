@@ -68,10 +68,13 @@
     <OutputPath>..\..\bin\Release\</OutputPath>
     <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.CEP.xml</DocumentationFile>
   </PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\Shared\ACBrReinfConfig.cs" Link="ACBrReinfConfig.cs" />
+	</ItemGroup>	
   
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
   </ItemGroup>
 	
-  
 </Project>

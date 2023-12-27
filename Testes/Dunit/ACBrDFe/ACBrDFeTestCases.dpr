@@ -37,7 +37,9 @@ uses
   ACBrTests.Runner in '..\..\ACBrTests.Runner.pas',
   ACBrDFeUtilTest in '..\..\FPCUnit\ACBrDFe\ACBrDFeUtilTest.pas',
   LibXml2TestCases in '..\..\FPCUnit\ACBrDFe\LibXml2TestCases.pas',
-  ACBrLibXml2TestClass in '..\..\FPCUnit\ACBrDFe\ACBrLibXml2TestClass.pas';
+  ACBrLibXml2TestClass in '..\..\FPCUnit\ACBrDFe\ACBrLibXml2TestClass.pas',
+  ACBrLibXml2TestAnsiConsts in '..\..\FPCUnit\ACBrDFe\ACBrLibXml2TestAnsiConsts.pas',
+  ACBrLibXml2TestUTF8Consts in '..\..\FPCUnit\ACBrDFe\ACBrLibXml2TestUTF8Consts.pas';
 
 {$R *.RES}
 

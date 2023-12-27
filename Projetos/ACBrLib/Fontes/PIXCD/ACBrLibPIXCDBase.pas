@@ -114,7 +114,7 @@ begin
     ValorCurrency:= AValor;
 
     if Config.Log.Nivel > logNormal then
-       GravarLog('PIXCD_GerarQRCodeEstatico(' + StrToCurr(ValorCurrency) + ',' + AinfoAdicional + ',' + ATxId + ' )', logCompleto, True)
+       GravarLog('PIXCD_GerarQRCodeEstatico(' + CurrToStr(ValorCurrency) + ',' + AinfoAdicional + ',' + ATxId + ' )', logCompleto, True)
     else
        GravarLog('PIXCD_GerarQRCodeEstatico', logNormal);
 

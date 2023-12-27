@@ -130,6 +130,7 @@ begin
               case HTTPResultCode of
                 400,
                 403,
+                422,
                 500,
                 401 :
                   begin
@@ -235,6 +236,7 @@ begin
                   ARejeicao.Mensagem   := AJSonRejeicao.Values['message'].AsString;
                 end;
               end;
+              422,
               401 :
               begin
                 if (AJson.Values['error'].AsString <> '') then

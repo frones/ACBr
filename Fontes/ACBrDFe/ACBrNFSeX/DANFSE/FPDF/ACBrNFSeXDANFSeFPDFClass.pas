@@ -120,6 +120,8 @@ var
   FProvider: IACBrNFSeXProvider;
   DadosAux: TDadosNecessariosParaDANFSeX;
   Report: TACBrDANFSeFPDFA4Retrato;
+  BLogoPref: TBytes;
+  BLogoPres: TBytes;
 begin
   FProvider := TACBrNFSeX(ACBrNFSe).Provider;
 
@@ -145,14 +147,20 @@ begin
       Report.QRCode := (Trim(UmaNFSe.Link) <> '');
 
       if Report.LogoPrefeitura then
-        ACBrUtil.FilesIO.FileToBytes(Self.Logo, Report.LogoPrefeituraBytes);
+      begin
+        ACBrUtil.FilesIO.FileToBytes(Self.Logo, BLogoPref);
+        Report.LogoPrefeituraBytes := BLogoPref;
+      end;
 
       if Report.LogoPrestador then
-        ACBrUtil.FilesIO.FileToBytes(Self.Prestador.Logo, Report.LogoPrestadorBytes);
+      begin
+        ACBrUtil.FilesIO.FileToBytes(Self.Prestador.Logo, BLogoPres);
+        Report.LogoPrestadorBytes := BLogoPres;
+      end;
 
       Report.CabecalhoLinha1 := Self.Prefeitura;
       Report.QuebraDeLinha   := DadosAux.QuebradeLinha;
-      Report.MensagemRodape := Format('Impresso em %s||%s', [FormatDateTime('dd/mm/yyy HH:nn:ss', Now), 'Nuvem Fiscal']);
+      Report.MensagemRodape := Format('Impresso em %s||%s', [FormatDateTime('dd/mm/yyy HH:nn:ss', Now), Self.Sistema]);
 
       report.SalvarPDF(DadosAux, FPArquivoPDF);
     finally

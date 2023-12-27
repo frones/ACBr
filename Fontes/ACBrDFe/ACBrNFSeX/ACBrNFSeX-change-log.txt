@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/12/2023
+-- ACBrNFSeXDANFSeFPDFClass --
+[*] Ajustes para imprimir corretamente os Logos e o nome da SoftHouse.
+   Por: Jéter Rabelo Ferreira
 -- ISSNet.Provider --
 [*] Correção, no método ConsultarLinkNFSe a inscrição municipal tem que estar
     com a formatação e não somente os digitos.

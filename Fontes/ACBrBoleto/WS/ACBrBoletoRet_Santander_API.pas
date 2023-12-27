@@ -111,8 +111,6 @@ begin
               case HTTPResultCode of
                   200,201 :
                   begin
-
-
                       ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF               := AJson.Values['payer'].AsObject.Values['documentNumber'].AsString;
                       ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado            := AJson.Values['payer'].AsObject.Values['name'].AsString;
                       ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro            := AJson.Values['payer'].AsObject.Values['address'].AsString;
@@ -203,7 +201,7 @@ begin
                     ARetornoWS.DadosRet.TituloRet.SeuNumero            := AJson.Values['clientNumber'].AsString;
                     ARetornoWS.DadosRet.TituloRet.Vencimento           := StringToDateTimeDef(AJson.Values['dueDate'].AsString, 0, 'yyyy-mm-dd');
                     ARetornoWS.DadosRet.TituloRet.DataDocumento        := StringToDateTimeDef(AJson.Values['issueDate'].AsString, 0, 'yyyy-mm-dd');
-                    ARetornoWS.DadosRet.TituloRet.ValorDocumento       := StrToFloatDef( AJson.Values['nominalValue'].AsString, 0);
+                    ARetornoWS.DadosRet.TituloRet.ValorDocumento       := AJson.Values['nominalValue'].AsNumber;
                     ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := AJson.Values['status'].AsString;
 
 
@@ -219,7 +217,7 @@ begin
                               for I := 0 to Pred(AJSonResp.Count) do
                               begin
                                 settlementData      := AJSonResp[I].AsObject;
-                                ARetornoWS.DadosRet.TituloRet.DataBaixa              :=  StringToDateTimeDef(settlementData.Values['settlementCreditDate'].AsString, 0, 'yyyy-mm-dd');
+                                ARetornoWS.DadosRet.TituloRet.DataBaixa              :=  StringToDateTimeDef(settlementData.Values['settlementDate'].AsString, 0, 'yyyy-mm-dd');
                                 ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         :=  settlementData.Values['interestValue'].AsNumber;
                                 ARetornoWS.DadosRet.TituloRet.ValorDesconto          :=  settlementData.Values['discountValue'].AsNumber;
                                 ARetornoWS.DadosRet.TituloRet.ValorPago              :=  settlementData.Values['settlementValue'].AsNumber;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2023
+-- Equiplano.LerXml --
+[*] Possível solução para a leitura correta do valor liquido da nota.
+  Por: Italo Giurizzato Junior
+
 26/12/2023
 -- PadraoNacional.LerXml --
 [*] Alteração visando a leitura de todas as informações do Prestador, pois algumas

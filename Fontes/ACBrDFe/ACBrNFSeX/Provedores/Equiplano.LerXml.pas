@@ -292,16 +292,6 @@ begin
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
     VerificarSeConteudoEhLista(NFSe.Servico.Discriminacao);
-
-    with NFSe.Servico.Valores do
-    begin
-      ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
-                          ValorIssRetido - DescontoIncondicionado -
-                          DescontoCondicionado;
-
-      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
-                              DescontoIncondicionado;
-    end;
   end;
 end;
 
@@ -323,11 +313,22 @@ begin
       ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlIrrf'), tcDe2);
       ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlPis'), tcDe2);
       ValorIssRetido := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlIss'), tcDe2);
+
       AliquotaCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaCofins'), tcDe2);
       AliquotaCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaCsll'), tcDe2);
       AliquotaInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaInss'), tcDe2);
       AliquotaIr  := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaIrrf'), tcDe2);
       AliquotaPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaPis'), tcDe2);
+
+      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+
+      if ValorLiquidoNfse = 0 then
+        ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
+                            ValorIssRetido - DescontoIncondicionado -
+                            DescontoCondicionado;
+
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
     end;
   end;
 end;

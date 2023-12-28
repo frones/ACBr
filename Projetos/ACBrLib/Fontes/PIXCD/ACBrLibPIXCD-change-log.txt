@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2023
+--- ACBrLibPIXCDDataModule ---
+[+] Criação Versão Demonstração ACBrLibPIXCD
+    Por: Antonio Carlos Junior
+
 27/12/2023
 --- ACBrLibPIXCDBase, ACBrLibPIXCDST, ACBrLibPIXCDStaticImportST, ACBrLibPIXCDMT, ACBrLibPIXCDStaticImportMT ---
 [*] Ajuste Método GerarQRCodeEstatico

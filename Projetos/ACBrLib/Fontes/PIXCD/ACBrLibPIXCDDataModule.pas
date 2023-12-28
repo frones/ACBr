@@ -293,6 +293,10 @@ begin
       ChavePIX    := pLibPIXCDConfig.PIXCDMercadoPago.ChavePIX;
       AccessToken := pLibPIXCDConfig.PIXCDMercadoPago.AccessToken;
     end;
+
+    {$IFDEF Demo}
+    ACBrPixCD1.Ambiente := ambTeste;
+    {$ENDIF}
 end;
 
 end.

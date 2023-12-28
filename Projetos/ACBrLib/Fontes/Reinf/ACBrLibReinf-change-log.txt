@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2023
+--- ACBrLibReinfDataModule ---
+[+] Criação Versão Demo ACBrLibReinf
+    Por: Antonio Carlos Junior
+
 19/12/2023
 -- ACBrLib.hnd --
 [*] Implementada documentação do Reinf

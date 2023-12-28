@@ -37,7 +37,7 @@ unit ACBrLibReinfDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibDataModule, ACBrLibConfig, syncobjs, ACBrReinf;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibDataModule, ACBrLibConfig, syncobjs, ACBrReinf, pcnConversao;
 
 type
 

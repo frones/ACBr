@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2023
+--- ACBrBancoSantander --
+[*]TK-4914 Ajustes ao ler CNAB240 seguimento "Y- 03" qdo rejeitado para nao montar o qrCODE
+Por:  Daniel Morais Infocotidiano
+
 27/12/2023
 --- ACBrBoletoRet_Sicredi_APIV2 --
 [*]TK-4901 Ajustes para tratar reposta HTTPResultCode: 422

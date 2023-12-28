@@ -971,7 +971,13 @@ begin
        // Provedor SoftPlan
       Servico.CFPS := '9201';
 
-     {=========================================================================
+      // Provedor ISSDSF
+      // (ttIsentaISS, ttNaoIncidencianoMunic, ttImune, ttExigibilidadeSusp,
+      //  ttNaoTributavel, ttTributavel, ttTributavelFixo, ttTributavelSN,
+      //  ttMEI);
+      Servico.Tributacao := ttImune;
+
+    {=========================================================================
         Dados do Prestador de Serviço
       =========================================================================}
       Prestador.IdentificacaoPrestador.CpfCnpj := edtEmitCNPJ.Text;
@@ -1031,6 +1037,9 @@ begin
       Tomador.IdentificacaoTomador.CpfCnpj := '12345678901';
       Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '';
+      Tomador.IdentificacaoTomador.Nif := '';
+      // (tnnNaoInformado, tnnDispensado, tnnNaoExigencia);
+      Tomador.IdentificacaoTomador.cNaoNIF := tnnDispensado;
 
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE & TESTE';
 

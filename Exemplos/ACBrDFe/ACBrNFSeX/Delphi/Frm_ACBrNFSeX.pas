@@ -1073,6 +1073,12 @@ begin
       // Provedor SoftPlan
       Servico.CFPS := '9201';
 
+      // Provedor ISSDSF
+      // (ttIsentaISS, ttNaoIncidencianoMunic, ttImune, ttExigibilidadeSusp,
+      //  ttNaoTributavel, ttTributavel, ttTributavelFixo, ttTributavelSN,
+      //  ttMEI);
+      Servico.Tributacao := ttImune;
+
       {=========================================================================
         Dados do Prestador de Serviço
       =========================================================================}
@@ -1119,6 +1125,9 @@ begin
       Tomador.IdentificacaoTomador.CpfCnpj := '12345678901';
       Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '';
+      Tomador.IdentificacaoTomador.Nif := '';
+      // (tnnNaoInformado, tnnDispensado, tnnNaoExigencia);
+      Tomador.IdentificacaoTomador.cNaoNIF := tnnDispensado;
 
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE E TESTE';
 
@@ -1574,7 +1583,7 @@ begin
       Tomador.Endereco.CEP := '14800000';
       Tomador.Endereco.xPais := 'BRASIL';
       Tomador.Contato.Telefone := '1622223333';
-      Tomador.Contato.Email := 'nome@provedor.com.br';
+      Tomador.Contato.Email := 'tomador <nome@provedor.com.br>';
 
       {=========================================================================
         Dados do Intermediario na prestação do serviço

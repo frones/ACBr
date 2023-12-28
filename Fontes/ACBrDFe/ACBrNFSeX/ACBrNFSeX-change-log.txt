@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/12/2023
+-- ACBrNFSeXServicos --
+[*] A cidade de Nao-Me-Toque/RS adicionou atualizou as URLs para https.
+  Por: BSSOFT
 -- Diversos --
 [*] Acrescentado na classe Identificacao o campo cNaoNIF que pode receber os valores:
     tnnNaoInformado, tnnDispensado ou tnnNaoExigencia.

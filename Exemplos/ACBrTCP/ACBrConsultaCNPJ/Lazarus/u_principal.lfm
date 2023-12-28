@@ -1,25 +1,29 @@
-object Fprincipal: TFprincipal
-  Left = 277
-  Height = 500
-  Top = 127
-  Width = 706
-  BorderStyle = bsDialog
+object F_Principal: TF_Principal
+  Left = 336
+  Height = 658
+  Top = 105
+  Width = 658
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Consulta de CNPJ'
-  ClientHeight = 500
-  ClientWidth = 706
+  ClientHeight = 658
+  ClientWidth = 658
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
   OnCreate = FormCreate
-  OnShow = FormShow
-  LCLVersion = '2.0.10.0'
+  Position = poScreenCenter
+  LCLVersion = '2.2.6.0'
   object Panel2: TPanel
-    Left = 9
-    Height = 329
-    Top = 168
-    Width = 695
+    Left = 8
+    Height = 456
+    Top = 201
+    Width = 633
     BevelInner = bvRaised
     BevelOuter = bvLowered
-    ClientHeight = 329
-    ClientWidth = 695
-    TabOrder = 0
+    ClientHeight = 456
+    ClientWidth = 633
+    TabOrder = 1
     object Label2: TLabel
       Left = 8
       Height = 16
@@ -69,7 +73,7 @@ object Fprincipal: TFprincipal
       ParentFont = False
     end
     object Label6: TLabel
-      Left = 536
+      Left = 486
       Height = 16
       Top = 59
       Width = 45
@@ -164,6 +168,66 @@ object Fprincipal: TFprincipal
       ParentColor = False
       ParentFont = False
     end
+    object Label15: TLabel
+      Left = 8
+      Height = 16
+      Top = 249
+      Width = 90
+      Caption = 'CNAE Principal'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label16: TLabel
+      Left = 8
+      Height = 16
+      Top = 299
+      Width = 120
+      Caption = 'CNAE Secundário(s)'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label17: TLabel
+      Left = 8
+      Height = 16
+      Top = 201
+      Width = 117
+      Caption = 'Endereço Eletrônico'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label18: TLabel
+      Left = 344
+      Height = 16
+      Top = 201
+      Width = 47
+      Caption = 'Telefone'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label19: TLabel
+      Left = 473
+      Height = 16
+      Top = 11
+      Width = 31
+      Caption = 'Porte'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
     object EditTipo: TEdit
       Left = 8
       Height = 24
@@ -179,7 +243,7 @@ object Fprincipal: TFprincipal
       Left = 112
       Height = 24
       Top = 29
-      Width = 418
+      Width = 355
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
@@ -187,45 +251,37 @@ object Fprincipal: TFprincipal
       TabOrder = 1
     end
     object EditAbertura: TEdit
-      AnchorSideRight.Control = Panel2
-      AnchorSideRight.Side = asrBottom
       Left = 536
       Height = 24
       Top = 29
-      Width = 152
-      Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Right = 5
+      Width = 88
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 3
     end
     object EditEndereco: TEdit
       Left = 192
       Height = 24
       Top = 77
-      Width = 338
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      ParentFont = False
-      TabOrder = 4
-    end
-    object EditNumero: TEdit
-      AnchorSideRight.Control = Panel2
-      AnchorSideRight.Side = asrBottom
-      Left = 534
-      Height = 24
-      Top = 77
-      Width = 154
-      Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Right = 5
+      Width = 288
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 5
+    end
+    object EditNumero: TEdit
+      Left = 486
+      Height = 24
+      Top = 77
+      Width = 138
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 6
     end
     object EditComplemento: TEdit
       Left = 8
@@ -236,22 +292,18 @@ object Fprincipal: TFprincipal
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 6
+      TabOrder = 7
     end
     object EditBairro: TEdit
-      AnchorSideRight.Control = Panel2
-      AnchorSideRight.Side = asrBottom
       Left = 344
       Height = 24
       Top = 123
-      Width = 344
-      Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Right = 5
+      Width = 280
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 7
+      TabOrder = 8
     end
     object EditCidade: TEdit
       Left = 8
@@ -262,7 +314,7 @@ object Fprincipal: TFprincipal
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 8
+      TabOrder = 9
     end
     object EditUF: TEdit
       Left = 305
@@ -273,7 +325,7 @@ object Fprincipal: TFprincipal
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 9
+      TabOrder = 10
     end
     object EditCEP: TEdit
       Left = 344
@@ -284,22 +336,18 @@ object Fprincipal: TFprincipal
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 10
+      TabOrder = 11
     end
     object EditSituacao: TEdit
-      AnchorSideRight.Control = Panel2
-      AnchorSideRight.Side = asrBottom
       Left = 464
       Height = 24
       Top = 171
-      Width = 224
-      Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Right = 5
+      Width = 160
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 11
+      TabOrder = 12
     end
     object EditFantasia: TEdit
       Left = 8
@@ -310,98 +358,75 @@ object Fprincipal: TFprincipal
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 3
+      TabOrder = 4
     end
-    object Label15: TLabel
+    object ListCNAE2: TListBox
       Left = 8
-      Height = 16
-      Top = 201
-      Width = 43
-      Caption = 'CNAE1'
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Arial'
-      ParentColor = False
-      ParentFont = False
+      Height = 125
+      Top = 318
+      Width = 616
+      ItemHeight = 0
+      TabOrder = 16
     end
     object EditCNAE1: TEdit
       Left = 8
       Height = 24
-      Top = 219
-      Width = 289
+      Top = 269
+      Width = 616
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      TabOrder = 12
+      TabOrder = 15
     end
-    object Label16: TLabel
+    object EditEmail: TEdit
       Left = 8
-      Height = 16
-      Top = 248
-      Width = 43
-      Caption = 'CNAE2'
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Arial'
-      ParentColor = False
-      ParentFont = False
-    end
-    object Label17: TLabel
-      Left = 305
-      Height = 16
-      Top = 203
-      Width = 100
-      Caption = 'Natureza Juridica'
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Arial'
-      ParentColor = False
-      ParentFont = False
-    end
-    object EditNaturezaJuridica: TEdit
-      AnchorSideRight.Control = Panel2
-      AnchorSideRight.Side = asrBottom
-      Left = 305
       Height = 24
       Top = 219
-      Width = 383
-      Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Right = 5
+      Width = 330
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 13
     end
-    object EditCNAE2: TMemo
-      Left = 8
-      Height = 56
-      Top = 264
-      Width = 679
-      Anchors = [akRight]
+    object EditTelefone: TEdit
+      Left = 344
+      Height = 24
+      Top = 219
+      Width = 280
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
-      ScrollBars = ssAutoBoth
       TabOrder = 14
+    end
+    object EditPorte: TEdit
+      Left = 473
+      Height = 24
+      Top = 29
+      Width = 57
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 2
     end
   end
   object Panel1: TPanel
     Left = 8
-    Height = 153
+    Height = 187
     Top = 8
-    Width = 696
+    Width = 634
     BevelInner = bvRaised
     BevelOuter = bvLowered
-    ClientHeight = 153
-    ClientWidth = 696
-    TabOrder = 1
+    ClientHeight = 187
+    ClientWidth = 634
+    TabOrder = 0
     object Label1: TLabel
-      Left = 388
+      Left = 25
       Height = 16
-      Top = 12
+      Top = 100
       Width = 85
       Caption = 'Digite o CNPJ:'
       Font.Color = clWindowText
@@ -411,11 +436,11 @@ object Fprincipal: TFprincipal
       ParentFont = False
     end
     object Label14: TLabel
-      Left = 388
+      Left = 25
       Height = 16
-      Top = 78
-      Width = 96
-      Caption = 'Digite o Captcha'
+      Top = 26
+      Width = 50
+      Caption = 'Provedor'
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Arial'
@@ -423,10 +448,10 @@ object Fprincipal: TFprincipal
       ParentFont = False
     end
     object ButBuscar: TBitBtn
-      Left = 564
-      Height = 59
-      Top = 81
-      Width = 121
+      Left = 328
+      Height = 86
+      Top = 91
+      Width = 187
       Caption = 'Consultar'
       Font.Color = clWindowText
       Font.Height = -16
@@ -475,89 +500,45 @@ object Fprincipal: TFprincipal
       }
       OnClick = ButBuscarClick
       ParentFont = False
-      TabOrder = 2
-    end
-    object EditCaptcha: TEdit
-      Left = 388
-      Height = 41
-      Top = 97
-      Width = 169
-      CharCase = ecUppercase
-      Font.Color = clWindowText
-      Font.Height = -27
-      Font.Name = 'Tahoma'
-      OnKeyPress = EditCaptchaKeyPress
-      ParentFont = False
       TabOrder = 1
     end
     object EditCNPJ: TMaskEdit
-      Left = 388
-      Height = 43
-      Top = 31
-      Width = 297
-      AutoSize = False
-      CharCase = ecNormal
+      Left = 25
+      Height = 41
+      Top = 119
+      Width = 288
       Font.Color = clWindowText
       Font.Height = -27
-      Font.Name = 'Sans'
+      Font.Name = 'Tahoma'
       MaxLength = 18
       ParentFont = False
       TabOrder = 0
-      EditMask = '00.000.000\/0000-00;1;_'
+      EditMask = '00.000.000/0000-00;1;_'
       Text = '  .   .   /    -  '
       SpaceChar = '_'
     end
-    object Panel3: TPanel
-      Left = 5
-      Height = 127
-      Top = 11
-      Width = 377
-      BevelOuter = bvLowered
-      ClientHeight = 127
-      ClientWidth = 377
-      Color = clWhite
-      ParentColor = False
-      TabOrder = 3
-      object Image1: TImage
-        Left = 1
-        Height = 106
-        Top = 1
-        Width = 375
-        Align = alClient
-        Center = True
-        Stretch = True
-      end
-      object LabAtualizarCaptcha: TLabel
-        Cursor = crHandPoint
-        Left = 1
-        Height = 19
-        Top = 107
-        Width = 375
-        Align = alBottom
-        Alignment = taCenter
-        AutoSize = False
-        Caption = 'Atualizar Captcha'
-        Font.Color = clBlue
-        Font.Height = -16
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold, fsUnderline]
-        ParentColor = False
-        ParentFont = False
-        OnClick = LabAtualizarCaptchaClick
-      end
+    object cbbProvedor: TComboBox
+      Left = 25
+      Height = 21
+      Top = 48
+      Width = 288
+      ItemHeight = 13
+      TabOrder = 2
+      Text = 'cbbProvedor'
     end
-  end
-  object Timer1: TTimer
-    Enabled = False
-    OnTimer = Timer1Timer
-    Left = 564
-    Top = 288
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
     ProxyPort = '8080'
-    TimeOut = 5000
     PesquisarIBGE = False
-    Left = 404
-    Top = 196
+    IniServicos = 'C:\Program Files (x86)\Embarcadero\Studio\22.0\bin\ACBrConsultaCNPJServicos.ini'
+    Left = 552
+    Top = 48
+  end
+  object ACBrConsultaCNPJ2: TACBrConsultaCNPJ
+    ProxyPort = '8080'
+    PesquisarIBGE = False
+    IniServicos = 'D:\lazarus_32\ACBrConsultaCNPJServicos.ini'
+    Left = 406
+    Top = 48
   end
 end

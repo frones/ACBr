@@ -28,7 +28,7 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit u_principal;
+unit U_Principal;
 
 {$mode objfpc}{$H+}
 
@@ -36,43 +36,23 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, LCL, LCLType,
-  LCLProc, ExtCtrls, StdCtrls, Buttons, MaskEdit, ACBrConsultaCNPJ;
+  LCLProc, ExtCtrls, StdCtrls, Buttons, MaskEdit, ACBrConsultaCNPJ,
+  ACBrBase, ACBrSocket, TypInfo;
+
+
+{$DEFINE SUPPORT_PNG}  
+
+{$IFDEF DELPHI2009_UP}
+  {$DEFINE SUPPORT_PNG}
+{$ENDIF}
 
 type
 
-  { TFprincipal }
+  { TF_Principal }
 
-  TFprincipal = class(TForm)
-    ACBrConsultaCNPJ1: TACBrConsultaCNPJ;
-    ButBuscar: TBitBtn;
-    EditAbertura: TEdit;
-    EditBairro: TEdit;
-    EditCaptcha: TEdit;
-    EditCEP: TEdit;
-    EditCidade: TEdit;
-    EditCNAE1 : TEdit ;
-    EditCNAE2: TMemo;
-    EditNaturezaJuridica : TEdit ;
-    EditCNPJ: TMaskEdit;
-    EditComplemento: TEdit;
-    EditEndereco: TEdit;
-    EditFantasia: TEdit;
-    EditNumero: TEdit;
-    EditRazaoSocial: TEdit;
-    EditSituacao: TEdit;
-    EditTipo: TEdit;
-    EditUF: TEdit;
-    Image1: TImage;
-    LabAtualizarCaptcha: TLabel;
-    Label1: TLabel;
-    Label10: TLabel;
-    Label11: TLabel;
-    Label12: TLabel;
-    Label13: TLabel;
-    Label14: TLabel;
-    Label15 : TLabel ;
-    Label16 : TLabel ;
-    Label17 : TLabel ;
+  TF_Principal = class(TForm)
+    ACBrConsultaCNPJ2: TACBrConsultaCNPJ;
+    Panel2: TPanel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -81,104 +61,104 @@ type
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    EditTipo: TEdit;
+    EditRazaoSocial: TEdit;
+    EditAbertura: TEdit;
+    EditEndereco: TEdit;
+    EditNumero: TEdit;
+    EditComplemento: TEdit;
+    EditBairro: TEdit;
+    EditCidade: TEdit;
+    EditUF: TEdit;
+    EditCEP: TEdit;
+    EditSituacao: TEdit;
     Panel1: TPanel;
-    Panel2: TPanel;
-    Panel3: TPanel;
-    Timer1: TTimer;
-    procedure ButBuscarClick(Sender: TObject);
-    procedure EditCaptchaKeyPress(Sender: TObject; var Key: char);
+    Label1: TLabel;
+    ButBuscar: TBitBtn;
+    EditFantasia: TEdit;
+    Label13: TLabel;
+    ACBrConsultaCNPJ1: TACBrConsultaCNPJ;
+    EditCNPJ: TMaskEdit;
+    ListCNAE2: TListBox;
+    Label15: TLabel;
+    EditCNAE1: TEdit;
+    Label16: TLabel;
+    EditEmail: TEdit;
+    Label17: TLabel;
+    EditTelefone: TEdit;
+    Label18: TLabel;
+    Label19: TLabel;
+    EditPorte: TEdit;
+    cbbProvedor: TComboBox;
+    Label14: TLabel;
     procedure FormCreate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure LabAtualizarCaptchaClick(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
+    procedure ButBuscarClick(Sender: TObject);
+    procedure EditCaptchaKeyPress(Sender: TObject; var Key: Char);
   private
-    { private declarations }
+    { Private declarations }
   public
-    { public declarations }
+    { Public declarations }
   end;
 
 var
-  Fprincipal: TFprincipal;
+  F_Principal: TF_Principal;
 
 implementation
 
 {$R *.lfm}
 
-{ TFprincipal }
-
-procedure TFprincipal.ButBuscarClick(Sender: TObject);
+procedure TF_Principal.FormCreate(Sender: TObject);
+var Provedor : TACBrCNPJProvedorWS;
 begin
-  if EditCaptcha.Text <> '' then
+  cbbProvedor.Items.Clear;
+
+  for Provedor := Low(TACBrCNPJProvedorWS) to High(TACBrCNPJProvedorWS) do
+    cbbProvedor.Items.AddObject( GetEnumName(TypeInfo(TACBrCNPJProvedorWS), integer(Provedor) ), TObject(integer(Provedor)) );
+
+  cbbProvedor.ItemIndex := 0;
+end;
+
+procedure TF_Principal.ButBuscarClick(Sender: TObject);
+var
+  I: Integer;
+begin
+  ACBrConsultaCNPJ1.Provedor := TACBrCNPJProvedorWS(cbbProvedor.ItemIndex);
+  if ACBrConsultaCNPJ1.Provedor = cwsNenhum then
+     raise EACBrConsultaCNPJException.Create('Nenhum provedor Selecionado!');
+
+  if ACBrConsultaCNPJ1.Consulta(EditCNPJ.Text) then
   begin
-    if ACBrConsultaCNPJ1.Consulta(EditCNPJ.Text, EditCaptcha.Text) then
-    begin
-      EditTipo.Text        := ACBrConsultaCNPJ1.EmpresaTipo;
-      EditRazaoSocial.Text := ACBrConsultaCNPJ1.RazaoSocial;
-      EditAbertura.Text    := DateToStr( ACBrConsultaCNPJ1.Abertura );
-      EditFantasia.Text    := ACBrConsultaCNPJ1.Fantasia;
-      EditEndereco.Text    := ACBrConsultaCNPJ1.Endereco;
-      EditNumero.Text      := ACBrConsultaCNPJ1.Numero;
-      EditComplemento.Text := ACBrConsultaCNPJ1.Complemento;
-      EditBairro.Text      := ACBrConsultaCNPJ1.Bairro;
-      EditCidade.Text      := ACBrConsultaCNPJ1.Cidade;
-      EditUF.Text          := ACBrConsultaCNPJ1.UF;
-      EditCEP.Text         := ACBrConsultaCNPJ1.CEP;
-      EditSituacao.Text    := ACBrConsultaCNPJ1.Situacao;
-      EditCNAE1.Text       := ACBrConsultaCNPJ1.CNAE1;
-      EditCNAE2.Lines.Text := ACBrConsultaCNPJ1.CNAE2.Text;
-      EditNaturezaJuridica.Text := ACBrConsultaCNPJ1.NaturezaJuridica;
-    end;
-  end
-  else
-  begin
-    ShowMessage('É necessário digitar o captcha.');
-    EditCaptcha.SetFocus;
+    EditTipo.Text        := ACBrConsultaCNPJ1.EmpresaTipo;
+    EditRazaoSocial.Text := ACBrConsultaCNPJ1.RazaoSocial;
+    EditPorte.Text       := ACBrConsultaCNPJ1.Porte;
+    EditAbertura.Text    := DateToStr( ACBrConsultaCNPJ1.Abertura );
+    EditFantasia.Text    := ACBrConsultaCNPJ1.Fantasia;
+    EditEndereco.Text    := ACBrConsultaCNPJ1.Endereco;
+    EditNumero.Text      := ACBrConsultaCNPJ1.Numero;
+    EditComplemento.Text := ACBrConsultaCNPJ1.Complemento;
+    EditBairro.Text      := ACBrConsultaCNPJ1.Bairro;
+    EditComplemento.Text := ACBrConsultaCNPJ1.Complemento;
+    EditCidade.Text      := ACBrConsultaCNPJ1.Cidade;
+    EditUF.Text          := ACBrConsultaCNPJ1.UF;
+    EditCEP.Text         := ACBrConsultaCNPJ1.CEP;
+    EditSituacao.Text    := ACBrConsultaCNPJ1.Situacao;
+    EditCNAE1.Text       := ACBrConsultaCNPJ1.CNAE1;
+    EditEmail.Text       := ACBrConsultaCNPJ1.EndEletronico;
+    EditTelefone.Text    := ACBrConsultaCNPJ1.Telefone;
+
+    ListCNAE2.Clear;
+    for I := 0 to ACBrConsultaCNPJ1.CNAE2.Count - 1 do
+      ListCNAE2.Items.Add(ACBrConsultaCNPJ1.CNAE2[I]);
   end;
 end;
 
-procedure TFprincipal.EditCaptchaKeyPress(Sender: TObject; var Key: char);
+procedure TF_Principal.EditCaptchaKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key = #13 then
     ButBuscarClick(ButBuscar);
 end;
 
-procedure TFprincipal.FormCreate(Sender: TObject);
-begin
-  DateSeparator:='/';
-  ShortDateFormat := 'dd/mm/yyyy';
-end;
-
-procedure TFprincipal.FormShow(Sender: TObject);
-begin
-  Timer1.Enabled:= True;
-end;
-
-procedure TFprincipal.LabAtualizarCaptchaClick(Sender: TObject);
-var
-  Stream: TMemoryStream;
-  Png: TPortableNetworkGraphic;
-begin
-  Stream:= TMemoryStream.Create;
-  Png:= TPortableNetworkGraphic.Create;
-  try
-    ACBrConsultaCNPJ1.Captcha(Stream);
-    Png.LoadFromStream(Stream);
-    Image1.Picture.Assign(Png);
-
-    EditCaptcha.Clear;
-    EditCaptcha.SetFocus;
-  finally
-    Stream.Free;
-    Png.Free;
-  end;
-end;
-
-procedure TFprincipal.Timer1Timer(Sender: TObject);
-begin
-  Timer1.Enabled:= False;
-  LabAtualizarCaptchaClick(LabAtualizarCaptcha);
-  EditCNPJ.SetFocus;
-end;
-
 end.
-

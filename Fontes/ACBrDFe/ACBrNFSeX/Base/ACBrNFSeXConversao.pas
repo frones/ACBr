@@ -309,6 +309,8 @@ type
 
   TAssinaturas = (taConfigProvedor, taAssinar, taNaoAssinar);
 
+  TNaoNIF = (tnnNaoInformado, tnnDispensado, tnnNaoExigencia);
+
 function StatusRPSToStr(const t: TStatusRPS): string;
 function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
 
@@ -474,6 +476,9 @@ function SiglaISO2ToCodIBGEPais(const t: string): Integer;
 
 function StrToLayoutNFSe(out ok: boolean; const s: string): TLayoutNFSe;
 function LayoutNFSeToStr(const t: TLayoutNFSe): string;
+
+function StrToNaoNIF(out ok: boolean; const s: string): TNaoNIF;
+function NaoNIFToStr(const t: TNaoNIF): string;
 
 const
 
@@ -12915,6 +12920,19 @@ end;
 function LayoutNFSeToStr(const t: TLayoutNFSe): string;
 begin
   Result := EnumeradoToStr(t, ['0', '1'], [lnfsProvedor, lnfsPadraoNacionalv1]);
+end;
+
+function StrToNaoNIF(out ok: boolean; const s: string): TNaoNIF;
+begin
+  Result := StrToEnumerado(OK, s,
+                           ['0', '1', '2'],
+                           [tnnNaoInformado, tnnDispensado, tnnNaoExigencia]);
+end;
+
+function NaoNIFToStr(const t: TNaoNIF): string;
+begin
+  Result := EnumeradoToStr(t, ['0', '1', '2'],
+                           [tnnNaoInformado, tnnDispensado, tnnNaoExigencia]);
 end;
 
 end.

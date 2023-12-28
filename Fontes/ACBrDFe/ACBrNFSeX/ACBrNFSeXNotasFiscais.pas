@@ -401,6 +401,7 @@ begin
           IdentificacaoPrestador.InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
 
           IdentificacaoPrestador.Nif := INIRec.ReadString(sSecao, 'NIF', '');
+          IdentificacaoPrestador.cNaoNIF := StrToNaoNIF(Ok, INIRec.ReadString(sSecao, 'cNaoNIF', '0'));
           IdentificacaoPrestador.CAEPF := INIRec.ReadString(sSecao, 'CAEPF', '');
 
           // Para o provedor ISSDigital deve-se informar também:
@@ -444,6 +445,7 @@ begin
             InscricaoEstadual := INIRec.ReadString(sSecao, 'InscricaoEstadual', '');
 
             Nif := INIRec.ReadString(sSecao, 'NIF', '');
+            cNaoNIF := StrToNaoNIF(Ok, INIRec.ReadString(sSecao, 'cNaoNIF', '0'));
             CAEPF := INIRec.ReadString(sSecao, 'CAEPF', '');
           end;
 
@@ -486,6 +488,7 @@ begin
             CpfCnpj := INIRec.ReadString(sSecao, 'CNPJCPF', '');
             InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
             Nif := INIRec.ReadString(sSecao, 'NIF', '');
+            cNaoNIF := StrToNaoNIF(Ok, INIRec.ReadString(sSecao, 'cNaoNIF', '0'));
             CAEPF := INIRec.ReadString(sSecao, 'CAEPF', '');
           end;
 
@@ -803,6 +806,7 @@ begin
                   CpfCnpj := INIRec.ReadString(sSecao, 'CNPJCPF', '');
                   InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
                   Nif := INIRec.ReadString(sSecao, 'NIF', '');
+                  cNaoNIF := StrToNaoNIF(Ok, INIRec.ReadString(sSecao, 'cNaoNIF', '0'));
                   CAEPF := INIRec.ReadString(sSecao, 'CAEPF', '');
                 end;
 
@@ -995,6 +999,7 @@ begin
       INIRec.WriteString(sSecao, 'CNPJ', Prestador.IdentificacaoPrestador.CpfCnpj);
       INIRec.WriteString(sSecao, 'InscricaoMunicipal', Prestador.IdentificacaoPrestador.InscricaoMunicipal);
       INIRec.WriteString(sSecao, 'NIF', Prestador.IdentificacaoPrestador.NIF);
+      INIRec.WriteString(sSecao, 'cNaoNIF', NaoNIFToStr(Prestador.IdentificacaoPrestador.cNaoNIF));
       INIRec.WriteString(sSecao, 'CAEPF', Prestador.IdentificacaoPrestador.CAEPF);
 
       // Para o provedor ISSDigital deve-se informar tambem:
@@ -1017,6 +1022,7 @@ begin
       INIRec.WriteString(sSecao, 'CNPJCPF', Tomador.IdentificacaoTomador.CpfCnpj);
       INIRec.WriteString(sSecao, 'InscricaoMunicipal', Tomador.IdentificacaoTomador.InscricaoMunicipal);
       INIRec.WriteString(sSecao, 'NIF', Tomador.IdentificacaoTomador.NIF);
+      INIRec.WriteString(sSecao, 'cNaoNIF', NaoNIFToStr(Tomador.IdentificacaoTomador.cNaoNIF));
       INIRec.WriteString(sSecao, 'CAEPF', Tomador.IdentificacaoTomador.CAEPF);
       //Exigido pelo provedor Equiplano
       INIRec.WriteString(sSecao, 'InscricaoEstadual', Tomador.IdentificacaoTomador.InscricaoEstadual);
@@ -1044,6 +1050,7 @@ begin
         INIRec.WriteString(sSecao, 'CNPJCPF', Intermediario.Identificacao.CpfCnpj);
         INIRec.WriteString(sSecao, 'InscricaoMunicipal', Intermediario.Identificacao.InscricaoMunicipal);
         INIRec.WriteString(sSecao, 'NIF', Intermediario.Identificacao.NIF);
+        INIRec.WriteString(sSecao, 'cNaoNIF', NaoNIFToStr(Intermediario.Identificacao.cNaoNIF));
         INIRec.WriteString(sSecao, 'CAEPF', Intermediario.Identificacao.CAEPF);
         INIRec.WriteString(sSecao, 'RazaoSocial', Intermediario.RazaoSocial);
 
@@ -1241,6 +1248,7 @@ begin
           INIRec.WriteString(sSecao, 'CNPJCPF', fornec.Identificacao.CpfCnpj);
           INIRec.WriteString(sSecao, 'InscricaoMunicipal', fornec.Identificacao.InscricaoMunicipal);
           INIRec.WriteString(sSecao, 'NIF', fornec.Identificacao.NIF);
+          INIRec.WriteString(sSecao, 'cNaoNIF', NaoNIFToStr(fornec.Identificacao.cNaoNIF));
           INIRec.WriteString(sSecao, 'CAEEPF', fornec.Identificacao.CAEPF);
 
           INIRec.WriteString(sSecao, 'Logradouro', fornec.Endereco.Endereco);

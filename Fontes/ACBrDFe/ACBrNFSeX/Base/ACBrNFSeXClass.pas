@@ -137,6 +137,7 @@ type
     FTipo: TTipoPessoa;
     FNif: string;
     FCAEPF: string;
+    FcNaoNIF: TNaoNIF;
 
     function GetCnpj: string;
     procedure SetCnpj(const Value: string);
@@ -149,6 +150,7 @@ type
     property Tipo: TTipoPessoa read FTipo write FTipo;
     property Nif: string read FNif write FNif;
     property CAEPF: string read FCAEPF write FCAEPF;
+    property cNaoNIF: TNaoNIF read FcNaoNIF write FcNaoNIF;
   end;
 
   TContato = class(TObject)

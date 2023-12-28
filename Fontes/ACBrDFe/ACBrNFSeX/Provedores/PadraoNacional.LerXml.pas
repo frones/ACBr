@@ -767,6 +767,8 @@ end;
 
 procedure TNFSeR_PadraoNacional.LerFornecedor(const ANode: TACBrXmlNode;
   Item: Integer);
+var
+  Ok: Boolean;
 begin
   if ANode <> nil then
   begin
@@ -778,6 +780,9 @@ begin
 
         if CpfCnpj = '' then
           Nif := ObterConteudo(ANode.Childrens.FindAnyNs('NIF'), tcStr);
+
+        if Nif = '' then
+          cNaoNIF := StrToNaoNIF(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('cNaoNIF'), tcStr));
 
         CAEPF := ObterConteudo(ANode.Childrens.FindAnyNs('CAEPF'), tcStr);
         InscricaoMunicipal := ObterConteudo(ANode.Childrens.FindAnyNs('IM'), tcStr);
@@ -911,6 +916,7 @@ end;
 procedure TNFSeR_PadraoNacional.LerIntermediario(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('interm');
 
@@ -925,9 +931,13 @@ begin
         if CpfCnpj = '' then
           Nif := ObterConteudo(AuxNode.Childrens.FindAnyNs('NIF'), tcStr);
 
+        if Nif = '' then
+          cNaoNIF := StrToNaoNIF(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('cNaoNIF'), tcStr));
+
         CAEPF := ObterConteudo(AuxNode.Childrens.FindAnyNs('CAEPF'), tcStr);
         InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
       end;
+
       RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
 
       LerEnderecoItermediario(AuxNode);
@@ -1044,6 +1054,7 @@ end;
 procedure TNFSeR_PadraoNacional.LerPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('prest');
 
@@ -1058,6 +1069,9 @@ begin
 
         if CpfCnpj = '' then
           Nif := ObterConteudo(AuxNode.Childrens.FindAnyNs('NIF'), tcStr);
+
+        if Nif = '' then
+          cNaoNIF := StrToNaoNIF(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('cNaoNIF'), tcStr));
 
         CAEPF := ObterConteudo(AuxNode.Childrens.FindAnyNs('CAEPF'), tcStr);
 
@@ -1169,6 +1183,7 @@ end;
 procedure TNFSeR_PadraoNacional.LerTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('toma');
 
@@ -1182,6 +1197,9 @@ begin
 
         if CpfCnpj = '' then
           Nif := ObterConteudo(AuxNode.Childrens.FindAnyNs('NIF'), tcStr);
+
+        if Nif = '' then
+          cNaoNIF := StrToNaoNIF(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('cNaoNIF'), tcStr));
 
         CAEPF := ObterConteudo(AuxNode.Childrens.FindAnyNs('CAEPF'), tcStr);
         InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);

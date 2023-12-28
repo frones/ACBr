@@ -236,7 +236,7 @@ begin
                                  NFSe.Prestador.IdentificacaoPrestador.Nif, ''))
     else
       Result.AppendChild(AddNode(tcStr, '#1', 'cNaoNIF', 1, 1, 1,
-                                                                      '0', ''));
+               NaoNIFToStr(NFSe.Prestador.IdentificacaoPrestador.cNaoNIF), ''));
   end;
 
   Result.AppendChild(AddNode(tcStr, '#1', 'CAEPF', 1, 14, 0,
@@ -352,7 +352,7 @@ begin
                                      NFSe.Tomador.IdentificacaoTomador.Nif, ''))
     else
       Result.AppendChild(AddNode(tcStr, '#1', 'cNaoNIF', 1, 1, 1,
-                                                                      '0', ''));
+                   NaoNIFToStr(NFSe.Tomador.IdentificacaoTomador.cNaoNIF), ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'CAEPF', 1, 14, 0,
                                   NFSe.Tomador.IdentificacaoTomador.CAEPF, ''));
@@ -446,7 +446,7 @@ begin
                                       NFSe.Intermediario.Identificacao.Nif, ''))
     else
       Result.AppendChild(AddNode(tcStr, '#1', 'cNaoNIF', 1, 1, 1,
-                                                                      '0', ''));
+                    NaoNIFToStr(NFSe.Intermediario.Identificacao.cNaoNIF), ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'CAEPF', 1, 14, 0,
                                    NFSe.Intermediario.Identificacao.CAEPF, ''));
@@ -1001,7 +1001,7 @@ begin
                                                          Identificacao.Nif, ''))
       else
         Result.AppendChild(AddNode(tcStr, '#1', 'cNaoNIF', 1, 1, 1,
-                                                                      '0', ''));
+                                       NaoNIFToStr(Identificacao.cNaoNIF), ''));
 
       Result.AppendChild(AddNode(tcStr, '#1', 'CAEPF', 1, 14, 0,
                                                       Identificacao.CAEPF, ''));

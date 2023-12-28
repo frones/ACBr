@@ -69,6 +69,7 @@ type
 implementation
 
 uses
+  ACBrUtil.Compatibilidade,
   ACBrUtil.FilesIO,
   ACBrNFSeX, ACBrNFSeXConversao, ACBr.DANFSeX.Classes, ACBrNFSeXInterface,
   ACBr.DANFSeX.FPDFA4Retrato;

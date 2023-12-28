@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/12/2023
+-- ACBrNFSeXDANFSeFPDFClass --
+[-] Compatibilização com o Delphi 7.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Nao-Me-Toque/RS adicionou atualizou as URLs para https.
   Por: BSSOFT

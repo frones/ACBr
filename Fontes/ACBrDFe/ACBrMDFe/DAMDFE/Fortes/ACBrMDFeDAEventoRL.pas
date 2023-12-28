@@ -106,7 +106,15 @@ begin
   try
     DAMDFeReport.fpDAMDFe := ADAMDFe;
     DAMDFeReport.fpEventoMDFe := AEventoMDFe;
+
+    if ADAMDFe.AlterarEscalaPadrao then
+    begin
+      DAMDFeReport.Scaled := False;
+      DAMDFeReport.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
+    end;
+
     TDFeReportFortes.AjustarReport(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
+    TDFeReportFortes.AjustarMargem(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
 
     if (AMDFe <> nil) then
       DAMDFeReport.fpMDFe := AMDFe;
@@ -129,7 +137,15 @@ begin
   try;
     DAMDFeReport.fpDAMDFe := ADAMDFe;
     DAMDFeReport.fpEventoMDFe := AEventoMDFe;
+
+    if ADAMDFe.AlterarEscalaPadrao then
+    begin
+      DAMDFeReport.Scaled := False;
+      DAMDFeReport.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
+    end;
+
     TDFeReportFortes.AjustarReport(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
+    TDFeReportFortes.AjustarMargem(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
     TDFeReportFortes.AjustarFiltroPDF(DAMDFeReport.RLPDFFilter1, DAMDFeReport.fpDAMDFe, AFile);
 
     if (AMDFe <> nil) then

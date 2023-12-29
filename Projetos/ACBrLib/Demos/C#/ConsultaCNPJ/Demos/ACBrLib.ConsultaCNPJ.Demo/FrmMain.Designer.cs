@@ -33,7 +33,8 @@
             this.rtbRespostas = new System.Windows.Forms.RichTextBox();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.btnConsultarCaptcha = new System.Windows.Forms.Button();
+            this.cmbServico = new System.Windows.Forms.ComboBox();
+            this.label43 = new System.Windows.Forms.Label();
             this.btnConsultarCNPJ = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl3.SuspendLayout();
@@ -70,7 +71,8 @@
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.btnConsultarCaptcha);
+            this.tabPage5.Controls.Add(this.cmbServico);
+            this.tabPage5.Controls.Add(this.label43);
             this.tabPage5.Controls.Add(this.btnConsultarCNPJ);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
@@ -80,15 +82,28 @@
             this.tabPage5.Text = "Consultas";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // btnConsultarCaptcha
+            // cmbServico
             // 
-            this.btnConsultarCaptcha.Location = new System.Drawing.Point(15, 21);
-            this.btnConsultarCaptcha.Name = "btnConsultarCaptcha";
-            this.btnConsultarCaptcha.Size = new System.Drawing.Size(109, 23);
-            this.btnConsultarCaptcha.TabIndex = 4;
-            this.btnConsultarCaptcha.Text = "Consultar Captcha";
-            this.btnConsultarCaptcha.UseVisualStyleBackColor = true;
-            this.btnConsultarCaptcha.Click += new System.EventHandler(this.btnConsultarCaptcha_Click);
+            this.cmbServico.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbServico.FormattingEnabled = true;
+            this.cmbServico.Items.AddRange(new object[] {
+            "cwsNenhum",
+            "cwsBrasilAPI",
+            "cwsReceitaWS"});
+            this.cmbServico.Location = new System.Drawing.Point(15, 23);
+            this.cmbServico.Name = "cmbServico";
+            this.cmbServico.Size = new System.Drawing.Size(100, 21);
+            this.cmbServico.TabIndex = 46;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.Location = new System.Drawing.Point(12, 7);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(50, 13);
+            this.label43.TabIndex = 45;
+            this.label43.Text = "Serviço";
             // 
             // btnConsultarCNPJ
             // 
@@ -118,6 +133,7 @@
             this.groupBox2.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -129,7 +145,8 @@
         private System.Windows.Forms.TabControl tabControl3;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.Button btnConsultarCNPJ;
-        private System.Windows.Forms.Button btnConsultarCaptcha;
+        private System.Windows.Forms.ComboBox cmbServico;
+        private System.Windows.Forms.Label label43;
     }
 }
 

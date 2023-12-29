@@ -70,13 +70,12 @@ namespace ACBrLibConsultaCNPJ.Demo
         {
             try
             {
+                rtbRespostas.Clear();
+
                 var eCNPJ = "";
                 if (InputBox.Show("Consultar CNPJ", "Informe o CNPJ:", ref eCNPJ) != DialogResult.OK) return;
 
-                var codCaptcha = "";
-                if (InputBox.Show("Consultar CNPJ", "Informe o Captcha:", ref codCaptcha) != DialogResult.OK) return;
-
-                var ret = ACBrCNPJ.Consultar(eCNPJ, codCaptcha);
+                var ret = ACBrCNPJ.Consultar(eCNPJ, (int)cmbServico.SelectedIndex );
                 rtbRespostas.AppendText(ret);
 
             }

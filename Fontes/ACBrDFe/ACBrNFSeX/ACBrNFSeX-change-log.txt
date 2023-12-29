@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/12/2023
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Baixo Guandu/ES, o provedor é EL versão 1.00
+  Por: João Antônio
+
 28/12/2023
 -- ACBrNFSeXDANFSeFPDFClass --
 [-] Compatibilização com o Delphi 7.

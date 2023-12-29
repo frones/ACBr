@@ -44,6 +44,8 @@ Símbolo : Significado
 
 29/12/2023
 -- ACBrNFSeXServicos --
+[*] A cidade de Dracena/SP, trocou de provedor, agora é ISSNet versão 2.04.
+  Por: Adriano Teodorico/Lucas Marcondes
 [+] Incluída a cidade de Baixo Guandu/ES, o provedor é EL versão 1.00
   Por: João Antônio
 
@@ -52,7 +54,7 @@ Símbolo : Significado
 [-] Compatibilização com o Delphi 7.
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
-[*] A cidade de Nao-Me-Toque/RS adicionou atualizou as URLs para https.
+[*] A cidade de Nao-Me-Toque/RS atualizou as URLs para https.
   Por: BSSOFT
 -- Diversos --
 [*] Acrescentado na classe Identificacao o campo cNaoNIF que pode receber os valores:

@@ -36,6 +36,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/12/2023
+[*]TK-4878 - ACBrConsultaCNPJ.WS.BrasilAPI, ACBrConsultaCNPJ.WS.ReceitaWS - Removido ACBrStr conforme discutido com o time das propriedades recebida pelo webservice. 
+  Por: Daniel Morais InfoCotidiano
+
 19/12/2023
 [*] Altera System.Classes para Classes nas novas units do ConsultaCNPJ para compatibilizar com Lazarus.
   Por: Diego Folieni

@@ -95,37 +95,37 @@ begin
           LJsonObject := LJSon.Get(I).AsObject;
           if HTTPSend.ResultCode = 200 then
           begin
-            FResposta.RazaoSocial          := ACBrStr(LJsonObject.Values['razao_social'].AsString);
-            FResposta.CNPJ                 := ACBrStr(LJsonObject.Values['cnpj'].AsString);
-            FResposta.Fantasia             := ACBrStr(LJsonObject.Values['nome_fantasia'].AsString);
+            FResposta.RazaoSocial          := LJsonObject.Values['razao_social'].AsString;
+            FResposta.CNPJ                 := LJsonObject.Values['cnpj'].AsString;
+            FResposta.Fantasia             := LJsonObject.Values['nome_fantasia'].AsString;
             FResposta.Abertura             := StringToDateTimeDef(LJsonObject.Values['data_inicio_atividade'].AsString,0,'yyyy/mm/dd');
-            FResposta.Porte                := ACBrStr(LJsonObject.Values['descricao_porte'].AsString);
+            FResposta.Porte                := LJsonObject.Values['descricao_porte'].AsString;
 
-            FResposta.CNAE1                := ACBrStr(IntToStr(LJsonObject.Values['cnae_fiscal'].AsInteger) + ' ' + LJsonObject.Values['cnae_fiscal_descricao'].AsString);
+            FResposta.CNAE1                := IntToStr(LJsonObject.Values['cnae_fiscal'].AsInteger) + ' ' + LJsonObject.Values['cnae_fiscal_descricao'].AsString;
 
             LJsonArray := LJsonObject.Values['cnaes_secundarias'].AsArray;
             for Z := 0 to Pred(LJsonArray.Count) do
-              FResposta.CNAE2.Add(ACBrStr(IntToStr(LJsonArray[Z].AsObject.Values['codigo'].AsInteger) + ' ' + LJsonArray[Z].AsObject.Values['descricao'].AsString));
+              FResposta.CNAE2.Add(IntToStr(LJsonArray[Z].AsObject.Values['codigo'].AsInteger) + ' ' + LJsonArray[Z].AsObject.Values['descricao'].AsString);
 
-            FResposta.EmpresaTipo          := ACBrStr(LJsonObject.Values['descricao_matriz_filial'].AsString);
-            FResposta.Endereco             := ACBrStr(LJsonObject.Values['logradouro'].AsString);
-            FResposta.Numero               := ACBrStr(LJsonObject.Values['numero'].AsString);
-            FResposta.Complemento          := ACBrStr(LJsonObject.Values['complemento'].AsString);
+            FResposta.EmpresaTipo          := LJsonObject.Values['descricao_matriz_filial'].AsString;
+            FResposta.Endereco             := LJsonObject.Values['logradouro'].AsString;
+            FResposta.Numero               := LJsonObject.Values['numero'].AsString;
+            FResposta.Complemento          := LJsonObject.Values['complemento'].AsString;
             FResposta.CEP                  := IntToStr( LJsonObject.Values['cep'].AsInteger);
-            FResposta.Bairro               := ACBrStr(LJsonObject.Values['bairro'].AsString);
-            FResposta.Cidade               := ACBrStr(LJsonObject.Values['municipio'].AsString);
+            FResposta.Bairro               := LJsonObject.Values['bairro'].AsString;
+            FResposta.Cidade               := LJsonObject.Values['municipio'].AsString;
             FResposta.CodigoIBGE           := IntToStr(LJsonObject.Values['codigo_municipio'].AsInteger);
-            FResposta.UF                   := ACBrStr(LJsonObject.Values['uf'].AsString);
-            FResposta.Situacao             := ACBrStr(LJsonObject.Values['descricao_situacao_cadastral'].AsString);
-            FResposta.SituacaoEspecial     := ACBrStr(LJsonObject.Values['situacao_especial'].AsString);
+            FResposta.UF                   := LJsonObject.Values['uf'].AsString;
+            FResposta.Situacao             := LJsonObject.Values['descricao_situacao_cadastral'].AsString;
+            FResposta.SituacaoEspecial     := LJsonObject.Values['situacao_especial'].AsString;
             FResposta.DataSituacao         := StringToDateTimeDef(LJsonObject.Values['data_situacao_cadastral'].AsString,0,'yyyy/mm/dd');
             FResposta.DataSituacaoEspecial := StringToDateTimeDef(LJsonObject.Values['data_situacao_especial'].AsString,0,'yyyy/mm/dd');
             FResposta.NaturezaJuridica     := IntToStr(LJsonObject.Values['codigo_natureza_juridica'].AsInteger);
-            FResposta.EndEletronico        := ACBrStr(LJsonObject.Values[''].AsString);
-            FResposta.Telefone             := ACBrStr(LJsonObject.Values['ddd_telefone_1'].AsString);
+            FResposta.EndEletronico        := LJsonObject.Values[''].AsString;
+            FResposta.Telefone             := LJsonObject.Values['ddd_telefone_1'].AsString;
             FResposta.EFR                  := '';
 
-            FResposta.MotivoSituacaoCad    := ACBrStr(LJsonObject.Values['motivo_situacao_cadastral'].AsString);
+            FResposta.MotivoSituacaoCad    := LJsonObject.Values['motivo_situacao_cadastral'].AsString;
 
             Result := true;
           end;

@@ -77,7 +77,7 @@ function CNPJ_ConfigGravarValor (const libHandle : PLibHandle; const eSessao, eC
 function CNPJ_ConsultarCaptcha (const libHandle : PLibHandle; ePathDownload: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_Consultar (const libHandle : PLibHandle; eCNPJ: PChar; eCaptcha: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CNPJ_Consultar (const libHandle : PLibHandle; eCNPJ: PChar; eServico: LongInt; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
@@ -169,12 +169,13 @@ begin
   end;
 end;
 
-function CNPJ_Consultar(const libHandle: PLibHandle; eCNPJ: PChar; eCaptcha: PChar; const sResposta: PChar; var esTamanho: longint): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CNPJ_Consultar(const libHandle: PLibHandle; eCNPJ: PChar;
+  eServico: LongInt; const sResposta: PChar; var esTamanho: longint): longint;
+  cdecl;
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibConsultaCNPJ(libHandle^.Lib).Consultar(eCNPJ, eCaptcha, sResposta, esTamanho);
+    Result := TACBrLibConsultaCNPJ(libHandle^.Lib).Consultar(eCNPJ, eServico , sResposta, esTamanho);
   except
      on E: EACBrLibException do
      Result := E.Erro;

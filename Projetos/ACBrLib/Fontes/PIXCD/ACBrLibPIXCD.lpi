@@ -8,6 +8,7 @@
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ACBrLibPIXCD"/>
@@ -21,9 +22,9 @@
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPIXCD - Biblioteca para gerar cobrança e pagamento PIX" InternalName="ACBrLibPIXCD" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="1.0.0.0"/>
     </VersionInfo>
-    <BuildModes>
-      <Item Name="Win32-i386-CDECL" Default="True"/>
-      <Item Name="Win64-x86_64-CDECL">
+    <BuildModes Count="13">
+      <Item1 Name="Win32-i386-CDECL" Default="True"/>
+      <Item2 Name="Win64-x86_64-CDECL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -63,8 +64,8 @@
             <CustomOptions Value="-dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Win32-i386-STDCALL">
+      </Item2>
+      <Item3 Name="Win32-i386-STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -104,8 +105,8 @@
             <CustomOptions Value="-dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Win64-x86_64-STDCALL">
+      </Item3>
+      <Item4 Name="Win64-x86_64-STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -145,8 +146,8 @@
             <CustomOptions Value="-dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Linux-x86_64">
+      </Item4>
+      <Item5 Name="Linux-x86_64">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -186,8 +187,8 @@
             <CustomOptions Value="-dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Linux-i386">
+      </Item5>
+      <Item6 Name="Linux-i386">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -227,8 +228,8 @@
             <CustomOptions Value="-dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="i386-CDECL-DEBUG">
+      </Item6>
+      <Item7 Name="i386-CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -262,8 +263,8 @@
             <CustomOptions Value="-dMT -dDEBUG -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Win32-i386-CDECL-MT">
+      </Item7>
+      <Item8 Name="Win32-i386-CDECL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -303,8 +304,8 @@
             <CustomOptions Value="-dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Win32-i386-STDCALL-MT">
+      </Item8>
+      <Item9 Name="Win32-i386-STDCALL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -344,8 +345,8 @@
             <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Win64-x86_64-CDECL-MT">
+      </Item9>
+      <Item10 Name="Win64-x86_64-CDECL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -385,8 +386,8 @@
             <CustomOptions Value="-dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Win64-x86_64-STDCALL-MT">
+      </Item10>
+      <Item11 Name="Win64-x86_64-STDCALL-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -426,8 +427,8 @@
             <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Linux-x86_64-MT">
+      </Item11>
+      <Item12 Name="Linux-x86_64-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -467,8 +468,8 @@
             <CustomOptions Value="-dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
-      <Item Name="Linux-i386-MT">
+      </Item12>
+      <Item13 Name="Linux-i386-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -508,7 +509,7 @@
             <CustomOptions Value="-dMT -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item>
+      </Item13>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -517,67 +518,67 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages>
-      <Item>
+    <RequiredPackages Count="1">
+      <Item1>
         <PackageName Value="ACBr_PIXCD"/>
-      </Item>
+      </Item1>
     </RequiredPackages>
-    <Units>
-      <Unit>
+    <Units Count="13">
+      <Unit0>
         <Filename Value="ACBrLibPIXCD.lpr"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit0>
+      <Unit1>
         <Filename Value="..\Comum\ACBrLibComum.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit1>
+      <Unit2>
         <Filename Value="..\Comum\ACBrLibConfig.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit2>
+      <Unit3>
         <Filename Value="..\Comum\ACBrLibConsts.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit3>
+      <Unit4>
         <Filename Value="ACBrLibPIXCDDataModule.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="LibPIXCDDM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-      </Unit>
-      <Unit>
+      </Unit4>
+      <Unit5>
         <Filename Value="ACBrLibPIXCDBase.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit5>
+      <Unit6>
         <Filename Value="ACBrLibPIXCDConfig.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit6>
+      <Unit7>
         <Filename Value="ACBrLibPIXCDConsts.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit7>
+      <Unit8>
         <Filename Value="ACBrLibPIXCDRespostas.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit8>
+      <Unit9>
         <Filename Value="ACBrLibPIXCDST.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit9>
+      <Unit10>
         <Filename Value="ACBrLibPIXCDMT.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit10>
+      <Unit11>
         <Filename Value="ACBrLibPIXCDStaticImportST.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
+      </Unit11>
+      <Unit12>
         <Filename Value="ACBrLibPIXCDStaticImportMT.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
+      </Unit12>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -620,16 +621,16 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions>
-      <Item>
+    <Exceptions Count="3">
+      <Item1>
         <Name Value="EAbort"/>
-      </Item>
-      <Item>
+      </Item1>
+      <Item2>
         <Name Value="ECodetoolError"/>
-      </Item>
-      <Item>
+      </Item2>
+      <Item3>
         <Name Value="EFOpenError"/>
-      </Item>
+      </Item3>
     </Exceptions>
   </Debugging>
 </CONFIG>

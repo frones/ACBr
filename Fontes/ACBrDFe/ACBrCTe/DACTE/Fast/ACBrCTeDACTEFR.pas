@@ -2932,20 +2932,17 @@ begin
 
       vResumo := vResumo + ' - VALOR A RECEBER: R$ ' + FormatFloat(',0.00',FCTe.vPrest.vRec);
     end;
+
     FieldByName('ResumoCanhoto').AsString := vResumo;
 
-    if DACTEClassOwner.PosCanhoto = prCabecalho then
-      FieldByName('PrintCanhoto').AsString := '0'
-    else
-	if DACTEClassOwner.PosCanhoto = prRodape then
-      FieldByName('PrintCanhoto').AsString := '1'
-	else
-	if DACTEClassOwner.PosCanhoto = prEsquerda then
-	  FieldByName('PrintCanhoto').AsString := '2';
-    if FCTe.infCTe.versao = 2 then
-      FieldByName('Versao').AsString := '2.00'
-    else
-      FieldByName('Versao').AsString := '3.00';
+    case DACTEClassOwner.PosCanhoto of
+      prCabecalho: FieldByName('PrintCanhoto').AsString := '0';
+      prRodape: FieldByName('PrintCanhoto').AsString := '1';
+      prEsquerda: FieldByName('PrintCanhoto').AsString := '2';
+    end;
+
+    FieldByName('Versao').AsString := FormatFloat('0.00', FCTe.infCTe.versao);
+
     if (FCTe.ide.tpAmb = taHomologacao) then
     begin
       if FCTe.Ide.modelo = 67 then
@@ -3016,7 +3013,7 @@ begin
     end;
 
     FieldByName('Sistema').AsString := Ifthen(Sistema <> '', Sistema, 'Projeto ACBr - http://acbr.sf.net');
-    FieldByName('Usuario').AsString := Ifthen(Usuario <> '', Usuario,'');
+    FieldByName('Usuario').AsString := Ifthen(Usuario <> '', Usuario, '');
 
     FieldByName('Site').AsString  := Site;
     FieldByName('Email').AsString := Email;

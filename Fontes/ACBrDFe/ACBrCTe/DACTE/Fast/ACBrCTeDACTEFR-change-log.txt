@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2024
+-- ACBrCTeDACTEFR --
+[*] Ajustes na impressão do DACTE - para mostrar a versão correta do CT-e no
+    rodapé.
+  Por: Italo Giurizzato Junior
+
 14/08/2023
 -- ACBrCTeDACTEFR --
 [*] Ajustes para a impressão correta das chaves dos CT-e complementados que

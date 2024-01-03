@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/01/2024
+-- ACBrNFSeXDANFSeFPDFClass --
+[*] Removido a unit Forms da declaração uses.
+  Por: Gabriel Franciscon
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Santa Vitoria do Palmar/RS, o provedor é Pronim versão 1.00
   Por: Enéias Rodrigo

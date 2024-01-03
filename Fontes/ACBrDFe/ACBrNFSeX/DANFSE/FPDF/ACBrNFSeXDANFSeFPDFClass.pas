@@ -37,7 +37,6 @@ unit ACBrNFSeXDANFSeFPDFClass;
 interface
 
 uses
-  Forms, 
   SysUtils, 
   Classes, 
   ACBrBase, 

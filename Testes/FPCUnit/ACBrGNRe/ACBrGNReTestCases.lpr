@@ -4,7 +4,8 @@ program ACBrGNReTestCases;
 
 uses
   Interfaces, Forms, ACBrTests.Util, GuiTestRunner,
-pgnreRetConsResLoteGNRETestCases;
+pgnreRetConsResLoteGNRETestCases, ACBrGNReGuiasRetornoTestCases,
+ACBrGNReTestConsts;
 
 {$R *.res}
 

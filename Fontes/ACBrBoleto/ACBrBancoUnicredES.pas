@@ -53,6 +53,8 @@ type
     function DefinePosicaoNossoNumeroRetorno: Integer; override;
     function DefineSeuNumeroRetorno(const ALinha: String): String; override;
     function DefineNumeroDocumentoRetorno(const ALinha: String): String; override;
+    function DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String; override;   //Utilizado para definir Código Protesto do título na remessa
+
   public
     Constructor create(AOwner: TACBrBanco);
 
@@ -624,6 +626,25 @@ begin
   ATitulo.ValorOutrasDespesas := 0;
 end;
 
+function TACBrBancoUnicredES.DefineCodigoProtesto(
+  const ACBrTitulo: TACBrTitulo): String;
+begin
+  with ACBrTitulo do
+  begin
+    case CodigoNegativacao of
+        cnNenhum           :  Result := '0';
+        cnProtestarCorrido :  Result := '1';
+        cnProtestarUteis   :  Result := '2';
+        cnNaoProtestar     :  Result := '3';
+        cnNegativar        :  Result := '4'; // negativar dias corridos
+        cnNegativarUteis   :  Result := '5';
+        cnNaoNegativar     :  Result := '6';
+       else
+        Result := '0';
+      end;
+  end;
+end;
+
 function TACBrBancoUnicredES.DefineNumeroDocumentoModulo(
   const ACBrTitulo: TACBrTitulo): String;
 begin
@@ -717,6 +738,7 @@ var
   sNossoNumero, sDigitoNossoNumero, ATipoAceite : String;
   ACodJuros, ACodDesc, ACodProtesto : String;
   ACodMulta, AValorMulta : String;
+  ADias : String;
   ListTransacao: TStringList;
 begin
   with ACBrTitulo do
@@ -758,6 +780,25 @@ begin
     if (ACBrBoleto.Cedente.UF = 'SC') then
       NumeroDocumento := PadLeft(Copy(NumeroDocumento,0,10), 15, ' ');
 
+    { Dias para protesto / Negativação }
+    ADias := '00';
+    if Length(ACodProtesto) > 0 then
+    begin
+      case StrToInt(ACodProtesto) of
+        1,2 : begin
+          ADias := PadLeft(IntToStr(DiasDeProtesto), 2, '0');
+          if DiasDeProtesto <= 0 then
+             Raise Exception.Create(ACBrStr('Informar a propriedade DiasDeProtesto !'));
+        end;
+        4,5 : begin
+          ADias := PadLeft(IntToStr(DiasDeNegativacao), 2, '0');
+          if DiasDeNegativacao <= 0 then
+             Raise Exception.Create(ACBrStr('Informar a propriedade DiasDeNegativacao !'));
+        end;
+
+      end;
+
+    end;
 
     ListTransacao:= TStringList.Create;
 
@@ -804,7 +845,7 @@ begin
                IntToStrZero( round(ValorAbatimento * 100), 15)                         + // 181 a 195 - Valor do abatimento
                PadRight(SeuNumero, 25, ' ')                                            + // 196 a 220 - Identificação do título na empresa
                aCodProtesto                                                            + // 221 - Código para protesto.  '1’ = ProtestarDias Corridos '2’ = ProtestarDias Úteis '3’ = NãoProtestar
-               IfThen(aCodProtesto<>'3', PadLeft(IntToStr(DiasDeProtesto),2,'0'),'00') + // 222 a 223 - Prazo para negativar (em dias corridos)
+               ADias                                                                   + // 222 a 223 - Prazo para negativar (em dias corridos)
                Space(4)                                                                + // 224 a 227 - Brancos
                '09'                                                                    + // 228 a 229 - Código da moeda: 09-Real
                StringOfChar('0', 10)                                                   + // 230 a 239 - Numero do contrato da op. de credito

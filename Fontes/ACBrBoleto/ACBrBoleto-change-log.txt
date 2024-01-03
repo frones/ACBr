@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2024
+--- ACBrBancoUnicredES, ACBrBoletoConversao --
+[*]TK-4881 Ajustado dias de protesto e negativação CNAB240; Corrigido eNum TACBrCodigoNegativacao e conversores;
+https://www.projetoacbr.com.br/forum/topic/75424-ajuste-no-arquivo-acbrbancounicredespas-para-a-homologa%C3%A7%C3%A3o-com-o-unicred-cnab-240/
+Por: Giovani Da Cruz e Daniel Morais InfoCotidiano
+
 28/12/2023
 --- ACBrBancoSantander --
 [*]TK-4914 Ajustes ao ler CNAB240 seguimento "Y- 03" qdo rejeitado para nao montar o qrCODE

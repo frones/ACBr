@@ -36,6 +36,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2024
+[*]TK-4920 - ACBrNCMs - Possível solução para a leitura das datas.
+  Por: Italo Giurizzato Junior
+
 29/12/2023
 [*]TK-4878 - ACBrConsultaCNPJ.WS.BrasilAPI, ACBrConsultaCNPJ.WS.ReceitaWS - Removido ACBrStr conforme discutido com o time das propriedades recebida pelo webservice. 
   Por: Daniel Morais InfoCotidiano

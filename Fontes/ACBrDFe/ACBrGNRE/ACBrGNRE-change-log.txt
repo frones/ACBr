@@ -46,6 +46,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/01/2024
+-- ACBrGNReGuiasRetorno, pgnreRetConsResLoteGNRe --
+[*] Otimização na leitura dos valores.
+  Por: Diego Folieni
 -- pgnreRetConsResLoteGNRE --
 [*] Adiciona na leitura do retorno as propriedades ValorFCP, AtualizacaoMonetariaFCP, JurosFCP e MultaFCP.
   Por: Diego Folieni

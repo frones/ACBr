@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2024
+-- ACBrMonitor.hnd --
+[*] Atualizado documentação da nova consulta CNPJ, removido captcha
+  Por: Daniel Morais InfoCotidiano
+
+04/01/2024
 --- DoCNPJUnit, ACBrMonitorConfig, ACBrMonitor1, ACBrMonitor1.lfm, ACBrMonitorConsts  ---
 [*] Ajustado para utilizar novo componente de consulta CNPJ
   Por: Daniel Morais InfoCotidiano

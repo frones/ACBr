@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail, ACBrPosPrinter,
-  ACBrIntegrador, ACBrDANFCeFortesFrA4, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
+  ACBrDANFCeFortesFrA4, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
   ACBrLibDataModule, ACBrLibConfig, ACBrLibComum;
 
 type
@@ -47,7 +47,6 @@ type
   { TLibNFeDM }
 
   TLibNFeDM = class(TLibDataModule)
-    ACBrIntegrador1: TACBrIntegrador;
     ACBrMail1: TACBrMail;
     ACBrNFe1: TACBrNFe;
     ACBrPosPrinter1: TACBrPosPrinter;
@@ -61,7 +60,6 @@ type
     procedure AplicarConfiguracoes; override;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
-    procedure ValidarIntegradorNFCe;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   Protocolo: String = ''; MostrarPreview: String = ''; MarcaDagua: String = '';
                                   ViaConsumidor: String = ''; Simplificado: String = '');
@@ -92,14 +90,6 @@ begin
   GravarLog('Modo DEMO - Forçando ambiente para Homologação', logNormal);
   ACBrNFe1.Configuracoes.WebServices.Ambiente := taHomologacao;
 {$ENDIF}
-
-  with ACBrIntegrador1 do
-  begin
-    ArqLOG := pLibConfig.Integrador.ArqLOG;
-    PastaInput := pLibConfig.Integrador.PastaInput;
-    PastaOutput := pLibConfig.Integrador.PastaOutput;
-    Timeout := pLibConfig.Integrador.Timeout;
-  end;
 
   AplicarConfigMail;
   AplicarConfigPosPrinter;
@@ -330,21 +320,6 @@ begin
   if Assigned(DANFCeEscPos) then FreeAndNil(DANFCeEscPos);
 
   GravarLog('FinalizarImpressao - Feito', logNormal);
-end;
-
-procedure TLibNFeDM.ValidarIntegradorNFCe;
-
-begin
-  if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFCe) and
-     (ACBrNFe1.Configuracoes.WebServices.UF = 'CE') and
-     ( NaoEstaVazio(ACBrIntegrador1.PastaInput)) and
-     ( NaoEstaVazio(ACBrIntegrador1.PastaOutput))  then
-  begin
-    GravarLog('ValidarIntegradorNFCe - Atribuido', logParanoico);
-    ACBrNFe1.Integrador := ACBrIntegrador1
-  end
-  else
-    ACBrNFe1.Integrador := nil;
 end;
 
 end.

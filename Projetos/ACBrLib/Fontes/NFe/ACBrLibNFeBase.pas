@@ -786,7 +786,6 @@ begin
   try
     GravarLog('NFE_StatusServico', logNormal);
 
-    NFeDM.ValidarIntegradorNFCe;
     NFeDM.Travar;
     Resp := TStatusServicoResposta.Create(Config.TipoResposta, Config.CodResposta);
     try
@@ -961,8 +960,6 @@ begin
         if NotasFiscais.Count > 50 then
            raise EACBrLibException.Create(ErrEnvio, 'ERRO: Conjunto de NF-e transmitidas (máximo de 50 NF-e)' +
                                                     ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count));
-
-        NFeDM.ValidarIntegradorNFCe;
 
         GravarLog('NFe_Enviar, Limpando Resp', logParanoico);
         Resposta := '';

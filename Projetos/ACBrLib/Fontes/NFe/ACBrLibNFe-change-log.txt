@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2024
+--- ACBrLibNFeDataModule, ACBrLibNFeConfig, ACBrLibNFeBase ---
+[*] Remoção Integrador
+    Por: Antonio Carlos Junior
+
 03/04/2023
 --- ACBrLibNFeConfig, ACBrLibNFeConsts, ACBrLibNFeDataModule ---
 [+] Adicionado propriedade ImprimeDescAcrescItemNFe - #TK-3788

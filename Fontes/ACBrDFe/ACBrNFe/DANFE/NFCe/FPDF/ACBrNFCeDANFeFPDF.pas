@@ -121,6 +121,9 @@ type
   end;
 
 type
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrNFCeDANFeFPDF = class(TACBrDFeDANFeReport)
   private
     FFPDFReport: TNFCeDANFeFPDF;

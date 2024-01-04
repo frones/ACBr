@@ -21845,6 +21845,28 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentColor = False
                 ParentFont = False
               end
+              object cbxBolProvedorCNPJ: TComboBox
+                Left = 7
+                Height = 25
+                Top = 280
+                Width = 161
+                ItemHeight = 17
+                OnChange = cbxBolProvedorCNPJChange
+                TabOrder = 13
+                Text = 'cbxBolProvedorCNPJ'
+              end
+              object lblBolProvedorConsultaCNPJ: TLabel
+                Left = 7
+                Height = 16
+                Top = 260
+                Width = 158
+                Caption = 'Provedor de consulta CNPJ'
+                Font.Color = clWindowText
+                Font.Height = -13
+                Font.Name = 'Arial'
+                ParentColor = False
+                ParentFont = False
+              end
             end
             object tsContaBancaria: TTabSheet
               HelpType = htKeyword
@@ -35696,13 +35718,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 808
     Top = 446
   end
-  object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
-    ProxyPort = '8080'
-    PesquisarIBGE = True
-    IniServicos = 'C:\lazarus\ACBrConsultaCNPJServicos.ini'
-    Left = 968
-    Top = 448
-  end
   object ACBrConsultaCPF1: TACBrConsultaCPF
     ProxyPort = '8080'
     IniServicos = 'C:\lazarus\ACBrConsultaCPFServicos.ini'
@@ -35952,5 +35967,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object ACBrBoletoFPDF1: TACBrBoletoFPDF
     Left = 750
     Top = 638
+  end
+  object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
+    ProxyPort = '8080'
+    PesquisarIBGE = False
+    IniServicos = 'D:\lazarus_32\ACBrConsultaCNPJServicos.ini'
+    Left = 934
+    Top = 459
   end
 end

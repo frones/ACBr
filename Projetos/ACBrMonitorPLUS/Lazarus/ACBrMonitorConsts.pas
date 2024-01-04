@@ -1436,6 +1436,10 @@ const
   CKeyNFSeNomePrefeitura =                  'NomePrefeitura';
   CKeyNFSeCNPJPrefeitura =                  'CNPJPrefeitura';
 
+  CSecProvedorCNPJ =                        'ProvedorCNPJ';
+  CKeyProvedorCNPJProvedor =                'Provedor';
+
+
 implementation
 
 end.

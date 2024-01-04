@@ -757,6 +757,11 @@ type
     CNPJPrefeitura: string;
   end;
 
+  TConsultaCNPJ = record
+    ProvedorCnpjWS: integer;
+  end;
+
+
   EDFeException = class(Exception);
   EDFeConfigException = class(EDFeException);
 
@@ -789,6 +794,7 @@ type
     FBoleto : TBOLETO;
     FFonteLinha: TFont;
     FNFSE: TNFSe;
+    FConsultaCNPJ :TConsultaCNPJ;
 
     FOnGravarConfig: TACBrOnGravarConfig;
     procedure DefinirValoresPadrao;
@@ -829,6 +835,7 @@ type
     property BOLETO : TBOLETO                read FBoleto;
     property FonteLinha: TFont               read FFonteLinha;
     property NFSE: TNFSe                     read FNFSE;
+    property ConsultaCNPJ :TConsultaCNPJ     read FConsultaCNPJ;
 
     property OnGravarConfig: TACBrOnGravarConfig read FOnGravarConfig write FOnGravarConfig;
   end;
@@ -1589,6 +1596,11 @@ begin
       Ini.WriteBool( CSecNFSE, CKeyNFSeConsultarAposCancelar, ConsultarAposCancelar );
       Ini.WriteString( CSecNFSE, CKeyNFSeNomePrefeitura, NomePrefeitura );
       Ini.WriteString( CSecNFSE, CKeyNFSeCNPJPrefeitura, CNPJPrefeitura );
+    end;
+
+    with ConsultaCNPJ do
+    begin
+       Ini.WriteInteger( CSecProvedorCNPJ, CKeyProvedorCNPJProvedor, ProvedorCnpjWS );
     end;
 
     SL := TStringList.Create;
@@ -2377,6 +2389,13 @@ begin
       NomePrefeitura := ini.ReadString( CSecNFSE, CKeyNFSeNomePrefeitura, NomePrefeitura);
       CNPJPrefeitura := ini.ReadString( CSecNFSE, CKeyNFSeCNPJPrefeitura, CNPJPrefeitura);
     end;
+
+    with ConsultaCNPJ do
+    begin
+      ProvedorCnpjWS := ini.ReadInteger( CSecProvedorCNPJ, CKeyProvedorCNPJProvedor, ProvedorCnpjWS);
+    end;
+
+
   finally
     Ini.Free;
 
@@ -3125,6 +3144,12 @@ begin
     ConsultarAposCancelar := True;
     NomePrefeitura := '';
     CNPJPrefeitura := '';
+  end;
+
+
+  with ConsultaCNPJ do
+  begin
+    ProvedorCnpjWS := 0;
   end;
 
 end;

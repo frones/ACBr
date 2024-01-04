@@ -44,10 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2024
+--- DoCNPJUnit, ACBrMonitorConfig, ACBrMonitor1, ACBrMonitor1.lfm, ACBrMonitorConsts  ---
+[*] Ajustado para utilizar novo componente de consulta CNPJ
+  Por: Daniel Morais InfoCotidiano
+
 26/12/2023
 -- ACBrMonitor.hnd --
 [+] Documenta os novos métodos SetLayoutNFSe, SetCodigoMunicipio, SetEmitente e SetAutenticacaoNFSe.
   Por: Diego Folieni
+  
 -- DoACBrNFSeUnit, ACBrMonitorConsts --
 [+] Adiciona os métodos SetLayoutNFSe, SetCodigoMunicipio, SetEmitente e SetAutenticacaoNFSe
   Por: Diego Folieni

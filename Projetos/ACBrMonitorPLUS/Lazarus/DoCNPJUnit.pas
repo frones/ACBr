@@ -83,14 +83,14 @@ uses
 { TMetodoConsultar }
 
 { Params: 0 - String: CNPJ para Consulta
-          1 - String: Captcha para Consulta}
+          1 - Integer: Provedor Consulta }
 procedure TMetodoConsultar.Executar;
 var
   ACNPJ: String;
-  ACaptcha: String;
+  AServico: Integer;
 begin
   ACNPJ := trim(fpCmd.Params(0));
-  ACaptcha := trim(fpCmd.Params(1));
+  AServico := StrToIntDef(fpCmd.Params(1),0);
 
   if (ACNPJ = '') then
     raise Exception.Create('CNPJ não informado.')
@@ -100,12 +100,15 @@ begin
       raise Exception.Create('CNPJ ' + ACNPJ + ' inválido.');
   end;
 
-  if (ACaptcha = '') then
-    raise Exception.Create('Captcha não informado.');
+  if (AServico <> 1) and (AServico <> 2) then
+    raise Exception.Create('Provedor de servico não informado !');
+
+
 
   with TACBrObjetoConsultaCNPJ(fpObjetoDono) do
   begin
-    ACBrConsultaCNPJ.Consulta(ACNPJ, ACaptcha);
+    ACBrConsultaCNPJ.Provedor := TACBrCNPJProvedorWS(AServico);
+    ACBrConsultaCNPJ.Consulta(ACNPJ);
     RespostaConsulta;
   end;
 

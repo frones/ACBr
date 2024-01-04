@@ -65,6 +65,22 @@ Public Const SESSAO_ConsultaCNPJ              As String = "ConsultaCNPJ"
 Public Const SESSAO_NCM                       As String = "NCM"
 Public Const SESSAO_NFSe                      As String = "NFSe"
 Public Const SESSAO_DANFSe                    As String = "DANFSe"
+Public Const SESSAO_PIXCD                     As String = "PIXCD"
+Public Const SESSAO_Bradesco                  As String = "Bradesco"
+Public Const SESSAO_Sicredi                   As String = "Sicredi"
+Public Const SESSAO_Sicoob                    As String = "Sicoob"
+Public Const SESSAO_Shipay                    As String = "Shipay"
+Public Const SESSAO_Santander                 As String = "Santander"
+Public Const SESSAO_PixPDV                    As String = "PixPDV"
+Public Const SESSAO_PagSeguro                 As String = "PagSeguro"
+Public Const SESSAO_Itau                      As String = "Itau"
+Public Const SESSAO_Inter                     As String = "Inter"
+Public Const SESSAO_GerenciaNet               As String = "GerenciaNet"
+Public Const SESSAO_BancoBrasil               As String = "BancoBrasil"
+Public Const SESSAO_Ailos                     As String = "Ailos"
+Public Const SESSAO_Matera                    As String = "Matera"
+Public Const SESSAO_Cielo                     As String = "Cielo"
+Public Const SESSAO_MercadoPago               As String = "MercadoPago"
 
 Public Enum NivelLog
     logNenhum = 0
@@ -644,6 +660,52 @@ End Enum
 Public Enum LayoutNFSe
     lnfsProvedor = 0
     lnfsPadraoNacionalv1 = 1
+End Enum
+
+Public Enum AmbientePIXCD
+    ambTeste = 0
+    ambProducao = 1
+    ambPreProducao = 2
+End Enum
+
+Public Enum BBAPIVersao
+    apiVersao1 = 0
+    apiversao2 = 1
+End Enum
+
+Public Enum NivelLogPSP
+    logPSPNenhum = 0
+    logPSPBaixo = 1
+    logPSPNormal = 2
+    logPSPAlto = 3
+    logPSPMuitoAlto = 4
+End Enum
+
+Public Enum PSP
+    pspBradesco = 0
+    pspItau = 1
+    pspBancoBrasil = 2
+    pspSantander = 3
+    pspShipay = 4
+    pspSicredi = 5
+    pspSicoob = 6
+    pspPagSeguro = 7
+    pspGerenciaNet = 8
+    pspPixPDV = 9
+    pspInter = 10
+    pspAilos = 11
+    pspMatera = 12
+    pspCielo = 13
+    pspMercadoPago = 14
+End Enum
+
+Public Enum TipoChave
+    tchNenhuma = 0
+    tchEmail = 1
+    tchCPF = 2
+    tchCNPJ = 3
+    tchCelular = 4
+    tchAleatoria = 5
 End Enum
 
 Public Function HasPosTipoStatus(Check As ACBrPosTipoStatus, Flag As ACBrPosTipoStatus) As Boolean

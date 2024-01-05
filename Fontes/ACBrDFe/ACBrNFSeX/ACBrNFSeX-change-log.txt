@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/01/2024
+-- ACBrNFSeXServicos --
+[*] Incluído campo Params=FormatarItemServicoSemZeroEsquerda: para cidade de Mage/RJ.
+  Por: Bruno
+[*] Incluído campo Params=TagAliquotaObrigSN:|TagValorISSObrigSN: para cidade de Dracena/SP e
+    Brasilia/DF.
+  Por: Italo Giurizzato Junior
+-- ISSNet.GravarXml --
+[*] Incluído no GerarXml (versão 2.04) a checagem se existe os parâmetros: 
+    TagAliquotaObrigSN e TagValorISSObrigSN.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv2/ACBrNFSeXLerXml_ABRASFv2/Tecnos.Provider --
 [*] Ajustes necessários para a leitura correta do XML da NFS-e do provedor Tecnos.
   Por: Italo Giurizzato Junior

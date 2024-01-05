@@ -161,8 +161,11 @@ begin
   if (NFSe.OptanteSimplesNacional = snSim) or
      (NFSe.RegimeEspecialTributacao = retMicroempresarioIndividual) then
   begin
-    NrOcorrValorIss := 1;
-    NrOcorrAliquota := 1;
+    if FpAOwner.ConfigGeral.Params.TemParametro('TagAliquotaObrigSN') then
+      NrOcorrAliquota := 1;
+
+    if FpAOwner.ConfigGeral.Params.TemParametro('TagValorISSObrigSN') then
+      NrOcorrValorIss := 1;
   end;
 
   Result := inherited GerarXml;

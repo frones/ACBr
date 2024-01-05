@@ -1195,7 +1195,7 @@ begin
       infoDeslig.dtDeslig     := StringToDateTime(INIRec.ReadString(sSecao, 'dtDeslig', '0'));
       infoDeslig.indPagtoAPI  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPagtoAPI', 'S'));
       infoDeslig.dtProjFimAPI := StringToDateTime(INIRec.ReadString(sSecao, 'dtProjFimAPI', '0'));
-      infoDeslig.pensAlim     := eSStrToTpPensaoAlimEx(INIRec.ReadString(sSecao, 'pensAlim', '0'));
+      infoDeslig.pensAlim     := eSStrToTpPensaoAlimEx(INIRec.ReadString(sSecao, 'pensAlim', ''));
       infoDeslig.percAliment  := StringToFloatDef(INIRec.ReadString(sSecao, 'percAliment', ''), 0);
       infoDeslig.vrAlim       := StringToFloatDef(INIRec.ReadString(sSecao, 'vrAlim', ''), 0);
       infoDeslig.nrCertObito  := INIRec.ReadString(sSecao, 'nrCertObito', EmptyStr);

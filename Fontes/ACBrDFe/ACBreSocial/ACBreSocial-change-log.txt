@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2023
+-- pcesS2299 --
+[*] Corrige leitura do campo pensAlim na rotina de leitura do INI
+  Por: Diego Folieni
+
 07/12/2023
 -- pcesS2240 --
 [*] Corrigidas condições do critério para envio da tag dtFimCondicao, no evento S-2240

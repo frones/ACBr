@@ -69,7 +69,6 @@ type
     FNFeUtils: TNFeUtilsFPDF;
     FDANFEClassOwner : TACBrDFeDANFeReport;
     FCancelada: boolean;
-    FFormatSettings: TFormatSettings;
     FInitialized: boolean;
     FFontFamily: string;
     FPaperWidth: double;
@@ -1875,16 +1874,16 @@ begin
         NFCeItem.XProd, 'T', 'L', 0, '', False);
 
     PDF.TextBox(x2, y2, (Args.Band.Width * matrix[2]), NFCeItem.Height,
-      FormatFloat('#,0.00', Prod.qCom, FFormatSettings), 'T', 'R', 0, '', False);
+      FormatFloat('#,0.00', Prod.qCom, FNFeUtils.FormatSettings), 'T', 'R', 0, '', False);
 
     PDF.TextBox(x3, y2, (Args.Band.Width * matrix[3]), NFCeItem.Height,
       Copy(Prod.uCom, 1, 2), 'T', 'C', 0, '', False);
 
     PDF.TextBox(x4, y2, (Args.Band.Width * matrix[4]), NFCeItem.Height,
-      FormatFloat('#,0.00', Prod.vUnCom, FFormatSettings), 'T', 'R', 0, '', False);
+      FormatFloat('#,0.00', Prod.vUnCom, FNFeUtils.FormatSettings), 'T', 'R', 0, '', False);
 
     PDF.TextBox(x5, y2, (Args.Band.Width * matrix[5]), NFCeItem.Height,
-      FormatFloat('#,0.00', Prod.vProd, FFormatSettings), 'T', 'R', 0, '', False);
+      FormatFloat('#,0.00', Prod.vProd, FNFeUtils.FormatSettings), 'T', 'R', 0, '', False);
 
     y2 := y2 + NFCeItem.Height;
   end;
@@ -2016,14 +2015,14 @@ begin
       'T', 'L', 0, '', false);
 
     y2 := PDF.TextBox(0, z, Args.Band.Width, 3,
-      FormatFloat('#,0.00', NFe.pag[I].vPag, FFormatSettings),
+      FormatFloat('#,0.00', NFe.pag[I].vPag, FNFeUtils.FormatSettings),
       'T', 'R', 0, '', false);
     z := z + y2;
   end;
 
   texto := 'Troco R$';
   PDF.TextBox(0, z, Args.Band.Width, 3, texto, 'T', 'L', 0, '', false);
-  texto := FormatFloat('#,0.00', NFe.pag.vTroco, FFormatSettings);
+  texto := FormatFloat('#,0.00', NFe.pag.vTroco, FNFeUtils.FormatSettings);
   PDF.TextBox(0, z, Args.Band.Width, 3, texto, 'T', 'R', 0, '', false);
 
   y := z + 3;
@@ -2126,7 +2125,7 @@ begin
   texto := 'Qtd. Total de Itens';
   PDF.TextBox(0, y, Args.Band.Width / 2, 3, texto, 'T', 'L', 0, '', false);
   y1 := PDF.TextBox(0 + Args.Band.Width / 2, y, Args.Band.Width / 2, 3,
-      FormatFloat('#,0', NFe.Det.Count, FFormatSettings),
+      FormatFloat('#,0', NFe.Det.Count, FNFeUtils.FormatSettings),
       'T', 'R', 0, '', false);
 
   texto := 'Valor Total R$';
@@ -2142,7 +2141,7 @@ begin
       '',
       false
   );
-  texto := FormatFloat('#,0.00', bruto, FFormatSettings);
+  texto := FormatFloat('#,0.00', bruto, FNFeUtils.FormatSettings);
   y2 := PDF.TextBox(
       0 + Args.Band.Width / 2,
       y + y1,
@@ -2169,7 +2168,7 @@ begin
       '',
       false
   );
-  texto := FormatFloat('#,0.00', desconto, FFormatSettings);
+  texto := FormatFloat('#,0.00', desconto, FNFeUtils.FormatSettings);
   y3 := PDF.TextBox(
       0 + Args.Band.Width / 2,
       y + y1 + y2,
@@ -2196,7 +2195,7 @@ begin
       '',
       false
   );
-  texto := FormatFloat('#,0.00', frete, FFormatSettings);
+  texto := FormatFloat('#,0.00', frete, FNFeUtils.FormatSettings);
   y4 := PDF.TextBox(
       0 + Args.Band.Width / 2,
       y + y1 + y2 + y3,
@@ -2227,7 +2226,7 @@ begin
       '',
       false
   );
-  texto := FormatFloat('#,0.00', valor, FFormatSettings);
+  texto := FormatFloat('#,0.00', valor, FNFeUtils.FormatSettings);
   PDF.TextBox(
       0 + Args.Band.Width / 2,
       y + y1 + y2 + y3 + y4,

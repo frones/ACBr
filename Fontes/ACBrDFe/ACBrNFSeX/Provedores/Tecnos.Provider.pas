@@ -640,7 +640,7 @@ begin
 
   Result := Executar('http://tempuri.org/mEnvioLoteRPSSincronoComRetornoLista', Request,
                      ['mEnvioLoteRPSSincronoComRetornoListaResult',
-                     'EnviarLoteRpsSincronoComRetornoListaResposta'],
+                     'EnviarLoteRpsSincronoComDadosResposta'],
                      []);
 end;
 
@@ -747,7 +747,7 @@ begin
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result);
   Result := StringReplace(Result, 'EnviarLoteRpsSincronoResposta',
-                'EnviarLoteRpsSincronoComRetornoListaResposta', [rfReplaceAll]);
+                'EnviarLoteRpsSincronoComDadosResposta', [rfReplaceAll]);
 end;
 
 end.

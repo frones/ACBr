@@ -1246,7 +1246,13 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+  // O provedor Tecnos tem essa tag entre as tag CompNfse e Nfse.
+  AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
+
+  if AuxNode = nil then
+    AuxNode := ANode;
+
+  AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
 
   if AuxNode = nil then
     AuxNode := ANode;

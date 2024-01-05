@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2024
+-- ACBrNFSeXGravarXml_ABRASFv2/ACBrNFSeXLerXml_ABRASFv2/Tecnos.Provider --
+[*] Ajustes necessários para a leitura correta do XML da NFS-e do provedor Tecnos.
+  Por: Italo Giurizzato Junior
+
 03/01/2024
 -- ACBrNFSeXDANFSeFPDFClass --
 [*] Removido a unit Forms da declaração uses.

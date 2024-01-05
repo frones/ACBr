@@ -679,7 +679,7 @@ begin
     Result.AppendChild(AddNode(tcInt, '#35', 'CodigoPais', 4, 4, NrOcorrCodigoPaisServico,
                                            NFSe.Servico.CodigoPais, DSC_CPAIS));
 
-    Result.AppendChild(AddNode(tcInt, '#36', 'ExigibilidadeISS',
+    Result.AppendChild(AddNode(tcStr, '#36', 'ExigibilidadeISS',
                                NrMinExigISS, NrMaxExigISS, NrOcorrExigibilidadeISS,
     StrToInt(FpAOwner.ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS)), DSC_INDISS));
 
@@ -1002,7 +1002,7 @@ begin
     Result.AppendChild(AddNode(tcStr, '#48', 'RazaoSocial', 1, 115, NrOcorrRazaoSocialInterm,
                                     NFSe.Intermediario.RazaoSocial, DSC_XNOME));
 
-    Result.AppendChild(AddNode(tcInt, '#49', 'CodigoMunicipio', 7, 7,
+    Result.AppendChild(AddNode(tcStr, '#49', 'CodigoMunicipio', 7, 7,
        NrOcorrCodigoMunicInterm, NFSe.Intermediario.CodigoMunicipio, DSC_CMUN));
   end;
 end;

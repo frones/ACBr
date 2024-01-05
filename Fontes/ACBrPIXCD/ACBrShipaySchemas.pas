@@ -508,6 +508,7 @@ type
 
   function ShipayOrderStatusToString(AStatus: TShipayOrderStatus): String;
   function StringToShipayOrderStatus(const AString: String): TShipayOrderStatus;
+  function ShipayStrDateTimeToDateTime(const ADateTime: String): TDateTime;
 
 implementation
 
@@ -554,6 +555,14 @@ begin
     Result := spsPartial_Refunded
   else
     Result := spsNone;
+end;
+
+function ShipayStrDateTimeToDateTime(const ADateTime: String): TDateTime;
+begin
+  if StrIsNumber(Copy(ADateTime, 1, 4)) then
+    Result := Iso8601ToDateTime(ADateTime)
+  else
+    Result := DecodeRfcDateTime(ADateTime);
 end;
 
 { TShipayAmountDiscountDate }
@@ -674,7 +683,7 @@ begin
     .Value('due_date', s)
     .Value('days_valid_after_due', i);
 
-  dataDeVencimento := Iso8601ToDateTime(s);
+  dataDeVencimento := ShipayStrDateTimeToDateTime(s);
   validadeAposVencimento := i;
 end;
 
@@ -1384,19 +1393,19 @@ begin
   fbalance := (c/100);
   AJSon.Value('created_at', s);
   if NaoEstaVazio(s) then
-    fcreated_at := Iso8601ToDateTime(s);
+    fcreated_at := ShipayStrDateTimeToDateTime(s);
 
   AJSon.Value('expiration_date', s);
   if NaoEstaVazio(s) then
-    fexpiration_date := Iso8601ToDateTime(s);
+    fexpiration_date := ShipayStrDateTimeToDateTime(s);
 
   AJSon.Value('payment_date', s);
   if NaoEstaVazio(s) then
-    fpayment_date := Iso8601ToDateTime(s);
+    fpayment_date := ShipayStrDateTimeToDateTime(s);
 
   AJSon.Value('updated_at', s);
   if NaoEstaVazio(s) then
-    fupdated_at := Iso8601ToDateTime(s);
+    fupdated_at := ShipayStrDateTimeToDateTime(s);
 end;
 
 { TShipayOrderData }

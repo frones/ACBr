@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+05/01/2024
+--- ACBrBoletoW_Santander_API.pas --
+[-]TK-4924 Corrigido envio dos descontos na inclusao do titulo;
+https://www.projetoacbr.com.br/forum/topic/75055-boleto-santander-api-valor-desconto-e-data-da-baixa-n%C3%A3o-registra/#comment-489438
+Por: Jhonlenon Ribeiro - Verificado:  Daniel Morais InfoCotidiano
+
 03/01/2024
 --- ACBrBancoUnicredES, ACBrBoletoConversao --
 [*]TK-4881 Ajustado dias de protesto e negativação CNAB240; Corrigido eNum TACBrCodigoNegativacao e conversores;

@@ -90,10 +90,21 @@ type
 
   end;
 const
+  {URL Produção}
   C_URL = 'https://trust-open.api.santander.com.br/collection_bill_management/v2';
+  C_URL_OAUTH_PROD = 'https://trust-open.api.santander.com.br/auth/oauth/v2/token';
+
+  {Para homologacao existe 2 end points SandBox e Open-h }
+
+  {URL SandBOX}
   C_URL_HOM = 'https://trust-sandbox.api.santander.com.br/collection_bill_management/v2';
   C_URL_OAUTH_HOM = 'https://trust-sandbox.api.santander.com.br/auth/oauth/v2/token';
-  C_URL_OAUTH_PROD = 'https://trust-open.api.santander.com.br/auth/oauth/v2/token';
+
+
+  {URL Homologação open-h}
+  //C_URL_HOM = 'https://trust-open-h.api.santander.com.br/collection_bill_management/v2';
+  //C_URL_OAUTH_HOM = 'https://trust-open-h.api.santander.com.br/auth/oauth/v2/token';
+
 
 implementation
 
@@ -114,6 +125,7 @@ begin
      tpConsultaDetalhe: FPURL := FPURL + '/bills/' +  DefinirParametros;
      tpBaixa          : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
   end;
+  BoletoWS.DoLog(' FUrl: '+FPURL);
 end;
 
 procedure TBoletoW_Santander_API.DefinirContentType;
@@ -819,95 +831,98 @@ end;
 
 procedure TBoletoW_Santander_API.GerarDesconto(AJson: TJsonObject);
 var
-  JsonDesconto: TJsonObject;
+  JsonDesconto, JsonDescontoAux: TJsonObject;
   JsonPairGrupoDesconto: TJsonPair;
   JsonPairDesconto: TJsonPair;
   STipoDesconto: string;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(AJson) then
   begin
-    with ATitulo do
-    begin
-      if Assigned(AJson) then
-      begin
-        JsonDesconto := TJSONObject.Create;
-        try
-          case TipoDesconto of
-            tdNaoConcederDesconto:
-              STipoDesconto := 'ISENTO';
-            tdValorFixoAteDataInformada:
-              STipoDesconto := 'VALOR_DATA_FIXA';
-            tdValorAntecipacaoDiaCorrido:
-              STipoDesconto := 'VALOR_DIA_CORRIDO';
-            tdValorAntecipacaoDiaUtil:
-              STipoDesconto := 'VALOR_DIA_UTIL ';
-            else
-              raise Exception.Create('Modalidade de desconto não permitida');
-          end;
-          JsonDesconto.Add('type').Value.AsString := STipoDesconto;
-          if DataDesconto > 0 then
-          begin
-            JsonDesconto.Add('value').Value.AsString :=
-              StringReplace(FormatFloat('0.00', ValorDesconto), ',', '.', [rfReplaceAll]);
-            JsonDesconto.Add('limitDate').Value.AsString :=
-              FormatDateTime('yyyy-mm-dd', DataDesconto);
-            JsonPairGrupoDesconto := TJsonPair.Create(AJson, 'discountOne');
-            try
-              JsonPairGrupoDesconto.Value.AsObject := JsonDesconto;
-              JsonDesconto.Add('discountOne').Assign(JsonPairGrupoDesconto);
-            finally
-              JsonPairGrupoDesconto.Free;
-            end;
-          end;
-
-          //Desconto2
-          if ValorDesconto2 > 0 then
-          begin
-            JsonDesconto.Clear;
-            JsonDesconto.Add('value').Value.AsString :=
-              StringReplace(FormatFloat('0.00', ValorDesconto2), ',', '.', [rfReplaceAll]);
-            JsonDesconto.Add('limitDate').Value.AsString :=
-              FormatDateTime('yyyy-mm-dd', DataDesconto2);
-            JsonPairGrupoDesconto := TJsonPair.Create(AJson, 'discountTwo');
-            try
-              JsonPairGrupoDesconto.Value.AsObject := JsonDesconto;
-              JsonDesconto.Add('discountTwo').Assign(JsonPairGrupoDesconto);
-            finally
-              JsonPairGrupoDesconto.Free;
-            end;
-          end;
-
-          //Desconto3
-          if ValorDesconto3 > 0 then
-          begin
-            JsonDesconto.Clear;
-            JsonDesconto.Add('value').Value.AsString :=
-              StringReplace(FormatFloat('0.00', ValorDesconto3), ',', '.', [rfReplaceAll]);
-            JsonDesconto.Add('limitDate').Value.AsString :=
-              FormatDateTime('yyyy-mm-dd', DataDesconto3);
-            JsonPairGrupoDesconto := TJsonPair.Create(AJson, 'discountThree');
-            try
-              JsonPairGrupoDesconto.Value.AsObject := JsonDesconto;
-              JsonDesconto.Add('discountThree').Assign(JsonPairGrupoDesconto);
-            finally
-              JsonPairGrupoDesconto.Free;
-            end;
-          end;
-
-          JsonPairDesconto := TJsonPair.Create(AJson, 'discount');
-          try
-            JsonPairDesconto.Value.AsObject := JsonDesconto;
-            AJson.Add('discount').Assign(JsonPairDesconto);
-          finally
-            JsonPairDesconto.Free;
-          end;
-        finally
-          JsonDesconto.Free;
+    JsonDescontoAux  := TJSONObject.Create;
+    JsonDesconto := TJSONObject.Create;
+    try
+      JsonPairDesconto := TJsonPair.Create(AJson, 'discount');
+      try
+        case ATitulo.TipoDesconto of
+          tdNaoConcederDesconto:
+            STipoDesconto := 'ISENTO';
+          tdValorFixoAteDataInformada:
+            STipoDesconto := 'VALOR_DATA_FIXA';
+          tdValorAntecipacaoDiaCorrido:
+            STipoDesconto := 'VALOR_DIA_CORRIDO';
+          tdValorAntecipacaoDiaUtil:
+            STipoDesconto := 'VALOR_DIA_UTIL ';
+          else
+            raise Exception.Create('Modalidade de desconto não permitida');
         end;
+        JsonDesconto.Clear;
+        JsonDescontoAux.Clear;
+        JsonDesconto.Add('type').Value.AsString := STipoDesconto;
+        {Desconto1}
+        if ATitulo.ValorDesconto > 0 then
+        begin
+          JsonDescontoAux.Add('value').Value.AsString :=
+          StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto), ',', '.', [rfReplaceAll]);
+          if ATitulo.DataDesconto > 0 then
+            JsonDescontoAux.Add('limitDate').Value.AsString := FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto)
+          else
+            JsonDescontoAux.Add('limitDate').Value.AsString := FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2);
+
+          JsonPairGrupoDesconto := TJsonPair.Create(AJson, 'discountOne');
+          try
+            JsonPairGrupoDesconto.Value.AsObject := JsonDescontoAux;
+            JsonDesconto.Add('discountOne').Assign(JsonPairGrupoDesconto);
+          finally
+            JsonPairGrupoDesconto.Free;
+          end;
+        end;
+
+        {Desconto2}
+        if ATitulo.ValorDesconto2 > 0 then
+        begin
+          JsonDescontoAux.Add('value').Value.AsString :=
+          StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto2), ',', '.', [rfReplaceAll]);
+          JsonDescontoAux.Add('limitDate').Value.AsString := FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2);
+
+          JsonPairGrupoDesconto := TJsonPair.Create(AJson, 'discountTwo');
+          try
+            JsonPairGrupoDesconto.Value.AsObject := JsonDescontoAux;
+            JsonDesconto.Add('discountTwo').Assign(JsonPairGrupoDesconto);
+          finally
+            JsonPairGrupoDesconto.Free;
+          end;
+
+        end;
+
+        {Desconto3}
+        if ATitulo.ValorDesconto3 > 0 then
+        begin
+          JsonDescontoAux.Add('value').Value.AsString :=
+          StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto3), ',', '.', [rfReplaceAll]);
+          JsonDescontoAux.Add('limitDate').Value.AsString := FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto3);
+
+          JsonPairGrupoDesconto := TJsonPair.Create(AJson, 'discountThree');
+          try
+            JsonPairGrupoDesconto.Value.AsObject := JsonDescontoAux;
+            JsonDesconto.Add('discountThree').Assign(JsonPairGrupoDesconto);
+          finally
+            JsonPairGrupoDesconto.Free;
+          end;
+
+        end;
+
+        JsonPairDesconto.Value.AsObject := JsonDesconto;
+        AJson.Add('discount').Assign(JsonPairDesconto);
+
+      finally
+        JsonPairDesconto.Free;
       end;
+
+    finally
+      JsonDesconto.Free;
+      JsonDescontoAux.Free;
     end;
   end;
-
 end;
 
 procedure TBoletoW_Santander_API.GerarRecebimentoDivergente(AJson: TJsonObject);

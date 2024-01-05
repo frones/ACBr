@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2024
+--- ACBrBoletoW_Santander_API.pas --
+[-]TK-4924 Ajuste para criar a tag de descontos qdo existir valor do desconto;
+https://www.projetoacbr.com.br/forum/topic/75055-boleto-santander-api-valor-desconto-e-data-da-baixa-n%C3%A3o-registra/#comment-489438
+Por: Daniel Morais InfoCotidiano
 
 05/01/2024
 --- ACBrBoletoW_Santander_API.pas --

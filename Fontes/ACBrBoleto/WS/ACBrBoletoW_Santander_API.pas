@@ -447,7 +447,8 @@ begin
         GerarSacadorAvalista(Json);
 
         Json.Add('documentKind').Value.AsString := AEspecieDoc;
-        GerarDesconto(Json);
+        if ValorDesconto > 0 then
+           GerarDesconto(Json);
         GerarMulta(Json);
         GerarJuros(Json);
         if ValorAbatimento > 0 then

@@ -44,6 +44,8 @@ Símbolo : Significado
 
 05/01/2024
 -- ACBrNFSeXServicos --
+[*] Corrigida a informação para a cidade de Lagoa Vermelha/RS;
+  Por: Diego Folieni/Italo Giurizzato Junior
 [*] Incluído campo Params=FormatarItemServicoSemZeroEsquerda: para cidade de Mage/RJ.
   Por: Bruno
 [*] Incluído campo Params=TagAliquotaObrigSN:|TagValorISSObrigSN: para cidade de Dracena/SP e

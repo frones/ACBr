@@ -20,8 +20,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="3851"/>
-        <CursorPos X="3" Y="3860"/>
+        <TopLine Value="385"/>
         <UsageCount Value="25"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -101,14 +100,13 @@
       </Unit9>
       <Unit10>
         <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="120"/>
         <CursorPos X="3" Y="99"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit10>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="26" HistoryIndex="25">
       <Position1>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
         <Caret Line="3007" Column="3" TopLine="3005"/>
@@ -203,28 +201,16 @@
       </Position23>
       <Position24>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3860" Column="42" TopLine="3868"/>
+        <Caret Line="3862" Column="32" TopLine="3852"/>
       </Position24>
       <Position25>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="3862" Column="32" TopLine="3852"/>
+        <Caret Line="418" Column="3" TopLine="409"/>
       </Position25>
       <Position26>
         <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="418" Column="3" TopLine="409"/>
+        <Caret Line="3834" Column="26" TopLine="3828"/>
       </Position26>
-      <Position27>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
-        <Caret Line="317" Column="6" TopLine="309"/>
-      </Position27>
-      <Position28>
-        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
-        <Caret Line="1751" TopLine="1644"/>
-      </Position28>
-      <Position29>
-        <Filename Value="Frm_ACBrNFSeX.pas"/>
-        <Caret Line="418" Column="3" TopLine="421"/>
-      </Position29>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

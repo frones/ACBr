@@ -1583,7 +1583,7 @@ begin
       Tomador.Endereco.CEP := '14800000';
       Tomador.Endereco.xPais := 'BRASIL';
       Tomador.Contato.Telefone := '1622223333';
-      Tomador.Contato.Email := 'tomador <nome@provedor.com.br>';
+      Tomador.Contato.Email := 'nome@provedor.com.br';
 
       {=========================================================================
         Dados do Intermediario na prestação do serviço
@@ -3395,6 +3395,7 @@ begin
     else
       memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
 
+    memoLog.Lines.Add('Chave do DPS.........: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.InfID.ID);
     memoLog.Lines.Add('Nota Numero..........: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Numero);
     memoLog.Lines.Add('Código de Verificação: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.CodigoVerificacao);
     memoLog.Lines.Add('Data de Emissão......: ' + DateToStr(ACBrNFSeX1.NotasFiscais.Items[0].NFSe.DataEmissao));

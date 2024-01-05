@@ -1118,7 +1118,7 @@ begin
       else
       begin
         Add( LFill('1400') +
-              LFill( vReg1400.COD_ITEM_IPM ) +
+              LFill( vReg1400.COD_ITEM ) +
               IfThen((Trim(vReg1400.MUN)= EmptyStr), EmptyStr, LFill( vReg1400.MUN ) ) +
               LFill( vReg1400.VALOR,0,2 ) ) ;
       end;

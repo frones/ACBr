@@ -49,5 +49,6 @@ public enum  ACBrSessao {
     ConsultaCNPJ,
     NCM,
     NFSe,
-    DANFSe;
+    DANFSe,
+    Reinf;
 }

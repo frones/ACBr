@@ -53,6 +53,7 @@ resourcestring
   CERR_INVCRC = 'Packet has invalid CRC';
 
   CERR_NOTENABLED = 'Communication is not Enabled';
+  CERR_BUSY = 'Communication is Busy';
 
 
 const
@@ -390,6 +391,7 @@ type
   private
     fID: String;
     fBlocks: TACBrAbecsBlockList;
+    procedure SetID(AValue: String);
 
   protected
     function GetAsString: AnsiString; virtual;
@@ -399,7 +401,7 @@ type
     destructor Destroy; override;
     procedure Clear; virtual;
 
-    property ID: String read fID;
+    property ID: String read fID write SetID;
     property Blocks: TACBrAbecsBlockList read fBlocks;
     property AsString: AnsiString read GetAsString write SetAsString;
   end;
@@ -451,7 +453,7 @@ type
     fResponse: TACBrAbecsResponse;
     fLogFile: String;
     fOnWriteLog: TACBrGravarLog;
-    fIsWaitingResponse: Boolean;
+    fIsBusy: Boolean;
 
     function GetIsEnabled: Boolean;
     function GetPort: String;
@@ -462,8 +464,10 @@ type
       AddTime: Boolean = True);
     procedure DoException(AException: Exception);
 
+    procedure ExecCommand;
     procedure SendCommand;
     procedure WaitForResponse;
+    procedure EvaluateResponse;
     procedure CancelWaiting;
   public
     constructor Create(AOwner: TComponent); override;
@@ -475,7 +479,7 @@ type
   published
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
-
+    property IsBusy: Boolean read fIsBusy;
     property LogFile: String read fLogFile write fLogFile;
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
 
@@ -529,7 +533,7 @@ begin
     raise EACBrAbecsPinPadError.Create(CERR_INVTLV);
 
   if (ld > MAX_TLV_SIZE) then
-    raise EACBrAbecsPinPadError.Create(CERR_INVTLVSIZE);
+    raise EACBrAbecsPinPadError.Create(Format(CERR_INVTLVSIZE, [MAX_TLV_SIZE]));
 
   fData := copy(AValue, 5, ld);
 end;
@@ -637,7 +641,7 @@ begin
     raise EACBrAbecsPinPadError.Create(CERR_INVBLK);
 
   if (l > MAX_BLOCK_SIZE) then
-    raise EACBrAbecsPinPadError.Create(CERR_INVBLKSIZE);
+    raise EACBrAbecsPinPadError.Create(Format(CERR_INVBLKSIZE, [MAX_BLOCK_SIZE]));
 
   fTLVList.AsString := copy(AValue, 4, l);
 end;
@@ -719,6 +723,13 @@ procedure TACBrAbecsCommand.Clear;
 begin
   fID := '';
   fBlocks.Clear;
+end;
+
+procedure TACBrAbecsCommand.SetID(AValue: String);
+begin
+  if fID = AValue then Exit;
+  Clear;
+  fID := AValue;
 end;
 
 function TACBrAbecsCommand.GetAsString: AnsiString;
@@ -854,7 +865,7 @@ begin
 
   fCommand := TACBrAbecsCommand.Create;
   fResponse := TACBrAbecsResponse.Create;
-  fIsWaitingResponse := False;
+  fIsBusy := False;
 end;
 
 destructor TACBrAbecsPinPad.Destroy;
@@ -930,6 +941,19 @@ begin
   raise AException;
 end;
 
+procedure TACBrAbecsPinPad.ExecCommand;
+begin
+  DoWriteLog('ExecCommand');
+  fIsBusy := True;
+  try
+    SendCommand;
+    WaitForResponse;
+    EvaluateResponse;
+  finally
+    fIsBusy := False;
+  end;
+end;
+
 procedure TACBrAbecsPinPad.SendCommand;
 var
   Pck: TACBrAbecsPacket;
@@ -939,6 +963,10 @@ begin
   if not IsEnabled then
     DoException(EACBrAbecsPinPadError.Create(CERR_NOTENABLED));
 
+  if IsBusy then
+    DoException(EACBrAbecsPinPadError.Create(CERR_BUSY));
+
+  fResponse.Clear;
   Pck := TACBrAbecsPacket.Create(fCommand.AsString);
   try
     s := Pck.AsString;
@@ -953,19 +981,26 @@ end;
 procedure TACBrAbecsPinPad.WaitForResponse;
 begin
   DoWriteLog('WaitForResponse');
-  fIsWaitingResponse := True;
+  fIsBusy := True;
+end;
+
+procedure TACBrAbecsPinPad.EvaluateResponse;
+begin
+  if (fResponse.STAT <> ST_OK) then
+    DoException(EACBrAbecsPinPadError.CreateFmt('Error: %d', [fResponse.STAT]));
 end;
 
 procedure TACBrAbecsPinPad.CancelWaiting;
 begin
   DoWriteLog('CancelWaiting');
-  fIsWaitingResponse := False;
+  fIsBusy := False;
 end;
 
 procedure TACBrAbecsPinPad.OpenInsecure;
 begin
   DoWriteLog('OpenInsecure');
-  fCommand.ID := ;
+  fCommand.ID := 'OPN';
+  ExecCommand;
 end;
 
 end.

@@ -55,19 +55,25 @@ resourcestring
   CERR_NOTENABLED = 'Communication is not Enabled';
   CERR_BUSY = 'Communication is Busy';
 
+  CERR_READING_ACK = 'Error Reading ACK';
+
 
 const
   // control characters
+  ACK = 06; // Sent from the pinpad to the SPE when receiving a valid packet.
+  NAK = 21; // It is returned to the side that sent an invalid packet, requesting its retransmission.
+
   EOT = #04; // Pinpad response when receiving a «CAN».
-  ACK = #06; // Sent from the pinpad to the SPE when receiving a valid packet.
   DC3 = #19; // Substitution byte, to prevent special bytes from traveling in the body of the packet.
-  NAK = #21; // It is returned to the side that sent an invalid packet, requesting its retransmission.
   SYN = #22; // Indicates the start of a packet.
   ETB = #23; // Indicates the end of a packet.
   CAN = #24; // Sent from the SPE to the pinpad to cancel the execution of a command.
 
   MAX_BLOCK_SIZE = 999;
   MAX_TLV_SIZE = MAX_BLOCK_SIZE - 4;
+
+  TIMEOUT_ACK = 2000;
+  MAX_ACK_TRIES = 3;
 
   // Return Codes
   ST_OK            = 000; // Command executed successfully.
@@ -477,7 +483,7 @@ type
 
     procedure ExecCommand;
     procedure SendCommand;
-    procedure WaitForAK;
+    function WaitForACK: Byte;
     procedure WaitForResponse;
     procedure EvaluateResponse;
     procedure CancelWaiting;
@@ -1135,11 +1141,34 @@ begin
 end;
 
 procedure TACBrAbecsPinPad.ExecCommand;
+var
+  AckByte: Byte;
+  ACKFails: Byte;
 begin
   RegisterLog('ExecCommand');
   fIsBusy := True;
   try
-    SendCommand;
+    // initial cleaning
+    AckByte := 0;
+    ACKFails := 0;
+    fResponse.Clear;
+
+    // Send Data and Wait for ACK
+    while (AckByte <> ACK) do
+    begin
+      SendCommand;
+      AckByte := WaitForACK;
+
+      if (AckByte = NAK) then
+      begin
+        Inc(ACKFails);
+        if (ACKFails > MAX_ACK_TRIES) then
+          DoException(EACBrAbecsPinPadError.Create(CERR_READING_ACK));
+      end
+      else if (AckByte <> ACK) then
+        DoException(EACBrAbecsPinPadError.Create(CERR_READING_ACK));
+    end;
+
     WaitForResponse;
     EvaluateResponse;
   finally
@@ -1161,7 +1190,6 @@ begin
   if IsBusy then
     DoException(EACBrAbecsPinPadError.Create(CERR_BUSY));
 
-  fResponse.Clear;
   Pck := TACBrAbecsPacket.Create(fCommand.AsString);
   try
     s := Pck.AsString;
@@ -1175,11 +1203,12 @@ begin
   end;
 end;
 
-procedure TACBrAbecsPinPad.WaitForAK;
+function TACBrAbecsPinPad.WaitForACK: Byte;
 begin
   if (LogLevel > 1) then
-    RegisterLog('WaitForAK');
+    RegisterLog('WaitForACK');
 
+  Result := fDevice.LeByte(TIMEOUT_ACK);
 end;
 
 procedure TACBrAbecsPinPad.WaitForResponse;

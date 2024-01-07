@@ -423,11 +423,11 @@ type
     property Blocks: TACBrAbecsBlockList read fBlocks;
     property AsString: AnsiString read GetAsString write SetAsString;
 
-    procedure AddParameter(const PARID: Word; const AData: AnsiString); overload;
-    procedure AddParameter(const PARID: Word; AData: TStream); overload;
+    procedure AddTLVParameter(const PARID: Word; const AData: AnsiString); overload;
+    procedure AddTLVParameter(const PARID: Word; AData: TStream); overload;
 
-    function GetParameter(const PARID: Word): AnsiString; overload;
-    procedure GetParameter(const PARID: Word; AData: TStream); overload;
+    function GetTLVParameter(const PARID: Word): AnsiString; overload;
+    procedure GetTLVParameter(const PARID: Word; AData: TStream); overload;
   end;
 
   { TACBrAbecsCommand }
@@ -435,9 +435,13 @@ type
   TACBrAbecsCommand = class( TACBrAbecsApplicationLayer )
   private
     fIsBlocking: Boolean;
+    fParam: AnsiString;
+  protected
+    function GetAsString: AnsiString; override;
   public
     procedure Clear; override;
     property IsBlocking: Boolean read fIsBlocking write fIsBlocking;
+    property Param: AnsiString read fParam write fParam;
   end;
 
   { TACBrAbecsResponse }
@@ -529,7 +533,8 @@ type
     property LogLevel: Byte read fLogLevel write fLogLevel default 2;
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
 
-    procedure OpenInsecure;
+    procedure CommandOPN;
+    procedure CommandCLO(const AMsgToDisplay: String; const ALineBreakChar: Char = '|');
   end ;
 
 implementation
@@ -538,6 +543,7 @@ uses
   DateUtils,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
+  ACBrUtil.Strings,
   synautil;
 
 { TACBrAbecsTLV }
@@ -799,7 +805,7 @@ begin
   fBlocks.Clear;
 end;
 
-procedure TACBrAbecsApplicationLayer.AddParameter(const PARID: Word; const AData: AnsiString);
+procedure TACBrAbecsApplicationLayer.AddTLVParameter(const PARID: Word; const AData: AnsiString);
 var
   LenData, LenChunk, SpaceLeftBlock, p: Integer;
   LastBlk: TACBrAbecsBlock;
@@ -829,7 +835,7 @@ begin
   end;
 end;
 
-procedure TACBrAbecsApplicationLayer.AddParameter(const PARID: Word; AData: TStream);
+procedure TACBrAbecsApplicationLayer.AddTLVParameter(const PARID: Word; AData: TStream);
 var
   LenChunk, SpaceLeftBlock: Integer;
   LastBlk: TACBrAbecsBlock;
@@ -859,7 +865,7 @@ begin
   end;
 end;
 
-function TACBrAbecsApplicationLayer.GetParameter(const PARID: Word): AnsiString;
+function TACBrAbecsApplicationLayer.GetTLVParameter(const PARID: Word): AnsiString;
 var
   i, j: Integer;
   tlv: TACBrAbecsTLV;
@@ -876,7 +882,7 @@ begin
   end;
 end;
 
-procedure TACBrAbecsApplicationLayer.GetParameter(const PARID: Word; AData: TStream);
+procedure TACBrAbecsApplicationLayer.GetTLVParameter(const PARID: Word; AData: TStream);
 var
   i, j: Integer;
   tlv: TACBrAbecsTLV;
@@ -923,9 +929,23 @@ end;
 
 { TACBrAbecsCommand }
 
+function TACBrAbecsCommand.GetAsString: AnsiString;
+var
+  s: AnsiString;
+begin
+  Result := inherited GetAsString;
+
+  if (fParam <> '') then
+  begin
+    s := Format('%.3d', [Length(fParam)]) + fParam;
+    Insert(s, Result, 4);
+  end;
+end;
+
 procedure TACBrAbecsCommand.Clear;
 begin
   fIsBlocking := False;
+  fParam := '';
   inherited Clear;
 end;
 
@@ -1445,10 +1465,33 @@ begin
   fIsBusy := False;
 end;
 
-procedure TACBrAbecsPinPad.OpenInsecure;
+procedure TACBrAbecsPinPad.CommandOPN;
 begin
-  RegisterLog('OpenInsecure');
+  RegisterLog('CommandOPN - Insecure');
   fCommand.ID := 'OPN';
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.CommandCLO(const AMsgToDisplay: String;
+  const ALineBreakChar: Char);
+var
+  p: Integer;
+  msg: String;
+begin
+  RegisterLog('CommandCLO');
+  fCommand.ID := 'CLO';
+  if (AMsgToDisplay <> '') then
+  begin
+    p := pos(ALineBreakChar, AMsgToDisplay);
+    if (p > 0) then
+      msg := PadRight(copy(AMsgToDisplay, 1, p-1), 16) +
+             PadRight(copy(AMsgToDisplay, p+1, 16), 16)
+    else
+      msg := PadRight(AMsgToDisplay, 32);
+
+    fCommand.Param := msg;
+  end;
+
   ExecCommand;
 end;
 

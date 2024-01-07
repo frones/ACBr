@@ -55,24 +55,31 @@ resourcestring
   CERR_NOTENABLED = 'Communication is not Enabled';
   CERR_BUSY = 'Communication is Busy';
 
-  CERR_READING_ACK = 'Error Reading ACK';
-
+  CERR_READING_ACK = 'Error reading ACK';
+  CERR_READING_RSP = 'Error reading Response';
+  CERR_TIMEOUT_RSP = 'Timeout reading Response';
+  CERR_READING_CAN = 'Error waiting for CAN response';
+  CERR_CANCELLED_BY_USER = 'Cancelled by User';
+  CERR_DATAPACKET_TO_LARGE = 'Data Packet is Larger than %d';
 
 const
   // control characters
   ACK = 06; // Sent from the pinpad to the SPE when receiving a valid packet.
   NAK = 21; // It is returned to the side that sent an invalid packet, requesting its retransmission.
 
-  EOT = #04; // Pinpad response when receiving a «CAN».
-  DC3 = #19; // Substitution byte, to prevent special bytes from traveling in the body of the packet.
-  SYN = #22; // Indicates the start of a packet.
-  ETB = #23; // Indicates the end of a packet.
-  CAN = #24; // Sent from the SPE to the pinpad to cancel the execution of a command.
+  EOT = 04;  // Pinpad response when receiving a «CAN».
+  CAN = 24;  // Sent from the SPE to the pinpad to cancel the execution of a command.
+
+  DC3 = 19; // Substitution byte, to prevent special bytes from traveling in the body of the packet.
+  SYN = 22; // Indicates the start of a packet.
+  ETB = 23; // Indicates the end of a packet.
 
   MAX_BLOCK_SIZE = 999;
   MAX_TLV_SIZE = MAX_BLOCK_SIZE - 4;
+  MAX_PACKET_SIZE = 2049;
 
   TIMEOUT_ACK = 2000;
+  TIMEOUT_RSP = 10000;
   MAX_ACK_TRIES = 3;
 
   // Return Codes
@@ -395,9 +402,9 @@ type
     property AsString: AnsiString read GetAsString write SetAsString;
   end;
 
-  { TACBrAbecsCommand }
+  { TACBrAbecsApplicationLayer }
 
-  TACBrAbecsCommand = class
+  TACBrAbecsApplicationLayer = class
   private
     fID: String;
     fBlocks: TACBrAbecsBlockList;
@@ -422,9 +429,19 @@ type
     procedure GetParameter(const PARID: Word; AData: TStream); overload;
   end;
 
+  { TACBrAbecsCommand }
+
+  TACBrAbecsCommand = class( TACBrAbecsApplicationLayer )
+  private
+    fIsBlocking: Boolean;
+  public
+    procedure Clear; override;
+    property IsBlocking: Boolean read fIsBlocking write fIsBlocking;
+  end;
+
   { TACBrAbecsResponse }
 
-  TACBrAbecsResponse = class( TACBrAbecsCommand )
+  TACBrAbecsResponse = class( TACBrAbecsApplicationLayer )
   private
     fSTAT: Integer;
   protected
@@ -448,7 +465,7 @@ type
     function DC3Substitution(const AData: AnsiString): AnsiString;
     function DC3RevertSubstitution(const AData: AnsiString): AnsiString;
   public
-    constructor Create(const AData: AnsiString);
+    constructor Create(const AData: AnsiString = '');
     procedure Clear;
 
     property Data: AnsiString read fData;
@@ -471,6 +488,7 @@ type
     fLogFile: String;
     fOnWriteLog: TACBrGravarLog;
     fIsBusy: Boolean;
+    fTimeOut: Integer;
 
     function GetIsEnabled: Boolean;
     function GetPort: String;
@@ -479,10 +497,14 @@ type
   protected
     procedure RegisterLog(const AString: AnsiString; Translate: Boolean = False;
       AddTime: Boolean = True);
-    procedure DoException(AException: Exception);
+    procedure DoException(AException: Exception); overload;
+    procedure DoException(const AMsg: String); overload;
 
     procedure ExecCommand;
     procedure SendCommand;
+    function SendCAN: Boolean;
+    procedure SendNAK;
+    procedure IgnoreAllBytes(SleepTime: Integer = 500);
     function WaitForACK: Byte;
     procedure WaitForResponse;
     procedure EvaluateResponse;
@@ -500,6 +522,7 @@ type
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
     property IsBusy: Boolean read fIsBusy;
+    property TimeOut: Integer read fTimeOut write fTimeOut default TIMEOUT_RSP;
 
     property LogFile: String read fLogFile write fLogFile;
     property LogLevel: Byte read fLogLevel write fLogLevel default 1;
@@ -511,6 +534,7 @@ type
 implementation
 
 uses
+  DateUtils,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
   synautil;
@@ -752,28 +776,28 @@ begin
   end;
 end;
 
-{ TACBrAbecsCommand }
+{ TACBrAbecsApplicationLayer }
 
-constructor TACBrAbecsCommand.Create;
+constructor TACBrAbecsApplicationLayer.Create;
 begin
   inherited;
   fBlocks := TACBrAbecsBlockList.Create;
   Clear;
 end;
 
-destructor TACBrAbecsCommand.Destroy;
+destructor TACBrAbecsApplicationLayer.Destroy;
 begin
   fBlocks.Free;
   inherited Destroy;
 end;
 
-procedure TACBrAbecsCommand.Clear;
+procedure TACBrAbecsApplicationLayer.Clear;
 begin
   fID := '';
   fBlocks.Clear;
 end;
 
-procedure TACBrAbecsCommand.AddParameter(const PARID: Word; const AData: AnsiString);
+procedure TACBrAbecsApplicationLayer.AddParameter(const PARID: Word; const AData: AnsiString);
 var
   LenData, LenChunk, SpaceLeftBlock, p: Integer;
   LastBlk: TACBrAbecsBlock;
@@ -803,7 +827,7 @@ begin
   end;
 end;
 
-procedure TACBrAbecsCommand.AddParameter(const PARID: Word; AData: TStream);
+procedure TACBrAbecsApplicationLayer.AddParameter(const PARID: Word; AData: TStream);
 var
   LenChunk, SpaceLeftBlock: Integer;
   LastBlk: TACBrAbecsBlock;
@@ -833,7 +857,7 @@ begin
   end;
 end;
 
-function TACBrAbecsCommand.GetParameter(const PARID: Word): AnsiString;
+function TACBrAbecsApplicationLayer.GetParameter(const PARID: Word): AnsiString;
 var
   i, j: Integer;
   tlv: TACBrAbecsTLV;
@@ -850,7 +874,7 @@ begin
   end;
 end;
 
-procedure TACBrAbecsCommand.GetParameter(const PARID: Word; AData: TStream);
+procedure TACBrAbecsApplicationLayer.GetParameter(const PARID: Word; AData: TStream);
 var
   i, j: Integer;
   tlv: TACBrAbecsTLV;
@@ -867,7 +891,7 @@ begin
   end;
 end;
 
-procedure TACBrAbecsCommand.SetID(AValue: String);
+procedure TACBrAbecsApplicationLayer.SetID(AValue: String);
 begin
   if fID = AValue then
     Exit;
@@ -876,13 +900,13 @@ begin
   fID := AValue;
 end;
 
-function TACBrAbecsCommand.GetAsString: AnsiString;
+function TACBrAbecsApplicationLayer.GetAsString: AnsiString;
 begin
   Result := fID +
             fBlocks.AsString;
 end;
 
-procedure TACBrAbecsCommand.SetAsString(const AValue: AnsiString);
+procedure TACBrAbecsApplicationLayer.SetAsString(const AValue: AnsiString);
 var
   l: Integer;
 begin
@@ -893,6 +917,14 @@ begin
 
   fID := copy(AValue, 1, 3);
   fBlocks.AsString := copy(AValue, 4, l);
+end;
+
+{ TACBrAbecsCommand }
+
+procedure TACBrAbecsCommand.Clear;
+begin
+  fIsBlocking := False;
+  inherited Clear;
 end;
 
 { TACBrAbecsResponse }
@@ -944,10 +976,10 @@ end;
 
 function TACBrAbecsPacket.GetAsString: AnsiString;
 begin
-  Result := SYN +
+  Result := chr(SYN) +
             DC3Substitution(fData) +
-            ETB +
-            CalcCRC(SYN + fData + ETB);
+            chr(ETB) +
+            CalcCRC(chr(SYN) + fData + chr(ETB));
 end;
 
 procedure TACBrAbecsPacket.SetAsString(const AValue: AnsiString);
@@ -956,10 +988,10 @@ var
   s, crc: AnsiString;
 begin
   l := Length(AValue);
-  if (copy(AValue, 1, 1) <> SYN) then
+  if (copy(AValue, 1, 1) <> chr(SYN)) then
     raise EACBrAbecsPinPadError.Create(CERR_NOSTART);
 
-  if (copy(AValue, l-3, 1) <> ETB) then
+  if (copy(AValue, l-3, 1) <> chr(ETB)) then
     raise EACBrAbecsPinPadError.Create(CERR_NOSTOP);
 
   s := copy(AValue, 2, l-4);
@@ -979,18 +1011,18 @@ end;
 function TACBrAbecsPacket.DC3Substitution(const AData: AnsiString): AnsiString;
 begin
   Result := AData;
-  Result := ReplaceString(Result, DC3, DC3+'3');
-  Result := ReplaceString(Result, SYN, DC3+'6');
-  Result := ReplaceString(Result, ETB, DC3+'7');
+  Result := ReplaceString(Result, chr(DC3), chr(DC3)+'3');
+  Result := ReplaceString(Result, chr(SYN), chr(DC3)+'6');
+  Result := ReplaceString(Result, chr(ETB), chr(DC3)+'7');
 end;
 
 function TACBrAbecsPacket.DC3RevertSubstitution(const AData: AnsiString
   ): AnsiString;
 begin
   Result := AData;
-  Result := ReplaceString(Result, DC3+'7', ETB);
-  Result := ReplaceString(Result, DC3+'6', SYN);
-  Result := ReplaceString(Result, DC3+'3', DC3);
+  Result := ReplaceString(Result, chr(DC3)+'7', chr(ETB));
+  Result := ReplaceString(Result, chr(DC3)+'6', chr(SYN));
+  Result := ReplaceString(Result, chr(DC3)+'3', chr(DC3));
 end;
 
 { TACBrAbecsPinPad }
@@ -1000,6 +1032,7 @@ begin
   inherited Create(AOwner);
   fLogFile := '';
   fLogLevel := 1;
+  fTimeOut := TIMEOUT_RSP;
   fOnWriteLog := nil;
 
   fDevice := TACBrDevice.Create(Self);
@@ -1023,12 +1056,12 @@ end;
 
 function TACBrAbecsPinPad.GetIsEnabled: Boolean;
 begin
-  Result := fDevice.Ativo;
+  Result := Self.Device.Ativo;
 end;
 
 procedure TACBrAbecsPinPad.SetIsEnabled(AValue: Boolean);
 begin
-  fDevice.Ativo := AValue;
+  Self.Device.Ativo := AValue;
 end;
 
 procedure TACBrAbecsPinPad.Enable;
@@ -1095,12 +1128,12 @@ end;
 
 function TACBrAbecsPinPad.GetPort: String;
 begin
-  Result := fDevice.Porta;
+  Result := Self.Device.Porta;
 end;
 
 procedure TACBrAbecsPinPad.SetPort(AValue: String);
 begin
-  fDevice.Porta := AValue;
+  Self.Device.Porta := AValue;
 end;
 
 procedure TACBrAbecsPinPad.RegisterLog(const AString: AnsiString;
@@ -1109,7 +1142,7 @@ var
   Done: Boolean;
   s: AnsiString;
 begin
-  if (fLogFile = '') and (not Assigned(fOnWriteLog)) then
+  if (Self.LogFile = '') and (not Assigned(Self.OnWriteLog)) then
     Exit;
 
   if Translate then
@@ -1121,14 +1154,14 @@ begin
     s := '-- ' + FormatDateTime('dd/mm hh:nn:ss:zzz', now) + ' - ' + s;
 
   Done := False;
-  if Assigned(fOnWriteLog) then
+  if Assigned(Self.OnWriteLog) then
   begin
     Done := True;
-    fOnWriteLog(s, Done);
+    Self.OnWriteLog(s, Done);
   end;
 
-  if (not Done) and (fLogFile <> '') then
-    WriteToTXT(fLogFile, s, True, True, True);
+  if (not Done) and (Self.LogFile <> '') then
+    WriteToTXT(Self.LogFile, s, True, True, True);
 end;
 
 procedure TACBrAbecsPinPad.DoException(AException: Exception);
@@ -1138,6 +1171,11 @@ begin
 
   RegisterLog(AException.ClassName+': '+AException.Message);
   raise AException;
+end;
+
+procedure TACBrAbecsPinPad.DoException(const AMsg: String);
+begin
+  DoException( EACBrAbecsPinPadError.Create(AMsg) );
 end;
 
 procedure TACBrAbecsPinPad.ExecCommand;
@@ -1163,10 +1201,10 @@ begin
       begin
         Inc(ACKFails);
         if (ACKFails > MAX_ACK_TRIES) then
-          DoException(EACBrAbecsPinPadError.Create(CERR_READING_ACK));
+          DoException(CERR_READING_ACK);
       end
       else if (AckByte <> ACK) then
-        DoException(EACBrAbecsPinPadError.Create(CERR_READING_ACK));
+        DoException(CERR_READING_ACK);
     end;
 
     WaitForResponse;
@@ -1181,49 +1219,168 @@ var
   Pck: TACBrAbecsPacket;
   s: AnsiString;
 begin
-  if (LogLevel > 1) then
+  if (Self.LogLevel > 1) then
     RegisterLog('SendCommand');
 
   if not IsEnabled then
-    DoException(EACBrAbecsPinPadError.Create(CERR_NOTENABLED));
+    DoException(CERR_NOTENABLED);
 
-  if IsBusy then
-    DoException(EACBrAbecsPinPadError.Create(CERR_BUSY));
+  if Self.IsBusy then
+    DoException(CERR_BUSY);
 
   Pck := TACBrAbecsPacket.Create(fCommand.AsString);
   try
     s := Pck.AsString;
-    if (LogLevel > 1) then
+    if (Self.LogLevel > 1) then
       RegisterLog('  '+s);
 
-    fDevice.EnviaString(s);
+    Self.Device.EnviaString(s);
   finally
     Pck.Free;
     fCommand.Clear;
   end;
 end;
 
+function TACBrAbecsPinPad.SendCAN: Boolean;
+var
+  b: Byte;
+  CanTries: Byte;
+begin
+  CanTries := 0;
+  Result := False;
+  repeat
+    Inc(CanTries);
+    RegisterLog(Format('SendCAN: %d', [CanTries]));
+    Self.Device.EnviaByte(CAN);
+    try
+      b := Self.Device.LeByte(TIMEOUT_ACK);
+      Result := (b = EOT);
+      if not Result then
+        IgnoreAllBytes;
+    except
+    end;
+  until Result or (CanTries >= MAX_ACK_TRIES)
+end;
+
+procedure TACBrAbecsPinPad.SendNAK;
+begin
+  Self.Device.EnviaByte(NAK);
+end;
+
+procedure TACBrAbecsPinPad.IgnoreAllBytes(SleepTime: Integer);
+begin
+  Sleep(SleepTime);
+  Self.Device.Limpar;
+end;
+
 function TACBrAbecsPinPad.WaitForACK: Byte;
 begin
-  if (LogLevel > 1) then
+  if (Self.LogLevel > 1) then
     RegisterLog('WaitForACK');
 
-  Result := fDevice.LeByte(TIMEOUT_ACK);
+  Result := Self.Device.LeByte(TIMEOUT_ACK);
 end;
 
 procedure TACBrAbecsPinPad.WaitForResponse;
+
+  function UserCancelled: Boolean;
+  begin
+    Result := not IsBusy;
+  end;
+
+  procedure WaitForSYN;
+  var
+    TimeToTimeOut: TDateTime;
+    b: Byte;
+  begin
+    TimeToTimeOut := IncMilliSecond(Now, Self.TimeOut);
+    repeat
+      if not fCommand.IsBlocking then
+      begin
+        if (Now > TimeToTimeOut) then
+          DoException(CERR_TIMEOUT_RSP);
+      end
+      else
+      begin
+        if UserCancelled then
+        begin
+          if SendCAN then
+            DoException(CERR_CANCELLED_BY_USER)
+          else
+            DoException(CERR_READING_CAN);
+        end;
+      end;
+
+      try
+        b := Self.Device.LeByte(500);
+      except
+      end;
+    until (b = SYN);
+  end;
+
+  function WaitForDataPacket: AnsiString;
+  var
+    b: Byte;
+  begin
+    Result := '';
+    repeat
+      b := Self.Device.LeByte(TIMEOUT_ACK);  // Raise Exception for Timeout
+      if (b <> ETB) then
+      begin
+        if (Length(Result) < MAX_PACKET_SIZE) then
+          Result := Result + chr(b)
+        else
+          DoException(CERR_DATAPACKET_TO_LARGE);
+      end;
+    until (b = ETB)
+  end;
+
+var
+  b, NumNAKSent: Byte;
+  PktData, CRCData: AnsiString;
+  Done: Boolean;
+  pkt: TACBrAbecsPacket;
 begin
-  if (LogLevel > 1) then
+  if (Self.LogLevel > 1) then
     RegisterLog('WaitForResponse');
+
+  pkt := TACBrAbecsPacket.Create();
+  try
+    NumNAKSent := 0;
+    PktData := '';
+    Done := False;
+    repeat
+      WaitForSYN;;
+
+      try
+        PktData := WaitForDataPacket;
+        CRCData := Self.Device.LeString(TIMEOUT_ACK, 2); // Read 2 bytes
+        // TACBrAbecsPacket.AsString Setter checks for CRC and raise Exception on error
+        pkt.AsString := chr(SYN) + PktData + chr(ETB) + CRCData;
+        Done := True;
+      except
+        IgnoreAllBytes;
+        SendNAK;
+        PktData := '';
+        Inc(NumNAKSent);
+        if (NumNAKSent >= MAX_ACK_TRIES) then
+          DoException(CERR_READING_RSP);
+      end;
+    until Done;
+
+    fResponse.AsString := pkt.Data;
+  finally
+    pkt.Free;
+  end;
 end;
 
 procedure TACBrAbecsPinPad.EvaluateResponse;
 begin
-  if (LogLevel > 2) then
+  if (Self.LogLevel > 2) then
     RegisterLog('EvaluateResponse');
 
   if (fResponse.STAT <> ST_OK) then
-    DoException(EACBrAbecsPinPadError.CreateFmt('Error: %d - %s', [fResponse.STAT, ReturnCodeDescription(fResponse.STAT)]));
+    DoException(Format('Error: %d - %s', [fResponse.STAT, ReturnCodeDescription(fResponse.STAT)]));
 end;
 
 procedure TACBrAbecsPinPad.CancelWaiting;

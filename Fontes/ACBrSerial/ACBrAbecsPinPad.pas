@@ -48,8 +48,9 @@ resourcestring
   CERR_INVRSP = 'Invalid Response';
   CERR_INVRSPSTAT = 'Invalid Response Status';
   CERR_INVTLV = 'Invalid TLV data';
-  CERR_NOSTART = 'Packet do not START with SYN';
-  CERR_NOSTOP = 'Packet do not have ETB';
+  CERR_PKT_INV = 'Invalid Packet data';
+  CERR_PKT_NOSTART = 'Packet do not START with SYN';
+  CERR_PKT_NOSTOP = 'Packet do not have ETB';
   CERR_INVCRC = 'Packet has invalid CRC';
 
   CERR_NOTENABLED = 'Communication is not Enabled';
@@ -495,7 +496,7 @@ type
     procedure SetIsEnabled(AValue: Boolean);
     procedure SetPort(AValue: String);
   protected
-    procedure RegisterLog(const AString: AnsiString; Translate: Boolean = False;
+    procedure RegisterLog(const AString: AnsiString; Translate: Boolean = True;
       AddTime: Boolean = True);
     procedure DoException(AException: Exception); overload;
     procedure DoException(const AMsg: String); overload;
@@ -525,7 +526,7 @@ type
     property TimeOut: Integer read fTimeOut write fTimeOut default TIMEOUT_RSP;
 
     property LogFile: String read fLogFile write fLogFile;
-    property LogLevel: Byte read fLogLevel write fLogLevel default 1;
+    property LogLevel: Byte read fLogLevel write fLogLevel default 2;
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
 
     procedure OpenInsecure;
@@ -571,8 +572,8 @@ end;
 
 function TACBrAbecsTLV.GetAsString: AnsiString;
 begin
-  Result := IntToLEStr(fID, 2) +
-            IntToLEStr(Size, 2) +
+  Result := IntToBEStr(fID, 2) +
+            IntToBEStr(Size, 2) +
             fData;
 end;
 
@@ -980,7 +981,7 @@ begin
   Result := chr(SYN) +
             DC3Substitution(fData) +
             chr(ETB) +
-            CalcCRC(chr(SYN) + fData + chr(ETB));
+            CalcCRC(fData + chr(ETB));
 end;
 
 procedure TACBrAbecsPacket.SetAsString(const AValue: AnsiString);
@@ -989,16 +990,19 @@ var
   s, crc: AnsiString;
 begin
   l := Length(AValue);
-  if (copy(AValue, 1, 1) <> chr(SYN)) then
-    raise EACBrAbecsPinPadError.Create(CERR_NOSTART);
+  if (l < 7) then
+    raise EACBrAbecsPinPadError.Create(CERR_PKT_INV);
 
-  if (copy(AValue, l-3, 1) <> chr(ETB)) then
-    raise EACBrAbecsPinPadError.Create(CERR_NOSTOP);
+  if (Ord(AValue[1]) <> SYN) then
+    raise EACBrAbecsPinPadError.Create(CERR_PKT_NOSTART);
+
+  if (Ord(AValue[l-2]) <> ETB) then
+    raise EACBrAbecsPinPadError.Create(CERR_PKT_NOSTOP);
 
   s := copy(AValue, 2, l-4);
   s := DC3RevertSubstitution(s);
-  crc := copy(AValue, l-2, 2);
-  if (crc <> CalcCRC(s)) then
+  crc := copy(AValue, l-1, 2);
+  if (crc <> CalcCRC(s + chr(ETB))) then
     raise EACBrAbecsPinPadError.Create(CERR_INVCRC);
 
   fData := s;
@@ -1006,7 +1010,7 @@ end;
 
 function TACBrAbecsPacket.CalcCRC(const AData: AnsiString): AnsiString;
 begin
-  Result := IntToLEStr( StringCrcCCITT(AData, 0, $1021), 2);
+  Result := IntToBEStr( StringCrcCCITT(AData, 0, $1021), 2);
 end;
 
 function TACBrAbecsPacket.DC3Substitution(const AData: AnsiString): AnsiString;
@@ -1032,7 +1036,7 @@ constructor TACBrAbecsPinPad.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   fLogFile := '';
-  fLogLevel := 1;
+  fLogLevel := 2;
   fTimeOut := TIMEOUT_RSP;
   fOnWriteLog := nil;
 
@@ -1062,18 +1066,19 @@ end;
 
 procedure TACBrAbecsPinPad.SetIsEnabled(AValue: Boolean);
 begin
+  RegisterLog('SetIsEnabled( '+BoolToStr(AValue, 'True', 'False')+' )');
   Self.Device.Ativo := AValue;
 end;
 
 procedure TACBrAbecsPinPad.Enable;
 begin
-  IsEnabled := True;
+  Self.IsEnabled := True;
 end;
 
 procedure TACBrAbecsPinPad.Disable;
 begin
   CancelWaiting;
-  IsEnabled := False;
+  Self.IsEnabled := False;
 end;
 
 function TACBrAbecsPinPad.ReturnCodeDescription(AStatus: Integer): String;
@@ -1184,7 +1189,7 @@ var
   AckByte: Byte;
   ACKFails: Byte;
 begin
-  RegisterLog('ExecCommand');
+  RegisterLog(Format('ExecCommand: %s', [fCommand.ID]));
   fIsBusy := True;
   try
     // initial cleaning
@@ -1201,7 +1206,7 @@ begin
       if (AckByte = NAK) then
       begin
         Inc(ACKFails);
-        if (ACKFails > MAX_ACK_TRIES) then
+        if (ACKFails >= MAX_ACK_TRIES) then
           DoException(CERR_READING_ACK);
       end
       else if (AckByte <> ACK) then
@@ -1217,28 +1222,24 @@ end;
 
 procedure TACBrAbecsPinPad.SendCommand;
 var
-  Pck: TACBrAbecsPacket;
+  pkt: TACBrAbecsPacket;
   s: AnsiString;
 begin
-  if (Self.LogLevel > 1) then
-    RegisterLog('SendCommand');
+  if (Self.LogLevel > 2) then
+    RegisterLog(Format('  SendCommand: %s', [fCommand.ID]));
 
-  if not IsEnabled then
+  if not Self.IsEnabled then
     DoException(CERR_NOTENABLED);
 
-  if Self.IsBusy then
-    DoException(CERR_BUSY);
-
-  Pck := TACBrAbecsPacket.Create(fCommand.AsString);
+  s := fCommand.AsString;
+  pkt := TACBrAbecsPacket.Create(s);
   try
-    s := Pck.AsString;
-    if (Self.LogLevel > 1) then
-      RegisterLog('  '+s);
-
+    s := pkt.AsString;
     Self.Device.EnviaString(s);
+    if (Self.LogLevel > 1) then
+      RegisterLog('  TX -> '+s);
   finally
-    Pck.Free;
-    fCommand.Clear;
+    pkt.Free;
   end;
 end;
 
@@ -1251,10 +1252,20 @@ begin
   Result := False;
   repeat
     Inc(CanTries);
-    RegisterLog(Format('SendCAN: %d', [CanTries]));
+    if (Self.LogLevel > 2) then
+      RegisterLog(Format('  SendCAN: %d', [CanTries]));
+    if (Self.LogLevel > 1) then
+      RegisterLog('  TX -> CAN');
+
     Self.Device.EnviaByte(CAN);
     try
+      if (Self.LogLevel > 2) then
+        RegisterLog(Format('  Wait %d for EOT', [TIMEOUT_ACK]));
+
       b := Self.Device.LeByte(TIMEOUT_ACK);
+      if (Self.LogLevel > 1) then
+        RegisterLog(Format('  RX <- %d', [b]));
+
       Result := (b = EOT);
       if not Result then
         IgnoreAllBytes;
@@ -1265,21 +1276,32 @@ end;
 
 procedure TACBrAbecsPinPad.SendNAK;
 begin
+  if (Self.LogLevel > 2) then
+    RegisterLog('  SendNAK');
+  if (Self.LogLevel > 1) then
+    RegisterLog('  TX -> NAK');
   Self.Device.EnviaByte(NAK);
 end;
 
 procedure TACBrAbecsPinPad.IgnoreAllBytes(SleepTime: Integer);
 begin
+  if (Self.LogLevel > 2) then
+    RegisterLog(Format('  IgnoreAllBytes( %d )', [SleepTime]));
+
   Sleep(SleepTime);
+  if (Self.LogLevel > 1) then
+    RegisterLog('  TX/RX - Purge');
   Self.Device.Limpar;
 end;
 
 function TACBrAbecsPinPad.WaitForACK: Byte;
 begin
-  if (Self.LogLevel > 1) then
-    RegisterLog('WaitForACK');
+  if (Self.LogLevel > 2) then
+    RegisterLog('  WaitForACK');
 
   Result := Self.Device.LeByte(TIMEOUT_ACK);
+  if (Self.LogLevel > 1) then
+    RegisterLog(Format('  RX <- %d', [Result]));
 end;
 
 procedure TACBrAbecsPinPad.WaitForResponse;
@@ -1295,6 +1317,9 @@ procedure TACBrAbecsPinPad.WaitForResponse;
     b: Byte;
   begin
     TimeToTimeOut := IncMilliSecond(Now, Self.TimeOut);
+    if (Self.LogLevel > 2) then
+      RegisterLog(Format('  WaitForSYN - Timeout:%d', [Self.TimeOut]));
+
     repeat
       if not fCommand.IsBlocking then
       begin
@@ -1305,6 +1330,9 @@ procedure TACBrAbecsPinPad.WaitForResponse;
       begin
         if UserCancelled then
         begin
+          if (Self.LogLevel > 2) then
+            RegisterLog('  UserCancelled');
+
           if SendCAN then
             DoException(CERR_CANCELLED_BY_USER)
           else
@@ -1314,6 +1342,8 @@ procedure TACBrAbecsPinPad.WaitForResponse;
 
       try
         b := Self.Device.LeByte(500);
+        if (Self.LogLevel > 1) then
+          RegisterLog(Format('  RX <- %d', [b]));
       except
       end;
     until (b = SYN);
@@ -1323,9 +1353,14 @@ procedure TACBrAbecsPinPad.WaitForResponse;
   var
     b: Byte;
   begin
+    if (Self.LogLevel > 2) then
+      RegisterLog('  WaitForDataPacket');
     Result := '';
     repeat
       b := Self.Device.LeByte(TIMEOUT_ACK);  // Raise Exception for Timeout
+      if (Self.LogLevel > 2) then
+        RegisterLog(Format('  RX <- %d', [b]));
+
       if (b <> ETB) then
       begin
         if (Length(Result) < MAX_PACKET_SIZE) then
@@ -1333,11 +1368,14 @@ procedure TACBrAbecsPinPad.WaitForResponse;
         else
           DoException(CERR_DATAPACKET_TO_LARGE);
       end;
-    until (b = ETB)
+    until (b = ETB);
+
+    if (Self.LogLevel > 1) then
+      RegisterLog(Format('  DataPacket: %s', [Result]));
   end;
 
 var
-  b, NumNAKSent: Byte;
+  b, NumFails: Byte;
   PktData, CRCData: AnsiString;
   Done: Boolean;
   pkt: TACBrAbecsPacket;
@@ -1347,7 +1385,7 @@ begin
 
   pkt := TACBrAbecsPacket.Create();
   try
-    NumNAKSent := 0;
+    NumFails := 0;
     PktData := '';
     Done := False;
     repeat
@@ -1355,21 +1393,38 @@ begin
 
       try
         PktData := WaitForDataPacket;
+        if (Self.LogLevel > 2) then
+          RegisterLog('  ReadCRC');
         CRCData := Self.Device.LeString(TIMEOUT_ACK, 2); // Read 2 bytes
+        if (Self.LogLevel > 1) then
+          RegisterLog(Format('  CRC: %s', [CRCData]));
+
         // TACBrAbecsPacket.AsString Setter checks for CRC and raise Exception on error
         pkt.AsString := chr(SYN) + PktData + chr(ETB) + CRCData;
         Done := True;
       except
-        IgnoreAllBytes;
-        SendNAK;
-        PktData := '';
-        Inc(NumNAKSent);
-        if (NumNAKSent >= MAX_ACK_TRIES) then
-          DoException(CERR_READING_RSP);
+        on E: Exception do
+        begin
+          if (Self.LogLevel > 1) then
+            RegisterLog(Format('  %s: %s', [E.ClassName, E.Message]));
+
+          IgnoreAllBytes;
+          SendNAK;
+          PktData := '';
+          Inc(NumFails);
+          if (NumFails >= MAX_ACK_TRIES) then
+          begin
+            if (Self.LogLevel > 1) then
+              RegisterLog(Format('  %d Fails', [NumFails]));
+            DoException(CERR_READING_RSP);
+          end;
+        end;
       end;
     until Done;
 
     fResponse.AsString := pkt.Data;
+    if (Self.LogLevel > 2) then
+      RegisterLog('  WaitForResponse - OK');
   finally
     pkt.Free;
   end;
@@ -1378,7 +1433,7 @@ end;
 procedure TACBrAbecsPinPad.EvaluateResponse;
 begin
   if (Self.LogLevel > 2) then
-    RegisterLog('EvaluateResponse');
+    RegisterLog(Format('EvaluateResponse: %d', [fResponse.STAT]));
 
   if (fResponse.STAT <> ST_OK) then
     DoException(Format('Error: %d - %s', [fResponse.STAT, ReturnCodeDescription(fResponse.STAT)]));

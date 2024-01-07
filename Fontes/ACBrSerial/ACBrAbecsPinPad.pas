@@ -326,8 +326,10 @@ type
     function GetSize: Word;
     procedure SetAsString(const AValue: AnsiString);
   public
-    constructor Create;
+    constructor Create; overload;
+    constructor Create(AID: Word; const AData: AnsiString); overload;
     procedure Clear;
+    procedure Assign(Source: TACBrAbecsTLV); reintroduce;
 
     property ID: Word read fID;
     property Size: Word read GetSize;
@@ -345,8 +347,9 @@ type
     procedure SetItem(Index: Integer; AValue: TACBrAbecsTLV);
   public
     function New: TACBrAbecsTLV;
-    Function Add(APar: TACBrAbecsTLV): Integer;
-    Procedure Insert(Index: Integer; APar: TACBrAbecsTLV);
+    Function Add(ATLV: TACBrAbecsTLV): Integer;
+    function AddValue(AID: Word; const AData: AnsiString): Integer;
+    Procedure Insert(Index: Integer; ATLV: TACBrAbecsTLV);
     property Items[Index: Integer]: TACBrAbecsTLV read GetItem write SetItem; default;
     property AsString: AnsiString read GetAsString write SetAsString;
   end;
@@ -366,6 +369,7 @@ type
 
     property Size: Integer read GetSize;
     property Values: TACBrAbecsTLVList read fTLVList;
+
     property AsString: AnsiString read GetAsString write SetAsString;
   end;
 
@@ -404,6 +408,12 @@ type
     property ID: String read fID write SetID;
     property Blocks: TACBrAbecsBlockList read fBlocks;
     property AsString: AnsiString read GetAsString write SetAsString;
+
+    procedure AddParameter(const PARID: Word; const AData: AnsiString); overload;
+    procedure AddParameter(const PARID: Word; AData: TStream); overload;
+
+    function GetParameter(const PARID: Word): AnsiString; overload;
+    procedure GetParameter(const PARID: Word; AData: TStream); overload;
   end;
 
   { TACBrAbecsResponse }
@@ -450,6 +460,7 @@ type
   private
     fDevice: TACBrDevice;
     fCommand: TACBrAbecsCommand;
+    fLogLevel: Byte;
     fResponse: TACBrAbecsResponse;
     fLogFile: String;
     fOnWriteLog: TACBrGravarLog;
@@ -460,12 +471,13 @@ type
     procedure SetIsEnabled(AValue: Boolean);
     procedure SetPort(AValue: String);
   protected
-    procedure DoWriteLog(const AString: AnsiString; Translate: Boolean = False;
+    procedure RegisterLog(const AString: AnsiString; Translate: Boolean = False;
       AddTime: Boolean = True);
     procedure DoException(AException: Exception);
 
     procedure ExecCommand;
     procedure SendCommand;
+    procedure WaitForAK;
     procedure WaitForResponse;
     procedure EvaluateResponse;
     procedure CancelWaiting;
@@ -476,11 +488,15 @@ type
     procedure Enable;
     procedure Disable;
     property IsEnabled: Boolean read GetIsEnabled write SetIsEnabled;
+
+    function ReturnCodeDescription(AStatus: Integer): String;
   published
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
     property IsBusy: Boolean read fIsBusy;
+
     property LogFile: String read fLogFile write fLogFile;
+    property LogLevel: Byte read fLogLevel write fLogLevel default 1;
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
 
     procedure OpenInsecure;
@@ -501,10 +517,26 @@ begin
   Clear;
 end;
 
+constructor TACBrAbecsTLV.Create(AID: Word; const AData: AnsiString);
+begin
+  if (Length(AData) > MAX_TLV_SIZE) then
+    raise EACBrAbecsPinPadError.Create(Format(CERR_INVTLVSIZE, [MAX_TLV_SIZE]));
+
+  Create;
+  fID := AID;
+  fData := AData;
+end;
+
 procedure TACBrAbecsTLV.Clear;
 begin
   fID := 0;
   fData := '';
+end;
+
+procedure TACBrAbecsTLV.Assign(Source: TACBrAbecsTLV);
+begin
+  fID := Source.ID;
+  fData := Source.Data;
 end;
 
 function TACBrAbecsTLV.GetAsString: AnsiString;
@@ -556,14 +588,22 @@ begin
   Self.Add(Result);
 end;
 
-function TACBrAbecsTLVList.Add(APar: TACBrAbecsTLV): Integer;
+function TACBrAbecsTLVList.Add(ATLV: TACBrAbecsTLV): Integer;
 begin
-  Result := inherited Add(APar);
+  Result := inherited Add(ATLV);
 end;
 
-procedure TACBrAbecsTLVList.Insert(Index: Integer; APar: TACBrAbecsTLV);
+function TACBrAbecsTLVList.AddValue(AID: Word; const AData: AnsiString): Integer;
+var
+  tlv: TACBrAbecsTLV;
 begin
-  inherited Insert(Index, APar);
+  tlv := TACBrAbecsTLV.Create(AID, AData);
+  Result := Self.Add(tlv);
+end;
+
+procedure TACBrAbecsTLVList.Insert(Index: Integer; ATLV: TACBrAbecsTLV);
+begin
+  inherited Insert(Index, ATLV);
 end;
 
 function TACBrAbecsTLVList.GetAsString: AnsiString;
@@ -600,7 +640,7 @@ end;
 
 constructor TACBrAbecsBlock.Create;
 begin
-  inherited;
+  inherited Create;
   fTLVList := TACBrAbecsTLVList.Create;
   Clear;
 end;
@@ -616,25 +656,26 @@ begin
   fTLVList.Clear;
 end;
 
-function TACBrAbecsBlock.GetSize: Integer;
-var
-  s: AnsiString;
-begin
-  s := fTLVList.GetAsString;
-  Result := Length(s);
-end;
-
 function TACBrAbecsBlock.GetAsString: AnsiString;
 var
   s: AnsiString;
 begin
-  s := fTLVList.GetAsString;
+  s := fTLVList.AsString;
   Result := Format('%.3d', [Length(s)]) + s;
+end;
+
+function TACBrAbecsBlock.GetSize: Integer;
+var
+  s: AnsiString;
+begin
+  s := fTLVList.AsString;
+  Result := Length(s);
 end;
 
 procedure TACBrAbecsBlock.SetAsString(const AValue: AnsiString);
 var
   l: Integer;
+  s: AnsiString;
 begin
   l := StrToIntDef(copy(AValue,1,3), 0);
   if (l = 0) or (l > (Length(AValue)-3)) then
@@ -643,7 +684,8 @@ begin
   if (l > MAX_BLOCK_SIZE) then
     raise EACBrAbecsPinPadError.Create(Format(CERR_INVBLKSIZE, [MAX_BLOCK_SIZE]));
 
-  fTLVList.AsString := copy(AValue, 4, l);
+  s := copy(AValue, 4, l);
+  fTLVList.AsString := s;
 end;
 
 { TACBrAbecsBlockList }
@@ -725,9 +767,105 @@ begin
   fBlocks.Clear;
 end;
 
+procedure TACBrAbecsCommand.AddParameter(const PARID: Word; const AData: AnsiString);
+var
+  LenData, LenChunk, SpaceLeftBlock, p: Integer;
+  LastBlk: TACBrAbecsBlock;
+  Chunk: AnsiString;
+begin
+  LenData := Length(AData);
+  if (LenData = 0) then
+    Exit;
+
+  if (Blocks.Count = 0) then
+    LastBlk := Blocks.New
+  else
+    LastBlk := Blocks[Blocks.Count-1];
+
+  p := 1;
+  while (p < LenData) do
+  begin
+    Chunk := copy(AData, p, MAX_TLV_SIZE);
+    LenChunk := Length(Chunk);
+
+    SpaceLeftBlock := MAX_BLOCK_SIZE - LastBlk.Size;
+    if (LenChunk+4 > SpaceLeftBlock) then
+      LastBlk := Blocks.New;
+
+    LastBlk.Values.AddValue(PARID, Chunk);
+    Inc(p, LenChunk);
+  end;
+end;
+
+procedure TACBrAbecsCommand.AddParameter(const PARID: Word; AData: TStream);
+var
+  LenChunk, SpaceLeftBlock: Integer;
+  LastBlk: TACBrAbecsBlock;
+  Chunk: AnsiString;
+begin
+  if not Assigned(AData) then
+    Exit;
+  if (AData.Size = 0) then
+    Exit;
+
+  if (Blocks.Count = 0) then
+    LastBlk := Blocks.New
+  else
+    LastBlk := Blocks[Blocks.Count-1];
+
+  AData.Position := 0;
+  while (AData.Position < AData.Size) do
+  begin
+    Chunk := ReadStrFromStream(AData, MAX_TLV_SIZE);
+    LenChunk := Length(Chunk);
+
+    SpaceLeftBlock := MAX_BLOCK_SIZE - LastBlk.Size;
+    if (LenChunk+4 > SpaceLeftBlock) then
+      LastBlk := Blocks.New;
+
+    LastBlk.Values.AddValue(PARID, Chunk);
+  end;
+end;
+
+function TACBrAbecsCommand.GetParameter(const PARID: Word): AnsiString;
+var
+  i, j: Integer;
+  tlv: TACBrAbecsTLV;
+begin
+  Result := '';
+  for i := 0 to Blocks.Count-1 do
+  begin
+    for j := 0 to Blocks[i].Values.Count-1 do
+    begin
+      tlv := Blocks[i].Values[j];
+      if (tlv.ID = PARID) then
+        Result := Result + tlv.Data;
+    end;
+  end;
+end;
+
+procedure TACBrAbecsCommand.GetParameter(const PARID: Word; AData: TStream);
+var
+  i, j: Integer;
+  tlv: TACBrAbecsTLV;
+begin
+  AData.Size := 0;
+  for i := 0 to Blocks.Count-1 do
+  begin
+    for j := 0 to Blocks[i].Values.Count-1 do
+    begin
+      tlv := Blocks[i].Values[j];
+      if (tlv.ID = PARID) then
+        WriteStrToStream(AData, tlv.Data);
+    end;
+  end;
+end;
+
 procedure TACBrAbecsCommand.SetID(AValue: String);
 begin
-  if fID = AValue then Exit;
+  if fID = AValue then
+    Exit;
+
   Clear;
   fID := AValue;
 end;
@@ -855,6 +993,7 @@ constructor TACBrAbecsPinPad.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   fLogFile := '';
+  fLogLevel := 1;
   fOnWriteLog := nil;
 
   fDevice := TACBrDevice.Create(Self);
@@ -897,6 +1036,57 @@ begin
   IsEnabled := False;
 end;
 
+function TACBrAbecsPinPad.ReturnCodeDescription(AStatus: Integer): String;
+begin
+  Result := '';
+  case AStatus of
+    ST_OK            : Result := 'Command executed successfully.';
+    ST_NOSEC         : Result := 'Attempted to use “Secure Communication” when it has not been established.';
+    ST_F1            : Result := 'Function #1 key pressed.';
+    ST_F2            : Result := 'Function #2 key pressed.';
+    ST_F3            : Result := ' Function #3 key pressed.';
+    ST_F4            : Result := 'Function #4 key pressed.';
+    ST_BACKSP        : Result := 'Clear (backspace) key pressed';
+    ST_ERRPKTSEC     : Result := 'Error decoding data received via “Secure Communication”; or Cleartext command received with “Secure Communication” established.';
+    ST_INVCALL       : Result := 'Invalid call to a command (previous operations are necessary) or unknown command (in case of an “ERR” response).';
+    ST_INVPARM       : Result := 'An invalid parameter was passed to the command.';
+    ST_TIMEOUT       : Result := 'The maximum time stipulated for the operation has been exhausted.';
+    ST_CANCEL        : Result := 'Operation canceled by the cardholder.';
+    ST_MANDAT        : Result := 'A mandatory parameter was not sent by the SPE.';
+    ST_TABVERDIF     : Result := 'EMV Tables version differs from the expected.';
+    ST_TABERR        : Result := 'Error when trying to write tables (lack of space, for example).';
+    ST_INTERR        : Result := 'Internal pinpad error (unexpected situation that does not correspond to the other error codes described here).';
+    ST_MCDATAERR     : Result := 'Magnetic card reading error.';
+    ST_ERRKEY        : Result := 'MK / DUKPT referenced is not present in the pinpad.';
+    ST_NOCARD        : Result := 'There is no ICC present in the coupler or CTLS detected by the antenna.';
+    ST_PINBUSY       : Result := 'Pinpad cannot process PIN capture temporarily due to security constrains (such as when the capture limit is reached within a time interval).';
+    ST_RSPOVRFL      : Result := 'Response data exceeds the maximum allowed size.';
+    ST_ERRCRYPT      : Result := 'Generic cryptographic validation error.';
+    ST_DUMBCARD      : Result := 'ICC inserted, but not responding (“mute”).';
+    ST_ERRCARD       : Result := 'Communication error between the pinpad and the ICC or CTLS.';
+    ST_CARDINVALIDAT : Result := 'ICC is invalidated.';
+    ST_CARDPROBLEMS  : Result := 'ICC with problems. This status is valid for many situations in which the ICC does not behave as expected and the transaction must be terminated.';
+    ST_CARDINVDATA   : Result := 'The ICC behaves correctly but has invalid or inconsistent data.';
+    ST_CARDAPPNAV    : Result := 'ICC with no matching application.';
+    ST_CARDAPPNAUT   : Result := 'The application selected in the ICC cannot be used in this situation.';
+    ST_ERRFALLBACK   : Result := 'High level error in the ICC that allows fallback to magnetic stripe.';
+    ST_INVAMOUNT     : Result := 'Invalid amount for the transaction.';
+    ST_ERRMAXAID     : Result := 'Number of candidate AIDs exceeds the processing capacity of the EMV kernel.';
+    ST_CARDBLOCKED   : Result := 'Card is blocked.';
+    ST_CTLSMULTIPLE  : Result := 'More than one CTLS was presented to the reader simultaneously.';
+    ST_CTLSCOMMERR   : Result := 'Communication error between the pinpad (antenna) and the CTLS.';
+    ST_CTLSINVALIDAT : Result := 'CTLS is invalidated.';
+    ST_CTLSPROBLEMS  : Result := 'CTLS with problems. This status is valid for many situations in which the CTLS does not behave as expected and the transaction must be terminated.';
+    ST_CTLSAPPNAV    : Result := 'CTLS with no matching application.';
+    ST_CTLSAPPNAUT   : Result := 'The application selected in the CTLS cannot be used in this situation.';
+    ST_CTLSEXTCVM    : Result := 'Cardholder must perform a validation on his device (mobile phone, for example) and then re-present it to the pinpad.';
+    ST_CTLSIFCHG     : Result := 'CTLS processing resulted in “change interface” (request ICC or magnetic card).';
+    ST_MFNFOUND      : Result := 'Media file not found.';
+    ST_MFERRFMT      : Result := 'Media file format error.';
+    ST_MFERR         : Result := 'Media file loading error.';
+  end;
+end;
+
 function TACBrAbecsPinPad.GetPort: String;
 begin
   Result := fDevice.Porta;
@@ -907,7 +1097,7 @@ begin
   fDevice.Porta := AValue;
 end;
 
-procedure TACBrAbecsPinPad.DoWriteLog(const AString: AnsiString;
+procedure TACBrAbecsPinPad.RegisterLog(const AString: AnsiString;
   Translate: Boolean; AddTime: Boolean);
 var
   Done: Boolean;
@@ -937,13 +1127,16 @@ end;
 
 procedure TACBrAbecsPinPad.DoException(AException: Exception);
 begin
-  DoWriteLog(AException.ClassName+': '+AException.Message);
+  if not Assigned(AException) then
+    Exit;
+
+  RegisterLog(AException.ClassName+': '+AException.Message);
   raise AException;
 end;
 
 procedure TACBrAbecsPinPad.ExecCommand;
 begin
-  DoWriteLog('ExecCommand');
+  RegisterLog('ExecCommand');
   fIsBusy := True;
   try
     SendCommand;
@@ -959,7 +1152,9 @@ var
   Pck: TACBrAbecsPacket;
   s: AnsiString;
 begin
-  DoWriteLog('SendCommand');
+  if (LogLevel > 1) then
+    RegisterLog('SendCommand');
+
   if not IsEnabled then
     DoException(EACBrAbecsPinPadError.Create(CERR_NOTENABLED));
 
@@ -970,7 +1165,9 @@ begin
   Pck := TACBrAbecsPacket.Create(fCommand.AsString);
   try
     s := Pck.AsString;
-    DoWriteLog('  '+s);
+    if (LogLevel > 1) then
+      RegisterLog('  '+s);
+
     fDevice.EnviaString(s);
   finally
     Pck.Free;
@@ -978,27 +1175,37 @@ begin
   end;
 end;
 
+procedure TACBrAbecsPinPad.WaitForAK;
+begin
+  if (LogLevel > 1) then
+    RegisterLog('WaitForAK');
+
+end;
+
 procedure TACBrAbecsPinPad.WaitForResponse;
 begin
-  DoWriteLog('WaitForResponse');
-  fIsBusy := True;
+  if (LogLevel > 1) then
+    RegisterLog('WaitForResponse');
 end;
 
 procedure TACBrAbecsPinPad.EvaluateResponse;
 begin
+  if (LogLevel > 2) then
+    RegisterLog('EvaluateResponse');
+
   if (fResponse.STAT <> ST_OK) then
-    DoException(EACBrAbecsPinPadError.CreateFmt('Error: %d', [fResponse.STAT]));
+    DoException(EACBrAbecsPinPadError.CreateFmt('Error: %d - %s', [fResponse.STAT, ReturnCodeDescription(fResponse.STAT)]));
 end;
 
 procedure TACBrAbecsPinPad.CancelWaiting;
 begin
-  DoWriteLog('CancelWaiting');
+  RegisterLog('CancelWaiting');
   fIsBusy := False;
 end;
 
 procedure TACBrAbecsPinPad.OpenInsecure;
 begin
-  DoWriteLog('OpenInsecure');
+  RegisterLog('OpenInsecure');
   fCommand.ID := 'OPN';
   ExecCommand;
 end;

@@ -696,10 +696,11 @@ end;
 
 function TACBrAbecsBlock.GetSize: Integer;
 var
-  s: AnsiString;
+  i: Integer;
 begin
-  s := fTLVList.AsString;
-  Result := Length(s);
+  Result := 0;
+  for i := 0 to fTLVList.Count-1 do
+    Result := Result + fTLVList[i].Size  + 4; // 4 = CMD_PARID X2 + CMD_PARLEN X2
 end;
 
 procedure TACBrAbecsBlock.SetAsString(const AValue: AnsiString);

@@ -258,6 +258,18 @@ namespace ACBrLib.Boleto
             set => SetProperty(value);
         }
 
+        public string ChavePIX
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public TipoChavePIX TipoChavePIX
+        {
+            get => GetProperty<TipoChavePIX>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

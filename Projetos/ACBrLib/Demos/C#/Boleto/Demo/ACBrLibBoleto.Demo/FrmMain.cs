@@ -257,6 +257,8 @@ namespace ACBrLibBoleto.Demo
             cedente.Modalidade = "17";
             //cedente.CodigoTransmissao = "";
             cedente.Convenio = "123456";
+            cedente.ChavePIX = "ABCD1234";
+            cedente.TipoChavePIX = TipoChavePIX.tchAleatoria;
 
             BoletoInfo[] boletoInfo = new BoletoInfo[3];
             boletoInfo[0] = banco;

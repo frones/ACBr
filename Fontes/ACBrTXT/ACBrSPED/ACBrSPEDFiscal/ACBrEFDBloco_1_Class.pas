@@ -1100,6 +1100,7 @@ end;
 procedure TBloco_1.WriteRegistro1400(Reg1001: TRegistro1001) ;
 var
   intFor: integer;
+  vCodItem: string;
   vReg1400: TRegistro1400;
 begin
   if Assigned( Reg1001.Registro1400 ) then
@@ -1107,21 +1108,15 @@ begin
     for intFor := 0 to Reg1001.Registro1400.Count - 1 do
     begin
       vReg1400 := Reg1001.Registro1400.Items[intFor];
-      if FBloco_0.Registro0000.COD_VER > vlVersao117 then
-      begin
-        Add( LFill('1400') +
-              LFill( vReg1400.COD_ITEM ) +
-              LFill( vReg1400.COD_ITEM_IPM ) +
-              IfThen((Trim(vReg1400.MUN)= EmptyStr), EmptyStr, LFill( vReg1400.MUN ) ) +
-              LFill( vReg1400.VALOR,0,2 ) ) ;
-      end
-      else
-      begin
-        Add( LFill('1400') +
-              LFill( vReg1400.COD_ITEM ) +
-              IfThen((Trim(vReg1400.MUN)= EmptyStr), EmptyStr, LFill( vReg1400.MUN ) ) +
-              LFill( vReg1400.VALOR,0,2 ) ) ;
-      end;
+      vCodItem := trim(vReg1400.COD_ITEM_IPM);
+      if (vCodItem = EmptyStr) then 
+        vCodItem := trim(vReg1400.COD_ITEM);
+
+      Add( LFill('1400') +
+           LFill( vCodItem ) +
+           LFill( Trim(vReg1400.MUN) )  +
+           LFill( vReg1400.VALOR, 0, 2 ) ) ;
+
       Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
     end;
     /// Variavél para armazenar a quantidade de registro do tipo.

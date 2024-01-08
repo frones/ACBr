@@ -252,7 +252,7 @@ begin
   LPercMulta := LBancoClass.CalcularPadraoMulta(LTitulo);
 
   {Código da Empresa}
-  LConta   :=   PadLeft(LBeneficiario.CodigoCedente, 12, '0') ;
+  LConta   :=   PadLeft(LBeneficiario.Conta + LBeneficiario.ContaDigito, 12, '0') ;
 
   LMensagemCedente:= '';
   LMensagemTodos  := '';

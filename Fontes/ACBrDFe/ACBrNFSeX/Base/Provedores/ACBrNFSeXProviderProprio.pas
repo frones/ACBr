@@ -308,7 +308,7 @@ begin
     Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
     Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
 
-    if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
+    if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono, meTeste])) or
        (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
     begin
       Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,

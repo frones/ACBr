@@ -162,145 +162,151 @@ begin
           if (TipoOperacao = tpInclui) then
           begin
             AJSonObject := aJson.Values['resultado'].AsArray.Items[0].AsObject.Values['boleto'].AsObject;
+            try
+              ARetornoWS.DadosRet.IDBoleto.CodBarras      := AJSonObject.Values['codigoBarras'].AsString;
+              ARetornoWS.DadosRet.IDBoleto.LinhaDig       := AJSonObject.Values['linhaDigitavel'].AsString;
+              ARetornoWS.DadosRet.IDBoleto.NossoNum       := AJSonObject.Values['nossoNumero'].AsString;
+              ARetornoWS.DadosRet.IDBoleto.URLPDF         := AJSonObject.Values['pdfBoleto'].AsString;
 
-            ARetornoWS.DadosRet.IDBoleto.CodBarras      := AJSonObject.Values['codigoBarras'].AsString;
-            ARetornoWS.DadosRet.IDBoleto.LinhaDig       := AJSonObject.Values['linhaDigitavel'].AsString;
-            ARetornoWS.DadosRet.IDBoleto.NossoNum       := AJSonObject.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.IDBoleto.URLPDF         := AJSonObject.Values['pdfBoleto'].AsString;
-
-            ARetornoWS.DadosRet.TituloRet.CodBarras      := ARetornoWS.DadosRet.IDBoleto.CodBarras;
-            ARetornoWS.DadosRet.TituloRet.LinhaDig       := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
-            ARetornoWS.DadosRet.TituloRet.NossoNumero    := ARetornoWS.DadosRet.IDBoleto.NossoNum;
-            ARetornoWS.DadosRet.TituloRet.EMV            := AJSonObject.Values['qrcode'].AsString;
-            ARetornoWS.DadosRet.TituloRet.UrlPix         := AJSonObject.Values['qrCode'].AsString;
-            ARetornoWS.DadosRet.TituloRet.Vencimento     := DateBancoobToDateTime(AJSonObject.Values['dataVencimento'].AsString);
-            ARetornoWS.DadosRet.TituloRet.NossoNumero    := AJSonObject.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.SeuNumero      := AJSonObject.Values['seuNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.EspecieDoc     := AJSonObject.Values['especieDocumento'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataDocumento  := DateBancoobToDateTime(AJSonObject.Values['dataEmissao'].AsString);
-            ARetornoWS.DadosRet.TituloRet.ValorDocumento := AJSonObject.Values['valor'].AsNumber;
-            ARetornoWS.DadosRet.TituloRet.ValorDesconto  := AJSonObject.Values['valorPrimeiroDesconto'].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.CodBarras      := ARetornoWS.DadosRet.IDBoleto.CodBarras;
+              ARetornoWS.DadosRet.TituloRet.LinhaDig       := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
+              ARetornoWS.DadosRet.TituloRet.NossoNumero    := ARetornoWS.DadosRet.IDBoleto.NossoNum;
+              ARetornoWS.DadosRet.TituloRet.EMV            := AJSonObject.Values['qrcode'].AsString;
+              ARetornoWS.DadosRet.TituloRet.UrlPix         := AJSonObject.Values['qrCode'].AsString;
+              ARetornoWS.DadosRet.TituloRet.Vencimento     := DateBancoobToDateTime(AJSonObject.Values['dataVencimento'].AsString);
+              ARetornoWS.DadosRet.TituloRet.NossoNumero    := AJSonObject.Values['nossoNumero'].AsString;
+              ARetornoWS.DadosRet.TituloRet.SeuNumero      := AJSonObject.Values['seuNumero'].AsString;
+              ARetornoWS.DadosRet.TituloRet.EspecieDoc     := AJSonObject.Values['especieDocumento'].AsString;
+              ARetornoWS.DadosRet.TituloRet.DataDocumento  := DateBancoobToDateTime(AJSonObject.Values['dataEmissao'].AsString);
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento := AJSonObject.Values['valor'].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.ValorDesconto  := AJSonObject.Values['valorPrimeiroDesconto'].AsNumber;
+            finally
+              AJSonObject.free;
+            end;
 
           end
           else if (TipoOperacao = tpConsultaDetalhe) then
           begin
             aJsonObject := TJsonObject.Create;
-            aJsonObject.Parse( aJson.Values['resultado'].Stringify );
-            ARetornoWS.DadosRet.IDBoleto.CodBarras       := AJSonObject.Values['codigoBarras'].AsString;
-            ARetornoWS.DadosRet.IDBoleto.LinhaDig        := AJSonObject.Values['linhaDigitavel'].AsString;
-            ARetornoWS.DadosRet.IDBoleto.NossoNum        := AJSonObject.Values['nossoNumero'].AsString;
-            ARetornoWS.indicadorContinuidade             := false;
+            try
+              aJsonObject.Parse( aJson.Values['resultado'].Stringify );
+              ARetornoWS.DadosRet.IDBoleto.CodBarras       := AJSonObject.Values['codigoBarras'].AsString;
+              ARetornoWS.DadosRet.IDBoleto.LinhaDig        := AJSonObject.Values['linhaDigitavel'].AsString;
+              ARetornoWS.DadosRet.IDBoleto.NossoNum        := AJSonObject.Values['nossoNumero'].AsString;
+              ARetornoWS.indicadorContinuidade             := false;
 
-            ARetornoWS.DadosRet.TituloRet.NossoNumero     := ARetornoWS.DadosRet.IDBoleto.NossoNum;
-            ARetornoWS.DadosRet.TituloRet.Vencimento      := DateBancoobToDateTime(AJSonObject.Values['dataVencimento'].AsString);
-            ARetornoWS.DadosRet.TituloRet.ValorDocumento  := AJSonObject.Values['valor'].AsNumber;
-            ARetornoWS.DadosRet.TituloRet.EspecieDoc      := AJSonObject.Values['especieDocumento'].AsString;
+              ARetornoWS.DadosRet.TituloRet.NossoNumero     := ARetornoWS.DadosRet.IDBoleto.NossoNum;
+              ARetornoWS.DadosRet.TituloRet.Vencimento      := DateBancoobToDateTime(AJSonObject.Values['dataVencimento'].AsString);
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento  := AJSonObject.Values['valor'].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.EspecieDoc      := AJSonObject.Values['especieDocumento'].AsString;
 
-            case AJSonObject.Values['tipoMulta'].AsInteger of
-             1 : begin // Multa Valor Fixo
-              ARetornoWS.DadosRet.TituloRet.CodigoMulta      := cmValorFixo;
-              ARetornoWS.DadosRet.TituloRet.PercentualMulta  := AJSonObject.Values['valorMulta'].AsNumber;
-              ARetornoWS.DadosRet.TituloRet.MultaValorFixo   := True;
-              ARetornoWS.DadosRet.TituloRet.DataMulta        := DateBancoobToDateTime(AJSonObject.Values['dataMulta'].AsString);
-             end;
-             2 : begin // Multa com Valor em Percentual
-              ARetornoWS.DadosRet.TituloRet.CodigoMulta      := cmPercentual;
-              ARetornoWS.DadosRet.TituloRet.PercentualMulta  := AJSonObject.Values['valorMulta'].AsNumber;
-              ARetornoWS.DadosRet.TituloRet.MultaValorFixo   := False;
-              ARetornoWS.DadosRet.TituloRet.DataMulta        := DateBancoobToDateTime(AJSonObject.Values['dataMulta'].AsString);
-             end;
-             3 : begin // Sem Multa
-               ARetornoWS.DadosRet.TituloRet.CodigoMulta     := cmIsento;
-               ARetornoWS.DadosRet.TituloRet.PercentualMulta := 0;
-             end;
-            end;
+              case AJSonObject.Values['tipoMulta'].AsInteger of
+               1 : begin // Multa Valor Fixo
+                ARetornoWS.DadosRet.TituloRet.CodigoMulta      := cmValorFixo;
+                ARetornoWS.DadosRet.TituloRet.PercentualMulta  := AJSonObject.Values['valorMulta'].AsNumber;
+                ARetornoWS.DadosRet.TituloRet.MultaValorFixo   := True;
+                ARetornoWS.DadosRet.TituloRet.DataMulta        := DateBancoobToDateTime(AJSonObject.Values['dataMulta'].AsString);
+               end;
+               2 : begin // Multa com Valor em Percentual
+                ARetornoWS.DadosRet.TituloRet.CodigoMulta      := cmPercentual;
+                ARetornoWS.DadosRet.TituloRet.PercentualMulta  := AJSonObject.Values['valorMulta'].AsNumber;
+                ARetornoWS.DadosRet.TituloRet.MultaValorFixo   := False;
+                ARetornoWS.DadosRet.TituloRet.DataMulta        := DateBancoobToDateTime(AJSonObject.Values['dataMulta'].AsString);
+               end;
+               3 : begin // Sem Multa
+                 ARetornoWS.DadosRet.TituloRet.CodigoMulta     := cmIsento;
+                 ARetornoWS.DadosRet.TituloRet.PercentualMulta := 0;
+               end;
+              end;
 
-            ARetornoWS.DadosRet.TituloRet.ValorMulta := ARetornoWS.DadosRet.TituloRet.PercentualMulta;
+              ARetornoWS.DadosRet.TituloRet.ValorMulta := ARetornoWS.DadosRet.TituloRet.PercentualMulta;
 
-            case AJSonObject.Values['tipoJurosMora'].AsInteger of
-             1 : begin // Valor Dia
-               ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros := cjValorDia;
-               ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['valorJurosMora'].AsNumber;
-               ARetornoWS.DadosRet.TituloRet.DataMoraJuros   := DateBancoobToDateTime(AJSonObject.Values['dataJurosMora'].AsString);
-             end;
-             2 : begin // Taxa Mensal
-               ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros := cjTaxaMensal;
-               ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['valorJurosMora'].AsNumber;
-               ARetornoWS.DadosRet.TituloRet.DataMoraJuros   := DateBancoobToDateTime(AJSonObject.Values['dataJurosMora'].AsString);
-             end;
-             3 : begin // Isento
-               ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros := cjIsento;
-               ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['valorJurosMora'].AsNumber;
-             end;
-            end;
+              case AJSonObject.Values['tipoJurosMora'].AsInteger of
+               1 : begin // Valor Dia
+                 ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros := cjValorDia;
+                 ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['valorJurosMora'].AsNumber;
+                 ARetornoWS.DadosRet.TituloRet.DataMoraJuros   := DateBancoobToDateTime(AJSonObject.Values['dataJurosMora'].AsString);
+               end;
+               2 : begin // Taxa Mensal
+                 ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros := cjTaxaMensal;
+                 ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['valorJurosMora'].AsNumber;
+                 ARetornoWS.DadosRet.TituloRet.DataMoraJuros   := DateBancoobToDateTime(AJSonObject.Values['dataJurosMora'].AsString);
+               end;
+               3 : begin // Isento
+                 ARetornoWS.DadosRet.TituloRet.CodigoMoraJuros := cjIsento;
+                 ARetornoWS.DadosRet.TituloRet.ValorMoraJuros  := AJSonObject.Values['valorJurosMora'].AsNumber;
+               end;
+              end;
 
-            ARetornoWS.DadosRet.TituloRet.CodBarras       := ARetornoWS.DadosRet.IDBoleto.CodBarras;
-            ARetornoWS.DadosRet.TituloRet.LinhaDig        := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
+              ARetornoWS.DadosRet.TituloRet.CodBarras       := ARetornoWS.DadosRet.IDBoleto.CodBarras;
+              ARetornoWS.DadosRet.TituloRet.LinhaDig        := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
 
-            ARetornoWS.DadosRet.TituloRet.SeuNumero       := AJSonObject.Values['seuNumero'].asString;
-            ARetornoWS.DadosRet.TituloRet.DataRegistro    := DateBancoobToDateTime( AJSonObject.Values['dataEmissao'].asString );
-            ARetornoWS.DadosRet.TituloRet.Vencimento      := DateBancoobToDateTime( AJSonObject.Values['dataVencimento'].asString );
+              ARetornoWS.DadosRet.TituloRet.SeuNumero       := AJSonObject.Values['seuNumero'].asString;
+              ARetornoWS.DadosRet.TituloRet.DataRegistro    := DateBancoobToDateTime( AJSonObject.Values['dataEmissao'].asString );
+              ARetornoWS.DadosRet.TituloRet.Vencimento      := DateBancoobToDateTime( AJSonObject.Values['dataVencimento'].asString );
 
-            ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca  := AJSonObject.Values['situacaoBoleto'].asString;
+              ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca  := AJSonObject.Values['situacaoBoleto'].asString;
 
-            if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_EMABERTO then
-               ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
+              if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_EMABERTO then
+                 ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
 
-            if (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_BAIXADO) or
-               (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_CANCELADO) then
-               ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
+              if (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_BAIXADO) or
+                 (UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = C_CANCELADO) then
+                 ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
 
-            if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = UpperCase(C_PAGO) then
-               ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
+              if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) = UpperCase(C_PAGO) then
+                 ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
 
 
-            ARetornoWS.DadosRet.TituloRet.UrlPix  := AJSonObject.Values['qrCode'].AsString;
-            ARetornoWS.DadosRet.TituloRet.EMV     := AJSonObject.Values['qrcode'].AsString;
+              ARetornoWS.DadosRet.TituloRet.UrlPix  := AJSonObject.Values['qrCode'].AsString;
+              ARetornoWS.DadosRet.TituloRet.EMV     := AJSonObject.Values['qrcode'].AsString;
 
-            //ARetornoWS.DadosRet.TituloRet.ValorAtual      := AJSonObject.Values['valor'].AsNumber;
-            //ARetornoWS.DadosRet.TituloRet.ValorPago       := AJSonObject.Values['valorTotalRecebimento'].AsNumber;
-            //ARetornoWS.DadosRet.TituloRet.DataMovimento         := DateBancoobToDateTime( AJSonObject.Values['dataHoraSituacao'].asString );
-            //ARetornoWS.DadosRet.TituloRet.DataCredito           := DateBancoobToDateTime( AJSonObject.Values['dataHoraSituacao'].asString );
+              //ARetornoWS.DadosRet.TituloRet.ValorAtual      := AJSonObject.Values['valor'].AsNumber;
+              //ARetornoWS.DadosRet.TituloRet.ValorPago       := AJSonObject.Values['valorTotalRecebimento'].AsNumber;
+              //ARetornoWS.DadosRet.TituloRet.DataMovimento         := DateBancoobToDateTime( AJSonObject.Values['dataHoraSituacao'].asString );
+              //ARetornoWS.DadosRet.TituloRet.DataCredito           := DateBancoobToDateTime( AJSonObject.Values['dataHoraSituacao'].asString );
 
-            ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado     := AJSonObject.Values['pagador'].asObject.Values['nome'].asString;
-            ARetornoWS.DadosRet.TituloRet.Sacado.Cidade         := AJSonObject.Values['pagador'].asObject.Values['cidade'].asString;
-            ARetornoWS.DadosRet.TituloRet.Sacado.UF             := AJSonObject.Values['pagador'].asObject.Values['uf'].asString;;
-            ARetornoWS.DadosRet.TituloRet.Sacado.Bairro         := AJSonObject.Values['pagador'].asObject.Values['bairro'].asString;;
-            ARetornoWS.DadosRet.TituloRet.Sacado.Cep            := AJSonObject.Values['pagador'].asObject.Values['cep'].asString;;
-            ARetornoWS.DadosRet.TituloRet.Sacado.Numero         := AJSonObject.Values['pagador'].asObject.Values['numero'].asString;;
-            ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro     := AJSonObject.Values['pagador'].asObject.Values['endereco'].asString;;
-            ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF        := AJSonObject.Values['pagador'].asObject.Values['numeroCpfCnpj'].asString;
+              ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado     := AJSonObject.Values['pagador'].asObject.Values['nome'].asString;
+              ARetornoWS.DadosRet.TituloRet.Sacado.Cidade         := AJSonObject.Values['pagador'].asObject.Values['cidade'].asString;
+              ARetornoWS.DadosRet.TituloRet.Sacado.UF             := AJSonObject.Values['pagador'].asObject.Values['uf'].asString;;
+              ARetornoWS.DadosRet.TituloRet.Sacado.Bairro         := AJSonObject.Values['pagador'].asObject.Values['bairro'].asString;;
+              ARetornoWS.DadosRet.TituloRet.Sacado.Cep            := AJSonObject.Values['pagador'].asObject.Values['cep'].asString;;
+              ARetornoWS.DadosRet.TituloRet.Sacado.Numero         := AJSonObject.Values['pagador'].asObject.Values['numero'].asString;;
+              ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro     := AJSonObject.Values['pagador'].asObject.Values['endereco'].asString;;
+              ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF        := AJSonObject.Values['pagador'].asObject.Values['numeroCpfCnpj'].asString;
 
-            if(AJSonObject.Values['situacaoBoleto'].asString = C_PAGO) then
-            begin
-             // WorkAround para pegar DataPagamento e Valor de Pagamento
-
-             AJsonListaHistoricoArray :=  AJSonObject.Values['listaHistorico'].AsArray;
-
-              for i := 0 to Pred(AJsonListaHistoricoArray.Count) do
+              if(AJSonObject.Values['situacaoBoleto'].asString = C_PAGO) then
               begin
-                AJsonListaHistoricoObject        := AJsonListaHistoricoArray[i].AsObject;
+               // WorkAround para pegar DataPagamento e Valor de Pagamento
 
-                if AJsonListaHistoricoObject.Values['tipoHistorico'].AsInteger = 6 then // 1 = Entrada, 4 = Tarifa Liquidação, 6 = Liquidação
+               AJsonListaHistoricoArray :=  AJSonObject.Values['listaHistorico'].AsArray;
+
+                for i := 0 to Pred(AJsonListaHistoricoArray.Count) do
                 begin
-                 ARetornoWS.DadosRet.TituloRet.DataBaixa := DateBancoobToDateTime(AJsonListaHistoricoObject.Values['dataHistorico'].AsString);
+                  AJsonListaHistoricoObject        := AJsonListaHistoricoArray[i].AsObject;
 
-                 vPos := Pos('R$', AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString);
+                  if AJsonListaHistoricoObject.Values['tipoHistorico'].AsInteger = 6 then // 1 = Entrada, 4 = Tarifa Liquidação, 6 = Liquidação
+                  begin
+                   ARetornoWS.DadosRet.TituloRet.DataBaixa := DateBancoobToDateTime(AJsonListaHistoricoObject.Values['dataHistorico'].AsString);
 
-                 ARetornoWS.DadosRet.TituloRet.ValorPago := 0;
+                   vPos := Pos('R$', AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString);
 
-                 if vpos > 0 then
-                  ARetornoWS.DadosRet.TituloRet.ValorPago := StringToFloatDef(copy(AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString, vPos+2, length(AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString)), 0);
+                   ARetornoWS.DadosRet.TituloRet.ValorPago := 0;
+
+                   if vpos > 0 then
+                    ARetornoWS.DadosRet.TituloRet.ValorPago := StringToFloatDef(copy(AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString, vPos+2, length(AJsonListaHistoricoObject.Values['descricaoHistorico'].AsString)), 0);
+                  end;
                 end;
               end;
+
+             { if(AJSonObject.Values['situacaoBoleto'].asString = C_CANCELADO) or (AJSonObject.Values['situacaoBoleto'].asString = C_EXPIRADO) or  (AJSonObject.Values['situacaoBoleto'].asString = C_PAGO) or (AJSonObject.Values['situacaoBoleto'].asString = C_EXPIRADO) then
+              begin
+                ARetornoWS.DadosRet.TituloRet.ValorPago                   := AJSonObject.Values['valorNominal'].AsNumber;
+                ARetornoWS.DadosRet.TituloRet.DataBaixa                   := DateBancoobToDateTime( AJSonObject.Values['dataHoraSituacao'].asString )
+              end;}
+            finally
+              aJsonObject.free;
             end;
-
-           { if(AJSonObject.Values['situacaoBoleto'].asString = C_CANCELADO) or (AJSonObject.Values['situacaoBoleto'].asString = C_EXPIRADO) or  (AJSonObject.Values['situacaoBoleto'].asString = C_PAGO) or (AJSonObject.Values['situacaoBoleto'].asString = C_EXPIRADO) then
-            begin
-              ARetornoWS.DadosRet.TituloRet.ValorPago                   := AJSonObject.Values['valorNominal'].AsNumber;
-              ARetornoWS.DadosRet.TituloRet.DataBaixa                   := DateBancoobToDateTime( AJSonObject.Values['dataHoraSituacao'].asString )
-            end;}
-
           end
           else if (TipoOperacao = tpBaixa) then
           begin

@@ -2316,7 +2316,7 @@ begin
   {Criando a lista de Provedor Consulta CNPJ}
   cbxBolProvedorCNPJ.Items.Clear;
   for ProvedorCnpj := Low(TACBrCNPJProvedorWS) to High(TACBrCNPJProvedorWS) do
-     cbxBolProvedorCNPJ.Items.AddObject( GetEnumName(TypeInfo(TACBrCNPJProvedorWS), integer(ProvedorCnpj) ), TObject(integer(ProvedorCnpj)) );
+     cbxBolProvedorCNPJ.Items.Add( GetEnumName(TypeInfo(TACBrCNPJProvedorWS), integer(ProvedorCnpj) ));
   cbxBolProvedorCNPJ.ItemIndex := 1;
 
 
@@ -7130,6 +7130,9 @@ begin
       Contrato                := edtSedexContrato.Text;
       SenhaSedex              := edtSedexSenha.Text;
     end;
+
+    with FMonitorConfig.ConsultaCNPJ do
+      ProvedorCnpjWS := Integer(cbxBolProvedorCNPJ.ItemIndex);
 
     { Parametros NCM }
     with FMonitorConfig.NCM do

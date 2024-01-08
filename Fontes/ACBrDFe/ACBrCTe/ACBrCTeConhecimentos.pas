@@ -2387,6 +2387,7 @@ begin
 
       Dest.enderDest.xLgr    := INIRec.ReadString('Dest','xLgr','');
       Dest.enderDest.nro     := INIRec.ReadString('Dest','nro','');
+      Dest.enderDest.xCpl    := INIRec.ReadString('Dest', 'xCpl', '');
       Dest.enderDest.xBairro := INIRec.ReadString('Dest','xBairro','');
       Dest.enderDest.cMun    := INIRec.ReadInteger('Dest','cMun',0);
       Dest.enderDest.xMun    := INIRec.ReadString('Dest','xMun','');

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2023
+-- ACBrCTeConhecimentos --
+[*] Adiciona na rotina de leitura do INI o campo xCpl do grupo Dest
+  Por: Diego Folieni
+
 17/11/2023
 -- Diversos --
 [+] Implementado o método ImprimirEventoPDF usando o Stream.

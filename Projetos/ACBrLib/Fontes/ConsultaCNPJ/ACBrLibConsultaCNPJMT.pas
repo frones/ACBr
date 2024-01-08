@@ -169,13 +169,12 @@ begin
   end;
 end;
 
-function CNPJ_Consultar(const libHandle: PLibHandle; eCNPJ: PChar;
-  eServico: LongInt; const sResposta: PChar; var esTamanho: longint): longint;
-  cdecl;
+function CNPJ_Consultar(const libHandle: PLibHandle; eCNPJ: PChar; eServico: LongInt; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibConsultaCNPJ(libHandle^.Lib).Consultar(eCNPJ, eServico , sResposta, esTamanho);
+    Result := TACBrLibConsultaCNPJ(libHandle^.Lib).Consultar(eCNPJ, eServico, sResposta, esTamanho);
   except
      on E: EACBrLibException do
      Result := E.Erro;

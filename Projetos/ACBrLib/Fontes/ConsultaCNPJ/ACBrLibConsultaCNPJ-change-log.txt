@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2024
+--- ACBrLibConsultaCNPJMT ---
+[-] Ajustes nas diretivas funcao CNPJ_Consultar
+	Por: Daniel de Morais InfoCotidiano 
+
 29/12/2023
 --- ACBrLibConsultaCNPJBase, ACBrLibConsultaCNPJMT, ACBrLibConsultaCNPJST  ---
 [*] Adequado as units para trabalhar com os novos provedores de servico para consulta CNPJ

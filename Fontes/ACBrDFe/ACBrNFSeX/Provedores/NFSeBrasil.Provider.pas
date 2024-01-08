@@ -227,9 +227,6 @@ function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  if Pos('ISO-8859-1', Result) > 0 then
-    Result := AnsiToNativeString(Result);
-
   Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverDeclaracaoXML(Result, True);
@@ -240,7 +237,6 @@ begin
   Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
   Result := StringReplace(Result, ']]', '', [rfReplaceAll]);
-  Result := NativeStringToUTF8(Result);
 end;
 
 { TACBrNFSeProviderNFSeBrasil }

@@ -1099,6 +1099,14 @@ begin
     if FPRetorno = '' then
       raise EACBrDFeException.Create('WebService retornou um XML vazio.');
 
+    if Pos('iso-8859-1', LowerCase(FPRetorno)) > 0 then
+    begin
+      FPRetorno := RemoverDeclaracaoXML(FPRetorno);
+      FPRetorno := AnsiToNativeString(FPRetorno);
+      FPRetorno := NativeStringToUTF8(FPRetorno);
+      FPRetorno := '<?xml version="1.0" encoding="UTF-8"?>' + FPRetorno;
+    end;
+
     if StringIsXML(FPRetorno) then
       LevantarExcecaoHttp;
   except

@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/01/2024
+-- ACBrNFSeXWebserviceBase/IPM.Provider/NFSeBrasil.Provider --
+[*] Assim que o componente obtem o retorno é verificado o encoding do XML,
+    caso seja "ISO-8859-1" o XML é convertido de ANSI para UTF-8 e o encoding
+    alterado.
+  Por: Italo Giurizzato Junior
+
 -- ACBrNFSeXProviderABRASFv2/ACBrNFSeXProviderProprio --
 [*] O PrepararEmitir não estava levando em consideração o modo de envio: meTeste,
     gerando erro ao validar o XML principalmente se este deveria ser assinado.

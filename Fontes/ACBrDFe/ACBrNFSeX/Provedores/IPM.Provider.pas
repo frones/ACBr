@@ -142,6 +142,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function AjustarRetorno(const Retorno: string): string;
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
@@ -162,7 +163,7 @@ type
 implementation
 
 uses
-  synacode, 
+  synacode,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts, ACBrJSON,
@@ -1253,6 +1254,18 @@ end;
 
 { TACBrNFSeXWebserviceIPM }
 
+function TACBrNFSeXWebserviceIPM.AjustarRetorno(const Retorno: string): string;
+var
+  i: Integer;
+begin
+  i := Pos('<codigo_html>', Retorno);
+
+  if i > 0 then
+    Result := Copy(Retorno, 1, i -1) + '</retorno>'
+  else
+    Result := Retorno;
+end;
+
 function TACBrNFSeXWebserviceIPM.TratarXmlRetornado(const aXML: string): string;
 var
   jDocument, JSonErro: TACBrJSONObject;
@@ -1285,8 +1298,6 @@ begin
 
     Result := AjustarRetorno(Result);
 
-    // Revertido para sanar o problema com as cidades de Agrolândia/SC e Rio das Antas/SC
-    Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
@@ -1326,18 +1337,6 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceIPM.AjustarRetorno(const Retorno: string): string;
-var
-  i: Integer;
-begin
-  i := Pos('<codigo_html>', Retorno);
-
-  if i > 0 then
-    Result := Copy(Retorno, 1, i -1) + '</retorno>'
-  else
-    Result := Retorno;
-end;
-
 function TACBrNFSeXWebserviceIPM.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1356,6 +1355,19 @@ begin
       AnsiString(WSSenha))));
 
   aHeaderReq.AddHeader('Authorization', Auth);
+end;
+
+function TACBrNFSeXWebserviceIPM101.AjustarRetorno(
+  const Retorno: string): string;
+var
+  i: Integer;
+begin
+  i := Pos('<codigo_html>', Retorno);
+
+  if i > 0 then
+    Result := Copy(Retorno, 1, i -1) + '</retorno>'
+  else
+    Result := Retorno;
 end;
 
 function TACBrNFSeXWebserviceIPM101.TratarXmlRetornado(
@@ -1390,7 +1402,7 @@ begin
     Result := inherited TratarXmlRetornado(aXML);
 
     Result := AjustarRetorno(Result);
-    Result := String(NativeStringToUTF8(Result));
+
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
@@ -1421,19 +1433,6 @@ begin
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [], []);
-end;
-
-function TACBrNFSeXWebserviceIPM101.AjustarRetorno(
-  const Retorno: string): string;
-var
-  i: Integer;
-begin
-  i := Pos('<codigo_html>', Retorno);
-
-  if i > 0 then
-    Result := Copy(Retorno, 1, i -1) + '</retorno>'
-  else
-    Result := Retorno;
 end;
 
 function TACBrNFSeXWebserviceIPM101.Cancelar(ACabecalho, AMSG: String): string;
@@ -1504,6 +1503,19 @@ begin
       AnsiString(WSSenha))));
 
   aHeaderReq.AddHeader('Authorization', Auth);
+end;
+
+function TACBrNFSeXWebserviceIPM204.AjustarRetorno(
+  const Retorno: string): string;
+var
+  i: Integer;
+begin
+  i := Pos('<codigo_html>', Retorno);
+
+  if i > 0 then
+    Result := Copy(Retorno, 1, i -1) + '</retorno>'
+  else
+    Result := Retorno;
 end;
 
 function TACBrNFSeXWebserviceIPM204.Recepcionar(ACabecalho,
@@ -1694,6 +1706,8 @@ begin
   else
   begin
     Result := inherited TratarXmlRetornado(aXML);
+
+    Result := AjustarRetorno(Result);
 
     if Pos('<retorno><msg>', Result) > 0 then
     begin

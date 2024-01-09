@@ -1,4 +1,4 @@
-{****************************************************************************** }
+{******************************************************************************}
 { Projeto: Componentes ACBr }
 { Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil }
@@ -112,18 +112,19 @@ type
 
 const
   C_URL =     'https://api.itau.com.br/cash_management/v2';
-  C_URL_HOM = 'https://devportal.itau.com.br/sandboxapi/cash_management_ext_v2/v2';
+  C_URL_HOM = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-cash-management-ext-v2/v2';
 
   C_URL_CONSULTA = 'https://secure.api.cloud.itau.com.br/boletoscash/v2';
 
   C_URL_OAUTH_PROD = 'https://sts.itau.com.br/api/oauth/token';
+
   C_URL_OAUTH_HOM = 'https://devportal.itau.com.br/api/jwt';
 
   C_ACCEPT = ''; // 'application/json';
-  // C_ACCEPT         = '*/*'; //'application/json';
+//C_ACCEPT = '*/*'; //'application/json';
 
   Protocolo = '1.1';
-  C_AUTHORIZATION_HOM = 'x-sandbox-token';
+  C_AUTHORIZATION_HOM = 'Authorization';
   C_AUTHORIZATION = 'Authorization';
 
 implementation
@@ -972,7 +973,6 @@ procedure TBoletoW_Itau_API.GerarJuros(AJson: TJsonObject);
 var
   JsonJuros: TJsonObject;
   JsonPairJuros: TJsonPair;
-  CodigoMora: String;
 begin
   if Assigned(ATitulo) then
   begin
@@ -984,28 +984,29 @@ begin
         begin
           if ATitulo.CodigoMora = '' then
           begin
-            CodigoMora := '90';
+            ATitulo.CodigoMora := '90';
             case ATitulo.CodigoMoraJuros of
-              cjValorDia:
-                CodigoMora := '93';
-              cjTaxaDiaria:
-                CodigoMora := '91';
-              cjTaxaMensal:
-                CodigoMora := '90';
-              cjIsento:
-                CodigoMora := '00';
-            end; // cjValorDia, cjTaxaMensal, cjIsento, cjValorMensal, cjTaxaDiaria
+              cjValorDia:   
+                ATitulo.CodigoMora := '93';
+              cjTaxaDiaria: 
+                ATitulo.CodigoMora := '91';
+              cjValorMensal:
+                ATitulo.CodigoMora := '90';
+              cjIsento:     
+                ATitulo.CodigoMora := '05';
+            else
+              ATitulo.CodigoMora := '05';
+            end; //0 cjValorDia,1 cjTaxaMensal,2 cjIsento,3 cjValorMensal,4 cjTaxaDiaria
           end;
-          JsonJuros.Add('codigo_tipo_juros').Value.AsString := CodigoMora;
-          JsonJuros.Add('quantidade_dias_juros').Value.AsInteger :=
-            trunc(ATitulo.DataMoraJuros - ATitulo.Vencimento);
-          if CodigoMora = '93' then
+
+          JsonJuros.Add('codigo_tipo_juros').Value.AsString := ATitulo.CodigoMora;
+          JsonJuros.Add('quantidade_dias_juros').Value.AsInteger := trunc(ATitulo.DataMoraJuros - ATitulo.Vencimento);
+          if ATitulo.CodigoMora = '93' then
           begin
             JsonJuros.Add('valor_juros').Value.AsString :=
               IntToStrZero(round(ATitulo.ValorMoraJuros * 100), 17)
           end
-          else if (CodigoMora = '91') or (CodigoMora = '90') or
-            (CodigoMora = '92') then
+          else if (ATitulo.CodigoMora = '91') or (ATitulo.CodigoMora = '90') or (ATitulo.CodigoMora = '92') then
             JsonJuros.Add('percentual_juros').Value.AsString :=
               IntToStrZero(round(ATitulo.ValorMoraJuros * 100000), 12);
 

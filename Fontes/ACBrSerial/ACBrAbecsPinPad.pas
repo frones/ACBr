@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, Contnrs,
-  ACBrBase, ACBrDevice;
+  ACBrBase, ACBrDevice, ACBrOpenSSLUtils;
 
 resourcestring
   CERR_INVBLK = 'Invalid Block';
@@ -63,6 +63,9 @@ resourcestring
   CERR_CANCELLED_BY_USER = 'Cancelled by User';
   CERR_DATAPACKET_TO_LARGE = 'Data Packet is Larger than %d';
 
+  CERR_MOD_WRONG_SIZE = 'Modulus should be %d bytes (Hex)';
+  CERR_EXP_WRONG_SIZE = 'Exponent should be 1-6 bytes (Hex)';
+
 const
   // control characters
   ACK = 06; // Sent from the pinpad to the SPE when receiving a valid packet.
@@ -78,6 +81,8 @@ const
   MAX_BLOCK_SIZE = 999;
   MAX_TLV_SIZE = MAX_BLOCK_SIZE - 4;
   MAX_PACKET_SIZE = 2049;
+
+  OPN_MODLEN = 256;
 
   TIMEOUT_ACK = 2000;
   TIMEOUT_RSP = 10000;
@@ -351,6 +356,9 @@ type
     property AsString: AnsiString read GetAsString write SetAsString;
   end;
 
+  TACBrAbecsBlock = class;
+  TACBrAbecsBlockList = class;
+
   { TACBrAbecsTLVList }
 
   TACBrAbecsTLVList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrAbecsPar>{$EndIf})
@@ -363,6 +371,9 @@ type
     function New: TACBrAbecsTLV;
     Function Add(ATLV: TACBrAbecsTLV): Integer;
     function AddValue(AID: Word; const AData: AnsiString): Integer;
+    procedure AddFromBlock(ABlock: TACBrAbecsBlock);
+    procedure AddFromBlockList(ABlockList: TACBrAbecsBlockList);
+
     Procedure Insert(Index: Integer; ATLV: TACBrAbecsTLV);
     property Items[Index: Integer]: TACBrAbecsTLV read GetItem write SetItem; default;
     property AsString: AnsiString read GetAsString write SetAsString;
@@ -372,17 +383,17 @@ type
 
   TACBrAbecsBlock = class
   private
-    fTLVList: TACBrAbecsTLVList;
+    fData: AnsiString;
     function GetAsString: AnsiString;
     function GetSize: Integer;
     procedure SetAsString(const AValue: AnsiString);
   public
-    constructor Create;
-    destructor Destroy; override;
+    constructor Create; overload;
+    constructor Create(const AData: AnsiString); overload;
     procedure Clear;
 
     property Size: Integer read GetSize;
-    property Values: TACBrAbecsTLVList read fTLVList;
+    property Data: AnsiString read fData;
 
     property AsString: AnsiString read GetAsString write SetAsString;
   end;
@@ -398,6 +409,9 @@ type
   public
     function New: TACBrAbecsBlock;
     Function Add(ABlock: TACBrAbecsBlock): Integer;
+    function AddFromData(AData: AnsiString): Integer;
+    procedure AddFromTLV(ATLVList: TACBrAbecsTLVList);
+
     Procedure Insert(Index: Integer; ABlock: TACBrAbecsBlock);
     property Items[Index: Integer]: TACBrAbecsBlock read GetItem write SetItem; default;
     property AsString: AnsiString read GetAsString write SetAsString;
@@ -422,12 +436,6 @@ type
     property ID: String read fID write SetID;
     property Blocks: TACBrAbecsBlockList read fBlocks;
     property AsString: AnsiString read GetAsString write SetAsString;
-
-    procedure AddTLVParameter(const PARID: Word; const AData: AnsiString); overload;
-    procedure AddTLVParameter(const PARID: Word; AData: TStream); overload;
-
-    function GetTLVParameter(const PARID: Word): AnsiString; overload;
-    procedure GetTLVParameter(const PARID: Word; AData: TStream); overload;
   end;
 
   { TACBrAbecsCommand }
@@ -435,13 +443,10 @@ type
   TACBrAbecsCommand = class( TACBrAbecsApplicationLayer )
   private
     fIsBlocking: Boolean;
-    fParam: AnsiString;
-  protected
-    function GetAsString: AnsiString; override;
   public
     procedure Clear; override;
     property IsBlocking: Boolean read fIsBlocking write fIsBlocking;
-    property Param: AnsiString read fParam write fParam;
+    procedure AddParam(const AData: AnsiString);
   end;
 
   { TACBrAbecsResponse }
@@ -487,13 +492,18 @@ type
   TACBrAbecsPinPad = class( TACBrComponent )
   private
     fDevice: TACBrDevice;
+    fOpenSSL: TACBrOpenSSLUtils;
     fCommand: TACBrAbecsCommand;
-    fLogLevel: Byte;
     fResponse: TACBrAbecsResponse;
-    fLogFile: String;
     fOnWriteLog: TACBrGravarLog;
+
+    fLogLevel: Byte;
+    fLogFile: String;
     fIsBusy: Boolean;
     fTimeOut: Integer;
+    fSPEKmod: String;
+    fSPEKpub: String;
+    fPinpadKSec: String;
 
     function GetIsEnabled: Boolean;
     function GetPort: String;
@@ -533,8 +543,11 @@ type
     property LogLevel: Byte read fLogLevel write fLogLevel default 2;
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
 
-    procedure CommandOPN;
-    procedure CommandCLO(const AMsgToDisplay: String; const ALineBreakChar: Char = '|');
+    procedure OPN; overload;
+    procedure OPN(const OPN_MOD: String; const OPN_EXP: String); overload;
+    procedure CLO(const AMsgToDisplay: String; const ALineBreakChar: Char = '|');
+    procedure GIX; overload;
+    procedure GIX(PP_DATA: array of Word); overload;
   end ;
 
 implementation
@@ -638,6 +651,16 @@ begin
   Result := Self.Add(tlv);
 end;
 
+procedure TACBrAbecsTLVList.AddFromBlock(ABlock: TACBrAbecsBlock);
+begin
+
+end;
+
+procedure TACBrAbecsTLVList.AddFromBlockList(ABlockList: TACBrAbecsBlockList);
+begin
+
+end;
+
 procedure TACBrAbecsTLVList.Insert(Index: Integer; ATLV: TACBrAbecsTLV);
 begin
   inherited Insert(Index, ATLV);
@@ -678,42 +701,33 @@ end;
 constructor TACBrAbecsBlock.Create;
 begin
   inherited Create;
-  fTLVList := TACBrAbecsTLVList.Create;
   Clear;
 end;
 
-destructor TACBrAbecsBlock.Destroy;
+constructor TACBrAbecsBlock.Create(const AData: AnsiString);
 begin
-  fTLVList.Free;
-  inherited Destroy;
+  Create;
+  fData := AData;
 end;
 
 procedure TACBrAbecsBlock.Clear;
 begin
-  fTLVList.Clear;
+  fData := '';
 end;
 
 function TACBrAbecsBlock.GetAsString: AnsiString;
-var
-  s: AnsiString;
 begin
-  s := fTLVList.AsString;
-  Result := Format('%.3d', [Length(s)]) + s;
+  Result := Format('%.3d', [Length(fData)]) + fData;
 end;
 
 function TACBrAbecsBlock.GetSize: Integer;
-var
-  i: Integer;
 begin
-  Result := 0;
-  for i := 0 to fTLVList.Count-1 do
-    Result := Result + fTLVList[i].Size  + 4; // 4 = CMD_PARID X2 + CMD_PARLEN X2
+  Result := Length(fData);
 end;
 
 procedure TACBrAbecsBlock.SetAsString(const AValue: AnsiString);
 var
   l: Integer;
-  s: AnsiString;
 begin
   l := StrToIntDef(copy(AValue,1,3), 0);
   if (l = 0) or (l > (Length(AValue)-3)) then
@@ -722,8 +736,7 @@ begin
   if (l > MAX_BLOCK_SIZE) then
     raise EACBrAbecsPinPadError.Create(Format(CERR_INVBLKSIZE, [MAX_BLOCK_SIZE]));
 
-  s := copy(AValue, 4, l);
-  fTLVList.AsString := s;
+  fData := copy(AValue, 4, l);
 end;
 
 { TACBrAbecsBlockList }
@@ -747,6 +760,19 @@ end;
 function TACBrAbecsBlockList.Add(ABlock: TACBrAbecsBlock): Integer;
 begin
   Result := inherited Add(ABlock);
+end;
+
+function TACBrAbecsBlockList.AddFromData(AData: AnsiString): Integer;
+var
+  blk: TACBrAbecsBlock;
+begin
+  blk := TACBrAbecsBlock.Create(AData);
+  Result := Self.Add(blk);
+end;
+
+procedure TACBrAbecsBlockList.AddFromTLV(ATLVList: TACBrAbecsTLVList);
+begin
+
 end;
 
 procedure TACBrAbecsBlockList.Insert(Index: Integer; ABlock: TACBrAbecsBlock);
@@ -805,100 +831,6 @@ begin
   fBlocks.Clear;
 end;
 
-procedure TACBrAbecsApplicationLayer.AddTLVParameter(const PARID: Word; const AData: AnsiString);
-var
-  LenData, LenChunk, SpaceLeftBlock, p: Integer;
-  LastBlk: TACBrAbecsBlock;
-  Chunk: AnsiString;
-begin
-  LenData := Length(AData);
-  if (LenData = 0) then
-    Exit;
-
-  if (Blocks.Count = 0) then
-    LastBlk := Blocks.New
-  else
-    LastBlk := Blocks[Blocks.Count-1];
-
-  p := 1;
-  while (p < LenData) do
-  begin
-    Chunk := copy(AData, p, MAX_TLV_SIZE);
-    LenChunk := Length(Chunk);
-
-    SpaceLeftBlock := MAX_BLOCK_SIZE - LastBlk.Size;
-    if (LenChunk+4 > SpaceLeftBlock) then
-      LastBlk := Blocks.New;
-
-    LastBlk.Values.AddValue(PARID, Chunk);
-    Inc(p, LenChunk);
-  end;
-end;
-
-procedure TACBrAbecsApplicationLayer.AddTLVParameter(const PARID: Word; AData: TStream);
-var
-  LenChunk, SpaceLeftBlock: Integer;
-  LastBlk: TACBrAbecsBlock;
-  Chunk: AnsiString;
-begin
-  if not Assigned(AData) then
-    Exit;
-  if (AData.Size = 0) then
-    Exit;
-
-  if (Blocks.Count = 0) then
-    LastBlk := Blocks.New
-  else
-    LastBlk := Blocks[Blocks.Count-1];
-
-  AData.Position := 0;
-  while (AData.Position < AData.Size) do
-  begin
-    Chunk := ReadStrFromStream(AData, MAX_TLV_SIZE);
-    LenChunk := Length(Chunk);
-
-    SpaceLeftBlock := MAX_BLOCK_SIZE - LastBlk.Size;
-    if (LenChunk+4 > SpaceLeftBlock) then
-      LastBlk := Blocks.New;
-
-    LastBlk.Values.AddValue(PARID, Chunk);
-  end;
-end;
-
-function TACBrAbecsApplicationLayer.GetTLVParameter(const PARID: Word): AnsiString;
-var
-  i, j: Integer;
-  tlv: TACBrAbecsTLV;
-begin
-  Result := '';
-  for i := 0 to Blocks.Count-1 do
-  begin
-    for j := 0 to Blocks[i].Values.Count-1 do
-    begin
-      tlv := Blocks[i].Values[j];
-      if (tlv.ID = PARID) then
-        Result := Result + tlv.Data;
-    end;
-  end;
-end;
-
-procedure TACBrAbecsApplicationLayer.GetTLVParameter(const PARID: Word; AData: TStream);
-var
-  i, j: Integer;
-  tlv: TACBrAbecsTLV;
-begin
-  AData.Size := 0;
-  for i := 0 to Blocks.Count-1 do
-  begin
-    for j := 0 to Blocks[i].Values.Count-1 do
-    begin
-      tlv := Blocks[i].Values[j];
-      if (tlv.ID = PARID) then
-        WriteStrToStream(AData, tlv.Data);
-    end;
-  end;
-end;
-
 procedure TACBrAbecsApplicationLayer.SetID(AValue: String);
 begin
   if fID = AValue then
@@ -921,7 +853,7 @@ begin
   Clear;
   l := Length(AValue);
   if (l < 3) then
-    raise EACBrAbecsPinPadError.Create(CERR_INVCMD);
+    raise EACBrAbecsPinPadError.Create(CERR_INVBLK);
 
   fID := copy(AValue, 1, 3);
   fBlocks.AsString := copy(AValue, 4, l);
@@ -929,24 +861,15 @@ end;
 
 { TACBrAbecsCommand }
 
-function TACBrAbecsCommand.GetAsString: AnsiString;
-var
-  s: AnsiString;
-begin
-  Result := inherited GetAsString;
-
-  if (fParam <> '') then
-  begin
-    s := Format('%.3d', [Length(fParam)]) + fParam;
-    Insert(s, Result, 4);
-  end;
-end;
-
 procedure TACBrAbecsCommand.Clear;
 begin
   fIsBlocking := False;
-  fParam := '';
   inherited Clear;
+end;
+
+procedure TACBrAbecsCommand.AddParam(const AData: AnsiString);
+begin
+  fBlocks.AddFromData(AData);
 end;
 
 { TACBrAbecsResponse }
@@ -977,10 +900,10 @@ begin
   if (i < 0) then
     raise EACBrAbecsPinPadError.Create(CERR_INVRSPSTAT);
 
-  fSTAT := i;
   s := AValue;
   Delete(s, 4, 3);
   inherited SetAsString(s);
+  fSTAT := i;
 end;
 
 { TACBrAbecsPacket }
@@ -1059,12 +982,16 @@ begin
   fLogLevel := 2;
   fTimeOut := TIMEOUT_RSP;
   fOnWriteLog := nil;
+  fSPEKmod := '';
+  fSPEKpub := '';
+  fPinpadKSec := '';
 
   fDevice := TACBrDevice.Create(Self);
   fDevice.Name := 'ACBrDevice';
   {$IFDEF COMPILER6_UP}
   fDevice.SetSubComponent(true);
   {$ENDIF}
+  fOpenSSL := TACBrOpenSSLUtils.Create(Self);
 
   fCommand := TACBrAbecsCommand.Create;
   fResponse := TACBrAbecsResponse.Create;
@@ -1086,8 +1013,14 @@ end;
 
 procedure TACBrAbecsPinPad.SetIsEnabled(AValue: Boolean);
 begin
+  if (AValue = Self.Device.Ativo) then
+    Exit;
   RegisterLog('SetIsEnabled( '+BoolToStr(AValue, 'True', 'False')+' )');
+
   Self.Device.Ativo := AValue;
+  fSPEKmod := '';
+  fSPEKpub := '';
+  fPinpadKSec := '';
 end;
 
 procedure TACBrAbecsPinPad.Enable;
@@ -1338,7 +1271,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
   begin
     TimeToTimeOut := IncMilliSecond(Now, Self.TimeOut);
     if (Self.LogLevel > 2) then
-      RegisterLog(Format('  WaitForSYN - Timeout:%d', [Self.TimeOut]));
+      RegisterLog('  WaitForSYN');
 
     repeat
       if not fCommand.IsBlocking then
@@ -1350,7 +1283,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
       begin
         if UserCancelled then
         begin
-          if (Self.LogLevel > 2) then
+          if (Self.LogLevel > 1) then
             RegisterLog('  UserCancelled');
 
           if SendCAN then
@@ -1362,11 +1295,14 @@ procedure TACBrAbecsPinPad.WaitForResponse;
 
       try
         b := Self.Device.LeByte(500);
-        if (Self.LogLevel > 1) then
+        if (Self.LogLevel > 2) then
           RegisterLog(Format('  RX <- %d', [b]));
       except
       end;
     until (b = SYN);
+
+    if (Self.LogLevel > 2) then
+      RegisterLog('  SYN received');
   end;
 
   function WaitForDataPacket: AnsiString;
@@ -1378,7 +1314,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
     Result := '';
     repeat
       b := Self.Device.LeByte(TIMEOUT_ACK);  // Raise Exception for Timeout
-      if (Self.LogLevel > 2) then
+      if (Self.LogLevel > 3) then
         RegisterLog(Format('  RX <- %d', [b]));
 
       if (b <> ETB) then
@@ -1465,20 +1401,54 @@ begin
   fIsBusy := False;
 end;
 
-procedure TACBrAbecsPinPad.CommandOPN;
+procedure TACBrAbecsPinPad.OPN;
 begin
-  RegisterLog('CommandOPN - Insecure');
+  RegisterLog('OPN');
+  fCommand.Clear;
   fCommand.ID := 'OPN';
   ExecCommand;
 end;
 
-procedure TACBrAbecsPinPad.CommandCLO(const AMsgToDisplay: String;
+procedure TACBrAbecsPinPad.OPN(const OPN_MOD: String; const OPN_EXP: String);
+var
+  LenMod, LenExp: Integer;
+  CRKSEC: String;
+begin
+  RegisterLog('OPN');
+  LenMod := Trunc(Length(OPN_MOD)/2);
+  if ((LenMod <> OPN_MODLEN) or
+      (not StrIsHexa(OPN_MOD))) then
+    DoException(Format(CERR_MOD_WRONG_SIZE, [(OPN_MODLEN*2)]));
+
+  LenExp := Trunc(Length(OPN_EXP)/2);
+  if ((LenExp < 1) or (LenExp > 6) or
+      ((LenExp*2) <> Length(OPN_EXP)) or
+      (not StrIsHexa(OPN_EXP))) then
+    DoException(CERR_EXP_WRONG_SIZE);
+
+  fSPEKmod := OPN_MOD;
+  fSPEKpub := OPN_EXP;
+
+  fCommand.Clear;
+  fCommand.ID := 'OPN';
+  fCommand.AddParam('0' +               // OPN_OPMODE N1 Operation mode (fixed “0”)
+                    IntToStr(LenMod) +  // OPN_MODLEN N3 Number of bytes represented in OPN_MOD (length ÷ 2), fixed “256”
+                    OPN_MOD +           // OPN_MOD H512 Modulus of the RSA key created by the SPE (KMOD).
+                    IntToStr(LenExp) +  // OPN_EXPLEN N1 Number of bytes represented in OPN_EXP (length ÷ 2).
+                    OPN_EXP);           // OPN_EXP H..6 Public exponent of the RSA key created by the SPE (KPUB).
+  ExecCommand;
+
+  CRKSEC := fResponse.Blocks[0].Data;
+end;
+
+procedure TACBrAbecsPinPad.CLO(const AMsgToDisplay: String;
   const ALineBreakChar: Char);
 var
   p: Integer;
   msg: String;
 begin
-  RegisterLog('CommandCLO');
+  RegisterLog('CLO');
+  fCommand.Clear;
   fCommand.ID := 'CLO';
   if (AMsgToDisplay <> '') then
   begin
@@ -1489,11 +1459,166 @@ begin
     else
       msg := PadRight(AMsgToDisplay, 32);
 
-    fCommand.Param := msg;
+    fCommand.AddParam(msg);
+  end;
+
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.GIX;
+begin
+  GIX([]);
+end;
+
+procedure TACBrAbecsPinPad.GIX(PP_DATA: array of Word);
+var
+  tlv: TACBrAbecsTLV;
+  s: AnsiString;
+  i: Integer;
+begin
+  RegisterLog('GIX');
+  fCommand.Clear;
+  fCommand.ID := 'GIX';
+
+  s := '';
+  for i := Low(PP_DATA) to High(PP_DATA) do
+    s := s + IntToBEStr(PP_DATA[i]);
+
+  if (s <> '') then
+  begin
+    tlv := TACBrAbecsTLV.Create(SPE_IDLIST, s);
+    try
+      fCommand.AddParam(tlv.AsString);
+    finally
+      tlv.Free;
+    end;
   end;
 
   ExecCommand;
 end;
 
 end.
+
+
+----------------------------------------------------------------------------------------
+function TACBrAbecsApplicationLayer.GetTLVParameter(const PARID: Word): AnsiString;
+var
+  i, j: Integer;
+  tlv: TACBrAbecsTLV;
+begin
+  Result := '';
+  for i := 0 to Blocks.Count-1 do
+  begin
+    for j := 0 to Blocks[i].Values.Count-1 do
+    begin
+      tlv := Blocks[i].Values[j];
+      if (tlv.ID = PARID) then
+        Result := Result + tlv.Data;
+    end;
+  end;
+end;
+
+procedure TACBrAbecsApplicationLayer.GetTLVParameter(const PARID: Word; AData: TStream);
+var
+  i, j: Integer;
+  tlv: TACBrAbecsTLV;
+begin
+  AData.Size := 0;
+  for i := 0 to Blocks.Count-1 do
+  begin
+    for j := 0 to Blocks[i].Values.Count-1 do
+    begin
+      tlv := Blocks[i].Values[j];
+      if (tlv.ID = PARID) then
+        WriteStrToStream(AData, tlv.Data);
+    end;
+  end;
+end;
+
+
+
+function TACBrAbecsBlock.GetSize: Integer;
+var
+  i: Integer;
+begin
+  REsul := 0;
+  for i := 0 to fTLVList.Count-1 do
+    Result := Result + fTLVList[i].Size  + 4; // 4 = CMD_PARID X2 + CMD_PARLEN X2
+end;
+
+
+function TACBrAbecsCommand.GetAsString: AnsiString;
+var
+  s: AnsiString;
+begin
+  Result := inherited GetAsString;
+
+  if (fParam <> '') then
+  begin
+    s := Format('%.3d', [Length(fParam)]) + fParam;
+    Insert(s, Result, 4);
+  end;
+end;
+
+
+
+procedure TACBrAbecsApplicationLayer.AddTLVParameter(const PARID: Word; const AData: AnsiString);
+var
+  LenData, LenChunk, SpaceLeftBlock, p: Integer;
+  LastBlk: TACBrAbecsBlock;
+  Chunk: AnsiString;
+begin
+  LenData := Length(AData);
+  if (LenData = 0) then
+    Exit;
+
+  if (Blocks.Count = 0) then
+    LastBlk := Blocks.New
+  else
+    LastBlk := Blocks[Blocks.Count-1];
+
+  p := 1;
+  while (p < LenData) do
+  begin
+    Chunk := copy(AData, p, MAX_TLV_SIZE);
+    LenChunk := Length(Chunk);
+
+    SpaceLeftBlock := MAX_BLOCK_SIZE - LastBlk.Size;
+    if (LenChunk+4 > SpaceLeftBlock) then
+      LastBlk := Blocks.New;
+
+    LastBlk.Values.AddValue(PARID, Chunk);
+    Inc(p, LenChunk);
+  end;
+end;
+
+procedure TACBrAbecsApplicationLayer.AddTLVParameter(const PARID: Word; AData: TStream);
+var
+  LenChunk, SpaceLeftBlock: Integer;
+  LastBlk: TACBrAbecsBlock;
+  Chunk: AnsiString;
+begin
+  if not Assigned(AData) then
+    Exit;
+  if (AData.Size = 0) then
+    Exit;
+
+  if (Blocks.Count = 0) then
+    LastBlk := Blocks.New
+  else
+    LastBlk := Blocks[Blocks.Count-1];
+
+  AData.Position := 0;
+  while (AData.Position < AData.Size) do
+  begin
+    Chunk := ReadStrFromStream(AData, MAX_TLV_SIZE);
+    LenChunk := Length(Chunk);
+
+    SpaceLeftBlock := MAX_BLOCK_SIZE - LastBlk.Size;
+    if (LenChunk+4 > SpaceLeftBlock) then
+      LastBlk := Blocks.New;
+
+    LastBlk.Values.AddValue(PARID, Chunk);
+  end;
+end;
 

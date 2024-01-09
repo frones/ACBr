@@ -72,6 +72,9 @@ begin
   inherited Configuracao;
 
   FormatoItemListaServico := filsSemFormatacao;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('Dividir100') then
+    DivAliq100 := True;
 end;
 
 { TNFSeW_Tiplan203 }

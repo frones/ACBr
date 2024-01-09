@@ -450,7 +450,7 @@ begin
                                                                 xAliquota, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'ValorServico', 1, 15, 1,
-                                   NFSe.Servico.ItemServico[i].ValorTotal, ''));
+                                NFSe.Servico.ItemServico[i].ValorUnitario, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'ValorIssqn', 1, 15, 1,
                                      NFSe.Servico.ItemServico[i].ValorISS, ''));

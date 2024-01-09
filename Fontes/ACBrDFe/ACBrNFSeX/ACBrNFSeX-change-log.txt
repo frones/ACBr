@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/01/2024
+-- EL.GravarXml --
+[*] Trocado o campo ValorTotal por ValorUnitario para gerar a tag ValorServico,
+    uma vez que essa tag se refere ao valor unitario do serviço e não o valor 
+    total do mesmo.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Barão de Cocais/MG, o provedor é SigCorp versão 2.04
   Por: Marcos Giordani

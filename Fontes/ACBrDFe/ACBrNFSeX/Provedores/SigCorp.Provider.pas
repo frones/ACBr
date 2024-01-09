@@ -480,14 +480,7 @@ end;
 procedure TACBrNFSeProviderSigCorp204.Configuracao;
 begin
   inherited Configuracao;
-  {
-  // Usado na leitura do envio
-  FpFormatoDataRecebimento := tcDatUSA;
-  // Usado na leitura das informações de cancelamento
-  FpFormatoDataHora := tcDatHor;
-  // Usado na leitura da data de emissão da NFS-e
-  FpFormatoDataEmissao := tcDatHor;
-  }
+
   with ConfigGeral do
   begin
     QuebradeLinha := '|';
@@ -565,7 +558,15 @@ end;
 
 function TACBrNFSeXWebserviceSigCorp204.GetSoapAction: string;
 begin
-  Result := URL + '#';
+  if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.SoapAction
+  else
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.SoapAction;
+
+  if Result = '' then
+    Result := URL;
+
+  Result := Result + '#';
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.Recepcionar(ACabecalho,

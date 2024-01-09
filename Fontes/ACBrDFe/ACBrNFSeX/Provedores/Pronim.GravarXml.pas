@@ -95,6 +95,9 @@ begin
   NrOcorrAliquota := 0;
 
   Opcoes.SuprimirDecimais := True;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoSuprimirDecimais') then
+    Opcoes.SuprimirDecimais := False;
 end;
 
 function TNFSeW_Pronim202.GerarXml: Boolean;

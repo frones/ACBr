@@ -44,6 +44,8 @@ Símbolo : Significado
 
 10/01/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Cruz Alta/RS migrou para a versão 2.04, provedor ainda é o ISSNet.
+  Por: Patrick Knopf
 [*] Adiciona o ParametroExtra:eletron=1 para o correto funcionamento para Lagoa Vermelha/RS
   Por: rogerio.rizzon 
 

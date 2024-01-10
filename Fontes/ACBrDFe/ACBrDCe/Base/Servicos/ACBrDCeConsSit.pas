@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -30,29 +30,53 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrDCe (Declaração de Conteúdo Eletrônica)
-|*
-|* PROPÓSITO: Registro de Alterações
-*******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit ACBrDCeConsSit;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
-10/01/2024
--- Diversos --
-[*] Novas units referentes aos serviços de consulta e eventos.
-   Por: Italo Giurizzato Junior
+uses
+  SysUtils, Classes,
+  ACBrXmlBase;
 
-26/01/2022
--- Diversos --
-[*] Inicio da remoção das Units: PCN dos fontes do componente.
-   Por: Italo Giurizzato Junior
+type
 
-Data 15/01/2022
-[+] Doação do componente ACBrDCe para o Projeto ACBr (Ainda não esta funcional)
-   Por: Italo Giurizzato Junior
+  TConsSitDCe = class
+  private
+    FtpAmb: TACBrTipoAmbiente;
+    FchDCe: string;
+    FVersao: string;
+  public
+    function GerarXML: string;
+    function ObterNomeArquivo: string;
+
+    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
+    property chDCe: string read FchDCe write FchDCe;
+    property Versao: string read FVersao write FVersao;
+  end;
+
+implementation
+
+uses
+  ACBrUtil.Strings,
+  ACBrDCeConsts;
+
+{ TConsSitDCe }
+
+function TConsSitDCe.ObterNomeArquivo: string;
+begin
+  Result := OnlyNumber(FchDCe) + '-ped-sit.xml';
+end;
+
+function TConsSitDCe.GerarXML: string;
+begin
+  Result := '<consSitDCe ' + NAME_SPACE_DCe + ' versao="' + versao + '">' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
+              '<xServ>CONSULTAR</xServ>' +
+              '<chDCe>' + chDCe + '</chDCe>' +
+            '</consSitDCe>';
+end;
+
+end.
 

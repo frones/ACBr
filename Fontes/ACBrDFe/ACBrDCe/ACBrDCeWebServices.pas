@@ -56,7 +56,7 @@ type
   TDCeWebService = class(TDFeWebService)
   private
   protected
-    FPStatus: TStatusACBrDCe;
+    FPStatus: TStatusDCe;
     FPLayout: TLayOutDCe;
     FPConfiguracoesDCe: TConfiguracoesDCe;
 
@@ -70,7 +70,7 @@ type
     constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
 
-    property Status: TStatusACBrDCe read FPStatus;
+    property Status: TStatusDCe read FPStatus;
     property Layout: TLayOutDCe read FPLayout;
   end;
 
@@ -497,7 +497,12 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil.Strings, ACBrCompress, ACBrDCe, ACBrDCeConsts,
+  ACBrUtil.Base,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrCompress, ACBrDCe, ACBrDCeConsts,
   pcnLeitor,
   pcnConsStatServ, pcnRetConsStatServ,
 //  pmdfeConsSitDCe, pmdfeConsDCeNaoEnc,
@@ -784,7 +789,7 @@ begin
     Modelo,
     CUFtoUF(FcUF),
     FTpAmb,
-    LayOutToServico(FPLayout),
+    LayOutDCeToServico(FPLayout),
     VerServ,
     FPURL
   );
@@ -1189,7 +1194,7 @@ begin
     Modelo,
     CUFtoUF(FcUF),
     FTpAmb,
-    LayOutToServico(FPLayout),
+    LayOutDCeToServico(FPLayout),
     VerServ,
     FPURL
   );
@@ -1496,7 +1501,7 @@ begin
     Modelo,
     CUFtoUF(FcUF),
     FTpAmb,
-    LayOutToServico(FPLayout),
+    LayOutDCeToServico(FPLayout),
     VerServ,
     FPURL
   );
@@ -1654,7 +1659,7 @@ begin
     Modelo,
     CUFtoUF(FcUF),
     TpcnTipoAmbiente(Ambiente),
-    LayOutToServico(FPLayout),
+    LayOutDCeToServico(FPLayout),
     VerServ,
     FPURL
   );
@@ -2123,7 +2128,7 @@ begin
     Modelo,
     UF,
     FTpAmb,
-    LayOutToServico(FPLayout),
+    LayOutDCeToServico(FPLayout),
     VerServ,
     FPURL
   );

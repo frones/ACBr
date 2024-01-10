@@ -38,9 +38,9 @@ interface
 
 uses
   Classes, SysUtils, synautil,
-  ACBrUtil.Strings, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
+  ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrXmlBase, ACBrDCeConfiguracoes, ACBrDCeWebServices, ACBrDCeDeclaracoes,
-  ACBrDCeDACEClass, ACBrDCeClass, pcnConversao, ACBrDCeConversao; //, pmdfeEnvEventoMDFe;
+  ACBrDCeDACEClass, ACBrDCeClass, pcnConversao, ACBrDCeConversao;
 
 const
   ACBRDCE_NAMESPACE = 'http://www.portalfiscal.inf.br/dce';
@@ -57,7 +57,7 @@ type
     FDACE: TACBrDCeDACEClass;
     FDeclaracoes: TDeclaracoes;
 //    FEventoDCe: TEventoDCe;
-    FStatus: TStatusACBrDCe;
+    FStatus: TStatusDCe;
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesDCe;
@@ -116,11 +116,9 @@ type
       const Versao: Double): String;
 
     function IdentificaSchema(const AXML: String): TSchemaDCe;
-    function IdentificaSchemaModal(const AXML: String): TSchemaDCe;
     function IdentificaSchemaEvento(const AXML: String): TSchemaDCe;
 
     function GerarNomeArqSchema(const ALayOut: TLayOutDCe; VersaoServico: Double): String;
-    function GerarNomeArqSchemaModal(const AXML: String; VersaoServico: Double): String;
     function GerarNomeArqSchemaEvento(ASchemaEventoDCe: TSchemaDCe; VersaoServico: Double): String;
 
     function GerarChaveContingencia(FDCe: TDCe): String;
@@ -128,9 +126,9 @@ type
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Declaracoes: TDeclaracoes read FDeclaracoes write FDeclaracoes;
 //    property EventoDCe: TEventoDCe read FEventoDCe write FEventoDCe;
-    property Status: TStatusACBrDCe read FStatus;
+    property Status: TStatusDCe read FStatus;
 
-    procedure SetStatus(const stNewStatus: TStatusACBrDCe);
+    procedure SetStatus(const stNewStatus: TStatusDCe);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
     function DistribuicaoDFePorUltNSU(const ACNPJCPF, AultNSU: String): Boolean;
@@ -147,7 +145,10 @@ implementation
 
 uses
   dateutils,
-  pcnAuxiliar, ACBrDFeSSL;
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$R ACBrDCeServicos.rc}
@@ -377,39 +378,9 @@ begin
 
       case lTipoEvento of
         teCancelamento: Result := schevCancDCe;
-        teEncerramento: Result := schevEncDCe;
+//        teEncerramento: Result := schevEncDCe;
       else 
-        Result := schevIncCondutorDCe;
-      end;
-    end;
-  end;
-end;
-
-function TACBrDCe.IdentificaSchemaModal(const AXML: String): TSchemaDCe;
-var
-  XML: String;
-  I: Integer;
-begin
-  XML := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
-
-  Result := schDCeModalRodoviario;
-
-  I := pos( '<rodo>', XML);
-  if I = 0 then
-  begin
-    I := pos( '<aereo>', XML);
-    if I> 0 then
-      Result := schDCeModalAereo
-    else begin
-      I := pos( '<aquav>', XML);
-      if I> 0 then
-        Result := schDCeModalAquaviario
-      else begin
-        I := pos( '<ferrov>', XML);
-        if I> 0 then
-          Result := schDCeModalFerroviario
-        else
-          Result := schErro;
+        Result := schErroDCe;
       end;
     end;
   end;
@@ -418,7 +389,7 @@ end;
 function TACBrDCe.IdentificaSchemaEvento(const AXML: String): TSchemaDCe;
 begin
   // Implementar
-  Result := schErro;
+  Result := schErroDCe;
 end;
 
 function TACBrDCe.GerarNomeArqSchema(const ALayOut: TLayOutDCe;
@@ -428,7 +399,7 @@ var
   Versao: Double;
 begin
   // Procura por Versão na pasta de Schemas //
-  NomeServico := LayOutToServico(ALayOut);
+  NomeServico := LayOutDCeToServico(ALayOut);
   NomeSchema := NomeServicoToNomeSchema(NomeServico);
   ArqSchema := '';
   if NaoEstaVazio(NomeSchema) then
@@ -438,17 +409,6 @@ begin
   end;
 
   Result := ArqSchema;
-end;
-
-function TACBrDCe.GerarNomeArqSchemaModal(const AXML: String;
-  VersaoServico: Double): String;
-begin
-  if VersaoServico = 0.0 then
-    Result := ''
-  else
-    Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
-              SchemaDCeToStr(IdentificaSchemaModal(AXML)) + '_v' +
-              FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
 function TACBrDCe.GerarNomeArqSchemaEvento(ASchemaEventoDCe: TSchemaDCe;
@@ -511,7 +471,7 @@ var
   Versao: Double;
 begin
   Versao := LerVersaoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
-    Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
+    Configuracoes.WebServices.Ambiente, LayOutDCeToServico(LayOutServico),
     VersaoDCeToDbl(Configuracoes.Geral.VersaoDF));
 
   Result := FloatToString(Versao, '.', '0.00');
@@ -522,9 +482,9 @@ Var
   ok: Boolean;
   ALayout: TLayOutDCe;
 begin
-  ALayout := ServicoToLayOut(ok, NomeServico);
+  ALayout := ServicoToLayOutDCe(ok, NomeServico);
   if ok then
-    Result := SchemaDCeToStr( LayOutToSchema( ALayout ) )
+    Result := SchemaDCeToStr( LayOutDCeToSchema( ALayout ) )
   else
     Result := '';
 end;
@@ -535,11 +495,11 @@ begin
   Versao := VersaoDCeToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
   LerServicoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
-    Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
+    Configuracoes.WebServices.Ambiente, LayOutDCeToServico(LayOutServico),
     Versao, URL);
 end;
 
-procedure TACBrDCe.SetStatus(const stNewStatus: TStatusACBrDCe);
+procedure TACBrDCe.SetStatus(const stNewStatus: TStatusDCe);
 begin
   if stNewStatus <> FStatus then
   begin

@@ -32,16 +32,14 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeGravarXml;
+unit ACBrDCeXmlWriter;
 
 interface
 
 uses
   SysUtils, Classes,
-  pcnConsts,
-  pcnAuxiliar,
   ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
-  ACBrUtil.Strings, ACBrDFeUtil, ACBrDCeClass;
+  ACBrDCeClass;
 
 type
 
@@ -118,12 +116,20 @@ type
     property DCe: TDCe read FDCe write FDCe;
   end;
 
-
 implementation
 
 uses
+  pcnConsts,
+  pcnAuxiliar,
   ACBrValidador,
-  ACBrDCe, ACBrDCeConversao;
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrDFeUtil,
+  ACBrDFeConversao,
+  ACBrDFeConsts,
+  ACBrDCe,
+  ACBrDCeConversao,
+  ACBrDCeConsts;
 
 { TDCeXmlWriter }
 
@@ -285,7 +291,7 @@ begin
                                  TipoEmissaoToStr(DCe.Ide.tpEmis), DSC_TPEMIS));
 
   Result.AppendChild(AddNode(tcStr, 'B09', 'tpEmit', 1, 1, 1,
-                                    EmitenteToStr(DCe.Ide.tpEmit), DSC_TPEMIS));
+                                 EmitenteDCeToStr(DCe.Ide.tpEmit), DSC_TPEMIS));
 
   Result.AppendChild(AddNode(tcInt, 'B10', 'nSiteAutoriz', 1, 1, 1,
                                                 DCe.ide.nSiteAutoriz, DSC_NNF));
@@ -544,7 +550,7 @@ const
 begin
   Result := FDocument.CreateElement('prod');
 
-  if (DCe.Det[i].Prod.nItem = 1) and (DCe.Ide.tpAmb = taHomologacao) then
+  if (DCe.Det[i].Prod.nItem = 1) and (DCe.Ide.tpAmb = TACBrTipoAmbiente.taHomologacao) then
     Result.AppendChild(AddNode(tcStr, 'I02', 'xProd', 1, 120, 1,
                                                           HOM_XPROD, DSC_XPROD))
   else
@@ -737,7 +743,7 @@ begin
 
   ChaveDCe := GerarChaveAcesso(DCe.ide.cUF, DCe.ide.dhEmi, xCNPJCPF,
       DCe.ide.serie, DCe.ide.nDC, StrToInt(TipoEmissaoToStr(DCe.ide.tpEmis)),
-      StrToInt(EmitenteToStr(DCe.Ide.tpEmit)), DCe.Ide.nSiteAutoriz,
+      StrToInt(EmitenteDCeToStr(DCe.Ide.tpEmit)), DCe.Ide.nSiteAutoriz,
       DCe.ide.cDC, DCe.Ide.modelo);
 
   DCe.infDCe.ID := 'DCe' + ChaveDCe;

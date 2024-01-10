@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -39,9 +39,9 @@ interface
 uses
   SysUtils;
 
-const
+resourcestring
   NAME_SPACE_DCE = 'xmlns="http://www.portalfiscal.inf.br/dce"';
-
+  {
   DSC_NMDF        = 'Número do Manifesto';
   DSC_CMDF        = 'Código numérico que compõe a Chave de Acesso';
   DSC_TPEMIT      = 'Tipo do Emitente';
@@ -128,7 +128,7 @@ const
   DSC_INFQRCODMDFE  = 'Texto com o QR-Code impresso no DAMDFE';
   DSC_IDESTRANGEIRO = 'Identificação do Estrangeiro';
   DSC_CATEGCOMBVEIC = 'Categoria de Combinação Veicular';
-
+  }
 implementation
 
 end.

@@ -114,7 +114,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings, DateUtils;
+  ACBrUtil.Strings, ACBrUtil.FilesIO,
+  DateUtils;
 
 { TConfiguracoesDCe }
 

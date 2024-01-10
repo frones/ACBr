@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -48,7 +48,8 @@ uses
   {$IFEND}
   ACBrBase, ACBrXmlBase,
   pcnSignature,
-  ACBrDCeConversao, ACBrDCeProc;
+  ACBrDCeConversao,
+  ACBrDCeProc;
 
 type
 
@@ -72,7 +73,7 @@ type
     Fserie: Integer;
     FnDC: Integer;
     FdhEmi: TDateTime;
-    FtpEmis: TTipoEmissao;
+    FtpEmis: TACBrTipoEmissao;
     FtpEmit: TEmitenteDCe;
     FnSiteAutoriz: Integer;
     FcDV: Integer;
@@ -88,7 +89,7 @@ type
     property serie: Integer read Fserie write Fserie;
     property nDC: Integer read FnDC write FnDC;
     property dhEmi: TDateTime read FdhEmi write FdhEmi;
-    property tpEmis: TTipoEmissao read FtpEmis write FtpEmis;
+    property tpEmis: TACBrTipoEmissao read FtpEmis write FtpEmis;
     property tpEmit: TEmitenteDCe read FtpEmit write FtpEmit;
     property nSiteAutoriz: Integer read FnSiteAutoriz write FnSiteAutoriz;
     property cDV: Integer read FcDV write FcDV;
@@ -403,18 +404,17 @@ type
     property signature: Tsignature read Fsignature write Fsignature;
   end;
 
-const
-  CMUN_EXTERIOR = 9999999;
-  XMUN_EXTERIOR = 'EXTERIOR';
-  UF_EXTERIOR = 'EX';
-
 implementation
+
+uses
+  ACBrUtil.Base;
 
 { TDCe }
 
 constructor TDCe.Create;
 begin
   inherited Create;
+
   FinfDCe := TInfDCe.Create;
   Fide := Tide.Create;
   Femit := Temit.Create;
@@ -527,9 +527,9 @@ end;
 function TinfDCe.GetVersaoStr: String;
 begin
   if FVersao <= 0 then
-    Result := 'versao="1.00"'
-  else
-    Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
+    FVersao := 2;
+
+  Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
 end;
 
 { Tdest }

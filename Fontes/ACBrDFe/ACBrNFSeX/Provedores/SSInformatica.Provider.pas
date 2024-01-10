@@ -81,6 +81,11 @@ uses
   ACBrNFSeX,
   SSInformatica.GravarXml, SSInformatica.LerXml;
 
+{
+  Ainda não é possível remover o pcnAuxiliar, pois utiliza a função:
+  GetUTC.
+}
+
 { TACBrNFSeProviderSSInformatica203 }
 
 procedure TACBrNFSeProviderSSInformatica203.Configuracao;

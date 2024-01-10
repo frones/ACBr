@@ -39,7 +39,6 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase, ACBrXmlDocument,
-  pcnConsts,
   ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXGravarXml_ABRASFv2,
   ACBrNFSeXConversao, ACBrNFSeXConsts;
 
@@ -129,7 +128,7 @@ begin
          FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), ''));
 
   NFSeNode.AppendChild(AddNode(tcDatHor, '#1', 'DataEmissao', 19, 19, 1,
-                                                   NFSe.DataEmissao, DSC_DEMI));
+                                                  NFSe.DataEmissao, DSC_DHEMI));
 
   xmlNode := GerarIdentificacaoRPS;
   NFSeNode.AppendChild(xmlNode);

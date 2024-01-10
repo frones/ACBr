@@ -80,6 +80,81 @@ resourcestring
   DESC_GENERICOSDESCRICAO = 'Conteúdo do campo livre.';
   DSC_VTTS = 'Valor Taxa Turismo';
   DSC_QDiaria = 'Quantidade Diaria';
+  DSC_REGTRIB = 'Código de Regime Tributário';
+  DSC_CLISTSERV = 'Código do Item da Lista Prestação de Serviços';
+  DSC_VISS = 'Valor do Imposto sobre Serviço';
+  DSC_REGISSQN = 'Regime Especial de Tributação do ISSQN';
+  DSC_CNAE = 'Classificação Nacional de Atividades Econômicas';
+  DSC_CSERVTRIBMUN = 'Codigo de tributação pelo ISSQN do municipio';
+
+  DSC_XSERV = 'Descrição do serviço';
+  DSC_QTDE = 'Quantidade';
+  DSC_VDEDUCISS = 'Valor das deduções para ISSQN';
+  DSC_VPIS = 'Valor do PIS';
+  DSC_VCOFINS = 'Valor do COFINS';
+  DSC_VINSS = 'Valor do INSS';
+  DSC_VIR = 'Valor do IR';
+  DSC_VCSLL = 'Valor do CSLL';
+  DSC_INDISSRET = 'Indicador de ISS Retido';
+  DSC_VBCISS = 'Valor da Base de Cálculo do ISSQN';
+  DSC_VALIQ = 'Alíquota';
+  DSC_VDESCINCOND = 'Valor Desconto Incondicionado';
+  DSC_VDESCCOND = 'Valor Desconto Condicionado';
+  DSC_VDESC = 'Valor do desconto';
+
+  DSC_INDISS = 'Indicador da Exigibilidade do ISS';
+  DSC_NPROCESSO = 'Número do Processo';
+  DSC_TPAG = 'Forma de Pagamento';
+  DSC_DVENC = 'Data de vencimento';
+
+  // Descrição de Documentos - Futuramente vai para ACBrDFeConst
+  DSC_CNPJ = 'CNPJ(MF)';
+  DSC_CPF = 'CPF';
+  DSC_IE = 'Inscrição Estadual';
+  DSC_IM = 'Inscrição Municipal';
+
+  // Descrição de Identificação do Documento Fiscal - Futuramente vai para ACBrDFeConst
+  DSC_TPAMB = 'Identificação do Ambiente';
+  DSC_CUF = 'Código IBGE da UF';
+  DSC_DHEMI = 'Data e Hora de Emissão';
+  DSC_DEMI = 'Data de emissão';
+  DSC_HEMI = 'Hora de emissão';
+  DSC_TPEMIS = 'Tipo de Emissão';
+  DSC_VERPROC = 'Versão do processo de emissão';
+  DSC_DHCONT = 'Data e Hora da entrada em contingência';
+  DSC_XJUSTCONT = 'Justificativa da entrada em contingência';
+  DSC_QRCODNFCOM = 'Texto com o QR-Code para consulta';
+  DSC_CHAVESEGURANCA = 'Chave de segurança';
+
+  // Descrição de Dados da Pessoa Física ou Jurídica - Futuramente vai para ACBrDFeConst
+  DSC_CRT = 'Código de Regime Tributário';
+  DSC_XNOME = 'Razão social ou Nome';
+  DSC_XFANT = 'Nome fantasia';
+  DSC_XLGR = 'Logradouro';
+  DSC_NRO = 'Número do Logradouro';
+  DSC_XCPL = 'Complemento';
+  DSC_XBAIRRO = 'Bairro';
+  DSC_CMUN = 'Código IBGE do município';
+  DSC_XMUN = 'Nome do município';
+  DSC_CEP = 'CEP';
+  DSC_UF = 'Sigla da UF';
+  DSC_CPAIS = 'Código do País';
+  DSC_XPAIS = 'Nome do País';
+  DSC_FONE = 'Telefone';
+  DSC_EMAIL = 'Endereço de E-mail';
+
+  // Descrição de Mensagens de Erro - Futuramente vai para ACBrDFeConst
+  ERR_MSG_MAIOR = 'Tamanho maior que o máximo permitido';
+  ERR_MSG_MENOR = 'Tamanho menor que o mínimo permitido';
+  ERR_MSG_VAZIO = 'Nenhum valor informado';
+  ERR_MSG_INVALIDO = 'Conteúdo inválido';
+  ERR_MSG_MAXIMO_DECIMAIS = 'Numero máximo de casas decimais permitidas';
+  ERR_MSG_GERAR_CHAVE = 'Erro ao gerar a chave da DFe!';
+  ERR_MSG_FINAL_MENOR_INICIAL = 'O numero final não pode ser menor que o inicial';
+  ERR_MSG_ARQUIVO_NAO_ENCONTRADO = 'Arquivo não encontrado';
+  ERR_MSG_SOMENTE_UM = 'Somente um campo deve ser preenchido';
+  ERR_MSG_MAIOR_MAXIMO = 'Número de ocorrências maior que o máximo permitido - Máximo ';
+  ERR_MSG_MENOR_MINIMO = 'Número de ocorrências menor que o mínimo permitido - Mínimo ';
 
   // Códigos e Descrições das mensagens
   Cod001 = 'X001';

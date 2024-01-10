@@ -304,10 +304,16 @@ implementation
 
 uses
   IniFiles,
-  pcnAuxiliar, ACBrConsts,
+  pcnAuxiliar,
+  ACBrConsts,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
   ACBrXmlBase, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts;
+
+{
+  Ainda não é possível remover o pcnAuxiliar, pois utiliza o:
+  TimeZoneConf.Assign.
+}
 
 { TACBrNFSeXProvider }
 

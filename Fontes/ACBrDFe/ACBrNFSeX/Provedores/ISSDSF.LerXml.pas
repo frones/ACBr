@@ -39,7 +39,6 @@ interface
 uses
   SysUtils, Classes, StrUtils, synacode,
   ACBrXmlBase, ACBrXmlDocument,
-  pcnAuxiliar,
   ACBrNFSeXConversao, ACBrNFSeXLerXml;
 
 type

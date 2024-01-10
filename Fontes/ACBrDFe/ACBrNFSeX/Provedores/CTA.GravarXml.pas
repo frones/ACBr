@@ -65,8 +65,7 @@ implementation
 
 uses
   ACBrUtil.Strings,
-  ACBrNFSeXConsts, ACBrNFSeXConversao,
-  pcnConsts;
+  ACBrNFSeXConsts, ACBrNFSeXConversao;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -87,7 +86,7 @@ begin
                          OnlyNumber(NFSe.IdentificacaoRps.Numero), DSC_NUMRPS));
 
   Result.AppendChild(AddNode(tcDatHor, '#2', 'Competencia', 19, 19, 1,
-                                                   NFSe.Competencia, DSC_DEMI));
+                                                  NFSe.Competencia, DSC_DHEMI));
 
   Result.AppendChild(AddNode(tcStr, '#3', 'TipodeTributacao', 1, 1, 1,
                                                                  TipoTrib, ''));

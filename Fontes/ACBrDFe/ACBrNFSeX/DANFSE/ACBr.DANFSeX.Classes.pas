@@ -37,14 +37,13 @@ unit ACBr.DANFSeX.Classes;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, pcnConversao;
+  Classes, SysUtils, ACBrBase;
 
 type
 
 
   TDadosNecessariosParaDANFSeX = class(TObject)
   private
-//    FLogotipoPrefeitura: string;
     FNaturezaOperacaoDescricao: string;     //FProvider.NaturezaOperacaoDescricao(NaturezaOperacao)
     FRegimeEspecialDescricao: string;       //FProvider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao)
     FIssAReterDescricao: string;            //FProvider.SituacaoTributariaDescricao(IssRetido);
@@ -55,10 +54,6 @@ type
 
   public
     constructor Create();
-
-    //DANFSe
-//    property LogotipoPrefeitura: string read FLogotipoPrefeitura write FLogotipoPrefeitura;
-    //...DANFSe
 
     //provider
     property NaturezaOperacaoDescricao: string read FNaturezaOperacaoDescricao write FNaturezaOperacaoDescricao;
@@ -78,13 +73,13 @@ implementation
 constructor TDadosNecessariosParaDANFSeX.Create();
 begin
   inherited;
-  FNaturezaOperacaoDescricao     := '';
-  FRegimeEspecialDescricao       := '';
-  FIssAReterDescricao            := '';
-  FOptanteSimplesDescricao       := '';
-  FIncentivadorCulturalDescricao := '';
-  FDetalhar             := False;
 
+  FNaturezaOperacaoDescricao := '';
+  FRegimeEspecialDescricao := '';
+  FIssAReterDescricao := '';
+  FOptanteSimplesDescricao := '';
+  FIncentivadorCulturalDescricao := '';
+  FDetalhar := False;
 end;
 
 end.

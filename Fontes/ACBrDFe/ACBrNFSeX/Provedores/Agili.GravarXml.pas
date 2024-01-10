@@ -39,7 +39,6 @@ interface
 uses
   SysUtils, Classes, StrUtils, MaskUtils,
   ACBrXmlBase, ACBrXmlDocument,
-  pcnConsts,
   ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao, ACBrNFSeXConsts;
 
 type
@@ -633,7 +632,7 @@ begin
   Result.AppendChild(xmlNode);
 
   Result.AppendChild(AddNode(tcDat, '#1', 'DataEmissao', 10, 10, 1,
-                                                   NFSe.DataEmissao, DSC_DEMI));
+                                                  NFSe.DataEmissao, DSC_DHEMI));
 end;
 
 end.

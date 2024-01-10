@@ -149,7 +149,6 @@ type
 implementation
 
 uses
-  pcnConsts,
   ACBrUtil.Strings,
   ACBrXmlBase,
   ACBrNFSeXConversao, ACBrNFSeXConsts;
@@ -262,7 +261,7 @@ begin
   Result.AppendChild(GerarIdentificacaoRPS);
 
   Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissao', 19, 19, 1,
-                                                   NFSe.DataEmissao, DSC_DEMI));
+                                                  NFSe.DataEmissao, DSC_DHEMI));
 
   Result.AppendChild(AddNode(tcStr, '#5', 'NaturezaOperacao', 1, 3, NrOcorrNaturezaOperacao,
                    NaturezaOperacaoToStr(NFSe.NaturezaOperacao), DSC_INDNATOP));

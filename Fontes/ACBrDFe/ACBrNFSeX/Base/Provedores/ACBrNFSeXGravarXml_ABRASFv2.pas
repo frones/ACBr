@@ -292,11 +292,15 @@ type
 implementation
 
 uses
-  pcnConsts,
   pcnAuxiliar,
   ACBrUtil.Strings,
   ACBrXmlBase,
   ACBrNFSeXConversao, ACBrNFSeXConsts;
+
+  {
+    Ainda não é possível remover a unit pcnAuxiliar, pois é utilizado a função:
+    AjustarDataHoraParaUf.
+  }
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS dos provedores
@@ -494,7 +498,7 @@ begin
   Result.AppendChild(GerarListaServicos);
 
   Result.AppendChild(AddNode(FormatoCompetencia, '#4', 'Competencia', 19, 19, NrOcorrCompetencia,
-                                                   NFSe.Competencia, DSC_DEMI));
+                                                  NFSe.Competencia, DSC_DHEMI));
 
   Result.AppendChild(GerarServico);
   Result.AppendChild(GerarPrestador);
@@ -589,7 +593,7 @@ begin
     NFSe.DataEmissaoRps := NFSe.DataEmissao;
 
   Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissao', 19, 19, 1,
-    AjustarDataHoraParaUf(NFse.DataEmissaoRps, CodMunEmit div 100000), DSC_DEMI));
+    AjustarDataHoraParaUf(NFse.DataEmissaoRps, CodMunEmit div 100000), DSC_DHEMI));
 
   Result.AppendChild(GerarStatus);
   Result.AppendChild(GerarRPSSubstituido);

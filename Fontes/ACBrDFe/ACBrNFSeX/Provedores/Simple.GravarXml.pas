@@ -38,8 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument, pcnConsts,
-  ACBrNFSeXConversao, ACBrNFSeXConsts, ACBrNFSeXGravarXml;
+  ACBrXmlBase, ACBrXmlDocument,
+  ACBrNFSeXGravarXml;
 
 type
   { TNFSeW_Simple }
@@ -57,6 +57,8 @@ type
 implementation
 
 uses
+  ACBrNFSeXConversao,
+  ACBrNFSeXConsts,
   ACBrUtil.Strings;
 
 //==============================================================================

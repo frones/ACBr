@@ -39,8 +39,7 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase, ACBrXmlDocument,
-  pcnConsts,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao;
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml;
 
 type
   { TNFSeW_PadraoNacional }
@@ -119,7 +118,13 @@ implementation
 uses
   ACBrUtil.Strings,
   ACBrNFSeXConsts,
+  ACBrNFSeXConversao,
   pcnAuxiliar;
+
+{
+  Ainda não é possível remover o pcnAuxiliar, pois utiliza as funções:
+  DateTimeTodh e GetUTC.
+}
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:

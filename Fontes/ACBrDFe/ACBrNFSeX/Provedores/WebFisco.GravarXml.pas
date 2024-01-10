@@ -39,7 +39,6 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase, ACBrXmlDocument,
-  pcnAuxiliar,
   ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao;
 
 type
@@ -66,8 +65,9 @@ function TNFSeW_WebFisco.GerarXml: Boolean;
 var
   NFSeNode: TACBrXmlNode;
   cSimples: Boolean;
-  xAtrib: string;
+  xAtrib, strAux: string;
   i: Integer;
+  valAux: Double;
 begin
   Configuracao;
 
@@ -299,15 +299,29 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'paisest', 1, 60, 1,
                                                          '', '', True, xAtrib));
 
+  if cSimples then
+    valAux := NFSe.Prestador.ValorReceitaBruta
+  else
+    valAux := 0.00;
+
   NFSeNode.AppendChild(AddNode(tcDe2, '#', 'ssrecbr', 1, 12, 1,
-   IIf(cSimples = True, NFSe.Prestador.ValorReceitaBruta, 0.00), '', True, xAtrib));
+                                                     valAux, '', True, xAtrib));
+
+  if cSimples then
+    strAux := NFSe.Prestador.Anexo
+  else
+    strAux :='';
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'ssanexo', 1, 15, 1,
-             IIf(cSimples = True, NFSe.Prestador.Anexo, ''), '', True, xAtrib));
+                                                     strAux, '', True, xAtrib));
+
+  if cSimples then
+    strAux := FormatDateTime('DD/MM/YYYY', NFSe.Prestador.DataInicioAtividade)
+  else
+    strAux :=' ';
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'ssdtini', 1, 10, 1,
-   IIf(cSimples = True,
-     FormatDateTime('DD/MM/YYYY', NFSe.Prestador.DataInicioAtividade), ' '), '', True, xAtrib));
+                                                     strAux, '', True, xAtrib));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'percded', 1, 6, 1,
                                                          '', '', True, xAtrib));

@@ -39,9 +39,8 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase, ACBrXmlDocument,
-  pcnConsts,
   ACBrNFSeXClass,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao, ACBrNFSeXConsts;
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml;
 
 type
   { Provedor com layout próprio }
@@ -63,7 +62,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings;
+  ACBrUtil.Strings, ACBrNFSeXConversao, ACBrNFSeXConsts;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -99,7 +98,7 @@ begin
                                     NFSe.IdentificacaoRps.Serie, DSC_SERIERPS));
 
   NFSeNode.AppendChild(AddNode(tcDatHor, '#1', 'dtEmissaoRps', 19, 19, 1,
-                                                   NFSe.DataEmissao, DSC_DEMI));
+                                                  NFSe.DataEmissao, DSC_DHEMI));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'stRps', 1, 1, 1, '1', ''));
 

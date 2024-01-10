@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/01/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Morro da Fumaca/SC trocou de provedor, agora é IPM versão 1.01.
+  Por: Diogo Loff
+[*] Incluída a URL de homologação e o Params: NaoGerarGrupoRps para a cidade de 
+    Campo Largo/PR.
+  Por: Diogo Loff
 -- Diversos --
 [*] Remoção da unit pcnConsts.
   Por: Italo Giurizzato Junior

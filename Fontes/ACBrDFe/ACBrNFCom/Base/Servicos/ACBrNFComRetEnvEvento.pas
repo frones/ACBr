@@ -1,0 +1,150 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
+unit ACBrNFComRetEnvEvento;
+
+interface
+
+uses
+  SysUtils, Classes,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase, ACBrXmlBase,
+  ACBrNFComEventoClass,
+  pcnSignature;
+
+type
+
+  TRetEventoNFCom = class(TObject)
+  private
+    Fversao: string;
+    FretInfEvento: TRetInfEvento;
+    Fsignature: Tsignature;
+
+    FXmlRetorno: string;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function LerXml: Boolean;
+
+    property versao: string read Fversao write Fversao;
+    property retInfEvento: TRetInfEvento read FretInfEvento write FretInfEvento;
+    property signature: Tsignature read Fsignature write Fsignature;
+
+    property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
+  end;
+
+implementation
+
+uses
+  ACBrNFComConversao,
+  ACBrUtil.Strings,
+  ACBrXmlDocument;
+
+{ TRetEventoNFCom }
+
+constructor TRetEventoNFCom.Create;
+begin
+  inherited Create;
+
+  FretInfEvento := TRetInfEvento.Create;
+  Fsignature := Tsignature.Create;
+end;
+
+destructor TRetEventoNFCom.Destroy;
+begin
+  FretInfEvento.Free;
+  Fsignature.Free;
+
+  inherited;
+end;
+
+function TRetEventoNFCom.LerXml: Boolean;
+var
+  Document: TACBrXmlDocument;
+  ANode, ANodeAux: TACBrXmlNode;
+  ok: Boolean;
+  i: Integer;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    Document.LoadFromXml(XmlRetorno);
+
+    ANode := Document.Root;
+
+    if ANode <> nil then
+    begin
+      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+
+      ANodeAux := ANode.Childrens.FindAnyNs('infEvento');
+
+      if ANodeAux <> nil then
+      begin
+        RetInfEvento.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
+        RetInfEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+        RetInfEvento.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+        retInfEvento.cOrgao := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cOrgao'), tcInt);
+        retInfEvento.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+        retInfEvento.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
+        RetInfEvento.chNFCom := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
+        RetInfEvento.tpEvento := StrToTpEventoNFCom(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpEvento'), tcStr));
+        RetInfEvento.xEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xEvento'), tcStr);
+        retInfEvento.nSeqEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+        retInfEvento.dhRegEvento := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
+        RetInfEvento.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+      end;
+
+      ANodeAux := ANode.Childrens.FindAnyNs('Signature');
+
+      if ANodeAux <> nil then
+      begin
+        signature.URI := ObterConteudoTag(ANodeAux.Attributes.Items['URI']);
+        signature.DigestValue := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('DigestValue'), tcStr);
+        signature.SignatureValue := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('SignatureValue'), tcStr);
+        signature.X509Certificate := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('X509Certificate'), tcStr);
+      end;
+    end;
+
+    FreeAndNil(Document);
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+end.

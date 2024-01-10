@@ -554,12 +554,14 @@ procedure TACBrNFSeProviderWebFisco.PrepararCancelaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
+  aNumero, aTipo: string;
 begin
-  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
+  if EstaVazio(Response.InfCancelamento.NumeroNFSe) and
+     (Response.InfCancelamento.NumeroRps = 0) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := ACBrStr(Desc108);
+    AErro.Codigo := Cod134;
+    AErro.Descricao := ACBrStr(Desc134);
     Exit;
   end;
 
@@ -605,6 +607,17 @@ begin
     Exit;
   end;
 
+  if Response.InfCancelamento.NumeroRps <> 0 then
+  begin
+    aNumero := IntToStr(Response.InfCancelamento.NumeroRps);
+    aTipo := '2';
+  end
+  else
+  begin
+    aNumero := Response.InfCancelamento.NumeroNFSe;
+    aTipo := '1';
+  end;
+
   Response.ArquivoEnvio := '<CancelaNfe>' +
                              '<usuario xsi:type="xsd:string">' +
                                Trim(Emitente.WSUser) +
@@ -619,10 +632,10 @@ begin
                                Trim(Emitente.CNPJ) +
                              '</usr>' +
                              '<ctr xsi:type="xsd:string">' +
-                               Response.InfCancelamento.NumeroNFSe +
+                               aNumero +
                              '</ctr>' +
                              '<tipo xsi:type="xsd:string">' +
-                               '1' +
+                               aTipo +
                              '</tipo>' +
                              '<obs xsi:type="xsd:string">' +
                                Response.InfCancelamento.MotCancelamento +

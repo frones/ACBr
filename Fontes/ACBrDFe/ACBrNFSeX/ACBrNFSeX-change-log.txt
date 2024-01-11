@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/01/2024
+-- IPM.GravarXml --
+[*] Alteração no profeixo da tag <identificador> para quando o envio for para teste.
+    Se produção usar "nfse_" se homologação usar "nfseh_".
+-- IPM.LerXml --
+[*] Incluido a leitura da ta <data_fato> que a data de competencia.
+  Por: Diogo Loff
+
 10/01/2024
 -- WebFisco.Provider --
 [*] Alteração visando o cancelamento de uma nota pelo numero de controle informado em

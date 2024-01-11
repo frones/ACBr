@@ -129,11 +129,19 @@ begin
   FDocument.Root := NFSeNode;
 
   if (VersaoNFSe in [ve100, ve101]) and (Ambiente = taHomologacao) then
-    NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
+  begin
+    if not FpNaoGerarGrupoRps then
+      NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
+        'nfseh_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
 
-  if not FpNaoGerarGrupoRps then
-    NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
-      'nfse_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
+    NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
+  end
+  else
+  begin
+    if not FpNaoGerarGrupoRps then
+      NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
+        'nfse_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
+  end;
 
   xmlNode := GerarIdentificacaoRPS;
   NFSeNode.AppendChild(xmlNode);

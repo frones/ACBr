@@ -2412,12 +2412,30 @@ begin
       I := 1;
       while true do
       begin
-        // infoIRComplem.dtLaudo não é obrigatória, verificar se exite o primeiro reg da infoDep.cpfDep
+        // infoIRComplem.dtLaudo não é obrigatória, verificar se exite o primeiro reg em alguma das filhas
         sSecao := 'infoDep' + IntToStrZero(I, 2) + '001';
         sFim   := INIRec.ReadString(sSecao, 'cpfDep', 'FIM');
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
+        begin
+          sSecao := 'infoIRCR' + IntToStrZero(I, 2) + '01';
+          sFim   := INIRec.ReadString(sSecao, 'tpCR', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          begin
+            sSecao := 'planSaude' + IntToStrZero(I, 2) + '01';
+            sFim   := INIRec.ReadString(sSecao, 'cnpjOper', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            begin
+              sSecao := 'infoReembMed' + IntToStrZero(I, 2) + '01';
+              sFim   := INIRec.ReadString(sSecao, 'indOrgReemb', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+            end;
+          end;
+        end;
 
         // de 0 até 1
         sSecao := 'infoIRComplem' + IntToStrZero(I, 2);

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/01/2024
+-- IPM.LerXml --
+[*] Possível solução para compilar no Lazarus.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Atualizado a URL de produção da cidade de Itaitinga/CE, o provedor é o mesmo.
   Por: Vinicius Jung - Projetos Bremen

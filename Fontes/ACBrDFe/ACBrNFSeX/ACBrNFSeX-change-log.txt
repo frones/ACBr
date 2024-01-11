@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/01/2024
+-- ACBrNFSeXServicos --
+[*] Atualizado a URL de produção da cidade de Itaitinga/CE, o provedor é o mesmo.
+  Por: Vinicius Jung - Projetos Bremen
+[*] Incluído o Params ParametroExta para a cidade de Lapa/PR.
+  Por: Alexandre Felippeto Henzen
 -- IPM.GravarXml --
 [*] Alteração no profeixo da tag <identificador> para quando o envio for para teste.
     Se produção usar "nfse_" se homologação usar "nfseh_".

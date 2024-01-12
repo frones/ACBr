@@ -1676,7 +1676,7 @@ begin
     LACBrCEPEnderecos.Municipio       := LJson.AsString['city'];
     LACBrCEPEnderecos.UF              := LJson.AsString['state'];
     LACBrCEPEnderecos.Longitude       := LJson.AsJSONObject['location'].AsJSONObject['coordinates'].AsString['longitude'];
-    LACBrCEPEnderecos.Latitude        := LJson.AsJSONObject['location'].AsJSONObject['coordinates'].AsString['longitude'];
+    LACBrCEPEnderecos.Latitude        := LJson.AsJSONObject['location'].AsJSONObject['coordinates'].AsString['latitude'];
   finally
     LJson.Free;
     BuscaEfetuada;

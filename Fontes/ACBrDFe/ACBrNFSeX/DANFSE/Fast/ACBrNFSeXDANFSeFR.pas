@@ -1122,11 +1122,22 @@ begin
     LCDS.FieldByName('CodigoMunicipio').AsString  := ANFSe.Prestador.Endereco.xMunicipio; //xMunicipio;
     LCDS.FieldByName('ExigibilidadeISS').AsString := FProvider.ExigibilidadeISSDescricao(LDadosServico.ExigibilidadeISS);
 
+    {
+      Incluido por: Italo em 12/01/2024
+    }
+    if LDadosServico.MunicipioIncidencia <> 0 then
+      LCDS.FieldByName('MunicipioIncidencia').AsString :=
+        IntToStr(LDadosServico.MunicipioIncidencia) + ' / ' +
+        LDadosServico.xMunicipioIncidencia)
+    else
+      LCDS.FieldByName('MunicipioIncidencia').AsString := '';
+
+    {  Comentado por: Italo em 12/01/2024
     if ANFSe.NaturezaOperacao = no2 then
       LCDS.FieldByName('MunicipioIncidencia').AsString := 'Fora do Município'
     else
       LCDS.FieldByName('MunicipioIncidencia').AsString := 'No Município';
-
+    }
     if LDadosServico.Valores.IssRetido = stRetencao then
       LCDS.FieldByName('TipoRecolhimento').AsString := 'Retido na Fonte'
     else

@@ -83,7 +83,8 @@ type
                            no601, no611, no612, no613, no615, no616, no621, no622,
                            no701, no711, no712,
                            no901, no902, no911, no912, no921, no931, no951, no952, no971,
-                           no981, no991);
+                           no981, no991,
+                           noNenhum);
 
   TnfseExigibilidadeISS = (exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo, exiISSFixo);

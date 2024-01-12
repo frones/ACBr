@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/01/2024
+-- ACBrNFSeXConversao/ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeFR/Tecnos.GravarXml --
+[*] Possível solução para a leitura correta da tag NaturezaOperacao no layout versão 2
+    da ABRASF que segundo o manual a tag não existe, mas tem um provedor que a utiliza.
+  Por: Italo Giurizzato Junior
 -- WebFisco.LerXml --
 [*] Incluída a leitura da tag nfecontrole e seu conteudo atribuido ao campo ID.
 -- WebFisco.GravarXml --

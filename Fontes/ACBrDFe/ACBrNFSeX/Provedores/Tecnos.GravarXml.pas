@@ -110,7 +110,6 @@ begin
   NrOcorrRespRetencao := 1;
   NrOcorrNumParcelas := 1;
   NrOcorrRazaoSocialPrest := 1;
-  NrOcorrNaturezaOperacao := 1;
   NrOcorrPercCargaTrib := 1;
   NrOcorrValorCargaTrib := 1;
   NrOcorrPercCargaTribMun := 1;

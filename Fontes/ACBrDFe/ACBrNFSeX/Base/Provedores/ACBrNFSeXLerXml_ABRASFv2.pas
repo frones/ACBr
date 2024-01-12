@@ -529,6 +529,7 @@ procedure TNFSeR_ABRASFv2.LerInfDeclaracaoPrestacaoServico(
 var
   AuxNode: TACBrXmlNode;
   Ok: Boolean;
+  sNatureza: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -552,9 +553,17 @@ begin
     LerConstrucaoCivil(AuxNode);
 
     NFSe.RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr));
-    NFSe.OptanteSimplesNacional   := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
-    NFSe.IncentivadorCultural     := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IncentivoFiscal'), tcStr));
-    NFSe.DataPagamento            := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataPagamento'), tcDat);
+
+    sNatureza := ObterConteudo(AuxNode.Childrens.FindAnyNs('NaturezaOperacao'), tcStr);
+
+    if sNatureza = '' then
+      NFSe.NaturezaOperacao := noNenhum
+    else
+      NFSe.NaturezaOperacao := StrToNaturezaOperacao(Ok, sNatureza);
+
+    NFSe.OptanteSimplesNacional := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
+    NFSe.IncentivadorCultural := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IncentivoFiscal'), tcStr));
+    NFSe.DataPagamento := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataPagamento'), tcDat);
 
     if NFSe.InformacoesComplementares = '' then
     begin

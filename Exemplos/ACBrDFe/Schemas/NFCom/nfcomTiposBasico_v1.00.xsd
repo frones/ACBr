@@ -288,8 +288,7 @@ para tpEmis diferente de 1</xs:documentation>
 										<xs:element name="CNPJ" type="TCnpjOpc">
 											<xs:annotation>
 												<xs:documentation>Número do CNPJ</xs:documentation>
-												<xs:documentation>Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.
-							Informar os zeros não significativos.</xs:documentation>
+												<xs:documentation>Informar os zeros não significativos.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="CPF" type="TCpf">
@@ -1446,13 +1445,16 @@ Se informado esse grupo o schema não permite informar nenhum dos grupos de ICMS
 									<xs:attribute name="chNFComAnt" type="TChDFe">
 										<xs:annotation>
 											<xs:documentation>Chave de Acesso da NFCom anterior </xs:documentation>
-											<xs:documentation>Informar chave de acesso de referencia anterior</xs:documentation>
+											<xs:documentation>Informar chave de acesso de referencia anterior
+TAG OPCIONAL, DEVE SER INFORMADA APENAS NOS CASOS PREVISTOS DE NOTA ANTERIOR REFERENCIADA</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
 									<xs:attribute name="nItemAnt" use="optional">
 										<xs:annotation>
 											<xs:documentation>Número do item da NFCom anterior</xs:documentation>
-											<xs:documentation>Informar nro do item da chave de acesso de referencia anterior</xs:documentation>
+											<xs:documentation>Informar nro do item da chave de acesso de referencia anterior
+
+TAG OPCIONAL, DEVE SER INFORMADA APENAS NOS CASOS PREVISTOS DE NOTA ANTERIOR REFERENCIADA</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -2555,7 +2557,7 @@ Observação: 28 caracteres são representados no schema como 20 bytes do tipo b
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:minLength value="1"/>
-			<xs:maxLength value="1"/>
+			<xs:maxLength value="2"/>
 			<xs:whiteSpace value="preserve"/>
 			<xs:enumeration value="1"/>
 			<xs:enumeration value="2"/>

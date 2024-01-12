@@ -246,9 +246,9 @@ begin
   NFSeNode.AppendChild(AddNode(tcDe2, '#', 'inss', 1, 12, 1,
                              NFSe.Servico.Valores.ValorInss, '', True, xAtrib));
   NFSeNode.AppendChild(AddNode(tcDe2, '#', 'irrf', 1, 12, 1,
-                                                          0, '', True, xAtrib));
+                               NFSe.Servico.Valores.ValorIr, '', True, xAtrib));
   NFSeNode.AppendChild(AddNode(tcDe2, '#', 'csll', 1, 12, 1,
-                                                          0, '', True, xAtrib));
+                             NFSe.Servico.Valores.ValorCsll, '', True, xAtrib));
   NFSeNode.AppendChild(AddNode(tcDe2, '#', 'pis', 1, 12, 1,
                               NFSe.Servico.Valores.ValorPis, '', True, xAtrib));
   NFSeNode.AppendChild(AddNode(tcDe2, '#', 'cofins', 1, 12, 1,

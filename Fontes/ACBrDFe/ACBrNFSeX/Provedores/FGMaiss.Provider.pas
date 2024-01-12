@@ -104,7 +104,7 @@ end;
 
 function TACBrNFSeXWebserviceFGMaiss.GetSoapActionURL: string;
 begin
-  Result := 'https://www1.fgmaiss.com.br/issqn/wservice/';
+  Result := 'https://www1.fgmaiss.com.br:443/issqn/wservice/';
 end;
 
 end.

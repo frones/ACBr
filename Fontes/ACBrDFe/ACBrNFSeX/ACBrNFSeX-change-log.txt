@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/01/2024
+-- WebFisco.LerXml --
+[*] Incluída a leitura da tag nfecontrole e seu conteudo atribuido ao campo ID.
+-- WebFisco.GravarXml --
+[*] Alteração para gerar os valores de IR e CSLL no XML.
+-- FGMaiss.Provider --
+[*] Acrescentado a porta 443 na URL do SoapAction.
+  Por: Marcelo Gonçalves
 -- ACBrNFSeXServicos --
 [*] Incluída a cidade de Estreito/MA, o provedor é Fiorilli.
   Por: Hugo Brito

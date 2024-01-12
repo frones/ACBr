@@ -128,6 +128,7 @@ begin
       SituacaoNfse := snCancelado;
 
 //      <xsd:element name="nfecontrole" type="xsd:string"/>
+    InfID.ID := ObterConteudo(ANode.Childrens.FindAnyNs('nfecontrole'), tcStr);
 
     with Prestador do
     begin

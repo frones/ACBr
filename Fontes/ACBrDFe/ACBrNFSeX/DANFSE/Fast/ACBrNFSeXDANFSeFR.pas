@@ -1128,7 +1128,7 @@ begin
     if LDadosServico.MunicipioIncidencia <> 0 then
       LCDS.FieldByName('MunicipioIncidencia').AsString :=
         IntToStr(LDadosServico.MunicipioIncidencia) + ' / ' +
-        LDadosServico.xMunicipioIncidencia)
+        LDadosServico.xMunicipioIncidencia
     else
       LCDS.FieldByName('MunicipioIncidencia').AsString := '';
 

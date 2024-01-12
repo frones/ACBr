@@ -212,9 +212,9 @@ begin
     {opcionais do segmento A}
     LerSegmentoB(PagFor.Lote.Last.SegmentoA.Last.SegmentoB, nLinha);
     LerSegmentoC(PagFor.Lote.Last.SegmentoA.Last.SegmentoC, nLinha);
-//    LerSegmentoE(PagFor.Lote.Last.SegmentoA.Last.SegmentoE, I);
-//    LerSegmentoF(PagFor.Lote.Last.SegmentoA.Last.SegmentoF, I);
-//    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, I);
+//    LerSegmentoE(PagFor.Lote.Last.SegmentoA.Last.SegmentoE, nLinha);
+//    LerSegmentoF(PagFor.Lote.Last.SegmentoA.Last.SegmentoF, nLinha);
+    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, nLinha);
 
     for x := 0 to PagFor.Lote.Last.SegmentoA.Last.SegmentoB.Count - 1 do
     begin
@@ -374,8 +374,8 @@ begin
     {opcionais segmento J}
     LerSegmentoJ52(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ52, nLinha);
     LerSegmentoJ99(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ99, nLinha);
-//    LerSegmentoB(PagFor.Lote.Last.SegmentoJ.Last.SegmentoB, I);
-//    LerSegmentoC(PagFor.Lote.Last.SegmentoJ.Last.SegmentoC, I);
+//    LerSegmentoB(PagFor.Lote.Last.SegmentoJ.Last.SegmentoB, nLinha);
+//    LerSegmentoC(PagFor.Lote.Last.SegmentoJ.Last.SegmentoC, nLinha);
     LerSegmentoZ(PagFor.Lote.Last.SegmentoJ.Last.SegmentoZ, nLinha);
 
     Linha := ArquivoTXT.Strings[nLinha+1];

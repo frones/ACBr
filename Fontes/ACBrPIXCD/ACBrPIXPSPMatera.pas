@@ -282,6 +282,12 @@ var
 begin
   if (not Assigned(fContaSolicitacao)) or fContaSolicitacao.IsEmpty then
     DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['ContaSolicitada']));
+                             
+  if (ContaSolicitacao.clientType = mctNone) then
+    ContaSolicitacao.clientType := mctCorporate;
+
+  if (ContaSolicitacao.accountType = matNone) then
+    ContaSolicitacao.accountType := matUnlimitedOrdinary;
 
   wBody := Trim(ContaSolicitacao.AsJSON);
   ContaResposta.Clear;

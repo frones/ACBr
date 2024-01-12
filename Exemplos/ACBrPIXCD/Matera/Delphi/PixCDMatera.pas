@@ -74,11 +74,20 @@ type
     ACBrPSPMatera1: TACBrPSPMatera;
     btAcharArqCertificado: TSpeedButton;
     btAcharChavePrivada: TSpeedButton;
+    btContaCriarRepresentanteFoto: TSpeedButton;
+    btContaCriarRepresentanteMostrarFotoFrente: TSpeedButton;
+    btContaCriarRepresentanteMostrarRGFotoFrente: TSpeedButton;
+    btContaCriarRepresentanteMostrarRGFotoVerso: TSpeedButton;
+    btContaCriarRepresentanteRGFotoFrente: TSpeedButton;
+    btContaCriarRepresentanteRGFotoVerso: TSpeedButton;
+    btVerClientID: TSpeedButton;
+    btVerClientSecret: TSpeedButton;
+    btVerSecretKey: TSpeedButton;
     btChavePIXConsultar: TBitBtn;
     btChavePIXCriarExternalId: TSpeedButton;
     btChavePIXExcluir: TBitBtn;
     btChavePIXIncluir: TBitBtn;
-    btCobCopiaECola: TSpeedButton;
+    btQRCodeCriarCopiaECola: TSpeedButton;
     btConsultarAliasRetirada: TBitBtn;
     btConsultarCob: TBitBtn;
     btConsultarExtratoEC: TBitBtn;
@@ -90,21 +99,15 @@ type
     btContaCriarExternalID: TSpeedButton;
     btContaCriarLimparDados: TBitBtn;
     btContaCriarPreencherDados: TBitBtn;
-    btContaCriarRepresentanteFoto: TSpeedButton;
-    btContaCriarRepresentanteMostrarRGFotoFrente: TSpeedButton;
-    btContaCriarRepresentanteMostrarRGFotoFrente1: TSpeedButton;
-    btContaCriarRepresentanteRGFotoFrente: TSpeedButton;
-    btContaCriarRepresentanteRGFotoVerso: TSpeedButton;
-    btContaCriarRepresentanteMostrarRGFotoVerso: TSpeedButton;
     btDevolucao: TBitBtn;
     btDevolucaoLimparDados: TBitBtn;
     btDevolucaoPreencherDados: TBitBtn;
     btFluxoCancelarVenda: TBitBtn;
     btFluxotransactionID: TSpeedButton;
-    btQRCodeGerarExternalID1: TSpeedButton;
+    btDevolucaoExternalID: TSpeedButton;
     btContaConsultar: TBitBtn;
     btContaInativar: TBitBtn;
-    btCriarCobranca: TBitBtn;
+    btQRCodeCriar: TBitBtn;
     btFluxoCancelarConsulta: TBitBtn;
     btFluxoCopiaECola: TSpeedButton;
     btFluxoEstornarPagto: TBitBtn;
@@ -121,18 +124,16 @@ type
     btQRCodeCriarPreencherDados: TBitBtn;
     btQRCodeGerarExternalID: TSpeedButton;
     btRetirada: TBitBtn;
-    btretiradaConsultaLimparDados: TBitBtn;
+    btRetiradaConsultaLimparDados: TBitBtn;
     btRetiradaConsultaPreencherDados: TBitBtn;
     btRetiradaGerarExternalID: TSpeedButton;
-    btretiradaLimparDados: TBitBtn;
+    btRetiradaLimparDados: TBitBtn;
     btRetiradaPreencherDados: TBitBtn;
     btSalvarParametros: TBitBtn;
     btVoltar: TBitBtn;
     cbAccountId: TComboBox;
     cbAmbiente: TComboBox;
     cbChavePIX: TComboBox;
-    cbContaCriarTipoCliente: TComboBox;
-    cbCriarContaTipoConta: TComboBox;
     cbRetiradaAccountTypeDestination: TComboBox;
     cbRetiradaPersonType: TComboBox;
     cbTipoMediatorFee: TComboBox;
@@ -190,6 +191,7 @@ type
     edContaCriarUF: TEdit;
     edDevolucaoCobTransactionID: TEdit;
     edDevolucaoExternalID: TEdit;
+    edFluxoValor: TEdit;
     edMediatorFee: TEdit;
     edMediatorFeeEstorno: TEdit;
     edDevolucaoValor: TEdit;
@@ -279,7 +281,6 @@ type
     gbGerarQRCodeInfoAdicional: TGroupBox;
     gbQRCodeDiscount: TGroupBox;
     Imagem: TImage;
-    ImageList1: TImageList;
     imGerarQRCodeImg: TImage;
     imErroCertificado: TImage;
     imErroChavePrivada: TImage;
@@ -300,8 +301,25 @@ type
     lbContaCriarCEP: TLabel;
     lbContaCriarCidade: TLabel;
     lbContaCriarComplemento: TLabel;
+    lbContaCriarFundacao: TLabel;
     lbContaCriarLogradouro: TLabel;
+    lbContaCriarNascimento: TLabel;
+    lbContaCriarNomeEmpresa: TLabel;
     lbContaCriarNumero: TLabel;
+    lbContaCriarRepresentante: TLabel;
+    lbContaCriarRepresentanteBairro: TLabel;
+    lbContaCriarRepresentanteCelular: TLabel;
+    lbContaCriarRepresentanteCEP: TLabel;
+    lbContaCriarRepresentanteCidade: TLabel;
+    lbContaCriarRepresentanteCPF: TLabel;
+    lbContaCriarRepresentanteEmail: TLabel;
+    lbContaCriarRepresentanteFoto: TLabel;
+    lbContaCriarRepresentanteLogradouro: TLabel;
+    lbContaCriarRepresentanteMae: TLabel;
+    lbContaCriarRepresentanteNumero: TLabel;
+    lbContaCriarRepresentanteRGFrente: TLabel;
+    lbContaCriarRepresentanteRGVerso: TLabel;
+    lbContaCriarRepresentanteUF: TLabel;
     lbContaCriarUF: TLabel;
     lbDisclaimerCallBack: TLabel;
     lbAmbiente: TLabel;
@@ -339,34 +357,15 @@ type
     lbContaCriarCelular: TLabel;
     lbQRCodePayercpfcnpj: TLabel;
     lbContaCriarExternalID: TLabel;
-    lbContaCriarFundacao: TLabel;
     lbQRCodedueDate: TLabel;
     lbQRCodediscountsdate: TLabel;
     lbQRCodediscountsAviso: TLabel;
-    lbContaCriarNascimento: TLabel;
     lbContaCriarNomeCliente: TLabel;
     lbQRCodePayerName: TLabel;
-    lbContaCriarNomeEmpresa: TLabel;
-    lbContaCriarRepresentante: TLabel;
-    lbContaCriarRepresentanteBairro: TLabel;
-    lbContaCriarRepresentanteCelular: TLabel;
-    lbContaCriarRepresentanteCEP: TLabel;
     lbQRCodepayerCEP: TLabel;
-    lbContaCriarRepresentanteCidade: TLabel;
     lbQRCodepayercity: TLabel;
-    lbContaCriarRepresentanteCPF: TLabel;
-    lbContaCriarRepresentanteEmail: TLabel;
-    lbContaCriarRepresentanteFoto: TLabel;
-    lbContaCriarRepresentanteLogradouro: TLabel;
     lbQRCodepayerstreet: TLabel;
-    lbContaCriarRepresentanteMae: TLabel;
-    lbContaCriarRepresentanteNumero: TLabel;
-    lbContaCriarRepresentanteRGFrente: TLabel;
-    lbContaCriarRepresentanteRGVerso: TLabel;
-    lbContaCriarRepresentanteUF: TLabel;
     lbQRCodepayeruf: TLabel;
-    lbContaCriarTipoCliente: TLabel;
-    lbContaCriarTipoConta: TLabel;
     lbContaInativarAccountId: TLabel;
     lbErroCertificado: TLabel;
     lbErroChavePrivada: TLabel;
@@ -421,6 +420,8 @@ type
     mmLogGerencial: TMemo;
     mmLogOperacoes: TMemo;
     OpenDialog1: TOpenDialog;
+    pnContaCriarCorporate: TPanel;
+    pnFluxoValor: TPanel;
     pnTEDRetirada: TPanel;
     pnPIXRetirada: TPanel;
     pnConsultaAliasRetirada: TPanel;
@@ -439,15 +440,14 @@ type
     pnDevolucaoBotoes: TPanel;
     pnMotivosDevolucao: TPanel;
     pnFluxoCopiaECola: TPanel;
-    pcContaCriarDadosAdicionais: TPageControl;
     pnContaCriar: TPanel;
-    pnContaCriarCorporate: TPanel;
     pnContaCriarRodape: TPanel;
     pnFluxotransactionId: TPanel;
     pnlRetirada: TPanel;
     pnRetirada: TPanel;
     pnDevolucao: TPanel;
     pgConfig: TPageControl;
+    pnConfig1: TPanel;
     pnQRCodeDetalhesCobrancaRodape: TPanel;
     pnQRCodeDiscount: TPanel;
     pnGerarQRCodeImg: TPanel;
@@ -459,6 +459,7 @@ type
     pnQRCodeValuesFines: TPanel;
     pnQRCodeValuesReduction: TPanel;
     pnQRCodeInfoAdicionais: TPanel;
+    pnConfig2: TPanel;
     pnQRCodeResult: TPanel;
     pnGerarQRCodeInfo: TPanel;
     pBotoesConfiguracao: TPanel;
@@ -508,7 +509,6 @@ type
     tsConsultaMediator: TTabSheet;
     tmConsultarPagto: TTimer;
     tmConsultarEstorno: TTimer;
-    tsContaCriarCorporate: TTabSheet;
     tsRetirada: TTabSheet;
     tsDevolucoes: TTabSheet;
     tsChavePIX: TTabSheet;
@@ -523,17 +523,17 @@ type
     tsMatera: TTabSheet;
     tsPIX: TTabSheet;
     tsTestes: TTabSheet;
-    pnConfig1: TPanel;
-    pnConfig2: TPanel;
-    pnFluxoValor: TPanel;
-    edFluxoValor: TEdit;
+    ImageList1: TImageList;
     procedure btAcharArqCertificadoClick(Sender: TObject);
+    procedure btVerClientIDClick(Sender: TObject);
+    procedure btVerClientSecretClick(Sender: TObject);
+    procedure btVerSecretKeyClick(Sender: TObject);
     procedure btAcharChavePrivadaClick(Sender: TObject);
     procedure btChavePIXConsultarClick(Sender: TObject);
     procedure btChavePIXCriarExternalIdClick(Sender: TObject);
     procedure btChavePIXExcluirClick(Sender: TObject);
     procedure btChavePIXIncluirClick(Sender: TObject);
-    procedure btCobCopiaEColaClick(Sender: TObject);
+    procedure btQRCodeCriarCopiaEColaClick(Sender: TObject);
     procedure btConsultarAliasRetiradaClick(Sender: TObject);
     procedure btConsultarExtratoECClick(Sender: TObject);
     procedure btConsultarExtratoMediatorClick(Sender: TObject);
@@ -546,13 +546,13 @@ type
     procedure btContaCriarLimparDadosClick(Sender: TObject);
     procedure btContaCriarPreencherDadosClick(Sender: TObject);
     procedure btContaCriarRepresentanteFotoClick(Sender: TObject);
-    procedure btContaCriarRepresentanteMostrarRGFotoFrente1Click(Sender: TObject);
+    procedure btContaCriarRepresentanteMostrarFotoFrenteClick(Sender: TObject);
     procedure btContaCriarRepresentanteMostrarRGFotoFrenteClick(Sender: TObject);
     procedure btContaCriarRepresentanteMostrarRGFotoVersoClick(Sender: TObject);
     procedure btContaCriarRepresentanteRGFotoFrenteClick(Sender: TObject);
     procedure btContaCriarRepresentanteRGFotoVersoClick(Sender: TObject);
     procedure btContaInativarClick(Sender: TObject);
-    procedure btCriarCobrancaClick(Sender: TObject);
+    procedure btQRCodeCriarClick(Sender: TObject);
     procedure btDevolucaoClick(Sender: TObject);
     procedure btDevolucaoLimparDadosClick(Sender: TObject);
     procedure btDevolucaoPreencherDadosClick(Sender: TObject);
@@ -569,19 +569,18 @@ type
     procedure btProxyVerSenhaClick(Sender: TObject);
     procedure btQRCodeCriarLimparDadosClick(Sender: TObject);
     procedure btQRCodeCriarPreencherDadosClick(Sender: TObject);
-    procedure btQRCodeGerarExternalID1Click(Sender: TObject);
+    procedure btDevolucaoExternalIDClick(Sender: TObject);
     procedure btQRCodeGerarExternalIDClick(Sender: TObject);
     procedure btRetiradaClick(Sender: TObject);
-    procedure btretiradaConsultaLimparDadosClick(Sender: TObject);
+    procedure btRetiradaConsultaLimparDadosClick(Sender: TObject);
     procedure btRetiradaConsultaPreencherDadosClick(Sender: TObject);
     procedure btRetiradaGerarExternalIDClick(Sender: TObject);
-    procedure btretiradaLimparDadosClick(Sender: TObject);
+    procedure btRetiradaLimparDadosClick(Sender: TObject);
     procedure btRetiradaPreencherDadosClick(Sender: TObject);
     procedure btSalvarParametrosClick(Sender: TObject);
     procedure btVoltarClick(Sender: TObject);
     procedure cbAccountIdSelect(Sender: TObject);
     procedure cbAmbienteChange(Sender: TObject);
-    procedure cbContaCriarTipoClienteChange(Sender: TObject);
     procedure cbDevolucaoReasonCodeDropDown(Sender: TObject);
     procedure cbTipoMediatorFeeDevolucaoChange(Sender: TObject);
     procedure cbTipoMediatorFeeEstornoChange(Sender: TObject);
@@ -646,6 +645,7 @@ type
     procedure TratarException(Sender: TObject; E: Exception);
     procedure AvaliarInterfaceFluxo;
 
+    procedure InicializarBitmaps;
     procedure InicializarComponentesDefault;
     procedure LigarAlertasdeErrosDeConfiguracao;
 
@@ -781,6 +781,7 @@ begin
   pgContasEChaves.ActivePageIndex := 0;
   pgConfig.ActivePageIndex := 0;
   InicializarComponentesDefault;
+  InicializarBitmaps;
   LerConfiguracao;
   InicializarAba;
 end;
@@ -872,12 +873,6 @@ begin
   btContaCriarPreencherDados.Enabled := (cbAmbiente.ItemIndex <> 1);
 end;
 
-procedure TfrPixCDMatera.cbContaCriarTipoClienteChange(Sender: TObject);
-begin
-  gbDadosAdicionais.Visible := (cbContaCriarTipoCliente.ItemIndex = 2);
-  pnContaCriarCorporate.Visible := (cbContaCriarTipoCliente.ItemIndex = 2);
-end;
-
 procedure TfrPixCDMatera.cbDevolucaoReasonCodeDropDown(Sender: TObject);
 begin
   if cbDevolucaoReasonCode.Items.Count = 0 then
@@ -964,6 +959,51 @@ begin
   if OpenDialog1.Execute then
     edArqCertificado.Text := RemoverPathAplicacao(OpenDialog1.FileName);
   ValidarCertificado;
+end;
+
+procedure TfrPixCDMatera.btVerClientIDClick(Sender: TObject);
+begin
+  {$IfDef FPC}
+  if (edPSPClientID.EchoMode = emPassword) then
+    edPSPClientID.EchoMode := emNormal
+  else
+    edPSPClientID.EchoMode := emPassword;
+  {$Else}
+  if (edPSPClientID.PasswordChar = '*') then
+    edPSPClientID.PasswordChar := #0
+  else
+    edPSPClientID.PasswordChar := '*';
+  {$EndIf}
+end;
+
+procedure TfrPixCDMatera.btVerClientSecretClick(Sender: TObject);
+begin
+  {$IfDef FPC}
+  if (edPSPClientSecret.EchoMode = emPassword) then
+    edPSPClientSecret.EchoMode := emNormal
+  else
+    edPSPClientSecret.EchoMode := emPassword;
+  {$Else}
+  if (edPSPClientSecret.PasswordChar = '*') then
+    edPSPClientSecret.PasswordChar := #0
+  else
+    edPSPClientSecret.PasswordChar := '*';
+  {$EndIf}
+end;
+
+procedure TfrPixCDMatera.btVerSecretKeyClick(Sender: TObject);
+begin
+  {$IfDef FPC}
+  if (edPSPSecretKey.EchoMode = emPassword) then
+    edPSPSecretKey.EchoMode := emNormal
+  else
+    edPSPSecretKey.EchoMode := emPassword;
+  {$Else}
+  if (edPSPSecretKey.PasswordChar = '*') then
+    edPSPSecretKey.PasswordChar := #0
+  else
+    edPSPSecretKey.PasswordChar := '*';
+  {$EndIf}
 end;
 
 procedure TfrPixCDMatera.btAcharChavePrivadaClick(Sender: TObject);
@@ -1094,7 +1134,7 @@ begin
   end;
 end;
 
-procedure TfrPixCDMatera.btCobCopiaEColaClick(Sender: TObject);
+procedure TfrPixCDMatera.btQRCodeCriarCopiaEColaClick(Sender: TObject);
 begin
   Clipboard.AsText := Trim(edCobCopiaECola.Text);
 end;
@@ -1371,10 +1411,7 @@ begin
 
   // Preenchendo dados da Conta
   LContaSolicitacao := ACBrPSPMatera1.ContaSolicitacao;
-
   LContaSolicitacao.externalIdentifier := edContaCriarExternalID.Text;
-  LContaSolicitacao.clientType         := TMateraClientType(cbContaCriarTipoCliente.ItemIndex);
-  LContaSolicitacao.accountType        := TMateraAccountType(cbCriarContaTipoConta.ItemIndex);
 
   // Preenchendo dados do cliente da conta
   LBasicClient := LContaSolicitacao.client;
@@ -1399,91 +1436,86 @@ begin
   LBillingAddress.pais        := 'BRA';
 
 
-  // Conta corporativa? ...Preenche dados da empresa
-  if (LContaSolicitacao.clientType = mctCorporate) then
+  LAdditionalDetailsCorporate := LContaSolicitacao.additionalDetailsCorporate;
+
+  LAdditionalDetailsCorporate.establishmentDate := edContaCriarFundacao.Date;
+  LAdditionalDetailsCorporate.companyName       := edContaCriarNomeEmpresa.Text;
+  LAdditionalDetailsCorporate.businessLine      := 47;
+  LAdditionalDetailsCorporate.establishmentForm := '1';
+  LAdditionalDetailsCorporate.financialStatistic := 0;
+
+  // Preenchendo o representando da empresa
+  LClientRepresentative := LAdditionalDetailsCorporate.representatives.New;
+  LClientRepresentative.name                    := edContaCriarRepresentanteNome.Text;
+  LClientRepresentative.mother                  := edContaCriarRepresentanteMae.Text;
+  LClientRepresentative.birthDate               := edContaCriarNascimento.Date;
+  LClientRepresentative.email                   := edContaCriarRepresentanteEmail.Text;
+  LClientRepresentative.taxIdentifier.taxId     := edContaCriarRepresentanteCPF.Text;
+  LClientRepresentative.taxIdentifier.country   := 'BRA';
+  LClientRepresentative.mobilePhone.country     := 'BRA';
+  LClientRepresentative.mobilePhone.phoneNumber := edContaCriarRepresentanteCelular.Text;
+
+  LMailAddress := LClientRepresentative.mailAddress;
+  LMailAddress.cep        := edContaCriarRepresentanteCEP.Text;
+  LMailAddress.logradouro := edContaCriarRepresentanteLogradouro.Text;
+  LMailAddress.numero     := edContaCriarRepresentanteNumero.Text;
+  LMailAddress.bairro     := edContaCriarRepresentanteBairro.Text;
+  LMailAddress.cidade     := edContaCriarRepresentanteCidade.Text;
+  LMailAddress.estado     := edContaCriarRepresentanteUF.Text;
+  LMailAddress.pais       := 'BRA';
+
+  // Preenchendo a foto do representante
+  if NaoEstaVazio(edContaCriarRepresentanteFoto.Text) then
   begin
-    LAdditionalDetailsCorporate := LContaSolicitacao.additionalDetailsCorporate;
-
-    LAdditionalDetailsCorporate.establishmentDate := edContaCriarFundacao.Date;
-    LAdditionalDetailsCorporate.companyName       := edContaCriarNomeEmpresa.Text;
-    LAdditionalDetailsCorporate.businessLine      := 47;
-    LAdditionalDetailsCorporate.establishmentForm := '1';
-    LAdditionalDetailsCorporate.financialStatistic := 0;
-
-    // Preenchendo o representando da empresa
-    LClientRepresentative := LAdditionalDetailsCorporate.representatives.New;
-    LClientRepresentative.name                    := edContaCriarRepresentanteNome.Text;
-    LClientRepresentative.mother                  := edContaCriarRepresentanteMae.Text;
-    LClientRepresentative.birthDate               := edContaCriarNascimento.Date;
-    LClientRepresentative.email                   := edContaCriarRepresentanteEmail.Text;
-    LClientRepresentative.taxIdentifier.taxId     := edContaCriarRepresentanteCPF.Text;
-    LClientRepresentative.taxIdentifier.country   := 'BRA';
-    LClientRepresentative.mobilePhone.country     := 'BRA';
-    LClientRepresentative.mobilePhone.phoneNumber := edContaCriarRepresentanteCelular.Text;
-
-    LMailAddress := LClientRepresentative.mailAddress;
-    LMailAddress.cep        := edContaCriarRepresentanteCEP.Text;
-    LMailAddress.logradouro := edContaCriarRepresentanteLogradouro.Text;
-    LMailAddress.numero     := edContaCriarRepresentanteNumero.Text;
-    LMailAddress.bairro     := edContaCriarRepresentanteBairro.Text;
-    LMailAddress.cidade     := edContaCriarRepresentanteCidade.Text;
-    LMailAddress.estado     := edContaCriarRepresentanteUF.Text;
-    LMailAddress.pais       := 'BRA';
-
-    // Preenchendo a foto do representante
-    if NaoEstaVazio(edContaCriarRepresentanteFoto.Text) then
-    begin
-      LDocument := LClientRepresentative.documents.New;
-      // Lê conteúdo do arquivo e converte para Base64
-      wFs := TFileStream.Create(edContaCriarRepresentanteFoto.Text, fmOpenRead or fmShareDenyWrite);
-      try
-        wFs.Position := 0;
-        wFile := ReadStrFromStream(wFs, wFs.Size);
-        wBase64 := EncodeBase64(wFile);
-      finally
-        wFs.Free;
-      end;
-
-      LDocument.type_ := mdtPicture;
-      LDocument.content := wBase64;
+    LDocument := LClientRepresentative.documents.New;
+    // Lê conteúdo do arquivo e converte para Base64
+    wFs := TFileStream.Create(edContaCriarRepresentanteFoto.Text, fmOpenRead or fmShareDenyWrite);
+    try
+      wFs.Position := 0;
+      wFile := ReadStrFromStream(wFs, wFs.Size);
+      wBase64 := EncodeBase64(wFile);
+    finally
+      wFs.Free;
     end;
 
-    // Preenchendo foto do RG(Frente) do representante
-    if NaoEstaVazio(edContaCriarRepresentanteRGFotoFrente.Text) then
-    begin
-      LDocument := LClientRepresentative.documents.New;
-      // Lê conteúdo do arquivo e converte para Base64
-      wFs := TFileStream.Create(edContaCriarRepresentanteRGFotoFrente.Text, fmOpenRead or fmShareDenyWrite);
-      try
-        wFs.Position := 0;
-        wFile := ReadStrFromStream(wFs, wFs.Size);
-        wBase64 := EncodeBase64(wFile);
-      finally
-        wFs.Free;
-      end;
+    LDocument.type_ := mdtPicture;
+    LDocument.content := wBase64;
+  end;
 
-      LDocument.type_ := mdtIdentityFront;
-      LDocument.content := wBase64;
+  // Preenchendo foto do RG(Frente) do representante
+  if NaoEstaVazio(edContaCriarRepresentanteRGFotoFrente.Text) then
+  begin
+    LDocument := LClientRepresentative.documents.New;
+    // Lê conteúdo do arquivo e converte para Base64
+    wFs := TFileStream.Create(edContaCriarRepresentanteRGFotoFrente.Text, fmOpenRead or fmShareDenyWrite);
+    try
+      wFs.Position := 0;
+      wFile := ReadStrFromStream(wFs, wFs.Size);
+      wBase64 := EncodeBase64(wFile);
+    finally
+      wFs.Free;
     end;
 
-    // Preenchendo os documentos do representante
-    if NaoEstaVazio(edContaCriarRepresentanteRGFotoVerso.Text) then
-    begin
-      LDocument := LClientRepresentative.documents.New;
-      // Lê conteúdo do arquivo e converte para Base64
-      wFs := TFileStream.Create(edContaCriarRepresentanteRGFotoVerso.Text, fmOpenRead or fmShareDenyWrite);
-      try
-        wFs.Position := 0;
-        wFile := ReadStrFromStream(wFs, wFs.Size);
-        wBase64 := EncodeBase64(wFile);
-      finally
-        wFs.Free;
-      end;
+    LDocument.type_ := mdtIdentityFront;
+    LDocument.content := wBase64;
+  end;
 
-      LDocument.type_ := mdtIdentityBack;
-      LDocument.content := wBase64;
+  // Preenchendo os documentos do representante
+  if NaoEstaVazio(edContaCriarRepresentanteRGFotoVerso.Text) then
+  begin
+    LDocument := LClientRepresentative.documents.New;
+    // Lê conteúdo do arquivo e converte para Base64
+    wFs := TFileStream.Create(edContaCriarRepresentanteRGFotoVerso.Text, fmOpenRead or fmShareDenyWrite);
+    try
+      wFs.Position := 0;
+      wFile := ReadStrFromStream(wFs, wFs.Size);
+      wBase64 := EncodeBase64(wFile);
+    finally
+      wFs.Free;
     end;
 
+    LDocument.type_ := mdtIdentityBack;
+    LDocument.content := wBase64;
   end;
 
   try
@@ -1513,9 +1545,6 @@ end;
 procedure TfrPixCDMatera.btContaCriarLimparDadosClick(Sender: TObject);
 begin
   edContaCriarExternalID.Text := EmptyStr;
-  cbCriarContaTipoConta.ItemIndex := 3;
-  cbContaCriarTipoCliente.ItemIndex := 2;
-  cbContaCriarTipoClienteChange(Nil);
   edContaCriarNomeCliente.Text := EmptyStr;
   edContaCriarCelular.Text := EmptyStr;
   edContaCriarEmail.Text := EmptyStr;
@@ -1549,9 +1578,6 @@ end;
 procedure TfrPixCDMatera.btContaCriarPreencherDadosClick(Sender: TObject);
 begin
   edContaCriarExternalID.Text := CriarTxId;
-  cbContaCriarTipoCliente.ItemIndex := 2;
-  cbCriarContaTipoConta.ItemIndex := 4;
-  cbContaCriarTipoClienteChange(Nil);
   edContaCriarNomeCliente.Text := 'Pessoa Jurídica';
   edContaCriarCelular.Text := '12922223893';
   edContaCriarEmail.Text := 'pessoajuridica@mp.com.br';
@@ -1595,7 +1621,7 @@ begin
   edContaCriarRepresentanteFoto.Text := SelecionarFoto(edContaCriarRepresentanteFoto.Text);
 end;
 
-procedure TfrPixCDMatera.btContaCriarRepresentanteMostrarRGFotoFrente1Click(
+procedure TfrPixCDMatera.btContaCriarRepresentanteMostrarFotoFrenteClick(
   Sender: TObject);
 begin
   MostraImagem(edContaCriarRepresentanteFoto.Text);
@@ -1673,7 +1699,7 @@ begin
     Result := aValor * (StrToFloatDef(aMediatorFee, 0) / 100);
 end;
 
-procedure TfrPixCDMatera.btCriarCobrancaClick(Sender: TObject);
+procedure TfrPixCDMatera.btQRCodeCriarClick(Sender: TObject);
 var
   wOK: Boolean;
   wQRCode: String;
@@ -2131,7 +2157,7 @@ begin
   edQRCodepayerstreet.Text := 'Rua Sacramento';
 end;
 
-procedure TfrPixCDMatera.btQRCodeGerarExternalID1Click(Sender: TObject);
+procedure TfrPixCDMatera.btDevolucaoExternalIDClick(Sender: TObject);
 begin
   edDevolucaoExternalID.Text := CriarTxId;
 end;
@@ -2318,7 +2344,7 @@ begin
   end;
 end;
 
-procedure TfrPixCDMatera.btretiradaConsultaLimparDadosClick(Sender: TObject);
+procedure TfrPixCDMatera.btRetiradaConsultaLimparDadosClick(Sender: TObject);
 begin
   edRetiradaConsultaAliasAccountID.Text := EmptyStr;
   edRetiradaConsultaaliasAliasDestinatario.Text := EmptyStr;
@@ -2335,7 +2361,7 @@ begin
   edRetiradaExternalID.Text := CriarTxId;
 end;
 
-procedure TfrPixCDMatera.btretiradaLimparDadosClick(Sender: TObject);
+procedure TfrPixCDMatera.btRetiradaLimparDadosClick(Sender: TObject);
 begin
   edRetiradaExternalID.Text := EmptyStr;
   edRetiradaValor.Text := EmptyStr;
@@ -2382,8 +2408,8 @@ begin
     edProxyUsuario.Text := wIni.ReadString('Proxy', 'User', '');
     edProxySenha.Text := StrCrypt(DecodeBase64(wIni.ReadString('Proxy', 'Pass', '')), CURL_ACBR);
 
-    edLogArquivo.Text := wIni.ReadString('Log', 'Arquivo', '');
-    cbLogNivel.ItemIndex := wIni.ReadInteger('Log', 'Nivel', 1);
+    edLogArquivo.Text := wIni.ReadString('Log', 'Arquivo', '_log.txt');
+    cbLogNivel.ItemIndex := wIni.ReadInteger('Log', 'Nivel', 4);
     
     edCNPJ.Text := wIni.ReadString('Matera', 'CNPJ', '');
     edPSPClientID.Text := wIni.ReadString('Matera', 'ClientID', '');
@@ -2849,11 +2875,78 @@ begin
   end;
 end;
 
+procedure TfrPixCDMatera.InicializarBitmaps;
+begin
+  ImageList1.GetBitmap(6, imErroCertificado.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imErroChavePrivada.Picture.Bitmap);
+  ImageList1.GetBitmap(9, btAcharChavePrivada.Glyph);
+  ImageList1.GetBitmap(9, btAcharArqCertificado.Glyph);
+  ImageList1.GetBitmap(7, btVerClientID.Glyph);
+  ImageList1.GetBitmap(7, btVerClientSecret.Glyph);
+  ImageList1.GetBitmap(7, btVerSecretKey.Glyph);
+
+  ImageList1.GetBitmap(18, btLogOperacoesLimpar.Glyph);
+  ImageList1.GetBitmap(10, btSalvarParametros.Glyph);
+  ImageList1.GetBitmap(11, btLerParametros.Glyph);
+
+  ImageList1.GetBitmap(33, btFluxoPagar.Glyph);
+  ImageList1.GetBitmap(17, btFluxoCancelarVenda.Glyph);
+  ImageList1.GetBitmap(12, btFluxoEstornarPagto.Glyph);
+  ImageList1.GetBitmap(23, btFluxoNovaVenda.Glyph);
+  ImageList1.GetBitmap(11, btFluxoTentarNovamente.Glyph);
+  ImageList1.GetBitmap(17, btFluxoCancelarConsulta.Glyph);
+  ImageList1.GetBitmap(16, btFluxoFecharVenda.Glyph);
+  ImageList1.GetBitmap(13, btFluxoCopiaECola.Glyph);
+
+  ImageList1.GetBitmap(4,  btQRCodeCriar.Glyph);
+  ImageList1.GetBitmap(30, btQRCodeGerarExternalID.Glyph);
+  ImageList1.GetBitmap(13, btQRCodeCriarCopiaECola.Glyph);
+  ImageList1.GetBitmap(18, btQRCodeCriarLimparDados.Glyph);
+  ImageList1.GetBitmap(29, btQRCodeCriarPreencherDados.Glyph);
+
+  ImageList1.GetBitmap(8,  btConsultarCob.Glyph);
+  ImageList1.GetBitmap(8,  btConsultarSaldoEC.Glyph);
+  ImageList1.GetBitmap(8,  btConsultarExtratoEC.Glyph);
+  ImageList1.GetBitmap(8,  btConsultarSaldoMediator.Glyph);
+  ImageList1.GetBitmap(8,  btConsultarExtratoMediator.Glyph);
+  ImageList1.GetBitmap(8,  btConsultarMotivosDevolucoes.Glyph);
+
+  ImageList1.GetBitmap(12, btDevolucao.Glyph);
+  ImageList1.GetBitmap(30, btDevolucaoExternalID.Glyph);
+  ImageList1.GetBitmap(18, btDevolucaoLimparDados.Glyph);
+  ImageList1.GetBitmap(29, btDevolucaoPreencherDados.Glyph);
+
+  ImageList1.GetBitmap(12, btRetirada.Glyph);
+  ImageList1.GetBitmap(30, btRetiradaLimparDados.Glyph);
+  ImageList1.GetBitmap(18, btRetiradaPreencherDados.Glyph);
+  ImageList1.GetBitmap(29, btConsultarAliasRetirada.Glyph);
+  ImageList1.GetBitmap(29, btRetiradaGerarExternalID.Glyph);
+  ImageList1.GetBitmap(30, btRetiradaConsultaLimparDados.Glyph);
+  ImageList1.GetBitmap(18, btRetiradaConsultaPreencherDados.Glyph);
+
+  ImageList1.GetBitmap(12, btContaCriar.Glyph);
+  ImageList1.GetBitmap(5, btContaInativar.Glyph);
+  ImageList1.GetBitmap(8, btContaConsultar.Glyph);
+  ImageList1.GetBitmap(30, btContaCriarExternalID.Glyph);
+  ImageList1.GetBitmap(30, btContaCriarLimparDados.Glyph);
+  ImageList1.GetBitmap(18, btContaCriarPreencherDados.Glyph);
+
+  ImageList1.GetBitmap(9, btContaCriarRepresentanteFoto.Glyph);
+  ImageList1.GetBitmap(9, btContaCriarRepresentanteRGFotoFrente.Glyph);
+  ImageList1.GetBitmap(9, btContaCriarRepresentanteRGFotoVerso.Glyph);
+  ImageList1.GetBitmap(7, btContaCriarRepresentanteMostrarFotoFrente.Glyph);
+  ImageList1.GetBitmap(7, btContaCriarRepresentanteMostrarRGFotoFrente.Glyph);
+  ImageList1.GetBitmap(7, btContaCriarRepresentanteMostrarRGFotoVerso.Glyph);
+  
+  ImageList1.GetBitmap(31, btChavePIXIncluir.Glyph);
+  ImageList1.GetBitmap(18, btChavePIXExcluir.Glyph);
+  ImageList1.GetBitmap(8,  btChavePIXConsultar.Glyph);
+  ImageList1.GetBitmap(30, btChavePIXCriarExternalId.Glyph);
+end;
+
 procedure TfrPixCDMatera.InicializarComponentesDefault;
 var
   i: TACBrPixCDAmbiente;
-  j: TMateraClientType;
-  k: TMateraAccountType;
 begin
   ACBrPixCD1.PSP := ACBrPSPMatera1;
   lbErroCertificado.Caption := EmptyStr;
@@ -2863,16 +2956,6 @@ begin
   cbAmbiente.Items.Clear;
   for i := Low(TACBrPixCDAmbiente) to High(TACBrPixCDAmbiente) do
      cbAmbiente.Items.Add(GetEnumName(TypeInfo(TACBrPixCDAmbiente), Integer(i)));
-
-  cbContaCriarTipoCliente.Items.Clear;
-  for j := Low(TMateraClientType) to High(TMateraClientType) do
-     cbContaCriarTipoCliente.Items.Add(GetEnumName(TypeInfo(TMateraClientType), Integer(j)));
-  cbContaCriarTipoCliente.ItemIndex := 1;
-  cbContaCriarTipoClienteChange(Nil);
-
-  cbCriarContaTipoConta.Items.Clear;
-  for k := Low(TMateraAccountType) to High(TMateraAccountType) do
-     cbCriarContaTipoConta.Items.Add(GetEnumName(TypeInfo(TMateraAccountType), Integer(k)));
 
   edConsultaStart.DateTime := Now;
   edconsultaEnding.DateTime := Now;
@@ -2893,6 +2976,9 @@ begin
   pnFluxoCopiaECola.Visible := False;
   pnFluxoTransactionID.Visible := False;
   lbSiteEfetuarPagto.Visible := False;
+  {$IfDef FPC}
+  imFluxoQRCode.Picture.Clear;
+  {$EndIf}
 end;
 
 procedure TfrPixCDMatera.AtualizarStatus(aStatusCobranca: TMateraTransactionStatus;

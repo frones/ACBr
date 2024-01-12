@@ -7,10 +7,9 @@ object frPixCDMatera: TfrPixCDMatera
   ClientHeight = 776
   ClientWidth = 1042
   Font.Height = -12
-  FormStyle = fsStayOnTop
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.2.4.0'
+  LCLVersion = '2.2.6.0'
   Visible = True
   object lbUrlPIX: TLabel
     Cursor = crHandPoint
@@ -36,11 +35,11 @@ object frPixCDMatera: TfrPixCDMatera
     Height = 751
     Top = 0
     Width = 1042
-    ActivePage = tsFluxoPagto
+    ActivePage = tsConfig
     Align = alClient
     Images = ImageList1
     TabHeight = 30
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 0
     TabWidth = 250
     OnChange = pgPrincipalChange
@@ -557,11 +556,11 @@ object frPixCDMatera: TfrPixCDMatera
         Height = 713
         Top = 0
         Width = 674
-        ActivePage = tsGerarQRCodes
+        ActivePage = tsDevolucoes
         Align = alClient
         Images = ImageList1
         TabHeight = 30
-        TabIndex = 0
+        TabIndex = 2
         TabOrder = 0
         TabWidth = 200
         object tsGerarQRCodes: TTabSheet
@@ -581,40 +580,40 @@ object frPixCDMatera: TfrPixCDMatera
             ClientWidth = 666
             TabOrder = 0
             object lbQRCodeExternalID: TLabel
-              Left = 15
+              Left = 184
               Height = 15
-              Top = 15
+              Top = 20
               Width = 56
               Caption = 'External ID'
               ParentColor = False
             end
             object edQRCodeExternalID: TEdit
-              Left = 15
+              Left = 184
               Height = 23
-              Top = 30
-              Width = 280
+              Top = 35
+              Width = 288
               TabOrder = 0
             end
             object edQRCodeValor: TEdit
-              Left = 343
+              Left = 512
               Height = 23
-              Top = 30
+              Top = 35
               Width = 125
               Alignment = taRightJustify
               TabOrder = 1
             end
             object lbQRCodeValor: TLabel
-              Left = 343
+              Left = 512
               Height = 15
-              Top = 15
+              Top = 20
               Width = 26
               Caption = 'Valor'
               ParentColor = False
             end
             object btQRCodeGerarExternalID: TSpeedButton
-              Left = 295
+              Left = 472
               Height = 23
-              Top = 30
+              Top = 35
               Width = 24
               Flat = True
               Images = ImageList1
@@ -622,10 +621,10 @@ object frPixCDMatera: TfrPixCDMatera
               OnClick = btQRCodeGerarExternalIDClick
             end
             object cbQRCodeTipoCobranca: TComboBox
-              Left = 487
+              Left = 16
               Height = 23
-              Top = 30
-              Width = 143
+              Top = 35
+              Width = 151
               ItemHeight = 15
               ItemIndex = 0
               Items.Strings = (
@@ -638,42 +637,42 @@ object frPixCDMatera: TfrPixCDMatera
               Text = 'Normal'
             end
             object lbQRCodeTipoCobranca: TLabel
-              Left = 487
+              Left = 16
               Height = 15
-              Top = 15
+              Top = 20
               Width = 93
               Caption = 'Tipo de Cobrança'
               ParentColor = False
             end
             object edQRCodeMediatorFee: TEdit
-              Left = 15
+              Left = 184
               Height = 23
-              Top = 75
-              Width = 125
+              Top = 81
+              Width = 288
               Alignment = taRightJustify
               TabOrder = 3
             end
             object lbQRCodeMediatorFee: TLabel
-              Left = 15
+              Left = 184
               Height = 15
-              Top = 59
+              Top = 65
               Width = 85
               Caption = 'Mediator Fee R$'
               ParentColor = False
             end
             object lbQRCodeTipoMediatorFee: TLabel
-              Left = 155
+              Left = 16
               Height = 15
-              Top = 59
+              Top = 65
               Width = 114
               Caption = 'Tipo de Mediator  Fee'
               ParentColor = False
             end
             object cbQRCodeTipoMediatorFee: TComboBox
-              Left = 155
+              Left = 16
               Height = 23
-              Top = 75
-              Width = 143
+              Top = 81
+              Width = 151
               ItemHeight = 15
               ItemIndex = 0
               Items.Strings = (
@@ -697,14 +696,14 @@ object frPixCDMatera: TfrPixCDMatera
             ClientWidth = 666
             TabOrder = 1
             Visible = False
-            object btCobCopiaECola: TSpeedButton
+            object btQRCodeCriarCopiaECola: TSpeedButton
               Left = 605
               Height = 26
               Top = 23
               Width = 26
               Images = ImageList1
               ImageIndex = 13
-              OnClick = btCobCopiaEColaClick
+              OnClick = btQRCodeCriarCopiaEColaClick
             end
             object edCobCopiaECola: TEdit
               Left = 240
@@ -1282,19 +1281,19 @@ object frPixCDMatera: TfrPixCDMatera
             ClientHeight = 34
             ClientWidth = 666
             TabOrder = 4
-            object btCriarCobranca: TBitBtn
-              Left = 505
+            object btQRCodeCriar: TBitBtn
+              Left = 507
               Height = 26
               Top = 5
               Width = 130
               Caption = 'Criar'
               Images = ImageList1
               ImageIndex = 4
-              OnClick = btCriarCobrancaClick
+              OnClick = btQRCodeCriarClick
               TabOrder = 0
             end
             object btQRCodeCriarLimparDados: TBitBtn
-              Left = 382
+              Left = 383
               Height = 26
               Top = 5
               Width = 119
@@ -1306,7 +1305,7 @@ object frPixCDMatera: TfrPixCDMatera
               TabOrder = 1
             end
             object btQRCodeCriarPreencherDados: TBitBtn
-              Left = 196
+              Left = 191
               Height = 26
               Top = 5
               Width = 186
@@ -1337,9 +1336,9 @@ object frPixCDMatera: TfrPixCDMatera
             Height = 675
             Top = 0
             Width = 666
-            ActivePage = tsConsultaMediator
+            ActivePage = tsConsultaTxID
             Align = alClient
-            TabIndex = 2
+            TabIndex = 0
             TabOrder = 1
             object tsConsultaTxID: TTabSheet
               Caption = 'Consulta Transação'
@@ -1980,7 +1979,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Width = 281
                 TabOrder = 2
               end
-              object btQRCodeGerarExternalID1: TSpeedButton
+              object btDevolucaoExternalID: TSpeedButton
                 Left = 621
                 Height = 23
                 Top = 40
@@ -1988,7 +1987,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Flat = True
                 Images = ImageList1
                 ImageIndex = 30
-                OnClick = btQRCodeGerarExternalID1Click
+                OnClick = btDevolucaoExternalIDClick
               end
               object pnDevolucaoBotoes: TPanel
                 Left = 0
@@ -2177,7 +2176,7 @@ object frPixCDMatera: TfrPixCDMatera
                 object btConsultarAliasRetirada: TBitBtn
                   Left = 483
                   Height = 26
-                  Top = 66
+                  Top = 69
                   Width = 130
                   Caption = 'Consultar alias'
                   Images = ImageList1
@@ -2186,7 +2185,7 @@ object frPixCDMatera: TfrPixCDMatera
                   TabOrder = 2
                 end
                 object btRetiradaConsultaPreencherDados: TBitBtn
-                  Left = 171
+                  Left = 162
                   Height = 26
                   Top = 69
                   Width = 186
@@ -2197,7 +2196,7 @@ object frPixCDMatera: TfrPixCDMatera
                   OnClick = btRetiradaConsultaPreencherDadosClick
                   TabOrder = 3
                 end
-                object btretiradaConsultaLimparDados: TBitBtn
+                object btRetiradaConsultaLimparDados: TBitBtn
                   Left = 357
                   Height = 26
                   Top = 69
@@ -2206,7 +2205,7 @@ object frPixCDMatera: TfrPixCDMatera
                   Caption = 'Limpar Dados'
                   Images = ImageList1
                   ImageIndex = 18
-                  OnClick = btretiradaConsultaLimparDadosClick
+                  OnClick = btRetiradaConsultaLimparDadosClick
                   TabOrder = 4
                 end
               end
@@ -2447,7 +2446,7 @@ object frPixCDMatera: TfrPixCDMatera
                   OnClick = btRetiradaPreencherDadosClick
                   TabOrder = 0
                 end
-                object btretiradaLimparDados: TBitBtn
+                object btRetiradaLimparDados: TBitBtn
                   Left = 355
                   Height = 26
                   Top = 17
@@ -2456,7 +2455,7 @@ object frPixCDMatera: TfrPixCDMatera
                   Caption = 'Limpar Dados'
                   Images = ImageList1
                   ImageIndex = 18
-                  OnClick = btretiradaLimparDadosClick
+                  OnClick = btRetiradaLimparDadosClick
                   TabOrder = 1
                 end
                 object btRetirada: TBitBtn
@@ -2721,7 +2720,6 @@ object frPixCDMatera: TfrPixCDMatera
               ClientHeight = 238
               ClientWidth = 618
               TabOrder = 0
-              Visible = False
               object pnImagem: TPanel
                 Left = 0
                 Height = 238
@@ -2731,7 +2729,7 @@ object frPixCDMatera: TfrPixCDMatera
                 BevelOuter = bvNone
                 ClientHeight = 238
                 ClientWidth = 618
-                TabOrder = 1
+                TabOrder = 0
                 object pnRodapeImagem: TPanel
                   Left = 0
                   Height = 37
@@ -2769,418 +2767,402 @@ object frPixCDMatera: TfrPixCDMatera
                   Stretch = True
                 end
               end
-              object pcContaCriarDadosAdicionais: TPageControl
+              object pnContaCriarCorporate: TPanel
                 Left = 0
                 Height = 238
                 Top = 0
                 Width = 618
-                ActivePage = tsContaCriarCorporate
                 Align = alClient
-                TabIndex = 0
-                TabOrder = 0
-                Visible = False
-                object tsContaCriarCorporate: TTabSheet
-                  Caption = 'Corporate'
-                  ClientHeight = 210
-                  ClientWidth = 610
-                  object pnContaCriarCorporate: TPanel
-                    Left = 0
-                    Height = 210
-                    Top = 0
-                    Width = 610
-                    Align = alClient
-                    BevelOuter = bvNone
-                    ClientHeight = 210
-                    ClientWidth = 610
-                    TabOrder = 0
-                    object lbContaCriarFundacao: TLabel
-                      Left = 10
-                      Height = 15
-                      Top = 5
-                      Width = 79
-                      Caption = 'Data Fundação'
-                      ParentColor = False
-                    end
-                    object edContaCriarNomeEmpresa: TEdit
-                      Left = 103
-                      Height = 23
-                      Top = 20
-                      Width = 252
-                      TabOrder = 1
-                    end
-                    object lbContaCriarNomeEmpresa: TLabel
-                      Left = 103
-                      Height = 15
-                      Top = 5
-                      Width = 81
-                      Caption = 'Nome Empresa'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteCelular: TEdit
-                      Left = 10
-                      Height = 23
-                      Top = 70
-                      Width = 83
-                      TabOrder = 4
-                    end
-                    object lbContaCriarRepresentanteCelular: TLabel
-                      Left = 10
-                      Height = 15
-                      Top = 55
-                      Width = 37
-                      Caption = 'Celular'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteNome: TEdit
-                      Left = 103
-                      Height = 23
-                      Top = 70
-                      Width = 130
-                      TabOrder = 5
-                    end
-                    object lbContaCriarRepresentante: TLabel
-                      Left = 103
-                      Height = 15
-                      Top = 55
-                      Width = 128
-                      Caption = 'Nome do Representante'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteMae: TEdit
-                      Left = 242
-                      Height = 23
-                      Top = 70
-                      Width = 113
-                      TabOrder = 6
-                    end
-                    object lbContaCriarRepresentanteMae: TLabel
-                      Left = 242
-                      Height = 15
-                      Top = 55
-                      Width = 75
-                      Caption = 'Nome da Mãe'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteCPF: TEdit
-                      Left = 365
-                      Height = 23
-                      Top = 20
-                      Width = 102
-                      TabOrder = 2
-                    end
-                    object lbContaCriarRepresentanteCPF: TLabel
-                      Left = 365
-                      Height = 15
-                      Top = 5
-                      Width = 99
-                      Caption = 'CPF Representante'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteEmail: TEdit
-                      Left = 365
-                      Height = 23
-                      Top = 70
-                      Width = 232
-                      TabOrder = 7
-                    end
-                    object lbContaCriarRepresentanteEmail: TLabel
-                      Left = 365
-                      Height = 15
-                      Top = 55
-                      Width = 29
-                      Caption = 'Email'
-                      ParentColor = False
-                    end
-                    object edContaCriarFundacao: TDateTimePicker
-                      Left = 10
-                      Height = 23
-                      Top = 20
-                      Width = 83
-                      CenturyFrom = 1941
-                      MaxDate = 2958465
-                      MinDate = -53780
-                      TabOrder = 0
-                      TrailingSeparator = False
-                      TextForNullDate = 'NULL'
-                      LeadingZeros = True
-                      Kind = dtkDate
-                      TimeFormat = tf24
-                      TimeDisplay = tdHMS
-                      DateMode = dmComboBox
-                      Date = 45114
-                      Time = 0.706492662036908
-                      UseDefaultSeparators = True
-                      HideDateTimeParts = []
-                      MonthNames = 'Long'
-                    end
-                    object edContaCriarNascimento: TDateTimePicker
-                      Left = 486
-                      Height = 23
-                      Top = 20
-                      Width = 111
-                      CenturyFrom = 1941
-                      MaxDate = 2958465
-                      MinDate = -53780
-                      AutoSize = False
-                      TabOrder = 3
-                      TrailingSeparator = False
-                      TextForNullDate = 'NULL'
-                      LeadingZeros = True
-                      Kind = dtkDate
-                      TimeFormat = tf24
-                      TimeDisplay = tdHMS
-                      DateMode = dmComboBox
-                      Date = 45114
-                      Time = 0.706492662036908
-                      UseDefaultSeparators = True
-                      HideDateTimeParts = []
-                      MonthNames = 'Long'
-                    end
-                    object lbContaCriarNascimento: TLabel
-                      Left = 486
-                      Height = 15
-                      Top = 5
-                      Width = 87
-                      Caption = 'Nasc. Represent.'
-                      ParentColor = False
-                    end
-                    object lbContaCriarRepresentanteCEP: TLabel
-                      Left = 10
-                      Height = 15
-                      Top = 105
-                      Width = 21
-                      Caption = 'CEP'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteCEP: TEdit
-                      Left = 10
-                      Height = 23
-                      Top = 120
-                      Width = 83
-                      OnChange = edContaCriarCEPChange
-                      OnKeyPress = edOnlyNumbersKeyPress
-                      TabOrder = 8
-                    end
-                    object lbContaCriarRepresentanteLogradouro: TLabel
-                      Left = 103
-                      Height = 15
-                      Top = 105
-                      Width = 62
-                      Caption = 'Logradouro'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteLogradouro: TEdit
-                      Left = 103
-                      Height = 23
-                      Top = 120
-                      Width = 130
-                      TabOrder = 9
-                    end
-                    object lbContaCriarRepresentanteNumero: TLabel
-                      Left = 242
-                      Height = 15
-                      Top = 105
-                      Width = 44
-                      Caption = 'Número'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteNumero: TEdit
-                      Left = 242
-                      Height = 23
-                      Top = 120
-                      Width = 60
-                      TabOrder = 10
-                    end
-                    object lbContaCriarRepresentanteBairro: TLabel
-                      Left = 314
-                      Height = 15
-                      Top = 105
-                      Width = 31
-                      Caption = 'Bairro'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteBairro: TEdit
-                      Left = 314
-                      Height = 23
-                      Top = 120
-                      Width = 103
-                      TabOrder = 11
-                    end
-                    object lbContaCriarRepresentanteCidade: TLabel
-                      Left = 427
-                      Height = 15
-                      Top = 105
-                      Width = 37
-                      Caption = 'Cidade'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteCidade: TEdit
-                      Left = 427
-                      Height = 23
-                      Top = 120
-                      Width = 107
-                      TabOrder = 12
-                    end
-                    object lbContaCriarRepresentanteUF: TLabel
-                      Left = 544
-                      Height = 15
-                      Top = 105
-                      Width = 14
-                      Caption = 'UF'
-                      ParentColor = False
-                    end
-                    object edContaCriarRepresentanteUF: TEdit
-                      Left = 544
-                      Height = 23
-                      Top = 120
-                      Width = 39
-                      TabOrder = 13
-                    end
-                    object edContaCriarRepresentanteFoto: TEdit
-                      Left = 10
-                      Height = 23
-                      Top = 170
-                      Width = 133
-                      AutoSize = False
-                      TabOrder = 14
-                    end
-                    object lbContaCriarRepresentanteFoto: TLabel
-                      Left = 10
-                      Height = 15
-                      Top = 155
-                      Width = 24
-                      Caption = 'Foto'
-                      ParentColor = False
-                    end
-                    object btContaCriarRepresentanteFoto: TSpeedButton
-                      Left = 148
-                      Height = 23
-                      Top = 170
-                      Width = 24
-                      Flat = True
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Images = ImageList1
-                      ImageIndex = 9
-                      OnClick = btContaCriarRepresentanteFotoClick
-                      ShowHint = True
-                      ParentFont = False
-                      ParentShowHint = False
-                    end
-                    object edContaCriarRepresentanteRGFotoFrente: TEdit
-                      Left = 208
-                      Height = 23
-                      Top = 170
-                      Width = 133
-                      AutoSize = False
-                      TabOrder = 15
-                    end
-                    object lbContaCriarRepresentanteRGFrente: TLabel
-                      Left = 208
-                      Height = 15
-                      Top = 155
-                      Width = 86
-                      Caption = 'Foto RG (Frente)'
-                      ParentColor = False
-                    end
-                    object btContaCriarRepresentanteRGFotoFrente: TSpeedButton
-                      Left = 344
-                      Height = 23
-                      Top = 171
-                      Width = 24
-                      Flat = True
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Images = ImageList1
-                      ImageIndex = 9
-                      OnClick = btContaCriarRepresentanteRGFotoFrenteClick
-                      ShowHint = True
-                      ParentFont = False
-                      ParentShowHint = False
-                    end
-                    object edContaCriarRepresentanteRGFotoVerso: TEdit
-                      Left = 404
-                      Height = 23
-                      Top = 170
-                      Width = 133
-                      AutoSize = False
-                      TabOrder = 16
-                    end
-                    object lbContaCriarRepresentanteRGVerso: TLabel
-                      Left = 402
-                      Height = 15
-                      Top = 155
-                      Width = 81
-                      Caption = 'Foto RG (Verso)'
-                      ParentColor = False
-                    end
-                    object btContaCriarRepresentanteRGFotoVerso: TSpeedButton
-                      Left = 542
-                      Height = 23
-                      Top = 171
-                      Width = 24
-                      Flat = True
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Images = ImageList1
-                      ImageIndex = 9
-                      OnClick = btContaCriarRepresentanteRGFotoVersoClick
-                      ShowHint = True
-                      ParentFont = False
-                      ParentShowHint = False
-                    end
-                    object btContaCriarRepresentanteMostrarRGFotoVerso: TSpeedButton
-                      Left = 573
-                      Height = 23
-                      Top = 170
-                      Width = 24
-                      Flat = True
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Images = ImageList1
-                      ImageIndex = 7
-                      OnClick = btContaCriarRepresentanteMostrarRGFotoVersoClick
-                      ShowHint = True
-                      ParentFont = False
-                      ParentShowHint = False
-                    end
-                    object btContaCriarRepresentanteMostrarRGFotoFrente: TSpeedButton
-                      Left = 373
-                      Height = 23
-                      Top = 170
-                      Width = 24
-                      Flat = True
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Images = ImageList1
-                      ImageIndex = 7
-                      OnClick = btContaCriarRepresentanteMostrarRGFotoFrenteClick
-                      ShowHint = True
-                      ParentFont = False
-                      ParentShowHint = False
-                    end
-                    object btContaCriarRepresentanteMostrarRGFotoFrente1: TSpeedButton
-                      Left = 176
-                      Height = 23
-                      Top = 171
-                      Width = 24
-                      Flat = True
-                      Font.Color = clWindowText
-                      Font.Height = -11
-                      Font.Name = 'MS Sans Serif'
-                      Images = ImageList1
-                      ImageIndex = 7
-                      OnClick = btContaCriarRepresentanteMostrarRGFotoFrente1Click
-                      ShowHint = True
-                      ParentFont = False
-                      ParentShowHint = False
-                    end
-                  end
+                BevelOuter = bvNone
+                ClientHeight = 238
+                ClientWidth = 618
+                TabOrder = 1
+                object lbContaCriarFundacao: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 14
+                  Width = 79
+                  Caption = 'Data Fundação'
+                  ParentColor = False
+                end
+                object edContaCriarNomeEmpresa: TEdit
+                  Left = 108
+                  Height = 23
+                  Top = 29
+                  Width = 252
+                  TabOrder = 1
+                end
+                object lbContaCriarNomeEmpresa: TLabel
+                  Left = 108
+                  Height = 15
+                  Top = 14
+                  Width = 81
+                  Caption = 'Nome Empresa'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteCelular: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 79
+                  Width = 83
+                  TabOrder = 4
+                end
+                object lbContaCriarRepresentanteCelular: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 64
+                  Width = 37
+                  Caption = 'Celular'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteNome: TEdit
+                  Left = 108
+                  Height = 23
+                  Top = 79
+                  Width = 130
+                  TabOrder = 5
+                end
+                object lbContaCriarRepresentante: TLabel
+                  Left = 108
+                  Height = 15
+                  Top = 64
+                  Width = 128
+                  Caption = 'Nome do Representante'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteMae: TEdit
+                  Left = 247
+                  Height = 23
+                  Top = 79
+                  Width = 113
+                  TabOrder = 6
+                end
+                object lbContaCriarRepresentanteMae: TLabel
+                  Left = 247
+                  Height = 15
+                  Top = 64
+                  Width = 75
+                  Caption = 'Nome da Mãe'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteCPF: TEdit
+                  Left = 370
+                  Height = 23
+                  Top = 29
+                  Width = 102
+                  TabOrder = 2
+                end
+                object lbContaCriarRepresentanteCPF: TLabel
+                  Left = 370
+                  Height = 15
+                  Top = 14
+                  Width = 99
+                  Caption = 'CPF Representante'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteEmail: TEdit
+                  Left = 370
+                  Height = 23
+                  Top = 79
+                  Width = 232
+                  TabOrder = 7
+                end
+                object lbContaCriarRepresentanteEmail: TLabel
+                  Left = 370
+                  Height = 15
+                  Top = 64
+                  Width = 29
+                  Caption = 'Email'
+                  ParentColor = False
+                end
+                object edContaCriarFundacao: TDateTimePicker
+                  Left = 15
+                  Height = 23
+                  Top = 29
+                  Width = 83
+                  CenturyFrom = 1941
+                  MaxDate = 2958465
+                  MinDate = -53780
+                  TabOrder = 0
+                  TrailingSeparator = False
+                  TextForNullDate = 'NULL'
+                  LeadingZeros = True
+                  Kind = dtkDate
+                  TimeFormat = tf24
+                  TimeDisplay = tdHMS
+                  DateMode = dmComboBox
+                  Date = 45114
+                  Time = 0.706492662036908
+                  UseDefaultSeparators = True
+                  HideDateTimeParts = []
+                  MonthNames = 'Long'
+                end
+                object edContaCriarNascimento: TDateTimePicker
+                  Left = 491
+                  Height = 23
+                  Top = 29
+                  Width = 111
+                  CenturyFrom = 1941
+                  MaxDate = 2958465
+                  MinDate = -53780
+                  AutoSize = False
+                  TabOrder = 3
+                  TrailingSeparator = False
+                  TextForNullDate = 'NULL'
+                  LeadingZeros = True
+                  Kind = dtkDate
+                  TimeFormat = tf24
+                  TimeDisplay = tdHMS
+                  DateMode = dmComboBox
+                  Date = 45114
+                  Time = 0.706492662036908
+                  UseDefaultSeparators = True
+                  HideDateTimeParts = []
+                  MonthNames = 'Long'
+                end
+                object lbContaCriarNascimento: TLabel
+                  Left = 491
+                  Height = 15
+                  Top = 14
+                  Width = 87
+                  Caption = 'Nasc. Represent.'
+                  ParentColor = False
+                end
+                object lbContaCriarRepresentanteCEP: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 112
+                  Width = 21
+                  Caption = 'CEP'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteCEP: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 129
+                  Width = 83
+                  OnChange = edContaCriarCEPChange
+                  OnKeyPress = edOnlyNumbersKeyPress
+                  TabOrder = 8
+                end
+                object lbContaCriarRepresentanteLogradouro: TLabel
+                  Left = 108
+                  Height = 15
+                  Top = 114
+                  Width = 62
+                  Caption = 'Logradouro'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteLogradouro: TEdit
+                  Left = 108
+                  Height = 23
+                  Top = 129
+                  Width = 130
+                  TabOrder = 9
+                end
+                object lbContaCriarRepresentanteNumero: TLabel
+                  Left = 247
+                  Height = 15
+                  Top = 114
+                  Width = 44
+                  Caption = 'Número'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteNumero: TEdit
+                  Left = 247
+                  Height = 23
+                  Top = 129
+                  Width = 60
+                  TabOrder = 10
+                end
+                object lbContaCriarRepresentanteBairro: TLabel
+                  Left = 319
+                  Height = 15
+                  Top = 114
+                  Width = 31
+                  Caption = 'Bairro'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteBairro: TEdit
+                  Left = 319
+                  Height = 23
+                  Top = 129
+                  Width = 103
+                  TabOrder = 11
+                end
+                object lbContaCriarRepresentanteCidade: TLabel
+                  Left = 432
+                  Height = 15
+                  Top = 114
+                  Width = 37
+                  Caption = 'Cidade'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteCidade: TEdit
+                  Left = 432
+                  Height = 23
+                  Top = 129
+                  Width = 107
+                  TabOrder = 12
+                end
+                object lbContaCriarRepresentanteUF: TLabel
+                  Left = 549
+                  Height = 15
+                  Top = 114
+                  Width = 14
+                  Caption = 'UF'
+                  ParentColor = False
+                end
+                object edContaCriarRepresentanteUF: TEdit
+                  Left = 549
+                  Height = 23
+                  Top = 129
+                  Width = 39
+                  TabOrder = 13
+                end
+                object edContaCriarRepresentanteFoto: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 179
+                  Width = 133
+                  AutoSize = False
+                  TabOrder = 14
+                end
+                object lbContaCriarRepresentanteFoto: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 164
+                  Width = 24
+                  Caption = 'Foto'
+                  ParentColor = False
+                end
+                object btContaCriarRepresentanteFoto: TSpeedButton
+                  Left = 153
+                  Height = 23
+                  Top = 179
+                  Width = 24
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btContaCriarRepresentanteFotoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edContaCriarRepresentanteRGFotoFrente: TEdit
+                  Left = 213
+                  Height = 23
+                  Top = 179
+                  Width = 133
+                  AutoSize = False
+                  TabOrder = 15
+                end
+                object lbContaCriarRepresentanteRGFrente: TLabel
+                  Left = 213
+                  Height = 15
+                  Top = 164
+                  Width = 86
+                  Caption = 'Foto RG (Frente)'
+                  ParentColor = False
+                end
+                object btContaCriarRepresentanteRGFotoFrente: TSpeedButton
+                  Left = 349
+                  Height = 23
+                  Top = 180
+                  Width = 24
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btContaCriarRepresentanteRGFotoFrenteClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edContaCriarRepresentanteRGFotoVerso: TEdit
+                  Left = 409
+                  Height = 23
+                  Top = 179
+                  Width = 133
+                  AutoSize = False
+                  TabOrder = 16
+                end
+                object lbContaCriarRepresentanteRGVerso: TLabel
+                  Left = 407
+                  Height = 15
+                  Top = 164
+                  Width = 81
+                  Caption = 'Foto RG (Verso)'
+                  ParentColor = False
+                end
+                object btContaCriarRepresentanteRGFotoVerso: TSpeedButton
+                  Left = 547
+                  Height = 23
+                  Top = 180
+                  Width = 24
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btContaCriarRepresentanteRGFotoVersoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btContaCriarRepresentanteMostrarRGFotoVerso: TSpeedButton
+                  Left = 578
+                  Height = 23
+                  Top = 179
+                  Width = 24
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 7
+                  OnClick = btContaCriarRepresentanteMostrarRGFotoVersoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btContaCriarRepresentanteMostrarRGFotoFrente: TSpeedButton
+                  Left = 378
+                  Height = 23
+                  Top = 179
+                  Width = 24
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 7
+                  OnClick = btContaCriarRepresentanteMostrarRGFotoFrenteClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btContaCriarRepresentanteMostrarFotoFrente: TSpeedButton
+                  Left = 181
+                  Height = 23
+                  Top = 180
+                  Width = 24
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 7
+                  OnClick = btContaCriarRepresentanteMostrarFotoFrenteClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
                 end
               end
             end
@@ -3213,7 +3195,7 @@ object frPixCDMatera: TfrPixCDMatera
                   TabOrder = 0
                 end
                 object lbContaCriarCEP: TLabel
-                  Left = 16
+                  Left = 15
                   Height = 15
                   Top = 0
                   Width = 21
@@ -3266,7 +3248,7 @@ object frPixCDMatera: TfrPixCDMatera
                   TabOrder = 3
                 end
                 object lbContaCriarComplemento: TLabel
-                  Left = 16
+                  Left = 15
                   Height = 15
                   Top = 50
                   Width = 77
@@ -3274,7 +3256,7 @@ object frPixCDMatera: TfrPixCDMatera
                   ParentColor = False
                 end
                 object edContaCriarComplemento: TEdit
-                  Left = 16
+                  Left = 15
                   Height = 23
                   Top = 65
                   Width = 167
@@ -3316,7 +3298,7 @@ object frPixCDMatera: TfrPixCDMatera
               Left = 20
               Height = 23
               Top = 40
-              Width = 241
+              Width = 324
               TabOrder = 2
             end
             object lbContaCriarExternalID: TLabel
@@ -3328,7 +3310,7 @@ object frPixCDMatera: TfrPixCDMatera
               ParentColor = False
             end
             object btContaCriarExternalID: TSpeedButton
-              Left = 261
+              Left = 343
               Height = 23
               Top = 40
               Width = 24
@@ -3337,47 +3319,12 @@ object frPixCDMatera: TfrPixCDMatera
               ImageIndex = 30
               OnClick = btContaCriarExternalIDClick
             end
-            object cbContaCriarTipoCliente: TComboBox
-              Left = 300
-              Height = 23
-              Top = 40
-              Width = 152
-              ItemHeight = 15
-              OnChange = cbContaCriarTipoClienteChange
-              Style = csDropDownList
-              TabOrder = 3
-            end
-            object cbCriarContaTipoConta: TComboBox
-              Left = 467
-              Height = 23
-              Top = 40
-              Width = 175
-              ItemHeight = 15
-              Style = csDropDownList
-              TabOrder = 4
-            end
-            object lbContaCriarTipoCliente: TLabel
-              Left = 301
-              Height = 15
-              Top = 25
-              Width = 63
-              Caption = 'Tipo Cliente'
-              ParentColor = False
-            end
-            object lbContaCriarTipoConta: TLabel
-              Left = 467
-              Height = 15
-              Top = 25
-              Width = 74
-              Caption = 'Tipo da Conta'
-              ParentColor = False
-            end
             object edContaCriarNomeCliente: TEdit
               Left = 20
               Height = 23
               Top = 90
-              Width = 241
-              TabOrder = 5
+              Width = 231
+              TabOrder = 3
             end
             object lbContaCriarNomeCliente: TLabel
               Left = 20
@@ -3388,15 +3335,15 @@ object frPixCDMatera: TfrPixCDMatera
               ParentColor = False
             end
             object edContaCriarCelular: TEdit
-              Left = 272
+              Left = 264
               Height = 23
               Top = 90
               Width = 103
               OnKeyPress = edOnlyNumbersKeyPress
-              TabOrder = 6
+              TabOrder = 4
             end
             object lbContaCriarCelular: TLabel
-              Left = 272
+              Left = 271
               Height = 15
               Top = 75
               Width = 37
@@ -3407,8 +3354,8 @@ object frPixCDMatera: TfrPixCDMatera
               Left = 381
               Height = 23
               Top = 90
-              Width = 147
-              TabOrder = 7
+              Width = 261
+              TabOrder = 5
             end
             object lbContaCriar: TLabel
               Left = 381
@@ -3419,16 +3366,16 @@ object frPixCDMatera: TfrPixCDMatera
               ParentColor = False
             end
             object edCNPJ: TEdit
-              Left = 537
+              Left = 381
               Height = 23
-              Top = 90
-              Width = 105
-              TabOrder = 8
+              Top = 40
+              Width = 261
+              TabOrder = 6
             end
             object lbCNPJ: TLabel
-              Left = 537
+              Left = 381
               Height = 15
-              Top = 75
+              Top = 25
               Width = 27
               Caption = 'CNPJ'
               ParentColor = False
@@ -3483,7 +3430,7 @@ object frPixCDMatera: TfrPixCDMatera
               TabOrder = 0
             end
             object btContaCriarLimparDados: TBitBtn
-              Left = 399
+              Left = 394
               Height = 26
               Top = 13
               Width = 119
@@ -3898,11 +3845,11 @@ object frPixCDMatera: TfrPixCDMatera
         Height = 676
         Top = 0
         Width = 1034
-        ActivePage = tsPIX
+        ActivePage = tsMatera
         Align = alClient
         Images = ImageList1
         TabHeight = 30
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 1
         TabWidth = 172
         object tsPIX: TTabSheet
@@ -4254,7 +4201,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 21
                 Height = 23
                 Top = 41
-                Width = 287
+                Width = 267
                 EchoMode = emPassword
                 PasswordChar = '*'
                 TabOrder = 0
@@ -4271,7 +4218,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 21
                 Height = 23
                 Top = 93
-                Width = 287
+                Width = 267
                 EchoMode = emPassword
                 PasswordChar = '*'
                 TabOrder = 1
@@ -4381,21 +4328,69 @@ object frPixCDMatera: TfrPixCDMatera
                 Visible = False
               end
               object edPSPSecretKey: TEdit
-                Left = 320
+                Left = 328
                 Height = 23
-                Top = 95
-                Width = 302
+                Top = 93
+                Width = 269
                 EchoMode = emPassword
                 PasswordChar = '*'
                 TabOrder = 4
               end
               object lbPSPSecretKey: TLabel
-                Left = 320
+                Left = 328
                 Height = 15
                 Top = 80
                 Width = 54
                 Caption = 'Secret Key'
                 ParentColor = False
+              end
+              object btVerClientID: TSpeedButton
+                Left = 288
+                Height = 23
+                Top = 40
+                Width = 24
+                Flat = True
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'MS Sans Serif'
+                Images = ImageList1
+                ImageIndex = 7
+                OnClick = btVerClientIDClick
+                ShowHint = True
+                ParentFont = False
+                ParentShowHint = False
+              end
+              object btVerClientSecret: TSpeedButton
+                Left = 288
+                Height = 23
+                Top = 93
+                Width = 24
+                Flat = True
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'MS Sans Serif'
+                Images = ImageList1
+                ImageIndex = 7
+                OnClick = btVerClientSecretClick
+                ShowHint = True
+                ParentFont = False
+                ParentShowHint = False
+              end
+              object btVerSecretKey: TSpeedButton
+                Left = 598
+                Height = 23
+                Top = 93
+                Width = 24
+                Flat = True
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'MS Sans Serif'
+                Images = ImageList1
+                ImageIndex = 7
+                OnClick = btVerSecretKeyClick
+                ShowHint = True
+                ParentFont = False
+                ParentShowHint = False
               end
             end
             object gbAccount: TGroupBox

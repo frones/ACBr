@@ -199,6 +199,7 @@ begin
   Clear;
   DateStart := '';
   DateEnd   := '';
+  BankName  := '';
   bOFX      := false;
 
   if not FileExists(FOFXFile) then

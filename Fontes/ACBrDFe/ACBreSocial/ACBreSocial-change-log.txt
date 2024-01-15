@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2024
+-- pcesConversaoeSocial.pas, pcesS5011.pas  --
+[*] Implementados ajustes da NT 2024.06
+  Por: Renato Rubinho
+
 10/01/2024
 -- pcesS1210.pas --
 [*] Corrigida leitura do grupo infoIRComplem ao ler dados do INI

@@ -157,7 +157,9 @@ type
 
   TpIndConstr             = (iconNaoeConstrutora, iconEmpresaConstrutora);
 
-  TpIndDesFolha           = (idfNaoAplicavel, idfEmpresaenquadradanosArt7_9);
+  TpIndDesFolha           = (idfNaoAplicavel,
+                             idfEmpresaenquadradanosArt7_9,
+                             idfMunEnquadrado);
 
   TpIndOptRegEletron      = (iorNaooptou, iorOptoupeloregistro);
 
@@ -510,7 +512,11 @@ type
   tpTpReint               = (trReintegracaoDecisaoJudicial, trReintegracaoAnistiaLegal, trReversaoServidorPublico, trReconducaoServidorPublico,
                              trReinclusoMilitar, trOutros);
 
-  tpIndSubstPatr          = (spVazio, spIntegralmenteSubstituida, spParcialmenteSubstituida);
+  tpIndSubstPatr          = (spVazio,
+                             spIntegralmenteSubstituida,
+                             spParcialmenteSubstituida,
+                             spAnexoI_MP1202,
+                             spAnexoII_MP1202);
 
   tpIdAquis               = (iaAquiProducaoProdutorRuralPessoaFisSegEspGeral, iaAquiProducaoProdutorRuralPessoaFisSegEspGeralEntPAA,
                              iaAquiProducaoProdutorRuralPessoaJurEntPAA, iaAquiProducaoProdutorRuralPessoaFisSegEspGeralProdIsenta,

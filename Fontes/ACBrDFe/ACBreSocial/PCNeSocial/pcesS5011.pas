@@ -242,6 +242,7 @@ type
     FvrCalcSenat: Double;
     FvrSalFam: Double;
     FvrSalMat: Double;
+    FvrBcCpSM: Double;
   public
     property vrBcCp00: Double read FvrBcCp00;
     property vrBcCp15: Double read FvrBcCp15;
@@ -265,6 +266,7 @@ type
     property vrCalcSenat: Double read FvrCalcSenat;
     property vrSalFam: Double read FvrSalFam;
     property vrSalMat: Double read FvrSalMat;
+    property vrBcCpSM: Double read FvrBcCpSM;
   end;
 
   TbasesRemunCollection = class(TACBrObjectList)
@@ -781,6 +783,7 @@ begin
 
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSalFam := leitor.rCampo(tcDe2, 'vrSalFam');
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSalMat := leitor.rCampo(tcDe2, 'vrSalMat');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCpSM := leitor.rCampo(tcDe2, 'vrBcCpSM');
               end;
 
               inc(k);
@@ -1003,6 +1006,7 @@ begin
                     AIni.WriteFloat(sSecao, 'vrCalcSenat',  vrCalcSenat);
                     AIni.WriteFloat(sSecao, 'vrSalFam',     vrSalFam);
                     AIni.WriteFloat(sSecao, 'vrSalMat',     vrSalMat);
+                    AIni.WriteFloat(sSecao, 'vrBcCpSM',     vrBcCpSM);
                   end;
                 end;
               end;

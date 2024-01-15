@@ -507,7 +507,7 @@ begin
 
   AJSon.AddPairISODate('dataDeVencimento', fdataDeVencimento, False);
 
-  if (fvalidadeAposVencimento > 0) then
+  if (fvalidadeAposVencimento >= 0) then
     AJSon.AddPair('validadeAposVencimento', fvalidadeAposVencimento);
 end;
 

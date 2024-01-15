@@ -387,7 +387,7 @@ begin
       Result := '02-Entrada Confirmada';
     03:
       Result := '03-Entrada Rejeitada';
-    06:
+    06, 24:
       Result := '06-Liquidação Normal';
     09:
       Result := '09-Baixa Simples';

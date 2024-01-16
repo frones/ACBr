@@ -148,13 +148,13 @@ namespace ACBrLib.ConsultaCNPJ
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Consultar(string eCNPJ, string eCaptcha)
+        public string Consultar(string eCNPJ, int eProvedor)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<CNPJ_Consultar>();
-            var ret = ExecuteMethod(() => method(libHandle, ToUTF8(eCNPJ), ToUTF8(eCaptcha), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(libHandle, ToUTF8(eCNPJ), eProvedor, buffer, ref bufferLen));
 
             CheckResult(ret);
 

@@ -44,6 +44,8 @@ Símbolo : Significado
 
 16/01/2024
 -- ACBrNFSeXServicos --
+[*] A URL da cidade de Nova Petropolis/RS mudou, o provedor ainda é o Pronim na versão 2.02
+  Por: rogerio.rizzon 
 [*] A cidade de Magé/RJ, trocou de provedor, agora é ModernizacaoPublica.
   Por: Bruno
 

@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="149"/>
+      <BuildNr Value="150"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrIBGE - Biblioteca para consulta de Cidades na base do IBGE" InternalName="ACBrLibIBGE" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="IBGE" ProductVersion="0.0.1.30"/>
     </VersionInfo>

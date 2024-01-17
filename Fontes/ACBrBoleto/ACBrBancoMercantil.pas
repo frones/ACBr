@@ -319,95 +319,31 @@ begin
   CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia), 0);
 
   case CodOcorrencia of
-    04:
-      Result := '04-Alteração de Dados (Entrada)';
-    05:
-      Result := '05-Alteração de Dados (Baixa)';
-    07:
-      Result := '07-Liquidação após Baixa';
-    08:
-      Result := '08-Liquidação em Cartório';
-    10:
-      Result := '10-Baixa comandada do cliente arquivo';
-    15:
-      Result := '15-Baixa rejeitada';
-    16:
-      Result := '16-Instrução rejeitada';
-    21:
-      Result := '21-Confirma instrução de não protestar';
-    22:
-      Result := '22-Alteração Seu Numero';
-    32:
-      Result := '32-Baixa por ter sido protestado';
-    36:
-      Result := '36-Custas de Edital';
-    37:
-      Result := '37-Custas de sustação judicial';
-    38:
-      Result := '38-Título sustado judicialmente';
-    55:
-      Result := '55-Instrução Codificada';
-    56:
-      Result := '56-Sustar protesto e manter em carteira';
-    65:
-      Result := '65-Emissão de Segunda via de aviso';
-    67:
-      Result := '67-Não conceder juros fora do Prazo';
-    69:
-      Result := '69-Cancelamento de Liquidação por Cheque Devolvido';
-    71:
-      Result := '71-Protesto cancelado pelo Cartório';
-    75:
-      Result := '75-Pagamento Parcial';
-    83:
-      Result := '83-Cobrança automática de tarifas';
-    84:
-      Result := '84-Protestar sem mais consultas';
-    85:
-      Result := '85-Baixaa de Título protestado';
-    90:
-      Result := '90-Instrução de Protesto Rejeitada';
-    95:
-      Result := '95-Troca Uso Empresa';
-    96:
-      Result := '96-Emissão Extrato Mov. Carteira';
-    97:
-      Result := '97-Tarifa de sustação de protesto';
-    98:
-      Result := '98-Tarifa de protesto';
-    99:
-      Result := '99-Custas de protesto';
+    02 : Result := 'Entrada confirmada';
+    03 : Result := 'Entrada rejeitada';
+    04 : Result := 'Transferência de contrato';
+    06 : Result := 'Liquidado';
+    09 : Result := 'Baixa Automática';
+    10 : Result := 'Baixa pedido do cedente';
+    12 : Result := 'Abatimento/Desconto concedido';
+    13 : Result := 'Abatimento/Desconto cancelado';
+    14 : Result := 'Alteração de vencimento';
+    15 : Result := 'Liquidado em cartório';
+    16 : Result := 'Liquidado com cheque a compensar';
+    19 : Result := 'Alteração de instrução protesto';
+    22 : Result := 'Alteração de seu número';
+    23 : Result := 'Liquidado por débito em conta';
+    24 : Result := 'Liquidado pelo Banco Correspondente';
+    31 : Result := 'Baixa franco de pagamento';
+    55 : Result := 'Instrução codificada';
+    56 : Result := 'Sustar protesto e manter em carteira';
+    65 : Result := 'Emissão de Segunda via de aviso';
+    //67 : Result := toRetorno;
+    83 : Result := 'Cobrança automática de tarifas';
+    //84 : Result := toRetorno;
+    85 : Result := 'Baixa de título protestado';
   end;
-
-  if (Result <> '') then
-    Exit;
-
-  case CodOcorrencia of
-    02:
-      Result := '02-Entrada Confirmada';
-    03:
-      Result := '03-Entrada Rejeitada';
-    06, 24:
-      Result := '06-Liquidação Normal';
-    09:
-      Result := '09-Baixa Simples';
-    12:
-      Result := '12-Abatimento Concedido';
-    13:
-      Result := '13-Abatimento Cancelado';
-    14:
-      Result := '14-Vencimento Alterado';
-    17:
-      Result := '17-Alterações de dados rejeitados';
-    19:
-      Result := '19-Confirma instrução de protesto';
-    20:
-      Result := '20-Confirma instruão de sustação de protesto';
-    23:
-      Result := '23-Protesto enviado a cartório';
-    35:
-      Result := '35-Alegações do sacado';
-  end;
+  Result := Poem_Zeros(CodOcorrencia,2) + '-' + Result;
 end;
 
 function TACBrBancoMercantil.CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
@@ -415,101 +351,29 @@ begin
   Result := toTipoOcorrenciaNenhum;
 
   case CodOcorrencia of
-    04:
-      Result := toRetornoAlteracaoDadosNovaEntrada;
-    05:
-      Result := toRetornoAlteracaoDadosBaixa;
-    07:
-      Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
-    08:
-      Result := toRetornoLiquidadoEmCartorio;
-    10:
-      Result := toRetornoBaixadoViaArquivo; //toRetornoBaixadoInstAgencia;
-    15:
-      Result := toRetornoBaixaRejeitada; //toRetornoLiquidadoEmCartorio;
-    16:
-      Result := toRetornoInstrucaoRejeitada; //toRetornoTituloPagoEmCheque;
-    21:
-      Result := toRetornoRecebimentoInstrucaoNaoProtestar; //toRetornoAcertoControleParticipante;
-    32:
-      Result := toRetornoBaixaPorProtesto; //toRetornoComandoRecusado;
-    36:
-      Result := toRetornoCustasEdital;
-    37:
-      Result := toRetornoCustasSustacaoJudicial;
-    38:
-      Result := toRetornoTituloSustadoJudicialmente;
-    65:
-      Result := toRetornoChequePendenteCompensacao;
-    69:
-      Result := toRetornoChequeDevolvido; //toRetornoCancelamentoDadosRateio;
-    71:
-      Result := toRetornoDevolvidoPeloCartorio;
-    75:
-      Result := toRetornoLiquidadoParcialmente;
-    90:
-      Result := toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente;
-    95:
-      Result := toRetornoAlteracaoUsoCedente;
-    96:
-      Result := toRetornoTarifaExtratoPosicao;
-    97:
-      Result := toRetornoDespesasSustacaoProtesto;
-    98:
-      Result := toRetornoDespesasProtesto;
-    99:
-      Result := toRetornoCustasProtesto;
-  end;
-
-  if (Result <> toTipoOcorrenciaNenhum) then
-    Exit;
-
-  case CodOcorrencia of
-    02:
-      Result := toRetornoRegistroConfirmado;
-    03:
-      Result := toRetornoRegistroRecusado;
-    06:
-      Result := toRetornoLiquidado;
-    09:
-      Result := toRetornoBaixaSimples; //toRetornoBaixadoViaArquivo;
-    12:
-      Result := toRetornoAbatimentoConcedido;
-    13:
-      Result := toRetornoAbatimentoCancelado;
-    14:
-      Result := toRetornoVencimentoAlterado;
-    17:
-      Result := toRetornoAlteracaoDadosRejeitados; //toRetornoLiquidadoAposBaixaouNaoRegistro;
-    19:
-      Result := toRetornoRecebimentoInstrucaoProtestar;
-    20:
-      Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-    23:
-      Result := toRetornoEncaminhadoACartorio;
-    35:
-      Result := toRetornoAlegacaoDoSacado; //toRetornoDesagendamentoDebitoAutomatico;
-    36: Result:= toRetornoCustasEdital;
-    37: Result:= toRetornoCustasSustacaoJudicial;
-    38: Result:= toRetornoTituloSustadoJudicialmente;
-    55: Result:= toRetornoAlteracaoInstrucao;
-    56: Result:= toRetornoSustacaoSolicitada;
-    65: Result:= toRetornoSegundaViaInstrumentoProtesto;
-    67: Result:= toRetornoJurosDispensados;
-    69: Result:= toRetornoChequeDevolvido;
-    71: Result:= toRetornoDevolvidoPeloCartorio;
-    75: Result:= toRetornoLiquidadoParcialmente;
-    83: Result:= toRetornoCobrancaContratual;
-    84: Result:= toRetornoProtestado;
-    85: Result:= toRetornoBaixaPorProtesto;
-    90: Result:= toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente;
-    95: Result:= toRetornoAlteracaoUsoCedente;
-    96: Result:= toRetornoTarifaExtratoPosicao;
-    97: Result:= toRetornoDespesasSustacaoProtesto;
-    98: Result:= toRetornoDespesasProtesto;
-    99: Result:= toRetornoCustasProtesto;
-    else
-      Result := toRetornoOutrasOcorrencias;
+    02 : Result := toRetornoRegistroConfirmado;
+    03 : Result := toRetornoRegistroRecusado;
+    04 : Result := toRetornoBaixaTransferenciaParaDesconto;
+    06 : Result := toRetornoLiquidado;
+    09 : Result := toRetornoBaixaAutomatica;
+    10 : Result := toRetornoBaixadoViaArquivo;
+    12 : Result := toRetornoAbatimentoConcedido;
+    13 : Result := toRetornoAbatimentoCancelado;
+    14 : Result := toRetornoVencimentoAlterado;
+    15 : Result := toRetornoLiquidadoEmCartorio;
+    16 : Result := toRetornoChequePendenteCompensacao;
+    19 : Result := toRetornoProtestado;
+    22 : Result := toRetornoAlteracaoSeuNumero;
+    23 : Result := toRetornoDebitoEmConta;
+    24 : Result := toRetornoLiquidadoPorConta;
+    31 : Result := toRetornoBaixadoFrancoPagamento;
+    55 : Result := toRetornoAlteracaoInstrucao;
+    56 : Result := toRetornoSustacaoSolicitada;
+    65 : Result := toRetornoSegundaViaInstrumentoProtesto;
+    //67 : Result := toRetorno;
+    83 : Result := toRetornoTarifaInstrucao;
+    //84 : Result := toRetorno;
+    85 : Result := toRetornoBaixaPorProtesto;
   end;
 end;
 
@@ -518,98 +382,50 @@ begin
   Result := '';
 
   case TipoOcorrencia of
-    toRetornoAlteracaoDadosNovaEntrada:
-      Result := '04';
-    toRetornoAlteracaoDadosBaixa:
-      Result := '05';
-    toRetornoLiquidadoAposBaixaOuNaoRegistro:
-      Result := '07';
-    toRetornoLiquidadoEmCartorio:
-      Result := '08';
-    toRetornoBaixadoViaArquivo:
-      Result := '10';
-    toRetornoBaixaRejeitada:
-      Result := '15';
-    toRetornoInstrucaoRejeitada:
-      Result := '16';
-    toRetornoRecebimentoInstrucaoNaoProtestar:
-      Result := '21';
-    toRetornoAlteracaoSeuNumero:
-      Result := '22';
-    toRetornoLiquidado:
-      Result := '24';
-    toRetornoBaixadoFrancoPagamento:
-      Result := '31';
-    toRetornoCustasEdital:
-      Result := '36';
-    toRetornoCustasSustacaoJudicial:
-      Result := '37';
-    toRetornoTituloSustadoJudicialmente:
-      Result := '38';
-    toRetornoAlteracaoInstrucao:
-      Result := '55';
-    toRetornoSustacaoSolicitada:
-      Result := '56';
-    toRetornoSegundaViaInstrumentoProtesto:
-      Result := '65';
-    toRetornoJurosDispensados:
-      Result := '67';
-    toRetornoChequeDevolvido:
-      Result := '69';
-    toRetornoDevolvidoPeloCartorio:
-      Result := '71';
-    toRetornoLiquidadoParcialmente:
-      Result := '75';
-    toRetornoCobrancaContratual:
-      Result := '83';
-    toRetornoProtestado:
-      Result := '84';
-    toRetornoBaixaPorProtesto:
-      Result := '85';
-    toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente:
-      Result := '90';
-    toRetornoAlteracaoUsoCedente:
-      Result := '95';
-    toRetornoTarifaExtratoPosicao:
-      Result := '96';
-    toRetornoDespesasSustacaoProtesto:
-      Result := '97';
-    toRetornoDespesasProtesto:
-      Result := '98';
-    toRetornoCustasProtesto:
-      Result := '99';
-  end;
-
-  if (Result <> '') then
-    Exit;
-
-  case TipoOcorrencia of
     toRetornoRegistroConfirmado:
       Result := '02';
     toRetornoRegistroRecusado:
       Result := '03';
+    toRetornoBaixaTransferenciaParaDesconto:
+      Result := '04';
     toRetornoLiquidado:
       Result := '06';
     toRetornoBaixaAutomatica:
       Result := '09';
+    toRetornoBaixadoViaArquivo:
+      Result := '10';
     toRetornoAbatimentoConcedido:
       Result := '12';
     toRetornoAbatimentoCancelado:
       Result := '13';
     toRetornoVencimentoAlterado:
       Result := '14';
-    toRetornoAlteracaoDadosRejeitados:
-      Result := '17';
-    toRetornoRecebimentoInstrucaoProtestar:
+    toRetornoLiquidadoEmCartorio:
+      Result := '15';
+    toRetornoChequePendenteCompensacao:
+      Result := '16';
+    toRetornoProtestado:
       Result := '19';
-    toRetornoRecebimentoInstrucaoSustarProtesto:
-      Result := '20';
-    toRetornoEncaminhadoACartorio:
+    toRetornoAlteracaoSeuNumero:
+      Result := '22';
+    toRetornoDebitoEmConta:
       Result := '23';
-    toRetornoAlegacaoDoSacado:
-      Result := '35';
-    else
-      Result := '02';
+    toRetornoLiquidadoPorConta:
+      Result := '24';
+    toRetornoBaixadoFrancoPagamento:
+      Result := '31';
+    toRetornoAlteracaoInstrucao:
+      Result := '55';
+    toRetornoSustacaoSolicitada:
+      Result := '56';
+    toRetornoSegundaViaInstrumentoProtesto:
+      Result := '65';
+      //67 : Result := toRetorno;
+    toRetornoTarifaInstrucao:
+      Result := '83';
+      //84 : Result := toRetorno;
+    toRetornoBaixaPorProtesto:
+      Result := '85';
   end;
 end;
 

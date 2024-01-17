@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2024
+-- ACBrBancoMercantil --
+[*] TK-4986 Melhoria nas rotinas de conversão para o banco Mercantil visando compatibilidade com o Manual.
+  Por: Victor H Gonzales - Pandaaa / Verificado: Diego Folieni
+
 15/01/2024
 --- ACBrBancoMercantil ---
 [*] TK-4986 Alteração na função TipoOcorrenciaToDescricao para correta conversao quando TipoOcorrencia for toRetornoLiquidado

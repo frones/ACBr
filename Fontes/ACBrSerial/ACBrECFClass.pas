@@ -4642,7 +4642,7 @@ end;
        {$ENDIF}
        fsFormMsg.OnCloseQuery := FormMsgCloseQuery ;
        fsFormMsg.BorderIcons  := [] ;
-       fsFormMsg.BorderStyle  := {$IFDEF VisualCLX} fbsNone {$ELSE} {$IFDEF FMX}TFmxFormBorderStyle.{$ENDIF} bsNone {$ENDIF};
+       fsFormMsg.BorderStyle  := {$IFDEF VisualCLX} fbsNone {$ELSE} {$IFDEF FMX}TFmxFormBorderStyle.None{$ELSE} bsNone {$ENDIF}{$ENDIF};
        {$IFDEF FMX}
         if Assigned(fsOnCriarFormMsg) then
           fsFormMsg.Visible := False

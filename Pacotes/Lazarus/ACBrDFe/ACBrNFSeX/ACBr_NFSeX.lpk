@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="411">
+    <Files Count="417">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -1659,6 +1659,30 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebISS.Provider.pas"/>
         <UnitName Value="WebISS.Provider"/>
       </Item411>
+      <Item412>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PRODAUB.GravarXml.pas"/>
+        <UnitName Value="PRODAUB.GravarXml"/>
+      </Item412>
+      <Item413>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PRODAUB.LerXml.pas"/>
+        <UnitName Value="PRODAUB.LerXml"/>
+      </Item413>
+      <Item414>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\PRODAUB.Provider.pas"/>
+        <UnitName Value="PRODAUB.Provider"/>
+      </Item414>
+      <Item415>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Isaneto.GravarXml.pas"/>
+        <UnitName Value="Isaneto.GravarXml"/>
+      </Item415>
+      <Item416>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Isaneto.LerXml.pas"/>
+        <UnitName Value="Isaneto.LerXml"/>
+      </Item416>
+      <Item417>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Isaneto.Provider.pas"/>
+        <UnitName Value="Isaneto.Provider"/>
+      </Item417>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

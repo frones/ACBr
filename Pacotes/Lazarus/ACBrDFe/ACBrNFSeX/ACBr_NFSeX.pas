@@ -84,7 +84,8 @@ uses
   Thema.Provider, Tinus.GravarXml, Tinus.LerXml, Tinus.Provider, Tiplan.GravarXml, Tiplan.LerXml, 
   Tiplan.Provider, Tributus.GravarXml, Tributus.LerXml, Tributus.Provider, VersaTecnologia.GravarXml, 
   VersaTecnologia.LerXml, VersaTecnologia.Provider, Virtual.GravarXml, Virtual.LerXml, Virtual.Provider, 
-  WebFisco.GravarXml, WebFisco.LerXml, WebFisco.Provider, WebISS.GravarXml, WebISS.LerXml, WebISS.Provider, 
+  WebFisco.GravarXml, WebFisco.LerXml, WebFisco.Provider, WebISS.GravarXml, WebISS.LerXml, WebISS.Provider,
+  PRODAUB.Provider, PRODAUB.GravarXml, PRODAUB.LerXml, Isaneto.Provider, Isaneto.GravarXml, Isaneto.LerXml,
   LazarusPackageIntf;
 
 implementation

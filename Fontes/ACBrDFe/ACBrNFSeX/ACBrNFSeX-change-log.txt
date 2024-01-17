@@ -44,6 +44,10 @@ Símbolo : Significado
 
 17/01/2024
 -- ACBrNFSeXServicos --
+[*] As URLs da cidade de Nova Itaberaba/SC mudaram, o provedor ainda é o Pronim na versão 2.02
+  Por: Ellosis Sistemas de Gestão
+[+] Incluída a cidade de Vera/MT o provedor é Agili.
+  Por: Aécio Soares Ferreira
 [+] Incluída a cidade de Castanhal/PA o provedor é Isaneto.
   Por: Diogo/Rodrigues/Italo Giurizzato Junior
 -- Diversos --

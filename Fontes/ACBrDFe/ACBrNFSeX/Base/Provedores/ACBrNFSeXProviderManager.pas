@@ -107,6 +107,7 @@ uses
   Giss.Provider,
   GovDigital.Provider,
   iiBrasil.Provider,
+  Isaneto.Provider,
   ISSCamacari.Provider,
   ISSDigital.Provider,
   ISSe.Provider,
@@ -123,6 +124,7 @@ uses
   NEAInformatica.Provider,
   NotaInteligente.Provider,
   Prodata.Provider,
+  PRODAUB.Provider,
   PublicSoft.Provider,
   RLZ.Provider,
   Saatri.Provider,
@@ -391,6 +393,7 @@ begin
           end;
         end;
 
+      proIsaneto:    Result := TACBrNFSeProviderIsaneto203.Create(ACBrNFSe);
       proISSBarueri: Result := TACBrNFSeProviderISSBarueri.Create(ACBrNFSe);
 
       proISSCamacari:
@@ -467,6 +470,7 @@ begin
       proPrescon: Result := TACBrNFSeProviderPrescon.Create(ACBrNFSe);
       proPriMax:  Result := TACBrNFSeProviderPriMax.Create(ACBrNFSe);
       proProdata: Result := TACBrNFSeProviderProdata201.Create(ACBrNFSe);
+      proPRODAUB: Result := TACBrNFSeProviderPRODAUB204.Create(ACBrNFSe);
 
       proPronim:
         begin

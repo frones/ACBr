@@ -70,6 +70,7 @@ Intertec             1.00
 IPM                  1.00
 IPM                  1.01  24/08/2022
 IPM                  2.04
+Isaneto              2.03
 ISSBarueri           1.00  19/09/2022
 ISSCamacari          2.01
 ISSCambe             1.00
@@ -107,6 +108,7 @@ PadraoNacional       1.00
 Prescon              1.00  14/03/2023
 PriMax               1.00
 Prodata              2.01
+PRODAUB              2.04
 Pronim               1.00
 Pronim               2.02  17/08/2022
 Pronim               2.03

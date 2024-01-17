@@ -55,7 +55,7 @@ Uses
     {$IfDef USE_LCLIntf} ,LCLIntf {$EndIf}
   {$EndIf}
   {$IfDef MSWINDOWS}
-    ,Windows, ShellAPI
+    ,Windows, ShellAPI ,Registry, Messages
   {$Else}
     {$IfNDef FPC}
       {$IfDef ANDROID}
@@ -157,6 +157,7 @@ function DefinirNomeArquivo(const APath, ANomePadraoComponente: string;
   const ANomePersonalizado: string = ''; const AExtensao: string = 'pdf'): string;
 
 function FileToBytes(const AName: string; out Bytes: TBytes): Boolean;
+function SetGlobalEnvironment(const AName, AValue: string; const UserEnvironment: Boolean = True): Boolean;
 
 {$IFDEF MSWINDOWS}
 var xInp32 : function (wAddr: word): byte; stdcall;
@@ -1548,6 +1549,52 @@ begin
   end;
   Result := True;
 end;
+
+function SetGlobalEnvironment(const AName, AValue: string; const UserEnvironment: Boolean = True): Boolean;
+{$IFDEF MSWINDOWS}
+// https://en.delphipraxis.net/topic/1715-setting-environment-variables/
+const
+  REG_MACHINE_LOCATION = 'System\CurrentControlSet\Control\Session Manager\Environment';
+  REG_USER_LOCATION = 'Environment';
+var
+  dwReturnValue: Cardinal;
+begin
+  with TRegistry.Create do
+  try
+    LazyWrite := false;
+    if UserEnvironment then
+    begin
+      { User Environment Variable }
+      RootKey := HKEY_CURRENT_USER;
+      Result := OpenKey(REG_USER_LOCATION, True);
+    end else
+    begin
+      { System Environment Variable }
+      RootKey := HKEY_LOCAL_MACHINE;
+      Result := OpenKey(REG_MACHINE_LOCATION, True);
+    end;
+
+    if not Result then
+      Exit;
+
+    WriteString(AName, AValue); { Write Registry for Global Environment }
+  finally
+    Free;
+  end;
+
+  { Update Current Process Environment Variable }
+  SetEnvironmentVariable(PChar(AName), PChar(AValue));
+
+  { Send Message To All Top Windows for Refresh }
+  //SendMessage(HWND_BROADCAST, WM_SETTINGCHANGE, 0, LPARAM(PChar('Environment')));
+  SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, LPARAM(PChar('Environment')), SMTO_ABORTIFHUNG, 5000, dwReturnValue);
+end;
+{$ELSE}
+begin
+  RunCommand('export',Trim(AVariable)+'='+AValue);
+  Result := True;
+end;
+{$EndIf}
 
 initialization
 {$IfDef MSWINDOWS}

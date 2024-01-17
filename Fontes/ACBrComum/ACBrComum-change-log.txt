@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2024
+-- ACBrUtil.FilesIO --
+[+] Adicionada a função que permite Definir ou Mudar o valor de Variáveis de Ambiente
+    function SetGlobalEnvironment(const AName, AValue: string; const UserEnvironment: Boolean = True): Boolean;
+    (por: DSA)
+
 27/12/2023
 -- ACBrUtil.FilesIO --
 [-] A função FileToBytes o esta faltando o Out no parâmetro Bytes para que seja

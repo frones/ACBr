@@ -1591,7 +1591,7 @@ begin
 end;
 {$ELSE}
 begin
-  RunCommand('export',Trim(AVariable)+'='+AValue);
+  RunCommand('export',Trim(AName)+'='+AValue);
   Result := True;
 end;
 {$EndIf}

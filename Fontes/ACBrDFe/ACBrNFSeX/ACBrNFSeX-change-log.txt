@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/01/2024
+-- ACBrNFSeXWebserviceBase --
+[-] Possível solução para os provedores cujo retorno é um Json.
+  Por: Italo Giurizzato Junior
+
 17/01/2024
 -- ACBrNFSeXServicos --
 [*] As URLs da cidade de Nova Itaberaba/SC mudaram, o provedor ainda é o Pronim na versão 2.02

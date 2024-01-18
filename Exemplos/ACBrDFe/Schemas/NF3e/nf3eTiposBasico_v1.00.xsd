@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas.softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2014 rel. 2 (http://www.altova.com) by private (private) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nf3e" targetNamespace="http://www.portalfiscal.inf.br/nf3e" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralNF3e_v1.00.xsd"/>
@@ -1854,6 +1854,30 @@ Deverá ser informado esse conjunto do ICMS Efetivo ou o conjunto do ICMS retido
 																												</xs:element>
 																											</xs:sequence>
 																										</xs:choice>
+																										<xs:sequence minOccurs="0">
+																											<xs:annotation>
+																												<xs:documentation>Sequencia XML</xs:documentation>
+																											</xs:annotation>
+																											<xs:element name="vICMSDeson" type="TDec_1302">
+																												<xs:annotation>
+																													<xs:documentation>Valor do ICMS de desoneração</xs:documentation>
+																												</xs:annotation>
+																											</xs:element>
+																											<xs:element name="cBenef">
+																												<xs:annotation>
+																													<xs:documentation>Código de Benefício Fiscal na UF aplicado ao item</xs:documentation>
+																													<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao
+ item.
+</xs:documentation>
+																												</xs:annotation>
+																												<xs:simpleType>
+																													<xs:restriction base="xs:string">
+																														<xs:whiteSpace value="preserve"/>
+																														<xs:maxLength value="10"/>
+																													</xs:restriction>
+																												</xs:simpleType>
+																											</xs:element>
+																										</xs:sequence>
 																									</xs:sequence>
 																								</xs:complexType>
 																							</xs:element>
@@ -1896,6 +1920,45 @@ Deverá ser informado esse conjunto do ICMS Efetivo ou o conjunto do ICMS retido
 																												</xs:annotation>
 																											</xs:element>
 																										</xs:sequence>
+																										<xs:sequence minOccurs="0">
+																											<xs:annotation>
+																												<xs:documentation>Sequencia XML</xs:documentation>
+																											</xs:annotation>
+																											<xs:element name="vICMSDeson" type="TDec_1302">
+																												<xs:annotation>
+																													<xs:documentation>Valor do ICMS de desoneração</xs:documentation>
+																												</xs:annotation>
+																											</xs:element>
+																											<xs:element name="cBenef">
+																												<xs:annotation>
+																													<xs:documentation>Código de Benefício Fiscal na UF aplicado ao item</xs:documentation>
+																													<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao
+ item.
+</xs:documentation>
+																												</xs:annotation>
+																												<xs:simpleType>
+																													<xs:restriction base="xs:string">
+																														<xs:whiteSpace value="preserve"/>
+																														<xs:maxLength value="10"/>
+																													</xs:restriction>
+																												</xs:simpleType>
+																											</xs:element>
+																										</xs:sequence>
+																										<xs:sequence minOccurs="0">
+																											<xs:annotation>
+																												<xs:documentation>Sequencia XML</xs:documentation>
+																											</xs:annotation>
+																											<xs:element name="pFCP" type="TDec_0302a04Opc">
+																												<xs:annotation>
+																													<xs:documentation>Percentual de ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																												</xs:annotation>
+																											</xs:element>
+																											<xs:element name="vFCP" type="TDec_1302">
+																												<xs:annotation>
+																													<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																												</xs:annotation>
+																											</xs:element>
+																										</xs:sequence>
 																									</xs:sequence>
 																								</xs:complexType>
 																							</xs:element>
@@ -1911,7 +1974,7 @@ Se informado esse grupo o schema não permite informar nenhum dos grupos de ICMS
 																							<xs:simpleType>
 																								<xs:restriction base="xs:string">
 																									<xs:whiteSpace value="preserve"/>
-																									<xs:enumeration value="90"/>
+																									<xs:enumeration value="1"/>
 																								</xs:restriction>
 																							</xs:simpleType>
 																						</xs:element>

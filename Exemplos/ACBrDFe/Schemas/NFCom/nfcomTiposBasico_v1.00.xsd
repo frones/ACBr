@@ -961,6 +961,45 @@ item.
 																							</xs:annotation>
 																						</xs:element>
 																					</xs:sequence>
+																					<xs:sequence minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation>Sequencia XML</xs:documentation>
+																						</xs:annotation>
+																						<xs:element name="vICMSDeson" type="TDec_1302">
+																							<xs:annotation>
+																								<xs:documentation>Valor do ICMS de desoneração</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																						<xs:element name="cBenef">
+																							<xs:annotation>
+																								<xs:documentation>Código de Benefício Fiscal na UF aplicado ao item</xs:documentation>
+																								<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao
+item.
+</xs:documentation>
+																							</xs:annotation>
+																							<xs:simpleType>
+																								<xs:restriction base="xs:string">
+																									<xs:whiteSpace value="preserve"/>
+																									<xs:maxLength value="10"/>
+																								</xs:restriction>
+																							</xs:simpleType>
+																						</xs:element>
+																					</xs:sequence>
+																					<xs:sequence minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation>Sequencia XML</xs:documentation>
+																						</xs:annotation>
+																						<xs:element name="pFCP" type="TDec_0302a04Opc">
+																							<xs:annotation>
+																								<xs:documentation>Percentual de ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																						<xs:element name="vFCP" type="TDec_1302">
+																							<xs:annotation>
+																								<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																					</xs:sequence>
 																				</xs:sequence>
 																			</xs:complexType>
 																		</xs:element>
@@ -1333,6 +1372,11 @@ Se informado esse grupo o schema não permite informar nenhum dos grupos de ICMS
 															<xs:documentation>Valor do COFINS</xs:documentation>
 														</xs:annotation>
 													</xs:element>
+													<xs:element name="vFCP" type="TDec_1302" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Valor do Fundo de Combate à Pobreza (FCP).</xs:documentation>
+														</xs:annotation>
+													</xs:element>
 													<xs:element name="gProc" maxOccurs="10">
 														<xs:annotation>
 															<xs:documentation>Grupo identificador do Processo</xs:documentation>
@@ -1365,7 +1409,6 @@ Se informado esse grupo o schema não permite informar nenhum dos grupos de ICMS
 										<xs:element name="gRessarc" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>Grupo de Informações detalhadas de item de cClass de Ressarcimento</xs:documentation>
-												<xs:documentation>Este grupo somente deverá ser preenchido quando houver processo judicial ou administrativo que altere valores.</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
 												<xs:sequence>

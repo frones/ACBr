@@ -1558,6 +1558,7 @@ begin
       try
         Stream.Write(FLogo[0], Length(FLogo));
         PDF.Image(xImg, yImg, nImgW, nImgH, Stream, 'C', 'C');
+        y := y + 5;
       finally
         Stream.Free;
       end;
@@ -2250,6 +2251,7 @@ begin
   inherited Create;
   FNFe := ANFe;
   FNFeUtils := TNFeUtilsFPDF.Create(ANFe, AACBrNFeDANFCEClass);
+  Self.FDANFEClassOwner := AACBrNFeDANFCEClass;
   FImageUtils := TImageUtils.Create;
   {$IFDEF HAS_FORMATSETTINGS}
     LFormatSettings := CreateFormatSettings;

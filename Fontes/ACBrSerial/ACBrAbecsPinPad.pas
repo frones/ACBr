@@ -65,6 +65,9 @@ resourcestring
 
   CERR_MOD_WRONG_SIZE = 'Modulus should be %d bytes (Hex)';
   CERR_EXP_WRONG_SIZE = 'Exponent should be 1-6 bytes (Hex)';
+  CERR_SPE_MFNAME = 'Invalid Media file name';
+  CERR_SPE_MFINFO = 'Invalid Media file parâmeters';
+
 
 const
   // control characters
@@ -446,7 +449,8 @@ type
   public
     procedure Clear; override;
     procedure AddParamFromData(const AData: AnsiString);
-    procedure AddParamFromTagValue(ATag: Word; const AValue: String);
+    procedure AddParamFromTagValue(ATag: Word; const AValue: String); overload;
+    procedure AddParamFromTagValue(ATag: Word; const AStream: TStream); overload;
     property IsBlocking: Boolean read fIsBlocking write fIsBlocking;
   end;
 
@@ -487,6 +491,7 @@ type
     property AsString: AnsiString read GetAsString write SetAsString;
   end;
 
+  TACBrAbecsPinPadMediaType = (mtPNG, mtJPG, mtGIF);
 
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
@@ -531,6 +536,8 @@ type
     procedure CancelWaiting;
 
     procedure ClearSecureData;
+    procedure LogApplicationLayer(AApplicationLayer: TACBrAbecsApplicationLayer);
+
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy; override ;
@@ -538,8 +545,6 @@ type
     procedure Enable;
     procedure Disable;
     property IsEnabled: Boolean read GetIsEnabled write SetIsEnabled;
-
-    function ReturnCodeDescription(AStatus: Integer): String;
   published
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
@@ -556,7 +561,16 @@ type
     procedure CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);
     procedure GIX; overload;
     procedure GIX(PP_DATA: array of Word); overload;
+    procedure MLI(const ASPE_MFNAME: String; const ASPE_MFINFO: AnsiString); overload;
+    procedure MLI(const ASPE_MFNAME: String; FileSize: Int64; CRC: Word; FileType: Byte); overload;
+    procedure MLR(ASPE_DATAIN: TStream);
+    procedure MLE;
+
+    procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
   end ;
+
+  function ReturnStatusCodeDescription(AStatus: Integer): String;
+  function SPE_ToStr(ASPE: Word): String;
 
 implementation
 
@@ -566,6 +580,102 @@ uses
   ACBrUtil.Math,
   ACBrUtil.Strings,
   synautil;
+
+function ReturnStatusCodeDescription(AStatus: Integer): String;
+begin
+  Result := '';
+  case AStatus of
+    ST_OK            : Result := 'Command executed successfully.';
+    ST_NOSEC         : Result := 'Attempted to use “Secure Communication” when it has not been established.';
+    ST_F1            : Result := 'Function #1 key pressed.';
+    ST_F2            : Result := 'Function #2 key pressed.';
+    ST_F3            : Result := ' Function #3 key pressed.';
+    ST_F4            : Result := 'Function #4 key pressed.';
+    ST_BACKSP        : Result := 'Clear (backspace) key pressed';
+    ST_ERRPKTSEC     : Result := 'Error decoding data received via “Secure Communication”; or Cleartext command received with “Secure Communication” established.';
+    ST_INVCALL       : Result := 'Invalid call to a command (previous operations are necessary) or unknown command (in case of an “ERR” response).';
+    ST_INVPARM       : Result := 'An invalid parameter was passed to the command.';
+    ST_TIMEOUT       : Result := 'The maximum time stipulated for the operation has been exhausted.';
+    ST_CANCEL        : Result := 'Operation canceled by the cardholder.';
+    ST_MANDAT        : Result := 'A mandatory parameter was not sent by the SPE.';
+    ST_TABVERDIF     : Result := 'EMV Tables version differs from the expected.';
+    ST_TABERR        : Result := 'Error when trying to write tables (lack of space, for example).';
+    ST_INTERR        : Result := 'Internal pinpad error (unexpected situation that does not correspond to the other error codes described here).';
+    ST_MCDATAERR     : Result := 'Magnetic card reading error.';
+    ST_ERRKEY        : Result := 'MK / DUKPT referenced is not present in the pinpad.';
+    ST_NOCARD        : Result := 'There is no ICC present in the coupler or CTLS detected by the antenna.';
+    ST_PINBUSY       : Result := 'Pinpad cannot process PIN capture temporarily due to security constrains (such as when the capture limit is reached within a time interval).';
+    ST_RSPOVRFL      : Result := 'Response data exceeds the maximum allowed size.';
+    ST_ERRCRYPT      : Result := 'Generic cryptographic validation error.';
+    ST_DUMBCARD      : Result := 'ICC inserted, but not responding (“mute”).';
+    ST_ERRCARD       : Result := 'Communication error between the pinpad and the ICC or CTLS.';
+    ST_CARDINVALIDAT : Result := 'ICC is invalidated.';
+    ST_CARDPROBLEMS  : Result := 'ICC with problems. This status is valid for many situations in which the ICC does not behave as expected and the transaction must be terminated.';
+    ST_CARDINVDATA   : Result := 'The ICC behaves correctly but has invalid or inconsistent data.';
+    ST_CARDAPPNAV    : Result := 'ICC with no matching application.';
+    ST_CARDAPPNAUT   : Result := 'The application selected in the ICC cannot be used in this situation.';
+    ST_ERRFALLBACK   : Result := 'High level error in the ICC that allows fallback to magnetic stripe.';
+    ST_INVAMOUNT     : Result := 'Invalid amount for the transaction.';
+    ST_ERRMAXAID     : Result := 'Number of candidate AIDs exceeds the processing capacity of the EMV kernel.';
+    ST_CARDBLOCKED   : Result := 'Card is blocked.';
+    ST_CTLSMULTIPLE  : Result := 'More than one CTLS was presented to the reader simultaneously.';
+    ST_CTLSCOMMERR   : Result := 'Communication error between the pinpad (antenna) and the CTLS.';
+    ST_CTLSINVALIDAT : Result := 'CTLS is invalidated.';
+    ST_CTLSPROBLEMS  : Result := 'CTLS with problems. This status is valid for many situations in which the CTLS does not behave as expected and the transaction must be terminated.';
+    ST_CTLSAPPNAV    : Result := 'CTLS with no matching application.';
+    ST_CTLSAPPNAUT   : Result := 'The application selected in the CTLS cannot be used in this situation.';
+    ST_CTLSEXTCVM    : Result := 'Cardholder must perform a validation on his device (mobile phone, for example) and then re-present it to the pinpad.';
+    ST_CTLSIFCHG     : Result := 'CTLS processing resulted in “change interface” (request ICC or magnetic card).';
+    ST_MFNFOUND      : Result := 'Media file not found.';
+    ST_MFERRFMT      : Result := 'Media file format error.';
+    ST_MFERR         : Result := 'Media file loading error.';
+  end;
+end;
+
+function SPE_ToStr(ASPE: Word): String;
+begin
+  case ASPE of
+    SPE_IDLIST   : Result := 'SPE_IDLIST';
+    SPE_MTHDPIN  : Result := 'SPE_MTHDPIN';
+    SPE_MTHDDAT  : Result := 'SPE_MTHDDAT';
+    SPE_TAGLIST  : Result := 'SPE_TAGLIST';
+    SPE_EMVDATA  : Result := 'SPE_EMVDATA';
+    SPE_CEXOPT   : Result := 'SPE_CEXOPT';
+    SPE_TRACKS   : Result := 'SPE_TRACKS';
+    SPE_OPNDIG   : Result := 'SPE_OPNDIG';
+    SPE_KEYIDX   : Result := 'SPE_KEYIDX';
+    SPE_WKENC    : Result := 'SPE_WKENC';
+    SPE_MSGIDX   : Result := 'SPE_MSGIDX';
+    SPE_TIMEOUT  : Result := 'SPE_TIMEOUT';
+    SPE_MINDIG   : Result := 'SPE_MINDIG';
+    SPE_MAXDIG   : Result := 'SPE_MAXDIG';
+    SPE_DATAIN   : Result := 'SPE_DATAIN';
+    SPE_ACQREF   : Result := 'SPE_ACQREF';
+    SPE_APPTYPE  : Result := 'SPE_APPTYPE';
+    SPE_AIDLIST  : Result := 'SPE_AIDLIST';
+    SPE_AMOUNT   : Result := 'SPE_AMOUNT';
+    SPE_CASHBACK : Result := 'SPE_CASHBACK';
+    SPE_TRNDATE  : Result := 'SPE_TRNDATE';
+    SPE_TRNTIME  : Result := 'SPE_TRNTIME';
+    SPE_GCXOPT   : Result := 'SPE_GCXOPT';
+    SPE_GOXOPT   : Result := 'SPE_GOXOPT';
+    SPE_FCXOPT   : Result := 'SPE_FCXOPT';
+    SPE_TRMPAR   : Result := 'SPE_TRMPAR';
+    SPE_DSPMSG   : Result := 'SPE_DSPMSG';
+    SPE_ARC      : Result := 'SPE_ARC';
+    SPE_IVCBC    : Result := 'SPE_IVCBC';
+    SPE_MFNAME   : Result := 'SPE_MFNAME';
+    SPE_MFINFO   : Result := 'SPE_MFINFO';
+    SPE_MNUOPT   : Result := 'SPE_MNUOPT';
+    SPE_TRNTYPE  : Result := 'SPE_TRNTYPE';
+    SPE_TRNCURR  : Result := 'SPE_TRNCURR';
+    SPE_PANMASK  : Result := 'SPE_PANMASK';
+    SPE_PBKMOD   : Result := 'SPE_PBKMOD';
+    SPE_PBKEXP   : Result := 'SPE_PBKEXP';
+  else
+    Result := '';
+  end;
+end;
 
 { TACBrAbecsTLV }
 
@@ -617,8 +727,8 @@ begin
   if (l = 0) or (l < 4) then
     raise EACBrAbecsPinPadError.Create(CERR_INVTLV);
 
-  fID := LEStrToInt(copy(AValue, 1, 2));
-  ld := LEStrToInt(copy(AValue, 3, 2));
+  fID := BEStrToInt(copy(AValue, 1, 2));
+  ld := BEStrToInt(copy(AValue, 3, 2));
   if (ld > l) then
     raise EACBrAbecsPinPadError.Create(CERR_INVTLV);
 
@@ -691,7 +801,7 @@ begin
   p := 1;
   while (p < lt) do
   begin
-    lp := LEStrToInt(copy(AValue, p+2, 2));
+    lp := BEStrToInt(copy(AValue, p+2, 2));
     if (lp > lt) then
       raise EACBrAbecsPinPadError.Create(CERR_INVTLV);
 
@@ -817,7 +927,7 @@ begin
 
     tlv := TACBrAbecsTLV.Create(ATag, Chunk);
     try
-      LastBlk.Data := tlv.AsString;
+      LastBlk.Data := LastBlk.Data + tlv.AsString;
     finally
       tlv.Free;
     end;
@@ -852,7 +962,7 @@ begin
 
     tlv := TACBrAbecsTLV.Create(ATag, Chunk);
     try
-      LastBlk.Data := tlv.AsString;
+      LastBlk.Data := LastBlk.Data + tlv.AsString;
     finally
       tlv.Free;
     end;
@@ -959,6 +1069,11 @@ end;
 procedure TACBrAbecsCommand.AddParamFromTagValue(ATag: Word; const AValue: String);
 begin
   fBlocks.AddFromTagValue(ATag, AValue);
+end;
+
+procedure TACBrAbecsCommand.AddParamFromTagValue(ATag: Word; const AStream: TStream);
+begin
+  fBlocks.AddFromTagValue(ATag, AStream);
 end;
 
 { TACBrAbecsResponse }
@@ -1167,6 +1282,33 @@ begin
   fPinpadKSec := '';
 end;
 
+procedure TACBrAbecsPinPad.LogApplicationLayer(AApplicationLayer: TACBrAbecsApplicationLayer);
+var
+  i, j: Integer;
+  tlvl: TACBrAbecsTLVList;
+begin
+  RegisterLog(Format('    %s, Blocks: %d', [AApplicationLayer.ClassName, AApplicationLayer.Blocks.Count]));
+
+  if (Self.LogLevel > 4) and (AApplicationLayer.Blocks.Count > 0) then
+  begin
+    for i := 0 to AApplicationLayer.Blocks.Count-1 do
+    begin
+      RegisterLog(Format('      Block: %d, Size: %d, Data: %s', [i+1, AApplicationLayer.Blocks[i].Size, AApplicationLayer.Blocks[i].Data]));
+      tlvl := TACBrAbecsTLVList.Create;
+      try
+        try
+          tlvl.AsString := AApplicationLayer.Blocks[i].Data;
+          for j := 0 to tlvl.Count-1 do
+            RegisterLog(Format('        %s, Size: %d, Data: %s', [SPE_ToStr(tlvl[j].ID), tlvl[j].Size, tlvl[j].Data]));
+        except
+        end;
+      finally
+        tlvl.Free;
+      end;
+    end;
+  end;
+end;
+
 function TACBrAbecsPinPad.GetIsEnabled: Boolean;
 begin
   Result := Self.Device.Ativo;
@@ -1193,57 +1335,6 @@ procedure TACBrAbecsPinPad.Disable;
 begin
   CancelWaiting;
   Self.IsEnabled := False;
-end;
-
-function TACBrAbecsPinPad.ReturnCodeDescription(AStatus: Integer): String;
-begin
-  Result := '';
-  case AStatus of
-    ST_OK            : Result := 'Command executed successfully.';
-    ST_NOSEC         : Result := 'Attempted to use “Secure Communication” when it has not been established.';
-    ST_F1            : Result := 'Function #1 key pressed.';
-    ST_F2            : Result := 'Function #2 key pressed.';
-    ST_F3            : Result := ' Function #3 key pressed.';
-    ST_F4            : Result := 'Function #4 key pressed.';
-    ST_BACKSP        : Result := 'Clear (backspace) key pressed';
-    ST_ERRPKTSEC     : Result := 'Error decoding data received via “Secure Communication”; or Cleartext command received with “Secure Communication” established.';
-    ST_INVCALL       : Result := 'Invalid call to a command (previous operations are necessary) or unknown command (in case of an “ERR” response).';
-    ST_INVPARM       : Result := 'An invalid parameter was passed to the command.';
-    ST_TIMEOUT       : Result := 'The maximum time stipulated for the operation has been exhausted.';
-    ST_CANCEL        : Result := 'Operation canceled by the cardholder.';
-    ST_MANDAT        : Result := 'A mandatory parameter was not sent by the SPE.';
-    ST_TABVERDIF     : Result := 'EMV Tables version differs from the expected.';
-    ST_TABERR        : Result := 'Error when trying to write tables (lack of space, for example).';
-    ST_INTERR        : Result := 'Internal pinpad error (unexpected situation that does not correspond to the other error codes described here).';
-    ST_MCDATAERR     : Result := 'Magnetic card reading error.';
-    ST_ERRKEY        : Result := 'MK / DUKPT referenced is not present in the pinpad.';
-    ST_NOCARD        : Result := 'There is no ICC present in the coupler or CTLS detected by the antenna.';
-    ST_PINBUSY       : Result := 'Pinpad cannot process PIN capture temporarily due to security constrains (such as when the capture limit is reached within a time interval).';
-    ST_RSPOVRFL      : Result := 'Response data exceeds the maximum allowed size.';
-    ST_ERRCRYPT      : Result := 'Generic cryptographic validation error.';
-    ST_DUMBCARD      : Result := 'ICC inserted, but not responding (“mute”).';
-    ST_ERRCARD       : Result := 'Communication error between the pinpad and the ICC or CTLS.';
-    ST_CARDINVALIDAT : Result := 'ICC is invalidated.';
-    ST_CARDPROBLEMS  : Result := 'ICC with problems. This status is valid for many situations in which the ICC does not behave as expected and the transaction must be terminated.';
-    ST_CARDINVDATA   : Result := 'The ICC behaves correctly but has invalid or inconsistent data.';
-    ST_CARDAPPNAV    : Result := 'ICC with no matching application.';
-    ST_CARDAPPNAUT   : Result := 'The application selected in the ICC cannot be used in this situation.';
-    ST_ERRFALLBACK   : Result := 'High level error in the ICC that allows fallback to magnetic stripe.';
-    ST_INVAMOUNT     : Result := 'Invalid amount for the transaction.';
-    ST_ERRMAXAID     : Result := 'Number of candidate AIDs exceeds the processing capacity of the EMV kernel.';
-    ST_CARDBLOCKED   : Result := 'Card is blocked.';
-    ST_CTLSMULTIPLE  : Result := 'More than one CTLS was presented to the reader simultaneously.';
-    ST_CTLSCOMMERR   : Result := 'Communication error between the pinpad (antenna) and the CTLS.';
-    ST_CTLSINVALIDAT : Result := 'CTLS is invalidated.';
-    ST_CTLSPROBLEMS  : Result := 'CTLS with problems. This status is valid for many situations in which the CTLS does not behave as expected and the transaction must be terminated.';
-    ST_CTLSAPPNAV    : Result := 'CTLS with no matching application.';
-    ST_CTLSAPPNAUT   : Result := 'The application selected in the CTLS cannot be used in this situation.';
-    ST_CTLSEXTCVM    : Result := 'Cardholder must perform a validation on his device (mobile phone, for example) and then re-present it to the pinpad.';
-    ST_CTLSIFCHG     : Result := 'CTLS processing resulted in “change interface” (request ICC or magnetic card).';
-    ST_MFNFOUND      : Result := 'Media file not found.';
-    ST_MFERRFMT      : Result := 'Media file format error.';
-    ST_MFERR         : Result := 'Media file loading error.';
-  end;
 end;
 
 function TACBrAbecsPinPad.GetPort: String;
@@ -1344,6 +1435,9 @@ begin
 
   if not Self.IsEnabled then
     DoException(CERR_NOTENABLED);
+
+  if (Self.LogLevel > 3) then
+    LogApplicationLayer(fCommand);
 
   s := fCommand.AsString;
   pkt := TACBrAbecsPacket.Create(s);
@@ -1475,9 +1569,6 @@ procedure TACBrAbecsPinPad.WaitForResponse;
     Result := '';
     repeat
       b := Self.Device.LeByte(TIMEOUT_ACK);  // Raise Exception for Timeout
-      if (Self.LogLevel > 3) then
-        RegisterLog(Format('  RX <- %d', [b]));
-
       if (b <> ETB) then
       begin
         if (Length(Result) < MAX_PACKET_SIZE) then
@@ -1542,6 +1633,8 @@ begin
     fResponse.AsString := pkt.Data;
     if (Self.LogLevel > 2) then
       RegisterLog('  WaitForResponse - OK');
+    if (Self.LogLevel > 3) then
+      LogApplicationLayer(fResponse);
   finally
     pkt.Free;
   end;
@@ -1553,7 +1646,7 @@ begin
     RegisterLog(Format('EvaluateResponse: %d', [fResponse.STAT]));
 
   if (fResponse.STAT <> ST_OK) then
-    DoException(Format('Error: %d - %s', [fResponse.STAT, ReturnCodeDescription(fResponse.STAT)]));
+    DoException(Format('Error: %d - %s', [fResponse.STAT, ReturnStatusCodeDescription(fResponse.STAT)]));
 end;
 
 procedure TACBrAbecsPinPad.CancelWaiting;
@@ -1602,6 +1695,7 @@ begin
   ExecCommand;
 
   CRKSEC := fResponse.GetResponseData;
+  //TODO: A LOT OF TO DO....
 end;
 
 procedure TACBrAbecsPinPad.CLO(const AMsgToDisplay: String;
@@ -1673,9 +1767,87 @@ begin
     s := s + IntToBEStr(PP_DATA[i]);
 
   if (s <> '') then
+  begin
+    if (Self.LogLevel > 1) then
+      RegisterLog('   '+s);
+
     fCommand.AddParamFromTagValue(SPE_IDLIST, s);
+  end;
 
   ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String;
+  const ASPE_MFINFO: AnsiString);
+var
+  l: Integer;
+  s: String;
+begin
+  RegisterLog('MLI: '+ASPE_MFNAME+', '+ASPE_MFINFO);
+  s := trim(ASPE_MFNAME);
+  l := Length(s);
+  if (l = 0) or (l > 8) or (not StrIsAlphaNum(s)) then
+    DoException(CERR_SPE_MFNAME);
+
+  l := Length(ASPE_MFINFO);
+  if (l <> 10) then
+    DoException(CERR_SPE_MFINFO);
+
+  s := PadRight(s, 8);
+
+  fCommand.Clear;
+  fCommand.ID := 'MLI';
+  fCommand.AddParamFromTagValue(SPE_MFNAME, s);
+  fCommand.AddParamFromTagValue(SPE_MFINFO, ASPE_MFINFO);
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String; FileSize: Int64;
+  CRC: Word; FileType: Byte);
+var
+  ASPE_MFINFO: AnsiString;
+begin
+  ASPE_MFINFO := IntToBEStr(FileSize, 4) + IntToBEStr(CRC, 2) + chr(FileType) + #0#0#0;
+  MLI(ASPE_MFNAME, ASPE_MFINFO);
+end;
+
+procedure TACBrAbecsPinPad.MLR(ASPE_DATAIN: TStream);
+begin
+  RegisterLog('MLR');
+  fCommand.Clear;
+  fCommand.ID := 'MLR';
+  fCommand.AddParamFromTagValue(SPE_DATAIN, ASPE_DATAIN);
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.MLE;
+begin
+  RegisterLog('MLE');
+  fCommand.Clear;
+  fCommand.ID := 'MLE';
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.LoadMedia(const ASPE_MFNAME: String;
+  ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
+var
+  AData: AnsiString;
+  crc: Word;
+  ft: Byte;
+begin
+  ASPE_DATAIN.Position := 0;
+  AData := ReadStrFromStream(ASPE_DATAIN, ASPE_DATAIN.Size);
+  crc := StringCrcCCITT(AData, 0, $1021);
+  case MediaType of
+    mtPNG: ft := 1;
+    mtJPG: ft := 2;
+    mtGIF: ft := 3;
+  end;
+
+  MLI(ASPE_MFNAME, ASPE_DATAIN.Size, crc, ft);
+  ASPE_DATAIN.Position := 0;
+  MLR(ASPE_DATAIN);
+  MLE;
 end;
 
 end.

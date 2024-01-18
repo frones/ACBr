@@ -1213,7 +1213,8 @@ var
 begin
   case Response.InfConsultaNFSe.tpConsulta of
     tcPorPeriodo,
-    tcPorFaixa: Response.Metodo := tmConsultarNFSePorFaixa;
+    tcPorFaixa,
+    tcPorNumero: Response.Metodo := tmConsultarNFSePorFaixa;
     tcServicoTomado: Response.Metodo := tmConsultarNFSeServicoTomado;
     tcServicoPrestado: Response.Metodo := tmConsultarNFSeServicoPrestado;
     tcPorChave: Response.Metodo := tmConsultarNFSePorChave;
@@ -1223,7 +1224,8 @@ begin
 
   case Response.InfConsultaNFSe.tpConsulta of
     tcPorPeriodo,
-    tcPorFaixa: PrepararConsultaNFSeporFaixa(Response);
+    tcPorFaixa,
+    tcPorNumero: PrepararConsultaNFSeporFaixa(Response);
     tcServicoPrestado: PrepararConsultaNFSeServicoPrestado(Response);
     tcServicoTomado: PrepararConsultaNFSeServicoTomado(Response);
   else
@@ -1260,7 +1262,8 @@ var
 begin
   case Response.InfConsultaNFSe.tpConsulta of
     tcPorPeriodo,
-    tcPorFaixa: AssinarConsultaNFSeporFaixa(Response);
+    tcPorFaixa,
+    tcPorNumero: AssinarConsultaNFSeporFaixa(Response);
     tcServicoPrestado: AssinarConsultaNFSeServicoPrestado(Response);
     tcServicoTomado: AssinarConsultaNFSeServicoTomado(Response);
   else
@@ -1278,7 +1281,8 @@ var
 begin
   case Response.InfConsultaNFSe.tpConsulta of
     tcPorPeriodo,
-    tcPorFaixa: TratarRetornoConsultaNFSeporFaixa(Response);
+    tcPorFaixa,
+    tcPorNumero: TratarRetornoConsultaNFSeporFaixa(Response);
     tcServicoPrestado: TratarRetornoConsultaNFSeServicoPrestado(Response);
     tcServicoTomado: TratarRetornoConsultaNFSeServicoTomado(Response);
   else

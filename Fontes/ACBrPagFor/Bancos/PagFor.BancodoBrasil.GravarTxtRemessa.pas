@@ -463,7 +463,7 @@ begin
     begin
       GeraSegmentoN(SegmentoN);
 
-      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(FormatFloat('000000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('17', 2, tcStr);
@@ -497,7 +497,7 @@ begin
     begin
       GeraSegmentoN(SegmentoN);
 
-      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(FormatFloat('000000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('16', 2, tcStr);
@@ -533,7 +533,7 @@ begin
     begin
       GeraSegmentoN(SegmentoN);
 
-      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(FormatFloat('000000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('18', 2, tcStr);
@@ -569,7 +569,7 @@ begin
     begin
       GeraSegmentoN(SegmentoN);
 
-      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(FormatFloat('000000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(TpIndTributoToStr(PagFor.Geral.idTributo), 2, tcStr);
@@ -607,7 +607,7 @@ begin
     begin
       GeraSegmentoN(SegmentoN);
 
-      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(FormatFloat('000000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(TpIndTributoToStr(PagFor.Geral.idTributo), 2, tcStr);
@@ -672,7 +672,7 @@ begin
     begin
       GeraSegmentoN(SegmentoN);
 
-      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(FormatFloat('000000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(InscEst, 8, tcStrZero);

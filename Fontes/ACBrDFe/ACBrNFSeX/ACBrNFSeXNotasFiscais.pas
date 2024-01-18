@@ -1479,10 +1479,12 @@ end;
 
 function TNotaFiscal.GetXmlNfse: String;
 begin
-  if XmlEhUTF8(FXmlNfse) then
-    Result := FXmlNfse
-  else
-    Result := '<?xml version="1.0" encoding="UTF-8"?>' + FXmlNfse;
+  Result := FXmlNfse;
+  if Result = '' then
+    Exit;
+
+  if not XmlEhUTF8(Result) then
+    Result := '<?xml version="1.0" encoding="UTF-8"?>' + Result;
 end;
 
 function TNotaFiscal.CalcularNomeArquivo: String;

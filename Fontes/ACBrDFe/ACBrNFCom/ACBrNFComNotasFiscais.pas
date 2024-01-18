@@ -235,7 +235,7 @@ var
   XMLStr: string;
   XMLUTF8: AnsiString;
   Document: TACBrXmlDocument;
-  ANode: TACBrXmlNode;
+  ANode, SignatureNode, ReferenceNode: TACBrXmlNode;
 begin
   with TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom) do
   begin
@@ -256,23 +256,28 @@ begin
     FXMLOriginal := FXMLAssinado;
 
     Document := TACBrXmlDocument.Create;
-
     try
-      Document.LoadFromXml(FXMLOriginal);
+      try
+        Document.LoadFromXml(FXMLOriginal);
+        ANode := Document.Root;
 
-      ANode := Document.Root;
+        if ANode <> nil then
+        begin
+          SignatureNode := ANode.Childrens.FindAnyNs('Signature');
+          ReferenceNode := SignatureNode.Childrens.FindAnyNs('SignedInfo').Childrens.FindAnyNs('Reference');
 
-      if ANode <> nil then
-      begin
-        NFCom.signature.URI := ObterConteudoTag(ANode.Attributes.Items['URI']);
-        NFCom.signature.DigestValue := ObterConteudoTag(ANode.Childrens.FindAnyNs('DigestValue'), tcStr);
-        NFCom.signature.SignatureValue := ObterConteudoTag(ANode.Childrens.FindAnyNs('SignatureValue'), tcStr);
-        NFCom.signature.X509Certificate := ObterConteudoTag(ANode.Childrens.FindAnyNs('X509Certificate'), tcStr);
+          NFCom.signature.URI := ObterConteudoTag(ReferenceNode.Attributes.Items['URI']);
+          NFCom.signature.DigestValue := ObterConteudoTag(ReferenceNode.Childrens.FindAnyNs('DigestValue'), tcStr);
+          NFCom.signature.SignatureValue := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
+          NFCom.signature.X509Certificate := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('KeyInfo')
+                                                                           .Childrens.FindAnyNs('X509Data')
+                                                                           .Childrens.FindAnyNs('X509Certificate'), tcStr);
+        end;
+      except
+        //Result := False;
       end;
-
+    finally
       FreeAndNil(Document);
-    except
-//      Result := False;
     end;
 
     with TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom) do

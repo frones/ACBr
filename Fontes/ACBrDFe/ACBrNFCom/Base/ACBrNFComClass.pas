@@ -309,7 +309,7 @@ type
   private
     FcProd: string;
     FxProd: string;
-    FcClass: Integer;
+    FcClass: String;
     FCFOP: Integer;
     FCNPJLD: string;
     FuMed: TuMed;
@@ -325,7 +325,7 @@ type
 
     property cProd: string read FcProd write FcProd;
     property xProd: string read FxProd write FxProd;
-    property cClass: Integer read FcClass write FcClass;
+    property cClass: String read FcClass write FcClass;
     property CFOP: Integer read FCFOP write FCFOP;
     property CNPJLD: string read FCNPJLD write FCNPJLD;
     property uMed: TuMed read FuMed write FuMed;

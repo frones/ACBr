@@ -47,7 +47,7 @@ uses
   pcnConversao,
   ACBrNFe,
   ACBrNFeDANFEClass,
-  StrUtilsEx;
+  StrUtilsEx, ACBrDFeDANFeReport;
 
 type
   TLogoAlign = (laLeft, laCenter, laRight, laFull);
@@ -56,7 +56,7 @@ type
 
   TNFeUtilsFPDF = class
   private
-    FDANFEClassOwner: TACBrNFeDANFEClass;
+    FDANFEClassOwner: TACBrDFeDANFeReport;
     FNFe: TNFe;
     FFormatSettings: TFormatSettings;
   public
@@ -67,10 +67,11 @@ type
     function GetTextoFatura: string;
     function GetTextoAdicional: string;
   public
-    property DANFEClassOwner: TACBrNFeDANFEClass read FDANFEClassOwner;
+    property DANFEClassOwner: TACBrDFeDANFeReport read FDANFEClassOwner;
     property NFe: TNFe read FNFe;
   public
-    constructor Create(ANFe: TNFe);
+    constructor Create(ANFe: TNFe; ADANFEClassOwner : TACBrNFeDANFEClass); overload;
+    constructor Create(ANFe: TNFe; ADANFCEClassOwner : TACBrNFeDANFCEClass); overload;
     destructor Destroy; override;
     property FormatSettings: TFormatSettings read FFormatSettings write FFormatSettings;
   end;
@@ -79,15 +80,20 @@ implementation
 
 { TNFeUtilsFPDF }
 
-constructor TNFeUtilsFPDF.Create(ANFe: TNFe);
+constructor TNFeUtilsFPDF.Create(ANFe: TNFe; ADANFEClassOwner : TACBrNFeDANFEClass);
 begin
   FNFe := ANFe;
-  FDANFEClassOwner := TACBrNFeDANFEClass.Create(nil);
+  FDANFEClassOwner := ADANFEClassOwner;
+end;
+
+constructor TNFeUtilsFPDF.Create(ANFe: TNFe; ADANFCEClassOwner : TACBrNFeDANFCEClass);
+begin
+  FNFe := ANFe;
+  FDANFEClassOwner := ADANFCEClassOwner;
 end;
 
 destructor TNFeUtilsFPDF.Destroy;
 begin
-  FDANFEClassOwner.Free;
   inherited;
 end;
 
@@ -105,7 +111,7 @@ end;
 
 function TNFeUtilsFPDF.GetTextoAdicional: string;
 begin
-  Result := DANFEClassOwner.ManterInformacoesDadosAdicionais(NFe);
+  Result := TACBrNFeDANFEClass(DANFEClassOwner).ManterInformacoesDadosAdicionais(NFe);
   Result := FastStringReplace(Result, ';', sLineBreak, [rfReplaceAll]);
 end;
 

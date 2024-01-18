@@ -67,7 +67,7 @@ type
   private
     FNFe: TNFe;
     FNFeUtils: TNFeUtilsFPDF;
-    FDANFEClassOwner : TACBrDFeDANFeReport;
+    FDANFEClassOwner : TACBrNFeDANFCEClass;
     FCancelada: boolean;
     FInitialized: boolean;
     FFontFamily: string;
@@ -106,7 +106,7 @@ type
   protected
     procedure OnStartReport(Args: TFPDFReportEventArgs); override;
   public
-    constructor Create(ANFe: TNFe); reintroduce;
+    constructor Create(ANFe: TNFe; AACBrNFeDANFCEClass : TACBrNFeDANFCEClass); reintroduce;
     destructor Destroy; override;
     property Cancelada: boolean read FCancelada write FCancelada;
     property PosCanhoto: TPosRecibo read FCanhoto write FCanhoto;
@@ -123,7 +123,7 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrNFCeDANFeFPDF = class(TACBrDFeDANFeReport)
+  TACBrNFCeDANFeFPDF = class(TACBrNFeDANFCEClass)
   private
     FFPDFReport: TNFCeDANFeFPDF;
   public
@@ -2243,13 +2243,13 @@ begin
   PDF.DashedLine(0, Args.Band.Height + y, 0 + Args.Band.Width, Args.Band.Height + y, FDashWidth);
 end;
 
-constructor TNFCeDANFeFPDF.Create(ANFe: TNFe);
+constructor TNFCeDANFeFPDF.Create(ANFe: TNFe; AACBrNFeDANFCEClass : TACBrNFeDANFCEClass);
 var
   LFormatSettings: TFormatSettings;
 begin
   inherited Create;
   FNFe := ANFe;
-  FNFeUtils := TNFeUtilsFPDF.Create(ANFe);
+  FNFeUtils := TNFeUtilsFPDF.Create(ANFe, AACBrNFeDANFCEClass);
   FImageUtils := TImageUtils.Create;
   {$IFDEF HAS_FORMATSETTINGS}
     LFormatSettings := CreateFormatSettings;
@@ -2444,8 +2444,8 @@ begin
   for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count -1 do
   begin
     LNFe := TACBrNFe(ACBrNFe).NotasFiscais[I].NFe;
-    Report := TNFCeDANFeFPDF.Create(LNFe);
-    TNFCeDANFeFPDF(Report).FDANFEClassOwner := TACBrNFe(ACBrNFe).DANFE;
+    Report := TNFCeDANFeFPDF.Create(LNFe,TACBrNFeDANFCEClass(TACBrNFe(ACBrNFe).DANFE));
+
     //TNFCeDANFeFPDF(Report).PosCanhoto := TNFCeDANFeFPDF(TACBrNFe(ACBrNFe).DANFE).PosCanhoto;
 
     TNFCeDANFeFPDF(Report).MensagemRodape := Self.Sistema;

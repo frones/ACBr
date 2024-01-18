@@ -61,7 +61,7 @@ type
   TNFeDANFeFPDF = class(TFPDFReport)
   private
     FNFeUtils: TNFeUtilsFPDF;
-    FDANFEClassOwner : TACBrDFeDANFeReport;
+    FDANFEClassOwner : TACBrNFeDANFEClass;
     FCancelada: boolean;
     FCanhoto: TPosRecibo;
     FLogo: TBytes;
@@ -72,7 +72,7 @@ type
   protected
     procedure OnStartReport(Args: TFPDFReportEventArgs); override;
   public
-    constructor Create(ANFe: TNFe); reintroduce;
+    constructor Create(ANFe: TNFe; AACBrNFeDANFEClass : TACBrNFeDANFEClass); reintroduce;
     destructor Destroy; override;
   public
     property Cancelada: boolean read FCancelada write FCancelada;
@@ -81,16 +81,17 @@ type
     property LogoStretched: boolean read FLogoStretched write FLogoStretched;
     property LogoAlign: TLogoAlign read FLogoAlign write FLogoAlign;
     property MensagemRodape: string read FMensagemRodape write FMensagemRodape;
+
   end;
 
 type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrNFeDANFeFPDF = class(TACBrDFeDANFeReport)
+  TACBrNFeDANFeFPDF = class(TACBrNFeDANFEClass)
   private
     FFPDFReport: TNFeDANFeFPDF;
-    FDANFEClassOwner: TACBrDFeDANFeReport;
+    FDANFEClassOwner: TACBrNFeDANFEClass;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -1359,7 +1360,7 @@ begin
   y := y + 3;
   //$dups = "";
   DupCont := 0;
-  if (textoFatura <> '') {and $this->exibirTextoFatura)} then
+  if (textoFatura <> '') and (TACBrNFeDANFEClass(FNFeUtils.DANFEClassOwner).ExibeCampoFatura) then
   begin
     myH := 4;
     myW := Width;
@@ -2537,12 +2538,13 @@ end;
 
 { TNFeDANFeFPDF }
 
-constructor TNFeDANFeFPDF.Create(ANFe: TNFe);
+constructor TNFeDANFeFPDF.Create(ANFe: TNFe; AACBrNFeDANFEClass : TACBrNFeDANFEClass);
 var
   LFormatSettings: TFormatSettings;
 begin
   inherited Create;
-  FNFeUtils := TNFeUtilsFPDF.Create(ANFe);
+  FNFeUtils := TNFeUtilsFPDF.Create(ANFe, AACBrNFeDANFEClass);
+  Self.FDANFEClassOwner := AACBrNFeDANFEClass;
   {$IFDEF HAS_FORMATSETTINGS}
     LFormatSettings := CreateFormatSettings;
   {$ENDIF}
@@ -2608,7 +2610,8 @@ begin
     AddBand(TBlocoLocalRetirada.Create(FNFeUtils));
     AddBand(TBlocoLocalEntrega.Create(FNFeUtils));
     AddBand(TBlocoFaturaDuplicatas.Create(FNFeUtils));
-    AddBand(TBlocoPagamentos.Create(FNFeUtils));
+    if (FDANFEClassOwner.ExibeCampoDePagamento = eipQuadro) then
+      AddBand(TBlocoPagamentos.Create(FNFeUtils));
     AddBand(TBlocoCalculoImposto.Create(FNFeUtils));
     AddBand(TBlocoTransporte.Create(FNFeUtils));
     AddBand(TBlocoProdutosServicos.Create(FNFeUtils));
@@ -2664,8 +2667,9 @@ begin
   for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count -1 do
   begin
     LNFe := TACBrNFe(ACBrNFe).NotasFiscais[I].NFe;
-    Report := TNFeDANFeFPDF.Create(LNFe);
-    TNFeDANFeFPDF(Report).FDANFEClassOwner := TACBrNFe(ACBrNFe).DANFE;
+    Report := TNFeDANFeFPDF.Create(LNFe,TACBrNFeDANFEClass(TACBrNFe(ACBrNFe).DANFE));
+
+
     //TNFeDANFeFPDF(Report).PosCanhoto := TNFeDANFeFPDF(TACBrNFe(ACBrNFe).DANFE).PosCanhoto;
 
     TNFeDANFeFPDF(Report).MensagemRodape := Self.Sistema;

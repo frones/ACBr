@@ -331,7 +331,7 @@ var
   aCarteira, wLinha, sNossoNumero, sDigitoNossoNumero, sTipoBoleto: String;
   aPercMulta: Double;
   LBanco, LTipoEmissaoBoleto, LAvisoDebitoAuto, LQtdePagamento, LInstrucoesProtesto,
-  LMensagemCedente : String;
+  LMensagemCedente, LDebitoAutomatico, LTipoAvalista : String;
 
 begin
    with ACBrTitulo do
@@ -361,17 +361,25 @@ begin
      { Converte valor em moeda para percentual, pois o arquivo só permite % }
      aPercMulta := ConverterMultaPercentual(ACBrTitulo);
 
+     {Tipo de Avalista}
+     LTipoAvalista := DefineTipoSacadoAvalista(ACBrTitulo);
+
       if LayoutVersaoArquivo = 002 then // Grafeno
       begin
         LBanco              := '274';
         LQtdePagamento      := '01';
+        LDebitoAutomatico   := ' ';
+        LMensagemCedente    := PadRight( MensagemCedente, 60 );
       end
       else
       begin
         LTipoEmissaoBoleto  := sTipoBoleto;
         LAvisoDebitoAuto    := '2';
+        LDebitoAutomatico   := 'N';
         LInstrucoesProtesto := sProtesto;
-        LMensagemCedente    := PadRight( MensagemCedente, 60 );
+        LMensagemCedente    := LTipoAvalista                                             + // 335 a 335 - Tipo de Inscrição 0 isento 1 cpf 2 cnpj 3 pis/pasep 9 outros
+                               PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0') + // 336 a 350 - Número de Inscrição do Avalista
+                               PadRight(Sacado.SacadoAvalista.NomeAvalista, 40, ' ');      // 351 a 394 - Nome do Avalista
       end;
 
 
@@ -400,7 +408,7 @@ begin
        sDigitoNossoNumero                                      +  // 082 a 082 - Digito Identificação do Titulo
        IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +  // 083 a 092 - Desconto Bonificação por dia
        PadRight(LTipoEmissaoBoleto,1)                          +  // 093 a 093 - Condicao para emissao da papeleta cobranca  Tipo Boleto(Quem emite)
-       ' '                                                     +  // 094 a 094 - Identificação se emite boleto para débito automático
+       LDebitoAutomatico                                       +  // 094 a 094 - Identificação se emite boleto para débito automático
        Space(10)                                               +  // 095 a 104 - Identificação Operação do Banco
        ' '                                                     +  // 105 a 105 - Ind. Rateio de Credito
        PadRight(LAvisoDebitoAuto,1)                            +  // 106 a 106 - Aviso de Debito Aut.: 2=Não emite aviso
@@ -422,7 +430,7 @@ begin
        IntToStrZero( round( ValorIOF * 100 ), 13)              +  // 193 a 205 - Valor IOF
        IntToStrZero( round( ValorAbatimento * 100 ), 13)       +  // 206 a 218 - Valor Abatimento
        sTipoSacado                                             +  // 219 a 220 - Tipo de Inscrição 01 cpf 02 cnpj
-       PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')              +  // 221 a 234 - Tipo de Inscrição + Número de Inscrição do Pagador
+       PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')              +  // 221 a 234 - Número de Inscrição do Pagador
        PadRight( Sacado.NomeSacado, 40, ' ')                   +  // 235 a 274 - Nome do Pagador
        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '  +
          Sacado.Complemento, 40)                               +  // 275 a 314

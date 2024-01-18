@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Victor H Gonzales - Pandaaa                     }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -128,8 +128,11 @@ begin
             FResposta.MotivoSituacaoCad    := LJsonObject.Values['motivo_situacao_cadastral'].AsString;
 
             Result := true;
+          end else
+          begin
+            if (Trim(LJsonObject.Values['message'].AsString) <> '') then
+              raise EACBrConsultaCNPJWSException.Create('Erro:'+IntToStr(HTTPSend.ResultCode) + ' - ' +LJsonObject.Values['message'].AsString);
           end;
-
         end;
       finally
         LJSon.Free;

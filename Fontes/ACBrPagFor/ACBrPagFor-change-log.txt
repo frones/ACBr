@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/01/2024
+--- CNAB240.GravarTxtRemessa ---
+[-] Incluído o incremento do sequencial de lote nos Segmentos W e Z.
+   Por: Italo Giurizzato Junior
 --- ACBrPagForConversao ---
 [*] TK-2011 Inclusão dos bancos: 380-PicPay e 536-Neon
    Por: Carlos Solla

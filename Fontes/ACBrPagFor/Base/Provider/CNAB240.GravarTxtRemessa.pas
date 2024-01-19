@@ -921,6 +921,7 @@ begin
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
       GravarCampo(FQtdeLotes, 4, tcInt);
@@ -967,6 +968,7 @@ begin
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDeLote);
 
       GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
       GravarCampo(FQtdeLotes, 4, tcInt);

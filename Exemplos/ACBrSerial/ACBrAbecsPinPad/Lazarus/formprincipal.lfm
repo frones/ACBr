@@ -1,0 +1,90 @@
+object Form1: TForm1
+  Left = 651
+  Height = 301
+  Top = 304
+  Width = 256
+  Caption = 'Teste ABECS PinPad'
+  ClientHeight = 301
+  ClientWidth = 256
+  OnCreate = FormCreate
+  LCLVersion = '3.0.0.3'
+  object edPorta: TEdit
+    Left = 19
+    Height = 23
+    Top = 32
+    Width = 211
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 0
+    Text = 'COM8'
+  end
+  object Label1: TLabel
+    Left = 19
+    Height = 15
+    Top = 13
+    Width = 28
+    Caption = 'Porta'
+  end
+  object btAtivar: TButton
+    Left = 19
+    Height = 25
+    Top = 70
+    Width = 75
+    Caption = 'Ativar'
+    TabOrder = 1
+    OnClick = btAtivarClick
+  end
+  object btDesativar: TButton
+    Left = 109
+    Height = 25
+    Top = 70
+    Width = 75
+    Caption = 'Desativar'
+    TabOrder = 2
+    OnClick = btDesativarClick
+  end
+  object btOPN: TButton
+    Left = 19
+    Height = 25
+    Top = 134
+    Width = 75
+    Caption = 'OPN'
+    TabOrder = 3
+    OnClick = btOPNClick
+  end
+  object btCLO: TButton
+    Left = 109
+    Height = 25
+    Top = 134
+    Width = 75
+    Caption = 'CLO'
+    TabOrder = 4
+    OnClick = btCLOClick
+  end
+  object btGIX: TButton
+    Left = 19
+    Height = 25
+    Top = 168
+    Width = 75
+    Caption = 'GIX'
+    TabOrder = 5
+    OnClick = btGIXClick
+  end
+  object btCLX: TButton
+    Left = 109
+    Height = 25
+    Top = 168
+    Width = 75
+    Caption = 'CLX'
+    TabOrder = 6
+    OnClick = btCLXClick
+  end
+  object btMediaLoad: TButton
+    Left = 19
+    Height = 25
+    Top = 200
+    Width = 75
+    Caption = 'Media Load'
+    TabOrder = 7
+    OnClick = btMediaLoadClick
+  end
+end

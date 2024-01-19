@@ -53,8 +53,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/01/2024
+-- pcesS1280.pas --
+[*] Corrigida a geração do grupo infoAtivConcom, do evento S-1280, para ser opcional, consideranto fatorMes
+  Por: Renato Rubinho
+
+19/01/2024
 -- pcesGerador.pas --
-[*] Corrigida geração do grupo pprend, do evento S-2200, consideranto NrInsc ou cnpjEntQual
+[*] Corrigida geração do grupo aprend, do evento S-2200, consideranto NrInsc ou cnpjEntQual
   Por: HugoH
 
 15/01/2024

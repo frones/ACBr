@@ -244,12 +244,15 @@ end;
 
 procedure TEvtInfoComplPer.GerarInfoAtivConcom;
 begin
-  Gerador.wGrupo('infoAtivConcom');
+  if InfoAtivConcom.fatorMes <> 0 then
+  begin
+    Gerador.wGrupo('infoAtivConcom');
 
-  Gerador.wCampo(tcDe2, '', 'fatorMes', 1, 5, 1, InfoAtivConcom.fatorMes);
-  Gerador.wCampo(tcDe2, '', 'fator13',  1, 5, 1, InfoAtivConcom.fator13);
+    Gerador.wCampo(tcDe2, '', 'fatorMes', 1, 5, 1, InfoAtivConcom.fatorMes);
+    Gerador.wCampo(tcDe2, '', 'fator13',  1, 5, 1, InfoAtivConcom.fator13);
 
-  Gerador.wGrupo('/infoAtivConcom');
+    Gerador.wGrupo('/infoAtivConcom');
+  end;
 end;
 
 procedure TEvtInfoComplPer.GerarinfoPercTransf11096;

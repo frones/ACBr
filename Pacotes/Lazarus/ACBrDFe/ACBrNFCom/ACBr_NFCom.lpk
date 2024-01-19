@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_NFCom"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Italo Giurizzato Junior - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom;..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base;..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos;..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFCom\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+        </CompilerMessages>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Nota Fiscal de Serviço de Comunicação/Telecomunicações - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="19">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFCom.pas"/>
+        <UnitName Value="ACBrNFCom"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFComReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFComReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFComNotasFiscais.pas"/>
+        <UnitName Value="ACBrNFComNotasFiscais"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFComConfiguracoes.pas"/>
+        <UnitName Value="ACBrNFComConfiguracoes"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFComWebServices.pas"/>
+        <UnitName Value="ACBrNFComWebServices"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\ACBrNFComDANFComClass.pas"/>
+        <UnitName Value="ACBrNFComDANFComClass"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComClass.pas"/>
+        <UnitName Value="ACBrNFComClass"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComConsts.pas"/>
+        <UnitName Value="ACBrNFComConsts"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComConversao.pas"/>
+        <UnitName Value="ACBrNFComConversao"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComProc.pas"/>
+        <UnitName Value="ACBrNFComProc"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlReader.pas"/>
+        <UnitName Value="ACBrNFComXmlReader"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlWriter.pas"/>
+        <UnitName Value="ACBrNFComXmlWriter"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComConsSit.pas"/>
+        <UnitName Value="ACBrNFComConsSit"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComConsStatServ.pas"/>
+        <UnitName Value="ACBrNFComConsStatServ"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEnvEvento.pas"/>
+        <UnitName Value="ACBrNFComEnvEvento"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEventoClass.pas"/>
+        <UnitName Value="ACBrNFComEventoClass"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetConsSit.pas"/>
+        <UnitName Value="ACBrNFComRetConsSit"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetConsStatServ.pas"/>
+        <UnitName Value="ACBrNFComRetConsStatServ"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetEnvEvento.pas"/>
+        <UnitName Value="ACBrNFComRetEnvEvento"/>
+      </Item19>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

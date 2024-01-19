@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{															                                      				   }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -51,6 +51,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+19/01/2024
+-- pcesGerador.pas --
+[*] Corrigida geração do grupo pprend, do evento S-2200, consideranto NrInsc ou cnpjEntQual
+  Por: HugoH
 
 15/01/2024
 -- pcesConversaoeSocial.pas, pcesS5011.pas  --

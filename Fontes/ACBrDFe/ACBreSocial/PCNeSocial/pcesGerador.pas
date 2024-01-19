@@ -1424,7 +1424,7 @@ end;
 
 procedure TeSocialEvento.GerarInfoAprend(pAprend: TAprend);
 begin
-  if (pAprend.NrInsc <> EmptyStr) then
+  if (pAprend.NrInsc <> EmptyStr) or (pAprend.cnpjEntQual <> EmptyStr) then
   begin
     Gerador.wGrupo('aprend');
 
@@ -1433,9 +1433,12 @@ begin
       Gerador.wCampo(tcStr, '', 'indAprend',   1,  1, 1, eStpIndAprendToStr(pAprend.indAprend));
       Gerador.wCampo(tcStr, '', 'cnpjEntQual', 0, 15, 0, pAprend.cnpjEntQual);
     end;
-    
-    Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(pAprend.TpInsc));
-    Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, pAprend.NrInsc);
+
+    if pAprend.NrInsc <> EmptyStr then
+    begin
+      Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(pAprend.TpInsc));
+      Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, pAprend.NrInsc);
+    end;
 
     if VersaoDF >= veS01_02_00 then
       Gerador.wCampo(tcStr, '', 'cnpjPrat', 0, 15, 0, pAprend.cnpjPrat);

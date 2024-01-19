@@ -1557,7 +1557,7 @@ const
   REG_MACHINE_LOCATION = 'System\CurrentControlSet\Control\Session Manager\Environment';
   REG_USER_LOCATION = 'Environment';
 var
-  dwReturnValue: Cardinal;
+  dwReturnValue: {$IfDef CPU64}PDWORD_PTR{$Else}Cardinal{$EndIf};
 begin
   with TRegistry.Create do
   try

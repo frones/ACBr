@@ -510,6 +510,7 @@ type
 
     fLogLevel: Byte;
     fLogFile: String;
+    fLogTranslate: Boolean;
     fIsBusy: Boolean;
     fTimeOut: Integer;
     fSPEKmod: String;
@@ -521,8 +522,8 @@ type
     procedure SetIsEnabled(AValue: Boolean);
     procedure SetPort(AValue: String);
   protected
-    procedure RegisterLog(const AString: AnsiString; Translate: Boolean = True;
-      AddTime: Boolean = True);
+    procedure RegisterLog(const AString: AnsiString; AddTime: Boolean = True);
+    function TranslateUnprintable(const ABinaryString: AnsiString): String;
     procedure DoException(AException: Exception); overload;
     procedure DoException(const AMsg: String); overload;
 
@@ -554,14 +555,19 @@ type
 
     property LogFile: String read fLogFile write fLogFile;
     property LogLevel: Byte read fLogLevel write fLogLevel default 2;
+    property LogTranslate: Boolean read fLogTranslate write fLogTranslate default True;
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
 
+    // Control Commands
     procedure OPN; overload;
     procedure OPN(const OPN_MOD: String; const OPN_EXP: String); overload;
-    procedure CLO(const AMsgToDisplay: String = ''; const ALineBreakChar: Char = '|');
-    procedure CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);
+    procedure GIN(const GIN_ACQIDX: Byte = 0);
     procedure GIX; overload;
     procedure GIX(PP_DATA: array of Word); overload;
+    procedure CLO(const AMsgToDisplay: String = ''; const ALineBreakChar: Char = '|');
+    procedure CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);
+
+    // Multimidia Commands
     procedure MLI(const ASPE_MFNAME: String; const ASPE_MFINFO: AnsiString); overload;
     procedure MLI(const ASPE_MFNAME: String; FileSize: Int64; CRC: Word; FileType: Byte); overload;
     procedure MLR(ASPE_DATAIN: TStream);
@@ -570,8 +576,8 @@ type
     procedure DMF(const ASPE_MFNAME: String); overload;
     procedure DMF(LIST_SPE_MFNAME: array of  String); overload;
     procedure DSI(const ASPE_MFNAME: String);
-
     procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
+
   end ;
 
   function ReturnStatusCodeDescription(AStatus: Integer): String;
@@ -1350,6 +1356,7 @@ begin
   inherited Create(AOwner);
   fLogFile := '';
   fLogLevel := 2;
+  fLogTranslate := True;
   fTimeOut := TIMEOUT_RSP;
   fOnWriteLog := nil;
   ClearSecureData;
@@ -1462,7 +1469,7 @@ begin
 end;
 
 procedure TACBrAbecsPinPad.RegisterLog(const AString: AnsiString;
-  Translate: Boolean; AddTime: Boolean);
+  AddTime: Boolean);
 var
   Done: Boolean;
   s: AnsiString;
@@ -1470,8 +1477,8 @@ begin
   if (Self.LogFile = '') and (not Assigned(Self.OnWriteLog)) then
     Exit;
 
-  if Translate then
-    s := TranslateUnprintable(AString)
+  if Self.LogTranslate then
+    s := Self.TranslateUnprintable(AString)
   else
     s := AString;
 
@@ -1487,6 +1494,27 @@ begin
 
   if (not Done) and (Self.LogFile <> '') then
     WriteToTXT(Self.LogFile, s, True, True, True);
+end;
+
+function TACBrAbecsPinPad.TranslateUnprintable(const ABinaryString: AnsiString): String;
+var
+  ch: String;
+  i: Integer;
+  b: Byte;
+begin
+  Result := '';
+  for i := 1 to Length(ABinaryString) do
+  begin
+    b := Ord(ABinaryString[I]) ;
+
+    case ABinaryString[i] of
+       #32..#126 : ch := String(ABinaryString[i]);
+    else ;
+      ch := '#'+IntToStr(b)+' ';
+    end;
+
+    Result := Result + ch;
+  end;
 end;
 
 procedure TACBrAbecsPinPad.DoException(AException: Exception);
@@ -1514,6 +1542,9 @@ begin
     RegisterLog(Format('ExecCommand: %s', [fCommand.ID]));
   fIsBusy := True;
   try
+    if (Self.LogLevel > 3) then
+      LogApplicationLayer(fCommand);
+
     BlockStart := -1;
     while (BlockStart < fCommand.Blocks.Count) do
     begin
@@ -1555,17 +1586,16 @@ var
 begin
   BlocksRead := 0;
   if (Self.LogLevel > 2) then
-    RegisterLog(Format('  SendCommand: %s', [fCommand.ID]));
+    RegisterLog(Format('  SendCommand: %s, BlockStart: %d', [fCommand.ID, BlockStart]));
 
   if not Self.IsEnabled then
     DoException(CERR_NOTENABLED);
 
-  if (Self.LogLevel > 3) then
-    LogApplicationLayer(fCommand);
-
   s := fCommand.GetDataPacket(BlockStart, BlocksRead);
   pkt := TACBrAbecsPacket.Create(s);
   try
+    if (Self.LogLevel > 2) then
+      RegisterLog(Format('    DataPacket, %d Bytes, %d Blocks', [Length(pkt.Data), BlocksRead]));
     s := pkt.AsString;
     Self.Device.EnviaString(s);
     if (Self.LogLevel > 1) then
@@ -1663,7 +1693,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
         if UserCancelled then
         begin
           if (Self.LogLevel > 1) then
-            RegisterLog('  UserCancelled');
+            RegisterLog('    UserCancelled');
 
           if SendCAN then
             DoException(CERR_CANCELLED_BY_USER)
@@ -1675,7 +1705,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
       try
         b := Self.Device.LeByte(500);
         if (Self.LogLevel > 2) then
-          RegisterLog(Format('  RX <- %d', [b]));
+          RegisterLog(Format('    RX <- %d', [b]));
       except
       end;
     until (b = SYN);
@@ -1825,6 +1855,46 @@ begin
   //TODO: A LOT OF TO DO....
 end;
 
+procedure TACBrAbecsPinPad.GIN(const GIN_ACQIDX: Byte);
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('GIN( '+IntToStr(GIN_ACQIDX)+' )');
+  fCommand.Clear;
+  fCommand.ID := 'GIN';
+  fCommand.AddParamFromData(Format('%.2d', [GIN_ACQIDX]));
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.GIX;
+begin
+  GIX([]);
+end;
+
+procedure TACBrAbecsPinPad.GIX(PP_DATA: array of Word);
+var
+  s: AnsiString;
+  i: Integer;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('GIX');
+  fCommand.Clear;
+  fCommand.ID := 'GIX';
+
+  s := '';
+  for i := Low(PP_DATA) to High(PP_DATA) do
+    s := s + IntToBEStr(PP_DATA[i]);
+
+  if (s <> '') then
+  begin
+    if (Self.LogLevel > 1) then
+      RegisterLog('   '+s);
+
+    fCommand.AddParamFromTagValue(SPE_IDLIST, s);
+  end;
+
+  ExecCommand;
+end;
+
 procedure TACBrAbecsPinPad.CLO(const AMsgToDisplay: String;
   const ALineBreakChar: Char);
 var
@@ -1877,36 +1947,6 @@ begin
   ClearSecureData;
 end;
 
-procedure TACBrAbecsPinPad.GIX;
-begin
-  GIX([]);
-end;
-
-procedure TACBrAbecsPinPad.GIX(PP_DATA: array of Word);
-var
-  s: AnsiString;
-  i: Integer;
-begin
-  if (Self.LogLevel > 0) then
-    RegisterLog('GIX');
-  fCommand.Clear;
-  fCommand.ID := 'GIX';
-
-  s := '';
-  for i := Low(PP_DATA) to High(PP_DATA) do
-    s := s + IntToBEStr(PP_DATA[i]);
-
-  if (s <> '') then
-  begin
-    if (Self.LogLevel > 1) then
-      RegisterLog('   '+s);
-
-    fCommand.AddParamFromTagValue(SPE_IDLIST, s);
-  end;
-
-  ExecCommand;
-end;
-
 procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String;
   const ASPE_MFINFO: AnsiString);
 var
@@ -1947,7 +1987,7 @@ end;
 procedure TACBrAbecsPinPad.MLR(ASPE_DATAIN: TStream);
 begin
   if (Self.LogLevel > 0) then
-    RegisterLog('MLR');
+    RegisterLog(Format('MLR( %d Bytes )', [ASPE_DATAIN.Size]));
   fCommand.Clear;
   fCommand.ID := 'MLR';
   fCommand.AddParamFromTagValue(SPE_DATAIN, ASPE_DATAIN);

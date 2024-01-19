@@ -566,6 +566,10 @@ type
     procedure MLI(const ASPE_MFNAME: String; FileSize: Int64; CRC: Word; FileType: Byte); overload;
     procedure MLR(ASPE_DATAIN: TStream);
     procedure MLE;
+    procedure LMF;
+    procedure DMF(const ASPE_MFNAME: String); overload;
+    procedure DMF(LIST_SPE_MFNAME: array of  String); overload;
+    procedure DSI(const ASPE_MFNAME: String);
 
     procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
   end ;
@@ -1544,12 +1548,12 @@ begin
   end;
 end;
 
-procedure TACBrAbecsPinPad.SendCommand(const BlockStart: Integer; out
-  BlocksRead: Integer);
+procedure TACBrAbecsPinPad.SendCommand(const BlockStart: Integer; out BlocksRead: Integer);
 var
   pkt: TACBrAbecsPacket;
   s: AnsiString;
 begin
+  BlocksRead := 0;
   if (Self.LogLevel > 2) then
     RegisterLog(Format('  SendCommand: %s', [fCommand.ID]));
 
@@ -1956,6 +1960,54 @@ begin
     RegisterLog('MLE');
   fCommand.Clear;
   fCommand.ID := 'MLE';
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.LMF;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('LMF');
+  fCommand.Clear;
+  fCommand.ID := 'LMF';
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.DMF(const ASPE_MFNAME: String);
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('DMF( '+ASPE_MFNAME+' )');
+  fCommand.Clear;
+  fCommand.ID := 'DMF';
+  fCommand.AddParamFromTagValue(SPE_MFNAME, ASPE_MFNAME);
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.DMF(LIST_SPE_MFNAME: array of String);
+var
+  s: String;
+  i: Integer;
+begin
+  s := '';
+  for i := Low(LIST_SPE_MFNAME) to High(LIST_SPE_MFNAME) do
+    s := s + LIST_SPE_MFNAME[i]+', ';
+
+  if (Self.LogLevel > 0) then
+    RegisterLog('DMF( '+copy(s, 1, Length(s)-2)+' )');
+
+  fCommand.Clear;
+  fCommand.ID := 'DMF';
+  for i := Low(LIST_SPE_MFNAME) to High(LIST_SPE_MFNAME) do
+    fCommand.AddParamFromTagValue(SPE_MFNAME, LIST_SPE_MFNAME[i]);
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.DSI(const ASPE_MFNAME: String);
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('DSI( '+ASPE_MFNAME+' )');
+  fCommand.Clear;
+  fCommand.ID := 'DSI';
+  fCommand.AddParamFromTagValue(SPE_MFNAME, ASPE_MFNAME);
   ExecCommand;
 end;
 

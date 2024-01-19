@@ -1081,6 +1081,8 @@ begin
 end;
 
 procedure TACBrNFSeXWebservice.EnvioInterno(var CodigoErro, CodigoInterno: Integer);
+const
+  UTF_8 = #$C3;
 begin
   ConfigurarHttpClient;
 
@@ -1101,11 +1103,15 @@ begin
 
     if ((Pos('iso-8859-1', LowerCase(FPRetorno)) > 0) or
        (Pos('encoding', LowerCase(FPRetorno)) = 0)) and
-       StringIsXML(FPRetorno)  then
+       StringIsXML(FPRetorno) then
     begin
-      FPRetorno := RemoverDeclaracaoXML(FPRetorno);
-      FPRetorno := AnsiToNativeString(FPRetorno);
-      FPRetorno := NativeStringToUTF8(FPRetorno);
+      if Pos(UTF_8, FPRetorno) = 0 then
+      begin
+        FPRetorno := RemoverDeclaracaoXML(FPRetorno);
+        FPRetorno := AnsiToNativeString(FPRetorno);
+        FPRetorno := NativeStringToUTF8(FPRetorno);
+      end;
+
       FPRetorno := '<?xml version="1.0" encoding="UTF-8"?>' + FPRetorno;
     end;
 

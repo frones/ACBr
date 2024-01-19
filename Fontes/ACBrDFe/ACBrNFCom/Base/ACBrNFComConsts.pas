@@ -49,6 +49,19 @@ const
 resourcestring
   NAME_SPACE_NFCom = 'xmlns="http://www.portalfiscal.inf.br/nfcom"';
 
+  // Descrição de Mensagens de Erro - Futuramente vai para a unit ACBrDFeConsts
+  ERR_MSG_MAIOR = 'Tamanho maior que o máximo permitido';
+  ERR_MSG_MENOR = 'Tamanho menor que o mínimo permitido';
+  ERR_MSG_VAZIO = 'Nenhum valor informado';
+  ERR_MSG_INVALIDO = 'Conteúdo inválido';
+  ERR_MSG_MAXIMO_DECIMAIS = 'Numero máximo de casas decimais permitidas';
+  ERR_MSG_GERAR_CHAVE = 'Erro ao gerar a chave da DFe!';
+  ERR_MSG_FINAL_MENOR_INICIAL = 'O numero final não pode ser menor que o inicial';
+  ERR_MSG_ARQUIVO_NAO_ENCONTRADO = 'Arquivo não encontrado';
+  ERR_MSG_SOMENTE_UM = 'Somente um campo deve ser preenchido';
+  ERR_MSG_MAIOR_MAXIMO = 'Número de ocorrências maior que o máximo permitido - Máximo ';
+  ERR_MSG_MENOR_MINIMO = 'Número de ocorrências menor que o mínimo permitido - Mínimo ';
+
   // Descrição de Identificação do Documento Fiscal - Futuramente vai para a unit ACBrDFeConsts
   DSC_TPAMB = 'Identificação do Ambiente';
   DSC_CUF = 'Código IBGE da UF';

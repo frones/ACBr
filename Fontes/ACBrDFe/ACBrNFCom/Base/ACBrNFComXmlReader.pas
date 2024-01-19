@@ -441,7 +441,7 @@ begin
 
   Item.Prod.cProd := ObterConteudo(ANode.Childrens.FindAnyNs('cProd'), tcStr);
   Item.Prod.xProd := ObterConteudo(ANode.Childrens.FindAnyNs('xProd'), tcStr);
-  Item.Prod.cClass := ObterConteudo(ANode.Childrens.FindAnyNs('cClass'), tcInt);
+  Item.Prod.cClass := ObterConteudo(ANode.Childrens.FindAnyNs('cClass'), tcStr);
   Item.Prod.CFOP := ObterConteudo(ANode.Childrens.FindAnyNs('CFOP'), tcInt);
   Item.Prod.CNPJLD := ObterConteudo(ANode.Childrens.FindAnyNs('CNPJLD'), tcStr);
   Item.Prod.uMed := StrTouMed(ok, ObterConteudo(ANode.Childrens.FindAnyNs('uMed'), tcStr));
@@ -497,6 +497,7 @@ begin
     Item.Imposto.ICMSUFDest[i].vFCPUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vFCPUFDest'), tcDe2);
     Item.Imposto.ICMSUFDest[i].vICMSUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vICMSUFDest'), tcDe2);
     Item.Imposto.ICMSUFDest[i].vICMSUFEmi := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vICMSUFEmi'), tcDe2);
+    Item.Imposto.ICMSUFDest[i].cBenefUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('cBenefUFDest'), tcStr);
   end;
 
   AuxNode := ANode.Childrens.FindAnyNs('PIS');

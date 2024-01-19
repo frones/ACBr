@@ -32,87 +32,109 @@
 
 {$I ACBr.inc}
 
-unit ACBrDFeConsStatServ;
+unit ACBrNFComRetConsStatServ;
 
 interface
 
 uses
-  SysUtils, Classes,
-  ACBrXmlBase;
+  SysUtils, Classes, DateUtils,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase, ACBrXmlBase;
 
 type
 
-  TConsStatServ = class
+  TRetConsStatServ = class(TObject)
   private
+    Fversao: string;
     FtpAmb: TACBrTipoAmbiente;
+    FdhRecbto: TDateTime;
+    FcStat: Integer;
+    FxMotivo: string;
     FcUF: Integer;
-    FVersao: string;
-    FNameSpace: string;
+    FverAplic: string;
+    FtMed: Integer;
+    FdhRetorno: TDateTime;
+    FxObs: string;
     FtagGrupoMsg: string;
-    FGerarcUF: Boolean;
+
+    FXmlRetorno: string;
   public
-    constructor Create(const AVersao, ANameSpace, AtagGrupoMsg: string; AGerarcUF: Boolean);
+    constructor Create(const AtagGrupoMsg: string);
     destructor Destroy; override;
 
-    function GerarXML: string;
-    function ObterNomeArquivo: string;
+    function LerXml: Boolean;
 
+    property versao: string read Fversao write Fversao;
     property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
+    property verAplic: string read FverAplic write FverAplic;
+    property cStat: Integer read FcStat write FcStat;
+    property xMotivo: string read FxMotivo write FxMotivo;
     property cUF: Integer read FcUF write FcUF;
+    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
+    property tMed: Integer read FtMed write FtMed;
+    property dhRetorno: TDateTime read FdhRetorno write FdhRetorno;
+    property xObs: string read FxObs write FxObs;
+
+    property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
   end;
 
 implementation
 
 uses
-  ACBrUtil.Strings;
+  ACBrUtil.Strings,
+  ACBrXmlDocument;
 
-{ TConsStatServ }
+{ TRetConsStatServ }
 
-constructor TConsStatServ.Create(const AVersao, ANameSpace, AtagGrupoMsg: string; AGerarcUF: Boolean);
+constructor TRetConsStatServ.Create(const AtagGrupoMsg: string);
 begin
   inherited Create;
 
-  FVersao := AVersao;
-  FNameSpace := ANameSpace;
   FtagGrupoMsg := AtagGrupoMsg;
-  FGerarcUF := AGerarcUF;
 end;
 
-destructor TConsStatServ.Destroy;
+destructor TRetConsStatServ.Destroy;
 begin
 
   inherited;
 end;
 
-function TConsStatServ.ObterNomeArquivo: string;
+function TRetConsStatServ.LerXml: Boolean;
 var
-  DataHora: TDateTime;
-  Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: string;
+  Document: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  ok: Boolean;
 begin
-  Datahora:=now;
-  DecodeTime(DataHora, Hour, Min, Sec, Milli);
-  DecodeDate(DataHora, Year, Month, Day);
-  AAAAMMDDTHHMMSS := Poem_Zeros(Year, 4) + Poem_Zeros(Month, 2) + Poem_Zeros(Day, 2) +
-    Poem_Zeros(Hour, 2) + Poem_Zeros(Min, 2) + Poem_Zeros(Sec, 2);
+  Document := TACBrXmlDocument.Create;
 
-  Result := AAAAMMDDTHHMMSS + '-ped-sta.xml';
-end;
+  try
+    Document.LoadFromXml(XmlRetorno);
 
-function TConsStatServ.GerarXML: string;
-var
-  xUF: string;
-begin
-  xUF := '';
+    ANode := Document.Root;
 
-  if FGerarcUF then
-    xUF := '<cUF>' + IntToStr(cUF) + '</cUF>';
+    if ANode <> nil then
+    begin
+      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(Anode.Childrens.FindAnyNs('tpAmb'), tcStr));
+      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+      xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
+      cUF := ObterConteudoTag(Anode.Childrens.FindAnyNs('cUF'), tcInt);
+      dhRecbto := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+      tMed := ObterConteudoTag(ANode.Childrens.FindAnyNs('tMed'), tcInt);
+      dhRetorno := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRetorno'), tcDatHor);
+      xObs := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xObs'), tcStr));
+    end;
 
-  Result := '<consStatServ' + FtagGrupoMsg + ' ' + FNameSpace + ' versao="' + Fversao + '">' +
-              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
-              xUF +
-              '<xServ>STATUS</xServ>' +
-            '</consStatServ' + FtagGrupoMsg + '>';
+    FreeAndNil(Document);
+    Result := True;
+  except
+    Result := False;
+  end;
 end;
 
 end.

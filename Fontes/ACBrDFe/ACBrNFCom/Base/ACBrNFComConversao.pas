@@ -38,11 +38,10 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
-  ACBrDFeConversao,
+//  ACBrDFeConversao,
   pcnConversao;
 
 type
-
   TVersaoNFCom = (ve100);
 
   TStatusNFCom = (stNFComIdle, stNFComStatusServico, stNFComRecepcao,
@@ -406,14 +405,14 @@ end;
 
 function CSTICMSToStr(const t: TCSTIcms): string;
 begin
-  result := EnumeradoToStr(t, ['00', '20', '40', '41', '51', '90', '90'],
+  result := EnumeradoToStr(t, ['00', '20', '40', '41', '51', '90', 'SN'],
                               [cst00, cst20, cst40, cst41, cst51, cst90,
                                cstICMSSN]);
 end;
 
 function StrToCSTICMS(out ok: boolean; const s: string): TCSTIcms;
 begin
-  result := StrToEnumerado(ok, s, ['00', '20', '40', '41', '51', '90', '90'],
+  result := StrToEnumerado(ok, s, ['00', '20', '40', '41', '51', '90', 'SN'],
                               [cst00, cst20, cst40, cst41, cst51, cst90,
                                cstICMSSN]);
 end;

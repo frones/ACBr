@@ -62,7 +62,6 @@ type
     property ValidarInscricoes: boolean read FValidarInscricoes write FValidarInscricoes;
     property ValidarListaServicos: boolean read FValidarListaServicos write FValidarListaServicos;
     property CamposFatObrigatorios: boolean read FCamposFatObrigatorios write FCamposFatObrigatorios;
-
   end;
 
   TNFComXmlWriter = class(TACBrXmlWriter)
@@ -268,15 +267,17 @@ begin
   if Opcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := True;
+
     if Opcoes.GerarTagAssinatura = taSomenteSeAssinada then
       Gerar := ((NFCom.signature.DigestValue <> '') and
                 (NFCom.signature.SignatureValue <> '') and
                 (NFCom.signature.X509Certificate <> ''));
 
     if Opcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
-       Gerar := ((NFCom.signature.DigestValue = '') and
-                 (NFCom.signature.SignatureValue = '') and
-                 (NFCom.signature.X509Certificate = ''));
+      Gerar := ((NFCom.signature.DigestValue = '') and
+                (NFCom.signature.SignatureValue = '') and
+                (NFCom.signature.X509Certificate = ''));
+
     if Gerar then
     begin
       FNFCom.signature.URI := '#NFCom' + OnlyNumber(NFCom.infNFCom.ID);
@@ -367,7 +368,7 @@ begin
   Result.AppendChild(AddNode(tcInt, '#14', 'nSiteAutoriz', 1, 1, 1,
                                      NFCom.Ide.nSiteAutoriz, DSC_NSITEAUTORIZ));
 
-  Result.AppendChild(AddNode(tcInt, '#15', 'cMunFG ', 7, 7, 1,
+  Result.AppendChild(AddNode(tcInt, '#15', 'cMunFG', 7, 7, 1,
                                                  NFCom.ide.cMunFG, DSC_CMUNFG));
 
   if not ValidarMunicipio(NFCom.ide.cMunFG) then
@@ -854,10 +855,10 @@ begin
           Result.AppendChild(AddNode(tcDe2, '#190', 'vBC', 1, 15, 1,
                                                                  vBC, DSC_VBC));
 
-          Result.AppendChild(AddNode(tcDe2, '#191', 'pICMS ', 1, 5, 1,
+          Result.AppendChild(AddNode(tcDe2, '#191', 'pICMS', 1, 5, 1,
                                                              pICMS, DSC_PICMS));
 
-          Result.AppendChild(AddNode(tcDe2, '#192', 'vICMS ', 1, 15, 1,
+          Result.AppendChild(AddNode(tcDe2, '#192', 'vICMS', 1, 15, 1,
                                                              vICMS, DSC_VICMS));
 
           if vICMSDeson > 0 then
@@ -958,6 +959,9 @@ begin
 
     Result[i].AppendChild(AddNode(tcDe2, '#152', 'vICMSUFEmi', 1, 15, 1,
              NFCom.Det[aDet].Imposto.ICMSUFDest[i].vICMSUFEmi, DSC_VICMSUFEMI));
+
+    Result[i].AppendChild(AddNode(tcStr, '#152', 'cBenefUFDest', 10, 10, 0,
+               NFCom.Det[aDet].Imposto.ICMSUFDest[i].cBenefUFDest, DSC_CBENEF));
   end;
 
   if NFCom.Det[aDet].Imposto.ICMSUFDest.Count > 999 then

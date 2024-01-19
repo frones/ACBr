@@ -44,10 +44,11 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  ACBrDFeConversao,
+//  ACBrDFeConversao,
   pcnConversao,
   pcnSignature,
-  ACBrNFComEventoClass, pcnConsts, ACBrNFComConsts;
+  ACBrNFComEventoClass,
+  ACBrNFComConsts;
 
 type
   EventoException = class(Exception);
@@ -61,8 +62,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
-    property signature: Tsignature       read Fsignature    write Fsignature;
+    property InfEvento: TInfEvento read FInfEvento write FInfEvento;
+    property signature: Tsignature read Fsignature write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
@@ -81,8 +82,8 @@ type
   private
     FidLote: Int64;
     FEvento: TInfEventoCollection;
-    FVersao: String;
-    FXml: String;
+    FVersao: string;
+    FXml: string;
 
     procedure SetEvento(const Value: TInfEventoCollection);
   public
@@ -90,15 +91,15 @@ type
     destructor Destroy; override;
 
     function GerarXML: string;
-    function LerXML(const CaminhoArquivo: String): Boolean;
-    function LerXMLFromString(const AXML: String): Boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
-    function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
+    function LerXML(const CaminhoArquivo: string): Boolean;
+    function LerXMLFromString(const AXML: string): Boolean;
+    function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+    function LerFromIni(const AIniString: string; CCe: Boolean = True): Boolean;
 
-    property idLote: Int64                read FidLote  write FidLote;
-    property Evento: TInfEventoCollection read FEvento  write SetEvento;
-    property Versao: String               read FVersao  write FVersao;
-    property Xml: String                  read FXml     write FXml;
+    property idLote: Int64 read FidLote write FidLote;
+    property Evento: TInfEventoCollection read FEvento write SetEvento;
+    property Versao: string read FVersao  write FVersao;
+    property Xml: string read FXml write FXml;
   end;
 
 implementation
@@ -167,7 +168,7 @@ begin
   inherited;
 end;
 
-function TEventoNFCom.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
+function TEventoNFCom.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
 begin
   case tpEvento of
     teCancelamento: Result := IntToStr(Self.idLote) + '-can-eve.xml';
@@ -179,7 +180,7 @@ end;
 function TEventoNFCom.GerarXML: string;
 var
   i: Integer;
-  sDoc, sModelo, CNPJCPF, xEvento: String;
+  sDoc, sModelo, CNPJCPF, xEvento: string;
 begin
   sModelo := Copy(OnlyNumber(Evento.Items[i].InfEvento.chNFCom), 21, 2);
 
@@ -269,7 +270,7 @@ begin
   FEvento.Assign(Value);
 end;
 
-function TEventoNFCom.LerXML(const CaminhoArquivo: String): Boolean;
+function TEventoNFCom.LerXML(const CaminhoArquivo: string): Boolean;
 var
   ArqEvento    : TStringList;
 begin
@@ -282,7 +283,7 @@ begin
   end;
 end;
 
-function TEventoNFCom.LerXMLFromString(const AXML: String): Boolean;
+function TEventoNFCom.LerXMLFromString(const AXML: string): Boolean;
 var
   RetEventoNFCom : TRetEventoNFCom;
 begin
@@ -333,10 +334,10 @@ begin
   end;
 end;
 
-function TEventoNFCom.LerFromIni(const AIniString: String; CCe: Boolean): Boolean;
+function TEventoNFCom.LerFromIni(const AIniString: string; CCe: Boolean): Boolean;
 var
   I: Integer;
-  sSecao, sFim: String;
+  sSecao, sFim: string;
   INIRec: TMemIniFile;
   ok: Boolean;
 begin

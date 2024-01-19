@@ -174,9 +174,9 @@ constructor TGeralConfNFCom.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FVersaoDF     := ve100;
-  FIdCSC        := '';
-  FCSC          := '';
+  FVersaoDF := ve100;
+  FIdCSC := '';
+  FCSC := '';
   FVersaoQRCode := veqr000;
 end;
 
@@ -184,9 +184,9 @@ procedure TGeralConfNFCom.Assign(DeGeralConfNFCom: TGeralConfNFCom);
 begin
   inherited Assign(DeGeralConfNFCom);
 
-  VersaoDF     := DeGeralConfNFCom.VersaoDF;
-  IdCSC        := DeGeralConfNFCom.IdCSC;
-  CSC          := DeGeralConfNFCom.CSC;
+  VersaoDF := DeGeralConfNFCom.VersaoDF;
+  IdCSC := DeGeralConfNFCom.IdCSC;
+  CSC := DeGeralConfNFCom.CSC;
   VersaoQRCode := DeGeralConfNFCom.VersaoQRCode;
 end;
 
@@ -204,9 +204,9 @@ procedure TGeralConfNFCom.LerIni(const AIni: TCustomIniFile);
 begin
   inherited LerIni(AIni);
 
-  IdCSC        := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdCSC', IdCSC);
-  CSC          := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CSC', CSC);
-  VersaoDF     := TVersaoNFCom(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  IdCSC := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdCSC', IdCSC);
+  CSC := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CSC', CSC);
+  VersaoDF := TVersaoNFCom(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
   VersaoQRCode := TVersaoQrCode(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode)));
 end;
 
@@ -237,12 +237,12 @@ constructor TArquivosConfNFCom.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FEmissaoPathNFCom             := False;
-  FSalvarEvento                := False;
-  FNormatizarMunicipios        := False;
-  FPathNFCom                    := '';
-  FPathEvento                  := '';
-  FPathArquivoMunicipios       := '';
+  FEmissaoPathNFCom := False;
+  FSalvarEvento := False;
+  FNormatizarMunicipios := False;
+  FPathNFCom := '';
+  FPathEvento := '';
+  FPathArquivoMunicipios := '';
 end;
 
 destructor TArquivosConfNFCom.Destroy;
@@ -255,12 +255,12 @@ procedure TArquivosConfNFCom.Assign(DeArquivosConfNFCom: TArquivosConfNFCom);
 begin
   inherited Assign(DeArquivosConfNFCom);
 
-  EmissaoPathNFCom             := DeArquivosConfNFCom.EmissaoPathNFCom;
-  SalvarEvento                := DeArquivosConfNFCom.SalvarEvento;
-  NormatizarMunicipios        := DeArquivosConfNFCom.NormatizarMunicipios;
-  PathNFCom                    := DeArquivosConfNFCom.PathNFCom;
-  PathEvento                  := DeArquivosConfNFCom.PathEvento;
-  PathArquivoMunicipios       := DeArquivosConfNFCom.PathArquivoMunicipios;
+  EmissaoPathNFCom := DeArquivosConfNFCom.EmissaoPathNFCom;
+  SalvarEvento := DeArquivosConfNFCom.SalvarEvento;
+  NormatizarMunicipios := DeArquivosConfNFCom.NormatizarMunicipios;
+  PathNFCom := DeArquivosConfNFCom.PathNFCom;
+  PathEvento := DeArquivosConfNFCom.PathEvento;
+  PathArquivoMunicipios := DeArquivosConfNFCom.PathArquivoMunicipios;
 end;
 
 procedure TArquivosConfNFCom.GravarIni(const AIni: TCustomIniFile);

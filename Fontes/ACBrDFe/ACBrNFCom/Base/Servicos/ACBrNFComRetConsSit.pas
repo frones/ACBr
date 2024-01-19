@@ -250,8 +250,6 @@ begin
             procEventoNFCom.Items[i].RetEventoNFCom.LerXml;
           end;
         end;
-
-        Result := True;
       except
         Result := False;
       end;

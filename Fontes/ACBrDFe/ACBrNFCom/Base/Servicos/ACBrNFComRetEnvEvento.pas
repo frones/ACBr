@@ -44,8 +44,8 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
-  ACBrNFComEventoClass,
-  pcnSignature;
+  pcnSignature,
+  ACBrNFComEventoClass;
 
 type
 
@@ -98,7 +98,6 @@ var
   Document: TACBrXmlDocument;
   ANode, ANodeAux: TACBrXmlNode;
   ok: Boolean;
-  i: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 

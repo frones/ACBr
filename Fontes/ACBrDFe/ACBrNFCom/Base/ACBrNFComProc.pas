@@ -94,7 +94,7 @@ type
 implementation
 
 uses
-  ACBrDFeConsts,
+//  ACBrDFeConsts,
   ACBrUtil.Strings,
   ACBrXmlDocument,
   pcnAuxiliar,

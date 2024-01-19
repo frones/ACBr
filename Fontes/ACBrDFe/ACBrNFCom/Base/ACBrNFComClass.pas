@@ -45,7 +45,7 @@ uses
   {$IFEND}
   ACBrBase,
   ACBrXmlBase,
-  ACBrDFeConversao,
+//  ACBrDFeConversao,
   ACBrNFComConversao,
   ACBrNFComProc,
   pcnSignature;
@@ -309,7 +309,7 @@ type
   private
     FcProd: string;
     FxProd: string;
-    FcClass: String;
+    FcClass: string;
     FCFOP: Integer;
     FCNPJLD: string;
     FuMed: TuMed;
@@ -325,7 +325,7 @@ type
 
     property cProd: string read FcProd write FcProd;
     property xProd: string read FxProd write FxProd;
-    property cClass: String read FcClass write FcClass;
+    property cClass: string read FcClass write FcClass;
     property CFOP: Integer read FCFOP write FCFOP;
     property CNPJLD: string read FCNPJLD write FCNPJLD;
     property uMed: TuMed read FuMed write FuMed;
@@ -377,6 +377,7 @@ type
     FvFCPUFDest: Double;
     FvICMSUFDest: Double;
     FvICMSUFEmi: Double;
+    FcBenefUFDest: string;
   public
     procedure Assign(Source: TICMSUFDestCollectionItem);
 
@@ -388,6 +389,7 @@ type
     property vFCPUFDest: Double read FvFCPUFDest write FvFCPUFDest;
     property vICMSUFDest: Double read FvICMSUFDest write FvICMSUFDest;
     property vICMSUFEmi: Double read FvICMSUFEmi write FvICMSUFEmi;
+    property cBenefUFDest: string read FcBenefUFDest write FcBenefUFDest;
   end;
 
   { TICMSUFDestCollection }
@@ -1367,6 +1369,7 @@ begin
   vFCPUFDest := Source.vFCPUFDest;
   vICMSUFDest := Source.vICMSUFDest;
   vICMSUFEmi := Source.vICMSUFEmi;
+  cBenefUFDest := Source.cBenefUFDest;
 end;
 
 { TgNF }

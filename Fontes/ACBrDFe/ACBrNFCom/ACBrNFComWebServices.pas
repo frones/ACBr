@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, dateutils,
   blcksock, synacode,
   ACBrDFe, ACBrDFeWebService,
-  ACBrDFeConversao,
+//  ACBrDFeConversao,
   ACBrXmlBase,
   ACBrNFComNotasFiscais, ACBrNFComConfiguracoes,
   ACBrNFComClass, ACBrNFComConversao, ACBrNFComProc, ACBrNFComRetConsSit,
@@ -352,13 +352,14 @@ type
     function Envia: Boolean;
 
     property ACBrNFCom: TACBrDFe read FACBrNFCom write FACBrNFCom;
-    property StatusServico: TNFComStatusServico read FStatusServico write FStatusServico;
+    property StatusServico: TNFComStatusServico read FStatusServico
+      write FStatusServico;
     property Enviar: TNFComRecepcao read FEnviar write FEnviar;
     property Retorno: TNFComRetRecepcao read FRetorno write FRetorno;
     property Consulta: TNFComConsulta read FConsulta write FConsulta;
     property EnvEvento: TNFComEnvEvento read FEnvEvento write FEnvEvento;
-    property EnvioWebService: TNFComEnvioWebService
-      read FEnvioWebService write FEnvioWebService;
+    property EnvioWebService: TNFComEnvioWebService read FEnvioWebService
+      write FEnvioWebService;
   end;
 
 implementation
@@ -370,8 +371,8 @@ uses
   ACBrCompress, ACBrNFCom, ACBrIntegrador,
   ACBrNFComConsts,
   ACBrNFComConsSit,
-  ACBrDFeConsts,
-//  ACBrDFeConsStatServ, ACBrDFeRetConsStatServ,
+//  ACBrDFeConsts,
+  ACBrNFComConsStatServ, ACBrNFComRetConsStatServ,
   pcnConsReciDFe;
 
 { TNFComWebService }
@@ -488,10 +489,9 @@ begin
 end;
 
 procedure TNFComStatusServico.DefinirDadosMsg;
-//var
-//  ConsStatServ: TConsStatServ;
+var
+  ConsStatServ: TConsStatServ;
 begin
-{
   ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_NFCom,
                                                                 'NFCom', False);
   try
@@ -502,14 +502,12 @@ begin
   finally
     ConsStatServ.Free;
   end;
-  }
 end;
 
 function TNFComStatusServico.TratarResposta: Boolean;
-//var
-//  NFComRetorno: TRetConsStatServ;
+var
+  NFComRetorno: TRetConsStatServ;
 begin
-(*
   FPRetWS := SeparaDadosArray(['nfcomResultMsg'], FPRetornoWS);
 
   VerificarSemResposta;
@@ -553,7 +551,6 @@ begin
   finally
     NFComRetorno.Free;
   end;
-  *)
 end;
 
 function TNFComStatusServico.GerarMsgLog: string;
@@ -919,8 +916,8 @@ begin
 end;
 
 procedure TNFComRetRecepcao.Clear;
-var
-  i, j: Integer;
+//var
+//  i, j: Integer;
 begin
   inherited Clear;
 
@@ -1105,11 +1102,11 @@ end;
 
 function TNFComRetRecepcao.TratarRespostaFinal: Boolean;
 var
-  I, J: integer;
-  AProcNFCom: TProcNFCom;
+  I{, J}: integer;
+//  AProcNFCom: TProcNFCom;
 //  AInfProt: TProtDFeCollection;
-  SalvarXML: Boolean;
-  NomeXMLSalvo: string;
+//  SalvarXML: Boolean;
+//  NomeXMLSalvo: string;
 begin
   Result := False;
 {
@@ -1439,7 +1436,9 @@ var
   SalvarXML, NFCancelada, Atualiza: Boolean;
   aEventos, sPathNFCom, NomeXMLSalvo: string;
   AProcNFCom: TProcNFCom;
-  I, J, Inicio, Fim: integer;
+  I,
+//  J,
+  Inicio, Fim: integer;
   dhEmissao: TDateTime;
 begin
   NFComRetorno := TRetConsSitNFCom.Create;
@@ -1685,14 +1684,14 @@ begin
                 aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
                 FRetNFComDFe := '<' + ENCODING_UTF8 + '>' +
-                              '<NFComDFe>' +
-                               '<nfComProc versao="' + FVersao + '">' +
-                                 SeparaDados(XMLOriginal, 'nfComProc') +
-                               '</nfComProc>' +
-                               '<procEventoNFCom versao="' + FVersao + '">' +
-                                 aEventos +
-                               '</procEventoNFCom>' +
-                              '</NFComDFe>';
+                                '<NFComDFe>' +
+                                 '<nfComProc versao="' + FVersao + '">' +
+                                   SeparaDados(XMLOriginal, 'nfComProc') +
+                                 '</nfComProc>' +
+                                 '<procEventoNFCom versao="' + FVersao + '">' +
+                                   aEventos +
+                                 '</procEventoNFCom>' +
+                                '</NFComDFe>';
               end;
 
               SalvarXML := Result and FPConfiguracoesNFCom.Arquivos.Salvar and Atualiza;

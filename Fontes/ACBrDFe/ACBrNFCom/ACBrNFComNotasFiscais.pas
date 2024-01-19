@@ -120,7 +120,6 @@ type
     property ErroValidacao: string read FErroValidacao;
     property ErroValidacaoCompleto: string read FErroValidacaoCompleto;
     property ErroRegrasdeNegocios: string read FErroRegrasdeNegocios;
-
   end;
 
   { TNotasFiscais }
@@ -173,7 +172,8 @@ uses
   synautil,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
-  ACBrDFeUtil, ACBrDFeConversao, ACBrNFCom, ACBrNFComConversao,
+  ACBrDFeUtil, //ACBrDFeConversao,
+  ACBrNFCom, ACBrNFComConversao,
   ACBrXmlDocument;
 
 { NotaFiscal }
@@ -192,7 +192,7 @@ begin
   begin
     FNFCom.infNFCom.Versao := VersaoNFComToDbl(Configuracoes.Geral.VersaoDF);
 
-    FNFCom.Ide.modelo  := 66;
+    FNFCom.Ide.modelo  := 62;
     FNFCom.Ide.verProc := 'ACBrNFCom';
     FNFCom.Ide.tpAmb   := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
     FNFCom.Ide.tpEmis  := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
@@ -240,7 +240,7 @@ begin
   with TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom) do
   begin
     if not Assigned(SSL.AntesDeAssinar) then
-      SSL.ValidarCNPJCertificado( NFCom.Emit.CNPJ );
+      SSL.ValidarCNPJCertificado(NFCom.Emit.CNPJ);
   end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
@@ -283,10 +283,10 @@ begin
     with TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom) do
     begin
       NFCom.infNFComSupl.qrCodNFCom := GetURLQRCode(NFCom.Ide.cUF,
-                                                 NFCom.Ide.tpAmb,
-                                                 NFCom.Ide.tpEmis,
-                                                 NFCom.infNFCom.ID,
-                                                 NFCom.infNFCom.Versao);
+                                                    NFCom.Ide.tpAmb,
+                                                    NFCom.Ide.tpEmis,
+                                                    NFCom.infNFCom.ID,
+                                                    NFCom.infNFCom.Versao);
 
       GerarXML;
     end;
@@ -335,7 +335,7 @@ begin
     if not NotaEhValida then
     begin
       FErroValidacao := ACBrStr('Falha na validação dos dados da nota: ') +
-        IntToStr(NFCom.Ide.nNF) + sLineBreak + FAlertas ;
+        IntToStr(NFCom.Ide.nNF) + sLineBreak + FAlertas;
       FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
 
       raise EACBrNFComException.CreateDef(
@@ -396,7 +396,7 @@ var
 begin
   // Converte o DateTime do Sistema para o TimeZone configurado,
   // para evitar divergência de Fuso Horário.
-  Inicio := DataHoraTimeZoneModoDeteccao( TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom));
+  Inicio := DataHoraTimeZoneModoDeteccao(TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom));
   // Aceita uma tolerância de até 5 minutos, devido ao sincronismo de horário
   // do servidor da Empresa e o servidor da SEFAZ.
   Agora := IncMinute(Inicio, 5);
@@ -419,8 +419,7 @@ begin
   if not Result then
   begin
     Erros := ACBrStr('Erro(s) nas Regras de negócios da nota: '+
-                     IntToStr(NFCom.Ide.nNF) + sLineBreak +
-                     Erros);
+                     IntToStr(NFCom.Ide.nNF) + sLineBreak + Erros);
   end;
 
   GravaLog('Fim da Validação. Tempo: ' +
@@ -445,13 +444,9 @@ end;
 function NotaFiscal.LerArqIni(const AIniString: string): Boolean;
 var
   INIRec: TMemIniFile;
-  sSecao, sFim, sProdID: string;
+  sSecao, sFim, nItemDet: string;
   OK: boolean;
-  i: Integer;
-//  SL     : TStringList;
-//  J, K : Integer;
-//  , sDINumber, sADINumber, sQtdVol,
-//  sDupNumber, sAdittionalField, sType, sDay, sDeduc, sNVE, sCNPJCPF : string;
+  i, j: Integer;
 begin
   Result := False;
 
@@ -461,966 +456,395 @@ begin
 
     with FNFCom do
     begin
-      infNFCom.versao := StringToFloatDef( INIRec.ReadString('infNFCom','versao', VersaoNFComToStr(FConfiguracoes.Geral.VersaoDF)), 0) ;
+      infNFCom.versao := StringToFloatDef(INIRec.ReadString('infNFCom', 'versao', VersaoNFComToStr(FConfiguracoes.Geral.VersaoDF)), 0);
 
-      sSecao      := IfThen( INIRec.SectionExists('Identificacao'), 'Identificacao', 'ide');
-      Ide.cNF     := INIRec.ReadInteger( sSecao,'Codigo' ,INIRec.ReadInteger( sSecao,'cNF' ,0));
-      Ide.modelo  := INIRec.ReadInteger( sSecao,'Modelo' ,INIRec.ReadInteger( sSecao,'mod' ,65));
-      Ide.serie   := INIRec.ReadInteger( sSecao,'Serie'  ,1);
-      Ide.nNF     := INIRec.ReadInteger( sSecao,'Numero' ,INIRec.ReadInteger( sSecao,'nNF' ,0));
-      Ide.dhEmi   := StringToDateTime(INIRec.ReadString( sSecao,'Emissao',INIRec.ReadString( sSecao,'dhEmi',INIRec.ReadString( sSecao,'dhEmi','0'))));
-//      Ide.tpEmis  := StrToTpEmis( OK,INIRec.ReadString( sSecao,'tpEmis',IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
-//      Ide.tpAmb   := StrToTpAmb(  OK, INIRec.ReadString( sSecao,'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
-      Ide.finNFCom := StrToFinNFCom( OK,INIRec.ReadString( sSecao,'Finalidade',INIRec.ReadString( sSecao,'finNFCom','0')));
-      Ide.verProc := INIRec.ReadString(  sSecao, 'verProc' ,'ACBrNFCom');
-      Ide.dhCont  := StringToDateTime(INIRec.ReadString( sSecao,'dhCont'  ,'0'));
-      Ide.xJust   := INIRec.ReadString(  sSecao,'xJust' ,'' );
+      sSecao := 'ide';
+      Ide.tpAmb := StrToTipoAmbiente(OK, INIRec.ReadString(sSecao, 'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
+      Ide.modelo := INIRec.ReadInteger(sSecao, 'Modelo', 62);
+      Ide.serie := INIRec.ReadInteger(sSecao, 'Serie', 1);
+      Ide.nNF := INIRec.ReadInteger(sSecao, 'nNF', 0);
+      Ide.cNF := INIRec.ReadInteger(sSecao, 'cNF', 0);
+      Ide.dhEmi := StringToDateTime(INIRec.ReadString(sSecao, 'dhEmi', '0'));
+      Ide.tpEmis := StrToTipoEmissao(OK, INIRec.ReadString(sSecao, 'tpEmis', IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
+      Ide.nSiteAutoriz := StrToSiteAutorizator(OK, INIRec.ReadString(sSecao, 'nSiteAutoriz', '0'));
+      Ide.finNFCom := StrToFinNFCom(OK, INIRec.ReadString(sSecao, 'finNFCom', '0'));
+      Ide.tpFat := StrToTipoFaturamento(OK, INIRec.ReadString(sSecao, 'tpFat', '0'));
+      Ide.verProc := INIRec.ReadString(sSecao, 'verProc', 'ACBrNFCom');
+      Ide.indPrePago := StrToTIndicador(OK, INIRec.ReadString(sSecao, 'indPrePago', '0'));
+      Ide.indCessaoMeiosRede := StrToTIndicador(OK, INIRec.ReadString(sSecao, 'indCessaoMeiosRede', '0'));
+      Ide.indNotaEntrada := StrToTIndicador(OK, INIRec.ReadString(sSecao, 'indNotaEntrada', '0'));
+      Ide.dhCont := StringToDateTime(INIRec.ReadString(sSecao, 'dhCont', '0'));
+      Ide.xJust := INIRec.ReadString(sSecao, 'xJust', '');
 
-      {
-      sSecao := IfThen( INIRec.SectionExists('Emitente'), 'Emitente', 'emit');
-      Emit.CNPJCPF := INIRec.ReadString( sSecao,'CNPJ'    ,INIRec.ReadString( sSecao,'CNPJCPF', ''));
-      Emit.xNome   := INIRec.ReadString( sSecao,'Razao'   ,INIRec.ReadString( sSecao,'xNome'  , ''));
-      Emit.xFant   := INIRec.ReadString( sSecao,'Fantasia',INIRec.ReadString( sSecao,'xFant'  , ''));
-      Emit.IE      := INIRec.ReadString( sSecao,'IE'  ,'');
-      Emit.IEST    := INIRec.ReadString( sSecao,'IEST','');
-      Emit.IM      := INIRec.ReadString( sSecao,'IM'  ,'');
-      Emit.CNAE    := INIRec.ReadString( sSecao,'CNAE','');
-      Emit.CRT     := StrToCRT(ok, INIRec.ReadString( sSecao,'CRT','3'));
+      sSecao := 'emit';
+      Emit.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
+      Emit.IE := INIRec.ReadString(sSecao, 'IE', '');
+      Emit.IEUFDest := INIRec.ReadString(sSecao, 'IEUFDest', '');
+      Emit.CRT := StrToCRT(ok, INIRec.ReadString(sSecao, 'CRT', '3'));
+      Emit.xNome := INIRec.ReadString(sSecao, 'xNome', '');
+      Emit.xFant := INIRec.ReadString(sSecao, 'xFant', '');
+      // Endereço do Emitente
+      Emit.EnderEmit.xLgr := INIRec.ReadString(sSecao, 'xLgr', '');
+      Emit.EnderEmit.nro := INIRec.ReadString(sSecao, 'nro', '');
+      Emit.EnderEmit.xCpl := INIRec.ReadString(sSecao, 'xCpl', '');
+      Emit.EnderEmit.xBairro := INIRec.ReadString(sSecao, 'xBairro', '');
+      Emit.EnderEmit.cMun := INIRec.ReadInteger(sSecao, 'cMun', 0);
+      Emit.EnderEmit.xMun := INIRec.ReadString(sSecao, 'xMun', '');
+      Emit.EnderEmit.CEP := INIRec.ReadInteger(sSecao, 'CEP', 0);
+      Emit.EnderEmit.UF := INIRec.ReadString(sSecao, 'UF', '');
+      Emit.EnderEmit.fone := INIRec.ReadString(sSecao, 'fone', '');
+      Emit.EnderEmit.email := INIRec.ReadString(sSecao, 'email', '');
 
-      Emit.EnderEmit.xLgr := INIRec.ReadString( sSecao, 'Logradouro' ,INIRec.ReadString(  sSecao, 'xLgr', ''));
-      if (INIRec.ReadString( sSecao,'Numero', '') <> '') or (INIRec.ReadString( sSecao, 'nro', '') <> '') then
-        Emit.EnderEmit.nro := INIRec.ReadString( sSecao,'Numero', INIRec.ReadString( sSecao, 'nro', ''));
+      Ide.cUF := INIRec.ReadInteger(sSecao, 'cUF', UFparaCodigo(Emit.EnderEmit.UF));
+      Ide.cMunFG := INIRec.ReadInteger(sSecao, 'cMunFG', Emit.EnderEmit.cMun);
 
-      if (INIRec.ReadString( sSecao, 'Complemento', '') <> '') or (INIRec.ReadString( sSecao, 'xCpl', '') <> '') then
-        Emit.EnderEmit.xCpl := INIRec.ReadString( sSecao, 'Complemento', INIRec.ReadString( sSecao, 'xCpl', ''));
+      sSecao := 'dest';
+      Dest.xNome := INIRec.ReadString(sSecao, 'xNome', '');
+      Dest.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+      Dest.idOutros := INIRec.ReadString(sSecao, 'idOutros','');
+      Dest.indIEDest := StrToindIEDest(OK, INIRec.ReadString(sSecao, 'indIEDest', '1'));
+      Dest.IE := INIRec.ReadString(sSecao, 'IE', '');
+      Dest.IM := INIRec.ReadString(sSecao, 'IM', '');
+      // Endereço do Destinatario
+      Dest.EnderDest.xLgr := INIRec.ReadString(sSecao, 'xLgr', '');
+      Dest.EnderDest.nro := INIRec.ReadString(sSecao, 'nro', '');
+      Dest.EnderDest.xCpl := INIRec.ReadString(sSecao, 'xCpl', '');
+      Dest.EnderDest.xBairro := INIRec.ReadString(sSecao, 'xBairro', '');
+      Dest.EnderDest.cMun := INIRec.ReadInteger(sSecao, 'cMun', 0);
+      Dest.EnderDest.xMun := INIRec.ReadString(sSecao, 'xMun', '');
+      Dest.EnderDest.CEP := INIRec.ReadInteger(sSecao, 'CEP', 0);
+      Dest.EnderDest.UF := INIRec.ReadString(sSecao, 'UF', '');
+      Dest.EnderDest.fone := INIRec.ReadString(sSecao, 'fone', '');
+      Dest.EnderDest.email := INIRec.ReadString(sSecao, 'email', '');
 
-      Emit.EnderEmit.xBairro := INIRec.ReadString(  sSecao,'Bairro'     ,INIRec.ReadString(  sSecao,'xBairro',''));
-      Emit.EnderEmit.cMun    := INIRec.ReadInteger( sSecao,'CidadeCod'  ,INIRec.ReadInteger( sSecao,'cMun'   ,0));
-      Emit.EnderEmit.xMun    := INIRec.ReadString(  sSecao,'Cidade'     ,INIRec.ReadString(  sSecao,'xMun'   ,''));
-      Emit.EnderEmit.UF      := INIRec.ReadString(  sSecao,'UF'         ,'');
-      Emit.EnderEmit.CEP     := INIRec.ReadInteger( sSecao,'CEP'        ,0);
-      Emit.EnderEmit.cPais   := INIRec.ReadInteger( sSecao,'PaisCod'    ,INIRec.ReadInteger( sSecao,'cPais'    ,1058));
-      Emit.EnderEmit.xPais   := INIRec.ReadString(  sSecao,'Pais'       ,INIRec.ReadString(  sSecao,'xPais'    ,'BRASIL'));
-      Emit.EnderEmit.fone    := INIRec.ReadString(  sSecao,'Fone'       ,'');
+      sSecao := 'assinante';
+      assinante.iCodAssinante := INIRec.ReadString(sSecao, 'iCodAssinante', '');
+      assinante.tpAssinante := StrTotpAssinante(OK, INIRec.ReadString(sSecao, 'tpAssinante', '1'));
+      assinante.tpServUtil := StrTotpServUtil(OK, INIRec.ReadString(sSecao, 'tpServUtil', '1'));
+      assinante.nContrato := INIRec.ReadString(sSecao, 'nContrato', '');
+      assinante.dContratoIni := StringToDateTime(INIRec.ReadString(sSecao, 'dContratoIni', '0'));
+      assinante.dContratoFim := StringToDateTime(INIRec.ReadString(sSecao, 'dContratoFim', '0'));
+      assinante.NroTermPrinc := INIRec.ReadString(sSecao, 'NroTermPrinc', '');
+      assinante.cUFPrinc := INIRec.ReadInteger(sSecao, 'cUFPrinc', 0);
 
-      Ide.cUF    := INIRec.ReadInteger( sSecao,'cUF'       ,UFparaCodigo(Emit.EnderEmit.UF));
-      Ide.cMunFG := INIRec.ReadInteger( sSecao,'CidadeCod' ,INIRec.ReadInteger( sSecao,'cMunFG' ,Emit.EnderEmit.cMun));
-
-      if INIRec.ReadString( 'Avulsa', 'CNPJ', '') <> '' then
-      begin
-        Avulsa.CNPJ    := INIRec.ReadString( 'Avulsa', 'CNPJ', '');
-        Avulsa.xOrgao  := INIRec.ReadString( 'Avulsa', 'xOrgao', '');
-        Avulsa.matr    := INIRec.ReadString( 'Avulsa', 'matr', '');
-        Avulsa.xAgente := INIRec.ReadString( 'Avulsa', 'xAgente', '');
-        Avulsa.fone    := INIRec.ReadString( 'Avulsa', 'fone', '');
-        Avulsa.UF      := INIRec.ReadString( 'Avulsa', 'UF', '');
-        Avulsa.nDAR    := INIRec.ReadString( 'Avulsa', 'nDAR', '');
-        Avulsa.dEmi    := StringToDateTime(INIRec.ReadString( 'Avulsa', 'dEmi', '0'));
-        Avulsa.vDAR    := StringToFloatDef(INIRec.ReadString( 'Avulsa', 'vDAR', ''), 0);
-        Avulsa.repEmi  := INIRec.ReadString( 'Avulsa', 'repEmi','');
-        Avulsa.dPag    := StringToDateTime(INIRec.ReadString( 'Avulsa', 'dPag', '0'));
-      end;
-
-      sSecao := IfThen( INIRec.SectionExists('Destinatario'),'Destinatario','dest');
-      Dest.idEstrangeiro     := INIRec.ReadString(  sSecao,'idEstrangeiro','');
-      Dest.CNPJCPF           := INIRec.ReadString(  sSecao,'CNPJ'       ,INIRec.ReadString(  sSecao,'CNPJCPF',INIRec.ReadString(  sSecao,'CPF','')));
-      Dest.xNome             := INIRec.ReadString(  sSecao,'NomeRazao'  ,INIRec.ReadString(  sSecao,'xNome'  ,''));
-      Dest.indIEDest         := StrToindIEDest(OK,INIRec.ReadString( sSecao,'indIEDest','1'));
-      Dest.IE                := INIRec.ReadString(  sSecao,'IE'         ,'');
-      Dest.ISUF              := INIRec.ReadString(  sSecao,'ISUF'       ,'');
-      Dest.Email             := INIRec.ReadString(  sSecao,'Email'      ,'');
-
-      Dest.EnderDest.xLgr := INIRec.ReadString(  sSecao, 'Logradouro' ,INIRec.ReadString( sSecao, 'xLgr', ''));
-      if (INIRec.ReadString(sSecao, 'Numero', '') <> '') or (INIRec.ReadString(sSecao, 'nro', '') <> '') then
-        Dest.EnderDest.nro := INIRec.ReadString(  sSecao, 'Numero', INIRec.ReadString(sSecao, 'nro', ''));
-
-      if (INIRec.ReadString(sSecao, 'Complemento', '') <> '') or (INIRec.ReadString(sSecao, 'xCpl', '') <> '') then
-        Dest.EnderDest.xCpl := INIRec.ReadString( sSecao, 'Complemento', INIRec.ReadString(sSecao,'xCpl',''));
-
-      Dest.EnderDest.xBairro := INIRec.ReadString(  sSecao,'Bairro'     ,INIRec.ReadString(  sSecao,'xBairro',''));
-      Dest.EnderDest.cMun    := INIRec.ReadInteger( sSecao,'CidadeCod'  ,INIRec.ReadInteger( sSecao,'cMun'   ,0));
-      Dest.EnderDest.xMun    := INIRec.ReadString(  sSecao,'Cidade'     ,INIRec.ReadString(  sSecao,'xMun'   ,''));
-      Dest.EnderDest.UF      := INIRec.ReadString(  sSecao,'UF'         ,'');
-      Dest.EnderDest.CEP     := INIRec.ReadInteger( sSecao,'CEP'       ,0);
-      Dest.EnderDest.cPais   := INIRec.ReadInteger( sSecao,'PaisCod'    ,INIRec.ReadInteger(sSecao,'cPais',1058));
-      Dest.EnderDest.xPais   := INIRec.ReadString(  sSecao,'Pais'       ,INIRec.ReadString( sSecao,'xPais','BRASIL'));
-      Dest.EnderDest.Fone    := INIRec.ReadString(  sSecao,'Fone'       ,'');
-
-      sCNPJCPF := INIRec.ReadString( 'Retirada','CNPJ',INIRec.ReadString( 'Retirada','CPF',INIRec.ReadString( 'Retirada','CNPJCPF','')));
-      if sCNPJCPF <> '' then
-      begin
-        Retirada.CNPJCPF := sCNPJCPF;
-        Retirada.xNome   := INIRec.ReadString( 'Retirada','xNome','');
-        Retirada.xLgr    := INIRec.ReadString( 'Retirada','xLgr','');
-        Retirada.nro     := INIRec.ReadString( 'Retirada','nro' ,'');
-        Retirada.xCpl    := INIRec.ReadString( 'Retirada','xCpl','');
-        Retirada.xBairro := INIRec.ReadString( 'Retirada','xBairro','');
-        Retirada.cMun    := INIRec.ReadInteger('Retirada','cMun',0);
-        Retirada.xMun    := INIRec.ReadString( 'Retirada','xMun','');
-        Retirada.UF      := INIRec.ReadString( 'Retirada','UF'  ,'');
-        Retirada.CEP     := INIRec.ReadInteger('Retirada','CEP',0);
-        Retirada.cPais   := INIRec.ReadInteger('Retirada','PaisCod',INIRec.ReadInteger('Retirada','cPais',1058));
-        Retirada.xPais   := INIRec.ReadString( 'Retirada','Pais',INIRec.ReadString( 'Retirada','xPais','BRASIL'));
-        Retirada.Fone    := INIRec.ReadString( 'Retirada','Fone','');
-        Retirada.Email   := INIRec.ReadString( 'Retirada','Email','');
-        Retirada.IE      := INIRec.ReadString( 'Retirada','IE'  ,'');
-      end;
-
-      sCNPJCPF := INIRec.ReadString(  'Entrega','CNPJ',INIRec.ReadString(  'Entrega','CPF',INIRec.ReadString(  'Entrega','CNPJCPF','')));
-      if sCNPJCPF <> '' then
-      begin
-        Entrega.CNPJCPF := sCNPJCPF;
-        Entrega.xNome   := INIRec.ReadString( 'Entrega','xNome','');
-        Entrega.xLgr    := INIRec.ReadString(  'Entrega','xLgr','');
-        Entrega.nro     := INIRec.ReadString(  'Entrega','nro' ,'');
-        Entrega.xCpl    := INIRec.ReadString(  'Entrega','xCpl','');
-        Entrega.xBairro := INIRec.ReadString(  'Entrega','xBairro','');
-        Entrega.cMun    := INIRec.ReadInteger( 'Entrega','cMun',0);
-        Entrega.xMun    := INIRec.ReadString(  'Entrega','xMun','');
-        Entrega.UF      := INIRec.ReadString(  'Entrega','UF','');
-        Entrega.CEP     := INIRec.ReadInteger('Entrega','CEP',0);
-        Entrega.cPais   := INIRec.ReadInteger('Entrega','PaisCod',INIRec.ReadInteger('Entrega','cPais',1058));
-        Entrega.xPais   := INIRec.ReadString( 'Entrega','Pais',INIRec.ReadString( 'Entrega','xPais','BRASIL'));
-        Entrega.Fone    := INIRec.ReadString( 'Entrega','Fone','');
-        Entrega.Email   := INIRec.ReadString( 'Entrega','Email','');
-        Entrega.IE      := INIRec.ReadString( 'Entrega','IE'  ,'');
-      end;
-      }
-      I := 1 ;
+      i := 1;
       while true do
       begin
-        sSecao := 'autXML'+IntToStrZero(I,3) ;
-        sFim     := OnlyNumber(INIRec.ReadString( sSecao ,'CNPJ',INIRec.ReadString(  sSecao,'CPF',INIRec.ReadString(  sSecao,'CNPJCPF','FIM'))));
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break ;
+        sSecao := 'TermAdic' + IntToStrZero(i, 3);
+        sFim := INIRec.ReadString(sSecao, 'NroTermAdic', 'FIM');
+        if sFim = 'FIM' then
+          break;
 
-//        with autXML.New do
-//          CNPJCPF := sFim;
+        with assinante.TermAdic.New do
+        begin
+          NroTermAdic := sFim;
+          cUFAdic := INIRec.ReadInteger(sSecao, 'cUFAdic', 0);
+        end;
 
-        Inc(I);
+        Inc(i);
       end;
 
-      I := 1 ;
+      sSecao := 'gSub';
+      gSub.chNFCom := INIRec.ReadString(sSecao, 'chNFCom', '');
+      gSub.motSub := StrToMotSub(OK, INIRec.ReadString(sSecao, 'motSub', '1'));
+      gSub.gNF.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
+      gSub.gNF.Modelo := INIRec.ReadInteger(sSecao, 'Modelo', 0);
+      gSub.gNF.Serie := INIRec.ReadString(sSecao, 'Serie', '');
+      gSub.gNF.nNF := INIRec.ReadInteger(sSecao, 'nNF', 0);
+      gSub.gNF.CompetEmis := StringToDateTime(INIRec.ReadString(sSecao, 'CompetEmis', '0'));
+      gSub.gNF.hash115 := INIRec.ReadString(sSecao, 'hash115', '');
+
+      sSecao := 'gCofat';
+      gCofat.chNFComLocal := INIRec.ReadString(sSecao, 'chNFComLocal', '');
+
+      i := 1;
       while true do
       begin
-        sSecao := IfThen( INIRec.SectionExists('Produto'+IntToStrZero(I,3)), 'Produto', 'det');
-        sSecao := sSecao+IntToStrZero(I,3) ;
-        sProdID  := INIRec.ReadString(sSecao,'Codigo',INIRec.ReadString( sSecao,'cProd','FIM')) ;
-        if sProdID = 'FIM' then
-          break ;
-        {
+        sSecao := 'det' + IntToStrZero(i, 3);
+        nItemDet := INIRec.ReadString(sSecao, 'nItem', 'FIM');
+        if nItemDet = 'FIM' then
+          break;
+
         with Det.New do
         begin
-          Prod.nItem := I;
-          infAdProd  := INIRec.ReadString(sSecao,'infAdProd','');
+          nItem := StrToIntDef(nItemDet, 0);
+          chNFComAnt := INIRec.ReadString(sSecao, 'chNFComAnt', '');
+          nItemAnt := INIRec.ReadInteger(sSecao, 'nItemAnt', 0);
+          infAdProd := INIRec.ReadString(sSecao, 'infAdProd', '');
 
-          Prod.cProd := INIRec.ReadString( sSecao,'Codigo'   ,INIRec.ReadString( sSecao,'cProd'   ,''));
-          if (Length(INIRec.ReadString( sSecao,'EAN','')) > 0) or (Length(INIRec.ReadString( sSecao,'cEAN','')) > 0)  then
-            Prod.cEAN := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
-
-          Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
-          Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
-          Prod.CEST     := INIRec.ReadString( sSecao,'CEST'     ,'');
-          Prod.indEscala:= StrToIndEscala(OK, INIRec.ReadString( sSecao,'indEscala' ,'') );
-          Prod.CNPJFab  := INIRec.ReadString( sSecao,'CNPJFab'   ,'');
-          Prod.cBenef   := INIRec.ReadString( sSecao,'cBenef'    ,'');
-          Prod.EXTIPI   := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
-          Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
-          Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
-          Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qCom'  ,'')) ,0) ;
-          Prod.vUnCom   := StringToFloatDef( INIRec.ReadString(sSecao,'ValorUnitario',INIRec.ReadString(sSecao,'vUnCom','')) ,0) ;
-          Prod.vProd    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorTotal'   ,INIRec.ReadString(sSecao,'vProd' ,'')) ,0) ;
-
-          if Length(INIRec.ReadString( sSecao,'cEANTrib','')) > 0 then
-            Prod.cEANTrib      := INIRec.ReadString( sSecao,'cEANTrib'      ,'');
-
-          Prod.uTrib     := INIRec.ReadString( sSecao,'uTrib'  , Prod.uCom);
-          Prod.qTrib     := StringToFloatDef( INIRec.ReadString(sSecao,'qTrib'  ,''), Prod.qCom);
-          Prod.vUnTrib   := StringToFloatDef( INIRec.ReadString(sSecao,'vUnTrib','') ,Prod.vUnCom) ;
-          Prod.vFrete    := StringToFloatDef( INIRec.ReadString(sSecao,'vFrete','') ,0) ;
-          Prod.vSeg      := StringToFloatDef( INIRec.ReadString(sSecao,'vSeg','') ,0) ;
-          Prod.vDesc     := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDesconto',INIRec.ReadString(sSecao,'vDesc','')) ,0) ;
-          Prod.vOutro    := StringToFloatDef( INIRec.ReadString(sSecao,'vOutro','') ,0) ;
-          Prod.IndTot    := StrToindTot(OK,INIRec.ReadString(sSecao,'indTot','1'));
-          Prod.xPed      := INIRec.ReadString( sSecao,'xPed'    ,'');
-          Prod.nItemPed  := INIRec.ReadString( sSecao,'nItemPed','');
-          Prod.nFCI      := INIRec.ReadString( sSecao,'nFCI','');  //NFCom3
-          Prod.nRECOPI   := INIRec.ReadString( sSecao,'nRECOPI','');  //NFCom3
-
-          pDevol    := StringToFloatDef( INIRec.ReadString(sSecao,'pDevol','') ,0);
-          vIPIDevol := StringToFloatDef( INIRec.ReadString(sSecao,'vIPIDevol','') ,0);
-
-          Imposto.vTotTrib := StringToFloatDef( INIRec.ReadString(sSecao,'vTotTrib','') ,0) ;
-
-          J := 1 ;
-          while true do
-          begin
-            sSecao := 'NVE'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sNVE     := INIRec.ReadString(sSecao,'NVE','') ;
-            if (sNVE <> '') then
-              Prod.NVE.New.NVE := sNVE
-            else
-              Break;
-
-            Inc(J);
-          end;
-
-          J := 1 ;
-          while true do
-          begin
-            sSecao  := 'rastro'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sFim    := INIRec.ReadString(sSecao,'nLote','') ;
-            if (sFim <> '') then
-               with Prod.rastro.New do
-               begin
-                 nLote    := sFim;
-                 qLote    := StringToFloatDef( INIRec.ReadString( sSecao,'qLote',''), 0 );
-                 dFab     := StringToDateTime( INIRec.ReadString( sSecao,'dFab','0') );
-                 dVal     := StringToDateTime( INIRec.ReadString( sSecao,'dVal','0') );
-                 cAgreg   := INIRec.ReadString( sSecao,'cAgreg','');
-               end
-            else
-               Break;
-            Inc(J);
-          end;
-
-          J := 1 ;
-          while true do
-          begin
-            sSecao  := 'DI'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sDINumber := INIRec.ReadString(sSecao,'NumeroDI',INIRec.ReadString(sSecao,'nDi','')) ;
-
-            if sDINumber <> '' then
-            begin
-              with Prod.DI.New do
-              begin
-                nDi         := sDINumber;
-                dDi         := StringToDateTime(INIRec.ReadString(sSecao,'DataRegistroDI'  ,INIRec.ReadString(sSecao,'dDi'  ,'0')));
-                xLocDesemb  := INIRec.ReadString(sSecao,'LocalDesembaraco',INIRec.ReadString(sSecao,'xLocDesemb',''));
-                UFDesemb    := INIRec.ReadString(sSecao,'UFDesembaraco'   ,INIRec.ReadString(sSecao,'UFDesemb'   ,''));
-                dDesemb     := StringToDateTime(INIRec.ReadString(sSecao,'DataDesembaraco',INIRec.ReadString(sSecao,'dDesemb','0')));
-
-                tpViaTransp  := StrToTipoViaTransp(OK,INIRec.ReadString(sSecao,'tpViaTransp',''));
-                vAFRMM       := StringToFloatDef( INIRec.ReadString(sSecao,'vAFRMM','') ,0) ;
-                tpIntermedio := StrToTipoIntermedio(OK,INIRec.ReadString(sSecao,'tpIntermedio',''));
-                CNPJ         := INIRec.ReadString(sSecao,'CNPJ','');
-                UFTerceiro   := INIRec.ReadString(sSecao,'UFTerceiro','');
-
-                cExportador := INIRec.ReadString(sSecao,'CodigoExportador',INIRec.ReadString(sSecao,'cExportador',''));
-
-                K := 1 ;
-                while true do
-                begin
-                  sSecao   := IfThen( INIRec.SectionExists('LADI'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3)), 'LADI', 'adi');
-                  sSecao   := sSecao+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3)  ;
-                  sADINumber := INIRec.ReadString(sSecao,'NumeroAdicao',INIRec.ReadString(sSecao,'nAdicao','FIM')) ;
-                  if (sADINumber = 'FIM') or (Length(sADINumber) <= 0) then
-                    break;
-
-                  with adi.New do
-                  begin
-                    nAdicao     := StrToInt(sADINumber);
-                    nSeqAdi     := INIRec.ReadInteger( sSecao,'nSeqAdi',K);
-                    cFabricante := INIRec.ReadString(  sSecao,'CodigoFabricante',INIRec.ReadString(  sSecao,'cFabricante',''));
-                    vDescDI     := StringToFloatDef( INIRec.ReadString(sSecao,'DescontoADI',INIRec.ReadString(sSecao,'vDescDI','')) ,0);
-                    nDraw       := INIRec.ReadString( sSecao,'nDraw','');
-                  end;
-
-                  Inc(K)
-                end;
-              end;
-            end
-            else
-              Break;
-
-            Inc(J);
-          end;
-
-          J := 1 ;
-          while true do
-          begin
-            sSecao := 'detExport'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sFim     := INIRec.ReadString(sSecao,'nRE','FIM');
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-            begin
-              sFim     := INIRec.ReadString(sSecao,'nDraw','FIM');
-              if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                break ;
-            end;
-
-            with Prod.detExport.New do
-            begin
-              nDraw   := INIRec.ReadString( sSecao,'nDraw','');
-              nRE     := INIRec.ReadString( sSecao,'nRE','');
-              chNFCom   := INIRec.ReadString( sSecao,'chNFCom','');
-              qExport := StringToFloatDef( INIRec.ReadString(sSecao,'qExport','') ,0);
-            end;
-
-            Inc(J);
-          end;
-
-          sSecao := 'impostoDevol'+IntToStrZero(I,3) ;
-          sFim   := INIRec.ReadString( sSecao,'pDevol','FIM') ;
-          if ((sFim <> 'FIM') and ( Length(sFim) > 0 ))  then
-          begin
-            pDevol    := StringToFloatDef( INIRec.ReadString(sSecao,'pDevol','') ,0);
-            vIPIDevol := StringToFloatDef( INIRec.ReadString(sSecao,'vIPIDevol','') ,0);
-          end;
-
-          sSecao := IfThen( INIRec.SectionExists('Veiculo'+IntToStrZero(I,3)), 'Veiculo', 'veicProd');
-          sSecao := sSecao+IntToStrZero(I,3) ;
-          sFim     := INIRec.ReadString( sSecao,'Chassi','FIM') ;
-          if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
-          begin
-            with Prod.veicProd do
-            begin
-              tpOP    := StrTotpOP(OK,INIRec.ReadString( sSecao,'tpOP','0'));
-              chassi  := sFim;
-              cCor    := INIRec.ReadString( sSecao,'cCor'   ,'');
-              xCor    := INIRec.ReadString( sSecao,'xCor'   ,'');
-              pot     := INIRec.ReadString( sSecao,'pot'    ,'');
-              Cilin   := INIRec.ReadString( sSecao,'CM3'    ,INIRec.ReadString( sSecao,'Cilin'  ,''));
-              pesoL   := INIRec.ReadString( sSecao,'pesoL'  ,'');
-              pesoB   := INIRec.ReadString( sSecao,'pesoB'  ,'');
-              nSerie  := INIRec.ReadString( sSecao,'nSerie' ,'');
-              tpComb  := INIRec.ReadString( sSecao,'tpComb' ,'');
-              nMotor  := INIRec.ReadString( sSecao,'nMotor' ,'');
-              CMT     := INIRec.ReadString( sSecao,'CMKG'   ,INIRec.ReadString( sSecao,'CMT'    ,''));
-              dist    := INIRec.ReadString( sSecao,'dist'   ,'');
-//             RENAVAM := INIRec.ReadString( sSecao,'RENAVAM','');
-              anoMod  := INIRec.ReadInteger(sSecao,'anoMod' ,0);
-              anoFab  := INIRec.ReadInteger(sSecao,'anoFab' ,0);
-              tpPint  := INIRec.ReadString( sSecao,'tpPint' ,'');
-              tpVeic  := INIRec.ReadInteger(sSecao,'tpVeic' ,0);
-              espVeic := INIRec.ReadInteger(sSecao,'espVeic',0);
-              VIN     := INIRec.ReadString( sSecao,'VIN'    ,'');
-              condVeic := StrTocondVeic(OK,INIRec.ReadString( sSecao,'condVeic','1'));
-              cMod    := INIRec.ReadString( sSecao,'cMod'   ,'');
-              cCorDENATRAN := INIRec.ReadString( sSecao,'cCorDENATRAN','');
-              lota    := INIRec.ReadInteger(sSecao,'lota'   ,0);
-              tpRest  := INIRec.ReadInteger(sSecao,'tpRest' ,0);
-            end;
-          end;
-
-          J := 1 ;
-          while true do
-          begin
-            sSecao := IfThen( INIRec.SectionExists('Medicamento'+IntToStrZero(I,3)+IntToStrZero(J,3)), 'Medicamento', 'med');
-            sSecao := sSecao+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sFim     := INIRec.ReadString(sSecao,'cProdANVISA','FIM') ;
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-              break;
-
-            with Prod.med.New do
-            begin
-              nLote := INIRec.ReadString(sSecao,'nLote','') ;
-              cProdANVISA:=  sFim;
-              xMotivoIsencao := INIRec.ReadString(sSecao,'xMotivoIsencao','') ;
-              qLote := StringToFloatDef(INIRec.ReadString( sSecao,'qLote',''),0) ;
-              dFab  := StringToDateTime(INIRec.ReadString( sSecao,'dFab','0')) ;
-              dVal  := StringToDateTime(INIRec.ReadString( sSecao,'dVal','0')) ;
-              vPMC  := StringToFloatDef(INIRec.ReadString( sSecao,'vPMC',''),0) ;
-            end;
-
-            Inc(J)
-          end;
-
-          J := 1 ;
-          while true do
-          begin
-            sSecao := 'Arma'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sFim     := INIRec.ReadString(sSecao,'nSerie','FIM') ;
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-              break;
-
-            with Prod.arma.New do
-            begin
-              tpArma := StrTotpArma(OK,INIRec.ReadString( sSecao,'tpArma','0')) ;
-              nSerie := sFim;
-              nCano  := INIRec.ReadString( sSecao,'nCano','') ;
-              descr  := INIRec.ReadString( sSecao,'descr','') ;
-            end;
-
-            Inc(J)
-          end;
-
-          sSecao := IfThen( INIRec.SectionExists('Combustivel'+IntToStrZero(I,3)), 'Combustivel', 'comb');
-          sSecao := sSecao+IntToStrZero(I,3) ;
-          sFim     := INIRec.ReadString( sSecao,'cProdANP','FIM') ;
-          if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
-          begin
-            with Prod.comb do
-            begin
-              cProdANP := INIRec.ReadInteger( sSecao,'cProdANP',0) ;
-              pMixGN   := StringToFloatDef(INIRec.ReadString( sSecao,'pMixGN',''),0) ;
-              descANP  := INIRec.ReadString(  sSecao,'descANP'   ,'');
-              pGLP     := StringToFloatDef( INIRec.ReadString( sSecao,'pGLP'   ,''), 0);
-              pGNn     := StringToFloatDef( INIRec.ReadString( sSecao,'pGNn'   ,''), 0);
-              pGNi     := StringToFloatDef( INIRec.ReadString( sSecao,'pGNi'   ,''), 0);
-              vPart    := StringToFloatDef( INIRec.ReadString( sSecao,'vPart'  ,''), 0);
-              CODIF    := INIRec.ReadString(  sSecao,'CODIF'   ,'') ;
-              qTemp    := StringToFloatDef(INIRec.ReadString( sSecao,'qTemp',''),0) ;
-              UFcons   := INIRec.ReadString( sSecao,'UFCons','') ;
-
-              sSecao := 'CIDE'+IntToStrZero(I,3) ;
-              CIDE.qBCprod   := StringToFloatDef(INIRec.ReadString( sSecao,'qBCprod'  ,''),0) ;
-              CIDE.vAliqProd := StringToFloatDef(INIRec.ReadString( sSecao,'vAliqProd',''),0) ;
-              CIDE.vCIDE     := StringToFloatDef(INIRec.ReadString( sSecao,'vCIDE'    ,''),0) ;
-
-              sSecao := 'encerrante'+IntToStrZero(I,3) ;
-              encerrante.nBico    := INIRec.ReadInteger( sSecao,'nBico'  ,0) ;
-              encerrante.nBomba   := INIRec.ReadInteger( sSecao,'nBomba' ,0) ;
-              encerrante.nTanque  := INIRec.ReadInteger( sSecao,'nTanque',0) ;
-              encerrante.vEncIni  := StringToFloatDef(INIRec.ReadString( sSecao,'vEncIni',''),0) ;
-              encerrante.vEncFin  := StringToFloatDef(INIRec.ReadString( sSecao,'vEncFin',''),0) ;
-
-              sSecao := 'ICMSComb'+IntToStrZero(I,3) ;
-              ICMS.vBCICMS   := StringToFloatDef(INIRec.ReadString( sSecao,'vBCICMS'  ,''),0) ;
-              ICMS.vICMS     := StringToFloatDef(INIRec.ReadString( sSecao,'vICMS'    ,''),0) ;
-              ICMS.vBCICMSST := StringToFloatDef(INIRec.ReadString( sSecao,'vBCICMSST',''),0) ;
-              ICMS.vICMSST   := StringToFloatDef(INIRec.ReadString( sSecao,'vICMSST'  ,''),0) ;
-
-              sSecao := 'ICMSInter'+IntToStrZero(I,3) ;
-              sFim     := INIRec.ReadString( sSecao,'vBCICMSSTDest','FIM') ;
-              if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
-              begin
-                ICMSInter.vBCICMSSTDest := StringToFloatDef(sFim,0) ;
-                ICMSInter.vICMSSTDest   := StringToFloatDef(INIRec.ReadString( sSecao,'vICMSSTDest',''),0) ;
-              end;
-
-              sSecao := 'ICMSCons'+IntToStrZero(I,3) ;
-              sFim   := INIRec.ReadString( sSecao,'vBCICMSSTCons','FIM') ;
-              if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
-              begin
-                ICMSCons.vBCICMSSTCons := StringToFloatDef(sFim,0) ;
-                ICMSCons.vICMSSTCons   := StringToFloatDef(INIRec.ReadString( sSecao,'vICMSSTCons',''),0) ;
-                ICMSCons.UFcons        := INIRec.ReadString( sSecao,'UFCons','') ;
-              end;
-            end;
-          end;
+          Prod.cProd := INIRec.ReadString(sSecao, 'cProd', '');
+          Prod.xProd := INIRec.ReadString(sSecao, 'xProd', '');
+          Prod.cClass := INIRec.ReadString(sSecao, 'cClass', '');
+          Prod.CFOP := INIRec.ReadInteger(sSecao, 'CFOP', 0);
+          Prod.CNPJLD := INIRec.ReadString(sSecao, 'CNPJLD', '');
+          Prod.uMed:= StrTouMed(OK, INIRec.ReadString(sSecao, 'uMed', ''));
+          Prod.qFaturada := StringToFloatDef(INIRec.ReadString(sSecao, 'qFaturada', ''), 0);
+          Prod.vItem := StringToFloatDef(INIRec.ReadString(sSecao, 'vItem', ''), 0);
+          Prod.vDesc := StringToFloatDef(INIRec.ReadString(sSecao, 'vDesc', ''), 0);
+          Prod.vOutro := StringToFloatDef(INIRec.ReadString(sSecao, 'vOutro', ''), 0);
+          Prod.vProd := StringToFloatDef(INIRec.ReadString(sSecao, 'vProd', ''), 0);
+          Prod.dExpiracao := StringToDateTime(INIRec.ReadString(sSecao, 'dExpiracao', '0'));
+          Prod.indDevolucao := StrToTIndicador(OK, INIRec.ReadString(sSecao, 'indDevolucao', '0'));
 
           with Imposto do
           begin
-            sSecao := 'ICMS'+IntToStrZero(I,3) ;
-            //sFim     := INIRec.ReadString( sSecao,'CST',INIRec.ReadString(sSecao,'CSOSN','FIM')) ;
+            sSecao := 'ICMS' + IntToStrZero(i, 3);
+            sFim := INIRec.ReadString(sSecao, 'CST', 'FIM');
 
-            sFim     := INIRec.ReadString( sSecao,'CST','FIM') ;
-            if (sFim = 'FIM') or ( Length(sFim) = 0 ) then
-              sFim     := INIRec.ReadString(sSecao,'CSOSN','FIM');
-
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
+            if ((sFim <> 'FIM') and (Length(sFim) > 0)) then
             begin
               with ICMS do
               begin
-                ICMS.orig       := StrToOrig(     OK, INIRec.ReadString(sSecao,'Origem'    ,INIRec.ReadString(sSecao,'orig'    ,'0' ) ));
-                CST             := StrToCSTICMS(  OK, INIRec.ReadString(sSecao,'CST'       ,'00'));
-                CSOSN           := StrToCSOSNIcms(OK, INIRec.ReadString(sSecao,'CSOSN'     ,''  ));
-                ICMS.modBC      := StrTomodBC(    OK, INIRec.ReadString(sSecao,'Modalidade',INIRec.ReadString(sSecao,'modBC','0' ) ));
-                ICMS.pRedBC     := StringToFloatDef( INIRec.ReadString(sSecao,'PercentualReducao',INIRec.ReadString(sSecao,'pRedBC','')) ,0);
-                ICMS.vBC        := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase',INIRec.ReadString(sSecao,'vBC'  ,'')) ,0);
-                ICMS.pICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota' ,INIRec.ReadString(sSecao,'pICMS','')) ,0);
-                ICMS.vICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'    ,INIRec.ReadString(sSecao,'vICMS','')) ,0);
-                ICMS.vBCFCP     := StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCP', INIRec.ReadString(sSecao,'vBCFCP','')) ,0) ;
-                ICMS.pFCP       := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCP', INIRec.ReadString(sSecao,'pFCP','')) ,0) ;
-                ICMS.vFCP       := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCP', INIRec.ReadString(sSecao,'vFCP','')) ,0) ;
-                ICMS.modBCST    := StrTomodBCST(OK, INIRec.ReadString(sSecao,'ModalidadeST',INIRec.ReadString(sSecao,'modBCST','0')));
-                ICMS.pMVAST     := StringToFloatDef( INIRec.ReadString(sSecao,'PercentualMargemST' ,INIRec.ReadString(sSecao,'pMVAST' ,'')) ,0);
-                ICMS.pRedBCST   := StringToFloatDef( INIRec.ReadString(sSecao,'PercentualReducaoST',INIRec.ReadString(sSecao,'pRedBCST','')) ,0);
-                ICMS.vBCST      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBaseST',INIRec.ReadString(sSecao,'vBCST','')) ,0);
-                ICMS.pICMSST    := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaST' ,INIRec.ReadString(sSecao,'pICMSST' ,'')) ,0);
-                ICMS.vICMSST    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorST'    ,INIRec.ReadString(sSecao,'vICMSST'    ,'')) ,0);
-                ICMS.vBCFCPST   := StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCPST', INIRec.ReadString(sSecao,'vBCFCPST','')) ,0) ;
-                ICMS.pFCPST     := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCPST', INIRec.ReadString(sSecao,'pFCPST','')) ,0) ;
-                ICMS.vFCPST     := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCPST', INIRec.ReadString(sSecao,'vFCPST','')) ,0) ;
-                ICMS.UFST       := INIRec.ReadString(sSecao,'UFST'    ,'');
-                ICMS.pBCOp      := StringToFloatDef( INIRec.ReadString(sSecao,'pBCOp'    ,'') ,0);
-                ICMS.vBCSTRet   := StringToFloatDef( INIRec.ReadString(sSecao,'vBCSTRet','') ,0);
-                ICMS.pST        := StringToFloatDef( INIRec.ReadString(sSecao,'pST','') ,0);
-                ICMS.vICMSSTRet := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSSTRet','') ,0);
-                ICMS.vBCFCPSTRet:= StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCPSTRes', INIRec.ReadString(sSecao,'vBCFCPSTRet','')) ,0) ;
-                ICMS.pFCPSTRet  := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCPSTRet', INIRec.ReadString(sSecao,'pFCPSTRet','')) ,0) ;
-                ICMS.vFCPSTRet  := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCPSTRet', INIRec.ReadString(sSecao,'vFCPSTRet','')) ,0) ;
-                ICMS.motDesICMS := StrTomotDesICMS(OK, INIRec.ReadString(sSecao,'motDesICMS','0'));
-                ICMS.pCredSN    := StringToFloatDef( INIRec.ReadString(sSecao,'pCredSN','') ,0);
-                ICMS.vCredICMSSN:= StringToFloatDef( INIRec.ReadString(sSecao,'vCredICMSSN','') ,0);
-                ICMS.vBCSTDest  := StringToFloatDef( INIRec.ReadString(sSecao,'vBCSTDest','') ,0);
-                ICMS.vICMSSTDest:= StringToFloatDef( INIRec.ReadString(sSecao,'vICMSSTDest','') ,0);
-                ICMS.vICMSDeson := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSDeson','') ,0);
-                ICMS.vICMSOp    := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSOp','') ,0);
-                ICMS.pDif       := StringToFloatDef( INIRec.ReadString(sSecao,'pDif','') ,0);
-                ICMS.vICMSDif   := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSDif','') ,0);
-
-                ICMS.pRedBCEfet := StringToFloatDef( INIRec.ReadString(sSecao,'pRedBCEfet','') ,0);
-                ICMS.vBCEfet    := StringToFloatDef( INIRec.ReadString(sSecao,'vBCEfet','') ,0);
-                ICMS.pICMSEfet  := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSEfet','') ,0);
-                ICMS.vICMSEfet  := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSEfet','') ,0);
-
-                ICMS.vICMSSubstituto := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSSubstituto','') ,0);
+                CST := StrToCSTICMS(OK, INIRec.ReadString(sSecao, 'CST', '00'));
+                vBC := StringToFloatDef(INIRec.ReadString(sSecao, 'vBC', ''), 0);
+                pICMS := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMS', ''), 0);
+                vICMS := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMS', ''), 0);
+                pFCP := StringToFloatDef(INIRec.ReadString(sSecao, 'pFCP', ''), 0);
+                vFCP := StringToFloatDef(INIRec.ReadString(sSecao, 'vFCP', ''), 0);
+                pRedBC := StringToFloatDef(INIRec.ReadString(sSecao, 'pRedBC', ''), 0);
+                vICMSDeson := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSDeson', ''), 0);
+                cBenef := INIRec.ReadString(sSecao,'cBenef', '');
               end;
             end;
 
-            sSecao := 'ICMSUFDest'+IntToStrZero(I,3);
-            sFim     := INIRec.ReadString(sSecao,'vBCUFDest','FIM');
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
+            j := 1;
+            while true do
             begin
-              with ICMSUFDest do
+              sSecao := 'ICMSUFDest' + IntToStrZero(i, 3) + IntToStrZero(j, 3);
+              sFim := INIRec.ReadString(sSecao, 'vBCUFDest', 'FIM');
+              if sFim = 'FIM' then
+                break;
+
+              with ICMSUFDest.New do
               begin
-                vBCUFDest      := StringToFloatDef(INIRec.ReadString(sSecao, 'vBCUFDest', ''), 0);
-                vBCFCPUFDest   := StringToFloatDef( INIRec.ReadString(sSecao,'vBCFCPUFDest','') ,0);
-                pFCPUFDest     := StringToFloatDef(INIRec.ReadString(sSecao, 'pFCPUFDest', ''), 0);
-                pICMSUFDest    := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMSUFDest', ''), 0);
-                pICMSInter     := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMSInter', ''), 0);
-                pICMSInterPart := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMSInterPart', ''), 0);
-                vFCPUFDest     := StringToFloatDef(INIRec.ReadString(sSecao, 'vFCPUFDest', ''), 0);
-                vICMSUFDest    := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSUFDest', ''), 0);
-                vICMSUFRemet   := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSUFRemet', ''), 0);
+                cUFDest := INIRec.ReadInteger(sSecao, 'cUFDest', 0);
+                vBCUFDest := StringToFloatDef(INIRec.ReadString(sSecao, 'vBCUFDest', ''), 0);
+                pFCPUFDest := StringToFloatDef(INIRec.ReadString(sSecao, 'pFCPUFDest', ''), 0);
+                pICMSUFDest := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMSUFDest', ''), 0);
+                pICMSInter := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMSInter', ''), 0);
+                vFCPUFDest := StringToFloatDef(INIRec.ReadString(sSecao, 'vFCPUFDest', ''), 0);
+                vICMSUFDest := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSUFDest', ''), 0);
+                vICMSUFEmi := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSUFEmi', ''), 0);
+                cBenefUFDest := INIRec.ReadString(sSecao, 'cBenefUFDest', '');
               end;
+
+              Inc(j);
             end;
 
-            sSecao := 'IPI'+IntToStrZero(I,3) ;
-            sFim   := INIRec.ReadString( sSecao,'CST','FIM') ;
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
-            begin
-              with IPI do
-              begin
-                CST      := StrToCSTIPI(OK, INIRec.ReadString( sSecao,'CST','')) ;
-                if OK then
-                begin
-                  clEnq    := INIRec.ReadString(  sSecao,'ClasseEnquadramento',INIRec.ReadString(  sSecao,'clEnq'   ,''));
-                  CNPJProd := INIRec.ReadString(  sSecao,'CNPJProdutor'       ,INIRec.ReadString(  sSecao,'CNPJProd',''));
-                  cSelo    := INIRec.ReadString(  sSecao,'CodigoSeloIPI'      ,INIRec.ReadString(  sSecao,'cSelo'   ,''));
-                  qSelo    := INIRec.ReadInteger( sSecao,'QuantidadeSelos'    ,INIRec.ReadInteger( sSecao,'qSelo'   ,0));
-                  cEnq     := INIRec.ReadString(  sSecao,'CodigoEnquadramento',INIRec.ReadString(  sSecao,'cEnq'    ,''));
-                  vBC      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
-                  qUnid    := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'  ,INIRec.ReadString(sSecao,'qUnid' ,'')) ,0);
-                  vUnid    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorUnidade',INIRec.ReadString(sSecao,'vUnid' ,'')) ,0);
-                  pIPI     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'pIPI'  ,'')) ,0);
-                  vIPI     := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'       ,INIRec.ReadString(sSecao,'vIPI'  ,'')) ,0);
-                end;
-              end;
-            end;
+            sSecao := 'PIS' + IntToStrZero(i, 3);
+            sFim := INIRec.ReadString(sSecao, 'CST', 'FIM');
 
-            sSecao := 'II'+IntToStrZero(I,3) ;
-            sFim     := INIRec.ReadString( sSecao,'ValorBase',INIRec.ReadString( sSecao,'vBC','FIM')) ;
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
-            begin
-              with II do
-              begin
-                vBc      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'          ,INIRec.ReadString(sSecao,'vBC'     ,'')) ,0);
-                vDespAdu := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDespAduaneiras',INIRec.ReadString(sSecao,'vDespAdu','')) ,0);
-                vII      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorII'            ,INIRec.ReadString(sSecao,'vII'     ,'')) ,0);
-                vIOF     := StringToFloatDef( INIRec.ReadString(sSecao,'ValorIOF'           ,INIRec.ReadString(sSecao,'vIOF'    ,'')) ,0);
-              end;
-            end;
-
-            sSecao := 'PIS'+IntToStrZero(I,3) ;
-            sFim     := INIRec.ReadString( sSecao,'CST','FIM') ;
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
+            if ((sFim <> 'FIM') and (Length(sFim) > 0)) then
             begin
               with PIS do
               begin
-                CST :=  StrToCSTPIS(OK, INIRec.ReadString( sSecao,'CST',''));
+                CST := StrToCSTPIS(OK, sFim);
                 if OK then
                 begin
-                  PIS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
-                  PIS.pPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'     ,INIRec.ReadString(sSecao,'pPIS'     ,'')) ,0);
-                  PIS.qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
-                  PIS.vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'ValorAliquota',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
-                  PIS.vPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'        ,INIRec.ReadString(sSecao,'vPIS'     ,'')) ,0);
+                  vBC := StringToFloatDef(INIRec.ReadString(sSecao,'vBC', ''), 0);
+                  pPIS := StringToFloatDef(INIRec.ReadString(sSecao,'pPIS', ''), 0);
+                  vPIS := StringToFloatDef(INIRec.ReadString(sSecao,'vPIS', ''), 0);
                 end;
               end;
             end;
 
-            sSecao := 'PISST'+IntToStrZero(I,3) ;
-            sFim     := INIRec.ReadString( sSecao,'ValorBase','F')+ INIRec.ReadString( sSecao,'Quantidade','IM') ;
-            if (sFim = 'FIM') then
-              sFim   := INIRec.ReadString( sSecao,'vBC','F')+ INIRec.ReadString( sSecao,'qBCProd','IM') ;
+            sSecao := 'COFINS'+ IntToStrZero(i, 3);
+            sFim := INIRec.ReadString(sSecao, 'CST', 'FIM');
 
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
-            begin
-              with PISST do
-              begin
-                vBc       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
-                pPis      := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaPerc' ,INIRec.ReadString(sSecao,'pPis'     ,'')) ,0);
-                qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
-                vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaValor',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
-                vPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorPISST'   ,INIRec.ReadString(sSecao,'vPIS'     ,'')) ,0);
-              end;
-            end;
-
-            sSecao := 'COFINS'+IntToStrZero(I,3) ;
-            sFim     := INIRec.ReadString( sSecao,'CST','FIM') ;
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
+            if ((sFim <> 'FIM') and (Length(sFim) > 0)) then
             begin
               with COFINS do
               begin
-                CST := StrToCSTCOFINS(OK, INIRec.ReadString( sSecao,'CST',''));
+                CST := StrToCSTCOFINS(OK, sFim);
                 if OK then
                 begin
-                  COFINS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
-                  COFINS.pCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'     ,INIRec.ReadString(sSecao,'pCOFINS'  ,'')) ,0);
-                  COFINS.qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
-                  COFINS.vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'ValorAliquota',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
-                  COFINS.vCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'        ,INIRec.ReadString(sSecao,'vCOFINS'  ,'')) ,0);
+                  vBC := StringToFloatDef(INIRec.ReadString(sSecao,'vBC', ''), 0);
+                  pCOFINS := StringToFloatDef(INIRec.ReadString(sSecao,'pCOFINS', ''), 0);
+                  vCOFINS := StringToFloatDef(INIRec.ReadString(sSecao,'vCOFINS', ''), 0);
                 end;
               end;
             end;
 
-            sSecao := 'COFINSST'+IntToStrZero(I,3) ;
-            sFim     := INIRec.ReadString( sSecao,'ValorBase','F')+ INIRec.ReadString( sSecao,'Quantidade','IM');
-            if (sFim = 'FIM') then
-              sFim   := INIRec.ReadString( sSecao,'vBC','F')+ INIRec.ReadString( sSecao,'qBCProd','IM') ;
+            sSecao := 'FUST'+ IntToStrZero(i, 3);
+            sFim := INIRec.ReadString(sSecao, 'vBC', 'FIM');
 
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
+            if ((sFim <> 'FIM') and (Length(sFim) > 0)) then
             begin
-              with COFINSST do
+              with FUST do
               begin
-                vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
-                pCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaPerc' ,INIRec.ReadString(sSecao,'pCOFINS'  ,'')) ,0);
-                qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
-                vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaValor',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
-                vCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'ValorCOFINSST',INIRec.ReadString(sSecao,'vCOFINS'  ,'')) ,0);
+                vBC := StringToFloatDef(sFim, 0);
+                pFUST := StringToFloatDef(INIRec.ReadString(sSecao,'pFUST', ''), 0);
+                vFUST := StringToFloatDef(INIRec.ReadString(sSecao,'vFUST', ''), 0);
               end;
             end;
 
-            sSecao := 'ISSQN'+IntToStrZero(I,3) ;
-            sFim     := INIRec.ReadString( sSecao,'ValorBase',INIRec.ReadString(sSecao,'vBC'   ,'FIM')) ;
-            if (sFim = 'FIM') then
-              sFim := INIRec.ReadString( sSecao,'vBC','FIM');
+            sSecao := 'FUNTTEL'+ IntToStrZero(i, 3);
+            sFim := INIRec.ReadString(sSecao, 'vBC', 'FIM');
 
-            if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
+            if ((sFim <> 'FIM') and (Length(sFim) > 0)) then
             begin
-              with ISSQN do
+              with FUNTTEL do
               begin
-                if StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase',INIRec.ReadString(sSecao,'vBC','')) ,0) > 0 then
-                begin
-                  vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
-                  vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
-                  vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
-                  cMunFG    := StrToInt( INIRec.ReadString(sSecao,'MunicipioFatoGerador',INIRec.ReadString(sSecao,'cMunFG','')));
-                  cListServ := INIRec.ReadString(sSecao,'CodigoServico',INIRec.ReadString(sSecao,'cListServ',''));
-                  cSitTrib  := StrToISSQNcSitTrib( OK,INIRec.ReadString(sSecao,'cSitTrib','')) ;
-                  vDeducao    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDeducao'   ,INIRec.ReadString(sSecao,'vDeducao'   ,'')) ,0);
-                  vOutro      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorOutro'   ,INIRec.ReadString(sSecao,'vOutro'   ,'')) ,0);
-                  vDescIncond := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDescontoIncondicional'   ,INIRec.ReadString(sSecao,'vDescIncond'   ,'')) ,0);
-                  vDescCond   := StringToFloatDef( INIRec.ReadString(sSecao,'vDescontoCondicional'   ,INIRec.ReadString(sSecao,'vDescCond'   ,'')) ,0);
-                  vISSRet     := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSRetido'   ,INIRec.ReadString(sSecao,'vISSRet'   ,'')) ,0);
-                  indISS      := StrToindISS( OK,INIRec.ReadString(sSecao,'indISS','')) ;
-                  cServico    := INIRec.ReadString(sSecao,'cServico','');
-                  cMun        := INIRec.ReadInteger(sSecao,'cMun',0);
-                  cPais       := INIRec.ReadInteger(sSecao,'cPais',1058);
-                  nProcesso   := INIRec.ReadString(sSecao,'nProcesso','');
-                  indIncentivo := StrToindIncentivo( OK,INIRec.ReadString(sSecao,'indIncentivo','')) ;
-                end;
+                vBC := StringToFloatDef(sFim, 0);
+                pFUNTTEL := StringToFloatDef(INIRec.ReadString(sSecao,'pFUNTTEL', ''), 0);
+                vFUNTTEL := StringToFloatDef(INIRec.ReadString(sSecao,'vFUNTTEL', ''), 0);
+              end;
+            end;
+
+            sSecao := 'retTrib'+ IntToStrZero(i, 3);
+            sFim := INIRec.ReadString(sSecao, 'vRetPIS', 'FIM');
+
+            if ((sFim <> 'FIM') and (Length(sFim) > 0)) then
+            begin
+              with retTrib do
+              begin
+                vRetPIS := StringToFloatDef(sFim, 0);
+                vRetCOFINS := StringToFloatDef(INIRec.ReadString(sSecao,'vRetCOFINS', ''), 0);
+                vRetCSLL := StringToFloatDef(INIRec.ReadString(sSecao,'vRetCSLL', ''), 0);
+                vBCIRRF := StringToFloatDef(INIRec.ReadString(sSecao,'vBCIRRF', ''), 0);
+                vIRRF := StringToFloatDef(INIRec.ReadString(sSecao,'vIRRF', ''), 0);
               end;
             end;
           end;
+
+          sSecao := 'gProcRef' + IntToStrZero(i, 3);
+          sFim := INIRec.ReadString(sSecao, 'vItem', 'FIM');
+
+          if ((sFim <> 'FIM') and (Length(sFim) > 0)) then
+          begin
+            with gProcRef do
+            begin
+              vItem := StringToFloatDef(INIRec.ReadString(sSecao,'vItem', ''), 0);
+              qFaturada := INIRec.ReadInteger(sSecao,'qFaturada', 0);
+              vProd := StringToFloatDef(INIRec.ReadString(sSecao,'vProd', ''), 0);
+              vDesc := StringToFloatDef(INIRec.ReadString(sSecao,'vDesc', ''), 0);
+              vOutro := StringToFloatDef(INIRec.ReadString(sSecao,'vOutro', ''), 0);
+              indDevolucao := StrToTIndicador(OK, INIRec.ReadString(sSecao, 'indDevolucao', '0'));
+              vBC := StringToFloatDef(INIRec.ReadString(sSecao,'vBC', ''), 0);
+              pICMS := StringToFloatDef(INIRec.ReadString(sSecao,'pICMS', ''), 0);
+              vICMS := StringToFloatDef(INIRec.ReadString(sSecao,'vICMS', ''), 0);
+              vPIS := StringToFloatDef(INIRec.ReadString(sSecao,'vPIS', ''), 0);
+              vCOFINS := StringToFloatDef(INIRec.ReadString(sSecao,'vCOFINS', ''), 0);
+
+              j := 1;
+              while true do
+              begin
+                sSecao := 'gProc' + IntToStrZero(i, 3) + IntToStrZero(j, 2);
+                sFim := INIRec.ReadString(sSecao, 'nProcesso', 'FIM');
+                if sFim = 'FIM' then
+                  break;
+
+                with gProc.New do
+                begin
+                  tpProc := StrTotpProc(OK, INIRec.ReadString(sSecao, 'tpProc', '0'));
+                  nProcesso := sFim;
+                end;
+
+                Inc(j);
+              end;
+            end;
+          end;
+
+          sSecao := 'gRessarc' + IntToStrZero(i, 3);
+          sFim := INIRec.ReadString(sSecao, 'dRef', 'FIM');
+
+          if ((sFim <> 'FIM') and (Length(sFim) > 0)) then
+          begin
+            with gRessarc do
+            begin
+              tpRessarc := StrTotpRessarc(OK, INIRec.ReadString(sSecao, 'tpRessarc', '0'));
+              dRef := StringToDateTime(INIRec.ReadString(sSecao, 'dRef', '0'));
+              nProcesso := INIRec.ReadString(sSecao,'nProcesso', '');
+              nProtReclama := INIRec.ReadString(sSecao,'nProtReclama', '');
+              xObs := INIRec.ReadString(sSecao,'xObs', '');
+            end;
+          end;
         end;
-        }
-        Inc( I ) ;
-      end ;
-      {
-      Total.ICMSTot.vBC     := StringToFloatDef( INIRec.ReadString('Total','BaseICMS'     ,INIRec.ReadString('Total','vBC'     ,'')) ,0) ;
-      Total.ICMSTot.vICMS   := StringToFloatDef( INIRec.ReadString('Total','ValorICMS'    ,INIRec.ReadString('Total','vICMS'   ,'')) ,0) ;
-      Total.ICMSTot.vICMSDeson := StringToFloatDef( INIRec.ReadString('Total','vICMSDeson',''),0) ;
-      Total.ICMSTot.vFCP       := StringToFloatDef( INIRec.ReadString('Total','ValorFCP',  INIRec.ReadString('Total','vFCP','')) ,0) ;
-      Total.ICMSTot.vBCST   := StringToFloatDef( INIRec.ReadString('Total','BaseICMSSubstituicao' ,INIRec.ReadString('Total','vBCST','')) ,0) ;
-      Total.ICMSTot.vST     := StringToFloatDef( INIRec.ReadString('Total','ValorICMSSubstituicao',INIRec.ReadString('Total','vST'  ,'')) ,0) ;
-      Total.ICMSTot.vFCPST  := StringToFloatDef( INIRec.ReadString('Total','ValorFCPST',INIRec.ReadString('Total','vFCPST'  ,'')) ,0) ;
-      Total.ICMSTot.vFCPSTRet:= StringToFloatDef( INIRec.ReadString('Total','ValorFCPSTRet',INIRec.ReadString('Total','vFCPSTRet'  ,'')) ,0) ;
-      Total.ICMSTot.vProd   := StringToFloatDef( INIRec.ReadString('Total','ValorProduto' ,INIRec.ReadString('Total','vProd'  ,'')) ,0) ;
-      Total.ICMSTot.vFrete  := StringToFloatDef( INIRec.ReadString('Total','ValorFrete'   ,INIRec.ReadString('Total','vFrete' ,'')) ,0) ;
-      Total.ICMSTot.vSeg    := StringToFloatDef( INIRec.ReadString('Total','ValorSeguro'  ,INIRec.ReadString('Total','vSeg'   ,'')) ,0) ;
-      Total.ICMSTot.vDesc   := StringToFloatDef( INIRec.ReadString('Total','ValorDesconto',INIRec.ReadString('Total','vDesc'  ,'')) ,0) ;
-      Total.ICMSTot.vII     := StringToFloatDef( INIRec.ReadString('Total','ValorII'      ,INIRec.ReadString('Total','vII'    ,'')) ,0) ;
-      Total.ICMSTot.vIPI    := StringToFloatDef( INIRec.ReadString('Total','ValorIPI'     ,INIRec.ReadString('Total','vIPI'   ,'')) ,0) ;
-      Total.ICMSTot.vIPIDevol:= StringToFloatDef( INIRec.ReadString('Total','ValorIPIDevol',INIRec.ReadString('Total','vIPIDevol'  ,'')) ,0) ;
-      Total.ICMSTot.vPIS    := StringToFloatDef( INIRec.ReadString('Total','ValorPIS'     ,INIRec.ReadString('Total','vPIS'   ,'')) ,0) ;
-      Total.ICMSTot.vCOFINS := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINS'  ,INIRec.ReadString('Total','vCOFINS','')) ,0) ;
-      Total.ICMSTot.vOutro  := StringToFloatDef( INIRec.ReadString('Total','ValorOutrasDespesas',INIRec.ReadString('Total','vOutro','')) ,0) ;
-      Total.ICMSTot.vNF     := StringToFloatDef( INIRec.ReadString('Total','ValorNota'    ,INIRec.ReadString('Total','vNF'    ,'')) ,0) ;
-      Total.ICMSTot.vTotTrib:= StringToFloatDef( INIRec.ReadString('Total','vTotTrib'     ,''),0) ;
-      Total.ICMSTot.vFCPUFDest  := StringToFloatDef( INIRec.ReadString('Total','vFCPUFDest',''),0);
-      Total.ICMSTot.vICMSUFDest := StringToFloatDef( INIRec.ReadString('Total','vICMSUFDest',''),0);
-      Total.ICMSTot.vICMSUFRemet:= StringToFloatDef( INIRec.ReadString('Total','vICMSUFRemet',''),0);
 
-      Total.ISSQNtot.vServ  := StringToFloatDef( INIRec.ReadString('Total','ValorServicos',INIRec.ReadString('ISSQNtot','vServ','')) ,0) ;
-      Total.ISSQNTot.vBC    := StringToFloatDef( INIRec.ReadString('Total','ValorBaseISS' ,INIRec.ReadString('ISSQNtot','vBC'  ,'')) ,0) ;
-      Total.ISSQNTot.vISS   := StringToFloatDef( INIRec.ReadString('Total','ValorISSQN'   ,INIRec.ReadString('ISSQNtot','vISS' ,'')) ,0) ;
-      Total.ISSQNTot.vPIS   := StringToFloatDef( INIRec.ReadString('Total','ValorPISISS'  ,INIRec.ReadString('ISSQNtot','vPIS' ,'')) ,0) ;
-      Total.ISSQNTot.vCOFINS := StringToFloatDef( INIRec.ReadString('Total','ValorCONFINSISS',INIRec.ReadString('ISSQNtot','vCOFINS','')) ,0) ;
-      Total.ISSQNtot.dCompet     := StringToDateTime(INIRec.ReadString('ISSQNtot','dCompet','0'));
-      Total.ISSQNtot.vDeducao    := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDeducao'   ,'') ,0) ;
-      Total.ISSQNtot.vOutro      := StringToFloatDef( INIRec.ReadString('ISSQNtot','vOutro'   ,'') ,0) ;
-      Total.ISSQNtot.vDescIncond := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDescIncond'   ,'') ,0) ;
-      Total.ISSQNtot.vDescCond   := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDescCond'   ,'') ,0) ;
-      Total.ISSQNtot.vISSRet     := StringToFloatDef( INIRec.ReadString('ISSQNtot','vISSRet'   ,'') ,0) ;
-      Total.ISSQNtot.cRegTrib    := StrToRegTribISSQN( OK,INIRec.ReadString('ISSQNtot','cRegTrib','1')) ;
+        Inc(i);
+      end;
 
-      Total.retTrib.vRetPIS    := StringToFloatDef( INIRec.ReadString('retTrib','vRetPIS'   ,'') ,0) ;
-      Total.retTrib.vRetCOFINS := StringToFloatDef( INIRec.ReadString('retTrib','vRetCOFINS','') ,0) ;
-      Total.retTrib.vRetCSLL   := StringToFloatDef( INIRec.ReadString('retTrib','vRetCSLL'  ,'') ,0) ;
-      Total.retTrib.vBCIRRF    := StringToFloatDef( INIRec.ReadString('retTrib','vBCIRRF'   ,'') ,0) ;
-      Total.retTrib.vIRRF      := StringToFloatDef( INIRec.ReadString('retTrib','vIRRF'     ,'') ,0) ;
-      Total.retTrib.vBCRetPrev := StringToFloatDef( INIRec.ReadString('retTrib','vBCRetPrev','') ,0) ;
-      Total.retTrib.vRetPrev   := StringToFloatDef( INIRec.ReadString('retTrib','vRetPrev'  ,'') ,0) ;
+      sSecao := 'total';
+      Total.vProd := StringToFloatDef(INIRec.ReadString(sSecao,'vProd', ''), 0);
+      Total.vBC := StringToFloatDef(INIRec.ReadString(sSecao,'vBC', ''), 0);
+      Total.vICMS := StringToFloatDef(INIRec.ReadString(sSecao,'vICMS', ''), 0);
+      Total.vICMSDeson := StringToFloatDef(INIRec.ReadString(sSecao,'vICMSDeson', ''), 0);
+      Total.vFCP := StringToFloatDef(INIRec.ReadString(sSecao,'vFCP', ''), 0);
+      Total.vCOFINS := StringToFloatDef(INIRec.ReadString(sSecao,'vCOFINS', ''), 0);
+      Total.vPIS := StringToFloatDef(INIRec.ReadString(sSecao,'vPIS', ''), 0);
+      Total.vFUNTTEL := StringToFloatDef(INIRec.ReadString(sSecao,'vFUNTTEL', ''), 0);
+      Total.vFUST := StringToFloatDef(INIRec.ReadString(sSecao,'vFUST', ''), 0);
+      Total.vRetPIS := StringToFloatDef(INIRec.ReadString(sSecao,'vRetPIS', ''), 0);
+      Total.vRetCOFINS := StringToFloatDef(INIRec.ReadString(sSecao,'vRetCOFINS', ''), 0);
+      Total.vRetCSLL := StringToFloatDef(INIRec.ReadString(sSecao,'vRetCSLL', ''), 0);
+      Total.vIRRF := StringToFloatDef(INIRec.ReadString(sSecao,'vIRRF', ''), 0);
+      Total.vDesc := StringToFloatDef(INIRec.ReadString(sSecao,'vDesc', ''), 0);
+      Total.vOutro := StringToFloatDef(INIRec.ReadString(sSecao,'vOutro', ''), 0);
+      Total.vNF := StringToFloatDef(INIRec.ReadString(sSecao,'vNF', ''), 0);
 
-      sSecao := IfThen( INIRec.SectionExists('Transportador'), 'Transportador', 'transp');
-      Transp.modFrete := StrTomodFrete(OK, INIRec.ReadString(sSecao,'FretePorConta',INIRec.ReadString(sSecao,'modFrete','0')));
-      Transp.Transporta.CNPJCPF  := INIRec.ReadString(sSecao,'CNPJCPF'  ,'');
-      Transp.Transporta.xNome    := INIRec.ReadString(sSecao,'NomeRazao',INIRec.ReadString(sSecao,'xNome',''));
-      Transp.Transporta.IE       := INIRec.ReadString(sSecao,'IE'       ,'');
-      Transp.Transporta.xEnder   := INIRec.ReadString(sSecao,'Endereco' ,INIRec.ReadString(sSecao,'xEnder',''));
-      Transp.Transporta.xMun     := INIRec.ReadString(sSecao,'Cidade'   ,INIRec.ReadString(sSecao,'xMun',''));
-      Transp.Transporta.UF       := INIRec.ReadString(sSecao,'UF'       ,'');
+      sSecao := 'gFidelidade';
+      gFidelidade.qtdSaldoPts := INIRec.ReadString(sSecao, 'qtdSaldoPts', '');
+      gFidelidade.dRefSaldoPts := StringToDateTime(INIRec.ReadString(sSecao, 'dRefSaldoPts', '0'));
+      gFidelidade.qtdPtsResg := INIRec.ReadString(sSecao, 'qtdPtsResg', '');
+      gFidelidade.dRefResgPts := StringToDateTime(INIRec.ReadString(sSecao, 'dRefResgPts', '0'));
 
-      Transp.retTransp.vServ    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorServico',INIRec.ReadString(sSecao,'vServ'   ,'')) ,0) ;
-      Transp.retTransp.vBCRet   := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBCRet'  ,'')) ,0) ;
-      Transp.retTransp.pICMSRet := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'pICMSRet','')) ,0) ;
-      Transp.retTransp.vICMSRet := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'       ,INIRec.ReadString(sSecao,'vICMSRet','')) ,0) ;
-      Transp.retTransp.CFOP     := INIRec.ReadString(sSecao,'CFOP'     ,'');
-      Transp.retTransp.cMunFG   := INIRec.ReadInteger(sSecao,'CidadeCod',INIRec.ReadInteger(sSecao,'cMunFG',0));
+      sSecao := 'gFat';
+      gFat.CompetFat := StringToDateTime(INIRec.ReadString(sSecao, 'CompetFat', '0'));
+      gFat.dVencFat := StringToDateTime(INIRec.ReadString(sSecao, 'dVencFat', '0'));
+      gFat.dPerUsoIni := StringToDateTime(INIRec.ReadString(sSecao, 'dPerUsoIni', '0'));
+      gFat.dPerUsoFim := StringToDateTime(INIRec.ReadString(sSecao, 'dPerUsoFim', '0'));
+      gFat.codBarras := INIRec.ReadString(sSecao, 'codBarras', '');
+      gFat.codDebAuto := INIRec.ReadString(sSecao, 'codDebAuto', '');
+      gFat.codBanco := INIRec.ReadString(sSecao, 'codBanco', '');
+      gFat.codAgencia := INIRec.ReadString(sSecao, 'codAgencia', '');
+      // Endereço do Destinatario
+      gFat.enderCorresp.xLgr := INIRec.ReadString(sSecao, 'xLgr', '');
+      gFat.enderCorresp.nro := INIRec.ReadString(sSecao, 'nro', '');
+      gFat.enderCorresp.xCpl := INIRec.ReadString(sSecao, 'xCpl', '');
+      gFat.enderCorresp.xBairro := INIRec.ReadString(sSecao, 'xBairro', '');
+      gFat.enderCorresp.cMun := INIRec.ReadInteger(sSecao, 'cMun', 0);
+      gFat.enderCorresp.xMun := INIRec.ReadString(sSecao, 'xMun', '');
+      gFat.enderCorresp.CEP := INIRec.ReadInteger(sSecao, 'CEP', 0);
+      gFat.enderCorresp.UF := INIRec.ReadString(sSecao, 'UF', '');
+      gFat.enderCorresp.fone := INIRec.ReadString(sSecao, 'fone', '');
+      gFat.enderCorresp.email := INIRec.ReadString(sSecao, 'email', '');
+      // Chave PIX
+      gFat.gPIX.urlQRCodePIX := INIRec.ReadString(sSecao, 'urlQRCodePIX', '');
 
-      Transp.veicTransp.placa := INIRec.ReadString(sSecao,'Placa'  ,'');
-      Transp.veicTransp.UF    := INIRec.ReadString(sSecao,'UFPlaca','');
-      Transp.veicTransp.RNTC  := INIRec.ReadString(sSecao,'RNTC'   ,'');
+      sSecao := 'gFatCentral';
+      gFatCentral.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
+      gFatCentral.cUF := INIRec.ReadInteger(sSecao, 'cUF', 0);
 
-      Transp.vagao := INIRec.ReadString( sSecao,'vagao','') ;
-      Transp.balsa := INIRec.ReadString( sSecao,'balsa','') ;
-
-      J := 1 ;
+      i := 1;
       while true do
       begin
-        sSecao := 'Reboque'+IntToStrZero(J,3) ;
-        sFim     := INIRec.ReadString(sSecao,'placa','FIM') ;
+        sSecao := 'autXML' + IntToStrZero(i, 2);
+        sFim := OnlyNumber(INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM'));
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with Transp.Reboque.New do
-        begin
-          placa := sFim;
-          UF    := INIRec.ReadString( sSecao,'UF'  ,'') ;
-          RNTC  := INIRec.ReadString( sSecao,'RNTC','') ;
-        end;
+        with autXML.New do
+          CNPJCPF := sFim;
 
-        Inc(J)
+        Inc(i);
       end;
 
-      I := 1 ;
-      while true do
-      begin
-        sSecao := IfThen(INIRec.SectionExists('Volume'+IntToStrZero(I,3)), 'Volume', 'vol');
-        sSecao := sSecao+IntToStrZero(I,3) ;
-        sQtdVol  := INIRec.ReadString(sSecao,'Quantidade',INIRec.ReadString(sSecao,'qVol','FIM')) ;
-        if (sQtdVol = 'FIM') or (Length(sQtdVol) <= 0)  then
-          break ;
-
-        with Transp.Vol.New do
-        begin
-          qVol  := StrToInt(sQtdVol);
-          esp   := INIRec.ReadString( sSecao,'Especie'  ,INIRec.ReadString( sSecao,'esp'  ,''));
-          marca := INIRec.ReadString( sSecao,'Marca'    ,'');
-          nVol  := INIRec.ReadString( sSecao,'Numeracao',INIRec.ReadString( sSecao,'nVol'  ,''));
-          pesoL := StringToFloatDef( INIRec.ReadString(sSecao,'PesoLiquido',INIRec.ReadString(sSecao,'pesoL','')) ,0) ;
-          pesoB := StringToFloatDef( INIRec.ReadString(sSecao,'PesoBruto'  ,INIRec.ReadString(sSecao,'pesoB','')) ,0) ;
-
-          J := 1;
-          while true do
-          begin
-            sSecao := IfThen(INIRec.SectionExists('lacres'+IntToStrZero(I,3)+IntToStrZero(J,3)), 'lacres', 'Lacre');
-            sSecao := sSecao+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sFim   := INIRec.ReadString(sSecao,'nLacre','FIM') ;
-            if (sFim = 'FIM') or (Length(sFim) <= 0)  then
-              break ;
-
-            Lacres.New.nLacre := sFim;
-
-            Inc(J);
-          end;
-        end;
-
-        Inc(I);
-      end;
-
-      sSecao := IfThen(INIRec.SectionExists('Fatura'), 'Fatura', 'fat');
-      Cobr.Fat.nFat  := INIRec.ReadString( sSecao,'Numero',INIRec.ReadString( sSecao,'nFat',''));
-      Cobr.Fat.vOrig := StringToFloatDef( INIRec.ReadString(sSecao,'ValorOriginal',INIRec.ReadString(sSecao,'vOrig','')) ,0) ;
-      Cobr.Fat.vDesc := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDesconto',INIRec.ReadString(sSecao,'vDesc','')) ,0) ;
-      Cobr.Fat.vLiq  := StringToFloatDef( INIRec.ReadString(sSecao,'ValorLiquido' ,INIRec.ReadString(sSecao,'vLiq' ,'')) ,0) ;
-
-      I := 1 ;
-      while true do
-      begin
-        sSecao   := IfThen(INIRec.SectionExists('Duplicata'+IntToStrZero(I,3)), 'Duplicata', 'dup');
-        sSecao   := sSecao+IntToStrZero(I,3) ;
-        sDupNumber := INIRec.ReadString(sSecao,'Numero',INIRec.ReadString(sSecao,'nDup','FIM')) ;
-        if (sDupNumber = 'FIM') or (Length(sDupNumber) <= 0) then
-          break ;
-
-        with Cobr.Dup.New do
-        begin
-          nDup  := sDupNumber;
-          dVenc := StringToDateTime(INIRec.ReadString( sSecao,'DataVencimento',INIRec.ReadString( sSecao,'dVenc','0')));
-          vDup  := StringToFloatDef( INIRec.ReadString(sSecao,'Valor',INIRec.ReadString(sSecao,'vDup','')) ,0) ;
-        end;
-
-        Inc(I);
-      end;
-
-      I := 1 ;
-      while true do
-      begin
-        sSecao := 'pag'+IntToStrZero(I,3) ;
-        sFim     := INIRec.ReadString(sSecao,'tpag','FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break ;
-
-        with pag.New do
-        begin
-          tPag  := StrToFormaPagamento(OK,sFim);
-          vPag  := StringToFloatDef( INIRec.ReadString(sSecao,'vPag','') ,0) ;
-          indPag:= StrToIndpag(OK,INIRec.ReadString( sSecao,'indPag','0'));
-
-          tpIntegra  := StrTotpIntegra(OK,INIRec.ReadString(sSecao,'tpIntegra',''));
-          CNPJ  := INIRec.ReadString(sSecao,'CNPJ','');
-          tBand := StrToBandeiraCartao(OK,INIRec.ReadString(sSecao,'tBand','99'));
-          cAut  := INIRec.ReadString(sSecao,'cAut','');
-        end;
-        pag.vTroco:= StringToFloatDef( INIRec.ReadString(sSecao,'vTroco','') ,0) ;
-
-        Inc(I);
-      end;
-
-      sSecao := IfThen(INIRec.SectionExists('DadosAdicionais'), 'DadosAdicionais', 'infAdic');
-      InfAdic.infAdFisco := INIRec.ReadString( sSecao,'Fisco'      ,INIRec.ReadString( sSecao,'infAdFisco',''));
-      InfAdic.infCpl     := INIRec.ReadString( sSecao,'Complemento',INIRec.ReadString( sSecao,'infCpl'    ,''));
-
-      I := 1 ;
-      while true do
-      begin
-        sSecao := IfThen(INIRec.SectionExists('obsCont'+IntToStrZero(I,3)), 'obsCont', 'InfAdic');
-        sSecao     := sSecao+IntToStrZero(I,3) ;
-        sAdittionalField := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','FIM')) ;
-        if (sAdittionalField = 'FIM') or (Length(sAdittionalField) <= 0) then
-          break ;
-
-        with InfAdic.obsCont.New do
-        begin
-          xCampo := sAdittionalField;
-          xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
-        end;
-
-        Inc(I);
-      end;
-
-      I := 1 ;
-      while true do
-      begin
-        sSecao := 'obsFisco'+IntToStrZero(I,3) ;
-        sAdittionalField := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','FIM')) ;
-        if (sAdittionalField = 'FIM') or (Length(sAdittionalField) <= 0) then
-          break ;
-
-        with InfAdic.obsFisco.New do
-        begin
-          xCampo := sAdittionalField;
-          xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
-        end;
-
-        Inc(I);
-      end;
-
-      I := 1 ;
-      while true do
-      begin
-        sSecao := 'procRef'+IntToStrZero(I,3) ;
-        sAdittionalField := INIRec.ReadString(sSecao,'nProc','FIM') ;
-        if (sAdittionalField = 'FIM') or (Length(sAdittionalField) <= 0) then
-          break ;
-
-        with InfAdic.procRef.New do
-        begin
-          nProc := sAdittionalField;
-          indProc := StrToindProc(OK,INIRec.ReadString( sSecao,'indProc','0'));
-        end;
-
-        Inc(I);
-      end;
-
-      sFim   := INIRec.ReadString( 'exporta','UFembarq',INIRec.ReadString( 'exporta','UFSaidaPais','FIM')) ;
-      if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
-      begin
-        exporta.UFembarq     := INIRec.ReadString( 'exporta','UFembarq','') ;;
-        exporta.xLocEmbarq   := INIRec.ReadString( 'exporta','xLocEmbarq','');
-        exporta.UFSaidaPais  := INIRec.ReadString( 'exporta','UFSaidaPais','');
-        exporta.xLocExporta  := INIRec.ReadString( 'exporta','xLocExporta','');
-        exporta.xLocDespacho := INIRec.ReadString( 'exporta','xLocDespacho','');
-      end;
-
-      if (INIRec.ReadString( 'compra','xNEmp','') <> '') or
-         (INIRec.ReadString( 'compra','xPed' ,'') <> '') or
-         (INIRec.ReadString( 'compra','xCont','') <> '') then
-      begin
-        compra.xNEmp := INIRec.ReadString( 'compra','xNEmp','');
-        compra.xPed  := INIRec.ReadString( 'compra','xPed','');
-        compra.xCont := INIRec.ReadString( 'compra','xCont','');
-      end;
-
-      cana.safra   := INIRec.ReadString( 'cana','safra','');
-      cana.ref     := INIRec.ReadString( 'cana','ref'  ,'');
-      cana.qTotMes := StringToFloatDef( INIRec.ReadString('cana','qTotMes','') ,0) ;
-      cana.qTotAnt := StringToFloatDef( INIRec.ReadString('cana','qTotAnt','') ,0) ;
-      cana.qTotGer := StringToFloatDef( INIRec.ReadString('cana','qTotGer','') ,0) ;
-      cana.vFor    := StringToFloatDef( INIRec.ReadString('cana','vFor'   ,'') ,0) ;
-      cana.vTotDed := StringToFloatDef( INIRec.ReadString('cana','vTotDed','') ,0) ;
-      cana.vLiqFor := StringToFloatDef( INIRec.ReadString('cana','vLiqFor','') ,0) ;
-
-      I := 1 ;
-      while true do
-      begin
-        sSecao := 'forDia'+IntToStrZero(I,3) ;
-        sDay     := INIRec.ReadString(sSecao,'dia','FIM') ;
-        if (sDay = 'FIM') or (Length(sDay) <= 0) then
-          break ;
-
-        with cana.fordia.New do
-        begin
-          dia  := StrToInt(sDay);
-          qtde := StringToFloatDef( INIRec.ReadString(sSecao,'qtde'   ,'') ,0) ;
-        end;
-
-        Inc(I);
-      end;
-
-      I := 1 ;
-      while true do
-      begin
-        sSecao := 'deduc'+IntToStrZero(I,3) ;
-        sDeduc   := INIRec.ReadString(sSecao,'xDed','FIM') ;
-        if (sDeduc = 'FIM') or (Length(sDeduc) <= 0) then
-          break ;
-
-        with cana.deduc.New do
-        begin
-          xDed := sDeduc;
-          vDed := StringToFloatDef( INIRec.ReadString(sSecao,'vDed'   ,'') ,0) ;
-        end;
-
-        Inc(I);
-      end;
+      sSecao := 'infAdic';
+      InfAdic.infAdFisco := INIRec.ReadString(sSecao, 'infAdFisco', '');
+      // Vai ser pois é uma lista
+      InfAdic.infCpl := INIRec.ReadString(sSecao,'infCpl', '');
 
       sSecao := 'infRespTec';
       if INIRec.SectionExists(sSecao) then
       begin
         with infRespTec do
         begin
-          CNPJ     := INIRec.ReadString(sSecao, 'CNPJ', '');
+          CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
           xContato := INIRec.ReadString(sSecao, 'xContato', '');
-          email    := INIRec.ReadString(sSecao, 'email', '');
-          fone     := INIRec.ReadString(sSecao, 'fone', '');
+          email := INIRec.ReadString(sSecao, 'email', '');
+          fone := INIRec.ReadString(sSecao, 'fone', '');
         end;
       end;
-      }
     end;
 
     GerarXML;
@@ -1438,6 +862,10 @@ var
 //  I, J, K: integer;
 //  sSecao: string;
 begin
+  {
+    Atenção procurar seguir a risca a nomenclatura do manual
+  }
+
   Result := '';
 
   if not ValidarChave(NFCom.infNFCom.ID) then
@@ -1449,19 +877,19 @@ begin
     begin
       INIRec.WriteString('infNFCom', 'ID', infNFCom.ID);
       INIRec.WriteString('infNFCom', 'Versao', FloatToStr(infNFCom.Versao));
-      INIRec.WriteInteger('Identificacao', 'cUF', Ide.cUF);
-      INIRec.WriteInteger('Identificacao', 'Codigo', Ide.cNF);
-      INIRec.WriteInteger('Identificacao', 'Modelo', Ide.modelo);
-      INIRec.WriteInteger('Identificacao', 'Serie', Ide.serie);
-      INIRec.WriteInteger('Identificacao', 'nNF', Ide.nNF);
-      INIRec.WriteString('Identificacao', 'dhEmi', DateTimeToStr(Ide.dhEmi));
-      INIRec.WriteInteger('Identificacao', 'cMunFG', Ide.cMunFG);
-//      INIRec.WriteString('Identificacao', 'tpAmb', TpAmbToStr(Ide.tpAmb));
-//      INIRec.WriteString('Identificacao', 'tpemis', TpEmisToStr(Ide.tpemis));
-      INIRec.WriteString('Identificacao', 'finNFCom', FinNFComToStr(Ide.finNFCom));
-      INIRec.WriteString('Identificacao', 'verProc', Ide.verProc);
-      INIRec.WriteString('Identificacao', 'dhCont', DateToStr(Ide.dhCont));
-      INIRec.WriteString('Identificacao', 'xJust', Ide.xJust);
+      INIRec.WriteInteger('ide', 'cUF', Ide.cUF);
+      INIRec.WriteInteger('ide', 'Codigo', Ide.cNF);
+      INIRec.WriteInteger('ide', 'Modelo', Ide.modelo);
+      INIRec.WriteInteger('ide', 'Serie', Ide.serie);
+      INIRec.WriteInteger('ide', 'nNF', Ide.nNF);
+      INIRec.WriteString('ide', 'dhEmi', DateTimeToStr(Ide.dhEmi));
+      INIRec.WriteInteger('ide', 'cMunFG', Ide.cMunFG);
+//      INIRec.WriteString('ide', 'tpAmb', TpAmbToStr(Ide.tpAmb));
+//      INIRec.WriteString('ide', 'tpemis', TpEmisToStr(Ide.tpemis));
+      INIRec.WriteString('ide', 'finNFCom', FinNFComToStr(Ide.finNFCom));
+      INIRec.WriteString('ide', 'verProc', Ide.verProc);
+      INIRec.WriteString('ide', 'dhCont', DateToStr(Ide.dhCont));
+      INIRec.WriteString('ide', 'xJust', Ide.xJust);
       {
       for I := 0 to Ide.NFref.Count - 1 do
       begin
@@ -2017,12 +1445,12 @@ begin
                 INIRec.WriteFloat(sSecao, 'vDescIncond', vDescIncond);
                 INIRec.WriteFloat(sSecao, 'vDescCond', vDescCond);
                 INIRec.WriteFloat(sSecao, 'vISSRet', vISSRet);
-                INIRec.WriteString(sSecao, 'indISS', indISSToStr( indISS ));
+                INIRec.WriteString(sSecao, 'indISS', indISSToStr(indISS));
                 INIRec.Writestring(sSecao, 'cServico', cServico);
                 INIRec.WriteInteger(sSecao, 'cMun', cMun);
                 INIRec.WriteInteger(sSecao, 'cPais', cPais);
                 INIRec.WriteString(sSecao, 'nProcesso', nProcesso);
-                INIRec.WriteString(sSecao, 'indIncentivo', indIncentivoToStr( indIncentivo ));
+                INIRec.WriteString(sSecao, 'indIncentivo', indIncentivoToStr(indIncentivo));
               end;
             end;
           end;
@@ -2314,7 +1742,7 @@ begin
         end;
       end;
 
-      EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFCom,
+      EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFCom,
                    NumID +'-NFCom.xml', sReplyTo);
     end;
   finally
@@ -2338,7 +1766,7 @@ begin
     FNFComW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FNFComW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    pcnAuxiliar.TimeZoneConf.Assign(Configuracoes.WebServices.TimeZoneConf);
 
     FNFComW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FNFComW.CSRT   := Configuracoes.RespTec.CSRT;
@@ -2355,7 +1783,7 @@ begin
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNFCom.infNFCom.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
-  FAlertas := ACBrStr( FNFComW.ListaDeAlertas.Text );
+  FAlertas := ACBrStr(FNFComW.ListaDeAlertas.Text);
 
   Result := FXMLOriginal;
 end;

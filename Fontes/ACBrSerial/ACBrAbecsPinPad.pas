@@ -435,6 +435,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear; virtual;
+    function GetDataPacket(const BlockStart: Integer; out BlocksRead: Integer): String;
 
     property ID: String read fID write SetID;
     property Blocks: TACBrAbecsBlockList read fBlocks;
@@ -526,7 +527,7 @@ type
     procedure DoException(const AMsg: String); overload;
 
     procedure ExecCommand;
-    procedure SendCommand;
+    procedure SendCommand(const BlockStart: Integer; out BlocksRead: Integer);
     function SendCAN: Boolean;
     procedure SendNAK;
     procedure IgnoreAllBytes(SleepTime: Integer = 500);
@@ -571,11 +572,12 @@ type
 
   function ReturnStatusCodeDescription(AStatus: Integer): String;
   function SPE_ToStr(ASPE: Word): String;
+  function PP_ToStr(APP: Word): String;
 
 implementation
 
 uses
-  DateUtils,
+  DateUtils, Math,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
   ACBrUtil.Strings,
@@ -673,7 +675,78 @@ begin
     SPE_PBKMOD   : Result := 'SPE_PBKMOD';
     SPE_PBKEXP   : Result := 'SPE_PBKEXP';
   else
-    Result := '';
+    Result := IntToHex(ASPE)+'h';
+  end;
+end;
+
+function PP_ToStr(APP: Word): String;
+begin
+  case APP of
+    PP_SERNUM     : Result := 'PP_SERNUM';
+    PP_PARTNBR    : Result := 'PP_PARTNBR';
+    PP_MODEL      : Result := 'PP_MODEL';
+    PP_MNNAME     : Result := 'PP_MNNAME';
+    PP_CAPAB      : Result := 'PP_CAPAB';
+    PP_SPECVER    : Result := 'PP_SPECVER';
+    PP_MANVERS    : Result := 'PP_MANVERS';
+    PP_APPVERS    : Result := 'PP_APPVERS';
+    PP_GENVERS    : Result := 'PP_GENVERS';
+    PP_KRNLVER    : Result := 'PP_KRNLVER';
+    PP_CTLSVER    : Result := 'PP_CTLSVER';
+    PP_MCTLSVER   : Result := 'PP_MCTLSVER';
+    PP_VCTLSVER   : Result := 'PP_VCTLSVER';
+    PP_AECTLSVER  : Result := 'PP_AECTLSVER';
+    PP_DPCTLSVER  : Result := 'PP_DPCTLSVER';
+    PP_PUREVER    : Result := 'PP_PUREVER';
+    PP_DSPTXTSZ   : Result := 'PP_DSPTXTSZ';
+    PP_DSPGRSZ    : Result := 'PP_DSPGRSZ';
+    PP_MFSUP      : Result := 'PP_MFSUP';
+    PP_MKTDESP    : Result := 'PP_MKTDESP';
+    PP_MKTDESD    : Result := 'PP_MKTDESD';
+    PP_DKPTTDESP  : Result := 'PP_DKPTTDESP';
+    PP_DKPTTDESD  : Result := 'PP_DKPTTDESD';
+    PP_EVENT      : Result := 'PP_EVENT';
+    PP_TRK1INC    : Result := 'PP_TRK1INC';
+    PP_TRK2INC    : Result := 'PP_TRK2INC';
+    PP_TRK3INC    : Result := 'PP_TRK3INC';
+    PP_TRACK1     : Result := 'PP_TRACK1';
+    PP_TRACK2     : Result := 'PP_TRACK2';
+    PP_TRACK3     : Result := 'PP_TRACK3';
+    PP_TRK1KSN    : Result := 'PP_TRK1KSN';
+    PP_TRK2KSN    : Result := 'PP_TRK2KSN';
+    PP_TRK3KSN    : Result := 'PP_TRK3KSN';
+    PP_ENCPAN     : Result := 'PP_ENCPAN';
+    PP_ENCPANKSN  : Result := 'PP_ENCPANKSN';
+    PP_KSN        : Result := 'PP_KSN';
+    PP_VALUE      : Result := 'PP_VALUE';
+    PP_DATAOUT    : Result := 'PP_DATAOUT';
+    PP_CARDTYPE   : Result := 'PP_CARDTYPE';
+    PP_ICCSTAT    : Result := 'PP_ICCSTAT';
+    PP_AIDTABINFO : Result := 'PP_AIDTABINFO';
+    PP_PAN        : Result := 'PP_PAN';
+    PP_PANSEQNO   : Result := 'PP_PANSEQNO';
+    PP_EMVDATA    : Result := 'PP_EMVDATA';
+    PP_CHNAME     : Result := 'PP_CHNAME';
+    PP_GOXRES     : Result := 'PP_GOXRES';
+    PP_PINBLK     : Result := 'PP_PINBLK';
+    PP_FCXRES     : Result := 'PP_FCXRES';
+    PP_ISRESULTS  : Result := 'PP_ISRESULTS';
+    PP_BIGRAND    : Result := 'PP_BIGRAND';
+    PP_LABEL      : Result := 'PP_LABEL';
+    PP_ISSCNTRY   : Result := 'PP_ISSCNTRY';
+    PP_CARDEXP    : Result := 'PP_CARDEXP';
+    PP_MFNAME     : Result := 'PP_MFNAME';
+    PP_DEVTYPE    : Result := 'PP_DEVTYPE';
+    PP_TLRMEM     : Result := 'PP_TLRMEM';
+    PP_ENCKRAND   : Result := 'PP_ENCKRAND';
+    PP_KSNTDESP00 : Result := 'PP_KSNTDESP00';
+    PP_KSNTDESP63 : Result := 'PP_KSNTDESP63';
+    PP_KSNTDESD00 : Result := 'PP_KSNTDESD00';
+    PP_KSNTDESD63 : Result := 'PP_KSNTDESD63';
+    PP_TABVER00   : Result := 'PP_TABVER00';
+    PP_TABVER63   : Result := 'PP_TABVER63';
+  else
+    Result := IntToHex(APP)+'h';
   end;
 end;
 
@@ -1025,6 +1098,28 @@ begin
   fBlocks.Clear;
 end;
 
+function TACBrAbecsApplicationLayer.GetDataPacket(const BlockStart: Integer; out
+  BlocksRead: Integer): String;
+var
+  l, p: Integer;
+begin
+  BlocksRead := 1;
+  Result := fID;
+  if (BlockStart >= Blocks.Count) or (BlockStart < 0) then
+    Exit;
+
+  l := 3;
+  p := BlockStart;
+  while  (p < Blocks.Count) and (l+Blocks[p].Size+3 < MAX_PACKET_SIZE) do
+  begin
+    Result := Result + Blocks[p].AsString;
+    l := Length(Result);
+    Inc(p)
+  end;
+
+  BlocksRead := p - BlockStart;
+end;
+
 procedure TACBrAbecsApplicationLayer.SetID(AValue: String);
 begin
   if fID = AValue then
@@ -1286,20 +1381,34 @@ procedure TACBrAbecsPinPad.LogApplicationLayer(AApplicationLayer: TACBrAbecsAppl
 var
   i, j: Integer;
   tlvl: TACBrAbecsTLVList;
+  s: String;
 begin
-  RegisterLog(Format('    %s, Blocks: %d', [AApplicationLayer.ClassName, AApplicationLayer.Blocks.Count]));
+  if (AApplicationLayer is TACBrAbecsCommand) then
+    s := 'Command'
+  else
+    s := 'Response';
+
+  if (Self.LogLevel > 3) then
+    RegisterLog(Format('  %s, Blocks: %d', [s, AApplicationLayer.Blocks.Count]));
 
   if (Self.LogLevel > 4) and (AApplicationLayer.Blocks.Count > 0) then
   begin
     for i := 0 to AApplicationLayer.Blocks.Count-1 do
     begin
-      RegisterLog(Format('      Block: %d, Size: %d, Data: %s', [i+1, AApplicationLayer.Blocks[i].Size, AApplicationLayer.Blocks[i].Data]));
+      RegisterLog(Format('    Block: %d, Size: %d, Data: %s', [i+1, AApplicationLayer.Blocks[i].Size, AApplicationLayer.Blocks[i].Data]));
       tlvl := TACBrAbecsTLVList.Create;
       try
         try
           tlvl.AsString := AApplicationLayer.Blocks[i].Data;
           for j := 0 to tlvl.Count-1 do
-            RegisterLog(Format('        %s, Size: %d, Data: %s', [SPE_ToStr(tlvl[j].ID), tlvl[j].Size, tlvl[j].Data]));
+          begin
+            if (AApplicationLayer is TACBrAbecsCommand) then
+              s := SPE_ToStr(tlvl[j].ID)
+            else
+              s := PP_ToStr(tlvl[j].ID);
+
+            RegisterLog(Format('      %s, Size: %d, Data: %s', [s, tlvl[j].Size, tlvl[j].Data]));
+          end;
         except
         end;
       finally
@@ -1318,7 +1427,8 @@ procedure TACBrAbecsPinPad.SetIsEnabled(AValue: Boolean);
 begin
   if (AValue = Self.Device.Ativo) then
     Exit;
-  RegisterLog('SetIsEnabled( '+BoolToStr(AValue, 'True', 'False')+' )');
+  if (Self.LogLevel > 0) then
+    RegisterLog('SetIsEnabled( '+BoolToStr(AValue, 'True', 'False')+' )');
 
   Self.Device.Ativo := AValue;
   fSPEKmod := '';
@@ -1380,7 +1490,8 @@ begin
   if not Assigned(AException) then
     Exit;
 
-  RegisterLog(AException.ClassName+': '+AException.Message);
+  if (Self.LogLevel > 0) then
+    RegisterLog(AException.ClassName+': '+AException.Message);
   raise AException;
 end;
 
@@ -1393,39 +1504,48 @@ procedure TACBrAbecsPinPad.ExecCommand;
 var
   AckByte: Byte;
   ACKFails: Byte;
+  BlockStart, BlocksRead: Integer;
 begin
-  RegisterLog(Format('ExecCommand: %s', [fCommand.ID]));
+  if (Self.LogLevel > 0) then
+    RegisterLog(Format('ExecCommand: %s', [fCommand.ID]));
   fIsBusy := True;
   try
-    // initial cleaning
-    AckByte := 0;
-    ACKFails := 0;
-    fResponse.Clear;
-
-    // Send Data and Wait for ACK
-    while (AckByte <> ACK) do
+    BlockStart := -1;
+    while (BlockStart < fCommand.Blocks.Count) do
     begin
-      SendCommand;
-      AckByte := WaitForACK;
+      // initial cleaning
+      AckByte := 0;
+      ACKFails := 0;
+      fResponse.Clear;
 
-      if (AckByte = NAK) then
+      // Send Data and Wait for ACK
+      while (AckByte <> ACK) do
       begin
-        Inc(ACKFails);
-        if (ACKFails >= MAX_ACK_TRIES) then
-          DoException(CERR_READING_ACK);
-      end
-      else if (AckByte <> ACK) then
-        DoException(CERR_READING_ACK);
-    end;
+        BlockStart := max(BlockStart, 0);
+        SendCommand(BlockStart, BlocksRead);
+        AckByte := WaitForACK;
 
-    WaitForResponse;
-    EvaluateResponse;
+        if (AckByte = NAK) then
+        begin
+          Inc(ACKFails);
+          if (ACKFails >= MAX_ACK_TRIES) then
+            DoException(CERR_READING_ACK);
+        end
+        else if (AckByte <> ACK) then
+          DoException(CERR_READING_ACK);
+      end;
+
+      WaitForResponse;
+      EvaluateResponse;
+      Inc(BlockStart, BlocksRead);
+    end;
   finally
     fIsBusy := False;
   end;
 end;
 
-procedure TACBrAbecsPinPad.SendCommand;
+procedure TACBrAbecsPinPad.SendCommand(const BlockStart: Integer; out
+  BlocksRead: Integer);
 var
   pkt: TACBrAbecsPacket;
   s: AnsiString;
@@ -1439,7 +1559,7 @@ begin
   if (Self.LogLevel > 3) then
     LogApplicationLayer(fCommand);
 
-  s := fCommand.AsString;
+  s := fCommand.GetDataPacket(BlockStart, BlocksRead);
   pkt := TACBrAbecsPacket.Create(s);
   try
     s := pkt.AsString;
@@ -1505,11 +1625,11 @@ end;
 function TACBrAbecsPinPad.WaitForACK: Byte;
 begin
   if (Self.LogLevel > 2) then
-    RegisterLog('  WaitForACK');
+    RegisterLog('    WaitForACK');
 
   Result := Self.Device.LeByte(TIMEOUT_ACK);
   if (Self.LogLevel > 1) then
-    RegisterLog(Format('  RX <- %d', [Result]));
+    RegisterLog(Format('    RX <- %d', [Result]));
 end;
 
 procedure TACBrAbecsPinPad.WaitForResponse;
@@ -1556,7 +1676,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
       end;
     until (b = SYN);
 
-    if (Self.LogLevel > 2) then
+    if (Self.LogLevel > 3) then
       RegisterLog('  SYN received');
   end;
 
@@ -1589,7 +1709,7 @@ var
   pkt: TACBrAbecsPacket;
 begin
   if (Self.LogLevel > 1) then
-    RegisterLog('WaitForResponse');
+    RegisterLog('  WaitForResponse');
 
   pkt := TACBrAbecsPacket.Create();
   try
@@ -1601,11 +1721,11 @@ begin
 
       try
         PktData := WaitForDataPacket;
-        if (Self.LogLevel > 2) then
-          RegisterLog('  ReadCRC');
+        if (Self.LogLevel > 3) then
+          RegisterLog('    ReadCRC');
         CRCData := Self.Device.LeString(TIMEOUT_ACK, 2); // Read 2 bytes
-        if (Self.LogLevel > 1) then
-          RegisterLog(Format('  CRC: %s', [CRCData]));
+        if (Self.LogLevel > 2) then
+          RegisterLog(Format('    CRC: %s', [CRCData]));
 
         // TACBrAbecsPacket.AsString Setter checks for CRC and raise Exception on error
         pkt.AsString := chr(SYN) + PktData + chr(ETB) + CRCData;
@@ -1613,8 +1733,8 @@ begin
       except
         on E: Exception do
         begin
-          if (Self.LogLevel > 1) then
-            RegisterLog(Format('  %s: %s', [E.ClassName, E.Message]));
+          if (Self.LogLevel > 2) then
+            RegisterLog(Format('    %s: %s', [E.ClassName, E.Message]));
 
           IgnoreAllBytes;
           SendNAK;
@@ -1622,8 +1742,8 @@ begin
           Inc(NumFails);
           if (NumFails >= MAX_ACK_TRIES) then
           begin
-            if (Self.LogLevel > 1) then
-              RegisterLog(Format('  %d Fails', [NumFails]));
+            if (Self.LogLevel > 2) then
+              RegisterLog(Format('    %d Fails', [NumFails]));
             DoException(CERR_READING_RSP);
           end;
         end;
@@ -1631,8 +1751,8 @@ begin
     until Done;
 
     fResponse.AsString := pkt.Data;
-    if (Self.LogLevel > 2) then
-      RegisterLog('  WaitForResponse - OK');
+    if (Self.LogLevel > 1) then
+      RegisterLog(Format('  Response.STAT: %d',[fResponse.STAT]));
     if (Self.LogLevel > 3) then
       LogApplicationLayer(fResponse);
   finally
@@ -1643,7 +1763,7 @@ end;
 procedure TACBrAbecsPinPad.EvaluateResponse;
 begin
   if (Self.LogLevel > 2) then
-    RegisterLog(Format('EvaluateResponse: %d', [fResponse.STAT]));
+    RegisterLog(Format('  EvaluateResponse: %d', [fResponse.STAT]));
 
   if (fResponse.STAT <> ST_OK) then
     DoException(Format('Error: %d - %s', [fResponse.STAT, ReturnStatusCodeDescription(fResponse.STAT)]));
@@ -1651,13 +1771,15 @@ end;
 
 procedure TACBrAbecsPinPad.CancelWaiting;
 begin
-  RegisterLog('CancelWaiting');
+  if (Self.LogLevel > 0) then
+    RegisterLog('  CancelWaiting');
   fIsBusy := False;
 end;
 
 procedure TACBrAbecsPinPad.OPN;
 begin
-  RegisterLog('OPN');
+  if (Self.LogLevel > 0) then
+    RegisterLog('OPN');
   fCommand.Clear;
   fCommand.ID := 'OPN';
   ExecCommand;
@@ -1668,7 +1790,8 @@ var
   LenMod, LenExp: Integer;
   CRKSEC: String;
 begin
-  RegisterLog('OPN');
+  if (Self.LogLevel > 0) then
+    RegisterLog('OPN( '+OPN_MOD+', '+OPN_EXP+' )');
   LenMod := Trunc(Length(OPN_MOD)/2);
   if ((LenMod <> OPN_MODLEN) or
       (not StrIsHexa(OPN_MOD))) then
@@ -1704,7 +1827,8 @@ var
   p: Integer;
   msg: String;
 begin
-  RegisterLog('CLO( '+AMsgToDisplay+', '+ALineBreakChar+' )');
+  if (Self.LogLevel > 0) then
+    RegisterLog('CLO( '+AMsgToDisplay+', '+ALineBreakChar+' )');
   fCommand.Clear;
   fCommand.ID := 'CLO';
   if (AMsgToDisplay <> '') then
@@ -1729,7 +1853,8 @@ var
   l: Word;
   ls: Integer;
 begin
-  RegisterLog('CLX( '+SPE_DSPMSG_or_SPE_MFNAME+' )');
+  if (Self.LogLevel > 0) then
+    RegisterLog('CLX( '+SPE_DSPMSG_or_SPE_MFNAME+' )');
   fCommand.Clear;
   fCommand.ID := 'CLX';
   s := TrimRight(SPE_DSPMSG_or_SPE_MFNAME);
@@ -1758,7 +1883,8 @@ var
   s: AnsiString;
   i: Integer;
 begin
-  RegisterLog('GIX');
+  if (Self.LogLevel > 0) then
+    RegisterLog('GIX');
   fCommand.Clear;
   fCommand.ID := 'GIX';
 
@@ -1783,7 +1909,8 @@ var
   l: Integer;
   s: String;
 begin
-  RegisterLog('MLI: '+ASPE_MFNAME+', '+ASPE_MFINFO);
+  if (Self.LogLevel > 0) then
+    RegisterLog('MLI( '+ASPE_MFNAME+', '+ASPE_MFINFO+' )');
   s := trim(ASPE_MFNAME);
   l := Length(s);
   if (l = 0) or (l > 8) or (not StrIsAlphaNum(s)) then
@@ -1807,13 +1934,16 @@ procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String; FileSize: Int64;
 var
   ASPE_MFINFO: AnsiString;
 begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('MLI( '+ASPE_MFNAME+', '+IntToStr(FileSize)+', '+IntToStr(CRC)+', '+IntToStr(FileType)+' )');
   ASPE_MFINFO := IntToBEStr(FileSize, 4) + IntToBEStr(CRC, 2) + chr(FileType) + #0#0#0;
   MLI(ASPE_MFNAME, ASPE_MFINFO);
 end;
 
 procedure TACBrAbecsPinPad.MLR(ASPE_DATAIN: TStream);
 begin
-  RegisterLog('MLR');
+  if (Self.LogLevel > 0) then
+    RegisterLog('MLR');
   fCommand.Clear;
   fCommand.ID := 'MLR';
   fCommand.AddParamFromTagValue(SPE_DATAIN, ASPE_DATAIN);
@@ -1822,7 +1952,8 @@ end;
 
 procedure TACBrAbecsPinPad.MLE;
 begin
-  RegisterLog('MLE');
+  if (Self.LogLevel > 0) then
+    RegisterLog('MLE');
   fCommand.Clear;
   fCommand.ID := 'MLE';
   ExecCommand;

@@ -87,4 +87,31 @@ object Form1: TForm1
     TabOrder = 7
     OnClick = btMediaLoadClick
   end
+  object btLMF: TButton
+    Left = 109
+    Height = 25
+    Top = 200
+    Width = 75
+    Caption = 'LMF'
+    TabOrder = 8
+    OnClick = btLMFClick
+  end
+  object btDMF: TButton
+    Left = 109
+    Height = 25
+    Top = 228
+    Width = 75
+    Caption = 'DMF'
+    TabOrder = 9
+    OnClick = btDMFClick
+  end
+  object btDSI: TButton
+    Left = 109
+    Height = 25
+    Top = 256
+    Width = 75
+    Caption = 'DSI'
+    TabOrder = 10
+    OnClick = btDSIClick
+  end
 end

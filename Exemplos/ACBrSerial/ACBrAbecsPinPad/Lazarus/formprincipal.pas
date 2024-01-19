@@ -15,6 +15,9 @@ type
   TForm1 = class(TForm)
     btAtivar: TButton;
     btCLX: TButton;
+    btDSI: TButton;
+    btLMF: TButton;
+    btDMF: TButton;
     btMediaLoad: TButton;
     btGIX: TButton;
     btDesativar: TButton;
@@ -26,8 +29,11 @@ type
     procedure btCLOClick(Sender: TObject);
     procedure btCLXClick(Sender: TObject);
     procedure btDesativarClick(Sender: TObject);
+    procedure btDMFClick(Sender: TObject);
+    procedure btDSIClick(Sender: TObject);
     procedure btGIXClick(Sender: TObject);
     procedure btMediaLoadClick(Sender: TObject);
+    procedure btLMFClick(Sender: TObject);
     procedure btOPNClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -66,6 +72,18 @@ begin
   fAbecsPinPad.Disable;
 end;
 
+procedure TForm1.btDMFClick(Sender: TObject);
+begin
+  fAbecsPinPad.DMF('LOGOACBR');
+  fAbecsPinPad.DMF(['LOGOACBR', 'AAA']);
+end;
+
+procedure TForm1.btDSIClick(Sender: TObject);
+begin
+  fAbecsPinPad.DSI('LOGOACBR');
+//  fAbecsPinPad.DSI('352233FF');
+end;
+
 procedure TForm1.btGIXClick(Sender: TObject);
 begin
   fAbecsPinPad.GIX([PP_MODEL]);
@@ -82,6 +100,11 @@ begin
   finally
     FS.Free;
   end;
+end;
+
+procedure TForm1.btLMFClick(Sender: TObject);
+begin
+  fAbecsPinPad.LMF;
 end;
 
 procedure TForm1.btOPNClick(Sender: TObject);

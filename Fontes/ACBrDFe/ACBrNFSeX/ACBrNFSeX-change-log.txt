@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/01/2024
+-- ACBrNFSeXProviderABRASFv2/ISSGoiania.Provider/ISSVitoria.Provider --
+[*] Alteração visando detectar os códigos de alertas para não tratar como
+    erro.
+  Por: Arimateia Jr/Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A URL da cidade de Santa Helena de Goias/GO foi alterado de http para https,
     o provedor continua o mesmo.

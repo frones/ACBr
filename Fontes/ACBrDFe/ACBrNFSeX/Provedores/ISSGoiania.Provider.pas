@@ -63,6 +63,9 @@ type
 
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+
+    function VerificarAlerta(const ACodigo, AMensagem: string): Boolean; override;
+    function VerificarErro(const ACodigo, AMensagem: string): Boolean; override;
   end;
 
 implementation
@@ -369,6 +372,24 @@ begin
   Response.ArquivoEnvio := xXmlEnvio;
 
   inherited ValidarSchema(Response, aMetodo);
+end;
+
+function TACBrNFSeProviderISSGoiania200.VerificarAlerta(const ACodigo,
+  AMensagem: string): Boolean;
+begin
+  if ACodigo = 'L000' then
+    Result := True
+  else
+    Result := inherited VerificarAlerta(ACodigo, AMensagem);
+end;
+
+function TACBrNFSeProviderISSGoiania200.VerificarErro(const ACodigo,
+  AMensagem: string): Boolean;
+begin
+  if ACodigo = 'L000' then
+    Result := False
+  else
+    Result := inherited VerificarErro(ACodigo, AMensagem);
 end;
 
 { TACBrNFSeXWebserviceISSGoiania200 }

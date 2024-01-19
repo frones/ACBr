@@ -143,6 +143,9 @@ type
     procedure GerarMsgDadosConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
     procedure TratarRetornoConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
 
+    function VerificarAlerta(const ACodigo, AMensagem: string): Boolean; virtual;
+    function VerificarErro(const ACodigo, AMensagem: string): Boolean; virtual;
+
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -2786,15 +2789,45 @@ begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;
 
+function TACBrNFSeProviderABRASFv2.VerificarAlerta(const ACodigo,
+  AMensagem: string): Boolean;
+begin
+  Result := (AMensagem <> '') and (Pos('L000', ACodigo) > 0);
+end;
+
+function TACBrNFSeProviderABRASFv2.VerificarErro(const ACodigo,
+  AMensagem: string): Boolean;
+begin
+  Result := (AMensagem <> '') and (Pos('L000', ACodigo) = 0);
+end;
+
 procedure TACBrNFSeProviderABRASFv2.ProcessarMensagemErros(RootNode: TACBrXmlNode;
   Response: TNFSeWebserviceResponse; const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  AErro: TNFSeEventoCollectionItem;
   AAlerta: TNFSeEventoCollectionItem;
   Codigo, Mensagem: string;
+
+procedure ProcessarErro(ErrorNode: TACBrXmlNode; const ACodigo, AMensagem: string);
+var
+  Item: TNFSeEventoCollectionItem;
+begin
+  if AMensagem = '' then
+    Exit;
+
+  if VerificarAlerta(ACodigo, AMensagem) then
+    Item := Response.Alertas.New
+  else if VerificarErro(ACodigo, AMensagem) then
+    Item := Response.Erros.New
+  else
+    Exit;
+
+  Item.Codigo := ACodigo;
+  Item.Descricao := ACBrStr(AMensagem);
+  Item.Correcao := ACBrStr(ObterConteudoTag(ErrorNode.Childrens.FindAnyNs('Correcao'), tcStr));
+end;
 
 procedure ProcessarErros;
 var
@@ -2811,23 +2844,7 @@ begin
         Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
         Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
-        if (Mensagem <> '') and (Pos('L000', Codigo) = 0) then
-        begin
-          AErro := Response.Erros.New;
-          AErro.Codigo := Codigo;
-          AErro.Descricao := ACBrStr(Mensagem);
-          AErro.Correcao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr));
-        end
-        else
-        begin
-          if (Mensagem <> '') and (Pos('L000', Codigo) > 0) then
-          begin
-            AAlerta := Response.Alertas.New;
-            AAlerta.Codigo := Codigo;
-            AAlerta.Descricao := ACBrStr(Mensagem);
-            AAlerta.Correcao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr));
-          end;
-        end;
+        ProcessarErro(ANodeArray[I], Codigo, Mensagem);
       end;
     end
     else
@@ -2835,23 +2852,7 @@ begin
       Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
       Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
-      if (Mensagem <> '') and (Pos('L000', Codigo)= 0) then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Codigo;
-        AErro.Descricao := ACBrStr(Mensagem);
-        AErro.Correcao := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr));
-      end
-      else
-      begin
-        if (Mensagem <> '') and (Pos('L000', Codigo) > 0) then
-        begin
-          AAlerta := Response.Alertas.New;
-          AAlerta.Codigo := Codigo;
-          AAlerta.Descricao := ACBrStr(Mensagem);
-          AAlerta.Correcao := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr));
-        end;
-      end;
+      ProcessarErro(ANode, Codigo, Mensagem);
     end;
   end;
 end;

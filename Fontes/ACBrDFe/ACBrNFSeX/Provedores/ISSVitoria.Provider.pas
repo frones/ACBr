@@ -67,6 +67,8 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function VerificarAlerta(const ACodigo, AMensagem: string): Boolean; override;
+    function VerificarErro(const ACodigo, AMensagem: string): Boolean; override;
   end;
 
 implementation
@@ -130,6 +132,24 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderISSVitoria200.VerificarAlerta(const ACodigo,
+  AMensagem: string): Boolean;
+begin
+  if ACodigo = 'A31' then
+    Result := True
+  else
+    Result := inherited VerificarAlerta(ACodigo, AMensagem);
+end;
+
+function TACBrNFSeProviderISSVitoria200.VerificarErro(const ACodigo,
+  AMensagem: string): Boolean;
+begin
+  if ACodigo = 'A31' then
+    Result := False
+  else
+    Result := inherited VerificarErro(ACodigo, AMensagem);
 end;
 
 { TACBrNFSeXWebserviceISSVitoria200 }

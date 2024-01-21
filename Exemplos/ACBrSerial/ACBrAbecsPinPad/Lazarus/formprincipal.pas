@@ -21,6 +21,7 @@ type
     btGCD: TButton;
     btGKY: TButton;
     btGIN: TButton;
+    btCEX: TButton;
     btLMF: TButton;
     btDMF: TButton;
     btMediaLoad: TButton;
@@ -31,6 +32,7 @@ type
     edPorta: TEdit;
     Label1: TLabel;
     procedure btAtivarClick(Sender: TObject);
+    procedure btCEXClick(Sender: TObject);
     procedure btCLOClick(Sender: TObject);
     procedure btCLXClick(Sender: TObject);
     procedure btDesativarClick(Sender: TObject);
@@ -77,6 +79,24 @@ procedure TForm1.btAtivarClick(Sender: TObject);
 begin
   fAbecsPinPad.Port := edPorta.Text;
   fAbecsPinPad.Enable;
+end;
+
+procedure TForm1.btCEXClick(Sender: TObject);
+begin
+  fAbecsPinPad.DSP('Pressione|alguma tecla');
+  fAbecsPinPad.CEX(True,False,False,False,False);
+  ShowMessage('PP_EVENT: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
+              'PP_TRK1INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
+              'PP_TRK2INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK2) + sLineBreak +
+              'PP_TRK3INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK3) );
+
+  fAbecsPinPad.DSP('Aproxime o cartao');
+  fAbecsPinPad.CEX(False,False,False,False,True);
+  ShowMessage('PP_EVENT: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
+              'PP_TRK1INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
+              'PP_TRK2INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK2) + sLineBreak +
+              'PP_TRK3INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK3) );
+
 end;
 
 procedure TForm1.btDesativarClick(Sender: TObject);

@@ -493,6 +493,30 @@ type
   end;
 
   TACBrAbecsPinPadMediaType = (mtPNG, mtJPG, mtGIF);
+  TACBrAbecsMSGIDX = ( msgDigiteDDD, msgRedigiteDDD,
+                       msgDigiteTelefone, msgRedigiteTelefone,
+                       msgDigiteDDDeTelefone, msgRedigiteDDDeTelefone,
+                       msgDigiteCPF, msgRedigiteCPF,
+                       msgDigiteRG, msgRedigiteRG,
+                       msgDigite4UltimosDigitos,
+                       msgDigiteCodSeguranca,
+                       msgDigiteCNPJ, msgRedigiteCNPJ,
+                       msgDigiteDataDDMMAAAA, msgDigiteDataDDMMAA, msgDigiteDataDDMM,
+                       msgDigiteDiaDD, msgDigiteMesMM, msgDigiteAnoAA, msgDigiteAnoAAAA,
+                       msgDataNascimentoDDMMAAAA, msgDataNascimentoDDMMAA, msgDataNascimentoDDMM,
+                       msgDiaNascimentoDD, msgMesNascimentoMM, msgAnoNascimentoAA, msgAnoNascimentoAAAA,
+                       msgDigiteIdentificacao,
+                       msgCodFidelidade, msgNumeroMesa, msgQtdPessoas, msgQuantidade,
+                       msgNumeroBomba, msgNumeroVaga, msgNumeroGuiche,
+                       msgCodVendedor, msgCodGarcom, msgNotaAtendimento,
+                       msgNumeroNotaFiscal, msgNumeroComanda,
+                       msgPlacaVeiculo, msgDigiteQuilometragem, msgQuilometragemInicial, QuilometragemFinal,
+                       msgDigitePorcentagem,
+                       msgPesquisaSatisfacao0_10, msgAvalieAtendimento0_10,
+                       msgDigiteToken, msgDigiteNumeroCartao,
+                       msgNumeroParcelas,
+                       msgCodigoPlano, msgCodigoProduto );
+
 
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
@@ -522,8 +546,7 @@ type
     procedure SetIsEnabled(AValue: Boolean);
     procedure SetPort(AValue: String);
   protected
-    procedure RegisterLog(const AString: AnsiString; AddTime: Boolean = True);
-    function TranslateUnprintable(const ABinaryString: AnsiString): String;
+    procedure RegisterLog(const AData: AnsiString; AddTime: Boolean = True);
     procedure DoException(AException: Exception); overload;
     procedure DoException(const AMsg: String); overload;
 
@@ -564,8 +587,15 @@ type
     procedure GIN(const GIN_ACQIDX: Byte = 0);
     procedure GIX; overload;
     procedure GIX(PP_DATA: array of Word); overload;
-    procedure CLO(const AMsgToDisplay: String = ''; const ALineBreakChar: Char = '|');
+    procedure CLO(const CLO_MSG: String = ''; const ALineBreakChar: Char = '|');
     procedure CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);
+
+    // Basic Commands
+    procedure DEX(const DEX_MSG: String);
+    procedure DSP(const DSP_MSG: String = ''; const ALineBreakChar: Char = '|');
+    function GCD(ASPE_MSGIDX: Word; ASPE_MINDIG: Byte = 0; ASPE_MAXDIG: Byte = 0;
+      ASPE_TIMEOUT: Byte = 0): String; overload;
+    function GCD(MSGIDX: TACBrAbecsMSGIDX; ASPE_TIMEOUT: Byte = 0): String; overload;
 
     // Multimidia Commands
     procedure MLI(const ASPE_MFNAME: String; const ASPE_MFINFO: AnsiString); overload;
@@ -587,7 +617,7 @@ type
 implementation
 
 uses
-  DateUtils, Math,
+  DateUtils, Math, TypInfo,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
   ACBrUtil.Strings,
@@ -1000,7 +1030,7 @@ begin
     LastBlk := Items[Count-1];
 
   p := 1;
-  while (p < LenData) do
+  while (p <= LenData) do
   begin
     Chunk := copy(AValue, p, MAX_TLV_SIZE);
     LenChunk := Length(Chunk);
@@ -1468,7 +1498,7 @@ begin
   Self.Device.Porta := AValue;
 end;
 
-procedure TACBrAbecsPinPad.RegisterLog(const AString: AnsiString;
+procedure TACBrAbecsPinPad.RegisterLog(const AData: AnsiString;
   AddTime: Boolean);
 var
   Done: Boolean;
@@ -1478,9 +1508,9 @@ begin
     Exit;
 
   if Self.LogTranslate then
-    s := Self.TranslateUnprintable(AString)
+    s := BinaryStringToString(AData)
   else
-    s := AString;
+    s := AData;
 
   if AddTime then
     s := '-- ' + FormatDateTime('dd/mm hh:nn:ss:zzz', now) + ' - ' + s;
@@ -1494,27 +1524,6 @@ begin
 
   if (not Done) and (Self.LogFile <> '') then
     WriteToTXT(Self.LogFile, s, True, True, True);
-end;
-
-function TACBrAbecsPinPad.TranslateUnprintable(const ABinaryString: AnsiString): String;
-var
-  ch: String;
-  i: Integer;
-  b: Byte;
-begin
-  Result := '';
-  for i := 1 to Length(ABinaryString) do
-  begin
-    b := Ord(ABinaryString[I]) ;
-
-    case ABinaryString[i] of
-       #32..#126 : ch := String(ABinaryString[i]);
-    else ;
-      ch := '#'+IntToStr(b)+' ';
-    end;
-
-    Result := Result + ch;
-  end;
 end;
 
 procedure TACBrAbecsPinPad.DoException(AException: Exception);
@@ -1895,24 +1904,24 @@ begin
   ExecCommand;
 end;
 
-procedure TACBrAbecsPinPad.CLO(const AMsgToDisplay: String;
+procedure TACBrAbecsPinPad.CLO(const CLO_MSG: String;
   const ALineBreakChar: Char);
 var
   p: Integer;
   msg: String;
 begin
   if (Self.LogLevel > 0) then
-    RegisterLog('CLO( '+AMsgToDisplay+', '+ALineBreakChar+' )');
+    RegisterLog('CLO( '+CLO_MSG+', '+ALineBreakChar+' )');
   fCommand.Clear;
   fCommand.ID := 'CLO';
-  if (AMsgToDisplay <> '') then
+  if (CLO_MSG <> '') then
   begin
-    p := pos(ALineBreakChar, AMsgToDisplay);
+    p := pos(ALineBreakChar, CLO_MSG);
     if (p > 0) then
-      msg := PadRight(copy(AMsgToDisplay, 1, p-1), 16) +
-             PadRight(copy(AMsgToDisplay, p+1, 16), 16)
+      msg := PadRight(copy(CLO_MSG, 1, p-1), 16) +
+             PadRight(copy(CLO_MSG, p+1, 16), 16)
     else
-      msg := PadRight(AMsgToDisplay, 32);
+      msg := PadRight(CLO_MSG, 32);
 
     fCommand.AddParamFromData(msg);
   end;
@@ -1945,6 +1954,136 @@ begin
 
   ExecCommand;
   ClearSecureData;
+end;
+
+procedure TACBrAbecsPinPad.DEX(const DEX_MSG: String);
+var
+  s: String;
+  l: Integer;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('DEX( '+DEX_MSG+' )');
+  fCommand.Clear;
+  fCommand.ID := 'DEX';
+  s := TrimRight(DEX_MSG);
+  l := Length(s);
+  s := Format('%.3d', [l])+s;
+  fCommand.AddParamFromData(s);
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.DSP(const DSP_MSG: String; const ALineBreakChar: Char);
+var
+  p: Integer;
+  msg: String;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('DSP( '+DSP_MSG+', '+ALineBreakChar+' )');
+  fCommand.Clear;
+  fCommand.ID := 'DSP';
+  p := pos(ALineBreakChar, DSP_MSG);
+  if (p > 0) then
+    msg := PadRight(copy(DSP_MSG, 1, p-1), 16) +
+           PadRight(copy(DSP_MSG, p+1, 16), 16)
+  else
+    msg := PadRight(DSP_MSG, 32);
+
+  fCommand.AddParamFromData(msg);
+  ExecCommand;
+  ClearSecureData;
+end;
+
+function TACBrAbecsPinPad.GCD(ASPE_MSGIDX: Word; ASPE_MINDIG: Byte;
+  ASPE_MAXDIG: Byte; ASPE_TIMEOUT: Byte): String;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog(Format('GCD( %d, %d, %d, %d) ',[ASPE_MSGIDX, ASPE_MINDIG, ASPE_MAXDIG, ASPE_TIMEOUT]));
+
+  fCommand.Clear;
+  fCommand.ID := 'GCD';
+  fCommand.IsBlocking := True;
+  fCommand.AddParamFromTagValue(SPE_MSGIDX, IntToBEStr(ASPE_MSGIDX, 2));
+  if (ASPE_MINDIG > 0) then
+    fCommand.AddParamFromTagValue(SPE_MINDIG, chr(ASPE_MINDIG));
+  if (ASPE_MAXDIG > 0) then
+    fCommand.AddParamFromTagValue(SPE_MAXDIG, chr(ASPE_MAXDIG));
+  if (ASPE_TIMEOUT > 0) then
+    fCommand.AddParamFromTagValue(SPE_TIMEOUT, chr(ASPE_TIMEOUT));
+
+  ExecCommand;
+  Result := fResponse.GetResponseFromTagValue(PP_VALUE);
+end;
+
+function TACBrAbecsPinPad.GCD(MSGIDX: TACBrAbecsMSGIDX; ASPE_TIMEOUT: Byte): String;
+var
+  mindig, maxdig: Byte;
+  ASPE_MSGIDX: Word;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog(Format('GCD( %s, %d )',[GetEnumName(TypeInfo(TACBrAbecsMSGIDX), integer(MSGIDX)), ASPE_TIMEOUT]));
+
+  mindig := 0; maxdig := 0;
+  case MSGIDX of
+    msgDigiteDDD, msgRedigiteDDD:
+      begin
+        mindig := 3; maxdig := 3;
+      end;
+    msgDigiteTelefone, msgRedigiteTelefone:
+      begin
+        mindig := 8; maxdig := 9;
+      end;
+    msgDigiteDDDeTelefone, msgRedigiteDDDeTelefone:
+      begin
+        mindig := 10; maxdig := 11;
+      end;
+    msgDigiteCPF, msgRedigiteCPF:
+      begin
+        mindig := 11; maxdig := 11;
+      end;
+    msgDigiteRG, msgRedigiteRG:
+      begin
+        mindig := 5; maxdig := 11;
+      end;
+    msgDigite4UltimosDigitos:
+      begin
+        mindig := 4; maxdig := 4;
+      end;
+    msgDigiteCodSeguranca:
+      begin
+        mindig := 3; maxdig := 3;
+      end;
+    msgDigiteCNPJ, msgRedigiteCNPJ:
+      begin
+        mindig := 14; maxdig := 14;
+      end;
+    msgDigiteDataDDMMAAAA, msgDataNascimentoDDMMAAAA:
+      begin
+        mindig := 8; maxdig := 8;
+      end;
+    msgDigiteDataDDMMAA,  msgDataNascimentoDDMMAA:
+      begin
+        mindig := 6; maxdig := 6;
+      end;
+    msgDigiteDataDDMM, msgDataNascimentoDDMM, msgDigiteAnoAAAA, msgAnoNascimentoAAAA:
+      begin
+        mindig := 4; maxdig := 4;
+      end;
+    msgDigiteDiaDD, msgDigiteMesMM, msgDigiteAnoAA, msgDiaNascimentoDD, msgMesNascimentoMM, msgAnoNascimentoAA:
+      begin
+        mindig := 2; maxdig := 2;
+      end;
+    msgPesquisaSatisfacao0_10, msgAvalieAtendimento0_10, msgNotaAtendimento:
+      begin
+        mindig := 1; maxdig := 2;
+      end;
+    msgNumeroParcelas:
+      begin
+        mindig := 1; maxdig := 3;
+      end;
+  end;
+
+  ASPE_MSGIDX := integer(MSGIDX)+1;
+  Result := GCD(ASPE_MSGIDX, mindig, maxdig, ASPE_TIMEOUT);
 end;
 
 procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String;

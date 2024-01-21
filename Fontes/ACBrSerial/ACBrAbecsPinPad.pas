@@ -68,6 +68,7 @@ resourcestring
   CERR_SPE_MFNAME = 'Invalid Media file name';
   CERR_SPE_MFINFO = 'Invalid Media file parâmeters';
 
+  CERR_INVALID_PARAM = 'Invalid value for %s param';
 
 const
   // control characters
@@ -570,6 +571,9 @@ type
     procedure Enable;
     procedure Disable;
     property IsEnabled: Boolean read GetIsEnabled write SetIsEnabled;
+
+    property Command: TACBrAbecsCommand read fCommand;
+    property Response: TACBrAbecsResponse read fResponse;
   published
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
@@ -591,6 +595,12 @@ type
     procedure CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);
 
     // Basic Commands
+    procedure CEX(const ASPE_CEXOPT: String; ASPE_TIMEOUT: Byte = 0;
+      const ASPE_PANMASK_LLRR: String = ''); overload;
+    procedure CEX( VerifyKey: Boolean; VerifyMagnetic: Boolean;
+      VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean;
+      VerifyCTLSPresence: Boolean; ASPE_TIMEOUT: Byte = 0;
+      const ASPE_PANMASK_LLRR: String = ''); overload;
     procedure DEX(const DEX_MSG: String);
     procedure DSP(const DSP_MSG: String = ''; const ALineBreakChar: Char = '|');
     function GCD(ASPE_MSGIDX: Word; ASPE_MINDIG: Byte = 0; ASPE_MAXDIG: Byte = 0;
@@ -618,7 +628,7 @@ type
 implementation
 
 uses
-  DateUtils, Math, TypInfo,
+  DateUtils, Math, TypInfo, StrUtils,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
   ACBrUtil.Strings,
@@ -1956,6 +1966,63 @@ begin
 
   ExecCommand;
   ClearSecureData;
+end;
+
+procedure TACBrAbecsPinPad.CEX(const ASPE_CEXOPT: String; ASPE_TIMEOUT: Byte;
+  const ASPE_PANMASK_LLRR: String);
+var
+  s: String;
+  l: Integer;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog(Format('CEX( %s, %d, %s )',[ASPE_CEXOPT, ASPE_TIMEOUT, ASPE_PANMASK_LLRR]));
+  fCommand.Clear;
+  fCommand.ID := 'CEX';
+  s := trim(ASPE_CEXOPT);
+  l := Length(s);
+  if (l <> 6) or (not StrIsNumber(s)) then
+    DoException(Format(CERR_INVALID_PARAM, ['SPE_CEXOPT']));
+
+  fCommand.AddParamFromTagValue(SPE_CEXOPT, s);
+  if (ASPE_TIMEOUT > 0) then
+    fCommand.AddParamFromTagValue(SPE_TIMEOUT, chr(ASPE_TIMEOUT));
+
+  if (ASPE_PANMASK_LLRR <> '') then
+  begin
+    s := trim(ASPE_PANMASK_LLRR);
+    l := Length(s);
+    if (l <> 4) or (not StrIsNumber(s)) then
+      DoException(Format(CERR_INVALID_PARAM, ['SPE_PANMASK']));
+
+    fCommand.AddParamFromTagValue(SPE_PANMASK, s);
+  end;
+
+  ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.CEX(VerifyKey: Boolean; VerifyMagnetic: Boolean;
+  VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean;
+  VerifyCTLSPresence: Boolean; ASPE_TIMEOUT: Byte;
+  const ASPE_PANMASK_LLRR: String);
+var
+  ASPE_CEXOPT: String;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('CEX: VerifyKey: '+BoolToStr(VerifyKey)+
+                   ', VerifyMagnetic: '+BoolToStr(VerifyMagnetic)+
+                   ', VerifyICCInsertion: '+BoolToStr(VerifyICCInsertion)+
+                   ', VerifyICCRemoval: '+BoolToStr(VerifyICCRemoval)+
+                   ', VerifyCTLSPresence: '+BoolToStr(VerifyCTLSPresence)+
+                   ', SPE_TIMEOUT: '+IntToStr(ASPE_TIMEOUT)+
+                   ', SPE_PANMASK_LLRR: '+ASPE_PANMASK_LLRR);
+
+  ASPE_CEXOPT := IfThen(VerifyKey, '1', '0');
+  ASPE_CEXOPT := ASPE_CEXOPT + IfThen(VerifyMagnetic, '1', '0');
+  ASPE_CEXOPT := ASPE_CEXOPT + IfThen(VerifyICCInsertion, '1', IfThen(VerifyICCRemoval, '2', '0'));
+  ASPE_CEXOPT := ASPE_CEXOPT + IfThen(VerifyCTLSPresence, '1', '0');
+  ASPE_CEXOPT := ASPE_CEXOPT + '00' ;  // RFU
+
+  CEX(ASPE_CEXOPT, ASPE_TIMEOUT, ASPE_PANMASK_LLRR);
 end;
 
 procedure TACBrAbecsPinPad.DEX(const DEX_MSG: String);

@@ -19,6 +19,7 @@ type
     btDSP: TButton;
     btDSI: TButton;
     btGCD: TButton;
+    btGKY: TButton;
     btGIN: TButton;
     btLMF: TButton;
     btDMF: TButton;
@@ -40,6 +41,7 @@ type
     procedure btGCDClick(Sender: TObject);
     procedure btGINClick(Sender: TObject);
     procedure btGIXClick(Sender: TObject);
+    procedure btGKYClick(Sender: TObject);
     procedure btMediaLoadClick(Sender: TObject);
     procedure btLMFClick(Sender: TObject);
     procedure btOPNClick(Sender: TObject);
@@ -56,7 +58,8 @@ var
 implementation
 
 uses
-  ACBrUtiL.FilesIO;
+  ACBrUtiL.FilesIO,
+  ACBrUtil.Strings;
 
 {$R *.lfm}
 
@@ -126,6 +129,16 @@ procedure TForm1.btGIXClick(Sender: TObject);
 begin
   fAbecsPinPad.GIX([PP_MODEL]);
   fAbecsPinPad.GIX;
+end;
+
+procedure TForm1.btGKYClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  fAbecsPinPad.DEX(NativeStringToAnsi('Pressione'+#13+'alguma tecla'+#13+'de função'));
+  i := fAbecsPinPad.GKY;
+  fAbecsPinPad.DSP('');
+  ShowMessage(IntToStr(i));
 end;
 
 procedure TForm1.btMediaLoadClick(Sender: TObject);

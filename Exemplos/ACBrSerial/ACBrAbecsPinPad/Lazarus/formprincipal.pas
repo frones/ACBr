@@ -15,7 +15,11 @@ type
   TForm1 = class(TForm)
     btAtivar: TButton;
     btCLX: TButton;
+    btDEX: TButton;
+    btDSP: TButton;
     btDSI: TButton;
+    btGCD: TButton;
+    btGIN: TButton;
     btLMF: TButton;
     btDMF: TButton;
     btMediaLoad: TButton;
@@ -29,8 +33,12 @@ type
     procedure btCLOClick(Sender: TObject);
     procedure btCLXClick(Sender: TObject);
     procedure btDesativarClick(Sender: TObject);
+    procedure btDEXClick(Sender: TObject);
     procedure btDMFClick(Sender: TObject);
     procedure btDSIClick(Sender: TObject);
+    procedure btDSPClick(Sender: TObject);
+    procedure btGCDClick(Sender: TObject);
+    procedure btGINClick(Sender: TObject);
     procedure btGIXClick(Sender: TObject);
     procedure btMediaLoadClick(Sender: TObject);
     procedure btLMFClick(Sender: TObject);
@@ -59,6 +67,7 @@ begin
   fAbecsPinPad := TACBrAbecsPinPad.Create(Self);
   fAbecsPinPad.LogFile := 'C:\temp\ACBrPinPad.log';
   fAbecsPinPad.LogLevel := 6;
+  //fAbecsPinPad.LogTranslate := False;
 end;
 
 procedure TForm1.btAtivarClick(Sender: TObject);
@@ -70,6 +79,12 @@ end;
 procedure TForm1.btDesativarClick(Sender: TObject);
 begin
   fAbecsPinPad.Disable;
+end;
+
+procedure TForm1.btDEXClick(Sender: TObject);
+begin
+  fAbecsPinPad.DEX('');
+  fAbecsPinPad.DEX('PROJETO ACBR'+#13+'projetoacbr.com.br'+#13+'(15) 2105-0750'+#13+'LINHA 4'+#13+'LINHA 5'+#13+'LINHA 6');
 end;
 
 procedure TForm1.btDMFClick(Sender: TObject);
@@ -84,6 +99,29 @@ begin
 //  fAbecsPinPad.DSI('352233FF');
 end;
 
+procedure TForm1.btDSPClick(Sender: TObject);
+begin
+  fAbecsPinPad.DSP('');
+  fAbecsPinPad.DSP('PROJETO ACBR|projetoacbr.com.br');
+end;
+
+procedure TForm1.btGCDClick(Sender: TObject);
+var
+  s: String;
+begin
+  s := fAbecsPinPad.GCD(msgDataNascimentoDDMMAAAA, 60);
+  ShowMessage(s);
+  s := fAbecsPinPad.GCD($0025, 5, 5);
+  ShowMessage(s);
+end;
+
+procedure TForm1.btGINClick(Sender: TObject);
+begin
+  fAbecsPinPad.GIN(2);
+  fAbecsPinPad.GIN(3);
+  fAbecsPinPad.GIN;
+end;
+
 procedure TForm1.btGIXClick(Sender: TObject);
 begin
   fAbecsPinPad.GIX([PP_MODEL]);
@@ -94,7 +132,7 @@ procedure TForm1.btMediaLoadClick(Sender: TObject);
 var
   FS: TFileStream;
 begin
-  FS := TFileStream.Create(ApplicationPath+'LogoACBrMarcaDagua.png', fmOpenRead);
+  FS := TFileStream.Create('C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_192_192.png', fmOpenRead);
   try
     fAbecsPinPad.LoadMedia('LOGOACBR', FS, mtPNG);
   finally
@@ -129,6 +167,7 @@ end;
 procedure TForm1.btCLXClick(Sender: TObject);
 begin
   fAbecsPinPad.CLX('PROJETO ACBR'+#13+'projetoacbr.com.br'+#13+'(15) 2105-0750'+#13+'LINHA 4'+#13+'LINHA 5'+#13+'LINHA 6');
+  fAbecsPinPad.CLX('LOGOACBR');
 end;
 
 end.

@@ -1,117 +1,154 @@
 object Form1: TForm1
   Left = 651
-  Height = 301
+  Height = 376
   Top = 304
-  Width = 256
+  Width = 356
   Caption = 'Teste ABECS PinPad'
-  ClientHeight = 301
-  ClientWidth = 256
+  ClientHeight = 376
+  ClientWidth = 356
+  DesignTimePPI = 120
   OnCreate = FormCreate
   LCLVersion = '3.0.0.3'
   object edPorta: TEdit
-    Left = 19
-    Height = 23
-    Top = 32
-    Width = 211
+    Left = 24
+    Height = 28
+    Top = 40
+    Width = 300
     Anchors = [akTop, akLeft, akRight]
     TabOrder = 0
     Text = 'COM8'
   end
   object Label1: TLabel
-    Left = 19
-    Height = 15
-    Top = 13
-    Width = 28
+    Left = 24
+    Height = 20
+    Top = 16
+    Width = 34
     Caption = 'Porta'
   end
   object btAtivar: TButton
-    Left = 19
-    Height = 25
-    Top = 70
-    Width = 75
+    Left = 24
+    Height = 31
+    Top = 88
+    Width = 94
     Caption = 'Ativar'
     TabOrder = 1
     OnClick = btAtivarClick
   end
   object btDesativar: TButton
-    Left = 109
-    Height = 25
-    Top = 70
-    Width = 75
+    Left = 136
+    Height = 31
+    Top = 88
+    Width = 94
     Caption = 'Desativar'
     TabOrder = 2
     OnClick = btDesativarClick
   end
   object btOPN: TButton
-    Left = 19
-    Height = 25
-    Top = 134
-    Width = 75
+    Left = 24
+    Height = 31
+    Top = 120
+    Width = 94
     Caption = 'OPN'
     TabOrder = 3
     OnClick = btOPNClick
   end
   object btCLO: TButton
-    Left = 109
-    Height = 25
-    Top = 134
-    Width = 75
+    Left = 136
+    Height = 31
+    Top = 120
+    Width = 94
     Caption = 'CLO'
     TabOrder = 4
     OnClick = btCLOClick
   end
   object btGIX: TButton
-    Left = 19
-    Height = 25
-    Top = 168
-    Width = 75
+    Left = 136
+    Height = 31
+    Top = 152
+    Width = 94
     Caption = 'GIX'
     TabOrder = 5
     OnClick = btGIXClick
   end
   object btCLX: TButton
-    Left = 109
-    Height = 25
-    Top = 168
-    Width = 75
+    Left = 248
+    Height = 31
+    Top = 120
+    Width = 94
     Caption = 'CLX'
     TabOrder = 6
     OnClick = btCLXClick
   end
   object btMediaLoad: TButton
-    Left = 19
-    Height = 25
-    Top = 200
-    Width = 75
+    Left = 24
+    Height = 31
+    Top = 285
+    Width = 94
     Caption = 'Media Load'
     TabOrder = 7
     OnClick = btMediaLoadClick
   end
   object btLMF: TButton
-    Left = 109
-    Height = 25
-    Top = 200
-    Width = 75
+    Left = 24
+    Height = 31
+    Top = 320
+    Width = 94
     Caption = 'LMF'
     TabOrder = 8
     OnClick = btLMFClick
   end
   object btDMF: TButton
-    Left = 109
-    Height = 25
-    Top = 228
-    Width = 75
+    Left = 136
+    Height = 31
+    Top = 285
+    Width = 94
     Caption = 'DMF'
     TabOrder = 9
     OnClick = btDMFClick
   end
   object btDSI: TButton
-    Left = 109
-    Height = 25
-    Top = 256
-    Width = 75
+    Left = 136
+    Height = 31
+    Top = 320
+    Width = 94
     Caption = 'DSI'
     TabOrder = 10
     OnClick = btDSIClick
+  end
+  object btGIN: TButton
+    Left = 24
+    Height = 31
+    Top = 152
+    Width = 94
+    Caption = 'GIN'
+    TabOrder = 11
+    OnClick = btGINClick
+  end
+  object btDEX: TButton
+    Left = 24
+    Height = 31
+    Top = 208
+    Width = 94
+    Caption = 'DEX'
+    TabOrder = 12
+    OnClick = btDEXClick
+  end
+  object btDSP: TButton
+    Left = 136
+    Height = 31
+    Top = 208
+    Width = 94
+    Caption = 'DSP'
+    TabOrder = 13
+    OnClick = btDSPClick
+  end
+  object btGCD: TButton
+    Left = 248
+    Height = 31
+    Top = 208
+    Width = 94
+    Caption = 'GCD'
+    TabOrder = 14
+    OnClick = btGCDClick
   end
 end

@@ -550,7 +550,7 @@ type
     procedure DoException(AException: Exception); overload;
     procedure DoException(const AMsg: String); overload;
 
-    procedure ExecCommand;
+    procedure ExecCommand( DoEvaluateResponse: Boolean = True );
     procedure SendCommand(const BlockStart: Integer; out BlocksRead: Integer);
     function SendCAN: Boolean;
     procedure SendNAK;
@@ -596,6 +596,7 @@ type
     function GCD(ASPE_MSGIDX: Word; ASPE_MINDIG: Byte = 0; ASPE_MAXDIG: Byte = 0;
       ASPE_TIMEOUT: Byte = 0): String; overload;
     function GCD(MSGIDX: TACBrAbecsMSGIDX; ASPE_TIMEOUT: Byte = 0): String; overload;
+    function GKY: Integer;
 
     // Multimidia Commands
     procedure MLI(const ASPE_MFNAME: String; const ASPE_MFINFO: AnsiString); overload;
@@ -1541,7 +1542,7 @@ begin
   DoException( EACBrAbecsPinPadError.Create(AMsg) );
 end;
 
-procedure TACBrAbecsPinPad.ExecCommand;
+procedure TACBrAbecsPinPad.ExecCommand(DoEvaluateResponse: Boolean);
 var
   AckByte: Byte;
   ACKFails: Byte;
@@ -1580,7 +1581,8 @@ begin
       end;
 
       WaitForResponse;
-      EvaluateResponse;
+      if DoEvaluateResponse then
+        EvaluateResponse;
       Inc(BlockStart, BlocksRead);
     end;
   finally
@@ -2084,6 +2086,17 @@ begin
 
   ASPE_MSGIDX := integer(MSGIDX)+1;
   Result := GCD(ASPE_MSGIDX, mindig, maxdig, ASPE_TIMEOUT);
+end;
+
+function TACBrAbecsPinPad.GKY: Integer;
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('GKY');
+
+  fCommand.Clear;
+  fCommand.ID := 'GKY';
+  ExecCommand( False ); // Do not EvaluateResponse
+  Result := fResponse.STAT;
 end;
 
 procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String;

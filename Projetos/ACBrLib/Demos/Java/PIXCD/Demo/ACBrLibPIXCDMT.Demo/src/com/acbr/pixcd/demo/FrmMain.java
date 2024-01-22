@@ -312,6 +312,9 @@ public class FrmMain extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
         });
 
         btnCarregarConfiguracoes.setLabel("Carregar Configurações");
@@ -2165,7 +2168,7 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Principal, "LogPath", pathLog.toString());
             acbrPIXCD.configGravar();
 
-            loadConfig();
+            //loadConfig();
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2751,6 +2754,14 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnArquivoCertificadoMateraActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            loadConfig();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
     private void loadConfig() {
         try 
         {    
@@ -2966,13 +2977,13 @@ public class FrmMain extends javax.swing.JFrame {
             
             //BancoBrasil
             acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ChavePIX", txtChavePIXBancoBrasil.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ClientID", txtChavePIXBancoBrasil.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ClientSecret", txtChavePIXBancoBrasil.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "DeveloperApplicationKey", txtChavePIXBancoBrasil.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ArqChavePrivada", txtChavePIXBancoBrasil.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ArqCertificado", txtChavePIXBancoBrasil.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ArqPFX", txtChavePIXBancoBrasil.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "SenhaPFX", txtChavePIXBancoBrasil.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ClientID", txtClientIDBancoBrasil.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ClientSecret", txtClientSecretBancoBrasil.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "DeveloperApplicationKey", txtDeveloperApplicationKeyBancoBrasil.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ArqChavePrivada", txtArquivoChavePrivadaBancoBrasil.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ArqCertificado", txtArquivoCertificadoBancoBrasil.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ArqPFX", txtArquivoPXFBancoBrasil.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "SenhaPFX", txtSenhaPFXBancoBrasil.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "BBAPIVersao", cmbBBAPIVersao.getSelectedIndex());
             
             //Ailos
@@ -2986,12 +2997,12 @@ public class FrmMain extends javax.swing.JFrame {
             //Matera
             acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ChavePIX", txtChavePIXMatera.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ClientID", txtClientIDMatera.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "SecretKey", txtChavePIXMatera.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ClientSecret", txtChavePIXMatera.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ArqCertificado", txtChavePIXMatera.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ArqChavePrivada", txtChavePIXMatera.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "AccountID", txtChavePIXMatera.getText());
-            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "MediatorFee", txtChavePIXMatera.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "SecretKey", txtSecretKeyMatera.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ClientSecret", txtClientSecretMatera.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ArqCertificado", txtArquivoCertificadoMatera.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ArqChavePrivada", txtArquivoChavePrivadaMatera.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "AccountID", txtAccountIDMatera.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "MediatorFee", txtMediatorFeeMatera.getText());
             
             //Cielo
             acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ChavePIX", txtChavePIXCielo.getText());

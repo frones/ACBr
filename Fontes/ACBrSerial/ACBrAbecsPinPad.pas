@@ -518,16 +518,24 @@ type
                        msgNumeroParcelas,
                        msgCodigoPlano, msgCodigoProduto );
 
+  TACBrAbecsDimension = record
+    Rows: LongWord;
+    Cols: LongWord;
+  end;
+
+  TACBrAbecsExecEvent = procedure (var Cancel: Boolean) of object;
+
+  { TACBrAbecsPinPad }
 
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-
-  { TACBrAbecsPinPad }
-
   TACBrAbecsPinPad = class( TACBrComponent )
   private
     fDevice: TACBrDevice;
+    fOnEndCommand: TNotifyEvent;
+    fOnStartCommand: TNotifyEvent;
+    fOnWaitForResponse: TACBrAbecsExecEvent;
     fOpenSSL: TACBrOpenSSLUtils;
     fCommand: TACBrAbecsCommand;
     fResponse: TACBrAbecsResponse;
@@ -541,6 +549,8 @@ type
     fSPEKmod: String;
     fSPEKpub: String;
     fPinpadKSec: String;
+    fDSPTXTSZ: TACBrAbecsDimension;
+    fDSPGRSZ: TACBrAbecsDimension;
 
     function GetIsEnabled: Boolean;
     function GetPort: String;
@@ -562,8 +572,9 @@ type
     procedure CancelWaiting;
 
     procedure ClearSecureData;
+    procedure ClearCacheData;
     procedure LogApplicationLayer(AApplicationLayer: TACBrAbecsApplicationLayer);
-
+    procedure GetPinPadSpecs;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy; override ;
@@ -574,6 +585,8 @@ type
 
     property Command: TACBrAbecsCommand read fCommand;
     property Response: TACBrAbecsResponse read fResponse;
+
+    function FormatSPE_DSPMSG(const ASPE_DSPMSG: String): String;
   published
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
@@ -584,6 +597,10 @@ type
     property LogLevel: Byte read fLogLevel write fLogLevel default 2;
     property LogTranslate: Boolean read fLogTranslate write fLogTranslate default True;
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
+
+    property OnStartCommand: TNotifyEvent read fOnStartCommand write fOnStartCommand;
+    property OnWaitForResponse: TACBrAbecsExecEvent read fOnWaitForResponse write fOnWaitForResponse;
+    property OnEndCommand: TNotifyEvent read fOnEndCommand write fOnEndCommand;
 
     // Control Commands
     procedure OPN; overload;
@@ -607,6 +624,8 @@ type
       ASPE_TIMEOUT: Byte = 0): String; overload;
     function GCD(MSGIDX: TACBrAbecsMSGIDX; ASPE_TIMEOUT: Byte = 0): String; overload;
     function GKY: Integer;
+    function MNU(ASPE_MNUOPT: array of String; ASPE_DSPMSG: String = '';
+      ASPE_TIMEOUT: Byte = 0): String;
 
     // Multimidia Commands
     procedure MLI(const ASPE_MFNAME: String; const ASPE_MFINFO: AnsiString); overload;
@@ -615,10 +634,10 @@ type
     procedure MLE;
     procedure LMF;
     procedure DMF(const ASPE_MFNAME: String); overload;
-    procedure DMF(LIST_SPE_MFNAME: array of  String); overload;
+    procedure DMF(LIST_SPE_MFNAME: array of String); overload;
     procedure DSI(const ASPE_MFNAME: String);
-    procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
 
+    procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
   end ;
 
   function ReturnStatusCodeDescription(AStatus: Integer): String;
@@ -1313,7 +1332,7 @@ begin
       try
         tlvlb.AsString := ABlockList[i].Data;
         for j := 0 to tlvlb.Count-1 do
-          ATLVList.AddFromTLV(tlvlb[i].ID, tlvlb[i].Data);
+          ATLVList.AddFromTLV(tlvlb[j].ID, tlvlb[j].Data);
       except
         // Data is not a TLV List
       end;
@@ -1400,7 +1419,11 @@ begin
   fLogTranslate := True;
   fTimeOut := TIMEOUT_RSP;
   fOnWriteLog := nil;
+  fOnStartCommand := nil;
+  fOnWaitForResponse := nil;
+  fOnEndCommand := nil;
   ClearSecureData;
+  ClearCacheData;
 
   fDevice := TACBrDevice.Create(Self);
   fDevice.Name := 'ACBrDevice';
@@ -1427,6 +1450,14 @@ begin
   fSPEKmod := '';
   fSPEKpub := '';
   fPinpadKSec := '';
+end;
+
+procedure TACBrAbecsPinPad.ClearCacheData;
+begin
+  fDSPTXTSZ.Cols := 0;
+  fDSPTXTSZ.Rows := 0;
+  fDSPGRSZ.Cols := 0;
+  fDSPGRSZ.Rows := 0;
 end;
 
 procedure TACBrAbecsPinPad.LogApplicationLayer(AApplicationLayer: TACBrAbecsApplicationLayer);
@@ -1470,6 +1501,23 @@ begin
   end;
 end;
 
+procedure TACBrAbecsPinPad.GetPinPadSpecs;
+var
+  s: String;
+begin
+  if (fDSPTXTSZ.Rows <> 0) then
+    Exit;
+
+  GIX([PP_DSPTXTSZ, PP_DSPGRSZ]);
+  s := fResponse.GetResponseFromTagValue(PP_DSPTXTSZ);
+  fDSPTXTSZ.Rows := StrToInt(copy(s,1,2));
+  fDSPTXTSZ.Cols := StrToInt(copy(s,3,2));
+
+  s := fResponse.GetResponseFromTagValue(PP_DSPGRSZ);
+  fDSPGRSZ.Rows := StrToInt(copy(s,1,4));
+  fDSPGRSZ.Cols := StrToInt(copy(s,5,4));
+end;
+
 function TACBrAbecsPinPad.GetIsEnabled: Boolean;
 begin
   Result := Self.Device.Ativo;
@@ -1497,6 +1545,27 @@ procedure TACBrAbecsPinPad.Disable;
 begin
   CancelWaiting;
   Self.IsEnabled := False;
+end;
+
+function TACBrAbecsPinPad.FormatSPE_DSPMSG(const ASPE_DSPMSG: String): String;
+var
+  s: String;
+  sl: TStringList;
+  i, r: Integer;
+begin
+  Result := '';
+  s := QuebraLinhas(ASPE_DSPMSG, fDSPTXTSZ.Cols);
+  sl := TStringList.Create;
+  try
+    sl.Text := s;
+    r := min(sl.Count-1, fDSPTXTSZ.Rows);
+    for i := 0 to r do
+      Result := Result + sl[i] + #13;
+  finally
+    sl.Free;
+  end;
+
+  Result := NativeStringToAnsi(Result);
 end;
 
 function TACBrAbecsPinPad.GetPort: String;
@@ -1560,6 +1629,10 @@ var
 begin
   if (Self.LogLevel > 0) then
     RegisterLog(Format('ExecCommand: %s', [fCommand.ID]));
+
+  if Assigned(fOnStartCommand) then
+    fOnStartCommand(Self);
+
   fIsBusy := True;
   try
     if (Self.LogLevel > 3) then
@@ -1597,6 +1670,8 @@ begin
     end;
   finally
     fIsBusy := False;
+    if Assigned(fOnEndCommand) then
+      fOnEndCommand(Self);
   end;
 end;
 
@@ -1698,6 +1773,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
   var
     TimeToTimeOut: TDateTime;
     b: Byte;
+    Cancel: Boolean;
   begin
     TimeToTimeOut := IncMilliSecond(Now, Self.TimeOut);
     if (Self.LogLevel > 2) then
@@ -1711,6 +1787,13 @@ procedure TACBrAbecsPinPad.WaitForResponse;
       end
       else
       begin
+        if Assigned(fOnWaitForResponse) then
+        begin
+          Cancel := False;
+          fOnWaitForResponse(Cancel);
+          fIsBusy := not Cancel;
+        end;
+
         if UserCancelled then
         begin
           if (Self.LogLevel > 1) then
@@ -1838,6 +1921,7 @@ begin
   fCommand.Clear;
   fCommand.ID := 'OPN';
   ExecCommand;
+  GetPinPadSpecs;
 end;
 
 procedure TACBrAbecsPinPad.OPN(const OPN_MOD: String; const OPN_EXP: String);
@@ -1859,6 +1943,7 @@ begin
     DoException(CERR_EXP_WRONG_SIZE);
 
   ClearSecureData;
+  ClearCacheData;
   fSPEKmod := OPN_MOD;
   fSPEKpub := OPN_EXP;
 
@@ -1874,6 +1959,7 @@ begin
 
   CRKSEC := fResponse.GetResponseData;
   //TODO: A LOT OF TO DO....
+  GetPinPadSpecs;
 end;
 
 procedure TACBrAbecsPinPad.GIN(const GIN_ACQIDX: Byte);
@@ -1940,6 +2026,7 @@ begin
 
   ExecCommand;
   ClearSecureData;
+  ClearCacheData;
 end;
 
 procedure TACBrAbecsPinPad.CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);
@@ -1959,13 +2046,17 @@ begin
     if (ls = 8) and StrIsAlphaNum(s) then
       l := SPE_MFNAME
     else
+    begin
       l := SPE_DSPMSG;
+      s := FormatSPE_DSPMSG(s);
+    end;
 
     fCommand.AddParamFromTagValue(l, s);
   end;
 
   ExecCommand;
   ClearSecureData;
+  ClearCacheData;
 end;
 
 procedure TACBrAbecsPinPad.CEX(const ASPE_CEXOPT: String; ASPE_TIMEOUT: Byte;
@@ -2034,7 +2125,7 @@ begin
     RegisterLog('DEX( '+DEX_MSG+' )');
   fCommand.Clear;
   fCommand.ID := 'DEX';
-  s := TrimRight(DEX_MSG);
+  s := FormatSPE_DSPMSG(DEX_MSG);
   l := Length(s);
   s := Format('%.3d', [l])+s;
   fCommand.AddParamFromData(s);
@@ -2059,7 +2150,6 @@ begin
 
   fCommand.AddParamFromData(msg);
   ExecCommand;
-  ClearSecureData;
 end;
 
 function TACBrAbecsPinPad.GCD(ASPE_MSGIDX: Word; ASPE_MINDIG: Byte;
@@ -2162,8 +2252,38 @@ begin
 
   fCommand.Clear;
   fCommand.ID := 'GKY';
+  fCommand.IsBlocking := True;
   ExecCommand( False ); // Do not EvaluateResponse
   Result := fResponse.STAT;
+end;
+
+function TACBrAbecsPinPad.MNU(ASPE_MNUOPT: array of String; ASPE_DSPMSG: String;
+  ASPE_TIMEOUT: Byte): String;
+var
+  s: String;
+  i: Integer;
+begin
+  if (Self.LogLevel > 0) then
+  begin
+    s := '';
+    for i := Low(ASPE_MNUOPT) to High(ASPE_MNUOPT) do
+      s := s + ASPE_MNUOPT[i];
+    RegisterLog(Format('MNU( %d, %s, %s )', [ASPE_TIMEOUT, ASPE_DSPMSG, s]));
+  end;
+
+  fCommand.Clear;
+  fCommand.ID := 'MNU';
+  fCommand.IsBlocking := True;
+  if (ASPE_TIMEOUT > 0) then
+    fCommand.AddParamFromTagValue(SPE_TIMEOUT, chr(ASPE_TIMEOUT));
+  fCommand.AddParamFromTagValue(SPE_DSPMSG, FormatSPE_DSPMSG(ASPE_DSPMSG));
+  for i := Low(ASPE_MNUOPT) to High(ASPE_MNUOPT) do
+  begin
+    s := LeftStr(ASPE_MNUOPT[i], 24);
+    fCommand.AddParamFromTagValue(SPE_MNUOPT, s);
+  end;
+  ExecCommand;
+  Result := fResponse.GetResponseFromTagValue(PP_VALUE);
 end;
 
 procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String;

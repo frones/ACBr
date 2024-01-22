@@ -45,6 +45,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+22/01/2024
+-- ACBrGNREWebServices/pgnreConsResLoteGNRE/pgnreRetConsResLoteGNRE --
+[*] Incluído na consulta do lote a tag opcional: incluirPDFGuias para que no
+    retorno consta as guias no formato PDF.
+  Por: Jacke Venson/Italo Giurizzato Junior
+
 03/01/2024
 -- ACBrGNReGuiasRetorno, pgnreRetConsResLoteGNRe --
 [*] Otimização na leitura dos valores.

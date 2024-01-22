@@ -214,6 +214,7 @@ type
     FresInfoCabec: TInfoCabec;
     FresGuia: TGuiaCollection;
     FresRejeicaoGuia: TRejeicaoGuiaCollection;
+    FpdfGuias: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -231,6 +232,7 @@ type
     property resInfoCabec: TInfoCabec read FresInfoCabec write FresInfoCabec;
     property resGuia: TGuiaCollection read FresGuia write FresGuia;
     property resRejeicaoGuia: TRejeicaoGuiaCollection read FresRejeicaoGuia write FresRejeicaoGuia;
+    property pdfGuias: string read FpdfGuias write FpdfGuias;
   end;
 
 implementation
@@ -460,6 +462,8 @@ begin
   begin
     i := 0; // Utilizado para a leitura Guias
     m := 0; // Utilizado para a leitura das Rejeições
+
+    pdfGuias := Leitor.rCampo(tcStr, 'pdfGuias');
 
     while Leitor.rExtrai(3, 'guia', '', i + 1) <> '' do
     begin

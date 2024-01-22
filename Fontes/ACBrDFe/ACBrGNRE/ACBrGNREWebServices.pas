@@ -116,6 +116,7 @@ type
   private
     FAmbiente: TpcnTipoAmbiente;
     FnumeroRecibo: String;
+    FIncluirPDFGuias: Boolean;
     Fcodigo: Integer;
     Fresultado: String;
     Fdescricao: String;
@@ -146,9 +147,12 @@ type
     function SalvarTXT(AResultado: String; Item: Integer): Boolean;
     function SalvarXML(AGuia, ANumero: String; aData: TDateTime;
       aCNPJ, aIE: string; Item: Integer): Boolean;
+    function SalvarPDF(AGuia, ANumero: String; aData: TDateTime;
+      aCNPJ, aIE: string): Boolean;
 
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property numeroRecibo: String read FnumeroRecibo write FnumeroRecibo;
+    property IncluirPDFGuias: Boolean read FIncluirPDFGuias write FIncluirPDFGuias;
     property codigo: Integer read Fcodigo write Fcodigo;
     property descricao: String read Fdescricao write Fdescricao;
     property protocolo: String read Fprotocolo write Fprotocolo;
@@ -315,7 +319,7 @@ type
 implementation
 
 uses
-  StrUtils, Math,
+  StrUtils, Math, synacode,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
   ACBrGNRE2,
@@ -554,6 +558,8 @@ constructor TGNRERetRecepcao.Create(AOwner: TACBrDFe; AGuias: TGuias);
 begin
   inherited Create(AOwner);
 
+  FIncluirPDFGuias := False;
+
   FGuias := AGuias;
 end;
 
@@ -598,6 +604,7 @@ begin
 	try
 		ConsResLoteGNRE.Ambiente     := FAmbiente;
 		ConsResLoteGNRE.numeroRecibo := FnumeroRecibo;
+		ConsResLoteGNRE.IncluirPDFGuias := FIncluirPDFGuias;
 		ConsResLoteGNRE.GerarXML;
 
 		FPDadosMsg := ConsResLoteGNRE.Gerador.ArquivoFormatoXML;
@@ -710,6 +717,7 @@ function TGNRERetRecepcao.TratarResposta: Boolean;
 var
   SL: TStringList;
   I: Integer;
+  xData: TDateTime;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
@@ -720,6 +728,7 @@ begin
   Fcodigo    := FGNRERetorno.codigo;
   Fdescricao := FGNRERetorno.descricao;
   Fresultado := FGNRERetorno.resultado;
+
   // Para aparecer as exceções que ocorreram / caso haja alguma
   SL := TStringList.Create;
   SL.Clear;
@@ -736,10 +745,12 @@ function TGNRERetRecepcao.TratarRespostaFinal: Boolean;
 var
   I: Integer;
   xData: TDateTime;
+  PDFJaSalvo: Boolean;
 begin
   Result := False;
+  PDFJaSalvo := False;
 
-  //Verificando se existe alguma guia confirmada
+  // Verificando se existe alguma guia confirmada
   for I := 0 to FGuias.Count - 1 do
   begin
     if FGuias.Items[I].Confirmada then
@@ -753,17 +764,27 @@ begin
         with FGNRERetorno.resGuia.Items[I] do
         begin
           if FPConfiguracoesGNRE.Arquivos.EmissaoPathGNRE then
-            xData := StrToDateDef(DataVencimento,Now)
+            xData := StrToDateDef(DataVencimento, Now)
           else
             xData := Now;
 
           Self.SalvarXML(XML, NumeroControle, xData, DocEmitente, '', I);
+
+          if not PDFJaSalvo then
+          begin
+            // Verifica se existe alguma guia no formato PDF
+            if FGNRERetorno.pdfGuias <> '' then
+            begin
+              Self.SalvarPDF(FGNRERetorno.pdfGuias, NumeroControle, xData, DocEmitente, '');
+              PDFJaSalvo := True;
+            end;
+          end;
         end;
       end;
     end;
   end;
 
-  //Verificando se existe alguma guia nao confirmada
+  // Verificando se existe alguma guia nao confirmada
   for I := 0 to FGuias.Count - 1 do
   begin
     if not FGuias.Items[I].Confirmada then
@@ -773,7 +794,7 @@ begin
     end;
   end;
 
-  //Montando a mensagem de retorno para as guias nao confirmadas
+  // Montando a mensagem de retorno para as guias nao confirmadas
   for I := 0 to FGuias.Count - 1 do
   begin
     if not FGuias.Items[I].Confirmada then
@@ -838,6 +859,25 @@ begin
     FGNRERetorno.resGuia.Items[Item].NomeArq := PathNome;
 
     Result := FPDFeOwner.Gravar(PathNome, AGuia);
+  end;
+end;
+
+function TGNRERetRecepcao.SalvarPDF(AGuia, ANumero: String; aData: TDateTime;
+  aCNPJ, aIE: string): Boolean;
+var
+  aPath, aNomeArq, aArq: string;
+begin
+  Result := True;
+
+  aArq := DecodeBase64(AGuia);
+
+  if FPConfiguracoesGNRE.Arquivos.Salvar then
+  begin
+    aPath := FPConfiguracoesGNRE.Arquivos.GetPathGNRE(aData, aCNPJ, aIE);
+
+    aNomeArq := PathWithDelim(aPath) + ANumero + '-guias.pdf';
+
+    WriteToTXT(aNomeArq, aArq, False, False);
   end;
 end;
 

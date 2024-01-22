@@ -28,6 +28,7 @@ type
     btMediaLoad: TButton;
     btGIX: TButton;
     btDesativar: TButton;
+    btRMC: TButton;
     btOPN: TButton;
     btCLO: TButton;
     Button1: TButton;
@@ -51,6 +52,7 @@ type
     procedure btLMFClick(Sender: TObject);
     procedure btMNUClick(Sender: TObject);
     procedure btOPNClick(Sender: TObject);
+    procedure btRMCClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   protected
@@ -125,7 +127,7 @@ end;
 
 procedure TForm1.btCEXClick(Sender: TObject);
 begin
-  fAbecsPinPad.DSP('Pressione|alguma tecla');
+  fAbecsPinPad.DSP('Pressione'+#13+'alguma tecla');
   fAbecsPinPad.CEX(True,False,False,False,False);
   ShowMessage('PP_EVENT: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
               'PP_TRK1INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
@@ -167,7 +169,7 @@ end;
 procedure TForm1.btDSPClick(Sender: TObject);
 begin
   fAbecsPinPad.DSP('');
-  fAbecsPinPad.DSP('PROJETO ACBR|projetoacbr.com.br');
+  fAbecsPinPad.DSP('PROJETO ACBR'+#13+'projetoacbr.com.br');
 end;
 
 procedure TForm1.btGCDClick(Sender: TObject);
@@ -224,7 +226,7 @@ procedure TForm1.btMNUClick(Sender: TObject);
 var
   s: String;
 begin
-  s := fAbecsPinPad.MNU(['A VISTA','A PRAZO','FIADO'],'Forma de Pagamento');
+  s := fAbecsPinPad.MNU(['1 A VISTA','2 A PRAZO','3 FIADO'],'Forma de Pagamento');
   ShowMessage(s);
 end;
 
@@ -242,6 +244,11 @@ begin
   //  '010001');
 end;
 
+procedure TForm1.btRMCClick(Sender: TObject);
+begin
+  fAbecsPinPad.RMC('OPERAÇÃO'+#13+'TERMINADA');
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   HidePanelCancel;
@@ -249,7 +256,7 @@ end;
 
 procedure TForm1.btCLOClick(Sender: TObject);
 begin
-  fAbecsPinPad.CLO('PROJETO ACBR|projetoacbr.com.br');
+  fAbecsPinPad.CLO('PROJETO ACBR'+#13+'projetoacbr.com.br');
 end;
 
 procedure TForm1.btCLXClick(Sender: TObject);

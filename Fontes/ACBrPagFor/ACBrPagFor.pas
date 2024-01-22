@@ -64,7 +64,7 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrPagFor = class(TComponent)
+  TACBrPagFor = class(TACBrComponent)
   private
     FArquivo  : TACBrPagForArquivoClass;
     FArquivos : TArquivos;

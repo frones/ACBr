@@ -600,7 +600,10 @@ type
      property  Items[Index: Integer]: TDocto read GetItem write SetItem; default;
    end;
 
-   TACBrEDINotaFiscais = class(TComponent)
+   {$IFDEF RTL230_UP}
+   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+   {$ENDIF RTL230_UP}
+   TACBrEDINotaFiscais = class(TACBrComponent)
    private
       FTxt        : TACBrTxtClass ;
       FVersao     : tveEdi ;

@@ -375,7 +375,10 @@ type
      property  Items[Index: Integer]: TConEmb read GetItem write SetItem; default;
    end;
 
-   TACBrEDIConhectos = class( TComponent )
+   {$IFDEF RTL230_UP}
+   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+   {$ENDIF RTL230_UP}
+   TACBrEDIConhectos = class(TACBrComponent)
    private
       FTxt       : TACBrTxtClass ;
       FVersao    : tveEdi ;

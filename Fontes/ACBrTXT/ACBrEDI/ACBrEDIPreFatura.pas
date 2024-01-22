@@ -287,7 +287,10 @@ type
      property  Items[Index: Integer]: TDocto read GetItem write SetItem; default;
    end;
 
-   TACBrEDIPreFatura = class(TComponent)
+   {$IFDEF RTL230_UP}
+   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+   {$ENDIF RTL230_UP}
+   TACBrEDIPreFatura = class(TACBrComponent)
    private
       FTxt        : TACBrTxtClass ;
       FVersao     : tveEdi ;

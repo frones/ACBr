@@ -64,7 +64,7 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrDebitoAutomatico = class(TComponent)
+  TACBrDebitoAutomatico = class(TACBrComponent)
   private
     FArquivo  : TACBrDebitoAutomaticoArquivoClass;
     FArquivos : TArquivos;

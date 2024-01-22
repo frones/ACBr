@@ -236,7 +236,10 @@ type
      property  Items[Index: Integer]: TOcor read GetItem write SetItem; default;
    end;
 
-   TACBrEDIOcorrencia = class( TComponent )
+   {$IFDEF RTL230_UP}
+   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+   {$ENDIF RTL230_UP}
+   TACBrEDIOcorrencia = class(TACBrComponent)
    private
       FTxt      : TACBrTxtClass ;
       FVersao   : tveEdi ;

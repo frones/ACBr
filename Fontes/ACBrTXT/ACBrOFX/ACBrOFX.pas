@@ -37,6 +37,7 @@ unit ACBrOFX;
 interface
 
 uses
+  ACBrBase,
   SysUtils,
   Classes, 
   StrUtils;
@@ -53,7 +54,10 @@ type
   end;
 
 type
-  TACBrOFX = class(TComponent)
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
+  TACBrOFX = class(TACBrComponent)
   private
     FOFXFile: string;
     FListItems: TList;

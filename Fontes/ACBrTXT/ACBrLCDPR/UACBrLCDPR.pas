@@ -34,12 +34,16 @@ unit UACBrLCDPR;
 interface
 
 uses
+  ACBrBase,
   SysUtils, Classes,
   Registro0000, Registro0010, Registro0030, Bloco0040, Bloco0050, BlocoQ,
   Registro9999, LCDPRUtils, LCDPRBlocos, uDadosContador;
 
 type
-  TACBrLCDPR = class(TComponent)
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
+  TACBrLCDPR = class(TACBrComponent)
   private
     FConteudo : TStringList;
     FBloco0000: TRegistro0000;

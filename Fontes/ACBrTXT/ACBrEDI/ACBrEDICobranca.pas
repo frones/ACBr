@@ -265,7 +265,10 @@ type
      property  Items[Index: Integer]: TDocCob read GetItem write SetItem; default;
    end;
 
-   TACBrEDICobranca = class( TComponent )
+   {$IFDEF RTL230_UP}
+   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+   {$ENDIF RTL230_UP}
+   TACBrEDICobranca = class(TACBrComponent)
    private
       FTxt       : TACBrTxtClass ;
       FVersao    : tveEdi ;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Bayeux/PB o provedor é ISSIntel.
+  Por: Arimateia Jr
+
 19/01/2024
 -- ACBrNFSeXWebserviceBase --
 [-] Possível solução para os provedores cujo retorno é um XML com codificação 

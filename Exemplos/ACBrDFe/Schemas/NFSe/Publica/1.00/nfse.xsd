@@ -68,6 +68,13 @@
             <xsd:element name="Email" type="tsEmail" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
+	
+	<xsd:complexType name="tcConstrucaoCivil">
+        <xsd:sequence>
+            <xsd:element name="CodigoObra" type="tsConstrucaoCivilObra" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="Art" type="tsConstrucaoCivilArtigo" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
 
     <xsd:simpleType name="tsEmail">
         <xsd:restriction base="xsd:string">
@@ -179,6 +186,22 @@
             <xsd:whiteSpace value="collapse"/>
         </xsd:restriction>
     </xsd:simpleType>
+	
+	<xsd:simpleType name="tsConstrucaoCivilObra">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="15"/>
+            <xsd:minLength value="1"/>
+            <xsd:whiteSpace value="collapse"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+	
+	<xsd:simpleType name="tsConstrucaoCivilArtigo">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="15"/>
+            <xsd:minLength value="1"/>
+            <xsd:whiteSpace value="collapse"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
     <xsd:simpleType name="tsQuantidadeRps">
         <xsd:restriction base="xsd:int">
@@ -227,6 +250,7 @@
             <xsd:element name="Tomador" type="tcDadosTomador" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="IntermediarioServico" type="tcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="CondicaoPagamento" type="tcCondicoesPagamentos" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ConstrucaoCivil" type="tcConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
         <xsd:attribute name="id" type="tsIdTag"/>
     </xsd:complexType>
@@ -465,6 +489,7 @@
             <xsd:element name="PrestadorServico" type="tcDadosPrestador" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="TomadorServico" type="tcDadosTomador" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="IntermediarioServico" type="tcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ConstrucaoCivil" type="tcConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="OrgaoGerador" type="tcIdentificacaoOrgaoGerador" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="CondicaoPagamento" type="tcCondicoesPagamentos" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>

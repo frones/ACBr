@@ -28,7 +28,8 @@ package ACBr_OFX;
 {$DEFINE DEBUG}
 
 requires
-  rtl;
+  rtl,
+  ACBr_Comum;
 
 contains
   ACBrOFX in '..\..\..\..\Fontes\ACBrTXT\ACBrOFX\ACBrOFX.pas';

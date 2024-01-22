@@ -5,7 +5,7 @@ unit FormPrincipal;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
   ACBrAbecsPinPad;
 
 type
@@ -14,6 +14,7 @@ type
 
   TForm1 = class(TForm)
     btAtivar: TButton;
+    btMNU: TButton;
     btCLX: TButton;
     btDEX: TButton;
     btDSP: TButton;
@@ -29,8 +30,10 @@ type
     btDesativar: TButton;
     btOPN: TButton;
     btCLO: TButton;
+    Button1: TButton;
     edPorta: TEdit;
     Label1: TLabel;
+    pCancelar: TPanel;
     procedure btAtivarClick(Sender: TObject);
     procedure btCEXClick(Sender: TObject);
     procedure btCLOClick(Sender: TObject);
@@ -46,8 +49,16 @@ type
     procedure btGKYClick(Sender: TObject);
     procedure btMediaLoadClick(Sender: TObject);
     procedure btLMFClick(Sender: TObject);
+    procedure btMNUClick(Sender: TObject);
     procedure btOPNClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+  protected
+    procedure ShowPanelCancel;
+    procedure HidePanelCancel;
+    procedure OnStartCommand(Sender: TObject);
+    procedure OnWaitForResponse(var Cancel: Boolean);
+    procedure OnEndCommand(Sender: TObject);
   private
     fAbecsPinPad: TACBrAbecsPinPad;
   public
@@ -73,6 +84,37 @@ begin
   fAbecsPinPad.LogFile := 'C:\temp\ACBrPinPad.log';
   fAbecsPinPad.LogLevel := 6;
   //fAbecsPinPad.LogTranslate := False;
+  fAbecsPinPad.OnStartCommand := @OnStartCommand;
+  fAbecsPinPad.OnWaitForResponse := @OnWaitForResponse;
+  fAbecsPinPad.OnEndCommand := @OnEndCommand;
+end;
+
+procedure TForm1.ShowPanelCancel;
+begin
+  pCancelar.Align := alClient;
+  pCancelar.Visible := True;
+end;
+
+procedure TForm1.HidePanelCancel;
+begin
+  pCancelar.Visible := False;
+end;
+
+procedure TForm1.OnStartCommand(Sender: TObject);
+begin
+  if fAbecsPinPad.Command.IsBlocking then
+    ShowPanelCancel;
+end;
+
+procedure TForm1.OnWaitForResponse(var Cancel: Boolean);
+begin
+  Application.ProcessMessages;
+  Cancel := not pCancelar.Visible;
+end;
+
+procedure TForm1.OnEndCommand(Sender: TObject);
+begin
+  HidePanelCancel;
 end;
 
 procedure TForm1.btAtivarClick(Sender: TObject);
@@ -155,7 +197,7 @@ procedure TForm1.btGKYClick(Sender: TObject);
 var
   i: Integer;
 begin
-  fAbecsPinPad.DEX(NativeStringToAnsi('Pressione'+#13+'alguma tecla'+#13+'de função'));
+  fAbecsPinPad.DEX('Pressione'+#13+'alguma tecla'+#13+'de função');
   i := fAbecsPinPad.GKY;
   fAbecsPinPad.DSP('');
   ShowMessage(IntToStr(i));
@@ -178,6 +220,14 @@ begin
   fAbecsPinPad.LMF;
 end;
 
+procedure TForm1.btMNUClick(Sender: TObject);
+var
+  s: String;
+begin
+  s := fAbecsPinPad.MNU(['A VISTA','A PRAZO','FIADO'],'Forma de Pagamento');
+  ShowMessage(s);
+end;
+
 procedure TForm1.btOPNClick(Sender: TObject);
 begin
   fAbecsPinPad.OPN;
@@ -190,6 +240,11 @@ begin
   //  '497C420840C0099F23FD089711209A31A6ED5EE9248D8C19D46F62A4EBC797143D80B85DAD4'+
   //  '7D0A485926298D81AFE23CA3D6229F3E011203713E5B74E9807CF98B71CD7D',
   //  '010001');
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  HidePanelCancel;
 end;
 
 procedure TForm1.btCLOClick(Sender: TObject);

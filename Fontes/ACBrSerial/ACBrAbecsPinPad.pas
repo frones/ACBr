@@ -82,6 +82,9 @@ const
   SYN = 22; // Indicates the start of a packet.
   ETB = 23; // Indicates the end of a packet.
 
+  CR = #13;
+  LF = #10;
+
   MAX_BLOCK_SIZE = 999;
   MAX_TLV_SIZE = MAX_BLOCK_SIZE - 4;
   MAX_PACKET_SIZE = 2049;
@@ -587,6 +590,9 @@ type
     property Response: TACBrAbecsResponse read fResponse;
 
     function FormatSPE_DSPMSG(const ASPE_DSPMSG: String): String;
+    function FormatMSG_S32(const AMSG: String): String;
+    function FormatMSG(const AMSG: String; MaxCols: Integer; MaxLines: Integer;
+      Pad: Byte = 0): String;
   published
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
@@ -608,7 +614,7 @@ type
     procedure GIN(const GIN_ACQIDX: Byte = 0);
     procedure GIX; overload;
     procedure GIX(PP_DATA: array of Word); overload;
-    procedure CLO(const CLO_MSG: String = ''; const ALineBreakChar: Char = '|');
+    procedure CLO(const CLO_MSG: String = '');
     procedure CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);
 
     // Basic Commands
@@ -619,13 +625,14 @@ type
       VerifyCTLSPresence: Boolean; ASPE_TIMEOUT: Byte = 0;
       const ASPE_PANMASK_LLRR: String = ''); overload;
     procedure DEX(const DEX_MSG: String);
-    procedure DSP(const DSP_MSG: String = ''; const ALineBreakChar: Char = '|');
+    procedure DSP(const DSP_MSG: String = '');
     function GCD(ASPE_MSGIDX: Word; ASPE_MINDIG: Byte = 0; ASPE_MAXDIG: Byte = 0;
       ASPE_TIMEOUT: Byte = 0): String; overload;
     function GCD(MSGIDX: TACBrAbecsMSGIDX; ASPE_TIMEOUT: Byte = 0): String; overload;
     function GKY: Integer;
     function MNU(ASPE_MNUOPT: array of String; ASPE_DSPMSG: String = '';
       ASPE_TIMEOUT: Byte = 0): String;
+    procedure RMC(const RMC_MSG: String = '');
 
     // Multimidia Commands
     procedure MLI(const ASPE_MFNAME: String; const ASPE_MFINFO: AnsiString); overload;
@@ -1548,19 +1555,42 @@ begin
 end;
 
 function TACBrAbecsPinPad.FormatSPE_DSPMSG(const ASPE_DSPMSG: String): String;
+begin
+  Result := FormatMSG(ASPE_DSPMSG, fDSPTXTSZ.Cols, fDSPTXTSZ.Rows);
+end;
+
+function TACBrAbecsPinPad.FormatMSG_S32(const AMSG: String): String;
+begin
+  Result := FormatMSG(AMSG, 16, 2, 3);
+  Result := ReplaceString(Result, CR, '');
+end;
+
+function TACBrAbecsPinPad.FormatMSG(const AMSG: String; MaxCols: Integer;
+  MaxLines: Integer; Pad: Byte): String;
 var
   s: String;
   sl: TStringList;
   i, r: Integer;
 begin
   Result := '';
-  s := QuebraLinhas(ASPE_DSPMSG, fDSPTXTSZ.Cols);
+  s := ReplaceString(AMSG, CR, LF);
+  s := QuebraLinhas(s, MaxCols);
   sl := TStringList.Create;
   try
     sl.Text := s;
-    r := min(sl.Count-1, fDSPTXTSZ.Rows);
+    r := min(sl.Count-1, MaxLines);
     for i := 0 to r do
-      Result := Result + sl[i] + #13;
+    begin
+      s := sl[i];
+      if (Pad = 1) then
+        s:= PadRight(s, MaxCols)
+      else if (Pad = 2) then
+        s:= PadLeft(s, MaxCols)
+      else if (Pad = 3) then
+        s:= PadCenter(s, MaxCols);
+
+      Result := Result + s + CR;
+    end;
   finally
     sl.Free;
   end;
@@ -2002,27 +2032,14 @@ begin
   ExecCommand;
 end;
 
-procedure TACBrAbecsPinPad.CLO(const CLO_MSG: String;
-  const ALineBreakChar: Char);
-var
-  p: Integer;
-  msg: String;
+procedure TACBrAbecsPinPad.CLO(const CLO_MSG: String);
 begin
   if (Self.LogLevel > 0) then
-    RegisterLog('CLO( '+CLO_MSG+', '+ALineBreakChar+' )');
+    RegisterLog('CLO( '+CLO_MSG+' )');
   fCommand.Clear;
   fCommand.ID := 'CLO';
   if (CLO_MSG <> '') then
-  begin
-    p := pos(ALineBreakChar, CLO_MSG);
-    if (p > 0) then
-      msg := PadRight(copy(CLO_MSG, 1, p-1), 16) +
-             PadRight(copy(CLO_MSG, p+1, 16), 16)
-    else
-      msg := PadRight(CLO_MSG, 32);
-
-    fCommand.AddParamFromData(msg);
-  end;
+    fCommand.AddParamFromData(FormatMSG_S32(CLO_MSG));
 
   ExecCommand;
   ClearSecureData;
@@ -2035,6 +2052,7 @@ var
   l: Word;
   ls: Integer;
 begin
+  GetPinPadSpecs;
   if (Self.LogLevel > 0) then
     RegisterLog('CLX( '+SPE_DSPMSG_or_SPE_MFNAME+' )');
   fCommand.Clear;
@@ -2121,6 +2139,7 @@ var
   s: String;
   l: Integer;
 begin
+  GetPinPadSpecs;
   if (Self.LogLevel > 0) then
     RegisterLog('DEX( '+DEX_MSG+' )');
   fCommand.Clear;
@@ -2132,23 +2151,13 @@ begin
   ExecCommand;
 end;
 
-procedure TACBrAbecsPinPad.DSP(const DSP_MSG: String; const ALineBreakChar: Char);
-var
-  p: Integer;
-  msg: String;
+procedure TACBrAbecsPinPad.DSP(const DSP_MSG: String);
 begin
   if (Self.LogLevel > 0) then
-    RegisterLog('DSP( '+DSP_MSG+', '+ALineBreakChar+' )');
+    RegisterLog('DSP( '+DSP_MSG+' )');
   fCommand.Clear;
   fCommand.ID := 'DSP';
-  p := pos(ALineBreakChar, DSP_MSG);
-  if (p > 0) then
-    msg := PadRight(copy(DSP_MSG, 1, p-1), 16) +
-           PadRight(copy(DSP_MSG, p+1, 16), 16)
-  else
-    msg := PadRight(DSP_MSG, 32);
-
-  fCommand.AddParamFromData(msg);
+  fCommand.AddParamFromData(FormatMSG_S32(DSP_MSG));
   ExecCommand;
 end;
 
@@ -2263,6 +2272,7 @@ var
   s: String;
   i: Integer;
 begin
+  GetPinPadSpecs;
   if (Self.LogLevel > 0) then
   begin
     s := '';
@@ -2284,6 +2294,17 @@ begin
   end;
   ExecCommand;
   Result := fResponse.GetResponseFromTagValue(PP_VALUE);
+end;
+
+procedure TACBrAbecsPinPad.RMC(const RMC_MSG: String);
+begin
+  if (Self.LogLevel > 0) then
+    RegisterLog('RMC( '+RMC_MSG+' )');
+  fCommand.Clear;
+  fCommand.ID := 'RMC';
+  fCommand.IsBlocking := True;
+  fCommand.AddParamFromData(FormatMSG_S32(RMC_MSG));
+  ExecCommand;
 end;
 
 procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String;

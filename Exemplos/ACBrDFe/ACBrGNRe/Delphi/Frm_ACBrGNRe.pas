@@ -1165,12 +1165,18 @@ end;
 
 procedure TfrmACBrGNRe.btnConsultarReciboClick(Sender: TObject);
 var
-  aux : String;
+  aux, BaixarPDF: String;
 begin
+  aux := '';
   if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux)) then
     exit;
 
+  BaixarPDF := '';
+  if not(InputQuery('Consultar Recibo Lote', 'Baixar PDF da Guia (digite S para Sim)', BaixarPDF)) then
+    exit;
+
   ACBrGNRE1.WebServices.Retorno.numeroRecibo := aux;
+  ACBrGNRE1.WebServices.Retorno.IncluirPDFGuias := (UpperCase(BaixarPDF) = 'S');
   ACBrGNRE1.WebServices.Retorno.Executar;
 
   MemoResp.Lines.Text   := UTF8Encode(ACBrGNRE1.WebServices.Retorno.RetWS);

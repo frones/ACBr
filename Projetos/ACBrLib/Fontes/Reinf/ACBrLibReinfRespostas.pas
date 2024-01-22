@@ -920,7 +920,7 @@ type
     procedure RespostaEnvioRCPRB(const ACont, ACont2: Integer; const AItem: TeventoCollectionItem);
     procedure RespostaEnvioRRecEspetDest(const ACont: Integer; const AItem: TeventoCollectionItem);
 
-    procedure RespostaConsultaideContri(const AItem: TideContrib; const AStatus: TStatus = nil);
+    procedure RespostaConsultaideContri(const ASessao: String; const AItem: TideContrib; const AStatus: TStatus = nil);
     procedure RespostaConsultaRetorno;
     procedure RespostaConsulta(const ASessao: String; const AId: String);
     procedure RespostaConsultaideEvento(const AItem: TIdeEvento1);
@@ -1803,7 +1803,7 @@ var
 begin
   with FACBrReinf.WebServices.Consultar.RetEnvioLote do
   begin
-    RespostaConsultaideContri(IdeContribuinte, status);
+    RespostaConsultaideContri(CSessaoRetornoideContribuinte, IdeContribuinte, status);
     RespostaEnviodadosRecepcaoLote(FACBrReinf.WebServices.EnvioLote.RetEnvioLote);
 
     for i:=0 to evento.Count - 1 do
@@ -1816,7 +1816,7 @@ begin
           begin
             RespostaConsulta(CSessaoRespEnvioevtTotal, id);
             RespostaConsultaideEvento(IdeEvento);
-            RespostaConsultaideContri(IdeContrib);
+            RespostaConsultaideContri(CSessaoRetornoideContri, IdeContrib);
             RespostaEnvioideStatus(i, IdeStatus);
 
             for j := 0 to IdeStatus.regOcorrs.Count -1 do
@@ -1853,7 +1853,7 @@ begin
           begin
             RespostaConsulta(CSessaoRespEnvioevtRet, id);
             RespostaConsultaideEvento(IdeEvento);
-            RespostaConsultaideContri(IdeContrib);
+            RespostaConsultaideContri(CSessaoRetornoideContri, IdeContrib);
             RespostaEnvioideStatus(i, IdeStatus);
 
             for j := 0 to IdeStatus.regOcorrs.Count -1 do
@@ -1910,7 +1910,7 @@ begin
     begin
       RespostaConsulta(CSessaoRespEnvioevtRetCons, Id);
       RespostaConsultaideEvento(IdeEvento);
-      RespostaConsultaideContri(IdeContri);
+      RespostaConsultaideContri(CSessaoRetornoideContri, IdeContri);
       RespostaEnvioideStatus(0, IdeStatus);
 
       for i := 0 to IdeStatus.regOcorrs.Count -1 do
@@ -1959,7 +1959,7 @@ begin
     begin
       RespostaConsulta(CSessaoRespConsulta, Id);
       RespostaConsultaideEvento(IdeEvento);
-      RespostaConsultaideContri(IdeContri);
+      RespostaConsultaideContri(CSessaoRetornoideContri, IdeContri);
       RespostaConsultaideStatus;
 
       for i := 0 to IdeStatus.regOcorrs.Count -1 do
@@ -1991,11 +1991,11 @@ begin
   end;
 end;
 
-procedure TRespostas.RespostaConsultaideContri(const AItem: TideContrib; const AStatus: TStatus);
+procedure TRespostas.RespostaConsultaideContri(const ASessao: String; const AItem: TideContrib; const AStatus: TStatus);
 var
   Resp: TRespostaideContri;
 begin
-  Resp := TRespostaideContri.Create(CSessaoRetornoideContri, TpResp, codUTF8);
+  Resp := TRespostaideContri.Create(ASessao, TpResp, codUTF8);
   try
     Resp.Processar(AItem, AStatus);
     Resposta := Resposta + Resp.Gerar;

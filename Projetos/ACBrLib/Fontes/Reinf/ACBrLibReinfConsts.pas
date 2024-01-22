@@ -61,6 +61,7 @@ const
   CSessaoRespEnvioevtRetCons = 'evtRetCons';
 
   CSessaoRetornoideEvento = 'ideEvento';
+  CSessaoRetornoideContribuinte = 'ideContribuinte';
   CSessaoRetornoideContri = 'ideContri';
   CSessaoRetornoideStatus = 'ideStatus';
   CSessaoRetornoregOcorrs = 'regOcorrs';

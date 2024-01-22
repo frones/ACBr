@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2024
+-- ACBrLibReinfConsts.pas, ACBrLibReinfRespostas.pas --
+[*] Corrigida seção "ideContribuinte" no início dos dados de retorno da consulta de protocolo
+  Por: Renato Rubinho
+
 04/01/2024
 -- ACBrMonitor.hnd --
 [*] Atualizado documentação da nova consulta CNPJ, removido captcha

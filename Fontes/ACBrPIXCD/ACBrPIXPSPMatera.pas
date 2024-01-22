@@ -52,7 +52,7 @@ uses
 
 const
   cMateraURLSandbox       = 'https://mtls-mp.hml.flagship.maas.link';
-  cMateraURLProducao      = 'https://mtls-mp.prd.flagship.maas.link/';
+  cMateraURLProducao      = 'https://mtls-mp.prd.flagship.maas.link';
   cMateraPathAuthToken    = '/auth/realms/Matera/protocol/openid-connect/token';
   cMateraURLAuthTeste     = cMateraURLSandbox+cMateraPathAuthToken;
   cMateraURLAuthProducao  = cMateraURLProducao+cMateraPathAuthToken;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2024
+-- ACBrLibPIXCDConfig --
+[*] Correção do reader da propriedade ClientId para a config do PSP Sicoob.
+    Por: Diego Folieni
+
 28/12/2023
 --- ACBrLibPIXCDDataModule ---
 [+] Criação Versão Demonstração ACBrLibPIXCD

@@ -313,7 +313,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile);
 
     property ChavePIX: String read FChavePIX write FChavePIX;
-    property ClientID: String read FClientID write FChavePIX;
+    property ClientID: String read FClientID write FClientID;
     property TokenSandbox: String read FTokenSandbox write FTokenSandbox;
     property ArqChavePrivada: String read FArqChavePrivada write FArqChavePrivada;
     property ArqCertificado: String read FArqCertificado write FArqCertificado;

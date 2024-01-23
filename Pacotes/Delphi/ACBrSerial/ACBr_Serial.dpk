@@ -166,6 +166,7 @@ contains
   ACBrEscPosHookElginDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas',
   ACBrWinUSBDevice in '..\..\..\Fontes\ACBrSerial\ACBrWinUSBDevice.pas',
   ACBrBALSelfCheckout in '..\..\..\Fontes\ACBrSerial\ACBrBALSelfCheckout.pas',
-  ACBrBALSiciliano in '..\..\..\Fontes\ACBrSerial\ACBrBALSiciliano.pas';
+  ACBrBALSiciliano in '..\..\..\Fontes\ACBrSerial\ACBrBALSiciliano.pas',
+  ACBrAbecsPinPad in '..\..\..\Fontes\ACBrSerial\ACBrAbecsPinPad.pas';
 
 end.

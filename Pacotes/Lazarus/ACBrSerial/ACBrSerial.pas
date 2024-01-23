@@ -8,21 +8,28 @@ unit ACBrSerial;
 interface
 
 uses
-  ACBrSerialReg, ACBrDevice, ACBrDeviceClass, ACBrDeviceSerial, ACBrDeviceTCP, ACBrDeviceLPT, ACBrDeviceRaw, 
-  ACBrBAL, ACBrBALCapital, ACBrBALClass, ACBrBALFilizola, ACBrBALLenkeLK2500, ACBrBALSaturno, 
-  ACBrBALSelfCheckout, ACBrBALToledo, ACBrBALUrano, ACBrBALSiciliano, ACBrCHQ, ACBrCHQBematech, 
-  ACBrCHQChronos, ACBrCHQClass, ACBrCHQImpressoraComum, ACBrCHQImpressoraECF, ACBrCHQPerto, ACBrCHQSchalter, 
-  ACBrCHQSotomaq, ACBrCHQUrano, ACBrDIS, ACBrDISClass, ACBrDISGertecSerial, ACBrDISGertecTeclado, 
-  ACBrDISGertecTEC65lib, ACBrDISKeytecTeclado, ACBrDISSmakTecladoLib, ACBrDISSmakTeclado, ACBrDISSmakSerial, 
-  ACBrECF, ACBrECFClass, ACBrECFBematech, ACBrECFDaruma, ACBrECFDataRegis, ACBrECFEpson, ACBrECFEscECF, 
-  ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, ACBrECFNaoFiscal, ACBrECFNCR, ACBrECFQuattro, ACBrECFSchalter, 
-  ACBrECFSweda, ACBrECFSwedaSTX, ACBrECFUrano, ACBrECFVirtual, ACBrECFVirtualBuffer, 
-  ACBrECFVirtualNaoFiscal, ACBrECFVirtualPrinter, ACBrECFYanco, ACBrEscBematech, ACBrEscCustomPos, 
-  ACBrEscDaruma, ACBrEscDatecs, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, ACBrEscGPrinter, 
-  ACBrEscPosEpson, ACBrEscPosStar, ACBrEscSunmi, ACBrEscZJiang, ACBrETQ, ACBrETQClass, ACBrETQEpl2, 
-  ACBrETQEscLabel, ACBrETQPpla, ACBrETQZplII, ACBrGAV, ACBrGAVClass, ACBrGAVImpressoraComum, 
-  ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, ACBrGAVSerialMenno, ACBrLCB, ACBrPosPrinter, ACBrRFD, ACBrSMS, 
-  ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, ACBrTER, ACBrTERClass, ACBrTERWilbor, ACBrSIN, LazarusPackageIntf;
+  ACBrSerialReg, ACBrDevice, ACBrDeviceClass, ACBrDeviceSerial, ACBrDeviceTCP, 
+  ACBrDeviceLPT, ACBrDeviceRaw, ACBrBAL, ACBrBALCapital, ACBrBALClass, 
+  ACBrBALFilizola, ACBrBALLenkeLK2500, ACBrBALSaturno, ACBrBALSelfCheckout, 
+  ACBrBALToledo, ACBrBALUrano, ACBrBALSiciliano, ACBrCHQ, ACBrCHQBematech, 
+  ACBrCHQChronos, ACBrCHQClass, ACBrCHQImpressoraComum, ACBrCHQImpressoraECF, 
+  ACBrCHQPerto, ACBrCHQSchalter, ACBrCHQSotomaq, ACBrCHQUrano, ACBrDIS, 
+  ACBrDISClass, ACBrDISGertecSerial, ACBrDISGertecTeclado, 
+  ACBrDISGertecTEC65lib, ACBrDISKeytecTeclado, ACBrDISSmakTecladoLib, 
+  ACBrDISSmakTeclado, ACBrDISSmakSerial, ACBrECF, ACBrECFClass, 
+  ACBrECFBematech, ACBrECFDaruma, ACBrECFDataRegis, ACBrECFEpson, 
+  ACBrECFEscECF, ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, ACBrECFNaoFiscal, 
+  ACBrECFNCR, ACBrECFQuattro, ACBrECFSchalter, ACBrECFSweda, ACBrECFSwedaSTX, 
+  ACBrECFUrano, ACBrECFVirtual, ACBrECFVirtualBuffer, ACBrECFVirtualNaoFiscal, 
+  ACBrECFVirtualPrinter, ACBrECFYanco, ACBrEscBematech, ACBrEscCustomPos, 
+  ACBrEscDaruma, ACBrEscDatecs, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, 
+  ACBrEscGPrinter, ACBrEscPosEpson, ACBrEscPosStar, ACBrEscSunmi, 
+  ACBrEscZJiang, ACBrETQ, ACBrETQClass, ACBrETQEpl2, ACBrETQEscLabel, 
+  ACBrETQPpla, ACBrETQZplII, ACBrGAV, ACBrGAVClass, ACBrGAVImpressoraComum, 
+  ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, ACBrGAVSerialMenno, ACBrLCB, 
+  ACBrPosPrinter, ACBrRFD, ACBrSMS, ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, 
+  ACBrTER, ACBrTERClass, ACBrTERWilbor, ACBrSIN, ACBrAbecsPinPad, 
+  LazarusPackageIntf;
 
 implementation
 

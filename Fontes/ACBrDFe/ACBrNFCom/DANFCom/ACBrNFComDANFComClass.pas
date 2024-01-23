@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  ACBrNFCom, ACBrUtil;
+  ACBrNFCom;
 
 { TACBrNFComDANFComClass }
 

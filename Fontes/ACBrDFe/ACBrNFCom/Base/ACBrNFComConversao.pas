@@ -38,7 +38,6 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
-//  ACBrDFeConversao,
   pcnConversao;
 
 type
@@ -51,10 +50,11 @@ type
 
   TSchemaNFCom = (schErroNFCom, schconsStatServNFCom, schNFCom, schconsReciNFCom,
                   schconsSitNFCom, schEventoNFCom, schdistDFeInt,
-                  schevCancNFCom, schEnvEPEC);
+                  schevCancNFCom);
 
   TLayOutNFCom = (LayNFComStatusServico, LayNFComRecepcao, LayNFComRetRecepcao,
-                  LayNFComConsulta, LayDistDFeInt, LayNFComEvento);
+                  LayNFComConsulta, LayNFComEvento, LayDistDFeInt,
+                  LayNFComURLQRCode, LayURLConsultaNFCom);
 
   TVersaoQrCode = (veqr000, veqr100, veqr200);
 
@@ -93,11 +93,65 @@ type
   // Futuramente deve ir para a unit ACBrDFeConversao
   TCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
 
-function StrToVersaoNFCom(out ok: Boolean; const s: string): TVersaoNFCom;
-function VersaoNFComToStr(const t: TVersaoNFCom): string;
+const
+  TSchemaNFComArrayStrings: array[TSchemaNFCom] of string = ('', '', '', '',
+    '', '', '', 'evCancNFCom');
 
-function DblToVersaoNFCom(out ok: Boolean; const d: Real): TVersaoNFCom;
-function VersaoNFComToDbl(const t: TVersaoNFCom): Real;
+  TVersaoNFComArrayStrings: array[TVersaoNFCom] of string = ('1.00');
+  TVersaoNFComArrayDouble: array[TVersaoNFCom] of Double = (1.00);
+
+  TLayOutNFComArrayStrings: array[TLayOutNFCom] of string = ('NFComStatusServico',
+    'NFComRecepcao', 'NFComRetRecepcao', 'NFComConsulta', 'NFComRecepcaoEvento',
+    'NFComDistribuicaoDFe', 'URL-QRCode', 'URL-ConsultaNFCom');
+
+  TVersaoQrCodeArrayStrings: array[TVersaoQrCode] of string = ('0', '1', '2');
+  TVersaoQrCodeArrayDouble: array[TVersaoQrCode] of Double = (0, 1, 2);
+
+  TSiteAutorizadorArrayStrings: array[TSiteAutorizador] of string = ('0','1', '2',
+    '3', '4', '5', '6', '7', '8', '9');
+
+  TIndicadorArrayStrings: array[TIndicador] of string = ('1', '0');
+
+  TFinalidadeNFComArrayStrings: array[TFinalidadeNFCom] of string = ('0', '3',
+    '4');
+
+  TindIEDestArrayStrings: array[TindIEDest] of string = ('1', '2', '9');
+
+  TTipoFaturamentoArrayStrings: array[TTipoFaturamento] of string = ('0', '1',
+    '2');
+
+  TtpAssinanteArrayStrings: array[TtpAssinante] of string = ('1', '2', '3', '4',
+    '5', '6', '7', '8', '99');
+
+  TtpServUtilArrayStrings: array[TtpServUtil] of string = ('1', '2', '3', '4',
+    '5', '6', '7');
+
+  TmotSubArrayStrings: array[TmotSub] of string = ('01', '02', '03', '04', '05',
+    '06');
+
+  TuMedArrayStrings: array[TuMed] of string = ('1', '2', '3', '4');
+
+  TCSTIcmsArrayStrings: array[TCSTIcms] of string = ('00', '20', '40', '41', '51',
+    '90', 'SN');
+
+  TCSTPisArrayStrings: array[TCSTPis] of string = ('01', '02', '06', '07', '08',
+    '09', '49');
+
+  TCSTCofinsArrayStrings: array[TCSTCofins] of string = ('01', '02', '06', '07',
+    '08', '09', '49');
+
+  TtpProcArrayStrings: array[TtpProc] of string = ('0', '1', '2');
+
+  TtpRessarcArrayStrings: array[TtpRessarc] of string = ('1', '2', '99');
+
+  // Futuramente deve ir para a unit ACBrDFeConversao
+  TCRTArrayStrings: array[TCRT] of string = ('1', '2', '3');
+
+function VersaoNFComToStr(const t: TVersaoNFCom): string;
+function StrToVersaoNFCom(const s: string): TVersaoNFCom;
+
+function DblToVersaoNFCom(out ok: Boolean; const d: Double): TVersaoNFCom;
+function VersaoNFComToDbl(const t: TVersaoNFCom): Double;
 
 function SchemaNFComToStr(const t: TSchemaNFCom): string;
 function StrToSchemaNFCom(const s: string): TSchemaNFCom;
@@ -106,75 +160,87 @@ function SchemaEventoToStr(const t: TSchemaNFCom): string;
 function LayOutNFComToSchema(const t: TLayOutNFCom): TSchemaNFCom;
 
 function LayOutNFComToServico(const t: TLayOutNFCom): string;
-function ServicoToLayOutNFCom(out ok: Boolean; const s: string): TLayOutNFCom;
+function ServicoToLayOutNFCom(const s: string): TLayOutNFCom;
 
 function VersaoQrCodeToStr(const t: TVersaoQrCode): string;
-function StrToVersaoQrCode(out ok: Boolean; const s: string): TVersaoQrCode;
-function VersaoQrCodeToDbl(const t: TVersaoQrCode): Real;
+function StrToVersaoQrCode(const s: string): TVersaoQrCode;
+function VersaoQrCodeToDbl(const t: TVersaoQrCode): Double;
 
 function SiteAutorizadorToStr(const t: TSiteAutorizador): string;
-function StrToSiteAutorizator(out ok: Boolean; const s: string): TSiteAutorizador;
+function StrToSiteAutorizator(const s: string): TSiteAutorizador;
 
 function TIndicadorToStr(const t: TIndicador): string;
-function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+function StrToTIndicador(const s: string): TIndicador;
 
 function finNFComToStr(const t: TFinalidadeNFCom): string;
-function StrTofinNFCom(out ok: Boolean; const s: string): TFinalidadeNFCom;
+function StrTofinNFCom(const s: string): TFinalidadeNFCom;
 
 function indIEDestToStr(const t: TindIEDest): string;
-function StrToindIEDest(out ok: boolean; const s: string): TindIEDest;
+function StrToindIEDest(const s: string): TindIEDest;
 
 function TipoFaturamentoToStr(const t: TTipoFaturamento): string;
-function StrToTipoFaturamento(out ok: boolean; const s: string): TTipoFaturamento;
+function StrToTipoFaturamento(const s: string): TTipoFaturamento;
 
 function tpAssinanteToStr(const t: TtpAssinante): string;
-function StrTotpAssinante(out ok: boolean; const s: string): TtpAssinante;
+function StrTotpAssinante(const s: string): TtpAssinante;
 
 function tpServUtilToStr(const t: TtpServUtil): string;
-function StrTotpServUtil(out ok: boolean; const s: string): TtpServUtil;
+function StrTotpServUtil(const s: string): TtpServUtil;
 
 function MotSubToStr(const t: TmotSub): string;
-function StrToMotSub(out ok: Boolean; const s: string): TmotSub;
+function StrToMotSub(const s: string): TmotSub;
 
 function uMedToStr(const t: TuMed): string;
-function StrTouMed(out ok: Boolean; const s: string): TuMed;
+function StrTouMed(const s: string): TuMed;
 
 function CSTICMSToStr(const t: TCSTIcms): string;
-function StrToCSTICMS(out ok: boolean; const s: string): TCSTIcms;
+function StrToCSTICMS(const s: string): TCSTIcms;
 
 function CSTPISToStr(const t: TCSTPis): string;
-function StrToCSTPIS(out ok: boolean; const s: string): TCSTPis;
+function StrToCSTPIS(const s: string): TCSTPis;
 
 function CSTCOFINSToStr(const t: TCSTCofins): string;
-function StrToCSTCOFINS(out ok: boolean; const s: string): TCSTCofins;
+function StrToCSTCOFINS(const s: string): TCSTCofins;
 
 function tpProcToStr(const t: TtpProc): string;
-function StrTotpProc(out ok: Boolean; const s: string): TtpProc;
+function StrTotpProc(const s: string): TtpProc;
 
 function tpRessarcToStr(const t: TtpRessarc): string;
-function StrTotpRessarc(out ok: Boolean; const s: string): TtpRessarc;
+function StrTotpRessarc(const s: string): TtpRessarc;
 
 function CRTToStr(const t: TCRT): string;
-function StrToCRT(out ok: boolean; const s: string): TCRT;
+function StrToCRT(const s: string): TCRT;
 
 function StrToTpEventoNFCom(out ok: boolean; const s: string): TpcnTpEvento;
 
 implementation
 
 uses
-  typinfo;
-
-function StrToVersaoNFCom(out ok: Boolean; const s: string): TVersaoNFCom;
-begin
-  Result := StrToEnumerado(ok, s, ['1.00'], [ve100]);
-end;
+  typinfo,
+  ACBrBase;
 
 function VersaoNFComToStr(const t: TVersaoNFCom): string;
 begin
-  Result := EnumeradoToStr(t, ['1.00'], [ve100]);
+  result := TVersaoNFComArrayStrings[t];
 end;
 
- function DblToVersaoNFCom(out ok: Boolean; const d: Real): TVersaoNFCom;
+function StrToVersaoNFCom(const s: string): TVersaoNFCom;
+var
+  idx: TVersaoNFCom;
+begin
+  for idx := Low(TVersaoNFComArrayStrings) to High(TVersaoNFComArrayStrings) do
+  begin
+    if (TVersaoNFComArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoNFCom: %s', [s]);
+end;
+
+ function DblToVersaoNFCom(out ok: Boolean; const d: Double): TVersaoNFCom;
  begin
    ok := True;
 
@@ -187,18 +253,14 @@ end;
    end;
  end;
 
- function VersaoNFComToDbl(const t: TVersaoNFCom): Real;
+ function VersaoNFComToDbl(const t: TVersaoNFCom): Double;
  begin
-   case t of
-     ve100: Result := 1.00;
-   else
-     Result := 0;
-   end;
+  result := TVersaoNFComArrayDouble[t];
  end;
 
 function SchemaNFComToStr(const t: TSchemaNFCom): string;
 begin
-  Result := GetEnumName(TypeInfo(TSchemaNFCom), Integer( t ) );
+  Result := GetEnumName(TypeInfo(TSchemaNFCom), Integer(t));
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
@@ -218,14 +280,19 @@ begin
   if LeftStr(SchemaStr, 3) <> 'sch' then
     SchemaStr := 'sch' + SchemaStr;
 
-  CodSchema := GetEnumValue(TypeInfo(TSchemaNFCom), SchemaStr );
+  CodSchema := GetEnumValue(TypeInfo(TSchemaNFCom), SchemaStr);
 
   if CodSchema = -1 then
   begin
-    raise Exception.Create(Format('"%s" não é um valor TSchemaNFCom válido.', [SchemaStr]));
+    raise EACBrException.CreateFmt('"%s" não é um valor TSchemaNFCom válido.', [SchemaStr]);
   end;
 
-  Result := TSchemaNFCom( CodSchema );
+  Result := TSchemaNFCom(CodSchema);
+end;
+
+function SchemaEventoToStr(const t: TSchemaNFCom): string;
+begin
+  result := TSchemaNFComArrayStrings[t];
 end;
 
 function LayOutNFComToSchema(const t: TLayOutNFCom): TSchemaNFCom;
@@ -244,35 +311,47 @@ end;
 
 function LayOutNFComToServico(const t: TLayOutNFCom): string;
 begin
-  Result := EnumeradoToStr(t,
-    ['NFComStatusServico', 'NFComRecepcao', 'NFComRetRecepcao',
-     'NFComConsulta', 'NFComRecepcaoEvento', 'NFComDistribuicaoDFe'],
-    [LayNFComStatusServico, LayNFComRecepcao, LayNFComRetRecepcao,
-     LayNFComConsulta, LayNFComEvento, LayDistDFeInt]);
+  result := TLayOutNFComArrayStrings[t];
 end;
 
-function ServicoToLayOutNFCom(out ok: Boolean; const s: string): TLayOutNFCom;
+function ServicoToLayOutNFCom(const s: string): TLayOutNFCom;
+var
+  idx: TLayOutNFCom;
 begin
-  Result := StrToEnumerado(ok, s,
-    ['NFComStatusServico', 'NFComRecepcao', 'NFComRetRecepcao',
-     'NFComConsulta', 'NFComRecepcaoEvento', 'NFComDistribuicaoDFe'],
-    [LayNFComStatusServico, LayNFComRecepcao, LayNFComRetRecepcao,
-     LayNFComConsulta, LayNFComEvento, LayDistDFeInt]);
+  for idx := Low(TLayOutNFComArrayStrings) to High(TLayOutNFComArrayStrings) do
+  begin
+    if (TLayOutNFComArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TLayOutNFCom: %s', [s]);
 end;
 
 function VersaoQrCodeToStr(const t: TVersaoQrCode): string;
 begin
-  Result := EnumeradoToStr(t, ['0', '1', '2'],
-                              [veqr000, veqr100, veqr200]);
+  result := TVersaoQrCodeArrayStrings[t];
 end;
 
-function StrToVersaoQrCode(out ok: Boolean; const s: string): TVersaoQrCode;
+function StrToVersaoQrCode(const s: string): TVersaoQrCode;
+var
+  idx: TVersaoQrCode;
 begin
-  Result := StrToEnumerado(ok, s, ['0', '1', '2'],
-                                  [veqr000, veqr100, veqr200]);
+  for idx := Low(TVersaoQrCodeArrayStrings) to High(TVersaoQrCodeArrayStrings) do
+  begin
+    if (TVersaoQrCodeArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoQrCode: %s', [s]);
 end;
 
-function VersaoQrCodeToDbl(const t: TVersaoQrCode): Real;
+function VersaoQrCodeToDbl(const t: TVersaoQrCode): Double;
 begin
   case t of
     veqr000: Result := 0;
@@ -285,198 +364,317 @@ end;
 
 function SiteAutorizadorToStr(const t: TSiteAutorizador): string;
 begin
-  Result := EnumeradoToStr(t, ['0','1', '2', '3', '4', '5', '6', '7', '8', '9'],
-            [sa0, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9]);
+  result := TSiteAutorizadorArrayStrings[t];
 end;
 
-function StrToSiteAutorizator(out ok: Boolean; const s: string): TSiteAutorizador;
+function StrToSiteAutorizator(const s: string): TSiteAutorizador;
+var
+  idx: TSiteAutorizador;
 begin
-  Result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-            [sa0, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9]);
+  for idx := Low(TSiteAutorizadorArrayStrings) to High(TSiteAutorizadorArrayStrings) do
+  begin
+    if (TSiteAutorizadorArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TSiteAutorizador: %s', [s]);
 end;
 
 function TIndicadorToStr(const t: TIndicador): string;
 begin
-  Result := EnumeradoToStr(t, ['1', '0'], [tiSim, tiNao]);
+  result := TIndicadorArrayStrings[t];
 end;
 
-function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+function StrToTIndicador(const s: string): TIndicador;
+var
+  idx: TIndicador;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '0'], [tiSim, tiNao]);
-end;
+  for idx := Low(TIndicadorArrayStrings) to High(TIndicadorArrayStrings) do
+  begin
+    if (TIndicadorArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
 
-function SchemaEventoToStr(const t: TSchemaNFCom): string;
-begin
-  result := EnumeradoToStr(t, ['evCancNFCom'],
-                              [schevCancNFCom]);
+  raise EACBrException.CreateFmt('Valor string inválido para TIndicador: %s', [s]);
 end;
 
 function finNFComToStr(const t: TFinalidadeNFCom): string;
 begin
-  Result := EnumeradoToStr(t, ['0', '3', '4'],
-                              [fnNormal, fnSubstituicao, fnAjuste]);
+  result := TFinalidadeNFComArrayStrings[t];
 end;
 
-function StrTofinNFCom(out ok: Boolean; const s: string): TFinalidadeNFCom;
+function StrTofinNFCom(const s: string): TFinalidadeNFCom;
+var
+  idx: TFinalidadeNFCom;
 begin
-  Result := StrToEnumerado(ok, s, ['0', '3', '4'],
-                                  [fnNormal, fnSubstituicao, fnAjuste]);
+  for idx := Low(TFinalidadeNFComArrayStrings) to High(TFinalidadeNFComArrayStrings) do
+  begin
+    if (TFinalidadeNFComArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TFinalidadeNFCom: %s', [s]);
 end;
 
-function indIEDestToStr(const t: TindIEDest ): string;
+function indIEDestToStr(const t: TindIEDest): string;
 begin
-  result := EnumeradoToStr(t, ['1', '2', '9'],
-                              [inContribuinte, inIsento, inNaoContribuinte]);
+  result := TindIEDestArrayStrings[t];
 end;
 
-function StrToindIEDest(out ok: boolean; const s: string): TindIEDest;
+function StrToindIEDest(const s: string): TindIEDest;
+var
+  idx: TindIEDest;
 begin
-  result := StrToEnumerado(ok, s, ['1', '2', '9'],
-                                  [inContribuinte, inIsento, inNaoContribuinte]);
+  for idx := Low(TindIEDestArrayStrings) to High(TindIEDestArrayStrings) do
+  begin
+    if (TindIEDestArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TindIEDest: %s', [s]);
 end;
 
 function TipoFaturamentoToStr(const t: TTipoFaturamento): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2'],
-                              [tfNormal, tfCentralizado, tfCofaturamento]);
+  result := TTipoFaturamentoArrayStrings[t];
 end;
 
-function StrToTipoFaturamento(out ok: boolean; const s: string): TTipoFaturamento;
+function StrToTipoFaturamento(const s: string): TTipoFaturamento;
+var
+  idx: TTipoFaturamento;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2'],
-                                  [tfNormal, tfCentralizado, tfCofaturamento]);
+  for idx := Low(TTipoFaturamentoArrayStrings) to High(TTipoFaturamentoArrayStrings) do
+  begin
+    if (TTipoFaturamentoArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TTipoFaturamento: %s', [s]);
 end;
 
 function tpAssinanteToStr(const t: TtpAssinante): string;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '99'],
-                 [taComercial, taIndustrial, taResidencial, taProdutorRural,
-                  taOrgaoPublico, taPrestadorServicoTeleCom,
-                  taMissoesDiplomaticas, taIgrejasTemplos, taOutros]);
+  result := TtpAssinanteArrayStrings[t];
 end;
 
-function StrTotpAssinante(out ok: boolean; const s: string): TtpAssinante;
+function StrTotpAssinante(const s: string): TtpAssinante;
+var
+  idx: TtpAssinante;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '99'],
-                 [taComercial, taIndustrial, taResidencial, taProdutorRural,
-                  taOrgaoPublico, taPrestadorServicoTeleCom,
-                  taMissoesDiplomaticas, taIgrejasTemplos, taOutros]);
+  for idx := Low(TtpAssinanteArrayStrings) to High(TtpAssinanteArrayStrings) do
+  begin
+    if (TtpAssinanteArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TtpAssinante: %s', [s]);
 end;
 
 function tpServUtilToStr(const t: TtpServUtil): string;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7'],
-                 [suTelefonia, suComunicacaoDados, suTVAssinatura,
-                  suAcessoInternet, suMultimidia, suOutros, suCombo]);
+  result := TtpServUtilArrayStrings[t];
 end;
 
-function StrTotpServUtil(out ok: boolean; const s: string): TtpServUtil;
+function StrTotpServUtil(const s: string): TtpServUtil;
+var
+  idx: TtpServUtil;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7'],
-                 [suTelefonia, suComunicacaoDados, suTVAssinatura,
-                  suAcessoInternet, suMultimidia, suOutros, suCombo]);
+  for idx := Low(TtpServUtilArrayStrings) to High(TtpServUtilArrayStrings) do
+  begin
+    if (TtpServUtilArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TtpServUtil: %s', [s]);
 end;
 
 function MotSubToStr(const t: TmotSub): string;
 begin
-  Result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06'],
-                  [msErroPreco, msErroCadastral, msDecisaoJudicial,
-                   msErroTributacao, msDescontServico, msComplValores]);
+  result := TmotSubArrayStrings[t];
 end;
 
-function StrToMotSub(out ok: Boolean; const s: string): TmotSub;
+function StrToMotSub(const s: string): TmotSub;
+var
+  idx: TmotSub;
 begin
-  Result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06'],
-                  [msErroPreco, msErroCadastral, msDecisaoJudicial,
-                   msErroTributacao, msDescontServico, msComplValores]);
+  for idx := Low(TmotSubArrayStrings) to High(TmotSubArrayStrings) do
+  begin
+    if (TmotSubArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TmotSub: %s', [s]);
 end;
 
 function uMedToStr(const t: TuMed): string;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '4'],
-                  [umMinuto, umMB, umGB, umUN]);
+  result := TuMedArrayStrings[t];
 end;
 
-function StrTouMed(out ok: Boolean; const s: string): TuMed;
+function StrTouMed(const s: string): TuMed;
+var
+  idx: TuMed;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
-                  [umMinuto, umMB, umGB, umUN]);
+  for idx := Low(TuMedArrayStrings) to High(TuMedArrayStrings) do
+  begin
+    if (TuMedArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TuMed: %s', [s]);
 end;
 
 function CSTICMSToStr(const t: TCSTIcms): string;
 begin
-  result := EnumeradoToStr(t, ['00', '20', '40', '41', '51', '90', 'SN'],
-                              [cst00, cst20, cst40, cst41, cst51, cst90,
-                               cstICMSSN]);
+  result := TCSTIcmsArrayStrings[t];
 end;
 
-function StrToCSTICMS(out ok: boolean; const s: string): TCSTIcms;
+function StrToCSTICMS(const s: string): TCSTIcms;
+var
+  idx: TCSTIcms;
 begin
-  result := StrToEnumerado(ok, s, ['00', '20', '40', '41', '51', '90', 'SN'],
-                              [cst00, cst20, cst40, cst41, cst51, cst90,
-                               cstICMSSN]);
+  for idx := Low(TCSTIcmsArrayStrings) to High(TCSTIcmsArrayStrings) do
+  begin
+    if (TCSTIcmsArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TCSTIcms: %s', [s]);
 end;
 
 function CSTPISToStr(const t: TCSTPIS): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '06', '07', '08', '09', '49'],
-                             [pis01, pis02, pis06, pis07, pis08, pis09, pis49]);
+  result := TCSTPISArrayStrings[t];
 end;
 
-function StrToCSTPIS(out ok: boolean; const s: string): TCSTPIS;
+function StrToCSTPIS(const s: string): TCSTPIS;
+var
+  idx: TCSTPIS;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '06', '07', '08', '09', '49'],
-                             [pis01, pis02, pis06, pis07, pis08, pis09, pis49]);
+  for idx := Low(TCSTPISArrayStrings) to High(TCSTPISArrayStrings) do
+  begin
+    if (TCSTPISArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TCSTPIS: %s', [s]);
 end;
 
 function CSTCOFINSToStr(const t: TCSTCofins): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '06', '07', '08', '09', '49'],
-                             [cof01, cof02, cof06, cof07, cof08, cof09, cof49]);
+  result := TCSTCofinsArrayStrings[t];
 end;
 
-function StrToCSTCOFINS(out ok: boolean; const s: string): TCSTCofins;
+function StrToCSTCOFINS(const s: string): TCSTCofins;
+var
+  idx: TCSTCofins;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '06', '07', '08', '09', '49'],
-                             [cof01, cof02, cof06, cof07, cof08, cof09, cof49]);
+  for idx := Low(TCSTCofinsArrayStrings) to High(TCSTCofinsArrayStrings) do
+  begin
+    if (TCSTCofinsArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TCSTCofins: %s', [s]);
 end;
 
 function tpProcToStr(const t: TtpProc): string;
 begin
-  Result := EnumeradoToStr(t, ['0', '1', '2'],
-                              [tpSEFAZ, tpJusticaFederal, tpJusticaEstadual]);
+  result := TtpProcArrayStrings[t];
 end;
 
-function StrTotpProc(out ok: Boolean; const s: string): TtpProc;
+function StrTotpProc(const s: string): TtpProc;
+var
+  idx: TtpProc;
 begin
-  Result := StrToEnumerado(ok, s, ['0', '1', '2'],
-                                  [tpSEFAZ, tpJusticaFederal, tpJusticaEstadual]);
+  for idx := Low(TtpProcArrayStrings) to High(TtpProcArrayStrings) do
+  begin
+    if (TtpProcArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TtpProc: %s', [s]);
 end;
 
 function tpRessarcToStr(const t: TtpRessarc): string;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '99'],
-                              [tpCobrancaIndevida, tpInterrupcao, tpOutros]);
+  result := TtpRessarcArrayStrings[t];
 end;
 
-function StrTotpRessarc(out ok: Boolean; const s: string): TtpRessarc;
+function StrTotpRessarc(const s: string): TtpRessarc;
+var
+  idx: TtpRessarc;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '99'],
-                                  [tpCobrancaIndevida, tpInterrupcao, tpOutros]);
+  for idx := Low(TtpRessarcArrayStrings) to High(TtpRessarcArrayStrings) do
+  begin
+    if (TtpRessarcArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TtpRessarc: %s', [s]);
 end;
 
 function CRTToStr(const t: TCRT): string;
 begin
-  Result := EnumeradoToStr(t, ['','1', '2', '3'],
-    [crtRegimeNormal, crtSimplesNacional, crtSimplesExcessoReceita,
-     crtRegimeNormal]);
+  result := TCRTArrayStrings[t];
 end;
 
-function StrToCRT(out ok: boolean; const s: string): TCRT;
+function StrToCRT(const s: string): TCRT;
+var
+  idx: TCRT;
 begin
-  Result := StrToEnumerado(ok, s, ['','1', '2', '3'],
-    [crtRegimeNormal, crtSimplesNacional, crtSimplesExcessoReceita,
-     crtRegimeNormal]);
+  for idx := Low(TCRTArrayStrings) to High(TCRTArrayStrings) do
+  begin
+    if (TCRTArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TCRT: %s', [s]);
 end;
 
 function StrToTpEventoNFCom(out ok: boolean; const s: string): TpcnTpEvento;

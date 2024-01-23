@@ -309,10 +309,7 @@ begin
     Result := ''
   else
   begin
-    if ASchemaEventoNFCom = schEnvEPEC then
-      xComplemento := GetNomeModeloDFe
-    else
-      xComplemento := '';
+    xComplemento := '';
 
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
               SchemaEventoToStr(ASchemaEventoNFCom) + xComplemento + '_v' +
@@ -615,15 +612,11 @@ end;
 
 function TACBrNFCom.NomeServicoToNomeSchema(const NomeServico: string): string;
 var
-  ok: Boolean;
   ALayout: TLayOutNFCom;
 begin
-  ALayout := ServicoToLayOutNFCom(ok, NomeServico);
+  ALayout := ServicoToLayOutNFCom(NomeServico);
 
-  if ok then
-    Result := SchemaNFComToStr( LayOutNFComToSchema( ALayout ) )
-  else
-    Result := '';
+  Result := SchemaNFComToStr(LayOutNFComToSchema(ALayout))
 end;
 
 procedure TACBrNFCom.ImprimirEvento;

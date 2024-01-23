@@ -650,7 +650,7 @@
                   <!-- Nome ou razao social -->
                   <xs:element name="xNome" type="TString100" minOccurs="0" maxOccurs="1" />
                   <!-- Endereco -->
-                  <xs:element ref="ender"/>
+                  <xs:element ref="ender" minOccurs="0"/>
                   <!-- Endereco de correio eletronico -->
                   <xs:element name="xEmail" type="TString120"  minOccurs="0" maxOccurs="1"/>
                   <!-- Inscricao Estadual  -->

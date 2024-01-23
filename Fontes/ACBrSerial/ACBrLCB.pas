@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:    Marcelo Welter - www.welter.pro.br/sultan    }
 {                                 Alexandre Rocha Lima e Marcondes             }
@@ -46,7 +46,7 @@ uses ACBrBase, ACBrDevice  {Units da ACBr}
           ,ExtCtrls
        {$IFEND}
      {$ENDIF}
-     ,SysUtils, Classes ;
+     ,SysUtils, Classes;
 
 type
 

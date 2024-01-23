@@ -37,7 +37,7 @@ unit ACBrBALSelfCheckout;
 interface
 
 uses
-  Classes, SysUtils, ACBrBALClass;
+  Classes, SysUtils, ACBrBALClass, ACBrBase;
   
 type
 

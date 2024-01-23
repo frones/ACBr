@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -37,7 +37,14 @@ unit ACBrAbecsPinPad;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
+  SysUtils, Classes,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
   ACBrBase, ACBrDevice, ACBrOpenSSLUtils;
 
 resourcestring
@@ -66,7 +73,7 @@ resourcestring
   CERR_MOD_WRONG_SIZE = 'Modulus should be %d bytes (Hex)';
   CERR_EXP_WRONG_SIZE = 'Exponent should be 1-6 bytes (Hex)';
   CERR_SPE_MFNAME = 'Invalid Media file name';
-  CERR_SPE_MFINFO = 'Invalid Media file par√¢meters';
+  CERR_SPE_MFINFO = 'Invalid Media file par‚meters';
 
   CERR_INVALID_PARAM = 'Invalid value for %s param';
 
@@ -75,7 +82,7 @@ const
   ACK = 06; // Sent from the pinpad to the SPE when receiving a valid packet.
   NAK = 21; // It is returned to the side that sent an invalid packet, requesting its retransmission.
 
-  EOT = 04;  // Pinpad response when receiving a ¬´CAN¬ª.
+  EOT = 04;  // Pinpad response when receiving a ´CANª.
   CAN = 24;  // Sent from the SPE to the pinpad to cancel the execution of a command.
 
   DC3 = 19; // Substitution byte, to prevent special bytes from traveling in the body of the packet.
@@ -97,14 +104,14 @@ const
 
   // Return Codes
   ST_OK            = 000; // Command executed successfully.
-  ST_NOSEC         = 003; // Attempted to use ‚ÄúSecure Communication‚Äù when it has not been established.
+  ST_NOSEC         = 003; // Attempted to use ìSecure Communicationî when it has not been established.
   ST_F1            = 004; // Function #1 key pressed.
   ST_F2            = 005; // Function #2 key pressed.
   ST_F3            = 006; // Function #3 key pressed.
   ST_F4            = 007; // Function #4 key pressed.
   ST_BACKSP        = 008; // Clear (backspace) key pressed
-  ST_ERRPKTSEC     = 009; // Error decoding data received via ‚ÄúSecure Communication‚Äù; or Cleartext command received with ‚ÄúSecure Communication‚Äù established.
-  ST_INVCALL       = 010; // Invalid call to a command (previous operations are necessary) or unknown command (in case of an ‚ÄúERR‚Äù response).
+  ST_ERRPKTSEC     = 009; // Error decoding data received via ìSecure Communicationî; or Cleartext command received with ìSecure Communicationî established.
+  ST_INVCALL       = 010; // Invalid call to a command (previous operations are necessary) or unknown command (in case of an ìERRî response).
   ST_INVPARM       = 011; // An invalid parameter was passed to the command.
   ST_TIMEOUT       = 012; // The maximum time stipulated for the operation has been exhausted.
   ST_CANCEL        = 013; // Operation canceled by the cardholder.
@@ -118,7 +125,7 @@ const
   ST_PINBUSY       = 044; // Pinpad cannot process PIN capture temporarily due to security constrains (such as when the capture limit is reached within a time interval).
   ST_RSPOVRFL      = 045; // Response data exceeds the maximum allowed size.
   ST_ERRCRYPT      = 046; // Generic cryptographic validation error.
-  ST_DUMBCARD      = 060; // ICC inserted, but not responding (‚Äúmute‚Äù).
+  ST_DUMBCARD      = 060; // ICC inserted, but not responding (ìmuteî).
   ST_ERRCARD       = 061; // Communication error between the pinpad and the ICC or CTLS.
   ST_CARDINVALIDAT = 067; // ICC is invalidated.
   ST_CARDPROBLEMS  = 068; // ICC with problems. This status is valid for many situations in which the ICC does not behave as expected and the transaction must be terminated.
@@ -136,7 +143,7 @@ const
   ST_CTLSAPPNAV    = 084; // CTLS with no matching application.
   ST_CTLSAPPNAUT   = 085; // The application selected in the CTLS cannot be used in this situation.
   ST_CTLSEXTCVM    = 086; // Cardholder must perform a validation on his device (mobile phone, for example) and then re-present it to the pinpad.
-  ST_CTLSIFCHG     = 087; // CTLS processing resulted in ‚Äúchange interface‚Äù (request ICC or magnetic card).
+  ST_CTLSIFCHG     = 087; // CTLS processing resulted in ìchange interfaceî (request ICC or magnetic card).
   ST_MFNFOUND      = 100; // Media file not found.
   ST_MFERRFMT      = 101; // Media file format error.
   ST_MFERR         = 102; // Media file loading error.
@@ -144,70 +151,70 @@ const
   // List of parameters
   SPE_IDLIST   = $0001; // B..128 (n*X2,n<=64) List of return data identifiers (up to 64).
   SPE_MTHDPIN  = $0002; // N1 Method to be used for PIN encryption:
-                        // ‚Äú1‚Äù = MK/WK:TDES:PIN; and
-                        // ‚Äú3‚Äù = DUKPT:TDES:PIN (see section 5.1.1).
+                        // ì1î = MK/WK:TDES:PIN; and
+                        // ì3î = DUKPT:TDES:PIN (see section 5.1.1).
   SPE_MTHDDAT  = $0003; // N2 Method to be used for data encryption:
-                        // ‚Äú10‚Äù = MK/WK:TDES:DAT (ECB block encryption);
-                        // ‚Äú11‚Äù = MK/WK:TDES:DAT (CBC block encryption);
-                        // ‚Äú50‚Äù = DUKPT:TDES:DAT#3 (ECB block encryption, see section 5.1.1); and
-                        // ‚Äú51‚Äù = DUKPT:TDES:DAT#3 (CBC block encryption, see section 5.1.1).
+                        // ì10î = MK/WK:TDES:DAT (ECB block encryption);
+                        // ì11î = MK/WK:TDES:DAT (CBC block encryption);
+                        // ì50î = DUKPT:TDES:DAT#3 (ECB block encryption, see section 5.1.1); and
+                        // ì51î = DUKPT:TDES:DAT#3 (CBC block encryption, see section 5.1.1).
   SPE_TAGLIST  = $0004; // B..128 List of tags referring to the EMV objects required by the SPE.
   SPE_EMVDATA  = $0005; // B..512 EMV objects sent to the pinpad (in TLV format - see section 7.1).
-  SPE_CEXOPT   = $0006; // A6 ‚ÄúCEX‚Äù command options.
-                        // ‚Äú0xxxxx‚Äù = Ignore keys;
-                        // ‚Äú1xxxxx‚Äù = Verify key pressing.
-                        // ‚Äúx0xxxx‚Äù = Ignore magnetic card;
-                        // ‚Äúx1xxxx‚Äù = Verify magnetic card swiping.
-                        // ‚Äúxx0xxx‚Äù = Ignore ICC;
-                        // ‚Äúxx1xxx‚Äù = Verify ICC insertion;
-                        // ‚Äúxx2xxx‚Äù = Verify ICC removal.
-                        // ‚Äúxxx0xx‚Äù = Ignore CTLS (do not activate antenna);
-                        // ‚Äúxxx1xx‚Äù = Activate antenna and verify CTLS presence.
-                        // ‚Äúxxxx00‚Äù = RFU.
-  SPE_TRACKS   = $0007; // N4 Identification of track data to be returned by the pinpad in ‚ÄúGTK‚Äù command.
-  SPE_OPNDIG   = $0008; // N1 Number of numeric digits (even number) to be preserved as cleartext at the beginning of encrypted tracks (accepted values: ‚Äú0‚Äù, ‚Äú2‚Äù, ‚Äú4‚Äù, ‚Äú6‚Äù, ‚Äú8‚Äù).
-  SPE_KEYIDX   = $0009; // N2 DUPKT or MK slot index (‚Äú00‚Äù to ‚Äú99‚Äù)
+  SPE_CEXOPT   = $0006; // A6 ìCEXî command options.
+                        // ì0xxxxxî = Ignore keys;
+                        // ì1xxxxxî = Verify key pressing.
+                        // ìx0xxxxî = Ignore magnetic card;
+                        // ìx1xxxxî = Verify magnetic card swiping.
+                        // ìxx0xxxî = Ignore ICC;
+                        // ìxx1xxxî = Verify ICC insertion;
+                        // ìxx2xxxî = Verify ICC removal.
+                        // ìxxx0xxî = Ignore CTLS (do not activate antenna);
+                        // ìxxx1xxî = Activate antenna and verify CTLS presence.
+                        // ìxxxx00î = RFU.
+  SPE_TRACKS   = $0007; // N4 Identification of track data to be returned by the pinpad in ìGTKî command.
+  SPE_OPNDIG   = $0008; // N1 Number of numeric digits (even number) to be preserved as cleartext at the beginning of encrypted tracks (accepted values: ì0î, ì2î, ì4î, ì6î, ì8î).
+  SPE_KEYIDX   = $0009; // N2 DUPKT or MK slot index (ì00î to ì99î)
   SPE_WKENC    = $000A; // B16 Working Key encrypted by MK:TDES.
   SPE_MSGIDX   = $000B; // X2 Index to the message to be presented.
   SPE_TIMEOUT  = $000C; // X1 Wait time for a cardholder action (in seconds - up to 255). IMPORTANT: This parameter reflects the cardholder inactivity time and not the maximum command execution time.
   SPE_MINDIG   = $000D; // X1 Minimum number of digits to be captured on the pinpad (from 0 to 32).
   SPE_MAXDIG   = $000E; // X1 Maximum number of digits to be captured on the pinpad (from 0 to 32).
   SPE_DATAIN   = $000F; // B..995 Generic data to be sent to the pinpad.
-  SPE_ACQREF   = $0010; // N2 Acquirer identifier for searching the AID Tables (de ‚Äú01‚Äù a ‚Äú99‚Äù).
+  SPE_ACQREF   = $0010; // N2 Acquirer identifier for searching the AID Tables (de ì01î a ì99î).
   SPE_APPTYPE  = $0011; // N..20 Application type identifiers for searching the AID Tables (from "01" to "98"). This field supports 1 to 10 different identifiers.
-  SPE_AIDLIST  = $0012; // A..512 Specific list of records in the AID Tables to be used in the transaction processing, which can include up to 128 entries in the ‚ÄúAARR‚Äù format, as follows:
+  SPE_AIDLIST  = $0012; // A..512 Specific list of records in the AID Tables to be used in the transaction processing, which can include up to 128 entries in the ìAARRî format, as follows:
                         // "AA" = Identifier of the Acquirer responsible for the table (from "01" to "99"); and
                         // "RR" = Index of the record in the table (from "01" to "ZZ").
   SPE_AMOUNT   = $0013; // N12 Transaction amount (Amount, authorized), in cents.
   SPE_CASHBACK = $0014; // N12 Cashback amount (Amount, other) , in cents.
-  SPE_TRNDATE  = $0015; // N6 Transaction date (‚ÄúAAMMDD‚Äù)
-  SPE_TRNTIME  = $0016; // N6 Transaction time (‚ÄúHHMMSS‚Äù)
-  SPE_GCXOPT   = $0017; // N5 ‚ÄúGCX‚Äù command options:
-                        // ‚Äú0xxxx‚Äù = Wait for magnetic card or ICC; or
-                        // ‚Äú1xxxx‚Äù = Wait for magnetic card; ICC or CTLS;
-                        // ‚Äúx0xxx‚Äù = Show transaction amount on the card waiting prompt, if not zero.
-                        // ‚Äúx1xxx‚Äù = Do not show transaction amount.
-                        // ‚Äúxx000‚Äù = RFU.
-  SPE_GOXOPT   = $0018; // N5 ‚ÄúGOX‚Äù command options:
-                        // ‚Äú1xxxx‚Äù = PAN is in the Exception List (only for ICC EMV).
-                        // ‚Äúx1xxx‚Äù = Transaction shall not be offline approved (only for ICC EMV).
-                        // ‚Äúxx1xx‚Äù = Do not allow PIN bypass.
-                        // ‚Äúxxx00‚Äù = RFU.
-  SPE_FCXOPT   = $0019; // N4 ‚ÄúFCX‚Äù command options:
-                        // ‚Äú0xxx‚Äù = Transaction approved by the Acquirer.
-                        // ‚Äú1xxx‚Äù = Transaction declined by the Acquirer.
-                        // ‚Äú2xxx‚Äù = Unable to go online (or invalid response from the Acquirer).
-                        // ‚Äúx000‚Äù = RFU.
-  SPE_TRMPAR   = $001A; // B10 Terminal Risk Management parameters to be used on ‚ÄúGOX‚Äù:
-                        // - Terminal Floor Limit (‚ÄúX4‚Äù format, in cents);
-                        // - Target Percentage to be used for Biased Random Selection (‚ÄúX1‚Äù format);
-                        // - Threshold Value for Biased Random Selection (‚ÄúX4‚Äù format, in cents); and
-                        // - Maximum Target Percentage to be used for Biased Random Selection (‚ÄúX1‚Äù format).
+  SPE_TRNDATE  = $0015; // N6 Transaction date (ìAAMMDDî)
+  SPE_TRNTIME  = $0016; // N6 Transaction time (ìHHMMSSî)
+  SPE_GCXOPT   = $0017; // N5 ìGCXî command options:
+                        // ì0xxxxî = Wait for magnetic card or ICC; or
+                        // ì1xxxxî = Wait for magnetic card; ICC or CTLS;
+                        // ìx0xxxî = Show transaction amount on the card waiting prompt, if not zero.
+                        // ìx1xxxî = Do not show transaction amount.
+                        // ìxx000î = RFU.
+  SPE_GOXOPT   = $0018; // N5 ìGOXî command options:
+                        // ì1xxxxî = PAN is in the Exception List (only for ICC EMV).
+                        // ìx1xxxî = Transaction shall not be offline approved (only for ICC EMV).
+                        // ìxx1xxî = Do not allow PIN bypass.
+                        // ìxxx00î = RFU.
+  SPE_FCXOPT   = $0019; // N4 ìFCXî command options:
+                        // ì0xxxî = Transaction approved by the Acquirer.
+                        // ì1xxxî = Transaction declined by the Acquirer.
+                        // ì2xxxî = Unable to go online (or invalid response from the Acquirer).
+                        // ìx000î = RFU.
+  SPE_TRMPAR   = $001A; // B10 Terminal Risk Management parameters to be used on ìGOXî:
+                        // - Terminal Floor Limit (ìX4î format, in cents);
+                        // - Target Percentage to be used for Biased Random Selection (ìX1î format);
+                        // - Threshold Value for Biased Random Selection (ìX4î format, in cents); and
+                        // - Maximum Target Percentage to be used for Biased Random Selection (ìX1î format).
   SPE_DSPMSG   = $001B; // S..128 Display message in free format, may have line break characters (0Dh). When formatting this message, the SPE shall respect the pinpad display capabilities (see PP_DSPTXTSZ).
   SPE_ARC      = $001C; // A2 Authorization Response Code (approval/declination code returned by the Acquirer).
-  SPE_IVCBC    = $001D; // B8 ‚ÄúIV‚Äù (Initialization Vector) to be used in CBC block cryptography
+  SPE_IVCBC    = $001D; // B8 ìIVî (Initialization Vector) to be used in CBC block cryptography
   SPE_MFNAME   = $001E; // A8 Media file name (only numeric characters and letters, without spaces or symbols).
-                        // The file name is not case sensitive, that is, the names ‚ÄúImgAlt01‚Äù and ‚ÄúIMGALT01‚Äù represent the same file.
+                        // The file name is not case sensitive, that is, the names ìImgAlt01î and ìIMGALT01î represent the same file.
   SPE_MFINFO   = $001F; // B10 Information about the media file:
                         // X4 = Size (de 0 a 4294967295 bytes).
                         // B2 = CRC of the file.
@@ -220,10 +227,10 @@ const
                         // 09h = Payment with cashback;
                         // 20h = Refund;
                         // 30h = Balance inquiry; or Other values according to ISO 8583:1987.
-  SPE_TRNCURR  = $0022; // N3 Currency code to be used in the transaction (ex.: Real = ‚Äú986‚Äù, Dollar = ‚Äú840‚Äù).
-  SPE_PANMASK  = $0023; // N4 PAN masking definition in ‚ÄúLLRR‚Äù format:
-                        // ‚ÄúLL‚Äù = Number of open digits on the left; and
-                        // ‚ÄúRR‚Äù = Number of open digits on the right.
+  SPE_TRNCURR  = $0022; // N3 Currency code to be used in the transaction (ex.: Real = ì986î, Dollar = ì840î).
+  SPE_PANMASK  = $0023; // N4 PAN masking definition in ìLLRRî format:
+                        // ìLLî = Number of open digits on the left; and
+                        // ìRRî = Number of open digits on the right.
   SPE_PBKMOD   = $0024; // B256 RSA public key modulus (2048 bits).
   SPE_PBKEXP   = $0025; // B..3 RSA public key exponent.
 
@@ -231,13 +238,13 @@ const
   // List of return data fields
   PP_SERNUM    = $8001; // A..32 Pinpad serial number (free format, it depends on the manufacturer).
   PP_PARTNBR   = $8002; // A..32 Pinpad part number (free format, it depends on the manufacturer).
-  PP_MODEL     = $8003; // A..20 Model / hardware version, in the format: ‚Äúxx...xx;m...m‚Äù, where: ‚Äúxx...xx‚Äù is the device name; and ‚Äúm...m‚Äù is the memory capacity (‚Äú512KB‚Äù, ‚Äú1MB‚Äù, ‚Äú2MB‚Äù, ...).
+  PP_MODEL     = $8003; // A..20 Model / hardware version, in the format: ìxx...xx;m...mî, where: ìxx...xxî is the device name; and ìm...mî is the memory capacity (ì512KBî, ì1MBî, ì2MBî, ...).
   PP_MNNAME    = $8004; // A..20 Name of the manufacturer (free format).
-  PP_CAPAB     = $8005; // A10 Pinpad capabilities: ‚Äú0xxxxxxxxx‚Äù = Does not support CTLS; ‚Äú1xxxxxxxxx‚Äù = Supports CTLS. ‚Äúx0xxxxxxxx‚Äù = Display is not graphic; ‚Äúx1xxxxxxxx‚Äù = Monochromatic graphic display; ‚Äúx2xxxxxxxx‚Äù = Color graphic display. ‚Äúxx00000000‚Äù = RFU. PP_SOVER (‚Ä†) 8006h A..20 Basic software or operating system version (free format).
-  PP_SPECVER   = $8007; // A4 Specification version, in ‚ÄúV.VV‚Äù format (in this case, fixed ‚Äú2.12‚Äù)
-  PP_MANVERS   = $8008; // A16 ‚ÄúManager‚Äù application version, in the format ‚ÄúVVV.VV YYMMDD‚Äù.
-  PP_APPVERS   = $8009; // A16 ‚ÄúAbecs‚Äù application version, in the format ‚ÄúVVV.VV YYMMDD‚Äù.
-  PP_GENVERS   = $800A; // A16 ‚ÄúExtension‚Äù application version, in the format ‚ÄúVVV.VV YYMMDD‚Äù.
+  PP_CAPAB     = $8005; // A10 Pinpad capabilities: ì0xxxxxxxxxî = Does not support CTLS; ì1xxxxxxxxxî = Supports CTLS. ìx0xxxxxxxxî = Display is not graphic; ìx1xxxxxxxxî = Monochromatic graphic display; ìx2xxxxxxxxî = Color graphic display. ìxx00000000î = RFU. PP_SOVER (Ü) 8006h A..20 Basic software or operating system version (free format).
+  PP_SPECVER   = $8007; // A4 Specification version, in ìV.VVî format (in this case, fixed ì2.12î)
+  PP_MANVERS   = $8008; // A16 ìManagerî application version, in the format ìVVV.VV YYMMDDî.
+  PP_APPVERS   = $8009; // A16 ìAbecsî application version, in the format ìVVV.VV YYMMDDî.
+  PP_GENVERS   = $800A; // A16 ìExtensionî application version, in the format ìVVV.VV YYMMDDî.
   PP_KRNLVER   = $8010; // A..20 ICC EMV kernel version.
   PP_CTLSVER   = $8011; // A..20 CTLS EMV kernel version (general or entry point).
   PP_MCTLSVER  = $8012; // A..20 CTLS EMV kernel version - MasterCard PayPass.
@@ -245,97 +252,97 @@ const
   PP_AECTLSVER = $8014; // A..20 CTLS EMV kernel version - American Express.
   PP_DPCTLSVER = $8015; // A..20 CTLS EMV kernel version - Discover.
   PP_PUREVER   = $8016; // A..20 CTLS EMV kernel version - Pure.
-  PP_DSPTXTSZ  = $8020; // N4 Maximum number of rows and columns of the display for showing messages in text mode (‚ÄúRRCC‚Äù format).
-  PP_DSPGRSZ   = $8021; // N8 Maximum number of rows and columns of the graphic display for image presentation (‚ÄúRRRRCCCC‚Äù format, in pixels).
-  PP_MFSUP     = $8022; // A..20 Supported media file types: ‚Äú1xxx ...‚Äù = Supports PNG format; ‚Äúx1xx ...‚Äù = Supports JPG format. ‚Äúxx1x ...‚Äù = Supports GIF format. --------- 8030h --- Reserved.--------- 8031h --- Reserved.
-  PP_MKTDESP   = $8032; // A100 100 characters representing the MK:TDES:PIN key map contained in the pinpad, with each character corresponding to a position (from ‚Äú00‚Äù to ‚Äú99‚Äù), indicating:
-                        // ‚Äú0‚Äù = Key absent (not loaded);
-                        // ‚Äú1‚Äù = Key present (loaded); and
-                        // ‚Äú2‚Äù = Slot not supported.
+  PP_DSPTXTSZ  = $8020; // N4 Maximum number of rows and columns of the display for showing messages in text mode (ìRRCCî format).
+  PP_DSPGRSZ   = $8021; // N8 Maximum number of rows and columns of the graphic display for image presentation (ìRRRRCCCCî format, in pixels).
+  PP_MFSUP     = $8022; // A..20 Supported media file types: ì1xxx ...î = Supports PNG format; ìx1xx ...î = Supports JPG format. ìxx1x ...î = Supports GIF format. --------- 8030h --- Reserved.--------- 8031h --- Reserved.
+  PP_MKTDESP   = $8032; // A100 100 characters representing the MK:TDES:PIN key map contained in the pinpad, with each character corresponding to a position (from ì00î to ì99î), indicating:
+                        // ì0î = Key absent (not loaded);
+                        // ì1î = Key present (loaded); and
+                        // ì2î = Slot not supported.
   PP_MKTDESD   = $8033; // A100 Same for MK:TDES:DAT slots. --------- 8034h --- Reserved.
   PP_DKPTTDESP = $8035; // A100 Same for DUKPT:TDES:PIN slots.
   PP_DKPTTDESD = $8036; // A100 Same for DUKPT:TDES:DAT slots.
-  PP_EVENT     = $8040; // A2 Event detected by the pinpad in the ‚ÄúCEX‚Äù command:
-                        // ‚Äú00‚Äù = [OK/ENTER] key pressed;
-                        // ‚Äú02‚Äù = [ÔÉ°] key pressed;
-                        // ‚Äú03‚Äù = [ÔÉ¢] key pressed;
-                        // ‚Äú04‚Äù = [F1] key pressed;
-                        // ‚Äú05‚Äù = [F2] key pressed;
-                        // ‚Äú06‚Äù = [F3] key pressed;
-                        // ‚Äú07‚Äù = [F4] key pressed;
-                        // ‚Äú08‚Äù = [CLEAR] key pressed;
-                        // ‚Äú13‚Äù = [CANCEL] key pressed;
-                        // ‚Äú90‚Äù = A magnetic card was swiped;
-                        // ‚Äú91‚Äù = ICC removed (or already absent);
-                        // ‚Äú92‚Äù = ICC inserted (or already present);
-                        // ‚Äú93‚Äù = CTLS not detected in 2 (two) minutes; and
-                        // ‚Äú94‚Äù = CTLS detected.
+  PP_EVENT     = $8040; // A2 Event detected by the pinpad in the ìCEXî command:
+                        // ì00î = [OK/ENTER] key pressed;
+                        // ì02î = [?] key pressed;
+                        // ì03î = [?] key pressed;
+                        // ì04î = [F1] key pressed;
+                        // ì05î = [F2] key pressed;
+                        // ì06î = [F3] key pressed;
+                        // ì07î = [F4] key pressed;
+                        // ì08î = [CLEAR] key pressed;
+                        // ì13î = [CANCEL] key pressed;
+                        // ì90î = A magnetic card was swiped;
+                        // ì91î = ICC removed (or already absent);
+                        // ì92î = ICC inserted (or already present);
+                        // ì93î = CTLS not detected in 2 (two) minutes; and
+                        // ì94î = CTLS detected.
   PP_TRK1INC   = $8041; // A..60 Card Track 1, incomplete (see section 5.4.1)
   PP_TRK2INC   = $8042; // A..30 Card Track 2, incomplete (see section 5.4.1)
   PP_TRK3INC   = $8043; // A..30 Card Track 3, incomplete (see section 5.4.1)
-  PP_TRACK1    = $8044; // B..88 Card Track 1 (complete), in cleartext or encrypted (see section 5.4.2.1). Note: Although Track 1 is represented in ASCII, this field follows the ‚ÄúB‚Äù format in case the data is encrypted.
+  PP_TRACK1    = $8044; // B..88 Card Track 1 (complete), in cleartext or encrypted (see section 5.4.2.1). Note: Although Track 1 is represented in ASCII, this field follows the ìBî format in case the data is encrypted.
   PP_TRACK2    = $8045; // B..28 Card Track 1 (complete), in cleartext or encrypted (see section 5.4.2.2). Each Track 2 symbol occupies a nibble, according to the following code:
-                        // 0h (0000) ‚Üí ‚Äú0‚Äù Ah (1010) ‚Üí ‚Äú:‚Äù Dh (1101) ‚Üí ‚Äú=‚Äù
-                        //    ...          Bh (1011) ‚Üí ‚Äú;‚Äù Eh (1110) ‚Üí ‚Äú>‚Äù
-                        // 9h (1001) ‚Üí ‚Äú9‚Äù Ch (1100) ‚Üí ‚Äú<‚Äù Fh (1110) ‚Üí ‚Äú?‚Äù
-                        // Data are left aligned, with trailing Fh (‚Äú?‚Äù) if necessary.
+                        // 0h (0000) ? ì0î Ah (1010) ? ì:î Dh (1101) ? ì=î
+                        //    ...          Bh (1011) ? ì;î Eh (1110) ? ì>î
+                        // 9h (1001) ? ì9î Ch (1100) ? ì<î Fh (1110) ? ì?î
+                        // Data are left aligned, with trailing Fh (ì?î) if necessary.
   PP_TRACK3    = $8046; // B..60 Card Track 1 (complete), in cleartext or encrypted (same format as PP_TRACK2).
   PP_TRK1KSN   = $8047; // B10 KSN of DUKPT used for Track 1 encryption.
   PP_TRK2KSN   = $8048; // B10 KSN of DUKPT used for Track 2 encryption.
   PP_TRK3KSN   = $8049; // B10 KSN of DUKPT used for Track 3 encryption.
-  PP_ENCPAN    = $804A; // B..16 Card PAN, in cleartext of encrypted (see section 5.4.2.2). Each digit of the PAN occupies a nibble. Data is left aligned with trailing Fh, if necessary. Example: A PAN ‚Äú9781234789432‚Äù is encoded as: 97h 81h 23h 47h 89h 43h 2Fh.
+  PP_ENCPAN    = $804A; // B..16 Card PAN, in cleartext of encrypted (see section 5.4.2.2). Each digit of the PAN occupies a nibble. Data is left aligned with trailing Fh, if necessary. Example: A PAN ì9781234789432î is encoded as: 97h 81h 23h 47h 89h 43h 2Fh.
   PP_ENCPANKSN = $804B; // B10 KSN of DUKPT used for PAN encryption.
   PP_KSN       = $804C; // B10 KSN of DUKPT used for PIN or data encryption.
   PP_VALUE     = $804D; // A..32 Value captured by the pinpad.
   PP_DATAOUT   = $804E; // B..256 Generic data returned by the pinpad.
-  PP_CARDTYPE  = $804F; // N2 ‚ÄúGCX‚Äù response: Card type.
-                        // ‚Äú00‚Äù = Magnetic;
-                        // ‚Äú03‚Äù = ICC EMV;
-                        // ‚Äú05‚Äù = CTLS magstripe mode; or
-                        // ‚Äú06‚Äù = CTLS EMV.
-  PP_ICCSTAT   = $8050; // N1 ‚ÄúGCX‚Äù response: Status of the previous ICC processing.
-  PP_AIDTABINFO= $8051; // A..120 ‚ÄúGCX‚Äù response: Information from the AID Table, which may contain up to 20 concatenated ‚ÄúA6‚Äù records.
+  PP_CARDTYPE  = $804F; // N2 ìGCXî response: Card type.
+                        // ì00î = Magnetic;
+                        // ì03î = ICC EMV;
+                        // ì05î = CTLS magstripe mode; or
+                        // ì06î = CTLS EMV.
+  PP_ICCSTAT   = $8050; // N1 ìGCXî response: Status of the previous ICC processing.
+  PP_AIDTABINFO= $8051; // A..120 ìGCXî response: Information from the AID Table, which may contain up to 20 concatenated ìA6î records.
   PP_PAN       = $8052; // N..19 PAN of the processed card.
   PP_PANSEQNO  = $8053; // N2 Application PAN Sequence Number of the processed card.
   PP_EMVDATA   = $8054; // B..512 List of EMV objects returned by the pinpad (in TLV format - see section 7.1).
   PP_CHNAME    = $8055; // A..26 Cardholder name of the processed card.
-  PP_GOXRES    = $8056; // N6 ‚ÄúGOX‚Äù response: EMV processing status.
-                        // ‚Äú0xxxxx‚Äù = Transaction offline approved;
-                        // ‚Äú1xxxxx‚Äù = Transaction declined; or
-                        // ‚Äú2xxxxx‚Äù = Transaction requires online approval.
-                        // ‚Äúx1xxxx‚Äù = Signature on paper.
-                        // ‚Äúxx1xxx‚Äù = Successful offline PIN verification.
-                        // ‚Äúxx2xxx‚Äù = PIN captured for online verification.
-                        // ‚Äúxxx1xx‚Äù = Cardholder verification performed on the mobile device (smartphone, for example)
-                        // ‚Äúxxxx00‚Äù = RFU.
+  PP_GOXRES    = $8056; // N6 ìGOXî response: EMV processing status.
+                        // ì0xxxxxî = Transaction offline approved;
+                        // ì1xxxxxî = Transaction declined; or
+                        // ì2xxxxxî = Transaction requires online approval.
+                        // ìx1xxxxî = Signature on paper.
+                        // ìxx1xxxî = Successful offline PIN verification.
+                        // ìxx2xxxî = PIN captured for online verification.
+                        // ìxxx1xxî = Cardholder verification performed on the mobile device (smartphone, for example)
+                        // ìxxxx00î = RFU.
   PP_PINBLK    = $8057; // B8 Encrypted PIN.
-  PP_FCXRES    = $8058; // N3 ‚ÄúFCX‚Äù response: EMV processing status.
-                        // ‚Äú0xx‚Äù = Transaction approved; or
-                        // ‚Äú1xx‚Äù = Transaction declined.
-                        // ‚Äúx00‚Äù = RFU.
+  PP_FCXRES    = $8058; // N3 ìFCXî response: EMV processing status.
+                        // ì0xxî = Transaction approved; or
+                        // ì1xxî = Transaction declined.
+                        // ìx00î = RFU.
   PP_ISRESULTS = $8059; // B..50 Issuer Script Results (multiple of 5 - up to 10 results).
   PP_BIGRAND   = $805A; // B900 900 random bytes generated by the pinpad (used for testing only).
   PP_LABEL     = $805B; // S..16 Label of the application being processed (ICC EMV or CTLS).
   PP_ISSCNTRY  = $805C; // N3 Issuer Country Code of the processed card.
-  PP_CARDEXP   = $805D; // N6 Application Expiration Date of the processed card, in the ‚ÄúYYMMDD‚Äù format.
+  PP_CARDEXP   = $805D; // N6 Application Expiration Date of the processed card, in the ìYYMMDDî format.
   PP_MFNAME    = $805E; // A8 Name of a media file loaded on the pinpad, always in uppercase.
   PP_DEVTYPE   = $8060; // N2 Device type used in the transaction:
-                        // ‚Äú00‚Äù = Card;
-                        // ‚Äú01‚Äù = Mobile device (i.e. smartphone);
-                        // ‚Äú02‚Äù = Keyring;
-                        // ‚Äú03‚Äù = Watch;
-                        // ‚Äú04‚Äù = Mobile tag;
-                        // ‚Äú05‚Äù = Bracelet;
-                        // ‚Äú06‚Äù = Mobile device case/sleeve;
-                        // ‚Äú10‚Äù = Tablet or e-reader;
+                        // ì00î = Card;
+                        // ì01î = Mobile device (i.e. smartphone);
+                        // ì02î = Keyring;
+                        // ì03î = Watch;
+                        // ì04î = Mobile tag;
+                        // ì05î = Bracelet;
+                        // ì06î = Mobile device case/sleeve;
+                        // ì10î = Tablet or e-reader;
                         // Other values = Future use.
-  PP_TLRMEM    = $8062; // X4 Amount of available memory (in bytes) for loading EMV Table records using the ‚ÄúTLR‚Äù command.
+  PP_TLRMEM    = $8062; // X4 Amount of available memory (in bytes) for loading EMV Table records using the ìTLRî command.
   PP_ENCKRAND  = $8063; // B256 Random key (KRAND) encrypted by an RSA public key in PKCS # 1 format.
   PP_KSNTDESP00= $9100; // B10 DUKPT:TDES:PIN KSN, slot index #nn (from 00 to 99) IMPORTANT: Pay attention to hexadecimal values (PP_KSNTDESP14 = 910Eh)!!
   PP_KSNTDESP63= $9163;
   PP_KSNTDESD00= $9200; // B10 DUKPT:TDES:DAT KSN, slot index #nn (from 00 to 99) IMPORTANT: Pay attention to hexadecimal values (PP_KSNTDESD79 = 924Fh)!!
   PP_KSNTDESD63= $9263;
-  PP_TABVER00  = $9300; // A10 EMV Tables version correspondent to the Acquirer #nn (00 to 99). Index #00 corresponds to the ‚Äúgeneral‚Äù version for all Acquirers.
+  PP_TABVER00  = $9300; // A10 EMV Tables version correspondent to the Acquirer #nn (00 to 99). Index #00 corresponds to the ìgeneralî version for all Acquirers.
   PP_TABVER63  = $9363;
 
 type
@@ -368,7 +375,7 @@ type
 
   { TACBrAbecsTLVList }
 
-  TACBrAbecsTLVList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrAbecsPar>{$EndIf})
+  TACBrAbecsTLVList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrAbecsTLV>{$EndIf})
   private
     function GetAsString: AnsiString;
     Function GetItem(Index: Integer): TACBrAbecsTLV;
@@ -559,6 +566,7 @@ type
     function GetPort: String;
     procedure SetIsEnabled(AValue: Boolean);
     procedure SetPort(AValue: String);
+
   protected
     procedure RegisterLog(const AData: AnsiString; AddTime: Boolean = True);
     procedure DoException(AException: Exception); overload;
@@ -578,6 +586,7 @@ type
     procedure ClearCacheData;
     procedure LogApplicationLayer(AApplicationLayer: TACBrAbecsApplicationLayer);
     procedure GetPinPadSpecs;
+
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy; override ;
@@ -593,21 +602,8 @@ type
     function FormatMSG_S32(const AMSG: String): String;
     function FormatMSG(const AMSG: String; MaxCols: Integer; MaxLines: Integer;
       Pad: Byte = 0): String;
-  published
-    property Device: TACBrDevice read fDevice;
-    property Port: String read GetPort write SetPort;
-    property IsBusy: Boolean read fIsBusy;
-    property TimeOut: Integer read fTimeOut write fTimeOut default TIMEOUT_RSP;
 
-    property LogFile: String read fLogFile write fLogFile;
-    property LogLevel: Byte read fLogLevel write fLogLevel default 2;
-    property LogTranslate: Boolean read fLogTranslate write fLogTranslate default True;
-    property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
-
-    property OnStartCommand: TNotifyEvent read fOnStartCommand write fOnStartCommand;
-    property OnWaitForResponse: TACBrAbecsExecEvent read fOnWaitForResponse write fOnWaitForResponse;
-    property OnEndCommand: TNotifyEvent read fOnEndCommand write fOnEndCommand;
-
+  public
     // Control Commands
     procedure OPN; overload;
     procedure OPN(const OPN_MOD: String; const OPN_EXP: String); overload;
@@ -645,6 +641,20 @@ type
     procedure DSI(const ASPE_MFNAME: String);
 
     procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
+  published
+    property Device: TACBrDevice read fDevice;
+    property Port: String read GetPort write SetPort;
+    property IsBusy: Boolean read fIsBusy;
+    property TimeOut: Integer read fTimeOut write fTimeOut default TIMEOUT_RSP;
+
+    property LogFile: String read fLogFile write fLogFile;
+    property LogLevel: Byte read fLogLevel write fLogLevel default 2;
+    property LogTranslate: Boolean read fLogTranslate write fLogTranslate default True;
+    property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
+
+    property OnStartCommand: TNotifyEvent read fOnStartCommand write fOnStartCommand;
+    property OnWaitForResponse: TACBrAbecsExecEvent read fOnWaitForResponse write fOnWaitForResponse;
+    property OnEndCommand: TNotifyEvent read fOnEndCommand write fOnEndCommand;
   end ;
 
   function ReturnStatusCodeDescription(AStatus: Integer): String;
@@ -665,14 +675,14 @@ begin
   Result := '';
   case AStatus of
     ST_OK            : Result := 'Command executed successfully.';
-    ST_NOSEC         : Result := 'Attempted to use ‚ÄúSecure Communication‚Äù when it has not been established.';
+    ST_NOSEC         : Result := 'Attempted to use ìSecure Communicationî when it has not been established.';
     ST_F1            : Result := 'Function #1 key pressed.';
     ST_F2            : Result := 'Function #2 key pressed.';
     ST_F3            : Result := ' Function #3 key pressed.';
     ST_F4            : Result := 'Function #4 key pressed.';
     ST_BACKSP        : Result := 'Clear (backspace) key pressed';
-    ST_ERRPKTSEC     : Result := 'Error decoding data received via ‚ÄúSecure Communication‚Äù; or Cleartext command received with ‚ÄúSecure Communication‚Äù established.';
-    ST_INVCALL       : Result := 'Invalid call to a command (previous operations are necessary) or unknown command (in case of an ‚ÄúERR‚Äù response).';
+    ST_ERRPKTSEC     : Result := 'Error decoding data received via ìSecure Communicationî; or Cleartext command received with ìSecure Communicationî established.';
+    ST_INVCALL       : Result := 'Invalid call to a command (previous operations are necessary) or unknown command (in case of an ìERRî response).';
     ST_INVPARM       : Result := 'An invalid parameter was passed to the command.';
     ST_TIMEOUT       : Result := 'The maximum time stipulated for the operation has been exhausted.';
     ST_CANCEL        : Result := 'Operation canceled by the cardholder.';
@@ -686,7 +696,7 @@ begin
     ST_PINBUSY       : Result := 'Pinpad cannot process PIN capture temporarily due to security constrains (such as when the capture limit is reached within a time interval).';
     ST_RSPOVRFL      : Result := 'Response data exceeds the maximum allowed size.';
     ST_ERRCRYPT      : Result := 'Generic cryptographic validation error.';
-    ST_DUMBCARD      : Result := 'ICC inserted, but not responding (‚Äúmute‚Äù).';
+    ST_DUMBCARD      : Result := 'ICC inserted, but not responding (ìmuteî).';
     ST_ERRCARD       : Result := 'Communication error between the pinpad and the ICC or CTLS.';
     ST_CARDINVALIDAT : Result := 'ICC is invalidated.';
     ST_CARDPROBLEMS  : Result := 'ICC with problems. This status is valid for many situations in which the ICC does not behave as expected and the transaction must be terminated.';
@@ -704,7 +714,7 @@ begin
     ST_CTLSAPPNAV    : Result := 'CTLS with no matching application.';
     ST_CTLSAPPNAUT   : Result := 'The application selected in the CTLS cannot be used in this situation.';
     ST_CTLSEXTCVM    : Result := 'Cardholder must perform a validation on his device (mobile phone, for example) and then re-present it to the pinpad.';
-    ST_CTLSIFCHG     : Result := 'CTLS processing resulted in ‚Äúchange interface‚Äù (request ICC or magnetic card).';
+    ST_CTLSIFCHG     : Result := 'CTLS processing resulted in ìchange interfaceî (request ICC or magnetic card).';
     ST_MFNFOUND      : Result := 'Media file not found.';
     ST_MFERRFMT      : Result := 'Media file format error.';
     ST_MFERR         : Result := 'Media file loading error.';
@@ -752,7 +762,7 @@ begin
     SPE_PBKMOD   : Result := 'SPE_PBKMOD';
     SPE_PBKEXP   : Result := 'SPE_PBKEXP';
   else
-    Result := IntToHex(ASPE)+'h';
+    Result := IntToHex(ASPE, 2)+'h';
   end;
 end;
 
@@ -823,7 +833,7 @@ begin
     PP_TABVER00   : Result := 'PP_TABVER00';
     PP_TABVER63   : Result := 'PP_TABVER63';
   else
-    Result := IntToHex(APP)+'h';
+    Result := IntToHex(APP, 2)+'h';
   end;
 end;
 
@@ -1535,7 +1545,7 @@ begin
   if (AValue = Self.Device.Ativo) then
     Exit;
   if (Self.LogLevel > 0) then
-    RegisterLog('SetIsEnabled( '+BoolToStr(AValue, 'True', 'False')+' )');
+    RegisterLog('SetIsEnabled( '+BoolToStr(AValue, True)+' )');
 
   Self.Device.Ativo := AValue;
   fSPEKmod := '';
@@ -1980,10 +1990,10 @@ begin
   fCommand.Clear;
   fCommand.ID := 'OPN';
   fCommand.AddParamFromData(
-    '0' +               // OPN_OPMODE N1 Operation mode (fixed ‚Äú0‚Äù)
-    IntToStr(LenMod) +  // OPN_MODLEN N3 Number of bytes represented in OPN_MOD (length √∑ 2), fixed ‚Äú256‚Äù
+    '0' +               // OPN_OPMODE N1 Operation mode (fixed ì0î)
+    IntToStr(LenMod) +  // OPN_MODLEN N3 Number of bytes represented in OPN_MOD (length ˜ 2), fixed ì256î
     OPN_MOD +           // OPN_MOD H512 Modulus of the RSA key created by the SPE (KMOD).
-    IntToStr(LenExp) +  // OPN_EXPLEN N1 Number of bytes represented in OPN_EXP (length √∑ 2).
+    IntToStr(LenExp) +  // OPN_EXPLEN N1 Number of bytes represented in OPN_EXP (length ˜ 2).
     OPN_EXP );          // OPN_EXP H..6 Public exponent of the RSA key created by the SPE (KPUB).
   ExecCommand;
 

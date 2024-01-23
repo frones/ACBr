@@ -4,7 +4,7 @@ program ACBrLibPIXCDTest;
 
 uses
   Interfaces, Forms, ACBrLibPIXCDStaticImportMT, GuiTestRunner,
-  ACBrLibConsts, ACBrLibPIXCDTestCase;
+  ACBrLibConsts, ACBrLibPIXCDTestCase, ACBrLibPIXCD_PSP_Sicoob_TestCase;
 
 {$R *.res}
 

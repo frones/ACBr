@@ -59,6 +59,10 @@
         <Filename Value="..\..\Fontes\Comum\ACBrLibErros.inc"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="ACBrLibPIXCD_PSP_Sicoob_TestCase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

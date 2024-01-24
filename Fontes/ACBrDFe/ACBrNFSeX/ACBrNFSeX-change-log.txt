@@ -42,8 +42,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2024
+-- ACBrNFSeXServicos --
+[*] Atualização nas orientações que constam no inicio do arquivo.
+-- TabServicos --
+[*] Atualização nas orientações que constam no inicio do arquivo.
+  Por: Italo Giurizzato Junior
+
+23/01/2024
+-- IPM.LerXml --
+[*] Alterado o tipo de conversão da leitura da tag data_fato de tcDat para tcDatVcto.
+  Por: Maiquel Parisotto
+
 22/01/2024
 -- ACBrNFSeXServicos --
+[+] Incluída a cidade de São Paulo das Missoes/RS o provedor é ABase.
+  Por: C4Dev
+[+] Incluída a cidade de Charqueada/SP o provedor é Pronim, versão 2.03.
+  Por: Glauber Bernardo
 [+] Incluída a cidade de Bayeux/PB o provedor é ISSIntel.
   Por: Arimateia Jr
 
@@ -120,7 +136,7 @@ Símbolo : Significado
 [*] Alteração no profeixo da tag <identificador> para quando o envio for para teste.
     Se produção usar "nfse_" se homologação usar "nfseh_".
 -- IPM.LerXml --
-[*] Incluido a leitura da ta <data_fato> que a data de competencia.
+[*] Incluido a leitura da tag <data_fato> que é a data de competencia.
   Por: Diogo Loff
 
 10/01/2024

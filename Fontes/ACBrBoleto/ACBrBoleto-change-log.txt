@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2024
+-- ACBrBoletoRet_Itau_API --
+[-] TK-4939-1 Corrigido respostas incompletas apos inclusao, corrigido consultaDetalhe
+devido a Resposta Homologação ser diferente de Produção na inclusão do titulo.
+https://www.projetoacbr.com.br/forum/topic/75747-configura%C3%A7%C3%B5es-do-ws-ita%C3%BA-baixar-via-api-o-arquivo-cnab/?do=findComment&comment=490700&_rid=1706
+  Por: Victor H Gonzales - Pandaaa / Daniel de Morais InfoCotidiano
+
 22/01/2024
 -- ACBrBoleto, ACBrBancoBradesco --
 [-] TK-5022 Tratamento do motivo rejeição P8 qdo ocorrencia 14 

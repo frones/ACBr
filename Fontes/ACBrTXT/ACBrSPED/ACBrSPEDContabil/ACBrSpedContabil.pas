@@ -112,7 +112,8 @@ type
     procedure SetArquivo(const Value: String);
     function GetConteudo: TStringList;
 
-    procedure SubstituiMascaraPorQTDLinhasEmArquivoFinal(const Mascara, Texto: string);
+    procedure SubstituiMascaraPorQTDLinhasEmArquivoFinal(const Mascara, Texto:
+        string);
 
   protected
     procedure WriteRegistro0990;
@@ -1244,61 +1245,42 @@ end;
 
 procedure TACBrSPEDContabil.SubstituiMascaraPorQTDLinhasEmArquivoFinal(const Mascara, Texto: string);
 var
-  fs: TFileStream;
-  sByte, sByteNew: Byte;
-  iInc, QtdSubstituicoes, iCont, iIni : Integer;
-  sChar : String;
+  ArquivoTextoIn, ArquivoTextoOut: TextFile;
+  NomeArquivoTemp: string;
+  sLinhaAtual, idRegistroAtual : String;
   TamanhoMascara: Integer;
 begin
-  sChar := '';
-  iCont := 0;
   TamanhoMascara := Length(Mascara);
-
-  fs := TFileStream.Create(FACBrTXT.NomeArquivo, fmOpenReadWrite or fmShareExclusive );
-
-//******************************************************************************
-// QtdSubstituicoes : soma a quantidade de vezes que foi substituido a mascara
-// dentro do arquivo. Para Sped Contabil isso é 2 vezes (Registros J e I).
-// Assim, encerra a alteração dos totalizadores de linhas do arquivo e encerra o laço
-// de repetiçãoapós duas vezes QtdSubstituicoes = 2
-//******************************************************************************
+  NomeArquivoTemp := ChangeFileExt(FACBrTXT.NomeArquivo, '.tmp');
+  AssignFile(ArquivoTextoOut, NomeArquivoTemp);
   try
-    QtdSubstituicoes := 0;
-    while QtdSubstituicoes <> 2 do
-    begin
-      fs.Position := iCont;
-      fs.Read(sByte, 1);
-      if (Chr(sByte) = '[') then
+    Rewrite(ArquivoTextoOut);
+    AssignFile(ArquivoTextoIn, FACBrTXT.NomeArquivo);
+    try
+      Reset(ArquivoTextoIn);
+      while not Eof(ArquivoTextoIn) do
       begin
-        fs.Position := iCont;
-        iIni := iCont;
-        sChar := '';
-
-        for iInc := 1 to TamanhoMascara do
+        Readln(ArquivoTextoIn, sLinhaAtual);
+        idRegistroAtual := Copy(sLinhaAtual, 1, 4);
+        if (idRegistroAtual = 'I030 ' ) or (idRegistroAtual = 'J900' ) then
         begin
-          fs.Position := iCont;
-          fs.Read(sByte, 1);
-          sChar := sChar + Chr(sByte);
-          Inc(iCont);
+          sLinhaAtual := ReplaceStr(sLinhaAtual, Mascara, Texto);
         end;
-
-        if (sChar = Mascara) then
-        begin
-          for iInc := 1 to TamanhoMascara do
-          begin
-            fs.Position := iIni;
-            sByteNew := Ord(Texto[iInc]);
-            fs.Write(sByteNew,1);
-            Inc(iIni);
-          end;
-          Inc(QtdSubstituicoes);
-        end;
+        Writeln(ArquivoTextoOut, sLinhaAtual);
       end;
-      Inc(iCont);
+    finally
+      Close(ArquivoTextoIn)
     end;
   finally
-    FreeAndNil(fs);
+    Close(ArquivoTextoOut)
   end;
+
+  if RenameFile( FACBrTXT.NomeArquivo , ChangeFileExt(FACBrTXT.NomeArquivo, '.old')) then
+    if RenameFile( NomeArquivoTemp , FACBrTXT.NomeArquivo) then
+    begin
+      SysUtils.DeleteFile( ChangeFileExt(FACBrTXT.NomeArquivo, '.old') );
+    end;
+
 end;
 
 {$ifdef FPC}

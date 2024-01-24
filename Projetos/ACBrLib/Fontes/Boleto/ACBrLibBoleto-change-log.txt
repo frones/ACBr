@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2024
+--- ACBrLibBoletoRespostas --
+[+]TK-5003 Adicionado a propriedade ValorPago que existe no componente, mas não existia na reposta da lib. Neste caso o valor esta voltando nesta propriedade.
+https://www.projetoacbr.com.br/forum/topic/75952-banco-santander-ignora-o-valor-pago-quando-motivo-de-rejei%C3%A7%C3%A3o-vem-preenchido/
+Por: Daniel Morais InfoCotidiano
+
 27/12/2023
 --- ACBrLibBoletoBase --
 [*]TK-4800 Revert 31691 para remover TEnconding

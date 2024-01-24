@@ -155,6 +155,7 @@ type
     FValorOutrasDespesas: Currency;
     FValorOutrosCreditos: Currency;
     FValorRecebido: Currency;
+    FValorPago: Currency;
     FSeuNumero: String;
     FCodTipoOcorrencia: String;
     FDescricaoTipoOcorrencia: String;
@@ -192,6 +193,7 @@ type
     property ValorOutrasDespesas: Currency read FValorOutrasDespesas write FValorOutrasDespesas;
     property ValorOutrosCreditos: Currency read FValorOutrosCreditos write FValorOutrosCreditos;
     property ValorRecebido: Currency read FValorRecebido write FValorRecebido;
+    property ValorPago: Currency read FValorPago write FValorPago;
     property SeuNumero: String read FSeuNumero write FSeuNumero;
     property CodTipoOcorrencia: String read FCodTipoOcorrencia write FCodTipoOcorrencia;
     property DescricaoTipoOcorrencia: String read FDescricaoTipoOcorrencia write FDescricaoTipoOcorrencia;
@@ -911,6 +913,7 @@ begin
     ValorOutrasDespesas := ACBrBoleto.ListadeBoletos[FID].ValorOutrasDespesas;
     ValorOutrosCreditos := ACBrBoleto.ListadeBoletos[FID].ValorOutrosCreditos;
     ValorRecebido := ACBrBoleto.ListadeBoletos[FID].ValorRecebido;
+    ValorPago := ACBrBoleto.ListadeBoletos[FID].ValorPago;
     SeuNumero := ACBrBoleto.ListadeBoletos[FID].SeuNumero;
     CodTipoOcorrencia := GetEnumName( TypeInfo(TACBrTipoOcorrencia),
                                              Integer(ACBrBoleto.ListadeBoletos[FID].OcorrenciaOriginal.Tipo));

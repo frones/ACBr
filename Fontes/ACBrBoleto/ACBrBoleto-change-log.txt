@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2024
+-- ACBrBoleto, ACBrBancoBradesco --
+[-] TK-5022-1 Tratamento do motivo rejeição P8 qdo ocorrencia 12 e 13 
+https://www.projetoacbr.com.br/forum/topic/76029-erro-ao-ler-retorno-acbrboletobradesco-cnab400-lib/
+  Por: Daniel de Morais InfoCotidiano
+
 
 25/01/2024
 -- ACBrBancoInter --

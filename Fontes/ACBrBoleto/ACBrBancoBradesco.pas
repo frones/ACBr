@@ -1209,7 +1209,7 @@ begin
          Result:= CodMotivo +' - Outros Motivos';
       end;
 
-      toRetornoVencimentoAlterado:
+      toRetornoVencimentoAlterado, toRetornoAbatimentoConcedido, toRetornoAbatimentoCancelado:
       if CodMotivo = 'P8' then
            Result := 'P8-Alteração não Permitida - QR CODE Pago ou Cancelado'
         else

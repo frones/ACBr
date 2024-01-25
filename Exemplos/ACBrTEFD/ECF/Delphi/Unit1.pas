@@ -36,7 +36,7 @@ uses
   Classes, SysUtils,
   Forms, Controls, Graphics, Dialogs,
   StdCtrls, ExtCtrls, Buttons, ComCtrls, ACBrECF, ACBrDevice, ACBrTEFD,
-  ACBrTEFDClass, ACBrUtil , ACBrTEFDCliSiTef, ACBrBase;
+  ACBrTEFDClass, ACBrUtil.Base, ACBrUtil.Strings, ACBrTEFDCliSiTef, ACBrBase;
 
 type
 

@@ -92,7 +92,8 @@ type
   TACBrTEFDTipo = ( gpNenhum, gpTefDial, gpTefDisc, gpHiperTef, gpCliSiTef,
                     gpTefGpu, gpVeSPague, gpBanese, gpTefAuttar, gpGoodCard,
                     gpFoxWin, gpCliDTEF, gpPetrocard, gpCrediShop, gpTicketCar,
-                    gpConvCard, gpCappta, gpPayGo, gpPayGoWeb, gpCliSiTefModular, gpTefDirecao) ;
+                    gpConvCard, gpCappta, gpPayGo, gpPayGoWeb, gpCliSiTefModular, gpTefDirecao,
+                    gpTefDialScopeGetcard) ;
 
   TACBrTEFDReqEstado = ( reqNenhum,             // Nennhuma Requisição em andamento
                          reqIniciando,          // Iniciando uma nova Requisicao

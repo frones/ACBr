@@ -41,7 +41,8 @@ uses
   ACBrTEFDAuttar, ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, ACBrTEFDCliSiTef,
   ACBrTEFDGpu, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
   ACBrTEFDCliDTEF, ACBrTEFDPetroCard, ACBrTEFDCrediShop, ACBrTEFDTicketCar,
-  ACBrTEFDConvCard, ACBrTEFDCappta, ACBrTEFDCliSiTefModular, ACBrTEFDDirecao
+  ACBrTEFDConvCard, ACBrTEFDCappta, ACBrTEFDCliSiTefModular, ACBrTEFDDirecao,
+  ACBrTEFDDialScopeGetcard
   {$IfNDef NOGUI}
     {$IfDef FPC}
       ,LResources

@@ -46,6 +46,53 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2024
+-- ACBrTEFPayGoWebComum --
+[*] Modificações para suportar nova DLL 4.1.25.3, PayGo Windows no modo atualizador da
+    PGWebLib.
+[+] Adicionado mapeamento para o comando "PW_End".
+    Esta função tem como finalidade encerrar alguns serviços e remover a proteção
+    do Warsaw da automação, possibilitando a realização da atualização.
+[*] Estrutura "TPW_GetData", modificada, removendo campo "bIndice: Byte" que não
+    fazia parte da Estrutura original
+[*] Métodos "ObterDadoCartao", "RealizarOperacaoPinPad", "LogPWGetData", modificados
+    para receber o indice do Parâmetro sendo processado na estrutura TPW_GetData
+[+] Adicionado o método:
+    "function GetPathPGWebLib: String;"
+    Retorna o valor da variável de ambiente "PathPGWebLib" (32 bits) ou
+    "PathPGWebLib_x64" (64 bits), e que contem o Path completo da DLL PGWebLib,
+    com proteção, e que deve ser carregada pela aplicação
+[+] Adicionado o método:
+    "function GetPGWebLibAtualiza: Boolean;"
+    Que Verifica o conteúdo da Variável de Ambiente "PGWebLibAtualiza".
+    Essa variável de ambiente fica com o Valor "TRUE", quando há atualizações
+    disponíveis para a PGWebLib.
+[+] Adicionado o método:
+    "function SetPGWebLibPermiteAtualiza(PermiteAtualizacao: Boolean): Boolean;"
+    Permite que a aplicação configure a variável de ambiente "PGWebLibPermiteAtualiza"
+    Quando a aplicação grava nela o valor "TRUE", permite que o Cliente Windows
+    da Paygo, baixe e atualize a PGWebLib da pasta "PathPGWebLib"
+[+] Adicionada a propriedade: "AtualizaPGWebLibAutomaticamente: Boolean default True"
+    Quando essa propriedade é True (padrão), o valor de "PGWebLibPermiteAtualiza"
+    será ajustado para True, sempre que TACBrTEFPGWebAPI.DesInicializar for chamado
+[*] Método "TACBrTEFPGWebAPI.Destroy", modificado para chamar "DesInicializar"
+[*] Método "TACBrTEFPGWebAPI.Inicializar" mmodificado para configurar a variável
+    de ambiente "PontoDeCaptura", se a propriedade "PontoCaptura" estiver com
+    valor definido
+    a variável de ambiente "CPFCNPJ" se a propriedade "CNPJEstabelecimento"
+    estiver com valor definido.
+[*] Método "TACBrTEFPGWebAPI.Inicializar", grava no Log o estado da variável de
+    ambiente "PGWebLibAtualiza"
+[*] Método "TACBrTEFPGWebAPI.DesInicializar" passa a chamar "PW_End", para
+    encerrar o processo de proteção, e "SetPGWebLibPermiteAtualiza", para
+    permitir a atualização da PGWebLib, conforme o valor da propridade
+     "AtualizaPGWebLibAutomaticamente"
+[*] Método "TACBrTEFPGWebAPI.LibFullName" modificado para usar o Path definido na
+    variável de ambiente "PathPGWebLib", caso a propriedade "PathLib" esteja vazia.
+[*] Método "TACBrTEFPGWebAPI.LoadLibFunctions" modificado para gravar no log,
+    o caminho completo da DLL PGWebLib que está sendo carregada
+    (por: DSA)
+
 28/09/2023
 -- ACBrTEFAPIComum --
 [*] Melhorias quando estiver Trantando Transações Pendentes durante a inicializaçao

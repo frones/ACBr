@@ -1261,8 +1261,8 @@ begin
       while not Eof(ArquivoTextoIn) do
       begin
         Readln(ArquivoTextoIn, sLinhaAtual);
-        idRegistroAtual := Copy(sLinhaAtual, 1, 4);
-        if (idRegistroAtual = 'I030 ' ) or (idRegistroAtual = 'J900' ) then
+        idRegistroAtual := Copy(sLinhaAtual, 1, 6);
+        if (idRegistroAtual = '|I030|' ) or (idRegistroAtual = '|J900|' ) then
         begin
           sLinhaAtual := FastStringReplace(sLinhaAtual, Mascara, Texto, []);
         end;

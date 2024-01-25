@@ -243,7 +243,8 @@ begin
   if EspecieDoc = 'DM' then
     EspecieDoc := '01';
 
-  ADataLimitePagamento := Round(ACBrTitulo.DataLimitePagto - ACBrTitulo.Vencimento);
+  if ACBrTitulo.DataLimitePagto >= ACBrTitulo.Vencimento then
+     ADataLimitePagamento := Round(ACBrTitulo.DataLimitePagto - ACBrTitulo.Vencimento);
 
   if not (ADataLimitePagamento in [30,60]) then
     ADataLimitePagamento := 0;

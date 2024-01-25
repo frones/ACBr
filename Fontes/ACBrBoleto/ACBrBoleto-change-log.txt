@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+25/01/2024
+-- ACBrBancoInter --
+[-] TK-5035 validando data limite pagamento antes do round para evitar erro "range check error"
+  Por: Daniel de Morais InfoCotidiano
+
+
 24/01/2024
 -- ACBrBoletoRet_Itau_API --
 [-] TK-4939-1 Corrigido respostas incompletas apos inclusao, corrigido consultaDetalhe

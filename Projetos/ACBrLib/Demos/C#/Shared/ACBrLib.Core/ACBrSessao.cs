@@ -67,6 +67,7 @@
         Ailos,
         Matera,
         Cielo,
-        MercadoPago
+        MercadoPago,
+        IBGE
     }
 }

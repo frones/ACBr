@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2024
+--- ACBrSessao ---
+[-] Adicionado item IBGE no enumerado ACBrSessao
+--- ACBrLib.IBGE.Demo, ACBrLib.IBGEMT.Demo ---
+[*] Definidos programas de exemplo MT e ST como projetos de inicialização
+   Por: Renato Rubinho
+
 11/01/2023
 --- ACBrLiIBGEBase ---
 [-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado

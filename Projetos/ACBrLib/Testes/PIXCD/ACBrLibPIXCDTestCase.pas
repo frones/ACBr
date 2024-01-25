@@ -75,6 +75,7 @@ type
     procedure Test_PIXCD_CriarCobranca;
     procedure Test_PIXCD_CancelarCobrancaImediata;
     procedure Test_PIXCD_CancelarCobranca;
+    procedure Test_PIXCD_ConfigPSPSicoob;
   end;
 
 implementation
@@ -619,6 +620,36 @@ begin
   AStr := Space(Bufflen);
 
   AssertEquals(ErrOK, PIXCD_CancelarCobranca(Handle, 'teste', PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConfigPSPSicoob;
+var
+  Bufflen: Integer;
+  AStr, Arq: String;
+  Handle: THandle;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  AssertEquals('Erro ao definir PSP', ErrOK, PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDConfig, CChavePSP, '6'));
+  AssertEquals('Erro ao definir ChavePIX', ErrOK, PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDSicoobConfig, CChavePIXSicoob, 'meuemail@mail.com'));
+  AssertEquals('Erro ao definir ClientID', ErrOK, PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDSicoobConfig, CChaveClientIDSicoob, 'testeClientID'));
+  AssertEquals('Erro ao definir TokenSandBox', ErrOK, PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDSicoobConfig, CChaveTokenSandboxSicoob, 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
+
+  Arq := fCaminhoExec+'\Arq.key';
+  AssertEquals('Erro ao definir ArqChavePrivada', ErrOK, PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDSicoobConfig, CChaveArqChavePrivadaSicoob, PChar(Arq)));
+
+  Arq := fCaminhoExec+'\Arq.cert';
+  AssertEquals('Erro ao definir ArqCertificado', ErrOK, PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDSicoobConfig, CChaveArqCertificadoSicoob, PChar(Arq)));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDSicoobConfig, CChavePIXSicoob, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDSicoobConfig, CChaveClientIDSicoob, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDSicoobConfig, CChaveTokenSandboxSicoob, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDSicoobConfig, CChaveArqChavePrivadaSicoob, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDSicoobConfig, CChaveArqCertificadoSicoob, PChar(AStr), Bufflen));
 
   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
 end;

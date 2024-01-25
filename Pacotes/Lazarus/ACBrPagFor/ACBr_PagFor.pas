@@ -29,6 +29,7 @@ uses
   PagFor.Banrisul.GravarTxtRemessa, PagFor.Banrisul.LerTxtRetorno, 
   PagFor.Banrisul.Provider, PagFor.UnicredCooperativa.GravarTxtRemessa, 
   PagFor.UnicredCooperativa.LerTxtRetorno, PagFor.UnicredCooperativa.Provider, 
+  PagFor.Inter.GravarTxtRemessa, PagFor.Inter.LerTxtRetorno, PagFor.Inter.Provider, 
   LazarusPackageIntf;
 
 implementation

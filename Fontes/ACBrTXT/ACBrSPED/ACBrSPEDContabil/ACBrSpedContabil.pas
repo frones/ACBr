@@ -213,7 +213,7 @@ type
 implementation
 
 Uses
-  StrUtils, Math, Types, ACBrUtil.Strings, ACBrUtil.FilesIO,
+  StrUtils, Math, Types, ACBrUtil.Strings, ACBrUtil.FilesIO, StrUtilsEx,
   ACBrECDBloco_9, ACBrECDBloco_I, ACBrECDBloco_K ;
 
 resourcestring
@@ -1264,7 +1264,7 @@ begin
         idRegistroAtual := Copy(sLinhaAtual, 1, 4);
         if (idRegistroAtual = 'I030 ' ) or (idRegistroAtual = 'J900' ) then
         begin
-          sLinhaAtual := ReplaceStr(sLinhaAtual, Mascara, Texto);
+          sLinhaAtual := FastStringReplace(sLinhaAtual, Mascara, Texto, []);
         end;
         Writeln(ArquivoTextoOut, sLinhaAtual);
       end;

@@ -129,7 +129,9 @@ begin
     Inc(FQtdeContasConc);
 
   FQtdeRegistrosLote := 1;
-  FSequencialDeLote  := 0;
+  FSequencialDoRegistroNoLote := 0;
+
+  FpFormaLancamento := PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento;
 
   GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
   GravarCampo(FQtdeLotes, 4, tcInt);
@@ -228,12 +230,12 @@ begin
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
+      Inc(FSequencialDoRegistroNoLote);
 
       GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
       GravarCampo(FQtdeLotes, 4, tcInt);
       GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
+      GravarCampo(FSequencialDoRegistroNoLote, 5, tcInt);
       GravarCampo('A', 1, tcStr);
       GravarCampo(TpMovimentoToStr(TipoMovimento), 1, tcStr);
       GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);
@@ -283,12 +285,12 @@ begin
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
+      Inc(FSequencialDoRegistroNoLote);
 
       GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
       GravarCampo(FQtdeLotes, 4, tcInt);
       GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
+      GravarCampo(FSequencialDoRegistroNoLote, 5, tcInt);
       GravarCampo('B', 1, tcStr);
 
       if (PixTipoChave <> tcpNenhum) then
@@ -361,12 +363,12 @@ begin
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
+      Inc(FSequencialDoRegistroNoLote);
 
       GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
       GravarCampo(FQtdeLotes, 4, tcInt);
       GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
+      GravarCampo(FSequencialDoRegistroNoLote, 5, tcInt);
       GravarCampo('J', 1, tcStr);
       GravarCampo(' ', 1, tcStr);
       //Conforme orientado pelo sicredi o J-52 sempre sera 01

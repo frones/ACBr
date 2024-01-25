@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/01/2024
+--- Diversos ---
+[+] Implementação do Banco Inter.
+   Por: Lucas Rampin
+--- Diversos ---
+[*] Alterado o nome da variável protegida de FSequencialDeLote para 
+    FSequencialDoRegistroNoLote, com esse nome deixa claro a sua finalidade.
+   Por: Italo Giurizzato Junior
+
 19/01/2024
 --- CNAB240.GravarTxtRemessa ---
 [-] Incluído o incremento do sequencial de lote nos Segmentos W e Z.

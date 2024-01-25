@@ -108,14 +108,16 @@ begin
     Inc(FQtdeContasConc);
 
   FQtdeRegistrosLote := 1;
-  FSequencialDeLote  := 0;
+  FSequencialDoRegistroNoLote := 0;
+
+  FpFormaLancamento := PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento;
 
   GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
   GravarCampo(FQtdeLotes, 4, tcInt);
   GravarCampo(1, 1, tcInt);
   GravarCampo(TpOperacaoToStr(PagFor.Lote.Items[I].Registro1.Servico.Operacao), 1, tcStr);
   GravarCampo(TpServicoToStr(PagFor.Lote.Items[I].Registro1.Servico.TipoServico), 2, tcStr);
-  GravarCampo(FmLancamentoToStr(PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento), 2, tcStr);
+  GravarCampo(FmLancamentoToStr(FpFormaLancamento), 2, tcStr);
   GravarCampo('045', 3, tcStr);
   GravarCampo(' ', 1, tcStr);
   GravarCampo(TpInscricaoToStr(PagFor.Lote.Items[I].Registro1.Empresa.Inscricao.Tipo), 1, tcStr);

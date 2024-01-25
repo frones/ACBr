@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
+{ Colaboradores nesse arquivo: Lucas Rampin                                    }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,89 +32,23 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForProviderManager;
+unit PagFor.Inter.LerTxtRetorno;
 
 interface
 
 uses
   SysUtils, Classes,
-  ACBrPagForInterface;
+  CNAB240.LerTxtRetorno, ACBrPagForClass;
 
 type
+ { TArquivoR_Inter }
 
-  TACBrPagForProviderManager = class
-  public
-    class function GetProvider(ACBrPagFor: TComponent): IACBrPagForProvider;
+  TArquivoR_Inter = class(TArquivoR_CNAB240)
+  protected
+
   end;
 
 implementation
 
-uses
-  ACBrPagFor, ACBrPagForConversao,
-
-  PagFor.BancoCECRED.Provider,
-  PagFor.BancodoBrasil.Provider,
-  PagFor.Banrisul.Provider,
-  PagFor.Bradesco.Provider,
-  PagFor.Caixa.Provider,
-  PagFor.HSBC.Provider,
-  PagFor.Inter.Provider,
-  PagFor.Itau.Provider,
-  PagFor.Safra.Provider,
-  PagFor.Santander.Provider,
-  PagFor.Sicoob.Provider,
-  PagFor.Sicredi.Provider,
-  PagFor.UnicredCooperativa.Provider;
-
-  { TACBrPagForProviderManager }
-
-class function TACBrPagForProviderManager.GetProvider(ACBrPagFor: TComponent): IACBrPagForProvider;
-begin
-  with TACBrPagfor(ACBrPagFor).Configuracoes.Geral do
-  begin
-    case Banco of
-      pagBancoCECRED:
-        Result := TACBrPagForProviderBancoCECRED.Create(ACBrPagFor);
-
-      pagBancodoBrasil:
-        Result := TACBrPagForProviderBancodoBrasil.Create(ACBrPagFor);
-
-      pagBanrisul:
-        Result := TACBrPagForProviderBanrisul.Create(ACBrPagFor);
-
-      pagBradesco:
-        Result := TACBrPagForProviderBradesco.Create(ACBrPagFor);
-
-      pagCaixaEconomica:
-        Result := TACBrPagForProviderCaixa.Create(ACBrPagFor);
-
-      pagHSBC:
-        Result := TACBrPagForProviderHSBC.Create(ACBrPagFor);
-
-      pagInter:
-        Result := TACBrPagForProviderInter.Create(ACBrPagFor);
-
-      pagItau:
-        Result := TACBrPagForProviderItau.Create(ACBrPagFor);
-
-      pagSafra:
-        Result := TACBrPagForProviderSafra.Create(ACBrPagFor);
-
-      pagSantander:
-        Result := TACBrPagForProviderSantander.Create(ACBrPagFor);
-
-      pagBanCooB:
-        Result := TACBrPagForProviderSicoob.Create(ACBrPagFor);
-
-      pagSicredi:
-        Result := TACBrPagForProviderSicredi.Create(ACBrPagFor);
-
-      pagUnicredCooperativa:
-        Result := TACBrPagForProviderUnicredCooperativa.Create(ACBrPagFor);
-    else
-      Result := nil;
-    end;
-  end;
-end;
-
 end.
+

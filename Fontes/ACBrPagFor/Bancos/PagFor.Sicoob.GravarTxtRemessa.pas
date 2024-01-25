@@ -110,16 +110,18 @@ begin
     Inc(FQtdeContasConc);
 
   FQtdeRegistrosLote := 1;
-  FSequencialDeLote  := 0;
+  FSequencialDoRegistroNoLote := 0;
+
+  FpFormaLancamento := PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento;
 
   GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
   GravarCampo(FQtdeLotes, 4, tcInt);
   GravarCampo(1, 1, tcInt);
   GravarCampo(TpOperacaoToStr(PagFor.Lote.Items[I].Registro1.Servico.Operacao), 1, tcStr);
   GravarCampo(TpServicoToStr(PagFor.Lote.Items[I].Registro1.Servico.TipoServico), 2, tcStr);
-  GravarCampo(FmLancamentoToStr(PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento), 2, tcStr);
+  GravarCampo(FmLancamentoToStr(FpFormaLancamento), 2, tcStr);
 
-  case PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento of
+  case FpFormaLancamento of
     flCreditoContaCorrente, flChequePagamento, flDocTed, flOPDisposicao,
     flPagamentoAutenticacao, flTEDMesmaTitularidade, flTEDOutraTitularidade:
       Versao := '045';
@@ -180,12 +182,12 @@ begin
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
+      Inc(FSequencialDoRegistroNoLote);
 
       GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
       GravarCampo(FQtdeLotes, 4, tcInt);
       GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
+      GravarCampo(FSequencialDoRegistroNoLote, 5, tcInt);
       GravarCampo('B', 1, tcStr);
       GravarCampo(' ', 3, tcStr);
       GravarCampo(TpInscricaoToStr(Inscricao.Tipo), 1, tcStr);
@@ -227,12 +229,12 @@ begin
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
+      Inc(FSequencialDoRegistroNoLote);
 
       GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
       GravarCampo(FQtdeLotes, 4, tcInt);
       GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
+      GravarCampo(FSequencialDoRegistroNoLote, 5, tcInt);
       GravarCampo('J', 1, tcStr);
       GravarCampo(' ', 1, tcStr);
       GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);

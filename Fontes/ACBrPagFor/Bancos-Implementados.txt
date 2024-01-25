@@ -6,6 +6,7 @@ Banrisul
 Bradesco
 Caixa
 HSBC
+Inter              23/01/2024
 Itau
 Safra
 Santander

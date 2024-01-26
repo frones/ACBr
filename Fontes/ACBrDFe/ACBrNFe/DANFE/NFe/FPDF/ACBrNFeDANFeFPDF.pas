@@ -2553,7 +2553,6 @@ begin
   FNFeUtils.FormatSettings := LFormatSettings;
 
   SetFont('Times');
-  SetMargins(2, 2, 2, 2);
 
   EngineOptions.DoublePass := True;
 end;
@@ -2569,6 +2568,10 @@ var
   LOrientation: TFPDFOrientation;
   LStream : TMemoryStream;
   LLogoStringStream : TStringStream;
+  LMargemInferior : Double;
+  LMargemSuperior : Double;
+  LMargemEsquerda : Double;
+  LMargemDireita  : Double;
 begin
   if not FInitialized then
   begin
@@ -2578,6 +2581,31 @@ begin
       LOrientation := poLandscape
     else
       LOrientation := poPortrait;
+
+    if FDANFEClassOwner.MargemEsquerda  <> 6 then
+      LMargemEsquerda := FDANFEClassOwner.MargemEsquerda
+    else
+      LMargemEsquerda := 2;
+
+    if FDANFEClassOwner.MargemSuperior <> 8 then
+      LMargemSuperior := FDANFEClassOwner.MargemSuperior
+    else
+      LMargemSuperior := 2;
+
+    if FDANFEClassOwner.MargemDireita  <> 5.1 then
+     LMargemDireita := FDANFEClassOwner.MargemDireita
+    else
+      LMargemDireita  := 2;
+
+    if FDANFEClassOwner.MargemInferior <> 8 then
+      LMargemInferior := FDANFEClassOwner.MargemInferior
+    else
+      LMargemInferior := 2;
+
+    SetMargins(LMargemEsquerda,
+               LMargemSuperior,
+               LMargemDireita,
+               LMargemInferior);
 
     if FDANFEClassOwner.Logo <> '' then
     begin

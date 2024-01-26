@@ -145,6 +145,8 @@ type
   end;
 implementation
 
+uses ACBrImage;
+
 type
   TBlocoCanhoto = class(TFPDFBand)
   private
@@ -2377,9 +2379,12 @@ begin
             LLogoStringStream.Free;
           end;
         end;
-        SetLength(FLogo, LStream.Size);
-        LStream.Position := 0;
-        LStream.Read(FLogo[0], LStream.Size);
+        if IsPNG(LStream, false) then
+        begin
+          SetLength(FLogo, LStream.Size);
+          LStream.Position := 0;
+          LStream.Read(FLogo[0], LStream.Size);
+        end;
       finally
         LStream.Free;
       end;

@@ -88,7 +88,6 @@ type
     procedure GerarObservacoesEvento;
 
     function CalcularDadosQRCode: String;
-    function ValidaLogoBmp(const APathLogo:string):Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -224,7 +223,7 @@ begin
     FPosPrinter.Buffer.Add('</zera><mp>' +
                           FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda));
 
-    FPosPrinter.Buffer.Add(IfThen(ValidaLogoBmp(logo),'<bmp>'+Logo+'</bmp>','</lf></logo>'));
+    FPosPrinter.Buffer.Add(IfThen(FPosPrinter.ValidaLogoBmp(logo),'<bmp>'+Logo+'</bmp>','</lf></logo>'));
 
     FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
                           TextoLateral +
@@ -232,7 +231,7 @@ begin
   end
   else
   begin
-    FPosPrinter.Buffer.Add('</zera></ce>'+ IfThen(ValidaLogoBmp(logo),'<bmp>'+Logo+'</bmp>','</lf></logo>'));
+    FPosPrinter.Buffer.Add('</zera></ce>'+ IfThen(FPosPrinter.ValidaLogoBmp(logo),'<bmp>'+Logo+'</bmp>','</lf></logo>'));
 
     if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
        FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+'<n>' +  FpNFe.Emit.xFant + '</n>');
@@ -970,27 +969,6 @@ begin
     Result := FpNFe.infNFeSupl.qrCode;
 end;
 
-function TACBrNFeDANFeESCPOS.ValidaLogoBmp(const APathLogo: string): Boolean;
-var
-  LFileStream : TFileStream;
-begin
-   Result := False;
-
-   if not FileExists(APathLogo) then
-     Exit;
-
-   LFileStream := TFileStream.Create(APathLogo, fmOpenRead or fmShareDenyWrite);
-   try
-     if not IsBMP(LFileStream, True) then
-       Exit;
-
-     //if LFileStream.Size <= 5000 then // Menor ou igual a 5 KB -- se necessário validar, ficar para futuro
-       Result := True;
-
-   finally
-     LFileStream.Free;
-   end;
-end;
 
 function TACBrNFeDANFeESCPOS.ColunasCondensado: Integer;
 begin

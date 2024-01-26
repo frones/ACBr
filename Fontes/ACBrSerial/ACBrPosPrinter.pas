@@ -244,6 +244,7 @@ type
     function ComandoGravarLogoStream(ABMPStream: TStream): AnsiString;
     function ComandoApagarLogo: AnsiString; virtual;
 
+
     procedure ArquivoImagemToRasterStr(ArquivoImagem: String; out AWidth: Integer;
       out AHeight: Integer; out ARasterStr: AnsiString);
 
@@ -567,6 +568,7 @@ type
     procedure ImprimirImagemStream(ABMPStream: TStream);
     procedure ImprimirImagemArquivo(ArquivoBMP: String);
     procedure ImprimirImagemRasterStr(const ARasterStr: AnsiString; AWidth, AHeight: Integer);
+    function  ValidaLogoBmp(const APathLogo: string): Boolean;
 
     procedure ImprimirLogo(AKC1: Integer = -1; AKC2: Integer = -1;
       AFatorX: Integer = -1; AFatorY: Integer = -1);
@@ -1101,6 +1103,29 @@ function TACBrPosPrinterClass.TraduzirTagBloco(const ATag,
   ConteudoBloco: AnsiString; var BlocoTraduzido: AnsiString): Boolean;
 begin
   Result := False;  // Não traduziu aqui, sobreescrever se necessário
+end;
+
+function TACBrPosPrinter.ValidaLogoBmp(const APathLogo: string): Boolean;
+var
+  LFileStream : TFileStream;
+  LPathLogo : String;
+begin
+   Result := False;
+
+   LPathLogo := Trim(APathLogo);
+
+   if (LPathLogo = '') or not FileExists(LPathLogo) then
+     Exit;
+
+   LFileStream := TFileStream.Create(LPathLogo, fmOpenRead or fmShareDenyWrite);
+   try
+     if not IsBMP(LFileStream, True) then
+       Exit;
+       //if LFileStream.Size <= 5000 then // Menor ou igual a 5 KB -- se necessário validar, ficar para futuro
+       Result := True;
+   finally
+     LFileStream.Free;
+   end;
 end;
 
 function TACBrPosPrinterClass.ComandoCodBarras(const ATag: String;
@@ -2842,8 +2867,13 @@ end;
 
 procedure TACBrPosPrinter.ImprimirImagemArquivo(ArquivoBMP: String);
 begin
-  GravarLog('ImprimirImagemArquivo( '+ArquivoBMP+' )');
-  ImprimirCmd(FPosPrinterClass.ComandoImprimirImagemArquivo(ArquivoBMP));
+  if ValidaLogoBmp(ArquivoBMP) then
+  begin
+    GravarLog('ImprimirImagemArquivo( '+ArquivoBMP+' )');
+    ImprimirCmd(FPosPrinterClass.ComandoImprimirImagemArquivo(ArquivoBMP))
+  end
+  else
+    GravarLog('ImprimirImagemArquivo( '+ArquivoBMP+' ) é inválido' );
 end;
 
 procedure TACBrPosPrinter.ImprimirImagemRasterStr(const ARasterStr: AnsiString; AWidth,

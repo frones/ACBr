@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/01/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Morro Reuter/RS trocou de provedor, agora é Pronim
+  Por: Daniel - DNA Automação
 -- ACBrNFSeXDANFSeFR --
 [*] Alteração visando emitir uma Discriminação de até 4 mil caracteres.
   Por: kurtslucas

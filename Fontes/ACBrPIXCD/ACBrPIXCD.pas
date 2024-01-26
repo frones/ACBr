@@ -1559,6 +1559,7 @@ begin
 
   fk1 := FormatDateTime('hhnnsszzz',Now);
   fClientID := StrCrypt(AValue, fk1);  // Salva de forma Criptografada, para evitar "Inspect"
+  fpAutenticado := False;  // Força uma nova autenticação
 end;
 
 function TACBrPSP.GetClientSecret: String;
@@ -1573,6 +1574,7 @@ begin
 
   fk2 := FormatDateTime('hhnnsszzz',Now);
   fClientSecret := StrCrypt(AValue, fk2);  // Salva de forma Criptografada, para evitar "Inspect"
+  fpAutenticado := False;  // Força uma nova autenticação
 end;
 
 procedure TACBrPSP.SetTipoChave(AValue: TACBrPIXTipoChave);

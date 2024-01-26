@@ -188,11 +188,13 @@ end;
 procedure TACBrPSPSantander.SetConsumerKey(AValue: String);
 begin
   ClientID := AValue;
+  fpAutenticado := False;  // Força uma nova autenticação
 end;
 
 procedure TACBrPSPSantander.SetConsumerSecret(AValue: String);
 begin
   ClientSecret := AValue;
+  fpAutenticado := False;  // Força uma nova autenticação
 end;
 
 procedure TACBrPSPSantander.QuandoReceberRespostaEndPoint(const aEndPoint,

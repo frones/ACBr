@@ -42,6 +42,19 @@ const
   CLibPIXCDVersao = '1.0.0.73';
 
   CSessaoRespPIXCD = 'Resposta';
+  CSessaoRespCobGerada = 'CobGerada';
+  CSessaoRespCobVGerada = 'CobVGerada';
+  CSessaoRespCalendario = 'Calendario';
+  CSessaoRespDevedor = 'Devedor';
+  CSessaoRespRecebedor = 'Recebedor';
+  CSessaoRespLocation = 'Loc';
+  CSessaoRespValor = 'Valor';
+
+  CSessaoRespPixInfo = 'PIX';
+  CSessaoRespDevolucao = 'Devolucao';
+  CSessaoRespConsultarPixRecebidos = 'ConsultarPIXRecebidos';
+
+  CSessaoRespProblema = 'Problema';
 
   CSessaoPIXCDConfig = 'PIXCD';
   CChaveAmbiente = 'Ambiente';

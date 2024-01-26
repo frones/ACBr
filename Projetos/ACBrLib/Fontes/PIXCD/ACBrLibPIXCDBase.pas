@@ -140,7 +140,9 @@ function TACBrLibPIXCD.ConsultarPix(const Ae2eid: PChar; const sResposta: PChar;
 var
   e2id: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDConsultarPixResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: boolean;
 begin
   try
     e2id:= ConverterAnsiParaUTF8(Ae2eid);
@@ -152,17 +154,29 @@ begin
 
     PIXCDDM.Travar;
     try
-      PIXCDDM.ACBrPixCD1.PSP.epPix.ConsultarPix(e2id);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epPix.ConsultarPix(e2id);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDConsultarPixResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Pix);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result:= SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -179,7 +193,9 @@ function TACBrLibPIXCD.ConsultarPixRecebidos(ADataInicio: TDateTime; ADataFim: T
 var
   TxId, CpfCnpj: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDConsultarPixRecebidosResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: Boolean;
 begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
@@ -192,17 +208,29 @@ begin
 
     PIXCDDM.Travar;
     try
-      PIXCDDM.ACBrPixCD1.PSP.epPix.ConsultarPixRecebidos(ADataInicio, ADataFim, TxId, CpfCnpj, PagAtual, ItensPorPagina);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epPix.ConsultarPixRecebidos(ADataInicio, ADataFim, TxId, CpfCnpj, PagAtual, ItensPorPagina);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDConsultarPixRecebidosResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.PixConsultados);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb :=TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result:= SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -219,7 +247,9 @@ function TACBrLibPIXCD.SolicitarDevolucaoPix(AInfDevolucao: PChar; const Ae2eid:
 var
   e2eid, idDevolucao: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDDevolucaoPixResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: Boolean;
 begin
   try
     e2eid:= ConverterAnsiParaUTF8(Ae2eid);
@@ -236,17 +266,29 @@ begin
     PIXCDDM.Travar;
     try
       PIXCDDM.ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.LoadFromIni(AInfDevolucao);
-      PIXCDDM.ACBrPixCD1.PSP.epPix.SolicitarDevolucaoPix(e2eid, idDevolucao);
-      Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Problema);
+      Ok:= PIXCDDM.ACBrPixCD1.PSP.epPix.SolicitarDevolucaoPix(e2eid, idDevolucao);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
-      finally
-      Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDDevolucaoPixResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+           Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Devolucao);
+           Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result:= SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -263,7 +305,9 @@ function TACBrLibPIXCD.ConsultarDevolucaoPix(const Ae2eid, AidDevolucao: PChar; 
 var
   e2eid, idDevolucao: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDDevolucaoPixResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: Boolean;
 begin
   try
     e2eid:= ConverterAnsiParaUTF8(Ae2eid);
@@ -276,17 +320,29 @@ begin
 
     PIXCDDM.Travar;
     try
-      PIXCDDM.ACBrPixCD1.PSP.epPix.ConsultarDevolucaoPix(e2eid, idDevolucao);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epPix.ConsultarDevolucaoPix(e2eid, idDevolucao);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDDevolucaoPixResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Devolucao);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epPix.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result:= SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -302,8 +358,10 @@ end;
 function TACBrLibPIXCD.CriarCobrancaImediata(AInfCobSolicitada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDCobResposta;
+  RespProb: TLibPIXCDProblemaResposta;
   TxId: String;
+  Ok: Boolean;
 begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
@@ -319,17 +377,29 @@ begin
     PIXCDDM.Travar;
     try
       PIXCDDM.ACBrPixCD1.PSP.epCob.CobSolicitada.LoadFromIni(AInfCobSolicitada);
-      PIXCDDM.ACBrPixCD1.PSP.epCob.CriarCobrancaImediata(TxId);
-      Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCob.CriarCobrancaImediata(TxId);
 
-        Resposta := Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDCobResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -346,7 +416,9 @@ function TACBrLibPIXCD.ConsultarCobrancaImediata(const ATxId: PChar; ARevisao: l
 var
   TxId: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDCobResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  ok: Boolean;
 begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
@@ -358,17 +430,29 @@ begin
 
     PIXCDDM.Travar;
     try
-      PIXCDDM.ACBrPixCD1.PSP.epCob.ConsultarCobrancaImediata(TxId, ARevisao);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCob.ConsultarCobrancaImediata(TxId, ARevisao);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDCobResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobCompleta);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result:= SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -385,7 +469,9 @@ function TACBrLibPIXCD.RevisarCobrancaImediata(AInfCobRevisada: PChar; const ATx
 var
   TxId: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDCobResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: Boolean;
 begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
@@ -401,17 +487,29 @@ begin
     PIXCDDM.Travar;
     try
       PIXCDDM.ACBrPixCD1.PSP.epCob.CobRevisada.LoadFromIni(AInfCobRevisada);
-      PIXCDDM.ACBrPixCD1.PSP.epCob.RevisarCobrancaImediata(TxId);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCob.RevisarCobrancaImediata(TxId);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDCobResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result:= SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -428,7 +526,9 @@ function TACBrLibPIXCD.CancelarCobrancaImediata(ATxId: PChar; const sResposta: P
 var
   TxId: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDCobResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: boolean;
 begin
   try
     TxId := ConverterAnsiParaUTF8(ATxId);
@@ -446,17 +546,29 @@ begin
         PSP.epCob.CobRevisada.status:= stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
       end;
 
-      PIXCDDM.ACBrPixCD1.PSP.epCob.RevisarCobrancaImediata(TxId);
-      Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCob.RevisarCobrancaImediata(TxId);
 
-        Resposta := Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDCobResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+          Resposta := Resp.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -471,9 +583,11 @@ end;
 
 function TACBrLibPIXCD.CriarCobranca(AinfCobVSolicitada: PChar; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
-  TxId: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDCobVResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  TxId: String;
+  Ok: Boolean;
 begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
@@ -489,17 +603,29 @@ begin
     PIXCDDM.Travar;
     try
       PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVSolicitada.LoadFromIni(AInfCobVSolicitada);
-      PIXCDDM.ACBrPixCD1.PSP.epCobV.CriarCobranca(TxId);
-      Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCobV.CriarCobranca(TxId);
 
-        Resposta := Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDCobVResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -516,7 +642,9 @@ function TACBrLibPIXCD.ConsultarCobranca(const ATxId: PChar; ARevisao: longint; 
 var
   TxId: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDCobVResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: Boolean;
 begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
@@ -528,17 +656,29 @@ begin
 
     PIXCDDM.Travar;
     try
-      PIXCDDM.ACBrPixCD1.PSP.epCobV.ConsultarCobranca(TxId, ARevisao);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCobV.ConsultarCobranca(TxId, ARevisao);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      if Ok then
+      begin
+        Resp := TLibPIXCDCobVResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVCompleta);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result:= SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -555,7 +695,9 @@ function TACBrLibPIXCD.RevisarCobranca(AInfCobVRevisada: PChar; const ATxId: PCh
 var
   TxId: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDCobVResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: Boolean;
 begin
   try
     TxId:= ConverterAnsiParaUTF8(ATxId);
@@ -571,17 +713,29 @@ begin
     PIXCDDM.Travar;
     try
       PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVRevisada.LoadFromIni(AInfCobVRevisada);
-      PIXCDDM.ACBrPixCD1.PSP.epCobV.RevisarCobranca(TxId);
-      Resp:= TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCobV.RevisarCobranca(TxId);
 
-        Resposta:= Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result:= SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      If Ok Then
+      begin
+        Resp := TLibPIXCDCobVResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result:= SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;
@@ -598,7 +752,9 @@ function TACBrLibPIXCD.CancelarCobranca(ATxId: PChar; const sResposta: PChar; va
 var
   TxId: String;
   Resposta: AnsiString;
-  Resp: TLibPIXCDResposta;
+  Resp: TLibPIXCDCobVResposta;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: boolean;
 begin
   try
     TxId := ConverterAnsiParaUTF8(ATxId);
@@ -616,17 +772,29 @@ begin
         PSP.epCobV.CobVRevisada.status:= stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
       end;
 
-      PIXCDDM.ACBrPixCD1.PSP.epCobV.RevisarCobranca(TxId);
-      Resp := TLibPIXCDResposta.Create(Config.TipoResposta, Config.CodResposta);
-      try
-        Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCobV.RevisarCobranca(TxId);
 
-        Resposta := Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
-      finally
-        Resp.Free;
+      If Ok Then
+      begin
+        Resp := TLibPIXCDCobVResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+          Resposta := Resp.Gerar;
+        finally
+          RespProb.Free;
+        end;
       end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       PIXCDDM.Destravar;
     end;

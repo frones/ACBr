@@ -38,6 +38,9 @@ uses
   ACBrJSON, SysUtils, ACBrValidador, httpsend,
   Classes;
 type
+  TParams =
+    record  prName,PrValue:String;
+  end;
   EACBrConsultaCNPJWSException = class ( Exception );
   TACBrConsultaCNPJWSResposta = class (TObject)
     NaturezaJuridica     : String ;
@@ -65,6 +68,7 @@ type
     EFR                  : string;
     MotivoSituacaoCad    : string;
     CodigoIBGE           : String;
+    InscricaoEstadual    : String;
   end;
   { TACBrConsultaCNPJWS }
   TACBrConsultaCNPJWS = class( TObject )
@@ -72,25 +76,48 @@ type
     FUsuario : String;
     FSenha : String;
     FResposta : TACBrConsultaCNPJWSResposta;
+    FHeaderParamsList : Array of TParams;
+    FDefasagemMaxima : Integer;
   private
     FHTTPSend: THTTPSend;
     public
-      constructor create(const ACNPJ : string; AUsuario : string = ''; ASenha: string = '');
+      constructor Create(const ACNPJ : string; AUsuario : string = ''; ASenha: string = ''; ADefasagemMaxima : Integer = 0);
       destructor Destroy; override;
       function Executar : boolean; virtual;
-      property HTTPSend: THTTPSend read FHTTPSend write FHTTPSend;
+      function SendHttp(const AMethod : string; AURL : String; out LRetorno : String):Integer;
+      function AddHeaderParam(AParamName, AParamValue : String) : TACBrConsultaCNPJWS;
+      function ClearHeaderParams() : TACBrConsultaCNPJWS;
   end;
 implementation
 
+uses
+  blcksock,
+  synautil;
+
 { TACBrConsultaCNPJWS }
 
-constructor TACBrConsultaCNPJWS.create(const ACNPJ : string; AUsuario : string = ''; ASenha: string = '');
+function TACBrConsultaCNPJWS.AddHeaderParam(AParamName,
+  AParamValue: String): TACBrConsultaCNPJWS;
+begin
+  Result := Self;
+  SetLength(FHeaderParamsList,Length(FHeaderParamsList)+1);
+  FHeaderParamsList[Length(FHeaderParamsList)-1].prName  := AParamName;
+  FHeaderParamsList[Length(FHeaderParamsList)-1].prValue := AParamValue;
+end;
+
+function TACBrConsultaCNPJWS.ClearHeaderParams: TACBrConsultaCNPJWS;
+begin
+  SetLength(FHeaderParamsList,0);
+end;
+
+constructor TACBrConsultaCNPJWS.Create(const ACNPJ : string; AUsuario : string = ''; ASenha: string = ''; ADefasagemMaxima : Integer = 0);
 begin
   FCNPJ     :=  ACNPJ;
   FUsuario  := AUsuario;
   FSenha    := ASenha;
   FResposta := TACBrConsultaCNPJWSResposta.Create;
   FResposta.CNAE2     := TStringList.Create;
+  FDefasagemMaxima := ADefasagemMaxima;
 end;
 
 destructor TACBrConsultaCNPJWS.Destroy;
@@ -107,6 +134,44 @@ begin
   LErro := ValidarCNPJ( FCNPJ ) ;
   if LErro <> '' then
     raise EACBrConsultaCNPJWSException.Create(LErro);
+end;
+
+function TACBrConsultaCNPJWS.SendHttp(const AMethod: string; AURL: String; out LRetorno: String): Integer;
+var
+  LStream : TStringStream;
+  LHeaders : TStringList;
+  I : Integer;
+begin
+  FHTTPSend := THTTPSend.Create;
+  LStream  := TStringStream.Create('');
+  try
+    FHTTPSend.OutputStream := LStream;
+    FHTTPSend.Clear;
+    FHTTPSend.Headers.Clear;
+    FHTTPSend.Headers.Add('Accept: application/json');
+
+    LHeaders := TStringList.Create;
+    try
+      for I := 0  to Length(FHeaderParamsList) -1 do
+        LHeaders.Add(FHeaderParamsList[I].prName+': '+FHeaderParamsList[I].prValue);
+      FHTTPSend.Headers.AddStrings(LHeaders);
+    finally
+      LHeaders.Free;
+    end;
+
+    FHTTPSend.Sock.SSL.SSLType := LT_TLSv1_2;
+
+    FHTTPSend.HTTPMethod(AMethod, AURL);
+
+    FHTTPSend.Document.Position:= 0;
+
+    LRetorno := ReadStrFromStream(LStream, LStream.Size);
+
+    Result := FHTTPSend.ResultCode;
+  finally
+    LStream.Free;
+    FHTTPSend.Free;
+  end;
 end;
 
 end.

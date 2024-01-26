@@ -43,7 +43,7 @@ uses
 type
   TACBrOnSolicitaCaptchaHTTP = procedure( var AHtml : String ) of object ;
   EACBrConsultaCNPJException = class ( Exception );
-  TACBrCNPJProvedorWS = (cwsNenhum, cwsBrasilAPI, cwsReceitaWS);
+  TACBrCNPJProvedorWS = (cwsNenhum, cwsBrasilAPI, cwsReceitaWS, cwsPublica);
 
   { TACBrConsultaCNPJ }
   {$IFDEF RTL230_UP}
@@ -86,6 +86,8 @@ type
     FProvedor : TACBrCNPJProvedorWS;
     FUsuario: String;
     FSenha: String;
+    FInscricaoEstadual : String;
+    FDefasagemMaximo : Integer;
     //Function GetCaptchaURL: String;
     function GetIBGE_UF : String ;
     function VerificarErros(const Str: String): String;
@@ -136,6 +138,8 @@ type
     property Provedor : TACBrCNPJProvedorWS read FProvedor write FProvedor default cwsNenhum;
     property Usuario: String read FUsuario write FUsuario;
     property Senha: String read FSenha write FSenha;
+    property InscricaoEstadual: String read FInscricaoEstadual;
+    property DefasagemMaximo: Integer read FDefasagemMaximo write FDefasagemMaximo default 999;
   end;
 
 implementation
@@ -149,7 +153,8 @@ uses
   ACBrValidador,
   ACBrUtil.FilesIO,
   ACBrConsultaCNPJ.WS.ReceitaWS,
-  ACBrConsultaCNPJ.WS.BrasilAPI;
+  ACBrConsultaCNPJ.WS.BrasilAPI,
+  ACBrConsultaCNPJ.WS.Publica;
 
 {$IFDEF FPC}
  {$R ACBrConsultaCNPJServicos.rc}
@@ -330,6 +335,7 @@ begin
   FEFR                  := AACBrConsultaCNPJWSResposta.EFR;
   FMotivoSituacaoCad    := AACBrConsultaCNPJWSResposta.MotivoSituacaoCad;
   FCodigoIBGE           := AACBrConsultaCNPJWSResposta.CodigoIBGE;
+  FInscricaoEstadual    := AACBrConsultaCNPJWSResposta.InscricaoEstadual;
 end;
 
 function TACBrConsultaCNPJ.Consulta(const ACNPJ: String; ACaptcha: String; ARemoverEspacosDuplos: Boolean): Boolean;
@@ -350,8 +356,9 @@ begin
     if Self.Provedor <> cwsNenhum then
     begin
       case Self.Provedor of
-        cwsReceitaWS : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSReceitaWS.Create( ACNPJ, self.Usuario, Self.Senha );
-        cwsBrasilAPI : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSBrasilAPI.Create( ACNPJ, self.Usuario, Self.Senha );
+        cwsReceitaWS : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSReceitaWS.Create( ACNPJ, Self.Usuario, Self.Senha, Self.DefasagemMaximo );
+        cwsBrasilAPI : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSBrasilAPI.Create( ACNPJ, Self.Usuario, Self.Senha );
+        cwsPublica   : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSPublica.Create( ACNPJ, Self.Usuario, Self.Senha );
       end;
 
       Result := LACBrConsultaCNPJWS.Executar;
@@ -522,6 +529,7 @@ begin
   FParams := TStringList.Create;
   LerParams;
   FProvedor := cwsNenhum;
+  FDefasagemMaximo := 999;
 end;
 
 destructor TACBrConsultaCNPJ.Destroy;
@@ -557,7 +565,8 @@ begin
   FTelefone         := '';
   FEFR              := '';
   FMotivoSituacaoCad:= '';
-  fCodigoIBGE       := '';
+  FCodigoIBGE       := '';
+  FInscricaoEstadual:= '';
 
   FCNAE2.Clear;
 end;

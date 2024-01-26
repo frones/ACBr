@@ -488,7 +488,7 @@ begin
   cdsServicos.FieldDefs.Add('CodigoCnae', ftString, 15);
   cdsServicos.FieldDefs.Add('CodigoNbs', ftString, 9);
   cdsServicos.FieldDefs.Add('CodigoTributacaoMunicipio', ftString, 20);
-  cdsServicos.FieldDefs.Add('Discriminacao', ftString, 2000);
+  cdsServicos.FieldDefs.Add('Discriminacao', ftString, 4000);
   cdsServicos.FieldDefs.Add('CodigoPais', ftString, 4);
   cdsServicos.FieldDefs.Add('NumeroProcesso', ftString, 10);
   cdsServicos.FieldDefs.Add('xItemListaServico', ftString, 300);
@@ -634,7 +634,7 @@ begin
   cdsItensServico := TACBrFRDataSet.Create(nil);
   cdsItensServico.Close;
   cdsItensServico.FieldDefs.Clear;
-  cdsItensServico.FieldDefs.Add('DiscriminacaoServico', ftString, 2000);
+  cdsItensServico.FieldDefs.Add('DiscriminacaoServico', ftString, 4000);
   cdsItensServico.FieldDefs.Add('Quantidade', ftString, 10);
   cdsItensServico.FieldDefs.Add('ValorUnitario', ftString, 30);
   cdsItensServico.FieldDefs.Add('ValorTotal', ftString, 30);

@@ -6,40 +6,90 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  ACBrAbecsPinPad;
+  Buttons, Spin, ComCtrls, ACBrAbecsPinPad;
+
+const
+  CSerialSection = 'Serial';
+  CLogSection = 'Log';
+  CPinPadSection = 'PinPad';
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
-    btAtivar: TButton;
-    btMNU: TButton;
+    ACBrAbecsPinPad1: TACBrAbecsPinPad;
+    ApplicationProperties1: TApplicationProperties;
+    btActivate: TBitBtn;
+    btCancel: TButton;
+    btCEX: TButton;
+    btCLO: TButton;
     btCLX: TButton;
     btDEX: TButton;
-    btDSP: TButton;
-    btDSI: TButton;
-    btGCD: TButton;
-    btGKY: TButton;
-    btGIN: TButton;
-    btCEX: TButton;
-    btLMF: TButton;
     btDMF: TButton;
-    btMediaLoad: TButton;
+    btDSI: TButton;
+    btDSP: TButton;
+    btGCD: TButton;
+    btGIN: TButton;
     btGIX: TButton;
-    btDesativar: TButton;
-    btRMC: TButton;
+    btGKY: TButton;
+    btReadParms: TBitBtn;
+    btLMF: TButton;
+    btMediaLoad: TButton;
+    btMNU: TButton;
     btOPN: TButton;
-    btCLO: TButton;
-    Button1: TButton;
-    edPorta: TEdit;
+    btSearchSerialPorts: TSpeedButton;
+    btRMC: TButton;
+    btSaveParams: TBitBtn;
+    btSerial: TSpeedButton;
+    cbSecure: TCheckBox;
+    cbxPort: TComboBox;
+    cbxMsgAlign: TComboBox;
+    edLogFile: TEdit;
+    edtCLOMsg1: TEdit;
+    edtCLOMsg2: TEdit;
+    gbConfig: TGroupBox;
+    gbConfig1: TGroupBox;
+    gbExponent: TGroupBox;
+    gbModulus: TGroupBox;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    gbCLX: TGroupBox;
+    ImageList1: TImageList;
     Label1: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    mCLX: TMemo;
+    mExponent: TMemo;
+    mLog: TMemo;
+    mModulus: TMemo;
+    Panel1: TPanel;
     pCancelar: TPanel;
-    procedure btAtivarClick(Sender: TObject);
+    pgcCommands: TPageControl;
+    pLogs: TPanel;
+    sbShowLogFile: TSpeedButton;
+    sbCleanMemoLog: TSpeedButton;
+    seLogLevel: TSpinEdit;
+    Splitter1: TSplitter;
+    sbResponse: TStatusBar;
+    tsConfig: TTabSheet;
+    tsOPN: TTabSheet;
+    tsCLO: TTabSheet;
+    tsLMF: TTabSheet;
+    TabSheet4: TTabSheet;
+    tsGIX: TTabSheet;
+    procedure ACBrAbecsPinPad1EndCommand(Sender: TObject);
+    procedure ACBrAbecsPinPad1StartCommand(Sender: TObject);
+    procedure ACBrAbecsPinPad1WaitForResponse(var Cancel: Boolean);
+    procedure ACBrAbecsPinPad1WriteLog(const ALogLine: String;
+      var Tratado: Boolean);
+    procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
+    procedure btActivateClick(Sender: TObject);
     procedure btCEXClick(Sender: TObject);
     procedure btCLOClick(Sender: TObject);
     procedure btCLXClick(Sender: TObject);
-    procedure btDesativarClick(Sender: TObject);
     procedure btDEXClick(Sender: TObject);
     procedure btDMFClick(Sender: TObject);
     procedure btDSIClick(Sender: TObject);
@@ -52,17 +102,26 @@ type
     procedure btLMFClick(Sender: TObject);
     procedure btMNUClick(Sender: TObject);
     procedure btOPNClick(Sender: TObject);
+    procedure btReadParmsClick(Sender: TObject);
+    procedure btSearchSerialPortsClick(Sender: TObject);
     procedure btRMCClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btSaveParamsClick(Sender: TObject);
+    procedure btSerialClick(Sender: TObject);
+    procedure btCancelClick(Sender: TObject);
+    procedure cbSecureChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure sbShowLogFileClick(Sender: TObject);
   protected
-    procedure ShowPanelCancel;
-    procedure HidePanelCancel;
-    procedure OnStartCommand(Sender: TObject);
-    procedure OnWaitForResponse(var Cancel: Boolean);
-    procedure OnEndCommand(Sender: TObject);
-  private
-    fAbecsPinPad: TACBrAbecsPinPad;
+    function ConfigFileName: String;
+    procedure SaveParams;
+    procedure ReadParams;
+
+    procedure FindSerialPorts(AStringList: TStrings);
+    procedure ShowResponseStatusBar;
+    procedure AddStrToLog(const AStr: String);
+    procedure ConfigPanelsCommands(IsActive: Boolean);
+    procedure ConfigPanelCancel(IsCancel: Boolean);
+    procedure ConfigACBrAbecsPinPad;
   public
 
   end;
@@ -73,6 +132,8 @@ var
 implementation
 
 uses
+  TypInfo, IniFiles,
+  configuraserial,
   ACBrUtiL.FilesIO,
   ACBrUtil.Strings;
 
@@ -81,127 +142,275 @@ uses
 { TForm1 }
 
 procedure TForm1.FormCreate(Sender: TObject);
-begin
-  fAbecsPinPad := TACBrAbecsPinPad.Create(Self);
-  fAbecsPinPad.LogFile := 'C:\temp\ACBrPinPad.log';
-  fAbecsPinPad.LogLevel := 6;
-  //fAbecsPinPad.LogTranslate := False;
-  fAbecsPinPad.OnStartCommand := @OnStartCommand;
-  fAbecsPinPad.OnWaitForResponse := @OnWaitForResponse;
-  fAbecsPinPad.OnEndCommand := @OnEndCommand;
-end;
-
-procedure TForm1.ShowPanelCancel;
-begin
-  pCancelar.Align := alClient;
-  pCancelar.Visible := True;
-end;
-
-procedure TForm1.HidePanelCancel;
+var
+  i: TACBrAbecsMsgAlign;
 begin
   pCancelar.Visible := False;
+  pCancelar.Align := alClient;
+  ConfigPanelCancel(False);
+  ConfigPanelsCommands(False);
+  pgcCommands.ActivePageIndex := 0;
+  FindSerialPorts(cbxPort.Items);
+
+  For i := Low(TACBrAbecsMsgAlign) to High(TACBrAbecsMsgAlign) do
+    cbxMsgAlign.Items.Add( GetEnumName(TypeInfo(TACBrAbecsMsgAlign), integer(I) ) ) ;
+
+  ReadParams;
 end;
 
-procedure TForm1.OnStartCommand(Sender: TObject);
+procedure TForm1.sbShowLogFileClick(Sender: TObject);
+var
+  AFileLog: String;
 begin
-  if fAbecsPinPad.Command.IsBlocking then
-    ShowPanelCancel;
+  if pos(PathDelim,edLogFile.Text) = 0 then
+    AFileLog := ApplicationPath + edLogFile.Text
+  else
+    AFileLog := edLogFile.Text;
+
+  OpenURL( AFileLog );
 end;
 
-procedure TForm1.OnWaitForResponse(var Cancel: Boolean);
+function TForm1.ConfigFileName: String;
+begin
+  Result := ChangeFileExt( Application.ExeName,'.ini' ) ;
+end;
+
+procedure TForm1.SaveParams;
+Var
+  ini: TIniFile ;
+begin
+  AddStrToLog('- SaveParams');
+
+  ini := TIniFile.Create(ConfigFileName);
+  try
+    ini.WriteString(CSerialSection, 'Port', cbxPort.Text);
+    ini.WriteString(CSerialSection,'ParamsString', ACBrAbecsPinPad1.Device.ParamsString);
+    ini.WriteString(CLogSection, 'File', edLogFile.Text);
+    ini.WriteInteger(CLogSection, 'Level', seLogLevel.Value);
+    ini.WriteInteger(CPinPadSection, 'MsgAlign', cbxMsgAlign.ItemIndex);
+  finally
+    ini.Free ;
+  end ;
+end;
+
+procedure TForm1.ReadParams;
+Var
+  ini: TIniFile ;
+begin
+  AddStrToLog('- ReadParams');
+
+  ini := TIniFile.Create(ConfigFileName);
+  try
+    cbxPort.Text := ini.ReadString(CSerialSection, 'Port', '');
+    ACBrAbecsPinPad1.Device.ParamsString := ini.ReadString(CSerialSection,'ParamsString', '');
+    edLogFile.Text := ini.ReadString(CLogSection, 'File', '');
+    seLogLevel.Value := ini.ReadInteger(CLogSection, 'Level', 2);
+    cbxMsgAlign.ItemIndex := ini.ReadInteger(CPinPadSection, 'MsgAlign', 3);
+  finally
+    ini.Free ;
+  end ;
+end;
+
+procedure TForm1.FindSerialPorts(AStringList: TStrings);
+begin
+  AStringList.Clear;
+  ACBrAbecsPinPad1.Device.AcharPortasSeriais( AStringList );
+  {$IfNDef MSWINDOWS}
+   AStringList.Add('/dev/ttyS0') ;
+   AStringList.Add('/dev/ttyUSB0') ;
+  {$EndIf}
+end;
+
+procedure TForm1.ShowResponseStatusBar;
+begin
+  sbResponse.Panels[0].Text := Format('STAT: %d', [ACBrAbecsPinPad1.Response.STAT]);
+  sbResponse.Panels[1].Text := ReturnStatusCodeDescription(ACBrAbecsPinPad1.Response.STAT);
+end;
+
+procedure TForm1.AddStrToLog(const AStr: String);
+begin
+  mLog.Lines.Add(AStr);
+end;
+
+procedure TForm1.ConfigPanelsCommands(IsActive: Boolean);
+var
+  i: Integer;
+begin
+  if IsActive then
+  begin
+    btActivate.Caption := 'Desativar';
+    btActivate.Tag := 1;
+  end
+  else
+  begin
+    btActivate.Caption := 'Ativar';
+    btActivate.Tag := 0;
+  end;
+
+  for i := 1 to pgcCommands.PageCount-1 do
+    pgcCommands.Pages[i].Enabled := IsActive;
+end;
+
+procedure TForm1.ConfigPanelCancel(IsCancel: Boolean);
+var
+  i: Integer;
+begin
+  pCancelar.Visible := IsCancel;
+  for i := 1 to pgcCommands.PageCount-1 do
+    pgcCommands.Pages[i].Enabled := not IsCancel;
+end;
+
+
+procedure TForm1.ConfigACBrAbecsPinPad;
+begin
+  ACBrAbecsPinPad1.LogFile := edLogFile.Text;
+  ACBrAbecsPinPad1.LogLevel := seLogLevel.Value;
+  ACBrAbecsPinPad1.Port := cbxPort.Text;
+  ACBrAbecsPinPad1.MsgAlign := TACBrAbecsMsgAlign(cbxMsgAlign.ItemIndex);
+end;
+
+procedure TForm1.btSerialClick(Sender: TObject);
+var
+  frConfiguraSerial: TfrConfiguraSerial;
+begin
+  frConfiguraSerial := TfrConfiguraSerial.Create(self);
+  try
+    frConfiguraSerial.Device.Porta        := ACBrAbecsPinPad1.Device.Porta ;
+    frConfiguraSerial.cmbPortaSerial.Text := cbxPort.Text ;
+    frConfiguraSerial.Device.ParamsString := ACBrAbecsPinPad1.Device.ParamsString ;
+
+    if frConfiguraSerial.ShowModal = mrOk then
+    begin
+      cbxPort.Text := frConfiguraSerial.cmbPortaSerial.Text ;
+      ACBrAbecsPinPad1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
+    end ;
+  finally
+    FreeAndNil( frConfiguraSerial ) ;
+  end ;
+end;
+
+procedure TForm1.btSearchSerialPortsClick(Sender: TObject);
+begin
+  FindSerialPorts(cbxPort.Items);
+  if (cbxPort.ItemIndex < 0) and (cbxPort.Items.Count>0) then
+    cbxPort.ItemIndex := 0;
+end;
+
+procedure TForm1.btActivateClick(Sender: TObject);
+begin
+  SaveParams;
+  ConfigACBrAbecsPinPad;
+  ACBrAbecsPinPad1.IsEnabled := (btActivate.Tag = 0);
+  ConfigPanelsCommands(ACBrAbecsPinPad1.IsEnabled);
+  if ACBrAbecsPinPad1.IsEnabled then
+    pgcCommands.ActivePageIndex := 1;
+end;
+
+procedure TForm1.ACBrAbecsPinPad1EndCommand(Sender: TObject);
+begin
+  ConfigPanelCancel(False);
+  ShowResponseStatusBar;
+end;
+
+procedure TForm1.ACBrAbecsPinPad1StartCommand(Sender: TObject);
+begin
+  if ACBrAbecsPinPad1.Command.IsBlocking then
+    ConfigPanelCancel(True);
+end;
+
+procedure TForm1.ACBrAbecsPinPad1WaitForResponse(var Cancel: Boolean);
 begin
   Application.ProcessMessages;
   Cancel := not pCancelar.Visible;
 end;
 
-procedure TForm1.OnEndCommand(Sender: TObject);
+procedure TForm1.ACBrAbecsPinPad1WriteLog(const ALogLine: String;
+  var Tratado: Boolean);
 begin
-  HidePanelCancel;
+  AddStrToLog(ALogLine);
+  Tratado := False;
 end;
 
-procedure TForm1.btAtivarClick(Sender: TObject);
+procedure TForm1.ApplicationProperties1Exception(Sender: TObject; E: Exception);
 begin
-  fAbecsPinPad.Port := edPorta.Text;
-  fAbecsPinPad.Enable;
+  AddStrToLog('');
+  AddStrToLog('** '+E.ClassName+' **');
+  AddStrToLog(E.Message);
+  ShowResponseStatusBar;
 end;
 
 procedure TForm1.btCEXClick(Sender: TObject);
 begin
-  fAbecsPinPad.DSP('Pressione'+#13+'alguma tecla');
-  fAbecsPinPad.CEX(True,False,False,False,False);
-  ShowMessage('PP_EVENT: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
-              'PP_TRK1INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
-              'PP_TRK2INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK2) + sLineBreak +
-              'PP_TRK3INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK3) );
+  ACBrAbecsPinPad1.DSP('Pressione'+#13+'alguma tecla');
+  ACBrAbecsPinPad1.CEX(True,False,False,False,False);
+  ShowMessage('PP_EVENT: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
+              'PP_TRK1INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
+              'PP_TRK2INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK2) + sLineBreak +
+              'PP_TRK3INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK3) );
 
-  fAbecsPinPad.DSP('Aproxime o cartao');
-  fAbecsPinPad.CEX(False,False,False,False,True);
-  ShowMessage('PP_EVENT: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
-              'PP_TRK1INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
-              'PP_TRK2INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK2) + sLineBreak +
-              'PP_TRK3INC: '+fAbecsPinPad.Response.GetResponseFromTagValue(PP_TRACK3) );
+  ACBrAbecsPinPad1.DSP('Aproxime o cartao');
+  ACBrAbecsPinPad1.CEX(False,False,False,False,True);
+  ShowMessage('PP_EVENT: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
+              'PP_TRK1INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
+              'PP_TRK2INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK2) + sLineBreak +
+              'PP_TRK3INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK3) );
 
-end;
-
-procedure TForm1.btDesativarClick(Sender: TObject);
-begin
-  fAbecsPinPad.Disable;
 end;
 
 procedure TForm1.btDEXClick(Sender: TObject);
 begin
-  fAbecsPinPad.DEX('');
-  fAbecsPinPad.DEX('PROJETO ACBR'+#13+'projetoacbr.com.br'+#13+'(15) 2105-0750'+#13+'LINHA 4'+#13+'LINHA 5'+#13+'LINHA 6');
+  ACBrAbecsPinPad1.DEX('');
+  ACBrAbecsPinPad1.DEX('PROJETO ACBR'+#13+'projetoacbr.com.br'+#13+'(15) 2105-0750'+#13+'LINHA 4'+#13+'LINHA 5'+#13+'LINHA 6');
 end;
 
 procedure TForm1.btDMFClick(Sender: TObject);
 begin
-  fAbecsPinPad.DMF('LOGOACBR');
-  fAbecsPinPad.DMF(['LOGOACBR', 'AAA']);
+  ACBrAbecsPinPad1.DMF('LOGOACBR');
+  ACBrAbecsPinPad1.DMF(['LOGOACBR', 'AAA']);
 end;
 
 procedure TForm1.btDSIClick(Sender: TObject);
 begin
-  fAbecsPinPad.DSI('LOGOACBR');
-//  fAbecsPinPad.DSI('352233FF');
+  ACBrAbecsPinPad1.DSI('LOGOACBR');
+//  ACBrAbecsPinPad1.DSI('352233FF');
 end;
 
 procedure TForm1.btDSPClick(Sender: TObject);
 begin
-  fAbecsPinPad.DSP('');
-  fAbecsPinPad.DSP('PROJETO ACBR'+#13+'projetoacbr.com.br');
+  ACBrAbecsPinPad1.DSP('');
+  ACBrAbecsPinPad1.DSP('PROJETO ACBR'+#13+'projetoacbr.com.br');
 end;
 
 procedure TForm1.btGCDClick(Sender: TObject);
 var
   s: String;
 begin
-  s := fAbecsPinPad.GCD(msgDataNascimentoDDMMAAAA, 60);
+  s := ACBrAbecsPinPad1.GCD(msgDataNascimentoDDMMAAAA, 60);
   ShowMessage(s);
-  s := fAbecsPinPad.GCD($0025, 5, 5);
+  s := ACBrAbecsPinPad1.GCD($0025, 5, 5);
   ShowMessage(s);
 end;
 
 procedure TForm1.btGINClick(Sender: TObject);
 begin
-  fAbecsPinPad.GIN(2);
-  fAbecsPinPad.GIN(3);
-  fAbecsPinPad.GIN;
+  ACBrAbecsPinPad1.GIN(2);
+  ACBrAbecsPinPad1.GIN(3);
+  ACBrAbecsPinPad1.GIN;
 end;
 
 procedure TForm1.btGIXClick(Sender: TObject);
 begin
-  fAbecsPinPad.GIX([PP_MODEL]);
-  fAbecsPinPad.GIX;
+  ACBrAbecsPinPad1.GIX([PP_MODEL]);
+  ACBrAbecsPinPad1.GIX;
 end;
 
 procedure TForm1.btGKYClick(Sender: TObject);
 var
   i: Integer;
 begin
-  fAbecsPinPad.DEX('Pressione'+#13+'alguma tecla'+#13+'de função');
-  i := fAbecsPinPad.GKY;
-  fAbecsPinPad.DSP('');
+  ACBrAbecsPinPad1.DEX('Pressione'+#13+'alguma tecla'+#13+'de função');
+  i := ACBrAbecsPinPad1.GKY;
+  ACBrAbecsPinPad1.DSP('');
   ShowMessage(IntToStr(i));
 end;
 
@@ -211,7 +420,7 @@ var
 begin
   FS := TFileStream.Create('C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_192_192.png', fmOpenRead);
   try
-    fAbecsPinPad.LoadMedia('LOGOACBR', FS, mtPNG);
+    ACBrAbecsPinPad1.LoadMedia('LOGOACBR', FS, mtPNG);
   finally
     FS.Free;
   end;
@@ -219,50 +428,60 @@ end;
 
 procedure TForm1.btLMFClick(Sender: TObject);
 begin
-  fAbecsPinPad.LMF;
+  ACBrAbecsPinPad1.LMF;
 end;
 
 procedure TForm1.btMNUClick(Sender: TObject);
 var
   s: String;
 begin
-  s := fAbecsPinPad.MNU(['1 A VISTA','2 A PRAZO','3 FIADO'],'Forma de Pagamento');
+  s := ACBrAbecsPinPad1.MNU(['1 A VISTA','2 A PRAZO','3 FIADO'],'Forma de Pagamento');
   ShowMessage(s);
 end;
 
 procedure TForm1.btOPNClick(Sender: TObject);
 begin
-  fAbecsPinPad.OPN;
-  //fAbecsPinPad.OPN(
-  //  'AE6F230563307A1FA054C0E5835D9670C2EEC4BCE9E67C10A77B3D1F637C68CFFD2307E8345'+
-  //  '120084B873F2B7D7E5DE1D3383DEB18D57106E58954B0A8D8E7DCFD84ACC724FB84DAEB2A40'+
-  //  '82E2CE576F4AAB0EF3522CD2ED1C5F926FFBA070BA6F78E2FFCCBF78508DBD337670F6C121B'+
-  //  '2E114AD939E87880833CA7B76F850B6D7E24C472CEF6A7F766951CC68CA782D05D37E621D3A'+
-  //  '7EE0A5FB5AB01437870A82664A3FCE8B3D75A64BE5DFFCF67FA4915C7A87D287E97AAB5FCA6'+
-  //  '497C420840C0099F23FD089711209A31A6ED5EE9248D8C19D46F62A4EBC797143D80B85DAD4'+
-  //  '7D0A485926298D81AFE23CA3D6229F3E011203713E5B74E9807CF98B71CD7D',
-  //  '010001');
+  if not cbSecure.Checked then
+    ACBrAbecsPinPad1.OPN
+  else
+    ACBrAbecsPinPad1.OPN( Trim(mModulus.Text), Trim(mExponent.Text) );
 end;
 
 procedure TForm1.btRMCClick(Sender: TObject);
 begin
-  fAbecsPinPad.RMC('OPERAÇÃO'+#13+'TERMINADA');
+  ACBrAbecsPinPad1.RMC('OPERAÇÃO'+#13+'TERMINADA');
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btSaveParamsClick(Sender: TObject);
 begin
-  HidePanelCancel;
+  SaveParams;
+end;
+
+procedure TForm1.btReadParmsClick(Sender: TObject);
+begin
+  ReadParams;
+end;
+
+procedure TForm1.btCancelClick(Sender: TObject);
+begin
+  ConfigPanelCancel(True);
+end;
+
+procedure TForm1.cbSecureChange(Sender: TObject);
+begin
+  gbModulus.Visible := cbSecure.Checked;
+  gbExponent.Visible := cbSecure.Checked;
 end;
 
 procedure TForm1.btCLOClick(Sender: TObject);
 begin
-  fAbecsPinPad.CLO('PROJETO ACBR'+#13+'projetoacbr.com.br');
+  ACBrAbecsPinPad1.CLO(edtCLOMsg1.Text, edtCLOMsg2.Text);
 end;
 
 procedure TForm1.btCLXClick(Sender: TObject);
 begin
-  fAbecsPinPad.CLX('PROJETO ACBR'+#13+'projetoacbr.com.br'+#13+'(15) 2105-0750'+#13+'LINHA 4'+#13+'LINHA 5'+#13+'LINHA 6');
-  fAbecsPinPad.CLX('LOGOACBR');
+  ACBrAbecsPinPad1.CLX(mCLX.Lines.Text);
+  //ACBrAbecsPinPad1.CLX('LOGOACBR');
 end;
 
 end.

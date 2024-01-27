@@ -121,6 +121,12 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="FormPrincipal"/>
       </Unit>
+      <Unit>
+        <Filename Value="configuraserial.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConfiguraSerial"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

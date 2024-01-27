@@ -1,209 +1,661 @@
 object Form1: TForm1
   Left = 651
-  Height = 493
+  Height = 628
   Top = 304
-  Width = 356
+  Width = 950
   Caption = 'Teste ABECS PinPad'
-  ClientHeight = 493
-  ClientWidth = 356
+  ClientHeight = 628
+  ClientWidth = 950
+  Constraints.MinWidth = 800
   DesignTimePPI = 120
   OnCreate = FormCreate
-  object edPorta: TEdit
-    Left = 24
-    Height = 28
-    Top = 40
-    Width = 300
-    Anchors = [akTop, akLeft, akRight]
+  Visible = True
+  object pLogs: TPanel
+    Left = 0
+    Height = 284
+    Top = 344
+    Width = 950
+    Align = alClient
+    ClientHeight = 284
+    ClientWidth = 950
     TabOrder = 0
-    Text = 'COM9'
-  end
-  object btAtivar: TButton
-    Left = 24
-    Height = 31
-    Top = 88
-    Width = 94
-    Caption = 'Ativar'
-    TabOrder = 1
-    OnClick = btAtivarClick
-  end
-  object btDesativar: TButton
-    Left = 136
-    Height = 31
-    Top = 88
-    Width = 94
-    Caption = 'Desativar'
-    TabOrder = 2
-    OnClick = btDesativarClick
-  end
-  object btOPN: TButton
-    Left = 24
-    Height = 31
-    Top = 120
-    Width = 94
-    Caption = 'OPN'
-    TabOrder = 3
-    OnClick = btOPNClick
-  end
-  object btCLO: TButton
-    Left = 136
-    Height = 31
-    Top = 120
-    Width = 94
-    Caption = 'CLO'
-    TabOrder = 4
-    OnClick = btCLOClick
-  end
-  object btGIX: TButton
-    Left = 136
-    Height = 31
-    Top = 152
-    Width = 94
-    Caption = 'GIX'
-    TabOrder = 5
-    OnClick = btGIXClick
-  end
-  object btCLX: TButton
-    Left = 248
-    Height = 31
-    Top = 120
-    Width = 94
-    Caption = 'CLX'
-    TabOrder = 6
-    OnClick = btCLXClick
-  end
-  object btMediaLoad: TButton
-    Left = 24
-    Height = 31
-    Top = 344
-    Width = 94
-    Caption = 'Media Load'
-    TabOrder = 7
-    OnClick = btMediaLoadClick
-  end
-  object btLMF: TButton
-    Left = 24
-    Height = 31
-    Top = 379
-    Width = 94
-    Caption = 'LMF'
-    TabOrder = 8
-    OnClick = btLMFClick
-  end
-  object btDMF: TButton
-    Left = 136
-    Height = 31
-    Top = 344
-    Width = 94
-    Caption = 'DMF'
-    TabOrder = 9
-    OnClick = btDMFClick
-  end
-  object btDSI: TButton
-    Left = 136
-    Height = 31
-    Top = 379
-    Width = 94
-    Caption = 'DSI'
-    TabOrder = 10
-    OnClick = btDSIClick
-  end
-  object btGIN: TButton
-    Left = 24
-    Height = 31
-    Top = 152
-    Width = 94
-    Caption = 'GIN'
-    TabOrder = 11
-    OnClick = btGINClick
-  end
-  object btDEX: TButton
-    Left = 24
-    Height = 31
-    Top = 208
-    Width = 94
-    Caption = 'DEX'
-    TabOrder = 12
-    OnClick = btDEXClick
-  end
-  object btDSP: TButton
-    Left = 136
-    Height = 31
-    Top = 208
-    Width = 94
-    Caption = 'DSP'
-    TabOrder = 13
-    OnClick = btDSPClick
-  end
-  object btGCD: TButton
-    Left = 248
-    Height = 31
-    Top = 208
-    Width = 94
-    Caption = 'GCD'
-    TabOrder = 14
-    OnClick = btGCDClick
-  end
-  object btGKY: TButton
-    Left = 248
-    Height = 31
-    Top = 242
-    Width = 94
-    Caption = 'GKY'
-    TabOrder = 15
-    OnClick = btGKYClick
-  end
-  object btCEX: TButton
-    Left = 136
-    Height = 31
-    Top = 242
-    Width = 94
-    Caption = 'CEX'
-    TabOrder = 16
-    OnClick = btCEXClick
-  end
-  object btMNU: TButton
-    Left = 24
-    Height = 31
-    Top = 242
-    Width = 94
-    Caption = 'MNU'
-    TabOrder = 17
-    OnClick = btMNUClick
-  end
-  object pCancelar: TPanel
-    Left = 225
-    Height = 48
-    Top = 16
-    Width = 117
-    ClientHeight = 48
-    ClientWidth = 117
-    TabOrder = 18
-    Visible = False
-    object Button1: TButton
-      Left = 8
-      Height = 31
-      Top = 8
-      Width = 94
-      Anchors = []
-      Caption = 'Cancelar'
+    object mLog: TMemo
+      Left = 5
+      Height = 168
+      Top = 111
+      Width = 911
+      Align = alClient
+      BorderSpacing.Around = 4
+      ReadOnly = True
+      ScrollBars = ssAutoBoth
       TabOrder = 0
-      OnClick = Button1Click
+      WordWrap = False
+    end
+    object sbCleanMemoLog: TSpeedButton
+      Left = 920
+      Height = 176
+      Top = 107
+      Width = 29
+      Align = alRight
+      Images = ImageList1
+      ImageIndex = 7
+    end
+    object Splitter1: TSplitter
+      Cursor = crVSplit
+      Left = 1
+      Height = 6
+      Top = 1
+      Width = 948
+      Align = alTop
+      ResizeAnchor = akTop
+    end
+    object sbResponse: TStatusBar
+      Left = 1
+      Height = 29
+      Top = 7
+      Width = 948
+      Align = alTop
+      Panels = <      
+        item
+          Text = 'STAT:'
+          Width = 150
+        end      
+        item
+          Text = 'ERROR:'
+          Width = 50
+        end>
+      SimplePanel = False
+    end
+    object pCancelar: TPanel
+      Left = 1
+      Height = 71
+      Top = 36
+      Width = 948
+      Align = alTop
+      ClientHeight = 71
+      ClientWidth = 948
+      TabOrder = 3
+      Visible = False
+      object btCancel: TButton
+        Left = 11
+        Height = 49
+        Top = 11
+        Width = 926
+        Align = alClient
+        Anchors = []
+        BorderSpacing.Around = 10
+        Caption = 'Cancel Operation'
+        TabOrder = 0
+        OnClick = btCancelClick
+      end
     end
   end
-  object Label1: TLabel
-    Left = 24
-    Height = 20
-    Top = 16
-    Width = 34
-    Caption = 'Porta'
+  object pgcCommands: TPageControl
+    Left = 0
+    Height = 344
+    Top = 0
+    Width = 950
+    ActivePage = tsCLO
+    Align = alTop
+    TabIndex = 2
+    TabOrder = 1
+    object tsConfig: TTabSheet
+      Caption = 'Config'
+      ClientHeight = 311
+      ClientWidth = 942
+      object gbConfig: TGroupBox
+        Left = 0
+        Height = 88
+        Top = 0
+        Width = 942
+        Align = alTop
+        Caption = 'Serial Port'
+        ClientHeight = 63
+        ClientWidth = 938
+        TabOrder = 0
+        object cbxPort: TComboBox
+          Left = 24
+          Height = 28
+          Top = 18
+          Width = 431
+          Anchors = [akTop, akLeft, akRight]
+          ItemHeight = 20
+          TabOrder = 0
+        end
+        object btSerial: TSpeedButton
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 467
+          Height = 28
+          Top = 18
+          Width = 31
+          Anchors = [akTop, akRight]
+          Images = ImageList1
+          ImageIndex = 6
+          OnClick = btSerialClick
+        end
+        object btSearchSerialPorts: TSpeedButton
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 506
+          Height = 28
+          Top = 18
+          Width = 31
+          Anchors = [akTop, akRight]
+          Images = ImageList1
+          ImageIndex = 12
+          OnClick = btSearchSerialPortsClick
+        end
+      end
+      object Panel1: TPanel
+        Left = 0
+        Height = 96
+        Top = 88
+        Width = 942
+        Align = alTop
+        BevelOuter = bvNone
+        ClientHeight = 96
+        ClientWidth = 942
+        TabOrder = 1
+        object gbConfig1: TGroupBox
+          Left = 0
+          Height = 96
+          Top = 0
+          Width = 623
+          Align = alClient
+          Caption = 'Log'
+          ClientHeight = 71
+          ClientWidth = 619
+          TabOrder = 0
+          object edLogFile: TEdit
+            Cursor = crIBeam
+            Left = 24
+            Height = 28
+            Top = 31
+            Width = 433
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 0
+          end
+          object Label13: TLabel
+            Left = 24
+            Height = 20
+            Top = 7
+            Width = 23
+            Alignment = taRightJustify
+            Caption = 'File'
+            ParentColor = False
+          end
+          object sbShowLogFile: TSpeedButton
+            Left = 469
+            Height = 28
+            Top = 31
+            Width = 31
+            Anchors = [akTop, akRight]
+            Caption = '...'
+            OnClick = sbShowLogFileClick
+            ParentFont = False
+          end
+          object seLogLevel: TSpinEdit
+            Left = 529
+            Height = 28
+            Top = 31
+            Width = 63
+            Anchors = [akTop, akRight]
+            MaxValue = 9
+            TabOrder = 1
+            Value = 2
+          end
+          object Label14: TLabel
+            Left = 529
+            Height = 20
+            Top = 7
+            Width = 62
+            Alignment = taRightJustify
+            Anchors = [akTop, akRight]
+            Caption = 'Log.Level'
+            ParentColor = False
+          end
+        end
+        object GroupBox2: TGroupBox
+          Left = 623
+          Height = 96
+          Top = 0
+          Width = 319
+          Align = alRight
+          Caption = 'Msg Align'
+          ClientHeight = 71
+          ClientWidth = 315
+          TabOrder = 1
+          object cbxMsgAlign: TComboBox
+            Left = 32
+            Height = 28
+            Top = 24
+            Width = 245
+            AutoDropDown = True
+            ItemHeight = 20
+            Style = csDropDownList
+            TabOrder = 0
+          end
+        end
+      end
+      object btSaveParams: TBitBtn
+        Left = 18
+        Height = 35
+        Top = 245
+        Width = 170
+        Anchors = [akLeft, akBottom]
+        Caption = 'Save Params'
+        Images = ImageList1
+        ImageIndex = 2
+        OnClick = btSaveParamsClick
+        TabOrder = 2
+      end
+      object btReadParms: TBitBtn
+        Left = 201
+        Height = 35
+        Top = 245
+        Width = 170
+        Anchors = [akLeft, akBottom]
+        Caption = 'Read Params'
+        Images = ImageList1
+        ImageIndex = 3
+        OnClick = btReadParmsClick
+        TabOrder = 3
+      end
+      object btActivate: TBitBtn
+        Left = 752
+        Height = 56
+        Top = 224
+        Width = 136
+        Anchors = [akTop]
+        Caption = 'Activate'
+        Images = ImageList1
+        ImageIndex = 5
+        OnClick = btActivateClick
+        TabOrder = 4
+      end
+    end
+    object tsOPN: TTabSheet
+      Caption = 'Open'
+      ClientHeight = 311
+      ClientWidth = 942
+      object btOPN: TButton
+        Left = 32
+        Height = 31
+        Top = 112
+        Width = 94
+        Caption = 'OPN'
+        TabOrder = 0
+        OnClick = btOPNClick
+      end
+      object cbSecure: TCheckBox
+        Left = 48
+        Height = 24
+        Top = 152
+        Width = 65
+        Caption = 'Secure'
+        TabOrder = 1
+        OnChange = cbSecureChange
+      end
+      object gbModulus: TGroupBox
+        Left = 168
+        Height = 311
+        Top = 0
+        Width = 648
+        Align = alRight
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        Caption = 'Modulus'
+        ClientHeight = 286
+        ClientWidth = 644
+        TabOrder = 2
+        Visible = False
+        object mModulus: TMemo
+          Left = 0
+          Height = 286
+          Top = 0
+          Width = 644
+          Align = alClient
+          Lines.Strings = (
+            'AE6F230563307A1FA054C0E5835D9670C2EEC4BCE9E67C10A77B3D1F637C68CFFD2307E8345120084B873F2B7D7E5DE1D3383DEB18D57106E58954B0A8D8E7DCFD84ACC724FB84DAEB2A4082E2CE576F4AAB0EF3522CD2ED1C5F926FFBA070BA6F78E2FFCCBF78508DBD337670F6C121B2E114AD939E87880833CA7B76F850B6D7E24C472CEF6A7F766951CC68CA782D05D37E621D3A7EE0A5FB5AB01437870A82664A3FCE8B3D75A64BE5DFFCF67FA4915C7A87D287E97AAB5FCA6497C420840C0099F23FD089711209A31A6ED5EE9248D8C19D46F62A4EBC797143D80B85DAD47D0A485926298D81AFE23CA3D6229F3E011203713E5B74E9807CF98B71CD7D'
+          )
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+        end
+      end
+      object gbExponent: TGroupBox
+        Left = 816
+        Height = 311
+        Top = 0
+        Width = 126
+        Align = alRight
+        Caption = 'Exponent'
+        ClientHeight = 286
+        ClientWidth = 122
+        TabOrder = 3
+        Visible = False
+        object mExponent: TMemo
+          Left = 0
+          Height = 286
+          Top = 0
+          Width = 122
+          Align = alClient
+          Lines.Strings = (
+            '010001'
+          )
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+        end
+      end
+    end
+    object tsCLO: TTabSheet
+      Caption = 'Close'
+      ClientHeight = 311
+      ClientWidth = 942
+      object GroupBox1: TGroupBox
+        Left = 0
+        Height = 311
+        Top = 0
+        Width = 294
+        Align = alLeft
+        Caption = 'CLO'
+        ClientHeight = 286
+        ClientWidth = 290
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 32
+          Height = 20
+          Top = 34
+          Width = 47
+          Caption = 'Linha 1'
+        end
+        object edtCLOMsg1: TEdit
+          Left = 32
+          Height = 28
+          Top = 58
+          Width = 228
+          Anchors = [akTop, akLeft, akRight]
+          Font.Height = -20
+          Font.Name = 'Courier'
+          MaxLength = 16
+          ParentFont = False
+          TabOrder = 0
+          Text = 'PROJETO ACBR'
+        end
+        object Label2: TLabel
+          Left = 32
+          Height = 20
+          Top = 96
+          Width = 47
+          Caption = 'Linha 2'
+        end
+        object edtCLOMsg2: TEdit
+          Left = 32
+          Height = 28
+          Top = 120
+          Width = 228
+          Anchors = [akTop, akLeft, akRight]
+          Font.Height = -20
+          Font.Name = 'Courier'
+          MaxLength = 16
+          ParentFont = False
+          TabOrder = 1
+          Text = 'ACBrAbecsPinPad'
+        end
+        object btCLO: TButton
+          Left = 80
+          Height = 47
+          Top = 184
+          Width = 110
+          Anchors = [akTop]
+          Caption = 'CLO'
+          TabOrder = 2
+          OnClick = btCLOClick
+        end
+      end
+      object gbCLX: TGroupBox
+        Left = 294
+        Height = 311
+        Top = 0
+        Width = 648
+        Align = alClient
+        Caption = 'CLX'
+        ClientHeight = 286
+        ClientWidth = 644
+        TabOrder = 1
+        object mCLX: TMemo
+          Left = 24
+          Height = 137
+          Top = 40
+          Width = 600
+          Font.Height = -20
+          Font.Name = 'Courier'
+          Lines.Strings = (
+            'PROJETO ACBR'
+            'ACBrAbecsPinPad'
+            '----------------'
+            'TEF e PIX ?'
+            'É no ACBr'
+            '-+-+-+-+-+-+-+-+'
+          )
+          ParentFont = False
+          TabOrder = 0
+        end
+        object btCLX: TButton
+          Left = 271
+          Height = 47
+          Top = 200
+          Width = 110
+          Caption = 'CLX'
+          TabOrder = 1
+          OnClick = btCLXClick
+        end
+        object Label3: TLabel
+          Left = 24
+          Height = 20
+          Top = 16
+          Width = 33
+          Caption = 'Lines'
+        end
+      end
+    end
+    object tsLMF: TTabSheet
+      Caption = 'Multimedia'
+      ClientHeight = 311
+      ClientWidth = 942
+      object btMediaLoad: TButton
+        Left = 48
+        Height = 31
+        Top = 192
+        Width = 94
+        Caption = 'Media Load'
+        TabOrder = 0
+        OnClick = btMediaLoadClick
+      end
+      object btLMF: TButton
+        Left = 72
+        Height = 31
+        Top = 112
+        Width = 94
+        Caption = 'LMF'
+        TabOrder = 1
+        OnClick = btLMFClick
+      end
+      object btDSI: TButton
+        Left = 184
+        Height = 31
+        Top = 144
+        Width = 94
+        Caption = 'DSI'
+        TabOrder = 2
+        OnClick = btDSIClick
+      end
+      object btDMF: TButton
+        Left = 184
+        Height = 31
+        Top = 192
+        Width = 94
+        Caption = 'DMF'
+        TabOrder = 3
+        OnClick = btDMFClick
+      end
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'TabSheet4'
+      ClientHeight = 311
+      ClientWidth = 942
+      object btDEX: TButton
+        Left = 256
+        Height = 31
+        Top = 232
+        Width = 94
+        Caption = 'DEX'
+        TabOrder = 0
+        OnClick = btDEXClick
+      end
+      object btMNU: TButton
+        Left = 168
+        Height = 31
+        Top = 200
+        Width = 94
+        Caption = 'MNU'
+        TabOrder = 1
+        OnClick = btMNUClick
+      end
+      object btRMC: TButton
+        Left = 240
+        Height = 31
+        Top = 112
+        Width = 94
+        Caption = 'RMC'
+        TabOrder = 2
+        OnClick = btRMCClick
+      end
+      object btDSP: TButton
+        Left = 348
+        Height = 31
+        Top = 186
+        Width = 94
+        Caption = 'DSP'
+        TabOrder = 3
+        OnClick = btDSPClick
+      end
+      object btCEX: TButton
+        Left = 348
+        Height = 31
+        Top = 186
+        Width = 94
+        Caption = 'CEX'
+        TabOrder = 4
+        OnClick = btCEXClick
+      end
+      object btGKY: TButton
+        Left = 368
+        Height = 31
+        Top = 120
+        Width = 94
+        Caption = 'GKY'
+        TabOrder = 5
+        OnClick = btGKYClick
+      end
+      object btGCD: TButton
+        Left = 496
+        Height = 31
+        Top = 160
+        Width = 94
+        Caption = 'GCD'
+        TabOrder = 6
+        OnClick = btGCDClick
+      end
+    end
+    object tsGIX: TTabSheet
+      Caption = 'Information'
+      ClientHeight = 311
+      ClientWidth = 942
+      object btGIN: TButton
+        Left = 392
+        Height = 31
+        Top = 186
+        Width = 94
+        Caption = 'GIN'
+        TabOrder = 0
+        OnClick = btGINClick
+      end
+      object btGIX: TButton
+        Left = 408
+        Height = 31
+        Top = 112
+        Width = 94
+        Caption = 'GIX'
+        TabOrder = 1
+        OnClick = btGIXClick
+      end
+    end
   end
-  object btRMC: TButton
-    Left = 24
-    Height = 31
-    Top = 280
-    Width = 94
-    Caption = 'RMC'
-    TabOrder = 19
-    OnClick = btRMCClick
+  object ACBrAbecsPinPad1: TACBrAbecsPinPad
+    OnWriteLog = ACBrAbecsPinPad1WriteLog
+    OnStartCommand = ACBrAbecsPinPad1StartCommand
+    OnWaitForResponse = ACBrAbecsPinPad1WaitForResponse
+    OnEndCommand = ACBrAbecsPinPad1EndCommand
+    Left = 128
+  end
+  object ImageList1: TImageList
+    Left = 240
+    Bitmap = {
+      4C7A0D0000001000000010000000240600000000000078DAED5B69685C55147E
+      5D62B5D19A1A691B1BEDA255C4E2825AC605378CD62E82E8280A2A1597404DEC
+      884BC040B42A55245134AD4D058D490B25F8477FD4FAC3058BA962B10AFE504B
+      553A5A4D292E6D68354E329E43BF4B4FAE779D699834CE818F4EDE7BDF7D7739
+      F79EEF9E779B24C36C2AE142C2B9F81D6B8D8441429EB093B09C302182CFCFAE
+      1265E45086CB4E252C238CC3DFC76865FC4C98EEE0DF46182064F0FE0A4233DE
+      ADEA7083837F2B9EFB9BF030B8FFE05A1EF558EAE0CF23F4E3D901F15E850384
+      CB3C7DF692C6D1F119A1D651C6718436C26F787E08ED91656C27CCF28CC55984
+      DBD127DCE6EF0D65D446F8C305183FBD2DB322CAB8C852466C3D4C6D3939B21E
+      B28C3EC2E991F34BF5C71EC2C2A4309B4B3827195D369950474807E272CC5365
+      8F60EEE40371101C653D40A8E9CFF3EFACB8EE43D6C0CF47E248F38B6DFFD1CC
+      5FA5ADD93EE410EBA4FF5E17E1BF8B0895C9D8B289841AACAB36D8DA3C9ED04A
+      F81173C3864D842A03BF06DC564B7FD713F662EC361BCAA845F9694BFDD47D35
+      FE9BB4B6A8FBF596765F4CD82DF8592DFE28FE5E4BBB776BBAC0C60FF5DF103E
+      C7FF6D887303917CD63C8F429BB05F3C094D11CAEF439C527636E18F08BEAE99
+      EAB436E8FC99845D5A1B39563F085DF893E1DE0CC167CDB93AC07FB378CF0B42
+      AF4A1DE79B3FB5A86B4552B6525B95E33AAFEFCF105E23BC4CB88B709A78E64A
+      C28B062E6BBA2F31D787E0C72A2EB10F3611AEC16F3DDEDD4DD8070DDF823D1C
+      FBD31CC2BD846F312FFB0DF1FF52C29F78668EA55D3713FE32E807F6C5B7F1EE
+      9485BB109AD5A43FD8EF6F223C64D92BB2C66E3768A84CD90547A5F9D62F9FF9
+      D64F9FF9625FA836B4C1B67F7980B03E80DF8D7CC5B15ADE241718BBB761AE2E
+      13FC8D11B1FF3C94D13D82FB8F3683066B8BE09B7458DAC14F89F7F8F8EAB994
+      C37F5CF51F69FF2D76FE94DA780D3F9FB0029A88D7EE06C27CE87C979D44E844
+      2CD1FD8DF5DF5AC2140B97E3446F80DFBE6F286302E6AE8BC7B1F31DC2EFA887
+      6CCB0211576D5CD602C713BAD096F982FF4400770AE2BF5A271A04BF0BD73E47
+      1C955AF775BCB749CBE9B50B7E37AE7D8CBCEF3D1803E64ED2F2A10A6B04BF45
+      5C7F0FF9D62BF0DE66CBDE7A85E05F02ADA3EEBD0B7DDD645917F7C1C712A141
+      DED29ED969C8612A741AB406BFEF8B00FFE9859F9A6C06EA71C0C0EB878FF972
+      8615E88F168C4B17FC6341642EBD5476A3250EBE41B83A80FF2B61AB81CFD77E
+      098CFF6A7D974807ACDF29B1FEB7219FD02AFECE3BE246681CED19C5FCEE007E
+      A7837FBD87CB7B9AAB1C7C5E533F71F03F34EC9B755BA4E51AE43A7A6D80FFB0
+      2EDB6279F7A488FC624CBFEB96F99FEE77AA84DEAA43EE28A6BFE4FA3D803C5D
+      8F67CEDAFA5BC2C7E778F0AA859BB1DCCF04E6EF7A8E003F4473BAF8FAFD98FC
+      23F3F9FBE26231B68B71AD107EAAC8FA9BFAE344C2A786756350D3592E9B893C
+      86DC332C8D5833C68A8D25FDDF6B293354FFA70DFBD67C84FEB7F16DFA5FD559
+      F1D49E51FDDDEBD1FF317C9BFE0FADBF4BFFFBF821FADF357E65FD5F9EFFB1FB
+      FF42E6BF0D31FBFF7C11F35F47ECFC77F143E6BF0B21F3DF86D0F99F2FEFFF4B
+      62F3E01F4AAB3E9FC49DD97A25197E9E268B6BA1167B3E6489E1FB940B3F24C3
+      CF5FAD2FC0FF4732FF5EE6C7F13716C07F53F0EF207C1390FB57D891FCF7FC5E
+      7540EE5F615A401EA4D4F13F23E27F6360FCAFF6C4FF0EECD56CF17F6BC0B87D
+      602883F30C1B448E6A5772F8FCB03AEF9515FBC30E47FCE7B19D8D6706C1E5DC
+      E119620FAAC7FF66F12ECE953F8D5CC83A70ABF0AFCC85375AE2BF2A636572E8
+      8C52A581EB8AFF795167C55FA7F5872BFEE7B43AAFC4EF0EAD8C8C25FE7F071F
+      577556FD313B397C46C715FF8750464EEB8F1D62FC4CF19FCF4A6C0F8CFFD516
+      1FACF1C4FF0D05C6FF66F8D8C4E4E8B04AF451EC39A569C8B77F8531DC82B535
+      A4DDD3F1FD6B0FF4463DD6E883F01FDFDAD30EFFAAD1AEF377FDFD89FB0CFE54
+      ACFF8F19EE9D40F89AF0AC837F0ADE7DA7E11EB77D33E6A0CD26C377575BF654
+      7C5EED714FFB1BF0BD6C097256E33186DC877CE67C6E40DE7C2DFCFCA3E4D099
+      20FE06D787BADD1FA05F2B90E75B8398FC14E14CF4EBFE2272E07C3EEF39F8C2
+      F202CB18073FE2B97D4B1165DC97C4FDBF8111B57F012614E5BC
+    }
+  end
+  object ApplicationProperties1: TApplicationProperties
+    OnException = ApplicationProperties1Exception
+    Left = 300
+    Top = 2
   end
 end

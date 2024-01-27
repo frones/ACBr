@@ -504,6 +504,7 @@ type
   end;
 
   TACBrAbecsPinPadMediaType = (mtPNG, mtJPG, mtGIF);
+  TACBrAbecsMsgAlign = (alNone, alLeft, alRight, alCenter);
   TACBrAbecsMSGIDX = ( msgDigiteDDD, msgRedigiteDDD,
                        msgDigiteTelefone, msgRedigiteTelefone,
                        msgDigiteDDDeTelefone, msgRedigiteDDDeTelefone,
@@ -543,6 +544,7 @@ type
   TACBrAbecsPinPad = class( TACBrComponent )
   private
     fDevice: TACBrDevice;
+    fMsgAlign: TACBrAbecsMsgAlign;
     fOnEndCommand: TNotifyEvent;
     fOnStartCommand: TNotifyEvent;
     fOnWaitForResponse: TACBrAbecsExecEvent;
@@ -600,8 +602,7 @@ type
 
     function FormatSPE_DSPMSG(const ASPE_DSPMSG: String): String;
     function FormatMSG_S32(const AMSG: String): String;
-    function FormatMSG(const AMSG: String; MaxCols: Integer; MaxLines: Integer;
-      Pad: Byte = 0): String;
+    function FormatMSG(const AMSG: String; MaxCols: Integer; MaxLines: Integer): String;
 
   public
     // Control Commands
@@ -610,7 +611,8 @@ type
     procedure GIN(const GIN_ACQIDX: Byte = 0);
     procedure GIX; overload;
     procedure GIX(PP_DATA: array of Word); overload;
-    procedure CLO(const CLO_MSG: String = '');
+    procedure CLO(const CLO_MSG: String = ''); overload;
+    procedure CLO(const Line1: String; Line2: String); overload;
     procedure CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);
 
     // Basic Commands
@@ -651,6 +653,8 @@ type
     property LogLevel: Byte read fLogLevel write fLogLevel default 2;
     property LogTranslate: Boolean read fLogTranslate write fLogTranslate default True;
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
+
+    property MsgAlign: TACBrAbecsMsgAlign read fMsgAlign write fMsgAlign default alCenter;
 
     property OnStartCommand: TNotifyEvent read fOnStartCommand write fOnStartCommand;
     property OnWaitForResponse: TACBrAbecsExecEvent read fOnWaitForResponse write fOnWaitForResponse;
@@ -1435,6 +1439,7 @@ begin
   fLogLevel := 2;
   fLogTranslate := True;
   fTimeOut := TIMEOUT_RSP;
+  fMsgAlign := alCenter;
   fOnWriteLog := nil;
   fOnStartCommand := nil;
   fOnWaitForResponse := nil;
@@ -1526,13 +1531,13 @@ begin
     Exit;
 
   GIX([PP_DSPTXTSZ, PP_DSPGRSZ]);
-  s := fResponse.GetResponseFromTagValue(PP_DSPTXTSZ);
-  fDSPTXTSZ.Rows := StrToInt(copy(s,1,2));
-  fDSPTXTSZ.Cols := StrToInt(copy(s,3,2));
+  s := Trim(fResponse.GetResponseFromTagValue(PP_DSPTXTSZ));
+  fDSPTXTSZ.Rows := StrToIntDef(copy(s,1,2), 0);
+  fDSPTXTSZ.Cols := StrToIntDef(copy(s,3,2), 0);
 
-  s := fResponse.GetResponseFromTagValue(PP_DSPGRSZ);
-  fDSPGRSZ.Rows := StrToInt(copy(s,1,4));
-  fDSPGRSZ.Cols := StrToInt(copy(s,5,4));
+  s := Trim(fResponse.GetResponseFromTagValue(PP_DSPGRSZ));
+  fDSPGRSZ.Rows := StrToIntDef(copy(s,1,4), 0);
+  fDSPGRSZ.Cols := StrToIntDef(copy(s,5,4), 0);
 end;
 
 function TACBrAbecsPinPad.GetIsEnabled: Boolean;
@@ -1571,12 +1576,12 @@ end;
 
 function TACBrAbecsPinPad.FormatMSG_S32(const AMSG: String): String;
 begin
-  Result := FormatMSG(AMSG, 16, 2, 3);
+  Result := FormatMSG(AMSG, 16, 2);
   Result := ReplaceString(Result, CR, '');
 end;
 
 function TACBrAbecsPinPad.FormatMSG(const AMSG: String; MaxCols: Integer;
-  MaxLines: Integer; Pad: Byte): String;
+  MaxLines: Integer): String;
 var
   s: String;
   sl: TStringList;
@@ -1591,13 +1596,14 @@ begin
     r := min(sl.Count-1, MaxLines);
     for i := 0 to r do
     begin
-      s := sl[i];
-      if (Pad = 1) then
-        s:= PadRight(s, MaxCols)
-      else if (Pad = 2) then
-        s:= PadLeft(s, MaxCols)
-      else if (Pad = 3) then
-        s:= PadCenter(s, MaxCols);
+      s := Trim(sl[i]);
+      case Self.MsgAlign of
+        alLeft: s := PadRight(s, MaxCols);
+        alRight: s := PadLeft(s, MaxCols);
+        alCenter: s:= PadCenter(s, MaxCols);
+      else
+        s := sl[i];
+      end;
 
       Result := Result + s + CR;
     end;
@@ -2054,6 +2060,11 @@ begin
   ExecCommand;
   ClearSecureData;
   ClearCacheData;
+end;
+
+procedure TACBrAbecsPinPad.CLO(const Line1: String; Line2: String);
+begin
+  CLO( Line1 + CR + Line2);
 end;
 
 procedure TACBrAbecsPinPad.CLX(const SPE_DSPMSG_or_SPE_MFNAME: String);

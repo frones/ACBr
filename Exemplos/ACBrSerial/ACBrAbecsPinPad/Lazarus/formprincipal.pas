@@ -15,20 +15,22 @@ const
 
 type
 
-  { TForm1 }
+  { TfrMain }
 
-  TForm1 = class(TForm)
+  TfrMain = class(TForm)
     ACBrAbecsPinPad1: TACBrAbecsPinPad;
     ApplicationProperties1: TApplicationProperties;
     btActivate: TBitBtn;
     btCancel: TButton;
     btCEX: TButton;
     btCLO: TButton;
+    btDSP: TButton;
     btCLX: TButton;
     btDEX: TButton;
     btDMF: TButton;
     btDSI: TButton;
-    btDSP: TButton;
+    btDSPClear: TButton;
+    btDEXClear: TButton;
     btGCD: TButton;
     btGIN: TButton;
     btGIX: TButton;
@@ -49,24 +51,33 @@ type
     edMediaLoad: TEdit;
     edtCLOMsg1: TEdit;
     edtCLOMsg2: TEdit;
+    edtDSPMsg1: TEdit;
+    edtDSPMsg2: TEdit;
     gbCLX: TGroupBox;
+    gbDSX: TGroupBox;
     gbConfig: TGroupBox;
     gbConfig1: TGroupBox;
     gbExponent: TGroupBox;
     gbModulus: TGroupBox;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
+    gbDSP: TGroupBox;
     ImageList1: TImageList;
     imgMedia: TImage;
     Label1: TLabel;
     Label13: TLabel;
     Label14: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    lbCLXMedias: TListBox;
     mCLX: TMemo;
+    mDEX: TMemo;
     mExponent: TMemo;
     mLog: TMemo;
     mModulus: TMemo;
+    pgCLX: TPageControl;
     pCommands: TPanel;
     pCancelar: TPanel;
     pConfigLogMsg: TPanel;
@@ -85,7 +96,11 @@ type
     seLogLevel: TSpinEdit;
     sgMedia: TStringGrid;
     Splitter2: TSplitter;
-    TabSheet4: TTabSheet;
+    TabSheet1: TTabSheet;
+    tsCLOLines: TTabSheet;
+    tsCLOMedia: TTabSheet;
+    tsAsk: TTabSheet;
+    tsDisplay: TTabSheet;
     tsCLO: TTabSheet;
     tsConfig: TTabSheet;
     tsGIX: TTabSheet;
@@ -104,6 +119,8 @@ type
     procedure btDEXClick(Sender: TObject);
     procedure btDMFClick(Sender: TObject);
     procedure btDSIClick(Sender: TObject);
+    procedure btDEXClearClick(Sender: TObject);
+    procedure btDSPClearClick(Sender: TObject);
     procedure btDSPClick(Sender: TObject);
     procedure btGCDClick(Sender: TObject);
     procedure btGINClick(Sender: TObject);
@@ -137,12 +154,13 @@ type
     procedure ConfigACBrAbecsPinPad;
 
     function GetSelectedMedia: String;
+    procedure LoadMediaNames;
   public
 
   end;
 
 var
-  Form1: TForm1;
+  frMain: TfrMain;
 
 implementation
 
@@ -154,9 +172,9 @@ uses
 
 {$R *.lfm}
 
-{ TForm1 }
+{ TfrMain }
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TfrMain.FormCreate(Sender: TObject);
 var
   i: TACBrAbecsMsgAlign;
 begin
@@ -165,6 +183,7 @@ begin
   ConfigPanelCancel(False);
   ConfigPanelsCommands(False);
   pgcCommands.ActivePageIndex := 0;
+  pgCLX.ActivePageIndex := 0;
   FindSerialPorts(cbxPort.Items);
 
   For i := Low(TACBrAbecsMsgAlign) to High(TACBrAbecsMsgAlign) do
@@ -173,17 +192,17 @@ begin
   ReadParams;
 end;
 
-procedure TForm1.sbCleanMemoLogClick(Sender: TObject);
+procedure TfrMain.sbCleanMemoLogClick(Sender: TObject);
 begin
   mLog.Lines.Clear;
 end;
 
-procedure TForm1.sbGenerateKeysClick(Sender: TObject);
+procedure TfrMain.sbGenerateKeysClick(Sender: TObject);
 begin
   // TODO: Generate new Keys
 end;
 
-procedure TForm1.sbShowLogFileClick(Sender: TObject);
+procedure TfrMain.sbShowLogFileClick(Sender: TObject);
 var
   AFileLog: String;
 begin
@@ -195,12 +214,12 @@ begin
   OpenURL( AFileLog );
 end;
 
-function TForm1.ConfigFileName: String;
+function TfrMain.ConfigFileName: String;
 begin
   Result := ChangeFileExt( Application.ExeName,'.ini' ) ;
 end;
 
-procedure TForm1.SaveParams;
+procedure TfrMain.SaveParams;
 Var
   ini: TIniFile ;
 begin
@@ -218,7 +237,7 @@ begin
   end ;
 end;
 
-procedure TForm1.ReadParams;
+procedure TfrMain.ReadParams;
 Var
   ini: TIniFile ;
 begin
@@ -236,7 +255,7 @@ begin
   end ;
 end;
 
-procedure TForm1.FindSerialPorts(AStringList: TStrings);
+procedure TfrMain.FindSerialPorts(AStringList: TStrings);
 begin
   AStringList.Clear;
   ACBrAbecsPinPad1.Device.AcharPortasSeriais( AStringList );
@@ -246,18 +265,18 @@ begin
   {$EndIf}
 end;
 
-procedure TForm1.ShowResponseStatusBar;
+procedure TfrMain.ShowResponseStatusBar;
 begin
   sbResponse.Panels[0].Text := Format('STAT: %d', [ACBrAbecsPinPad1.Response.STAT]);
   sbResponse.Panels[1].Text := ReturnStatusCodeDescription(ACBrAbecsPinPad1.Response.STAT);
 end;
 
-procedure TForm1.AddStrToLog(const AStr: String);
+procedure TfrMain.AddStrToLog(const AStr: String);
 begin
   mLog.Lines.Add(AStr);
 end;
 
-procedure TForm1.ConfigPanelsCommands(IsActive: Boolean);
+procedure TfrMain.ConfigPanelsCommands(IsActive: Boolean);
 var
   i: Integer;
 begin
@@ -276,7 +295,7 @@ begin
     pgcCommands.Pages[i].Enabled := IsActive;
 end;
 
-procedure TForm1.ConfigPanelCancel(IsCancel: Boolean);
+procedure TfrMain.ConfigPanelCancel(IsCancel: Boolean);
 var
   i: Integer;
 begin
@@ -286,7 +305,7 @@ begin
 end;
 
 
-procedure TForm1.ConfigACBrAbecsPinPad;
+procedure TfrMain.ConfigACBrAbecsPinPad;
 begin
   ACBrAbecsPinPad1.LogFile := edLogFile.Text;
   ACBrAbecsPinPad1.LogLevel := seLogLevel.Value;
@@ -294,14 +313,37 @@ begin
   ACBrAbecsPinPad1.MsgAlign := TACBrAbecsMsgAlign(cbxMsgAlign.ItemIndex);
 end;
 
-function TForm1.GetSelectedMedia: String;
+function TfrMain.GetSelectedMedia: String;
 begin
   Result := '';
   if (sgMedia.Row > 0) then
     Result := sgMedia.Rows[sgMedia.Row].Text;
 end;
 
-procedure TForm1.btSerialClick(Sender: TObject);
+procedure TfrMain.LoadMediaNames;
+var
+  sl: TStringList;
+  i: Integer;
+begin
+  ACBrAbecsPinPad1.LMF;
+
+  sl := TStringList.Create;
+  try
+    ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_MFNAME, sl);
+    lbCLXMedias.Items.Assign(sl);
+
+    sgMedia.RowCount := 1;
+    for i := 0 to sl.Count-1 do
+    begin
+      sgMedia.RowCount := i+2;
+      sgMedia.Rows[i+1].Text := sl[i];
+    end;
+  finally
+    sl.Free;
+  end;
+end;
+
+procedure TfrMain.btSerialClick(Sender: TObject);
 var
   frConfiguraSerial: TfrConfiguraSerial;
 begin
@@ -321,14 +363,14 @@ begin
   end ;
 end;
 
-procedure TForm1.btSearchSerialPortsClick(Sender: TObject);
+procedure TfrMain.btSearchSerialPortsClick(Sender: TObject);
 begin
   FindSerialPorts(cbxPort.Items);
   if (cbxPort.ItemIndex < 0) and (cbxPort.Items.Count>0) then
     cbxPort.ItemIndex := 0;
 end;
 
-procedure TForm1.btActivateClick(Sender: TObject);
+procedure TfrMain.btActivateClick(Sender: TObject);
 begin
   SaveParams;
   ConfigACBrAbecsPinPad;
@@ -338,32 +380,32 @@ begin
     pgcCommands.ActivePageIndex := 1;
 end;
 
-procedure TForm1.ACBrAbecsPinPad1EndCommand(Sender: TObject);
+procedure TfrMain.ACBrAbecsPinPad1EndCommand(Sender: TObject);
 begin
   ConfigPanelCancel(False);
   ShowResponseStatusBar;
 end;
 
-procedure TForm1.ACBrAbecsPinPad1StartCommand(Sender: TObject);
+procedure TfrMain.ACBrAbecsPinPad1StartCommand(Sender: TObject);
 begin
   if ACBrAbecsPinPad1.Command.IsBlocking then
     ConfigPanelCancel(True);
 end;
 
-procedure TForm1.ACBrAbecsPinPad1WaitForResponse(var Cancel: Boolean);
+procedure TfrMain.ACBrAbecsPinPad1WaitForResponse(var Cancel: Boolean);
 begin
   Application.ProcessMessages;
   Cancel := not pCancelar.Visible;
 end;
 
-procedure TForm1.ACBrAbecsPinPad1WriteLog(const ALogLine: String;
+procedure TfrMain.ACBrAbecsPinPad1WriteLog(const ALogLine: String;
   var Tratado: Boolean);
 begin
   AddStrToLog(ALogLine);
   Tratado := False;
 end;
 
-procedure TForm1.ApplicationProperties1Exception(Sender: TObject; E: Exception);
+procedure TfrMain.ApplicationProperties1Exception(Sender: TObject; E: Exception);
 begin
   AddStrToLog('');
   AddStrToLog('** '+E.ClassName+' **');
@@ -371,7 +413,7 @@ begin
   ShowResponseStatusBar;
 end;
 
-procedure TForm1.btCEXClick(Sender: TObject);
+procedure TfrMain.btCEXClick(Sender: TObject);
 begin
   ACBrAbecsPinPad1.DSP('Pressione'+#13+'alguma tecla');
   ACBrAbecsPinPad1.CEX(True,False,False,False,False);
@@ -389,13 +431,12 @@ begin
 
 end;
 
-procedure TForm1.btDEXClick(Sender: TObject);
+procedure TfrMain.btDEXClick(Sender: TObject);
 begin
-  ACBrAbecsPinPad1.DEX('');
-  ACBrAbecsPinPad1.DEX('PROJETO ACBR'+#13+'projetoacbr.com.br'+#13+'(15) 2105-0750'+#13+'LINHA 4'+#13+'LINHA 5'+#13+'LINHA 6');
+  ACBrAbecsPinPad1.DEX(mDEX.Lines.Text);
 end;
 
-procedure TForm1.btDMFClick(Sender: TObject);
+procedure TfrMain.btDMFClick(Sender: TObject);
 var
   s: String;
 begin
@@ -405,7 +446,7 @@ begin
     if (MessageDlg( 'DELETE MEDIA?',
                     Format('Are you shure to delete Media %s',[s]),
                     mtConfirmation,
-                    mbYesNo, mbNo) = mrYes);
+                    mbYesNo, 0, mbNo) = mrYes) then
       ACBrAbecsPinPad1.DMF(s);
   end
   else
@@ -415,7 +456,7 @@ begin
   //ACBrAbecsPinPad1.DMF(['LOGOACBR', 'IMAGE01', 'QRCODE02']);
 end;
 
-procedure TForm1.btDSIClick(Sender: TObject);
+procedure TfrMain.btDSIClick(Sender: TObject);
 var
   s: String;
 begin
@@ -426,13 +467,22 @@ begin
     raise Exception.Create('No Media selected');
 end;
 
-procedure TForm1.btDSPClick(Sender: TObject);
+procedure TfrMain.btDEXClearClick(Sender: TObject);
 begin
-  ACBrAbecsPinPad1.DSP('');
-  ACBrAbecsPinPad1.DSP('PROJETO ACBR'+#13+'projetoacbr.com.br');
+  ACBrAbecsPinPad1.DEX();
 end;
 
-procedure TForm1.btGCDClick(Sender: TObject);
+procedure TfrMain.btDSPClearClick(Sender: TObject);
+begin
+  ACBrAbecsPinPad1.DSP();
+end;
+
+procedure TfrMain.btDSPClick(Sender: TObject);
+begin
+  ACBrAbecsPinPad1.DSP(edtDSPMsg1.Text, edtDSPMsg2.Text);
+end;
+
+procedure TfrMain.btGCDClick(Sender: TObject);
 var
   s: String;
 begin
@@ -442,20 +492,20 @@ begin
   ShowMessage(s);
 end;
 
-procedure TForm1.btGINClick(Sender: TObject);
+procedure TfrMain.btGINClick(Sender: TObject);
 begin
   ACBrAbecsPinPad1.GIN(2);
   ACBrAbecsPinPad1.GIN(3);
   ACBrAbecsPinPad1.GIN;
 end;
 
-procedure TForm1.btGIXClick(Sender: TObject);
+procedure TfrMain.btGIXClick(Sender: TObject);
 begin
   ACBrAbecsPinPad1.GIX([PP_MODEL]);
   ACBrAbecsPinPad1.GIX;
 end;
 
-procedure TForm1.btGKYClick(Sender: TObject);
+procedure TfrMain.btGKYClick(Sender: TObject);
 var
   i: Integer;
 begin
@@ -465,7 +515,7 @@ begin
   ShowMessage(IntToStr(i));
 end;
 
-procedure TForm1.btMediaLoadClick(Sender: TObject);
+procedure TfrMain.btMediaLoadClick(Sender: TObject);
 var
   FS: TFileStream;
 begin
@@ -477,27 +527,12 @@ begin
   end;
 end;
 
-procedure TForm1.btLMFClick(Sender: TObject);
-var
-  sl: TStringList;
-  i: Integer;
+procedure TfrMain.btLMFClick(Sender: TObject);
 begin
-  sgMedia.RowCount := 1;
-  ACBrAbecsPinPad1.LMF;
-  sl := TStringList.Create;
-  try
-    ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_MFNAME, sl);
-    for i := 0 to sl.Count-1 do
-    begin
-      sgMedia.RowCount := i+2;
-      sgMedia.Rows[i+1].Text := sl[i];
-    end;
-  finally
-    sl.Free;
-  end;
+  LoadMediaNames;
 end;
 
-procedure TForm1.btMNUClick(Sender: TObject);
+procedure TfrMain.btMNUClick(Sender: TObject);
 var
   s: String;
 begin
@@ -505,47 +540,56 @@ begin
   ShowMessage(s);
 end;
 
-procedure TForm1.btOPNClick(Sender: TObject);
+procedure TfrMain.btOPNClick(Sender: TObject);
 begin
   if not cbSecure.Checked then
     ACBrAbecsPinPad1.OPN
   else
     ACBrAbecsPinPad1.OPN( Trim(mModulus.Text), Trim(mExponent.Text) );
+
+  LoadMediaNames;
 end;
 
-procedure TForm1.btRMCClick(Sender: TObject);
+procedure TfrMain.btRMCClick(Sender: TObject);
 begin
   ACBrAbecsPinPad1.RMC('OPERAÇÃO'+#13+'TERMINADA');
 end;
 
-procedure TForm1.btSaveParamsClick(Sender: TObject);
+procedure TfrMain.btSaveParamsClick(Sender: TObject);
 begin
   SaveParams;
 end;
 
-procedure TForm1.btReadParmsClick(Sender: TObject);
+procedure TfrMain.btReadParmsClick(Sender: TObject);
 begin
   ReadParams;
 end;
 
-procedure TForm1.btCancelClick(Sender: TObject);
+procedure TfrMain.btCancelClick(Sender: TObject);
 begin
   ConfigPanelCancel(True);
 end;
 
-procedure TForm1.cbSecureChange(Sender: TObject);
+procedure TfrMain.cbSecureChange(Sender: TObject);
 begin
   pKeys.Enabled := cbSecure.Checked;
 end;
 
-procedure TForm1.btCLOClick(Sender: TObject);
+procedure TfrMain.btCLOClick(Sender: TObject);
 begin
   ACBrAbecsPinPad1.CLO(edtCLOMsg1.Text, edtCLOMsg2.Text);
 end;
 
-procedure TForm1.btCLXClick(Sender: TObject);
+procedure TfrMain.btCLXClick(Sender: TObject);
 begin
-  ACBrAbecsPinPad1.CLX(mCLX.Lines.Text);
+  if pgCLX.ActivePageIndex = 0 then
+    ACBrAbecsPinPad1.CLX(mCLX.Lines.Text)
+  else
+  begin
+    if (lbCLXMedias.ItemIndex >= 0) then
+      ACBrAbecsPinPad1.CLX(lbCLXMedias.Items[lbCLXMedias.ItemIndex]);
+  end;
+
   //ACBrAbecsPinPad1.CLX('LOGOACBR');
 end;
 

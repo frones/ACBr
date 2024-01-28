@@ -1,11 +1,11 @@
-object Form1: TForm1
+object frMain: TfrMain
   Left = 651
   Height = 628
   Top = 304
-  Width = 940
+  Width = 941
   Caption = 'Teste ABECS PinPad'
   ClientHeight = 628
-  ClientWidth = 940
+  ClientWidth = 941
   Constraints.MinWidth = 800
   DesignTimePPI = 120
   OnCreate = FormCreate
@@ -14,16 +14,16 @@ object Form1: TForm1
     Left = 0
     Height = 278
     Top = 350
-    Width = 940
+    Width = 941
     Align = alClient
     ClientHeight = 278
-    ClientWidth = 940
+    ClientWidth = 941
     TabOrder = 0
     object mLog: TMemo
       Left = 5
       Height = 168
       Top = 76
-      Width = 901
+      Width = 902
       Align = alClient
       BorderSpacing.Around = 4
       ReadOnly = True
@@ -32,7 +32,7 @@ object Form1: TForm1
       WordWrap = False
     end
     object sbCleanMemoLog: TSpeedButton
-      Left = 910
+      Left = 911
       Height = 176
       Top = 72
       Width = 29
@@ -45,7 +45,7 @@ object Form1: TForm1
       Left = 1
       Height = 29
       Top = 248
-      Width = 938
+      Width = 939
       Panels = <      
         item
           Text = 'STAT:'
@@ -61,17 +61,17 @@ object Form1: TForm1
       Left = 1
       Height = 71
       Top = 1
-      Width = 938
+      Width = 939
       Align = alTop
       ClientHeight = 71
-      ClientWidth = 938
+      ClientWidth = 939
       TabOrder = 2
       Visible = False
       object btCancel: TButton
         Left = 11
         Height = 49
         Top = 11
-        Width = 916
+        Width = 917
         Align = alClient
         Anchors = []
         BorderSpacing.Around = 10
@@ -85,41 +85,41 @@ object Form1: TForm1
     Left = 0
     Height = 340
     Top = 0
-    Width = 940
+    Width = 941
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 340
-    ClientWidth = 940
+    ClientWidth = 941
     Constraints.MinHeight = 330
     TabOrder = 1
     object pgcCommands: TPageControl
       Left = 0
       Height = 340
       Top = 0
-      Width = 940
+      Width = 941
       ActivePage = tsCLO
       Align = alClient
-      TabIndex = 5
+      TabIndex = 7
       TabOrder = 0
       object tsConfig: TTabSheet
         Caption = 'Config'
         ClientHeight = 307
-        ClientWidth = 932
+        ClientWidth = 933
         object gbConfig: TGroupBox
           Left = 0
           Height = 88
           Top = 0
-          Width = 932
+          Width = 933
           Align = alTop
           Caption = 'Serial Port'
           ClientHeight = 63
-          ClientWidth = 928
+          ClientWidth = 929
           TabOrder = 0
           object cbxPort: TComboBox
             Left = 24
             Height = 28
             Top = 18
-            Width = 421
+            Width = 422
             Anchors = [akTop, akLeft, akRight]
             ItemHeight = 20
             TabOrder = 0
@@ -127,7 +127,7 @@ object Form1: TForm1
           object btSerial: TSpeedButton
             AnchorSideLeft.Side = asrBottom
             AnchorSideBottom.Side = asrBottom
-            Left = 457
+            Left = 458
             Height = 28
             Top = 18
             Width = 31
@@ -139,7 +139,7 @@ object Form1: TForm1
           object btSearchSerialPorts: TSpeedButton
             AnchorSideLeft.Side = asrBottom
             AnchorSideBottom.Side = asrBottom
-            Left = 496
+            Left = 497
             Height = 28
             Top = 18
             Width = 31
@@ -153,28 +153,28 @@ object Form1: TForm1
           Left = 0
           Height = 96
           Top = 88
-          Width = 932
+          Width = 933
           Align = alTop
           BevelOuter = bvNone
           ClientHeight = 96
-          ClientWidth = 932
+          ClientWidth = 933
           TabOrder = 1
           object gbConfig1: TGroupBox
             Left = 0
             Height = 96
             Top = 0
-            Width = 613
+            Width = 614
             Align = alClient
             Caption = 'Log'
             ClientHeight = 71
-            ClientWidth = 609
+            ClientWidth = 610
             TabOrder = 0
             object edLogFile: TEdit
               Cursor = crIBeam
               Left = 24
               Height = 28
               Top = 31
-              Width = 423
+              Width = 424
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 0
             end
@@ -188,7 +188,7 @@ object Form1: TForm1
               ParentColor = False
             end
             object sbShowLogFile: TSpeedButton
-              Left = 459
+              Left = 460
               Height = 28
               Top = 31
               Width = 31
@@ -198,7 +198,7 @@ object Form1: TForm1
               ParentFont = False
             end
             object seLogLevel: TSpinEdit
-              Left = 519
+              Left = 520
               Height = 28
               Top = 31
               Width = 63
@@ -208,7 +208,7 @@ object Form1: TForm1
               Value = 2
             end
             object Label14: TLabel
-              Left = 519
+              Left = 520
               Height = 20
               Top = 7
               Width = 62
@@ -219,7 +219,7 @@ object Form1: TForm1
             end
           end
           object GroupBox2: TGroupBox
-            Left = 613
+            Left = 614
             Height = 96
             Top = 0
             Width = 319
@@ -263,7 +263,7 @@ object Form1: TForm1
           TabOrder = 3
         end
         object btActivate: TBitBtn
-          Left = 743
+          Left = 744
           Height = 56
           Top = 216
           Width = 136
@@ -278,12 +278,12 @@ object Form1: TForm1
       object tsOPN: TTabSheet
         Caption = 'Open'
         ClientHeight = 307
-        ClientWidth = 932
+        ClientWidth = 933
         object btOPN: TButton
           Left = 32
-          Height = 31
-          Top = 112
-          Width = 94
+          Height = 47
+          Top = 96
+          Width = 102
           Caption = 'OPN'
           TabOrder = 0
           OnClick = btOPNClick
@@ -298,7 +298,7 @@ object Form1: TForm1
           OnChange = cbSecureChange
         end
         object pKeys: TPanel
-          Left = 166
+          Left = 167
           Height = 307
           Top = 0
           Width = 766
@@ -366,10 +366,206 @@ object Form1: TForm1
           end
         end
       end
+      object tsGIX: TTabSheet
+        Caption = 'Information'
+        ClientHeight = 307
+        ClientWidth = 933
+        object btGIN: TButton
+          Left = 56
+          Height = 31
+          Top = 64
+          Width = 94
+          Caption = 'GIN'
+          TabOrder = 0
+          OnClick = btGINClick
+        end
+        object btGIX: TButton
+          Left = 392
+          Height = 31
+          Top = 112
+          Width = 94
+          Caption = 'GIX'
+          TabOrder = 1
+          OnClick = btGIXClick
+        end
+      end
+      object tsDisplay: TTabSheet
+        Caption = 'Display'
+        ClientHeight = 307
+        ClientWidth = 933
+        object gbDSP: TGroupBox
+          Left = 0
+          Height = 307
+          Top = 0
+          Width = 294
+          Align = alLeft
+          Caption = 'DSP'
+          ClientHeight = 282
+          ClientWidth = 290
+          TabOrder = 0
+          object Label4: TLabel
+            Left = 24
+            Height = 20
+            Top = 34
+            Width = 47
+            Caption = 'Linha 1'
+          end
+          object edtDSPMsg1: TEdit
+            Left = 24
+            Height = 28
+            Top = 58
+            Width = 240
+            Anchors = [akTop, akLeft, akRight]
+            Font.Height = -20
+            Font.Name = 'Courier'
+            MaxLength = 16
+            ParentFont = False
+            TabOrder = 0
+            Text = 'PROJETO ACBR'
+          end
+          object Label5: TLabel
+            Left = 24
+            Height = 20
+            Top = 96
+            Width = 47
+            Caption = 'Linha 2'
+          end
+          object edtDSPMsg2: TEdit
+            Left = 24
+            Height = 28
+            Top = 120
+            Width = 240
+            Anchors = [akTop, akLeft, akRight]
+            Font.Height = -20
+            Font.Name = 'Courier'
+            MaxLength = 16
+            ParentFont = False
+            TabOrder = 1
+            Text = 'ACBrAbecsPinPad'
+          end
+          object btDSP: TButton
+            Left = 24
+            Height = 39
+            Top = 176
+            Width = 102
+            Anchors = [akTop]
+            Caption = 'DSP'
+            TabOrder = 2
+            OnClick = btDSPClick
+          end
+          object btDSPClear: TButton
+            Left = 144
+            Height = 39
+            Top = 176
+            Width = 120
+            Anchors = [akTop]
+            Caption = 'Clear Display'
+            TabOrder = 3
+            OnClick = btDSPClearClick
+          end
+        end
+        object gbDSX: TGroupBox
+          Left = 294
+          Height = 307
+          Top = 0
+          Width = 639
+          Align = alClient
+          Caption = 'DEX'
+          ClientHeight = 282
+          ClientWidth = 635
+          TabOrder = 1
+          object mDEX: TMemo
+            Left = 24
+            Height = 137
+            Top = 40
+            Width = 584
+            Anchors = [akTop, akLeft, akRight]
+            Font.Height = -20
+            Font.Name = 'Courier'
+            Lines.Strings = (
+              'PROJETO ACBR'
+              'ACBrAbecsPinPad'
+              '----------------'
+              'TEF e PIX ?'
+              'É no ACBr'
+              '-+-+-+-+-+-+-+-+'
+            )
+            ParentFont = False
+            TabOrder = 0
+          end
+          object btDEX: TButton
+            Left = 168
+            Height = 39
+            Top = 208
+            Width = 110
+            Caption = 'DEX'
+            TabOrder = 1
+            OnClick = btDEXClick
+          end
+          object Label6: TLabel
+            Left = 24
+            Height = 20
+            Top = 16
+            Width = 33
+            Caption = 'Lines'
+          end
+          object btDEXClear: TButton
+            Left = 337
+            Height = 39
+            Top = 208
+            Width = 120
+            Anchors = [akTop]
+            Caption = 'Clear Display'
+            TabOrder = 2
+            OnClick = btDEXClearClick
+          end
+        end
+      end
+      object tsAsk: TTabSheet
+        Caption = 'Ask'
+        ClientHeight = 307
+        ClientWidth = 933
+        object btCEX: TButton
+          Left = 200
+          Height = 31
+          Top = 56
+          Width = 94
+          Caption = 'CEX'
+          TabOrder = 0
+          OnClick = btCEXClick
+        end
+        object btGKY: TButton
+          Left = 64
+          Height = 31
+          Top = 192
+          Width = 94
+          Caption = 'GKY'
+          TabOrder = 1
+          OnClick = btGKYClick
+        end
+        object btGCD: TButton
+          Left = 64
+          Height = 31
+          Top = 248
+          Width = 94
+          Caption = 'GCD'
+          TabOrder = 2
+          OnClick = btGCDClick
+        end
+        object btMNU: TButton
+          Left = 64
+          Height = 31
+          Top = 120
+          Width = 94
+          Caption = 'MNU'
+          TabOrder = 3
+          OnClick = btMNUClick
+        end
+      end
       object tsLMF: TTabSheet
         Caption = 'Multimedia'
         ClientHeight = 307
-        ClientWidth = 932
+        ClientWidth = 933
         object pMediaFile: TPanel
           Left = 0
           Height = 307
@@ -450,27 +646,27 @@ object Form1: TForm1
           Left = 372
           Height = 307
           Top = 0
-          Width = 560
+          Width = 561
           Align = alClient
           ClientHeight = 307
-          ClientWidth = 560
+          ClientWidth = 561
           TabOrder = 1
           object sbMedia: TScrollBox
             Left = 1
             Height = 259
             Top = 1
-            Width = 558
+            Width = 559
             HorzScrollBar.Page = 512
             VertScrollBar.Page = 255
             Align = alClient
             ClientHeight = 255
-            ClientWidth = 533
+            ClientWidth = 534
             TabOrder = 0
             object imgMedia: TImage
               Left = 0
               Height = 512
               Top = 0
-              Width = 533
+              Width = 534
               Align = alClient
               Center = True
               Picture.Data = {
@@ -1902,10 +2098,10 @@ object Form1: TForm1
             Left = 1
             Height = 46
             Top = 260
-            Width = 558
+            Width = 559
             Align = alBottom
             ClientHeight = 46
-            ClientWidth = 558
+            ClientWidth = 559
             TabOrder = 1
             object btMediaLoad: TButton
               Left = 24
@@ -1920,108 +2116,31 @@ object Form1: TForm1
               Left = 144
               Height = 28
               Top = 11
-              Width = 390
+              Width = 391
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 1
             end
           end
         end
       end
-      object TabSheet4: TTabSheet
-        Caption = 'TabSheet4'
+      object TabSheet1: TTabSheet
+        Caption = 'Card'
         ClientHeight = 307
-        ClientWidth = 932
-        object btDEX: TButton
-          Left = 680
-          Height = 31
-          Top = 128
-          Width = 94
-          Caption = 'DEX'
-          TabOrder = 0
-          OnClick = btDEXClick
-        end
-        object btMNU: TButton
-          Left = 64
-          Height = 31
-          Top = 120
-          Width = 94
-          Caption = 'MNU'
-          TabOrder = 1
-          OnClick = btMNUClick
-        end
+        ClientWidth = 933
         object btRMC: TButton
           Left = 64
           Height = 31
           Top = 56
           Width = 94
           Caption = 'RMC'
-          TabOrder = 2
-          OnClick = btRMCClick
-        end
-        object btDSP: TButton
-          Left = 680
-          Height = 31
-          Top = 64
-          Width = 94
-          Caption = 'DSP'
-          TabOrder = 3
-          OnClick = btDSPClick
-        end
-        object btCEX: TButton
-          Left = 200
-          Height = 31
-          Top = 56
-          Width = 94
-          Caption = 'CEX'
-          TabOrder = 4
-          OnClick = btCEXClick
-        end
-        object btGKY: TButton
-          Left = 64
-          Height = 31
-          Top = 192
-          Width = 94
-          Caption = 'GKY'
-          TabOrder = 5
-          OnClick = btGKYClick
-        end
-        object btGCD: TButton
-          Left = 64
-          Height = 31
-          Top = 248
-          Width = 94
-          Caption = 'GCD'
-          TabOrder = 6
-          OnClick = btGCDClick
-        end
-      end
-      object tsGIX: TTabSheet
-        Caption = 'Information'
-        ClientHeight = 307
-        ClientWidth = 932
-        object btGIN: TButton
-          Left = 392
-          Height = 31
-          Top = 186
-          Width = 94
-          Caption = 'GIN'
           TabOrder = 0
-          OnClick = btGINClick
-        end
-        object btGIX: TButton
-          Left = 392
-          Height = 31
-          Top = 112
-          Width = 94
-          Caption = 'GIX'
-          TabOrder = 1
-          OnClick = btGIXClick
+          OnClick = btRMCClick
         end
       end
       object tsCLO: TTabSheet
         Caption = 'Close'
         ClientHeight = 307
-        ClientWidth = 932
+        ClientWidth = 933
         object GroupBox1: TGroupBox
           Left = 0
           Height = 307
@@ -2087,45 +2206,69 @@ object Form1: TForm1
           Left = 294
           Height = 307
           Top = 0
-          Width = 638
+          Width = 639
           Align = alClient
           Caption = 'CLX'
           ClientHeight = 282
-          ClientWidth = 634
+          ClientWidth = 635
           TabOrder = 1
-          object mCLX: TMemo
-            Left = 24
-            Height = 137
-            Top = 40
-            Width = 600
-            Font.Height = -20
-            Font.Name = 'Courier'
-            Lines.Strings = (
-              'PROJETO ACBR'
-              'ACBrAbecsPinPad'
-              '----------------'
-              'TEF e PIX ?'
-              'É no ACBr'
-              '-+-+-+-+-+-+-+-+'
-            )
-            ParentFont = False
-            TabOrder = 0
-          end
           object btCLX: TButton
-            Left = 271
+            Left = 272
             Height = 47
-            Top = 208
+            Top = 216
             Width = 110
             Caption = 'CLX'
-            TabOrder = 1
+            TabOrder = 0
             OnClick = btCLXClick
           end
-          object Label3: TLabel
+          object pgCLX: TPageControl
             Left = 24
-            Height = 20
-            Top = 16
-            Width = 33
-            Caption = 'Lines'
+            Height = 187
+            Top = 13
+            Width = 592
+            ActivePage = tsCLOMedia
+            Anchors = [akTop, akLeft, akRight]
+            TabIndex = 1
+            TabOrder = 1
+            object tsCLOLines: TTabSheet
+              Caption = 'Lines'
+              ClientHeight = 154
+              ClientWidth = 584
+              object mCLX: TMemo
+                Left = 0
+                Height = 154
+                Top = 0
+                Width = 584
+                Align = alClient
+                Anchors = [akTop, akLeft, akRight]
+                Font.Height = -20
+                Font.Name = 'Courier'
+                Lines.Strings = (
+                  'PROJETO ACBR'
+                  'ACBrAbecsPinPad'
+                  '----------------'
+                  'TEF e PIX ?'
+                  'É no ACBr'
+                  '-+-+-+-+-+-+-+-+'
+                )
+                ParentFont = False
+                TabOrder = 0
+              end
+            end
+            object tsCLOMedia: TTabSheet
+              Caption = 'Media'
+              ClientHeight = 154
+              ClientWidth = 584
+              object lbCLXMedias: TListBox
+                Left = 0
+                Height = 154
+                Top = 0
+                Width = 584
+                Align = alClient
+                ItemHeight = 0
+                TabOrder = 0
+              end
+            end
           end
         end
       end
@@ -2136,7 +2279,7 @@ object Form1: TForm1
     Left = 0
     Height = 10
     Top = 340
-    Width = 940
+    Width = 941
     Align = alTop
     ResizeAnchor = akTop
   end

@@ -116,7 +116,7 @@
       <Unit>
         <Filename Value="formprincipal.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
+        <ComponentName Value="frMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="FormPrincipal"/>

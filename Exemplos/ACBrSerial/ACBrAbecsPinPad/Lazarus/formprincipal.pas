@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, Spin, ComCtrls, ACBrAbecsPinPad;
+  Buttons, Spin, ComCtrls, Grids, ACBrAbecsPinPad;
 
 const
   CSerialSection = 'Serial';
@@ -33,29 +33,31 @@ type
     btGIN: TButton;
     btGIX: TButton;
     btGKY: TButton;
-    btReadParms: TBitBtn;
     btLMF: TButton;
     btMediaLoad: TButton;
     btMNU: TButton;
     btOPN: TButton;
-    btSearchSerialPorts: TSpeedButton;
+    btReadParms: TBitBtn;
     btRMC: TButton;
     btSaveParams: TBitBtn;
+    btSearchSerialPorts: TSpeedButton;
     btSerial: TSpeedButton;
     cbSecure: TCheckBox;
-    cbxPort: TComboBox;
     cbxMsgAlign: TComboBox;
+    cbxPort: TComboBox;
     edLogFile: TEdit;
+    edMediaLoad: TEdit;
     edtCLOMsg1: TEdit;
     edtCLOMsg2: TEdit;
+    gbCLX: TGroupBox;
     gbConfig: TGroupBox;
     gbConfig1: TGroupBox;
     gbExponent: TGroupBox;
     gbModulus: TGroupBox;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
-    gbCLX: TGroupBox;
     ImageList1: TImageList;
+    imgMedia: TImage;
     Label1: TLabel;
     Label13: TLabel;
     Label14: TLabel;
@@ -65,21 +67,30 @@ type
     mExponent: TMemo;
     mLog: TMemo;
     mModulus: TMemo;
-    Panel1: TPanel;
+    pCommands: TPanel;
     pCancelar: TPanel;
+    pConfigLogMsg: TPanel;
     pgcCommands: TPageControl;
+    pKeys: TPanel;
     pLogs: TPanel;
-    sbShowLogFile: TSpeedButton;
+    pMedia: TPanel;
+    pMediaFile: TPanel;
+    pMediaLoad: TPanel;
+    pMFButtons: TPanel;
     sbCleanMemoLog: TSpeedButton;
-    seLogLevel: TSpinEdit;
-    Splitter1: TSplitter;
+    sbGenerateKeys: TSpeedButton;
+    sbMedia: TScrollBox;
     sbResponse: TStatusBar;
-    tsConfig: TTabSheet;
-    tsOPN: TTabSheet;
-    tsCLO: TTabSheet;
-    tsLMF: TTabSheet;
+    sbShowLogFile: TSpeedButton;
+    seLogLevel: TSpinEdit;
+    sgMedia: TStringGrid;
+    Splitter2: TSplitter;
     TabSheet4: TTabSheet;
+    tsCLO: TTabSheet;
+    tsConfig: TTabSheet;
     tsGIX: TTabSheet;
+    tsLMF: TTabSheet;
+    tsOPN: TTabSheet;
     procedure ACBrAbecsPinPad1EndCommand(Sender: TObject);
     procedure ACBrAbecsPinPad1StartCommand(Sender: TObject);
     procedure ACBrAbecsPinPad1WaitForResponse(var Cancel: Boolean);
@@ -110,6 +121,8 @@ type
     procedure btCancelClick(Sender: TObject);
     procedure cbSecureChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure sbCleanMemoLogClick(Sender: TObject);
+    procedure sbGenerateKeysClick(Sender: TObject);
     procedure sbShowLogFileClick(Sender: TObject);
   protected
     function ConfigFileName: String;
@@ -122,6 +135,8 @@ type
     procedure ConfigPanelsCommands(IsActive: Boolean);
     procedure ConfigPanelCancel(IsCancel: Boolean);
     procedure ConfigACBrAbecsPinPad;
+
+    function GetSelectedMedia: String;
   public
 
   end;
@@ -156,6 +171,16 @@ begin
     cbxMsgAlign.Items.Add( GetEnumName(TypeInfo(TACBrAbecsMsgAlign), integer(I) ) ) ;
 
   ReadParams;
+end;
+
+procedure TForm1.sbCleanMemoLogClick(Sender: TObject);
+begin
+  mLog.Lines.Clear;
+end;
+
+procedure TForm1.sbGenerateKeysClick(Sender: TObject);
+begin
+  // TODO: Generate new Keys
 end;
 
 procedure TForm1.sbShowLogFileClick(Sender: TObject);
@@ -269,6 +294,13 @@ begin
   ACBrAbecsPinPad1.MsgAlign := TACBrAbecsMsgAlign(cbxMsgAlign.ItemIndex);
 end;
 
+function TForm1.GetSelectedMedia: String;
+begin
+  Result := '';
+  if (sgMedia.Row > 0) then
+    Result := sgMedia.Rows[sgMedia.Row].Text;
+end;
+
 procedure TForm1.btSerialClick(Sender: TObject);
 var
   frConfiguraSerial: TfrConfiguraSerial;
@@ -364,15 +396,34 @@ begin
 end;
 
 procedure TForm1.btDMFClick(Sender: TObject);
+var
+  s: String;
 begin
-  ACBrAbecsPinPad1.DMF('LOGOACBR');
-  ACBrAbecsPinPad1.DMF(['LOGOACBR', 'AAA']);
+  s := GetSelectedMedia;
+  if (s <> '') then
+  begin
+    if (MessageDlg( 'DELETE MEDIA?',
+                    Format('Are you shure to delete Media %s',[s]),
+                    mtConfirmation,
+                    mbYesNo, mbNo) = mrYes);
+      ACBrAbecsPinPad1.DMF(s);
+  end
+  else
+    raise Exception.Create('No Media selected');
+
+  // Example how to delete multiple files (using Array of String)
+  //ACBrAbecsPinPad1.DMF(['LOGOACBR', 'IMAGE01', 'QRCODE02']);
 end;
 
 procedure TForm1.btDSIClick(Sender: TObject);
+var
+  s: String;
 begin
-  ACBrAbecsPinPad1.DSI('LOGOACBR');
-//  ACBrAbecsPinPad1.DSI('352233FF');
+  s := GetSelectedMedia;
+  if (s <> '') then
+    ACBrAbecsPinPad1.DSI(s)
+  else
+    raise Exception.Create('No Media selected');
 end;
 
 procedure TForm1.btDSPClick(Sender: TObject);
@@ -427,8 +478,23 @@ begin
 end;
 
 procedure TForm1.btLMFClick(Sender: TObject);
+var
+  sl: TStringList;
+  i: Integer;
 begin
+  sgMedia.RowCount := 1;
   ACBrAbecsPinPad1.LMF;
+  sl := TStringList.Create;
+  try
+    ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_MFNAME, sl);
+    for i := 0 to sl.Count-1 do
+    begin
+      sgMedia.RowCount := i+2;
+      sgMedia.Rows[i+1].Text := sl[i];
+    end;
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TForm1.btMNUClick(Sender: TObject);
@@ -469,8 +535,7 @@ end;
 
 procedure TForm1.cbSecureChange(Sender: TObject);
 begin
-  gbModulus.Visible := cbSecure.Checked;
-  gbExponent.Visible := cbSecure.Checked;
+  pKeys.Enabled := cbSecure.Checked;
 end;
 
 procedure TForm1.btCLOClick(Sender: TObject);

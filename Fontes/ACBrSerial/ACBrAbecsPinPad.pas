@@ -480,6 +480,7 @@ type
     function GetResponseData: AnsiString;
     function GetResponseFromTagValue(ATag: Word): AnsiString; overload;
     procedure GetResponseFromTagValue(ATag: Word; AStream: TStream); overload;
+    procedure GetResponseFromTagValue(ATag: Word; AStringList: TStrings); overload;
     property STAT: Integer read fSTAT;
   end;
 
@@ -1308,6 +1309,24 @@ begin
     for i := 0 to tlvl.Count-1 do
       if (tlvl[i].ID = ATag) then
         WriteStrToStream(AStream, tlvl[i].Data);
+  finally
+    tlvl.Free;
+  end;
+end;
+
+procedure TACBrAbecsResponse.GetResponseFromTagValue(ATag: Word;
+  AStringList: TStrings);
+var
+  i: Integer;
+  tlvl: TACBrAbecsTLVList;
+begin
+  AStringList.Clear;
+  tlvl := TACBrAbecsTLVList.Create;
+  try
+    BlockListToTLVList(Blocks, tlvl);
+    for i := 0 to tlvl.Count-1 do
+      if (tlvl[i].ID = ATag) then
+        AStringList.Add(tlvl[i].Data);
   finally
     tlvl.Free;
   end;

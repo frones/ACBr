@@ -623,8 +623,9 @@ type
       VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean;
       VerifyCTLSPresence: Boolean; ASPE_TIMEOUT: Byte = 0;
       const ASPE_PANMASK_LLRR: String = ''); overload;
-    procedure DEX(const DEX_MSG: String);
-    procedure DSP(const DSP_MSG: String = '');
+    procedure DEX(const DEX_MSG: String = '');
+    procedure DSP(const DSP_MSG: String = ''); overload;
+    procedure DSP(const Line1: String; Line2: String); overload;
     function GCD(ASPE_MSGIDX: Word; ASPE_MINDIG: Byte = 0; ASPE_MAXDIG: Byte = 0;
       ASPE_TIMEOUT: Byte = 0): String; overload;
     function GCD(MSGIDX: TACBrAbecsMSGIDX; ASPE_TIMEOUT: Byte = 0): String; overload;
@@ -2199,6 +2200,11 @@ begin
   fCommand.ID := 'DSP';
   fCommand.AddParamFromData(FormatMSG_S32(DSP_MSG));
   ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.DSP(const Line1: String; Line2: String);
+begin
+  DSP(Line1 + CR + Line2);
 end;
 
 function TACBrAbecsPinPad.GCD(ASPE_MSGIDX: Word; ASPE_MINDIG: Byte;

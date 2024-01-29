@@ -139,6 +139,8 @@ begin
 end;
 
 function TNFSeR_SoftPlan.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+var
+  ValorLiq: Double;
 begin
   Result := True;
 
@@ -199,6 +201,20 @@ begin
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
   	// <valorISSQNSubstituicao>0</valorISSQNSubstituicao>
+
+    with NFSe.Servico.Valores do
+    begin
+      if ValorIss <> 0 then
+        ValorIssRetido := ValorIss
+      else
+        ValorIssRetido := 0;
+
+      ValorLiq := ValorServicos - ValorIssRetido;
+
+      ValorLiquidoNfse := ValorLiq;
+
+      ValorTotalNotaFiscal := ValorServicos;
+    end;
   end;
 
   LerCampoLink;

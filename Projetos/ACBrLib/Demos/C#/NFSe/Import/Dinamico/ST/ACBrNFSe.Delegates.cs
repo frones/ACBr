@@ -115,6 +115,9 @@ namespace ACBrLib.NFSe
         public delegate int NFSE_ImprimirPDF();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFSE_SalvarPDF(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFSE_ConsultarNFSeServicoPrestadoPorNumero(string aNumero, int aPagina, DateTime aDataInicial, DateTime aDataFinal, int aTipoPeriodo, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -202,6 +205,7 @@ namespace ACBrLib.NFSe
             AddMethod<NFSE_EnviarEmail>("NFSE_EnviarEmail");
             AddMethod<NFSE_Imprimir>("NFSE_Imprimir");
             AddMethod<NFSE_ImprimirPDF>("NFSE_ImprimirPDF");
+            AddMethod<NFSE_SalvarPDF>("NFSE_SalvarPDF");
             AddMethod<NFSE_ConsultarNFSeServicoPrestadoPorNumero>("NFSE_ConsultarNFSeServicoPrestadoPorNumero");
             AddMethod<NFSE_ConsultarNFSeServicoPrestadoPorPeriodo>("NFSE_ConsultarNFSeServicoPrestadoPorPeriodo");
             AddMethod<NFSE_ConsultarNFSeServicoPrestadoPorTomador>("NFSE_ConsultarNFSeServicoPrestadoPorTomador");

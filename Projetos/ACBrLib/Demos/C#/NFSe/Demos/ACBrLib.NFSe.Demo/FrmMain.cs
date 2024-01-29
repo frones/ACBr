@@ -1204,5 +1204,35 @@ namespace ACBrLibNFSe.Demo
                 MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private async void btnSalvarPDFStream_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml NFSe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                ACBrNFSe.LimparLista();
+                ACBrNFSe.CarregarXML(arquivoXml);
+
+                var nomeArquivo = Helpers.SaveFile("Salvar em PDF (*.pdf)|*.pdf|Todos os Arquivos (*.*)|*.*");
+
+                using (FileStream aStream = File.Create(nomeArquivo))
+                {
+                    ACBrNFSe.ImprimirPDF(aStream);
+                    byte[] buffer = new Byte[aStream.Length];
+                    await aStream.ReadAsync(buffer, 0, buffer.Length);
+                    await aStream.FlushAsync();
+                    aStream.Seek(0, SeekOrigin.End);
+                    await aStream.WriteAsync(buffer, 0, buffer.Length);
+                }
+                rtbRespostas.AppendLine($"PDF Salvo em: {nomeArquivo}");
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

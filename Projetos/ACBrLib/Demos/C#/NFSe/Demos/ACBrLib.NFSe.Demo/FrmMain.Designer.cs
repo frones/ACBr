@@ -35,6 +35,9 @@
             this.tbpConfiguracoes = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tbpGeral = new System.Windows.Forms.TabPage();
+            this.txtServicosIni = new System.Windows.Forms.TextBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.btnServicosIni = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.cmbLayoutNFSe = new System.Windows.Forms.ComboBox();
             this.ckbConsultarAposCancelar = new System.Windows.Forms.CheckBox();
@@ -229,9 +232,7 @@
             this.btnConsultarNFSePorChave = new System.Windows.Forms.Button();
             this.btnConsultarDPSPorChave = new System.Windows.Forms.Button();
             this.btnEnviarEvento = new System.Windows.Forms.Button();
-            this.txtServicosIni = new System.Windows.Forms.TextBox();
-            this.label54 = new System.Windows.Forms.Label();
-            this.btnServicosIni = new System.Windows.Forms.Button();
+            this.btnSalvarPDFStream = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -350,6 +351,33 @@
             this.tbpGeral.TabIndex = 0;
             this.tbpGeral.Text = "Geral";
             this.tbpGeral.UseVisualStyleBackColor = true;
+            // 
+            // txtServicosIni
+            // 
+            this.txtServicosIni.Location = new System.Drawing.Point(6, 288);
+            this.txtServicosIni.Name = "txtServicosIni";
+            this.txtServicosIni.Size = new System.Drawing.Size(238, 20);
+            this.txtServicosIni.TabIndex = 46;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.Location = new System.Drawing.Point(3, 272);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(142, 13);
+            this.label54.TabIndex = 47;
+            this.label54.Text = "Arquivo .ini de Serviços";
+            // 
+            // btnServicosIni
+            // 
+            this.btnServicosIni.Location = new System.Drawing.Point(243, 287);
+            this.btnServicosIni.Name = "btnServicosIni";
+            this.btnServicosIni.Size = new System.Drawing.Size(27, 22);
+            this.btnServicosIni.TabIndex = 48;
+            this.btnServicosIni.Text = "...";
+            this.btnServicosIni.UseVisualStyleBackColor = true;
+            this.btnServicosIni.Click += new System.EventHandler(this.btnServicosIni_Click);
             // 
             // label11
             // 
@@ -1931,6 +1959,7 @@
             // 
             // tbpEnvios
             // 
+            this.tbpEnvios.Controls.Add(this.btnSalvarPDFStream);
             this.tbpEnvios.Controls.Add(this.btnLimparListaNFSe);
             this.tbpEnvios.Controls.Add(this.btnImprimirNFSe);
             this.tbpEnvios.Controls.Add(this.btnGravarXMLNFSe);
@@ -2414,32 +2443,15 @@
             this.btnEnviarEvento.UseVisualStyleBackColor = true;
             this.btnEnviarEvento.Click += new System.EventHandler(this.btnEnviarEvento_Click);
             // 
-            // txtServicosIni
+            // btnSalvarPDFStream
             // 
-            this.txtServicosIni.Location = new System.Drawing.Point(6, 288);
-            this.txtServicosIni.Name = "txtServicosIni";
-            this.txtServicosIni.Size = new System.Drawing.Size(238, 20);
-            this.txtServicosIni.TabIndex = 46;
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label54.Location = new System.Drawing.Point(3, 272);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(142, 13);
-            this.label54.TabIndex = 47;
-            this.label54.Text = "Arquivo .ini de Serviços";
-            // 
-            // btnServicosIni
-            // 
-            this.btnServicosIni.Location = new System.Drawing.Point(243, 287);
-            this.btnServicosIni.Name = "btnServicosIni";
-            this.btnServicosIni.Size = new System.Drawing.Size(27, 22);
-            this.btnServicosIni.TabIndex = 48;
-            this.btnServicosIni.Text = "...";
-            this.btnServicosIni.UseVisualStyleBackColor = true;
-            this.btnServicosIni.Click += new System.EventHandler(this.btnServicosIni_Click);
+            this.btnSalvarPDFStream.Location = new System.Drawing.Point(189, 209);
+            this.btnSalvarPDFStream.Name = "btnSalvarPDFStream";
+            this.btnSalvarPDFStream.Size = new System.Drawing.Size(177, 23);
+            this.btnSalvarPDFStream.TabIndex = 18;
+            this.btnSalvarPDFStream.Text = "Salvar PDF (Stream)";
+            this.btnSalvarPDFStream.UseVisualStyleBackColor = true;
+            this.btnSalvarPDFStream.Click += new System.EventHandler(this.btnSalvarPDFStream_Click);
             // 
             // FrmMain
             // 
@@ -2711,6 +2723,7 @@
         private System.Windows.Forms.TextBox txtServicosIni;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Button btnServicosIni;
+        private System.Windows.Forms.Button btnSalvarPDFStream;
     }
 }
 

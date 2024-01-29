@@ -7,6 +7,7 @@ using System.Text;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
 using ACBrLib.NFSe;
+using System.IO;
 
 namespace ACBrLib.NFSe
 {
@@ -407,6 +408,22 @@ namespace ACBrLib.NFSe
             var ret = ExecuteMethod(() => method(libHandle));
 
             CheckResult(ret);
+        }
+
+        public void ImprimirPDF(Stream aStream)
+        {
+            if (aStream == null) throw new ArgumentNullException(nameof(aStream));
+
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<NFSE_SalvarPDF>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var pdf = ProcessResult(buffer, bufferLen);
+            Base64ToStream(pdf, aStream);
         }
 
         public string ConsultarNFSeServicoPrestadoPorNumero(string aNumero, int aPagina, DateTime aDataInicial, DateTime aDataFinal, int aTipoPeriodo)

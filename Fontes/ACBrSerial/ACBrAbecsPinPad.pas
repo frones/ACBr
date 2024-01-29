@@ -241,6 +241,7 @@ const
   PP_MODEL     = $8003; // A..20 Model / hardware version, in the format: “xx...xx;m...m”, where: “xx...xx” is the device name; and “m...m” is the memory capacity (“512KB”, “1MB”, “2MB”, ...).
   PP_MNNAME    = $8004; // A..20 Name of the manufacturer (free format).
   PP_CAPAB     = $8005; // A10 Pinpad capabilities: “0xxxxxxxxx” = Does not support CTLS; “1xxxxxxxxx” = Supports CTLS. “x0xxxxxxxx” = Display is not graphic; “x1xxxxxxxx” = Monochromatic graphic display; “x2xxxxxxxx” = Color graphic display. “xx00000000” = RFU. PP_SOVER (†) 8006h A..20 Basic software or operating system version (free format).
+  PP_SOVER     = $8006; // Basic software or operating system version (free format).
   PP_SPECVER   = $8007; // A4 Specification version, in “V.VV” format (in this case, fixed “2.12”)
   PP_MANVERS   = $8008; // A16 “Manager” application version, in the format “VVV.VV YYMMDD”.
   PP_APPVERS   = $8009; // A16 “Abecs” application version, in the format “VVV.VV YYMMDD”.
@@ -536,6 +537,23 @@ type
     Cols: LongWord;
   end;
 
+  TACBrAbecsPinPadCapabilities = record
+    SerialNumber: String;
+    PartNumber: String;
+    Model: String;
+    Memory: String;
+    Manufacturer: String;
+    SupportContactless: Boolean;
+    DisplayIsGraphic: Boolean;
+    DisplayIsColor: Boolean;
+    SpecificationVersion: Double;
+    DisplayTextModeDimensions: TACBrAbecsDimension;
+    DisplayGraphicPixels: TACBrAbecsDimension;
+    MediaPNGisSupported: Boolean;
+    MediaJPGisSupported: Boolean;
+    MediaGIFisSupported: Boolean;
+  end;
+
   TACBrAbecsExecEvent = procedure (var Cancel: Boolean) of object;
 
   { TACBrAbecsPinPad }
@@ -563,8 +581,7 @@ type
     fSPEKmod: String;
     fSPEKpub: String;
     fPinpadKSec: String;
-    fDSPTXTSZ: TACBrAbecsDimension;
-    fDSPGRSZ: TACBrAbecsDimension;
+    fPinPadCapabilities: TACBrAbecsPinPadCapabilities;
 
     function GetIsEnabled: Boolean;
     function GetPort: String;
@@ -589,7 +606,6 @@ type
     procedure ClearSecureData;
     procedure ClearCacheData;
     procedure LogApplicationLayer(AApplicationLayer: TACBrAbecsApplicationLayer);
-    procedure GetPinPadSpecs;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -647,6 +663,7 @@ type
     procedure DSI(const ASPE_MFNAME: String);
 
     procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
+    function GetPinPadCapabilities: TACBrAbecsPinPadCapabilities;
   published
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
@@ -673,6 +690,7 @@ implementation
 
 uses
   DateUtils, Math, TypInfo, StrUtils,
+  ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
   ACBrUtil.Strings,
@@ -782,6 +800,7 @@ begin
     PP_MODEL      : Result := 'PP_MODEL';
     PP_MNNAME     : Result := 'PP_MNNAME';
     PP_CAPAB      : Result := 'PP_CAPAB';
+    PP_SOVER      : Result := 'PP_SOVER';
     PP_SPECVER    : Result := 'PP_SPECVER';
     PP_MANVERS    : Result := 'PP_MANVERS';
     PP_APPVERS    : Result := 'PP_APPVERS';
@@ -1514,10 +1533,31 @@ end;
 
 procedure TACBrAbecsPinPad.ClearCacheData;
 begin
-  fDSPTXTSZ.Cols := 0;
-  fDSPTXTSZ.Rows := 0;
-  fDSPGRSZ.Cols := 0;
-  fDSPGRSZ.Rows := 0;
+  with fPinPadCapabilities do
+  begin
+    PartNumber := '';
+    SerialNumber := '';
+    Model := '';
+    Manufacturer := '';
+    Memory := '';
+    SupportContactless := False;
+    DisplayIsGraphic := False;
+    DisplayIsColor := False;
+    SpecificationVersion := 0;
+    MediaPNGisSupported := False;
+    MediaJPGisSupported := False;
+    MediaGIFisSupported := False;
+    with DisplayTextModeDimensions do
+    begin
+      Rows := 0;
+      Cols := 0;
+    end;
+    with DisplayGraphicPixels do
+    begin
+      Rows := 0;
+      Cols := 0;
+    end;
+  end;
 end;
 
 procedure TACBrAbecsPinPad.LogApplicationLayer(AApplicationLayer: TACBrAbecsApplicationLayer);
@@ -1561,21 +1601,60 @@ begin
   end;
 end;
 
-procedure TACBrAbecsPinPad.GetPinPadSpecs;
+function TACBrAbecsPinPad.GetPinPadCapabilities: TACBrAbecsPinPadCapabilities;
 var
   s: String;
+  p: Integer;
 begin
-  if (fDSPTXTSZ.Rows <> 0) then
-    Exit;
+  if (fPinPadCapabilities.SerialNumber = '') then
+  begin
+    if (Self.LogLevel > 1) then
+      RegisterLog('- GetPinPadCapabilities');
 
-  GIX([PP_DSPTXTSZ, PP_DSPGRSZ]);
-  s := Trim(fResponse.GetResponseFromTagValue(PP_DSPTXTSZ));
-  fDSPTXTSZ.Rows := StrToIntDef(copy(s,1,2), 0);
-  fDSPTXTSZ.Cols := StrToIntDef(copy(s,3,2), 0);
+    GIX([PP_SERNUM, PP_PARTNBR, PP_MODEL, PP_MNNAME, PP_CAPAB, PP_SPECVER, PP_DSPTXTSZ, PP_DSPGRSZ, PP_MFSUP]);
 
-  s := Trim(fResponse.GetResponseFromTagValue(PP_DSPGRSZ));
-  fDSPGRSZ.Rows := StrToIntDef(copy(s,1,4), 0);
-  fDSPGRSZ.Cols := StrToIntDef(copy(s,5,4), 0);
+    with fPinPadCapabilities do
+    begin
+      SerialNumber := Trim(fResponse.GetResponseFromTagValue(PP_SERNUM));
+      PartNumber := Trim(fResponse.GetResponseFromTagValue(PP_PARTNBR));
+
+      s := Trim(fResponse.GetResponseFromTagValue(PP_MODEL));
+      p := Pos(';', s+';');
+      Model := copy(s, 1, p-1);
+      Memory := copy(s, p+1, Length(s));
+      Manufacturer := Trim(fResponse.GetResponseFromTagValue(PP_MNNAME));
+
+      s := PadRight(Trim(fResponse.GetResponseFromTagValue(PP_CAPAB)), 10, '0');
+      SupportContactless := (s[1] = '1');
+      p := StrToIntDef(s[2], 0);
+      DisplayIsGraphic := (p > 0);
+      DisplayIsColor := (p > 1);
+
+      s := Trim(fResponse.GetResponseFromTagValue(PP_SPECVER));
+      SpecificationVersion := StringToFloatDef(s, 0);
+
+      s := Trim(fResponse.GetResponseFromTagValue(PP_DSPTXTSZ));
+      with DisplayTextModeDimensions do
+      begin
+        Rows := StrToIntDef(copy(s, 1, 2), 0);
+        Cols := StrToIntDef(copy(s, 3, 2), 0);
+      end;
+
+      s := Trim(fResponse.GetResponseFromTagValue(PP_DSPGRSZ));
+      with DisplayGraphicPixels do
+      begin
+        Rows := StrToIntDef(copy(s, 1, 4), 0);
+        Cols := StrToIntDef(copy(s, 5, 4), 0);
+      end;
+
+      s := Trim(fResponse.GetResponseFromTagValue(PP_MFSUP));
+      MediaPNGisSupported := (copy(s, 1, 1) = '1');
+      MediaJPGisSupported := (copy(s, 2, 1) = '1');
+      MediaGIFisSupported := (copy(s, 3, 1) = '1');
+    end;
+  end;
+
+  Result := fPinPadCapabilities;
 end;
 
 function TACBrAbecsPinPad.GetIsEnabled: Boolean;
@@ -1609,7 +1688,8 @@ end;
 
 function TACBrAbecsPinPad.FormatSPE_DSPMSG(const ASPE_DSPMSG: String): String;
 begin
-  Result := FormatMSG(ASPE_DSPMSG, fDSPTXTSZ.Cols, fDSPTXTSZ.Rows);
+  with fPinPadCapabilities.DisplayTextModeDimensions do
+    Result := FormatMSG(ASPE_DSPMSG, Cols, Rows);
 end;
 
 function TACBrAbecsPinPad.FormatMSG_S32(const AMSG: String): String;
@@ -2005,7 +2085,7 @@ begin
   fCommand.Clear;
   fCommand.ID := 'OPN';
   ExecCommand;
-  GetPinPadSpecs;
+  GetPinPadCapabilities;
 end;
 
 procedure TACBrAbecsPinPad.OPN(const OPN_MOD: String; const OPN_EXP: String);
@@ -2043,7 +2123,7 @@ begin
 
   CRKSEC := fResponse.GetResponseData;
   //TODO: A LOT OF TO DO....
-  GetPinPadSpecs;
+  GetPinPadCapabilities;
 end;
 
 procedure TACBrAbecsPinPad.GIN(const GIN_ACQIDX: Byte);
@@ -2111,7 +2191,7 @@ var
   l: Word;
   ls: Integer;
 begin
-  GetPinPadSpecs;
+  GetPinPadCapabilities;
   if (Self.LogLevel > 0) then
     RegisterLog('CLX( '+SPE_DSPMSG_or_SPE_MFNAME+' )');
   fCommand.Clear;
@@ -2198,7 +2278,7 @@ var
   s: String;
   l: Integer;
 begin
-  GetPinPadSpecs;
+  GetPinPadCapabilities;
   if (Self.LogLevel > 0) then
     RegisterLog('DEX( '+DEX_MSG+' )');
   fCommand.Clear;
@@ -2336,7 +2416,7 @@ var
   s: String;
   i: Integer;
 begin
-  GetPinPadSpecs;
+  GetPinPadCapabilities;
   if (Self.LogLevel > 0) then
   begin
     s := '';

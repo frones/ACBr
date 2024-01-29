@@ -1804,7 +1804,7 @@ begin
   with FACBrReinf.WebServices.Consultar.RetEnvioLote do
   begin
     RespostaConsultaideContri(CSessaoRetornoideContribuinte, IdeContribuinte, status);
-    RespostaEnviodadosRecepcaoLote(FACBrReinf.WebServices.EnvioLote.RetEnvioLote);
+    RespostaEnviodadosRecepcaoLote(FACBrReinf.WebServices.Consultar.RetEnvioLote);
 
     for i:=0 to evento.Count - 1 do
     begin

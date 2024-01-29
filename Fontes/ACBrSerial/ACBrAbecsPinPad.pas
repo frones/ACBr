@@ -481,6 +481,7 @@ type
     function GetResponseFromTagValue(ATag: Word): AnsiString; overload;
     procedure GetResponseFromTagValue(ATag: Word; AStream: TStream); overload;
     procedure GetResponseFromTagValue(ATag: Word; AStringList: TStrings); overload;
+    procedure GetResponseAsValues(AStringList: TStrings);
     property STAT: Integer read fSTAT;
   end;
 
@@ -642,6 +643,7 @@ type
     procedure LMF;
     procedure DMF(const ASPE_MFNAME: String); overload;
     procedure DMF(LIST_SPE_MFNAME: array of String); overload;
+    procedure DMF(LIST_SPE_MFNAME: TStrings); overload;
     procedure DSI(const ASPE_MFNAME: String);
 
     procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
@@ -1328,6 +1330,22 @@ begin
     for i := 0 to tlvl.Count-1 do
       if (tlvl[i].ID = ATag) then
         AStringList.Add(tlvl[i].Data);
+  finally
+    tlvl.Free;
+  end;
+end;
+
+procedure TACBrAbecsResponse.GetResponseAsValues(AStringList: TStrings);
+var
+  i: Integer;
+  tlvl: TACBrAbecsTLVList;
+begin
+  AStringList.Clear;
+  tlvl := TACBrAbecsTLVList.Create;
+  try
+    BlockListToTLVList(Blocks, tlvl);
+    for i := 0 to tlvl.Count-1 do
+      AStringList.Add(Format('%d=%s',[tlvl[i].ID,tlvl[i].Data]));
   finally
     tlvl.Free;
   end;
@@ -2445,6 +2463,20 @@ begin
   for i := Low(LIST_SPE_MFNAME) to High(LIST_SPE_MFNAME) do
     fCommand.AddParamFromTagValue(SPE_MFNAME, LIST_SPE_MFNAME[i]);
   ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.DMF(LIST_SPE_MFNAME: TStrings);
+var
+  i: Integer;
+  Medias: array of String;
+begin
+  for i := 0 to LIST_SPE_MFNAME.Count-1 do
+  begin
+    SetLength(Medias, i+1);
+    Medias[i] := LIST_SPE_MFNAME[i];
+  end;
+
+  DMF(Medias);
 end;
 
 procedure TACBrAbecsPinPad.DSI(const ASPE_MFNAME: String);

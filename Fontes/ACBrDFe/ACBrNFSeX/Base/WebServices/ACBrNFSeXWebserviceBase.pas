@@ -1101,10 +1101,20 @@ begin
     if FPRetorno = '' then
       raise EACBrDFeException.Create('WebService retornou um XML vazio.');
 
+    {
+      Se o retorno for um XML mas o seu encoding for iso-8859-1 ou se não constar
+      a declaração do encoding logo no inicio do XML assume que o mesmo não
+      esta no formato URF-8
+    }
     if ((Pos('iso-8859-1', LowerCase(FPRetorno)) > 0) or
-       (Pos('encoding', LowerCase(FPRetorno)) = 0)) and
-       StringIsXML(FPRetorno) then
+        (Pos('encoding', LowerCase(FPRetorno)) = 0) or
+        (Pos('encoding', LowerCase(FPRetorno)) > 40)
+       ) and StringIsXML(FPRetorno) then
     begin
+      {
+        Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
+        esta no formato UTF-8, converte o XML para UTF-8
+      }
       if Pos(UTF_8, FPRetorno) = 0 then
       begin
         FPRetorno := RemoverDeclaracaoXML(FPRetorno);

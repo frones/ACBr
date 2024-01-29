@@ -374,72 +374,84 @@ object frMain: TfrMain
           Left = 0
           Height = 307
           Top = 0
-          Width = 343
+          Width = 248
           Align = alLeft
           Caption = 'GIN (obsolete)'
           ClientHeight = 282
-          ClientWidth = 339
+          ClientWidth = 244
           TabOrder = 0
-          object btGIN: TButton
-            Left = 216
-            Height = 39
-            Top = 3
-            Width = 94
-            Caption = 'GIN'
-            TabOrder = 0
-            OnClick = btGINClick
-          end
-          object seGIN_ACQIDX: TSpinEdit
-            Left = 112
-            Height = 28
-            Top = 10
-            Width = 63
-            MaxValue = 99
-            TabOrder = 1
-          end
-          object Label3: TLabel
-            Left = 40
-            Height = 20
-            Top = 14
-            Width = 54
-            Caption = 'ACQIDX'
-          end
           object mGINResponse: TMemo
             Left = 0
             Height = 226
             Top = 56
-            Width = 339
+            Width = 244
             Align = alBottom
             Anchors = [akTop, akLeft, akRight, akBottom]
+            ReadOnly = True
             ScrollBars = ssAutoBoth
-            TabOrder = 2
+            TabOrder = 0
+          end
+          object pGINIDX: TPanel
+            Left = 0
+            Height = 48
+            Top = 0
+            Width = 244
+            Align = alTop
+            BevelOuter = bvNone
+            ClientHeight = 48
+            ClientWidth = 244
+            TabOrder = 1
+            object Label3: TLabel
+              Left = 8
+              Height = 20
+              Top = 15
+              Width = 54
+              Caption = 'ACQIDX'
+            end
+            object seGIN_ACQIDX: TSpinEdit
+              Left = 72
+              Height = 28
+              Top = 7
+              Width = 48
+              MaxValue = 99
+              TabOrder = 0
+            end
+            object btGIN: TButton
+              Left = 136
+              Height = 39
+              Top = 1
+              Width = 94
+              Caption = 'GIN'
+              TabOrder = 1
+              OnClick = btGINClick
+            end
           end
         end
         object gbGIX: TGroupBox
-          Left = 343
+          Left = 248
           Height = 307
           Top = 0
-          Width = 590
+          Width = 386
           Align = alClient
           Caption = 'GIX'
           ClientHeight = 282
-          ClientWidth = 586
+          ClientWidth = 382
           TabOrder = 1
           object pGIXParams: TPanel
             Left = 0
             Height = 282
             Top = 0
-            Width = 200
+            Width = 152
             Align = alLeft
             Caption = 'pGIXParams'
             ClientHeight = 282
-            ClientWidth = 200
+            ClientWidth = 152
             TabOrder = 0
             object btGIX: TButton
               Left = 1
               Height = 41
               Top = 240
-              Width = 198
+              Width = 150
               Align = alBottom
               Caption = 'GIX'
               TabOrder = 0
@@ -449,7 +461,7 @@ object frMain: TfrMain
               Left = 1
               Height = 187
               Top = 25
-              Width = 198
+              Width = 150
               Align = alClient
               Items.Strings = (
                 'PP_SERNUM     '
@@ -457,6 +469,7 @@ object frMain: TfrMain
                 'PP_MODEL      '
                 'PP_MNNAME     '
                 'PP_CAPAB      '
+                'PP_SOVER      '
                 'PP_SPECVER    '
                 'PP_MANVERS    '
                 'PP_APPVERS    '
@@ -525,7 +538,7 @@ object frMain: TfrMain
               Left = 1
               Height = 28
               Top = 212
-              Width = 198
+              Width = 150
               Align = alBottom
               TabOrder = 2
             end
@@ -533,7 +546,7 @@ object frMain: TfrMain
               Left = 1
               Height = 24
               Top = 1
-              Width = 198
+              Width = 150
               Align = alTop
               Caption = 'All'
               TabOrder = 3
@@ -541,14 +554,54 @@ object frMain: TfrMain
             end
           end
           object mGIXResponse: TMemo
-            Left = 200
+            Left = 152
             Height = 282
             Top = 0
-            Width = 386
+            Width = 230
             Align = alClient
+            ReadOnly = True
             ScrollBars = ssAutoBoth
             TabOrder = 1
           end
+        end
+        object gbACBrPinPadCapabilities: TGroupBox
+          Left = 640
+          Height = 307
+          Top = 0
+          Width = 293
+          Align = alRight
+          Caption = 'ACBr PinPad Capabilities'
+          ClientHeight = 282
+          ClientWidth = 289
+          TabOrder = 2
+          object btACBrPinPadCapabilities: TButton
+            Left = 0
+            Height = 40
+            Top = 0
+            Width = 289
+            Align = alTop
+            Caption = 'Get ACBr PinPad Capabilities'
+            TabOrder = 0
+            OnClick = btACBrPinPadCapabilitiesClick
+          end
+          object mACBrPinPadCapabilities: TMemo
+            Left = 0
+            Height = 242
+            Top = 40
+            Width = 289
+            Align = alClient
+            ReadOnly = True
+            ScrollBars = ssAutoBoth
+            TabOrder = 1
+          end
+        end
+        object Splitter1: TSplitter
+          Left = 634
+          Height = 307
+          Top = 0
+          Width = 6
+          Align = alRight
+          ResizeAnchor = akRight
         end
       end
       object tsDisplay: TTabSheet

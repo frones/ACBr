@@ -45,6 +45,7 @@ type
     btSearchSerialPorts: TSpeedButton;
     btSearchSerialPorts1: TSpeedButton;
     btSerial: TSpeedButton;
+    btACBrPinPadCapabilities: TButton;
     cbSecure: TCheckBox;
     cbxMsgAlign: TComboBox;
     cbxPort: TComboBox;
@@ -67,6 +68,7 @@ type
     gbDSP: TGroupBox;
     gbGIN: TGroupBox;
     gbGIX: TGroupBox;
+    gbACBrPinPadCapabilities: TGroupBox;
     ImageList1: TImageList;
     imgMedia: TImage;
     Label1: TLabel;
@@ -82,12 +84,14 @@ type
     lbGIXParams: TListBox;
     mCLX: TMemo;
     mDEX: TMemo;
+    mACBrPinPadCapabilities: TMemo;
     mGIXResponse: TMemo;
     mGINResponse: TMemo;
     mExponent: TMemo;
     mLog: TMemo;
     mModulus: TMemo;
     OpenPictureDialog1: TOpenPictureDialog;
+    pGINIDX: TPanel;
     pGIXParams: TPanel;
     pLMFMediaTitle: TPanel;
     pCLXMediaTitle: TPanel;
@@ -107,8 +111,9 @@ type
     sbMedia: TScrollBox;
     sbResponse: TStatusBar;
     sbShowLogFile: TSpeedButton;
-    seLogLevel: TSpinEdit;
     seGIN_ACQIDX: TSpinEdit;
+    seLogLevel: TSpinEdit;
+    Splitter1: TSplitter;
     Splitter2: TSplitter;
     TabSheet1: TTabSheet;
     tsCLOLines: TTabSheet;
@@ -126,6 +131,7 @@ type
     procedure ACBrAbecsPinPad1WriteLog(const ALogLine: String;
       var Tratado: Boolean);
     procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
+    procedure btACBrPinPadCapabilitiesClick(Sender: TObject);
     procedure btActivateClick(Sender: TObject);
     procedure btCEXClick(Sender: TObject);
     procedure btCLOClick(Sender: TObject);
@@ -367,6 +373,8 @@ begin
     Result := PP_MNNAME
   else if (s = 'PP_CAPAB') then
     Result := PP_CAPAB
+  else if (s = 'PP_SOVER') then
+    Result := PP_SOVER
   else if (s = 'PP_SPECVER') then
     Result := PP_SPECVER
   else if (s = 'PP_MANVERS') then
@@ -553,6 +561,32 @@ begin
   AddStrToLog('** '+E.ClassName+' **');
   AddStrToLog(E.Message);
   ShowResponseStatusBar;
+end;
+
+procedure TfrMain.btACBrPinPadCapabilitiesClick(Sender: TObject);
+var
+  cap: TACBrAbecsPinPadCapabilities;
+begin
+  cap := ACBrAbecsPinPad1.GetPinPadCapabilities;
+  with cap do
+  begin
+    mACBrPinPadCapabilities.Lines.Add('SerialNumber: '+SerialNumber);
+    mACBrPinPadCapabilities.Lines.Add('PartNumber: '+PartNumber);
+    mACBrPinPadCapabilities.Lines.Add('Model: '+Model);
+    mACBrPinPadCapabilities.Lines.Add('Memory: '+Memory);
+    mACBrPinPadCapabilities.Lines.Add('Manufacturer: '+Manufacturer);
+    mACBrPinPadCapabilities.Lines.Add('SupportContactless: '+BoolToStr(SupportContactless, True));
+    mACBrPinPadCapabilities.Lines.Add('DisplayIsGraphic: '+BoolToStr(DisplayIsGraphic, True));
+    mACBrPinPadCapabilities.Lines.Add('DisplayIsColor: '+BoolToStr(DisplayIsColor, True));
+    mACBrPinPadCapabilities.Lines.Add('SpecificationVersion: '+FloatToStr(SpecificationVersion));
+    mACBrPinPadCapabilities.Lines.Add('DisplayTextModeDimensions.Rows: '+IntToStr(DisplayTextModeDimensions.Rows));
+    mACBrPinPadCapabilities.Lines.Add('DisplayTextModeDimensions.Cols: '+IntToStr(DisplayTextModeDimensions.Cols));
+    mACBrPinPadCapabilities.Lines.Add('DisplayGraphicPixels.Rows: '+IntToStr(DisplayGraphicPixels.Rows));
+    mACBrPinPadCapabilities.Lines.Add('DisplayGraphicPixels.Cols: '+IntToStr(DisplayGraphicPixels.Cols));
+    mACBrPinPadCapabilities.Lines.Add('MediaPNGisSupported: '+BoolToStr(MediaPNGisSupported, True));
+    mACBrPinPadCapabilities.Lines.Add('MediaJPGisSupported: '+BoolToStr(MediaJPGisSupported, True));
+    mACBrPinPadCapabilities.Lines.Add('MediaGIFisSupported: '+BoolToStr(MediaGIFisSupported, True));
+  end;
 end;
 
 procedure TfrMain.btCEXClick(Sender: TObject);

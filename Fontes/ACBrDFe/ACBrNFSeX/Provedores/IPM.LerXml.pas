@@ -222,7 +222,7 @@ begin
         aValor := aValor + ' ' +
                   ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_nfse'), tcStr);
 
-        DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY');
+        DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY hh:nn:ss');
       end;
 
       //XML cancelado não tem a tag "situacao_codigo_nfse" se baixado do site da prefeitura
@@ -303,8 +303,8 @@ begin
     aValor := aValor + ' ' +
               ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_emissao_recibo_provisorio'), tcStr);
 
-    NFSe.DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY');
-    NFSe.DataEmissaoRps := EncodeDataHora(aValor, 'DD/MM/YYYY');
+    NFSe.DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY hh:nn:ss');
+    NFSe.DataEmissaoRps := NFSe.DataEmissao;
 
     with NFSe.IdentificacaoRps do
     begin

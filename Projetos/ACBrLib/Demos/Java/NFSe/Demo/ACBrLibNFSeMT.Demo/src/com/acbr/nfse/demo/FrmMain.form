@@ -13,7 +13,7 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="ACBrLibNFSe Demo"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Cursor Padr&#xe3;o"/>
+      <Color id="Default Cursor"/>
     </Property>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2106,8 +2106,9 @@
                               <Component id="btnLinkNFSe" max="32767" attributes="0"/>
                               <Component id="btnGerarToken" max="32767" attributes="0"/>
                               <Component id="btnObterXMLNFSe" max="32767" attributes="0"/>
+                              <Component id="btnSalvarPDF" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="123" max="32767" attributes="0"/>
+                          <EmptySpace pref="127" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2150,8 +2151,11 @@
                               <Component id="btnObterXMLNFSe" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnGravarXMLNFSe" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="17" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnGravarXMLNFSe" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSalvarPDF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="33" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2276,6 +2280,14 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnObterXMLNFSeActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnSalvarPDF">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Salvar PDF (Stream)"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarPDFActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

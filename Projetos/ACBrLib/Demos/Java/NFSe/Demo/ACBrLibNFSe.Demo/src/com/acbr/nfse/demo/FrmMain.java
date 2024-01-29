@@ -225,6 +225,7 @@ public class FrmMain extends javax.swing.JFrame {
         btnLinkNFSe = new javax.swing.JButton();
         btnGerarToken = new javax.swing.JButton();
         btnObterXMLNFSe = new javax.swing.JButton();
+        btnSalvarPDF = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         btnConsultarSituacaoLote = new javax.swing.JButton();
         btnConsultarNFSePorNumero = new javax.swing.JButton();
@@ -1244,7 +1245,7 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nudPorta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, Short.MAX_VALUE)
+                            .addComponent(nudPorta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
                             .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING))
@@ -1446,6 +1447,13 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarPDF.setText("Salvar PDF (Stream)");
+        btnSalvarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -1469,8 +1477,9 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnImprimirNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLinkNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGerarToken, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnObterXMLNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(123, Short.MAX_VALUE))
+                    .addComponent(btnObterXMLNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSalvarPDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1504,8 +1513,10 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnCarregarXMLNFse)
                     .addComponent(btnObterXMLNFSe))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGravarXMLNFSe)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGravarXMLNFSe)
+                    .addComponent(btnSalvarPDF))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Envios", jPanel14);
@@ -2813,6 +2824,26 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConsultarParametrosActionPerformed
 
+    private void btnSalvarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarPDFActionPerformed
+        try 
+        {
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFSe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrNFSe.limparLista();
+            acbrNFSe.carregarXml(chooser.getSelectedFile().getAbsolutePath());
+            acbrNFSe.salvarPDF();
+            rtbRespostas.append("Impresso com sucesso.");
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+    }//GEN-LAST:event_btnSalvarPDFActionPerformed
+
     private void loadConfig() {
         try {
             
@@ -3058,6 +3089,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnObterXMLNFSe;
     private javax.swing.JButton btnPastaPDF;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnSalvarPDF;
     private javax.swing.JButton btnSelecionarCertificado;
     private javax.swing.JButton btnSelectLog;
     private javax.swing.JButton btnSelectSchema;

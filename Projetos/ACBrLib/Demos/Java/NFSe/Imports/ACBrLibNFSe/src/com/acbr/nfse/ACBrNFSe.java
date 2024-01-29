@@ -119,6 +119,8 @@ public final class ACBrNFSe extends ACBrLibBase {
         
         int NFSE_ImprimirPDF();
         
+        int NFSE_SalvarPDF(ByteBuffer buffer, IntByReference bufferSize);
+        
         int NFSE_ConsultarNFSeServicoPrestadoPorNumero(String aNumero, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
         int NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(Date aDataInicial, Date aDataFinal, Integer aPagina, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
@@ -439,6 +441,15 @@ public final class ACBrNFSe extends ACBrLibBase {
     public void imprimirPDF() throws Exception {
         int ret = ACBrNFSeLib.INSTANCE.NFSE_ImprimirPDF();
         checkResult(ret);
+    }
+    
+    public String salvarPDF() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+        
+        int ret = ACBrNFSeLib.INSTANCE.NFSE_SalvarPDF(buffer, bufferLen);
+        checkResult(ret);
+        return processResult(buffer, bufferLen);
     }
     
     public String consultarNFSeServicoPrestadoPorNumero(String aNumero, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo) throws Exception {

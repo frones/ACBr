@@ -44,6 +44,8 @@ Símbolo : Significado
 
 29/01/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Castanhal/PA mudou a URL de produção. Provedor e o mesmo.
+  Por: Diogo Rodrigues
 [*] A cidade de Camboriu/SC mudou a URL. Provedor e versão ainda são os mesmos
   Por: rose_asano 
 [*] Correção da versão para a cidade de Morro Reuter/RS.

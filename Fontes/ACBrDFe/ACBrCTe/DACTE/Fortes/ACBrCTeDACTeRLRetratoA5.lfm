@@ -1,18 +1,15 @@
 inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
-  Left = 290
-  Height = 919
-  Top = 188
-  Width = 974
-  VertScrollBar.Position = 251
-  Caption = 'DACTe - Retrato A5'
-  ClientHeight = 919
-  ClientWidth = 974
+  Left = 312
+  Height = 336
+  Top = 167
+  Caption = 'DACTe -  Retrato A5'
+  ClientHeight = 336
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
     Left = 16
-    Top = -243
+    Top = 8
     DataSource = Datasource1
     Font.Height = -8
     Font.Name = 'Courier New'
@@ -34,10 +31,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       AfterPrint = rlb_08_ItensAfterPrint
       BeforePrint = rlb_08_ItensBeforePrint
       object RLDraw29: TRLDraw
@@ -45,36 +38,21 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 13
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw28: TRLDraw
         Left = 0
         Height = 14
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw35: TRLDraw
         Left = 740
         Height = 14
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rldbtTpDoc2: TRLDBText
         Left = 373
@@ -90,10 +68,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtTpDoc1: TRLDBText
@@ -110,10 +84,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtDocumento2: TRLDBText
@@ -130,10 +100,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtDocumento1: TRLDBText
@@ -150,10 +116,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtCnpjEmitente2: TRLDBText
@@ -169,10 +131,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtCnpjEmitente1: TRLDBText
@@ -188,10 +146,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlsFimItens: TRLDraw
@@ -200,12 +154,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 14
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_01_Recibo: TRLBand[1]
@@ -216,22 +165,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_01_ReciboBeforePrint
       object RLDraw46: TRLDraw
         Left = 0
         Height = 57
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw49: TRLDraw
         Left = 1
@@ -239,48 +179,28 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 32
         Width = 201
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw50: TRLDraw
         Left = 593
         Height = 46
         Top = 14
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw51: TRLDraw
         Left = 473
         Height = 46
         Top = 14
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw52: TRLDraw
         Left = 202
         Height = 46
         Top = 14
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllSerie2: TRLLabel
         Left = 655
@@ -295,10 +215,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllNumCTe2: TRLLabel
@@ -316,10 +232,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel3: TRLLabel
@@ -337,10 +249,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel143: TRLLabel
         Left = 480
@@ -357,10 +265,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel140: TRLLabel
         Left = 647
@@ -375,10 +279,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel139: TRLLabel
@@ -393,10 +293,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel138: TRLLabel
@@ -404,17 +300,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Top = 41
         Width = 30
-        Caption = 'S…RIE:'
+        Caption = 'S√âRIE:'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel137: TRLLabel
@@ -431,10 +323,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel136: TRLLabel
@@ -449,10 +337,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel135: TRLLabel
@@ -469,10 +353,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel134: TRLLabel
@@ -482,17 +362,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 108
         Alignment = taCenter
         AutoSize = False
-        Caption = 'SAÕDA DATA/HORA'
+        Caption = 'SA√çDA DATA/HORA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel133: TRLLabel
@@ -509,10 +385,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel132: TRLLabel
@@ -528,10 +400,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw101: TRLDraw
@@ -539,12 +407,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 1
         Top = 65
         Width = 756
-        Angle = 0
         Pen.Style = psDot
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw48: TRLDraw
         Left = 1
@@ -552,12 +415,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 14
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_07_HeaderItens: TRLBand[2]
@@ -568,51 +426,33 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_07_HeaderItensBeforePrint
       object rlsQuadro07: TRLDraw
         Left = 1
         Height = 11
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw34: TRLDraw
         Left = 370
         Height = 11
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel96: TRLLabel
         Left = 206
         Height = 8
         Top = 1
         Width = 86
-        Caption = 'S…RIE/NRO. DOCUMENTO'
+        Caption = 'S√âRIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel92: TRLLabel
@@ -627,10 +467,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel91: TRLLabel
@@ -645,10 +481,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel109: TRLLabel
@@ -663,10 +495,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel106: TRLLabel
@@ -681,10 +509,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel100: TRLLabel
@@ -692,17 +516,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 86
-        Caption = 'S…RIE/NRO. DOCUMENTO'
+        Caption = 'S√âRIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -715,22 +535,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_09_ObsBeforePrint
       object rlsQuadro08: TRLDraw
         Left = 0
         Height = 56
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmObs: TRLMemo
         Left = 304
@@ -751,10 +562,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel10: TRLLabel
         Left = 304
@@ -763,17 +570,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 234
         Alignment = taCenter
         AutoSize = False
-        Caption = 'ObservaÁıes - InformaÁıes Complementares'
+        Caption = 'Observa√ß√µes - Informa√ß√µes Complementares'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel11: TRLLabel
@@ -788,10 +591,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object lblCIOT: TRLLabel
@@ -806,10 +605,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel83: TRLLabel
@@ -817,17 +612,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 35
-        Caption = 'LOTA«√O'
+        Caption = 'LOTA√á√ÉO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel84: TRLLabel
@@ -842,10 +633,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllRntrcEmpresa: TRLLabel
@@ -859,10 +646,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCIOT: TRLLabel
         Left = 84
@@ -875,10 +658,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllLotacao: TRLLabel
         Left = 154
@@ -894,10 +673,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllDtPrevEntrega: TRLLabel
         Left = 196
@@ -910,10 +685,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlsCIOT: TRLDraw
@@ -921,48 +692,28 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 20
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw36: TRLDraw
         Left = 150
         Height = 20
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw37: TRLDraw
         Left = 192
         Height = 20
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw38: TRLDraw
         Left = 300
         Height = 56
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw24: TRLDraw
         Left = 1
@@ -970,12 +721,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 20
         Width = 300
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel85: TRLLabel
         Left = 6
@@ -984,17 +730,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 292
         Alignment = taCenter
         AutoSize = False
-        Caption = 'ESSE CT-e DE TRANSP. ATENDE LEGISLA«√O DE TRANSP. RODO.EM VIGOR'
+        Caption = 'ESSE CT-e DE TRANSP. ATENDE LEGISLA√á√ÉO DE TRANSP. RODO.EM VIGOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -8
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel20: TRLLabel
@@ -1011,10 +753,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw5: TRLDraw
@@ -1022,12 +760,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 56
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmObsFisco: TRLMemo
         Left = 552
@@ -1046,10 +779,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllMsgTeste: TRLLabel
         Left = 7
@@ -1057,7 +786,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 14
         Width = 718
         Alignment = taCenter
-        Caption = 'AMBIENTE DE HOMOLOGA«√O - SEM VALOR FISCAL'
+        Caption = 'AMBIENTE DE HOMOLOGA√á√ÉO - SEM VALOR FISCAL'
         Color = clWhite
         Font.Color = clGray
         Font.Height = -27
@@ -1065,10 +794,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw1: TRLDraw
         Left = 300
@@ -1076,12 +801,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 14
         Width = 440
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_02_Cabecalho: TRLBand[4]
@@ -1092,10 +812,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_02_CabecalhoBeforePrint
       object RLBarcode1: TRLBarcode
         Left = 354
@@ -1106,142 +822,83 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         BarcodeType = bcCode128C
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsQuadro01: TRLDraw
         Left = 0
         Height = 149
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaH02: TRLDraw
         Left = 332
         Height = 1
         Top = 54
         Width = 408
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaH03: TRLDraw
         Left = 332
         Height = 1
         Top = 88
         Width = 408
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV01: TRLDraw
         Left = 105
         Height = 35
         Top = 114
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV04: TRLDraw
         Left = 332
         Height = 149
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV05: TRLDraw
         Left = 366
         Height = 26
         Top = 29
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV06: TRLDraw
         Left = 390
         Height = 26
         Top = 29
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV07: TRLDraw
         Left = 614
         Height = 28
         Top = 29
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV08: TRLDraw
         Left = 464
         Height = 26
         Top = 29
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV09: TRLDraw
         Left = 508
         Height = 26
         Top = 29
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV10: TRLDraw
         Left = 627
         Height = 30
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rliLogo: TRLImage
         Left = 7
@@ -1249,10 +906,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 34
         Width = 94
         Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Stretch = True
       end
       object rlsLinhaH04: TRLDraw
@@ -1260,12 +913,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 1
         Top = 114
         Width = 332
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmEmitente: TRLMemo
         Left = 7
@@ -1282,10 +930,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlmDadosEmitente: TRLMemo
@@ -1308,10 +952,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel17: TRLLabel
@@ -1329,10 +969,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel18: TRLLabel
         Left = 344
@@ -1341,7 +977,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 278
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Documento Auxiliar do Conhecimento de Transporte EletrÙnico'
+        Caption = 'Documento Auxiliar do Conhecimento de Transporte Eletr√¥nico'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -8
@@ -1349,10 +985,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel6: TRLLabel
         Left = 640
@@ -1369,10 +1001,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllModal: TRLLabel
@@ -1390,10 +1018,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel8: TRLLabel
@@ -1409,10 +1033,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllModelo: TRLLabel
@@ -1429,10 +1049,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel21: TRLLabel
@@ -1441,17 +1057,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 30
         Width = 22
         Alignment = taCenter
-        Caption = 'S…RIE'
+        Caption = 'S√âRIE'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllSerie: TRLLabel
@@ -1468,10 +1080,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel23: TRLLabel
@@ -1481,17 +1089,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 70
         Alignment = taCenter
         AutoSize = False
-        Caption = 'N⁄MERO'
+        Caption = 'N√öMERO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllNumCte: TRLLabel
@@ -1509,10 +1113,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel25: TRLLabel
@@ -1529,10 +1129,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPageNumber: TRLLabel
@@ -1550,10 +1146,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel33: TRLLabel
@@ -1562,17 +1154,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 30
         Width = 95
         AutoSize = False
-        Caption = 'DATA E HORA DE EMISS√O'
+        Caption = 'DATA E HORA DE EMISS√ÉO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllEmissao: TRLLabel
@@ -1587,10 +1175,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel74: TRLLabel
@@ -1606,10 +1190,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllChave: TRLLabel
@@ -1626,10 +1206,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel2: TRLLabel
@@ -1644,10 +1220,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTipoCte: TRLLabel
@@ -1662,27 +1234,19 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel9: TRLLabel
         Left = 107
         Height = 8
         Top = 116
         Width = 61
-        Caption = 'TIPO DO SERVI«O'
+        Caption = 'TIPO DO SERVI√áO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTipoServico: TRLLabel
@@ -1697,27 +1261,19 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel28: TRLLabel
         Left = 212
         Height = 8
         Top = 117
         Width = 81
-        Caption = 'TOMADOR DO SERVI«O'
+        Caption = 'TOMADOR DO SERVI√áO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTomaServico: TRLLabel
@@ -1732,17 +1288,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllDescricao: TRLLabel
         Left = 334
         Height = 8
         Top = 117
         Width = 56
-        Caption = 'N∞ PROTOCOLO'
+        Caption = 'N¬∞ PROTOCOLO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1750,10 +1302,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllProtocolo: TRLLabel
@@ -1770,27 +1318,19 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel77: TRLLabel
         Left = 616
         Height = 8
         Top = 30
         Width = 120
-        Caption = 'INSC. SUFRAMA DO DESTINAT¡RIO'
+        Caption = 'INSC. SUFRAMA DO DESTINAT√ÅRIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllInscSuframa: TRLLabel
@@ -1804,58 +1344,34 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw88: TRLDraw
         Left = 332
         Height = 1
         Top = 148
         Width = 408
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaH01: TRLDraw
         Left = 332
         Height = 1
         Top = 29
         Width = 408
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw99: TRLDraw
         Left = 332
         Height = 1
         Top = 114
         Width = 408
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw3: TRLDraw
         Left = 0
         Height = 1
         Top = 148
         Width = 332
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rliBarCode: TRLBarcode
         Left = 337
@@ -1867,22 +1383,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Caption = '1234569789'
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw12: TRLDraw
         Left = 209
         Height = 35
         Top = 114
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_03_DadosDACTe: TRLBand[5]
@@ -1893,46 +1400,27 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_03_DadosDACTeBeforePrint
       object rlsQuadro02: TRLDraw
         Left = 0
         Height = 82
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV11: TRLDraw
         Left = 370
         Height = 58
         Top = 24
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaH05: TRLDraw
         Left = 1
         Height = 1
         Top = 24
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllRazaoRemet: TRLLabel
         Left = 48
@@ -1946,10 +1434,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllRazaoDest: TRLLabel
         Left = 432
@@ -1963,10 +1447,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllPaisRemet: TRLLabel
         Left = 48
@@ -1980,10 +1460,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllOrigPrestacao: TRLLabel
         Left = 336
@@ -1997,10 +1473,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNatOperacao: TRLLabel
         Left = 4
@@ -2014,10 +1486,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllMunRemet: TRLLabel
         Left = 48
@@ -2031,10 +1499,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllMunDest: TRLLabel
         Left = 432
@@ -2048,10 +1512,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllInscEstRemet: TRLLabel
         Left = 256
@@ -2065,10 +1525,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllInscEstDest: TRLLabel
         Left = 632
@@ -2082,10 +1538,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllFoneRemet: TRLLabel
         Left = 288
@@ -2099,10 +1551,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllFoneDest: TRLLabel
         Left = 664
@@ -2116,10 +1564,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEnderecoRemet2: TRLLabel
         Left = 48
@@ -2133,10 +1577,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEnderecoRemet1: TRLLabel
         Left = 48
@@ -2150,10 +1590,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEnderecoDest1: TRLLabel
         Left = 432
@@ -2167,10 +1603,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllDestPrestacao: TRLLabel
         Left = 542
@@ -2184,10 +1616,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCnpjRemet: TRLLabel
         Left = 48
@@ -2201,10 +1629,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCEPRemet: TRLLabel
         Left = 301
@@ -2218,10 +1642,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCEPDest: TRLLabel
         Left = 677
@@ -2235,10 +1655,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel98: TRLLabel
         Left = 284
@@ -2252,10 +1668,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel95: TRLLabel
@@ -2270,10 +1682,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel93: TRLLabel
@@ -2281,17 +1689,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 58
         Width = 78
-        Caption = 'INSCRI«√O ESTADUAL'
+        Caption = 'INSCRI√á√ÉO ESTADUAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel79: TRLLabel
@@ -2306,10 +1710,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel32: TRLLabel
@@ -2324,10 +1724,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel31: TRLLabel
@@ -2335,17 +1731,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 49
         Width = 38
-        Caption = 'MUNICÕPIO'
+        Caption = 'MUNIC√çPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel30: TRLLabel
@@ -2353,17 +1745,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 33
         Width = 39
-        Caption = 'ENDERE«O'
+        Caption = 'ENDERE√áO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel29: TRLLabel
@@ -2371,17 +1759,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 115
-        Caption = 'CFOP - NATUREZA DA OPERA«√O'
+        Caption = 'CFOP - NATUREZA DA OPERA√á√ÉO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel27: TRLLabel
@@ -2389,17 +1773,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 25
         Width = 52
-        Caption = 'DESTINAT¡RIO'
+        Caption = 'DESTINAT√ÅRIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel26: TRLLabel
@@ -2414,10 +1794,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel24: TRLLabel
@@ -2432,10 +1808,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel22: TRLLabel
@@ -2443,17 +1815,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 49
         Width = 38
-        Caption = 'MUNICÕPIO'
+        Caption = 'MUNIC√çPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel16: TRLLabel
@@ -2461,17 +1829,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 33
         Width = 39
-        Caption = 'ENDERE«O'
+        Caption = 'ENDERE√áO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel14: TRLLabel
@@ -2479,17 +1843,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 86
-        Caption = 'DESTINO DA PRESTA«√O'
+        Caption = 'DESTINO DA PRESTA√á√ÉO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel13: TRLLabel
@@ -2504,10 +1864,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel12: TRLLabel
@@ -2515,17 +1871,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 84
-        Caption = 'ORIGEM DA PRESTA«√O'
+        Caption = 'ORIGEM DA PRESTA√á√ÉO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel116: TRLLabel
@@ -2540,10 +1892,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel114: TRLLabel
@@ -2551,17 +1899,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 58
         Width = 78
-        Caption = 'INSCRI«√O ESTADUAL'
+        Caption = 'INSCRI√á√ÉO ESTADUAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw102: TRLDraw
@@ -2569,24 +1913,14 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 24
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw103: TRLDraw
         Left = 332
         Height = 24
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCnpjDest: TRLLabel
         Left = 432
@@ -2600,10 +1934,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllPaisDest: TRLLabel
         Left = 432
@@ -2617,10 +1947,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel119: TRLLabel
         Left = 660
@@ -2634,10 +1960,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllEnderecoDest2: TRLLabel
@@ -2652,10 +1974,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_04_DadosNotaFiscal: TRLBand[6]
@@ -2666,130 +1984,76 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_04_DadosNotaFiscalBeforePrint
       object rlsQuadro03: TRLDraw
         Left = 0
         Height = 66
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw9: TRLDraw
         Left = 148
         Height = 23
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw8: TRLDraw
         Left = 632
         Height = 22
         Top = 23
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw7: TRLDraw
         Left = 508
         Height = 22
         Top = 23
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw61: TRLDraw
         Left = 415
         Height = 44
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw60: TRLDraw
         Left = 324
         Height = 22
         Top = 23
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw59: TRLDraw
         Left = 164
         Height = 22
         Top = 23
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw58: TRLDraw
         Left = 84
         Height = 22
         Top = 23
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw56: TRLDraw
         Left = 294
         Height = 23
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw55: TRLDraw
         Left = 1
         Height = 1
         Top = 23
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmQtdUnidMedida5: TRLMemo
         Left = 328
@@ -2808,10 +2072,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmQtdUnidMedida3: TRLMemo
         Left = 166
@@ -2830,10 +2090,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmQtdUnidMedida2: TRLMemo
         Left = 86
@@ -2852,10 +2108,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmQtdUnidMedida1: TRLMemo
         Left = 5
@@ -2874,10 +2126,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllVlrTotalMerc: TRLLabel
         Left = 298
@@ -2893,10 +2141,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllRespSeguroMerc: TRLLabel
         Left = 418
@@ -2910,10 +2154,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllProdPredominante: TRLLabel
         Left = 4
@@ -2927,10 +2167,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllOutrasCaracCarga: TRLLabel
         Left = 152
@@ -2944,10 +2180,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNroAverbacao: TRLLabel
         Left = 634
@@ -2961,10 +2193,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNroApolice: TRLLabel
         Left = 510
@@ -2978,10 +2206,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNomeSeguradora: TRLLabel
         Left = 418
@@ -2995,10 +2219,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel5: TRLLabel
@@ -3013,10 +2233,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel43: TRLLabel
@@ -3033,10 +2249,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel41: TRLLabel
@@ -3053,10 +2265,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel40: TRLLabel
@@ -3064,17 +2272,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 24
         Width = 90
-        Caption = 'N⁄MERO DA AVERBA«√O'
+        Caption = 'N√öMERO DA AVERBA√á√ÉO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel4: TRLLabel
@@ -3082,17 +2286,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 135
-        Caption = 'OUTRAS CARACTERÕSTICAS DA CARGA'
+        Caption = 'OUTRAS CARACTER√çSTICAS DA CARGA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel39: TRLLabel
@@ -3100,17 +2300,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 24
         Width = 75
-        Caption = 'N⁄MERO DA AP”LICE'
+        Caption = 'N√öMERO DA AP√ìLICE'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel37: TRLLabel
@@ -3118,17 +2314,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 24
         Width = 51
-        Caption = 'RESPONS¡VEL'
+        Caption = 'RESPONS√ÅVEL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel36: TRLLabel
@@ -3138,17 +2330,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 76
         Alignment = taCenter
         AutoSize = False
-        Caption = 'PESO BASE C¡LC. (Kg)'
+        Caption = 'PESO BASE C√ÅLC. (Kg)'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel35: TRLLabel
@@ -3165,10 +2353,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel34: TRLLabel
@@ -3183,10 +2367,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel1: TRLLabel
@@ -3201,10 +2381,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlmQtdUnidMedida4: TRLMemo
@@ -3224,10 +2400,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel73: TRLLabel
         Left = 246
@@ -3243,10 +2415,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw100: TRLDraw
@@ -3254,29 +2422,20 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 22
         Top = 23
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel52: TRLLabel
         Left = 3
         Height = 8
         Top = 45
         Width = 81
-        Caption = 'SITUA«√O TRIBUT¡RIA'
+        Caption = 'SITUA√á√ÉO TRIBUT√ÅRIA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllSitTrib: TRLLabel
@@ -3291,39 +2450,26 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw22: TRLDraw
         Left = 346
         Height = 22
         Top = 44
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel55: TRLLabel
         Left = 350
         Height = 8
         Top = 45
         Width = 66
-        Caption = 'BASE DE C¡LCULO'
+        Caption = 'BASE DE C√ÅLCULO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel56: TRLLabel
@@ -3331,17 +2477,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 45
         Width = 39
-        Caption = 'ALÕQ. ICMS'
+        Caption = 'AL√çQ. ICMS'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel54: TRLLabel
@@ -3356,10 +2498,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel53: TRLLabel
@@ -3374,10 +2512,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel58: TRLLabel
@@ -3392,10 +2526,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw20: TRLDraw
@@ -3403,48 +2533,28 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 22
         Top = 44
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw23: TRLDraw
         Left = 500
         Height = 22
         Top = 44
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw25: TRLDraw
         Left = 586
         Height = 22
         Top = 44
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw26: TRLDraw
         Left = 650
         Height = 22
         Top = 44
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllBaseCalc: TRLLabel
         Left = 350
@@ -3460,10 +2570,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllAliqICMS: TRLLabel
         Left = 454
@@ -3479,10 +2585,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllVlrICMS: TRLLabel
         Left = 504
@@ -3498,10 +2600,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllRedBaseCalc: TRLLabel
         Left = 590
@@ -3517,10 +2615,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllICMS_ST: TRLLabel
         Left = 656
@@ -3536,22 +2630,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw62: TRLDraw
         Left = 0
         Height = 1
         Top = 44
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_05_Complemento: TRLBand[7]
@@ -3562,90 +2647,26 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_05_ComplementoBeforePrint
       object rlsQuadro04: TRLDraw
         Left = 0
         Height = 60
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw6: TRLDraw
         Left = 372
         Height = 60
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlmComplValor2: TRLMemo
-        Left = 645
-        Height = 46
-        Top = 11
-        Width = 89
-        Alignment = taRightJustify
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4'
-        )
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlmComplValor1: TRLMemo
-        Left = 280
-        Height = 46
-        Top = 11
-        Width = 89
-        Alignment = taRightJustify
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4'
-        )
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmComplChave2: TRLMemo
         Left = 377
         Height = 46
         Top = 11
-        Width = 264
+        Width = 352
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
@@ -3660,16 +2681,12 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmComplChave1: TRLMemo
         Left = 5
         Height = 46
         Top = 11
-        Width = 269
+        Width = 361
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
@@ -3684,28 +2701,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlLabel64: TRLLabel
-        Left = 645
-        Height = 8
-        Top = 2
-        Width = 90
-        Caption = 'VALOR COMPLEMENTADO'
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Transparent = False
       end
       object rlLabel63: TRLLabel
         Left = 377
@@ -3719,28 +2714,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Transparent = False
-      end
-      object rlLabel62: TRLLabel
-        Left = 280
-        Height = 8
-        Top = 2
-        Width = 90
-        Caption = 'VALOR COMPLEMENTADO'
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel61: TRLLabel
@@ -3755,10 +2728,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -3771,27 +2740,19 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btSummary
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_17_SistemaBeforePrint
       object rlLabel15: TRLLabel
         Left = 1
         Height = 12
         Top = 0
         Width = 140
-        Caption = 'DATA E HORA DA IMPRESS√O: '
+        Caption = 'DATA E HORA DA IMPRESS√ÉO: '
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllblSistema: TRLLabel
         Left = 352
@@ -3807,10 +2768,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_06_ValorPrestacao: TRLBand[9]
@@ -3821,22 +2778,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_06_ValorPrestacaoBeforePrint
       object rlsQuadro05: TRLDraw
         Left = 0
         Height = 47
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw16: TRLDraw
         Left = 557
@@ -3844,48 +2792,28 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 21
         Width = 184
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw18: TRLDraw
         Left = 372
         Height = 47
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw19: TRLDraw
         Left = 556
         Height = 47
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw15: TRLDraw
         Left = 186
         Height = 47
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCompValor3: TRLMemo
         Left = 476
@@ -3906,10 +2834,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCompValor2: TRLMemo
         Left = 290
@@ -3930,10 +2854,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCompValor1: TRLMemo
         Left = 104
@@ -3954,10 +2874,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCompNome3: TRLMemo
         Left = 377
@@ -3977,10 +2893,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCompNome2: TRLMemo
         Left = 190
@@ -4000,10 +2912,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCompNome1: TRLMemo
         Left = 5
@@ -4023,10 +2931,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllVlrTotServico: TRLLabel
         Left = 658
@@ -4043,10 +2947,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllVlrTotReceber: TRLLabel
@@ -4064,10 +2964,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel50: TRLLabel
@@ -4083,10 +2979,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel49: TRLLabel
@@ -4095,17 +2987,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 1
         Width = 96
         AutoSize = False
-        Caption = 'VALOR TOTAL DO SERVI«O'
+        Caption = 'VALOR TOTAL DO SERVI√áO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel48: TRLLabel
@@ -4120,10 +3008,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel47: TRLLabel
@@ -4138,10 +3022,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel46: TRLLabel
@@ -4156,10 +3036,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel45: TRLLabel
@@ -4174,10 +3050,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel44: TRLLabel
@@ -4192,10 +3064,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel42: TRLLabel
@@ -4210,10 +3078,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -4225,82 +3089,48 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_12_ModAereoBeforePrint
       object RLDraw47: TRLDraw
         Left = 0
         Height = 96
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw66: TRLDraw
         Left = 68
         Height = 22
         Top = 49
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw67: TRLDraw
         Left = 90
         Height = 22
         Top = 49
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw68: TRLDraw
         Left = 154
         Height = 22
         Top = 49
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw69: TRLDraw
         Left = 540
         Height = 24
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw65: TRLDraw
         Left = 260
         Height = 56
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw57: TRLDraw
         Left = 1
@@ -4308,36 +3138,21 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 38
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw72: TRLDraw
         Left = 596
         Height = 56
         Top = 39
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw70: TRLDraw
         Left = 34
         Height = 26
         Top = 70
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllTrecho: TRLLabel
         Left = 2
@@ -4350,10 +3165,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTarifaValor: TRLLabel
@@ -4371,10 +3182,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTarifaCodigo: TRLLabel
@@ -4389,10 +3196,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTarifaCL: TRLLabel
@@ -4407,10 +3210,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllRetira: TRLLabel
@@ -4427,10 +3226,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllMinuta: TRLLabel
         Left = 672
@@ -4446,10 +3241,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllLojaAgenteEmissor: TRLLabel
@@ -4463,10 +3254,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllDadosRetira: TRLLabel
         Left = 39
@@ -4480,10 +3267,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllContaCorrente: TRLLabel
@@ -4497,10 +3280,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCaracAdTransporte: TRLLabel
         Left = 262
@@ -4513,10 +3292,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCaracAdServico: TRLLabel
         Left = 6
@@ -4529,10 +3304,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllAWB: TRLLabel
         Left = 632
@@ -4548,10 +3319,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel157: TRLLabel
@@ -4566,10 +3333,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel156: TRLLabel
@@ -4584,10 +3347,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel155: TRLLabel
@@ -4602,10 +3361,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel154: TRLLabel
@@ -4613,17 +3368,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 16
         Width = 152
-        Caption = 'CARACTERISTICAS ADICIONAIS DO SERVI«O'
+        Caption = 'CARACTERISTICAS ADICIONAIS DO SERVI√áO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel153: TRLLabel
@@ -4633,17 +3384,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 730
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMA«’ES ESPECÕFICAS DO MODAL A…REO'
+        Caption = 'INFORMA√á√ïES ESPEC√çFICAS DO MODAL A√âREO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel150: TRLLabel
@@ -4658,10 +3405,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel149: TRLLabel
@@ -4676,10 +3419,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel148: TRLLabel
@@ -4687,17 +3426,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 40
         Width = 73
-        Caption = 'N⁄MERO DA MINUTA'
+        Caption = 'N√öMERO DA MINUTA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel147: TRLLabel
@@ -4712,10 +3447,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel146: TRLLabel
@@ -4723,17 +3454,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 50
         Width = 29
-        Caption = 'C”DIGO'
+        Caption = 'C√ìDIGO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel145: TRLLabel
@@ -4748,10 +3475,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel144: TRLLabel
@@ -4766,10 +3489,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel142: TRLLabel
@@ -4786,10 +3505,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel141: TRLLabel
@@ -4797,17 +3512,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 16
         Width = 83
-        Caption = 'N⁄MERO OPERACIONAL'
+        Caption = 'N√öMERO OPERACIONAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw54: TRLDraw
@@ -4816,36 +3527,21 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 14
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw63: TRLDraw
         Left = 0
         Height = 1
         Top = 70
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw64: TRLDraw
         Left = 0
         Height = 1
         Top = 48
         Width = 260
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_13_ModAquaviario: TRLBand[11]
@@ -4856,22 +3552,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_13_ModAquaviarioBeforePrint
       object RLDraw73: TRLDraw
         Left = 16
         Height = 89
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel151: TRLLabel
         Left = 6
@@ -4880,17 +3567,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 732
         Alignment = taCenter
         AutoSize = False
-        Caption = 'DADOS ESPECÕFICOS DO MODAL AQUAVI¡RIO'
+        Caption = 'DADOS ESPEC√çFICOS DO MODAL AQUAVI√ÅRIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw74: TRLDraw
@@ -4899,12 +3582,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 14
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel152: TRLLabel
         Left = 6
@@ -4918,10 +3596,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPortoEmbarque: TRLLabel
@@ -4935,10 +3609,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel158: TRLLabel
         Left = 406
@@ -4952,10 +3622,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllPortoDestino: TRLLabel
@@ -4969,10 +3635,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw75: TRLDraw
         Left = 1
@@ -4980,29 +3642,20 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 38
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel159: TRLLabel
         Left = 6
         Height = 8
         Top = 40
         Width = 141
-        Caption = 'IDENTIFICA«√O DO NAVIO / REBOCADOR'
+        Caption = 'IDENTIFICA√á√ÉO DO NAVIO / REBOCADOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllIndNavioRebocador: TRLLabel
@@ -5016,10 +3669,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw76: TRLDraw
         Left = 1
@@ -5027,29 +3676,20 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 62
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel160: TRLLabel
         Left = 6
         Height = 8
         Top = 64
         Width = 116
-        Caption = 'IDENTIFICA«√O DOS CONTEINERS'
+        Caption = 'IDENTIFICA√á√ÉO DOS CONTEINERS'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllIndConteiners: TRLLabel
@@ -5063,22 +3703,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw77: TRLDraw
         Left = 402
         Height = 48
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel162: TRLLabel
         Left = 406
@@ -5092,10 +3723,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllBCAFRMM: TRLLabel
@@ -5109,10 +3736,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel164: TRLLabel
         Left = 518
@@ -5126,10 +3749,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllValorAFRMM: TRLLabel
@@ -5143,27 +3762,19 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel166: TRLLabel
         Left = 614
         Height = 8
         Top = 40
         Width = 74
-        Caption = 'TIPO DE NAVEGA«√O'
+        Caption = 'TIPO DE NAVEGA√á√ÉO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTipoNav: TRLLabel
@@ -5177,27 +3788,19 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel168: TRLLabel
         Left = 694
         Height = 8
         Top = 40
         Width = 33
-        Caption = 'DIRE«√O'
+        Caption = 'DIRE√á√ÉO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllDirecao: TRLLabel
@@ -5211,46 +3814,27 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw78: TRLDraw
         Left = 690
         Height = 24
         Top = 39
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw79: TRLDraw
         Left = 610
         Height = 24
         Top = 39
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw80: TRLDraw
         Left = 514
         Height = 24
         Top = 39
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_14_ModFerroviario: TRLBand[12]
@@ -5261,10 +3845,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_14_ModFerroviarioBeforePrint
     end
     object rlb_15_ModDutoviario: TRLBand[13]
@@ -5275,10 +3855,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_15_ModDutoviarioBeforePrint
     end
     object rlb_01_Recibo_Aereo: TRLBand[14]
@@ -5289,34 +3865,20 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_01_Recibo_AereoBeforePrint
       object RLDraw10: TRLDraw
         Left = 0
         Height = 145
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw53: TRLDraw
         Left = 367
         Height = 78
         Top = 66
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw2: TRLDraw
         Left = 1
@@ -5324,12 +3886,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 15
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel70: TRLLabel
         Left = 6
@@ -5343,10 +3900,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel66: TRLLabel
@@ -5361,10 +3914,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel65: TRLLabel
@@ -5381,10 +3930,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel19: TRLLabel
@@ -5393,17 +3938,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 17
         Width = 730
         AutoSize = False
-        Caption = 'O Transporte coberto por este conhecimento se rege pelo cÛdigo Brasileiro de Aeron·utica (Lei 7.565 de 19/12/1986), especificamente pelas regras relativas a responsabilidade Civil prevista nos artigos 193, 241, 244, 262 e 264, de cujo teor o Expedidor / Remetente declara concordar e ter plena ciÍncia. O Expedidor / Remetente aceita como corretas todas as especificaÁıes impressas, manuscritas, datilografadas ou carimbadas neste conhecimento, certificando que os artigos perigosos descritos pela regulamentaÁ„o da I.C.A.O. foram devidamente informados e acondicionados para transporte AÈreo.'
+        Caption = 'O Transporte coberto por este conhecimento se rege pelo c√≥digo Brasileiro de Aeron√°utica (Lei 7.565 de 19/12/1986), especificamente pelas regras relativas a responsabilidade Civil prevista nos artigos 193, 241, 244, 262 e 264, de cujo teor o Expedidor / Remetente declara concordar e ter plena ci√™ncia. O Expedidor / Remetente aceita como corretas todas as especifica√ß√µes impressas, manuscritas, datilografadas ou carimbadas neste conhecimento, certificando que os artigos perigosos descritos pela regulamenta√ß√£o da I.C.A.O. foram devidamente informados e acondicionados para transporte A√©reo.'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw81: TRLDraw
@@ -5412,12 +3953,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 66
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw82: TRLDraw
         Left = 1
@@ -5425,12 +3961,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 77
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel57: TRLLabel
         Left = 121
@@ -5445,10 +3976,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel60: TRLLabel
@@ -5457,17 +3984,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 68
         Width = 100
         Alignment = taCenter
-        Caption = 'DESTINAT¡RIO / RECEBEDOR'
+        Caption = 'DESTINAT√ÅRIO / RECEBEDOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel69: TRLLabel
@@ -5482,10 +4005,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel161: TRLLabel
@@ -5500,10 +4019,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel67: TRLLabel
@@ -5518,10 +4033,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel68: TRLLabel
@@ -5536,10 +4047,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel72: TRLLabel
@@ -5554,10 +4061,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel163: TRLLabel
@@ -5572,10 +4075,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -5587,10 +4086,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       Visible = False
       BeforePrint = rlb_11_ModRodLot104BeforePrint
       object RLDraw4: TRLDraw
@@ -5598,12 +4093,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 107
         Top = 0
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Visible = False
       end
       object RLDraw30: TRLDraw
@@ -5611,12 +4101,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 105
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw83: TRLDraw
         Left = 1
@@ -5624,48 +4109,28 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 14
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw84: TRLDraw
         Left = 42
         Height = 69
         Top = 13
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw85: TRLDraw
         Left = 100
         Height = 69
         Top = 13
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw86: TRLDraw
         Left = 122
         Height = 69
         Top = 13
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw87: TRLDraw
         Left = 1
@@ -5673,12 +4138,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 29
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw89: TRLDraw
         Left = 1
@@ -5686,36 +4146,21 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 82
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw90: TRLDraw
         Left = 345
         Height = 24
         Top = 82
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw92: TRLDraw
         Left = 330
         Height = 69
         Top = 13
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel167: TRLLabel
         Left = 2
@@ -5729,10 +4174,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel169: TRLLabel
@@ -5742,17 +4183,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 524
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMA«’ES REFERENTES AO VALE-PED¡GIO'
+        Caption = 'INFORMA√á√ïES REFERENTES AO VALE-PED√ÅGIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel170: TRLLabel
@@ -5762,17 +4199,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 202
         Alignment = taCenter
         AutoSize = False
-        Caption = 'IDENTIFICA«√O DO CONJ. TRANSPORTADOR'
+        Caption = 'IDENTIFICA√á√ÉO DO CONJ. TRANSPORTADOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel171: TRLLabel
@@ -5780,17 +4213,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 84
         Width = 148
-        Caption = 'IDENTIFICA«√O DOS LACRES EM TR¬NSITO'
+        Caption = 'IDENTIFICA√á√ÉO DOS LACRES EM TR√ÇNSITO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel172: TRLLabel
@@ -5805,10 +4234,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel173: TRLLabel
@@ -5823,10 +4248,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel174: TRLLabel
@@ -5834,17 +4255,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 15
         Width = 87
-        Caption = 'N⁄MERO COMPROVANTE'
+        Caption = 'N√öMERO COMPROVANTE'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel177: TRLLabel
@@ -5852,17 +4269,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 15
         Width = 70
-        Caption = 'CNPJ RESPONS¡VEL'
+        Caption = 'CNPJ RESPONS√ÅVEL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel179: TRLLabel
@@ -5877,10 +4290,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel181: TRLLabel
@@ -5895,10 +4304,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel182: TRLLabel
@@ -5913,10 +4318,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel183: TRLLabel
@@ -5931,10 +4332,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlmUF2: TRLMemo
@@ -5956,10 +4353,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmTipo2: TRLMemo
         Left = 2
@@ -5980,10 +4373,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmRNTRC2: TRLMemo
         Left = 124
@@ -6004,10 +4393,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmPlaca2: TRLMemo
         Left = 44
@@ -6028,10 +4413,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCNPJForn: TRLMemo
         Left = 210
@@ -6051,10 +4432,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmNumCompra: TRLMemo
         Left = 334
@@ -6074,10 +4451,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllNomeMotorista2: TRLLabel
         Left = 4
@@ -6090,10 +4463,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllLacres2: TRLLabel
         Left = 351
@@ -6106,10 +4475,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCPFMotorista2: TRLLabel
         Left = 212
@@ -6122,22 +4487,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw98: TRLDraw
         Left = 614
         Height = 69
         Top = 13
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCNPJPg: TRLMemo
         Left = 618
@@ -6157,10 +4513,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_18_Recibo: TRLBand[16]
@@ -6171,58 +4523,34 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btSummary
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_18_ReciboBeforePrint
       object RLDraw97: TRLDraw
         Left = 0
         Height = 67
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw91: TRLDraw
         Left = 202
         Height = 52
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw93: TRLDraw
         Left = 473
         Height = 52
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw94: TRLDraw
         Left = 593
         Height = 52
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw95: TRLDraw
         Left = 1
@@ -6230,12 +4558,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 40
         Width = 201
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw96: TRLDraw
         Left = 1
@@ -6243,12 +4566,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 15
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel175: TRLLabel
         Left = 480
@@ -6265,10 +4583,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel176: TRLLabel
         Left = 480
@@ -6285,10 +4599,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Arial'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel180: TRLLabel
         Left = 647
@@ -6303,10 +4613,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel184: TRLLabel
@@ -6314,17 +4620,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Top = 33
         Width = 14
-        Caption = 'N∞ '
+        Caption = 'N¬∞ '
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel185: TRLLabel
@@ -6332,17 +4634,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Top = 47
         Width = 30
-        Caption = 'S…RIE:'
+        Caption = 'S√âRIE:'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel186: TRLLabel
@@ -6359,10 +4657,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel187: TRLLabel
@@ -6377,10 +4671,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel188: TRLLabel
@@ -6397,10 +4687,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel189: TRLLabel
@@ -6410,17 +4696,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 108
         Alignment = taCenter
         AutoSize = False
-        Caption = 'SAÕDA DATA/HORA'
+        Caption = 'SA√çDA DATA/HORA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel190: TRLLabel
@@ -6437,10 +4719,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel191: TRLLabel
@@ -6455,10 +4733,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllSerie3: TRLLabel
@@ -6474,10 +4748,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllNumCTe3: TRLLabel
@@ -6495,10 +4765,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -6510,34 +4776,20 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BandType = btHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_03_DadosRedespachoExpedidorBeforePrint
       object RLDraw11: TRLDraw
         Left = 0
         Height = 66
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLDraw17: TRLDraw
         Left = 370
         Height = 64
         Top = 0
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel7: TRLLabel
         Left = 4
@@ -6551,10 +4803,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllRazaoResdes: TRLLabel
@@ -6569,10 +4817,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEnderecoRedes1: TRLLabel
         Left = 48
@@ -6586,10 +4830,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEnderecoRedes2: TRLLabel
         Left = 48
@@ -6603,10 +4843,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllMunRedes: TRLLabel
         Left = 48
@@ -6620,10 +4856,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCnpjRedes: TRLLabel
         Left = 48
@@ -6637,10 +4869,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllPaisRedes: TRLLabel
         Left = 48
@@ -6654,27 +4882,19 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel81: TRLLabel
         Left = 4
         Height = 8
         Top = 9
         Width = 39
-        Caption = 'ENDERE«O'
+        Caption = 'ENDERE√áO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel82: TRLLabel
@@ -6682,17 +4902,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 32
         Width = 38
-        Caption = 'MUNICÕPIO'
+        Caption = 'MUNIC√çPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel86: TRLLabel
@@ -6707,10 +4923,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel87: TRLLabel
@@ -6725,10 +4937,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel88: TRLLabel
@@ -6736,17 +4944,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 40
         Width = 78
-        Caption = 'INSCRI«√O ESTADUAL'
+        Caption = 'INSCRI√á√ÉO ESTADUAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel89: TRLLabel
@@ -6761,10 +4965,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCEPRedes: TRLLabel
@@ -6779,10 +4979,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllInscEstRedes: TRLLabel
         Left = 256
@@ -6796,10 +4992,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel97: TRLLabel
         Left = 262
@@ -6813,10 +5005,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllFoneRedes: TRLLabel
@@ -6831,10 +5019,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllRazaoReceb: TRLLabel
         Left = 432
@@ -6848,10 +5032,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEnderecoRecebe1: TRLLabel
         Left = 432
@@ -6865,10 +5045,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEnderecoRecebe2: TRLLabel
         Left = 432
@@ -6882,10 +5058,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllMunReceb: TRLLabel
         Left = 432
@@ -6899,10 +5071,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCnpjReceb: TRLLabel
         Left = 432
@@ -6916,10 +5084,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllPaisReceb: TRLLabel
         Left = 432
@@ -6933,27 +5097,19 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel80: TRLLabel
         Left = 373
         Height = 8
         Top = 10
         Width = 39
-        Caption = 'ENDERE«O'
+        Caption = 'ENDERE√áO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel90: TRLLabel
@@ -6961,17 +5117,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 33
         Width = 38
-        Caption = 'MUNICÕPIO'
+        Caption = 'MUNIC√çPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel94: TRLLabel
@@ -6986,10 +5138,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel99: TRLLabel
@@ -7004,10 +5152,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel101: TRLLabel
@@ -7015,17 +5159,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 41
         Width = 78
-        Caption = 'INSCRI«√O ESTADUAL'
+        Caption = 'INSCRI√á√ÉO ESTADUAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel102: TRLLabel
@@ -7040,10 +5180,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCEPReceb: TRLLabel
@@ -7058,10 +5194,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllInscEstReceb: TRLLabel
         Left = 640
@@ -7075,10 +5207,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel105: TRLLabel
         Left = 646
@@ -7092,10 +5220,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllFoneReceb: TRLLabel
@@ -7110,10 +5234,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel108: TRLLabel
         Left = 373
@@ -7127,10 +5247,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end

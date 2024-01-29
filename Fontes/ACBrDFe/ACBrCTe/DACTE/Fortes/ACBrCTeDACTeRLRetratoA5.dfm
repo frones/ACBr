@@ -2920,54 +2920,10 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 60
         Brush.Style = bsClear
       end
-      object rlmComplValor2: TRLMemo
-        Left = 645
-        Top = 11
-        Width = 89
-        Height = 46
-        Alignment = taRightJustify
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4')
-        ParentColor = False
-        ParentFont = False
-      end
-      object rlmComplValor1: TRLMemo
-        Left = 280
-        Top = 11
-        Width = 89
-        Height = 46
-        Alignment = taRightJustify
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4')
-        ParentColor = False
-        ParentFont = False
-      end
       object rlmComplChave2: TRLMemo
         Left = 377
         Top = 11
-        Width = 264
+        Width = 352
         Height = 46
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -2988,7 +2944,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlmComplChave1: TRLMemo
         Left = 5
         Top = 11
-        Width = 269
+        Width = 361
         Height = 46
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -3006,44 +2962,12 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         ParentColor = False
         ParentFont = False
       end
-      object rlLabel64: TRLLabel
-        Left = 645
-        Top = 2
-        Width = 90
-        Height = 8
-        Caption = 'VALOR COMPLEMENTADO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-      end
       object rlLabel63: TRLLabel
         Left = 377
         Top = 2
         Width = 119
         Height = 8
         Caption = 'CHAVE DO CT-E COMPLEMENTADO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-      end
-      object rlLabel62: TRLLabel
-        Left = 280
-        Top = 2
-        Width = 90
-        Height = 8
-        Caption = 'VALOR COMPLEMENTADO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

@@ -196,13 +196,9 @@ type
     RLDraw19: TRLDraw;
     RLDraw6: TRLDraw;
     rlLabel61: TRLLabel;
-    rlLabel62: TRLLabel;
     rlLabel63: TRLLabel;
-    rlLabel64: TRLLabel;
     rlmComplChave1: TrlMemo;
-    rlmComplValor1: TrlMemo;
     rlmComplChave2: TrlMemo;
-    rlmComplValor2: TrlMemo;
     rlsQuadro01: TRLDraw;
     rlsQuadro04: TRLDraw;
     rlsQuadro05: TRLDraw;
@@ -1229,16 +1225,12 @@ begin
 
   // Imprime a lista dos CT-e Complementados se o Tipo de CTe for Complemento
   rlmComplChave1.Lines.Clear;
-  rlmComplValor1.Lines.Clear;
   rlmComplChave2.Lines.Clear;
-  rlmComplValor2.Lines.Clear;
   rlb_05_Complemento.Enabled := (fpCTe.Ide.tpCTe = tcComplemento);
 
   if fpCTe.infCTe.versao <= 3 then
   begin
     rlmComplChave1.Lines.Add(fpCTe.InfCTeComp.Chave);
-
-    rlmComplValor1.Lines.Add(FormatFloatBr(msk10x2, fpCTe.vPrest.vTPrest));
   end
   else
   begin

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2024
+-- ACBrCTeDACTeRLRetrato, ACBrCTeDACTeRLRetratoA5 --
+[*] Remoção da coluna Valor Complementado da seção CTe-Complementado, pois não há tag correspondente para preencher a informação
+  Por: Diego Folieni
+
 08/01/2023
 -- ACBrCTeConhecimentos --
 [*] Adiciona na rotina de leitura do INI o campo xCpl do grupo Dest

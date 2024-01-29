@@ -4215,44 +4215,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Align = faWidth
         Brush.Style = bsClear
       end
-      object RLLabel64: TRLLabel
-        Left = 645
-        Top = 19
-        Width = 90
-        Height = 8
-        Caption = 'VALOR COMPLEMENTADO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-      end
       object RLLabel63: TRLLabel
         Left = 377
         Top = 19
         Width = 119
         Height = 8
         Caption = 'CHAVE DO CT-E COMPLEMENTADO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-      end
-      object RLLabel62: TRLLabel
-        Left = 280
-        Top = 19
-        Width = 90
-        Height = 8
-        Caption = 'VALOR COMPLEMENTADO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -4300,30 +4268,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rlmComplChave1: TRLMemo
         Left = 5
         Top = 28
-        Width = 269
+        Width = 361
         Height = 48
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4')
-        ParentColor = False
-        ParentFont = False
-      end
-      object rlmComplValor1: TRLMemo
-        Left = 280
-        Top = 28
-        Width = 89
-        Height = 48
-        Alignment = taRightJustify
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
@@ -4343,30 +4289,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rlmComplChave2: TRLMemo
         Left = 377
         Top = 28
-        Width = 264
+        Width = 352
         Height = 48
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4')
-        ParentColor = False
-        ParentFont = False
-      end
-      object rlmComplValor2: TRLMemo
-        Left = 645
-        Top = 28
-        Width = 89
-        Height = 48
-        Alignment = taRightJustify
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite

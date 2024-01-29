@@ -328,9 +328,7 @@ type
     RLDraw5: TRLDraw;
     RLDraw6: TRLDraw;
     rlLabel61: TRLLabel;
-    rlLabel62: TRLLabel;
     rlLabel63: TRLLabel;
-    rlLabel64: TRLLabel;
     rlsLinhaH7: TRLDraw;
     rlsLinhaV12: TRLDraw;
     rlsLinhaV13: TRLDraw;
@@ -584,9 +582,7 @@ type
     RLDraw50: TRLDraw;
     rllVariavel2: TRLLabel;
     rlmComplChave1: TRLMemo;
-    rlmComplValor1: TRLMemo;
     rlmComplChave2: TRLMemo;
-    rlmComplValor2: TRLMemo;
     rlDocOrig_tpDoc1: TRLMemo;
     rlDocOrig_tpDoc2: TRLMemo;
     RLLabel199: TRLLabel;
@@ -1634,15 +1630,11 @@ begin
   PrintIt := (RLCTe.PageNumber = 1);
 
   rlmComplChave1.Lines.Clear;
-  rlmComplValor1.Lines.Clear;
   rlmComplChave2.Lines.Clear;
-  rlmComplValor2.Lines.Clear;
 
   if fpCTe.infCTe.versao <= 3 then
   begin
     rlmComplChave1.Lines.Add(fpCTe.InfCTeComp.Chave);
-
-    rlmComplValor1.Lines.Add(FormatFloatBr(msk10x2, fpCTe.vPrest.vTPrest));
   end
   else
   begin

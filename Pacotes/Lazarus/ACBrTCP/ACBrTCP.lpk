@@ -36,7 +36,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="27">
+    <Files Count="28">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -146,6 +146,10 @@
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.ReceitaWS.pas"/>
         <UnitName Value="ACBrConsultaCNPJ.WS.ReceitaWS"/>
       </Item27>
+      <Item28>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.Publica.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS.Publica"/>
+      </Item28>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

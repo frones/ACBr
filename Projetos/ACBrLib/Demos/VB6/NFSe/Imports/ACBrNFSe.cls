@@ -196,6 +196,9 @@ Private Declare Function NFSE_Imprimir _
                                       
 Private Declare Function NFSE_ImprimirPDF Lib "ACBrNFSe32.dll" () As Long
 
+Private Declare Function NFSE_SalvarPDF Lib "ACBrNFSe32.dll" (ByVal buffer As String, _
+                                                              ByRef bufferLen As Long) As Long
+
 Private Declare Function NFSE_ConsultarNFSeServicoPrestadoPorNumero _
                 Lib "ACBrNFSe32.dll" (ByVal aNumero As String, _
                                       ByVal aPagina As Long, _
@@ -750,6 +753,22 @@ Public Sub ImprimirPDF()
     CheckResult retorno
     
 End Sub
+
+Public Function SalvarPDF() As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_SalvarPDF(buffer, bufferLen)
+    CheckResult retorno
+    
+    SalvarPDF = processResult(buffer, bufferLen)
+
+End Function
 
 Public Function ConsultarNFSeServicoPrestadoPorNumero(ByVal aNumero As String, ByVal aPagina As Long, ByVal aDataInicial As Date, ByVal aDataFinal As Date, ByVal aTipoPeriodo As Long) As String
 

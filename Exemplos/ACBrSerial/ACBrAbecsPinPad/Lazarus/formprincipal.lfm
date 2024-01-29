@@ -97,9 +97,9 @@ object frMain: TfrMain
       Height = 340
       Top = 0
       Width = 941
-      ActivePage = tsCLO
+      ActivePage = tsGIX
       Align = alClient
-      TabIndex = 7
+      TabIndex = 2
       TabOrder = 0
       object tsConfig: TTabSheet
         Caption = 'Config'
@@ -370,23 +370,185 @@ object frMain: TfrMain
         Caption = 'Information'
         ClientHeight = 307
         ClientWidth = 933
-        object btGIN: TButton
-          Left = 56
-          Height = 31
-          Top = 64
-          Width = 94
-          Caption = 'GIN'
+        object gbGIN: TGroupBox
+          Left = 0
+          Height = 307
+          Top = 0
+          Width = 343
+          Align = alLeft
+          Caption = 'GIN (obsolete)'
+          ClientHeight = 282
+          ClientWidth = 339
           TabOrder = 0
-          OnClick = btGINClick
+          object btGIN: TButton
+            Left = 216
+            Height = 39
+            Top = 3
+            Width = 94
+            Caption = 'GIN'
+            TabOrder = 0
+            OnClick = btGINClick
+          end
+          object seGIN_ACQIDX: TSpinEdit
+            Left = 112
+            Height = 28
+            Top = 10
+            Width = 63
+            MaxValue = 99
+            TabOrder = 1
+          end
+          object Label3: TLabel
+            Left = 40
+            Height = 20
+            Top = 14
+            Width = 54
+            Caption = 'ACQIDX'
+          end
+          object mGINResponse: TMemo
+            Left = 0
+            Height = 226
+            Top = 56
+            Width = 339
+            Align = alBottom
+            Anchors = [akTop, akLeft, akRight, akBottom]
+            ScrollBars = ssAutoBoth
+            TabOrder = 2
+          end
         end
-        object btGIX: TButton
-          Left = 392
-          Height = 31
-          Top = 112
-          Width = 94
+        object gbGIX: TGroupBox
+          Left = 343
+          Height = 307
+          Top = 0
+          Width = 590
+          Align = alClient
           Caption = 'GIX'
+          ClientHeight = 282
+          ClientWidth = 586
           TabOrder = 1
-          OnClick = btGIXClick
+          object pGIXParams: TPanel
+            Left = 0
+            Height = 282
+            Top = 0
+            Width = 200
+            Align = alLeft
+            Caption = 'pGIXParams'
+            ClientHeight = 282
+            ClientWidth = 200
+            TabOrder = 0
+            object btGIX: TButton
+              Left = 1
+              Height = 41
+              Top = 240
+              Width = 198
+              Align = alBottom
+              Caption = 'GIX'
+              TabOrder = 0
+              OnClick = btGIXClick
+            end
+            object lbGIXParams: TListBox
+              Left = 1
+              Height = 187
+              Top = 25
+              Width = 198
+              Align = alClient
+              Items.Strings = (
+                'PP_SERNUM     '
+                'PP_PARTNBR    '
+                'PP_MODEL      '
+                'PP_MNNAME     '
+                'PP_CAPAB      '
+                'PP_SPECVER    '
+                'PP_MANVERS    '
+                'PP_APPVERS    '
+                'PP_GENVERS    '
+                'PP_KRNLVER    '
+                'PP_CTLSVER    '
+                'PP_MCTLSVER   '
+                'PP_VCTLSVER   '
+                'PP_AECTLSVER  '
+                'PP_DPCTLSVER  '
+                'PP_PUREVER    '
+                'PP_DSPTXTSZ   '
+                'PP_DSPGRSZ    '
+                'PP_MFSUP      '
+                'PP_MKTDESP    '
+                'PP_MKTDESD    '
+                'PP_DKPTTDESP  '
+                'PP_DKPTTDESD  '
+                'PP_EVENT      '
+                'PP_TRK1INC    '
+                'PP_TRK2INC    '
+                'PP_TRK3INC    '
+                'PP_TRACK1     '
+                'PP_TRACK2     '
+                'PP_TRACK3     '
+                'PP_TRK1KSN    '
+                'PP_TRK2KSN    '
+                'PP_TRK3KSN    '
+                'PP_ENCPAN     '
+                'PP_ENCPANKSN  '
+                'PP_KSN        '
+                'PP_VALUE      '
+                'PP_DATAOUT    '
+                'PP_CARDTYPE   '
+                'PP_ICCSTAT    '
+                'PP_AIDTABINFO '
+                'PP_PAN        '
+                'PP_PANSEQNO   '
+                'PP_EMVDATA    '
+                'PP_CHNAME     '
+                'PP_GOXRES     '
+                'PP_PINBLK     '
+                'PP_FCXRES     '
+                'PP_ISRESULTS  '
+                'PP_BIGRAND    '
+                'PP_LABEL      '
+                'PP_ISSCNTRY   '
+                'PP_CARDEXP    '
+                'PP_MFNAME     '
+                'PP_DEVTYPE    '
+                'PP_TLRMEM     '
+                'PP_ENCKRAND   '
+                'PP_KSNTDESP00 '
+                'PP_KSNTDESP63 '
+                'PP_KSNTDESD00 '
+                'PP_KSNTDESD63 '
+                'PP_TABVER00   '
+                'PP_TABVER63   '
+              )
+              ItemHeight = 20
+              ItemIndex = 0
+              MultiSelect = True
+              TabOrder = 1
+            end
+            object edGIXValue: TEdit
+              Left = 1
+              Height = 28
+              Top = 212
+              Width = 198
+              Align = alBottom
+              TabOrder = 2
+            end
+            object cbGIXAll: TCheckBox
+              Left = 1
+              Height = 24
+              Top = 1
+              Width = 198
+              Align = alTop
+              Caption = 'All'
+              TabOrder = 3
+              OnChange = cbGIXAllChange
+            end
+          end
+          object mGIXResponse: TMemo
+            Left = 200
+            Height = 282
+            Top = 0
+            Width = 386
+            Align = alClient
+            ScrollBars = ssAutoBoth
+            TabOrder = 1
+          end
         end
       end
       object tsDisplay: TTabSheet
@@ -526,7 +688,7 @@ object frMain: TfrMain
         ClientHeight = 307
         ClientWidth = 933
         object btCEX: TButton
-          Left = 200
+          Left = 64
           Height = 31
           Top = 56
           Width = 94
@@ -612,34 +774,27 @@ object frMain: TfrMain
               OnClick = btDMFClick
             end
           end
-          object sgMedia: TStringGrid
+          object pLMFMediaTitle: TPanel
             Left = 1
-            Height = 259
+            Height = 39
             Top = 1
             Width = 370
-            Align = alClient
-            AutoFillColumns = True
-            ColCount = 1
-            Columns = <            
-              item
-                Alignment = taCenter
-                Title.Alignment = taCenter
-                Title.Caption = 'Media Name'
-                Width = 366
-              end>
-            DefaultColWidth = 100
-            FixedCols = 0
-            RowCount = 2
+            Align = alTop
+            Caption = 'Media Files'
+            Font.Height = -20
+            ParentFont = False
             TabOrder = 1
-            ColWidths = (
-              366
-            )
-            Cells = (
-              1
-              0
-              0
-              'Media Name'
-            )
+          end
+          object lbLMFMedias: TListBox
+            Left = 1
+            Height = 220
+            Top = 40
+            Width = 370
+            Align = alClient
+            Columns = 1
+            ItemHeight = 0
+            MultiSelect = True
+            TabOrder = 2
           end
         end
         object pMedia: TPanel
@@ -668,6 +823,7 @@ object frMain: TfrMain
               Top = 0
               Width = 534
               Align = alClient
+              AutoSize = True
               Center = True
               Picture.Data = {
                 1754506F727461626C654E6574776F726B477261706869636BB1000089504E47
@@ -2116,9 +2272,22 @@ object frMain: TfrMain
               Left = 144
               Height = 28
               Top = 11
-              Width = 391
+              Width = 344
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 1
+              Text = 'ACBRLOGO'
+            end
+            object btSearchSerialPorts1: TSpeedButton
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideBottom.Side = asrBottom
+              Left = 504
+              Height = 28
+              Top = 11
+              Width = 31
+              Anchors = [akTop, akRight]
+              Images = ImageList1
+              ImageIndex = 12
+              OnClick = btSearchSerialPorts1Click
             end
           end
         end
@@ -2215,30 +2384,30 @@ object frMain: TfrMain
           object btCLX: TButton
             Left = 272
             Height = 47
-            Top = 216
+            Top = 224
             Width = 110
             Caption = 'CLX'
             TabOrder = 0
             OnClick = btCLXClick
           end
           object pgCLX: TPageControl
-            Left = 24
-            Height = 187
-            Top = 13
-            Width = 592
+            Left = 0
+            Height = 216
+            Top = 0
+            Width = 635
             ActivePage = tsCLOMedia
-            Anchors = [akTop, akLeft, akRight]
+            Align = alTop
             TabIndex = 1
             TabOrder = 1
             object tsCLOLines: TTabSheet
               Caption = 'Lines'
-              ClientHeight = 154
-              ClientWidth = 584
+              ClientHeight = 183
+              ClientWidth = 627
               object mCLX: TMemo
                 Left = 0
-                Height = 154
+                Height = 183
                 Top = 0
-                Width = 584
+                Width = 627
                 Align = alClient
                 Anchors = [akTop, akLeft, akRight]
                 Font.Height = -20
@@ -2257,16 +2426,28 @@ object frMain: TfrMain
             end
             object tsCLOMedia: TTabSheet
               Caption = 'Media'
-              ClientHeight = 154
-              ClientWidth = 584
+              ClientHeight = 183
+              ClientWidth = 627
               object lbCLXMedias: TListBox
                 Left = 0
-                Height = 154
-                Top = 0
-                Width = 584
+                Height = 144
+                Top = 39
+                Width = 627
                 Align = alClient
+                Columns = 2
                 ItemHeight = 0
                 TabOrder = 0
+              end
+              object pCLXMediaTitle: TPanel
+                Left = 0
+                Height = 39
+                Top = 0
+                Width = 627
+                Align = alTop
+                Caption = 'Media Files'
+                Font.Height = -20
+                ParentFont = False
+                TabOrder = 1
               end
             end
           end
@@ -2288,10 +2469,10 @@ object frMain: TfrMain
     OnStartCommand = ACBrAbecsPinPad1StartCommand
     OnWaitForResponse = ACBrAbecsPinPad1WaitForResponse
     OnEndCommand = ACBrAbecsPinPad1EndCommand
-    Left = 128
+    Left = 768
   end
   object ImageList1: TImageList
-    Left = 240
+    Left = 648
     Bitmap = {
       4C7A0E0000001000000010000000920600000000000078DAED5B696C554514BE
       2C15A58AC51AA0D20A14D118894B545297B8C52AB298182D0D266A302E4DB0B5
@@ -2351,7 +2532,11 @@ object frMain: TfrMain
   end
   object ApplicationProperties1: TApplicationProperties
     OnException = ApplicationProperties1Exception
-    Left = 300
-    Top = 2
+    Left = 568
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Title = 'Open Image File'
+    Filter = 'All Compatible Image Types|*.png;*.jpeg;*.jpg;*.gif|PNG Files (*.png)|*.png|JPEG Files (*.jpeg;*.jpg;*.jpe;*.jfif)|*.jpeg;*.jpg|Graphics Interchange Format Files (*.gif)|*.gif'
+    Left = 608
   end
 end

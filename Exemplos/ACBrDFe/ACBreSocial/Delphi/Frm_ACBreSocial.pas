@@ -2069,7 +2069,7 @@ begin
             with planSaude.New do
             begin
               cnpjOper := '01234567890123';
-              regANS := 123456;
+              regANS := '123456';
               vlrSaudeTit := 1200.23;
 
               with infoDepSau.New do
@@ -2083,7 +2083,7 @@ begin
             begin
               indOrgReemb := '1';
               cnpjOper := '01234567890123';
-              regANS := 123456;
+              regANS := '123456';
 
               with detReembTit.New do
               begin

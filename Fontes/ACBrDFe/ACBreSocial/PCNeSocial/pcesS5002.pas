@@ -707,7 +707,7 @@ type
   TplanSaudeCollectionItem = class(TObject)
   private
     FcnpjOper: string;
-    FregANS: integer;
+    FregANS: string;
     FvlrSaudeTit: double;
     FinfoDepSau: TinfoDepSauCollection;
 
@@ -719,7 +719,7 @@ type
     function infoDepSauInst: boolean;
 
     property cnpjOper: string read FcnpjOper;
-    property regANS: integer read FregANS;
+    property regANS: string read FregANS;
     property vlrSaudeTit: double read FvlrSaudeTit;
     property infoDepSau: TinfoDepSauCollection read getInfoDepSau write FinfoDepSau;
   end;
@@ -755,7 +755,7 @@ type
   private
     FindOrgReemb: string;
     FcnpjOper: string;
-    FregANS: integer;
+    FregANS: string;
     FdetReembTit: TdetReembTitCollection;
     FinfoReembDep: TinfoReembDepCollection;
 
@@ -770,7 +770,7 @@ type
 
     property indOrgReemb: string read FindOrgReemb;
     property cnpjOper: string read FcnpjOper;
-    property regANS: integer read FregANS;
+    property regANS: string read FregANS;
     property detReembTit: TdetReembTitCollection read getDetReembTit write FdetReembTit;
     property infoReembDep: TinfoReembDepCollection read getInfoReembDep write FinfoReembDep;
   end;
@@ -2336,7 +2336,7 @@ begin
                 begin
                   New;
                   Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
-                  Items[j].FregANS      := leitor.rCampo(tcInt, 'regANS');
+                  Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
                   Items[j].FvlrSaudeTit := leitor.rCampo(tcDe2, 'vlrSaudeTit');
                 end;
 
@@ -2364,7 +2364,7 @@ begin
                   New;
                   Items[j].FindOrgReemb := leitor.rCampo(tcStr, 'indOrgReemb');
                   Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
-                  Items[j].FregANS      := leitor.rCampo(tcInt, 'regANS');
+                  Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
                 end;
 
                 k := 0;
@@ -2639,7 +2639,7 @@ begin
         sSecao := 'planSaude' + IntToStrZero(I, 2);
 
         AIni.WriteString(sSecao, 'cnpjOper', ideTrabalhador.infoIRComplem.planSaude.Items[i].cnpjOper);
-        AIni.WriteInteger(sSecao, 'regANS', ideTrabalhador.infoIRComplem.planSaude.Items[i].regANS);
+        AIni.WriteString(sSecao, 'regANS', ideTrabalhador.infoIRComplem.planSaude.Items[i].regANS);
         AIni.WriteFloat(sSecao, 'vlrSaudeTit', ideTrabalhador.infoIRComplem.planSaude.Items[i].vlrSaudeTit);
 
         for j := 0 to ideTrabalhador.infoIRComplem.planSaude.Items[i].infoDepSau.Count -1 do
@@ -2657,7 +2657,7 @@ begin
 
         AIni.WriteString(sSecao, 'indOrgReemb', ideTrabalhador.infoIRComplem.infoReembMed.Items[i].indOrgReemb);
         AIni.WriteString(sSecao, 'cnpjOper', ideTrabalhador.infoIRComplem.infoReembMed.Items[i].cnpjOper);
-        AIni.WriteInteger(sSecao, 'regANS', ideTrabalhador.infoIRComplem.infoReembMed.Items[i].regANS);
+        AIni.WriteString(sSecao, 'regANS', ideTrabalhador.infoIRComplem.infoReembMed.Items[i].regANS);
 
         for j := 0 to ideTrabalhador.infoIRComplem.infoReembMed.Items[i].detReembTit.Count -1 do
         begin

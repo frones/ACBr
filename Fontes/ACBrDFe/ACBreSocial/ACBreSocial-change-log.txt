@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2024
+-- pcesS1210.pas, pcesS5002.pas, Frm_ACBreSocial --
+[-] Corrigido campo regANS, do evento S-1210, convertendo para string e permitindo o preenchimento de zeros à esquerda
+  Por: alemartinssilva@gmail.com, Renato Rubinho
+
 19/01/2024
 -- pcesS1280.pas --
 [*] Corrigida a geração do grupo infoAtivConcom, do evento S-1280, para ser opcional, consideranto fatorMes

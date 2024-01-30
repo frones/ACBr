@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Caceres/MT mudou a URL de produção. Provedor e o mesmo.
+  Por: Fernando Henrique
+[*] A cidade de Itapeva/MG trocou de provedor, agora é Fiorilli.
+  Por: Fernanda Penteado
+
 29/01/2024
 -- ACBrNFSeXWebserviceBase --
 [*] Alterado as condições para detectar a ausencia de encoding no inicio do 

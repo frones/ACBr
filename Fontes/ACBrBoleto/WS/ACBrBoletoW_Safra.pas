@@ -241,9 +241,8 @@ begin
   begin
     Json := TJsonObject.Create;
     try
-      Json.Add('agencia').Value.asString := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Agencia, '12400');
-      Json.Add('conta').Value.asString := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito,
-        '008554440');
+      Json.Add('agencia').Value.asString := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Agencia, '');
+      Json.Add('conta').Value.asString := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito,'');
 
       GerarDocumento(Json);
 

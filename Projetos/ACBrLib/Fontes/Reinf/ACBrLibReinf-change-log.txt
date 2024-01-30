@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2024
+--- ACBrReinf, ACBrReinf.Delegates ---
+[-] Correção no programa de exemplo MT em C#
+    Por: Renato Rubinho
+
 05/01/2024
 --- Diversos ---
 [+] Desenvolvido programa de exemplo em Java

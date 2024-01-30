@@ -10,75 +10,75 @@ namespace ACBrLib.Reinf
     public sealed partial class ACBrReinf
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_Inicializar(string eArqConfig, string eChaveCrypt);
+        public delegate int Reinf_Inicializar(ref IntPtr handle, string eArqConfig, string eChaveCrypt);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_Finalizar();
+        public delegate int Reinf_Finalizar(IntPtr handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_Nome(StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_Nome(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_Versao(StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_Versao(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ConfigImportar(string eArqConfig);
+        public delegate int Reinf_ConfigImportar(IntPtr handle, string eArqConfig);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ConfigExportar(StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_ConfigExportar(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ConfigLer(string eArqConfig);
+        public delegate int Reinf_ConfigLer(IntPtr handle, string eArqConfig);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ConfigGravar(string eArqConfig);
+        public delegate int Reinf_ConfigGravar(IntPtr handle, string eArqConfig);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ConfigLerValor(string eSessao, string eChave, StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_ConfigLerValor(IntPtr handle, string eSessao, string eChave, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ConfigGravarValor(string eSessao, string eChave, string valor);
+        public delegate int Reinf_ConfigGravarValor(IntPtr handle, string eSessao, string eChave, string valor);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_CriarEventoReinf(string eArqIni);
+        public delegate int Reinf_CriarEventoReinf(IntPtr handle, string eArqIni);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_EnviarReinf(StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_EnviarReinf(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ConsultarReinf(string eProtocolo, StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_ConsultarReinf(IntPtr handle, string eProtocolo, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ConsultarReciboReinf(string ePerApur, int aTipoEvento, string eNrInscEstab,
+        public delegate int Reinf_ConsultarReciboReinf(IntPtr handle, string ePerApur, int aTipoEvento, string eNrInscEstab,
             string eCnpjPrestador, string eNrInscTomador, string eDtApur, string eCpfCnpjBenef,
             string eCnpjFonte, StringBuilder buffer, ref int bufferSize);
         
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_CriarEnviarReinf(string eArqIni, StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_CriarEnviarReinf(IntPtr handle, string eArqIni, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_LimparReinf();
+        public delegate int Reinf_LimparReinf(IntPtr handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_CarregarXMLEventoReinf(string eArquivoOuXML);
+        public delegate int Reinf_CarregarXMLEventoReinf(IntPtr handle, string eArquivoOuXML);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_SetIDContribuinte(string aIdContribuinte);
+        public delegate int Reinf_SetIDContribuinte(IntPtr handle, string aIdContribuinte);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_SetIDTransmissor(string aIdTransmissor);
+        public delegate int Reinf_SetIDTransmissor(IntPtr handle, string aIdTransmissor);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_SetTipoContribuinte(int aTipoContribuinte);
+        public delegate int Reinf_SetTipoContribuinte(IntPtr handle, int aTipoContribuinte);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_SetVersaoDF(string sVersao);
+        public delegate int Reinf_SetVersaoDF(IntPtr handle, string sVersao);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Reinf_ObterCertificados(StringBuilder buffer, ref int bufferSize);
+        public delegate int Reinf_ObterCertificados(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         protected override void InitializeMethods()
         {

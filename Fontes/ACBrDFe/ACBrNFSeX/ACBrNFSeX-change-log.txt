@@ -44,6 +44,8 @@ Símbolo : Significado
 
 30/01/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Boa Esperanca/MG trocou de provedor, agora é Betha versaõ 2.02
+  Por: José Geraldo
 [*] A cidade de Caceres/MT mudou a URL de produção. Provedor e o mesmo.
   Por: Fernando Henrique
 [*] A cidade de Itapeva/MG trocou de provedor, agora é Fiorilli.

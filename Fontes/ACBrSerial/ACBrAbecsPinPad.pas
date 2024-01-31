@@ -565,6 +565,7 @@ type
   private
     fDevice: TACBrDevice;
     fMsgAlign: TACBrAbecsMsgAlign;
+    fMsgWordWrap: Boolean;
     fOnEndCommand: TNotifyEvent;
     fOnStartCommand: TNotifyEvent;
     fOnWaitForResponse: TACBrAbecsExecEvent;
@@ -607,6 +608,8 @@ type
     procedure ClearCacheData;
     procedure LogApplicationLayer(AApplicationLayer: TACBrAbecsApplicationLayer);
 
+    function FormatMSG(const AMSG: String; MaxCols: Integer; MaxLines: Integer): String;
+    function GetPinPadCapabilities: TACBrAbecsPinPadCapabilities;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy; override ;
@@ -617,12 +620,8 @@ type
 
     property Command: TACBrAbecsCommand read fCommand;
     property Response: TACBrAbecsResponse read fResponse;
+    property PinPadCapabilities: TACBrAbecsPinPadCapabilities read GetPinPadCapabilities;
 
-    function FormatSPE_DSPMSG(const ASPE_DSPMSG: String): String;
-    function FormatMSG_S32(const AMSG: String): String;
-    function FormatMSG(const AMSG: String; MaxCols: Integer; MaxLines: Integer): String;
-
-  public
     // Control Commands
     procedure OPN; overload;
     procedure OPN(const OPN_MOD: String; const OPN_EXP: String); overload;
@@ -663,7 +662,9 @@ type
     procedure DSI(const ASPE_MFNAME: String);
 
     procedure LoadMedia(const ASPE_MFNAME: String; ASPE_DATAIN: TStream; MediaType: TACBrAbecsPinPadMediaType);
-    function GetPinPadCapabilities: TACBrAbecsPinPadCapabilities;
+    function FormatSPE_MFNAME(const ASPE_MFNAME: String): String;
+    function FormatSPE_DSPMSG(const ASPE_DSPMSG: String): String;
+    function FormatMSG_S32(const AMSG: String): String;
   published
     property Device: TACBrDevice read fDevice;
     property Port: String read GetPort write SetPort;
@@ -676,6 +677,7 @@ type
     property OnWriteLog: TACBrGravarLog read fOnWriteLog write fOnWriteLog;
 
     property MsgAlign: TACBrAbecsMsgAlign read fMsgAlign write fMsgAlign default alCenter;
+    property MsgWordWrap: Boolean read fMsgWordWrap write fMsgWordWrap default True;
 
     property OnStartCommand: TNotifyEvent read fOnStartCommand write fOnStartCommand;
     property OnWaitForResponse: TACBrAbecsExecEvent read fOnWaitForResponse write fOnWaitForResponse;
@@ -1497,6 +1499,7 @@ begin
   fLogTranslate := True;
   fTimeOut := TIMEOUT_RSP;
   fMsgAlign := alCenter;
+  fMsgWordWrap := True;
   fOnWriteLog := nil;
   fOnStartCommand := nil;
   fOnWaitForResponse := nil;
@@ -1608,6 +1611,8 @@ var
 begin
   if (fPinPadCapabilities.SerialNumber = '') then
   begin
+    ClearCacheData;
+
     if (Self.LogLevel > 1) then
       RegisterLog('- GetPinPadCapabilities');
 
@@ -1706,8 +1711,11 @@ var
   i, r: Integer;
 begin
   Result := '';
-  s := ReplaceString(AMSG, CR, LF);
-  s := QuebraLinhas(s, MaxCols);
+  s := ReplaceString(AMSG, CR+LF, LF);
+  s := ReplaceString(s, CR, LF);
+  if fMsgWordWrap then
+    s := QuebraLinhas(s, MaxCols);
+
   sl := TStringList.Create;
   try
     sl.Text := s;
@@ -1730,6 +1738,11 @@ begin
   end;
 
   Result := NativeStringToAnsi(Result);
+end;
+
+function TACBrAbecsPinPad.FormatSPE_MFNAME(const ASPE_MFNAME: String): String;
+begin
+  Result := PadRight(UpperCase(OnlyAlphaNum(ASPE_MFNAME)), 8);
 end;
 
 function TACBrAbecsPinPad.GetPort: String;
@@ -2459,16 +2472,14 @@ var
 begin
   if (Self.LogLevel > 0) then
     RegisterLog('MLI( '+ASPE_MFNAME+', '+ASPE_MFINFO+' )');
-  s := trim(ASPE_MFNAME);
+  s := FormatSPE_MFNAME(ASPE_MFNAME);
   l := Length(s);
-  if (l = 0) or (l > 8) or (not StrIsAlphaNum(s)) then
+  if (l = 0) then
     DoException(CERR_SPE_MFNAME);
 
   l := Length(ASPE_MFINFO);
   if (l <> 10) then
     DoException(CERR_SPE_MFINFO);
-
-  s := PadRight(s, 8);
 
   fCommand.Clear;
   fCommand.ID := 'MLI';
@@ -2522,7 +2533,7 @@ begin
     RegisterLog('DMF( '+ASPE_MFNAME+' )');
   fCommand.Clear;
   fCommand.ID := 'DMF';
-  fCommand.AddParamFromTagValue(SPE_MFNAME, ASPE_MFNAME);
+  fCommand.AddParamFromTagValue(SPE_MFNAME, FormatSPE_MFNAME(ASPE_MFNAME));
   ExecCommand;
 end;
 
@@ -2541,7 +2552,7 @@ begin
   fCommand.Clear;
   fCommand.ID := 'DMF';
   for i := Low(LIST_SPE_MFNAME) to High(LIST_SPE_MFNAME) do
-    fCommand.AddParamFromTagValue(SPE_MFNAME, LIST_SPE_MFNAME[i]);
+    fCommand.AddParamFromTagValue(SPE_MFNAME, FormatSPE_MFNAME(LIST_SPE_MFNAME[i]));
   ExecCommand;
 end;
 
@@ -2565,7 +2576,7 @@ begin
     RegisterLog('DSI( '+ASPE_MFNAME+' )');
   fCommand.Clear;
   fCommand.ID := 'DSI';
-  fCommand.AddParamFromTagValue(SPE_MFNAME, ASPE_MFNAME);
+  fCommand.AddParamFromTagValue(SPE_MFNAME, FormatSPE_MFNAME(ASPE_MFNAME));
   ExecCommand;
 end;
 

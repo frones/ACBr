@@ -167,8 +167,10 @@ begin
     xVer := '015'
   else if (DtRef.DateTime >= StrToDate('01/01/2022')) and (DtRef.DateTime <= StrToDate('31/12/2022')) then
     xVer := '016'
-  else if (DtRef.DateTime >= StrToDate('01/01/2023')) then
-    xVer := '017';
+  else if (DtRef.DateTime >= StrToDate('01/01/2023')) and (DtRef.DateTime <= StrToDate('31/12/2023')) then
+    xVer := '017'
+  else
+    xVer := '018';
   Result := StrToCodVer(xVer);
 end;
 

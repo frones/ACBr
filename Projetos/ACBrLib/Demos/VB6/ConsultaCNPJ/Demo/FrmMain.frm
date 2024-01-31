@@ -55,26 +55,37 @@ Begin VB.Form FrmMain
       TabCaption(0)   =   "Consultas"
       TabPicture(0)   =   "FrmMain.frx":0000
       Tab(0).ControlEnabled=   -1  'True
-      Tab(0).Control(0)=   "btnConsultarCaptcha"
+      Tab(0).Control(0)=   "label1"
       Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "btnConsultarCNPJ"
       Tab(0).Control(1).Enabled=   0   'False
-      Tab(0).ControlCount=   2
+      Tab(0).Control(2)=   "cmbServico"
+      Tab(0).Control(2).Enabled=   0   'False
+      Tab(0).ControlCount=   3
+      Begin VB.ComboBox cmbServico 
+         Height          =   315
+         ItemData        =   "FrmMain.frx":001C
+         Left            =   360
+         List            =   "FrmMain.frx":0029
+         TabIndex        =   5
+         Top             =   840
+         Width           =   1575
+      End
       Begin VB.CommandButton btnConsultarCNPJ 
          Caption         =   "Consultar CNPJ"
          Height          =   375
          Left            =   3120
-         TabIndex        =   4
-         Top             =   600
+         TabIndex        =   3
+         Top             =   840
          Width           =   1575
       End
-      Begin VB.CommandButton btnConsultarCaptcha 
-         Caption         =   "Consultar Captcha"
-         Height          =   375
+      Begin VB.Label label1 
+         Caption         =   "Serviço"
+         Height          =   255
          Left            =   360
-         TabIndex        =   3
+         TabIndex        =   4
          Top             =   600
-         Width           =   1575
+         Width           =   975
       End
    End
 End
@@ -102,9 +113,8 @@ End Sub
 Private Sub btnConsultarCNPJ_Click()
     
     sCNPJ = InputBox("CNPJ", "Informe o CNPJ", "")
-    Captcha = InputBox("Captcha", "Informe o Captcha", "")
     
-    ret = cnpj.Consultar(sCNPJ, Captcha)
+    ret = cnpj.Consultar(sCNPJ, cmbServico.ListIndex)
     rtbRespostas.Text = ret
     
 End Sub

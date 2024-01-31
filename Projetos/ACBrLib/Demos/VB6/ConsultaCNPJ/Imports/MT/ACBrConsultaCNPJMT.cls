@@ -71,14 +71,14 @@ Private Declare Function CNPJ_ConfigGravarValor _
                                       
 Private Declare Function CNPJ_ConsultarCaptcha _
                 Lib "ACBrConsultaCNPJ32.dll" (ByRef libHandler As Long, _
-                                     ByVal ePathDownload As String, _
+                                              ByVal ePathDownload As String, _
                                               ByVal buffer As String, _
                                               ByRef bufferLen As Long) As Long
                                               
 Private Declare Function CNPJ_Consultar _
                 Lib "ACBrConsultaCNPJ32.dll" (ByRef libHandler As Long, _
-                                     ByVal eCNPJ As String, _
-                                              ByVal eCaptcha As String, _
+                                              ByVal eCNPJ As String, _
+                                              ByVal eProvedor As Long, _
                                               ByVal buffer As String, _
                                               ByRef bufferLen As Long) As Long
                                       
@@ -214,7 +214,7 @@ Public Function ConsultarCaptcha(ByVal ePathDownload As String) As String
     ConsultarCaptcha = processResult(buffer, bufferLen)
 End Function
 
-Public Function Consultar(ByVal eCNPJ As String, ByVal eCaptcha As String) As String
+Public Function Consultar(ByVal eCNPJ As String, ByVal eProvedor As Long) As String
 
     Dim retorno As Long
     Dim buffer As String
@@ -223,7 +223,7 @@ Public Function Consultar(ByVal eCNPJ As String, ByVal eCaptcha As String) As St
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = CNPJ_Consultar(libHandler, eCNPJ, eCaptcha, buffer, bufferLen)
+    retorno = CNPJ_Consultar(libHandler, eCNPJ, eProvedor, buffer, bufferLen)
     CheckResult retorno
     
     Consultar = processResult(buffer, bufferLen)

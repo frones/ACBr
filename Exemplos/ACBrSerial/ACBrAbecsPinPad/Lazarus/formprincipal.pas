@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, Spin, ComCtrls, Grids, ExtDlgs, ACBrAbecsPinPad;
+  Buttons, Spin, ComCtrls, Grids, ExtDlgs, ACBrAbecsPinPad, Types;
 
 const
   CSerialSection = 'Serial';
@@ -37,6 +37,7 @@ type
     btGKY: TButton;
     btLMF: TButton;
     btMediaLoad: TButton;
+    btSendQRCode: TButton;
     btMNU: TButton;
     btOPN: TButton;
     btReadParms: TBitBtn;
@@ -46,13 +47,16 @@ type
     btSearchSerialPorts1: TSpeedButton;
     btSerial: TSpeedButton;
     btACBrPinPadCapabilities: TButton;
+    btPaintQRCode: TButton;
     cbSecure: TCheckBox;
     cbxMsgAlign: TComboBox;
     cbxPort: TComboBox;
     cbGIXAll: TCheckBox;
+    cbMsgWordWrap: TCheckBox;
     edGIXValue: TEdit;
     edLogFile: TEdit;
     edMediaLoad: TEdit;
+    edQRCodeImgName: TEdit;
     edtCLOMsg1: TEdit;
     edtCLOMsg2: TEdit;
     edtDSPMsg1: TEdit;
@@ -63,7 +67,7 @@ type
     gbConfig1: TGroupBox;
     gbExponent: TGroupBox;
     gbModulus: TGroupBox;
-    GroupBox1: TGroupBox;
+    gbCLO: TGroupBox;
     GroupBox2: TGroupBox;
     gbDSP: TGroupBox;
     gbGIN: TGroupBox;
@@ -71,6 +75,7 @@ type
     gbACBrPinPadCapabilities: TGroupBox;
     ImageList1: TImageList;
     imgMedia: TImage;
+    imgQRCode: TImage;
     Label1: TLabel;
     Label13: TLabel;
     Label14: TLabel;
@@ -90,7 +95,10 @@ type
     mExponent: TMemo;
     mLog: TMemo;
     mModulus: TMemo;
+    mQRCode: TMemo;
     OpenPictureDialog1: TOpenPictureDialog;
+    Panel1: TPanel;
+    pgMedia: TPageControl;
     pGINIDX: TPanel;
     pGIXParams: TPanel;
     pLMFMediaTitle: TPanel;
@@ -104,8 +112,11 @@ type
     pLogs: TPanel;
     pMedia: TPanel;
     pMediaFile: TPanel;
+    pMediaInfo: TPanel;
     pMediaLoad: TPanel;
     pMFButtons: TPanel;
+    pQREGerado: TPanel;
+    pQREMemo: TPanel;
     sbCleanMemoLog: TSpeedButton;
     sbGenerateKeys: TSpeedButton;
     sbMedia: TScrollBox;
@@ -115,16 +126,19 @@ type
     seLogLevel: TSpinEdit;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
-    TabSheet1: TTabSheet;
+    Splitter3: TSplitter;
+    tsImage: TTabSheet;
+    tsQRCode: TTabSheet;
+    tsCard: TTabSheet;
     tsCLOLines: TTabSheet;
     tsCLOMedia: TTabSheet;
     tsAsk: TTabSheet;
     tsDisplay: TTabSheet;
-    tsCLO: TTabSheet;
+    tsClose: TTabSheet;
     tsConfig: TTabSheet;
     tsGIX: TTabSheet;
-    tsLMF: TTabSheet;
-    tsOPN: TTabSheet;
+    tsMultimidia: TTabSheet;
+    tsOpen: TTabSheet;
     procedure ACBrAbecsPinPad1EndCommand(Sender: TObject);
     procedure ACBrAbecsPinPad1StartCommand(Sender: TObject);
     procedure ACBrAbecsPinPad1WaitForResponse(var Cancel: Boolean);
@@ -155,8 +169,10 @@ type
     procedure btSearchSerialPortsClick(Sender: TObject);
     procedure btRMCClick(Sender: TObject);
     procedure btSaveParamsClick(Sender: TObject);
+    procedure btSendQRCodeClick(Sender: TObject);
     procedure btSerialClick(Sender: TObject);
     procedure btCancelClick(Sender: TObject);
+    procedure btPaintQRCodeClick(Sender: TObject);
     procedure cbGIXAllChange(Sender: TObject);
     procedure cbSecureChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -176,6 +192,7 @@ type
     procedure ConfigACBrAbecsPinPad;
 
     procedure LoadMediaNames;
+    procedure ShowMediaDimensions;
     function PP_StrToInt(const PP: String): Word;
   public
 
@@ -187,8 +204,9 @@ var
 implementation
 
 uses
-  TypInfo, IniFiles,
+  TypInfo, IniFiles, DateUtils, Math,
   configuraserial,
+  ACBrImage, ACBrDelphiZXingQRCode,
   ACBrUtiL.FilesIO,
   ACBrUtil.Strings;
 
@@ -206,12 +224,15 @@ begin
   ConfigPanelsCommands(False);
   pgcCommands.ActivePageIndex := 0;
   pgCLX.ActivePageIndex := 0;
+  pgMedia.ActivePageIndex := 0;
   FindSerialPorts(cbxPort.Items);
 
   For i := Low(TACBrAbecsMsgAlign) to High(TACBrAbecsMsgAlign) do
     cbxMsgAlign.Items.Add( GetEnumName(TypeInfo(TACBrAbecsMsgAlign), integer(I) ) ) ;
 
   ReadParams;
+  ShowMediaDimensions;
+  btPaintQRCode.Click;
 end;
 
 procedure TfrMain.sbCleanMemoLogClick(Sender: TObject);
@@ -254,6 +275,7 @@ begin
     ini.WriteString(CLogSection, 'File', edLogFile.Text);
     ini.WriteInteger(CLogSection, 'Level', seLogLevel.Value);
     ini.WriteInteger(CPinPadSection, 'MsgAlign', cbxMsgAlign.ItemIndex);
+    ini.WriteBool(CPinPadSection, 'MsgWordWrap', cbMsgWordWrap.Checked);
   finally
     ini.Free ;
   end ;
@@ -272,6 +294,7 @@ begin
     edLogFile.Text := ini.ReadString(CLogSection, 'File', '');
     seLogLevel.Value := ini.ReadInteger(CLogSection, 'Level', 2);
     cbxMsgAlign.ItemIndex := ini.ReadInteger(CPinPadSection, 'MsgAlign', 3);
+    cbMsgWordWrap.Checked := ini.ReadBool(CPinPadSection, 'MsgWordWrap', True);
   finally
     ini.Free ;
   end ;
@@ -333,6 +356,7 @@ begin
   ACBrAbecsPinPad1.LogLevel := seLogLevel.Value;
   ACBrAbecsPinPad1.Port := cbxPort.Text;
   ACBrAbecsPinPad1.MsgAlign := TACBrAbecsMsgAlign(cbxMsgAlign.ItemIndex);
+  ACBrAbecsPinPad1.MsgWordWrap := cbMsgWordWrap.Checked;
 end;
 
 procedure TfrMain.LoadMediaNames;
@@ -355,6 +379,11 @@ begin
   finally
     sl.Free;
   end;
+end;
+
+procedure TfrMain.ShowMediaDimensions;
+begin
+  pMediaInfo.Caption := Format('w:%d x h:%d', [imgMedia.Picture.Width, imgMedia.Picture.Height]);
 end;
 
 function TfrMain.PP_StrToInt(const PP: String): Word;
@@ -527,7 +556,10 @@ begin
   ACBrAbecsPinPad1.IsEnabled := (btActivate.Tag = 0);
   ConfigPanelsCommands(ACBrAbecsPinPad1.IsEnabled);
   if ACBrAbecsPinPad1.IsEnabled then
+  begin
+    LoadMediaNames;
     pgcCommands.ActivePageIndex := 1;
+  end;
 end;
 
 procedure TfrMain.ACBrAbecsPinPad1EndCommand(Sender: TObject);
@@ -564,11 +596,8 @@ begin
 end;
 
 procedure TfrMain.btACBrPinPadCapabilitiesClick(Sender: TObject);
-var
-  cap: TACBrAbecsPinPadCapabilities;
 begin
-  cap := ACBrAbecsPinPad1.GetPinPadCapabilities;
-  with cap do
+  with ACBrAbecsPinPad1.PinPadCapabilities do
   begin
     mACBrPinPadCapabilities.Lines.Add('SerialNumber: '+SerialNumber);
     mACBrPinPadCapabilities.Lines.Add('PartNumber: '+PartNumber);
@@ -640,6 +669,8 @@ begin
       sl.Free;
     end;
   end;
+
+  LoadMediaNames;
 end;
 
 procedure TfrMain.btDSIClick(Sender: TObject);
@@ -758,13 +789,27 @@ end;
 procedure TfrMain.btMediaLoadClick(Sender: TObject);
 var
   ms: TMemoryStream;
+  tini, tfim: TDateTime;
 begin
   ms := TMemoryStream.Create;
   try
     imgMedia.Picture.SaveToStream(ms);
-    ACBrAbecsPinPad1.LoadMedia( edMediaLoad.Text,
-                                ms,
-                                TACBrAbecsPinPadMediaType(imgMedia.Tag) );
+    try
+      tini := Now;
+      mLog.Lines.Add('Start Loading '+edMediaLoad.Text);
+      mLog.Lines.BeginUpdate;
+      ACBrAbecsPinPad1.LoadMedia( edMediaLoad.Text,
+                                  ms,
+                                  TACBrAbecsPinPadMediaType(imgMedia.Tag) );
+    finally
+      mLog.Lines.EndUpdate;
+    end;
+
+    tfim := Now;
+    LoadMediaNames;
+    ACBrAbecsPinPad1.DSI(edMediaLoad.Text);
+    mLog.ScrollBy(0, mLog.Lines.Count);
+    mLog.Lines.Add('Done Loading '+edMediaLoad.Text+', '+FormatFloat('##0.000',SecondSpan(tini,tfim))+' segundos' );
   finally
     ms.Free;
   end;
@@ -789,8 +834,6 @@ begin
     ACBrAbecsPinPad1.OPN
   else
     ACBrAbecsPinPad1.OPN( Trim(mModulus.Text), Trim(mExponent.Text) );
-
-  LoadMediaNames;
 end;
 
 procedure TfrMain.btRMCClick(Sender: TObject);
@@ -801,6 +844,44 @@ end;
 procedure TfrMain.btSaveParamsClick(Sender: TObject);
 begin
   SaveParams;
+end;
+
+procedure TfrMain.btSendQRCodeClick(Sender: TObject);
+var
+  ms: TMemoryStream;
+  tini, tfim: TDateTime;
+  jpg: TJPEGImage;
+  qrsize: Integer;
+begin
+  ms := TMemoryStream.Create;
+  jpg := TJPEGImage.Create;
+  try
+    qrsize := Trunc(min( ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Cols,
+                         ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows)) - 20;
+    jpg.Width := qrsize;
+    jpg.Height := qrsize;
+    jpg.CompressionQuality := 50;
+    jpg.Canvas.StretchDraw(jpg.Canvas.ClipRect, imgQRCode.Picture.Bitmap);
+    jpg.SaveToFile('c:\temp\qrcode.jpg');
+    jpg.SaveToStream(ms);
+    try
+      tini := Now;
+      mLog.Lines.Add('Start Loading '+edQRCodeImgName.Text);
+      mLog.Lines.BeginUpdate;
+      ACBrAbecsPinPad1.LoadMedia( edQRCodeImgName.Text, ms, mtJPG);
+    finally
+      mLog.Lines.EndUpdate;
+    end;
+
+    tfim := Now;
+    LoadMediaNames;
+    ACBrAbecsPinPad1.DSI(edQRCodeImgName.Text);
+    mLog.ScrollBy(0, mLog.Lines.Count);
+    mLog.Lines.Add('Done Loading '+edQRCodeImgName.Text+', '+FormatFloat('##0.000',SecondSpan(tini,tfim))+' segundos' );
+  finally
+    ms.Free;
+    jpg.Free;
+  end;
 end;
 
 procedure TfrMain.btReadParmsClick(Sender: TObject);
@@ -814,8 +895,10 @@ var
 begin
   if OpenPictureDialog1.Execute then
   begin
+    edMediaLoad.Text := ACBrAbecsPinPad1.FormatSPE_MFNAME( ExtractFileName(OpenPictureDialog1.FileName) );
     imgMedia.Picture.Clear;
     imgMedia.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+    ShowMediaDimensions;
     ext := LowerCase(ExtractFileExt(OpenPictureDialog1.FileName));
     if (ext = '.gif') then
       imgMedia.Tag := Integer(mtGIF)
@@ -829,6 +912,11 @@ end;
 procedure TfrMain.btCancelClick(Sender: TObject);
 begin
   ConfigPanelCancel(True);
+end;
+
+procedure TfrMain.btPaintQRCodeClick(Sender: TObject);
+begin
+  PintarQRCode(mQRCode.Lines.Text, imgQRCode.Picture.Bitmap, qrUTF8BOM);
 end;
 
 procedure TfrMain.cbGIXAllChange(Sender: TObject);

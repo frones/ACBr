@@ -360,7 +360,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if (Pos('nfse', Arquivo) > 0) or (Pos('nfs', Arquivo) > 0) then
+  if (Pos('nfse', Arquivo) > 0) then
     tpXML := txmlNFSe
   else
     tpXML := txmlRPS;

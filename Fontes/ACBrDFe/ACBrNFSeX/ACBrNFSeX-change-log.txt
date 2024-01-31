@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 31/01/2024
+-- Equiplano.LerXml --
+[*] Não estava identificando corretamente um XML de NFS-e.
+  Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [*] A cidade de Carlos Barbosa/RS trocou de provedor, agora é Infisc versão 1.01
   Por: DNA Automação

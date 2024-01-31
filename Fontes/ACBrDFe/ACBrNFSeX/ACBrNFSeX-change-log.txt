@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 31/01/2024
+-- ACBrNFSeXServicos --
+[*] Inclusão das cidades: Piranga/MG, Presidente Bernardes/MG, 
+    Senhora de Oliveira/MG, Bras Pires/MG, Lamim/MG e Rio Espera/MG
+    todas utilizam o provedor Futurize.
+  Por: Arimateia Jr
 -- Equiplano.LerXml --
 [*] Não estava identificando corretamente um XML de NFS-e.
   Por: Diego Reckziegel

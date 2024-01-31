@@ -51,7 +51,8 @@ public class FrmMain extends javax.swing.JFrame {
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel14 = new javax.swing.JPanel();
         btnConsultarCNPJ = new javax.swing.JButton();
-        btnConsultarCaotcha = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cmbServico = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         rtbRespostas = new javax.swing.JTextArea();
@@ -77,32 +78,36 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
-        btnConsultarCaotcha.setText("Consultar Captcha");
-        btnConsultarCaotcha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarCaotchaActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Serviço");
+
+        cmbServico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "cwsNenhum", "cwsBrasilAPI", "cwsReceitaWS" }));
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(btnConsultarCaotcha)
-                .addGap(54, 54, 54)
-                .addComponent(btnConsultarCNPJ)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addComponent(btnConsultarCNPJ)
+                        .addGap(51, 51, 51))))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConsultarCNPJ)
-                    .addComponent(btnConsultarCaotcha))
-                .addContainerGap(187, Short.MAX_VALUE))
+                    .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsultarCNPJ))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Consultas", jPanel14);
@@ -125,7 +130,7 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -138,21 +143,19 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 15, Short.MAX_VALUE))
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(861, 307));
+        setSize(new java.awt.Dimension(888, 346));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -179,10 +182,7 @@ public class FrmMain extends javax.swing.JFrame {
             String cnpj = JOptionPane.showInputDialog(this, "Informe o CNPJ:",
                 "Consultar CNPJ", JOptionPane.PLAIN_MESSAGE);
 
-            String codcaptcha = JOptionPane.showInputDialog(this, "Informe o Captcha:",
-                "Consultar CNPJ", JOptionPane.PLAIN_MESSAGE);
-
-            String ret = acbrcnpj.Consultar(cnpj, codcaptcha);
+            String ret = acbrcnpj.Consultar(cnpj, cmbServico.getSelectedIndex());
             rtbRespostas.append(ret);
 
         }
@@ -192,31 +192,14 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConsultarCNPJActionPerformed
 
-    private void btnConsultarCaotchaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCaotchaActionPerformed
-
-        try 
-        {
-            
-            Path captchaPath = Paths.get(System.getProperty("user.dir"), "Captcha");
-            if (!Files.isDirectory(captchaPath)) {
-                captchaPath.toFile().mkdirs();
-                acbrcnpj.consultarCaptcha(captchaPath.toString());
-            }
-        } 
-        catch (Exception ex)
-        {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_btnConsultarCaotchaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultarCNPJ;
-    private javax.swing.JButton btnConsultarCaotcha;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup8;
     private javax.swing.ButtonGroup buttonGroup9;
+    private javax.swing.JComboBox<String> cmbServico;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;

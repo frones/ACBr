@@ -67,7 +67,7 @@ public final class ACBrConsultaCNPJ extends ACBrLibBase {
         
         int CNPJ_ConsultarCaptcha(String ePathDownload, ByteBuffer buffer, IntByReference bufferSize);
         
-        int CNPJ_Consultar(String eCNPJ, String eCaptcha, ByteBuffer buffer, IntByReference bufferSize);
+        int CNPJ_Consultar(String eCNPJ, int eProvedor, ByteBuffer buffer, IntByReference bufferSize);
                 
     }
 
@@ -178,12 +178,12 @@ public final class ACBrConsultaCNPJ extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String Consultar(String eCNPJ, String eCaptcha) throws Exception{
+    public String Consultar(String eCNPJ, int eProvedor) throws Exception{
         
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
-        int ret = ACBrConsultaCNPJLib.INSTANCE.CNPJ_Consultar(eCNPJ, eCaptcha, buffer, bufferLen);
+        int ret = ACBrConsultaCNPJLib.INSTANCE.CNPJ_Consultar(eCNPJ, eProvedor, buffer, bufferLen);
         checkResult(ret);
         
         return processResult(buffer, bufferLen);

@@ -141,7 +141,7 @@ implementation
 
 uses
   strutils,
-  pcnConsts,
+  ACBrDFeConsts,
   ACBrDFeException,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,

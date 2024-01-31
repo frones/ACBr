@@ -1018,7 +1018,7 @@ begin
         + '/'
         + Copy(LLinha, 298, 2)
         + '/'
-        + Copy(LLinha, 290, 2), 0, 'DD/MM/YY');
+        + Copy(LLinha, 300, 2), 0, 'DD/MM/YY');
   end;
 end;
 

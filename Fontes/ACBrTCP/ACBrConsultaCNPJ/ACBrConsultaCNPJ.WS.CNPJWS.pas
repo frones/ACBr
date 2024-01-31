@@ -31,7 +31,7 @@
 {******************************************************************************}
 
 {$I ACBr.inc}
-unit ACBrConsultaCNPJ.WS.Publica;
+unit ACBrConsultaCNPJ.WS.CNPJWS;
 
 interface
 uses
@@ -40,12 +40,13 @@ type
   EACBrConsultaCNPJWSException = class ( Exception );
 
   { TACBrConsultaCNPJWS }
-  TACBrConsultaCNPJWSPublica = class(TACBrConsultaCNPJWS)
+  TACBrConsultaCNPJWSCNPJWS = class(TACBrConsultaCNPJWS)
     public
       function Executar:boolean; override;
   end;
 const
-  C_URL = 'https://publica.cnpj.ws/cnpj/';
+  C_URL_PUBLICA   = 'https://publica.cnpj.ws/cnpj/';
+  C_URL_COMERCIAL = 'https://comercial.cnpj.ws/cnpj/';
 
 implementation
 
@@ -59,7 +60,7 @@ uses
 
 { TACBrConsultaCNPJWS }
 
-function TACBrConsultaCNPJWSPublica.Executar: boolean;
+function TACBrConsultaCNPJWSCNPJWS.Executar: boolean;
 var
   LJSon: TJson;
   LJsonObject : TJsonObject;
@@ -67,12 +68,21 @@ var
   LRetorno : String;
   LJsonArray: TJsonArray;
   I, Z : Integer;
-  JsonObjestabelecimento : Jsons.TJsonObject;
-  JsonObj2               : Jsons.TJsonObject;
+  LJsonObjestabelecimento : Jsons.TJsonObject;
+  LJsonObj2               : Jsons.TJsonObject;
+  LURL : String;
 begin
   inherited Executar;
 
-  SendHttp('GET',C_URL +  OnlyNumber(FCNPJ), LRetorno);
+  ClearHeaderParams;
+  if FUsuario <> '' then
+  begin
+    AddHeaderParam('x_api_token', FUsuario);
+    LURL := C_URL_COMERCIAL;
+  end else
+    LURL := C_URL_PUBLICA;
+
+  SendHttp('GET', LURL +  OnlyNumber(FCNPJ), LRetorno);
 
   LJSon := TJson.Create;
   try
@@ -84,57 +94,57 @@ begin
       begin
         FResposta.RazaoSocial := LJsonObject.Values['razao_social'].AsString;
 
-        JsonObjestabelecimento := Jsons.TJsonObject.Create;
-        JsonObjestabelecimento.Parse( LJsonObject.Values['estabelecimento'].Stringify );
-        FResposta.Fantasia             := JsonObjestabelecimento.Values['nome_fantasia'].AsString;
-        FResposta.CNPJ                 := JsonObjestabelecimento.Values['cnpj'].AsString;
-        FResposta.Abertura             := StringToDateTimeDef(JsonObjestabelecimento.Values['data_inicio_atividade'].AsString,0,'yyyy/mm/dd');
-        FResposta.Endereco             := JsonObjestabelecimento.Values['tipo_logradouro'].AsString + ' ' +LJsonObject.Values['logradouro'].AsString;
-        FResposta.Numero               := JsonObjestabelecimento.Values['numero'].AsString;
-        FResposta.Complemento          := JsonObjestabelecimento.Values['complemento'].AsString;
-        FResposta.CEP                  := OnlyNumber( JsonObjestabelecimento.Values['cep'].AsString);
-        FResposta.Bairro               := JsonObjestabelecimento.Values['bairro'].AsString;
-        FResposta.UF                   := JsonObjestabelecimento.Values['uf'].AsString;
-        FResposta.EndEletronico        := JsonObjestabelecimento.Values['email'].AsString;
-        FResposta.Telefone             := JsonObjestabelecimento.Values['ddd1'].AsString + JsonObjestabelecimento.Values['telefone1'].AsString;
-        FResposta.Situacao             := JsonObjestabelecimento.Values['situacao_cadastral'].AsString;
-        FResposta.DataSituacao         := StringToDateTimeDef(JsonObjestabelecimento.Values['data_situacao'].AsString,0,'yyyy/mm/dd');
-        FResposta.EmpresaTipo          := JsonObjestabelecimento.Values['tipo'].AsString;
+        LJsonObjestabelecimento := Jsons.TJsonObject.Create;
+        LJsonObjestabelecimento.Parse( LJsonObject.Values['estabelecimento'].Stringify );
+        FResposta.Fantasia             := LJsonObjestabelecimento.Values['nome_fantasia'].AsString;
+        FResposta.CNPJ                 := LJsonObjestabelecimento.Values['cnpj'].AsString;
+        FResposta.Abertura             := StringToDateTimeDef(LJsonObjestabelecimento.Values['data_inicio_atividade'].AsString,0,'yyyy/mm/dd');
+        FResposta.Endereco             := LJsonObjestabelecimento.Values['tipo_logradouro'].AsString + ' ' +LJsonObject.Values['logradouro'].AsString;
+        FResposta.Numero               := LJsonObjestabelecimento.Values['numero'].AsString;
+        FResposta.Complemento          := LJsonObjestabelecimento.Values['complemento'].AsString;
+        FResposta.CEP                  := OnlyNumber( LJsonObjestabelecimento.Values['cep'].AsString);
+        FResposta.Bairro               := LJsonObjestabelecimento.Values['bairro'].AsString;
+        FResposta.UF                   := LJsonObjestabelecimento.Values['uf'].AsString;
+        FResposta.EndEletronico        := LJsonObjestabelecimento.Values['email'].AsString;
+        FResposta.Telefone             := LJsonObjestabelecimento.Values['ddd1'].AsString + LJsonObjestabelecimento.Values['telefone1'].AsString;
+        FResposta.Situacao             := LJsonObjestabelecimento.Values['situacao_cadastral'].AsString;
+        FResposta.DataSituacao         := StringToDateTimeDef(LJsonObjestabelecimento.Values['data_situacao'].AsString,0,'yyyy/mm/dd');
+        FResposta.EmpresaTipo          := LJsonObjestabelecimento.Values['tipo'].AsString;
 
-        JsonObj2 := TJsonObject.Create;
+        LJsonObj2 := TJsonObject.Create;
 
-        if JsonObjestabelecimento.IsJsonObject( JsonObjestabelecimento.Values['motivo_situacao_cadastral'].Stringify ) then
+        if LJsonObjestabelecimento.IsJsonObject( LJsonObjestabelecimento.Values['motivo_situacao_cadastral'].Stringify ) then
         begin
-           JsonObj2.Parse( JsonObjestabelecimento.Values['motivo_situacao_cadastral'].Stringify );
-           FResposta.MotivoSituacaoCad := JsonObj2.Values['id'].AsString + ' ' + JsonObj2.Values['descricao'].AsString;
+           LJsonObj2.Parse( LJsonObjestabelecimento.Values['motivo_situacao_cadastral'].Stringify );
+           FResposta.MotivoSituacaoCad := LJsonObj2.Values['id'].AsString + ' ' + LJsonObj2.Values['descricao'].AsString;
         end;
 
-        FResposta.SituacaoEspecial     := JsonObjestabelecimento.Values['situacao_especial'].AsString;
+        FResposta.SituacaoEspecial     := LJsonObjestabelecimento.Values['situacao_especial'].AsString;
         FResposta.DataSituacaoEspecial := StringToDateTimeDef(LJsonObject.Values['data_situacao_especial'].AsString,0,'yyyy/mm/dd');
 
-        JsonObj2.Parse( JsonObjestabelecimento.Values['cidade'].Stringify );
-        FResposta.Cidade := JsonObj2.Values['nome'].AsString;
+        LJsonObj2.Parse( LJsonObjestabelecimento.Values['cidade'].Stringify );
+        FResposta.Cidade := LJsonObj2.Values['nome'].AsString;
 
-        JsonObj2.Parse( JsonObjestabelecimento.Values['estado'].Stringify );
-        FResposta.UF := JsonObj2.Values['sigla'].AsString;
+        LJsonObj2.Parse( LJsonObjestabelecimento.Values['estado'].Stringify );
+        FResposta.UF := LJsonObj2.Values['sigla'].AsString;
 
-        JsonObj2.Parse( JsonObjestabelecimento.Values['atividade_principal'].Stringify );
-        FResposta.CNAE1 := JsonObj2.Values['id'].AsString + ' ' + JsonObj2.Values['descricao'].AsString;
+        LJsonObj2.Parse( LJsonObjestabelecimento.Values['atividade_principal'].Stringify );
+        FResposta.CNAE1 := LJsonObj2.Values['id'].AsString + ' ' + LJsonObj2.Values['descricao'].AsString;
 
-        LJsonArray := JsonObjestabelecimento.Values['atividades_secundarias'].AsArray;
+        LJsonArray := LJsonObjestabelecimento.Values['atividades_secundarias'].AsArray;
         for Z := 0 to Pred(LJsonArray.Count) do
            FResposta.CNAE2.Add(LJsonArray[Z].AsObject.Values['id'].AsString + ' ' + LJsonArray[Z].AsObject.Values['descricao'].AsString);
 
-        JsonObj2.Parse( LJsonObject.Values['porte'].Stringify );
-        FResposta.Porte := JsonObj2.Values['descricao'].AsString;
+        LJsonObj2.Parse( LJsonObject.Values['porte'].Stringify );
+        FResposta.Porte := LJsonObj2.Values['descricao'].AsString;
 
-        JsonObj2.Parse( LJsonObject.Values['natureza_juridica'].Stringify );
-        FResposta.NaturezaJuridica     := JsonObj2.Values['descricao'].AsString;
+        LJsonObj2.Parse( LJsonObject.Values['natureza_juridica'].Stringify );
+        FResposta.NaturezaJuridica     := LJsonObj2.Values['descricao'].AsString;
         FResposta.EFR                  := '';
 
-        if JsonObjestabelecimento.Values['inscricoes_estaduais'].AsArray.Count >0 then
+        if LJsonObjestabelecimento.Values['inscricoes_estaduais'].AsArray.Count >0 then
         begin
-           LJsonArray := JsonObjestabelecimento.Values['inscricoes_estaduais'].AsArray;
+           LJsonArray := LJsonObjestabelecimento.Values['inscricoes_estaduais'].AsArray;
            if LJsonArray[0].AsObject['ativo'].AsBoolean then
               FResposta.InscricaoEstadual := LJsonArray[0].AsObject['inscricao_estadual'].AsString;
         end;

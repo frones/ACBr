@@ -49,7 +49,7 @@ contains
   ACBrConsultaCNPJ.WS in '..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.pas',
   ACBrConsultaCNPJ.WS.BrasilAPI in '..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.BrasilAPI.pas',
   ACBrConsultaCNPJ.WS.ReceitaWS in '..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.ReceitaWS.pas',
-  ACBrConsultaCNPJ.WS.Publica in '..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.Publica.pas',
+  ACBrConsultaCNPJ.WS.CNPJWS in '..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.CNPJWS.pas',
   ACBrConsultaCPF in '..\..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas',
   ACBrCotacao in '..\..\..\Fontes\ACBrTCP\ACBrCotacao.pas',
   ACBrMail in '..\..\..\Fontes\ACBrTCP\ACBrMail.pas',

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -37,13 +37,19 @@ unit ACBrConsultaCNPJ;
 interface
 
 uses
-  SysUtils, Classes, types, IniFiles,
-  ACBrBase, ACBrSocket, ACBrIBGE, ACBrConsultaCNPJ.WS;
+  SysUtils,
+  Classes,
+  types,
+  IniFiles,
+  ACBrBase,
+  ACBrSocket,
+  ACBrIBGE,
+  ACBrConsultaCNPJ.WS;
 
 type
   TACBrOnSolicitaCaptchaHTTP = procedure( var AHtml : String ) of object ;
   EACBrConsultaCNPJException = class ( Exception );
-  TACBrCNPJProvedorWS = (cwsNenhum, cwsBrasilAPI, cwsReceitaWS, cwsPublica);
+  TACBrCNPJProvedorWS = (cwsNenhum, cwsBrasilAPI, cwsReceitaWS, cwsCNPJWS);
 
   { TACBrConsultaCNPJ }
   {$IFDEF RTL230_UP}
@@ -154,7 +160,7 @@ uses
   ACBrUtil.FilesIO,
   ACBrConsultaCNPJ.WS.ReceitaWS,
   ACBrConsultaCNPJ.WS.BrasilAPI,
-  ACBrConsultaCNPJ.WS.Publica;
+  ACBrConsultaCNPJ.WS.CNPJWS;
 
 {$IFDEF FPC}
  {$R ACBrConsultaCNPJServicos.rc}
@@ -357,8 +363,8 @@ begin
     begin
       case Self.Provedor of
         cwsReceitaWS : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSReceitaWS.Create( ACNPJ, Self.Usuario, Self.Senha, Self.DefasagemMaximo );
-        cwsBrasilAPI : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSBrasilAPI.Create( ACNPJ, Self.Usuario, Self.Senha );
-        cwsPublica   : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSPublica.Create( ACNPJ, Self.Usuario, Self.Senha );
+        cwsBrasilAPI : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSBrasilAPI.Create( ACNPJ );
+        cwsCNPJWS    : LACBrConsultaCNPJWS := TACBrConsultaCNPJWSCNPJWS.Create( ACNPJ, Self.Usuario, Self.Senha );
       end;
 
       Result := LACBrConsultaCNPJWS.Executar;

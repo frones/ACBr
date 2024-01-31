@@ -147,8 +147,8 @@
         <UnitName Value="ACBrConsultaCNPJ.WS.ReceitaWS"/>
       </Item27>
       <Item28>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.Publica.pas"/>
-        <UnitName Value="ACBrConsultaCNPJ.WS.Publica"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.CNPJWS.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS.CNPJWS"/>
       </Item28>
     </Files>
     <CompatibilityMode Value="True"/>

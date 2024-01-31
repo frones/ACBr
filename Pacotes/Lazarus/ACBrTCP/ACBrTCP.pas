@@ -14,7 +14,7 @@ uses
   ACBrSedex, ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, 
   ACBrFeriado, ACBrFeriadoWSCalendario, ACBrFeriadoWSClass, ACBrFeriadoWSJSON, 
   ACBrConsultaCNPJ.WS, ACBrConsultaCNPJ.WS.BrasilAPI, 
-  ACBrConsultaCNPJ.WS.ReceitaWS, ACBrConsultaCNPJ.WS.Publica, 
+  ACBrConsultaCNPJ.WS.ReceitaWS, ACBrConsultaCNPJ.WS.CNPJWS, 
   LazarusPackageIntf;
 
 implementation

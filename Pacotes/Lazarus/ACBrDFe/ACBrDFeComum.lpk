@@ -23,7 +23,7 @@
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos"/>
-    <Files Count="13">
+    <Files Count="14">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas"/>
         <UnitName Value="ACBrDFeConfiguracoes"/>
@@ -76,6 +76,10 @@
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrXmlDocument.pas"/>
         <UnitName Value="ACBrXmlDocument"/>
       </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeConsts.pas"/>
+        <UnitName Value="ACBrDFeConsts"/>
+      </Item14>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="3">

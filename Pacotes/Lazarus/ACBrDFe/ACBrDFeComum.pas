@@ -10,7 +10,7 @@ interface
 uses
   ACBrDFeConfiguracoes, ACBrDFeWebService, ACBrDFeUtil, ACBrDFe, ACBrDFeSSL, 
   ACBrDFeException, ACBrDFeRegUtil, ACBrDFeReport, ACBrLibXml2, ACBrXmlReader, 
-  ACBrXmlWriter, ACBrXmlBase, ACBrXmlDocument;
+  ACBrXmlWriter, ACBrXmlBase, ACBrXmlDocument, ACBrDFeConsts;
 
 implementation
 

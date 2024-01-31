@@ -37,6 +37,8 @@ requires
   ACBr_TCP;
 
 contains
+  ACBrDFeConsts in '..\..\..\Fontes\ACBrDFe\ACBrDFeConsts.pas',
+
   ACBrXmlBase in '..\..\..\Fontes\ACBrDFe\ACBrXmlBase.pas',
   ACBrXmlDocument in '..\..\..\Fontes\ACBrDFe\ACBrXmlDocument.pas',
   ACBrXmlReader in '..\..\..\Fontes\ACBrDFe\ACBrXmlReader.pas',

@@ -168,7 +168,6 @@ begin
                '/' + FtpInscContrib +
                '/' + nrInscContrib +
                '/' + perApur +
-               '/' + FtpInscEstab +
                '/' + nrInscEstab;
       end;
 
@@ -216,7 +215,12 @@ begin
     teR4020:
       begin
         if cpfCnpjBenef = '' then
-          URL := URL + '/semCpfBeneficiario';
+        begin
+          if TipoEvento = teR4010 then
+            URL := URL + '/semCpfBeneficiario'
+          else
+            URL := URL + '/semCnpjBeneficiario';
+        end;
 
         URL := URL +
                '/' + FtpInscContrib +

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/01/2024
+-- pcnReinfConsulta.pas --
+[-] Corrigida consulta de recibo dos eventos R-2055 e R-4020
+  Por: Renato Rubinho
+
 23/11/2023
 -- ACBrReinfWebServices --
 [*] Levantada exceção, no tratamento de retornos, quando for utilizada versão de leiaute descontinuada ou ainda não implementada

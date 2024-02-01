@@ -92,7 +92,7 @@ type
      pagFrenteCC, pagBTCC, pagNovoBancoContinental, pagCreditAgricoleBrasil,
      pagBancoSistema, pagCredialianca, pagVR, pagBancoOurinvest, pagCredicoamo,
      pagRBCapitalInvestimentos, pagJohnDeere, pagAdvanced, pagC6, pagDigimais,
-     pagPicPay, PagNeon);
+     pagPicPay, PagNeon, PagCora);
      {
       pagC6Consignado, pagChinaConstructionBank, pagNationalAssociation,
       pagLetsbank, pagMaster, pagSicoob, pagSorocred, pagStateStreetBrasil,
@@ -345,7 +345,7 @@ begin
      '131', '011', '611', '755', '089', '643', '140', '707', '288', '101',
      '487', '233', '117', '633', '218', '292', '169', '293', '285', '080',
      '753', '222', '754', '098', '610', '712', '010', '283', '217', '117',
-     '336', '654', '380', '536'],
+     '336', '654', '380', '536','403'],
     [pagNenhum,
      pagBancodoBrasil, pagBancoDigito, pagNuBank,
      pagPagSeguro, pagMercadoPago, pagBradesco, pagSofisaDireto, pagInter, pagItau,
@@ -394,7 +394,7 @@ begin
      pagFrenteCC, pagBTCC, pagNovoBancoContinental, pagCreditAgricoleBrasil,
      pagBancoSistema, pagCredialianca, pagVR, pagBancoOurinvest, pagCredicoamo,
      pagRBCapitalInvestimentos, pagJohnDeere, pagAdvanced, pagC6, pagDigimais,
-     pagPicPay, PagNeon]);
+     pagPicPay, PagNeon, PagCora]);
 end;
 
 function BancoToDesc(const t: TBanco): String;
@@ -475,7 +475,8 @@ begin
      'BANCO CREDIT AGRICOLE BR S.A', 'BANCO SISTEMA', 'CREDIALIANCA CCR',
      'BANCO VR S.A', 'BANCO OURINVEST S.A', 'CREDICOAMO',
      'RB CAPITAL INVESTIMENTOS DTVM LTDA', 'BANCO JOHN DEERE S.A',
-     'ADVANCED CC LTDA', 'BANCO C6 S.A', 'BANCO DIGIMAIS S.A', 'PICPAY', 'NEON'],
+     'ADVANCED CC LTDA', 'BANCO C6 S.A', 'BANCO DIGIMAIS S.A', 'PICPAY', 'NEON',
+     'BANCO CORA'],
     [pagNenhum,
      pagBancodoBrasil, pagBancoDigito, pagNuBank, pagPagSeguro, pagMercadoPago,
      pagSofisaDireto, pagInter, pagItau, pagCaixaEconomica, pagSantander,
@@ -524,7 +525,7 @@ begin
      pagFrenteCC, pagBTCC, pagNovoBancoContinental, pagCreditAgricoleBrasil,
      pagBancoSistema, pagCredialianca, pagVR, pagBancoOurinvest, pagCredicoamo,
      pagRBCapitalInvestimentos, pagJohnDeere, pagAdvanced, pagC6, pagDigimais,
-     pagPicPay, PagNeon]);
+     pagPicPay, PagNeon, PagCora]);
 end;
 
 function StrToBanco(var ok: boolean; const s: String): TBanco;
@@ -552,7 +553,7 @@ begin
      '131', '011', '611', '755', '089', '643', '140', '707', '288', '101',
      '487', '233', '117', '633', '218', '292', '169', '293', '285', '080',
      '753', '222', '754', '098', '610', '712', '010', '283', '217', '117',
-     '336', '654', '380', '536'],
+     '336', '654', '380', '536','403'],
     [pagNenhum,
      pagBancodoBrasil, pagBancoDigito, pagNuBank,
      pagPagSeguro, pagMercadoPago, pagBradesco, pagSofisaDireto, pagInter, pagItau,
@@ -601,7 +602,7 @@ begin
      pagFrenteCC, pagBTCC, pagNovoBancoContinental, pagCreditAgricoleBrasil,
      pagBancoSistema, pagCredialianca, pagVR, pagBancoOurinvest, pagCredicoamo,
      pagRBCapitalInvestimentos, pagJohnDeere, pagAdvanced, pagC6, pagDigimais,
-     pagPicPay, PagNeon]);
+     pagPicPay, PagNeon, PagCora]);
 end;
 
 function BancoToIspb(const t: TBanco): String;
@@ -643,7 +644,7 @@ begin
        '92856905', '68900810', '71027866', '28650236', '        ', '71590442',
        '71677850', '73622748', '74828799', '75647891', '76543115', '78157146',
        '78626983', '78632767', '81723108', '89960090', '91884981', '92856905',
-       '31872495', '92874270', '22896431', '59588111'],
+       '31872495', '92874270', '22896431', '59588111', '37880206'],
     [pagNenhum,
      pagBancodoBrasil, pagBancoDigito, pagNuBank,
      pagPagSeguro, pagMercadoPago, pagBradesco, pagSofisaDireto, pagInter, pagItau,
@@ -692,7 +693,7 @@ begin
      pagFrenteCC, pagBTCC, pagNovoBancoContinental, pagCreditAgricoleBrasil,
      pagBancoSistema, pagCredialianca, pagVR, pagBancoOurinvest, pagCredicoamo,
      pagRBCapitalInvestimentos, pagJohnDeere, pagAdvanced, pagC6, pagDigimais,
-     pagPicPay, PagNeon]);
+     pagPicPay, PagNeon, PagCora]);
 end;
 
 function TpInscricaoToStr(const t: TTipoInscricao): String;

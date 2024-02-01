@@ -45,10 +45,17 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+01/02/2024
+[*]TK-5034 ACBrBoletoFCFortesFr (dfm/lfm) - Correção Ancoragem
+https://www.projetoacbr.com.br/forum/topic/74780-boleto-pix-fortes-report-cortando-valores/
+Por: Marcio Marcondes / Daniel Morais
+
 07/08/2023
 [-]TK-4223 ACBrBoletoFCFortesFr (dfm/lfm) - Correção nome do campo numDiasNegativacaoAuto
 https://www.projetoacbr.com.br/forum/topic/73276-tamanho-imagem-logo-empresa-em-acbrboletofcfortesfr-desproporcional/
 Por: IBS Sistemas / Verificado: Daniel Morais
+
 15/04/2023
 --ACBrBoletoFCFortesFr--
 [-]TK-3818 Corrigido posições do cedente e endereco do boleto carnê (dfm e lfm)

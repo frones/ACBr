@@ -58,7 +58,9 @@ type
 implementation
 
 uses
-  ACBrBlocoX, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, pcnConversao, pcnConsts, pcnGerador;
+  ACBrBlocoX, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador;
 
 { TACBrBlocoX_Estoque }
 

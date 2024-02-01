@@ -149,7 +149,9 @@ type
 implementation
 
 uses
-  ACBrBlocoX, ACBrUtil.XMLHTML, ACBrUtil.FilesIO, pcnConversao, pcnConsts, pcnGerador;
+  ACBrBlocoX, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador;
 
 { TACBrBlocoX_ConsultarProcessamentoArquivo }
 

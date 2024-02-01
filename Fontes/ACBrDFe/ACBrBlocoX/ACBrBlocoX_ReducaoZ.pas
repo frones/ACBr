@@ -103,8 +103,10 @@ type
 implementation
 
 uses
-  pcnConversao, pcnConsts, pcnGerador, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO, ACBrBlocoX, pcnAuxiliar;
-
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML, ACBrUtil.FilesIO, ACBrBlocoX, pcnAuxiliar;
 
 { TACBrBlocoX_Totalizadores }
 

@@ -76,6 +76,7 @@ resourcestring
   CERR_SPE_MFINFO = 'Invalid Media file parâmeters';
 
   CERR_INVALID_PARAM = 'Invalid value for %s param';
+  CERR_NOT_IMPLEMENTED = '%s is not implemented yet';
 
 const
   // control characters
@@ -348,7 +349,8 @@ const
 
 type
 
-  EACBrAbecsPinPadError = Exception;
+  EACBrAbecsPinPadError = class(Exception);
+  EACBrAbecsPinPadTimeout = class(EACBrAbecsPinPadError);
 
   { TACBrAbecsTLV }
 
@@ -647,8 +649,11 @@ type
     function GCD(MSGIDX: TACBrAbecsMSGIDX; ASPE_TIMEOUT: Byte = 0): String; overload;
     function GKY: Integer;
     function MNU(ASPE_MNUOPT: array of String; ASPE_DSPMSG: String = '';
-      ASPE_TIMEOUT: Byte = 0): String;
-    procedure RMC(const RMC_MSG: String = '');
+      ASPE_TIMEOUT: Byte = 0): String; overload;
+    function MNU(ASPE_MNUOPT: TStrings; ASPE_DSPMSG: String = '';
+      ASPE_TIMEOUT: Byte = 0): String; overload;
+    procedure RMC(const RMC_MSG: String = ''); overload;
+    procedure RMC(const Line1: String; Line2: String); overload;
 
     // Multimidia Commands
     procedure MLI(const ASPE_MFNAME: String; const ASPE_MFINFO: AnsiString); overload;
@@ -1960,7 +1965,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
       if not fCommand.IsBlocking then
       begin
         if (Now > TimeToTimeOut) then
-          DoException(CERR_TIMEOUT_RSP);
+          DoException(EACBrAbecsPinPadTimeout.Create(CERR_TIMEOUT_RSP));
       end
       else
       begin
@@ -2076,12 +2081,18 @@ begin
 end;
 
 procedure TACBrAbecsPinPad.EvaluateResponse;
+var
+  s: String;
 begin
   if (Self.LogLevel > 2) then
     RegisterLog(Format('  EvaluateResponse: %d', [fResponse.STAT]));
 
+  s := Format('Error: %d - %s', [fResponse.STAT, ReturnStatusCodeDescription(fResponse.STAT)]);
+  if (fResponse.STAT = ST_TIMEOUT) then
+    DoException(EACBrAbecsPinPadTimeout.Create(s));
+
   if (fResponse.STAT <> ST_OK) then
-    DoException(Format('Error: %d - %s', [fResponse.STAT, ReturnStatusCodeDescription(fResponse.STAT)]));
+    DoException(s);
 end;
 
 procedure TACBrAbecsPinPad.CancelWaiting;
@@ -2102,10 +2113,13 @@ begin
 end;
 
 procedure TACBrAbecsPinPad.OPN(const OPN_MOD: String; const OPN_EXP: String);
-var
-  LenMod, LenExp: Integer;
-  CRKSEC: String;
+//var
+//  LenMod, LenExp: Integer;
+//  CRKSEC: String;
 begin
+  DoException(Format(CERR_NOT_IMPLEMENTED, ['OPN Secure']));
+
+{
   if (Self.LogLevel > 0) then
     RegisterLog('OPN( '+OPN_MOD+', '+OPN_EXP+' )');
   LenMod := Trunc(Length(OPN_MOD)/2);
@@ -2137,6 +2151,7 @@ begin
   CRKSEC := fResponse.GetResponseData;
   //TODO: A LOT OF TO DO....
   GetPinPadCapabilities;
+}
 end;
 
 procedure TACBrAbecsPinPad.GIN(const GIN_ACQIDX: Byte);
@@ -2239,9 +2254,13 @@ begin
     RegisterLog(Format('CEX( %s, %d, %s )',[ASPE_CEXOPT, ASPE_TIMEOUT, ASPE_PANMASK_LLRR]));
   fCommand.Clear;
   fCommand.ID := 'CEX';
+  fCommand.IsBlocking := True;
   s := trim(ASPE_CEXOPT);
   l := Length(s);
   if (l <> 6) or (not StrIsNumber(s)) then
+    DoException(Format(CERR_INVALID_PARAM, ['SPE_CEXOPT']));
+
+  if (StrToIntDef(s,0) = 0) then
     DoException(Format(CERR_INVALID_PARAM, ['SPE_CEXOPT']));
 
   fCommand.AddParamFromTagValue(SPE_CEXOPT, s);
@@ -2429,6 +2448,7 @@ var
   s: String;
   i: Integer;
 begin
+  Result := '';
   GetPinPadCapabilities;
   if (Self.LogLevel > 0) then
   begin
@@ -2453,6 +2473,22 @@ begin
   Result := fResponse.GetResponseFromTagValue(PP_VALUE);
 end;
 
+function TACBrAbecsPinPad.MNU(ASPE_MNUOPT: TStrings; ASPE_DSPMSG: String;
+  ASPE_TIMEOUT: Byte): String;
+var
+  i: Integer;
+  Options: array of String;
+begin
+  Result := '';
+  for i := 0 to ASPE_MNUOPT.Count-1 do
+  begin
+    SetLength(Options, i+1);
+    Options[i] := ASPE_MNUOPT[i];
+  end;
+
+  Result := MNU(Options, ASPE_DSPMSG, ASPE_TIMEOUT);
+end;
+
 procedure TACBrAbecsPinPad.RMC(const RMC_MSG: String);
 begin
   if (Self.LogLevel > 0) then
@@ -2462,6 +2498,11 @@ begin
   fCommand.IsBlocking := True;
   fCommand.AddParamFromData(FormatMSG_S32(RMC_MSG));
   ExecCommand;
+end;
+
+procedure TACBrAbecsPinPad.RMC(const Line1: String; Line2: String);
+begin
+  RMC( Line1 + CR + Line2);
 end;
 
 procedure TACBrAbecsPinPad.MLI(const ASPE_MFNAME: String;

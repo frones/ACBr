@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2024
+-- ACBrGTINWebServices --
+[*] Refactoring visando deixar de usar a unit pcnConsts.
+  Por: Italo Giurizzato Junior
+
 06/04/2023
 -- ACBrGTINWebServices --
 [*] Formatado o NCM para 8 digitos, incluindo zeros a esquerda.

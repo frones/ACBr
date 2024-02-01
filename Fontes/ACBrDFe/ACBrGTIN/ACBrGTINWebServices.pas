@@ -38,7 +38,8 @@ interface
 
 uses
   Classes, SysUtils, synacode,
-  pcnConversao, pcnConsts,
+  ACBrDFeConsts,
+  pcnConversao,
   ACBrDFe, ACBrDFeWebService,
   ACBrGTINConversao, ACBrGTINConfiguracoes;
 

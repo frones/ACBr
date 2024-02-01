@@ -352,7 +352,7 @@ uses
   ACBrUtil.DateTime,
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
-  ACBrCompress, ACBrBPe, pcnBPeConsts, pcnConsts,
+  ACBrCompress, ACBrBPe, pcnBPeConsts, ACBrDFeConsts,
   pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitBPe;
 

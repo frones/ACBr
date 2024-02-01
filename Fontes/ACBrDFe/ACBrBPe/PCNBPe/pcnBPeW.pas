@@ -124,7 +124,7 @@ implementation
 
 uses
   pcnConversaoBPe, pcnAuxiliar,
-  ACBrDFeUtil, pcnConsts,
+  ACBrDFeUtil, ACBrDFeConsts,
   ACBrUtil.Base,
   ACBrUtil.Strings;
 
@@ -306,8 +306,8 @@ begin
   Gerador.wCampo(tcStr, '#006', 'tpAmb  ', 01, 01, 1, tpAmbToStr(BPe.Ide.tpAmb), DSC_TPAMB);
   Gerador.wCampo(tcInt, '#007', 'mod    ', 02, 02, 1, BPe.ide.modelo, DSC_MOD);
   Gerador.wCampo(tcInt, '#008', 'serie  ', 01, 03, 1, BPe.ide.serie, DSC_SERIE);
-  Gerador.wCampo(tcInt, '#009', 'nBP    ', 01, 09, 1, BPe.ide.nBP, DSC_NNF);
-  Gerador.wCampo(tcStr, '#010', 'cBP    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(BPe.infBPe.ID), 8), DSC_CNF);
+  Gerador.wCampo(tcInt, '#009', 'nBP    ', 01, 09, 1, BPe.ide.nBP, DSC_NDF);
+  Gerador.wCampo(tcStr, '#010', 'cBP    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(BPe.infBPe.ID), 8), DSC_CDF);
   Gerador.wCampo(tcInt, '#011', 'cDV    ', 01, 01, 1, BPe.Ide.cDV, DSC_CDV);
   Gerador.wCampo(tcStr, '#012', 'modal  ', 01, 01, 1, ModalBPeToStr(BPe.ide.modal), DSC_MODALBPE);
   Gerador.wCampo(tcStr, '#013', 'dhEmi  ', 25, 25, 1, DateTimeTodh(BPe.ide.dhEmi) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.ide.dhEmi), DSC_DEMI);

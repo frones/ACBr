@@ -37,7 +37,9 @@ unit pcnConsSitBPe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts, pcnBPeConsts;
+  SysUtils, Classes, pcnConversao, pcnGerador,
+  ACBrDFeConsts,
+  pcnBPeConsts;
 
 type
 
@@ -78,7 +80,7 @@ begin
 
   Gerador.wGrupo('consSitBPe ' + NAME_SPACE_BPE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'CP04', 'xServ', 09, 09, 1, 'CONSULTAR', DSC_XSERV);
+  Gerador.wCampo(tcStr, 'CP04', 'xServ', 09, 09, 1, 'CONSULTAR');
   Gerador.wCampo(tcEsp, 'CP05', 'chBPe', 44, 44, 1, FchBPe, DSC_CHBPE);
   Gerador.wGrupo('/consSitBPe');
 

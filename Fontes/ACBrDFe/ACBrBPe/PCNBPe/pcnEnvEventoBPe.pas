@@ -46,7 +46,8 @@ uses
    Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, pcnGerador, pcnConsts, pcnBPeConsts,
+  pcnConversao, pcnGerador, ACBrDFeConsts,
+  pcnBPeConsts,
   pcnEventoBPe, pcnSignature;
 
 type

@@ -116,6 +116,21 @@ const
   DSC_QCOMP = 'Quantidade do componente';
   DSC_DCOMPET = 'Data de Competencia';
 
+  DSC_IEST = 'Inscrição Estadual do Substituto tributário';
+  DSC_CNAE = 'Classificação Nacional de Atividades Econômicas';
+  DSC_VBC = 'Valor da BC do ICMS';
+  DSC_PICMS = 'Alíquota do imposto';
+  DSC_VICMS = 'Valor do ICMS';
+  DSC_PREDBC = 'Percentual da Redução de BC';
+
+  DSC_TPAG = 'Forma de Pagamento';
+  DSC_VPAG = 'Valor do Pagamento';
+  DSC_TPINTEGRA = 'Tipo de Integração para pagamento';
+  DSC_TBAND = 'Bandeira da Operadora de Cartão';
+  DSC_CAUT = 'Número da Autorização';
+
+  DSC_PLACA = 'Placa do Veículo';
+
 implementation
 
 end.

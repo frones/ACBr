@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFe, ACBrDFeWebService, pcnConsts,
+  ACBrDFe, ACBrDFeWebService,
   ACBrCIOTContratos, ACBrCIOTConfiguracoes,
   pcnAuxiliar, pcnConversao, pcnConversaoCIOT, pcnCIOT, pcnRetEnvCIOT;
 
@@ -148,6 +148,7 @@ type
 implementation
 
 uses
+  ACBrDFeConsts,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,

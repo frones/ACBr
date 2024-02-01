@@ -54,9 +54,8 @@ uses
   pcnConversao, 
   pcnGerador, 
   pcnLeitor,
-  pcnCIOT, 
-  pcnConversaoCIOT, 
-  pcnConsts;
+  pcnCIOT,
+  pcnConversaoCIOT;
 
 type
   { TCIOTW_eFrete }

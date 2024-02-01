@@ -55,8 +55,7 @@ uses
   pcnGerador, 
   pcnLeitor,
   pcnCIOT, 
-  pcnConversaoCIOT, 
-  pcnConsts;
+  pcnConversaoCIOT;
 
 type
   { TCIOTW_WexFrete }

@@ -136,6 +136,7 @@ begin
     end;
 
     i01 := 0;
+    MDFe.Ide.infMunCarrega.Clear;
     while Leitor.rExtrai(2, 'infMunCarrega', '', i01 + 1) <> '' do
     begin
       MDFe.Ide.infMunCarrega.New;
@@ -145,6 +146,7 @@ begin
     end;
 
     i01 := 0;
+    MDFe.Ide.infPercurso.Clear;
     while Leitor.rExtrai(2, 'infPercurso', '', i01 + 1) <> '' do
     begin
       MDFe.Ide.infPercurso.New;
@@ -194,6 +196,7 @@ begin
           MDFe.Rodo.infANTT.RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
 
           i01 := 0;
+          MDFe.Rodo.infANTT.infCIOT.Clear;
           while Leitor.rExtrai(4, 'infCIOT', '', i01 + 1) <> '' do
           begin
             MDFe.Rodo.infANTT.infCIOT.New;
@@ -207,6 +210,7 @@ begin
             MDFe.Rodo.infANTT.valePed.categCombVeic := StrTocategCombVeic(ok, Leitor.rCampo(tcStr, 'categCombVeic'));
 
             i01 := 0;
+            MDFe.Rodo.infANTT.valePed.disp.Clear;
             while Leitor.rExtrai(5, 'disp', '', i01 + 1) <> '' do
             begin
               MDFe.Rodo.infANTT.valePed.disp.New;
@@ -225,6 +229,7 @@ begin
           end;
 
           i01 := 0;
+          MDFe.Rodo.infANTT.infContratante.Clear;
           while Leitor.rExtrai(4, 'infContratante', '', i01 + 1) <> '' do
           begin
             MDFe.Rodo.infANTT.infContratante.New;
@@ -241,6 +246,7 @@ begin
           end;
 
           i01 := 0;
+          MDFe.Rodo.infANTT.infPag.Clear;
           while Leitor.rExtrai(4, 'infPag', '', i01 + 1) <> '' do
           begin
             MDFe.Rodo.infANTT.infPag.New;
@@ -333,6 +339,7 @@ begin
         end;
 
         i01 := 0;
+        MDFe.rodo.veicTracao.condutor.Clear;
         while Leitor.rExtrai(4, 'condutor', '', i01 + 1) <> '' do
         begin
           MDFe.rodo.veicTracao.condutor.New;
@@ -343,6 +350,7 @@ begin
       end;
 
       i01 := 0;
+      MDFe.rodo.veicReboque.Clear;
       while Leitor.rExtrai(3, 'veicReboque', '', i01 + 1) <> '' do
       begin
         MDFe.rodo.veicReboque.New;
@@ -377,6 +385,7 @@ begin
         if Leitor.rExtrai(3, 'valePed') <> '' then
         begin
           i01 := 0;
+          MDFe.Rodo.valePed.disp.Clear;
           while Leitor.rExtrai(4, 'disp', '', i01 + 1) <> '' do
           begin
             MDFe.Rodo.valePed.disp.New;
@@ -417,6 +426,7 @@ begin
        MDFe.aquav.tpNav      := StrToTpNavegacao(ok, Leitor.rCampo(tcStr, 'tpNav'));
 
        i01 := 0;
+       MDFe.aquav.infTermCarreg.Clear;
        while Leitor.rExtrai(3, 'infTermCarreg', '', i01 + 1) <> '' do
        begin
          MDFe.aquav.infTermCarreg.New;
@@ -426,6 +436,7 @@ begin
        end;
 
        i01 := 0;
+       MDFe.aquav.infTermDescarreg.Clear;
        while Leitor.rExtrai(3, 'infTermDescarreg', '', i01 + 1) <> '' do
        begin
          MDFe.aquav.infTermDescarreg.New;
@@ -435,6 +446,7 @@ begin
        end;
 
        i01 := 0;
+       MDFe.aquav.infEmbComb.Clear;
        while Leitor.rExtrai(3, 'infEmbComb', '', i01 + 1) <> '' do
        begin
          MDFe.aquav.infEmbComb.New;
@@ -444,6 +456,7 @@ begin
        end;
 
        i01 := 0;
+       MDFe.aquav.infUnidCargaVazia.Clear;
        while Leitor.rExtrai(3, 'infUnidCargaVazia', '', i01 + 1) <> '' do
        begin
          MDFe.aquav.infUnidCargaVazia.New;
@@ -453,6 +466,7 @@ begin
        end;
 
        i01 := 0;
+       MDFe.aquav.infUnidTranspVazia.Clear;
        while Leitor.rExtrai(3, 'infUnidTranspVazia', '', i01 + 1) <> '' do
        begin
          MDFe.aquav.infUnidTranspVazia.New;
@@ -476,6 +490,7 @@ begin
         end;
 
        i01 := 0;
+       MDFe.ferrov.vag.Clear;
        while Leitor.rExtrai(3, 'vag', '', i01 + 1) <> '' do
        begin
          MDFe.ferrov.vag.New;
@@ -496,6 +511,7 @@ begin
   if Leitor.rExtrai(1, 'infDoc') <> '' then
   begin
     i01 := 0;
+    MDFe.infDoc.infMunDescarga.Clear;
     while Leitor.rExtrai(2, 'infMunDescarga', '', i01 + 1) <> '' do
     begin
       MDFe.infDoc.infMunDescarga.New;
@@ -527,14 +543,14 @@ begin
 
           sAux := Leitor.Grupo;
           pos1 := PosLast('</infUnidCarga>', sAux);
-          pos2 := PosLast('<qtdRat>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux) + Length('<qtdRat>');
           pos3 := PosLast('</qtdRat>', sAux);
 
 //          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
 //            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2, pos3 - pos2), 0)
           else
             qtdRat_UnidTransp := 0.0;
 
@@ -620,14 +636,14 @@ begin
 
           sAux := Leitor.Grupo;
           pos1 := PosLast('</infUnidCarga>', sAux);
-          pos2 := PosLast('<qtdRat>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux) + Length('<qtdRat>');
           pos3 := PosLast('</qtdRat>', sAux);
 
 //          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
 //            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2, pos3 - pos2), 0)
           else
             qtdRat_UnidTransp := 0.0;
 
@@ -691,14 +707,14 @@ begin
 
           sAux := Leitor.Grupo;
           pos1 := PosLast('</infUnidCarga>', sAux);
-          pos2 := PosLast('<qtdRat>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux) + Length('<qtdRat>');
           pos3 := PosLast('</qtdRat>', sAux);
 
 //          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
 //            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2, pos3 - pos2), 0)
           else
             qtdRat_UnidTransp := 0.0;
 
@@ -780,14 +796,14 @@ begin
 
           sAux := Leitor.Grupo;
           pos1 := PosLast('</infUnidCarga>', sAux);
-          pos2 := PosLast('<qtdRat>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux) + Length('<qtdRat>');
           pos3 := PosLast('</qtdRat>', sAux);
 
 //          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
 //            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2, pos3 - pos2), 0)
           else
             qtdRat_UnidTransp := 0.0;
 
@@ -850,14 +866,14 @@ begin
 
           sAux := Leitor.Grupo;
           pos1 := PosLast('</infUnidCarga>', sAux);
-          pos2 := PosLast('<qtdRat>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux) + Length('<qtdRat>');
           pos3 := PosLast('</qtdRat>', sAux);
 
 //          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
 //            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2, pos3 - pos2), 0)
           else
             qtdRat_UnidTransp := 0.0;
 
@@ -919,6 +935,7 @@ begin
   if MDFe.infMDFe.versao >= 3 then
   begin
     i01 := 0;
+    MDFe.seg.Clear;
     while Leitor.rExtrai(1, 'seg', '', i01 + 1) <> '' do
     begin
       MDFe.seg.New;
@@ -988,6 +1005,7 @@ begin
 
   (* Grupo da TAG <lacres> ****************************************************)
   i01 := 0;
+  MDFe.lacres.Clear;
   while Leitor.rExtrai(1, 'lacres', '', i01 + 1) <> '' do
   begin
     MDFe.lacres.New;
@@ -997,6 +1015,7 @@ begin
 
   (* Grupo da TAG <autXML> ****************************************************)
   i01 := 0;
+  MDFe.autXML.Clear;
   while Leitor.rExtrai(1, 'autXML', '', i01 + 1) <> '' do
   begin
     MDFe.autXML.New;

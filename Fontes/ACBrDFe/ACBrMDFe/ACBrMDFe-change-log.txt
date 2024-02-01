@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/02/2024
+-- pmdfeMDFeR --
+[*] Ajustes para a leitura correta da tag <qtdRat>
+  Por: Jeanny Paiva Lopes
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnConsts.
   Por: Italo Giurizzato Junior

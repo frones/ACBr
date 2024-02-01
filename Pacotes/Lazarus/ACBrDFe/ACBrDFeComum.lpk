@@ -8,7 +8,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\Terceiros\Ole;..\..\..\Fontes\Terceiros\LibXmlSec"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\Comum;..\..\..\Fontes\Terceiros\Ole;..\..\..\Fontes\Terceiros\LibXmlSec"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -23,7 +23,7 @@
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos"/>
-    <Files Count="14">
+    <Files Count="20">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas"/>
         <UnitName Value="ACBrDFeConfiguracoes"/>
@@ -80,6 +80,30 @@
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeConsts.pas"/>
         <UnitName Value="ACBrDFeConsts"/>
       </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.ConsCad.pas"/>
+        <UnitName Value="ACBrDFeComum.ConsCad"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.RetConsCad.pas"/>
+        <UnitName Value="ACBrDFeComum.RetConsCad"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.ConsReciDFe.pas"/>
+        <UnitName Value="ACBrDFeComum.ConsReciDFe"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.RetConsReciDFe.pas"/>
+        <UnitName Value="ACBrDFeComum.RetConsReciDFe"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.ConsStatServ.pas"/>
+        <UnitName Value="ACBrDFeComum.ConsStatServ"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.RetConsStatServ.pas"/>
+        <UnitName Value="ACBrDFeComum.RetConsStatServ"/>
+      </Item20>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="3">

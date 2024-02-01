@@ -351,7 +351,7 @@ end;
 
 procedure TACBrTEFAPIClassCliSiTef.ContinuarRequisicaoSiTef;
 var
-  Continua, ItemSelecionado, I, EsperaMensagem: Integer;
+  Continua, ItemSelecionado, EsperaMensagem: Integer;
   ProximoComando,TamanhoMinimo, TamanhoMaximo : SmallInt;
   TipoCampo: LongInt;
   Buffer: array [0..20000] of AnsiChar;

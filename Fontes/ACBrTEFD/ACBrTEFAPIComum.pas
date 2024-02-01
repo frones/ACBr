@@ -674,8 +674,8 @@ begin
 end;
 
 procedure TACBrTEFAPIRespostas.LimparRespostasTEF;
-var
-  i: Integer;
+//var
+//  i: Integer;
 begin
   while (fTEFRespList.Count > 0) do
     ApagarRespostaTEF(0);

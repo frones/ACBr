@@ -61,7 +61,19 @@ const
   DSC_INDREENTREGA = 'Indicador de reentrega';
   DSC_QTDTOTAL    = 'Quantidade Total';
   DSC_QTDPARCIAL  = 'Quantidade Parcial';
-
+  DSC_MODAL  = 'Tipo de Modal';
+  DSC_UFPER    = 'Sigla da UF do percurso do veículo';
+  DSC_RNTRC  = 'Registro Nacional de Transportadores Rodoviários de Carga';
+  DSC_PLACA = 'Placa do Veículo';
+  DSC_RENAVAM = 'RENAVAM';
+  DSC_TPPROP = 'Tipo de Proprietário';
+  DSC_TPROD  = 'Tipo de Rodado';
+  DSC_TPCAR  = 'Tipo de Carroceria';
+  DSC_VVALEPED  = 'Valor do Vale-Pedagio';
+  DSC_NLACRE = 'Número dos Lacres';
+  DSC_NSERIE = 'Número de série';
+  DSC_REFCTE = 'Chave de acesso do CT-e referenciado';
+  DSC_REFNFE = 'Chave de acesso das NF-e referenciadas';
 
   // Rodoviário
   DSC_CIOT        = 'Código Identificador da Operação de Transporte';
@@ -97,7 +109,9 @@ const
   DSC_XTERMDESCAR = 'Nome do Terminal de Descarregamento';
   DSC_CEMBCOMB    = 'Código da Embarcação do comboio';
   DSC_XBALSA      = 'Identificador da Balsa';
-  
+  DSC_IRIN      = 'Irin do navio sempre deverá ser informado';
+  DSC_TPNAV     = 'Tipo de Navegação';
+
   // Ferroviário
   DSC_XPREF       = 'Prefixo do Trem';
   DSC_DHTREM      = 'Data e Hora de liberação do Trem na origem';
@@ -132,6 +146,36 @@ const
   DSC_CATEGCOMBVEIC = 'Categoria de Combinação Veicular';
 
   DSC_VCONTRATOGLOBAL = 'Valor Global do Contrato';
+  DSC_INDPAG = 'Indicador da forma de pagamento';
+  DSC_DVENC = 'Data de vencimento';
+  DSC_QTDRAT = 'Quantidade Rateada';
+
+  DSC_NONU      = 'Número ONU/UN';
+  DSC_XNOMEAE   = 'Nome apropriado para embarque do produto';
+  DSC_XCLARISCO = 'Classe e Risco secundário';
+  DSC_GREMB     = 'Grupo de Embalagem';
+  DSC_QTOTPROD  = 'Quantidade total por produto';
+  DSC_QVOLTIPO  = 'Quantidade e tipo de volumes';
+
+  DSC_VDOC   = 'Valor do documento';
+
+  DSC_TPUNIDTRANSP = 'Tipo de Unidade de Transporte';
+  DSC_IDUNIDTRANSP = 'Identificação da Unidade de Transporte';
+  DSC_TPUNIDCARGA  = 'Tipo de Unidade de Carga';
+  DSC_IDUNIDCARGA  = 'Identificação da Unidade de Carga';
+
+  DSC_RESPSEG  = 'Responsável pelo Seguro';
+  DSC_XSEG     = 'Nome da Seguradora';
+  DSC_NAPOL    = 'Número da Apólice';
+  DSC_NAVER    = 'Número da Averbação';
+  DSC_INFSEG   = 'Informações de seguro da carga';
+
+  DSC_CUNID  = 'Código da unidade de medida';
+  DSC_LACR   = 'Grupo de lacres';
+
+  DSC_XPROD = 'Descrição do Produto ou Serviço';
+  DSC_CEAN = 'Código de Barra do Item';
+  DSC_NCM = 'Código NCM';
 
 implementation
 

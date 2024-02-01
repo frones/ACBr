@@ -40,7 +40,7 @@ uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnGerador,
   ACBrUtil.Strings,
-  pcnConsts, pmdfeConsts;
+  pmdfeConsts;
 
 type
 
@@ -62,6 +62,9 @@ type
 
 implementation
 
+uses
+  ACBrDFeConsts;
+
 { TConsSitMDFe }
 
 constructor TConsSitMDFe.Create;
@@ -81,8 +84,8 @@ begin
 
  Gerador.wGrupo('consSitMDFe ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
  Gerador.wCampo(tcStr, 'CP03', 'tpAmb ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
- Gerador.wCampo(tcStr, 'CP04', 'xServ ', 09, 09, 1, 'CONSULTAR', DSC_XSERV);
- Gerador.wCampo(tcEsp, 'CP05', 'chMDFe', 44, 44, 1, OnlyNumber(FchMDFe), DSC_CHCTe);
+ Gerador.wCampo(tcStr, 'CP04', 'xServ ', 09, 09, 1, 'CONSULTAR');
+ Gerador.wCampo(tcEsp, 'CP05', 'chMDFe', 44, 44, 1, OnlyNumber(FchMDFe), DSC_CHAVE);
  if not ValidarChave(FchMDFe)
   then Gerador.wAlerta('CP05', 'chMDFe', '', 'Chave do MDFe inválida');
  Gerador.wGrupo('/consSitMDFe');

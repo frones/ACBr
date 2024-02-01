@@ -496,12 +496,13 @@ implementation
 
 uses
   StrUtils, Math,
+  ACBrDFeConsts,
   ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
-  ACBrCompress, ACBrMDFe, pmdfeConsts, pcnConsts,
+  ACBrCompress, ACBrMDFe, pmdfeConsts,
   pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
   pmdfeConsSitMDFe, pcnConsReciDFe, pmdfeConsMDFeNaoEnc;
 

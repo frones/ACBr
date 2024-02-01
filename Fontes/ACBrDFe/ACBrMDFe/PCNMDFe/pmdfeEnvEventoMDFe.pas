@@ -44,7 +44,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao, pcnGerador, pcnConsts, pmdfeConsts,
+  pcnConversao, pcnGerador, pmdfeConsts,
   pmdfeEventoMDFe, pcnSignature;
 
 type
@@ -103,6 +103,7 @@ implementation
 
 uses
   IniFiles,
+  ACBrDFeConsts,
   pcnAuxiliar, pmdfeRetEnvEventoMDFe, pmdfeConversaoMDFe,
   ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime,
   ACBrDFeUtil;

@@ -42,7 +42,7 @@ uses
   pmdfeConversaoMDFe, pmdfeMDFe,
   ACBrUtil.Strings,
   ACBrUtil.Base,
-  pcnConsts, pmdfeConsts, ACBrDFeUtil;
+  pmdfeConsts, ACBrDFeUtil;
 
 type
   TGeradorOpcoes = class;
@@ -120,6 +120,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrDFeConsts;
 
 { TMDFeW }
 
@@ -856,7 +859,7 @@ begin
            Gerador.wCampo(tcEsp, '#049', 'chCTe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe), DSC_REFCTE);
            if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) <> '' then
             if not ValidarChave(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) then
-           Gerador.wAlerta('#049', 'chCTe', DSC_REFNFE, ERR_MSG_INVALIDO);
+           Gerador.wAlerta('#049', 'chCTe', DSC_REFCTE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#050', 'SegCodBarra', 36, 36, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].SegCodBarra, DSC_SEGCODBARRA);
 
            if VersaoDF >= ve300 then
@@ -1057,7 +1060,7 @@ begin
            Gerador.wGrupo('infNF', '#060');
            Gerador.wCampoCNPJ('#061', MDFe.infDoc.infMunDescarga[i].infNF[j].CNPJ, CODIGO_BRASIL, True);
            Gerador.wCampo(tcStr, '#062', 'UF   ', 02, 02, 1, MDFe.infDoc.infMunDescarga[i].infNF[j].UF, DSC_IE);
-           Gerador.wCampo(tcStr, '#063', 'nNF  ', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infNF[j].nNF, DSC_NNF);
+           Gerador.wCampo(tcStr, '#063', 'nNF  ', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infNF[j].nNF, DSC_NDF);
            Gerador.wCampo(tcInt, '#064', 'serie', 01, 03, 1, MDFe.infDoc.infMunDescarga[i].infNF[j].serie, DSC_SERIE);
            Gerador.wCampo(tcDat, '#065', 'dEmi ', 10, 10, 1, MDFe.infDoc.infMunDescarga[i].infNF[j].dEmi, DSC_DEMI);
            Gerador.wCampo(tcDe2, '#066', 'vNF  ', 01, 15, 1, MDFe.infDoc.infMunDescarga[i].infNF[j].vNF, DSC_VDOC);

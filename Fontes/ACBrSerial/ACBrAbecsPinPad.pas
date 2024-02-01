@@ -1442,16 +1442,16 @@ end;
 
 function TACBrAbecsPacket.GetAsString: AnsiString;
 begin
-  Result := chr(SYN) +
+  Result := AnsiChr(SYN) +
             DC3Substitution(fData) +
-            chr(ETB) +
-            CalcCRC(fData + chr(ETB));
+            AnsiChr(ETB) +
+            CalcCRC(fData + AnsiChr(ETB));
 end;
 
 procedure TACBrAbecsPacket.SetAsString(const AValue: AnsiString);
 var
   l: Integer;
-  s, crc: AnsiString;
+  s, crc1, crc2: AnsiString;
 begin
   l := Length(AValue);
   if (l < 7) then
@@ -1465,8 +1465,9 @@ begin
 
   s := copy(AValue, 2, l-4);
   s := DC3RevertSubstitution(s);
-  crc := copy(AValue, l-1, 2);
-  if (crc <> CalcCRC(s + chr(ETB))) then
+  crc1 := copy(AValue, l-1, 2);
+  crc2 := CalcCRC(s + AnsiChr(ETB));
+  if (crc1 <> crc2) then
     raise EACBrAbecsPinPadError.Create(CERR_INVCRC);
 
   fData := s;
@@ -1480,18 +1481,18 @@ end;
 function TACBrAbecsPacket.DC3Substitution(const AData: AnsiString): AnsiString;
 begin
   Result := AData;
-  Result := ReplaceString(Result, chr(DC3), chr(DC3)+'3');
-  Result := ReplaceString(Result, chr(SYN), chr(DC3)+'6');
-  Result := ReplaceString(Result, chr(ETB), chr(DC3)+'7');
+  Result := ReplaceString(Result, AnsiChr(DC3), AnsiChr(DC3)+'3');
+  Result := ReplaceString(Result, AnsiChr(SYN), AnsiChr(DC3)+'6');
+  Result := ReplaceString(Result, AnsiChr(ETB), AnsiChr(DC3)+'7');
 end;
 
 function TACBrAbecsPacket.DC3RevertSubstitution(const AData: AnsiString
   ): AnsiString;
 begin
   Result := AData;
-  Result := ReplaceString(Result, chr(DC3)+'7', chr(ETB));
-  Result := ReplaceString(Result, chr(DC3)+'6', chr(SYN));
-  Result := ReplaceString(Result, chr(DC3)+'3', chr(DC3));
+  Result := ReplaceString(Result, AnsiChr(DC3)+'7', AnsiChr(ETB));
+  Result := ReplaceString(Result, AnsiChr(DC3)+'6', AnsiChr(SYN));
+  Result := ReplaceString(Result, AnsiChr(DC3)+'3', AnsiChr(DC3));
 end;
 
 { TACBrAbecsPinPad }
@@ -1526,6 +1527,10 @@ end;
 
 destructor TACBrAbecsPinPad.Destroy;
 begin
+  fOnWriteLog := nil;
+  fOnStartCommand := nil;
+  fOnEndCommand := nil;
+  fOnWaitForResponse := nil;
   Disable;
   fCommand.Free;
   fResponse.Free;
@@ -2012,7 +2017,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
       if (b <> ETB) then
       begin
         if (Length(Result) < MAX_PACKET_SIZE) then
-          Result := Result + chr(b)
+          Result := Result + AnsiChr(b)
         else
           DoException(CERR_DATAPACKET_TO_LARGE);
       end;
@@ -2048,7 +2053,7 @@ begin
           RegisterLog(Format('    CRC: %s', [CRCData]));
 
         // TACBrAbecsPacket.AsString Setter checks for CRC and raise Exception on error
-        pkt.AsString := chr(SYN) + PktData + chr(ETB) + CRCData;
+        pkt.AsString := AnsiChr(SYN) + PktData + AnsiChr(ETB) + CRCData;
         Done := True;
       except
         on E: Exception do
@@ -2265,7 +2270,7 @@ begin
 
   fCommand.AddParamFromTagValue(SPE_CEXOPT, s);
   if (ASPE_TIMEOUT > 0) then
-    fCommand.AddParamFromTagValue(SPE_TIMEOUT, chr(ASPE_TIMEOUT));
+    fCommand.AddParamFromTagValue(SPE_TIMEOUT, AnsiChr(ASPE_TIMEOUT));
 
   if (ASPE_PANMASK_LLRR <> '') then
   begin
@@ -2348,11 +2353,11 @@ begin
   fCommand.IsBlocking := True;
   fCommand.AddParamFromTagValue(SPE_MSGIDX, IntToBEStr(ASPE_MSGIDX, 2));
   if (ASPE_MINDIG > 0) then
-    fCommand.AddParamFromTagValue(SPE_MINDIG, chr(ASPE_MINDIG));
+    fCommand.AddParamFromTagValue(SPE_MINDIG, AnsiChr(ASPE_MINDIG));
   if (ASPE_MAXDIG > 0) then
-    fCommand.AddParamFromTagValue(SPE_MAXDIG, chr(ASPE_MAXDIG));
+    fCommand.AddParamFromTagValue(SPE_MAXDIG, AnsiChr(ASPE_MAXDIG));
   if (ASPE_TIMEOUT > 0) then
-    fCommand.AddParamFromTagValue(SPE_TIMEOUT, chr(ASPE_TIMEOUT));
+    fCommand.AddParamFromTagValue(SPE_TIMEOUT, AnsiChr(ASPE_TIMEOUT));
 
   ExecCommand;
   Result := fResponse.GetResponseFromTagValue(PP_VALUE);
@@ -2462,7 +2467,7 @@ begin
   fCommand.ID := 'MNU';
   fCommand.IsBlocking := True;
   if (ASPE_TIMEOUT > 0) then
-    fCommand.AddParamFromTagValue(SPE_TIMEOUT, chr(ASPE_TIMEOUT));
+    fCommand.AddParamFromTagValue(SPE_TIMEOUT, AnsiChr(ASPE_TIMEOUT));
   fCommand.AddParamFromTagValue(SPE_DSPMSG, FormatSPE_DSPMSG(ASPE_DSPMSG));
   for i := Low(ASPE_MNUOPT) to High(ASPE_MNUOPT) do
   begin
@@ -2536,7 +2541,7 @@ var
 begin
   if (Self.LogLevel > 0) then
     RegisterLog('MLI( '+ASPE_MFNAME+', '+IntToStr(FileSize)+', '+IntToStr(CRC)+', '+IntToStr(FileType)+' )');
-  ASPE_MFINFO := IntToBEStr(FileSize, 4) + IntToBEStr(CRC, 2) + chr(FileType) + #0#0#0;
+  ASPE_MFINFO := IntToBEStr(FileSize, 4) + IntToBEStr(CRC, 2) + AnsiChr(FileType) + #0#0#0;
   MLI(ASPE_MFNAME, ASPE_MFINFO);
 end;
 

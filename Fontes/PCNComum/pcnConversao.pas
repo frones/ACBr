@@ -85,7 +85,7 @@ type
   TpcnCSTIcms = (cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
                  cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
                  cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60,
-                 cst02, cst15, cst53, cst61); //80 e 81 apenas para CTe
+                 cst02, cst15, cst53, cst61, cst01, cst12, cst13, cst14, cst21, cst72, cst73, cst74); //80 e 81 apenas para CTe
 
   TpcnCSOSNIcms = (csosnVazio,csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900 );
   TpcnDeterminacaoBaseIcms = (dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum);

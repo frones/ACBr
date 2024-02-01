@@ -369,7 +369,7 @@ begin
   if CFe.Emit.cRegTrib = RTRegimeNormal then
   begin
     case CFe.Det[i].Imposto.ICMS.CST of
-      cst00, cst20, cst90 :
+      cst00, cst01, cst12, cst13, cst14, cst20, cst21, cst72, cst73, cst74, cst90 :
         begin
           Gerador.wGrupo('ICMS00');
           Gerador.wCampo(tcStr, 'N06', 'Orig ', 01, 01, 1, OrigTOStr(CFe.Det[i].Imposto.ICMS.orig), DSC_ORIG);
@@ -381,7 +381,7 @@ begin
 
           Gerador.wGrupo('/ICMS00');
         end;
-      cst40, cst41, cst50, cst60 :
+      cst30, cst40, cst41, cst50, cst60, cst61 :
         begin
           Gerador.wGrupo('ICMS40');
           Gerador.wCampo(tcStr, 'N06', 'Orig', 01, 01, 1, OrigTOStr(CFe.Det[i].Imposto.ICMS.orig), DSC_ORIG);

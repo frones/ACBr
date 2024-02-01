@@ -1348,9 +1348,10 @@ end;
 procedure TACBrTEFPGWebAPI.AjustarTempoOcioso(const IdleTimeStr: String);
 var
   AStr, AnoStr: String;
-  IdleProcTime: TDateTime;
+  IdleProcTime, Agora: TDateTime;
 begin
-  if (IdleTimeStr = '') and (fTempoOcioso > Now) then
+  Agora := Now;
+  if (IdleTimeStr = '') and (fTempoOcioso > Agora) then
     Exit;
 
   if (IdleTimeStr = '') then
@@ -1360,7 +1361,7 @@ begin
 
   if (AStr <> '') then
   begin
-    AnoStr := IntToStr(YearOf(Today));
+    AnoStr := IntToStr(YearOf(Agora));
     IdleProcTime := EncodeDateTime( StrToIntDef(Copy(AnoStr,1,2)+copy(AStr,1,2),0),  // YYYY
                                     StrToIntDef(copy(AStr, 3,2),0),  // MM
                                     StrToIntDef(copy(AStr, 5,2),0),  // DD
@@ -1370,13 +1371,13 @@ begin
                                     0 );
     if (IdleProcTime <> 0) then
     begin
-      if (IdleProcTime < Now) then
+      if (IdleProcTime <= Agora) then
         OnTimerOcioso(nil)
 
       else if (IdleProcTime <> fTempoOcioso) then
       begin
         fTimerOcioso.Enabled := False;
-        fTimerOcioso.Interval := MilliSecondsBetween(now, IdleProcTime);
+        fTimerOcioso.Interval := MilliSecondsBetween(Agora, IdleProcTime);
         fTimerOcioso.Enabled := True;
       end;
 

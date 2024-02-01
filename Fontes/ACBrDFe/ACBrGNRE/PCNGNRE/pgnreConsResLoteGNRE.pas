@@ -39,7 +39,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts;
+  ACBrDFeConsts,
+  pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
   TConsResLoteGNRE = class(TObject)
@@ -58,6 +59,9 @@ type
     property numeroRecibo: string read FnumeroRecibo write FnumeroRecibo;
     property IncluirPDFGuias: Boolean read FIncluirPDFGuias write FIncluirPDFGuias;
   end;
+
+const
+  DSC_NREC = 'Numero do recibo';
 
 implementation
 

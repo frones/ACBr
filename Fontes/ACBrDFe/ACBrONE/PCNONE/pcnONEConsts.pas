@@ -60,6 +60,7 @@ const
   DSC_PesoBrutoTotal = 'Peso Bruto Total';
   DSC_NroEixos = 'Numero de Eixos do Veiculo';
   DSC_tpDist = 'Tipo de Distribuição';
+  DSC_ULTNSU = 'Último NSU recebido pela Empresa';
   DSC_NSUFin = 'NSU Final';
   DSC_xREFCOMPL = 'Detalhe da Localização do Equiplamento';
   DSC_NSULeitura = 'NSU Geral da leitura';

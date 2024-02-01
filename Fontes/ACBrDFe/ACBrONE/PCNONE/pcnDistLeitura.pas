@@ -37,7 +37,9 @@ unit pcnDistLeitura;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts, pcnConversaoONE;
+  SysUtils, Classes,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador, pcnConversaoONE;
 
 type
 

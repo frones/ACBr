@@ -37,8 +37,10 @@ unit pcnConsPlaca;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil.Base,
-  pcnConsts, pcnONEConsts;
+  SysUtils, Classes,
+  ACBrDFeConsts,
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil.Base,
+  pcnONEConsts;
 
 type
 

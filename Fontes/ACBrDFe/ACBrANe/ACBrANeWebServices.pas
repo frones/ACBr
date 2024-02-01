@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, synacode,
-  ACBrDFe, ACBrDFeWebService, pcnConsts,
+  ACBrDFe, ACBrDFeWebService,
   ACBrANeDocumentos, ACBrANeConfiguracoes,
   pcnAuxiliar, pcnConversao, pcaConversao, pcaANe, pcaRetEnvANe;
 
@@ -180,6 +180,7 @@ uses
   ACBrUtil.XMLHTML,
   ACBrUtil.DateTime,
   ACBrANe,
+  ACBrDFeConsts,
   pcnGerador, pcnLeitor;
 
 { TANeWebService }

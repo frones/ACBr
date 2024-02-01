@@ -184,6 +184,9 @@
       <Item>
         <Name Value="ESynaSerError"/>
       </Item>
+      <Item>
+        <Name Value="EACBrAbecsPinPadTimeout"/>
+      </Item>
     </Exceptions>
   </Debugging>
 </CONFIG>

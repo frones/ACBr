@@ -37,28 +37,38 @@ type
     btGKY: TButton;
     btLMF: TButton;
     btMediaLoad: TButton;
-    btSendQRCode: TButton;
     btMNU: TButton;
+    btRMC: TButton;
+    btSendQRCode: TButton;
     btOPN: TButton;
     btReadParms: TBitBtn;
-    btRMC: TButton;
     btSaveParams: TBitBtn;
     btSearchSerialPorts: TSpeedButton;
     btSearchSerialPorts1: TSpeedButton;
     btSerial: TSpeedButton;
     btACBrPinPadCapabilities: TButton;
     btPaintQRCode: TButton;
+    cbCEXVerifyICCRemoval: TCheckBox;
+    cbCEXVerifyCTLSPresence: TCheckBox;
+    cbCEXVerifyMagnetic: TCheckBox;
+    cbCEXVerifyICCInsertion: TCheckBox;
     cbSecure: TCheckBox;
     cbxMsgAlign: TComboBox;
+    cbxGCD: TComboBox;
     cbxPort: TComboBox;
     cbGIXAll: TCheckBox;
     cbMsgWordWrap: TCheckBox;
+    cbMNUHotKey: TCheckBox;
+    cbCEXVerifyKey: TCheckBox;
     edGIXValue: TEdit;
+    edMNUTitle: TEdit;
     edLogFile: TEdit;
     edMediaLoad: TEdit;
     edQRCodeImgName: TEdit;
     edtCLOMsg1: TEdit;
     edtCLOMsg2: TEdit;
+    edtRMCMsg1: TEdit;
+    edtRMCMsg2: TEdit;
     edtDSPMsg1: TEdit;
     edtDSPMsg2: TEdit;
     gbCLX: TGroupBox;
@@ -66,30 +76,45 @@ type
     gbConfig: TGroupBox;
     gbConfig1: TGroupBox;
     gbExponent: TGroupBox;
+    gbGKY: TGroupBox;
     gbModulus: TGroupBox;
     gbCLO: TGroupBox;
+    gbMNU: TGroupBox;
+    gbCEX: TGroupBox;
+    GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     gbDSP: TGroupBox;
     gbGIN: TGroupBox;
     gbGIX: TGroupBox;
     gbACBrPinPadCapabilities: TGroupBox;
+    gbGCD: TGroupBox;
     ImageList1: TImageList;
     imgMedia: TImage;
     imgQRCode: TImage;
     Label1: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
     Label13: TLabel;
     Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
     lbCLXMedias: TListBox;
     lbLMFMedias: TListBox;
     lbGIXParams: TListBox;
     mCLX: TMemo;
     mDEX: TMemo;
     mACBrPinPadCapabilities: TMemo;
+    mCEXResponse: TMemo;
+    mMNU: TMemo;
     mGIXResponse: TMemo;
     mGINResponse: TMemo;
     mExponent: TMemo;
@@ -98,6 +123,10 @@ type
     mQRCode: TMemo;
     OpenPictureDialog1: TOpenPictureDialog;
     Panel1: TPanel;
+    Panel2: TPanel;
+    pGCDResponse: TPanel;
+    pGKYResponse: TPanel;
+    pMNUResponse: TPanel;
     pgMedia: TPageControl;
     pGINIDX: TPanel;
     pGIXParams: TPanel;
@@ -122,17 +151,19 @@ type
     sbMedia: TScrollBox;
     sbResponse: TStatusBar;
     sbShowLogFile: TSpeedButton;
+    seMNUTimeOut: TSpinEdit;
     seGIN_ACQIDX: TSpinEdit;
     seLogLevel: TSpinEdit;
+    seGCDTimeOut: TSpinEdit;
+    seCEXTimeOut: TSpinEdit;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
     tsImage: TTabSheet;
     tsQRCode: TTabSheet;
-    tsCard: TTabSheet;
     tsCLOLines: TTabSheet;
     tsCLOMedia: TTabSheet;
-    tsAsk: TTabSheet;
+    tsAskEvent: TTabSheet;
     tsDisplay: TTabSheet;
     tsClose: TTabSheet;
     tsConfig: TTabSheet;
@@ -175,6 +206,7 @@ type
     procedure btPaintQRCodeClick(Sender: TObject);
     procedure cbGIXAllChange(Sender: TObject);
     procedure cbSecureChange(Sender: TObject);
+    procedure cbMNUHotKeyChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure sbCleanMemoLogClick(Sender: TObject);
     procedure sbGenerateKeysClick(Sender: TObject);
@@ -217,9 +249,9 @@ uses
 procedure TfrMain.FormCreate(Sender: TObject);
 var
   i: TACBrAbecsMsgAlign;
+  j: TACBrAbecsMSGIDX;
 begin
   pCancelar.Visible := False;
-  pCancelar.Align := alClient;
   ConfigPanelCancel(False);
   ConfigPanelsCommands(False);
   pgcCommands.ActivePageIndex := 0;
@@ -227,8 +259,13 @@ begin
   pgMedia.ActivePageIndex := 0;
   FindSerialPorts(cbxPort.Items);
 
+  cbxMsgAlign.Items.Clear;
   For i := Low(TACBrAbecsMsgAlign) to High(TACBrAbecsMsgAlign) do
-    cbxMsgAlign.Items.Add( GetEnumName(TypeInfo(TACBrAbecsMsgAlign), integer(I) ) ) ;
+    cbxMsgAlign.Items.Add( GetEnumName(TypeInfo(TACBrAbecsMsgAlign), integer(i) ) ) ;
+
+  cbxGCD.Items.Clear;
+  For j := Low(TACBrAbecsMSGIDX) to High(TACBrAbecsMSGIDX) do
+    cbxGCD.Items.Add( GetEnumName(TypeInfo(TACBrAbecsMSGIDX), integer(j) ) ) ;
 
   ReadParams;
   ShowMediaDimensions;
@@ -619,21 +656,77 @@ begin
 end;
 
 procedure TfrMain.btCEXClick(Sender: TObject);
+var
+  s: String;
+
+  procedure AddResponseToLog(t: Word);
+  var
+    v: AnsiString;
+  begin
+    v := ACBrAbecsPinPad1.Response.GetResponseFromTagValue(t);
+    if (Trim(v) = '') then
+      Exit;
+
+    mCEXResponse.Lines.Add(PP_ToStr(t)+' => '+v);
+  end;
 begin
-  ACBrAbecsPinPad1.DSP('Pressione'+#13+'alguma tecla');
-  ACBrAbecsPinPad1.CEX(True,False,False,False,False);
-  ShowMessage('PP_EVENT: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
-              'PP_TRK1INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
-              'PP_TRK2INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK2) + sLineBreak +
-              'PP_TRK3INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK3) );
+  s := '';
+  if cbCEXVerifyKey.Checked then
+    s := s + 'Press Key'+CR;
+  if cbCEXVerifyMagnetic.Checked then
+    s := s + 'Swipe the card'+CR;
+  if cbCEXVerifyICCInsertion.Checked then
+    s := s + 'Insert card'+CR;
+  if cbCEXVerifyICCRemoval.Checked then
+    s := s + 'Remove card'+CR;
+  if cbCEXVerifyCTLSPresence.Checked then
+    s := s + 'Bring card closer'+CR;
 
-  ACBrAbecsPinPad1.DSP('Aproxime o cartao');
-  ACBrAbecsPinPad1.CEX(False,False,False,False,True);
-  ShowMessage('PP_EVENT: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_EVENT) + sLineBreak +
-              'PP_TRK1INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK1) + sLineBreak +
-              'PP_TRK2INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK2) + sLineBreak +
-              'PP_TRK3INC: '+ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_TRACK3) );
+  s := Trim(s);
+  mCEXResponse.Lines.Add('------------------------------');
+  mCEXResponse.Lines.Add(s);
+  ACBrAbecsPinPad1.DEX(s);
+  try
+    ACBrAbecsPinPad1.CEX( cbCEXVerifyKey.Checked,
+                          cbCEXVerifyMagnetic.Checked,
+                          cbCEXVerifyICCInsertion.Checked,
+                          cbCEXVerifyICCRemoval.Checked,
+                          cbCEXVerifyCTLSPresence.Checked,
+                          seCEXTimeOut.Value);
+  except
+    On E: EACBrAbecsPinPadTimeout do
+    begin
+      ACBrAbecsPinPad1.DEX('TIMEOUT');
+      mCEXResponse.Lines.Add('* TIMEOUT *');
+      Exit;
+    end
+    else
+    begin
+      ACBrAbecsPinPad1.DEX();
+      raise;
+    end;
+  end;
 
+  mCEXResponse.Lines.Add('');
+  AddResponseToLog(PP_EVENT);
+  AddResponseToLog(PP_VALUE);
+  AddResponseToLog(PP_DATAOUT);
+  AddResponseToLog(PP_CARDTYPE);
+  AddResponseToLog(PP_PAN);
+  AddResponseToLog(PP_PANSEQNO);
+  AddResponseToLog(PP_CHNAME);
+  AddResponseToLog(PP_LABEL);
+  AddResponseToLog(PP_ISSCNTRY);
+  AddResponseToLog(PP_CARDEXP);
+  AddResponseToLog(PP_DEVTYPE);
+  AddResponseToLog(PP_TRK1INC);
+  AddResponseToLog(PP_TRK2INC);
+  AddResponseToLog(PP_TRK3INC);
+
+  s := Trim(ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_EVENT));
+  if (s <> '') then
+    s := 'Event: '+s;
+  ACBrAbecsPinPad1.DEX(s);
 end;
 
 procedure TfrMain.btDEXClick(Sender: TObject);
@@ -706,10 +799,16 @@ procedure TfrMain.btGCDClick(Sender: TObject);
 var
   s: String;
 begin
-  s := ACBrAbecsPinPad1.GCD(msgDataNascimentoDDMMAAAA, 60);
-  ShowMessage(s);
-  s := ACBrAbecsPinPad1.GCD($0025, 5, 5);
-  ShowMessage(s);
+  pGCDResponse.Caption := cbxGCD.Items[cbxGCD.ItemIndex];
+  try
+    s := ACBrAbecsPinPad1.GCD(TACBrAbecsMSGIDX(cbxGCD.ItemIndex), seGCDTimeOut.Value);
+    pGCDResponse.Caption := s;
+  except
+    On E: EACBrAbecsPinPadTimeout do
+      pGCDResponse.Caption := 'USER TIMEOUT';
+    else
+      raise;
+  end;
 end;
 
 procedure TfrMain.btGINClick(Sender: TObject);
@@ -779,11 +878,25 @@ end;
 procedure TfrMain.btGKYClick(Sender: TObject);
 var
   i: Integer;
+  s: String;
 begin
-  ACBrAbecsPinPad1.DEX('Pressione'+#13+'alguma tecla'+#13+'de função');
-  i := ACBrAbecsPinPad1.GKY;
-  ACBrAbecsPinPad1.DSP('');
-  ShowMessage(IntToStr(i));
+  i := 0;
+  s := 'PRESS FUNCTION KEY';
+  pGKYResponse.Caption := s;
+  ACBrAbecsPinPad1.DSP(s);
+
+  try
+    i := ACBrAbecsPinPad1.GKY;
+  except
+    On E: EACBrAbecsPinPadTimeout do
+      pGKYResponse.Caption := 'USER TIMEOUT';
+    else
+      raise;
+  end;
+
+  s := Format('Key Number: %d',[i]);
+  ACBrAbecsPinPad1.DSP(s);
+  pGKYResponse.Caption := s;
 end;
 
 procedure TfrMain.btMediaLoadClick(Sender: TObject);
@@ -809,7 +922,7 @@ begin
     LoadMediaNames;
     ACBrAbecsPinPad1.DSI(edMediaLoad.Text);
     mLog.ScrollBy(0, mLog.Lines.Count);
-    mLog.Lines.Add('Done Loading '+edMediaLoad.Text+', '+FormatFloat('##0.000',SecondSpan(tini,tfim))+' segundos' );
+    mLog.Lines.Add('Done Loading '+edMediaLoad.Text+', '+FormatFloat('##0.000',SecondSpan(tini,tfim))+' seconds' );
   finally
     ms.Free;
   end;
@@ -824,8 +937,18 @@ procedure TfrMain.btMNUClick(Sender: TObject);
 var
   s: String;
 begin
-  s := ACBrAbecsPinPad1.MNU(['1 A VISTA','2 A PRAZO','3 FIADO'],'Forma de Pagamento');
-  ShowMessage(s);
+  s := '';
+  pMNUResponse.Caption := 'SELECT ON PINPAD';
+  try
+    s := ACBrAbecsPinPad1.MNU(mMNU.Lines,edMNUTitle.Text, seMNUTimeOut.Value);
+  except
+    On E: EACBrAbecsPinPadTimeout do
+      pMNUResponse.Caption := 'USER TIMEOUT';
+    else
+      raise;
+  end;
+
+  pMNUResponse.Caption := s;
 end;
 
 procedure TfrMain.btOPNClick(Sender: TObject);
@@ -838,7 +961,7 @@ end;
 
 procedure TfrMain.btRMCClick(Sender: TObject);
 begin
-  ACBrAbecsPinPad1.RMC('OPERAÇÃO'+#13+'TERMINADA');
+  ACBrAbecsPinPad1.RMC(edtRMCMsg1.Text, edtRMCMsg2.Text);
 end;
 
 procedure TfrMain.btSaveParamsClick(Sender: TObject);
@@ -850,25 +973,34 @@ procedure TfrMain.btSendQRCodeClick(Sender: TObject);
 var
   ms: TMemoryStream;
   tini, tfim: TDateTime;
-  jpg: TJPEGImage;
+  //jpg: TJPEGImage;
+  png: TPortableNetworkGraphic;
   qrsize: Integer;
 begin
   ms := TMemoryStream.Create;
-  jpg := TJPEGImage.Create;
+  //jpg := TJPEGImage.Create;
+  png := TPortableNetworkGraphic.Create;
   try
     qrsize := Trunc(min( ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Cols,
                          ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows)) - 20;
-    jpg.Width := qrsize;
-    jpg.Height := qrsize;
-    jpg.CompressionQuality := 50;
-    jpg.Canvas.StretchDraw(jpg.Canvas.ClipRect, imgQRCode.Picture.Bitmap);
-    jpg.SaveToFile('c:\temp\qrcode.jpg');
-    jpg.SaveToStream(ms);
+    png.Width := qrsize;
+    png.Height := qrsize;
+    png.Canvas.StretchDraw(png.Canvas.ClipRect, imgQRCode.Picture.Bitmap);
+    //png.SaveToFile('c:\temp\qrcode.png');
+    png.SaveToStream(ms);
+    imgQRCode.Picture.Assign(png);
+
+    //jpg.Width := qrsize;
+    //jpg.Height := qrsize;
+    //jpg.CompressionQuality := 50;
+    //jpg.Canvas.StretchDraw(jpg.Canvas.ClipRect, imgQRCode.Picture.Bitmap);
+    //jpg.SaveToFile('c:\temp\qrcode.jpg');
+    //jpg.SaveToStream(ms);
     try
       tini := Now;
       mLog.Lines.Add('Start Loading '+edQRCodeImgName.Text);
       mLog.Lines.BeginUpdate;
-      ACBrAbecsPinPad1.LoadMedia( edQRCodeImgName.Text, ms, mtJPG);
+      ACBrAbecsPinPad1.LoadMedia( edQRCodeImgName.Text, ms, mtPNG{mtJPG});
     finally
       mLog.Lines.EndUpdate;
     end;
@@ -877,10 +1009,11 @@ begin
     LoadMediaNames;
     ACBrAbecsPinPad1.DSI(edQRCodeImgName.Text);
     mLog.ScrollBy(0, mLog.Lines.Count);
-    mLog.Lines.Add('Done Loading '+edQRCodeImgName.Text+', '+FormatFloat('##0.000',SecondSpan(tini,tfim))+' segundos' );
+    mLog.Lines.Add('Done Loading '+edQRCodeImgName.Text+', '+FormatFloat('##0.000',SecondSpan(tini,tfim))+' seconds' );
   finally
     ms.Free;
-    jpg.Free;
+    //jpg.Free;
+    png.Free;
   end;
 end;
 
@@ -891,15 +1024,16 @@ end;
 
 procedure TfrMain.btSearchSerialPorts1Click(Sender: TObject);
 var
-  ext: String;
+  filename, ext: String;
 begin
   if OpenPictureDialog1.Execute then
   begin
-    edMediaLoad.Text := ACBrAbecsPinPad1.FormatSPE_MFNAME( ExtractFileName(OpenPictureDialog1.FileName) );
+    ext := LowerCase(ExtractFileExt(OpenPictureDialog1.FileName));
+    filename := StringReplace(ExtractFileName(OpenPictureDialog1.FileName), ext, '', []);
+    edMediaLoad.Text := ACBrAbecsPinPad1.FormatSPE_MFNAME( filename );
     imgMedia.Picture.Clear;
     imgMedia.Picture.LoadFromFile(OpenPictureDialog1.FileName);
     ShowMediaDimensions;
-    ext := LowerCase(ExtractFileExt(OpenPictureDialog1.FileName));
     if (ext = '.gif') then
       imgMedia.Tag := Integer(mtGIF)
     else if (ext = '.png') then
@@ -911,7 +1045,7 @@ end;
 
 procedure TfrMain.btCancelClick(Sender: TObject);
 begin
-  ConfigPanelCancel(True);
+  ConfigPanelCancel(False);
 end;
 
 procedure TfrMain.btPaintQRCodeClick(Sender: TObject);
@@ -937,6 +1071,37 @@ end;
 procedure TfrMain.cbSecureChange(Sender: TObject);
 begin
   pKeys.Enabled := cbSecure.Checked;
+end;
+
+procedure TfrMain.cbMNUHotKeyChange(Sender: TObject);
+var
+  i: Integer;
+  s: String;
+begin
+  if cbMNUHotKey.Checked then
+  begin
+    for i := 0 to min(mMNU.Lines.Count-1, 8) do
+    begin
+      s := mMNU.Lines[i];
+      if (StrToIntDef(copy(s, 1, 1), 0) < 1) then
+      begin
+        s := IntToStr(i+1) + ' ' + s;
+        mMNU.Lines[i] := s;
+      end;
+    end;
+  end
+  else
+  begin
+    for i := 0 to min(mMNU.Lines.Count-1, 8) do
+    begin
+      s := mMNU.Lines[i];
+      if (StrToIntDef(copy(s, 1, 1), 0) > 0) then
+      begin
+        s := Trim(copy(s, 2, Length(s)));
+        mMNU.Lines[i] := s;
+      end;
+    end;
+  end;
 end;
 
 procedure TfrMain.btCLOClick(Sender: TObject);

@@ -42,9 +42,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Aracruz/ES trocou a URL e a versão o provedor é o mesmo.
+  Por: Paulo Alves N. Júnior
+[*] A cidade de Itaborai/RJ trocou de provedor, agora é CTA
+  Por: Thiagfb
+[*] Removidos os parâmetros para gerar as tags de ValorIss e Aliquota para as 
+    cidades de Dracena/SP e Brasilia/DF.
+  Por: Adriano Teodorico
+[+] Inclusão da cidade: São Miguel/RN o provedor é Tributus.
+  Por: Arimateia Jr
+
 31/01/2024
 -- ACBrNFSeXServicos --
-[*] Inclusão das cidades: Piranga/MG, Presidente Bernardes/MG, 
+[+] Inclusão das cidades: Piranga/MG, Presidente Bernardes/MG, 
     Senhora de Oliveira/MG, Bras Pires/MG, Lamim/MG e Rio Espera/MG
     todas utilizam o provedor Futurize.
   Por: Arimateia Jr

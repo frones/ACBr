@@ -274,7 +274,8 @@ uses
   IniFiles, typinfo, dateutils, math, strutils,
   frIncluirPagamento, frMenuTEF, frObtemCampo, frExibeMensagem,
   configuraserial,
-  ACBrUtil, ACBrDelphiZXingQRCode,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.DateTime,
+  ACBrDelphiZXingQRCode,
   ACBrTEFPayGoComum, ACBrTEFAPIPayGoWeb;
 
 {$R *.dfm}

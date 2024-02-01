@@ -146,8 +146,7 @@ Function DescricaoTipoPagamento(const ATipoPagamento: String): String;
 implementation
 
 uses
-  math,
-  ACBrUtil;
+  math;
 
 function DescricaoTipoPagamento(const ATipoPagamento: String): String;
 var

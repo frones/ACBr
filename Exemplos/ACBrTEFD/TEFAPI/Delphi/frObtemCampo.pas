@@ -85,7 +85,7 @@ type
 implementation
 
 uses
-  ACBrConsts, ACBrUtil, ACBrValidador;
+  ACBrConsts, ACBrUtil.Base, ACBrUtil.Strings, ACBrValidador;
 
 { TFormObtemCampo }
 

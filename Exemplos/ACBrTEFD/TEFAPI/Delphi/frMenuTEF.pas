@@ -75,7 +75,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 { TFormMenuTEF }
 

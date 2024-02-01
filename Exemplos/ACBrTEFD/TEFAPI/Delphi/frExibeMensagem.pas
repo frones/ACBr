@@ -64,7 +64,7 @@ implementation
 
 uses
   dateutils,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrConsts;
 
 {$R *.dfm}
 

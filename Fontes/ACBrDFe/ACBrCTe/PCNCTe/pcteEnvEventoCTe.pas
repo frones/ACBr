@@ -44,7 +44,8 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, pcnGerador, pcnConsts,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador,
   pcteConversaoCTe, pcteEventoCTe, pcteConsts, pcnSignature;
 
 type

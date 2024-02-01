@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador,
-  pcnConsts, pcteConsts;
+  ACBrDFeConsts,
+  pcteConsts;
 
 type
 
@@ -83,8 +84,8 @@ begin
 
   Gerador.wGrupo('consSitCTe ' + NAME_SPACE_CTE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'EP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'EP04', 'xServ', 009, 009, 1, 'CONSULTAR', DSC_XSERV);
-  Gerador.wCampo(tcEsp, 'EP05', 'chCTe', 044, 044, 1, OnlyNumber(FchCTe), DSC_CHCTe);
+  Gerador.wCampo(tcStr, 'EP04', 'xServ', 009, 009, 1, 'CONSULTAR');
+  Gerador.wCampo(tcEsp, 'EP05', 'chCTe', 044, 044, 1, OnlyNumber(FchCTe), DSC_CHAVE);
   if not ValidarChave(FchCTe) then
     Gerador.wAlerta('EP05', 'chCTe', '', 'Chave do CTe inválida');
   Gerador.wGrupo('/consSitCTe');

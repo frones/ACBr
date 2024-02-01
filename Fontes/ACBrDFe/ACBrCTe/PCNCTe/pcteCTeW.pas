@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteCTe,
-  pcteConversaoCTe, pcnConsts, pcteConsts, ACBrDFeUtil;
+  pcteConversaoCTe, pcteConsts, ACBrDFeUtil, ACBrDFeConsts;
 
 type
 
@@ -408,7 +408,7 @@ begin
   if not ValidarCodigoUF(CTe.ide.cUF) then
     Gerador.wAlerta('#005', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#006', 'cCT  ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(CTe.infCTe.ID), 8), DSC_CNF);
+  Gerador.wCampo(tcStr, '#006', 'cCT  ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(CTe.infCTe.ID), 8), DSC_CDF);
   Gerador.wCampo(tcInt, '#007', 'CFOP ', 04, 04, 1, CTe.ide.CFOP, DSC_CFOP);
   Gerador.wCampo(tcStr, '#008', 'natOp', 01, 60, 1, CTe.ide.natOp, DSC_NATOP);
 
@@ -417,7 +417,7 @@ begin
 
   Gerador.wCampo(tcInt, '#010', 'mod  ', 02, 02, 1, CTe.ide.modelo, DSC_MOD);
   Gerador.wCampo(tcInt, '#011', 'serie', 01, 03, 1, CTe.ide.serie, DSC_SERIE);
-  Gerador.wCampo(tcInt, '#012', 'nCT  ', 01, 09, 1, CTe.ide.nCT, DSC_NNF);
+  Gerador.wCampo(tcInt, '#012', 'nCT  ', 01, 09, 1, CTe.ide.nCT, DSC_NDF);
 
   if VersaoDF >= ve300 then
     Gerador.wCampo(tcStr, '#013', 'dhEmi', 25, 25, 1, DateTimeWithTimeZone(CTe.ide.dhEmi, CTe.ide.cUF), DSC_DEMI)
@@ -850,10 +850,13 @@ begin
 
   GerarEnderEmit;
 
-  if VersaoDF >= ve400 then
-    Gerador.wCampo(tcStr, '#', 'CRT', 1, 1, 1, CRTCTeToStr(CTe.Emit.CRT), DSC_CRTCTE)
-  else
-    Gerador.wCampo(tcStr, '#', 'CRT', 1, 1, 0, CRTCTeToStr(CTe.Emit.CRT), DSC_CRTCTE);
+  if CTe.ide.modelo <> 64 then
+  begin
+    if VersaoDF >= ve400 then
+      Gerador.wCampo(tcStr, '#', 'CRT', 1, 1, 1, CRTCTeToStr(CTe.Emit.CRT), DSC_CRTCTE)
+    else
+      Gerador.wCampo(tcStr, '#', 'CRT', 1, 1, 0, CRTCTeToStr(CTe.Emit.CRT), DSC_CRTCTE);
+  end;
 
   Gerador.wGrupo('/emit');
 end;
@@ -1562,7 +1565,7 @@ begin
 
       if CTe.Ide.tpServ = tsTranspValores then
       begin
-        Gerador.wCampo(tcEsp, '#', 'refCTeCanc', 44, 44, 0, OnlyNumber(CTe.infCTeNorm.refCTeCanc), DSC_CHCTE);
+        Gerador.wCampo(tcEsp, '#', 'refCTeCanc', 44, 44, 0, OnlyNumber(CTe.infCTeNorm.refCTeCanc), DSC_CHAVE);
 
         if OnlyNumber(CTe.infCTeNorm.refCTeCanc) <> '' then
           if not ValidarChave(CTe.infCTeNorm.refCTeCanc) then
@@ -1677,7 +1680,7 @@ begin
     Gerador.wCampo(tcStr, '#266', 'serie', 01, 03, 1, CTe.infCTeNorm.infDoc.InfNF[i].serie, DSC_SERIE);
     Gerador.wCampo(tcEsp, '#267', 'nDoc ', 01, 20, 1, OnlyNumber(CTe.infCTeNorm.infDoc.InfNF[i].nDoc), DSC_NDOC);
     Gerador.wCampo(tcDat, '#268', 'dEmi ', 10, 10, 1, CTe.infCTeNorm.infDoc.InfNF[i].dEmi, DSC_DEMI);
-    Gerador.wCampo(tcDe2, '#269', 'vBC  ', 01, 15, 1, CTe.infCTeNorm.infDoc.InfNF[i].vBC, DSC_VBCICMS);
+    Gerador.wCampo(tcDe2, '#269', 'vBC  ', 01, 15, 1, CTe.infCTeNorm.infDoc.InfNF[i].vBC, DSC_VBC);
     Gerador.wCampo(tcDe2, '#270', 'vICMS', 01, 15, 1, CTe.infCTeNorm.infDoc.InfNF[i].vICMS, DSC_VICMS);
     Gerador.wCampo(tcDe2, '#271', 'vBCST', 01, 15, 1, CTe.infCTeNorm.infDoc.InfNF[i].vBCST, DSC_VBCST);
     Gerador.wCampo(tcDe2, '#272', 'vST  ', 01, 15, 1, CTe.infCTeNorm.infDoc.InfNF[i].vST, DSC_VST);
@@ -1946,7 +1949,7 @@ begin
         Gerador.wCampo(tcStr, '#353', 'tpDoc ', 02, 02, 1, TpDocumentoAnteriorToStr(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].tpDoc), DSC_TPNF);
         Gerador.wCampo(tcStr, '#354', 'serie ', 01, 03, 1, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].serie, DSC_SERIE);
         Gerador.wCampo(tcStr, '#355', 'subser', 01, 02, 0, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].subser, DSC_SERIE);
-        Gerador.wCampo(tcStr, '#356', 'nDoc  ', 01, 30, 1, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].nDoc, DSC_NNF);
+        Gerador.wCampo(tcStr, '#356', 'nDoc  ', 01, 30, 1, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].nDoc, DSC_NDF);
         Gerador.wCampo(tcDat, '#357', 'dEmi  ', 10, 10, 1, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].dEmi, DSC_DEMI);
         Gerador.wGrupo('/idDocAntPap');
       end;
@@ -1960,7 +1963,7 @@ begin
 
         if (VersaoDF >= ve300) then
         begin
-          Gerador.wCampo(tcStr, '#359', 'chCTe', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chCTe ), DSC_CHCTE);
+          Gerador.wCampo(tcStr, '#359', 'chCTe', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chCTe ), DSC_CHAVE);
 
           if OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chCTe) <> '' then
             if not ValidarChave(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chCTe) then
@@ -1968,7 +1971,7 @@ begin
         end
         else
         begin
-          Gerador.wCampo(tcStr, '#359', 'chave', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave), DSC_CHCTE);
+          Gerador.wCampo(tcStr, '#359', 'chave', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave), DSC_CHAVE);
 
           if OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave) <> '' then
             if not ValidarChave(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave) then
@@ -2699,7 +2702,7 @@ begin
   if CTe.Ide.tpCTe = tcSubstituto then
   begin
     Gerador.wGrupo('infCteSub', '#394');
-    Gerador.wCampo(tcEsp, '#395', 'chCte', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.chCte), DSC_CHCTE);
+    Gerador.wCampo(tcEsp, '#395', 'chCte', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.chCte), DSC_CHAVE);
 
     if OnlyNumber(CTe.infCTeNorm.infCTeSub.chCte) <> '' then
       if not ValidarChave(CTe.infCTeNorm.infCTeSub.chCTe) then
@@ -2729,14 +2732,14 @@ begin
             Gerador.wCampo(tcStr, '#401', 'mod     ', 02, 02, 1, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.modelo, DSC_MOD);
             Gerador.wCampo(tcInt, '#402', 'serie   ', 01, 03, 1, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.serie, DSC_SERIE);
             Gerador.wCampo(tcInt, '#403', 'subserie', 01, 03, 0, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.subserie, DSC_SERIE);
-            Gerador.wCampo(tcInt, '#404', 'nro     ', 01, 06, 1, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.nro, DSC_NNF);
+            Gerador.wCampo(tcInt, '#404', 'nro     ', 01, 06, 1, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.nro, DSC_NDF);
             Gerador.wCampo(tcDe2, '#405', 'valor   ', 01, 15, 1, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.valor, DSC_VDOC);
             Gerador.wCampo(tcDat, '#406', 'dEmi    ', 10, 10, 1, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.dEmi, DSC_DEMI);
             Gerador.wGrupo('/refNF');
           end
           else
           begin
-            Gerador.wCampo(tcEsp, '#407', 'refCte', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refCte), DSC_CHCTE);
+            Gerador.wCampo(tcEsp, '#407', 'refCte', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refCte), DSC_CHAVE);
 
             if OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refCte) <> '' then
               if not ValidarChave(CTe.infCTeNorm.infCTeSub.tomaICMS.refCTe) then
@@ -2751,7 +2754,7 @@ begin
         if VersaoDF = ve200 then
         begin
           Gerador.wGrupo('tomaNaoICMS', '#408');
-          Gerador.wCampo(tcEsp, '#409', 'refCteAnu', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu), DSC_CHCTE);
+          Gerador.wCampo(tcEsp, '#409', 'refCteAnu', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu), DSC_CHAVE);
 
           if OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu) <> '' then
             if not ValidarChave(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu) then
@@ -2761,7 +2764,7 @@ begin
         end
         else
         begin
-          Gerador.wCampo(tcEsp, '#372', 'refCteAnu', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.refCteAnu), DSC_CHCTE);
+          Gerador.wCampo(tcEsp, '#372', 'refCteAnu', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.refCteAnu), DSC_CHAVE);
 
           if OnlyNumber(CTe.infCTeNorm.infCTeSub.refCteAnu) <> '' then
             if not ValidarChave(CTe.infCTeNorm.infCTeSub.refCteAnu) then
@@ -2794,7 +2797,7 @@ begin
     begin
       Gerador.wGrupo('infGTVe', '#');
 
-      Gerador.wCampo(tcStr, '#', 'chCTe', 44, 44, 1, CTe.infCTeNorm.infGTVe[i].chCTe, DSC_CHCTE);
+      Gerador.wCampo(tcStr, '#', 'chCTe', 44, 44, 1, CTe.infCTeNorm.infGTVe[i].chCTe, DSC_CHAVE);
 
       for j := 0 to CTe.infCTeNorm.infGTVe[i].Comp.Count - 1 do
       begin
@@ -2850,9 +2853,9 @@ begin
       chave := OnlyNumber(CTe.infCTeComp.Chave);
 
       if VersaoDF = ve200 then
-        Gerador.wCampo(tcEsp, '#411', 'chave', 44, 44, 1, chave, DSC_CHCTE)
+        Gerador.wCampo(tcEsp, '#411', 'chave', 44, 44, 1, chave, DSC_CHAVE)
       else
-        Gerador.wCampo(tcEsp, '#411', 'chCTe', 44, 44, 1, chave, DSC_CHCTE);
+        Gerador.wCampo(tcEsp, '#411', 'chCTe', 44, 44, 1, chave, DSC_CHAVE);
 
       if chave <> '' then
         if not ValidarChave(chave) then
@@ -2868,7 +2871,7 @@ begin
 
         chave := OnlyNumber(CTe.infCteComp10[i].chCTe);
 
-        Gerador.wCampo(tcEsp, '#383', 'chCTe', 44, 44, 1, chave, DSC_CHCTE);
+        Gerador.wCampo(tcEsp, '#383', 'chCTe', 44, 44, 1, chave, DSC_CHAVE);
 
         if chave <> '' then
           if not ValidarChave(chave) then
@@ -2888,7 +2891,7 @@ begin
   if (CTe.Ide.tpCTe = tcAnulacao) then
   begin
     Gerador.wGrupo('infCteAnu', '#412');
-    Gerador.wCampo(tcEsp, '#413', 'chCte', 44, 44, 1, OnlyNumber(CTe.InfCTeAnu.chCTe), DSC_CHCTE);
+    Gerador.wCampo(tcEsp, '#413', 'chCte', 44, 44, 1, OnlyNumber(CTe.InfCTeAnu.chCTe), DSC_CHAVE);
 
     if OnlyNumber(CTe.InfCTeAnu.chCTe) <> '' then
       if not ValidarChave(CTe.InfCTeAnu.chCTe) then

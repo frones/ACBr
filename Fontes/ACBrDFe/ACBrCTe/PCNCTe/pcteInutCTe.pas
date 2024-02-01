@@ -41,8 +41,9 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
+  ACBrDFeConsts,
   pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, pcnLeitor,
-  pcnConsts, pcnSignature, pcteConsts;
+  pcnSignature, pcteConsts;
 
 type
 
@@ -127,7 +128,7 @@ begin
   if length(FIDInutilizacao) < 39 then
     Gerador.wAlerta('DP04', 'ID', '', 'ID de inutilização inválido');
   Gerador.wCampo(tcStr, 'DP05', 'tpAmb ', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'DP06', 'xServ ', 010, 010, 1, 'INUTILIZAR', DSC_XSERV);
+  Gerador.wCampo(tcStr, 'DP06', 'xServ ', 010, 010, 1, 'INUTILIZAR');
   Gerador.wCampo(tcInt, 'DP07', 'cUF   ', 002, 002, 1, FcUF, DSC_CUF);
   if not ValidarCodigoUF(FcUF) then
     Gerador.wAlerta('DP07', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);

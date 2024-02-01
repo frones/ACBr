@@ -5,9 +5,9 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
   Buttons, Spin, ComCtrls, Grids, ExtDlgs, ACBrAbecsPinPad, Types,
-  ACBrBase, ImgList, AppEvnts
-  {$IfDef VER230},pngimage{$EndIf}
-  ;
+  ACBrBase, ImgList, AppEvnts, System.ImageList,
+  Vcl.Imaging.pngimage,
+  Vcl.Imaging.jpeg;
 
 const
   CSerialSection = 'Serial';
@@ -204,14 +204,14 @@ type
     procedure btSerialClick(Sender: TObject);
     procedure btCancelClick(Sender: TObject);
     procedure btPaintQRCodeClick(Sender: TObject);
-    procedure cbGIXAllChange(Sender: TObject);
     procedure cbSecureChange(Sender: TObject);
-    procedure cbMNUHotKeyChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure sbCleanMemoLogClick(Sender: TObject);
     procedure sbGenerateKeysClick(Sender: TObject);
     procedure sbShowLogFileClick(Sender: TObject);
     procedure ApplicationEvents1Exception(Sender: TObject; E: Exception);
+    procedure cbGIXAllClick(Sender: TObject);
+    procedure cbMNUHotKeyClick(Sender: TObject);
   protected
     function ConfigFileName: String;
     procedure SaveParams;
@@ -917,7 +917,7 @@ var
 begin
   ms := TMemoryStream.Create;
   try
-    imgMedia.Picture.Bitmap.SaveToStream(ms);
+    imgMedia.Picture.Graphic.SaveToStream(ms);
     try
       tini := Now;
       mLog.Lines.Add('Start Loading '+edMediaLoad.Text);
@@ -984,16 +984,11 @@ procedure TfrMain.btSendQRCodeClick(Sender: TObject);
 var
   ms: TMemoryStream;
   tini, tfim: TDateTime;
-  {$IfDef VER230}
-   png: TPngImage;
-  {$EndIf}
+  png: TPngImage;
   qrsize: Integer;
 begin
-  {$IfNDef VER230}
-  raise Exception.Create('This version of Delphi does not support PNG image');
-  {$else}
-   ms := TMemoryStream.Create;
-   png := TPngImage.Create;
+  ms := TMemoryStream.Create;
+  png := TPngImage.Create;
   try
     qrsize := min( ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Cols,
                          ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows) - 20;
@@ -1007,7 +1002,7 @@ begin
       tini := Now;
       mLog.Lines.Add('Start Loading '+edQRCodeImgName.Text);
       mLog.Lines.BeginUpdate;
-      ACBrAbecsPinPad1.LoadMedia( edQRCodeImgName.Text, ms, mtJPG);
+      ACBrAbecsPinPad1.LoadMedia( edQRCodeImgName.Text, ms, mtPNG);
     finally
       mLog.Lines.EndUpdate;
     end;
@@ -1021,7 +1016,6 @@ begin
     ms.Free;
      png.Free;
   end;
-  {$EndIf}
 end;
 
 procedure TfrMain.btReadParmsClick(Sender: TObject);
@@ -1060,7 +1054,7 @@ begin
   PintarQRCode(mQRCode.Lines.Text, imgQRCode.Picture.Bitmap, qrUTF8BOM);
 end;
 
-procedure TfrMain.cbGIXAllChange(Sender: TObject);
+procedure TfrMain.cbGIXAllClick(Sender: TObject);
 begin
   if (cbGIXAll.Checked) then
   begin
@@ -1080,7 +1074,7 @@ begin
   pKeys.Enabled := cbSecure.Checked;
 end;
 
-procedure TfrMain.cbMNUHotKeyChange(Sender: TObject);
+procedure TfrMain.cbMNUHotKeyClick(Sender: TObject);
 var
   i: Integer;
   s: String;

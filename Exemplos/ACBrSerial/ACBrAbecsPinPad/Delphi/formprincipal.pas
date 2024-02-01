@@ -1,12 +1,13 @@
 unit FormPrincipal;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, Spin, ComCtrls, Grids, ExtDlgs, ACBrAbecsPinPad, Types;
+  Buttons, Spin, ComCtrls, Grids, ExtDlgs, ACBrAbecsPinPad, Types,
+  ACBrBase, ImgList, AppEvnts
+  {$IfDef VER230},pngimage{$EndIf}
+  ;
 
 const
   CSerialSection = 'Serial';
@@ -19,7 +20,6 @@ type
 
   TfrMain = class(TForm)
     ACBrAbecsPinPad1: TACBrAbecsPinPad;
-    ApplicationProperties1: TApplicationProperties;
     btActivate: TBitBtn;
     btCancel: TButton;
     btCEX: TButton;
@@ -88,7 +88,6 @@ type
     gbGIX: TGroupBox;
     gbACBrPinPadCapabilities: TGroupBox;
     gbGCD: TGroupBox;
-    ImageList1: TImageList;
     imgMedia: TImage;
     imgQRCode: TImage;
     Label1: TLabel;
@@ -170,12 +169,13 @@ type
     tsGIX: TTabSheet;
     tsMultimidia: TTabSheet;
     tsOpen: TTabSheet;
+    ApplicationEvents1: TApplicationEvents;
+    ImageList1: TImageList;
     procedure ACBrAbecsPinPad1EndCommand(Sender: TObject);
     procedure ACBrAbecsPinPad1StartCommand(Sender: TObject);
     procedure ACBrAbecsPinPad1WaitForResponse(var Cancel: Boolean);
     procedure ACBrAbecsPinPad1WriteLog(const ALogLine: String;
       var Tratado: Boolean);
-    procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
     procedure btACBrPinPadCapabilitiesClick(Sender: TObject);
     procedure btActivateClick(Sender: TObject);
     procedure btCEXClick(Sender: TObject);
@@ -211,6 +211,7 @@ type
     procedure sbCleanMemoLogClick(Sender: TObject);
     procedure sbGenerateKeysClick(Sender: TObject);
     procedure sbShowLogFileClick(Sender: TObject);
+    procedure ApplicationEvents1Exception(Sender: TObject; E: Exception);
   protected
     function ConfigFileName: String;
     procedure SaveParams;
@@ -242,7 +243,7 @@ uses
   ACBrUtiL.FilesIO,
   ACBrUtil.Strings;
 
-{$R *.lfm}
+{$R *.dfm}
 
 { TfrMain }
 
@@ -624,7 +625,7 @@ begin
   Tratado := False;
 end;
 
-procedure TfrMain.ApplicationProperties1Exception(Sender: TObject; E: Exception);
+procedure TfrMain.ApplicationEvents1Exception(Sender: TObject; E: Exception);
 begin
   AddStrToLog('');
   AddStrToLog('** '+E.ClassName+' **');
@@ -743,10 +744,9 @@ begin
   if (lbLMFMedias.SelCount < 1) then
     raise Exception.Create('No Media selected');
 
-  if (MessageDlg( 'DELETE MEDIA?',
-                  Format('Delete %d Media file(s)',[lbLMFMedias.SelCount]),
+  if (MessageDlg( Format('Delete %d Media file(s)',[lbLMFMedias.SelCount]),
                   mtConfirmation,
-                  mbYesNo, 0, mbNo) <> mrYes) then
+                  [mbYes,mbNo], 0) <> mrYes) then
     Exit;
 
   s := '';
@@ -917,7 +917,7 @@ var
 begin
   ms := TMemoryStream.Create;
   try
-    imgMedia.Picture.SaveToStream(ms);
+    imgMedia.Picture.Bitmap.SaveToStream(ms);
     try
       tini := Now;
       mLog.Lines.Add('Start Loading '+edMediaLoad.Text);
@@ -984,26 +984,30 @@ procedure TfrMain.btSendQRCodeClick(Sender: TObject);
 var
   ms: TMemoryStream;
   tini, tfim: TDateTime;
-  png: TPortableNetworkGraphic;
+  {$IfDef VER230}
+   png: TPngImage;
+  {$EndIf}
   qrsize: Integer;
 begin
-  ms := TMemoryStream.Create;
-  png := TPortableNetworkGraphic.Create;
+  {$IfNDef VER230}
+  raise Exception.Create('This version of Delphi does not support PNG image');
+  {$else}
+   ms := TMemoryStream.Create;
+   png := TPngImage.Create;
   try
-    qrsize := Trunc(min( ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Cols,
-                         ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows)) - 20;
-    png.Width := qrsize;
-    png.Height := qrsize;
+    qrsize := min( ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Cols,
+                         ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows) - 20;
+    png.Assign(imgQRCode.Picture.Bitmap);
+    png.Resize(qrsize, qrsize);
     png.Canvas.StretchDraw(png.Canvas.ClipRect, imgQRCode.Picture.Bitmap);
     //png.SaveToFile('c:\temp\qrcode.png');
     png.SaveToStream(ms);
     imgQRCode.Picture.Assign(png);
-
     try
       tini := Now;
       mLog.Lines.Add('Start Loading '+edQRCodeImgName.Text);
       mLog.Lines.BeginUpdate;
-      ACBrAbecsPinPad1.LoadMedia( edQRCodeImgName.Text, ms, mtPNG);
+      ACBrAbecsPinPad1.LoadMedia( edQRCodeImgName.Text, ms, mtJPG);
     finally
       mLog.Lines.EndUpdate;
     end;
@@ -1015,8 +1019,9 @@ begin
     mLog.Lines.Add('Done Loading '+edQRCodeImgName.Text+', '+FormatFloat('##0.000',SecondSpan(tini,tfim))+' seconds' );
   finally
     ms.Free;
-    png.Free;
+     png.Free;
   end;
+  {$EndIf}
 end;
 
 procedure TfrMain.btReadParmsClick(Sender: TObject);
@@ -1033,7 +1038,7 @@ begin
     ext := LowerCase(ExtractFileExt(OpenPictureDialog1.FileName));
     filename := StringReplace(ExtractFileName(OpenPictureDialog1.FileName), ext, '', []);
     edMediaLoad.Text := ACBrAbecsPinPad1.FormatSPE_MFNAME( filename );
-    imgMedia.Picture.Clear;
+    imgMedia.Picture := nil;
     imgMedia.Picture.LoadFromFile(OpenPictureDialog1.FileName);
     ShowMediaDimensions;
     if (ext = '.gif') then

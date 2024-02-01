@@ -187,6 +187,9 @@
       <Item>
         <Name Value="EACBrAbecsPinPadTimeout"/>
       </Item>
+      <Item>
+        <Name Value="EACBrAbecsPinPadError"/>
+      </Item>
     </Exceptions>
   </Debugging>
 </CONFIG>

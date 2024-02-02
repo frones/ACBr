@@ -37,7 +37,7 @@ unit ACBrDFeDistDFeInt;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts;
+  SysUtils, Classes, pcnConversao, pcnGerador;
 
 type
 
@@ -80,6 +80,8 @@ type
 implementation
 
 uses
+  ACBrDFeConsts,
+  ACBrNF3eConsts,
   pcnAuxiliar;
 
 { TDistDFeInt }

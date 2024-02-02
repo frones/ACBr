@@ -91,10 +91,10 @@ type
 implementation
 
 uses
+  ACBrDFeConsts,
   ACBrUtil.Strings,
   ACBrXmlDocument,
   pcnAuxiliar,
-  pcnConsts,
   ACBrNF3eConsts;
 
 { TProcNF3e }

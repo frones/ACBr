@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
-  ACBrNF3eClass, ACBrNF3eConsts;
+  ACBrNF3eClass;
 
 type
   TNF3eXmlWriterOptions = class(TACBrXmlWriterOptions)
@@ -162,11 +162,12 @@ implementation
 
 uses
   variants, dateutils,
+  ACBrDFeConsts,
+  ACBrNF3eConsts,
   ACBrNF3eConversao,
   ACBrValidador,
   pcnAuxiliar,
   ACBrDFeUtil,
-  pcnConsts,
   ACBrUtil.Base, ACBrUtil.Strings;
 
 constructor TNF3eXmlWriter.Create(AOwner: TNF3e);
@@ -370,10 +371,10 @@ begin
   Result.AppendChild(AddNode(tcInt, '#8', 'serie', 1, 3, 1,
     NF3e.ide.serie, DSC_SERIE));
 
-  Result.AppendChild(AddNode(tcInt, '#9', 'nNF', 1, 9, 1, NF3e.ide.nNF, DSC_NNF));
+  Result.AppendChild(AddNode(tcInt, '#9', 'nNF', 1, 9, 1, NF3e.ide.nNF, DSC_NDF));
 
   Result.AppendChild(AddNode(tcStr, '#10', 'cNF', 7, 7, 1,
-    IntToStrZero(ExtrairCodigoChaveAcesso(NF3e.infNF3e.ID), 7), DSC_CNF));
+    IntToStrZero(ExtrairCodigoChaveAcesso(NF3e.infNF3e.ID), 7), DSC_CDF));
 
   Result.AppendChild(AddNode(tcInt, '#11', 'cDV', 1, 1, 1, NF3e.Ide.cDV, DSC_CDV));
 
@@ -673,7 +674,7 @@ begin
     NF3e.gSub.serie, DSC_SERIE));
 
   Result.AppendChild(AddNode(tcStr, '#74', 'nNF', 1, 9, 1,
-    NF3e.gSub.nNF, DSC_NNF));
+    NF3e.gSub.nNF, DSC_NDF));
 
   Result.AppendChild(AddNode(tcStr, '#75', 'CompetEmis', 6, 6, 1,
     FormatDateTime('yyyymm', NF3e.gSub.CompetEmis), DSC_COMPETEMIS));
@@ -1274,7 +1275,11 @@ function TNF3eXmlWriter.Gerar_NFdet_det_DetItem_Imposto(aNFdet,
 begin
   Result := FDocument.CreateElement('imposto');
 
-  Result.AppendChild(Gerar_NFdet_det_DetItem_Imposto_ICMS(aNFdet, aDet));
+  if NF3e.NFDet[aNFdet].Det[aDet].detItem.Imposto.ICMS.indSemCST = tiSim then
+    Result.AppendChild(AddNode(tcStr, '#175', 'indSemCST', 1, 1, 1, '1', ''))
+  else
+    Result.AppendChild(Gerar_NFdet_det_DetItem_Imposto_ICMS(aNFdet, aDet));
+
   Result.AppendChild(Gerar_NFdet_det_DetItem_Imposto_PIS(aNFdet, aDet));
   Result.AppendChild(Gerar_NFdet_det_DetItem_Imposto_PISEfet(aNFdet, aDet));
   Result.AppendChild(Gerar_NFdet_det_DetItem_Imposto_COFINS(aNFdet, aDet));
@@ -1395,11 +1400,29 @@ begin
 
       cst90:
         begin
-          Result.AppendChild(AddNode(tcDe2, '#207', 'vBC', 1, 15, 1, vBC, DSC_VBC));
+          if vBC > 0 then
+          begin
+            Result.AppendChild(AddNode(tcDe2, '#207', 'vBC', 1, 15, 1, vBC, DSC_VBC));
 
-          Result.AppendChild(AddNode(tcDe2, '#208', 'pICMS', 1, 5, 1, pICMS, DSC_PICMS));
+            Result.AppendChild(AddNode(tcDe2, '#208', 'pICMS', 1, 5, 1, pICMS, DSC_PICMS));
 
-          Result.AppendChild(AddNode(tcDe2, '#209', 'vICMS', 1, 15, 1, vICMS, DSC_VICMS));
+            Result.AppendChild(AddNode(tcDe2, '#209', 'vICMS', 1, 15, 1, vICMS, DSC_VICMS));
+          end;
+
+          if vICMSDeson > 0 then
+          begin
+            Result.AppendChild(AddNode(tcDe2, '#210', 'vICMSDeson', 1, 15, 1,
+              vICMSDeson, DSC_VICMSDESON));
+
+            Result.AppendChild(AddNode(tcStr, '#211', 'cBenef', 10, 10, 1, cBenef, DSC_CBENEF));
+          end;
+
+          if (pFCP > 0) or (vFCP > 0) then
+          begin
+            Result.AppendChild(AddNode(tcDe2, '#195', 'pFCP', 1, 5, 1, pFCP, DSC_PFCP));
+
+            Result.AppendChild(AddNode(tcDe2, '#196', 'vFCP', 1, 15, 1, vFCP, DSC_VFCP));
+          end;
         end;
     end;
   end;
@@ -1678,7 +1701,7 @@ begin
     NF3e.Total.vPISEfet, DSC_VPISEfet));
 
   Result.AppendChild(AddNode(tcDe2, '#271', 'vNF', 1, 15, 1,
-    NF3e.Total.vNF, DSC_VNF));
+    NF3e.Total.vNF, DSC_VDF));
 end;
 
 function TNF3eXmlWriter.Gerar_TotalICMSTotal: TACBrXmlNode;

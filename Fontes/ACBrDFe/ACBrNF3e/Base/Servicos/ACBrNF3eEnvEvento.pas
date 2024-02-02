@@ -46,7 +46,7 @@ uses
   ACBrBase,
   pcnConversao,
   pcnSignature,
-  ACBrNF3eEvento, pcnConsts, ACBrNF3eConsts;
+  ACBrNF3eEvento, ACBrNF3eConsts;
 
 type
   EventoException = class(Exception);

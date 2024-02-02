@@ -113,7 +113,7 @@ begin
   try
     Document.LoadFromXml(XmlRetorno);
 
-    ANode := Document.Root; //.Childrens.FindAnyNs('retConsStatServ' + FtagGrupoMsg);
+    ANode := Document.Root;
 
     if ANode <> nil then
     begin

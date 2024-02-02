@@ -512,6 +512,7 @@ type
     FpRedBC: Double;
     FvICMSDeson: Double;
     FcBenef: String;
+    FindSemCST: TIndicador;
   public
     procedure Assign(Source: TICMS);
 
@@ -529,6 +530,7 @@ type
     property pRedBC: Double     read FpRedBC     write FpRedBC;
     property vICMSDeson: Double read FvICMSDeson write FvICMSDeson;
     property cBenef: String     read FcBenef     write FcBenef;
+    property indSemCST: TIndicador read FindSemCST write FindSemCST;
   end;
 
   { TImposto }

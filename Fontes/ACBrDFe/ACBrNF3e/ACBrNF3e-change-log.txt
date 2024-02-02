@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2024
+-- Diversos --
+[*] Refactoring visando deixar de usar a unit pcnConsts.
+  Por: Italo Giurizzato Junior
+
 20/10/2022
 -- ACBrNF3eNotasFiscais/ACBrNF3eXmlReader --
 [*] Ajustes para a leitura correta do XML.

@@ -461,12 +461,13 @@ implementation
 
 uses
   StrUtils, Math,
+  ACBrDFeConsts,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
   ACBrCompress, ACBrNF3e, ACBrIntegrador,
   ACBrNF3eConsts,
   ACBrNF3eConsSit,
-  pcnConsts, pcnGerador, pcnLeitor,
+  pcnGerador, pcnLeitor,
   ACBrDFeConsStatServ, ACBrDFeRetConsStatServ,
   pcnConsReciDFe;
 

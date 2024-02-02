@@ -209,6 +209,8 @@ type
     Label31: TLabel;
     ACBr_NFSeXDanfseFPDF_dpk: TCheckBox;
     Label32: TLabel;
+    ACBr_NFCom_dpk: TCheckBox;
+    lblNFCom: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

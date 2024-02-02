@@ -555,7 +555,7 @@ object framePacotes: TframePacotes
     end
     object lblacb: TLabel
       Left = 276
-      Top = 918
+      Top = 934
       Width = 386
       Height = 13
       Margins.Left = 5
@@ -634,6 +634,22 @@ object framePacotes: TframePacotes
       Caption = 'FPDF Pascal - DANFSE (NOVO COMPONENTE BETA)'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lblNFCom: TLabel
+      Left = 292
+      Top = 560
+      Width = 387
+      Height = 13
+      Margins.Left = 5
+      Caption = 
+        'Nota Fiscal Fatura de Servi'#231'o de Comunica'#231#227'o Eletr'#244'nica (NOVO CO' +
+        'MPONENTE!)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -750,7 +766,7 @@ object framePacotes: TframePacotes
     object ACBr_BPe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 729
+      Top = 745
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -770,7 +786,7 @@ object framePacotes: TframePacotes
     object ACBr_TEFD_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 866
+      Top = 882
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -909,7 +925,7 @@ object framePacotes: TframePacotes
     end
     object ACBr_NFe_dpk: TCheckBox
       Tag = 4
-      Left = 82
+      Left = 81
       Top = 459
       Width = 163
       Height = 17
@@ -970,7 +986,7 @@ object framePacotes: TframePacotes
     object ACBr_MDFe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 560
+      Top = 576
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -990,7 +1006,7 @@ object framePacotes: TframePacotes
     object ACBr_GNRE_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 577
+      Top = 593
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1050,7 +1066,7 @@ object framePacotes: TframePacotes
     object ACBr_SAT_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 628
+      Top = 644
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1090,7 +1106,7 @@ object framePacotes: TframePacotes
     object ACBr_SATExtratoESCPOS_dpk: TCheckBox
       Tag = 5
       Left = 97
-      Top = 662
+      Top = 678
       Width = 180
       Height = 17
       Margins.Left = 25
@@ -1190,7 +1206,7 @@ object framePacotes: TframePacotes
     object ACBr_SATECFVirtual_dpk: TCheckBox
       Tag = 5
       Left = 97
-      Top = 645
+      Top = 661
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1490,7 +1506,7 @@ object framePacotes: TframePacotes
     object ACBr_BlocoX_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 696
+      Top = 712
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1570,7 +1586,7 @@ object framePacotes: TframePacotes
     object ACBr_SATWS_dpk: TCheckBox
       Tag = 4
       Left = 97
-      Top = 679
+      Top = 695
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1590,7 +1606,7 @@ object framePacotes: TframePacotes
     object ACBr_ANe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 762
+      Top = 778
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1630,7 +1646,7 @@ object framePacotes: TframePacotes
     object ACBre_Social_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 594
+      Top = 610
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1650,7 +1666,7 @@ object framePacotes: TframePacotes
     object ACBr_Reinf_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 611
+      Top = 627
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1670,7 +1686,7 @@ object framePacotes: TframePacotes
     object ACBr_BPeDabpeESCPOS_dpk: TCheckBox
       Tag = 4
       Left = 97
-      Top = 745
+      Top = 761
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1710,7 +1726,7 @@ object framePacotes: TframePacotes
     object ACBr_CIOT_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 779
+      Top = 795
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1750,7 +1766,7 @@ object framePacotes: TframePacotes
     object ACBr_ONE_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 796
+      Top = 812
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1790,7 +1806,7 @@ object framePacotes: TframePacotes
     object ACBr_NF3e_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 813
+      Top = 829
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1810,7 +1826,7 @@ object framePacotes: TframePacotes
     object ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox
       Tag = 4
       Left = 97
-      Top = 829
+      Top = 845
       Width = 172
       Height = 17
       Margins.Left = 25
@@ -1869,7 +1885,7 @@ object framePacotes: TframePacotes
     end
     object ACBr_PagFor_dpk: TCheckBox
       Tag = 4
-      Left = 82
+      Left = 81
       Top = 427
       Width = 163
       Height = 17
@@ -1950,7 +1966,7 @@ object framePacotes: TframePacotes
     object ACBr_OFX_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 883
+      Top = 899
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1970,7 +1986,7 @@ object framePacotes: TframePacotes
     object ACBr_GTIN_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 847
+      Top = 863
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1990,7 +2006,7 @@ object framePacotes: TframePacotes
     object ACBr_OpenDelivery_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 900
+      Top = 916
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2010,7 +2026,7 @@ object framePacotes: TframePacotes
     object ACBr_PAFNFCe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 712
+      Top = 728
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2050,7 +2066,7 @@ object framePacotes: TframePacotes
     object ACBr_Android_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 917
+      Top = 933
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2089,7 +2105,7 @@ object framePacotes: TframePacotes
     end
     object ACBr_DebitoAutomatico_dpk: TCheckBox
       Tag = 4
-      Left = 82
+      Left = 81
       Top = 442
       Width = 163
       Height = 17
@@ -2145,6 +2161,26 @@ object framePacotes: TframePacotes
       Font.Style = []
       ParentFont = False
       TabOrder = 57
+      OnClick = VerificarCheckboxes
+    end
+    object ACBr_NFCom_dpk: TCheckBox
+      Tag = 4
+      Left = 81
+      Top = 559
+      Width = 163
+      Height = 17
+      Margins.Left = 25
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Caption = 'ACBr_NFCom.dpk'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 75
       OnClick = VerificarCheckboxes
     end
   end

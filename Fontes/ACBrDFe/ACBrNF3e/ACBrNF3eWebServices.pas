@@ -42,10 +42,14 @@ uses
   ACBrDFe, ACBrDFeWebService,
   ACBrXmlBase,
   ACBrNF3eNotasFiscais, ACBrNF3eConfiguracoes,
-  ACBrNF3eClass, ACBrNF3eConversao, ACBrNF3eProc, ACBrNF3eRetConsSit,
+  ACBrNF3eClass, ACBrNF3eConversao,
+  ACBrNF3eProc,
   ACBrNF3eEnvEvento, ACBrNF3eRetEnvEvento, ACBrNF3eRetEnv,
-  pcnAuxiliar, pcnConversao,
-  pcnRetConsReciDFe, pcnDistDFeInt, pcnRetDistDFeInt;
+  ACBrNF3eRetConsSit,
+  ACBrDFeComum.RetConsReciDFe,
+//  ACBrDFeComum.DistDFeInt, ACBrDFeComum.RetDistDFeInt,
+  pcnAuxiliar,
+  pcnConversao;
 
 type
 
@@ -176,7 +180,7 @@ type
     FChaveNF3e: String;
     FNotasFiscais: TNotasFiscais;
     Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
+    FTpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: integer;
     FcUF: integer;
@@ -208,7 +212,7 @@ type
     function Executar: Boolean; override;
 
     property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
+    property TpAmb: TACBrTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
     property cStat: integer read FcStat;
     property cUF: integer read FcUF;
@@ -355,7 +359,7 @@ type
   end;
 
   { TDistribuicaoDFe }
-
+(*
   TDistribuicaoDFe = class(TNF3eWebService)
   private
     FcUFAutor: integer;
@@ -392,7 +396,7 @@ type
 
     property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
   end;
-
+*)
   { TNF3eEnvioWebService }
 
   TNF3eEnvioWebService = class(TNF3eWebService)
@@ -433,7 +437,7 @@ type
     FRecibo: TNF3eRecibo;
     FConsulta: TNF3eConsulta;
     FEnvEvento: TNF3eEnvEvento;
-    FDistribuicaoDFe: TDistribuicaoDFe;
+//    FDistribuicaoDFe: TDistribuicaoDFe;
     FEnvioWebService: TNF3eEnvioWebService;
   public
     constructor Create(AOwner: TACBrDFe); overload;
@@ -451,8 +455,8 @@ type
     property Recibo: TNF3eRecibo read FRecibo write FRecibo;
     property Consulta: TNF3eConsulta read FConsulta write FConsulta;
     property EnvEvento: TNF3eEnvEvento read FEnvEvento write FEnvEvento;
-    property DistribuicaoDFe: TDistribuicaoDFe
-      read FDistribuicaoDFe write FDistribuicaoDFe;
+//    property DistribuicaoDFe: TDistribuicaoDFe
+//      read FDistribuicaoDFe write FDistribuicaoDFe;
     property EnvioWebService: TNF3eEnvioWebService
       read FEnvioWebService write FEnvioWebService;
   end;
@@ -468,8 +472,8 @@ uses
   ACBrNF3eConsts,
   ACBrNF3eConsSit,
   pcnGerador, pcnLeitor,
-  ACBrDFeConsStatServ, ACBrDFeRetConsStatServ,
-  pcnConsReciDFe;
+  ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ,
+  ACBrDFeComum.ConsReciDFe;
 
 { TNF3eWebService }
 
@@ -607,7 +611,7 @@ var
 begin
   ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e', False);
   try
-    ConsStatServ.TpAmb := TACBrTipoAmbiente(FPConfiguracoesNF3e.WebServices.Ambiente);
+    ConsStatServ.TpAmb := FPConfiguracoesNF3e.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesNF3e.WebServices.UFCodigo;
 
     FPDadosMsg := ConsStatServ.GerarXML;
@@ -1128,7 +1132,7 @@ begin
 
   if Assigned(FPConfiguracoesNF3e) then
   begin
-    FtpAmb := FPConfiguracoesNF3e.WebServices.Ambiente;
+    FtpAmb := TACBrTipoAmbiente(FPConfiguracoesNF3e.WebServices.Ambiente);
     FcUF := FPConfiguracoesNF3e.WebServices.UFCodigo;
   end;
 
@@ -1206,7 +1210,7 @@ begin
   end;
 
   VerServ := VersaoNF3eToDbl(FVersaoDF);
-  FTpAmb := FPConfiguracoesNF3e.WebServices.Ambiente;
+  FTpAmb := TACBrTipoAmbiente(FPConfiguracoesNF3e.WebServices.Ambiente);
   FPVersaoServico := '';
   FPURL := '';
 
@@ -1223,7 +1227,7 @@ begin
   TACBrNF3e(FPDFeOwner).LerServicoDeParams(
     'NF3e',
     xUF,
-    FTpAmb,
+    TpcnTipoAmbiente(FTpAmb),
     LayOutToServico(FPLayout),
     VerServ,
     FPURL,
@@ -1255,13 +1259,11 @@ var
 begin
   ConsReciNF3e := TConsReciDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
   try
-    ConsReciNF3e.tpAmb := FTpAmb;
+    ConsReciNF3e.tpAmb := TpcnTipoAmbiente(FTpAmb);
     ConsReciNF3e.nRec := FRecibo;
 
-    AjustarOpcoes( ConsReciNF3e.Gerador.Opcoes );
-    ConsReciNF3e.GerarXML;
-
-    FPDadosMsg := ConsReciNF3e.Gerador.ArquivoFormatoXML;
+//    AjustarOpcoes( ConsReciNF3e.Gerador.Opcoes );
+    FPDadosMsg := ConsReciNF3e.GerarXML;
   finally
     ConsReciNF3e.Free;
   end;
@@ -1275,7 +1277,7 @@ begin
 
   RemoverNameSpace;
 
-  FNF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS, True, False);
+  FNF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
   FNF3eRetorno.LerXML;
 
   Fversao := FNF3eRetorno.versao;
@@ -1437,7 +1439,7 @@ begin
                            'UF: %s ' + LineBreak +
                            'cMsg: %s ' + LineBreak +
                            'xMsg: %s ' + LineBreak),
-                   [FNF3eRetorno.versao, TpAmbToStr(FNF3eRetorno.tpAmb),
+                   [FNF3eRetorno.versao, TipoAmbienteToStr(FNF3eRetorno.tpAmb),
                     FNF3eRetorno.verAplic, FNF3eRetorno.nRec,
                     IntToStr(FNF3eRetorno.cStat), FNF3eRetorno.xMotivo,
                     CodigoParaUF(FNF3eRetorno.cUF), IntToStr(FNF3eRetorno.cMsg),
@@ -1579,10 +1581,8 @@ begin
     ConsReciNF3e.tpAmb := FTpAmb;
     ConsReciNF3e.nRec  := FRecibo;
 
-    AjustarOpcoes( ConsReciNF3e.Gerador.Opcoes );
-    ConsReciNF3e.GerarXML;
-
-    FPDadosMsg := ConsReciNF3e.Gerador.ArquivoFormatoXML;
+//    AjustarOpcoes( ConsReciNF3e.Gerador.Opcoes );
+    FPDadosMsg := ConsReciNF3e.GerarXML;
   finally
     ConsReciNF3e.Free;
   end;
@@ -1596,11 +1596,11 @@ begin
 
   RemoverNameSpace;
 
-  FNF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS, True, False);
+  FNF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
   FNF3eRetorno.LerXML;
 
   Fversao := FNF3eRetorno.versao;
-  FTpAmb := FNF3eRetorno.TpAmb;
+  FTpAmb := TpcnTipoAmbiente(FNF3eRetorno.TpAmb);
   FverAplic := FNF3eRetorno.verAplic;
   FcStat := FNF3eRetorno.cStat;
   FxMotivo := FNF3eRetorno.xMotivo;
@@ -1622,7 +1622,7 @@ begin
                            'Status Código: %s ' + LineBreak +
                            'Status Descrição: %s ' + LineBreak +
                            'UF: %s ' + LineBreak),
-                   [FNF3eRetorno.versao, TpAmbToStr(FNF3eRetorno.TpAmb),
+                   [FNF3eRetorno.versao, TipoAmbienteToStr(FNF3eRetorno.TpAmb),
                    FNF3eRetorno.verAplic, FNF3eRetorno.nRec,
                    IntToStr(FNF3eRetorno.cStat),
                    FNF3eRetorno.xMotivo,
@@ -2512,7 +2512,7 @@ begin
 end;
 
 { TDistribuicaoDFe }
-
+(*
 constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
@@ -2675,7 +2675,6 @@ end;
 
 function TDistribuicaoDFe.GerarMsgLog: String;
 begin
-  {(*}
   Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
                            'Ambiente: %s ' + LineBreak +
                            'Versão Aplicativo: %s ' + LineBreak +
@@ -2690,7 +2689,6 @@ begin
                     IfThen(FretDistDFeInt.dhResp = 0, '',
                            FormatDateTimeBr(RetDistDFeInt.dhResp)),
                     FretDistDFeInt.ultNSU, FretDistDFeInt.maxNSU]);
-  {*)}
 end;
 
 function TDistribuicaoDFe.GerarMsgErro(E: Exception): String;
@@ -2739,7 +2737,7 @@ begin
                                                         Data);
   end;
 end;
-
+*)
 { TNF3eEnvioWebService }
 
 constructor TNF3eEnvioWebService.Create(AOwner: TACBrDFe);
@@ -2826,7 +2824,7 @@ begin
   FRecibo := TNF3eRecibo.Create(FACBrNF3e, TACBrNF3e(FACBrNF3e).NotasFiscais);
   FConsulta := TNF3eConsulta.Create(FACBrNF3e, TACBrNF3e(FACBrNF3e).NotasFiscais);
   FEnvEvento := TNF3eEnvEvento.Create(FACBrNF3e, TACBrNF3e(FACBrNF3e).EventoNF3e);
-  FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrNF3e);
+//  FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrNF3e);
   FEnvioWebService := TNF3eEnvioWebService.Create(FACBrNF3e);
 end;
 
@@ -2838,7 +2836,7 @@ begin
   FRecibo.Free;
   FConsulta.Free;
   FEnvEvento.Free;
-  FDistribuicaoDFe.Free;
+//  FDistribuicaoDFe.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/02/2024
+-- ACBrNF3e/ACBrNF3eWebServices --
+[*] Compatibilização com o D7 e outros ajustes.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnConsts.
   Por: Italo Giurizzato Junior

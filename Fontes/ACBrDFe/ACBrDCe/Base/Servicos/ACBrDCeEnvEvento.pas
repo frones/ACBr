@@ -46,7 +46,8 @@ uses
   ACBrBase,
   pcnConversao,
   pcnSignature,
-  ACBrDCeEventoClass, pcnConsts, ACBrDCeConsts;
+  ACBrDCeEventoClass,
+  ACBrDCeConsts;
 
 type
   EventoException = class(Exception);
@@ -363,8 +364,8 @@ begin
         infEvento.cOrgao   := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
         infEvento.CNPJ     := INIRec.ReadString( sSecao, 'CNPJ'  , '');
         infEvento.chDCe   := sFim;
-        infEvento.dhEvento := StringToDateTime(INIRec.ReadString(    sSecao, 'dhEvento', ''));
-        infEvento.tpEvento := StrToEventoDCe(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.dhEvento := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
+        infEvento.tpEvento := StrTotpEventoDCe(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
 
         infEvento.nSeqEvento := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
 

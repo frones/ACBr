@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
-  ACBrDFeConversao,
+//  ACBrDFeConversao,
+  pcnConversao,
   ACBrXmlBase;
 
 type
@@ -80,7 +81,7 @@ function StrToEmitenteDCe(out ok: Boolean; const s: String): TEmitenteDCe;
 function ModTransToStr(const t: TModTrans): String;
 function StrToModTrans(out ok: Boolean; const s: String): TModTrans;
 
-function StrTotpEventoDCe(out ok: boolean; const s: string): TTipoEvento;
+function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
 
 implementation
 
@@ -210,7 +211,7 @@ begin
                                   [mtCorreios, mtPropria, mtTransportadora]);
 end;
 
-function StrTotpEventoDCe(out ok: boolean; const s: string): TTipoEvento;
+function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110111', '110112', '110114', '110115', '110116',

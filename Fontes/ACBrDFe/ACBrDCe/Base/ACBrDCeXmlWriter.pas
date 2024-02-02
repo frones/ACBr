@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -119,13 +119,11 @@ type
 implementation
 
 uses
-  pcnConsts,
   pcnAuxiliar,
   ACBrValidador,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrDFeUtil,
-  ACBrDFeConversao,
   ACBrDFeConsts,
   ACBrDCe,
   ACBrDCeConversao,
@@ -274,14 +272,14 @@ begin
     wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, 'B03', 'cDC', 6, 6, 1,
-            IntToStrZero(ExtrairCodigoChaveAcesso(DCe.infDCe.ID), 8), DSC_CNF));
+            IntToStrZero(ExtrairCodigoChaveAcesso(DCe.infDCe.ID), 8), DSC_CDF));
 
   Result.AppendChild(AddNode(tcInt, 'B04', 'mod', 2, 2, 1, DCe.Ide.modelo, ''));
 
   Result.AppendChild(AddNode(tcInt, 'B05', 'serie', 1, 3, 1,
                                                      DCe.ide.serie, DSC_SERIE));
 
-  Result.AppendChild(AddNode(tcInt, 'B06', 'nDC', 1, 9, 1, DCe.ide.nDC, DSC_NNF));
+  Result.AppendChild(AddNode(tcInt, 'B06', 'nDC', 1, 9, 1, DCe.ide.nDC, DSC_NDF));
 
   Result.AppendChild(AddNode(tcStr, 'B07', 'dhEmi', 25, 25, 1,
       DateTimeTodh(DCe.ide.dhEmi) +
@@ -294,7 +292,7 @@ begin
                                  EmitenteDCeToStr(DCe.Ide.tpEmit), DSC_TPEMIS));
 
   Result.AppendChild(AddNode(tcInt, 'B10', 'nSiteAutoriz', 1, 1, 1,
-                                                DCe.ide.nSiteAutoriz, DSC_NNF));
+                                                DCe.ide.nSiteAutoriz, DSC_NDF));
 
   Result.AppendChild(AddNode(tcInt, 'B11', 'cDV', 1, 1, 1, DCe.Ide.cDV, DSC_CDV));
 
@@ -575,7 +573,7 @@ begin
   Result := FDocument.CreateElement('total');
 
   Result.AppendChild(AddNode(tcDe2, 'W16', 'vDC', 1, 15, 1,
-                                               DCe.Total.vDC, DSC_VNF));
+                                               DCe.Total.vDC, DSC_VDF));
 end;
 
 function TDCeXmlWriter.GerarTransp: TACBrXmlNode;

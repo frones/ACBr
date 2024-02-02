@@ -41,94 +41,15 @@ uses
 
 resourcestring
   NAME_SPACE_DCE = 'xmlns="http://www.portalfiscal.inf.br/dce"';
-  {
-  DSC_NMDF        = 'Número do Manifesto';
-  DSC_CMDF        = 'Código numérico que compõe a Chave de Acesso';
-  DSC_TPEMIT      = 'Tipo do Emitente';
-  DSC_TPTRANSP    = 'Tipo de Transportador';
-  DSC_CMUNCARREGA = 'Código do Município de Carregamento';
-  DSC_XMUNCARREGA = 'Nome do Município de Carregamento';
-  DSC_SEGCODBARRA = 'Segundo código de barras';
-  DSC_NCT         = 'Número do CT';
-  DSC_SUBSERIE    = 'Subsérie do CT';
-  DSC_PIN         = 'PIN SUFRAMA';
-  DSC_QCTE        = 'Quantidade total de CTe relacionados no Manifesto';
-  DSC_QCT         = 'Quantidade total de CT relacionados no Manifesto';
-  DSC_QNFE        = 'Quantidade total de NFe relacionados no Manifesto';
-  DSC_QNF         = 'Quantidade total de NF relacionados no Manifesto';
-  DSC_QCARGA      = 'Peso Bruto Total da Carga / Mercadoria Transportada';
-  DSC_DHINIVIAGEM = 'Data e Hora previstas de Inicio da Viagem';
-  DSC_INDREENTREGA = 'Indicador de reentrega';
-  DSC_QTDTOTAL    = 'Quantidade Total';
-  DSC_QTDPARCIAL  = 'Quantidade Parcial';
 
+  DSC_INFADPROD = 'Informações adicionais do Produto';
+  DSC_NITEM = 'Numero do item';
+  DSC_XPROD = 'Descrição do Produto ou Serviço';
+  DSC_NCM = 'Código NCM';
+  DSC_QCOM = 'Quantidade Comercial';
+  DSC_VUNCOM = 'Valor Unitário de Comercialização';
+  DSC_VPROD = 'Valor Total Bruto dos Produtos ou Serviços';
 
-  // Rodoviário
-  DSC_CIOT        = 'Código Identificador da Operação de Transporte';
-  DSC_CINTV       = 'Código interno do veículo';
-  DSC_TARA        = 'Tara em KG';
-  DSC_CAPKG       = 'Capacidade em KG';
-  DSC_CAPM3       = 'Capacidade em m3';
-  DSC_CNPJFORN    = 'CNPJ da empresa fornecedora do Vale-Pedágio';
-  DSC_CNPJPG      = 'CNPJ do responsável pelo pagamento do Vale-Pedágio';
-  DSC_NCOMPRA     = 'Número do comprovante de compra';
-  DSC_CODAGPORTO  = 'Código de Agendamento no Porto';
-
-  // Aéreo
-  DSC_NAC         = 'Marca da Nacionalidade da Aeronave';
-  DSC_MATR        = 'Marca da Matricula da Aeronave';
-  DSC_NVOO        = 'Número do Vôo';
-  DSC_CAEREMB     = 'Aeródromo de Embarque';
-  DSC_CAERDES     = 'Aeródromo de Destino';
-  DSC_DVOO        = 'Data do Vôo';
-
-  // Aquaviário
-  DSC_CNPJAGENAV  = 'CNPJ da Agência de Navegação';
-  DSC_TPEMB       = 'Tipo de Embarcação';
-  DSC_CEMBAR      = 'Código da Embarcação';
-  DSC_XEMBAR      = 'Nome da Embarcação';
-  DSC_NVIAG       = 'Número da Viagem';
-  DSC_CPRTEMB     = 'Código do Porto de Embarque';
-  DSC_CPRTDEST    = 'Código do Porto de Destino';
-  DSC_PRTTRANS    = 'Porto de Transbordo';
-  DSC_CTERMCARREG = 'Código do Terminal de Carregamento';
-  DSC_XTERMCARREG = 'Nome do Terminal de Carregamento';
-  DSC_CTERMDESCAR = 'Código do Terminal de Descarregamento';
-  DSC_XTERMDESCAR = 'Nome do Terminal de Descarregamento';
-  DSC_CEMBCOMB    = 'Código da Embarcação do comboio';
-  DSC_XBALSA      = 'Identificador da Balsa';
-  
-  // Ferroviário
-  DSC_XPREF       = 'Prefixo do Trem';
-  DSC_DHTREM      = 'Data e Hora de liberação do Trem na origem';
-  DSC_XORI        = 'Origem do Trem';
-  DSC_XDEST       = 'Destino do Trem';
-  DSC_QVAG        = 'Quantidade de vagões carregados';
-  DSC_NVAG        = 'Número de Identificação do vagão';
-  DSC_NSEQ        = 'Sequência do vagão na composição';
-  DSC_TU          = 'Tonelada Útil';
-  DSC_TPCARGA     = 'Tipo de Carga';
-  DSC_LATITUDE    = 'Latitude';
-  DSC_LONGITUDE   = 'Longitude';
-  DSC_VCONTRATO   = 'Valor do Contrato';
-  DSC_TPCOMP      = 'Tipo de Componente de Pagamento do Frete';
-  DSC_VCOMP       = 'Valor do Componente de Pagamento do Frete';
-  DSC_XCOMP       = 'Descrição do Componente de Pagamento do Frete (Outros)';
-  DSC_NPARCELA    = 'Numero da Parcela';
-  DSC_VPARCELA    = 'Valor da Parcela';
-  DSC_CNPJIPEF    = 'CNPJ da Instituição de pagamento Eletrônico do Frete';
-  DSC_CODBANCO    = 'Código do Banco';
-  DSC_CODAGENCIA  = 'Código da Agência';
-  DSC_PIX         = 'Chave PIX';
-  DSC_TPVALEPED   = 'Tipo de Vale Pedágio';
-  DSC_VADIANT     = 'Valor do Adiantamento';
-
-  DSC_INDCANALVERDE = 'Indicador de Canal Verde';
-  DSC_INDCARREGAPOSTERIOR = 'Indicador de Carregamento Posterior';
-  DSC_INFQRCODMDFE  = 'Texto com o QR-Code impresso no DAMDFE';
-  DSC_IDESTRANGEIRO = 'Identificação do Estrangeiro';
-  DSC_CATEGCOMBVEIC = 'Categoria de Combinação Veicular';
-  }
 implementation
 
 end.

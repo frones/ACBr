@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/02/2024
+-- ACBrNFComConsStatServ/ACBrNFComRetConsStatServ --
+[*] Renoção das units acima, pois o componente vai usar as units respectivas 
+    que estão na pasta Comum.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnConsts.
   Por: Italo Giurizzato Junior

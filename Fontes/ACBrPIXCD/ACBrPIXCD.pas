@@ -947,6 +947,9 @@ begin
       end
       else if NaoEstaVazio(ArquivoChavePrivada) then
         Http.Sock.SSL.PrivateKeyFile := ArquivoChavePrivada;
+
+      if NaoEstaVazio(SenhaPFX) then
+        Http.Sock.SSL.KeyPassword := SenhaPFX;
     end;
   end;
 end;

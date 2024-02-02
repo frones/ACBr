@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal de Serviço de Comunicação/Telecomunicações - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="19">
+    <Files Count="17">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFCom.pas"/>
         <UnitName Value="ACBrNFCom"/>
@@ -75,29 +75,21 @@
         <UnitName Value="ACBrNFComConsSit"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComConsStatServ.pas"/>
-        <UnitName Value="ACBrNFComConsStatServ"/>
-      </Item14>
-      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEnvEvento.pas"/>
         <UnitName Value="ACBrNFComEnvEvento"/>
-      </Item15>
-      <Item16>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEventoClass.pas"/>
         <UnitName Value="ACBrNFComEventoClass"/>
-      </Item16>
-      <Item17>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetConsSit.pas"/>
         <UnitName Value="ACBrNFComRetConsSit"/>
-      </Item17>
-      <Item18>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetConsStatServ.pas"/>
-        <UnitName Value="ACBrNFComRetConsStatServ"/>
-      </Item18>
-      <Item19>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetEnvEvento.pas"/>
         <UnitName Value="ACBrNFComRetEnvEvento"/>
-      </Item19>
+      </Item17>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

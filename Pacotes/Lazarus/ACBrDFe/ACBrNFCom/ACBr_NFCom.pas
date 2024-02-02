@@ -11,9 +11,9 @@ uses
   ACBrNFCom, ACBrNFComReg, ACBrNFComNotasFiscais, ACBrNFComConfiguracoes, 
   ACBrNFComWebServices, ACBrNFComDANFComClass, ACBrNFComClass, 
   ACBrNFComConsts, ACBrNFComConversao, ACBrNFComProc, ACBrNFComXmlReader, 
-  ACBrNFComXmlWriter, ACBrNFComConsSit, ACBrNFComConsStatServ, 
-  ACBrNFComEnvEvento, ACBrNFComEventoClass, ACBrNFComRetConsSit, 
-  ACBrNFComRetConsStatServ, ACBrNFComRetEnvEvento, LazarusPackageIntf;
+  ACBrNFComXmlWriter, ACBrNFComConsSit, ACBrNFComEnvEvento, 
+  ACBrNFComEventoClass, ACBrNFComRetConsSit, ACBrNFComRetEnvEvento, 
+  LazarusPackageIntf;
 
 implementation
 

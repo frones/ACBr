@@ -12,7 +12,7 @@ uses
   ACBrDFeException, ACBrDFeRegUtil, ACBrDFeReport, ACBrLibXml2, ACBrXmlReader, 
   ACBrXmlWriter, ACBrXmlBase, ACBrXmlDocument, ACBrDFeConsts, ACBrDFeComum.ConsCad, 
   ACBrDFeComum.RetConsCad, ACBrDFeComum.ConsReciDFe, ACBrDFeComum.RetConsReciDFe, 
-  ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ;
+  ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ, ACBrDFeComum.Proc;
 
 implementation
 

@@ -312,14 +312,16 @@ begin
                   StringOfChar( '0', 19)                                     + // Dados p/ Débito Automático
                   PadLeft( Cedente.Agencia + Cedente.AgenciaDigito, 10, '0') + // Código da Cooperativa
                   PadLeft( Cedente.CodigoCedente, 7, '0')                    + // Código de Cobrança
-                  PadRight( SeuNumero, 25, ' ')                              + // Número de Controle de Participantes
+                  PadRight(IfThen(SeuNumero = '',NumeroDocumento,SeuNumero), 25)
+                                                                             + // Número de Controle de Participantes
                   StringOfChar( '0', 8)                                      + // ZEROS
                   PadRight(aNossoNumero , 11, '0')                           + // Nosso Número
                   aDigitoNossoNumero                                         + // Digito Verificador do Nosso Número
                   IntToStrZero( round( ValorDescontoAntDia * 100), 10)       + // Desconto bonificação por dia
                   TipoBoleto + 'N' + Space(14)                               + // Tipo Boleto(Quem emite) + 'N'= Nao registrar p/ Débito automático
                   aOcorrencia                                                + // Identificação da Instrução
-                  PadRight( NumeroDocumento,  10)                            + // Número do Documento
+                  PadRight( IfThen(NumeroDocumento = '',SeuNumero,NumeroDocumento),  10)
+                                                                             + // Número do Documento
                   FormatDateTime( 'ddmmyy', Vencimento)                      + // Data do Vencimento do Título
                   IntToStrZero( Round( ValorDocumento * 100 ), 13)           + // Valor do Título
                   StringOfChar('0',8) + PadRight(aEspecie,2) + 'N'           + // Zeros + Especie do documento + Idntificação(valor fixo N)

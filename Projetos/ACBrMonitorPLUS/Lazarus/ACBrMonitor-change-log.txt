@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2024
+-- DoBoletoUnit, ACBrMonitor.hnd --
+[*] Ajustado o metodo BOLETO.EnviarEmailBoleto para tambem receber parametro de assunto e mensagem
+  Atualizado o manual  
+  Por: Daniel Morais /Validado: Victor H Gonzales - Pandaaa
+
 29/01/2024
 -- ACBrLibReinfRespostas --
 [-] Corrigido preenchimento do grupo dadosRecepcaoLote no retorno da consulta de protocolo do Reinf

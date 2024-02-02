@@ -409,7 +409,7 @@ begin
   sEntrada := 'chNFCom=' + idNFCom + '&tpAmb=' + TipoAmbienteToStr(TipoAmbiente);
 
   // Passo 2 calcular o SHA-1 da string idCTe se o Tipo de Emissão for EPEC ou FSDA
-  if TipoEmissao = TACBrTipoEmissao.teOffLine then
+  if TipoEmissao = TACBrTipoEmissao(teOffLine) then
   begin
     // Tipo de Emissão em Contingência
     SSL.CarregarCertificadoSeNecessario;

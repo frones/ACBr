@@ -97,14 +97,14 @@ type
     procedure Assign(Source: TIde);
 
     property cUF: Integer read FcUF write FcUF;
-    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb default TACBrTipoAmbiente.taHomologacao;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
     property modelo: Integer read Fmodelo write Fmodelo;
     property serie: Integer read Fserie write Fserie;
     property nNF: Integer read FnNF write FnNF;
     property cNF: Integer read FcNF write FcNF;
     property cDV: Integer read FcDV write FcDV;
     property dhEmi: TDateTime read FdhEmi write FdhEmi;
-    property tpEmis: TACBrTipoEmissao read FtpEmis write FtpEmis default TACBrTipoEmissao.teNormal;
+    property tpEmis: TACBrTipoEmissao read FtpEmis write FtpEmis;
     property nSiteAutoriz: TSiteAutorizador read FnSiteAutoriz write FnSiteAutoriz default sa0;
     property cMunFG: Integer read FcMunFG write FcMunFG;
     property finNFCom: TFinalidadeNFCom read FfinNFCom write FfinNFCom default fnNormal;

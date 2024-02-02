@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/02/2024
+-- Diversos --
+[*] Compatibilização com o D7 e outros ajustes.
+  Por: Italo Giurizzato Junior
 -- ACBrNFComConsStatServ/ACBrNFComRetConsStatServ --
 [*] Renoção das units acima, pois o componente vai usar as units respectivas 
     que estão na pasta Comum.

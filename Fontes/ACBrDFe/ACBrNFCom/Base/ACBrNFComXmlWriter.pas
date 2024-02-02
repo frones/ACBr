@@ -499,7 +499,7 @@ begin
   UF := '';
   Result := FDocument.CreateElement('dest');
 
-  if NFCom.Ide.tpAmb = TACBrTipoAmbiente.taProducao then
+  if NFCom.Ide.tpAmb = TACBrTipoAmbiente(taProducao) then
     xNome := NFCom.Dest.xNome
   else
     xNome := HOM_NOME_DEST;

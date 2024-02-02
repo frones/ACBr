@@ -43,7 +43,10 @@ uses
 //  ACBrDFeConversao,
   ACBrXmlBase,
   ACBrNFComNotasFiscais, ACBrNFComConfiguracoes,
-  ACBrNFComClass, ACBrNFComConversao, ACBrNFComProc, ACBrNFComRetConsSit,
+  ACBrNFComClass, ACBrNFComConversao,
+//  ACBrNFComProc,
+  ACBrDFeComum.Proc,
+  ACBrNFComRetConsSit,
   ACBrNFComEnvEvento, ACBrNFComRetEnvEvento,
   pcnAuxiliar,
   pcnConversao;
@@ -235,7 +238,7 @@ type
     FcUF: integer;
     FRetNFComDFe: string;
 
-    FprotNFCom: TProcNFCom;
+    FprotNFCom: TProcDFe;
     FprocEventoNFCom: TRetEventoNFComCollection;
 
     procedure SetNFComChave(const AValue: string);
@@ -266,7 +269,7 @@ type
     property cUF: integer read FcUF;
     property RetNFComDFe: string read FRetNFComDFe;
 
-    property protNFCom: TProcNFCom read FprotNFCom;
+    property protNFCom: TProcDFe read FprotNFCom;
     property procEventoNFCom: TRetEventoNFComCollection read FprocEventoNFCom;
   end;
 
@@ -735,7 +738,7 @@ function TNFComRecepcao.TratarResposta: Boolean;
 var
   I: integer;
   chNFCom, AXML, NomeXMLSalvo: string;
-  AProcNFCom: TProcNFCom;
+  AProcNFCom: TProcDFe;
   SalvarXML: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['nfcomResultMsg'], FPRetornoWS );
@@ -809,12 +812,11 @@ begin
           NFCom.procNFCom.digVal := FNFComRetornoSincrono.protNFCom.digVal;
           NFCom.procNFCom.xMotivo := FNFComRetornoSincrono.protNFCom.xMotivo;
 
-          AProcNFCom := TProcNFCom.Create;
+          AProcNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFCom');
           try
             // Processando em UTF8, para poder gravar arquivo corretamente //
-            AProcNFCom.XML_NFCom := RemoverDeclaracaoXML(XMLAssinado);
+            AProcNFCom.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);
             AProcNFCom.XML_Prot := FNFComRetornoSincrono.XMLprotNFCom;
-            AProcNFCom.Versao := FPVersaoServico;
             XMLOriginal := AProcNFCom.GerarXML;
 
             if FPConfiguracoesNFCom.Arquivos.Salvar then
@@ -1307,7 +1309,7 @@ begin
   if Assigned(FprocEventoNFCom) then
     FprocEventoNFCom.Free;
 
-  FprotNFCom := TProcNFCom.Create;
+  FprotNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFCom');
   FprocEventoNFCom := TRetEventoNFComCollection.Create;
 end;
 
@@ -1436,7 +1438,7 @@ var
   NFComRetorno: TRetConsSitNFCom;
   SalvarXML, NFCancelada, Atualiza: Boolean;
   aEventos, sPathNFCom, NomeXMLSalvo: string;
-  AProcNFCom: TProcNFCom;
+  AProcNFCom: TProcDFe;
   I,
 //  J,
   Inicio, Fim: integer;
@@ -1470,18 +1472,17 @@ begin
 
     // <protNFCom> - Retorno dos dados do ENVIO da NFCom-e
     // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
-    FprotNFCom.PathNFCom := NFComRetorno.protNFCom.PathNFCom;
-    FprotNFCom.PathRetConsReciNFCom := NFComRetorno.protNFCom.PathRetConsReciNFCom;
-    FprotNFCom.PathRetConsSitNFCom := NFComRetorno.protNFCom.PathRetConsSitNFCom;
+    FprotNFCom.PathDFe := NFComRetorno.protNFCom.PathNFCom;
+    FprotNFCom.PathRetConsReciDFe := NFComRetorno.protNFCom.PathRetConsReciNFCom;
+    FprotNFCom.PathRetConsSitDFe := NFComRetorno.protNFCom.PathRetConsSitNFCom;
     FprotNFCom.tpAmb := NFComRetorno.protNFCom.tpAmb;
     FprotNFCom.verAplic := NFComRetorno.protNFCom.verAplic;
-    FprotNFCom.chNFCom := NFComRetorno.protNFCom.chNFCom;
+    FprotNFCom.chDFe := NFComRetorno.protNFCom.chNFCom;
     FprotNFCom.dhRecbto := NFComRetorno.protNFCom.dhRecbto;
     FprotNFCom.nProt := NFComRetorno.protNFCom.nProt;
     FprotNFCom.digVal := NFComRetorno.protNFCom.digVal;
     FprotNFCom.cStat := NFComRetorno.protNFCom.cStat;
     FprotNFCom.xMotivo := NFComRetorno.protNFCom.xMotivo;
-    FprotNFCom.Versao := NFComRetorno.protNFCom.Versao;
 
     {(*}
     if Assigned(NFComRetorno.procEventoNFCom) and (NFComRetorno.procEventoNFCom.Count > 0) then
@@ -1654,14 +1655,10 @@ begin
                   NFCom.procNFCom.Versao := NFComRetorno.protNFCom.Versao;
 
                   // O código abaixo é bem mais rápido que "GerarXML" (acima)...
-                  AProcNFCom := TProcNFCom.Create;
+                  AProcNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFCom');;
                   try
-                    AProcNFCom.XML_NFCom := RemoverDeclaracaoXML(XMLOriginal);
+                    AProcNFCom.XML_DFe := RemoverDeclaracaoXML(XMLOriginal);
                     AProcNFCom.XML_Prot := NFComRetorno.XMLprotNFCom;
-                    AProcNFCom.Versao := NFComRetorno.protNFCom.Versao;
-
-                    if AProcNFCom.Versao = '' then
-                      AProcNFCom.Versao := FPVersaoServico;
 
                     XMLOriginal := AProcNFCom.GerarXML;
                   finally

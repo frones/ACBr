@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2024
+-- ACBrDFeComum.Proc --
+[+] Nova Unit para montagem do grupo de informações do protocolo.
+  Por: Italo Giurizzato Junior
+
 31/01/2024
 -- ACBrDFeComum.ConsCad --
 [+] Nova Unit para Consultar Cadastro de Contribuintes.

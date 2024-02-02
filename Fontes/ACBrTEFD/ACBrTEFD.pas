@@ -160,6 +160,7 @@ type
      fTefCappta    : TACBrTEFDCappta;
      fTefCliSiTefModular: TACBrTEFDCliSiTefModular;
      fTefDirecao   : TACBrTEFDDirecao;
+     fTefDialScopeGetcard: TACBrTEFDDialScopeGetcard;
 
      fEsperaSTS    : Integer;
      fEsperaMinimaMensagemFinal: Integer;
@@ -618,6 +619,13 @@ begin
    fTefDirecao.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
   {$ENDIF}
 
+  { Criando Classe Dial_ScopeGetcard }
+  fTefDialScopeGetcard := TACBrTEFDDialScopeGetcard.Create(self);
+  fTEFList.Add(fTefDialScopeGetcard);     // Adicionando "fTefDialScopeGetcard" na Lista Objetos de Classes de TEF
+  {$IFDEF COMPILER6_UP}
+   fTefDialScopeGetcard.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
+  {$ENDIF}
+
   GPAtual := gpPayGo;
 end;
 
@@ -739,6 +747,7 @@ begin
     gpCappta    : fTefClass := fTefCappta ;
     gpCliSiTefModular : fTefClass := fTefCliSiTefModular;
     gpTefDirecao : fTefClass := fTefDirecao ;
+    gpTefDialScopeGetcard : fTefClass := fTefDialScopeGetcard ;
   end;
 
   fGPAtual := AValue;

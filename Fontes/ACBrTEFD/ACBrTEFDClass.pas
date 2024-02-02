@@ -492,7 +492,7 @@ implementation
 Uses
   dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
   ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFCliSiTefComum, ACBrTEFDVeSPague,
-  ACBrTEFDPayGo, ACBrTEFDPayGoWeb,
+  ACBrTEFDPayGo, ACBrTEFDPayGoWeb, ACBrTEFDDialScopeGetcard,
   ACBrUtil.Strings,
   ACBrUtil.Base,
   ACBrUtil.FilesIO;
@@ -2285,6 +2285,7 @@ begin
     gpVeSPague: Result := TACBrTEFDRespVeSPague.Create;
     gpPayGo: Result := TACBrTEFDRespPayGo.Create;
     gpPayGoWeb: Result := TACBrTEFDRespPayGoWeb.Create;
+    gpTefDialScopeGetcard: Result := TACBrTEFDRespScopeGetcard.Create;
   else
     Result := TACBrTEFDRespTXT.Create;
   end;

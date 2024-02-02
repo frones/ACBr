@@ -80,8 +80,6 @@ contains
   ACBrNFComProc in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComProc.pas',
   ACBrNFComXmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlReader.pas',
   ACBrNFComXmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlWriter.pas',
-  ACBrNFComConsStatServ in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComConsStatServ.pas',
-  ACBrNFComRetConsStatServ in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetConsStatServ.pas',
   ACBrNFComConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComConsSit.pas',
   ACBrNFComRetConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetConsSit.pas',
   ACBrNFComEventoClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEventoClass.pas',

@@ -39,7 +39,7 @@ uses
 
 const
   CLibPIXCDNome = 'ACBrLibPIXCD';
-  CLibPIXCDVersao = '1.0.0.73';
+  CLibPIXCDVersao = '1.0.0.9';
 
   CSessaoRespPIXCD = 'Resposta';
   CSessaoRespCobGerada = 'CobGerada';

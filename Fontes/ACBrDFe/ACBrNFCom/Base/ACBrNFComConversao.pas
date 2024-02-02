@@ -41,112 +41,152 @@ uses
   pcnConversao;
 
 type
-  TVersaoNFCom = (ve100);
-
   TStatusNFCom = (stNFComIdle, stNFComStatusServico, stNFComRecepcao,
                   stNFComRetRecepcao, stNFComRecibo, stNFComConsulta,
                   stNFComEvento, stNFComDistDFeInt, stNFComEnvioWebService,
                   stNFComEmail);
 
+type
+  TVersaoNFCom = (ve100);
+
+const
+  TVersaoNFComArrayStrings: array[TVersaoNFCom] of string = ('1.00');
+  TVersaoNFComArrayDouble: array[TVersaoNFCom] of Double = (1.00);
+
+type
   TSchemaNFCom = (schErroNFCom, schconsStatServNFCom, schNFCom, schconsReciNFCom,
                   schconsSitNFCom, schEventoNFCom, schdistDFeInt,
                   schevCancNFCom);
-
-  TLayOutNFCom = (LayNFComStatusServico, LayNFComRecepcao, LayNFComRetRecepcao,
-                  LayNFComConsulta, LayNFComEvento, LayDistDFeInt,
-                  LayNFComURLQRCode, LayURLConsultaNFCom);
-
-  TVersaoQrCode = (veqr000, veqr100, veqr200);
-
-  TSiteAutorizador = (sa0, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9);
-
-  TIndicador = (tiSim, tiNao);
-
-  TFinalidadeNFCom = (fnNormal, fnSubstituicao, fnAjuste);
-
-  TindIEDest = (inContribuinte, inIsento, inNaoContribuinte);
-
-  TTipoFaturamento = (tfNormal, tfCentralizado, tfCofaturamento);
-
-  TtpAssinante = (taComercial, taIndustrial, taResidencial, taProdutorRural,
-                  taOrgaoPublico, taPrestadorServicoTeleCom,
-                  taMissoesDiplomaticas, taIgrejasTemplos, taOutros);
-
-  TtpServUtil = (suTelefonia, suComunicacaoDados, suTVAssinatura,
-                 suAcessoInternet, suMultimidia, suOutros, suCombo);
-
-  TmotSub = (msErroPreco, msErroCadastral, msDecisaoJudicial,
-             msErroTributacao, msDescontServico, msComplValores);
-
-  TuMed = (umMinuto, umMB, umGB, umUN);
-
-  TCSTIcms = (cst00, cst20, cst40, cst41, cst51, cst90, cstICMSSN);
-
-  TCSTPis = (pis01, pis02, pis06, pis07, pis08, pis09, pis49);
-
-  TCSTCofins = (cof01, cof02, cof06, cof07, cof08, cof09, cof49);
-
-  TtpProc = (tpSEFAZ, tpJusticaFederal, tpJusticaEstadual);
-
-  TtpRessarc = (tpCobrancaIndevida, tpInterrupcao, tpOutros);
-
-  // Futuramente deve ir para a unit ACBrDFeConversao
-  TCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
 
 const
   TSchemaNFComArrayStrings: array[TSchemaNFCom] of string = ('', '', '', '',
     '', '', '', 'evCancNFCom');
 
-  TVersaoNFComArrayStrings: array[TVersaoNFCom] of string = ('1.00');
-  TVersaoNFComArrayDouble: array[TVersaoNFCom] of Double = (1.00);
+type
+  TLayOutNFCom = (LayNFComStatusServico, LayNFComRecepcao, LayNFComRetRecepcao,
+                  LayNFComConsulta, LayNFComEvento, LayDistDFeInt,
+                  LayNFComURLQRCode, LayURLConsultaNFCom);
 
+const
   TLayOutNFComArrayStrings: array[TLayOutNFCom] of string = ('NFComStatusServico',
     'NFComRecepcao', 'NFComRetRecepcao', 'NFComConsulta', 'NFComRecepcaoEvento',
     'NFComDistribuicaoDFe', 'URL-QRCode', 'URL-ConsultaNFCom');
 
+type
+  TVersaoQrCode = (veqr000, veqr100, veqr200);
+
+const
   TVersaoQrCodeArrayStrings: array[TVersaoQrCode] of string = ('0', '1', '2');
   TVersaoQrCodeArrayDouble: array[TVersaoQrCode] of Double = (0, 1, 2);
 
+type
+  TSiteAutorizador = (sa0, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9);
+
+const
   TSiteAutorizadorArrayStrings: array[TSiteAutorizador] of string = ('0','1', '2',
     '3', '4', '5', '6', '7', '8', '9');
 
+type
+  TIndicador = (tiSim, tiNao);
+
+const
   TIndicadorArrayStrings: array[TIndicador] of string = ('1', '0');
 
+type
+  TFinalidadeNFCom = (fnNormal, fnSubstituicao, fnAjuste);
+
+const
   TFinalidadeNFComArrayStrings: array[TFinalidadeNFCom] of string = ('0', '3',
     '4');
 
+type
+  TindIEDest = (inContribuinte, inIsento, inNaoContribuinte);
+
+const
   TindIEDestArrayStrings: array[TindIEDest] of string = ('1', '2', '9');
 
+type
+  TTipoFaturamento = (tfNormal, tfCentralizado, tfCofaturamento);
+
+const
   TTipoFaturamentoArrayStrings: array[TTipoFaturamento] of string = ('0', '1',
     '2');
 
+type
+  TtpAssinante = (taComercial, taIndustrial, taResidencial, taProdutorRural,
+                  taOrgaoPublico, taPrestadorServicoTeleCom,
+                  taMissoesDiplomaticas, taIgrejasTemplos, taOutros);
+
+const
   TtpAssinanteArrayStrings: array[TtpAssinante] of string = ('1', '2', '3', '4',
     '5', '6', '7', '8', '99');
 
+type
+  TtpServUtil = (suTelefonia, suComunicacaoDados, suTVAssinatura,
+                 suAcessoInternet, suMultimidia, suOutros, suCombo);
+
+const
   TtpServUtilArrayStrings: array[TtpServUtil] of string = ('1', '2', '3', '4',
     '5', '6', '7');
 
+type
+  TmotSub = (msErroPreco, msErroCadastral, msDecisaoJudicial,
+             msErroTributacao, msDescontServico, msComplValores);
+
+const
   TmotSubArrayStrings: array[TmotSub] of string = ('01', '02', '03', '04', '05',
     '06');
 
+type
+  TuMed = (umMinuto, umMB, umGB, umUN);
+
+const
   TuMedArrayStrings: array[TuMed] of string = ('1', '2', '3', '4');
 
+type
+  TCSTIcms = (cst00, cst20, cst40, cst41, cst51, cst90, cstICMSSN);
+
+const
   TCSTIcmsArrayStrings: array[TCSTIcms] of string = ('00', '20', '40', '41', '51',
     '90', 'SN');
 
+type
+  TCSTPis = (pis01, pis02, pis06, pis07, pis08, pis09, pis49);
+
+const
   TCSTPisArrayStrings: array[TCSTPis] of string = ('01', '02', '06', '07', '08',
     '09', '49');
 
+type
+  TCSTCofins = (cof01, cof02, cof06, cof07, cof08, cof09, cof49);
+
+const
   TCSTCofinsArrayStrings: array[TCSTCofins] of string = ('01', '02', '06', '07',
     '08', '09', '49');
 
+type
+  TtpProc = (tpSEFAZ, tpJusticaFederal, tpJusticaEstadual);
+
+const
   TtpProcArrayStrings: array[TtpProc] of string = ('0', '1', '2');
 
+type
+  TtpRessarc = (tpCobrancaIndevida, tpInterrupcao, tpOutros);
+
+const
   TtpRessarcArrayStrings: array[TtpRessarc] of string = ('1', '2', '99');
 
+type
+  // Futuramente deve ir para a unit ACBrDFeConversao
+  TCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
+
+const
   // Futuramente deve ir para a unit ACBrDFeConversao
   TCRTArrayStrings: array[TCRT] of string = ('1', '2', '3');
 
+{
+  Declaração das funções de conversão
+}
 function VersaoNFComToStr(const t: TVersaoNFCom): string;
 function StrToVersaoNFCom(const s: string): TVersaoNFCom;
 

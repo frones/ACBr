@@ -366,13 +366,13 @@ implementation
 
 uses
   StrUtils, Math,
+//  ACBrDFeConsts,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
   ACBrCompress, ACBrNFCom, ACBrIntegrador,
   ACBrNFComConsts,
   ACBrNFComConsSit,
-//  ACBrDFeConsts,
-  ACBrNFComConsStatServ, ACBrNFComRetConsStatServ,
+  ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ,
   pcnConsReciDFe;
 
 { TNFComWebService }
@@ -495,7 +495,7 @@ begin
   ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_NFCom,
                                                                 'NFCom', False);
   try
-    ConsStatServ.TpAmb := TACBrTipoAmbiente(FPConfiguracoesNFCom.WebServices.Ambiente);
+    ConsStatServ.TpAmb := FPConfiguracoesNFCom.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesNFCom.WebServices.UFCodigo;
 
     FPDadosMsg := ConsStatServ.GerarXML;
@@ -1377,6 +1377,7 @@ var
   ConsSitNFCom: TConsSitNFCom;
 begin
   ConsSitNFCom := TConsSitNFCom.Create;
+
   try
     ConsSitNFCom.TpAmb := TACBrTipoAmbiente(FTpAmb);
     ConsSitNFCom.chNFCom := FNFComChave;

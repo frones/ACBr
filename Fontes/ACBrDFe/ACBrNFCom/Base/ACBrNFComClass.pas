@@ -48,6 +48,7 @@ uses
 //  ACBrDFeConversao,
   ACBrNFComConversao,
   ACBrNFComProc,
+//  ACBrDFeComum.Signature,
   pcnSignature;
 
 type

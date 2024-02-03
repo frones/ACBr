@@ -145,8 +145,8 @@
             <xs:element name="indDesFolha">
                 <xs:simpleType>
                     <xs:annotation>
-                        <xs:documentation>Indicativo de desoneração da folha.</xs:documentation>
-                        <xs:documentation>Validação: Pode ser igual a [1] apenas se {classTrib}(./classTrib) = [02, 03, 99]. Nos demais casos, deve ser igual a [0].</xs:documentation>
+                        <xs:documentation>Indicativo de opção/enquadramento de desoneração da folha.</xs:documentation>
+                        <xs:documentation>Validação: Pode ser igual a [1] apenas se {classTrib}(./classTrib) = [02, 03, 99]. Pode ser igual a [2] apenas para as naturezas jurídicas iguais a [103-1, 106-6, 124-4, 133-3]. Nos demais casos, deve ser igual a [0].</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:byte">
                         <xs:enumeration value="0">
@@ -156,7 +156,12 @@
                         </xs:enumeration>
                         <xs:enumeration value="1">
                             <xs:annotation>
-                                <xs:documentation>Empresa enquadrada nos arts. 7º a 9º da Lei 12.546/2011</xs:documentation>
+                                <xs:documentation>Empresa enquadrada nos critérios da legislação vigente</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="2">
+                            <xs:annotation>
+                                <xs:documentation>Município enquadrado nos critérios da legislação vigente</xs:documentation>
                             </xs:annotation>
                         </xs:enumeration>
                     </xs:restriction>

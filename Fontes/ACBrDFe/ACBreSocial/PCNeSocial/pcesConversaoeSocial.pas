@@ -1916,12 +1916,12 @@ end;
 
 function eSIndDesFolhaToStr(const t:tpIndDesFolha ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString0_1 );
+  result := EnumeradoToStr2(t,TGenericosString0_2 );
 end;
 
 function eSStrToIndDesFolha(var ok: boolean; const s: string): TpIndDesFolha;
 begin
-  result := TpIndDesFolha( StrToEnumerado2(ok , s, TGenericosString0_1 ) );
+  result := TpIndDesFolha( StrToEnumerado2(ok , s, TGenericosString0_2 ) );
 end;
 
 function eSIndOptRegEletronicoToStr(const t:TpIndOptRegEletron ): string;

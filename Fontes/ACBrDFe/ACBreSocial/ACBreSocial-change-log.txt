@@ -52,6 +52,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/02/2024
+-- pcesConversaoeSocial --
+[*] Corrigidas eSIndDesFolhaToStr e eSStrToIndDesFolha para considerarem a faixa de 0..2 do enumerado para indDesFolha
+-- evtInfoEmpregador-v_S_01_02_00.xsd --
+[*] Corrigidos schemas para considerarem a faixa de 0..2 de indDesFolha
+  Por: Hudson G Leite
+
 29/01/2024
 -- pcesS1210.pas, pcesS5002.pas, Frm_ACBreSocial --
 [-] Corrigido campo regANS, do evento S-1210, convertendo para string e permitindo o preenchimento de zeros à esquerda

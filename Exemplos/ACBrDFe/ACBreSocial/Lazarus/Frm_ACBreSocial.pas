@@ -421,8 +421,8 @@ begin
           if VersaoDFx <= ve02_05_00 then
             natJurid := '0001';
           indCoop := tpIndCoop(1);
-          indConstr := tpIndConstr(2);
-          indDesFolha := tpIndDesFolha(1);
+          indConstr := tpIndConstr(1);
+          indDesFolha := tpIndDesFolha(2);
           indPorte := tpNao;
           indOptRegEletron := tpIndOptRegEletron(1);
 

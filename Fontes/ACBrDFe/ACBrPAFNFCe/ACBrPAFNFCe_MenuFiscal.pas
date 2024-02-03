@@ -76,8 +76,8 @@ type
 implementation
 
 uses
+  ACBrDFeConsts,
   pcnConversao,
-  pcnConsts,
   pcnGerador,
   synacode,
   ACBrUtil.Strings,

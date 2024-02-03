@@ -53,6 +53,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/02/2024
+-- pcesS1000 --
+[*] Alterado valor padrão do indTribFolhaPisCofins quando não existir a tag, na leitura do ini do S1000, considerando em branco pois o campo só deve ser preenchido quando for "S"
+  Por: IMATECH
 -- pcesConversaoeSocial --
 [*] Corrigidas eSIndDesFolhaToStr e eSStrToIndDesFolha para considerarem a faixa de 0..2 do enumerado para indDesFolha
 -- evtInfoEmpregador-v_S_01_02_00.xsd --

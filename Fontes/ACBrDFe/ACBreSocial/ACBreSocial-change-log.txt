@@ -53,6 +53,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/02/2024
+-- Diversos --
+[*] Refactoring visando deixar de usar a unit pcnConsts.
+  Por: Italo Giurizzato Junior
 -- pcesS1000 --
 [*] Alterado valor padrão do indTribFolhaPisCofins quando não existir a tag, na leitura do ini do S1000, considerando em branco pois o campo só deve ser preenchido quando for "S"
   Por: IMATECH

@@ -56,7 +56,8 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, pcnGerador, pcnConsts,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type

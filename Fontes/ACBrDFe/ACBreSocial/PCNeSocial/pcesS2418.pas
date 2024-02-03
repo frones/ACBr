@@ -54,7 +54,7 @@ uses
   {$ELSE}
    Contnrs,
   {$IFEND}
-  ACBrBase, pcnConversao, ACBrUtil.Strings, pcnConsts,
+  ACBrBase, pcnConversao, ACBrUtil.Strings,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type

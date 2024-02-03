@@ -59,12 +59,12 @@ uses
 		System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, 
+  ACBrDFeConsts,
+  pcnConversao,
 	pcnGerador,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
-  pcnConsts,
   pcesCommon, 
 	pcesConversaoeSocial, 
 	pcesGerador;

@@ -59,7 +59,7 @@ uses
    Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao, pcnConsts,
+  pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type

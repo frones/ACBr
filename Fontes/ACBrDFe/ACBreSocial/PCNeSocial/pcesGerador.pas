@@ -51,7 +51,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, variants,
-  pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar, pcnConsts,
+  pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar,
+  ACBrDFeConsts,
   pcesCommon, pcesConversaoeSocial;
 
 type

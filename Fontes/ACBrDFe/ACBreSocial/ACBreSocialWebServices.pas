@@ -48,7 +48,8 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeWebService,
-  pcnLeitor, pcnConsts,
+  pcnLeitor,
+  ACBrDFeConsts,
   ACBreSocialLoteEventos, ACBreSocialConfiguracoes,
   pcesConversaoeSocial, pcesCommon, pcesRetEnvioLote, pcesRetConsultaLote,
   pcesConsultaIdentEvt, pcesRetConsultaIdentEvt, pcesRetDownloadEvt;

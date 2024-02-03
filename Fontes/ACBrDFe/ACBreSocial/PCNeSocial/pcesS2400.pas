@@ -58,7 +58,6 @@ uses
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
-  pcnConsts,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type

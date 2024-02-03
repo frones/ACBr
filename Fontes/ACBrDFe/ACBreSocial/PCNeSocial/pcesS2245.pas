@@ -55,7 +55,9 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, pcnConversao, pcnGerador, pcnConsts,
+  ACBrBase,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type

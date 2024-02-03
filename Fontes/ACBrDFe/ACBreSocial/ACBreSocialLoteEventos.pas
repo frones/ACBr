@@ -126,8 +126,7 @@ uses
   DateUtils,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
-  ACBreSocial, 
-	pcnConsts;
+  ACBreSocial;
 
 { TLoteEventos }
 

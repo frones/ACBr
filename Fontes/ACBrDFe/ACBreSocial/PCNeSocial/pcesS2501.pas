@@ -54,7 +54,9 @@ uses
   {$ELSE}
    Contnrs,
   {$IFEND}
-  ACBrBase, pcnConversao, pcnConsts,
+  ACBrBase,
+  ACBrDFeConsts,
+  pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador,
   ACBrUtil.Strings, ACBrUtil.DateTime;
 

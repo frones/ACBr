@@ -37,7 +37,9 @@ unit pcnSATConsulta;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts;
+  SysUtils, Classes,
+  pcnConversao,
+  pcnGerador;
 
 type
 
@@ -66,9 +68,16 @@ type
     property chaveSeguranca : String           read FchaveSeguranca write FchaveSeguranca;
   end;
 
+resourcestring
+  DSC_NSERIESAT = 'Número de série do equipamento SAT';
+  DSC_DHINICIAL = 'Data e hora incial';
+  DSC_DHFINAL = 'Data e Hora Final';
+  DSC_CHAVESEGURANCA = 'Chave de segurança';
+
 implementation
 
-Uses pcnAuxiliar;
+uses
+  pcnAuxiliar;
 
 { TSATConsulta }
 

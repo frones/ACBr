@@ -46,7 +46,6 @@ uses
   ACBrBase,
   pcnConversao, pcnGerador,
   ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime,
-  pcnConsts,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type

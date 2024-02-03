@@ -56,7 +56,6 @@ uses
   pcnGerador,
   ACBrReinfConfiguracoes, 
   ACBrReinfEventos, 
-  pcnConsts,
   pcnCommonReinf, 
   pcnConversaoReinf;
 

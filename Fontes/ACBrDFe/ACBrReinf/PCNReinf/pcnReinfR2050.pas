@@ -46,7 +46,7 @@ uses
   ACBrBase,
   pcnConversao, pcnGerador,
   ACBrUtil.Base, ACBrUtil.FilesIO,
-  pcnConsts,
+  ACBrDFeConsts,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type

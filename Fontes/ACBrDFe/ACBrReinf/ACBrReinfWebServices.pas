@@ -40,7 +40,8 @@ uses
   Classes, SysUtils,
   ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.Base,
   ACBrDFe, ACBrDFeWebService,
-  pcnLeitor, pcnConsts,
+  pcnLeitor,
+  ACBrDFeConsts,
   ACBrReinfLoteEventos, ACBrReinfConfiguracoes,
   pcnConversaoReinf, pcnCommonReinf, pcnReinfRetEventos, pcnReinfConsulta,
   pcnReinfRetConsulta, pcnReinfRetConsulta_R9011, pcnReinfRetConsulta_R9015;

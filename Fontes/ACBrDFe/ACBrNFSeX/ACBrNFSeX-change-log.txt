@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/02/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Boituva/SP trocou de provedor, agora é Pronim versão 2.03.
+  Por: Antonio Donizete Ribeiro Junior
+[*] A cidade de Serra Alta/SC trocou de provedor, agora é IPM.
+  Por: C4Dev
+
 01/02/2024
 -- ACBrNFSeXServicos --
 [*] A cidade de Aracruz/ES trocou a URL e a versão o provedor é o mesmo.

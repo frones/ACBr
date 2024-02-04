@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2024
+[+] Adicionado as constantes XML_V01 e ENCODING_UTF8_STD.
+  Por: Italo Giurizzato Junior
+
 31/01/2024
 -- ACBrDFe/ACBrDFeWebService --
 [*] Removido a unit pcnConsts e colocado no lugar a ACBrDFeConsts.

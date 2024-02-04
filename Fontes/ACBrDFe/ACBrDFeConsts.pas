@@ -39,7 +39,9 @@ interface
 const
   CODIGO_BRASIL = 1058;
   CMUN_EXTERIOR = 9999999;
+  XML_V01 = '?xml version="1.0"?';
   ENCODING_UTF8 = '?xml version="1.0" encoding="UTF-8"?';
+  ENCODING_UTF8_STD = '?xml version="1.0" encoding="UTF-8" standalone="no"?';
   XMUN_EXTERIOR = 'EXTERIOR';
   UF_EXTERIOR = 'EX';
 

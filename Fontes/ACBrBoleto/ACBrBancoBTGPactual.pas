@@ -66,6 +66,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
     procedure GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa: TStringList); override;
     procedure LerRetorno400(ARetorno: TStringList); override;
+    function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
   end;
 
 implementation
@@ -435,6 +436,41 @@ begin
     toRetornoConfirmacaoAlteracaoValorMinimoOuPercentual:           Result := '64';
     toRetornoConfirmacaoAlteracaoValorMaximoOuPercentual:           Result := '65';
   end;
+end;
+
+function TACBrBancoBTGPactual.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+var
+ CodOcorrencia: Integer;
+begin
+  Result := '';
+  CodOcorrencia := StrToIntDef(TipoOcorrenciaToCod(TipoOcorrencia),0);
+  case CodOcorrencia of
+    02: Result:= '02 – Entrada confirmada';
+    03: Result:= '03 – Entrada Rejeitada';
+    04: Result:= '04 – Transferência de Carteira/Entrada';
+    05: Result:= '05 – Transferência de Carteira/Baixa';
+    06: Result:= '06 – Liquidação';
+    09: Result:= '09 – Baixa';
+    11: Result:= '11 – Títulos em Carteira (em ser)';
+    12: Result:= '12 – Confirmação Recebimento Instrução de Abatimento';
+    13: Result:= '13 – Confirmação Recebimento Instrução de Cancelamento Abatimento';
+    14: Result:= '14 – Confirmação Recebimento Instrução Alteração de Vencimento';
+    15: Result:= '15 – Franco de Pagamento';
+    17: Result:= '17 – Liquidação Após Baixa ou Liquidação Título Não Registrado';
+    19: Result:= '19 – Confirmação Recebimento Instrução de Protesto';
+    20: Result:= '20 – Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
+    23: Result:= '23 – Remessa a Cartório';
+    24: Result:= '24 – Retirada de Cartório e Manutenção em Carteira';
+    25: Result:= '25 – Protestado e Baixado';
+    26: Result:= '26 – Instrução Rejeitada';
+    27: Result:= '27 – Confirmação do Pedido de Alteração de Outros Dados';
+    28: Result:= '28 – Débito de Tarifas/Custas';
+    29: Result:= '29 – Ocorrências do Sacado';
+    30: Result:= '30 – Alteração de Dados Rejeitada';
+    44: Result:= '44 – Título pago com cheque devolvido';
+    50: Result:= '50 – Título pago com cheque pendente de compensação';
+  end;
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoBTGPactual.MontaInstrucoesCNAB240(ATitulo: TACBrTitulo;

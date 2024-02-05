@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2024
+-- ACBrBancoBTGPactual --
+[-] #TK-5079 Criado override da função TipoOcorrenciaToDescricao para retornar os motivos da ocorrencia.
+  Por: Daniel de Morais InfoCotidiano
+
 30/01/2024
 -- ACBrBancoBradesco --
 [-] #TK-5059 Tratamento da leitura do EMV

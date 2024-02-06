@@ -44,6 +44,8 @@ Símbolo : Significado
 
 06/02/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Pedra Preta/MT trocou de provedor, agora é Fiorilli na versão 2.00
+  Por: Catrini
 [*] Adicioa parâmetro para não formatar ItemListaServico para Santo Andre/SP
   Por: João Frederico de Souza
 [*] A cidade de Ouro/SC trocou de provedor, agora é IPM versão 1.00

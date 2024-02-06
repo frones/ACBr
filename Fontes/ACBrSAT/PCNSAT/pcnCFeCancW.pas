@@ -41,7 +41,10 @@ uses
   ACBrUtil.FilesIO,
   ACBrDFeConsts,
   ACBrCFeConsts,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnCFeCanc;
+  pcnAuxiliar,
+  pcnConversao,
+  pcnGerador,
+  pcnCFeCanc;
 
 type
 

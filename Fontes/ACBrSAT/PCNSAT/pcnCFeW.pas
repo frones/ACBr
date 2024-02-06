@@ -39,7 +39,9 @@ uses
   SysUtils, Classes,
   ACBrDFeConsts,
   ACBrCFeConsts,
-  pcnConversao, pcnGerador, pcnCFe;
+  pcnConversao,
+  pcnGerador,
+  pcnCFe;
 
 type
 

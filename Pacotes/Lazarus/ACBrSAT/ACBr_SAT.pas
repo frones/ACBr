@@ -4,13 +4,14 @@
 
 unit ACBr_SAT;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrSATReg, ACBrSAT, ACBrSATClass, ACBrSATDinamico_cdecl, pcnCFe, pcnCFeR, 
   pcnCFeW, pcnCFeCanc, pcnCFeCancR, pcnCFeCancW, pcnRede, pcnRedeR, pcnRedeW, 
   ACBrSATDinamico_stdcall, ACBrSATMFe_integrador, ACBrSATExtratoClass, 
-  ACBrSATExtratoReportClass, LazarusPackageIntf;
+  ACBrSATExtratoReportClass, ACBrCFeConsts, LazarusPackageIntf;
 
 implementation
 

@@ -46,6 +46,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+05/02/2024
+-- Diversos --
+[*] Refactoring visando deixar de usar a unit pcnConsts.
+  Por: Italo Giurizzato Junior
+
 20/04/2023
 [*] TK-3849 adicionado o campo cAut (Código de Autorização), mas no componente ACBrSAT não possui esse campo;
 https://www.projetoacbr.com.br/forum/topic/71785-campo-caut-layout-009-mfe/

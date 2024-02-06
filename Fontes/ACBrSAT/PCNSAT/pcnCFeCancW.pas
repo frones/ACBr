@@ -39,7 +39,9 @@ uses
   SysUtils, Classes,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts, pcnCFeCanc;
+  ACBrDFeConsts,
+  ACBrCFeConsts,
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnCFeCanc;
 
 type
 
@@ -143,7 +145,7 @@ begin
     if not ValidarCodigoUF(CFeCanc.ide.cUF) then
       Gerador.wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
-    Gerador.wCampo(tcStr, 'B03', 'cNF      ', 06, 06, 1, IntToStrZero(CFeCanc.ide.cNF, 6), DSC_CNF);
+    Gerador.wCampo(tcStr, 'B03', 'cNF      ', 06, 06, 1, IntToStrZero(CFeCanc.ide.cNF, 6), DSC_CDF);
     Gerador.wCampo(tcInt, 'B04', 'mod      ', 02, 02, 1, CFeCanc.ide.modelo, DSC_MOD);
     Gerador.wCampo(tcInt, 'B05', 'nserieSAT', 09, 09, 1, CFeCanc.ide.nserieSAT, DSC_SERIE);
     Gerador.wCampo(tcInt, 'B06', 'nCFe     ', 06, 06, 1, IntToStrZero(CFeCanc.ide.nCFe,6), DSC_NCFE);

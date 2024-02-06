@@ -37,7 +37,9 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnConsts, pcnCFe;
+  ACBrDFeConsts,
+  ACBrCFeConsts,
+  pcnConversao, pcnGerador, pcnCFe;
 
 type
 
@@ -167,7 +169,7 @@ begin
     if not ValidarCodigoUF(CFe.ide.cUF) then
       Gerador.wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
-    Gerador.wCampo(tcInt, 'B03', 'cNF      ', 06, 06, 0, CFe.ide.cNF, DSC_CNF);
+    Gerador.wCampo(tcInt, 'B03', 'cNF      ', 06, 06, 0, CFe.ide.cNF, DSC_CDF);
     Gerador.wCampo(tcInt, 'B04', 'mod      ', 02, 02, 0, CFe.ide.modelo, DSC_MOD);
     Gerador.wCampo(tcInt, 'B05', 'nserieSAT', 09, 09, 0, CFe.ide.nserieSAT, DSC_SERIE);
     Gerador.wCampo(tcInt, 'B06', 'nCFe     ', 06, 06, 0, IntToStrZero(CFe.ide.nCFe,6), DSC_NCFE);

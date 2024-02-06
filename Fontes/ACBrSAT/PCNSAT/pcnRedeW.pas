@@ -37,7 +37,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnConsts, pcnRede;
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador, pcnRede;
 
 type
 

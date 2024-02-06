@@ -3757,11 +3757,12 @@ begin
                       '-procEventoNFe.xml';
       end;
 
-      if NaoEstaVazio(NomeArq) then
-        FlistaArqs.Add( FNomeArq );
-
       aPath := GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]);
-      FretDistDFeInt.docZip.Items[I].NomeArq := aPath + FNomeArq;
+
+      if NaoEstaVazio(NomeArq) then
+        FlistaArqs.Add(aPath + PathDelim + FNomeArq);
+
+      FretDistDFeInt.docZip.Items[I].NomeArq := aPath + PathDelim + FNomeArq;
 
       if (FPConfiguracoesNFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
       begin

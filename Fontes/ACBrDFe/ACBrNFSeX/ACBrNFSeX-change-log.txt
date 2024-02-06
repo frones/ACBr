@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2024
+-- ACBrNFSeXServicos --
+[*] Adiciona parâmetro para não formatar ItemServico para Suzano/SP
+  Por: Adauri A. Camacho Jr.
+
 03/02/2024
 -- ACBrNFSeXServicos --
 [*] A cidade de Boituva/SP trocou de provedor, agora é Pronim versão 2.03.

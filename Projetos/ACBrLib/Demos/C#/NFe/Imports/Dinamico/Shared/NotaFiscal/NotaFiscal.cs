@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
@@ -188,7 +189,7 @@ namespace ACBrLib.NFe
                 if (produto.ICMSUFDEST.pICMSInterPart.HasValue)
                     iniData.WriteToIni(produto.ICMSUFDEST, $"ICMSUFDEST{i + 1:000}");
 
-                if (produto.IPI.qSelo.HasValue)
+                if (!String.IsNullOrEmpty(produto.IPI.cEnq))
                     iniData.WriteToIni(produto.IPI, $"IPI{i + 1:000}");
 
                 if (produto.II.vBC.HasValue)

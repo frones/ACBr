@@ -48,6 +48,8 @@ uses
   SysUtils;
 
 const
+  NAME_SPACE = 'xmlns="http://www.portalfiscal.inf.br/nfe"';
+
   DSC_AAMM = 'Ano e Mês';
   DSC_ANOFAB = 'Ano de Fabricação';
   DSC_ANOMOD = 'Ano do Modelo de Fabricação';
@@ -287,6 +289,83 @@ const
   DSC_VICMSMONOOP = 'Valor do ICMS da operação';
   DSC_QBCMONORET = 'Quantidade tributada retida anteriormente';
   DSC_PDIF = 'Percentual do diferimento';
+
+  DSC_VICMS = 'Valor do ICMS';
+  DSC_VST = 'Valor TOTAL Icms substituição Tributária';
+  DSC_NATOP = 'Descrição da Natureza da Operação';
+  DSC_INDPAG = 'Indicador da forma de pagamento';
+  DSC_TPNF = 'Tipo do Documento Fiscal';
+  DSC_CMUNFG = 'Código do Município FG';
+  DSC_REFNFE = 'Chave de acesso das NF-e referenciadas';
+  DSC_REFCTE = 'Chave de acesso do CT-e referenciado';
+  DSC_IEST = 'Inscrição Estadual do Substituto tributário';
+  DSC_CNAE = 'Classificação Nacional de Atividades Econômicas';
+  DSC_ISUF = 'Inscrição na SUFRAMA';
+  DSC_INFADPROD = 'Informações adicionais do Produto';
+  DSC_NITEM = 'Numero do item';
+  DSC_CPROD = 'Código do produto ou serviço';
+  DSC_CEAN = 'Código de Barra do Item';
+  DSC_XPROD = 'Descrição do Produto ou Serviço';
+  DSC_NCM = 'Código NCM';
+  DSC_CEST = 'Código Identificador da Substitução Tributária';
+  DSC_UCOM = 'Unidade Comercial';
+  DSC_QCOM = 'Quantidade Comercial';
+  DSC_VUNCOM = 'Valor Unitário de Comercialização';
+  DSC_VPROD = 'Valor Total Bruto dos Produtos ou Serviços';
+  DSC_VFRETE = 'Valor Total do Frete';
+  DSC_VDESC = 'Valor do desconto';
+  DSC_VOUTRO = 'Outras Despesas Acessórias';
+  DSC_NITEMPED = 'Item do Pedido de Compra da DI – adição';
+  DSC_VAFRMM = 'Valor da AFRMM';
+  DSC_CHASSI = 'Número do chassi';
+  DSC_CCOR = 'Cor do Veículo';
+  DSC_XCOR = 'Descrição da Cor';
+  DSC_NSERIE = 'Número de série';
+  DSC_TPVEIC = 'Tipo de Veículo';
+  DSC_CMOD = 'Modelo do Veículo';
+  DSC_LOTA   = 'Indicador de lotação';
+  DSC_QBCPROD = 'BC da CIDE';
+  DSC_VALIQPROD = 'Valor da alíquota (em reais)';
+  DSC_VBCICMS = 'BC do ICMS';
+  DSC_ORIG = 'Origem da mercadoria';
+  DSC_VBC = 'Valor da BC do ICMS';
+  DSC_PICMS = 'Alíquota do imposto';
+  DSC_PREDBC = 'Percentual da Redução de BC';
+  DSC_VBCST = 'Valor da BC do ICMS ST';
+  DSC_CSOSN = 'Código de Situação da Operação – Simples Nacional';
+  DSC_PPIS = 'Alíquota do PIS (em percentual)';
+  DSC_VPIS = 'Valor do PIS';
+  DSC_PISOUTR = 'Grupo PIS outras operações';
+  DSC_PCOFINS = 'Alíquota da COFINS (em percentual)';
+  DSC_VCOFINS = 'Valor do COFINS';
+  DSC_COFINSST = 'Grupo de COFINS Substituição Tributária';
+  DSC_VBCISS = 'Valor da Base de Cálculo do ISSQN';
+  DSC_VALIQ = 'Alíquota';
+  DSC_VISSQN = 'Valor do Imposto sobre Serviço de Qualquer Natureza';
+  DSC_CLISTSERV = 'Lista Prestação de Serviços';
+  DSC_VDESCINCOND = 'Valor Desconto Incondicionado';
+  DSC_VDESCCOND = 'Valor Desconto Condicionado';
+  DSC_VISSRET = 'Valor Retenção ISS';
+  DSC_INDISS = 'Indicador da Exigibilidade do ISS';
+  DSC_NPROCESSO = 'Número do Processo';
+  DSC_INDINCENTIVO = 'Indicador de Incentivo Fiscal';
+  DSC_VISS = 'Valor do Imposto sobre Serviço';
+  DSC_NFAT = 'Número da fatura';
+  DSC_VORIG = 'Valor Original da Fatura';
+  DSC_VLIQ = 'Valor Líquido da Fatura';
+  DSC_NDUP = 'Número da duplicata';
+  DSC_DVENC = 'Data de vencimento';
+  DSC_VDUP = 'Valor da duplicata';
+  DSC_VAGAO = 'Identificação do vagão';
+  DSC_PLACA = 'Placa do Veículo';
+  DSC_NLACRE = 'Número dos Lacres';
+  DSC_QTDE = 'Quantidade';
+  DSC_TPAG = 'Forma de Pagamento';
+  DSC_XPAG = 'Descrição da forma de Pagamento';
+  DSC_VPAG = 'Valor do Pagamento';
+  DSC_TPINTEGRA = 'Tipo de Integração para pagamento';
+  DSC_TBAND = 'Bandeira da Operadora de Cartão';
+  DSC_CAUT = 'Número da Autorização';
 
 implementation
 

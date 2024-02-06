@@ -43,12 +43,17 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+05/02/2024
+-- Diversos --
+[*] Refactoring visando deixar de usar a unit pcnConsts.
+  Por: Italo Giurizzato Junior
+
 15/12/2023
 --- ACBrDANFCeFortesFr,ACBrDANFCeFortesFrA4  ---
 [*]TK-4814 Substituida a função para formatação de DataHora do NFCe, deixado como no modelo NFe
 https://www.projetoacbr.com.br/forum/topic/75361-mascara-de-impress%C3%A3o-da-data-na-nfc-e-na-acbrlib-usando-em-api-com-iis-em-projeto-c/?_rid=127195
 Por: Daniel Morais
-
 
 11/12/2023
 -- ACBrNFeNotasFiscais --

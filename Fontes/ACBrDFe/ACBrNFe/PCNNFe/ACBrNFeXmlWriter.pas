@@ -179,7 +179,9 @@ implementation
 uses
   variants, dateutils,
   pcnConversaoNFe, ACBrValidador, pcnAuxiliar,
-  ACBrDFeUtil, pcnConsts, ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.DateTime,
+  ACBrDFeUtil,
+  ACBrDFeConsts,
+  ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.DateTime,
   ACBrNFe;
 
 constructor TNFeXmlWriter.Create(AOwner: TNFe);
@@ -397,7 +399,7 @@ begin
     wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, 'B03', 'cNF', 08, 08, 1,
-    IntToStrZero(ExtrairCodigoChaveAcesso(NFe.infNFe.ID), 8), DSC_CNF));
+    IntToStrZero(ExtrairCodigoChaveAcesso(NFe.infNFe.ID), 8), DSC_CDF));
   Result.AppendChild(AddNode(tcStr, 'B04', 'natOp', 01, 60, 1,
     NFe.ide.natOp, DSC_NATOP));
 
@@ -409,7 +411,7 @@ begin
     NFe.ide.modelo, DSC_MOD));
   Result.AppendChild(AddNode(tcInt, 'B07', 'serie', 01, 03, 1,
     NFe.ide.serie, DSC_SERIE));
-  Result.AppendChild(AddNode(tcInt, 'B08', 'nNF', 01, 09, 1, NFe.ide.nNF, DSC_NNF));
+  Result.AppendChild(AddNode(tcInt, 'B08', 'nNF', 01, 09, 1, NFe.ide.nNF, DSC_NDF));
 
   if NFe.infNFe.Versao >= 3 then
   begin
@@ -575,7 +577,7 @@ begin
   Result.AppendChild(AddNode(tcInt, 'B19', 'serie', 01, 03, 1,
     NFe.ide.NFref[i].RefNF.serie, DSC_SERIE));
   Result.AppendChild(AddNode(tcInt, 'B20', 'nNF', 01, 09, 1,
-    NFe.Ide.NFref[i].RefNF.nNF, DSC_NNF));
+    NFe.Ide.NFref[i].RefNF.nNF, DSC_NDF));
 end;
 
 function TNFeXmlWriter.GerarRefNFP(const i: integer): TACBrXmlNode;
@@ -601,7 +603,7 @@ begin
   Result.AppendChild(AddNode(tcInt, 'B20g', 'serie', 01, 03, 1,
     NFe.ide.NFref[i].RefNFP.serie, DSC_SERIE));
   Result.AppendChild(AddNode(tcInt, 'B20h', 'nNF', 01, 09, 1,
-    NFe.Ide.NFref[i].RefNFP.nNF, DSC_NNF));
+    NFe.Ide.NFref[i].RefNFP.nNF, DSC_NDF));
 end;
 
 function TNFeXmlWriter.GerarIdeNFrerefCTe(const i: integer): TACBrXmlNode;
@@ -645,7 +647,7 @@ begin
       wAlerta('C17', 'IE', DSC_IE, ERR_MSG_VAZIO)
     else
     begin
-      if not pcnAuxiliar.ValidarIE(NFe.Emit.IE, CodigoParaUF(NFe.Ide.cUF)) then
+      if not ValidarIE(NFe.Emit.IE, CodigoParaUF(NFe.Ide.cUF)) then
         wAlerta('C17', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -685,7 +687,7 @@ begin
     wAlerta('C10', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
   Result.AppendChild(AddNode(tcStr, 'C11', 'xMun', 02, 60, 1, xMun, DSC_XMUN));
   Result.AppendChild(AddNode(tcStr, 'C12', 'UF', 02, 02, 1, xUF, DSC_UF));
-  if not pcnAuxiliar.ValidarUF(xUF) then
+  if not ValidarUF(xUF) then
     wAlerta('C12', 'UF', DSC_UF, ERR_MSG_INVALIDO);
   Result.AppendChild(AddNode(tcInt, 'C13', 'CEP', 08, 08, 1,
     NFe.Emit.enderEmit.CEP, DSC_CEP));
@@ -716,7 +718,7 @@ begin
       OnlyNumber(NFe.Avulsa.fone), DSC_FONE));
     Result.AppendChild(AddNode(tcStr, 'D07', 'UF', 02, 02, 1,
       NFe.Avulsa.UF, DSC_UF));
-    if not pcnAuxiliar.ValidarUF(NFe.Avulsa.UF) then
+    if not ValidarUF(NFe.Avulsa.UF) then
       wAlerta('D07', 'UF', DSC_UF, ERR_MSG_INVALIDO);
     Result.AppendChild(AddNode(tcStr, 'D08', 'nDAR', 01, 60, 0,
       NFe.Avulsa.nDAR, DSC_nDAR));
@@ -792,7 +794,7 @@ begin
 
       if (Opcoes.ValidarInscricoes) and (NFe.Dest.IE <> '') and
         (NFe.Dest.IE <> 'ISENTO') then
-        if not pcnAuxiliar.ValidarIE(NFe.Dest.IE, UF) then
+        if not ValidarIE(NFe.Dest.IE, UF) then
           wAlerta('E17', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -830,7 +832,7 @@ begin
     wAlerta('E10', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
   Result.AppendChild(AddNode(tcStr, 'E11', 'xMun', 02, 60, 1, xMun, DSC_XMUN));
   Result.AppendChild(AddNode(tcStr, 'E12', 'UF', 02, 02, 1, xUF, DSC_UF));
-  if not pcnAuxiliar.ValidarUF(xUF) then
+  if not ValidarUF(xUF) then
     wAlerta('E12', 'UF', DSC_UF, ERR_MSG_INVALIDO);
   Result.AppendChild(AddNode(tcInt, 'E13', 'CEP', 08, 08, 0,
     NFe.Dest.enderDest.CEP, DSC_CEP));
@@ -872,7 +874,7 @@ begin
       wAlerta('F07', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
     Result.AppendChild(AddNode(tcStr, 'F08', 'xMun', 02, 60, 1, xMun, DSC_XMUN));
     Result.AppendChild(AddNode(tcStr, 'F09', 'UF', 02, 02, 1, xUF, DSC_UF));
-    if not pcnAuxiliar.ValidarUF(xUF) then
+    if not ValidarUF(xUF) then
       wAlerta('F09', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
     Result.AppendChild(AddNode(tcInt, 'F10', 'CEP', 08, 08, 0,
@@ -918,7 +920,7 @@ begin
       wAlerta('F07', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
     Result.AppendChild(AddNode(tcStr, 'G08', 'xMun', 02, 60, 1, xMun, DSC_XMUN));
     Result.AppendChild(AddNode(tcStr, 'G09', 'UF', 02, 02, 1, xUF, DSC_UF));
-    if not pcnAuxiliar.ValidarUF(NFe.Entrega.UF) then
+    if not ValidarUF(NFe.Entrega.UF) then
       wAlerta('G09', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
     Result.AppendChild(AddNode(tcInt, 'G10', 'CEP', 08, 08, 0,
@@ -1166,7 +1168,7 @@ begin
       60, 1, NFe.Det[i].Prod.DI[j].xLocDesemb, DSC_XLOCDESEMB));
     Result[j].AppendChild(AddNode(tcStr, 'I22', 'UFDesemb', 02,
       02, 1, NFe.Det[i].Prod.DI[j].UFDesemb, DSC_UFDESEMB));
-    if not pcnAuxiliar.ValidarUF(NFe.Det[i].Prod.DI[j].UFDesemb) then
+    if not ValidarUF(NFe.Det[i].Prod.DI[j].UFDesemb) then
       wAlerta('I22', 'UFDesemb', DSC_UFDESEMB, ERR_MSG_INVALIDO);
     Result[j].AppendChild(AddNode(tcDat, 'I23', 'dDesemb', 10,
       10, 1, NFe.Det[i].Prod.DI[j].dDesemb, DSC_DDESEMB));
@@ -1194,7 +1196,7 @@ begin
       Result[j].AppendChild(AddNode(tcStr, 'I23e', 'UFTerceiro',
         02, 02, 0, NFe.Det[i].Prod.DI[j].UFTerceiro, DSC_UF));
       if NFe.Det[i].Prod.DI[j].UFTerceiro <> '' then
-        if not pcnAuxiliar.ValidarUF(NFe.Det[i].Prod.DI[j].UFTerceiro) then
+        if not ValidarUF(NFe.Det[i].Prod.DI[j].UFTerceiro) then
           wAlerta('I23e', 'UFTerceiro', DSC_UF, ERR_MSG_INVALIDO);
     end;
 
@@ -1541,7 +1543,7 @@ begin
       Result.AppendChild(AddNode(tcStr, 'L120', 'UFCons', 02, 02, 1,
         NFe.Det[i].Prod.comb.UFcons, DSC_UFCONS));
 
-      if not pcnAuxiliar.ValidarUF(NFe.Det[i].Prod.comb.UFcons) then
+      if not ValidarUF(NFe.Det[i].Prod.comb.UFcons) then
         wAlerta('L120', 'UFcons', DSC_UFCONS, ERR_MSG_INVALIDO);
 
       Result.AppendChild(GerarDetProdCombCIDE(i));
@@ -1659,7 +1661,7 @@ begin
       15, 1, NFe.Det[i].Prod.comb.ICMSCons.vICMSSTCons, DSC_VICMSSTCONS));
     Result.AppendChild(AddNode(tcStr, 'L120', 'UFCons', 02,
       02, 1, NFe.Det[i].Prod.comb.ICMSCons.UFcons, DSC_UFCONS));
-    if not pcnAuxiliar.ValidarUF(NFe.Det[i].Prod.comb.ICMSCons.UFcons) then
+    if not ValidarUF(NFe.Det[i].Prod.comb.ICMSCons.UFcons) then
       wAlerta('L120', 'UFcons', DSC_UFCONS, ERR_MSG_INVALIDO);
   end;
 end;
@@ -3180,7 +3182,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, 'W13', 'vPIS', 01, 15, 1, NFe.Total.ICMSTot.vPIS, DSC_VPIS));
   Result.AppendChild(AddNode(tcDe2, 'W14', 'vCOFINS', 01, 15, 1, NFe.Total.ICMSTot.vCOFINS, DSC_VCOFINS));
   Result.AppendChild(AddNode(tcDe2, 'W15', 'vOutro', 01, 15, 1, NFe.Total.ICMSTot.vOutro, DSC_VOUTRO));
-  Result.AppendChild(AddNode(tcDe2, 'W16', 'vNF', 01, 15, 1, NFe.Total.ICMSTot.vNF, DSC_VNF));
+  Result.AppendChild(AddNode(tcDe2, 'W16', 'vNF', 01, 15, 1, NFe.Total.ICMSTot.vNF, DSC_VDF));
   Result.AppendChild(AddNode(tcDe2, 'W16a', 'vTotTrib', 01, 15, 0, NFe.Total.ICMSTot.vTotTrib, DSC_VTOTTRIB));
 end;
 
@@ -3397,7 +3399,7 @@ begin
      begin
        Result.AppendChild(AddNode(tcStr, 'X07', 'IE', 02, 14, 0, OnlyNumber(NFe.Transp.Transporta.IE), DSC_IE));
        if (Opcoes.ValidarInscricoes) and (NFe.Transp.Transporta.IE <> '') then
-         if not pcnAuxiliar.ValidarIE(NFe.Transp.Transporta.IE, NFe.Transp.Transporta.UF) then
+         if not ValidarIE(NFe.Transp.Transporta.IE, NFe.Transp.Transporta.UF) then
            wAlerta('X07', 'IE', DSC_IE, ERR_MSG_INVALIDO);
      end;
     Result.AppendChild(AddNode(tcStr, 'X08', 'xEnder', 01, 60, 0, NFe.Transp.Transporta.xEnder, DSC_XENDER));
@@ -3405,7 +3407,7 @@ begin
     if trim(NFe.Transp.Transporta.UF) <> '' then
      begin
        Result.AppendChild(AddNode(tcStr, 'X10', 'UF', 01, 02, 0, NFe.Transp.Transporta.UF, DSC_UF));
-       if not pcnAuxiliar.ValidarUF(NFe.Transp.Transporta.UF) then
+       if not ValidarUF(NFe.Transp.Transporta.UF) then
          wAlerta('X10', 'UF', DSC_UF, ERR_MSG_INVALIDO);
      end;
   end;
@@ -3445,7 +3447,7 @@ begin
     Result.AppendChild(AddNode(tcStr, 'X20', 'UF', 02, 02, 0, NFe.Transp.veicTransp.UF, DSC_UF));
 
     if NFe.Transp.veicTransp.UF <> '' then
-      if not pcnAuxiliar.ValidarUF(NFe.Transp.veicTransp.UF) then
+      if not ValidarUF(NFe.Transp.veicTransp.UF) then
         wAlerta('X20', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
     Result.AppendChild(AddNode(tcStr, 'X21', 'RNTC', 01, 20, 0, NFe.Transp.veicTransp.RNTC, DSC_RNTC));
@@ -3466,7 +3468,7 @@ begin
     Result[i].AppendChild(AddNode(tcStr, 'X24', 'UF', 02, 02, 0, NFe.Transp.Reboque[i].UF, DSC_UF));
 
     if NFe.Transp.Reboque[i].UF <> '' then
-      if not pcnAuxiliar.ValidarUF(NFe.Transp.Reboque[i].UF) then
+      if not ValidarUF(NFe.Transp.Reboque[i].UF) then
         wAlerta('X24', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
     Result[i].AppendChild(AddNode(tcStr, 'X25', 'RNTC', 01, 20, 0, NFe.Transp.Reboque[i].RNTC, DSC_RNTC));
@@ -3644,7 +3646,7 @@ begin
     begin
       Result := FDocument.CreateElement('exporta');
       Result.AppendChild(AddNode(tcStr, 'ZA02', 'UFSaidaPais', 02, 02, 1, NFe.exporta.UFSaidaPais, DSC_UFEMBARQ));
-      if not pcnAuxiliar.ValidarUF(NFe.exporta.UFSaidaPais) then
+      if not ValidarUF(NFe.exporta.UFSaidaPais) then
         wAlerta('ZA02', 'UFSaidaPais', DSC_UFEMBARQ, ERR_MSG_INVALIDO);
       Result.AppendChild(AddNode(tcStr, 'ZA03', 'xLocExporta', 01, 60, 1, NFe.exporta.xLocExporta, DSC_XLOCEMBARQ));
       Result.AppendChild(AddNode(tcStr, 'ZA04', 'xLocDespacho', 01, 60, 0, NFe.exporta.xLocDespacho, DSC_XLOCDESP));
@@ -3656,7 +3658,7 @@ begin
     begin
       Result := FDocument.CreateElement('exporta');
       Result.AppendChild(AddNode(tcStr, 'ZA02', 'UFEmbarq', 02, 02, 1, NFe.exporta.UFembarq, DSC_UFEMBARQ));
-      if not pcnAuxiliar.ValidarUF(NFe.exporta.UFembarq) then
+      if not ValidarUF(NFe.exporta.UFembarq) then
         wAlerta('ZA02', 'UFEmbarq', DSC_UFEMBARQ, ERR_MSG_INVALIDO);
       Result.AppendChild(AddNode(tcStr, 'ZA03', 'xLocEmbarq', 01, 60, 1, NFe.exporta.xLocEmbarq, DSC_XLOCEMBARQ));
     end;

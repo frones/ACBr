@@ -56,7 +56,8 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  pcnConversao, pcnGerador, pcnEventoNFe, pcnConsts, pcnNFeConsts, pcnSignature,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador, pcnEventoNFe, pcnNFeConsts, pcnSignature,
   ACBrBase;
 
 type
@@ -276,7 +277,7 @@ begin
             GerarDestNFCe(Evento.Items[i]);
             // No EPEC da NFC-e segundo o schema as TAGs vNF e vICMS estão fora do grupo dest e não
             // tem a TAG vST.
-            Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
+            Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VDF);
             Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
           end;
         end;
@@ -400,7 +401,7 @@ begin
 
   // No EPEC da NF-e segundo o schema as TAGs vNF, vICMS e vST estão dentro do grupo dest.
 
-  Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, EventoItem.InfEvento.detEvento.vNF, DSC_VNF);
+  Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, EventoItem.InfEvento.detEvento.vNF, DSC_VDF);
   Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, EventoItem.InfEvento.detEvento.vICMS, DSC_VICMS);
   Gerador.wCampo(tcDe2, 'P34', 'vST',   01, 15, 1, EventoItem.InfEvento.detEvento.vST, DSC_VST);
 

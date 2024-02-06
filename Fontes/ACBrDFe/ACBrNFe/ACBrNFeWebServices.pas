@@ -41,7 +41,9 @@ uses
   Classes, SysUtils, dateutils,
   ACBrDFe, ACBrDFeWebService,
   blcksock, synacode,
-  pcnNFe, pcnRetConsReciDFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnConsts,
+  pcnNFe, pcnRetConsReciDFe, pcnRetConsCad, pcnAuxiliar, pcnConversao,
+  ACBrDFeConsts,
+  pcnNFeConsts,
   pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe, 
   pcnAdmCSCNFCe, pcnRetAdmCSCNFCe, pcnDistDFeInt, pcnRetDistDFeInt, pcnRetEnvNFe,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes;

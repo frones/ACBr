@@ -196,9 +196,10 @@ type
 
 implementation
 
-Uses
+uses
+  ACBrDFeUtil,
+  ACBrDFeConsts,
   pcnConversaoNFe, pcnAuxiliar, pcnLayoutTXT,
-  ACBrDFeUtil, pcnConsts,
   ACBrUtil.Base, ACBrUtil.Strings,
   ACBrValidador;
 
@@ -388,7 +389,7 @@ begin
   if not ValidarCodigoUF(NFe.ide.cUF) then
     Gerador.wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, 'B03', 'cNF    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(NFe.infNFe.ID), 8), DSC_CNF);
+  Gerador.wCampo(tcStr, 'B03', 'cNF    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(NFe.infNFe.ID), 8), DSC_CDF);
   Gerador.wCampo(tcStr, 'B04', 'natOp  ', 01, 60, 1, NFe.ide.natOp, DSC_NATOP);
 
   if NFe.infNFe.Versao < 4 then
@@ -396,7 +397,7 @@ begin
 
   Gerador.wCampo(tcInt, 'B06', 'mod    ', 02, 02, 1, NFe.ide.modelo, DSC_MOD);
   Gerador.wCampo(tcInt, 'B07', 'serie  ', 01, 03, 1, NFe.ide.serie, DSC_SERIE);
-  Gerador.wCampo(tcInt, 'B08', 'nNF    ', 01, 09, 1, NFe.ide.nNF, DSC_NNF);
+  Gerador.wCampo(tcInt, 'B08', 'nNF    ', 01, 09, 1, NFe.ide.nNF, DSC_NDF);
 
   if NFe.infNFe.Versao >= 3 then
    begin
@@ -506,7 +507,7 @@ begin
   Gerador.wCampo(tcInt, 'B18', 'mod   ', 02, 02, 1, NFe.Ide.NFref[i].RefNF.Modelo, DSC_MOD);
   if not ValidarMod(NFe.Ide.NFref[i].RefNF.Modelo, NFe.infNFe.Versao) then Gerador.wAlerta('B18', 'mod', DSC_MOD, 'Modelo de documento inválido');
   Gerador.wCampo(tcInt, 'B19', 'serie ', 01, 03, 1, NFe.ide.NFref[i].RefNF.serie, DSC_SERIE);
-  Gerador.wCampo(tcInt, 'B20', 'nNF   ', 01, 09, 1, NFe.Ide.NFref[i].RefNF.nNF, DSC_NNF);
+  Gerador.wCampo(tcInt, 'B20', 'nNF   ', 01, 09, 1, NFe.Ide.NFref[i].RefNF.nNF, DSC_NDF);
   Gerador.wGrupo('/refNF');
 end;
 
@@ -521,7 +522,7 @@ begin
   Gerador.wCampo(tcStr, 'B20f', 'IE   ', 01, 14, 1, NFe.Ide.NFref[i].RefNFP.IE, DSC_IE);
   Gerador.wCampo(tcInt, 'B20f', 'mod   ', 02, 02, 1, NFe.Ide.NFref[i].RefNFP.Modelo, DSC_MOD);
   Gerador.wCampo(tcInt, 'B20g', 'serie ', 01, 03, 1, NFe.ide.NFref[i].RefNFP.serie, DSC_SERIE);
-  Gerador.wCampo(tcInt, 'B20h', 'nNF   ', 01, 09, 1, NFe.Ide.NFref[i].RefNFP.nNF, DSC_NNF);
+  Gerador.wCampo(tcInt, 'B20h', 'nNF   ', 01, 09, 1, NFe.Ide.NFref[i].RefNFP.nNF, DSC_NDF);
   Gerador.wGrupo('/refNFP');
 end;
 
@@ -2544,7 +2545,7 @@ begin
   Gerador.wCampo(tcDe2, 'W13', 'vPIS     ', 01, 15, 1, NFe.Total.ICMSTot.vPIS, DSC_VPIS);
   Gerador.wCampo(tcDe2, 'W14', 'vCOFINS  ', 01, 15, 1, NFe.Total.ICMSTot.vCOFINS, DSC_VCOFINS);
   Gerador.wCampo(tcDe2, 'W15', 'vOutro   ', 01, 15, 1, NFe.Total.ICMSTot.vOutro, DSC_VOUTRO);
-  Gerador.wCampo(tcDe2, 'W16', 'vNF      ', 01, 15, 1, NFe.Total.ICMSTot.vNF, DSC_VNF);
+  Gerador.wCampo(tcDe2, 'W16', 'vNF      ', 01, 15, 1, NFe.Total.ICMSTot.vNF, DSC_VDF);
   Gerador.wCampo(tcDe2, 'W16a', 'vTotTrib', 01, 15, 0, NFe.Total.ICMSTot.vTotTrib, DSC_VTOTTRIB);
   Gerador.wGrupo('/ICMSTot');
 end;

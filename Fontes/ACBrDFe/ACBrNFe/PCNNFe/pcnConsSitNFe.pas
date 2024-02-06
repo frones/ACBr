@@ -58,7 +58,9 @@ unit pcnConsSitNFe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts, pcnNFeConsts;
+  SysUtils, Classes,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador, pcnNFeConsts;
 
 type
 
@@ -109,7 +111,7 @@ begin
 
   Gerador.wGrupo('consSitNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'EP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'EP04', 'xServ', 009, 009, 1, 'CONSULTAR', DSC_XSERV);
+  Gerador.wCampo(tcStr, 'EP04', 'xServ', 009, 009, 1, 'CONSULTAR');
   Gerador.wCampo(tcEsp, 'EP05', 'chNFe', 044, 044, 1, FchNFe, DSC_CHNFe);
   Gerador.wGrupo('/consSitNFe');
 

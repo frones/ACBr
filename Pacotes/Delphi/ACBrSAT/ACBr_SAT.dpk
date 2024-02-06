@@ -40,6 +40,7 @@ contains
   ACBrSATDinamico_cdecl in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_cdecl.pas',
   ACBrSATDinamico_stdcall in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_stdcall.pas',
   ACBrSATExtratoClass in '..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoClass.pas',
+  ACBrCFeConsts in '..\..\..\Fontes\ACBrSAT\PCNSAT\ACBrCFeConsts.pas',
   pcnCFe in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFe.pas',
   pcnCFeR in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeR.pas',
   pcnCFeW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeW.pas',

@@ -50,6 +50,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/02/2024
+-- Diversos --
+[*] Refactoring visando deixar de usar a unit pcnConsts.
+  Por: Italo Giurizzato Junior
 -- ACBrBancoBTGPactual --
 [-] #TK-5079 Criado override da função TipoOcorrenciaToDescricao para retornar os motivos da ocorrencia.
   Por: Daniel de Morais InfoCotidiano

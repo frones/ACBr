@@ -35,7 +35,8 @@ interface
 
 uses
   Classes, SysUtils, DateUtils, Types, strutils,
-  pcnConsts, pcnConversao, pcnGerador, synacode,
+  ACBrDFeConsts,
+  pcnConversao, pcnGerador, synacode,
   ACBrBoletoWS,
   ACBrValidador,
   ACBrBoleto,

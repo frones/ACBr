@@ -94,7 +94,9 @@ const
 implementation
 
 uses
-  synacode, ACBrBoletoPcnConsts, strutils, pcnConsts, ACBrUtil.Strings,
+  synacode, ACBrBoletoPcnConsts, strutils,
+  ACBrDFeConsts,
+  ACBrUtil.Strings,
   ACBrUtil.XMLHTML, ACBrUtil.Base;
 
 { TBoletoW_BancoBrasil }

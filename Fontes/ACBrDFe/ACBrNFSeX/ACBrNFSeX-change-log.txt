@@ -44,6 +44,10 @@ Símbolo : Significado
 
 06/02/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Ouro/SC trocou de provedor, agora é IPM versão 1.00
+  Por: Willian Delan
+[+] Inclusão da cidade: Esmeraldas/MG o provedor é Fiorilli.
+  Por: Marcos Giordani
 [*] Adiciona parâmetro para não formatar ItemServico para Suzano/SP
   Por: Adauri A. Camacho Jr.
 

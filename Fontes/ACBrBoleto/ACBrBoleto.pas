@@ -3561,7 +3561,7 @@ begin
        AStream.Position := 0;
        SlRetorno.LoadFromStream(AStream);
      end;
-     SlRetorno.Text := ACBrStr(SlRetorno.Text);
+     SlRetorno.Text := SlRetorno.Text;
      if SlRetorno.Count < 1 then
         raise exception.Create(ACBrStr('O Arquivo de Retorno:'+sLineBreak+
                                        NomeArq + sLineBreak+

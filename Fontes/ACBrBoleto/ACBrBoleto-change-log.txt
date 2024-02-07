@@ -49,10 +49,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2024
+-- ACBrBoleto --
+[-] TK-5100 Ajustes para nao dar conflito na leitura ANSI/UTF8 que estava impactando
+  https://www.projetoacbr.com.br/forum/topic/76258-acbrlib-c-n%C3%A3o-estou-conseguindo-ler-arquivo-de-retorno-do-sicoob-400/
+  Por: Daniel de Morais InfoCotidiano
+
 05/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnConsts.
   Por: Italo Giurizzato Junior
+  
 -- ACBrBancoBTGPactual --
 [-] #TK-5079 Criado override da função TipoOcorrenciaToDescricao para retornar os motivos da ocorrencia.
   Por: Daniel de Morais InfoCotidiano

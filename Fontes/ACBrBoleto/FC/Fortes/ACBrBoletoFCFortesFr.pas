@@ -1259,6 +1259,7 @@ type
     txtCA5Sw: TRLAngleLabel;
     txtCodigoBaixa2: TRLLabel;
     RLLabel98: TRLLabel;
+    txtCarteiraRecPagDet2: TRLLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -2182,6 +2183,7 @@ begin
     txtEspecieDocRecPagDet.Caption     := Titulo.EspecieDoc;
     txtNossoNumeroRecPagDet.Caption    := NossoNum;
     txtCarteiraRecPagDet.Caption       := Titulo.Carteira;
+    txtCarteiraRecPagDet2.Caption      := txtCarteiraRecPagDet.Caption;
     txtValorDocumentoRecPagDet.Caption := IfThen(Titulo.ValorDocumento > 0, FormatFloatBr( Titulo.ValorDocumento, '###,###,##0.00'));
     //Pagador
     txtNomePagadorRecPagDet.Caption    := Titulo.Sacado.NomeSacado + '  ' +

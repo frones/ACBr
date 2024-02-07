@@ -588,8 +588,12 @@ end;
 
 procedure TfrMain.btActivateClick(Sender: TObject);
 begin
-  SaveParams;
-  ConfigACBrAbecsPinPad;
+  if not ACBrAbecsPinPad1.IsEnabled then
+  begin
+    SaveParams;
+    ConfigACBrAbecsPinPad;
+  end;
+
   ACBrAbecsPinPad1.IsEnabled := (btActivate.Tag = 0);
   ConfigPanelsCommands(ACBrAbecsPinPad1.IsEnabled);
   if ACBrAbecsPinPad1.IsEnabled then

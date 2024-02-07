@@ -11,10 +11,62 @@ object frMain: TfrMain
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = True
+  Icon.Data = {
+    0000010001000000000001002000800600001600000089504E470D0A1A0A0000
+    000D4948445200000100000001000804000000F67B60ED000006474944415478
+    DAEDDDB16F94751CC7F14FEF4E885217135B680A11D4C0E260430CA226C6B8E0
+    CC6E2393FA0788839389EE2E6C105CE98A26288D2E808921241403A90643515A
+    1207424BA0E95D1D6470E11EC2C3F7F7BDE7F9BC5F3796DEF77777EF1E777D7A
+    BF674CE5F5F4AADED3BB7A4D3B34AE4EC20A46C940ABBAA5CBFA49F35AD446E9
+    F16385E77535A3591DD24EF54ADFD411B7A1259DD6495D2A1F4139DBF5A56E69
+    93CB232FCBFA4ADBB31FA62833FA5183F4BB78D42F039DD54CF64315E16D2DA4
+    DFB94DB92CE89DEC87EB699BD1E5F4BBB549978552CF02DD2253B6EB980E94B9
+    412D31A1577446ABF1834A04D0D167FAB0C09C76D9A3FBFA599BD1634ABC0BDF
+    AF2305A6B4CF11ED8F1F121F4057B3ED7D63136A8766E39FA1E303D8A343E133
+    DAEA9076478F880FE0A07685CF68AB5D3A183D223A80311DB0FF6DFF93EBC4BF
+    778A7E709ED3BEE89BD06AFBB42D76407400E37A317842BB4D683C7640F431B9
+    2D1505F7B5D2E6A35F957A9A1CFA4A7F9BB6442F2056A7E23966458775D3F655
+    C240D39AD3D4907F5175FFD5967D547E437F6B29790D993AD9CF7FAE3F7B7888
+    00CC11803902304700E608C01C019823007304608E00CC11803902304700E608
+    C01C019823007304608E00CC11803902304700E608C01C019823007304608E00
+    CC11803902304700E6B23F1DDCD39406B6190E3495FD08640730A9B9EC0F48A7
+    EA69327B01B9BA43B7474038D7275F3C4400E608C01C019823007304608E00CC
+    11803902304700E608C01C0198230073D94703EB9E2FA06ABFFDA65F7FB8EC00
+    EA9D2FA07ABFFDA65F7FB8EC00EA9E2FA06ABFFDA65F7F385E03982300730460
+    8E00CC11803902304700E608C01C019823007304608E00CC11803902304700E6
+    08C01C019823007304608E00CC11803902304700E608C01C019823007304608E
+    00CC1180B9EC4F07D73B5F40F57EFB4DBFFE70D901D43D5F40D57EFB4DBFFE70
+    D901449F2FA0E9D71F8ED700E608C01C019823007304608E00CC118039023047
+    00E608C01C019823007304602EFB6860D3F7F3E77C0135357D3F7FCE175053D3
+    F7F3E77C01683602304700E608C01C019823007304608E00CC11803902304700
+    E608C01C019823007304608E00CC11803902304700E608C01C01982300730460
+    8E00CC11803902304700E608C01C0198CBFE7470D3F7F3E77C0195377130F4EB
+    4DDFCF3FFAFAABEEBFDAA20358D7DAD0AF377D3FFFE8EB5FD37AE8F587BF0658
+    D5EDE009ED765BABB103A20358D3B5E009ED76B5E219B4B6F87701E7A3FF176B
+    B1BECE478F880FE09C6E84CF68AB1B6D08E0BA4E87CF68ABEF753D7A447C007D
+    9DD472F894365AD649F5A38794F84DE0459D2830A57D8EEBD7F8212576A9DCD4
+    15BDAE3D0526B5C9591DD5DDF83165B6295DD582DED2449159EDB0A04FB55862
+    50A97D6A6FE9B2DE2081C774459FE89732A3CA6D547C4317F4B2766BACD8C466
+    DAD4BC3E2EF5F0970C405AD619DDD75E8D179CD9342BFA4647F57BB981A57F1E
+    BB9AD1AC3ED0CEDC4DD247505F37F59D4EE862FC5BBFFFCB7842EEE9251DD49B
+    DAAB096D53579B096B181563EA6B4DB7755517744E7F96DF3B3CEF7FE48E9ED5
+    B8B6D8FF4DD240EBBAABFB1C3101000000000000000000F07465FF81564F93D9
+    9F90AF65432B438FE157DDBEAAEF0F977DE74F6A4ED38D3D16DED14D1DD65F4F
+    7CFBAABF3F5C76003D4D693A790D750C1E630791E91ADF1FCEFDEF71EC118039
+    02304700E608C01C019823007304608E00CC11803902304700E608C01C019823
+    007304608E00CC11803902304700E608C01C019823007304608E00CC11803902
+    304700E608C01C019823007304608E00CC11803902304700E608C01C01982300
+    7304608E00CC11803902304700E608C01C019823007304608E00CC1180390230
+    4700E608C01C019823007304608E00CC11803902304700E608C05CF6D9C39BAE
+    A7290D1EF96334D0D4A8DFC323BEBC9137A9396D0CF97A4F93D94B1C8E00EAE9
+    6A2A7B09F5F01AC01C019823007304608E00CC1180B9EC0036B49E7D17A45A1F
+    FA5B8402B203B8A3A5E415E45AD29DDC056407B0AAF9E415E49AD76AEE02B203
+    904E69317B096916752A7B09DDEC05E81FDDD3FB7A267B1909EEE90BFD90BD88
+    FC00A4DFD4D701BB04EEE96B1D533F7B19A361AB3ED2350DB4697219E89A8E68
+    6BF6DD2E8DC63380D4D725CDEB815ED0F3AD3F3EF9407FE85B7DAE33D96F00FF
+    F32FB0C0CDCB00C23FC00000000049454E44AE426082}
   Visible = True
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 15
   object Splitter2: TSplitter
     Left = 0
@@ -31,6 +83,8 @@ object frMain: TfrMain
     Height = 246
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 936
+    ExplicitHeight = 242
     object sbCleanMemoLog: TSpeedButton
       Left = 914
       Top = 58
@@ -78,8 +132,8 @@ object frMain: TfrMain
       ScrollBars = ssVertical
       TabOrder = 0
       WordWrap = False
-      ExplicitWidth = 912
-      ExplicitHeight = 158
+      ExplicitWidth = 911
+      ExplicitHeight = 155
     end
     object sbResponse: TStatusBar
       Left = 1
@@ -95,6 +149,8 @@ object frMain: TfrMain
           Text = 'ERROR:'
           Width = 40
         end>
+      ExplicitTop = 213
+      ExplicitWidth = 934
     end
     object pCancelar: TPanel
       Left = 1
@@ -104,6 +160,7 @@ object frMain: TfrMain
       Align = alTop
       TabOrder = 2
       Visible = False
+      ExplicitWidth = 934
       DesignSize = (
         936
         57)
@@ -116,6 +173,7 @@ object frMain: TfrMain
         Caption = 'Cancel Operation'
         TabOrder = 0
         OnClick = btCancelClick
+        ExplicitLeft = 1
       end
     end
   end
@@ -128,15 +186,17 @@ object frMain: TfrMain
     BevelOuter = bvNone
     Constraints.MinHeight = 264
     TabOrder = 1
+    ExplicitWidth = 936
     object pgcCommands: TPageControl
       Left = 0
       Top = 0
       Width = 938
       Height = 332
-      ActivePage = tsAskEvent
+      ActivePage = tsMultimidia
       Align = alClient
       Images = ImageList1
       TabOrder = 0
+      ExplicitWidth = 936
       object tsConfig: TTabSheet
         Caption = 'Config'
         DesignSize = (
@@ -539,8 +599,6 @@ object frMain: TfrMain
             Align = alClient
             Caption = 'Modulus'
             TabOrder = 1
-            ExplicitLeft = 24
-            ExplicitWidth = 645
             object mModulus: TMemo
               Left = 2
               Top = 17
@@ -572,8 +630,6 @@ object frMain: TfrMain
                 'D')
               ScrollBars = ssVertical
               TabOrder = 0
-              ExplicitLeft = 3
-              ExplicitWidth = 641
             end
           end
         end
@@ -674,7 +730,6 @@ object frMain: TfrMain
               Caption = 'GIX'
               TabOrder = 0
               OnClick = btGIXClick
-              ExplicitTop = 258
             end
             object lbGIXParams: TListBox
               Left = 1
@@ -750,8 +805,6 @@ object frMain: TfrMain
                 'PP_TABVER63   ')
               MultiSelect = True
               TabOrder = 1
-              ExplicitTop = 19
-              ExplicitHeight = 197
             end
             object edGIXValue: TEdit
               Left = 1
@@ -760,8 +813,6 @@ object frMain: TfrMain
               Height = 23
               Align = alBottom
               TabOrder = 2
-              ExplicitLeft = 0
-              ExplicitTop = 220
             end
             object cbGIXAll: TCheckBox
               Left = 1
@@ -812,8 +863,6 @@ object frMain: TfrMain
             ReadOnly = True
             ScrollBars = ssVertical
             TabOrder = 1
-            ExplicitTop = 51
-            ExplicitHeight = 247
           end
         end
       end
@@ -1038,6 +1087,7 @@ object frMain: TfrMain
           ActivePage = tsQRCode
           Align = alClient
           TabOrder = 1
+          ExplicitWidth = 630
           object tsImage: TTabSheet
             Caption = 'Image'
             object pMedia: TPanel
@@ -1626,6 +1676,7 @@ object frMain: TfrMain
               Height = 272
               Align = alClient
               TabOrder = 0
+              ExplicitWidth = 622
               object imgQRCode: TImage
                 Left = 1
                 Top = 1
@@ -1644,6 +1695,7 @@ object frMain: TfrMain
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
+                ExplicitWidth = 365
                 object mQRCode: TMemo
                   Left = 0
                   Top = 0
@@ -1651,13 +1703,7 @@ object frMain: TfrMain
                   Height = 231
                   Align = alClient
                   Alignment = taCenter
-                  Lines.Strings = (
-                    '00020126360014br.gov.bcb.pix0114187605400'
-                    '00139520400005303986540510.005802BR5912P'
-                    'ROJETO '
-                    'ACBR6005Tatui61081827017062070503***6304'
-                    '0B2D')
-                  ScrollBars = ssVertical
+                  ScrollBars = ssBoth
                   TabOrder = 0
                   WantReturns = False
                 end
@@ -1678,6 +1724,7 @@ object frMain: TfrMain
                 Height = 39
                 Align = alBottom
                 TabOrder = 1
+                ExplicitWidth = 620
                 object edQRCodeImgName: TEdit
                   Left = 8
                   Top = 8

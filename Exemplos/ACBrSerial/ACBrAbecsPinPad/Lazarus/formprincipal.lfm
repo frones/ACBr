@@ -837,9 +837,9 @@ object frMain: TfrMain
           Height = 244
           Top = 0
           Width = 534
-          ActivePage = tsQRCode
+          ActivePage = tsImage
           Align = alClient
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 1
           object tsImage: TTabSheet
             Caption = 'Image'

@@ -270,6 +270,8 @@ begin
 
   ReadParams;
   ShowMediaDimensions;
+  mQRCode.Lines.Text := '00020126360014br.gov.bcb.pix0114187605400001395204000053039865406100'+
+                        '.005802BR5912PROJETO ACBR6005Tatui61081827017062070503***63048F90';
   btPaintQRCode.Click;
 end;
 
@@ -589,8 +591,12 @@ end;
 
 procedure TfrMain.btActivateClick(Sender: TObject);
 begin
-  SaveParams;
-  ConfigACBrAbecsPinPad;
+  if not ACBrAbecsPinPad1.IsEnabled then
+  begin
+    SaveParams;
+    ConfigACBrAbecsPinPad;
+  end;
+
   ACBrAbecsPinPad1.IsEnabled := (btActivate.Tag = 0);
   ConfigPanelsCommands(ACBrAbecsPinPad1.IsEnabled);
   if ACBrAbecsPinPad1.IsEnabled then
@@ -991,7 +997,7 @@ begin
   png := TPngImage.Create;
   try
     qrsize := min( ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Cols,
-                         ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows) - 20;
+                   ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows) - 20;
     png.Assign(imgQRCode.Picture.Bitmap);
     png.Resize(qrsize, qrsize);
     png.Canvas.StretchDraw(png.Canvas.ClipRect, imgQRCode.Picture.Bitmap);

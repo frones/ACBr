@@ -51,6 +51,11 @@ Símbolo : Significado
 
 07/02/2024
 -- ACBrBoleto --
+[*] Removido a atribuição da variavel para ela mesma.
+  Por: Daniel de Morais InfoCotidiano
+
+07/02/2024
+-- ACBrBoleto --
 [-] TK-5100 Ajustes para nao dar conflito na leitura ANSI/UTF8 que estava impactando
   https://www.projetoacbr.com.br/forum/topic/76258-acbrlib-c-n%C3%A3o-estou-conseguindo-ler-arquivo-de-retorno-do-sicoob-400/
   Por: Daniel de Morais InfoCotidiano

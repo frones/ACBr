@@ -44,6 +44,8 @@ Símbolo : Significado
 
 07/02/2024
 -- ACBrNFSeXServicos --
+[*] Adiciona as URLs e a versão 1.01 para a cidade de Lagoa Vermelha/RS
+   Por: DNA Automação
 [*] Acrescentada URL do link de Produção para o provedor SystemPro
    Por: Renato Rubinho
 

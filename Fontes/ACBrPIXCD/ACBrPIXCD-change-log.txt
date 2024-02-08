@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/02/2024
+-- ACBrPIXPSPGate2All --
+[+] Inclusão do novo PSP Gate2All
+    por: Elias César
+
 26/01/2024
 -- ACBrPIXPSP --
 [-] Correção para forçar a autenticação novamente após alterar as credenciais.

@@ -2806,7 +2806,7 @@ object Form1: TForm1
         object Label2: TLabel
           Left = 1
           Top = 1
-          Width = 361
+          Width = 93
           Height = 13
           Align = alTop
           Caption = 'Log das Opera'#231#245'es'
@@ -3244,8 +3244,8 @@ object Form1: TForm1
               Caption = 'Cobran'#231'a'
               TabOrder = 4
               object pnCobranca: TPanel
-                Left = 0
-                Top = 0
+                Left = 2
+                Top = 15
                 Width = 276
                 Height = 52
                 Align = alClient
@@ -3278,10 +3278,10 @@ object Form1: TForm1
               Height = 72
               TabOrder = 5
               object pnAutenticacaoManual: TPanel
-                Left = 0
-                Top = 0
+                Left = 2
+                Top = 15
                 Width = 252
-                Height = 52
+                Height = 55
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
@@ -6704,6 +6704,60 @@ object Form1: TForm1
                 end
               end
             end
+            object tsGate2All: TTabSheet
+              Caption = 'Gate2All'
+              ImageIndex = 15
+              DesignSize = (
+                984
+                492)
+              object pnGate2All: TPanel
+                Left = 48
+                Top = 72
+                Width = 880
+                Height = 177
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                TabOrder = 0
+                DesignSize = (
+                  880
+                  177)
+                object lbGate2AllAuthenticationKey: TLabel
+                  Left = 24
+                  Top = 76
+                  Width = 86
+                  Height = 13
+                  Caption = 'AuthenticationKey'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbGate2AllAuthenticationApi: TLabel
+                  Left = 24
+                  Top = 25
+                  Width = 83
+                  Height = 13
+                  Caption = 'AuthenticationApi'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object edGate2AllAuthenticationKey: TEdit
+                  Left = 24
+                  Top = 90
+                  Width = 816
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 1
+                end
+                object edGate2AllAuthenticationApi: TEdit
+                  Left = 24
+                  Top = 40
+                  Width = 816
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 0
+                  OnChange = edCieloChavePIXChange
+                end
+              end
+            end
           end
         end
       end
@@ -8185,6 +8239,11 @@ object Form1: TForm1
   object ACBrPSPMercadoPago1: TACBrPSPMercadoPago
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 564
+    Top = 416
+  end
+  object ACBrPSPGate2All1: TACBrPSPGate2All
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 594
     Top = 416
   end
 end

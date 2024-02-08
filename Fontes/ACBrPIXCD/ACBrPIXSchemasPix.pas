@@ -450,9 +450,12 @@ begin
   if (fendToEndId = AValue) then
     Exit;
 
-  e := ValidarEndToEndId(AValue);
-  if (e <> '') then
-    raise EACBrPixException.Create(ACBrStr(e));
+  if fIsBacen then
+  begin
+    e := ValidarEndToEndId(AValue);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
 
   fendToEndId := AValue;
 end;

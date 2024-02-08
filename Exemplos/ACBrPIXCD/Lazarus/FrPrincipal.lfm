@@ -5240,7 +5240,7 @@ object Form1: TForm1
                       Left = 24
                       Height = 23
                       Top = 37
-                      Width = 673
+                      Width = 649
                       Anchors = [akTop, akLeft, akRight]
                       AutoSize = False
                       TabOrder = 0
@@ -7143,6 +7143,55 @@ object Form1: TForm1
                 end
               end
             end
+            object tsGate2All: TTabSheet
+              Caption = 'Gate2All'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnGate2All: TPanel
+                Left = 48
+                Height = 192
+                Top = 72
+                Width = 880
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                ClientHeight = 192
+                ClientWidth = 880
+                TabOrder = 0
+                object lbGate2AllAuthenticationKey: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 98
+                  Caption = 'AuthenticationKey'
+                  ParentColor = False
+                end
+                object lbGate2AllAuthenticationApi: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 97
+                  Caption = 'AuthenticationAPI'
+                  ParentColor = False
+                end
+                object edGate2AllAuthenticationKey: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 90
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 1
+                end
+                object edGate2AllAuthenticationApi: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = edCieloChavePIXChange
+                  TabOrder = 0
+                end
+              end
+            end
           end
         end
       end
@@ -7480,6 +7529,11 @@ object Form1: TForm1
   object ACBrPSPMercadoPago1: TACBrPSPMercadoPago
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 568
+    Top = 416
+  end
+  object ACBrPSPGate2All1: TACBrPSPGate2All
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 600
     Top = 416
   end
 end

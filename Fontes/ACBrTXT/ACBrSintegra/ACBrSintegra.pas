@@ -1070,7 +1070,7 @@ type
     property Regs60A: TRegistros60A read FRegs60A write FRegs60A;
     property Regs60D: TRegistros60D read FRegs60D write FRegs60D;
     property Regs60I: TRegistros60I read FRegs60I write FRegs60I;
-    
+
     property Emissao: TDateTime read FEmissao write FEmissao;
     property NumSerie: string read FNumSerie write FNumSerie;
     property NumOrdem: Integer read FNumOrdem write FNumOrdem;
@@ -1315,7 +1315,7 @@ type
     property Ie : String read FIe write FIe;
     property Uf : String read FUf write FUf;
   end;
-  
+
   {Lista de objetos do tipo Registro88SP02}
   TRegistros88SP02 = class(TObjectList)
   protected
@@ -1356,7 +1356,7 @@ type
     property DataRecebimento : TDateTime read FDataRecebimento write FDataRecebimento;
     property Uf : String read FUf write FUf;
     property Modelo : String read FModelo write FModelo;
-    property Serie : String read FSerie write FSerie; 
+    property Serie : String read FSerie write FSerie;
     property Numero : String read FNumero write FNumero;
     property Cfop : String read FCfop write FCfop;
     property Emitente : String read FEmitente write FEmitente; //P - proprio ou  T - terceiro
@@ -1540,7 +1540,8 @@ type
   function Sort50(Item1: Pointer;Item2: Pointer): Integer;
   function Sort51(Item1: Pointer;Item2: Pointer): Integer;
   function Sort53(Item1: Pointer;Item2: Pointer): Integer;
-
+  function Sort54(Item1: Pointer;Item2: Pointer): Integer;
+  function Sort56(Item1: Pointer;Item2: Pointer): Integer;
   function Sort60M(Item1: Pointer;Item2: Pointer): Integer;
   function Sort60A(Item1: Pointer;Item2: Pointer): Integer;
   function Sort60D(Item1: Pointer;Item2: Pointer): Integer;
@@ -1937,72 +1938,63 @@ end;
 
 procedure TACBrSintegra.GerarRegistros54;
 var
-  wregistro: string;
+  LRegistro: string;
   i: Integer;
   a:integer;
 begin
-for i:=0 to Registros54.Count-1 do
-begin
-    wregistro:='54';
-    wregistro:=wregistro+TBStrZero(TiraPontos(Registros54[i].CPFCNPJ),14);
-    wregistro:=wregistro+TBStrZero(Registros54[i].Modelo,2);
-    wregistro:=wregistro+PadRight(Registros54[i].Serie,3);
-    wregistro:=wregistro+TBStrZero(RightStr(Registros54[i].Numero,6),6);
+  Registros54.Sort(Sort54);
+  for i := 0 to Registros54.Count - 1 do
+  begin
+    LRegistro := '54';
+    LRegistro := LRegistro + TBStrZero(TiraPontos(Registros54[ i ].CPFCNPJ), 14);
+    LRegistro := LRegistro + TBStrZero(Registros54[ i ].Modelo, 2);
+    LRegistro := LRegistro + PadRight(Registros54[ i ].Serie, 3);
+    LRegistro := LRegistro + TBStrZero(RightStr(Registros54[ i ].Numero, 6), 6);
 
-    wregistro:=wregistro+PadRight(TiraPontos(Registros54[i].CFOP),4);
-    wregistro:=wregistro+PadRight(Registros54[i].CST,3);
-    wregistro:=wregistro+IntToStrZero(Registros54[i].NumeroItem,3);
-    if Registros54[i].NumeroItem<=990 then
-       wregistro:=wregistro+PadRight(Registros54[i].Codigo,14) //codigo do produto
+    LRegistro := LRegistro + PadRight(TiraPontos(Registros54[ i ].CFOP), 4);
+    LRegistro := LRegistro + PadRight(Registros54[ i ].CST, 3);
+    LRegistro := LRegistro + IntToStrZero(Registros54[ i ].NumeroItem, 3);
+    if Registros54[ i ].NumeroItem <= 990 then
+      LRegistro := LRegistro + PadRight(Registros54[ i ].Codigo, 14) //codigo do produto
     else
-       wregistro:=wregistro+space(14);
+      LRegistro := LRegistro + Space(14);
 
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,###0.000',
-      Registros54[i].Quantidade)),11); //quantidade do produto
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',
-      Registros54[i].Valor)),12); //total do produto
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',
-      Registros54[i].ValorDescontoDespesa)),12); //desconto/despesa
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',
-      Registros54[i].BasedeCalculo)),12);
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',
-      Registros54[i].BaseST)),12); //base de calculo substituicao tributária
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',
-      Registros54[i].ValorIpi)),12); //valor do ipi.
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',
-      Registros54[i].Aliquota)),4);
-    WriteRecord(wregistro);
-    if registros56.count>0 then begin
-
-    for a := 0 to Registros56.Count - 1 do begin
-        if  (Registros56[a].Cfop=registros54[i].CFOP)
-        and (Registros56[a].modelo=registros54[i].modelo)
-        and (Registros56[a].serie=registros54[i].serie)
-        and (Registros56[a].numero=registros54[i].numero)
-        and (Registros56[a].NumeroItem=registros54[i].NumeroItem)
-        and (Registros56[a].cfop=registros54[i].cfop) then begin
-          wregistro:='56';
-          wregistro:=wregistro+TBStrZero(TiraPontos(Registros56[a].CNPJ),14);
-          wregistro:=wregistro+TBStrZero(Registros56[a].Modelo,2);
-          wregistro:=wregistro+PadRight(Registros56[a].Serie,3);
-          wregistro:=wregistro+TBStrZero(Registros56[a].Numero,6);
-          wregistro:=wregistro+PadRight(TiraPontos(Registros56[a].CFOP),4);
-          wregistro:=wregistro+PadRight(Registros56[a].CST,3);
-          wregistro:=wregistro+IntToStrZero(Registros56[a].NumeroItem,3);
-          wregistro:=wregistro+PadRight(Registros56[a].Codigo,14); //codigo do produto
-          wregistro:=wregistro+PadRight(Registros56[a].TipoOperacao,1); //Tipo de operacao
-          wregistro:=wregistro+TBStrZero(TiraPontos(Registros56[a].CnpjConcessionaria),14);
-          wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',Registros56[a].ipi)),4);
-          wregistro:=wregistro+TBStrZero(TiraPontos(Registros56[a].Chassi),17);
-          wregistro:=wregistro+Space(39);
-          WriteRecord(wregistro);
+    LRegistro := LRegistro + TBStrZero(TiraPontos(FormatFloat('#,###0.000', Registros54[ i ].Quantidade)), 11); //quantidade do produto
+    LRegistro := LRegistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00', Registros54[ i ].Valor)), 12); //total do produto
+    LRegistro := LRegistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00', Registros54[ i ].ValorDescontoDespesa)), 12); //desconto/despesa
+    LRegistro := LRegistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00', Registros54[ i ].BasedeCalculo)), 12);
+    LRegistro := LRegistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00', Registros54[ i ].BaseST)), 12); //base de calculo substituicao tributária
+    LRegistro := LRegistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00', Registros54[ i ].ValorIpi)), 12); //valor do ipi.
+    LRegistro := LRegistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00', Registros54[ i ].Aliquota)), 4);
+    WriteRecord(LRegistro);
+    if Registros56.Count > 0 then
+    begin
+      Registros56.Sort(Sort56);
+      for a := 0 to Registros56.Count - 1 do
+      begin
+        if (Registros56[ a ].CFOP = Registros54[ i ].CFOP) and (Registros56[ a ].Modelo = Registros54[ i ].Modelo) and (Registros56[ a ].Serie = Registros54[ i ].Serie) and
+          (Registros56[ a ].Numero = Registros54[ i ].Numero) and (Registros56[ a ].NumeroItem = Registros54[ i ].NumeroItem) and (Registros56[ a ].CFOP = Registros54[ i ].CFOP)
+        then
+        begin
+          LRegistro := '56';
+          LRegistro := LRegistro + TBStrZero(TiraPontos(Registros56[ a ].CNPJ), 14);
+          LRegistro := LRegistro + TBStrZero(Registros56[ a ].Modelo, 2);
+          LRegistro := LRegistro + PadRight(Registros56[ a ].Serie, 3);
+          LRegistro := LRegistro + TBStrZero(Registros56[ a ].Numero, 6);
+          LRegistro := LRegistro + PadRight(TiraPontos(Registros56[ a ].CFOP), 4);
+          LRegistro := LRegistro + PadRight(Registros56[ a ].CST, 3);
+          LRegistro := LRegistro + IntToStrZero(Registros56[ a ].NumeroItem, 3);
+          LRegistro := LRegistro + PadRight(Registros56[ a ].Codigo, 14); //codigo do produto
+          LRegistro := LRegistro + PadRight(Registros56[ a ].TipoOperacao, 1); //Tipo de operacao
+          LRegistro := LRegistro + TBStrZero(TiraPontos(Registros56[ a ].CnpjConcessionaria), 14);
+          LRegistro := LRegistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00', Registros56[ a ].Ipi)), 4);
+          LRegistro := LRegistro + TBStrZero(TiraPontos(Registros56[ a ].Chassi), 17);
+          LRegistro := LRegistro + Space(39);
+          WriteRecord(LRegistro);
         end;
+      end;
     end;
-
-end;
-
-
-end;
+  end;
 end;
 
 procedure TACBrSintegra.GerarRegistros60A(vRegistros60A: TRegistros60A);
@@ -2409,13 +2401,13 @@ FRegistros60M.Clear;
 if FVersaoValidador = vv523 then //Caso esteja usando vv523, destruir os componentes
   FRegistros60A.OwnsObjects := True;
 FRegistros60A.Clear;
-if FVersaoValidador = vv523 then 
+if FVersaoValidador = vv523 then
   FRegistros60D.OwnsObjects := True;
 FRegistros60D.Clear;
-if FVersaoValidador = vv523 then 
+if FVersaoValidador = vv523 then
   FRegistros60I.OwnsObjects := True;
 FRegistros60I.Clear;
-if FVersaoValidador = vv523 then 
+if FVersaoValidador = vv523 then
   FRegistros60R.OwnsObjects := True;
 FRegistros60R.Clear;
 FRegistros61.Clear;
@@ -3016,6 +3008,26 @@ begin
   inherited SetItem (Index, Item) ;
 end;
 
+function Sort54(Item1: Pointer;Item2: Pointer): Integer;
+var
+  LItem1, LItem2 : TRegistro54;
+begin
+  LItem1 := TRegistro54(Item1);
+  LItem2 := TRegistro54(Item2);
+  if (StrToInt64Def(LItem1.CPFCNPJ,0) > StrToInt64Def(LItem2.CPFCNPJ,0))
+   and (LItem1.Serie > LItem2.Serie)
+   and (StrToInt64Def(LItem1.Numero,0) > StrToInt64Def(LItem2.Numero,0))
+   and (LItem1.NumeroItem > LItem2.NumeroItem) then
+    Result := 1
+  else if (StrToInt64Def(LItem1.CPFCNPJ,0) = StrToInt64Def(LItem2.CPFCNPJ,0))
+   and (LItem1.Serie = LItem2.Serie)
+   and (StrToInt64Def(LItem1.Numero,0) = StrToInt64Def(LItem2.Numero,0))
+   and (LItem1.NumeroItem = LItem2.NumeroItem) then
+    Result := 0
+  else
+    Result := -1;
+end;
+
 { TRegistros56 }
 
 function TRegistros56.Add(Obj: TRegistro56): Integer;
@@ -3036,6 +3048,26 @@ end;
 procedure TRegistros56.SetObject(Index: Integer; Item: TRegistro56);
 begin
   inherited SetItem (Index, Item) ;
+end;
+
+function Sort56(Item1: Pointer;Item2: Pointer): Integer;
+var
+  LItem1, LItem2 : TRegistro56;
+begin
+  LItem1 := TRegistro56(Item1);
+  LItem2 := TRegistro56(Item2);
+  if (StrToInt64Def(LItem1.Cnpj,0) > StrToInt64Def(LItem2.Cnpj,0))
+   and (LItem1.Serie > LItem2.Serie)
+   and (StrToInt64Def(LItem1.Numero,0) > StrToInt64Def(LItem2.Numero,0))
+   and (LItem1.NumeroItem > LItem2.NumeroItem) then
+    Result := 1
+  else if (StrToInt64Def(LItem1.Cnpj,0) = StrToInt64Def(LItem2.Cnpj,0))
+   and (LItem1.Serie = LItem2.Serie)
+   and (StrToInt64Def(LItem1.Numero,0) = StrToInt64Def(LItem2.Numero,0))
+   and (LItem1.NumeroItem = LItem2.NumeroItem) then
+    Result := 0
+  else
+    Result := -1;
 end;
 
 { TRegistros75 }
@@ -3192,7 +3224,7 @@ begin
     Result := 0
   else
     Result := -1;
-end; 
+end;
 
 
 { TRegistros51 }

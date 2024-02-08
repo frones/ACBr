@@ -3708,14 +3708,21 @@ end;
 
 function TACBrBoleto.GetOcorrenciasRemessa(): TACBrOcorrenciasRemessa;
 var I: Integer;
+  LACBrOcorrenciasRemessa : TACBrOcorrenciasRemessa;
+  LOcorrencia : String;
 begin
-  SetLength(Result, 77);
-
-  for I := 1 to 48 do
+  SetLength(LACBrOcorrenciasRemessa, 0);
+  for I := Ord(Low(TACBrTipoOcorrencia)) to Ord(High(TACBrTipoOcorrencia)) do
   begin
-    Result[I-1].Tipo := TACBrTipoOcorrencia(I-1);
-    Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[TACBrTipoOcorrencia(I-1)];
+    LOcorrencia := GetEnumName(TypeInfo(TACBrTipoOcorrencia), I);
+    if Copy(LOcorrencia, 1, Length('toRemessa')) = 'toRemessa' then
+    begin
+      SetLength(LACBrOcorrenciasRemessa, Length(LACBrOcorrenciasRemessa) + 1);
+      LACBrOcorrenciasRemessa[High(LACBrOcorrenciasRemessa)].Tipo := TACBrTipoOcorrencia(I);
+      LACBrOcorrenciasRemessa[High(LACBrOcorrenciasRemessa)].descricao := cACBrTipoOcorrenciaDecricao[TACBrTipoOcorrencia(I)];
+    end;
   end;
+  Result := LACBrOcorrenciasRemessa;
 end;
 
 function TACBrBoleto.GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;

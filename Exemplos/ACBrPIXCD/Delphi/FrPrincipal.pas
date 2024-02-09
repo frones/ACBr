@@ -2186,6 +2186,7 @@ end;
 procedure TForm1.btFluxoPagarClick(Sender: TObject);
 var
   wNome, wDoc: String;
+  sl: TStringList;
   I: Integer;
 begin
   VerificarConfiguracao;
@@ -2224,17 +2225,24 @@ begin
           valor := FormatDateTime('yymmddhhnnss', Now);
         end;
 
-        for I := 1 to Pred(gdFluxoItens.RowCount) do
-          with infoAdicionais.New do
+        sl := TStringList.Create;
+        try
+          for I := 1 to Pred(gdFluxoItens.RowCount) do
           begin
-            nome := 'item_' + IntToStr(I);
-            valor := '{' +
-              '"ean": "' + gdFluxoItens.Cells[0, I] + '", ' +
-              '"item_title": "' + gdFluxoItens.Cells[1, I] + '", ' +
-              '"quantity": 1, ' +
-              '"sku": "' + gdFluxoItens.Cells[0, I] + '", ' +
-              '"unit_price": ' + StringReplace(gdFluxoItens.Cells[2, I], '.', '', []) + '}';
+            with infoAdicionais.New do
+            begin
+              nome := 'item_' + IntToStr(I);
+              sl.Add('ean=' + gdFluxoItens.Cells[0, I]);
+              sl.Add('item_title=' + gdFluxoItens.Cells[1, I]);
+              sl.Add('quantity=1');
+              sl.Add('sku=' + gdFluxoItens.Cells[0, I]);
+              sl.Add('unit_price=' + gdFluxoItens.Cells[2, I]);
+              valor := sl.Text;
+            end;
           end;
+        finally
+          sl.Free;
+        end;
       end;
 
       valor.original := fFluxoDados.Total;

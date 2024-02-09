@@ -47,6 +47,9 @@ Símbolo : Significado
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.
   Por: Italo Giurizzato Junior
+-- Diversos --
+[-] Correção nos parâmetros para assinatura
+  Por: Renato Rubinho
 
 08/02/2024
 -- ACBrNFSeXServicos --

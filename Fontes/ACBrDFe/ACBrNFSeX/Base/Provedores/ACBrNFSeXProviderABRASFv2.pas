@@ -527,7 +527,7 @@ begin
       Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
                                          PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
                                          ConfigMsgDados.XmlRps.InfElemento, '', '', '',
-                                         IdAttr, ConfigAssinar.IdSignatureValue);
+                                         IdAttr);
     end;
 
     SalvarXmlRps(Nota);
@@ -1422,8 +1422,7 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarNFSePorFaixa.DocElemento,
-      ConfigMsgDados.ConsultarNFSePorFaixa.InfElemento, '', '', '', IdAttr,
-      ConfigAssinar.IdSignatureValue);
+      ConfigMsgDados.ConsultarNFSePorFaixa.InfElemento, '', '', '', IdAttr);
   except
     on E:Exception do
     begin
@@ -1690,7 +1689,7 @@ begin
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarNFSeServicoPrestado.DocElemento,
       ConfigMsgDados.ConsultarNFSeServicoPrestado.InfElemento, '', '', '',
-      IdAttr, ConfigAssinar.IdSignatureValue);
+      IdAttr);
   except
     on E:Exception do
     begin
@@ -1955,8 +1954,7 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarNFSeServicoTomado.DocElemento,
-      ConfigMsgDados.ConsultarNFSeServicoTomado.InfElemento, '', '', '', IdAttr,
-      ConfigAssinar.IdSignatureValue);
+      ConfigMsgDados.ConsultarNFSeServicoTomado.InfElemento, '', '', '', IdAttr);
   except
     on E:Exception do
     begin
@@ -2448,7 +2446,7 @@ begin
     Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
                                        PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
                                        ConfigMsgDados.XmlRps.InfElemento, '', '', '',
-                                       IdAttr, ConfigAssinar.IdSignatureValue);
+                                       IdAttr);
   end;
 
   SalvarXmlRps(Nota);

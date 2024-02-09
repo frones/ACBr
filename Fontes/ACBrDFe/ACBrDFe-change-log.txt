@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2024
+-- Diversos --
+[*] Refactoring visando deixar de usar a unit pcnAuxiliar.
+  Por: Italo Giurizzato Junior
+
 04/02/2024
 [+] Adicionado as constantes XML_V01 e ENCODING_UTF8_STD.
   Por: Italo Giurizzato Junior

@@ -155,7 +155,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrUtil.XMLHTML,
-  pcnAuxiliar, synacode;
+  synacode;
 
 { TDFeWebService }
 
@@ -546,7 +546,7 @@ begin
   AOpcoes.RetirarAcentos := FPDFeOwner.Configuracoes.Geral.RetirarAcentos;
   AOpcoes.RetirarEspacos := FPDFeOwner.Configuracoes.Geral.RetirarEspacos;
   AOpcoes.IdentarXML := FPDFeOwner.Configuracoes.Geral.IdentarXML;
-  pcnAuxiliar.TimeZoneConf.Assign( FPDFeOwner.Configuracoes.WebServices.TimeZoneConf );
+  TimeZoneConf.Assign( FPDFeOwner.Configuracoes.WebServices.TimeZoneConf );
   AOpcoes.QuebraLinha := FPDFeOwner.Configuracoes.WebServices.QuebradeLinha;
 end;
 

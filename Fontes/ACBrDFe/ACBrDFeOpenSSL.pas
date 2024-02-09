@@ -119,8 +119,8 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.Math,
   ACBrUtil.DateTime,
-  ACBrDFeException,
-  pcnAuxiliar;
+  ACBrUtil.Base,
+  ACBrDFeException;
 
 function CertToDERBase64(cert: pX509): AnsiString;
 var

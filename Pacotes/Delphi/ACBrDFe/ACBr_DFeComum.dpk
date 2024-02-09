@@ -58,6 +58,9 @@ contains
   ACBrDFeComum.ConsStatServ in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.ConsStatServ.pas',
   ACBrDFeComum.RetConsStatServ in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.RetConsStatServ.pas',
   ACBrDFeComum.Proc in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.Proc.pas',
+  ACBrDFeComum.DistDFeInt in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.DistDFeInt.pas',
+  ACBrDFeComum.RetDistDFeInt in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.RetDistDFeInt.pas',
+  ACBrDFeComum.SignatureClass in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.SignatureClass.pas',
 
   {$IfNDef DFE_SEM_MSXML}
     ACBrMSXML2_TLB in '..\..\..\Fontes\Terceiros\Ole\ACBrMSXML2_TLB.pas',

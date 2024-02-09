@@ -232,7 +232,6 @@ type
 implementation
 
 uses
-  pcnAuxiliar,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TLeituraCollection }

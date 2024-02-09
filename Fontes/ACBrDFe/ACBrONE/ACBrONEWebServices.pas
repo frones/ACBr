@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, dateutils, blcksock,
   ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
-  pcnAuxiliar, pcnConversao, pcnConversaoONE,
+  pcnConversao, pcnConversaoONE,
   pcnEnvManutencaoEQP, pcnRetManutencaoEQP,
   pcnEnvRecepcaoLeitura, pcnRetRecepcaoLeitura,
   pcnDistLeitura, pcnRetDistLeitura,

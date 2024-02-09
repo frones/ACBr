@@ -137,7 +137,7 @@ implementation
 
 uses
   IniFiles,
-  pcnAuxiliar, pcnRetRecepcaoLeitura,
+  pcnRetRecepcaoLeitura,
   ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrDFeUtil;
 
@@ -173,12 +173,12 @@ begin
   Gerador.wCampo(tcStr, 'BP04', 'verAplic ', 01, 20, 1, FverAplic, DSC_verAplic);
   Gerador.wCampo(tcStr, 'BP05', 'tpTransm ', 01, 01, 1, tpTransmToStr(FtpTransm), DSC_tpTransm);
   Gerador.wCampo(tcStr, 'BP06', 'dhTransm ', 01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhTransm) +
-                                                           GetUTC(CodigoParaUF(infLeitura.cUF), FdhTransm));
+                                                           GetUTC(CodigoUFparaUF(infLeitura.cUF), FdhTransm));
 
   Gerador.wGrupo('infLeitura');
   Gerador.wCampo(tcInt, 'BP08', 'cUF     ', 01, 02, 1, infLeitura.cUF, DSC_cUF);
   Gerador.wCampo(tcStr, 'BP09', 'dhPass  ', 01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', infLeitura.dhPass) +
-                                                              GetUTC(CodigoParaUF(infLeitura.cUF), infLeitura.dhPass));
+                                                              GetUTC(CodigoUFparaUF(infLeitura.cUF), infLeitura.dhPass));
   Gerador.wCampo(tcStr, 'BP10', 'CNPJOper', 01, 14, 1, infLeitura.CNPJOper, DSC_CNPJOper);
 
   if sEQP <> '' then

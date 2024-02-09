@@ -101,7 +101,7 @@ implementation
 
 uses
   IniFiles,
-  pcnAuxiliar, pcnRetManutencaoEQP,
+  pcnRetManutencaoEQP,
   ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrDFeUtil;
 
@@ -135,7 +135,7 @@ begin
   Gerador.wCampo(tcStr, 'AP04', 'verAplic ', 01, 020, 1, FverAplic, DSC_verAplic);
   Gerador.wCampo(tcStr, 'AP05', 'tpMan    ', 01, 001, 1, TpManToStr(FtpMan), DSC_tpMan);
   Gerador.wCampo(tcStr, 'AP06', 'dhReg    ', 01, 050, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhReg) +
-                                                           GetUTC(CodigoParaUF(FcUF), FdhReg));
+                                                           GetUTC(CodigoUFparaUF(FcUF), FdhReg));
   Gerador.wCampo(tcStr, 'AP07', 'CNPJOper ', 01, 014, 1, FCNPJOper, DSC_CNPJOper);
   Gerador.wCampo(tcStr, 'AP08', 'cEQP     ', 01, 015, 1, sEQP, DSC_cEQP);
   Gerador.wCampo(tcStr, 'AP09', 'xEQP     ', 01, 050, 1, FxEQP, DSC_xEQP);

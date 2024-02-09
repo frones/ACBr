@@ -44,7 +44,7 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase, ACBrUtil.Base, ACBrUtil.FilesIO, synacode,
-  pcnAuxiliar, pcnConversao, pcnLeitor;
+  pcnConversao, pcnLeitor;
 
 type
   TinfMDFeCollectionItem = class(TObject)

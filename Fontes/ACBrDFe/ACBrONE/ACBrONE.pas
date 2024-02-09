@@ -126,8 +126,7 @@ Const
 implementation
 
 uses
-  dateutils,
-  pcnAuxiliar;
+  dateutils;
 
 {$IFDEF FPC}
  {$R ACBrONEServicos.rc}

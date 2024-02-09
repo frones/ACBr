@@ -38,10 +38,11 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador,
   pmdfeConversaoMDFe, pmdfeMDFe,
   ACBrUtil.Strings,
   ACBrUtil.Base,
+  ACBrUtil.DateTime,
   pmdfeConsts, ACBrDFeUtil;
 
 type
@@ -122,6 +123,8 @@ type
 implementation
 
 uses
+  StrUtils,
+  Math,
   ACBrDFeConsts;
 
 { TMDFeW }
@@ -224,7 +227,7 @@ begin
                '<cStat>'+IntToStr(MDFe.procMDFe.cStat)+'</cStat>'+
                '<xMotivo>'+MDFe.procMDFe.xMotivo+'</xMotivo>'+
              '</infProt>'+
-             IIF( (MDFe.procMDFe.cMsg > 0) or (MDFe.procMDFe.xMsg <> ''),
+             IfThen( (MDFe.procMDFe.cMsg > 0) or (MDFe.procMDFe.xMsg <> ''),
              '<infFisco>' +
                '<cMsg>' + IntToStr(MDFe.procMDFe.cMsg) + '</cMsg>' +
                '<xMsg>' + MDFe.procMDFe.xMsg + '</xMsg>' +
@@ -1304,9 +1307,9 @@ var
 begin
   PaisBrasil := cPais = CODIGO_BRASIL;
 
-  cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
-  xMun := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
-  xUF  := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
+  cMun := IfThen(PaisBrasil, vcMun, CMUN_EXTERIOR);
+  xMun := IfThen(PaisBrasil, vxMun, XMUN_EXTERIOR);
+  xUF  := IfThen(PaisBrasil, vxUF, UF_EXTERIOR);
 
   if FOpcoes.NormatizarMunicipios then
     if ( ( EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR) ) then

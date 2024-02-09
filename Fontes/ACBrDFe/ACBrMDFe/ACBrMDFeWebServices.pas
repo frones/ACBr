@@ -40,7 +40,8 @@ uses
   Classes, SysUtils, synacode,
   ACBrDFe, ACBrDFeWebService,
   pmdfeMDFe,
-  pcnRetConsReciDFe, pcnAuxiliar, pcnConversao, pmdfeConversaoMDFe,
+  pcnRetConsReciDFe,
+  pcnConversao, pmdfeConversaoMDFe,
   pmdfeProcMDFe, pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
   pmdfeRetConsSitMDFe, pmdfeRetConsMDFeNaoEnc, pmdfeRetEnvMDFe,
   pcnDistDFeInt, pcnRetDistDFeInt,
@@ -497,6 +498,7 @@ implementation
 uses
   StrUtils, Math,
   ACBrDFeConsts,
+  ACBrDFeUtil,
   ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.Strings,
@@ -668,7 +670,7 @@ begin
                            'Retorno: %s' + LineBreak +
                            'Observação: %s' + LineBreak),
                    [Fversao, TpAmbToStr(FtpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
                     IntToStr(FTMed),
                     IfThen(FdhRetorno = 0, '', FormatDateTimeBr(FdhRetorno)),
@@ -1003,7 +1005,7 @@ begin
                       FMDFeRetornoSincrono.verAplic,
                       IntToStr(FMDFeRetornoSincrono.cStat),
                       FMDFeRetornoSincrono.xMotivo,
-                      CodigoParaUF(FMDFeRetornoSincrono.cUF),
+                      CodigoUFparaUF(FMDFeRetornoSincrono.cUF),
                       FormatDateTimeBr(FMDFeRetornoSincrono.protMDFe.dhRecbto),
                       FMDFeRetornoSincrono.chMDFe])
   else
@@ -1021,7 +1023,7 @@ begin
                         FMDFeRetorno.verAplic,
                         IntToStr(FMDFeRetorno.cStat),
                         FMDFeRetorno.xMotivo,
-                        CodigoParaUF(FMDFeRetorno.cUF),
+                        CodigoUFparaUF(FMDFeRetorno.cUF),
                         FMDFeRetorno.infRec.nRec,
                         IfThen(FMDFeRetorno.InfRec.dhRecbto = 0, '',
                                FormatDateTimeBr(FMDFeRetorno.InfRec.dhRecbto)),
@@ -1389,7 +1391,7 @@ begin
                    [FMDFeRetorno.versao, TpAmbToStr(FMDFeRetorno.tpAmb),
                     FMDFeRetorno.verAplic, FMDFeRetorno.nRec,
                     IntToStr(FMDFeRetorno.cStat), FMDFeRetorno.xMotivo,
-                    CodigoParaUF(FMDFeRetorno.cUF), IntToStr(FMDFeRetorno.cMsg),
+                    CodigoUFparaUF(FMDFeRetorno.cUF), IntToStr(FMDFeRetorno.cMsg),
                     FMDFeRetorno.xMsg]);
 end;
 
@@ -1550,7 +1552,7 @@ begin
                    FMDFeRetorno.verAplic, FMDFeRetorno.nRec,
                    IntToStr(FMDFeRetorno.cStat),
                    FMDFeRetorno.xMotivo,
-                   CodigoParaUF(FMDFeRetorno.cUF)]);
+                   CodigoUFparaUF(FMDFeRetorno.cUF)]);
 end;
 
 { TMDFeConsulta }
@@ -2027,7 +2029,7 @@ begin
                            'Protocolo: %s ' + LineBreak +
                            'Digest Value: %s ' + LineBreak),
                    [Fversao, FMDFeChave, TpAmbToStr(FTpAmb), FverAplic,
-                    IntToStr(FcStat), FXMotivo, CodigoParaUF(FcUF), FMDFeChave,
+                    IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FMDFeChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotMDFe.digVal]);
 end;
 
@@ -2642,7 +2644,7 @@ begin
                    [FRetConsMDFeNaoEnc.versao, TpAmbToStr(FRetConsMDFeNaoEnc.tpAmb),
                     FRetConsMDFeNaoEnc.verAplic, IntToStr(FRetConsMDFeNaoEnc.cStat),
                     FRetConsMDFeNaoEnc.xMotivo,
-                    CodigoParaUF(FRetConsMDFeNaoEnc.cUF)]);
+                    CodigoUFparaUF(FRetConsMDFeNaoEnc.cUF)]);
 end;
 
 function TMDFeConsultaMDFeNaoEnc.GerarMsgErro(E: Exception): String;

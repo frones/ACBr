@@ -45,7 +45,6 @@ uses
   pmdfeMDFeR, 
   pmdfeMDFeW, 
   pcnConversao, 
-  pcnAuxiliar, 
   pcnLeitor;
 
 type
@@ -1252,7 +1251,7 @@ begin
     FMDFeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FMDFeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
     FMDFeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FMDFeW.CSRT   := Configuracoes.RespTec.CSRT;
@@ -1493,7 +1492,7 @@ begin
       Emit.enderEmit.fone    := INIRec.ReadString('emit', 'fone', '');
       Emit.enderEmit.email   := INIRec.ReadString('emit', 'email', '');
 
-      ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigo(Emit.enderEmit.UF));
+      ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigoUF(Emit.enderEmit.UF));
 
       //*********************************************************************
       //

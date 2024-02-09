@@ -37,7 +37,7 @@ unit pmdfeRetEnvMDFe;
 interface
  uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor;
+  pcnConversao, pcnLeitor;
 
 type
 

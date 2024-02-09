@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador,
   ACBrUtil.Strings,
   pmdfeConsts;
 
@@ -63,7 +63,8 @@ type
 implementation
 
 uses
-  ACBrDFeConsts;
+  ACBrDFeConsts,
+  ACBrDFeUtil;
 
 { TConsSitMDFe }
 

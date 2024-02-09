@@ -47,7 +47,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pmdfeMDFe;
+  pcnConversao, pmdfeMDFe;
 
 type
   TInfEvento = class;

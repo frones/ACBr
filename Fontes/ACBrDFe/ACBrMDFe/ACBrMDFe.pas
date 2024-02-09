@@ -149,7 +149,7 @@ implementation
 
 uses
   dateutils,
-  pcnAuxiliar, ACBrDFeSSL;
+  ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$R ACBrMDFeServicos.rc}

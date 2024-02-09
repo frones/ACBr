@@ -47,7 +47,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pmdfeEventoMDFe, pcnSignature;
+  pcnConversao, pcnLeitor, pmdfeEventoMDFe, pcnSignature;
 
 type
   TRetInfEventoCollectionItem = class;

@@ -48,7 +48,6 @@ uses
   ACBrNF3eRetConsSit,
   ACBrDFeComum.RetConsReciDFe,
 //  ACBrDFeComum.DistDFeInt, ACBrDFeComum.RetDistDFeInt,
-  pcnAuxiliar,
   pcnConversao;
 
 type
@@ -60,7 +59,7 @@ type
     FOldSSLType: TSSLType;
     FOldHeaderElement: String;
   protected
-    FPStatus: TStatusACBrNF3e;
+    FPStatus: TStatusNF3e;
     FPLayout: TLayOut;
     FPConfiguracoesNF3e: TConfiguracoesNF3e;
 
@@ -76,7 +75,7 @@ type
     constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
 
-    property Status: TStatusACBrNF3e read FPStatus;
+    property Status: TStatusNF3e read FPStatus;
     property Layout: TLayOut read FPLayout;
   end;
 
@@ -466,6 +465,7 @@ implementation
 uses
   StrUtils, Math,
   ACBrDFeConsts,
+  ACBrDFeUtil,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
   ACBrCompress, ACBrNF3e, ACBrIntegrador,
@@ -683,7 +683,7 @@ begin
                            'Retorno: %s' + LineBreak +
                            'Observação: %s' + LineBreak),
                    [Fversao, TpAmbToStr(FtpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
                     IntToStr(FTMed),
                     IfThen(FdhRetorno = 0, '', FormatDateTimeBr(FdhRetorno)),
@@ -1032,7 +1032,7 @@ begin
                       FNF3eRetornoSincrono.verAplic,
                       IntToStr(FNF3eRetornoSincrono.protNF3e.cStat),
                       FNF3eRetornoSincrono.protNF3e.xMotivo,
-                      CodigoParaUF(FNF3eRetornoSincrono.cUF),
+                      CodigoUFparaUF(FNF3eRetornoSincrono.cUF),
                       FormatDateTimeBr(FNF3eRetornoSincrono.dhRecbto),
                       FNF3eRetornoSincrono.chNF3e])
   else
@@ -1050,7 +1050,7 @@ begin
                       FNF3eRetorno.verAplic,
                       IntToStr(FNF3eRetorno.cStat),
                       FNF3eRetorno.xMotivo,
-                      CodigoParaUF(FNF3eRetorno.cUF),
+                      CodigoUFparaUF(FNF3eRetorno.cUF),
                       FNF3eRetorno.infRec.nRec,
                       IfThen(FNF3eRetorno.InfRec.dhRecbto = 0, '',
                              FormatDateTimeBr(FNF3eRetorno.InfRec.dhRecbto)),
@@ -1442,7 +1442,7 @@ begin
                    [FNF3eRetorno.versao, TipoAmbienteToStr(FNF3eRetorno.tpAmb),
                     FNF3eRetorno.verAplic, FNF3eRetorno.nRec,
                     IntToStr(FNF3eRetorno.cStat), FNF3eRetorno.xMotivo,
-                    CodigoParaUF(FNF3eRetorno.cUF), IntToStr(FNF3eRetorno.cMsg),
+                    CodigoUFparaUF(FNF3eRetorno.cUF), IntToStr(FNF3eRetorno.cMsg),
                     FNF3eRetorno.xMsg]);
   {*)}
 end;
@@ -1626,7 +1626,7 @@ begin
                    FNF3eRetorno.verAplic, FNF3eRetorno.nRec,
                    IntToStr(FNF3eRetorno.cStat),
                    FNF3eRetorno.xMotivo,
-                   CodigoParaUF(FNF3eRetorno.cUF)]);
+                   CodigoUFparaUF(FNF3eRetorno.cUF)]);
   {*)}
 end;
 
@@ -2134,7 +2134,7 @@ begin
                            'Protocolo: %s ' + LineBreak +
                            'Digest Value: %s ' + LineBreak),
                    [Fversao, FNF3eChave, TpAmbToStr(FTpAmb), FverAplic,
-                    IntToStr(FcStat), FXMotivo, CodigoParaUF(FcUF), FNF3eChave,
+                    IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FNF3eChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotNF3e.digVal]);
   {*)}
 end;

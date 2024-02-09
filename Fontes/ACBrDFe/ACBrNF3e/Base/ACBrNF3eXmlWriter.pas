@@ -130,7 +130,6 @@ type
     function Gerar_gANEEL_gHistFat: TACBrXmlNodeArray;
     function Gerar_gANEEL_gHistFat_gGrandFat(agHistFat: Integer): TACBrXmlNodeArray;
 
-
     function Gerar_autXML: TACBrXmlNodeArray;
     function Gerar_InfAdic: TACBrXmlNode;
     function Gerar_gRespTec: TACBrXmlNode;
@@ -161,14 +160,18 @@ type
 implementation
 
 uses
-  variants, dateutils,
+  variants,
+  dateutils,
+  StrUtils,
+  Math,
   ACBrDFeConsts,
   ACBrNF3eConsts,
   ACBrNF3eConversao,
   ACBrValidador,
-  pcnAuxiliar,
   ACBrDFeUtil,
-  ACBrUtil.Base, ACBrUtil.Strings;
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings;
 
 constructor TNF3eXmlWriter.Create(AOwner: TNF3e);
 begin
@@ -212,9 +215,9 @@ var
   PaisBrasil: boolean;
 begin
   PaisBrasil := cPais = CODIGO_BRASIL;
-  cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
-  xMun := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
-  xUF := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
+  cMun := IfThen(PaisBrasil, vcMun, CMUN_EXTERIOR);
+  xMun := IfThen(PaisBrasil, vxMun, XMUN_EXTERIOR);
+  xUF := IfThen(PaisBrasil, vxUF, UF_EXTERIOR);
 
   if Opcoes.NormatizarMunicipios then
     if ((EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR)) then
@@ -379,7 +382,7 @@ begin
   Result.AppendChild(AddNode(tcInt, '#11', 'cDV', 1, 1, 1, NF3e.Ide.cDV, DSC_CDV));
 
   Result.AppendChild(AddNode(tcStr, '#12', 'dhEmi', 25, 25, 1,
-    DateTimeTodh(NF3e.ide.dhEmi) + GetUTC(CodigoParaUF(NF3e.ide.cUF), NF3e.ide.dhEmi),
+    DateTimeTodh(NF3e.ide.dhEmi) + GetUTC(CodigoUFparaUF(NF3e.ide.cUF), NF3e.ide.dhEmi),
     DSC_DEMI));
 
   Result.AppendChild(AddNode(tcStr, '#13', 'tpEmis', 1, 1, 1,
@@ -403,7 +406,7 @@ begin
   if (NF3e.Ide.dhCont > 0) or (NF3e.Ide.xJust <> '') then
   begin
     Result.AppendChild(AddNode(tcStr, '#17', 'dhCont', 25, 25,
-      1, DateTimeTodh(NF3e.ide.dhCont) + GetUTC(CodigoParaUF(NF3e.ide.cUF),
+      1, DateTimeTodh(NF3e.ide.dhCont) + GetUTC(CodigoUFparaUF(NF3e.ide.cUF),
       NF3e.ide.dhCont), DSC_DHCONT));
 
     Result.AppendChild(AddNode(tcStr, '#18', 'xJust', 15, 256, 1,
@@ -430,7 +433,7 @@ begin
       wAlerta('#21', 'IE', DSC_IE, ERR_MSG_VAZIO)
     else
     begin
-      if not pcnAuxiliar.ValidarIE(NF3e.Emit.IE, CodigoParaUF(NF3e.Ide.cUF)) then
+      if not ValidarIE(NF3e.Emit.IE, CodigoUFparaUF(NF3e.Ide.cUF)) then
         wAlerta('#21', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -479,7 +482,7 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#32', 'UF', 2, 2, 1, xUF, DSC_UF));
 
-  if not pcnAuxiliar.ValidarUF(xUF) then
+  if not ValidarUF(xUF) then
     wAlerta('#32', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, '#33', 'fone', 7, 12, 0,
@@ -532,7 +535,7 @@ begin
 
       if (Opcoes.ValidarInscricoes) and (NF3e.Dest.IE <> '') and
          (NF3e.Dest.IE <> 'ISENTO') then
-        if not pcnAuxiliar.ValidarIE(NF3e.Dest.IE, UF) then
+        if not ValidarIE(NF3e.Dest.IE, UF) then
           wAlerta('#41', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -588,7 +591,7 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#53', 'UF', 2, 2, 1, xUF, DSC_UF));
 
-  if not pcnAuxiliar.ValidarUF(xUF) then
+  if not ValidarUF(xUF) then
     wAlerta('#53', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, '#54', 'fone', 7, 12, 0,
@@ -1823,7 +1826,7 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#291', 'UF', 2, 2, 1, xUF, DSC_UF));
 
-  if not pcnAuxiliar.ValidarUF(xUF) then
+  if not ValidarUF(xUF) then
     wAlerta('#291', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, '#292', 'fone', 7, 12, 0,
@@ -1992,7 +1995,7 @@ begin
 
   xmlNode.AddChild('dhRecbto').Content :=
     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', NF3e.procNF3e.dhRecbto) +
-    GetUTC(CodigoParaUF(FNF3e.Ide.cUF), NF3e.procNF3e.dhRecbto);
+    GetUTC(CodigoUFparaUF(FNF3e.Ide.cUF), NF3e.procNF3e.dhRecbto);
 
   xmlNode.AddChild('nProt').Content := NF3e.procNF3e.nProt;
 

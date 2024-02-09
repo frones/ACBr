@@ -81,8 +81,9 @@ implementation
 
 uses
   ACBrDFeConsts,
-  ACBrNF3eConsts,
-  pcnAuxiliar;
+  ACBrDFeUtil,
+  ACBrUtil.Base,
+  ACBrNF3eConsts;
 
 { TDistDFeInt }
 

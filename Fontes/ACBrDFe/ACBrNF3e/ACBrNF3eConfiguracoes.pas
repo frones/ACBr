@@ -49,7 +49,7 @@ type
     FVersaoDF: TVersaoNF3e;
     FIdCSC: String;
     FCSC: String;
-    FVersaoQRCode: TpcnVersaoQrCode;
+    FVersaoQRCode: TVersaoQrCode;
 
     procedure SetVersaoDF(const Value: TVersaoNF3e);
     procedure SetIdCSC(const AValue: String);
@@ -64,7 +64,7 @@ type
     property VersaoDF: TVersaoNF3e read FVersaoDF write SetVersaoDF default ve100;
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
-    property VersaoQRCode: TpcnVersaoQrCode read FVersaoQRCode write FVersaoQRCode default veqr100;
+    property VersaoQRCode: TVersaoQrCode read FVersaoQRCode write FVersaoQRCode default veqr100;
   end;
 
   { TArquivosConfNF3e }
@@ -204,7 +204,7 @@ begin
   IdCSC        := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdCSC', IdCSC);
   CSC          := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CSC', CSC);
   VersaoDF     := TVersaoNF3e(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
-  VersaoQRCode := TpcnVersaoQrCode(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode)));
+  VersaoQRCode := TVersaoQrCode(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode)));
 end;
 
 procedure TGeralConfNF3e.SetIdCSC(const AValue: String);

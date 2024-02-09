@@ -64,7 +64,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar;
+  ACBrUtil.Base;
 
 { TConsStatServ }
 

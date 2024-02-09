@@ -1120,7 +1120,7 @@ type
   TIde = class(TObject)
   private
     FxJust: String;
-    FfinNF3e: TpcnFinalidadeNF3e;
+    FfinNF3e: TFinalidadeNF3e;
     FtpEmis: TACBrTipoEmissao;
     FnSiteAutoriz: TSiteAutorizador;
     FdhEmi: TDateTime;
@@ -1149,7 +1149,7 @@ type
     property tpEmis: TACBrTipoEmissao    read FtpEmis  write FtpEmis default teNormal;
     property nSiteAutoriz: TSiteAutorizador read FnSiteAutoriz write FnSiteAutoriz default sa0;
     property cMunFG: Integer             read FcMunFG  write FcMunFG;
-    property finNF3e: TpcnFinalidadeNF3e read FfinNF3e write FfinNF3e default fnNormal;
+    property finNF3e: TFinalidadeNF3e read FfinNF3e write FfinNF3e default fnNormal;
     property verProc: String             read FverProc write FverProc;
     property dhCont: TDateTime           read FdhCont  write FdhCont;
     property xJust: String               read FxJust   write FxJust;

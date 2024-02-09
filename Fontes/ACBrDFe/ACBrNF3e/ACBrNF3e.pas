@@ -62,7 +62,7 @@ type
     FDANF3e: TACBrNF3eDANF3eClass;
     FNotasFiscais: TNotasFiscais;
     FEventoNF3e: TEventoNF3e;
-    FStatus: TStatusACBrNF3e;
+    FStatus: TStatusNF3e;
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesNF3e;
@@ -104,8 +104,8 @@ type
       var URL: String; var Servico: String; var SoapAction: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
 
-    function AjustarVersaoQRCode( AVersaoQRCode: TpcnVersaoQrCode;
-      AVersaoXML: TVersaoNF3e): TpcnVersaoQrCode;
+    function AjustarVersaoQRCode( AVersaoQRCode: TVersaoQrCode;
+      AVersaoXML: TVersaoNF3e): TVersaoQrCode;
     function GetURLConsultaNF3e(const CUF: integer;
       const TipoAmbiente: TACBrTipoAmbiente;
       const Versao: Double): String;
@@ -120,9 +120,9 @@ type
     property WebServices: TWebServices read FWebServices write FWebServices;
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
     property EventoNF3e: TEventoNF3e read FEventoNF3e write FEventoNF3e;
-    property Status: TStatusACBrNF3e read FStatus;
+    property Status: TStatusNF3e read FStatus;
 
-    procedure SetStatus(const stNewStatus: TStatusACBrNF3e);
+    procedure SetStatus(const stNewStatus: TStatusNF3e);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
 
@@ -150,7 +150,7 @@ implementation
 uses
   dateutils, math,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
-  pcnAuxiliar, ACBrDFeSSL;
+  ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$R ACBrNF3eServicos.rc}
@@ -325,10 +325,7 @@ begin
     Result := ''
   else
   begin
-    if ASchemaEventoNF3e = schEnvEPEC then
-      xComplemento := GetNomeModeloDFe
-    else
-      xComplemento := '';
+    xComplemento := '';
 
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
               SchemaEventoToStr(ASchemaEventoNF3e) + xComplemento + '_v' +
@@ -357,13 +354,13 @@ begin
   Result := FloatToString(Versao, '.', '0.00');
 end;
 
-function TACBrNF3e.AjustarVersaoQRCode(AVersaoQRCode: TpcnVersaoQrCode;
-  AVersaoXML: TVersaoNF3e): TpcnVersaoQrCode;
+function TACBrNF3e.AjustarVersaoQRCode(AVersaoQRCode: TVersaoQrCode;
+  AVersaoXML: TVersaoNF3e): TVersaoQrCode;
 begin
   if (AVersaoXML <= ve100) then
     Result := veqr100
   else     // ve100 ou superior
-    Result := TpcnVersaoQrCode(max(Integer(AVersaoQRCode), Integer(veqr100)));
+    Result := TVersaoQrCode(max(Integer(AVersaoQRCode), Integer(veqr100)));
 end;
 
 procedure TACBrNF3e.LerServicoDeParams(LayOutServico: TLayOut;
@@ -394,7 +391,7 @@ function TACBrNF3e.GetURLConsultaNF3e(const CUF: integer;
   const TipoAmbiente: TACBrTipoAmbiente; const Versao: Double): String;
 var
   VersaoDFe: TVersaoNF3e;
-  VersaoQrCode: TpcnVersaoQrCode;
+  VersaoQrCode: TVersaoQrCode;
   ok: Boolean;
 begin
   VersaoDFe := DblToVersaoNF3e(ok, Versao);
@@ -410,7 +407,7 @@ function TACBrNF3e.GetURLQRCode(const CUF: integer;
 var
   idNF3e, sEntrada, urlUF, Passo2, sign: String;
   VersaoDFe: TVersaoNF3e;
-  VersaoQrCode: TpcnVersaoQrCode;
+  VersaoQrCode: TVersaoQrCode;
   Ok: Boolean;
 begin
   VersaoDFe := DblToVersaoNF3e(Ok, Versao);
@@ -451,7 +448,7 @@ begin
   Result := True;
 end;
 
-procedure TACBrNF3e.SetStatus(const stNewStatus: TStatusACBrNF3e);
+procedure TACBrNF3e.SetStatus(const stNewStatus: TStatusNF3e);
 begin
   if stNewStatus <> FStatus then
   begin

@@ -41,7 +41,7 @@ uses
   ACBrXmlBase,
   ACBrNF3eConfiguracoes, ACBrNF3eClass,
   ACBrNF3eXmlReader, ACBrNF3eXmlWriter,
-  pcnConversao, pcnAuxiliar, pcnLeitor;
+  pcnConversao, pcnLeitor;
 
 type
 
@@ -2320,7 +2320,7 @@ begin
     FNF3eW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FNF3eW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
     FNF3eW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FNF3eW.CSRT   := Configuracoes.RespTec.CSRT;

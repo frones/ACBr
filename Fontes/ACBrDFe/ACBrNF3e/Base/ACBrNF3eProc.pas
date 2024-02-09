@@ -91,10 +91,12 @@ type
 implementation
 
 uses
+  StrUtils,
   ACBrDFeConsts,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
+  ACBrUtil.DateTime,
   ACBrXmlDocument,
-  pcnAuxiliar,
   ACBrNF3eConsts;
 
 { TProcNF3e }
@@ -256,17 +258,17 @@ begin
       if ProtLido then
       begin
         if Copy(FverAplic,1,2) = 'SV' then
-          xUF := CodigoParaUF(StrToIntDef(Copy(FchNF3e, 1, 2), 0))
+          xUF := CodigoUFparaUF(StrToIntDef(Copy(FchNF3e, 1, 2), 0))
         else
           xUF := Copy(FverAplic,1,2);
 
         xProtNF3e := '<protNF3e versao="' + Versao + '">' +
-                       '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
+                       '<infProt Id="' + IfThen( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
                          '<tpAmb>' + TipoAmbienteToStr(FtpAmb) + '</tpAmb>' +
                          '<verAplic>' + FverAplic + '</verAplic>' +
                          '<chNF3e>' + FchNF3e + '</chNF3e>' +
                          '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) +
-                                        IIf(Versao >= '3.10', GetUTC(xUF,FdhRecbto),'') +
+                                        IfThen(Versao >= '3.10', GetUTC(xUF,FdhRecbto),'') +
                          '</dhRecbto>'+
                          '<nProt>' + FnProt + '</nProt>' +
                          '<digVal>' + FdigVal + '</digVal>' +

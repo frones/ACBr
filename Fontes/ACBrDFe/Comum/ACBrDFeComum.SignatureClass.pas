@@ -30,46 +30,60 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* Comum (Units de uso comum, ou seja, são utilizadas por diversos componentes)
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit ACBrDFeComum.SignatureClass;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
-09/02/2024
--- ACBrDFeComum.DistDFeInt --
-[+] Nova Unit para Distribuição DFe.
--- ACBrDFeComum.RetDistDFeInt --
-[+] Nova Unit para ler o retorno do Distribuição DFe.
--- ACBrDFeComum.SignatureClass --
-[+] Nova Unit com a classe TSignature.
-  Por: Italo Giurizzato Junior
--- Diversos --
-[*] Refactoring visando deixar de usar a unit pcnAuxiliar.
-  Por: Italo Giurizzato Junior
+uses
+  SysUtils, Classes;
 
-02/02/2024
--- ACBrDFeComum.Proc --
-[+] Nova Unit para montagem do grupo de informações do protocolo.
-  Por: Italo Giurizzato Junior
+type
 
-31/01/2024
--- ACBrDFeComum.ConsCad --
-[+] Nova Unit para Consultar Cadastro de Contribuintes.
--- ACBrDFeComum.RetConsCad --
-[+] Nova Unit para ler o retorno do Consultar Cadastro de Contribuintes.
--- ACBrDFeComum.ConsReciDFe --
-[+] Nova Unit para Consultar o DFe pelo numero do Recibo.
--- ACBrDFeComum.RetConsReciDFe --
-[+] Nova Unit para ler o retorno do Consultar o DFe pelo numero do Recibo.
--- ACBrDFeComum.ConsStatServ --
-[+] Nova Unit para Consultar o Status de Serviço.
--- ACBrDFeComum.RetConsStatServ --
-[+] Nova Unit para ler o retorno do Consultar o Status de Serviço.
-  Por: Italo Giurizzato Junior
+  { TSignature }
+
+  TSignature = class(TPersistent)
+  private
+    FURI: string;
+    FDigestValue: string;
+    FSignatureValue: string;
+    FX509Certificate: string;
+  public
+    procedure Assign(Source: TPersistent); override;
+
+    procedure Clear;
+  published
+    property URI: string             read FURI             write FURI;
+    property DigestValue: string     read FDigestValue     write FDigestValue;
+    property SignatureValue: string  read FSignatureValue  write FSignatureValue;
+    property X509Certificate: string read FX509Certificate write FX509Certificate;
+  end;
+
+implementation
+
+{ TSignature }
+
+procedure TSignature.Clear;
+begin
+  FURI := '';
+  FDigestValue := '';
+  FSignatureValue := '';
+  FX509Certificate := '';
+end;
+
+procedure TSignature.Assign(Source: TPersistent);
+begin
+  if Source is TSignature then
+  begin
+    URI := TSignature(Source).URI;
+    DigestValue := TSignature(Source).DigestValue;
+    SignatureValue := TSignature(Source).SignatureValue;
+    X509Certificate := TSignature(Source).X509Certificate;
+  end
+  else
+    inherited; 
+end;
+
+end.
+

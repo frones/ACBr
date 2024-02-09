@@ -112,28 +112,31 @@ begin
   Document := TACBrXmlDocument.Create;
 
   try
-    Document.LoadFromXml(XmlRetorno);
+    try
+      Document.LoadFromXml(XmlRetorno);
 
-    ANode := Document.Root;
+      ANode := Document.Root;
 
-    if ANode <> nil then
-    begin
-      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(Anode.Childrens.FindAnyNs('tpAmb'), tcStr));
-      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-      xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
-      cUF := ObterConteudoTag(Anode.Childrens.FindAnyNs('cUF'), tcInt);
-      dhRecbto := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-      tMed := ObterConteudoTag(ANode.Childrens.FindAnyNs('tMed'), tcInt);
-      dhRetorno := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRetorno'), tcDatHor);
-      xObs := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xObs'), tcStr));
+      if ANode <> nil then
+      begin
+        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+        tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(Anode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+        cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+        xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
+        cUF := ObterConteudoTag(Anode.Childrens.FindAnyNs('cUF'), tcInt);
+        dhRecbto := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+        tMed := ObterConteudoTag(ANode.Childrens.FindAnyNs('tMed'), tcInt);
+        dhRetorno := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRetorno'), tcDatHor);
+        xObs := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xObs'), tcStr));
+      end;
+
+      Result := True;
+    except
+      Result := False;
     end;
-
+  finally
     FreeAndNil(Document);
-    Result := True;
-  except
-    Result := False;
   end;
 end;
 

@@ -40,6 +40,7 @@ uses
   Classes, SysUtils, dateutils,
   blcksock, synacode,
   ACBrDFe, ACBrDFeWebService,
+  ACBrDFeUtil,
 //  ACBrDFeConversao,
   ACBrXmlBase,
   ACBrNFComNotasFiscais, ACBrNFComConfiguracoes,
@@ -48,7 +49,6 @@ uses
   ACBrDFeComum.Proc,
   ACBrNFComRetConsSit,
   ACBrNFComEnvEvento, ACBrNFComRetEnvEvento,
-  pcnAuxiliar,
   pcnConversao;
 
 type
@@ -570,7 +570,7 @@ begin
                            'Retorno: %s' + LineBreak +
                            'Observação: %s' + LineBreak),
                    [Fversao, TipoAmbienteToStr(FtpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
                     IntToStr(FTMed),
                     IfThen(FdhRetorno = 0, '', FormatDateTimeBr(FdhRetorno)),
@@ -862,7 +862,7 @@ begin
                     FNFComRetornoSincrono.verAplic,
                     IntToStr(FNFComRetornoSincrono.protNFCom.cStat),
                     FNFComRetornoSincrono.protNFCom.xMotivo,
-                    CodigoParaUF(FNFComRetornoSincrono.cUF),
+                    CodigoUFparaUF(FNFComRetornoSincrono.cUF),
                     FormatDateTimeBr(FNFComRetornoSincrono.dhRecbto),
                     FNFComRetornoSincrono.chNFCom]);
 end;
@@ -1767,7 +1767,7 @@ begin
                            'Protocolo: %s ' + LineBreak +
                            'Digest Value: %s ' + LineBreak),
                    [Fversao, FNFComChave, TipoAmbienteToStr(FtpAmb), FverAplic,
-                    IntToStr(FcStat), FXMotivo, CodigoParaUF(FcUF), FNFComChave,
+                    IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FNFComChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotNFCom.digVal]);
   {*)}
 end;

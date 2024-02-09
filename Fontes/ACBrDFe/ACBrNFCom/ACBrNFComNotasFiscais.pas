@@ -40,8 +40,7 @@ uses
   Classes, SysUtils, StrUtils,
   ACBrXmlBase,
   ACBrNFComConfiguracoes, ACBrNFComClass,
-  ACBrNFComXmlReader, ACBrNFComXmlWriter,
-  pcnAuxiliar;
+  ACBrNFComXmlReader, ACBrNFComXmlWriter;
 
 type
 
@@ -501,7 +500,7 @@ begin
       Emit.EnderEmit.fone := INIRec.ReadString(sSecao, 'fone', '');
       Emit.EnderEmit.email := INIRec.ReadString(sSecao, 'email', '');
 
-      Ide.cUF := INIRec.ReadInteger(sSecao, 'cUF', UFparaCodigo(Emit.EnderEmit.UF));
+      Ide.cUF := INIRec.ReadInteger(sSecao, 'cUF', UFparaCodigoUF(Emit.EnderEmit.UF));
       Ide.cMunFG := INIRec.ReadInteger(sSecao, 'cMunFG', Emit.EnderEmit.cMun);
 
       sSecao := 'dest';
@@ -1276,7 +1275,7 @@ begin
     FNFComW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FNFComW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
 
-    pcnAuxiliar.TimeZoneConf.Assign(Configuracoes.WebServices.TimeZoneConf);
+    TimeZoneConf.Assign(Configuracoes.WebServices.TimeZoneConf);
 
     FNFComW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FNFComW.CSRT   := Configuracoes.RespTec.CSRT;

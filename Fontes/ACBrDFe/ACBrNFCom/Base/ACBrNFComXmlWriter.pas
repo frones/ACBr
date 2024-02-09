@@ -148,10 +148,13 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings,
+  StrUtils,
+  Math,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
   ACBrDFeUtil,
-  ACBrValidador,
-  pcnAuxiliar,
+//  ACBrValidador,
   ACBrNFComConversao, ACBrNFComConsts;
 
 constructor TNFComXmlWriter.Create(AOwner: TNFCom);
@@ -196,9 +199,9 @@ var
   PaisBrasil: boolean;
 begin
   PaisBrasil := cPais = CODIGO_BRASIL;
-  cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
-  xMun := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
-  xUF := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
+  cMun := IfThen(PaisBrasil, vcMun, CMUN_EXTERIOR);
+  xMun := IfThen(PaisBrasil, vxMun, XMUN_EXTERIOR);
+  xUF := IfThen(PaisBrasil, vxUF, UF_EXTERIOR);
 
   if Opcoes.NormatizarMunicipios then
     if ((EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR)) then
@@ -359,7 +362,7 @@ begin
                                                        NFCom.Ide.cDV, DSC_CDV));
 
   Result.AppendChild(AddNode(tcStr, '#12', 'dhEmi', 25, 25, 1,
-    DateTimeTodh(NFCom.ide.dhEmi) + GetUTC(CodigoParaUF(NFCom.ide.cUF),
+    DateTimeTodh(NFCom.ide.dhEmi) + GetUTC(CodigoUFparaUF(NFCom.ide.cUF),
     NFCom.ide.dhEmi), DSC_DHEMI));
 
   Result.AppendChild(AddNode(tcStr, '#13', 'tpEmis', 1, 1, 1,
@@ -397,7 +400,7 @@ begin
   if (NFCom.Ide.dhCont > 0) or (NFCom.Ide.xJust <> '') then
   begin
     Result.AppendChild(AddNode(tcStr, '#21', 'dhCont', 25, 25, 1,
-      DateTimeTodh(NFCom.ide.dhCont) + GetUTC(CodigoParaUF(NFCom.ide.cUF),
+      DateTimeTodh(NFCom.ide.dhCont) + GetUTC(CodigoUFparaUF(NFCom.ide.cUF),
       NFCom.ide.dhCont), DSC_DHCONT));
 
     Result.AppendChild(AddNode(tcStr, '#22', 'xJust', 15, 256, 1,
@@ -425,7 +428,7 @@ begin
       wAlerta('#25', 'IE', DSC_IE, ERR_MSG_VAZIO)
     else
     begin
-      if not pcnAuxiliar.ValidarIE(NFCom.Emit.IE, CodigoParaUF(NFCom.Ide.cUF)) then
+      if not ValidarIE(NFCom.Emit.IE, CodigoUFparaUF(NFCom.Ide.cUF)) then
         wAlerta('#25', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -480,7 +483,7 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#38', 'UF', 2, 2, 1, xUF, DSC_UF));
 
-  if not pcnAuxiliar.ValidarUF(xUF) then
+  if not ValidarUF(xUF) then
     wAlerta('#38', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, '#39', 'fone', 7, 12, 0,
@@ -528,7 +531,7 @@ begin
       Result.AppendChild(AddNode(tcStr, '#47', 'IE', 0, 14, 1, nIE, DSC_IE));
 
       if (Opcoes.ValidarInscricoes) and (nIE <> 'ISENTO') then
-        if not pcnAuxiliar.ValidarIE(nIE, UF) then
+        if not ValidarIE(nIE, UF) then
           wAlerta('#47', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -575,7 +578,7 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#57', 'UF', 2, 2, 1, xUF, DSC_UF));
 
-  if not pcnAuxiliar.ValidarUF(xUF) then
+  if not ValidarUF(xUF) then
     wAlerta('#57', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, '#58', 'fone', 7, 12, 0,
@@ -1354,7 +1357,7 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#291', 'UF', 2, 2, 1, xUF, DSC_UF));
 
-  if not pcnAuxiliar.ValidarUF(xUF) then
+  if not ValidarUF(xUF) then
     wAlerta('#291', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, '#292', 'fone', 7, 12, 0,
@@ -1472,7 +1475,7 @@ begin
 
   xmlNode.AddChild('dhRecbto').Content :=
     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', NFCom.procNFCom.dhRecbto) +
-    GetUTC(CodigoParaUF(FNFCom.Ide.cUF), NFCom.procNFCom.dhRecbto);
+    GetUTC(CodigoUFparaUF(FNFCom.Ide.cUF), NFCom.procNFCom.dhRecbto);
 
   xmlNode.AddChild('nProt').Content := NFCom.procNFCom.nProt;
 

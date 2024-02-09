@@ -284,7 +284,10 @@ type
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil.Strings ;
+uses
+  StrUtils,
+  Math,
+  ACBrUtil.Strings;
 
 { TOcorrencias }
 
@@ -347,7 +350,7 @@ begin
                 FTxt.LFill(Cabecalho.Data        , 'ddmmyy', false)+
                 FTxt.RFill(OnlyNumber(TimeToStr(Cabecalho.Hora)), 4, '0') +
                 FTxt.RFill(Cabecalho.Id, 12)                       +
-                FTxt.RFill(Cabecalho.Filler, iif(Versao = ve50, 155, 25)) ) ;
+                FTxt.RFill(Cabecalho.Filler, IfThen(Versao = ve50, 155, 25)) ) ;
 
   for i := 0 to InfoOcor.Count - 1 do
   begin
@@ -379,15 +382,15 @@ begin
   end;
   Conteudo.Add( Registro.IdRegistro +
                 FTxt.RFill(Registro.IdDocto, 14) +
-                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 233, 103)) ) ;
+                FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 233, 103)) ) ;
 end;
 
 procedure TACBrEDIOcorrencia.GerarTransportadora( Registro: TTransportadora ) ;
 begin
   Conteudo.Add( Registro.IdRegistro +
                 FTxt.RFill( OnlyNumber( Registro.CNPJ ), 14) +
-                FTxt.RFill( Registro.Razao, iif( Versao = ve50, 50, 40)) +
-                FTxt.RFill( Registro.Filler, iif( Versao = ve50, 183, 63) ) ) ;
+                FTxt.RFill( Registro.Razao, IfThen( Versao = ve50, 50, 40)) +
+                FTxt.RFill( Registro.Filler, IfThen( Versao = ve50, 183, 63) ) ) ;
 
   GerarOcorrencia( Registro.OcorEntrega )  ;
 end;
@@ -398,8 +401,8 @@ var
 begin
   xTexto := Registro.IdRegistro + OnlyNumber(Registro.CNPJEmissorNF)        +
                    FTxt.RFill(Registro.SerieNF,3)                           +
-                   FTxt.LFill(Registro.nNF, iif( Versao = ve50, 9, 8) )     +
-                   FTxt.LFill(Registro.cOcorrencia, iif(Versao = ve50, 3, 2))+
+                   FTxt.LFill(Registro.nNF, IfThen( Versao = ve50, 9, 8) )     +
+                   FTxt.LFill(Registro.cOcorrencia, IfThen(Versao = ve50, 3, 2))+
                    FTxt.LFill(Registro.dtOcorrencia, 'ddmmyyyy', false)     +
                    FTxt.LFill(Registro.hrOcorrencia, 'hhmm', false)         +
                    FTxt.LFill(Registro.cObsOcorrencia, 2)                   ;
@@ -460,11 +463,11 @@ begin
   if Registro.CNPJContratante <> '' then
   begin
     xTexto := Registro.IdRegistro + FTxt.RFill(OnlyNumber(Registro.CNPJContratante), 14) +
-                iif(Versao = ve50, FTxt.RFill(OnlyNumber(Registro.CNPJEmissor),14), '') +
+                IfThen(Versao = ve50, FTxt.RFill(OnlyNumber(Registro.CNPJEmissor),14), '') +
                                    FTxt.LFill(Registro.FilialEmissor, 10)+
                                    FTxt.RFill(Registro.Serie, 5)         +
                                    FTxt.RFill(Registro.nCTe, 12)         +
-                   FTxt.RFill(Registro.Filler, iif(Versao = ve50, 192, 76)) ;
+                   FTxt.RFill(Registro.Filler, IfThen(Versao = ve50, 192, 76)) ;
     Conteudo.Add( xTexto ) ;
   end;
 end;
@@ -643,7 +646,7 @@ function TACBrEDIOcorrencia.LerCabecalhoDocto( nRow: Integer ): Integer ;
 var
   cReg: String ;
 begin
-  cReg := iif( Versao = ve50, '540', '340') ;
+  cReg := IfThen( Versao = ve50, '540', '340') ;
 
   while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
   begin
@@ -669,7 +672,7 @@ function TACBrEDIOcorrencia.LerTransportadora( Registro: TTransportadora; nRow: 
 var
   cReg: String ;
 begin
-  cReg := iif( Versao = ve50, '541', '341') ;
+  cReg := IfThen( Versao = ve50, '541', '341') ;
 
   while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
   begin
@@ -699,7 +702,7 @@ function TACBrEDIOcorrencia.LerOcorrencias( Registro: TOcorEntrega ; nRow: Integ
 var
   cReg: String ;
 begin
-  cReg := iif( Versao = ve50, '542', '342') ;
+  cReg := IfThen( Versao = ve50, '542', '342') ;
 
   while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
   begin

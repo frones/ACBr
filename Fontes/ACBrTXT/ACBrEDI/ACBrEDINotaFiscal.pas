@@ -664,7 +664,10 @@ type
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil.Strings ;
+uses
+  StrUtils,
+  Math,
+  ACBrUtil.Strings;
 
 { TNotaFiscais }
 
@@ -701,7 +704,7 @@ var
   cReg: String ;
 begin
   // Registros 500 ou 310
-  cReg := iif( Versao = ve50, '500', '310') ;
+  cReg := IfThen( Versao = ve50, '500', '310') ;
   if Copy(Conteudo.Strings[nRow],1,3) <> cReg then
     raise Exception.Create('Erro: Registro Indentioficação do Arquivo não informado...,'+#13+
                            'Este registro é Obrigatório !!' );
@@ -731,7 +734,7 @@ var
   cReg: String ;
 begin
   // Registros 501 ou 311
-  cReg := iif( Versao = ve50, '501', '311') ;
+  cReg := IfThen( Versao = ve50, '501', '311') ;
   if Copy(Conteudo.Strings[nRow],1,3) <> cReg then
     raise Exception.Create('Erro: Registro Informações da Embarcadora não informado...,'+#13+
                            'Este registro é Obrigatório !!' );
@@ -783,7 +786,7 @@ var
   cReg: String ;
 begin
   // Registro  502 apenas versão  5.0
-  cReg := iif( Versao = ve50, '502', '' ) ;
+  cReg := IfThen( Versao = ve50, '502', '' ) ;
   if cReg = Copy( Conteudo.Strings[nRow], 1, 3) then
   begin
     with Registro do
@@ -811,7 +814,7 @@ var
   cReg: String ;
 begin
   // Registros 503 ou 312
-  cReg := iif( Versao = ve50, '503', '312') ;
+  cReg := IfThen( Versao = ve50, '503', '312') ;
   if Copy(Conteudo.Strings[nRow],1,3) <> cReg then
     raise Exception.Create('Erro: Registro Informações do Destinatário não informado...,'+#13+
                            'Este registro é Obrigatório !!' );
@@ -868,7 +871,7 @@ var
   cReg: String ;
 begin
   // Registros 504 apenas versão 5.0
-  cReg := iif( Versao = ve50, '504', '' ) ;
+  cReg := IfThen( Versao = ve50, '504', '' ) ;
 
   if cReg = Copy( Conteudo.Strings[nRow], 1, 3) then
   begin
@@ -902,7 +905,7 @@ var
   Ok: Boolean ;
 begin
   // Registros 505 ou 313
-  cReg := iif( Versao = ve50, '505', '313' ) ;
+  cReg := IfThen( Versao = ve50, '505', '313' ) ;
   if Copy(Conteudo.Strings[nRow],1,3) <> cReg then
     raise Exception.Create('Erro: Registro Informações das Notas não informado...,'+#13+
                            'Este registro é Obrigatório !!' );
@@ -991,7 +994,7 @@ begin
                                            LerInfoEntrega      ( InfoEntrega,
                                            LerIdCargas         ( IdCargas,
                                            LerCalculoFrete     ( CalculoFrete,
-                       iif( Versao = ve50, LerValoresNF        ( ValoresNF, nRow ), nRow) ) ) ) ) ) ) ) ;
+                       IfThen( Versao = ve50, LerValoresNF        ( ValoresNF, nRow ), nRow) ) ) ) ) ) ) ) ;
     end;
   end;
   result := nRow ;
@@ -1100,7 +1103,7 @@ var
   cReg: String ;
   Ok: Boolean ;
 begin
-  cReg := iif( Versao = ve50, '507', '') ;
+  cReg := IfThen( Versao = ve50, '507', '') ;
   if cReg = Copy(Conteudo.Strings[nRow], 1, 3) then
   begin
     with Registro do
@@ -1145,7 +1148,7 @@ function TACBrEDINotaFiscais.LerIdCargas( Registro: TIdCargas; nRow: Integer ): 
 var
   cReg: String ;
 begin
-  cReg := iif( Versao = ve50, '508', '') ;
+  cReg := IfThen( Versao = ve50, '508', '') ;
   if cReg = Copy(Conteudo.Strings[nRow], 1, 3) then
   begin
     with Registro.New do
@@ -1165,7 +1168,7 @@ function TACBrEDINotaFiscais.LerInfoEntrega( Registro: TInfoEntrega; nRow: Integ
 var
   cReg: String ;
 begin
-  cReg := iif( Versao = ve50, '509', '312' ) ;
+  cReg := IfThen( Versao = ve50, '509', '312' ) ;
   while Copy(Conteudo.Strings[nRow],1,3) = cReg do
   begin
     with Registro.New do
@@ -1202,7 +1205,7 @@ var
   cReg: String ;
   nPos, I: Integer ;
 begin
-  cReg     := iif( Versao = ve50, '511', '314' );
+  cReg     := IfThen( Versao = ve50, '511', '314' );
   while Copy(Conteudo.Strings[nRow],1 ,3) = cReg do
   begin
     if Versao = ve50 then
@@ -1253,7 +1256,7 @@ function TACBrEDINotaFiscais.LerInfoConsignatario( Registro: TInfoTomador; nRow:
 var
   cReg: String ;
 begin
-  cReg := iif( Versao = ve50, '513', '315' ) ;
+  cReg := IfThen( Versao = ve50, '513', '315' ) ;
   if cReg = Copy( Conteudo.Strings[nRow], 1, 3) then
   begin
     with Registro do
@@ -1297,7 +1300,7 @@ function TACBrEDINotaFiscais.LerInfoRedespacho( Registro: TInfoRedespacho; nRow:
 var
   cReg: String ;
 begin
-  cReg := iif( Versao = ve50, '514', '316' ) ;
+  cReg := IfThen( Versao = ve50, '514', '316' ) ;
   while cReg = Copy( Conteudo.Strings[nRow], 1, 3) do
   begin
     with Registro do
@@ -1343,7 +1346,7 @@ function TACBrEDINotaFiscais.LerInfoTomador( Registro: TInfoTomador; nRow: Integ
 var
   cReg: String ;
 begin
-  cReg := iif( Versao = ve50, '515', '317' ) ;
+  cReg := IfThen( Versao = ve50, '515', '317' ) ;
   if cReg = Copy( Conteudo.Strings[nRow], 1, 3) then
   begin
     with Registro do
@@ -1388,7 +1391,7 @@ var
   cReg: string ;
 begin
   // Registros 519 ou 318
-  cReg := iif( Versao = ve50, '519', '318') ;
+  cReg := IfThen( Versao = ve50, '519', '318') ;
   if Copy(Conteudo.Strings[nRow], 1, 3) <> cReg then
     raise Exception.Create('Erro: Registro Totalizador das Notas não informado...,'+#13+
                            'Este registro é Obrigatório !!' );
@@ -1637,7 +1640,7 @@ begin
                      FTxt.LFill(Cabecalho.Data, 'ddmmyy', false) +
                      Copy(OnlyNumber(TimeToStr(FCabecalho.Hora)),1,4)      +
                      IntToStr(Cabecalho.Sequencia) ;
-             tam  := iif( Versao = ve31, 145, 135) ;
+             tam  := IfThen( Versao = ve31, 145, 135) ;
            end;
   end;
 
@@ -1680,7 +1683,7 @@ begin
       end;
       Conteudo.Add( IdRegistro +
                 FTxt.RFill(IdDocto, 14) +
-                FTxt.RFill(Filler, iif( Versao = ve50, 303, 223)) ) ;
+                FTxt.RFill(Filler, IfThen( Versao = ve50, 303, 223)) ) ;
 
       GerarInfoEmbarcadora( InfoEmbarcadora ) ;
 
@@ -1703,32 +1706,32 @@ begin
     with Registro.Items[i] do
     begin
       Conteudo.Add( IdRegistro +
-                    iif( Versao = ve50, FTxt.RFill(Razao, 50), '' ) +
+                    IfThen( Versao = ve50, FTxt.RFill(Razao, 50), '' ) +
 
                   FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
                   FTxt.RFill(OnlyNumber(IE)     , 15) +
 
-                  iif( Versao = ve50, FTxt.RFill(OnlyNumber(IEST), 15) +
+                  IfThen( Versao = ve50, FTxt.RFill(OnlyNumber(IEST), 15) +
                                       FTxt.RFill(IM              , 15), '') +
 
-                  iif( Versao = ve50, FTxt.RFill(Endereco, 50), FTxt.RFill(Endereco, 40) ) +
+                  IfThen( Versao = ve50, FTxt.RFill(Endereco, 50), FTxt.RFill(Endereco, 40) ) +
 
-                  iif( Versao = ve50, FTxt.RFill(Bairro, 35), '') +
+                  IfThen( Versao = ve50, FTxt.RFill(Bairro, 35), '') +
 
                   FTxt.RFill(Cidade             , 35) +
                   FTxt.LFill(Cep                ,  9) +
 
-                  iif( Versao = ve50, FTxt.LFill(cMunicipio,  9), '') +
+                  IfThen( Versao = ve50, FTxt.LFill(cMunicipio,  9), '') +
 
                   FTxt.RFill(UF                 ,  9) +
                   FTxt.LFill(dtEmbarque         , 'ddmmyyyy', false) +
 
-                  iif( Versao = ve50, FTxt.RFill(AreaFrete,  4) +
+                  IfThen( Versao = ve50, FTxt.RFill(AreaFrete,  4) +
                                       FTxt.RFill(Telefone , 25), '') +
 
-                  iif( Versao = ve50, '', FTxt.RFill(Razao, 40)) +
+                  IfThen( Versao = ve50, '', FTxt.RFill(Razao, 40)) +
 
-                  FTxt.RFill(Filler, iif( Versao = ve50, 24, 67) ) ) ;
+                  FTxt.RFill(Filler, IfThen( Versao = ve50, 24, 67) ) ) ;
 
       GerarLocalColeta( LocalColeta ) ;
       GerarInfoDestinatario( InfoDestinatario ) ;
@@ -1772,20 +1775,20 @@ begin
     with Registro.Items[i] do
     begin
       Conteudo.Add( idRegistro +
-                    FTxt.RFill(Razao, iif( Versao = ve50, 50, 40)) +
+                    FTxt.RFill(Razao, IfThen( Versao = ve50, 50, 40)) +
                     FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
                     FTxt.RFill(OnlyNumber(IE), 15) +
 
-                    iif( Versao = ve50, FTxt.RFill(InsSuframa, 15), '') +
+                    IfThen( Versao = ve50, FTxt.RFill(InsSuframa, 15), '') +
 
-                    FTxt.RFill(Endereco, iif( Versao = ve50, 50, 40)) +
-                    FTxt.RFill(Bairro, iif( Versao = ve50, 35, 20)) +
+                    FTxt.RFill(Endereco, IfThen( Versao = ve50, 50, 40)) +
+                    FTxt.RFill(Bairro, IfThen( Versao = ve50, 35, 20)) +
                     FTxt.RFill(Cidade, 35) +
                     FTxt.LFill(Cep,  9) +
                     FTxt.LFill(cMunicipio,  9) +
                     FTxt.RFill(UF,  9) +
 
-                    iif( Versao = ve50, FTxt.RFill(Telefone , 35)   +
+                    IfThen( Versao = ve50, FTxt.RFill(Telefone , 35)   +
                                         FTxt.LFill(cPais    ,  4)   +
                                         FTxt.RFill(AreaFrete,  4)   ,
                                         FTxt.RFill(AreaFrete,  4)   +
@@ -1793,9 +1796,9 @@ begin
 
                     FTxt.LFill(Tipo,  1) +
 
-                    iif( Versao = ve50, FTxt.RFill(TpComercio,  1), '') +
+                    IfThen( Versao = ve50, FTxt.RFill(TpComercio,  1), '') +
 
-                    FTxt.RFill(Filler, iif( Versao = ve50, 31, 6) )  ) ;
+                    FTxt.RFill(Filler, IfThen( Versao = ve50, 31, 6) )  ) ;
       GerarLocalEntrega( LocalEntrega ) ;
       GerarNotasFiscais( InfoNotas ) ;
     end;
@@ -2163,17 +2166,17 @@ begin
     with Registro do
     begin
       Conteudo.Add( IdRegistro +
-                    FTxt.RFill(Razao              , iif( Versao = ve50, 50, 40)) +
+                    FTxt.RFill(Razao              , IfThen( Versao = ve50, 50, 40)) +
                     FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
                     FTxt.RFill(IE                 , 15) +
-                    FTxt.RFill(Endereco           , iif( Versao = ve50, 50, 40)) +
-                    FTxt.RFill(Bairro             , iif( Versao = ve50, 35, 20)) +
+                    FTxt.RFill(Endereco           , IfThen( Versao = ve50, 50, 40)) +
+                    FTxt.RFill(Bairro             , IfThen( Versao = ve50, 35, 20)) +
                     FTxt.RFill(Cidade             , 35) +
                     FTxt.LFill(Cep                , 9) +
                     FTxt.LFill(cMunicipio         , 9) +
                     FTxt.RFill(UF                 , 9) +
                     FTxt.RFill(Telefone           , 35) +
-                    FTxt.RFill(Filler             , iif( Versao = ve50, 56, 11)) ) ;
+                    FTxt.RFill(Filler             , IfThen( Versao = ve50, 56, 11)) ) ;
     end;
   end;
 end;
@@ -2186,22 +2189,22 @@ begin
     with Registro do
     begin
       Conteudo.Add( IdRegistro +
-                    FTxt.RFill(Razao              , iif( Versao = ve50, 50, 40)) +
+                    FTxt.RFill(Razao              , IfThen( Versao = ve50, 50, 40)) +
                     FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
                     FTxt.RFill(IE                 , 15) +
-                    FTxt.RFill(Endereco           , iif( Versao = ve50, 50, 40)) +
-                    FTxt.RFill(Bairro             , iif( Versao = ve50, 35, 20)) +
+                    FTxt.RFill(Endereco           , IfThen( Versao = ve50, 50, 40)) +
+                    FTxt.RFill(Bairro             , IfThen( Versao = ve50, 35, 20)) +
                     FTxt.RFill(Cidade             , 35) +
                     FTxt.LFill(Cep                ,  9) +
                     FTxt.LFill(cMunicipio         ,  9) +
                     FTxt.RFill(UF                 ,  9) +
 
-                    iif( Versao = ve50, FTxt.RFill(Telefone, 35) +
+                    IfThen( Versao = ve50, FTxt.RFill(Telefone, 35) +
                                         FTxt.RFill(AreaFrete, 4),
                                         FTxt.RFill(AreaFrete, 4) +
                                         FTxt.RFill(Telefone, 35) ) +
 
-                    FTxt.RFill(Filler, iif( Versao = ve50, 52, 7)) ) ;
+                    FTxt.RFill(Filler, IfThen( Versao = ve50, 52, 7)) ) ;
     end;
   end;
 end;
@@ -2214,17 +2217,17 @@ begin
     with Registro do
     begin
       Conteudo.Add( IdRegistro +
-                    FTxt.RFill(Razao              , iif( Versao = ve50, 50, 40)) +
+                    FTxt.RFill(Razao              , IfThen( Versao = ve50, 50, 40)) +
                     FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
                     FTxt.RFill(IE                 , 15) +
-                    FTxt.RFill(Endereco           , iif( Versao = ve50, 50, 40)) +
-                    FTxt.RFill(Bairro             , iif( Versao = ve50, 35, 20)) +
+                    FTxt.RFill(Endereco           , IfThen( Versao = ve50, 50, 40)) +
+                    FTxt.RFill(Bairro             , IfThen( Versao = ve50, 35, 20)) +
                     FTxt.RFill(Cidade             , 35) +
                     FTxt.LFill(Cep                ,  9) +
                     FTxt.LFill(cMunicipio         ,  9) +
                     FTxt.RFill(UF                 ,  9) +
                     FTxt.RFill(Telefone           , 35) +
-                    FTxt.RFill(Filler             , iif( Versao = ve50, 56, 11)) ) ;
+                    FTxt.RFill(Filler             , IfThen( Versao = ve50, 56, 11)) ) ;
     end;
   end;
 end;

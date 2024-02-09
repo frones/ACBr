@@ -312,7 +312,9 @@ type
 
 implementation
 
-uses pcnAuxiliar;
+uses
+  Math,
+  StrUtils;
 
 { TDoctoCobranca }
 
@@ -395,7 +397,7 @@ begin
                 FTxt.LFill(Cabecalho.Data        , 'ddmmyy', false)+
                 FTxt.RFill(OnlyNumber(TimeToStr(Cabecalho.Hora)),4)+
                 FTxt.RFill(Cabecalho.Id,12)                        +
-                FTxt.RFill(Cabecalho.Filler, iif( Versao = ve50, 185, 75)) ) ;
+                FTxt.RFill(Cabecalho.Filler, IfThen( Versao = ve50, 185, 75)) ) ;
 
   for i := 0 to InfoDocCob.Count - 1 do
   begin
@@ -424,7 +426,7 @@ begin
                      IntToStr(Cabecalho.Sequencia) ;
   end;
   Conteudo.Add( Registro.IdRegistro + FTxt.RFill(Registro.IdDocto,14) +
-                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 263, 153)) ) ;
+                FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 263, 153)) ) ;
 end;
 
 procedure TACBrEDICobranca.GerarTransportadora( Registro: TTransportadora ) ;
@@ -435,8 +437,8 @@ begin
 
   Conteudo.Add( Registro.IdRegistro +
                 FTxt.LFill(OnlyNumber(Registro.CNPJ), 14)                +
-                FTxt.RFill(Registro.Razao, iif( Versao = ve50, 50, 40) ) +
-                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 213, 113)) ) ;
+                FTxt.RFill(Registro.Razao, IfThen( Versao = ve50, 50, 40) ) +
+                FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 213, 113)) ) ;
 
   GerarDoctoCobranca( Registro.DoctoCobranca ) ;
 end;
@@ -455,16 +457,16 @@ begin
             FTxt.VLFill(Registro.FvDocto    , 15, 2, '0')          +
             FTxt.RFill(TipoCobrancaToStr(Registro.TipoCobranca), 3)+
 
-            iif(Versao = ve50, FTxt.VLFill(Registro.pMulta,  4, 2, '0'),
+            IfThen(Versao = ve50, FTxt.VLFill(Registro.pMulta,  4, 2, '0'),
                                FTxt.VLFill(Registro.vICMS , 15, 2, '0'))+
 
             FTxt.VLFill(Registro.vJurosDiario, 15, 2, '0')        +
             FTxt.LFill(Registro.dtLimetePag , 'ddmmyyyy', false)  +
             FTxt.VLFill(Registro.vDescto    , 15, 2, '0')         +
 
-            iif(Versao = ve50, FTxt.LFill(Registro.cBanco, 5, 0, false, '0'),'') +
+            IfThen(Versao = ve50, FTxt.LFill(Registro.cBanco, 5, 0, false, '0'),'') +
 
-            FTxt.RFill(Registro.xBanco,iif(Versao = ve50, 30, 35))+
+            FTxt.RFill(Registro.xBanco,IfThen(Versao = ve50, 30, 35))+
             FTxt.LFill(Registro.nAgencia , 4, 0, false, '0')      +
             FTxt.RFill(Registro.dvAgencia, 1)                     +
             FTxt.LFill(Registro.nConta   , 10, 0, false, '0')     +
@@ -480,7 +482,7 @@ begin
             FTxt.RFill(Registro.chNFe, 45)                        +
             FTxt.RFill(Registro.xProtocoloNFe, 15)                ;
 
-  Conteudo.Add( xTexto + FTxt.RFill(Registro.Filler, iif( Versao = ve50, 20, 3)) ) ;
+  Conteudo.Add( xTexto + FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 20, 3)) ) ;
 end;
 
 procedure TACBrEDICobranca.GerarImpostos( Registro: TImpostos );
@@ -536,7 +538,7 @@ begin
               SimNaoEdiToStr(Registro.Items[i].CTDevolucao)   ;
 
     Conteudo.Add( xTexto + FTxt.RFill(Registro.Items[i].Filler,
-                           iif( Versao = ve50, 86, 75)) ) ;
+                           IfThen( Versao = ve50, 86, 75)) ) ;
   end;
 end;
 
@@ -549,7 +551,7 @@ begin
   begin
     xTexto := Registro.Items[i].IdRegistro +
               FTxt.RFill(Registro.Items[i].xSerie   , 3)                     +
-              FTxt.LFill(Registro.Items[i].xNumero  , iif(Versao = ve50, 9, 8))+
+              FTxt.LFill(Registro.Items[i].xNumero  , IfThen(Versao = ve50, 9, 8))+
               FTxt.LFill(Registro.Items[i].dtEmissao, 'ddmmyyyy', false)   +
               FTxt.VLFill(Registro.Items[i].qPesoNF ,  7, 2, '0')          +
               FTxt.VLFill(Registro.Items[i].vNF     , 15, 2, '0')          +
@@ -563,7 +565,7 @@ begin
               SimNaoEDIToStr(Registro.Items[i].Devolucao) ;
 
     Conteudo.Add( xTexto + FTxt.RFill(Registro.Items[i].Filler,
-                           iif( Versao = ve50, 140, 112)) ) ;
+                           IfThen( Versao = ve50, 140, 112)) ) ;
   end;
 end;
 
@@ -596,7 +598,7 @@ begin
   Conteudo.Add( Registro.IdRegistro +
                 FormatFloat('0000', Registro.nQtde) +
                 FTxt.VLFill(Registro.vTotal, 15, 2, '0') +
-                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 258, 148)) ) ;
+                FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 258, 148)) ) ;
 end;
 
 constructor TACBrEDICobranca.Create(AOwner: TComponent) ;
@@ -708,7 +710,7 @@ function TACBrEDICobranca.LerCabecalhoDocto( Registro: TInfoDocCob; nRow: Intege
 var
   cReg: string ;
 begin
-  cReg := iif( Versao = ve50, '550', '350') ;
+  cReg := IfThen( Versao = ve50, '550', '350') ;
 
   while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
   begin
@@ -734,7 +736,7 @@ function TACBrEDICobranca.LerTransportadora( Registro: TTransportadora; nRow: In
 var
   cReg: string ;
 begin
-  cReg := iif( Versao = ve50, '551', '351') ;
+  cReg := IfThen( Versao = ve50, '551', '351') ;
 
   if Copy(Conteudo.Strings[nRow], 1, 3) = cReg then
   begin
@@ -764,7 +766,7 @@ var
   cReg: string ;
   ok  : Boolean ;
 begin
-  cReg := iif( Versao = ve50, '552', '352') ;
+  cReg := IfThen( Versao = ve50, '552', '352') ;
 
   while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
   begin
@@ -855,7 +857,7 @@ var
   ok  : Boolean ;
   cReg: string ;
 begin
-  cReg := iif( Versao = ve50, '555', '353') ;
+  cReg := IfThen( Versao = ve50, '555', '353') ;
 
   if Copy(Conteudo.Strings[nRow], 1, 3) <> cReg then
     raise Exception.Create('Nenhum Registro de Conhecimentos informado...,'+#13+
@@ -902,7 +904,7 @@ var
   ok: boolean ;
   cReg: string ;
 begin
-  cReg := iif( Versao = ve50, '556', '354') ;
+  cReg := IfThen( Versao = ve50, '556', '354') ;
 
   while Copy(Conteudo.Strings[nRow], 1, 3) = cReg do
   begin
@@ -943,7 +945,7 @@ function TACBrEDICobranca.LerTotCobranca( Registro: TTotCobranca; nRow: Integer 
 var
   cReg: string ;
 begin
-  cReg := iif( Versao = ve50, '559', '355') ;
+  cReg := IfThen( Versao = ve50, '559', '355') ;
 
   if Copy(Conteudo.Strings[nRow], 1,  3) = cReg then
   begin

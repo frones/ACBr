@@ -333,8 +333,8 @@ type
 
 implementation
 
-uses pcnAuxiliar,
-     ACBrUtil.Strings ;
+uses
+  ACBrUtil.Strings;
 
 { TNotaFiscais }
 

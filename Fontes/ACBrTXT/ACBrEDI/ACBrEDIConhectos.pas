@@ -427,7 +427,10 @@ type
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil.Strings;
+uses
+  StrUtils,
+  Math,
+  ACBrUtil.Strings;
 
 { TConhectoEmbarcado }
 
@@ -501,7 +504,7 @@ begin
                 FTxt.LFill(Cabecalho.Data, 'ddmmyy', false) +
                 FTxt.RFill(OnlyNumber(TimeToStr(Cabecalho.Hora)),4) +
                 FTxt.RFill(Cabecalho.Id,12) +
-                FTxt.RFill(Cabecalho.Filler, iif( Versao = ve50, 255, 585)) ) ;
+                FTxt.RFill(Cabecalho.Filler, IfThen( Versao = ve50, 255, 585)) ) ;
 
   for i := 0 to InfoConEmb.Count - 1 do
   begin
@@ -533,7 +536,7 @@ begin
   end;
   Conteudo.Add( Registro.IdRegistro +
                 FTxt.RFill(Registro.IdDocto, 14) +
-                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 333, 663)) ) ;
+                FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 333, 663)) ) ;
 end;
 
 procedure TACBrEDIConhectos.GerarTransportadora( Registro: TTransportadora ) ;
@@ -541,8 +544,8 @@ begin
   // Registro 521 ou 321 Identificação da Transportadora
   Conteudo.Add( Registro.IdRegistro +
                 FTxt.LFill(OnlyNumber(Registro.CNPJ), 14, false, '0') +
-                FTxt.RFill(Registro.Razao, iif( Versao = ve50, 50, 40)) +
-                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 283, 623)) ) ;
+                FTxt.RFill(Registro.Razao, IfThen( Versao = ve50, 50, 40)) +
+                FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 283, 623)) ) ;
 
   GerarConhectoEmbarcado( Registro.ConhectoEmbarcado ) ;
 end;
@@ -571,7 +574,7 @@ begin
             FTxt.VLFill(Registro.ValoresConhecto.vPedagio     , 15, 2, '0') +
             FTxt.VLFill(Registro.ValoresConhecto.vAdemeGris   , 15, 2, '0') +
             SimNaoSTToStr(Registro.ValoresConhecto.ST)                      +
-            FTxt.RFill( iif( Versao=ve31,Registro.Filler,Registro.CFOP), 3) +
+            FTxt.RFill( IfThen( Versao=ve31,Registro.Filler,Registro.CFOP), 3) +
             FTxt.RFill(OnlyNumber(Registro.CNPJEmissor), 14, '0')           +
             FTxt.RFill(OnlyNumber(Registro.CNPJEmbarq) , 14, '0') ;
 
@@ -814,7 +817,7 @@ begin
   Conteudo.Add( Registro.IdRegistro +
                 FormatFloat('0000',Registro.nQtde)       +
                 FTxt.VLFill(Registro.vTotal, 15, 2, '0') +
-                FTxt.RFill(Registro.Filler, iif( Versao = ve50, 328, 658)) ) ;
+                FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 328, 658)) ) ;
 end;
 
 constructor TACBrEDIConhectos.Create(AOwner: TComponent) ;
@@ -943,7 +946,7 @@ var
   cReg: String ;
 begin
   // Registro 520 ou 320 Identificação do Arquivo ConEmb
-  cReg := iif( Versao = ve50, '520', '320') ;
+  cReg := IfThen( Versao = ve50, '520', '320') ;
   if Copy(Conteudo.Strings[nRow], 1, 3) <> cReg then
     raise Exception.Create('Erro: Nenhum Registro de Identificação não Informado...,'+#13+
                            'Este registro é obrigatório !!' );
@@ -971,7 +974,7 @@ var
   cReg: String ;
 begin
   // Registro 521 ou 321 Identificação da Transportadora
-  cReg := iif( Versao = ve50, '521', '321') ;
+  cReg := IfThen( Versao = ve50, '521', '321') ;
   if Copy(Conteudo.Strings[nRow], 1, 3) <> cReg then
     raise Exception.Create('Erro: Nenhum Registro da Transportadora não Informado...,'+#13+
                            'Este registro é obrigatório !!' );
@@ -1005,7 +1008,7 @@ var
   ok  : Boolean ;
   n   : Integer ;
 begin
-  cReg := iif( Versao = ve50, '522', '322') ;
+  cReg := IfThen( Versao = ve50, '522', '322') ;
   if Copy(Conteudo.Strings[nRow], 1, 3) <> cReg then
     raise Exception.Create('Erro: Nenhum Registro de Conhecimentos não Informado...,'+#13+
                            'Este registro é obrigatório !!' );
@@ -1218,7 +1221,7 @@ var
   ok: Boolean ;
 begin
   // Registro 524 ou 324 notas fiscais do Conhecimento
-  cReg := iif( Versao = ve50, '524', '324') ;
+  cReg := IfThen( Versao = ve50, '524', '324') ;
   if (Copy(Conteudo.Strings[nRow], 1, 3) <> cReg) and (Versao = ve50) then
     raise Exception.Create('Erro: Nenhum Registro de Notas Fiscais não Informado...,'+#13+
                            'Este registro é obrigatório !!' );
@@ -1355,7 +1358,7 @@ var
   cReg: String ;
 begin
   // Registro 529 ou 323 Totalizador de Conhecimentos Embarcados
-  cReg := iif( Versao = ve50, '529', '323') ;
+  cReg := IfThen( Versao = ve50, '529', '323') ;
   if Copy(Conteudo.Strings[nRow], 1, 3) <> cReg then
     raise Exception.Create('Erro: Nenhum Registro Totalizafdor não Informado...,'+#13+
                            'Este registro é obrigatório !!' );

@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, StrUtils,
   ACBrBPeConfiguracoes,
-  pcnBPe, pcnBPeR, pcnBPeW, pcnConversao, pcnAuxiliar, pcnLeitor;
+  pcnBPe, pcnBPeR, pcnBPeW, pcnConversao, pcnLeitor;
 
 type
 
@@ -557,7 +557,7 @@ begin
     FBPeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FBPeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
     FBPeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FBPeW.CSRT   := Configuracoes.RespTec.CSRT;
@@ -1064,7 +1064,7 @@ begin
       Emit.enderEmit.fone    := INIRec.ReadString('emit', 'fone', '');
       Emit.enderEmit.Email   := INIRec.ReadString('emit', 'Email', '');
 
-      ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigo(Emit.enderEmit.UF));
+      ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigoUF(Emit.enderEmit.UF));
 
       //
       // Seção [comp] Comprador

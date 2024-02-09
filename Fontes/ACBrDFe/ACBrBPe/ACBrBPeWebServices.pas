@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, dateutils, blcksock, synacode,
   ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
-  pcnAuxiliar, pcnConversao, pcnBPe, pcnConversaoBPe, pcnProcBPe,
+  pcnConversao, pcnBPe, pcnConversaoBPe, pcnProcBPe,
   pcnEnvEventoBPe, pcnRetEnvEventoBPe, pcnRetConsSitBPe, pcnDistDFeInt,
   pcnRetDistDFeInt, pcnRetEnvBPe, ACBrBPeBilhetes, ACBrBPeConfiguracoes;
 
@@ -538,7 +538,7 @@ begin
                            'Retorno: %s' + LineBreak +
                            'Observação: %s' + LineBreak),
                    [Fversao, TpAmbToStr(FtpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
                     IntToStr(FTMed),
                     IfThen(FdhRetorno = 0, '', FormatDateTimeBr(FdhRetorno)),
@@ -863,7 +863,7 @@ begin
                       FBPeRetorno.verAplic,
                       IntToStr(FBPeRetorno.cStat),
                       FBPeRetorno.xMotivo,
-                      CodigoParaUF(FBPeRetorno.cUF)]);
+                      CodigoUFparaUF(FBPeRetorno.cUF)]);
   {*)}
 end;
 
@@ -1354,7 +1354,7 @@ begin
                            'Protocolo: %s ' + LineBreak +
                            'Digest Value: %s ' + LineBreak),
                    [Fversao, FBPeChave, TpAmbToStr(FTpAmb), FverAplic,
-                    IntToStr(FcStat), FXMotivo, CodigoParaUF(FcUF), FBPeChave,
+                    IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FBPeChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotBPe.digVal]);
   {*)}
 end;

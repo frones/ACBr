@@ -109,7 +109,7 @@ implementation
 
 uses
   IniFiles,
-  pcnAuxiliar, pcnRetEnvEventoBPe, pcnConversaoBPe,
+  pcnRetEnvEventoBPe, pcnConversaoBPe,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
@@ -175,7 +175,7 @@ begin
       Gerador.wAlerta('EP08', 'chBPe', '', 'Chave de BPe inválida');
 
     Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[i].InfEvento.dhEvento) +
-                                                           GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
+                                                           GetUTC(CodigoUFparaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
     Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 06, 06, 1, Evento.Items[i].InfEvento.TipoEvento);
     Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 01, 02, 1, Evento.Items[i].InfEvento.nSeqEvento);
 

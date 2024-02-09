@@ -123,9 +123,12 @@ type
 implementation
 
 uses
-  pcnConversaoBPe, pcnAuxiliar,
+  pcnConversaoBPe,
+  StrUtils,
+  Math,
   ACBrDFeUtil, ACBrDFeConsts,
   ACBrUtil.Base,
+  ACBrUtil.DateTime,
   ACBrUtil.Strings;
 
 { TBPeW }
@@ -240,13 +243,13 @@ begin
      (*********)'<verAplic>' + BPe.procBPe.verAplic + '</verAplic>' +
      (*********)'<chBPe>' + BPe.procBPe.chBPe + '</chBPe>' +
      (*********)'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', BPe.procBPe.dhRecbto) +
-                               GetUTC(CodigoParaUF(FBPe.Ide.cUF), BPe.procBPe.dhRecbto) + '</dhRecbto>' +
+                               GetUTC(CodigoUFparaUF(FBPe.Ide.cUF), BPe.procBPe.dhRecbto) + '</dhRecbto>' +
      (*********)'<nProt>' + BPe.procBPe.nProt + '</nProt>' +
      (*********)'<digVal>' + BPe.procBPe.digVal + '</digVal>' +
      (*********)'<cStat>' + IntToStr(BPe.procBPe.cStat) + '</cStat>' +
      (*********)'<xMotivo>' + BPe.procBPe.xMotivo + '</xMotivo>' +
      (******)'</infProt>' +
-             IIF( (BPe.procBPe.cMsg > 0) or (BPe.procBPe.xMsg <> ''),
+             IfThen( (BPe.procBPe.cMsg > 0) or (BPe.procBPe.xMsg <> ''),
              '<infFisco>' +
                '<cMsg>' + IntToStr(BPe.procBPe.cMsg) + '</cMsg>' +
                '<xMsg>' + BPe.procBPe.xMsg + '</xMsg>' +
@@ -310,7 +313,7 @@ begin
   Gerador.wCampo(tcStr, '#010', 'cBP    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(BPe.infBPe.ID), 8), DSC_CDF);
   Gerador.wCampo(tcInt, '#011', 'cDV    ', 01, 01, 1, BPe.Ide.cDV, DSC_CDV);
   Gerador.wCampo(tcStr, '#012', 'modal  ', 01, 01, 1, ModalBPeToStr(BPe.ide.modal), DSC_MODALBPE);
-  Gerador.wCampo(tcStr, '#013', 'dhEmi  ', 25, 25, 1, DateTimeTodh(BPe.ide.dhEmi) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.ide.dhEmi), DSC_DEMI);
+  Gerador.wCampo(tcStr, '#013', 'dhEmi  ', 25, 25, 1, DateTimeTodh(BPe.ide.dhEmi) + GetUTC(CodigoUFparaUF(BPe.ide.cUF), BPe.ide.dhEmi), DSC_DEMI);
 
   if BPe.ide.tpBPe = tbBPeTM then
     Gerador.wCampo(tcDat, '#013', 'dCompet', 10, 10, 1, BPe.ide.dCompet, DSC_DCOMPET);
@@ -332,7 +335,7 @@ begin
 
   if (BPe.Ide.dhCont > 0) or (BPe.Ide.xJust <> '') then
   begin
-    Gerador.wCampo(tcStr, '#022', 'dhCont', 25,  25, 1, DateTimeTodh(BPe.ide.dhCont) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.ide.dhCont), DSC_DHCONT);
+    Gerador.wCampo(tcStr, '#022', 'dhCont', 25,  25, 1, DateTimeTodh(BPe.ide.dhCont) + GetUTC(CodigoUFparaUF(BPe.ide.cUF), BPe.ide.dhCont), DSC_DHCONT);
     Gerador.wCampo(tcStr, '#023', 'xJust ', 15, 256, 1, BPe.ide.xJust, DSC_XJUSTCONT);
   end;
 
@@ -356,7 +359,7 @@ begin
       Gerador.wAlerta('#026', 'IE', DSC_IE, ERR_MSG_VAZIO)
     else
     begin
-      if not ValidarIE(BPe.Emit.IE, CodigoParaUF(BPe.Ide.cUF)) then
+      if not ValidarIE(BPe.Emit.IE, CodigoUFparaUF(BPe.Ide.cUF)) then
         Gerador.wAlerta('#026', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -435,7 +438,7 @@ begin
       Gerador.wAlerta('#050', 'IE', DSC_IE, ERR_MSG_VAZIO)
     else
     begin
-      if not ValidarIE(BPe.Comp.IE, CodigoParaUF(BPe.Ide.cUF)) then
+      if not ValidarIE(BPe.Comp.IE, CodigoUFparaUF(BPe.Ide.cUF)) then
         Gerador.wAlerta('#050', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -472,7 +475,7 @@ begin
   if not ValidarUF(xUF) then
     Gerador.wAlerta('#059', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#060', 'cPais', 01, 04, 0, IIf(BPe.Comp.enderComp.cPais <> 0, IntToStrZero(BPe.Comp.enderComp.cPais,4), ''), DSC_CPAIS);
+  Gerador.wCampo(tcStr, '#060', 'cPais', 01, 04, 0, IfThen(BPe.Comp.enderComp.cPais <> 0, IntToStrZero(BPe.Comp.enderComp.cPais,4), ''), DSC_CPAIS);
 
   if not ValidarCodigoPais(BPe.Comp.enderComp.cPais) = -1 then
     Gerador.wAlerta('#060', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
@@ -523,7 +526,7 @@ begin
   if not ValidarUF(xUF) then
     Gerador.wAlerta('#075', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#075a', 'cPais', 01, 04, 0, IIf(BPe.Agencia.enderAgencia.cPais <> 0, IntToStrZero(BPe.Agencia.enderAgencia.cPais,4), ''), DSC_CPAIS);
+  Gerador.wCampo(tcStr, '#075a', 'cPais', 01, 04, 0, IfThen(BPe.Agencia.enderAgencia.cPais <> 0, IntToStrZero(BPe.Agencia.enderAgencia.cPais,4), ''), DSC_CPAIS);
 
   if not ValidarCodigoPais(BPe.Agencia.enderAgencia.cPais) = -1 then
     Gerador.wAlerta('#060', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
@@ -553,8 +556,8 @@ begin
   Gerador.wCampo(tcStr, '#083', 'xLocOrig  ', 02, 60, 1, BPe.infPassagem.xLocOrig, DSC_XLOCORIG);
   Gerador.wCampo(tcStr, '#084', 'cLocDest  ', 01, 07, 1, BPe.infPassagem.cLocDest, DSC_CLOCDEST);
   Gerador.wCampo(tcStr, '#085', 'xLocDest  ', 02, 60, 1, BPe.infPassagem.xLocDest, DSC_XLOCDEST);
-  Gerador.wCampo(tcStr, '#086', 'dhEmb     ', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhEmb) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhEmb), DSC_DHEMB);
-  Gerador.wCampo(tcStr, '#087', 'dhValidade', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhValidade) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhValidade), DSC_DHVALIDADE);
+  Gerador.wCampo(tcStr, '#086', 'dhEmb     ', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhEmb) + GetUTC(CodigoUFparaUF(BPe.ide.cUF), BPe.infPassagem.dhEmb), DSC_DHEMB);
+  Gerador.wCampo(tcStr, '#087', 'dhValidade', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhValidade) + GetUTC(CodigoUFparaUF(BPe.ide.cUF), BPe.infPassagem.dhValidade), DSC_DHVALIDADE);
 
   if BPe.infPassagem.infPassageiro.xNome <> '' then
     GerarinfPassageiro;
@@ -613,10 +616,10 @@ begin
     Gerador.wCampo(tcStr, '#100', 'tpAcomodacao', 01,  01, 1, tpAcomodacaoToStr(BPe.infViagem[i].tpAcomodacao), DSC_TPACOMODACAO);
     Gerador.wCampo(tcStr, '#101', 'tpTrecho    ', 01,  01, 1, tpTrechoToStr(BPe.infViagem[i].tpTrecho), DSC_TPTRECHO);
 
-    Gerador.wCampo(tcStr, '#102a', 'dhViagem', 25, 25, 1, DateTimeTodh(BPe.infViagem[i].dhViagem) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhViagem), DSC_DHVIAGEM);
+    Gerador.wCampo(tcStr, '#102a', 'dhViagem', 25, 25, 1, DateTimeTodh(BPe.infViagem[i].dhViagem) + GetUTC(CodigoUFparaUF(BPe.ide.cUF), BPe.infViagem[i].dhViagem), DSC_DHVIAGEM);
 
     if BPe.infViagem[i].tpTrecho = ttConexao then
-      Gerador.wCampo(tcStr, '#102', 'dhConexao', 25, 25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);
+      Gerador.wCampo(tcStr, '#102', 'dhConexao', 25, 25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoUFparaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);
 
     Gerador.wCampo(tcStr, '#103', 'prefixo   ', 01, 20, 0, BPe.infViagem[i].Prefixo, DSC_PREFIXO);
     Gerador.wCampo(tcInt, '#104', 'poltrona  ', 01, 03, 0, BPe.infViagem[i].Poltrona, DSC_POLTRONA);
@@ -988,9 +991,9 @@ var
   PaisBrasil: Boolean;
 begin
   PaisBrasil := cPais = CODIGO_BRASIL;
-  cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
-  xMun := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
-  xUF := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
+  cMun := IfThen(PaisBrasil, vcMun, CMUN_EXTERIOR);
+  xMun := IfThen(PaisBrasil, vxMun, XMUN_EXTERIOR);
+  xUF := IfThen(PaisBrasil, vxUF, UF_EXTERIOR);
   if FOpcoes.NormatizarMunicipios then
     if ( ( EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR) ) then
       cMun := ObterCodigoMunicipio(xMun, xUF, FOpcoes.FPathArquivoMunicipios)

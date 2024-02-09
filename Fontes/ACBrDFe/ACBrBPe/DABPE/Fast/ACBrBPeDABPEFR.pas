@@ -140,7 +140,7 @@ type
 implementation
 
 uses
-  ACBrDFeUtil, ACBrDelphiZXingQRCode,pcnAuxiliar,ACBrImage;
+  ACBrDFeUtil, ACBrDelphiZXingQRCode, ACBrImage;
 
 { TACBrBPeDABPEFR }
 

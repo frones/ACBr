@@ -92,7 +92,11 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnLeitor, ACBrUtil.Strings;
+  pcnLeitor,
+  StrUtils,
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings;
 
 { TProcBPe }
 
@@ -222,7 +226,7 @@ begin
                         PreencherTAG('cStat', XMLinfProt.text) +
                         PreencherTAG('xMotivo', XMLinfProt.text) +
                        '</infProt>' +
-                       IIF( (PreencherTAG('cMsg', XMLinfProt.text) <> ''),
+                       IfThen( (PreencherTAG('cMsg', XMLinfProt.text) <> ''),
                        '<infFisco>' +
                         PreencherTAG('cMsg', XMLinfProt.text) +
                         PreencherTAG('xMsg', XMLinfProt.text) +
@@ -235,12 +239,12 @@ begin
       if ProtLido then
       begin
         if Copy(FverAplic, 1, 2) = 'SV' then
-          xUF := CodigoParaUF(StrToIntDef(Copy(FchBPe, 1, 2), 0))
+          xUF := CodigoUFparaUF(StrToIntDef(Copy(FchBPe, 1, 2), 0))
         else
           xUF := Copy(FverAplic, 1, 2);
 
         xProtBPe := '<protBPe versao="' + Versao + '">' +
-                     '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
+                     '<infProt Id="' + IfThen( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
                       '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
                       '<verAplic>' + FverAplic + '</verAplic>' +
                       '<chBPe>' + FchBPe + '</chBPe>' +
@@ -251,7 +255,7 @@ begin
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +
                       '<xMotivo>' + FxMotivo + '</xMotivo>' +
                      '</infProt>' +
-                     IIF( (cMsg > 0) or (xMsg <> ''),
+                     IfThen( (cMsg > 0) or (xMsg <> ''),
                      '<infFisco>' +
                       '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
                       '<xMsg>' + FxMsg + '</xMsg>' +

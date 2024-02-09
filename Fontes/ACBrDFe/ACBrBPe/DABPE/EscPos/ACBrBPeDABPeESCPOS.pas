@@ -104,7 +104,7 @@ uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrDFeUtil, ACBrConsts,
-  pcnConversao, pcnConversaoBPe, pcnAuxiliar;
+  pcnConversao, pcnConversaoBPe;
 
 { TACBrBPeDABPeESCPOS }
 

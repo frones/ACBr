@@ -58,9 +58,6 @@ procedure Register;
 
 implementation
 
-uses
-  ACBrDFeUtil, pcnAuxiliar;
-
 procedure Register;
 begin
   RegisterComponents('ACBrBPe', [TACBrBPeDABPeFR]);

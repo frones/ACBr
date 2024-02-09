@@ -147,7 +147,7 @@ uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
-  pcnAuxiliar, ACBrDFeSSL;
+  ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$R ACBrBPeServicos.rc}

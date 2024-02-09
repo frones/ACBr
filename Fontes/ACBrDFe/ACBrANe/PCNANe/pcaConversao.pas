@@ -73,7 +73,7 @@ function VersaoANeToDbl(const t: TVersaoANe): Double;
 implementation
 
 uses
-  typinfo, pcnConversao, pcnAuxiliar;
+  typinfo, pcnConversao;
 
 function LayOutToSchema(const t: TLayOutANe): TSchemaANe;
 begin

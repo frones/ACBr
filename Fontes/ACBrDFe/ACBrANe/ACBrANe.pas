@@ -113,8 +113,7 @@ type
 implementation
 
 uses
-  dateutils,
-  pcnAuxiliar;
+  dateutils;
 
 {$IFDEF FPC}
  {$R ACBrANeServicos.rc}

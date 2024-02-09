@@ -38,9 +38,9 @@ interface
 
 uses
   Classes, SysUtils, synacode,
-  ACBrDFe, ACBrDFeWebService,
+  ACBrDFe, ACBrDFeWebService, ACBrDFeUtil,
   ACBrANeDocumentos, ACBrANeConfiguracoes,
-  pcnAuxiliar, pcnConversao, pcaConversao, pcaANe, pcaRetEnvANe;
+  pcnConversao, pcaConversao, pcaANe, pcaRetEnvANe;
 
 const
   CURL_WSDL = '';

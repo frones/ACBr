@@ -45,7 +45,6 @@ uses
   pcaANeR, 
   pcaANeW, 
   pcnConversao, 
-  pcnAuxiliar, 
   pcnLeitor;
 
 type
@@ -150,6 +149,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
   pcaConversao, synautil;
 
 { Documento }
@@ -357,7 +357,7 @@ begin
     FANeW.TipoDoc    := Configuracoes.Geral.TipoDoc;
     FANeW.Seguradora := Configuracoes.Geral.Seguradora;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FANeW.GerarXml;

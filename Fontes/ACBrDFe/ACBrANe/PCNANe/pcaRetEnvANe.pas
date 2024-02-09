@@ -45,7 +45,7 @@ interface
    Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pcaConversao, pcnLeitor;
+  pcnConversao, pcaConversao, pcnLeitor;
 
 type
   TRetEnvANe = class;

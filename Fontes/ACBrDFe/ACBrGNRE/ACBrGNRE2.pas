@@ -121,7 +121,6 @@ implementation
 
 uses
   Dateutils,
-  PcnAuxiliar,
   ACBrUtil.Base,
   ACBrUtil.Strings;
 

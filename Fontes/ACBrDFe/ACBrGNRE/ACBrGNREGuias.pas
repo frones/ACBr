@@ -43,7 +43,6 @@ uses
   StrUtils,
   ACBrDFeUtil, 
   pcnConversao, 
-  pcnAuxiliar, 
   pcnLeitor,
   ACBrGNREConfiguracoes,
   pgnreGNRE, 
@@ -598,7 +597,7 @@ begin
 
     FGNREW.Versao := Configuracoes.Geral.VersaoDF;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FGNREW.GerarXml;

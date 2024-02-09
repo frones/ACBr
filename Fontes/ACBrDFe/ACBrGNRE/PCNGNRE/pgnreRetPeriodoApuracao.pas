@@ -45,7 +45,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConfigUF;
+  pcnConversao, pcnLeitor, pgnreConfigUF;
 
 type
   TRetInfPeriodoApuracaoCollection = class;

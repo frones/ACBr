@@ -40,7 +40,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeWebService,
-  pcnAuxiliar, pcnConversao,
+  pcnConversao,
   pgnreGNRE, pgnreConversao, pgnreRetEnvLoteGNRE, pgnreConsResLoteGNRE,
   pgnreRetConsResLoteGNRE, pgnreConsConfigUF, pgnreRetConsConfigUF,
   ACBrGNREGuias, ACBrGNREConfiguracoes;

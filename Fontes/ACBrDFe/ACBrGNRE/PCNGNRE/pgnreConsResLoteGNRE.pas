@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrDFeConsts,
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnConversao, pcnGerador;
 
 type
   TConsResLoteGNRE = class(TObject)

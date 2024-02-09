@@ -45,7 +45,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConfigUF, pgnreRetProduto,
+  pcnConversao, pcnLeitor, pgnreConfigUF, pgnreRetProduto,
   pgnreRetDetalhamentoReceita, pgnreRetPeriodoApuracao,
   pgnreRetTipoDocumentoOrigem, pgnreRetCampoAdicional;
 

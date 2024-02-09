@@ -43,7 +43,6 @@ uses
   ACBrGNREGuiaClass,
   pgnreGNRERetorno, 
   pcnConversao, 
-  pcnAuxiliar, 
   pcnLeitor;
 
 type

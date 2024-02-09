@@ -64,7 +64,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, ACBrConsts;
+  ACBrConsts;
 
 { TGNRER }
 

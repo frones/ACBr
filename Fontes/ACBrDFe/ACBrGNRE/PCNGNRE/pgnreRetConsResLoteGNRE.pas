@@ -45,7 +45,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao;
+  pcnConversao, pcnLeitor, pgnreConversao;
 
 type
 

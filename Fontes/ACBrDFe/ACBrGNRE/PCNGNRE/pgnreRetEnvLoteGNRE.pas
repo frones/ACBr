@@ -39,7 +39,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor;
+  pcnConversao, pcnLeitor;
 
 type
   TTretLote_GNRE = class(TObject)

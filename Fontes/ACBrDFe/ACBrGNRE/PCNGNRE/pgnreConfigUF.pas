@@ -39,7 +39,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao;
+  pcnConversao;
 
 type
   TInfReceita = class;

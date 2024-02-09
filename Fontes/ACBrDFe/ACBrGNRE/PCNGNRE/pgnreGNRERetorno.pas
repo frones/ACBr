@@ -39,7 +39,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pgnreRetConsResLoteGNRE;
+  pcnConversao, pgnreRetConsResLoteGNRE;
 
 type
   TGNRERetorno = class(TObject)

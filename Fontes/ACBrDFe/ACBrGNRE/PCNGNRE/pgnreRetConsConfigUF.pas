@@ -39,7 +39,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pgnreRetReceita;
+  pcnConversao, pcnLeitor, pgnreRetReceita;
 
 type
 

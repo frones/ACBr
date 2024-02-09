@@ -123,11 +123,14 @@ function EAN13_DV( CodEAN13 : String ) : String ;
 
 procedure RttiSetProp(AObject: TObject; AProp: String; AValue: String);
 
+function CodigoUFparaUF(const codigo: integer): string;
+function UFparaCodigoUF(const UF: string): integer;
+
 implementation
 
-Uses
-  synautil, StrUtilsEx, typinfo, ACBrCompress, ACBrUtil.Compatibilidade, ACBrUtil.Strings;
-
+uses
+  synautil, StrUtilsEx, typinfo,
+  ACBrCompress, ACBrUtil.Compatibilidade, ACBrUtil.Strings;
 
 function PosExA(const SubStr, S: AnsiString; Offset: Integer): Integer;
 begin
@@ -377,7 +380,7 @@ end;
    texto apos a String ' | '
  ---------------------------------------------------------------------------- }
 function TraduzComando(const AString: String): AnsiString;
-Var 
+Var
   A : Integer ;
   VString : String;
 begin
@@ -508,7 +511,6 @@ begin
   {$EndIf}
 end;
 
-
 {------------------------------------------------------------------------------
    Inserir um valor a propriedade por RTTI
  ------------------------------------------------------------------------------}
@@ -522,6 +524,29 @@ begin
   SetPropValue(AObject, AProp, AValue);
 end;
 
+function CodigoUFparaUF(const codigo: integer): string;
+const
+  (**)UFS = '.AC.AL.AP.AM.BA.CE.DF.ES.GO.MA.MT.MS.MG.PA.PB.PR.PE.PI.RJ.RN.RS.RO.RR.SC.SP.SE.TO.DF.DF.';
+  CODIGOS = '.12.27.16.13.29.23.53.32.52.21.51.50.31.15.25.41.26.22.33.24.43.11.14.42.35.28.17.90.91.';
+begin
+  try
+    result := copy(UFS, pos('.' + IntToStr(Codigo) + '.', CODIGOS) + 1, 2);
+  except
+    result := '';
+  end;
+end;
+
+function UFparaCodigoUF(const UF: string): integer;
+const
+  (**)UFS = '.AC.AL.AP.AM.BA.CE.DF.ES.GO.MA.MT.MS.MG.PA.PB.PR.PE.PI.RJ.RN.RS.RO.RR.SC.SP.SE.TO.';
+  CODIGOS = '.12.27.16.13.29.23.53.32.52.21.51.50.31.15.25.41.26.22.33.24.43.11.14.42.35.28.17.';
+begin
+  try
+    result := StrToInt(copy(CODIGOS, pos('.' + UF + '.', UFS) + 1, 2));
+  except
+    result := 0;
+  end;
+end;
 
 initialization
 

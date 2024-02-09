@@ -187,6 +187,7 @@ function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
    AStringList: TStrings; const AQuoteChar: Char = '"'): Integer;
 
 function ChangeLineBreak(const AText: String; const NewLineBreak: String = ';'): String;
+function SubStrEmSubStr(const SubStr1: string; SubStr2: string): boolean;
 
 implementation
 
@@ -1593,6 +1594,23 @@ begin
     if NewLineBreak <> LF then
       Result := StringReplace(Result, LF, NewLineBreak, [rfReplaceAll]);
   end
+end;
+
+function SubStrEmSubStr(const SubStr1: string; SubStr2: string): boolean;
+var
+  s: string;
+  i: integer;
+begin
+  i := 0;
+  while (i = 0) and (length(SubStr2) > 0) do
+  begin
+    SubStr2 := copy(SubStr2, 2, maxInt);
+    s := copy(SubStr2, 1, pos('|', SubStr2) - 1);
+    SubStr2 := copy(SubStr2, pos('|', SubStr2), maxInt);
+    if s <> '' then
+      i := i + pos('|' + s, '|' + SubStr1);
+  end;
+  result := i > 0;
 end;
 
 initialization

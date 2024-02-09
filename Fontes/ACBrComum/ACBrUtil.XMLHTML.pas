@@ -101,10 +101,18 @@ procedure EncontrarInicioFinalTag(const aText, ATag: String; var PosIni, PosFim:
 function StripHTML(const AHTMLString : String) : String;
 procedure AcharProximaTag(const ABinaryString: AnsiString; const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
 
+function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String;
+  RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True;
+  const QuebraLinha: String = ';'): String;
+function ReverterFiltroTextoXML(aTexto: String): String;
+function xml4line(texto: String): String;
+
 implementation
 
 uses
-  ACBrUtil.Compatibilidade, ACBrUtil.Base, ACBrUtil.Strings, StrUtilsEx;
+  ACBrUtil.Compatibilidade, ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrUtil.Math,
+  StrUtilsEx;
 
 {------------------------------------------------------------------------------
    Realiza o tratamento de uma String recebida de um Serviço Web
@@ -291,7 +299,6 @@ begin
     Result := AXML;
 end;
 
-
 function SeparaDados(const AString: String; const Chave: String; const MantemChave: Boolean = False;
   const PermitePrefixo: Boolean = True; const AIgnoreCase: Boolean = True): String;
 var
@@ -344,7 +351,6 @@ begin
   end
   else
     Result := copy(AString, PosIni, PosFim - (PosIni + 1));
-
 end;
 
 function SeparaDadosArray(const AArray: array of String; const AString: String; const MantemChave: Boolean = False;
@@ -360,7 +366,6 @@ begin
       Exit;
  end;
 end;
-
 
 {------------------------------------------------------------------------------
    Retorna a posição inicial e final da Tag do XML
@@ -386,7 +391,7 @@ end;
 procedure AcharProximaTag(const ABinaryString: AnsiString;
   const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
 var
-   PosTagAux, FimTag, LenTag : Integer ;
+  PosTagAux, FimTag, LenTag : Integer ;
 begin
   ATag   := '';
   PosTag := PosExA( '<', ABinaryString, PosIni);
@@ -433,6 +438,87 @@ begin
     AcharProximaTag( VHTMLString, PosTag, ATag, PosTag );
   end ;
   Result := VHTMLString;
+end;
+
+function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String;
+  RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean; const QuebraLinha: String): String;
+begin
+  if RetirarAcentos then
+     aTexto := TiraAcentos(aTexto);
+
+  aTexto := ParseText(AnsiString(aTexto), False );
+
+  if RetirarEspacos then
+  begin
+    while pos('  ', aTexto) > 0 do
+      aTexto := StringReplace(aTexto, '  ', ' ', [rfReplaceAll]);
+  end;
+
+  if SubstituirQuebrasLinha then
+    aTexto := ChangeLineBreak( aTexto, QuebraLinha);
+
+  Result := Trim(aTexto);
+end;
+
+function ReverterFiltroTextoXML(aTexto: String): String;
+var
+  p1,p2:Integer;
+  vHex,vStr:String;
+  vStrResult:AnsiString;
+begin
+  if Pos('<![CDATA[', aTexto) > 0 then
+  begin
+    aTexto := StringReplace(aTexto, '<![CDATA[', '', []);
+    aTexto := StringReplace(aTexto, ']]>', '', []);
+  end
+  else
+  begin
+    aTexto := StringReplace(aTexto, '&amp;', '&', [rfReplaceAll]);
+    aTexto := StringReplace(aTexto, '&lt;', '<', [rfReplaceAll]);
+    aTexto := StringReplace(aTexto, '&gt;', '>', [rfReplaceAll]);
+    aTexto := StringReplace(aTexto, '&quot;', '"', [rfReplaceAll]);
+    aTexto := StringReplace(aTexto, '&#39;', #39, [rfReplaceAll]);
+    p1:=Pos('&#x',aTexto);
+    while p1>0 do begin
+      for p2:=p1 to Length(aTexto) do
+          if aTexto[p2]=';' then
+             break;
+      vHex:=Copy(aTexto,p1,p2-p1+1);
+      vStr:=StringReplace(vHex,'&#x','',[rfReplaceAll]);
+      vStr:=StringReplace(vStr,';','',[rfReplaceAll]);
+      if not TryHexToAscii(vStr, vStrResult) then
+        vStrResult := AnsiString(vStr);
+      aTexto:=StringReplace(aTexto,vHex,String(vStrResult),[rfReplaceAll]);
+      p1:=Pos('&#x',aTexto);
+    end;
+  end;
+  result := Trim(aTexto);
+end;
+
+{------------------------------------------------------------------------------
+   Esta função insere um quebra de linha entre os caracteres >< do xml
+   Usada para facilitar os teste de comparação de arquivos
+ ------------------------------------------------------------------------------}
+function xml4line(texto: String): String;
+var
+  xml: TStringList;
+  i: integer;
+begin
+  Texto := Texto + '<';
+  Texto := stringreplace(Texto, #$D#$A, '', [rfReplaceAll]);
+  Xml := TStringList.create;
+  try
+    Result := '';
+    while length(texto) > 1 do
+    begin
+      i := pos('><', Texto);
+      Xml.Add(copy(Texto, 1, i));
+      Texto := copy(Texto, i + 1, maxInt);
+    end;
+    Result := Xml.Text;
+  finally
+    Xml.Free;
+  end;
 end;
 
 end.

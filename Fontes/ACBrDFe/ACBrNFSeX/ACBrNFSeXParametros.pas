@@ -551,6 +551,8 @@ type
     FAssinaturaAdicional: boolean;
     // Tipo de Assinaturas
     FAssinaturas: TAssinaturas;
+    // Contem o conteudo do atributo Id da tag SignatureValue
+    FIdSignatureValue: string;
 
   public
     property Rps: boolean read FRps write FRps;
@@ -581,6 +583,7 @@ type
     property IncluirURI: boolean read FIncluirURI write FIncluirURI;
     property AssinaturaAdicional: boolean read FAssinaturaAdicional write FAssinaturaAdicional;
     property Assinaturas: TAssinaturas read FAssinaturas write FAssinaturas;
+    property IdSignatureValue: string read FIdSignatureValue write FIdSignatureValue;
   end;
 
   { TConfigSchemas }

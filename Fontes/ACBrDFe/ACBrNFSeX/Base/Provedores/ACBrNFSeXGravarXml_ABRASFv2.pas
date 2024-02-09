@@ -292,15 +292,10 @@ type
 implementation
 
 uses
-  pcnAuxiliar,
+  ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrXmlBase,
   ACBrNFSeXConversao, ACBrNFSeXConsts;
-
-  {
-    Ainda não é possível remover a unit pcnAuxiliar, pois é utilizado a função:
-    AjustarDataHoraParaUf.
-  }
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS dos provedores
@@ -461,6 +456,9 @@ begin
     NFSeNode.SetNamespace(FpAOwner.ConfigMsgDados.XmlRps.xmlns, Self.PrefixoPadrao);
 
   FDocument.Root := NFSeNode;
+
+  if FormatoDiscriminacao <> fdNenhum then
+    ConsolidarVariosItensServicosEmUmSo;
 
   xmlNode := GerarInfDeclaracaoPrestacaoServico;
   NFSeNode.AppendChild(xmlNode);
@@ -706,7 +704,7 @@ end;
 function TNFSeW_ABRASFv2.GerarStatus: TACBrXmlNode;
 begin
   Result := AddNode(tcStr, '#9', 'Status', 1, 1, 1,
-                                 StatusRPSToStr(NFSe.StatusRps), DSC_INDSTATUS);
+                        FpAOwner.StatusRPSToStr(NFSe.StatusRps), DSC_INDSTATUS);
 end;
 
 function TNFSeW_ABRASFv2.GerarValores: TACBrXmlNode;

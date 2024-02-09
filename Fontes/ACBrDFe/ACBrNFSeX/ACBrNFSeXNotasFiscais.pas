@@ -173,7 +173,7 @@ implementation
 
 uses
   synautil, IniFiles, StrUtilsEx,
-  pcnAuxiliar,
+  ACBrUtil.DateTime,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
   ACBrDFeUtil,
   ACBrNFSeX, ACBrNFSeXInterface;
@@ -343,7 +343,7 @@ begin
         Situacao := INIRec.ReadInteger(sSecao, 'Situacao', 0);
 
         Producao := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Producao', '1'));
-        StatusRps := StrToStatusRPS(Ok, INIRec.ReadString(sSecao, 'Status', '1'));
+        StatusRps := FProvider.StrToStatusRPS(Ok, INIRec.ReadString(sSecao, 'Status', '1'));
         OutrasInformacoes := INIRec.ReadString(sSecao, 'OutrasInformacoes', '');
 
         // Provedor ISSDSF e Siat
@@ -405,7 +405,7 @@ begin
           IdentificacaoPrestador.CAEPF := INIRec.ReadString(sSecao, 'CAEPF', '');
 
           // Para o provedor ISSDigital deve-se informar também:
-          cUF := UFparaCodigo(INIRec.ReadString(sSecao, 'UF', 'SP'));
+          cUF := UFparaCodigoUF(INIRec.ReadString(sSecao, 'UF', 'SP'));
 
           RazaoSocial := INIRec.ReadString(sSecao, 'RazaoSocial', '');
           NomeFantasia := INIRec.ReadString(sSecao, 'NomeFantasia', '');
@@ -953,7 +953,7 @@ begin
       sSecao:= 'IdentificacaoRps';
       INIRec.WriteString(sSecao, 'SituacaoTrib', FProvider.SituacaoTribToStr(SituacaoTrib));
       INIRec.WriteString(sSecao, 'Producao', FProvider.SimNaoToStr(Producao));
-      INIRec.WriteString(sSecao, 'Status', StatusRPSToStr(StatusRps));
+      INIRec.WriteString(sSecao, 'Status', FProvider.StatusRPSToStr(StatusRps));
       INIRec.WriteString(sSecao, 'OutrasInformacoes', OutrasInformacoes);
 
       //Provedores CTA, ISSBarueri, ISSSDSF, ISSSaoPaulo, Simple e SmarAPD.

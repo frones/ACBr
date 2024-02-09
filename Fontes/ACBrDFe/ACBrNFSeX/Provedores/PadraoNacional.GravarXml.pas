@@ -116,15 +116,10 @@ type
 implementation
 
 uses
+  ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrNFSeXConsts,
-  ACBrNFSeXConversao,
-  pcnAuxiliar;
-
-{
-  Ainda não é possível remover o pcnAuxiliar, pois utiliza as funções:
-  DateTimeTodh e GetUTC.
-}
+  ACBrNFSeXConversao;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:

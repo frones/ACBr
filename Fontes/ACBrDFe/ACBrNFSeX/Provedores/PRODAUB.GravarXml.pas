@@ -47,9 +47,13 @@ type
   protected
     procedure Configuracao; override;
 
+    procedure DefinirIDDeclaracao; override;
   end;
 
 implementation
+
+uses
+  ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -63,6 +67,13 @@ begin
   inherited Configuracao;
 
   TagTomador := 'TomadorServico';
+end;
+
+procedure TNFSeW_PRODAUB204.DefinirIDDeclaracao;
+begin
+  NFSe.InfID.ID := 'ID_' + OnlyNumber(NFSe.IdentificacaoRps.Numero) +
+                    NFSe.IdentificacaoRps.Serie +
+                    FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo);
 end;
 
 end.

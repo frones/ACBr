@@ -817,7 +817,7 @@ begin
 
     NFSe.DataEmissaoRps := LerDataEmissaoRps(AuxNode);
 
-    NFSe.StatusRps := StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
+    NFSe.StatusRps := FpAOwner.StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
 
     if NFSe.StatusRps = srCancelado then
       NFSe.SituacaoNfse := snCancelado;

@@ -121,6 +121,9 @@ type
 
     function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string;
     function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento;
+
+    function StatusRPSToStr(const t: TStatusRPS): string;
+    function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
   end;
 
 implementation

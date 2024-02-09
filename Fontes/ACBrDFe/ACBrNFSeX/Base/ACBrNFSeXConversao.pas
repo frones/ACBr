@@ -205,6 +205,8 @@ type
                               filsSemFormatacaoSemZeroEsquerda,
                               filsNaoSeAplica);
 
+  TFormatoDiscriminacao = (fdNenhum, fdConsolidado, fdTabulado, fdJson);
+
   TSituacaoTrib = (tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta, tsImune,
                    tsNaoTributada, tsFixo, tsOutroMunicipio);
 
@@ -312,9 +314,6 @@ type
   TAssinaturas = (taConfigProvedor, taAssinar, taNaoAssinar);
 
   TNaoNIF = (tnnNaoInformado, tnnDispensado, tnnNaoExigencia);
-
-function StatusRPSToStr(const t: TStatusRPS): string;
-function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
 
 function StatusNFSeToStr(const t: TStatusNFSe): string;
 function StrToStatusNFSe(out ok: boolean; const s: string): TStatusNFSe;
@@ -536,20 +535,6 @@ uses
   ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrXmlBase;
 
-
-function StatusRPSToStr(const t: TStatusRPS): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [srNormal, srCancelado]);
-end;
-
-function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [srNormal, srCancelado]);
-end;
 
 function StatusNFSeToStr(const t: TStatusNFSe): string;
 begin

@@ -443,7 +443,7 @@ begin
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
-    NFSe.StatusRps := StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
+    NFSe.StatusRps := FpAOwner.StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
     NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
     NFSe.Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
 
@@ -526,7 +526,7 @@ begin
 
     NFSe.DataEmissaoRps := LerDataEmissaoRps(AuxNode);
 
-    NFSe.StatusRps := StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
+    NFSe.StatusRps := FpAOwner.StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
 
     if NFSe.StatusRps = srCancelado then
       NFSe.SituacaoNfse := snCancelado;

@@ -236,11 +236,8 @@ begin
 
   FDocument.Root := NFSeNode;
 
-  {
-    O ConsolidarVariosItensServicosEmUmSo esta comentado pois requer varios
-    testes.
-  }
-//  ConsolidarVariosItensServicosEmUmSo;
+  if FormatoDiscriminacao <> fdNenhum then
+    ConsolidarVariosItensServicosEmUmSo;
 
   xmlNode := GerarInfRps;
   NFSeNode.AppendChild(xmlNode);
@@ -277,7 +274,7 @@ begin
    FpAOwner.SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
 
   Result.AppendChild(AddNode(tcStr, '#9', 'Status', 1, 1, NrOcorrStatus,
-                                   StatusRPSToStr(NFSe.StatusRps), DSC_INDSTATUS));
+                       FpAOwner.StatusRPSToStr(NFSe.StatusRps), DSC_INDSTATUS));
 
   Result.AppendChild(AddNode(tcStr, '#11', 'OutrasInformacoes', 1, 255, NrOcorrOutrasInformacoes,
                                         NFSe.OutrasInformacoes, DSC_OUTRASINF));

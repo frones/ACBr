@@ -198,6 +198,7 @@ type
     FAssinaturas: TAssinaturas;
     FAutenticacao: TAutenticacao;
     FServicosDisponibilizados: TServicosDispobilizados;
+    FFormDiscriminacao: TFormatoDiscriminacao;
 
     procedure SetCodigoMunicipio(const Value: Integer);
   public
@@ -230,6 +231,7 @@ type
     property PIniParams: TMemIniFile read FPIniParams;
     property Autenticacao: TAutenticacao read FAutenticacao;
     property ServicosDisponibilizados: TServicosDispobilizados read FServicosDisponibilizados;
+    property FormatoDiscriminacao: TFormatoDiscriminacao read FFormDiscriminacao write FFormDiscriminacao default fdNenhum;
   end;
 
   { TArquivosConfNFSe }
@@ -408,6 +410,7 @@ begin
   FMontarPathSchema := True;
   FLayoutNFSe := lnfsProvedor;
   FAssinaturas := taConfigProvedor;
+  FFormDiscriminacao := fdNenhum;
 
   FAutenticacao := TAutenticacao.Create;
   FServicosDisponibilizados := TServicosDispobilizados.Create;
@@ -434,6 +437,7 @@ begin
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'MontarPathSchema', MontarPathSchema);
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'LayoutNFSe', Integer(LayoutNFSe));
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'Assinaturas', Integer(Assinaturas));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'FormatoDiscriminacao', Integer(FormatoDiscriminacao));
 
   // Emitente
   with Emitente do
@@ -476,6 +480,7 @@ begin
   MontarPathSchema := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'MontarPathSchema', MontarPathSchema);
   LayoutNFSe := TLayoutNFSe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'LayoutNFSe', Integer(LayoutNFSe)));
   Assinaturas := TAssinaturas(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Assinaturas', Integer(Assinaturas)));
+  FormatoDiscriminacao := TFormatoDiscriminacao(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'FormatoDiscriminacao', Integer(FormatoDiscriminacao)));
 
   // Emitente
   with Emitente do
@@ -579,6 +584,7 @@ begin
   FLayout                := DeGeralConfNFSe.Layout;
   FLayoutNFSe            := DeGeralConfNFSe.LayoutNFSe;
   FAssinaturas           := DeGeralConfNFSe.Assinaturas;
+  FFormDiscriminacao     := DeGeralConfNFSe.FormatoDiscriminacao;
 
   FEmitente.Assign(DeGeralConfNFSe.Emitente);
 

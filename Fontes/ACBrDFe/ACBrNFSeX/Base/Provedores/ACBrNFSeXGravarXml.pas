@@ -80,6 +80,7 @@ type
     FFormatoEmissao: TACBrTipoCampo;
     FFormatoCompetencia: TACBrTipoCampo;
     FFormItemLServico: TFormatoItemListaServico;
+    FFormDiscriminacao: TFormatoDiscriminacao;
     FFormatoAliq: TACBrTipoCampo;
     FDivAliq100: Boolean;
 
@@ -109,6 +110,12 @@ type
     procedure DefinirIDRps; virtual;
     procedure DefinirIDDeclaracao; virtual;
     procedure ConsolidarVariosItensServicosEmUmSo;
+
+    function GerarTabulado(const xDescricao: string; const xCodigoItem: string;
+      aQuantidade, aValorUnitario, aValorServico, aBaseCalculo,
+      aAliquota: Double): string;
+    function GerarJson(const xDescricao: string;
+      aQuantidade, aValorUnitario, aValorServico: Double): string;
 
     function GerarCNPJ(const CNPJ: string): TACBrXmlNode; virtual;
     function GerarCPFCNPJ(const CPFCNPJ: string): TACBrXmlNode; virtual;
@@ -143,6 +150,7 @@ type
     property FormatoCompetencia: TACBrTipoCampo read FFormatoCompetencia write FFormatoCompetencia;
 
     property FormatoItemListaServico: TFormatoItemListaServico read FFormItemLServico write FFormItemLServico;
+    property FormatoDiscriminacao: TFormatoDiscriminacao read FFormDiscriminacao write FFormDiscriminacao;
 
     property FormatoAliq: TACBrTipoCampo read FFormatoAliq  write FFormatoAliq;
     property DivAliq100: Boolean         read FDivAliq100   write FDivAliq100;
@@ -187,6 +195,7 @@ begin
   // Propriedades de Formatação de informações
   FFormatoEmissao := tcDatHor;
   FFormatoCompetencia := tcDatHor;
+  FFormDiscriminacao := fdNenhum;
   FFormItemLServico := filsComFormatacao;
 
   // Os 4 IF abaixo vão configurar o componente conforme a presença do
@@ -228,7 +237,7 @@ end;
 procedure TNFSeWClass.ConsolidarVariosItensServicosEmUmSo;
 var
   i: Integer;
-  xDiscriminacao, xItemListaServico: string;
+  xDiscriminacao, xItemListaServ: string;
   vValorDeducoes, vValorServicos, vDescontoCondicionado, vAliquota, vBaseCalculo,
   vDescontoIncondicionado, vValorPis, vValorCofins, vValorInss, vValorIr,
   vValorCsll, vValorIss, vAliquotaPis, vAliquotaCofins, vAliquotaInss,
@@ -256,11 +265,11 @@ begin
     vAliquotaIr := 0;
     vAliquotaCsll := 0;
 
-    with NFSe.Servico do
+    with FNFSe.Servico do
     begin
       for i := 0 to ItemServico.Count -1 do
       begin
-        xItemListaServico := ItemServico[i].ItemListaServico;
+        xItemListaServ := ItemServico[i].ItemListaServico;
         vAliquota := ItemServico[i].Aliquota;
         vAliquotaPis := ItemServico[i].AliqRetPIS;
         vAliquotaCofins := ItemServico[i].AliqRetCOFINS;
@@ -268,7 +277,6 @@ begin
         vAliquotaIr := ItemServico[i].AliqRetIRRF;
         vAliquotaCsll := ItemServico[i].AliqRetCSLL;
 
-        xDiscriminacao := xDiscriminacao + ItemServico[i].Descricao;
         vValorDeducoes := vValorDeducoes + ItemServico[i].ValorDeducoes;
         vValorServicos := vValorServicos + ItemServico[i].ValorTotal;
         vDescontoCondicionado := vDescontoCondicionado + ItemServico[i].DescontoCondicionado;
@@ -281,11 +289,37 @@ begin
         vValorCsll := vValorCsll + ItemServico[i].ValorCsll;
         vValorIss := vValorIss + ItemServico[i].ValorIss;
         vValorIssRetido := vValorIssRetido + ItemServico[i].ValorIssRetido;
+
+        case FormatoDiscriminacao of
+          fdTabulado:
+            xDiscriminacao := xDiscriminacao +
+                                GerarTabulado(ItemServico[i].Descricao,
+                                  ItemServico[i].ItemListaServico,
+                                  ItemServico[i].Quantidade,
+                                  ItemServico[i].ValorUnitario,
+                                  ItemServico[i].ValorTotal,
+                                  ItemServico[i].BaseCalculo,
+                                  ItemServico[i].Aliquota);
+
+          fdJson:
+            begin
+              if i > 0 then
+                xDiscriminacao := xDiscriminacao + ',';
+
+              xDiscriminacao := xDiscriminacao +
+                                  GerarJson(ItemServico[i].Descricao,
+                                    ItemServico[i].Quantidade,
+                                    ItemServico[i].ValorUnitario,
+                                    ItemServico[i].ValorTotal);
+            end;
+        else
+          xDiscriminacao := xDiscriminacao + ';' + ItemServico[i].Descricao;
+        end;
       end;
     end;
 
     // Leva em consideração a informação do ultimo item da lista.
-    NFSe.Servico.ItemListaServico := xItemListaServico;
+    NFSe.Servico.ItemListaServico := xItemListaServ;
     NFSe.Servico.Valores.Aliquota := vAliquota;
     NFSe.Servico.Valores.AliquotaPis := vAliquotaPis;
     NFSe.Servico.Valores.AliquotaCofins := vAliquotaCofins;
@@ -294,7 +328,16 @@ begin
     NFSe.Servico.Valores.AliquotaCsll := vAliquotaCsll;
 
     // Consolida todos os itens da lista.
-    NFSe.Servico.Discriminacao := xDiscriminacao;
+    case FormatoDiscriminacao of
+      fdTabulado:
+        NFSe.Servico.Discriminacao := '{' + xDiscriminacao + '}';
+
+      fdJson:
+        NFSe.Servico.Discriminacao := '{[' + xDiscriminacao + ']}';
+    else
+      NFSe.Servico.Discriminacao := xDiscriminacao;
+    end;
+
     NFSe.Servico.Valores.ValorDeducoes := vValorDeducoes;
     NFSe.Servico.Valores.ValorServicos := vValorServicos;
     NFSe.Servico.Valores.DescontoCondicionado := vDescontoCondicionado;
@@ -308,6 +351,28 @@ begin
     NFSe.Servico.Valores.ValorIss := vValorIss;
     NFSe.Servico.Valores.ValorIssRetido := vValorIssRetido;
   end;
+end;
+
+function TNFSeWClass.GerarTabulado(const xDescricao, xCodigoItem: string;
+  aQuantidade, aValorUnitario, aValorServico, aBaseCalculo,
+  aAliquota: Double): string;
+begin
+  Result := '[[Descricao=' + xDescricao + ']' +
+             '[ItemServico=' + xCodigoItem + ']' +
+             '[Quantidade=' + FloatToStr(aQuantidade) + ']' +
+             '[ValorUnitario=' + FloatToStr(aValorUnitario) + ']' +
+             '[ValorServico=' + FloatToStr(aValorServico) + ']' +
+             '[ValorBaseCalculo=' + FloatToStr(aBaseCalculo) + ']' +
+             '[Aliquota=' + FloatToStr(aAliquota) + ']]';
+end;
+
+function TNFSeWClass.GerarJson(const xDescricao: string; aQuantidade,
+  aValorUnitario, aValorServico: Double): string;
+begin
+  Result := '{"Descricao":"' + xDescricao + '",' +
+             '"ValorUnitario":' + FloatToStr(aValorUnitario) + ',' +
+             '"Quantidade":' + FloatToStr(aQuantidade) + ',' +
+             '"ValorServico":' + FloatToStr(aValorServico) + '}';
 end;
 
 function TNFSeWClass.ConteudoTxt: String;

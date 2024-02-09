@@ -162,7 +162,7 @@ begin
                                                    NFSe.OutrasInformacoes, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Status', 1, 1, 1,
-                                           StatusRPSToStr(NFSe.StatusRps), ''));
+                                  FpAOwner.StatusRPSToStr(NFSe.StatusRps), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoMunicipioPrestacao', 7, 7, 0,
                                  OnlyNumber(NFSe.Servico.CodigoMunicipio), ''));

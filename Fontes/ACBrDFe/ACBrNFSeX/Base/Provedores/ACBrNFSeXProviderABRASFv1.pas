@@ -429,7 +429,8 @@ begin
     begin
       Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
                                          PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
-                                         ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
+                                         ConfigMsgDados.XmlRps.InfElemento, '', '', '',
+                                         IdAttr, ConfigAssinar.IdSignatureValue);
     end;
 
     SalvarXmlRps(Nota);

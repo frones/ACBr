@@ -47,9 +47,6 @@ type
 
   TNFSeW_Sigep200 = class(TNFSeW_ABRASFv2)
   protected
-    function GerarStatus: TACBrXmlNode; override;
-    function GerarTipoRPS: TACBrXmlNode; override;
-
     procedure Configuracao; override;
 
   end;
@@ -92,16 +89,6 @@ begin
   NrOcorrRegimeEspecialTributacao := -1;
   NrOcorrOptanteSimplesNacional := -1;
   NrOcorrIncentCultural := -1;
-end;
-
-function TNFSeW_Sigep200.GerarStatus: TACBrXmlNode;
-begin
-  Result := AddNode(tcStr, '#9', 'Status', 2, 2, 1, 'CO', DSC_INDSTATUS);
-end;
-
-function TNFSeW_Sigep200.GerarTipoRPS: TACBrXmlNode;
-begin
-  Result := AddNode(tcStr, '#3', 'Tipo', 2, 2, 1, 'R1', DSC_TIPORPS);
 end;
 
 end.

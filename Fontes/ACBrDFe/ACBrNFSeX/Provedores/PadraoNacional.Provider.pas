@@ -109,16 +109,11 @@ implementation
 
 uses
   synacode,
-  pcnAuxiliar,
   ACBrDFeException, ACBrCompress,
+  ACBrUtil.DateTime,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.FilesIO,
   ACBrNFSeX, ACBrNFSeXConsts, ACBrNFSeXConfiguracoes,
   PadraoNacional.GravarXml, PadraoNacional.LerXml;
-
-{
-  Ainda não é possível remover o pcnAuxiliar, pois utiliza a função:
-  GetUTC.
-}
 
 { TACBrNFSeProviderPadraoNacional }
 

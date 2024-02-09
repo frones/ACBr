@@ -76,15 +76,13 @@ type
 implementation
 
 uses
-  synacode, DateUtils, pcnAuxiliar,
-  ACBrDFeException, ACBrUtil.Math, ACBrUtil.XMLHTML,
+  synacode, DateUtils,
+  ACBrDFeException,
+  ACBrUtil.DateTime,
+  ACBrUtil.Math, 
+  ACBrUtil.XMLHTML,
   ACBrNFSeX,
   SSInformatica.GravarXml, SSInformatica.LerXml;
-
-{
-  Ainda não é possível remover o pcnAuxiliar, pois utiliza a função:
-  GetUTC.
-}
 
 { TACBrNFSeProviderSSInformatica203 }
 

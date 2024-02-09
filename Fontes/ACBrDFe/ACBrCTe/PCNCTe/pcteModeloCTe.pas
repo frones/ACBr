@@ -41,7 +41,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcteCTe, pcteCTeW, pcteConversaoCTe,
+  pcnConversao, pcteCTe, pcteCTeW, pcteConversaoCTe,
   ACBrUtil.Strings;
 
 procedure ModeloCTe;

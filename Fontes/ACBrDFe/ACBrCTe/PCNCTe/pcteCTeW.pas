@@ -37,7 +37,8 @@ unit pcteCTeW;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteCTe,
+  SysUtils, Classes,
+  pcnConversao, pcnGerador, pcteCTe,
   pcteConversaoCTe, pcteConsts, ACBrDFeUtil, ACBrDFeConsts;
 
 type
@@ -190,8 +191,11 @@ type
 implementation
 
 uses
- ACBrUtil.Base,
- ACBrUtil.Strings;
+  StrUtils,
+  Math,
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings;
 
 { TCTeW }
 
@@ -321,7 +325,7 @@ begin
   begin
     xProtCTe :=
           '<protCTe ' + CTe.infCTe.VersaoStr + '>' +
-            '<infProt' + IIf( (CTe.procCTe.Id <> ''), ' Id="' + CTe.procCTe.Id + '">', '>') +
+            '<infProt' + IfThen( (CTe.procCTe.Id <> ''), ' Id="' + CTe.procCTe.Id + '">', '>') +
               '<tpAmb>'+TpAmbToStr(CTe.procCTe.tpAmb)+'</tpAmb>'+
               '<verAplic>'+CTe.procCTe.verAplic+'</verAplic>'+
               '<chCTe>'+CTe.procCTe.chCTe+'</chCTe>'+
@@ -331,7 +335,7 @@ begin
               '<cStat>'+IntToStr(CTe.procCTe.cStat)+'</cStat>'+
               '<xMotivo>'+CTe.procCTe.xMotivo+'</xMotivo>'+
             '</infProt>'+
-            IIF( (CTe.procCTe.cMsg > 0) or (CTe.procCTe.xMsg <> ''),
+            IfThen( (CTe.procCTe.cMsg > 0) or (CTe.procCTe.xMsg <> ''),
             '<infFisco>' +
               '<cMsg>' + IntToStr(CTe.procCTe.cMsg) + '</cMsg>' +
               '<xMsg>' + CTe.procCTe.xMsg + '</xMsg>' +
@@ -3077,9 +3081,9 @@ var
 begin
   PaisBrasil := (cPais = CODIGO_BRASIL) or (cPais = 0);
 
-  cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
-  xMun := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
-  xUF  := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
+  cMun := IfThen(PaisBrasil, vcMun, CMUN_EXTERIOR);
+  xMun := IfThen(PaisBrasil, vxMun, XMUN_EXTERIOR);
+  xUF  := IfThen(PaisBrasil, vxUF, UF_EXTERIOR);
 
   if FOpcoes.NormatizarMunicipios then
     if ( ( EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR) ) then

@@ -49,7 +49,7 @@ uses
    Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pcteConversaoCTe;
+  pcnConversao, pcteConversaoCTe;
 
 type
   EventoException = class(Exception);

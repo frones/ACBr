@@ -128,7 +128,7 @@ implementation
 
 uses
   IniFiles,
-  pcnAuxiliar, pcteRetEnvEventoCTe,
+  pcteRetEnvEventoCTe,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
@@ -206,7 +206,7 @@ begin
 
   if VersaoDF >= ve300 then
     Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, DateTimeTodh(Evento.Items[0].InfEvento.dhEvento) +
-                                                             GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
+                                                             GetUTC(CodigoUFparaUF(Evento.Items[0].InfEvento.cOrgao),
                                                              Evento.Items[0].InfEvento.dhEvento), DSC_DEMI)
   else
     Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento));

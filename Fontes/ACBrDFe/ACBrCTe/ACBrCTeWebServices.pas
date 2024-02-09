@@ -40,7 +40,8 @@ uses
   Classes, SysUtils, synacode,
   ACBrDFe, ACBrDFeWebService,
   ACBrDFeConsts,
-  pcteCTe, pcnRetConsReciDFe, pcnRetConsCad, pcnAuxiliar, pcnConversao,
+  ACBrDFeUtil,
+  pcteCTe, pcnRetConsReciDFe, pcnRetConsCad, pcnConversao,
   pcteConversaoCTe, pcteProcCte, pcteEnvEventoCTe, pcteRetEnvEventoCTe,
   pcteRetConsSitCTe, pcteRetEnvCTe, pcnDistDFeInt, pcnRetDistDFeInt,
   ACBrCteConhecimentos, ACBrCTeConfiguracoes, pcteConsts;
@@ -776,7 +777,7 @@ begin
                            'Retorno: %s' + LineBreak +
                            'Observação: %s' + LineBreak),
                    [Fversao, TpAmbToStr(FtpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
                     IntToStr(FTMed),
                     IfThen(FdhRetorno = 0, '', FormatDateTimeBr(FdhRetorno)),
@@ -1372,7 +1373,7 @@ begin
                                         FCTeRetornoSincrono.cStat,
                                         FCTeRetornoSincrono.protCTe.cStat)),
                         FCTeRetornoSincrono.protCTe.xMotivo,
-                        CodigoParaUF(FCTeRetornoSincrono.cUF),
+                        CodigoUFparaUF(FCTeRetornoSincrono.cUF),
                         FormatDateTimeBr(FCTeRetornoSincrono.protCTe.dhRecbto),
                         FCTeRetornoSincrono.chCTe])
     else
@@ -1390,7 +1391,7 @@ begin
                         FCTeRetorno.verAplic,
                         IntToStr(FCTeRetorno.cStat),
                         FCTeRetorno.xMotivo,
-                        CodigoParaUF(FCTeRetorno.cUF),
+                        CodigoUFparaUF(FCTeRetorno.cUF),
                         FCTeRetorno.infRec.nRec,
                         IfThen(FCTeRetorno.InfRec.dhRecbto = 0, '',
                                FormatDateTimeBr(FCTeRetorno.InfRec.dhRecbto)),
@@ -1410,7 +1411,7 @@ begin
                       FCTeRetornoSincrono.verAplic,
                       IntToStr(FCTeRetornoSincrono.cStat),
                       FCTeRetornoSincrono.xMotivo,
-                      CodigoParaUF(FCTeRetornoSincrono.cUF),
+                      CodigoUFparaUF(FCTeRetornoSincrono.cUF),
                       IfThen(FCTeRetornoSincrono.protCTe.dhRecbto = 0, '',
                              FormatDateTimeBr(FCTeRetornoSincrono.protCTe.dhRecbto)),
                       FCTeRetornoSincrono.chCTe]);
@@ -1793,7 +1794,7 @@ begin
                    [FCTeRetorno.versao, TpAmbToStr(FCTeRetorno.tpAmb),
                     FCTeRetorno.verAplic, FCTeRetorno.nRec,
                     IntToStr(FCTeRetorno.cStat), FCTeRetorno.xMotivo,
-                    CodigoParaUF(FCTeRetorno.cUF), IntToStr(FCTeRetorno.cMsg),
+                    CodigoUFparaUF(FCTeRetorno.cUF), IntToStr(FCTeRetorno.cMsg),
                     FCTeRetorno.xMsg]);
 end;
 
@@ -1969,7 +1970,7 @@ begin
                    FCTeRetorno.verAplic, FCTeRetorno.nRec,
                    IntToStr(FCTeRetorno.cStat),
                    FCTeRetorno.xMotivo,
-                   CodigoParaUF(FCTeRetorno.cUF)]);
+                   CodigoUFparaUF(FCTeRetorno.cUF)]);
 end;
 
 { TCTeConsulta }
@@ -2472,7 +2473,7 @@ begin
                            'Protocolo: %s ' + LineBreak +
                            'Digest Value: %s ' + LineBreak),
                    [Fversao, FCTeChave, TpAmbToStr(FTpAmb), FverAplic,
-                    IntToStr(FcStat), FXMotivo, CodigoParaUF(FcUF), FCTeChave,
+                    IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FCTeChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotCTe.digVal]);
 end;
 
@@ -2659,7 +2660,7 @@ begin
                            'UF: %s ' + LineBreak +
                            'Recebimento: %s ' + LineBreak),
                    [Fversao, TpAmbToStr(FTpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto))]);
 end;
 
@@ -2878,13 +2879,13 @@ begin
                            'Consulta: %s ' + sLineBreak),
                    [FRetConsCad.versao, FRetConsCad.verAplic,
                    IntToStr(FRetConsCad.cStat), FRetConsCad.xMotivo,
-                   CodigoParaUF(FRetConsCad.cUF),
+                   CodigoUFparaUF(FRetConsCad.cUF),
                    FormatDateTimeBr(FRetConsCad.dhCons)]);
 end;
 
 function TCTeConsultaCadastro.GerarUFSoap: String;
 begin
-  Result := '<cUF>' + IntToStr(UFparaCodigo(FUF)) + '</cUF>';
+  Result := '<cUF>' + IntToStr(UFparaCodigoUF(FUF)) + '</cUF>';
 end;
 
 procedure TCTeConsultaCadastro.InicializarServico;

@@ -40,7 +40,7 @@ interface
 uses
   Classes, Sysutils, StrUtils,
   ACBrCTeConfiguracoes,
-  pcteCTe, pcteCTeR, pcteCTeW, pcnConversao, pcnAuxiliar, pcnLeitor;
+  pcteCTe, pcteCTeR, pcteCTeW, pcnConversao, pcnLeitor;
 
 type
 
@@ -1550,7 +1550,7 @@ begin
     FCTeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FCTeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
     FCTeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FCTeW.CSRT   := Configuracoes.RespTec.CSRT;
@@ -1916,7 +1916,7 @@ begin
       Emit.enderEmit.UF      := INIRec.ReadString('emit','UF','');
       Emit.enderEmit.fone    := INIRec.ReadString('emit','fone','');
 
-      ide.cUF := INIRec.ReadInteger('ide','cUF', UFparaCodigo(Emit.enderEmit.UF));
+      ide.cUF := INIRec.ReadInteger('ide','cUF', UFparaCodigoUF(Emit.enderEmit.UF));
 
       Rem.CNPJCPF := INIRec.ReadString('rem','CNPJCPF','');
       Rem.IE      := INIRec.ReadString('rem','IE','');

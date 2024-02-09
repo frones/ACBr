@@ -37,7 +37,7 @@ unit pcteLayoutTXT;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao;
+  SysUtils, Classes, pcnConversao;
 
 function CarregarLayoutTXT(const versao: string): AnsiString;
 

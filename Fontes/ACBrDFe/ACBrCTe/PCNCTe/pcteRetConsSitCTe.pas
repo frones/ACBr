@@ -44,7 +44,7 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pcteProcCTe, pcteRetEnvEventoCTe;
+  pcnConversao, pcnLeitor, pcteProcCTe, pcteRetEnvEventoCTe;
 
 type
 

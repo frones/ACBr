@@ -60,7 +60,6 @@ type
 implementation
 
 uses
-  pcnAuxiliar,
   ACBrConsts,
   ACBrUtil.Base, ACBrUtil.Strings;
 
@@ -292,11 +291,9 @@ begin
     CTe.Compl.ObsCont.Clear;
     while Leitor.rExtrai(2, 'ObsCont', '', i01 + 1) <> '' do
     begin
-      I := RetornarPosEx('ObsCont xCampo=', Leitor.Arquivo, I + 1);
-      J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 16);
-      CTe.Compl.ObsCont.New;
-      CTe.Compl.ObsCont[i01].xCampo := copy(Leitor.Arquivo, I + 16, J - (I + 16));
-      CTe.Compl.ObsCont[i01].xTexto := Leitor.rCampo(tcstr,'xTexto');
+      CTe.Compl.obsCont.New;
+      CTe.Compl.obsCont[i].xCampo := Leitor.rAtributo('xCampo');
+      CTe.Compl.obsCont[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i01);
     end;
 
@@ -305,11 +302,9 @@ begin
     CTe.Compl.ObsFisco.Clear;
     while Leitor.rExtrai(2, 'ObsFisco', '', i01 + 1) <> '' do
     begin
-      I := RetornarPosEx('ObsFisco xCampo=', Leitor.Arquivo, I + 1);
-      J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 17);
-      CTe.Compl.ObsFisco.New;
-      CTe.Compl.ObsFisco[i01].xCampo := copy(Leitor.Arquivo, I + 17, J - (I + 17));
-      CTe.Compl.ObsFisco[i01].xTexto := Leitor.rCampo(tcstr,'xTexto');
+      CTe.Compl.obsCont.New;
+      CTe.Compl.obsCont[i].xCampo := Leitor.rAtributo('xCampo');
+      CTe.Compl.obsCont[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i01);
     end;
   end;

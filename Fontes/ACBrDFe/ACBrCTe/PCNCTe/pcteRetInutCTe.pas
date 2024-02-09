@@ -37,7 +37,8 @@ unit pcteRetInutCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
+  SysUtils, Classes,
+  pcnConversao, pcnLeitor;
 
 type
 

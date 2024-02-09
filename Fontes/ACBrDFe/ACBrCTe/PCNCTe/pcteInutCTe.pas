@@ -42,7 +42,7 @@ uses
   Variants,
 {$ENDIF}
   ACBrDFeConsts,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, pcnLeitor,
+  pcnConversao, pcnGerador, pcteRetInutCTe, pcnLeitor,
   pcnSignature, pcteConsts;
 
 type
@@ -92,8 +92,10 @@ type
 implementation
 
 uses
+  ACBrDFeUtil,
   ACBrUtil.Base,
-  ACBrUtil.Strings;
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML;
 
 { TinutCTe }
 

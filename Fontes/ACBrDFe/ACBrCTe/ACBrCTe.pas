@@ -163,7 +163,6 @@ implementation
 
 uses
   dateutils,
-  pcnAuxiliar,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,

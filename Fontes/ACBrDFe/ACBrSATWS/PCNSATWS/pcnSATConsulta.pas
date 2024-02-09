@@ -77,7 +77,8 @@ resourcestring
 implementation
 
 uses
-  pcnAuxiliar;
+  ACBrUtil.Base,
+  ACBrUtil.DateTime;
 
 { TSATConsulta }
 

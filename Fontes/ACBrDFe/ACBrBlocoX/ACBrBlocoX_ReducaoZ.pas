@@ -106,7 +106,10 @@ uses
   ACBrDFeConsts,
   pcnConversao, pcnGerador,
   ACBrUtil.Strings,
-  ACBrUtil.XMLHTML, ACBrUtil.FilesIO, ACBrBlocoX, pcnAuxiliar;
+  ACBrUtil.DateTime,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
+  ACBrBlocoX;
 
 { TACBrBlocoX_Totalizadores }
 

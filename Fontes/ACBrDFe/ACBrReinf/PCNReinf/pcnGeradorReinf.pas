@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, StrUtils, variants,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings,
-  pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar,
+  pcnGerador, pcnLeitor, pcnConversao,
   ACBrDFeConsts,
   pcnCommonReinf, pcnConversaoReinf;
 

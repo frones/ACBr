@@ -353,7 +353,7 @@ type
 implementation
 
 uses
-  IniFiles, pcnAuxiliar,
+  IniFiles,
   ACBrUtil.Base,
   pcnConversao, DateUtils;
 

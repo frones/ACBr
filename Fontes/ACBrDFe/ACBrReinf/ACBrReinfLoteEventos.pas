@@ -51,7 +51,6 @@ uses
   ACBrUtil.Strings, 
   ACBrUtil.XMLHTML,
   pcnConversao, 
-  pcnAuxiliar, 
   pcnLeitor, 
   pcnGerador,
   ACBrReinfConfiguracoes, 

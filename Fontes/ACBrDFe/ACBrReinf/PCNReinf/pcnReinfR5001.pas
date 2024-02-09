@@ -320,7 +320,10 @@ type
 implementation
 
 uses
-  IniFiles, pcnAuxiliar, ACBrUtil.Strings, pcnConversao, DateUtils;
+  IniFiles,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  pcnConversao, DateUtils;
 
 { TR5001 }
 

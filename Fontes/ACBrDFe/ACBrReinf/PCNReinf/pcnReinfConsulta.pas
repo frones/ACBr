@@ -83,8 +83,6 @@ type
 
 implementation
 
-Uses pcnAuxiliar;
-
 { TReinfConsulta }
 
 constructor TReinfConsulta.Create;

@@ -22,7 +22,7 @@ uses
   ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
   ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLotesCobVConsultadas, 
   ACBrShipaySchemas, ACBrPIXSchemasPixPDV, ACBrSchemasMatera, 
-  LazarusPackageIntf;
+  ACBrPIXPSPGate2All, ACBrSchemasGate2All, LazarusPackageIntf;
 
 implementation
 

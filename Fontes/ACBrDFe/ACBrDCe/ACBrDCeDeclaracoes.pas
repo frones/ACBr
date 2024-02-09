@@ -44,8 +44,7 @@ uses
   ACBrDCeClass, 
 	ACBrDCeXmlReader,
 	ACBrDCeXmlWriter,
-	pcnConversao, 
-	pcnAuxiliar;
+	pcnConversao;
 
 type
 
@@ -180,7 +179,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
-//  ACBrUtil.DateTime,
+  ACBrUtil.DateTime,
 	ACBrXmlBase,
   ACBrDCe,
 	ACBrDFeUtil,
@@ -1191,7 +1190,7 @@ begin
     FDCeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FDCeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FDCeW.GerarXml;

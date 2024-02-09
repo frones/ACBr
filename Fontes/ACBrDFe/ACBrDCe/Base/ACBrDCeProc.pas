@@ -91,7 +91,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, ACBrUtil.Strings, ACBrDCe;
+  ACBrUtil.Strings, ACBrDCe;
 
 { TProcDCe }
 

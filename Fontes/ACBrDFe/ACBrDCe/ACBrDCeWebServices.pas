@@ -38,7 +38,6 @@ interface
 
 uses
   Classes, SysUtils, synacode,
-  pcnAuxiliar,
   pcnConversao,
   ACBrDFe, ACBrDFeWebService,
   ACBrDCeClass,
@@ -503,6 +502,7 @@ uses
   ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
   ACBrCompress, ACBrDCe, ACBrDCeConsts,
+  ACBrDFeUtil,
   pcnLeitor,
   pcnConsStatServ, pcnRetConsStatServ,
 //  pmdfeConsSitDCe, pmdfeConsDCeNaoEnc,
@@ -670,7 +670,7 @@ begin
                            'Retorno: %s' + LineBreak +
                            'Observação: %s' + LineBreak),
                    [Fversao, TpAmbToStr(FtpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFParaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
                     IntToStr(FTMed),
                     IfThen(FdhRetorno = 0, '', FormatDateTimeBr(FdhRetorno)),
@@ -2047,7 +2047,7 @@ begin
                            'Protocolo: %s ' + LineBreak +
                            'Digest Value: %s ' + LineBreak),
                    [Fversao, FDCeChave, TpAmbToStr(FTpAmb), FverAplic,
-                    IntToStr(FcStat), FXMotivo, CodigoParaUF(FcUF), FDCeChave,
+                    IntToStr(FcStat), FXMotivo, CodigoUFParaUF(FcUF), FDCeChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotDCe.digVal]);
 end;
 

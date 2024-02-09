@@ -47,7 +47,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}      
-  pcnConversao, pcnSignature, pcnAuxiliar, ACBrBase;
+  pcnConversao, pcnSignature, ACBrBase;
 
 type
 
@@ -1380,7 +1380,7 @@ begin
   try
     try
       infCFe.versaoDadosEnt := StringToFloatDef(INIRec.ReadString('infCFe','versao',''), infCFe.versaoDadosEnt);
-      Ide.cUF        := INIRec.ReadInteger( 'Identificacao','cUF' ,UFparaCodigo(INIRec.ReadString(  'Emitente','UF', CodigoParaUF(Ide.cUF))));
+      Ide.cUF        := INIRec.ReadInteger( 'Identificacao','cUF' ,UFparaCodigoUF(INIRec.ReadString(  'Emitente','UF', CodigoUFparaUF(Ide.cUF))));
       Ide.cNF        := INIRec.ReadInteger( 'Identificacao','cNF' ,INIRec.ReadInteger( 'Identificacao','Codigo' ,Ide.cNF));
       Ide.modelo     := INIRec.ReadInteger( 'Identificacao','mod' ,INIRec.ReadInteger( 'Identificacao','Modelo' ,Ide.modelo));
       Ide.nserieSAT  := INIRec.ReadInteger( 'Identificacao','nserieSAT'  ,Ide.nserieSAT);

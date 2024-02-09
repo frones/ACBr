@@ -117,8 +117,10 @@ type
 
 implementation
 
-Uses
-  pcnAuxiliar, ACBrUtil.Base, ACBrUtil.Strings;
+uses
+  ACBrDFeUtil,
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 { TCFeW }
 

@@ -84,7 +84,6 @@ uses
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
   ACBrPAFNFCe,
-  pcnAuxiliar,
   pcnLeitor;
 
 

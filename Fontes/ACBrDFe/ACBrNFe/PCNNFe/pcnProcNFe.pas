@@ -111,7 +111,10 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnLeitor,
+  StrUtils,
+  pcnLeitor,
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
   ACBrUtil.Strings;
 
 { TProcNFe }
@@ -265,19 +268,19 @@ begin
         (*By Edilson Alves de Oliveira  - 30/07/2015
           Resolver situação quando a UF utiliza servidor virtual *)
         if Copy(FverAplic,1,2) = 'SV' then
-          xUF := CodigoParaUF(StrToIntDef(Copy(FchNFe, 1, 2), 0))
+          xUF := CodigoUFparaUF(StrToIntDef(Copy(FchNFe, 1, 2), 0))
         else
           xUF := Copy(FverAplic,1,2);
         (**)
         xProtNFe := '<protNFe versao="' + Versao + '">' +
-                     '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
+                     '<infProt Id="' + IfThen( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
                       '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
                       '<verAplic>' + FverAplic + '</verAplic>' +
                       '<chNFe>' + FchNFe + '</chNFe>' +
                       //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + '</dhRecbto>' +
                       //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC{(copy(FverAplic,1,2),FdhRecbto)},'')+'</dhRecbto>'+
                       (*By Edilson Alves de Oliveira  - 30/07/2015 *)
-                      '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(xUF,FdhRecbto),'')+'</dhRecbto>'+
+                      '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IfThen(Versao >= '3.10', GetUTC(xUF,FdhRecbto),'')+'</dhRecbto>'+
                       '<nProt>' + FnProt + '</nProt>' +
                       '<digVal>' + FdigVal + '</digVal>' +
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +

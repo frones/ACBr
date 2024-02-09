@@ -118,7 +118,6 @@ uses
   ACBrDFeUtil,
   ACBrConsts,
   pcnConversao,
-  pcnAuxiliar,
   ACBrImage;
 
 { TACBrNFeDANFeESCPOS }
@@ -356,7 +355,7 @@ begin
           begin
             LinhaCmd := '</ae>'+TagLigaCondensado + padSpace(
                 'Desconto ' + padLeft(FormatFloatBr(LDesconto, '-,0.00'), 15, ' ')
-                +IIf((VlrAcrescimo+Prod.vFrete > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
+                +IfThen((VlrAcrescimo+Prod.vFrete > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
                 ColunasCondensado, '|');
             FPosPrinter.Buffer.Add('</ae>'+TagLigaCondensado + LinhaCmd);
           end;
@@ -366,7 +365,7 @@ begin
           begin
             LinhaCmd := '</ae>'+TagLigaCondensado + padSpace(
                 'Frete ' + padLeft(FormatFloatBr(Prod.vFrete, '+,0.00'), 15, ' ')
-                +IIf((VlrAcrescimo > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
+                +IfThen((VlrAcrescimo > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
                 ColunasCondensado, '|');
             FPosPrinter.Buffer.Add('</ae>'+TagLigaCondensado + LinhaCmd);
           end;
@@ -478,7 +477,7 @@ begin
     end;
   end;
 
-  Troco := IIf(FpNFe.pag.vTroco > 0,FpNFe.pag.vTroco,vTroco);
+  Troco := IfThen(FpNFe.pag.vTroco > 0,FpNFe.pag.vTroco,vTroco);
 
   if Troco > 0 then
     FPosPrinter.Buffer.Add(TagLigaCondensado + PadSpace('Troco R$|' +

@@ -83,8 +83,10 @@ implementation
 
 uses
   ACBrConsts,
-  ACBrUtil.Base, ACBrUtil.Strings,
-  pcnAuxiliar, pcnConversaoNFe;
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  pcnConversaoNFe;
 
 { TNFeRTXT }
 

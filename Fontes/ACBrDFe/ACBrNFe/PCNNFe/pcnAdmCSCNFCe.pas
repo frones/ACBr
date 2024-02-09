@@ -75,7 +75,8 @@ const
 
 implementation
 
-Uses pcnAuxiliar;
+uses
+  ACBrUtil.Base;
 
 { TAdmCSCNFCe }
 

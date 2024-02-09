@@ -123,7 +123,7 @@ implementation
 
 uses
   IniFiles,
-  pcnRetEnvEventoNFe, pcnAuxiliar, pcnConversaoNFe,
+  pcnRetEnvEventoNFe, pcnConversaoNFe,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrDFeUtil;
 
@@ -220,7 +220,7 @@ begin
       Gerador.wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
 
     Gerador.wCampo(tcStr,    'HP13', 'dhEvento', 001, 050,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+
-                                                                GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
+                                                                GetUTC(CodigoUFparaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
     Gerador.wCampo(tcInt,    'HP14', 'tpEvento', 006, 006,   1, Evento.Items[i].InfEvento.TipoEvento);
     Gerador.wCampo(tcInt,    'HP15', 'nSeqEvento', 001, 002, 1, Evento.Items[i].InfEvento.nSeqEvento);
     // Alterado por Italo em 21/11/2017
@@ -265,7 +265,7 @@ begin
           Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
           Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
           Gerador.wCampo(tcStr, 'P23', 'dhEmi',       01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.detEvento.dhEmi)+
-                                                                 GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor), Evento.Items[i].InfEvento.detEvento.dhEmi));
+                                                                 GetUTC(CodigoUFparaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor), Evento.Items[i].InfEvento.detEvento.dhEmi));
 //            Gerador.wCampo(tcStr, 'P23', 'dhEmi',       01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.detEvento.dhEmi)+
 //                                                                   GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.detEvento.dhEmi));
           Gerador.wCampo(tcStr, 'P24', 'tpNF',        01, 01, 1, tpNFToStr(Evento.Items[i].InfEvento.detEvento.tpNF));
@@ -309,7 +309,7 @@ begin
           Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
           Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
           Gerador.wCampo(tcStr, 'P30', 'dhEntrega',   25, 25, 1, DateTimeTodh(Evento.Items[i].InfEvento.detEvento.dhEntrega) +
-                                    GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor),
+                                    GetUTC(CodigoUFparaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor),
                                     Evento.Items[i].InfEvento.detEvento.dhEntrega), DSC_DEMI);
 
           Gerador.wCampo(tcStr, 'P31', 'nDoc   ', 02, 20, 1, Evento.Items[i].InfEvento.detEvento.nDoc);
@@ -319,7 +319,7 @@ begin
 
           Gerador.wCampo(tcStr, 'P35', 'hashComprovante  ', 28, 28, 1, Evento.Items[i].InfEvento.detEvento.hashComprovante);
           Gerador.wCampo(tcStr, 'P36', 'dhHashComprovante', 25, 25, 1, DateTimeTodh(Evento.Items[i].InfEvento.detEvento.dhHashComprovante) +
-                                    GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor),
+                                    GetUTC(CodigoUFparaUF(Evento.Items[i].InfEvento.detEvento.cOrgaoAutor),
                                     Evento.Items[i].InfEvento.detEvento.dhHashComprovante), DSC_DEMI);
         end;
 

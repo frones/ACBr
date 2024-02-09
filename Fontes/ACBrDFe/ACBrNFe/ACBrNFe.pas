@@ -180,7 +180,9 @@ implementation
 
 uses
   strutils, dateutils, math,
-  pcnAuxiliar, synacode;
+  ACBrDFeUtil,
+  ACBrUtil.DateTime,
+  synacode;
 
 {$IFDEF FPC}
  {$R ACBrNFeServicos.rc}
@@ -557,7 +559,7 @@ begin
 
   // Passo 1
   sdhEmi_HEX := AsciiToHex(DateTimeTodh(DataHoraEmissao) +
-    GetUTC(CodigoParaUF(CUF), DataHoraEmissao));
+    GetUTC(CodigoUFparaUF(CUF), DataHoraEmissao));
   sdigVal_HEX := AsciiToHex(DigestValue);
 
   if (CUF in [35, 41, 50]) then

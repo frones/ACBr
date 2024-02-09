@@ -77,7 +77,8 @@ type
 
 implementation
 
-Uses pcnAuxiliar;
+uses
+  ACBrUtil.Strings;
 
 { TenvNFe }
 

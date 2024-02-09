@@ -114,7 +114,9 @@ type
 implementation
 
 uses
-  pcnAuxiliar,
+  ACBrDFeUtil,
+  ACBrUtil.Base,
+  ACBrUtil.XMLHTML,
   ACBrUtil.Strings;
 
 { TinutNFe }

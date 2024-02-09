@@ -54,7 +54,9 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnNFe, pcnNFeW;
+  pcnConversao,
+  pcnConversaoNFe,
+  pcnNFe, pcnNFeW;
 
 procedure ModeloNFe;
 
@@ -231,7 +233,7 @@ begin
                               // retirada for diferente do endereço do remetente.
                               // Assim se retirada.xLgr <> '' o gerador grava o grupo no XML
 
-  NFe.Retirada.CNPJ := '';    // F02 - CNPJ
+  NFe.Retirada.CNPJCPF := '';    // F02 - CNPJ
   NFe.Retirada.xLgr := '';    // F03 - Logradouro
   NFe.Retirada.nro := '';     // F04 - Número
   NFe.Retirada.xCpl := '';    // F05 - Complemento
@@ -248,7 +250,7 @@ begin
                               // endereço de entrega for diferente do endereço do destinatario.
                               // Assim se entrega.xLgr <> '' o gerador grava o grupo no XML
 
-  NFe.Entrega.CNPJ := '';     // G02 - CNPJ
+  NFe.Entrega.CNPJCPF := '';     // G02 - CNPJ
   NFe.Entrega.xLgr := '';     // G03 - Logradouro
   NFe.Entrega.nro := '';      // G04 - Número
   NFe.Entrega.xCpl := '';     // G05 - Complemento
@@ -274,7 +276,7 @@ begin
     NFe.Det[i].Prod.xProd := '';    // I04 - Descrição do produto ou serviço
     NFe.Det[i].Prod.NCM := '';      // I05 - Código NCM         (Em caso de serviço, não incluir a TAG.)
     NFe.Det[i].Prod.EXTIPI := '';   // I06 - Código EX da TIPI  (Em caso de serviço, não incluir a TAG.)
-    NFe.Det[i].Prod.genero := 0;    // I07 - Gênero do Produto ou Serviço (Tabela de Capítulos da NCM)(Em caso de serviço, não incluir a TAG.)
+//    NFe.Det[i].Prod.genero := 0;    // I07 - Gênero do Produto ou Serviço (Tabela de Capítulos da NCM)(Em caso de serviço, não incluir a TAG.)
     NFe.Det[i].Prod.CFOP := '';     // I08 - Código Fiscal de Operações e Prestações
 
     NFe.Det[i].Prod.uCom := '';     // I09 - Unidade Comercial
@@ -331,15 +333,15 @@ begin
     NFe.Det[i].prod.veicProd.cCor := '';            // J04 - Cor
     NFe.Det[i].prod.veicProd.xCor := '';            // J05 - Descrição da Cor
     NFe.Det[i].prod.veicProd.pot := '';             // J06 - Potência Motor
-    NFe.Det[i].prod.veicProd.CM3 := '';             // J07 - CM3 (Potência)
+//    NFe.Det[i].prod.veicProd.CM3 := '';             // J07 - CM3 (Potência)
     NFe.Det[i].prod.veicProd.pesoL := '';           // J08 - Peso Líquido
     NFe.Det[i].prod.veicProd.pesoB := '';           // J09 - Peso Bruto
     NFe.Det[i].prod.veicProd.nSerie := '';          // J10 - Serial (série)
     NFe.Det[i].prod.veicProd.tpComb := '';          // J11 - Tipo de combustível
     NFe.Det[i].prod.veicProd.nMotor := '';          // J12 - Número de Motor
-    NFe.Det[i].prod.veicProd.CMKG := '';            // J13 - CMKG
+//    NFe.Det[i].prod.veicProd.CMKG := '';            // J13 - CMKG
     NFe.Det[i].prod.veicProd.dist := '';            // J14 - Distância entre eixos
-    NFe.Det[i].prod.veicProd.RENAVAM := '';         // J15 - RENAVAM            (Não informar a TAG na exportação)
+//    NFe.Det[i].prod.veicProd.RENAVAM := '';         // J15 - RENAVAM            (Não informar a TAG na exportação)
     NFe.Det[i].prod.veicProd.anoMod := 0;           // J16 - Ano Modelo de Fabricação
     NFe.Det[i].prod.veicProd.anoFab := 0;           // J17 - Ano de Fabricação
     NFe.Det[i].prod.veicProd.tpPint := '';          // J18 - Tipo de Pintura
@@ -367,8 +369,8 @@ begin
       NFe.Det[i].prod.arma[j].tpArma := taUsoPermitido; // L02 - Indicador do tipo de arma de fogo
                                                         //         (0)=taUsoPermitido
                                                         //         (1)=taUsoRestrito
-      NFe.Det[i].prod.arma[j].nSerie := 0;              // L03 - Número de série da arma
-      NFe.Det[i].prod.arma[j].nCano := 0;               // L04 - Número de série do cano
+      NFe.Det[i].prod.arma[j].nSerie := '0';              // L03 - Número de série da arma
+      NFe.Det[i].prod.arma[j].nCano := '0';               // L04 - Número de série do cano
       NFe.Det[i].prod.arma[j].descr := '';              // L05 - Descrição completa da arma, compreendendo: calibre, marca, capacidade, etc)
     end;
 
@@ -767,7 +769,7 @@ begin
     NFe.Det[i].Imposto.ISSQN.vAliq := 0;             // U03 - Alíquota do ISSQN
     NFe.Det[i].Imposto.ISSQN.vISSQN := 0;            // U04 - Valor do ISSQN
     NFe.Det[i].Imposto.ISSQN.cMunFG := 0;            // U05 - Código do município de ocorrência do fato gerador do ISSQN
-    NFe.Det[i].Imposto.ISSQN.cListServ := 0;         // U06 - Código da Lista de Serviços
+    NFe.Det[i].Imposto.ISSQN.cListServ := '0';         // U06 - Código da Lista de Serviços
 
   end;
 
@@ -939,12 +941,12 @@ begin
 
   // Informa as opções especificas de TNFeW
 
-  NFew.Opcoes.GerarTagIPIparaNaoTributado := True;               // No caso de produto não tributado gera a TAG especifica
+//  NFew.Opcoes.GerarTagIPIparaNaoTributado := True;               // No caso de produto não tributado gera a TAG especifica
   NFeW.Opcoes.GerarTXTSimultaneamente := False;                  // Possibilita gerar um arquivo TXT do formato do programa SEFAZ-SP
   NFeW.Opcoes.NormatizarMunicipios := False;                     // Realiza a normatização do nome do municipio conforme a tabela do IBGE
   NFeW.Opcoes.PathArquivoMunicipios := 'C:\meuCaminho\MunIBGE\'; // Indicar para aonde estão os arquivo com os nomes dos municipios
   NFeW.Opcoes.GerarTagAssinatura := taNunca;                     // Opção de gerar o template da assinature em branco
-  NFeW.Opcoes.ValidarInscricoes := False;                        // Valida as Inscrições. (É melhor quando essa validação é feita no ERP)
+//  NFeW.Opcoes.ValidarInscricoes := False;                        // Valida as Inscrições. (É melhor quando essa validação é feita no ERP)
 
   // Informar as opções comuns ao gerador ( Abaixo opcões Default)
 

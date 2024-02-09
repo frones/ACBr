@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrBase, ACBrDFeReport,
-  pcnNFe, pcnConversao, pcnAuxiliar;
+  pcnNFe, pcnConversao;
 
 type
   TpcnTributos = (trbNenhum, trbNormal, trbSeparadamente);
@@ -437,7 +437,7 @@ begin
   if infAdFisco > '' then
   begin
     if ANFe.InfAdic.infCpl > '' then
-      Result := infAdFisco + IIf(Copy(infAdFisco, Length(infAdFisco), 1) = ';', '', '; ')
+      Result := infAdFisco + IfThen(Copy(infAdFisco, Length(infAdFisco), 1) = ';', '', '; ')
     else
       Result := infAdFisco;
   end;

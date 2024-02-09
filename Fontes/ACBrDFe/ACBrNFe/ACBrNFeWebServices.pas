@@ -40,8 +40,9 @@ interface
 uses
   Classes, SysUtils, dateutils,
   ACBrDFe, ACBrDFeWebService,
+  ACBrDFeUtil,
   blcksock, synacode,
-  pcnNFe, pcnRetConsReciDFe, pcnRetConsCad, pcnAuxiliar, pcnConversao,
+  pcnNFe, pcnRetConsReciDFe, pcnRetConsCad, pcnConversao,
   ACBrDFeConsts,
   pcnNFeConsts,
   pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe, 
@@ -904,7 +905,7 @@ begin
                            'Retorno: %s' + LineBreak +
                            'Observação: %s' + LineBreak),
                    [Fversao, TpAmbToStr(FtpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
                     IntToStr(FTMed),
                     IfThen(FdhRetorno = 0, '', FormatDateTimeBr(FdhRetorno)),
@@ -1315,7 +1316,7 @@ begin
                       FNFeRetornoSincrono.verAplic,
                       IntToStr(FNFeRetornoSincrono.protNFe.cStat),
                       FNFeRetornoSincrono.protNFe.xMotivo,
-                      CodigoParaUF(FNFeRetornoSincrono.cUF),
+                      CodigoUFparaUF(FNFeRetornoSincrono.cUF),
                       FormatDateTimeBr(FNFeRetornoSincrono.dhRecbto),
                       FNFeRetornoSincrono.chNfe])
   else
@@ -1333,7 +1334,7 @@ begin
                       FNFeRetorno.verAplic,
                       IntToStr(FNFeRetorno.cStat),
                       FNFeRetorno.xMotivo,
-                      CodigoParaUF(FNFeRetorno.cUF),
+                      CodigoUFparaUF(FNFeRetorno.cUF),
                       FNFeRetorno.infRec.nRec,
                       IfThen(FNFeRetorno.InfRec.dhRecbto = 0, '',
                              FormatDateTimeBr(FNFeRetorno.InfRec.dhRecbto)),
@@ -1764,7 +1765,7 @@ begin
                    [FNFeRetorno.versao, TpAmbToStr(FNFeRetorno.tpAmb),
                     FNFeRetorno.verAplic, FNFeRetorno.nRec,
                     IntToStr(FNFeRetorno.cStat), FNFeRetorno.xMotivo,
-                    CodigoParaUF(FNFeRetorno.cUF), IntToStr(FNFeRetorno.cMsg),
+                    CodigoUFparaUF(FNFeRetorno.cUF), IntToStr(FNFeRetorno.cMsg),
                     FNFeRetorno.xMsg]);
   {*)}
 end;
@@ -1979,7 +1980,7 @@ begin
                    FNFeRetorno.verAplic, FNFeRetorno.nRec,
                    IntToStr(FNFeRetorno.cStat),
                    FNFeRetorno.xMotivo,
-                   CodigoParaUF(FNFeRetorno.cUF)]);
+                   CodigoUFparaUF(FNFeRetorno.cUF)]);
   {*)}
 end;
 
@@ -2556,7 +2557,7 @@ begin
                            'Protocolo: %s ' + LineBreak +
                            'Digest Value: %s ' + LineBreak),
                    [Fversao, FNFeChave, TpAmbToStr(FTpAmb), FverAplic,
-                    IntToStr(FcStat), FXMotivo, CodigoParaUF(FcUF), FNFeChave,
+                    IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FNFeChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotNFe.digVal]);
   {*)}
 end;
@@ -2775,7 +2776,7 @@ begin
                            'UF: %s ' + LineBreak +
                            'Recebimento: %s ' + LineBreak),
                    [Fversao, TpAmbToStr(FTpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
+                    FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto))]);
   {*)}
 end;
@@ -2974,14 +2975,14 @@ begin
                            'Consulta: %s ' + sLineBreak),
                    [FRetConsCad.versao, FRetConsCad.verAplic,
                    IntToStr(FRetConsCad.cStat), FRetConsCad.xMotivo,
-                   CodigoParaUF(FRetConsCad.cUF),
+                   CodigoUFparaUF(FRetConsCad.cUF),
                    FormatDateTimeBr(FRetConsCad.dhCons)]);
   {*)}
 end;
 
 function TNFeConsultaCadastro.GerarUFSoap: String;
 begin
-  Result := '<cUF>' + IntToStr(UFparaCodigo(FUF)) + '</cUF>';
+  Result := '<cUF>' + IntToStr(UFparaCodigoUF(FUF)) + '</cUF>';
 end;
 
 procedure TNFeConsultaCadastro.InicializarServico;

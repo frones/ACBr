@@ -45,7 +45,7 @@ uses
   {$Else}
      pcnNFeR, pcnNFeW,
   {$EndIf}
-   pcnConversao, pcnAuxiliar, pcnLeitor;
+   pcnConversao, pcnLeitor;
 
 type
 
@@ -497,7 +497,7 @@ begin
       AdicionaErro('270-Rejeição: Código Município do Fato Gerador: dígito inválido');
 
     GravaLog('Validar: 271-Municipio Fato Gerador diferente');
-    if (UFparaCodigo(NFe.Emit.EnderEmit.UF) <> StrToIntDef(
+    if (UFparaCodigoUF(NFe.Emit.EnderEmit.UF) <> StrToIntDef(
       copy(IntToStr(NFe.Ide.cMunFG), 1, 2), 0)) then//GB12.1
       AdicionaErro('271-Rejeição: Código Município do Fato Gerador: difere da UF do emitente');
 
@@ -559,7 +559,7 @@ begin
       AdicionaErro('272-Rejeição: Código Município do Emitente: dígito inválido');
 
     GravaLog('Validar: 273-Código Município difere da UF');
-    if (UFparaCodigo(NFe.Emit.EnderEmit.UF) <> StrToIntDef(
+    if (UFparaCodigoUF(NFe.Emit.EnderEmit.UF) <> StrToIntDef(
       copy(IntToStr(NFe.Emit.EnderEmit.cMun), 1, 2), 0)) then
       AdicionaErro('273-Rejeição: Código Município do Emitente: difere da UF do emitente');
 
@@ -593,7 +593,7 @@ begin
       if NFe.Retirada.UF = 'EX' then
         CodigoUF := 99
       else
-        CodigoUF := UFparaCodigo(NFe.Retirada.UF);
+        CodigoUF := UFparaCodigoUF(NFe.Retirada.UF);
 
       if (CodigoUF <> StrToIntDef(Copy(IntToStr(NFe.Retirada.cMun), 1, 2), 0)) then
         AdicionaErro('277-Rejeição: Código Município do Local de Retirada: difere da UF do Local de Retirada');
@@ -616,7 +616,7 @@ begin
       if NFe.Entrega.UF = 'EX' then
         CodigoUF := 99
       else
-        CodigoUF := UFparaCodigo(NFe.Entrega.UF);
+        CodigoUF := UFparaCodigoUF(NFe.Entrega.UF);
 
       if (CodigoUF <> StrToIntDef(Copy(IntToStr(NFe.Entrega.cMun), 1, 2), 0)) then
         AdicionaErro('279-Rejeição: Código Município do Local de Entrega: difere da UF do Local de Entrega');
@@ -842,9 +842,9 @@ begin
       if (NFe.Ide.finNFe = fnComplementar) and (NFe.Ide.NFref.Count = 1) and
         //Testa pelo número para saber se TAG foi preenchida
         (((NFe.Ide.NFref.Items[0].RefNF.nNF > 0) and
-        (NFe.Ide.NFref.Items[0].RefNF.cUF <> UFparaCodigo(
+        (NFe.Ide.NFref.Items[0].RefNF.cUF <> UFparaCodigoUF(
         NFe.Emit.EnderEmit.UF))) or ((NFe.Ide.NFref.Items[0].RefNFP.nNF > 0) and
-        (NFe.Ide.NFref.Items[0].RefNFP.cUF <> UFparaCodigo(
+        (NFe.Ide.NFref.Items[0].RefNFP.cUF <> UFparaCodigoUF(
         NFe.Emit.EnderEmit.UF))))
       then  //B25-60 - Facultativo
         AdicionaErro('678-Rejeição: NF referenciada com UF diferente da NF-e complementar');
@@ -1731,7 +1731,7 @@ begin
       Emit.EnderEmit.xPais   := INIRec.ReadString(  sSecao,'xPais'   ,INIRec.ReadString(  sSecao,'Pais'    ,'BRASIL'));
       Emit.EnderEmit.fone    := INIRec.ReadString(  sSecao,'Fone'    ,'');
 
-      Ide.cUF    := INIRec.ReadInteger( sSecao,'cUF'       ,UFparaCodigo(Emit.EnderEmit.UF));
+      Ide.cUF    := INIRec.ReadInteger( sSecao,'cUF'       ,UFparaCodigoUF(Emit.EnderEmit.UF));
       if (Ide.cMunFG = 0) then
         Ide.cMunFG := INIRec.ReadInteger( sSecao,'cMunFG' ,INIRec.ReadInteger( sSecao,'CidadeCod' ,Emit.EnderEmit.cMun));
 
@@ -3773,7 +3773,7 @@ begin
     FNFeW.Opcoes.ForcarGerarTagRejeicao906 := Configuracoes.Geral.ForcarGerarTagRejeicao906;
 {$EndIf}
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
     FNFeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FNFeW.CSRT   := Configuracoes.RespTec.CSRT;

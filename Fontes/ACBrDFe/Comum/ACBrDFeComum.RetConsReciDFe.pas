@@ -85,7 +85,7 @@ type
     property Items[Index: Integer]: TProtDFeCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetConsReciDFe = class
+  TRetConsReciDFe = class(TObject)
   private
     Fversao: string;
     FtpAmb: TACBrTipoAmbiente;

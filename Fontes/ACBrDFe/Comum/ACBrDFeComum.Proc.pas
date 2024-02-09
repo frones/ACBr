@@ -95,9 +95,10 @@ implementation
 
 uses
   ACBrDFeConsts,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
-  ACBrXmlDocument,
-  pcnAuxiliar;
+  ACBrUtil.DateTime,
+  ACBrXmlDocument;
 
 { TProcDFe }
 
@@ -252,7 +253,7 @@ begin
       if ProtLido then
       begin
         if Copy(verAplic, 1, 2) = 'SV' then
-          xUF := CodigoParaUF(StrToIntDef(Copy(chDFe, 1, 2), 0))
+          xUF := CodigoUFparaUF(StrToIntDef(Copy(chDFe, 1, 2), 0))
         else
           xUF := Copy(verAplic, 1, 2);
 

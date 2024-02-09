@@ -56,7 +56,7 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnAuxiliar, pcnConversao, pcnLeitor,
+  pcnConversao, pcnLeitor,
   pcesCommon, pcesConversaoeSocial;
 
 type

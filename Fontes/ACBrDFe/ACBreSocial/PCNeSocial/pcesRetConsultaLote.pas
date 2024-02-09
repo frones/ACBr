@@ -55,7 +55,8 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, pcnAuxiliar, pcnConversao, pcnLeitor,
+  ACBrBase,
+  pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012, pcesS5003, 
   pcesS5013, pcesS5501, pcesS5503;

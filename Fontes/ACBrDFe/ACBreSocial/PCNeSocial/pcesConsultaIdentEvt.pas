@@ -89,9 +89,6 @@ type
 
 implementation
 
-uses
-  pcnAuxiliar;
-
 { TConsultaIdentEvt }
 
 constructor TConsultaIdentEvt.Create;

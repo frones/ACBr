@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, variants,
-  pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar,
+  pcnGerador, pcnLeitor, pcnConversao,
   ACBrDFeConsts,
   pcesCommon, pcesConversaoeSocial;
 
@@ -436,13 +436,13 @@ begin
       Result := Result + copy(OnlyNumber(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);
   end;
 
-  Result := Result + pcnAuxiliar.IntToStrZero(nAno, 4);
-  Result := Result + pcnAuxiliar.IntToStrZero(nMes, 2);
-  Result := Result + pcnAuxiliar.IntToStrZero(nDia, 2);
-  Result := Result + pcnAuxiliar.IntToStrZero(nHora, 2);
-  Result := Result + pcnAuxiliar.IntToStrZero(nMin, 2);
-  Result := Result + pcnAuxiliar.IntToStrZero(nSeg, 2);
-  Result := Result + pcnAuxiliar.IntToStrZero(sequencial, 5);
+  Result := Result + IntToStrZero(nAno, 4);
+  Result := Result + IntToStrZero(nMes, 2);
+  Result := Result + IntToStrZero(nDia, 2);
+  Result := Result + IntToStrZero(nHora, 2);
+  Result := Result + IntToStrZero(nMin, 2);
+  Result := Result + IntToStrZero(nSeg, 2);
+  Result := Result + IntToStrZero(sequencial, 5);
 end;
 
 procedure TeSocialEvento.GerarCNH(pCnh: TCNH);

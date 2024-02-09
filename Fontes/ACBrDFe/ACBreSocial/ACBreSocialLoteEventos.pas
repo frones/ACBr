@@ -60,7 +60,6 @@ uses
   {$IFEND}
   ACBrBase,
   pcnConversao, 
-	pcnAuxiliar, 
 	pcnLeitor, 
 	pcnGerador,
   ACBreSocialConfiguracoes, 
@@ -329,7 +328,7 @@ begin
     '<envioLoteEventos grupo="' + Inttostr(ord(AGrupo)) + '">'+
       '<ideEmpregador>'+
         '<tpInsc>' + eSTpInscricaoToStr(FIdeEmpregador.TpInsc) + '</tpInsc>'+
-        '<nrInsc>' + IIf((FIdeEmpregador.TpInsc <> tiCNPJ) or (FIdeEmpregador.OrgaoPublico), FIdeEmpregador.NrInsc, Copy(FIdeEmpregador.NrInsc, 1, 8)) +'</nrInsc>'+
+        '<nrInsc>' + IfThen((FIdeEmpregador.TpInsc <> tiCNPJ) or (FIdeEmpregador.OrgaoPublico), FIdeEmpregador.NrInsc, Copy(FIdeEmpregador.NrInsc, 1, 8)) +'</nrInsc>'+
       '</ideEmpregador>'+
       '<ideTransmissor>'+
         '<tpInsc>' + eSTpInscricaoToStr(FIdeTransmissor.TpInsc) +'</tpInsc>'+

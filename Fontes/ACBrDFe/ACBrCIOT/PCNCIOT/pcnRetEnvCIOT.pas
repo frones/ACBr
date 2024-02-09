@@ -37,7 +37,7 @@ unit pcnRetEnvCIOT;
 interface
  uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pcnCIOT, pcnConversaoCIOT, synacode;
+  pcnConversao, pcnLeitor, pcnCIOT, pcnConversaoCIOT, synacode;
 
 type
   TRetornoEnvio = class;

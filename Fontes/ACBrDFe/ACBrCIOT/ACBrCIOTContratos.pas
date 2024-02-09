@@ -45,7 +45,6 @@ uses
   pcnCIOTR, 
   pcnCIOTW, 
   pcnConversao, 
-  pcnAuxiliar, 
   pcnLeitor;
 
 type
@@ -145,6 +144,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
   synautil;
 
 { Documento }
@@ -289,7 +289,7 @@ begin
 
     FCIOTW.Integradora := Configuracoes.Geral.Integradora;
 
-    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FCIOTW.GerarXml;

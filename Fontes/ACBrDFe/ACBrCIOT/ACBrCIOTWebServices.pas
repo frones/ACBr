@@ -40,7 +40,7 @@ uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeWebService,
   ACBrCIOTContratos, ACBrCIOTConfiguracoes,
-  pcnAuxiliar, pcnConversao, pcnConversaoCIOT, pcnCIOT, pcnRetEnvCIOT;
+  pcnConversao, pcnConversaoCIOT, pcnCIOT, pcnRetEnvCIOT;
 
 const
   CURL_WSDL = 'http://schemas.ipc.adm.br/efrete/pef/';

@@ -41,7 +41,8 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  ACBrUtil.Strings, pcnAuxiliar, pcnConversao, pcnLeitor, pcnConversaoCIOT, pcnCIOT;
+  ACBrUtil.Strings,
+  pcnConversao, pcnLeitor, pcnConversaoCIOT, pcnCIOT;
 
 type
 

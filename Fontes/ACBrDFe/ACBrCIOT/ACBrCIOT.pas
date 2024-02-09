@@ -109,8 +109,7 @@ implementation
 uses
   dateutils,
   ACBrUtil.Base,
-  ACBrUtil.Strings,
-  pcnAuxiliar;
+  ACBrUtil.Strings;
 
 {$IFDEF FPC}
  {$R ACBrCIOTServicos.rc}

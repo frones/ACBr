@@ -192,7 +192,8 @@ function StrToIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
 implementation
 
 uses
-  typinfo, pcnConversao, pcnAuxiliar;
+  typinfo,
+  pcnConversao;
 
 function LayOutToSchema(const t: TLayOutCIOT): TSchemaCIOT;
 begin

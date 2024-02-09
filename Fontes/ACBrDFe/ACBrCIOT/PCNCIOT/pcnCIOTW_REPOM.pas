@@ -50,7 +50,6 @@ uses
   ACBrConsts,
   pcnCIOTW, 
   pcnCIOTR,
-  pcnAuxiliar, 
   pcnConversao, 
   pcnGerador, 
   pcnLeitor,
